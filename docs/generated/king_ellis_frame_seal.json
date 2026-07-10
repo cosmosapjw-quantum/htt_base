@@ -1,0 +1,90 @@
+{
+  "definitions": {
+    "normal": "n = d_t (unit normal of the homogeneous slices)",
+    "tilted": "u = cosh b(t) e_0 + sinh b(t) (c1 e_1 + c2 e_2 + c3 e_3), e_1 = a1^-1 d_x, e_2 = (a2 e^{sx})^-1 d_y, e_3 = (a3 e^{sx})^-1 d_z; group-invariant (frame components depend on t only)",
+    "unit_norm_exact": true
+  },
+  "gauss_identity": {
+    "alpha": "1",
+    "beta": "1",
+    "checks": {
+      "fourth_point_consistent": true,
+      "identity_symbolic_bianchi_i_oblique": true,
+      "identity_symbolic_bianchi_v_aligned": true,
+      "identity_symbolic_bianchi_v_normal": true,
+      "identity_symbolic_bianchi_v_oblique": true,
+      "identity_symbolic_bianchi_v_transverse": true
+    },
+    "gamma": "-2/3",
+    "identity": "R3 = 2 G_ab u^a u^b + (-2/3) Theta^2 + (1) sigma^2 + (1) omega^2  (sigma^2 = sigma_ab sigma^ab, omega^2 = omega_ab omega^ab)",
+    "non_integrability_note": "for omega != 0 no family of 3-surfaces is orthogonal to u (Frobenius), so R3 is the Gauss-equation curvature of the formal rest spaces, not of actual hypersurfaces; the beta omega^2 term is exactly the correction the identity acquires there"
+  },
+  "items_discharged": "1-7 of the ten-item rotating-congruence program (t3_king_ellis.yaml)",
+  "ke_obs_vorticity_theorem": {
+    "aligned_zero_bianchi_v": true,
+    "closed_form": "omega_ab omega^ab = (S^2 sin^2 phi / 2) * (S cos(phi) (H1 - H2) - sqrt(1+S^2) c/a1)^2,  S = sinh b, c = 1 (type V) / 0 (type I)",
+    "closed_form_verified": true,
+    "frobenius_normal_zero": true,
+    "slaving_leading_order_verified": true,
+    "transverse_v_reduction": true,
+    "type_i_not_identically_irrotational": true,
+    "type_i_oblique_form_verified": true,
+    "type_v_cancellation_surface_exists": true
+  },
+  "matter_frames": {
+    "checks": {
+      "pi_n_traceless": true,
+      "q_n_magnitude": true,
+      "rho_n_form": true,
+      "u_frame_trivial": true
+    },
+    "pi_n_amplitude": "(1 + w) rho sinh^2 b (traceless, along the tilt)",
+    "q_n_mag": "(1 + w) rho cosh b sinh b",
+    "rho_n": "rho (cosh^2 b + w sinh^2 b)"
+  },
+  "momentum_constraint_components": {
+    "aligned": {
+      "M_t": "2*S_sinh**3*Derivative(a3(t), t)/(a1(t)*a3(t)) + 2*S_sinh**3*Derivative(a2(t), t)/(a1(t)*a2(t)) - 4*S_sinh**3*Derivative(a1(t), t)/a1(t)**2 + S_sinh**2*sqrt(S_sinh**2 + 1)*Derivative(a3(t), (t, 2))/a3(t) + S_sinh**2*sqrt(S_sinh**2 + 1)*Derivative(a2(t), (t, 2))/a2(t) - S_sinh**2*sqrt(S_sinh**2 + 1)*Derivative(a1(t), t)*Derivative(a3(t), t)/(a1(t)*a3(t)) - S_sinh**2*sqrt(S_sinh**2 + 1)*Derivative(a1(t), t)*Derivative(a2(t), t)/(a1(t)*a2(t)) + 2*S_sinh**2*sqrt(S_sinh**2 + 1)/a1(t)**2 + S_sinh*Derivative(a3(t), t)/(a1(t)*a3(t)) + S_sinh*Derivative(a2(t), t)/(a1(t)*a2(t)) - 2*S_sinh*Derivative(a1(t), t)/a1(t)**2",
+      "M_x": "-S_sinh**3*a1(t)*Derivative(a3(t), (t, 2))/a3(t) - S_sinh**3*a1(t)*Derivative(a2(t), (t, 2))/a2(t) + S_sinh**3*Derivative(a1(t), t)*Derivative(a3(t), t)/a3(t) + S_sinh**3*Derivative(a1(t), t)*Derivative(a2(t), t)/a2(t) - 2*S_sinh**3/a1(t) - 2*S_sinh**2*sqrt(S_sinh**2 + 1)*Derivative(a3(t), t)/a3(t) - 2*S_sinh**2*sqrt(S_sinh**2 + 1)*Derivative(a2(t), t)/a2(t) + 4*S_sinh**2*sqrt(S_sinh**2 + 1)*Derivative(a1(t), t)/a1(t) - S_sinh*a1(t)*Derivative(a3(t), (t, 2))/a3(t) - S_sinh*a1(t)*Derivative(a2(t), (t, 2))/a2(t) + S_sinh*Derivative(a1(t), t)*Derivative(a3(t), t)/a3(t) + S_sinh*Derivative(a1(t), t)*Derivative(a2(t), t)/a2(t) - 2*S_sinh/a1(t) - sqrt(S_sinh**2 + 1)*Derivative(a3(t), t)/a3(t) - sqrt(S_sinh**2 + 1)*Derivative(a2(t), t)/a2(t) + 2*sqrt(S_sinh**2 + 1)*Derivative(a1(t), t)/a1(t)"
+    },
+    "transverse": {
+      "M_t": "S_sinh**2*sqrt(S_sinh**2 + 1)*(a1(t)**2*a2(t)*Derivative(a3(t), (t, 2)) - a1(t)**2*Derivative(a2(t), t)*Derivative(a3(t), t) + a1(t)*a2(t)*a3(t)*Derivative(a1(t), (t, 2)) - a1(t)*a3(t)*Derivative(a1(t), t)*Derivative(a2(t), t) + 2*a2(t)*a3(t))/(a1(t)**2*a2(t)*a3(t))",
+      "M_x": "-sqrt(S_sinh**2 + 1)*Derivative(a3(t), t)/a3(t) - sqrt(S_sinh**2 + 1)*Derivative(a2(t), t)/a2(t) + 2*sqrt(S_sinh**2 + 1)*Derivative(a1(t), t)/a1(t)",
+      "M_y": "S_sinh*(-S_sinh**2*a1(t)**2*a2(t)*Derivative(a3(t), (t, 2)) + S_sinh**2*a1(t)**2*Derivative(a2(t), t)*Derivative(a3(t), t) - S_sinh**2*a1(t)*a2(t)*a3(t)*Derivative(a1(t), (t, 2)) + S_sinh**2*a1(t)*a3(t)*Derivative(a1(t), t)*Derivative(a2(t), t) - 2*S_sinh**2*a2(t)*a3(t) - a1(t)**2*a2(t)*Derivative(a3(t), (t, 2)) + a1(t)**2*Derivative(a2(t), t)*Derivative(a3(t), t) - a1(t)*a2(t)*a3(t)*Derivative(a1(t), (t, 2)) + a1(t)*a3(t)*Derivative(a1(t), t)*Derivative(a2(t), t) - 2*a2(t)*a3(t))*exp(x)/(a1(t)**2*a3(t))"
+    }
+  },
+  "rational_point_anchor": {
+    "point": "a=(2,3,5), da=(1/2,1/3,1/5), db=1/7, e^b=3/2, dda=(1/11,1/13,1/17), x=0",
+    "values": {
+      "aligned": {
+        "A2": "841/12544",
+        "omega2": "0",
+        "sigma2": "34662601/8573040000",
+        "theta": "68851/75600"
+      },
+      "normal": {
+        "A2": "0",
+        "omega2": "0",
+        "sigma2": "27721/1215000",
+        "theta": "361/900"
+      },
+      "transverse": {
+        "A2": "1754281/36578304",
+        "omega2": "4225/165888",
+        "sigma2": "7090796491/137168640000",
+        "theta": "37351/75600"
+      }
+    }
+  },
+  "scope_not_claimed": "exact frame kinematics + constraint algebra on the group-invariant ansatz class; NOT a constraint-satisfying W^2 > 0 witness at Omega_k = 0 -- KE-OBS is KINEMATIC: the oblique type-I vorticity is a candidate rotational mode only, its Einstein-constraint compatibility (which forces an off-diagonal homogeneous metric) is the dynamics-phase question; the n-frame Frobenius argument and hence the T3 lower-endpoint W^2 withdrawal for the slice-normal comparator congruence STAND; items 8-10 live in egs3_king_ellis_dynamics; no data or inference claim",
+  "seal": "egs3.king_ellis_frame",
+  "status": "PASS",
+  "structure_constants": {
+    "class_b_condition_a_dot_n": "0 (n^ab = 0)",
+    "commutators_match_type_v": true,
+    "jacobi": true,
+    "n_ab_zero": true,
+    "type_i_limit": "a -> 0: all commutators vanish (abelian, type I)"
+  },
+  "theorem_id": "KE-FRAME/KE-CONSTR/KE-OBS"
+}

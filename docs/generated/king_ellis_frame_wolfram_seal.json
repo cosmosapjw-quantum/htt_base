@@ -1,0 +1,45 @@
+{
+  "anchors": {
+    "aligned": {
+      "A2": "841/12544",
+      "omega2": "0",
+      "sigma2": "34662601/8573040000",
+      "theta": "68851/75600"
+    },
+    "normal": {
+      "A2": "0",
+      "omega2": "0",
+      "sigma2": "27721/1215000",
+      "theta": "361/900"
+    },
+    "transverse": {
+      "A2": "1754281/36578304",
+      "omega2": "4225/165888",
+      "sigma2": "7090796491/137168640000",
+      "theta": "37351/75600"
+    }
+  },
+  "checks": {
+    "commutators_match_type_v": true,
+    "cross_engine_anchor_match_sympy": true,
+    "gauss_i_oblique": true,
+    "gauss_v_aligned": true,
+    "gauss_v_normal": true,
+    "gauss_v_oblique": true,
+    "gauss_v_transverse": true,
+    "jacobi": true,
+    "ke_obs_closed_form": true,
+    "omega_aligned_zero": true,
+    "omega_normal_zero_frobenius": true,
+    "q_n_magnitude": true,
+    "rho_n_form": true,
+    "type_i_oblique_form": true,
+    "type_i_oblique_rotates": true,
+    "u_frame_trivial": true
+  },
+  "closed_form": "omega_ab omega^ab = (S^2 Sin[phi]^2/2)(S Cos[phi](H1-H2) - Sqrt[1+S^2] c/a1)^2",
+  "gauss_identity": "R3 = 2 G_uu - (2/3) Theta^2 + sigma^2 + omega^2 (projection-definition as stated)",
+  "schema": "htt.egs3.ke_frame.wolfram.v1",
+  "status": "PASS",
+  "wolfram_version": "\"15.0.0 for Linux x86 (64-bit) (May 26, 2026)\""
+}

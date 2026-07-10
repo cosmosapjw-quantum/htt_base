@@ -31,6 +31,7 @@ for p in (REPO / "htt/htt", REPO / "htt", REPO):
 
 OUT_DIR = REPO / "docs/generated"
 SAGE_SCRIPT = REPO / "sage/egs3_v9_fractional.sage"
+KE_WOLFRAM_SCRIPT = REPO / "wolfram/ke_rotating_congruence.wls"
 
 
 def sage_fractional_seal() -> tuple[dict, int]:
@@ -57,6 +58,41 @@ def sage_fractional_seal() -> tuple[dict, int]:
     ok = bool(checks) and all(v is True for v in checks.values())
     seal["status"] = "PASS" if (ok and seal.get("status") == "PASS") else "FAIL"
     return seal, (0 if seal["status"] == "PASS" else 1)
+
+
+def wolfram_ke_frame_seal(sympy_anchors: dict | None) -> tuple[dict, int]:
+    """Second-engine lane for the KE frame seal: run the independent Wolfram
+    computation and enforce cross-engine equality of the exact rational
+    anchors against the SymPy seal. Missing wolframscript is a registered
+    blocker (exit 2), never silently substituted."""
+    exe = shutil.which("wolframscript")
+    if not exe or not KE_WOLFRAM_SCRIPT.exists():
+        return {"status": "BLOCKED_WOLFRAM_UNAVAILABLE",
+                "detail": "wolframscript not on PATH or "
+                          "wolfram/ke_rotating_congruence.wls missing"}, 2
+    code = (f'Print[ExportString[Get["{KE_WOLFRAM_SCRIPT}"], "RawJSON", '
+            f'"Compact"->True]]')
+    try:
+        run = subprocess.run([exe, "-code", code], text=True,
+                             capture_output=True, check=True, timeout=1200)
+    except (OSError, subprocess.CalledProcessError,
+            subprocess.TimeoutExpired) as exc:
+        detail = getattr(exc, "stderr", "") or repr(exc)
+        return {"status": "BLOCKED_WOLFRAM_RUN_FAILED",
+                "detail": str(detail)[-2000:]}, 2
+    raw = run.stdout
+    span = raw[raw.find("{"):raw.rfind("}") + 1]
+    if not span:
+        return {"status": "BLOCKED_WOLFRAM_NO_OUTPUT",
+                "stdout": raw[-1000:]}, 2
+    seal = json.loads(span)
+    checks = dict(seal.get("checks", {}))
+    cross = bool(sympy_anchors) and seal.get("anchors") == sympy_anchors
+    checks["cross_engine_anchor_match_sympy"] = cross
+    seal["checks"] = checks
+    ok = checks and all(v is True for v in checks.values())
+    seal["status"] = "PASS" if ok else "FAIL"
+    return seal, (0 if ok else 1)
 
 
 def build_seals() -> tuple[dict[str, dict], int]:
@@ -110,6 +146,24 @@ def build_seals() -> tuple[dict[str, dict], int]:
             worst = max(worst, 1)
     except ImportError:
         pass
+    # --- REV-R181: King-Ellis frame (items 1-7) + Wolfram second engine ---
+    sympy_anchors = None
+    try:
+        from htt.obsstat.egs3_king_ellis_frame import king_ellis_frame_seal
+        seal = king_ellis_frame_seal()
+        payloads["king_ellis_frame_seal.json"] = seal
+        sympy_anchors = seal["rational_point_anchor"]["values"]
+        if seal.get("status") != "PASS":
+            worst = max(worst, 1)
+    except ImportError:
+        pass
+    if sympy_anchors is not None:
+        wseal, code = wolfram_ke_frame_seal(sympy_anchors)
+        payloads["king_ellis_frame_wolfram_seal.json"] = wseal
+        worst = max(worst, code if code != 2 else 0)
+        if code == 2:
+            print(f"REGISTERED BLOCKER: {wseal.get('status')}",
+                  file=sys.stderr)
 
     return payloads, worst
 
