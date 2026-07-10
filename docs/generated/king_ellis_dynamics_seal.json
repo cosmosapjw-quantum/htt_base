@@ -1,0 +1,152 @@
+{
+  "aligned_uframe_trajectory": {
+    "holds_at_grid_accuracy": true,
+    "theta_u_final": 1.5360801708875031,
+    "theta_u_initial": 3.248160600377702,
+    "u_frame_energy_conservation_max_rel_residual": 9.381918026184098e-05
+  },
+  "items_discharged": "8-10 of the ten-item rotating-congruence program (t3_king_ellis.yaml)",
+  "net_verdict": "a genuine rotating perfect-fluid development EXISTS at Omega_k > 0 (type V, single oblique tilt: omega^2[u] > 0 maintained under monitored constraints); at Omega_k = 0 it is DOUBLY obstructed -- the single stream by the momentum constraint (G_ti = 0 identically) and the antipodal pair by dynamical irrotationality (Killing + Euler conserve the tilt-covector direction; omega^2 = 0 along the pair development to machine precision). The T3 lower-endpoint W^2 withdrawal is thereby upgraded from constraint-level to DYNAMICAL within this class: only inhomogeneous or non-perfect-fluid rotational modes remain",
+  "radiation_center_manifold": {
+    "dust": {
+      "close_to_minus_one": true,
+      "mean_linear_rate": -0.9977846847419903
+    },
+    "radiation": {
+      "matches_quadratic_drift": true,
+      "max_rel_dev_from_two_thirds_beta_sq": 0.08166449721332952
+    }
+  },
+  "raychaudhuri_identity": {
+    "alpha_sigma2": "-1",
+    "beta_omega2": "1",
+    "checks": {
+      "identity_symbolic_bianchi_i_oblique": true,
+      "identity_symbolic_bianchi_v_aligned": true,
+      "identity_symbolic_bianchi_v_oblique": true,
+      "sixth_point_consistent": true
+    },
+    "delta_divA": "1",
+    "epsilon_Ruu": "-1",
+    "gamma_A2": "0",
+    "identity": "u(Theta) = -Theta^2/3 + (-1) sigma_ab sigma^ab + (1) omega_ab omega^ab + (0) A_a A^a + (1) div A + (-1) R_ab u^a u^b"
+  },
+  "rotating_development_bianchi_i_antipodal_pair": {
+    "curvature_class": "bianchi_i",
+    "e_folds_volume": 0.5297961749029575,
+    "initial_constraint_residuals": [
+      5.551115123125783e-17,
+      0.0,
+      0.0
+    ],
+    "max_constraint_residuals": [
+      1.1357564888569982e-10,
+      0.0,
+      0.0
+    ],
+    "nonvacuum_throughout": true,
+    "omega2_final": 0.0,
+    "omega2_initial": 1.8142398965306442e-35,
+    "omega2_positive_throughout": false,
+    "preserved_at_tolerance": true,
+    "streams": "antipodal_pair",
+    "tilt_final": [
+      0.021502756885268145,
+      0.021375691739682262
+    ],
+    "tilt_initial": [
+      0.03,
+      0.04
+    ],
+    "w": 0.0
+  },
+  "rotating_development_bianchi_v_dust": {
+    "curvature_class": "bianchi_v",
+    "e_folds_volume": 1.4387081326794025,
+    "initial_constraint_residuals": [
+      7.638334409421077e-14,
+      2.563921297493721e-15,
+      0.0
+    ],
+    "max_constraint_residuals": [
+      1.544965485706331e-10,
+      6.481127006602305e-11,
+      7.91339123542385e-12
+    ],
+    "nonvacuum_throughout": true,
+    "omega2_final": 3.5249277580257906e-05,
+    "omega2_initial": 0.0010369100081756362,
+    "omega2_positive_throughout": true,
+    "preserved_at_tolerance": true,
+    "streams": "single",
+    "tilt_final": [
+      0.007341633863496921,
+      0.00580648829180526
+    ],
+    "tilt_initial": [
+      0.03,
+      0.04
+    ],
+    "w": 0.0
+  },
+  "rotating_development_bianchi_v_radiation": {
+    "curvature_class": "bianchi_v",
+    "e_folds_volume": 1.4298582067527559,
+    "initial_constraint_residuals": [
+      7.993605777301127e-14,
+      4.579669976578771e-16,
+      1.734723475976807e-18
+    ],
+    "max_constraint_residuals": [
+      1.0368669671629466e-10,
+      2.987473463056389e-11,
+      5.5394330310645e-12
+    ],
+    "nonvacuum_throughout": true,
+    "omega2_final": 0.00015161699680006247,
+    "omega2_initial": 0.001036910008175637,
+    "omega2_positive_throughout": true,
+    "preserved_at_tolerance": true,
+    "streams": "single",
+    "tilt_final": [
+      0.01552335325530814,
+      0.012043826902774873
+    ],
+    "tilt_initial": [
+      0.03,
+      0.04
+    ],
+    "w": 0.3333333333333333
+  },
+  "scope_not_claimed": "the comparator W^2 is defined on the SLICE NORMAL, which remains hypersurface-orthogonal (Frobenius), so the T3 lower-endpoint W^2 withdrawal STANDS and no value of the withdrawn W^2 = 4/100 is asserted; the type-V rotating development is matter-congruence vorticity at Omega_k > 0, NOT a lower-endpoint witness; re-attributing W^2 to the matter congruence is a registered interpretive question; NOT a Bianchi-class sky claim; no data or inference claim",
+  "seal": "egs3.king_ellis_dynamics",
+  "status": "PASS",
+  "theorem_id": "KE-DYN",
+  "type_i_dynamical_irrotationality": {
+    "analytic_reason": "translational Killing vectors + barotropic Euler with spatially homogeneous pressure: A_i is parallel to u_i, so the tilt covector direction never rotates",
+    "covector_direction_conserved": true,
+    "max_rel_bilinear_residual": 9.839130755395867e-13,
+    "w": 0.3333333333333333
+  },
+  "type_i_single_stream_obstruction": {
+    "consequence": "momentum constraint forces T_ti = 0: a single group-invariant tilted perfect fluid is EXCLUDED at Omega_k = 0 (tilt flux cannot be supported); the antipodal pair cancels T_ti exactly and is NOT excluded",
+    "g_tx_identically_zero": true,
+    "g_ty_identically_zero": true,
+    "obstruction_established": true
+  },
+  "uframe_conservation": {
+    "all_exact": true,
+    "bianchi_i_oblique": {
+      "energy_identity": true,
+      "euler_identity": true
+    },
+    "bianchi_v_oblique": {
+      "energy_identity": true,
+      "euler_identity": true
+    },
+    "bianchi_v_transverse": {
+      "energy_identity": true,
+      "euler_identity": true
+    }
+  }
+}
