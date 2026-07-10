@@ -116,6 +116,7 @@ REQUIRED_ARTIFACTS = [
     "docs/generated/teff_statistical_v9_seal.json",
     "docs/generated/mes_branch_registry_seal.json",
     "docs/generated/k5_cf4_identified_interval_card_v9.json",
+    "docs/generated/bianchi_v_dynamics_seal.json",
 ]
 
 # v7 strengthened-theorem seals surfaced in the Fifth-Revision response section.
@@ -217,6 +218,7 @@ SOURCE_FILES = [
     "scripts/make_data_proxy_coordinates_figure.py",
     "sage/egs3_v9_fractional.sage",
     "scripts/run_egs3_v9_seals.py",
+    "htt/obsstat/egs3_bianchi_v_dynamics.py",
 ]
 
 
@@ -1679,8 +1681,41 @@ def v9_response_section() -> str:
         r"replication counts, data-generating process, and acceptance criteria.}",
         r"\end{center}",
         r"",
+        r"\subsection{BV-DYN: tilted Bianchi V dynamics (stretch item discharged)}",
+        _bv_dyn_paragraph(),
+        r"",
     ]
     return "\n".join(lines)
+
+
+def _bv_dyn_paragraph() -> str:
+    d = _seal("bianchi_v_dynamics_seal.json")
+    dust = d.get("constraint_preservation_dust", {})
+    rad = d.get("constraint_preservation_radiation", {})
+    align = d.get("p5_alignment_on_trajectory", {})
+    return (
+        rf"The registered F2 stretch item is executed: the tilted-LRS Bianchi~V "
+        rf"field equations are derived first-principles in SymPy from "
+        rf"$ds^2=-dt^2+a_1^2dx^2+a_2^2e^{{2x}}(dy^2+dz^2)$ with a tilted perfect "
+        rf"fluid (no literature system is transcribed), the evolution system "
+        rf"$\{{E_{{xx}},E_{{yy}},\nabla_\mu T^{{\mu t}},\nabla_\mu T^{{\mu x}}\}}$ "
+        rf"is integrated from exact non-vacuum constraint-satisfying initial data "
+        rf"(the vacuum/Milne branch, on which preservation is vacuous, is "
+        rf"excluded by declaring $\rho_0>0$), and the Gauss and momentum "
+        rf"constraints are MONITORED, never imposed.  Residuals stay below "
+        rf"${dust.get('max_gauss_residual', 0):.1e}$ (dust) and "
+        rf"${rad.get('max_gauss_residual', 0):.1e}$ (radiation) over "
+        rf"$\sim{dust.get('e_folds_a2', 0)}$ e-folds; the tilt decays "
+        rf"($\beta: {dust.get('beta0', 0)}\to{dust.get('beta_final', 0):.4f}$); and "
+        rf"along the trajectories the expansion-normalized variables satisfy the "
+        rf"exact-rapidity P5 relation to "
+        rf"$\sim{max(align.get('trajectory_matches_exact_constraint_rel', [0])):.1e}$ "
+        rf"relative, with the leading-formula error scaling as $\beta^2$ (log-log "
+        rf"slope ${align.get('loglog_slope', 0)}$).  The F2 lane is thereby a "
+        rf"dynamics seal.  Scope unchanged: this is NOT the King--Ellis "
+        rf"rotating-congruence item and NOT a dynamical realization of the T3 "
+        rf"endpoints (the upper-endpoint witness uses a transverse-shear "
+        rf"configuration).")
 
 
 def build_tex(artifacts: dict[str, dict]) -> str:
@@ -2704,7 +2739,7 @@ K1 requires Planck E2E or PR4/NPIPE simulation support to replace an idealized l
 
 REGISTERED REQUIREMENT (M5\('\)): when the K1 covariance is ESTIMATED from a finite simulation ensemble of size \(N_{\rm sim}\), its inverse is a biased precision estimate; before any \(\chi^2\), whitening, or e-value calibration claim, the lane must either apply the Hartlap correction factor \((N_{\rm sim}-m-2)/(N_{\rm sim}-1)\) for \(m\) data dimensions, or replace the Gaussian likelihood by the Sellentin--Heavens multivariate-\(t\) marginalization (external-context citations, \S2.3).  With the expected \(N_{\rm sim}\sim300\)--\(600\) E2E realizations and low-\(\ell\) data dimensions this is a percent-level but REGISTERED effect: omitting it silently inflates the apparent precision of the null calibration.
 
-Registered stretch item: an expansion-normalized tilted-LRS Bianchi~V EVOLUTION check (integrating the Hewitt--Wainwright-type system and verifying that trajectories respect the P5 constraint en route) would upgrade the F2 constraint-algebra seal to a dynamics seal; it is registered here, not claimed.
+The formerly registered stretch item is now DISCHARGED (BV-DYN, \code{bianchi_v_dynamics_seal.json}; \S{}Seventh-Revision response): the tilted-LRS Bianchi~V system, derived first-principles in SymPy from the metric ansatz, is integrated with the Gauss and momentum constraints MONITORED rather than imposed; on non-vacuum dust and radiation trajectories both residuals stay below $3.5\times10^{-11}$ over $\sim$1.1 e-folds, and the expansion-normalized variables satisfy the exact-rapidity P5 relation to $\sim2\times10^{-10}$ with the leading-formula error scaling as $\beta^2$ (slope $2.0006$) ALONG the dynamics --- the F2 lane is thereby a dynamics seal, not only constraint algebra.
 
 \subsection{Native low-\(\ell\) handoff}
 The solver-design documents are contract sources, not result sources.  A future native route must supply harmonic \(a_{\ell m}^{T,E,B}\), deterministic/stochastic/local-boost output separation, residual packs, transfer provenance, covariance metadata, and atlas/equivalence information before detailed geometry-side inference can be entertained.

@@ -95,6 +95,14 @@ def build_seals() -> tuple[dict[str, dict], int]:
     except ImportError:
         pass
     try:
+        from htt.obsstat.egs3_bianchi_v_dynamics import bianchi_v_dynamics_seal
+        seal = bianchi_v_dynamics_seal()
+        payloads["bianchi_v_dynamics_seal.json"] = seal
+        if seal.get("status") != "PASS":
+            worst = max(worst, 1)
+    except ImportError:
+        pass
+    try:
         from htt.obsstat.egs3_mes_branch_registry import mes_branch_registry_seal
         seal = mes_branch_registry_seal()
         payloads["mes_branch_registry_seal.json"] = seal

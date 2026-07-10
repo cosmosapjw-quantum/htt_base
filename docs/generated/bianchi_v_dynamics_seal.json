@@ -1,0 +1,69 @@
+{
+  "constraint_preservation_dust": {
+    "beta0": 0.05,
+    "beta_final": 0.016409139261787685,
+    "e_folds_a2": 1.1177,
+    "initial_residuals": [
+      8.881784197001252e-16,
+      0.0
+    ],
+    "max_gauss_residual": 3.4283687000424834e-11,
+    "max_momentum_residual": 1.5437516866710595e-12,
+    "nonvacuum_throughout": true,
+    "preserved_at_tolerance": true,
+    "rho_final": 0.009871540828138858,
+    "rho_initial": 0.3,
+    "shear_initial_h1_minus_h2": -0.007512506251488249,
+    "t_end": 2.0,
+    "tilt_decays": true,
+    "w": 0.0
+  },
+  "constraint_preservation_radiation": {
+    "beta0": 0.05,
+    "beta_final": 0.05203181912058866,
+    "e_folds_a2": 1.1115,
+    "initial_residuals": [
+      0.0,
+      0.0
+    ],
+    "max_gauss_residual": 2.4309443347192428e-11,
+    "max_momentum_residual": 1.796618540621136e-12,
+    "nonvacuum_throughout": true,
+    "preserved_at_tolerance": true,
+    "rho_final": 0.0030493152147228666,
+    "rho_initial": 0.3,
+    "shear_initial_h1_minus_h2": -0.010016675001984332,
+    "t_end": 2.0,
+    "tilt_decays": false,
+    "w": 0.3333333333333333
+  },
+  "derivation": "first-principles SymPy Einstein tensor for ds^2=-dt^2+a1^2 dx^2+a2^2 e^{2x}(dy^2+dz^2) with a tilted perfect fluid; evolution = {E_xx, E_yy, energy conservation, x-momentum conservation}; constraints E_tt, E_tx MONITORED, never imposed",
+  "discharges": "the v9 report's registered stretch item: tilted-LRS Bianchi V EVOLUTION check upgrading the F2 constraint-algebra seal to a dynamics seal",
+  "p5_alignment_on_trajectory": {
+    "beta_sq_scaling_on_trajectory": true,
+    "betas": [
+      0.001,
+      0.003,
+      0.01,
+      0.03
+    ],
+    "leading_vs_exact_rel_errors": [
+      3.2240021077804825e-07,
+      2.9019944767445384e-06,
+      3.225966331365381e-05,
+      0.0002907310380430488
+    ],
+    "loglog_slope": 2.0006,
+    "trajectory_matches_exact_constraint_rel": [
+      1.4950270556850648e-10,
+      1.7121672015805547e-10,
+      1.6944605449510606e-10,
+      1.70846895579824e-10
+    ],
+    "trajectory_satisfies_exact_relation": true
+  },
+  "scope_not_claimed": "NOT the King-Ellis rotating-congruence item; NOT a dynamical realization of the T3 endpoints (transverse-shear configuration); no data, signal-discovery, Bianchi-class-identification-of-the-sky, or probabilistic-inference claim",
+  "seal": "egs3.bianchi_v_dynamics",
+  "status": "PASS",
+  "theorem_id": "BV-DYN"
+}

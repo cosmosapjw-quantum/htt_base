@@ -699,6 +699,24 @@ entries:
     sources:
       - htt/obsstat/egs3_mes_branch_registry.py
       - docs/generated/mes_branch_registry_seal.json
+  - id: BV-DYN
+    title: Tilted-LRS Bianchi V evolution seal (constraint preservation monitored on non-vacuum trajectories; P5 exact-rapidity relation holds dynamically)
+    owner: BASS/OBSSTAT
+    status: ACTIVE
+    landing: rev-r178
+    claim_tier: C2
+    body_section: v9_response
+    note: >-
+      Discharges the registered F2 stretch item. First-principles SymPy
+      derivation (no literature transcription); Gauss+momentum residuals
+      monitored (never imposed) stay < 3.5e-11 over ~1.1 e-folds for dust
+      and radiation; trajectory Sigma_+ satisfies the exact-rapidity P5
+      relation to ~1.7e-10 and the leading-formula error scales as beta^2
+      (slope 2.0006) on dynamical trajectories. NOT the King-Ellis
+      rotating-congruence item; NOT a dynamical T3-endpoint realization.
+    sources:
+      - htt/obsstat/egs3_bianchi_v_dynamics.py
+      - docs/generated/bianchi_v_dynamics_seal.json
   - id: K5-CARD-v2
     title: K5/CF4 identified-interval card v9 (three labeled W^2 ceiling branches x two curvature branches)
     owner: OBSSTAT/MIO
