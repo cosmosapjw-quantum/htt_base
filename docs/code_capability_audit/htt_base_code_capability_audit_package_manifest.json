@@ -17,15 +17,15 @@
     {
       "archive_path": "02_CODE_MAP.md",
       "group": "guide",
-      "sha256": "sha256:be5bf14857396df3f94dec91b73265a1b8e205c879abdf9822403828c461f699",
+      "sha256": "sha256:aec5cf101e8a23349d23cce7b7751742e240cf30df636fcce8b4204a354b270f",
       "size_bytes": 2451,
       "source_path": "virtual:02_CODE_MAP.md"
     },
     {
       "archive_path": "03_ENTRY_POINTS.md",
       "group": "guide",
-      "sha256": "sha256:e13af2730c74e3c1950c83cc6a4b5dad5235b2db6a237499e1d63d79d271596d",
-      "size_bytes": 17235,
+      "sha256": "sha256:f771aa4966468aa8331a0e1ea66eab8c630702b6c32d1923168f3b54438add40",
+      "size_bytes": 17342,
       "source_path": "virtual:03_ENTRY_POINTS.md"
     },
     {
@@ -3195,8 +3195,8 @@
     {
       "archive_path": "code_capability_audit/htt/obsstat/egs3_nonlinear_realization.py",
       "group": "library_source",
-      "sha256": "sha256:7127f2fe1a6818ac50b6f6333e01eba8c928adc31683ca5b38e3bd94bf640ad5",
-      "size_bytes": 10131,
+      "sha256": "sha256:adf839ec1000bb7dd27beec144fac6e3e4aec34d53e217096dd4c9f4eae44795",
+      "size_bytes": 12277,
       "source_path": "htt/obsstat/egs3_nonlinear_realization.py"
     },
     {
@@ -3552,8 +3552,8 @@
     {
       "archive_path": "code_capability_audit/htt/teff/representative.py",
       "group": "library_source",
-      "sha256": "sha256:a68c451265ef901621790ef54e63eee3a62356994c16d4231ef0245c960c401f",
-      "size_bytes": 12195,
+      "sha256": "sha256:1a6c787101b7e9383d9a2c828cf4198952ed10ae7fafe77385d1cf048c507050",
+      "size_bytes": 13052,
       "source_path": "htt/teff/representative.py"
     },
     {
@@ -4192,6 +4192,13 @@
       "sha256": "sha256:38dc5716c2004cdbade9b3dd33cbf76c2843fc978cc98a794350b39d20ac7388",
       "size_bytes": 159679,
       "source_path": "scripts/build_external_audit_report_v7.py"
+    },
+    {
+      "archive_path": "code_capability_audit/scripts/build_external_audit_report_v8.py",
+      "group": "science_driver",
+      "sha256": "sha256:09f902ef06b21a0df65ad27e5f7365c5a0b2d2d30dc01e117ca51d326a6c638d",
+      "size_bytes": 171006,
+      "source_path": "scripts/build_external_audit_report_v8.py"
     },
     {
       "archive_path": "code_capability_audit/scripts/build_pr04_research_audit_package.py",
@@ -5965,7 +5972,7 @@
       "source_path": "src/teff/theta4_bridge_v2.rs"
     }
   ],
-  "archive_entry_count": 852,
+  "archive_entry_count": 853,
   "artifact_id": "code_capability_audit_package",
   "artifact_path": "docs/code_capability_audit/htt_base_code_capability_audit_package.zip",
   "caveats": [
@@ -5976,13 +5983,13 @@
     "Inclusion of code does not imply a validated science result; see the result/claim packages for claim tiers."
   ],
   "claim_tier": "diagnostic_only",
-  "code_version": "bf0d756+dirty",
-  "config_hash": "sha256:e5e8eff8beadc7abe536425694b1114ca948bf48d1dc104fc706e89cf0aa4c53",
+  "code_version": "a37a99e+dirty",
+  "config_hash": "sha256:c43f031b7c43a481159763accf1722edf27bfa0edde4fb1a808e1d8e715020ec",
   "created_by": "scripts/build_code_capability_audit_package.py",
   "failed_gates": [],
   "family_identification": false,
   "generating_command": "python scripts/build_code_capability_audit_package.py",
-  "git_commit_or_worktree_state": "bf0d756+dirty",
+  "git_commit_or_worktree_state": "a37a99e+dirty",
   "group_counts": {
     "audit_prompt": 1,
     "config": 1,
@@ -5993,15 +6000,15 @@
     "library_source": 486,
     "package_readme": 1,
     "rust_solver_source": 165,
-    "science_driver": 95,
+    "science_driver": 96,
     "support": 9
   },
   "implementation_scope": "common",
   "input_hashes": [
     "virtual:00_README.md:sha256:538dc2b2dc67e18d823a1ced405841a0555cd43707381a2566b0b0dc7ca1e748",
     "virtual:01_ARCHITECTURE_GUIDE.md:sha256:a45976a887afc1ca75512730af173504909d960521f2e58888128af406658a34",
-    "virtual:02_CODE_MAP.md:sha256:be5bf14857396df3f94dec91b73265a1b8e205c879abdf9822403828c461f699",
-    "virtual:03_ENTRY_POINTS.md:sha256:e13af2730c74e3c1950c83cc6a4b5dad5235b2db6a237499e1d63d79d271596d",
+    "virtual:02_CODE_MAP.md:sha256:aec5cf101e8a23349d23cce7b7751742e240cf30df636fcce8b4204a354b270f",
+    "virtual:03_ENTRY_POINTS.md:sha256:f771aa4966468aa8331a0e1ea66eab8c630702b6c32d1923168f3b54438add40",
     "virtual:04_DATA_ACCESS.md:sha256:8bd06a61c7031be5932f52f3fc5b19116446ee23b66a9097131e9399e1947502",
     "virtual:AUDIT_PROMPT.md:sha256:1808d0e0e7c0c82f3b418524209a3a46d7d5ebdb1d2fe2ba7d0a4e43953fa6ff",
     "CLAUDE.md:sha256:3c1c76f0bf56586861f24a9e672f2164c4a063902962b7b1e382b3ee93dd8310",
@@ -6454,7 +6461,7 @@
     "htt/obsstat/egs3_measured_response.py:sha256:b33d5239883d27807ffea01854d054d5ae8de67a65047cd13e2e6122d46b3514",
     "htt/obsstat/egs3_mes_provenance.py:sha256:03bc934eb75fb77141e311d344e3ce633bd92fe1772f006d76e0435829a9afef",
     "htt/obsstat/egs3_mes_rederivation.py:sha256:bb74c8c17f83e6a79c76c290db5edf6fe71403d83bc91a81809af2a3d167fa4f",
-    "htt/obsstat/egs3_nonlinear_realization.py:sha256:7127f2fe1a6818ac50b6f6333e01eba8c928adc31683ca5b38e3bd94bf640ad5",
+    "htt/obsstat/egs3_nonlinear_realization.py:sha256:adf839ec1000bb7dd27beec144fac6e3e4aec34d53e217096dd4c9f4eae44795",
     "htt/obsstat/egs3_parent_identity.py:sha256:8c1a35ad3a2e166a27d8b540223d427f02f40c18f604afccbda7c6581a7a6862",
     "htt/obsstat/egs3_prior_exposure.py:sha256:1f2b80b08e40a8b14462602ead3f8c9edb50d56f0f64b71133433c5fe0ef473e",
     "htt/obsstat/egs3_psd_cone.py:sha256:2019fad6e61d50f7036fb73e9da6cf3797eb9e6d25b626fea134afb833ef9eea",
@@ -6505,7 +6512,7 @@
     "htt/src/common/theorem_registry.py:sha256:a83a86c952fe2bf4bda78a8fb0868231b6c302a76f3e7a4679b3bdd4fdc2e43d",
     "htt/src/common/transfer_registry.py:sha256:d22beea71bc0e9ffe308c2ae1c9424017c2274aedc7c791d8b432042f5175554",
     "htt/teff/__init__.py:sha256:3e4004552afbac346c51d2b267dccf6bf561f6c92226286e1affcf4510498606",
-    "htt/teff/representative.py:sha256:a68c451265ef901621790ef54e63eee3a62356994c16d4231ef0245c960c401f",
+    "htt/teff/representative.py:sha256:1a6c787101b7e9383d9a2c828cf4198952ed10ae7fafe77385d1cf048c507050",
     "htt/tsc/__init__.py:sha256:5c698128d88e74c6d0001a0d70e0ddd75c9db864e33bcfc9c6fe255be3e33a4a",
     "htt/tsc/adapters/__init__.py:sha256:398748a870787af68e1cd3057f666ebc8ee45082fb2ade685fd0971b9f82b8a4",
     "htt/tsc/adapters/bass_runtime.py:sha256:2808cbeb6977cb18348f5a26722ed0368ceeea5c6ac1491631be9d6d444ddec9",
@@ -6597,6 +6604,7 @@
     "scripts/build_external_audit_report_v5.py:sha256:de6cccac6728e12e69a9a4d2c8c9728f31ceab8b94856024bdeeb5d8ac531bf7",
     "scripts/build_external_audit_report_v6.py:sha256:f573df5462590cba60d6d5665e9ee51502af3434da192a2ae635bb0892e11819",
     "scripts/build_external_audit_report_v7.py:sha256:38dc5716c2004cdbade9b3dd33cbf76c2843fc978cc98a794350b39d20ac7388",
+    "scripts/build_external_audit_report_v8.py:sha256:09f902ef06b21a0df65ad27e5f7365c5a0b2d2d30dc01e117ca51d326a6c638d",
     "scripts/build_pr04_research_audit_package.py:sha256:0abc123ec9d3b385977798cf81f8aeb7a5d58b969dcfdad4df7f7afec3e1ce73",
     "scripts/build_research_evaluation_package.py:sha256:613ba3fac748c0ad3e3c81739ba209f8a3f443c722b00883bccbccfc94f1b056",
     "scripts/build_v6_compact_data_analysis.py:sha256:7dc9fac41abb0699c5bbe618603b2238e166baae615e523e103776060e18fbea",

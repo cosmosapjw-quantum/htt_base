@@ -7,6 +7,62 @@
 
 ## [Unreleased]
 
+### v8 (Sixth Revision) external-audit report: primary-source rederivation, exact realization, mathlib, Teff representative lane (rev-r155..r158, 2026-07-10)
+
+Closed four items the fifth revision left registered-external or deferred, using the
+arXiv primary sources and exact symbolic algebra (no new external data), revived the
+deprecated Teff/TSC lane, and ran the physics/stat adversarial pass that never landed in v7.
+
+- **M4 resolved (rev-r155).** Web-sourced the MES 1995 primary papers (MESa,
+  `arXiv:astro-ph/9501016` = PRD 51,1525; companion `astro-ph/9510126`; archived under
+  `docs/audits/mes_primary_sources/`). `B_sigma=(5/3,3,3/7)` is now **rederived bit-exact**
+  (SymPy Fraction + symbolic identity) from MESa raw eq (51) via C1 (spatial<=time-deriv) +
+  C2 (`e*_L~e_L/3`); the extracted leading rational `3/8` is a pdftotext digit-swap, only
+  `8/3` closes to eq (59)'s `3*e2`. The same machinery reproduces MESa eq (60)
+  `omega=(10/3,2/15,0)`, which differs from the registered `(3/4,2,2/7)`: those are MESb
+  (PRD 51,5942, print-only) Paper-II values under the relaxed non-geodesic assumption set,
+  so they stay `primary_sourced_not_rederivable` with the documented Paper-I/II lineage. New
+  `htt/obsstat/egs3_mes_rederivation.py`, `mes_rederivation_seal.json`, gate (12); ticket
+  -> `partially_resolved`. No coefficient value changes; `W2_max=1.309e-6` + x_C bit-identical.
+- **Non-data deferrals cleared (rev-r156).** (a) **T3-full**: both identified-interval
+  ENDPOINTS realized by exact homogeneous initial-data configs (Bianchi I lower; Bianchi V
+  upper with shear transverse to the a-vector + antipodal tilt) with **exactly-zero**
+  Gauss+momentum constraint residuals -- exact endpoint attainability, verified on SymPy +
+  Wolfram/xAct (`egs3_nonlinear_realization.py`, `v8_t3_king_ellis.wls`). (f) **mathlib**:
+  separate `formal_mathlib/` package (mathlib v4.31.0, `lake build` 8560 jobs) proving the
+  forall-parameter T1'/DL1/T2' generalizations over the rationals; core `native_decide` lane
+  untouched. (e) **K5 Omega_k**: leading-order structural null already certified
+  (measured_response_seal); finite anisotropic-curvature ceiling documented as blocked on the
+  higher-order re-opening transfer (not a download). Tickets + `.lake` (~7GB) gitignored.
+- **TSC revival + Teff representative theory (rev-r157).** Applied the new draft
+  (`PRE_MANUSCRIPT_STAGE2B5_v0_9_1.pdf`, "Maximum-Entropy Effective-Temperature
+  Representatives") as an **additive active lane**: new active `Owner.TEFF` +
+  `BundleKind.TEFF_REPRESENTATIVE` at `diagnostic_only`, distinct from the frozen
+  `TSC_LEGACY` (freeze + 3 guard tests untouched). New `htt/teff/` implements the exact core:
+  radial constants `a_xi=(2, 2 zeta(4), (7/4) zeta(4))`, `(n,k)` insertion fingerprints
+  `c_p=(p-4)/2^{p+1}` (`c4=0` anchor), SO(3) Gram PSD + exact L^2 staircase, and two-temperature
+  ratios `R4=1`, `R3=1-(3/2)s^2`, `R5=1+(5/2)s^2` (equal-information nonidentifiability).
+  Verified on SymPy + Wolfram (independently `a_BE=pi^4/45`, `a_FD=7pi^4/360`). Gate (9),
+  `make teff-gates`/`v8-seals`/`v8-wolfram`; CLAIM_LEDGER +3; nonclaims ticket.
+- **Adversarial verification + honesty fixes (rev-r158).** 7 independent skeptics prompted to
+  refute every v7+v8 theorem: **5 CONFIRMED, 2 PLAUSIBLE, 0 REFUTED**, all math correct
+  (`v8_adversarial_verification.json`). Fixes: reframed T3-full's "interval exactly sharp /
+  full nonlinear" overclaim to exact endpoint attainability (interval-sharpness stays at the
+  convex P31 level; W^2/coefficient/Gauss caveats disclosed); relabeled the Teff Gram/staircase
+  seals ILLUSTRATIVE; softened the a_xi docstring; documented a v7 T2' latent unexercised
+  quotient-path sign bug (ticket) rather than editing the frozen v7 source.
+- **v8 report (rev-r158).** `scripts/build_external_audit_report_v8.py` ->
+  `external_audit_research_report_20260710_v8/` (**47-page PDF** + zip) + root PDF, with a new
+  Sixth-Revision response section rendered from the v8 seals + verification summary; `--check`
+  byte-stable, `check_claim_language` clean. v5/v6/v6.1/v7 packages byte-frozen.
+- **Validation.** `make egs3-gates` 163 -> 183 (+ `make teff-gates` 9, a separate lane);
+  `pytest tests/contracts` 1 pre-existing
+  failure (cf4pp network-blocked) vs 2 at baseline (regenerated pr04-research + code-capability
+  audit packages). Diagnostic-only throughout; no data/detection/family/native-solver/posterior
+  claim. Deferred (still ticketed): full nonlinear King-Ellis dynamical realization, MESb
+  print-scan value-pin, K1 real E2E + DESI randoms + K6 (1TB downloads), K5 higher-order
+  Omega_k transfer, v7 T2' latent-path fix (next re-freeze cycle).
+
 ### v7 (Fifth Revision) external-audit report: strengthened theorems + multi-engine seals (rev-r148..r153, 2026-07-09/10)
 
 Answered the four 2026-07-09 external review bundles (critic + referee F1-F3/M1-M10/m1-m12 +
