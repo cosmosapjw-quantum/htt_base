@@ -1,0 +1,33 @@
+{
+  "seal": "teff.transport_application",
+  "status": "PASS",
+  "owner": "TEFF",
+  "claim_tier": "diagnostic_only",
+  "numpy_version": "2.5.0",
+  "bgk_lane": {
+    "s_mix_diagnostic": 0.3,
+    "kappa": 1.0,
+    "retained_EN_conserved_machine": true,
+    "residual_p5_initial": 20.595841043739977,
+    "residual_p5_final": 0.3734411534344109,
+    "residual_decays_monotonically": true,
+    "residual_equals_unretained_error_by_construction": true,
+    "corr_residual_vs_LATER_error_lag50": 1.0,
+    "finding": "single-mode BGK: the insertion-resolved residual and the unretained-moment error are the SAME functional of the uniformly decaying difference, so predictivity is exact BY CONSTRUCTION (lagged corr ~= 1); a property of the toy, NOT Boltzmann-closure evidence"
+  },
+  "expansion_exact_limit": {
+    "T_comoving_recovered": 1.0,
+    "closed_form_T_error_vs_unity": 0.0,
+    "T_scales_exactly_one_over_a": true,
+    "quadrature_T_recovery_ok": true,
+    "note": "midpoint-rule quadrature bias only; the scaling law itself is exact by construction (comoving staticity)"
+  },
+  "recorded_predictivity_answer": {
+    "in_this_toy": "residual predicts unretained error exactly BY CONSTRUCTION (same functional of the uniformly decaying difference; lagged corr recorded)",
+    "residual_equals_error_by_construction": true,
+    "corr_lagged": 1.0,
+    "boltzmann_closure_evidence": false
+  },
+  "discharges": "teff_representative_nonclaims.yaml future_obligation (transport application) -- via a BGK multigroup toy, disclosed as such; the transport-closure NONCLAIM stands unchanged",
+  "claim_boundary": "synthetic multigroup BGK harness (toy != Boltzmann closure); no data, signal-discovery, Bianchi-class-identification-of-the-sky, native-solver-produced, or probabilistic-inference claim"
+}

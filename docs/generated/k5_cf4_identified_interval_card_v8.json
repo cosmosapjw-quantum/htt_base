@@ -1,0 +1,349 @@
+{
+  "allowed_use": "external_audit",
+  "artifact_id": "k5_cf4_identified_interval_card_v8",
+  "artifact_mode": "external_audit_conditioned",
+  "artifact_path": "docs/generated/k5_cf4_identified_interval_card_v8.json",
+  "based_on_frozen_v7_card": {
+    "note": "v7 card byte-frozen (embedded in the v7 report); its interval payload is inherited verbatim above",
+    "path": "docs/generated/k5_cf4_identified_interval_card.json",
+    "sha256": "5fa4d8456182454ab584fe8c22300326cfa5f8f2594f9bace2c9530dd33ad912"
+  },
+  "blocked_components": [
+    "Sigma2_hat",
+    "Sigma2_error",
+    "Omega_k_upper"
+  ],
+  "bulk_flow_summary": {
+    "amplitude_kms": 340.72639833770336,
+    "measurement_error_kms": 4.968225629763425,
+    "n_groups": 38049,
+    "sigma_cv_prior_kms_per_component": 150.0,
+    "total_error_kms": 101.87045232654711
+  },
+  "caveats": [
+    "Diagnostic pipeline-closure card only.",
+    "W2 ceiling is the registered MES value (3/2)B_omega^2 from the ssot epsilons.",
+    "Sigma2 and Omega_k placeholders still block observational promotion.",
+    "No posterior odds, native low-ell solver output, or morphology-family promotion.",
+    "v8 additions are derived/registered-external rows only; no component was promoted to a measurement; the plugin firewall and observational_claim_allowed=False are unchanged"
+  ],
+  "claim_tier": "diagnostic_only",
+  "code_version": "content-addressed",
+  "component_input_modes": {
+    "CF4_bulk_amplitude": "REAL",
+    "External_vorticity_shear_priors": "REGISTERED_EXTERNAL_MODEL_CONDITIONAL_CROSSCHECK_ONLY",
+    "K1_maxscan": "REAL_DIAGNOSTIC_INPUT_NOT_USED_AS_SIGMA2",
+    "MES_coefficients": "SIGMA_REDERIVED_BIT_EXACT_FROM_PRIMARY_SOURCE; OMEGA_ACCEL_PRIMARY_SOURCED_NOT_REDERIVABLE (mes_rederivation_seal, v8)",
+    "Omega_k_upper": "PLUGIN/BLOCKED",
+    "Omega_m": "DECLARED_OBS_DEFAULT",
+    "Omega_tilt_formula": "DERIVED_FROM_PARENT_IDENTITY_SEAL",
+    "Sigma2_error": "PLUGIN/BLOCKED",
+    "Sigma2_hat": "PLUGIN/BLOCKED",
+    "Teff_fingerprint": "DERIVED_FROM_UNIFICATION_SEAL_DETERMINISTIC",
+    "W2_upper": "REGISTERED_MES_CEILING"
+  },
+  "config_hash": "sha256:6419242c1eb6ce67f8442386b8d014e2ba8bf36e36f58561d24fbbecf091084a",
+  "created_by": "scripts/k5_cf4_identified_interval_card.py",
+  "failed_gates": [
+    "registered_sigma2_artifact_absent",
+    "registered_omega_k_upper_artifact_absent"
+  ],
+  "family_identification": false,
+  "generating_command": "venv/bin/python scripts/k5_cf4_identified_interval_card_v8.py",
+  "git_commit": "content-addressed",
+  "git_commit_or_worktree_state": "content-addressed",
+  "implementation_scope": "obsstat",
+  "input_hashes": [
+    "docs/generated/k5_cf4_release_coverage.json:sha256:edcf9f9354cd326827fdae48ce1595aed963140ac5bd6a3264ebe0c5c144eee9",
+    "docs/generated/k1_global_maxscan.json:sha256:c7f8ca243eec35eca6ab6518309f216d16ddc706996df1f6dbd2a2a813867237",
+    "docs/generated/parent_identity_seal.json:sha256:16518f1770699d65fc114e704639e68029c60b153dac85091442fbe71f149c47",
+    "htt/workspace/data/obs_defaults.json:sha256:c305be5b42ea3c0a9f8d919f0314ac6befc5155424d6b8a00d92f4f9349ac1df"
+  ],
+  "k1_context": {
+    "commander_global_p": 0.12093953023488256,
+    "smica_global_p": 0.09695152423788106,
+    "use_in_card": "context_only_not_sigma2_binding"
+  },
+  "native_solver_result": false,
+  "null_mock_status": "not_statistical",
+  "observational_claim_allowed": false,
+  "owner": "OBSSTAT",
+  "parent_identity": {
+    "mes_epsilon_rederived_here": false,
+    "omega_tilt_closed_form": "(1+w) * Omega_m * sinh(beta)**2"
+  },
+  "passed_gates": [
+    "repo_local_cf4_bulk_artifact_present",
+    "parent_identity_formula_present",
+    "plugin_firewall_for_unbound_components",
+    "registered_w2_ceiling_from_mes_provenance"
+  ],
+  "policies": {
+    "cosmic_variance_inclusive": {
+      "beta": 0.0011365409277164116,
+      "branches": {
+        "all_branch[-Uk,Uk]": {
+          "component_bounds": [
+            [
+              0.0,
+              "Infinity"
+            ],
+            [
+              0.0,
+              1.3086802636835631e-06
+            ],
+            [
+              0.0,
+              "Infinity"
+            ],
+            [
+              -1e-06,
+              1e-06
+            ]
+          ],
+          "df_reachable": 2,
+          "df_residual": 2,
+          "im_95_ci": [
+            -1.267899790181675e-05,
+            3.7209921579065816e-05
+          ],
+          "im_c_n": 1.6448536287231887,
+          "interval": [
+            -2.308680263661411e-06,
+            2.6839603940910474e-05
+          ],
+          "null_extremes": [
+            -2.308680263683563e-06,
+            1e-06
+          ],
+          "policy_id": "cosmic_variance_inclusive",
+          "reachable_extremes": [
+            2.2152135032186496e-17,
+            2.5839603940910473e-05
+          ],
+          "spec_stat": 0.0,
+          "status": "FEASIBLE",
+          "tau1": 5.991464547107979,
+          "tau2": 5.991464547107979,
+          "threshold_policy": "known_chi2"
+        },
+        "open_branch[0,Uk]": {
+          "component_bounds": [
+            [
+              0.0,
+              "Infinity"
+            ],
+            [
+              0.0,
+              1.3086802636835631e-06
+            ],
+            [
+              0.0,
+              "Infinity"
+            ],
+            [
+              0.0,
+              1e-06
+            ]
+          ],
+          "df_reachable": 2,
+          "df_residual": 2,
+          "im_95_ci": [
+            -1.1678997921194496e-05,
+            3.720992159844356e-05
+          ],
+          "im_c_n": 1.6448536317967262,
+          "interval": [
+            -1.3086802636614111e-06,
+            2.6839603940910474e-05
+          ],
+          "null_extremes": [
+            -1.3086802636835631e-06,
+            1e-06
+          ],
+          "policy_id": "cosmic_variance_inclusive",
+          "reachable_extremes": [
+            2.2152135032186496e-17,
+            2.5839603940910473e-05
+          ],
+          "spec_stat": 0.0,
+          "status": "FEASIBLE",
+          "tau1": 5.991464547107979,
+          "tau2": 5.991464547107979,
+          "threshold_policy": "known_chi2"
+        }
+      },
+      "bulk_error_kms": 101.87045232654711,
+      "omega_tilt": 4.0728115626715063e-07,
+      "omega_tilt_error": 2.435381213780489e-07
+    },
+    "measurement_only": {
+      "beta": 0.0011365409277164116,
+      "branches": {
+        "all_branch[-Uk,Uk]": {
+          "component_bounds": [
+            [
+              0.0,
+              "Infinity"
+            ],
+            [
+              0.0,
+              1.3086802636835631e-06
+            ],
+            [
+              0.0,
+              "Infinity"
+            ],
+            [
+              -1e-06,
+              1e-06
+            ]
+          ],
+          "df_reachable": 2,
+          "df_residual": 2,
+          "im_95_ci": [
+            -1.2286126643778356e-05,
+            3.719070987709307e-05
+          ],
+          "im_c_n": 1.64485362954318,
+          "interval": [
+            -1.9235303616106864e-06,
+            2.6828113594925402e-05
+          ],
+          "null_extremes": [
+            -2.308680263683563e-06,
+            1e-06
+          ],
+          "policy_id": "measurement_only",
+          "reachable_extremes": [
+            3.8514990207287654e-07,
+            2.58281135949254e-05
+          ],
+          "spec_stat": 4.930380657631324e-32,
+          "status": "FEASIBLE",
+          "tau1": 5.991464547107979,
+          "tau2": 5.991464547107979,
+          "threshold_policy": "known_chi2"
+        },
+        "open_branch[0,Uk]": {
+          "component_bounds": [
+            [
+              0.0,
+              "Infinity"
+            ],
+            [
+              0.0,
+              1.3086802636835631e-06
+            ],
+            [
+              0.0,
+              "Infinity"
+            ],
+            [
+              0.0,
+              1e-06
+            ]
+          ],
+          "df_reachable": 2,
+          "df_residual": 2,
+          "im_95_ci": [
+            -1.1286126671726075e-05,
+            3.7190709905040787e-05
+          ],
+          "im_c_n": 1.6448536339793178,
+          "interval": [
+            -9.235303616106867e-07,
+            2.6828113594925402e-05
+          ],
+          "null_extremes": [
+            -1.3086802636835631e-06,
+            1e-06
+          ],
+          "policy_id": "measurement_only",
+          "reachable_extremes": [
+            3.8514990207287654e-07,
+            2.58281135949254e-05
+          ],
+          "spec_stat": 4.930380657631324e-32,
+          "status": "FEASIBLE",
+          "tau1": 5.991464547107979,
+          "tau2": 5.991464547107979,
+          "threshold_policy": "known_chi2"
+        }
+      },
+      "bulk_error_kms": 4.968225629763425,
+      "omega_tilt": 4.0728115626715063e-07,
+      "omega_tilt_error": 1.1877362952864287e-08
+    }
+  },
+  "production_status": "diagnostic_only",
+  "promotion_blockers": [
+    "Sigma2_hat",
+    "Sigma2_error",
+    "Omega_k_upper"
+  ],
+  "required_gates": [
+    "repo_local_cf4_bulk_artifact_present",
+    "parent_identity_formula_present",
+    "plugin_firewall_for_unbound_components"
+  ],
+  "schema": "htt.k5_cf4_identified_interval_card.v8",
+  "schema_version": "htt.k5.cf4_identified_interval_card.v1",
+  "sky_support_status": "not_directional",
+  "source_artifacts": [
+    "docs/generated/k5_cf4_release_coverage.json",
+    "docs/generated/k1_global_maxscan.json",
+    "docs/generated/parent_identity_seal.json",
+    "htt/workspace/data/obs_defaults.json"
+  ],
+  "statistics_definitions": {
+    "error_policies": [
+      "measurement_only",
+      "cosmic_variance_inclusive"
+    ],
+    "omega_tilt": "(1+w) Omega_m sinh(beta)^2 with w=0 and beta=|B|/c",
+    "plugin_firewall": "observational_claim_allowed is false while any component is PLUGIN/BLOCKED",
+    "x_comparator": "c=(1,-1,1,1) applied to branch-bounded components"
+  },
+  "transfer_source": "none",
+  "v8_external_model_conditional_priors": {
+    "applicability": "Bianchi-VII_h-MODEL-CONDITIONAL published limits; cross-checks only -- they do NOT replace the MES W2_max registry and enable NO observational claim",
+    "shear_sigma_over_H_weakest_mode": {
+      "limit_95": 1e-06,
+      "mode": "regular tensor",
+      "source": "Saadeh et al. 2016, Table II (Planck, all-mode)"
+    },
+    "vorticity_omega_over_H": [
+      {
+        "limit_95": 5.2e-11,
+        "source": "Saadeh et al., PRL 117, 131302 (2016), arXiv:1605.07178 (vector-mode recast)"
+      },
+      {
+        "limit_95": 7.6e-10,
+        "source": "Planck 2015 XVIII, A&A 594, A18, arXiv:1502.01593 (open-coupled VII_h, T)"
+      }
+    ]
+  },
+  "v8_omega_k_status": {
+    "external_prior_branch": "DOCUMENTED NULL -- no published direct Omega_k^aniso upper limit exists; Bianchi VII_h analyses marginalize Omega_K as a prior; fabricating a ceiling is forbidden",
+    "higher_order_transfer_branch": "open (ticket k5_omega_k_higher_order_ceiling)",
+    "input_mode": "PLUGIN/BLOCKED (unchanged)",
+    "leading_order_structural_null": "certified (measured_response_seal); leading-EGS-order no-channel",
+    "survey": "docs/research_program/egs3/external_anisotropic_curvature_prior_survey.md"
+  },
+  "v8_teff_fingerprint_row": {
+    "beta_cf4_rapidity": 0.0011365409332612364,
+    "driver": "the SAME CF4 bulk-flow rapidity as the card's Omega_tilt (one boost, two channels; seal egs3.teff_unification)",
+    "fingerprint_R3_deviation_3half_s2": 1.9375862709144723e-06,
+    "fingerprint_R5_deviation_5half_s2": 3.22931045152412e-06,
+    "fingerprint_below_ceiling": true,
+    "input_mode": "DERIVED_FROM_UNIFICATION_SEAL_DETERMINISTIC",
+    "mes_dipole_ceiling_R3": 2.28265344e-06,
+    "mes_dipole_ceiling_R3_exact": "1783323/781250000000",
+    "mes_dipole_ceiling_R5": 3.8044224e-06,
+    "mes_dipole_ceiling_R5_exact": "594441/156250000000",
+    "not_a_measurement": true,
+    "s_mixing_tanh_beta": 0.001136540443895266,
+    "statistical_lane": "coverage/calibration run at DISPLAY mixings only (seal egs3.teff_statistical); CF4-scale sampling would be pure noise -- disclosed"
+  }
+}

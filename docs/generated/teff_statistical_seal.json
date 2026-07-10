@@ -1,0 +1,52 @@
+{
+  "seal": "egs3.teff_statistical",
+  "status": "PASS",
+  "numpy_version": "2.5.0",
+  "theorem_U4": "the EGS3 partial-identification + calibration machinery closes over the Teff fingerprint lane: IM coverage holds on the identified interval [R_3(s_max), 1] of the nonidentified mixing, and the estimated-covariance joint fingerprint requires the Hotelling/F correction exactly as in T4'",
+  "im_fingerprint_coverage": {
+    "identified_interval_R3": [
+      0.91507031,
+      1.0
+    ],
+    "s_max_display_disclosed": 0.3,
+    "alpha": 0.05,
+    "n_events": 4000,
+    "n_rep": 800,
+    "rows": {
+      "endpoint_s0": {
+        "s_true": 0.0,
+        "target_R3": 1.0,
+        "coverage": 0.93625,
+        "se": 0.01325341
+      },
+      "interior_mid": {
+        "s_true": 0.15,
+        "target_R3": 0.97045575,
+        "coverage": 0.95375,
+        "se": 0.01715149
+      },
+      "endpoint_smax": {
+        "s_true": 0.3,
+        "target_R3": 0.91507031,
+        "coverage": 0.95625,
+        "se": 0.01889552
+      }
+    },
+    "nominal": 0.95,
+    "binomial_3sigma_tol": 0.023117,
+    "coverage_holds_everywhere": true
+  },
+  "hotelling_fingerprint_calibration": {
+    "s_true_display_disclosed": 0.15,
+    "n_sim_cov": 10,
+    "n_rep": 1500,
+    "alpha": 0.05,
+    "empirical_size_naive_chi2": 0.15333333333333332,
+    "empirical_size_hotelling_F": 0.064,
+    "naive_over_rejects": true,
+    "hotelling_calibrated": true,
+    "binomial_3sigma_tol": 0.016882
+  },
+  "scale_honesty": "sampling experiments at display mixings (0.15/0.3, disclosed); the CF4/MES-scale fingerprints (~2e-6) enter only as the DETERMINISTIC row of the K5 v8 card, never as a pretended measurement",
+  "claim_boundary": "synthetic seeded experiments over the Teff fingerprint observables; diagnostic_only; no data, signal-discovery, Bianchi-class-identification-of-the-sky, native-solver-produced, or probabilistic-inference claim about the sky"
+}

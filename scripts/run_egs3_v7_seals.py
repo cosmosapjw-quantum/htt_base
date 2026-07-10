@@ -104,6 +104,23 @@ def build_payloads() -> tuple[dict[str, str], dict[str, dict]]:
         seals["unification_schema_seal.json"] = unification_schema_seal()
     except Exception:  # module not present yet -> lane simply omits it
         pass
+    try:
+        from htt.obsstat.egs3_teff_statistical import teff_statistical_seal
+        seals["teff_statistical_seal.json"] = teff_statistical_seal()
+    except Exception:  # module not present yet -> lane simply omits it
+        pass
+    try:
+        from htt.teff.transport_application import (
+            teff_transport_application_seal)
+        seals["teff_transport_application_seal.json"] = (
+            teff_transport_application_seal())
+    except Exception:  # module not present yet -> lane simply omits it
+        pass
+    try:
+        from htt.teff.rust_twin_parity import teff_rust_parity_seal
+        seals["teff_rust_parity_seal.json"] = teff_rust_parity_seal()
+    except Exception:  # module not present yet -> lane simply omits it
+        pass
 
     payloads = {name: json.dumps(seal, indent=2, default=float) + "\n"
                 for name, seal in seals.items()}

@@ -32,3 +32,26 @@ future_obligations (pure compute/derivation, no data download):
     multigroup reference solution).
   - Rust twin parity: cross-check the a_xi / c_p / Gram objects against src/teff/*.rs
     (spectral.rs zeta(4) integrals, teff_solver.rs GramMatrix2x2) at bit level.
+
+future_obligations_discharged_2026_07_10: |
+  v8-update cycle (REV-R165): BOTH future_obligations discharged.
+  (a) TRANSPORT APPLICATION: htt/teff/transport_application.py -- multigroup
+      BGK reference (grid-consistent Newton (E,N)-matching; retained moments
+      conserved to machine precision; free-expansion limit T ~ 1/a exact) vs
+      the closed-form MB max-entropy representative; insertion-resolved
+      residual monitored. RECORDED ANSWER (honest): in the single-mode BGK toy
+      the residual and the unretained-moment error are the SAME functional of
+      the uniformly decaying difference, so predictivity is exact BY
+      CONSTRUCTION -- a property of the toy, explicitly NOT Boltzmann-closure
+      evidence; the transport-closure NONCLAIM stands unchanged.
+      Seal teff_transport_application_seal.json (PASS).
+  (b) RUST TWIN PARITY: htt/teff/rust_twin_parity.py -- exact SymPy parity
+      3 a_BE = pi^4/15, 3 a_FD = 7 pi^4/120 vs the src/teff/spectral.rs test
+      expectations; zeta-table closed forms + Apery/zeta(5) float literals
+      matched to 1e-15; monopole Gram closed forms zeta(3)/(3 zeta(4)),
+      zeta(2)/(2 zeta(3)) exact with nonzero determinant; cargo lane LIVE in
+      this environment (cargo test --lib teff: 153 passed / 0 failed).
+      Seal teff_rust_parity_seal.json (PASS, mode CARGO_LIVE).
+  Gates research_gates/teff/tests/test_teff_transport_parity.py (11). The
+  lane's core NONCLAIMS (transport closure, realizability boundary, global
+  two-field diffeomorphism, global-in-time stability) are UNCHANGED.

@@ -75,6 +75,10 @@ V7_SYMPY_SEALS = (
     # v8-update unification lane (U1/U2 beta-channel + MES->Teff ceilings; U3 schema)
     "teff_unification_seal.json",
     "unification_schema_seal.json",
+    # v8-update U4 statistical closure + TEFF future-obligation discharges
+    "teff_statistical_seal.json",
+    "teff_transport_application_seal.json",
+    "teff_rust_parity_seal.json",
 )
 
 
