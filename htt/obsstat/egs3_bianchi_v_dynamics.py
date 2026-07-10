@@ -18,11 +18,12 @@ solved for (a1'', a2'', rho', b'), and the two CONSTRAINTS
     C2 (momentum): G_tx - T_tx = 0
 
 are NOT imposed during integration -- they are monitored along the numeric
-trajectory. Constraint-satisfying initial data are constructed exactly
-(C1 solved for rho0; C2 solved for the a1-expansion rate), and preservation
-of both residuals at the integration-tolerance level over several e-folds is
-the dynamics statement (contracted Bianchi identities, verified numerically,
-not assumed).
+trajectory. Constraint-satisfying initial data are constructed by declaring
+rho0 > 0 (excluding the vacuous vacuum/Milne branch) and Newton-solving the
+pair (H1, H2) jointly from {C1 = 0, C2 = 0} to residuals < 1e-12, and
+preservation of both residuals at the integration-tolerance level over
+~1.1 e-folds is the dynamics statement (contracted Bianchi identities,
+verified numerically, not assumed).
 
 Alignment with the sealed P5 constraint algebra (frozen module
 ``egs3_bianchi_v_constraint``): along the trajectory the expansion-normalized

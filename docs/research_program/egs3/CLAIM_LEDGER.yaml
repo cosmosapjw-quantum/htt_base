@@ -136,11 +136,11 @@ claims:
     caveats: [F1 repair; the curvature coordinate is SIGNED; SymPy + exact-QQ (Sage) + native_decide (Lean) seals; representation, no data claim]
   egs3.gf_joint_interval_strictness:
     owner: MIO/OBSSTAT
-    status: DERIVED
+    status: RETRACTED_SUPERSEDED
     evidence_type: proof_and_test
     claim_tier: C4
-    allowed_phrase: T2' joint-vs-naive depth-gap interval strictness criterion -- the inclusion is strict iff a shared component has c_N c_D>0 (aligned regimes are exactly equal)
-    caveats: [M1 repair of the refuted 'strict whenever' statement; exact-Fraction corner enumeration, zero tolerance; interval algebra, no data claim]
+    allowed_phrase: L-T2-EXIST existence-level strictness lemma -- on the strictly-positive-numerator domain, a shared component with c_N c_D>0 certifies that SOME endpoint of the joint interval is strictly inside the naive one (the 400/400 seal survives at this level ONLY)
+    caveats: [the v6 per-endpoint IFF reading is RETRACTED by T2G (reviewer instance S=[0,1], N=s, D=1+s lies inside the stated hypotheses and defeats the lower endpoint; forced-N_min=0 survey defeats the sign test 81x); superseded_by egs3.fractional_program per THEOREM_REGISTRY.yaml (P36/T2p); exact-Fraction corner enumeration; interval algebra, no data claim]
   egs3.two_stage_coverage_strengthened:
     owner: OBSSTAT/MIO
     status: DERIVED
@@ -196,8 +196,8 @@ claims:
     status: DERIVED
     evidence_type: proof_and_test
     claim_tier: C4
-    allowed_phrase: T3-full exact (nonlinear, all-orders) initial-data realization of BOTH identified-interval ENDPOINTS by exact homogeneous cosmologies (Bianchi I lower, Bianchi V upper with shear transverse to the a-vector + antipodal tilt), with exactly-zero Gauss+momentum constraint residuals -- endpoint attainability at exact order
-    caveats: [M2 upgrade of T3-lin's ENDPOINT realizations from residuals<1e-10 to EXACT-zero (SymPy + Wolfram/xAct); this is endpoint attainability, NOT by itself a full nonlinear interval-sharpness theorem -- the no-model-exceeds-the-box bound + continuum interior-filling stay at the convex-component-box level (P31), only the Gauss+momentum CONSTRAINTS are checked (not the dynamics), and the full King-Ellis tilted-Bianchi-V dynamical realization stays deferred; Bianchi I/V are the realizing construction, NOT a sky class claim; no data claim]
+    allowed_phrase: T3-full exact realization of BOTH identified-interval ENDPOINTS by exact constraint-surface endpoint witnesses (homogeneous initial-data candidates; Bianchi I lower, Bianchi V upper with shear transverse to the a-vector + antipodal tilt), with exactly-zero Gauss+momentum constraint residuals -- constraint-surface attainability at exact order, at the lower endpoint OUTSIDE the withdrawn W^2 sector
+    caveats: [v9 reclassification (P31 sharpness taxonomy) -- the phrase 'exact homogeneous cosmologies' is WITHDRAWN and the lower-endpoint W^2=4/100 is constraint-UNVERIFIED (Frobenius, the slice normal of a Bianchi-I homogeneous slicing is hypersurface-orthogonal, and the antipodal pair cancels only the energy flux); this is endpoint attainability, NOT a full nonlinear interval-sharpness theorem -- box bound + interior filling stay convex-P31, only Gauss+momentum CONSTRAINTS checked (not dynamics), King-Ellis dynamical realization deferred (ten-item program executing, see egs3.king_ellis_frame); Bianchi I/V are the realizing construction, NOT a sky class claim; no data claim]
   teff.representative:
     owner: TEFF
     status: DERIVED
@@ -233,4 +233,41 @@ claims:
     evidence_type: proof_and_test
     claim_tier: C4
     allowed_phrase: T3-int -- every interior x_C of [11/100,17/100] exactly realized by one connected two-segment exact family (Bianchi I W^2-sweep glued exactly at 3/20 to the a->0 boundary of a Bianchi V Omega_k-sweep); Bianchi V group-invariant curl derived from the structure constants with the exact slaving |curl v|^2 = a^2 v_perp^2
-    caveats: [constraint-level initial data only (Gauss+momentum), King-Ellis DYNAMICS deferred; the slaving relation is the derived OBSTRUCTION to free (W^2,Omega_k) box dial-in (a finding); curl normalization convention-anchored, curl=0 iff aligned + |curl| ~ a|v_perp| convention-robust; Bianchi I/V are the realizing construction NOT a sky class claim; no data claim]
+    caveats: [constraint-level initial data only (Gauss+momentum), King-Ellis DYNAMICS deferred; v9 reclassification -- genuine momentum closure holds on segment II ONLY, segment I (Bianchi-I W^2-sweep) inherits the Frobenius/constraint-unverified W^2 gap, so the x_C-value sweep is sharpness level 1 with level 2 on segment II; the slaving relation is the derived OBSTRUCTION to free (W^2,Omega_k) box dial-in (a finding); curl normalization convention-anchored, curl=0 iff aligned + |curl| ~ a|v_perp| convention-robust; Bianchi I/V are the realizing construction NOT a sky class claim; no data claim]
+  # --- v9 (Seventh Revision) cycle (rev-r170..r178; yaml entries added rev-r179,
+  #     an adversarial-audit finding: the v9 claims had landed without ledger rows) ---
+  egs3.fractional_program:
+    owner: MIO/OBSSTAT
+    status: DERIVED
+    evidence_type: proof_and_test
+    claim_tier: C4
+    allowed_phrase: T2G general fractional-program interval theorem -- joint interval contained in the product relaxation with vertex attainment; per-endpoint equality decided by diagonal attainment (witness-corner comparison); argmin(N) cap argmax(D) corollary VALID ONLY on the N_min>0 domain; retracts P36 and the T2' per-endpoint iff
+    caveats: [refuting instance S=[0,1] N=s D=1+s lies inside the old hypotheses; 400-draw exact-Fraction survey with a forced-N_min=0 third (sign test defeated 81x there); Sage QQ+PPL Charnes-Cooper 15/15; interval algebra, no data claim]
+  egs3.fingerprint_sum:
+    owner: OBSSTAT
+    status: DERIVED
+    evidence_type: proof_and_test
+    claim_tier: C4
+    allowed_phrase: TSUM two-temperature fingerprint sum bound R3+R5>=2 with equality iff s=0 -- exact factorization mu3 mu5 - mu4^2 = s^2 (1-s^2)^3 plus AM-GM
+    caveats: [promotion of the v8 numeric certificate to an exact theorem; s=1 edge carried symbolically; representation-level, no data claim]
+  egs3.teff_statistical_v9:
+    owner: OBSSTAT
+    status: SPECIFIED
+    evidence_type: test
+    claim_tier: C1
+    allowed_phrase: U4-v9 fingerprint statistics rerun -- regime-split acceptance stated in code before the run, disclosed seeds, Wilson CIs, exact-regime witnesses exact (known-se IM; Gaussian/Wishart Hotelling size 0.05025), approximation-lane deviations REPORTED (boundary coverage -0.0054, fingerprint Hotelling size 0.0678)
+    caveats: [v8 statistical module frozen, successor pattern; deviations are disclosed findings, not claimed away; the boundary band 0.01 and Hotelling band 0.025 are wider than pure-MC 3-sigma at n_rep=8000 BY DESIGN and printed; seeded synthetic experiments; no data claim]
+  egs3.mes_branch_registry:
+    owner: OBSSTAT/GR
+    status: REGISTERED_EXTERNAL
+    evidence_type: proof_and_test
+    claim_tier: C2
+    allowed_phrase: MES-BR coefficient branch registry -- MES-G verified geodesic / MES-NG unverified non-geodesic / acceleration WITHHELD; eps1 attribution triple (observer boost = conservative total = 771/625000, numerically the solar kinematic dipole; cosmological = 0 per SAG); three labeled attribution-conditional W^2 ceilings, none promoted
+    caveats: [registered values UNCHANGED (frozen registry, W2_max bit-identity anchor); hybrid nature of 2.5369e-5 disclosed (geodesic coefficients x full observer dipole); eps1 carries ~99% of B_omega under both branches; re-freeze requires explicit owner sign-off; no observational claim]
+  egs3.bianchi_v_dynamics:
+    owner: OBSSTAT/BASS
+    status: DERIVED
+    evidence_type: proof_and_test
+    claim_tier: C4
+    allowed_phrase: BV-DYN tilted-LRS Bianchi V evolution -- first-principles derived system with Gauss+momentum constraints MONITORED (not imposed) preserved to <3.5e-11 (dust) over ~1.1 e-folds from non-vacuum exact-to-1e-12 initial data; the exact-rapidity P5 relation holds ON TRAJECTORIES to ~1.7e-10 with beta^2 error scaling (slope 2.0006)
+    caveats: [upgrades the F2 lane constraint-algebra seal to a dynamics seal (registered stretch item discharged); aligned single tilt only, NOT the King-Ellis rotating-congruence item and NOT a dynamical T3-endpoint realization; dust tilt decays, radiation tilt drifts up (recorded dynamics finding, literature-consistent: the gamma=4/3 transcritical bifurcation with quadratic center-manifold drift); no data claim]

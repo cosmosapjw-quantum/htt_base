@@ -1005,7 +1005,11 @@ def v7_response_section() -> str:
         r"mode, an antipodal tilt pair (net energy flux zero, additive tilt density), and a "
         r"signed anisotropic-curvature mode --- whose Gauss and momentum constraint residuals "
         rf"vanish to machine precision ($<10^{{-10}}$; seal {st(t3l)}).  This is a linearized "
-        r"($x_C\ll1$) physical-realizability statement; the full nonlinear King--Ellis tilted "
+        r"($x_C\ll1$) physical-realizability statement, and the rotation mode enters as a "
+        r"\emph{posited} free antisymmetric tensor: the linear momentum constraint cannot "
+        r"detect the Frobenius obstruction that withdraws the exact lower-endpoint $W^2$ "
+        r"sector (P31 taxonomy), so T3-lin carries sharpness level~1 with only partial "
+        r"level~2.  The full nonlinear King--Ellis tilted "
         r"Bianchi~V realization is a registered deferred obligation.  The covariant momentum "
         r"residual is checked in the Wolfram/xAct lane.",
         r"",
@@ -1153,9 +1157,11 @@ def v8_response_section() -> str:
         r"configuration whose exact $(0i)$ momentum constraint "
         r"$3\,a_b\sigma^{ab}+\kappa q^a=0$ is satisfied by a shear \emph{transverse} to the "
         r"$a$-vector ($\sigma_1=0$, $\sigma=\mathrm{diag}(0,\sigma_+,-\sigma_+)$) plus the "
-        r"antipodal tilt pair.  This upgrades the physical-attainability half of the "
-        r"sharpness statement from linear to exact order: both interval endpoints admit "
-        r"exact initial-data realizations.  Verified on SymPy and Wolfram/xAct.  It is "
+        r"antipodal tilt pair.  This upgrades the constraint-surface attainability half of "
+        r"the sharpness statement from linear to exact order: both interval endpoints admit "
+        r"exact constraint-surface witnesses, at the upper endpoint in every comparator "
+        r"sector and at the lower endpoint outside the withdrawn $W^2$ sector.  Verified on "
+        r"SymPy and Wolfram/xAct.  It is "
         r"\emph{not}, by itself, a full nonlinear interval-sharpness theorem: the "
         r"no-model-exceeds-the-box bound and the continuum interior-filling remain the "
         r"convex-component-box result (P31), only the Gauss and momentum constraints (not the "
@@ -2827,12 +2833,15 @@ def environment_lock() -> str:
     (importlib.metadata; stable across --check runs within one environment)
     plus the proof-engine toolchain versions recorded at registration time."""
     import importlib.metadata as md
-    pins = []
-    for dist in sorted(md.distributions(),
-                       key=lambda d: (d.metadata["Name"] or "").lower()):
+    # dedupe by canonical name: with PYTHONPATH=.:htt:htt/htt the in-tree
+    # egg-info dirs (bass-py, htt) are discovered a second time, which made
+    # the lock PYTHONPATH-dependent (adversarial-audit finding, REV-R179)
+    by_name: dict[str, str] = {}
+    for dist in md.distributions():
         name = dist.metadata["Name"]
-        if name:
-            pins.append(f"{name}=={dist.version}")
+        if name and name.lower() not in by_name:
+            by_name[name.lower()] = f"{name}=={dist.version}"
+    pins = [by_name[k] for k in sorted(by_name)]
     toolchain = [
         "# proof-engine toolchain (versions as registered by their seals)",
         "python==3.12 (venv)",

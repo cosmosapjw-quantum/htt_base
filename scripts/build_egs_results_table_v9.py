@@ -95,9 +95,43 @@ def _v9_rows() -> list[dict]:
     ]
 
 
+# status/annotation overlay for inherited rows whose claims the v9 registry
+# retracted or superseded (adversarial-audit finding, REV-R179): the frozen
+# v7/v8 table ARTIFACTS keep their bytes; this successor table must not
+# assert retracted content as live.
+_SUPERSESSION_OVERLAY = {
+    "EGS3-E4": ("retracted_superseded",
+                " [RETRACTED by T2G: refuting instance inside the stated"
+                " hypotheses; see THEOREM_REGISTRY.yaml P36]"),
+    "EGS3-G2": ("retracted_superseded",
+                " [RETRACTED by T2G: the per-endpoint iff fails on"
+                " N_min=0/signed-numerator domains; the seal survives as"
+                " the existence-level lemma L-T2-EXIST on the strictly"
+                " positive-numerator domain]"),
+    "EGS3-E1": (None, " [SUPERSEDED by T1'/T3-full per"
+                      " THEOREM_REGISTRY.yaml (P26/P31); content subsumed]"),
+    "EGS3-E2": (None, " [SUPERSEDED by T4'/T5' per THEOREM_REGISTRY.yaml"
+                      " (P35); content subsumed]"),
+}
+
+
+def _apply_overlay(rows: list[dict]) -> list[dict]:
+    out = []
+    for row in rows:
+        row = dict(row)
+        status, badge = _SUPERSESSION_OVERLAY.get(row["theorem_id"],
+                                                  (None, None))
+        if badge:
+            row["statement"] = row["statement"] + badge
+        if status:
+            row["status"] = status
+        out.append(row)
+    return out
+
+
 def _payload() -> dict:
     v8 = _v8_builder()
-    rows = v8._payload()["rows"] + _v9_rows()
+    rows = _apply_overlay(v8._payload()["rows"]) + _v9_rows()
     counts: dict[str, int] = {}
     for row in rows:
         counts[row["status"]] = counts.get(row["status"], 0) + 1
@@ -106,7 +140,10 @@ def _payload() -> dict:
         "schema": "htt.egs.results_table.v9",
         "based_on_frozen_tables": "egs_results_table.json (v7, byte-frozen) "
                                   "+ egs_results_table_v8.json (v8, "
-                                  "hash-frozen); rows inherited verbatim",
+                                  "hash-frozen); rows inherited with a "
+                                  "supersession overlay on EGS3-E1/E2/E4/G2 "
+                                  "(registry-retracted or superseded content "
+                                  "must not print as live; REV-R179)",
         "claim_tier": base["claim_tier"],
         "family_identification": False,
         "native_solver_result": False,

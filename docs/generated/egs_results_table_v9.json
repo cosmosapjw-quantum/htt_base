@@ -4,7 +4,7 @@
     "gr_boltzmann": "GR / covariant-Boltzmann theory axis",
     "math_stat": "mathematics / statistics theory axis"
   },
-  "based_on_frozen_tables": "egs_results_table.json (v7, byte-frozen) + egs_results_table_v8.json (v8, hash-frozen); rows inherited verbatim",
+  "based_on_frozen_tables": "egs_results_table.json (v7, byte-frozen) + egs_results_table_v8.json (v8, hash-frozen); rows inherited with a supersession overlay on EGS3-E1/E2/E4/G2 (registry-retracted or superseded content must not print as live; REV-R179)",
   "blockers_open": [
     "BLOCKED_MISSING_PR4_E2E_ACCESS (E2E-systematics null only; look-elsewhere discharged)",
     "BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP (K5 full release-matched mocks; conditional Gaussian-prior coverage only so far)",
@@ -196,7 +196,7 @@
       "axis": "math_stat",
       "evidence": "egs3-gates E1/E7",
       "key_result": "population interval [0.1099999999999452, 0.1700000000360007] reproduces the registered example; statuses {'feasible': 'feasible', 'empty_misfit': 'empty', 'unbounded_no_ceiling': 'unbounded', 'ceiling_unfit_F_gt_1': 'ceiling_unfit'}",
-      "statement": "Identified-set semantics for x_C (P26/P31/A8): the reportable object under the rank-2 response is the two-stage-tau interval [x_C^-, x_C^+] with refutability (empty), no-result (unbounded), and ceiling-unfit (F>1) statuses; the interval is sharp (endpoints attained)",
+      "statement": "Identified-set semantics for x_C (P26/P31/A8): the reportable object under the rank-2 response is the two-stage-tau interval [x_C^-, x_C^+] with refutability (empty), no-result (unbounded), and ceiling-unfit (F>1) statuses; the interval is sharp (endpoints attained) [SUPERSEDED by T1'/T3-full per THEOREM_REGISTRY.yaml (P26/P31); content subsumed]",
       "status": "proven_gate",
       "theorem_id": "EGS3-E1"
     },
@@ -204,7 +204,7 @@
       "axis": "math_stat",
       "evidence": "egs3-gates E2; fig_egs3_e_im_coverage",
       "key_result": "coverage projection 0.967 >= IM 0.948 (nominal 0.95) > naive endpoint 0.931 (N=2000, seed 20260708, SE 0.0050)",
-      "statement": "Imbens-Manski endpoint coverage (P35): the parameter CI needs the IM critical value; the projection CI is conservative and the naive per-endpoint one-sided CI undercovers as the interval width shrinks",
+      "statement": "Imbens-Manski endpoint coverage (P35): the parameter CI needs the IM critical value; the projection CI is conservative and the naive per-endpoint one-sided CI undercovers as the interval width shrinks [SUPERSEDED by T4'/T5' per THEOREM_REGISTRY.yaml (P35); content subsumed]",
       "status": "proven_gate",
       "theorem_id": "EGS3-E2"
     },
@@ -220,8 +220,8 @@
       "axis": "math_stat",
       "evidence": "egs3-gates E4",
       "key_result": "joint width / naive width = 0.582; joint within naive True",
-      "statement": "Joint-feasible-set G_F propagation (P36): with shared null components across depth bins the depth-gap interval is the joint sup/inf over ONE shared feasible set; the naive quotient of marginal intervals is strictly wider (conservative)",
-      "status": "proven_gate",
+      "statement": "Joint-feasible-set G_F propagation (P36): with shared null components across depth bins the depth-gap interval is the joint sup/inf over ONE shared feasible set; the naive quotient of marginal intervals is strictly wider (conservative) [RETRACTED by T2G: refuting instance inside the stated hypotheses; see THEOREM_REGISTRY.yaml P36]",
+      "status": "retracted_superseded",
       "theorem_id": "EGS3-E4"
     },
     {
@@ -284,8 +284,8 @@
       "axis": "math_stat",
       "evidence": "run_egs3_v7_seals; gates G2",
       "key_result": "exact-Fraction agreement 400/400; aligned counterexample joint==naive; seal PASS",
-      "statement": "T2' (M1): joint-vs-naive depth-gap strictness is an IFF (strict iff a shared component has c_N c_D>0); aligned regimes collapse to equality (the v6 'strict whenever' was refuted)",
-      "status": "proven_seal",
+      "statement": "T2' (M1): joint-vs-naive depth-gap strictness is an IFF (strict iff a shared component has c_N c_D>0); aligned regimes collapse to equality (the v6 'strict whenever' was refuted) [RETRACTED by T2G: the per-endpoint iff fails on N_min=0/signed-numerator domains; the seal survives as the existence-level lemma L-T2-EXIST on the strictly positive-numerator domain]",
+      "status": "retracted_superseded",
       "theorem_id": "EGS3-G2"
     },
     {
@@ -516,13 +516,14 @@
     "measured_partial": 2,
     "measured_synth": 5,
     "proven": 2,
-    "proven_gate": 19,
-    "proven_seal": 7,
+    "proven_gate": 18,
+    "proven_seal": 6,
     "proven_seal_linearized": 1,
     "proven_seal_partial": 1,
     "proven_symbolic": 14,
     "reclassified": 1,
-    "registered_external": 1
+    "registered_external": 1,
+    "retracted_superseded": 2
   },
   "v9_note": "v9 rows (EGS3-T2G/TSUM/U4v9/MESBR, K5-V9, EGS3-G12) appended per the 2026-07-10 review-response cycle; P36/T2' retractions and the P26/P31/P35 supersessions are carried by THEOREM_REGISTRY.yaml; no claim-envelope change"
 }
