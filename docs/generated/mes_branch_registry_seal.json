@@ -1,0 +1,103 @@
+{
+  "branch_table": {
+    "ACCEL_WITHHELD": {
+      "rule": "the acceleration ceiling enters NO observational lane until an accessible derivation exists",
+      "status": "WITHHELD"
+    },
+    "MES_G": {
+      "accel": {
+        "provenance": "no acceleration bound exists in any accessible source (geodesic congruence)",
+        "triple": null
+      },
+      "omega": {
+        "provenance": "SAG1997 eq (4) == MESa eq (60); geodesic congruence; NOT the registered triple",
+        "triple": [
+          "10/3",
+          "2/15",
+          "0"
+        ]
+      },
+      "sigma": {
+        "provenance": "rederived bit-exact from the archived primary source (mes_rederivation seal); printed as SAG1997 eq (3)",
+        "triple": [
+          "5/3",
+          "3",
+          "3/7"
+        ]
+      },
+      "status": "VERIFIED_GEODESIC"
+    },
+    "MES_NG": {
+      "accel": {
+        "provenance": "REGISTERED; appears in NO accessible source",
+        "triple": [
+          "3/4",
+          "1",
+          "3/14"
+        ]
+      },
+      "omega": {
+        "provenance": "REGISTERED; attributed to MESb (PRD 51, 5942; print-only, inaccessible); primary_sourced_not_rederivable",
+        "triple": [
+          "3/4",
+          "2",
+          "2/7"
+        ]
+      },
+      "status": "UNVERIFIED_NON_GEODESIC"
+    },
+    "registered_values_unchanged": true
+  },
+  "claim_boundary": "provenance classification + exact rational algebra on registered constants; diagnostic_only; no branch enables any observational claim; the frozen registry values are unchanged",
+  "eps1_attribution_triple": {
+    "consumed_by_frozen_evaluators": "eps1_conservative_total",
+    "eps1_conservative_total": "771/625000",
+    "eps1_cosmological": "0",
+    "eps1_cosmological_rationale": "SAG1997 attributes the whole dipole to observer peculiar motion and sets eps1 = 0 (archived tex)",
+    "eps1_observer_boost": "771/625000",
+    "eps1_observer_boost_float": 0.0012336,
+    "numeric_coincidence_confirmed": true,
+    "reading": "the registered eps1 IS the observed CMB dipole dT/T, numerically the solar kinematic dipole; it is an observer-boost quantity, not a cosmological vorticity bound",
+    "relative_difference_to_solar_beta": 1.075168676650759e-05,
+    "solar_kinematic_beta": 0.001233586736861806
+  },
+  "hybrid_over_registered_exact": "5179437039866250251601/267188887168727440900",
+  "seal": "egs3.mes_branch_registry",
+  "status": "PASS",
+  "theorem_id": "MES-BR",
+  "w2_ceiling_branches": {
+    "dominance_disclosure": "the eps1 term carries 99.1% (registered) / 100.0% (geodesic) of B_omega at the ssot epsilons; every nonzero ceiling is essentially an observer-boost quantity and the K5 lower endpoint is keyed to the eps1 attribution choice",
+    "eps_inputs": {
+      "eps1": "771/625000",
+      "eps1_attribution": "eps1_conservative_total (observer-boost dominated)",
+      "eps2": "3559629/1000000000000",
+      "eps3": "6065291/1000000000000"
+    },
+    "hybrid_literature": {
+      "coefficients": "MES_G omega (10/3, 2/15, 0); VERIFIED geodesic",
+      "eps1_term_share_of_B_omega": 0.9998845908499921,
+      "hybrid_disclosure": "geodesic (literature) coefficients times the FULL observer dipole \u2014 NOT SAG's own eps1=0 convention; comparison-only",
+      "matches_mes_rederivation_report": true,
+      "value_exact": "317108390195892872547/12500000000000000000000000",
+      "value_float": 2.536867121567143e-05
+    },
+    "no_branch_promoted": true,
+    "ordering": {
+      "hybrid_over_registered": 19.3849268760773,
+      "sag_lt_registered_lt_hybrid": true
+    },
+    "registered": {
+      "bit_identical_to_frozen_W2_max": true,
+      "coefficients": "MES_NG omega (3/4, 2, 2/7); UNVERIFIED provenance (MESb print-only)",
+      "eps1_term_share_of_B_omega": 0.9905228012931602,
+      "value_exact": "8015666615061823227/6125000000000000000000000",
+      "value_float": 1.308680263683563e-06
+    },
+    "sag_consistent": {
+      "coefficients": "MES_G omega (10/3, 2/15, 0) under SAG's own eps1 = 0",
+      "reading": "with the dipole attributed entirely to the observer boost (SAG convention) the geodesic vorticity ceiling collapses by ~12 orders of magnitude \u2014 the eps2 term carries it",
+      "value_exact": "4223652872547/12500000000000000000000000",
+      "value_float": 3.3789222980376e-13
+    }
+  }
+}

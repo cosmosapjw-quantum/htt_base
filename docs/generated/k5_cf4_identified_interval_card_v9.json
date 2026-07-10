@@ -1,0 +1,209 @@
+{
+  "allowed_use": "external_audit",
+  "artifact_id": "obsstat.k5_cf4_identified_interval_card_v9",
+  "artifact_mode": "external_audit_conditioned",
+  "artifact_path": "docs/generated/k5_cf4_identified_interval_card_v9.json",
+  "based_on_frozen_cards": {
+    "note": "both byte-frozen; the v8 Teff fingerprint row and Omega_k documented-null status are inherited by reference, not recomputed",
+    "v7": {
+      "path": "docs/generated/k5_cf4_identified_interval_card.json",
+      "sha256": "5fa4d8456182454ab584fe8c22300326cfa5f8f2594f9bace2c9530dd33ad912"
+    },
+    "v8": {
+      "path": "docs/generated/k5_cf4_identified_interval_card_v8.json",
+      "sha256": "a4082dd7d441a436b1bbd4fc47d80d705e2f5af2ee36bc695f54e9e99f401eb9"
+    }
+  },
+  "branch_reading": {
+    "lower_endpoint_rule": "c_W = -1, so each W^2 ceiling fixes the LOWER interval endpoint at -U_W (plus the curvature-branch term)",
+    "omega_k_status": "inherited by reference from the frozen v8 card (PLUGIN/BLOCKED + documented external-prior null)",
+    "spread_quantifies": "how much the identified interval is keyed to the eps1 attribution choice; the registered branch stays the frozen anchor and NO branch is promoted",
+    "v8_teff_fingerprint_row": "inherited by reference from the frozen v8 card"
+  },
+  "bulk_flow_input": {
+    "amplitude_error_kms": 4.968225629763425,
+    "amplitude_kms": 340.72639833770336,
+    "beta": 0.0011365409277164116,
+    "error_policy": "measurement_only (the cosmic-variance-inclusive policy lives in the frozen v7 card rows)",
+    "omega_m_declared": 0.3153,
+    "omega_tilt": 4.0728115626715063e-07,
+    "omega_tilt_error": 1.1877362952864287e-08
+  },
+  "caveats": [
+    "Diagnostic pipeline-closure card only.",
+    "All three W^2 ceilings are attribution-conditional; the registered value is the frozen anchor and none is promoted.",
+    "The hybrid_literature ceiling mixes geodesic coefficients with the full observer dipole (NOT SAG's own eps1=0 convention).",
+    "Sigma2 and Omega_k placeholders still block observational promotion."
+  ],
+  "claim_tier": "diagnostic_only",
+  "code_version": "content-addressed",
+  "component_input_modes": {
+    "CF4_bulk_amplitude": "REAL",
+    "External_vorticity_shear_priors": "REGISTERED_EXTERNAL_MODEL_CONDITIONAL_CROSSCHECK_ONLY",
+    "K1_maxscan": "REAL_DIAGNOSTIC_INPUT_NOT_USED_AS_SIGMA2",
+    "MES_coefficients": "SIGMA_REDERIVED_BIT_EXACT_FROM_PRIMARY_SOURCE; OMEGA_ACCEL_PRIMARY_SOURCED_NOT_REDERIVABLE (mes_rederivation_seal, v8)",
+    "Omega_k_upper": "PLUGIN/BLOCKED",
+    "Omega_m": "DECLARED_OBS_DEFAULT",
+    "Omega_tilt_formula": "DERIVED_FROM_PARENT_IDENTITY_SEAL",
+    "Sigma2_error": "PLUGIN/BLOCKED",
+    "Sigma2_hat": "PLUGIN/BLOCKED",
+    "Teff_fingerprint": "DERIVED_FROM_UNIFICATION_SEAL_DETERMINISTIC",
+    "W2_upper": "THREE_LABELED_ATTRIBUTION_CONDITIONAL_BRANCHES (registered / hybrid_literature / sag_consistent; mes_branch_registry_seal)"
+  },
+  "config_hash": "sha256:c78557bdf432abeaee693ecfdc596e7ee0f2255221cea640fb3209a5883ad730",
+  "created_by": "scripts/k5_cf4_identified_interval_card_v9.py",
+  "eps1_attribution": {
+    "consumed_by_frozen_evaluators": "eps1_conservative_total",
+    "eps1_conservative_total": "771/625000",
+    "eps1_cosmological": "0",
+    "eps1_cosmological_rationale": "SAG1997 attributes the whole dipole to observer peculiar motion and sets eps1 = 0 (archived tex)",
+    "eps1_observer_boost": "771/625000",
+    "eps1_observer_boost_float": 0.0012336,
+    "numeric_coincidence_confirmed": true,
+    "reading": "the registered eps1 IS the observed CMB dipole dT/T, numerically the solar kinematic dipole; it is an observer-boost quantity, not a cosmological vorticity bound",
+    "relative_difference_to_solar_beta": 1.075168676650759e-05,
+    "solar_kinematic_beta": 0.001233586736861806
+  },
+  "family_identification": false,
+  "generating_command": "venv/bin/python scripts/k5_cf4_identified_interval_card_v9.py",
+  "git_commit": "content-addressed",
+  "git_commit_or_worktree_state": "content-addressed",
+  "implementation_scope": "obsstat",
+  "input_hashes": [
+    "docs/generated/k5_cf4_identified_interval_card.json:sha256:5fa4d8456182454ab584fe8c22300326cfa5f8f2594f9bace2c9530dd33ad912",
+    "docs/generated/k5_cf4_identified_interval_card_v8.json:sha256:a4082dd7d441a436b1bbd4fc47d80d705e2f5af2ee36bc695f54e9e99f401eb9",
+    "docs/generated/k5_cf4_release_coverage.json:sha256:edcf9f9354cd326827fdae48ce1595aed963140ac5bd6a3264ebe0c5c144eee9",
+    "htt/workspace/data/obs_defaults.json:sha256:c305be5b42ea3c0a9f8d919f0314ac6befc5155424d6b8a00d92f4f9349ac1df"
+  ],
+  "native_solver_result": false,
+  "null_mock_status": "not_statistical",
+  "observational_claim_allowed": false,
+  "owner": "OBSSTAT",
+  "production_status": "diagnostic_only",
+  "schema": "htt.k5.cf4_identified_interval_card.v2",
+  "schema_version": "htt.k5.cf4_identified_interval_card.v2",
+  "sky_support_status": "not_directional",
+  "transfer_source": "none",
+  "w2_ceiling_branches": {
+    "W2_hybrid_literature": {
+      "coefficients": "MES_G omega (10/3, 2/15, 0); VERIFIED geodesic",
+      "curvature_branches": {
+        "all_branch[-Uk,Uk]": {
+          "im_95_ci": [
+            -3.634611757943852e-05,
+            3.719070986076537e-05
+          ],
+          "im_c_n": 1.644853626951486,
+          "interval": [
+            -2.5983521313598557e-05,
+            2.6828113594925402e-05
+          ],
+          "null_extremes": [
+            -2.6368671215671432e-05,
+            1e-06
+          ],
+          "status": "FEASIBLE"
+        },
+        "open_branch[0,Uk]": {
+          "im_95_ci": [
+            -3.5346117579438526e-05,
+            3.719070986076537e-05
+          ],
+          "im_c_n": 1.644853626951486,
+          "interval": [
+            -2.4983521313598556e-05,
+            2.6828113594925402e-05
+          ],
+          "null_extremes": [
+            -2.536867121567143e-05,
+            1e-06
+          ],
+          "status": "FEASIBLE"
+        }
+      },
+      "input_mode": "COMPARISON_ONLY_HYBRID_GEODESIC_COEFFS_X_FULL_OBSERVER_DIPOLE",
+      "w2_upper": 2.536867121567143e-05,
+      "w2_upper_exact": "317108390195892872547/12500000000000000000000000"
+    },
+    "W2_registered": {
+      "coefficients": "MES_NG omega (3/4, 2, 2/7); UNVERIFIED provenance (MESb print-only)",
+      "curvature_branches": {
+        "all_branch[-Uk,Uk]": {
+          "im_95_ci": [
+            -1.2286126643778356e-05,
+            3.719070987709307e-05
+          ],
+          "im_c_n": 1.64485362954318,
+          "interval": [
+            -1.9235303616106864e-06,
+            2.6828113594925402e-05
+          ],
+          "null_extremes": [
+            -2.308680263683563e-06,
+            1e-06
+          ],
+          "status": "FEASIBLE"
+        },
+        "open_branch[0,Uk]": {
+          "im_95_ci": [
+            -1.1286126671726075e-05,
+            3.7190709905040787e-05
+          ],
+          "im_c_n": 1.6448536339793178,
+          "interval": [
+            -9.235303616106865e-07,
+            2.6828113594925402e-05
+          ],
+          "null_extremes": [
+            -1.308680263683563e-06,
+            1e-06
+          ],
+          "status": "FEASIBLE"
+        }
+      },
+      "input_mode": "REGISTERED_MES_CEILING_UNVERIFIED_NON_GEODESIC_PROVENANCE",
+      "w2_upper": 1.308680263683563e-06,
+      "w2_upper_exact": "8015666615061823227/6125000000000000000000000"
+    },
+    "W2_sag_consistent": {
+      "coefficients": "MES_G omega (10/3, 2/15, 0) under SAG's own eps1 = 0",
+      "curvature_branches": {
+        "all_branch[-Uk,Uk]": {
+          "im_95_ci": [
+            -1.0977446761601984e-05,
+            3.719070992070803e-05
+          ],
+          "im_c_n": 1.6448536364661772,
+          "interval": [
+            -6.148504358193533e-07,
+            2.6828113594925402e-05
+          ],
+          "null_extremes": [
+            -1.0000003378922298e-06,
+            1e-06
+          ],
+          "status": "FEASIBLE"
+        },
+        "open_branch[0,Uk]": {
+          "im_95_ci": [
+            -9.977446859055792e-06,
+            3.719071001816184e-05
+          ],
+          "im_c_n": 1.6448536519350083,
+          "interval": [
+            3.8514956418064675e-07,
+            2.6828113594925402e-05
+          ],
+          "null_extremes": [
+            -3.3789222980376e-13,
+            1e-06
+          ],
+          "status": "FEASIBLE"
+        }
+      },
+      "input_mode": "COMPARISON_ONLY_GEODESIC_UNDER_SAG_EPS1_ZERO",
+      "w2_upper": 3.3789222980376e-13,
+      "w2_upper_exact": "4223652872547/12500000000000000000000000"
+    }
+  }
+}
