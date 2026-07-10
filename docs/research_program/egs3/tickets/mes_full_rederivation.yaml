@@ -1,6 +1,6 @@
 id: EGS3-G8-mes-full-rederivation
 title: Full PSTF multipole-hierarchy rederivation of the MES bound coefficients
-state: partially_resolved
+state: discrepancy_documented
 blocker: BLOCKED_MISSING_MESb_PRINT_ONLY_PAPER_II
 owner_lane: gr_xact
 scope: rederive, bit-exact and in-repo, the MES-1995 diagonal bound coefficients
@@ -40,3 +40,26 @@ remaining: MESb (print-only) omega/accel internal rederivation; only obtainable 
   journal PDF (Phys. Rev. D 51, 5942), not a data download.
 reference: Maartens, Ellis, Stoeger, Phys. Rev. D 51, 1525 (1995) [MESa, astro-ph/9501016];
   Phys. Rev. D 51, 5942 (1995) [MESb, print-only]; astro-ph/9510126 [companion]
+
+discrepancy_documented_2026_07_10: |
+  v8-update cycle (REV-R166): the exit gate's "documented discrepancy report
+  (itself a publishable finding)" branch is EXECUTED. Full retrieval log:
+  MESb (PRD 51,5942) confirmed print-only (APS paywalled 403; no arXiv; no ADS
+  scan 403/404; Semantic Scholar no OA PDF; Google Books preview does not
+  expose the equations; unauthorized full-book copies not used). Decisive
+  accessible citing source: Stoeger, Araujo & Gebbie, ApJ 476, 435 (1997)
+  [astro-ph/9904346; LaTeX source archived at docs/audits/mes_primary_sources/
+  sag1997_astro-ph_9904346_ApJ476_435.tex] -- co-authored by Stoeger,
+  explicitly using the Maartens et al. 1995a,b assumption set -- transcribes
+  sigma (5/3,3,3/7) [= registry] and omega (10/3,2/15,0) for a GEODESIC
+  congruence with NO acceleration bound; its own printed numerics (eqs 23-24)
+  close exactly on those triples and exclude the registered omega
+  (3/4,2,2/7) by a factor ~19.9. The registered accel (3/4,1,3/14) appears in
+  NO accessible source. CONSEQUENCE RECORDED, VALUES UNCHANGED: the registry
+  (three_bound_hierarchy.py) is v7-frozen and W2_max=1.309e-6 is a
+  bit-identity production anchor; the literature-supported alternative
+  W2_max=(3/2)((10/3)e1+(2/15)e2)^2 = 2.54e-5 is computed for comparison only
+  (seal egs3.mes_rederivation, sag1997_discrepancy_report). Registry revision
+  is a RE-FREEZE-CYCLE decision requiring explicit sign-off. Residual
+  uncertainty stated: MESb's inaccessibility means a distinct non-geodesic
+  bound set inside it cannot be excluded.

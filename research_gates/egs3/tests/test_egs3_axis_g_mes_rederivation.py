@@ -102,3 +102,38 @@ class G8R3CoVeAdversarialTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class G8SAG1997DiscrepancyGates(unittest.TestCase):
+    """v8-update: the documented-discrepancy branch of the exit gate."""
+
+    def test_sag_numerics_close_on_sag_triples(self):
+        from htt.obsstat.egs3_mes_rederivation import sag1997_discrepancy_report
+        d = sag1997_discrepancy_report()
+        self.assertTrue(d["numerics_close_on_sag_triples"])
+        self.assertGreater(d["registered_triple_excluded_by_factor"], 10.0)
+
+    def test_registered_values_unchanged_bit_identical(self):
+        from htt.obsstat.egs3_mes_rederivation import sag1997_discrepancy_report
+        from htt.tsc.admissibility.three_bound_hierarchy import W2_max
+        d = sag1997_discrepancy_report()
+        registered = W2_max(1.2336e-3, 3.559629e-6, 6.065291e-6)
+        self.assertTrue(np.array_equal(d["w2_ceiling_registered_unchanged"],
+                                       registered))
+        # the alternative is comparison-only and NOT the registered value
+        self.assertNotEqual(d["w2_ceiling_literature_supported_comparison_only"],
+                            d["w2_ceiling_registered_unchanged"])
+
+    def test_seal_carries_the_discrepancy_and_still_passes(self):
+        from htt.obsstat.egs3_mes_rederivation import mes_rederivation_seal
+        seal = mes_rederivation_seal()
+        self.assertEqual(seal["status"], "PASS")
+        self.assertIn("sag1997_discrepancy_report", seal)
+        self.assertIn("DOCUMENTED DISCREPANCY",
+                      seal["resolution"]["omega_accel"])
+
+    def test_registry_action_deferred_to_refreeze(self):
+        from htt.obsstat.egs3_mes_rederivation import sag1997_discrepancy_report
+        d = sag1997_discrepancy_report()
+        self.assertIn("NONE this cycle", d["registry_action"])
+        self.assertIn("re-freeze", d["registry_action"])

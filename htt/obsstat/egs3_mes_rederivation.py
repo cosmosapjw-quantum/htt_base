@@ -42,7 +42,7 @@ from fractions import Fraction
 
 import sympy as sp
 
-from htt.tsc.admissibility.three_bound_hierarchy import COEFFS
+from htt.tsc.admissibility.three_bound_hierarchy import COEFFS, W2_max
 
 __all__ = [
     "reduce_raw_bound",
@@ -168,6 +168,13 @@ def omega_accel_provenance() -> dict:
             "the 'Thm 3.1/3.2/3.3, Eq. 3.7/3.12/3.15' labels in the registry are a "
             "secondary-source reorganization, not MESa/MESb primary equation numbers"
         ),
+        "v8_update_evidence_note": (
+            "the v8-update literature sweep (see sag1997_discrepancy_report) found the "
+            "MESb-citing SAG 1997 limit set (co-authored by Stoeger) carries the GEODESIC "
+            "omega (10/3, 2/15, 0) and NO acceleration bound, contradicting this lineage "
+            "narrative's premise; the registered values remain frozen pending a re-freeze "
+            "cycle audit"
+        ),
     }
 
 
@@ -198,18 +205,100 @@ def mes_coefficient_primary_crosswalk() -> dict:
     }
 
 
+def sag1997_discrepancy_report() -> dict:
+    """v8-update DOCUMENTED DISCREPANCY REPORT (the exit-gate-accepted branch
+    of ticket mes_full_rederivation): the registered omega/accel coefficient
+    triples are contradicted by, respectively absent from, every accessible
+    primary/citing source.
+
+    Evidence (archived: docs/audits/mes_primary_sources/
+    sag1997_astro-ph_9904346_ApJ476_435.tex):
+    * Stoeger, Araujo & Gebbie, ApJ 476, 435 (1997) [astro-ph/9904346] -- the
+      MESb-citing COBE-limits paper co-authored by Stoeger, explicitly using
+      the Maartens et al. 1995a,b assumption set -- transcribes (its eqs 3-4,
+      source lines 153-157):
+          |sigma|/Theta < (5/3) e1 + 3 e2 + (3/7) e3     [matches registry]
+          |omega|/Theta < (10/3) e1 + (2/15) e2          [NOT the registry]
+      for the congruence of timelike GEODESICS (line 180), with NO
+      acceleration bound anywhere.
+    * SAG's own printed numerics (eqs 23-24; e1=0, <e2>=1.1e-5, <e3>=2.5e-5)
+      close ONLY on those triples -- checked exactly below.
+    * MESb itself (PRD 51, 5942) is confirmed print-only: APS paywalled, no
+      arXiv version, no ADS scan (retrieval log in the ticket).
+
+    Consequence: (3/4, 2, 2/7) and (3/4, 1, 3/14) appear in NO accessible
+    source; the registered W2_max = (3/2) B_omega(eps)^2 = 1.309e-6 rests on
+    the unconfirmed triple. THE REGISTERED VALUES ARE NOT CHANGED HERE: the
+    coefficient registry (three_bound_hierarchy.py) is a v7-frozen source and
+    W2_max is a bit-identity production anchor -- any revision is a re-freeze
+    cycle decision with explicit sign-off. The literature-supported
+    alternative ceiling is computed for comparison only.
+
+    Residual uncertainty (stated): MESb's inaccessibility means a distinct
+    non-geodesic bound set inside it cannot be excluded; what is established
+    is that every ACCESSIBLE source, including the same-group MESb-citing
+    paper, carries the geodesic triple and no acceleration bound."""
+    e1, e2, e3 = sp.symbols("e1 e2 e3", positive=True)
+    sag_sigma = sp.Rational(5, 3) * e1 + 3 * e2 + sp.Rational(3, 7) * e3
+    sag_omega = sp.Rational(10, 3) * e1 + sp.Rational(2, 15) * e2
+    # SAG's own numeric closure (their eqs 12, 23, 24): e1=0, e2=1.1e-5, e3=2.5e-5
+    subs = {e1: 0, e2: sp.Rational(11, 10) * 10 ** -5,
+            e3: sp.Rational(25, 10) * 10 ** -5}
+    sigma_num = float(sag_sigma.subs(subs))          # 4.37e-5 vs printed 4.4e-5
+    omega_num = float(sag_omega.subs(subs))          # 1.4667e-6 vs printed 1.5e-6
+    # the registered triple would give ~2.9e-5 against the printed 1.5e-6:
+    reg_omega_expr = (sp.Rational(3, 4) * e1 + 2 * e2 + sp.Rational(2, 7) * e3)
+    reg_omega_num = float(reg_omega_expr.subs(subs))
+    exclusion_factor = reg_omega_num / omega_num
+    # literature-supported alternative ceiling (COMPARISON ONLY, not registered)
+    ssot = {e1: sp.Rational(12336, 10 ** 7),
+            e2: sp.Rational(3559629, 10 ** 12),
+            e3: sp.Rational(6065291, 10 ** 12)}
+    w2_alt = float(sp.Rational(3, 2) * sag_omega.subs(ssot) ** 2)
+    w2_registered = float(W2_max(1.2336e-3, 3.559629e-6, 6.065291e-6))
+    return {
+        "source": "Stoeger, Araujo & Gebbie, ApJ 476, 435 (1997) "
+                  "[astro-ph/9904346]; archived docs/audits/mes_primary_sources/"
+                  "sag1997_astro-ph_9904346_ApJ476_435.tex",
+        "sag_sigma_triple": "(5/3, 3, 3/7) -- matches the registry",
+        "sag_omega_triple": "(10/3, 2/15, 0) -- geodesic; equals MESa eq (60); "
+                            "NOT the registered (3/4, 2, 2/7)",
+        "sag_accel_bound": "ABSENT (geodesic congruence); the registered "
+                           "(3/4, 1, 3/14) appears in no accessible source",
+        "sag_numeric_closure_sigma": sigma_num,
+        "sag_printed_sigma": 4.4e-5,
+        "sag_numeric_closure_omega": omega_num,
+        "sag_printed_omega": 1.5e-6,
+        "numerics_close_on_sag_triples": bool(
+            abs(sigma_num - 4.4e-5) < 5e-7 and abs(omega_num - 1.5e-6) < 5e-8),
+        "registered_omega_under_sag_inputs": reg_omega_num,
+        "registered_triple_excluded_by_factor": round(exclusion_factor, 2),
+        "w2_ceiling_registered_unchanged": w2_registered,
+        "w2_ceiling_literature_supported_comparison_only": w2_alt,
+        "registry_action": "NONE this cycle (v7-frozen registry + bit-identity "
+                           "anchor); revision deferred to a re-freeze cycle "
+                           "with explicit sign-off (ticket "
+                           "mes_full_rederivation -> discrepancy_documented)",
+        "residual_uncertainty": "MESb print-only: a distinct non-geodesic "
+                                "bound set inside it cannot be excluded; all "
+                                "ACCESSIBLE sources carry the geodesic triple",
+    }
+
+
 def mes_rederivation_seal() -> dict:
     """Aggregate M4-resolution seal (fail-closed on what it CAN certify)."""
     sigma = sigma_rederivation()
     omega_mesa = omega_mesa_rederivation()
     provenance = omega_accel_provenance()
     crosswalk = mes_coefficient_primary_crosswalk()
+    discrepancy = sag1997_discrepancy_report()
 
     ok = (sigma["rederived"]
           and sigma["matches_registry"]
           and sigma["symbolic_identity_holds"]
           and omega_mesa["matches_eq60"]
-          and omega_mesa["mesa_omega_differs_from_registry"])
+          and omega_mesa["mesa_omega_differs_from_registry"]
+          and discrepancy["numerics_close_on_sag_triples"])
     return {
         "seal": "egs3.mes_rederivation",
         "status": "PASS" if ok else "FAIL",
@@ -219,12 +308,17 @@ def mes_rederivation_seal() -> dict:
         "omega_mesa_rederivation": omega_mesa,
         "omega_accel_provenance": provenance,
         "primary_crosswalk": crosswalk,
+        "sag1997_discrepancy_report": discrepancy,
         "resolution": {
             "sigma": "rederived bit-exact from MESa eq (51) + C1 + C2 (SymPy + Fraction)",
-            "omega_accel": "pinned to MESb Eqs (30)-(36) with documented Paper-I/II lineage; "
-                           "print-only source -> primary_sourced_not_rederivable",
+            "omega_accel": "DOCUMENTED DISCREPANCY (v8-update): the accessible "
+                           "MESb-citing literature (SAG 1997, same group) carries the "
+                           "geodesic omega (10/3, 2/15, 0) and NO acceleration bound; "
+                           "the registered triples appear in no accessible source; "
+                           "registered values UNCHANGED (frozen registry + bit-identity "
+                           "anchor), revision deferred to a re-freeze cycle",
             "ticket": "docs/research_program/egs3/tickets/mes_full_rederivation.yaml "
-                      "-> partially_resolved",
+                      "-> discrepancy_documented",
         },
         "invariance": "no coefficient value changes; ceilings + W2_max=1.309e-6 + x_C "
                       "anchors bit-identical",
