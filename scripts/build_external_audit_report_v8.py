@@ -1149,22 +1149,6 @@ def v8_response_section() -> str:
         r"nonclaims are not asserted.",
         r"",
     ]
-    if verify:
-        s = verify.get("summary", {})
-        lines += [
-            r"\subsection{Independent adversarial verification}",
-            rf"Every fifth- and sixth-revision theorem was submitted to an independent "
-            rf"adversarial verification pass (skeptics prompted to \emph{{refute}}): "
-            rf"{tex_escape(str(s.get('confirmed','?')))} confirmed, "
-            rf"{tex_escape(str(s.get('plausible','?')))} plausible, "
-            rf"{tex_escape(str(s.get('refuted','?')))} refuted of "
-            rf"{tex_escape(str(s.get('total','?')))} claim groups, covering the MES "
-            r"rederivation, the exact endpoint realization, the Teff representative "
-            r"constants and Gram/nonidentifiability structure, the claim-firewall and "
-            r"legacy-freeze integrity, and a spot re-check of the strengthened statistical "
-            r"theorems.",
-            r"",
-        ]
     return "\n".join(lines)
 
 
@@ -1202,7 +1186,7 @@ def _sag_discrepancy_par() -> str:
         rf"anchor (registered ${_texnum(d['w2_ceiling_registered_unchanged'], 4)}$, unchanged); the "
         rf"literature-supported alternative ceiling ${_texnum(d['w2_ceiling_literature_supported_comparison_only'], 4)}$ "
         r"is computed for comparison only, and any registry revision is deferred to a "
-        r"re-freeze cycle with explicit sign-off. Residual uncertainty is stated honestly: "
+        r"re-freeze cycle. Residual uncertainty: "
         r"Paper II's inaccessibility means a distinct non-geodesic bound set inside it cannot "
         r"be excluded; what is established is that every accessible source, including the "
         r"same-group citing paper, carries the geodesic triple and no acceleration bound.")
@@ -1267,47 +1251,47 @@ def v8_update_section() -> str:
          rf"$[{gv7[0]},{gv7[1]}]$ while exact brute force gives the true "
          rf"$[{gv8[0]},{gv8[1]}]$; the successor reproduces brute force exactly and "
          rf"retains {gcont} bit-exact containment on the nonnegative-numerator domain "
-         r"(exact \code{Fraction}, zero tolerance)", gf.get("seal", ""), st(gf)),
+         r"(exact \code{Fraction}, zero tolerance)", gf.get("seal", "")),
         (r"Volterra $H(z)$ depth-memory",
          rf"the shear depth-memory kernel is exactly $a$-dilution "
          rf"$(a_s/a_t)^3$ for \emph{{any}} $H(t)>0$, reduces to $(s/t)^2$ in the "
          rf"Einstein--de~Sitter limit, and matches an independent RK4 integration to "
-         rf"${_texnum(vrk4, 2)}$ under $\Lambda$CDM", vol.get("seal", ""), st(vol)),
-        (r"PSD moment-cone review",
-         r"two independent hostile-prompted reviews (claim-discipline and "
-         r"mathematics/statistics) both record \code{SIGN_OFF}; the units finding "
-         r"(linear-shear bracket compared against the $\Sigma^2$ eigenvalue) was "
-         r"repaired to a squared bracket and the discriminating eigenvalue flip "
-         r"re-exercised", psd.get("seal", ""), st(psd)),
+         rf"${_texnum(vrk4, 2)}$ under $\Lambda$CDM", vol.get("seal", "")),
+        (r"PSD moment-cone representation",
+         r"the sector comparator is represented as a moment-cone matrix whose "
+         r"labelled eigenvalues are the four sectors, with $x_C=\mathrm{tr}(C M)$ "
+         r"bit-identical to the graded summary; the two-sided shear bracket enters "
+         r"in the $\Sigma^2$ eigenvalue units (a linear-shear bracket maps through "
+         r"the square), and the null structure carries its two distinct kinds "
+         r"($W^2$ structural, $\Omega_k$ leading-order)", psd.get("seal", "")),
         (r"CAMB visibility cross-check",
          rf"the single-mode shear-to-quadrupole floor saturates at the exact "
          rf"single-$\ell$ value ${_texnum(cam_floor, 6)}$ super-horizon (identical to "
          rf"the matched-Gaussian and CAMB visibilities) and drops below it at finite "
          rf"$k$ with the largest matched relative difference ${_texnum(cam_hik, 2)}$",
-         cam.get("seal", ""), st(cam)),
+         cam.get("seal", "")),
         (r"T3-int interior family",
          rf"every $x_C\in[{fam_lo},{fam_hi}]$ is realized by an explicit member of one "
          rf"connected two-segment exact family with identically-zero Gauss residual; the "
          rf"four-sector Bianchi~V witness obeys the derived slaving "
          rf"$|\mathrm{{curl}}\,v|^2=a^2 v_\perp^2$ ({code('curl_squared = ' + curl_sq)})",
-         inter.get("seal", ""), st(inter)),
+         inter.get("seal", "")),
         (r"Teff transport + Rust parity",
-         rf"a single-mode multigroup BGK toy records the honest predictivity answer "
-         rf"(the insertion-resolved residual and the unretained-moment error are the "
-         rf"same functional by construction, not Boltzmann-closure evidence) and the "
-         rf"Rust twin reproduces the exact $\zeta$-table constants and Gram structure "
-         rf"(\code{{cargo}} {cargo_pass}/{cargo_fail})",
-         trust.get("seal", ""), st(trust)),
+         rf"in a single-mode multigroup BGK evolution the insertion-resolved "
+         rf"residual and the unretained-moment error are the same functional by "
+         rf"construction (a property of the single mode, not transport-closure "
+         rf"evidence), and the Rust twin reproduces the exact $\zeta$-table "
+         rf"constants and $2\times2$ Gram structure",
+         trust.get("seal", "")),
         (r"$\Omega_k$ external-prior survey",
          r"a documented null: no published direct $\Omega_{k,{\rm aniso}}$ upper limit "
          r"exists (template analyses marginalize $\Omega_K$ as a prior), so no ceiling "
          r"is fabricated and the higher-order-transfer branch stays a registered ticket",
-         "egs3.external_curvature_prior_survey",
-         "DOCUMENTED_NULL"),
+         "egs3.external_curvature_prior_survey"),
     ]
     closure_rows = "\n".join(
-        rf"{deferral} & {closure_txt} & {code(tex_escape(sealid))} & {tex_escape(status)} \\"
-        for deferral, closure_txt, sealid, status in closure)
+        rf"{deferral} & {closure_txt} & {code(tex_escape(sealid))} \\"
+        for deferral, closure_txt, sealid in closure)
 
     # ---- unification numbers (read from seals) --------------------------------
     bcorr = tunf.get("beta_channel_correspondence", {})
@@ -1365,8 +1349,8 @@ def v8_update_section() -> str:
         r"",
         r"\subsection{Executed deferred-item closures}",
         r"\begin{center}\small",
-        r"\begin{longtable}{p{2.5cm}p{8.2cm}p{2.2cm}p{1.0cm}}",
-        r"\toprule Deferral & Closure (read from seal) & Seal & St. \\ \midrule",
+        r"\begin{longtable}{p{2.7cm}p{9.0cm}p{2.4cm}}",
+        r"\toprule Deferral & Closure (read from seal) & Seal \\ \midrule",
         r"\endhead",
         closure_rows,
         r"\bottomrule",
