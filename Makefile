@@ -42,6 +42,10 @@ egs2-gates:
 egs2-experiments:
 	$(THREADS) $(PYPATH) $(PY) $(REPO)/scripts/run_egs2_experiments.py
 
+## EGS2 B1 closure: real-CAMB visibility cross-check seal (exit-2 registered blocker if camb absent).
+egs2-camb-crosscheck:
+	$(THREADS) $(PYPATH) $(PY) $(REPO)/scripts/run_egs2_camb_crosscheck_seal.py
+
 ## EGS3 extension gates (A1-A4 graded comparator/floor/e-value/RB; B1-B3 transfer/Volterra/vorticity).
 egs3-gates:
 	$(THREADS) $(PYPATH) $(PY) -m unittest discover -s $(GATEDIR3) -p 'test_egs3_*.py' -v

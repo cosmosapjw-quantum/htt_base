@@ -20,7 +20,11 @@ claims:
     evidence_type: test
     claim_tier: C1
     allowed_phrase: shear->multipole Fisher floor as a k-profile saturating at 0.632
-    caveats: [analytic visibility stand-in; real CAMB/CLASS visibility to-close; single mode]
+    caveats: [cross-checked against the real CAMB 1.6.6 recombination visibility
+        by the v8 successor htt/bass/transfer/visibility_camb_crosscheck.py
+        (seal egs2.seminative_camb_crosscheck; super-horizon saturation and
+        finite-k floor reproduced to <=0.2%); still single mode -- the full
+        transfer awaits the shear-power mode integral / native line of sight]
   egs3.volterra_depth_memory:
     owner: BASS
     status: SPECIFIED
