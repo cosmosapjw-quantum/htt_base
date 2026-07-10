@@ -1,6 +1,6 @@
 id: EGS3-T3-king-ellis
 title: Full nonlinear (King-Ellis) realization of the identified-set
-state: interval_interior_exactly_realized_dynamics_deferred
+state: constraint_witness_reclassified_lower_w2_withdrawn_dynamics_deferred
 owner_lane: gr_xact / obsstat
 
 progression:
@@ -65,3 +65,49 @@ resolution_t3_int_2026_07_10: |
   STILL DEFERRED: the dynamical King-Ellis evolution realization (constraint-
   level initial data only) and any exact family with independently dialed
   (W^2, Omega_k) box-interior points.
+
+reclassification_v9_2026_07_10: |
+  Both 2026-07-10 external reviews were adversarially verified in-repo; the
+  Frobenius objection (R1 3.4) is CONFIRMED and the v9 cycle (REV-R174)
+  reclassifies this ticket's claims onto the three-level sharpness taxonomy
+  now carried in docs/research_program/THEOREM_REGISTRY.yaml
+  (1 = algebraic-box, 2 = constraint-surface attainability, 3 = dynamical):
+
+  - T3-full is RELABELED "exact constraint-surface endpoint witnesses
+    (homogeneous initial-data candidates)". The phrase "exact homogeneous
+    cosmologies" and the reading "realizing both endpoints ... makes the
+    interval exactly sharp -- a full nonlinear result" (resolved_in_v8 block
+    above) are WITHDRAWN as labels: only Gauss+momentum constraints are
+    checked, and sharpness above level 1 is endpoint-attainability only.
+  - LOWER-ENDPOINT W^2 WITHDRAWN to constraint-unverified: the comparator
+    W^2 is defined on the slice normal n^a; a Bianchi-I homogeneous-slice
+    normal is hypersurface-orthogonal, so Frobenius forces omega_ab[n] = 0.
+    The antipodal pair cancels only the energy flux q(beta)+q(-beta)=0 and
+    creates NO congruence vorticity; the exact seal reads W^2 = 4/100 from
+    the registry and never constructs a vorticity
+    (egs3_nonlinear_realization.py:129,142-144; caveat already at :198-201).
+    Our own slaving relation |curl v|^2 = a^2 v_perp^2 independently
+    corroborates the obstruction (irrotational at Omega_k = 0). The lower
+    endpoint therefore reaches level 2 only OUTSIDE the W^2 sector.
+  - UPPER endpoint (Bianchi V, transverse shear, antipodal q=0, Gauss closed
+    by Lambda) KEEPS genuine level-2 status.
+  - T3-int: level 1 for the x_C-value sweep; genuine momentum closure only
+    on segment II; segment I inherits the Bianchi-I W^2/Frobenius gap.
+
+  rotating_congruence_rederivation_program (recorded from R1 3.4; required
+  before any genuine W^2 > 0 witness at Omega_k = 0):
+    1. explicit definitions of n^a and the matter congruence u^a;
+    2. Theta[n], sigma_ab[n], omega_ab[n], A_a[n];
+    3. (3)R[n] and its meaning on the non-integrable rest-space;
+    4. energy density and momentum flux in that frame;
+    5. Hamiltonian/Gauss constraint;  6. momentum constraint;
+    7. Jacobi and structure-constant constraints;
+    8. matter conservation;  9. evolution equations;
+    10. local development / explicit trajectory.
+  WARNING recorded: the group-invariant slaving relation implies a
+  group-invariant tilt at Omega_k=0 is irrotational, and the antipodal
+  device (needed for q=0) neutralizes the net tilt -- a genuine rotating
+  lower-endpoint witness likely requires abandoning the antipodal
+  construction (single-stream King-Ellis tilt with q != 0) or an
+  inhomogeneous rotational mode. This is a re-derivation, not a relabel.
+

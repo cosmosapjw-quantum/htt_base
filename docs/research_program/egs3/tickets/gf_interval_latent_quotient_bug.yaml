@@ -1,6 +1,6 @@
 id: EGS3-gf-interval-latent-quotient-bug
 title: Latent sign bug + positive-numerator domain restriction in T2' exact quotient path
-state: resolved_in_successor
+state: resolved_in_successor_and_iff_retracted_superseded_by_T2G
 owner_lane: mio / obsstat
 severity: low
 
@@ -52,3 +52,21 @@ resolution_v8_update: |
     NOT claimed outside the nonnegative-numerator region.
   Seal: docs/generated/gf_interval_v8_seal.json (egs3.gf_interval_v8, PASS).
   Gates: research_gates/egs3/tests/test_egs3_axis_e_gf_v8.py.
+
+supersession_v9_2026_07_10: |
+  Beyond the latent quotient bug above, the 2026-07-10 reviews REFUTED the
+  T2' per-endpoint strictness iff itself: the instance S=[0,1], N(s)=s,
+  D(s)=1+s sits inside the stated hypotheses (positive denominator,
+  nondegenerate box, c_N c_D > 0) yet its lower endpoint is NOT strict
+  (N_min = 0 neutralizes the conflict). Registry actions (REV-R170/R171):
+  P36 RETRACTED and T2' per-endpoint iff RETRACTED, both superseded by T2G
+  (htt/obsstat/egs3_fractional_program.py: product relaxation + per-endpoint
+  diagonal-attainment criterion + argmin/argmax corollary gated on N > 0;
+  seals fractional_program_exact_seal.json + fractional_program_sage_seal
+  .json, Sage QQ+PPL Charnes-Cooper second engine). The 400/400 seal of the
+  frozen module survives as the weaker existence-level lemma L-T2-EXIST.
+  The frozen module stays untouched (byte-freeze); the exit_gate above is
+  ABSORBED by the successor: the signed-safe engines live in
+  egs3_gf_interval_v8/egs3_fractional_program and the frozen quotient path
+  stays unused.
+
