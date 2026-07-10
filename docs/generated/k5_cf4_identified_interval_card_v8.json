@@ -316,7 +316,7 @@
     "vorticity_omega_over_H": [
       {
         "limit_95": 5.2e-11,
-        "source": "Saadeh et al., PRL 117, 131302 (2016), arXiv:1605.07178 (vector-mode recast)"
+        "source": "Saadeh et al., PRL 117, 131302 (2016), arXiv:1605.07178 -- the paper's own vorticity recast of its vector-mode shear limit (sigma_V/H)_0 < 4.7e-11; the two numbers are DISTINCT quantities from one source"
       },
       {
         "limit_95": 7.6e-10,
@@ -333,7 +333,8 @@
   },
   "v8_teff_fingerprint_row": {
     "beta_cf4_rapidity": 0.0011365409332612364,
-    "driver": "the SAME CF4 bulk-flow rapidity as the card's Omega_tilt (one boost, two channels; seal egs3.teff_unification)",
+    "containment_is_trivial_inequality": "reduces to s_CF4 < eps1 (the CF4 bulk-flow rapidity below the CMB-dipole amplitude); a consistency disclosure, NOT a null-test result",
+    "driver": "the CF4 bulk-flow rapidity that also drives the card's Omega_tilt (seal egs3.teff_unification; the unification module's |B| = 340.7264 km/s is the card value rounded at 1e-7 relative -- disclosed)",
     "fingerprint_R3_deviation_3half_s2": 1.9375862709144723e-06,
     "fingerprint_R5_deviation_5half_s2": 3.22931045152412e-06,
     "fingerprint_below_ceiling": true,

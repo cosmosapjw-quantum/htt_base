@@ -3,7 +3,7 @@
   "status": "PASS",
   "sympy_version": "1.14.0",
   "numpy_version": "2.5.0",
-  "theorem_U1": "one boost rapidity feeds both channels: s = tanh(beta) exactly under the antipodal two-point reduction; s^2 = t/(2+t) with t = Omega_tilt/((1+w) Omega_m); R_3 - 1 = -(3/4) t + O(t^2), R_5 - 1 = +(5/4) t + O(t^2), R_4 == 1 identically (antipodal-specific: single species gives -(3/2))",
+  "theorem_U1": "conditional on identifying the observer-boost and matter-tilt rapidities (disclosed): s = tanh(beta) exactly under the antipodal two-point reduction; s^2 = t/(2+t) with t = Omega_tilt/((1+w) Omega_m); R_3 - 1 = -(3/4) t + O(t^2), R_5 - 1 = +(5/4) t + O(t^2), R_4 == 1 identically (antipodal-specific: single species gives -(3/2))",
   "theorem_U2": "proved envelopes 1 - R_3 <= (3/2) s^2 and R_5 - 1 <= (5/2) s^2 on 0 < s < 1 (polynomial root isolation); exact rational ceilings at the registered MES dipole amplitude; strictly-increasing ceiling map carries the MES ordering; CF4 rapidity contained in both channels",
   "antipodal_boost_reduction": {
     "antipodal_temperatures": "T_+/- = T_0 e^{+/-beta} (exact)",
@@ -25,7 +25,7 @@
     "leading_coeffs_exact": true,
     "single_species_R3_coeff": "-3/2",
     "antipodal_specificity_pin": true,
-    "correspondence": "R_3 - 1 = -(3/4) Omega_tilt/((1+w) Omega_m) + O(t^2) -- one rapidity feeds the comparator tilt sector and the Teff fingerprint channel"
+    "correspondence": "R_3 - 1 = -(3/4) Omega_tilt/((1+w) Omega_m) + O(t^2) with the ANTIPODAL-PAIR tilt normalization (the canonical single-boost comparator tilt gives -(3/2)); an exact symbolic identity conditional on identifying the observer-boost and matter-tilt rapidities"
   },
   "fingerprint_envelope_proofs": {
     "method": "polynomial root isolation on u = s^2 (sympy real_roots, Sturm); exact, zero tolerance",
@@ -69,6 +69,8 @@
     }
   },
   "disclosed_caveats": [
+    "the observer-boost rapidity (LOCAL kinematic dipole) and the matter-frame tilt rapidity (GLOBAL Bianchi background) are a priori physically distinct and are identified BY FIAT here; the dynamical derivation equating them is not supplied",
+    "the headline -(3/4) uses the ANTIPODAL-PAIR tilt normalization (2x the canonical single-boost comparator Omega_tilt, which gives -(3/2))",
     "two-point antipodal reduction of a continuum boost sky (registered toy anchor, not an angular average)",
     "the two-temperature mixture is the Teff equal-information representation anchor, NOT a predicted CMB spectral distortion",
     "rapidity-vs-velocity beta differs at O(beta^3) ~ 1e-9 (disclosed)",

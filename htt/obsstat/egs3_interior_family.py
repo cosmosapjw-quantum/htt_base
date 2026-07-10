@@ -5,9 +5,15 @@ Discharges the residual King-Ellis initial-data item of ticket ``t3_king_ellis``
 ("realizing every INTERIOR point ... by a single connected exact family"). Two
 results, both exact symbolic GR at the constraint level:
 
-1. INTERVAL interior (proved here, exact). A piecewise-connected two-segment
-   family of exact homogeneous initial data whose x_C sweeps the ENTIRE
-   registered interval [11/100, 17/100] continuously and strictly monotonically:
+1. INTERVAL interior (proved here at the x_C-VALUE level, exact). A
+   piecewise-connected two-segment family of homogeneous data 4-tuples whose
+   x_C sweeps the ENTIRE registered interval [11/100, 17/100] continuously and
+   strictly monotonically. SCOPE: this is an exact statement about the
+   comparator VALUES (piecewise-linear inversion); the Gauss closure is a
+   bookkeeping identity (Omega_Lambda defined to close it), segment II's
+   momentum closure is genuinely computed (transverse shear + antipodal pair,
+   a-independent), and segment I's momentum closure is INHERITED-ASSERTED from
+   the frozen endpoint module (rotating-build caveat re-disclosed below):
 
      Segment I  (Bianchi I, t in [0,1]):  g(t) = (12, 4(1-t), 3, 0)/100,
         x_C = (11 + 4t)/100  -- the rigid-rotation amplitude is scaled down;
@@ -28,7 +34,7 @@ results, both exact symbolic GR at the constraint level:
    (derived here, exact). For a group-invariant tilt velocity v on Bianchi V
    (structure constants [e_1, e_2] = a e_2, [e_1, e_3] = a e_3), the fluid
    vorticity is derived from the commutator algebra: curl(v)^1 = 0,
-   curl(v)^(2,3) = -/+ a v_(3,2)  --  i.e. |curl v| = a |v_perp| EXACTLY
+   curl(v)^(2,3) = +/- a v_(3,2)  --  i.e. |curl v| = a |v_perp| EXACTLY
    (in this frame convention; the overall factor is convention-anchored).
    Consequences:
      * a tilt ALIGNED with the a-vector is irrotational (curl v = 0);
@@ -44,12 +50,14 @@ results, both exact symbolic GR at the constraint level:
        remains open; what is realized is the full x_C interval (result 1) plus
        the simultaneous-nonzero corner class (this result).
 
-Scope kept honest: constraint-level initial data only (Gauss + momentum), NOT
-dynamical evolution -- the full King-Ellis tilted-dynamics realization stays
-deferred; the overall curl normalization is convention-anchored (frame
-commutator algebra below + the Wolfram lane), while the LOAD-BEARING facts --
-curl v = 0 iff v is a-aligned, |curl v| proportional to a |v_perp|, constraint
-closure for antipodal pairs -- are convention-robust.
+Scope kept honest: this is NOT a verified interior realization by fully
+momentum-constraint-checked tilted GR initial data -- the proven parts are the
+exact x_C-value interval sweep, the genuinely computed segment-II/witness
+constraint closures, and the sign-blind curl magnitude/alignment facts; the
+Gauss closure is bookkeeping; dynamics stay deferred (King-Ellis). The curl is
+derived from the VERIFIED Levi-Civita connection (metric-compatible +
+torsion-free in-seal); the spatial curl is a linear-order (gamma -> 1) proxy
+for the covariant comparator vorticity.
 
 Claim discipline: exact symbolic GR algebra; the Bianchi I/V labels are the
 realizing construction, NOT a sky class statement; no data claim, no
@@ -95,7 +103,15 @@ def family_member(segment: str, s: Fraction) -> dict:
              "Omega_tilt": Fraction(3, 100), "Omega_k": Fraction(0)}
         bianchi_class = "I"
         momentum_terms = ("trivial structure constants; rigid-rotation amplitude "
-                          "scaled by (1-t); antipodal pair q=0")
+                          "scaled by (1-t); antipodal pair q=0. INHERITED "
+                          "CAVEAT (frozen endpoint module): the rotating "
+                          "tilted Bianchi I build's momentum constraint is "
+                          "ASSERTED, not explicitly verified -- and a "
+                          "group-invariant tilt is irrotational in Bianchi I "
+                          "(trivial structure constants), so the nonzero W^2 "
+                          "rides on a separate rotational mode whose "
+                          "constraint-level consistency is part of the "
+                          "deferred King-Ellis item")
     elif segment == "II":
         g = {"Sigma2": Fraction(12, 100), "W2": Fraction(0),
              "Omega_tilt": Fraction(3, 100), "Omega_k": Fraction(2, 100) * s}
@@ -116,6 +132,7 @@ def family_member(segment: str, s: Fraction) -> dict:
         "x_C": str(x_C),
         "omega_lambda_closure": str(omega_lambda),
         "gauss_residual_exact_zero": bool(gauss_residual == 0),
+        "gauss_closure_note": "Gauss is closed by DEFINING Omega_Lambda (bookkeeping closure, not an independent constraint -- same disclosure as the frozen endpoint module)",
         "momentum_terms": momentum_terms,
     }
 
@@ -166,6 +183,7 @@ def symbolic_family_residuals() -> dict:
         "gauss_residual_segment_I": str(gauss(S1)),
         "gauss_residual_segment_II": str(gauss(S2)),
         "gauss_identically_zero": bool(gauss(S1) == 0 and gauss(S2) == 0),
+        "gauss_closure_note": "identically zero BECAUSE Omega_Lambda is DEFINED to close it (bookkeeping identity, no constraint content)",
         "x_C_segment_I": str(x1),
         "x_C_segment_II": str(x2),
         "dxC_dt": str(sp.diff(x1, t)),        # +1/25 > 0
@@ -179,53 +197,58 @@ def symbolic_family_residuals() -> dict:
 
 def bianchi_v_group_invariant_curl() -> dict:
     """SymPy derivation of the curl of a group-invariant vector field on
-    Bianchi V from the structure-constant algebra.
+    Bianchi V from the LEVI-CIVITA connection of the invariant orthonormal
+    frame, with the connection VERIFIED metric-compatible and torsion-free
+    in-seal (2026-07 adversarial repair: an earlier index convention produced
+    the opposite overall sign; the magnitude and alignment facts are
+    sign-blind and unchanged).
 
-    Frame: [e_1, e_2] = a e_2, [e_1, e_3] = a e_3, [e_2, e_3] = 0, i.e.
-    C^2_{12} = a, C^3_{13} = a (antisymmetric in the lower pair). For an
-    invariant field v = v_b e_b (frame components constant), the frame
-    covariant derivative reduces to connection terms,
-    nabla_b v_c = -Gamma^d_{cb} v_d with the metric (Levi-Civita, orthonormal)
-    connection Gamma_{abc} = (C_{abc} + C_{cab} - C_{bca})/2 (all indices
-    down, C_{abc} = C^a_{bc} with the orthonormal metric), and
-    (curl v)^a = eps^{abc} nabla_b v_c."""
+    Frame: [e_1, e_2] = a e_2, [e_1, e_3] = a e_3, [e_2, e_3] = 0. With
+    C_{jmk} = <[e_j, e_m], e_k>, the Koszul connection components are
+    Gamma_{jmk} = <nabla_{e_j} e_m, e_k> = (C_{jmk} - C_{mkj} + C_{kjm})/2,
+    and for an invariant field (constant frame components)
+    (curl v)^i = eps^{ibc} v_m Gamma_{bmc}. Result: curl v = (0, a v3, -a v2).
+    """
     a = sp.Symbol("a", real=True)
     v1, v2, v3 = sp.symbols("v1 v2 v3", real=True)
     v = [v1, v2, v3]
-    # structure constants C[c][a][b] = C^c_{ab}, antisymmetric in (a,b)
+    # C[j][m][k] = C_{jmk} = <[e_j, e_m], e_k>
     C = [[[sp.Integer(0)] * 3 for _ in range(3)] for _ in range(3)]
-    C[1][0][1], C[1][1][0] = a, -a       # C^2_{12} = a
-    C[2][0][2], C[2][2][0] = a, -a       # C^3_{13} = a
-    # orthonormal frame: lower the first index trivially; Gamma_{cbd}
-    # (Koszul for an orthonormal invariant frame):
-    #   Gamma_{abc} = (C_{abc} + C_{cab} - C_{bca}) / 2,  C_{abc} := C^a_{bc}
-    def Cl(i, j, k):
-        return C[i][j][k]
+    C[0][1][1], C[1][0][1] = a, -a       # [e1,e2] = a e2
+    C[0][2][2], C[2][0][2] = a, -a       # [e1,e3] = a e3
 
-    def Gamma(i, j, k):   # Gamma_{ijk}
-        return sp.Rational(1, 2) * (Cl(i, j, k) + Cl(k, i, j) - Cl(j, k, i))
+    def Gamma(j, m, k):   # Koszul: <nabla_{e_j} e_m, e_k>
+        return sp.Rational(1, 2) * (C[j][m][k] - C[m][k][j] + C[k][j][m])
 
-    # nabla_b v_c = - Gamma^d_{cb} v_d = - Gamma_{dcb} v_d (orthonormal)
-    def nabla(b, c):
-        return -sum(Gamma(d, c, b) * v[d] for d in range(3))
-
-    eps = sp.LeviCivita
-    curl = [sp.simplify(sum(eps(i, j, k) * nabla(j, k)
-                            for j in range(3) for k in range(3)))
-            for i in range(3)]
-    aligned = [sp.simplify(c.subs({v2: 0, v3: 0})) for c in curl]
-    curl_sq = sp.simplify(sum(c ** 2 for c in curl))
+    rng = range(3)
+    metric_compatible = all(
+        sp.simplify(Gamma(j, m, k) + Gamma(j, k, m)) == 0
+        for j in rng for m in rng for k in rng)
+    torsion_free = all(
+        sp.simplify(Gamma(j, m, k) - Gamma(m, j, k) - C[j][m][k]) == 0
+        for j in rng for m in rng for k in rng)
+    curl = [sp.simplify(sum(sp.LeviCivita(i, b, c)
+                            * sum(v[m] * Gamma(b, m, c) for m in rng)
+                            for b in rng for c in rng)) for i in rng]
+    aligned = [sp.simplify(c_.subs({v2: 0, v3: 0})) for c_ in curl]
+    curl_sq = sp.simplify(sum(c_ ** 2 for c_ in curl))
     # exact DERIVED slaving relation: |curl v|^2 = a^2 (v2^2 + v3^2) = a^2 v_perp^2
     slaving = sp.simplify(curl_sq - a ** 2 * (v2 ** 2 + v3 ** 2)) == 0
     return {
         "structure_constants": "[e1,e2]=a e2, [e1,e3]=a e3, [e2,e3]=0 (Bianchi V)",
-        "curl_components": [str(c) for c in curl],
-        "aligned_tilt_is_irrotational": bool(all(c == 0 for c in aligned)),
+        "connection_metric_compatible": bool(metric_compatible),
+        "connection_torsion_free": bool(torsion_free),
+        "curl_components": [str(c_) for c_ in curl],
+        "aligned_tilt_is_irrotational": bool(all(c_ == 0 for c_ in aligned)),
         "curl_squared": str(curl_sq),
         "slaving_identity_a2_vperp2": bool(slaving),
-        "note": "overall factor is convention-anchored (this frame algebra + "
-                "the Wolfram lane); curl=0 iff v || a and |curl v| ~ a|v_perp| "
-                "are convention-robust",
+        "note": "Levi-Civita connection verified metric-compatible + "
+                "torsion-free in-seal; curl=0 iff v || a and |curl v| = "
+                "a|v_perp| are sign-blind; the SPATIAL curl of v is a "
+                "LINEAR-ORDER (gamma->1) proxy for the covariant fluid "
+                "vorticity of the tilted congruence -- gamma/projection "
+                "factors and the /(6H^2) comparator normalization are NOT "
+                "applied here",
     }
 
 
@@ -236,8 +259,10 @@ def simultaneous_four_sector_witness() -> dict:
     Data: a > 0 (Omega_k = a^2/H^2 > 0), transverse diagonal shear
     sigma = diag(0, s+, -s+) (Sigma^2 > 0), antipodal TRANSVERSE tilt pair
     (+v, -v) with v perpendicular to the a-vector (Omega_tilt > 0, q_net = 0
-    exactly), and the DERIVED vorticity of each pair member
-    |curl v| = a |v_perp| > 0 (W^2 > 0). The momentum constraint keeps only
+    exactly), and the DERIVED spatial curl of each pair member
+    |curl v| = a |v_perp| > 0 -- a LINEAR-ORDER (gamma -> 1) proxy for a
+    nonzero comparator W^2 (the covariant vorticity invariant carries
+    gamma/projection factors and the /(6H^2) normalization not applied here). The momentum constraint keeps only
     3 a_b sigma^{ab} + kappa q^a; both terms vanish exactly (transverse shear;
     antipodal pair)."""
     flux = antipodal_flux_exact()
@@ -251,14 +276,15 @@ def simultaneous_four_sector_witness() -> dict:
                         "antipodal transverse tilt pair (+v,-v), v perp a",
         "momentum_exact_zero": bool(momV["momentum_exact_zero"]
                                     and flux["q_net_is_exact_zero"]),
-        "vorticity_squared_each_component": str(w2_each),
+        "spatial_curl_squared_each_component_linear_order_proxy": str(w2_each),
         "vorticity_nonzero_for_a_v_positive": all_nonzero,
         "four_sectors_simultaneously_nonzero": bool(
             all_nonzero and momV["momentum_exact_zero"]
             and flux["q_net_is_exact_zero"]),
-        "slaving_obstruction": "W^2 is SLAVED: |curl v|^2 = a^2 v_perp^2, a "
-                               "curvature-tilt product -- vorticity is NOT a free "
-                               "dial in this class; arbitrary independent "
+        "slaving_obstruction": "the rotational mode is SLAVED: |curl v|^2 = a^2 v_perp^2 "
+                               "(a curvature-tilt product; linear-order proxy for "
+                               "W^2) -- the rotational mode is NOT a free dial in "
+                               "this class; arbitrary independent "
                                "(W^2, Omega_k) box-interior dial-in by one exact "
                                "connected family remains open (derived "
                                "obstruction, recorded in t3_king_ellis)",

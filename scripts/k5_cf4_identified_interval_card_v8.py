@@ -54,8 +54,10 @@ def build_payload() -> dict:
     ceil = fingerprint_ceilings()
     cf4 = ceil["cf4_containment"]
     teff_row = {
-        "driver": "the SAME CF4 bulk-flow rapidity as the card's Omega_tilt "
-                  "(one boost, two channels; seal egs3.teff_unification)",
+        "driver": "the CF4 bulk-flow rapidity that also drives the card's "
+                  "Omega_tilt (seal egs3.teff_unification; the unification "
+                  "module's |B| = 340.7264 km/s is the card value rounded at "
+                  "1e-7 relative -- disclosed)",
         "beta_cf4_rapidity": cf4["beta_cf4"],
         "s_mixing_tanh_beta": cf4["s_cf4_tanh"],
         "fingerprint_R3_deviation_3half_s2": cf4["fingerprint_3half_s2"],
@@ -65,6 +67,7 @@ def build_payload() -> dict:
         "mes_dipole_ceiling_R3_exact": ceil["ceiling_R3_exact"],
         "mes_dipole_ceiling_R5_exact": ceil["ceiling_R5_exact"],
         "fingerprint_below_ceiling": cf4["fingerprint_below_ceiling"],
+        "containment_is_trivial_inequality": "reduces to s_CF4 < eps1 (the CF4 bulk-flow rapidity below the CMB-dipole amplitude); a consistency disclosure, NOT a null-test result",
         "input_mode": "DERIVED_FROM_UNIFICATION_SEAL_DETERMINISTIC",
         "not_a_measurement": True,
         "statistical_lane": "coverage/calibration run at DISPLAY mixings only "
@@ -78,7 +81,9 @@ def build_payload() -> dict:
                          "W2_max registry and enable NO observational claim",
         "vorticity_omega_over_H": [
             {"limit_95": 5.2e-11, "source": "Saadeh et al., PRL 117, 131302 "
-             "(2016), arXiv:1605.07178 (vector-mode recast)"},
+             "(2016), arXiv:1605.07178 -- the paper's own vorticity recast of "
+             "its vector-mode shear limit (sigma_V/H)_0 < 4.7e-11; the two "
+             "numbers are DISTINCT quantities from one source"},
             {"limit_95": 7.6e-10, "source": "Planck 2015 XVIII, A&A 594, A18, "
              "arXiv:1502.01593 (open-coupled VII_h, T)"},
         ],

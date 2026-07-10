@@ -29,16 +29,23 @@ hitAll = Resolve[ForAll[x, 11/100 <= x <= 15/100,
    Exists[uu, 0 <= uu <= 1, (x2 /. u -> uu) == x]], Reals];
 
 (* (3) group-invariant curl from the Bianchi V frame algebra.
-   C[c][[aIdx,bIdx]] = C^c_{ab}; nonzero: C^2_{12}=a, C^3_{13}=a. *)
+   CC[[j,m,k]] = C_{jmk} = <[e_j,e_m], e_k> (orthonormal frame; indices lowered
+   trivially): [e1,e2]=a e2 -> C_{122}=a, C_{212}=-a; [e1,e3]=a e3 ->
+   C_{133}=a, C_{313}=-a. *)
 CC = ConstantArray[0, {3, 3, 3}];
-CC[[2, 1, 2]] = a; CC[[2, 2, 1]] = -a;
-CC[[3, 1, 3]] = a; CC[[3, 3, 1]] = -a;
-(* orthonormal invariant frame connection Gamma_{abc} = (C_{abc}+C_{cab}-C_{bca})/2 *)
-Gam[i_, j_, k_] := (CC[[i, j, k]] + CC[[k, i, j]] - CC[[j, k, i]])/2;
+CC[[1, 2, 2]] = a; CC[[2, 1, 2]] = -a;
+CC[[1, 3, 3]] = a; CC[[3, 1, 3]] = -a;
+(* Levi-Civita (Koszul) connection Gamma_{jmk} = (C_{jmk} - C_{mkj} + C_{kjm})/2,
+   verified metric-compatible + torsion-free below *)
+Gam[j_, m_, k_] := (CC[[j, m, k]] - CC[[m, k, j]] + CC[[k, j, m]])/2;
+metricCompat = And @@ Flatten[Table[Simplify[Gam[j, m, k] + Gam[j, k, m]] === 0,
+   {j, 3}, {m, 3}, {k, 3}]];
+torsionFree = And @@ Flatten[Table[Simplify[Gam[j, m, k] - Gam[m, j, k] - CC[[j, m, k]]] === 0,
+   {j, 3}, {m, 3}, {k, 3}]];
 v = {v1, v2, v3};
-nab[b_, c_] := -Sum[Gam[d, c, b] v[[d]], {d, 3}];
-curl = Table[Sum[LeviCivitaTensor[3][[i, j, k]] nab[j, k], {j, 3}, {k, 3}], {i, 3}];
-curlExpected = Simplify[curl - {0, -a v3, a v2}] === {0, 0, 0};
+curl = Table[Sum[LeviCivitaTensor[3][[i, b, c]] Sum[v[[m]] Gam[b, m, c], {m, 3}],
+   {b, 3}, {c, 3}], {i, 3}] // Simplify;
+curlExpected = Simplify[curl - {0, a v3, -a v2}] === {0, 0, 0};
 alignedIrrot = Simplify[curl /. {v2 -> 0, v3 -> 0}] === {0, 0, 0};
 slaving = Simplify[curl . curl - a^2 (v2^2 + v3^2)] === 0;
 
@@ -60,7 +67,9 @@ fluxZero = qPair === 0;
     "strictly_monotone_slopes_1_25_and_1_50" -> TrueQ[monotone],
     "endpoints_11_100_and_17_100" -> TrueQ[endpointsOK],
     "every_interval_point_hit" -> TrueQ[hitAll],
-    "curl_components_0_mav3_av2" -> TrueQ[curlExpected],
+    "curl_components_0_av3_mav2" -> TrueQ[curlExpected],
+    "connection_metric_compatible" -> TrueQ[metricCompat],
+    "connection_torsion_free" -> TrueQ[torsionFree],
     "aligned_tilt_irrotational" -> TrueQ[alignedIrrot],
     "slaving_curl_sq_a2_vperp2" -> TrueQ[slaving],
     "transverse_momentum_closure" -> TrueQ[momentumZero],

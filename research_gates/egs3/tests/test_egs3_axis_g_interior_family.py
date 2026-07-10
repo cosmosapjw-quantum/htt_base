@@ -82,8 +82,13 @@ class GI2InteriorRealization(unittest.TestCase):
 class GI3DerivedCurl(unittest.TestCase):
     def test_curl_components_and_alignment(self):
         curl = bianchi_v_group_invariant_curl()
-        self.assertEqual(curl["curl_components"], ["0", "-a*v3", "a*v2"])
+        self.assertEqual(curl["curl_components"], ["0", "a*v3", "-a*v2"])
         self.assertTrue(curl["aligned_tilt_is_irrotational"])
+
+    def test_connection_is_genuinely_levi_civita(self):
+        curl = bianchi_v_group_invariant_curl()
+        self.assertTrue(curl["connection_metric_compatible"])
+        self.assertTrue(curl["connection_torsion_free"])
 
     def test_slaving_identity(self):
         curl = bianchi_v_group_invariant_curl()

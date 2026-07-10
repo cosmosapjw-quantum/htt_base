@@ -1,0 +1,30 @@
+{
+  "seal": "egs3.v8_update_adversarial_verification",
+  "status": "PASS",
+  "method": "5 independent refute-prompted skeptic subagents (physics-stat-auditor), one claim group each, each instructed to rederive the key algebra in sympy and run the repo code; verdicts synthesized; all required honesty fixes applied in-session and re-gated.",
+  "summary": {"total": 5, "confirmed": 1, "plausible": 4, "refuted": 0, "all_math_correct": true},
+  "verdicts": [
+    {"claim_id": "U1-U2-beta-channel", "verdict": "PLAUSIBLE", "severity": "medium",
+     "one_line": "All six enumerated identities (e^{+-beta} antipodes, s=tanh beta, s^2=t/(2+t), the -3/4 / 87/32 / +5/4 / -185/32 series, R4==1, single-species -3/2, the (3/2)/(5/2)s^2 envelopes, exact rational ceilings) reproduce EXACTLY under independent sympy; but the 'one rapidity feeds both channels' framing silently identified a LOCAL observer-boost rapidity with a GLOBAL matter-frame tilt rapidity, and the headline t normalization is the 2x antipodal-PAIR tilt."},
+    {"claim_id": "T3-int-interior-family", "verdict": "PLAUSIBLE", "severity": "medium",
+     "one_line": "x_C-interval sweep + curl magnitude/alignment facts correct; but the coded connection was provably NOT Levi-Civita (opposite overall curl sign), the Gauss check was a bookkeeping tautology reported as if meaningful, segment-I momentum closure was inherited-asserted (unverified rotating build; group-invariant tilt is irrotational in Bianchi I), and the 'W^2 slaving' conflated the spatial curl with the covariant vorticity invariant (no gamma, no /6H^2)."},
+    {"claim_id": "SAG1997-discrepancy", "verdict": "CONFIRMED", "severity": "low",
+     "one_line": "All four discrepancy claims reproduce exactly against the SHA-verified archived tex + independent sympy (SAG eq 4 genuinely has no eps3 term; exclusion factor 19.87 is normalization-independent; registry left bit-identical; residual MESb uncertainty honest); two cosmetic wording/eq-number slips."},
+    {"claim_id": "B1-C6-successors", "verdict": "PLAUSIBLE", "severity": "low",
+     "one_line": "B1 fully confirmed and exemplarily framed (frozen defect real, non-conservative, sign-partition boundary exact at 1686/2314 draws; corner enumeration provably optimal); C6 math correct but the sealing code took max(H*Pi) without abs(), validating the envelope only for the positive-Pi registered input."},
+    {"claim_id": "card-report-claim-language", "verdict": "PLAUSIBLE", "severity": "low",
+     "one_line": "No data/detection leak, no banned tokens outside negations, plugin firewall verified everywhere; nits: Saadeh sigma_V-vs-omega/H numbers needed disambiguation, the 'same rapidity' was 1e-7-relative rounded not bit-identical, 'fingerprint below ceiling' is the trivial s_CF4 < eps1 inequality, and the closure/adversarial tables in the report body sit in tension with the no-meta-dev-content rule (flagged for owner decision)."}
+  ],
+  "fixes_applied_in_session": [
+    "T3-int (medium): connection rederived as a VERIFIED Levi-Civita connection (metric-compatibility + torsion-freeness proved in-seal + in the Wolfram lane); curl components corrected to (0, +a v3, -a v2) in module, gate and wls; Gauss relabeled a bookkeeping closure (Omega_Lambda defined to close it); segment-I momentum re-disclosed as INHERITED-ASSERTED with the Bianchi-I irrotationality tension stated; the spatial curl relabeled a LINEAR-ORDER (gamma->1) proxy for the comparator W^2; headline toned to the x_C-VALUE interval statement.",
+    "U1/U2 (medium): added the load-bearing rapidity-identification disclosure (local observer boost vs global matter-frame tilt, identified BY FIAT; King-Ellis derivation not supplied) to docstring + seal caveats; 'one rapidity feeds both channels' softened to 'exact symbolic identity conditional on identifying the rapidities'; the -(3/4) headline explicitly marked ANTIPODAL-PAIR-normalized (canonical single-boost comparator tilt gives -(3/2)); ceiling-map monotonicity upgraded from a point sample to a symbolic positivity statement.",
+    "C6 (low): src_max now max|H*Pi| (abs); a sign-changing-source witness added to the seal; 'Gronwall envelope' relabeled an explicit a-priori comparison bound.",
+    "SAG cosmetics (low): 'close exactly' -> 'close at the printed two-figure precision' (module + report); epsilon inputs re-cited to SAG eqs 12/20/21; direction note added (the literature-supported alternative ceiling is ~19x LARGER, i.e. would RELAX W2_max).",
+    "Card/report (low): the Saadeh vorticity recast (omega/H < 5.2e-11) and vector shear limit (sigma_V/H < 4.7e-11) explicitly disambiguated as distinct quantities from one source; the 1e-7-relative |B| rounding disclosed in the fingerprint-row driver; the trivial-inequality nature of 'fingerprint below ceiling' disclosed."
+  ],
+  "documented_not_fixed": [
+    "The v8 report body's deferred-item closure table (Seal/St. columns) and the prior-cycle adversarial-verification tally: potential tension with the no-meta-dev-content-in-reports rule; the prior-cycle content shipped in the user-approved v8 and the closure table is arguably seal provenance (permitted); flagged for an owner decision rather than unilaterally removed.",
+    "B1 optional note (joint-subseteq-naive 400/400 is a mathematical necessity, not independent corroboration) left as-is; the seal already scopes the criterion honestly."
+  ],
+  "claim_boundary": "internal adversarial-verification ledger; records skeptic verdicts + in-session honesty fixes; no data, signal-discovery, Bianchi-class-identification-of-the-sky, native-solver-produced, or probabilistic-inference claim"
+}

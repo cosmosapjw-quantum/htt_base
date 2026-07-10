@@ -1192,7 +1192,7 @@ def _sag_discrepancy_par() -> str:
         r"Stoeger and explicitly built on the Maartens et al.\ 1995a,b assumption set---"
         r"transcribes the shear triple $(5/3,\,3,\,3/7)$ (matching the registry) but the "
         r"GEODESIC vorticity triple $(10/3,\,2/15,\,0)$ with NO acceleration bound. Its own "
-        rf"printed numerics close exactly on those triples (${_texnum(d['sag_numeric_closure_sigma'])}$ "
+        rf"printed numerics close on those triples at the printed two-figure precision (${_texnum(d['sag_numeric_closure_sigma'])}$ "
         rf"vs.\ printed ${_texnum(d['sag_printed_sigma'])}$; ${_texnum(d['sag_numeric_closure_omega'])}$ "
         rf"vs.\ ${_texnum(d['sag_printed_omega'])}$) and exclude the registered vorticity triple "
         rf"$(3/4,\,2,\,2/7)$ by a factor ${_texnum(d['registered_triple_excluded_by_factor'])}$; the "

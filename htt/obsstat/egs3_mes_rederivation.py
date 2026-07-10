@@ -221,8 +221,9 @@ def sag1997_discrepancy_report() -> dict:
           |omega|/Theta < (10/3) e1 + (2/15) e2          [NOT the registry]
       for the congruence of timelike GEODESICS (line 180), with NO
       acceleration bound anywhere.
-    * SAG's own printed numerics (eqs 23-24; e1=0, <e2>=1.1e-5, <e3>=2.5e-5)
-      close ONLY on those triples -- checked exactly below.
+    * SAG's own printed numerics (bounds at eqs 23-24; inputs e1=0 [eq 12],
+      <e2>=1.1e-5 [eq 20], <e3>=2.5e-5 [eq 21]) close on those triples at the
+      printed two-figure precision -- checked below.
     * MESb itself (PRD 51, 5942) is confirmed print-only: APS paywalled, no
       arXiv version, no ADS scan (retrieval log in the ticket).
 
@@ -241,7 +242,8 @@ def sag1997_discrepancy_report() -> dict:
     e1, e2, e3 = sp.symbols("e1 e2 e3", positive=True)
     sag_sigma = sp.Rational(5, 3) * e1 + 3 * e2 + sp.Rational(3, 7) * e3
     sag_omega = sp.Rational(10, 3) * e1 + sp.Rational(2, 15) * e2
-    # SAG's own numeric closure (their eqs 12, 23, 24): e1=0, e2=1.1e-5, e3=2.5e-5
+    # SAG numeric closure: inputs e1=0 (eq 12), e2=1.1e-5 (eq 20), e3=2.5e-5
+    # (eq 21); printed bounds at eqs 23-24
     subs = {e1: 0, e2: sp.Rational(11, 10) * 10 ** -5,
             e3: sp.Rational(25, 10) * 10 ** -5}
     sigma_num = float(sag_sigma.subs(subs))          # 4.37e-5 vs printed 4.4e-5
@@ -275,6 +277,9 @@ def sag1997_discrepancy_report() -> dict:
         "registered_triple_excluded_by_factor": round(exclusion_factor, 2),
         "w2_ceiling_registered_unchanged": w2_registered,
         "w2_ceiling_literature_supported_comparison_only": w2_alt,
+        "direction_note": "the literature-supported alternative ceiling is "
+                          "~19x LARGER than the registered value, i.e. adopting "
+                          "the geodesic triple would RELAX (not tighten) W2_max",
         "registry_action": "NONE this cycle (v7-frozen registry + bit-identity "
                            "anchor); revision deferred to a re-freeze cycle "
                            "with explicit sign-off (ticket "

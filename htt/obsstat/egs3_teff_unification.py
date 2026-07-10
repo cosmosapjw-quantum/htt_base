@@ -9,7 +9,8 @@ previously separate structures -- the MES bound registry
 representative theory (``htt.teff.representative``) -- into one sealed system.
 All frozen modules are imported read-only.
 
-U1 (beta-channel correspondence, exact + disclosed reduction).
+U1 (beta-channel correspondence: an exact symbolic identity CONDITIONAL on
+identifying the observer-boost and matter-tilt rapidities, disclosed below).
   A boosted blackbody sky at rapidity beta has EXACT antipodal temperatures
   T_+/- = T_0 / (gamma (1 -/+ v)) = T_0 e^{+/-beta}. The equal-weight
   two-temperature anchor c(1 +/- s) of the Teff theory therefore matches the
@@ -46,7 +47,20 @@ U1 (beta-channel correspondence, exact + disclosed reduction).
       distortion -- no data or signal-discovery statement;
   (iii) beta here is the RAPIDITY (v gamma = sinh beta); a velocity-defined
       beta_v = v differs from tanh beta at O(beta^3) ~ 1e-9 for CF4-scale
-      inputs -- disclosed, never silently mixed.
+      inputs -- disclosed, never silently mixed;
+  (iv) RAPIDITY IDENTIFICATION (load-bearing disclosure): the boost rapidity
+      of the Teff antipodal reduction is a LOCAL observer peculiar-velocity /
+      kinematic-dipole rapidity, while the tilt rapidity in Omega_tilt is a
+      GLOBAL matter-frame (Bianchi background) tilt -- two a priori PHYSICALLY
+      DISTINCT rapidities that this correspondence identifies BY FIAT (the
+      dynamical King-Ellis derivation that would equate them is not supplied);
+      every U1 statement is conditional on that identification;
+  (v) NORMALIZATION: the headline coefficient -(3/4) is ANTIPODAL-PAIR
+      specific: t here uses the pair tilt Omega_tilt = 2(1+w) Omega_m sinh^2
+      beta (T9' antipodal corollary). The canonical single-boost comparator
+      tilt Omega_tilt = (1+w) Omega_m sinh^2 beta (egs3_parent_identity) gives
+      slope -(3/2); cross-plugging normalizations silently is a 2x error --
+      the single-species pin below exists precisely to block that.
 
 U2 (MES -> Teff fingerprint ceilings, exact).
   With s_max := eps_1 (the registered SSOT MES dipole amplitude, leading-order
@@ -177,8 +191,10 @@ def beta_channel_correspondence() -> dict:
         "single_species_R3_coeff": str(c3_single),
         "antipodal_specificity_pin": bool(c3_single == sp.Rational(-3, 2)),
         "correspondence": "R_3 - 1 = -(3/4) Omega_tilt/((1+w) Omega_m) + O(t^2) "
-                          "-- one rapidity feeds the comparator tilt sector and "
-                          "the Teff fingerprint channel",
+                          "with the ANTIPODAL-PAIR tilt normalization (the "
+                          "canonical single-boost comparator tilt gives -(3/2)); "
+                          "an exact symbolic identity conditional on identifying "
+                          "the observer-boost and matter-tilt rapidities",
     }
 
 
@@ -256,9 +272,11 @@ def fingerprint_ceilings() -> dict:
     r5_at = sp.simplify(R[5].subs(s, eps1))
     endpoint_within = bool(sp.N(1 - r3_at, 30) <= sp.N(ceil_r3, 30)
                            and sp.N(r5_at - 1, 30) <= sp.N(ceil_r5, 30))
-    # ceiling map strictly increasing (exact derivative)
+    # ceiling map strictly increasing: d/du[(k/2)u^2] = k*u > 0 for ALL u > 0,
+    # proved symbolically (positivity of the derivative expression on u > 0)
     uu = sp.Symbol("uu", positive=True)
-    increasing = bool(sp.diff(sp.Rational(3, 2) * uu ** 2, uu).subs(uu, 1) > 0)
+    deriv = sp.diff(sp.Rational(3, 2) * uu ** 2, uu)          # = 3*uu
+    increasing = bool(deriv.is_positive)                       # uu > 0 assumption
     # MES ordering -> ordered ceilings (formal order-preservation instantiation)
     order = mes_ordering_theorem()
     ordering_key = "sigma_gt_omega_on_positive_orthant & omega_gt_accel_on_positive_orthant"
@@ -327,7 +345,8 @@ def teff_unification_seal() -> dict:
         "status": "PASS" if ok else "FAIL",
         "sympy_version": sp.__version__,
         "numpy_version": np.__version__,
-        "theorem_U1": "one boost rapidity feeds both channels: s = tanh(beta) "
+        "theorem_U1": "conditional on identifying the observer-boost and "
+                      "matter-tilt rapidities (disclosed): s = tanh(beta) "
                       "exactly under the antipodal two-point reduction; "
                       "s^2 = t/(2+t) with t = Omega_tilt/((1+w) Omega_m); "
                       "R_3 - 1 = -(3/4) t + O(t^2), R_5 - 1 = +(5/4) t + "
@@ -343,6 +362,13 @@ def teff_unification_seal() -> dict:
         "fingerprint_envelope_proofs": env,
         "fingerprint_ceilings": ceil,
         "disclosed_caveats": [
+            "the observer-boost rapidity (LOCAL kinematic dipole) and the "
+            "matter-frame tilt rapidity (GLOBAL Bianchi background) are a "
+            "priori physically distinct and are identified BY FIAT here; the "
+            "dynamical derivation equating them is not supplied",
+            "the headline -(3/4) uses the ANTIPODAL-PAIR tilt normalization "
+            "(2x the canonical single-boost comparator Omega_tilt, which "
+            "gives -(3/2))",
             "two-point antipodal reduction of a continuum boost sky "
             "(registered toy anchor, not an angular average)",
             "the two-temperature mixture is the Teff equal-information "

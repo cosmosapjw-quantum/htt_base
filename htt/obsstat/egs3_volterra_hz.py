@@ -24,7 +24,8 @@ Consequences sealed here:
 2. SymPy: the Einstein-de Sitter limit ``a ~ t^{2/3}`` gives ``K = (s/t)^2``;
 3. numeric: for the registered flat LambdaCDM ``H(a) = H0 sqrt(Om a^-3 + OL)``
    the e-fold Volterra solution matches an independent RK4 integration;
-4. the time-varying Gronwall envelope, exact in e-fold time:
+4. the explicit a-priori comparison bound ('Gronwall-style' envelope:
+   integrating factor + triangle inequality with max|H Pi|), in e-fold time:
    ``|sigma(x)| <= |sigma_0| e^{-3(x-x0)} + max|H Pi| (1 - e^{-3(x-x0)})``.
 
 Claim discipline. Diagnostic-only transport mathematics on declared inputs
@@ -152,8 +153,10 @@ def volterra_hz_check(*, sigma0: float = 1e-3, pi_level: float = 1e-3,
     ode = _rk4_shear_efold(pi, x, omega_m=omega_m, sigma0=sigma0)
     max_diff = float(np.max(np.abs(vol - ode)))
     span = float(x[-1] - x[0])
-    src_max = float(np.max(hubble_lcdm(x, omega_m)
-                           * np.array([pi(xx) for xx in x])))
+    # 2026-07 adversarial repair: max|H Pi| (ABSOLUTE value), so the a-priori
+    # comparison bound is valid for SIGNED sources, matching the docstring.
+    src_max = float(np.max(np.abs(hubble_lcdm(x, omega_m)
+                                  * np.array([pi(xx) for xx in x]))))
     bound = abs(sigma0) * np.exp(-3.0 * span) + src_max * (1.0 - np.exp(-3.0 * span))
     gronwall = bool(np.max(np.abs(vol)) <= bound + 1e-9)
     lags = np.linspace(0.0, span, 20)
@@ -162,13 +165,18 @@ def volterra_hz_check(*, sigma0: float = 1e-3, pi_level: float = 1e-3,
 
 
 def volterra_hz_seal() -> dict:
-    """Fail-closed seal for the real-H(z) depth-memory closure."""
+    """Fail-closed seal for the real-H(z) depth-memory closure. The envelope
+    lane is exercised on BOTH a positive and a SIGN-CHANGING source (2026-07
+    adversarial repair)."""
     sym = kernel_universality_symbolic()
     eds = eds_kernel_limit_symbolic()
     chk = volterra_hz_check()
+    chk_signed = volterra_hz_check(sigma0=-1e-3, pi_level=1e-3, growth=-8.0)
     numeric_ok = chk.max_abs_diff_vs_rk4 < 5e-6
     ok = (sym["identity_holds"] and eds["equals_s_over_t_squared"]
-          and numeric_ok and chk.gronwall_holds and chk.kernel_decays)
+          and numeric_ok and chk.gronwall_holds and chk.kernel_decays
+          and chk_signed.gronwall_holds
+          and chk_signed.max_abs_diff_vs_rk4 < 5e-6)
     return {
         "seal": "egs3.volterra_hz",
         "status": "PASS" if ok else "FAIL",
@@ -184,6 +192,15 @@ def volterra_hz_seal() -> dict:
             "gronwall_envelope_holds": chk.gronwall_holds,
             "kernel_decays": chk.kernel_decays,
             "n_nodes": chk.n_nodes,
+        },
+        "signed_source_witness": {
+            "growth": -8.0,
+            "sigma0": -1e-3,
+            "envelope_holds_for_sign_changing_source": chk_signed.gronwall_holds,
+            "max_abs_diff_vs_rk4": float(round(chk_signed.max_abs_diff_vs_rk4, 12)),
+            "note": "the envelope is an explicit a-priori COMPARISON bound "
+                    "(integrating factor + triangle inequality with max|H Pi|), "
+                    "not an implicit Gronwall feedback argument",
         },
         "claim_boundary": "diagnostic-only transport mathematics; no data, "
                           "signal-discovery, Bianchi-class/geometry, or "
