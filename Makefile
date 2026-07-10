@@ -103,6 +103,11 @@ v7-sympy-seals:
 ## EGS3 v7 aggregate symbolic-seal lane: SymPy (report-gating) + Sage + Lean + Wolfram.
 v7-seals: egs3-seals v7-sympy-seals egs3-sage egs3-lean v7-wolfram
 
+## EGS3 v9 successor seals (T2G fractional program + later TSUM/U4-v9/MES-BR)
+## -> docs/generated/fractional_program_*_seal.json (Sage lane inside).
+v9-seals:
+	$(THREADS) $(PYPATH) $(PY) $(REPO)/scripts/run_egs3_v9_seals.py
+
 ## PAPER-A: identifiability / congruence-kinematics gates + PAPER-A symbolic cores.
 paper-a-gates:
 	cd $(GATEDIR) && $(THREADS) $(PYPATH) $(PY) -m unittest -v \

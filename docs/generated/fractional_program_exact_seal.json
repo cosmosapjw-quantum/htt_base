@@ -1,0 +1,91 @@
+{
+  "claim_boundary": "diagnostic-only exact interval algebra on registered synthetic instances; no data claim, no geometry claim, no inference claim",
+  "counterexample_symbolic": {
+    "derivative_positive_form": "(s + 1)**(-2)",
+    "max_at_1_is_half": true,
+    "min_at_0": true,
+    "monotone_increasing": true,
+    "naive_lower_is_0_over_2": true,
+    "naive_upper_is_1_over_1": true
+  },
+  "engines": {
+    "intervals": "htt/obsstat/egs3_gf_interval_v8.py (signed-safe four-candidate, imported read-only)",
+    "retracted_criterion_demonstrated_from": "htt/obsstat/egs3_gf_interval.py (v7-frozen, read-only)"
+  },
+  "reviewer_counterexample": {
+    "diagonal_witness_lower_at_s0": [
+      "0"
+    ],
+    "instance": "S=[0,1], N(s)=s, D(s)=1+s",
+    "joint": [
+      "0",
+      "1/2"
+    ],
+    "lower_is_exactly_zero_on_both": true,
+    "n_min_degeneracy": "N_min = 0 at s = 0 neutralizes the denominator conflict at the lower endpoint",
+    "product": [
+      "0",
+      "1"
+    ],
+    "retracted_criterion_mispredicts_lower": true,
+    "retracted_criterion_predicts_strict_lower": true,
+    "strict_lower_observed": false,
+    "strict_upper_observed": true,
+    "upper_joint_is_half": true,
+    "upper_product_is_one": true
+  },
+  "seal": "egs3.fractional_program",
+  "statement": {
+    "T2G-1": "I_joint subseteq I_prod (diagonal inclusion), always",
+    "T2G-2": "vertex attainment of linear-fractional extremes on a box (Charnes-Cooper/vertex reduction)",
+    "T2G-3": "per-endpoint equality iff a diagonal point attains the product-relaxation endpoint (exact witness returned)",
+    "T2G-4": "for N>0 over the box: lower equality iff argmin(N) meets argmax(D); upper dually; N_min>0 load-bearing",
+    "T2G-5": "the coefficient-sign test survives only as the N>0 nondegenerate corollary"
+  },
+  "status": "PASS",
+  "supersedes": [
+    "P36 (RETRACTED)",
+    "T2p per-endpoint iff (RETRACTED)"
+  ],
+  "survey": {
+    "containment_holds_everywhere": true,
+    "corollary_iff_holds_on_positive_domain": true,
+    "degenerate_domain_defeats_sign_criterion": true,
+    "n_trials": 400,
+    "seed": 20260710,
+    "sign_criterion_exact_on_positive_domain": true,
+    "tally": {
+      "forced_nmin_zero": {
+        "containment_fail": 0,
+        "corollary_checked": 0,
+        "corollary_iff_fail": 0,
+        "draws": 133,
+        "sign_criterion_lower_mispredicts": 81,
+        "sign_criterion_upper_mispredicts": 0
+      },
+      "positive": {
+        "containment_fail": 0,
+        "corollary_checked": 134,
+        "corollary_iff_fail": 0,
+        "draws": 134,
+        "sign_criterion_lower_mispredicts": 0,
+        "sign_criterion_upper_mispredicts": 0
+      },
+      "signed": {
+        "containment_fail": 0,
+        "corollary_checked": 0,
+        "corollary_iff_fail": 0,
+        "draws": 133,
+        "sign_criterion_lower_mispredicts": 78,
+        "sign_criterion_upper_mispredicts": 5
+      }
+    }
+  },
+  "theorem_id": "T2G",
+  "vertex_attainment_survey": {
+    "grid_per_axis": 5,
+    "n_trials": 40,
+    "vertex_attainment_holds": true,
+    "vertex_optimum_beaten": 0
+  }
+}
