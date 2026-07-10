@@ -466,20 +466,34 @@ def _render(src: dict) -> None:
     # PSD-cone redesign schematic
     ps = src["psd"]
     fig, (axa, axb) = plt.subplots(1, 2, figsize=(7.2, 3.6))
-    cols = [green if s in ps["reachable_sectors"] else red for s in ps["sectors"]]
+    # null-KIND distinction (2026-07 review P2): W2 is a genuine structural
+    # null (red); Omega_k is a leading-order no-channel that re-opens beyond
+    # leading order (orange) -- not the same kind of null.
+    orange = "#e08a00"
+    cols = []
+    for s in ps["sectors"]:
+        if s in ps["reachable_sectors"]:
+            cols.append(green)
+        elif s == "W2":
+            cols.append(red)
+        else:
+            cols.append(orange)
     axa.bar(range(4), ps["spectrum"], color=cols)
     axa.set_xticks(range(4)); axa.set_xticklabels(ps["sectors"], rotation=20, fontsize=8)
     axa.set_ylabel("labelled eigenvalue (sector)")
-    axa.set_title(f"M=diag(g)⪰0, rank {ps['reachable_rank']} reachable\n"
-                  f"green=reachable, red=structural null")
-    # cone-shell on the lambda_Sigma axis
+    axa.set_title(f"M=diag(g), moment block ⪰0, rank {ps['reachable_rank']} reachable\n"
+                  f"green=reachable, red=structural null,\norange=leading-order no-channel",
+                  fontsize=9)
+    # cone-shell on the lambda_Sigma = Sigma^2 axis (log-x: the squared bracket
+    # spans ~4 decades after the 2026-07 units repair)
     axb.axvspan(ps["shell_s_lo"], ps["shell_s_hi"], color=blue, alpha=0.18, label="cone-shell")
-    axb.axvline(0.0, color=red, lw=2, label="FLRW vertex (excluded)")
-    axb.axvline(ps["shell_lambda_sigma"], color=green, lw=2, label="observed λ_Σ")
-    axb.axvline(ps["shell_s_lo"], color=grey, ls="--")
-    axb.set_xlim(-2, ps["shell_s_hi"] * 1.1); axb.set_yticks([])
-    axb.set_xlabel("shear eigenvalue λ_Σ")
-    axb.set_title("convex cone-shell bracket\ns_lo>0 excludes the vertex")
+    axb.axvline(ps["shell_lambda_sigma"], color=green, lw=2, label="observed λ_Σ = Σ²")
+    axb.axvline(ps["shell_s_lo"], color=red, lw=2,
+                label="s_lo>0: FLRW vertex λ_Σ=0 excluded")
+    axb.set_xscale("log")
+    axb.set_xlim(ps["shell_s_lo"] * 0.2, ps["shell_s_hi"] * 3.0); axb.set_yticks([])
+    axb.set_xlabel("shear eigenvalue λ_Σ = Σ² (log)")
+    axb.set_title("convex cone-shell bracket (Σ² units)\ns_lo>0 excludes the vertex")
     axb.legend(fontsize=7)
     fig.suptitle(f"EGS3 PSD-cone redesign: x_C=tr(C M) bit-identical = {ps['bit_identical']}", fontsize=9)
     fig.tight_layout(); fig.savefig(FIG_DIR / "fig_egs3_psd_cone.png", dpi=140); plt.close(fig)

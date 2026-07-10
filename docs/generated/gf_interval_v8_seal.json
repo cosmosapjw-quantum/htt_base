@@ -1,0 +1,67 @@
+{
+  "seal": "egs3.gf_interval_v8",
+  "status": "PASS",
+  "successor_of": "htt/obsstat/egs3_gf_interval.py (v7-frozen; lines 280-281, 298 fixed pairing; float path lines 105-106)",
+  "repairs": [
+    "documented signed-numerator domain (v7 pairing valid iff shifted numerator nonnegative)",
+    "four-candidate corner enumeration valid for every signed numerator with strictly positive denominator"
+  ],
+  "negative_numerator_discrepancy": {
+    "config": {
+      "n_pt": [
+        "-3/2",
+        "-1"
+      ],
+      "d_pt": [
+        "2",
+        "5/2"
+      ],
+      "bounds": [
+        [
+          "0",
+          "1/4"
+        ]
+      ],
+      "c_num": [
+        "1/5"
+      ],
+      "c_den": [
+        "-1/5"
+      ]
+    },
+    "v7_frozen_interval": [
+      "-3/5",
+      "-19/39"
+    ],
+    "v8_interval": [
+      "-3/4",
+      "-19/49"
+    ],
+    "brute_force_interval": [
+      "-3/4",
+      "-19/49"
+    ],
+    "v8_matches_brute_force_exactly": true,
+    "v7_fails_containment_on_negative_domain": true,
+    "arithmetic": "exact Fraction (zero tolerance)"
+  },
+  "positive_domain_bit_exact_containment": {
+    "trials_evaluated": 200,
+    "joint_bit_exact_agreement": "200/200",
+    "naive_bit_exact_agreement": "200/200",
+    "all_bit_exact": true,
+    "domain": "nonnegative shifted numerator over the whole shared box",
+    "arithmetic": "exact Fraction (zero tolerance)"
+  },
+  "signed_domain_survey": {
+    "trials_evaluated": 400,
+    "containment_exact": "400/400",
+    "containment_always": true,
+    "criterion_agreement_measured": "271/400",
+    "criterion_claim_domain": "nonnegative shifted numerator only (v7 theorem); signed-domain agreement is an observation",
+    "strict_cases": 287,
+    "arithmetic": "exact Fraction (zero tolerance)"
+  },
+  "frozen_module_untouched": true,
+  "claim_boundary": "diagnostic-only interval algebra; no data, signal-discovery, Bianchi-class/geometry, or probabilistic-inference claim"
+}

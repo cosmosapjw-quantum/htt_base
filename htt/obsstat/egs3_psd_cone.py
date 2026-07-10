@@ -4,10 +4,12 @@ The graded upgrade (`egs3_graded_comparator`) already cured the signed scalar
 ``x_C = Sigma^2 - W^2 + Omega_tilt + Omega_k`` by exposing the four sectors
 individually as a vector ``g``. This module takes the next, structural step
 registered in the EGS3 plan (Part 1, revisionary redesign): the primary
-diagnostic object becomes a real symmetric **PSD matrix comparator** ``M >= 0``
-whose labelled spectrum (the diagonal in the sector eigenbasis) ARE the four
-sector invariants.  A single object then unifies what were four separate
-statements:
+diagnostic object becomes a real symmetric **matrix comparator, PSD on the
+three genuine second-moment sectors** {Sigma2, W2, Omega_tilt} (the fourth
+coordinate, Omega_k_aniso, is SIGNED and rides in the signature C, so global
+``M >= 0`` is NOT asserted), whose labelled spectrum (the diagonal in the
+sector eigenbasis) ARE the four sector invariants.  A single object then
+unifies what were four separate statements:
 
   * x_C as a functional of M          --  x_C = tr(C M),  C = diag(+1,-1,+1,+1)
   * admissible set                    --  the PSD cone (PAPER-B B-psd moment cone)
@@ -45,7 +47,7 @@ from dataclasses import dataclass
 import numpy as np
 
 from htt.obsstat.egs3_graded_comparator import (
-    SECTORS, COMPARATOR_SIGNS, channel_response_design,
+    SECTORS, COMPARATOR_SIGNS, channel_response_design, NULL_SECTOR_KIND,
 )
 
 # Signature operator C: x_C = tr(C M).  Diagonal because M is diagonal in the
@@ -94,8 +96,11 @@ def sectors_from_matrix(M: np.ndarray) -> np.ndarray:
 def xc_from_matrix(M: np.ndarray) -> float:
     """x_C as a functional of the comparator: x_C = tr(C M).
 
-    Bit-identical to the graded summary <c, g> because M is diagonal in the
-    sector eigenbasis (gated by the EGS3 PSD contract)."""
+    Bit-identical to the graded summary <c, g>: diagonality gives mathematical
+    equality, and the identity is bit-exact because C = diag(+-1) makes every
+    product c_i * g_i an EXACT float operation and the trace sums the same
+    values in the same index order as the dot product (gated by the EGS3 PSD
+    contract; verified adversarially by the 2026-07 independent review)."""
     M = np.asarray(M, dtype=float)
     return float(np.trace(SECTOR_SIGNATURE @ M))
 
@@ -170,6 +175,11 @@ class EigenIdentifiability:
     null_sectors: tuple[str, ...]
     null_residual: float          # ||(I-P_R) M restricted to recovered|| -> 0
     reachable_recovers_sectors: bool
+    # NULL-KIND annotation (2026-07 review P2): the two nulls are NOT the same
+    # kind -- W2 is a genuine order-independent structural null; Omega_k is a
+    # leading-EGS-order no-channel that re-opens beyond leading order within
+    # the same channels (see egs3_graded_comparator.NULL_SECTOR_KIND).
+    null_sector_kinds: tuple[str, ...] = ()
 
 
 def eigen_identifiability(M: np.ndarray, *, tol: float = 1e-12) -> EigenIdentifiability:
@@ -191,10 +201,13 @@ def eigen_identifiability(M: np.ndarray, *, tol: float = 1e-12) -> EigenIdentifi
     recovers = bool(np.allclose([g_meas[i] for i in reach_idx],
                                 [g[i] for i in reach_idx], atol=1e-12))
     null_resid = float(np.linalg.norm([g_meas[i] for i in null_idx]))
+    kinds = tuple(NULL_SECTOR_KIND.get(name, {}).get("kind", "unclassified")
+                  for name in null)
     return EigenIdentifiability(reachable_rank=len(reachable),
                                 reachable_sectors=reachable, null_sectors=null,
                                 null_residual=null_resid,
-                                reachable_recovers_sectors=recovers)
+                                reachable_recovers_sectors=recovers,
+                                null_sector_kinds=kinds)
 
 
 @dataclass(frozen=True)
@@ -221,10 +234,20 @@ def cone_shell_membership(M: np.ndarray, s_lo: float, s_hi: float) -> ConeShell:
 
 
 def bracket_shell_from_a2a3(a2: float, a3: float) -> tuple[float, float]:
-    """Lower/upper shear-eigenvalue bracket from the observed quadrupole+octupole,
-    via the NT2-B1 covariant two-sided bracket (egs2_shear_bracket)."""
+    """Lower/upper shear-EIGENVALUE (Sigma^2) bracket from the observed
+    quadrupole+octupole via the NT2-B1 covariant two-sided bracket.
+
+    Units repair (2026-07 independent review, P1): `egs2_shear_bracket` bounds
+    the LINEAR shear Sigma (`shear_lower <= Sigma <= shear_upper`), while the
+    cone-shell coordinate is the second-moment eigenvalue
+    ``lambda_Sigma = M[0,0] = Sigma^2``.  The bracket is therefore mapped
+    through the (monotone on Sigma >= 0) square before being compared with
+    ``lambda_Sigma``; both `shear_lower` and `shear_upper` are nonnegative by
+    construction, so the endpoint order is preserved."""
     from htt.obsstat.egs2_shear_bracket import shear_lower, shear_upper
-    return float(shear_lower(a2, a3)), float(shear_upper(a2))
+    lo = max(float(shear_lower(a2, a3)), 0.0)
+    hi = float(shear_upper(a2))
+    return lo * lo, hi * hi
 
 
 def convex_combination_is_admissible(M1: np.ndarray, M2: np.ndarray,

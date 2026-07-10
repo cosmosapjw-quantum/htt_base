@@ -5,15 +5,17 @@
     {
       "script": "egs3_psd_cone.wls",
       "result": {
-        "schema": "htt.egs3.psd_cone.v1",
+        "schema": "htt.egs3.psd_cone.v2",
         "checks": {
           "trace_identity_reconstructs_xc": true,
           "spectrum_equals_sectors": true,
           "cone_positive_homogeneity": true,
           "admissible_set_is_convex_cone": true,
+          "signed_omega_k_line_closed": true,
           "bracket_shell_is_convex": true,
           "positive_lower_bound_excludes_flrw_vertex": true,
-          "signature": "C = diag(+1,-1,+1,+1); x_C = tr(C M); admissible set = PSD cone"
+          "linear_to_eigenvalue_bracket_square_exact": true,
+          "signature": "C = diag(+1,-1,+1,+1); x_C = tr(C M); admissible set = (nonneg 3-sector second-moment block) x (signed Omega_k line)"
         }
       }
     }

@@ -1,0 +1,26 @@
+{
+  "seal": "egs3.volterra_hz",
+  "status": "PASS",
+  "successor_of": "htt/obsstat/egs3_volterra_memory.py (v7-frozen, constant-H)",
+  "closes_caveat": "egs3.volterra_depth_memory: constant-H stand-in; real H(z) to-close",
+  "kernel_universality": {
+    "kernel": "a(s)**3/a(t)**3",
+    "target": "a(s)**3/a(t)**3",
+    "identity_holds": true,
+    "statement": "memory kernel is exactly a^3-dilution for ANY H(t)>0"
+  },
+  "eds_limit": {
+    "H": "2/(3*t)",
+    "kernel_simplified": "s**2/t**2",
+    "equals_s_over_t_squared": true
+  },
+  "lcdm_numeric": {
+    "omega_m_declared": 0.3,
+    "max_abs_diff_vs_rk4": 1.56441e-07,
+    "numeric_match": true,
+    "gronwall_envelope_holds": true,
+    "kernel_decays": true,
+    "n_nodes": 161
+  },
+  "claim_boundary": "diagnostic-only transport mathematics; no data, signal-discovery, Bianchi-class/geometry, or probabilistic-inference claim"
+}

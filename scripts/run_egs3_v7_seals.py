@@ -79,6 +79,16 @@ def build_payloads() -> tuple[dict[str, str], dict[str, dict]]:
         seals["teff_representative_seal.json"] = teff_representative_seal()
     except Exception:  # module not present yet -> lane simply omits it
         pass
+    try:
+        from htt.obsstat.egs3_gf_interval_v8 import gf_interval_v8_seal
+        seals["gf_interval_v8_seal.json"] = gf_interval_v8_seal()
+    except Exception:  # module not present yet -> lane simply omits it
+        pass
+    try:
+        from htt.obsstat.egs3_volterra_hz import volterra_hz_seal
+        seals["volterra_hz_seal.json"] = volterra_hz_seal()
+    except Exception:  # module not present yet -> lane simply omits it
+        pass
 
     payloads = {name: json.dumps(seal, indent=2, default=float) + "\n"
                 for name, seal in seals.items()}

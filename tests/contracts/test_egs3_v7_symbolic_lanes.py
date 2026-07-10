@@ -67,6 +67,9 @@ V7_SYMPY_SEALS = (
     "mes_rederivation_seal.json",
     "nonlinear_realization_seal.json",
     "teff_representative_seal.json",
+    # v8-update additions (signed-numerator T2'' successor + real-H(z) depth memory)
+    "gf_interval_v8_seal.json",
+    "volterra_hz_seal.json",
 )
 
 

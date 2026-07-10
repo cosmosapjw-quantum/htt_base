@@ -1,6 +1,6 @@
 id: EGS3-redesign-psd-cone
 title: PSD-cone-valued comparator (revisionary redesign)
-state: implemented_behind_review
+state: reviewed_fixes_applied_behind_graded
 owner_lane: gr_xact
 scope: replace the scalar diagnostic layer with a PSD-matrix comparator M>=0 whose invariants are the sectors; x_C,F become functionals of M; identifiability = reachable eigen-directions; NT2-B3 = null direction; NT2-B1 = cone membership; PAPER-B B-psd cone = admissible set
 gate: must keep x_C bit-identical (regression) until independently reviewed; ships behind the additive graded upgrade
@@ -13,3 +13,17 @@ realized_by:
   experiment: scripts/run_egs3_experiments.py:axis_psd -> docs/generated/egs3_experiments.json
 delivered: rev-r125
 review_gate: stays behind the graded upgrade (does NOT front the production diagnostic) until an independent reviewer signs off; x_C-bit-identical regression is the standing guard. Off-diagonal (cross-sector) PSD structure is reserved for the native solver and not used.
+review_outcome_2026_07_10: |
+  Independent dual review executed (v8-update cycle, REV-R161); record at
+  docs/audits/psd_cone_review_signoff_2026-07.md (+ psd_cone_review_signoff.json).
+  Claim-discipline reviewer: SIGN_OFF (no P0/P1). Math reviewer: one genuine P1
+  (bracket_shell_from_a2a3 returned LINEAR-shear bounds compared against the
+  Sigma^2 eigenvalue) + three P2 framing/seal-fidelity findings -- ALL REPAIRED
+  in-session: squared bracket + discriminating P7 gate, "moment block >= 0"
+  headline (global M>=0 no longer asserted), Wolfram seal rewritten with
+  Omega_k free (schema v2, new bracket-square Resolve check), null-KIND
+  propagation (W2 structural vs Omega_k leading-order). Frozen
+  egs3_experiments.json axis_psd rows keep the pre-repair numbers (v7
+  byte-freeze); corrected values land in the v8 successor experiments artifact.
+  The representation stays BEHIND the graded upgrade (no fronting authorized);
+  the bit-identical x_C regression remains the standing guard.

@@ -1,6 +1,6 @@
 id: EGS3-gf-interval-latent-quotient-bug
 title: Latent sign bug + positive-numerator domain restriction in T2' exact quotient path
-state: documented_unexercised
+state: resolved_in_successor
 owner_lane: mio / obsstat
 severity: low
 
@@ -28,3 +28,27 @@ exit_gate: |
   In a future cycle that is allowed to touch the v7-era module (e.g. a v9 that re-freezes),
   add the explicit positive-numerator domain guard, fix the sign in the exact-quotient
   branch, and add a witness that exercises that path. Until then the path stays unused.
+
+resolution_v8_update: |
+  Resolved additively (2026-07-10, v8-update cycle) by the successor module
+  htt/obsstat/egs3_gf_interval_v8.py, which the exit_gate's freeze constraint
+  permits: the v7-frozen source is untouched (its historical defective output
+  on the registered negative-numerator case is itself pinned by gate
+  E-V8-1 test_frozen_module_behavior_is_unchanged).
+  - explicit signed-numerator domain DOCUMENTED (v7 pairing valid iff the
+    shifted numerator is nonnegative over the shared box);
+  - sign defect FIXED via the full four-candidate corner enumeration
+    {N_lo/D_lo, N_lo/D_hi, N_hi/D_lo, N_hi/D_hi} (valid for every signed
+    numerator with strictly positive denominator);
+  - the previously unexercised path is now EXERCISED: registered
+    negative-numerator witness shows frozen v7 -> [-3/5,-19/39] vs true
+    (= v8 = independent dense-grid Fraction verifier) [-3/4,-19/49];
+  - bit-exact containment: on the documented nonnegative domain the v8
+    selector reproduces the frozen v7 selector exactly (200/200 Fraction
+    draws), so no v7 result changes;
+  - signed-domain survey: joint subseteq naive containment 400/400 exact;
+    the sign-conflict strictness criterion measured at 271/400 there --
+    confirming the domain restriction was load-bearing and the criterion is
+    NOT claimed outside the nonnegative-numerator region.
+  Seal: docs/generated/gf_interval_v8_seal.json (egs3.gf_interval_v8, PASS).
+  Gates: research_gates/egs3/tests/test_egs3_axis_e_gf_v8.py.
