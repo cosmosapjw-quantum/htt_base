@@ -536,9 +536,13 @@ def type_i_dynamical_irrotationality(*, w: float = 1.0 / 3.0,
     bilinear u_x du_y/dt - u_y du_x/dt vanishes ALONG THE DERIVED
     DYNAMICS at every state -- not only on the constraint surface. A
     group-invariant perfect-fluid stream at Omega_k = 0 is therefore
-    DYNAMICALLY irrotational for every w, even though oblique kinematic
-    vorticity modes exist (KE-OBS): the dynamics never enters them.
-    Verified on random states for the antipodal-pair system."""
+    DYNAMICALLY irrotational for every w with rho + p != 0, even though
+    oblique kinematic vorticity modes exist (KE-OBS): the dynamics never
+    enters them. (At w = 0 the covector is conserved EXACTLY -- du_i = 0
+    -- so the direction is trivially conserved; the normalization below
+    detects that case instead of dividing round-off by round-off, an
+    adversarial-lane fix, REV-R183.) Verified on random states for the
+    antipodal-pair system."""
     rhs, _, _ = derive_rotating_system(0, 2)
     rng = np.random.default_rng(seed)
     worst = 0.0
@@ -557,8 +561,11 @@ def type_i_dynamical_irrotationality(*, w: float = 1.0 / 3.0,
         uy = h12v * w1v + h22v * w2v
         dux = dh11v * w1v + h11v * dw1v + dh12v * w2v + h12v * dw2v
         duy = dh12v * w1v + h12v * dw1v + dh22v * w2v + h22v * dw2v
-        scale = max(abs(ux * duy), abs(uy * dux), 1e-30)
-        worst = max(worst, abs(ux * duy - uy * dux) / scale)
+        u_mag = float(np.hypot(ux, uy))
+        du_mag = float(np.hypot(dux, duy))
+        if du_mag <= 1e-12 * u_mag:
+            continue    # covector exactly conserved (w = 0): trivial
+        worst = max(worst, abs(ux * duy - uy * dux) / (u_mag * du_mag))
     return {
         "w": w,
         "max_rel_bilinear_residual": float(worst),

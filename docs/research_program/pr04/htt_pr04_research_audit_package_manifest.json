@@ -507,8 +507,8 @@
     {
       "archive_path": "pr04_research_audit/docs/research_program/egs3/CLAIM_LEDGER.yaml",
       "group": "governance",
-      "sha256": "sha256:0591524fba970f3f6dba8cd83ba1d88995a742d393e1a57c3c6a3411109b5e2e",
-      "size_bytes": 22112,
+      "sha256": "sha256:50bc395b04d2a6ccf3dd874969bb5788f31d6b85b8774d13c6d270eb1c5a1f3a",
+      "size_bytes": 24094,
       "source_path": "docs/research_program/egs3/CLAIM_LEDGER.yaml"
     },
     {
@@ -1443,6 +1443,20 @@
       "source_path": "research_gates/egs3/tests/test_egs3_axis_g_interior_family.py"
     },
     {
+      "archive_path": "pr04_research_audit/research_gates/egs3/tests/test_egs3_axis_g_king_ellis_dynamics.py",
+      "group": "gate_test",
+      "sha256": "sha256:d4893408418841c965b7e8f9f8c09d16e23cc38e90d1ced13983b57a88949f97",
+      "size_bytes": 5801,
+      "source_path": "research_gates/egs3/tests/test_egs3_axis_g_king_ellis_dynamics.py"
+    },
+    {
+      "archive_path": "pr04_research_audit/research_gates/egs3/tests/test_egs3_axis_g_king_ellis_frame.py",
+      "group": "gate_test",
+      "sha256": "sha256:193e8b7dbd11258011e1326d401e3cd196a6728d4f7682146b212b7b87be04fc",
+      "size_bytes": 6506,
+      "source_path": "research_gates/egs3/tests/test_egs3_axis_g_king_ellis_frame.py"
+    },
+    {
       "archive_path": "pr04_research_audit/research_gates/egs3/tests/test_egs3_axis_g_mes_rederivation.py",
       "group": "gate_test",
       "sha256": "sha256:487a717dc5076523c5009a43f80c0da3cf19b82f041b131c7d1fbc58e8cfb371",
@@ -1737,7 +1751,7 @@
       "source_path": "wolfram/pr07_xact_abstract.wls"
     }
   ],
-  "archive_entry_count": 248,
+  "archive_entry_count": 250,
   "artifact_id": "pr04_research_audit_package",
   "artifact_path": "docs/research_program/pr04/htt_pr04_research_audit_package.zip",
   "caveats": [
@@ -1749,20 +1763,20 @@
     "Raw datasets are not shipped; reports carry release hashes + provenance."
   ],
   "claim_tier": "diagnostic_only",
-  "code_version": "0d1b2d0+dirty",
-  "config_hash": "sha256:835ac07f445a0300625d0b2042defc0e6aafb0e8b6d3e82ef4fe7a1ede6e22a9",
+  "code_version": "06a5241+dirty",
+  "config_hash": "sha256:5413f0e9f323265c60c426c2abb549df15e8cf4090ee7899bedf03393d970171",
   "created_by": "scripts/build_pr04_research_audit_package.py",
   "failed_gates": [],
   "family_identification": false,
   "generating_command": "python scripts/build_pr04_research_audit_package.py",
-  "git_commit_or_worktree_state": "0d1b2d0+dirty",
+  "git_commit_or_worktree_state": "06a5241+dirty",
   "group_counts": {
     "audit_prompt": 1,
     "driver_script": 26,
     "figure_manifest": 21,
     "figure_payload": 21,
     "figure_source_json": 16,
-    "gate_test": 34,
+    "gate_test": 36,
     "governance": 40,
     "measurement_report": 25,
     "package_readme": 1,
@@ -1845,7 +1859,7 @@
     "docs/research_program/egs2/tickets/K5_release_matched_mocks.yaml:sha256:46186d394b60a075192cd870894668e09764fc3e283631ade25f3e318cd048eb",
     "docs/research_program/egs2/tickets/semi_native_shear_to_quadrupole.yaml:sha256:0bde934dd937403d54e54cf2fb4ed6d41a4f6fc7dae47c26fc971e86295065fc",
     "docs/research_program/egs3/BLOCKER_SOLUTIONS.md:sha256:fa57108d69263f577efc2f7f06b7fd9827ecd09154709ab0f0555bb797cb3e9c",
-    "docs/research_program/egs3/CLAIM_LEDGER.yaml:sha256:0591524fba970f3f6dba8cd83ba1d88995a742d393e1a57c3c6a3411109b5e2e",
+    "docs/research_program/egs3/CLAIM_LEDGER.yaml:sha256:50bc395b04d2a6ccf3dd874969bb5788f31d6b85b8774d13c6d270eb1c5a1f3a",
     "docs/research_program/egs3/DIVERGENCE.md:sha256:0a2cbd09d62a0eea976fd8a85f6d95ab9dd3179cf12d83660e6385aa958d4496",
     "docs/research_program/egs3/FRAMEWORK_CRITIQUE_AND_REDESIGN.md:sha256:f2257445f4cb2fc406364181cff34bfcc200cc75d9bc135aecf4d62ad5bd537b",
     "docs/research_program/egs3/README.md:sha256:9889bc7152b0c48b2461d0600ae3d7fdd0b765230814204729d2079d347e96c0",
@@ -1979,6 +1993,8 @@
     "research_gates/egs3/tests/test_egs3_axis_f_dynamics.py:sha256:3967efb577dab33bbbdc4cd0f7a2a3ff276a0a19e357a88118f8936d0552da28",
     "research_gates/egs3/tests/test_egs3_axis_f_physics_seals.py:sha256:90d7186c4e18e5a03b1c0b23797b6ad25d809e84b47f65616fb9d265286da922",
     "research_gates/egs3/tests/test_egs3_axis_g_interior_family.py:sha256:bfb6a1f64a92c07f9f0c14ed92bbe801d760c373dc35c26afb37f5b4634c868a",
+    "research_gates/egs3/tests/test_egs3_axis_g_king_ellis_dynamics.py:sha256:d4893408418841c965b7e8f9f8c09d16e23cc38e90d1ced13983b57a88949f97",
+    "research_gates/egs3/tests/test_egs3_axis_g_king_ellis_frame.py:sha256:193e8b7dbd11258011e1326d401e3cd196a6728d4f7682146b212b7b87be04fc",
     "research_gates/egs3/tests/test_egs3_axis_g_mes_rederivation.py:sha256:487a717dc5076523c5009a43f80c0da3cf19b82f041b131c7d1fbc58e8cfb371",
     "research_gates/egs3/tests/test_egs3_axis_g_nonlinear_realization.py:sha256:b656d3696ebd23a809e5bfff4b3c5806adc8efff98408061fc7d2d45ecb72074",
     "research_gates/egs3/tests/test_egs3_axis_g_realization.py:sha256:a72758098c0ddcc39fb9a936e1c9aa79b44a03afb65c14bacd89ab0a878b1261",

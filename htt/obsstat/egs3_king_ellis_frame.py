@@ -38,8 +38,10 @@ Item map (1-7):
 KE-OBS theorem (exact vorticity classification; REPLACES the ticket
 WARNING's blanket irrotationality reading): for the LRS metric with
 curvature parameter c (c = 1 type V, c = 0 type I) and group-invariant
-tilt of rapidity b at angle phi to the a-vector axis (S = sinh b,
-H_i = a_i'/a_i),
+tilt of rapidity b(t) at CONSTANT direction -- fixed angle phi to the
+a-vector axis and fixed azimuth (a time-rotating azimuth psi(t) adds
++(S^4/2) sin^2(phi) (dpsi/dt)^2; adversarial-lane qualifier, REV-R183) --
+with S = sinh b, H_i = a_i'/a_i,
 
     omega_ab omega^ab = (S^2 sin^2 phi / 2)
                         * [ S cos(phi) (H1 - H2) - cosh(b) c / a1 ]^2
@@ -290,8 +292,10 @@ def _reduce_even_trig(expr):
 @lru_cache(maxsize=1)
 def ke_obs_vorticity_theorem() -> dict:
     """KE-OBS: EXACT vorticity classification of the group-invariant
-    tilted congruence (LRS metric, curvature parameter c: 1 = type V,
-    0 = type I; tilt angle phi to the a-vector axis; S = sinh b):
+    CONSTANT-DIRECTION tilted congruence (LRS metric, curvature parameter
+    c: 1 = type V, 0 = type I; fixed tilt angle phi to the a-vector axis
+    and fixed azimuth psi -- a time-rotating azimuth adds
+    +(S^4/2) sin^2(phi) psi'^2 to the closed form; S = sinh b):
 
         omega_ab omega^ab
             = (S^2 sin^2 phi / 2) [S cos(phi)(H1 - H2) - cosh(b) c/a1]^2
@@ -365,8 +369,20 @@ def ke_obs_vorticity_theorem() -> dict:
 
 # ---------------------------------------------------------------- item 3+5
 def _proj_riemann_trace(case: str, tilt: str) -> sp.Expr:
-    """Double h-trace of the Gauss-projected curvature:
-    R3 = h^{ac} h^{bd} [ R_{abcd}(proj) - V_ac V_bd + V_ad V_bc ]."""
+    """Double h-trace of the Gauss-projected curvature, with the
+    SAME-ORDER contraction of the Gauss-product term:
+
+        R3 = h^{mk} h^{nl} R_{mnkl} + V_ab V^{ab} - (h^{ab} V_ab)^2 ,
+        V_ab = h^m_a h^n_b nabla_m u_n .
+
+    Ordering disclosure (adversarial-lane finding, REV-R183): for a
+    rotating congruence V is non-symmetric, so the Gauss-product term has
+    an ordering choice; the TRANSPOSED contraction tr(V.V) instead of
+    V_ab V^{ab} differs by exactly 2 omega_ab omega^ab and yields the
+    Ellis-convention identity with -omega^2. This module STATES and uses
+    the same-order contraction throughout (hence beta = +1 in
+    gauss_identity); both orderings reproduce the standard 3-curvature in
+    the integrable (omega = 0) limits, where they coincide."""
     kin = frame_kinematics(case, tilt)
     lrs = tilt == "general"
     coords, g, ginv, Gam, Rdn, _, _, _ = _geometry(case, lrs)
@@ -386,13 +402,13 @@ def _proj_riemann_trace(case: str, tilt: str) -> sp.Expr:
                 for l in range(4):
                     if Rdn[m][n][k][l] != 0:
                         rr += hup[m, k] * hup[n, l] * Rdn[m][n][k][l]
-    # V-trace terms: h^{ac}h^{bd}(V_ad V_bc - V_ac V_bd)
-    #              = tr(V~ V~) - (tr V~)^2 with V~ = h-projected V (V is
-    # already fully projected), traces taken with h^{ab}.
+    # Gauss-product term, SAME-ORDER contraction: V_ab V^{ab} - (tr V)^2
+    # (see the docstring's ordering disclosure; the transposed tr(V.V)
+    # would flip the omega^2 sign to the Ellis convention)
     trV = sum(hup[a, b_] * V[a, b_] for a in range(4) for b_ in range(4))
     trVV = sum(hup[a, c] * hup[b_, d] * V[a, d] * V[c, b_]
                for a in range(4) for b_ in range(4)
-               for c in range(4) for d in range(4))
+               for c in range(4) for d in range(4))   # = V_ab V^{ab}
     return sp.cancel(sp.together(rr + trVV - trV ** 2))
 
 
@@ -468,6 +484,16 @@ def gauss_identity() -> dict:
             " formal rest spaces, not of actual hypersurfaces; the beta"
             " omega^2 term is exactly the correction the identity"
             " acquires there"),
+        "convention_note": (
+            "once the same-order Gauss-product contraction V_ab V^ab is"
+            " fixed (stated in _proj_riemann_trace), the identity is a"
+            " pointwise consequence of the h = g + uu algebra for ANY"
+            " unit timelike congruence; the configuration checks exercise"
+            " the derivation end-to-end rather than delimit its validity."
+            " The transposed contraction tr(V.V) differs by exactly"
+            " 2 omega_ab omega^ab and gives the Ellis-convention"
+            " -omega^2 form; the two coincide in every integrable"
+            " (omega = 0) limit"),
     }
 
 

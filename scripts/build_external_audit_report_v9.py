@@ -117,6 +117,11 @@ REQUIRED_ARTIFACTS = [
     "docs/generated/mes_branch_registry_seal.json",
     "docs/generated/k5_cf4_identified_interval_card_v9.json",
     "docs/generated/bianchi_v_dynamics_seal.json",
+    # v9 follow-on King-Ellis seals (REV-R181/R182)
+    "docs/generated/king_ellis_frame_seal.json",
+    "docs/generated/king_ellis_frame_wolfram_seal.json",
+    "docs/generated/king_ellis_dynamics_seal.json",
+    "docs/generated/king_ellis_dynamics_wolfram_seal.json",
 ]
 
 # v7 strengthened-theorem seals surfaced in the Fifth-Revision response section.
@@ -219,6 +224,11 @@ SOURCE_FILES = [
     "sage/egs3_v9_fractional.sage",
     "scripts/run_egs3_v9_seals.py",
     "htt/obsstat/egs3_bianchi_v_dynamics.py",
+    # v9 follow-on: King-Ellis ten-item program (REV-R181/R182)
+    "htt/obsstat/egs3_king_ellis_frame.py",
+    "htt/obsstat/egs3_king_ellis_dynamics.py",
+    "wolfram/ke_rotating_congruence.wls",
+    "wolfram/ke_dynamics.wls",
 ]
 
 
@@ -1690,8 +1700,123 @@ def v9_response_section() -> str:
         r"\subsection{BV-DYN: tilted Bianchi V dynamics (stretch item discharged)}",
         _bv_dyn_paragraph(),
         r"",
+        r"\subsection{KE-FRAME/KE-OBS: the rotating-congruence program, items 1--7}",
+        _ke_frame_paragraph(),
+        r"",
+        r"\subsection{KE-DYN: rotating development and the $\Delta\Omega_k=0$ double obstruction (items 8--10)}",
+        _ke_dynamics_paragraph(),
+        r"",
     ]
     return "\n".join(lines)
+
+
+def _ceil_1sig(x: float) -> float:
+    """Smallest 1-significant-figure value >= x (so 'below N' is literally
+    true; adversarial-lane fix, REV-R183)."""
+    import math
+    if x <= 0:
+        return 0.0
+    e = math.floor(math.log10(x))
+    return math.ceil(x / 10 ** e * 10) / 10 * 10 ** e
+
+
+def _ke_frame_paragraph() -> str:
+    kf = _seal("king_ellis_frame_seal.json")
+    kw = _seal("king_ellis_frame_wolfram_seal.json")
+    obs = kf.get("ke_obs_vorticity_theorem", {})
+    gauss = kf.get("gauss_identity", {})
+    engines = ("SymPy and an independent Wolfram lane with exact rational "
+               "cross-engine anchors"
+               if kw.get("status") == "PASS" else "SymPy (Wolfram lane: "
+               + str(kw.get("status")))
+    return (
+        rf"Items 1--7 of the ten-step rotating-congruence rederivation program "
+        rf"recorded from the review are executed first-principles on {engines}: "
+        rf"explicit $n^a$/$u^a$ definitions, the full exact kinematic "
+        rf"decomposition of both congruences (Frobenius $\omega_{{ab}}[n]=0$ and "
+        rf"aligned-tilt $\omega_{{ab}}[u]=0$ to all orders), the tilted-fluid "
+        rf"matter decomposition in both frames, the $u$-frame momentum-constraint "
+        rf"components, and the type-V structure-constant/Jacobi checks.  The "
+        rf"contracted Gauss identity is \emph{{derived}}, not transcribed: with "
+        rf"the stated projection definition, "
+        rf"$R_3=2G_{{ab}}u^au^b+({gauss.get('gamma')})\Theta^2"
+        rf"+({gauss.get('alpha')})\sigma_{{ab}}\sigma^{{ab}}"
+        rf"+({gauss.get('beta')})\omega_{{ab}}\omega^{{ab}}$, verified "
+        rf"identically on five configurations including two rotating ones, and "
+        rf"reproducing the standard 3-curvature in the integrable limits "
+        rf"(the Gauss-product ordering is stated with the definition; the "
+        rf"transposed contraction yields the Ellis-convention "
+        rf"$-\omega_{{ab}}\omega^{{ab}}$ form, the two coinciding wherever "
+        rf"$\omega=0$).  "
+        rf"KE-OBS is the exact vorticity classification "
+        rf"$\omega_{{ab}}\omega^{{ab}}=\tfrac{{1}}{{2}}S^2\sin^2\!\phi\,"
+        rf"[S\cos\phi\,(H_1-H_2)-\cosh(b)\,c/a_1]^2$ ($S=\sinh b$; $c=1$ type~V, "
+        rf"$c=0$ type~I; constant tilt direction --- a time-rotating azimuth "
+        rf"adds $+\tfrac{{1}}{{2}}S^4\sin^2\!\phi\,\dot\psi^2$).  It "
+        rf"\emph{{sharpens}} the earlier blanket statement that a "
+        rf"group-invariant tilt is irrotational at $\Omk=0$ (the taxonomy "
+        rf"paragraph above now carries the corrected form): that reading "
+        rf"holds only along shear principal axes or at leading order --- an "
+        rf"OBLIQUE tilt in a shear-anisotropic type-I background carries "
+        rf"$\omega^2=\tfrac{{1}}{{2}}S^4\sin^2\!\phi\cos^2\!\phi\,(H_1-H_2)^2$, "
+        rf"an $O(v^2)$ effect in $\omega_{{ab}}$ invisible to the leading-order "
+        rf"slaving relation (which the formula reproduces at $O(v^2)$).  The "
+        rf"$n$-frame Frobenius argument, and hence the lower-endpoint $W^2$ "
+        rf"withdrawal for the slice-normal comparator congruence, is untouched; "
+        rf"the oblique mode is a kinematic candidate whose dynamical fate is "
+        rf"settled next.")
+
+
+def _ke_dynamics_paragraph() -> str:
+    kd = _seal("king_ellis_dynamics_seal.json")
+    kw = _seal("king_ellis_dynamics_wolfram_seal.json")
+    ray = kd.get("raychaudhuri_identity", {})
+    rv = kd.get("rotating_development_bianchi_v_dust", {})
+    irrot = kd.get("type_i_dynamical_irrotationality", {})
+    cm = kd.get("radiation_center_manifold", {})
+    engines = (" The Wolfram lane derives the same system independently and "
+               "integrates it with \\code{NDSolve} in one script; the "
+               "development summaries agree across engines."
+               if kw.get("status") == "PASS" else "")
+    return (
+        rf"Items 8--10: the $u$-frame conservation identities (energy and "
+        rf"Euler) are verified exactly on rotating configurations; the "
+        rf"Raychaudhuri identity is derived by undetermined coefficients, "
+        rf"$u(\Theta)=-\Theta^2/3-\sigma_{{ab}}\sigma^{{ab}}"
+        rf"+\omega_{{ab}}\omega^{{ab}}+\nabla_\mu A^\mu-R_{{ab}}u^au^b$, and "
+        rf"verified identically.  Local development: on the off-diagonal class "
+        rf"$\eta=[[h_{{11}},h_{{12}},0],[h_{{12}},h_{{22}},0],[0,0,h_{{33}}]]$ "
+        rf"with an oblique two-component tilt, the first-principles "
+        rf"$7\times7$ evolution system is uniquely solvable along the "
+        rf"integrated trajectories, and a "
+        rf"\emph{{genuine rotating perfect-fluid development exists at "
+        rf"$\Omk>0$}} (type~V): non-vacuum oblique initial data with the three "
+        rf"constraints MONITORED below "
+        rf"${_ceil_1sig(max(rv.get('max_constraint_residuals', [0]))):.1e}$ and "
+        rf"$\omega_{{ab}}\omega^{{ab}}[u]>0$ maintained throughout "
+        rf"(${rv.get('omega2_initial', 0):.2e}\to"
+        rf"{rv.get('omega2_final', 0):.2e}$ over "
+        rf"{rv.get('e_folds_volume', 0):.2f} volume e-folds), for dust and "
+        rf"radiation.{engines}  At $\Omk=0$ the rotating development is "
+        rf"\emph{{doubly obstructed}}: (i) $G_{{ti}}=0$ identically for every "
+        rf"homogeneous type-I metric in the class, so the momentum constraint "
+        rf"forces a SINGLE tilted stream's flux to vanish (symbolic); (ii) the "
+        rf"antipodal pair evades (i) but is \emph{{dynamically irrotational}} "
+        rf"--- the translational Killing vectors and the barotropic Euler "
+        rf"equation conserve the tilt-covector direction (structural bilinear "
+        rf"identity, residual $<{irrot.get('max_rel_bilinear_residual', 0):.0e}$ "
+        rf"on random states; $\omega^2=0$ to machine precision along the pair "
+        rf"development).  The lower-endpoint $W^2$ withdrawal is thereby "
+        rf"upgraded from constraint-level to \emph{{dynamical}} within the "
+        rf"group-invariant perfect-fluid class: only inhomogeneous or "
+        rf"non-perfect-fluid rotational modes remain.  The radiation-tilt "
+        rf"drift reported in the BV-DYN subsection above "
+        rf"is identified as the known $\gamma=4/3$ transcritical "
+        rf"center-manifold law $d\beta/d\ln a=+\tfrac{{2}}{{3}}\beta^2$ "
+        rf"(verified to "
+        rf"{100 * cm.get('radiation', {}).get('max_rel_dev_from_two_thirds_beta_sq', 0):.0f}\% "
+        rf"with the dust rate at the $3\gamma-4$ eigenvalue; Collins \& Ellis "
+        rf"1979; Hewitt \& Wainwright 1992; Coley \& Hervik 2005).")
 
 
 def _bv_dyn_paragraph() -> str:
@@ -1719,9 +1844,9 @@ def _bv_dyn_paragraph() -> str:
         rf"relative, with the leading-formula error scaling as $\beta^2$ (log-log "
         rf"slope ${align.get('loglog_slope', 0)}$).  The F2 lane is thereby a "
         rf"dynamics seal.  Scope unchanged: this is NOT the King--Ellis "
-        rf"rotating-congruence item and NOT a dynamical realization of the T3 "
-        rf"endpoints (the upper-endpoint witness uses a transverse-shear "
-        rf"configuration).")
+        rf"rotating-congruence item (executed separately below) and NOT a "
+        rf"dynamical realization of the T3 endpoints (the upper-endpoint "
+        rf"witness uses a transverse-shear configuration).")
 
 
 def build_tex(artifacts: dict[str, dict]) -> str:
@@ -2086,14 +2211,14 @@ Convexity and closedness as before (an ellipsoidal cylinder, the orthant on the 
 Sharpness is graded on three levels, and each statement below is tagged with the highest level it actually attains:
 \emph{level 1} (algebraic-box sharpness: the interval is the exact image of the product component model under \(c^T\!\cdot\)),
 \emph{level 2} (constraint-surface attainability: an endpoint value is realized by exact initial data satisfying the Gauss and momentum constraints), and
-\emph{level 3} (dynamical solution-space sharpness: realization by an Einstein--matter evolution) --- \emph{no statement in this report reaches level 3}.
+\emph{level 3} (dynamical solution-space sharpness: realization by an Einstein--matter evolution) --- level 3 is reached ONLY by the executed rotating-congruence development (KE-DYN, Seventh-Revision response), and only within the registered group-invariant ansatz class; no identified-interval endpoint statement reaches level 3.
 \begin{lemma}[Identified-set sharpness, level 1]
 Every point of \([x_C^-,x_C^+]\), including both endpoints, is attained by a point of the product component model: the interval is sharp \emph{as an algebraic box image}.
 \end{lemma}
 \begin{proof}
 The reachable extremes are attained by compactness and continuity; null-box values concatenate by convexity.  The PSD second-moment cone (P11) shows each null-sector \emph{magnitude} is a valid second moment of an antipodal stream pair --- an algebraic admissibility statement, not by itself a constraint-surface realization.
 \end{proof}
-Above level 1, the current state is carried by T3-full and T3-int (registry): the UPPER endpoint is a genuine level-2 constraint-surface witness (Bianchi~V initial data, shear transverse to the \(a\)-vector, antipodal flux cancellation, Gauss closed by \(\Lambda\)); the LOWER endpoint reaches level 2 only OUTSIDE the \(W^2\) sector --- the comparator \(W^2\) is the vorticity of the slice normal \(n^a\), a Bianchi~I homogeneous slicing has hypersurface-orthogonal \(n^a\) (Frobenius: \(\omega_{ab}[n]=0\)), and the antipodal tilt pair cancels only the energy flux \(q_a(\beta)+q_a(-\beta)=0\) without generating congruence vorticity, so the lower-endpoint \(W^2=4/100\) rides on a separate, constraint-\emph{unverified} rotational mode (the derived slaving relation \(|{\rm curl}\,v|^2=a^2v_\perp^2\) independently corroborates the obstruction: a group-invariant tilt is irrotational at \(\Omk=0\)).  The exact endpoint constructions are therefore \emph{constraint-surface endpoint witnesses (homogeneous initial-data candidates)}, not exact cosmologies; the dynamical (King--Ellis) realization, including the ten-step rotating-congruence rederivation program, is a registered deferred item.
+Above level 1, the current state is carried by T3-full and T3-int (registry): the UPPER endpoint is a genuine level-2 constraint-surface witness (Bianchi~V initial data, shear transverse to the \(a\)-vector, antipodal flux cancellation, Gauss closed by \(\Lambda\)); the LOWER endpoint reaches level 2 only OUTSIDE the \(W^2\) sector --- the comparator \(W^2\) is the vorticity of the slice normal \(n^a\), a Bianchi~I homogeneous slicing has hypersurface-orthogonal \(n^a\) (Frobenius: \(\omega_{ab}[n]=0\)), and the antipodal tilt pair cancels only the energy flux \(q_a(\beta)+q_a(-\beta)=0\) without generating congruence vorticity, so the lower-endpoint \(W^2=4/100\) rides on a separate, constraint-\emph{unverified} rotational mode (the derived slaving relation \(|{\rm curl}\,v|^2=a^2v_\perp^2\) corroborates the obstruction at leading order; the exact KE-OBS classification sharpens this: a group-invariant tilt at \(\Omk=0\) is irrotational in \(\omega_{ab}\) only along shear principal axes or at leading order in the tilt velocity, an oblique tilt carries an \(O(v^2)\) kinematic vorticity --- but KE-DYN shows the dynamics never enters those modes).  The exact endpoint constructions are therefore \emph{constraint-surface endpoint witnesses (homogeneous initial-data candidates)}, not exact cosmologies.  The ten-step rotating-congruence rederivation program is now EXECUTED (KE-FRAME/KE-OBS/KE-DYN; Seventh-Revision response subsections): a genuine rotating perfect-fluid development exists at \(\Omk>0\) (type~V), while at \(\Omk=0\) it is doubly obstructed (single stream by the momentum constraint, antipodal pair by dynamical irrotationality), so the lower-endpoint \(W^2\) withdrawal is upgraded from constraint-level to \emph{dynamical} within the group-invariant perfect-fluid class.
 
 \paragraph{Proof item P35 --- \textcolor{orange!70!black}{SUPERSEDED by T4$'$/T5$'$} (estimated covariance).}
 The known-covariance \(\chi^2\) statement below is retained as the fixed-covariance special case; the ACTIVE statements are T4$'$ (with an ESTIMATED covariance from \(N_{\rm sim}\) Gaussian simulations the residual quadratic form is Hotelling \(T^2\), i.e.\ an \(F\) threshold with exact finite-simulation size --- valid under the explicit assumptions block: test vector Gaussian and independent of the covariance ensemble, Wishart \(S\), known/fixed mean, response/projector/rank/active set fixed a priori, ensemble splitting whenever selection reuses the covariance mocks) and T5$'$ (the exact deterministic-width Imbens--Manski statement in the special model: shared Gaussian reachable noise, known variance --- no asymptotics and no Stoye uniformity condition are invoked; outside that special model the construction is a finite-sample approximation and is labeled as such).

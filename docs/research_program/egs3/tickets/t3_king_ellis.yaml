@@ -1,6 +1,6 @@
 id: EGS3-T3-king-ellis
 title: Full nonlinear (King-Ellis) realization of the identified-set
-state: constraint_witness_reclassified_lower_w2_withdrawn_dynamics_deferred
+state: ten_item_program_executed_lower_w2_withdrawal_upgraded_to_dynamical
 owner_lane: gr_xact / obsstat
 
 progression:
@@ -111,3 +111,55 @@ reclassification_v9_2026_07_10: |
   construction (single-stream King-Ellis tilt with q != 0) or an
   inhomogeneous rotational mode. This is a re-derivation, not a relabel.
 
+program_executed_2026_07_11: |
+  REV-R181/R182: the ten-item rotating-congruence rederivation program is
+  EXECUTED (registry KE-FRAME / KE-OBS / KE-DYN; seals
+  king_ellis_frame_seal.json + wolfram twin, king_ellis_dynamics_seal.json
+  + wolfram NDSolve twin; gates test_egs3_axis_g_king_ellis_{frame,
+  dynamics}.py). Per-item dispositions:
+    1. n^a and u^a explicit definitions ................ DONE (KE-FRAME)
+    2. Theta, sigma_ab, omega_ab, A_a for both n and u .. DONE (exact, all
+       orders; Frobenius omega[n]=0; aligned omega[u]=0)
+    3. (3)R on the non-integrable rest space ........... DONE (contracted
+       Gauss identity DERIVED: R3 = 2 G_uu - (2/3)Theta^2 + sigma^2
+       + omega^2, projection definition stated; five configs verified)
+    4. energy density and momentum flux in that frame .. DONE (n-frame
+       cosh/sinh closed forms exact; u-frame trivial exactly)
+    5. Hamiltonian/Gauss constraint .................... DONE (item 3's
+       identity = the uu-projection)
+    6. momentum constraint ............................. DONE (u-frame
+       components exact; matter side exactly zero)
+    7. Jacobi and structure-constant constraints ....... DONE (type V
+       commutators, Jacobi, n^ab=0, type-I limit)
+    8. matter conservation ............................. DONE (u-frame
+       energy + Euler identities exact on rotating configs)
+    9. evolution equations ............................. DONE
+       (Raychaudhuri derived by undetermined coefficients; off-diagonal
+       7x7 first-principles system generically invertible)
+   10. local development / explicit trajectory ......... DONE (genuine
+       rotating perfect-fluid development at Omega_k>0: type V oblique
+       tilt, constraints monitored <1.6e-10, omega^2[u]>0 throughout,
+       dust+radiation, SymPy RK45 + Wolfram NDSolve; aligned BV-DYN
+       trajectory re-expressed in u-frame variables)
+
+  HEADLINE OUTCOMES (exactly the WARNING's two routes, now theorems):
+    - KE-OBS exact vorticity classification omega_ab omega^ab =
+      (S^2 sin^2 phi/2)[S cos(phi)(H1-H2) - cosh(b) c/a1]^2 CORRECTS the
+      blanket "group-invariant tilt is irrotational at Omega_k=0" reading
+      (true only along shear principal axes or at leading order; oblique
+      tilt carries O(v^2) kinematic vorticity).
+    - At Omega_k=0 the rotating development is DOUBLY OBSTRUCTED:
+      single stream by the momentum constraint (G_ti = 0 identically for
+      every homogeneous type-I metric in the class, symbolic); antipodal
+      pair by DYNAMICAL irrotationality (translational Killing vectors +
+      barotropic Euler conserve the tilt-covector direction; omega^2 = 0
+      to machine precision along the pair development). The lower-endpoint
+      W^2 withdrawal is UPGRADED from constraint-level to DYNAMICAL within
+      the group-invariant perfect-fluid class -- only inhomogeneous or
+      non-perfect-fluid rotational modes remain (the WARNING's residual).
+    - A genuine rotating perfect-fluid development EXISTS at Omega_k>0
+      (type V); whether the comparator W^2 should be re-attributed from
+      the slice normal to the matter congruence is a REGISTERED
+      INTERPRETIVE QUESTION, not a claim; the withdrawal STANDS under the
+      current slice-normal definition and no W^2 = 4/100 value is
+      asserted.

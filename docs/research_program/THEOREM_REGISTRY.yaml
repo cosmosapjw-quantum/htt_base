@@ -728,3 +728,81 @@ entries:
     sources:
       - scripts/k5_cf4_identified_interval_card_v9.py
       - docs/generated/k5_cf4_identified_interval_card_v9.json
+  - id: KE-FRAME
+    title: King-Ellis tilted-congruence frame kinematics + constraint algebra (items 1-7 of the rotating-congruence program)
+    owner: OBSSTAT/GR
+    status: ACTIVE
+    landing: rev-r181
+    claim_tier: C2
+    body_section: v9_response
+    note: >-
+      Executes items 1-7 of the ten-step program recorded from review R1
+      3.4 (t3_king_ellis.yaml), dual-engine (SymPy + independent Wolfram
+      lane with exact rational cross-engine anchors). Includes the DERIVED
+      contracted Gauss identity R3 = 2 G_uu - (2/3) Theta^2 + sigma^2 +
+      omega^2 (stated projection definition; coefficients from exact
+      rational-point linear systems, verified identically on five
+      configurations including two rotating ones) and the tilted-fluid
+      matter decomposition in both frames.
+    sources:
+      - htt/obsstat/egs3_king_ellis_frame.py
+      - wolfram/ke_rotating_congruence.wls
+      - docs/generated/king_ellis_frame_seal.json
+      - docs/generated/king_ellis_frame_wolfram_seal.json
+      - research_gates/egs3/tests/test_egs3_axis_g_king_ellis_frame.py
+  - id: KE-OBS
+    title: Exact vorticity classification of group-invariant tilted congruences (corrects the blanket Omega_k=0 irrotationality reading)
+    owner: OBSSTAT/GR
+    status: ACTIVE
+    landing: rev-r181
+    claim_tier: C2
+    body_section: v9_response
+    note: >-
+      omega_ab omega^ab = (S^2 sin^2 phi / 2)[S cos(phi)(H1-H2) -
+      cosh(b) c/a1]^2 (S = sinh b; c = 1 type V, c = 0 type I; CONSTANT
+      tilt direction -- a time-rotating azimuth adds +(S^4/2) sin^2 phi
+      psi'^2, adversarial-lane qualifier rev-r183; psi-independent for
+      fixed psi). CORRECTION finding: type I is NOT identically
+      irrotational -- an oblique tilt in a shear-anisotropic background
+      carries O(v^2) vorticity in omega_ab, invisible to the leading-order
+      slaving relation (reproduced at O(v^2)); type V has a codimension-1
+      cancellation surface. The n-frame Frobenius argument and the T3
+      lower-endpoint W^2 withdrawal for the slice-normal comparator
+      congruence STAND; the oblique mode is kinematic only (its dynamical
+      fate is settled by KE-DYN: never entered).
+    sources:
+      - htt/obsstat/egs3_king_ellis_frame.py
+      - wolfram/ke_rotating_congruence.wls
+      - docs/generated/king_ellis_frame_seal.json
+  - id: KE-DYN
+    title: Rotating perfect-fluid development at Omega_k>0 + the double Omega_k=0 obstruction (items 8-10)
+    owner: OBSSTAT/GR
+    status: ACTIVE
+    landing: rev-r182
+    claim_tier: C2
+    sharpness_level: 3
+    body_section: v9_response
+    note: >-
+      Items 8-10 executed: exact u-frame conservation identities; the
+      Raychaudhuri identity derived by undetermined coefficients
+      (u(Theta) = -Theta^2/3 - sigma^2 + omega^2 + div A - R_uu); a
+      GENUINE rotating perfect-fluid development at Omega_k > 0 (type V,
+      off-diagonal 7x7 first-principles system, three constraints
+      monitored < 1.6e-10, omega^2[u] > 0 throughout, dust + radiation;
+      Wolfram NDSolve second engine). At Omega_k = 0 doubly obstructed:
+      single stream by G_ti = 0 (symbolic), antipodal pair by DYNAMICAL
+      irrotationality (Killing + Euler conserve the tilt-covector
+      direction; omega^2 = 0 to machine precision along the pair
+      development). The T3 lower-endpoint W^2 withdrawal is upgraded from
+      constraint-level to dynamical within the group-invariant
+      perfect-fluid class; sharpness level 3 refers to the registered
+      ansatz class, not to a sky claim. The R178 radiation-tilt drift is
+      the known gamma=4/3 transcritical center-manifold law
+      d(beta)/d(ln a) = +(2/3) beta^2 (Collins-Ellis 1979;
+      Hewitt-Wainwright 1992; Coley-Hervik 2005).
+    sources:
+      - htt/obsstat/egs3_king_ellis_dynamics.py
+      - wolfram/ke_dynamics.wls
+      - docs/generated/king_ellis_dynamics_seal.json
+      - docs/generated/king_ellis_dynamics_wolfram_seal.json
+      - research_gates/egs3/tests/test_egs3_axis_g_king_ellis_dynamics.py

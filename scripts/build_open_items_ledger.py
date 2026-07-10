@@ -40,25 +40,6 @@ GENERATED_AT = "2026-07-11"  # static: --check byte-stability
 OPEN_ITEMS = [
     {
         "rank": 1,
-        "item": "King-Ellis rotating-congruence rederivation (10-item program)",
-        "source": "review R1 3.4 (2026-07-10); ticket EGS3-T3-king-ellis; "
-                  "registry T3-full/T3-int reclassification (v9)",
-        "ticket": "t3_king_ellis.yaml",
-        "ticket_state": "constraint_witness_reclassified_lower_w2_withdrawn_"
-                        "dynamics_deferred",
-        "blocker": None,
-        "executability": "now",
-        "exit_gate": "items 1-10 discharged as dual-engine (SymPy + Wolfram) "
-                     "seals: tilted-frame kinematics/constraints "
-                     "(king_ellis_frame_seal) + conservation/evolution/local "
-                     "development (king_ellis_dynamics_seal); ticket carries "
-                     "per-item dispositions",
-        "note": "pure symbolic GR + numerics; BV-DYN (REV-R178) supplies the "
-                "dynamical integrator machinery. EXECUTING this cycle "
-                "(REV-R179..R183).",
-    },
-    {
-        "rank": 2,
         "item": "Anisotropic-Omega_k higher-order vorticity/curvature "
                 "re-opening transfer (finite ceiling)",
         "source": "ticket EGS3-K5-omega-k-higher-order-ceiling (exit branch 1; "
@@ -71,10 +52,10 @@ OPEN_ITEMS = [
                      "finite anisotropic-curvature ceiling, emitted as a NEW "
                      "card artifact (frozen cards untouched)",
         "note": "substantial GR-transfer compute item, no external data; "
-                "next candidate cycle after item 1.",
+                "next executable candidate cycle.",
     },
     {
-        "rank": 3,
+        "rank": 2,
         "item": "MES registry re-freeze decision (coefficient-branch "
                 "promotion)",
         "source": "ticket EGS3-G8-mes-full-rederivation "
@@ -90,7 +71,7 @@ OPEN_ITEMS = [
                 "until sign-off.",
     },
     {
-        "rank": 4,
+        "rank": 3,
         "item": "Paper-A/B/C split of the audit-report material",
         "source": "registered plan (v9 report; user decision 2026-07-10: "
                   "plan-only this cycle)",
@@ -102,7 +83,7 @@ OPEN_ITEMS = [
         "note": None,
     },
     {
-        "rank": 5,
+        "rank": 4,
         "item": "K1 E2E-systematics null + BipoSH E2E upgrade",
         "source": "ticket EGS3-C1-k1-ffp10-npipe; BLOCKERS.md section 1",
         "ticket": "k1_ffp10_npipe.yaml",
@@ -115,7 +96,7 @@ OPEN_ITEMS = [
         "note": "PLA/PL3 downloads in progress (2026-07-11).",
     },
     {
-        "rank": 6,
+        "rank": 5,
         "item": "K6 Hoffman-Ribak constrained-realization vorticity posterior",
         "source": "ticket EGS3-C2-cf4-wfcr; BLOCKERS.md section 2",
         "ticket": "cf4_wfcr.yaml",
@@ -126,7 +107,7 @@ OPEN_ITEMS = [
         "note": "WF mean-field curl-suppression no-go already established.",
     },
     {
-        "rank": 7,
+        "rank": 6,
         "item": "K5 cosmic-variance coverage on release mocks",
         "source": "ticket EGS3-C2-cf4-wfcr; BLOCKERS.md section 3",
         "ticket": "cf4_wfcr.yaml",
@@ -139,19 +120,19 @@ OPEN_ITEMS = [
                 "measured.",
     },
     {
-        "rank": 8,
+        "rank": 7,
         "item": "PR08-006 joint posterior artifact",
         "source": "BLOCKERS.md section 4",
         "ticket": None,
         "ticket_state": None,
         "blocker": "BLOCKED_UPSTREAM",
         "executability": "blocked",
-        "exit_gate": "close K1+K5+K6 first (items 5-7); then assemble with "
+        "exit_gate": "close K1+K5+K6 first (items 4-6); then assemble with "
                      "explicit measured/partial/fail-closed sectors",
         "note": None,
     },
     {
-        "rank": 9,
+        "rank": 8,
         "item": "Native low-ell Bianchi solver atlas (theory-g CMB likelihood)",
         "source": "BLOCKERS.md section 5; PR10 project",
         "ticket": None,
@@ -163,7 +144,7 @@ OPEN_ITEMS = [
         "note": None,
     },
     {
-        "rank": 10,
+        "rank": 9,
         "item": "MESb (PRD 51, 5942) internal rederivation",
         "source": "ticket EGS3-G8-mes-full-rederivation (remaining)",
         "ticket": "mes_full_rederivation.yaml",
@@ -179,6 +160,16 @@ OPEN_ITEMS = [
 
 # tickets whose obligations are closed/held (represented for completeness)
 CLOSED_TICKETS = [
+    {"ticket": "t3_king_ellis.yaml",
+     "ticket_state": "ten_item_program_executed_lower_w2_withdrawal_upgraded"
+                     "_to_dynamical",
+     "note": "the ten-item rotating-congruence program EXECUTED "
+             "(REV-R181/R182, registry KE-FRAME/KE-OBS/KE-DYN): rotating "
+             "perfect-fluid development exists at Omega_k>0; at Omega_k=0 "
+             "doubly obstructed (momentum constraint + dynamical "
+             "irrotationality) -- the lower-endpoint W^2 withdrawal is now "
+             "dynamical within the group-invariant perfect-fluid class; "
+             "W^2 re-attribution stays a registered interpretive question"},
     {"ticket": "gf_interval_latent_quotient_bug.yaml",
      "ticket_state": "resolved_in_successor_and_iff_retracted_superseded_by_"
                      "T2G",

@@ -82,6 +82,44 @@ def _v9_rows() -> list[dict]:
            "observational_claim_allowed False",
            "diagnostic_only",
            "k5_cf4_identified_interval_card_v9.json"),
+        _r("KE-FRAME", GR,
+           "King-Ellis items 1-7: exact tilted-frame kinematics + "
+           "constraint algebra, dual engine (SymPy + independent Wolfram, "
+           "exact rational cross-engine anchors); contracted Gauss "
+           "identity DERIVED (R3 = 2 G_uu - (2/3)Theta^2 + sigma^2 + "
+           "omega^2, stated projection definition)",
+           "Frobenius omega[n]=0 and aligned omega[u]=0 exact; identity "
+           "verified on five configurations incl. two rotating; standard "
+           "3-curvature reproduced in integrable limits",
+           "proven",
+           "king_ellis_frame_seal.json; king_ellis_frame_wolfram_seal.json"),
+        _r("KE-OBS", GR,
+           "Exact vorticity classification of group-invariant tilted "
+           "congruences: omega_ab omega^ab = (S^2 sin^2 phi/2)"
+           "[S cos phi (H1-H2) - cosh(b) c/a1]^2; CORRECTS the blanket "
+           "'irrotational at Omega_k=0' reading (oblique tilt carries "
+           "O(v^2) kinematic vorticity; slaving relation reproduced at "
+           "leading order)",
+           "type-I oblique form (S^4/2) sin^2 phi cos^2 phi (H1-H2)^2; "
+           "type-V codimension-1 cancellation surface; n-frame Frobenius "
+           "and the W^2 withdrawal untouched",
+           "proven",
+           "king_ellis_frame_seal.json"),
+        _r("KE-DYN", GR,
+           "King-Ellis items 8-10: exact u-frame conservation; "
+           "Raychaudhuri derived by undetermined coefficients; GENUINE "
+           "rotating perfect-fluid development at Omega_k>0 (type V, "
+           "constraints monitored, omega^2[u]>0, dust+radiation, SymPy "
+           "RK45 + Wolfram NDSolve); Omega_k=0 DOUBLY obstructed (single "
+           "stream: G_ti=0 momentum constraint; antipodal pair: dynamical "
+           "irrotationality, Killing+Euler conserve the tilt-covector "
+           "direction)",
+           "lower-endpoint W^2 withdrawal upgraded from constraint-level "
+           "to DYNAMICAL within the group-invariant perfect-fluid class; "
+           "radiation drift = gamma=4/3 center-manifold law +(2/3)beta^2",
+           "proven",
+           "king_ellis_dynamics_seal.json; "
+           "king_ellis_dynamics_wolfram_seal.json"),
         _r("EGS3-G12", GR,
            "T3 family re-scoped onto the three-level sharpness taxonomy; "
            "lower-endpoint W^2 withdrawn to constraint-unverified "
@@ -154,6 +192,8 @@ def _payload() -> dict:
         "blockers_open": base["blockers_open"],
         "v9_note": "v9 rows (EGS3-T2G/TSUM/U4v9/MESBR, K5-V9, EGS3-G12) "
                    "appended per the 2026-07-10 review-response cycle; "
+                   "KE-FRAME/KE-OBS/KE-DYN rows added by the executed "
+                   "ten-item rotating-congruence program (REV-R181/R182); "
                    "P36/T2' retractions and the P26/P31/P35 supersessions "
                    "are carried by THEOREM_REGISTRY.yaml; no claim-envelope "
                    "change",

@@ -63,9 +63,11 @@ def test_sharpness_levels_on_realization_family():
     assert ids["T3-lin"]["sharpness_level"] == 1
     assert ids["T3-full"]["sharpness_level"] == 2
     assert ids["T3-int"]["sharpness_level"] == 1
-    # Nobody reaches dynamical (level-3) sharpness.
-    for entry in ids.values():
-        assert entry.get("sharpness_level") != 3
+    # Dynamical (level-3) sharpness is reached ONLY by KE-DYN (REV-R182:
+    # the executed rotating-congruence program; level 3 is scoped to the
+    # registered group-invariant ansatz class, not to a sky claim).
+    level3 = {i for i, e in ids.items() if e.get("sharpness_level") == 3}
+    assert level3 == {"KE-DYN"}
 
 
 def test_ledger_rows_carry_supersede_badges():
