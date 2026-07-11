@@ -40,6 +40,25 @@ GENERATED_AT = "2026-07-11"  # static: --check byte-stability
 OPEN_ITEMS = [
     {
         "rank": 1,
+        "item": "Manuscript downstream reconciliation of the MES "
+                "vorticity-ceiling correction (Saadeh-MES gap magnitude; "
+                "ch09 W^2~1e-15 aside; ch04 atlas ~1e6 strip)",
+        "source": "REV-R190 ch04 correction (registry MES-MESB-TRACE); "
+                  "geodesic W2_max=3.3789e-13 changes the downstream numbers",
+        "ticket": None,
+        "ticket_state": None,
+        "blocker": None,
+        "executability": "now",
+        "exit_gate": "recompute the Saadeh(9.01e-22)-vs-MES gap against the "
+                     "geodesic W2_max=3.3789e-13 (~8-9 OOM, was quoted ~6) "
+                     "and reconcile ch04 sec:atlas + ch09 Saadeh-MES gap "
+                     "subsection; ch04 MES theorems already corrected",
+        "note": "the refuted-value theorem correction (thm:MES-omega/udot, "
+                "prop:ordering) is DONE this cycle; only the downstream "
+                "gap-magnitude prose remains.",
+    },
+    {
+        "rank": 2,
         "item": "Paper-A/B/C split of the audit-report material",
         "source": "registered plan (v9 report; user decision 2026-07-10: "
                   "plan-only this cycle)",
@@ -51,7 +70,7 @@ OPEN_ITEMS = [
         "note": None,
     },
     {
-        "rank": 2,
+        "rank": 3,
         "item": "K1 E2E-systematics null + BipoSH E2E upgrade",
         "source": "ticket EGS3-C1-k1-ffp10-npipe; BLOCKERS.md section 1",
         "ticket": "k1_ffp10_npipe.yaml",
@@ -64,7 +83,7 @@ OPEN_ITEMS = [
         "note": "PLA/PL3 downloads in progress (2026-07-11).",
     },
     {
-        "rank": 3,
+        "rank": 4,
         "item": "K6 Hoffman-Ribak constrained-realization vorticity posterior",
         "source": "ticket EGS3-C2-cf4-wfcr; BLOCKERS.md section 2",
         "ticket": "cf4_wfcr.yaml",
@@ -75,7 +94,7 @@ OPEN_ITEMS = [
         "note": "WF mean-field curl-suppression no-go already established.",
     },
     {
-        "rank": 4,
+        "rank": 5,
         "item": "K5 cosmic-variance coverage on release mocks",
         "source": "ticket EGS3-C2-cf4-wfcr; BLOCKERS.md section 3",
         "ticket": "cf4_wfcr.yaml",
@@ -88,7 +107,7 @@ OPEN_ITEMS = [
                 "measured.",
     },
     {
-        "rank": 5,
+        "rank": 6,
         "item": "PR08-006 joint posterior artifact",
         "source": "BLOCKERS.md section 4",
         "ticket": None,
@@ -100,7 +119,7 @@ OPEN_ITEMS = [
         "note": None,
     },
     {
-        "rank": 6,
+        "rank": 7,
         "item": "Native low-ell Bianchi solver atlas (theory-g CMB likelihood)",
         "source": "BLOCKERS.md section 5; PR10 project",
         "ticket": None,
@@ -112,30 +131,37 @@ OPEN_ITEMS = [
         "note": None,
     },
     {
-        "rank": 7,
-        "item": "MESb (PRD 51, 5942) internal rederivation",
-        "source": "ticket EGS3-G8-mes-full-rederivation (remaining)",
+        "rank": 8,
+        "item": "MESb (PRD 51, 5942) INTERNAL non-geodesic derivation "
+                "(Eqs 30-36 algebra)",
+        "source": "ticket EGS3-G8-mes-full-rederivation (residual)",
         "ticket": "mes_full_rederivation.yaml",
-        "ticket_state": "re_frozen_to_geodesic_sag_consistent_anchor",
-        "blocker": "BLOCKED_MISSING_MESb_PRINT_ONLY_PAPER_II",
+        "ticket_state": "web_traced_in_house_refuted_geodesic_readopted",
+        "blocker": None,
         "executability": "blocked",
-        "exit_gate": "legitimate access to the print-only journal PDF; then "
-                     "the existing rederivation machinery applies",
-        "note": "print-only (no arXiv/ADS/OA copy); SAG-1997 discrepancy "
-                "already documented.",
+        "exit_gate": "legitimate access to the print-only journal PDF; the "
+                     "accessible-range trace (REV-R190) already REFUTED the "
+                     "in-house triples and re-adopted the geodesic anchor, "
+                     "so only MESb's internal algebra remains",
+        "note": "print-only (no arXiv/ADS/OA copy); the in-house "
+                "(3/4,2,2/7)/(3/4,1,3/14) refutation + geodesic re-adoption "
+                "is DONE; only MESb's own Eqs 30-36 derivation is blocked.",
     },
 ]
 
 # tickets whose obligations are closed/held (represented for completeness)
 CLOSED_TICKETS = [
     {"ticket": "mes_full_rederivation.yaml",
-     "ticket_state": "re_frozen_to_geodesic_sag_consistent_anchor",
-     "note": "MES re-freeze EXECUTED with explicit owner sign-off "
-             "(REV-R187/R188, registry MES-REFREEZE): the actual geodesic "
-             "derivation attached (two engines), the hierarchy-preservation "
-             "theorem forces e1=0, W2_max re-frozen 1.3087e-6 -> 3.3789e-13; "
-             "frozen anchor preserved byte-identical (successor pattern); "
-             "MESb print-only internal rederivation remains blocked (rank 7)"},
+     "ticket_state": "web_traced_in_house_refuted_geodesic_readopted",
+     "note": "MES re-freeze EXECUTED (REV-R187/R188, registry MES-REFREEZE: "
+             "geodesic derivation attached, W2_max 1.3087e-6 -> 3.3789e-13), "
+             "then WEB-TRACED + the in-house non-geodesic triples REFUTED "
+             "(REV-R190, registry MES-MESB-TRACE): they appear in no "
+             "accessible source and exceed the companion's own reduced bound; "
+             "the geodesic anchor SURVIVED five adversarial lanes and is "
+             "re-adopted; ch04 corrected. Frozen anchor byte-identical; only "
+             "MESb's internal Eqs 30-36 algebra stays print-only-blocked "
+             "(rank 8)"},
     {"ticket": "k5_omega_k_higher_order_ceiling.yaml",
      "ticket_state": "branch1_executed_slaving_transfer_ceilings_registered",
      "note": "exit-gate branch 1 EXECUTED (REV-R184/R185, registry "

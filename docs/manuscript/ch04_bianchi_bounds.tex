@@ -11,7 +11,7 @@ The master defect identity of Theorem~\ref{thm:master-defect-id}
 provides the algebraic skeleton; the present chapter supplies the
 numerical flesh.  We begin with a self-contained account of the
 Bianchi classification (Section~\ref{sec:bianchi-class}), then
-derive the MES three-bound hierarchy from the covariant Boltzmann
+derive the MES covariant shear and vorticity bounds from the Boltzmann
 hierarchy (Section~\ref{sec:MES}), specialise the defect identity
 to each of the nine types in both orthogonal and tilted sectors
 (Sections~\ref{sec:BI}--\ref{sec:classAB}), analyse the Bianchi~V
@@ -462,109 +462,92 @@ propagates the smallness to $\omega/\Theta$.
 
 \begin{theorem}[MES vorticity bound {\normalfont
   $[\ConditionalStatus]$}]\label{thm:MES-omega}
-Under the same conditions as Theorem~\ref{thm:MES-shear},
+Under the same conditions as Theorem~\ref{thm:MES-shear}, and for a
+\emph{geodesic} matter congruence ($\dot{u}_a = 0$, appropriate to
+pressure-free matter after last scattering),
 \begin{equation}\label{eq:Bom-def}
 \frac{\sqrt{\omega_{ab}\omega^{ab}}}{\Theta}
 < \Bom
-:= \tfrac{3}{4}\,\eps_1 + 2\,\eps_2 + \tfrac{2}{7}\,\eps_3\,.
+:= \tfrac{10}{3}\,\eps_1 + \tfrac{2}{15}\,\eps_2\,.
 \end{equation}
 \end{theorem}
 
-The coefficients $(3/4, 2, 2/7)$ arise from the $\Delta\ell =
-\pm 1$ coupling of the vorticity vector (rank-1 spatial tensor)
-with the photon multipoles, propagated through the constraint
-equations.  The vorticity bound is logically \emph{dependent}
-on the shear and acceleration bounds---it requires establishing
-$\sigma = O(\eps)\Theta$ and $\dot{u} = O(\eps)\Theta$ first,
-then using the Einstein constraints to close the system.
+These are the geodesic vorticity coefficients of
+Maartens--Ellis--Stoeger (Paper~I, Phys.~Rev.~D~\textbf{51}, 1525,
+Eq.~(60)), reproduced verbatim by Stoeger--Araujo--Gebbie
+(1997, Eq.~(4)) and by the direct $C_1/C_2$ reduction of the raw
+covariant bound (Paper~I, Eq.~(52)).  The octupole does not enter (the
+$\eps_3$ coefficient vanishes).  Under the standard observer-motion
+convention---the observed CMB dipole is the observer's peculiar
+velocity, so the residual cosmological dipole $\eps_1 \to 0$
+(Stoeger--Araujo--Gebbie, Eq.~(12))---the bound collapses to
+$\Bom = \tfrac{2}{15}\eps_2$.
 
-\paragraph{Acceleration bound.}
-The acceleration enters the $\ell = 1$
-equation~\eqref{eq:ell1} through the coefficient $4/3$.
-Inverting:
-\begin{equation}\label{eq:udot-from-ell1}
-\dot{u}_a = \frac{3}{4\,I}\Bigl[
-  -\dot{I}_a - \tfrac{4}{3}\Theta\,I_a
-  - \tilde{D}^b I_{ab}
-  + \tfrac{1}{3}\tilde{D}_a I
-\Bigr]\,.
-\end{equation}
-
-\begin{theorem}[MES acceleration bound {\normalfont
-  $[\ConditionalStatus]$}]\label{thm:MES-udot}
-Under the same conditions,
-\begin{equation}\label{eq:Bud-def}
-\frac{\sqrt{\dot{u}_a\dot{u}^a}}{\Theta}
-< \Bud
-:= \tfrac{3}{4}\,\eps_1 + \eps_2 + \tfrac{3}{14}\,\eps_3\,.
-\end{equation}
-\end{theorem}
-
-The coefficient $3/4$ for $\eps_1$ arises from the monopole--dipole
-coupling induced by the acceleration source term in
-Eq.~\eqref{eq:ell1}; the coefficient $1$ for $\eps_2$ comes from
-the gradient term $\tilde{D}^b I_{ab}$; and $3/14$ for $\eps_3$
-involves the next-order gradient coupling.
+\paragraph{Acceleration.}
+For a geodesic congruence the four-acceleration vanishes identically,
+$\dot{u}_a = 0$, so there is no independent acceleration ceiling and
+$A^2 = 0$; both accessible Maartens--Ellis--Stoeger sources (Paper~I and
+Stoeger--Araujo--Gebbie) assume geodesic flow and print no acceleration
+bound.  If the geodesic assumption is relaxed (Paper~II, the
+non-geodesic ``in principle observational'' case), the reduced vorticity
+limit is only bounded at order of magnitude by the authors' companion
+summary---$\omega/\Theta < \alpha\times10^{-5}$ with
+$\alpha\times10^{-5} = \max(\eps_2,\eps_3)$, ``comparable to the
+distortion''---with no closed acceleration coefficient available in any
+accessible source.
 
 
 \subsection{Bound ordering hierarchy}\label{sec:hierarchy}
 
-\begin{proposition}[Bound ordering {\normalfont
+\begin{proposition}[Shear--vorticity ordering {\normalfont
   $[\ConditionalStatus]$}]\label{prop:ordering}
-For any set of non-negative CMB multipoles
-$(\eps_1, \eps_2, \eps_3)$:
-\begin{enumerate}
-\item[\emph{(i)}]
-  \textbf{Weak hierarchy} (requires only $\eps_1 > 0$):
-  \begin{equation}\label{eq:ordering-weak}
-  \Bsig > \Bom \geq \Bud\,.
-  \end{equation}
-\item[\emph{(ii)}]
-  \textbf{Strict hierarchy} (requires $\eps_2 > 0$ or
-  $\eps_3 > 0$):
-  \begin{equation}\label{eq:ordering-strict}
-  \Bsig > \Bom > \Bud\,.
-  \end{equation}
-\end{enumerate}
+For the geodesic bounds $\Bsig = \tfrac53\eps_1 + 3\eps_2 +
+\tfrac37\eps_3$ and $\Bom = \tfrac{10}{3}\eps_1 + \tfrac{2}{15}\eps_2$,
+the shear bound exceeds the vorticity bound,
+\begin{equation}\label{eq:ordering-weak}
+\Bsig > \Bom > 0\,,
+\end{equation}
+if and only if the residual dipole is small,
+\begin{equation}\label{eq:ordering-strict}
+\eps_1 < \eps_1^{\mathrm{crit}}
+:= \tfrac{43}{25}\,\eps_2 + \tfrac{9}{35}\,\eps_3\,,
+\end{equation}
+with strict positivity of $\Bom$ whenever $\eps_1 > 0$ or $\eps_2 > 0$.
 \end{proposition}
 
 \begin{proof}
-For $\Bsig > \Bom$: the $\eps_1$ coefficients are
-$5/3 > 3/4$, so $\eps_1 > 0$ alone suffices.  For
-$\Bom \geq \Bud$: the $\eps_1$ coefficients are equal
-($3/4 = 3/4$), and the remaining coefficients satisfy
-$2 \geq 1$ ($\eps_2$) and $2/7 \geq 3/14$ ($\eps_3$).
-This gives part~(i).  Strict inequality $\Bom > \Bud$
-requires at least one of $\eps_2 > 0$ or $\eps_3 > 0$,
-since the $\eps_2$ coefficient is $2 > 1$ and the $\eps_3$
-coefficient is $2/7 > 3/14$.  Planck measures $\eps_2 > 0$,
-so part~(ii) holds observationally.
+$\Bsig - \Bom = -\tfrac53\eps_1 + \tfrac{43}{15}\eps_2 + \tfrac37\eps_3$,
+which is positive exactly when
+$\eps_1 < [\tfrac{43}{15}\eps_2 + \tfrac37\eps_3]/\tfrac53
+= \tfrac{43}{25}\eps_2 + \tfrac{9}{35}\eps_3$.  Because the vorticity
+bound carries the \emph{larger} residual-dipole coefficient
+($10/3 > 5/3$), a large $\eps_1$ makes $\Bom$ overtake $\Bsig$; the
+ordering is therefore not universal but conditional on the residual
+dipole.
 \end{proof}
 
-\begin{remark}[Near-degeneracy of the lower hierarchy]
+\begin{remark}[The residual-dipole convention is load-bearing]
 \label{rem:lower-degeneracy}
-The gap between the two lower bounds is
-$\Bom - \Bud = \eps_2 + \eps_3/14$.
-Strictness therefore requires only that $\eps_2 > 0$
-\emph{or} $\eps_3 > 0$; the condition $\eps_2 > 0$ stated
-above is sufficient but not necessary.  In the observational
-regime $(\eps_2, \eps_3) \ll \eps_1$, this gap is
-$\sim 4 \times 10^{-6}$, so the lower hierarchy
-$\Bom \gtrsim \Bud$ is numerically near-degenerate even
-when strictly ordered.
+At Planck sensitivity $\eps_1^{\mathrm{crit}} = \tfrac{43}{25}\eps_2 +
+\tfrac{9}{35}\eps_3 \approx 7.68\times10^{-6}$, whereas the observed
+dipole is $\eps_1 \approx 1.23\times10^{-3} \gg \eps_1^{\mathrm{crit}}$.
+The ordering $\Bsig > \Bom$ therefore holds \emph{only} under the
+observer-motion convention that attributes the CMB dipole to peculiar
+velocity, setting the residual cosmological dipole $\eps_1 \to 0$
+(equivalently, any $\eps_1 < \eps_1^{\mathrm{crit}}$).  Without that
+convention the geodesic vorticity bound formally dominates the shear
+bound---a direct consequence of vorticity being the most
+dipole-sensitive of the covariant limits.
 \end{remark}
 
-The physical content is that the CMB is most
-sensitive to shear (rank-2, direct quadrupole source) and least
-sensitive to acceleration (rank-1, entering through
-monopole--dipole coupling).  The hierarchy is preserved under
-dynamical evolution
-(Remark~\ref{rem:hierarchy-conservation} of
-Chapter~\ref{ch:framework}).
-the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery} shows the three bounds as
-functions of the observed multipole amplitudes $(\eps_1,
-\eps_2, \eps_3)$, with the strict hierarchy
-$\Bsig > \Bom > \Bud$ visible across the full observational range.
+The physical content is that, once the observer's motion is removed, the
+CMB most tightly constrains shear (rank-2, direct quadrupole source),
+with vorticity the next-tightest.  For a geodesic dust congruence the
+four-acceleration vanishes and no separate acceleration ceiling
+enters.  The conditioned legacy figure gallery in
+Appendix~\ref{app:conditioned-legacy-figure-gallery} shows the two
+geodesic bounds as functions of the observed multipole amplitudes
+$(\eps_1, \eps_2, \eps_3)$ under the $\eps_1 \to 0$ convention.
 
 
 \subsection{Standardised-variable form and frame correction}
@@ -576,7 +559,7 @@ $(\sigma/\Theta)^2 = (2/3)\Sigstd$, giving:
 \begin{equation}\label{eq:Sig2-from-Bsig}
 \Sigstd < \tfrac{3}{2}\,\Bsig^2\,,\qquad
 \Wstd < \tfrac{3}{2}\,\Bom^2\,,\qquad
-\Astd < \tfrac{3}{2}\,\Bud^2\,.
+\Astd = 0 \quad(\text{geodesic } \dot{u}_a = 0)\,.
 \end{equation}
 
 For tilted models, the observed $\eps_1$ contains the
@@ -1046,8 +1029,8 @@ observational bounds.  We collect the constraints:
 \begin{equation}\label{eq:constraint-inventory}
 \begin{aligned}
 \text{MES shear:} &\quad \Sigstd < \tfrac{3}{2}\Bsig^2\,,\\
-\text{MES vorticity:} &\quad \Wstd < \tfrac{3}{2}\Bom^2\,,\\
-\text{MES acceleration:} &\quad \Astd < \tfrac{3}{2}\Bud^2\,,\\
+\text{MES vorticity (geodesic):} &\quad \Wstd < \tfrac{3}{2}\Bom^2\,,\\
+\text{MES acceleration (geodesic):} &\quad \Astd = 0\,,\\
 \text{Saadeh vorticity:} &\quad \Wstd < 9.01 \times 10^{-22}\,,\\
 \text{Safe-route tilt:} &\quad \beta < \betasr\,,\\
 \text{Frobenius (VII$_h$):} &\quad

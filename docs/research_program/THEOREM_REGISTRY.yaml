@@ -883,3 +883,53 @@ entries:
       - docs/generated/mes_geodesic_refreeze_wolfram_seal.json
       - docs/audits/mes_primary_sources/PROVENANCE_M4.md
       - research_gates/egs3/tests/test_egs3_axis_g_mes_refreeze.py
+
+  - id: MES-MESB-TRACE
+    title: MESb web-trace + refutation of the in-house non-geodesic bounds; geodesic vorticity anchor re-adopted from three primary sources
+    owner: OBSSTAT/GR
+    status: ACTIVE
+    landing: rev-r190
+    claim_tier: C2
+    body_section: v9_response
+    note: >-
+      Web-traces the original MESb (Paper II, PRD 51 5942, print-only) and,
+      within the accessible range, REFUTES the in-house non-geodesic bounds
+      that the prior cycle only labelled "print-only / not reconstructable".
+      Three accessible primary sources were re-fetched and SHA-archived
+      (clean layouts): MESa (astro-ph/9501016, geodesic, eq 60 omega =
+      (10/3,2/15,0)), the Maartens-Ellis-Stoeger DeltaT/T companion
+      (astro-ph/9510126, which presents the MESb reduced bounds: its raw
+      shear eq (6) is labelled "MESb Eq (24)" and equals MESa eq (51)
+      identically, and its eq (8) gives the reduced omega/Theta < alpha x
+      10^-5), and SAG 1997 (astro-ph/9904346, clean LaTeX eq (4) omega =
+      (10/3,2/15,0)). REFUTATION: the previously-registered omega (3/4,2,2/7)
+      / accel (3/4,1,3/14) trace to an IN-HOUSE reconstruction
+      (docs/ver2_upgrade/mes_full_covariance_extension_self_contained.md +
+      manuscript ch04) whose "Thm 3.2/Eq 3.12" labels are in-house numbering,
+      NOT MESa/MESb equations; they appear in no accessible source (robust,
+      alpha-independent ground) and, under the companion's own assumption (c)
+      (alpha x 10^-5 = max(eps2,eps3) = eps3), the in-house B_omega(eps1=0) =
+      8.85e-6 exceeds the faithful companion cap 6.07e-6 (it does fit the
+      loose COBE alpha~1 cap, so this corroboration is reading-dependent).
+      The accel bound is unsupported (both primary papers geodesic, u_dot=0,
+      no accel bound). ADVERSARIAL ADJUDICATION: five refute-prompted lanes
+      ran; the GEODESIC anchor W2_max = 3.3789e-13 SURVIVES (exact, triply
+      primary-sourced, only the geodesic frame + eps1=0 convention are
+      registered caveats), the COMPANION non-geodesic envelope is PLAUSIBLE
+      but order-of-magnitude only (faithful cap (3/2)eps3^2 = 5.52e-11; COBE
+      alpha~1 -> 1.50e-10; the earlier eps2 nominal 1.90e-11 understated the
+      ceiling and was corrected). ADOPTED: geodesic 3.3789e-13 stays the LIVE
+      anchor (unchanged value, now web-traced + adversarially survived);
+      companion 5.52e-11 disclosed as the non-geodesic branch; in-house
+      refuted. Manuscript ch04 corrected (thm:MES-omega -> geodesic
+      (10/3,2/15,0); no acceleration ceiling; the bound ordering B_sigma >
+      B_omega reframed as conditional on eps1 < eps1_crit). Frozen
+      three_bound_hierarchy (W2_max = 1.3087e-6) byte-identical; x_C
+      untouched.
+    sources:
+      - htt/obsstat/egs3_mesb_web_trace.py
+      - wolfram/mesb_web_trace.wls
+      - docs/generated/mesb_web_trace_seal.json
+      - docs/generated/mesb_web_trace_wolfram_seal.json
+      - docs/audits/mes_primary_sources/PROVENANCE_M4b.md
+      - research_gates/egs3/tests/test_egs3_axis_g_mesb_web_trace.py

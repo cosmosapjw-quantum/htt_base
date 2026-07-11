@@ -129,6 +129,9 @@ REQUIRED_ARTIFACTS = [
     # v9 follow-on MES geodesic derivation + re-freeze (REV-R187/R188)
     "docs/generated/mes_geodesic_refreeze_seal.json",
     "docs/generated/mes_geodesic_refreeze_wolfram_seal.json",
+    # v9 follow-on MESb web-trace + in-house refutation (REV-R190)
+    "docs/generated/mesb_web_trace_seal.json",
+    "docs/generated/mesb_web_trace_wolfram_seal.json",
 ]
 
 # v7 strengthened-theorem seals surfaced in the Fifth-Revision response section.
@@ -244,6 +247,10 @@ SOURCE_FILES = [
     "htt/obsstat/egs3_mes_geodesic_refreeze.py",
     "wolfram/mes_geodesic_refreeze.wls",
     "docs/audits/mes_primary_sources/PROVENANCE_M4.md",
+    # v9 follow-on: MESb web-trace + in-house refutation (REV-R190)
+    "htt/obsstat/egs3_mesb_web_trace.py",
+    "wolfram/mesb_web_trace.wls",
+    "docs/audits/mes_primary_sources/PROVENANCE_M4b.md",
 ]
 
 
@@ -1727,6 +1734,9 @@ def v9_response_section() -> str:
         r"\subsection{MES-REFREEZE: the geodesic derivation and the re-frozen vorticity-ceiling anchor}",
         _mes_refreeze_paragraph(),
         r"",
+        r"\subsection{MES-MESB-TRACE: the primary-source trace of Paper~II and the refutation of the non-geodesic coefficients}",
+        _mesb_trace_paragraph(),
+        r"",
     ]
     return "\n".join(lines)
 
@@ -1784,6 +1794,51 @@ def _mes_refreeze_paragraph() -> str:
         rf"re-freeze is reversible, and the comparator $x_C$ is untouched "
         rf"(the ceiling is an admissibility boundary, not an $x_C$ input).  "
         rf"This is a diagnostic ceiling; no observational claim is made.")
+
+
+def _mesb_trace_paragraph() -> str:
+    t = _seal("mesb_web_trace_seal.json")
+    ref = t.get("in_house_refutation", {})
+    comp = t.get("companion_reduced_bounds", {})
+    anch = t.get("candidate_anchors", {})
+    geo = anch.get("A_geodesic", {})
+    env = anch.get("B_companion_envelope", {})
+    return (
+        rf"Paper~II (Maartens--Ellis--Stoeger, Phys.~Rev.~D~\textbf{{51}}, "
+        rf"5942) is print-only, but its reduced bounds are accessible through "
+        rf"the authors' own $\Delta T/T$ companion (\code{{astro-ph/9510126}}): "
+        rf"its raw shear bound (eq (6)) is labelled ``MESb Eq.~(24)'' and "
+        rf"equals the MESa shear bound (eq (51)) identically, and its reduced "
+        rf"limits (eq (8)) give $\sigma/\Theta<4\alpha\times10^{{-5}}$ and "
+        rf"$\omega/\Theta<\alpha\times10^{{-5}}$ with "
+        rf"$\alpha\times10^{{-5}}=\max(\epsilon_2,\epsilon_3)$.  Against this "
+        rf"primary record the previously-registered non-geodesic "
+        rf"$\omega=(\tfrac34,2,\tfrac27)$ and "
+        rf"$\dot u=(\tfrac34,1,\tfrac3{{14}})$ are refuted: they appear in no "
+        rf"accessible Maartens--Ellis--Stoeger source (their in-repo "
+        rf"provenance is a secondary reconstruction, not a Paper~I/II "
+        rf"equation), and at $\epsilon_1=0$ the reconstructed vorticity bound "
+        rf"$2\epsilon_2+\tfrac27\epsilon_3"
+        rf"={ref.get('B_omega_in_house_eps1_zero', 0):.3e}$ EXCEEDS the "
+        rf"companion's own faithful cap "
+        rf"$\max(\epsilon_2,\epsilon_3)"
+        rf"={ref.get('companion_cap_faithful_max_eps', 0):.3e}$ "
+        rf"(the acceleration bound has no accessible source at all, both "
+        rf"primary papers being geodesic).  The geodesic "
+        rf"$\omega=(\tfrac{{10}}3,\tfrac2{{15}},0)$ is by contrast confirmed "
+        rf"by three accessible primary channels (MESa eq (60), Stoeger--"
+        rf"Araujo--Gebbie eq (4), and the direct $C_1/C_2$ reduction) and "
+        rf"remains the live anchor at "
+        rf"$W^2_{{\max}}={geo.get('W2_max', 0):.4e}$.  The companion's "
+        rf"non-geodesic vorticity limit is bounded only at order of "
+        rf"magnitude (the faithful reading "
+        rf"$\tfrac32\max(\epsilon_2,\epsilon_3)^2"
+        rf"={env.get('W2_max_faithful', 0):.3e}$, loosening to "
+        rf"$\sim1.5\times10^{{-10}}$ at the COBE $\alpha\sim1$ scale); it is "
+        rf"recorded as the disclosed non-geodesic branch, tighter than the "
+        rf"in-house value it supersedes.  The frozen constants stay "
+        rf"byte-identical and $x_C$ is untouched; this is a diagnostic "
+        rf"ceiling and no observational claim is made.")
 
 
 def _omk_reopening_paragraph() -> str:
@@ -2411,7 +2466,7 @@ With \(H=\Theta/3\), the standardized squared ceilings are
 The MES hypotheses bound the PSTF photon multipoles and the first covariant derivative terms that source the kinematical hierarchy.  Solving the linearized hierarchy for shear, vorticity, and acceleration gives different coefficient combinations because the dipole, quadrupole, and octupole enter the three equations with different projection coefficients.  The factor \(3/2\) is now DERIVED rather than asserted: with \(X^2:=x_{ab}x^{ab}/(6H^2)\), \(H=\Theta/3\), and the hierarchy bound \(\sqrt{x_{ab}x^{ab}}/\Theta\le B\), one gets \(X^2\le B^2\Theta^2/(6\Theta^2/9)=\frac32B^2\) (sealed in \code{parent_identity_seal.json}).  Note this conversion is consistent ONLY under the registered tensor-norm-over-\(6H^2\) convention of \S3.1 -- the third revision's \(\omega_a\omega^a/H^2\) vorticity statement contradicted exactly this rule, which is how the defect was caught.  Thus the result is a three-bound hierarchy, not a single scalar anisotropy number.
 \end{proof}
 
-\paragraph{Provenance of the \(\epsilon\)-coefficients.}  The rational coefficients \((\frac53,3,\frac37)\), \((\frac34,2,\frac27)\), \((\frac34,1,\frac3{14})\) originate in the Maartens--Ellis--Stoeger 1995 linearized multipole hierarchy and are carried as exact fractions in \code{three\_bound\_hierarchy.py}.  The shear triple \((\frac53,3,\frac37)\) is rederived bit-exact from the primary source (MESa eq (51) + the stated C1/C2 reduction); the \(\frac32\) conversion between the \(\Theta\)-normalized bounds and the \(H\)-normalized squared ceilings is derived (above).  The Seventh-Revision MES-REFREEZE subsection re-freezes the vorticity-ceiling anchor onto the derivable GEODESIC value: the previously-registered \(\omega\)/acceleration triples \((\frac34,2,\frac27)\)/\((\frac34,1,\frac3{14})\) are print-only MESb (Paper II) NON-GEODESIC values absent from every accessible source, whereas the derivable (and SAG-1997-verified) geodesic \(\omega=(\frac{10}3,\frac2{15},0)\) with no acceleration bound is now the live anchor.  Gate class F1 continues to assert bit-level agreement against the frozen constants (which stay byte-identical for the earlier revisions' reproducibility).
+\paragraph{Provenance of the \(\epsilon\)-coefficients.}  The shear triple \((\frac53,3,\frac37)\) originates in the Maartens--Ellis--Stoeger 1995 linearized multipole hierarchy and is rederived bit-exact from the primary source (MESa eq (51) + the stated C1/C2 reduction); the \(\frac32\) conversion between the \(\Theta\)-normalized bounds and the \(H\)-normalized squared ceilings is derived (above).  The vorticity/acceleration triples \((\frac34,2,\frac27)\)/\((\frac34,1,\frac3{14})\) carried in \code{three\_bound\_hierarchy.py} are, by contrast, NOT a Maartens--Ellis--Stoeger result: the MES-MESB-TRACE subsection shows they trace to a secondary reconstruction, appear in no accessible primary source, and (at \(\epsilon_1=0\)) exceed the authors' own $\Delta T/T$ companion reduced vorticity bound \(\max(\epsilon_2,\epsilon_3)\).  The derivable geodesic \(\omega=(\frac{10}3,\frac2{15},0)\) with no acceleration bound is confirmed by three accessible primary channels (MESa eq (60), Stoeger--Araujo--Gebbie eq (4), and the direct \(C_1/C_2\) reduction) and is the live anchor.  Gate class F1 continues to assert bit-level agreement against the frozen constants (which stay byte-identical for the earlier revisions' reproducibility).
 
 \paragraph{Proof item P4.}
 \begin{proposition}[Frame-attribution safe-route correction]

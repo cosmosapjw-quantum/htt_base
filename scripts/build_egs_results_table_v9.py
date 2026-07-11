@@ -153,6 +153,22 @@ def _v9_rows() -> list[dict]:
            "re_frozen",
            "mes_geodesic_refreeze_seal.json; "
            "mes_geodesic_refreeze_wolfram_seal.json"),
+        _r("MES-MESB-TRACE", GR,
+           "MESb (print-only) web-traced via three archived accessible "
+           "primary sources; the in-house non-geodesic omega (3/4,2,2/7) / "
+           "accel (3/4,1,3/14) REFUTED (in-house numbering, no accessible "
+           "source; exceed the companion's own reduced bound under its "
+           "assumption alpha x 10^-5 = max(eps2,eps3)); geodesic omega "
+           "(10/3,2/15,0) triply primary-sourced and re-adopted",
+           "five refute-prompted adversarial lanes: geodesic anchor "
+           "3.3789e-13 SURVIVES (exact, MESa eq 60 + SAG eq 4 + C1/C2), "
+           "companion non-geodesic envelope PLAUSIBLE order-of-magnitude "
+           "(faithful (3/2)eps3^2 = 5.52e-11; COBE alpha~1 -> 1.50e-10); "
+           "manuscript ch04 corrected to the geodesic result + conditional "
+           "ordering (B_sigma > B_omega iff e1 < e1_crit)",
+           "web_traced_refuted_readopted",
+           "mesb_web_trace_seal.json; mesb_web_trace_wolfram_seal.json; "
+           "PROVENANCE_M4b.md"),
         _r("EGS3-G12", GR,
            "T3 family re-scoped onto the three-level sharpness taxonomy; "
            "lower-endpoint W^2 withdrawn to constraint-unverified "

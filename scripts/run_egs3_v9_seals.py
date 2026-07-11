@@ -35,6 +35,7 @@ KE_WOLFRAM_SCRIPT = REPO / "wolfram/ke_rotating_congruence.wls"
 KE_DYN_WOLFRAM_SCRIPT = REPO / "wolfram/ke_dynamics.wls"
 OMK_WOLFRAM_SCRIPT = REPO / "wolfram/omega_k_reopening.wls"
 MES_REFREEZE_WOLFRAM_SCRIPT = REPO / "wolfram/mes_geodesic_refreeze.wls"
+MESB_TRACE_WOLFRAM_SCRIPT = REPO / "wolfram/mesb_web_trace.wls"
 
 
 def sage_fractional_seal() -> tuple[dict, int]:
@@ -189,6 +190,28 @@ def wolfram_mes_refreeze_seal(sympy_seal: dict | None) -> tuple[dict, int]:
     return seal, (0 if ok else 1)
 
 
+def wolfram_mesb_trace_seal(sympy_seal: dict | None) -> tuple[dict, int]:
+    """Second-engine lane for MES-MESB-TRACE: independent Wolfram reduction
+    + in-house refutation arithmetic + exact geodesic-anchor cross-check
+    against the SymPy seal (exact rational equality)."""
+    seal, blocked = _run_wolfram(MESB_TRACE_WOLFRAM_SCRIPT)
+    if seal is None:
+        return blocked, 2
+    cross = False
+    if sympy_seal is not None:
+        try:
+            sp_w2 = sympy_seal["candidate_anchors"]["A_geodesic"]["W2_max"]
+            wl_w2 = seal["W2_geodesic"]
+            cross = abs(wl_w2 - sp_w2) / sp_w2 < 1e-12
+        except (KeyError, TypeError, ZeroDivisionError):
+            cross = False
+    seal["cross_engine_W2_geodesic_match_sympy"] = bool(cross)
+    ok = (seal.get("status") == "PASS" and cross
+          and seal.get("in_house_exceeds_companion_faithful") is True)
+    seal["status"] = "PASS" if ok else "FAIL"
+    return seal, (0 if ok else 1)
+
+
 def build_seals() -> tuple[dict[str, dict], int]:
     """Return ({filename: payload}, worst_exit_code)."""
     payloads: dict[str, dict] = {}
@@ -308,6 +331,23 @@ def build_seals() -> tuple[dict[str, dict], int]:
     if mes_seal is not None:
         wseal, code = wolfram_mes_refreeze_seal(mes_seal)
         payloads["mes_geodesic_refreeze_wolfram_seal.json"] = wseal
+        worst = max(worst, code if code != 2 else 0)
+        if code == 2:
+            print(f"REGISTERED BLOCKER: {wseal.get('status')}",
+                  file=sys.stderr)
+    # --- REV-R190: MESb web-trace + in-house refutation ---
+    mesb_seal = None
+    try:
+        from htt.obsstat.egs3_mesb_web_trace import mesb_web_trace_seal
+        mesb_seal = mesb_web_trace_seal()
+        payloads["mesb_web_trace_seal.json"] = mesb_seal
+        if mesb_seal.get("status") != "PASS":
+            worst = max(worst, 1)
+    except ImportError:
+        pass
+    if mesb_seal is not None:
+        wseal, code = wolfram_mesb_trace_seal(mesb_seal)
+        payloads["mesb_web_trace_wolfram_seal.json"] = wseal
         worst = max(worst, code if code != 2 else 0)
         if code == 2:
             print(f"REGISTERED BLOCKER: {wseal.get('status')}",
