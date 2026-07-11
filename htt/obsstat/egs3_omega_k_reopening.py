@@ -177,8 +177,11 @@ def reduced_system() -> dict:
     H1v, H2v, rv, A2i = sp.symbols("H1v H2v rv A2i", real=True)
     Hs, Sg, Kv, Om = sp.symbols("H_n Sigma K Omega", real=True)
 
-    # metric-level accelerations, re-derived symbolically for signed A2i
-    # ( A2i = curv_sign / a2^2 enters ONLY through the curvature terms )
+    # metric-level accelerations for signed A2i ( = curv_sign / a2^2,
+    # entering ONLY through the curvature terms); the stated forms are
+    # tied to the metric-level derivation by the exact-point check
+    # 'hardcoded_forms_match_metric_level_rhs' below AND by the dynamical
+    # cross-check lane (adversarial-lane fix, REV-R186)
     a1 = sp.Function("a1", positive=True)(_T)
     a2 = sp.Function("a2", positive=True)(_T)
     rho = sp.Function("rho", positive=True)(_T)
@@ -208,7 +211,24 @@ def reduced_system() -> dict:
     dSg_g = sp.factor(sp.expand(dSg.subs(elim)))
     dK_g = sp.factor(sp.expand(dK.subs(elim)))
 
+    # exact-point tie of the stated Exx/Ezz forms to the metric-level
+    # derivation (both curvature signs)
+    forms_ok = True
+    for cs in (1, -1):
+        rhs_f, _ = derive_lrs3_field_equations(cs)
+        for pt in ((2.0, 3.0, 0.5, 0.25, 0.3, 0.0),
+                   (1.5, 0.8, -0.2, 0.4, 0.7, 1.0 / 3.0)):
+            a1v, a2v, da1, da2, rv0, wv = pt
+            dd1_m, dd2_m, _ = rhs_f(a1v, a2v, da1, da2, rv0, wv)
+            sub = {H1v: da1 / a1v, H2v: da2 / a2v, rv: rv0,
+                   A2i: cs / a2v ** 2, _W: wv}
+            dd1_h = float((dH1.subs(sub) + (da1 / a1v) ** 2) * a1v)
+            dd2_h = float((dH2.subs(sub) + (da2 / a2v) ** 2) * a2v)
+            forms_ok &= (abs(dd1_h - dd1_m) < 1e-12
+                         and abs(dd2_h - dd2_m) < 1e-12)
+
     checks = {
+        "hardcoded_forms_match_metric_level_rhs": bool(forms_ok),
         "gauss_is_1_eq_Om_Sg2_K": sp.simplify(
             (3 * Hs ** 2 * (1 - Sg ** 2)
              - 3 * Kv * Hs ** 2 - 3 * Hs ** 2 * Om)
@@ -237,8 +257,9 @@ def slaving_coefficient() -> dict:
         solution Sigma = kappa K requires
         kappa (1+3w) = -(3/2)(1-w) kappa - 1, i.e.
         kappa = -2/(5+3w) = -1/(2+q0) with q0 = (1+3w)/2;
-    (b) transient decay rate 2 - q0 > 0 for w < 3 (the homogeneous shear
-        mode dies, the slaved mode survives);
+    (b) transient decay rate 2 - q0 = (3/2)(1-w) > 0 for w < 1 (the
+        homogeneous shear mode dies, the slaved mode survives; the decay
+        RELATIVE to the growing slaved mode is (5+3w)/2 > 0 for every w);
     (c) exact vacuum fixed point (Sigma, K) = (-1/2, 3/4) with ratio -2/3
         (the nonlinear anchor), and its local stability for dust;
     (d) the KS mirror (K < 0) has the same |kappa| (the source is exactly
@@ -266,15 +287,17 @@ def slaving_coefficient() -> dict:
                                   + sp.Rational(2, 5)) == 0,
         "radiation_value": sp.simplify(kappa.subs(w, sp.Rational(1, 3))
                                        + sp.Rational(1, 3)) == 0,
-        "transient_rate_positive_w_lt_3": sp.simplify(
-            2 - q0 - sp.Rational(3, 2) * (1 - w) / 1) == q0 - q0,
     }
-    # (b) transient rate = (3/2)(1-w) at leading order; positive for w < 1
-    #     (and 2 - q > 0 up to w < 3 on the full q)
-    checks["transient_rate_positive_w_lt_3"] = True  # 2 - q0 = (3 - 3w)/2 + 1/2... computed below
+    # (b) transient rate 2 - q0 = (3/2)(1-w), COMPUTED (an earlier
+    # hardcoded-True placeholder here was an adversarial-lane finding,
+    # REV-R186); positive for w < 1, and the decay RELATIVE to the
+    # growing slaved mode is (5+3w)/2 > 0 for every w
     checks["transient_rate_closed_form"] = sp.simplify(
         -(rs["dSigma"].diff(Sg).subs({Sg: 0, Kv: 0}))
         - sp.Rational(3, 2) * (1 - w)) == 0
+    checks["relative_decay_rate_always_positive"] = sp.simplify(
+        sp.Rational(3, 2) * (1 - w) + (1 + 3 * w)
+        - sp.Rational(1, 2) * (5 + 3 * w)) == 0
     # (c) vacuum fixed point
     fp = {Sg: sp.Rational(-1, 2), Kv: sp.Rational(3, 4)}
     checks["vacuum_fixed_point"] = (
@@ -481,7 +504,11 @@ def ceiling_map() -> dict:
             "attribution": "REGISTERED-EXTERNAL model-conditional"
                            " (sigma/H)_0 < 1e-6 weakest-mode, Saadeh et"
                            " al. 2016 Table II (Planck, all-mode);"
-                           " Sigma = (sigma/H)/sqrt(3)",
+                           " Sigma = (sigma/H)/sqrt(3) is exact under the"
+                           " standard scalar-shear convention sigma^2 ="
+                           " (1/2) sigma_ab sigma^ab -- the mapping onto"
+                           " Saadeh's per-mode (sigma_T,reg/H)_0 is"
+                           " registered-external, not rederived here",
         },
     }
     eras = {"matter_era": Fraction(2, 5), "radiation_era": Fraction(1, 3)}
@@ -499,11 +526,15 @@ def ceiling_map() -> dict:
         "rows": rows,
         "two_sided": "KS mirror carries the same |kappa|: the ceiling"
                      " bounds |Delta Omega_k| for both curvature signs",
-        "conservative_note": "a Lambda-dominated era has |kappa| ="
-                             " 1/(2+q) > 2/5, so the matter/radiation-era"
-                             " coefficients give the WEAKEST (largest)"
-                             " ceilings; the radiation-era row is the"
-                             " most conservative",
+        "conservative_note": "within the matter/radiation/Lambda history"
+                             " (w <= 1/3 eras) |kappa| = 1/(2+q) is"
+                             " minimized by the radiation era, so the"
+                             " radiation-era row is the WEAKEST (largest,"
+                             " most conservative) ceiling and a"
+                             " Lambda-dominated era only tightens it; a"
+                             " hypothetical stiff era (w > 1/3) would"
+                             " lower |kappa| further and is OUTSIDE the"
+                             " registered history class",
         "frozen_plugin_untouched": True,
         "class_conditional": "LRS Bianchi III / Kantowski-Sachs slaved"
                              " mode after transient decay; inherits the"

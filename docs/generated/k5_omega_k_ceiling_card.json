@@ -26,19 +26,19 @@
     },
     "saadeh_model_conditional__matter_era": {
       "abs_kappa": "2/5",
-      "attribution": "REGISTERED-EXTERNAL model-conditional (sigma/H)_0 < 1e-6 weakest-mode, Saadeh et al. 2016 Table II (Planck, all-mode); Sigma = (sigma/H)/sqrt(3)",
+      "attribution": "REGISTERED-EXTERNAL model-conditional (sigma/H)_0 < 1e-6 weakest-mode, Saadeh et al. 2016 Table II (Planck, all-mode); Sigma = (sigma/H)/sqrt(3) is exact under the standard scalar-shear convention sigma^2 = (1/2) sigma_ab sigma^ab -- the mapping onto Saadeh's per-mode (sigma_T,reg/H)_0 is registered-external, not rederived here",
       "omega_k_ceiling_abs": 1.4433756729740645e-06,
       "sigma2_ceiling": 3.3333333333333334e-13
     },
     "saadeh_model_conditional__radiation_era": {
       "abs_kappa": "1/3",
-      "attribution": "REGISTERED-EXTERNAL model-conditional (sigma/H)_0 < 1e-6 weakest-mode, Saadeh et al. 2016 Table II (Planck, all-mode); Sigma = (sigma/H)/sqrt(3)",
+      "attribution": "REGISTERED-EXTERNAL model-conditional (sigma/H)_0 < 1e-6 weakest-mode, Saadeh et al. 2016 Table II (Planck, all-mode); Sigma = (sigma/H)/sqrt(3) is exact under the standard scalar-shear convention sigma^2 = (1/2) sigma_ab sigma^ab -- the mapping onto Saadeh's per-mode (sigma_T,reg/H)_0 is registered-external, not rederived here",
       "omega_k_ceiling_abs": 1.7320508075688774e-06,
       "sigma2_ceiling": 3.3333333333333334e-13
     }
   },
   "class_conditional": "LRS Bianchi III / Kantowski-Sachs slaved mode after transient decay; inherits the PARTIAL status of the shear-sector reading",
-  "conservative_note": "a Lambda-dominated era has |kappa| = 1/(2+q) > 2/5, so the matter/radiation-era coefficients give the WEAKEST (largest) ceilings; the radiation-era row is the most conservative",
+  "conservative_note": "within the matter/radiation/Lambda history (w <= 1/3 eras) |kappa| = 1/(2+q) is minimized by the radiation era, so the radiation-era row is the WEAKEST (largest, most conservative) ceiling and a Lambda-dominated era only tightens it; a hypothetical stiff era (w > 1/3) would lower |kappa| further and is OUTSIDE the registered history class",
   "frozen_surfaces_untouched": {
     "frozen_card_hashes": {
       "docs/generated/k5_cf4_identified_interval_card.json": "5fa4d8456182454ab584fe8c22300326cfa5f8f2594f9bace2c9530dd33ad912",
@@ -48,7 +48,7 @@
     "registered_T1p_half_width_U_k": "PLUGIN value NOT modified (frozen-card and signed-box surfaces intact)"
   },
   "observational_claim_allowed": false,
-  "plugin_coherence_remark": "the saadeh_model_conditional ceilings (1.4e-6 / 1.7e-6) sit at the same order as the historical U_k PLUGIN placeholder 1e-6 -- a comparison-only coherence remark, not a promotion",
+  "plugin_coherence_remark": "the saadeh_model_conditional ceilings (<=1.5e-6 / <=1.8e-6, two-significant-figure ceilings) sit at the same order as the historical U_k PLUGIN placeholder 1e-6 -- a comparison-only coherence remark, not a promotion",
   "schema": "htt.k5.omega_k_ceiling_card.v1",
   "sources": {
     "module": "htt/obsstat/egs3_omega_k_reopening.py",

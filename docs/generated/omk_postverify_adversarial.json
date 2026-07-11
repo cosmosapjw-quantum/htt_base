@@ -1,0 +1,60 @@
+{
+  "schema": "htt.internal.adversarial_ledger.v1",
+  "cycle": "REV-R186 (post-verify of OMK-REOPEN, REV-R184/R185)",
+  "run": "workflow wf_b693a285-579, 4 refute-prompted lanes, 2026-07-11",
+  "never_rendered_in_reports": true,
+  "lanes": {
+    "slaving-math": {
+      "verdict": "CONFIRMED",
+      "notes": [
+        "exact reduced system + kappa = -2/(5+3w) confirmed by an independent Jacobian-eigenvector route (own conventions)",
+        "vacuum anchor (-1/2, 3/4) identified as the Bianchi-III form of FLAT spacetime (Riemann identically 0 for -dt^2+t^2(dx^2+e^{2x}dy^2)+dz^2) -- the degenerate flat plane-wave member of the Wainwright-Ellis class-B equilibria; Collins-type interior point exists only for -1/3 < w < 0, so no competitor for dust/radiation",
+        "KS (f = sin x) IS the R x S^2 Kantowski-Sachs metric, correctly never called a Bianchi type; the signed-K polynomial system proven symbolically for both curvature signs; K < 0 slaving verified numerically for dust AND radiation",
+        "comparator normalization sigma_ab sigma^ab/(6H^2) = Sigma^2 exact (matches comparator_policy)",
+        "all six ceiling rows reproduce sqrt(Sigma2_ceiling)/|kappa| to the last printed digit; generic-initial-data plateaus (Sigma0 != 0, own tolerances): -0.3993/-0.3304/-0.4007/-0.3362",
+        "stiff-fluid sanity: at w = 2 the reduced-system plateau S/K = -0.18167 vs kappa = -2/11 = -0.18182 (reldev 8e-4) -- the slaving needs only the RELATIVE rate (5+3w)/2 > 0"
+      ],
+      "findings": [
+        {"severity": "P2", "summary": "seal check 'transient_rate_positive_w_lt_3' hardcoded True with a mathematically false range in its name (2-q0 > 0 iff w < 1, not w < 3)", "disposition": "FIXED rev-r186 (hardcoded line removed; docstring corrected to w < 1 with the relative-rate (5+3w)/2 note; replaced by computed checks transient_rate_closed_form + relative_decay_rate_always_positive)"},
+        {"severity": "note", "summary": "reduced_system hardcoded Exx/Ezz forms carried a '(verified below)' comment without an in-module tie to the metric-level derivation", "disposition": "FIXED rev-r186 (exact-point check hardcoded_forms_match_metric_level_rhs added, both curvature signs, <1e-12)"},
+        {"severity": "note", "summary": "'radiation-era row most conservative' holds for the matter/radiation/Lambda history; a stiff era (w > 1/3) would lower |kappa|", "disposition": "FIXED rev-r186 (conservative_note scoped to the registered history class with the stiff-era caveat)"}
+      ]
+    },
+    "dynamics-verification": {
+      "verdict": "CONFIRMED",
+      "notes": [
+        "plateau NOT a window artifact: converges to kappa independently of window, k0, w, curvature sign",
+        "Gauss genuinely monitored: off-shell residual O(1) of 3H^2; E_tt provably NOT an algebraic consequence of {E_xx, E_zz, conservation}",
+        "fully independent integrator reproduces the slaved ratio, the vacuum anchor, and the metric-level run",
+        "KS branch: constraints preserved, ratio -> kappa, K strictly negative throughout",
+        "deep-run anchor tolerance passed with modest margin (0.0164/0.0136) due to the center-manifold power-law approach; convergence confirmed monotone to longer N (recorded)"
+      ],
+      "findings": []
+    },
+    "null-and-ceiling-honesty": {
+      "verdict": "CONFIRMED",
+      "notes": [
+        "null/re-opening distinction coherent: Omega_k null kind is 'no_channel_leading_order' with order_dependence 'leading_egs_order_only' (unlike W2's order-independent structural null), so the dynamical re-opening does not contradict the certification",
+        "all six card ceilings reproduce BIT-EXACTLY from the SSOT eps registry (B_sigma = 2.0692782974285717e-3; Sigma2_max registered 6.422869008313332e-6)",
+        "U_k plugin + all three frozen-card sha256 hashes verified untouched at HEAD",
+        "MES-shear-to-slaved-Sigma application judged fairly labeled (attribution-conditional), not a category error"
+      ],
+      "findings": [
+        {"severity": "P1", "summary": "v9 printed 'Gauss residual <4e-11' vs seal max 4.3466e-11 (helper returned a 2-sig ceiling but the call site's :.0e rounded it back down)", "disposition": "FIXED rev-r186 (helper renamed _ceil_2sig with corrected docstring; call site :.1e; prints <4.4e-11)"},
+        {"severity": "P2", "summary": "same hardcoded-True check as the slaving-math lane", "disposition": "FIXED rev-r186 (see slaving-math)"},
+        {"severity": "note", "summary": "NULL_SECTOR_KIND['Omega_k'].reopens_via in the FROZEN comparator module does not name the executed slaving route", "disposition": "RECORDED rev-r186 (frozen surface, successor discipline; taxonomy_staleness_note added to the ticket; route documented in registry/ticket/card)"},
+        {"severity": "note", "summary": "Saadeh conversion Sigma = (sigma/H)/sqrt(3) asserted not derived (exact under the standard scalar-shear convention; per-mode mapping registered-external)", "disposition": "FIXED rev-r186 (convention + registered-external qualifier added to the attribution string)"}
+      ]
+    },
+    "report-language": {
+      "verdict": "REFUTED (formatting violations; all fixed in-session)",
+      "findings": [
+        {"severity": "P1", "summary": "'Gauss residual <4e-11' literally false (rounding chain)", "disposition": "FIXED rev-r186 (see above)"},
+        {"severity": "P2", "summary": "four of six ceiling values printed with nearest-rounding that rounded DOWN (up to 3.1% tighter than derived)", "disposition": "FIXED rev-r186 (two-significant-figure CEILING formatting in the tex; registry note / results table / ticket / card remark value strings aligned: 6.4e-3/7.7e-3, 4.1e-5/4.9e-5, 1.5e-6/1.8e-6)"},
+        {"severity": "note", "summary": "hardcoded '~10^{-11}' cross-engine figure not derived from the seals", "disposition": "FIXED rev-r186 (gap computed from both seals at render time, printed as a ceiling: <5.0e-12)"},
+        {"severity": "note", "summary": "plateau percent used nearest :.1f", "disposition": "FIXED rev-r186 (ceiling formatting: 'to 0.19%')"}
+      ]
+    }
+  },
+  "net": "three math lanes CONFIRMED with zero P0 (every attempted refutation failed on independent rederivation, including a flat-spacetime identification of the vacuum anchor and a stiff-fluid extrapolation check); the language lane REFUTED on upper-bound formatting, all findings fixed in-session and the v9 report rebuilt (--check byte-stable)"
+}

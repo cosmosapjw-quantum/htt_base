@@ -67,7 +67,7 @@ def build_card() -> dict:
                                    if (REPO / p).exists()},
         },
         "plugin_coherence_remark": (
-            "the saadeh_model_conditional ceilings (1.4e-6 / 1.7e-6) sit"
+            "the saadeh_model_conditional ceilings (<=1.5e-6 / <=1.8e-6, two-significant-figure ceilings) sit"
             " at the same order as the historical U_k PLUGIN placeholder"
             " 1e-6 -- a comparison-only coherence remark, not a"
             " promotion"),

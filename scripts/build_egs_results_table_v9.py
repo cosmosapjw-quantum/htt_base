@@ -129,8 +129,8 @@ def _v9_rows() -> list[dict]:
            "|Delta Omega_k| ceilings on a NEW labeled card",
            "kappa: dust -2/5, radiation -1/3, vacuum anchor -2/3 "
            "(two-sided via KS mirror); ceilings: MES registered "
-           "6.3e-3/7.6e-3, MES cosmological 4.1e-5/4.9e-5, Saadeh "
-           "model-conditional 1.4e-6/1.7e-6; instantaneous structural "
+           "6.4e-3/7.7e-3, MES cosmological 4.1e-5/4.9e-5, Saadeh "
+           "model-conditional 1.5e-6/1.8e-6; instantaneous structural "
            "null UNTOUCHED; frozen U_k plugin NOT modified; "
            "attribution+class-conditional, nothing promoted",
            "proven",

@@ -1727,14 +1727,24 @@ def _omk_reopening_paragraph() -> str:
     card = _seal("k5_omega_k_ceiling_card.json")
     dyn = omk.get("dynamical_verification", {})
     rows = card.get("ceiling_rows", {})
-    engines = (" The Wolfram lane derives the same system independently"
-               " and integrates it with \\code{NDSolve} in one script;"
-               " the deep-run anchors agree across engines to"
-               " $\\sim10^{-11}$."
-               if wl.get("status") == "PASS" else "")
+    engines = ""
+    if wl.get("status") == "PASS":
+        # cross-engine deep-run gap DERIVED from the two seals (a
+        # hardcoded figure here was a REV-R186 adversarial-lane finding)
+        anchor = dyn.get("reduced_lane", {}).get(
+            "late_time_vacuum_anchor", {})
+        wdeep = wl.get("deep_lane", {})
+        gap = max(abs(wdeep.get("sigma_final", 0)
+                      - anchor.get("sigma_final", 0)),
+                  abs(wdeep.get("k_final", 0) - anchor.get("k_final", 0)))
+        engines = (" The Wolfram lane derives the same system"
+                   " independently and integrates it with \\code{NDSolve}"
+                   " in one script; the deep-run anchors agree across"
+                   rf" engines to $<{_ceil_2sig(gap):.1e}$.")
 
     def _r(key):
-        return rows.get(key, {}).get("omega_k_ceiling_abs", 0.0)
+        # two-significant-figure CEILING: every printed '<=' literally true
+        return _ceil_2sig(rows.get(key, {}).get("omega_k_ceiling_abs", 0.0))
 
     return (
         rf"The registered higher-order re-opening item is executed: in the "
@@ -1755,9 +1765,9 @@ def _omk_reopening_paragraph() -> str:
         rf"the statement is two-sided).  On monitored-constraint "
         rf"metric-level trajectories the ratio $\Sigma/K$ plateaus at "
         rf"$\kappa$ to "
-        rf"{100 * max(dyn.get(k, {}).get('max_rel_dev_in_window', 0) for k in ('lrs3_dust', 'lrs3_radiation', 'ks_dust')):.1f}\% "
+        rf"{100 * _ceil_2sig(max(dyn.get(k, {}).get('max_rel_dev_in_window', 0) for k in ('lrs3_dust', 'lrs3_radiation', 'ks_dust'))):.2f}\% "
         rf"(Gauss residual "
-        rf"$<{_ceil_1sig(max(dyn.get(k, {}).get('max_gauss_residual', 0) for k in ('lrs3_dust', 'lrs3_radiation', 'ks_dust'))):.0e}$)."
+        rf"$<{_ceil_2sig(max(dyn.get(k, {}).get('max_gauss_residual', 0) for k in ('lrs3_dust', 'lrs3_radiation', 'ks_dust'))):.1e}$)."
         rf"{engines}  The certified \emph{{instantaneous}} structural null "
         rf"of $\Delta\Omega_k$ is untouched: the re-opening is the "
         rf"on-shell dynamical correlation along the slaved submanifold, "
@@ -1784,9 +1794,11 @@ def _omk_reopening_paragraph() -> str:
         rf"made.")
 
 
-def _ceil_1sig(x: float) -> float:
-    """Smallest 1-significant-figure value >= x (so 'below N' is literally
-    true; adversarial-lane fix, REV-R183)."""
+def _ceil_2sig(x: float) -> float:
+    """Smallest TWO-significant-figure value >= x, printed with ':.1e' so
+    every 'below N' / '<= N' is literally true (REV-R183 fix; renamed and
+    the 1-sig-fig docstring corrected after the REV-R186 adversarial lane
+    caught a ':.0e' call site rounding the ceiling back DOWN)."""
     import math
     if x <= 0:
         return 0.0
@@ -1866,7 +1878,7 @@ def _ke_dynamics_paragraph() -> str:
         rf"\emph{{genuine rotating perfect-fluid development exists at "
         rf"$\Omk>0$}} (type~V): non-vacuum oblique initial data with the three "
         rf"constraints MONITORED below "
-        rf"${_ceil_1sig(max(rv.get('max_constraint_residuals', [0]))):.1e}$ and "
+        rf"${_ceil_2sig(max(rv.get('max_constraint_residuals', [0]))):.1e}$ and "
         rf"$\omega_{{ab}}\omega^{{ab}}[u]>0$ maintained throughout "
         rf"(${rv.get('omega2_initial', 0):.2e}\to"
         rf"{rv.get('omega2_final', 0):.2e}$ over "
