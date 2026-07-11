@@ -1,0 +1,133 @@
+{
+  "ceiling_map": {
+    "class_conditional": "LRS Bianchi III / Kantowski-Sachs slaved mode after transient decay; inherits the PARTIAL status of the shear-sector reading",
+    "conservative_note": "a Lambda-dominated era has |kappa| = 1/(2+q) > 2/5, so the matter/radiation-era coefficients give the WEAKEST (largest) ceilings; the radiation-era row is the most conservative",
+    "frozen_plugin_untouched": true,
+    "observational_claim_allowed": false,
+    "rows": {
+      "mes_cosmological__matter_era": {
+        "abs_kappa": "2/5",
+        "attribution": "eps1_cosmological = 0 (SAG convention; boost attributed to observer motion)",
+        "omega_k_ceiling_abs": 4.065631669113745e-05,
+        "sigma2_ceiling": 2.6446977390240996e-10
+      },
+      "mes_cosmological__radiation_era": {
+        "abs_kappa": "1/3",
+        "attribution": "eps1_cosmological = 0 (SAG convention; boost attributed to observer motion)",
+        "omega_k_ceiling_abs": 4.878758002936495e-05,
+        "sigma2_ceiling": 2.6446977390240996e-10
+      },
+      "mes_registered__matter_era": {
+        "abs_kappa": "2/5",
+        "attribution": "eps1_conservative_total (observer-boost dominated; MES-BR triple)",
+        "omega_k_ceiling_abs": 0.006335844955643905,
+        "sigma2_ceiling": 6.422869008313332e-06
+      },
+      "mes_registered__radiation_era": {
+        "abs_kappa": "1/3",
+        "attribution": "eps1_conservative_total (observer-boost dominated; MES-BR triple)",
+        "omega_k_ceiling_abs": 0.007603013946772688,
+        "sigma2_ceiling": 6.422869008313332e-06
+      },
+      "saadeh_model_conditional__matter_era": {
+        "abs_kappa": "2/5",
+        "attribution": "REGISTERED-EXTERNAL model-conditional (sigma/H)_0 < 1e-6 weakest-mode, Saadeh et al. 2016 Table II (Planck, all-mode); Sigma = (sigma/H)/sqrt(3)",
+        "omega_k_ceiling_abs": 1.4433756729740645e-06,
+        "sigma2_ceiling": 3.3333333333333334e-13
+      },
+      "saadeh_model_conditional__radiation_era": {
+        "abs_kappa": "1/3",
+        "attribution": "REGISTERED-EXTERNAL model-conditional (sigma/H)_0 < 1e-6 weakest-mode, Saadeh et al. 2016 Table II (Planck, all-mode); Sigma = (sigma/H)/sqrt(3)",
+        "omega_k_ceiling_abs": 1.7320508075688774e-06,
+        "sigma2_ceiling": 3.3333333333333334e-13
+      }
+    },
+    "two_sided": "KS mirror carries the same |kappa|: the ceiling bounds |Delta Omega_k| for both curvature signs"
+  },
+  "dynamical_verification": {
+    "all_verified": true,
+    "ks_dust": {
+      "gauss_monitored_ok": true,
+      "kappa_expected": -0.4,
+      "max_gauss_residual": 4.34658663060298e-11,
+      "max_rel_dev_in_window": 0.0017350066928822905,
+      "nonvacuum_throughout": true,
+      "plateau_ratio_mean": -0.39953455864361737,
+      "slaving_verified": true
+    },
+    "lrs3_dust": {
+      "gauss_monitored_ok": true,
+      "kappa_expected": -0.4,
+      "max_gauss_residual": 4.346284707328308e-11,
+      "max_rel_dev_in_window": 0.0016401535910573473,
+      "nonvacuum_throughout": true,
+      "plateau_ratio_mean": -0.3995803220786803,
+      "slaving_verified": true
+    },
+    "lrs3_radiation": {
+      "gauss_monitored_ok": true,
+      "kappa_expected": -0.3333333333333333,
+      "max_gauss_residual": 2.1441446011464016e-11,
+      "max_rel_dev_in_window": 0.0018898275531362696,
+      "nonvacuum_throughout": true,
+      "plateau_ratio_mean": -0.3329481078765172,
+      "slaving_verified": true
+    },
+    "reduced_lane": {
+      "cross_check_ok": true,
+      "cross_check_vs_metric_level_max_abs_dev": 4.19142028208622e-06,
+      "late_time_vacuum_anchor": {
+        "approaches_anchor": true,
+        "k_final": 0.7336469935158271,
+        "sigma_final": -0.48355686798265546,
+        "target": [
+          -0.5,
+          0.75
+        ]
+      }
+    }
+  },
+  "exit_gate": "branch 1 of k5_omega_k_higher_order_ceiling (registered higher-order Omega_k transfer + finite ceiling, NEW card artifact; frozen cards and the registered U_k plugin untouched)",
+  "reduced_system": {
+    "checks": {
+      "curvature_source_coefficient_minus_one": true,
+      "dK_is_2K_q_plus_Sigma": true,
+      "gauss_is_1_eq_Om_Sg2_K": true,
+      "q_closed_form": true
+    },
+    "dK_dN": "-K*(3*K*w + K + 3*Sigma**2*w - 3*Sigma**2 - 2*Sigma - 3*w - 1)",
+    "dSigma_dN": "-(3*K*Sigma*w + K*Sigma + 2*K + 3*Sigma**3*w - 3*Sigma**3 - 3*Sigma*w + 3*Sigma)/2",
+    "q": "-(3*K*w + K + 3*Sigma**2*w - 3*Sigma**2 - 3*w - 1)/2"
+  },
+  "scope_not_claimed": "attribution-conditional AND class-conditional (LRS-III/KS slaved mode) ceilings; the certified instantaneous structural null is untouched; the shear-sector reading stays PARTIAL; the transverse/B-mode channel remains the other registered re-opening route (semi-native remit); no observational claim, no detection, no geometry/family claim, no posterior claim",
+  "seal": "egs3.omega_k_reopening",
+  "slaving_theorem": {
+    "checks": {
+      "dust_value": true,
+      "kappa_eq_minus_1_over_2_plus_q0": true,
+      "kappa_eq_minus_2_over_5_plus_3w": true,
+      "radiation_value": true,
+      "transient_rate_closed_form": true,
+      "transient_rate_positive_w_lt_3": true,
+      "vacuum_fixed_point": true,
+      "vacuum_point_eigenvalues": true
+    },
+    "kappa_dust": "-2/5",
+    "kappa_exact": "-2/(3*w + 5)",
+    "kappa_of_q": "-1/(2 + q)",
+    "kappa_radiation": "-1/3",
+    "ks_mirror_two_sided": true,
+    "vacuum_anchor": "(Sigma, K) = (-1/2, 3/4), ratio -2/3",
+    "vacuum_eigenvalues_dust": [
+      "-3/2",
+      "0"
+    ]
+  },
+  "status": "PASS",
+  "structural_null_repair": {
+    "dynamical_linear_response_nonzero": true,
+    "instantaneous_null_still_certified": true,
+    "statement": "the leading-order response column of Omega_k is exactly zero at FIXED sector amplitudes (certified structural null, untouched); ON SHELL in the anisotropic-curvature class the shear is slaved to K with exact coefficient kappa = -1/(2+q), so the certified shear->quadrupole chain carries a curvature response after transients decay -- the higher-order re-opening is a dynamical correlation along the slaved submanifold, not a repaired instantaneous response"
+  },
+  "theorem_id": "OMK-REOPEN"
+}

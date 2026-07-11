@@ -33,6 +33,7 @@ OUT_DIR = REPO / "docs/generated"
 SAGE_SCRIPT = REPO / "sage/egs3_v9_fractional.sage"
 KE_WOLFRAM_SCRIPT = REPO / "wolfram/ke_rotating_congruence.wls"
 KE_DYN_WOLFRAM_SCRIPT = REPO / "wolfram/ke_dynamics.wls"
+OMK_WOLFRAM_SCRIPT = REPO / "wolfram/omega_k_reopening.wls"
 
 
 def sage_fractional_seal() -> tuple[dict, int]:
@@ -133,6 +134,37 @@ def wolfram_ke_dynamics_seal(sympy_seal: dict | None) -> tuple[dict, int]:
     return seal, (0 if ok else 1)
 
 
+def wolfram_omk_seal(sympy_seal: dict | None) -> tuple[dict, int]:
+    """Second-engine lane for OMK-REOPEN: independent Wolfram derivation +
+    NDSolve; the runner cross-checks the slaving plateau and the deep-run
+    vacuum-anchor approach against the SymPy seal (tolerances: two
+    independent integrators)."""
+    seal, blocked = _run_wolfram(OMK_WOLFRAM_SCRIPT)
+    if seal is None:
+        return blocked, 2
+    checks = dict(seal.get("checks", {}))
+    cross = False
+    if sympy_seal is not None:
+        try:
+            dyn = sympy_seal["dynamical_verification"]
+            sp_plateau = dyn["lrs3_dust"]["plateau_ratio_mean"]
+            wl_plateau = seal["metric_lane"]["plateau_ratio_mean"]
+            sp_anchor = dyn["reduced_lane"]["late_time_vacuum_anchor"]
+            wl_deep = seal["deep_lane"]
+            cross = (abs(wl_plateau - sp_plateau) / abs(sp_plateau) < 1e-3
+                     and abs(wl_deep["sigma_final"]
+                             - sp_anchor["sigma_final"]) < 1e-6
+                     and abs(wl_deep["k_final"]
+                             - sp_anchor["k_final"]) < 1e-6)
+        except (KeyError, TypeError, ZeroDivisionError):
+            cross = False
+    checks["cross_engine_match_sympy"] = bool(cross)
+    seal["checks"] = checks
+    ok = checks and all(v is True for v in checks.values())
+    seal["status"] = "PASS" if ok else "FAIL"
+    return seal, (0 if ok else 1)
+
+
 def build_seals() -> tuple[dict[str, dict], int]:
     """Return ({filename: payload}, worst_exit_code)."""
     payloads: dict[str, dict] = {}
@@ -216,6 +248,24 @@ def build_seals() -> tuple[dict[str, dict], int]:
     if dyn_seal is not None:
         wseal, code = wolfram_ke_dynamics_seal(dyn_seal)
         payloads["king_ellis_dynamics_wolfram_seal.json"] = wseal
+        worst = max(worst, code if code != 2 else 0)
+        if code == 2:
+            print(f"REGISTERED BLOCKER: {wseal.get('status')}",
+                  file=sys.stderr)
+    # --- REV-R184: Omega_k higher-order re-opening transfer + ceiling ---
+    omk_seal = None
+    try:
+        from htt.obsstat.egs3_omega_k_reopening import (
+            omega_k_reopening_seal)
+        omk_seal = omega_k_reopening_seal()
+        payloads["omega_k_reopening_seal.json"] = omk_seal
+        if omk_seal.get("status") != "PASS":
+            worst = max(worst, 1)
+    except ImportError:
+        pass
+    if omk_seal is not None:
+        wseal, code = wolfram_omk_seal(omk_seal)
+        payloads["omega_k_reopening_wolfram_seal.json"] = wseal
         worst = max(worst, code if code != 2 else 0)
         if code == 2:
             print(f"REGISTERED BLOCKER: {wseal.get('status')}",
