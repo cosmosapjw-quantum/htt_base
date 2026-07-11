@@ -9,6 +9,7 @@
     ],
     "omega_matches_eq60": true,
     "omega_symbolic_ok": true,
+    "pdftotext_digit_swaps_note": "the pdftotext extraction of MESa swaps digits in three raw coefficients (eq 51 leading '38'->8/3, and the octopole '97'->9/7 in eq 51 / '73'->3/7 in eq 59); all three readings are FORCED by internal closure to the printed reduced bounds and are independently corroborated by SAG 1997's unambiguous LaTeX \\frac{3}{7} (eq 3), not just the leading term",
     "previously_registered_accel": [
       "3/4",
       "1",
@@ -29,7 +30,7 @@
     "why_it_differs": "the previously-registered omega (3/4,2,2/7) and accel (3/4,1,3/14) are MESb (Paper II, PRD 51 5942, print-only) NON-GEODESIC values; MESa's geodesic assumption gives (10/3,2/15,0) and no accel bound, matching the accessible MESb-citing SAG 1997 (Stoeger co-author)"
   },
   "hierarchy_preservation_theorem": {
-    "conclusion": "the geodesic omega has e1-coefficient 10/3 > 5/3 (shear), so at the observed dipole the full-dipole geodesic ceiling VIOLATES B_sigma > B_omega; the physically-standard e1 = 0 (observer-motion dipole, SAG convention) is the ONLY geodesic attribution that is a valid MES hierarchy -- it forces the re-freeze target",
+    "conclusion": "the geodesic omega has e1-coefficient 10/3 > 5/3 (shear), so at the observed dipole the full-dipole geodesic ceiling VIOLATES B_sigma > B_omega and is ruled out as a valid MES hierarchy. The hierarchy admits any e1 in [0, e1_crit); the specific e1 = 0 is the primary-sourced SAG observer-motion convention (the observed dipole is the observer's peculiar motion). SAG-convention selection + hierarchy-admissibility together fix the re-freeze target",
     "diff_B_sigma_minus_B_omega": "-5*e1/3 + 43*e2/15 + 3*e3/7",
     "e1_crit_matches_derivation": true,
     "e1_crit_numeric": 7.682208137142856e-06,
@@ -37,6 +38,7 @@
     "e1_zero_B_omega": 4.746172e-07,
     "e1_zero_B_sigma": 1.3278297428571429e-05,
     "e1_zero_hierarchy_holds": true,
+    "e1_zero_is_physical_sag_convention_not_hierarchy_forced": true,
     "full_dipole_B_omega": 0.0041124746172,
     "full_dipole_B_sigma": 0.0020692782974285713,
     "full_dipole_hierarchy_holds": false,
@@ -98,7 +100,7 @@
       "eps1_attribution": "0 (SAG convention: CMB dipole is observer motion)"
     },
     "sign_off": "explicit owner sign-off (re-freeze cycle), 2026-07-11",
-    "why_the_change": "the actual derivation yields the GEODESIC bounds (rederived bit-exact from MESa + SAG-1997-verified); the previously-registered non-geodesic values are print-only MESb and appear in no accessible source. The hierarchy-preservation theorem forces the e1 = 0 (observer-motion) attribution, giving the unique derivable + valid-hierarchy anchor"
+    "why_the_change": "the actual derivation yields the GEODESIC bounds (rederived bit-exact from MESa + SAG-1997-verified); the previously-registered non-geodesic values are print-only MESb and appear in no accessible source. The e1 = 0 attribution is the primary-sourced SAG observer-motion convention; the hierarchy-preservation theorem certifies it admissible and rules out the full-observed-dipole geodesic ceiling (which violates B_sigma > B_omega)"
   },
   "refrozen_anchor": {
     "A2_max": 0.0,

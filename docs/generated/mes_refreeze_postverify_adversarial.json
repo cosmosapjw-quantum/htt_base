@@ -1,0 +1,55 @@
+{
+  "schema": "htt.internal.adversarial_ledger.v1",
+  "cycle": "REV-R189 (post-verify of the MES geodesic derivation + re-freeze, REV-R187/R188)",
+  "run": "workflow wf_20513be9-7fe, 4 refute-prompted lanes, 2026-07-11",
+  "never_rendered_in_reports": true,
+  "lanes": {
+    "derivation": {
+      "verdict": "CONFIRMED",
+      "notes": [
+        "the 8/3 reading of MESa eq 51 (vs the pdftotext '3/8') is FORCED: 3/8 + 1/3 = 17/24 != 3, so only 8/3 closes to eq 59's integer '3 e2'; independently recomputed",
+        "C1/C2 reduction recomputes bit-exact to sigma (5/3,3,3/7) and omega (10/3,2/15,0) (independent Fraction session)",
+        "SAG-1997 cross-claim CONFIRMED: carries geodesic omega (10/3,2/15,0), NO acceleration bound, geodesic congruence, e1=0 (eq 12); its unambiguous LaTeX 3/7 corroborates MESa's pdftotext digit-swaps",
+        "physics structural map (shear->quadrupole L=2, u_dot->dipole L=1, geodesic removes accel) correct per MESa's own multipole equations (E^2 sigma_ab in the L=2 harmonic) + standard covariant kinetic theory",
+        "SHA256 integrity of all three archived sources verified OK"
+      ],
+      "findings": [
+        {"severity": "note", "summary": "only the 8/3 digit-swap was explicitly flagged; the 3/7 and 9/7 octopole swaps were used silently", "disposition": "FIXED rev-r189 (pdftotext_digit_swaps_note added to geodesic_reduction; all three swaps are internally forced + SAG-corroborated)"}
+      ]
+    },
+    "hierarchy-theorem": {
+      "verdict": "PLAUSIBLE",
+      "notes": [
+        "e1_crit = 43 e2/25 + 9 e3/35 = 7.682208e-6 derivation EXACTLY correct (independent SymPy)",
+        "full-dipole violation (B_omega 4.11e-3 > B_sigma 2.07e-3) and e1=0 restoration (1.33e-5 > 4.75e-7 > 0) both reproduce; W2_max=3.3789e-13, Sigma2_max=2.6447e-10 exact",
+        "three_bound_hierarchy strict mode genuinely raises HierarchyViolationError on a violation"
+      ],
+      "findings": [
+        {"severity": "P1", "summary": "'the hierarchy-preservation theorem forces the re-freeze uniquely' / 'e1=0 is the ONLY valid geodesic hierarchy' is OVERSTATED: the hierarchy permits any e1 in [0, e1_crit); e1=0 is the primary-sourced SAG observer-motion convention, not a mathematical forcing (an intermediate e1=5e-6 gives a valid hierarchy with W2_max ~5e-10)", "disposition": "FIXED rev-r189: reframed everywhere (module docstring + hierarchy_preservation_theorem conclusion + refreeze_provenance + registry note + CLAIM_LEDGER + results table + v9 report paragraph + CHANGELOG) -- e1=0 is the primary-sourced SAG convention that SELECTS the value; the hierarchy theorem is the ADMISSIBILITY check that RULES OUT the full-observed-dipole geodesic ceiling and confirms e1=0 admissible; added the explicit note that the hierarchy alone permits [0,e1_crit)"}
+      ]
+    },
+    "refreeze-consistency": {
+      "verdict": "CONFIRMED",
+      "notes": [
+        "re-frozen W2_max = 3.3789222980376e-13 EXACT, matches v9 branch-registry sag_consistent",
+        "FREEZE DISCIPLINE holds: frozen three_bound_hierarchy.py byte-unchanged at HEAD, still returns 1.3087e-6, all guard tests pass (89 passed)",
+        "x_C UNTOUCHED (W2_max is the ceiling, not an x_C input; x_C uses the g-vector W^2 component)",
+        "OMK-REOPEN ripple CONSISTENT: mes_cosmological (e1=0) branch exactly equals the re-frozen Sigma2_max; OMK module not touched",
+        "no frozen v5-v8 report broken (successor pattern honored)"
+      ],
+      "findings": [
+        {"severity": "note", "summary": "after the re-freeze made e1=0 live, the OMK 'mes_registered' (full-e1) branch label could be misread as the live registered value", "disposition": "RECORDED (cosmetic; the OMK card discloses all branches; the live anchor is documented in the registry/ledger)"}
+      ]
+    },
+    "report-language": {
+      "verdict": "CONFIRMED (with fixed language findings)",
+      "findings": [
+        {"severity": "P1", "summary": "'owner sign-off' governance/QA-process narrative rendered in the report BODY, violating the reports-carry-physics-only rule", "disposition": "FIXED rev-r189 (removed 'explicit owner sign-off' from the v9 report paragraph; dropped 'owner-signed-off' from the registry TITLE that renders in the ledger and from the results-table statement; the sign-off record stays in the seal/ticket only)"},
+        {"severity": "P2", "summary": "the MES-REFREEZE subsection omitted the explicit no-observational-claim nonclaim", "disposition": "FIXED rev-r189 ('This is a diagnostic ceiling; no observational claim is made.' appended)"},
+        {"severity": "P2", "summary": "cross-section coherence: one section says 1.3087e-6 'no branch promoted', later 3.3789e-13 'live anchor', reconciliation only implicit", "disposition": "FIXED rev-r189 (the paragraph now states it supersedes, as the live anchor, the three attribution-conditional ceilings tabulated earlier, of which it is the e1=0 branch)"},
+        {"severity": "note", "summary": "subject-verb tense error in the corrected provenance paragraph ('re-frozen' as verb)", "disposition": "FIXED rev-r189 ('re-freezes ... onto')"}
+      ]
+    }
+  },
+  "net": "three lanes CONFIRMED (derivation, refreeze-consistency, report-language-after-fixes), one PLAUSIBLE (hierarchy-theorem) with zero P0; the derivation, e1_crit, W2_max, freeze discipline, and x_C-independence all independently reproduced. The load-bearing correction: the re-freeze target is fixed by the primary-sourced SAG observer-motion convention (e1=0), NOT by a hierarchy uniqueness forcing; the hierarchy theorem is the admissibility check that excludes the full-dipole alternative. All language/framing findings fixed in-session and the v9 report rebuilt (--check byte-stable)."
+}

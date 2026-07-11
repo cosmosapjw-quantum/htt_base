@@ -36,23 +36,32 @@ transcriptions + C1/C2 reduction are reused):
      co-authored by Stoeger). The previously-registered omega (3/4,2,2/7)
      and accel (3/4,1,3/14) are MESb (Paper II, print-only) NON-GEODESIC
      values that appear in NO accessible source and are not reconstructable.
-  3. HIERARCHY-PRESERVATION THEOREM (the load-bearing constraint that
-     FIXES the re-freeze uniquely): the MES ceilings are only admissible
-     when B_sigma > B_omega > B_accel (the module
-     ``three_bound_hierarchy`` RAISES otherwise). With the geodesic omega
-     the coefficient of e1 jumps from 5/3 (shear) to 10/3 (vorticity), so
+  3. THE e1 = 0 ATTRIBUTION IS PRIMARY-SOURCED, and the HIERARCHY-
+     PRESERVATION THEOREM is the admissibility check that rules out the
+     conservative alternative. The re-freeze SELECTS e1 = 0 by the
+     physical SAG convention (the observed CMB dipole is the OBSERVER's
+     peculiar motion, so the residual COSMOLOGICAL dipole bound is zero;
+     SAG 1997 eq (12) sets e1 = 0 verbatim, and MESa itself notes that if
+     the CBR temperature dipole is negligible then the e1's vanish). The
+     hierarchy-preservation theorem then CONFIRMS this choice is
+     admissible and RULES OUT the full-observed-dipole geodesic ceiling:
+     the MES ceilings are only admissible when B_sigma > B_omega >
+     B_accel (the module ``three_bound_hierarchy`` RAISES otherwise), and
+     with the geodesic omega the coefficient of e1 jumps from 5/3 (shear)
+     to 10/3 (vorticity), so
         B_sigma > B_omega  <=>  e1 < e1_crit
            e1_crit = [3 e2 + (3/7) e3 - (2/15) e2] / (10/3 - 5/3)
                    = (43/15 e2 + 3/7 e3) / (5/3)   (derived below, exact).
-     At the observed dipole e1 = 771/625000 the strict inequality FAILS
-     (B_omega,geo = 4.11e-3 > B_sigma = 2.07e-3): the FULL-dipole geodesic
-     ceiling is NOT a valid MES hierarchy. The physically-standard
-     resolution -- adopted verbatim by SAG 1997 -- is that the observed
-     CMB dipole is the OBSERVER's peculiar motion, so the residual
-     COSMOLOGICAL dipole bound is e1 = 0. With e1 = 0 the hierarchy holds
-     (B_sigma = 1.33e-5 > B_omega = 4.75e-7 > 0), and this is the ONLY
-     geodesic re-freeze that is simultaneously derivable AND a valid MES
-     hierarchy.
+     At the observed dipole e1 = 771/625000 the inequality FAILS
+     (B_omega,geo = 4.11e-3 > B_sigma = 2.07e-3): a FULL-dipole geodesic
+     ceiling is NOT a valid MES hierarchy, so the "conservative" (keep the
+     whole observed dipole) alternative is ruled out. The SAG e1 = 0
+     choice IS admissible (B_sigma = 1.33e-5 > B_omega = 4.75e-7 > 0).
+     NOTE: the hierarchy alone permits any e1 in [0, e1_crit); it does
+     NOT by itself single out e1 = 0 -- that specific value is the
+     PHYSICAL SAG convention. The two together fix the re-freeze: the
+     SAG convention selects the value, the hierarchy check certifies it
+     admissible while excluding the full-dipole ceiling.
 
 THE RE-FROZEN ANCHOR (this cycle, owner-signed-off):
         coefficients : sigma (5/3, 3, 3/7) [unchanged, rederived]
@@ -190,6 +199,13 @@ def geodesic_reduction() -> dict:
         "omega_symbolic_ok": bool(sp.simplify(om_sym - om_target) == 0),
         "geodesic_accel": "(0, 0, 0) -- MESa is geodesic (u_dot = 0), no "
                           "acceleration bound",
+        "pdftotext_digit_swaps_note": (
+            "the pdftotext extraction of MESa swaps digits in three raw "
+            "coefficients (eq 51 leading '38'->8/3, and the octopole "
+            "'97'->9/7 in eq 51 / '73'->3/7 in eq 59); all three readings "
+            "are FORCED by internal closure to the printed reduced bounds "
+            "and are independently corroborated by SAG 1997's unambiguous "
+            "LaTeX \\frac{3}{7} (eq 3), not just the leading term"),
         "differs_from_previously_registered_omega": (
             REFROZEN_COEFFS["omega"] != COEFFS_FROZEN["omega"]),
         "previously_registered_omega": tuple(
@@ -210,8 +226,11 @@ def geodesic_reduction() -> dict:
 def hierarchy_preservation_theorem() -> dict:
     """EXACT: with the geodesic omega, B_sigma > B_omega holds IFF
     e1 < e1_crit; derive e1_crit symbolically, evaluate at the observed
-    dipole (FAILS) and at e1 = 0 (HOLDS). This is the constraint that
-    forces the re-freeze to the e1 = 0 (SAG) attribution."""
+    dipole (FAILS) and at e1 = 0 (HOLDS). This is the ADMISSIBILITY check
+    that rules out the full-observed-dipole geodesic ceiling; it permits
+    any e1 in [0, e1_crit), so it does NOT by itself single out e1 = 0 --
+    the specific value is the primary-sourced SAG observer-motion
+    convention."""
     e1, e2, e3 = sp.symbols("e1 e2 e3", positive=True)
     Bs = sp.Rational(5, 3) * e1 + 3 * e2 + sp.Rational(3, 7) * e3
     Bo = sp.Rational(10, 3) * e1 + sp.Rational(2, 15) * e2
@@ -244,13 +263,16 @@ def hierarchy_preservation_theorem() -> dict:
         "e1_zero_hierarchy_holds": bool(Bs_zero > Bo_zero),
         "e1_zero_B_sigma": Bs_zero,
         "e1_zero_B_omega": Bo_zero,
+        "e1_zero_is_physical_sag_convention_not_hierarchy_forced": True,
         "conclusion": (
             "the geodesic omega has e1-coefficient 10/3 > 5/3 (shear), so "
             "at the observed dipole the full-dipole geodesic ceiling "
-            "VIOLATES B_sigma > B_omega; the physically-standard e1 = 0 "
-            "(observer-motion dipole, SAG convention) is the ONLY geodesic "
-            "attribution that is a valid MES hierarchy -- it forces the "
-            "re-freeze target"),
+            "VIOLATES B_sigma > B_omega and is ruled out as a valid MES "
+            "hierarchy. The hierarchy admits any e1 in [0, e1_crit); the "
+            "specific e1 = 0 is the primary-sourced SAG observer-motion "
+            "convention (the observed dipole is the observer's peculiar "
+            "motion). SAG-convention selection + hierarchy-admissibility "
+            "together fix the re-freeze target"),
     }
 
 
@@ -334,10 +356,11 @@ def refreeze_provenance() -> dict:
             "the actual derivation yields the GEODESIC bounds "
             "(rederived bit-exact from MESa + SAG-1997-verified); the "
             "previously-registered non-geodesic values are print-only "
-            "MESb and appear in no accessible source. The hierarchy-"
-            "preservation theorem forces the e1 = 0 (observer-motion) "
-            "attribution, giving the unique derivable + valid-hierarchy "
-            "anchor"),
+            "MESb and appear in no accessible source. The e1 = 0 "
+            "attribution is the primary-sourced SAG observer-motion "
+            "convention; the hierarchy-preservation theorem certifies it "
+            "admissible and rules out the full-observed-dipole geodesic "
+            "ceiling (which violates B_sigma > B_omega)"),
         "freeze_discipline": (
             "the v7/v8-frozen three_bound_hierarchy module and its "
             "W2_max = 1.3087e-6 stay byte-identical (v5-v8 reports "

@@ -1743,44 +1743,47 @@ def _mes_refreeze_paragraph() -> str:
     prev = anchor.get("previous_registered_W2_max", 0.0)
     oom = anchor.get("orders_of_magnitude_change", 0.0)
     return (
-        rf"With explicit owner sign-off this revision executes the "
-        rf"re-freeze cycle that the MES provenance work had deferred, and "
-        rf"attaches the actual derivation.  Reducing the primary-source raw "
-        rf"MESa bounds (eq (51) shear, eq (52) vorticity; SHA-archived) by "
-        rf"the stated C1/C2 assumptions{engines} yields the GEODESIC "
-        rf"triples $\sigma=(\tfrac53,3,\tfrac37)$ [unchanged] and "
+        rf"This revision re-freezes the MES vorticity-ceiling anchor onto "
+        rf"the derivable geodesic bound and attaches the derivation.  "
+        rf"Reducing the primary-source raw MESa bounds (eq (51) shear, "
+        rf"eq (52) vorticity; SHA-archived) by the stated C1/C2 "
+        rf"assumptions{engines} yields the GEODESIC triples "
+        rf"$\sigma=(\tfrac53,3,\tfrac37)$ [unchanged] and "
         rf"$\omega=(\tfrac{{10}}3,\tfrac2{{15}},0)$ with NO acceleration "
         rf"bound (the MESa flow is geodesic, $\dot u=0$).  The "
         rf"previously-registered $\omega=(\tfrac34,2,\tfrac27)$ and "
         rf"$\dot u=(\tfrac34,1,\tfrac3{{14}})$ are print-only MESb "
         rf"(Paper~II) NON-GEODESIC values that appear in no accessible "
-        rf"source; the derivable geodesic $\omega$ is exactly the triple "
-        rf"carried by the accessible MESb-citing Stoeger--Araujo--Gebbie "
-        rf"1997 (Stoeger co-author).  \emph{{Why this forces the anchor:}} "
-        rf"the geodesic $\omega$ raises the dipole coefficient from "
-        rf"$\tfrac53$ (shear) to $\tfrac{{10}}3$, so the MES hierarchy "
-        rf"$B_\sigma>B_\omega$ holds only for "
-        rf"$\epsilon_1<\epsilon_1^{{\rm crit}}"
+        rf"source, whereas the derivable geodesic $\omega$ is exactly the "
+        rf"triple carried by the accessible MESb-citing Stoeger--Araujo--"
+        rf"Gebbie 1997 (Stoeger co-author), which also sets "
+        rf"$\epsilon_1=0$.  \emph{{The attribution and its admissibility:}} "
+        rf"the re-freeze adopts $\epsilon_1=0$ --- the observed dipole is "
+        rf"the observer's peculiar motion, so the residual cosmological "
+        rf"dipole bound vanishes (the SAG convention).  The geodesic "
+        rf"$\omega$ raises the dipole coefficient from $\tfrac53$ (shear) "
+        rf"to $\tfrac{{10}}3$, so the MES hierarchy $B_\sigma>B_\omega$ "
+        rf"holds only for $\epsilon_1<\epsilon_1^{{\rm crit}}"
         rf"=\tfrac{{43}}{{25}}\epsilon_2+\tfrac9{{35}}\epsilon_3"
         rf"={hier.get('e1_crit_numeric', 0):.3e}$; the observed dipole "
         rf"$\epsilon_1={hier.get('observed_e1', 0):.3e}$ EXCEEDS it, so a "
-        rf"full-dipole geodesic ceiling is not a valid MES hierarchy.  The "
-        rf"physically-standard resolution --- the observed dipole is the "
-        rf"observer's peculiar motion, so the residual cosmological dipole "
-        rf"bound is $\epsilon_1=0$ (the SAG convention) --- is the unique "
-        rf"geodesic attribution that restores the hierarchy.  The re-frozen "
-        rf"anchor is therefore "
+        rf"full-observed-dipole geodesic ceiling would not be a valid MES "
+        rf"hierarchy and is excluded, while $\epsilon_1=0$ is admissible.  "
+        rf"The re-frozen anchor is "
         rf"$W^2_{{\max}}=\tfrac32B_\omega(0,\epsilon_2,\epsilon_3)^2"
         rf"={anchor.get('W2_max', 0):.4e}$ (a "
         rf"{oom:.1f}-order-of-magnitude tightening of the previous "
         rf"${prev:.4e}$), with $\Sigma^2_{{\max}}"
-        rf"={anchor.get('Sigma2_max', 0):.4e}$ and $A^2_{{\max}}=0$.  The "
-        rf"frozen \code{{three\_bound\_hierarchy}} constants (and the "
-        rf"earlier revisions' $W^2_{{\max}}={prev:.4e}$) stay "
-        rf"byte-identical for reproducibility; this successor is the live "
-        rf"anchor, so the re-freeze is reversible, and the comparator "
-        rf"$x_C$ is untouched (the ceiling is an admissibility boundary, "
-        rf"not an $x_C$ input).")
+        rf"={anchor.get('Sigma2_max', 0):.4e}$ and $A^2_{{\max}}=0$; this "
+        rf"supersedes, as the live anchor, the three attribution-"
+        rf"conditional ceilings tabulated earlier (of which it is the "
+        rf"$\epsilon_1=0$ branch).  The frozen "
+        rf"\code{{three\_bound\_hierarchy}} constants (and the earlier "
+        rf"revisions' $W^2_{{\max}}={prev:.4e}$) stay byte-identical for "
+        rf"reproducibility; this successor is the live anchor, so the "
+        rf"re-freeze is reversible, and the comparator $x_C$ is untouched "
+        rf"(the ceiling is an admissibility boundary, not an $x_C$ input).  "
+        rf"This is a diagnostic ceiling; no observational claim is made.")
 
 
 def _omk_reopening_paragraph() -> str:
@@ -2408,7 +2411,7 @@ With \(H=\Theta/3\), the standardized squared ceilings are
 The MES hypotheses bound the PSTF photon multipoles and the first covariant derivative terms that source the kinematical hierarchy.  Solving the linearized hierarchy for shear, vorticity, and acceleration gives different coefficient combinations because the dipole, quadrupole, and octupole enter the three equations with different projection coefficients.  The factor \(3/2\) is now DERIVED rather than asserted: with \(X^2:=x_{ab}x^{ab}/(6H^2)\), \(H=\Theta/3\), and the hierarchy bound \(\sqrt{x_{ab}x^{ab}}/\Theta\le B\), one gets \(X^2\le B^2\Theta^2/(6\Theta^2/9)=\frac32B^2\) (sealed in \code{parent_identity_seal.json}).  Note this conversion is consistent ONLY under the registered tensor-norm-over-\(6H^2\) convention of \S3.1 -- the third revision's \(\omega_a\omega^a/H^2\) vorticity statement contradicted exactly this rule, which is how the defect was caught.  Thus the result is a three-bound hierarchy, not a single scalar anisotropy number.
 \end{proof}
 
-\paragraph{Provenance of the \(\epsilon\)-coefficients.}  The rational coefficients \((\frac53,3,\frac37)\), \((\frac34,2,\frac27)\), \((\frac34,1,\frac3{14})\) originate in the Maartens--Ellis--Stoeger 1995 linearized multipole hierarchy and are carried as exact fractions in \code{three\_bound\_hierarchy.py}.  The shear triple \((\frac53,3,\frac37)\) is rederived bit-exact from the primary source (MESa eq (51) + the stated C1/C2 reduction); the \(\frac32\) conversion between the \(\Theta\)-normalized bounds and the \(H\)-normalized squared ceilings is derived (above).  The Seventh-Revision MES-REFREEZE subsection re-frozen the vorticity-ceiling anchor to the derivable GEODESIC value: the previously-registered \(\omega\)/acceleration triples \((\frac34,2,\frac27)\)/\((\frac34,1,\frac3{14})\) are print-only MESb (Paper II) NON-GEODESIC values absent from every accessible source, whereas the derivable (and SAG-1997-verified) geodesic \(\omega=(\frac{10}3,\frac2{15},0)\) with no acceleration bound is now the live anchor.  Gate class F1 continues to assert bit-level agreement against the frozen constants (which stay byte-identical for the earlier revisions' reproducibility).
+\paragraph{Provenance of the \(\epsilon\)-coefficients.}  The rational coefficients \((\frac53,3,\frac37)\), \((\frac34,2,\frac27)\), \((\frac34,1,\frac3{14})\) originate in the Maartens--Ellis--Stoeger 1995 linearized multipole hierarchy and are carried as exact fractions in \code{three\_bound\_hierarchy.py}.  The shear triple \((\frac53,3,\frac37)\) is rederived bit-exact from the primary source (MESa eq (51) + the stated C1/C2 reduction); the \(\frac32\) conversion between the \(\Theta\)-normalized bounds and the \(H\)-normalized squared ceilings is derived (above).  The Seventh-Revision MES-REFREEZE subsection re-freezes the vorticity-ceiling anchor onto the derivable GEODESIC value: the previously-registered \(\omega\)/acceleration triples \((\frac34,2,\frac27)\)/\((\frac34,1,\frac3{14})\) are print-only MESb (Paper II) NON-GEODESIC values absent from every accessible source, whereas the derivable (and SAG-1997-verified) geodesic \(\omega=(\frac{10}3,\frac2{15},0)\) with no acceleration bound is now the live anchor.  Gate class F1 continues to assert bit-level agreement against the frozen constants (which stay byte-identical for the earlier revisions' reproducibility).
 
 \paragraph{Proof item P4.}
 \begin{proposition}[Frame-attribution safe-route correction]

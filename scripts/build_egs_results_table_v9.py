@@ -138,15 +138,16 @@ def _v9_rows() -> list[dict]:
            "omega_k_reopening_wolfram_seal.json; "
            "k5_omega_k_ceiling_card.json"),
         _r("MES-REFREEZE", GR,
-           "MES vorticity-ceiling re-freeze (owner-signed-off): the "
+           "MES vorticity-ceiling re-freeze: the "
            "primary-source raw MESa bounds reduce (C1/C2, SymPy + Wolfram) "
            "to geodesic sigma (5/3,3,3/7) + omega (10/3,2/15,0) + no accel; "
            "the previously-registered non-geodesic omega/accel are MESb "
-           "print-only (no accessible source); hierarchy-preservation "
-           "theorem forces e1 = 0",
+           "print-only (no accessible source); e1 = 0 is the SAG "
+           "observer-motion convention, admissibility-checked by the "
+           "hierarchy-preservation theorem",
            "e1_crit = 43 e2/25 + 9 e3/35 = 7.68e-6 (observed dipole "
-           "1.23e-3 exceeds it, full-dipole geodesic breaks the "
-           "hierarchy); re-frozen W2_max = 3.3789e-13 (from 1.3087e-6, "
+           "1.23e-3 exceeds it, so the full-dipole geodesic ceiling is "
+           "excluded); e1 = 0 is the SAG convention; re-frozen W2_max = 3.3789e-13 (from 1.3087e-6, "
            "6.59-OOM tightening) = branch-registry sag_consistent; frozen "
            "anchor byte-identical (successor pattern); x_C untouched",
            "re_frozen",
