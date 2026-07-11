@@ -1,6 +1,11 @@
 {
   "closed_or_held_tickets": [
     {
+      "note": "MES re-freeze EXECUTED with explicit owner sign-off (REV-R187/R188, registry MES-REFREEZE): the actual geodesic derivation attached (two engines), the hierarchy-preservation theorem forces e1=0, W2_max re-frozen 1.3087e-6 -> 3.3789e-13; frozen anchor preserved byte-identical (successor pattern); MESb print-only internal rederivation remains blocked (rank 7)",
+      "ticket": "mes_full_rederivation.yaml",
+      "ticket_state": "re_frozen_to_geodesic_sag_consistent_anchor"
+    },
+    {
       "note": "exit-gate branch 1 EXECUTED (REV-R184/R185, registry OMK-REOPEN): exact curvature->shear slaving kappa = -1/(2+q) on the LRS-III/KS slaved mode; six labeled attribution x era |Delta Omega_k| ceilings on a NEW card; the certified instantaneous null untouched; frozen U_k plugin NOT modified; nothing promoted",
       "ticket": "k5_omega_k_higher_order_ceiling.yaml",
       "ticket_state": "branch1_executed_slaving_transfer_ceilings_registered"
@@ -37,21 +42,10 @@
     {
       "blocker": null,
       "executability": "decision_only",
-      "exit_gate": "explicit owner sign-off selecting a coefficient branch; then a re-freeze cycle with a new W2_max anchor",
-      "item": "MES registry re-freeze decision (coefficient-branch promotion)",
-      "note": "all compute done (3-branch registry, 3 labeled ceilings, eps1 attribution triple); registered values stay frozen until sign-off.",
-      "rank": 1,
-      "source": "ticket EGS3-G8-mes-full-rederivation (branch_registry_v9_2026_07_10); MES-BR seal (v9)",
-      "ticket": "mes_full_rederivation.yaml",
-      "ticket_state": "discrepancy_documented"
-    },
-    {
-      "blocker": null,
-      "executability": "decision_only",
       "exit_gate": "user instruction to execute the split",
       "item": "Paper-A/B/C split of the audit-report material",
       "note": null,
-      "rank": 2,
+      "rank": 1,
       "source": "registered plan (v9 report; user decision 2026-07-10: plan-only this cycle)",
       "ticket": null,
       "ticket_state": null
@@ -62,7 +56,7 @@
       "exit_gate": "PLA FFP10/NPIPE E2E ensembles on disk (download in flight, ~1TB); then the registered max-scan/global-p mechanics run unchanged",
       "item": "K1 E2E-systematics null + BipoSH E2E upgrade",
       "note": "PLA/PL3 downloads in progress (2026-07-11).",
-      "rank": 3,
+      "rank": 2,
       "source": "ticket EGS3-C1-k1-ffp10-npipe; BLOCKERS.md section 1",
       "ticket": "k1_ffp10_npipe.yaml",
       "ticket_state": "blocked"
@@ -73,7 +67,7 @@
       "exit_gate": "owned CR ensemble over the CF4 3D WF field",
       "item": "K6 Hoffman-Ribak constrained-realization vorticity posterior",
       "note": "WF mean-field curl-suppression no-go already established.",
-      "rank": 4,
+      "rank": 3,
       "source": "ticket EGS3-C2-cf4-wfcr; BLOCKERS.md section 2",
       "ticket": "cf4_wfcr.yaml",
       "ticket_state": "blocked"
@@ -84,7 +78,7 @@
       "exit_gate": "ownership of the CF4 release-mock pipeline (selection/Malmquist/grouping/correlated field)",
       "item": "K5 cosmic-variance coverage on release mocks",
       "note": "conditional coverage (fixed LCDM sigma_cv prior) already measured.",
-      "rank": 5,
+      "rank": 4,
       "source": "ticket EGS3-C2-cf4-wfcr; BLOCKERS.md section 3",
       "ticket": "cf4_wfcr.yaml",
       "ticket_state": "blocked"
@@ -92,10 +86,10 @@
     {
       "blocker": "BLOCKED_UPSTREAM",
       "executability": "blocked",
-      "exit_gate": "close K1+K5+K6 first (items 3-5); then assemble with explicit measured/partial/fail-closed sectors",
+      "exit_gate": "close K1+K5+K6 first (items 2-4); then assemble with explicit measured/partial/fail-closed sectors",
       "item": "PR08-006 joint posterior artifact",
       "note": null,
-      "rank": 6,
+      "rank": 5,
       "source": "BLOCKERS.md section 4",
       "ticket": null,
       "ticket_state": null
@@ -106,7 +100,7 @@
       "exit_gate": "PR10-scale separate solver project; fail-closed OutOfScopeError firewall stays until then",
       "item": "Native low-ell Bianchi solver atlas (theory-g CMB likelihood)",
       "note": null,
-      "rank": 7,
+      "rank": 6,
       "source": "BLOCKERS.md section 5; PR10 project",
       "ticket": null,
       "ticket_state": null
@@ -117,10 +111,10 @@
       "exit_gate": "legitimate access to the print-only journal PDF; then the existing rederivation machinery applies",
       "item": "MESb (PRD 51, 5942) internal rederivation",
       "note": "print-only (no arXiv/ADS/OA copy); SAG-1997 discrepancy already documented.",
-      "rank": 8,
+      "rank": 7,
       "source": "ticket EGS3-G8-mes-full-rederivation (remaining)",
       "ticket": "mes_full_rederivation.yaml",
-      "ticket_state": "discrepancy_documented"
+      "ticket_state": "re_frozen_to_geodesic_sag_consistent_anchor"
     }
   ],
   "schema": "htt.research_program.open_items_ledger.v1",

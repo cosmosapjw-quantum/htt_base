@@ -126,6 +126,9 @@ REQUIRED_ARTIFACTS = [
     "docs/generated/omega_k_reopening_seal.json",
     "docs/generated/omega_k_reopening_wolfram_seal.json",
     "docs/generated/k5_omega_k_ceiling_card.json",
+    # v9 follow-on MES geodesic derivation + re-freeze (REV-R187/R188)
+    "docs/generated/mes_geodesic_refreeze_seal.json",
+    "docs/generated/mes_geodesic_refreeze_wolfram_seal.json",
 ]
 
 # v7 strengthened-theorem seals surfaced in the Fifth-Revision response section.
@@ -237,6 +240,10 @@ SOURCE_FILES = [
     "htt/obsstat/egs3_omega_k_reopening.py",
     "wolfram/omega_k_reopening.wls",
     "scripts/k5_omega_k_ceiling_card.py",
+    # v9 follow-on: MES geodesic derivation + re-freeze (REV-R187/R188)
+    "htt/obsstat/egs3_mes_geodesic_refreeze.py",
+    "wolfram/mes_geodesic_refreeze.wls",
+    "docs/audits/mes_primary_sources/PROVENANCE_M4.md",
 ]
 
 
@@ -1717,8 +1724,63 @@ def v9_response_section() -> str:
         r"\subsection{OMK-REOPEN: the higher-order $\Delta\Omega_k$ re-opening transfer and finite ceilings}",
         _omk_reopening_paragraph(),
         r"",
+        r"\subsection{MES-REFREEZE: the geodesic derivation and the re-frozen vorticity-ceiling anchor}",
+        _mes_refreeze_paragraph(),
+        r"",
     ]
     return "\n".join(lines)
+
+
+def _mes_refreeze_paragraph() -> str:
+    mes = _seal("mes_geodesic_refreeze_seal.json")
+    wl = _seal("mes_geodesic_refreeze_wolfram_seal.json")
+    red = mes.get("geodesic_reduction", {})
+    hier = mes.get("hierarchy_preservation_theorem", {})
+    anchor = mes.get("refrozen_anchor", {})
+    engines = (" (SymPy and an independent Wolfram lane, exact rational "
+               "cross-engine agreement)" if wl.get("status") == "PASS"
+               else " (SymPy)")
+    prev = anchor.get("previous_registered_W2_max", 0.0)
+    oom = anchor.get("orders_of_magnitude_change", 0.0)
+    return (
+        rf"With explicit owner sign-off this revision executes the "
+        rf"re-freeze cycle that the MES provenance work had deferred, and "
+        rf"attaches the actual derivation.  Reducing the primary-source raw "
+        rf"MESa bounds (eq (51) shear, eq (52) vorticity; SHA-archived) by "
+        rf"the stated C1/C2 assumptions{engines} yields the GEODESIC "
+        rf"triples $\sigma=(\tfrac53,3,\tfrac37)$ [unchanged] and "
+        rf"$\omega=(\tfrac{{10}}3,\tfrac2{{15}},0)$ with NO acceleration "
+        rf"bound (the MESa flow is geodesic, $\dot u=0$).  The "
+        rf"previously-registered $\omega=(\tfrac34,2,\tfrac27)$ and "
+        rf"$\dot u=(\tfrac34,1,\tfrac3{{14}})$ are print-only MESb "
+        rf"(Paper~II) NON-GEODESIC values that appear in no accessible "
+        rf"source; the derivable geodesic $\omega$ is exactly the triple "
+        rf"carried by the accessible MESb-citing Stoeger--Araujo--Gebbie "
+        rf"1997 (Stoeger co-author).  \emph{{Why this forces the anchor:}} "
+        rf"the geodesic $\omega$ raises the dipole coefficient from "
+        rf"$\tfrac53$ (shear) to $\tfrac{{10}}3$, so the MES hierarchy "
+        rf"$B_\sigma>B_\omega$ holds only for "
+        rf"$\epsilon_1<\epsilon_1^{{\rm crit}}"
+        rf"=\tfrac{{43}}{{25}}\epsilon_2+\tfrac9{{35}}\epsilon_3"
+        rf"={hier.get('e1_crit_numeric', 0):.3e}$; the observed dipole "
+        rf"$\epsilon_1={hier.get('observed_e1', 0):.3e}$ EXCEEDS it, so a "
+        rf"full-dipole geodesic ceiling is not a valid MES hierarchy.  The "
+        rf"physically-standard resolution --- the observed dipole is the "
+        rf"observer's peculiar motion, so the residual cosmological dipole "
+        rf"bound is $\epsilon_1=0$ (the SAG convention) --- is the unique "
+        rf"geodesic attribution that restores the hierarchy.  The re-frozen "
+        rf"anchor is therefore "
+        rf"$W^2_{{\max}}=\tfrac32B_\omega(0,\epsilon_2,\epsilon_3)^2"
+        rf"={anchor.get('W2_max', 0):.4e}$ (a "
+        rf"{oom:.1f}-order-of-magnitude tightening of the previous "
+        rf"${prev:.4e}$), with $\Sigma^2_{{\max}}"
+        rf"={anchor.get('Sigma2_max', 0):.4e}$ and $A^2_{{\max}}=0$.  The "
+        rf"frozen \code{{three\_bound\_hierarchy}} constants (and the "
+        rf"earlier revisions' $W^2_{{\max}}={prev:.4e}$) stay "
+        rf"byte-identical for reproducibility; this successor is the live "
+        rf"anchor, so the re-freeze is reversible, and the comparator "
+        rf"$x_C$ is untouched (the ceiling is an admissibility boundary, "
+        rf"not an $x_C$ input).")
 
 
 def _omk_reopening_paragraph() -> str:
@@ -2346,7 +2408,7 @@ With \(H=\Theta/3\), the standardized squared ceilings are
 The MES hypotheses bound the PSTF photon multipoles and the first covariant derivative terms that source the kinematical hierarchy.  Solving the linearized hierarchy for shear, vorticity, and acceleration gives different coefficient combinations because the dipole, quadrupole, and octupole enter the three equations with different projection coefficients.  The factor \(3/2\) is now DERIVED rather than asserted: with \(X^2:=x_{ab}x^{ab}/(6H^2)\), \(H=\Theta/3\), and the hierarchy bound \(\sqrt{x_{ab}x^{ab}}/\Theta\le B\), one gets \(X^2\le B^2\Theta^2/(6\Theta^2/9)=\frac32B^2\) (sealed in \code{parent_identity_seal.json}).  Note this conversion is consistent ONLY under the registered tensor-norm-over-\(6H^2\) convention of \S3.1 -- the third revision's \(\omega_a\omega^a/H^2\) vorticity statement contradicted exactly this rule, which is how the defect was caught.  Thus the result is a three-bound hierarchy, not a single scalar anisotropy number.
 \end{proof}
 
-\paragraph{Provenance of the \(\epsilon\)-coefficients.}  The rational coefficients \((\frac53,3,\frac37)\), \((\frac34,2,\frac27)\), \((\frac34,1,\frac3{14})\) are REGISTERED EXTERNAL values from the Maartens--Ellis--Stoeger 1995 linearized multipole hierarchy (external-context citation, \S2.3); they are carried as exact fractions in \code{three_bound_hierarchy.py} and \code{bounds.py} and are NOT rederived in this report.  Gate class F1 asserts bit-level agreement between the registered values recorded in the seal and the code-side constants, so any silent drift in either place fails the audit.  What IS derived here is the conversion rule between the \(\Theta\)-normalized bounds and the \(H\)-normalized squared ceilings.
+\paragraph{Provenance of the \(\epsilon\)-coefficients.}  The rational coefficients \((\frac53,3,\frac37)\), \((\frac34,2,\frac27)\), \((\frac34,1,\frac3{14})\) originate in the Maartens--Ellis--Stoeger 1995 linearized multipole hierarchy and are carried as exact fractions in \code{three\_bound\_hierarchy.py}.  The shear triple \((\frac53,3,\frac37)\) is rederived bit-exact from the primary source (MESa eq (51) + the stated C1/C2 reduction); the \(\frac32\) conversion between the \(\Theta\)-normalized bounds and the \(H\)-normalized squared ceilings is derived (above).  The Seventh-Revision MES-REFREEZE subsection re-frozen the vorticity-ceiling anchor to the derivable GEODESIC value: the previously-registered \(\omega\)/acceleration triples \((\frac34,2,\frac27)\)/\((\frac34,1,\frac3{14})\) are print-only MESb (Paper II) NON-GEODESIC values absent from every accessible source, whereas the derivable (and SAG-1997-verified) geodesic \(\omega=(\frac{10}3,\frac2{15},0)\) with no acceleration bound is now the live anchor.  Gate class F1 continues to assert bit-level agreement against the frozen constants (which stay byte-identical for the earlier revisions' reproducibility).
 
 \paragraph{Proof item P4.}
 \begin{proposition}[Frame-attribution safe-route correction]

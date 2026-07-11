@@ -1,0 +1,141 @@
+{
+  "geodesic_reduction": {
+    "differs_from_previously_registered_omega": true,
+    "geodesic_accel": "(0, 0, 0) -- MESa is geodesic (u_dot = 0), no acceleration bound",
+    "omega_fraction": [
+      "10/3",
+      "2/15",
+      "0"
+    ],
+    "omega_matches_eq60": true,
+    "omega_symbolic_ok": true,
+    "previously_registered_accel": [
+      "3/4",
+      "1",
+      "3/14"
+    ],
+    "previously_registered_omega": [
+      "3/4",
+      "2",
+      "2/7"
+    ],
+    "sigma_fraction": [
+      "5/3",
+      "3",
+      "3/7"
+    ],
+    "sigma_matches_eq59": true,
+    "sigma_symbolic_ok": true,
+    "why_it_differs": "the previously-registered omega (3/4,2,2/7) and accel (3/4,1,3/14) are MESb (Paper II, PRD 51 5942, print-only) NON-GEODESIC values; MESa's geodesic assumption gives (10/3,2/15,0) and no accel bound, matching the accessible MESb-citing SAG 1997 (Stoeger co-author)"
+  },
+  "hierarchy_preservation_theorem": {
+    "conclusion": "the geodesic omega has e1-coefficient 10/3 > 5/3 (shear), so at the observed dipole the full-dipole geodesic ceiling VIOLATES B_sigma > B_omega; the physically-standard e1 = 0 (observer-motion dipole, SAG convention) is the ONLY geodesic attribution that is a valid MES hierarchy -- it forces the re-freeze target",
+    "diff_B_sigma_minus_B_omega": "-5*e1/3 + 43*e2/15 + 3*e3/7",
+    "e1_crit_matches_derivation": true,
+    "e1_crit_numeric": 7.682208137142856e-06,
+    "e1_crit_symbolic": "43*e2/25 + 9*e3/35",
+    "e1_zero_B_omega": 4.746172e-07,
+    "e1_zero_B_sigma": 1.3278297428571429e-05,
+    "e1_zero_hierarchy_holds": true,
+    "full_dipole_B_omega": 0.0041124746172,
+    "full_dipole_B_sigma": 0.0020692782974285713,
+    "full_dipole_hierarchy_holds": false,
+    "observed_e1": 0.0012336,
+    "observed_e1_exceeds_crit": true
+  },
+  "multipole_structure_map": {
+    "acceleration_u_dot_a": "sources the DIPOLE (ell = 1)",
+    "geodesic_consequence": "u_dot = 0 (MESa geodesic assumption) removes the dipole acceleration source: NO acceleration bound, and the vorticity bound loses its u_dot-coupling -> the eq (52)->(60) geodesic form",
+    "note": "structural attribution (which ell couples to which kinematic quantity) is primary-sourced; the FINAL coefficients are derived below from the raw bounds by transparent, two-engine reduction",
+    "primary_sourced": true,
+    "reference": "Ellis-Matravers-Treciokas 1983 multipole hierarchy; MESa (astro-ph/9501016) p.123 (geodesic flow)",
+    "shear_sigma_ab": "sources the QUADRUPOLE (ell = 2)",
+    "vorticity_omega_ab": "enters through the CURL of the dipole relation"
+  },
+  "refreeze_provenance": {
+    "freeze_discipline": "the v7/v8-frozen three_bound_hierarchy module and its W2_max = 1.3087e-6 stay byte-identical (v5-v8 reports reproduce against it); this module is the LIVE successor anchor. Reversible: the historical anchor is preserved",
+    "matches_v9_branch_registry_sag_consistent": true,
+    "previous_anchor": {
+      "W2_max": 1.308680263683563e-06,
+      "coefficients": {
+        "accel": [
+          "3/4",
+          "1",
+          "3/14"
+        ],
+        "omega": [
+          "3/4",
+          "2",
+          "2/7"
+        ],
+        "sigma": [
+          "5/3",
+          "3",
+          "3/7"
+        ]
+      },
+      "provenance": "MESb (Paper II, PRD 51 5942, print-only) NON-GEODESIC omega/accel; not reconstructable; appears in no accessible source"
+    },
+    "refrozen_anchor": {
+      "W2_max": 3.3789222980376e-13,
+      "coefficients": {
+        "accel": [
+          "0",
+          "0",
+          "0"
+        ],
+        "omega": [
+          "10/3",
+          "2/15",
+          "0"
+        ],
+        "sigma": [
+          "5/3",
+          "3",
+          "3/7"
+        ]
+      },
+      "eps1_attribution": "0 (SAG convention: CMB dipole is observer motion)"
+    },
+    "sign_off": "explicit owner sign-off (re-freeze cycle), 2026-07-11",
+    "why_the_change": "the actual derivation yields the GEODESIC bounds (rederived bit-exact from MESa + SAG-1997-verified); the previously-registered non-geodesic values are print-only MESb and appear in no accessible source. The hierarchy-preservation theorem forces the e1 = 0 (observer-motion) attribution, giving the unique derivable + valid-hierarchy anchor"
+  },
+  "refrozen_anchor": {
+    "A2_max": 0.0,
+    "B_accel": 0.0,
+    "B_omega": 4.746172e-07,
+    "B_omega_exact": "1186543/2500000000000",
+    "B_sigma": 1.3278297428571429e-05,
+    "B_sigma_exact": "46474041/3500000000000",
+    "Sigma2_max": 2.644697739024099e-10,
+    "Sigma2_max_exact": "6479509460609043/24500000000000000000000000",
+    "W2_max": 3.3789222980376e-13,
+    "W2_max_exact": "4223652872547/12500000000000000000000000",
+    "coefficients": {
+      "accel": [
+        "0",
+        "0",
+        "0"
+      ],
+      "omega": [
+        "10/3",
+        "2/15",
+        "0"
+      ],
+      "sigma": [
+        "5/3",
+        "3",
+        "3/7"
+      ]
+    },
+    "eps1_attribution": "0 (SAG convention: CMB dipole is observer motion)",
+    "hierarchy_strict": true,
+    "orders_of_magnitude_change": 6.588055348010942,
+    "previous_registered_W2_max": 1.308680263683563e-06
+  },
+  "scope_not_claimed": "symbolic derivation + primary-source provenance + owner-signed-off re-freeze; the geodesic coefficients are rederived (MESa) and SAG-1997-verified, the print-only MESb non-geodesic set is superseded as the LIVE anchor but the frozen historical anchor is preserved byte-identical; no data, detection, family/geometry, native-solver, or posterior claim",
+  "seal": "egs3.mes_geodesic_refreeze",
+  "status": "PASS",
+  "sympy_version": "1.14.0",
+  "theorem_id": "MES-REFREEZE"
+}

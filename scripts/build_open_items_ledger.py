@@ -40,22 +40,6 @@ GENERATED_AT = "2026-07-11"  # static: --check byte-stability
 OPEN_ITEMS = [
     {
         "rank": 1,
-        "item": "MES registry re-freeze decision (coefficient-branch "
-                "promotion)",
-        "source": "ticket EGS3-G8-mes-full-rederivation "
-                  "(branch_registry_v9_2026_07_10); MES-BR seal (v9)",
-        "ticket": "mes_full_rederivation.yaml",
-        "ticket_state": "discrepancy_documented",
-        "blocker": None,
-        "executability": "decision_only",
-        "exit_gate": "explicit owner sign-off selecting a coefficient branch; "
-                     "then a re-freeze cycle with a new W2_max anchor",
-        "note": "all compute done (3-branch registry, 3 labeled ceilings, "
-                "eps1 attribution triple); registered values stay frozen "
-                "until sign-off.",
-    },
-    {
-        "rank": 2,
         "item": "Paper-A/B/C split of the audit-report material",
         "source": "registered plan (v9 report; user decision 2026-07-10: "
                   "plan-only this cycle)",
@@ -67,7 +51,7 @@ OPEN_ITEMS = [
         "note": None,
     },
     {
-        "rank": 3,
+        "rank": 2,
         "item": "K1 E2E-systematics null + BipoSH E2E upgrade",
         "source": "ticket EGS3-C1-k1-ffp10-npipe; BLOCKERS.md section 1",
         "ticket": "k1_ffp10_npipe.yaml",
@@ -80,7 +64,7 @@ OPEN_ITEMS = [
         "note": "PLA/PL3 downloads in progress (2026-07-11).",
     },
     {
-        "rank": 4,
+        "rank": 3,
         "item": "K6 Hoffman-Ribak constrained-realization vorticity posterior",
         "source": "ticket EGS3-C2-cf4-wfcr; BLOCKERS.md section 2",
         "ticket": "cf4_wfcr.yaml",
@@ -91,7 +75,7 @@ OPEN_ITEMS = [
         "note": "WF mean-field curl-suppression no-go already established.",
     },
     {
-        "rank": 5,
+        "rank": 4,
         "item": "K5 cosmic-variance coverage on release mocks",
         "source": "ticket EGS3-C2-cf4-wfcr; BLOCKERS.md section 3",
         "ticket": "cf4_wfcr.yaml",
@@ -104,19 +88,19 @@ OPEN_ITEMS = [
                 "measured.",
     },
     {
-        "rank": 6,
+        "rank": 5,
         "item": "PR08-006 joint posterior artifact",
         "source": "BLOCKERS.md section 4",
         "ticket": None,
         "ticket_state": None,
         "blocker": "BLOCKED_UPSTREAM",
         "executability": "blocked",
-        "exit_gate": "close K1+K5+K6 first (items 3-5); then assemble with "
+        "exit_gate": "close K1+K5+K6 first (items 2-4); then assemble with "
                      "explicit measured/partial/fail-closed sectors",
         "note": None,
     },
     {
-        "rank": 7,
+        "rank": 6,
         "item": "Native low-ell Bianchi solver atlas (theory-g CMB likelihood)",
         "source": "BLOCKERS.md section 5; PR10 project",
         "ticket": None,
@@ -128,11 +112,11 @@ OPEN_ITEMS = [
         "note": None,
     },
     {
-        "rank": 8,
+        "rank": 7,
         "item": "MESb (PRD 51, 5942) internal rederivation",
         "source": "ticket EGS3-G8-mes-full-rederivation (remaining)",
         "ticket": "mes_full_rederivation.yaml",
-        "ticket_state": "discrepancy_documented",
+        "ticket_state": "re_frozen_to_geodesic_sag_consistent_anchor",
         "blocker": "BLOCKED_MISSING_MESb_PRINT_ONLY_PAPER_II",
         "executability": "blocked",
         "exit_gate": "legitimate access to the print-only journal PDF; then "
@@ -144,6 +128,14 @@ OPEN_ITEMS = [
 
 # tickets whose obligations are closed/held (represented for completeness)
 CLOSED_TICKETS = [
+    {"ticket": "mes_full_rederivation.yaml",
+     "ticket_state": "re_frozen_to_geodesic_sag_consistent_anchor",
+     "note": "MES re-freeze EXECUTED with explicit owner sign-off "
+             "(REV-R187/R188, registry MES-REFREEZE): the actual geodesic "
+             "derivation attached (two engines), the hierarchy-preservation "
+             "theorem forces e1=0, W2_max re-frozen 1.3087e-6 -> 3.3789e-13; "
+             "frozen anchor preserved byte-identical (successor pattern); "
+             "MESb print-only internal rederivation remains blocked (rank 7)"},
     {"ticket": "k5_omega_k_higher_order_ceiling.yaml",
      "ticket_state": "branch1_executed_slaving_transfer_ceilings_registered",
      "note": "exit-gate branch 1 EXECUTED (REV-R184/R185, registry "

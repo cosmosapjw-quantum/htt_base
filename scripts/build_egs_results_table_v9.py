@@ -137,6 +137,21 @@ def _v9_rows() -> list[dict]:
            "omega_k_reopening_seal.json; "
            "omega_k_reopening_wolfram_seal.json; "
            "k5_omega_k_ceiling_card.json"),
+        _r("MES-REFREEZE", GR,
+           "MES vorticity-ceiling re-freeze (owner-signed-off): the "
+           "primary-source raw MESa bounds reduce (C1/C2, SymPy + Wolfram) "
+           "to geodesic sigma (5/3,3,3/7) + omega (10/3,2/15,0) + no accel; "
+           "the previously-registered non-geodesic omega/accel are MESb "
+           "print-only (no accessible source); hierarchy-preservation "
+           "theorem forces e1 = 0",
+           "e1_crit = 43 e2/25 + 9 e3/35 = 7.68e-6 (observed dipole "
+           "1.23e-3 exceeds it, full-dipole geodesic breaks the "
+           "hierarchy); re-frozen W2_max = 3.3789e-13 (from 1.3087e-6, "
+           "6.59-OOM tightening) = branch-registry sag_consistent; frozen "
+           "anchor byte-identical (successor pattern); x_C untouched",
+           "re_frozen",
+           "mes_geodesic_refreeze_seal.json; "
+           "mes_geodesic_refreeze_wolfram_seal.json"),
         _r("EGS3-G12", GR,
            "T3 family re-scoped onto the three-level sharpness taxonomy; "
            "lower-endpoint W^2 withdrawn to constraint-unverified "

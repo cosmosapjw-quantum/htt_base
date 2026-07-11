@@ -34,6 +34,7 @@ SAGE_SCRIPT = REPO / "sage/egs3_v9_fractional.sage"
 KE_WOLFRAM_SCRIPT = REPO / "wolfram/ke_rotating_congruence.wls"
 KE_DYN_WOLFRAM_SCRIPT = REPO / "wolfram/ke_dynamics.wls"
 OMK_WOLFRAM_SCRIPT = REPO / "wolfram/omega_k_reopening.wls"
+MES_REFREEZE_WOLFRAM_SCRIPT = REPO / "wolfram/mes_geodesic_refreeze.wls"
 
 
 def sage_fractional_seal() -> tuple[dict, int]:
@@ -165,6 +166,29 @@ def wolfram_omk_seal(sympy_seal: dict | None) -> tuple[dict, int]:
     return seal, (0 if ok else 1)
 
 
+def wolfram_mes_refreeze_seal(sympy_seal: dict | None) -> tuple[dict, int]:
+    """Second-engine lane for MES-REFREEZE: independent Wolfram reduction
+    + hierarchy theorem + exact re-frozen W2_max cross-checked against the
+    SymPy seal (exact rational equality)."""
+    seal, blocked = _run_wolfram(MES_REFREEZE_WOLFRAM_SCRIPT)
+    if seal is None:
+        return blocked, 2
+    checks = dict(seal.get("checks", {}))
+    cross = False
+    if sympy_seal is not None:
+        try:
+            sp_w2 = sympy_seal["refrozen_anchor"]["W2_max"]
+            wl_w2 = seal["W2_max_refrozen"]
+            cross = abs(wl_w2 - sp_w2) / sp_w2 < 1e-12
+        except (KeyError, TypeError, ZeroDivisionError):
+            cross = False
+    checks["cross_engine_W2_max_match_sympy"] = bool(cross)
+    seal["checks"] = checks
+    ok = checks and all(v is True for v in checks.values())
+    seal["status"] = "PASS" if ok else "FAIL"
+    return seal, (0 if ok else 1)
+
+
 def build_seals() -> tuple[dict[str, dict], int]:
     """Return ({filename: payload}, worst_exit_code)."""
     payloads: dict[str, dict] = {}
@@ -266,6 +290,24 @@ def build_seals() -> tuple[dict[str, dict], int]:
     if omk_seal is not None:
         wseal, code = wolfram_omk_seal(omk_seal)
         payloads["omega_k_reopening_wolfram_seal.json"] = wseal
+        worst = max(worst, code if code != 2 else 0)
+        if code == 2:
+            print(f"REGISTERED BLOCKER: {wseal.get('status')}",
+                  file=sys.stderr)
+    # --- REV-R187/R188: MES geodesic derivation + re-freeze ---
+    mes_seal = None
+    try:
+        from htt.obsstat.egs3_mes_geodesic_refreeze import (
+            mes_geodesic_refreeze_seal)
+        mes_seal = mes_geodesic_refreeze_seal()
+        payloads["mes_geodesic_refreeze_seal.json"] = mes_seal
+        if mes_seal.get("status") != "PASS":
+            worst = max(worst, 1)
+    except ImportError:
+        pass
+    if mes_seal is not None:
+        wseal, code = wolfram_mes_refreeze_seal(mes_seal)
+        payloads["mes_geodesic_refreeze_wolfram_seal.json"] = wseal
         worst = max(worst, code if code != 2 else 0)
         if code == 2:
             print(f"REGISTERED BLOCKER: {wseal.get('status')}",
