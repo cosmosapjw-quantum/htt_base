@@ -120,6 +120,23 @@ def _v9_rows() -> list[dict]:
            "proven",
            "king_ellis_dynamics_seal.json; "
            "king_ellis_dynamics_wolfram_seal.json"),
+        _r("OMK-REOPEN", GR,
+           "Higher-order anisotropic-Omega_k re-opening transfer: exact "
+           "curvature->shear slaving on the LRS Bianchi III / "
+           "Kantowski-Sachs class (source coefficient exactly -1; "
+           "Sigma = kappa Delta Omega_k with kappa = -1/(2+q) exact, "
+           "dual engine SymPy + Wolfram NDSolve ~5e-12); finite "
+           "|Delta Omega_k| ceilings on a NEW labeled card",
+           "kappa: dust -2/5, radiation -1/3, vacuum anchor -2/3 "
+           "(two-sided via KS mirror); ceilings: MES registered "
+           "6.3e-3/7.6e-3, MES cosmological 4.1e-5/4.9e-5, Saadeh "
+           "model-conditional 1.4e-6/1.7e-6; instantaneous structural "
+           "null UNTOUCHED; frozen U_k plugin NOT modified; "
+           "attribution+class-conditional, nothing promoted",
+           "proven",
+           "omega_k_reopening_seal.json; "
+           "omega_k_reopening_wolfram_seal.json; "
+           "k5_omega_k_ceiling_card.json"),
         _r("EGS3-G12", GR,
            "T3 family re-scoped onto the three-level sharpness taxonomy; "
            "lower-endpoint W^2 withdrawn to constraint-unverified "

@@ -806,3 +806,37 @@ entries:
       - docs/generated/king_ellis_dynamics_seal.json
       - docs/generated/king_ellis_dynamics_wolfram_seal.json
       - research_gates/egs3/tests/test_egs3_axis_g_king_ellis_dynamics.py
+  - id: OMK-REOPEN
+    title: Higher-order anisotropic-Omega_k re-opening transfer (curvature-shear slaving) + finite attribution/class-conditional ceilings
+    owner: OBSSTAT/GR
+    status: ACTIVE
+    landing: rev-r184
+    claim_tier: C2
+    body_section: v9_response
+    note: >-
+      Executes exit-gate branch 1 of k5_omega_k_higher_order_ceiling.
+      LRS Bianchi III / Kantowski-Sachs class, first-principles dual
+      engine (SymPy + independent Wolfram NDSolve, deep-run agreement
+      ~5e-12): exact reduction 1 = Omega + Sigma^2 + K with the curvature
+      source coefficient in dSigma/dN exactly -1; slaving theorem
+      Sigma = kappa K on the transient-decayed mode, kappa = -1/(2+q)
+      exact (dust -2/5, radiation -1/3; vacuum anchor (-1/2, 3/4) ratio
+      -2/3, dust eigenvalues (-3/2, 0) with the center-direction
+      attraction carried numerically). The certified instantaneous
+      structural null (measured_response) is UNTOUCHED; the re-opening is
+      the on-shell dynamical correlation feeding the certified
+      shear->quadrupole chain. Ceilings |Delta Omega_k| <=
+      sqrt(Sigma^2_ceiling)/|kappa|: 6 labeled attribution x era rows
+      (MES registered 6.3e-3/7.6e-3; MES cosmological 4.1e-5/4.9e-5;
+      Saadeh model-conditional 1.4e-6/1.7e-6), two-sided via the KS
+      mirror; NEW card k5_omega_k_ceiling_card.json; the frozen T1'
+      half-width U_k PLUGIN is NOT modified; nothing promoted;
+      observational_claim_allowed False. Attribution- AND
+      class-conditional; inherits the PARTIAL shear-sector status.
+    sources:
+      - htt/obsstat/egs3_omega_k_reopening.py
+      - wolfram/omega_k_reopening.wls
+      - docs/generated/omega_k_reopening_seal.json
+      - docs/generated/omega_k_reopening_wolfram_seal.json
+      - docs/generated/k5_omega_k_ceiling_card.json
+      - research_gates/egs3/tests/test_egs3_axis_g_omega_k_reopening.py

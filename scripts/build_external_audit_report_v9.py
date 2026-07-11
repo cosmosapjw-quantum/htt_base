@@ -122,6 +122,10 @@ REQUIRED_ARTIFACTS = [
     "docs/generated/king_ellis_frame_wolfram_seal.json",
     "docs/generated/king_ellis_dynamics_seal.json",
     "docs/generated/king_ellis_dynamics_wolfram_seal.json",
+    # v9 follow-on Omega_k re-opening transfer (REV-R184/R185)
+    "docs/generated/omega_k_reopening_seal.json",
+    "docs/generated/omega_k_reopening_wolfram_seal.json",
+    "docs/generated/k5_omega_k_ceiling_card.json",
 ]
 
 # v7 strengthened-theorem seals surfaced in the Fifth-Revision response section.
@@ -229,6 +233,10 @@ SOURCE_FILES = [
     "htt/obsstat/egs3_king_ellis_dynamics.py",
     "wolfram/ke_rotating_congruence.wls",
     "wolfram/ke_dynamics.wls",
+    # v9 follow-on: Omega_k re-opening transfer (REV-R184/R185)
+    "htt/obsstat/egs3_omega_k_reopening.py",
+    "wolfram/omega_k_reopening.wls",
+    "scripts/k5_omega_k_ceiling_card.py",
 ]
 
 
@@ -1706,8 +1714,74 @@ def v9_response_section() -> str:
         r"\subsection{KE-DYN: rotating development and the $\Delta\Omega_k=0$ double obstruction (items 8--10)}",
         _ke_dynamics_paragraph(),
         r"",
+        r"\subsection{OMK-REOPEN: the higher-order $\Delta\Omega_k$ re-opening transfer and finite ceilings}",
+        _omk_reopening_paragraph(),
+        r"",
     ]
     return "\n".join(lines)
+
+
+def _omk_reopening_paragraph() -> str:
+    omk = _seal("omega_k_reopening_seal.json")
+    wl = _seal("omega_k_reopening_wolfram_seal.json")
+    card = _seal("k5_omega_k_ceiling_card.json")
+    dyn = omk.get("dynamical_verification", {})
+    rows = card.get("ceiling_rows", {})
+    engines = (" The Wolfram lane derives the same system independently"
+               " and integrates it with \\code{NDSolve} in one script;"
+               " the deep-run anchors agree across engines to"
+               " $\\sim10^{-11}$."
+               if wl.get("status") == "PASS" else "")
+
+    def _r(key):
+        return rows.get(key, {}).get("omega_k_ceiling_abs", 0.0)
+
+    return (
+        rf"The registered higher-order re-opening item is executed: in the "
+        rf"class with genuinely anisotropic spatial curvature (LRS "
+        rf"Bianchi~III and its Kantowski--Sachs mirror) the traceless "
+        rf"3-Ricci sources the shear exactly, and the first-principles "
+        rf"expansion-normalized reduction gives "
+        rf"$1=\Omega+\Sigma^2+K$, $q=\tfrac{{1}}{{2}}(1+3w)(1-K)"
+        rf"+\tfrac{{3}}{{2}}(1-w)\Sigma^2$, "
+        rf"$d\Sigma/dN=-K-\tfrac{{\Sigma}}{{2}}[(1+3w)K+3(1-w)(1-\Sigma^2)]$, "
+        rf"$dK/dN=2K(q+\Sigma)$ --- the curvature source coefficient is "
+        rf"exactly $-1$.  After the transient decays (rate "
+        rf"$\tfrac{{3}}{{2}}(1-w)$) the surviving mode obeys the exact "
+        rf"slaving $\Sigma=\kappa\,\Delta\Omega_k$ with "
+        rf"$\kappa=-1/(2+q)$ (dust $-2/5$, radiation $-1/3$; the exact "
+        rf"vacuum fixed point $(-1/2,3/4)$ anchors the nonlinear regime, "
+        rf"and the Kantowski--Sachs mirror carries the same $|\kappa|$, so "
+        rf"the statement is two-sided).  On monitored-constraint "
+        rf"metric-level trajectories the ratio $\Sigma/K$ plateaus at "
+        rf"$\kappa$ to "
+        rf"{100 * max(dyn.get(k, {}).get('max_rel_dev_in_window', 0) for k in ('lrs3_dust', 'lrs3_radiation', 'ks_dust')):.1f}\% "
+        rf"(Gauss residual "
+        rf"$<{_ceil_1sig(max(dyn.get(k, {}).get('max_gauss_residual', 0) for k in ('lrs3_dust', 'lrs3_radiation', 'ks_dust'))):.0e}$)."
+        rf"{engines}  The certified \emph{{instantaneous}} structural null "
+        rf"of $\Delta\Omega_k$ is untouched: the re-opening is the "
+        rf"on-shell dynamical correlation along the slaved submanifold, "
+        rf"feeding the certified shear$\to$quadrupole chain.  Every "
+        rf"registered shear ceiling therefore induces a FINITE "
+        rf"anisotropic-curvature ceiling "
+        rf"$|\Delta\Omega_k|\le\sqrt{{\Sigma^2_{{\rm ceil}}}}/|\kappa|$: "
+        rf"on the new labeled card, "
+        rf"${_r('mes_registered__matter_era'):.1e}$/"
+        rf"${_r('mes_registered__radiation_era'):.1e}$ (MES registered, "
+        rf"matter/radiation era), "
+        rf"${_r('mes_cosmological__matter_era'):.1e}$/"
+        rf"${_r('mes_cosmological__radiation_era'):.1e}$ (MES "
+        rf"cosmological attribution), and "
+        rf"${_r('saadeh_model_conditional__matter_era'):.1e}$/"
+        rf"${_r('saadeh_model_conditional__radiation_era'):.1e}$ "
+        rf"(Saadeh model-conditional).  The ceilings are "
+        rf"attribution-conditional AND class-conditional (the LRS-III/KS "
+        rf"slaved mode; a $\Lambda$-dominated era raises $|\kappa|$, so "
+        rf"the quoted rows are the conservative choices), inherit the "
+        rf"PARTIAL status of the shear-sector reading, and promote "
+        rf"nothing: the registered signed-box half-width $U_k$ and the "
+        rf"frozen cards are unmodified, and no observational claim is "
+        rf"made.")
 
 
 def _ceil_1sig(x: float) -> float:

@@ -1,6 +1,6 @@
 id: EGS3-K5-omega-k-higher-order-ceiling
 title: Registered finite anisotropic-Omega_k ceiling for the K5/CF4 identified card
-state: blocked_on_higher_order_transfer
+state: branch1_executed_slaving_transfer_ceilings_registered
 blocker: BLOCKED_HIGHER_ORDER_VORTICITY_CURVATURE_REOPENING
 owner_lane: obsstat / gr-transfer
 
@@ -60,3 +60,34 @@ branch2_survey_2026_07_10: |
   do NOT replace the MES W2_max registry and do NOT enable any observational
   claim. Branch 1 (higher-order re-opening transfer) remains the open exit
   path; state unchanged.
+branch1_executed_2026_07_11: |
+  REV-R184/R185: exit-gate BRANCH 1 EXECUTED (registry OMK-REOPEN; seals
+  omega_k_reopening_seal.json + wolfram twin; NEW card
+  k5_omega_k_ceiling_card.json; gate
+  test_egs3_axis_g_omega_k_reopening.py, 9).
+  - The "higher-order re-opening" is realized as the exact DYNAMICAL
+    curvature->shear slaving of the anisotropic-curvature class (LRS
+    Bianchi III / Kantowski-Sachs): dSigma/dN carries the curvature
+    source with coefficient exactly -1, and the transient-decayed mode
+    obeys Sigma = kappa * Delta Omega_k with kappa = -1/(2+q) exact
+    (dust -2/5, radiation -1/3; vacuum anchor ratio -2/3; two-sided via
+    the KS mirror). The certified instantaneous structural null
+    (measured_response, item 1 of the context) is UNTOUCHED -- the
+    response re-opens along the on-shell slaved submanifold feeding the
+    certified shear->quadrupole chain (semi-native remit).
+  - FINITE ceilings |Delta Omega_k| <= sqrt(Sigma^2_ceiling)/|kappa|:
+    six labeled attribution x era rows (MES registered 6.3e-3/7.6e-3;
+    MES cosmological 4.1e-5/4.9e-5; Saadeh model-conditional
+    1.4e-6/1.7e-6 -- same order as the historical U_k PLUGIN 1e-6,
+    comparison only). Lambda-era |kappa| = 1/(2+q) is LARGER, so the
+    matter/radiation-era rows are the conservative (weakest) choices.
+  - DOUBLE-ROLE GUARD (item 3 of the context): the registered T1'
+    signed-box half-width U_k PLUGIN is NOT modified; the frozen v7/v8/
+    v9 cards are SHA-referenced and untouched (item 4); nothing is
+    promoted; observational_claim_allowed stays False. Sigma2_hat stays
+    PLUGIN/BLOCKED (K1-tied) -- the ceilings are attribution- AND
+    class-conditional (LRS-III/KS slaved mode) and inherit the PARTIAL
+    shear-sector status.
+  - The transverse/B-mode channel (egs3.vorticity_reopening) remains the
+    OTHER registered re-opening route; its quantitative transfer stays
+    the semi-native calculator's remit.

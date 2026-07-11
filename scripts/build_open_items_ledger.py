@@ -40,22 +40,6 @@ GENERATED_AT = "2026-07-11"  # static: --check byte-stability
 OPEN_ITEMS = [
     {
         "rank": 1,
-        "item": "Anisotropic-Omega_k higher-order vorticity/curvature "
-                "re-opening transfer (finite ceiling)",
-        "source": "ticket EGS3-K5-omega-k-higher-order-ceiling (exit branch 1; "
-                  "branch 2 executed as documented null, REV-R162)",
-        "ticket": "k5_omega_k_higher_order_ceiling.yaml",
-        "ticket_state": "blocked_on_higher_order_transfer",
-        "blocker": "BLOCKED_HIGHER_ORDER_VORTICITY_CURVATURE_REOPENING",
-        "executability": "now",
-        "exit_gate": "registered higher-order Omega_k transfer producing a "
-                     "finite anisotropic-curvature ceiling, emitted as a NEW "
-                     "card artifact (frozen cards untouched)",
-        "note": "substantial GR-transfer compute item, no external data; "
-                "next executable candidate cycle.",
-    },
-    {
-        "rank": 2,
         "item": "MES registry re-freeze decision (coefficient-branch "
                 "promotion)",
         "source": "ticket EGS3-G8-mes-full-rederivation "
@@ -71,7 +55,7 @@ OPEN_ITEMS = [
                 "until sign-off.",
     },
     {
-        "rank": 3,
+        "rank": 2,
         "item": "Paper-A/B/C split of the audit-report material",
         "source": "registered plan (v9 report; user decision 2026-07-10: "
                   "plan-only this cycle)",
@@ -83,7 +67,7 @@ OPEN_ITEMS = [
         "note": None,
     },
     {
-        "rank": 4,
+        "rank": 3,
         "item": "K1 E2E-systematics null + BipoSH E2E upgrade",
         "source": "ticket EGS3-C1-k1-ffp10-npipe; BLOCKERS.md section 1",
         "ticket": "k1_ffp10_npipe.yaml",
@@ -96,7 +80,7 @@ OPEN_ITEMS = [
         "note": "PLA/PL3 downloads in progress (2026-07-11).",
     },
     {
-        "rank": 5,
+        "rank": 4,
         "item": "K6 Hoffman-Ribak constrained-realization vorticity posterior",
         "source": "ticket EGS3-C2-cf4-wfcr; BLOCKERS.md section 2",
         "ticket": "cf4_wfcr.yaml",
@@ -107,7 +91,7 @@ OPEN_ITEMS = [
         "note": "WF mean-field curl-suppression no-go already established.",
     },
     {
-        "rank": 6,
+        "rank": 5,
         "item": "K5 cosmic-variance coverage on release mocks",
         "source": "ticket EGS3-C2-cf4-wfcr; BLOCKERS.md section 3",
         "ticket": "cf4_wfcr.yaml",
@@ -120,19 +104,19 @@ OPEN_ITEMS = [
                 "measured.",
     },
     {
-        "rank": 7,
+        "rank": 6,
         "item": "PR08-006 joint posterior artifact",
         "source": "BLOCKERS.md section 4",
         "ticket": None,
         "ticket_state": None,
         "blocker": "BLOCKED_UPSTREAM",
         "executability": "blocked",
-        "exit_gate": "close K1+K5+K6 first (items 4-6); then assemble with "
+        "exit_gate": "close K1+K5+K6 first (items 3-5); then assemble with "
                      "explicit measured/partial/fail-closed sectors",
         "note": None,
     },
     {
-        "rank": 8,
+        "rank": 7,
         "item": "Native low-ell Bianchi solver atlas (theory-g CMB likelihood)",
         "source": "BLOCKERS.md section 5; PR10 project",
         "ticket": None,
@@ -144,7 +128,7 @@ OPEN_ITEMS = [
         "note": None,
     },
     {
-        "rank": 9,
+        "rank": 8,
         "item": "MESb (PRD 51, 5942) internal rederivation",
         "source": "ticket EGS3-G8-mes-full-rederivation (remaining)",
         "ticket": "mes_full_rederivation.yaml",
@@ -160,6 +144,14 @@ OPEN_ITEMS = [
 
 # tickets whose obligations are closed/held (represented for completeness)
 CLOSED_TICKETS = [
+    {"ticket": "k5_omega_k_higher_order_ceiling.yaml",
+     "ticket_state": "branch1_executed_slaving_transfer_ceilings_registered",
+     "note": "exit-gate branch 1 EXECUTED (REV-R184/R185, registry "
+             "OMK-REOPEN): exact curvature->shear slaving kappa = -1/(2+q) "
+             "on the LRS-III/KS slaved mode; six labeled attribution x era "
+             "|Delta Omega_k| ceilings on a NEW card; the certified "
+             "instantaneous null untouched; frozen U_k plugin NOT modified; "
+             "nothing promoted"},
     {"ticket": "t3_king_ellis.yaml",
      "ticket_state": "ten_item_program_executed_lower_w2_withdrawal_upgraded"
                      "_to_dynamical",
