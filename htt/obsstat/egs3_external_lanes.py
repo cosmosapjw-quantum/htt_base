@@ -56,6 +56,7 @@ ACT_ALM = (REPO / "workdir/raw/act_dr6_lensing/dr6_lensing_release/maps/"
 ACT_NL = (REPO / "workdir/raw/act_dr6_lensing/dr6_lensing_release/maps/"
           "baseline/N_L_kk_act_dr6_lensing_v1_baseline.txt")
 JWST_ANCHORS = REPO / "docs/generated/jwst_cf4_anchors.json"
+DESI_DIPOLE_CARD = REPO / "docs/generated/desi_dipole_card.json"
 
 # Planck 2018 CMB dipole direction (Galactic), for the DESI direction contrast.
 CMB_DIPOLE_LB = (264.021, 48.253)
@@ -119,7 +120,16 @@ def desi_number_count_dipole() -> dict:
     pix = hp.vec2pix(nside, nhat[:, 0], nhat[:, 1], nhat[:, 2])
     fsky = float((np.bincount(pix, minlength=hp.nside2npix(nside)) > 0).sum()
                  / hp.nside2npix(nside))
-    return {
+
+    # window-corrected measurement (once the DESI randoms are on disk, the
+    # standalone scripts/desi_dipole_measure.py writes the card; the lane then
+    # flips blocked -> measured)
+    measured = None
+    if DESI_DIPOLE_CARD.exists():
+        card = json.loads(DESI_DIPOLE_CARD.read_text())
+        if card.get("status") == "MEASURED_WINDOW_CORRECTED":
+            measured = card
+    out = {
         "lane": "desi_number_count_dipole",
         "sector": "Omega_tilt (LSS number-count dipole vs CMB kinematic dipole)",
         "sample": "DESI DR1 BGS_ANY NGC",
@@ -139,16 +149,39 @@ def desi_number_count_dipole() -> dict:
             "window_dominated": True,
             "cosmological_reference_scale": CMB_KINEMATIC_NUMBER_COUNT_DIPOLE,
         },
-        "status": "BLOCKED_MISSING_DESI_RANDOMS",
-        "exit_gate": "DESI DR1 BGS random catalogues (BGS_ANY_{NGC,SGC}_"
-                     "*_clustering.ran.fits) for window-function deconvolution; "
-                     "then the estimator returns the selection-corrected "
-                     "number-count dipole with mock-calibrated significance",
-        "sgc_available_raw": DESI_SGC_RAW.exists(),
-        "scope_not_claimed": "the raw footprint dipole is survey-window "
-                             "dominated, NOT a cosmological dipole; no "
-                             "anisotropy or family claim; diagnostic-only",
     }
+    if measured is not None:
+        out["window_corrected_measurement"] = {
+            "sample": measured["sample"],
+            "combined_fsky": measured["combined_fsky"],
+            "dipole_amplitude": measured["dipole_amplitude"],
+            "dipole_direction_l_b_deg": measured["dipole_direction_l_b_deg"],
+            "separation_from_cmb_dipole_deg":
+                measured["separation_from_cmb_dipole_deg"],
+            "window_suppression_factor": measured["window_suppression_factor"],
+            "caveats": measured["caveats"],
+        }
+        out["status"] = "MEASURED_WINDOW_CORRECTED"
+        out["residual_gate"] = ("release-matched mock calibration for the "
+                                "mask-coupling amplitude bias + significance; "
+                                "the BGS dipole mixes local clustering with "
+                                "the kinematic dipole (diagnostic-only)")
+        out["scope_not_claimed"] = ("window-corrected overdensity dipole "
+                                    "(selection removed via the randoms); "
+                                    "clustering+kinematic mixed at BGS depths; "
+                                    "no anisotropy, geometry, family, or "
+                                    "inference claim; diagnostic-only")
+    else:
+        out["status"] = "BLOCKED_MISSING_DESI_RANDOMS"
+        out["exit_gate"] = ("DESI DR1 BGS random catalogues (BGS_ANY_{NGC,SGC}_"
+                            "*_clustering.ran.fits) for window-function "
+                            "deconvolution; then the estimator returns the "
+                            "selection-corrected number-count dipole")
+        out["scope_not_claimed"] = ("the raw footprint dipole is survey-window "
+                                    "dominated, NOT a cosmological dipole; no "
+                                    "anisotropy or family claim; diagnostic-only")
+    out["sgc_available_raw"] = DESI_SGC_RAW.exists()
+    return out
 
 
 # --- ACT DR6 lensing auto-bandpower -----------------------------------
@@ -217,8 +250,10 @@ def external_lanes_seal() -> dict:
     act = act_kappa_auto_bandpower()
     jwst = jwst_anchor_connection()
     ok = (desi.get("mock_verification", {}).get("recovers_injected_dipole")
-          and desi.get("status") == "BLOCKED_MISSING_DESI_RANDOMS"
-          and act.get("status") == "BLOCKED_MISSING_ACT_LENSING_SIMS"
+          and desi.get("status") in ("BLOCKED_MISSING_DESI_RANDOMS",
+                                      "MEASURED_WINDOW_CORRECTED")
+          and act.get("status") in ("BLOCKED_MISSING_ACT_LENSING_SIMS",
+                                     "MEASURED_MEAN_FIELD_DEBIASED")
           and act.get("lmax") == 4000
           and jwst.get("status") == "CONNECTED_FORECAST")
     return {

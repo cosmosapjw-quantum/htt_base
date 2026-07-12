@@ -1,0 +1,37 @@
+{
+  "caps": {
+    "NGC": {
+      "alpha": 0.287537,
+      "fsky": 0.1915,
+      "n_data": 4081227,
+      "n_random": 13248857
+    },
+    "SGC": {
+      "alpha": 0.278198,
+      "fsky": 0.0897,
+      "n_data": 1441126,
+      "n_random": 5432939
+    }
+  },
+  "caveats": [
+    "BGS is low-z (z<0.5): the measured dipole mixes the local large-scale-structure (clustering) dipole with the kinematic dipole; it is NOT a clean kinematic signal",
+    "partial-sky mask (fsky~0.2-0.35) couples multipoles: the amplitude and its significance require release-matched mock calibration (further exit gate)",
+    "single random per cap; radial selection removed via the random z-distribution"
+  ],
+  "cmb_kinematic_number_count_dipole_ref": 0.007,
+  "combined_fsky": 0.2812,
+  "dipole_amplitude": 0.009493,
+  "dipole_direction_l_b_deg": [
+    172.503,
+    -44.665
+  ],
+  "estimator": "window-corrected overdensity dipole D = 3 <delta n_hat>_R, delta = (D - alpha R)/(alpha R)",
+  "nside": 64,
+  "raw_footprint_dipole_before_randoms": 2.129222,
+  "sample": "DESI DR1 BGS_ANY (NGC+SGC)",
+  "schema": "htt.desi_dipole_card.v1",
+  "scope_not_claimed": "model-independent kinematic descriptor; diagnostic-only; no anisotropy, geometry, family, or inference claim",
+  "separation_from_cmb_dipole_deg": 122.481,
+  "status": "MEASURED_WINDOW_CORRECTED",
+  "window_suppression_factor": 224.3
+}

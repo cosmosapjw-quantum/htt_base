@@ -132,19 +132,21 @@ OPEN_ITEMS = [
     },
     {
         "rank": 8,
-        "item": "DESI number-count dipole: window deconvolution (randoms)",
-        "source": "ticket EGS3-H1-desi-number-count-dipole; BLOCKERS.md; "
-                  "registry EXT-DESI",
+        "item": "DESI number-count dipole: mock-calibrated significance",
+        "source": "ticket EGS3-H1-desi-number-count-dipole; registry EXT-DESI",
         "ticket": "desi_number_count_dipole.yaml",
-        "ticket_state": "connected_mock_verified_blocked_on_randoms",
-        "blocker": "BLOCKED_MISSING_DESI_RANDOMS",
+        "ticket_state": "randoms_downloaded_window_corrected_measured",
+        "blocker": None,
         "executability": "blocked",
-        "exit_gate": "download the DESI DR1 BGS random catalogues; deconvolve "
-                     "the survey window; then EXT-DESI flips blocked -> "
-                     "measured (diagnostic-only)",
-        "note": "REV-R191: real loader + linear estimator wired + mock-"
-                "verified; the real footprint value is window-dominated "
-                "(fsky~0.19), not a cosmological dipole.",
+        "exit_gate": "release-matched DESI BGS mocks to calibrate the "
+                     "mask-coupling amplitude bias + significance (and to "
+                     "separate the local clustering dipole from the kinematic "
+                     "dipole at BGS depths)",
+        "note": "REV-R192/R193: randoms downloaded (fetch.py --desi-randoms); "
+                "window-corrected overdensity dipole MEASURED D=9.49e-3 "
+                "(224x below the raw footprint, at the kinematic scale), "
+                "EXT-DESI flipped to MEASURED_WINDOW_CORRECTED (diagnostic); "
+                "only the mock-calibrated significance remains.",
     },
     {
         "rank": 9,

@@ -294,11 +294,11 @@ claims:
     caveats: [companion non-geodesic envelope is order-of-magnitude only -- faithful cap (3/2)eps3^2 = 5.52e-11, COBE alpha~1 -> 1.50e-10, disclosed as the non-geodesic branch (the earlier eps2 nominal 1.90e-11 understated the ceiling and was corrected by the adversarial pass); in-house corroboration is reading-dependent (in-house fits the loose COBE cap), the robust refutation ground is no-accessible-source; accel bound unsupported (both primary papers geodesic); manuscript ch04 corrected to the geodesic result + conditional ordering; frozen three_bound_hierarchy W2_max = 1.3087e-6 byte-identical; x_C untouched; no data claim]
   egs3.external_lanes:
     owner: OBSSTAT/DATA
-    status: BLOCKED_MECHANICS_READY
-    evidence_type: real_data_loader_and_test
+    status: DESI_MEASURED_ACT_BLOCKED
+    evidence_type: real_data_loader_and_measurement
     claim_tier: C1
-    allowed_phrase: EXT-LANES -- the acquired-but-unwired external datasets are connected into the framework through real loaders + estimators; DESI DR1 BGS number-count dipole (Omega_tilt-sector) is mock-verified and returns a window-dominated footprint value blocked on the DESI randoms (BLOCKED_MISSING_DESI_RANDOMS); ACT DR6 kappa auto-bandpower loads with a low-ell isotropy statistic blocked on the ACT lensing sims (BLOCKED_MISSING_ACT_LENSING_SIMS); 14 JWST CF4-matched anchors feed the Omega_tilt forecast (already connected)
-    caveats: [the DESI footprint dipole is survey-window dominated (fsky~0.19), orders of magnitude above the cosmological reference scale ~7e-3 -- NOT a cosmological dipole and not claimed as one; the ACT low-ell kappa is reconstruction-mean-field dominated; both terminate in registered blockers awaiting companion products (randoms / lensing sims), no substitute estimate beyond the labelled mock; model-independent kinematic descriptors only; no anisotropy, geometry, family, or inference claim; no data-detection headline]
+    allowed_phrase: EXT-LANES -- the acquired external datasets are connected through real loaders + estimators; the DESI DR1 BGS randoms were downloaded (fetch.py --desi-randoms) and the window-corrected overdensity dipole is MEASURED on NGC+SGC (delta=(D-alpha R)/(alpha R), linear D=3<delta n_hat>_R = 9.49e-3, a 224x suppression of the raw footprint 2.13 down to the kinematic scale ~7e-3); ACT DR6 kappa auto-bandpower loads with a low-ell isotropy statistic blocked on the ACT lensing sims (downloading; BLOCKED_MISSING_ACT_LENSING_SIMS); 14 JWST CF4-matched anchors feed the Omega_tilt forecast (already connected)
+    caveats: [the DESI measured dipole is DIAGNOSTIC -- the BGS sample is low-z so it MIXES the local large-scale-structure (clustering) dipole with the kinematic dipole, and the fsky~0.28 partial-sky mask couples multipoles, so a calibrated amplitude + significance still need release-matched mocks (residual gate); the ACT low-ell kappa is reconstruction-mean-field dominated (sims downloading); model-independent kinematic descriptors only; no anisotropy, geometry, family, or inference claim; no data-detection headline]
   egs3.omega_k_reopening:
     owner: OBSSTAT/GR
     status: DERIVED

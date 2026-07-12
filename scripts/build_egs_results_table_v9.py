@@ -84,14 +84,15 @@ def _v9_rows() -> list[dict]:
            "k5_cf4_identified_interval_card_v9.json"),
         _r("EXT-DESI", DATA,
            "DESI DR1 BGS number-count dipole lane (Omega_tilt-sector cross-"
-           "check): the linear D=3<n_hat>_w estimator is mock-verified "
-           "(recovers an injected dipole on a full-sky mock); the real "
-           "footprint value is survey-window dominated (fsky~0.19), NOT a "
-           "cosmological dipole",
-           "estimator recovers 0.0196 vs injected 0.0200 (6.9 deg); "
-           "selection-function deconvolution needs the DESI random catalogues",
-           "blocked",
-           "external_lanes_seal.json (BLOCKED_MISSING_DESI_RANDOMS)"),
+           "check): randoms downloaded; window-corrected overdensity dipole "
+           "delta=(D-alpha R)/(alpha R), linear D=3<delta n_hat>_R on NGC+SGC "
+           "(fsky 0.28) = 9.49e-3 -- a 224x suppression of the raw footprint "
+           "value (2.13) down to the kinematic scale ~7e-3",
+           "window-corrected D=9.49e-3, dir (l,b)=(172.5,-44.7); mixes local "
+           "BGS clustering with the kinematic dipole; mask-coupling amplitude "
+           "bias + significance need release-matched mocks (residual gate)",
+           "measured_diagnostic",
+           "external_lanes_seal.json; desi_dipole_card.json"),
         _r("EXT-ACT", DATA,
            "ACT DR6 CMB-lensing auto-bandpower lane (independent-instrument "
            "isotropy cross-check): the released kappa a_lm (lmax=4000) + N_L "

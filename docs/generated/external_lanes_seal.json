@@ -20,7 +20,6 @@
   },
   "desi_number_count_dipole": {
     "estimator": "linear D = 3 <n_hat>_w (Crawford/Secrest)",
-    "exit_gate": "DESI DR1 BGS random catalogues (BGS_ANY_{NGC,SGC}_*_clustering.ran.fits) for window-function deconvolution; then the estimator returns the selection-corrected number-count dipole with mock-calibrated significance",
     "lane": "desi_number_count_dipole",
     "mock_verification": {
       "direction_error_deg": 6.859,
@@ -40,11 +39,28 @@
       "separation_from_cmb_dipole_deg": 51.856,
       "window_dominated": true
     },
+    "residual_gate": "release-matched mock calibration for the mask-coupling amplitude bias + significance; the BGS dipole mixes local clustering with the kinematic dipole (diagnostic-only)",
     "sample": "DESI DR1 BGS_ANY NGC",
-    "scope_not_claimed": "the raw footprint dipole is survey-window dominated, NOT a cosmological dipole; no anisotropy or family claim; diagnostic-only",
+    "scope_not_claimed": "window-corrected overdensity dipole (selection removed via the randoms); clustering+kinematic mixed at BGS depths; no anisotropy, geometry, family, or inference claim; diagnostic-only",
     "sector": "Omega_tilt (LSS number-count dipole vs CMB kinematic dipole)",
     "sgc_available_raw": true,
-    "status": "BLOCKED_MISSING_DESI_RANDOMS"
+    "status": "MEASURED_WINDOW_CORRECTED",
+    "window_corrected_measurement": {
+      "caveats": [
+        "BGS is low-z (z<0.5): the measured dipole mixes the local large-scale-structure (clustering) dipole with the kinematic dipole; it is NOT a clean kinematic signal",
+        "partial-sky mask (fsky~0.2-0.35) couples multipoles: the amplitude and its significance require release-matched mock calibration (further exit gate)",
+        "single random per cap; radial selection removed via the random z-distribution"
+      ],
+      "combined_fsky": 0.2812,
+      "dipole_amplitude": 0.009493,
+      "dipole_direction_l_b_deg": [
+        172.503,
+        -44.665
+      ],
+      "sample": "DESI DR1 BGS_ANY (NGC+SGC)",
+      "separation_from_cmb_dipole_deg": 122.481,
+      "window_suppression_factor": 224.3
+    }
   },
   "jwst_cf4_anchors": {
     "connected_to": "scripts/jwst_cf4_crossmatch.py -> htt/obsstat/joint_pv_cmb_forecast.py (labelled forecast, already wired)",

@@ -31,7 +31,7 @@ def _require(lane: dict, key: str):
 
 
 class HEXT1Desi(unittest.TestCase):
-    def test_mock_verified_and_blocked(self):
+    def test_mock_verified(self):
         d = desi_number_count_dipole()
         _require(d, "mock_verification")
         mv = d["mock_verification"]
@@ -40,8 +40,20 @@ class HEXT1Desi(unittest.TestCase):
                                mv["injected_amplitude"], delta=3e-3)
         self.assertTrue(d["real_footprint"]["window_dominated"])
         self.assertLess(d["real_footprint"]["fsky"], 0.5)     # partial footprint
-        self.assertEqual(d["status"], "BLOCKED_MISSING_DESI_RANDOMS")
-        self.assertIn("random", d["exit_gate"].lower())
+        self.assertIn(d["status"], ("BLOCKED_MISSING_DESI_RANDOMS",
+                                    "MEASURED_WINDOW_CORRECTED"))
+
+    def test_window_corrected_when_randoms_present(self):
+        d = desi_number_count_dipole()
+        _require(d, "window_corrected_measurement")   # skip if randoms absent
+        m = d["window_corrected_measurement"]
+        # the window correction must slash the raw footprint dipole toward the
+        # cosmological scale (~7e-3), not leave it window-dominated (~2)
+        self.assertLess(m["dipole_amplitude"], 0.05)
+        self.assertGreater(m["window_suppression_factor"], 20)
+        self.assertEqual(d["status"], "MEASURED_WINDOW_CORRECTED")
+        # clustering/kinematic-mixing + mask caveats must be carried
+        self.assertTrue(any("clustering" in c.lower() for c in m["caveats"]))
 
     def test_footprint_dipole_not_claimed_cosmological(self):
         d = desi_number_count_dipole()
