@@ -26,7 +26,7 @@ Bianchi-family, anisotropic-geometry, or native-solver claim.
 | `BLOCKED_UPSTREAM` | PR08-006 joint posterior artifact | close K1+K5+K6 first | n/a | K5 measured (conditional coverage), K6 WF mean-field no-go, K1 partial → assemblable with explicit measured/partial/fail-closed sectors |
 | `AWAITING_NATIVE_LOWELL_SOLVER` | full Bianchi family atlas / morphology | build the native low-ℓ Bianchi–Boltzmann solver | partial (B1 interim) | separate long-term project (PR10) |
 | `BLOCKED_MISSING_DESI_RANDOMS` | DESI number-count dipole (Ω_tilt cross-check) | ~~download the DESI DR1 BGS random catalogues~~ | yes | **DISCHARGED (rev-r192/r193)**: randoms downloaded (`fetch.py --desi-randoms`); window-corrected overdensity dipole MEASURED D=9.49×10⁻³ on NGC+SGC (224× below the raw footprint, at the kinematic scale). Residual: mock-calibrated significance + clustering/kinematic separation |
-| `BLOCKED_MISSING_ACT_LENSING_SIMS` | ACT DR6 low-ℓ κ isotropy | download the ACT DR6 lensing simulation ensemble (mean field + N0/N1) | yes (loader + auto-bandpower) | **CONNECTED (rev-r191)**: real κ a_lm + N_L loaded, auto-bandpower readout; low-ℓ isotropy null blocked on the sim ensemble |
+| `BLOCKED_MISSING_ACT_LENSING_SIMS` | ACT DR6 low-ℓ κ isotropy | ~~download the ACT DR6 lensing simulation ensemble~~ | yes | **DISCHARGED (rev-r192/r194)**: 400 baseline sims downloaded (`fetch.py --act-sims`); mean field subtracted; ℓ=2..10 debiased band power **p=0.35, CONSISTENT** with the isotropic ΛCDM sims (dipole ℓ=1 not measurable). Residual: separate N0/N1 debias |
 
 **rev-r127 discharge status (real data, this session).** With local nvme + long
 runs enabled, the controlling inputs for K5/K6 were found already in-repo

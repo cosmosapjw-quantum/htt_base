@@ -128,15 +128,15 @@
       "ticket_state": "randoms_downloaded_window_corrected_measured"
     },
     {
-      "blocker": "BLOCKED_MISSING_ACT_LENSING_SIMS",
+      "blocker": null,
       "executability": "blocked",
-      "exit_gate": "download the ACT DR6 lensing simulation ensemble (mean field + N0/N1); debias the low-ell kappa statistic; then EXT-ACT flips blocked -> measured (diagnostic-only)",
-      "item": "ACT DR6 low-ell kappa isotropy: mean-field debias (sims)",
-      "note": "REV-R191: real kappa a_lm + N_L + mask loaded, auto-bandpower readout; low-ell isotropy null blocked on sims.",
+      "exit_gate": "separate N0/N1 realisation-dependent debiasing (the sim ensemble is currently used directly as the isotropic null); the low-ell band is reconstruction-noise-dominated so consistency is the expected result",
+      "item": "ACT DR6 low-ell kappa isotropy: N0/N1 debias",
+      "note": "REV-R192/R194: 400 sims downloaded (fetch.py --act-sims); mean field subtracted; ell=2..10 debiased band power p=0.35 CONSISTENT with the isotropic sims; EXT-ACT flipped to MEASURED_MEAN_FIELD_DEBIASED (diagnostic); dipole ell=1 not measurable by ACT lensing.",
       "rank": 9,
-      "source": "ticket EGS3-H2-act-dr6-kappa-isotropy; BLOCKERS.md; registry EXT-ACT",
+      "source": "ticket EGS3-H2-act-dr6-kappa-isotropy; registry EXT-ACT",
       "ticket": "act_dr6_kappa_isotropy.yaml",
-      "ticket_state": "connected_bandpower_readout_blocked_on_sims"
+      "ticket_state": "sims_downloaded_mean_field_debiased_isotropy_measured"
     },
     {
       "blocker": null,

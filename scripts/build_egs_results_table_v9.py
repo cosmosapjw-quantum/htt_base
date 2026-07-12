@@ -94,14 +94,16 @@ def _v9_rows() -> list[dict]:
            "measured_diagnostic",
            "external_lanes_seal.json; desi_dipole_card.json"),
         _r("EXT-ACT", DATA,
-           "ACT DR6 CMB-lensing auto-bandpower lane (independent-instrument "
-           "isotropy cross-check): the released kappa a_lm (lmax=4000) + N_L "
-           "load with a raw masked auto-power readout; a low-multipole kappa "
-           "isotropy statistic is reconstruction-mean-field dominated",
-           "auto-bandpower computed; low-ell isotropy null needs the ACT "
-           "lensing simulation ensemble (mean field + N0/N1)",
-           "blocked",
-           "external_lanes_seal.json (BLOCKED_MISSING_ACT_LENSING_SIMS)"),
+           "ACT DR6 CMB-lensing low-multipole isotropy cross-check "
+           "(independent-instrument): 400 baseline sims downloaded, mean field "
+           "MF=<kappa_alm_sim> subtracted; the ell=2..10 debiased band power "
+           "of the data is compared to the isotropic sim null (the "
+           "reconstruction dipole ell=1 is not measurable, NaN)",
+           "p = 0.35 (data band stat 7e-6 = sim median) -> CONSISTENT with "
+           "the isotropic LambdaCDM sims; N0/N1 not separately debiased "
+           "(residual gate)",
+           "measured_diagnostic",
+           "external_lanes_seal.json; act_kappa_card.json"),
         _r("EXT-JWST", DATA,
            "JWST distance anchors (14 Cepheid/TRGB/maser, CF4-matched) feed "
            "the Omega_tilt survey-design forecast",

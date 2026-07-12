@@ -506,10 +506,10 @@
     },
     {
       "axis": "data_interpretation",
-      "evidence": "external_lanes_seal.json (BLOCKED_MISSING_ACT_LENSING_SIMS)",
-      "key_result": "auto-bandpower computed; low-ell isotropy null needs the ACT lensing simulation ensemble (mean field + N0/N1)",
-      "statement": "ACT DR6 CMB-lensing auto-bandpower lane (independent-instrument isotropy cross-check): the released kappa a_lm (lmax=4000) + N_L load with a raw masked auto-power readout; a low-multipole kappa isotropy statistic is reconstruction-mean-field dominated",
-      "status": "blocked",
+      "evidence": "external_lanes_seal.json; act_kappa_card.json",
+      "key_result": "p = 0.35 (data band stat 7e-6 = sim median) -> CONSISTENT with the isotropic LambdaCDM sims; N0/N1 not separately debiased (residual gate)",
+      "statement": "ACT DR6 CMB-lensing low-multipole isotropy cross-check (independent-instrument): 400 baseline sims downloaded, mean field MF=<kappa_alm_sim> subtracted; the ell=2..10 debiased band power of the data is compared to the isotropic sim null (the reconstruction dipole ell=1 is not measurable, NaN)",
+      "status": "measured_diagnostic",
       "theorem_id": "EXT-ACT"
     },
     {
@@ -579,12 +579,12 @@
   ],
   "schema": "htt.egs.results_table.v9",
   "status_counts": {
-    "blocked": 3,
+    "blocked": 2,
     "diagnostic_forward_model": 1,
     "diagnostic_only": 2,
     "diagnostic_pipeline_closure": 1,
     "measured": 2,
-    "measured_diagnostic": 1,
+    "measured_diagnostic": 2,
     "measured_no_go": 1,
     "measured_partial": 2,
     "measured_synth": 5,

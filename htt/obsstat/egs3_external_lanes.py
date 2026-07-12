@@ -57,6 +57,7 @@ ACT_NL = (REPO / "workdir/raw/act_dr6_lensing/dr6_lensing_release/maps/"
           "baseline/N_L_kk_act_dr6_lensing_v1_baseline.txt")
 JWST_ANCHORS = REPO / "docs/generated/jwst_cf4_anchors.json"
 DESI_DIPOLE_CARD = REPO / "docs/generated/desi_dipole_card.json"
+ACT_KAPPA_CARD = REPO / "docs/generated/act_kappa_card.json"
 
 # Planck 2018 CMB dipole direction (Galactic), for the DESI direction contrast.
 CMB_DIPOLE_LB = (264.021, 48.253)
@@ -203,7 +204,7 @@ def act_kappa_auto_bandpower() -> dict:
     for L in (40, 100, 200, 400):
         if L <= lmax:
             bands[str(L)] = _round(float(cl[L]), 12)
-    return {
+    out = {
         "lane": "act_kappa_auto_bandpower",
         "sector": "independent-instrument CMB-lensing isotropy cross-check",
         "product": "ACT DR6 baseline kappa a_lm (released)",
@@ -213,15 +214,42 @@ def act_kappa_auto_bandpower() -> dict:
         "N_L_rows": (int(NL.shape[0]) if NL is not None else None),
         "low_ell_mean_field_dominated": True,
         "low_ell_C_L_2_10_mean": _round(float(cl[2:11].mean()), 12),
-        "status": "BLOCKED_MISSING_ACT_LENSING_SIMS",
-        "exit_gate": "ACT DR6 lensing simulation ensemble (mean field + "
-                     "N0/N1 realisations) to debias and calibrate a low-"
-                     "multipole kappa isotropy statistic; the auto-bandpower "
-                     "readout above is a data-integrity cross-check only",
-        "scope_not_claimed": "raw masked auto-power readout + registered "
-                             "blocker; no anisotropy, geometry, or family "
-                             "claim; diagnostic-only",
     }
+    measured = None
+    if ACT_KAPPA_CARD.exists():
+        card = json.loads(ACT_KAPPA_CARD.read_text())
+        if card.get("status") == "MEASURED_MEAN_FIELD_DEBIASED":
+            measured = card
+    if measured is not None:
+        out["low_ell_isotropy_measurement"] = {
+            "n_sims": measured["n_sims"],
+            "ell_band": measured["ell_band"],
+            "dipole_note": measured["dipole_note"],
+            "p_value_data_vs_isotropic_sims":
+                measured["p_value_data_vs_isotropic_sims"],
+            "consistent_with_isotropic_sims":
+                measured["consistent_with_isotropic_sims"],
+            "caveats": measured["caveats"],
+        }
+        out["status"] = "MEASURED_MEAN_FIELD_DEBIASED"
+        out["residual_gate"] = ("N0/N1 not separately debiased; the sim "
+                                "ensemble is used as the isotropic null "
+                                "(diagnostic-only)")
+        out["scope_not_claimed"] = ("mean-field-debiased low-multipole kappa "
+                                    "isotropy cross-check (ell=2..N; the "
+                                    "reconstruction dipole ell=1 is not "
+                                    "measurable); no anisotropy, geometry, "
+                                    "family, or inference claim; diagnostic-only")
+    else:
+        out["status"] = "BLOCKED_MISSING_ACT_LENSING_SIMS"
+        out["exit_gate"] = ("ACT DR6 lensing simulation ensemble (mean field "
+                            "+ N0/N1) to debias and calibrate a low-multipole "
+                            "kappa isotropy statistic; the auto-bandpower "
+                            "readout above is a data-integrity cross-check only")
+        out["scope_not_claimed"] = ("raw masked auto-power readout + registered "
+                                    "blocker; no anisotropy, geometry, or "
+                                    "family claim; diagnostic-only")
+    return out
 
 
 # --- JWST anchor connection -------------------------------------------

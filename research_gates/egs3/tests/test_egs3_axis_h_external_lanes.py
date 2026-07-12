@@ -66,14 +66,24 @@ class HEXT1Desi(unittest.TestCase):
 
 
 class HEXT2Act(unittest.TestCase):
-    def test_kappa_loads_and_blocked(self):
+    def test_kappa_loads(self):
         a = act_kappa_auto_bandpower()
         _require(a, "lmax")
         self.assertEqual(a["lmax"], 4000)
         self.assertTrue(a["auto_bandpower_C_L_raw"])          # non-empty readout
         self.assertTrue(a["low_ell_mean_field_dominated"])
-        self.assertEqual(a["status"], "BLOCKED_MISSING_ACT_LENSING_SIMS")
-        self.assertIn("mean field", a["exit_gate"].lower())
+        self.assertIn(a["status"], ("BLOCKED_MISSING_ACT_LENSING_SIMS",
+                                    "MEASURED_MEAN_FIELD_DEBIASED"))
+
+    def test_isotropy_measured_when_sims_present(self):
+        a = act_kappa_auto_bandpower()
+        _require(a, "low_ell_isotropy_measurement")   # skip if sims absent
+        m = a["low_ell_isotropy_measurement"]
+        self.assertEqual(m["n_sims"], 400)
+        self.assertEqual(m["ell_band"][0], 2)          # dipole ell=1 excluded
+        self.assertTrue(0.0 <= m["p_value_data_vs_isotropic_sims"] <= 1.0)
+        self.assertEqual(a["status"], "MEASURED_MEAN_FIELD_DEBIASED")
+        self.assertTrue(any("dipole" in c.lower() for c in m["caveats"]))
 
 
 class HEXT3Jwst(unittest.TestCase):

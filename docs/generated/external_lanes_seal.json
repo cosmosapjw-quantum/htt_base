@@ -7,16 +7,31 @@
       "40": 7.6523e-08,
       "400": 6.9905e-08
     },
-    "exit_gate": "ACT DR6 lensing simulation ensemble (mean field + N0/N1 realisations) to debias and calibrate a low-multipole kappa isotropy statistic; the auto-bandpower readout above is a data-integrity cross-check only",
     "lane": "act_kappa_auto_bandpower",
     "lmax": 4000,
     "low_ell_C_L_2_10_mean": 6.7734e-08,
+    "low_ell_isotropy_measurement": {
+      "caveats": [
+        "ell=0,1 (monopole+dipole) not reconstructed by ACT lensing -- the low-multipole cross-check is ell=2..10 only",
+        "the kappa low-multipole band is reconstruction-noise-dominated; consistency with the isotropic sims is the expected null result",
+        "mean field from the 400 baseline sims; N0/N1 not separately debiased (the band statistic uses the sim ensemble as the null)"
+      ],
+      "consistent_with_isotropic_sims": true,
+      "dipole_note": "ell=0,1 not reconstructed (NaN); lowest available multipole is the quadrupole ell=2",
+      "ell_band": [
+        2,
+        10
+      ],
+      "n_sims": 400,
+      "p_value_data_vs_isotropic_sims": 0.3525
+    },
     "low_ell_mean_field_dominated": true,
     "mask_fsky": 0.23388,
     "product": "ACT DR6 baseline kappa a_lm (released)",
-    "scope_not_claimed": "raw masked auto-power readout + registered blocker; no anisotropy, geometry, or family claim; diagnostic-only",
+    "residual_gate": "N0/N1 not separately debiased; the sim ensemble is used as the isotropic null (diagnostic-only)",
+    "scope_not_claimed": "mean-field-debiased low-multipole kappa isotropy cross-check (ell=2..N; the reconstruction dipole ell=1 is not measurable); no anisotropy, geometry, family, or inference claim; diagnostic-only",
     "sector": "independent-instrument CMB-lensing isotropy cross-check",
-    "status": "BLOCKED_MISSING_ACT_LENSING_SIMS"
+    "status": "MEASURED_MEAN_FIELD_DEBIASED"
   },
   "desi_number_count_dipole": {
     "estimator": "linear D = 3 <n_hat>_w (Crawford/Secrest)",

@@ -12,7 +12,7 @@ _Generated 2026-07-11 by `scripts/build_open_items_ledger.py` (dev-tier planning
 | 6 | PR08-006 joint posterior artifact | BLOCKERS.md section 4 | — | BLOCKED_UPSTREAM | **blocked** | close K1+K5+K6 first (items 2-4); then assemble with explicit measured/partial/fail-closed sectors |
 | 7 | Native low-ell Bianchi solver atlas (theory-g CMB likelihood) | BLOCKERS.md section 5; PR10 project | — | AWAITING_NATIVE_LOWELL_SOLVER | **blocked** | PR10-scale separate solver project; fail-closed OutOfScopeError firewall stays until then |
 | 8 | DESI number-count dipole: mock-calibrated significance | ticket EGS3-H1-desi-number-count-dipole; registry EXT-DESI | randoms_downloaded_window_corrected_measured | — | **blocked** | release-matched DESI BGS mocks to calibrate the mask-coupling amplitude bias + significance (and to separate the local clustering dipole from the kinematic dipole at BGS depths) |
-| 9 | ACT DR6 low-ell kappa isotropy: mean-field debias (sims) | ticket EGS3-H2-act-dr6-kappa-isotropy; BLOCKERS.md; registry EXT-ACT | connected_bandpower_readout_blocked_on_sims | BLOCKED_MISSING_ACT_LENSING_SIMS | **blocked** | download the ACT DR6 lensing simulation ensemble (mean field + N0/N1); debias the low-ell kappa statistic; then EXT-ACT flips blocked -> measured (diagnostic-only) |
+| 9 | ACT DR6 low-ell kappa isotropy: N0/N1 debias | ticket EGS3-H2-act-dr6-kappa-isotropy; registry EXT-ACT | sims_downloaded_mean_field_debiased_isotropy_measured | — | **blocked** | separate N0/N1 realisation-dependent debiasing (the sim ensemble is currently used directly as the isotropic null); the low-ell band is reconstruction-noise-dominated so consistency is the expected result |
 | 10 | MESb (PRD 51, 5942) INTERNAL non-geodesic derivation (Eqs 30-36 algebra) | ticket EGS3-G8-mes-full-rederivation (residual) | web_traced_in_house_refuted_geodesic_readopted | — | **blocked** | legitimate access to the print-only journal PDF; the accessible-range trace (REV-R190) already REFUTED the in-house triples and re-adopted the geodesic anchor, so only MESb's internal algebra remains |
 
 ## Notes
@@ -22,7 +22,7 @@ _Generated 2026-07-11 by `scripts/build_open_items_ledger.py` (dev-tier planning
 - **4.** WF mean-field curl-suppression no-go already established.
 - **5.** conditional coverage (fixed LCDM sigma_cv prior) already measured.
 - **8.** REV-R192/R193: randoms downloaded (fetch.py --desi-randoms); window-corrected overdensity dipole MEASURED D=9.49e-3 (224x below the raw footprint, at the kinematic scale), EXT-DESI flipped to MEASURED_WINDOW_CORRECTED (diagnostic); only the mock-calibrated significance remains.
-- **9.** REV-R191: real kappa a_lm + N_L + mask loaded, auto-bandpower readout; low-ell isotropy null blocked on sims.
+- **9.** REV-R192/R194: 400 sims downloaded (fetch.py --act-sims); mean field subtracted; ell=2..10 debiased band power p=0.35 CONSISTENT with the isotropic sims; EXT-ACT flipped to MEASURED_MEAN_FIELD_DEBIASED (diagnostic); dipole ell=1 not measurable by ACT lensing.
 - **10.** print-only (no arXiv/ADS/OA copy); the in-house (3/4,2,2/7)/(3/4,1,3/14) refutation + geodesic re-adoption is DONE; only MESb's own Eqs 30-36 derivation is blocked.
 
 ## Closed / held tickets (represented for completeness)
