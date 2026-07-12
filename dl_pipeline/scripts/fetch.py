@@ -415,10 +415,58 @@ def stage_act_dr6(root: Path, sources: dict, log: Logger, **opts):
     _extract_act_dr6_only(root, log, **opts)
 
 
+def _download_act_sims(root: Path, sources: dict, log: Logger, **opts):
+    """Download the ACT DR6 lensing baseline reconstruction sims (~59.6 GB)
+    for the EXT-ACT low-ell kappa mean field. Off-Dropbox by default; each
+    file skips if already present (resumable across restarts)."""
+    spec = sources.get("act_dr6_lensing", {}).get("simulations")
+    if not spec:
+        log("  [err] act_dr6_lensing.simulations missing from sources.json")
+        return
+    target = opts.get("act_sims_dir")
+    if not target:
+        nvme = Path("/mnt/sn850x2t/htt_base_e2e/act_dr6_lensing_sims")
+        target = nvme if nvme.parent.exists() else root / "downloads" / "act_dr6_lensing_sims"
+    target = Path(target)
+    target.mkdir(parents=True, exist_ok=True)
+    variant = spec.get("variant", "baseline")
+    first = int(spec.get("first_index", 1))
+    count = int(spec.get("count", 400))
+    base = spec["base"]
+    pattern = spec["pattern"]
+    urls = [f"{base}/{pattern.format(variant=variant, i=i)}"
+            for i in range(first, first + count)]
+    log(f"  [act-sims] {count} sims -> {target} (~{spec.get('size_estimate_GB')} GB)")
+
+    # Prefer aria2c (parallel + resumable) over the sequential curl fallback:
+    # the NERSC portal is slow per stream (~0.2 MB/s), so parallel files win.
+    if shutil.which("aria2c"):
+        listing = target / "_act_sims_urls.txt"
+        listing.write_text("\n".join(urls) + "\n")
+        cmd = ["aria2c", "--input-file", str(listing), "--dir", str(target),
+               "--continue=true", "--max-concurrent-downloads=8",
+               "--max-connection-per-server=2", "--split=2",
+               "--min-split-size=32M", "--auto-file-renaming=false",
+               "--allow-overwrite=false", "--max-tries=20", "--retry-wait=15",
+               "--connect-timeout=60", "--timeout=600", "--summary-interval=30",
+               "--console-log-level=notice"]
+        log(f"  [act-sims] aria2c {len(urls)} urls (8x2 parallel)")
+        run_shell(cmd, log, check=False)
+    else:
+        for i, url in enumerate(urls, first):
+            dst = target / Path(url).name
+            download(url, dst, log, force=opts.get("force", False), optional=True)
+    done = len(list(target.glob("kappa_alm_sim_*.fits")))
+    log(f"  [act-sims] present: {done}/{count} in {target}")
+
+
 def stage_act_dr6_lensing(root: Path, sources: dict, log: Logger, **opts):
     """ACT DR6 lensing release acquisition; no inference is run here."""
     out_dir = root / "raw" / "act_dr6_lensing"
     out_dir.mkdir(parents=True, exist_ok=True)
+    if opts.get("act_sims"):
+        _download_act_sims(root, sources, log, **opts)
+        return
     if not opts.get("approve_downloads", False):
         log("  [approval-required] ACT DR6 lensing downloads require --approve-downloads.")
         return
@@ -512,6 +560,10 @@ def stage_desi_y1(root: Path, sources: dict, log: Logger, **opts):
     raw.mkdir(parents=True, exist_ok=True)
     for fname in s["files"]:
         download(f"{s['base']}/{fname}", raw / fname, log)
+    if opts.get("desi_randoms"):
+        for fname in s.get("randoms", []):
+            download(f"{s['base']}/{fname}", raw / fname, log,
+                     force=opts.get("force", False))
     out = root / "compact_products" / "desi"
     desi_mode = opts.get("desi_mode") or "extended"
     run_python(SCRIPTS_DIR / "extract_desi_compact.py",
@@ -718,6 +770,18 @@ def main():
     ap.add_argument("--full-res-maps", action="store_true",
                     help="Also dump full-resolution (NSIDE=2048) Planck map/mask "
                          "NPZs alongside the downgraded ones (~200 MB per map).")
+    ap.add_argument("--desi-randoms", action="store_true",
+                    help="also download the DESI DR1 BGS random catalogues "
+                         "(desi_y1.randoms) for EXT-DESI window deconvolution")
+    ap.add_argument("--act-sims", action="store_true",
+                    help="download the ACT DR6 lensing baseline reconstruction "
+                         "sims (~59.6 GB) for the EXT-ACT low-ell kappa mean "
+                         "field; goes off-Dropbox by default")
+    ap.add_argument("--act-sims-dir", default=None,
+                    help="target dir for --act-sims (default: "
+                         "/mnt/sn850x2t/htt_base_e2e/act_dr6_lensing_sims if "
+                         "the NVMe is present, else "
+                         "<root>/downloads/act_dr6_lensing_sims)")
     ap.add_argument("--desi-mode", choices=["minimal", "extended"], default="extended",
                     help="DESI column set ??extended (default) keeps all weights + "
                          "targetid/ntile/photsys; minimal strips to ra/dec/z/weight/n_hat.")
@@ -797,6 +861,9 @@ def main():
                 planck_nside_out=args.planck_nside_out,
                 full_res_maps=args.full_res_maps,
                 desi_mode=args.desi_mode,
+                desi_randoms=args.desi_randoms,
+                act_sims=args.act_sims,
+                act_sims_dir=args.act_sims_dir,
                 approve_downloads=args.approve_downloads,
                 max_download_bytes=cap_bytes)
 

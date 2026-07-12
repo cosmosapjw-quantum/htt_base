@@ -225,6 +225,11 @@
       "LRG_SGC_0_clustering.ran.fits",
       "QSO_NGC_0_clustering.ran.fits",
       "QSO_SGC_0_clustering.ran.fits"
+    ],
+    "_randoms_doc": "DESI DR1 BGS random catalogues for window-function deconvolution of the EXT-DESI number-count dipole (BLOCKED_MISSING_DESI_RANDOMS exit gate). NGC_0 ~1.58 GB, SGC_0 ~0.65 GB; one random per cap (~50M points) resolves the smooth ell=1 angular selection. Enabled by --desi-randoms.",
+    "randoms": [
+      "BGS_ANY_NGC_0_clustering.ran.fits",
+      "BGS_ANY_SGC_0_clustering.ran.fits"
     ]
   },
   "cf4": {
@@ -381,6 +386,15 @@
         ]
       }
     ],
+    "simulations": {
+      "_doc": "ACT DR6 lensing baseline reconstruction sims (400) from NERSC; the mean field + N0/N1 suite needed for the EXT-ACT low-ell kappa isotropy exit gate (BLOCKED_MISSING_ACT_LENSING_SIMS). 400 x ~152.7 MB = ~59.6 GB; enabled by --act-sims and downloaded off-Dropbox (default under /mnt/sn850x2t if present, else downloads/act_dr6_lensing_sims). Acquisition only; no geometry/family claim.",
+      "base": "https://portal.nersc.gov/project/act/dr6_lensing_v1",
+      "variant": "baseline",
+      "first_index": 1,
+      "count": 400,
+      "pattern": "maps/{variant}/simulations/kappa_alm_sim_act_dr6_lensing_v1_{variant}_{i:04d}.fits",
+      "size_estimate_GB": 59.6
+    },
     "extraction": {
       "produces": "raw/act_dr6_lensing/* plus act_dr6_lensing_acquisition_manifest.json",
       "note": "No HTT evidence, MIO posterior, native solver, or family-identification claim is created by this stage."
