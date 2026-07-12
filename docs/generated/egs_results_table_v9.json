@@ -497,6 +497,30 @@
       "theorem_id": "K5-V9"
     },
     {
+      "axis": "data_interpretation",
+      "evidence": "external_lanes_seal.json (BLOCKED_MISSING_DESI_RANDOMS)",
+      "key_result": "estimator recovers 0.0196 vs injected 0.0200 (6.9 deg); selection-function deconvolution needs the DESI random catalogues",
+      "statement": "DESI DR1 BGS number-count dipole lane (Omega_tilt-sector cross-check): the linear D=3<n_hat>_w estimator is mock-verified (recovers an injected dipole on a full-sky mock); the real footprint value is survey-window dominated (fsky~0.19), NOT a cosmological dipole",
+      "status": "blocked",
+      "theorem_id": "EXT-DESI"
+    },
+    {
+      "axis": "data_interpretation",
+      "evidence": "external_lanes_seal.json (BLOCKED_MISSING_ACT_LENSING_SIMS)",
+      "key_result": "auto-bandpower computed; low-ell isotropy null needs the ACT lensing simulation ensemble (mean field + N0/N1)",
+      "statement": "ACT DR6 CMB-lensing auto-bandpower lane (independent-instrument isotropy cross-check): the released kappa a_lm (lmax=4000) + N_L load with a raw masked auto-power readout; a low-multipole kappa isotropy statistic is reconstruction-mean-field dominated",
+      "status": "blocked",
+      "theorem_id": "EXT-ACT"
+    },
+    {
+      "axis": "data_interpretation",
+      "evidence": "external_lanes_seal.json; jwst_cf4_anchors.json",
+      "key_result": "connected via jwst_cf4_crossmatch -> joint_pv_cmb_forecast (labelled forecast, not a measurement)",
+      "statement": "JWST distance anchors (14 Cepheid/TRGB/maser, CF4-matched) feed the Omega_tilt survey-design forecast",
+      "status": "diagnostic_only",
+      "theorem_id": "EXT-JWST"
+    },
+    {
       "axis": "gr_boltzmann",
       "evidence": "king_ellis_frame_seal.json; king_ellis_frame_wolfram_seal.json",
       "key_result": "Frobenius omega[n]=0 and aligned omega[u]=0 exact; identity verified on five configurations incl. two rotating; standard 3-curvature reproduced in integrable limits",
@@ -555,9 +579,9 @@
   ],
   "schema": "htt.egs.results_table.v9",
   "status_counts": {
-    "blocked": 2,
+    "blocked": 4,
     "diagnostic_forward_model": 1,
-    "diagnostic_only": 1,
+    "diagnostic_only": 2,
     "diagnostic_pipeline_closure": 1,
     "measured": 2,
     "measured_no_go": 1,

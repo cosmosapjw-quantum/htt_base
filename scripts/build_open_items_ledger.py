@@ -132,6 +132,37 @@ OPEN_ITEMS = [
     },
     {
         "rank": 8,
+        "item": "DESI number-count dipole: window deconvolution (randoms)",
+        "source": "ticket EGS3-H1-desi-number-count-dipole; BLOCKERS.md; "
+                  "registry EXT-DESI",
+        "ticket": "desi_number_count_dipole.yaml",
+        "ticket_state": "connected_mock_verified_blocked_on_randoms",
+        "blocker": "BLOCKED_MISSING_DESI_RANDOMS",
+        "executability": "blocked",
+        "exit_gate": "download the DESI DR1 BGS random catalogues; deconvolve "
+                     "the survey window; then EXT-DESI flips blocked -> "
+                     "measured (diagnostic-only)",
+        "note": "REV-R191: real loader + linear estimator wired + mock-"
+                "verified; the real footprint value is window-dominated "
+                "(fsky~0.19), not a cosmological dipole.",
+    },
+    {
+        "rank": 9,
+        "item": "ACT DR6 low-ell kappa isotropy: mean-field debias (sims)",
+        "source": "ticket EGS3-H2-act-dr6-kappa-isotropy; BLOCKERS.md; "
+                  "registry EXT-ACT",
+        "ticket": "act_dr6_kappa_isotropy.yaml",
+        "ticket_state": "connected_bandpower_readout_blocked_on_sims",
+        "blocker": "BLOCKED_MISSING_ACT_LENSING_SIMS",
+        "executability": "blocked",
+        "exit_gate": "download the ACT DR6 lensing simulation ensemble (mean "
+                     "field + N0/N1); debias the low-ell kappa statistic; then "
+                     "EXT-ACT flips blocked -> measured (diagnostic-only)",
+        "note": "REV-R191: real kappa a_lm + N_L + mask loaded, auto-"
+                "bandpower readout; low-ell isotropy null blocked on sims.",
+    },
+    {
+        "rank": 10,
         "item": "MESb (PRD 51, 5942) INTERNAL non-geodesic derivation "
                 "(Eqs 30-36 algebra)",
         "source": "ticket EGS3-G8-mes-full-rederivation (residual)",

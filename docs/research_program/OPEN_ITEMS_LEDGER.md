@@ -11,7 +11,9 @@ _Generated 2026-07-11 by `scripts/build_open_items_ledger.py` (dev-tier planning
 | 5 | K5 cosmic-variance coverage on release mocks | ticket EGS3-C2-cf4-wfcr; BLOCKERS.md section 3 | blocked | BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP | **blocked** | ownership of the CF4 release-mock pipeline (selection/Malmquist/grouping/correlated field) |
 | 6 | PR08-006 joint posterior artifact | BLOCKERS.md section 4 | — | BLOCKED_UPSTREAM | **blocked** | close K1+K5+K6 first (items 2-4); then assemble with explicit measured/partial/fail-closed sectors |
 | 7 | Native low-ell Bianchi solver atlas (theory-g CMB likelihood) | BLOCKERS.md section 5; PR10 project | — | AWAITING_NATIVE_LOWELL_SOLVER | **blocked** | PR10-scale separate solver project; fail-closed OutOfScopeError firewall stays until then |
-| 8 | MESb (PRD 51, 5942) INTERNAL non-geodesic derivation (Eqs 30-36 algebra) | ticket EGS3-G8-mes-full-rederivation (residual) | web_traced_in_house_refuted_geodesic_readopted | — | **blocked** | legitimate access to the print-only journal PDF; the accessible-range trace (REV-R190) already REFUTED the in-house triples and re-adopted the geodesic anchor, so only MESb's internal algebra remains |
+| 8 | DESI number-count dipole: window deconvolution (randoms) | ticket EGS3-H1-desi-number-count-dipole; BLOCKERS.md; registry EXT-DESI | connected_mock_verified_blocked_on_randoms | BLOCKED_MISSING_DESI_RANDOMS | **blocked** | download the DESI DR1 BGS random catalogues; deconvolve the survey window; then EXT-DESI flips blocked -> measured (diagnostic-only) |
+| 9 | ACT DR6 low-ell kappa isotropy: mean-field debias (sims) | ticket EGS3-H2-act-dr6-kappa-isotropy; BLOCKERS.md; registry EXT-ACT | connected_bandpower_readout_blocked_on_sims | BLOCKED_MISSING_ACT_LENSING_SIMS | **blocked** | download the ACT DR6 lensing simulation ensemble (mean field + N0/N1); debias the low-ell kappa statistic; then EXT-ACT flips blocked -> measured (diagnostic-only) |
+| 10 | MESb (PRD 51, 5942) INTERNAL non-geodesic derivation (Eqs 30-36 algebra) | ticket EGS3-G8-mes-full-rederivation (residual) | web_traced_in_house_refuted_geodesic_readopted | — | **blocked** | legitimate access to the print-only journal PDF; the accessible-range trace (REV-R190) already REFUTED the in-house triples and re-adopted the geodesic anchor, so only MESb's internal algebra remains |
 
 ## Notes
 
@@ -19,7 +21,9 @@ _Generated 2026-07-11 by `scripts/build_open_items_ledger.py` (dev-tier planning
 - **3.** PLA/PL3 downloads in progress (2026-07-11).
 - **4.** WF mean-field curl-suppression no-go already established.
 - **5.** conditional coverage (fixed LCDM sigma_cv prior) already measured.
-- **8.** print-only (no arXiv/ADS/OA copy); the in-house (3/4,2,2/7)/(3/4,1,3/14) refutation + geodesic re-adoption is DONE; only MESb's own Eqs 30-36 derivation is blocked.
+- **8.** REV-R191: real loader + linear estimator wired + mock-verified; the real footprint value is window-dominated (fsky~0.19), not a cosmological dipole.
+- **9.** REV-R191: real kappa a_lm + N_L + mask loaded, auto-bandpower readout; low-ell isotropy null blocked on sims.
+- **10.** print-only (no arXiv/ADS/OA copy); the in-house (3/4,2,2/7)/(3/4,1,3/14) refutation + geodesic re-adoption is DONE; only MESb's own Eqs 30-36 derivation is blocked.
 
 ## Closed / held tickets (represented for completeness)
 

@@ -1,0 +1,27 @@
+id: EGS3-H1-desi-number-count-dipole
+title: DESI DR1 BGS number-count dipole (Omega_tilt-sector cross-check)
+state: connected_mock_verified_blocked_on_randoms
+blocker: BLOCKED_MISSING_DESI_RANDOMS
+owner_lane: obsstat_data
+scope: measure the DESI DR1 BGS_ANY number-count dipole (amplitude + direction)
+  as an independent Omega_tilt-sector probe (the LSS matter-frame dipole vs the
+  CMB kinematic dipole), and compare direction/amplitude to the CMB dipole.
+connected_rev_r191: |
+  The real compact catalogue (workdir/compact_products/desi/
+  BGS_ANY_NGC_clustering_extended.npz; 4.08M galaxies with unit sky vectors +
+  imaging-systematics/FKP weights) is loaded by htt/obsstat/egs3_external_lanes.py.
+  The linear D=3<n_hat>_w estimator is VERIFIED on a full-sky mock (recovers an
+  injected 0.02 dipole to 0.0196, direction 6.9 deg). Applied to the real
+  footprint it returns a WINDOW-dominated value (D~2.1, fsky~0.19) that is NOT
+  a cosmological dipole and is not claimed as one. Seal external_lanes_seal.json;
+  gate research_gates/egs3/tests/test_egs3_axis_h_external_lanes.py.
+obstruction: separating the survey selection function (angular + radial window)
+  requires the DESI DR1 BGS random catalogues (BGS_ANY_{NGC,SGC}_*_clustering.ran.fits,
+  ~18 files per cap), which are not in-tree. Without them any footprint dipole is
+  geometry-dominated; we refuse to quote a cosmological number-count dipole.
+exit_gate: download the DESI DR1 BGS random catalogues; deconvolve the window
+  (data-minus-randoms overdensity, or a masked-C_1 estimator with the random
+  window) and calibrate significance against the mocks; then the EXT-DESI row in
+  the v9 results table flips blocked -> measured, still diagnostic-only.
+reference: DESI DR1 LSS catalogues (BGS_ANY); Crawford 2009 / Secrest et al. 2021
+  linear number-count dipole estimator; CMB kinematic dipole (Planck 2018).

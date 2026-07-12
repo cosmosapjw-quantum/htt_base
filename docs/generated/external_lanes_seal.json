@@ -1,0 +1,68 @@
+{
+  "act_kappa_auto_bandpower": {
+    "N_L_rows": 2101,
+    "auto_bandpower_C_L_raw": {
+      "100": 4.4257e-08,
+      "200": 5.7718e-08,
+      "40": 7.6523e-08,
+      "400": 6.9905e-08
+    },
+    "exit_gate": "ACT DR6 lensing simulation ensemble (mean field + N0/N1 realisations) to debias and calibrate a low-multipole kappa isotropy statistic; the auto-bandpower readout above is a data-integrity cross-check only",
+    "lane": "act_kappa_auto_bandpower",
+    "lmax": 4000,
+    "low_ell_C_L_2_10_mean": 6.7734e-08,
+    "low_ell_mean_field_dominated": true,
+    "mask_fsky": 0.23388,
+    "product": "ACT DR6 baseline kappa a_lm (released)",
+    "scope_not_claimed": "raw masked auto-power readout + registered blocker; no anisotropy, geometry, or family claim; diagnostic-only",
+    "sector": "independent-instrument CMB-lensing isotropy cross-check",
+    "status": "BLOCKED_MISSING_ACT_LENSING_SIMS"
+  },
+  "desi_number_count_dipole": {
+    "estimator": "linear D = 3 <n_hat>_w (Crawford/Secrest)",
+    "exit_gate": "DESI DR1 BGS random catalogues (BGS_ANY_{NGC,SGC}_*_clustering.ran.fits) for window-function deconvolution; then the estimator returns the selection-corrected number-count dipole with mock-calibrated significance",
+    "lane": "desi_number_count_dipole",
+    "mock_verification": {
+      "direction_error_deg": 6.859,
+      "injected_amplitude": 0.02,
+      "recovered_amplitude": 0.019633,
+      "recovers_injected_dipole": true
+    },
+    "n_galaxies": 4081227,
+    "real_footprint": {
+      "cosmological_reference_scale": 0.007,
+      "direction_l_b_deg": [
+        195.662,
+        33.628
+      ],
+      "fsky": 0.1908,
+      "raw_dipole_amplitude": 2.129222,
+      "separation_from_cmb_dipole_deg": 51.856,
+      "window_dominated": true
+    },
+    "sample": "DESI DR1 BGS_ANY NGC",
+    "scope_not_claimed": "the raw footprint dipole is survey-window dominated, NOT a cosmological dipole; no anisotropy or family claim; diagnostic-only",
+    "sector": "Omega_tilt (LSS number-count dipole vs CMB kinematic dipole)",
+    "sgc_available_raw": true,
+    "status": "BLOCKED_MISSING_DESI_RANDOMS"
+  },
+  "jwst_cf4_anchors": {
+    "connected_to": "scripts/jwst_cf4_crossmatch.py -> htt/obsstat/joint_pv_cmb_forecast.py (labelled forecast, already wired)",
+    "lane": "jwst_cf4_anchors",
+    "methods": [
+      "Cepheid",
+      "Cepheid+TRGB",
+      "TRGB",
+      "TRGB/JAGB",
+      "maser+TRGB"
+    ],
+    "n_anchors": 14,
+    "scope_not_claimed": "the anchors feed a labelled survey-design forecast, not a measurement; diagnostic-only",
+    "sector": "Omega_tilt survey-design forecast (distance-anchor precision)",
+    "status": "CONNECTED_FORECAST"
+  },
+  "scope_not_claimed": "real-data loaders + mock-verified estimators + registered blockers for the missing companion products (DESI randoms, ACT lensing sims); model-independent kinematic descriptors only; no anisotropy, geometry, family, or inference claim",
+  "seal": "egs3.external_lanes",
+  "status": "PASS",
+  "theorem_id": "EXT-LANES"
+}

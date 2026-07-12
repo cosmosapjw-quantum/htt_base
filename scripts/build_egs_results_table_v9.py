@@ -82,6 +82,32 @@ def _v9_rows() -> list[dict]:
            "observational_claim_allowed False",
            "diagnostic_only",
            "k5_cf4_identified_interval_card_v9.json"),
+        _r("EXT-DESI", DATA,
+           "DESI DR1 BGS number-count dipole lane (Omega_tilt-sector cross-"
+           "check): the linear D=3<n_hat>_w estimator is mock-verified "
+           "(recovers an injected dipole on a full-sky mock); the real "
+           "footprint value is survey-window dominated (fsky~0.19), NOT a "
+           "cosmological dipole",
+           "estimator recovers 0.0196 vs injected 0.0200 (6.9 deg); "
+           "selection-function deconvolution needs the DESI random catalogues",
+           "blocked",
+           "external_lanes_seal.json (BLOCKED_MISSING_DESI_RANDOMS)"),
+        _r("EXT-ACT", DATA,
+           "ACT DR6 CMB-lensing auto-bandpower lane (independent-instrument "
+           "isotropy cross-check): the released kappa a_lm (lmax=4000) + N_L "
+           "load with a raw masked auto-power readout; a low-multipole kappa "
+           "isotropy statistic is reconstruction-mean-field dominated",
+           "auto-bandpower computed; low-ell isotropy null needs the ACT "
+           "lensing simulation ensemble (mean field + N0/N1)",
+           "blocked",
+           "external_lanes_seal.json (BLOCKED_MISSING_ACT_LENSING_SIMS)"),
+        _r("EXT-JWST", DATA,
+           "JWST distance anchors (14 Cepheid/TRGB/maser, CF4-matched) feed "
+           "the Omega_tilt survey-design forecast",
+           "connected via jwst_cf4_crossmatch -> joint_pv_cmb_forecast "
+           "(labelled forecast, not a measurement)",
+           "diagnostic_only",
+           "external_lanes_seal.json; jwst_cf4_anchors.json"),
         _r("KE-FRAME", GR,
            "King-Ellis items 1-7: exact tilted-frame kinematics + "
            "constraint algebra, dual engine (SymPy + independent Wolfram, "

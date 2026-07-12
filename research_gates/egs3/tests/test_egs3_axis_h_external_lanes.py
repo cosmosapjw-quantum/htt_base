@@ -1,0 +1,92 @@
+"""EGS3 Axis H gates (REV-R191): external-data lanes (DESI / ACT / JWST).
+
+H-EXT-1 DESI number-count dipole: the linear estimator RECOVERS an injected
+        dipole on a full-sky mock; the real footprint value is window-dominated
+        (fsky ~ 0.19) and terminates in BLOCKED_MISSING_DESI_RANDOMS;
+H-EXT-2 ACT DR6 kappa: the released a_lm loads (lmax=4000) with an auto-
+        bandpower readout; the low-multipole isotropy statistic terminates in
+        BLOCKED_MISSING_ACT_LENSING_SIMS;
+H-EXT-3 JWST: 14 CF4-matched anchors, CONNECTED_FORECAST;
+H-EXT-4 seal PASS + scope + forbidden-token guard; no substitute estimate
+        beyond the labelled mock.
+"""
+import unittest
+
+from htt.obsstat.egs3_external_lanes import (
+    act_kappa_auto_bandpower,
+    desi_number_count_dipole,
+    external_lanes_seal,
+    jwst_anchor_connection,
+)
+
+_SEAL = external_lanes_seal()
+
+
+def _require(lane: dict, key: str):
+    """Skip (not fail) when the real dataset is absent, e.g. in a data-less
+    CI checkout -- the lane returns a BLOCKED_MISSING_* status without the
+    computed keys. The lane is exercised wherever the workdir data is present."""
+    if key not in lane:
+        raise unittest.SkipTest(f"external data absent: {lane.get('status')}")
+
+
+class HEXT1Desi(unittest.TestCase):
+    def test_mock_verified_and_blocked(self):
+        d = desi_number_count_dipole()
+        _require(d, "mock_verification")
+        mv = d["mock_verification"]
+        self.assertTrue(mv["recovers_injected_dipole"])
+        self.assertAlmostEqual(mv["recovered_amplitude"],
+                               mv["injected_amplitude"], delta=3e-3)
+        self.assertTrue(d["real_footprint"]["window_dominated"])
+        self.assertLess(d["real_footprint"]["fsky"], 0.5)     # partial footprint
+        self.assertEqual(d["status"], "BLOCKED_MISSING_DESI_RANDOMS")
+        self.assertIn("random", d["exit_gate"].lower())
+
+    def test_footprint_dipole_not_claimed_cosmological(self):
+        d = desi_number_count_dipole()
+        _require(d, "real_footprint")
+        # the raw footprint dipole is orders of magnitude above the
+        # cosmological reference scale -> must be flagged, not claimed
+        self.assertGreater(d["real_footprint"]["raw_dipole_amplitude"],
+                           10 * d["real_footprint"]["cosmological_reference_scale"])
+        self.assertIn("window", d["scope_not_claimed"].lower())
+
+
+class HEXT2Act(unittest.TestCase):
+    def test_kappa_loads_and_blocked(self):
+        a = act_kappa_auto_bandpower()
+        _require(a, "lmax")
+        self.assertEqual(a["lmax"], 4000)
+        self.assertTrue(a["auto_bandpower_C_L_raw"])          # non-empty readout
+        self.assertTrue(a["low_ell_mean_field_dominated"])
+        self.assertEqual(a["status"], "BLOCKED_MISSING_ACT_LENSING_SIMS")
+        self.assertIn("mean field", a["exit_gate"].lower())
+
+
+class HEXT3Jwst(unittest.TestCase):
+    def test_anchors_connected(self):
+        j = jwst_anchor_connection()
+        self.assertEqual(j["n_anchors"], 14)
+        self.assertEqual(j["status"], "CONNECTED_FORECAST")
+        self.assertIn("joint_pv_cmb_forecast", j["connected_to"])
+
+
+class HEXT4SealScope(unittest.TestCase):
+    FORBIDDEN = ("posterior", "detection", "native solver", "family assignment")
+
+    def test_seal_pass_and_scope(self):
+        _require(_SEAL["desi_number_count_dipole"], "mock_verification")
+        self.assertEqual(_SEAL["status"], "PASS")
+        self.assertEqual(_SEAL["theorem_id"], "EXT-LANES")
+        self.assertIn("registered blockers", _SEAL["scope_not_claimed"])
+
+    def test_docstring_guard(self):
+        import htt.obsstat.egs3_external_lanes as mod
+        doc = (mod.__doc__ or "").lower()
+        for tok in self.FORBIDDEN:
+            self.assertNotIn(tok, doc)
+
+
+if __name__ == "__main__":
+    unittest.main()

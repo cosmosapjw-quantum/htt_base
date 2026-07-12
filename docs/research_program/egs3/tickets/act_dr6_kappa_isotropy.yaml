@@ -1,0 +1,27 @@
+id: EGS3-H2-act-dr6-kappa-isotropy
+title: ACT DR6 CMB-lensing low-multipole isotropy cross-check
+state: connected_bandpower_readout_blocked_on_sims
+blocker: BLOCKED_MISSING_ACT_LENSING_SIMS
+owner_lane: obsstat_data
+scope: an independent-instrument (ACT, not Planck) low-multipole isotropy
+  cross-check on the CMB-lensing convergence kappa -- the low-ell kappa
+  dipole/quadrupole amplitudes + alignment, as a companion to the Planck K1
+  temperature-morphology lane.
+connected_rev_r191: |
+  The released ACT DR6 baseline kappa a_lm (lmax=4000), the N_L noise curve, and
+  the NSIDE=4096 mask (fsky=0.234) are loaded by htt/obsstat/egs3_external_lanes.py.
+  A raw masked auto-bandpower C_L^kk readout is computed as a data-integrity
+  cross-check. Seal external_lanes_seal.json; gate
+  research_gates/egs3/tests/test_egs3_axis_h_external_lanes.py.
+obstruction: a sound low-multipole kappa statistic requires debiasing the
+  reconstruction mean field (which dominates at ell <~ 10) and calibrating
+  significance -- both need the ACT DR6 lensing simulation ensemble (mean field
+  + N0/N1 realisations), which is not in-tree. We refuse to quote a low-ell
+  kappa isotropy statistic from the raw data alm alone.
+exit_gate: download the ACT DR6 lensing simulation ensemble; subtract the mean
+  field, apply the mask-deconvolved low-ell estimator, and calibrate against the
+  sims; then the EXT-ACT row in the v9 results table flips blocked -> measured,
+  still diagnostic-only (an independent-instrument isotropy cross-check, no
+  anisotropy or family claim).
+reference: ACT DR6 lensing release (Madhavacheril et al. 2024 / Qu et al. 2024);
+  released products maps/baseline/{kappa_alm_data, N_L_kk, mask}.
