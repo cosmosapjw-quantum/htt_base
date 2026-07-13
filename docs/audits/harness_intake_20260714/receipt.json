@@ -1,0 +1,96 @@
+{
+  "schema_version": "htt.physmath_harness_receipt.v1",
+  "recorded_at": "2026-07-14T00:28:19+09:00",
+  "baseline": {
+    "branch": "research/pr04-multicomponent",
+    "git_commit": "8af39b36c1d5ed4f9b16f0bc71dbecd8b22548d4",
+    "git_bundle_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base_pre_audit_20260714.bundle",
+    "git_bundle_sha256": "def102cba82f0dba46e510d9fe2772f5683b7210093c1deb6078448f9dc157a1",
+    "git_bundle_mode": "0600",
+    "remote_count": 0
+  },
+  "archives": [
+    {
+      "name": "physmath-coding-harness-gpt56.zip",
+      "sha256": "6e67e999a0c19f6ed9de7c339067cc11691d5cf5cb662a11756d8fc393c849b4",
+      "version": "3.1.0",
+      "checked_on": "2026-07-12",
+      "license": "MIT",
+      "file_count": 46,
+      "uncompressed_bytes": 29572,
+      "vendor_tree_sha256": "b170730ceddf596f535e8a792e0fe682a4c3e82cbc90c10f4af0b90e252535d6",
+      "vendor_path": "harness_templates/vendor/physmath-gpt56/3.1.0/coding"
+    },
+    {
+      "name": "physmath-research-harness-gpt56.zip",
+      "sha256": "9adde688f8020e7feb2c1c0304b3204dbe70dd01e2d87e64a5c4eb357c019934",
+      "version": "3.1.0",
+      "checked_on": "2026-07-12",
+      "license": "MIT",
+      "file_count": 59,
+      "uncompressed_bytes": 37428,
+      "vendor_tree_sha256": "60be265eb334cfd8bcec6b3de534f9fa4f1f348d24d0b0eec89f9f6c9b246a92",
+      "vendor_path": "harness_templates/vendor/physmath-gpt56/3.1.0/research"
+    }
+  ],
+  "root_control_hashes": {
+    ".gitignore": "f3cf7eb30004c81216ad5998f6c5893b70eda835c04fc4ab9145b17a0bfbcacf",
+    "AGENTS.md": "caf78d6d3cca82265b16553ef98c4d2065ace001e13e873b8f72c15d3f65453a",
+    "CHANGELOG.md": "d246ff37fee421ac33c6f81ebb8c2daf4b1d1db87f4083086f5dc64c23d537ce",
+    "Makefile": "65863a49305a09ca0646abeca2aead0516aa9cb576f0c227bf94d78d0e64153b",
+    "README.md": "b283cac6ae933d1552b56af2466bf6e56e52c643f0c0a7adfba19825d3b3a2e6"
+  },
+  "security": {
+    "crc_test": "pass",
+    "unsafe_paths": 0,
+    "symlinks": 0,
+    "encrypted_members": 0,
+    "duplicate_or_casefold_collisions": 0,
+    "nested_archives": 0,
+    "unexpected_executables": 0,
+    "network_or_subprocess_calls_in_tools": 0,
+    "coding_root_collisions": 5,
+    "research_root_collisions": 4,
+    "cross_archive_collisions": 11,
+    "activation": "repo_adapter_only"
+  },
+  "validation": {
+    "coding_upstream_validator": "pass",
+    "research_upstream_validator": "pass",
+    "python_compile": "pass",
+    "root_extraction": "forbidden",
+    "initializer_run_in_repository_or_vendor_tree": false,
+    "initializer_disposable_copy_write_scope_test": "pass"
+  },
+  "artifact_metadata": {
+    "artifact_id": "htt.audit.harness_intake_20260714",
+    "artifact_path": "docs/audits/harness_intake_20260714/receipt.json",
+    "owner": "COMMON",
+    "implementation_scope": "common",
+    "bundle_kind": "common_contract",
+    "subject_owner": "multi-owner repository audit",
+    "claim_tier": "diagnostic_only",
+    "artifact_mode": "governance_diagnostic",
+    "allowed_use": "external_audit",
+    "production_status": "diagnostic_only",
+    "created_by": "PR-116 safe harness intake",
+    "git_commit": "8af39b36c1d5ed4f9b16f0bc71dbecd8b22548d4",
+    "code_version": "physmath-gpt56-3.1.0+htt-adapter-v1",
+    "schema_version": "htt.physmath_harness_receipt.v1",
+    "transfer_source": "none",
+    "config_hash": "caf78d6d3cca82265b16553ef98c4d2065ace001e13e873b8f72c15d3f65453a",
+    "input_hashes": [
+      "6e67e999a0c19f6ed9de7c339067cc11691d5cf5cb662a11756d8fc393c849b4",
+      "9adde688f8020e7feb2c1c0304b3204dbe70dd01e2d87e64a5c4eb357c019934"
+    ],
+    "sky_support_status": "not_directional",
+    "null_mock_status": "not_statistical",
+    "caveats": [
+      "Generic upstream skills are inert vendored references.",
+      "The receipt is harness provenance, not scientific validation.",
+      "Raw input archives remain untracked user inputs."
+    ],
+    "generating_command": "unzip -t <archive>; isolated extraction; upstream validators; deterministic tree hash",
+    "git_commit_or_worktree_state": "baseline 8af39b36; PR-116 worktree"
+  }
+}

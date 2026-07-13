@@ -1832,3 +1832,25 @@ frozen v5/v6/v6.1/v7 artifacts byte-stable throughout (successor-artifact patter
 | `venv/bin/python scripts/k5_cf4_identified_interval_card_v8.py --check` | repo root | current | firewall intact |
 | `venv/bin/python scripts/build_egs_results_table_v8.py --check` | repo root | current | 55 rows (43 inherited verbatim) |
 | `venv/bin/python scripts/make_egs2_egs3_theorem_figures.py --check` | repo root | current | +3 unification figures |
+
+## PR-116 — safe GPT-5.6 physmath audit harness integration (2026-07-14)
+
+| Command | CWD | Result | Notes |
+| --- | --- | --- | --- |
+| `venv/bin/python -B /home/cosmosapjw/.codex/skills/.system/skill-creator/scripts/quick_validate.py .agents/skills/htt-physmath-audit` | repo root | PASS | Repo adapter valid. |
+| `venv/bin/python -B harness_templates/vendor/physmath-gpt56/3.1.0/coding/tools/validate_harness.py` | repo root | PASS | Read-only upstream structure check. |
+| `venv/bin/python -B harness_templates/vendor/physmath-gpt56/3.1.0/research/tools/validate_workspace.py` | repo root | PASS | Read-only upstream structure check. |
+| `venv/bin/python -B -m pytest -p no:cacheprovider tests/contracts/test_physmath_harness_vendor.py scripts/codex_harness/test_codex_assets.py scripts/codex_harness/test_pr_dag_harness.py tests/contracts/test_pr_delta_template.py htt/htt/tests/test_ver2_likelihood_scope_guard.py tests/obsstat/test_observable_vector.py tests/bass/test_external_transfer_registry.py tests/bass/test_atlas_entry_lite.py tests/bass/test_native_adapter_stub.py htt/mio/tests/test_mio_certificate_generator.py tests/contracts/test_mio_htt_no_merge.py tests/contracts/test_semantic_guards.py tests/contracts/test_claim_language_lint.py -q` | repo root | PASS | Final run: 145 passed in 3.62 s. |
+| `venv/bin/python -B -m pytest -p no:cacheprovider -m smoke -q` | repo root | PASS | 6 passed, 7,918 deselected in 3.57 s. |
+| `venv/bin/python -B -m pytest -p no:cacheprovider --collect-only -q` | repo root | PASS | 7,865/7,924 collected; 59 deselected in 3.49 s. |
+| `venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml` | repo root | PASS | 65 PRs; DAG valid. |
+| `venv/bin/python -B scripts/check_claim_language.py .agents/skills/htt-physmath-audit/SKILL.md docs/audits/harness_intake_20260714 docs/PR_DELTAS/pr-116.md --dry-run --format json` | repo root | PASS | Zero issues. |
+| `venv/bin/python -B .agents/skills/htt-claim-provenance-ledger/scripts/check_forbidden_claims.py .agents/skills/htt-physmath-audit/SKILL.md docs/audits/harness_intake_20260714 docs/PR_DELTAS/pr-116.md` | repo root | PASS | Zero forbidden patterns. |
+| `venv/bin/python -B scripts/build_external_audit_package.py --check` and `venv/bin/python -B scripts/check_publication_claim_freeze.py --check` | repo root | PASS | Refreshed generated provenance after DAG/status change. |
+| `git diff --cached --check` | repo root | PASS | Exact vendor bytes preserved with scoped `-text`. |
+
+Adversarial review found and fixed: ignored vendored `AGENTS.md`, dangling
+installer dependencies, fixed-count skill tests, missing agent nicknames,
+permanent root-hash locking, invalid manifest metadata, EOL conversion risk,
+contaminated reinstall acceptance, and ambiguous initializer evidence. Upstream
+validator success remains workflow reachability only, not science validation.

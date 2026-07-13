@@ -419,3 +419,22 @@ Record accepted, rejected, and deferred design decisions.
 - Deferred: calibrated local/global null ensembles, response-rank audits,
   MIO report cards, PPC/LOOCV, and native morphology atlas integration remain
   downstream.
+
+## 2026-07-14 - PR-116 physmath audit harness boundary
+
+- Accepted: treat both supplied GPT-5.6 packages as hash-pinned,
+  unauthenticated methodology snapshots under separate immutable vendor roots.
+- Accepted: activate only the repo-owned `htt-physmath-audit` adapter. COMMON
+  owns the audit bundle; audited owner is recorded separately as
+  `subject_owner`.
+- Accepted: mutable run state lives under `docs/audits/<run>/state`; upstream
+  initializers may be exercised only in disposable copies.
+- Accepted: installer reuse is idempotent only for a byte-identical vendor
+  destination and fails closed on extra, missing, or modified files.
+- Accepted: counterfactual family/geometry work maps to exploratory,
+  internal-only metadata and never enters public or production claim surfaces.
+- Rejected: root extraction, generic nested-skill activation, vendor mutation,
+  workflow checks as scientific validation, multi-agent votes as independent
+  replication, or external transfer as native evidence.
+- Deferred: the actual delta audit, legacy disposition ledger, advocate
+  ranking, and referee decision belong to PR-117 and PR-118.

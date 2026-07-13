@@ -1029,3 +1029,43 @@ At each PR: web-backed brainstorming when available -> subagent steelman diverge
   - Every public claim maps to artifact, manifest, tests, caveats, and owner
   - Forbidden claims are blocked before submission
 - **Kill / rollback:** Reject if any C5/C6 family-identification claim appears before native low-ell solver morphology atlas.
+
+## Wave 12: JCAP/PRD delta audit and advocate closeout
+
+### PR-116 — Safe GPT-5.6 physmath audit harness integration
+- **Owner:** COMMON
+- **Depends:** PR-115
+- **Verification level:** L1
+- **Risk:** medium
+- **Primary files:** pinned vendor trees, repo adapter skill, intake receipt
+- **Tests / commands:** vendor contract tests and both read-only upstream validators
+- **Definition of done:** exact archive bytes are vendored without root collisions;
+  only the repo adapter is active and all HTT ownership/claim gates remain intact.
+- **Kill / rollback:** Reject root overwrite, generic skill activation, checksum
+  drift, dangling installer state, or claim-gate weakening.
+
+### PR-117 — JCAP/PRD delta adversarial audit with execution receipts
+- **Owner:** COMMON
+- **Depends:** PR-116
+- **Verification level:** L4
+- **Risk:** high
+- **Primary files:** audit package, deterministic audit validator, audit tests
+- **Tests / commands:** package validation, focused scientific diagnostics, claim
+  and provenance scanners
+- **Definition of done:** all 55 prior findings are imported without rediscovery;
+  new findings, web lock, agents, commands, numerical probes, and legacy history
+  carry execution receipts.
+- **Kill / rollback:** Reject hidden failures, unreceipted findings, or promotion
+  of counterfactual family hypotheses.
+
+### PR-118 — Counterfactual advocate ranking and final referee closeout
+- **Owner:** COMMON
+- **Depends:** PR-117
+- **Verification level:** L4
+- **Risk:** high
+- **Primary files:** advocate ledger, response matrix, final CRAG and referee reports
+- **Tests / commands:** audit package validation, pre-submission review, 65-PR checkpoint
+- **Definition of done:** at least 24 no-web candidates are independently ranked;
+  every criticism has a disposition and the final reports preserve blockers.
+- **Kill / rollback:** Reject self-promotion, shortlist CRAG scope drift, false
+  independence, or hypothesis-only leakage into publication-facing surfaces.

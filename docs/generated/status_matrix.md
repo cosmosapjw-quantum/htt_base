@@ -7,52 +7,55 @@ Manual status counts are prohibited; use `docs/generated/status_snapshot.json` a
 
 | Metric | Value |
 | --- | ---: |
-| Total PRs | 62 |
-| Completed PRs | 62 |
+| Total PRs | 65 |
+| Completed PRs | 63 |
 | Blocked PRs | 0 |
 | In progress | 0 |
-| Pending PRs | 0 |
+| Pending PRs | 2 |
 
 | Metadata | Value |
 | --- | --- |
 | Claim tier | `diagnostic_only` |
 | Transfer source | `none` |
-| Config hash | `22b63c43da2158a5428e8a69b848b8fee70eda4e1c887864626e7f87b937fdd3` |
-| Source commit | `367039e+dirty` |
+| Config hash | `7b23ca94afa1f87d9fdd0244ea57fd989d2b23ba04d3bb4ddbcd21d61288b3d5` |
+| Source commit | `8af39b3+dirty` |
 | Worktree state | `dirty` |
 
 | Owner | Rows |
 | --- | ---: |
 | `BASS` | 4 |
-| `COMMON` | 30 |
+| `COMMON` | 33 |
 | `HTT` | 10 |
 | `MIO` | 11 |
 | `OBSSTAT` | 7 |
 
 | State | Rows |
 | --- | ---: |
-| `completed` | 62 |
+| `completed` | 63 |
+| `not_completed` | 2 |
 
 | Claim Tier | Rows |
 | --- | ---: |
 | `conditional` | 5 |
-| `diagnostic_only` | 57 |
+| `diagnostic_only` | 60 |
 
 | Artifact Readiness | Rows |
 | --- | ---: |
-| `generated` | 53 |
+| `generated` | 54 |
+| `missing` | 2 |
 | `smoke_tested` | 3 |
 | `validation_candidate` | 6 |
 
 | Allowed Use | Rows |
 | --- | ---: |
-| `external_audit` | 60 |
+| `external_audit` | 61 |
+| `internal_only` | 2 |
 | `paper_appendix` | 2 |
 
 | Artifact Mode | Rows |
 | --- | ---: |
 | `external_audit_conditioned` | 7 |
-| `governance_diagnostic` | 53 |
+| `governance_diagnostic` | 56 |
 | `paper_appendix_conditioned` | 2 |
 
 This matrix is a diagnostic-only DAG rendering. It does not certify solver validation, posterior evidence, native transfer validation, or family-ID evidence.

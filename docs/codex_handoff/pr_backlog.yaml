@@ -64,6 +64,9 @@ policy:
   - PR-112
   - PR-114
   - PR-115
+  - PR-116
+  - PR-117
+  - PR-118
   checkpoint_every_completed_prs: 5
   no_native_lowell_solver_implementation: true
   family_identification_claims_blocked_until_native_morphology_atlas: true
@@ -95,6 +98,8 @@ waves:
   title: MIO certificate suite and cross-check outputs
 - wave: 11
   title: Result packs, manuscript/figure integration, and external audit freeze
+- wave: 12
+  title: JCAP/PRD delta audit, counterfactual advocate, and evidence closeout
 prs:
 - id: PR-000
   wave: 0
@@ -1372,4 +1377,67 @@ prs:
     solver morphology atlas.
   level: L4
   scope: pre-solver
+  risk: high
+- id: PR-116
+  wave: 12
+  title: Safe GPT-5.6 physmath audit harness integration
+  owner: COMMON
+  depends:
+  - PR-115
+  files:
+  - harness_templates/vendor/physmath-gpt56/3.1.0
+  - .agents/skills/htt-physmath-audit
+  - docs/audits/harness_intake_20260714
+  tests:
+  - venv/bin/python -B -m pytest -p no:cacheprovider tests/contracts/test_physmath_harness_vendor.py -q
+  - venv/bin/python -B harness_templates/vendor/physmath-gpt56/3.1.0/coding/tools/validate_harness.py
+  - venv/bin/python -B harness_templates/vendor/physmath-gpt56/3.1.0/research/tools/validate_workspace.py
+  dod:
+  - Both upstream archives are hash-verified and vendored without root collisions
+  - One repo-owned adapter preserves HTT ownership, provenance, and family-claim gates
+  kill: Reject if integration overwrites root controls, activates generic nested skills,
+    weakens claim gates, or lacks a complete receipt.
+  level: L1
+  scope: pre-solver audit harness
+  risk: medium
+- id: PR-117
+  wave: 12
+  title: JCAP/PRD delta adversarial audit with execution receipts
+  owner: COMMON
+  depends:
+  - PR-116
+  files:
+  - docs/audits/jcap_prd_adversarial_audit_20260714
+  - scripts/audits/jcap_prd_20260714.py
+  - tests/audits/test_jcap_prd_audit_package.py
+  tests:
+  - venv/bin/python -B -m pytest -p no:cacheprovider tests/audits/test_jcap_prd_audit_package.py -q
+  - venv/bin/python -B scripts/audits/jcap_prd_20260714.py validate
+  dod:
+  - All 55 prior findings are imported as known-open and new findings carry delta evidence
+  - Commands, agents, web lock, numerical diagnostics, and legacy archaeology are manifest-backed
+  kill: Reject if prior findings are relabeled as new, failed runs are hidden, or counterfactual
+    family hypotheses enter production evidence.
+  level: L4
+  scope: pre-solver audit
+  risk: high
+- id: PR-118
+  wave: 12
+  title: Counterfactual advocate ranking and final referee closeout
+  owner: COMMON
+  depends:
+  - PR-117
+  files:
+  - docs/audits/jcap_prd_adversarial_audit_20260714
+  - docs/harness
+  tests:
+  - venv/bin/python -B -m pytest -p no:cacheprovider tests/audits/test_jcap_prd_audit_package.py -q
+  - venv/bin/python -B scripts/audits/jcap_prd_20260714.py validate
+  dod:
+  - At least 24 no-web advocate candidates are independently ranked in pre- and post-solver tracks
+  - Every prior/new criticism has a disposition and the final referee package records blockers
+  kill: Reject if candidate authors self-promote, final CRAG exceeds the shortlist, or a
+    hypothesis-only family claim leaks into publication-facing surfaces.
+  level: L4
+  scope: pre-solver audit closeout
   risk: high

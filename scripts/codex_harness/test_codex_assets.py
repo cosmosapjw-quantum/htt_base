@@ -20,6 +20,11 @@ REQUIRED_AGENT_NAMES = {
     "physics_stat_auditor",
     "regression_tester",
 }
+REQUIRED_SKILL_NAMES = {
+    "htt-dag-orchestrator",
+    "htt-harness-engineering",
+    "htt-physmath-audit",
+}
 READ_ONLY_AGENT_NAMES = {
     "claim_gate_reviewer",
     "code_cartographer",
@@ -68,6 +73,21 @@ def _strictest_decision(output: str) -> str:
     return decision
 
 
+def _skill_names(root: Path) -> set[str]:
+    return {
+        path.parent.name
+        for path in (root / ".agents" / "skills").glob("*/SKILL.md")
+    }
+
+
+def _reported_skill_names(output: str) -> set[str]:
+    return {
+        line.removeprefix("- ").strip()
+        for line in output.splitlines()
+        if line.startswith("- ")
+    }
+
+
 def test_agents_md_stays_terse_and_names_repo_boundaries() -> None:
     agents_md = REPO_ROOT / "AGENTS.md"
     assert agents_md.exists()
@@ -91,7 +111,10 @@ def test_repo_scoped_skill_layout_is_valid() -> None:
         check=False,
     )
     assert completed.returncode == 0, completed.stdout + completed.stderr
-    assert "18 skills OK" in completed.stdout
+    expected = _skill_names(REPO_ROOT)
+    assert REQUIRED_SKILL_NAMES <= expected
+    assert f"{len(expected)} skills OK" in completed.stdout
+    assert _reported_skill_names(completed.stdout) == expected
 
 
 def test_custom_agent_configs_are_well_formed_and_named() -> None:
@@ -253,6 +276,8 @@ def test_installer_copies_repo_scoped_assets_without_project_config(tmp_path: Pa
         ".codex/rules/default.rules",
         "docs/codex_handoff/pr_backlog.yaml",
         "scripts/codex_harness/verify_skill_layout.py",
+        "harness_templates/vendor/physmath-gpt56/3.1.0/coding/manifest.json",
+        "harness_templates/vendor/physmath-gpt56/3.1.0/research/manifest.json",
     ]:
         assert (target / path).exists(), path
     assert not (target / ".codex/config.toml").exists()
@@ -268,7 +293,55 @@ def test_installer_copies_repo_scoped_assets_without_project_config(tmp_path: Pa
         check=False,
     )
     assert installed_skills.returncode == 0, installed_skills.stdout + installed_skills.stderr
-    assert "18 skills OK" in installed_skills.stdout
+    expected = _skill_names(REPO_ROOT)
+    assert REQUIRED_SKILL_NAMES <= expected
+    assert f"{len(expected)} skills OK" in installed_skills.stdout
+    assert _reported_skill_names(installed_skills.stdout) == expected
+
+    for mode, expected_message in [
+        ("coding", "Coding harness validation passed."),
+        ("research", "Research harness validation passed."),
+    ]:
+        validator = "validate_harness.py" if mode == "coding" else "validate_workspace.py"
+        validated = subprocess.run(
+            [
+                sys.executable,
+                str(
+                    target
+                    / "harness_templates/vendor/physmath-gpt56/3.1.0"
+                    / mode
+                    / "tools"
+                    / validator
+                ),
+            ],
+            cwd=target,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        assert validated.returncode == 0, validated.stdout + validated.stderr
+        assert expected_message in validated.stdout
+
+    clean_reinstall = subprocess.run(
+        ["bash", "scripts/install_codex_handoff.sh", str(target)],
+        cwd=REPO_ROOT,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    assert clean_reinstall.returncode == 0, clean_reinstall.stdout + clean_reinstall.stderr
+
+    rogue = target / "harness_templates/vendor/physmath-gpt56/3.1.0/coding/ROGUE.txt"
+    rogue.write_text("unreceipted\n", encoding="utf-8")
+    contaminated = subprocess.run(
+        ["bash", "scripts/install_codex_handoff.sh", str(target)],
+        cwd=REPO_ROOT,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    assert contaminated.returncode == 1
+    assert "Refusing to overwrite a divergent physmath vendor snapshot" in contaminated.stderr
 
     installed_policy = subprocess.run(
         [
