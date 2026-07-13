@@ -1,0 +1,71 @@
+{
+  "allowed_use": "paper_appendix",
+  "artifact_id": "bass.obsdata.fig_obs_desi_dipole_mock",
+  "artifact_mode": "paper_appendix_conditioned",
+  "artifact_path": "figures/obsdata_current/fig_obs_desi_dipole_mock.png",
+  "caption_policy": [
+    "must_state_observed_data_diagnostic",
+    "must_not_state_family_identification",
+    "must_not_state_native_low_ell_solver_output",
+    "must_not_state_detection"
+  ],
+  "caveats": [
+    "Observed-data / in-house-mock analysis figure; diagnostic-only.",
+    "Kinematic/statistical descriptor; no geometry-detection, no family-identification, no observer-frame-violation claim.",
+    "No native low-ell solver output is used."
+  ],
+  "claim_tier": "diagnostic_only",
+  "config_hash": "sha256:5d00531fe48ca036ec5b094ebf090c763e40da2b979accd6821e25d70ad46bb8",
+  "covariance_status": "linear_lcdm_or_analytic",
+  "created_by": "scripts/make_obsdata_r195_r198_figures.py",
+  "failed_gates": [
+    "native_low_ell_solver_not_available",
+    "family_morphology_atlas_not_available"
+  ],
+  "family_identification": false,
+  "generating_command": "python scripts/make_obsdata_r195_r198_figures.py",
+  "implementation_scope": "htt_obsstat",
+  "native_solver_result": false,
+  "null_mock_status": "real_data_and_in_house_lcdm_mocks",
+  "owner": "OBSSTAT",
+  "passed_gates": [
+    "gate_test_present",
+    "manifest_metadata_present",
+    "claim_firewall_caption_review"
+  ],
+  "production_status": "diagnostic_only",
+  "schema_version": "bass.obsdata_figure.v1",
+  "sky_support_status": "directional_descriptor_only",
+  "source": {
+    "bias": [
+      1.2,
+      1.5,
+      2.0
+    ],
+    "mock_mean": [
+      0.016584,
+      0.020743,
+      0.028564
+    ],
+    "mock_std": [
+      0.007561,
+      0.009029,
+      0.012591
+    ],
+    "obs": 0.009493,
+    "pval": [
+      0.8329,
+      0.9002,
+      0.9701
+    ],
+    "shot_sigma_amp": 0.0012759694353706127,
+    "sigma_above_shot": 13.55
+  },
+  "source_json_path": "figures/obsdata_current/fig_obs_desi_dipole_mock.source.json",
+  "statistics_definitions": {
+    "figure": "fig_obs_desi_dipole_mock",
+    "program": "obsdata_r195_r198"
+  },
+  "title": "DESI BGS dipole vs the LambdaCDM clustering mock",
+  "transfer_source": "none"
+}
