@@ -1,0 +1,733 @@
+{
+  "baseline_head": "8af39b36c1d5ed4f9b16f0bc71dbecd8b22548d4",
+  "caveats": [
+    "Audit-only recalculations do not replace production estimates.",
+    "A missing decisive input is BLOCKED, never silently replaced by a smaller proxy."
+  ],
+  "claim_tier": "diagnostic_only",
+  "counterfactual_contract": {
+    "allowed_use": "internal_only",
+    "artifact_mode": "internal_exploratory",
+    "claim_tier": "exploratory",
+    "hypothesis_only": true,
+    "public_use": false
+  },
+  "lane_count": 7,
+  "lanes": {
+    "act_low_l_transfer_scope": {
+      "adjudication": "The released reconstructed kappa alms and simulations can support a same-release diagnostic percentile. They cannot identify an injected pre-QE sky signal transfer or native kappa sky-power upper limit without the filtered CMB/QE inputs and reconstruction response.",
+      "claim_tier": "diagnostic_only",
+      "completed_at": "2026-07-13T17:15:52+00:00",
+      "current_card": {
+        "band": null,
+        "upper_limit": {
+          "band_power_95ul": 3.2802e-06,
+          "band_power_95ul_over_sim_median": 0.4739,
+          "c_sig_95ul": 2.8036e-08,
+          "confidence_level": 0.95,
+          "interpretation": "95% CL upper limit on excess low-multipole kappa power beyond the isotropic-LambdaCDM end-to-end expectation; model-independent (flat template); the sim ensemble is the N0+N1-inclusive isotropic null",
+          "signal_template": "flat-in-ell excess convergence power C_sig over ell=2..10"
+        }
+      },
+      "delta_assessment": {
+        "allowed_reason": "severity_change",
+        "candidate_new_id": "D-ACT-VALIDATION-RANGE-01",
+        "maximum_claim_tier": "release_simulation_conditioned_diagnostic",
+        "parent_prior_ids": [
+          "C5-EXT-ACT-F1",
+          "GAP-06"
+        ]
+      },
+      "inputs": [
+        {
+          "bytes": 2377,
+          "path": "docs/generated/act_kappa_card.json",
+          "sha256": "sha256:f0278ab610e324813c1f0079298dcbb8b95d82261cf205e700d9556b801a6118",
+          "status": "present"
+        },
+        {
+          "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/raw/act_dr6_lensing/dr6_lensing_release",
+          "status": "present"
+        },
+        {
+          "path": "/mnt/sn850x2t/htt_base_e2e/act_dr6_lensing_sims",
+          "status": "present"
+        }
+      ],
+      "inventory": {
+        "external_sim_file_count": 402,
+        "kappa_alm_file_count": 13,
+        "mask_file_count": 13,
+        "raw_cmb_qe_input_count": 0,
+        "release_file_count": 53,
+        "release_name_hash": "sha256:94f8a8385847a6e5b90e34376574e12274b1f9b6400b688f8b836325e0e6f09e"
+      },
+      "locked_crag_constraint": {
+        "low_L_issue": "mean field exceeds signal and low-L null fluctuations; initial CRAG source arXiv:2304.05202",
+        "published_validated_spectrum_band": "40<L<763",
+        "repository_band": "L=2..10"
+      },
+      "production_output_modified": false,
+      "seed": 20260714,
+      "status": "BLOCKED_MISSING_RAW_QE_INPUTS_FOR_SKY_POWER_TRANSFER",
+      "web_used": false
+    },
+    "cf4_monopole_propagation": {
+      "claim_tier": "diagnostic_only",
+      "completed_at": "2026-07-13T17:15:20+00:00",
+      "constraint_residuals": {
+        "gram_condition": 83.73074821550045,
+        "max_shell_monopole": 1.096345236817342e-15,
+        "max_uniform_flow": 1.096345236817342e-15
+      },
+      "delta_assessment": {
+        "allowed_reason": "downstream_propagation",
+        "candidate_new_id": "D-CF4-DOWNSTREAM-01",
+        "maximum_claim_tier": "diagnostic_only",
+        "parent_prior_ids": [
+          "C1-K5-MV-F1",
+          "GAP-02",
+          "GAP-12"
+        ]
+      },
+      "downstream_gls_diagnostic": {
+        "scope": "audit-only diagonal-noise estimator, not a replacement production result",
+        "shell_null": {
+          "amplitude_kms": 366.14661412880326,
+          "chi2_3dof": 2.495284072348776,
+          "p_value": 0.4761439599921705,
+          "per_component_error_kms": [
+            237.51362448984412,
+            231.66121431068888,
+            215.23207038592756
+          ],
+          "vector_kms": [
+            -300.33968543900005,
+            162.60900225959813,
+            -131.97624321266034
+          ]
+        },
+        "standard": {
+          "amplitude_kms": 362.0655827468367,
+          "chi2_3dof": 2.4494090386360474,
+          "p_value": 0.48450341883082104,
+          "per_component_error_kms": [
+            240.15493203131268,
+            231.26889955436553,
+            221.40045754829416
+          ],
+          "vector_kms": [
+            -308.8811168964271,
+            145.73240567907445,
+            -120.19154616532657
+          ]
+        }
+      },
+      "downstream_tilt_pushforward": {
+        "claim_status": "uniform-global-tilt interpretation blocked",
+        "monopole_null_mv": {
+          "Omega_tilt": 3.110069053542817e-08,
+          "beta_rapidity": 0.0003140675187288573
+        },
+        "shipped_gls_340_726_kms": {
+          "Omega_tilt": 4.072815069978929e-07,
+          "beta_rapidity": 0.001136541417083007
+        },
+        "standard_mv": {
+          "Omega_tilt": 5.760627160596339e-07,
+          "beta_rapidity": 0.001351676509172421
+        }
+      },
+      "injection_recovery": {
+        "distance_error_pattern": "observed inverse-variance shell means",
+        "n": 512,
+        "nulled_mean_bias_vector_kms": [
+          4.157208769734723,
+          1.057435629634199,
+          -1.2656697405710702
+        ],
+        "nulled_noiseless_error_kms": 6.586236751363951e-13,
+        "nulled_rmse_kms": 33.56356330888634,
+        "standard_mean_bias_vector_kms": [
+          -95.01435290568122,
+          -461.83847395228577,
+          -23.62779229536615
+        ],
+        "standard_noiseless_error_kms": 473.0531931292773,
+        "standard_rmse_kms": 274.37541852832396,
+        "truth_amplitude_kms": 400.0,
+        "truth_vector_kms": [
+          271.41677510463296,
+          -262.4029338649957,
+          132.2030048480131
+        ]
+      },
+      "inputs": [
+        {
+          "bytes": 5179298,
+          "path": "workdir/obs_bundle/pecvel/cf4_full/cf4_groups.npz",
+          "sha256": "sha256:3c0f2e1a5b56b7227abb5e187406810d7eb15e924aac69e9cb0ffc1343a811ad",
+          "status": "present"
+        }
+      ],
+      "monopole_null_mv": {
+        "amplitude_kms": 94.1550703219165,
+        "chi2_3dof": 1.632492647472864,
+        "p_value": 0.6520449762019753,
+        "per_component_error_kms": [
+          81.79393007982738,
+          74.4835437432139,
+          74.24728884919405
+        ],
+        "vector_kms": [
+          -20.221040971931252,
+          90.68749648794825,
+          -15.233671589111129
+        ]
+      },
+      "n_cells": 1389,
+      "n_groups": 38038,
+      "production_output_modified": false,
+      "seed": 20260714,
+      "shell_count": 11,
+      "shell_means_kms": [
+        -32.00970359966789,
+        -11.336079286305386,
+        -4.89310872192689,
+        -31.712174177326123,
+        37.76469737440927,
+        22.707100588646586,
+        -85.31355974564077,
+        -611.6350009637525,
+        -1965.0197825896844,
+        -3852.6589611732793,
+        -5765.368034942908
+      ],
+      "sigma_star_kms": 50.0,
+      "standard_mv": {
+        "amplitude_kms": 405.2221763214151,
+        "chi2_3dof": 35.90325916038436,
+        "p_value": 7.849472374386062e-08,
+        "per_component_error_kms": [
+          81.12201336114022,
+          66.1316932407525,
+          74.17170151604377
+        ],
+        "vector_kms": [
+          -124.89814052967095,
+          -383.51432076336823,
+          -39.0157973685904
+        ]
+      },
+      "standard_mv_data_minus_shell_monopole": {
+        "amplitude_kms": 84.44738935755481,
+        "chi2_3dof": 1.5711163672365627,
+        "p_value": 0.6659565760114794,
+        "per_component_error_kms": [
+          81.12201336114022,
+          66.1316932407525,
+          74.17170151604377
+        ],
+        "vector_kms": [
+          -26.058708360020752,
+          78.56153435883797,
+          -16.744868082459394
+        ]
+      },
+      "standard_mv_projected_shell_monopole": {
+        "amplitude_kms": 473.0531931292766,
+        "chi2_3dof": 50.08768999467622,
+        "p_value": 7.652910921257273e-11,
+        "per_component_error_kms": [
+          81.12201336114022,
+          66.1316932407525,
+          74.17170151604377
+        ],
+        "vector_kms": [
+          -98.83943216965021,
+          -462.07585512220606,
+          -22.270929286131018
+        ]
+      },
+      "status": "EXECUTED",
+      "wall_seconds_internal": 2.923981953994371,
+      "web_used": false
+    },
+    "desi_quadrature_and_alpha_refit": {
+      "alpha_refit": {
+        "NGC": {
+          "mock_mean": 0.28766037415296125,
+          "mock_std": 0.0023119253529135064,
+          "observed": 0.28753675027481324
+        },
+        "SGC": {
+          "mock_mean": 0.27795178018004985,
+          "mock_std": 0.003470571544205884,
+          "observed": 0.27819791990962284
+        }
+      },
+      "claim_tier": "diagnostic_only",
+      "completed_at": "2026-07-13T17:15:51+00:00",
+      "configuration": {
+        "alpha_refit_each_mock": true,
+        "lmax": 40,
+        "n_mock": 400,
+        "nside": 64,
+        "nz_production_audit": 200
+      },
+      "delta_assessment": {
+        "disposition": "executes_prior_prescribed_correction",
+        "maximum_claim_tier": "conditional_diagnostic",
+        "new_id": null,
+        "parent_prior_ids": [
+          "C4-EXT-DESI-F1",
+          "C4-EXT-DESI-F2",
+          "GAP-06"
+        ]
+      },
+      "fixed_alpha_null": {
+        "mean": 0.01887076079709517,
+        "n_exceeding": 342,
+        "observed_percentile": 0.145,
+        "p_rank": 0.8553615960099751,
+        "std": 0.008751823858663852
+      },
+      "inputs": [
+        {
+          "bytes": 220388970,
+          "path": "workdir/compact_products/desi/BGS_ANY_NGC_clustering_extended.npz",
+          "sha256": "sha256:ea52cb7e0bbfa3ef69db396dab4a68ee95b409d8e237451d74a924e4e3cca21d",
+          "status": "present"
+        },
+        {
+          "bytes": 1656118080,
+          "path": "workdir/raw/desi/BGS_ANY_NGC_0_clustering.ran.fits",
+          "sha256": "sha256:60c1e435511f7eb3aea3c06897850300438798080aca14273f54d56a7f0d95c8",
+          "status": "present"
+        },
+        {
+          "bytes": 77823516,
+          "path": "workdir/compact_products/desi/BGS_ANY_SGC_clustering_extended.npz",
+          "sha256": "sha256:e6c858efb2b3fc22ce36443f1393772f62d2e714efbfefde76c1404386ffc05d",
+          "status": "present"
+        },
+        {
+          "bytes": 679127040,
+          "path": "workdir/raw/desi/BGS_ANY_SGC_0_clustering.ran.fits",
+          "sha256": "sha256:c65e4144ef758a5d62a5f737b397939028f428be116ec76d6f8f9b2dbe3d5f80",
+          "status": "present"
+        }
+      ],
+      "observed_amplitude": 0.009493329346411264,
+      "official_release_mock_status": "BLOCKED_NOT_LOCAL_FOR_BGS_ANY_EXACT_SELECTION",
+      "production_output_modified": false,
+      "quadrature": {
+        "ratio_nz200_over_nz400": {
+          "C1": 0.9998462337247987,
+          "C10": 1.000086364332309,
+          "C40": 1.0001759868508924
+        },
+        "ratio_nz40_over_nz400": {
+          "C1": 1.3582626632367503,
+          "C10": 1.321194075336566,
+          "C40": 1.7534758024730446
+        },
+        "values": {
+          "200": {
+            "C1": 0.0001271135587953385,
+            "C10": 0.00014578450408954947,
+            "C40": 4.584824262283017e-05
+          },
+          "40": {
+            "C1": 0.0001726801532868298,
+            "C10": 0.00019259298991401082,
+            "C40": 8.037963826563175e-05
+          },
+          "400": {
+            "C1": 0.0001271331075797458,
+            "C10": 0.000145771914595476,
+            "C40": 4.584017535472514e-05
+          }
+        }
+      },
+      "refit_alpha_null": {
+        "mean": 0.013132390785028284,
+        "n_exceeding": 273,
+        "observed_percentile": 0.3175,
+        "p_rank": 0.683291770573566,
+        "std": 0.0064734975354654185
+      },
+      "scope": "in-house GRF audit; not a replacement for exact-selection EZmock/Abacus nulls",
+      "seed": 20260714,
+      "status": "EXECUTED",
+      "web_used": false
+    },
+    "fsigma8_depth_and_uncertainty": {
+      "claim_tier": "diagnostic_only",
+      "combined_uncertainty": {
+        "cross_covariance_status": "BLOCKED_NOT_ESTIMATED",
+        "four_point_nine_sigma_status": "unsupported_without_joint_covariance_and_valid_likelihood",
+        "independent_stat_z": 1.5972865155651659,
+        "independent_total_minus_z": 0.5220595375008236,
+        "independent_total_plus_z": 0.8635667313167574,
+        "repo_fisher_error": 0.021697232766130194,
+        "repo_raw_minus_published": 0.10191100939251085,
+        "same_data_correlation_sensitivity": [
+          {
+            "combined_sigma": 0.0816972327661302,
+            "rho": -1.0,
+            "z": 1.2474230269738198
+          },
+          {
+            "combined_sigma": 0.0732980482391956,
+            "rho": -0.5,
+            "z": 1.3903645709629506
+          },
+          {
+            "combined_sigma": 0.06380258544688949,
+            "rho": 0.0,
+            "z": 1.5972865155651654
+          },
+          {
+            "combined_sigma": 0.05262067981069631,
+            "rho": 0.5,
+            "z": 1.9367102393799784
+          },
+          {
+            "combined_sigma": 0.04156282919828212,
+            "rho": 0.9,
+            "z": 2.451974789933767
+          },
+          {
+            "combined_sigma": 0.03830276723386981,
+            "rho": 1.0,
+            "z": 2.6606696265640695
+          }
+        ]
+      },
+      "completed_at": "2026-07-13T17:15:32+00:00",
+      "delta_assessment": {
+        "allowed_reason": "downstream_propagation",
+        "candidate_new_id": "D-FS8-DEPTH-01",
+        "maximum_claim_tier": "rebuild_required",
+        "parent_prior_ids": [
+          "C3-K5-VCORR-ML-F1",
+          "C3-K5-VCORR-ML-F2",
+          "GAP-02"
+        ]
+      },
+      "depth_cut_and_shell_centering": [
+        {
+          "centering_scope": "audit sensitivity, not a valid replacement likelihood",
+          "fisher_error": 0.01846913062605881,
+          "max_depth_hmpc": 120.0,
+          "n_cells": 730,
+          "n_groups": 16406,
+          "railed": false,
+          "raw_eh98_fsigma8": 0.31140487763353397,
+          "shell_centered_railed": false,
+          "shell_centered_raw_eh98_fsigma8": 0.30755847665075464,
+          "sigma_star_kms": 50.0
+        },
+        {
+          "centering_scope": "audit sensitivity, not a valid replacement likelihood",
+          "fisher_error": 0.01717252925852992,
+          "max_depth_hmpc": 180.0,
+          "n_cells": 1020,
+          "n_groups": 23592,
+          "railed": false,
+          "raw_eh98_fsigma8": 0.2987316443795844,
+          "shell_centered_railed": false,
+          "shell_centered_raw_eh98_fsigma8": 0.2950858919459358,
+          "sigma_star_kms": 50.0
+        },
+        {
+          "centering_scope": "audit sensitivity, not a valid replacement likelihood",
+          "fisher_error": 0.017363619004586876,
+          "max_depth_hmpc": 220.0,
+          "n_cells": 1144,
+          "n_groups": 28688,
+          "railed": false,
+          "raw_eh98_fsigma8": 0.3063312316000253,
+          "shell_centered_railed": false,
+          "shell_centered_raw_eh98_fsigma8": 0.3017334131009316,
+          "sigma_star_kms": 50.0
+        },
+        {
+          "centering_scope": "audit sensitivity, not a valid replacement likelihood",
+          "fisher_error": 0.018863516473194442,
+          "max_depth_hmpc": 330.0,
+          "n_cells": 1301,
+          "n_groups": 36896,
+          "railed": false,
+          "raw_eh98_fsigma8": 0.40154939562224684,
+          "shell_centered_railed": false,
+          "shell_centered_raw_eh98_fsigma8": 0.29316056093824705,
+          "sigma_star_kms": 50.0
+        },
+        {
+          "centering_scope": "audit sensitivity, not a valid replacement likelihood",
+          "fisher_error": 0.021697232766130194,
+          "max_depth_hmpc": 520.0,
+          "n_cells": 1388,
+          "n_groups": 38037,
+          "railed": false,
+          "raw_eh98_fsigma8": 0.48591100939251086,
+          "shell_centered_railed": false,
+          "shell_centered_raw_eh98_fsigma8": 0.291949141468834,
+          "sigma_star_kms": 50.0
+        }
+      ],
+      "inputs": [
+        {
+          "bytes": 5179298,
+          "path": "workdir/obs_bundle/pecvel/cf4_full/cf4_groups.npz",
+          "sha256": "sha256:3c0f2e1a5b56b7227abb5e187406810d7eb15e924aac69e9cb0ffc1343a811ad",
+          "status": "present"
+        },
+        {
+          "bytes": 1218676,
+          "path": "workdir/obs_bundle/pecvel/cf4_full/cf4_pv_variants.npz",
+          "sha256": "sha256:e3dfd734c133858892436a139eb0bd0ed916e3283db54d83dd7c0146d451d87b",
+          "status": "present"
+        }
+      ],
+      "production_output_modified": false,
+      "published_comparator": {
+        "central": 0.384,
+        "local_stat_plus_minus": [
+          0.054,
+          0.06
+        ],
+        "source": "locked initial CRAG: arXiv:2604.08314",
+        "total_plus_minus": [
+          0.116,
+          0.194
+        ]
+      },
+      "seed": 20260714,
+      "status": "EXECUTED",
+      "web_used": false
+    },
+    "hermitian_grf_reference": {
+      "claim_tier": "diagnostic_only",
+      "completed_at": "2026-07-13T17:15:21+00:00",
+      "configuration": {
+        "box_hmpc": 500.0,
+        "n_seeds": 16,
+        "ngrid": 32
+      },
+      "current_component_variance_mean": [
+        63934.217656502726,
+        64494.85926530012,
+        73487.5137552121
+      ],
+      "current_component_variance_sem": [
+        760.8371842038132,
+        1138.227617481572,
+        1364.465544820897
+      ],
+      "current_over_hermitian_reference": [
+        0.8244929190723078,
+        0.8346163778115218,
+        0.9839963698297672
+      ],
+      "delta_assessment": {
+        "disposition": "independent_reproduction_of_known_finding",
+        "maximum_claim_tier": "diagnostic_only",
+        "new_id": null,
+        "parent_prior_ids": [
+          "C2-K5-MOCKSIG-F1",
+          "GAP-06"
+        ]
+      },
+      "inputs": [
+        {
+          "bytes": 6791,
+          "path": "htt/obsstat/pv_forward_mocks.py",
+          "sha256": "sha256:48563bb308ffef034ba2934e6583dc8a8e93ab231f4b52c70b4a311b6e6b58f9",
+          "status": "present"
+        }
+      ],
+      "production_output_modified": false,
+      "reference_component_variance_mean": [
+        77543.68312639894,
+        77274.85462772065,
+        74682.70819731332
+      ],
+      "reference_component_variance_sem": [
+        2333.249893280923,
+        2549.1660411704493,
+        2293.346633070875
+      ],
+      "reference_construction": "real white noise -> rfftn -> P(k) scaling",
+      "seed": 20260714,
+      "source_contains_conjugate_symmetrization": false,
+      "status": "EXECUTED",
+      "web_used": false
+    },
+    "jwst_14_anchor_rerun": {
+      "adjudication": "The 14-anchor forecast mechanics rerun, but the committed artifact is stale and authoritative row provenance/shared calibration covariance are not closed.",
+      "authoritative_raw_manifest_status": "missing",
+      "claim_tier": "diagnostic_only",
+      "committed_stale_n": 9,
+      "committed_stale_precision_gain": 1.0407554363160498,
+      "completed_at": "2026-07-13T17:15:54+00:00",
+      "crossmatch_rerun_n": 14,
+      "delta_assessment": {
+        "allowed_reasons": [
+          "regression",
+          "downstream_propagation"
+        ],
+        "candidate_new_ids": [
+          "D-JWST-ACQUISITION-01",
+          "D-JWST-COVARIANCE-02"
+        ],
+        "maximum_claim_tier": "survey_design_forecast_only",
+        "parent_prior_ids": [
+          "C10-K1-JWST-F2",
+          "GAP-06"
+        ]
+      },
+      "downloader_static_findings": {
+        "arxiv_landing_targets_count": 2,
+        "contains_dead_iop_endpoint_from_locked_crag": true,
+        "network_recheck_after_web_lock": false
+      },
+      "forecast_rerun_n": 14,
+      "forecast_rerun_precision_gain": 1.0599865245651692,
+      "inputs": [
+        {
+          "bytes": 5179298,
+          "path": "workdir/obs_bundle/pecvel/cf4_full/cf4_groups.npz",
+          "sha256": "sha256:3c0f2e1a5b56b7227abb5e187406810d7eb15e924aac69e9cb0ffc1343a811ad",
+          "status": "present"
+        },
+        {
+          "bytes": 3522,
+          "path": "docs/generated/jwst_cf4_anchors.json",
+          "sha256": "sha256:5f9467f8ec06e7547f43a56fab1953641ce3932c1cb71109f7271b00028f4ce8",
+          "status": "present"
+        },
+        {
+          "bytes": 2435,
+          "path": "dl_pipeline/data/jwst_distances_seed.csv",
+          "sha256": "sha256:d02e7c988592f0217d968b59385d6494c7288654cd7620c43005c2cdb658b5c8",
+          "status": "present"
+        },
+        {
+          "bytes": 3777,
+          "path": "dl_pipeline/scripts/download_jwst_anchors.py",
+          "sha256": "sha256:e77a5caf66522868cd1a9a6c36c9c6d4a3aae274d1d2c825c3277a09e8f5c823",
+          "status": "present"
+        }
+      ],
+      "production_output_modified": false,
+      "seed": 20260714,
+      "shared_calibration_covariance_sensitivity": [
+        {
+          "precision_gain": 1.0599865245651692,
+          "shared_distance_modulus_sigma_mag": 0.0
+        },
+        {
+          "precision_gain": 1.0560168940273102,
+          "shared_distance_modulus_sigma_mag": 0.01
+        },
+        {
+          "precision_gain": 1.0489182804372228,
+          "shared_distance_modulus_sigma_mag": 0.03
+        },
+        {
+          "precision_gain": 1.0470705400530727,
+          "shared_distance_modulus_sigma_mag": 0.05
+        }
+      ],
+      "status": "EXECUTED_WITH_PROVENANCE_BLOCKER",
+      "web_used": false
+    },
+    "k6_stencil_grid_convergence": {
+      "adjudication": "The second-order value is a stencil-dependent upper bound on potential-flow reconstruction curl, not a physical vorticity measurement.",
+      "claim_tier": "diagnostic_only",
+      "completed_at": "2026-07-13T17:15:53+00:00",
+      "delta_assessment": {
+        "disposition": "executes_prior_prescribed_convergence",
+        "maximum_claim_tier": "diagnostic_upper_bound",
+        "new_id": null,
+        "parent_prior_ids": [
+          "C6-K6-CURL-F1",
+          "C6-K6-CURL-F2",
+          "GAP-06"
+        ]
+      },
+      "grid_convergence": [
+        {
+          "cell_mpc": 7.8125,
+          "fourth_order": {
+            "curl_over_div": 0.0006816686597436134,
+            "curl_rms": 0.024396743241869138,
+            "div_rms": 35.789738743519685
+          },
+          "grid_n": 128,
+          "second_order": {
+            "curl_over_div": 0.00931310802734817,
+            "curl_rms": 0.3255457514390885,
+            "div_rms": 34.95565073261423
+          }
+        },
+        {
+          "cell_mpc": 15.625,
+          "fourth_order": {
+            "curl_over_div": 0.009447052045917856,
+            "curl_rms": 0.32325510241597266,
+            "div_rms": 34.21756340970448
+          },
+          "grid_n": 64,
+          "second_order": {
+            "curl_over_div": 0.03703724300235946,
+            "curl_rms": 1.1722092084474651,
+            "div_rms": 31.649472623348057
+          }
+        },
+        {
+          "cell_mpc": 31.25,
+          "fourth_order": {
+            "curl_over_div": 0.09224937154292563,
+            "curl_rms": 2.4767829328808944,
+            "div_rms": 26.84877838683588
+          },
+          "grid_n": 32,
+          "second_order": {
+            "curl_over_div": 0.13604397305838617,
+            "curl_rms": 3.1050030693795825,
+            "div_rms": 22.82352536151678
+          }
+        }
+      ],
+      "inputs": [
+        {
+          "bytes": 167773716,
+          "path": "workdir/raw/cf4/CF4pp_mean_std_grids.npz",
+          "sha256": "sha256:78c0515c8330066a034f5e8afb3663e6c81ddf033db302a921c662344639bc91",
+          "status": "present"
+        },
+        {
+          "bytes": 3105,
+          "path": "htt/obsstat/velocity_field_curl.py",
+          "sha256": "sha256:f6aa025e5ed0f7a7b5c47eee2b333f4af26c2d5203cb4b99c9139d5acf978c65",
+          "status": "present"
+        }
+      ],
+      "native_grid_stencil_ratio": 13.66222121881176,
+      "production_output_modified": false,
+      "seed": 20260714,
+      "sphere_radius_mpc": 200.0,
+      "status": "EXECUTED",
+      "web_used": false
+    }
+  },
+  "owner": "COMMON",
+  "production_outputs_modified": false,
+  "schema": "htt.jcap_prd.audit_diagnostics.v1",
+  "seed": 20260714,
+  "updated_at": "2026-07-13T17:15:54+00:00"
+}

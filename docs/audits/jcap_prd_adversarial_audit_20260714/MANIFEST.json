@@ -1,0 +1,1376 @@
+{
+  "allowed_use": "external_audit",
+  "artifact_id": "jcap_prd_adversarial_audit_20260714",
+  "artifact_mode": "governance_diagnostic",
+  "artifact_path": "docs/audits/jcap_prd_adversarial_audit_20260714/MANIFEST.json",
+  "baseline_head": "8af39b36c1d5ed4f9b16f0bc71dbecd8b22548d4",
+  "bundle_kind": "common_contract",
+  "caveats": [
+    "Audit findings do not repair production scientific outputs.",
+    "Prior findings remain KNOWN_OPEN unless a later production PR closes them.",
+    "Counterfactual family and geometry candidates are hypothesis-only and public_use=false.",
+    "External-transfer products remain transfer-conditional and are not native solver results.",
+    "Shared evidence packets create correlated viewpoints, not independent replications."
+  ],
+  "claim_tier": "diagnostic_only",
+  "config_hash": "sha256:daa55952397d6115da91908efb4456273d4d012ce29ef6150862226e11d61c0b",
+  "counterfactual_contract": {
+    "allowed_use": "internal_only",
+    "artifact_mode": "internal_exploratory",
+    "claim_tier": "exploratory",
+    "hypothesis_only": true,
+    "public_use": false
+  },
+  "file_count": 262,
+  "files": [
+    {
+      "bytes": 644,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/.gitattributes",
+      "sha256": "sha256:e88246e2ff8dd25fafbeebc2445dd7be4b22ef1b7a9470161e32bfd7cae69cd7"
+    },
+    {
+      "bytes": 1162,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/WEB_LOCK.json",
+      "sha256": "sha256:51bb7e2e26111ff615126e3586ddcc230c6ee369ea9a47f6de2265f0fa2f5e1d"
+    },
+    {
+      "bytes": 1074,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/blind_referees/RUBRIC.md",
+      "sha256": "sha256:b7a3863a237cf91501f87867f8fb219878d2f87091d74a203e24a0a13e5fa4b7"
+    },
+    {
+      "bytes": 1120,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/blind_referees/data_referee_prompt.md",
+      "sha256": "sha256:b014c50b21312af2621cd10de52e828830251b3c55f5ec5876f94967d07a4f71"
+    },
+    {
+      "bytes": 13197,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/blind_referees/data_referee_response.md",
+      "sha256": "sha256:f8ff09ed737ed4752cd39195e51383a9b65b936fc80131c16d07dd3bbacf4d95"
+    },
+    {
+      "bytes": 1060,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/blind_referees/repro_referee_prompt.md",
+      "sha256": "sha256:8cfe1d3afe1c208cacbf7b33a4302b2b6da583232840d28ef219aa3f2d2dbc8a"
+    },
+    {
+      "bytes": 15082,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/blind_referees/repro_referee_response.md",
+      "sha256": "sha256:f959e2127a1cbc8a8023f51f464e177dc813d6d0bf12bfa773e75338aea8f047"
+    },
+    {
+      "bytes": 914,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/blind_referees/theory_referee_prompt.md",
+      "sha256": "sha256:a4f9be3682927a2960ad3b59a22dbc02db594164deeb01f98d9eb92d7610ffd2"
+    },
+    {
+      "bytes": 16363,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/blind_referees/theory_referee_response.md",
+      "sha256": "sha256:2606dbfdaf662542c3672397a456f7ed648ada26ef4dea036bd1b4d5d51ffe64"
+    },
+    {
+      "bytes": 1310,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/code_wave/numerical_analyst_prompt.md",
+      "sha256": "sha256:122a8a1969a43c64df4f1861ec94b95feee674b51b1b2a1413db917a9ac7ab8b"
+    },
+    {
+      "bytes": 17560,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/code_wave/numerical_analyst_response.md",
+      "sha256": "sha256:711bdffb6684c9146ba7c6a7dd33191583d9afaa36686e91277c3541b4f5e3d7"
+    },
+    {
+      "bytes": 1302,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/code_wave/oracle_provenance_prompt.md",
+      "sha256": "sha256:1b157d846ec8110f0f10ad5b503d639ad25206cce803cb7c8da0071bd1ce59b8"
+    },
+    {
+      "bytes": 16385,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/code_wave/oracle_provenance_response.md",
+      "sha256": "sha256:3c97a60861de7418a5901b6abe583c543902c984186f574c7f49ffeac646e528"
+    },
+    {
+      "bytes": 1406,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/code_wave/reproducibility_prompt.md",
+      "sha256": "sha256:bb7606d82de476514ca7475c6bcf2c83a072970e09ccf5ec290c6ad2bc3e95e6"
+    },
+    {
+      "bytes": 15252,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/code_wave/reproducibility_response.md",
+      "sha256": "sha256:dd8e7cf5f77ec67d791604c68d92b7ec6bda997263ec408967b0e87969f6ef43"
+    },
+    {
+      "bytes": 1019,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/cross_debate/formalism_statistics_prompt.md",
+      "sha256": "sha256:4560372188f278e782501ba674bba6a1f46ba313eb950ea9b42d428292efdbe4"
+    },
+    {
+      "bytes": 16132,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/cross_debate/formalism_statistics_response.md",
+      "sha256": "sha256:bb792cd48b4ce51b8da172dcc70061813f7f20b2ba440769cfb29e3a73c1c836"
+    },
+    {
+      "bytes": 974,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/cross_debate/integrity_novelty_prompt.md",
+      "sha256": "sha256:f160eb810f1b0f3c4d9ffcd785d8aede060b1b892aa3fc8b1e7fa280da96c7fc"
+    },
+    {
+      "bytes": 21453,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/cross_debate/integrity_novelty_response.md",
+      "sha256": "sha256:675ebdb5007ca0770ad10f3843554a9f2a04f57f86a089a25b6e867386e1e546"
+    },
+    {
+      "bytes": 1017,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/cross_debate/physics_observation_prompt.md",
+      "sha256": "sha256:a396e433973e1aed4ccb7d957cec99c765303fbd22961adfa48d251c7a7d44fb"
+    },
+    {
+      "bytes": 15318,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/cross_debate/physics_observation_response.md",
+      "sha256": "sha256:8b8c196916d707c2f97816ab85ab63d724343bfccc986b86aa603eb0c15e2568"
+    },
+    {
+      "bytes": 1148,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/data_wave/cf4_observer_prompt.md",
+      "sha256": "sha256:973dda8fd4daa2c7c90ba38aea5363c2c0edc7a466476e9be4bd536805c50c07"
+    },
+    {
+      "bytes": 17238,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/data_wave/cf4_observer_response.md",
+      "sha256": "sha256:0a935fbbf8fed7ccdc56fc9d22240e13e3e17e6ce6bd863dbc29d11ed5020df9"
+    },
+    {
+      "bytes": 1152,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/data_wave/cmb_observer_prompt.md",
+      "sha256": "sha256:71c8c984985397cb603cb78e12d44d80f545bd339414881208392ad944c4cae3"
+    },
+    {
+      "bytes": 14782,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/data_wave/cmb_observer_response.md",
+      "sha256": "sha256:28b7303f0b509430f8ef7bf3715349deba5547e38df12c64ad5f84f02fb0c424"
+    },
+    {
+      "bytes": 1232,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/data_wave/survey_observer_prompt.md",
+      "sha256": "sha256:93d07ab3237993c82d19190ecc2a7265028a70d501c6db28e4ca3897a988e9e2"
+    },
+    {
+      "bytes": 13666,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/data_wave/survey_observer_response.md",
+      "sha256": "sha256:ee02e93cdbc5f41d39601dfd52bb20f727300c4a0b9688466baa0a8080556789"
+    },
+    {
+      "bytes": 510,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/initial_crag/observations_prompt.md",
+      "sha256": "sha256:79188a2137a6faba2e9ba85f1c08f293b8093fe3fe80d02dc462722cdd697716"
+    },
+    {
+      "bytes": 13043,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/initial_crag/observations_response.md",
+      "sha256": "sha256:c218b9a7c212378b0895011f12b5c051f3c16c8a7023f12f4af0aa7afcbaea81"
+    },
+    {
+      "bytes": 555,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/initial_crag/statistics_pv_prompt.md",
+      "sha256": "sha256:c2bd2375e81e13b880123fa960f05e5d94ad99b0645f4fadb58cf03523f0c30c"
+    },
+    {
+      "bytes": 23688,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/initial_crag/statistics_pv_response.md",
+      "sha256": "sha256:2df5b76754d851c6c1ce3581254b9267e56a4d6e9a3b4584e6e195402bfd5f80"
+    },
+    {
+      "bytes": 519,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/initial_crag/theory_prompt.md",
+      "sha256": "sha256:5c5d4cb2b6ef1a07ad43d61c4dd294e95a33583450625fe88f7c1e3579380e7f"
+    },
+    {
+      "bytes": 14500,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/initial_crag/theory_response.md",
+      "sha256": "sha256:b873bd12eb5da7582a19da21192c95fb6f928b649b77454b71059cadd0ab212f"
+    },
+    {
+      "bytes": 996,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/pr117_rereview/integration_provenance_followup_prompt.md",
+      "sha256": "sha256:2c70001a3c44b5dabbbb72306fafb91ffc0ecd29fed3ef43247ea4da7c75e5fc"
+    },
+    {
+      "bytes": 7709,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/pr117_rereview/integration_provenance_followup_response.md",
+      "sha256": "sha256:a7aa55d9b4b5d4a4ff4169e751aa8008f1595b049e35010b39607b6bd9c70f81"
+    },
+    {
+      "bytes": 953,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/pr117_rereview/schema_harness_followup_prompt.md",
+      "sha256": "sha256:5fe3c40c80feed206995455c7d539c6ebe148dbe7c778613d0452eb43f08a868"
+    },
+    {
+      "bytes": 12129,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/pr117_rereview/schema_harness_followup_response.md",
+      "sha256": "sha256:f708766059d133e55a8076685984ad05084d16a1b67525964f572f7d296ce6e6"
+    },
+    {
+      "bytes": 1008,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/pr117_rereview/science_dedup_followup_prompt.md",
+      "sha256": "sha256:9cb63f701e5755e19264eab9c1cec6240819fcc1f13f5f4208139ef34271e487"
+    },
+    {
+      "bytes": 9245,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/pr117_rereview/science_dedup_followup_response.md",
+      "sha256": "sha256:b9a49e844ca2efcf1dba0d334c31e73d66d48e01c9560cf0a4396fd5f89f98de"
+    },
+    {
+      "bytes": 652,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/pr117_review/integration_provenance_prompt.md",
+      "sha256": "sha256:99cac5035c29bce4e013e0954955728dbe492e915140336043fdafde89bb1bff"
+    },
+    {
+      "bytes": 5645,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/pr117_review/integration_provenance_response.md",
+      "sha256": "sha256:9b711632e851659f097c4d05c9b9169813e174fadc116ab3a3ae083cb066b7c9"
+    },
+    {
+      "bytes": 712,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/pr117_review/schema_harness_prompt.md",
+      "sha256": "sha256:69a01c7e72b0a52cc0278b60dac4ecec3390dfaab5f33fe440588f9c8818509e"
+    },
+    {
+      "bytes": 9787,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/pr117_review/schema_harness_response.md",
+      "sha256": "sha256:5c6985ff7be502f2ef06de144f35f0b13802658d8e77c621cdbb13ec04a046b1"
+    },
+    {
+      "bytes": 689,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/pr117_review/science_dedup_prompt.md",
+      "sha256": "sha256:64ded84f4a1e2e17f431e4f8fb2b8e3fc7b382ee9a27301645389de7b783b008"
+    },
+    {
+      "bytes": 8850,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/pr117_review/science_dedup_response.md",
+      "sha256": "sha256:57f05d1bec0bc5857f2d5a2ceb0636b355aa636d03b25a3c93e8faa33557d37e"
+    },
+    {
+      "bytes": 2091,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/statistics_wave/bayesian_ppc_prompt.md",
+      "sha256": "sha256:617e2f0f930d16648bbef554d3cc531425ecd5fc1c5ef2778c02ceac07c3fc01"
+    },
+    {
+      "bytes": 17700,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/statistics_wave/bayesian_ppc_response.md",
+      "sha256": "sha256:49f83603ff0dc47d8ebdccad6b022d2ed96854e7d31fa49b29bf7d314076ccd3"
+    },
+    {
+      "bytes": 1984,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/statistics_wave/frequentist_null_prompt.md",
+      "sha256": "sha256:b9ae65aaafe819737272514aa71f20716bac5653a8308d636e8a5fae874b1ac3"
+    },
+    {
+      "bytes": 28751,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/statistics_wave/frequentist_null_response.md",
+      "sha256": "sha256:79175754c4ad6cfee3b916af54f838f1839af488a55c1077871b60f60ebb2a19"
+    },
+    {
+      "bytes": 2123,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/statistics_wave/partial_identification_prompt.md",
+      "sha256": "sha256:cfc1fadcd2ec684d36304d7d14a9bbd56f8cdae31360dfa5d6fdcf97cc059674"
+    },
+    {
+      "bytes": 16783,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/statistics_wave/partial_identification_response.md",
+      "sha256": "sha256:bdd67f4b75d96e9d2230c4a1277a8c422148be875765232b91cd7785d4632d75"
+    },
+    {
+      "bytes": 735,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/theory_wave/anisotropy_advocate_prompt.md",
+      "sha256": "sha256:88975981d726efa2e398efd87ba7ca6cb607124dfa0d00e30cc0989045d7cded"
+    },
+    {
+      "bytes": 26110,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/theory_wave/anisotropy_advocate_response.md",
+      "sha256": "sha256:f0c355439864222555e5f7fa8ac60d524dd5fc238026af8859bb26028caa1fcf"
+    },
+    {
+      "bytes": 513,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/theory_wave/gr_convention_auditor_prompt.md",
+      "sha256": "sha256:242bc0edc71ab83b0e06c6a567c8ba0b79b48932032680a6a01e2d405f8e8ad1"
+    },
+    {
+      "bytes": 14507,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/theory_wave/gr_convention_auditor_response.md",
+      "sha256": "sha256:513ed8ae14fa778cc73f440d8cecb4e9a407acec026b68e26ef6282250d084e7"
+    },
+    {
+      "bytes": 543,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/theory_wave/isotropy_advocate_prompt.md",
+      "sha256": "sha256:7d9001b6a09ef373a759be3dd42b6231fd2eaac2ca87c29ed35afbb2e0405efc"
+    },
+    {
+      "bytes": 23145,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/agents/theory_wave/isotropy_advocate_response.md",
+      "sha256": "sha256:77bb484ad182dae7cb278effe274375b458956abc31991f2bb15cea9f87c8b5f"
+    },
+    {
+      "bytes": 47380,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/atomic_finding_ledger.json",
+      "sha256": "sha256:6e88a6f6c4f95e5154c89e939230c94854b11a8430a64c28ccb339d8c4ab6feb"
+    },
+    {
+      "bytes": 18669,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/coverage_matrix.json",
+      "sha256": "sha256:8d53a8e12524e4791466f27c1eb2b5a358b5de43afac6a82ffbfb971d2f95916"
+    },
+    {
+      "bytes": 49230,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/debate_bundle.json",
+      "sha256": "sha256:22987ad78f702d3b127c3583118ee0040043c14618c56fe1cf5a078f2b9db39d"
+    },
+    {
+      "bytes": 24609,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/diagnostic_results.json",
+      "sha256": "sha256:4c87f984f69783ecc6759fbc32f26ff4b64a6af8e35a75672622f006a45bd248"
+    },
+    {
+      "bytes": 1040,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/environment.json",
+      "sha256": "sha256:c570fefda92aa0e8cc7b4a832054d67602955abeaeeb59de5d2d01c665e0b35e"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_act.stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 2301,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_act.stdout.txt",
+      "sha256": "sha256:87c01bb606d11c03b3fce3f5cc351b2f9747960081734b534f1b9566016e8cb4"
+    },
+    {
+      "bytes": 789,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_act.time.txt",
+      "sha256": "sha256:bbd30b2310d4ca02980e0c4c60e9ccdf67edc1430c62973cfb5d7b4e6170cd98"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_cf4.stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 4814,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_cf4.stdout.txt",
+      "sha256": "sha256:bd491154e5aa954064a9f3b159abc93cf1371c8b0292204c51ab56334bae7c99"
+    },
+    {
+      "bytes": 798,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_cf4.time.txt",
+      "sha256": "sha256:6fb3fa10e0ced6edfe66bd2de6a7c453a19ba0274e2e323e1a6c5a417b7286a1"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_desi.stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 3148,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_desi.stdout.txt",
+      "sha256": "sha256:5348ec3b379942a1977018a68cacf973ef4fbcb3ca32f49ce08114ee9050bbb6"
+    },
+    {
+      "bytes": 806,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_desi.time.txt",
+      "sha256": "sha256:34deedc99b5832480b99d70ace7abb68d97accec81bac8d9b133339df46d2e6d"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_fsigma.stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 4446,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_fsigma.stdout.txt",
+      "sha256": "sha256:046693294b05ded5642962c0c2db632d42a6a9d926ea263e89f7c172e27d069d"
+    },
+    {
+      "bytes": 802,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_fsigma.time.txt",
+      "sha256": "sha256:30fb4c1e7e91c4147e7a1fcb361fd933ffcc1ea241567dbeb2140dc0c5f3715c"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_fsigma_verified_inputs.stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 4446,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_fsigma_verified_inputs.stdout.txt",
+      "sha256": "sha256:8389aa735824a0b981f20fc0ad0897851dfc5aae958cfeb86b88c1fcbe5f6dde"
+    },
+    {
+      "bytes": 802,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_fsigma_verified_inputs.time.txt",
+      "sha256": "sha256:c4ff360cc393252c1144e41255c09e9747bdb53b61ef16266b8fc1c301e1df77"
+    },
+    {
+      "bytes": 477,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_grf.stderr.txt",
+      "sha256": "sha256:5ce1dd4c5253e60bfc32dd6944abbf75dbcc6e14305b2c90920250ab54bc1cf1"
+    },
+    {
+      "bytes": 1415,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_grf.stdout.txt",
+      "sha256": "sha256:c6843b6715dc0db1389fe884cec415f9c84a3182d5d71d1daabfa04fc34ce7d2"
+    },
+    {
+      "bytes": 794,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_grf.time.txt",
+      "sha256": "sha256:ffb11d6ca186a18faaaccce9b5292cefafdedc7c4e1583fa220ed1362cce2006"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_grf_axes_fixed.stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 1415,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_grf_axes_fixed.stdout.txt",
+      "sha256": "sha256:9a507d7bb7a3227e7c2b709a281a22b62ef48cb330975995e8d26a568ffbedc1"
+    },
+    {
+      "bytes": 794,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_grf_axes_fixed.time.txt",
+      "sha256": "sha256:43194cd38eccc05252e3b7ebcd8513eec2955081382e5946cb35dc8d82689ab1"
+    },
+    {
+      "bytes": 477,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_grf_contract_refresh.stderr.txt",
+      "sha256": "sha256:26612e28886e1ac0b57f8816a4b815efb1948678b786212977c3df875aacfc13"
+    },
+    {
+      "bytes": 1415,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_grf_contract_refresh.stdout.txt",
+      "sha256": "sha256:b024de7317472e1de0c7bf18a74a4200028d8457f37dd76a0d639d79abf505fd"
+    },
+    {
+      "bytes": 794,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_grf_contract_refresh.time.txt",
+      "sha256": "sha256:a3dd8f3a8c6016ff580bed3392dd3774ecdd8f19b214485e9a0363b6e82591ae"
+    },
+    {
+      "bytes": 1650,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_jwst.stderr.txt",
+      "sha256": "sha256:9079c6b47df5c25e88cc6040579cc362b6cf798b0f8f0e2257b0d70fdf0aa0f3"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_jwst.stdout.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 832,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_jwst.time.txt",
+      "sha256": "sha256:62c3ea8a6a6fb75aa40cb249b27ac22c566fef4f2cb17fdc8bc55e84f5d2f364"
+    },
+    {
+      "bytes": 837,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_jwst_retry1.stderr.txt",
+      "sha256": "sha256:05511cf894abcdb504c037eeeab9e7ad219272dc64b5d0405385c99d010bfc3e"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_jwst_retry1.stdout.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 835,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_jwst_retry1.time.txt",
+      "sha256": "sha256:ff62374edf0f58da56958dc3a39b6c29477e92176dfa18907e0ea08f1094da07"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_jwst_retry2.stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 2480,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_jwst_retry2.stdout.txt",
+      "sha256": "sha256:2a966fdd8cd3d1825a0ca7a0542be8ee8557697c0ed23ed6b957a1e01d0f766c"
+    },
+    {
+      "bytes": 799,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_jwst_retry2.time.txt",
+      "sha256": "sha256:33d88ec4040e7420ffcbf33ac2deaa3a86794db39c50481940868c972f11e5fb"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_k6.stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 2260,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_k6.stdout.txt",
+      "sha256": "sha256:2a31e93433500af468135d785904ef1eab6b9179309df23898ceddef5c3dcacf"
+    },
+    {
+      "bytes": 794,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_k6.time.txt",
+      "sha256": "sha256:7cc216a4a97037f0529776c3188e3181b1551bacd31f8af6fc2f9d9ba6106b04"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/finalhash_act.stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 2301,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/finalhash_act.stdout.txt",
+      "sha256": "sha256:ecb5e70797dce766ca7f87df4c5c7d2e15ce1545f2e311cc3a26501f931e016c"
+    },
+    {
+      "bytes": 794,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/finalhash_act.time.txt",
+      "sha256": "sha256:991f04c3e4f7e0603213fcccfecc6e8d06d8cf4eb79aa6869dfe63647e676382"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/finalhash_cf4.stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 4815,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/finalhash_cf4.stdout.txt",
+      "sha256": "sha256:8af3859f8be8d0c0137ef06c4b7d5200587dd7c060e3f6761d7fa000d72c1147"
+    },
+    {
+      "bytes": 800,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/finalhash_cf4.time.txt",
+      "sha256": "sha256:aab4714982e9adfded628c6b7391bb01899397c83a573b88cee32160fab33ab3"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/finalhash_desi.stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 3148,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/finalhash_desi.stdout.txt",
+      "sha256": "sha256:eb97e12ae03e7136e2e7b0f9fd213abe591e7444e2dce9d97af4cfd563f1ed41"
+    },
+    {
+      "bytes": 807,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/finalhash_desi.time.txt",
+      "sha256": "sha256:b88c433825d3bae0af6cd6c31e2218b138dea7655c5a7e90a8c548a85284de12"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/finalhash_fsigma.stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 4446,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/finalhash_fsigma.stdout.txt",
+      "sha256": "sha256:4ef15de0a6a6e4fcec65cb61cff4b79586a80f6a55e4ec040b095af6cb97d24e"
+    },
+    {
+      "bytes": 805,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/finalhash_fsigma.time.txt",
+      "sha256": "sha256:8b6699d08cfe09d153792fa70bb45cb05e72c3c6514680394684461156449cde"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/finalhash_grf.stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 1415,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/finalhash_grf.stdout.txt",
+      "sha256": "sha256:b3810d900ac9a5340f1cb0eb087210ea4d3f70c3543bdbe2c5710a06da9e2a29"
+    },
+    {
+      "bytes": 794,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/finalhash_grf.time.txt",
+      "sha256": "sha256:212a7504f7e89c9cf049b5973c105efdeb44c09874d3a92d4cc68eae45d10c25"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/finalhash_jwst.stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 2480,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/finalhash_jwst.stdout.txt",
+      "sha256": "sha256:ad0db852339d5d8395ae70b609b5b14f40ffe38702ab08bac216c9292fd7ead9"
+    },
+    {
+      "bytes": 801,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/finalhash_jwst.time.txt",
+      "sha256": "sha256:8e3a65476885ecdb0d8ef928206c7644f10ad41dd2c6569118ea6f3d37490da8"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/finalhash_k6.stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 2260,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/finalhash_k6.stdout.txt",
+      "sha256": "sha256:e235f174897e350084162e1128331bbb189d8fae7b0edad8029e12c51ad1abd1"
+    },
+    {
+      "bytes": 794,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/finalhash_k6.time.txt",
+      "sha256": "sha256:bdacd6207085ceeec764ef387763ef3d62dc88ef7f5b70b37a0a6ec4c43c1b9a"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_audit_contract_tests.stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 1720,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_audit_contract_tests.stdout.txt",
+      "sha256": "sha256:d0710ce3bf0b97cac8c15b6d4fcd5b5ce71e29087af00b6b9987a2141aca99ec"
+    },
+    {
+      "bytes": 861,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_audit_contract_tests.time.txt",
+      "sha256": "sha256:80d22ab0b15de0868a2c98a11a0f95bd7936c44f25dae8623144af0224b6387a"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_audit_contract_tests_after_manifest_refresh.stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 119,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_audit_contract_tests_after_manifest_refresh.stdout.txt",
+      "sha256": "sha256:27bb03f3219c8f6f017f9971cb75f3a4f3142f553975ac5e6b265300564ae055"
+    },
+    {
+      "bytes": 915,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_audit_contract_tests_after_manifest_refresh.time.txt",
+      "sha256": "sha256:e7fb7b006a72642e05bab84c3509fd55ed8473049a4267f4fdb01e2bb98041a0"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_build_debate.stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 30,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_build_debate.stdout.txt",
+      "sha256": "sha256:127d0ebe8ee9c212ef478b59cb60c4118be0ae94e8ea9da55918da8397fb76ad"
+    },
+    {
+      "bytes": 789,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_build_debate.time.txt",
+      "sha256": "sha256:49e30b5f90491f53b55bd20f222388c9d3818fbf03226fa4012c14885a3a5f2f"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_build_debate_final.stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 30,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_build_debate_final.stdout.txt",
+      "sha256": "sha256:127d0ebe8ee9c212ef478b59cb60c4118be0ae94e8ea9da55918da8397fb76ad"
+    },
+    {
+      "bytes": 788,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_build_debate_final.time.txt",
+      "sha256": "sha256:74f935a2092c976efacd76a760bcf92acc5175181459be56fe68cf81c4901839"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_build_debate_post_review.stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 30,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_build_debate_post_review.stdout.txt",
+      "sha256": "sha256:75304b93b9cfcd1b5640cf5ec0fbd74fb55a34bde23580f1559fd9f4bc08020f"
+    },
+    {
+      "bytes": 787,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_build_debate_post_review.time.txt",
+      "sha256": "sha256:0776ac012cc0bc1aeb90a60b94c272f3cd856cb81a3c1d0ed136156dd5f85747"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_build_debate_receipt_fix.stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 30,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_build_debate_receipt_fix.stdout.txt",
+      "sha256": "sha256:127d0ebe8ee9c212ef478b59cb60c4118be0ae94e8ea9da55918da8397fb76ad"
+    },
+    {
+      "bytes": 788,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_build_debate_receipt_fix.time.txt",
+      "sha256": "sha256:d4320b07f53a9a2bd1954ac8134bf20215a923ad3632125dfeccfdf9add05445"
+    },
+    {
+      "bytes": 122,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_clean_cwd_import_probe.stderr.txt",
+      "sha256": "sha256:115a0783435c8ad05d57ef608b91653601cff844997573965a35a908a08e0730"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_clean_cwd_import_probe.stdout.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 883,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_clean_cwd_import_probe.time.txt",
+      "sha256": "sha256:617cfc1f4f693e908a962c921003cfd5299eb9403922d3466a9d4a93bf4c68dd"
+    },
+    {
+      "bytes": 122,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_clean_cwd_import_probe_verified_inputs.stderr.txt",
+      "sha256": "sha256:115a0783435c8ad05d57ef608b91653601cff844997573965a35a908a08e0730"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_clean_cwd_import_probe_verified_inputs.stdout.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 883,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_clean_cwd_import_probe_verified_inputs.time.txt",
+      "sha256": "sha256:1777fa3da431d64a8c9a5bf04cdc121ba1cb5a7e5609b5662f5820338b24774d"
+    },
+    {
+      "bytes": 793,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_closeout_collect/resource.time.txt",
+      "sha256": "sha256:fd1c66c5c5d9248a5b1a63976a95cca4e2f93ab630c9b2e26cd09516a744a9b0"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_closeout_collect/stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 797018,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_closeout_collect/stdout.txt",
+      "sha256": "sha256:d95aff4f1e58f99b677eedad65a7bd0c5ff4ba8e106a9897579e624d420e7e91"
+    },
+    {
+      "bytes": 841,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_closeout_contract_preseal/resource.time.txt",
+      "sha256": "sha256:62233af6966f499365d08a55aad092b8ed88bbb5d3125dc2a7f9031d8ec95538"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_closeout_contract_preseal/stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 113,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_closeout_contract_preseal/stdout.txt",
+      "sha256": "sha256:a4b9633fae72f68fac8bd271f2256d56018ce62d092fbe72e7e4cdb0e4bdd0e1"
+    },
+    {
+      "bytes": 810,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_closeout_dag/resource.time.txt",
+      "sha256": "sha256:2ceefdc61aa826a00575e36b81fbd674cbfadf60b187e4c30c351c3a2ee8dfd8"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_closeout_dag/stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 495,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_closeout_dag/stdout.txt",
+      "sha256": "sha256:7a3383b010d808b7bbfbca828266ec83e59422e462d302b1865a17d7ef3da2c6"
+    },
+    {
+      "bytes": 730,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_closeout_diff_check/resource.time.txt",
+      "sha256": "sha256:04d4957f7a3db04c011ac191d65806ec87de23cdd784377cc778ad7b4db38674"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_closeout_diff_check/stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_closeout_diff_check/stdout.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 1126,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_closeout_ownership_transfer/resource.time.txt",
+      "sha256": "sha256:07128fcc8f1ed8b5c12aa5581bd213c27a272ea44244d5d48338379cdf4a126e"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_closeout_ownership_transfer/stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 179,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_closeout_ownership_transfer/stdout.txt",
+      "sha256": "sha256:7b0c022ea77e1cea3aea810279479034262f6b677d15c3039f24b14811fb4183"
+    },
+    {
+      "bytes": 784,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_closeout_smoke/resource.time.txt",
+      "sha256": "sha256:7ebb863231119b95c2b1d3d11cd05a8e10d745521441f1e8039deb72b4b278a9"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_closeout_smoke/stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 115,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_closeout_smoke/stdout.txt",
+      "sha256": "sha256:bf780e2dadd4ab5559b09f8db004712f761474241f8dd6dc9f63d99587f3d210"
+    },
+    {
+      "bytes": 821,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_closeout_vendor/resource.time.txt",
+      "sha256": "sha256:530acb180782659b87a46d7136c40a604cd3697388f5fd188ec959ff74c13a2b"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_closeout_vendor/stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 98,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_closeout_vendor/stdout.txt",
+      "sha256": "sha256:fc04c4ed459b92d32a3835538d313386aceee93bf4d005bf5bb81449e34239eb"
+    },
+    {
+      "bytes": 788,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_closure_debate/resource.time.txt",
+      "sha256": "sha256:4f2ff90acec4124bc05503dc5c3cb902fa7bf16b9becc7f63285b65a3c557e3b"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_closure_debate/stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 30,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_closure_debate/stdout.txt",
+      "sha256": "sha256:2f3dd7adbb1b0a22a3bb98bb9ad24d8c906298a761ae6fc5be9847f643477ec9"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_collect_only.stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 796089,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_collect_only.stdout.txt",
+      "sha256": "sha256:e1bc2bafa20106a2bc9aaeaa624e08e7e3e379ac4cc61b57a2e4a9ed18ab8aae"
+    },
+    {
+      "bytes": 790,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_collect_only.time.txt",
+      "sha256": "sha256:6a373dea614fd56c9ce5d5b33c23207854141c5e5c73eee3ac5c9c29c54d214c"
+    },
+    {
+      "bytes": 323,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_current_figure_manifest_check.stderr.txt",
+      "sha256": "sha256:ecb4fbb0a180c629691f1aa0308f8d68a91a08a93d64ab803f33e5573987bacd"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_current_figure_manifest_check.stdout.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 832,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_current_figure_manifest_check.time.txt",
+      "sha256": "sha256:2d665922cf55a4a4eeeaa861d14127a686e909a8c04169a4d6ddad5cca9aab1c"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_external_package_check.stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 95,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_external_package_check.stdout.txt",
+      "sha256": "sha256:70c0bbb850a6c4a5c13058c9aff7ba43e6e180434e68efcf034612beeb882f9d"
+    },
+    {
+      "bytes": 785,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_external_package_check.time.txt",
+      "sha256": "sha256:ba405cf1eec83f50ab57a96fb269530421c70d22e5065db4489ec653ec0f69dd"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_final_collect_only.stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 796648,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_final_collect_only.stdout.txt",
+      "sha256": "sha256:e09d9a01c6247fa5472e8c211e6834bc442e6e6a3c111451422dc1b296cbdbee"
+    },
+    {
+      "bytes": 795,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_final_collect_only.time.txt",
+      "sha256": "sha256:44d8cd8a47c2e353331a0b827afde9dd8ae6a1b3d73a46ed20c6ace7955f90e4"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_final_dag.stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 495,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_final_dag.stdout.txt",
+      "sha256": "sha256:7a3383b010d808b7bbfbca828266ec83e59422e462d302b1865a17d7ef3da2c6"
+    },
+    {
+      "bytes": 810,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_final_dag.time.txt",
+      "sha256": "sha256:7b2c32e70f0a5b6bf837162b77a925f424bd53a15c1a313bf9b093a2e1d88030"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_final_ownership_transfer.stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 179,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_final_ownership_transfer.stdout.txt",
+      "sha256": "sha256:e9ee69c05e1f4902fc09b312e930e9cdd07c583347dd73d181c693556c0b6f06"
+    },
+    {
+      "bytes": 1123,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_final_ownership_transfer.time.txt",
+      "sha256": "sha256:334c4a232741c1bf1cc40a349e142232cdbcfa2ad237c795418cb5eab38f8828"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_final_smoke.stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 115,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_final_smoke.stdout.txt",
+      "sha256": "sha256:be8173ea59145d10213c64812c3ab5865d90280ca6a342bfa6035d4f50b5878e"
+    },
+    {
+      "bytes": 784,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_final_smoke.time.txt",
+      "sha256": "sha256:e0489b5520c24346b4f5674ad14545adf5b4940dc46e4513acb5391779981cfe"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_final_vendor_harness.stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 98,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_final_vendor_harness.stdout.txt",
+      "sha256": "sha256:fc04c4ed459b92d32a3835538d313386aceee93bf4d005bf5bb81449e34239eb"
+    },
+    {
+      "bytes": 821,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_final_vendor_harness.time.txt",
+      "sha256": "sha256:500abc27ff79fe2e997a224f9f761a7e810b86379dace8568aafab2edbec47c7"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_generic_figure_manifest_check.stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 38871,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_generic_figure_manifest_check.stdout.txt",
+      "sha256": "sha256:d4a82672556ae80275473fe1700e28deb45aecaae541b29070d72f13e8f81fd3"
+    },
+    {
+      "bytes": 902,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_generic_figure_manifest_check.time.txt",
+      "sha256": "sha256:f541fee3ffe75ebbaa46faea1fec09a31a14426da4f71800728c60ba0619e12a"
+    },
+    {
+      "bytes": 790,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_manifest_build_receipt/resource.time.txt",
+      "sha256": "sha256:38fc1f6b8c53cd2360266e0f998b632e7199d150b5edd0d770f3e5afd63df37c"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_manifest_build_receipt/stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 21,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_manifest_build_receipt/stdout.txt",
+      "sha256": "sha256:2b5cb7fe4aab9f655829520c2e8e02c4363d515f5aa1da31be45bdb51a4e53a8"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_ownership_transfer_regression.stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 179,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_ownership_transfer_regression.stdout.txt",
+      "sha256": "sha256:ac8c2901469f2cca5df5c58793acc258be692f54673ba8f008fa49c977c35fa3"
+    },
+    {
+      "bytes": 1123,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_ownership_transfer_regression.time.txt",
+      "sha256": "sha256:d60099ea7deabe8976c42dcdc79ecc47cd53b451c11cce4e1f4ef1898b84530a"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_publication_freeze_check.stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 198,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_publication_freeze_check.stdout.txt",
+      "sha256": "sha256:b0878035eba9e4f8e55e863c2d10ddf51de1d9c3a0e9b62eb2b151cf2427d6e7"
+    },
+    {
+      "bytes": 788,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_publication_freeze_check.time.txt",
+      "sha256": "sha256:329161980ac93486df059fe761638eedbbeb7192c2e948716bb8653a262837c9"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_smoke.stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 115,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_smoke.stdout.txt",
+      "sha256": "sha256:036378072e5a281874743bd4f6f2f4c9b61856a4c93e786aa6c5f1a56f453e76"
+    },
+    {
+      "bytes": 784,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_smoke.time.txt",
+      "sha256": "sha256:3d2437b0af7924a6eaadf71f6633950a6f444d4a2f2ab23b4f5cfaf5040d791b"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_validate_dag.stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 495,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_validate_dag.stdout.txt",
+      "sha256": "sha256:7a3383b010d808b7bbfbca828266ec83e59422e462d302b1865a17d7ef3da2c6"
+    },
+    {
+      "bytes": 810,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_validate_dag.time.txt",
+      "sha256": "sha256:18754acfaec79ac696a0828ad14147d6c4c3516351eb034f465d8877d117bdb4"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_ver2_result_pack_check.stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 1246,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_ver2_result_pack_check.stdout.txt",
+      "sha256": "sha256:b7d6a1fd5d265db6c7394259655247fa38d521ecce6dc78c8b69fa1be552b861"
+    },
+    {
+      "bytes": 822,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_ver2_result_pack_check.time.txt",
+      "sha256": "sha256:3f4e4e6bc5b0114c77b559d60c65aec3cea475f6fb213a9ce717ca8f47afdc89"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_act.stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 2301,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_act.stdout.txt",
+      "sha256": "sha256:c4d904ded8f85d382a7f686a01332cd6637f9149193522f767462abd58d6671b"
+    },
+    {
+      "bytes": 794,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_act.time.txt",
+      "sha256": "sha256:bd0e0d4aeb171596842ee6694b297defcf45fd9e393fba8237720402fed6c14f"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_cf4.stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 4815,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_cf4.stdout.txt",
+      "sha256": "sha256:ec8e31cc9453767439ed9f53184cc6f1ae3f016bf3b83ce2d383ca726e2911b6"
+    },
+    {
+      "bytes": 798,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_cf4.time.txt",
+      "sha256": "sha256:e5f02a1c79a28abb2e315646def60545b306da3815545c7d6322f14df04d5122"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_desi.stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 3148,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_desi.stdout.txt",
+      "sha256": "sha256:c99640d274fac31f412a6a10cd4bba2a58bf7ca6501eab49aace02ccd70463ec"
+    },
+    {
+      "bytes": 805,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_desi.time.txt",
+      "sha256": "sha256:7e6c1a8875e2c162361ed3dba9b424a867038c14cb3fa07df237a79a9257792c"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_fsigma.stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 4446,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_fsigma.stdout.txt",
+      "sha256": "sha256:b2967b916480eca6230aaead99589825ade129152866047cebbec2eea9be9dbb"
+    },
+    {
+      "bytes": 804,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_fsigma.time.txt",
+      "sha256": "sha256:d341b754fb041e38356726ef287efd9fde8d066224f8de1a7996c06a3104834a"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_grf.stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 1415,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_grf.stdout.txt",
+      "sha256": "sha256:1a16ac955c1e15521a33d3f3165fb44f189987c9daadad136d0b3b16fb47e481"
+    },
+    {
+      "bytes": 794,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_grf.time.txt",
+      "sha256": "sha256:364640d2c8a2c67a511b0065d2adb0abb67cb95a966dac37416059546feaf61c"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_jwst.stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 2480,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_jwst.stdout.txt",
+      "sha256": "sha256:499e65b130a25204fff2f6d15979f1708666df71d0715fc907e8fd823f5b4243"
+    },
+    {
+      "bytes": 799,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_jwst.time.txt",
+      "sha256": "sha256:9828052adb4c10425f92b918ff9f7e891179f3e33f248381fb835d00b6150596"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_k6.stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 2260,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_k6.stdout.txt",
+      "sha256": "sha256:e0d67ebc4150bc050d046bcca47e633b65312c4e7ab2de808ce2f9e2f416db21"
+    },
+    {
+      "bytes": 794,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_k6.time.txt",
+      "sha256": "sha256:19f5861e2ff13fc34fbe62557d482359e2a62c1fa0233c3c9cf86f4f71bdaf9d"
+    },
+    {
+      "bytes": 793,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_v2_act/resource.time.txt",
+      "sha256": "sha256:bbb68f9bc7beb9e6880221d1e899c9dd4771d9ad8537ebd691341582a6c5f5e9"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_v2_act/stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 2301,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_v2_act/stdout.txt",
+      "sha256": "sha256:3ad87974ad040514a29c5529befb6519a636cd808ace454ce5f396d204b63d64"
+    },
+    {
+      "bytes": 798,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_v2_cf4/resource.time.txt",
+      "sha256": "sha256:39312b9cf7dfcd0f93ad79f2aec5bbbde9d28266f37ef961c3ccb01ebc3a2aa8"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_v2_cf4/stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 4814,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_v2_cf4/stdout.txt",
+      "sha256": "sha256:18031249c50e8ac1db910276323d59e96208cdb1a1a335cd76dbbd27023c5f5a"
+    },
+    {
+      "bytes": 810,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_v2_desi/resource.time.txt",
+      "sha256": "sha256:8653f5fd2ced8c50c9d5a704191dc3a66888d9d2122cf711e5f52b18bfb2b23e"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_v2_desi/stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 3148,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_v2_desi/stdout.txt",
+      "sha256": "sha256:4b035371a7fe8eb4e194d6fd17fe8414c2bb8858ce96e1e0ab3e6fa4588a76b4"
+    },
+    {
+      "bytes": 804,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_v2_fsigma/resource.time.txt",
+      "sha256": "sha256:4311cdd2bb55f35b09de02ae653496df2b6de300f3962e905902de1d3b5ea4b2"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_v2_fsigma/stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 4446,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_v2_fsigma/stdout.txt",
+      "sha256": "sha256:b8385bc77763f15ec6b893ecac3c2d74bad3c3ad40abc01bb38e582265483774"
+    },
+    {
+      "bytes": 794,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_v2_grf/resource.time.txt",
+      "sha256": "sha256:a56b034c27701bb86318a204a5fae3d9b9bbc9e9f33a883ca08dfbf97a5ced52"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_v2_grf/stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 1415,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_v2_grf/stdout.txt",
+      "sha256": "sha256:eb848f76320b66ec26cfe70689717e2baeb1a471c13004fac85355690ea0b938"
+    },
+    {
+      "bytes": 799,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_v2_jwst/resource.time.txt",
+      "sha256": "sha256:8dde89965de94349b9f8aa8189e4ba5b02920ed48bda6098733d250c4ced120b"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_v2_jwst/stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 2480,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_v2_jwst/stdout.txt",
+      "sha256": "sha256:b084d3ccde84426201b61c37badf5a0213af78155ada2061f882992c1b6adf5a"
+    },
+    {
+      "bytes": 794,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_v2_k6/resource.time.txt",
+      "sha256": "sha256:d0978b1d64049009fa83a0ea40e6f385e967a6a95c00805592c9e4e8a4e827b9"
+    },
+    {
+      "bytes": 0,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_v2_k6/stderr.txt",
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 2260,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_v2_k6/stdout.txt",
+      "sha256": "sha256:bd8381aebcb60fc3b5307b76189966fdab641522077afcb2a0e97fb44ee04e4b"
+    },
+    {
+      "bytes": 149631,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/execution_ledger.jsonl",
+      "sha256": "sha256:f36e6917f5ca30b49de8f75860a0b07543b310ecc6f6f953a902b1f620ba73ac"
+    },
+    {
+      "bytes": 16124,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/four_axis_hostile_review.md",
+      "sha256": "sha256:39c8d5b2d64f6cc1fddf3b5158e89776e3e48d82337db6e906ec6bc8bc552340"
+    },
+    {
+      "bytes": 50327,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/history_legacy_ledger.json",
+      "sha256": "sha256:bc30edae27896d31e5470c97711b1f267b3ac6cc03692f23263161a7f4e0b1f3"
+    },
+    {
+      "bytes": 12955,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/history_legacy_ledger.md",
+      "sha256": "sha256:f4666ca9260a70a07be32e28190c80c00828ae2cd583178c2f44f11610b272ad"
+    },
+    {
+      "bytes": 102351,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/prior_crosswalk.json",
+      "sha256": "sha256:e542b51a19350f019fcbbbdee5a7feacbe10aad224deb84dad5e6a257d1c612e"
+    },
+    {
+      "bytes": 22557,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/prior_crosswalk.md",
+      "sha256": "sha256:b5dbacd4791e30dee81fabeeb5c5a1263e1f6ac0edfa63dba048027dd8a21376"
+    },
+    {
+      "bytes": 27901,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/root_adjudications.json",
+      "sha256": "sha256:4fcf738aed06ffec7cb3371562673eac211dc72407f475913e020d15d452c94a"
+    },
+    {
+      "bytes": 64407,
+      "path": "docs/audits/jcap_prd_adversarial_audit_20260714/web_crag_initial.json",
+      "sha256": "sha256:459fbbb67b8ef769b7b2b9f212ba2add28c22129638d206d7ce4e14e2c1668c5"
+    }
+  ],
+  "generated_at": "2026-07-13T17:23:06+00:00",
+  "generating_command": "venv/bin/python -B scripts/audits/jcap_prd_20260714.py build-manifest",
+  "git_commit": "f8c90f918e1d6bf1187e8143ddccbf00eddc470c",
+  "git_commit_or_worktree_state": {
+    "baseline_head": "8af39b36c1d5ed4f9b16f0bc71dbecd8b22548d4",
+    "branch": "research/pr04-multicomponent",
+    "current_head": "f8c90f918e1d6bf1187e8143ddccbf00eddc470c",
+    "worktree_porcelain": "A  docs/PR_DELTAS/pr-117.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/.gitattributes\nA  docs/audits/jcap_prd_adversarial_audit_20260714/MANIFEST.json\nA  docs/audits/jcap_prd_adversarial_audit_20260714/WEB_LOCK.json\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/blind_referees/RUBRIC.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/blind_referees/data_referee_prompt.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/blind_referees/data_referee_response.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/blind_referees/repro_referee_prompt.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/blind_referees/repro_referee_response.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/blind_referees/theory_referee_prompt.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/blind_referees/theory_referee_response.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/code_wave/numerical_analyst_prompt.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/code_wave/numerical_analyst_response.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/code_wave/oracle_provenance_prompt.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/code_wave/oracle_provenance_response.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/code_wave/reproducibility_prompt.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/code_wave/reproducibility_response.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/cross_debate/formalism_statistics_prompt.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/cross_debate/formalism_statistics_response.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/cross_debate/integrity_novelty_prompt.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/cross_debate/integrity_novelty_response.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/cross_debate/physics_observation_prompt.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/cross_debate/physics_observation_response.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/data_wave/cf4_observer_prompt.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/data_wave/cf4_observer_response.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/data_wave/cmb_observer_prompt.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/data_wave/cmb_observer_response.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/data_wave/survey_observer_prompt.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/data_wave/survey_observer_response.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/initial_crag/observations_prompt.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/initial_crag/observations_response.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/initial_crag/statistics_pv_prompt.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/initial_crag/statistics_pv_response.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/initial_crag/theory_prompt.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/initial_crag/theory_response.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/pr117_rereview/integration_provenance_followup_prompt.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/pr117_rereview/integration_provenance_followup_response.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/pr117_rereview/schema_harness_followup_prompt.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/pr117_rereview/schema_harness_followup_response.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/pr117_rereview/science_dedup_followup_prompt.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/pr117_rereview/science_dedup_followup_response.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/pr117_review/integration_provenance_prompt.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/pr117_review/integration_provenance_response.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/pr117_review/schema_harness_prompt.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/pr117_review/schema_harness_response.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/pr117_review/science_dedup_prompt.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/pr117_review/science_dedup_response.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/statistics_wave/bayesian_ppc_prompt.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/statistics_wave/bayesian_ppc_response.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/statistics_wave/frequentist_null_prompt.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/statistics_wave/frequentist_null_response.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/statistics_wave/partial_identification_prompt.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/statistics_wave/partial_identification_response.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/theory_wave/anisotropy_advocate_prompt.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/theory_wave/anisotropy_advocate_response.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/theory_wave/gr_convention_auditor_prompt.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/theory_wave/gr_convention_auditor_response.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/theory_wave/isotropy_advocate_prompt.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/agents/theory_wave/isotropy_advocate_response.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/atomic_finding_ledger.json\nA  docs/audits/jcap_prd_adversarial_audit_20260714/coverage_matrix.json\nA  docs/audits/jcap_prd_adversarial_audit_20260714/debate_bundle.json\nA  docs/audits/jcap_prd_adversarial_audit_20260714/diagnostic_results.json\nA  docs/audits/jcap_prd_adversarial_audit_20260714/environment.json\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_act.stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_act.stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_act.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_cf4.stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_cf4.stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_cf4.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_desi.stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_desi.stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_desi.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_fsigma.stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_fsigma.stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_fsigma.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_fsigma_verified_inputs.stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_fsigma_verified_inputs.stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_fsigma_verified_inputs.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_grf.stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_grf.stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_grf.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_grf_axes_fixed.stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_grf_axes_fixed.stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_grf_axes_fixed.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_grf_contract_refresh.stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_grf_contract_refresh.stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_grf_contract_refresh.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_jwst.stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_jwst.stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_jwst.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_jwst_retry1.stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_jwst_retry1.stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_jwst_retry1.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_jwst_retry2.stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_jwst_retry2.stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_jwst_retry2.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_k6.stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_k6.stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/diagnostic_k6.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/finalhash_act.stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/finalhash_act.stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/finalhash_act.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/finalhash_cf4.stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/finalhash_cf4.stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/finalhash_cf4.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/finalhash_desi.stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/finalhash_desi.stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/finalhash_desi.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/finalhash_fsigma.stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/finalhash_fsigma.stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/finalhash_fsigma.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/finalhash_grf.stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/finalhash_grf.stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/finalhash_grf.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/finalhash_jwst.stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/finalhash_jwst.stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/finalhash_jwst.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/finalhash_k6.stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/finalhash_k6.stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/finalhash_k6.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_audit_contract_tests.stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_audit_contract_tests.stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_audit_contract_tests.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_audit_contract_tests_after_manifest_refresh.stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_audit_contract_tests_after_manifest_refresh.stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_audit_contract_tests_after_manifest_refresh.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_build_debate.stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_build_debate.stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_build_debate.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_build_debate_final.stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_build_debate_final.stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_build_debate_final.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_build_debate_post_review.stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_build_debate_post_review.stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_build_debate_post_review.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_build_debate_receipt_fix.stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_build_debate_receipt_fix.stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_build_debate_receipt_fix.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_clean_cwd_import_probe.stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_clean_cwd_import_probe.stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_clean_cwd_import_probe.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_clean_cwd_import_probe_verified_inputs.stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_clean_cwd_import_probe_verified_inputs.stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_clean_cwd_import_probe_verified_inputs.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_closeout_collect/resource.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_closeout_collect/stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_closeout_collect/stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_closeout_contract_preseal/resource.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_closeout_contract_preseal/stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_closeout_contract_preseal/stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_closeout_dag/resource.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_closeout_dag/stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_closeout_dag/stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_closeout_diff_check/resource.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_closeout_diff_check/stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_closeout_diff_check/stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_closeout_ownership_transfer/resource.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_closeout_ownership_transfer/stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_closeout_ownership_transfer/stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_closeout_smoke/resource.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_closeout_smoke/stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_closeout_smoke/stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_closeout_vendor/resource.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_closeout_vendor/stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_closeout_vendor/stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_closure_debate/resource.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_closure_debate/stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_closure_debate/stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_collect_only.stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_collect_only.stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_collect_only.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_current_figure_manifest_check.stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_current_figure_manifest_check.stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_current_figure_manifest_check.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_external_package_check.stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_external_package_check.stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_external_package_check.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_final_collect_only.stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_final_collect_only.stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_final_collect_only.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_final_dag.stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_final_dag.stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_final_dag.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_final_ownership_transfer.stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_final_ownership_transfer.stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_final_ownership_transfer.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_final_smoke.stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_final_smoke.stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_final_smoke.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_final_vendor_harness.stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_final_vendor_harness.stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_final_vendor_harness.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_generic_figure_manifest_check.stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_generic_figure_manifest_check.stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_generic_figure_manifest_check.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_manifest_build_receipt/resource.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_manifest_build_receipt/stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_manifest_build_receipt/stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_ownership_transfer_regression.stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_ownership_transfer_regression.stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_ownership_transfer_regression.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_publication_freeze_check.stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_publication_freeze_check.stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_publication_freeze_check.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_smoke.stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_smoke.stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_smoke.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_validate_dag.stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_validate_dag.stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_validate_dag.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_ver2_result_pack_check.stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_ver2_result_pack_check.stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr117_ver2_result_pack_check.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_act.stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_act.stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_act.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_cf4.stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_cf4.stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_cf4.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_desi.stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_desi.stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_desi.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_fsigma.stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_fsigma.stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_fsigma.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_grf.stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_grf.stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_grf.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_jwst.stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_jwst.stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_jwst.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_k6.stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_k6.stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_k6.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_v2_act/resource.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_v2_act/stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_v2_act/stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_v2_cf4/resource.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_v2_cf4/stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_v2_cf4/stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_v2_desi/resource.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_v2_desi/stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_v2_desi/stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_v2_fsigma/resource.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_v2_fsigma/stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_v2_fsigma/stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_v2_grf/resource.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_v2_grf/stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_v2_grf/stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_v2_jwst/resource.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_v2_jwst/stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_v2_jwst/stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_v2_k6/resource.time.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_v2_k6/stderr.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/sealed_v2_k6/stdout.txt\nA  docs/audits/jcap_prd_adversarial_audit_20260714/execution_ledger.jsonl\nA  docs/audits/jcap_prd_adversarial_audit_20260714/four_axis_hostile_review.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/history_legacy_ledger.json\nA  docs/audits/jcap_prd_adversarial_audit_20260714/history_legacy_ledger.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/prior_crosswalk.json\nA  docs/audits/jcap_prd_adversarial_audit_20260714/prior_crosswalk.md\nA  docs/audits/jcap_prd_adversarial_audit_20260714/root_adjudications.json\nA  docs/audits/jcap_prd_adversarial_audit_20260714/web_crag_initial.json\nM  docs/codex_handoff/pr_backlog.json\nM  docs/codex_handoff/pr_backlog.yaml\nM  docs/codex_handoff/pr_status.yaml\nM  machine_readable/pr_backlog.json\nM  machine_readable/pr_backlog.yaml\nM  machine_readable/pr_status.yaml\nA  scripts/audits/jcap_prd_20260714.py\nA  tests/contracts/test_jcap_prd_adversarial_audit.py\n?? legacy/\n?? physmath-coding-harness-gpt56.zip\n?? physmath-research-harness-gpt56.zip",
+    "worktree_state_hash": "sha256:63e336c7bfc90946e6705ef0f840eed11544e4179609da3d5f3a68fd67626c2f"
+  },
+  "implementation_scope": "common",
+  "input_hashes": [
+    "AGENTS.md:sha256:caf78d6d3cca82265b16553ef98c4d2065ace001e13e873b8f72c15d3f65453a",
+    ".agents/skills/htt-physmath-audit/SKILL.md:sha256:ddb3f6810b40c98b52a8f094d29a8cb3ce1ab04be279700afe4f9dd91190b5d3",
+    "docs/codex_handoff/pr_backlog.yaml:sha256:1492e350ef8b9b1884ecc5ce2ebbd68589721fdf8d8b88b4ff596259533afb78",
+    "scripts/audits/jcap_prd_20260714.py:sha256:614630a438c046418703ec07dd91cf2d305b7ce8962b27904960c4d588c3fa0c",
+    "tests/contracts/test_jcap_prd_adversarial_audit.py:sha256:cfdf2bfda0a1f982fe2c4db87d5499c47228d95359cf6639fff4907726d62c32"
+  ],
+  "null_mock_status": "mixed_recomputed_blocked_and_not_statistical",
+  "owner": "COMMON",
+  "production_status": "internal_audit",
+  "schema": "htt.jcap_prd.audit_manifest.v1",
+  "sky_support": {
+    "completeness_status": "mixed_partial_and_full_sky",
+    "coordinate_frame": "mixed_as_declared_by_source_artifacts",
+    "mask_hash": "source_specific_input_hashes_in_diagnostic_results",
+    "mock_coverage_status": "mixed_and_explicitly_audited",
+    "scan_volume_hash": "not_applicable_to_audit_bundle",
+    "selection_mode": "source_specific_masks_preserved"
+  },
+  "sky_support_status": "mixed_directional_inputs_audit_only_no_promotion",
+  "subject_owners": [
+    "BASS_PY",
+    "HTT",
+    "MIO",
+    "OBSSTAT",
+    "TSC_LEGACY"
+  ],
+  "transfer_source": "mixed_none_observed_external_transfer_conditional_and_legacy"
+}
