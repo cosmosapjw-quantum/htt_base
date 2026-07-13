@@ -59,6 +59,24 @@ OPEN_ITEMS = [
     },
     {
         "rank": 2,
+        "item": "K5 velocity-correlation precision f sigma_8 (max-likelihood "
+                "noise-aware estimator)",
+        "source": "registry K5-VCORR exit-gate (rev-r196)",
+        "ticket": None,
+        "ticket_state": None,
+        "blocker": None,
+        "executability": "now",
+        "exit_gate": "the full max-likelihood noise-aware velocity-correlation "
+                     "estimator (Johnson 2014; CF4 arXiv:2604.08314); the "
+                     "simplified pair estimator (cf4_velocity_correlation.py) "
+                     "gives a treatment-dependent DIAGNOSTIC f sigma_8",
+        "note": "REV-R196: the reconstruction-independent Psi_par/Psi_perp "
+                "statistic is measured; Vpec f sigma_8 diagnostic ~0.38 matches "
+                "the published CF4, but the direct Vpds is noise-limited (0.75) "
+                "-- the precision value needs the ML estimator.",
+    },
+    {
+        "rank": 3,
         "item": "Paper-A/B/C split of the audit-report material",
         "source": "registered plan (v9 report; user decision 2026-07-10: "
                   "plan-only this cycle)",
@@ -70,7 +88,7 @@ OPEN_ITEMS = [
         "note": None,
     },
     {
-        "rank": 3,
+        "rank": 4,
         "item": "K1 E2E-systematics null + BipoSH E2E upgrade",
         "source": "ticket EGS3-C1-k1-ffp10-npipe; BLOCKERS.md section 1",
         "ticket": "k1_ffp10_npipe.yaml",
@@ -83,7 +101,7 @@ OPEN_ITEMS = [
         "note": "PLA/PL3 downloads in progress (2026-07-11).",
     },
     {
-        "rank": 4,
+        "rank": 5,
         "item": "K6 Hoffman-Ribak constrained-realization vorticity posterior",
         "source": "ticket EGS3-C2-cf4-wfcr; BLOCKERS.md section 2",
         "ticket": "cf4_wfcr.yaml",
@@ -94,27 +112,45 @@ OPEN_ITEMS = [
         "note": "WF mean-field curl-suppression no-go already established.",
     },
     {
-        "rank": 5,
-        "item": "K5 CF4 bulk-flow LambdaCDM amplitude significance",
+        "rank": 6,
+        "item": "K5 CF4 bulk-flow DEFINITIVE (mock-calibrated) significance",
         "source": "ticket EGS3-C2-cf4-wfcr; BLOCKERS.md section 3; registry "
-                  "K5-LCDMCV",
+                  "K5-MV / K5-LCDMCV",
         "ticket": "cf4_wfcr.yaml",
         "ticket_state": "blocked",
         "blocker": "BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP",
         "executability": "blocked",
-        "exit_gate": "the minimum-variance ideal-window estimator (isolates the "
-                     "large-scale flow) OR CF4 release-matched forward mocks "
-                     "(selection/Malmquist/grouping/nonlinear field)",
-        "note": "REV-R195: the hand-set sigma_cv=150 km/s prior was replaced by "
-                "the real linear estimator-matched cosmic variance (mode-"
-                "function window integral, validated); |B|=340.7+/-5.0 km/s, "
-                "apex, Omega_tilt are real MEASUREMENTS, but the LambdaCDM "
-                "amplitude SIGNIFICANCE stays WITHHELD -- the linear CV is a "
-                "lower bound (naive chi^2 ~9sigma is an artifact). Credible "
-                "significance needs the MV estimator or mocks.",
+        "exit_gate": "CF4 release-matched forward mocks (full non-Gaussian + "
+                     "selection covariance) to pin the significance; the MV "
+                     "ideal-window estimator route is DELIVERED (rev-r196), the "
+                     "mock branch remains",
+        "note": "REV-R196: the minimum-variance ideal-window estimator "
+                "(cf4_mv_bulkflow.py) RESOLVES the rev-r195 withheld "
+                "significance -- window-tied faithful cosmic variance gives "
+                "|B|(200)=405 km/s (Watkins-consistent) and ~4.4-5.4 sigma (a "
+                "likely over-estimate per Whitford). Only the DEFINITIVE mock-"
+                "calibrated significance (non-Gaussian + selection covariance) "
+                "remains. REV-R195 context: the linear estimator-matched CV was "
+                "a lower bound so the significance was withheld -- now resolved.",
     },
     {
-        "rank": 6,
+        "rank": 7,
+        "item": "K5 external cross-reconstruction (Nusser 2026 2MRS)",
+        "source": "BLOCKERS.md BLOCKED_MISSING_CROSS_RECONSTRUCTION; registry "
+                  "K5-RECON",
+        "ticket": None,
+        "ticket_state": None,
+        "blocker": "BLOCKED_MISSING_CROSS_RECONSTRUCTION",
+        "executability": "blocked",
+        "exit_gate": "bind the Nusser 2026 2MRS Bayesian-Zeldovich reconstruction "
+                     "(arXiv:2606.08593; set NUSSER_2MRS_URL) for a 6th method in "
+                     "the reconstruction-spread comparison",
+        "note": "REV-R196: the Carrick 2015 2M++ field (independent tracer) was "
+                "downloaded + connected as a 5th method; Nusser 2MRS has no "
+                "confirmed public release yet.",
+    },
+    {
+        "rank": 8,
         "item": "PR08-006 joint posterior artifact",
         "source": "BLOCKERS.md section 4",
         "ticket": None,
@@ -126,7 +162,7 @@ OPEN_ITEMS = [
         "note": None,
     },
     {
-        "rank": 7,
+        "rank": 9,
         "item": "Native low-ell Bianchi solver atlas (theory-g CMB likelihood)",
         "source": "BLOCKERS.md section 5; PR10 project",
         "ticket": None,
@@ -138,7 +174,7 @@ OPEN_ITEMS = [
         "note": None,
     },
     {
-        "rank": 8,
+        "rank": 10,
         "item": "DESI number-count dipole: mock-calibrated significance",
         "source": "ticket EGS3-H1-desi-number-count-dipole; registry EXT-DESI",
         "ticket": "desi_number_count_dipole.yaml",
@@ -156,7 +192,7 @@ OPEN_ITEMS = [
                 "only the mock-calibrated significance remains.",
     },
     {
-        "rank": 9,
+        "rank": 11,
         "item": "ACT DR6 low-ell kappa isotropy: N0/N1 debias",
         "source": "ticket EGS3-H2-act-dr6-kappa-isotropy; registry EXT-ACT",
         "ticket": "act_dr6_kappa_isotropy.yaml",
@@ -176,7 +212,7 @@ OPEN_ITEMS = [
                 "remains. Dipole ell=1 not measurable by ACT lensing.",
     },
     {
-        "rank": 10,
+        "rank": 12,
         "item": "MESb (PRD 51, 5942) INTERNAL non-geodesic derivation "
                 "(Eqs 30-36 algebra)",
         "source": "ticket EGS3-G8-mes-full-rederivation (residual)",

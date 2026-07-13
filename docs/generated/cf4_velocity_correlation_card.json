@@ -1,0 +1,126 @@
+{
+  "caveats": [
+    "the correlation function Psi is computed directly from observed LOS velocities (no field reconstruction) -- the real reconstruction-independent statistic; the direct Vpds carries that independence, Vpec (WF-blended) is shown for contrast",
+    "the f sigma_8 is DIAGNOSTIC, not a precision constraint: this simplified pair estimator is sensitive to the noise treatment -- raw pairs give f sigma_8 ~ 1-3 (measurement-noise + bulk-flow contaminated); bulk-flow subtraction + inverse-error pair weighting (applied here) bring Vpec to ~0.4-0.5, but the Psi_par SHAPE still departs from linear theory, so a precision value needs the full max-likelihood noise-aware estimator (registered exit-gate)",
+    "the direct Vpds is noisiest (unphysical outliers to +/-24000 km/s) so its f sigma_8 diagnostic is the least reliable; the jackknife is a delete-one-octant estimate (rigorous covariance needs mocks)",
+    "the estimator runs on a deterministic 12000-group subsample (the full pair count ~1.25e8 makes the octant jackknife infeasible); ~1.3e7 pairs is ample for the 8-bin fit"
+  ],
+  "claim": "the reconstruction-independent CF4 velocity correlation function Psi_par/Psi_perp is measured directly from LOS-velocity pairs (no field reconstruction); the simplified bulk-subtracted error-weighted amplitude fit gives a DIAGNOSTIC f sigma_8 ~ 0.38 (Vpec) / 0.75 (direct Vpds), treatment-dependent -- a precision value vs the published CF4 ~0.38 needs the max-likelihood estimator",
+  "fiducial_cosmology": {
+    "Omega_m": 0.3153,
+    "P_k": "EH98 no-wiggle, sigma_8-normalised",
+    "growth_f": 0.53003,
+    "h": 0.6736,
+    "sigma_8": 0.8111
+  },
+  "fiducial_f_sigma8": 0.4299,
+  "input_hashes": [
+    "workdir/obs_bundle/pecvel/cf4_full/cf4_groups.npz:sha256:3c0f2e1a5b56b7227abb5e187406810d7eb15e924aac69e9cb0ffc1343a811ad",
+    "workdir/obs_bundle/pecvel/cf4_full/cf4_pv_variants.npz:sha256:e3dfd734c133858892436a139eb0bd0ed916e3283db54d83dd7c0146d451d87b"
+  ],
+  "per_variant": {
+    "Vpds": {
+      "amplitude_A": 3.0266,
+      "cosmic_mach_number": 0.099,
+      "estimator": "Davis-Scrimgeour 2014 direct (reconstruction-independent)",
+      "f_sigma8": 0.7479,
+      "f_sigma8_jackknife_error": 0.0932,
+      "n_groups": 12000,
+      "n_pairs_total": 12124649,
+      "psi_par_data_kms2": [
+        7757.8,
+        7910.9,
+        16340.1,
+        33073.7,
+        37977.2,
+        38730.5,
+        43338.3,
+        52289.5
+      ],
+      "psi_perp_data_kms2": [
+        41474.8,
+        45684.6,
+        65668.5,
+        112440.2,
+        161528.1,
+        237505.5,
+        301827.1,
+        379034.9
+      ],
+      "sigma_1d_kms": 3785.2
+    },
+    "Vpec": {
+      "amplitude_A": 0.7981,
+      "cosmic_mach_number": 0.247,
+      "estimator": "ramp Eq.11 (WF blend)",
+      "f_sigma8": 0.3841,
+      "f_sigma8_jackknife_error": 0.07,
+      "n_groups": 12000,
+      "n_pairs_total": 12124649,
+      "psi_par_data_kms2": [
+        590.5,
+        4012.8,
+        10108.7,
+        14568.6,
+        13990.6,
+        14021.9,
+        12081.6,
+        9893.2
+      ],
+      "psi_perp_data_kms2": [
+        30111.2,
+        25225.0,
+        21676.3,
+        26201.1,
+        32377.3,
+        45153.8,
+        57487.8,
+        72041.2
+      ],
+      "sigma_1d_kms": 1597.5
+    }
+  },
+  "product": "Cosmicflows-4 groups (Tully+ 2023); velocity correlation function",
+  "reconstruction_independent_statistic": {
+    "cf4_published_anchor": 0.38,
+    "cosmic_mach_number_vpds": 0.099,
+    "exit_gate": "a precision f sigma_8 needs the full max-likelihood noise-aware estimator (Johnson 2014; CF4 arXiv:2604.08314); this simplified pair estimator gives a treatment-dependent value, not a precision constraint",
+    "f_sigma8_diagnostic_vpds_direct": 0.7479,
+    "f_sigma8_diagnostic_vpec": 0.3841,
+    "what": "the Gorski velocity correlation function Psi_par/Psi_perp computed directly from observed LOS velocities (NO field reconstruction) is the physical reconstruction-independent statistic -- the well-posed replacement for an ill-posed angular pseudo-C_l"
+  },
+  "schema": "htt.cf4_velocity_correlation.v1",
+  "scope_not_claimed": "a reconstruction-independent velocity correlation function + a treatment-dependent diagnostic f sigma_8 (not a precision growth-rate constraint); NOT a Bianchi family, geometry, or observer-frame claim; no anisotropy discovery",
+  "separation_bins_hmpc": [
+    25.0,
+    35.0,
+    45.0,
+    55.0,
+    65.0,
+    75.0,
+    85.0,
+    95.0
+  ],
+  "statistic": "Gorski Psi_par(r)/Psi_perp(r) from LOS-velocity pairs (reconstruction-independent; bulk-subtracted, error-weighted); f sigma_8 amplitude fit is a DIAGNOSTIC",
+  "status": "MEASURED_CORRELATION_DIAGNOSTIC",
+  "theory_psi_par_kms2": [
+    31260.3,
+    20404.2,
+    13210.8,
+    8259.1,
+    4748.3,
+    2203.7,
+    331.3,
+    -1058.3
+  ],
+  "theory_psi_perp_kms2": [
+    57544.7,
+    48372.5,
+    41306.2,
+    35721.1,
+    31211.2,
+    27504.4,
+    24412.2,
+    21800.6
+  ]
+}

@@ -98,6 +98,45 @@ def _v9_rows() -> list[dict]:
            "(BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP)",
            "measured",
            "cf4_bulkflow_lcdm_card.json"),
+        _r("K5-MV", DATA,
+           "CF4 minimum-variance ideal-window bulk flow (Watkins-Feldman-Hudson): "
+           "the MV weights are tied to a specified Gaussian window of scale R, so "
+           "the cosmic-variance covariance is FAITHFUL (not the rev-r195 GLS "
+           "lower bound) and the LambdaCDM significance is REPORTABLE -- resolving "
+           "the rev-r195 withheld significance",
+           "|B|(200 h^-1Mpc)=405 km/s (+/-3 binning syst), consistent with the "
+           "published CF4 419+/-36; apex@50 8.5 deg from the published flow; "
+           "LambdaCDM tension ~4.4-5.4 sigma (P(k)-corrected to fiducial, a "
+           "likely OVER-estimate per Whitford 2023); injection recovered exact, "
+           "sigma_v to <0.1%; the apex swings at large R (deep-sample-dominated), "
+           "amplitude is the robust quantity; release-matched mocks pin the "
+           "definitive significance (BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP)",
+           "measured",
+           "cf4_mv_bulkflow_card.json"),
+        _r("K5-RECON", DATA,
+           "CF4 bulk-flow dependence on the peculiar-velocity reconstruction: the "
+           "identical estimator on the three catalogue PV columns (Vpds direct / "
+           "Vpwf pure-WF / Vpec ramp) + the CF4++ WF field + the external Carrick "
+           "2015 2M++ field (independent tracer, downloaded)",
+           "amplitude spans 145-341 km/s (spread 196) across 5 reconstruction "
+           "methods -- the pure Wiener-filter (Vpwf 145) shrinks the flow vs the "
+           "direct/ramp (319/341); apex spread 28 deg; ZoA |b|-cut sensitivity "
+           "small (5 km/s / 1.4 deg -- CF4 has good sky coverage); Nusser 2026 "
+           "2MRS stays BLOCKED_MISSING_CROSS_RECONSTRUCTION",
+           "measured_diagnostic",
+           "cf4_reconstruction_dependence_card.json"),
+        _r("K5-VCORR", DATA,
+           "reconstruction-INDEPENDENT statistic (the physical replacement for an "
+           "ill-posed angular pseudo-C_l): the Gorski velocity correlation "
+           "function Psi_par/Psi_perp from LOS-velocity pairs (no field "
+           "reconstruction) -> f sigma_8, bulk-subtracted + inverse-error-weighted",
+           "the Psi(r) curves are measured directly from pairs; the simplified "
+           "pair estimator gives a DIAGNOSTIC f sigma_8 = 0.38 (Vpec, matching the "
+           "published CF4 ~0.38) / 0.75 (direct Vpds, noise-limited) -- treatment-"
+           "dependent; a precision f sigma_8 needs the max-likelihood noise-aware "
+           "estimator (registered exit-gate); cosmic Mach number reported",
+           "measured_diagnostic",
+           "cf4_velocity_correlation_card.json"),
         _r("EXT-DESI", DATA,
            "DESI DR1 BGS number-count dipole lane (Omega_tilt-sector cross-"
            "check): randoms downloaded; window-corrected overdensity dipole "

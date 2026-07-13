@@ -1,0 +1,147 @@
+{
+  "carrick2015_2mpp_affine_bulk": {
+    "100": {
+      "amplitude_kms": 225.14,
+      "apex_galactic_l_b_deg": [
+        291.4,
+        15.33
+      ]
+    },
+    "150": {
+      "amplitude_kms": 208.94,
+      "apex_galactic_l_b_deg": [
+        298.95,
+        4.22
+      ]
+    }
+  },
+  "catalog_variant_spread": {
+    "amplitude_max_kms": 340.73,
+    "amplitude_min_kms": 144.6,
+    "amplitude_spread_kms": 196.13,
+    "max_pairwise_apex_separation_deg": 18.94
+  },
+  "caveats": [
+    "the 3 catalog variants isolate the reconstruction-method effect (identical estimator + objects; only the velocity column differs); Vpds is the DIRECT estimator (noisiest), Vpwf/Vpec are Wiener-filter-based (Vpec is the frozen column)",
+    "two full field reconstructions extend the comparison: the CF4++ WF field (CF4 tracers) and the EXTERNAL Carrick 2015 2M++ field (an INDEPENDENT tracer + linear method, downloaded from cosmicflows.iap.fr); both are affine bulk flows at their own depth/window convention (grids in Mpc or Mpc/h) -- cross-method sanity comparisons, not scale-matched measurements; the Nusser 2026 2MRS reconstruction stays BLOCKED_MISSING_CROSS_RECONSTRUCTION",
+    "the ZoA sweep removes near-plane objects (|b| cut); it measures the directional/magnitude sensitivity, it does not fill the gap"
+  ],
+  "cf4pp_wf_field_affine_bulk": {
+    "150": {
+      "amplitude_kms": 315.5,
+      "apex_galactic_l_b_deg": [
+        294.02,
+        32.26
+      ]
+    },
+    "200": {
+      "amplitude_kms": 359.26,
+      "apex_galactic_l_b_deg": [
+        282.48,
+        79.85
+      ]
+    }
+  },
+  "claim": "real measurement: CF4 bulk-flow amplitude spread across three reconstruction variants (Vpds/Vpwf/Vpec) = 196 km/s, max apex spread 19 deg; ZoA |b|-cut sensitivity 5 km/s / 1 deg",
+  "cross_method_spread_incl_field": {
+    "amplitude_max_kms": 340.73,
+    "amplitude_min_kms": 144.6,
+    "amplitude_spread_kms": 196.13,
+    "max_pairwise_apex_separation_deg": 28.42
+  },
+  "estimator": "weighted-GLS bulk flow, identical across PV variants",
+  "external_reconstructions": {
+    "carrick_2mpp": "CONNECTED",
+    "nusser_2mrs": "BLOCKED_MISSING_CROSS_RECONSTRUCTION"
+  },
+  "input_hashes": [
+    "workdir/obs_bundle/pecvel/cf4_full/cf4_groups.npz:sha256:3c0f2e1a5b56b7227abb5e187406810d7eb15e924aac69e9cb0ffc1343a811ad",
+    "workdir/obs_bundle/pecvel/cf4_full/cf4_pv_variants.npz:sha256:e3dfd734c133858892436a139eb0bd0ed916e3283db54d83dd7c0146d451d87b"
+  ],
+  "product": "Cosmicflows-4 groups (Tully+ 2023) + CF4++ WF field",
+  "reconstruction_method_comparison": {
+    "Vpds": {
+      "amplitude_error_kms": 9.3,
+      "amplitude_kms": 318.95,
+      "apex_galactic_l_b_deg": [
+        295.96,
+        4.74
+      ],
+      "estimator": "Davis-Scrimgeour 2014 direct",
+      "n_groups": 38049,
+      "sigma_star_kms": 160.0
+    },
+    "Vpec": {
+      "amplitude_error_kms": 4.97,
+      "amplitude_kms": 340.73,
+      "apex_galactic_l_b_deg": [
+        293.34,
+        20.17
+      ],
+      "estimator": "ramp Eq.11 (WF blend; frozen column)",
+      "n_groups": 38049,
+      "sigma_star_kms": 50.0
+    },
+    "Vpwf": {
+      "amplitude_error_kms": 4.94,
+      "amplitude_kms": 144.6,
+      "apex_galactic_l_b_deg": [
+        292.74,
+        23.42
+      ],
+      "estimator": "Watkins-Feldman 2015 Wiener-filter",
+      "n_groups": 38049,
+      "sigma_star_kms": 50.0
+    }
+  },
+  "schema": "htt.cf4_reconstruction_dependence.v1",
+  "scope_not_claimed": "model-independent bulk-flow amplitudes/apexes and their reconstruction-method + ZoA spread; NOT a Bianchi family, geometry, or observer-frame claim; no anisotropy discovery",
+  "status": "MEASURED_RECONSTRUCTION_SPREAD",
+  "zoa_sensitivity_direct_vpds": {
+    "0": {
+      "amplitude_kms": 318.95,
+      "apex_galactic_l_b_deg": [
+        295.96,
+        4.74
+      ],
+      "apex_shift_from_nocut_deg": 0.0,
+      "b_cut_deg": 0.0,
+      "n_groups": 38049
+    },
+    "10": {
+      "amplitude_kms": 320.23,
+      "apex_galactic_l_b_deg": [
+        296.47,
+        4.69
+      ],
+      "apex_shift_from_nocut_deg": 0.51,
+      "b_cut_deg": 10.0,
+      "n_groups": 37737
+    },
+    "15": {
+      "amplitude_kms": 316.57,
+      "apex_galactic_l_b_deg": [
+        296.98,
+        3.77
+      ],
+      "apex_shift_from_nocut_deg": 1.41,
+      "b_cut_deg": 15.0,
+      "n_groups": 36835
+    },
+    "5": {
+      "amplitude_kms": 321.52,
+      "apex_galactic_l_b_deg": [
+        295.65,
+        4.7
+      ],
+      "apex_shift_from_nocut_deg": 0.31,
+      "b_cut_deg": 5.0,
+      "n_groups": 37996
+    }
+  },
+  "zoa_summary": {
+    "amplitude_spread_kms": 4.95,
+    "expectation": "literature ~10-15% magnitude, 5-10 deg direction",
+    "max_apex_shift_deg": 1.41
+  }
+}

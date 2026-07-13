@@ -684,6 +684,28 @@ def stage_cf4_full(root: Path, sources: dict, log: Logger, **opts):
         log(f"           VizieR: {s['project_page']}")
 
 
+def stage_cf4_reconstructions(root: Path, sources: dict, log: Logger, **opts):
+    """External velocity-field reconstructions for the CF4 reconstruction-method
+    cross-check (REV-R196). Carrick 2015 2M++ is a public direct download (an
+    INDEPENDENT tracer + linear method); the Nusser 2026 2MRS reconstruction has
+    no confirmed public release -> BLOCKED_MISSING_CROSS_RECONSTRUCTION (set
+    NUSSER_2MRS_URL for a direct file). Off-Dropbox target if available."""
+    s = sources.get("cf4_reconstructions", {})
+    dest = Path(opts.get("cf4_recon_dir")
+                or "/mnt/sn850x2t/htt_base_e2e/carrick_2mpp")
+    if not dest.parent.exists():
+        dest = root / "raw" / "carrick_2mpp"
+    for name, url in s.get("carrick_2mpp", {}).get("files", {}).items():
+        download(url, dest / name, log, optional=True)
+    log(f"  [note] Carrick 2M++ velocity field -> {dest} (257^3, 400 Mpc/h).")
+    nurl = os.environ.get(s.get("nusser_2mrs", {}).get("env_url_var", "NUSSER_2MRS_URL"))
+    if nurl:
+        download(nurl, (root / "raw" / "nusser_2mrs" / Path(nurl).name), log, optional=True)
+    else:
+        log("  [blocked] Nusser 2026 2MRS: BLOCKED_MISSING_CROSS_RECONSTRUCTION "
+            "(no public release; set NUSSER_2MRS_URL).")
+
+
 def stage_planck_npipe(root: Path, sources: dict, log: Logger, **opts):
     """Planck PR4/NPIPE maps for LR-06E (observer-boost / BipoSH).
 
@@ -710,6 +732,7 @@ def stage_planck_npipe(root: Path, sources: dict, log: Logger, **opts):
 STAGES = {
     "env":            stage_env,
     "cf4_full":       stage_cf4_full,
+    "cf4_reconstructions": stage_cf4_reconstructions,
     "planck_npipe":   stage_planck_npipe,
     "planck_pr3":     stage_planck_pr3,
     "bicep_keck":     stage_bicep_keck,

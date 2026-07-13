@@ -1,0 +1,150 @@
+{
+  "amplitude_binning_systematic": {
+    "B200_alt_nside8_kms": 401.97,
+    "B200_primary_nside4_kms": 405.22,
+    "systematic_kms": 3.25
+  },
+  "apex_stability": {
+    "apex_vs_R": {
+      "100": [
+        295.92,
+        -16.74
+      ],
+      "150": [
+        309.78,
+        -63.15
+      ],
+      "200": [
+        318.95,
+        -72.04
+      ],
+      "50": [
+        289.19,
+        10.6
+      ]
+    },
+    "note": "the apex is well-constrained at R<=100 (near the published CF4 flow); it swings with scale as the sparse/anisotropic deep CF4 sample takes over (Psi_par turns negative at large separation, anti-weighting deep cells) -- the AMPLITUDE, not the large-R direction, is the robust tension quantity"
+  },
+  "bulk_flow_vs_R": {
+    "100": {
+      "amplitude_kms": 135.36,
+      "apex_galactic_l_b_deg": [
+        295.92,
+        -16.74
+      ],
+      "cosmic_variance_error_kms": 84.52,
+      "cosmic_variance_error_pk_corrected_kms": 101.5,
+      "lcdm_expected_B_rms_kms": 129.01,
+      "noise_error_kms": 26.898,
+      "significance": {
+        "chi2_3dof_full": 2.333,
+        "p_value_full": 0.50615,
+        "sigma_full_fiducial_pk": 0.66,
+        "sigma_noise_only": 4.42,
+        "sigma_pk_corrected": 0.46
+      }
+    },
+    "150": {
+      "amplitude_kms": 263.14,
+      "apex_galactic_l_b_deg": [
+        309.78,
+        -63.15
+      ],
+      "cosmic_variance_error_kms": 68.09,
+      "cosmic_variance_error_pk_corrected_kms": 81.78,
+      "lcdm_expected_B_rms_kms": 93.05,
+      "noise_error_kms": 25.97,
+      "significance": {
+        "chi2_3dof_full": 13.386,
+        "p_value_full": 0.00387,
+        "sigma_full_fiducial_pk": 2.89,
+        "sigma_noise_only": 10.3,
+        "sigma_pk_corrected": 2.29
+      }
+    },
+    "200": {
+      "amplitude_kms": 405.22,
+      "apex_galactic_l_b_deg": [
+        318.95,
+        -72.04
+      ],
+      "cosmic_variance_error_kms": 62.57,
+      "cosmic_variance_error_pk_corrected_kms": 75.14,
+      "lcdm_expected_B_rms_kms": 72.69,
+      "noise_error_kms": 27.442,
+      "significance": {
+        "chi2_3dof_full": 35.903,
+        "p_value_full": 0.0,
+        "sigma_full_fiducial_pk": 5.37,
+        "sigma_noise_only": 14.81,
+        "sigma_pk_corrected": 4.44
+      }
+    },
+    "50": {
+      "amplitude_kms": 173.33,
+      "apex_galactic_l_b_deg": [
+        289.19,
+        10.6
+      ],
+      "cosmic_variance_error_kms": 120.33,
+      "cosmic_variance_error_pk_corrected_kms": 144.51,
+      "lcdm_expected_B_rms_kms": 208.01,
+      "noise_error_kms": 16.017,
+      "significance": {
+        "chi2_3dof_full": 2.039,
+        "p_value_full": 0.56436,
+        "sigma_full_fiducial_pk": 0.58,
+        "sigma_noise_only": 10.85,
+        "sigma_pk_corrected": 0.38
+      }
+    }
+  },
+  "caveats": [
+    "the significance is a LIKELY OVER-ESTIMATE and is reported as a treatment-dependent RANGE, not a single headline: Whitford 2023 shows MV bulk-flow uncertainties are typically underestimated (the linear-theory + Gaussian-window covariance omits the non-Gaussian + survey-selection scatter that release-matched mocks capture), so tension is overestimated; a definitive significance still needs the release-matched mocks (BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP)",
+    "the fiducial EH98 no-wiggle P(k) runs ~15% low in sigma_v; the cosmic variance is therefore also reported P(k)-corrected to the standard linear sigma_v (370 km/s), which lowers sigma -- a scale offset carried by the fiducial cosmology, not a data feature",
+    "the estimator uses a GAUSSIAN window of scale R (exp(-r^2/2R^2)); |B|(R) and the LambdaCDM expectation are for THAT window; the AMPLITUDE is the robust quantity (|B|(200)~370-420 km/s consistent with the published CF4 419+/-36) -- the APEX is well-constrained only at R<=100 (near the published flow) and swings at large R where the sparse deep CF4 sample dominates (see apex_stability)",
+    "the |B|(200) amplitude carries a ~3 km/s HEALPix-binning systematic (nside 4 vs 8); groups are binned into HEALPix x radial cells (standard MV practice), validated exact on an injected uniform flow, sigma_v diagonal to <0.1%, converged vs a finer k/A grid"
+  ],
+  "claim": "real measurement: CF4 MV ideal-window bulk flow |B|(200 h^-1Mpc) = 405 km/s (+/- 3 binning syst), consistent with the published CF4 419+/-36; small-R apex (l,b)=(289,11) ~ 8 deg from the published flow; LambdaCDM tension in the range 4.4-5.4 sigma (P(k)-corrected to fiducial covariance; treatment-dependent per Whitford 2023, a likely over-estimate, NOT a single headline value)",
+  "estimator": "Watkins-Feldman-Hudson minimum-variance, Gaussian window scale R; groups binned into HEALPix x radial cells",
+  "fiducial_cosmology": {
+    "Omega_b": 0.0493,
+    "Omega_m": 0.3153,
+    "P_k": "EH98 no-wiggle, sigma_8-normalised (self-contained)",
+    "growth_f_Om^0.55": 0.53003,
+    "h": 0.6736,
+    "n_s": 0.9649,
+    "sigma_8": 0.8111
+  },
+  "headline_R_hmpc": 200.0,
+  "input_hashes": [
+    "workdir/obs_bundle/pecvel/cf4_full/cf4_groups.npz:sha256:3c0f2e1a5b56b7227abb5e187406810d7eb15e924aac69e9cb0ffc1343a811ad"
+  ],
+  "literature_crosscheck": {
+    "amplitude_deviation_kms": 13.78,
+    "apex50_separation_from_published_deg": 8.47,
+    "apex_at_50hmpc_l_b_deg": [
+      289.19,
+      10.6
+    ],
+    "our_200hmpc_kms": 405.22,
+    "watkins2023_200hmpc_kms": 419.0,
+    "whitford2023_173mpch_kms": 428.0,
+    "within_band": true
+  },
+  "n_cells": 1389,
+  "n_groups": 38038,
+  "product": "Cosmicflows-4 groups (Tully+ 2023); MV ideal-window bulk flow",
+  "residual_gate": "release-matched CF4 forward mocks (full non-Gaussian + selection covariance) to pin the amplitude significance; the linear Gaussian-window covariance here is the credible upper estimate that resolves the rev-r195 withheld-significance, pending those mocks",
+  "schema": "htt.cf4_mv_bulkflow.v1",
+  "scope_not_claimed": "a bulk-flow-vs-LambdaCDM kinematic measurement + significance; no anisotropy discovery beyond the stated covariance-treatment-dependent sigma, and NOT a Bianchi family, geometry, or observer-frame claim; the theory-g link is out of scope (it needs the native low-multipole solver)",
+  "sigma_star_kms": 50.0,
+  "status": "MEASURED_MV_BULKFLOW",
+  "validation": {
+    "cell_diagonal_sigma_v_kms": 307.96,
+    "closed_form_sigma_v_kms": 308.09,
+    "injection_recovery_error_kms": 0.0,
+    "khat_grid_convergence_rel": 0.0,
+    "passed": true
+  }
+}

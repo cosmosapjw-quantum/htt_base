@@ -308,6 +308,22 @@
       "produces": "obs_bundle/pecvel/cf4_full/cf4_groups.npz, obs_bundle/pecvel/cf4_full/cf4_full_release_manifest.json"
     }
   },
+  "cf4_reconstructions": {
+    "_doc": "External velocity-field reconstructions for the reconstruction-method-dependence cross-check (REV-R196). Carrick 2015 2M++ (an INDEPENDENT tracer + linear method) is a public direct download; the Nusser 2026 2MRS Bayesian Zel'dovich reconstruction (arXiv:2606.08593) has no confirmed public release -> BLOCKED_MISSING_CROSS_RECONSTRUCTION until bound (set NUSSER_2MRS_URL for a direct file, else fetch manually).",
+    "carrick_2mpp": {
+      "project_page": "https://cosmicflows.iap.fr",
+      "files": {
+        "twompp_velocity.npy": "http://cosmicflows.iap.fr/assets/data/twompp_velocity.npy",
+        "twompp_README.txt": "http://cosmicflows.iap.fr/assets/data/twompp_README.txt"
+      },
+      "grid": "257^3 cells, 400 Mpc/h box, 1.5625 Mpc/h spacing, Galactic Cartesian"
+    },
+    "nusser_2mrs": {
+      "project_page": "https://arxiv.org/abs/2606.08593",
+      "env_url_var": "NUSSER_2MRS_URL",
+      "blocker": "BLOCKED_MISSING_CROSS_RECONSTRUCTION"
+    }
+  },
   "planck_npipe": {
     "_doc": "Planck PR4/NPIPE frequency+component maps for LR-06E observer-boost/BipoSH. The PR4 maps are served from the Planck Legacy Archive query portal (not a plain file URL); set PLANCK_NPIPE_URL to a direct map URL to auto-fetch, else fetch manually. The end-to-end NPIPE simulation ensemble (300 realizations, hundreds of GB) needed to CALIBRATE boost injection recovery is not auto-downloaded; LR-06E calibration remains BLOCKED_MISSING_E2E_SIMULATIONS until those sims are bound.",
     "project_page": "https://pla.esac.esa.int/#maps",

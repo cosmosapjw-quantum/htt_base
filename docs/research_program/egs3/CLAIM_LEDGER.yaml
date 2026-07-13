@@ -306,6 +306,27 @@ claims:
     claim_tier: C3
     allowed_phrase: K5-LCDMCV -- the CF4 weighted-GLS bulk flow is a real MEASUREMENT (|B| = 340.7 +/- 5.0 km/s inverse-Fisher measurement error, apex (l,b)=(293,20) -- 37 deg from the CMB dipole and only 18 deg from the published CF4 (Watkins 2023) flow direction, Omega_tilt = 4.07e-7); the linear estimator-matched cosmic variance (mode-function window integral, validated: single-group sigma_v recovers the closed-form 1-D dispersion to 1.2%, khat/k grids converged to 0.4%) replaces the frozen release-coverage card's hand-set 150 km/s isotropic prior
     caveats: [the LambdaCDM amplitude SIGNIFICANCE is WITHHELD -- the linear window cosmic variance (~35 km/s along B) is a LOWER BOUND because the noise-weighted GLS estimator aliases small-scale (nonlinear) velocity power that linear theory omits, so the naive chi^2 (~9 sigma) is an ARTIFACT, not a cosmological tension/anomaly; a credible amplitude significance needs the minimum-variance ideal-window estimator or release-matched mocks (BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP); model-independent kinematic descriptor; NOT a Bianchi family, geometry, or observer-frame-violation claim; frozen v7/v8/v9 K5 cards untouched; no tension/anomaly/detection headline]
+  k5.cf4_mv_bulkflow:
+    owner: OBSSTAT/DATA
+    status: MEASURED_MV_BULKFLOW
+    evidence_type: real_data_measurement
+    claim_tier: C3
+    allowed_phrase: K5-MV -- the CF4 minimum-variance ideal-window bulk flow (Watkins-Feldman-Hudson) resolves the rev-r195 withheld significance: the MV weights are tied to a specified Gaussian window of scale R, so the cosmic-variance covariance is FAITHFUL and the LambdaCDM significance is reportable; |B|(200 h^-1Mpc) = 405 km/s (+/- 3 binning systematic), consistent with the published CF4 419 +/- 36; apex@50 h^-1Mpc is 8.5 deg from the published flow; validated (injected uniform flow recovered exact to 1e-14, sigma_v diagonal to <0.1%, converged vs a finer grid)
+    caveats: [the significance ~4.4-5.4 sigma (P(k)-corrected to fiducial covariance) is a LIKELY OVER-ESTIMATE and is reported as a treatment-dependent RANGE (Whitford 2023: MV uncertainties are typically underestimated -> tension overestimated; the linear Gaussian-window covariance omits the non-Gaussian + selection scatter); the fiducial EH98 P(k) runs ~15% low in sigma_v (corrected up for the conservative sigma); the AMPLITUDE is the robust quantity -- the apex swings at large R where the sparse deep CF4 sample dominates (well-constrained only at R<=100); a definitive significance needs release-matched mocks (BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP); a bulk-flow-vs-LambdaCDM kinematic statement, NOT a Bianchi family/geometry or observer-frame claim; no anisotropy discovery]
+  k5.cf4_reconstruction_dependence:
+    owner: OBSSTAT/DATA
+    status: MEASURED_RECONSTRUCTION_SPREAD
+    evidence_type: real_data_measurement
+    claim_tier: C3
+    allowed_phrase: K5-RECON -- the CF4 bulk-flow amplitude depends on the peculiar-velocity reconstruction: the identical weighted-GLS estimator on the three catalogue PV columns (Vpds direct 319, Vpwf pure-Wiener-filter 145, Vpec ramp 341 km/s) plus the CF4++ WF field (315) and the external Carrick 2015 2M++ field (209, independent tracer, downloaded from cosmicflows.iap.fr) spans 145-341 km/s (spread 196) across 5 reconstruction methods; apex spread 28 deg; the ZoA |b|-cut sensitivity is small (5 km/s / 1.4 deg -- CF4 has good sky coverage)
+    caveats: [the pure Wiener-filter shrinks the flow toward zero (the WF prior mean), which is why Vpwf is the low outlier; the field reconstructions use their own depth/window convention (a cross-method sanity comparison, not scale-matched); the Nusser 2026 2MRS reconstruction has no confirmed public release -> BLOCKED_MISSING_CROSS_RECONSTRUCTION; model-independent kinematic descriptors; NOT a Bianchi family/geometry or observer-frame claim; no anisotropy discovery]
+  k5.cf4_velocity_correlation:
+    owner: OBSSTAT/DATA
+    status: MEASURED_CORRELATION_DIAGNOSTIC
+    evidence_type: real_data_measurement
+    claim_tier: C3
+    allowed_phrase: K5-VCORR -- the reconstruction-INDEPENDENT statistic (the physical, well-posed replacement for an ill-posed angular pseudo-C_l): the Gorski velocity correlation function Psi_par(r)/Psi_perp(r) is measured directly from LOS-velocity pairs (NO field reconstruction), bulk-subtracted + inverse-error-weighted; the simplified pair estimator gives a DIAGNOSTIC f sigma_8 = 0.38 (Vpec, matching the published CF4 ~0.38) and 0.75 (direct Vpds, noise-limited); the cosmic Mach number is also reported
+    caveats: [the f sigma_8 is a treatment-dependent DIAGNOSTIC, not a precision constraint -- raw pairs give ~1-3 (measurement-noise + bulk-flow contaminated), bulk-flow subtraction + inverse-error weighting bring Vpec to ~0.38 but the Psi_par shape still departs from linear theory, so a precision value needs the full max-likelihood noise-aware estimator (Johnson 2014; CF4 arXiv:2604.08314, registered exit-gate); the direct Vpds is noisiest (unphysical outliers) so its diagnostic is least reliable; the estimator runs on a deterministic 12k subsample; NOT a Bianchi family/geometry or observer-frame claim; no anisotropy discovery]
   egs3.omega_k_reopening:
     owner: OBSSTAT/GR
     status: DERIVED
