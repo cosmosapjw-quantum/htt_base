@@ -155,6 +155,32 @@ def _v9_rows() -> list[dict]:
            "estimator (registered exit-gate); cosmic Mach number reported",
            "measured_diagnostic",
            "cf4_velocity_correlation_card.json"),
+        _r("K5-VCORR-ML", DATA,
+           "the PRECISION upgrade of K5-VCORR (rev-r196 diagnostic): the "
+           "field-level maximum-likelihood NOISE-AWARE f sigma_8 (Johnson+2014) "
+           "on the binned CF4 cells, C(A)=A G+N maximised over the velocity-field "
+           "amplitude -- the registered exit-gate; injection-MC-validated unbiased",
+           "f sigma_8 = 0.40 +/- 0.02 (Vpec, shape-corrected; conservative "
+           "octant jackknife +/- 0.10), CONSISTENT with the published CF4 ~0.38 "
+           "and Planck ~0.44; the injection Monte Carlo recovers the amplitude "
+           "unbiased (pull 1.4 sigma); the direct Vpds is noise-limited (its ML "
+           "amplitude rails); replaces the treatment-dependent pair diagnostic",
+           "measured",
+           "cf4_velocity_correlation_ml_card.json"),
+        _r("K6-CURL", DATA,
+           "K6 vorticity on the REAL CF4++ 3-D WF field (rev-r127 no-go was "
+           "abstract): the WF mean-field curl/div ratio quantifies the potential-"
+           "flow suppression, and a correlated-residual constrained-realization "
+           "vorticity distribution (scaled to the per-cell WF std) upgrades the "
+           "per-cell-independent toy",
+           "the WF mean field is strongly curl-suppressed (RMS|curl|/RMS|div| = "
+           "0.009, potential flow) -- the no-go CONFIRMED on the real 3-D field; "
+           "the CR vorticity RMS|curl| = 14-48 (km/s)/Mpc is residual-dominated "
+           "and correlation-length-dependent, so a DEFINITIVE ensemble still "
+           "needs the full WF operator (BLOCKED_MISSING_FIELD_REALIZATIONS "
+           "PARTIAL)",
+           "measured",
+           "cf4pp_vorticity_card.json"),
         _r("EXT-DESI", DATA,
            "DESI DR1 BGS number-count dipole lane (Omega_tilt-sector cross-"
            "check): randoms downloaded; window-corrected overdensity dipole "
@@ -166,6 +192,19 @@ def _v9_rows() -> list[dict]:
            "bias + significance need release-matched mocks (residual gate)",
            "measured_diagnostic",
            "external_lanes_seal.json; desi_dipole_card.json"),
+        _r("EXT-DESI-MOCK", DATA,
+           "mock-calibrated significance of the DESI BGS number-count dipole "
+           "(the rev-r197 in-house-mock pattern applied to the dipole): the "
+           "analytic shot-noise floor + an in-house LambdaCDM clustering mock "
+           "(exact ell=1 projection of the observed dN/dz -> GRF sky maps masked "
+           "to the footprint + Poisson shot, IDENTICAL estimator)",
+           "the observed dipole D=9.49e-3 is CLUSTERING-dominated (13.5 sigma "
+           "above the shot-noise floor) and CONSISTENT with LambdaCDM clustering "
+           "cosmic variance (mock |D|=0.021+/-0.009, p=0.90 at bias 1.5; robust "
+           "across bias 1.2-2.0) -- NOT an excess/anomaly; the kinematic dipole "
+           "is sub-dominant to the clustering cosmic variance at BGS depths",
+           "measured",
+           "desi_dipole_mock_card.json"),
         _r("EXT-ACT", DATA,
            "ACT DR6 CMB-lensing low-multipole isotropy cross-check "
            "(independent-instrument): 400 baseline sims give the mean field "

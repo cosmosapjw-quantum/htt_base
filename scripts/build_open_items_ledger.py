@@ -59,24 +59,6 @@ OPEN_ITEMS = [
     },
     {
         "rank": 2,
-        "item": "K5 velocity-correlation precision f sigma_8 (max-likelihood "
-                "noise-aware estimator)",
-        "source": "registry K5-VCORR exit-gate (rev-r196)",
-        "ticket": None,
-        "ticket_state": None,
-        "blocker": None,
-        "executability": "now",
-        "exit_gate": "the full max-likelihood noise-aware velocity-correlation "
-                     "estimator (Johnson 2014; CF4 arXiv:2604.08314); the "
-                     "simplified pair estimator (cf4_velocity_correlation.py) "
-                     "gives a treatment-dependent DIAGNOSTIC f sigma_8",
-        "note": "REV-R196: the reconstruction-independent Psi_par/Psi_perp "
-                "statistic is measured; Vpec f sigma_8 diagnostic ~0.38 matches "
-                "the published CF4, but the direct Vpds is noise-limited (0.75) "
-                "-- the precision value needs the ML estimator.",
-    },
-    {
-        "rank": 3,
         "item": "Paper-A/B/C split of the audit-report material",
         "source": "registered plan (v9 report; user decision 2026-07-10: "
                   "plan-only this cycle)",
@@ -88,7 +70,7 @@ OPEN_ITEMS = [
         "note": None,
     },
     {
-        "rank": 4,
+        "rank": 3,
         "item": "K1 E2E-systematics null + BipoSH E2E upgrade",
         "source": "ticket EGS3-C1-k1-ffp10-npipe; BLOCKERS.md section 1",
         "ticket": "k1_ffp10_npipe.yaml",
@@ -101,18 +83,28 @@ OPEN_ITEMS = [
         "note": "PLA/PL3 downloads in progress (2026-07-11).",
     },
     {
-        "rank": 5,
+        "rank": 4,
         "item": "K6 Hoffman-Ribak constrained-realization vorticity posterior",
         "source": "ticket EGS3-C2-cf4-wfcr; BLOCKERS.md section 2",
         "ticket": "cf4_wfcr.yaml",
         "ticket_state": "blocked",
         "blocker": "BLOCKED_MISSING_FIELD_REALIZATIONS",
         "executability": "blocked",
-        "exit_gate": "owned CR ensemble over the CF4 3D WF field",
-        "note": "WF mean-field curl-suppression no-go already established.",
+        "exit_gate": "the full WF residual covariance / operator for a true "
+                     "Hoffman-Ribak CR ensemble; rev-r198 already quantified the "
+                     "mean-field curl suppression on the real 3-D field + built a "
+                     "correlated-residual CR (correlation-length-dependent)",
+        "note": "REV-R198: cf4pp_vorticity_posterior.py QUANTIFIED the WF "
+                "mean-field curl suppression on the REAL CF4++ 3-D field "
+                "(RMS|curl|/RMS|div| = 0.009, potential flow -- the no-go "
+                "confirmed) and built a CORRELATED-residual CR (upgrade over the "
+                "per-cell-independent toy). The CR vorticity distribution is "
+                "residual-dominated + correlation-length-dependent (14-48 "
+                "(km/s)/Mpc across R=7.8-30 Mpc); a DEFINITIVE ensemble still "
+                "needs the WF operator -- stays PARTIAL.",
     },
     {
-        "rank": 6,
+        "rank": 5,
         "item": "K5 CF4 bulk-flow significance: nonlinear COLA/L-PICOLA "
                 "refinement (in-house physical mock DELIVERED)",
         "source": "ticket EGS3-C2-cf4-wfcr; BLOCKERS.md section 3; registry "
@@ -139,19 +131,19 @@ OPEN_ITEMS = [
                 "resolved rev-r195's withheld significance.)",
     },
     {
-        "rank": 7,
+        "rank": 6,
         "item": "PR08-006 joint posterior artifact",
         "source": "BLOCKERS.md section 4",
         "ticket": None,
         "ticket_state": None,
         "blocker": "BLOCKED_UPSTREAM",
         "executability": "blocked",
-        "exit_gate": "close K1+K5+K6 first (items 2-4); then assemble with "
+        "exit_gate": "close K1+K5+K6 first (items 3-5); then assemble with "
                      "explicit measured/partial/fail-closed sectors",
         "note": None,
     },
     {
-        "rank": 8,
+        "rank": 7,
         "item": "Native low-ell Bianchi solver atlas (theory-g CMB likelihood)",
         "source": "BLOCKERS.md section 5; PR10 project",
         "ticket": None,
@@ -163,45 +155,51 @@ OPEN_ITEMS = [
         "note": None,
     },
     {
-        "rank": 9,
-        "item": "DESI number-count dipole: mock-calibrated significance",
-        "source": "ticket EGS3-H1-desi-number-count-dipole; registry EXT-DESI",
+        "rank": 8,
+        "item": "DESI number-count dipole: clustering/kinematic separation "
+                "(significance mock-calibrated)",
+        "source": "ticket EGS3-H1-desi-number-count-dipole; registry EXT-DESI / "
+                  "EXT-DESI-MOCK",
         "ticket": "desi_number_count_dipole.yaml",
-        "ticket_state": "randoms_downloaded_window_corrected_measured",
+        "ticket_state": "mock_calibrated_consistent_with_lcdm_clustering",
         "blocker": None,
         "executability": "blocked",
-        "exit_gate": "release-matched DESI BGS mocks to calibrate the "
-                     "mask-coupling amplitude bias + significance (and to "
-                     "separate the local clustering dipole from the kinematic "
-                     "dipole at BGS depths)",
-        "note": "REV-R192/R193: randoms downloaded (fetch.py --desi-randoms); "
-                "window-corrected overdensity dipole MEASURED D=9.49e-3 "
-                "(224x below the raw footprint, at the kinematic scale), "
-                "EXT-DESI flipped to MEASURED_WINDOW_CORRECTED (diagnostic); "
-                "only the mock-calibrated significance remains.",
+        "exit_gate": "higher-z tracers / density-cross-correlation to SEPARATE "
+                     "the clustering dipole from the kinematic dipole at BGS "
+                     "depths; the significance is already mock-calibrated "
+                     "(rev-r198: consistent with LambdaCDM clustering)",
+        "note": "REV-R192/R193: randoms downloaded, window-corrected dipole "
+                "D=9.49e-3 MEASURED. REV-R198: significance MOCK-CALIBRATED "
+                "(desi_dipole_mock_significance.py, an in-house LambdaCDM "
+                "clustering mock) -- D is CLUSTERING-dominated (13.5 sigma above "
+                "the shot-noise floor) and CONSISTENT with LambdaCDM clustering "
+                "cosmic variance (p=0.90), NOT an excess; only the "
+                "clustering/kinematic SEPARATION (BGS low-z) remains.",
     },
     {
-        "rank": 10,
+        "rank": 9,
         "item": "ACT DR6 low-ell kappa isotropy: N0/N1 debias",
         "source": "ticket EGS3-H2-act-dr6-kappa-isotropy; registry EXT-ACT",
         "ticket": "act_dr6_kappa_isotropy.yaml",
         "ticket_state": "sims_downloaded_mean_field_debiased_isotropy_measured",
         "blocker": None,
         "executability": "blocked",
-        "exit_gate": "separate N0/N1 realisation-dependent debiasing (the sim "
-                     "ensemble is currently used directly as the isotropic "
-                     "null); the low-ell band is reconstruction-noise-"
-                     "dominated so consistency is the expected result",
-        "note": "REV-R192/R194: 400 sims downloaded (fetch.py --act-sims); "
-                "mean field subtracted; ell=2..10 debiased band power p=0.35 "
-                "CONSISTENT with the isotropic sims. REV-R195 added a real 95% "
-                "CL model-independent UPPER LIMIT on excess low-ell kappa power "
-                "(< 3.28e-6, 0.47x the null band power) by injecting a flat "
-                "signal into the sim null; only the separate N0/N1 debias "
-                "remains. Dipole ell=1 not measurable by ACT lensing.",
+        "exit_gate": "a true realisation-dependent N0 (RDN0) debias needs the "
+                     "quadratic-estimator pipeline / raw CMB maps -- only the "
+                     "reconstructed kappa a_lm are on disk, so this is "
+                     "blocked-on-QE (NOT runnable with kappa alone; the "
+                     "sim-null already includes N0+N1 for the isotropy test)",
+        "note": "REV-R192/R194: 400 sims downloaded; mean field subtracted; "
+                "ell=2..10 debiased band power p=0.35 CONSISTENT with the "
+                "isotropic sims. REV-R195 added a real 95% CL UPPER LIMIT on "
+                "excess low-ell kappa power. REV-R198: confirmed the RDN0 debias "
+                "is BLOCKED-on-QE -- only reconstructed kappa a_lm are available "
+                "(a realisation-dependent N0 needs the QE inputs / raw CMB); the "
+                "isotropy conclusion is unaffected (the sim-null handles N0+N1). "
+                "Dipole ell=1 not measurable by ACT lensing.",
     },
     {
-        "rank": 11,
+        "rank": 10,
         "item": "MESb (PRD 51, 5942) INTERNAL non-geodesic derivation "
                 "(Eqs 30-36 algebra)",
         "source": "ticket EGS3-G8-mes-full-rederivation (residual)",

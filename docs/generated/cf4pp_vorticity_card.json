@@ -1,0 +1,55 @@
+{
+  "caveats": [
+    "the WF MEAN-field curl/div ratio (0.009) is a real measurement of the potential-flow suppression on the reconstructed 3-D field; the CR vorticity DISTRIBUTION is residual-dominated and depends on the residual correlation length R (a factor >1.5 across R=[7.8, 15.0, 30.0] Mpc), which is NOT determined by (v_mean, v_std) alone",
+    "the true Hoffman-Ribak CR needs the full WF residual covariance (the WF operator + the data + the noise model), not just the per-cell WF std; so a DEFINITIVE CR vorticity distribution still needs an owned field-realization ensemble (BLOCKED_MISSING_FIELD_REALIZATIONS stays PARTIAL) -- this correlated-residual CR is a principled upgrade over the per-cell-independent toy, not the definitive ensemble",
+    "curl and divergence are central-difference derivatives on the 128^3 grid (cell 7.8 Mpc) within the reliable radius 250 Mpc; the box convention (1000 Mpc, matching the reconstruction lane) sets the gradient scale"
+  ],
+  "claim": "the CF4++ WF mean velocity field is strongly curl-suppressed (RMS|curl|/RMS|div| = 0.009, potential flow), confirming the K6 no-go on the REAL 3-D reconstructed field; a correlated-residual CR vorticity distribution (scaled to the per-cell WF std) gives RMS|curl| = 13.6-48.1 (km/s)/Mpc depending on the residual correlation length -- residual-dominated and correlation-length-dependent, so a DEFINITIVE CR ensemble still needs the full WF operator (blocker stays PARTIAL)",
+  "cr_fiducial_correlation_length_mpc": 15.0,
+  "cr_vorticity_distribution_vs_correlation_length": {
+    "15.0": {
+      "cr_over_meanfield": 102.3,
+      "cr_rms_curl_mean": 28.4638,
+      "cr_rms_curl_std": 0.3226
+    },
+    "30.0": {
+      "cr_over_meanfield": 48.7,
+      "cr_rms_curl_mean": 13.5544,
+      "cr_rms_curl_std": 0.4189
+    },
+    "7.8": {
+      "cr_over_meanfield": 173.0,
+      "cr_rms_curl_mean": 48.1275,
+      "cr_rms_curl_std": 0.2665
+    }
+  },
+  "grid": {
+    "box_mpc": 1000.0,
+    "cell_mpc": 7.81,
+    "n": 128,
+    "valid_radius_mpc": 250.0
+  },
+  "headline": {
+    "cr_distribution_correlation_length_dependent": true,
+    "cr_rms_curl_range_kms_per_mpc": [
+      13.554,
+      48.127
+    ],
+    "meanfield_curl_over_div": 0.0089,
+    "meanfield_potential_flow": true
+  },
+  "input_hashes": [
+    "workdir/raw/cf4/CF4pp_mean_std_grids.npz:sha256:78c0515c8330066a034f5e8afb3663e6c81ddf033db302a921c662344639bc91"
+  ],
+  "n_cr": 40,
+  "product": "CF4++ Wiener-filter reconstructed 3-D velocity field (v_mean + per-cell WF std v_std)",
+  "schema": "htt.cf4pp_vorticity_card.v1",
+  "scope_not_claimed": "a potential-flow-suppression measurement + a conditional CR vorticity distribution; NOT a Bianchi family, geometry, or observer-frame claim; no vorticity signal claim",
+  "status": "MEASURED_WF_CURL_SUPPRESSION_CR_PARTIAL",
+  "wf_mean_field": {
+    "curl_over_div_ratio": 0.0089,
+    "interpretation": "the WF mean field is strongly curl-suppressed (curl << div) -> potential flow, confirming the no-go on the real 3-D CF4++ field",
+    "rms_curl_kms_per_mpc": 0.2782,
+    "rms_div_kms_per_mpc": 31.3068
+  }
+}

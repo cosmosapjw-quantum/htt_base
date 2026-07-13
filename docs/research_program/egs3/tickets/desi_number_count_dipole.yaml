@@ -1,7 +1,7 @@
 id: EGS3-H1-desi-number-count-dipole
 title: DESI DR1 BGS number-count dipole (Omega_tilt-sector cross-check)
-state: randoms_downloaded_window_corrected_measured
-blocker: none_for_point_estimate__mock_significance_pending
+state: mock_calibrated_consistent_with_lcdm_clustering
+blocker: none__significance_mock_calibrated__clustering_kinematic_separation_residual
 owner_lane: obsstat_data
 scope: measure the DESI DR1 BGS_ANY number-count dipole (amplitude + direction)
   as an independent Omega_tilt-sector probe (the LSS matter-frame dipole vs the
@@ -28,10 +28,21 @@ measured_rev_r193: |
   dipole -- a 224x suppression of the raw footprint value (2.13) down to the
   kinematic scale ~7e-3. Card docs/generated/desi_dipole_card.json; the
   EXT-DESI lane flips blocked -> MEASURED_WINDOW_CORRECTED (diagnostic-only).
-residual_gate: the measured amplitude/direction are DIAGNOSTIC -- the BGS
-  sample is low-z so the dipole MIXES the local large-scale-structure
-  (clustering) dipole with the kinematic dipole, and the fsky~0.28 partial-sky
-  mask couples multipoles, so a calibrated amplitude + significance still needs
-  release-matched mocks. No anisotropy, geometry, family, or inference claim.
+mock_calibrated_rev_r198: |
+  scripts/desi_dipole_mock_significance.py + htt/obsstat/number_count_dipole.py
+  supply the in-house LambdaCDM significance mock (the rev-r197 pattern applied
+  to the dipole): the analytic shot-noise floor separates shot noise from
+  clustering, and the exact ell=1 projection of the observed dN/dz -> GRF sky
+  maps masked to the real BGS footprint + Poisson shot (IDENTICAL estimator)
+  give the LambdaCDM null. The observed dipole D=9.49e-3 is CLUSTERING-dominated
+  (13.5 sigma above the shot-noise floor) and CONSISTENT with LambdaCDM
+  clustering cosmic variance (mock |D|=0.021+/-0.009, p=0.90 at bias 1.5; robust
+  across bias 1.2-2.0) -- NOT an excess. Card desi_dipole_mock_card.json.
+residual_gate: the dipole is CLUSTERING-dominated so the significance is now
+  mock-calibrated (consistent with LambdaCDM clustering); the remaining
+  limitation is the clustering/kinematic SEPARATION -- BGS is low-z so the total
+  dipole still mixes the clustering and kinematic components, and isolating the
+  kinematic part needs higher-z tracers / a density cross-correlation. No
+  anisotropy, geometry, family, or inference claim.
 reference: DESI DR1 LSS catalogues (BGS_ANY); Crawford 2009 / Secrest et al. 2021
   linear number-count dipole estimator; CMB kinematic dipole (Planck 2018).

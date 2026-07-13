@@ -21,13 +21,13 @@ Bianchi-family, anisotropic-geometry, or native-solver claim.
 | Code | Blocks | Unblock action (owner) | Mechanics ready? | State |
 | --- | --- | --- | --- | --- |
 | `BLOCKED_MISSING_PR4_E2E_ACCESS` | K1 global low-ℓ p-value | E2E-systematics null needs PLA-portal/NERSC-auth sims | yes | **PARTIAL (rev-r127)**: look-elsewhere global p discharged on the real map under a ΛCDM null; E2E-systematics null still open |
-| `BLOCKED_MISSING_FIELD_REALIZATIONS` | K6 vorticity/curl posterior | obtain CF4 3D WF field; run Hoffman–Ribak CR | yes | **PARTIAL (rev-r127; reworded rev-r134)**: WF mean-field curl-suppression structural no-go established; a true CR (Hoffman–Ribak) vorticity posterior still blocked until a CR ensemble is owned (present field uses independent per-cell draws) |
+| `BLOCKED_MISSING_FIELD_REALIZATIONS` | K6 vorticity/curl distribution | own the full CF4 WF residual covariance (operator) for a true Hoffman–Ribak CR | yes | **PARTIAL (rev-r127; rev-r198)**: rev-r198 QUANTIFIED the WF mean-field curl suppression on the REAL 3-D CF4++ field (`cf4pp_vorticity_posterior.py`: RMS\|curl\|/RMS\|div\| = 0.009, potential flow) and built a CORRELATED-residual CR (a principled upgrade over the per-cell-independent toy). The CR vorticity distribution is residual-dominated + correlation-length-dependent (RMS\|curl\| 14–48 (km/s)/Mpc across R=7.8–30 Mpc), so a DEFINITIVE ensemble still needs the full WF residual covariance / operator |
 | `BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP` | K5 bulk-flow amplitude significance (definitive, mock-calibrated) | own the full nonlinear COLA/L-PICOLA release-matched mock suite | yes | **PARTIAL — in-house physical mock DELIVERED (rev-r197)**: `scripts/cf4_mock_calibrated_significance.py` replaces the request-only CF4TF release mocks with an in-house **physical forward-mock ensemble** (linear GRF velocity field + super-sample mode + real per-object noise at the fixed CF4 geometry, `htt/obsstat/pv_forward_mocks.py`). It reproduces the analytic linear bulk-flow covariance (mock/analytic ratio ≈1) → the estimator/geometry/noise do NOT inflate the significance; the gap to the literature ~2–3σ is localised to nonlinear velocity power. Residual: the full nonlinear COLA/L-PICOLA suite (Qin+2021 CF4TF is request-only) — **downgraded, no longer the sole gate** |
 | `BLOCKED_MISSING_CROSS_RECONSTRUCTION` | K5 external cross-reconstruction | ~~bind the Nusser 2026 2MRS reconstruction~~ | yes | **DISCHARGED_BY_SUBSTITUTION (rev-r197)**: the private Nusser 2026 2MRS reconstruction (no public release) is substituted by **two public 2MRS reconstructions** — the Lilow–Ganeshaiah-Veena–Nusser 2024 neural network (arXiv:2404.02278) and CORAS (Lilow–Nusser 2021, arXiv:2102.07291) — both downloaded + connected as reconstruction methods (7-method spread now); Nusser 2026 stays a provenance note |
 | `BLOCKED_UPSTREAM` | PR08-006 joint posterior artifact | close K1+K5+K6 first | n/a | K5 measured (conditional coverage), K6 WF mean-field no-go, K1 partial → assemblable with explicit measured/partial/fail-closed sectors |
 | `AWAITING_NATIVE_LOWELL_SOLVER` | full Bianchi family atlas / morphology | build the native low-ℓ Bianchi–Boltzmann solver | partial (B1 interim) | separate long-term project (PR10) |
-| `BLOCKED_MISSING_DESI_RANDOMS` | DESI number-count dipole (Ω_tilt cross-check) | ~~download the DESI DR1 BGS random catalogues~~ | yes | **DISCHARGED (rev-r192/r193)**: randoms downloaded (`fetch.py --desi-randoms`); window-corrected overdensity dipole MEASURED D=9.49×10⁻³ on NGC+SGC (224× below the raw footprint, at the kinematic scale). Residual: mock-calibrated significance + clustering/kinematic separation |
-| `BLOCKED_MISSING_ACT_LENSING_SIMS` | ACT DR6 low-ℓ κ isotropy | ~~download the ACT DR6 lensing simulation ensemble~~ | yes | **DISCHARGED (rev-r192/r194)**: 400 baseline sims downloaded (`fetch.py --act-sims`); mean field subtracted; ℓ=2..10 debiased band power **p=0.35, CONSISTENT** with the isotropic ΛCDM sims (dipole ℓ=1 not measurable). Residual: separate N0/N1 debias |
+| `BLOCKED_MISSING_DESI_RANDOMS` | DESI number-count dipole (Ω_tilt cross-check) | ~~download the DESI DR1 BGS random catalogues~~ | yes | **DISCHARGED (rev-r192/r193)**: randoms downloaded (`fetch.py --desi-randoms`); window-corrected overdensity dipole MEASURED D=9.49×10⁻³ on NGC+SGC (224× below the raw footprint). rev-r198 MOCK-CALIBRATED the significance (`desi_dipole_mock_significance.py`, an in-house LambdaCDM clustering mock): D is CLUSTERING-dominated (13.5σ above the shot-noise floor) and CONSISTENT with ΛCDM clustering cosmic variance (p=0.90) — not an excess. Residual: clustering/kinematic separation (BGS low-z) |
+| `BLOCKED_MISSING_ACT_LENSING_SIMS` | ACT DR6 low-ℓ κ isotropy | ~~download the ACT DR6 lensing simulation ensemble~~ | yes | **DISCHARGED (rev-r192/r194)**: 400 baseline sims downloaded (`fetch.py --act-sims`); mean field subtracted; ℓ=2..10 debiased band power **p=0.35, CONSISTENT** with the isotropic ΛCDM sims (dipole ℓ=1 not measurable). Residual: a true realization-dependent N0 (RDN0) debias needs the quadratic-estimator pipeline / raw CMB maps — only the reconstructed κ a_lm are on disk, so this is blocked-on-QE (NOT runnable with κ alone; the sim-null already includes N0+N1 correctly for the isotropy test) |
 
 **rev-r127 discharge status (real data, this session).** With local nvme + long
 runs enabled, the controlling inputs for K5/K6 were found already in-repo
@@ -138,6 +138,16 @@ rev-r128. These items are a separate refactor PR, deliberately not churned here.
   curl sector is exercised in `egs2_experiments.json:BLOCK_K6_hoffman_ribak`
   (labelled synthetic). The vorticity re-opening theorem (NT2-B3/EGS3-B3) that
   the posterior would test is already proven.
+- **rev-r198 partial.** `scripts/cf4pp_vorticity_posterior.py` +
+  `htt/obsstat/velocity_field_curl.py` QUANTIFIED the WF mean-field curl
+  suppression on the REAL 3-D CF4++ field (RMS|curl|/RMS|div| = 0.009 within the
+  reliable radius — potential flow, the no-go confirmed) and built a
+  CORRELATED-residual CR (a GRF residual scaled to the per-cell WF std) — a
+  principled upgrade over the per-cell-independent toy. The CR vorticity
+  distribution is residual-dominated + correlation-length-dependent (RMS|curl|
+  14–48 (km/s)/Mpc across R=7.8–30 Mpc), because the residual correlations are
+  NOT fixed by (v_mean, v_std) alone. This does NOT discharge the blocker: a
+  definitive CR needs the full WF residual covariance / operator.
 - **Exit gate.** Realization-conditioned shear/vorticity posterior (median +
   16/84 percentiles) from the real CF4 WF/CR ensemble + provenance.
 
