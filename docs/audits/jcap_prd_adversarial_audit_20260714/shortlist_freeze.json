@@ -1,0 +1,1430 @@
+{
+  "author_ids": [
+    "/root/pr118_statistics_advocate",
+    "/root/pr118_theory_advocate",
+    "pr118-code-advocate",
+    "root-data-author"
+  ],
+  "caveats": [
+    "Internal audit and research-prioritization artifact only.",
+    "No production scientific output is repaired or promoted by this artifact.",
+    "Counterfactual family/geometry content remains hypothesis-only and public_use=false."
+  ],
+  "claim_tier": "diagnostic_only",
+  "config_hash": "sha256:4f7928435041e4443705fbcc938af5cc16fa7e8e03ace4b4e2a1e655322ff530",
+  "generated_at": "2026-07-13T18:49:02+00:00",
+  "generating_command": "venv/bin/python -B scripts/audits/jcap_prd_20260714.py build-shortlist-freeze",
+  "git_commit_or_worktree_state": {
+    "baseline_head": "8af39b36c1d5ed4f9b16f0bc71dbecd8b22548d4",
+    "branch": "research/pr04-multicomponent",
+    "current_head": "f96e8d9eed9d318141d9ea77ab3ce47c2acecef3",
+    "worktree_porcelain": "M AGENTS.md\n M docs/audits/jcap_prd_adversarial_audit_20260714/debate_bundle.json\n M docs/audits/jcap_prd_adversarial_audit_20260714/execution_ledger.jsonl\n M docs/codex_handoff/pr_backlog.json\n M docs/codex_handoff/pr_backlog.yaml\n M docs/codex_handoff/pr_status.yaml\n M docs/generated/claim_ledger.json\n M docs/generated/external_audit_package.zip\n M docs/generated/external_audit_package_manifest.json\n M docs/generated/hostile_review_response_matrix.md\n M docs/generated/progress_checkpoints/progress_scoreboard.md\n M docs/generated/publication_claim_freeze.md\n M docs/generated/status_matrix.md\n M docs/generated/status_snapshot.json\n M docs/harness/BLOCKERS.md\n M docs/harness/DECISION_LOG.md\n M docs/harness/NEXT_SESSION_PROMPT.md\n M docs/harness/PROJECT_STATE.md\n M docs/harness/PR_PROGRESS.md\n M htt/src/common/semantic_guards/no_overclaim.py\n M machine_readable/pr_backlog.json\n M machine_readable/pr_backlog.yaml\n M machine_readable/pr_status.yaml\n M scripts/audits/jcap_prd_20260714.py\n M tests/contracts/test_claim_language_lint.py\n M tests/contracts/test_jcap_prd_adversarial_audit.py\n M tests/contracts/test_physmath_harness_vendor.py\n M tests/contracts/test_semantic_guards.py\n?? docs/PR_DELTAS/pr-118.md\n?? docs/audits/jcap_prd_adversarial_audit_20260714/advocate_candidate_ledger.json\n?? docs/audits/jcap_prd_adversarial_audit_20260714/agents/advocate_divergence/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/agents/advocate_judging/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/agents/criticism_mapping/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/agents/final_crag/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/agents/final_referees/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/agents/pr118_review/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/criticism_response_matrix.json\n?? docs/audits/jcap_prd_adversarial_audit_20260714/criticism_response_matrix.md\n?? docs/audits/jcap_prd_adversarial_audit_20260714/environment_pr118.json\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_backlog_mirrors/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_backlog_mirrors_seal1/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_backlog_mirrors_seal2/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_backlog_mirrors_seal3/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_checkpoint/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_checkpoint_seal1/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_checkpoint_seal2/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_checkpoint_seal3/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_claim_language/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_claim_language_seal1/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_claim_language_seal2/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_claim_language_seal3/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_collect/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_collect_retry1/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_collect_retry2/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_collect_retry3/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_current_figure_manifest/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_current_figure_manifest_seal2/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_current_figure_manifest_seal3/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_dag/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_dag_seal1/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_dag_seal2/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_dag_seal3/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_external_package/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_external_package_retry1/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_external_package_retry2/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_generic_figure_manifest/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_generic_figure_manifest_seal2/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_generic_figure_manifest_seal3/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_latex_build/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_ownership_transfer/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_ownership_transfer_seal1/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_ownership_transfer_seal2/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_ownership_transfer_seal3/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_package/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_package_seal1/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_package_seal2/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_package_seal3/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_publication_freeze/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_publication_freeze_retry1/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_publication_freeze_retry2/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_result_pack_freshness/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_result_pack_freshness_seal2/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_result_pack_freshness_seal3/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_smoke/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_smoke_retry1/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_smoke_retry2/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_smoke_retry3/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_status_contracts/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_status_contracts_seal1/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_status_contracts_seal2/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_status_contracts_seal3/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_vendor_archive_adapter/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_vendor_archive_adapter_retry1/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/pr118_final_vendor_archive_adapter_retry2/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/evidence/latex/\n?? docs/audits/jcap_prd_adversarial_audit_20260714/executive_summary_ko.md\n?? docs/audits/jcap_prd_adversarial_audit_20260714/final_referee_decisions.json\n?? docs/audits/jcap_prd_adversarial_audit_20260714/final_referee_report.md\n?? docs/audits/jcap_prd_adversarial_audit_20260714/latex_pdf_validation.json\n?? docs/audits/jcap_prd_adversarial_audit_20260714/next_dag_candidates.json\n?? docs/audits/jcap_prd_adversarial_audit_20260714/shortlist_freeze.json\n?? docs/audits/jcap_prd_adversarial_audit_20260714/web_crag_final.json\n?? docs/generated/progress_checkpoints/checkpoint_065.md\n?? legacy/\n?? physmath-coding-harness-gpt56.zip\n?? physmath-research-harness-gpt56.zip",
+    "worktree_state_hash": "sha256:67f9d7e29f7886828508ec70e5a1a73593821fad7c83d8ce9424aafa9e49c256"
+  },
+  "implementation_scope": "common",
+  "input_hashes": [
+    "docs/audits/jcap_prd_adversarial_audit_20260714/agents/advocate_divergence/theory_advocate_response.json:sha256:64370d8c0280a78bece61f48bdb17b98d3fd1abe817fc75747bf9ebaebb7e7a0",
+    "docs/audits/jcap_prd_adversarial_audit_20260714/agents/advocate_divergence/statistics_advocate_response.json:sha256:40a3d3092e6788c00a7a9bc2407e641ccceade5424702a91f89446bc1ae899c6",
+    "docs/audits/jcap_prd_adversarial_audit_20260714/agents/advocate_divergence/code_advocate_response.json:sha256:9807fe0e93d96991641d5f063108bb94c6ed4622c10d1ce64bfef946a36f820b",
+    "docs/audits/jcap_prd_adversarial_audit_20260714/agents/advocate_divergence/data_advocate_response.json:sha256:70f4e01e9e292a40aeeb674b043a6869685e5de0158f60c1b9a1cecefc33e467",
+    "docs/audits/jcap_prd_adversarial_audit_20260714/agents/advocate_judging/pre_solver_judge_response.json:sha256:9af8a7f45e141b3b50fc4ff2c561bf80e7fda19c7794e96131faf8adc7c10da4",
+    "docs/audits/jcap_prd_adversarial_audit_20260714/agents/advocate_judging/post_native_judge_response.json:sha256:3a37944edf21be7d692d6d06d9021737a2e4453fafde4acb3649f63a3cc96a97",
+    "docs/audits/jcap_prd_adversarial_audit_20260714/agents/advocate_judging/integrity_veto_judge_response.json:sha256:8c5187ed13394a81027de1fd07bd1b748a743da9acb22a1e43d6264050338ce1",
+    "docs/audits/jcap_prd_adversarial_audit_20260714/WEB_LOCK.json:sha256:51bb7e2e26111ff615126e3586ddcc230c6ee369ea9a47f6de2265f0fa2f5e1d"
+  ],
+  "judge_ids": {
+    "integrity_veto": "integrity-veto-independent-judge",
+    "post_native_solver": "post-native-independent-judge",
+    "pre_solver": "pre-solver-independent-judge"
+  },
+  "materialization_status": "retrospective_canonical_hash_seal_of_the_pre_web_author_and_judge_packets; the physical freeze file was not independently timestamp-sealed before the single final CRAG lookup",
+  "null_mock_status": "not_a_statistical_result",
+  "ordering_caveat": "Canonical replay proves that the CRAG assignment equals the no-web ranking; it does not retroactively prove filesystem materialization order.",
+  "owner": "COMMON",
+  "phase": "no_web_shortlist_authority",
+  "ranking_rows": [
+    {
+      "author_id": "pr118-code-advocate",
+      "axis": "code",
+      "axis_rank": 4,
+      "candidate_id": "CO-01",
+      "integrity_veto_review": {
+        "eligible_for_retain": true,
+        "judge_id": "integrity-veto-independent-judge",
+        "missing_falsifier": false,
+        "provenance_unsecured": false,
+        "rationale": "This is a release-oracle claim, not a CF4 or shape-correction science claim. Its load-bearing validators, manifests, and sealed PR-117 receipts are local and hash-bound, and the enumerated stale, invalid, mismatched-hash, nonexistent-test, and scientifically blocked mutations decisively test false-green behavior.",
+        "unresolved_p0": false
+      },
+      "post_native_solver_review": {
+        "judge_id": "post-native-independent-judge",
+        "rationale": "A claim-addressed receipt graph is directly useful when native outputs arrive because it can distinguish transport conformance, numerical validation, and blocked scientific interpretation. PR-117 proves much of the receipt substrate, but the present contradictory release gates and risk of composing correlated self-oracles keep this below full readiness and it cannot validate the native physics by itself.",
+        "scores": {
+          "adapter_readiness": 7.0,
+          "correctness": 9.0,
+          "identifiability": 8.5,
+          "novelty": 6.0,
+          "scientific_effect": 7.5
+        },
+        "total": 77.75,
+        "track_eligible": true
+      },
+      "pre_solver_review": {
+        "judge_id": "pre-solver-independent-judge",
+        "rationale": "The PR-117 false-green finding and its successfully sealed process-versus-science receipts give this graph a concrete local target and a decisive mutation suite. It can identify release-oracle failures before a solver arrives, although it validates evidence flow rather than the underlying scientific estimand and largely adapts established content-addressed build ideas.",
+        "scores": {
+          "correctness_falsifiability": 9.0,
+          "identifiability": 8.5,
+          "local_feasibility": 8.5,
+          "novelty": 6.5,
+          "reproducibility": 9.0,
+          "scientific_effect": 7.5
+        },
+        "total": 81.75,
+        "track_eligible": true
+      },
+      "selection_score": 81.75
+    },
+    {
+      "author_id": "pr118-code-advocate",
+      "axis": "code",
+      "axis_rank": 6,
+      "candidate_id": "CO-02",
+      "integrity_veto_review": {
+        "eligible_for_retain": true,
+        "judge_id": "integrity-veto-independent-judge",
+        "missing_falsifier": false,
+        "provenance_unsecured": false,
+        "rationale": "The clean-install and detached-replay claim uses the Git snapshot, package metadata, and selectable local hash-frozen slices; it does not consume either P0 result. CWD, install-order, undeclared-path, and structured-output replay failures are decisive and directly observable.",
+        "unresolved_p0": false
+      },
+      "post_native_solver_review": {
+        "judge_id": "post-native-independent-judge",
+        "rationale": "Hermetic installation and detached replay are concrete prerequisites for attributing a native-atlas result to declared source bytes, and the clean-CWD BASS failure makes the need specific. The work is methodologically conventional and its payoff is reproducibility rather than a new cosmological discriminant; optional compiled dependencies and the currently split namespace reduce immediate adapter readiness.",
+        "scores": {
+          "adapter_readiness": 6.5,
+          "correctness": 9.0,
+          "identifiability": 9.0,
+          "novelty": 4.5,
+          "scientific_effect": 6.0
+        },
+        "total": 72.0,
+        "track_eligible": true
+      },
+      "pre_solver_review": {
+        "judge_id": "pre-solver-independent-judge",
+        "rationale": "Clean-CWD failure of htt.bass is independently reproduced, so empty-CWD install and detached replay are sharply falsifiable and can be executed locally. The work would materially improve third-party reproducibility, but namespace cleanup is conventional engineering and optional compiled or large-data consumers may prevent full coverage in one short pre-solver pass.",
+        "scores": {
+          "correctness_falsifiability": 8.8,
+          "identifiability": 8.5,
+          "local_feasibility": 7.5,
+          "novelty": 5.5,
+          "reproducibility": 9.0,
+          "scientific_effect": 7.0
+        },
+        "total": 77.75,
+        "track_eligible": true
+      },
+      "selection_score": 77.75
+    },
+    {
+      "author_id": "pr118-code-advocate",
+      "axis": "code",
+      "axis_rank": 7,
+      "candidate_id": "CO-03",
+      "integrity_veto_review": {
+        "eligible_for_retain": true,
+        "judge_id": "integrity-veto-independent-judge",
+        "missing_falsifier": false,
+        "provenance_unsecured": false,
+        "rationale": "A content-addressed build DAG can quarantine scientifically invalid nodes, so it does not presuppose either P0 is repaired. Current generators, sidecars, source snapshots, and local inputs are available for the reproducibility claim, and dependency mutations plus two-pass isolated rebuild stability decisively test it.",
+        "unresolved_p0": false
+      },
+      "post_native_solver_review": {
+        "judge_id": "post-native-independent-judge",
+        "rationale": "A content-addressed build DAG would materially strengthen native-atlas lineage and prevent stale or quarantined products from satisfying a family-analysis gate. The current repository has reusable generators and canonical manifests, but heterogeneous artifacts and platform-sensitive comparisons require substantial migration, and byte freshness remains orthogonal to physical correctness.",
+        "scores": {
+          "adapter_readiness": 6.5,
+          "correctness": 8.5,
+          "identifiability": 8.5,
+          "novelty": 5.5,
+          "scientific_effect": 7.0
+        },
+        "total": 73.75,
+        "track_eligible": true
+      },
+      "pre_solver_review": {
+        "judge_id": "pre-solver-independent-judge",
+        "rationale": "The five current and fifteen VER2 stale surfaces plus canonically invalid packaged manifests make dependency mutation and isolated two-pass rebuilds direct tests. A content-addressed DAG would strongly improve provenance, but heterogeneous generators and platform-dependent figures make migration costly, and freshness still cannot certify scientific validity.",
+        "scores": {
+          "correctness_falsifiability": 8.7,
+          "identifiability": 8.5,
+          "local_feasibility": 6.5,
+          "novelty": 5.5,
+          "reproducibility": 9.2,
+          "scientific_effect": 7.5
+        },
+        "total": 77.7,
+        "track_eligible": true
+      },
+      "selection_score": 77.7
+    },
+    {
+      "author_id": "pr118-code-advocate",
+      "axis": "code",
+      "axis_rank": 1,
+      "candidate_id": "CO-04",
+      "integrity_veto_review": {
+        "eligible_for_retain": true,
+        "judge_id": "integrity-veto-independent-judge",
+        "missing_falsifier": false,
+        "provenance_unsecured": false,
+        "rationale": "The laboratory directly attacks, rather than assumes away, the CF4 P0 and keeps any missing end-to-end assets above the mechanics tier blocked. Its pre-solver claim is supported by the hash-bound audit inputs and manufactured fields, and surviving known-defect mutations, shared lineage, or failed coverage/convergence decisively kill that claim.",
+        "unresolved_p0": false
+      },
+      "post_native_solver_review": {
+        "judge_id": "post-native-independent-judge",
+        "rationale": "Independent references, manufactured fields, coverage tests, and defect mutations can become a strong post-native validation layer for transfer, convergence, and inference mechanics. The sealed audit supplies concrete mutations, but present references are not end-to-end Bianchi or survey simulators and independence of conceptual lineage must be demonstrated before a passing laboratory raises a scientific claim tier.",
+        "scores": {
+          "adapter_readiness": 7.0,
+          "correctness": 8.5,
+          "identifiability": 8.0,
+          "novelty": 6.5,
+          "scientific_effect": 8.5
+        },
+        "total": 78.75,
+        "track_eligible": true
+      },
+      "pre_solver_review": {
+        "judge_id": "pre-solver-independent-judge",
+        "rationale": "PR-117 supplies unusually strong known-defect mutations: CF4 nuisance leakage, component-selective GRF deficits, DESI refitting, K6 stencil error, and ACT scientific blockage. Independent references and mutation killing can resolve numerical mechanics now and would affect several science lanes, although matched end-to-end mocks and covariance remain necessary for claims beyond mechanics.",
+        "scores": {
+          "correctness_falsifiability": 9.2,
+          "identifiability": 8.5,
+          "local_feasibility": 6.5,
+          "novelty": 7.5,
+          "reproducibility": 8.8,
+          "scientific_effect": 8.8
+        },
+        "total": 84.15,
+        "track_eligible": true
+      },
+      "selection_score": 84.15
+    },
+    {
+      "author_id": "pr118-code-advocate",
+      "axis": "code",
+      "axis_rank": 5,
+      "candidate_id": "CO-05",
+      "integrity_veto_review": {
+        "eligible_for_retain": true,
+        "judge_id": "integrity-veto-independent-judge",
+        "missing_falsifier": false,
+        "provenance_unsecured": false,
+        "rationale": "The proposed oracle is formal and uses tracked theorem artifacts and Git-preserved specifications rather than either observational P0. Engine-independence failure, exact-versus-numerical disagreement, registered counterexamples, and absent remainder control are decisive failure modes; no unauthenticated observational input is load-bearing at C1.",
+        "unresolved_p0": false
+      },
+      "post_native_solver_review": {
+        "judge_id": "post-native-independent-judge",
+        "rationale": "Two specification-independent engines for the live coefficient, domain, and frame identities would be valuable controls on a delivered solver and can decisively reject several recorded regressions. The proposal remains a formal-mechanics oracle rather than a native-output adapter, and agreement between engines cannot rescue a mis-specified physical theorem or observed family claim.",
+        "scores": {
+          "adapter_readiness": 5.5,
+          "correctness": 8.5,
+          "identifiability": 8.5,
+          "novelty": 5.5,
+          "scientific_effect": 6.5
+        },
+        "total": 71.0,
+        "track_eligible": true
+      },
+      "pre_solver_review": {
+        "judge_id": "pre-solver-independent-judge",
+        "rationale": "The NT2 reciprocal, OMK domain, EGS counterexample, frame bypass, and dead D2 authority are precise local oracle targets with explicit counterexamples and limits. Two genuinely independent engines would substantially harden formal claims, but they can share a faulty specification and cannot by themselves validate physical premises or observational transfer.",
+        "scores": {
+          "correctness_falsifiability": 8.8,
+          "identifiability": 8.0,
+          "local_feasibility": 7.5,
+          "novelty": 6.5,
+          "reproducibility": 8.5,
+          "scientific_effect": 7.8
+        },
+        "total": 79.35,
+        "track_eligible": true
+      },
+      "selection_score": 79.35
+    },
+    {
+      "author_id": "pr118-code-advocate",
+      "axis": "code",
+      "axis_rank": 3,
+      "candidate_id": "CO-06",
+      "integrity_veto_review": {
+        "eligible_for_retain": true,
+        "judge_id": "integrity-veto-independent-judge",
+        "missing_falsifier": false,
+        "provenance_unsecured": false,
+        "rationale": "Only the pre-solver C1 interface-conformance claim is eligible here: it rests on tracked schema, transfer, atlas, and observable contracts plus explicitly non-scientific fixtures. Invalid-fixture acceptance or convention disagreement is decisive; the absent future native sample remains outside this current retain ceiling and cannot be treated as physics validation.",
+        "unresolved_p0": false
+      },
+      "post_native_solver_review": {
+        "judge_id": "post-native-independent-judge",
+        "rationale": "This is the most direct delivery-time bridge: current NativeLowEllSchema, transfer-source gates, AtlasEntryLite metadata, and rejection tests already enforce provisional non-consumability and explicit conventions. A real authenticated sample, version negotiation, lossless coefficient transport, and independent producer-consumer interpretation are still absent, so conformance must remain separate from transfer or morphology validation.",
+        "scores": {
+          "adapter_readiness": 9.0,
+          "correctness": 9.0,
+          "identifiability": 8.5,
+          "novelty": 6.5,
+          "scientific_effect": 8.0
+        },
+        "total": 82.75,
+        "track_eligible": true
+      },
+      "pre_solver_review": {
+        "judge_id": "pre-solver-independent-judge",
+        "rationale": "Transport-only conformance and adversarial rejection are fully testable now using the existing native stub, transfer registry, AtlasEntryLite, and ObservableVector contracts without simulating solver physics. It gives a clear pre-solver interface result and excellent replayability, but its scientific effect is limited because physical correctness cannot be assessed until an authenticated external sample arrives.",
+        "scores": {
+          "correctness_falsifiability": 9.0,
+          "identifiability": 9.0,
+          "local_feasibility": 8.0,
+          "novelty": 6.0,
+          "reproducibility": 9.2,
+          "scientific_effect": 6.5
+        },
+        "total": 79.7,
+        "track_eligible": true
+      },
+      "selection_score": 82.75
+    },
+    {
+      "author_id": "pr118-code-advocate",
+      "axis": "code",
+      "axis_rank": 2,
+      "candidate_id": "CO-07",
+      "integrity_veto_review": {
+        "eligible_for_retain": false,
+        "judge_id": "integrity-veto-independent-judge",
+        "missing_falsifier": false,
+        "provenance_unsecured": true,
+        "rationale": "The challenge logic has decisive invariance, equivalence, support-collapse, and tuning-leak tests, and it does not require either CF4 P0. However its load-bearing native morphology atlas, matched masks and nulls, covariance, and family-equivalence annotations do not presently exist; proposing to obtain them does not secure provenance now.",
+        "unresolved_p0": false
+      },
+      "post_native_solver_review": {
+        "judge_id": "post-native-independent-judge",
+        "rationale": "A sealed blind challenge that includes rotations, channel ordering, masks, local/global confusion, and deliberately equivalent families tests exactly the distinction between morphology compatibility and family identification. ObservableVector and AtlasEntryLite provide a plausible interface, but current observed vectors have unresolved support defects and the challenge can become a self-oracle unless held out from all adapter and atlas tuning.",
+        "scores": {
+          "adapter_readiness": 8.0,
+          "correctness": 9.0,
+          "identifiability": 7.5,
+          "novelty": 8.0,
+          "scientific_effect": 9.0
+        },
+        "total": 84.0,
+        "track_eligible": true
+      },
+      "pre_solver_review": {
+        "judge_id": "pre-solver-independent-judge",
+        "rationale": "Analytic and transport-only challenge fixtures can be sealed now, but the stated hypothesis is whether the future native-atlas path respects morphology and family equivalences. Its decisive failures require blinded native injections, matched masks, nulls, covariance, and atlas-owned equivalence annotations, so pre-solver work is preparatory rather than a completed candidate test.",
+        "scores": {
+          "correctness_falsifiability": 7.5,
+          "identifiability": 3.0,
+          "local_feasibility": 6.5,
+          "novelty": 7.5,
+          "reproducibility": 7.5,
+          "scientific_effect": 3.5
+        },
+        "total": 57.0,
+        "track_eligible": false
+      },
+      "selection_score": 84.0
+    },
+    {
+      "author_id": "pr118-code-advocate",
+      "axis": "code",
+      "axis_rank": 8,
+      "candidate_id": "CO-08",
+      "integrity_veto_review": {
+        "eligible_for_retain": true,
+        "judge_id": "integrity-veto-independent-judge",
+        "missing_falsifier": false,
+        "provenance_unsecured": false,
+        "rationale": "At the stated C1 ceiling, the legacy ZIP is only a hash-inventoried source of known-bad mutations while the load-bearing benchmark must be independently re-derived on manufactured cases. Failure to track or upper-bound controlled truncation error decisively rejects the sentinel; native outputs are required only for later physical relevance.",
+        "unresolved_p0": false
+      },
+      "post_native_solver_review": {
+        "judge_id": "post-native-independent-judge",
+        "rationale": "A rejection-only truncation sentinel could use future cutoff sweeps without reviving Teff ownership or supplying replacement dynamics, and the archived failures make useful known-bad cases. Its evidence is a constant-frequency toy whose residual need not track an evolving, collisional, polarized Bianchi hierarchy, while the current native adapter has no cutoff-sweep or internal-state contract.",
+        "scores": {
+          "adapter_readiness": 4.5,
+          "correctness": 6.5,
+          "identifiability": 5.5,
+          "novelty": 7.0,
+          "scientific_effect": 6.0
+        },
+        "total": 59.5,
+        "track_eligible": true
+      },
+      "pre_solver_review": {
+        "judge_id": "pre-solver-independent-judge",
+        "rationale": "The safe local MZ archive contains known-bad recursions, inaccurate few-pole fits, and an underconverged reference that can seed a reproducible rejection sentinel without reviving legacy ownership. Manufactured cases can test the sentinel before a solver arrives, but correlation with errors of an evolving collision and polarization hierarchy remains unidentified until native cutoff sweeps exist.",
+        "scores": {
+          "correctness_falsifiability": 7.8,
+          "identifiability": 6.5,
+          "local_feasibility": 7.5,
+          "novelty": 7.5,
+          "reproducibility": 8.5,
+          "scientific_effect": 6.0
+        },
+        "total": 71.75,
+        "track_eligible": true
+      },
+      "selection_score": 71.75
+    },
+    {
+      "author_id": "root-data-author",
+      "axis": "data_analysis",
+      "axis_rank": 1,
+      "candidate_id": "DA-01",
+      "integrity_veto_review": {
+        "eligible_for_retain": false,
+        "judge_id": "integrity-veto-independent-judge",
+        "missing_falsifier": false,
+        "provenance_unsecured": true,
+        "rationale": "This candidate directly repairs the radial-monopole P0 and can retain a null or non-identification result without assuming that P0 fixed. Bias, undercoverage, or rank deficiency is decisive, but the current hash-bound NPZ files do not authenticate the required row-level catalogue lineage, realistic distance-error and selection generator, grouping model, or joint covariance.",
+        "unresolved_p0": false
+      },
+      "post_native_solver_review": {
+        "judge_id": "post-native-independent-judge",
+        "rationale": "Realistic constrained-flow injections and depth tomography are worthwhile CF4 estimator research, but native low-ell solver delivery does not supply the missing catalogue selection, distance-error, correlated-flow, or covariance model. The present 94.155 km/s sensitivity is not a recovered truth and cannot become a global-tilt anchor merely because an atlas exists, so this belongs to the independent data-rebuild track.",
+        "scores": {
+          "adapter_readiness": 3.0,
+          "correctness": 8.0,
+          "identifiability": 5.5,
+          "novelty": 6.0,
+          "scientific_effect": 6.5
+        },
+        "total": 60.75,
+        "track_eligible": false
+      },
+      "pre_solver_review": {
+        "judge_id": "pre-solver-independent-judge",
+        "rationale": "The local CF4 catalogue and the audited 405.222-to-94.155 km/s shift give an immediately executable and consequential estimator study with explicit bias and coverage falsifiers. Its identified region can be honest even when it contains zero, but the current injection omits realistic selection, correlated fields, nonlinear distance errors, and reconstruction covariance.",
+        "scores": {
+          "correctness_falsifiability": 8.8,
+          "identifiability": 7.8,
+          "local_feasibility": 8.5,
+          "novelty": 7.0,
+          "reproducibility": 8.5,
+          "scientific_effect": 8.8
+        },
+        "total": 82.7,
+        "track_eligible": true
+      },
+      "selection_score": 82.7
+    },
+    {
+      "author_id": "root-data-author",
+      "axis": "data_analysis",
+      "axis_rank": 6,
+      "candidate_id": "DA-02",
+      "integrity_veto_review": {
+        "eligible_for_retain": false,
+        "judge_id": "integrity-veto-independent-judge",
+        "missing_falsifier": false,
+        "provenance_unsecured": true,
+        "rationale": "The common nuisance basis is a proposed repair of the monopole P0 rather than a presumption that it vanished, and missing mappings or inadequate common-window overlap decisively stop the comparison. Provenance is nonetheless unsecured because the audit records missing reconstruction converters or primary artifacts and unclosed shared-catalogue correlation.",
+        "unresolved_p0": false
+      },
+      "post_native_solver_review": {
+        "judge_id": "post-native-independent-judge",
+        "rationale": "Window and convention triangulation could expose why local reconstructions disagree, but missing authenticated reconstruction products and strong same-catalogue dependence may leave little common identified support. It has no defined native-atlas input or adapter path and should be completed as survey-methodology work before any later cosmological combination.",
+        "scores": {
+          "adapter_readiness": 2.5,
+          "correctness": 7.0,
+          "identifiability": 4.5,
+          "novelty": 5.5,
+          "scientific_effect": 6.0
+        },
+        "total": 53.5,
+        "track_eligible": false
+      },
+      "pre_solver_review": {
+        "judge_id": "pre-solver-independent-judge",
+        "rationale": "Common-window comparison is the right way to separate estimator disagreement from depth convention and does not require a native solver. Its value is reduced because some converters and primary reconstruction artifacts are missing, shared-catalogue correlations are load-bearing, and insufficient window overlap can terminate rather than identify the comparison.",
+        "scores": {
+          "correctness_falsifiability": 8.0,
+          "identifiability": 6.8,
+          "local_feasibility": 6.5,
+          "novelty": 6.5,
+          "reproducibility": 7.5,
+          "scientific_effect": 7.0
+        },
+        "total": 71.35,
+        "track_eligible": true
+      },
+      "selection_score": 71.35
+    },
+    {
+      "author_id": "root-data-author",
+      "axis": "data_analysis",
+      "axis_rank": 3,
+      "candidate_id": "DA-03",
+      "integrity_veto_review": {
+        "eligible_for_retain": false,
+        "judge_id": "integrity-veto-independent-judge",
+        "missing_falsifier": false,
+        "provenance_unsecured": true,
+        "rationale": "This CMB-only statistic is independent of both CF4 P0s, and asymmetric transforms, post-unblinding scans, or nulls without support coverage decisively reject it. The required Planck end-to-end null ensemble and byte-identical mask, downgrade, and transfer lineage were not examined or authenticated, while the current mask and convention paths are known defective.",
+        "unresolved_p0": false
+      },
+      "post_native_solver_review": {
+        "judge_id": "post-native-independent-judge",
+        "rationale": "An exchangeable, mask-matched Planck low-ell feature pipeline is a necessary observed-side counterpart to any native morphology atlas and the known K1 asymmetry is repairable. It can at most deliver globally calibrated morphology compatibility until family equivalence is tested, and unexamined end-to-end null coverage plus finite scan resolution limit identifiability and novelty.",
+        "scores": {
+          "adapter_readiness": 7.0,
+          "correctness": 8.5,
+          "identifiability": 7.0,
+          "novelty": 5.5,
+          "scientific_effect": 8.0
+        },
+        "total": 74.0,
+        "track_eligible": true
+      },
+      "pre_solver_review": {
+        "judge_id": "pre-solver-independent-judge",
+        "rationale": "Identical data/null masking, transfer, convention, and maximization directly addresses the K1 exchangeability, mask, and convention defects and yields a well-defined morphology statistic without a solver. Scientific execution remains conditional on suitable end-to-end Planck nulls that were not established by PR-117, and a large registered scan can exhaust finite-null resolution.",
+        "scores": {
+          "correctness_falsifiability": 8.8,
+          "identifiability": 8.0,
+          "local_feasibility": 6.0,
+          "novelty": 6.0,
+          "reproducibility": 8.0,
+          "scientific_effect": 8.0
+        },
+        "total": 77.0,
+        "track_eligible": true
+      },
+      "selection_score": 77.0
+    },
+    {
+      "author_id": "root-data-author",
+      "axis": "data_analysis",
+      "axis_rank": 7,
+      "candidate_id": "DA-04",
+      "integrity_veto_review": {
+        "eligible_for_retain": false,
+        "judge_id": "integrity-veto-independent-judge",
+        "missing_falsifier": false,
+        "provenance_unsecured": true,
+        "rationale": "The lane does not depend on the CF4 P0s and has a decisive no-go outcome if coverage cannot be calibrated. The sealed ACT receipt found zero raw QE inputs and the target multipoles lie outside the frozen validated range, so the upstream QE, mask, and reconstruction-simulation provenance is presently absent.",
+        "unresolved_p0": false
+      },
+      "post_native_solver_review": {
+        "judge_id": "post-native-independent-judge",
+        "rationale": "The proposed acquisition experiment correctly permits a data-availability no-go, but zero local raw QE inputs and a target outside the frozen ACT validation range make the scientific lane presently speculative. A native Bianchi atlas does not create the missing ACT reconstruction transfer, so the candidate is not a post-native-solver programme unless authenticated upstream data and calibrated low-L coverage first exist.",
+        "scores": {
+          "adapter_readiness": 3.0,
+          "correctness": 7.5,
+          "identifiability": 3.0,
+          "novelty": 4.0,
+          "scientific_effect": 4.5
+        },
+        "total": 46.5,
+        "track_eligible": false
+      },
+      "pre_solver_review": {
+        "judge_id": "pre-solver-independent-judge",
+        "rationale": "The sealed inventory found zero raw filtered-CMB/QE inputs and a target band outside the frozen validation range, making acquisition or a documented data-availability no-go a decisive pre-solver experiment. Local feasibility is poor because the required upstream products may not be public or local; no result may be replaced by same-release reconstructed alms.",
+        "scores": {
+          "correctness_falsifiability": 9.0,
+          "identifiability": 7.5,
+          "local_feasibility": 2.0,
+          "novelty": 5.5,
+          "reproducibility": 8.0,
+          "scientific_effect": 7.0
+        },
+        "total": 69.75,
+        "track_eligible": true
+      },
+      "selection_score": 69.75
+    },
+    {
+      "author_id": "root-data-author",
+      "axis": "data_analysis",
+      "axis_rank": 2,
+      "candidate_id": "DA-05",
+      "integrity_veto_review": {
+        "eligible_for_retain": false,
+        "judge_id": "integrity-veto-independent-judge",
+        "missing_falsifier": false,
+        "provenance_unsecured": true,
+        "rationale": "The required identity, convergence, variance, and symmetric-rank checks are decisive and neither P0 is involved. The executed 400 mocks are explicitly an in-house proxy; exact-selection DESI mocks and complete catalog/random-weight and high-ell leakage lineage are absent, so the proposed acquisition has not secured the load-bearing provenance.",
+        "unresolved_p0": false
+      },
+      "post_native_solver_review": {
+        "judge_id": "post-native-independent-judge",
+        "rationale": "Exact-selection mocks, per-mock alpha refits, converged quadrature, and symmetric ranks define a sound DESI null experiment, with the audit proxy already favoring a non-anomalous outcome. The missing official selection and leakage controls are survey inputs rather than native-solver outputs, and the candidate does not specify an atlas response or family-equivalence role.",
+        "scores": {
+          "adapter_readiness": 3.0,
+          "correctness": 8.5,
+          "identifiability": 7.5,
+          "novelty": 4.5,
+          "scientific_effect": 6.0
+        },
+        "total": 62.5,
+        "track_eligible": false
+      },
+      "pre_solver_review": {
+        "judge_id": "pre-solver-independent-judge",
+        "rationale": "Per-mock alpha refits, nz convergence, and symmetric ranking are concrete and PR-117 already provides a non-anomalous proxy regression result at p=0.6833. Exact-selection mocks would turn this into an identifiable survey null test, but their current absence and unmodeled weight variance and multipole leakage limit immediate feasibility.",
+        "scores": {
+          "correctness_falsifiability": 9.0,
+          "identifiability": 8.5,
+          "local_feasibility": 5.5,
+          "novelty": 5.5,
+          "reproducibility": 8.5,
+          "scientific_effect": 8.0
+        },
+        "total": 77.75,
+        "track_eligible": true
+      },
+      "selection_score": 77.75
+    },
+    {
+      "author_id": "root-data-author",
+      "axis": "data_analysis",
+      "axis_rank": 8,
+      "candidate_id": "DA-06",
+      "integrity_veto_review": {
+        "eligible_for_retain": false,
+        "judge_id": "integrity-veto-independent-judge",
+        "missing_falsifier": false,
+        "provenance_unsecured": true,
+        "rationale": "This forecast-impact question does not require either disputed CF4 headline estimator, and missing rows, leave-group instability, or negligible covariance-aware gain decisively falsifies the gain claim. The sealed JWST receipt is EXECUTED_WITH_PROVENANCE_BLOCKER: the authoritative 14-row manifest, host errors, calibration groups, and probabilistic identity matches are not secured.",
+        "unresolved_p0": false
+      },
+      "post_native_solver_review": {
+        "judge_id": "post-native-independent-judge",
+        "rationale": "Row authentication, probabilistic crossmatching, host errors, and shared calibration covariance are the correct way to test the JWST forecast, but the audit's gains near 1.05 and missing row provenance imply modest likely payoff. The work is independent of a low-ell Bianchi atlas and has no adapter-facing output, so it should not compete in the post-native track.",
+        "scores": {
+          "adapter_readiness": 2.0,
+          "correctness": 8.0,
+          "identifiability": 4.5,
+          "novelty": 4.0,
+          "scientific_effect": 4.0
+        },
+        "total": 48.0,
+        "track_eligible": false
+      },
+      "pre_solver_review": {
+        "judge_id": "pre-solver-independent-judge",
+        "rationale": "A row-authenticated hierarchical covariance and leave-group-out analysis directly tests the small 1.060-to-1.047 forecast gain and can end in a valid negligible-gain result. The missing authoritative row manifest, dead endpoint, permissive crossmatch, and absent host errors make acquisition a real blocker, while the likely effect is a modest forecast correction rather than a broad cosmological result.",
+        "scores": {
+          "correctness_falsifiability": 8.5,
+          "identifiability": 7.5,
+          "local_feasibility": 4.0,
+          "novelty": 4.5,
+          "reproducibility": 8.0,
+          "scientific_effect": 6.5
+        },
+        "total": 68.0,
+        "track_eligible": true
+      },
+      "selection_score": 68.0
+    },
+    {
+      "author_id": "root-data-author",
+      "axis": "data_analysis",
+      "axis_rank": 5,
+      "candidate_id": "DA-07",
+      "integrity_veto_review": {
+        "eligible_for_retain": false,
+        "judge_id": "integrity-veto-independent-judge",
+        "missing_falsifier": false,
+        "provenance_unsecured": true,
+        "rationale": "As a negative-control battery it can reject coherence without presupposing a repaired CF4 P0, and any comparable control alignment or non-identifiable conjunction decisively stops interpretation. Current probe directions include stale or support-mismatched products, while probe-local matched nulls and defensible cross-survey covariance or independence bounds are not authenticated.",
+        "unresolved_p0": false
+      },
+      "post_native_solver_review": {
+        "judge_id": "post-native-independent-judge",
+        "rationale": "Predeclared cross-survey negative controls would be an important falsification layer before interpreting an atlas-compatible direction as a shared cosmic source. Different sky supports, depths, transfers, stale directions, and weak cross-survey covariance can still force non-identification, and current MIO coherence surfaces are diagnostic rather than an adapter-calibrated joint likelihood.",
+        "scores": {
+          "adapter_readiness": 5.0,
+          "correctness": 8.0,
+          "identifiability": 5.0,
+          "novelty": 6.0,
+          "scientific_effect": 7.5
+        },
+        "total": 65.25,
+        "track_eligible": true
+      },
+      "pre_solver_review": {
+        "judge_id": "pre-solver-independent-judge",
+        "rationale": "Predeclared rotations, depth reversals, mask perturbations, and group deletions are strong negative controls for the stale-direction and support-mismatch defects and can yield a useful falsification result before family interpretation. Different supports and unavailable matched null/covariance assets weaken identifiability, and designing the battery after seeing anomalies adds a second trials burden.",
+        "scores": {
+          "correctness_falsifiability": 8.5,
+          "identifiability": 7.0,
+          "local_feasibility": 5.0,
+          "novelty": 6.5,
+          "reproducibility": 7.8,
+          "scientific_effect": 7.8
+        },
+        "total": 73.4,
+        "track_eligible": true
+      },
+      "selection_score": 73.4
+    },
+    {
+      "author_id": "root-data-author",
+      "axis": "data_analysis",
+      "axis_rank": 4,
+      "candidate_id": "DA-08",
+      "integrity_veto_review": {
+        "eligible_for_retain": false,
+        "judge_id": "integrity-veto-independent-judge",
+        "missing_falsifier": false,
+        "provenance_unsecured": true,
+        "rationale": "Blinded-injection failure under matched support is a decisive failure condition and the interface does not inherently consume either CF4 P0. Its load-bearing cleaned observables, matched nulls and covariances, external native atlas, and equivalence metadata are unavailable or presently defective, so a future packaging proposal cannot establish provenance now.",
+        "unresolved_p0": false
+      },
+      "post_native_solver_review": {
+        "judge_id": "post-native-independent-judge",
+        "rationale": "A quarantined challenge collection can give the first native atlas a demanding observed-side and degeneracy-aware test without encoding current anomaly labels as truth. Its value depends on repairing the present masks, covariance, and feature provenance, and a future atlas may require statistics not contained in today's ObservableVector, so failure must trigger redesign rather than family promotion.",
+        "scores": {
+          "adapter_readiness": 7.0,
+          "correctness": 8.5,
+          "identifiability": 6.0,
+          "novelty": 7.5,
+          "scientific_effect": 8.0
+        },
+        "total": 75.0,
+        "track_eligible": true
+      },
+      "pre_solver_review": {
+        "judge_id": "pre-solver-independent-judge",
+        "rationale": "A quarantine package can be designed now, but the present feature vectors still have unresolved CF4, CMB, and provenance defects and the candidate's actual atlas challenge requires blinded native templates and equivalence metadata. Pre-solver packaging therefore cannot test the claimed family-equivalence behavior or support a scientific result.",
+        "scores": {
+          "correctness_falsifiability": 7.8,
+          "identifiability": 2.5,
+          "local_feasibility": 4.5,
+          "novelty": 6.5,
+          "reproducibility": 7.5,
+          "scientific_effect": 3.5
+        },
+        "total": 53.25,
+        "track_eligible": false
+      },
+      "selection_score": 75.0
+    },
+    {
+      "author_id": "/root/pr118_statistics_advocate",
+      "axis": "statistics",
+      "axis_rank": 6,
+      "candidate_id": "ST-01",
+      "integrity_veto_review": {
+        "eligible_for_retain": false,
+        "judge_id": "integrity-veto-independent-judge",
+        "missing_falsifier": false,
+        "provenance_unsecured": true,
+        "rationale": "The empirical shared-cause thesis consumes the selected cross-probe amplitudes and directions for which the CF4 and growth lanes retain both P0 defects; the model does not itself rebuild those estimators, although it can abstain. Prior instability, held-out failure, and null false positives decisively kill support, but matched nulls, joint covariance, normalized prior lineage, and calibrated likelihood factors are also unsecured.",
+        "unresolved_p0": true
+      },
+      "post_native_solver_review": {
+        "judge_id": "post-native-independent-judge",
+        "rationale": "A normalized, dependency-aware shared-cause model with an explicit systematics null and abstention state is the correct statistical form for combining native predictions with heterogeneous probes. The current likelihood-factor mismatch, sign reversal, uncalibrated nulls, CF4 contamination, and missing joint covariance remain independent blockers, so solver delivery alone would not make the shared cause identifiable.",
+        "scores": {
+          "adapter_readiness": 6.5,
+          "correctness": 8.0,
+          "identifiability": 5.5,
+          "novelty": 6.0,
+          "scientific_effect": 9.0
+        },
+        "total": 72.25,
+        "track_eligible": true
+      },
+      "pre_solver_review": {
+        "judge_id": "pre-solver-independent-judge",
+        "rationale": "A normalized, same-factor shared-cause versus systematics model with mandatory abstention is the correct replacement for the shipped score that reversed from +29.7 to -1035.461. Its predictive and null falsifiers are strong and potentially high impact, but contaminated inputs, missing cross-probe covariance, and absent matched ensembles make a current empirical comparison difficult.",
+        "scores": {
+          "correctness_falsifiability": 8.5,
+          "identifiability": 7.5,
+          "local_feasibility": 4.0,
+          "novelty": 7.0,
+          "reproducibility": 7.5,
+          "scientific_effect": 9.0
+        },
+        "total": 76.25,
+        "track_eligible": true
+      },
+      "selection_score": 76.25
+    },
+    {
+      "author_id": "/root/pr118_statistics_advocate",
+      "axis": "statistics",
+      "axis_rank": 5,
+      "candidate_id": "ST-02",
+      "integrity_veto_review": {
+        "eligible_for_retain": false,
+        "judge_id": "integrity-veto-independent-judge",
+        "missing_falsifier": false,
+        "provenance_unsecured": true,
+        "rationale": "The generic predictive-lineage framework can be tested without either P0 and has decisive SBC, frozen-PPC, leakage, refit, and predictive-gain failures. Present builders accept unauthenticated caller values, and content-addressed posterior draws, replicated datasets, matched simulators, and train-only refit lineage do not yet exist; rebuilding them leaves provenance unsecured now.",
+        "unresolved_p0": false
+      },
+      "post_native_solver_review": {
+        "judge_id": "post-native-independent-judge",
+        "rationale": "Native family or morphology predictions require posterior-draw lineage, replicated observations, train-only nuisance refits, and dependency-respecting held-out scores, making this a high-value validation programme regardless of whether it returns inadequacy. Existing typed HTT builders are a start, but the live PPC and LOOCV semantics are not authentic and matched map/noise/selection simulators remain to be bound.",
+        "scores": {
+          "adapter_readiness": 7.0,
+          "correctness": 9.0,
+          "identifiability": 7.5,
+          "novelty": 5.5,
+          "scientific_effect": 8.5
+        },
+        "total": 77.5,
+        "track_eligible": true
+      },
+      "pre_solver_review": {
+        "judge_id": "pre-solver-independent-judge",
+        "rationale": "Posterior-draw lineage, replicated data, simulation-based calibration, and dependency-aware held-out refits directly replace the mislabeled plug-in PPC and channel-ablation LOOCV. The inadequate or indeterminate outcome remains identifiable and useful pre-solver, although end-to-end replicated observations and repeated fitting are expensive and any family-specific interpretation remains transfer conditional.",
+        "scores": {
+          "correctness_falsifiability": 9.2,
+          "identifiability": 8.5,
+          "local_feasibility": 5.5,
+          "novelty": 7.0,
+          "reproducibility": 8.5,
+          "scientific_effect": 8.5
+        },
+        "total": 81.5,
+        "track_eligible": true
+      },
+      "selection_score": 81.5
+    },
+    {
+      "author_id": "/root/pr118_statistics_advocate",
+      "axis": "statistics",
+      "axis_rank": 1,
+      "candidate_id": "ST-03",
+      "integrity_veto_review": {
+        "eligible_for_retain": true,
+        "judge_id": "integrity-veto-independent-judge",
+        "missing_falsifier": false,
+        "provenance_unsecured": false,
+        "rationale": "The eligible scope is the algorithmic exchangeability repair, not a Planck scientific release claim. It uses the locally regenerated, digest-bound K1 matrix and fixed-seed coverage generators, is independent of both CF4 P0s, and failure of super-uniformity or identical scan preprocessing decisively rejects global-p interpretation; full end-to-end nulls remain a separate promotion gate.",
+        "unresolved_p0": false
+      },
+      "post_native_solver_review": {
+        "judge_id": "post-native-independent-judge",
+        "rationale": "Symmetric pooled-rank or independent calibration is a precise repair with executable size falsifiers and is essential for any future family-orientation-parameter scan. It is statistically standard rather than highly novel, and native atlas outputs still require matched end-to-end masks and systematics nulls, but the algorithmic estimand and finite-null guarantees are unusually identifiable.",
+        "scores": {
+          "adapter_readiness": 7.5,
+          "correctness": 9.5,
+          "identifiability": 9.0,
+          "novelty": 5.0,
+          "scientific_effect": 7.5
+        },
+        "total": 79.25,
+        "track_eligible": true
+      },
+      "pre_solver_review": {
+        "judge_id": "pre-solver-independent-judge",
+        "rationale": "This is the cleanest pre-solver statistical repair: the 5.790 percent size defect is executable, pooled exchangeability has an exact finite-rank target, and the existing K1 matrix shows the non-anomalous conclusion is stable. CI coverage generators and one hashed implementation are locally feasible; full scientific use still needs matched end-to-end nulls.",
+        "scores": {
+          "correctness_falsifiability": 9.5,
+          "identifiability": 9.0,
+          "local_feasibility": 9.0,
+          "novelty": 6.5,
+          "reproducibility": 9.5,
+          "scientific_effect": 8.0
+        },
+        "total": 86.0,
+        "track_eligible": true
+      },
+      "selection_score": 86.0
+    },
+    {
+      "author_id": "/root/pr118_statistics_advocate",
+      "axis": "statistics",
+      "axis_rank": 3,
+      "candidate_id": "ST-04",
+      "integrity_veto_review": {
+        "eligible_for_retain": false,
+        "judge_id": "integrity-veto-independent-judge",
+        "missing_falsifier": false,
+        "provenance_unsecured": true,
+        "rationale": "This is a direct repair of the monopole P0 and explicitly permits unbounded or unidentified output, so it need not assume the P0 is fixed. Coverage failure, nuisance-induced unboundedness, or dependent residual construction is decisive, but raw-distance lineage, full selection and Malmquist metadata, realistic catalogue simulations, and joint covariance are not authenticated.",
+        "unresolved_p0": false
+      },
+      "post_native_solver_review": {
+        "judge_id": "post-native-independent-judge",
+        "rationale": "A nuisance-augmented CF4 identified set with explicit unbounded and non-identified outcomes is statistically defensible and could repair a P0-dependent data lane. Its decisive ingredients are raw-catalogue simulations and a valid local/global response, neither of which is supplied by a native low-ell atlas, so it remains a pre-combination data/statistics rebuild rather than a post-native candidate.",
+        "scores": {
+          "adapter_readiness": 3.0,
+          "correctness": 8.5,
+          "identifiability": 5.0,
+          "novelty": 6.5,
+          "scientific_effect": 7.0
+        },
+        "total": 63.0,
+        "track_eligible": false
+      },
+      "pre_solver_review": {
+        "judge_id": "pre-solver-independent-judge",
+        "rationale": "Set-valued output that permits zero, unboundedness, or non-identification is well matched to the order-of-magnitude CF4 propagation and current weak-direction defects. Coverage on raw catalogue simulations is decisive and scientifically important, but realistic selection, correlated velocity fields, non-Gaussian distance errors, and joint nuisance covariance require substantial new local work.",
+        "scores": {
+          "correctness_falsifiability": 9.0,
+          "identifiability": 8.5,
+          "local_feasibility": 5.0,
+          "novelty": 8.0,
+          "reproducibility": 8.0,
+          "scientific_effect": 8.8
+        },
+        "total": 82.1,
+        "track_eligible": true
+      },
+      "selection_score": 82.1
+    },
+    {
+      "author_id": "/root/pr118_statistics_advocate",
+      "axis": "statistics",
+      "axis_rank": 8,
+      "candidate_id": "ST-05",
+      "integrity_veto_review": {
+        "eligible_for_retain": false,
+        "judge_id": "integrity-veto-independent-judge",
+        "missing_falsifier": false,
+        "provenance_unsecured": true,
+        "rationale": "The candidate is designed to replace the refuted 370/308 P0 with a frozen observable or an honest union bound and can retain only an instability or null result if that repair fails. Its coverage and post-hoc-dependence criteria are decisive, but correction lineage, matched depth simulations, and same-data comparator cross-covariance remain explicitly blocked.",
+        "unresolved_p0": false
+      },
+      "post_native_solver_review": {
+        "judge_id": "post-native-independent-judge",
+        "rationale": "The proposed simultaneous bound is an honest replacement for the unsupported 4.9-sigma language and correctly allows zero, but same-data covariance and correction provenance may be impossible to identify tightly. It neither consumes nor tests native morphology outputs, and solver arrival cannot resolve the CF4 depth instability, so the post-native track is inapplicable.",
+        "scores": {
+          "adapter_readiness": 2.5,
+          "correctness": 8.5,
+          "identifiability": 4.5,
+          "novelty": 5.0,
+          "scientific_effect": 6.0
+        },
+        "total": 56.5,
+        "track_eligible": false
+      },
+      "pre_solver_review": {
+        "judge_id": "pre-solver-independent-judge",
+        "rationale": "The observed 0.299-to-0.486 depth drift, shell-centered stability, and at most 2.66-sigma correlation sensitivity make a simultaneous joint-covariance bound a sound downclaim. The same-data comparator lineage and covariance are currently blocked, so the most likely pre-solver product is an honest instability curve rather than a precision growth measurement.",
+        "scores": {
+          "correctness_falsifiability": 8.8,
+          "identifiability": 7.5,
+          "local_feasibility": 4.0,
+          "novelty": 5.5,
+          "reproducibility": 7.5,
+          "scientific_effect": 7.5
+        },
+        "total": 71.75,
+        "track_eligible": true
+      },
+      "selection_score": 71.75
+    },
+    {
+      "author_id": "/root/pr118_statistics_advocate",
+      "axis": "statistics",
+      "axis_rank": 4,
+      "candidate_id": "ST-06",
+      "integrity_veto_review": {
+        "eligible_for_retain": false,
+        "judge_id": "integrity-veto-independent-judge",
+        "missing_falsifier": false,
+        "provenance_unsecured": true,
+        "rationale": "Neither CF4 P0 is structurally required and the permutation, duplication, reweighting, covariance, and false-positive failures decisively keep the diagnostic blocked. Current equal-length positional arrays do not supply joint IDs, weights, pairing hashes, paired depth mocks, cross-bin covariance, or certified ceiling provenance, so the calibrated claim lacks authenticated inputs.",
+        "unresolved_p0": false
+      },
+      "post_native_solver_review": {
+        "judge_id": "post-native-independent-judge",
+        "rationale": "Explicit joint IDs, measures, weights, pairing hashes, and paired-depth nulls are necessary to define MIO F and G_F, but they recover only diagnostic invariance and may still fail contamination calibration. The candidate explicitly requires no native solver for its mechanics and does not define a native-atlas consumption path, so it belongs to the pre-solver diagnostic-hardening track.",
+        "scores": {
+          "adapter_readiness": 4.5,
+          "correctness": 8.5,
+          "identifiability": 5.5,
+          "novelty": 6.0,
+          "scientific_effect": 5.5
+        },
+        "total": 61.75,
+        "track_eligible": false
+      },
+      "pre_solver_review": {
+        "judge_id": "pre-solver-independent-judge",
+        "rationale": "The 4.9-fold permutation change provides a sharp local invariant for a MeasureSpec, while explicit IDs, weights, pairing hashes, and MIO ownership make the estimand auditable. Contract and invariance tests are highly feasible now; scientific calibration remains conditional on paired depth mocks and covariance, and the endpoint stays diagnostic rather than inferential.",
+        "scores": {
+          "correctness_falsifiability": 9.0,
+          "identifiability": 8.5,
+          "local_feasibility": 7.5,
+          "novelty": 7.5,
+          "reproducibility": 9.0,
+          "scientific_effect": 7.2
+        },
+        "total": 81.65,
+        "track_eligible": true
+      },
+      "selection_score": 81.65
+    },
+    {
+      "author_id": "/root/pr118_statistics_advocate",
+      "axis": "statistics",
+      "axis_rank": 7,
+      "candidate_id": "ST-07",
+      "integrity_veto_review": {
+        "eligible_for_retain": false,
+        "judge_id": "integrity-veto-independent-judge",
+        "missing_falsifier": false,
+        "provenance_unsecured": true,
+        "rationale": "The explicit contamination branch and mandatory abstention are a proposed way to model the monopole defect, not an assumption that the P0 is already cured; the retained output may be non-identification. Misclassification, overlap, failed held-out separation, or prior dominance is decisive, but matched local/global/systematics injections, common support, full covariance, and predictive folds are not secured.",
+        "unresolved_p0": false
+      },
+      "post_native_solver_review": {
+        "judge_id": "post-native-independent-judge",
+        "rationale": "A contamination-aware HTT mixture with mandatory abstention is an appropriate way to compare native global responses against local boost, isotropy, and named systematics. The present response overlap and contamination false-positive rates show that identifiable regions may be small or empty; existing mixture contracts help integration, but only matched injections, full covariance, and predictive separation can support classification.",
+        "scores": {
+          "adapter_readiness": 7.0,
+          "correctness": 8.5,
+          "identifiability": 5.0,
+          "novelty": 6.5,
+          "scientific_effect": 8.5
+        },
+        "total": 72.75,
+        "track_eligible": true
+      },
+      "pre_solver_review": {
+        "judge_id": "pre-solver-independent-judge",
+        "rationale": "Named isotropic, local, global-candidate, and contamination branches with calibrated abstention are preferable to forced classification and can be studied transfer-conditionally before a native atlas. Current contamination false positives as high as 0.95, CF4 monopole leakage, missing CMB support, and response overlap make near-term identification and feasibility weak.",
+        "scores": {
+          "correctness_falsifiability": 8.3,
+          "identifiability": 6.5,
+          "local_feasibility": 4.5,
+          "novelty": 7.5,
+          "reproducibility": 7.0,
+          "scientific_effect": 8.5
+        },
+        "total": 73.5,
+        "track_eligible": true
+      },
+      "selection_score": 73.5
+    },
+    {
+      "author_id": "/root/pr118_statistics_advocate",
+      "axis": "statistics",
+      "axis_rank": 2,
+      "candidate_id": "ST-08",
+      "integrity_veto_review": {
+        "eligible_for_retain": false,
+        "judge_id": "integrity-veto-independent-judge",
+        "missing_falsifier": false,
+        "provenance_unsecured": true,
+        "rationale": "The family-set proposal is not logically tied to either CF4 P0 and has decisive coverage, null-FPR, interpolation, transfer, and equivalence failures. No validated native solver or atlas, held-out atlas simulations, matched end-to-end support, or family-equivalence registry exists, so all load-bearing post-native provenance is presently unsecured.",
+        "unresolved_p0": false
+      },
+      "post_native_solver_review": {
+        "judge_id": "post-native-independent-judge",
+        "rationale": "Set-valued, equivalence-quotiented morphology inference is the strongest statistically honest use of a native atlas because it treats multi-family compatibility and complete non-identification as valid endpoints. The repository has relevant response-rank, transfer, and identified-set contracts, but current adapters are schema-only and no family result is eligible without held-out atlas coverage, matched masks/nulls/covariance, global trials, and family-equivalence validation.",
+        "scores": {
+          "adapter_readiness": 7.5,
+          "correctness": 9.0,
+          "identifiability": 7.0,
+          "novelty": 8.0,
+          "scientific_effect": 9.5
+        },
+        "total": 83.5,
+        "track_eligible": true
+      },
+      "pre_solver_review": {
+        "judge_id": "pre-solver-independent-judge",
+        "rationale": "Set-valued family equivalence is statistically disciplined, but no native low-ell atlas, validated transfer, family registry, matched masks/nulls/covariance, or globally calibrated atlas scan exists. Only interfaces and synthetic negative tests can run now, so the candidate's scientific hypothesis is not a pre-solver track result.",
+        "scores": {
+          "correctness_falsifiability": 8.5,
+          "identifiability": 2.0,
+          "local_feasibility": 1.0,
+          "novelty": 7.5,
+          "reproducibility": 6.5,
+          "scientific_effect": 3.0
+        },
+        "total": 50.0,
+        "track_eligible": false
+      },
+      "selection_score": 83.5
+    },
+    {
+      "author_id": "/root/pr118_theory_advocate",
+      "axis": "theory",
+      "axis_rank": 2,
+      "candidate_id": "TH-01",
+      "integrity_veto_review": {
+        "eligible_for_retain": true,
+        "judge_id": "integrity-veto-independent-judge",
+        "missing_falsifier": false,
+        "provenance_unsecured": false,
+        "rationale": "This formal one-way theorem reconstruction is independent of the two observational P0s and uses tracked theorem sources and executable local counterexamples. Failure to find a non-vacuous frame-consistent premise set, disagreement between independent derivations, or regeneration of a forbidden converse decisively rejects the reconstruction.",
+        "unresolved_p0": false
+      },
+      "post_native_solver_review": {
+        "judge_id": "post-native-independent-judge",
+        "rationale": "A convention-complete one-way theorem DAG is a strong formal repair and can decisively block the stored FLRW and EGS converses. Its premises and counterexamples are independent of native morphology output, however, and it has no solver-adapter interface; completing it before data interpretation is preferable to treating it as a post-native research candidate.",
+        "scores": {
+          "adapter_readiness": 3.5,
+          "correctness": 8.5,
+          "identifiability": 8.0,
+          "novelty": 5.5,
+          "scientific_effect": 5.5
+        },
+        "total": 64.5,
+        "track_eligible": false
+      },
+      "pre_solver_review": {
+        "judge_id": "pre-solver-independent-judge",
+        "rationale": "The stored x_C cancellation and beta-zero non-FLRW witnesses, plus the frame-vorticity bypass, make the theorem premises and unsupported converses directly testable without observational data. A convention-complete implication DAG would repair load-bearing mathematics and manuscript consumers, though it yields conditional theorems rather than a physical transfer or sky result.",
+        "scores": {
+          "correctness_falsifiability": 9.0,
+          "identifiability": 9.0,
+          "local_feasibility": 8.0,
+          "novelty": 7.5,
+          "reproducibility": 8.8,
+          "scientific_effect": 8.0
+        },
+        "total": 84.55,
+        "track_eligible": true
+      },
+      "selection_score": 84.55
+    },
+    {
+      "author_id": "/root/pr118_theory_advocate",
+      "axis": "theory",
+      "axis_rank": 1,
+      "candidate_id": "TH-02",
+      "integrity_veto_review": {
+        "eligible_for_retain": true,
+        "judge_id": "integrity-veto-independent-judge",
+        "missing_falsifier": false,
+        "provenance_unsecured": false,
+        "rationale": "The claim is a formal partial-identification theorem for a declared response map, not an observational sector measurement, so neither P0 nor missing survey assets are load-bearing. Tracked specifications and cancellation witnesses are available, and an independently changed rank/kernel or failed admissible injection decisively falsifies the stated map.",
+        "unresolved_p0": false
+      },
+      "post_native_solver_review": {
+        "judge_id": "post-native-independent-judge",
+        "rationale": "A sector-preserving response map and constructive kernel witnesses would give a native atlas an honest language for blind directions instead of reading scalar cancellation as isotropy. The formal object is identifiable for a fixed response contract, but the current rank is conditional and can change with native observables, nuisance projection, nonlinear response, and frame correction, so the operator must be rederived from delivered outputs.",
+        "scores": {
+          "adapter_readiness": 6.5,
+          "correctness": 8.5,
+          "identifiability": 8.0,
+          "novelty": 7.0,
+          "scientific_effect": 7.5
+        },
+        "total": 76.25,
+        "track_eligible": true
+      },
+      "pre_solver_review": {
+        "judge_id": "pre-solver-independent-judge",
+        "rationale": "A sector-preserving cone and explicit response kernel convert the demonstrated scalar cancellation failure into constructive non-identification witnesses. Independent Jacobians, admissible injections, and parameterization checks can establish a useful formal result now; observed-sector identification remains blocked because the present response map is conditional and lacks matched transfer and covariance.",
+        "scores": {
+          "correctness_falsifiability": 9.0,
+          "identifiability": 8.5,
+          "local_feasibility": 7.5,
+          "novelty": 8.5,
+          "reproducibility": 8.5,
+          "scientific_effect": 8.2
+        },
+        "total": 84.65,
+        "track_eligible": true
+      },
+      "selection_score": 84.65
+    },
+    {
+      "author_id": "/root/pr118_theory_advocate",
+      "axis": "theory",
+      "axis_rank": 6,
+      "candidate_id": "TH-03",
+      "integrity_veto_review": {
+        "eligible_for_retain": true,
+        "judge_id": "integrity-veto-independent-judge",
+        "missing_falsifier": false,
+        "provenance_unsecured": false,
+        "rationale": "At the pre-solver C3 ceiling this is a typed frame-and-order decomposition using tracked algebra and synthetic transformations; observed promotion remains blocked and therefore does not depend on the CF4 P0. Rank-deficient responses or loss of the claimed contrast under an allowed tetrad change decisively force equivalence or rejection.",
+        "unresolved_p0": false
+      },
+      "post_native_solver_review": {
+        "judge_id": "post-native-independent-judge",
+        "rationale": "Separating linear observer boost, species flux, quadratic tilt energy, and induced stress is indispensable before comparing a native global model to local motion. The solver handoff's normal/electron-frame split is compatible with this programme, but live Omega_tilt semantics are overloaded and realistic nuisance-projected derivatives may remain collinear, in which case only an equivalence class is justified.",
+        "scores": {
+          "adapter_readiness": 6.5,
+          "correctness": 8.0,
+          "identifiability": 5.5,
+          "novelty": 7.0,
+          "scientific_effect": 8.5
+        },
+        "total": 72.5,
+        "track_eligible": true
+      },
+      "pre_solver_review": {
+        "judge_id": "pre-solver-independent-judge",
+        "rationale": "Separating observer velocity, species rapidities, first-order flux, and quadratic tilt energy directly repairs the live Omega_tilt type error and admits frame-transformation and cancellation tests now. The important observational separation may remain rank deficient after realistic windows, and the matched multi-probe injections needed for C4 use are not currently available.",
+        "scores": {
+          "correctness_falsifiability": 8.7,
+          "identifiability": 7.5,
+          "local_feasibility": 5.5,
+          "novelty": 8.0,
+          "reproducibility": 7.5,
+          "scientific_effect": 8.5
+        },
+        "total": 78.75,
+        "track_eligible": true
+      },
+      "selection_score": 78.75
+    },
+    {
+      "author_id": "/root/pr118_theory_advocate",
+      "axis": "theory",
+      "axis_rank": 3,
+      "candidate_id": "TH-04",
+      "integrity_veto_review": {
+        "eligible_for_retain": false,
+        "judge_id": "integrity-veto-independent-judge",
+        "missing_falsifier": false,
+        "provenance_unsecured": true,
+        "rationale": "The graph has decisive reparameterization, held-out-merger, and native-injection failure criteria and is not tied to the CF4 P0s. A physically populated graph nevertheless requires native response blocks, matched masks and nulls, covariance, held-out probes, and family-equivalence review that are presently absent; current representative-family placeholders are not authenticated morphology provenance.",
+        "unresolved_p0": false
+      },
+      "post_native_solver_review": {
+        "judge_id": "post-native-independent-judge",
+        "rationale": "A typed equivalence graph joining mean, covariance, local/global, and systematics response subspaces is a high-value handoff target because unresolved components are themselves valid results. Existing Pack B/E and AtlasEntry-style contracts provide scaffolding, but parameterization invariance, held-out splitting behavior, authenticated native response blocks, matched support, and family-equivalence tests must all be demonstrated.",
+        "scores": {
+          "adapter_readiness": 7.5,
+          "correctness": 8.5,
+          "identifiability": 7.5,
+          "novelty": 8.0,
+          "scientific_effect": 9.0
+        },
+        "total": 82.0,
+        "track_eligible": true
+      },
+      "pre_solver_review": {
+        "judge_id": "pre-solver-independent-judge",
+        "rationale": "An adapter-level graph of response subspaces and unresolved equivalence components is executable with synthetic rank witnesses and is a scientifically honest pre-solver interface. Its components and metric can be parameterization dependent, current family nodes have no physical authority, and decisive held-out classification still requires a native atlas and matched support.",
+        "scores": {
+          "correctness_falsifiability": 8.0,
+          "identifiability": 6.0,
+          "local_feasibility": 6.0,
+          "novelty": 8.0,
+          "reproducibility": 7.5,
+          "scientific_effect": 7.2
+        },
+        "total": 71.9,
+        "track_eligible": true
+      },
+      "selection_score": 82.0
+    },
+    {
+      "author_id": "/root/pr118_theory_advocate",
+      "axis": "theory",
+      "axis_rank": 7,
+      "candidate_id": "TH-05",
+      "integrity_veto_review": {
+        "eligible_for_retain": false,
+        "judge_id": "integrity-veto-independent-judge",
+        "missing_falsifier": false,
+        "provenance_unsecured": true,
+        "rationale": "The native tangent-space and held-out-channel failures decisively test the proposed source class, and neither CF4 P0 is logically necessary. The required native T/E/B and covariance responses, end-to-end simulations, matched support and foreground treatment, joint covariance, and independent depth probes do not exist with authenticated provenance.",
+        "unresolved_p0": false
+      },
+      "post_native_solver_review": {
+        "judge_id": "post-native-independent-judge",
+        "rationale": "Joint T/E/B, parity, BiPoSH, and depth-response factorization could reveal a shear or regular-tensor direction outside classical VII_h and velocity/systematics spans. It is presently a plausible source-class hypothesis rather than a derived separator, and foreground, calibration, mask, and low-ell degeneracies may erase every stable singular direction even with exact native transport.",
+        "scores": {
+          "adapter_readiness": 6.5,
+          "correctness": 7.5,
+          "identifiability": 5.5,
+          "novelty": 7.5,
+          "scientific_effect": 8.5
+        },
+        "total": 72.0,
+        "track_eligible": true
+      },
+      "pre_solver_review": {
+        "judge_id": "pre-solver-independent-judge",
+        "rationale": "The proposed T/E/B, parity, BiPoSH, and depth factorization is a plausible discriminator distinct from the classical VII_h spiral, but every decisive response and held-out prediction requires native transport and end-to-end simulations. Present Planck and ACT support defects supply no pre-solver physical response with which to test the source-class hypothesis.",
+        "scores": {
+          "correctness_falsifiability": 8.2,
+          "identifiability": 2.5,
+          "local_feasibility": 1.0,
+          "novelty": 8.0,
+          "reproducibility": 5.5,
+          "scientific_effect": 3.5
+        },
+        "total": 51.0,
+        "track_eligible": false
+      },
+      "selection_score": 72.0
+    },
+    {
+      "author_id": "/root/pr118_theory_advocate",
+      "axis": "theory",
+      "axis_rank": 4,
+      "candidate_id": "TH-06",
+      "integrity_veto_review": {
+        "eligible_for_retain": false,
+        "judge_id": "integrity-veto-independent-judge",
+        "missing_falsifier": false,
+        "provenance_unsecured": true,
+        "rationale": "Nontrivial quotient membership, coverage failure, or loss of a separator under orientation, prior, transfer, mask, or covariance changes is decisive and unrelated to either CF4 P0. The native family-wide atlas, common-prior sampling, matched end-to-end assets, and equivalence graph are wholly future inputs, so provenance is unsecured now.",
+        "unresolved_p0": false
+      },
+      "post_native_solver_review": {
+        "judge_id": "post-native-independent-judge",
+        "rationale": "Quotienting native family outputs by orientation, handedness, limiting-family, frame, parameter, and nuisance equivalences is the correct prerequisite for any eventual family statement and has major scientific payoff even if it proves non-identification. Current schemas and solver design provide only provisional interface vocabulary, not all-family authenticated outputs or group actions, while matched masks/nulls/covariance and held-out family-equivalence coverage remain mandatory.",
+        "scores": {
+          "adapter_readiness": 6.5,
+          "correctness": 9.0,
+          "identifiability": 6.5,
+          "novelty": 8.5,
+          "scientific_effect": 9.5
+        },
+        "total": 81.75,
+        "track_eligible": true
+      },
+      "pre_solver_review": {
+        "judge_id": "pre-solver-independent-judge",
+        "rationale": "Quotienting explicit orientation, handedness, parameter, frame, and nuisance group actions is the correct eventual family test and has a stringent falsifier. It is wholly non-executable as a scientific pre-solver study because the native family-wide atlas, common prior domain, transfer, masks, nulls, covariance, and equivalence validation do not exist.",
+        "scores": {
+          "correctness_falsifiability": 9.0,
+          "identifiability": 2.0,
+          "local_feasibility": 0.5,
+          "novelty": 8.5,
+          "reproducibility": 6.0,
+          "scientific_effect": 3.0
+        },
+        "total": 51.75,
+        "track_eligible": false
+      },
+      "selection_score": 81.75
+    },
+    {
+      "author_id": "/root/pr118_theory_advocate",
+      "axis": "theory",
+      "axis_rank": 5,
+      "candidate_id": "TH-07",
+      "integrity_veto_review": {
+        "eligible_for_retain": true,
+        "judge_id": "integrity-veto-independent-judge",
+        "missing_falsifier": false,
+        "provenance_unsecured": false,
+        "rationale": "This is a class-conditional formal theorem based on tracked symbolic field-equation artifacts and does not consume either observational P0. An in-domain remainder violation, independent coefficient disagreement, or premature constraint singularity is decisive; observational transfer and native morphology are explicitly outside the retained C2 claim.",
+        "unresolved_p0": false
+      },
+      "post_native_solver_review": {
+        "judge_id": "post-native-independent-judge",
+        "rationale": "A certified near-FLRW expansion with explicit remainder would repair the OMK and reciprocal-coefficient overclaims and is a well-falsified formal project. It does not require or consume a native morphology atlas, and its class-domain proof should be established independently before being used to interpret solver outputs, so it is not assigned to the post-native track.",
+        "scores": {
+          "adapter_readiness": 4.0,
+          "correctness": 8.5,
+          "identifiability": 8.0,
+          "novelty": 6.0,
+          "scientific_effect": 6.0
+        },
+        "total": 67.25,
+        "track_eligible": false
+      },
+      "pre_solver_review": {
+        "judge_id": "pre-solver-independent-judge",
+        "rationale": "The OMK global-domain overstatement and NT2 reciprocal provide precise coefficient and remainder targets for symbolic, interval, and randomized constraint-surface checks. A certified class-conditional theorem can be completed pre-solver and propagated fail-closed, although a uniform domain may collapse near class boundaries and the theorem cannot calibrate observed curvature or shear.",
+        "scores": {
+          "correctness_falsifiability": 8.8,
+          "identifiability": 8.5,
+          "local_feasibility": 7.0,
+          "novelty": 7.5,
+          "reproducibility": 8.5,
+          "scientific_effect": 7.5
+        },
+        "total": 80.75,
+        "track_eligible": true
+      },
+      "selection_score": 80.75
+    },
+    {
+      "author_id": "/root/pr118_theory_advocate",
+      "axis": "theory",
+      "axis_rank": 8,
+      "candidate_id": "TH-08",
+      "integrity_veto_review": {
+        "eligible_for_retain": false,
+        "judge_id": "integrity-veto-independent-judge",
+        "missing_falsifier": false,
+        "provenance_unsecured": true,
+        "rationale": "The closure family has decisive passivity, reflection, phase, stability, observable-error, and converged-reference failure criteria and is independent of the CF4 P0s. The legacy constant-frequency toy is not authenticated physical evidence, and the load-bearing evolving-coefficient native hierarchy and converged cutoff sweeps do not yet exist.",
+        "unresolved_p0": false
+      },
+      "post_native_solver_review": {
+        "judge_id": "post-native-independent-judge",
+        "rationale": "A passive memory-kernel interface could reduce hierarchy reflection and phase error if judged against converged native cutoff sweeps and observable bias rather than pole count. The legacy toy also records severe recursion and fit failures, and the current handoff has no validated evolving-coefficient reference or closure interchange contract, so scientific value remains conditional on independent convergence across families and visibility histories.",
+        "scores": {
+          "adapter_readiness": 4.5,
+          "correctness": 6.5,
+          "identifiability": 5.5,
+          "novelty": 7.0,
+          "scientific_effect": 6.5
+        },
+        "total": 60.75,
+        "track_eligible": true
+      },
+      "pre_solver_review": {
+        "judge_id": "pre-solver-independent-judge",
+        "rationale": "A passive closure contract and toy adversarial suite can be developed now, and the legacy archive already demonstrates why naive recursion, few-pole fits, and an underconverged reference must be rejected. Pre-solver work can identify numerical acceptance criteria but cannot establish error control for evolving Bianchi transport until a converged native hierarchy supplies the reference.",
+        "scores": {
+          "correctness_falsifiability": 7.5,
+          "identifiability": 5.0,
+          "local_feasibility": 5.5,
+          "novelty": 8.0,
+          "reproducibility": 7.5,
+          "scientific_effect": 6.0
+        },
+        "total": 65.75,
+        "track_eligible": true
+      },
+      "selection_score": 65.75
+    }
+  ],
+  "schema": "htt.pr118.shortlist_freeze.v1",
+  "shortlist_candidate_ids": [
+    "TH-02",
+    "TH-01",
+    "ST-03",
+    "ST-08",
+    "CO-04",
+    "CO-07",
+    "DA-01",
+    "DA-05",
+    "CO-06",
+    "ST-04",
+    "TH-04",
+    "CO-01"
+  ],
+  "shortlist_count": 12,
+  "shortlist_hash": "sha256:fb20adbbe16d651e6231cc52a66fe25d4c122fe2cab7ee6a12aeb986cb4cd6c6",
+  "shortlist_rule": "per-axis top two plus candidates within five points of the second-place axis cutoff, globally capped at twelve",
+  "sky_support_status": "not_a_sky_result",
+  "transfer_source": "none_no_web_ranking_inputs",
+  "web_lock_sha256": "sha256:51bb7e2e26111ff615126e3586ddcc230c6ee369ea9a47f6de2265f0fa2f5e1d",
+  "web_used": false,
+  "weights": {
+    "post_native_solver": {
+      "adapter_readiness": 15,
+      "correctness": 25,
+      "identifiability": 20,
+      "novelty": 15,
+      "scientific_effect": 25
+    },
+    "pre_solver": {
+      "correctness_falsifiability": 25,
+      "identifiability": 20,
+      "local_feasibility": 10,
+      "novelty": 15,
+      "reproducibility": 10,
+      "scientific_effect": 20
+    }
+  }
+}

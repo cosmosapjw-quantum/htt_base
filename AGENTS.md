@@ -127,6 +127,13 @@ Skill activation rules:
 - Use `$htt-ssot-handoff-maintainer` after every five PRs, after any architectural decision, and before handing work to another agent/session.
 - Use `$htt-reviewer-mode-pre-submission` for release gates, external audit packages, manuscript readiness, or severe self-review.
 - Use `$htt-adversarial-review-loop` before merging each PR: run third-party style review, address concrete findings, and record remaining risks.
+- Use `$htt-physmath-audit` for evidence-locked multi-axis hostile audits,
+  advocate divergence, audit evidence packaging, and referee debates. Compose
+  it with `$htt-physics-math-audit`, `$htt-statistical-hardening`,
+  `$htt-scientific-code-validation`, `$htt-claim-firewall`,
+  `$htt-claim-provenance-ledger`, `$htt-transfer-provenance`, and manuscript
+  audit/build skills when those domain actions occur; the narrower
+  `$htt-physics-math-audit` alone does not route a complete multi-axis audit.
 
 ## Mandatory non-overclaim rules
 

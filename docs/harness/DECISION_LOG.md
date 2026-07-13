@@ -2,6 +2,25 @@
 
 Record accepted, rejected, and deferred design decisions.
 
+## 2026-07-14 - PR-118 final adversarial-audit decision
+
+- Accepted: preserve all 55 prior findings as `KNOWN_OPEN`, keep the 14 audit
+  gaps separate, and admit only 33 source-deduplicated new atomic deltas.
+- Accepted: the as-shipped manuscript decision is REJECT; a defensible object
+  requires a new methods/negative-audit submission after major rebuild.
+- Accepted: prioritize pre-solver exchangeable null calibration,
+  non-identification/theorem-domain work, independent numerical oracles, and
+  authenticated CF4/DESI rebuilds.
+- Accepted: keep native-atlas/equivalence candidates as post-native interface
+  hypotheses only. `hypothesis_only=true` and `public_use=false` remain hard.
+- Accepted: final CRAG scope is frozen to 12 independently shortlisted
+  candidates. The authoritative packet is pruned to 12 queries and 22
+  primary/official sources; full raw lookups remain hash-bound.
+- Rejected: retaining any present anisotropy, global-tilt, FLRW-violation,
+  precision-evidence, geometry, or family-identification headline.
+- Deferred: the nine staged `AUD-R01A`-`AUD-R05C` follow-up cards are proposed only;
+  they are not inserted into the completed active DAG without a new intake.
+
 ## 2026-06-12 - PR-011 artifact quarantine boundary
 
 - Accepted: keep `common.contracts.ArtifactManifest` as the canonical manifest

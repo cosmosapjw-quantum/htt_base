@@ -52,3 +52,22 @@ Date: 2026-06-12
   bookkeeping only, not scientific readiness, transfer calibration, HTT
   posterior/evidence, MIO diagnostic, null calibration, morphology
   compatibility, or family-ID evidence.
+
+## Checkpoint 065 materialized by PR-118
+
+Date: 2026-07-14
+
+- Completed PRs: 65/65 = 100.0%.
+- Dependency-weighted completion: 100.0%.
+- Critical-path completion: 24/24 = 100.0%.
+- Artifact: `docs/generated/progress_checkpoints/checkpoint_065.md`.
+- Blocked/skipped/unblocked DAG nodes: none; no replan was required because
+  completion advanced by five from checkpoint 060.
+- Scientific audit state: 55 prior findings and 33 new open atomic deltas
+  remain; the as-shipped manuscript decision is REJECT.
+- PR-118 evidence: 32 candidates, three independent judges, 12-candidate
+  bounded final CRAG, 102-row criticism matrix, and three independent final
+  referee decisions.
+- Scope caveat: 100% DAG completion is not science readiness and supplies no
+  native solver, transfer, null, covariance, morphology, geometry, or family
+  validation.

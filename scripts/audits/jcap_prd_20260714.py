@@ -38,6 +38,7 @@ for _root in (REPO, REPO / "htt", REPO / "htt/htt", REPO / "htt/src"):
 # and a nested HTT-inference package with the same import root.  Audit imports
 # need both search locations without changing the production package layout.
 import htt as _htt_package  # noqa: E402
+from common.semantic_guards.no_overclaim import scan_text as scan_claim_text  # noqa: E402
 
 for _package_root in (REPO / "htt", REPO / "htt/htt/htt"):
     if str(_package_root) not in _htt_package.__path__:
@@ -51,8 +52,46 @@ EXECUTION_LEDGER = AUDIT / "execution_ledger.jsonl"
 DIAGNOSTICS = AUDIT / "diagnostic_results.json"
 MANIFEST = AUDIT / "MANIFEST.json"
 ATOMIC_LEDGER = AUDIT / "atomic_finding_ledger.json"
+SHORTLIST_FREEZE = AUDIT / "shortlist_freeze.json"
 BASELINE_HEAD = "8af39b36c1d5ed4f9b16f0bc71dbecd8b22548d4"
+PR117_COMMIT = "f96e8d9eed9d318141d9ea77ab3ce47c2acecef3"
+PR117_SEALED_RUNNER_SHA256 = (
+    "sha256:614630a438c046418703ec07dd91cf2d305b7ce8962b27904960c4d588c3fa0c"
+)
 AUDIT_SEED = 20260714
+
+PR118_REQUIRED_RECEIPTS = {
+    # ``seal4``/``retry4`` bind the terminal hostile-mutation hardening of the
+    # runner and contract tests.  Superseded records remain in the append-only
+    # ledger as execution history but cannot satisfy the current seal.
+    "pr118_final_dag_seal4": "PASS",
+    "pr118_final_backlog_mirrors_seal4": "PASS",
+    "pr118_final_checkpoint_seal4": "PASS",
+    "pr118_final_collect_retry4": "PASS",
+    "pr118_final_smoke_retry4": "PASS",
+    "pr118_final_package_seal4": "PASS",
+    "pr118_final_status_contracts_seal4": "PASS",
+    "pr118_final_ownership_transfer_seal4": "PASS",
+    "pr118_final_claim_language_seal4": "PASS",
+    "pr118_final_result_pack_freshness_seal4": "FAIL_OR_BLOCKED",
+    "pr118_final_current_figure_manifest_seal4": "FAIL_OR_BLOCKED",
+    "pr118_final_generic_figure_manifest_seal4": "FAIL_OR_BLOCKED",
+    "pr118_final_publication_freeze_retry3": "PASS",
+    "pr118_final_external_package_retry3": "PASS",
+    "pr118_final_vendor_archive_adapter_retry3": "PASS",
+    "pr118_final_latex_build_seal4": "PASS",
+    "pr118_final_contract_preseal": "PASS",
+    "pr118_final_diff_check": "PASS",
+    "pr118_final_manifest_preseal": "PASS",
+}
+PR118_RETAINED_ATTEMPT_RESULTS = {
+    "pr118_final_collect": "BLOCKED_MISSING_DECLARED_INPUT",
+    "pr118_final_smoke": "BLOCKED_MISSING_DECLARED_INPUT",
+    "pr118_final_publication_freeze": "FAIL_OR_BLOCKED",
+    "pr118_final_external_package": "FAIL_OR_BLOCKED",
+    "pr118_final_external_package_retry1": "FAIL_OR_BLOCKED",
+    "pr118_final_vendor_archive_adapter": "BLOCKED_MISSING_DECLARED_INPUT",
+}
 
 EXPECTED_PRIOR_COUNTS = {"P0": 2, "P1": 14, "P2": 17, "P3": 22}
 ALLOWED_DELTA_REASONS = {
@@ -69,6 +108,89 @@ COUNTERFACTUAL_FIELDS = {
     "allowed_use": "internal_only",
     "hypothesis_only": True,
     "public_use": False,
+}
+
+ADVOCATE_RESPONSE_PATHS = {
+    "theory": AUDIT / "agents/advocate_divergence/theory_advocate_response.json",
+    "statistics": AUDIT / "agents/advocate_divergence/statistics_advocate_response.json",
+    "code": AUDIT / "agents/advocate_divergence/code_advocate_response.json",
+    "data_analysis": AUDIT / "agents/advocate_divergence/data_advocate_response.json",
+}
+ADVOCATE_AXIS_PREFIXES = {
+    "theory": "TH-",
+    "statistics": "ST-",
+    "code": "CO-",
+    "data_analysis": "DA-",
+}
+ADVOCATE_REQUIRED_FIELDS = {
+    "candidate_id",
+    "axis",
+    "title",
+    "hypothesis",
+    "assumptions",
+    "mechanism",
+    "supporting_evidence",
+    "contrary_evidence",
+    "decisive_falsifier",
+    "required_data_or_solver",
+    "resource_cost",
+    "salvage_disposition_proposed",
+    "maximum_claim_tier",
+    "native_atlas_required",
+    "matched_masks_required",
+    "matched_nulls_required",
+    "covariance_required",
+    "family_equivalence_required",
+    "hypothesis_only",
+    "public_use",
+    "author_cannot_promote",
+    "web_used",
+}
+PRE_SOLVER_WEIGHTS = {
+    "correctness_falsifiability": 25,
+    "identifiability": 20,
+    "scientific_effect": 20,
+    "novelty": 15,
+    "local_feasibility": 10,
+    "reproducibility": 10,
+}
+POST_SOLVER_WEIGHTS = {
+    "correctness": 25,
+    "scientific_effect": 25,
+    "identifiability": 20,
+    "novelty": 15,
+    "adapter_readiness": 15,
+}
+ADVOCATE_DISPOSITIONS = {
+    "rescued",
+    "downclaimed",
+    "rebuild_required",
+    "native_solver_dependent",
+    "falsified",
+    "abandoned",
+}
+CRITICISM_MAP_PATHS = {
+    "prior": AUDIT / "agents/criticism_mapping/prior_response_map.json",
+    "gap_theory_statistics": AUDIT
+    / "agents/criticism_mapping/gap_theory_statistics_response_map.json",
+    "data_code": AUDIT / "agents/criticism_mapping/data_code_response_map.json",
+}
+FINAL_CRAG_RESPONSE_PATHS = {
+    "theory_statistics": AUDIT
+    / "agents/final_crag/theory_statistics_crag_response.json",
+    "code": AUDIT / "agents/final_crag/code_crag_response.json",
+    "data": AUDIT / "agents/final_crag/data_crag_response.json",
+}
+FINAL_CRAG_ASSIGNMENTS = {
+    "theory_statistics": {"TH-02", "TH-01", "TH-04", "ST-03", "ST-08", "ST-04"},
+    "code": {"CO-04", "CO-07", "CO-06", "CO-01"},
+    "data": {"DA-01", "DA-05"},
+}
+FINAL_REFEREE_RESPONSE_PATHS = {
+    "JCAP": AUDIT / "agents/final_referees/jcap_referee_response.json",
+    "PRD": AUDIT / "agents/final_referees/prd_referee_response.json",
+    "Independent skeptical": AUDIT
+    / "agents/final_referees/skeptical_referee_response.json",
 }
 
 DIAGNOSTIC_LANE_NAMES = {
@@ -112,6 +234,27 @@ REQUIRED_AGENT_ROLES = {
     ("pr117_rereview", "integration_provenance_followup"),
     ("pr117_rereview", "schema_harness_followup"),
     ("pr117_rereview", "science_dedup_followup"),
+}
+REQUIRED_PR118_AGENT_ROLES = {
+    ("advocate_divergence", "theory_advocate"),
+    ("advocate_divergence", "statistics_advocate"),
+    ("advocate_divergence", "code_advocate"),
+    ("advocate_divergence", "data_advocate"),
+    ("advocate_judging", "pre_solver_judge"),
+    ("advocate_judging", "post_native_judge"),
+    ("advocate_judging", "integrity_veto_judge"),
+    ("final_crag", "theory_statistics_crag"),
+    ("final_crag", "code_crag"),
+    ("final_crag", "data_crag"),
+    ("criticism_mapping", "prior_response_map"),
+    ("criticism_mapping", "gap_theory_statistics_response_map"),
+    ("criticism_mapping", "data_code_response_map"),
+    ("final_referees", "jcap_referee"),
+    ("final_referees", "prd_referee"),
+    ("final_referees", "skeptical_referee"),
+    ("pr118_review", "harness_schema"),
+    ("pr118_review", "science_claim"),
+    ("pr118_review", "integration_provenance"),
 }
 
 
@@ -179,6 +322,35 @@ def repo_state() -> dict[str, Any]:
     }
 
 
+def _artifact_metadata(
+    input_paths: Iterable[Path],
+    generating_command: str,
+    *,
+    transfer_source: str = "mixed_none_and_external_transfer_conditional",
+    sky_support_status: str = "mixed_audit_only_no_directional_promotion",
+    null_mock_status: str = "mixed_matched_proxy_blocked_and_not_statistical",
+) -> dict[str, Any]:
+    paths = [path for path in input_paths if path.is_file()]
+    input_map = {relative(path): sha256_file(path) for path in paths}
+    return {
+        "owner": "COMMON",
+        "implementation_scope": "common",
+        "claim_tier": "diagnostic_only",
+        "transfer_source": transfer_source,
+        "config_hash": sha256_json(input_map),
+        "input_hashes": [f"{path}:{digest}" for path, digest in input_map.items()],
+        "sky_support_status": sky_support_status,
+        "null_mock_status": null_mock_status,
+        "caveats": [
+            "Internal audit and research-prioritization artifact only.",
+            "No production scientific output is repaired or promoted by this artifact.",
+            "Counterfactual family/geometry content remains hypothesis-only and public_use=false.",
+        ],
+        "generating_command": generating_command,
+        "git_commit_or_worktree_state": repo_state(),
+    }
+
+
 def _environment_payload() -> dict[str, Any]:
     versions: dict[str, str] = {}
     for name in ("numpy", "scipy", "healpy", "astropy", "camb", "pytest"):
@@ -204,6 +376,16 @@ def _environment_payload() -> dict[str, Any]:
 def build_environment() -> dict[str, Any]:
     payload = _environment_payload()
     write_json(AUDIT / "environment.json", payload)
+    return payload
+
+
+def build_pr118_environment() -> dict[str, Any]:
+    payload = _environment_payload()
+    payload["phase"] = "PR-118-final-validation"
+    # Recompute after adding the phase marker.
+    payload.pop("environment_hash", None)
+    payload["environment_hash"] = sha256_json(payload)
+    write_json(AUDIT / "environment_pr118.json", payload)
     return payload
 
 
@@ -674,7 +856,7 @@ def _save_diagnostic_lane(name: str, row: dict[str, Any]) -> dict[str, Any]:
 def build_debate() -> dict[str, Any]:
     """Index immutable prompts/responses and root adjudications.
 
-    Full prompt and response text remains in the paired Markdown artifacts so
+    Full prompt and response text remains in paired Markdown/JSON artifacts so
     a referee can inspect it without trusting a digest written by the root
     agent.  This JSON binds those artifacts by hash and records whether an
     offline response supplied the mandatory web receipt.
@@ -682,7 +864,27 @@ def build_debate() -> dict[str, Any]:
     agent_root = AUDIT / "agents"
     entries: list[dict[str, Any]] = []
     for prompt in sorted(agent_root.rglob("*_prompt.md")):
-        response = prompt.with_name(prompt.name.replace("_prompt.md", "_response.md"))
+        markdown_response = prompt.with_name(
+            prompt.name.replace("_prompt.md", "_response.md")
+        )
+        json_response = prompt.with_name(
+            prompt.name.replace("_prompt.md", "_response.json")
+        )
+        direct_json_response = prompt.with_name(
+            prompt.name.removesuffix("_prompt.md") + ".json"
+        )
+        if markdown_response.is_file():
+            response = markdown_response
+        elif json_response.is_file():
+            response = json_response
+        elif direct_json_response.is_file():
+            # Mapper outputs deliberately retain their schema-facing stem
+            # (`*_response_map.json`) instead of adding a redundant
+            # `_response` suffix.  Bind that exact agent artifact rather than
+            # silently indexing a nonexistent conventional path.
+            response = direct_json_response
+        else:
+            response = json_response
         phase = prompt.parent.name
         row: dict[str, Any] = {
             "phase": phase,
@@ -701,6 +903,13 @@ def build_debate() -> dict[str, Any]:
                     "web_used_false_receipt": bool(
                         re.search(
                             r"[\"']?web_used[\"']?\s*[:=]\s*false",
+                            body,
+                            re.IGNORECASE,
+                        )
+                    ),
+                    "web_used_true_receipt": bool(
+                        re.search(
+                            r"[\"']?web_used[\"']?\s*[:=]\s*true",
                             body,
                             re.IGNORECASE,
                         )
@@ -736,7 +945,7 @@ def build_debate() -> dict[str, Any]:
         "offline_receipt_failures": [
             row["response_path"]
             for row in entries
-            if row["phase"] != "initial_crag"
+            if row["phase"] not in {"initial_crag", "final_crag"}
             and row["response_status"] == "complete"
             and not row.get("web_used_false_receipt")
         ],
@@ -1543,7 +1752,14 @@ def record_command(args: argparse.Namespace) -> int:
                 "status": status,
             }
         )
-    environment_path = AUDIT / "environment.json"
+    raw_environment_path = getattr(args, "environment_file", None)
+    environment_path = (
+        (REPO / raw_environment_path).resolve()
+        if raw_environment_path and not Path(raw_environment_path).is_absolute()
+        else Path(raw_environment_path)
+        if raw_environment_path
+        else AUDIT / "environment.json"
+    )
     env = (
         json.loads(environment_path.read_text(encoding="utf-8"))
         if environment_path.exists()
@@ -1622,6 +1838,10 @@ def record_command(args: argparse.Namespace) -> int:
         "seed": args.seed,
         "timeout_policy_seconds": 21600,
         "environment_hash": env["environment_hash"],
+        "environment_receipt": {
+            "path": relative(environment_path),
+            "sha256": sha256_file(environment_path),
+        },
         "repo_state": repo_state(),
         "input_hashes": input_rows,
         "stdout": {"path": relative(stdout_path), "sha256": sha256_file(stdout_path)},
@@ -1933,6 +2153,7 @@ def build_manifest() -> dict[str, Any]:
             "Counterfactual family and geometry candidates are hypothesis-only and public_use=false.",
             "External-transfer products remain transfer-conditional and are not native solver results.",
             "Shared evidence packets create correlated viewpoints, not independent replications.",
+            "The 78-row generated-result register is coverage-limited: 44 rows are not_examined and 34 are sampled; neither status is blanket scientific clearance.",
         ],
         "generating_command": "venv/bin/python -B scripts/audits/jcap_prd_20260714.py build-manifest",
         "git_commit": state["current_head"],
@@ -1971,11 +2192,110 @@ def _require_object(
             errors.append(f"{label} missing required field {field}")
             continue
         value = payload[field]
-        if value is None or value == "" or (
+        if value is None or (isinstance(value, str) and not value.strip()) or (
             isinstance(value, (list, dict, tuple, set)) and not value
         ):
             errors.append(f"{label} has empty required field {field}")
     return payload
+
+
+def _require_schema(
+    payload: dict[str, Any] | None,
+    label: str,
+    allowed: str | set[str],
+    errors: list[str],
+) -> None:
+    if not payload:
+        return
+    allowed_values = {allowed} if isinstance(allowed, str) else set(allowed)
+    if payload.get("schema") not in allowed_values:
+        errors.append(
+            f"{label} schema differs: expected={sorted(allowed_values)} "
+            f"actual={payload.get('schema')!r}"
+        )
+
+
+def _require_exact_keys(
+    payload: dict[str, Any] | None,
+    label: str,
+    expected: Iterable[str],
+    errors: list[str],
+) -> None:
+    """Reject undeclared packet fields as well as missing critical fields."""
+
+    if not payload:
+        return
+    expected_keys = set(expected)
+    actual_keys = set(payload)
+    if actual_keys != expected_keys:
+        errors.append(
+            f"{label} keys differ: missing={sorted(expected_keys - actual_keys)} "
+            f"unknown={sorted(actual_keys - expected_keys)}"
+        )
+
+
+def _meaningful_structure(value: Any) -> bool:
+    if isinstance(value, str):
+        return bool(value.strip())
+    if isinstance(value, bool) or value is None:
+        return False
+    if isinstance(value, (int, float)):
+        return True
+    if isinstance(value, list):
+        return bool(value) and all(_meaningful_structure(item) for item in value)
+    if isinstance(value, dict):
+        return bool(value) and all(
+            isinstance(key, str)
+            and key.strip()
+            and _meaningful_structure(item)
+            for key, item in value.items()
+        )
+    return False
+
+
+def _validate_artifact_metadata(
+    payload: dict[str, Any] | None,
+    label: str,
+    errors: list[str],
+    *,
+    expected_inputs: Iterable[Path] | None = None,
+) -> None:
+    """Recompute metadata lineage instead of trusting a newly sealed output."""
+
+    if not payload:
+        return
+    rows = payload.get("input_hashes")
+    if not isinstance(rows, list) or not rows:
+        errors.append(f"{label} input_hashes must be a non-empty list")
+        return
+    input_map: dict[str, str] = {}
+    for raw in rows:
+        if not isinstance(raw, str) or ":sha256:" not in raw:
+            errors.append(f"{label} has malformed input hash row {raw!r}")
+            continue
+        path_text, digest_text = raw.rsplit(":sha256:", 1)
+        digest = "sha256:" + digest_text
+        if path_text in input_map:
+            errors.append(f"{label} repeats input path {path_text}")
+            continue
+        path = Path(path_text)
+        if not path.is_absolute():
+            path = REPO / path
+        if not path.is_file():
+            errors.append(f"{label} input is missing: {path_text}")
+        elif sha256_file(path) != digest:
+            errors.append(f"{label} input hash is stale: {path_text}")
+        input_map[path_text] = digest
+    if expected_inputs is not None:
+        expected = {relative(path) for path in expected_inputs}
+        if set(input_map) != expected:
+            errors.append(
+                f"{label} input path set differs: "
+                f"missing={sorted(expected - set(input_map))} "
+                f"extra={sorted(set(input_map) - expected)}"
+            )
+    if payload.get("config_hash") != sha256_json(input_map):
+        errors.append(f"{label} config_hash is stale")
 
 
 def _contains_counterfactual_marker(value: Any) -> bool:
@@ -1989,8 +2309,14 @@ def _contains_counterfactual_marker(value: Any) -> bool:
 
 
 _PUBLIC_CLAIM_PATTERNS = (
-    re.compile(r"\bBianchi\s+family\s+identified\b", re.IGNORECASE),
-    re.compile(r"\bBianchi\s+geometry\s+detected\b", re.IGNORECASE),
+    re.compile(
+        r"\bBianchi\s+family\s+(?:is\s+|was\s+|has\s+been\s+)?identified\b",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"\bBianchi\s+geometry\s+(?:is\s+|was\s+|has\s+been\s+)?detected\b",
+        re.IGNORECASE,
+    ),
     re.compile(r"\bmodel[- ]independent\s+truth\s+certificate\b", re.IGNORECASE),
     re.compile(r"\bCOUNTERFACTUAL_SENTINEL\b", re.IGNORECASE),
 )
@@ -2018,6 +2344,7 @@ def _counterfactual_public_text_hits(text: str) -> list[str]:
     """Return semantic leak markers across JSON/YAML/Markdown/TeX text."""
 
     hits: list[str] = []
+    hits.extend(issue.rule_id for issue in scan_claim_text(text, path=Path("audit_scan.md")))
     for pattern in (*_PUBLIC_CLAIM_PATTERNS, *_TEXT_COUNTERFACTUAL_METADATA):
         match = pattern.search(text)
         if match:
@@ -2362,9 +2689,77 @@ def _validate_environment_self_hash(payload: Any, errors: list[str]) -> None:
         )
 
 
-def _validate_current_input_hashes(
-    row: dict[str, Any], label: str, errors: list[str]
+def _validate_pr118_receipts(
+    rows: list[dict[str, Any]], errors: list[str]
 ) -> None:
+    environment_path = AUDIT / "environment_pr118.json"
+    environment = _validate_json(environment_path, errors)
+    _validate_environment_self_hash(environment, errors)
+    if not isinstance(environment, dict):
+        return
+    by_id = {row.get("command_id"): row for row in rows}
+    expected_receipts = {
+        **PR118_RETAINED_ATTEMPT_RESULTS,
+        **PR118_REQUIRED_RECEIPTS,
+    }
+    missing = sorted(set(expected_receipts) - set(by_id))
+    if missing:
+        errors.append(f"missing required PR-118 receipts: {missing}")
+    environment_digest = sha256_file(environment_path)
+    required_bindings = {
+        relative(Path(__file__)),
+        "tests/contracts/test_jcap_prd_adversarial_audit.py",
+    }
+    for command_id, expected_result in expected_receipts.items():
+        row = by_id.get(command_id)
+        if not row:
+            continue
+        retained_attempt = command_id in PR118_RETAINED_ATTEMPT_RESULTS
+        if row.get("schema") != "htt.jcap_prd.execution_receipt.v2":
+            errors.append(f"{command_id} is not a v2 execution receipt")
+        if row.get("result") != expected_result:
+            errors.append(
+                f"{command_id} result differs: expected={expected_result} "
+                f"actual={row.get('result')}"
+            )
+        if expected_result == "PASS" and row.get("exit_code") != 0:
+            errors.append(f"{command_id} PASS receipt has nonzero exit")
+        if expected_result == "FAIL_OR_BLOCKED" and row.get("exit_code") == 0:
+            errors.append(f"{command_id} expected finding was silently green")
+        if (
+            expected_result == "BLOCKED_MISSING_DECLARED_INPUT"
+            and row.get("exit_code") == 0
+        ):
+            errors.append(f"{command_id} missing-input receipt is unexpectedly green")
+        if not retained_attempt and row.get("environment_hash") != environment.get("environment_hash"):
+            errors.append(f"{command_id} environment hash differs from PR-118 receipt")
+        receipt = row.get("environment_receipt", {})
+        if not retained_attempt and (
+            receipt.get("path") != relative(environment_path)
+            or receipt.get("sha256") != environment_digest
+        ):
+            errors.append(f"{command_id} does not bind environment_pr118.json")
+        bound_paths = {item.get("path") for item in row.get("input_hashes", [])}
+        if not retained_attempt and not required_bindings <= bound_paths:
+            errors.append(f"{command_id} lacks runner/test config bindings")
+        if not retained_attempt:
+            _validate_current_input_hashes(row, command_id, errors)
+        resource = row.get("resource", {})
+        if not resource.get("gnu_time_sha256") or (
+            expected_result != "BLOCKED_MISSING_DECLARED_INPUT"
+            and "peak_rss_kb" not in resource
+        ):
+            errors.append(f"{command_id} lacks durable resource evidence")
+
+
+def _validate_current_input_hashes(
+    row: dict[str, Any],
+    label: str,
+    errors: list[str],
+    *,
+    frozen_hashes: dict[str, str] | None = None,
+) -> None:
+    frozen_hashes = frozen_hashes or {}
     paths: list[str] = []
     for item in row.get("input_hashes", []):
         raw = str(item.get("path", ""))
@@ -2377,6 +2772,13 @@ def _validate_current_input_hashes(
             continue
         if not path.is_file():
             errors.append(f"{label} decisive input is not a file: {raw}")
+            continue
+        if raw in frozen_hashes:
+            if item.get("sha256") != frozen_hashes[raw]:
+                errors.append(
+                    f"{label} frozen input hash mismatch for {raw}: "
+                    f"stored={item.get('sha256')} expected={frozen_hashes[raw]}"
+                )
             continue
         actual = sha256_file(path)
         if item.get("sha256") != actual:
@@ -2425,17 +2827,39 @@ def _validate_sealed_diagnostics(
     _validate_environment_self_hash(environment, errors)
     if isinstance(environment, dict) and environment_hashes != {environment.get("environment_hash")}:
         errors.append("sealed diagnostic environment hash differs from environment.json")
-    runner_hash = sha256_file(Path(__file__))
+    # PR-117 receipts are immutable evidence from the committed PR-117 runner.
+    # PR-118 necessarily extends this file; requiring the live PR-118 byte hash
+    # would either invalidate valid receipts or encourage rewriting history.
+    # Bind instead to the recorded hash and independently verify the committed
+    # blob so the constant cannot silently drift.
+    committed_runner = subprocess.run(
+        ["git", "show", f"{PR117_COMMIT}:scripts/audits/jcap_prd_20260714.py"],
+        cwd=REPO,
+        capture_output=True,
+        check=False,
+    )
+    if committed_runner.returncode:
+        errors.append("cannot read committed PR-117 audit runner")
+    elif sha256_bytes(committed_runner.stdout) != PR117_SEALED_RUNNER_SHA256:
+        errors.append("committed PR-117 audit runner hash differs from frozen receipt hash")
     for lane, row in zip(DIAGNOSTIC_LANE_NAMES, sealed_rows):
         label = f"{SEALED_RECEIPT_PREFIX}{lane}"
-        _validate_current_input_hashes(row, label, errors)
+        _validate_current_input_hashes(
+            row,
+            label,
+            errors,
+            frozen_hashes={relative(Path(__file__)): PR117_SEALED_RUNNER_SHA256},
+        )
         script_inputs = [
             item
             for item in row.get("input_hashes", [])
             if item.get("path") == relative(Path(__file__))
         ]
-        if len(script_inputs) != 1 or script_inputs[0].get("sha256") != runner_hash:
-            errors.append(f"{label} is not bound to the current audit runner hash")
+        if (
+            len(script_inputs) != 1
+            or script_inputs[0].get("sha256") != PR117_SEALED_RUNNER_SHA256
+        ):
+            errors.append(f"{label} is not bound to the frozen PR-117 runner hash")
         if any(item.get("status") != "present" for item in row.get("input_hashes", [])):
             errors.append(f"{label} has a missing declared input")
         if row.get("process_result") != "PASS" or row.get("exit_code") != 0:
@@ -2461,6 +2885,2498 @@ def _validate_sealed_diagnostics(
             else None
         )
         _validate_diagnostic_payload_binding(row, stored_payload, label, errors)
+
+
+def _load_advocate_responses(
+    errors: list[str],
+) -> tuple[list[dict[str, Any]], dict[str, str]]:
+    """Load the four author lanes without granting authors ranking authority."""
+
+    candidates: list[dict[str, Any]] = []
+    author_by_candidate: dict[str, str] = {}
+    seen_ids: set[str] = set()
+    expected_lock_hash = sha256_file(AUDIT / "WEB_LOCK.json")
+    for axis, path in ADVOCATE_RESPONSE_PATHS.items():
+        payload = _validate_json(path, errors)
+        payload = _require_object(
+            payload,
+            f"{axis} advocate response",
+            (
+                "schema",
+                "agent_role",
+                "author_id",
+                "phase",
+                "web_used",
+                "web_lock_sha256",
+                "evidence_paths",
+                "steelman",
+                "hostile_countercase",
+                "candidates",
+            ),
+            errors,
+        )
+        if not payload:
+            continue
+        _require_schema(
+            payload,
+            f"{axis} advocate response",
+            {"htt.pr118.advocate_response.v1", "htt.jcap_prd.advocate_response.v1"},
+            errors,
+        )
+        _require_exact_keys(
+            payload,
+            f"{axis} advocate response",
+            {
+                "schema",
+                "agent_role",
+                "author_id",
+                "phase",
+                "web_used",
+                "web_lock_sha256",
+                "evidence_paths",
+                "steelman",
+                "hostile_countercase",
+                "candidates",
+            },
+            errors,
+        )
+        for field in ("agent_role", "author_id"):
+            if not isinstance(payload.get(field), str) or not payload[field].strip():
+                errors.append(f"{axis} advocate response {field} must be non-whitespace text")
+        for field in ("steelman", "hostile_countercase"):
+            if not _meaningful_structure(payload.get(field)):
+                errors.append(f"{axis} advocate response {field} must be meaningful")
+        if not isinstance(payload.get("evidence_paths"), list) or not payload["evidence_paths"]:
+            errors.append(f"{axis} advocate evidence_paths must be a non-empty list")
+        elif any(
+            not isinstance(item, str) or not item.strip()
+            for item in payload["evidence_paths"]
+        ):
+            errors.append(f"{axis} advocate evidence_paths must contain non-empty text")
+        if payload.get("web_used") is not False:
+            errors.append(f"{axis} advocate response used web after WEB_LOCK")
+        if payload.get("web_lock_sha256") != expected_lock_hash:
+            errors.append(f"{axis} advocate response has stale WEB_LOCK hash")
+        if payload.get("phase") != "advocate_divergence":
+            errors.append(f"{axis} advocate response has wrong phase")
+        rows = payload.get("candidates", [])
+        if not isinstance(rows, list):
+            errors.append(f"{axis} advocate candidates must be a list")
+            rows = []
+        if len(rows) != 8:
+            errors.append(f"{axis} must contribute exactly eight candidates")
+        for evidence in payload.get("evidence_paths", []):
+            evidence_path = Path(str(evidence))
+            if not evidence_path.is_absolute():
+                evidence_path = REPO / evidence_path
+            if not evidence_path.is_file():
+                errors.append(f"{axis} advocate evidence does not exist: {evidence}")
+        for row in rows:
+            if not isinstance(row, dict):
+                errors.append(f"{axis} advocate candidate must be an object")
+                continue
+            missing = ADVOCATE_REQUIRED_FIELDS - row.keys()
+            if missing:
+                errors.append(
+                    f"{row.get('candidate_id', axis)} missing candidate fields {sorted(missing)}"
+                )
+                continue
+            unknown = row.keys() - ADVOCATE_REQUIRED_FIELDS
+            if unknown:
+                errors.append(
+                    f"{row.get('candidate_id', axis)} has unknown candidate fields {sorted(unknown)}"
+                )
+            candidate_id = str(row["candidate_id"])
+            if candidate_id in seen_ids:
+                errors.append(f"duplicate advocate candidate ID {candidate_id}")
+            seen_ids.add(candidate_id)
+            if row.get("axis") != axis:
+                errors.append(f"{candidate_id} axis must be {axis}")
+            if not re.fullmatch(r"(?:TH|ST|CO|DA)-\d{2}", candidate_id):
+                errors.append(f"{candidate_id} is not a canonical candidate ID")
+            if not candidate_id.startswith(ADVOCATE_AXIS_PREFIXES[axis]):
+                errors.append(f"{candidate_id} has the wrong axis prefix")
+            if (
+                row.get("hypothesis_only") is not True
+                or row.get("public_use") is not False
+                or row.get("author_cannot_promote") is not True
+                or row.get("web_used") is not False
+            ):
+                errors.append(f"{candidate_id} violates the counterfactual/offline contract")
+            for field in (
+                "title",
+                "hypothesis",
+                "mechanism",
+                "decisive_falsifier",
+                "salvage_disposition_proposed",
+                "maximum_claim_tier",
+            ):
+                if not isinstance(row.get(field), str) or not row[field].strip():
+                    errors.append(f"{candidate_id} has empty/non-text {field}")
+            for field in ("required_data_or_solver", "resource_cost"):
+                if not _meaningful_structure(row.get(field)):
+                    errors.append(f"{candidate_id} has empty/invalid {field}")
+            for field in ("assumptions", "supporting_evidence", "contrary_evidence"):
+                value = row.get(field)
+                if (
+                    not isinstance(value, list)
+                    or not value
+                    or any(not isinstance(item, str) or not item.strip() for item in value)
+                ):
+                    errors.append(f"{candidate_id} {field} must be non-empty text rows")
+            for field in (
+                "native_atlas_required",
+                "matched_masks_required",
+                "matched_nulls_required",
+                "covariance_required",
+                "family_equivalence_required",
+                "hypothesis_only",
+                "public_use",
+                "author_cannot_promote",
+                "web_used",
+            ):
+                if not isinstance(row.get(field), bool):
+                    errors.append(f"{candidate_id} {field} must be a strict boolean")
+            if row.get("salvage_disposition_proposed") not in ADVOCATE_DISPOSITIONS:
+                errors.append(f"{candidate_id} has invalid proposed disposition")
+            enriched = dict(row)
+            enriched.update(
+                {
+                    "author_id": payload["author_id"],
+                    "source_response_path": relative(path),
+                    "source_response_sha256": sha256_file(path),
+                }
+            )
+            candidates.append(enriched)
+            author_by_candidate[candidate_id] = str(payload["author_id"])
+    if len(candidates) != 32:
+        errors.append(f"advocate pool must contain 32 candidates, got {len(candidates)}")
+    return candidates, author_by_candidate
+
+
+def _weighted_score(
+    score_row: Any,
+    weights: dict[str, int],
+    label: str,
+    errors: list[str],
+) -> float:
+    if not isinstance(score_row, dict):
+        errors.append(f"{label} scores must be an object")
+        return 0.0
+    if set(score_row) != set(weights):
+        errors.append(
+            f"{label} score keys differ: expected={sorted(weights)} actual={sorted(score_row)}"
+        )
+        return 0.0
+    total = 0.0
+    for key, weight in weights.items():
+        value = score_row[key]
+        if not isinstance(value, (int, float)) or isinstance(value, bool) or not 0 <= value <= 10:
+            errors.append(f"{label} {key} must be numeric in [0,10]")
+            continue
+        total += float(value) * weight / 10.0
+    return round(total, 3)
+
+
+def _load_judge_rows(
+    path: Path,
+    track: str,
+    candidate_ids: set[str],
+    author_ids: set[str],
+    errors: list[str],
+) -> tuple[str, dict[str, dict[str, Any]]]:
+    payload = _validate_json(path, errors)
+    payload = _require_object(
+        payload,
+        f"{track} judge response",
+        ("schema", "judge_id", "phase", "track", "web_used", "candidate_scores"),
+        errors,
+    )
+    if not payload:
+        return "missing", {}
+    _require_schema(
+        payload,
+        f"{track} judge response",
+        "htt.pr118.independent_judge.v1",
+        errors,
+    )
+    _require_exact_keys(
+        payload,
+        f"{track} judge response",
+        {"schema", "judge_id", "phase", "track", "web_used", "candidate_scores"},
+        errors,
+    )
+    raw_judge_id = payload.get("judge_id")
+    judge_id = raw_judge_id if isinstance(raw_judge_id, str) else "invalid-judge-id"
+    if not isinstance(raw_judge_id, str) or not raw_judge_id.strip():
+        errors.append(f"{track} judge_id must be non-whitespace text")
+    if judge_id in author_ids:
+        errors.append(f"candidate author {judge_id} cannot act as {track} judge")
+    if payload.get("phase") != "advocate_judging" or payload.get("track") != track:
+        errors.append(f"{track} judge phase/track mismatch")
+    if payload.get("web_used") is not False:
+        errors.append(f"{track} judge used web before shortlist")
+    rows = payload.get("candidate_scores", [])
+    if not isinstance(rows, list):
+        errors.append(f"{track} candidate_scores must be a list")
+        rows = []
+    score_row_keys = (
+        {
+            "candidate_id",
+            "unresolved_p0",
+            "missing_falsifier",
+            "provenance_unsecured",
+            "eligible_for_retain",
+            "rationale",
+        }
+        if track == "integrity_veto"
+        else {"candidate_id", "scores", "track_eligible", "rationale"}
+    )
+    for index, row in enumerate(rows):
+        if not isinstance(row, dict):
+            errors.append(f"{track} judge row {index} must be an object")
+            continue
+        _require_exact_keys(row, f"{track} judge row {index}", score_row_keys, errors)
+        candidate_id = row.get("candidate_id")
+        if not isinstance(candidate_id, str) or not re.fullmatch(
+            r"(?:TH|ST|CO|DA)-\d{2}", candidate_id
+        ):
+            errors.append(f"{track} judge row {index} has invalid candidate_id")
+        if not isinstance(row.get("rationale"), str) or not row["rationale"].strip():
+            errors.append(f"{track} judge row {index} rationale must be non-whitespace text")
+        if track == "integrity_veto":
+            for field in (
+                "unresolved_p0",
+                "missing_falsifier",
+                "provenance_unsecured",
+                "eligible_for_retain",
+            ):
+                if not isinstance(row.get(field), bool):
+                    errors.append(f"{track} judge row {index} {field} must be boolean")
+        elif not isinstance(row.get("track_eligible"), bool):
+            errors.append(f"{track} judge row {index} track_eligible must be boolean")
+    by_id = {
+        str(row.get("candidate_id")): row
+        for row in rows
+        if isinstance(row, dict) and row.get("candidate_id")
+    }
+    if len(by_id) != len(rows):
+        errors.append(f"{track} judge has duplicate or malformed score rows")
+    if set(by_id) != candidate_ids:
+        errors.append(
+            f"{track} judge candidate census differs: "
+            f"missing={sorted(candidate_ids - set(by_id))} extra={sorted(set(by_id) - candidate_ids)}"
+        )
+    return judge_id, by_id
+
+
+def _canonical_advocate_ranking(errors: list[str]) -> dict[str, Any]:
+    """Pure reconstruction of the no-web author/judge ranking authority."""
+
+    candidates, author_by_candidate = _load_advocate_responses(errors)
+    candidate_ids = set(author_by_candidate)
+    author_ids = set(author_by_candidate.values())
+    if len(author_ids) != 4:
+        errors.append(f"advocate divergence requires four distinct authors, got {len(author_ids)}")
+    judge_root = AUDIT / "agents/advocate_judging"
+    pre_judge, pre_rows = _load_judge_rows(
+        judge_root / "pre_solver_judge_response.json",
+        "pre_solver",
+        candidate_ids,
+        author_ids,
+        errors,
+    )
+    post_judge, post_rows = _load_judge_rows(
+        judge_root / "post_native_judge_response.json",
+        "post_native_solver",
+        candidate_ids,
+        author_ids,
+        errors,
+    )
+    integrity_judge, integrity_rows = _load_judge_rows(
+        judge_root / "integrity_veto_judge_response.json",
+        "integrity_veto",
+        candidate_ids,
+        author_ids,
+        errors,
+    )
+    if len({pre_judge, post_judge, integrity_judge}) != 3:
+        errors.append("all three independent judge IDs must be distinct")
+
+    ranked: list[dict[str, Any]] = []
+    for candidate in candidates:
+        candidate_id = candidate["candidate_id"]
+        pre = pre_rows.get(candidate_id, {})
+        post = post_rows.get(candidate_id, {})
+        integrity = integrity_rows.get(candidate_id, {})
+        pre_total = _weighted_score(
+            pre.get("scores"), PRE_SOLVER_WEIGHTS, f"{candidate_id} pre-solver", errors
+        )
+        post_total = _weighted_score(
+            post.get("scores"), POST_SOLVER_WEIGHTS, f"{candidate_id} post-native", errors
+        )
+        for track, row in (("pre-solver", pre), ("post-native", post)):
+            if not isinstance(row.get("track_eligible"), bool) or not row.get("rationale"):
+                errors.append(f"{candidate_id} {track} judge row lacks eligibility/rationale")
+        integrity_required = {
+            "candidate_id",
+            "unresolved_p0",
+            "missing_falsifier",
+            "provenance_unsecured",
+            "eligible_for_retain",
+            "rationale",
+        }
+        if not integrity_required <= integrity.keys():
+            errors.append(f"{candidate_id} integrity veto row is incomplete")
+        veto_flags = {
+            key: integrity.get(key)
+            for key in ("unresolved_p0", "missing_falsifier", "provenance_unsecured")
+        }
+        if any(not isinstance(value, bool) for value in veto_flags.values()):
+            errors.append(f"{candidate_id} integrity veto flags must be booleans")
+        expected_eligible = not any(value is True for value in veto_flags.values())
+        if integrity.get("eligible_for_retain") is not expected_eligible:
+            errors.append(f"{candidate_id} integrity retain eligibility contradicts veto flags")
+        eligible_scores = []
+        if pre.get("track_eligible") is True:
+            eligible_scores.append(pre_total)
+        if post.get("track_eligible") is True:
+            eligible_scores.append(post_total)
+        selection_score = max(eligible_scores) if eligible_scores else 0.0
+        row = dict(candidate)
+        row.update(
+            {
+                "pre_solver_review": {
+                    "judge_id": pre_judge,
+                    "scores": pre.get("scores"),
+                    "total": pre_total,
+                    "track_eligible": pre.get("track_eligible"),
+                    "rationale": pre.get("rationale"),
+                },
+                "post_native_solver_review": {
+                    "judge_id": post_judge,
+                    "scores": post.get("scores"),
+                    "total": post_total,
+                    "track_eligible": post.get("track_eligible"),
+                    "rationale": post.get("rationale"),
+                },
+                "integrity_veto_review": {
+                    "judge_id": integrity_judge,
+                    **veto_flags,
+                    "eligible_for_retain": integrity.get("eligible_for_retain"),
+                    "rationale": integrity.get("rationale"),
+                },
+                "selection_score": selection_score,
+            }
+        )
+        ranked.append(row)
+
+    shortlist_ids: list[str] = []
+    extras: list[dict[str, Any]] = []
+    for axis in ADVOCATE_RESPONSE_PATHS:
+        axis_rows = sorted(
+            (row for row in ranked if row["axis"] == axis),
+            key=lambda row: (-row["selection_score"], row["candidate_id"]),
+        )
+        for index, row in enumerate(axis_rows, 1):
+            row["axis_rank"] = index
+        mandatory = axis_rows[:2]
+        shortlist_ids.extend(row["candidate_id"] for row in mandatory)
+        cutoff = mandatory[-1]["selection_score"] if mandatory else 0.0
+        extras.extend(
+            row
+            for row in axis_rows[2:]
+            if row["selection_score"] >= cutoff - 5.0
+        )
+    for row in sorted(extras, key=lambda row: (-row["selection_score"], row["candidate_id"])):
+        if len(shortlist_ids) >= 12:
+            break
+        shortlist_ids.append(row["candidate_id"])
+    shortlist_set = set(shortlist_ids)
+    shortlist_hash = sha256_json(sorted(shortlist_set))
+
+    return {
+        "ranked": ranked,
+        "author_by_candidate": author_by_candidate,
+        "author_ids": author_ids,
+        "pre_judge": pre_judge,
+        "post_judge": post_judge,
+        "integrity_judge": integrity_judge,
+        "shortlist_ids": shortlist_ids,
+        "shortlist_set": shortlist_set,
+        "shortlist_hash": shortlist_hash,
+    }
+
+
+def _shortlist_freeze_projection(canonical: dict[str, Any]) -> dict[str, Any]:
+    ranking_rows = []
+    for row in canonical["ranked"]:
+        ranking_rows.append(
+            {
+                "candidate_id": row["candidate_id"],
+                "axis": row["axis"],
+                "author_id": canonical["author_by_candidate"][row["candidate_id"]],
+                "pre_solver_review": row["pre_solver_review"],
+                "post_native_solver_review": row["post_native_solver_review"],
+                "integrity_veto_review": row["integrity_veto_review"],
+                "selection_score": row["selection_score"],
+                "axis_rank": row["axis_rank"],
+            }
+        )
+    return {
+        "weights": {
+            "pre_solver": PRE_SOLVER_WEIGHTS,
+            "post_native_solver": POST_SOLVER_WEIGHTS,
+        },
+        "author_ids": sorted(canonical["author_ids"]),
+        "judge_ids": {
+            "pre_solver": canonical["pre_judge"],
+            "post_native_solver": canonical["post_judge"],
+            "integrity_veto": canonical["integrity_judge"],
+        },
+        "ranking_rows": sorted(ranking_rows, key=lambda row: row["candidate_id"]),
+        "shortlist_candidate_ids": canonical["shortlist_ids"],
+        "shortlist_count": len(canonical["shortlist_ids"]),
+        "shortlist_hash": canonical["shortlist_hash"],
+        "shortlist_rule": (
+            "per-axis top two plus candidates within five points of the second-place "
+            "axis cutoff, globally capped at twelve"
+        ),
+    }
+
+
+def build_shortlist_freeze() -> dict[str, Any]:
+    """Materialize the deterministic no-web shortlist authority separately."""
+
+    errors: list[str] = []
+    canonical = _canonical_advocate_ranking(errors)
+    if errors:
+        raise RuntimeError("cannot freeze advocate shortlist:\n- " + "\n- ".join(errors))
+    inputs = [
+        *ADVOCATE_RESPONSE_PATHS.values(),
+        AUDIT / "agents/advocate_judging/pre_solver_judge_response.json",
+        AUDIT / "agents/advocate_judging/post_native_judge_response.json",
+        AUDIT / "agents/advocate_judging/integrity_veto_judge_response.json",
+        AUDIT / "WEB_LOCK.json",
+    ]
+    payload = {
+        "schema": "htt.pr118.shortlist_freeze.v1",
+        **_artifact_metadata(
+            inputs,
+            "venv/bin/python -B scripts/audits/jcap_prd_20260714.py build-shortlist-freeze",
+            transfer_source="none_no_web_ranking_inputs",
+            sky_support_status="not_a_sky_result",
+            null_mock_status="not_a_statistical_result",
+        ),
+        "phase": "no_web_shortlist_authority",
+        "generated_at": utcnow(),
+        "web_lock_sha256": sha256_file(AUDIT / "WEB_LOCK.json"),
+        "web_used": False,
+        "materialization_status": (
+            "retrospective_canonical_hash_seal_of_the_pre_web_author_and_judge_packets; "
+            "the physical freeze file was not independently timestamp-sealed before the "
+            "single final CRAG lookup"
+        ),
+        "ordering_caveat": (
+            "Canonical replay proves that the CRAG assignment equals the no-web ranking; "
+            "it does not retroactively prove filesystem materialization order."
+        ),
+        **_shortlist_freeze_projection(canonical),
+    }
+    write_json(SHORTLIST_FREEZE, payload)
+    return payload
+
+
+def _finalize_advocate_ranking(
+    canonical: dict[str, Any],
+    final_crag: dict[str, Any] | None,
+    errors: list[str],
+) -> list[dict[str, Any]]:
+    """Apply only the bounded CRAG updates to an already frozen ranking."""
+
+    ranked = canonical["ranked"]
+    shortlist_set = canonical["shortlist_set"]
+    update_by_id = {
+        row.get("candidate_id"): row
+        for row in (final_crag or {}).get("candidate_updates", [])
+        if isinstance(row, dict)
+    }
+    for row in ranked:
+        row["shortlisted_for_final_crag"] = row["candidate_id"] in shortlist_set
+        row["shortlist_rule"] = (
+            "per-axis top two plus candidates within five points of the second-place "
+            "axis cutoff, globally capped at twelve"
+        )
+        row["pre_crag_selection_score"] = row["selection_score"]
+        update = update_by_id.get(row["candidate_id"])
+        if update:
+            row["final_crag_update"] = update
+            row["final_disposition"] = update.get(
+                "recommended_disposition", row["salvage_disposition_proposed"]
+            )
+            novelty_after = update.get("novelty_after")
+            for review_key, weights in (
+                ("pre_solver_review", PRE_SOLVER_WEIGHTS),
+                ("post_native_solver_review", POST_SOLVER_WEIGHTS),
+            ):
+                review = row[review_key]
+                review["pre_crag_total"] = review["total"]
+                post_crag_scores = dict(review["scores"])
+                post_crag_scores["novelty"] = novelty_after
+                review["post_crag_scores"] = post_crag_scores
+                review["post_crag_total"] = _weighted_score(
+                    post_crag_scores,
+                    weights,
+                    f"{row['candidate_id']} {review_key} post-CRAG",
+                    errors,
+                )
+        else:
+            row["final_crag_update"] = None
+            row["final_disposition"] = row["salvage_disposition_proposed"]
+            for review_key in ("pre_solver_review", "post_native_solver_review"):
+                review = row[review_key]
+                review["pre_crag_total"] = review["total"]
+                review["post_crag_scores"] = None
+                review["post_crag_total"] = None
+        if row["final_disposition"] not in ADVOCATE_DISPOSITIONS:
+            errors.append(f"{row['candidate_id']} has invalid final disposition")
+        if (
+            not row["integrity_veto_review"]["eligible_for_retain"]
+            and row["final_disposition"] == "rescued"
+        ):
+            errors.append(f"{row['candidate_id']} bypasses a mandatory retain veto")
+    return ranked
+
+
+def build_advocate_ledger() -> dict[str, Any]:
+    """Deterministically aggregate author-blind judges and finalize after CRAG."""
+
+    errors: list[str] = []
+    canonical = _canonical_advocate_ranking(errors)
+    ranked = canonical["ranked"]
+    author_ids = canonical["author_ids"]
+    pre_judge = canonical["pre_judge"]
+    post_judge = canonical["post_judge"]
+    integrity_judge = canonical["integrity_judge"]
+    shortlist_ids = canonical["shortlist_ids"]
+    shortlist_set = canonical["shortlist_set"]
+    shortlist_hash = canonical["shortlist_hash"]
+    judge_root = AUDIT / "agents/advocate_judging"
+    freeze = json.loads(SHORTLIST_FREEZE.read_text(encoding="utf-8"))
+    freeze_projection = _shortlist_freeze_projection(canonical)
+    for key, expected in freeze_projection.items():
+        if freeze.get(key) != expected:
+            errors.append(f"shortlist freeze canonical projection drift at {key}")
+
+    final_crag_path = AUDIT / "web_crag_final.json"
+    final_crag = (
+        json.loads(final_crag_path.read_text(encoding="utf-8"))
+        if final_crag_path.is_file()
+        else None
+    )
+    ranked = _finalize_advocate_ranking(canonical, final_crag, errors)
+
+    if errors:
+        raise RuntimeError("cannot build advocate ledger:\n- " + "\n- ".join(errors))
+    payload = {
+        "schema": "htt.pr118.advocate_candidate_ledger.v1",
+        **_artifact_metadata(
+            [
+                *ADVOCATE_RESPONSE_PATHS.values(),
+                judge_root / "pre_solver_judge_response.json",
+                judge_root / "post_native_judge_response.json",
+                judge_root / "integrity_veto_judge_response.json",
+                AUDIT / "WEB_LOCK.json",
+                SHORTLIST_FREEZE,
+                *([final_crag_path] if final_crag else []),
+            ],
+            "venv/bin/python -B scripts/audits/jcap_prd_20260714.py build-advocate-ledger",
+        ),
+        "phase": "final_crag_complete" if final_crag else "shortlist_frozen",
+        "generated_at": utcnow(),
+        "web_lock_sha256": sha256_file(AUDIT / "WEB_LOCK.json"),
+        "generation_web_used": False,
+        "candidate_count": len(ranked),
+        "axis_counts": dict(Counter(row["axis"] for row in ranked)),
+        "author_ids": sorted(author_ids),
+        "ranking_authority": {
+            "pre_solver_judge": pre_judge,
+            "post_native_solver_judge": post_judge,
+            "integrity_veto_judge": integrity_judge,
+            "candidate_authors_excluded": True,
+            "deterministic_aggregator": relative(Path(__file__)),
+        },
+        "weights": {
+            "pre_solver": PRE_SOLVER_WEIGHTS,
+            "post_native_solver": POST_SOLVER_WEIGHTS,
+        },
+        "shortlist_candidate_ids": shortlist_ids,
+        "shortlist_count": len(shortlist_ids),
+        "shortlist_hash": shortlist_hash,
+        "shortlist_basis": "pre_crag_selection_score_frozen_before_final_crag",
+        "shortlist_freeze_path": relative(SHORTLIST_FREEZE),
+        "shortlist_freeze_sha256": sha256_file(SHORTLIST_FREEZE),
+        "final_crag_path": relative(final_crag_path) if final_crag else None,
+        "candidates": sorted(ranked, key=lambda row: row["candidate_id"]),
+        "counterfactual_contract": COUNTERFACTUAL_FIELDS,
+    }
+    write_json(AUDIT / "advocate_candidate_ledger.json", payload)
+    return payload
+
+
+def build_final_crag(*, write: bool = True) -> dict[str, Any]:
+    """Merge the three bounded final lookups and prove they stayed in-scope."""
+
+    freeze = json.loads(SHORTLIST_FREEZE.read_text(encoding="utf-8"))
+    shortlist = freeze["shortlist_candidate_ids"]
+    shortlist_set = set(shortlist)
+    if shortlist_set != set().union(*FINAL_CRAG_ASSIGNMENTS.values()):
+        raise RuntimeError("frozen shortlist differs from final CRAG role assignments")
+    errors: list[str] = []
+    queries: list[dict[str, Any]] = []
+    sources: list[dict[str, Any]] = []
+    updates: list[dict[str, Any]] = []
+    receipts: list[dict[str, Any]] = []
+    all_source_ids: set[str] = set()
+    all_query_ids: set[str] = set()
+    for group, path in FINAL_CRAG_RESPONSE_PATHS.items():
+        payload = _validate_json(path, errors)
+        payload = _require_object(
+            payload,
+            f"{group} final CRAG response",
+            (
+                "schema",
+                "phase",
+                "researcher_id",
+                "web_used",
+                "assigned_candidate_ids",
+                "queries",
+                "sources",
+                "candidate_updates",
+                "web_closed",
+            ),
+            errors,
+        )
+        if not payload:
+            continue
+        _require_schema(
+            payload,
+            f"{group} final CRAG response",
+            "htt.pr118.final_crag_agent.v1",
+            errors,
+        )
+        _require_exact_keys(
+            payload,
+            f"{group} final CRAG response",
+            {
+                "schema",
+                "phase",
+                "researcher_id",
+                "web_used",
+                "assigned_candidate_ids",
+                "queries",
+                "sources",
+                "candidate_updates",
+                "web_closed",
+            },
+            errors,
+        )
+        researcher_id = payload.get("researcher_id")
+        if not isinstance(researcher_id, str) or not researcher_id.strip():
+            errors.append(f"{group} final CRAG researcher_id must be non-whitespace text")
+        for collection_name in ("queries", "sources", "candidate_updates"):
+            if not isinstance(payload.get(collection_name), list):
+                errors.append(
+                    f"{group} final CRAG {collection_name} must be a list"
+                )
+                payload[collection_name] = []
+        assigned_rows = payload.get("assigned_candidate_ids", [])
+        if not isinstance(assigned_rows, list) or any(
+            not isinstance(item, str) or not item.strip() for item in assigned_rows
+        ):
+            errors.append(f"{group} final CRAG assigned_candidate_ids must be text rows")
+            assigned_rows = []
+        elif len(assigned_rows) != len(set(assigned_rows)):
+            errors.append(f"{group} final CRAG assigned_candidate_ids contain duplicates")
+        assigned = set(assigned_rows)
+        if assigned != FINAL_CRAG_ASSIGNMENTS[group]:
+            errors.append(f"{group} final CRAG escaped or omitted its assignment")
+        if (
+            payload.get("phase") != "final_crag"
+            or payload.get("web_used") is not True
+            or payload.get("web_closed") is not True
+        ):
+            errors.append(f"{group} final CRAG lacks open/close receipt")
+        local_source_ids = {
+            row.get("source_id")
+            for row in payload.get("sources", [])
+            if isinstance(row, dict)
+        }
+        if len(local_source_ids) != len(payload.get("sources", [])):
+            errors.append(f"{group} final CRAG has duplicate/malformed sources")
+        collision = all_source_ids & local_source_ids
+        if collision:
+            errors.append(f"final CRAG source IDs collide across agents: {sorted(collision)}")
+        all_source_ids |= local_source_ids
+        local_query_ids = {
+            row.get("query_id")
+            for row in payload.get("queries", [])
+            if isinstance(row, dict)
+        }
+        if len(local_query_ids) != len(payload.get("queries", [])):
+            errors.append(f"{group} final CRAG has duplicate/malformed queries")
+        collision = all_query_ids & local_query_ids
+        if collision:
+            errors.append(f"final CRAG query IDs collide across agents: {sorted(collision)}")
+        all_query_ids |= local_query_ids
+        for query in payload.get("queries", []):
+            if not isinstance(query, dict):
+                errors.append(f"{group} final CRAG query must be an object")
+                continue
+            _require_exact_keys(
+                query,
+                f"{group} final CRAG query {query.get('query_id')}",
+                {"query_id", "candidate_ids", "query", "executed_at"},
+                errors,
+            )
+            if not isinstance(query.get("candidate_ids"), list) or any(
+                not isinstance(item, str) or not item.strip()
+                for item in query.get("candidate_ids", [])
+            ):
+                errors.append(f"{group} final CRAG query candidate_ids must be text rows")
+            for field in ("query_id", "query", "executed_at"):
+                if not isinstance(query.get(field), str) or not query[field].strip():
+                    errors.append(
+                        f"{group} final CRAG query {query.get('query_id')} {field} "
+                        "must be non-whitespace text"
+                    )
+            if not set(query.get("candidate_ids", [])) <= assigned:
+                errors.append(f"{group} final CRAG query escaped assigned candidates")
+            for field in ("query_id", "candidate_ids", "query", "executed_at"):
+                if not _meaningful_structure(query.get(field)):
+                    errors.append(f"{group} final CRAG query missing {field}")
+        for source in payload.get("sources", []):
+            if not isinstance(source, dict):
+                errors.append(f"{group} final CRAG source must be an object")
+                continue
+            _require_exact_keys(
+                source,
+                f"{group} final CRAG source {source.get('source_id')}",
+                {
+                    "source_id",
+                    "url",
+                    "title",
+                    "accessed_at",
+                    "candidate_ids",
+                    "primary_or_official",
+                    "supports_or_challenges",
+                    "data_code_availability",
+                    "citation_action",
+                },
+                errors,
+            )
+            if not isinstance(source.get("candidate_ids"), list) or any(
+                not isinstance(item, str) or not item.strip()
+                for item in source.get("candidate_ids", [])
+            ):
+                errors.append(f"{group} final CRAG source candidate_ids must be text rows")
+            if not set(source.get("candidate_ids", [])) <= assigned:
+                errors.append(f"{group} final CRAG source escaped assigned candidates")
+            if source.get("primary_or_official") is not True:
+                errors.append(f"{group} final CRAG used a non-primary/non-official source")
+            for field in (
+                "source_id",
+                "url",
+                "title",
+                "accessed_at",
+                "supports_or_challenges",
+                "data_code_availability",
+                "citation_action",
+            ):
+                if not isinstance(source.get(field), str) or not source[field].strip():
+                    errors.append(
+                        f"{group} final CRAG source {source.get('source_id')} {field} "
+                        "must be non-whitespace text"
+                    )
+            for field in (
+                "source_id",
+                "url",
+                "title",
+                "accessed_at",
+                "candidate_ids",
+                "supports_or_challenges",
+                "data_code_availability",
+                "citation_action",
+            ):
+                if not _meaningful_structure(source.get(field)):
+                    errors.append(f"{group} final CRAG source missing {field}")
+        local_updates = payload.get("candidate_updates", [])
+        if {
+            row.get("candidate_id") for row in local_updates if isinstance(row, dict)
+        } != assigned or len(local_updates) != len(assigned):
+            errors.append(f"{group} final CRAG candidate-update census differs")
+        for update in local_updates:
+            if not isinstance(update, dict):
+                errors.append(f"{group} final CRAG update must be an object")
+                continue
+            _require_exact_keys(
+                update,
+                f"{group} final CRAG update {update.get('candidate_id')}",
+                {
+                    "candidate_id",
+                    "nearest_prior_art",
+                    "novelty_before",
+                    "novelty_after",
+                    "blocker_update",
+                    "recommended_disposition",
+                    "source_ids",
+                },
+                errors,
+            )
+            if not isinstance(update.get("source_ids"), list) or any(
+                not isinstance(item, str) or not item.strip()
+                for item in update.get("source_ids", [])
+            ):
+                errors.append(f"{group} final CRAG update source_ids must be text rows")
+            if not isinstance(update.get("candidate_id"), str) or not update[
+                "candidate_id"
+            ].strip():
+                errors.append(f"{group} final CRAG update candidate_id must be text")
+            for field in ("novelty_before", "novelty_after"):
+                value = update.get(field)
+                if (
+                    not isinstance(value, (int, float))
+                    or isinstance(value, bool)
+                    or not 0 <= value <= 10
+                ):
+                    errors.append(
+                        f"{group} final CRAG update {update.get('candidate_id')} "
+                        f"{field} must be numeric in [0,10]"
+                    )
+            if not set(update.get("source_ids", [])) <= local_source_ids:
+                errors.append(f"{group} final CRAG update cites an unknown source")
+            if update.get("recommended_disposition") not in ADVOCATE_DISPOSITIONS:
+                errors.append(f"{group} final CRAG update has invalid disposition")
+            for field in (
+                "nearest_prior_art",
+                "novelty_before",
+                "novelty_after",
+                "blocker_update",
+                "recommended_disposition",
+                "source_ids",
+            ):
+                if not _meaningful_structure(update.get(field)):
+                    errors.append(f"{group} final CRAG update missing {field}")
+        queries.extend(payload.get("queries", []))
+        sources.extend(payload.get("sources", []))
+        updates.extend(local_updates)
+        receipts.append(
+            {
+                "group": group,
+                "researcher_id": payload["researcher_id"],
+                "response_path": relative(path),
+                "response_sha256": sha256_file(path),
+                "web_used": True,
+                "web_closed": True,
+            }
+        )
+    if len({row["researcher_id"] for row in receipts}) != len(receipts):
+        errors.append("final CRAG researcher IDs must be unique")
+    if {row.get("candidate_id") for row in updates} != shortlist_set or len(updates) != len(shortlist):
+        errors.append("merged final CRAG updates differ from frozen shortlist")
+    if errors:
+        raise RuntimeError("cannot build final CRAG:\n- " + "\n- ".join(errors))
+    raw_query_count = len(queries)
+    raw_source_count = len(sources)
+    # The agents retain their full primary-source research as raw evidence.
+    # The authoritative final packet is intentionally short: no more than two
+    # directly cited sources and one recorded query per shortlisted candidate.
+    selected_source_ids = {
+        source_id
+        for update in updates
+        for source_id in update.get("source_ids", [])[:2]
+    }
+    sources = [row for row in sources if row.get("source_id") in selected_source_ids]
+    selected_queries: list[dict[str, Any]] = []
+    selected_query_ids: set[str] = set()
+    for candidate_id in shortlist:
+        for query in queries:
+            if (
+                candidate_id in query.get("candidate_ids", [])
+                and query.get("query_id") not in selected_query_ids
+            ):
+                selected_queries.append(query)
+                selected_query_ids.add(query["query_id"])
+                break
+    queries = selected_queries
+    updates = [
+        {
+            **row,
+            "source_ids": [
+                source_id
+                for source_id in row.get("source_ids", [])
+                if source_id in selected_source_ids
+            ][:2],
+        }
+        for row in updates
+    ]
+    source_by_id = {row["source_id"]: row for row in sources}
+    for update in updates:
+        candidate_id = update["candidate_id"]
+        relevant_queries = [
+            row for row in queries if candidate_id in row.get("candidate_ids", [])
+        ]
+        relevant_sources = [
+            source_by_id[source_id]
+            for source_id in update.get("source_ids", [])
+            if source_id in source_by_id
+            and candidate_id in source_by_id[source_id].get("candidate_ids", [])
+        ]
+        if not relevant_queries:
+            errors.append(f"{candidate_id} has no candidate-relevant final CRAG query")
+        if not relevant_sources:
+            errors.append(f"{candidate_id} has no candidate-relevant cited final CRAG source")
+        if len(update.get("source_ids", [])) > 2:
+            errors.append(f"{candidate_id} exceeds the two-source authoritative CRAG cap")
+    if errors:
+        raise RuntimeError("cannot build bounded final CRAG:\n- " + "\n- ".join(errors))
+    payload = {
+        "schema": "htt.pr118.web_crag_final.v1",
+        **_artifact_metadata(
+            [*FINAL_CRAG_RESPONSE_PATHS.values(), SHORTLIST_FREEZE],
+            "venv/bin/python -B scripts/audits/jcap_prd_20260714.py build-final-crag",
+            transfer_source="primary_and_official_literature_metadata_only",
+            sky_support_status="not_a_sky_result",
+            null_mock_status="not_a_statistical_result",
+        ),
+        "generated_at": utcnow(),
+        "reopened_after_shortlist": True,
+        "reopen_scope": "nearest prior art and time-variable blocker checks for frozen shortlist only",
+        "shortlist_path": relative(SHORTLIST_FREEZE),
+        "shortlist_sha256": sha256_file(SHORTLIST_FREEZE),
+        "shortlist_hash": freeze["shortlist_hash"],
+        "candidate_ids": shortlist,
+        "candidate_count": len(shortlist),
+        "selection_policy": (
+            "authoritative packet retains at most two cited primary/official sources "
+            "and one recorded query per frozen candidate; full lookups remain hash-bound "
+            "in the three raw agent responses"
+        ),
+        "raw_query_count": raw_query_count,
+        "raw_source_count": raw_source_count,
+        "queries": queries,
+        "sources": sources,
+        "candidate_updates": updates,
+        "agent_receipts": receipts,
+        "closed_after_completion": True,
+        "forbidden_after_close": "new web search or candidate expansion",
+    }
+    if write:
+        write_json(AUDIT / "web_crag_final.json", payload)
+    return payload
+
+
+def _authoritative_criticism_fields(
+    prior: dict[str, Any], atomic: dict[str, Any]
+) -> dict[str, dict[str, Any]]:
+    rows: dict[str, dict[str, Any]] = {}
+    for row in prior["prior_findings"]:
+        criticism_id = row["prior_id"]
+        rows[criticism_id] = {
+            "criticism_id": criticism_id,
+            "origin": "prior",
+            "severity": row["severity"],
+            "criticism": row["title"],
+            "source_reference": f"{row['source_path']}#{criticism_id}",
+            "source_hash": row["source_hash"],
+            "authoritative_state": row["remediation_state"],
+            "maximum_claim_tier": (
+                "diagnostic-only advocate response; finding remains KNOWN_OPEN until "
+                "a separate hash-bound production-remediation receipt passes"
+            ),
+        }
+    for row in prior["audit_completeness_gaps"]:
+        criticism_id = row["gap_id"]
+        rows[criticism_id] = {
+            "criticism_id": criticism_id,
+            "origin": "audit_gap",
+            "severity": "AUDIT_GAP",
+            "criticism": row["title"],
+            "source_reference": f"{row['source_path']}#{criticism_id}",
+            "source_hash": row["source_hash"],
+            "authoritative_state": row["remediation_state"],
+            "maximum_claim_tier": (
+                "audit-process or coverage-accounting conclusion only; no scientific "
+                "claim promotion"
+            ),
+        }
+    atomic_hash = sha256_file(ATOMIC_LEDGER)
+    for row in atomic["atomic_findings"]:
+        if row.get("disposition") != "NEW_OPEN":
+            continue
+        criticism_id = row["atomic_id"]
+        rows[criticism_id] = {
+            "criticism_id": criticism_id,
+            "origin": "delta_new",
+            "severity": row["severity"],
+            "criticism": row["error_claim"],
+            "source_reference": f"{relative(ATOMIC_LEDGER)}#{criticism_id}",
+            "source_hash": atomic_hash,
+            "authoritative_state": "NEW_OPEN",
+            "maximum_claim_tier": row["maximum_claim_tier"],
+        }
+    return rows
+
+
+def build_criticism_matrix(*, write: bool = True) -> dict[str, Any]:
+    """Merge independently authored steelman responses without losing criticism IDs."""
+
+    prior = json.loads((AUDIT / "prior_crosswalk.json").read_text(encoding="utf-8"))
+    atomic = json.loads(ATOMIC_LEDGER.read_text(encoding="utf-8"))
+    advocate = json.loads(
+        (AUDIT / "advocate_candidate_ledger.json").read_text(encoding="utf-8")
+    )
+    candidate_ids = {row["candidate_id"] for row in advocate["candidates"]}
+    authority = _authoritative_criticism_fields(prior, atomic)
+    expected_by_group = {
+        "prior": {row["prior_id"] for row in prior["prior_findings"]},
+        "gap_theory_statistics": {
+            row["gap_id"] for row in prior["audit_completeness_gaps"]
+        }
+        | {
+            row["atomic_id"]
+            for row in atomic["atomic_findings"]
+            if row.get("disposition") == "NEW_OPEN"
+            and row["atomic_id"].startswith(("N-THEORY-", "N-STAT-"))
+        },
+        "data_code": {
+            row["atomic_id"]
+            for row in atomic["atomic_findings"]
+            if row.get("disposition") == "NEW_OPEN"
+            and row["atomic_id"].startswith(("N-DATA-", "N-CODE-"))
+        },
+    }
+    errors: list[str] = []
+    merged: list[dict[str, Any]] = []
+    mapper_ids: list[str] = []
+    for group, path in CRITICISM_MAP_PATHS.items():
+        payload = _validate_json(path, errors)
+        payload = _require_object(
+            payload,
+            f"{group} criticism mapper",
+            ("schema", "mapper_id", "phase", "web_used", "assigned_group", "rows"),
+            errors,
+        )
+        if not payload:
+            continue
+        _require_schema(
+            payload,
+            f"{group} criticism mapper",
+            "htt.pr118.criticism_mapper.v1",
+            errors,
+        )
+        _require_exact_keys(
+            payload,
+            f"{group} criticism mapper",
+            {"schema", "mapper_id", "phase", "web_used", "assigned_group", "rows"},
+            errors,
+        )
+        if not isinstance(payload.get("mapper_id"), str) or not payload["mapper_id"].strip():
+            errors.append(f"{group} criticism mapper_id must be non-whitespace text")
+        if payload.get("phase") != "criticism_mapping" or payload.get("assigned_group") != group:
+            errors.append(f"{group} criticism mapper phase/group mismatch")
+        if payload.get("web_used") is not False:
+            errors.append(f"{group} criticism mapper performed a new web lookup")
+        mapper_ids.append(str(payload["mapper_id"]))
+        rows = payload.get("rows", [])
+        if not isinstance(rows, list):
+            errors.append(f"{group} criticism mapper rows must be a list")
+            rows = []
+        ids = {
+            row.get("criticism_id")
+            for row in rows
+            if isinstance(row, dict) and row.get("criticism_id")
+        }
+        if len(ids) != len(rows) or ids != expected_by_group[group]:
+            errors.append(
+                f"{group} criticism mapper census differs: "
+                f"missing={sorted(expected_by_group[group] - ids)} "
+                f"extra={sorted(ids - expected_by_group[group])}"
+            )
+        for row in rows:
+            required = {
+                "criticism_id",
+                "origin",
+                "severity",
+                "criticism",
+                "strongest_advocate_response",
+                "response_to_rebuttal",
+                "disposition",
+                "candidate_ids",
+                "residual_risk",
+                "decisive_closeout_evidence",
+                "maximum_claim_tier",
+                "source_reference",
+            }
+            if not required <= row.keys():
+                errors.append(f"{row.get('criticism_id')} mapper row lacks required fields")
+                continue
+            _require_exact_keys(
+                row,
+                f"{row.get('criticism_id')} criticism mapper row",
+                required,
+                errors,
+            )
+            for field in (
+                "criticism_id",
+                "origin",
+                "severity",
+                "criticism",
+                "strongest_advocate_response",
+                "response_to_rebuttal",
+                "disposition",
+                "residual_risk",
+                "decisive_closeout_evidence",
+                "maximum_claim_tier",
+                "source_reference",
+            ):
+                if not isinstance(row.get(field), str) or not row[field].strip():
+                    errors.append(
+                        f"{row.get('criticism_id')} mapper {field} must be non-whitespace text"
+                    )
+            if not isinstance(row.get("candidate_ids"), list) or any(
+                not isinstance(item, str) or not item.strip()
+                for item in row.get("candidate_ids", [])
+            ):
+                errors.append(
+                    f"{row.get('criticism_id')} mapper candidate_ids must be text rows"
+                )
+            if row.get("disposition") not in ADVOCATE_DISPOSITIONS:
+                errors.append(f"{row.get('criticism_id')} mapper disposition invalid")
+            if not set(row.get("candidate_ids", [])) <= candidate_ids:
+                errors.append(f"{row.get('criticism_id')} mapper links unknown candidate")
+            criticism_id = row["criticism_id"]
+            immutable = authority[criticism_id]
+            disposition = row["disposition"]
+            override = None
+            if immutable["authoritative_state"] == "KNOWN_OPEN" and disposition == "rescued":
+                disposition = "downclaimed"
+                override = (
+                    "Mapper proposed rescued, but a KNOWN_OPEN imported finding cannot be "
+                    "rescued without a separate hash-bound production-remediation receipt."
+                )
+            enriched = {
+                **row,
+                "mapper_proposed_origin": row["origin"],
+                "mapper_proposed_severity": row["severity"],
+                "mapper_proposed_criticism": row["criticism"],
+                "mapper_proposed_source_reference": row["source_reference"],
+                "mapper_proposed_maximum_claim_tier": row["maximum_claim_tier"],
+                "mapper_proposed_disposition": row["disposition"],
+                **immutable,
+                "disposition": disposition,
+                "root_disposition_override": override,
+            }
+            enriched["mapper_id"] = payload["mapper_id"]
+            enriched["mapper_response_path"] = relative(path)
+            enriched["mapper_response_sha256"] = sha256_file(path)
+            merged.append(enriched)
+    if len(set(mapper_ids)) != len(mapper_ids):
+        errors.append("criticism mapper IDs must be independent and unique")
+    if len(merged) != 102 or len({row.get("criticism_id") for row in merged}) != 102:
+        errors.append("merged criticism response census must be exactly 102")
+    if any(row.get("disposition") == "rescued" for row in merged):
+        errors.append(
+            "current root criticism policy requires zero rescued findings without "
+            "hash-bound production-remediation receipts"
+        )
+    if errors:
+        raise RuntimeError("cannot build criticism matrix:\n- " + "\n- ".join(errors))
+    origin_order = {"prior": 0, "audit_gap": 1, "delta_new": 2}
+    merged.sort(
+        key=lambda row: (origin_order.get(row["origin"], 9), row["criticism_id"])
+    )
+    payload = {
+        "schema": "htt.pr118.criticism_response_matrix.v1",
+        **_artifact_metadata(
+            [
+                *CRITICISM_MAP_PATHS.values(),
+                AUDIT / "advocate_candidate_ledger.json",
+                AUDIT / "prior_crosswalk.json",
+                ATOMIC_LEDGER,
+            ],
+            "venv/bin/python -B scripts/audits/jcap_prd_20260714.py build-criticism-matrix",
+        ),
+        "generated_at": utcnow(),
+        "web_used": False,
+        "fixed_external_packets": [
+            relative(AUDIT / "web_crag_initial.json"),
+            relative(AUDIT / "web_crag_final.json"),
+        ],
+        "mapper_ids": mapper_ids,
+        "row_count": len(merged),
+        "origin_counts": dict(Counter(row["origin"] for row in merged)),
+        "disposition_counts": dict(Counter(row["disposition"] for row in merged)),
+        "rows": merged,
+    }
+    if write:
+        write_json(AUDIT / "criticism_response_matrix.json", payload)
+    lines = [
+        "# Criticism-response matrix",
+        "",
+        "Every imported finding, audit-completeness gap, and new atomic delta receives exactly one advocate disposition. `rescued` never means a production claim has been validated; the maximum claim tier and residual blocker remain controlling.",
+        "",
+        f"- Rows: {payload['row_count']}",
+        f"- Origins: `{json.dumps(payload['origin_counts'], sort_keys=True)}`",
+        f"- Dispositions: `{json.dumps(payload['disposition_counts'], sort_keys=True)}`",
+        "",
+        "| ID | Origin | Severity | Disposition | Candidate links | Maximum claim tier | Advocate response and residual risk |",
+        "|---|---|---:|---|---|---|---|",
+    ]
+    for row in merged:
+        def cell(value: Any) -> str:
+            return str(value).replace("|", "\\|").replace("\n", " ")
+
+        links = ", ".join(row["candidate_ids"]) or "none"
+        response = (
+            f"{row['strongest_advocate_response']} **Residual:** {row['residual_risk']} "
+            f"**Closeout:** {row['decisive_closeout_evidence']}"
+        )
+        lines.append(
+            "| "
+            + " | ".join(
+                cell(value)
+                for value in (
+                    row["criticism_id"],
+                    row["origin"],
+                    row["severity"],
+                    row["disposition"],
+                    links,
+                    row["maximum_claim_tier"],
+                    response,
+                )
+            )
+            + " |"
+        )
+    if write:
+        (AUDIT / "criticism_response_matrix.md").write_text(
+            "\n".join(lines) + "\n", encoding="utf-8"
+        )
+    return payload
+
+
+def build_final_reports() -> dict[str, Any]:
+    """Render the independent decisions and root synthesis without claim promotion."""
+
+    advocate = json.loads(
+        (AUDIT / "advocate_candidate_ledger.json").read_text(encoding="utf-8")
+    )
+    matrix = json.loads(
+        (AUDIT / "criticism_response_matrix.json").read_text(encoding="utf-8")
+    )
+    crag = json.loads((AUDIT / "web_crag_final.json").read_text(encoding="utf-8"))
+    coverage = json.loads((AUDIT / "coverage_matrix.json").read_text(encoding="utf-8"))
+    coverage_rows = coverage["generated_result_rows"]
+    coverage_counts = Counter(row["examination_status"] for row in coverage_rows)
+    if len(coverage_rows) != 78 or coverage_counts != {
+        "not_examined": 44,
+        "sampled": 34,
+    }:
+        raise RuntimeError(
+            "final report coverage ceiling drift: "
+            f"rows={len(coverage_rows)} counts={dict(coverage_counts)}"
+        )
+    candidate_ids = {row["candidate_id"] for row in advocate["candidates"]}
+    errors: list[str] = []
+    decisions: list[dict[str, Any]] = []
+    for journal, path in FINAL_REFEREE_RESPONSE_PATHS.items():
+        payload = _validate_json(path, errors)
+        payload = _require_object(
+            payload,
+            f"{journal} final referee",
+            (
+                "schema",
+                "referee_id",
+                "phase",
+                "web_used",
+                "as_shipped_decision",
+                "as_shipped_score_0_to_10",
+                "post_surgery_decision",
+                "post_surgery_score_0_to_10",
+                "strongest_defensible_thesis",
+                "pre_solver_research",
+                "post_native_research",
+                "must_fix",
+                "unexecuted_blockers",
+                "dissent_or_uncertainty",
+                "candidate_ids_considered",
+                "evidence_paths",
+            ),
+            errors,
+        )
+        if not payload:
+            continue
+        _require_schema(
+            payload,
+            f"{journal} final referee",
+            "htt.pr118.final_referee.v1",
+            errors,
+        )
+        _require_exact_keys(
+            payload,
+            f"{journal} final referee",
+            {
+                "schema",
+                "referee_id",
+                "phase",
+                "web_used",
+                "as_shipped_decision",
+                "as_shipped_score_0_to_10",
+                "post_surgery_decision",
+                "post_surgery_score_0_to_10",
+                "strongest_defensible_thesis",
+                "pre_solver_research",
+                "post_native_research",
+                "must_fix",
+                "unexecuted_blockers",
+                "dissent_or_uncertainty",
+                "candidate_ids_considered",
+                "evidence_paths",
+            },
+            errors,
+        )
+        if payload.get("phase") != "final_referees" or payload.get("web_used") is not False:
+            errors.append(f"{journal} referee phase/web receipt invalid")
+        for field in (
+            "referee_id",
+            "as_shipped_decision",
+            "post_surgery_decision",
+            "strongest_defensible_thesis",
+        ):
+            if not isinstance(payload.get(field), str) or not payload[field].strip():
+                errors.append(
+                    f"{journal} referee {field} must be non-whitespace text"
+                )
+        if not _meaningful_structure(payload.get("dissent_or_uncertainty")):
+            errors.append(
+                f"{journal} referee dissent_or_uncertainty must be meaningful"
+            )
+        for field in (
+            "pre_solver_research",
+            "post_native_research",
+            "must_fix",
+            "unexecuted_blockers",
+            "candidate_ids_considered",
+            "evidence_paths",
+        ):
+            value = payload.get(field)
+            if (
+                not isinstance(value, list)
+                or not value
+                or any(not isinstance(item, str) or not item.strip() for item in value)
+            ):
+                errors.append(
+                    f"{journal} referee {field} must be a non-empty text list"
+                )
+        for field in ("as_shipped_score_0_to_10", "post_surgery_score_0_to_10"):
+            score = payload.get(field)
+            if not isinstance(score, (int, float)) or isinstance(score, bool) or not 0 <= score <= 10:
+                errors.append(f"{journal} referee {field} must be in [0,10]")
+        if not set(payload.get("candidate_ids_considered", [])) <= candidate_ids:
+            errors.append(f"{journal} referee considered an unknown candidate")
+        for evidence in payload.get("evidence_paths", []):
+            path_evidence = Path(str(evidence))
+            if not path_evidence.is_absolute():
+                path_evidence = REPO / path_evidence
+            if not path_evidence.is_file():
+                errors.append(f"{journal} referee evidence path missing: {evidence}")
+        decisions.append(
+            {
+                "journal_role": journal,
+                **payload,
+                "response_path": relative(path),
+                "response_sha256": sha256_file(path),
+            }
+        )
+    if len(decisions) != 3 or len({row["referee_id"] for row in decisions}) != 3:
+        errors.append("three unique final referees are required")
+    if errors:
+        raise RuntimeError("cannot build final reports:\n- " + "\n- ".join(errors))
+
+    report_inputs = [
+        AUDIT / "advocate_candidate_ledger.json",
+        AUDIT / "criticism_response_matrix.json",
+        AUDIT / "web_crag_final.json",
+        SHORTLIST_FREEZE,
+        AUDIT / "coverage_matrix.json",
+        *FINAL_REFEREE_RESPONSE_PATHS.values(),
+    ]
+    final_metadata = _artifact_metadata(
+        report_inputs,
+        "venv/bin/python -B scripts/audits/jcap_prd_20260714.py build-final-reports",
+    )
+    next_dag = {
+        "schema": "htt.pr118.proposed_followup_dag.v1",
+        **final_metadata,
+        "status": "proposed_only_not_inserted_into_active_backlog",
+        "depends_on": "PR-118",
+        "closure_contract": (
+            "Cards target open findings only. A target closes only after its owner-specific "
+            "acceptance tests produce passed, hash-bound receipts and a later adjudication "
+            "updates the controlling finding ledger. Scheduling or running a card never closes it."
+        ),
+        "cards": [
+            {
+                "id": "AUD-R01A",
+                "owner": "OBSSTAT",
+                "track": "pre_solver",
+                "title": "Quarantine refuted CF4 corrections and rebuild estimator mechanics",
+                "targets": ["imported P0 C1-K5-MV-F1", "imported P0 C3-K5-VCORR-ML-F1", "N-DATA-CF4-DOWNSTREAM"],
+                "entry_gate": "authenticated CF4 row/group/selection lineage and preregistered injection coverage",
+                "maximum_claim_tier": "observable-estimator validation only",
+            },
+            {
+                "id": "AUD-R01B",
+                "owner": "HTT",
+                "track": "pre_solver",
+                "depends_on": ["AUD-R01A"],
+                "title": "Construct CF4 identified sets and downstream pushforwards",
+                "targets": ["N-DATA-CF4-DOWNSTREAM", "N-DATA-FS8-DEPTH"],
+                "entry_gate": "OBSSTAT estimator coverage receipt plus explicit nuisance/partial-identification contract",
+                "maximum_claim_tier": "identified-region result; no global-tilt truth claim",
+            },
+            {
+                "id": "AUD-R02A",
+                "owner": "OBSSTAT",
+                "track": "pre_solver",
+                "title": "Build exchangeable observed/null calibration",
+                "targets": ["N-STAT-K1-EXCHANGE", "N-STAT-DEGENERATE-NULL"],
+                "entry_gate": "identical observed/null feature pipeline and finite-null calibration plan",
+                "maximum_claim_tier": "matched-null calibration",
+            },
+            {
+                "id": "AUD-R02B",
+                "owner": "COMMON",
+                "track": "pre_solver",
+                "depends_on": ["AUD-R02A"],
+                "title": "Run independent mutation-oracle and false-green release campaign",
+                "targets": ["N-CODE-FALSE-GREEN"],
+                "entry_gate": "predeclared oracle-killing mutations and independent implementation receipts",
+                "maximum_claim_tier": "release-mechanics validation only",
+            },
+            {
+                "id": "AUD-R03",
+                "owner": "COMMON",
+                "track": "pre_solver",
+                "title": "Rebuild one-way FLRW/almost-EGS and coefficient-domain theorem surfaces",
+                "targets": ["N-THEORY-FLRW-CONVERSE", "N-THEORY-EGS-CONVERSE", "N-THEORY-NT2-COEFFICIENT", "N-THEORY-OMK-DOMAIN"],
+                "entry_gate": "two independent derivations with explicit frame/domain/remainder assumptions",
+                "maximum_claim_tier": "conditional mathematical result",
+            },
+            {
+                "id": "AUD-R04",
+                "owner": "OBSSTAT",
+                "track": "pre_solver",
+                "title": "Acquire and rerun exact-support DESI/ACT/JWST validation inputs",
+                "targets": ["N-DATA-DESI-READINESS", "N-DATA-ACT-RANGE", "N-DATA-JWST-ACQUISITION", "N-DATA-JWST-COVARIANCE"],
+                "entry_gate": "input manifests, exact selection/mask transfer, covariance and matched-null provenance",
+                "maximum_claim_tier": "survey-conditional null or forecast result",
+            },
+            {
+                "id": "AUD-R05A",
+                "owner": "BASS_PY",
+                "track": "post_native_solver",
+                "title": "Run authenticated native-adapter and atlas transport conformance",
+                "targets": ["TH-04", "CO-06"],
+                "entry_gate": "authenticated native solver/atlas with versioned conventions and rejection fixtures",
+                "maximum_claim_tier": "native transport/atlas conformance only",
+            },
+            {
+                "id": "AUD-R05B",
+                "owner": "OBSSTAT",
+                "track": "post_native_solver",
+                "depends_on": ["AUD-R05A"],
+                "title": "Build matched-mask morphology challenge features and equivalence annotations",
+                "targets": ["TH-04", "ST-08", "CO-07"],
+                "entry_gate": "authenticated atlas plus matched masks, nulls, covariance and held-out injections",
+                "maximum_claim_tier": "morphology compatibility feature validation",
+            },
+            {
+                "id": "AUD-R05C",
+                "owner": "HTT",
+                "track": "post_native_solver",
+                "depends_on": ["AUD-R05A", "AUD-R05B"],
+                "title": "Run blinded equivalence-set inference and abstention challenge",
+                "targets": ["ST-08", "CO-07"],
+                "entry_gate": "BASS transport and OBSSTAT matched-feature receipts plus nuisance-rank and equivalence contracts",
+                "maximum_claim_tier": "morphology compatibility before any separate family-identification review",
+            },
+        ],
+    }
+    write_json(AUDIT / "next_dag_candidates.json", next_dag)
+    decision_bundle = {
+        "schema": "htt.pr118.final_referee_decisions.v1",
+        **final_metadata,
+        "generated_at": utcnow(),
+        "as_shipped_root_decision": "REJECT",
+        "post_surgery_root_decision": "NEW_SUBMISSION_AFTER_MAJOR_REBUILD",
+        "referees": decisions,
+        "correlated_evidence_caveat": (
+            "Agent agreement is not an independent replication; decisions are separately "
+            "authored but share repository evidence."
+        ),
+    }
+    write_json(AUDIT / "final_referee_decisions.json", decision_bundle)
+
+    def markdown_cell(value: Any) -> str:
+        if isinstance(value, (dict, list)):
+            value = json.dumps(value, sort_keys=True)
+        return str(value).replace("|", "\\|").replace("\n", " ")
+
+    report_lines = [
+        "# Final JCAP/PRD adversarial referee report",
+        "",
+        "## Artifact and claim boundary",
+        "",
+        "- Owner: `COMMON`.",
+        "- Scope: internal, diagnostic-only pre-solver audit and advocate research ranking.",
+        f"- Claim tier: `{final_metadata['claim_tier']}`.",
+        f"- Transfer source: `{final_metadata['transfer_source']}`.",
+        f"- Config hash: `{final_metadata['config_hash']}`.",
+        f"- Sky/mask status: `{final_metadata['sky_support_status']}`.",
+        f"- Covariance/null status: `{final_metadata['null_mock_status']}`.",
+        f"- Generating command: `{final_metadata['generating_command']}`.",
+        f"- Git/worktree: `{final_metadata['git_commit_or_worktree_state']['current_head']}` with recorded worktree hash `{final_metadata['git_commit_or_worktree_state']['worktree_state_hash']}`.",
+        "- Input hashes:",
+        *[f"  - `{item}`" for item in final_metadata["input_hashes"]],
+        "- Baseline under audit: `8af39b36c1d5ed4f9b16f0bc71dbecd8b22548d4`.",
+        "- Current audit mechanics do not repair production results or validate an external/native transfer.",
+        "- Counterfactual family/geometry candidates remain `hypothesis_only=true`, `public_use=false`.",
+        "- DAG completion is bookkeeping, not scientific readiness.",
+        "",
+        "## Editorial decision summary",
+        "",
+        "| Referee | As-shipped decision | As-shipped score /10 | Post-surgery decision | Post-surgery score /10 |",
+        "|---|---|---:|---|---:|",
+    ]
+    for row in decisions:
+        report_lines.append(
+            "| "
+            + " | ".join(
+                markdown_cell(value)
+                for value in (
+                    row["journal_role"],
+                    row["as_shipped_decision"],
+                    row["as_shipped_score_0_to_10"],
+                    row["post_surgery_decision"],
+                    row["post_surgery_score_0_to_10"],
+                )
+            )
+            + " |"
+        )
+    role_headers = {
+        "JCAP": "JCAP referee decision",
+        "PRD": "PRD referee decision",
+        "Independent skeptical": "Independent skeptical referee decision",
+    }
+    for row in decisions:
+        report_lines.extend(
+            [
+                "",
+                f"### {role_headers[row['journal_role']]}",
+                "",
+                f"- **As-shipped:** {row['as_shipped_decision']} ({row['as_shipped_score_0_to_10']}/10).",
+                f"- **Post-surgery:** {row['post_surgery_decision']} ({row['post_surgery_score_0_to_10']}/10).",
+                f"- Thesis allowed by this referee: {row['strongest_defensible_thesis']}",
+            ]
+        )
+    report_lines.extend(
+        [
+            "",
+            "## Audit census and delta discipline",
+            "",
+            "The prior audit contributes 55 `KNOWN_OPEN` findings (P0 2 / P1 14 / P2 17 / P3 22) and 14 audit-completeness gaps. PR-117 contributes 33 distinct open atomic deltas (P1 22 / P2 11); it does not relabel prior findings as new. The prose/raw-ledger P1 inconsistency in the prior audit is preserved as an audited inconsistency rather than silently corrected.",
+            "",
+            f"The advocate matrix covers {matrix['row_count']} criticisms exactly once. Dispositions are `{json.dumps(matrix['disposition_counts'], sort_keys=True)}`. A disposition is a research response, not evidence that a production claim has passed.",
+            "The immutable-field root join converted three mapper-proposed rescues to `downclaimed` because their authoritative source state remains `KNOWN_OPEN`; no criticism is rescued in the final root matrix.",
+            "",
+            "### Examination coverage ceiling",
+            "",
+            f"The generated-result coverage register contains {len(coverage_rows)} rows: {coverage_counts['not_examined']} / {len(coverage_rows)} are `not_examined` and {coverage_counts['sampled']} / {len(coverage_rows)} are `sampled`. `not_examined` is not clearance; `sampled` is also not blanket clearance of the row, its consumers, or its scientific claim. Complete criticism accounting therefore does not imply complete scientific examination.",
+            "",
+            "## As-shipped assessment",
+            "",
+            "**Root decision: REJECT.** The shipped positive-science object cannot support anisotropy detection, global tilt, FLRW violation, precision growth tension, Bayesian evidence/PPC/LOOCV adequacy, native low-L morphology, geometry, or Bianchi-family conclusions. Two imported P0 findings remain open, the new audit adds 22 P1 and 11 P2 deltas, and decisive data inputs remain missing in several lanes. Passing governance/package checks demonstrably coexists with stale or scientifically invalid artifacts.",
+            "",
+            "The audit-only recalculations are sensitivity and failure-localization evidence. They do not become corrected truth: CF4 changes from about 405 to 94 km/s under a monopole-orthogonal construction; raw/depth f-sigma8 behavior shifts materially; the Hermitian GRF defect reproduces; the DESI proxy null becomes unexceptional but exact-selection mocks remain absent; ACT is scientifically blocked; K6 is stencil-dominated; and JWST gains are small and provenance/covariance-limited.",
+            "",
+            "Failure of the present anisotropy claims is not proof of exact isotropy and is not a new validation of LambdaCDM. Weak anisotropy remains a falsifiable but currently unsupported research program; the present result is non-identification rather than confirmation of either pole.",
+            "",
+            "## Minimum-surgery assessment",
+            "",
+            "**Root decision: NEW SUBMISSION AFTER MAJOR REBUILD, not a revision that retains the positive headline.** Remove the detection/tension/family narrative and reframe the work as a claim-tiered pre-solver methods and negative-audit paper. Its evidence-bearing contributions may be: exchangeable null construction, partial/non-identification theorems, independent numerical-oracle attacks, transfer/provenance contracts, and explicit demonstrations of when CF4/CMB/DESI/ACT/JWST examples remain blocked.",
+            "",
+            "## Four-axis hostile and advocate synthesis",
+            "",
+            "- **Theory:** one-way FLRW/almost-EGS statements and coefficient/domain claims must be rebuilt with frame, congruence, matter, regularity, order and remainder assumptions. Scalar or low-rank observables remain non-identifying; this negative theorem direction is the recoverable content.",
+            "- **Statistics:** fitted likelihood differences are not Bayes factors, plug-in residuals are not PPC, and channel ablations are not LOOCV. Exchangeable global scans, finite-null rank guarantees, calibrated abstention and honest identified sets are viable rebuilds.",
+            "- **Code:** clean-install failure, correlated self-oracles and false-green gates preclude reproducibility claims. Independent algorithms, mutation tests, content-addressed evidence and future adapter rejection fixtures can validate mechanics only.",
+            "- **Data analysis:** CF4, Planck/ACT, DESI and JWST lanes require row/input provenance, matched support/masks/nulls, selection and calibration covariance, and estimator-identical mocks. Current anomaly amplitudes are not retained.",
+            "",
+            "## Advocate ranking and bounded final CRAG",
+            "",
+            f"Thirty-two no-web candidates (eight per axis) were scored by three non-author judges. The frozen shortlist has {advocate['shortlist_count']} candidates. Only those candidates entered the final CRAG; its authoritative packet contains {len(crag['queries'])} queries and {len(crag['sources'])} primary/official sources, while fuller raw agent lookups remain hash-bound. Final CRAG novelty checks reduced rather than inflated several novelty assessments.",
+            "The shortlist is now canonically replayable from the raw no-web author/judge packets and bound by `shortlist_freeze.json`. That freeze file was retrospectively materialized after the single CRAG lookup, so it proves assignment consistency but not independent filesystem ordering; this process limitation is retained rather than backdated.",
+            "",
+            "The shortlist was frozen on the pre-CRAG selection scores. The totals below are recomputed after the bounded CRAG by replacing each track's novelty component with `novelty_after`; they are not compared against non-shortlisted candidates whose novelty was not rechecked.",
+            "",
+            "| Candidate | Axis | Post-CRAG pre-solver | Post-CRAG post-native | Integrity eligible now | Final disposition | Novelty after CRAG |",
+            "|---|---|---:|---:|---|---|---:|",
+        ]
+    )
+    for row in advocate["candidates"]:
+        if not row["shortlisted_for_final_crag"]:
+            continue
+        report_lines.append(
+            "| "
+            + " | ".join(
+                markdown_cell(value)
+                for value in (
+                    f"{row['candidate_id']} - {row['title']}",
+                    row["axis"],
+                    row["pre_solver_review"]["post_crag_total"],
+                    row["post_native_solver_review"]["post_crag_total"],
+                    row["integrity_veto_review"]["eligible_for_retain"],
+                    row["final_disposition"],
+                    row.get("final_crag_update", {}).get("novelty_after", "n/a"),
+                )
+            )
+            + " |"
+        )
+    report_lines.extend(
+        [
+            "",
+            "## Pre-solver research to execute now",
+            "",
+            "1. `ST-03`: rebuild the global scan so observation and nulls traverse an identical, frozen pipeline with finite-null uncertainty and tie handling.",
+            "2. `TH-02` and `TH-01`: prove non-identification and one-way theorem results with explicit assumptions, independent derivations and mutation/regeneration checks.",
+            "3. `CO-04` and `CO-01`: create independent numerical oracles and a claim-addressed evidence graph, while treating both as mechanics/provenance validation rather than scientific truth.",
+            "4. `DA-01` and `ST-04`: rebuild CF4 as a preregistered injection/coverage and identified-region analysis only after row/group/selection lineage is authenticated.",
+            "5. `DA-05`: use a two-tier DESI validation (large fast-mock covariance plus smaller high-realism selection mocks), with per-mock estimator refits and a receipted runner.",
+            "",
+            "## Research deferred until the native solver/atlas arrives",
+            "",
+            "`TH-04`, `ST-08`, `CO-06`, and `CO-07` remain interface/challenge-set work. Scientific use requires an authenticated native low-ell solver and morphology atlas, versioned coefficient conventions, held-out injections, matched masks/nulls/covariance, nuisance-rank checks, and explicit family-equivalence annotations. Even after those gates, the first permissible conclusion is morphology compatibility; family identification requires a separate external review.",
+            "",
+            "## Strongest defensible thesis",
+            "",
+            "The strongest defensible paper thesis is: *a fail-closed, claim-tiered pre-solver methodology can diagnose non-identification, estimator non-exchangeability, correlated numerical oracles, and transfer/provenance failure in low-ell anisotropy searches; the present CF4/CMB/DESI/ACT/JWST examples demonstrate blockers and identified research designs, not evidence for cosmic anisotropy or a Bianchi family.*",
+            "",
+            "## Unexecuted blockers",
+            "",
+            "- The two imported P0 scientific defects are not repaired in production outputs or manuscript numbers.",
+            "- ACT raw/upstream QE inputs and validated low-L reconstruction transfer are absent.",
+            "- Exact matched Planck end-to-end nulls and exact-selection DESI mock execution are not complete here.",
+            "- JWST authoritative row manifest, per-host errors, probabilistic crossmatch and shared calibration covariance are incomplete.",
+            "- Native solver/atlas, family-equivalence registry and external validation do not exist in this repository.",
+            "- Manuscript figure provenance/freshness failures remain scientific-publication blockers even if LaTeX compiles.",
+            "",
+            "## Dissent and uncertainty",
+            "",
+        ]
+    )
+    for row in decisions:
+        dissent = row["dissent_or_uncertainty"]
+        if isinstance(dissent, list):
+            dissent = " ".join(str(item) for item in dissent)
+        report_lines.append(f"- **{row['journal_role']}:** {markdown_cell(dissent)}")
+    report_lines.extend(
+        [
+            "",
+            "Agreement among agents is correlated because they share repository evidence; it is not an independent replication. The digest-blind PR-117 referee samples and the separately authored PR-118 decisions reduce, but do not remove, this dependence.",
+            "",
+            "## Proposed next DAG candidates",
+            "",
+        ]
+    )
+    for card in next_dag["cards"]:
+        report_lines.append(
+            f"- `{card['id']}` ({card['track']}, {card['owner']}): {card['title']}. Targets: {', '.join(card['targets'])}. Entry gate: {card['entry_gate']}. Maximum claim: {card['maximum_claim_tier']}."
+        )
+    report_lines.extend(
+        [
+            "",
+            "These cards are proposals only and were not inserted into the active completed DAG. Production corrections, manuscript number replacement, public upload and native solver implementation remain out of scope.",
+        ]
+    )
+    (AUDIT / "final_referee_report.md").write_text(
+        "\n".join(report_lines) + "\n", encoding="utf-8"
+    )
+
+    scores_as = [float(row["as_shipped_score_0_to_10"]) for row in decisions]
+    scores_post = [float(row["post_surgery_score_0_to_10"]) for row in decisions]
+    ko_lines = [
+        "# 최종 적대적 감사 요약",
+        "",
+        "- Owner: `COMMON`",
+        f"- Claim tier: `{final_metadata['claim_tier']}`",
+        f"- Transfer source: `{final_metadata['transfer_source']}`",
+        f"- Config hash: `{final_metadata['config_hash']}`",
+        f"- Sky/mask 상태: `{final_metadata['sky_support_status']}`",
+        f"- Covariance/null 상태: `{final_metadata['null_mock_status']}`",
+        f"- 생성 명령: `{final_metadata['generating_command']}`",
+        f"- Git/worktree hash: `{final_metadata['git_commit_or_worktree_state']['worktree_state_hash']}`",
+        "",
+        "## 현재 상태",
+        "",
+        f"현재 as-shipped 논문 판정은 **REJECT**입니다. 세 독립 referee의 점수 범위는 {min(scores_as):g}-{max(scores_as):g}/10입니다. DAG 65/65 완료는 작업 장부의 완결일 뿐 과학적 준비 완료가 아닙니다. 기존 55개 finding(P0 2/P1 14/P2 17/P3 22), 감사 gap 14개, PR-117의 신규 open delta 33개는 서로 구분해 보존했습니다.",
+        "",
+        f"생성 결과 coverage register 78개 중 **44/78은 `not_examined`**, **34/78은 `sampled`**입니다. `not_examined`는 통과나 면제가 아니며 `sampled`도 해당 결과와 하류 명제 전체의 blanket clearance가 아닙니다. 102개 비판에 모두 답했다는 사실은 모든 과학 산출물을 완전 심사했다는 뜻이 아닙니다.",
+        "",
+        "CF4, CMB, DESI, ACT, JWST의 현재 결과는 cosmic anisotropy, global tilt, FLRW 위반, geometry 또는 family identification을 지지하지 못합니다. 특히 기존 P0 두 건과 새 P1 22건이 production result와 manuscript 수치에서 아직 닫히지 않았습니다.",
+        "",
+        "현재 anisotropy 주장이 실패했다는 사실은 exact isotropy의 증명도, LambdaCDM의 새로운 검증도 아닙니다. 약한 비등방성은 반증 가능한 미래 연구 가설로 남지만 현재는 지지되지 않으며, 이 감사의 결론은 양쪽 어느 하나의 확인이 아니라 non-identification입니다.",
+        "",
+        "## 최소 수정 후 가능한 논문",
+        "",
+        f"최소 수정이라는 표현은 오해를 부릅니다. 필요한 것은 긍정적 headline을 유지한 revision이 아니라 **새로운 methods/negative-audit submission**입니다. 세 referee의 post-surgery 점수 범위는 {min(scores_post):g}-{max(scores_post):g}/10입니다. 검증 가능한 소재는 exchangeable null, partial/non-identification, independent numerical oracle, provenance/transfer contract, 그리고 각 데이터 lane의 명시적 blocker입니다.",
+        "",
+        "## pre-solver 단계에서 즉시 할 연구",
+        "",
+        "- ST-03: observed/null 동일 파이프라인과 finite-null 보장을 갖춘 global scan 재구축.",
+        "- TH-02/TH-01: cancellation과 theorem domain을 명시한 non-identification 및 one-way FLRW/almost-EGS 정리.",
+        "- CO-04/CO-01: 독립 수치 oracle, mutation test, claim-addressed evidence graph.",
+        "- DA-01/ST-04: CF4 row/group/selection provenance를 확보한 뒤 injection coverage와 identified region 분석.",
+        "- DA-05: DESI 대규모 fast mock과 소수 high-realism mock을 나눈 2단계 검증.",
+        "",
+        "## native solver 도착 후 재개할 연구",
+        "",
+        "TH-04, ST-08, CO-06, CO-07은 지금은 interface/challenge-set 후보입니다. authenticated native solver와 morphology atlas, matched mask/null/covariance, held-out injection, family-equivalence annotation이 모두 있어야 합니다. 그 뒤에도 최초 허용 명제는 morphology compatibility이며 family identification은 별도 외부 심사를 거쳐야 합니다.",
+        "",
+        "## 가장 강한 방어 가능 명제",
+        "",
+        "현재 가장 강한 방어 가능 명제는 다음과 같습니다: 이 저장소는 low-ell anisotropy 탐색에서 비식별성, estimator 비대칭, 상관된 self-oracle, transfer/provenance 실패를 fail-closed 방식으로 드러내는 claim-tiered pre-solver 방법론을 제공할 수 있다. 현재 데이터 예시는 우주 비등방성의 증거가 아니라 blocker와 반증 가능한 후속 설계를 보여준다.",
+        "",
+        "Counterfactual family/geometry 후보는 계속 `hypothesis_only=true`, `public_use=false`이며 manuscript/generated/public manifest로 승격되지 않습니다.",
+    ]
+    (AUDIT / "executive_summary_ko.md").write_text(
+        "\n".join(ko_lines) + "\n", encoding="utf-8"
+    )
+    return decision_bundle
+
+
+def _validate_final_closeout(
+    prior: Any,
+    atomic: Any,
+    execution_rows: list[dict[str, Any]],
+    errors: list[str],
+) -> None:
+    ledger = _validate_json(AUDIT / "advocate_candidate_ledger.json", errors)
+    ledger = _require_object(
+        ledger,
+        "advocate candidate ledger",
+        (
+            "schema",
+            "owner",
+            "implementation_scope",
+            "claim_tier",
+            "transfer_source",
+            "config_hash",
+            "input_hashes",
+            "sky_support_status",
+            "null_mock_status",
+            "caveats",
+            "generating_command",
+            "git_commit_or_worktree_state",
+            "phase",
+            "candidate_count",
+            "axis_counts",
+            "ranking_authority",
+            "shortlist_candidate_ids",
+            "shortlist_count",
+            "shortlist_hash",
+            "shortlist_freeze_path",
+            "shortlist_freeze_sha256",
+            "candidates",
+            "counterfactual_contract",
+        ),
+        errors,
+    )
+    if not ledger:
+        return
+    final_crag = _validate_json(AUDIT / "web_crag_final.json", errors)
+    try:
+        canonical_final_crag = build_final_crag(write=False)
+    except RuntimeError as exc:
+        errors.append(f"raw final CRAG canonical replay failed: {exc}")
+        canonical_final_crag = final_crag if isinstance(final_crag, dict) else {}
+    ranking_input_paths = [
+        *ADVOCATE_RESPONSE_PATHS.values(),
+        AUDIT / "agents/advocate_judging/pre_solver_judge_response.json",
+        AUDIT / "agents/advocate_judging/post_native_judge_response.json",
+        AUDIT / "agents/advocate_judging/integrity_veto_judge_response.json",
+        AUDIT / "WEB_LOCK.json",
+    ]
+    _validate_artifact_metadata(
+        ledger,
+        "advocate candidate ledger",
+        errors,
+        expected_inputs=[*ranking_input_paths, SHORTLIST_FREEZE, AUDIT / "web_crag_final.json"],
+    )
+    freeze = _validate_json(SHORTLIST_FREEZE, errors)
+    freeze = _require_object(
+        freeze,
+        "shortlist freeze",
+        (
+            "schema",
+            "owner",
+            "config_hash",
+            "input_hashes",
+            "phase",
+            "web_used",
+            "ranking_rows",
+            "shortlist_candidate_ids",
+            "shortlist_count",
+            "shortlist_hash",
+            "materialization_status",
+            "ordering_caveat",
+        ),
+        errors,
+    )
+    _require_schema(freeze, "shortlist freeze", "htt.pr118.shortlist_freeze.v1", errors)
+    _validate_artifact_metadata(
+        freeze,
+        "shortlist freeze",
+        errors,
+        expected_inputs=ranking_input_paths,
+    )
+    canonical_errors: list[str] = []
+    canonical = _canonical_advocate_ranking(canonical_errors)
+    errors.extend(canonical_errors)
+    if freeze:
+        for key, expected in _shortlist_freeze_projection(canonical).items():
+            if freeze.get(key) != expected:
+                errors.append(f"shortlist freeze canonical replay differs at {key}")
+        if ledger.get("shortlist_freeze_sha256") != sha256_file(SHORTLIST_FREEZE):
+            errors.append("advocate ledger shortlist-freeze hash is stale")
+    expected_ranked = _finalize_advocate_ranking(
+        canonical, canonical_final_crag, errors
+    )
+    author_candidates, _ = _load_advocate_responses(errors)
+    expected_ids = {row["candidate_id"] for row in author_candidates}
+    rows = ledger.get("candidates", [])
+    ids = {row.get("candidate_id") for row in rows if isinstance(row, dict)}
+    if ledger.get("candidate_count") != 32 or ids != expected_ids:
+        errors.append("final advocate ledger does not bind the 32-candidate author pool")
+    if ledger.get("axis_counts") != {
+        "theory": 8,
+        "statistics": 8,
+        "code": 8,
+        "data_analysis": 8,
+    }:
+        errors.append("advocate axis census must be eight per axis")
+    shortlist = ledger.get("shortlist_candidate_ids", [])
+    if not 8 <= len(shortlist) <= 12 or len(shortlist) != len(set(shortlist)):
+        errors.append("final CRAG shortlist must contain 8-12 unique candidates")
+    if ledger.get("shortlist_count") != len(shortlist):
+        errors.append("advocate shortlist_count is stale")
+    if ledger.get("shortlist_hash") != sha256_json(sorted(shortlist)):
+        errors.append("advocate shortlist hash is stale")
+    if ledger.get("counterfactual_contract") != COUNTERFACTUAL_FIELDS:
+        errors.append("advocate counterfactual contract drift")
+    if ledger.get("ranking_authority", {}).get("candidate_authors_excluded") is not True:
+        errors.append("candidate authors were not excluded from ranking authority")
+    expected_authority = {
+        "pre_solver_judge": canonical["pre_judge"],
+        "post_native_solver_judge": canonical["post_judge"],
+        "integrity_veto_judge": canonical["integrity_judge"],
+        "candidate_authors_excluded": True,
+        "deterministic_aggregator": relative(Path(__file__)),
+    }
+    if ledger.get("ranking_authority") != expected_authority:
+        errors.append("advocate ranking authority differs from raw author/judge packets")
+    if ledger.get("author_ids") != sorted(canonical["author_ids"]):
+        errors.append("advocate author IDs differ from raw author packets")
+    if ledger.get("shortlist_basis") != "pre_crag_selection_score_frozen_before_final_crag":
+        errors.append("advocate shortlist basis must remain the frozen pre-CRAG score")
+    if sorted(rows, key=lambda row: row.get("candidate_id", "")) != sorted(
+        expected_ranked, key=lambda row: row.get("candidate_id", "")
+    ):
+        errors.append("advocate ledger differs from canonical author/judge/CRAG replay")
+    for row in rows:
+        if (
+            row.get("hypothesis_only") is not True
+            or row.get("public_use") is not False
+            or row.get("author_cannot_promote") is not True
+            or row.get("web_used") is not False
+        ):
+            errors.append(f"{row.get('candidate_id')} violates advocate sandbox controls")
+        integrity = row.get("integrity_veto_review", {})
+        if (
+            any(
+                integrity.get(flag) is True
+                for flag in ("unresolved_p0", "missing_falsifier", "provenance_unsecured")
+            )
+            and row.get("final_disposition") == "rescued"
+        ):
+            errors.append(f"{row.get('candidate_id')} is rescued despite a mandatory veto")
+        for review_key, weights in (
+            ("pre_solver_review", PRE_SOLVER_WEIGHTS),
+            ("post_native_solver_review", POST_SOLVER_WEIGHTS),
+        ):
+            review = row.get(review_key, {})
+            if review.get("pre_crag_total") != review.get("total"):
+                errors.append(
+                    f"{row.get('candidate_id')} {review_key} lost its frozen pre-CRAG score"
+                )
+            if row.get("shortlisted_for_final_crag"):
+                update = row.get("final_crag_update") or {}
+                expected_scores = dict(review.get("scores") or {})
+                expected_scores["novelty"] = update.get("novelty_after")
+                score_errors: list[str] = []
+                expected_total = _weighted_score(
+                    expected_scores,
+                    weights,
+                    f"{row.get('candidate_id')} {review_key} validator",
+                    score_errors,
+                )
+                errors.extend(score_errors)
+                if review.get("post_crag_scores") != expected_scores:
+                    errors.append(
+                        f"{row.get('candidate_id')} {review_key} post-CRAG score vector is stale"
+                    )
+                if review.get("post_crag_total") != expected_total:
+                    errors.append(
+                        f"{row.get('candidate_id')} {review_key} post-CRAG total is stale"
+                    )
+            elif (
+                review.get("post_crag_scores") is not None
+                or review.get("post_crag_total") is not None
+            ):
+                errors.append(
+                    f"{row.get('candidate_id')} received post-CRAG scores outside the frozen shortlist"
+                )
+
+    final_crag = _require_object(
+        final_crag,
+        "final CRAG",
+        (
+            "schema",
+            "owner",
+            "implementation_scope",
+            "claim_tier",
+            "transfer_source",
+            "config_hash",
+            "input_hashes",
+            "sky_support_status",
+            "null_mock_status",
+            "caveats",
+            "generating_command",
+            "git_commit_or_worktree_state",
+            "reopened_after_shortlist",
+            "shortlist_hash",
+            "shortlist_sha256",
+            "candidate_ids",
+            "queries",
+            "sources",
+            "candidate_updates",
+            "closed_after_completion",
+        ),
+        errors,
+    )
+    if final_crag:
+        _require_schema(
+            final_crag, "final CRAG", "htt.pr118.web_crag_final.v1", errors
+        )
+        _validate_artifact_metadata(
+            final_crag,
+            "final CRAG",
+            errors,
+            expected_inputs=[*FINAL_CRAG_RESPONSE_PATHS.values(), SHORTLIST_FREEZE],
+        )
+        for key in (
+            "reopened_after_shortlist",
+            "reopen_scope",
+            "shortlist_path",
+            "shortlist_sha256",
+            "shortlist_hash",
+            "candidate_ids",
+            "candidate_count",
+            "selection_policy",
+            "raw_query_count",
+            "raw_source_count",
+            "queries",
+            "sources",
+            "candidate_updates",
+            "agent_receipts",
+            "closed_after_completion",
+            "forbidden_after_close",
+        ):
+            if final_crag.get(key) != canonical_final_crag.get(key):
+                errors.append(
+                    f"final CRAG differs from canonical raw-response replay at {key}"
+                )
+        if final_crag.get("reopened_after_shortlist") is not True:
+            errors.append("final CRAG was not explicitly reopened after shortlist freeze")
+        if final_crag.get("closed_after_completion") is not True:
+            errors.append("final CRAG was not closed after the bounded lookup")
+        if final_crag.get("shortlist_hash") != ledger.get("shortlist_hash"):
+            errors.append("final CRAG shortlist hash differs from frozen advocate shortlist")
+        if final_crag.get("shortlist_sha256") != sha256_file(SHORTLIST_FREEZE):
+            errors.append("final CRAG does not bind the current shortlist-freeze artifact")
+        crag_ids = final_crag.get("candidate_ids", [])
+        if set(crag_ids) != set(shortlist) or len(crag_ids) != len(shortlist):
+            errors.append("final CRAG must cover exactly the frozen shortlist")
+        for query in final_crag.get("queries", []):
+            if not set(query.get("candidate_ids", [])) <= set(shortlist):
+                errors.append("final CRAG query escaped the frozen shortlist")
+        updates = final_crag.get("candidate_updates", [])
+        if {row.get("candidate_id") for row in updates} != set(shortlist):
+            errors.append("final CRAG must update every and only shortlisted candidate")
+        source_ids = {row.get("source_id") for row in final_crag.get("sources", [])}
+        for source in final_crag.get("sources", []):
+            for field in (
+                "source_id",
+                "url",
+                "accessed_at",
+                "primary_or_official",
+                "candidate_ids",
+                "supports_or_challenges",
+                "data_code_availability",
+                "citation_action",
+            ):
+                if not source.get(field):
+                    errors.append(f"final CRAG source missing {field}")
+            if source.get("primary_or_official") is not True:
+                errors.append(f"final CRAG source {source.get('source_id')} is not primary/official")
+            if not set(source.get("candidate_ids", [])) <= set(shortlist):
+                errors.append("final CRAG source escaped the frozen shortlist")
+        for update in updates:
+            if not set(update.get("source_ids", [])) <= source_ids:
+                errors.append(f"{update.get('candidate_id')} cites unknown final CRAG source")
+            for field in (
+                "nearest_prior_art",
+                "novelty_before",
+                "novelty_after",
+                "blocker_update",
+                "recommended_disposition",
+                "source_ids",
+            ):
+                if not update.get(field):
+                    errors.append(f"final CRAG update {update.get('candidate_id')} missing {field}")
+            if update.get("recommended_disposition") not in ADVOCATE_DISPOSITIONS:
+                errors.append(f"final CRAG update {update.get('candidate_id')} has bad disposition")
+            candidate_id = update.get("candidate_id")
+            relevant_queries = [
+                row
+                for row in final_crag.get("queries", [])
+                if candidate_id in row.get("candidate_ids", [])
+            ]
+            relevant_sources = [
+                source
+                for source in final_crag.get("sources", [])
+                if source.get("source_id") in update.get("source_ids", [])
+                and candidate_id in source.get("candidate_ids", [])
+            ]
+            if not relevant_queries:
+                errors.append(f"{candidate_id} lacks a candidate-relevant final CRAG query")
+            if not relevant_sources:
+                errors.append(f"{candidate_id} lacks a candidate-relevant final CRAG source")
+            if len(update.get("source_ids", [])) > 2:
+                errors.append(f"{candidate_id} exceeds the authoritative two-source cap")
+
+    matrix = _validate_json(AUDIT / "criticism_response_matrix.json", errors)
+    matrix = _require_object(
+        matrix,
+        "criticism response matrix",
+        (
+            "schema",
+            "owner",
+            "implementation_scope",
+            "claim_tier",
+            "transfer_source",
+            "config_hash",
+            "input_hashes",
+            "sky_support_status",
+            "null_mock_status",
+            "caveats",
+            "generating_command",
+            "git_commit_or_worktree_state",
+            "row_count",
+            "origin_counts",
+            "disposition_counts",
+            "rows",
+        ),
+        errors,
+    )
+    if matrix:
+        _require_schema(
+            matrix,
+            "criticism response matrix",
+            "htt.pr118.criticism_response_matrix.v1",
+            errors,
+        )
+        try:
+            canonical_matrix = build_criticism_matrix(write=False)
+        except RuntimeError as exc:
+            errors.append(f"raw criticism-mapper canonical replay failed: {exc}")
+            canonical_matrix = {}
+        _validate_artifact_metadata(
+            matrix,
+            "criticism response matrix",
+            errors,
+            expected_inputs=[
+                *CRITICISM_MAP_PATHS.values(),
+                AUDIT / "advocate_candidate_ledger.json",
+                AUDIT / "prior_crosswalk.json",
+                ATOMIC_LEDGER,
+            ],
+        )
+        for key in (
+            "web_used",
+            "fixed_external_packets",
+            "mapper_ids",
+            "row_count",
+            "origin_counts",
+            "disposition_counts",
+            "rows",
+        ):
+            if canonical_matrix and matrix.get(key) != canonical_matrix.get(key):
+                errors.append(
+                    "criticism matrix differs from canonical raw-mapper/root replay "
+                    f"at {key}"
+                )
+        expected_prior = {
+            row.get("prior_id") for row in (prior or {}).get("prior_findings", [])
+        }
+        expected_gaps = {
+            row.get("gap_id") for row in (prior or {}).get("audit_completeness_gaps", [])
+        }
+        expected_new = {
+            row.get("atomic_id")
+            for row in (atomic or {}).get("atomic_findings", [])
+            if row.get("disposition") == "NEW_OPEN"
+        }
+        expected = expected_prior | expected_gaps | expected_new
+        authority = _authoritative_criticism_fields(prior or {}, atomic or {})
+        matrix_rows = matrix.get("rows", [])
+        actual = {
+            row.get("criticism_id") for row in matrix_rows if isinstance(row, dict)
+        }
+        if len(matrix_rows) != 102 or actual != expected:
+            errors.append("criticism matrix must cover exactly 55 prior + 14 gaps + 33 new")
+        if matrix.get("row_count") != len(matrix_rows):
+            errors.append("criticism matrix row_count is stale")
+        origins = Counter(row.get("origin") for row in matrix_rows)
+        if dict(origins) != matrix.get("origin_counts") or origins != {
+            "prior": 55,
+            "audit_gap": 14,
+            "delta_new": 33,
+        }:
+            errors.append("criticism matrix origin census is stale")
+        dispositions = Counter(row.get("disposition") for row in matrix_rows)
+        if dict(dispositions) != matrix.get("disposition_counts"):
+            errors.append("criticism matrix disposition census is stale")
+        if dispositions.get("rescued", 0) or matrix.get("disposition_counts", {}).get(
+            "rescued", 0
+        ):
+            errors.append(
+                "criticism matrix cannot rescue an open finding without a separate "
+                "hash-bound production-remediation receipt"
+            )
+        for row in matrix_rows:
+            required = {
+                "criticism_id",
+                "origin",
+                "severity",
+                "criticism",
+                "strongest_advocate_response",
+                "response_to_rebuttal",
+                "disposition",
+                "candidate_ids",
+                "residual_risk",
+                "decisive_closeout_evidence",
+                "maximum_claim_tier",
+                "source_reference",
+                "source_hash",
+                "authoritative_state",
+            }
+            if not required <= row.keys() or any(
+                row.get(field) in (None, "", [])
+                for field in required - {"candidate_ids"}
+            ):
+                errors.append(f"criticism matrix row {row.get('criticism_id')} is incomplete")
+            if row.get("disposition") not in ADVOCATE_DISPOSITIONS:
+                errors.append(f"criticism {row.get('criticism_id')} has invalid disposition")
+            if not set(row.get("candidate_ids", [])) <= expected_ids:
+                errors.append(f"criticism {row.get('criticism_id')} links unknown candidate")
+            immutable = authority.get(row.get("criticism_id"))
+            if not immutable:
+                errors.append(f"criticism {row.get('criticism_id')} lacks authoritative source")
+            else:
+                for field, expected_value in immutable.items():
+                    if row.get(field) != expected_value:
+                        errors.append(
+                            f"criticism {row.get('criticism_id')} rewrites authoritative {field}"
+                        )
+                if (
+                    immutable["authoritative_state"] == "KNOWN_OPEN"
+                    and row.get("disposition") == "rescued"
+                ):
+                    errors.append(
+                        f"criticism {row.get('criticism_id')} rescues KNOWN_OPEN without remediation receipt"
+                    )
+
+    latex = _validate_json(AUDIT / "latex_pdf_validation.json", errors)
+    latex = _require_object(
+        latex,
+        "LaTeX/PDF validation",
+        (
+            "schema",
+            "owner",
+            "implementation_scope",
+            "claim_tier",
+            "transfer_source",
+            "config_hash",
+            "input_hashes",
+            "sky_support_status",
+            "null_mock_status",
+            "caveats",
+            "generating_command",
+            "git_commit_or_worktree_state",
+            "attempts",
+            "execution_receipt",
+            "pdf",
+            "pdfinfo",
+            "log",
+            "representative_page_rendering",
+            "visual_review_receipt",
+            "scientific_readiness",
+            "publication_readiness",
+        ),
+        errors,
+    )
+    if latex:
+        _require_schema(
+            latex,
+            "LaTeX/PDF validation",
+            "htt.pr118.latex_pdf_validation.v1",
+            errors,
+        )
+        _validate_artifact_metadata(
+            latex,
+            "LaTeX/PDF validation",
+            errors,
+            expected_inputs=[
+                REPO / "docs/manuscript/main.tex",
+                REPO / "docs/manuscript/references.bib",
+                REPO / "docs/generated/status_snapshot.json",
+                REPO / "docs/generated/claim_ledger.json",
+                REPO / "docs/generated/status_matrix.md",
+            ],
+        )
+        accepted = [row for row in latex.get("attempts", []) if row.get("status") == "PASS_BUILD_MECHANICS_ONLY"]
+        if len(accepted) != 1 or accepted[0].get("exit_code") != 0:
+            errors.append("LaTeX validation requires exactly one accepted exit-zero build")
+        if latex.get("pdf", {}).get("pdfinfo_status") != "PASS" or latex.get("pdf", {}).get("pages", 0) <= 0:
+            errors.append("LaTeX validation lacks a parseable non-empty PDF")
+        if latex.get("log", {}).get("undefined_reference_warnings") != 0:
+            errors.append("LaTeX validation retains undefined references")
+        if latex.get("log", {}).get("undefined_citation_warnings") != 0:
+            errors.append("LaTeX validation retains undefined citations")
+        pages = latex.get("representative_page_rendering", [])
+        if len(pages) != 3 or any(
+            row.get("visual_status") != "PASS_NO_CLIPPING_OR_MISSING_CONTENT_OBSERVED"
+            for row in pages
+        ):
+            errors.append("LaTeX representative-page visual inspection is incomplete")
+        if latex.get("scientific_readiness") is not False or latex.get("publication_readiness") is not False:
+            errors.append("LaTeX mechanics were promoted to science/publication readiness")
+        latex_receipt_id = latex.get("execution_receipt", {}).get("command_id")
+        latex_receipt = next(
+            (row for row in execution_rows if row.get("command_id") == latex_receipt_id),
+            None,
+        )
+        if latex_receipt_id != "pr118_final_latex_build_seal4" or not latex_receipt:
+            errors.append("LaTeX validation does not bind the required execution receipt")
+        elif latex_receipt.get("result") != "PASS":
+            errors.append("LaTeX execution receipt is not a process PASS")
+
+        def evidence_path(value: Any) -> Path:
+            path = Path(str(value or ""))
+            return path if path.is_absolute() else REPO / path
+
+        pdf = latex.get("pdf", {})
+        pdf_path = evidence_path(pdf.get("path"))
+        if not pdf_path.is_file():
+            errors.append("LaTeX external PDF is unavailable at seal time")
+        else:
+            if pdf.get("sha256") != sha256_file(pdf_path):
+                errors.append("LaTeX external PDF hash is stale")
+            if pdf.get("bytes") != pdf_path.stat().st_size:
+                errors.append("LaTeX external PDF byte count is stale")
+        for section_name in ("pdfinfo", "log"):
+            section = latex.get(section_name, {})
+            path = evidence_path(section.get("path"))
+            if not path.is_file():
+                errors.append(f"LaTeX durable {section_name} evidence is missing")
+            elif section.get("sha256") != sha256_file(path):
+                errors.append(f"LaTeX durable {section_name} hash is stale")
+        pdfinfo_path = evidence_path(latex.get("pdfinfo", {}).get("path"))
+        if pdfinfo_path.is_file():
+            pdfinfo_text = pdfinfo_path.read_text(encoding="utf-8", errors="replace")
+            page_match = re.search(r"(?m)^Pages:\s*(\d+)\s*$", pdfinfo_text)
+            if not page_match or int(page_match.group(1)) != latex.get("pdf", {}).get("pages"):
+                errors.append("LaTeX durable pdfinfo page count differs")
+        log_path = evidence_path(latex.get("log", {}).get("path"))
+        if log_path.is_file():
+            log_text = log_path.read_text(encoding="utf-8", errors="replace")
+            if len(re.findall(r"Overfull \\hbox", log_text)) != latex.get("log", {}).get(
+                "overfull_hbox_warnings"
+            ):
+                errors.append("LaTeX overfull-hbox count differs from durable log")
+        for page in pages:
+            path = evidence_path(page.get("path"))
+            if not path.is_file():
+                errors.append(f"LaTeX rendered page {page.get('pdf_page')} is missing")
+                continue
+            if page.get("png_sha256") != sha256_file(path):
+                errors.append(f"LaTeX rendered page {page.get('pdf_page')} hash is stale")
+            data = path.read_bytes()[:24]
+            if len(data) < 24 or data[:8] != b"\x89PNG\r\n\x1a\n":
+                errors.append(f"LaTeX rendered page {page.get('pdf_page')} is not PNG")
+            else:
+                dimensions = [
+                    int.from_bytes(data[16:20], "big"),
+                    int.from_bytes(data[20:24], "big"),
+                ]
+                if page.get("pixel_dimensions") != dimensions:
+                    errors.append(
+                        f"LaTeX rendered page {page.get('pdf_page')} dimensions are stale"
+                    )
+            for field in ("render_command", "rendered_at", "inspected_at", "inspector_id"):
+                if not page.get(field):
+                    errors.append(f"LaTeX rendered page {page.get('pdf_page')} lacks {field}")
+        visual = latex.get("visual_review_receipt", {})
+        visual_path = evidence_path(visual.get("path"))
+        if not visual_path.is_file():
+            errors.append("LaTeX visual-review receipt is missing")
+        elif visual.get("sha256") != sha256_file(visual_path):
+            errors.append("LaTeX visual-review receipt hash is stale")
+        else:
+            visual_text = visual_path.read_text(encoding="utf-8", errors="replace")
+            if not re.search(r"web_used\s*[:=]\s*false", visual_text, re.IGNORECASE):
+                errors.append("LaTeX visual-review receipt lacks web_used=false")
+            for page in pages:
+                if page.get("png_sha256") not in visual_text:
+                    errors.append(
+                        f"LaTeX visual reviewer did not bind page {page.get('pdf_page')} hash"
+                    )
+
+    for name in ("final_referee_decisions.json", "next_dag_candidates.json"):
+        payload = _validate_json(AUDIT / name, errors)
+        payload = _require_object(
+            payload,
+            name,
+            (
+                "schema",
+                "owner",
+                "implementation_scope",
+                "claim_tier",
+                "transfer_source",
+                "config_hash",
+                "input_hashes",
+                "sky_support_status",
+                "null_mock_status",
+                "caveats",
+                "generating_command",
+                "git_commit_or_worktree_state",
+            ),
+            errors,
+        )
+        if name == "next_dag_candidates.json" and payload:
+            if "closes" in json.dumps(payload.get("cards", []), sort_keys=True):
+                errors.append("proposed DAG cards must target findings, not claim premature closure")
+            expected_owners = {
+                "AUD-R01A": "OBSSTAT",
+                "AUD-R01B": "HTT",
+                "AUD-R02A": "OBSSTAT",
+                "AUD-R02B": "COMMON",
+                "AUD-R03": "COMMON",
+                "AUD-R04": "OBSSTAT",
+                "AUD-R05A": "BASS_PY",
+                "AUD-R05B": "OBSSTAT",
+                "AUD-R05C": "HTT",
+            }
+            actual_owners = {
+                row.get("id"): row.get("owner")
+                for row in payload.get("cards", [])
+                if isinstance(row, dict)
+            }
+            if actual_owners != expected_owners:
+                errors.append("proposed DAG card ownership/staging contract drift")
+            if not payload.get("closure_contract"):
+                errors.append("proposed DAG cards lack a receipt-gated closure contract")
+        if payload:
+            expected_schema = (
+                "htt.pr118.final_referee_decisions.v1"
+                if name == "final_referee_decisions.json"
+                else "htt.pr118.proposed_followup_dag.v1"
+            )
+            _require_schema(payload, name, expected_schema, errors)
+            _validate_artifact_metadata(
+                payload,
+                name,
+                errors,
+                expected_inputs=[
+                    AUDIT / "advocate_candidate_ledger.json",
+                    AUDIT / "criticism_response_matrix.json",
+                    AUDIT / "web_crag_final.json",
+                    SHORTLIST_FREEZE,
+                    AUDIT / "coverage_matrix.json",
+                    *FINAL_REFEREE_RESPONSE_PATHS.values(),
+                ],
+            )
+
+    for name, required_terms in (
+        (
+            "final_referee_report.md",
+            (
+                "JCAP referee decision",
+                "PRD referee decision",
+                "Independent skeptical referee decision",
+                "As-shipped",
+                "Post-surgery",
+                "Strongest defensible thesis",
+                "Dissent",
+                "Unexecuted blockers",
+                "44 / 78",
+                "not_examined",
+                "not proof of exact isotropy",
+            ),
+        ),
+        (
+            "executive_summary_ko.md",
+            (
+                "현재 상태",
+                "최소 수정",
+                "pre-solver",
+                "native solver",
+                "가장 강한 방어 가능 명제",
+                "44/78",
+                "not_examined",
+                "exact isotropy의 증명도",
+            ),
+        ),
+    ):
+        path = AUDIT / name
+        if not path.is_file():
+            errors.append(f"missing final report {relative(path)}")
+            continue
+        text = path.read_text(encoding="utf-8")
+        for term in required_terms:
+            if term not in text:
+                errors.append(f"{name} missing required section/term {term}")
 
 
 def validate(*, final: bool = False) -> list[str]:
@@ -2541,6 +5457,8 @@ def validate(*, final: bool = False) -> list[str]:
             errors.append("history ledger contains an unsafe archive")
 
     execution_rows = _read_execution_ledger(errors)
+    if final:
+        _validate_pr118_receipts(execution_rows, errors)
 
     diagnostics = _validate_json(DIAGNOSTICS, errors)
     diagnostics = _require_object(
@@ -2649,6 +5567,12 @@ def validate(*, final: bool = False) -> list[str]:
         missing_roles = sorted(REQUIRED_AGENT_ROLES - actual_roles)
         if missing_roles:
             errors.append(f"debate bundle missing required roles: {missing_roles}")
+        if final:
+            missing_final_roles = sorted(REQUIRED_PR118_AGENT_ROLES - actual_roles)
+            if missing_final_roles:
+                errors.append(
+                    f"debate bundle missing required PR-118 roles: {missing_final_roles}"
+                )
         if len(actual_roles) != len(agent_rows):
             errors.append("debate bundle has duplicate phase/role entries")
         if debate.get("agent_artifact_count") != len(agent_rows):
@@ -2676,7 +5600,11 @@ def validate(*, final: bool = False) -> list[str]:
     ]
     if final:
         required_md.extend(
-            [AUDIT / "final_referee_report.md", AUDIT / "executive_summary_ko.md"]
+            [
+                AUDIT / "criticism_response_matrix.md",
+                AUDIT / "final_referee_report.md",
+                AUDIT / "executive_summary_ko.md",
+            ]
         )
         for name in (
             "advocate_candidate_ledger.json",
@@ -2684,6 +5612,7 @@ def validate(*, final: bool = False) -> list[str]:
             "web_crag_final.json",
         ):
             _validate_json(AUDIT / name, errors)
+        _validate_final_closeout(prior, atomic, execution_rows, errors)
     for path in required_md:
         if not path.is_file() or not path.read_text(encoding="utf-8").strip():
             errors.append(f"missing or empty artifact: {relative(path)}")
@@ -2778,6 +5707,8 @@ def validate(*, final: bool = False) -> list[str]:
             except (OSError, UnicodeDecodeError):
                 continue
             leaked = bool(_counterfactual_public_text_hits(text))
+            canonical_claim_issues = scan_claim_text(text, path=path)
+            leaked = leaked or bool(canonical_claim_issues)
             if path.suffix.lower() == ".json":
                 try:
                     leaked = leaked or _contains_counterfactual_marker(json.loads(text))
@@ -2785,7 +5716,8 @@ def validate(*, final: bool = False) -> list[str]:
                     pass
             if leaked:
                 errors.append(
-                    f"counterfactual metadata or claim leaked outside audit package: {relative(path)}"
+                    "counterfactual metadata or forbidden claim leaked outside audit "
+                    f"package: {relative(path)}"
                 )
     return errors
 
@@ -2794,10 +5726,16 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
     sub.add_parser("build-environment")
+    sub.add_parser("build-pr118-environment")
     sub.add_parser("build-prior")
     sub.add_parser("build-initial-crag")
     sub.add_parser("build-history")
     sub.add_parser("build-debate")
+    sub.add_parser("build-shortlist-freeze")
+    sub.add_parser("build-advocate-ledger")
+    sub.add_parser("build-final-crag")
+    sub.add_parser("build-criticism-matrix")
+    sub.add_parser("build-final-reports")
     sub.add_parser("build-manifest")
     diag = sub.add_parser("run-diagnostic")
     diag.add_argument(
@@ -2810,11 +5748,16 @@ def main(argv: list[str] | None = None) -> int:
     rec.add_argument("--agent", default="root")
     rec.add_argument("--seed", type=int, default=AUDIT_SEED)
     rec.add_argument("--input", action="append")
+    rec.add_argument("--environment-file")
     rec.add_argument("exec_command", nargs=argparse.REMAINDER)
     args = parser.parse_args(argv)
 
     if args.command == "build-environment":
         payload = build_environment()
+        print(payload["environment_hash"])
+        return 0
+    if args.command == "build-pr118-environment":
+        payload = build_pr118_environment()
         print(payload["environment_hash"])
         return 0
     if args.command == "build-prior":
@@ -2841,6 +5784,35 @@ def main(argv: list[str] | None = None) -> int:
             f"indexed {payload['complete_response_count']}/"
             f"{payload['agent_artifact_count']} agent responses"
         )
+        return 0
+    if args.command == "build-shortlist-freeze":
+        payload = build_shortlist_freeze()
+        print(
+            f"froze {payload['shortlist_count']} candidates at "
+            f"{sha256_file(SHORTLIST_FREEZE)}"
+        )
+        return 0
+    if args.command == "build-advocate-ledger":
+        payload = build_advocate_ledger()
+        print(
+            f"ranked {payload['candidate_count']} candidates; "
+            f"shortlisted {payload['shortlist_count']}"
+        )
+        return 0
+    if args.command == "build-final-crag":
+        payload = build_final_crag()
+        print(
+            f"sealed final CRAG for {payload['candidate_count']} candidates "
+            f"from {len(payload['sources'])} primary/official sources"
+        )
+        return 0
+    if args.command == "build-criticism-matrix":
+        payload = build_criticism_matrix()
+        print(f"mapped {payload['row_count']} criticisms")
+        return 0
+    if args.command == "build-final-reports":
+        payload = build_final_reports()
+        print(f"rendered {len(payload['referees'])} independent referee decisions")
         return 0
     if args.command == "build-manifest":
         payload = build_manifest()

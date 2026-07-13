@@ -63,6 +63,13 @@ def test_direct_geometry_detection_claim_is_blocked() -> None:
     assert _rules("Bianchi family identified in this artifact.") == [
         "geometry_detected"
     ]
+    for text in (
+        "Bianchi family is identified in this artifact.",
+        "We identify a Bianchi family from the statistic.",
+        "Bianchi geometry has been detected in this map.",
+        "We detected the Bianchi geometry.",
+    ):
+        assert _rules(text) == ["geometry_detected"], text
 
 
 def test_tsc_teff_full_solver_language_is_blocked() -> None:

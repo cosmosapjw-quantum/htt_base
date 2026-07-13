@@ -116,6 +116,8 @@ def test_root_controls_and_adapter_preserve_repo_authority() -> None:
     agents = (ROOT / "AGENTS.md").read_text(encoding="utf-8")
     assert "Codex operating contract" in agents
     assert "Do not implement or simulate the future external low-ell" in agents
+    assert "Use `$htt-physmath-audit` for evidence-locked multi-axis hostile audits" in agents
+    assert "`$htt-physics-math-audit` alone does not route a complete multi-axis audit" in agents
 
     active = {path.parent.name for path in (ROOT / ".agents/skills").glob("*/SKILL.md")}
     assert not (GENERIC_SKILLS & active)

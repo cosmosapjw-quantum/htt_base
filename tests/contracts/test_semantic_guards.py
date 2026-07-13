@@ -246,6 +246,28 @@ def test_common_no_overclaim_guard_blocks_source_observable_conflation(
     assert "source_observable_conflation" in [issue.rule_id for issue in issues]
 
 
+def test_claim_guard_understands_forbidden_reading_table_cells() -> None:
+    safe_table = """\
+| Quantity | Owner | Allowed meaning | Forbidden reading |
+| --- | --- | --- | --- |
+| `F` | MIO | diagnostic filling fraction | posterior odds or truth certificate |
+"""
+
+    assert scan_text(safe_table, path=Path("claim_matrix.md")) == ()
+
+
+def test_claim_guard_does_not_exempt_allowed_table_cells() -> None:
+    unsafe_table = """\
+| Quantity | Owner | Allowed meaning | Forbidden reading |
+| --- | --- | --- | --- |
+| `F` | MIO | posterior odds | truth certificate |
+"""
+
+    issues = scan_text(unsafe_table, path=Path("claim_matrix.md"))
+
+    assert "mio_truth_or_posterior" in [issue.rule_id for issue in issues]
+
+
 def test_semantic_guard_modules_do_not_import_package_specific_owners() -> None:
     offending: dict[str, set[str]] = {}
     for path in SEMANTIC_GUARD_ROOT.glob("*.py"):

@@ -1432,7 +1432,7 @@ prs:
   - docs/harness
   tests:
   - venv/bin/python -B -m pytest -p no:cacheprovider tests/contracts/test_jcap_prd_adversarial_audit.py -q
-  - venv/bin/python -B scripts/audits/jcap_prd_20260714.py validate
+  - venv/bin/python -B scripts/audits/jcap_prd_20260714.py validate --final
   dod:
   - At least 24 no-web advocate candidates are independently ranked in pre- and post-solver tracks
   - Every prior/new criticism has a disposition and the final referee package records blockers

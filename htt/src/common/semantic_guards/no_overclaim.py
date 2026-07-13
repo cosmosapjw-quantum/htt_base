@@ -47,6 +47,7 @@ GUARDRAIL_MARKERS = (
     "must not",
     "never",
     "no ",
+    "none ",
     "not ",
     "overclaim",
     "reject",
@@ -91,11 +92,13 @@ RULES: tuple[ClaimLanguageRule, ...] = (
         rule_id="geometry_detected",
         pattern=re.compile(
             r"\b("
-            r"Bianchi geometry detected|"  # forbidden-rule literal
+            r"Bianchi geometry (?:is |was |has been )?detected|"  # forbidden-rule literal
             r"global Bianchi anisotropy detected|"  # forbidden-rule literal
-            r"Bianchi family identified|"  # forbidden-rule literal
+            r"Bianchi family (?:is |was |has been )?identified|"  # forbidden-rule literal
             r"identified Bianchi family|"  # forbidden-rule literal
-            r"family identified as"  # forbidden-rule literal
+            r"family identified as|"  # forbidden-rule literal
+            r"(?:we\s+)?identif(?:y|ies|ied)\s+(?:a\s+|the\s+)?Bianchi family|"
+            r"(?:we\s+)?detect(?:s|ed)?\s+(?:a\s+|the\s+)?Bianchi geometry"
             r")\b",
             re.IGNORECASE,
         ),
@@ -201,10 +204,20 @@ def scan_text(text: str, *, path: Path = Path("<text>")) -> tuple[ClaimLanguageI
             continue
         if in_fence or not stripped:
             continue
-        if _is_guardrail_context(lines, index - 1):
-            continue
         for rule in RULES:
-            if rule.pattern.search(line):
+            match = rule.pattern.search(line)
+            if match is None:
+                continue
+            if _is_guardrail_context(lines, index - 1):
+                continue
+            if _match_is_in_forbidden_markdown_column(
+                lines,
+                zero_based_index=index - 1,
+                match=match,
+                pattern=rule.pattern,
+            ):
+                continue
+            if match:
                 issues.append(
                     ClaimLanguageIssue(
                         path=path,
@@ -343,10 +356,66 @@ def _is_archival_path(path: Path) -> bool:
 
 
 def _is_guardrail_context(lines: Sequence[str], zero_based_index: int) -> bool:
+    current = lines[zero_based_index].strip()
+    if current.startswith("|") and current.endswith("|"):
+        # Nearby table headers such as ``Forbidden reading`` describe a column,
+        # not every cell in the following rows.  Per-cell handling lives in
+        # ``_match_is_in_forbidden_markdown_column`` below.
+        window = current.lower()
+        return any(marker in window for marker in GUARDRAIL_MARKERS)
     start = max(0, zero_based_index - 2)
     stop = min(len(lines), zero_based_index + 2)
     window = " ".join(lines[start:stop]).lower()
     return any(marker in window for marker in GUARDRAIL_MARKERS)
+
+
+def _match_is_in_forbidden_markdown_column(
+    lines: Sequence[str],
+    *,
+    zero_based_index: int,
+    match: re.Match[str],
+    pattern: re.Pattern[str],
+) -> bool:
+    """Return true only when a match ends in an explicit forbidden-reading cell.
+
+    This keeps explanatory claim matrices scannable without granting a blanket
+    exemption to the table row: a forbidden phrase placed in an ``Allowed``
+    cell is still reported.
+    """
+
+    row = lines[zero_based_index]
+    row_spans = tuple(re.finditer(r"(?<=\|)[^|]*(?=\|)", row))
+    if not row_spans:
+        return False
+
+    header_cells: tuple[str, ...] | None = None
+    for header_index in range(zero_based_index, max(-1, zero_based_index - 20), -1):
+        candidate = lines[header_index].strip()
+        if not candidate.startswith("|") or not candidate.endswith("|"):
+            break
+        cells = tuple(cell.strip().lower() for cell in candidate.strip("|").split("|"))
+        if any("forbidden" in cell and "reading" in cell for cell in cells):
+            header_cells = cells
+            break
+    if header_cells is None or len(header_cells) != len(row_spans):
+        return False
+
+    forbidden_indexes = {
+        index
+        for index, cell in enumerate(header_cells)
+        if "forbidden" in cell and "reading" in cell
+    }
+    first_forbidden_start = min(
+        row_spans[index].start() for index in forbidden_indexes
+    )
+    if pattern.search(row[:first_forbidden_start]):
+        # The claim is already complete before the explanatory forbidden cell.
+        return False
+    match_endpoint = max(match.start(), match.end() - 1)
+    return any(
+        index in forbidden_indexes and cell.start() <= match_endpoint < cell.end()
+        for index, cell in enumerate(row_spans)
+    )
 
 
 __all__ = [

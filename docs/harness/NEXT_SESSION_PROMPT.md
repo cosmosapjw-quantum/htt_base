@@ -1,82 +1,63 @@
 # Next Session Prompt
 
-Continue from `/home/cosmosapjw/Dropbox/bianchi/htt_base`.
-
-Pre-read:
+Continue from `/home/cosmosapjw/Dropbox/bianchi/htt_base` only after reading:
 
 - `AGENTS.md`
 - `.agents/skills/htt-dag-orchestrator/SKILL.md`
-- `.agents/skills/htt-xqpi-fg-formalism/SKILL.md`
+- `.agents/skills/htt-adversarial-review-loop/SKILL.md`
 - `.agents/skills/htt-physics-math-audit/SKILL.md`
+- `.agents/skills/htt-statistical-hardening/SKILL.md`
 - `.agents/skills/htt-claim-firewall/SKILL.md`
 - `.agents/skills/htt-claim-provenance-ledger/SKILL.md`
-- `.agents/skills/htt-harness-engineering/SKILL.md`
-- `.agents/skills/htt-scientific-code-validation/SKILL.md`
-- `.agents/skills/htt-local-global-discrimination/SKILL.md`
-- `.agents/skills/htt-adversarial-review-loop/SKILL.md`
 - `.agents/skills/htt-ssot-handoff-maintainer/SKILL.md`
-- `docs/codex_handoff/pr_backlog.yaml`
-- `docs/codex_handoff/pr_status.yaml`
-- `docs/PR_DELTAS/pr-055.md`
-- `docs/generated/progress_checkpoints/checkpoint_040.md`
-- `docs/generated/progress_checkpoints/progress_scoreboard.md`
-- `docs/generated/status_snapshot.json`
+- `docs/audits/jcap_prd_adversarial_audit_20260714/final_referee_report.md`
+- `docs/audits/jcap_prd_adversarial_audit_20260714/executive_summary_ko.md`
+- `docs/audits/jcap_prd_adversarial_audit_20260714/criticism_response_matrix.json`
+- `docs/audits/jcap_prd_adversarial_audit_20260714/next_dag_candidates.json`
+- `docs/generated/progress_checkpoints/checkpoint_065.md`
 
-Current state:
+## Current state
 
-- Completed PRs: 40/62 = 64.52%.
-- Dependency-weighted completion: 69.74%.
-- Critical path completion: 11/21 = 52.38%.
-- Checkpoint 040 is current; the next checkpoint is due at 45 completed PRs.
-- Latest unblocked candidates: `PR-076`, `PR-056`, and `PR-060`.
-- The next topological node is `PR-076`.
-- The progress harness reported no blockers and no replan requirement.
+- The active DAG is 65/65 complete: 100% by count, dependency weight, and
+  critical path. This is bookkeeping only, not scientific readiness.
+- The as-shipped manuscript decision is unanimous `REJECT` (1.0-1.5/10).
+- A distinct pre-solver methods/negative-audit submission is only potentially
+  defensible after major rebuild (5.0-6.5/10).
+- Prior findings remain 55 `KNOWN_OPEN` (`P0 2 / P1 14 / P2 17 / P3 22`),
+  with 14 audit gaps and 33 new open atomic deltas (`P1 22 / P2 11`).
+- The advocate program contains 32 candidates, a 12-candidate bounded final
+  CRAG, and a 102-row criticism-response matrix.
+- No production scientific result or manuscript number was repaired by the
+  audit. Raw `legacy/` and the two original GPT-5.6 ZIPs remain untracked.
 
-Important PR-055 boundary:
+## Authority boundary
 
-- `mio.formalism.isotropy_gap` is MIO-owned, diagnostic-only, and pre-solver.
-- `log_g_F = log(max(F_comparison,floor))-log(max(F_reference,floor))`, and
-  `G_F = exp(log_g_F)`.
-- Payloads require explicit depth-bin metadata, covariance/null metadata,
-  PR-040 sky/mask support fields, BudgetUse.DEPTH_GAP_REFERENCE, floor policy,
-  sample-wise denominator-evolution split fields, config/input hashes,
-  generating command, and git/worktree provenance.
-- Optional transfer-derived records require PR-014 metadata, matching transfer
-  source/spec IDs, and matching canonical transfer metadata hashes across
-  compared bins.
-- PR-055 does not calibrate p-values/FPR, create HTT posterior/evidence
-  content, create MIO certificate content, validate transfer or native solver
-  output, establish morphology compatibility, or support global-tilt,
-  geometry, or family claims.
+There is no active next DAG card. `AUD-R01A` through `AUD-R05C` are staged proposals,
+not authorized implementation work. Before starting one, add it through an
+explicit DAG intake/review that assigns owner, dependencies, tests, claim
+ceiling, decisive inputs, and kill conditions.
 
-Immediate PR-076 target:
+Recommended first intake is `AUD-R01A`: quarantine the two open P0-dependent
+CF4 headline/correction paths and rebuild estimator/downstream propagation.
+Its entry gate is authenticated CF4 row/group/selection lineage plus a
+preregistered injection/coverage design. It may yield only estimator
+validation or an identified-region result.
 
-- Title: Null ensembles and look-elsewhere bookkeeping.
-- Owner: OBSSTAT.
-- Depends: `PR-072`, `PR-073`, `PR-074`, `PR-075`.
-- Files: `htt/obsstat/null_ensembles.py`,
-  `tests/obsstat/test_null_ensembles.py`.
-- DoD: FLRW+mask+noise, local/systematic, and injected-template nulls can be
-  represented; look-elsewhere metadata attaches to feature vectors.
-- Kill switch: reject any p-value path without null ensemble provenance.
+## Hard boundaries
 
-Rules:
+- Do not implement a native low-ell Bianchi solver in this repository.
+- Do not label external/AniCLASS output as native or validated transfer.
+- Do not merge MIO diagnostics into HTT posterior/evidence semantics.
+- Do not replace production numbers from audit-only sensitivity reruns.
+- Keep every family/geometry counterfactual `hypothesis_only=true` and
+  `public_use=false` until native atlas, matched masks/nulls/covariance,
+  family equivalence, rank, and external validation gates all pass.
 
-- Do not implement a native low-ell Bianchi solver in this repo.
-- Do not label external transfer as native.
-- Do not merge MIO diagnostics with HTT posterior or evidence semantics.
-- Do not make geometry/family-ID claims before native low-ell morphology atlas
-  plus null/mask/covariance/equivalence/rank/PPC gates.
-- Continue the per-PR loop with web/doc verification, role divergence,
-  implementation, tests, adversarial review, status updates, and commit.
-
-Immediate commands:
+## Immediate verification
 
 ```bash
-python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+venv/bin/python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
 venv/bin/python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --checkpoint-every 5 --json
-PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/obsstat/test_null_ensembles.py -q
-PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider tests/obsstat/test_biposh_features.py tests/obsstat/test_template_fit.py tests/obsstat/test_morphology.py tests/obsstat/test_scalar_lowell.py -q
-PYTHONDONTWRITEBYTECODE=1 venv/bin/python scripts/codex_harness/run_subset.py package
-PYTHONDONTWRITEBYTECODE=1 venv/bin/python scripts/codex_harness/run_subset.py smoke
+venv/bin/python -B scripts/audits/jcap_prd_20260714.py validate --final
+venv/bin/python -B -m pytest -p no:cacheprovider tests/contracts/test_jcap_prd_adversarial_audit.py -q
 ```

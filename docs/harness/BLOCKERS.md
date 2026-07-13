@@ -2,6 +2,30 @@
 
 Open blockers, owner, required resolution, and PR dependency impact.
 
+## 2026-07-14 - PR-118 audit blockers
+
+- **P0 production blockers remain open:** the CF4 radial-monopole-sensitive
+  headline and the unsupported nonlinear/linear velocity-shape correction have
+  not been repaired in production result cards or manuscript numbers.
+- **Estimator/null blockers:** observed and null paths are not uniformly
+  exchangeable; matched masks, end-to-end nulls, trial accounting, covariance,
+  and independent numerical oracles remain incomplete.
+- **Data blockers:** ACT lacks the required upstream QE inputs/validated low-L
+  transfer; DESI exact-support mock execution is incomplete; JWST lacks an
+  authoritative row manifest, per-host error use, probabilistic crossmatch,
+  and shared calibration covariance.
+- **Theory blockers:** one-way FLRW/almost-EGS, frame/order assumptions, NT2
+  coefficients, and OMK valid-domain/remainder statements require fresh
+  independent derivations.
+- **Publication blockers:** stale result packs and manuscript figure
+  provenance remain unresolved even when LaTeX mechanics compile.
+- **Native-solver blocker:** no authenticated native low-ell solver/morphology
+  atlas, matched masks/nulls/covariance, or family-equivalence registry exists.
+
+See `docs/audits/jcap_prd_adversarial_audit_20260714/final_referee_report.md`
+and `criticism_response_matrix.json`. DAG 65/65 completion does not close any
+of these scientific blockers.
+
 ## 2026-06-13
 
 No active DAG blockers after PR-055. Progress report shows unblocked next

@@ -8,17 +8,17 @@ Manual status counts are prohibited; use `docs/generated/status_snapshot.json` a
 | Metric | Value |
 | --- | ---: |
 | Total PRs | 65 |
-| Completed PRs | 63 |
+| Completed PRs | 65 |
 | Blocked PRs | 0 |
 | In progress | 0 |
-| Pending PRs | 2 |
+| Pending PRs | 0 |
 
 | Metadata | Value |
 | --- | --- |
 | Claim tier | `diagnostic_only` |
 | Transfer source | `none` |
-| Config hash | `7b23ca94afa1f87d9fdd0244ea57fd989d2b23ba04d3bb4ddbcd21d61288b3d5` |
-| Source commit | `8af39b3+dirty` |
+| Config hash | `621770633211e76eabe9f15d83caa273b315aee281d38b15c9b00f86697a86e6` |
+| Source commit | `f96e8d9+dirty` |
 | Worktree state | `dirty` |
 
 | Owner | Rows |
@@ -31,8 +31,7 @@ Manual status counts are prohibited; use `docs/generated/status_snapshot.json` a
 
 | State | Rows |
 | --- | ---: |
-| `completed` | 63 |
-| `not_completed` | 2 |
+| `completed` | 65 |
 
 | Claim Tier | Rows |
 | --- | ---: |
@@ -41,15 +40,13 @@ Manual status counts are prohibited; use `docs/generated/status_snapshot.json` a
 
 | Artifact Readiness | Rows |
 | --- | ---: |
-| `generated` | 54 |
-| `missing` | 2 |
+| `generated` | 56 |
 | `smoke_tested` | 3 |
 | `validation_candidate` | 6 |
 
 | Allowed Use | Rows |
 | --- | ---: |
-| `external_audit` | 61 |
-| `internal_only` | 2 |
+| `external_audit` | 63 |
 | `paper_appendix` | 2 |
 
 | Artifact Mode | Rows |

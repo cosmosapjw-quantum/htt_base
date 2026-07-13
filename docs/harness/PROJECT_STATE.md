@@ -1,5 +1,39 @@
 # Project State
 
+## 2026-07-14 - PR-118 adversarial-audit closeout
+
+The active DAG is complete at 65/65 (100% by count, dependency weight, and
+critical path). This is bookkeeping completion only. It does not establish
+scientific readiness, native-solver validation, morphology compatibility, or
+family/geometry identification.
+
+The controlling scientific state is the package at
+`docs/audits/jcap_prd_adversarial_audit_20260714/`:
+
+- 55 prior findings remain `KNOWN_OPEN` (`P0 2 / P1 14 / P2 17 / P3 22`),
+  with 14 audit-completeness gaps tracked separately;
+- PR-117 adds 33 distinct open atomic deltas (`P1 22 / P2 11`) without
+  relabeling prior findings as new;
+- PR-118 ranks 32 no-web advocate candidates through three non-author judges,
+  freezes a 12-candidate shortlist, and limits the final CRAG to that shortlist;
+- the 102-row criticism-response matrix records `rebuild_required 56`,
+  `downclaimed 43`, and `abandoned 3`; no row is rescued while its
+  authoritative source remains open;
+- independent JCAP, PRD, and skeptical decisions are unanimously `REJECT`
+  as shipped (1.0-1.5/10), while a distinct methods/negative-audit new
+  submission scores 5.0-6.5/10 only after major rebuild.
+
+The strongest defensible thesis is a fail-closed pre-solver methods result
+about non-identification, estimator non-exchangeability, correlated numerical
+oracles, and transfer/provenance failure. Current CF4/CMB/DESI/ACT/JWST lanes
+are blockers and research designs, not evidence for cosmic anisotropy. Family
+and geometry candidates remain internal, hypothesis-only, and non-public.
+
+No active next PR exists. `next_dag_candidates.json` contains nine staged
+follow-up cards (`AUD-R01A` through `AUD-R05C`); they require explicit DAG
+intake before implementation and preserve OBSSTAT/HTT/COMMON/BASS ownership.
+Checkpoint 065 and the generated status snapshot are current.
+
 Current DAG position: PR-075 complete after commits PR-000, PR-001, PR-002,
 PR-003, PR-004, PR-005, PR-020, PR-010, PR-021, PR-011, PR-013, PR-014,
 PR-040, PR-012, PR-022, PR-070, PR-015, PR-050, PR-041, PR-023, PR-071,
