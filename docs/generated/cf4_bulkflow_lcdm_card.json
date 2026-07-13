@@ -1,0 +1,77 @@
+{
+  "bulk_flow": {
+    "amplitude_kms": 340.726,
+    "apex_galactic_l_b_deg": [
+      293.34,
+      20.17
+    ],
+    "measurement_error_kms": 4.968,
+    "separation_from_cf4_watkins2023_deg": 17.95,
+    "separation_from_cmb_dipole_deg": 36.66,
+    "vector_sgxyz_kms": [
+      -292.121,
+      131.096,
+      -116.507
+    ]
+  },
+  "caveats": [
+    "linear-theory estimator-matched cosmic variance from a fiducial EH98 sigma_8-normalised P(k); the nonlinear + survey-selection mock covariance stays BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP",
+    "CF4 distances (Mpc, catalogue H0) are scaled to Mpc/h with the fiducial h for the window; a ~10% depth-scale convention residual",
+    "the growth rate uses f = Omega_m^0.55 (Planck base); no redshift-space or scale-dependent-bias modelling (bulk flow is bias-free)"
+  ],
+  "claim": "real measurement: CF4 weighted-GLS bulk flow |B| = 341 +/- 5 km/s (measurement error), apex (l,b)=(293,20), Omega_tilt = 4.07e-07; the LambdaCDM amplitude significance is WITHHELD (the linear window cosmic variance is a lower bound)",
+  "fiducial_cosmology": {
+    "Omega_b": 0.0493,
+    "Omega_m": 0.3153,
+    "P_k": "EH98 no-wiggle, sigma_8-normalised (self-contained)",
+    "growth_f_Om^0.55": 0.53003,
+    "h": 0.6736,
+    "n_s": 0.9649,
+    "sigma_8": 0.8111
+  },
+  "input_hashes": [
+    "workdir/obs_bundle/pecvel/cf4_full/cf4_groups.npz:sha256:3c0f2e1a5b56b7227abb5e187406810d7eb15e924aac69e9cb0ffc1343a811ad"
+  ],
+  "lcdm_amplitude_significance": {
+    "naive_chi2_3dof": 96.726,
+    "naive_gaussian_sigma": 9.36,
+    "naive_p_value": 0.0,
+    "significance_claimed": false,
+    "why_withheld": "the naive chi^2 uses the linear cosmic-variance LOWER BOUND, so its large apparent significance (~9 sigma) is an artifact, NOT a cosmological anomaly; a credible amplitude significance needs the minimum-variance ideal-window estimator (isolates the large-scale flow) or release-matched mocks (full nonlinear + selection covariance), which stay BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP"
+  },
+  "linear_cosmic_variance_lower_bound": {
+    "cov_cv_eigenvalues_kms2": [
+      975.3,
+      1418.68,
+      2085.67
+    ],
+    "expected_B_rms_lcdm_linear_kms": 66.93,
+    "is_lower_bound": true,
+    "method": "estimator-matched mode-function window integral (linear theory); replaces the frozen card's scalar 150 km/s isotropic prior",
+    "sigma_cv_along_B_kms": 35.043,
+    "sigma_v_1d_linear_kms": 308.09,
+    "why_lower_bound": "the noise-weighted GLS estimator aliases small-scale (nonlinear) velocity power that linear theory omits, so the linear window cosmic variance underestimates the true LambdaCDM scatter of this estimator"
+  },
+  "n_groups": 38049,
+  "omega_tilt": {
+    "beta_v_over_c": 0.0011365409277164116,
+    "definition": "Omega_tilt = Omega_m sinh^2(beta), beta = |B|/c",
+    "error": 1.1877362952864287e-08,
+    "error_note": "measurement (inverse-Fisher) error only",
+    "value": 4.0728115626715063e-07
+  },
+  "product": "Cosmicflows-4 groups (Tully+ 2023); weighted-GLS bulk flow",
+  "schema": "htt.cf4_bulkflow_lcdm.v1",
+  "scope_not_claimed": "a model-independent kinematic MEASUREMENT (|B|, apex, Omega_tilt); NO LambdaCDM tension/anomaly claim (significance withheld), and NOT a Bianchi family, geometry, or observer-frame-violation claim; the theory-g tilt link is out of scope (it needs the native low-multipole solver)",
+  "sigma_star_kms": 50.0,
+  "status": "MEASURED_BULKFLOW_AMPLITUDE",
+  "validation": {
+    "closed_form_sigma_v_kms": 308.09,
+    "converged": true,
+    "diagonal_matches_closed_form": true,
+    "khat_grid_convergence_rel": 0.0036,
+    "n_k_samples": 160,
+    "n_khat_directions": 768,
+    "single_group_diag_sigma_v_kms": 304.46
+  }
+}

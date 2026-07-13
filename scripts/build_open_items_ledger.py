@@ -95,16 +95,23 @@ OPEN_ITEMS = [
     },
     {
         "rank": 5,
-        "item": "K5 cosmic-variance coverage on release mocks",
-        "source": "ticket EGS3-C2-cf4-wfcr; BLOCKERS.md section 3",
+        "item": "K5 CF4 bulk-flow LambdaCDM amplitude significance",
+        "source": "ticket EGS3-C2-cf4-wfcr; BLOCKERS.md section 3; registry "
+                  "K5-LCDMCV",
         "ticket": "cf4_wfcr.yaml",
         "ticket_state": "blocked",
         "blocker": "BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP",
         "executability": "blocked",
-        "exit_gate": "ownership of the CF4 release-mock pipeline "
-                     "(selection/Malmquist/grouping/correlated field)",
-        "note": "conditional coverage (fixed LCDM sigma_cv prior) already "
-                "measured.",
+        "exit_gate": "the minimum-variance ideal-window estimator (isolates the "
+                     "large-scale flow) OR CF4 release-matched forward mocks "
+                     "(selection/Malmquist/grouping/nonlinear field)",
+        "note": "REV-R195: the hand-set sigma_cv=150 km/s prior was replaced by "
+                "the real linear estimator-matched cosmic variance (mode-"
+                "function window integral, validated); |B|=340.7+/-5.0 km/s, "
+                "apex, Omega_tilt are real MEASUREMENTS, but the LambdaCDM "
+                "amplitude SIGNIFICANCE stays WITHHELD -- the linear CV is a "
+                "lower bound (naive chi^2 ~9sigma is an artifact). Credible "
+                "significance needs the MV estimator or mocks.",
     },
     {
         "rank": 6,
@@ -162,9 +169,11 @@ OPEN_ITEMS = [
                      "dominated so consistency is the expected result",
         "note": "REV-R192/R194: 400 sims downloaded (fetch.py --act-sims); "
                 "mean field subtracted; ell=2..10 debiased band power p=0.35 "
-                "CONSISTENT with the isotropic sims; EXT-ACT flipped to "
-                "MEASURED_MEAN_FIELD_DEBIASED (diagnostic); dipole ell=1 "
-                "not measurable by ACT lensing.",
+                "CONSISTENT with the isotropic sims. REV-R195 added a real 95% "
+                "CL model-independent UPPER LIMIT on excess low-ell kappa power "
+                "(< 3.28e-6, 0.47x the null band power) by injecting a flat "
+                "signal into the sim null; only the separate N0/N1 debias "
+                "remains. Dipole ell=1 not measurable by ACT lensing.",
     },
     {
         "rank": 10,

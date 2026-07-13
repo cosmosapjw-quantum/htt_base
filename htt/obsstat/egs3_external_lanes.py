@@ -229,17 +229,22 @@ def act_kappa_auto_bandpower() -> dict:
                 measured["p_value_data_vs_isotropic_sims"],
             "consistent_with_isotropic_sims":
                 measured["consistent_with_isotropic_sims"],
+            "upper_limit_95cl": measured.get("upper_limit_95cl"),
             "caveats": measured["caveats"],
         }
         out["status"] = "MEASURED_MEAN_FIELD_DEBIASED"
-        out["residual_gate"] = ("N0/N1 not separately debiased; the sim "
-                                "ensemble is used as the isotropic null "
-                                "(diagnostic-only)")
-        out["scope_not_claimed"] = ("mean-field-debiased low-multipole kappa "
-                                    "isotropy cross-check (ell=2..N; the "
+        out["real_claim"] = measured.get("claim")
+        out["residual_gate"] = ("N0/N1 enter through the end-to-end sim null, "
+                                "not a separate analytic subtraction; the "
+                                "upper limit is on power above that null")
+        out["scope_not_claimed"] = ("a mean-field-debiased low-multipole kappa "
+                                    "isotropy consistency test AND a 95% CL "
+                                    "model-independent upper limit on excess "
+                                    "low-multipole power (ell=2..N; the "
                                     "reconstruction dipole ell=1 is not "
-                                    "measurable); no anisotropy, geometry, "
-                                    "family, or inference claim; diagnostic-only")
+                                    "measurable); an upper-limit/consistency "
+                                    "constraint, NOT a detection or a Bianchi "
+                                    "family/geometry claim")
     else:
         out["status"] = "BLOCKED_MISSING_ACT_LENSING_SIMS"
         out["exit_gate"] = ("ACT DR6 lensing simulation ensemble (mean field "

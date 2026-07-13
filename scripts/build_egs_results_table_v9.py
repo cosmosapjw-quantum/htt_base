@@ -82,6 +82,22 @@ def _v9_rows() -> list[dict]:
            "observational_claim_allowed False",
            "diagnostic_only",
            "k5_cf4_identified_interval_card_v9.json"),
+        _r("K5-LCDMCV", DATA,
+           "CF4 weighted-GLS bulk flow promoted to a real MEASUREMENT (|B|, "
+           "apex, Omega_tilt); the linear estimator-matched cosmic variance "
+           "(mode-function window integral, validated against the closed-form "
+           "sigma_v_1d) replaces the frozen card's 150 km/s scalar prior. The "
+           "LambdaCDM amplitude SIGNIFICANCE is WITHHELD: the linear window "
+           "cosmic variance is a lower bound",
+           "|B|=340.7+/-5.0 km/s, apex (l,b)=(293,20) -- 37 deg from the CMB "
+           "dipole and only 18 deg from the published CF4 (Watkins 2023) flow; "
+           "Omega_tilt=4.07e-7; the naive chi^2 reads a spurious ~9 sigma (the "
+           "noise-weighted GLS aliases nonlinear small-scale power the linear "
+           "CV omits) -> significance withheld; credible significance needs the "
+           "MV ideal-window estimator or release-matched mocks "
+           "(BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP)",
+           "measured",
+           "cf4_bulkflow_lcdm_card.json"),
         _r("EXT-DESI", DATA,
            "DESI DR1 BGS number-count dipole lane (Omega_tilt-sector cross-"
            "check): randoms downloaded; window-corrected overdensity dipole "
@@ -95,14 +111,16 @@ def _v9_rows() -> list[dict]:
            "external_lanes_seal.json; desi_dipole_card.json"),
         _r("EXT-ACT", DATA,
            "ACT DR6 CMB-lensing low-multipole isotropy cross-check "
-           "(independent-instrument): 400 baseline sims downloaded, mean field "
-           "MF=<kappa_alm_sim> subtracted; the ell=2..10 debiased band power "
-           "of the data is compared to the isotropic sim null (the "
-           "reconstruction dipole ell=1 is not measurable, NaN)",
-           "p = 0.35 (data band stat 7e-6 = sim median) -> CONSISTENT with "
-           "the isotropic LambdaCDM sims; N0/N1 not separately debiased "
-           "(residual gate)",
-           "measured_diagnostic",
+           "(independent-instrument): 400 baseline sims give the mean field "
+           "MF=<kappa_alm_sim> and the N0+N1-inclusive isotropic null; the "
+           "ell=2..10 debiased band power is tested for consistency AND a 95% "
+           "CL model-independent upper limit is set on excess low-multipole "
+           "power (a flat-in-ell signal injected into the sims)",
+           "p = 0.35 CONSISTENT with the isotropic LambdaCDM sims; 95% CL "
+           "upper limit on excess ell=2..10 kappa band power < 3.28e-6 "
+           "(0.47x the null band power); NOT a detection, NOT a family claim; "
+           "the reconstruction dipole ell=1 is not measurable (NaN)",
+           "measured",
            "external_lanes_seal.json; act_kappa_card.json"),
         _r("EXT-JWST", DATA,
            "JWST distance anchors (14 Cepheid/TRGB/maser, CF4-matched) feed "

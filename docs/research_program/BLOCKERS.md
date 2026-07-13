@@ -22,7 +22,7 @@ Bianchi-family, anisotropic-geometry, or native-solver claim.
 | --- | --- | --- | --- | --- |
 | `BLOCKED_MISSING_PR4_E2E_ACCESS` | K1 global low-ℓ p-value | E2E-systematics null needs PLA-portal/NERSC-auth sims | yes | **PARTIAL (rev-r127)**: look-elsewhere global p discharged on the real map under a ΛCDM null; E2E-systematics null still open |
 | `BLOCKED_MISSING_FIELD_REALIZATIONS` | K6 vorticity/curl posterior | obtain CF4 3D WF field; run Hoffman–Ribak CR | yes | **PARTIAL (rev-r127; reworded rev-r134)**: WF mean-field curl-suppression structural no-go established; a true CR (Hoffman–Ribak) vorticity posterior still blocked until a CR ensemble is owned (present field uses independent per-cell draws) |
-| `BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP` | K5 cosmic-variance bulk-flow coverage | own the CF4 release mock pipeline | yes | **PARTIAL (rev-r127; reworded rev-r134)**: real CF4 bulk flow measured; CV-inclusive coverage is CONDITIONAL on a fixed ΛCDM σ_cv=150 km/s/comp Gaussian prior (geometry-and-error matched mocks). Full selection/Malmquist/grouping/correlated-field release mocks still a gate |
+| `BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP` | K5 cosmic-variance bulk-flow coverage / amplitude significance | own the CF4 release mock pipeline (or the MV ideal-window estimator) | yes | **PARTIAL (rev-r127; reworded rev-r134; rev-r195)**: real CF4 bulk flow measured (\|B\|=340.7±5.0 km/s). rev-r195 replaced the hand-set σ_cv=150 km/s prior with the real **linear estimator-matched** cosmic variance (mode-function window integral, validated). BUT that linear CV is a **lower bound** (the noise-weighted GLS aliases nonlinear small-scale power), so the LambdaCDM amplitude **significance is WITHHELD** (a naive χ² would read a spurious ~9σ). Credible significance still needs the minimum-variance ideal-window estimator or full selection/nonlinear release mocks — still a gate |
 | `BLOCKED_UPSTREAM` | PR08-006 joint posterior artifact | close K1+K5+K6 first | n/a | K5 measured (conditional coverage), K6 WF mean-field no-go, K1 partial → assemblable with explicit measured/partial/fail-closed sectors |
 | `AWAITING_NATIVE_LOWELL_SOLVER` | full Bianchi family atlas / morphology | build the native low-ℓ Bianchi–Boltzmann solver | partial (B1 interim) | separate long-term project (PR10) |
 | `BLOCKED_MISSING_DESI_RANDOMS` | DESI number-count dipole (Ω_tilt cross-check) | ~~download the DESI DR1 BGS random catalogues~~ | yes | **DISCHARGED (rev-r192/r193)**: randoms downloaded (`fetch.py --desi-randoms`); window-corrected overdensity dipole MEASURED D=9.49×10⁻³ on NGC+SGC (224× below the raw footprint, at the kinematic scale). Residual: mock-calibrated significance + clustering/kinematic separation |
@@ -150,8 +150,19 @@ rev-r128. These items are a separate refactor PR, deliberately not churned here.
   sky coverage, and distance-error model as the published CF4 group catalogue),
   which we do not own. The rev-r127 coverage is a CONDITIONAL stand-in: a fixed
   ΛCDM σ_cv=150 km/s/comp Gaussian bulk-flow prior on the real geometry + errors.
-- **Concrete unblock.** Generate CF4 Bias-Gaussianization forward mocks matched
-  to the release selection; push each through the same bulk-flow MLE.
+- **rev-r195 partial.** `scripts/cf4_bulkflow_lcdm_variance.py` replaced that
+  hand-set prior with the real **linear estimator-matched** cosmic variance
+  (mode-function window integral of a fiducial EH98 σ₈-normalised P(k), validated:
+  single-group σ_v recovers the closed form to 1.2%, grids converged to 0.4%).
+  The result (σ_cv≈35 km/s along **B**) is a **lower bound** — the noise-weighted
+  GLS estimator aliases nonlinear small-scale velocity power linear theory omits —
+  so the LambdaCDM amplitude **significance is WITHHELD** (a naive χ² reads a
+  spurious ~9σ). The measurement (|B|, apex, Ω_tilt) is real; the significance is
+  not. This does NOT discharge the blocker.
+- **Concrete unblock.** Either the minimum-variance ideal-window estimator
+  (Watkins–Feldman–Hudson; isolates the large-scale flow the linear CV describes)
+  or CF4 Bias-Gaussianization forward mocks matched to the release selection,
+  pushed through the same bulk-flow MLE.
 - **Mechanics ready.** `htt/obsstat/bulkflow_mle.py`
   (`hierarchical_coverage_experiment`) computes coverage over a supplied mock
   ensemble; the hierarchical-GLS estimator (PR08-002) is closed.

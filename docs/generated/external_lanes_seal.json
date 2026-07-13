@@ -14,7 +14,7 @@
       "caveats": [
         "ell=0,1 (monopole+dipole) not reconstructed by ACT lensing -- the low-multipole cross-check is ell=2..10 only",
         "the kappa low-multipole band is reconstruction-noise-dominated; consistency with the isotropic sims is the expected null result",
-        "mean field from the 400 baseline sims; N0/N1 not separately debiased (the band statistic uses the sim ensemble as the null)"
+        "mean field from the 400 baseline sims; N0/N1 enter through the end-to-end sim ensemble used as the null, not as a separate analytic subtraction, so the upper limit is on power ABOVE that realistic-noise null"
       ],
       "consistent_with_isotropic_sims": true,
       "dipole_note": "ell=0,1 not reconstructed (NaN); lowest available multipole is the quadrupole ell=2",
@@ -23,13 +23,22 @@
         10
       ],
       "n_sims": 400,
-      "p_value_data_vs_isotropic_sims": 0.3525
+      "p_value_data_vs_isotropic_sims": 0.3525,
+      "upper_limit_95cl": {
+        "band_power_95ul": 3.2802e-06,
+        "band_power_95ul_over_sim_median": 0.4739,
+        "c_sig_95ul": 2.8036e-08,
+        "confidence_level": 0.95,
+        "interpretation": "95% CL upper limit on excess low-multipole kappa power beyond the isotropic-LambdaCDM end-to-end expectation; model-independent (flat template); the sim ensemble is the N0+N1-inclusive isotropic null",
+        "signal_template": "flat-in-ell excess convergence power C_sig over ell=2..10"
+      }
     },
     "low_ell_mean_field_dominated": true,
     "mask_fsky": 0.23388,
     "product": "ACT DR6 baseline kappa a_lm (released)",
-    "residual_gate": "N0/N1 not separately debiased; the sim ensemble is used as the isotropic null (diagnostic-only)",
-    "scope_not_claimed": "mean-field-debiased low-multipole kappa isotropy cross-check (ell=2..N; the reconstruction dipole ell=1 is not measurable); no anisotropy, geometry, family, or inference claim; diagnostic-only",
+    "real_claim": "95% CL model-independent upper limit on excess low-multipole (ell=2..10) CMB-lensing convergence power beyond the isotropic-LambdaCDM end-to-end expectation (band power < 3.28e-06); independent-instrument (ACT DR6) statistical-isotropy constraint",
+    "residual_gate": "N0/N1 enter through the end-to-end sim null, not a separate analytic subtraction; the upper limit is on power above that null",
+    "scope_not_claimed": "a mean-field-debiased low-multipole kappa isotropy consistency test AND a 95% CL model-independent upper limit on excess low-multipole power (ell=2..N; the reconstruction dipole ell=1 is not measurable); an upper-limit/consistency constraint, NOT a detection or a Bianchi family/geometry claim",
     "sector": "independent-instrument CMB-lensing isotropy cross-check",
     "status": "MEASURED_MEAN_FIELD_DEBIASED"
   },
