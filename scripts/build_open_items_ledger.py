@@ -113,44 +113,33 @@ OPEN_ITEMS = [
     },
     {
         "rank": 6,
-        "item": "K5 CF4 bulk-flow DEFINITIVE (mock-calibrated) significance",
+        "item": "K5 CF4 bulk-flow significance: nonlinear COLA/L-PICOLA "
+                "refinement (in-house physical mock DELIVERED)",
         "source": "ticket EGS3-C2-cf4-wfcr; BLOCKERS.md section 3; registry "
-                  "K5-MV / K5-LCDMCV",
+                  "K5-MOCKSIG",
         "ticket": "cf4_wfcr.yaml",
         "ticket_state": "blocked",
         "blocker": "BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP",
         "executability": "blocked",
-        "exit_gate": "CF4 release-matched forward mocks (full non-Gaussian + "
-                     "selection covariance) to pin the significance; the MV "
-                     "ideal-window estimator route is DELIVERED (rev-r196), the "
-                     "mock branch remains",
-        "note": "REV-R196: the minimum-variance ideal-window estimator "
-                "(cf4_mv_bulkflow.py) RESOLVES the rev-r195 withheld "
-                "significance -- window-tied faithful cosmic variance gives "
-                "|B|(200)=405 km/s (Watkins-consistent) and ~4.4-5.4 sigma (a "
-                "likely over-estimate per Whitford). Only the DEFINITIVE mock-"
-                "calibrated significance (non-Gaussian + selection covariance) "
-                "remains. REV-R195 context: the linear estimator-matched CV was "
-                "a lower bound so the significance was withheld -- now resolved.",
+        "exit_gate": "the full nonlinear COLA/L-PICOLA survey-matched mock suite "
+                     "(Qin+2021 CF4TF is request-only) to fold in nonlinear "
+                     "velocity power + selection mode-coupling; the in-house "
+                     "physical forward mock (rev-r197) already calibrates the "
+                     "estimator and localises this residual",
+        "note": "REV-R197: scripts/cf4_mock_calibrated_significance.py DELIVERS "
+                "an in-house PHYSICAL forward-mock ensemble (linear GRF velocity "
+                "field + super-sample mode + real per-object noise at the fixed "
+                "CF4 geometry, htt/obsstat/pv_forward_mocks.py; 2000 survey-"
+                "matched mocks). It reproduces the analytic linear bulk-flow "
+                "covariance (mock/analytic ratio ~1) -> the estimator/geometry/"
+                "noise do NOT inflate the significance; the gap to the literature "
+                "~2-3 sigma is localised to nonlinear velocity power. Only the "
+                "full nonlinear COLA refinement remains -- the 'no mock at all' "
+                "state is discharged. (rev-r196 MV route: |B|(200)=405 km/s "
+                "resolved rev-r195's withheld significance.)",
     },
     {
         "rank": 7,
-        "item": "K5 external cross-reconstruction (Nusser 2026 2MRS)",
-        "source": "BLOCKERS.md BLOCKED_MISSING_CROSS_RECONSTRUCTION; registry "
-                  "K5-RECON",
-        "ticket": None,
-        "ticket_state": None,
-        "blocker": "BLOCKED_MISSING_CROSS_RECONSTRUCTION",
-        "executability": "blocked",
-        "exit_gate": "bind the Nusser 2026 2MRS Bayesian-Zeldovich reconstruction "
-                     "(arXiv:2606.08593; set NUSSER_2MRS_URL) for a 6th method in "
-                     "the reconstruction-spread comparison",
-        "note": "REV-R196: the Carrick 2015 2M++ field (independent tracer) was "
-                "downloaded + connected as a 5th method; Nusser 2MRS has no "
-                "confirmed public release yet.",
-    },
-    {
-        "rank": 8,
         "item": "PR08-006 joint posterior artifact",
         "source": "BLOCKERS.md section 4",
         "ticket": None,
@@ -162,7 +151,7 @@ OPEN_ITEMS = [
         "note": None,
     },
     {
-        "rank": 9,
+        "rank": 8,
         "item": "Native low-ell Bianchi solver atlas (theory-g CMB likelihood)",
         "source": "BLOCKERS.md section 5; PR10 project",
         "ticket": None,
@@ -174,7 +163,7 @@ OPEN_ITEMS = [
         "note": None,
     },
     {
-        "rank": 10,
+        "rank": 9,
         "item": "DESI number-count dipole: mock-calibrated significance",
         "source": "ticket EGS3-H1-desi-number-count-dipole; registry EXT-DESI",
         "ticket": "desi_number_count_dipole.yaml",
@@ -192,7 +181,7 @@ OPEN_ITEMS = [
                 "only the mock-calibrated significance remains.",
     },
     {
-        "rank": 11,
+        "rank": 10,
         "item": "ACT DR6 low-ell kappa isotropy: N0/N1 debias",
         "source": "ticket EGS3-H2-act-dr6-kappa-isotropy; registry EXT-ACT",
         "ticket": "act_dr6_kappa_isotropy.yaml",
@@ -212,7 +201,7 @@ OPEN_ITEMS = [
                 "remains. Dipole ell=1 not measurable by ACT lensing.",
     },
     {
-        "rank": 12,
+        "rank": 11,
         "item": "MESb (PRD 51, 5942) INTERNAL non-geodesic derivation "
                 "(Eqs 30-36 algebra)",
         "source": "ticket EGS3-G8-mes-full-rederivation (residual)",

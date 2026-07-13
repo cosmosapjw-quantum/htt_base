@@ -686,24 +686,50 @@ def stage_cf4_full(root: Path, sources: dict, log: Logger, **opts):
 
 def stage_cf4_reconstructions(root: Path, sources: dict, log: Logger, **opts):
     """External velocity-field reconstructions for the CF4 reconstruction-method
-    cross-check (REV-R196). Carrick 2015 2M++ is a public direct download (an
-    INDEPENDENT tracer + linear method); the Nusser 2026 2MRS reconstruction has
-    no confirmed public release -> BLOCKED_MISSING_CROSS_RECONSTRUCTION (set
-    NUSSER_2MRS_URL for a direct file). Off-Dropbox target if available."""
+    cross-check (REV-R196/R197). Carrick 2015 2M++ is a public direct download
+    (an INDEPENDENT tracer + linear method). REV-R197 substitutes the blocked
+    private Nusser 2026 2MRS reconstruction with TWO public 2MRS reconstructions
+    from the Lilow group -- the LVN 2024 neural-network reconstruction and the
+    CORAS 2021 Wiener-filter/constrained-realization reconstruction -- both
+    shipped as public Dropbox folder zips. Nusser 2026 stays private (superseded,
+    provenance note kept). Off-Dropbox targets if available."""
     s = sources.get("cf4_reconstructions", {})
-    dest = Path(opts.get("cf4_recon_dir")
-                or "/mnt/sn850x2t/htt_base_e2e/carrick_2mpp")
-    if not dest.parent.exists():
-        dest = root / "raw" / "carrick_2mpp"
+    base = Path("/mnt/sn850x2t/htt_base_e2e") if Path(
+        "/mnt/sn850x2t/htt_base_e2e").exists() else (root / "raw")
+
+    # Carrick 2M++ (per-file public downloads)
+    dest = Path(opts.get("cf4_recon_dir") or base / "carrick_2mpp")
     for name, url in s.get("carrick_2mpp", {}).get("files", {}).items():
         download(url, dest / name, log, optional=True)
     log(f"  [note] Carrick 2M++ velocity field -> {dest} (257^3, 400 Mpc/h).")
+
+    # LVN 2024 NN + CORAS 2021 (public 2MRS reconstruction folder zips)
+    for key, label, grid in (
+        ("lilow_nn_2mrs", "Lilow-Veena-Nusser 2024 NN 2MRS", "128^3, 400 h^-1 Mpc, Galactic Cartesian, CMB frame"),
+        ("coras_2mrs", "CORAS (Lilow-Nusser 2021) 2MRS", "201^3, +/-200 Mpc/h, comoving Galactic, zCMB/zLG"),
+    ):
+        cfg = s.get(key, {})
+        url = os.environ.get(cfg.get("env_url_var", "")) or cfg.get("folder_zip")
+        if url:
+            zdest = base / key / cfg.get("zip_name", f"{key}.zip")
+            ok = download(url, zdest, log, optional=True)
+            if ok:
+                log(f"  [note] {label} reconstruction -> {zdest} ({grid}). "
+                    f"Unzip in place; grid parsed at analysis time.")
+            else:
+                log(f"  [blocked] {label}: {cfg.get('blocker', 'BLOCKED_MISSING_RECONSTRUCTION')} "
+                    f"(folder zip fetch failed; set {cfg.get('env_url_var')}).")
+        else:
+            log(f"  [blocked] {label}: {cfg.get('blocker', 'BLOCKED_MISSING_RECONSTRUCTION')} "
+                f"(no URL; set {cfg.get('env_url_var')}).")
+
+    # Nusser 2026: private, superseded by the two public reconstructions above
     nurl = os.environ.get(s.get("nusser_2mrs", {}).get("env_url_var", "NUSSER_2MRS_URL"))
     if nurl:
-        download(nurl, (root / "raw" / "nusser_2mrs" / Path(nurl).name), log, optional=True)
+        download(nurl, (base / "nusser_2mrs" / Path(nurl).name), log, optional=True)
     else:
-        log("  [blocked] Nusser 2026 2MRS: BLOCKED_MISSING_CROSS_RECONSTRUCTION "
-            "(no public release; set NUSSER_2MRS_URL).")
+        log("  [note] Nusser 2026 2MRS: SUPERSEDED_BY_LILOW_2024_PUBLIC "
+            "(no public release; the LVN 2024 NN + CORAS 2021 reconstructions substitute).")
 
 
 def stage_planck_npipe(root: Path, sources: dict, log: Logger, **opts):

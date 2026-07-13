@@ -309,7 +309,7 @@
     }
   },
   "cf4_reconstructions": {
-    "_doc": "External velocity-field reconstructions for the reconstruction-method-dependence cross-check (REV-R196). Carrick 2015 2M++ (an INDEPENDENT tracer + linear method) is a public direct download; the Nusser 2026 2MRS Bayesian Zel'dovich reconstruction (arXiv:2606.08593) has no confirmed public release -> BLOCKED_MISSING_CROSS_RECONSTRUCTION until bound (set NUSSER_2MRS_URL for a direct file, else fetch manually).",
+    "_doc": "External velocity-field reconstructions for the reconstruction-method-dependence cross-check (REV-R196/R197). Carrick 2015 2M++ (an INDEPENDENT tracer + linear method) is a public direct download. REV-R197 substitutes the blocked private Nusser 2026 2MRS reconstruction with TWO public 2MRS reconstructions from the Lilow group: the Lilow-Ganeshaiah-Veena-Nusser 2024 neural-network reconstruction (arXiv:2404.02278) and the Lilow-Nusser 2021 CORAS Wiener-filter/constrained-realization reconstruction (arXiv:2102.07291). Both ship public reconstructed velocity grids (Dropbox folder zips). Nusser 2026 (arXiv:2606.08593) stays private -> superseded, provenance note kept.",
     "carrick_2mpp": {
       "project_page": "https://cosmicflows.iap.fr",
       "files": {
@@ -318,10 +318,30 @@
       },
       "grid": "257^3 cells, 400 Mpc/h box, 1.5625 Mpc/h spacing, Galactic Cartesian"
     },
+    "lilow_nn_2mrs": {
+      "project_page": "https://github.com/rlilow/2MRS-NeuralNet",
+      "paper": "arXiv:2404.02278 (A&A 689 A226)",
+      "folder_zip": "https://www.dropbox.com/scl/fo/wb8iyg113hyin4ni7srkg/h?rlkey=bfry3x0s612qtnmgb6n82rnny&dl=1",
+      "zip_name": "lilow_nn_2mrs.zip",
+      "env_url_var": "LILOW_NN_URL",
+      "files": ["xVelocity.npy", "yVelocity.npy", "zVelocity.npy", "xVelocity_error.npy", "yVelocity_error.npy", "zVelocity_error.npy", "density.npy"],
+      "grid": "128^3 cells, 400 h^-1 Mpc box, 3.125 h^-1 Mpc spacing, Galactic Cartesian, CMB frame, 3 h^-1 Mpc Gaussian smoothing, valid r<200 h^-1 Mpc (NaN outside)",
+      "blocker": "BLOCKED_MISSING_LILOW_NN"
+    },
+    "coras_2mrs": {
+      "project_page": "https://github.com/rlilow/CORAS",
+      "paper": "arXiv:2102.07291 (MNRAS 507 1557)",
+      "folder_zip": "https://www.dropbox.com/sh/3nebvt1lskxshtu/AAByegavgA_-l1x118tZkaSAa?dl=1",
+      "zip_name": "coras_2mrs.zip",
+      "env_url_var": "CORAS_URL",
+      "grid": "201^3 Cartesian, -200..+200 Mpc/h per axis, 2 Mpc/h spacing, comoving Galactic, zCMB + zLG frames, 5 Mpc/h Gaussian smoothing; velocity components along Galactic axes; line l=(i*201+j)*201+k",
+      "blocker": "BLOCKED_MISSING_CORAS"
+    },
     "nusser_2mrs": {
       "project_page": "https://arxiv.org/abs/2606.08593",
       "env_url_var": "NUSSER_2MRS_URL",
-      "blocker": "BLOCKED_MISSING_CROSS_RECONSTRUCTION"
+      "blocker": "BLOCKED_MISSING_CROSS_RECONSTRUCTION",
+      "status": "SUPERSEDED_BY_LILOW_2024_PUBLIC (no public release; the public LVN 2024 NN + CORAS 2021 reconstructions substitute for the reconstruction-dependence cross-check)"
     }
   },
   "planck_npipe": {

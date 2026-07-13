@@ -116,15 +116,33 @@ def _v9_rows() -> list[dict]:
         _r("K5-RECON", DATA,
            "CF4 bulk-flow dependence on the peculiar-velocity reconstruction: the "
            "identical estimator on the three catalogue PV columns (Vpds direct / "
-           "Vpwf pure-WF / Vpec ramp) + the CF4++ WF field + the external Carrick "
-           "2015 2M++ field (independent tracer, downloaded)",
-           "amplitude spans 145-341 km/s (spread 196) across 5 reconstruction "
-           "methods -- the pure Wiener-filter (Vpwf 145) shrinks the flow vs the "
-           "direct/ramp (319/341); apex spread 28 deg; ZoA |b|-cut sensitivity "
-           "small (5 km/s / 1.4 deg -- CF4 has good sky coverage); Nusser 2026 "
-           "2MRS stays BLOCKED_MISSING_CROSS_RECONSTRUCTION",
+           "Vpwf pure-WF / Vpec ramp) + four full-field reconstructions -- the "
+           "CF4++ WF field, the external Carrick 2015 2M++ field, and (REV-R197, "
+           "substituting the private Nusser 2026) two PUBLIC 2MRS reconstructions: "
+           "the Lilow-Ganeshaiah-Veena-Nusser 2024 neural network + CORAS 2021",
+           "amplitude spans 140-341 km/s across 7 reconstruction methods -- the "
+           "pure Wiener-filter (Vpwf 145) and the shallow-2MRS LVN NN (140@150) "
+           "shrink the flow vs the direct/ramp (319/341) and CORAS (283); the "
+           "2MRS reconstructions are reconstruction-vs-measurement (regress to "
+           "the mean at large r), NOT a tension; ZoA |b|-cut sensitivity small; "
+           "the private Nusser 2026 2MRS is SUPERSEDED_BY_LILOW_2024_PUBLIC",
            "measured_diagnostic",
            "cf4_reconstruction_dependence_card.json"),
+        _r("K5-MOCKSIG", DATA,
+           "CF4 bulk-flow significance calibrated by an in-house PHYSICAL "
+           "forward-mock ensemble (linear GRF velocity field + super-sample bulk "
+           "mode + real per-object noise at the fixed CF4 geometry, 2000 survey-"
+           "matched mocks) -- replacing the request-only CF4TF release mocks "
+           "(BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP)",
+           "the mock reproduces the analytic linear bulk-flow covariance "
+           "(mock/analytic ratio ~0.93) so the estimator/geometry/noise do NOT "
+           "inflate the significance; mock-calibrated parametric tension |B|(200) "
+           "~5.8 sigma (empirical 2000-mock floor >3.5 sigma), consistent with "
+           "the rev-r196 analytic 4.4-5.4 range; the reduction to the literature "
+           "~2-3 sigma is the nonlinear-power (COLA) residual, NOT claimed here; "
+           "GRF-linear + positions-conditional",
+           "measured",
+           "cf4_mock_significance_card.json"),
         _r("K5-VCORR", DATA,
            "reconstruction-INDEPENDENT statistic (the physical replacement for an "
            "ill-posed angular pseudo-C_l): the Gorski velocity correlation "

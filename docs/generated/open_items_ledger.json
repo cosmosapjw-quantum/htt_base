@@ -97,24 +97,13 @@
     {
       "blocker": "BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP",
       "executability": "blocked",
-      "exit_gate": "CF4 release-matched forward mocks (full non-Gaussian + selection covariance) to pin the significance; the MV ideal-window estimator route is DELIVERED (rev-r196), the mock branch remains",
-      "item": "K5 CF4 bulk-flow DEFINITIVE (mock-calibrated) significance",
-      "note": "REV-R196: the minimum-variance ideal-window estimator (cf4_mv_bulkflow.py) RESOLVES the rev-r195 withheld significance -- window-tied faithful cosmic variance gives |B|(200)=405 km/s (Watkins-consistent) and ~4.4-5.4 sigma (a likely over-estimate per Whitford). Only the DEFINITIVE mock-calibrated significance (non-Gaussian + selection covariance) remains. REV-R195 context: the linear estimator-matched CV was a lower bound so the significance was withheld -- now resolved.",
+      "exit_gate": "the full nonlinear COLA/L-PICOLA survey-matched mock suite (Qin+2021 CF4TF is request-only) to fold in nonlinear velocity power + selection mode-coupling; the in-house physical forward mock (rev-r197) already calibrates the estimator and localises this residual",
+      "item": "K5 CF4 bulk-flow significance: nonlinear COLA/L-PICOLA refinement (in-house physical mock DELIVERED)",
+      "note": "REV-R197: scripts/cf4_mock_calibrated_significance.py DELIVERS an in-house PHYSICAL forward-mock ensemble (linear GRF velocity field + super-sample mode + real per-object noise at the fixed CF4 geometry, htt/obsstat/pv_forward_mocks.py; 2000 survey-matched mocks). It reproduces the analytic linear bulk-flow covariance (mock/analytic ratio ~1) -> the estimator/geometry/noise do NOT inflate the significance; the gap to the literature ~2-3 sigma is localised to nonlinear velocity power. Only the full nonlinear COLA refinement remains -- the 'no mock at all' state is discharged. (rev-r196 MV route: |B|(200)=405 km/s resolved rev-r195's withheld significance.)",
       "rank": 6,
-      "source": "ticket EGS3-C2-cf4-wfcr; BLOCKERS.md section 3; registry K5-MV / K5-LCDMCV",
+      "source": "ticket EGS3-C2-cf4-wfcr; BLOCKERS.md section 3; registry K5-MOCKSIG",
       "ticket": "cf4_wfcr.yaml",
       "ticket_state": "blocked"
-    },
-    {
-      "blocker": "BLOCKED_MISSING_CROSS_RECONSTRUCTION",
-      "executability": "blocked",
-      "exit_gate": "bind the Nusser 2026 2MRS Bayesian-Zeldovich reconstruction (arXiv:2606.08593; set NUSSER_2MRS_URL) for a 6th method in the reconstruction-spread comparison",
-      "item": "K5 external cross-reconstruction (Nusser 2026 2MRS)",
-      "note": "REV-R196: the Carrick 2015 2M++ field (independent tracer) was downloaded + connected as a 5th method; Nusser 2MRS has no confirmed public release yet.",
-      "rank": 7,
-      "source": "BLOCKERS.md BLOCKED_MISSING_CROSS_RECONSTRUCTION; registry K5-RECON",
-      "ticket": null,
-      "ticket_state": null
     },
     {
       "blocker": "BLOCKED_UPSTREAM",
@@ -122,7 +111,7 @@
       "exit_gate": "close K1+K5+K6 first (items 2-4); then assemble with explicit measured/partial/fail-closed sectors",
       "item": "PR08-006 joint posterior artifact",
       "note": null,
-      "rank": 8,
+      "rank": 7,
       "source": "BLOCKERS.md section 4",
       "ticket": null,
       "ticket_state": null
@@ -133,7 +122,7 @@
       "exit_gate": "PR10-scale separate solver project; fail-closed OutOfScopeError firewall stays until then",
       "item": "Native low-ell Bianchi solver atlas (theory-g CMB likelihood)",
       "note": null,
-      "rank": 9,
+      "rank": 8,
       "source": "BLOCKERS.md section 5; PR10 project",
       "ticket": null,
       "ticket_state": null
@@ -144,7 +133,7 @@
       "exit_gate": "release-matched DESI BGS mocks to calibrate the mask-coupling amplitude bias + significance (and to separate the local clustering dipole from the kinematic dipole at BGS depths)",
       "item": "DESI number-count dipole: mock-calibrated significance",
       "note": "REV-R192/R193: randoms downloaded (fetch.py --desi-randoms); window-corrected overdensity dipole MEASURED D=9.49e-3 (224x below the raw footprint, at the kinematic scale), EXT-DESI flipped to MEASURED_WINDOW_CORRECTED (diagnostic); only the mock-calibrated significance remains.",
-      "rank": 10,
+      "rank": 9,
       "source": "ticket EGS3-H1-desi-number-count-dipole; registry EXT-DESI",
       "ticket": "desi_number_count_dipole.yaml",
       "ticket_state": "randoms_downloaded_window_corrected_measured"
@@ -155,7 +144,7 @@
       "exit_gate": "separate N0/N1 realisation-dependent debiasing (the sim ensemble is currently used directly as the isotropic null); the low-ell band is reconstruction-noise-dominated so consistency is the expected result",
       "item": "ACT DR6 low-ell kappa isotropy: N0/N1 debias",
       "note": "REV-R192/R194: 400 sims downloaded (fetch.py --act-sims); mean field subtracted; ell=2..10 debiased band power p=0.35 CONSISTENT with the isotropic sims. REV-R195 added a real 95% CL model-independent UPPER LIMIT on excess low-ell kappa power (< 3.28e-6, 0.47x the null band power) by injecting a flat signal into the sim null; only the separate N0/N1 debias remains. Dipole ell=1 not measurable by ACT lensing.",
-      "rank": 11,
+      "rank": 10,
       "source": "ticket EGS3-H2-act-dr6-kappa-isotropy; registry EXT-ACT",
       "ticket": "act_dr6_kappa_isotropy.yaml",
       "ticket_state": "sims_downloaded_mean_field_debiased_isotropy_measured"
@@ -166,7 +155,7 @@
       "exit_gate": "legitimate access to the print-only journal PDF; the accessible-range trace (REV-R190) already REFUTED the in-house triples and re-adopted the geodesic anchor, so only MESb's internal algebra remains",
       "item": "MESb (PRD 51, 5942) INTERNAL non-geodesic derivation (Eqs 30-36 algebra)",
       "note": "print-only (no arXiv/ADS/OA copy); the in-house (3/4,2,2/7)/(3/4,1,3/14) refutation + geodesic re-adoption is DONE; only MESb's own Eqs 30-36 derivation is blocked.",
-      "rank": 12,
+      "rank": 11,
       "source": "ticket EGS3-G8-mes-full-rederivation (residual)",
       "ticket": "mes_full_rederivation.yaml",
       "ticket_state": "web_traced_in_house_refuted_geodesic_readopted"

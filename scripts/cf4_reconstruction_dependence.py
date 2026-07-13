@@ -11,10 +11,12 @@ catalogue carries three peculiar-velocity estimators for the SAME 38053 groups:
 
 Running the IDENTICAL weighted-GLS bulk-flow estimator on each isolates the
 reconstruction-method effect (same objects, same weights, only the velocity
-reconstruction differs). A fourth, fundamentally different method -- the CF4++
-128^3 Wiener-filter reconstructed velocity field (affine bulk flow) -- is added
-as a cross-method comparison. The SPREAD across methods is the reconstruction
-dependence.
+reconstruction differs). Four full-field reconstructions extend the comparison:
+the CF4++ 128^3 Wiener-filter field, the external Carrick 2015 2M++ field, and
+(REV-R197, substituting the private Nusser 2026) two public 2MRS reconstructions
+-- the Lilow-Ganeshaiah-Veena-Nusser 2024 neural network (arXiv:2404.02278) and
+CORAS (Lilow-Nusser 2021, arXiv:2102.07291). The SPREAD across methods is the
+reconstruction dependence.
 
 A Zone-of-Avoidance sensitivity sweep (|b| cuts on the DIRECT Vpds) reports how
 the bulk-flow magnitude and apex shift as near-Galactic-plane objects are
@@ -54,12 +56,23 @@ CARRICK = Path(os.environ.get(
     "CARRICK_2MPP_NPY",
     "/mnt/sn850x2t/htt_base_e2e/carrick_2mpp/twompp_velocity.npy"))
 CARRICK_ALT = REPO / "workdir/raw/carrick_2mpp/twompp_velocity.npy"
+# public 2MRS reconstructions (REV-R197 substitutes the private Nusser 2026):
+# Lilow-Ganeshaiah-Veena-Nusser 2024 neural-network (arXiv:2404.02278) and CORAS
+# (Lilow-Nusser 2021, arXiv:2102.07291). Off-Dropbox NVMe or workdir, gitignored.
+LILOW_NN_DIR = Path(os.environ.get(
+    "LILOW_NN_DIR", "/mnt/sn850x2t/htt_base_e2e/lilow_nn_2mrs"))
+LILOW_NN_ALT = REPO / "workdir/raw/lilow_nn_2mrs"
+CORAS = Path(os.environ.get(
+    "CORAS_NPY", "/mnt/sn850x2t/htt_base_e2e/coras_2mrs/coras_velocity_zCMB.npy"))
+CORAS_ALT = REPO / "workdir/raw/coras_2mrs/coras_velocity_zCMB.npy"
 OUT = REPO / "docs/generated/cf4_reconstruction_dependence_card.json"
 
 BOX_MPC = 1000.0
 BOX_CARRICK_HMPC = 400.0
+BOX_LILOW_HMPC = 400.0                              # 128^3, spacing = box/n
 FIELD_RADII_MPC = (150.0, 200.0)
 CARRICK_RADII_HMPC = (100.0, 150.0)
+RECON_RADII_HMPC = (50.0, 100.0, 150.0)            # LVN/CORAS valid r<200
 ZOA_CUTS_DEG = (0.0, 5.0, 10.0, 15.0)
 PV_VARIANTS = ("Vpds", "Vpwf", "Vpec")
 VARIANT_DESC = {"Vpds": "Davis-Scrimgeour 2014 direct",
@@ -133,6 +146,50 @@ def _carrick_bulk():
     return out
 
 
+def _lilow_nn_bulk():
+    """Lilow-Ganeshaiah-Veena-Nusser 2024 neural-network 2MRS reconstruction
+    (128^3, 400 h^-1 Mpc, Galactic Cartesian, CMB frame; valid r<200, NaN
+    outside). Public substitute for the private Nusser 2026 reconstruction."""
+    d = LILOW_NN_DIR if (LILOW_NN_DIR / "xVelocity.npy").is_file() else LILOW_NN_ALT
+    if not (d / "xVelocity.npy").is_file():
+        return None
+    vx, vy, vz = (np.load(d / f"{a}Velocity.npy") for a in "xyz")
+    n = vx.shape[0]
+    centers = (np.arange(n) - (n - 1) / 2.0) * (BOX_LILOW_HMPC / n)
+    gx, gy, gz = np.meshgrid(centers, centers, centers, indexing="ij")
+    pos = np.column_stack([gx.ravel(), gy.ravel(), gz.ravel()])
+    vel = np.column_stack([vx.ravel(), vy.ravel(), vz.ravel()]).astype(float)
+    fin = np.isfinite(vel).all(axis=1)               # drop the NaN r>200 shell
+    pos, vel = pos[fin], vel[fin]
+    out = {}
+    for R in RECON_RADII_HMPC:
+        af = fit_affine_flow(pos, vel, radius=R)
+        out[str(int(R))] = {"amplitude_kms": round(af.bulk_amplitude, 2),
+                            "apex_galactic_l_b_deg": _galactic_cart_to_lb(af.bulk)}
+    return out
+
+
+def _coras_bulk():
+    """CORAS (Lilow-Nusser 2021) Wiener-filter/constrained-realization 2MRS
+    reconstruction (201^3, +/-200 Mpc/h, 2 Mpc/h, comoving Galactic, zCMB).
+    Second public 2MRS reconstruction (a different method from the NN)."""
+    path = CORAS if CORAS.is_file() else CORAS_ALT
+    if not path.is_file():
+        return None
+    v = np.load(path)                                # (201,201,201,3) km/s
+    n = v.shape[0]
+    centers = 2.0 * (np.arange(n) - (n - 1) / 2.0)   # -200..+200 Mpc/h
+    gx, gy, gz = np.meshgrid(centers, centers, centers, indexing="ij")
+    pos = np.column_stack([gx.ravel(), gy.ravel(), gz.ravel()])
+    vel = v.reshape(-1, 3).astype(float)
+    out = {}
+    for R in RECON_RADII_HMPC:
+        af = fit_affine_flow(pos, vel, radius=R)
+        out[str(int(R))] = {"amplitude_kms": round(af.bulk_amplitude, 2),
+                            "apex_galactic_l_b_deg": _galactic_cart_to_lb(af.bulk)}
+    return out
+
+
 def _field_bulk():
     if not FIELD.is_file():
         return None
@@ -181,17 +238,20 @@ def measure() -> dict:
         }
     catalog_spread = _spread(list(method_rows.values()))
 
-    # --- cross-method: CF4++ WF field + external Carrick 2M++ (affine bulk) ---
+    # --- cross-method: CF4++ WF field + 3 external reconstructions (affine) ---
     field = _field_bulk()
     carrick = _carrick_bulk()
+    lilow = _lilow_nn_bulk()
+    coras = _coras_bulk()
     combined = list(method_rows.values())
-    if field is not None:
-        combined.append({"amplitude_kms": field["150"]["amplitude_kms"],
-                         "apex_galactic_l_b_deg": field["150"]["apex_galactic_l_b_deg"]})
-    if carrick is not None:
-        combined.append({"amplitude_kms": carrick["150"]["amplitude_kms"],
-                         "apex_galactic_l_b_deg": carrick["150"]["apex_galactic_l_b_deg"]})
-    cross_spread = _spread(combined) if (field or carrick) else None
+    for ext in (field, carrick, lilow, coras):
+        if ext is not None:
+            combined.append(
+                {"amplitude_kms": ext["150"]["amplitude_kms"],
+                 "apex_galactic_l_b_deg": ext["150"]["apex_galactic_l_b_deg"]})
+    cross_spread = (_spread(combined)
+                    if any(x is not None for x in (field, carrick, lilow, coras))
+                    else None)
 
     # --- ZoA sensitivity: |b| cuts on the DIRECT Vpds ---
     vpds = np.asarray(var["Vpds"], float)
@@ -216,16 +276,23 @@ def measure() -> dict:
     return {
         "schema": "htt.cf4_reconstruction_dependence.v1",
         "status": "MEASURED_RECONSTRUCTION_SPREAD",
-        "product": "Cosmicflows-4 groups (Tully+ 2023) + CF4++ WF field",
+        "product": "Cosmicflows-4 groups (Tully+ 2023) + CF4++ WF field + "
+                   "Carrick 2M++ + LVN-2024/CORAS 2MRS reconstructions",
         "estimator": "weighted-GLS bulk flow, identical across PV variants",
         "reconstruction_method_comparison": method_rows,
         "catalog_variant_spread": catalog_spread,
         "cf4pp_wf_field_affine_bulk": field,
         "carrick2015_2mpp_affine_bulk": carrick,
+        "lilow_nn_2mrs_affine_bulk": lilow,
+        "coras_2mrs_affine_bulk": coras,
         "external_reconstructions": {
             "carrick_2mpp": ("CONNECTED" if carrick is not None
                              else "BLOCKED_MISSING_CARRICK_2MPP"),
-            "nusser_2mrs": "BLOCKED_MISSING_CROSS_RECONSTRUCTION",
+            "lilow_nn_2mrs": ("CONNECTED" if lilow is not None
+                              else "BLOCKED_MISSING_LILOW_NN"),
+            "coras_2mrs": ("CONNECTED" if coras is not None
+                           else "BLOCKED_MISSING_CORAS"),
+            "nusser_2mrs": "SUPERSEDED_BY_LILOW_2024_PUBLIC",
         },
         "cross_method_spread_incl_field": cross_spread,
         "zoa_sensitivity_direct_vpds": zoa_rows,
@@ -241,13 +308,21 @@ def measure() -> dict:
             "(identical estimator + objects; only the velocity column differs); "
             "Vpds is the DIRECT estimator (noisiest), Vpwf/Vpec are Wiener-"
             "filter-based (Vpec is the frozen column)",
-            "two full field reconstructions extend the comparison: the CF4++ WF "
-            "field (CF4 tracers) and the EXTERNAL Carrick 2015 2M++ field (an "
-            "INDEPENDENT tracer + linear method, downloaded from cosmicflows.iap."
-            "fr); both are affine bulk flows at their own depth/window "
-            "convention (grids in Mpc or Mpc/h) -- cross-method sanity "
-            "comparisons, not scale-matched measurements; the Nusser 2026 2MRS "
-            "reconstruction stays BLOCKED_MISSING_CROSS_RECONSTRUCTION",
+            "four full field reconstructions extend the comparison: the CF4++ WF "
+            "field (CF4 tracers), the EXTERNAL Carrick 2015 2M++ field (an "
+            "INDEPENDENT tracer + linear method), and TWO public 2MRS "
+            "reconstructions -- the Lilow-Ganeshaiah-Veena-Nusser 2024 neural "
+            "network (arXiv:2404.02278) and CORAS (Lilow-Nusser 2021, "
+            "arXiv:2102.07291, a WF/constrained-realization method) -- which "
+            "REPLACE the private Nusser 2026 reconstruction (no public release); "
+            "each is an affine bulk flow at its own depth/window convention "
+            "(grids in Mpc or Mpc/h) -- cross-method sanity comparisons, not "
+            "scale-matched measurements",
+            "the 2MRS reconstructions are RECONSTRUCTION-vs-MEASUREMENT, not "
+            "like-for-like: 2MRS is shallow, so the neural-network flow regresses "
+            "to the mean at large r (published LVN |B|~220@50 -> ~90@200 km/s, "
+            "apex l~254); the CF4 MEASURED flow being larger at large r is the "
+            "expected reconstruction/measurement gap, NOT a tension",
             "the ZoA sweep removes near-plane objects (|b| cut); it measures the "
             "directional/magnitude sensitivity, it does not fill the gap",
         ],
@@ -290,8 +365,12 @@ def main(argv=None) -> int:
         print(f"  catalog spread: {card['catalog_variant_spread']}")
         if card["cf4pp_wf_field_affine_bulk"]:
             print(f"  CF4pp field @150Mpc: {card['cf4pp_wf_field_affine_bulk']['150']}")
-        if card["carrick2015_2mpp_affine_bulk"]:
-            print(f"  Carrick 2M++ @150: {card['carrick2015_2mpp_affine_bulk']['150']}")
+        for k, lbl in (("carrick2015_2mpp_affine_bulk", "Carrick 2M++"),
+                       ("lilow_nn_2mrs_affine_bulk", "Lilow-NN 2MRS"),
+                       ("coras_2mrs_affine_bulk", "CORAS 2MRS")):
+            if card.get(k):
+                print(f"  {lbl} @150: {card[k]['150']}")
+        print(f"  external: {card['external_reconstructions']}")
         print(f"  cross-method spread: {card['cross_method_spread_incl_field']}")
         print(f"  ZoA: {card['zoa_summary']}")
     return 0

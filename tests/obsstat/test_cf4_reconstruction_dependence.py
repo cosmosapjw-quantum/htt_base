@@ -48,7 +48,21 @@ def test_external_reconstruction_status():
     d = _card()
     ext = d["external_reconstructions"]
     assert ext["carrick_2mpp"] in ("CONNECTED", "BLOCKED_MISSING_CARRICK_2MPP")
-    assert ext["nusser_2mrs"] == "BLOCKED_MISSING_CROSS_RECONSTRUCTION"
+    # REV-R197: the private Nusser 2026 is superseded by two PUBLIC 2MRS
+    # reconstructions (LVN 2024 neural network + CORAS 2021 WF/CR)
+    assert ext["lilow_nn_2mrs"] in ("CONNECTED", "BLOCKED_MISSING_LILOW_NN")
+    assert ext["coras_2mrs"] in ("CONNECTED", "BLOCKED_MISSING_CORAS")
+    assert ext["nusser_2mrs"] == "SUPERSEDED_BY_LILOW_2024_PUBLIC"
+
+
+def test_lilow_nn_reproduces_published_amplitude():
+    """When the LVN grid is present, the affine bulk flow reproduces the
+    published |B|(50 h^-1Mpc) ~ 220 km/s (Lilow+2024) -- a convention check."""
+    d = _card()
+    lvn = d.get("lilow_nn_2mrs_affine_bulk")
+    if lvn is None:
+        return                                     # grid absent -> skip
+    assert 180.0 < lvn["50"]["amplitude_kms"] < 260.0
 
 
 def test_claim_firewall():
@@ -70,10 +84,18 @@ def test_deterministic_when_data_present():
     if not VARIANTS.is_file():
         return
     mod = _load_module()
-    # the committed card's Carrick content must match the on-disk Carrick file
+    # each external reconstruction's presence in the committed card must match
+    # the on-disk file, else a regenerated card would differ (skip, not fail)
     card = _card()
-    has_carrick_in_card = card.get("carrick2015_2mpp_affine_bulk") is not None
-    carrick_present = mod.CARRICK.is_file() or mod.CARRICK_ALT.is_file()
-    if has_carrick_in_card != carrick_present:
+    checks = [
+        (card.get("carrick2015_2mpp_affine_bulk") is not None,
+         mod.CARRICK.is_file() or mod.CARRICK_ALT.is_file()),
+        (card.get("lilow_nn_2mrs_affine_bulk") is not None,
+         (mod.LILOW_NN_DIR / "xVelocity.npy").is_file()
+         or (mod.LILOW_NN_ALT / "xVelocity.npy").is_file()),
+        (card.get("coras_2mrs_affine_bulk") is not None,
+         mod.CORAS.is_file() or mod.CORAS_ALT.is_file()),
+    ]
+    if any(in_card != present for in_card, present in checks):
         return                                 # data-presence mismatch -> skip
     assert mod.main(["--check"]) == 0

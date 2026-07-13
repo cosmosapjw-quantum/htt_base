@@ -22,8 +22,8 @@ Bianchi-family, anisotropic-geometry, or native-solver claim.
 | --- | --- | --- | --- | --- |
 | `BLOCKED_MISSING_PR4_E2E_ACCESS` | K1 global low-ℓ p-value | E2E-systematics null needs PLA-portal/NERSC-auth sims | yes | **PARTIAL (rev-r127)**: look-elsewhere global p discharged on the real map under a ΛCDM null; E2E-systematics null still open |
 | `BLOCKED_MISSING_FIELD_REALIZATIONS` | K6 vorticity/curl posterior | obtain CF4 3D WF field; run Hoffman–Ribak CR | yes | **PARTIAL (rev-r127; reworded rev-r134)**: WF mean-field curl-suppression structural no-go established; a true CR (Hoffman–Ribak) vorticity posterior still blocked until a CR ensemble is owned (present field uses independent per-cell draws) |
-| `BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP` | K5 bulk-flow amplitude significance (definitive, mock-calibrated) | own the CF4 release mock pipeline | yes | **PARTIAL — MV route DELIVERED (rev-r196)**: rev-r195's withheld significance is resolved by the **minimum-variance ideal-window estimator** (`cf4_mv_bulkflow.py`): its window-tied cosmic variance is faithful, giving \|B\|(200)=405 km/s (Watkins-consistent) and a LambdaCDM tension ~4.4–5.4σ (P(k)-corrected, a likely OVER-estimate per Whitford 2023). The DEFINITIVE significance (full non-Gaussian + selection covariance) still needs release-matched mocks — the **mock branch stays a gate** |
-| `BLOCKED_MISSING_CROSS_RECONSTRUCTION` | K5 external cross-reconstruction (Nusser 2026 2MRS) | bind the Nusser 2MRS reconstruction (arXiv:2606.08593; set NUSSER_2MRS_URL) | yes | **PARTIAL (rev-r196)**: the Carrick 2015 2M++ field (an independent tracer) was downloaded + connected as a 5th reconstruction in the method-spread comparison; the Nusser 2026 2MRS Bayesian-Zel'dovich reconstruction has no confirmed public release yet — registered gate |
+| `BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP` | K5 bulk-flow amplitude significance (definitive, mock-calibrated) | own the full nonlinear COLA/L-PICOLA release-matched mock suite | yes | **PARTIAL — in-house physical mock DELIVERED (rev-r197)**: `scripts/cf4_mock_calibrated_significance.py` replaces the request-only CF4TF release mocks with an in-house **physical forward-mock ensemble** (linear GRF velocity field + super-sample mode + real per-object noise at the fixed CF4 geometry, `htt/obsstat/pv_forward_mocks.py`). It reproduces the analytic linear bulk-flow covariance (mock/analytic ratio ≈1) → the estimator/geometry/noise do NOT inflate the significance; the gap to the literature ~2–3σ is localised to nonlinear velocity power. Residual: the full nonlinear COLA/L-PICOLA suite (Qin+2021 CF4TF is request-only) — **downgraded, no longer the sole gate** |
+| `BLOCKED_MISSING_CROSS_RECONSTRUCTION` | K5 external cross-reconstruction | ~~bind the Nusser 2026 2MRS reconstruction~~ | yes | **DISCHARGED_BY_SUBSTITUTION (rev-r197)**: the private Nusser 2026 2MRS reconstruction (no public release) is substituted by **two public 2MRS reconstructions** — the Lilow–Ganeshaiah-Veena–Nusser 2024 neural network (arXiv:2404.02278) and CORAS (Lilow–Nusser 2021, arXiv:2102.07291) — both downloaded + connected as reconstruction methods (7-method spread now); Nusser 2026 stays a provenance note |
 | `BLOCKED_UPSTREAM` | PR08-006 joint posterior artifact | close K1+K5+K6 first | n/a | K5 measured (conditional coverage), K6 WF mean-field no-go, K1 partial → assemblable with explicit measured/partial/fail-closed sectors |
 | `AWAITING_NATIVE_LOWELL_SOLVER` | full Bianchi family atlas / morphology | build the native low-ℓ Bianchi–Boltzmann solver | partial (B1 interim) | separate long-term project (PR10) |
 | `BLOCKED_MISSING_DESI_RANDOMS` | DESI number-count dipole (Ω_tilt cross-check) | ~~download the DESI DR1 BGS random catalogues~~ | yes | **DISCHARGED (rev-r192/r193)**: randoms downloaded (`fetch.py --desi-randoms`); window-corrected overdensity dipole MEASURED D=9.49×10⁻³ on NGC+SGC (224× below the raw footprint, at the kinematic scale). Residual: mock-calibrated significance + clustering/kinematic separation |
@@ -160,17 +160,30 @@ rev-r128. These items are a separate refactor PR, deliberately not churned here.
   so the LambdaCDM amplitude **significance is WITHHELD** (a naive χ² reads a
   spurious ~9σ). The measurement (|B|, apex, Ω_tilt) is real; the significance is
   not. This does NOT discharge the blocker.
-- **Concrete unblock.** Either the minimum-variance ideal-window estimator
-  (Watkins–Feldman–Hudson; isolates the large-scale flow the linear CV describes)
-  or CF4 Bias-Gaussianization forward mocks matched to the release selection,
-  pushed through the same bulk-flow MLE.
-- **Mechanics ready.** `htt/obsstat/bulkflow_mle.py`
-  (`hierarchical_coverage_experiment`) computes coverage over a supplied mock
+- **rev-r197 in-house physical mock (DELIVERED).**
+  `scripts/cf4_mock_calibrated_significance.py` replaces the request-only CF4TF
+  release mocks with an in-house **physical forward-mock ensemble**
+  (`htt/obsstat/pv_forward_mocks.py`): a linear Gaussian-random-field
+  peculiar-velocity grid (EH98 σ₈-normalised P(k), 2 h⁻¹Gpc box) + the
+  super-sample (>box) uniform bulk mode + real per-object N(0, σ_tot) noise,
+  sampled at the fixed CF4 group positions and run through the identical MV
+  weights (250 boxes × 8 octant observers = 2000 survey-matched mocks). The mock
+  bulk-flow covariance reproduces the analytic linear-theory covariance to the
+  grid resolution (mock/analytic ratio ≈1), so the estimator + geometry + noise
+  do NOT inflate the significance; the reduction to the literature ~2–3σ is
+  localised to nonlinear velocity power beyond this linear model. This
+  **discharges the "no mock at all" state** — only the full nonlinear refinement
+  remains.
+- **Concrete unblock (residual).** The full nonlinear COLA/L-PICOLA
+  survey-matched mock suite (the Qin+2021 CF4TF suite is request-only; L-PICOLA
+  is roll-your-own) to fold in nonlinear velocity power + selection mode-coupling.
+- **Mechanics ready.** `htt/obsstat/pv_forward_mocks.py` (the in-house linear
+  forward model) + `htt/obsstat/bulkflow_mle.py`
+  (`hierarchical_coverage_experiment`) computes coverage over any supplied mock
   ensemble; the hierarchical-GLS estimator (PR08-002) is closed.
-- **Exit gate.** Cosmic-variance-inclusive coverage of the bulk-flow apex/depth
-  over the selection-matched mock ensemble + provenance. (The K5 figure's PNG
-  title and the LaTeX caption now agree on the "weighted-GLS" wording; the stale
-  "minimum-variance" docstring/caveat were fixed in rev-r135.)
+- **Exit gate.** Nonlinear COLA/L-PICOLA survey-matched mocks folded into the
+  same estimator to pin the definitive significance; the in-house linear forward
+  mock already calibrates the estimator and localises that residual.
 
 ## 4. `BLOCKED_UPSTREAM` — PR08-006 joint posterior artifact
 
