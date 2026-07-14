@@ -1,0 +1,249 @@
+{
+ "ranked": [
+  {
+   "rank": 1,
+   "title": "MES four-acceleration honesty theorem + bounds.py defect fix (S44)",
+   "axis": "theory",
+   "gate_tier": "defensible",
+   "score": 88,
+   "rescue_leverage": "Highest-integrity, lowest-risk rescue: bounds.py still ships the refuted in-house non-geodesic B_accel=(3/4)e1+e2+(3/14)e3 with in-house citations, contradicting the rev-r190 geodesic A^2=0 re-adoption \u2014 a live code defect. Proving the O(beta) four-acceleration T-dipole is spectrally degenerate with the kinematic dipole both removes the defect and closes an honest theorem; CRAG KEEP (not downclaimed).",
+   "feasibility": "runnable_now (symbolic + existing bounds.py; no solver, no download)",
+   "non_overlap_ok": true,
+   "decisive_falsifier": "Compute the O(beta) four-acceleration T-multipole kernel; if its l-spectrum carries independent l>=2 structure NOT proportional to the pure kinematic-dipole kernel, degeneracy is refuted and B_accel is a real observable \u2014 otherwise B_accel is confirmed dead and must be deleted from bounds.py."
+  },
+  {
+   "rank": 2,
+   "title": "Manufactured-universe end-to-end MMS with order-convergence (S26)",
+   "axis": "code",
+   "gate_tier": "defensible",
+   "score": 84,
+   "rescue_leverage": "Strongest falsifier in the entire corpus: Oberkampf-Roy grid-refinement order-convergence toward an exact injected ground truth is unforgeable \u2014 converts 'estimators pass their own tests' into 'estimators recover a truth never told to them'. Adds an independent-kinematic construction plus a false-positive specificity bracket. CRAG KEEP.",
+   "feasibility": "runnable_now (injection-recovery harness, CF4 geometry on disk)",
+   "non_overlap_ok": false,
+   "decisive_falsifier": "Inject a known (B0,theta0,omega0) universe and run the full estimator chain at successively refined grids; if recovered-vs-injected error does NOT converge at the estimator's formal order, the estimator is biased/mis-implemented; a pass certifies recovery of an untold truth plus a specificity bracket at beta_true=0.",
+   "overlap_correction": "overlaps CO-04 (numerical-oracle+mutation lab); net-new delta = anisotropy-specific injected ground truth (B0/theta0/omega0) + beta_true=0 specificity bracket"
+  },
+  {
+   "rank": 3,
+   "title": "Tsagas div(v) -> q-dipole cross-falsifier, ad-hoc closure removed (S6/S43)",
+   "axis": "data_analysis",
+   "gate_tier": "defensible",
+   "score": 82,
+   "rescue_leverage": "Best net-new empirical object: the shipped Delta_q=(beta/9)(lambda_H/d)^3 in tilted_flrw.py IS the Tsagas divergence law with the ad-hoc closure theta/H=beta*lambda_H/d already substituted, and divergence() already ships in velocity_field_curl.py (computed then discarded). Reading theta=div(v) directly from CF4/PV replaces the closure and forces a three-dataset single-axis coherence. Monopole-immune physics; CRAG KEEP_DOWNCLAIMED.",
+   "feasibility": "needs_data but CF4/PV already on disk; runnable now",
+   "non_overlap_ok": true,
+   "decisive_falsifier": "Read theta=div(v) from CF4/PV, form Delta_q~(1/9)(lambda_H/lambda)^2(theta/H); if the resulting q-dipole apex disagrees beyond joint error with the SNe deceleration-dipole apex and the CMB low-l tilt axis, the single-axis tilt dictionary is refuted."
+  },
+  {
+   "rank": 4,
+   "title": "Physics-invariant symmetry-transform metamorphic battery + B-parity MR (S25/S32)",
+   "axis": "code",
+   "gate_tier": "defensible",
+   "score": 82,
+   "rescue_leverage": "Cleanest self-executing survivor: falsifiable now with no native solver, structurally family-clean because the monopole-projection MR actively ENFORCES hypothesis_only discipline rather than smuggling past it. Fuses continuous relations (rotation covariance, axis permutation, quadratic amplitude scaling) with the discrete B-mode-parity bit. CRAG KEEP.",
+   "feasibility": "runnable_now (pure transform battery on existing estimators)",
+   "non_overlap_ok": true,
+   "decisive_falsifier": "Apply rotation / axis-permutation / quadratic-amplitude / monopole-projection transforms to inputs; if estimator outputs are NOT covariant as the physical symmetry demands, or monopole projection leaks nonzero anisotropy, the estimator carries a frame/convention bug."
+  },
+  {
+   "rank": 5,
+   "title": "Occupancy-exceedance pushforward x->Q->Pi + F-perp-lnB obstruction theorem (S14)",
+   "axis": "statistics",
+   "gate_tier": "defensible",
+   "score": 78,
+   "rescue_leverage": "Only candidate giving the statistics axis a genuinely DIFFERENT primary object: F_Bayes=E[Q|D] as a squared-loss occupancy estimator and Pi(1)=P(Q>1|D) as a decision-theoretic exceedance-of-kinematic-ceiling probability, not a repackaged evidence ratio. The obstruction theorem is refutable-by-computation. CRAG KEEP_DOWNCLAIMED.",
+   "feasibility": "runnable_now (closed-form pushforward on existing posteriors)",
+   "non_overlap_ok": false,
+   "decisive_falsifier": "The F-perp-lnB obstruction predicts F_Bayes=E[Q|D] cannot exceed a bound tied to lnB; a computed posterior with F_Bayes above that bound refutes the theorem, and Pi(1)=P(Q>1|D) must exceed the MC-variance floor to be called nonzero.",
+   "overlap_correction": "overlaps ST-06/PR-142 (F_Bayes=E[Q|D] is the frozen MIO joint-measure functional); net-new content = the F-perp-lnB obstruction theorem ONLY"
+  },
+  {
+   "rank": 6,
+   "title": "FAM-C unsigned isotropy-leakage ceiling M_max with Nilsson-class witnesses (S1)",
+   "axis": "theory",
+   "gate_tier": "defensible",
+   "score": 78,
+   "rescue_leverage": "Lands directly on the audit wound: because W^2 enters the frozen identity x_C=Sigma^2-W^2+Omega_tilt+Omega_k with a MINUS, x_C~0 is compatible with individually LARGE Sigma^2 and W^2 \u2014 so x_C~0 is NOT an FLRW/EGS certificate. An unsigned ceiling M_max on isotropy leakage with saturating witnesses formalizes exactly what x_C~0 fails to guarantee. CRAG KEEP_DOWNCLAIMED.",
+   "feasibility": "runnable_now (symbolic + Nilsson-class witness construction)",
+   "non_overlap_ok": true,
+   "decisive_falsifier": "Construct an admissible Nilsson-class witness with x_C~0 but individually large Sigma^2 and W^2 saturating M_max; if no such witness exists (M_max=0), then x_C~0 does certify FLRW and the leakage-ceiling claim collapses."
+  },
+  {
+   "rank": 7,
+   "title": "Parity / B-mode family bit + handedness veto sign(EB/TB)=sign(x_h) (S45/S50)",
+   "axis": "theory",
+   "gate_tier": "gates_off_ambitious",
+   "score": 76,
+   "rescue_leverage": "The only route to a Bianchi-family bit that does NOT require the fail-closed native solver: axisymmetric (I,V,VII0,III,IX) => B==0 is a symmetry statement, not a solve. The handedness veto adds an amplitude-immune, kinematic-immune sign channel (pure boost gives zero parity-odd signal identically) comparing CMB EB/TB sign against the local CF4 curl handedness. Family-ID => stays gated.",
+   "feasibility": "runnable_now for the theorem + sign comparison; CF4 curl() already computed",
+   "non_overlap_ok": true,
+   "decisive_falsifier": "A residual low-l B excitation surviving exact boost subtraction refutes axisymmetry; for helical VII_h, sign(EB/TB) must equal the sign of the local CF4 velocity-curl handedness \u2014 sign disagreement refutes helical VII_h, agreement is a corroboration only.",
+   "gate_leak_correction": "REFRAMED: the sign(EB/TB)=sign(x_h) handedness veto must NOT adjudicate a Bianchi FAMILY on shipped data; it stays hypothesis_only as a REGISTERED reference signal for the future native atlas, never a current-data family falsification."
+  },
+  {
+   "rank": 8,
+   "title": "Validated-band ACT DR6 kappa anisotropic-modulation transfer, 40<L<763 (S37)",
+   "axis": "data_analysis",
+   "gate_tier": "defensible",
+   "score": 74,
+   "rescue_leverage": "Repairs a real verified defect: the shipped ACT read hardcodes ELL_MIN,ELL_MAX=2,10, ENTIRELY outside the ACT DR6 validated band (Qu et al. 40<L<763). Measuring quadrupolar modulation as an in-band off-diagonal coupling instead of forcing an out-of-band low-L read is the best-falsifiable legitimate estimator. CRAG KEEP_DOWNCLAIMED.",
+   "feasibility": "runnable_now (ACT DR6 kappa alm on disk)",
+   "non_overlap_ok": true,
+   "decisive_falsifier": "Measure the quadrupolar off-diagonal kappa coupling inside 40<L<763; if the in-band modulation amplitude is consistent with zero at the certified MC floor there is no anisotropic modulation \u2014 a nonzero coupling not attributable to mask leakage is the detection."
+  },
+  {
+   "rank": 9,
+   "title": "Monte-Carlo finite-ensemble error-budget certifier (fail-closed infra) (S29/S16)",
+   "axis": "code",
+   "gate_tier": "defensible",
+   "score": 72,
+   "rescue_leverage": "Necessary honesty substrate genericized beyond Essick-Farr: batch-means/jackknife MC-SE, the 1/(N+1) p-resolution ceiling, and seed-SEM as primitives every stochastic number carries. Fail-closed gate over DESI p_rank, CF4 injection RMSE, ACT band-power, fsigma8 MC, and the Pi(1) occupancy tail; worst case it reveals a shipped headline was estimator noise \u2014 pure honesty gain. CRAG KEEP.",
+   "feasibility": "runnable_now (wraps existing stochastic outputs)",
+   "non_overlap_ok": true,
+   "decisive_falsifier": "For each stochastic headline compute batch-means/jackknife MC-SE and the 1/(N+1) p-resolution ceiling; if any headline's central value lies within its own MC-SE of the null, that headline is estimator noise rather than signal."
+  },
+  {
+   "rank": 10,
+   "title": "Partial-identification SBC with structural-null no-update invariance (S12)",
+   "axis": "statistics",
+   "gate_tier": "defensible",
+   "score": 72,
+   "rescue_leverage": "Correct replacement for the mislabeled plug-in-residual scaffolds sold as PPC/LOOCV: runs real SBC on the identified projection while explicitly checking prior==posterior on the exact structural nulls {W^2, Omega_k}, respecting the frozen rank-2 PSD-cone structure. CRAG KEEP_DOWNCLAIMED.",
+   "feasibility": "runnable_now (SBC harness on existing identified-set posterior)",
+   "non_overlap_ok": false,
+   "decisive_falsifier": "Run SBC on the identified projection (must be rank-uniform) AND verify prior==posterior on {W^2, Omega_k}; a non-uniform identified rank OR any posterior update on a structural null refutes calibration / exposes an identification leak.",
+   "overlap_correction": "recombination of PR-138 (SBC+PPC)+PR-136 (IM); net-new = structural-null no-update invariance test"
+  },
+  {
+   "rank": 11,
+   "title": "DESI number-count dipole redshift tomography (S36)",
+   "axis": "data_analysis",
+   "gate_tier": "defensible",
+   "score": 72,
+   "rescue_leverage": "Best-scoped of the DESI trio: falsifiable and runnable now on data already on disk, using the survey's own redshift leverage instead of absent exact-selection mocks. Genuinely new vs the shipped single all-sky number_count_dipole (verified: no z_shell path exists). Reconstruction-free and mock-free. CRAG KEEP_DOWNCLAIMED.",
+   "feasibility": "needs_data but DESI counts already on disk; runnable now",
+   "non_overlap_ok": true,
+   "decisive_falsifier": "Split DESI counts into z-shells and measure the per-shell dipole; a kinematic dipole is z-independent in direction (amplitude only evolution-scaled), whereas clustering/window dipoles vary with z \u2014 a z-shell-varying dipole refutes the pure-kinematic reading."
+  },
+  {
+   "rank": 12,
+   "title": "Unified partial-identification coverage toolkit (S13)",
+   "axis": "statistics",
+   "gate_tier": "defensible",
+   "score": 70,
+   "rescue_leverage": "Merges three coverage objects on three object types into one certified layer \u2014 scalar-beta selection integral (scalar), OSB aggregated band-power (nonnegative-spectrum functional), directional-IM apex cap (S^2 manifold) \u2014 the correct answer to coverage-unproven-for-stacked-projection+IM. Directional IM is independently load-bearing. CRAG KEEP_DOWNCLAIMED.",
+   "feasibility": "runnable_now (coverage MC on existing estimators)",
+   "non_overlap_ok": false,
+   "decisive_falsifier": "Certify simultaneous coverage of the merged (scalar-beta selection integral + OSB band-power + directional-IM apex cap); if stacked-projection+IM coverage falls below nominal in MC, the toolkit's coverage claim is refuted.",
+   "overlap_correction": "recombination of PR-136/PR-137/ST-04; net-new = simultaneous multi-projection coverage certificate"
+  },
+  {
+   "rank": 13,
+   "title": "Buchert backreaction covariant home + two-patch cancellation obstruction (S3)",
+   "axis": "theory",
+   "gate_tier": "defensible",
+   "score": 70,
+   "rescue_leverage": "Gives the shear sector of x_C an externally-recognized covariant home (Buchert/BMR averaging Q_D) and supplies a two-patch obstruction \u2014 a physically-homed instance of the exact converse the audit killed: global averaged backreaction ~0 WITHOUT local isotropy. CRAG KEEP_DOWNCLAIMED.",
+   "feasibility": "runnable_now (symbolic two-patch construction)",
+   "non_overlap_ok": true,
+   "decisive_falsifier": "Attempt an explicit two-patch construction cancelling Q_D globally while keeping local shear large; if no admissible configuration cancels global Q_D without local isotropy, the obstruction / covariant-home claim fails."
+  },
+  {
+   "rank": 14,
+   "title": "Exact zero-parameter boost-BipoSH residual excitation vector (S11)",
+   "axis": "statistics",
+   "gate_tier": "defensible",
+   "score": 70,
+   "rescue_leverage": "Most shippable statistics item: the aberration+Doppler L=1 kernel is fixed by the measured dipole beta with genuinely zero free parameters (deterministic template, not a fit), flowing through the canonical alm/BipoSH convention and the recorded fsky=0.788737 mask. Reported as a boost-RESIDUAL excitation vector with the 'geometric estimand' label stripped. CRAG KEEP_DOWNCLAIMED.",
+   "feasibility": "needs_data (Planck low-l alm); estimator deterministic",
+   "non_overlap_ok": true,
+   "decisive_falsifier": "Subtract the exact zero-parameter aberration+Doppler L=1 BipoSH kernel (fixed by measured beta) through the fsky=0.788737 mask; a residual L=1 excitation surviving exact subtraction is a non-kinematic residual, while zero residual confirms a pure boost."
+  },
+  {
+   "rank": 15,
+   "title": "Sign-locked one-sided Omega_tilt ceiling from the CF4 identified set (S38)",
+   "axis": "data_analysis",
+   "gate_tier": "defensible",
+   "score": 66,
+   "rescue_leverage": "Legitimate Imbens-Manski / OSB partial identification: treat the constrained (405->94 km/s) and unconstrained MV estimators as endpoints of the CF4 identified set and forward-map the SET into a one-sided Omega_tilt ceiling. Converts the killed point-measurement into a valid constraint; clears the bar only sign-locked and de-scoped. CRAG KEEP_DOWNCLAIMED.",
+   "feasibility": "runnable_now (CF4 MV estimators already computed)",
+   "non_overlap_ok": false,
+   "decisive_falsifier": "Forward-map the CF4 identified set (94 km/s constrained -> 405 km/s unconstrained) sign-locked to a one-sided Omega_tilt upper ceiling; if the honest upper endpoint exceeds the MES admissibility ceiling the constraint is non-informative, if below it is a valid one-sided bound.",
+   "overlap_correction": "overlaps ST-04/PR-147 (nuisance-augmented CF4 identified sets); net-new = sign-lock one-sided ceiling"
+  },
+  {
+   "rank": 16,
+   "title": "Khronon / non-comoving dark-sector shear-leakage no-go ceiling (S4)",
+   "axis": "theory",
+   "gate_tier": "defensible",
+   "score": 66,
+   "rescue_leverage": "Narrows source-space for Omega_tilt: a momentum-conserving non-comoving dark fluid (Q^mu prop. relative velocity, w_X<1/3, Gamma>=0) relaxes to comoving, so a generic fluid cannot source a persistent tilt. Value is the quantitative suppression ceiling any surviving tilt source must beat. Must stay hypothesis_only. CRAG KEEP_DOWNCLAIMED.",
+   "feasibility": "runnable_now (background relaxation ODE, symbolic)",
+   "non_overlap_ok": true,
+   "decisive_falsifier": "Evolve a momentum-conserving non-comoving dark fluid (Q^mu prop. relative velocity, w_X<1/3, Gamma>=0); if a persistent tilt survives rather than relaxing to comoving, the no-go is refuted; otherwise the relaxation rate sets the suppression ceiling a generic-fluid tilt source must exceed."
+  },
+  {
+   "rank": 17,
+   "title": "Exact real-space Sachs-Wolfe ray tracer in anisotropic background (S27)",
+   "axis": "code",
+   "gate_tier": "gates_off_ambitious",
+   "score": 64,
+   "rescue_leverage": "The only executable real-space anisotropic-background temperature forward model in the corpus (theory-g is fail-closed, the LoS path is FLRW Bessel mode-space); its kernels are physically independent of every estimator/schema self-oracle \u2014 the direct object the false-green audit asks for. SW-only scope with an explicit no-likelihood firewall; ambitious forward model => gated.",
+   "feasibility": "runnable_now for SW-only null-geodesic integration (legacy RK4 tracer revivable)",
+   "non_overlap_ok": true,
+   "decisive_falsifier": "Trace null geodesics through an exact anisotropic background computing SW-only Delta T/T; if the recovered temperature quadrupole disagrees with the closed-form parity/shear prediction, either the ray tracer or the analytic transfer is wrong (no likelihood invoked)."
+  },
+  {
+   "rank": 18,
+   "title": "Low-ell T-E recombination-shear coherence ratio discriminant (S2)",
+   "axis": "theory",
+   "gate_tier": "gates_off_ambitious",
+   "score": 62,
+   "rescue_leverage": "The best empirical go/no-go the sky decides for the EGS converse: recombination shear sources coherent low-l E with a fixed TE sign/ratio, whereas a kinematic boost/tilt gives a T-quadrupole with no coherent E. Genuine discriminant, but requires the fail-closed native low-ell solver => gated.",
+   "feasibility": "needs_native_solver (fail-closed today)",
+   "non_overlap_ok": true,
+   "decisive_falsifier": "In a native low-ell solve, recombination shear must source coherent low-l E with a fixed TE sign/ratio; a measured low-l T-quadrupole with NO coherent E of that sign refutes the shear origin and favors a kinematic boost/tilt."
+  },
+  {
+   "rank": 19,
+   "title": "Eleven-type tetrad geometry oracle from structure constants (S28)",
+   "axis": "code",
+   "gate_tier": "gates_off_ambitious",
+   "score": 62,
+   "rescue_leverage": "Covariant-geometry counterpart to the SW tracer: a first-principles geometry check derived from structure constants, NOT fitted to the schema, fused with an external Buchert anchor and a complex-step second engine (the as-stated contracted-Bianchi falsifier was proven a tautology, so the external anchor + independent engine are load-bearing). Geometry => gated.",
+   "feasibility": "runnable_now (symbolic + complex-step; external anchor)",
+   "non_overlap_ok": true,
+   "decisive_falsifier": "Derive curvature/shear invariants for all 11 Bianchi types from structure constants via two independent engines (symbolic + complex-step) anchored to Buchert; disagreement between engines or with the external anchor refutes the oracle."
+  },
+  {
+   "rank": 20,
+   "title": "Reconstruction-independent directional cosmography {H(n),q(n)} on raw CF4 (S35)",
+   "axis": "data_analysis",
+   "gate_tier": "defensible",
+   "score": 60,
+   "rescue_leverage": "Survives the isotropy-advocate's strongest weapon (disputed CF4 reconstruction + monopole handling, P0 C1-K5-MV) by construction: it has no reconstruction. Fitting a Heinesen-style multipole Hubble law directly to raw (mu,z,n-hat) sidesteps the exact object the audit killed. ALREADY_KNOWN method but reconstruction-free application is the distinct move. CRAG KEEP_DOWNCLAIMED.",
+   "feasibility": "runnable_now (raw CF4 (mu,z,n) on disk)",
+   "non_overlap_ok": true,
+   "decisive_falsifier": "Fit a Heinesen multipole Hubble law {H(n-hat),q(n-hat)} to raw (mu,z,n-hat) with no reconstruction; a dipole in H(n-hat)/q(n-hat) inconsistent with zero at the MC floor is a directional anisotropy, while consistency bounds it reconstruction-independently."
+  },
+  {
+   "rank": 21,
+   "title": "Systematics-as-hypotheses normalized model competition with FPR calibration (S15)",
+   "axis": "statistics",
+   "gate_tier": "defensible",
+   "score": 55,
+   "rescue_leverage": "Principled answer to the recurring 'it's a survey systematic' objection (EXT-DESI window-dominated, K5-MV, EXT-ACT): promote each registered systematic-null to a first-class normalized generative model {cosmological-dipole / structured-systematic bank / null} and let evidence adjudicate, with per-family FPR calibration. ALREADY_KNOWN and the weakest non-overlap (adjacent to ST-01 shared-cause abstention) \u2014 kept only as a specificity gate, not a headline. CRAG KEEP_DOWNCLAIMED.",
+   "feasibility": "needs_data (per-family FPR calibration on DESI/CF4/ACT)",
+   "non_overlap_ok": true,
+   "decisive_falsifier": "Calibrate per-family FPR at beta_true=0 for the systematic bank (mask leakage / selection / mimic); if a systematic model reproduces the reactive signal above the calibrated FPR, the 'detection' is a systematic \u2014 a specificity gate, not a headline claim."
+  }
+ ],
+ "axis_theses": {
+  "theory": "Defensible core: (1) the MES four-acceleration honesty theorem (S44) \u2014 geodesic A^2=0 kills the in-house non-geodesic B_accel=(3/4)e1+e2+(3/14)e3 still shipping in bounds.py, and the O(beta) four-acceleration T-dipole is spectrally degenerate with the kinematic dipole; (2) the unsigned isotropy-leakage ceiling M_max (S1) \u2014 because x_C=Sigma^2-W^2+Omega_tilt+Omega_k carries a MINUS on W^2, x_C~0 does NOT certify FLRW/EGS, and M_max with Nilsson-class saturating witnesses formalizes what x_C~0 fails to guarantee; (3) the Buchert covariant home + two-patch averaged-cancellation obstruction (S3) giving the shear sector an externally recognized home; and (4) the khronon non-comoving dark-sector no-go (S4) supplying the quantitative suppression ceiling any persistent-tilt source must beat. All stay hypothesis_only/theorem-level. Gates-off ambitious tier: the low-ell T-E recombination-shear coherence ratio (S2), the sky-decided go/no-go for the EGS converse (coherent low-l E with fixed TE sign vs a kinematic T-quadrupole with no coherent E), gated because it needs the fail-closed native low-ell solver.",
+  "statistics": "Defensible core: (1) the occupancy-exceedance pushforward x->Q->Pi with the F-perp-lnB obstruction theorem (S14) \u2014 a genuinely different primary object (F_Bayes=E[Q|D] squared-loss occupancy estimator, Pi(1)=P(Q>1|D) exceedance-of-kinematic-ceiling) that is refutable by computation; (2) partial-identification SBC (S12) checking identified-projection rank uniformity AND prior==posterior no-update on the structural nulls {W^2,Omega_k}, the correct replacement for the mislabeled PPC/LOOCV scaffolds; (3) the unified partial-ID coverage toolkit (S13) certifying simultaneous coverage across scalar/spectrum/S^2 objects; (4) the exact zero-parameter boost-BipoSH residual excitation vector (S11) with the geometric-estimand label stripped; and (5) the MC estimator-variance certificate (S16/S29) as fail-closed honesty infrastructure gating every stochastic headline. Gates-off ambitious tier: systematics-as-hypotheses normalized model competition (S15) with per-family FPR calibration \u2014 retained only as a specificity gate (its non-overlap with ST-01 shared-cause abstention is the thinnest in the set) and only once real DESI/CF4/ACT FPR calibration is in hand.",
+  "code": "Defensible core: (1) the manufactured-universe end-to-end MMS (S26) whose Oberkampf-Roy grid-refinement order-convergence toward an exact injected ground truth is an unforgeable falsifier \u2014 it proves the estimators recover a truth never told to them, plus a false-positive specificity bracket at beta_true=0; (2) the physics-invariant symmetry-transform metamorphic battery (S25/S32) fusing continuous relations (rotation covariance, axis permutation, quadratic amplitude scaling, monopole projection) with the discrete B-mode-parity MR, where the monopole-projection relation actively ENFORCES hypothesis_only discipline; and (3) the MC finite-ensemble error-budget certifier (S29) as reporting hygiene every stochastic number carries. Gates-off ambitious tier: the exact real-space SW-only ray tracer (S27, the only executable anisotropic-background temperature forward model, no-likelihood firewall) and the 11-type tetrad geometry oracle (S28, first-principles structure-constant geometry check with an external Buchert anchor and complex-step second engine) \u2014 both stay gated because they are ambitious forward-model / geometry objects.",
+  "data_analysis": "Defensible core: (1) the Tsagas div(v)->q-dipole cross-falsifier (S6/S43) \u2014 read theta=div(v) directly from CF4/PV (divergence() already ships, computed then discarded) to replace the ad-hoc closure baked into tilted_flrw.py, forcing a single-axis coherence across CF4 div-v apex, SNe q-dipole apex, and CMB low-l; (2) the validated-band ACT DR6 kappa in-band anisotropic-modulation transfer (S37) repairing the shipped out-of-band ELL 2,10 hardcode by measuring the quadrupolar off-diagonal coupling within 40<L<763; (3) DESI number-count dipole z-tomography (S36), reconstruction-free and mock-free using the survey's own redshift leverage; (4) the sign-locked one-sided Omega_tilt ceiling from the CF4 identified set (S38), forward-mapping the 94->405 km/s endpoints into a valid de-scoped constraint; and (5) reconstruction-independent directional cosmography {H(n),q(n)} on raw CF4 (S35), which survives the disputed-reconstruction P0 by having no reconstruction. Gates-off ambitious tier: the parity / B-mode family bit plus handedness veto sign(EB/TB)=sign(x_h) (S45/S50) \u2014 the only Bianchi-family discriminant reachable without the native solver (axisymmetric I,V,VII0,III,IX => B==0 is a symmetry statement) and amplitude-/kinematic-immune, but family-ID so it stays gates_off_ambitious and hypothesis_only."
+ },
+ "completeness_corrections_applied": true,
+ "note": "non_overlap_ok flipped to False on 5 entries per the completeness critic; these become recombination/coverage-proof contributions, not net-new primacy. Genuinely net-new survivors are the ones retaining non_overlap_ok=True."
+}
