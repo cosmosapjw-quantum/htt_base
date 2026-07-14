@@ -276,3 +276,24 @@ Stop if: the map/mask/beam path differs between the observed map and the sims; c
 methods are mixed without labels; fewer sims are available than declared; the p-value is
 recomputed with an unfrozen statistic set; or any text claims E2E global significance
 without the matched provenance.
+
+## Disk-swap + reproducibility retention (PR3 → PR4 on a 1.8 TB NVMe)
+
+The NVMe cannot hold PR3 (FFP10, ~1 TB) and PR4 (NPIPE) at once, so acquisition is a
+**serial swap** and PR3 must be reduced to a faithful cache before deletion. Full policy:
+`docs/research_program/K1_E2E_REPRODUCIBILITY_RETENTION.md`. Short form:
+
+1. `scripts/k1_e2e_reduce.py` (while PR3 on disk) → estimator-agnostic cache
+   (Tier-2, NSIDE=128 float64 pre-mask maps + a_lm) + a committed Tier-1 receipt.
+2. `scripts/k1_e2e_cache_gate.py --all` → must report `safe_to_delete_raw: true`
+   (bit-exact from-raw reproduction + raw-hash match). Fail-closed.
+3. only then delete PR3 raw; measure PR4 with `scripts/k1_npipe_size_probe.py`
+   (`--du-listing`/`--head-list` from an authenticated NERSC/PLA listing); download only
+   the **K1-usable** NPIPE product (component-separated CMB sims / one cleaned channel —
+   the full frequency ensemble is multi-TB and will not fit); reduce+gate NPIPE the same way.
+
+**PR4 is a required additional analysis, not an optional cross-check:** the Planck team reports
+NPIPE reduces residual low-ℓ systematics vs FFP10/2018, which is exactly the K1 regime — so
+report the FFP10-null and NPIPE-null global-p side by side (never averaged); their difference is
+the systematics-sensitivity result. Freeze the mask/convention (roadmap PR-149) before deleting
+PR3 raw — a convention needing proc_nside > 128 is the only re-download trigger.

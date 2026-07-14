@@ -612,21 +612,22 @@ PR-143 완료 시에만 authenticated data 분석을 시작한다. checkpoint에
 - **Targets:** `N-DATA-K1-CONVENTION`, `C10-K1-JWST-F4/F5`, structural zero/trials 문제.
 - **실제로 할 것:** observed/null map이 동일한 coordinate, alm indexing/phase/reality, beam/pixel/downgrade, mask, cut-sky feature, orientation/max scan을 통과하게 한다. TT BiPoSH odd-L diagonal structural zero와 monotone/equivalent scan을 quotient하고 effective family를 freeze한다.
 - **하지 말 것:** hash만 기록하고 실제 map path에서 mask를 적용하지 않거나 hard-coded/stale Planck axis를 discovery 결과로 사용하지 않는다.
-- **주의·anti-drift:** convention mutation이 observed/null 양쪽에 같이 들어가 self-consistency로 숨을 수 있으므로 independent alm/Wigner/rotation oracle가 필요하다.
+- **주의·anti-drift:** convention mutation이 observed/null 양쪽에 같이 들어가 self-consistency로 숨을 수 있으므로 independent alm/Wigner/rotation oracle가 필요하다. **이 카드가 mask/proc-nside/convention을 freeze하는 것이 PR-150의 PR3 raw 삭제 전제조건이다**(reduced-cache의 유일 재다운로드 trigger가 mask/proc-nside > 128 변경이므로, PR-149가 닫히기 전 PR3 raw를 삭제하지 않는다 — `docs/research_program/K1_E2E_REPRODUCIBILITY_RETENTION.md`).
 - **검증·산출물:** alm reality/round-trip/rotation, arbitrary-real-alm structural zeros, mask/beam injections, observed/null path equality와 scan-family ledger.
-- **Exit / kill:** canonical independent oracle와 coefficient/sign/order가 불일치하면 K1 statistic을 폐기한다.
+- **Exit / kill:** canonical independent oracle와 coefficient/sign/order가 불일치하면 K1 statistic을 폐기한다. convention이 확정되기 전에는 PR-150의 raw-deletion swap을 승인하지 않는다.
 - **최대 claim:** observable feature extraction/basis theorem C1--C2.
 
 ### PR-150 — K1 exchangeable global scan과 Planck E2E calibration
 
 - **Owner / dependencies / cost:** `OBSSTAT`; PR-135, PR-149; high, E2E input에 따라 blocked.
 - **Targets:** `N-STAT-K1-EXCHANGE`, `N-STAT-DEGENERATE-NULL`, `N-DATA-K1-STALE-DIRECTION`, `C10-F5`.
-- **실제로 할 것:** 먼저 correlated idealised-GRF에서 pooled rank의 super-uniformity를 대규모 reduced simulation으로 확인한다. 그 뒤 Planck PR4/NPIPE/FFP 계열 input manifest를 만들고 동일 mask/transfer/statistic/max scan을 E2E maps에 적용한다. fixed-axis와 re-estimated-axis/null multiplicity를 분리한다.
-- **하지 말 것:** idealised GRF success를 Planck systematics calibration으로 승격하거나 E2E ensemble이 없는 상태에서 real-sky p-value를 내지 않는다.
-- **주의·anti-drift:** component-separation method를 혼합하지 않고 joint/individual 결과를 구분한다. axis pre-specification과 data reuse를 기록한다. 공식 Planck products는 [Planck Legacy Archive](https://pla.esac.esa.int/)에서 intake한다.
-- **검증·산출물:** input license/hash manifest, data/null byte-equivalent runner, finite-rank intervals, method-wise/global scan, type-I/power report.
-- **Exit / kill:** E2E input/support가 없거나 observed/null path가 다르면 science state는 `BLOCKED`; idealised non-anomaly만 유지한다.
-- **최대 claim:** Planck-E2E-conditioned morphology calibration C3; family/axis detection 없음.
+- **SPEC:** estimand=exchangeable observation-inclusive pooled-rank global p under matched E2E null; support=Planck low-ℓ, PR-149 canonical mask/convention (frozen BEFORE any raw deletion); ensembles=**BOTH** FFP10(PR3) and NPIPE(PR4); falsifier=super-uniform pooled rank fails on correlated GRF, OR observed/null pipeline is not byte-equivalent; ceiling=C3.
+- **실제로 할 것:** 먼저 correlated idealised-GRF에서 pooled rank의 super-uniformity를 대규모 reduced simulation으로 확인한다. 그 뒤 Planck FFP10(PR3) + NPIPE(PR4) 계열 input manifest를 만들고 동일 mask/transfer/statistic/max scan을 E2E maps에 적용한다. fixed-axis와 re-estimated-axis/null multiplicity를 분리한다. **디스크 제약(1.8 TB NVMe는 PR3+PR4 동시 상주 불가): PR3를 `scripts/k1_e2e_reduce.py`로 estimator-agnostic 캐시(Tier-2, NSIDE=128 float64 pre-mask 맵 + a_lm)로 줄이고 `scripts/k1_e2e_cache_gate.py`가 GREEN(safe_to_delete_raw, bit-exact 재현 + raw hash 일치)일 때만 raw 삭제 → PR4 다운로드. 절차는 `docs/research_program/K1_E2E_REPRODUCIBILITY_RETENTION.md`.** subagent 단계(§4.5): 3 `research-code-task`(reduce/gate 운용) → 5 `numerical-validation`(faithful-cache) → 7 `reproducibility-closeout`(retention receipt).
+- **하지 말 것:** idealised GRF success를 Planck systematics calibration으로 승격하거나 E2E ensemble이 없는 상태에서 real-sky p-value를 내지 않는다. **faithful-cache gate가 RED인데 raw를 삭제하지 않는다.** NPIPE **full-frequency** 전체를 받지 않는다(multi-TB, 안 들어감 — K1-usable component-separated/single-channel subset만).
+- **주의·anti-drift:** component-separation method를 혼합하지 않고 joint/individual 결과를 구분한다. **PR4는 optional cross-check가 아니라 필수 추가분석이다**: Planck team이 NPIPE에서 residual systematics 개선을 보고하므로 low-ℓ morphology 영역에서 FFP10-null과 NPIPE-null을 나란히 보고하고 평균내지 않는다(둘의 global-p 차이가 곧 systematics-sensitivity 결과). PR-149 mask/convention을 raw 삭제 전 freeze(유일 재다운로드 trigger). axis pre-specification과 data reuse를 기록한다. 공식 Planck products는 [Planck Legacy Archive](https://pla.esac.esa.int/)에서 intake한다.
+- **검증·산출물:** input license/hash manifest, data/null byte-equivalent runner, finite-rank intervals, method-wise/global scan, type-I/power report; **Tier-1 receipt(`docs/generated/k1_e2e_reduced_manifest_*.json`, committed) + Tier-2 캐시(NVMe 잔존) + faithful-cache gate receipt + NPIPE size-probe(`scripts/k1_npipe_size_probe.py`) decision.**
+- **Exit / kill:** E2E input/support가 없거나 observed/null path가 다르면 science state는 `BLOCKED`; idealised non-anomaly만 유지한다. **PR3 raw는 gate GREEN 전 삭제 금지; NPIPE size-probe가 BLOCKED_TOO_LARGE면 subset-stream 또는 external storage로 전환.**
+- **최대 claim:** Planck-E2E-conditioned morphology calibration C3 (FFP10 + NPIPE-improved-systematics 양쪽); family/axis detection 없음.
 
 ### PR-151 — DESI exact-selection mock와 per-mock refit
 
