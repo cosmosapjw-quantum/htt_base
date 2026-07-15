@@ -27,13 +27,14 @@ discharges (mechanics landed, real-data runs ticketed).
 | # | Statement | Mechanics | Real-data status |
 |---|---|---|---|
 | C1 ★ | K1 **global** p on public Planck FFP10/NPIPE E2E (max-scan) | `lowell_global_calibration.e2e_maxscan_from_summaries` | ticket `tickets/k1_ffp10_npipe.yaml` |
-| C2 | K6/K5 posteriors via Hoffman–Ribak CR + WF/CR forward mocks | `constrained_realizations.curl_posterior`, `bulkflow_mle.hierarchical_coverage_experiment` | ticket `tickets/cf4_wfcr.yaml` |
-| C3 | graded-comparator joint pushforward: measured rank-2 sectors + proven 2-sector no-go | `egs3_graded_comparator` on K1/K4/K5/K6 | runnable once C1/C2 land |
+| C2 | K6/K5 reconstruction and mock mechanics | `constrained_realizations.curl_posterior`, `bulkflow_mle.hierarchical_coverage_experiment` | quarantined while CF4 P0 findings are OPEN; synthetic mechanics only |
+| C3 | graded-comparator joint pushforward: synthetic rank witness + proven 2-sector no-go | `egs3_graded_comparator` | observational promotion blocked by `N-DATA-CF4-DOWNSTREAM` |
 | C4 | independent 2MRS cross-reconstruction (no covariance merge) | `../pr07/PR08-005...` | contract |
 
-## The publishable headline (anti-tone-down)
+## Current claim boundary
 
-A1 + C3: a **measured** rank-2 graded comparator on real Planck/CF4 data,
-**together with** the proven two-sector no-go (W², Ω_k are forever unreachable
-from CMB-T + radial velocities) and the B3 named re-opening channels. Strong,
-honest, novel — a result, not a hedge.
+A1 remains a structural/synthetic rank statement together with its registered
+two-sector no-go and named re-opening channels.  It is not a measured
+Planck/CF4 rank-2 result.  Every CF4-conditioned pushforward and global-tilt
+interpretation remains quarantined while `C1-K5-MV-F1`,
+`C3-K5-VCORR-ML-F1`, and `N-DATA-CF4-DOWNSTREAM` are OPEN.

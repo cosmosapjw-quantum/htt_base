@@ -1,10 +1,10 @@
 """
 htt/infer/lowz_ablation.py — Low-z Ablation Test
 ===================================================
-Phase 2 deliverable. Tests whether removing low-z data destroys
+Phase 2 deliverable. Tests whether removing explicit low-z synthetic data destroys
 the directional information gain.
 
-The ablation logic: partition the CF4 catalog by redshift, remove
+The ablation logic: partition a caller-supplied catalog by redshift, remove
 the lowest-z bin, and re-evaluate the directional likelihood.
 If the directional signal collapses, it is driven by low-z;
 if it persists, it has a broader redshift base.
@@ -12,6 +12,8 @@ if it persists, it has a broader redshift base.
 import numpy as np
 from dataclasses import dataclass
 from typing import List, Tuple
+
+from htt.core.cf4_observational_input import require_cf4_observational_input
 
 __all__ = ['AblationResult', 'LowzAblation', 'run_lowz_ablation']
 
@@ -37,7 +39,8 @@ class LowzAblation:
     """
 
     def __init__(self, z_catalog: np.ndarray = None,
-                 beta_catalog: np.ndarray = None):
+                 beta_catalog: np.ndarray = None,
+                 lowz_axis: tuple[float, float] | None = None):
         """Initialize with catalog data.
 
         Parameters
@@ -47,16 +50,27 @@ class LowzAblation:
         beta_catalog : array
             Peculiar velocity amplitudes (β = v/c)
         """
-        if z_catalog is None:
-            # Default: synthetic catalog mimicking CF4 distribution
-            rng = np.random.default_rng(42)
-            self.z_catalog = rng.lognormal(-4.5, 0.8, 500)
-            self.z_catalog = np.clip(self.z_catalog, 0.001, 0.1)
-            self.beta_catalog = 1.334e-3 * np.ones_like(self.z_catalog)
-        else:
-            self.z_catalog = np.asarray(z_catalog)
-            self.beta_catalog = np.asarray(beta_catalog) if beta_catalog is not None \
-                else np.full_like(self.z_catalog, 1.334e-3)
+        if z_catalog is None or beta_catalog is None:
+            require_cf4_observational_input(
+                consumer="LowzAblation implicit/default catalog",
+            )
+        self.z_catalog = np.asarray(z_catalog, dtype=float)
+        self.beta_catalog = np.asarray(beta_catalog, dtype=float)
+        if self.z_catalog.shape != self.beta_catalog.shape:
+            raise ValueError("z_catalog and beta_catalog must have identical shapes")
+        if self.z_catalog.ndim != 1 or self.z_catalog.size == 0:
+            raise ValueError("explicit low-z catalogs must be non-empty 1-D arrays")
+        if not np.all(np.isfinite(self.z_catalog)) or not np.all(
+            np.isfinite(self.beta_catalog)
+        ):
+            raise ValueError("explicit low-z catalogs must contain finite values")
+        if lowz_axis is None:
+            require_cf4_observational_input(
+                consumer="LowzAblation implicit/default low-z axis",
+            )
+        if len(lowz_axis) != 2:
+            raise ValueError("lowz_axis must be an explicit (l_deg, b_deg) pair")
+        self.lowz_axis = (float(lowz_axis[0]), float(lowz_axis[1]))
 
     def run_ablation(self, z_cuts: List[float] = None,
                      gain_threshold: float = 0.1) -> List[AblationResult]:
@@ -78,7 +92,7 @@ class LowzAblation:
         if z_cuts is None:
             z_cuts = [0.005, 0.01, 0.015, 0.02, 0.03]
 
-        lowell = LowellLikelihood()
+        lowell = LowellLikelihood(*self.lowz_axis)
         info_full = lowell.information_gain(n_samples=3000)
 
         results = []

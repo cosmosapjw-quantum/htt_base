@@ -23,7 +23,9 @@ from pathlib import Path
 import sys
 
 REPO = Path(__file__).resolve().parents[1]
-for p in (REPO, REPO / "htt", REPO / "htt/htt"):
+# Insert the narrow legacy roots first so the repository-owner ``htt`` package
+# ends up first.  Otherwise ``htt/htt`` shadows it and ``htt.tsc`` cannot load.
+for p in (REPO / "htt/htt", REPO / "htt", REPO):
     if str(p) not in sys.path:
         sys.path.insert(0, str(p))
 

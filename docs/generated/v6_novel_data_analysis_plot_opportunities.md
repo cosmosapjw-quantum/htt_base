@@ -7,10 +7,10 @@
 - claim_tier: diagnostic_only
 - transfer_source: mixed; none for OBSSTAT catalog summaries, external-transfer-conditional where CF4 WF products are used
 - config_hash: manual_scan_20260709T000517
-- input_hashes: source artifacts retain their own manifests; primary scanned artifacts were `docs/generated/observed_longrun_analysis.json`, `docs/generated/cf4_bulkflow_apex_depth_report.json`, `docs/generated/cf4_bulkflow_likelihood_report.json`, `docs/generated/cf4_affine_flow_report.json`, `docs/generated/lowell_morphology_real_map_report.json`, `docs/generated/k1_global_maxscan.json`, `docs/generated/k1_biposh_smica.json`, `docs/generated/k5_cf4_release_coverage.json`, `docs/generated/k6_cf4_curl_posterior.json`, `docs/generated/pr08_006_joint_artifact.json`, and repo-local modules under `htt/obsstat`, `htt/htt/htt/infer`, `htt/htt/htt/nulls`, `htt/htt/htt/rest_frame`, and `htt/mio`
+- input_hashes: source artifacts retain their own manifests; the active CF4 inputs are `docs/generated/cf4_p0_quarantine_block.json`, `docs/generated/cf4_bulkflow_apex_depth_report.json`, and `docs/generated/cf4_affine_flow_report.json`, with the latter two restricted to reconstruction-conditioned method/systematics diagnostics. Other scanned inputs were `docs/generated/observed_longrun_analysis.json`, `docs/generated/lowell_morphology_real_map_report.json`, `docs/generated/k1_global_maxscan.json`, `docs/generated/k1_biposh_smica.json`, `docs/generated/k6_cf4_curl_posterior.json`, and repo-local modules under `htt/obsstat`, `htt/htt/htt/infer`, `htt/htt/htt/nulls`, `htt/htt/htt/rest_frame`, and `htt/mio`. Historical P0 CF4 value-bearing artifacts exist only under `legacy/cf4_p0` with public use false.
 - sky_support_status: mixed; inherit from source artifact before plotting
-- null_mock_status: mixed; diagnostic-only unless matched null metadata are explicitly bound
-- caveats: opportunity inventory only; every report-facing figure still needs a generating script, manifest, source JSON, claim lane, and caption audit; no geometry or family conclusion is implied
+- null_mock_status: mixed; CF4 P0 findings remain OPEN and no quarantined numerical calibration is active
+- caveats: opportunity inventory only; every report-facing figure still needs a generating script, manifest, source JSON, claim lane, and caption audit; reconstruction-conditioned CF4 functionals may support method/systematics interpretation only; no observed bulk amplitude, global-tilt inference, cosmological inference, geometry, or family conclusion is implied
 - generating_command: manual broad scan with `rg`, `find`, `jq`, and targeted module reads on 2026-07-09
 - git_commit_or_worktree_state: 8280b8f+dirty
 
@@ -29,18 +29,18 @@ Do not use figures or tables about internal development history, claim gates, li
 
 | ID | Plot concept | Primary inputs | Claim-safe use |
 | --- | --- | --- | --- |
-| P01 | CF4 depth-apex phase portrait | `cf4_bulkflow_apex_depth_report.json`, `cf4_bulkflow_likelihood_report.json`, `lowell_morphology_real_map_report.json` | Data geometry of CF4 depth-dependent apex versus CMB dipole and low-ell morphology axis. |
-| P02 | K5 group-GLS versus CF4++ WF consistency plot | `k5_cf4_release_coverage.json`, `cf4_bulkflow_likelihood_report.json`, `cf4_affine_flow_report.json` | Compare catalog-level GLS and WF affine summaries without promoting either to native-solver validation. |
+| P01 | CF4 reconstruction-conditioned depth-apex phase portrait | `cf4_bulkflow_apex_depth_report.json`, `cf4_p0_quarantine_block.json` | Method/systematics-only comparison of depth-dependent reconstruction functionals; no measured bulk amplitude or cosmological interpretation. |
+| P02 | K5 group-GLS versus CF4++ WF consistency plot | historical artifacts under `legacy/cf4_p0` | `QUARANTINED_OPEN_P0`; no active report-facing plot or replacement value while the canonical findings remain OPEN. |
 | P03 | Scalar low-ell versus BiPoSH two-channel anomaly plane | `k1_global_maxscan.json`, `lowell_morphology_real_map_report.json`, `k1_biposh_smica.json` | Compare scalar and covariance-channel descriptors under their own null status. |
 | P04 | K1 max-scan contribution waterfall | `k1_global_maxscan.json`, `lowell_morphology_real_map_report.json` | Show which registered low-ell statistics dominate the max-scan score. |
-| P05 | CF4 affine gradient spectrum | `cf4_affine_flow_report.json`, `k6_cf4_curl_posterior.json` | Display bulk, expansion, shear, and curl-suppressed affine sectors by radius. |
-| P06 | Observed-sector response vector | `pr08_006_joint_artifact.json`, K1/K5/K6 generated artifacts | Place measured diagnostic coordinates in a shared observed-sector panel without gate/status styling. |
-| P07 | Depth-window coverage stability surface | Existing CF4 GLS and forward-mock coverage machinery | Denser depth grid for bulk-flow coverage residuals and stability. |
+| P05 | CF4 affine reconstruction-functional spectrum | `cf4_affine_flow_report.json`, `cf4_p0_quarantine_block.json` | Display reconstruction-conditioned affine sectors as method/systematics diagnostics only. |
+| P06 | Observed-sector response vector | historical CF4 coordinate artifacts under `legacy/cf4_p0` | `QUARANTINED_OPEN_P0`; the prior shared observed-sector coordinate is not an active data figure. |
+| P07 | Depth-window coverage stability surface | historical CF4 likelihood machinery under `legacy/cf4_p0` | `QUARANTINED_OPEN_P0`; no active coverage calibration or residual surface. |
 | P08 | CF4 shell leverage / leave-one-depth-out plot | Existing CF4 GLS shell estimator | Show how shell removal shifts amplitude, apex angle, and coverage sensitivity. |
 | P09 | Low-ell axis uncertainty geometry plot | `lowell_morphology_real_map_report.json` | Show eigenvalue gaps, effective rank, and preferred-axis conditioning. |
-| P10 | CF4/JWST anchor leverage forecast | `jwst_cf4_anchors.json`, `bass_extended_joint_forecast.json` | Forecast-only anchor leverage on distance errors and local-flow precision. |
-| P11 | Planck low-ell residual map with CF4 apex-track overlay | SMICA low-ell products plus CF4 apex-depth report | Visualize actual low-ell residual geometry with CF4 apex track overlays. |
-| P12 | K1-K5 joint diagnostic scatter against null/mock axes | K1 GRF null max-score and K5 forward-mock coverage distribution | Joint diagnostic page only; no joint calibrated probability unless a matched joint null is built. |
+| P10 | CF4/JWST catalogue-linkage audit | `jwst_cf4_anchors.json`, `cf4_p0_quarantine_block.json` | Catalogue linkage and error-metadata mechanics only; the global-tilt forecast is quarantined. |
+| P11 | Planck low-ell residual map with CF4 apex-track overlay | SMICA low-ell products plus CF4 reconstruction-conditioned apex report | Conditional method/systematics geometry only; no cross-probe source or cosmological inference. |
+| P12 | K1-K5 joint diagnostic scatter against null/mock axes | historical K5 calibration artifacts under `legacy/cf4_p0` | `QUARANTINED_OPEN_P0`; no active joint data plot or joint calibrated probability. |
 
 ## Additional immediately drawable opportunities
 
@@ -51,8 +51,8 @@ Do not use figures or tables about internal development history, claim gates, li
 | A03 | DESI tracer hand-off continuity strip | Same DESI jackknife table | Shows how BGS, LRG, and QSO occupancy-driven directional summaries connect across redshift. | One continuous redshift axis, marker size by `n_rows`, uncertainty by `jackknife_std`. |
 | A04 | CF4 radial velocity sign-transition curve | `observed_longrun_analysis.json`: 10 CF4 radial bootstrap rows from `workdir/compact_products/cf4/query_batch.npz` | Uses radial shell velocity summaries rather than bulk-only literature-style amplitude plots. | Plot `vr_mean_km_s` with p16/p84 band versus `radius_mid_mpc_h`; mark zero crossings. |
 | A05 | CF4 radial delta-stability band | Same CF4 bootstrap table | Separates radial density/contrast stability from velocity amplitude. | Plot `delta_mean` with bootstrap band and optional `n_rows` rug/axis. |
-| A06 | CF4 forward-coverage residual by depth | `cf4_bulkflow_likelihood_report.json` depth windows | Converts existing coverage checks into a data-analysis residual curve. | Plot `forward_mock_recovered_kms - bulk_amplitude_kms` and `forward_mock_coverage_1sigma` versus depth. |
-| A07 | CF4 shell-to-shell apex separation matrix | `cf4_bulkflow_apex_depth_report.json` | Shows whether depth shells share a stable direction or fragment angularly. | Matrix of pairwise shell apex separations plus rows for full-sample apex and CMB dipole. |
+| A06 | CF4 forward-coverage residual by depth | historical likelihood report under `legacy/cf4_p0` | `QUARANTINED_OPEN_P0`; the former coverage curve is not an active figure. | No plotting route while C1-K5-MV-F1 remains OPEN. |
+| A07 | CF4 reconstruction shell-to-shell apex separation matrix | `cf4_bulkflow_apex_depth_report.json`, `cf4_p0_quarantine_block.json` | Shows reconstruction sensitivity across depth shells without treating an apex as a measured cosmological vector. | Pairwise separation matrix labelled method/systematics only. |
 | A08 | K1 low-ell tensor conditioning panel | `lowell_morphology_real_map_report.json` | Distinguishes low-ell axis stability from scalar tail strength. | Plot eigenvalues, eigenvalue gaps, effective rank, and condition number. |
 | A09 | K1 scalar/BiPoSH map-stability matrix | `k1_global_maxscan.json`, `k1_biposh_smica.json` | Tests whether scalar and covariance-channel descriptors co-move across map choices. | Heatmap or paired scatter of scalar global score and BiPoSH descriptor percentiles. |
 | A10 | MIO directional pairwise separation heatmap | `htt/workspace/results/mio_directional_coherence.json` or `mio.coherence.directional.STANDARD_PROBES` | Summarizes multi-probe angular consistency in a compact diagnostic. | Lower priority: hardcoded/literature probes must be source-bound before report use. |
@@ -72,11 +72,11 @@ Do not use figures or tables about internal development history, claim gates, li
 ## Priority queue
 
 1. Produce A01-A03 first: they are the most underused actual-data results already present in the v6 generated artifacts.
-2. Produce A04-A07 next: they convert CF4 products from familiar bulk-flow rechecks into radial and shell-geometry analyses.
+2. Produce A04-A05 and A07 only under their reconstruction-conditioned method/systematics manifests; A06 remains quarantined.
 3. Produce A08-A09 next: they add low-ell conditioning and scalar/covariance-channel stability without relying on family-level language.
 4. Keep A10-A11 internal until the probe sources are explicitly bound into report manifests.
 5. Treat B01-B06 as small implementation tasks, not ready-made report figures.
 
 ## Scan conclusion
 
-The broad code scan found at least 17 additional data-analysis opportunities beyond the prior 12 concepts. The strongest report-facing expansion is not another governance or claim-gate surface; it is a concrete DESI+CF4+K1 figure set using already generated v6 products and repo-local compact data.
+The broad code scan found at least 17 candidate directions beyond the prior 12 concepts. The active report-facing expansion is a concrete DESI+K1 set plus explicitly reconstruction-conditioned CF4 method/systematics figures. P0-derived CF4 values, coverage calibration, global-tilt forecasts, and shared observed-sector coordinates remain quarantined with no active replacement value.

@@ -1,61 +1,75 @@
 {
-  "allowed_use": "paper_appendix",
-  "artifact_id": "obsstat.report_data.observed_sector_proxy_coordinates",
-  "artifact_mode": "paper_appendix_conditioned",
-  "artifact_path": "figures/data_analysis_current/fig_data_observed_sector_proxy_coordinates.png",
-  "caption_policy": [
-    "must_state_observed_data_diagnostic",
-    "must_state_proxy_not_comparator_component",
-    "must_not_state_family_identification",
-    "must_not_state_native_low_ell_solver_output",
-    "must_not_state_p_value_without_null_ensemble"
-  ],
+  "allowed_use": "blocked_source_record_only",
+  "artifact": {
+    "active_png": "figures/data_analysis_current/fig_data_observed_sector_proxy_coordinates.png",
+    "active_png_status": "ABSENT_BY_QUARANTINE",
+    "artifact_id": "fig_data_observed_sector_proxy_coordinates",
+    "artifact_kind": "figure_manifest_block_record",
+    "legacy_public_use": false,
+    "legacy_reproduction_only_root": "legacy/cf4_p0/figures/data_analysis_current",
+    "producer": "scripts/make_data_proxy_coordinates_figure.py"
+  },
   "caveats": [
-    "Observed/prepared data analysis figure.",
-    "The three panels are heterogeneous PROXY coordinates (tail transform, km/s amplitude, reconstruction ratio); none is a comparator component and the triple is NOT a g-vector.",
-    "Diagnostic-only: no posterior odds, p-value, geometry detection, or family identification.",
-    "No native low-ell solver output is used."
+    "Quarantine is propagation control, not scientific remediation or validation.",
+    "All three findings remain OPEN; zero stale active consumers does not close them.",
+    "No audit sensitivity or alternative number is a replacement result.",
+    "Historical audits and frozen external packages remain immutable evidence.",
+    "PR4/NPIPE download, reduction, and analysis remain skipped by user scope."
   ],
-  "claim_tier": "diagnostic_only",
-  "code_version": "content-addressed",
-  "config_hash": "sha256:ef89d546528f0dc1f948910ee54d462a8c2007dd5f70d30d39564a11067c4661",
-  "created_by": "scripts/make_data_proxy_coordinates_figure.py",
-  "generating_command": "python scripts/make_data_proxy_coordinates_figure.py",
-  "git_commit": "content-addressed",
-  "git_commit_or_worktree_state": "content-addressed",
-  "implementation_scope": "obsstat",
-  "input_hashes": [
-    "docs/generated/pr08_006_joint_artifact.json:sha256:8019a9e64a053a29cfe3fd0b9a78c4b7ad52d798723908c4f08630f689bc93e1"
-  ],
-  "null_mock_status": "mixed_by_sector",
-  "owner": "OBSSTAT",
-  "production_status": "diagnostic_only",
-  "schema_version": "obsstat.report_data_analysis_figure.v1",
-  "sky_support_status": "not_directional",
-  "source": {
-    "figure_id": "fig_data_observed_sector_proxy_coordinates",
-    "panels": {
-      "cf4_bulk_flow_amplitude": {
-        "error_kms": 101.87045232654711,
-        "never_folded_into_a_g_vector": true,
-        "units": "km/s",
-        "value_kms": 340.72639833770336
-      },
-      "k1_low_ell_global_tail": {
-        "minus_log10_global_p_commander": 0.9174317226557801,
-        "minus_log10_global_p_smica": 1.0134453587059853,
-        "not_the_comparator_Sigma2": true
-      },
-      "k6_reconstruction_curl_shear_ratio": {
-        "not_the_comparator_W2": true,
-        "vorticity_over_shear_max": 0.005519792636461094
-      }
+  "claim_level": {
+    "level": "C1",
+    "scheme": "roadmap_rescue_v1"
+  },
+  "claim_tier": "blocked",
+  "config_hash": "7b684610685ed343747a74d76aca8cc9e4738ea1273ab4c4a696de938baa3235",
+  "findings": [
+    {
+      "claim_tier_ceiling": "blocked",
+      "finding_id": "C1-K5-MV-F1",
+      "scientific_status": "OPEN",
+      "severity": "P0",
+      "source_reference": "docs/audits/self_adversarial_audit_20260713_nsc/03_cove_correctness_ledger.json#C1-K5-MV-F1",
+      "source_sha256": "635fb02a705974e4b13678213914d57eb815f597e9799469eb8ae1925e47227c"
     },
-    "successor_of": "fig_data_observed_sector_response_vector (frozen v7/v8 packages; comparator-component panel titles retired)",
-    "unit_heterogeneity": [
-      "dimensionless tail transform",
-      "km/s",
-      "dimensionless reconstruction ratio"
-    ]
-  }
+    {
+      "claim_tier_ceiling": "blocked",
+      "finding_id": "C3-K5-VCORR-ML-F1",
+      "scientific_status": "OPEN",
+      "severity": "P0",
+      "source_reference": "docs/audits/self_adversarial_audit_20260713_nsc/03_cove_correctness_ledger.json#C3-K5-VCORR-ML-F1",
+      "source_sha256": "635fb02a705974e4b13678213914d57eb815f597e9799469eb8ae1925e47227c"
+    },
+    {
+      "claim_tier_ceiling": "blocked",
+      "finding_id": "N-DATA-CF4-DOWNSTREAM",
+      "scientific_status": "OPEN",
+      "severity": "P1",
+      "source_reference": "docs/audits/jcap_prd_adversarial_audit_20260714/atomic_finding_ledger.json#N-DATA-CF4-DOWNSTREAM",
+      "source_sha256": "6e88a6f6c4f95e5154c89e939230c94854b11a8430a64c28ccb339d8c4ab6feb"
+    }
+  ],
+  "generating_command": "PYTHONPATH=htt/src venv/bin/python -B scripts/codex_harness/quarantine_cf4_p0_consumers.py --write",
+  "git_commit_or_worktree_state": "baseline_commit:e6da3670043596efdcd93f9ba5e631e1462146c7; PR-120 worktree hashes are bound by the canonical inventory",
+  "implementation_scope": "propagation_quarantine_only",
+  "input_hashes": [
+    "docs/research_program/long_horizon_rescue/cf4_p0_quarantine_policy.yaml:sha256:7b684610685ed343747a74d76aca8cc9e4738ea1273ab4c4a696de938baa3235",
+    "docs/generated/cf4_p0_quarantine_inventory.json:sha256:2d6eada611234b102989f2e12441637a4e35b64bf456c3096f6ee8e426fa82de",
+    "docs/codex_handoff/research_remediation_state.yaml:sha256:77d36878315f041c7bb6c273a2d650f7d3fa1c8a8dc635a577527d646fa40109"
+  ],
+  "inventory_path": "docs/generated/cf4_p0_quarantine_inventory.json",
+  "inventory_sha256": "2d6eada611234b102989f2e12441637a4e35b64bf456c3096f6ee8e426fa82de",
+  "null_mock_status": "not_applicable_quarantine_is_not_validation",
+  "owner": "COMMON",
+  "policy_path": "docs/research_program/long_horizon_rescue/cf4_p0_quarantine_policy.yaml",
+  "policy_sha256": "7b684610685ed343747a74d76aca8cc9e4738ea1273ab4c4a696de938baa3235",
+  "public_use": true,
+  "remediation_root_path": "docs/codex_handoff/research_remediation_state.yaml",
+  "remediation_root_sha256": "77d36878315f041c7bb6c273a2d650f7d3fa1c8a8dc635a577527d646fa40109",
+  "replacement_policy": "forbidden_without_later_authenticated_adjudication",
+  "replacement_value": null,
+  "schema": "htt.cf4_p0_quarantine_block.v1",
+  "scientific_effect": "none",
+  "sky_support_status": "not_applicable_to_propagation_quarantine",
+  "status": "QUARANTINED_OPEN_FINDINGS",
+  "transfer_source": "none"
 }

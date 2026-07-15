@@ -31,6 +31,24 @@ import zipfile
 from typing import Any, Sequence
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
+COMMON_ROOT = REPO_ROOT / "htt/src"
+if str(COMMON_ROOT) not in sys.path:
+    sys.path.insert(0, str(COMMON_ROOT))
+
+from common.cf4_p0_quarantine import (  # noqa: E402
+    ContentMode,
+    QuarantineContent,
+    read_regular_bytes,
+    read_regular_text,
+    repository_content,
+    reviewed_active_binary_sidecar_pin,
+    validate_repository,
+)
+from common.package_binary_binding import (  # noqa: E402
+    verify_package_binary_binding,
+    verify_packaged_entry_bytes,
+)
+
 DEFAULT_OUTPUT_ZIP = Path("htt_base_research_evaluation_package.zip")
 DEFAULT_OUTPUT_MANIFEST = Path("htt_base_research_evaluation_package_manifest.json")
 DEFAULT_OUTPUT_PROMPT = Path("htt_base_research_evaluation_prompt.md")
@@ -41,7 +59,15 @@ ARCHIVE_ROOT = "research_evaluation"
 # content-addressed provenance: pinned by config_hash + input_hashes, not volatile HEAD
 PROVENANCE = "content-addressed"
 
-REPORT_FILES = ("docs/final_report/main.tex", "docs/final_report/main.pdf")
+LEGACY_REPORT_FILES = (
+    "legacy/cf4_p0/packages/final_report/main.tex",
+    "legacy/cf4_p0/packages/final_report/main.pdf",
+    "legacy/cf4_p0/packages/final_report/htt_base_final_results_audit_package_manifest.json",
+)
+CURRENT_QUARANTINE_CONTROLS = (
+    "docs/generated/cf4_p0_quarantine_block.json",
+    "docs/generated/cf4_p0_quarantine_inventory.json",
+)
 
 # The research content code: the modules + drivers that PRODUCE every headline.
 RESEARCH_CODE = (
@@ -135,8 +161,8 @@ REPRODUCIBILITY_REFS = (
 
 # Machine-checked result records that back every number.
 RESULT_RECORDS = (
-    "docs/generated/egs_results_table.json",
-    "docs/generated/egs_results_table.md",
+    "docs/generated/egs_results_table_v9.json",
+    "docs/generated/egs_results_table_v9.md",
     "docs/generated/egs3_experiments.json",
     "docs/generated/egs3_psd_cone_proof.json",
     # rev-r146 review-response: identified-set semantics + SymPy seals.
@@ -159,7 +185,6 @@ FIGURE_STEMS = (
     "figures/current/fig_egs3_b1_floor_profile",
     "figures/current/fig_egs3_b2_volterra",
     "figures/current/fig_egs3_b3_vorticity",
-    "figures/current/fig_blocker_discharges",
 )
 
 
@@ -169,12 +194,14 @@ class Entry:
     group: str
     source_path: Path | None = None
     content: bytes | None = None
+    content_mode: ContentMode = ContentMode.ACTIVE_PUBLIC
+    public_use: bool = True
 
     def bytes(self, repo_root: Path) -> bytes:
         if self.content is not None:
             return self.content
         assert self.source_path is not None
-        return (repo_root / self.source_path).read_bytes()
+        return read_regular_bytes(repo_root, self.source_path)
 
     def source_text(self) -> str:
         return self.source_path.as_posix() if self.source_path is not None else f"virtual:{self.archive_path}"
@@ -188,8 +215,69 @@ def _stable_hash(payload: Any) -> str:
     return _sha256(json.dumps(payload, sort_keys=True, separators=(",", ":")).encode())
 
 
+def verify_pdf_manifest_pair(
+    repo_root: Path,
+    *,
+    pdf_path: str,
+    manifest_path: str,
+    manifest_member_path: str,
+) -> dict[str, Any]:
+    """Verify preserved PDF bytes against the exact historical manifest row."""
+
+    pdf = repo_root / pdf_path
+    manifest = repo_root / manifest_path
+    if not pdf.is_file() or not manifest.is_file():
+        raise FileNotFoundError(
+            f"legacy PDF/manifest pair is incomplete: {pdf_path}, {manifest_path}"
+        )
+    try:
+        payload = json.loads(read_regular_text(repo_root, manifest_path))
+    except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+        raise ValueError(f"cannot parse PDF companion manifest {manifest_path}: {exc}") from exc
+    if not isinstance(payload, dict):
+        raise ValueError(f"PDF companion manifest must be an object: {manifest_path}")
+    rows = payload.get("archive_entries")
+    if not isinstance(rows, list):
+        raise ValueError(f"PDF companion manifest lacks archive_entries: {manifest_path}")
+    matches = [
+        row
+        for row in rows
+        if isinstance(row, dict) and row.get("source_path") == manifest_member_path
+    ]
+    if len(matches) != 1:
+        raise ValueError(
+            f"PDF companion manifest must bind exactly one {manifest_member_path!r} row"
+        )
+    expected = str(matches[0].get("sha256", ""))
+    actual = _sha256(read_regular_bytes(repo_root, pdf_path))
+    if expected != actual:
+        raise ValueError(
+            f"PDF companion manifest digest mismatch for {pdf_path}: "
+            f"expected {expected or 'missing'}, got {actual}"
+        )
+    return {
+        "pdf_path": pdf_path,
+        "pdf_sha256": actual,
+        "manifest_path": manifest_path,
+        "manifest_sha256": _sha256(read_regular_bytes(repo_root, manifest_path)),
+        "content_mode": ContentMode.IMMUTABLE_HISTORICAL_EVIDENCE.value,
+        "public_use": False,
+    }
+
+
 def _file_entry(rel: str, group: str) -> Entry:
-    return Entry(archive_path=f"{ARCHIVE_ROOT}/{rel}", group=group, source_path=Path(rel))
+    mode = (
+        ContentMode.IMMUTABLE_HISTORICAL_EVIDENCE
+        if rel.startswith(("legacy/cf4_p0/", "research_gates/pr04/"))
+        else ContentMode.ACTIVE_PUBLIC
+    )
+    return Entry(
+        archive_path=f"{ARCHIVE_ROOT}/{rel}",
+        group=group,
+        source_path=Path(rel),
+        content_mode=mode,
+        public_use=mode is not ContentMode.IMMUTABLE_HISTORICAL_EVIDENCE,
+    )
 
 
 def _virtual_entry(archive: str, group: str, text: str) -> Entry:
@@ -197,12 +285,22 @@ def _virtual_entry(archive: str, group: str, text: str) -> Entry:
 
 
 def _collect_entries(repo_root: Path) -> list[Entry]:
+    verify_pdf_manifest_pair(
+        repo_root,
+        pdf_path="legacy/cf4_p0/packages/final_report/main.pdf",
+        manifest_path=(
+            "legacy/cf4_p0/packages/final_report/"
+            "htt_base_final_results_audit_package_manifest.json"
+        ),
+        manifest_member_path="docs/final_report/main.pdf",
+    )
     entries: list[Entry] = [
         _virtual_entry("README.md", "package_readme", render_readme()),
         _virtual_entry("REVIEW_PROMPT.md", "review_prompt", render_prompt()),
     ]
     groups = (
-        (REPORT_FILES, "report"),
+        (LEGACY_REPORT_FILES, "legacy_report"),
+        (CURRENT_QUARANTINE_CONTROLS, "quarantine_control"),
         (RESEARCH_CODE, "research_code"),
         (TEST_FILES, "gate_test"),
         (RESULT_RECORDS, "result_record"),
@@ -231,19 +329,103 @@ def _entry_rows(repo_root: Path, entries: Sequence[Entry]) -> list[dict[str, Any
             raise ValueError(f"unsafe archive path: {entry.archive_path}")
         if entry.archive_path in seen:
             raise ValueError(f"duplicate archive path: {entry.archive_path}")
+        source_path = entry.source_path.as_posix() if entry.source_path else ""
+        if entry.content_mode is ContentMode.ACTIVE_PUBLIC and not entry.public_use:
+            raise ValueError(
+                f"active/public package entry cannot set public_use=false: {entry.archive_path}"
+            )
+        if (
+            entry.content_mode is ContentMode.IMMUTABLE_HISTORICAL_EVIDENCE
+            and entry.public_use
+        ):
+            raise ValueError(
+                f"historical package entry cannot set public_use=true: {entry.archive_path}"
+            )
+        if source_path.startswith("legacy/cf4_p0/"):
+            if entry.content_mode is not ContentMode.IMMUTABLE_HISTORICAL_EVIDENCE:
+                raise ValueError(
+                    f"legacy CF4 payload requires immutable_historical_evidence mode: {source_path}"
+                )
+            if entry.public_use or not entry.archive_path.startswith(
+                f"{ARCHIVE_ROOT}/legacy/cf4_p0/"
+            ):
+                raise ValueError(
+                    "legacy CF4 payload must be non-public and retain an explicit legacy archive path"
+                )
         seen.add(entry.archive_path)
         data = entry.bytes(repo_root)
-        rows.append({"source_path": entry.source_text(), "archive_path": entry.archive_path,
-                     "group": entry.group, "sha256": _sha256(data), "size_bytes": len(data)})
+        reviewed_pin = (
+            reviewed_active_binary_sidecar_pin(repo_root, entry.source_path)
+            if entry.source_path is not None
+            and (repo_root / "docs/research_program/long_horizon_rescue/cf4_p0_quarantine_policy.yaml").is_file()
+            else None
+        )
+        binary_binding = (
+            verify_package_binary_binding(
+                repo_root,
+                entry.source_path,
+                content_mode=entry.content_mode.value,
+                explicit_manifest_path=reviewed_pin[0] if reviewed_pin else None,
+                explicit_manifest_sha256=reviewed_pin[1] if reviewed_pin else None,
+            )
+            if entry.source_path is not None
+            else None
+        )
+        row = {
+                "source_path": entry.source_text(),
+                "archive_path": entry.archive_path,
+                "group": entry.group,
+                "content_mode": entry.content_mode.value,
+                "public_use": entry.public_use,
+                "sha256": _sha256(data),
+                "size_bytes": len(data),
+            }
+        if binary_binding is not None:
+            row["binary_binding"] = binary_binding
+        rows.append(row)
     return rows
+
+
+def _quarantine_package_contents(
+    repo_root: Path,
+    entries: Sequence[Entry],
+) -> dict[str, bytes | QuarantineContent]:
+    contents: dict[str, bytes | QuarantineContent] = {}
+    for entry in entries:
+        if entry.source_path is not None and entry.content_mode is not ContentMode.ACTIVE_PUBLIC:
+            contents[entry.archive_path] = repository_content(
+                repo_root,
+                entry.source_path,
+                mode=entry.content_mode,
+            )
+        else:
+            contents[entry.archive_path] = entry.bytes(repo_root)
+    return contents
 
 
 def _assertions(rows: Sequence[dict[str, Any]]) -> dict[str, bool]:
     paths = {r["archive_path"] for r in rows}
     groups = [r["group"] for r in rows]
     return {
-        "report_pdf_included": f"{ARCHIVE_ROOT}/docs/final_report/main.pdf" in paths,
-        "report_tex_included": f"{ARCHIVE_ROOT}/docs/final_report/main.tex" in paths,
+        "legacy_report_pdf_included": (
+            f"{ARCHIVE_ROOT}/legacy/cf4_p0/packages/final_report/main.pdf" in paths
+        ),
+        "legacy_report_tex_included": (
+            f"{ARCHIVE_ROOT}/legacy/cf4_p0/packages/final_report/main.tex" in paths
+        ),
+        "legacy_report_manifest_included": (
+            f"{ARCHIVE_ROOT}/legacy/cf4_p0/packages/final_report/"
+            "htt_base_final_results_audit_package_manifest.json" in paths
+        ),
+        "legacy_report_non_public": all(
+            row["content_mode"] == ContentMode.IMMUTABLE_HISTORICAL_EVIDENCE.value
+            and row["public_use"] is False
+            for row in rows
+            if row["group"] == "legacy_report"
+        ),
+        "current_quarantine_controls_included": all(
+            f"{ARCHIVE_ROOT}/{path}" in paths for path in CURRENT_QUARANTINE_CONTROLS
+        ),
         "review_prompt_included": "REVIEW_PROMPT.md" in paths,
         "readme_included": "README.md" in paths,
         "research_code_present": groups.count("research_code") >= 20,
@@ -251,7 +433,7 @@ def _assertions(rows: Sequence[dict[str, Any]]) -> dict[str, bool]:
         "result_records_present": groups.count("result_record") >= 10,
         "reproducibility_refs_present": groups.count("reproducibility_ref") >= 13,
         "joint_artifact_included": f"{ARCHIVE_ROOT}/docs/generated/pr08_006_joint_artifact.json" in paths,
-        "results_table_included": f"{ARCHIVE_ROOT}/docs/generated/egs_results_table.json" in paths,
+        "results_table_included": f"{ARCHIVE_ROOT}/docs/generated/egs_results_table_v9.json" in paths,
         "blockers_included": f"{ARCHIVE_ROOT}/docs/research_program/BLOCKERS.md" in paths,
     }
 
@@ -264,6 +446,11 @@ def build_payload(*, repo_root: Path = REPO_ROOT, output_zip: Path = DEFAULT_OUT
     entries = _collect_entries(root)
     rows = _entry_rows(root, entries)
     assertions = _assertions(rows)
+    quarantine_report = validate_repository(
+        root,
+        additional_contents=_quarantine_package_contents(root, entries),
+    )
+    assertions["cf4_p0_quarantine"] = quarantine_report.ok
     failed = [name for name, ok in assertions.items() if not ok]
     config = {"schema_version": SCHEMA_VERSION, "archive_paths": [r["archive_path"] for r in rows],
               "assertions": sorted(assertions)}
@@ -291,6 +478,16 @@ def build_payload(*, repo_root: Path = REPO_ROOT, output_zip: Path = DEFAULT_OUT
         "archive_entries": rows,
         "archive_entry_count": len(rows),
         "required_assertions": assertions,
+        "cf4_p0_quarantine": quarantine_report.to_dict(),
+        "legacy_report_binding": verify_pdf_manifest_pair(
+            root,
+            pdf_path="legacy/cf4_p0/packages/final_report/main.pdf",
+            manifest_path=(
+                "legacy/cf4_p0/packages/final_report/"
+                "htt_base_final_results_audit_package_manifest.json"
+            ),
+            manifest_member_path="docs/final_report/main.pdf",
+        ),
         "passed_gates": sorted(n for n, ok in assertions.items() if ok),
         "failed_gates": failed,
         "science_promotion_gates": {
@@ -300,10 +497,12 @@ def build_payload(*, repo_root: Path = REPO_ROOT, output_zip: Path = DEFAULT_OUT
         },
         "caveats": [
             "Self-contained, context-independent research-evaluation bundle.",
-            "All results are diagnostic-only / model-independent / transfer-conditional.",
+            "The bundled PDF/report source is immutable historical evidence under legacy/cf4_p0, with public_use false and an exact companion-manifest digest check.",
+            "The canonical CF4 P0 quarantine block is the authoritative current surface; the historical report is not a current result source.",
+            "Results are claim-tiered; diagnostic-only and transfer-conditional labels apply where recorded by each artifact.",
             "No Bianchi family-ID, no geometry detection, no native low-ell solver validation.",
             "K6 is a structural no-go; K1 is a partial (look-elsewhere) discharge under a LambdaCDM null.",
-            "External-data E2E runs (K1 full E2E) remain pending; see BLOCKERS.md + K1_E2E_DOWNLOAD_GUIDE.md.",
+            "The PR3/FFP10 inputs are downloaded but their analysis is deferred to PR-150; PR4/NPIPE is not downloaded and every PR4 data action is skipped in the current roadmap run.",
         ],
     }
     return payload, tuple(entries)
@@ -312,8 +511,8 @@ def build_payload(*, repo_root: Path = REPO_ROOT, output_zip: Path = DEFAULT_OUT
 def render_readme() -> str:
     return """# BASS / HTT research-evaluation package (self-contained, context-independent)
 
-This bundle lets a reviewer with **no prior knowledge of the repository** read the
-research report, inspect the essential code that produces every headline, re-run the
+This bundle lets a reviewer with **no prior knowledge of the repository** inspect the
+current quarantine controls, read an explicitly historical report, inspect essential code, re-run the
 gate tests, and read the machine-checked result records -- then give a **critical and
 constructive** evaluation of the *research content*.
 
@@ -323,13 +522,17 @@ what to evaluate and what the claim boundaries are.
 ## Contents
 
 - `REVIEW_PROMPT.md` -- context-independent critical+constructive review prompt.
-- `research_evaluation/docs/final_report/main.pdf` (+ `main.tex`) -- the research report.
+- `research_evaluation/docs/generated/cf4_p0_quarantine_block.json` -- the authoritative
+  current no-number block record; read this before any historical report material.
+- `research_evaluation/legacy/cf4_p0/packages/final_report/main.pdf` (+ `main.tex` and
+  companion package manifest) -- immutable historical evidence only, `public_use=false`.
 - `research_evaluation/htt/...`, `.../scripts/...`, `.../wolfram/...` -- the research code
   (five-variable + graded/PSD comparator, EGS2/EGS3 theorem modules, GR/Boltzmann
-  transfer, the real-data estimators, the K1/K5/K6 + PR08-006 discharge drivers, symbolic cores).
+  transfer, observable-statistics methods, the active K1/K6 drivers, quarantine-wrapped
+  K5/PR08-006 surfaces, and symbolic cores).
 - `research_evaluation/.../tests/...` -- runnable gate tests for the claims.
-- `research_evaluation/docs/generated/...` -- result records (consolidated table, the
-  K1/K5/K6 discharges, the PR08-006 joint comparator, theorem proofs).
+- `research_evaluation/docs/generated/...` -- current records (consolidated table, K1/K6
+  observational records, K5/PR08-006 quarantine blocks, theorem proofs).
 - `research_evaluation/docs/research_program/{BLOCKERS.md,K1_E2E_DOWNLOAD_GUIDE.md}` --
   what is blocked and how to unblock it.
 
@@ -346,12 +549,13 @@ PYTHONPATH=.:htt:htt/htt python -m pytest tests research_gates -q
 
 ## Claim envelope (do not exceed)
 
-Diagnostic-only / model-independent descriptors + conditional theorems + (where inputs
-are owned) calibrated measurements. No Bianchi-family identification, no geometry
+Diagnostic-only descriptors + conditional theorems + explicitly partial/no-go
+observational records. No Bianchi-family identification, no geometry
 detection, no native low-ell solver output, no MIO-as-odds, no scalar->family promotion.
-K5: the CF4 bulk flow is measured, but its cosmic-variance coverage is conditional on a
-fixed LambdaCDM prior. K6 is a WF mean-field structural no-go (true CR posterior still
-blocked). K1 is a partial (look-elsewhere) discharge under a LambdaCDM null, not E2E.
+The historical K5/CF4 numbers are quarantined and must not be reused or replaced. K6 is
+a WF mean-field structural no-go (true CR posterior still blocked). K1 remains a partial
+(look-elsewhere) discharge under a LambdaCDM null, not E2E: the downloaded PR3/FFP10
+inputs have not yet been analysed, and PR4/NPIPE is skipped in the current roadmap run.
 """
 
 
@@ -380,14 +584,17 @@ theorems applying GR + the covariant Boltzmann hierarchy directly to these varia
 
 ## What to read (in order)
 
-1. `research_evaluation/docs/final_report/main.pdf` -- the report (start here).
-2. `docs/generated/egs_results_table.md` -- the consolidated results table (14 proven +
-   3 data rows).
-3. The K1/K5/K6 discharge records `docs/generated/k{1,5,6}_*.json` and the joint
-   comparator `docs/generated/pr08_006_joint_artifact.json`.
-4. The code under `htt/` and `scripts/` for any result you want to verify; the gate tests
+1. `research_evaluation/docs/generated/cf4_p0_quarantine_block.json` -- authoritative
+   current propagation boundary (start here).
+2. `research_evaluation/legacy/cf4_p0/packages/final_report/main.pdf` -- immutable
+   historical report evidence only; it is not a current/public result source.
+3. `docs/generated/egs_results_table_v9.md` -- the current claim-tiered result table.
+4. The current K1/K5/K6 records `docs/generated/k{1,5,6}_*.json` and
+   `docs/generated/pr08_006_joint_artifact.json`; K5 and PR08-006 are active quarantine
+   blocks, not measured-sector records.
+5. The code under `htt/` and `scripts/` for any result you want to verify; the gate tests
    under `tests/`, `research_gates/`.
-5. `docs/research_program/BLOCKERS.md` for what is blocked and why.
+6. `docs/research_program/BLOCKERS.md` for what is blocked and why.
 
 ## Key claims to evaluate (be adversarial, then constructive)
 
@@ -406,25 +613,28 @@ theorems applying GR + the covariant Boltzmann hierarchy directly to these varia
   depth-memory; vorticity radial-blindness with transverse re-opening; the two-sided
   shear bracket; the visibility-kernel contraction. Are the hypotheses complete, limits
   valid, constants correctly attributed (e.g. the ETM coefficient kappa=4/21)?
-- **Real-data discharges:**
-  - K5 -- CF4 bulk flow |B|~341+/-102 km/s (a measurement; consistent with the LambdaCDM
-    ~150-250 km/s expectation at this depth), error cosmic-variance-dominated. The
-    cosmic-variance-inclusive coverage 0.67 (vs 0.19 measurement-only) is from
-    geometry-and-error matched Gaussian bulk-flow mocks and is CONDITIONAL on a fixed
-    LambdaCDM sigma_cv=150 km/s/comp prior; full selection/Malmquist/grouping/correlated
-    mocks remain a gate. Is the conditional-coverage framing honest? Frame/selection caveats?
+- **Observed-data and quarantine records:**
+  - K5 -- the historical CF4 bulk-flow/global-tilt numerical result is quarantined by
+    PR-120 behind `docs/generated/cf4_p0_quarantine_block.json`; C1-K5-MV-F1 and
+    N-DATA-CF4-DOWNSTREAM remain OPEN and no replacement value is authorized. Evaluate
+    whether the package preserves that propagation boundary without mistaking quarantine
+    for remediation.
   - K6 -- a WF mean-field structural *no-go*: the CF4 Wiener-filter velocity field is
     curl-suppressed (vorticity <= 0.6% of shear), estimator validated by an injected
     solid-body curl mode. A true Hoffman-Ribak CR vorticity posterior remains blocked.
     Is "WF-prior no-go, not detection" the honest reading?
   - K1 -- global look-elsewhere p = 0.097 (SMICA) / 0.121 (Commander, ~25% method
-    dependence -- reported side by side, not averaged) under an *isotropic LambdaCDM null*;
-    the full FFP10/NPIPE E2E-systematics null is not yet bound (a noise-augmented null is
-    built and ready to run). Is the partial-discharge framing honest? Is the look-elsewhere
-    max-scan valid?
-  - PR08-006 -- the joint comparator: rank-2 = ONE measured sector (Omega_tilt) + ONE
-    partial sector (Sigma^2), with `W^2,Omega_k` fail-closed (never zeroed), no collapsed
-    scalar. Is the fail-closed assembly correct, and the one-full-plus-one-partial honest?
+    dependence -- reported side by side, not averaged) under an *isotropic LambdaCDM null*.
+    PR3/FFP10 inputs are downloaded, but their E2E analysis is deferred to PR-150 and has
+    not changed this partial result. PR4/NPIPE is not downloaded; every PR4 download,
+    reduction, and analysis step is skipped in the current roadmap run. Is the current
+    partial-discharge framing honest? Is the look-elsewhere max-scan valid?
+  - PR08-006 -- the registered leading-channel response map remains method-level rank 2,
+    but the active observed assembly has no authorized measured `Omega_tilt` sector:
+    its CF4 source and the PR08 artifact are quarantine-only while the P0 findings remain
+    OPEN. `Sigma^2` remains partial and no collapsed scalar is authorized. Does every
+    active surface preserve that distinction between structural reachability and current
+    observational support?
 
 ## Hard boundaries (flag any violation as a fatal overclaim)
 
@@ -443,11 +653,13 @@ theorems applying GR + the covariant Boltzmann hierarchy directly to these varia
    the strongest honest framing?
 4. **Fatal blockers:** only those that invalidate a stated result.
 5. **Theorem audit** (table `Item | Status | Issue | Required fix`): hypotheses, limits, constants.
-6. **Statistics audit** (table): K1 null/look-elsewhere; K5 coverage/cosmic-variance/selection;
-   K6 no-go logic; PR08-006 rank + fail-closed; identifiability rank argument.
+6. **Statistics audit** (table): K1 null/look-elsewhere; K5 quarantine propagation and
+   missing authenticated remediation; K6 no-go logic; PR08-006 structural rank versus
+   current observed support; identifiability rank argument.
 7. **Constructive roadmap:** the smallest set of additional analyses/tests that would make
-   each result publishable (e.g. what the FFP10/NPIPE E2E run must show; CF4 mock realism;
-   theorem generalizations).
+   each result publishable (e.g. what the deferred PR3/FFP10 E2E analysis must show;
+   authenticated CF4 remediation; theorem generalizations). Treat PR4/NPIPE as explicitly
+   out of scope for the current roadmap run.
 8. **Claim-tier corrections:** exact wording to downgrade/remove; and **claims that are safe** as stated.
 
 Cite `path` (and line/figure) for every finding. If a part is acceptable, say so in one sentence.
@@ -473,7 +685,22 @@ def _build_zip_bytes(repo_root: Path, payload: dict[str, Any], entries: Sequence
     with zipfile.ZipFile(buffer, mode="w", compression=zipfile.ZIP_DEFLATED) as archive:
         archive.writestr(_zip_info("MANIFEST.json"), _render_manifest(payload).encode("utf-8"))
         for row in sorted(payload["archive_entries"], key=lambda r: r["archive_path"]):
-            archive.writestr(_zip_info(row["archive_path"]), by_path[row["archive_path"]].bytes(repo_root))
+            entry = by_path[row["archive_path"]]
+            data = entry.bytes(repo_root)
+            if entry.source_path is not None:
+                data = verify_packaged_entry_bytes(
+                    repo_root,
+                    entry.source_path,
+                    data,
+                    expected_sha256=row["sha256"],
+                    content_mode=row["content_mode"],
+                    expected_binary_binding=row.get("binary_binding"),
+                )
+            elif _sha256(data) != row["sha256"]:
+                raise ValueError(
+                    f"virtual package bytes changed after manifest construction: {entry.archive_path}"
+                )
+            archive.writestr(_zip_info(row["archive_path"]), data)
     return buffer.getvalue()
 
 

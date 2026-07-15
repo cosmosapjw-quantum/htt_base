@@ -1,11 +1,9 @@
 """Physical forward mocks for peculiar-velocity bulk-flow significance (REV-R197).
 
-The rev-r196 MV card reports the CF4 |B| vs LambdaCDM tension as a
-covariance-treatment-dependent RANGE (4.4-5.4 sigma) and withholds a single
-headline, because the analytic linear-window covariance underestimates the true
-scatter (Whitford+2023, MNRAS 526 3051: MV bulk-flow uncertainties are
-underestimated ~4-6x in variance -> tension overestimated; credible tension
-~2-3 sigma). The registered unblock was "release-matched CF4 mocks"
+The historical rev-r196 MV numerical interpretation is quarantined by PR-120
+while ``C1-K5-MV-F1`` remains OPEN.  This module retains only the reusable
+forward-mock mechanics; it supplies no active CF4 amplitude, significance, or
+replacement result. The registered unblock was "release-matched CF4 mocks"
 (BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP -- the Qin+2021 CF4TF L-PICOLA mocks are
 request-only, not public). This module replaces the missing release mock with an
 in-house PHYSICAL forward model that calibrates OUR estimator's actual sampling

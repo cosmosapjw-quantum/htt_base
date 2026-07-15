@@ -55,8 +55,8 @@ coverage lane below uses an ESTIMATED plug-in se and is labeled the
 finite-sample approximation.
 
 SCALE HONESTY (unchanged from v8): experiments run at display mixings
-(0.15/0.3, disclosed); CF4/MES-scale fingerprints (~2e-6) enter only as the
-deterministic row of the K5 card, never as a pretended measurement.
+(0.15/0.3, disclosed).  Observational numerical instantiations and K5-card
+comparison rows are excluded from this active synthetic seal.
 
 Claim discipline: synthetic seeded experiments at tier diagnostic_only; no
 data claim, no signal-discovery claim, no probabilistic-inference claim
@@ -398,9 +398,9 @@ def teff_statistical_v9_seal() -> dict:
                                     "lane where the response is "
                                     "mock-estimated",
         },
-        "scale_honesty": "display mixings 0.15/0.3 (disclosed); CF4/MES-"
-                         "scale fingerprints enter only as the deterministic "
-                         "K5-card row, never as a pretended measurement",
+        "scale_honesty": "display mixings 0.15/0.3 (disclosed); observational "
+                         "numerical instantiations and K5-card comparison rows "
+                         "are excluded from this active synthetic seal",
         "claim_boundary": "synthetic seeded experiments over the Teff "
                           "fingerprint observables; diagnostic_only; no "
                           "data, signal-discovery, "

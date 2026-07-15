@@ -1,12 +1,20 @@
-# K1 full E2E discharge — manual download + run guide
+# K1 full E2E discharge — state-aware handoff guide
 
-_Closes the residual of `BLOCKED_MISSING_PR4_E2E_ACCESS`: the look-elsewhere global
-max-scan is already discharged on the real map under a ΛCDM null
-(`scripts/k1_global_maxscan.py`, SMICA global p = 0.097); what remains is swapping
-the idealised null for a **matched end-to-end (E2E) simulation ensemble** with real
-instrument noise, residual foregrounds, and the component-separation transfer._
+## Current roadmap state (2026-07-15)
 
-## Why this is manual
+- **PR3 / FFP10 download: complete.** Download completion is an input-readiness fact,
+  not an analysed result. The PR3 E2E analysis is deferred to **PR-150**.
+- **PR4 / NPIPE download: not started.** By explicit user scope, every PR4 download,
+  size probe, reduction, cache build, and analysis step is **SKIPPED_BY_USER_SCOPE**
+  throughout the current roadmap run.
+- The currently published K1 record therefore remains the partial real-map result under
+  the isotropic ΛCDM GRF null. No E2E claim is promoted by this guide.
+
+The procedures below are retained as the PR-150 handoff for the already-downloaded PR3
+inputs and as historical acquisition context. They are not authorization to acquire or
+analyse PR4 data in the current run.
+
+## Why acquisition required manual access
 
 Confirmed this session by probing the sources:
 
@@ -23,19 +31,21 @@ Confirmed this session by probing the sources:
   a map/a_lm ensemble. The morphology statistics depend on a_lm phases, so a C_ℓ-only
   product cannot generate the null.
 
-So the sim ensemble must be fetched by a human through the PLA portal (or NERSC auth).
-Everything downstream is already built and waits for the maps.
+PR3/FFP10 was fetched through that manual route and is now present outside git. PR4/NPIPE
+has not been fetched and remains out of scope. The downstream PR3 runner is implemented,
+but execution and interpretation wait for PR-150.
 
-## What to download
+## Current-run acquisition action: none
 
-Pick **one** matched route. The observed map + common mask are already local
+Do not download additional FFP10 or any NPIPE data during the current roadmap run. The
+observed map + common mask are already local
 (`workdir/raw/planck_data/COM_CMB_IQU-{smica,commander}_2048_R3.00_full.fits`,
 `COM_Mask_CMB-common-Mask-Int_2048_R3.00.fits`).
 
-### Route A — FFP10 component-separated CMB simulations (recommended, matches SMICA)
+### Route A — FFP10 component-separated CMB simulations (PR3 download complete)
 
-From the PLA "Simulations" interface, the FFP10 component-separated CMB+noise MC for the
-**same method as the observed map** (SMICA):
+The completed PR3 acquisition targeted the FFP10 component-separated CMB+noise MC for
+the **same method as the observed map** (SMICA):
 
 - `dx12_v3_smica_cmb_mc_<00000..00999>_raw.fits` — nominally 1000 CMB realizations
   (signal); **999 usable** (`00970` known missing/corrupt on the PLA, confirmation pending);
@@ -45,20 +55,22 @@ The honest E2E null is **CMB + noise** per realization (add a noise MC to each C
 use the FFP10 "full" component-separated sims if the portal offers them pre-summed). Keep
 the **same** component-separation method as the observed map; do not mix methods.
 
-### Route B — NPIPE/PR4 E2E (alternative)
+### Route B — NPIPE/PR4 E2E (not downloaded; skipped)
 
-The ~600 NPIPE A/B end-to-end realizations (NERSC-authenticated). These are frequency-level;
-a low-ℓ analysis needs a single cleaned channel or a component-separation step, so Route A
-is cleaner for a morphology max-scan.
+No NPIPE/PR4 product is local. Do not download, reduce, or analyse the NPIPE ensemble in
+this roadmap run. Any future NPIPE work requires a later explicit scope decision and a
+separate provenance-bound handoff.
 
-## Full download on a 2 TB nvme (the exit-gate path — recommended once disk allows)
+## Completed PR3 acquisition and deferred PR-150 analysis
 
-With a dedicated 2 TB nvme the full FFP10 set fits, so Route A in full is the
-strongest, exit-gate null (real CMB MC + real noise MC) — the version that flips
-the `egs_results_table` K1 row `measured_partial → measured` and closes
-`BLOCKED_MISSING_PR4_E2E_ACCESS`. The footprint reducers below are now optional.
+The full FFP10 set was downloaded for PR3. It is the candidate exit-gate null (real CMB
+MC + real noise MC), but it does **not** flip the `egs_results_table` K1 row merely by
+being present. Only a provenance-complete PR-150 analysis may adjudicate whether the row
+can move beyond `measured_partial`. The legacy blocker code
+`BLOCKED_MISSING_PR4_E2E_ACCESS` remains a compatibility label, not a statement that
+PR4 data are locally available.
 
-**Download (PLA portal, SMICA to match the observed map):**
+**Downloaded PR3 inventory target (PLA portal, SMICA to match the observed map):**
 
 - `dx12_v3_smica_cmb_mc_<00000..00999>_raw.fits` — nominally 1000 CMB (signal) MC,
   of which **999 are usable**: realization `00970` is a known missing/corrupt file on
@@ -67,11 +79,10 @@ the `egs_results_table` K1 row `measured_partial → measured` and closes
 
 The runner pairs **by parsed MC id** (`noise[cmb_id mod n_noise]`), so the missing
 `00970` leaves a single absent realization instead of misaligning every later pairing;
-the analysed ensemble is the **PLA-available** set (999 usable CMB MC + 300 noise MC).
+the PR-150 target ensemble is the **PLA-available** set (999 usable CMB MC + 300 noise MC).
 
-Full IQU Nside=2048 is ~1 TB (fits a 2 TB disk with headroom for the working set).
-You can keep all raw FITS this time, or still stream-downgrade (below) to keep the
-nvme free for the next method (Commander) cross-check.
+Full IQU Nside=2048 is ~1 TB. Retain the downloaded raw FITS and acquisition receipts
+until the PR-150 analysis and reproducibility gates complete.
 
 **Layout** (raw outside git, `workdir/raw`):
 
@@ -81,7 +92,7 @@ workdir/raw/planck_ffp10/smica/
   noise_mc/ dx12_v3_smica_noise_mc_00000_raw.fits ... 00299
 ```
 
-**Run the full E2E null (already implemented — `scripts/k1_global_maxscan.py`):**
+**PR-150 execution command (implemented, but deferred in the current roadmap slice):**
 
 ```bash
 PYTHONPATH=. venv/bin/python scripts/k1_global_maxscan.py \
@@ -97,11 +108,10 @@ statistics, and runs the frozen max-scan against the real SMICA observed 6-vecto
 Pairing is **by parsed MC id**, `cmb_mc[id] + noise_mc[id mod n_noise]` (300 noise
 cycled across the CMB set, matching the Planck-2018 permutation scheme); this is
 robust to the known missing realization `00970` (999 usable CMB MC), which simply
-leaves a single absent realization rather than shifting later pairings. Repeat with
-`--method commander` for
-the cross-check; **report the two side by side, do not average**. Then flip the K1
-row per "Exit gate" below. The canonical GRF artifact and the route-4 noise-only
-artifact are left untouched (separate files).
+leaves a single absent realization rather than shifting later pairings. Within PR-150,
+repeat with `--method commander` for the cross-check and report the two side by side,
+never averaged. Do not alter the current K1 row before the PR-150 gates below pass.
+The canonical GRF artifact and route-4 noise-only artifact remain separate.
 
 ### Higher-precision (v2) statistic set + parallelism (Ryzen 5900X)
 
@@ -151,7 +161,7 @@ NSIDE 64 vs 128 barely move it. RAM: ~1 GB/worker → `--jobs 12` ≈ 12 GB, `--
 ≈ 24 GB, both well under 64 GB (no RAM purchase needed). The v2 full run writes
 `docs/generated/k1_global_maxscan_e2e_full.json`; the v1/GRF artifacts are untouched.
 
-## Reducing the ~1 TB footprint (optional — only if disk is tight)
+## Historical PR3 footprint-reduction options (no current download action)
 
 Downloading all `dx12_v3_smica_cmb_mc_<00000..00999>` + `..._noise_mc_<00000..00299>`
 at full IQU Nside=2048 is ~1 TB. None of that volume is needed for an Nside=16,
@@ -185,8 +195,8 @@ Compounded footprints (stream-downgraded, so stored ≈ a few hundred KB either 
 | 300 CMB + 300 noise, T-only, streamed | 600 | ~85 GB / ~250 GB | `--cmb-mc-dir --noise-mc-dir --max-sims 300` |
 | 300 noise-only + local ΛCDM, T-only, streamed | 300 | ~40 GB / ~125 GB | `--noise-mc-dir` (alone) |
 
-With a 2 TB nvme, **full Route A** is the recommendation: it is the exit-gate null
-(real CMB + real noise) that flips K1 `measured_partial → measured`. Route 4
+For the completed PR3 acquisition, **full Route A** is the candidate exit-gate null.
+Only the PR-150 result and provenance gates can authorize any K1 status change. Route 4
 (noise-only + local ΛCDM) remains the lighter fallback if disk is tight — it
 upgrades the GRF null with real noise but is not the full E2E, so K1 stays
 `measured_partial`. Both modes are implemented in `k1_global_maxscan.py` and write
@@ -214,7 +224,7 @@ Record, per simulation: `simulation_id`, `release_family` (FFP10/NPIPE_PR4),
 `docs/research_program/publishable_analysis_pack_2026-06-26/scripts/validate_blocker_manifest.py`
 (+ `examples/k1_e2e_manifest.example.json`).
 
-## Run (everything below is already implemented)
+## PR-150 run handoff (implemented; execution deferred)
 
 The frozen pipeline is identical to the observed-map path
 (`scripts/make_lowell_morphology_real_map.py`): downgrade each sim to **NSIDE=16**, apply
@@ -230,7 +240,7 @@ sim N×6 matrix to the max-scan.
    venv/bin/python "$PACK/scripts/validate_blocker_manifest.py" workdir/raw/planck_ffp10/MANIFEST.json
    ```
 
-2. **Build summaries + run the max-scan** — now a single implemented command
+2. **In PR-150, build summaries + run the max-scan** with the implemented command
    (`scripts/k1_global_maxscan.py`, rev-r136). It downgrades each sim on read
    (`hp.ud_grade(m, 16)`), computes the six statistics, and runs the frozen max-scan;
    raw maps are streamed/discarded, only the compact JSON artifact is written.
@@ -253,22 +263,24 @@ sim N×6 matrix to the max-scan.
    `htt.obsstat.lowell_global_calibration` remains available if you precompute summaries
    separately; the command above is the wired path.)
 
-4. **Flip the row** through the generator:
+4. **Only after the PR-150 gates pass, propose the row update** through the generator:
 
    ```bash
-   venv/bin/python scripts/build_egs_results_table.py   # K1: measured_partial -> measured
+   venv/bin/python scripts/build_egs_results_table.py   # conditional status update through evidence gates
    ```
 
    and add the E2E provenance (map IDs, mask, beam, NSIDE, method, config hash, input
    hashes) to `docs/generated/k1_global_maxscan.json` (set `null_model: ffp10_e2e`).
 
-## Exit gate
+## PR-150 exit gate
 
 - global rank p-value under the **matched E2E** ensemble (not ΛCDM);
 - matched-pipeline config hash bound to {statistic list, mask, beam, ℓ-range, method};
 - ensemble provenance manifest (map IDs, URLs, sha256, NSIDE, method);
-- `egs_results_table` K1 row flips `measured_partial → measured` **through the generator**;
-- `BLOCKED_MISSING_PR4_E2E_ACCESS` closes.
+- the `egs_results_table` K1 row changes only if the generator's evidence gates authorize
+  it; otherwise it remains `measured_partial`;
+- the legacy `BLOCKED_MISSING_PR4_E2E_ACCESS` label is adjudicated from the PR3 E2E
+  result without implying that PR4/NPIPE was downloaded or analysed.
 
 ## Kill switches (per `BLOCKER_RESOLUTION_PLAN.md`)
 
@@ -277,23 +289,11 @@ methods are mixed without labels; fewer sims are available than declared; the p-
 recomputed with an unfrozen statistic set; or any text claims E2E global significance
 without the matched provenance.
 
-## Disk-swap + reproducibility retention (PR3 → PR4 on a 1.8 TB NVMe)
+## Retention boundary: preserve PR3; do not start PR4
 
-The NVMe cannot hold PR3 (FFP10, ~1 TB) and PR4 (NPIPE) at once, so acquisition is a
-**serial swap** and PR3 must be reduced to a faithful cache before deletion. Full policy:
-`docs/research_program/K1_E2E_REPRODUCIBILITY_RETENTION.md`. Short form:
-
-1. `scripts/k1_e2e_reduce.py` (while PR3 on disk) → estimator-agnostic cache
-   (Tier-2, NSIDE=128 float64 pre-mask maps + a_lm) + a committed Tier-1 receipt.
-2. `scripts/k1_e2e_cache_gate.py --all` → must report `safe_to_delete_raw: true`
-   (bit-exact from-raw reproduction + raw-hash match). Fail-closed.
-3. only then delete PR3 raw; measure PR4 with `scripts/k1_npipe_size_probe.py`
-   (`--du-listing`/`--head-list` from an authenticated NERSC/PLA listing); download only
-   the **K1-usable** NPIPE product (component-separated CMB sims / one cleaned channel —
-   the full frequency ensemble is multi-TB and will not fit); reduce+gate NPIPE the same way.
-
-**PR4 is a required additional analysis, not an optional cross-check:** the Planck team reports
-NPIPE reduces residual low-ℓ systematics vs FFP10/2018, which is exactly the K1 regime — so
-report the FFP10-null and NPIPE-null global-p side by side (never averaged); their difference is
-the systematics-sensitivity result. Freeze the mask/convention (roadmap PR-149) before deleting
-PR3 raw — a convention needing proc_nside > 128 is the only re-download trigger.
+Keep the downloaded PR3/FFP10 inputs and their acquisition receipts intact until PR-150
+has completed the registered analysis and reproducibility gates. Do not delete PR3 to make
+space for PR4, do not run `scripts/k1_npipe_size_probe.py`, and do not create NPIPE-derived
+summaries in this roadmap run. `docs/research_program/K1_E2E_REPRODUCIBILITY_RETENTION.md`
+remains the future retention policy, but its PR3-to-PR4 swap phase is inactive under the
+current user scope.

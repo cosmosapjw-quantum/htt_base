@@ -12,6 +12,7 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 DATA_DIR = REPO_ROOT / "figures" / "data_analysis_current"
 META_DIR = REPO_ROOT / "figures" / "quarantined_meta" / "v6_no_download"
 LEGACY_ROOT_DIR = REPO_ROOT / "figures" / "quarantined_legacy" / "root_sources"
+CF4_P0_LEGACY_DIR = REPO_ROOT / "legacy" / "cf4_p0" / "figures" / "data_analysis_current"
 PACK_JSON = REPO_ROOT / "docs" / "generated" / "report_data_analysis_figure_pack.json"
 PACK_MD = REPO_ROOT / "docs" / "generated" / "report_data_analysis_figure_pack.md"
 
@@ -20,7 +21,6 @@ EXPECTED_DATA_FIGURES = (
     "fig_data_planck_smica_masked_temperature.png",
     "fig_data_cf4_catalog_sky_velocity.png",
     "fig_data_cf4_depth_velocity_profile.png",
-    "fig_data_k5_cf4_bulk_flow_coverage.png",
     "fig_data_k6_cf4_wf_curl_shear_diagnostic.png",
     "fig_data_compact_cmb_high_ell_products.png",
     "fig_data_compact_lensing_bandpower_covariance.png",
@@ -31,17 +31,27 @@ EXPECTED_DATA_FIGURES = (
     "fig_data_desi_tracer_handoff_continuity.png",
     "fig_data_cf4_radial_velocity_sign_transition.png",
     "fig_data_cf4_radial_delta_stability.png",
-    "fig_data_cf4_forward_coverage_residual.png",
     "fig_data_cf4_depth_apex_phase_portrait.png",
     "fig_data_cf4_shell_apex_separation_matrix.png",
-    "fig_data_k5_cf4_vs_affine_consistency.png",
     "fig_data_cf4_affine_gradient_spectrum.png",
     "fig_data_k1_lowell_tensor_conditioning.png",
     "fig_data_k1_maxscan_waterfall.png",
     "fig_data_k1_scalar_biposh_map_stability.png",
+)
+
+QUARANTINED_CF4_P0_FIGURES = (
+    "fig_data_k5_cf4_bulk_flow_coverage.png",
+    "fig_data_k5_cf4_vs_affine_consistency.png",
+    "fig_data_cf4_forward_coverage_residual.png",
     "fig_data_observed_sector_response_vector.png",
     "fig_data_k1_k5_joint_diagnostic_axes.png",
 )
+
+RECONSTRUCTION_FUNCTIONAL_FIGURES = {
+    "fig_data_cf4_depth_apex_phase_portrait.png",
+    "fig_data_cf4_shell_apex_separation_matrix.png",
+    "fig_data_cf4_affine_gradient_spectrum.png",
+}
 
 
 def _read_json(path: Path) -> dict[str, object]:
@@ -134,16 +144,35 @@ def test_report_data_analysis_figures_are_actual_data_not_meta_surfaces() -> Non
             expected_artifact_path=rel_path,
         )
         assert issues == ()
-        assert manifest["artifact_mode"] == "paper_appendix_conditioned"
-        assert manifest["allowed_use"] == "paper_appendix"
+        if file_name in RECONSTRUCTION_FUNCTIONAL_FIGURES:
+            assert manifest["artifact_mode"] == "paper_appendix_conditioned"
+            assert manifest["allowed_use"] == "paper_appendix"
+            assert manifest["analysis_mode"] == (
+                "reconstruction_conditioned_method_systematics"
+            )
+            finding = manifest["statistics_definitions"]["finding_state"]
+            assert finding["finding_id"] == "C1-K5-MV-F1"
+            assert finding["scientific_status"] == "OPEN"
+            assert manifest["statistics_definitions"]["observational_amplitude_claim_allowed"] is False
+            assert manifest["statistics_definitions"]["global_tilt_claim_allowed"] is False
+            assert manifest["transfer_source"] == "external_proxy_cf4_wf_reconstruction"
+        else:
+            assert manifest["artifact_mode"] == "paper_appendix_conditioned"
+            assert manifest["allowed_use"] == "paper_appendix"
         assert manifest["statistics_definitions"]["figure_lane"] == "report_data_analysis_current"
         assert any(row.startswith("workdir/") for row in manifest["input_hashes"])
 
-    k5 = _read_json(DATA_DIR / "fig_data_k5_cf4_bulk_flow_coverage.manifest.json")
-    assert "docs/generated/k5_cf4_release_coverage.json" in k5["statistics_definitions"]["source_artifacts"]
-    assert k5["statistics_definitions"]["measured_bulk_amplitude_kms"] > 300.0
-    assert k5["statistics_definitions"]["measurement_only_coverage"] < 0.5
-    assert 0.60 <= k5["statistics_definitions"]["cosmic_variance_inclusive_coverage"] <= 0.76
+    for file_name in QUARANTINED_CF4_P0_FIGURES:
+        assert not (DATA_DIR / file_name).exists()
+        assert not (
+            DATA_DIR
+            / file_name.replace(".png", ".manifest.json")
+        ).exists()
+        assert (CF4_P0_LEGACY_DIR / file_name).is_file()
+        assert (
+            CF4_P0_LEGACY_DIR
+            / file_name.replace(".png", ".manifest.json")
+        ).is_file()
 
     k6 = _read_json(DATA_DIR / "fig_data_k6_cf4_wf_curl_shear_diagnostic.manifest.json")
     assert "docs/generated/k6_cf4_curl_posterior.json" in k6["statistics_definitions"]["source_artifacts"]

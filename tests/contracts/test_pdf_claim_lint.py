@@ -1,6 +1,10 @@
 import pytest
 
-from scripts.pdf_claim_lint import lint_pages
+import json
+from pathlib import Path
+
+import scripts.pdf_claim_lint as pdf_claim_lint
+from scripts.pdf_claim_lint import lint_pages, verify_pdf_manifest_pair
 
 
 def test_pdf_claim_lint_fails_high_strength_language_without_context():
@@ -151,3 +155,125 @@ def test_pdf_claim_lint_allows_negative_family_id_statement():
     findings = lint_pages(["Bianchi family identification is not established."])
 
     assert findings == []
+
+
+@pytest.mark.parametrize(
+    ("text", "signature"),
+    [
+        (
+            "The CF4 MV bulk-flow B200 amplitude is " + "40" + "5.22 km/s.",
+            "cf4_mv_r200_headline",
+        ),
+        (
+            "CF4 velocity-correlation f_sigma8="
+            + "0.404"
+            + "6 after shape correction "
+            + "1.442"
+            + "3.",
+            "cf4_ml_corrected_headline",
+        ),
+        (
+            "The CF4 GLS bulk-flow is "
+            + "34"
+            + "1 km/s and Omega_tilt is "
+            + "4.07"
+            + "e-7.",
+            "cf4_gls_headline",
+        ),
+    ],
+)
+def test_pdf_claim_lint_rejects_cf4_p0_text(text: str, signature: str):
+    findings = lint_pages([text])
+
+    assert any(
+        finding.severity == "fail" and signature in finding.pattern
+        for finding in findings
+    )
+
+
+def test_pdf_claim_lint_rejects_mismatched_companion_manifest(tmp_path: Path):
+    pdf = tmp_path / "report.pdf"
+    manifest = tmp_path / "report.manifest.json"
+    pdf.write_bytes(b"%PDF-1.4\nclaim surface\n")
+    manifest.write_text(
+        json.dumps({"artifact_sha256": "sha256:" + "0" * 64}),
+        encoding="utf-8",
+    )
+
+    try:
+        verify_pdf_manifest_pair(pdf, manifest)
+    except ValueError as exc:
+        assert "digest mismatch" in str(exc)
+    else:
+        raise AssertionError("mismatched PDF companion manifest must fail closed")
+
+
+def test_missing_current_pdf_emits_blocked_not_passed_report(
+    tmp_path: Path,
+    monkeypatch,
+):
+    class Block:
+        sha256 = "1" * 64
+        findings = (
+            {"finding_id": "C1-K5-MV-F1"},
+            {"finding_id": "C3-K5-VCORR-ML-F1"},
+            {"finding_id": "N-DATA-CF4-DOWNSTREAM"},
+        )
+
+    monkeypatch.setattr(pdf_claim_lint, "load_block_record", lambda _root: Block())
+    payload = pdf_claim_lint.build_report_payload(
+        repo_root=tmp_path,
+        pdf_path=Path("docs/generated/manuscript_pdf/report.pdf"),
+        manifest_path=Path("docs/generated/manuscript_pdf/report.manifest.json"),
+        output_path=tmp_path / "docs/generated/pdf_claim_lint_report.md",
+        generating_command="pytest",
+    )
+    report = pdf_claim_lint.render_report(payload)
+
+    assert payload["status"] == "BLOCKED_NO_CURRENT_PDF"
+    assert payload["claim_lint_passed"] is False
+    assert payload["page_count"] == 0
+    assert "No current PDF was linted" in report
+    assert "claim_lint_passed: false" in report
+
+
+def test_blocked_no_current_pdf_cli_is_nonzero_in_write_and_check_modes(
+    tmp_path: Path,
+    monkeypatch,
+):
+    payload = {
+        "owner": "COMMON",
+        "implementation_scope": "common",
+        "claim_tier": "blocked",
+        "transfer_source": "none",
+        "sky_support_status": "not_applicable_no_current_pdf",
+        "null_mock_status": "not_applicable_no_current_pdf",
+        "artifact_path": "report.md",
+        "status": "BLOCKED_NO_CURRENT_PDF",
+        "claim_lint_passed": False,
+        "pdf_path": "missing.pdf",
+        "pdf_sha256": None,
+        "pdf_manifest_path": None,
+        "quarantine_block_path": "docs/generated/cf4_p0_quarantine_block.json",
+        "quarantine_block_sha256": "sha256:" + "1" * 64,
+        "config_hash": "sha256:" + "2" * 64,
+        "input_hashes": [],
+        "generating_command": "pytest",
+        "git_commit_or_worktree_state": "test",
+        "page_count": 0,
+        "failed_findings": 0,
+        "warning_findings": 0,
+        "findings": [],
+        "open_findings": ["C1-K5-MV-F1"],
+        "caveats": ["blocked"],
+    }
+    output = tmp_path / "report.md"
+    monkeypatch.setattr(
+        pdf_claim_lint,
+        "build_report_payload",
+        lambda **_kwargs: dict(payload),
+    )
+
+    assert pdf_claim_lint.main(["--output", str(output)]) == 1
+    assert output.is_file()
+    assert pdf_claim_lint.main(["--output", str(output), "--check"]) == 1

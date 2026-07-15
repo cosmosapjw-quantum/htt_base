@@ -27,9 +27,9 @@ for p in (REPO / "htt/htt", REPO / "htt", REPO):
 
 OUT = REPO / "docs/generated/k5_omega_k_ceiling_card.json"
 FROZEN_REFS = [
-    "docs/generated/k5_cf4_identified_interval_card.json",
-    "docs/generated/k5_cf4_identified_interval_card_v8.json",
-    "docs/generated/k5_cf4_identified_interval_card_v9.json",
+    "legacy/cf4_p0/cards/k5_cf4_identified_interval_card.json",
+    "legacy/cf4_p0/cards/k5_cf4_identified_interval_card_v8.json",
+    "legacy/cf4_p0/cards/k5_cf4_identified_interval_card_v9.json",
 ]
 
 
@@ -65,6 +65,9 @@ def build_card() -> dict:
                                              " surfaces intact)",
             "frozen_card_hashes": {p: _sha(REPO / p) for p in FROZEN_REFS
                                    if (REPO / p).exists()},
+            "legacy_reproduction_only": True,
+            "public_use": False,
+            "active_cf4_numeric_consumer": False,
         },
         "plugin_coherence_remark": (
             "the saadeh_model_conditional ceilings (<=1.5e-6 / <=1.8e-6, two-significant-figure ceilings) sit"

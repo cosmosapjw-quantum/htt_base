@@ -8,7 +8,7 @@ def test_preliminary_directional_handoff_loads_generated_bundle() -> None:
     assert handoff.pack_ids == ("A", "B", "D")
     assert tuple(handoff.pack_index) == ("A", "B", "D")
     assert handoff.pack_claim_tiers["B"] == "conditional"
-    assert handoff.pack_production_statuses["B"] == "production_candidate"
+    assert handoff.pack_production_statuses["B"] == "diagnostic_only"
     assert handoff.pack_summary_lines["B"]
     assert handoff.likelihood_input.observable_vector.manifest.owner == "BASS"
     assert handoff.likelihood_input.atlas_entry is not None

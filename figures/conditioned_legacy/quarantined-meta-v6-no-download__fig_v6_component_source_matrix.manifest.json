@@ -1,25 +1,28 @@
 {
   "artifact_id": "common.conditioned_legacy_figure.quarantined-meta-v6-no-download__fig_v6_component_source_matrix",
   "artifact_path": "figures/conditioned_legacy/quarantined-meta-v6-no-download__fig_v6_component_source_matrix.png",
+  "artifact_sha256": "sha256:c1d2a984f8ac18a6c8a474be900139a55e6937273ecca2951f75da0d322bfa12",
   "caveats": [
     "Conditionally included legacy figure; not a refreshed current-code production result.",
     "shown only as a legacy manuscript-generator diagnostic under its original assumptions, with current claim ceilings made explicit.",
     "No native low-ell solver output is represented.",
     "No Bianchi family-ID or geometry-detection claim is made.",
-    "MIO diagnostics, HTT inference, and transfer provenance remain separated by owner."
+    "MIO diagnostics, HTT inference, and transfer provenance remain separated by owner.",
+    "The live source path has changed since this immutable conditioned copy; the manifest preserves the frozen source digest and records the current candidate digest separately."
   ],
   "claim_tier": "exploratory",
-  "code_version": "conditioned-legacy-gallery-v1",
-  "config_hash": "sha256:4b3288763cadbe6a5d8059cce4d41fc3bda191f9b9be2f21c3145b6eed06f8b1",
+  "code_version": "conditioned-legacy-gallery-v2",
+  "config_hash": "sha256:3ec5e4213fb5b1247ab999654f253a6372dbd706680b83f32d8fc6e8ad102690",
   "created_by": "scripts/build_expanded_manuscript_figure_suite.py",
   "failed_gates": [],
-  "generating_command": "python scripts/build_expanded_manuscript_figure_suite.py",
-  "git_commit": "85fca53",
-  "git_commit_or_worktree_state": "85fca53+dirty",
+  "generating_command": "python scripts/build_expanded_manuscript_figure_suite.py --phase all",
+  "git_commit": "e6da367",
+  "git_commit_or_worktree_state": "e6da367+dirty",
   "implementation_scope": "common",
   "input_hashes": [
-    "figures/quarantined_meta/v6_no_download/fig_v6_component_source_matrix.png:sha256:c1d2a984f8ac18a6c8a474be900139a55e6937273ecca2951f75da0d322bfa12",
-    "scripts/build_expanded_manuscript_figure_suite.py:sha256:b96cc2dc76f678a2158b7053334b182ab2908963be64209cd4aa19c7f60d228a"
+    "frozen-source-snapshot:figures/quarantined_meta/v6_no_download/fig_v6_component_source_matrix.png:sha256:c1d2a984f8ac18a6c8a474be900139a55e6937273ecca2951f75da0d322bfa12",
+    "current-source-candidate:figures/quarantined_meta/v6_no_download/fig_v6_component_source_matrix.png:sha256:8791851a7f64425d66b111ed45c952fe7ad3c81ef0b62fb2990908fc243c9efc",
+    "scripts/build_expanded_manuscript_figure_suite.py:sha256:f530556a73b1f17113a6fb4ee539733f1364a26e60ffc20d633d67a7af721106"
   ],
   "null_mock_status": "not_statistical_or_legacy_context",
   "owner": "COMMON",
@@ -33,9 +36,17 @@
   ],
   "schema_version": "artifact-manifest-v2",
   "sky_support_status": "not_directional",
+  "source_binding": {
+    "artifact_sha256": "sha256:c1d2a984f8ac18a6c8a474be900139a55e6937273ecca2951f75da0d322bfa12",
+    "current_source_sha256": "sha256:8791851a7f64425d66b111ed45c952fe7ad3c81ef0b62fb2990908fc243c9efc",
+    "frozen_source_sha256": "sha256:c1d2a984f8ac18a6c8a474be900139a55e6937273ecca2951f75da0d322bfa12",
+    "source_path": "figures/quarantined_meta/v6_no_download/fig_v6_component_source_matrix.png",
+    "status": "preserved_frozen_source_digest"
+  },
   "statistics_definitions": {
     "legacy_source_path": "figures/quarantined_meta/v6_no_download/fig_v6_component_source_matrix.png",
-    "manuscript_role": "appendix_only_conditioned_diagnostic"
+    "manuscript_role": "appendix_only_conditioned_diagnostic",
+    "source_binding_status": "preserved_frozen_source_digest"
   },
   "transfer_source": "legacy_analytic_or_proxy_context"
 }

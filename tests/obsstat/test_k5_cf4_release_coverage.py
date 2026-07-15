@@ -1,8 +1,4 @@
-"""Regression: K5 CF4 release-matched cosmic-variance coverage on the real catalogue.
-
-Validates that the cosmic-variance-inclusive coverage is nominal while the
-measurement-noise-only coverage under-covers, and the claim firewall.
-"""
+"""PR-120 regression: the active K5 coverage artifact is quarantine-only."""
 from __future__ import annotations
 
 import importlib.util
@@ -27,25 +23,24 @@ def _load():
 def test_report_is_committed_and_claim_gated():
     assert OUT.is_file()
     d = json.loads(OUT.read_text())
-    assert d["family_identification"] is False
-    assert d["native_solver_result"] is False
-    assert d["claim_tier"] == "diagnostic_only"
-    assert d["blocker_resolved"] == "BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP"
+    assert d["schema"] == "htt.cf4_p0_quarantine_block.v1"
+    assert d["owner"] == "COMMON"
+    assert d["claim_tier"] == "blocked"
+    assert d["status"] == "QUARANTINED_OPEN_FINDINGS"
+    assert d["allowed_use"] == "blocked_source_record_only"
+    assert d["replacement_value"] is None
 
 
 def test_cosmic_variance_restores_nominal_coverage():
     d = json.loads(OUT.read_text())
-    c = d["coverage"]
-    # measurement-noise-only coverage under-covers a real cosmic-variance flow ...
-    assert c["measurement_noise_only"]["amplitude_coverage"] < 0.5
-    # ... and the cosmic-variance-inclusive coverage is nominal (~68%)
-    assert 0.60 <= c["cosmic_variance_inclusive"]["amplitude_coverage"] <= 0.76
-    for comp in c["cosmic_variance_inclusive"]["component_coverage"]:
-        assert 0.58 <= comp <= 0.78
-    # cosmic variance dominates the bulk-flow error budget
-    assert c["cosmic_variance_amplitude_error_kms"] > c["measurement_amplitude_error_kms"]
-    # estimator is (near) unbiased
-    assert abs(c["cosmic_variance_inclusive"]["amplitude_bias_kms"]) < 10.0
+    assert "coverage" not in d
+    assert "blocker_resolved" not in d
+    assert {row["finding_id"] for row in d["findings"]} == {
+        "C1-K5-MV-F1",
+        "C3-K5-VCORR-ML-F1",
+        "N-DATA-CF4-DOWNSTREAM",
+    }
+    assert all(row["scientific_status"] == "OPEN" for row in d["findings"])
 
 
 def test_deterministic_against_real_catalogue_when_present():

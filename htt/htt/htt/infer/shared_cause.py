@@ -13,6 +13,7 @@ from typing import Any, Mapping
 import numpy as np
 
 from common.sky_geometry import spherical_mean
+from htt.core.cf4_observational_input import OPEN_FINDING_IDS
 
 __all__ = [
     'SharedCauseResult',
@@ -68,48 +69,52 @@ def _classify(delta: float) -> str:
 
 
 def _fit_axis_amplitude(obs_data: dict) -> tuple[float, float, float]:
-    """Fit a shared low-z axis/amplitude directly from observed surveys."""
+    """Fit a shared axis/amplitude from the active non-CF4 surveys."""
     from .dipole_vector_likelihood import DipoleVectorLikelihood
 
     dp = obs_data['dipole_observations']
-    cf4 = dp['cf4_watkins_2023']
     cw = dp['catwise_bohme_2025']
     radio = dp['radio_secrest_2021']
 
-    direction_rows = [
-        (
-            'CF4',
-            cf4.get('l_deg', DipoleVectorLikelihood.CF4_L),
-            cf4.get('b_deg', DipoleVectorLikelihood.CF4_B),
-            DipoleVectorLikelihood.CF4_SIGMA_DEG,
-        ),
+    survey_rows = [
         (
             'CatWISE',
             cw.get('l_deg', DipoleVectorLikelihood.CW_L),
             cw.get('b_deg', DipoleVectorLikelihood.CW_B),
             DipoleVectorLikelihood.CW_SIGMA_DEG,
+            cw['eps1'],
+            cw['sigma_stat'],
         ),
         (
             'Radio',
             radio.get('l_deg', DipoleVectorLikelihood.RADIO_L),
             radio.get('b_deg', DipoleVectorLikelihood.RADIO_B),
             DipoleVectorLikelihood.RADIO_SIGMA_DEG,
+            radio['eps1'],
+            radio['sigma_stat'],
         ),
     ]
-    l_vals = np.array([float(row[1]) for row in direction_rows], dtype=float)
-    b_vals = np.array([float(row[2]) for row in direction_rows], dtype=float)
-    w_dir = np.array([1.0 / float(row[3])**2 for row in direction_rows], dtype=float)
+
+    # ``LowZAblation`` marks a removed survey with effectively infinite
+    # amplitude uncertainty.  Drop it from both the direction and amplitude
+    # fits so an ablation cannot retain a hidden direction constraint.
+    active_rows = [
+        row
+        for row in survey_rows
+        if np.isfinite(float(row[5])) and 0.0 < float(row[5]) < 1.0e9
+    ]
+    if not active_rows:
+        raise ValueError("no active non-CF4 survey remains for shared-axis fit")
+
+    l_vals = np.array([float(row[1]) for row in active_rows], dtype=float)
+    b_vals = np.array([float(row[2]) for row in active_rows], dtype=float)
+    w_dir = np.array([1.0 / float(row[3])**2 for row in active_rows], dtype=float)
     mean = spherical_mean(l_vals, b_vals, w_dir)
     if np.isnan(mean['l_deg']) or np.isnan(mean['b_deg']):
         raise ValueError("shared-cause axis fit is degenerate")
 
-    amplitude_rows = [
-        (cf4['beta'], cf4['sigma']),
-        (cw['eps1'], cw['sigma_stat']),
-        (radio['eps1'], radio['sigma_stat']),
-    ]
-    values = np.array([float(row[0]) for row in amplitude_rows], dtype=float)
-    sigmas = np.array([float(row[1]) for row in amplitude_rows], dtype=float)
+    values = np.array([float(row[4]) for row in active_rows], dtype=float)
+    sigmas = np.array([float(row[5]) for row in active_rows], dtype=float)
     w_amp = 1.0 / sigmas**2
     amplitude = float(np.sum(w_amp * values) / np.sum(w_amp))
     return amplitude, float(mean['l_deg']), float(mean['b_deg'])
@@ -130,7 +135,7 @@ def _resolve_axis_amplitude(
 
     n_user = sum(value is not None for value in (A_best, l_best, b_best))
     if n_user == 0:
-        fit_mode = 'weighted_data_fit'
+        fit_mode = 'weighted_non_cf4_data_fit'
     elif n_user == 3:
         fit_mode = 'user_supplied'
     else:
@@ -150,7 +155,7 @@ def _ablation_entries(
 
     abl = LowZAblation(obs_data)
     entries: list[dict[str, Any]] = []
-    for survey in ['CF4', 'CatWISE', 'Radio']:
+    for survey in ['CatWISE', 'Radio']:
         obs_mod = abl.ablate(survey)
         A_mod, l_mod, b_mod, fit_mode = _resolve_axis_amplitude(
             obs_mod,
@@ -265,9 +270,14 @@ def shared_cause_report_artifact(
         'wall_time_sec': extra.get('wall_time_sec'),
         'python_version': extra.get('python_version', platform.python_version()),
         'numpy_version': extra.get('numpy_version', np.__version__),
-        'claim_tier': extra.get('claim_tier', 'REPORT'),
-        'scope_label': extra.get('scope_label', 'report'),
+        'owner': 'HTT',
+        'implementation_scope': 'non_cf4_shared_axis_diagnostic',
+        'claim_tier': extra.get('claim_tier', 'diagnostic_only'),
+        'scope_label': extra.get('scope_label', 'non_cf4_diagnostic'),
         'production_allowed': False,
+        'excluded_channels': ['c'],
+        'cf4_channel_status': 'QUARANTINED_OPEN_FINDINGS',
+        'cf4_finding_ids': list(OPEN_FINDING_IDS),
         'fit_mode': fit_mode,
         'lnB_S2_vs_null': float(result.lnB_S2_vs_null),
         'S2_preferred': bool(result.S2_preferred),

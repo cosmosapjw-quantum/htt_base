@@ -1,5 +1,4 @@
-"""EGS3 Axis U gates (U4): statistical closure over the Teff fingerprint lane
-+ the K5 v8 card extension.
+"""EGS3 Axis U gates (U4): synthetic statistical closure over Teff fingerprints.
 
 US1 the forward model's population anchors are exact: the moment-ratio
     estimators are centered on the Teff two_temperature_ratio values;
@@ -8,9 +7,8 @@ US2 IM coverage holds on the identified fingerprint interval at the
 US3 the estimated-covariance joint fingerprint over-rejects under the naive
     chi^2 threshold and is calibrated by the Hotelling/F correction (the T4'
     phenomenon reproduced on the Teff observables);
-US4 the K5 v8 card artifact is check-current, keeps the plugin firewall
-    (observational_claim_allowed False, Omega_k PLUGIN + documented null) and
-    carries the deterministic Teff fingerprint row below the MES ceiling;
+US4 the formerly coupled K5 v8 card is a canonical PR-120 blocked source and
+    the active synthetic seal imports no observational numerical row;
 US-CoVe x_C bit-identity three-route anchor + forbidden-string guard.
 
 Diagnostic-only; display-scale experiments disclosed; no measurement claim.
@@ -76,28 +74,28 @@ class US4CardExtension(unittest.TestCase):
                  "PYTHONPATH": f"{REPO}:{REPO}/htt:{REPO}/htt/htt"})
         self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
 
-    def test_card_firewall_and_fingerprint_row(self):
+    def test_card_is_canonical_block_with_no_fingerprint_row(self):
         card = json.loads(
             (REPO / "docs/generated/k5_cf4_identified_interval_card_v8.json")
             .read_text())
-        self.assertFalse(card["observational_claim_allowed"])
-        row = card["v8_teff_fingerprint_row"]
-        self.assertTrue(row["not_a_measurement"])
-        self.assertTrue(row["fingerprint_below_ceiling"])
-        self.assertIn("PLUGIN/BLOCKED", card["v8_omega_k_status"]["input_mode"])
-        self.assertIn("DOCUMENTED NULL",
-                      card["v8_omega_k_status"]["external_prior_branch"])
+        self.assertEqual(card["status"], "QUARANTINED_OPEN_FINDINGS")
+        self.assertEqual(card["claim_tier"], "blocked")
+        self.assertIsNone(card["replacement_value"])
+        self.assertNotIn("v8_teff_fingerprint_row", card)
+        self.assertEqual(
+            {row["scientific_status"] for row in card["findings"]}, {"OPEN"}
+        )
 
-    def test_card_references_frozen_v7_base(self):
+    def test_card_references_exact_legacy_v8_copy(self):
         card = json.loads(
             (REPO / "docs/generated/k5_cf4_identified_interval_card_v8.json")
             .read_text())
-        base = card["based_on_frozen_v7_card"]
-        self.assertEqual(len(base["sha256"]), 64)
-        frozen = REPO / base["path"]
-        import hashlib
-        self.assertEqual(hashlib.sha256(frozen.read_bytes()).hexdigest(),
-                         base["sha256"])
+        legacy = card["artifact"]["legacy_reproduction_only"]
+        self.assertIn(
+            "legacy/cf4_p0/cards/k5_cf4_identified_interval_card_v8.json",
+            legacy,
+        )
+        self.assertFalse(card["artifact"]["legacy_public_use"])
 
 
 class USSealTests(unittest.TestCase):
@@ -106,6 +104,8 @@ class USSealTests(unittest.TestCase):
         self.assertEqual(seal["status"], "PASS")
         self.assertEqual(seal["seal"], "egs3.teff_statistical")
         self.assertIn("scale_honesty", seal)
+        self.assertIn("excluded", seal["scale_honesty"])
+        self.assertNotIn("CF4", seal["scale_honesty"])
 
 
 class USCoVeAdversarialGuard(unittest.TestCase):
@@ -128,7 +128,7 @@ class USCoVeAdversarialGuard(unittest.TestCase):
 
     def test_scale_honesty_disclosed(self):
         doc = " ".join((ts.__doc__ or "").lower().split())
-        self.assertIn("never as a pretended measurement", doc)
+        self.assertIn("observational numerical instantiations are excluded", doc)
 
 
 if __name__ == "__main__":

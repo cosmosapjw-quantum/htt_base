@@ -203,7 +203,9 @@ class DeparturePosterior:
 
         For the geometry-frame convention (used by BackgroundState.x),
         see htt.core.ssot.omega_tilt(..., frame='geometry').
-        The two agree to 0.014% at CF4 β = 1.334e-3.
+        The conventions have been compared only at historical observational
+        inputs that are unavailable to active code.  No numerical agreement
+        claim is carried forward here.
 
         Note: this is an algebraic pushforward under the chosen comparator
         and frame convention, not a frame-independent exact identity.

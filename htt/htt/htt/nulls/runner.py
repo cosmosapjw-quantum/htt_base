@@ -14,6 +14,7 @@ import platform
 from pathlib import Path
 from typing import Any, Mapping
 
+from htt.core.cf4_observational_input import OPEN_FINDING_IDS
 
 from htt.nulls.common_interface import NullFamilyResult, FalsePositiveRates
 from htt.nulls.scanning_law import ScanningLawNull
@@ -64,34 +65,29 @@ def _fast_lnB_approx(ds) -> float:
     # Channel contributions (squared signal-to-noise)
     sn_cw = ds.e1_CW / ds.e1_CW_s if ds.e1_CW_s > 0 else 0
     sn_rad = ds.e1_rad / ds.e1_rad_s if ds.e1_rad_s > 0 else 0
-    sn_cf4 = ds.b_CF4 / ds.b_CF4_s if ds.b_CF4_s > 0 else 0
 
     # Bivariate Gaussian for CW+Radio (channel b)
     rho = ds.rho_CW_radio
     det_factor = 1.0 / (1 - rho**2) if abs(rho) < 0.99 else 1.0
     chi2_biv = det_factor * (sn_cw**2 + sn_rad**2 - 2*rho*sn_cw*sn_rad)
 
-    # CF4 channel (channel c)
-    chi2_cf4 = sn_cf4**2
-
     # Total lnB ≈ half the chi² improvement minus Occam penalty
     # Occam penalty for β: ln(prior_width / posterior_width) ≈ ln(100)
     occam = np.log(100)  # prior is ~100× wider than posterior
-    lnB = 0.5 * (chi2_biv + chi2_cf4) - occam
+    lnB = 0.5 * chi2_biv - occam
 
     return float(lnB)
 
 
 def _fast_beta_approx(ds) -> float:
     """Fast β posterior median approximation."""
-    # Inverse-variance weighted mean of the three channels
+    # Inverse-variance weighted mean of the two active channels.
     w_cw = 1.0 / ds.e1_CW_s**2 if ds.e1_CW_s > 0 else 0
     w_rad = 1.0 / ds.e1_rad_s**2 if ds.e1_rad_s > 0 else 0
-    w_cf4 = 1.0 / ds.b_CF4_s**2 if ds.b_CF4_s > 0 else 0
-    w_total = w_cw + w_rad + w_cf4
+    w_total = w_cw + w_rad
     if w_total == 0:
         return 0.0
-    beta = (w_cw * ds.e1_CW + w_rad * ds.e1_rad + w_cf4 * ds.b_CF4) / w_total
+    beta = (w_cw * ds.e1_CW + w_rad * ds.e1_rad) / w_total
     return float(beta)
 
 
@@ -154,6 +150,10 @@ def run_null_library(obs_base: dict, n_datasets: int = 100,
             'n_datasets_per_family': n_datasets,
             'n_families': len(ALL_FAMILIES),
             'total_datasets': n_datasets * len(ALL_FAMILIES),
+            'claim_tier': 'diagnostic_only',
+            'excluded_channels': ['c'],
+            'cf4_channel_status': 'QUARANTINED_OPEN_FINDINGS',
+            'cf4_finding_ids': list(OPEN_FINDING_IDS),
         },
         'families': fpr.to_dict(),
         'union_fp_Pi005': fpr.union_fp_Pi005,
@@ -235,9 +235,12 @@ def null_library_fpr_report_artifact(
         'wall_time_sec': extra.get('wall_time_sec'),
         'python_version': extra.get('python_version', platform.python_version()),
         'numpy_version': extra.get('numpy_version', np.__version__),
-        'claim_tier': extra.get('claim_tier', 'REPORT'),
+        'claim_tier': extra.get('claim_tier', 'diagnostic_only'),
         'scope_label': extra.get('scope_label', 'report'),
         'production_allowed': False,
+        'excluded_channels': ['c'],
+        'cf4_channel_status': 'QUARANTINED_OPEN_FINDINGS',
+        'cf4_finding_ids': list(OPEN_FINDING_IDS),
         'shape': {
             'n_families': len(families),
             'n_models': len(models),

@@ -33,7 +33,43 @@ def test_v6_cards_preserve_no_download_claim_boundaries() -> None:
     identified = cards["identified_set_card"]
     assert identified["x_C_interval_status"] == "not_certified_blind_sectors_not_zeroed"
     assert identified["F_status"] == "diagnostic_only_not_certified_filling"
-    assert set(identified["fail_closed_columns"]) == {"W2", "Omega_k"}
+    assert set(identified["fail_closed_columns"]) == {"W2", "Omega_k", "Omega_tilt"}
+
+    omega = next(
+        row
+        for row in cards["component_source_matrix"]["rows"]
+        if row["component"] == "Omega_tilt"
+    )
+    assert omega["source_status"] == "blocked_open_p0"
+    assert omega["source_mode"] == "quarantined_no_active_value"
+    assert omega["value_summary"] is None
+    assert omega["allowed_use"] == "blocked_source_record_only"
+
+    sigma = next(
+        row
+        for row in cards["component_source_matrix"]["rows"]
+        if row["component"] == "Sigma2"
+    )
+    assert sigma["blocker"] == "PR3_E2E_ANALYSIS_DEFERRED_TO_PR150"
+    assert sigma["pr4_scope"] == (
+        "not_downloaded_download_reduction_analysis_skipped_by_user_scope"
+    )
+
+    readiness = cards["k1_e2e_data_readiness"]
+    assert readiness["current_result_status"] == (
+        "measured_partial_isotropic_lcdm_grf_null"
+    )
+    assert readiness["pr3_ffp10"] == {
+        "download_state": "complete",
+        "analysis_state": "deferred_to_pr150",
+        "claim_effect": "none_until_provenance_complete_analysis",
+    }
+    assert readiness["pr4_npipe"] == {
+        "download_state": "not_downloaded",
+        "reduction_state": "skipped_by_user_scope",
+        "analysis_state": "skipped_by_user_scope",
+        "claim_effect": "none",
+    }
 
     depth = cards["depth_gap_card"]
     assert depth["cf4_shell_attempt_status"] == (
@@ -74,10 +110,11 @@ def test_v6_k5_k6_feasibility_is_check_only_not_execution_claim() -> None:
 
     assert feasibility["K5"]["input_present"] is True
     assert feasibility["K6"]["input_present"] is True
-    assert feasibility["K5"]["next_turn_runnable"] is True
+    assert feasibility["K5"]["next_turn_runnable"] is False
     assert feasibility["K6"]["next_turn_runnable"] is True
     assert feasibility["K5"]["heavy_run_deferred_this_turn"] is True
     assert feasibility["K6"]["heavy_run_deferred_this_turn"] is True
+    assert "execution forbidden" in feasibility["K5"]["expected_runtime_note"]
 
 
 def test_v6_generator_check_mode_is_current() -> None:

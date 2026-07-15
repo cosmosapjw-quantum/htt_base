@@ -152,3 +152,7 @@ class UV9CoVeAdversarialGuard(unittest.TestCase):
     def test_acceptance_criterion_is_pre_registered_constant(self):
         self.assertTrue(ACCEPTANCE_CRITERION["pre_registered"])
         self.assertIn("deviation band", ACCEPTANCE_CRITERION["size_lane"])
+
+    def test_statistical_seal_excludes_observational_instantiations(self):
+        self.assertIn("excluded", _SEAL_V9["scale_honesty"])
+        self.assertNotIn("CF4", _SEAL_V9["scale_honesty"])

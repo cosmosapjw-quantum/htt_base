@@ -1,12 +1,13 @@
 """Contract: the EGS2/EGS3 theorem figure deck is deterministic and claim-gated.
 
-The generator's --check mode must pass (sidecars byte-stable across commits,
-since the manifests are content-addressed with no git state), and every figure
-manifest must carry the diagnostic-only claim firewall (no detection, no
-family/geometry, no native-solver result).
+The generator's --check mode must pass and every figure manifest must carry the
+diagnostic-only claim firewall (no detection, no family/geometry, no native-
+solver result). PR-120's changed U1/U2 manifests additionally bind their exact
+inputs and baseline worktree state.
 """
 from __future__ import annotations
 
+import hashlib
 import importlib.util
 import json
 from pathlib import Path
@@ -61,10 +62,31 @@ def test_every_manifest_carries_the_claim_firewall():
         assert man["publication_gates"]["family_identification_claim"] == "fail_blocked_pre_native_atlas"
 
 
-def test_manifests_are_content_addressed_without_git_state():
-    # no git_commit / worktree fields -> --check stays green across commits
+def test_manifests_are_content_addressed_and_pr120_u_figures_bind_worktree_state():
+    pr120_changed = {
+        "fig_egs3_u1_beta_channel",
+        "fig_egs3_u2_fingerprint_ceilings",
+    }
     for stem in STEMS:
         man = json.loads((FIG_DIR / f"{stem}.manifest.json").read_text())
         assert "git_commit" not in man
-        assert "git_commit_or_worktree_state" not in man
         assert man["config_hash"].startswith("sha256:")
+        if stem in pr120_changed:
+            assert man["artifact_sha256"] == "sha256:" + hashlib.sha256(
+                (FIG_DIR / f"{stem}.png").read_bytes()
+            ).hexdigest()
+            assert man["git_commit_or_worktree_state"].startswith(
+                "baseline_commit:e6da3670043596efdcd93f9ba5e631e1462146c7;"
+            )
+            assert len(man["input_hashes"]) == 3
+            assert all(":sha256:" in value for value in man["input_hashes"])
+            assert not any(
+                value.startswith("docs/generated/cf4_p0_quarantine_block.json:")
+                for value in man["input_hashes"]
+            )
+            assert any(
+                value.startswith("htt/obsstat/egs3_teff_unification.py:")
+                for value in man["input_hashes"]
+            )
+        else:
+            assert "git_commit_or_worktree_state" not in man

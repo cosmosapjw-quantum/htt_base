@@ -3,15 +3,19 @@
 owner: OBSSTAT
 implementation_scope: obsstat
 claim_tier: diagnostic_only
-transfer_source: none
+status: RECONSTRUCTION_CONDITIONED_SYSTEMATICS_DIAGNOSTIC
+allowed_use: paper_appendix
+finding_state: C1-K5-MV-F1 OPEN (canonical PR-120 block)
+transfer_source: external_proxy_cf4_wf_reconstruction
 null_mock_status: bootstrap_over_correlated_reconstruction_cells
 config_hash: `sha256:c0dc4ac51378f4780aaf783e21246a3466a032182c6fb90f1e903e4994943edb`
 input_hashes:
 - sha256:5fb994ca076235fb30db644d3d1a3672d092ed31f8ef4737bcabe2da87491909
+- sha256:77d36878315f041c7bb6c273a2d650f7d3fa1c8a8dc635a577527d646fa40109
 generating_command: `python scripts/make_cf4_bulkflow_apex_depth.py`
-git_commit_or_worktree_state: `8280b8f+dirty`
+git_commit_or_worktree_state: `e6da367+dirty`
 
-Full-sample bulk flow: 133.4 km/s toward Galactic (l, b) = 121.6, 70.8 deg.
+Full-sample reconstruction functional: 133.4 km/s toward Galactic (l, b) = 121.6, 70.8 deg.
 
 ## Bulk-flow apex by depth shell
 
@@ -27,7 +31,8 @@ Full-sample bulk flow: 133.4 km/s toward Galactic (l, b) = 121.6, 70.8 deg.
 
 ## Caveats
 
-- model-independent kinematic descriptor; not evidence for any Bianchi model and not a cosmological-frame-violation claim
-- bulk flow is the volume-averaged CF4 reconstruction velocity per shell
+- numerical rows are functionals of one CF4++ Wiener-filter reconstruction, not observed bulk-flow amplitude measurements
+- the plotted vectors are volume-averaged reconstruction velocities per shell
 - bootstrap is over correlated reconstruction cells; a lower bound on the true direction uncertainty, not a full covariance
 - no native low-ell solver output or Bianchi family identification
+- C1-K5-MV-F1 remains OPEN; no global-tilt coordinate or cosmological inference is permitted

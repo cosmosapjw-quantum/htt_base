@@ -11,6 +11,8 @@ memory, vorticity re-opening) are the robust content.
 from __future__ import annotations
 
 import argparse
+import copy
+import hashlib
 import json
 import math
 from pathlib import Path
@@ -21,6 +23,104 @@ REPO = Path(__file__).resolve().parents[1]
 if str(REPO) not in sys.path:
     sys.path.insert(0, str(REPO))
 OUT = REPO / "docs/generated/egs3_experiments.json"
+
+_INPUT_PATHS = (
+    "scripts/run_egs3_experiments.py",
+    "htt/bass/transfer/shear_quadrupole_seminative.py",
+    "htt/obsstat/egs2_fisher.py",
+    "htt/obsstat/egs3_bianchi_v_constraint.py",
+    "htt/obsstat/egs3_calibration.py",
+    "htt/obsstat/egs3_evalue_merge.py",
+    "htt/obsstat/egs3_gf_interval.py",
+    "htt/obsstat/egs3_graded_comparator.py",
+    "htt/obsstat/egs3_identified_set.py",
+    "htt/obsstat/egs3_kinematic_deprojection.py",
+    "htt/obsstat/egs3_prior_exposure.py",
+    "htt/obsstat/egs3_psd_cone.py",
+    "htt/obsstat/egs3_shear_memory_bias.py",
+    "htt/obsstat/egs3_volterra_memory.py",
+    "htt/obsstat/egs3_vorticity_channels.py",
+    "htt/obsstat/biposh_smica.py",
+    "htt/obsstat/joint_pv_cmb_forecast.py",
+    "htt/obsstat/lowell_map_features.py",
+    "htt/obsstat/pv_covariance.py",
+)
+_METADATA_KEYS = frozenset({
+    "owner",
+    "implementation_scope",
+    "claim_tier",
+    "transfer_source",
+    "config_hash",
+    "input_hashes",
+    "sky_support_status",
+    "null_mock_status",
+    "caveats",
+    "generating_command",
+    "metadata_refresh_command",
+    "git_commit",
+    "git_commit_or_worktree_state",
+    "worktree_state",
+})
+
+
+def _stable_hash(value: object) -> str:
+    encoded = json.dumps(
+        value, sort_keys=True, separators=(",", ":"), allow_nan=False, default=float
+    ).encode("utf-8")
+    return "sha256:" + hashlib.sha256(encoded).hexdigest()
+
+
+def _input_hashes() -> list[str]:
+    records: list[str] = []
+    for relative in _INPUT_PATHS:
+        path = REPO / relative
+        digest = hashlib.sha256(path.read_bytes()).hexdigest()
+        records.append(f"{relative}:sha256:{digest}")
+    return records
+
+
+def _with_artifact_metadata(source: dict) -> dict:
+    """Attach content-addressed metadata without re-running any experiment.
+
+    This is deliberately usable on an existing payload so a provenance-only
+    refresh does not change or recompute the stored scientific numbers.
+    """
+    payload = copy.deepcopy(source)
+    d1 = payload["experiments"]["axis_d"]["D1_feasible_pv_covariance"]
+    d1.update({
+        "label": "deterministic synthetic method witness; no survey forecast",
+        "observational_interpretation": None,
+        "public_use": False,
+    })
+    inputs = _input_hashes()
+    scientific_payload = {
+        key: value for key, value in payload.items() if key not in _METADATA_KEYS
+    }
+    payload.update({
+        "owner": "OBSSTAT",
+        "implementation_scope": "obsstat",
+        "transfer_source": "mixed_none_and_analytic_transfer_stand_ins",
+        "config_hash": _stable_hash({
+            "metadata_schema": "htt.minimum_artifact_metadata.v1",
+            "scientific_payload_hash": _stable_hash(scientific_payload),
+            "input_hashes": inputs,
+        }),
+        "input_hashes": inputs,
+        "sky_support_status": "synthetic_or_not_applicable_no_observed_sky_claim",
+        "null_mock_status": "fixed_seed_synthetic_and_idealized_nulls_no_e2e_validation",
+        "caveats": [
+            "Conditional theorems and deterministic synthetic mechanics only.",
+            "Axis D1 is a synthetic method witness with no observational interpretation or public-result use.",
+            "Analytic and semi-native transfer stand-ins are not native low-ell solver outputs.",
+            "No detection, geometry, family-identification, or posterior claim is authorized.",
+        ],
+        "generating_command": "python scripts/run_egs3_experiments.py",
+        "metadata_refresh_command": "python scripts/run_egs3_experiments.py --metadata-only",
+        "git_commit": "content-addressed",
+        "git_commit_or_worktree_state": "content-addressed",
+        "worktree_state": "content-addressed",
+    })
+    return payload
 
 
 def _json_bound(value: float) -> float | str:
@@ -175,12 +275,12 @@ def axis_c() -> dict:
 
 
 def axis_d() -> dict:
-    """Axis D: BASS-Extended joint PV+CMB information forecast (pre-solver). Deterministic
-    synthetic mechanics (the real-data numbers live in bass_extended_joint_forecast.json +
-    k1_biposh_smica.json). Feasible correlated-covariance PV tilt (Woodbury), a JWST-anchor
-    Omega_tilt precision forecast, the coupled-Fisher degeneracy-break, the BipoSH aberration
-    response, and the fail-closed theory-g CMB sector. Estimator/forecast + real-data channels;
-    theory-g CMB blocked; no detection/family/solver."""
+    """Axis D: synthetic joint-information method witnesses (pre-solver).
+
+    The CF4/JWST observational forecast is quarantined by PR-120.  This axis
+    retains only deterministic synthetic Woodbury, subset-error, coupled-Fisher,
+    and BipoSH response mechanics plus the fail-closed theory-g CMB sector.
+    """
     import numpy as np
     from htt.obsstat import pv_covariance as pv
     from htt.obsstat import joint_pv_cmb_forecast as jf
@@ -198,15 +298,17 @@ def axis_d() -> dict:
     d0 = rng.uniform(1, 4, 40); U0 = rng.normal(size=(40, 8)); l0 = rng.uniform(.5, 2, 8)
     C0 = np.diag(d0) + U0 @ np.diag(l0) @ U0.T; b0 = rng.normal(size=(40, 2))
     woodbury_ok = bool(np.allclose(pv.woodbury_solve(d0, U0, l0, b0), np.linalg.solve(C0, b0), atol=1e-9))
-    # JWST-anchor forecast vs anchor fraction (nearest by distance)
+    # Synthetic subset-error sensitivity vs selected fraction.
     order = np.argsort(r)
     gain_curve = {}
     for frac in (0.02, 0.05, 0.10, 0.15):
         mask = np.zeros(600, bool); mask[order[:int(frac * 600)]] = True
-        gain_curve[f"{frac:.2f}"] = jf.jwst_anchor_forecast(nh, v, sig2, mask, jwst_shrink=1/3,
-                                                            U=U, Lambda=Lam)["precision_gain"]
-    jff = jf.joint_fisher_forecast(rho=0.5, f_omega_tilt_data=1.0,
-                                   f_omega_tilt_jwst=gain_curve["0.10"])
+        gain_curve[f"{frac:.2f}"] = jf.synthetic_error_shrink_sensitivity(
+            nh, v, sig2, mask, error_scale=1/3, U=U, Lambda=Lam
+        )["information_multiplier"]
+    jff = jf.joint_fisher_sensitivity(
+        rho=0.5, f_tilt_base=1.0, f_tilt_candidate=gain_curve["0.10"]
+    )
     # BipoSH aberration response (isotropic vs injected l<->l+1), synthetic alm
     lmax = 8
     def packed(seed):
@@ -234,27 +336,32 @@ def axis_d() -> dict:
             "woodbury_matches_dense": woodbury_ok,
             "correlated_tilt_amplitude_kms": fit.amplitude, "n_modes": fit.n_modes,
             "note": "diag(sigma^2)+U Lambda U^T Woodbury; O(N K^2), no dense N x N inversion",
+            "label": "deterministic synthetic method witness; no survey forecast",
+            "observational_interpretation": None,
+            "public_use": False,
         },
-        "D2_jwst_forecast": {
-            "precision_gain_by_anchor_fraction": gain_curve,
-            "monotone_in_anchors": bool(all(gain_curve[a] <= gain_curve[b] for a, b in
+        "D2_synthetic_subset_error_sensitivity": {
+            "information_multiplier_by_selected_fraction": gain_curve,
+            "monotone_in_selected_fraction": bool(all(gain_curve[a] <= gain_curve[b] for a, b in
                                             zip(["0.02", "0.05", "0.10"], ["0.05", "0.10", "0.15"]))),
-            "label": "survey-design forecast (hypothetical JWST prior)",
+            "label": "deterministic synthetic method witness; no survey forecast",
+            "observational_interpretation": None,
+            "public_use": False,
         },
-        "D3_degeneracy_break": {
-            "sigma2_inflation_data": jff["inflation_data"],
-            "sigma2_inflation_jwst": jff["inflation_jwst"],
-            "degeneracy_break_factor": jff["degeneracy_break_factor"],
+        "D3_generic_fisher_sensitivity": {
+            "sigma2_inflation_base": jff["inflation_base"],
+            "sigma2_inflation_candidate": jff["inflation_candidate"],
+            "sensitivity_ratio": jff["sensitivity_ratio"],
+            "observational_interpretation": None,
         },
         "D4_biposh_aberration": {
             "iso_L1_mean": float(np.mean(iso)), "aberrated_L1_mean": float(np.mean(ab)),
             "aberration_raises_L1": bool(np.mean(ab) > np.mean(iso)),
         },
         "D5_theory_cmb_fail_closed": cmb_fail_closed,
-        "headline": ("feasible correlated-covariance PV tilt (Woodbury) + a JWST-anchor Omega_tilt "
-                     "precision forecast that reduces the Sigma^2 covariance inflation via the coupled "
-                     "Fisher (degeneracy break) + a real off-diagonal BipoSH SI channel; the theory-g "
-                     "CMB likelihood stays fail-closed until the native solver"),
+        "headline": ("synthetic correlated-covariance and generic information-weight sensitivity "
+                     "+ synthetic off-diagonal BipoSH response; the former CF4/JWST forecast is "
+                     "quarantined and the theory-g CMB likelihood stays fail-closed"),
     }
 
 
@@ -444,8 +551,20 @@ def build_payload() -> dict:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--check", action="store_true", help="fail if generated JSON is stale")
+    parser.add_argument(
+        "--metadata-only",
+        action="store_true",
+        help="refresh/check metadata on the existing payload without recomputing experiments",
+    )
     args = parser.parse_args(argv)
-    payload = build_payload()
+    if args.metadata_only:
+        if not OUT.is_file():
+            print(f"missing {OUT}; metadata-only refresh cannot synthesize results")
+            return 1
+        payload = json.loads(OUT.read_text(encoding="utf-8"))
+    else:
+        payload = build_payload()
+    payload = _with_artifact_metadata(payload)
     text = json.dumps(payload, indent=2, default=float) + "\n"
     if args.check:
         if not OUT.is_file():

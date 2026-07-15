@@ -31,19 +31,16 @@ class ClusteringDipoleNull(NullFamily):
 
         cw = obs_base['dipole_observations']['catwise_bohme_2025']
         rad = obs_base['dipole_observations']['radio_secrest_2021']
-        cf4 = obs_base['dipole_observations']['cf4_watkins_2023']
 
         e1_CW = abs(rng.normal(A, cw['sigma_stat']))
         e1_rad = abs(rng.normal(A * 0.7, rad['sigma_stat']))
-        # Clustering affects CF4 bulk flow too (local structure)
-        b_CF4 = abs(rng.normal(A * 0.3, cf4['sigma']))
-
         return NullDataset(
             seed=seed, family=self.name,
             e1_CW=e1_CW, e1_CW_s=cw['sigma_stat'],
             e1_rad=e1_rad, e1_rad_s=rad['sigma_stat'],
             rho_CW_radio=0.2,
-            b_CF4=b_CF4, b_CF4_s=cf4['sigma'],
+            # Legacy interface placeholders; active inference excludes c.
+            b_CF4=0.0, b_CF4_s=np.inf,
             eps2=3.56e-6, eps3=6.07e-6,
             systematic_amplitude=A,
             systematic_type='clustering_dipole',
@@ -70,19 +67,16 @@ class SelectionResponseNull(NullFamily):
 
         cw = obs_base['dipole_observations']['catwise_bohme_2025']
         rad = obs_base['dipole_observations']['radio_secrest_2021']
-        cf4 = obs_base['dipole_observations']['cf4_watkins_2023']
 
         e1_CW = abs(rng.normal(A, cw['sigma_stat']))
         # Radio less affected (different selection function)
         e1_rad = abs(rng.normal(A * 0.3, rad['sigma_stat']))
-        b_CF4 = abs(rng.normal(0, cf4['sigma']))
-
         return NullDataset(
             seed=seed, family=self.name,
             e1_CW=e1_CW, e1_CW_s=cw['sigma_stat'],
             e1_rad=e1_rad, e1_rad_s=rad['sigma_stat'],
             rho_CW_radio=0.1,
-            b_CF4=b_CF4, b_CF4_s=cf4['sigma'],
+            b_CF4=0.0, b_CF4_s=np.inf,
             eps2=3.56e-6, eps3=6.07e-6,
             systematic_amplitude=A,
             systematic_type='selection_response',
@@ -108,7 +102,6 @@ class SurveyAxisNull(NullFamily):
 
         cw = obs_base['dipole_observations']['catwise_bohme_2025']
         rad = obs_base['dipole_observations']['radio_secrest_2021']
-        cf4 = obs_base['dipole_observations']['cf4_watkins_2023']
 
         # Generate correlated CW + Radio systematics
         A_common = rng.normal(self.A_axis_mean, 1e-4)
@@ -117,14 +110,12 @@ class SurveyAxisNull(NullFamily):
 
         e1_CW = abs(A_cw + rng.normal(0, cw['sigma_stat']))
         e1_rad = abs(A_rad + rng.normal(0, rad['sigma_stat']))
-        b_CF4 = abs(rng.normal(0, cf4['sigma']))
-
         return NullDataset(
             seed=seed, family=self.name,
             e1_CW=e1_CW, e1_CW_s=cw['sigma_stat'],
             e1_rad=e1_rad, e1_rad_s=rad['sigma_stat'],
             rho_CW_radio=self.rho_shared,
-            b_CF4=b_CF4, b_CF4_s=cf4['sigma'],
+            b_CF4=0.0, b_CF4_s=np.inf,
             eps2=3.56e-6, eps3=6.07e-6,
             systematic_amplitude=abs(A_common),
             systematic_type='survey_axis',

@@ -120,8 +120,8 @@
       ],
       "blind_sector_null_residual": 0.0,
       "bracket_shell": {
-        "s_lo": 0.5952380952380951,
-        "s_hi": 45.0,
+        "s_lo": 0.3543083900226756,
+        "s_hi": 2025.0,
         "in_shell": true,
         "excludes_vertex": true
       },
@@ -165,22 +165,28 @@
         "woodbury_matches_dense": true,
         "correlated_tilt_amplitude_kms": 226.9240857088533,
         "n_modes": 5,
-        "note": "diag(sigma^2)+U Lambda U^T Woodbury; O(N K^2), no dense N x N inversion"
+        "note": "diag(sigma^2)+U Lambda U^T Woodbury; O(N K^2), no dense N x N inversion",
+        "label": "deterministic synthetic method witness; no survey forecast",
+        "observational_interpretation": null,
+        "public_use": false
       },
-      "D2_jwst_forecast": {
-        "precision_gain_by_anchor_fraction": {
+      "D2_synthetic_subset_error_sensitivity": {
+        "information_multiplier_by_selected_fraction": {
           "0.02": 1.1596606814994987,
           "0.05": 1.4594353887321423,
           "0.10": 1.8927750986082017,
           "0.15": 2.289842431399706
         },
-        "monotone_in_anchors": true,
-        "label": "survey-design forecast (hypothetical JWST prior)"
+        "monotone_in_selected_fraction": true,
+        "label": "deterministic synthetic method witness; no survey forecast",
+        "observational_interpretation": null,
+        "public_use": false
       },
-      "D3_degeneracy_break": {
-        "sigma2_inflation_data": 1.0416666666666667,
-        "sigma2_inflation_jwst": 1.0238917215869265,
-        "degeneracy_break_factor": 1.0173601804809895
+      "D3_generic_fisher_sensitivity": {
+        "sigma2_inflation_base": 1.0416666666666667,
+        "sigma2_inflation_candidate": 1.0238917215869265,
+        "sensitivity_ratio": 1.0173601804809895,
+        "observational_interpretation": null
       },
       "D4_biposh_aberration": {
         "iso_L1_mean": 19.771495319669786,
@@ -188,7 +194,7 @@
         "aberration_raises_L1": true
       },
       "D5_theory_cmb_fail_closed": true,
-      "headline": "feasible correlated-covariance PV tilt (Woodbury) + a JWST-anchor Omega_tilt precision forecast that reduces the Sigma^2 covariance inflation via the coupled Fisher (degeneracy break) + a real off-diagonal BipoSH SI channel; the theory-g CMB likelihood stays fail-closed until the native solver"
+      "headline": "synthetic correlated-covariance and generic information-weight sensitivity + synthetic off-diagonal BipoSH response; the former CF4/JWST forecast is quarantined and the theory-g CMB likelihood stays fail-closed"
     },
     "axis_e": {
       "E1_identified_set": {
@@ -435,5 +441,43 @@
     "BLOCKED_MISSING_FIELD_REALIZATIONS",
     "AWAITING_NATIVE_LOWELL_SOLVER"
   ],
-  "claim_boundary": "conditional EGS-type theorems + synthetic mechanics only; no detection, family/geometry, or native-solver validation"
+  "claim_boundary": "conditional EGS-type theorems + synthetic mechanics only; no detection, family/geometry, or native-solver validation",
+  "owner": "OBSSTAT",
+  "implementation_scope": "obsstat",
+  "transfer_source": "mixed_none_and_analytic_transfer_stand_ins",
+  "config_hash": "sha256:2f04f8fe73eb7c1e2423f682e4ef2b86e20af2aaf4cb621c6724c9b417981217",
+  "input_hashes": [
+    "scripts/run_egs3_experiments.py:sha256:4fb599212d4c990839223382334eb113f9473e6e10743cd020b0046c72808840",
+    "htt/bass/transfer/shear_quadrupole_seminative.py:sha256:c11f32ec964e635cabfc31b5f97a3c8025a38e3caf5605da74d58ae5d1eec95d",
+    "htt/obsstat/egs2_fisher.py:sha256:eca2f079942485097c4d2ae7390d6675c976f9b592d01241bb9313269c31a431",
+    "htt/obsstat/egs3_bianchi_v_constraint.py:sha256:97191abca5b99933c3dc5ee8e0543ce8446cb777b4168c0ed356547b46fa2943",
+    "htt/obsstat/egs3_calibration.py:sha256:e60f74c99b448025cf1305aa37b8aa0d3f1f26642b37ab96ca8242518a720364",
+    "htt/obsstat/egs3_evalue_merge.py:sha256:52276cafbc920b6a9aefc282a86ecbc482d86b34566c9d7ad00ef0c4edfcc40d",
+    "htt/obsstat/egs3_gf_interval.py:sha256:8be1af1ce848847378d4710ab4c398fc0c6917e637a9c37656e2ab94a68614f2",
+    "htt/obsstat/egs3_graded_comparator.py:sha256:3108758e8ca30043d9f200f023d2c8c2f7ff2227bf93fbe2656ffb0d694138df",
+    "htt/obsstat/egs3_identified_set.py:sha256:309d7d577c6dd686313c815f28b8c12b6f688ca5753815237c5c54d643538a6b",
+    "htt/obsstat/egs3_kinematic_deprojection.py:sha256:1194c8ef71c4ede2300d6be08a604d3f2a1343bed5ced276cd42d09f6c8ff716",
+    "htt/obsstat/egs3_prior_exposure.py:sha256:1f2b80b08e40a8b14462602ead3f8c9edb50d56f0f64b71133433c5fe0ef473e",
+    "htt/obsstat/egs3_psd_cone.py:sha256:021fbf8820a03d799898089677b8220c5464772e149f5598b1b6c474e4414689",
+    "htt/obsstat/egs3_shear_memory_bias.py:sha256:4a6d24ba6b01c35e1f840054e284e70fdc976909e4e81f704eec34b5f014ce38",
+    "htt/obsstat/egs3_volterra_memory.py:sha256:b71efda1af840f54e44cd27df79a1b172e7906431a2c0732eb4071c0c4d3d563",
+    "htt/obsstat/egs3_vorticity_channels.py:sha256:90ee2fef53adf03b77b9a64a4a9710be561b6aff8b90e8e58a394b07eda4a10e",
+    "htt/obsstat/biposh_smica.py:sha256:0b24bd85ff0d0348aa15cc38063086d4736f8e0680d14fa0ae415765ed3a9b33",
+    "htt/obsstat/joint_pv_cmb_forecast.py:sha256:4cd0d1e332b0294833b2e881edd51046e338af540f3a74be6a442ac40baa9df5",
+    "htt/obsstat/lowell_map_features.py:sha256:0d1d80591b1c50b5ac843faaaefc1dbd3ad846e5cb41a518e10fa8ddb2dba08d",
+    "htt/obsstat/pv_covariance.py:sha256:ed0d06f2db4c8ddea95109ba4d5614748756d3945b820b01cbb7daf2874cd526"
+  ],
+  "sky_support_status": "synthetic_or_not_applicable_no_observed_sky_claim",
+  "null_mock_status": "fixed_seed_synthetic_and_idealized_nulls_no_e2e_validation",
+  "caveats": [
+    "Conditional theorems and deterministic synthetic mechanics only.",
+    "Axis D1 is a synthetic method witness with no observational interpretation or public-result use.",
+    "Analytic and semi-native transfer stand-ins are not native low-ell solver outputs.",
+    "No detection, geometry, family-identification, or posterior claim is authorized."
+  ],
+  "generating_command": "python scripts/run_egs3_experiments.py",
+  "metadata_refresh_command": "python scripts/run_egs3_experiments.py --metadata-only",
+  "git_commit": "content-addressed",
+  "git_commit_or_worktree_state": "content-addressed",
+  "worktree_state": "content-addressed"
 }

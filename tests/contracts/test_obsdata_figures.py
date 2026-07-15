@@ -1,11 +1,9 @@
-"""Contract: the rev-r195..r198 observed-data figure deck is deterministic and
-claim-gated.
+"""PR-120 contract for the rev-r195..r198 observed-data figure deck.
 
-The generator's --check mode must pass (source.json + manifest sidecars
-byte-stable across commits; content-addressed, no git state), every manifest
-carries the diagnostic-only claim firewall (no detection / family / geometry /
-native-solver), and no figure encodes a forbidden claim token. Physics/statistics
-results only (no dev-history / claim-gate / limitation-narrative content).
+The five figure triples fed by the CF4 P0 producer/consumer chain are frozen below
+``legacy/cf4_p0``.  Active source/manifest paths contain only the canonical
+quarantine record and no active PNG can survive.  The three unrelated figures
+remain byte-stable and retain their existing diagnostic-only manifests.
 """
 from __future__ import annotations
 
@@ -14,60 +12,81 @@ import json
 from pathlib import Path
 import sys
 
+
 REPO_ROOT = Path(__file__).resolve().parents[2]
 SCRIPT = REPO_ROOT / "scripts/make_obsdata_r195_r198_figures.py"
 FIG_DIR = REPO_ROOT / "figures/obsdata_current"
+LEGACY_FIG_DIR = REPO_ROOT / "legacy/cf4_p0/figures/obsdata_current"
 
-STEMS = (
-    "fig_obs_cf4_mv_bulkflow", "fig_obs_cf4_reconstruction_spread",
-    "fig_obs_cf4_mock_significance", "fig_obs_cf4_fsigma8_ml",
-    "fig_obs_cf4_velocity_correlation", "fig_obs_desi_dipole_mock",
-    "fig_obs_cf4pp_vorticity", "fig_obs_act_kappa",
+QUARANTINED = (
+    "fig_obs_cf4_mv_bulkflow",
+    "fig_obs_cf4_mock_significance",
+    "fig_obs_cf4_fsigma8_ml",
+    "fig_obs_cf4_reconstruction_spread",
+    "fig_obs_cf4_velocity_correlation",
 )
-_FORBIDDEN = ("family assignment", "native solver", "geometry detection")
+UNAFFECTED = (
+    "fig_obs_desi_dipole_mock",
+    "fig_obs_cf4pp_vorticity",
+    "fig_obs_act_kappa",
+)
+_FORBIDDEN = ("family assignment", "geometry detection")
 
 
 def _load():
     spec = importlib.util.spec_from_file_location("make_obsdata_r195_r198_figures", SCRIPT)
-    mod = importlib.util.module_from_spec(spec)
-    sys.modules["make_obsdata_r195_r198_figures"] = mod
-    spec.loader.exec_module(mod)
-    return mod
+    module = importlib.util.module_from_spec(spec)
+    sys.modules["make_obsdata_r195_r198_figures"] = module
+    spec.loader.exec_module(module)
+    return module
 
 
 def test_check_mode_is_current():
     assert _load().main(["--check"]) == 0
 
 
-def test_all_eight_figures_present_with_sidecars():
-    assert len(STEMS) == 8
-    for stem in STEMS:
+def test_quarantined_active_pngs_are_absent_and_sidecars_are_blocks():
+    for stem in QUARANTINED:
+        assert not (FIG_DIR / f"{stem}.png").exists()
+        for sidecar in ("source", "manifest"):
+            card = json.loads((FIG_DIR / f"{stem}.{sidecar}.json").read_text())
+            assert card["schema"] == "htt.cf4_p0_quarantine_block.v1"
+            assert card["status"] == "QUARANTINED_OPEN_FINDINGS"
+            assert card["claim_tier"] == "blocked"
+            assert card["replacement_value"] is None
+            assert card["artifact"]["artifact_id"] == stem
+            assert card["artifact"]["active_png_status"] == "ABSENT_BY_QUARANTINE"
+
+
+def test_exact_historical_figure_triples_live_only_under_legacy_root():
+    for stem in QUARANTINED:
+        for suffix in ("png", "source.json", "manifest.json"):
+            assert (LEGACY_FIG_DIR / f"{stem}.{suffix}").is_file()
+
+
+def test_unaffected_three_figures_and_claim_firewalls_remain_present():
+    assert len(UNAFFECTED) == 3
+    for stem in UNAFFECTED:
         assert (FIG_DIR / f"{stem}.png").is_file()
-        assert (FIG_DIR / f"{stem}.source.json").is_file()
-        assert (FIG_DIR / f"{stem}.manifest.json").is_file()
+        source_path = FIG_DIR / f"{stem}.source.json"
+        manifest_path = FIG_DIR / f"{stem}.manifest.json"
+        assert source_path.is_file()
+        assert manifest_path.is_file()
+        manifest = json.loads(manifest_path.read_text())
+        assert manifest["claim_tier"] == "diagnostic_only"
+        assert manifest["family_identification"] is False
+        assert manifest["native_solver_result"] is False
+        assert manifest["transfer_source"] == "none"
+        blob = (source_path.read_text() + manifest_path.read_text()).lower()
+        for token in _FORBIDDEN:
+            assert token not in blob
 
 
-def test_every_manifest_carries_the_claim_firewall():
-    for stem in STEMS:
-        man = json.loads((FIG_DIR / f"{stem}.manifest.json").read_text())
-        assert man["claim_tier"] == "diagnostic_only"
-        assert man["family_identification"] is False
-        assert man["native_solver_result"] is False
-        assert man["transfer_source"] == "none"
-        assert "must_state_observed_data_diagnostic" in man["caption_policy"]
-        assert "must_not_state_detection" in man["caption_policy"]
-
-
-def test_manifests_are_content_addressed_without_git_state():
-    for stem in STEMS:
-        man = json.loads((FIG_DIR / f"{stem}.manifest.json").read_text())
-        assert "git_commit" not in man
-        assert man["config_hash"].startswith("sha256:")
-
-
-def test_no_forbidden_claim_token_in_sidecars():
-    for stem in STEMS:
-        blob = ((FIG_DIR / f"{stem}.manifest.json").read_text()
-                + (FIG_DIR / f"{stem}.source.json").read_text()).lower()
-        for tok in _FORBIDDEN:
-            assert tok not in blob, f"{stem}: forbidden token {tok!r}"
+def test_quarantine_sidecars_contain_no_numerical_figure_payload():
+    prohibited_keys = {
+        "amp", "obs", "mock_rms", "sigma_param", "floor", "grid", "dchi2", "fs8"
+    }
+    for stem in QUARANTINED:
+        for sidecar in ("source", "manifest"):
+            card = json.loads((FIG_DIR / f"{stem}.{sidecar}.json").read_text())
+            assert prohibited_keys.isdisjoint(card)

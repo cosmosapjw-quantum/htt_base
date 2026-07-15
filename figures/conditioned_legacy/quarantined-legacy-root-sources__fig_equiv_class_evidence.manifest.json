@@ -1,6 +1,7 @@
 {
   "artifact_id": "common.conditioned_legacy_figure.quarantined-legacy-root-sources__fig_equiv_class_evidence",
   "artifact_path": "figures/conditioned_legacy/quarantined-legacy-root-sources__fig_equiv_class_evidence.png",
+  "artifact_sha256": "sha256:82f9d4484466401f1f46d4ac94432ff829c6421a4973b7b5fc5dab232215abd4",
   "caveats": [
     "Conditionally included legacy figure; not a refreshed current-code production result.",
     "shown only under the legacy statistical assumptions encoded by the original manuscript generator; no current null/PPC/LOOCV refresh is implied.",
@@ -9,17 +10,17 @@
     "MIO diagnostics, HTT inference, and transfer provenance remain separated by owner."
   ],
   "claim_tier": "exploratory",
-  "code_version": "conditioned-legacy-gallery-v1",
-  "config_hash": "sha256:0f428ee683ec339dbb3aa022d9e3b38c284313933fb4d75105f3ad3e606f8809",
+  "code_version": "conditioned-legacy-gallery-v2",
+  "config_hash": "sha256:660d44aad1e396fe0a13324dff1979fd350f191239ab8cc4330f3c7f536ff1de",
   "created_by": "scripts/build_expanded_manuscript_figure_suite.py",
   "failed_gates": [],
-  "generating_command": "python scripts/build_expanded_manuscript_figure_suite.py",
-  "git_commit": "85fca53",
-  "git_commit_or_worktree_state": "85fca53+dirty",
+  "generating_command": "python scripts/build_expanded_manuscript_figure_suite.py --phase all",
+  "git_commit": "e6da367",
+  "git_commit_or_worktree_state": "e6da367+dirty",
   "implementation_scope": "common",
   "input_hashes": [
     "figures/quarantined_legacy/root_sources/fig_equiv_class_evidence.png:sha256:82f9d4484466401f1f46d4ac94432ff829c6421a4973b7b5fc5dab232215abd4",
-    "scripts/build_expanded_manuscript_figure_suite.py:sha256:b96cc2dc76f678a2158b7053334b182ab2908963be64209cd4aa19c7f60d228a"
+    "scripts/build_expanded_manuscript_figure_suite.py:sha256:f530556a73b1f17113a6fb4ee539733f1364a26e60ffc20d633d67a7af721106"
   ],
   "null_mock_status": "legacy_statistical_context_no_current_null_refresh",
   "owner": "COMMON",
@@ -33,9 +34,17 @@
   ],
   "schema_version": "artifact-manifest-v2",
   "sky_support_status": "not_directional",
+  "source_binding": {
+    "artifact_sha256": "sha256:82f9d4484466401f1f46d4ac94432ff829c6421a4973b7b5fc5dab232215abd4",
+    "current_source_sha256": "sha256:82f9d4484466401f1f46d4ac94432ff829c6421a4973b7b5fc5dab232215abd4",
+    "frozen_source_sha256": "sha256:82f9d4484466401f1f46d4ac94432ff829c6421a4973b7b5fc5dab232215abd4",
+    "source_path": "figures/quarantined_legacy/root_sources/fig_equiv_class_evidence.png",
+    "status": "current_source_matches_artifact"
+  },
   "statistics_definitions": {
     "legacy_source_path": "figures/quarantined_legacy/root_sources/fig_equiv_class_evidence.png",
-    "manuscript_role": "appendix_only_conditioned_diagnostic"
+    "manuscript_role": "appendix_only_conditioned_diagnostic",
+    "source_binding_status": "current_source_matches_artifact"
   },
   "transfer_source": "legacy_analytic_or_proxy_context"
 }

@@ -19,7 +19,21 @@ from typing import Iterable, Sequence
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
+COMMON_ROOT = REPO_ROOT / "htt" / "src"
+if str(COMMON_ROOT) not in sys.path:
+    sys.path.insert(0, str(COMMON_ROOT))
+
+from common.cf4_p0_quarantine import (  # noqa: E402
+    BLOCK_RELATIVE_PATH,
+    load_block_record,
+    validate_active_text,
+)
+
+
 DEFAULT_PDF = Path("docs/generated/manuscript_pdf/htt_base_research_report.pdf")
+DEFAULT_MANIFEST = Path(
+    "docs/generated/manuscript_pdf/htt_base_research_report.manifest.json"
+)
 DEFAULT_OUTPUT = Path("docs/generated/pdf_claim_lint_report.md")
 
 FAIL_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = (
@@ -179,6 +193,43 @@ def _sha256_file(path: Path) -> str:
     return "sha256:" + digest.hexdigest()
 
 
+def verify_pdf_manifest_pair(
+    pdf_path: Path,
+    manifest_path: Path,
+    *,
+    manifest_member_path: str | None = None,
+) -> str:
+    """Return the PDF digest only when the companion manifest binds exact bytes."""
+
+    try:
+        payload = json.loads(manifest_path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+        raise ValueError(f"cannot parse PDF companion manifest {manifest_path}: {exc}") from exc
+    if not isinstance(payload, dict):
+        raise ValueError("PDF companion manifest must be a JSON object")
+    expected = payload.get("artifact_sha256")
+    if manifest_member_path is not None:
+        rows = payload.get("archive_entries")
+        if not isinstance(rows, list):
+            raise ValueError("PDF companion manifest lacks archive_entries")
+        matches = [
+            row
+            for row in rows
+            if isinstance(row, dict) and row.get("source_path") == manifest_member_path
+        ]
+        if len(matches) != 1:
+            raise ValueError(
+                f"PDF companion manifest must bind exactly one {manifest_member_path!r} row"
+            )
+        expected = matches[0].get("sha256")
+    actual = _sha256_file(pdf_path)
+    if expected != actual:
+        raise ValueError(
+            f"PDF companion manifest digest mismatch: expected {expected or 'missing'}, got {actual}"
+        )
+    return actual
+
+
 def _current_git_state(repo_root: Path) -> str:
     try:
         commit = subprocess.check_output(
@@ -252,6 +303,19 @@ def _family_id_is_negative_context(text: str, start: int, end: int) -> bool:
 def lint_pages(pages: Iterable[str]) -> list[PdfClaimFinding]:
     findings: list[PdfClaimFinding] = []
     for page_number, page_text in enumerate(pages, start=1):
+        for issue in validate_active_text(
+            f"pdf_text/page_{page_number:04d}.txt",
+            page_text,
+            repo_root=REPO_ROOT,
+        ):
+            findings.append(
+                PdfClaimFinding(
+                    severity="fail",
+                    page=page_number,
+                    pattern=f"CF4 P0 quarantine: {issue.signature_id or issue.code}",
+                    context=issue.detail,
+                )
+            )
         for pattern_name, pattern in FAIL_PATTERNS:
             for match in pattern.finditer(page_text):
                 context = _context(page_text, match.start(), match.end())
@@ -306,10 +370,81 @@ def build_report_payload(
     *,
     repo_root: Path,
     pdf_path: Path,
+    manifest_path: Path | None,
     output_path: Path,
     generating_command: str,
 ) -> dict[str, object]:
     absolute_pdf = pdf_path if pdf_path.is_absolute() else repo_root / pdf_path
+    absolute_manifest = (
+        None
+        if manifest_path is None
+        else manifest_path
+        if manifest_path.is_absolute()
+        else repo_root / manifest_path
+    )
+    config_hash = "sha256:" + hashlib.sha256(
+        json.dumps(
+            {
+                "fail_patterns": [name for name, _ in FAIL_PATTERNS],
+                "lnb_numeric_pattern": LNB_NUMERIC_PATTERN.pattern,
+                "lnb_high_strength_pattern": LNB_HIGH_STRENGTH_PATTERN.pattern,
+                "lnb_safe_diagnostic_markers": LNB_SAFE_DIAGNOSTIC_MARKERS,
+                "context_markers": CONTEXT_MARKERS,
+                "missing_current_pdf_policy": "blocked_by_cf4_p0_quarantine",
+            },
+            sort_keys=True,
+            separators=(",", ":"),
+        ).encode("utf-8")
+    ).hexdigest()
+    if not absolute_pdf.is_file():
+        if absolute_manifest is not None and absolute_manifest.exists():
+            raise ValueError(
+                "PDF companion manifest exists while the bound PDF is missing: "
+                f"{_repo_relative(absolute_manifest, repo_root)}"
+            )
+        block = load_block_record(repo_root)
+        return {
+            "owner": "COMMON",
+            "implementation_scope": "common",
+            "claim_tier": "blocked",
+            "transfer_source": "none",
+            "sky_support_status": "not_applicable_no_current_pdf",
+            "null_mock_status": "not_applicable_no_current_pdf",
+            "artifact_path": _repo_relative(output_path, repo_root),
+            "status": "BLOCKED_NO_CURRENT_PDF",
+            "claim_lint_passed": False,
+            "pdf_path": _repo_relative(absolute_pdf, repo_root),
+            "pdf_sha256": None,
+            "pdf_manifest_path": (
+                _repo_relative(absolute_manifest, repo_root)
+                if absolute_manifest is not None
+                else None
+            ),
+            "quarantine_block_path": BLOCK_RELATIVE_PATH.as_posix(),
+            "quarantine_block_sha256": "sha256:" + block.sha256,
+            "config_hash": config_hash,
+            "input_hashes": [
+                f"{BLOCK_RELATIVE_PATH.as_posix()}:sha256:{block.sha256}"
+            ],
+            "generating_command": generating_command,
+            "git_commit_or_worktree_state": _current_git_state(repo_root),
+            "page_count": 0,
+            "failed_findings": 0,
+            "warning_findings": 0,
+            "findings": [],
+            "open_findings": [
+                str(row["finding_id"]) for row in block.findings
+            ],
+            "caveats": [
+                "No current manuscript PDF exists at the active path, so no PDF prose surface was scanned.",
+                "The prior PDF and lint report are immutable historical evidence under legacy/cf4_p0 with public_use false.",
+                "This blocked report is not a passing PDF claim lint and cannot satisfy a publication gate.",
+                "The canonical CF4 P0 block record is authoritative and authorizes no replacement value.",
+            ],
+        }
+    if absolute_manifest is None or not absolute_manifest.is_file():
+        raise ValueError("a current PDF requires an existing companion manifest")
+    pdf_digest = verify_pdf_manifest_pair(absolute_pdf, absolute_manifest)
     pages = _extract_pdf_pages(absolute_pdf)
     findings = lint_pages(pages)
     failed = [finding for finding in findings if finding.severity == "fail"]
@@ -322,23 +457,17 @@ def build_report_payload(
         "sky_support_status": "not_directional",
         "null_mock_status": "not_statistical",
         "artifact_path": _repo_relative(output_path, repo_root),
+        "status": "PASS" if not failed else "FAIL",
+        "claim_lint_passed": not failed,
         "pdf_path": _repo_relative(absolute_pdf, repo_root),
-        "pdf_sha256": _sha256_file(absolute_pdf),
-        "config_hash": "sha256:" + hashlib.sha256(
-            json.dumps(
-                {
-                    "fail_patterns": [name for name, _ in FAIL_PATTERNS],
-                    "lnb_numeric_pattern": LNB_NUMERIC_PATTERN.pattern,
-                    "lnb_high_strength_pattern": LNB_HIGH_STRENGTH_PATTERN.pattern,
-                    "lnb_safe_diagnostic_markers": LNB_SAFE_DIAGNOSTIC_MARKERS,
-                    "context_markers": CONTEXT_MARKERS,
-                },
-                sort_keys=True,
-                separators=(",", ":"),
-            ).encode("utf-8")
-        ).hexdigest(),
+        "pdf_sha256": pdf_digest,
+        "pdf_manifest_path": _repo_relative(absolute_manifest, repo_root),
+        "quarantine_block_path": None,
+        "quarantine_block_sha256": None,
+        "config_hash": config_hash,
         "input_hashes": [
-            f"{_repo_relative(absolute_pdf, repo_root)}:{_sha256_file(absolute_pdf)}"
+            f"{_repo_relative(absolute_pdf, repo_root)}:{pdf_digest}",
+            f"{_repo_relative(absolute_manifest, repo_root)}:{_sha256_file(absolute_manifest)}",
         ],
         "generating_command": generating_command,
         "git_commit_or_worktree_state": _current_git_state(repo_root),
@@ -346,6 +475,7 @@ def build_report_payload(
         "failed_findings": len(failed),
         "warning_findings": len(warned),
         "findings": [finding.__dict__ for finding in findings],
+        "open_findings": [],
         "caveats": [
             "PDF text extraction is used as a final prose-surface lint.",
             "lnB numeric mentions are warnings unless paired with high-strength claim language.",
@@ -375,19 +505,29 @@ def render_report(payload: dict[str, object]) -> str:
         f"generating_command: {payload['generating_command']}",
         f"git_commit_or_worktree_state: {payload['git_commit_or_worktree_state']}",
         f"artifact_path: {payload['artifact_path']}",
+        f"status: {payload['status']}",
+        f"claim_lint_passed: {str(payload['claim_lint_passed']).lower()}",
         "",
         "## Summary",
         "",
         f"- PDF: `{payload['pdf_path']}`",
         f"- PDF SHA256: `{payload['pdf_sha256']}`",
+        f"- PDF manifest: `{payload['pdf_manifest_path']}`",
+        f"- Quarantine block: `{payload['quarantine_block_path']}`",
+        f"- Quarantine block SHA256: `{payload['quarantine_block_sha256']}`",
         f"- Pages scanned: `{payload['page_count']}`",
         f"- Failed findings: `{payload['failed_findings']}`",
         f"- Warning findings: `{payload['warning_findings']}`",
+        f"- Open findings: `{', '.join(payload['open_findings'])}`",
         "",
         "## Findings",
         "",
     ]
-    if not findings:
+    if payload["status"] == "BLOCKED_NO_CURRENT_PDF":
+        lines.append(
+            "No current PDF was linted. This surface is blocked by the canonical CF4 P0 quarantine record."
+        )
+    elif not findings:
         lines.append("No PDF claim-lint findings.")
     else:
         lines.extend(
@@ -426,6 +566,7 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--repo-root", type=Path, default=REPO_ROOT)
     parser.add_argument("--pdf", type=Path, default=DEFAULT_PDF)
+    parser.add_argument("--manifest", type=Path, default=DEFAULT_MANIFEST)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--check", action="store_true")
     return parser.parse_args(argv)
@@ -438,6 +579,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     payload = build_report_payload(
         repo_root=repo_root,
         pdf_path=args.pdf,
+        manifest_path=args.manifest,
         output_path=output_path,
         generating_command=_command_from_args(argv),
     )
@@ -446,6 +588,11 @@ def main(argv: Sequence[str] | None = None) -> int:
         if existing_git_state:
             payload["git_commit_or_worktree_state"] = existing_git_state
     report = render_report(payload)
+    claim_lint_passed = (
+        payload.get("status") == "PASS"
+        and payload.get("claim_lint_passed") is True
+        and int(payload["failed_findings"]) == 0
+    )
     if args.check:
         if not output_path.exists():
             print("missing PDF claim lint report")
@@ -453,16 +600,24 @@ def main(argv: Sequence[str] | None = None) -> int:
         if output_path.read_text(encoding="utf-8") != report:
             print("stale PDF claim lint report")
             return 1
-        if int(payload["failed_findings"]) > 0:
-            print(f"PDF claim lint failed: {payload['failed_findings']} findings")
+        if not claim_lint_passed:
+            print(
+                "PDF claim lint did not pass: "
+                f"status={payload.get('status')} "
+                f"failed_findings={payload['failed_findings']}"
+            )
             return 1
         print(f"up-to-date {output_path}")
         return 0
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(report, encoding="utf-8")
     print(f"wrote {output_path}")
-    if int(payload["failed_findings"]) > 0:
-        print(f"PDF claim lint failed: {payload['failed_findings']} findings")
+    if not claim_lint_passed:
+        print(
+            "PDF claim lint did not pass: "
+            f"status={payload.get('status')} "
+            f"failed_findings={payload['failed_findings']}"
+        )
         return 1
     return 0
 

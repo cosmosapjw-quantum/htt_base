@@ -8,9 +8,9 @@ U1b the exact series pins: R_3 - 1 = -(3/4) t + (87/32) t^2, R_5 - 1 =
     SPECIFICITY pin (single-species tilt gives -(3/2), not -(3/4));
 U2a the envelope proofs (polynomial root isolation, exact): 0 <= 1 - R_3 <=
     (3/2) s^2 and 0 <= R_5 - 1 <= (5/2) s^2 on 0 < s < 1;
-U2b exact rational ceilings at the registered MES dipole amplitude, the
-    strictly-increasing ceiling map carrying the MES ordering, and the CF4
-    rapidity contained in BOTH channels;
+U2b exact rational ceilings at the registered MES dipole amplitude and the
+    strictly-increasing ceiling map carrying the MES ordering; the former CF4
+    numeric instantiation is quarantined and excluded;
 U3  the rank-deficiency schema correspondence: comparator design rank 2 with
     null {W2, Omega_k} (kinds carried), Teff response
     {{-1/16,-3/2},{0,0},{1/64,5/2}} with the retained p=4 selector exactly
@@ -30,7 +30,7 @@ import sympy as sp
 from htt.obsstat import egs3_teff_unification as uni
 from htt.obsstat import egs3_unification_schema as sch
 from htt.obsstat.egs3_teff_unification import (
-    BETA_CF4, antipodal_boost_reduction, beta_channel_correspondence,
+    antipodal_boost_reduction, beta_channel_correspondence,
     fingerprint_envelope_proofs, fingerprint_ceilings, teff_unification_seal,
 )
 from htt.obsstat.egs3_unification_schema import (
@@ -98,13 +98,15 @@ class U2bCeilings(unittest.TestCase):
         self.assertIn("NOT three physical rapidity ceilings",
                       ceil["ordered_ceiling_disclosure"])
 
-    def test_cf4_contained_in_both_channels(self):
+    def test_cf4_numeric_instantiation_is_quarantined(self):
         ceil = fingerprint_ceilings()
-        cf4 = ceil["cf4_containment"]
-        self.assertTrue(cf4["fingerprint_below_ceiling"])
-        self.assertAlmostEqual(cf4["beta_cf4"], 340.7264 / 299792.458, places=15)
-        # rapidity-vs-velocity disclosure scale: O(beta^3)
-        self.assertLess(abs(cf4["s_cf4_tanh"] - cf4["beta_cf4"]), 1e-9)
+        blocked = ceil["cf4_numeric_instantiation"]
+        self.assertEqual(blocked["status"], "QUARANTINED_OPEN_P0")
+        self.assertIsNone(blocked["replacement_value"])
+        self.assertEqual(
+            blocked["finding_ids"],
+            ["C1-K5-MV-F1", "N-DATA-CF4-DOWNSTREAM"],
+        )
 
 
 class U3Schema(unittest.TestCase):

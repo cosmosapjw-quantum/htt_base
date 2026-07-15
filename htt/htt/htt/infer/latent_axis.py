@@ -8,12 +8,16 @@ and nuisance parameters.
 Parameters:
   - (l, b): Galactic longitude/latitude of the common dipole axis
   - A: common amplitude (= β in the tilt interpretation)
-  - δ_CW, δ_rad, δ_CF4: survey-specific amplitude offsets
+  - δ_CW, δ_rad: survey-specific amplitude offsets
   - σ_sys_CW, σ_sys_rad: systematic uncertainty floors
+
+Channel ``c`` is excluded while the PR-120 CF4 findings remain OPEN.
 """
 import numpy as np
 from dataclasses import dataclass, field
 from typing import Tuple
+
+from htt.core.cf4_observational_input import OPEN_FINDING_IDS
 
 __all__ = ['LatentAxisModel', 'LatentAxisParams', 'dipole_projection']
 
@@ -26,7 +30,6 @@ class LatentAxisParams:
     A: float            # Common amplitude (β)
     delta_CW: float = 0.0    # CatWISE offset
     delta_rad: float = 0.0   # Radio offset
-    delta_CF4: float = 0.0   # CF4 offset
     sigma_sys_CW: float = 0.0
     sigma_sys_rad: float = 0.0
 
@@ -79,7 +82,10 @@ class LatentAxisModel:
 
     def __init__(self, obs_data: dict):
         self.obs = obs_data
-        self.ndim = 8  # l, b, A, δ_CW, δ_rad, δ_CF4, σ_sys_CW, σ_sys_rad
+        self.ndim = 7  # l, b, A, δ_CW, δ_rad, σ_sys_CW, σ_sys_rad
+        self.excluded_channels = ('c',)
+        self.cf4_channel_status = 'QUARANTINED_OPEN_FINDINGS'
+        self.cf4_finding_ids = OPEN_FINDING_IDS
 
         # Extract observational values
         dp = obs_data['dipole_observations']
@@ -87,31 +93,27 @@ class LatentAxisModel:
         self.s_CW = dp['catwise_bohme_2025']['sigma_stat']
         self.e1_rad = dp['radio_secrest_2021']['eps1']
         self.s_rad = dp['radio_secrest_2021']['sigma_stat']
-        self.b_CF4 = dp['cf4_watkins_2023']['beta']
-        self.s_CF4 = dp['cf4_watkins_2023']['sigma']
         self.rho = dp['rho_CW_radio']
 
     def prior_transform(self, u: np.ndarray) -> np.ndarray:
-        """Map [0,1]^8 → parameter space."""
-        theta = np.empty(8)
+        """Map [0,1]^7 → the active non-CF4 parameter space."""
+        theta = np.empty(7)
         theta[0] = u[0] * 360          # l ∈ [0, 360)
         theta[1] = np.degrees(np.arcsin(2*u[1] - 1))  # b ∈ [-90, 90]
         theta[2] = 10**(u[2] * 4 - 6)  # A ∈ [10⁻⁶, 10⁻²] log-uniform
         theta[3] = (u[3] - 0.5) * 2e-3  # δ_CW ∈ [-1e-3, 1e-3]
         theta[4] = (u[4] - 0.5) * 2e-3  # δ_rad
-        theta[5] = (u[5] - 0.5) * 2e-3  # δ_CF4
-        theta[6] = u[6] * 5e-4          # σ_sys_CW ∈ [0, 5e-4]
-        theta[7] = u[7] * 5e-4          # σ_sys_rad
+        theta[5] = u[5] * 5e-4          # σ_sys_CW ∈ [0, 5e-4]
+        theta[6] = u[6] * 5e-4          # σ_sys_rad
         return theta
 
     def log_likelihood(self, theta: np.ndarray) -> float:
         """Log-likelihood for the latent-axis model."""
-        l, b, A, d_CW, d_rad, d_CF4, ss_CW, ss_rad = theta
+        l, b, A, d_CW, d_rad, ss_CW, ss_rad = theta
 
         # Predicted amplitudes
         pred_CW = A + d_CW
         pred_rad = A + d_rad
-        pred_CF4 = A + d_CF4
 
         # Effective uncertainties (stat + sys in quadrature)
         s_eff_CW = np.sqrt(self.s_CW**2 + ss_CW**2)
@@ -132,11 +134,7 @@ class LatentAxisModel:
         )
         logL_biv = -0.5 * chi2_biv - np.log(2*np.pi*s_eff_CW*s_eff_rad*np.sqrt(det))
 
-        # Channel c: CF4
-        dx_CF4 = self.b_CF4 - pred_CF4
-        logL_CF4 = -0.5 * (dx_CF4 / self.s_CF4)**2 - 0.5*np.log(2*np.pi*self.s_CF4**2)
-
         # Direction prior: uniform on sphere (already encoded in prior_transform)
         # No additional direction-dependent term needed
 
-        return logL_biv + logL_CF4
+        return logL_biv

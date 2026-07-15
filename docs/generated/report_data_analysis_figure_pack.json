@@ -7,7 +7,7 @@
     "Diagnostic-only; no posterior odds, p-values, or family-identification claim."
   ],
   "claim_tier": "diagnostic_only",
-  "config_hash": "sha256:910a85985f129f99123fa29e7591a4195d44dbed23e8eeb63a81f5dfd521bd3d",
+  "config_hash": "sha256:8deb6db307c898b08916cf7e80a3c9cfe64fbe0708f6310e0446122b90f16e47",
   "figure_lane": "report_data_analysis_current",
   "figures": [
     {
@@ -51,18 +51,6 @@
       "file_name": "fig_data_cf4_depth_velocity_profile.png",
       "manifest_path": "figures/data_analysis_current/fig_data_cf4_depth_velocity_profile.manifest.json",
       "source_paths": [
-        "workdir/obs_bundle/pecvel/cf4_full/cf4_groups.npz",
-        "scripts/make_report_data_analysis_figures.py"
-      ]
-    },
-    {
-      "artifact_id": "obsstat.report_data.k5_cf4_bulk_flow_coverage",
-      "artifact_path": "figures/data_analysis_current/fig_data_k5_cf4_bulk_flow_coverage.png",
-      "caption": "Cosmicflows-4 bulk-flow amplitude, shell amplitudes, and conditional coverage from the K5 result.",
-      "file_name": "fig_data_k5_cf4_bulk_flow_coverage.png",
-      "manifest_path": "figures/data_analysis_current/fig_data_k5_cf4_bulk_flow_coverage.manifest.json",
-      "source_paths": [
-        "docs/generated/k5_cf4_release_coverage.json",
         "workdir/obs_bundle/pecvel/cf4_full/cf4_groups.npz",
         "scripts/make_report_data_analysis_figures.py"
       ]
@@ -224,25 +212,14 @@
       ]
     },
     {
-      "artifact_id": "obsstat.report_data.cf4_forward_coverage_residual",
-      "artifact_path": "figures/data_analysis_current/fig_data_cf4_forward_coverage_residual.png",
-      "caption": "CF4 depth-window forward-mock recovered amplitude residuals and coverage curve.",
-      "file_name": "fig_data_cf4_forward_coverage_residual.png",
-      "manifest_path": "figures/data_analysis_current/fig_data_cf4_forward_coverage_residual.manifest.json",
-      "source_paths": [
-        "docs/generated/cf4_bulkflow_likelihood_report.json",
-        "workdir/obs_bundle/pecvel/cf4_full/cf4_groups.npz",
-        "scripts/make_report_data_analysis_figures.py"
-      ]
-    },
-    {
       "artifact_id": "obsstat.report_data.cf4_depth_apex_phase_portrait",
       "artifact_path": "figures/data_analysis_current/fig_data_cf4_depth_apex_phase_portrait.png",
-      "caption": "CF4 shell apex track with full-sample, CMB dipole, and low-ell diagnostic-axis references.",
+      "caption": "CF4++ reconstruction-functional shell-apex track with reference axes; method/systematics only while C1-K5-MV-F1 remains OPEN.",
       "file_name": "fig_data_cf4_depth_apex_phase_portrait.png",
       "manifest_path": "figures/data_analysis_current/fig_data_cf4_depth_apex_phase_portrait.manifest.json",
       "source_paths": [
         "docs/generated/cf4_bulkflow_apex_depth_report.json",
+        "docs/generated/cf4_p0_quarantine_block.json",
         "docs/generated/lowell_morphology_real_map_report.json",
         "workdir/raw/cf4/CF4pp_mean_std_grids.npz",
         "workdir/obs_bundle/cmb/maps/smica_nside16.npz",
@@ -252,25 +229,12 @@
     {
       "artifact_id": "obsstat.report_data.cf4_shell_apex_separation_matrix",
       "artifact_path": "figures/data_analysis_current/fig_data_cf4_shell_apex_separation_matrix.png",
-      "caption": "Pairwise angular separations among CF4 shell apexes, full-sample apex, and CMB dipole.",
+      "caption": "Pairwise angular separations among CF4++ reconstruction-functional shell apexes; no observed amplitude or global-tilt claim.",
       "file_name": "fig_data_cf4_shell_apex_separation_matrix.png",
       "manifest_path": "figures/data_analysis_current/fig_data_cf4_shell_apex_separation_matrix.manifest.json",
       "source_paths": [
         "docs/generated/cf4_bulkflow_apex_depth_report.json",
-        "workdir/raw/cf4/CF4pp_mean_std_grids.npz",
-        "scripts/make_report_data_analysis_figures.py"
-      ]
-    },
-    {
-      "artifact_id": "obsstat.report_data.k5_cf4_vs_affine_consistency",
-      "artifact_path": "figures/data_analysis_current/fig_data_k5_cf4_vs_affine_consistency.png",
-      "caption": "K5 group-GLS bulk amplitudes compared with CF4++ WF affine bulk scale.",
-      "file_name": "fig_data_k5_cf4_vs_affine_consistency.png",
-      "manifest_path": "figures/data_analysis_current/fig_data_k5_cf4_vs_affine_consistency.manifest.json",
-      "source_paths": [
-        "docs/generated/k5_cf4_release_coverage.json",
-        "docs/generated/cf4_affine_flow_report.json",
-        "workdir/obs_bundle/pecvel/cf4_full/cf4_groups.npz",
+        "docs/generated/cf4_p0_quarantine_block.json",
         "workdir/raw/cf4/CF4pp_mean_std_grids.npz",
         "scripts/make_report_data_analysis_figures.py"
       ]
@@ -278,11 +242,12 @@
     {
       "artifact_id": "obsstat.report_data.cf4_affine_gradient_spectrum",
       "artifact_path": "figures/data_analysis_current/fig_data_cf4_affine_gradient_spectrum.png",
-      "caption": "CF4 affine bulk, expansion, shear, and curl-suppressed gradient sectors by radius.",
+      "caption": "CF4++ affine reconstruction functionals versus radius; estimator/systematics only while C1-K5-MV-F1 remains OPEN.",
       "file_name": "fig_data_cf4_affine_gradient_spectrum.png",
       "manifest_path": "figures/data_analysis_current/fig_data_cf4_affine_gradient_spectrum.manifest.json",
       "source_paths": [
         "docs/generated/cf4_affine_flow_report.json",
+        "docs/generated/cf4_p0_quarantine_block.json",
         "workdir/raw/cf4/CF4pp_mean_std_grids.npz",
         "scripts/make_report_data_analysis_figures.py"
       ]
@@ -326,57 +291,22 @@
         "workdir/obs_bundle/cmb/maps/commander_nside16.npz",
         "scripts/make_report_data_analysis_figures.py"
       ]
-    },
-    {
-      "artifact_id": "obsstat.report_data.observed_sector_response_vector",
-      "artifact_path": "figures/data_analysis_current/fig_data_observed_sector_response_vector.png",
-      "caption": "Available observed-sector numeric coordinates without promoting absent sectors.",
-      "file_name": "fig_data_observed_sector_response_vector.png",
-      "manifest_path": "figures/data_analysis_current/fig_data_observed_sector_response_vector.manifest.json",
-      "source_paths": [
-        "docs/generated/pr08_006_joint_artifact.json",
-        "docs/generated/k1_global_maxscan.json",
-        "docs/generated/k5_cf4_release_coverage.json",
-        "docs/generated/k6_cf4_curl_posterior.json",
-        "workdir/obs_bundle/cmb/maps/smica_nside16.npz",
-        "workdir/obs_bundle/cmb/maps/commander_nside16.npz",
-        "workdir/obs_bundle/pecvel/cf4_full/cf4_groups.npz",
-        "workdir/raw/cf4/CF4pp_mean_std_grids.npz",
-        "scripts/make_report_data_analysis_figures.py"
-      ]
-    },
-    {
-      "artifact_id": "obsstat.report_data.k1_k5_joint_diagnostic_axes",
-      "artifact_path": "figures/data_analysis_current/fig_data_k1_k5_joint_diagnostic_axes.png",
-      "caption": "K1 global-tail coordinates crossed with K5 coverage coordinates; no joint null probability is reported.",
-      "file_name": "fig_data_k1_k5_joint_diagnostic_axes.png",
-      "manifest_path": "figures/data_analysis_current/fig_data_k1_k5_joint_diagnostic_axes.manifest.json",
-      "source_paths": [
-        "docs/generated/k1_global_maxscan.json",
-        "docs/generated/k5_cf4_release_coverage.json",
-        "workdir/obs_bundle/cmb/maps/smica_nside16.npz",
-        "workdir/obs_bundle/cmb/maps/commander_nside16.npz",
-        "workdir/obs_bundle/pecvel/cf4_full/cf4_groups.npz",
-        "scripts/make_report_data_analysis_figures.py"
-      ]
     }
   ],
   "generating_command": "python scripts/make_report_data_analysis_figures.py",
   "git_commit_or_worktree_state": "content-addressed",
   "implementation_scope": "obsstat",
   "input_hashes": [
-    "docs/generated/cf4_affine_flow_report.json:sha256:5e95cfb1a2fc1ff91ce3a336d91955115f8fa34708df90fcf01e7676680fb1fc",
-    "docs/generated/cf4_bulkflow_apex_depth_report.json:sha256:34191a4c61d7719d7ad3c3edb8d2d543ecad7a737168ae07fd731b56c29c2864",
-    "docs/generated/cf4_bulkflow_likelihood_report.json:sha256:183fc58041f04a9c9778a21ef2f81cdc3fbf874a6455c4aa84792b5585728536",
+    "docs/generated/cf4_affine_flow_report.json:sha256:40048a154e7f5a6ce410bc5869f889aae90e0c3460bac7180efe704904b5f05b",
+    "docs/generated/cf4_bulkflow_apex_depth_report.json:sha256:d35f9f8c2b07f417f332648a2af54a0afc03e9fa6e9b05fe42593aee35a4b057",
+    "docs/generated/cf4_p0_quarantine_block.json:sha256:7046c3bbefc18c840a36798fccd7f3dcdae9616ab1ef6f9eb2344e6c573405c7",
     "docs/generated/k1_biposh_smica.json:sha256:c5ac1194231796f7e8eccefe16b77c8d6c862fec809e7cfeff700325e5513f19",
     "docs/generated/k1_global_maxscan.json:sha256:c7f8ca243eec35eca6ab6518309f216d16ddc706996df1f6dbd2a2a813867237",
-    "docs/generated/k5_cf4_release_coverage.json:sha256:edcf9f9354cd326827fdae48ce1595aed963140ac5bd6a3264ebe0c5c144eee9",
     "docs/generated/k6_cf4_curl_posterior.json:sha256:abc3f59486abb1e910c06d55e72ea932f065829d699826a55dbb9601921871f7",
     "docs/generated/lowell_morphology_real_map_report.json:sha256:d1bf061318211814cf8f588bc4640d7c7bd754d2cfb4714aed32d7c804f45470",
     "docs/generated/observed_longrun_analysis.json:sha256:deb1cd2f10a49f9d4803b57c8c2414c03d04e7baf5939c48a8c9251295a2e5ec",
-    "docs/generated/pr08_006_joint_artifact.json:sha256:8019a9e64a053a29cfe3fd0b9a78c4b7ad52d798723908c4f08630f689bc93e1",
     "docs/generated/v6_approval_compact_download_inventory.json:sha256:e11b664a2edd6cd1e4a75a21cb355fd074192e98540410dfdebfca61d4090a20",
-    "scripts/make_report_data_analysis_figures.py:sha256:a7dd3f43fe0e63df90d84d23fe275d3a1e341636bc5db97c59c9e94a2aff85ab",
+    "scripts/make_report_data_analysis_figures.py:sha256:6dad3adadc9d1bb298e38ead2ec6a468455679b2009444f5b71728cab30d4acd",
     "workdir/compact_products/cf4/query_batch.npz:sha256:5fb994ca076235fb30db644d3d1a3672d092ed31f8ef4737bcabe2da87491909",
     "workdir/compact_products/cf4/targets_cf4_from_desi_bgs_auto.csv:sha256:91974cb828227236317443de3f5036df0753b18cc6eb45d0234d9dc7f79c4c11",
     "workdir/compact_products/desi/BGS_ANY_NGC_clustering_extended.npz:sha256:ea52cb7e0bbfa3ef69db396dab4a68ee95b409d8e237451d74a924e4e3cca21d",
@@ -418,6 +348,10 @@
   "owner": "OBSSTAT",
   "skipped_current_data_candidates": [
     {
+      "candidate": "K5 CF4 bulk-flow/global-tilt and forward-coverage figure set",
+      "reason": "PR-120 quarantine: K5 coverage, K5-versus-affine, forward-coverage residual, observed-sector response, and K1-K5 joint figures consume the OPEN CF4 P0 chain; historical copies are legacy_reproduction_only"
+    },
+    {
       "candidate": "MIO directional pairwise separation heatmap",
       "reason": "probe set is hardcoded/literature-level in the current checkout; source-bound report manifest is not present"
     },
@@ -426,8 +360,8 @@
       "reason": "requires an explicitly bound probe tuple and matched null metadata before report-lane use"
     },
     {
-      "candidate": "CF4/JWST anchor leverage forecast",
-      "reason": "forecast product exists, but it is not a current observed-data figure"
+      "candidate": "CF4/JWST catalogue-linkage diagnostic",
+      "reason": "PR-120 quarantine: no CF4-conditioned precision or global-tilt forecast is authorized while N-DATA-CF4-DOWNSTREAM remains OPEN"
     },
     {
       "candidate": "Planck low-ell residual map with CF4 apex-track overlay",

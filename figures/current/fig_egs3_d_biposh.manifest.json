@@ -1,8 +1,9 @@
 {
-  "allowed_use": "paper_appendix",
+  "allowed_use": "internal_method_audit_only",
   "artifact_id": "bass.theorem.fig_egs3_d_biposh",
-  "artifact_mode": "paper_appendix_conditioned",
+  "artifact_mode": "synthetic_method_witness",
   "artifact_path": "figures/current/fig_egs3_d_biposh.png",
+  "artifact_sha256": "sha256:7851a906428232c61a3e627b1820e8e6bca23fe0613d52bab91cfeb33b1aa8d6",
   "caption_policy": [
     "must_state_diagnostic_only",
     "must_not_use_for_family_identification_or_family_selection",
@@ -15,7 +16,7 @@
     "No Bianchi family-ID or geometry-detection claim is made."
   ],
   "claim_tier": "diagnostic_only",
-  "config_hash": "sha256:0c7c22a9f05276a9def58eb1e420a12a4672cca1238494abad249d383c3562bc",
+  "config_hash": "sha256:fd578150e34deb5a377e8496e387d0bf152c28fb10f868f94c9f97746641a5cd",
   "covariance_status": "synthetic_only",
   "created_by": "scripts/make_egs2_egs3_theorem_figures.py",
   "failed_gates": [
@@ -24,10 +25,21 @@
     "observational_closure_not_bound"
   ],
   "family_identification": false,
+  "finding_ids": [
+    "N-DATA-CF4-DOWNSTREAM"
+  ],
+  "finding_status": "OPEN",
   "generating_command": "python scripts/make_egs2_egs3_theorem_figures.py",
+  "git_commit_or_worktree_state": "baseline_commit:e6da3670043596efdcd93f9ba5e631e1462146c7; worktree_state:PR-120-content-addressed",
   "implementation_scope": "bass_py",
+  "input_hashes": [
+    "figures/current/fig_egs3_d_biposh.source.json:sha256:f8f77ef69a4b62bc690ab5502538b4aa1b47aedff32e0fbebbb37a2f639c3171",
+    "scripts/make_egs2_egs3_theorem_figures.py:sha256:b140e512d7fd620cbc7ff55f4955c0606acabfd274029edb0c12ccc434029389",
+    "htt/obsstat/joint_pv_cmb_forecast.py:sha256:4cd0d1e332b0294833b2e881edd51046e338af540f3a74be6a442ac40baa9df5"
+  ],
   "native_solver_result": false,
   "null_mock_status": "synthetic_only",
+  "observational_interpretation": null,
   "owner": "BASS",
   "passed_gates": [
     "gate_test_present",
@@ -40,10 +52,12 @@
     "native_morphology_atlas_absent",
     "family_identification_blocked_pre_native_atlas"
   ],
+  "public_use": false,
   "publication_gates": {
     "bianchi_evidence_claim": "fail_program_theorem_only",
     "family_identification_claim": "fail_blocked_pre_native_atlas"
   },
+  "quarantine_control_ref": "docs/generated/cf4_p0_quarantine_block.json",
   "required_gates": [
     "gate_test_present",
     "manifest_metadata_present",
@@ -177,6 +191,8 @@
       12.541359216397561,
       32.93903863954716
     ],
+    "observational_interpretation": null,
+    "status": "SYNTHETIC_METHOD_WITNESS",
     "theorem_id": "EGS3-D"
   },
   "source_json_path": "figures/current/fig_egs3_d_biposh.source.json",
@@ -185,7 +201,7 @@
     "theorem_id": "EGS3-D"
   },
   "theorem_id": "EGS3-D",
-  "theorem_title": "SMICA BipoSH L=1 boost-aberration channel",
-  "title": "SMICA BipoSH L=1 boost-aberration channel",
+  "theorem_title": "Synthetic BipoSH L=1 response channel",
+  "title": "Synthetic BipoSH L=1 response channel",
   "transfer_source": "none"
 }

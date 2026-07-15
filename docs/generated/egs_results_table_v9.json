@@ -1,4 +1,6 @@
 {
+  "artifact_id": "common.egs.results_table.v9",
+  "artifact_path": "docs/generated/egs_results_table_v9.json",
   "axes": {
     "data_interpretation": "data interpretation axis",
     "gr_boltzmann": "GR / covariant-Boltzmann theory axis",
@@ -7,14 +9,29 @@
   "based_on_frozen_tables": "egs_results_table.json (v7, byte-frozen) + egs_results_table_v8.json (v8, hash-frozen); rows inherited with a supersession overlay on EGS3-E1/E2/E4/G2 (registry-retracted or superseded content must not print as live; REV-R179)",
   "blockers_open": [
     "BLOCKED_MISSING_PR4_E2E_ACCESS (E2E-systematics null only; look-elsewhere discharged)",
-    "BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP (K5 full release-matched mocks; conditional Gaussian-prior coverage only so far)",
+    "CF4 P0 findings C1-K5-MV-F1, C3-K5-VCORR-ML-F1, and N-DATA-CF4-DOWNSTREAM remain OPEN; replacement_value=null and scientific_effect=none",
     "BLOCKED_MISSING_FIELD_REALIZATIONS (K6 true CR vorticity posterior; WF mean-field no-go only so far)",
     "AWAITING_NATIVE_LOWELL_SOLVER"
   ],
+  "caveats": [
+    "Table rows retain their individual theorem, synthetic, and data-interpretation scopes.",
+    "All CF4 P0-fed rows are blocked records with no replacement value.",
+    "No row identifies a Bianchi family or represents native low-ell solver output."
+  ],
   "claim_boundary": "conditional theorems + synthetic mechanics + real-data measurements on owned inputs; no detection, family/geometry, or native-solver result. Measured rows are model-independent descriptors; K6 is an honest structural no-go; K1 is a partial (look-elsewhere) discharge under an idealised null.",
   "claim_tier": "program_theorem_and_synthetic_mechanics",
+  "config_hash": "sha256:31951f0ea9091d1d2abbe89b43b84af291355d3d9faa72d403f0adf8dec1f4e5",
   "family_identification": false,
+  "generating_command": "python scripts/build_egs_results_table_v9.py",
+  "git_commit_or_worktree_state": "content-addressed-inputs",
+  "implementation_scope": "common",
+  "input_hashes": [
+    "legacy/cf4_p0/tables/egs_results_table_v8.json:sha256:a50de53b7e314d3cef50e1db68b5d58e7a7d2205fbc83b2e1144361a8d88b5d7",
+    "scripts/build_egs_results_table_v9.py:sha256:58acdd46fe18a2cc39311cf71e64652e76d92212fcc0a496ccf850b14db0cb68"
+  ],
   "native_solver_result": false,
+  "null_mock_status": "mixed_by_row",
+  "owner": "COMMON",
   "rows": [
     {
       "axis": "math_stat",
@@ -154,18 +171,18 @@
     },
     {
       "axis": "data_interpretation",
-      "evidence": "scripts/bass_extended_joint_forecast.py on real CF4 + JWST seed cross-match; PV tilt measured, JWST prior is a labelled forecast",
-      "key_result": "|B|=341 km/s on 38049 CF4 groups (K5-consistent); 9 JWST anchors matched -> Omega_tilt precision gain 1.041 (nearby anchors barely move the global tilt -- honest)",
-      "statement": "BASS-Extended PV sector: a feasible correlated-covariance bulk-flow / tilt GLS on real CF4 via a low-rank Woodbury covariance (no dense N x N inversion), with a JWST-anchored distance-prior Omega_tilt precision FORECAST (survey-design; hypothetical prior on the cross-matched anchors, not a measurement)",
-      "status": "measured_synth",
+      "evidence": "cf4_p0_quarantine_block.json; legacy reproduction only: legacy/cf4_p0/cards/bass_extended_joint_forecast.json",
+      "key_result": "blocked source record; findings C1-K5-MV-F1, N-DATA-CF4-DOWNSTREAM remain OPEN; no replacement value",
+      "statement": "CF4 numerical consumer quarantined by PR-120; independent estimator or symbolic mechanics may remain method substrate, but this active row cannot carry an observational or global-tilt interpretation.",
+      "status": "quarantined_open_p0",
       "theorem_id": "EGS3-D1"
     },
     {
       "axis": "math_stat",
-      "evidence": "egs3-gates D4; wolfram egs3_boost_tilt_separation prior_precision_reduces_inflation (PASS); fig_egs3_d_joint_forecast",
-      "key_result": "Sigma^2 inflation 1.0417 -> 1.0239 (break 1.0174) with the prior",
-      "statement": "Coupled-Fisher degeneracy break: the PV/JWST Omega_tilt prior strictly reduces the Sigma^2 covariance inflation 1/(1-r^2), blocking the observer-boost Sigma^2 leakage (solver-free; Wolfram-verified monotonicity)",
-      "status": "proven_gate",
+      "evidence": "egs3-gates D4; fig_egs3_d_joint_forecast; cf4_p0_quarantine_block.json",
+      "key_result": "monotone covariance-inflation sensitivity on a declared synthetic grid; observational interpretation absent",
+      "statement": "Generic coupled-Fisher sensitivity to a synthetic tilt-information weight; this is method substrate and not a PV/JWST prior or observational forecast.",
+      "status": "synthetic_method_only",
       "theorem_id": "EGS3-D2"
     },
     {
@@ -258,10 +275,10 @@
     },
     {
       "axis": "data_interpretation",
-      "evidence": "scripts/k5_cf4_release_coverage.py on real CF4 groups; bulk flow measured; coverage is conditional Gaussian-prior mock mechanics (full CF4 selection/Malmquist/grouping/correlated-field mocks remain a local-repo gate)",
-      "key_result": "|B|=341 +/- 102 km/s (consistent with the LambdaCDM ~150-250 km/s bulk-flow expectation at this depth); CV-incl coverage 0.67 (meas-only 0.19), conditional on the sigma_cv prior",
-      "statement": "CF4 bulk-flow amplitude (measured, model-independent) + conditional cosmic-variance coverage from geometry-and-error matched Gaussian bulk-flow mock mechanics (fixed LambdaCDM sigma_cv=150 km/s/comp prior)",
-      "status": "measured",
+      "evidence": "cf4_p0_quarantine_block.json; legacy reproduction only: legacy/cf4_p0/cards/k5_cf4_release_coverage.json",
+      "key_result": "blocked source record; findings C1-K5-MV-F1, N-DATA-CF4-DOWNSTREAM remain OPEN; no replacement value",
+      "statement": "CF4 numerical consumer quarantined by PR-120; independent estimator or symbolic mechanics may remain method substrate, but this active row cannot carry an observational or global-tilt interpretation.",
+      "status": "quarantined_open_p0",
       "theorem_id": "K5"
     },
     {
@@ -354,10 +371,10 @@
     },
     {
       "axis": "data_interpretation",
-      "evidence": "scripts/k5_cf4_identified_interval_card.py (plugin-firewalled)",
-      "key_result": "branch-labelled FEASIBLE identified interval + IM CI; observational_claim_allowed=False",
-      "statement": "F2: end-to-end K5/CF4 identified-interval card runs the full y->R->tau->status/interval pipeline on real CF4 |B|; W^2 ceiling now the registered MES value; Sigma^2/Omega_k stay PLUGIN so no observational claim is made",
-      "status": "diagnostic_pipeline_closure",
+      "evidence": "cf4_p0_quarantine_block.json; legacy reproduction only: legacy/cf4_p0/cards/k5_cf4_identified_interval_card.json",
+      "key_result": "blocked source record; findings C1-K5-MV-F1, N-DATA-CF4-DOWNSTREAM remain OPEN; no replacement value",
+      "statement": "CF4 numerical consumer quarantined by PR-120; independent estimator or symbolic mechanics may remain method substrate, but this active row cannot carry an observational or global-tilt interpretation.",
+      "status": "quarantined_open_p0",
       "theorem_id": "EGS3-K5card"
     },
     {
@@ -410,9 +427,9 @@
     },
     {
       "axis": "math_stat",
-      "evidence": "teff_unification_seal.json",
-      "key_result": "|R3-1| <= 2.283e-6, |R5-1| <= 3.804e-6; CF4 rapidity contained in both channels (1.94e-6)",
-      "statement": "MES-registry ceilings on the Teff fingerprints: proved envelopes (3/2)s^2, (5/2)s^2; exact rational ceilings at eps1; MES ordering carried by the ceiling map",
+      "evidence": "teff_unification_seal.json; cf4_p0_quarantine_block.json",
+      "key_result": "symbolic ceiling map retained; former CF4 point quarantined while C1-K5-MV-F1 remains OPEN; no replacement value",
+      "statement": "MES-registry ceilings on the Teff fingerprints: proved symbolic envelopes and exact rational ceilings at eps1; observational numeric instantiation excluded",
       "status": "proven_symbolic",
       "theorem_id": "EGS3-U2"
     },
@@ -450,10 +467,10 @@
     },
     {
       "axis": "data_interpretation",
-      "evidence": "k5_cf4_identified_interval_card_v8.json (plugin firewall intact)",
-      "key_result": "fingerprint 1.94e-6 < MES ceiling 2.28e-6; observational_claim_allowed stays False",
-      "statement": "K5 card v8 extension: deterministic Teff fingerprint row from the SAME CF4 rapidity as Omega_tilt; registered-external model-conditional vorticity/shear cross-checks; Omega_k documented external null",
-      "status": "blocked",
+      "evidence": "cf4_p0_quarantine_block.json; legacy reproduction only: legacy/cf4_p0/cards/k5_cf4_identified_interval_card_v8.json",
+      "key_result": "blocked source record; findings C1-K5-MV-F1, N-DATA-CF4-DOWNSTREAM remain OPEN; no replacement value",
+      "statement": "CF4 numerical consumer quarantined by PR-120; independent estimator or symbolic mechanics may remain method substrate, but this active row cannot carry an observational or global-tilt interpretation.",
+      "status": "quarantined_open_p0",
       "theorem_id": "K5-V8"
     },
     {
@@ -490,58 +507,58 @@
     },
     {
       "axis": "data_interpretation",
-      "evidence": "k5_cf4_identified_interval_card_v9.json",
-      "key_result": "6 labeled intervals; lower endpoint keyed to -U_W; observational_claim_allowed False",
-      "statement": "K5/CF4 identified-interval card v9: three attribution-conditional W^2 ceilings x two signed-curvature branches; no branch promoted",
-      "status": "diagnostic_only",
+      "evidence": "cf4_p0_quarantine_block.json; legacy reproduction only: legacy/cf4_p0/cards/k5_cf4_identified_interval_card_v9.json",
+      "key_result": "blocked source record; findings C1-K5-MV-F1, N-DATA-CF4-DOWNSTREAM remain OPEN; no replacement value",
+      "statement": "CF4 numerical consumer quarantined by PR-120; independent estimator or symbolic mechanics may remain method substrate, but this active row cannot carry an observational or global-tilt interpretation.",
+      "status": "quarantined_open_p0",
       "theorem_id": "K5-V9"
     },
     {
       "axis": "data_interpretation",
-      "evidence": "cf4_bulkflow_lcdm_card.json",
-      "key_result": "|B|=340.7+/-5.0 km/s, apex (l,b)=(293,20) -- 37 deg from the CMB dipole and only 18 deg from the published CF4 (Watkins 2023) flow; Omega_tilt=4.07e-7; the naive chi^2 reads a spurious ~9 sigma (the noise-weighted GLS aliases nonlinear small-scale power the linear CV omits) -> significance withheld; credible significance needs the MV ideal-window estimator or release-matched mocks (BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP)",
-      "statement": "CF4 weighted-GLS bulk flow promoted to a real MEASUREMENT (|B|, apex, Omega_tilt); the linear estimator-matched cosmic variance (mode-function window integral, validated against the closed-form sigma_v_1d) replaces the frozen card's 150 km/s scalar prior. The LambdaCDM amplitude SIGNIFICANCE is WITHHELD: the linear window cosmic variance is a lower bound",
-      "status": "measured",
+      "evidence": "cf4_p0_quarantine_block.json; legacy reproduction only: legacy/cf4_p0/cards/cf4_bulkflow_lcdm_card.json",
+      "key_result": "blocked source record; findings C1-K5-MV-F1, N-DATA-CF4-DOWNSTREAM remain OPEN; no replacement value",
+      "statement": "CF4 numerical consumer quarantined by PR-120; independent estimator or symbolic mechanics may remain method substrate, but this active row cannot carry an observational or global-tilt interpretation.",
+      "status": "quarantined_open_p0",
       "theorem_id": "K5-LCDMCV"
     },
     {
       "axis": "data_interpretation",
-      "evidence": "cf4_mv_bulkflow_card.json",
-      "key_result": "|B|(200 h^-1Mpc)=405 km/s (+/-3 binning syst), consistent with the published CF4 419+/-36; apex@50 8.5 deg from the published flow; LambdaCDM tension ~4.4-5.4 sigma (P(k)-corrected to fiducial, a likely OVER-estimate per Whitford 2023); injection recovered exact, sigma_v to <0.1%; the apex swings at large R (deep-sample-dominated), amplitude is the robust quantity; release-matched mocks pin the definitive significance (BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP)",
-      "statement": "CF4 minimum-variance ideal-window bulk flow (Watkins-Feldman-Hudson): the MV weights are tied to a specified Gaussian window of scale R, so the cosmic-variance covariance is FAITHFUL (not the rev-r195 GLS lower bound) and the LambdaCDM significance is REPORTABLE -- resolving the rev-r195 withheld significance",
-      "status": "measured",
+      "evidence": "cf4_p0_quarantine_block.json; legacy reproduction only: legacy/cf4_p0/cards/cf4_mv_bulkflow_card.json",
+      "key_result": "blocked source record; findings C1-K5-MV-F1 remain OPEN; no replacement value",
+      "statement": "CF4 numerical consumer quarantined by PR-120; independent estimator or symbolic mechanics may remain method substrate, but this active row cannot carry an observational or global-tilt interpretation.",
+      "status": "quarantined_open_p0",
       "theorem_id": "K5-MV"
     },
     {
       "axis": "data_interpretation",
-      "evidence": "cf4_reconstruction_dependence_card.json",
-      "key_result": "amplitude spans 140-341 km/s across 7 reconstruction methods -- the pure Wiener-filter (Vpwf 145) and the shallow-2MRS LVN NN (140@150) shrink the flow vs the direct/ramp (319/341) and CORAS (283); the 2MRS reconstructions are reconstruction-vs-measurement (regress to the mean at large r), NOT a tension; ZoA |b|-cut sensitivity small; the private Nusser 2026 2MRS is SUPERSEDED_BY_LILOW_2024_PUBLIC",
-      "statement": "CF4 bulk-flow dependence on the peculiar-velocity reconstruction: the identical estimator on the three catalogue PV columns (Vpds direct / Vpwf pure-WF / Vpec ramp) + four full-field reconstructions -- the CF4++ WF field, the external Carrick 2015 2M++ field, and (REV-R197, substituting the private Nusser 2026) two PUBLIC 2MRS reconstructions: the Lilow-Ganeshaiah-Veena-Nusser 2024 neural network + CORAS 2021",
-      "status": "measured_diagnostic",
+      "evidence": "cf4_p0_quarantine_block.json; legacy reproduction only: legacy/cf4_p0/cards/cf4_reconstruction_dependence_card.json",
+      "key_result": "blocked source record; findings C1-K5-MV-F1 remain OPEN; no replacement value",
+      "statement": "CF4 numerical consumer quarantined by PR-120; independent estimator or symbolic mechanics may remain method substrate, but this active row cannot carry an observational or global-tilt interpretation.",
+      "status": "quarantined_open_p0",
       "theorem_id": "K5-RECON"
     },
     {
       "axis": "data_interpretation",
-      "evidence": "cf4_mock_significance_card.json",
-      "key_result": "the mock reproduces the analytic linear bulk-flow covariance (mock/analytic ratio ~0.93) so the estimator/geometry/noise do NOT inflate the significance; mock-calibrated parametric tension |B|(200) ~5.8 sigma (empirical 2000-mock floor >3.5 sigma), consistent with the rev-r196 analytic 4.4-5.4 range; the reduction to the literature ~2-3 sigma is the nonlinear-power (COLA) residual, NOT claimed here; GRF-linear + positions-conditional",
-      "statement": "CF4 bulk-flow significance calibrated by an in-house PHYSICAL forward-mock ensemble (linear GRF velocity field + super-sample bulk mode + real per-object noise at the fixed CF4 geometry, 2000 survey-matched mocks) -- replacing the request-only CF4TF release mocks (BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP)",
-      "status": "measured",
+      "evidence": "cf4_p0_quarantine_block.json; legacy reproduction only: legacy/cf4_p0/cards/cf4_mock_significance_card.json",
+      "key_result": "blocked source record; findings C1-K5-MV-F1 remain OPEN; no replacement value",
+      "statement": "CF4 numerical consumer quarantined by PR-120; independent estimator or symbolic mechanics may remain method substrate, but this active row cannot carry an observational or global-tilt interpretation.",
+      "status": "quarantined_open_p0",
       "theorem_id": "K5-MOCKSIG"
     },
     {
       "axis": "data_interpretation",
-      "evidence": "cf4_velocity_correlation_card.json",
-      "key_result": "the Psi(r) curves are measured directly from pairs; the simplified pair estimator gives a DIAGNOSTIC f sigma_8 = 0.38 (Vpec, matching the published CF4 ~0.38) / 0.75 (direct Vpds, noise-limited) -- treatment-dependent; a precision f sigma_8 needs the max-likelihood noise-aware estimator (registered exit-gate); cosmic Mach number reported",
-      "statement": "reconstruction-INDEPENDENT statistic (the physical replacement for an ill-posed angular pseudo-C_l): the Gorski velocity correlation function Psi_par/Psi_perp from LOS-velocity pairs (no field reconstruction) -> f sigma_8, bulk-subtracted + inverse-error-weighted",
-      "status": "measured_diagnostic",
+      "evidence": "cf4_p0_quarantine_block.json; legacy reproduction only: legacy/cf4_p0/cards/cf4_velocity_correlation_card.json",
+      "key_result": "blocked source record; findings C3-K5-VCORR-ML-F1, N-DATA-CF4-DOWNSTREAM remain OPEN; no replacement value",
+      "statement": "CF4 numerical consumer quarantined by PR-120; independent estimator or symbolic mechanics may remain method substrate, but this active row cannot carry an observational or global-tilt interpretation.",
+      "status": "quarantined_open_p0",
       "theorem_id": "K5-VCORR"
     },
     {
       "axis": "data_interpretation",
-      "evidence": "cf4_velocity_correlation_ml_card.json",
-      "key_result": "f sigma_8 = 0.40 +/- 0.02 (Vpec, shape-corrected; conservative octant jackknife +/- 0.10), CONSISTENT with the published CF4 ~0.38 and Planck ~0.44; the injection Monte Carlo recovers the amplitude unbiased (pull 1.4 sigma); the direct Vpds is noise-limited (its ML amplitude rails); replaces the treatment-dependent pair diagnostic",
-      "statement": "the PRECISION upgrade of K5-VCORR (rev-r196 diagnostic): the field-level maximum-likelihood NOISE-AWARE f sigma_8 (Johnson+2014) on the binned CF4 cells, C(A)=A G+N maximised over the velocity-field amplitude -- the registered exit-gate; injection-MC-validated unbiased",
-      "status": "measured",
+      "evidence": "cf4_p0_quarantine_block.json; legacy reproduction only: legacy/cf4_p0/cards/cf4_velocity_correlation_ml_card.json",
+      "key_result": "blocked source record; findings C3-K5-VCORR-ML-F1 remain OPEN; no replacement value",
+      "statement": "CF4 numerical consumer quarantined by PR-120; independent estimator or symbolic mechanics may remain method substrate, but this active row cannot carry an observational or global-tilt interpretation.",
+      "status": "quarantined_open_p0",
       "theorem_id": "K5-VCORR-ML"
     },
     {
@@ -578,10 +595,10 @@
     },
     {
       "axis": "data_interpretation",
-      "evidence": "external_lanes_seal.json; jwst_cf4_anchors.json",
-      "key_result": "connected via jwst_cf4_crossmatch -> joint_pv_cmb_forecast (labelled forecast, not a measurement)",
-      "statement": "JWST distance anchors (14 Cepheid/TRGB/maser, CF4-matched) feed the Omega_tilt survey-design forecast",
-      "status": "diagnostic_only",
+      "evidence": "jwst_cf4_anchors.json; cf4_p0_quarantine_block.json",
+      "key_result": "catalogue linkage only; no global-tilt precision gain or observational interpretation while N-DATA-CF4-DOWNSTREAM is OPEN",
+      "statement": "JWST/CF4 cross-match catalogue mechanics remain available, but the downstream Omega_tilt survey-design forecast is quarantined by PR-120",
+      "status": "quarantined_open_p0",
       "theorem_id": "EXT-JWST"
     },
     {
@@ -642,27 +659,29 @@
     }
   ],
   "schema": "htt.egs.results_table.v9",
+  "sky_support_status": "mixed_by_row",
   "status_counts": {
-    "blocked": 2,
+    "blocked": 1,
     "diagnostic_forward_model": 1,
-    "diagnostic_only": 2,
-    "diagnostic_pipeline_closure": 1,
-    "measured": 9,
-    "measured_diagnostic": 3,
+    "measured": 4,
+    "measured_diagnostic": 1,
     "measured_no_go": 1,
     "measured_partial": 2,
-    "measured_synth": 5,
+    "measured_synth": 4,
     "proven": 6,
-    "proven_gate": 18,
+    "proven_gate": 17,
     "proven_seal": 6,
     "proven_seal_linearized": 1,
     "proven_seal_partial": 1,
     "proven_symbolic": 14,
+    "quarantined_open_p0": 12,
     "re_frozen": 1,
     "reclassified": 1,
     "registered_external": 1,
     "retracted_superseded": 2,
+    "synthetic_method_only": 1,
     "web_traced_refuted_readopted": 1
   },
+  "transfer_source": "mixed_none_registered_external_and_proxy_by_row",
   "v9_note": "v9 rows (EGS3-T2G/TSUM/U4v9/MESBR, K5-V9, EGS3-G12) appended per the 2026-07-10 review-response cycle; KE-FRAME/KE-OBS/KE-DYN rows added by the executed ten-item rotating-congruence program (REV-R181/R182); P36/T2' retractions and the P26/P31/P35 supersessions are carried by THEOREM_REGISTRY.yaml; no claim-envelope change"
 }

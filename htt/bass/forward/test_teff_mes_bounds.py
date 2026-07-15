@@ -13,7 +13,7 @@ class TestLayerDominance:
 
     def test_boost_dominates_gaunt(self):
         mes = TeffMESBounds()
-        eps1, eps2 = 1.334e-3, 1.233e-3
+        eps1, eps2 = 1.2e-3, 9.0e-4
         R_boost = mes.R_sigma_boost(eps1)
         R_gaunt = mes.R_sigma_gaunt(eps1, eps2)
         boost_contrib = abs(R_boost - 1.0)
@@ -85,10 +85,10 @@ class TestFillingFractionCorrection:
         )
         assert r['Delta_F'] < 0
 
-    def test_magnitude_cf4_bounded(self):
-        """ΔF/F is small but nonzero at CF4 parameters."""
+    def test_magnitude_synthetic_bounded(self):
+        """ΔF/F is small but nonzero for a synthetic perturbation."""
         mes = TeffMESBounds()
-        R_sigma = mes.R_sigma_combined(1.334e-3, 1.233e-3)
+        R_sigma = mes.R_sigma_combined(1.2e-3, 9.0e-4)
         r = mes.filling_fraction_correction(
             x=1e-6, x_max=1.233e-3, Omega_tilt=4.4e-8, R_sigma=R_sigma,
         )
@@ -129,7 +129,7 @@ class TestIntegrationWithForward:
         mes = TeffMESBounds()
 
         Sigma2 = 1e-6
-        beta = 1.334e-3
+        beta = 1.2e-3
         r = teff.compute_from_shear(Sigma2, beta)
         # Convert a_ℓ to effective ε_ℓ (= a_ℓ / 4)
         eps1 = r['a_ell'][1] / 4.0
@@ -137,4 +137,4 @@ class TestIntegrationWithForward:
         assert eps1 == pytest.approx(beta, rel=0.02)  # ε₁ ≈ β for small Q
         R_sigma = mes.R_sigma_combined(eps1, eps2)
         assert R_sigma > 1.0
-        assert R_sigma < 1.01  # tiny at CF4
+        assert R_sigma < 1.01  # tiny in this synthetic small-beta regime

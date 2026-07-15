@@ -2,14 +2,16 @@
 """v9 (Seventh Revision) successor results table (NEW artifact pair).
 
 The v7 table and the v8 successor are both hash-frozen in shipped packages,
-so the v9 rows land in ``egs_results_table_v9.{json,md}``: the v8 successor's
-rows are inherited VERBATIM by importing its builders (which themselves
-inherit the frozen v7 rows), and the v9-cycle rows are appended. Same status
-vocabulary; no detection / Bianchi-class / geometry / native-solver claim.
+so the v9 rows land in ``egs_results_table_v9.{json,md}``. The active v8
+gateway reads its authenticated frozen JSON without executing legacy Python;
+v9 then applies the quarantine overlay and appends this cycle's rows. Same
+status vocabulary; no detection / Bianchi-class / geometry / native-solver
+claim.
 """
 from __future__ import annotations
 
 import argparse
+import hashlib
 import importlib.util
 import json
 from pathlib import Path
@@ -21,6 +23,10 @@ OUT_JSON = GEN / "egs_results_table_v9.json"
 OUT_MD = GEN / "egs_results_table_v9.md"
 
 MATH, GR, DATA = "math_stat", "gr_boltzmann", "data_interpretation"
+
+
+def _sha256(path: Path) -> str:
+    return "sha256:" + hashlib.sha256(path.read_bytes()).hexdigest()
 
 
 def _v8_builder():
@@ -36,6 +42,21 @@ def _v8_builder():
 def _r(tid, axis, statement, key, status, evidence):
     return {"theorem_id": tid, "axis": axis, "statement": statement,
             "key_result": key, "status": status, "evidence": evidence}
+
+
+def _cf4_quarantined_row(tid: str, evidence: str, *finding_ids: str) -> dict:
+    findings = ", ".join(finding_ids)
+    return _r(
+        tid,
+        DATA,
+        "CF4 numerical consumer quarantined by PR-120; independent estimator "
+        "or symbolic mechanics may remain method substrate, but this active row "
+        "cannot carry an observational or global-tilt interpretation.",
+        f"blocked source record; findings {findings} remain OPEN; no replacement value",
+        "quarantined_open_p0",
+        "cf4_p0_quarantine_block.json; legacy reproduction only: "
+        f"legacy/cf4_p0/cards/{evidence}",
+    )
 
 
 def _v9_rows() -> list[dict]:
@@ -75,98 +96,25 @@ def _v9_rows() -> list[dict]:
            "(SAG-consistent); eps1 term carries 99.05%/99.99% of B_omega",
            "registered_external",
            "mes_branch_registry_seal.json"),
-        _r("K5-V9", DATA,
-           "K5/CF4 identified-interval card v9: three attribution-conditional "
-           "W^2 ceilings x two signed-curvature branches; no branch promoted",
-           "6 labeled intervals; lower endpoint keyed to -U_W; "
-           "observational_claim_allowed False",
-           "diagnostic_only",
-           "k5_cf4_identified_interval_card_v9.json"),
-        _r("K5-LCDMCV", DATA,
-           "CF4 weighted-GLS bulk flow promoted to a real MEASUREMENT (|B|, "
-           "apex, Omega_tilt); the linear estimator-matched cosmic variance "
-           "(mode-function window integral, validated against the closed-form "
-           "sigma_v_1d) replaces the frozen card's 150 km/s scalar prior. The "
-           "LambdaCDM amplitude SIGNIFICANCE is WITHHELD: the linear window "
-           "cosmic variance is a lower bound",
-           "|B|=340.7+/-5.0 km/s, apex (l,b)=(293,20) -- 37 deg from the CMB "
-           "dipole and only 18 deg from the published CF4 (Watkins 2023) flow; "
-           "Omega_tilt=4.07e-7; the naive chi^2 reads a spurious ~9 sigma (the "
-           "noise-weighted GLS aliases nonlinear small-scale power the linear "
-           "CV omits) -> significance withheld; credible significance needs the "
-           "MV ideal-window estimator or release-matched mocks "
-           "(BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP)",
-           "measured",
-           "cf4_bulkflow_lcdm_card.json"),
-        _r("K5-MV", DATA,
-           "CF4 minimum-variance ideal-window bulk flow (Watkins-Feldman-Hudson): "
-           "the MV weights are tied to a specified Gaussian window of scale R, so "
-           "the cosmic-variance covariance is FAITHFUL (not the rev-r195 GLS "
-           "lower bound) and the LambdaCDM significance is REPORTABLE -- resolving "
-           "the rev-r195 withheld significance",
-           "|B|(200 h^-1Mpc)=405 km/s (+/-3 binning syst), consistent with the "
-           "published CF4 419+/-36; apex@50 8.5 deg from the published flow; "
-           "LambdaCDM tension ~4.4-5.4 sigma (P(k)-corrected to fiducial, a "
-           "likely OVER-estimate per Whitford 2023); injection recovered exact, "
-           "sigma_v to <0.1%; the apex swings at large R (deep-sample-dominated), "
-           "amplitude is the robust quantity; release-matched mocks pin the "
-           "definitive significance (BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP)",
-           "measured",
-           "cf4_mv_bulkflow_card.json"),
-        _r("K5-RECON", DATA,
-           "CF4 bulk-flow dependence on the peculiar-velocity reconstruction: the "
-           "identical estimator on the three catalogue PV columns (Vpds direct / "
-           "Vpwf pure-WF / Vpec ramp) + four full-field reconstructions -- the "
-           "CF4++ WF field, the external Carrick 2015 2M++ field, and (REV-R197, "
-           "substituting the private Nusser 2026) two PUBLIC 2MRS reconstructions: "
-           "the Lilow-Ganeshaiah-Veena-Nusser 2024 neural network + CORAS 2021",
-           "amplitude spans 140-341 km/s across 7 reconstruction methods -- the "
-           "pure Wiener-filter (Vpwf 145) and the shallow-2MRS LVN NN (140@150) "
-           "shrink the flow vs the direct/ramp (319/341) and CORAS (283); the "
-           "2MRS reconstructions are reconstruction-vs-measurement (regress to "
-           "the mean at large r), NOT a tension; ZoA |b|-cut sensitivity small; "
-           "the private Nusser 2026 2MRS is SUPERSEDED_BY_LILOW_2024_PUBLIC",
-           "measured_diagnostic",
-           "cf4_reconstruction_dependence_card.json"),
-        _r("K5-MOCKSIG", DATA,
-           "CF4 bulk-flow significance calibrated by an in-house PHYSICAL "
-           "forward-mock ensemble (linear GRF velocity field + super-sample bulk "
-           "mode + real per-object noise at the fixed CF4 geometry, 2000 survey-"
-           "matched mocks) -- replacing the request-only CF4TF release mocks "
-           "(BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP)",
-           "the mock reproduces the analytic linear bulk-flow covariance "
-           "(mock/analytic ratio ~0.93) so the estimator/geometry/noise do NOT "
-           "inflate the significance; mock-calibrated parametric tension |B|(200) "
-           "~5.8 sigma (empirical 2000-mock floor >3.5 sigma), consistent with "
-           "the rev-r196 analytic 4.4-5.4 range; the reduction to the literature "
-           "~2-3 sigma is the nonlinear-power (COLA) residual, NOT claimed here; "
-           "GRF-linear + positions-conditional",
-           "measured",
-           "cf4_mock_significance_card.json"),
-        _r("K5-VCORR", DATA,
-           "reconstruction-INDEPENDENT statistic (the physical replacement for an "
-           "ill-posed angular pseudo-C_l): the Gorski velocity correlation "
-           "function Psi_par/Psi_perp from LOS-velocity pairs (no field "
-           "reconstruction) -> f sigma_8, bulk-subtracted + inverse-error-weighted",
-           "the Psi(r) curves are measured directly from pairs; the simplified "
-           "pair estimator gives a DIAGNOSTIC f sigma_8 = 0.38 (Vpec, matching the "
-           "published CF4 ~0.38) / 0.75 (direct Vpds, noise-limited) -- treatment-"
-           "dependent; a precision f sigma_8 needs the max-likelihood noise-aware "
-           "estimator (registered exit-gate); cosmic Mach number reported",
-           "measured_diagnostic",
-           "cf4_velocity_correlation_card.json"),
-        _r("K5-VCORR-ML", DATA,
-           "the PRECISION upgrade of K5-VCORR (rev-r196 diagnostic): the "
-           "field-level maximum-likelihood NOISE-AWARE f sigma_8 (Johnson+2014) "
-           "on the binned CF4 cells, C(A)=A G+N maximised over the velocity-field "
-           "amplitude -- the registered exit-gate; injection-MC-validated unbiased",
-           "f sigma_8 = 0.40 +/- 0.02 (Vpec, shape-corrected; conservative "
-           "octant jackknife +/- 0.10), CONSISTENT with the published CF4 ~0.38 "
-           "and Planck ~0.44; the injection Monte Carlo recovers the amplitude "
-           "unbiased (pull 1.4 sigma); the direct Vpds is noise-limited (its ML "
-           "amplitude rails); replaces the treatment-dependent pair diagnostic",
-           "measured",
-           "cf4_velocity_correlation_ml_card.json"),
+        _cf4_quarantined_row(
+            "K5-V9", "k5_cf4_identified_interval_card_v9.json",
+            "C1-K5-MV-F1", "N-DATA-CF4-DOWNSTREAM"),
+        _cf4_quarantined_row(
+            "K5-LCDMCV", "cf4_bulkflow_lcdm_card.json",
+            "C1-K5-MV-F1", "N-DATA-CF4-DOWNSTREAM"),
+        _cf4_quarantined_row(
+            "K5-MV", "cf4_mv_bulkflow_card.json", "C1-K5-MV-F1"),
+        _cf4_quarantined_row(
+            "K5-RECON", "cf4_reconstruction_dependence_card.json",
+            "C1-K5-MV-F1"),
+        _cf4_quarantined_row(
+            "K5-MOCKSIG", "cf4_mock_significance_card.json", "C1-K5-MV-F1"),
+        _cf4_quarantined_row(
+            "K5-VCORR", "cf4_velocity_correlation_card.json",
+            "C3-K5-VCORR-ML-F1", "N-DATA-CF4-DOWNSTREAM"),
+        _cf4_quarantined_row(
+            "K5-VCORR-ML", "cf4_velocity_correlation_ml_card.json",
+            "C3-K5-VCORR-ML-F1"),
         _r("K6-CURL", DATA,
            "K6 vorticity on the REAL CF4++ 3-D WF field (rev-r127 no-go was "
            "abstract): the WF mean-field curl/div ratio quantifies the potential-"
@@ -219,12 +167,13 @@ def _v9_rows() -> list[dict]:
            "measured",
            "external_lanes_seal.json; act_kappa_card.json"),
         _r("EXT-JWST", DATA,
-           "JWST distance anchors (14 Cepheid/TRGB/maser, CF4-matched) feed "
-           "the Omega_tilt survey-design forecast",
-           "connected via jwst_cf4_crossmatch -> joint_pv_cmb_forecast "
-           "(labelled forecast, not a measurement)",
-           "diagnostic_only",
-           "external_lanes_seal.json; jwst_cf4_anchors.json"),
+           "JWST/CF4 cross-match catalogue mechanics remain available, but "
+           "the downstream Omega_tilt survey-design forecast is quarantined "
+           "by PR-120",
+           "catalogue linkage only; no global-tilt precision gain or "
+           "observational interpretation while N-DATA-CF4-DOWNSTREAM is OPEN",
+           "quarantined_open_p0",
+           "jwst_cf4_anchors.json; cf4_p0_quarantine_block.json"),
         _r("KE-FRAME", GR,
            "King-Ellis items 1-7: exact tilted-frame kinematics + "
            "constraint algebra, dual engine (SymPy + independent Wolfram, "
@@ -344,10 +293,59 @@ _SUPERSESSION_OVERLAY = {
                       " (P35); content subsumed]"),
 }
 
+_CF4_P0_INHERITED_ROWS = {
+    "EGS3-D1": "bass_extended_joint_forecast.json",
+    "EGS3-K5card": "k5_cf4_identified_interval_card.json",
+    "K5": "k5_cf4_release_coverage.json",
+    "K5-V8": "k5_cf4_identified_interval_card_v8.json",
+}
+
 
 def _apply_overlay(rows: list[dict]) -> list[dict]:
     out = []
     for row in rows:
+        if row["theorem_id"] == "EGS3-D2":
+            out.append(
+                _r(
+                    "EGS3-D2",
+                    MATH,
+                    "Generic coupled-Fisher sensitivity to a synthetic tilt-information "
+                    "weight; this is method substrate and not a PV/JWST prior or "
+                    "observational forecast.",
+                    "monotone covariance-inflation sensitivity on a declared synthetic "
+                    "grid; observational interpretation absent",
+                    "synthetic_method_only",
+                    "egs3-gates D4; fig_egs3_d_joint_forecast; "
+                    "cf4_p0_quarantine_block.json",
+                )
+            )
+            continue
+        if row["theorem_id"] == "EGS3-U2":
+            row = dict(row)
+            row["statement"] = (
+                "MES-registry ceilings on the Teff fingerprints: proved "
+                "symbolic envelopes and exact rational ceilings at eps1; "
+                "observational numeric instantiation excluded"
+            )
+            row["key_result"] = (
+                "symbolic ceiling map retained; former CF4 point quarantined "
+                "while C1-K5-MV-F1 remains OPEN; no replacement value"
+            )
+            row["evidence"] = (
+                "teff_unification_seal.json; cf4_p0_quarantine_block.json"
+            )
+            out.append(row)
+            continue
+        if row["theorem_id"] in _CF4_P0_INHERITED_ROWS:
+            out.append(
+                _cf4_quarantined_row(
+                    row["theorem_id"],
+                    _CF4_P0_INHERITED_ROWS[row["theorem_id"]],
+                    "C1-K5-MV-F1",
+                    "N-DATA-CF4-DOWNSTREAM",
+                )
+            )
+            continue
         row = dict(row)
         status, badge = _SUPERSESSION_OVERLAY.get(row["theorem_id"],
                                                   (None, None))
@@ -366,8 +364,28 @@ def _payload() -> dict:
     for row in rows:
         counts[row["status"]] = counts.get(row["status"], 0) + 1
     base = v8._payload()
+    blockers_open = [
+        (
+            "CF4 P0 findings C1-K5-MV-F1, C3-K5-VCORR-ML-F1, and "
+            "N-DATA-CF4-DOWNSTREAM remain OPEN; replacement_value=null and "
+            "scientific_effect=none"
+            if "BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP" in blocker
+            else blocker
+        )
+        for blocker in base["blockers_open"]
+    ]
+    config = {
+        "schema": "htt.egs.results_table.v9",
+        "supersession_overlay": sorted(_SUPERSESSION_OVERLAY),
+        "cf4_quarantined_rows": sorted(_CF4_P0_INHERITED_ROWS),
+        "v9_row_ids": [row["theorem_id"] for row in _v9_rows()],
+    }
     return {
         "schema": "htt.egs.results_table.v9",
+        "artifact_id": "common.egs.results_table.v9",
+        "artifact_path": "docs/generated/egs_results_table_v9.json",
+        "owner": "COMMON",
+        "implementation_scope": "common",
         "based_on_frozen_tables": "egs_results_table.json (v7, byte-frozen) "
                                   "+ egs_results_table_v8.json (v8, "
                                   "hash-frozen); rows inherited with a "
@@ -375,13 +393,34 @@ def _payload() -> dict:
                                   "(registry-retracted or superseded content "
                                   "must not print as live; REV-R179)",
         "claim_tier": base["claim_tier"],
+        "transfer_source": "mixed_none_registered_external_and_proxy_by_row",
+        "config_hash": "sha256:" + hashlib.sha256(
+            json.dumps(config, sort_keys=True, separators=(",", ":")).encode(
+                "utf-8"
+            )
+        ).hexdigest(),
+        "input_hashes": [
+            f"legacy/cf4_p0/tables/egs_results_table_v8.json:"
+            f"{_sha256(REPO_ROOT / 'legacy/cf4_p0/tables/egs_results_table_v8.json')}",
+            f"scripts/build_egs_results_table_v9.py:"
+            f"{_sha256(REPO_ROOT / 'scripts/build_egs_results_table_v9.py')}",
+        ],
+        "sky_support_status": "mixed_by_row",
+        "null_mock_status": "mixed_by_row",
+        "caveats": [
+            "Table rows retain their individual theorem, synthetic, and data-interpretation scopes.",
+            "All CF4 P0-fed rows are blocked records with no replacement value.",
+            "No row identifies a Bianchi family or represents native low-ell solver output.",
+        ],
+        "generating_command": "python scripts/build_egs_results_table_v9.py",
+        "git_commit_or_worktree_state": "content-addressed-inputs",
         "family_identification": False,
         "native_solver_result": False,
         "axes": base["axes"],
         "status_counts": counts,
         "rows": rows,
         "claim_boundary": base["claim_boundary"],
-        "blockers_open": base["blockers_open"],
+        "blockers_open": blockers_open,
         "v9_note": "v9 rows (EGS3-T2G/TSUM/U4v9/MESBR, K5-V9, EGS3-G12) "
                    "appended per the 2026-07-10 review-response cycle; "
                    "KE-FRAME/KE-OBS/KE-DYN rows added by the executed "
@@ -397,6 +436,20 @@ _AXIS_LABEL = {MATH: "Math/Stat", GR: "GR/Boltzmann", DATA: "Data"}
 
 def _markdown(payload: dict) -> str:
     lines = ["# EGS consolidated results table (v9 successor)", "",
+             f"owner: {payload['owner']}",
+             f"implementation_scope: {payload['implementation_scope']}",
+             f"claim_tier: {payload['claim_tier']}",
+             f"transfer_source: {payload['transfer_source']}",
+             f"config_hash: `{payload['config_hash']}`",
+             "input_hashes:",
+             *[f"- {item}" for item in payload["input_hashes"]],
+             f"sky_support_status: {payload['sky_support_status']}",
+             f"null_mock_status: {payload['null_mock_status']}",
+             "caveats:",
+             *[f"- {item}" for item in payload["caveats"]],
+             f"generating_command: `{payload['generating_command']}`",
+             f"git_commit_or_worktree_state: {payload['git_commit_or_worktree_state']}",
+             "",
              f"Rows: {len(payload['rows'])}; status counts: "
              + ", ".join(f"{k}={v}" for k, v in
                          sorted(payload["status_counts"].items())), "",

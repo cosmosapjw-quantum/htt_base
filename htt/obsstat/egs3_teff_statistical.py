@@ -27,10 +27,9 @@ Statistical closures (frozen modules imported read-only):
   (egs3_coverage_strengthened.hotelling_scale) -- measured empirically.
 
 SCALE HONESTY: the sampling experiments run at DISPLAY mixings s in
-{0.15, 0.3} (disclosed diagnostic scale); at the CF4/MES scale
-(s ~ 1.1e-3, fingerprints ~ 2e-6) sampling noise dominates any feasible
-event count, so the CF4-scale entry is carried as the DETERMINISTIC
-fingerprint row of the K5 v8 card, never as a pretended measurement.
+{0.15, 0.3} (disclosed diagnostic scale).  Observational numerical
+instantiations are excluded from this active statistical seal; no K5 card or
+catalogue-derived coordinate is imported as a deterministic comparison row.
 
 Claim discipline: synthetic seeded experiments + exact anchors at tier
 diagnostic_only; no data claim, no signal-discovery claim, no
@@ -192,9 +191,9 @@ def teff_statistical_seal() -> dict:
         "im_fingerprint_coverage": cov,
         "hotelling_fingerprint_calibration": hot,
         "scale_honesty": "sampling experiments at display mixings (0.15/0.3, "
-                         "disclosed); the CF4/MES-scale fingerprints (~2e-6) "
-                         "enter only as the DETERMINISTIC row of the K5 v8 "
-                         "card, never as a pretended measurement",
+                         "disclosed); observational numerical instantiations "
+                         "and K5-card comparison rows are excluded from this "
+                         "active synthetic seal",
         "claim_boundary": "synthetic seeded experiments over the Teff "
                           "fingerprint observables; diagnostic_only; no data, "
                           "signal-discovery, "

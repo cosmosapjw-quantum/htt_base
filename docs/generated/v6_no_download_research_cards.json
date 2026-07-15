@@ -3,11 +3,10 @@
   "artifact_path": "docs/generated/v6_no_download_research_cards.json",
   "cards": {
     "cf4_shell_gf_attempt": {
-      "allowed_next_step": "bind a matched shell covariance/null artifact before computing observed G_F",
+      "allowed_next_step": "remediate the authenticated CF4 lineage and matched covariance/null gates before any observed G_F computation",
       "attempted": false,
       "evidence_read": [
-        "docs/generated/cf4_bulkflow_apex_depth_report.json",
-        "docs/generated/cf4_affine_flow_report.json",
+        "docs/generated/cf4_p0_quarantine_block.json",
         "docs/generated/cf4_bulkflow_likelihood_report.json"
       ],
       "reason": "existing CF4 shell artifacts do not provide matched covariance plus calibrated null status required by v6"
@@ -17,13 +16,15 @@
       "rows": [
         {
           "allowed_use": "partial_lowell_descriptor_not_family_identification",
-          "blocker": "BLOCKED_MISSING_PR4_E2E_ACCESS",
+          "blocker": "PR3_E2E_ANALYSIS_DEFERRED_TO_PR150",
           "component": "Sigma2",
-          "covariance_status": "e2e_systematics_covariance_not_bound",
+          "covariance_status": "pr3_ffp10_e2e_analysis_deferred_pr150",
           "file_hash": "sha256:c7f8ca243eec35eca6ab6518309f216d16ddc706996df1f6dbd2a2a813867237",
+          "legacy_blocker_code": "BLOCKED_MISSING_PR4_E2E_ACCESS",
           "local_file": "docs/generated/k1_global_maxscan.json",
-          "null_mock_status": "isotropic_lcdm_grf_only_e2e_blocked",
+          "null_mock_status": "isotropic_lcdm_grf_only_pr3_ffp10_downloaded_analysis_deferred_pr4_npipe_skipped",
           "owner": "OBSSTAT",
+          "pr4_scope": "not_downloaded_download_reduction_analysis_skipped_by_user_scope",
           "signed_xC_coefficient": 1,
           "source_mode": "estimated_partial",
           "source_status": "partial",
@@ -43,29 +44,25 @@
           "owner": "OBSSTAT",
           "signed_xC_coefficient": -1,
           "source_mode": "fail_closed_structural_no_go",
-          "source_status": "fail_closed_structural_no_go",
+          "source_status": "fail_closed",
           "value_summary": {
             "structural_no_go": true,
             "vorticity_over_shear_max": 0.005519792636461094
           }
         },
         {
-          "allowed_use": "model_independent_kinematic_descriptor",
-          "blocker": "full_selection_malmquist_grouping_correlated_release_mocks_still_gate",
+          "allowed_use": "blocked_source_record_only",
+          "blocker": "C1-K5-MV-F1_and_N-DATA-CF4-DOWNSTREAM_open",
           "component": "Omega_tilt",
-          "covariance_status": "conditional_lambdacdm_sigma_cv_prior_not_release_mocks",
-          "file_hash": "sha256:edcf9f9354cd326827fdae48ce1595aed963140ac5bd6a3264ebe0c5c144eee9",
-          "local_file": "docs/generated/k5_cf4_release_coverage.json",
-          "null_mock_status": "geometry_and_error_matched_gaussian_bulkflow_mocks",
+          "covariance_status": "not_evaluated_while_cf4_p0_findings_open",
+          "file_hash": "sha256:7046c3bbefc18c840a36798fccd7f3dcdae9616ab1ef6f9eb2344e6c573405c7",
+          "local_file": "docs/generated/cf4_p0_quarantine_block.json",
+          "null_mock_status": "not_evaluated_while_cf4_p0_findings_open",
           "owner": "OBSSTAT",
           "signed_xC_coefficient": 1,
-          "source_mode": "estimated_conditional_coverage",
-          "source_status": "measured",
-          "value_summary": {
-            "bulk_amplitude_kms": 340.72639833770336,
-            "cv_inclusive_coverage": 0.6666666666666666,
-            "total_error_kms": 101.87045232654711
-          }
+          "source_mode": "quarantined_no_active_value",
+          "source_status": "blocked_open_p0",
+          "value_summary": null
         },
         {
           "allowed_use": "fail_closed_blind_sector_not_zeroed",
@@ -220,16 +217,15 @@
       "F_status": "diagnostic_only_not_certified_filling",
       "card_id": "v6_current_identified_set",
       "claim_tier": "diagnostic_only",
-      "data_rank_count": 2,
+      "data_rank_count": null,
       "fail_closed_columns": [
         "Omega_k",
+        "Omega_tilt",
         "W2"
       ],
       "kill_switch": "if any fail_closed sector is numerically zero-filled, withhold x_C/Q/F and report vector sectors only",
       "owner": "HTT/MIO/OBSSTAT",
-      "reachable_full": [
-        "Omega_tilt"
-      ],
+      "reachable_full": [],
       "reachable_partial": [
         "Sigma2"
       ],
@@ -240,17 +236,39 @@
         0.6912232444261323
       ],
       "x_C_interval_status": "not_certified_blind_sectors_not_zeroed",
-      "x_C_point_status": "x_C is NOT collapsed to a single number: two of the four sectors are fail-closed, so a scalar comparator would require setting blind sectors to zero (forbidden). The graded vector is reported per-sector instead."
+      "x_C_point_status": "withheld_cf4_omega_tilt_source_quarantined_open_p0"
+    },
+    "k1_e2e_data_readiness": {
+      "allowed_use": "input_readiness_and_scope_record_only",
+      "card_id": "v6_k1_e2e_data_readiness",
+      "claim_tier": "diagnostic_only",
+      "current_result_status": "measured_partial_isotropic_lcdm_grf_null",
+      "evidence": [
+        "docs/research_program/K1_E2E_DOWNLOAD_GUIDE.md",
+        "docs/research_program/egs3/tickets/k1_ffp10_npipe.yaml"
+      ],
+      "owner": "OBSSTAT",
+      "pr3_ffp10": {
+        "analysis_state": "deferred_to_pr150",
+        "claim_effect": "none_until_provenance_complete_analysis",
+        "download_state": "complete"
+      },
+      "pr4_npipe": {
+        "analysis_state": "skipped_by_user_scope",
+        "claim_effect": "none",
+        "download_state": "not_downloaded",
+        "reduction_state": "skipped_by_user_scope"
+      }
     },
     "k5_k6_next_turn_feasibility": {
       "K5": {
         "check_option_available": true,
-        "expected_runtime_note": "moderate deterministic run; N_MOCK=600",
+        "expected_runtime_note": "execution forbidden while C1-K5-MV-F1 and N-DATA-CF4-DOWNSTREAM remain OPEN",
         "heavy_run_deferred_this_turn": true,
         "input_path": "workdir/obs_bundle/pecvel/cf4_full/cf4_groups.npz",
         "input_present": true,
         "input_size_bytes": 5179298,
-        "next_turn_runnable": true,
+        "next_turn_runnable": false,
         "script": "scripts/k5_cf4_release_coverage.py"
       },
       "K6": {
@@ -477,10 +495,10 @@
       "legacy_figure_classification_ref": "docs/generated/v6_legacy_figure_classification.json",
       "legacy_response_class_counts": {
         "directional_style_only_no_geometry_claim": 6,
-        "legacy_ranking_or_posterior_removed": 9,
-        "legacy_response_label_only": 57,
+        "legacy_ranking_or_posterior_removed": 8,
+        "legacy_response_label_only": 55,
         "method_or_denominator_context_only": 8,
-        "observed_or_validation_style_only": 8
+        "observed_or_validation_style_only": 7
       },
       "ranking_removed": true
     }
@@ -489,22 +507,27 @@
     "No long-run K1/K5/K6 analysis is executed by this artifact.",
     "No native low-ell solver output is represented.",
     "All cards are diagnostic/readiness objects and do not identify a Bianchi family.",
-    "K1 E2E remains blocked until the external simulation maps are locally bound."
+    "PR3/FFP10 download is complete, but its analysis is deferred to PR-150 and has no current claim effect.",
+    "PR4/NPIPE is not downloaded; all PR4 download, reduction, and analysis work is skipped by user scope in this roadmap run.",
+    "The K5/Omega_tilt lane carries no active value while the CF4 P0 findings remain OPEN."
   ],
   "claim_tier": "diagnostic_only",
-  "config_hash": "sha256:c9b3c7d344aabf9b5af9a48473f6454b4d1fa99ba14a71a4dbf58c7478ffbfd7",
+  "config_hash": "sha256:220dc0eb51fe06c2c0b608bbdaad9e4557ed4dbefd4739c49431c1663b9319db",
   "generating_command": "python scripts/build_v6_no_download_research_cards.py",
   "git_commit_or_worktree_state": "content-addressed",
   "implementation_scope": "common",
   "input_hashes": [
     "docs/generated/current_science_plot_payload.json:sha256:dbe57bffa28b9c11f88491ff2c31d3c2bb8e41efabbf2bb7a070da1e0c2faa48",
-    "docs/generated/pr08_006_joint_artifact.json:sha256:8019a9e64a053a29cfe3fd0b9a78c4b7ad52d798723908c4f08630f689bc93e1",
+    "docs/generated/pr08_006_joint_artifact.json:sha256:5d80cab6004bc7d8c014943c52973a552ed7bb6a490c03e7f3ee008fbd71ca7f",
     "docs/generated/k1_global_maxscan.json:sha256:c7f8ca243eec35eca6ab6518309f216d16ddc706996df1f6dbd2a2a813867237",
-    "docs/generated/k5_cf4_release_coverage.json:sha256:edcf9f9354cd326827fdae48ce1595aed963140ac5bd6a3264ebe0c5c144eee9",
+    "docs/generated/k5_cf4_release_coverage.json:sha256:a4a2cb460819ad325f5d318254dcd27bc01a90011367ea1c65e48442d1dc76b8",
     "docs/generated/k6_cf4_curl_posterior.json:sha256:abc3f59486abb1e910c06d55e72ea932f065829d699826a55dbb9601921871f7",
     "docs/generated/k1_biposh_smica.json:sha256:c5ac1194231796f7e8eccefe16b77c8d6c862fec809e7cfeff700325e5513f19",
-    "docs/generated/cf4_bulkflow_apex_depth_report.json:sha256:34191a4c61d7719d7ad3c3edb8d2d543ecad7a737168ae07fd731b56c29c2864",
-    "docs/generated/lowell_likelihood_branch_report.md:sha256:525bd76cc04fae675f9f15a9d9b3d74ac3af1c5622187aaf0b97aedfc73f5ec4"
+    "docs/generated/cf4_bulkflow_apex_depth_report.json:sha256:d35f9f8c2b07f417f332648a2af54a0afc03e9fa6e9b05fe42593aee35a4b057",
+    "docs/generated/cf4_p0_quarantine_block.json:sha256:7046c3bbefc18c840a36798fccd7f3dcdae9616ab1ef6f9eb2344e6c573405c7",
+    "docs/generated/lowell_likelihood_branch_report.md:sha256:525bd76cc04fae675f9f15a9d9b3d74ac3af1c5622187aaf0b97aedfc73f5ec4",
+    "docs/research_program/K1_E2E_DOWNLOAD_GUIDE.md:sha256:763d362a1bbd7e4573168cff12ec3e814fe251ecce549dca00af09a331765a53",
+    "docs/research_program/egs3/tickets/k1_ffp10_npipe.yaml:sha256:ed6e36d3a3303943f4f389a3bd3e0077aa28f7fa0b7b664514f93b3e7ff0ed04"
   ],
   "null_mock_status": "mixed_diagnostic_and_blocked",
   "owner": "COMMON",

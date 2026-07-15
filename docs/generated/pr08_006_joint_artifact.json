@@ -1,118 +1,74 @@
 {
+  "allowed_use": "blocked_source_record_only",
+  "artifact": {
+    "active_path": "docs/generated/pr08_006_joint_artifact.json",
+    "artifact_id": "pr08_006_joint_artifact",
+    "artifact_kind": "derived_result_card_block_record",
+    "legacy_public_use": false,
+    "legacy_reproduction_only_path": "legacy/cf4_p0/cards/pr08_006_joint_artifact.json",
+    "producer": "scripts/pr08_006_joint_artifact.py"
+  },
   "caveats": [
-    "Omega_tilt (K5) is a model-independent bulk-flow descriptor, not anisotropy evidence.",
-    "Sigma^2 (K1) is partial: look-elsewhere only, E2E null still blocked.",
-    "W^2 (K6) is a structural no-go from a curl-suppressed reconstruction, not a vorticity measurement.",
-    "Omega_k has no channel and is fail-closed.",
-    "No combined scalar x_C is reported because blind sectors must not be zeroed."
+    "Quarantine is propagation control, not scientific remediation or validation.",
+    "All three findings remain OPEN; zero stale active consumers does not close them.",
+    "No audit sensitivity or alternative number is a replacement result.",
+    "Historical audits and frozen external packages remain immutable evidence.",
+    "PR4/NPIPE download, reduction, and analysis remain skipped by user scope."
   ],
-  "claim_boundary": "joint pushforward of identified sectors only; blind/partial sectors explicit and fail-closed; no MIO-as-odds, no scalar-to-family, no native-atlas/geometry claim",
-  "claim_tier": "diagnostic_only",
-  "data_rank": {
-    "data_rank_count": 2,
-    "note": "data rank counts sectors with a real channel (K5 full + K1 partial); it is NOT prior-conditioned",
-    "reachable_full": [
-      "Omega_tilt"
-    ],
-    "reachable_partial": [
-      "Sigma2"
-    ]
+  "claim_level": {
+    "level": "C1",
+    "scheme": "roadmap_rescue_v1"
   },
-  "family_identification": false,
-  "graded_sectors": [
-    "Sigma2",
-    "W2",
-    "Omega_tilt",
-    "Omega_k"
-  ],
-  "mio_as_odds": false,
-  "native_solver_result": false,
-  "owner": "consensus_editor",
-  "prior_conditioned_rank": {
-    "count": 2,
-    "note": "no prior is invoked to add a sector; prior-conditioned rank equals data rank here",
-    "sectors": [
-      "Omega_tilt",
-      "Sigma2"
-    ]
-  },
-  "scalar_to_family_promotion": false,
-  "schema": "htt.pr08_006.joint_artifact.v1",
-  "sectors": {
-    "Omega_k": {
-      "blocker": "no_low_ell_channel_sources_anisotropic_curvature",
-      "note": "no registered low-l channel reaches the anisotropic-curvature sector at leading EGS order (NOT set to zero); re-opens beyond leading order, unlike W2",
-      "null_kind": "no_channel_leading_order",
-      "null_order_dependence": "leading_egs_order_only",
-      "reopens_via": [
-        "higher_order_isw",
-        "lensing",
-        "native_low_ell_transfer"
-      ],
-      "source": null,
-      "status": "fail_closed_no_channel"
+  "claim_tier": "blocked",
+  "config_hash": "7b684610685ed343747a74d76aca8cc9e4738ea1273ab4c4a696de938baa3235",
+  "findings": [
+    {
+      "claim_tier_ceiling": "blocked",
+      "finding_id": "C1-K5-MV-F1",
+      "scientific_status": "OPEN",
+      "severity": "P0",
+      "source_reference": "docs/audits/self_adversarial_audit_20260713_nsc/03_cove_correctness_ledger.json#C1-K5-MV-F1",
+      "source_sha256": "635fb02a705974e4b13678213914d57eb815f597e9799469eb8ae1925e47227c"
     },
-    "Omega_tilt": {
-      "blocker": null,
-      "coverage_cv_inclusive": 0.6666666666666666,
-      "coverage_is_conditional_on_lambdacdm_sigma_cv_prior": true,
-      "error_kms": 101.87045232654711,
-      "note": "bulk-flow amplitude is the reachable tilt/dipole sector (model-independent kinematic descriptor); consistent with the LambdaCDM ~150-250 km/s expectation. The CV-inclusive coverage is conditional on a fixed LambdaCDM sigma_cv=150 km/s/comp prior; full release-matched mocks remain BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP",
-      "source": "K5 CF4 bulk flow (real Tully+2023 release)",
-      "status": "measured",
-      "value_kms": 340.72639833770336
+    {
+      "claim_tier_ceiling": "blocked",
+      "finding_id": "C3-K5-VCORR-ML-F1",
+      "scientific_status": "OPEN",
+      "severity": "P0",
+      "source_reference": "docs/audits/self_adversarial_audit_20260713_nsc/03_cove_correctness_ledger.json#C3-K5-VCORR-ML-F1",
+      "source_sha256": "635fb02a705974e4b13678213914d57eb815f597e9799469eb8ae1925e47227c"
     },
-    "Sigma2": {
-      "blocker": "BLOCKED_MISSING_PR4_E2E_ACCESS",
-      "global_p_commander": 0.12093953023488256,
-      "global_p_smica": 0.09695152423788106,
-      "note": "look-elsewhere global p discharged under a LambdaCDM null; the E2E-systematics calibration is not bound, so the shear sector is only partially probed",
-      "source": "K1 low-l CMB morphology (quadrupole-bearing)",
-      "status": "partial"
-    },
-    "W2": {
-      "blocker": "BLOCKED_MISSING_FIELD_REALIZATIONS (WF mean-field no-go established; true CR posterior still blocked)",
-      "note": "the CF4 WF mean-field reconstruction is curl-suppressed (WF prior, across modes); the vorticity sector is structurally unidentifiable from it (NOT set to zero). A true Hoffman-Ribak CR posterior remains blocked until a CR ensemble is owned",
-      "null_kind": "structural_null",
-      "null_order_dependence": "order_independent",
-      "reopens_via": [
-        "transverse_peculiar_velocity",
-        "cmb_b_modes"
-      ],
-      "source": "K6 CF4 WF mean-field vorticity",
-      "status": "fail_closed_structural_no_go",
-      "vorticity_over_shear_max": 0.005519792636461094
+    {
+      "claim_tier_ceiling": "blocked",
+      "finding_id": "N-DATA-CF4-DOWNSTREAM",
+      "scientific_status": "OPEN",
+      "severity": "P1",
+      "source_reference": "docs/audits/jcap_prd_adversarial_audit_20260714/atomic_finding_ledger.json#N-DATA-CF4-DOWNSTREAM",
+      "source_sha256": "6e88a6f6c4f95e5154c89e939230c94854b11a8430a64c28ccb339d8c4ab6feb"
     }
-  },
-  "ticket": "PR08-006",
-  "two_sector_no_go": {
-    "blind_sectors": [
-      "W2",
-      "Omega_k"
-    ],
-    "null_kinds": {
-      "Omega_k": {
-        "kind": "no_channel_leading_order",
-        "order_dependence": "leading_egs_order_only",
-        "reason": "no leading-EGS-order low-l channel sources the anisotropic-curvature scalar",
-        "reopens_via": [
-          "higher_order_isw",
-          "lensing",
-          "native_low_ell_transfer"
-        ]
-      },
-      "W2": {
-        "kind": "structural_null",
-        "order_dependence": "order_independent",
-        "reason": "radial n.Omega.n=0 (PAPER-A no-go) + CMB curl/Weyl-blind at EGS order",
-        "reopens_via": [
-          "transverse_peculiar_velocity",
-          "cmb_b_modes"
-        ]
-      }
-    },
-    "statement": "W^2 (vorticity) and Omega_k (anisotropic curvature) are both fail-closed, but they are NOT the same KIND of null. W^2 is a GENUINE, order-INDEPENDENT structural null (radial n.Omega.n=0 + CMB curl/Weyl-blind at EGS order); it re-opens only via a different observable (transverse velocities, B-modes). Omega_k is a LEADING-EGS-ORDER no-channel (no low-l channel sources anisotropic curvature at leading order); it is truncation-dependent and re-opens beyond leading order (higher-order ISW, lensing, native low-l transfer). Neither is set to zero."
-  },
-  "x_C_single_scalar": null,
-  "x_C_withheld_reason": "x_C is NOT collapsed to a single number: two of the four sectors are fail-closed, so a scalar comparator would require setting blind sectors to zero (forbidden). The graded vector is reported per-sector instead."
+  ],
+  "generating_command": "PYTHONPATH=htt/src venv/bin/python -B scripts/codex_harness/quarantine_cf4_p0_consumers.py --write",
+  "git_commit_or_worktree_state": "baseline_commit:e6da3670043596efdcd93f9ba5e631e1462146c7; PR-120 worktree hashes are bound by the canonical inventory",
+  "implementation_scope": "propagation_quarantine_only",
+  "input_hashes": [
+    "docs/research_program/long_horizon_rescue/cf4_p0_quarantine_policy.yaml:sha256:7b684610685ed343747a74d76aca8cc9e4738ea1273ab4c4a696de938baa3235",
+    "docs/generated/cf4_p0_quarantine_inventory.json:sha256:2d6eada611234b102989f2e12441637a4e35b64bf456c3096f6ee8e426fa82de",
+    "docs/codex_handoff/research_remediation_state.yaml:sha256:77d36878315f041c7bb6c273a2d650f7d3fa1c8a8dc635a577527d646fa40109"
+  ],
+  "inventory_path": "docs/generated/cf4_p0_quarantine_inventory.json",
+  "inventory_sha256": "2d6eada611234b102989f2e12441637a4e35b64bf456c3096f6ee8e426fa82de",
+  "null_mock_status": "not_applicable_quarantine_is_not_validation",
+  "owner": "COMMON",
+  "policy_path": "docs/research_program/long_horizon_rescue/cf4_p0_quarantine_policy.yaml",
+  "policy_sha256": "7b684610685ed343747a74d76aca8cc9e4738ea1273ab4c4a696de938baa3235",
+  "public_use": true,
+  "remediation_root_path": "docs/codex_handoff/research_remediation_state.yaml",
+  "remediation_root_sha256": "77d36878315f041c7bb6c273a2d650f7d3fa1c8a8dc635a577527d646fa40109",
+  "replacement_policy": "forbidden_without_later_authenticated_adjudication",
+  "replacement_value": null,
+  "schema": "htt.cf4_p0_quarantine_block.v1",
+  "scientific_effect": "none",
+  "sky_support_status": "not_applicable_to_propagation_quarantine",
+  "status": "QUARANTINED_OPEN_FINDINGS",
+  "transfer_source": "none"
 }

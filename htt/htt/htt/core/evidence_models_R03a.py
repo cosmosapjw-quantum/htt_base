@@ -10,15 +10,18 @@ VE-R03a: Extensions over R03:
 Channels:
   (a) F&Q intrinsic dipole upper limit        [half-Gaussian on ε₁]
   (b) CatWISE + Radio dipole 2×2 covariance   [bivariate Gaussian on ε₁]
-  (c) CF4 bulk flow → tilt rapidity            [Gaussian on β]
+  (c) quarantined observational input              [blocked while findings are OPEN]
   (d) Saadeh vorticity upper limit             [half-Gaussian on ω/H]
   (e) D₂ quadrupole χ²(5)                     [scaled χ² with D₂^shear(Σ², f₂(x))]
   (f) MES hard ceiling                         [hard prior: reject if Σ² > Σ²_max]
   (g) MES soft logistic prior                   [INERT by default; redundant with (f)]
   (h) D₃ octupole χ²(7)             *** NEW *** [scaled χ² with D₃^shear(Σ², f₃(x))]
 
-Default channels: 'abcdefh' (7 active). Channel (g) excluded because (f) makes it
-redundant for nested sampling. Pass channels='abcdefgh' to re-enable for MCMC.
+There is no implicit active default while PR-120 is in force: the historical
+default included channel (c). Independent method checks must explicitly pass
+``channels=ACTIVE_DEFAULT_CHANNELS`` (``abdefh``). Channel (g) remains excluded
+because (f) makes it redundant for nested sampling. Any implicit or explicit
+request for channel (c) fails closed.
 
 Data values (Planck PR3 Commander):
   D₂^obs  = 225.9 μK²   (COM_PowerSpect_CMB-TT-full_R3.01.txt, ℓ=2)
@@ -35,6 +38,12 @@ from typing import Any, Mapping
 import numpy as np
 from scipy.interpolate import interp1d
 from scipy.special import erfinv, gammaln
+
+from htt.core.cf4_observational_input import (
+    ACTIVE_DEFAULT_CHANNELS,
+    normalize_active_channels,
+    require_cf4_observational_input,
+)
 
 # =====================================================================
 #  SSOT: Physical and Observational Constants
@@ -332,7 +341,6 @@ class ObsData:
         'e1_FQ_UL','e1_FQ_s',
         'e1_CW','e1_CW_s','e1_CW_sys',
         'e1_rad','e1_rad_s','e1_rad_sys',
-        'b_CF4','b_CF4_s',
         'omH_UL','omH_s','rho45',
     )
     def __init__(self):
@@ -343,16 +351,31 @@ class ObsData:
         self.e1_FQ_UL  = 1.358e-3;      self.e1_FQ_s   = 0.693e-3
         self.e1_CW     = 1.476e-3;      self.e1_CW_s   = 0.30e-3; self.e1_CW_sys = 0.0
         self.e1_rad    = 3.296e-3;      self.e1_rad_s  = 0.60e-3; self.e1_rad_sys= 0.0
-        self.b_CF4     = 1.334e-3;      self.b_CF4_s   = 0.267e-3
         # Saadeh et al. (2016): (ω/H)₀ < 5.2e-11 where ω = √(ω_aω^a)
         # Code convention: omH = √(ω_{ab}ω^{ab})/Θ = (√2/3)(ω/H)
         # Conversion factor: √2/3 ≈ 0.4714
         self.omH_UL    = 2.45e-11;       self.omH_s     = 1.25e-11
         self.rho45     = 0.1
 
+    @property
+    def b_CF4(self):
+        require_cf4_observational_input(consumer="ObsData.b_CF4")
+
+    @b_CF4.setter
+    def b_CF4(self, value):
+        require_cf4_observational_input(consumer="ObsData.b_CF4 assignment")
+
+    @property
+    def b_CF4_s(self):
+        require_cf4_observational_input(consumer="ObsData.b_CF4_s")
+
+    @b_CF4_s.setter
+    def b_CF4_s(self, value):
+        require_cf4_observational_input(consumer="ObsData.b_CF4_s assignment")
+
 
 # =====================================================================
-#  Core Likelihood: 7 active channels (a–f, h); channel g inert
+#  Core Likelihood: 6 active defaults (a, b, d, e, f, h); channel g inert
 # =====================================================================
 def _chi2_logL(D_obs, D_true, nu):
     """Scaled χ²(ν) log-likelihood."""
@@ -380,16 +403,20 @@ class BianchiModel:
     _equivalence_class = None
     _duplicate_of      = None
 
-    # Default channels: 'abcdefh' (7 active channels).
+    # The implicit default is quarantined because it historically included
+    # channel (c). Explicit c-free method checks may use ACTIVE_DEFAULT_CHANNELS.
     # Channel (g) is intentionally excluded from the default because it is
     # redundant with channel (f): the hard MES ceiling in (f) rejects any
     # sample with Σ² > Σ²_max BEFORE the soft logistic penalty in (g) can
     # activate.  Channel (g) code is retained below for use with samplers
     # that do not support hard prior boundaries (e.g. MCMC).  To include
-    # it, pass channels='abcdefgh'.
-    def __init__(self, obs=None, channels='abcdefh'):
+    # it, pass channels='abdefgh' (still excluding quarantined channel c).
+    def __init__(self, obs=None, channels=None):
         self.obs = obs or ObsData()
-        self.channels = channels
+        self.channels = normalize_active_channels(
+            channels,
+            consumer=f"{type(self).__name__} likelihood",
+        )
 
     def prior_transform(self, u):
         raise NotImplementedError
@@ -428,9 +455,13 @@ class BianchiModel:
             ll -= 0.5*(s5**2*d4**2 - 2*r*s4*s5*d4*d5 + s4**2*d5**2)/det
             ll -= 0.5*np.log(det) + np.log(2.*np.pi)
 
-        # (c) CF4 bulk flow
+        # (c) quarantined observational input. The constructor rejects this
+        # channel before likelihood evaluation; this branch is a second guard
+        # against state mutation or deserialised legacy objects.
         if 'c' in ch:
-            ll -= 0.5*((beta - o.b_CF4)/o.b_CF4_s)**2
+            require_cf4_observational_input(
+                consumer=f"{type(self).__name__}._core_logL",
+            )
 
         # (d) Saadeh vorticity
         if 'd' in ch:
@@ -790,26 +821,29 @@ class BianchiVIIh_tilt_grow(BianchiModel):
 #  CONSISTENCY DIAGNOSTIC: Dipolar Deceleration (TF-N02)
 # =====================================================================
 # This function does NOT participate in the evidence computation.
-# It provides a consistency check: β_SNe(z_ref) vs β_CF4.
+# It provides a non-CF4 consistency check: β_SNe(z_ref) vs model β.
 # See TF-T03 §channel-i for the decision not to add channel (i).
 #
-# The Fisher information for channel (i) is COMPARABLE to channel (c)
-# (I_i/I_c ≈ 0.6 at z=0.05), but the high physical correlation
-# (ρ_ci ≳ 0.8) between the two channels—both probing the same β
-# at similar depths—renders the evidence gain negligible (Δln B < 0.1).
+# No channel-c Fisher comparison is active while the PR-120 findings are OPEN.
 
 _C_KMS = 299792.458
 _COLIN_QD = -8.03
 _COLIN_S  = 0.0262
 
-def consistency_Dq(beta, z_ref=0.05, q_d=_COLIN_QD, S=_COLIN_S,
-                   beta_CF4=None, sigma_CF4=None):
+def consistency_Dq(
+    beta,
+    z_ref=0.05,
+    q_d=_COLIN_QD,
+    S=_COLIN_S,
+    beta_CF4=None,
+    sigma_CF4=None,
+):
     """Dipolar deceleration consistency diagnostic.
 
     Translates the Colin et al. (2019) dipolar q into β_SNe at
     z_ref using the Tsagas formula, and computes χ² against the
-    CF4 measurement.  This function is INERT in the evidence
-    computation—it provides a post-hoc consistency check only.
+    caller-supplied model beta. This function is INERT in the evidence
+    computation and excludes channel c.
 
     Parameters
     ----------
@@ -821,25 +855,15 @@ def consistency_Dq(beta, z_ref=0.05, q_d=_COLIN_QD, S=_COLIN_S,
         Colin dipole amplitude (default: −8.03).
     S : float
         Colin decay scale (default: 0.0262).
-    beta_CF4 : float, optional
-        CF4 measured β.  Default: ObsData value.
-    sigma_CF4 : float, optional
-        CF4 1σ uncertainty.  Default: ObsData value.
-
     Returns
     -------
     dict with keys:
         'beta_SNe'    : float — β translated from Colin at z_ref
-        'chi2_vs_CF4' : float — (β_SNe − β_CF4)² / σ²_CF4
         'chi2_vs_model': float — (β_SNe − beta)² / σ²_β,i
         'sigma_beta_i' : float — uncertainty on β_SNe
-        'Fisher_ratio' : float — I_i / I_c
-        'Delta_lnB'    : float — estimated Δln B at ρ=0.8
     """
-    if beta_CF4 is None:
-        beta_CF4 = 1.334e-3
-    if sigma_CF4 is None:
-        sigma_CF4 = 0.267e-3
+    if beta_CF4 is not None or sigma_CF4 is not None:
+        require_cf4_observational_input(consumer="consistency_Dq CF4 arguments")
 
     # β_SNe = 9|q_d| z³ exp(−z/S)
     beta_SNe = 9.0 * abs(q_d) * z_ref**3 * np.exp(-z_ref / S)
@@ -848,29 +872,15 @@ def consistency_Dq(beta, z_ref=0.05, q_d=_COLIN_QD, S=_COLIN_S,
     sigma_qd = abs(q_d) / 3.9
     sigma_beta_i = 9.0 * z_ref**3 * np.exp(-z_ref / S) * sigma_qd
 
-    # Fisher information
-    I_c = 1.0 / sigma_CF4**2
-    I_i = 1.0 / sigma_beta_i**2
-    Fisher_ratio = I_i / I_c
-
-    # χ² against CF4
-    chi2_CF4 = ((beta_SNe - beta_CF4) / sigma_CF4)**2
-
     # χ² against model-predicted β
     chi2_model = ((beta_SNe - beta) / sigma_beta_i)**2
 
-    # Estimated Δln B at ρ = 0.8 (high physical correlation)
-    rho = 0.8
-    DI = I_i * (1.0 - rho**2)
-    Delta_lnB = 0.5 * np.log(1.0 + DI / I_c)
-
     return {
         'beta_SNe':      beta_SNe,
-        'chi2_vs_CF4':   chi2_CF4,
         'chi2_vs_model': chi2_model,
         'sigma_beta_i':  sigma_beta_i,
-        'Fisher_ratio':  Fisher_ratio,
-        'Delta_lnB':     Delta_lnB,
+        'excluded_channels': ['c'],
+        'cf4_channel_status': 'QUARANTINED_OPEN_FINDINGS',
     }
 
 
@@ -899,7 +909,7 @@ ALL_MODELS = {
     "BVIIh_tilt": BianchiVIIh_tilt, "BVIIh_tilt_grow": BianchiVIIh_tilt_grow,
 }
 
-def create_model(name, obs=None, channels='abcdefh'):
+def create_model(name, obs=None, channels=None):
     if name not in ALL_MODELS:
         raise ValueError(f"Unknown model '{name}'")
     return ALL_MODELS[name](obs=obs, channels=channels)

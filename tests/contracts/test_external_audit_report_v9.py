@@ -15,22 +15,22 @@ from __future__ import annotations
 
 import hashlib
 import json
-import subprocess
-import sys
 import zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-ZIP = ROOT / "external_audit_research_report_20260711_v9.zip"
-TEX = (ROOT / "external_audit_research_report_20260711_v9"
+LEGACY_ROOT = ROOT / "legacy/cf4_p0/packages/external_reports"
+ZIP = LEGACY_ROOT / "external_audit_research_report_20260711_v9.zip"
+TEX = (LEGACY_ROOT / "external_audit_research_report_20260711_v9"
        / "external_audit_research_report_v9.tex")
 
 
-def test_builder_check_is_byte_stable():
-    run = subprocess.run(
-        [sys.executable, str(ROOT / "scripts/build_external_audit_report_v9.py"),
-         "--check"], capture_output=True, text=True, cwd=ROOT)
-    assert run.returncode == 0, run.stderr[-2000:]
+def test_v9_snapshot_is_absent_from_active_paths_and_preserved_in_legacy():
+    assert not (ROOT / "external_audit_research_report_20260711_v9").exists()
+    assert not (ROOT / "external_audit_research_report_20260711_v9.zip").exists()
+    assert not (ROOT / "external_audit_research_report_v9.pdf").exists()
+    assert ZIP.is_file()
+    assert TEX.is_file()
 
 
 def _zip_index():

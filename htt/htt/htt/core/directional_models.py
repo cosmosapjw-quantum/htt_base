@@ -4,10 +4,10 @@ Extends the scalar-amplitude pipeline with the tilt axis direction
 (l, b) in galactic coordinates. The directional likelihood uses
 Fisher-distribution penalties weighted by each survey's (S/N)².
 
-Reference directions:
+Active reference directions:
   CMB dipole:  (l, b) = (264.021, 48.253)  — Planck 2018
-  CF4 bulk:    (l, b) = (282, 6)            — Watkins+2023
   CatWISE:     (l, b) = (240, -4)           — Secrest+2021/Böhme+2025
+  Radio:       (l, b) = (245, 18)           — NVSS+RACS
 
 The directional model has 3 parameters: (β, l, b) where β is the
 tilt rapidity and (l, b) is the tilt axis in galactic degrees.
@@ -15,6 +15,7 @@ tilt rapidity and (l, b) is the tilt axis in galactic degrees.
 STATUS: EXPLORATORY — directional inference is preliminary.
 The summary-statistic pipeline was designed for amplitude-only
 analysis; directional extension is a proof of concept.
+Channel c is excluded while the PR-120 findings remain OPEN.
 """
 import numpy as np
 import sys
@@ -29,6 +30,10 @@ from htt.core.evidence_models_R03a import (
     FLRW_tilt, eps1_from_beta, boost_to_D2,
     ObsData, T0_UK, D2_LCDM, D3_LCDM,
 )
+from htt.core.cf4_observational_input import (
+    ACTIVE_DEFAULT_CHANNELS,
+    OPEN_FINDING_IDS,
+)
 
 __all__ = [
     'FLRW_tilt_directional',
@@ -41,7 +46,6 @@ __all__ = [
 
 REFS = {
     'CMB_dipole': {'l': 264.021, 'b': 48.253, 'label': 'CMB dipole (Planck 2018)'},
-    'CF4_bulk':   {'l': 282.0,   'b': 6.0,    'label': 'CF4 bulk flow (Watkins+2023)'},
     'CatWISE':    {'l': 240.0,   'b': -4.0,   'label': 'CatWISE (Secrest+2021)'},
     'radio_NVSS': {'l': 245.0,   'b': 18.0,   'label': 'NVSS+RACS (Wagenveld+2023)'},
 }
@@ -71,19 +75,21 @@ class FLRW_tilt_directional:
     Likelihood = L_amplitude(β) × L_direction(l, b | β)
 
     L_amplitude: same as FLRW_tilt (scalar pipeline)
-    L_direction: Fisher penalties for alignment with CF4 and CatWISE,
+    L_direction: Fisher penalties for alignment with CatWISE and Radio,
                  with concentration κ = (S/N)²
     """
     name = 'FLRW_tilt_dir'
     param_names = ['beta', 'l_gal', 'b_gal']
     ndim = 3
+    excluded_channels = ('c',)
+    cf4_finding_ids = OPEN_FINDING_IDS
 
     def __init__(self):
         self.obs = ObsData()
-        self._scalar = FLRW_tilt()
-        # Fisher concentrations from survey S/N
-        self.kappa_CF4 = (self.obs.b_CF4 / self.obs.b_CF4_s)**2
-        self.kappa_CW = 25.0  # CatWISE dipole ~5σ → κ ≈ 25
+        self._scalar = FLRW_tilt(channels=ACTIVE_DEFAULT_CHANNELS)
+        # Fisher concentrations from the two active survey S/N values.
+        self.kappa_CW = (self.obs.e1_CW / self.obs.e1_CW_s)**2
+        self.kappa_radio = (self.obs.e1_rad / self.obs.e1_rad_s)**2
 
     def prior_transform(self, u):
         """Prior: β log-uniform [1e-8, 0.1], l uniform [0, 360], b cosine."""
@@ -112,15 +118,15 @@ class FLRW_tilt_directional:
             return -1e30
 
         # Directional part: Fisher penalties
-        sep_CF4 = _angular_separation(l_gal, b_gal,
-                                       REFS['CF4_bulk']['l'],
-                                       REFS['CF4_bulk']['b'])
         sep_CW = _angular_separation(l_gal, b_gal,
                                       REFS['CatWISE']['l'],
                                       REFS['CatWISE']['b'])
+        sep_radio = _angular_separation(l_gal, b_gal,
+                                         REFS['radio_NVSS']['l'],
+                                         REFS['radio_NVSS']['b'])
 
-        ll_dir = (_fisher_logpdf(sep_CF4, self.kappa_CF4) +
-                  _fisher_logpdf(sep_CW, self.kappa_CW))
+        ll_dir = (_fisher_logpdf(sep_CW, self.kappa_CW) +
+                  _fisher_logpdf(sep_radio, self.kappa_radio))
 
         return ll_amp + ll_dir
 
@@ -134,13 +140,15 @@ class BI_tilt_directional:
     name = 'BI_tilt_dir'
     param_names = ['Sigma2', 'beta', 'l_gal', 'b_gal']
     ndim = 4
+    excluded_channels = ('c',)
+    cf4_finding_ids = OPEN_FINDING_IDS
 
     def __init__(self):
         self.obs = ObsData()
         from htt.core.evidence_models_R03a import BianchiI_tilt
-        self._scalar = BianchiI_tilt()
-        self.kappa_CF4 = (self.obs.b_CF4 / self.obs.b_CF4_s)**2
-        self.kappa_CW = 25.0
+        self._scalar = BianchiI_tilt(channels=ACTIVE_DEFAULT_CHANNELS)
+        self.kappa_CW = (self.obs.e1_CW / self.obs.e1_CW_s)**2
+        self.kappa_radio = (self.obs.e1_rad / self.obs.e1_rad_s)**2
 
     def prior_transform(self, u):
         Sigma2 = 10**(u[0] * 26 - 30)  # log-uniform 1e-30..1e-4
@@ -165,14 +173,14 @@ class BI_tilt_directional:
         if not np.isfinite(ll_amp):
             return -1e30
 
-        sep_CF4 = _angular_separation(l_gal, b_gal,
-                                       REFS['CF4_bulk']['l'],
-                                       REFS['CF4_bulk']['b'])
         sep_CW = _angular_separation(l_gal, b_gal,
                                       REFS['CatWISE']['l'],
                                       REFS['CatWISE']['b'])
-        ll_dir = (_fisher_logpdf(sep_CF4, self.kappa_CF4) +
-                  _fisher_logpdf(sep_CW, self.kappa_CW))
+        sep_radio = _angular_separation(l_gal, b_gal,
+                                         REFS['radio_NVSS']['l'],
+                                         REFS['radio_NVSS']['b'])
+        ll_dir = (_fisher_logpdf(sep_CW, self.kappa_CW) +
+                  _fisher_logpdf(sep_radio, self.kappa_radio))
         return ll_amp + ll_dir
 
 

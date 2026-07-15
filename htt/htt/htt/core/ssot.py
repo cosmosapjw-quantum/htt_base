@@ -151,8 +151,8 @@ def omega_tilt(Om, Or, beta, frame='matter'):
       Ω_tilt_r = Ω_r^geom × (1+w_r)sinh²β / (1 + (1+w_r)sinh²β)
       Ω_tilt_m = Ω_m^geom × (1+w_m)sinh²β / (1 + (1+w_m)sinh²β)
 
-    At CF4 β = 1.334e-3, the two conventions agree to 0.014%.
-    They diverge at β > 0.1 (outside the observational regime).
+    Their historical observational comparison is unavailable to active code.
+    They diverge for sufficiently large synthetic tilt parameters.
 
     Parameters
     ----------

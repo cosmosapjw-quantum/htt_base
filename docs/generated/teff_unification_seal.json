@@ -4,7 +4,7 @@
   "sympy_version": "1.14.0",
   "numpy_version": "2.5.0",
   "theorem_U1": "conditional on identifying the observer-boost and matter-tilt rapidities (disclosed): s = tanh(beta) exactly under the antipodal two-point reduction; s^2 = t/(2+t) with t = Omega_tilt/((1+w) Omega_m); R_3 - 1 = -(3/4) t + O(t^2), R_5 - 1 = +(5/4) t + O(t^2), R_4 == 1 identically (antipodal-specific: single species gives -(3/2))",
-  "theorem_U2": "proved envelopes 1 - R_3 <= (3/2) s^2 and R_5 - 1 <= (5/2) s^2 on 0 < s < 1 (polynomial root isolation); exact rational ceilings at the registered MES dipole amplitude; strictly-increasing ceiling map carries the MES ordering; CF4 rapidity contained in both channels",
+  "theorem_U2": "proved envelopes 1 - R_3 <= (3/2) s^2 and R_5 - 1 <= (5/2) s^2 on 0 < s < 1 (polynomial root isolation); exact rational ceilings at the registered MES dipole amplitude; strictly-increasing ceiling map carries the MES ordering; the former CF4 numeric instantiation is quarantined and excluded from this active seal",
   "antipodal_boost_reduction": {
     "antipodal_temperatures": "T_+/- = T_0 e^{+/-beta} (exact)",
     "boost_pole_identity_exact": true,
@@ -60,12 +60,14 @@
     "mes_ordering_holds": true,
     "ordered_ceiling_triple_from_mes_budgets": true,
     "ordered_ceiling_disclosure": "formal order-preservation instantiation of B_sigma > B_omega > B_accel through the strictly increasing ceiling map; the MES budgets are NOT three physical rapidity ceilings",
-    "cf4_containment": {
-      "beta_cf4": 0.0011365409332612364,
-      "s_cf4_tanh": 0.001136540443895266,
-      "fingerprint_3half_s2": 1.9375862709144723e-06,
-      "mes_dipole_ceiling_3half_eps1_2": 2.2826534400000003e-06,
-      "fingerprint_below_ceiling": true
+    "cf4_numeric_instantiation": {
+      "status": "QUARANTINED_OPEN_P0",
+      "source_record": "docs/generated/cf4_p0_quarantine_block.json",
+      "finding_ids": [
+        "C1-K5-MV-F1",
+        "N-DATA-CF4-DOWNSTREAM"
+      ],
+      "replacement_value": null
     }
   },
   "disclosed_caveats": [
@@ -76,7 +78,8 @@
     "rapidity-vs-velocity beta differs at O(beta^3) ~ 1e-9 (disclosed)",
     "s_max = eps_1 uses the leading-order dipole <-> boost identification",
     "the ordered ceiling triple is a formal order-preservation instantiation, not three physical rapidity ceilings",
-    "pointwise R_5 + R_3 >= 2 is numerically certified only"
+    "pointwise R_5 + R_3 >= 2 is numerically certified only",
+    "the CF4 numerical instantiation is blocked while C1-K5-MV-F1 and N-DATA-CF4-DOWNSTREAM remain OPEN; no replacement value is supplied"
   ],
   "claim_boundary": "exact symbolic correspondence between registered in-repo objects (MES registry, comparator tilt sector, Teff representative anchor); diagnostic_only; no data, signal-discovery, spectral-distortion, Bianchi-class-identification-of-the-sky, native-solver-produced, or probabilistic-inference claim"
 }

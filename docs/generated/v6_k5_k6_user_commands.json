@@ -10,12 +10,12 @@
   "commands": {
     "K5": {
       "check_command": "venv/bin/python scripts/k5_cf4_release_coverage.py --check",
-      "expected_runtime_note": "moderate deterministic run; N_MOCK=600",
+      "expected_runtime_note": "execution forbidden while C1-K5-MV-F1 and N-DATA-CF4-DOWNSTREAM remain OPEN",
       "generator_executed_this_turn": false,
       "input_path": "workdir/obs_bundle/pecvel/cf4_full/cf4_groups.npz",
       "input_present": true,
       "input_size_bytes": 5179298,
-      "next_turn_runnable": true,
+      "next_turn_runnable": false,
       "report_back": [
         "terminal stdout tail",
         "docs/generated/k5_cf4_release_coverage.json"
@@ -39,14 +39,14 @@
       "script": "scripts/k6_cf4_curl_posterior.py"
     }
   },
-  "config_hash": "sha256:d4498a1186f1a779c43921e7a125fbbbd386ec743055340996437de3fa43d299",
+  "config_hash": "sha256:309ee63452f1cea56b3fb97fc9af38781ccb68cf7981171964c91191a689c52c",
   "execution_policy": "user_runs_commands_generator_did_not_execute_k5_k6",
   "generating_command": "python scripts/make_v6_no_download_figures.py",
   "git_commit_or_worktree_state": "content-addressed",
   "implementation_scope": "common",
   "input_hashes": [
-    "docs/generated/v6_no_download_research_cards.json:sha256:f4074ddb094f8c16a17503669ada8a55e379371f4166b338b36f0a3cd906f3f8",
-    "docs/generated/v6_legacy_figure_classification.json:sha256:8c6617c257ad422c1bb5338fd19391943ffdd97f31af638d86367c025631a3ee",
+    "docs/generated/v6_no_download_research_cards.json:sha256:b8c8dfc84688816606d2807cb27d5dc7fe455d0c5beedc627d5af4e96d0ed6d0",
+    "docs/generated/v6_legacy_figure_classification.json:sha256:0f6590ce532b4df7f4704f14751280c1fdfdca6eb70361584cf6a6dbc92bbbc0",
     "scripts/make_v6_no_download_figures.py:sha256:6d31a1bd981b23cb4c323d99b9ca4540cda86b410146c5356f3b921950ad1df4"
   ],
   "null_mock_status": "mixed_diagnostic_and_blocked",

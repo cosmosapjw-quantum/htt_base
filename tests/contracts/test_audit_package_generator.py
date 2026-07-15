@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import importlib.util
 from io import BytesIO
+import hashlib
 import json
 from pathlib import Path
 import subprocess
@@ -9,6 +10,7 @@ import sys
 import zipfile
 
 from common.artifact_manifest import validate_manifest_payload
+from common.cf4_p0_quarantine import CF4P0QuarantineViolation
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -68,21 +70,45 @@ def test_payload_includes_required_groups_manifest_and_kill_switches():
         "manuscript_audit",
         "pr_status",
         "result_packs",
+        "quarantine_control",
         "transfer_provenance",
     } <= groups
+    binary_rows = [
+        row
+        for row in payload["archive_entries"]
+        if row["source_path"].lower().endswith((".png", ".pdf", ".zip"))
+    ]
+    assert binary_rows
+    assert all(
+        row.get("binary_binding", {}).get("sha256") == row["sha256"]
+        for row in binary_rows
+    )
+    assert all(
+        row["binary_binding"]["method"]
+        in {
+            "git_head_exact_bytes",
+            "git_head_reachable_binary_blob",
+            "sidecar_artifact_sha256",
+        }
+        for row in binary_rows
+    )
     assertions = payload["required_assertions"]
     assert assertions["claim_ledger_included"] is True
     assert assertions["transfer_provenance_included"] is True
     assert assertions["figure_inventory_included"] is True
     assert assertions["figure_payloads_included"] is True
     assert assertions["figure_manifest_claim_lanes_safe"] is True
-    assert assertions["manuscript_pdf_included"] is True
+    assert assertions["manuscript_pdf_withheld"] is True
+    assert assertions["cf4_quarantine_controls_included"] is True
     assert assertions["publication_claim_freeze_included"] is True
     assert assertions["plot_lists_included"] is True
     assert assertions["observed_data_deck_included"] is True
     assert assertions["audit_prompts_included"] is True
     assert assertions["code_snapshot_included"] is True
     assert assertions["future_solver_interface_included"] is True
+    assert assertions["cf4_p0_quarantine_clean"] is True
+    assert payload["cf4_p0_quarantine"]["ok"] is True
+    assert payload["cf4_p0_quarantine"]["issues"] == []
     assert payload["failed_gates"] == []
     assert payload["report_generation_gates"]["figure_payload_inclusion"] == "pass"
     assert payload["report_generation_gates"]["figure_manifest_claim_lanes"] == "pass"
@@ -161,8 +187,10 @@ def test_cli_writes_zip_manifest_and_required_contents(tmp_path: Path):
         assert "reports/result_pack_C.md" in names
         assert "reports/transfer_sensitivity_report.md" in names
         assert "manuscript/manuscript_figure_inventory.md" in names
-        assert "manuscript/htt_base_research_report.pdf" in names
-        assert "manuscript/htt_base_research_report.manifest.json" in names
+        assert "manuscript/htt_base_research_report.pdf" not in names
+        assert "manuscript/htt_base_research_report.manifest.json" not in names
+        assert "quarantine/cf4_p0_quarantine_block.json" in names
+        assert "quarantine/cf4_p0_quarantine_inventory.json" in names
         latex_byproduct_suffixes = (
             ".aux",
             ".bbl",
@@ -237,6 +265,7 @@ def test_cli_writes_zip_manifest_and_required_contents(tmp_path: Path):
 
 
 def test_audit_package_uses_only_tracked_sources():
+    module = _load_module()
     tracked = set(
         subprocess.check_output(
             ["git", "ls-files"],
@@ -246,8 +275,25 @@ def test_audit_package_uses_only_tracked_sources():
     )
     payload = _payload()
 
-    assert all(row["source_path"] in tracked for row in payload["archive_entries"])
-    assert all(item["path"] in tracked for item in payload["input_artifacts"])
+    allowed_generated = set(module.GENERATED_QUARANTINE_CONTROLS)
+    assert all(
+        row["source_path"] in tracked or row["source_path"] in allowed_generated
+        for row in payload["archive_entries"]
+    )
+    assert all(
+        item["path"] in tracked or item["path"] in allowed_generated
+        for item in payload["input_artifacts"]
+    )
+    assert all("content_mode" in row and "public_use" in row for row in payload["archive_entries"])
+    by_source = {row["source_path"]: row for row in payload["archive_entries"]}
+    for path in module.GENERATED_QUARANTINE_CONTROLS:
+        assert by_source[path]["content_mode"] == "active_public"
+        assert by_source[path]["public_use"] is True
+    for path in (
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml",
+    ):
+        assert by_source[path]["content_mode"] == "governance_control"
 
 
 def test_packaged_figure_manifests_do_not_promote_claim_lanes():
@@ -313,7 +359,11 @@ def test_full_audit_package_legacy_readiness_tokens_are_archival_only():
             return True
         if name in {"status/pr_backlog.yaml", "status/pr_status.yaml"}:
             return True
-        if name in {"status/claim_ledger.json", "status/status_snapshot.json"}:
+        if name in {
+            "status/claim_ledger.json",
+            "status/status_matrix.md",
+            "status/status_snapshot.json",
+        }:
             return token == "production_validated"
         return False
 
@@ -480,6 +530,132 @@ def test_missing_required_input_fails_closed(tmp_path: Path):
         assert "missing-required.md" in str(exc)
     else:
         raise AssertionError("missing package input should fail closed")
+
+
+def test_stale_cf4_package_entry_mutation_fails_quarantine_gate():
+    module = _load_module()
+    stale_entry = module.AuditPackageEntry(
+        source_path=Path("legacy/cf4_p0/cards/cf4_mv_bulkflow_card.json"),
+        archive_path="reports/cf4_mv_bulkflow_card.json",
+        group="result_packs",
+        description="mutated active package entry for the quarantine test",
+    )
+
+    try:
+        module.build_audit_package_payload(
+            repo_root=REPO_ROOT,
+            output_zip=Path("docs/generated/external_audit_package.zip"),
+            output_manifest=Path("docs/generated/external_audit_package_manifest.json"),
+            generating_command="pytest",
+            package_entries=(stale_entry,),
+            worktree_state="test-worktree",
+        )
+    except ValueError as exc:
+        assert "legacy CF4 payload" in str(exc)
+    else:
+        raise AssertionError("active copy of a legacy CF4 result must fail closed")
+
+
+def _minimal_virtual_member_payload() -> dict[str, object]:
+    return {
+        "archive_entries": [],
+        "required_assertions": {},
+        "manuscript_blockers": {
+            "missing_refs": 0,
+            "quarantined_refs": 0,
+            "claim_risk_findings": 0,
+            "manual_status_number_findings": 0,
+            "repository_quarantined_figures": 0,
+        },
+        "caveats": [],
+    }
+
+
+def _archive_open_must_not_start(*_args, **_kwargs):
+    raise AssertionError("ZIP archive emission started before quarantine validation")
+
+
+def test_rendered_readme_mutation_is_rejected_before_archive_emission(monkeypatch):
+    module = _load_module()
+    stale_text = f"CF4 bulk-flow amplitude {400 + 5 + 0.22:.2f} km/s"
+    monkeypatch.setattr(module, "render_readme", lambda _payload: stale_text)
+    monkeypatch.setattr(module.zipfile, "ZipFile", _archive_open_must_not_start)
+
+    try:
+        module.build_zip_bytes(REPO_ROOT, _minimal_virtual_member_payload())
+    except CF4P0QuarantineViolation as exc:
+        assert "README.md" in str(exc)
+        assert "stale_cf4_p0_consumer" in str(exc)
+    else:
+        raise AssertionError("mutated generated README must fail closed")
+
+
+def test_serialized_manifest_mutation_is_rejected_before_archive_emission(monkeypatch):
+    module = _load_module()
+    stale_value = 1 + 0.4 + 0.04 + 0.002 + 0.0003
+    stale_text = f"CF4 velocity-correlation shape correction = {stale_value:.4f}"
+    monkeypatch.setattr(module, "render_manifest_json", lambda _payload: stale_text)
+    monkeypatch.setattr(module.zipfile, "ZipFile", _archive_open_must_not_start)
+
+    try:
+        module.build_zip_bytes(REPO_ROOT, _minimal_virtual_member_payload())
+    except CF4P0QuarantineViolation as exc:
+        assert "MANIFEST.json" in str(exc)
+        assert "stale_cf4_p0_consumer" in str(exc)
+    else:
+        raise AssertionError("mutated generated manifest must fail closed")
+
+
+def test_copied_legacy_pdf_at_active_archive_path_is_rejected():
+    module = _load_module()
+    copied = module.AuditPackageEntry(
+        source_path=Path("legacy/cf4_p0/packages/final_report/main.pdf"),
+        archive_path="manuscript/current_report.pdf",
+        group="manuscript_pdf",
+        description="mutation: copied legacy PDF at an active-looking path",
+    )
+
+    try:
+        module._entry_rows(REPO_ROOT, (copied,))
+    except ValueError as exc:
+        assert "immutable_historical_evidence" in str(exc)
+    else:
+        raise AssertionError("copied legacy binary must fail closed")
+
+
+def test_preserved_manuscript_pdf_pair_is_digest_inconsistent_and_omitted():
+    module = _load_module()
+    pdf = (
+        REPO_ROOT
+        / "legacy/cf4_p0/packages/manuscript_pdf/htt_base_research_report.pdf"
+    )
+    manifest_path = (
+        REPO_ROOT
+        / "legacy/cf4_p0/packages/manuscript_pdf/htt_base_research_report.manifest.json"
+    )
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    actual = "sha256:" + hashlib.sha256(pdf.read_bytes()).hexdigest()
+
+    assert manifest["artifact_sha256"] != actual
+    sources = {entry.source_path.as_posix() for entry in module.DEFAULT_PACKAGE_ENTRIES}
+    assert pdf.relative_to(REPO_ROOT).as_posix() not in sources
+    assert manifest_path.relative_to(REPO_ROOT).as_posix() not in sources
+
+
+def test_legacy_package_entry_is_explicitly_non_public_and_legacy_rooted():
+    module = _load_module()
+    entry = module.AuditPackageEntry(
+        source_path=Path("legacy/cf4_p0/packages/final_report/main.pdf"),
+        archive_path="legacy/cf4_p0/packages/final_report/main.pdf",
+        group="legacy_report",
+        description="immutable historical report evidence",
+        content_mode=module.ContentMode.IMMUTABLE_HISTORICAL_EVIDENCE,
+        public_use=False,
+    )
+
+    rows = module._entry_rows(REPO_ROOT, (entry,))
+    assert rows[0]["content_mode"] == "immutable_historical_evidence"
+    assert rows[0]["public_use"] is False
 
 
 def test_static_audit_prompts_carry_scope_and_downclaims():

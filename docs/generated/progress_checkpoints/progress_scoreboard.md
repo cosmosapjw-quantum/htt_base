@@ -6,26 +6,26 @@
 - Implementation scope: `common`
 - Claim tier: `diagnostic_only`
 - Transfer source: `none`
-- Config hash: `862e431a3ed5cca1430e9852a37e127b63eb314e418fec42da588629743d5aea`
+- Config hash: `cd4f6d17446e25c69a985348f1903af46eec19f202399078fe63c9b1eb24f54a`
 - Sky support / mask status: `not_applicable_governance`
 - Covariance / null mock status: `not_applicable_governance`
-- Generating command: `/home/cosmosapjw/Dropbox/bianchi/htt_base/venv/bin/python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --checkpoint-every 5 --write-scoreboard docs/generated/progress_checkpoints/progress_scoreboard.md --json`
-- Git commit / worktree state: `f70e0cd96b08fb50ee4035c00f0a689ce5a0f591; dirty`
+- Generating command: `/home/cosmosapjw/Dropbox/bianchi/htt_base/venv/bin/python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --checkpoint-every 5 --write-scoreboard docs/generated/progress_checkpoints/progress_scoreboard.md`
+- Git commit / worktree state: `e6da3670043596efdcd93f9ba5e631e1462146c7; dirty`
 - Input hashes:
   - `docs/codex_handoff/pr_backlog.yaml:03ec8869094d65ceda007661949cb0513c42f7620529d4b963190c183a803e71`
-  - `docs/codex_handoff/pr_status.yaml:ca72ac424328ecfb0cde619a4d3be66d3361ce19008de7e0bf8b84d62528bd43`
+  - `docs/codex_handoff/pr_status.yaml:5ab573f2150022268a849f42ff78bfd06d53d2111565171cbc5e3bb472bc80ce`
 - Caveats:
   - Progress percentages count DAG bookkeeping only.
   - This artifact cannot establish scientific readiness, native transfer validation, posterior support, or family identification.
 
-- Completed PRs: 66/113 = 58.41%
-- Dependency-weighted completion: 50.61%
+- Completed PRs: 67/113 = 59.29%
+- Dependency-weighted completion: 51.11%
 - Critical path completion: 25/56 = 44.64%
 - Critical path: PR-000 -> PR-003 -> PR-004 -> PR-010 -> PR-014 -> PR-050 -> PR-051 -> PR-052 -> PR-053 -> PR-054 -> PR-055 -> PR-060 -> PR-061 -> PR-062 -> PR-063 -> PR-064 -> PR-065 -> PR-066 -> PR-111 -> PR-114 -> PR-115 -> PR-116 -> PR-117 -> PR-118 -> PR-119 -> PR-121 -> PR-122 -> PR-123 -> PR-124 -> PR-125 -> PR-126 -> PR-127 -> PR-128 -> PR-131 -> PR-132 -> PR-133 -> PR-134 -> PR-135 -> PR-137 -> PR-138 -> PR-139 -> PR-140 -> PR-141 -> PR-142 -> PR-143 -> PR-144 -> PR-145 -> PR-146 -> PR-147 -> PR-148 -> PR-155 -> PR-162 -> PR-163 -> PR-164 -> PR-165 -> PR-166
 - Blocked PRs: none
 - Skipped PRs: none
 - Dormant external PRs: PR-159, PR-160, PR-161, PR-162, PR-163, PR-164, PR-165, PR-166
-- Unblocked next: PR-120, PR-121
+- Unblocked next: PR-121
 - Checkpoint due: no
 - Next checkpoint at: 70
 - Replan required: no

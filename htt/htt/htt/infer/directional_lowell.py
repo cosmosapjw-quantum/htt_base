@@ -11,10 +11,18 @@ planarity normal, quadrupole-octupole alignment axis).
 
 This module does NOT fit full CMB maps. It uses pre-computed low-ℓ
 summary statistics and tests directional consistency.
+
+The low-z axis must be supplied explicitly from a non-CF4 or synthetic
+source.  The former implicit CF4 direction is quarantined under PR-120.
 """
 import numpy as np
 from dataclasses import dataclass
 from typing import Optional, Tuple
+
+from htt.core.cf4_observational_input import (
+    OPEN_FINDING_IDS,
+    require_cf4_observational_input,
+)
 
 __all__ = [
     'DirectionalLowellResult', 'LowellLikelihood',
@@ -82,13 +90,16 @@ class DirectionalLowellResult:
 
     # Interpretation
     aligned: bool               # True if combined_p < 0.05
-    status: str = 'INFERENTIAL'
+    status: str = 'diagnostic_only'
+    excluded_channels: tuple[str, ...] = ('c',)
+    cf4_finding_ids: tuple[str, ...] = OPEN_FINDING_IDS
 
 
 class LowellLikelihood:
     """Low-ℓ directional likelihood for tilt-CMB axis alignment.
 
-    Uses the CF4 bulk flow direction and Planck low-ℓ preferred axes.
+    Uses a caller-supplied non-CF4 low-z direction and pre-computed CMB
+    low-ℓ preferred axes.
     The likelihood tests whether three axes (low-z dipole, CMB quadrupole,
     CMB octupole) are mutually closer than expected from isotropy.
     """
@@ -99,13 +110,19 @@ class LowellLikelihood:
     CMB_OCT_L = 236.0           # octupole planarity normal (l, deg)
     CMB_OCT_B = 64.0            # octupole planarity normal (b, deg)
 
-    # CF4 bulk flow direction (Watkins+ 2023)
-    CF4_L = 285.0
-    CF4_B = 10.0
-
     def __init__(self, lowz_l: float = None, lowz_b: float = None):
-        self.lowz_l = lowz_l or self.CF4_L
-        self.lowz_b = lowz_b or self.CF4_B
+        if lowz_l is None or lowz_b is None:
+            require_cf4_observational_input(
+                consumer='directional_lowell.LowellLikelihood implicit low-z axis',
+            )
+        self.lowz_l = float(lowz_l)
+        self.lowz_b = float(lowz_b)
+        if not np.isfinite(self.lowz_l) or not np.isfinite(self.lowz_b):
+            raise ValueError('explicit low-z direction must be finite')
+        if not 0.0 <= self.lowz_l <= 360.0:
+            raise ValueError('lowz_l must lie in [0, 360] degrees')
+        if not -90.0 <= self.lowz_b <= 90.0:
+            raise ValueError('lowz_b must lie in [-90, 90] degrees')
 
     def evaluate(self) -> DirectionalLowellResult:
         """Evaluate the directional low-ℓ consistency test."""

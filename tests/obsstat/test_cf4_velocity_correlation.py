@@ -1,64 +1,67 @@
-"""K5 CF4 velocity correlation function -> f sigma_8 diagnostic (REV-R196).
-
-The reconstruction-INDEPENDENT statistic: the Gorski Psi_par/Psi_perp velocity
-correlation function computed directly from LOS-velocity pairs (no field
-reconstruction) -- the physical, well-posed replacement for an ill-posed angular
-pseudo-C_l. The f sigma_8 from this simplified pair estimator is a treatment-
-dependent DIAGNOSTIC (a precision value needs the max-likelihood estimator).
-Guards: committed + claim-gated; Psi measured; f sigma_8 plausible; the exit-gate
-registered; no detection/family/geometry claim.
-"""
+"""PR-120 gates for the treatment-conditioned CF4 pair-statistic record."""
 from __future__ import annotations
 
-import importlib.util
 import json
-from pathlib import Path
+import subprocess
 import sys
+from pathlib import Path
+
 
 REPO = Path(__file__).resolve().parents[2]
-SCRIPT = REPO / "scripts/cf4_velocity_correlation.py"
 OUT = REPO / "docs/generated/cf4_velocity_correlation_card.json"
-VARIANTS = REPO / "workdir/obs_bundle/pecvel/cf4_full/cf4_pv_variants.npz"
-
-_FORBIDDEN = ("posterior", "detection", "native solver", "family assignment")
+LEGACY = REPO / "legacy/cf4_p0/cards/cf4_velocity_correlation_card.json"
 
 
-def _card():
-    assert OUT.is_file(), "cf4_velocity_correlation_card.json not committed"
-    return json.loads(OUT.read_text())
+def _card() -> dict:
+    return json.loads(OUT.read_text(encoding="utf-8"))
 
 
-def test_measured_diagnostic():
-    d = _card()
-    assert d["status"] == "MEASURED_CORRELATION_DIAGNOSTIC"
-    for c in ("Vpds", "Vpec"):
-        v = d["per_variant"][c]
-        assert len(v["psi_par_data_kms2"]) == len(d["separation_bins_hmpc"])
-        assert 0.1 < v["f_sigma8"] < 1.6           # plausible, treatment-dependent
+def test_pair_card_retains_only_conditioned_method_mechanics() -> None:
+    card = _card()
+    artifact = card["artifact"]
+    assert card["status"] == "QUARANTINED_OPEN_FINDINGS"
+    assert artifact["allowed_use"] == (
+        "treatment_conditioned_pair_statistic_and_systematics_design_only"
+    )
+    assert artifact["observational_numeric_instantiation"]["values"] is None
+    assert artifact["observational_numeric_instantiation"]["replacement_value"] is None
+    assert "growth_amplitude_measurement" in artifact["forbidden_uses"]
+    assert "f_sigma8_constraint" in artifact["forbidden_uses"]
+    assert "global_tilt_pushforward" in artifact["forbidden_uses"]
+    assert {row["scientific_status"] for row in card["findings"]} == {"OPEN"}
 
 
-def test_reconstruction_independent_and_exit_gate():
-    d = _card()
-    ris = d["reconstruction_independent_statistic"]
-    # the physical statistic is the correlation function (not an angular pseudo-Cl)
-    assert "exit_gate" in ris and "max-likelihood" in ris["exit_gate"]
-    assert ris["cf4_published_anchor"] == 0.38
-    # Vpec (WF-smoothed) is closer to the literature than the noisy direct Vpds
-    assert d["per_variant"]["Vpec"]["f_sigma8"] < d["per_variant"]["Vpds"]["f_sigma8"]
+def test_pair_card_has_no_active_estimate_arrays_or_amplitudes() -> None:
+    card = _card()
+    forbidden_keys = {
+        "per_variant",
+        "f_sigma8",
+        "f_sigma8_jackknife_error",
+        "psi_par_data_kms2",
+        "psi_perp_data_kms2",
+        "cosmic_mach_number",
+    }
+
+    def walk(value: object) -> None:
+        if isinstance(value, dict):
+            assert not (forbidden_keys & set(value))
+            for child in value.values():
+                walk(child)
+        elif isinstance(value, list):
+            for child in value:
+                walk(child)
+
+    walk(card)
+    assert LEGACY.is_file()
+    assert card["artifact"]["legacy_public_use"] is False
 
 
-def test_claim_firewall():
-    d = _card()
-    blob = json.dumps(d).lower()
-    for tok in _FORBIDDEN:
-        assert tok not in blob, f"forbidden claim token: {tok!r}"
-
-
-def test_deterministic_when_data_present():
-    if not VARIANTS.is_file():
-        return
-    spec = importlib.util.spec_from_file_location("cf4_velocity_correlation", SCRIPT)
-    mod = importlib.util.module_from_spec(spec)
-    sys.modules["cf4_velocity_correlation"] = mod
-    spec.loader.exec_module(mod)
-    assert mod.main(["--check"]) == 0
+def test_pair_wrapper_is_current() -> None:
+    result = subprocess.run(
+        [sys.executable, "scripts/cf4_velocity_correlation.py", "--check"],
+        cwd=REPO,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    assert result.returncode == 0, result.stdout + result.stderr

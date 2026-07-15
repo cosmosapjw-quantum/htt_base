@@ -1,22 +1,11 @@
-"""Regression tests for the three CLAUDE.md §5 production anchors.
+"""Regression tests for active non-CF4 evidence and derived diagnostics.
 
-Anchors (as of 2026-04-24, bit-identical across repeated runs with fixed
-seeds / n_points):
-
-    ln B(FLRW_tilt vs FLRW)  = 26.3966094015
-    <beta>_FLRW_tilt         = 1.3597868670e-03
-    median F_Bayes (S3)      = 0.0904143077
-
-CLAUDE.md §5 records the semantic form of the same anchors as
-
-    ln B(FLRW_tilt)          = +26.40
-    beta                     = 1.360e-3
-    F_Bayes                  = 0.093 ± 0.025
-
-These tests pin the computed values at tight tolerance so any accidental
-drift in the underlying likelihood / MC machinery is caught, and also
-cross-check that the computed values remain consistent with the
-semantic anchors in CLAUDE.md §5.
+The historical likelihood anchors included quarantined channel c.  They are
+preserved only in ``legacy/cf4_p0`` and are not valid production expectations
+for the active default. These tests enforce a fail-closed implicit likelihood,
+explicit non-CF4 method selection, and the remaining independent
+filling-fraction anchors. They do not compute a replacement evidence or
+posterior headline.
 """
 from __future__ import annotations
 
@@ -29,42 +18,24 @@ from htt.core.evidence_models import (
     FLRW_tilt,
 )
 from htt.core.analysis_extended import FillingFraction
+from htt.core.cf4_observational_input import (
+    ACTIVE_DEFAULT_CHANNELS,
+    CF4InputQuarantined,
+)
 
 
 # ─── Pinned regression values (bit-identical, fixed seeds / grid) ──────
-_LN_B_FLRW_TILT        = 26.3966094015
-_BETA_MEAN_FLRW_TILT   = 1.3597868670e-03
 _F_MEDIAN_S3           = 0.0904143077
-_QUAD_N_POINTS         = 10_000
 _MC_N                  = 200_000
 _MC_SEED               = 42
 
 
 # ─── 1. Pinned regression anchors ─────────────────────────────────────
-def test_anchor_lnB_flrw_tilt_vs_flrw_pinned():
-    """ln B(FLRW_tilt vs FLRW) is bit-identical to the pinned value."""
-    lnZ_flrw_tilt = FLRW_tilt().log_evidence_quadrature(
-        n_points=_QUAD_N_POINTS
-    )["lnZ"]
-    lnZ_flrw = FLRW().log_evidence()
-    lnB = lnZ_flrw_tilt - lnZ_flrw
-    assert lnB == pytest.approx(_LN_B_FLRW_TILT, rel=0, abs=1e-9), (
-        f"lnB drifted from pinned {_LN_B_FLRW_TILT}: got {lnB!r}. "
-        "If this drift is intentional, update the pinned value and the "
-        "matching CLAUDE.md §5 anchor together."
-    )
-
-
-def test_anchor_beta_mean_flrw_tilt_pinned():
-    """Posterior <beta> under FLRW_tilt is bit-identical to the pinned value."""
-    beta_mean = FLRW_tilt().log_evidence_quadrature(
-        n_points=_QUAD_N_POINTS
-    )["beta_mean"]
-    assert beta_mean == pytest.approx(
-        _BETA_MEAN_FLRW_TILT, rel=0, abs=1e-12
-    ), (
-        f"<beta> drifted from pinned {_BETA_MEAN_FLRW_TILT}: got {beta_mean!r}."
-    )
+@pytest.mark.parametrize("model_type", [FLRW, FLRW_tilt])
+def test_implicit_evidence_likelihood_fails_closed(model_type):
+    """The historical implicit default cannot silently drop channel c."""
+    with pytest.raises(CF4InputQuarantined, match="implicit/default likelihood"):
+        model_type()
 
 
 def test_anchor_filling_fraction_S3_pinned():
@@ -78,20 +49,11 @@ def test_anchor_filling_fraction_S3_pinned():
     )
 
 
-# ─── 2. CLAUDE.md §5 semantic anchors (loose-tolerance cross-check) ───
-def test_semantic_anchor_lnB_matches_claude_md():
-    """ln B(FLRW_tilt) ≈ +26.40 (CLAUDE.md §5)."""
-    lnZ_ft = FLRW_tilt().log_evidence_quadrature(n_points=_QUAD_N_POINTS)["lnZ"]
-    lnB = lnZ_ft - FLRW().log_evidence()
-    assert lnB == pytest.approx(26.40, abs=0.10)
-
-
-def test_semantic_anchor_beta_matches_claude_md():
-    """<beta> ≈ 1.360e-3 (CLAUDE.md §5)."""
-    beta_mean = FLRW_tilt().log_evidence_quadrature(
-        n_points=_QUAD_N_POINTS
-    )["beta_mean"]
-    assert beta_mean == pytest.approx(1.360e-3, rel=5e-3)
+# ─── 2. Active non-CF4 semantic checks ────────────────────────────────
+def test_explicit_non_cf4_method_channel_set_is_canonical():
+    """Independent method checks must opt into the c-free channel set."""
+    assert FLRW_tilt(channels=ACTIVE_DEFAULT_CHANNELS).channels == "abdefh"
+    assert FLRW(channels=ACTIVE_DEFAULT_CHANNELS).channels == "abdefh"
 
 
 def test_semantic_anchor_F_bayes_matches_claude_md():
@@ -128,13 +90,13 @@ def _smoke_params_reach_finite(model, rng, tries):
 @pytest.mark.parametrize("model_name", list(ALL_MODELS.keys()))
 def test_all_15_models_admit_finite_log_likelihood(model_name):
     """Every registered Bianchi model must expose at least one parameter
-    draw with finite log_likelihood under the default channel set.
+    draw with finite log_likelihood under an explicit c-free method channel set.
 
     Protects against silent breakage of prior_transform / predicted_observables
     wiring (e.g. a MES ceiling regression that makes a whole model -inf).
     """
     rng = np.random.default_rng(_SMOKE_SEED)
-    model = ALL_MODELS[model_name]()
+    model = ALL_MODELS[model_name](channels=ACTIVE_DEFAULT_CHANNELS)
     assert _smoke_params_reach_finite(model, rng, _SMOKE_TRIES), (
         f"{model_name}: no finite log_likelihood in {_SMOKE_TRIES} prior draws "
         "(seed 0). Check prior_transform, predicted_observables, and the "

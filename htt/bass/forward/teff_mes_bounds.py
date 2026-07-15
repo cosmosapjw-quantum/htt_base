@@ -24,8 +24,10 @@ algebra.  The 4.18 quadratic coefficient in R_σ^{Gaunt} is the
 next-to-leading ε₁² contribution from the a_2 = 4·A² term propagated
 through the bound structure.
 
-Cross-check scenarios ``VN04_SCENARIOS`` replicate the three legacy
-reference points (S1/S2/S3) used to validate this closure to < 1%.
+Cross-check scenarios ``VN04_SCENARIOS`` are dimensionless synthetic
+perturbations used to validate this closure to < 1%.  They deliberately carry
+no observational CF4 instantiation; those inputs are quarantined while the
+PR-120 findings remain OPEN.
 """
 from __future__ import annotations
 
@@ -46,11 +48,11 @@ __all__ = [
 
 VN04_SCENARIOS: Dict[str, Dict[str, float]] = {
     'S1': {
-        'description': 'CF4 bulk flow (standard)',
-        'eps1': 1.334e-3,
-        'eps2': 1.233e-3,
+        'description': 'Small synthetic perturbation',
+        'eps1': 1.2e-3,
+        'eps2': 9.0e-4,
         'eps3': 1.0e-4,
-        'R_sigma_vn04': 1.0 + 2.684 * 1.334e-3,  # ≈ 1.00358
+        'R_sigma_vn04': 1.0 + 2.684 * 1.2e-3,
     },
     'S2': {
         'description': 'Strong tilt (hypothetical)',
@@ -106,7 +108,7 @@ class TeffMESBounds:
 
         C-09b: encodes the a₂ = 4·A² dipole-squared → quadrupole leakage
         propagated through the MES bound. Three orders of magnitude below
-        Layer 1 at CF4 parameters.
+        Layer 1 for small synthetic perturbations.
         """
         return 1.0 + self.C2_GAUNT * float(eps1) ** 2
 

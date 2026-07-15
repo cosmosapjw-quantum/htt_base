@@ -1,6 +1,7 @@
 {
   "artifact_id": "common.conditioned_legacy_figure.validation__flrw_lowell_dell_camb_bass_lmax30",
   "artifact_path": "figures/conditioned_legacy/validation__flrw_lowell_dell_camb_bass_lmax30.png",
+  "artifact_sha256": "sha256:75817e5d0c0b37a910edea5263fc229eddb3bf88ef7dfc6bec26fc54cb598a4d",
   "caveats": [
     "Conditionally included legacy figure; not a refreshed current-code production result.",
     "shown as a validation-context diagnostic tied to the existing FLRW/CAMB/BASS comparison artifact; not a production validation of anisotropic native low-ell transfer.",
@@ -9,17 +10,17 @@
     "MIO diagnostics, HTT inference, and transfer provenance remain separated by owner."
   ],
   "claim_tier": "exploratory",
-  "code_version": "conditioned-legacy-gallery-v1",
-  "config_hash": "sha256:b5bfda55b5bc61b1a0e80cb7557d21bded11cf5a99a26213de4c39cb2435e449",
+  "code_version": "conditioned-legacy-gallery-v2",
+  "config_hash": "sha256:4ac309dfc795826bb524099a768e76e32d34b741fd9c33e39fd2ef6826a054e8",
   "created_by": "scripts/build_expanded_manuscript_figure_suite.py",
   "failed_gates": [],
-  "generating_command": "python scripts/build_expanded_manuscript_figure_suite.py",
-  "git_commit": "85fca53",
-  "git_commit_or_worktree_state": "85fca53+dirty",
+  "generating_command": "python scripts/build_expanded_manuscript_figure_suite.py --phase all",
+  "git_commit": "e6da367",
+  "git_commit_or_worktree_state": "e6da367+dirty",
   "implementation_scope": "common",
   "input_hashes": [
     "figures/validation/flrw_lowell_dell_camb_bass_lmax30.png:sha256:75817e5d0c0b37a910edea5263fc229eddb3bf88ef7dfc6bec26fc54cb598a4d",
-    "scripts/build_expanded_manuscript_figure_suite.py:sha256:b96cc2dc76f678a2158b7053334b182ab2908963be64209cd4aa19c7f60d228a"
+    "scripts/build_expanded_manuscript_figure_suite.py:sha256:f530556a73b1f17113a6fb4ee539733f1364a26e60ffc20d633d67a7af721106"
   ],
   "null_mock_status": "legacy_mock_or_validation_context",
   "owner": "COMMON",
@@ -33,9 +34,17 @@
   ],
   "schema_version": "artifact-manifest-v2",
   "sky_support_status": "not_directional",
+  "source_binding": {
+    "artifact_sha256": "sha256:75817e5d0c0b37a910edea5263fc229eddb3bf88ef7dfc6bec26fc54cb598a4d",
+    "current_source_sha256": "sha256:75817e5d0c0b37a910edea5263fc229eddb3bf88ef7dfc6bec26fc54cb598a4d",
+    "frozen_source_sha256": "sha256:75817e5d0c0b37a910edea5263fc229eddb3bf88ef7dfc6bec26fc54cb598a4d",
+    "source_path": "figures/validation/flrw_lowell_dell_camb_bass_lmax30.png",
+    "status": "current_source_matches_artifact"
+  },
   "statistics_definitions": {
     "legacy_source_path": "figures/validation/flrw_lowell_dell_camb_bass_lmax30.png",
-    "manuscript_role": "appendix_only_conditioned_diagnostic"
+    "manuscript_role": "appendix_only_conditioned_diagnostic",
+    "source_binding_status": "current_source_matches_artifact"
   },
   "transfer_source": "FLRW_validation_context"
 }

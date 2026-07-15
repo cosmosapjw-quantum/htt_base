@@ -17,6 +17,26 @@ from typing import Any, Iterable, Sequence
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
+COMMON_SRC = REPO_ROOT / "htt" / "src"
+if str(COMMON_SRC) not in sys.path:
+    sys.path.insert(0, str(COMMON_SRC))
+
+from common.cf4_p0_quarantine import (  # noqa: E402
+    ContentMode,
+    QuarantineContent,
+    assert_repository_clean,
+    read_regular_bytes,
+    read_regular_text,
+    repository_content,
+    reviewed_active_binary_sidecar_pin,
+    validate_repository,
+)
+from common.package_binary_binding import (  # noqa: E402
+    verify_package_binary_binding,
+    verify_packaged_entry_bytes,
+)
+
+
 DEFAULT_OUTPUT_ZIP = Path("docs/generated/external_audit_package.zip")
 DEFAULT_OUTPUT_MANIFEST = Path("docs/generated/external_audit_package_manifest.json")
 SCHEMA_VERSION = "common.external_audit_package.v1"
@@ -34,6 +54,20 @@ FIGURE_MANIFEST_PROMOTION_TOKENS = (
     "production_validated",
     "production-grade",
 )
+GENERATED_QUARANTINE_CONTROLS = frozenset(
+    {
+        "docs/generated/cf4_p0_quarantine_block.json",
+        "docs/generated/cf4_p0_quarantine_inventory.json",
+    }
+)
+GOVERNANCE_CONTROL_PATHS = frozenset(
+    {
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml",
+        "docs/codex_handoff/pr_dag_research_program.yaml",
+        "docs/codex_handoff/pr_dag_revision.yaml",
+    }
+)
 
 
 @dataclass(frozen=True)
@@ -42,10 +76,39 @@ class AuditPackageEntry:
     archive_path: str
     group: str
     description: str
+    content_mode: ContentMode = ContentMode.ACTIVE_PUBLIC
+    public_use: bool = True
 
 
-def _entry(source: str, archive: str, group: str, description: str) -> AuditPackageEntry:
-    return AuditPackageEntry(Path(source), archive, group, description)
+def _entry(
+    source: str,
+    archive: str,
+    group: str,
+    description: str,
+    *,
+    content_mode: ContentMode | None = None,
+    public_use: bool | None = None,
+) -> AuditPackageEntry:
+    mode = content_mode
+    if mode is None:
+        mode = (
+            ContentMode.IMMUTABLE_HISTORICAL_EVIDENCE
+            if source.startswith("docs/PR_DELTAS/")
+            else ContentMode.GOVERNANCE_CONTROL
+            if source in GOVERNANCE_CONTROL_PATHS
+            else ContentMode.ACTIVE_PUBLIC
+        )
+    use = public_use
+    if use is None:
+        use = mode is not ContentMode.IMMUTABLE_HISTORICAL_EVIDENCE
+    return AuditPackageEntry(
+        Path(source),
+        archive,
+        group,
+        description,
+        content_mode=mode,
+        public_use=use,
+    )
 
 
 DEFAULT_PACKAGE_ENTRIES: tuple[AuditPackageEntry, ...] = (
@@ -223,17 +286,21 @@ DEFAULT_PACKAGE_ENTRIES: tuple[AuditPackageEntry, ...] = (
         "manuscript_audit",
         "observed-data results LaTeX figure snippet",
     ),
+    # PR-120: the former manuscript PDF and its manifest are immutable historical
+    # evidence under legacy/cf4_p0.  The pair is intentionally omitted here because
+    # its manifest digest does not bind the preserved PDF bytes.  The authoritative
+    # current surface is the no-number quarantine block below.
     _entry(
-        "docs/generated/manuscript_pdf/htt_base_research_report.pdf",
-        "manuscript/htt_base_research_report.pdf",
-        "manuscript_pdf",
-        "repo-local built research report PDF",
+        "docs/generated/cf4_p0_quarantine_block.json",
+        "quarantine/cf4_p0_quarantine_block.json",
+        "quarantine_control",
+        "authoritative CF4 P0 blocked-source record",
     ),
     _entry(
-        "docs/generated/manuscript_pdf/htt_base_research_report.manifest.json",
-        "manuscript/htt_base_research_report.manifest.json",
-        "manuscript_pdf",
-        "manifest and claim caveats for repo-local research report PDF",
+        "docs/generated/cf4_p0_quarantine_inventory.json",
+        "quarantine/cf4_p0_quarantine_inventory.json",
+        "quarantine_control",
+        "hash-bound CF4 P0 producer-consumer inventory",
     ),
     # Dependency PR deltas.
     _entry("docs/PR_DELTAS/pr-110.md", "pr_deltas/pr-110.md", "framework_reports", "Result Pack A PR delta"),
@@ -366,6 +433,14 @@ def _figure_payload_entries(repo_root: Path) -> tuple[AuditPackageEntry, ...]:
                     archive_path=relative.as_posix(),
                     group=group,
                     description=description,
+                    content_mode=(
+                        ContentMode.IMMUTABLE_HISTORICAL_EVIDENCE
+                        if relative.as_posix().startswith("figures/conditioned_legacy/")
+                        else ContentMode.ACTIVE_PUBLIC
+                    ),
+                    public_use=not relative.as_posix().startswith(
+                        "figures/conditioned_legacy/"
+                    ),
                 )
             )
     return tuple(entries)
@@ -450,6 +525,35 @@ def _normalise_output_path(path: Path) -> str:
     return path.as_posix()
 
 
+def _validate_entry_semantics(entry: AuditPackageEntry) -> None:
+    source = entry.source_path.as_posix()
+    archive = entry.archive_path
+    if entry.content_mode is ContentMode.ACTIVE_PUBLIC and not entry.public_use:
+        raise ValueError(
+            f"active/public package entry cannot set public_use=false: {archive}"
+        )
+    if (
+        entry.content_mode is ContentMode.IMMUTABLE_HISTORICAL_EVIDENCE
+        and entry.public_use
+    ):
+        raise ValueError(
+            f"immutable historical entry cannot set public_use=true: {archive}"
+        )
+    if source.startswith("legacy/cf4_p0/"):
+        if entry.content_mode is not ContentMode.IMMUTABLE_HISTORICAL_EVIDENCE:
+            raise ValueError(
+                "legacy CF4 payload requires immutable_historical_evidence mode: "
+                f"{source}"
+            )
+        if entry.public_use:
+            raise ValueError(f"legacy CF4 payload cannot be public: {source}")
+        if not archive.startswith("legacy/cf4_p0/"):
+            raise ValueError(
+                "legacy CF4 payload must retain an explicit legacy archive path: "
+                f"{archive}"
+            )
+
+
 def _entry_rows(
     repo_root: Path,
     entries: Iterable[AuditPackageEntry],
@@ -460,29 +564,50 @@ def _entry_rows(
     missing: list[str] = []
     untracked: list[str] = []
     for entry in sorted(entries, key=lambda item: item.archive_path):
+        _validate_entry_semantics(entry)
         if entry.archive_path.startswith("/") or ".." in Path(entry.archive_path).parts:
             raise ValueError(f"unsafe archive path: {entry.archive_path}")
         if entry.archive_path in seen_archive_paths:
             raise ValueError(f"duplicate archive path: {entry.archive_path}")
         seen_archive_paths.add(entry.archive_path)
         source_text = entry.source_path.as_posix()
-        if tracked_paths is not None and source_text not in tracked_paths:
+        if (
+            tracked_paths is not None
+            and source_text not in tracked_paths
+            and source_text not in GENERATED_QUARANTINE_CONTROLS
+        ):
             untracked.append(source_text)
             continue
         source = repo_root / entry.source_path
         if not source.is_file():
             missing.append(entry.source_path.as_posix())
             continue
-        rows.append(
-            {
+        source_bytes = read_regular_bytes(repo_root, entry.source_path)
+        reviewed_pin = (
+            reviewed_active_binary_sidecar_pin(repo_root, entry.source_path)
+            if (repo_root / "docs/research_program/long_horizon_rescue/cf4_p0_quarantine_policy.yaml").is_file()
+            else None
+        )
+        binary_binding = verify_package_binary_binding(
+            repo_root,
+            entry.source_path,
+            content_mode=entry.content_mode.value,
+            explicit_manifest_path=reviewed_pin[0] if reviewed_pin else None,
+            explicit_manifest_sha256=reviewed_pin[1] if reviewed_pin else None,
+        )
+        row = {
                 "source_path": entry.source_path.as_posix(),
                 "archive_path": entry.archive_path,
                 "group": entry.group,
                 "description": entry.description,
-                "sha256": _sha256_file(source),
-                "size_bytes": source.stat().st_size,
+                "content_mode": entry.content_mode.value,
+                "public_use": entry.public_use,
+                "sha256": _sha256_bytes(source_bytes),
+                "size_bytes": len(source_bytes),
             }
-        )
+        if binary_binding is not None:
+            row["binary_binding"] = binary_binding
+        rows.append(row)
     if missing:
         raise FileNotFoundError(
             "external audit package required inputs are missing: "
@@ -528,9 +653,12 @@ def _required_assertions(rows: Sequence[dict[str, Any]]) -> dict[str, bool]:
             _figure_pairs_complete(archive_paths, root)
             for root in figure_roots
         ),
-        "manuscript_pdf_included": (
-            "manuscript/htt_base_research_report.pdf" in archive_paths
-            and "manuscript/htt_base_research_report.manifest.json" in archive_paths
+        "manuscript_pdf_withheld": not any(
+            path.lower().endswith(".pdf") for path in archive_paths
+        ),
+        "cf4_quarantine_controls_included": (
+            "quarantine/cf4_p0_quarantine_block.json" in archive_paths
+            and "quarantine/cf4_p0_quarantine_inventory.json" in archive_paths
         ),
         "publication_claim_freeze_included": (
             "status/publication_claim_freeze.md" in archive_paths
@@ -569,8 +697,7 @@ def _figure_manifest_claim_lanes_safe(repo_root: Path, rows: Sequence[dict[str, 
     for row in rows:
         if row["group"] != "figure_manifest":
             continue
-        source_path = repo_root / str(row["source_path"])
-        text = source_path.read_text(encoding="utf-8")
+        text = read_regular_text(repo_root, str(row["source_path"]))
         if any(token in text for token in FIGURE_MANIFEST_PROMOTION_TOKENS):
             return False
         try:
@@ -617,6 +744,26 @@ def _manuscript_blocker_summary(repo_root: Path) -> dict[str, int | str]:
     return summary
 
 
+def _quarantine_package_contents(
+    repo_root: Path,
+    rows: Sequence[dict[str, Any]],
+) -> dict[str, bytes | QuarantineContent]:
+    contents: dict[str, bytes | QuarantineContent] = {}
+    for row in rows:
+        source_path = str(row["source_path"])
+        archive_path = str(row["archive_path"])
+        mode = ContentMode(str(row["content_mode"]))
+        if mode is not ContentMode.ACTIVE_PUBLIC:
+            contents[archive_path] = repository_content(
+                repo_root,
+                source_path,
+                mode=mode,
+            )
+        else:
+            contents[archive_path] = read_regular_bytes(repo_root, source_path)
+    return contents
+
+
 def build_audit_package_payload(
     *,
     repo_root: Path | str = REPO_ROOT,
@@ -630,6 +777,12 @@ def build_audit_package_payload(
     root = Path(repo_root).resolve()
     all_entries = tuple(package_entries) + _figure_payload_entries(root)
     rows = _entry_rows(root, all_entries)
+    quarantine_report = validate_repository(
+        root,
+        additional_contents=_quarantine_package_contents(root, rows),
+    )
+    quarantine_payload = quarantine_report.to_dict()
+    quarantine_report_hash = _stable_hash(quarantine_payload)
     input_hashes = [f"{row['source_path']}:{row['sha256']}" for row in rows]
     input_artifacts = [
         {
@@ -638,6 +791,8 @@ def build_audit_package_payload(
             "included": True,
             "archive_path": row["archive_path"],
             "group": row["group"],
+            "content_mode": row["content_mode"],
+            "public_use": row["public_use"],
         }
         for row in rows
     ]
@@ -646,6 +801,7 @@ def build_audit_package_payload(
         root,
         rows,
     )
+    assertions["cf4_p0_quarantine_clean"] = quarantine_report.ok
     failed_gates = [
         name
         for name, passed in assertions.items()
@@ -655,6 +811,7 @@ def build_audit_package_payload(
         "schema_version": SCHEMA_VERSION,
         "archive_paths": [row["archive_path"] for row in rows],
         "required_assertions": sorted(assertions),
+        "cf4_p0_quarantine_report_hash": quarantine_report_hash,
     }
     config_hash = _stable_hash(config)
     commit = git_commit or _git_commit(root)
@@ -674,6 +831,8 @@ def build_audit_package_payload(
         "input_artifacts": input_artifacts,
         "code_version": state,
         "schema_version": SCHEMA_VERSION,
+        "cf4_p0_quarantine_report_hash": quarantine_report_hash,
+        "cf4_p0_quarantine": quarantine_payload,
         "transfer_source": "mixed_none_observed_reference_external_transfer_conditioned_legacy",
         "sky_support_status": "pending_or_unknown_for_existing_directional_artifacts",
         "null_mock_status": "mixed_not_statistical_jackknife_bootstrap_diagnostic_and_legacy_conditioned",
@@ -693,7 +852,13 @@ def build_audit_package_payload(
             "figure_manifest_claim_lanes": "pass"
             if assertions.get("figure_manifest_claim_lanes_safe")
             else "fail",
+            "manuscript_pdf_withheld": "pass"
+            if assertions.get("manuscript_pdf_withheld")
+            else "fail",
             "known_quarantine_inventory_preserved": "warn",
+            "cf4_p0_quarantine": "pass"
+            if assertions.get("cf4_p0_quarantine_clean")
+            else "fail",
         },
         "science_promotion_gates": {
             "native_low_ell_solver_validation": "fail",
@@ -712,6 +877,8 @@ def build_audit_package_payload(
             "Current transfer-dependent outputs remain transfer-conditional.",
             "MIO certificates are diagnostic reports and remain separate from HTT inference artifacts.",
             "Missing or quarantined manuscript figure references remain blockers.",
+            "No current manuscript PDF is distributed; the preserved legacy PDF/manifest pair is digest-inconsistent and therefore remains outside this package.",
+            "The canonical CF4 P0 block and inventory are the authoritative current package surfaces.",
             "Manual/status-number manuscript findings and repository quarantine counts are preserved for external review.",
             "Future native solver interface material is schema-only unless native validated artifacts are separately manifested.",
         ],
@@ -750,7 +917,8 @@ def render_readme(payload: dict[str, Any]) -> str:
             "- `prompts/`: adversarial review prompts.",
             "- `status/`: DAG, status, and claim ledger artifacts.",
             "- `reports/`: Result Packs A/B/C and transfer provenance report.",
-            "- `manuscript/`: manuscript figure inventory, plot lists, PDF, PDF manifest, and blockers.",
+            "- `manuscript/`: manuscript figure inventory, plot lists, blocked PDF-lint status, and blockers.",
+            "- `quarantine/`: authoritative CF4 P0 block record and hash-bound inventory; no replacement value is authorized.",
             "- `code_snapshot/`: scoped source files for reproducing the audit surfaces.",
             "- Archived `pr_deltas/` and `status/` entries may preserve historical readiness vocabulary as provenance; current reports use diagnostic-only public readiness and legacy-not-current caveats.",
             "",
@@ -777,13 +945,52 @@ def render_manifest_json(payload: dict[str, Any]) -> str:
 def build_zip_bytes(repo_root: Path, payload: dict[str, Any]) -> bytes:
     from io import BytesIO
 
+    manifest_bytes = render_manifest_json(payload).encode("utf-8")
+    readme_bytes = render_readme(payload).encode("utf-8")
+    release_contents = _quarantine_package_contents(
+        repo_root,
+        payload["archive_entries"],
+    )
+    # Revalidate every source byte against the already constructed manifest
+    # before the repository-wide virtual-content gate.  This preserves the
+    # precise fail-closed error for a source that changed after manifest
+    # construction while still validating the final README, MANIFEST, and
+    # entry bytes together before opening the ZIP writer.
+    for row in sorted(payload["archive_entries"], key=lambda item: item["archive_path"]):
+        content = release_contents[row["archive_path"]]
+        data = content.content if isinstance(content, QuarantineContent) else content
+        if isinstance(data, str):
+            data = data.encode("utf-8")
+        verified = verify_packaged_entry_bytes(
+            repo_root,
+            row["source_path"],
+            data,
+            expected_sha256=row["sha256"],
+            content_mode=row["content_mode"],
+            expected_binary_binding=row.get("binary_binding"),
+        )
+        if isinstance(content, QuarantineContent):
+            release_contents[row["archive_path"]] = QuarantineContent(
+                content=verified,
+                mode=content.mode,
+                source_path=content.source_path,
+                source_sha256=content.source_sha256,
+            )
+        else:
+            release_contents[row["archive_path"]] = verified
+    release_contents["MANIFEST.json"] = manifest_bytes
+    release_contents["README.md"] = readme_bytes
+    assert_repository_clean(repo_root, additional_contents=release_contents)
+
     buffer = BytesIO()
     with zipfile.ZipFile(buffer, mode="w", compression=zipfile.ZIP_DEFLATED) as archive:
-        manifest_json = render_manifest_json(payload)
-        archive.writestr(_zip_info("MANIFEST.json"), manifest_json.encode("utf-8"))
-        archive.writestr(_zip_info("README.md"), render_readme(payload).encode("utf-8"))
+        archive.writestr(_zip_info("MANIFEST.json"), manifest_bytes)
+        archive.writestr(_zip_info("README.md"), readme_bytes)
         for row in sorted(payload["archive_entries"], key=lambda item: item["archive_path"]):
-            data = (repo_root / row["source_path"]).read_bytes()
+            content = release_contents[row["archive_path"]]
+            data = content.content if isinstance(content, QuarantineContent) else content
+            if isinstance(data, str):
+                data = data.encode("utf-8")
             archive.writestr(_zip_info(row["archive_path"]), data)
     return buffer.getvalue()
 

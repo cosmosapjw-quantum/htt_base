@@ -17,8 +17,9 @@ null_mock_status: mixed_formalism_tests_and_diagnostic_null_context
 
 | Finding | Status | Evidence | Residual risk |
 | --- | --- | --- | --- |
-| Full external audit package missed PDF/figure payload context | addressed | `scripts/build_external_audit_package.py --check` passes; package contains PDF and figure payloads | package remains diagnostic-only |
-| Research-only package was stale | addressed | `scripts/build_research_only_audit_package.py --check` passes | intentionally excludes PDF |
+| Full external audit package missed PDF/figure payload context | quarantined | PR-120 withholds the non-binding PDF pair and includes the canonical block/inventory | no current PDF is distributed |
+| Research-only package was stale | guarded | the PR-120 content gate rejects stale package entries | intentionally excludes PDF |
+| Statistical-formalism package embedded stale manuscript/lint surfaces | quarantined | exact previous ZIP/manifest/prompt bytes moved under `legacy/cf4_p0/packages/statistical_formalism_audit/`; retained TeX/Bib rows are typed historical evidence | a diagnostic package may rebuild only when its content gate is clean; manuscript publication remains unauthorized |
 | VER2 sidecars carried production promotion labels | addressed | included VER2 manuscript figure sidecars are diagnostic-only | legacy result-pack text may mention readiness labels as historical context |
 | Manifest self-reference caused post-commit stale loops | addressed | VER2 and package check-mode preserve/normalise self-referential git fields | generated manifests still record worktree state as provenance |
 | LaTeX byproducts polluted worktree/package risk | addressed | byproducts ignored and package tests exclude logs/aux files | local scratch files may exist after future latexmk runs |
@@ -32,7 +33,7 @@ null_mock_status: mixed_formalism_tests_and_diagnostic_null_context
 - `venv/bin/python scripts/build_external_audit_package.py --check` -> pass
 - `venv/bin/python scripts/build_research_only_audit_package.py --check` -> pass
 - `venv/bin/python scripts/ver2_artifact_export.py --check` -> pass
-- `venv/bin/python scripts/check_publication_claim_freeze.py --check` -> pass
+- `venv/bin/python scripts/check_publication_claim_freeze.py --check` -> blocked_nonzero_pdf_claim_lint_passed
 - `venv/bin/python scripts/audit_manuscript_figures.py --dry-run` -> 0 missing, 0 quarantined, 0 claim-risk
 - `venv/bin/python -m pytest tests/contracts/test_audit_package_generator.py tests/contracts/test_research_only_audit_package.py scripts/test_ver2_artifact_export.py -q` -> pass
 
@@ -45,3 +46,4 @@ null_mock_status: mixed_formalism_tests_and_diagnostic_null_context
 - `G_F`: depth-gap diagnostic requiring bin metadata and null/calibration status.
 - MIO formalism remains diagnostic; HTT evidence/posterior surfaces are separate.
 - Scalar formalism values cannot imply geometry detection or Bianchi family-ID.
+- The LaTeX tree is retained as immutable historical evidence with public_use false; main.tex is a fail-closed notice, not a current build entrypoint.

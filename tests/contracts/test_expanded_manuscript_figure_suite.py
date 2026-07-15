@@ -1,9 +1,12 @@
 from __future__ import annotations
 
+import hashlib
 import importlib.util
 import json
 from pathlib import Path
 import sys
+
+import pytest
 
 from common.artifact_manifest import validate_manifest_payload
 
@@ -29,10 +32,11 @@ def test_conditioned_legacy_gallery_covers_existing_noncurrent_figures():
 
     candidates = suite._iter_legacy_candidates()
 
-    # 93 = the non-current legacy lanes (quarantined_legacy 72 + parallel_track 12 +
+    # 89 = the non-current legacy lanes (quarantined_legacy 72 + parallel_track 8 +
     # quarantined_meta 5 + validation 4); the data_analysis_current lane is a CURRENT
-    # diagnostic lane and is excluded like current/observed_current/paper.
-    assert len(candidates) == 93
+    # diagnostic lane and is excluded like current/observed_current/paper. Four
+    # CF4 P0 downstream figures are frozen only below legacy/cf4_p0.
+    assert len(candidates) == 89
     assert all("current" not in path.relative_to(suite.FIGURES_ROOT).parts for path in candidates)
     assert all("paper" not in path.relative_to(suite.FIGURES_ROOT).parts for path in candidates)
     assert all(
@@ -64,7 +68,7 @@ def test_generated_ver2_and_conditioned_manifests_are_valid():
         REPO_ROOT
         / "figures"
         / "conditioned_legacy"
-        / "root__fig_equiv_class_evidence.manifest.json"
+        / "quarantined-legacy-root-sources__fig_equiv_class_evidence.manifest.json"
     )
 
     for manifest_path in (ver2_manifest, conditioned_manifest):
@@ -77,6 +81,17 @@ def test_generated_ver2_and_conditioned_manifests_are_valid():
         )
         assert artifact_path.exists()
         assert issues == ()
+        if "conditioned_legacy" in artifact_path.parts:
+            assert payload["artifact_sha256"] == (
+                "sha256:" + hashlib.sha256(artifact_path.read_bytes()).hexdigest()
+            )
+            source_path = REPO_ROOT / payload["source_binding"]["source_path"]
+            suite = _load_suite_module()
+            suite._validate_conditioned_manifest_binding(
+                manifest_path,
+                artifact_path,
+                source_path,
+            )
         assert payload["owner"] == "COMMON"
         assert payload["implementation_scope"] == "common"
         assert "native_solver" not in str(payload["transfer_source"])
@@ -95,3 +110,58 @@ def test_ver2_figure_manifests_are_diagnostic_lane_only():
         assert payload["production_status"] == "diagnostic_only"
         assert "production_candidate" not in manifest_text
         assert "production-grade" not in manifest_text
+
+
+def test_conditioned_gallery_preserves_frozen_source_digest_after_source_mutation(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+):
+    suite = _load_suite_module()
+    source = tmp_path / "source.png"
+    output = tmp_path / "conditioned" / "source.png"
+    manifest = tmp_path / "conditioned" / "source.manifest.json"
+    source.write_bytes(b"frozen legacy pixels")
+    output.parent.mkdir(parents=True)
+    record = suite.ConditionedFigure(
+        source_path=source,
+        output_path=output,
+        manifest_path=manifest,
+        label="fig:test-frozen-binding",
+        title="Frozen binding test",
+        condition="test-only conditioned legacy source",
+        caption="test caption",
+        transfer_source="none",
+        sky_support_status="not_directional",
+        null_mock_status="not_statistical",
+    )
+    snippet = tmp_path / "gallery.tex"
+    monkeypatch.setattr(suite, "CONDITIONED_DIR", output.parent)
+    monkeypatch.setattr(suite, "CONDITIONED_SNIPPET", snippet)
+    monkeypatch.setattr(suite, "_conditioned_records", lambda command: (record,))
+
+    suite.write_conditioned_gallery("test initial gallery")
+    frozen_bytes = output.read_bytes()
+    frozen_sha256 = hashlib.sha256(frozen_bytes).hexdigest()
+
+    source.write_bytes(b"new source pixels that must not rebind old output")
+    current_sha256 = hashlib.sha256(source.read_bytes()).hexdigest()
+    suite.write_conditioned_gallery("test mutated gallery")
+
+    payload = json.loads(manifest.read_text(encoding="utf-8"))
+    assert output.read_bytes() == frozen_bytes
+    assert payload["source_binding"] == {
+        "artifact_sha256": f"sha256:{frozen_sha256}",
+        "current_source_sha256": f"sha256:{current_sha256}",
+        "frozen_source_sha256": f"sha256:{frozen_sha256}",
+        "source_path": suite._repo_relative(source),
+        "status": "preserved_frozen_source_digest",
+    }
+    assert (
+        f"frozen-source-snapshot:{suite._repo_relative(source)}:sha256:{frozen_sha256}"
+        in payload["input_hashes"]
+    )
+    assert (
+        f"current-source-candidate:{suite._repo_relative(source)}:sha256:{current_sha256}"
+        in payload["input_hashes"]
+    )
+    suite._validate_conditioned_manifest_binding(manifest, output, source)

@@ -14,6 +14,8 @@ C-05 deliverable. Tests:
 import pytest
 import numpy as np
 
+SYNTHETIC_BETA = 2.0e-4
+SYNTHETIC_INPUT_MODE = "synthetic"
 
 # ═══════════════════════════════════════════════════════════
 # 1. HPD intervals
@@ -112,7 +114,7 @@ class TestTeffQuadrupole:
         """R_σ > 1 for ε₁ > 0."""
         from htt.core.teff_extended import NonlinearCorrection
         nc = NonlinearCorrection()
-        R = nc.R_sigma(1.334e-3)
+        R = nc.R_sigma(SYNTHETIC_BETA)
         assert R > 1.0
 
 
@@ -247,7 +249,7 @@ class TestBoundsConsistency:
 
     def test_x_defect_with_tilt(self):
         from htt.core.bounds import x_defect, Omega_tilt
-        beta = 1.334e-3
+        beta = SYNTHETIC_BETA
         Ot = Omega_tilt(beta)
         x = x_defect(Sig2=1e-6, Omega_tilt=Ot)
         assert x > 1e-6  # tilt adds positive contribution
@@ -261,9 +263,9 @@ class TestBoundsConsistency:
         """BV momentum constraint should give large Σ²."""
         from htt.core.bounds import Sig2_BV
         from htt.core.ssot import C
-        S2 = Sig2_BV(beta=1.334e-3, Omega_K=0.01)
+        S2 = Sig2_BV(beta=SYNTHETIC_BETA, Omega_K=0.01)
         # Should be large (overproduction)
-        assert S2 > 1e-7
+        assert S2 > 1e-8
 
 
 # ═══════════════════════════════════════════════════════════

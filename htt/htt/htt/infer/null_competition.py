@@ -35,7 +35,7 @@ from common.contracts import (
 from htt.infer.matched_complexity import MatchedComplexityHook
 from htt.nulls import NULL_REGISTRY
 from htt.nulls.common_interface import NullFamily
-from htt.infer.shared_cause import run_shared_cause_test, SharedCauseResult
+from htt.infer.dipole_vector_likelihood import DipoleVectorLikelihood
 
 __all__ = [
     'NullCompetitionResult', 'FamilyCompetitionResult',
@@ -1048,6 +1048,8 @@ class NullCompetitionEngine:
         """
         self.n_realizations = n_realizations
         self.fpr_threshold = fpr_threshold
+        self.excluded_channels = ('c',)
+        self.cf4_channel_status = 'QUARANTINED_OPEN_FINDINGS'
 
         if obs_base is not None:
             self.obs_base = obs_base
@@ -1066,7 +1068,7 @@ class NullCompetitionEngine:
                     'dipole_observations': {
                         'catwise_bohme_2025': {'eps1': 1.5e-2, 'sigma_stat': 3e-3, 'sigma_sys': 1e-3},
                         'radio_secrest_2021': {'eps1': 1.3e-2, 'sigma_stat': 4e-3, 'sigma_sys': 2e-3},
-                        'cf4_watkins_2023': {'beta': 1.334e-3, 'sigma': 0.13e-3},
+                        'rho_CW_radio': 0.0,
                     },
                     'planck2018': {'eps1': 1.2336e-3},
                 }
@@ -1099,22 +1101,33 @@ class NullCompetitionEngine:
                         'sigma_stat': null_data.e1_rad_s,
                         'sigma_sys': 0.0,
                     },
-                    'cf4_watkins_2023': {
-                        'beta': null_data.b_CF4,
-                        'sigma': null_data.b_CF4_s,
-                    },
                     'rho_CW_radio': null_data.rho_CW_radio,
                 },
             }
 
-            # Run shared-cause test on null data
-            result = run_shared_cause_test(
-                obs_data=obs_data,
-                A_best=0.0011,  # default amplitude
+            # Active null diagnostic uses only CatWISE+Radio amplitudes and
+            # directions. It is not the historical three-survey shared-cause
+            # result and must not be promoted as observed-data evidence.
+            likelihood = DipoleVectorLikelihood(obs_data=obs_data, control='C1')
+            active_amplitudes = np.asarray(
+                [null_data.e1_CW, null_data.e1_rad], dtype=float
+            )
+            active_sigmas = np.asarray(
+                [null_data.e1_CW_s, null_data.e1_rad_s], dtype=float
+            )
+            weights = 1.0 / np.square(active_sigmas)
+            amplitude = float(np.sum(weights * active_amplitudes) / np.sum(weights))
+            lnB = (
+                likelihood.directional_log_likelihood(
+                    likelihood.CMB_L,
+                    likelihood.CMB_B,
+                    amplitude,
+                )
+                - likelihood.scalar_log_likelihood(0.0)
             )
 
-            lnB_values.append(result.lnB_S2_vs_null)
-            if result.S2_preferred:
+            lnB_values.append(lnB)
+            if lnB > 5.0:
                 false_positives += 1
 
         lnB_arr = np.array(lnB_values)

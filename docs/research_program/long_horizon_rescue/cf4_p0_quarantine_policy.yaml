@@ -1,0 +1,601 @@
+schema: htt.cf4_p0_quarantine_policy.v1
+policy_id: PR-120-CF4-P0
+baseline_commit: e6da3670043596efdcd93f9ba5e631e1462146c7
+owner: COMMON
+implementation_scope: propagation_quarantine_only
+claim_level:
+  scheme: roadmap_rescue_v1
+  level: C1
+claim_tier: blocked
+transfer_source: none
+root_state:
+  canonical_path: docs/codex_handoff/research_remediation_state.yaml
+  mirror_path: machine_readable/research_remediation_state.yaml
+  sha256: 77d36878315f041c7bb6c273a2d650f7d3fa1c8a8dc635a577527d646fa40109
+  finding_count: 102
+  rescued_count: 0
+  required_open_findings:
+    - finding_id: C1-K5-MV-F1
+      severity: P0
+      authoritative_source_state: KNOWN_OPEN
+      source_reference: docs/audits/self_adversarial_audit_20260713_nsc/03_cove_correctness_ledger.json#C1-K5-MV-F1
+      source_sha256: 635fb02a705974e4b13678213914d57eb815f597e9799469eb8ae1925e47227c
+    - finding_id: C3-K5-VCORR-ML-F1
+      severity: P0
+      authoritative_source_state: KNOWN_OPEN
+      source_reference: docs/audits/self_adversarial_audit_20260713_nsc/03_cove_correctness_ledger.json#C3-K5-VCORR-ML-F1
+      source_sha256: 635fb02a705974e4b13678213914d57eb815f597e9799469eb8ae1925e47227c
+    - finding_id: N-DATA-CF4-DOWNSTREAM
+      severity: P1
+      authoritative_source_state: NEW_OPEN
+      source_reference: docs/audits/jcap_prd_adversarial_audit_20260714/atomic_finding_ledger.json#N-DATA-CF4-DOWNSTREAM
+      source_sha256: 6e88a6f6c4f95e5154c89e939230c94854b11a8430a64c28ccb339d8c4ab6feb
+legacy_output_roots:
+  - legacy/cf4_p0
+scan:
+  roots:
+    - .
+  # A single typed top-level historical tree is allowed. All other broad
+  # top-level exemptions (for example docs/) are rejected by the validator.
+  typed_historical_top_level_roots:
+    - legacy
+  text_suffixes:
+    - .json
+    - .md
+    - .py
+    - .tex
+    - .toml
+    - .txt
+    - .yaml
+    - .yml
+  max_text_bytes: 8388608
+  immutable_historical_paths:
+    - CHANGELOG.md
+    - CLAUDE.md
+    - docs/manuscript/appendices.tex
+    - docs/manuscript/ch01_introduction.tex
+    - docs/manuscript/ch02_dipole_anomaly.tex
+    - docs/manuscript/ch03_framework.tex
+    - docs/manuscript/ch04_bianchi_bounds.tex
+    - docs/manuscript/ch05_teff_corrections.tex
+    - docs/manuscript/ch06_pipeline.tex
+    - docs/manuscript/ch07_results.tex
+    - docs/manuscript/ch08_robustness.tex
+    - docs/manuscript/ch09_discussion.tex
+    - docs/manuscript/ch10_future.tex
+    - docs/manuscript/ch11_error_hierarchy.tex
+    - docs/manuscript/references.bib
+    - docs/V5_RUNTIME_SPECTRAL_AUDIT.json
+    - docs/codex_handoff/pr_backlog.json
+    - docs/codex_handoff/pr_backlog.yaml
+    - docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md
+    - docs/research_program/long_horizon_rescue/cf4_p0_quarantine_policy.yaml
+    - docs/research_program/long_horizon_rescue/pr120_spec.yaml
+    - machine_readable/pr_backlog.json
+    - machine_readable/pr_backlog.yaml
+    - scripts/audits/jcap_prd_20260714.py
+  immutable_historical_prefixes:
+    - legacy/
+    - docs/code_capability_audit/
+    - docs/dossier/
+    - docs/manuscript/generated/
+    - docs/PR_DELTAS/
+    - docs/audits/
+    - docs/research_program/advocate_rescue_divergence_20260714/
+    - docs/ver2_upgrade/
+    - figures/conditioned_legacy/
+    - figures/quarantined_legacy/
+    - figures/quarantined_meta/
+    - research_gates/pr04/
+  generated_contract_paths:
+    - docs/generated/cf4_p0_quarantine_inventory.json
+    - docs/generated/cf4_p0_quarantine_inventory.md
+    - docs/generated/cf4_p0_quarantine_block.json
+    - docs/generated/cf4_p0_quarantine_block.md
+  mutation_corpus_paths:
+    - tests/pr_cards/test_pr_120_cf4_p0_downstream_consumer_quarantine.py
+    - tests/obsstat/test_cf4_velocity_correlation_ml.py
+  support_paths:
+    - htt/src/common/cf4_p0_quarantine.py
+    - htt/src/common/package_binary_binding.py
+    - docs/research_program/long_horizon_rescue/cf4_p0_legacy_package_hashes.json
+    - scripts/codex_harness/quarantine_cf4_p0_consumers.py
+  ignored_directory_names:
+    - .git
+    - .mypy_cache
+    - .pytest_cache
+    - .ruff_cache
+    - __pycache__
+    - node_modules
+    - venv
+package_content_modes:
+  # These are package-entry authorities only. They do not exempt the files from
+  # the repository scan, and same-prefix neighbours are deliberately rejected.
+  governance_control_paths:
+    - docs/codex_handoff/pr_backlog.yaml
+    - docs/codex_handoff/pr_status.yaml
+    - docs/codex_handoff/pr_dag_research_program.yaml
+    - docs/codex_handoff/pr_dag_revision.yaml
+stale_signatures:
+  - id: cf4_mv_r200_headline
+    finding_ids: [C1-K5-MV-F1, N-DATA-CF4-DOWNSTREAM]
+    token_regex: '(?<![0-9.])405(?:\.22)?(?![0-9.])'
+    context_regex: '(?is)(CF4.{0,420}(?:bulk[ -]?flow|B200|MV|amplitude)|(?:bulk[ -]?flow|B200|MV|amplitude).{0,420}CF4)'
+  - id: cf4_mv_analytic_tension
+    finding_ids: [C1-K5-MV-F1, N-DATA-CF4-DOWNSTREAM]
+    token_regex: '(?i)(?:4\.4(?:4)?\s*(?:-|--|\u2013|\u2014|to)\s*5\.4(?:0)?|(?:4\.44|5\.37)\s*(?:sigma|\u03c3)?)'
+    context_regex: '(?is)(CF4|bulk[ -]?flow|LambdaCDM|sigma_pk_corrected|sigma_full_fiducial_pk)'
+  - id: cf4_mv_mock_significance
+    finding_ids: [C1-K5-MV-F1, N-DATA-CF4-DOWNSTREAM]
+    token_regex: '(?i)(?:5\.8\s*(?:sigma|\u03c3)|5\.7[246]\s*(?:sigma|\u03c3)?|3\.48\s*(?:sigma|\u03c3)?)'
+    context_regex: '(?is)(CF4|bulk[ -]?flow|mock.{0,120}(?:significance|tension)|significance_parametric_mock_sigma)'
+  - id: cf4_ml_shape_factor
+    finding_ids: [C3-K5-VCORR-ML-F1, N-DATA-CF4-DOWNSTREAM]
+    token_regex: '(?i)(?:1\.4423|pk_corr\s*=\s*\(370\s*/\s*308(?:\.09)?\)\s*\*\*?\s*2|shape_correction_pk_corr)'
+    context_regex: '(?is)(CF4|f[ _-]?(?:sigma|\u03c3)[ _-]?8|velocity[ _-]?correlation|shape[ _-]?correct)'
+  - id: cf4_ml_corrected_headline
+    finding_ids: [C3-K5-VCORR-ML-F1, N-DATA-CF4-DOWNSTREAM]
+    token_regex: '(?i)(?:0\.4046|0\.40\s*(?:\+/-|\u00b1)\s*0\.0?2)'
+    context_regex: '(?is)(CF4|f[ _-]?(?:sigma|\u03c3)[ _-]?8|velocity[ _-]?correlation|Vpec|shape[ _-]?correct)'
+  - id: cf4_ml_raw_replacement
+    finding_ids: [C3-K5-VCORR-ML-F1, N-DATA-CF4-DOWNSTREAM]
+    token_regex: '(?<![0-9.])0\.486(?:0)?(?![0-9.])'
+    context_regex: '(?is)(CF4|f[ _-]?(?:sigma|\u03c3)[ _-]?8|Vpec|raw[ _-]?EH98|replacement|corrected)'
+  - id: cf4_ml_published_offset
+    finding_ids: [C3-K5-VCORR-ML-F1, N-DATA-CF4-DOWNSTREAM]
+    token_regex: '(?i)4\.9\s*(?:sigma|\u03c3)'
+    context_regex: '(?is)(CF4|f[ _-]?(?:sigma|\u03c3)[ _-]?8|velocity[ _-]?correlation|shape[ _-]?correct)'
+  - id: cf4_gls_headline
+    finding_ids: [C1-K5-MV-F1, N-DATA-CF4-DOWNSTREAM]
+    token_regex: '(?<![0-9.])(?:340\.7(?:[0-9]+)?|341(?:\.[0-9]+)?)(?![0-9.])'
+    context_regex: '(?is)(CF4.{0,420}(?:bulk[ -]?flow|GLS|Omega_tilt)|(?:bulk[ -]?flow|GLS|Omega_tilt).{0,420}CF4)'
+  - id: cf4_reconstruction_spread_measured
+    finding_ids: [C1-K5-MV-F1, N-DATA-CF4-DOWNSTREAM]
+    token_regex: '(?i)(?:MEASURED_RECONSTRUCTION_SPREAD|(?:real[ -]?measurement|measured).{0,80}reconstruction.{0,40}spread|reconstruction.{0,40}spread.{0,80}(?:real[ -]?measurement|measured))'
+    context_regex: '(?is)(CF4|bulk[ -]?flow|peculiar[ -]?velocity|Vpec|Vpds|Vpwf)'
+  - id: cf4_forward_mock_coverage_claim
+    finding_ids: [C1-K5-MV-F1, N-DATA-CF4-DOWNSTREAM]
+    token_regex: '(?i)forward_mock_coverage_calibrated'
+    context_regex: '(?is)(CF4|bulk[ -]?flow|peculiar[ -]?velocity)'
+  - id: cf4_egs3_k5card_real_data
+    finding_ids: [C1-K5-MV-F1, N-DATA-CF4-DOWNSTREAM]
+    token_regex: '(?i)EGS3-K5card'
+    context_regex: '(?is)(real\s+CF4|K5/CF4.{0,180}(?:identified[ -]?interval|diagnostic_pipeline_closure)|observational_claim_allowed\s*=\s*False)'
+  - id: cf4_teff_numeric_instantiation
+    finding_ids: [C1-K5-MV-F1, N-DATA-CF4-DOWNSTREAM]
+    token_regex: '(?i)(?:CF4\s+rapidity\s+contained|deterministic\s+Teff\s+fingerprint\s+row|same\W{0,24}CF4\s+bulk[ -]?flow\s+rapidity)'
+    context_regex: '(?is)(Teff|fingerprint|Omega[ _-]?tilt|K5/CF4)'
+  - id: cf4_v6_measured_component
+    finding_ids: [C1-K5-MV-F1, N-DATA-CF4-DOWNSTREAM]
+    token_regex: '(?i)estimated_conditional_coverage'
+    context_regex: '(?is)(CF4|Omega[ _-]?tilt|bulk_amplitude_kms|k5_cf4_release_coverage)'
+  - id: cf4_omega_tilt_pushforward
+    finding_ids: [C1-K5-MV-F1, N-DATA-CF4-DOWNSTREAM]
+    token_regex: '(?i)(?:4\.0(?:728115626715063)?e-0?7|4\.07e-0?7|4\.073e-0?7|3\.110e-0?8)'
+    context_regex: '(?is)(CF4|Omega[ _-]?tilt|global[ -]?tilt|bulk[ -]?flow|rapidity)'
+  - id: cf4_audit_sensitivity_replacement
+    finding_ids: [C1-K5-MV-F1, N-DATA-CF4-DOWNSTREAM]
+    token_regex: '(?i)(?<![0-9.])(?:94\.155|94\.8|94(?:\.0)?\s*km\s*/\s*s)(?![0-9.])'
+    context_regex: '(?is)(CF4|km/s|bulk[ -]?flow|monopole|corrected|replacement|Omega[ _-]?tilt)'
+  - id: cf4_precision_upgrade_phrase
+    finding_ids: [C3-K5-VCORR-ML-F1, N-DATA-CF4-DOWNSTREAM]
+    token_regex: '(?is)precision[ -]?upgrade\s*:\s*the\s+CF4'
+    context_regex: '(?s).+'
+inventory:
+  required_absent_active_paths:
+    - figures/parallel_track/fig_02_tilted_flrw_dictionary.png
+    - figures/parallel_track/fig_03_colin_beta_translation.png
+    - figures/parallel_track/fig_04_flrw_tilt_posterior.png
+    - figures/parallel_track/fig_10_cf4_beta_variants.png
+    - figures/conditioned_legacy/parallel-track__fig_02_tilted_flrw_dictionary.png
+    - figures/conditioned_legacy/parallel-track__fig_02_tilted_flrw_dictionary.manifest.json
+    - figures/conditioned_legacy/parallel-track__fig_03_colin_beta_translation.png
+    - figures/conditioned_legacy/parallel-track__fig_03_colin_beta_translation.manifest.json
+    - figures/conditioned_legacy/parallel-track__fig_04_flrw_tilt_posterior.png
+    - figures/conditioned_legacy/parallel-track__fig_04_flrw_tilt_posterior.manifest.json
+    - figures/conditioned_legacy/parallel-track__fig_10_cf4_beta_variants.png
+    - figures/conditioned_legacy/parallel-track__fig_10_cf4_beta_variants.manifest.json
+  # New/changed active binaries may use this lane only after an explicit
+  # reviewer pins both the sidecar and artifact digests. HEAD-identical binaries
+  # need no entry. Root fills final entries after figure regeneration.
+  reviewed_active_binary_sidecars:
+    figures/current/fig_egs3_d_joint_forecast.png:
+      sidecar_path: figures/current/fig_egs3_d_joint_forecast.manifest.json
+      sidecar_sha256: sha256:ed062f1ed4825ce37d4d277bd641f87148711d83045456bb31dffa81b5a4767f
+      artifact_sha256: sha256:495c6e1dceedf638a44e4d4d03db422feff15df9945c15e84c68b2ca8b9181a9
+      review_scope: PR-120-reviewed-active-binary
+    figures/current/fig_egs3_d_biposh.png:
+      sidecar_path: figures/current/fig_egs3_d_biposh.manifest.json
+      sidecar_sha256: sha256:71c334246cfd992ec3d44142ee7fd7b365f12934d48d3c2d581481da3cd22ff6
+      artifact_sha256: sha256:7851a906428232c61a3e627b1820e8e6bca23fe0613d52bab91cfeb33b1aa8d6
+      review_scope: PR-120-reviewed-active-binary
+    figures/current/fig_egs3_u1_beta_channel.png:
+      sidecar_path: figures/current/fig_egs3_u1_beta_channel.manifest.json
+      sidecar_sha256: sha256:77013cae1681220f471c2c6a38f87b1801fa1eed3890e3c2d6c5cb58458b15f3
+      artifact_sha256: sha256:d3be05f649b793fdbeaa884ff82f7441cb390d83dfc7db243a38712fcf84af79
+      review_scope: PR-120-reviewed-active-binary
+    figures/current/fig_egs3_u2_fingerprint_ceilings.png:
+      sidecar_path: figures/current/fig_egs3_u2_fingerprint_ceilings.manifest.json
+      sidecar_sha256: sha256:08364699fa1d5fdeb5ff35afd1e71130e926d53f5dd904be5e3a05b60a61ab2a
+      artifact_sha256: sha256:c47adcc1222a3a7f9e2238074532ba6335cb79d0ba1f9738261db3007a9356f3
+      review_scope: PR-120-reviewed-active-binary
+    figures/observed_current/fig_observed_cf4_affine_flow.png:
+      sidecar_path: figures/observed_current/fig_observed_cf4_affine_flow.manifest.json
+      sidecar_sha256: sha256:5aed3884f7ae8b484e0953685590421741f47e5b9c94dc106975691a273feed2
+      artifact_sha256: sha256:3e53343871e3935b550b9771032db2266e66a5fda388163bb72238eb3d7d5a3e
+      review_scope: PR-120-reviewed-active-binary
+    figures/observed_current/fig_observed_cf4_bulkflow_apex_depth.png:
+      sidecar_path: figures/observed_current/fig_observed_cf4_bulkflow_apex_depth.manifest.json
+      sidecar_sha256: sha256:39826fadbc807d77ace7c013d7df91e4746e42173588f71908c7c217fecd8b4e
+      artifact_sha256: sha256:5394d759a691d62ac6ed6576110778287e05ea3040249825086279504ace4ed7
+      review_scope: PR-120-reviewed-active-binary
+  # These four self-containing release archives embed the canonical inventory,
+  # so their own digest cannot enter it without an impossible hash fixed point.
+  # They remain exact-path enumerated and are accepted only with their pinned
+  # builder plus the mandatory deterministic --check closeout command.
+  deterministic_release_outputs:
+    docs/generated/external_audit_package.zip:
+      builder_path: scripts/build_external_audit_package.py
+      manifest_path: docs/generated/external_audit_package_manifest.json
+      check_command: venv/bin/python scripts/build_external_audit_package.py --check
+    docs/generated/research_only_external_audit_package.zip:
+      builder_path: scripts/build_research_only_audit_package.py
+      manifest_path: docs/generated/research_only_external_audit_package_manifest.json
+      check_command: venv/bin/python scripts/build_research_only_audit_package.py --check
+    docs/generated/statistical_formalism_audit_package.zip:
+      builder_path: scripts/build_statistical_formalism_audit_package.py
+      manifest_path: docs/generated/statistical_formalism_audit_package_manifest.json
+      check_command: venv/bin/python scripts/build_statistical_formalism_audit_package.py --check
+    htt_base_research_evaluation_package.zip:
+      builder_path: scripts/build_research_evaluation_package.py
+      manifest_path: htt_base_research_evaluation_package_manifest.json
+      check_command: venv/bin/python scripts/build_research_evaluation_package.py --check
+  pinned_paths:
+    - path: scripts/cf4_p0_quarantine_producer.py
+      role: shared_active_producer_gate
+      mode: active_block_consumer
+      required_markers: [quarantine_block_payload, require_legacy_reproduction]
+    - path: scripts/cf4_mv_bulkflow.py
+      role: active_result_card_wrapper
+      mode: active_block_consumer
+      required_markers: [cf4_p0_quarantine_producer]
+    - path: scripts/cf4_mock_calibrated_significance.py
+      role: active_result_card_wrapper
+      mode: active_block_consumer
+      required_markers: [cf4_p0_quarantine_producer]
+    - path: scripts/cf4_velocity_correlation_ml.py
+      role: active_result_card_wrapper
+      mode: active_block_consumer
+      required_markers: [cf4_p0_quarantine_producer]
+    - path: scripts/cf4_bulkflow_lcdm_variance.py
+      role: active_result_card_wrapper
+      mode: active_block_consumer
+      required_markers: [cf4_p0_quarantine_producer]
+    - path: scripts/make_obsdata_r195_r198_figures.py
+      role: active_figure_block_wrapper
+      mode: active_block_consumer
+      required_markers: [quarantine_block_payload, require_legacy_reproduction]
+    - path: scripts/cf4_p0_quarantine_derived.py
+      role: shared_derived_consumer_gate
+      mode: active_block_consumer
+      required_markers: [quarantine_block_payload, require_legacy_reproduction]
+    - path: scripts/k5_cf4_identified_interval_card.py
+      role: active_derived_card_wrapper
+      mode: active_block_consumer
+      required_markers: [cf4_p0_quarantine_derived]
+    - path: scripts/k5_cf4_identified_interval_card_v8.py
+      role: active_derived_card_wrapper
+      mode: active_block_consumer
+      required_markers: [cf4_p0_quarantine_derived]
+    - path: scripts/k5_cf4_identified_interval_card_v9.py
+      role: active_derived_card_wrapper
+      mode: active_block_consumer
+      required_markers: [cf4_p0_quarantine_derived]
+    - path: scripts/k5_cf4_release_coverage.py
+      role: active_derived_card_wrapper
+      mode: active_block_consumer
+      required_markers: [cf4_p0_quarantine_derived]
+    - path: scripts/pr08_006_joint_artifact.py
+      role: active_derived_card_wrapper
+      mode: active_block_consumer
+      required_markers: [cf4_p0_quarantine_derived]
+    - path: scripts/bass_extended_joint_forecast.py
+      role: active_derived_card_wrapper
+      mode: active_block_consumer
+      required_markers: [cf4_p0_quarantine_derived]
+    - path: scripts/make_data_proxy_coordinates_figure.py
+      role: active_derived_figure_wrapper
+      mode: active_block_consumer
+      required_markers: [cf4_p0_quarantine_derived]
+    - path: docs/manuscript/main.tex
+      role: manuscript_guard
+      mode: active_block_consumer
+      required_markers: [HTTCF4PZeroLegacyReproduction]
+    - path: scripts/check_publication_claim_freeze.py
+      role: publication_freeze
+      mode: active_block_consumer
+      required_markers: [cf4_p0_quarantine]
+    - path: scripts/build_external_audit_package.py
+      role: package_builder
+      mode: active_block_consumer
+      required_markers: [cf4_p0_quarantine]
+    - path: scripts/build_research_only_audit_package.py
+      role: package_builder
+      mode: active_block_consumer
+      required_markers: [cf4_p0_quarantine]
+    - path: scripts/build_research_evaluation_package.py
+      role: package_builder
+      mode: active_block_consumer
+      required_markers: [cf4_p0_quarantine]
+    - path: scripts/build_statistical_formalism_audit_package.py
+      role: package_builder
+      mode: active_block_consumer
+      required_markers: [cf4_p0_quarantine]
+    - path: scripts/pdf_claim_lint.py
+      role: compiled_claim_surface_gate
+      mode: active_block_consumer
+      required_markers: [validate_active_text, BLOCKED_NO_CURRENT_PDF]
+    - path: scripts/build_external_audit_report_v6.py
+      role: historical_report_gateway
+      mode: active_block_consumer
+      required_markers: [legacy/cf4_p0, active rebuild withheld]
+    - path: scripts/build_external_audit_report_v7.py
+      role: historical_report_gateway
+      mode: active_block_consumer
+      required_markers: [legacy/cf4_p0, active rebuild withheld]
+    - path: scripts/build_external_audit_report_v8.py
+      role: report_consumer
+      mode: active_block_consumer
+      required_markers: [cf4_p0_quarantine_block.json]
+    - path: scripts/build_external_audit_report_v9.py
+      role: report_consumer
+      mode: active_block_consumer
+      required_markers: [cf4_p0_quarantine_block.json]
+    - path: scripts/build_v6_no_download_research_cards.py
+      role: result_card_consumer
+      mode: active_block_consumer
+      required_markers: [cf4_p0_quarantine_block.json]
+    - path: scripts/build_v6_compact_data_analysis.py
+      role: result_pack_consumer
+      mode: active_block_consumer
+      required_markers: [v6_no_download_research_cards]
+    - path: scripts/cf4_p0_conditioned_diagnostics.py
+      role: conditioned_method_gate
+      mode: active_block_consumer
+      required_markers: [quarantine_block_payload]
+    - path: scripts/cf4_reconstruction_dependence.py
+      role: conditioned_method_wrapper
+      mode: active_block_consumer
+      required_markers: [cf4_p0_conditioned_diagnostics]
+    - path: scripts/cf4_velocity_correlation.py
+      role: conditioned_method_wrapper
+      mode: active_block_consumer
+      required_markers: [cf4_p0_conditioned_diagnostics]
+    - path: scripts/make_cf4_bulkflow_likelihood.py
+      role: conditioned_method_wrapper
+      mode: active_block_consumer
+      required_markers: [cf4_p0_conditioned_diagnostics]
+    - path: scripts/make_blocker_discharge_figures.py
+      role: active_figure_absence_gate
+      mode: active_block_consumer
+      required_markers: [legacy/cf4_p0, active figure absent]
+    - path: scripts/make_cf4_affine_flow.py
+      role: reconstruction_conditioned_diagnostic
+      mode: active_block_consumer
+      required_markers: [cf4_p0_quarantine_block.json]
+    - path: scripts/make_cf4_bulkflow_apex_depth.py
+      role: reconstruction_conditioned_diagnostic
+      mode: active_block_consumer
+      required_markers: [cf4_p0_quarantine_block.json]
+    - path: scripts/jwst_cf4_crossmatch.py
+      role: catalogue_linkage_consumer
+      mode: active_block_consumer
+      required_markers: [cf4_p0_quarantine_block.json]
+    - path: scripts/make_report_data_analysis_figures.py
+      role: report_figure_consumer
+      mode: active_block_consumer
+      required_markers: [cf4_p0_quarantine_block.json]
+    - path: scripts/make_egs2_egs3_theorem_figures.py
+      role: symbolic_theorem_figure_consumer
+      mode: active_block_consumer
+      required_markers: [cf4_p0_quarantine_block.json]
+    - path: htt/obsstat/egs3_teff_unification.py
+      role: symbolic_teff_consumer
+      mode: active_block_consumer
+      required_markers: [QUARANTINED_OPEN_P0]
+    - path: htt/htt/htt/core/cf4_observational_input.py
+      role: active_htt_cf4_input_gate
+      mode: active_block_consumer
+      required_markers: [QUARANTINED_OPEN_FINDINGS, ACTIVE_DEFAULT_CHANNELS]
+    - path: htt/obsstat/egs3_teff_statistical.py
+      role: symbolic_teff_consumer
+      mode: active_block_consumer
+      required_markers: [observational numerical instantiations]
+    - path: htt/obsstat/egs3_teff_statistical_v9.py
+      role: symbolic_teff_consumer
+      mode: active_block_consumer
+      required_markers: [excluded from this active synthetic seal]
+    - path: htt/obsstat/pv_forward_mocks.py
+      role: forward_mock_method_consumer
+      mode: active_block_consumer
+      required_markers: [CF4]
+    - path: scripts/build_open_items_ledger.py
+      role: claim_status_consumer
+      mode: active_block_consumer
+      required_markers: [C1-K5-MV-F1]
+    - path: docs/research_program/BLOCKERS.md
+      role: claim_status_consumer
+      mode: active_block_consumer
+      required_markers: [C1-K5-MV-F1, QUARANTINED]
+    - path: docs/research_program/egs3/CLAIM_LEDGER.yaml
+      role: claim_status_consumer
+      mode: active_block_consumer
+      required_markers: [C1-K5-MV-F1]
+    - path: scripts/build_egs_results_table_v9.py
+      role: result_table_builder
+      mode: active_block_consumer
+      required_markers: [cf4_p0_quarantine]
+    - path: scripts/build_egs_results_table.py
+      role: legacy_result_table_gateway
+      mode: active_block_consumer
+      required_markers: [require_legacy_reproduction, legacy/cf4_p0/scripts/build_egs_results_table.py]
+    - path: scripts/build_egs_results_table_v8.py
+      role: legacy_result_table_gateway
+      mode: active_block_consumer
+      required_markers: [require_legacy_reproduction, legacy/cf4_p0/scripts/build_egs_results_table_v8.py]
+    - path: docs/generated/egs_results_table_v9.json
+      role: active_result_table
+      mode: active_block_consumer
+      required_markers: [cf4_p0_quarantine_block.json]
+    - path: docs/generated/egs_results_table_v9.md
+      role: active_result_table
+      mode: active_block_consumer
+      required_markers: [cf4_p0_quarantine_block.json]
+    - path: htt/src/common/cf4_p0_quarantine.py
+      role: shared_validator
+      mode: validator_support
+      required_markers: [htt.cf4_p0_quarantine_block.v1]
+    - path: htt/src/common/package_binary_binding.py
+      role: binary_release_binding_validator
+      mode: validator_support
+      required_markers: [verify_package_binary_binding]
+    - path: docs/research_program/long_horizon_rescue/cf4_p0_legacy_package_hashes.json
+      role: fixed_pr119_legacy_package_hash_authority
+      mode: validator_support
+      required_markers: [e6da3670043596efdcd93f9ba5e631e1462146c7, root_digest_contract]
+    - path: scripts/codex_harness/quarantine_cf4_p0_consumers.py
+      role: validator_cli
+      mode: validator_support
+      required_markers: [validate_repository]
+    - path: tests/pr_cards/test_pr_120_cf4_p0_downstream_consumer_quarantine.py
+      role: mutation_and_contract_tests
+      mode: mutation_corpus_only
+      required_markers: [cf4_mv_r200_headline, cf4_ml_shape_factor]
+    - path: tests/obsstat/test_cf4_velocity_correlation_ml.py
+      role: active_block_regression_test
+      mode: mutation_corpus_only
+      required_markers: [QUARANTINED_OPEN_FINDINGS, shape_correction_pk_corr]
+  lineage_edges:
+    - edge_id: canonical_block_to_every_active_consumer
+      from_path: docs/generated/cf4_p0_quarantine_block.json
+      to_paths:
+        - scripts/cf4_p0_quarantine_producer.py
+        - scripts/cf4_mv_bulkflow.py
+        - scripts/cf4_mock_calibrated_significance.py
+        - scripts/cf4_velocity_correlation_ml.py
+        - scripts/cf4_bulkflow_lcdm_variance.py
+        - scripts/make_obsdata_r195_r198_figures.py
+        - scripts/cf4_p0_quarantine_derived.py
+        - scripts/k5_cf4_identified_interval_card.py
+        - scripts/k5_cf4_identified_interval_card_v8.py
+        - scripts/k5_cf4_identified_interval_card_v9.py
+        - scripts/k5_cf4_release_coverage.py
+        - scripts/pr08_006_joint_artifact.py
+        - scripts/bass_extended_joint_forecast.py
+        - scripts/make_data_proxy_coordinates_figure.py
+        - docs/manuscript/main.tex
+        - scripts/check_publication_claim_freeze.py
+        - scripts/build_external_audit_package.py
+        - scripts/build_research_only_audit_package.py
+        - scripts/build_research_evaluation_package.py
+        - scripts/build_statistical_formalism_audit_package.py
+        - scripts/pdf_claim_lint.py
+        - scripts/build_external_audit_report_v6.py
+        - scripts/build_external_audit_report_v7.py
+        - scripts/build_external_audit_report_v8.py
+        - scripts/build_external_audit_report_v9.py
+        - scripts/build_v6_no_download_research_cards.py
+        - scripts/build_v6_compact_data_analysis.py
+        - scripts/cf4_p0_conditioned_diagnostics.py
+        - scripts/cf4_reconstruction_dependence.py
+        - scripts/cf4_velocity_correlation.py
+        - scripts/make_cf4_bulkflow_likelihood.py
+        - scripts/make_blocker_discharge_figures.py
+        - scripts/make_cf4_affine_flow.py
+        - scripts/make_cf4_bulkflow_apex_depth.py
+        - scripts/jwst_cf4_crossmatch.py
+        - scripts/make_report_data_analysis_figures.py
+        - scripts/make_egs2_egs3_theorem_figures.py
+        - htt/obsstat/egs3_teff_unification.py
+        - htt/htt/htt/core/cf4_observational_input.py
+        - htt/obsstat/egs3_teff_statistical.py
+        - htt/obsstat/egs3_teff_statistical_v9.py
+        - htt/obsstat/pv_forward_mocks.py
+        - scripts/build_open_items_ledger.py
+        - docs/research_program/BLOCKERS.md
+        - docs/research_program/egs3/CLAIM_LEDGER.yaml
+        - scripts/build_egs_results_table_v9.py
+        - scripts/build_egs_results_table.py
+        - scripts/build_egs_results_table_v8.py
+        - docs/generated/egs_results_table_v9.json
+        - docs/generated/egs_results_table_v9.md
+      finding_ids: [C1-K5-MV-F1, C3-K5-VCORR-ML-F1, N-DATA-CF4-DOWNSTREAM]
+      disposition: exhaustive_active_consumer_fail_closed_coverage
+    - edge_id: binary_binding_validator_to_release_builders
+      from_path: htt/src/common/package_binary_binding.py
+      to_paths:
+        - scripts/build_external_audit_package.py
+        - scripts/build_research_only_audit_package.py
+        - scripts/build_research_evaluation_package.py
+        - scripts/build_statistical_formalism_audit_package.py
+      finding_ids: [C1-K5-MV-F1, C3-K5-VCORR-ML-F1, N-DATA-CF4-DOWNSTREAM]
+      disposition: independent_binary_byte_binding_release_dependency
+    - edge_id: fixed_legacy_hash_ledger_to_validator_support
+      from_path: docs/research_program/long_horizon_rescue/cf4_p0_legacy_package_hashes.json
+      to_paths:
+        - htt/src/common/cf4_p0_quarantine.py
+        - htt/src/common/package_binary_binding.py
+      finding_ids: [C1-K5-MV-F1, C3-K5-VCORR-ML-F1, N-DATA-CF4-DOWNSTREAM]
+      disposition: fixed_pr119_legacy_byte_authority
+    - edge_id: mv_p0_producer_to_active_gate
+      from_path: legacy/cf4_p0/scripts/cf4_mv_bulkflow.py
+      to_paths:
+        - scripts/cf4_mv_bulkflow.py
+        - scripts/cf4_mock_calibrated_significance.py
+        - scripts/cf4_bulkflow_lcdm_variance.py
+      finding_ids: [C1-K5-MV-F1, N-DATA-CF4-DOWNSTREAM]
+      disposition: legacy_value_to_block_record_only
+    - edge_id: ml_p0_producer_to_active_gate
+      from_path: legacy/cf4_p0/scripts/cf4_velocity_correlation_ml.py
+      to_paths:
+        - scripts/cf4_velocity_correlation_ml.py
+        - scripts/cf4_velocity_correlation.py
+      finding_ids: [C3-K5-VCORR-ML-F1, N-DATA-CF4-DOWNSTREAM]
+      disposition: legacy_value_to_block_or_method_record_only
+    - edge_id: canonical_block_to_derived_cards
+      from_path: docs/generated/cf4_p0_quarantine_block.json
+      to_paths:
+        - scripts/cf4_p0_quarantine_derived.py
+        - scripts/cf4_p0_conditioned_diagnostics.py
+        - scripts/build_egs_results_table_v9.py
+        - scripts/build_v6_no_download_research_cards.py
+      finding_ids: [C1-K5-MV-F1, C3-K5-VCORR-ML-F1, N-DATA-CF4-DOWNSTREAM]
+      disposition: block_record_only
+    - edge_id: canonical_block_to_figure_and_teff_consumers
+      from_path: docs/generated/cf4_p0_quarantine_block.json
+      to_paths:
+        - scripts/make_report_data_analysis_figures.py
+        - scripts/make_egs2_egs3_theorem_figures.py
+        - htt/obsstat/egs3_teff_unification.py
+        - scripts/make_cf4_affine_flow.py
+        - scripts/make_cf4_bulkflow_apex_depth.py
+      finding_ids: [C1-K5-MV-F1, N-DATA-CF4-DOWNSTREAM]
+      disposition: symbolic_or_reconstruction_conditioned_only
+    - edge_id: canonical_block_to_release_consumers
+      from_path: docs/generated/cf4_p0_quarantine_block.json
+      to_paths:
+        - scripts/check_publication_claim_freeze.py
+        - scripts/pdf_claim_lint.py
+        - scripts/build_external_audit_package.py
+        - scripts/build_research_only_audit_package.py
+        - scripts/build_research_evaluation_package.py
+        - scripts/build_statistical_formalism_audit_package.py
+        - docs/manuscript/main.tex
+      finding_ids: [C1-K5-MV-F1, C3-K5-VCORR-ML-F1, N-DATA-CF4-DOWNSTREAM]
+      disposition: fail_closed_release_gate
+caveats:
+  - Quarantine is propagation control, not scientific remediation or validation.
+  - All three findings remain OPEN; zero stale active consumers does not close them.
+  - No audit sensitivity or alternative number is a replacement result.
+  - Historical audits and frozen external packages remain immutable evidence.
+  - PR4/NPIPE download, reduction, and analysis remain skipped by user scope.

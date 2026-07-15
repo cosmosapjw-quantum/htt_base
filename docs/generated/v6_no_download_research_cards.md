@@ -6,7 +6,7 @@ claim_tier: diagnostic_only
 transfer_source: mixed_none_and_external_transfer_conditioned
 sky_support_status: mixed_diagnostic_metadata_only
 null_mock_status: mixed_diagnostic_and_blocked
-config_hash: `sha256:c9b3c7d344aabf9b5af9a48473f6454b4d1fa99ba14a71a4dbf58c7478ffbfd7`
+config_hash: `sha256:220dc0eb51fe06c2c0b608bbdaad9e4557ed4dbefd4739c49431c1663b9319db`
 caveats:
 - No long-run K1/K5/K6 analysis is executed by this artifact.
 - No native low-ell solver output is represented.
@@ -18,17 +18,26 @@ git_commit_or_worktree_state: content-addressed
 
 | Component | Mode | Status | Source | Blocker |
 | --- | --- | --- | --- | --- |
-| `Sigma2` | `estimated_partial` | `partial` | `docs/generated/k1_global_maxscan.json` | BLOCKED_MISSING_PR4_E2E_ACCESS |
-| `W2` | `fail_closed_structural_no_go` | `fail_closed_structural_no_go` | `docs/generated/k6_cf4_curl_posterior.json` | BLOCKED_MISSING_FIELD_REALIZATIONS |
-| `Omega_tilt` | `estimated_conditional_coverage` | `measured` | `docs/generated/k5_cf4_release_coverage.json` | full_selection_malmquist_grouping_correlated_release_mocks_still_gate |
+| `Sigma2` | `estimated_partial` | `partial` | `docs/generated/k1_global_maxscan.json` | PR3_E2E_ANALYSIS_DEFERRED_TO_PR150 |
+| `W2` | `fail_closed_structural_no_go` | `fail_closed` | `docs/generated/k6_cf4_curl_posterior.json` | BLOCKED_MISSING_FIELD_REALIZATIONS |
+| `Omega_tilt` | `quarantined_no_active_value` | `blocked_open_p0` | `docs/generated/cf4_p0_quarantine_block.json` | C1-K5-MV-F1_and_N-DATA-CF4-DOWNSTREAM_open |
 | `Omega_k` | `absent_no_registered_lowell_channel` | `fail_closed_no_channel` | `none` | native_lowell_transfer_or_higher_order_channel_required |
+
+## K1 E2E Data Readiness
+
+- current_result_status: `measured_partial_isotropic_lcdm_grf_null`
+- PR3/FFP10 download: `complete`
+- PR3/FFP10 analysis: `deferred_to_pr150`
+- PR4/NPIPE download: `not_downloaded`
+- PR4/NPIPE reduction: `skipped_by_user_scope`
+- PR4/NPIPE analysis: `skipped_by_user_scope`
 
 ## Identified-Set Card
 
-- data_rank_count: `2`
-- reachable_full: `Omega_tilt`
+- data_rank_count: `None`
+- reachable_full: `none`
 - reachable_partial: `Sigma2`
-- fail_closed_columns: `Omega_k, W2`
+- fail_closed_columns: `Omega_k, Omega_tilt, W2`
 - x_C_interval_status: `not_certified_blind_sectors_not_zeroed`
 - F_status: `diagnostic_only_not_certified_filling`
 
@@ -72,7 +81,7 @@ git_commit_or_worktree_state: content-addressed
 
 | Lane | Input present | Size bytes | Next-turn runnable | Deferred reason |
 | --- | ---: | ---: | ---: | --- |
-| `K5` | `True` | 5179298 | `True` | moderate deterministic run; N_MOCK=600 |
+| `K5` | `True` | 5179298 | `False` | execution forbidden while C1-K5-MV-F1 and N-DATA-CF4-DOWNSTREAM remain OPEN |
 | `K6` | `True` | 167773716 | `True` | heavier grid/ensemble run; 128^3 velocity grid, N_CR=400 |
 
 ## Legacy Figure Classification

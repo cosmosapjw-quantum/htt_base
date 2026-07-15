@@ -1,126 +1,110 @@
 {
-  "caveats": [
-    "the correlation function Psi is computed directly from observed LOS velocities (no field reconstruction) -- the real reconstruction-independent statistic; the direct Vpds carries that independence, Vpec (WF-blended) is shown for contrast",
-    "the f sigma_8 is DIAGNOSTIC, not a precision constraint: this simplified pair estimator is sensitive to the noise treatment -- raw pairs give f sigma_8 ~ 1-3 (measurement-noise + bulk-flow contaminated); bulk-flow subtraction + inverse-error pair weighting (applied here) bring Vpec to ~0.4-0.5, but the Psi_par SHAPE still departs from linear theory, so a precision value needs the full max-likelihood noise-aware estimator (registered exit-gate)",
-    "the direct Vpds is noisiest (unphysical outliers to +/-24000 km/s) so its f sigma_8 diagnostic is the least reliable; the jackknife is a delete-one-octant estimate (rigorous covariance needs mocks)",
-    "the estimator runs on a deterministic 12000-group subsample (the full pair count ~1.25e8 makes the octant jackknife infeasible); ~1.3e7 pairs is ample for the 8-bin fit"
-  ],
-  "claim": "the reconstruction-independent CF4 velocity correlation function Psi_par/Psi_perp is measured directly from LOS-velocity pairs (no field reconstruction); the simplified bulk-subtracted error-weighted amplitude fit gives a DIAGNOSTIC f sigma_8 ~ 0.38 (Vpec) / 0.75 (direct Vpds), treatment-dependent -- a precision value vs the published CF4 ~0.38 needs the max-likelihood estimator",
-  "fiducial_cosmology": {
-    "Omega_m": 0.3153,
-    "P_k": "EH98 no-wiggle, sigma_8-normalised",
-    "growth_f": 0.53003,
-    "h": 0.6736,
-    "sigma_8": 0.8111
-  },
-  "fiducial_f_sigma8": 0.4299,
-  "input_hashes": [
-    "workdir/obs_bundle/pecvel/cf4_full/cf4_groups.npz:sha256:3c0f2e1a5b56b7227abb5e187406810d7eb15e924aac69e9cb0ffc1343a811ad",
-    "workdir/obs_bundle/pecvel/cf4_full/cf4_pv_variants.npz:sha256:e3dfd734c133858892436a139eb0bd0ed916e3283db54d83dd7c0146d451d87b"
-  ],
-  "per_variant": {
-    "Vpds": {
-      "amplitude_A": 3.0266,
-      "cosmic_mach_number": 0.099,
-      "estimator": "Davis-Scrimgeour 2014 direct (reconstruction-independent)",
-      "f_sigma8": 0.7479,
-      "f_sigma8_jackknife_error": 0.0932,
-      "n_groups": 12000,
-      "n_pairs_total": 12124649,
-      "psi_par_data_kms2": [
-        7757.8,
-        7910.9,
-        16340.1,
-        33073.7,
-        37977.2,
-        38730.5,
-        43338.3,
-        52289.5
-      ],
-      "psi_perp_data_kms2": [
-        41474.8,
-        45684.6,
-        65668.5,
-        112440.2,
-        161528.1,
-        237505.5,
-        301827.1,
-        379034.9
-      ],
-      "sigma_1d_kms": 3785.2
+  "allowed_use": "blocked_source_record_only",
+  "artifact": {
+    "active_json": "docs/generated/cf4_velocity_correlation_card.json",
+    "active_markdown": null,
+    "allowed_use": "treatment_conditioned_pair_statistic_and_systematics_design_only",
+    "artifact_id": "cf4_velocity_correlation_card",
+    "artifact_kind": "conditioned_method_diagnostic_block_record",
+    "caveats": [
+      "Method mechanics survive only as treatment-conditioned design substrate.",
+      "Quarantine is propagation control and does not remediate the OPEN findings.",
+      "No observed numerical value or alternative audit sensitivity is a replacement result."
+    ],
+    "claim_tier": "blocked",
+    "covariance_status": "not_bound_on_active_path",
+    "forbidden_uses": [
+      "growth_amplitude_measurement",
+      "f_sigma8_constraint",
+      "global_tilt_pushforward",
+      "cosmological_tension",
+      "family_identification"
+    ],
+    "generating_command": "python scripts/cf4_velocity_correlation.py",
+    "git_commit_or_worktree_state": "content-addressed_by_canonical_block",
+    "implementation_scope": "obsstat_method_and_systematics_only",
+    "legacy_public_use": false,
+    "legacy_reproduction_only": [
+      "legacy/cf4_p0/cards/cf4_velocity_correlation_card.json"
+    ],
+    "legacy_script": "legacy/cf4_p0/scripts/cf4_velocity_correlation.py",
+    "method_definition": [
+      "Define line-of-sight pair-correlation bins and angular projection weights before fitting any amplitude.",
+      "Keep direct and reconstructed peculiar-velocity treatments separate throughout the pair statistic.",
+      "Use mock-bound covariance and an independently authorized likelihood before any growth-amplitude interpretation."
+    ],
+    "null_mock_status": "not_bound_on_active_path",
+    "observational_numeric_instantiation": {
+      "replacement_value": null,
+      "status": "QUARANTINED_OPEN_P0",
+      "values": null
     },
-    "Vpec": {
-      "amplitude_A": 0.7981,
-      "cosmic_mach_number": 0.247,
-      "estimator": "ramp Eq.11 (WF blend)",
-      "f_sigma8": 0.3841,
-      "f_sigma8_jackknife_error": 0.07,
-      "n_groups": 12000,
-      "n_pairs_total": 12124649,
-      "psi_par_data_kms2": [
-        590.5,
-        4012.8,
-        10108.7,
-        14568.6,
-        13990.6,
-        14021.9,
-        12081.6,
-        9893.2
-      ],
-      "psi_perp_data_kms2": [
-        30111.2,
-        25225.0,
-        21676.3,
-        26201.1,
-        32377.3,
-        45153.8,
-        57487.8,
-        72041.2
-      ],
-      "sigma_1d_kms": 1597.5
+    "owner": "OBSSTAT",
+    "producer": "scripts/cf4_velocity_correlation.py",
+    "sky_support_status": "not_evaluated_on_active_path",
+    "transfer_source": "none"
+  },
+  "caveats": [
+    "Quarantine is propagation control, not scientific remediation or validation.",
+    "All three findings remain OPEN; zero stale active consumers does not close them.",
+    "No audit sensitivity or alternative number is a replacement result.",
+    "Historical audits and frozen external packages remain immutable evidence.",
+    "PR4/NPIPE download, reduction, and analysis remain skipped by user scope."
+  ],
+  "claim_level": {
+    "level": "C1",
+    "scheme": "roadmap_rescue_v1"
+  },
+  "claim_tier": "blocked",
+  "config_hash": "7b684610685ed343747a74d76aca8cc9e4738ea1273ab4c4a696de938baa3235",
+  "findings": [
+    {
+      "claim_tier_ceiling": "blocked",
+      "finding_id": "C1-K5-MV-F1",
+      "scientific_status": "OPEN",
+      "severity": "P0",
+      "source_reference": "docs/audits/self_adversarial_audit_20260713_nsc/03_cove_correctness_ledger.json#C1-K5-MV-F1",
+      "source_sha256": "635fb02a705974e4b13678213914d57eb815f597e9799469eb8ae1925e47227c"
+    },
+    {
+      "claim_tier_ceiling": "blocked",
+      "finding_id": "C3-K5-VCORR-ML-F1",
+      "scientific_status": "OPEN",
+      "severity": "P0",
+      "source_reference": "docs/audits/self_adversarial_audit_20260713_nsc/03_cove_correctness_ledger.json#C3-K5-VCORR-ML-F1",
+      "source_sha256": "635fb02a705974e4b13678213914d57eb815f597e9799469eb8ae1925e47227c"
+    },
+    {
+      "claim_tier_ceiling": "blocked",
+      "finding_id": "N-DATA-CF4-DOWNSTREAM",
+      "scientific_status": "OPEN",
+      "severity": "P1",
+      "source_reference": "docs/audits/jcap_prd_adversarial_audit_20260714/atomic_finding_ledger.json#N-DATA-CF4-DOWNSTREAM",
+      "source_sha256": "6e88a6f6c4f95e5154c89e939230c94854b11a8430a64c28ccb339d8c4ab6feb"
     }
-  },
-  "product": "Cosmicflows-4 groups (Tully+ 2023); velocity correlation function",
-  "reconstruction_independent_statistic": {
-    "cf4_published_anchor": 0.38,
-    "cosmic_mach_number_vpds": 0.099,
-    "exit_gate": "a precision f sigma_8 needs the full max-likelihood noise-aware estimator (Johnson 2014; CF4 arXiv:2604.08314); this simplified pair estimator gives a treatment-dependent value, not a precision constraint",
-    "f_sigma8_diagnostic_vpds_direct": 0.7479,
-    "f_sigma8_diagnostic_vpec": 0.3841,
-    "what": "the Gorski velocity correlation function Psi_par/Psi_perp computed directly from observed LOS velocities (NO field reconstruction) is the physical reconstruction-independent statistic -- the well-posed replacement for an ill-posed angular pseudo-C_l"
-  },
-  "schema": "htt.cf4_velocity_correlation.v1",
-  "scope_not_claimed": "a reconstruction-independent velocity correlation function + a treatment-dependent diagnostic f sigma_8 (not a precision growth-rate constraint); NOT a Bianchi family, geometry, or observer-frame claim; no anisotropy discovery",
-  "separation_bins_hmpc": [
-    25.0,
-    35.0,
-    45.0,
-    55.0,
-    65.0,
-    75.0,
-    85.0,
-    95.0
   ],
-  "statistic": "Gorski Psi_par(r)/Psi_perp(r) from LOS-velocity pairs (reconstruction-independent; bulk-subtracted, error-weighted); f sigma_8 amplitude fit is a DIAGNOSTIC",
-  "status": "MEASURED_CORRELATION_DIAGNOSTIC",
-  "theory_psi_par_kms2": [
-    31260.3,
-    20404.2,
-    13210.8,
-    8259.1,
-    4748.3,
-    2203.7,
-    331.3,
-    -1058.3
+  "generating_command": "PYTHONPATH=htt/src venv/bin/python -B scripts/codex_harness/quarantine_cf4_p0_consumers.py --write",
+  "git_commit_or_worktree_state": "baseline_commit:e6da3670043596efdcd93f9ba5e631e1462146c7; PR-120 worktree hashes are bound by the canonical inventory",
+  "implementation_scope": "propagation_quarantine_only",
+  "input_hashes": [
+    "docs/research_program/long_horizon_rescue/cf4_p0_quarantine_policy.yaml:sha256:7b684610685ed343747a74d76aca8cc9e4738ea1273ab4c4a696de938baa3235",
+    "docs/generated/cf4_p0_quarantine_inventory.json:sha256:2d6eada611234b102989f2e12441637a4e35b64bf456c3096f6ee8e426fa82de",
+    "docs/codex_handoff/research_remediation_state.yaml:sha256:77d36878315f041c7bb6c273a2d650f7d3fa1c8a8dc635a577527d646fa40109"
   ],
-  "theory_psi_perp_kms2": [
-    57544.7,
-    48372.5,
-    41306.2,
-    35721.1,
-    31211.2,
-    27504.4,
-    24412.2,
-    21800.6
-  ]
+  "inventory_path": "docs/generated/cf4_p0_quarantine_inventory.json",
+  "inventory_sha256": "2d6eada611234b102989f2e12441637a4e35b64bf456c3096f6ee8e426fa82de",
+  "null_mock_status": "not_applicable_quarantine_is_not_validation",
+  "owner": "COMMON",
+  "policy_path": "docs/research_program/long_horizon_rescue/cf4_p0_quarantine_policy.yaml",
+  "policy_sha256": "7b684610685ed343747a74d76aca8cc9e4738ea1273ab4c4a696de938baa3235",
+  "public_use": true,
+  "remediation_root_path": "docs/codex_handoff/research_remediation_state.yaml",
+  "remediation_root_sha256": "77d36878315f041c7bb6c273a2d650f7d3fa1c8a8dc635a577527d646fa40109",
+  "replacement_policy": "forbidden_without_later_authenticated_adjudication",
+  "replacement_value": null,
+  "schema": "htt.cf4_p0_quarantine_block.v1",
+  "scientific_effect": "none",
+  "sky_support_status": "not_applicable_to_propagation_quarantine",
+  "status": "QUARANTINED_OPEN_FINDINGS",
+  "transfer_source": "none"
 }

@@ -1,0 +1,65 @@
+schema: htt.long_horizon.pr_spec.v1
+pr_id: PR-120
+title: Quarantine the two CF4 P0 producers and every active downstream consumer
+baseline_commit: e6da3670043596efdcd93f9ba5e631e1462146c7
+owner: COMMON
+contributors:
+  - OBSSTAT
+implementation_scope:
+  - common
+claim_level:
+  scheme: roadmap_rescue_v1
+  level: C1
+scientific_effect: none
+finding_state_required:
+  C1-K5-MV-F1: OPEN
+  C3-K5-VCORR-ML-F1: OPEN
+  N-DATA-CF4-DOWNSTREAM: OPEN
+evidence:
+  - path: docs/audits/self_adversarial_audit_20260713_nsc/03_cove_correctness_ledger.json
+    sha256: 635fb02a705974e4b13678213914d57eb815f597e9799469eb8ae1925e47227c
+  - path: docs/audits/self_adversarial_audit_20260713_nsc/08_final_referee_report.md
+    sha256: 4e0c4a4e9264318f81194a6ab6e24625529f0e61ad8082f62cfc48ddcd25e3ee
+  - path: docs/audits/self_adversarial_audit_20260713_nsc/09_inhouse_verification.md
+    sha256: a02e16bf961ab8018a3356d0e82e4c93e28ae6b06228c4dfe11b4c0a43b06a23
+  - path: docs/audits/jcap_prd_adversarial_audit_20260714/atomic_finding_ledger.json
+    sha256: 6e88a6f6c4f95e5154c89e939230c94854b11a8430a64c28ccb339d8c4ab6feb
+  - path: docs/audits/jcap_prd_adversarial_audit_20260714/agents/data_wave/cf4_observer_response.md
+    sha256: 0a935fbbf8fed7ccdc56fc9d22240e13e3e17e6ce6bd863dbc29d11ed5020df9
+  - path: docs/codex_handoff/research_remediation_state.yaml
+    sha256: 77d36878315f041c7bb6c273a2d650f7d3fa1c8a8dc635a577527d646fa40109
+  - path: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md
+    sha256: b64847e8aa0f2165b09662d2862aeea117b5ace2039044feae815e09c28a2f5b
+external_verification:
+  required: false
+  reason: The quarantine decision and affected producer-consumer graph are frozen repository-local audit findings; no external API or current package semantics are used.
+roles:
+  code_mapper:
+    steelman: Preserve exact method and historical reproduction while locating transitive consumers by filename, generated value, and semantic pushforward.
+  harness_engineer:
+    steelman: Use one typed content-addressed validator across CLI, freeze, and package builders with mutation and false-positive controls.
+  physics_statistics_auditor:
+    steelman: Quarantine observational interpretations and CF4 numeric instantiations while retaining independent MV, ML, and symbolic mechanics.
+  claim_gate_reviewer:
+    steelman: Keep all findings OPEN, forbid replacement values, and allow only a propagation-control C1 claim.
+chosen_patch:
+  - Add a typed hash-bound CF4 P0 quarantine contract, policy, inventory, block record, and validator CLI.
+  - Require explicit legacy_reproduction_only mode for the frozen numerical producers and pin every legacy artifact by hash.
+  - Replace active result-card, table, figure, manuscript, and pushforward consumers with blocked source records or fail-closed gates.
+  - Reuse the same validator in publication-freeze and audit-package builders.
+  - Add contextual stale-value and hidden-copy mutations without banning unrelated numeric tokens.
+forbidden_actions:
+  - Substitute 94.155 km/s, 94.8 km/s, raw 0.486, or any other audit sensitivity as corrected truth.
+  - Compute a new CF4 or cosmological result.
+  - Mark any affected finding RESCUED, CORRECTED_SUPERSEDED, or otherwise above OPEN.
+  - Delete or rewrite historical audits, PR deltas, changelog entries, or frozen package snapshots.
+  - Treat diagnostic_only wording as sufficient to bypass a blocked source.
+  - Perform any PR4 download, reduction, or analysis.
+acceptance:
+  - Every active/public path has zero stale P0 numerical or interpretive payload and consumes the canonical block record.
+  - Every preserved numerical payload is exact-hash-bound and explicitly legacy_reproduction_only with public_use false.
+  - Publication freeze, figure/manuscript gates, and package builders reject stale, copied, missing, or hash-mismatched inputs.
+  - Mutations cover MV amplitude/tension, mock significance, ML shape correction, GLS/Omega_tilt pushforwards, and false replacement truth.
+  - Unrelated CatWISE significance and unrelated numeric fixtures remain accepted.
+  - The remediation census remains 102 OPEN and zero RESCUED.
+kill_switch: Any hidden active consumer or stale generated copy blocks PR-120 and every later data PR.

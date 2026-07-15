@@ -3,7 +3,7 @@
 owner: COMMON
 implementation_scope: common
 claim_tier: diagnostic_only
-config_hash: `sha256:08e0a7b415086c2f594725baed96f813e1dee4c5ee12a346c0b20c3c3c6a2846`
+config_hash: `sha256:f78e1784742140a8dc21f95bbc8a93d1bf2d34438796809d309bc65bd8700d3c`
 generating_command: `venv/bin/python scripts/build_v7_external_audit_synthesis.py`
 
 ## Zip Inputs
@@ -20,7 +20,7 @@ generating_command: `venv/bin/python scripts/build_v7_external_audit_synthesis.p
 | ID | Severity | Response | Target |
 | --- | --- | --- | --- |
 | F1 | `fatal_if_unfixed` | Use signed component boxes and publish open/all curvature branch intervals. | `htt/obsstat/egs3_identified_set.py` |
-| F2 | `fatal_if_unfixed` | Add K5/CF4 identified-interval diagnostic card with plugin firewall. | `scripts/k5_cf4_identified_interval_card.py` |
+| F2 | `fatal_if_unfixed` | PR-120 quarantines the K5/CF4 numerical card and every downstream consumer; no replacement result is supplied. | `docs/generated/cf4_p0_quarantine_block.json` |
 | F3 | `major_revision` | Keep generated audit cards separate from Paper A theorem-witness-result prose. | `docs/generated/v7_external_audit_synthesis_matrix.md` |
 | M1 | `major` | Add strict/equality classifier and counterexample witness. | `htt/obsstat/egs3_gf_interval.py` |
 | M2 | `major` | Label current result as component-box sharpness; defer full realization. | `Paper A text` |

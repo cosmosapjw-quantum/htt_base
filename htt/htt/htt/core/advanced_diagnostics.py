@@ -26,6 +26,11 @@ from dataclasses import dataclass, field
 import platform
 from typing import Any, Dict, List, Mapping, Optional, Tuple
 
+from htt.core.cf4_observational_input import (
+    OPEN_FINDING_IDS,
+    require_cf4_observational_input,
+)
+
 __all__ = [
     'DepthTomography', 'SavageDickeyRatio', 'CrossChannelCoherence',
     'PosteriorPredictive', 'LeaveOneOutCV',
@@ -97,8 +102,8 @@ class DepthTomography:
     """
 
     # Survey depth ladder
+    # Active depth ladder excludes the quarantined CF4 observational row.
     BINS = (
-        DepthBin('CF4', 0.05, 1.334e-3, 0.267e-3, 150, 'peculiar velocity'),
         DepthBin('CatWISE', 0.15, 1.476e-3, 0.30e-3, 450, 'number count dipole'),
         DepthBin('Radio', 0.80, 3.296e-3, 0.60e-3, 2400, 'radio continuum'),
     )
@@ -141,21 +146,29 @@ class DepthTomography:
         ndof_kin = len(amps) - 2
         pval_kin = float(1 - chi2_dist.cdf(chi2_kin, max(ndof_kin, 1)))
 
-        # Interpretation
-        if chi2_geo < chi2_kin:
+        # Interpretation. With channel c excluded there are only two active
+        # depth points, so the two-parameter depth model is underidentified.
+        if len(amps) < 3:
+            interp = (
+                "Diagnostic-only two-channel depth comparison. The active "
+                "non-CF4 ladder is insufficient for local/global source "
+                "discrimination; no geometric or kinematic preference is "
+                "authorized."
+            )
+        elif chi2_geo < chi2_kin:
             if pval_geo > 0.05:
                 interp = (f"Constant-amplitude model preferred (χ²={chi2_geo:.1f}, "
-                          f"p={pval_geo:.2f}). Consistent with GEOMETRIC tilt. "
-                          f"But Radio excess (ε₁=3.3e-3 vs CF4 β=1.3e-3) "
-                          f"creates tension at {(3.296e-3 - beta_geo)/0.6e-3:.1f}σ.")
+                          f"p={pval_geo:.2f}) within this diagnostic. "
+                          f"The result is conditional on the two active "
+                          f"number-count/radio channels; CF4 is excluded.")
             else:
                 interp = (f"Neither model fits well. Constant: χ²={chi2_geo:.1f} "
                           f"(p={pval_geo:.2f}), Kinematic: χ²={chi2_kin:.1f} "
                           f"(p={pval_kin:.2f}). Radio excess drives the tension.")
         else:
-            interp = (f"Depth-dependent model preferred (χ²={chi2_kin:.1f} vs "
+            interp = (f"Depth-dependent candidate has lower χ² (χ²={chi2_kin:.1f} vs "
                       f"{chi2_geo:.1f}). Slope α={b:.2f}±{b_err:.2f}. "
-                      f"Consistent with KINEMATIC local flow + Radio excess.")
+                      f"This diagnostic does not identify a physical source.")
 
         return DepthTomographyResult(
             bins=self.BINS,
@@ -307,12 +320,10 @@ class CrossChannelCoherence:
     def run(self) -> CrossChannelResult:
         from scipy.stats import chi2 as chi2_dist
 
-        # Per-channel β estimates
-        # CF4: direct β measurement
+        # Per-channel β estimates. CF4 channel c is not an active estimate.
         # CatWISE: ε₁ → β via ε₁ = β(1+1/12)
         eta = 1.0 / 12.0
         estimates = (
-            ChannelEstimate('CF4', 1.334e-3, 0.267e-3, 1.0),
             ChannelEstimate('CatWISE', 1.476e-3 / (1+eta), 0.30e-3 / (1+eta), 1.0),
             ChannelEstimate('Radio', 3.296e-3 / (1+eta), 0.60e-3 / (1+eta), 1.0),
         )
@@ -395,10 +406,6 @@ class PosteriorPredictive:
                 'predicted': eps1, 'observed': 0.0, 'sigma': 1.5e-3,
                 'note': 'Ferreira-Quartin UL (half-Gaussian)',
             },
-            'beta_CF4': {
-                'predicted': beta_med, 'observed': 1.334e-3, 'sigma': 0.267e-3,
-                'note': 'CosmicFlows-4 bulk flow',
-            },
             'eps1_CatWISE': {
                 'predicted': eps1, 'observed': 1.476e-3, 'sigma': 0.30e-3,
                 'note': 'CatWISE+Böhme 2025',
@@ -408,8 +415,8 @@ class PosteriorPredictive:
                 'note': 'Planck quadrupole (χ²(5) channel)',
             },
             'v_tilt_kms': {
-                'predicted': v_kms, 'observed': 400.0, 'sigma': 80.0,
-                'note': 'CF4-equivalent velocity',
+                'predicted': v_kms, 'observed': 0.0, 'sigma': 0.0,
+                'note': 'derived diagnostic only; no observational comparison',
             },
         }
 
@@ -461,9 +468,12 @@ class LeaveOneOutCV:
                               lnB_full: float) -> List[LOOCVResult]:
         results = []
         channel_map = {
-            'no_CF4': 'c (CF4 bulk flow)',
             'no_CatWISE': 'b (CatWISE+Radio)',
         }
+        if 'no_CF4' in ablation.get('channels', {}):
+            require_cf4_observational_input(
+                consumer="LeaveOneOutCV channel-c ablation",
+            )
         for key, label in channel_map.items():
             if key in ablation.get('channels', {}):
                 ch = ablation['channels'][key]
@@ -518,9 +528,12 @@ def redshift_tomography_report_artifact(
         'wall_time_sec': extra.get('wall_time_sec'),
         'python_version': extra.get('python_version', platform.python_version()),
         'numpy_version': extra.get('numpy_version', np.__version__),
-        'claim_tier': extra.get('claim_tier', 'REPORT'),
-        'scope_label': extra.get('scope_label', 'report'),
+        'claim_tier': extra.get('claim_tier', 'diagnostic_only'),
+        'scope_label': extra.get('scope_label', 'non_cf4_diagnostic'),
         'production_allowed': False,
+        'excluded_channels': ['c'],
+        'cf4_channel_status': 'QUARANTINED_OPEN_FINDINGS',
+        'cf4_finding_ids': list(OPEN_FINDING_IDS),
         'n_bins': len(bins),
         'bins': [
             {
@@ -583,9 +596,12 @@ def cross_channel_coherence_report_artifact(
         'wall_time_sec': extra.get('wall_time_sec'),
         'python_version': extra.get('python_version', platform.python_version()),
         'numpy_version': extra.get('numpy_version', np.__version__),
-        'claim_tier': extra.get('claim_tier', 'REPORT'),
-        'scope_label': extra.get('scope_label', 'report'),
+        'claim_tier': extra.get('claim_tier', 'diagnostic_only'),
+        'scope_label': extra.get('scope_label', 'non_cf4_diagnostic'),
         'production_allowed': False,
+        'excluded_channels': ['c'],
+        'cf4_channel_status': 'QUARANTINED_OPEN_FINDINGS',
+        'cf4_finding_ids': list(OPEN_FINDING_IDS),
         'channel_order': channel_order,
         'estimates': {
             e.channel: {
@@ -609,11 +625,13 @@ def cross_channel_coherence_report_artifact(
 def posterior_predictive_report_artifact(
     *,
     model_name: str = 'FLRW_tilt',
-    beta_med: float = 1.36e-3,
+    beta_med: float | None = None,
     result: PosteriorPredictiveResult | None = None,
     metadata: Mapping[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Build ``posterior_predictive_v1.json`` from PPC observables."""
+    if result is None and beta_med is None:
+        raise ValueError("beta_med must be supplied explicitly for a non-CF4 PPC")
     if result is None:
         result = PosteriorPredictive().compute(model_name, beta_med)
     pulls = {}
@@ -646,9 +664,12 @@ def posterior_predictive_report_artifact(
         'wall_time_sec': extra.get('wall_time_sec'),
         'python_version': extra.get('python_version', platform.python_version()),
         'numpy_version': extra.get('numpy_version', np.__version__),
-        'claim_tier': extra.get('claim_tier', 'REPORT'),
-        'scope_label': extra.get('scope_label', 'report'),
+        'claim_tier': extra.get('claim_tier', 'diagnostic_only'),
+        'scope_label': extra.get('scope_label', 'non_cf4_diagnostic'),
         'production_allowed': False,
+        'excluded_channels': ['c'],
+        'cf4_channel_status': 'QUARANTINED_OPEN_FINDINGS',
+        'cf4_finding_ids': list(OPEN_FINDING_IDS),
         'model': result.model,
         'chi2_total': float(result.chi2_total),
         'ndof': int(result.ndof),
@@ -701,9 +722,12 @@ def loocv_report_artifact(
         'wall_time_sec': extra.get('wall_time_sec'),
         'python_version': extra.get('python_version', platform.python_version()),
         'numpy_version': extra.get('numpy_version', np.__version__),
-        'claim_tier': extra.get('claim_tier', 'REPORT'),
-        'scope_label': extra.get('scope_label', 'report'),
+        'claim_tier': extra.get('claim_tier', 'diagnostic_only'),
+        'scope_label': extra.get('scope_label', 'non_cf4_diagnostic'),
         'production_allowed': False,
+        'excluded_channels': ['c'],
+        'cf4_channel_status': 'QUARANTINED_OPEN_FINDINGS',
+        'cf4_finding_ids': list(OPEN_FINDING_IDS),
         'lnB_full': float(lnB_full),
         'n_dropped_channels': len(entries),
         'entries': entries,
@@ -720,7 +744,7 @@ def run_advanced_diagnostics(
     bi_tilt_weights: np.ndarray = None,
     channel_ablation: dict = None,
     lnB_full: float = 26.33,
-    beta_med: float = 1.36e-3,
+    beta_med: float | None = None,
     verbose: bool = True,
 ) -> Dict:
     """Run all advanced statistical diagnostics.
@@ -810,23 +834,31 @@ def run_advanced_diagnostics(
     # Posterior Predictive
     if verbose:
         print(f"\n--- Posterior Predictive Observables ---")
-    pp = PosteriorPredictive()
-    pp_result = pp.compute('FLRW_tilt', beta_med)
-    results['posterior_predictive'] = {
-        'model': pp_result.model,
-        'chi2': pp_result.chi2_total,
-        'ndof': pp_result.ndof,
-        'pvalue': pp_result.pvalue,
-        'interpretation': pp_result.interpretation,
-    }
-    if verbose:
-        for key, o in pp_result.observables.items():
-            if o['observed'] != 0:
-                pull = (o['predicted'] - o['observed']) / o['sigma']
-                print(f"  {key:20s} pred={o['predicted']:.4e}  "
-                      f"obs={o['observed']:.4e}  pull={pull:+.1f}σ")
-        print(f"  Total χ²/ndof = {pp_result.chi2_total:.1f}/{pp_result.ndof}, "
-              f"p = {pp_result.pvalue:.3f}")
+    if beta_med is None:
+        results['posterior_predictive'] = {
+            'status': 'skipped_no_explicit_non_cf4_beta',
+            'excluded_channels': ['c'],
+            'cf4_finding_ids': list(OPEN_FINDING_IDS),
+        }
+    else:
+        pp = PosteriorPredictive()
+        pp_result = pp.compute('FLRW_tilt', beta_med)
+        results['posterior_predictive'] = {
+            'model': pp_result.model,
+            'chi2': pp_result.chi2_total,
+            'ndof': pp_result.ndof,
+            'pvalue': pp_result.pvalue,
+            'interpretation': pp_result.interpretation,
+            'excluded_channels': ['c'],
+        }
+        if verbose:
+            for key, o in pp_result.observables.items():
+                if o['observed'] != 0:
+                    pull = (o['predicted'] - o['observed']) / o['sigma']
+                    print(f"  {key:20s} pred={o['predicted']:.4e}  "
+                          f"obs={o['observed']:.4e}  pull={pull:+.1f}σ")
+            print(f"  Total χ²/ndof = {pp_result.chi2_total:.1f}/{pp_result.ndof}, "
+                  f"p = {pp_result.pvalue:.3f}")
 
     # Leave-One-Out
     if channel_ablation is not None and verbose:

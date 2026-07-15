@@ -26,6 +26,20 @@ if str(COMMON_ROOT) not in sys.path:
     sys.path.insert(0, str(COMMON_ROOT))
 
 from common.artifact_manifest import validate_manifest_payload  # noqa: E402
+from common.cf4_p0_quarantine import (  # noqa: E402
+    CF4P0QuarantineError,
+    ContentMode,
+    QuarantineContent,
+    load_block_record,
+    read_regular_bytes,
+    repository_content,
+    reviewed_active_binary_sidecar_pin,
+    validate_repository,
+)
+from common.package_binary_binding import (  # noqa: E402
+    verify_package_binary_binding,
+    verify_packaged_entry_bytes,
+)
 
 
 DEFAULT_OUTPUT_ZIP = Path("docs/generated/statistical_formalism_audit_package.zip")
@@ -36,6 +50,8 @@ SCHEMA_VERSION = "common.statistical_formalism_audit_package.v1"
 ARTIFACT_ID = "statistical_formalism_audit_package"
 ARCHIVE_ROOT = "statistical_formalism_audit"
 FIXED_ZIP_DATE = (1980, 1, 1, 0, 0, 0)
+MANUSCRIPT_SOURCE_PREFIX = "docs/manuscript/"
+MANUSCRIPT_HARD_STOP_STUB = "docs/manuscript/main.tex"
 
 LATEX_SOURCE_FILES = (
     "docs/manuscript/main.tex",
@@ -62,6 +78,8 @@ LATEX_SOURCE_FILES = (
 )
 
 FORMALISM_METADATA_FILES = (
+    "docs/generated/cf4_p0_quarantine_block.json",
+    "docs/generated/cf4_p0_quarantine_inventory.json",
     "docs/generated/current_manuscript_plot_list.md",
     "docs/generated/expanded_manuscript_plot_list.md",
     "docs/generated/current_science_plot_payload.json",
@@ -149,7 +167,11 @@ REQUIRED_CURRENT_ASSERTIONS = (
     ("full_external_package_check", "venv/bin/python scripts/build_external_audit_package.py --check", "pass"),
     ("research_only_package_check", "venv/bin/python scripts/build_research_only_audit_package.py --check", "pass"),
     ("ver2_export_check", "venv/bin/python scripts/ver2_artifact_export.py --check", "pass"),
-    ("publication_claim_freeze_check", "venv/bin/python scripts/check_publication_claim_freeze.py --check", "pass"),
+    (
+        "publication_claim_freeze_check",
+        "venv/bin/python scripts/check_publication_claim_freeze.py --check",
+        "blocked_nonzero_pdf_claim_lint_passed",
+    ),
     ("manuscript_figure_audit", "venv/bin/python scripts/audit_manuscript_figures.py --dry-run", "0 missing, 0 quarantined, 0 claim-risk"),
     ("focused_package_tests", "venv/bin/python -m pytest tests/contracts/test_audit_package_generator.py tests/contracts/test_research_only_audit_package.py scripts/test_ver2_artifact_export.py -q", "pass"),
 )
@@ -162,13 +184,15 @@ class PackageEntry:
     description: str
     source_path: Path | None = None
     content: bytes | None = None
+    content_mode: ContentMode = ContentMode.ACTIVE_PUBLIC
+    public_use: bool = True
 
     def bytes(self, repo_root: Path) -> bytes:
         if self.content is not None:
             return self.content
         if self.source_path is None:
             raise ValueError(f"entry {self.archive_path} has no source or content")
-        return (repo_root / self.source_path).read_bytes()
+        return read_regular_bytes(repo_root, self.source_path)
 
     def source_text(self) -> str:
         return self.source_path.as_posix() if self.source_path else f"virtual:{self.archive_path}"
@@ -218,11 +242,23 @@ def _command_from_args(argv: Sequence[str] | None) -> str:
 
 
 def _entry(source: str, archive: str, group: str, description: str) -> PackageEntry:
+    mode = (
+        ContentMode.IMMUTABLE_HISTORICAL_EVIDENCE
+        if (
+            source.startswith(MANUSCRIPT_SOURCE_PREFIX)
+            and source != MANUSCRIPT_HARD_STOP_STUB
+            and Path(source).suffix in {".tex", ".bib"}
+        )
+        or source.startswith(("docs/ver2_upgrade/", "figures/conditioned_legacy/"))
+        else ContentMode.ACTIVE_PUBLIC
+    )
     return PackageEntry(
         source_path=Path(source),
         archive_path=f"{ARCHIVE_ROOT}/{archive}",
         group=group,
         description=description,
+        content_mode=mode,
+        public_use=mode is ContentMode.ACTIVE_PUBLIC,
     )
 
 
@@ -278,19 +314,101 @@ def _entry_rows(repo_root: Path, entries: Sequence[PackageEntry]) -> list[dict[s
             raise ValueError(f"duplicate archive path: {entry.archive_path}")
         if entry.archive_path.lower().endswith(".pdf"):
             raise ValueError(f"PDF files are intentionally excluded: {entry.archive_path}")
+        if entry.content_mode is ContentMode.ACTIVE_PUBLIC and not entry.public_use:
+            raise ValueError(
+                f"active/public package entry cannot set public_use=false: {entry.archive_path}"
+            )
+        if (
+            entry.content_mode is ContentMode.IMMUTABLE_HISTORICAL_EVIDENCE
+            and entry.public_use
+        ):
+            raise ValueError(
+                f"historical package entry cannot set public_use=true: {entry.archive_path}"
+            )
+        source_path = entry.source_path.as_posix() if entry.source_path else ""
+        if (
+            source_path.startswith(MANUSCRIPT_SOURCE_PREFIX)
+            and Path(source_path).suffix in {".tex", ".bib"}
+        ):
+            if source_path == MANUSCRIPT_HARD_STOP_STUB:
+                if (
+                    entry.content_mode is not ContentMode.ACTIVE_PUBLIC
+                    or not entry.public_use
+                ):
+                    raise ValueError(
+                        "the clean manuscript hard-stop stub must remain an "
+                        "active/public control surface"
+                    )
+            elif (
+                entry.content_mode
+                is not ContentMode.IMMUTABLE_HISTORICAL_EVIDENCE
+                or entry.public_use
+            ):
+                raise ValueError(
+                    "retained manuscript chapter, bibliography, and generated "
+                    f"TeX sources must be immutable historical evidence: {source_path}"
+                )
+        if source_path.startswith("legacy/cf4_p0/"):
+            if entry.content_mode is not ContentMode.IMMUTABLE_HISTORICAL_EVIDENCE:
+                raise ValueError(
+                    f"legacy CF4 payload requires immutable_historical_evidence mode: {source_path}"
+                )
+            if entry.public_use or not entry.archive_path.startswith(
+                f"{ARCHIVE_ROOT}/legacy/cf4_p0/"
+            ):
+                raise ValueError(
+                    "legacy CF4 payload must be non-public and retain an explicit legacy archive path"
+                )
         seen.add(entry.archive_path)
         data = entry.bytes(repo_root)
-        rows.append(
-            {
+        reviewed_pin = (
+            reviewed_active_binary_sidecar_pin(repo_root, entry.source_path)
+            if entry.source_path is not None
+            and (repo_root / "docs/research_program/long_horizon_rescue/cf4_p0_quarantine_policy.yaml").is_file()
+            else None
+        )
+        binary_binding = (
+            verify_package_binary_binding(
+                repo_root,
+                entry.source_path,
+                content_mode=entry.content_mode.value,
+                explicit_manifest_path=reviewed_pin[0] if reviewed_pin else None,
+                explicit_manifest_sha256=reviewed_pin[1] if reviewed_pin else None,
+            )
+            if entry.source_path is not None
+            else None
+        )
+        row = {
                 "source_path": entry.source_text(),
                 "archive_path": entry.archive_path,
                 "group": entry.group,
                 "description": entry.description,
+                "content_mode": entry.content_mode.value,
+                "public_use": entry.public_use,
                 "sha256": _sha256_bytes(data),
                 "size_bytes": len(data),
             }
-        )
+        if binary_binding is not None:
+            row["binary_binding"] = binary_binding
+        rows.append(row)
     return rows
+
+
+def _quarantine_package_contents(
+    repo_root: Path,
+    entries: Sequence[PackageEntry],
+) -> dict[str, bytes | QuarantineContent]:
+    contents: dict[str, bytes | QuarantineContent] = {}
+    for entry in entries:
+        if entry.source_path is not None and entry.content_mode is not ContentMode.ACTIVE_PUBLIC:
+            contents[entry.archive_path] = repository_content(
+                repo_root,
+                entry.source_path,
+                mode=entry.content_mode,
+            )
+        else:
+            contents[entry.archive_path] = entry.bytes(repo_root)
+    return contents
 
 
 def _figure_manifest_lanes_safe(repo_root: Path, rows: Sequence[dict[str, Any]]) -> bool:
@@ -331,15 +449,53 @@ def _required_assertions(repo_root: Path, rows: Sequence[dict[str, Any]]) -> dic
         for path in archive_paths
         if path.startswith(f"{ARCHIVE_ROOT}/figures/") and path.endswith(".manifest.json")
     }
+    manuscript_rows = [
+        row
+        for row in rows
+        if str(row["source_path"]).startswith(MANUSCRIPT_SOURCE_PREFIX)
+        and Path(str(row["source_path"])).suffix in {".tex", ".bib"}
+    ]
+    retained_manuscript_rows = [
+        row
+        for row in manuscript_rows
+        if row["source_path"] != MANUSCRIPT_HARD_STOP_STUB
+    ]
+    main_rows = [
+        row
+        for row in manuscript_rows
+        if row["source_path"] == MANUSCRIPT_HARD_STOP_STUB
+    ]
     return {
         "compiled_pdf_excluded": not any(path.lower().endswith(".pdf") for path in archive_paths),
         "latex_source_included": f"{ARCHIVE_ROOT}/docs/manuscript/main.tex" in archive_paths,
+        "retained_manuscript_sources_historical_nonpublic": bool(
+            retained_manuscript_rows
+        )
+        and all(
+            row["content_mode"]
+            == ContentMode.IMMUTABLE_HISTORICAL_EVIDENCE.value
+            and row["public_use"] is False
+            for row in retained_manuscript_rows
+        ),
+        "manuscript_hard_stop_stub_only_active_source": len(main_rows) == 1
+        and main_rows[0]["content_mode"] == ContentMode.ACTIVE_PUBLIC.value
+        and main_rows[0]["public_use"] is True
+        and not any(
+            row["content_mode"] == ContentMode.ACTIVE_PUBLIC.value
+            for row in retained_manuscript_rows
+        ),
         "statistical_prompt_included": "AUDIT_PROMPT_STATISTICAL_FORMALISM.md" in archive_paths,
         "readiness_checklist_included": "READINESS_CHECKLIST.md" in archive_paths,
         "figure_label_linter_report_included": "FIGURE_LABEL_LINTER_REPORT.md" in archive_paths,
         "formalism_code_included": all(f"{ARCHIVE_ROOT}/{rel}" in archive_paths for rel in FORMALISM_CODE_FILES),
         "formalism_tests_included": all(f"{ARCHIVE_ROOT}/{rel}" in archive_paths for rel in FORMALISM_TEST_FILES),
         "formalism_metadata_included": all(f"{ARCHIVE_ROOT}/{rel}" in archive_paths for rel in FORMALISM_METADATA_FILES),
+        "cf4_quarantine_controls_included": (
+            f"{ARCHIVE_ROOT}/docs/generated/cf4_p0_quarantine_block.json"
+            in archive_paths
+            and f"{ARCHIVE_ROOT}/docs/generated/cf4_p0_quarantine_inventory.json"
+            in archive_paths
+        ),
         "formalism_figures_have_payload_and_manifest": bool(figure_png) and figure_png == figure_manifest,
         "figure_manifest_lanes_safe": _figure_manifest_lanes_safe(repo_root, rows),
         "minimal_formalism_scope_only": {"formalism_code", "formalism_test"}.issubset(groups)
@@ -368,8 +524,9 @@ def render_readiness_checklist() -> str:
         "",
         "| Finding | Status | Evidence | Residual risk |",
         "| --- | --- | --- | --- |",
-        "| Full external audit package missed PDF/figure payload context | addressed | `scripts/build_external_audit_package.py --check` passes; package contains PDF and figure payloads | package remains diagnostic-only |",
-        "| Research-only package was stale | addressed | `scripts/build_research_only_audit_package.py --check` passes | intentionally excludes PDF |",
+        "| Full external audit package missed PDF/figure payload context | quarantined | PR-120 withholds the non-binding PDF pair and includes the canonical block/inventory | no current PDF is distributed |",
+        "| Research-only package was stale | guarded | the PR-120 content gate rejects stale package entries | intentionally excludes PDF |",
+        "| Statistical-formalism package embedded stale manuscript/lint surfaces | quarantined | exact previous ZIP/manifest/prompt bytes moved under `legacy/cf4_p0/packages/statistical_formalism_audit/`; retained TeX/Bib rows are typed historical evidence | a diagnostic package may rebuild only when its content gate is clean; manuscript publication remains unauthorized |",
         "| VER2 sidecars carried production promotion labels | addressed | included VER2 manuscript figure sidecars are diagnostic-only | legacy result-pack text may mention readiness labels as historical context |",
         "| Manifest self-reference caused post-commit stale loops | addressed | VER2 and package check-mode preserve/normalise self-referential git fields | generated manifests still record worktree state as provenance |",
         "| LaTeX byproducts polluted worktree/package risk | addressed | byproducts ignored and package tests exclude logs/aux files | local scratch files may exist after future latexmk runs |",
@@ -394,6 +551,7 @@ def render_readiness_checklist() -> str:
             "- `G_F`: depth-gap diagnostic requiring bin metadata and null/calibration status.",
             "- MIO formalism remains diagnostic; HTT evidence/posterior surfaces are separate.",
             "- Scalar formalism values cannot imply geometry detection or Bianchi family-ID.",
+            "- The LaTeX tree is retained as immutable historical evidence with public_use false; main.tex is a fail-closed notice, not a current build entrypoint.",
             "",
         ]
     )
@@ -452,14 +610,14 @@ def render_figure_label_linter_report(repo_root: Path) -> tuple[str, bool]:
 def render_prompt() -> str:
     return """# Adversarial Audit Prompt: x_C/Q/Pi/F/G_F Statistical Formalism
 
-You are an external hostile reviewer. Audit only the statistical and physical formalization of `x_C`, `Q`, `Pi`, `F`, and `G_F`, plus the manuscript/result figures that use them. Do not review software style, packaging aesthetics, CI design, or general code quality.
+You are an external hostile reviewer. Audit only the statistical and physical formalization of `x_C`, `Q`, `Pi`, `F`, and `G_F`, plus preserved manuscript/result surfaces that use them. This is a diagnostic audit bundle, not a current manuscript publication source. Do not review software style, packaging aesthetics, CI design, or general code quality.
 
 ## Inputs
 
 Read in this order:
 1. `READINESS_CHECKLIST.md`
-2. `statistical_formalism_audit/docs/manuscript/main.tex`
-3. manuscript chapters `ch01_introduction.tex`, `ch03_framework.tex`, `ch07_results.tex`, and `ch09_discussion.tex`
+2. `statistical_formalism_audit/docs/manuscript/main.tex` for the fail-closed quarantine notice
+3. historical manuscript chapters `ch01_introduction.tex`, `ch03_framework.tex`, `ch07_results.tex`, and `ch09_discussion.tex`, inspected with `public_use:false` and not compiled
 4. generated LaTeX snippets under `statistical_formalism_audit/docs/manuscript/generated/`, especially `formalism_methods_claim_ladder.tex`
 5. `statistical_formalism_audit/docs/generated/formalism_audit_originality_response_matrix.md`
 6. `FIGURE_LABEL_LINTER_REPORT.md`
@@ -478,6 +636,7 @@ Read in this order:
 - MIO diagnostics are not posterior odds, evidence, or truth certificates.
 - HTT owns model-dependent likelihood, evidence, PPC, LOOCV, and posterior pushforward.
 - `x_C`, `Q`, `Pi`, `F`, `G_F`, direction coherence, residual vectors, or low-ell summaries cannot identify Bianchi family or geometry.
+- CF4 P0 source quarantine blocks a current manuscript build; retained TeX/Bib sources are immutable historical evidence only.
 
 ## Required Verdict
 
@@ -562,15 +721,23 @@ Reject if any current claim says or implies:
 def render_readme() -> str:
     return """# Statistical Formalism External Audit Package
 
-This archive is a narrow re-audit bundle for `x_C/Q/Pi/F/G_F` formalism.
+This archive is a narrow diagnostic re-audit bundle for `x_C/Q/Pi/F/G_F`
+formalism. It is not a current manuscript publication source.
 
 Use `AUDIT_PROMPT_STATISTICAL_FORMALISM.md` first.  The compiled PDF is
-excluded; selected LaTeX source, generated reports, figure payloads/manifests,
+excluded. `docs/manuscript/main.tex` is a fail-closed hard-stop stub; all other
+selected chapter, bibliography, and generated TeX sources are immutable
+historical evidence with `public_use:false`. Generated reports, figure payloads/manifests,
 formalism code, and formalism tests are included only where needed to interpret
-the statistical definitions and manuscript figures.
+the statistical definitions and preserved manuscript figures. Do not compile
+or redistribute the retained LaTeX tree as a current manuscript.
 
 This package is diagnostic-only.  It is not native solver validation, not a
 geometry detection claim, and not a Bianchi family-ID claim.
+PR-120 permits this diagnostic audit bundle only when the canonical CF4 P0
+quarantine is clean.  The OPEN findings still block scientific promotion, not
+review of the formalism.  The prior package is immutable historical evidence
+under `legacy/cf4_p0` with `public_use=false`.
 Historical status ledgers may preserve archived readiness vocabulary as
 provenance; current result packs use diagnostic-only public readiness and
 legacy-not-current caveats.
@@ -602,9 +769,21 @@ def build_payload(
         *_figure_entries(root),
     ]
     rows = _entry_rows(root, entries)
+    quarantine_report = validate_repository(
+        root,
+        additional_contents=_quarantine_package_contents(root, entries),
+    )
+    quarantine_payload = quarantine_report.to_dict()
+    quarantine_report_hash = _stable_hash(quarantine_payload)
+    try:
+        block_status = load_block_record(root).status
+    except CF4P0QuarantineError:
+        block_status = "INVALID_OR_STALE_QUARANTINE_CONTROL"
     assertions = _required_assertions(root, rows)
     assertions["figure_label_linter_passed"] = linter_passed
+    assertions["cf4_p0_quarantine_clean"] = quarantine_report.ok
     failed_gates = [name for name, ok in assertions.items() if not ok]
+    active_package_release_authorized = quarantine_report.ok
     archive_paths = [row["archive_path"] for row in rows]
     config = {
         "schema_version": SCHEMA_VERSION,
@@ -612,6 +791,8 @@ def build_payload(
         "assertions": sorted(assertions),
         "package_focus": "x_C_Q_Pi_F_G_F_statistical_formalism",
         "pdf_excluded": True,
+        "cf4_p0_quarantine_report_hash": quarantine_report_hash,
+        "active_release_policy": "diagnostic_package_allowed_only_when_quarantine_clean",
     }
     commit = git_commit or _git_commit(root)
     state = worktree_state or _git_state(root)
@@ -631,6 +812,15 @@ def build_payload(
         "input_hashes": [f"{row['source_path']}:{row['sha256']}" for row in rows],
         "code_version": state,
         "schema_version": SCHEMA_VERSION,
+        "cf4_p0_quarantine_report_hash": quarantine_report_hash,
+        "cf4_p0_quarantine": quarantine_payload,
+        "active_package_release_authorized": active_package_release_authorized,
+        "cf4_p0_scientific_promotion_authorized": (
+            block_status not in {
+                "QUARANTINED_OPEN_FINDINGS",
+                "INVALID_OR_STALE_QUARANTINE_CONTROL",
+            }
+        ),
         "transfer_source": "mixed_none_external_transfer_and_conditioned_legacy",
         "sky_support_status": "not_directional",
         "null_mock_status": "mixed_formalism_tests_diagnostic_nulls_and_conditioned_legacy",
@@ -647,17 +837,31 @@ def build_payload(
             "figure_payload_manifest_pairing": "pass" if assertions.get("formalism_figures_have_payload_and_manifest") else "fail",
             "figure_manifest_claim_lanes": "pass" if assertions.get("figure_manifest_lanes_safe") else "fail",
             "compiled_pdf_excluded": "pass" if assertions.get("compiled_pdf_excluded") else "fail",
+            "cf4_p0_quarantine": "pass"
+            if assertions.get("cf4_p0_quarantine_clean")
+            else "fail",
+            "active_package_release": "pass"
+            if active_package_release_authorized
+            else "fail_quarantine_not_clean",
         },
         "science_promotion_gates": {
             "native_low_ell_solver_validation": "fail_not_available",
             "native_morphology_atlas": "fail_not_available",
             "family_identification": "blocked",
             "xqpi_fg_geometry_claim": "blocked",
+            "cf4_p0_findings": (
+                "blocked_open_findings"
+                if block_status == "QUARANTINED_OPEN_FINDINGS"
+                else "not_authorized_by_this_package"
+            ),
         },
         "publication_gates": {
             "external_statistical_formalism_audit_ready": "pass" if not failed_gates else "fail",
             "publication_ready": "fail_diagnostic_only",
+            "current_manuscript_source_authorized": "fail_cf4_p0_source_quarantine",
         },
+        "manuscript_source_status": "immutable_historical_evidence_only_no_current_publication_source",
+        "active_manuscript_publication_source_authorized": False,
         "formalism_focus": {
             "x_C": "signed comparator coordinate",
             "Q": "policy-normalized diagnostic score",
@@ -666,11 +870,12 @@ def build_payload(
             "G_F": "depth-gap diagnostic with bin/null metadata requirements",
         },
         "caveats": [
-            "The package is for external physics/statistics/formalism audit only.",
-            "The compiled PDF is excluded to reduce size; selected LaTeX source is included.",
+            "The package is a diagnostic external physics/statistics/formalism audit bundle only; it is not a current manuscript publication source.",
+            "The compiled PDF is excluded. main.tex is a clean hard-stop stub; every retained chapter, bibliography, and generated TeX source is immutable historical evidence with public_use false.",
             "Formalism code/tests are included only to clarify definitions and gates.",
             "Scalar formalism quantities do not support Bianchi geometry detection or family-ID.",
             "Current transfer-dependent and conditioned legacy material remains transfer-conditional.",
+            "A clean diagnostic statistical-formalism package may be released for audit while the canonical CF4 P0 findings remain OPEN; those findings still block scientific promotion, and the exact prior package bytes are legacy evidence only.",
         ],
     }
     issues = validate_manifest_payload(
@@ -704,7 +909,21 @@ def _build_zip_bytes(repo_root: Path, payload: dict[str, Any], entries: Sequence
         archive.writestr(_zip_info("MANIFEST.json"), _render_manifest(payload).encode("utf-8"))
         for row in sorted(payload["archive_entries"], key=lambda item: item["archive_path"]):
             entry = entry_by_archive[row["archive_path"]]
-            archive.writestr(_zip_info(row["archive_path"]), entry.bytes(repo_root))
+            data = entry.bytes(repo_root)
+            if entry.source_path is not None:
+                data = verify_packaged_entry_bytes(
+                    repo_root,
+                    entry.source_path,
+                    data,
+                    expected_sha256=row["sha256"],
+                    content_mode=row["content_mode"],
+                    expected_binary_binding=row.get("binary_binding"),
+                )
+            elif _sha256_bytes(data) != row["sha256"]:
+                raise ValueError(
+                    f"virtual package bytes changed after manifest construction: {entry.archive_path}"
+                )
+            archive.writestr(_zip_info(row["archive_path"]), data)
     return buffer.getvalue()
 
 

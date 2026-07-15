@@ -14,7 +14,6 @@ from htt.core.advanced_diagnostics import (
 def _ablation_fixture() -> dict:
     return {
         "channels": {
-            "no_CF4": {"lnB": 21.1},
             "no_CatWISE": {"lnB": 24.8},
         }
     }
@@ -25,10 +24,11 @@ def test_cross_channel_coherence_artifact_is_json_ready():
         metadata={"git_commit": "abc123"},
     )
     assert artifact["artifact_name"] == "cross_channel_coherence_v1.json"
-    assert artifact["scope_label"] == "report"
+    assert artifact["scope_label"] == "non_cf4_diagnostic"
     assert artifact["production_allowed"] is False
-    assert len(artifact["channel_order"]) == 3
-    assert len(artifact["pairwise_tension_sigma_matrix"]) == 3
+    assert artifact["excluded_channels"] == ["c"]
+    assert len(artifact["channel_order"]) == 2
+    assert len(artifact["pairwise_tension_sigma_matrix"]) == 2
     assert artifact["config_hash"] != ""
     json.dumps(artifact)
 
@@ -36,15 +36,16 @@ def test_cross_channel_coherence_artifact_is_json_ready():
 def test_posterior_predictive_artifact_is_json_ready():
     artifact = posterior_predictive_report_artifact(
         model_name="FLRW_tilt",
-        beta_med=1.36e-3,
+        beta_med=2.0e-4,
         metadata={"git_commit": "abc123"},
     )
     assert artifact["artifact_name"] == "posterior_predictive_v1.json"
-    assert artifact["scope_label"] == "report"
+    assert artifact["scope_label"] == "non_cf4_diagnostic"
     assert artifact["production_allowed"] is False
     assert artifact["model"] == "FLRW_tilt"
-    assert "beta_CF4" in artifact["observables"]
-    assert "beta_CF4" in artifact["pulls"]
+    assert artifact["excluded_channels"] == ["c"]
+    assert "beta_CF4" not in artifact["observables"]
+    assert "beta_CF4" not in artifact["pulls"]
     json.dumps(artifact)
 
 
@@ -55,9 +56,9 @@ def test_loocv_report_artifact_is_json_ready():
         metadata={"git_commit": "abc123"},
     )
     assert artifact["artifact_name"] == "loocv_report_v1.json"
-    assert artifact["scope_label"] == "report"
+    assert artifact["scope_label"] == "non_cf4_diagnostic"
     assert artifact["production_allowed"] is False
-    assert artifact["n_dropped_channels"] == 2
+    assert artifact["n_dropped_channels"] == 1
     assert artifact["most_sensitive_channel"]["delta_lnB"] >= 0.0
     json.dumps(artifact)
 
@@ -75,8 +76,9 @@ def test_redshift_tomography_artifact_is_json_ready():
         metadata={"git_commit": "abc123"},
     )
     assert artifact["artifact_name"] == "redshift_tomography_v1.json"
-    assert artifact["scope_label"] == "report"
+    assert artifact["scope_label"] == "non_cf4_diagnostic"
     assert artifact["production_allowed"] is False
     assert artifact["n_bins"] == len(artifact["bins"])
-    assert artifact["n_bins"] >= 3
+    assert artifact["n_bins"] == 2
+    assert {row["name"] for row in artifact["bins"]} == {"CatWISE", "Radio"}
     json.dumps(artifact)

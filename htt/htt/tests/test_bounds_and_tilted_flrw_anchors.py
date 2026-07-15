@@ -309,13 +309,11 @@ def test_beta_from_colin_pinned(z_ref, expected):
     assert beta_from_colin(z_ref) == pytest.approx(expected, abs=1e-15)
 
 
-def test_beta_from_colin_z005_close_to_CF4_measurement():
-    """Semantic anchor: β_SNe(z=0.05) ≈ 1.34e-3 is within 5σ of β_CF4 = 1.334e-3.
+def test_beta_from_colin_does_not_authorize_cf4_cross_consistency():
+    """A derived SNe translation cannot restore the quarantined CF4 input."""
+    from htt.core.cf4_observational_input import CF4InputQuarantined
+    from htt.core.evidence_models_R03a import ObsData
 
-    This is the cross-consistency check TF-N02 (manuscript ch09) uses to
-    gate the "dipolar-q as diagnostic" claim. Dropping this below the
-    CF4 band invalidates that interpretation.
-    """
-    beta_sne = beta_from_colin(0.05)
-    # CF4 measurement from evidence_models.ObsData: b_CF4 = 1.334e-3, σ = 0.267e-3
-    assert abs(beta_sne - 1.334e-3) < 5 * 0.267e-3
+    assert beta_from_colin(0.05) == pytest.approx(_BETA_COLIN_ANCHORS[0.05])
+    with pytest.raises(CF4InputQuarantined, match="N-DATA-CF4-DOWNSTREAM"):
+        _ = ObsData().b_CF4

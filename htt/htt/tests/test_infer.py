@@ -117,24 +117,24 @@ class TestEstimators:
 
     def test_tilt_velocity(self):
         from htt.infer.estimators import tilt_velocity
-        result = tilt_velocity(beta=1.334e-3, z=0.0)
+        result = tilt_velocity(beta=2.0e-4, z=0.0)
         assert hasattr(result, 'value')
         assert result.value > 0
 
     def test_delta_H(self):
         from htt.infer.estimators import delta_H
-        result = delta_H(beta=1.334e-3, d_Mpc=100.0)
+        result = delta_H(beta=2.0e-4, d_Mpc=100.0)
         assert hasattr(result, 'value')
         assert result.value > 0
 
     def test_delta_q(self):
         from htt.infer.estimators import delta_q
-        result = delta_q(beta=1.334e-3, d_Mpc=100.0)
+        result = delta_q(beta=2.0e-4, d_Mpc=100.0)
         assert result is not None
 
     def test_lambda_J(self):
         from htt.infer.estimators import lambda_J_pec
-        result = lambda_J_pec(beta=1.334e-3)
+        result = lambda_J_pec(beta=2.0e-4)
         assert hasattr(result, 'value')
         assert result.value > 100  # ~297 Mpc
 
@@ -146,7 +146,7 @@ class TestEstimators:
     def test_bridge_results_exploratory(self):
         """All bridge estimators should be tagged EXPLORATORY."""
         from htt.infer.estimators import tilt_velocity, delta_H
-        r = tilt_velocity(beta=1.334e-3)
+        r = tilt_velocity(beta=2.0e-4)
         assert r.status == 'EXPLORATORY'
-        r2 = delta_H(beta=1.334e-3, d_Mpc=100.0)
+        r2 = delta_H(beta=2.0e-4, d_Mpc=100.0)
         assert r2.status == 'EXPLORATORY'

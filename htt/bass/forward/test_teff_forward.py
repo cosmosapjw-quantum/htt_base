@@ -124,7 +124,7 @@ class TestForwardClass:
 
     def test_gauge_deviation_small(self):
         teff = TeffBianchiForward()
-        r = teff.compute_from_shear(1e-6, 1.334e-3)
+        r = teff.compute_from_shear(1e-6, 1.2e-3)
         assert r['gauge_deviation'] < 1e-10
 
     def test_transfer_function_grid(self):

@@ -15,6 +15,10 @@ from typing import Any, List, Mapping
 import numpy as np
 
 from .control_registry import CONTROLS, matched_complexity_check
+from htt.core.cf4_observational_input import (
+    OPEN_FINDING_IDS,
+    require_cf4_observational_input,
+)
 
 __all__ = [
     'enforce_matched_complexity',
@@ -251,6 +255,9 @@ def matched_complexity_report_artifact(
         'claim_tier': extra.get('claim_tier', 'REPORT'),
         'scope_label': extra.get('scope_label', 'report'),
         'production_allowed': False,
+        'excluded_channels': ['c'],
+        'cf4_channel_status': 'QUARANTINED_OPEN_FINDINGS',
+        'cf4_finding_ids': list(OPEN_FINDING_IDS),
         'reference_control': 'C1',
         'controls_requested': requested,
         'controls_audited': audited,
@@ -294,7 +301,6 @@ class LowZAblation:
 
     # Survey redshift characteristics
     SURVEY_Z = {
-        'CF4': 0.05,      # median z of CF4 sample
         'CatWISE': 1.2,   # median z of CatWISE quasars
         'Radio': 0.9,     # median z of NVSS/RACS sources
         'CMB_lowl': 1089,  # last scattering
@@ -309,7 +315,7 @@ class LowZAblation:
         Parameters
         ----------
         remove_survey : str
-            'CF4', 'CatWISE', 'Radio', or 'CMB_lowl'.
+            'CatWISE', 'Radio', or 'CMB_lowl'. Channel c is quarantined.
 
         Returns
         -------
@@ -321,14 +327,20 @@ class LowZAblation:
         dp = obs_mod['dipole_observations']
 
         if remove_survey == 'CF4':
-            dp['cf4_watkins_2023']['sigma'] = 1e10  # effectively infinite
-        elif remove_survey == 'CatWISE':
+            require_cf4_observational_input(
+                consumer="matched_complexity.LowZAblation CF4 ablation",
+            )
+        if remove_survey == 'CatWISE':
             dp['catwise_bohme_2025']['sigma_stat'] = 1e10
         elif remove_survey == 'Radio':
             dp['radio_secrest_2021']['sigma_stat'] = 1e10
         elif remove_survey == 'CMB_lowl':
             # Set CMB multipole uncertainties to infinity
             pass  # CMB channels are in the evidence_models likelihood, not here
+        else:
+            raise ValueError(
+                "remove_survey must be CatWISE, Radio, or CMB_lowl"
+            )
 
         return obs_mod
 
@@ -338,7 +350,7 @@ class LowZAblation:
         Returns list of ablation configurations.
         """
         configs = []
-        for survey in ['CF4', 'CatWISE', 'Radio']:
+        for survey in ['CatWISE', 'Radio']:
             obs_mod = self.ablate(survey)
             configs.append({
                 'removed': survey,
@@ -357,7 +369,7 @@ def ablation_result(survey: str, lnB_full: float,
     return AblationResult(
         z_cut=z,
         n_removed=1,
-        n_remaining=2,  # 3 surveys - 1
+        n_remaining=1,  # 2 active surveys - 1
         lnB_full=lnB_full,
         lnB_ablated=lnB_ablated,
         delta_lnB=lnB_ablated - lnB_full,

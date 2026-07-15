@@ -23,36 +23,30 @@ import pytest
 
 from htt.core import evidence_models as DEPR
 from htt.core import evidence_models_R03a as R03a
+from htt.core.cf4_observational_input import (
+    ACTIVE_DEFAULT_CHANNELS,
+    CF4InputQuarantined,
+)
 
 
 # ═══════════════════════════════════════════════════════════════════════
 # Part 1 — Cross-consistency R03a vs deprecated (bit-identical)
 # ═══════════════════════════════════════════════════════════════════════
-def test_R03a_flrw_log_evidence_matches_deprecated():
-    """FLRW evidence identical across the two implementations."""
-    assert R03a.FLRW().log_evidence() == DEPR.FLRW().log_evidence()
+@pytest.mark.parametrize(
+    "model_type",
+    [R03a.FLRW, R03a.FLRW_tilt, DEPR.FLRW, DEPR.FLRW_tilt],
+)
+def test_implicit_evidence_model_defaults_fail_closed(model_type):
+    """Neither primary nor compatibility imports may silently drop channel c."""
+    with pytest.raises(CF4InputQuarantined, match="implicit/default likelihood"):
+        model_type()
 
 
-def test_R03a_flrw_tilt_lnZ_matches_deprecated():
-    """FLRW_tilt log-evidence (quadrature) identical."""
-    r_a = R03a.FLRW_tilt().log_evidence_quadrature(n_points=10000)["lnZ"]
-    r_d = DEPR.FLRW_tilt().log_evidence_quadrature(n_points=10000)["lnZ"]
-    assert r_a == r_d
-
-
-def test_R03a_flrw_tilt_beta_mean_matches_deprecated():
-    """Posterior-mean β identical across implementations."""
-    r_a = R03a.FLRW_tilt().log_evidence_quadrature(n_points=10000)["beta_mean"]
-    r_d = DEPR.FLRW_tilt().log_evidence_quadrature(n_points=10000)["beta_mean"]
-    assert r_a == r_d
-
-
-def test_R03a_pins_same_claude_md_anchors():
-    """R03a also satisfies the CLAUDE.md §5 production anchors bit-exact."""
-    res = R03a.FLRW_tilt().log_evidence_quadrature(n_points=10000)
-    lnZ_flrw = R03a.FLRW().log_evidence()
-    assert res["lnZ"] - lnZ_flrw == pytest.approx(26.3966094015, abs=1e-9)
-    assert res["beta_mean"]       == pytest.approx(1.3597868670e-03, abs=1e-12)
+def test_explicit_non_cf4_method_selection_matches_compatibility_alias():
+    """The alias preserves typed c-free method selection without computing lnZ."""
+    primary = R03a.FLRW_tilt(channels=ACTIVE_DEFAULT_CHANNELS)
+    compatibility = DEPR.FLRW_tilt(channels=ACTIVE_DEFAULT_CHANNELS)
+    assert primary.channels == compatibility.channels == ACTIVE_DEFAULT_CHANNELS
 
 
 # ═══════════════════════════════════════════════════════════════════════
@@ -204,8 +198,10 @@ def test_obsdata_default_values_pinned():
     assert obs.e1_CW == 1.476e-3
     # Radio (NVSS+RACS)
     assert obs.e1_rad == 3.296e-3
-    # CF4 bulk flow
-    assert obs.b_CF4 == 1.334e-3
+    # The former channel-c observation has no active numerical payload.
+    from htt.core.cf4_observational_input import CF4InputQuarantined
+    with pytest.raises(CF4InputQuarantined, match="N-DATA-CF4-DOWNSTREAM"):
+        _ = obs.b_CF4
     # Saadeh vorticity (internal convention omH = (√2/3)(ω/H))
     assert obs.omH_UL == 2.45e-11
 

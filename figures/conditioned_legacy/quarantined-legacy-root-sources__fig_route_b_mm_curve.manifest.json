@@ -1,6 +1,7 @@
 {
   "artifact_id": "common.conditioned_legacy_figure.quarantined-legacy-root-sources__fig_route_b_mm_curve",
   "artifact_path": "figures/conditioned_legacy/quarantined-legacy-root-sources__fig_route_b_mm_curve.png",
+  "artifact_sha256": "sha256:0c0a32095101721cbe673890edd88943bbe932e4d45a91c94dad5a547a3cc7ae",
   "caveats": [
     "Conditionally included legacy figure; not a refreshed current-code production result.",
     "shown only as a legacy manuscript-generator diagnostic under its original assumptions, with current claim ceilings made explicit.",
@@ -9,17 +10,17 @@
     "MIO diagnostics, HTT inference, and transfer provenance remain separated by owner."
   ],
   "claim_tier": "exploratory",
-  "code_version": "conditioned-legacy-gallery-v1",
-  "config_hash": "sha256:63e2726a41d821615b4e3e394baecf206017865d580e9966c0f9d08b70f8ed71",
+  "code_version": "conditioned-legacy-gallery-v2",
+  "config_hash": "sha256:c001977a48bb57d9521c959428838eb0b1f4af19b9b855952a48003b1fd918d4",
   "created_by": "scripts/build_expanded_manuscript_figure_suite.py",
   "failed_gates": [],
-  "generating_command": "python scripts/build_expanded_manuscript_figure_suite.py",
-  "git_commit": "85fca53",
-  "git_commit_or_worktree_state": "85fca53+dirty",
+  "generating_command": "python scripts/build_expanded_manuscript_figure_suite.py --phase all",
+  "git_commit": "e6da367",
+  "git_commit_or_worktree_state": "e6da367+dirty",
   "implementation_scope": "common",
   "input_hashes": [
     "figures/quarantined_legacy/root_sources/fig_route_b_mm_curve.png:sha256:0c0a32095101721cbe673890edd88943bbe932e4d45a91c94dad5a547a3cc7ae",
-    "scripts/build_expanded_manuscript_figure_suite.py:sha256:b96cc2dc76f678a2158b7053334b182ab2908963be64209cd4aa19c7f60d228a"
+    "scripts/build_expanded_manuscript_figure_suite.py:sha256:f530556a73b1f17113a6fb4ee539733f1364a26e60ffc20d633d67a7af721106"
   ],
   "null_mock_status": "not_statistical_or_legacy_context",
   "owner": "COMMON",
@@ -33,9 +34,17 @@
   ],
   "schema_version": "artifact-manifest-v2",
   "sky_support_status": "not_directional",
+  "source_binding": {
+    "artifact_sha256": "sha256:0c0a32095101721cbe673890edd88943bbe932e4d45a91c94dad5a547a3cc7ae",
+    "current_source_sha256": "sha256:0c0a32095101721cbe673890edd88943bbe932e4d45a91c94dad5a547a3cc7ae",
+    "frozen_source_sha256": "sha256:0c0a32095101721cbe673890edd88943bbe932e4d45a91c94dad5a547a3cc7ae",
+    "source_path": "figures/quarantined_legacy/root_sources/fig_route_b_mm_curve.png",
+    "status": "current_source_matches_artifact"
+  },
   "statistics_definitions": {
     "legacy_source_path": "figures/quarantined_legacy/root_sources/fig_route_b_mm_curve.png",
-    "manuscript_role": "appendix_only_conditioned_diagnostic"
+    "manuscript_role": "appendix_only_conditioned_diagnostic",
+    "source_binding_status": "current_source_matches_artifact"
   },
   "transfer_source": "external_or_legacy_transfer_context"
 }

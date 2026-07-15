@@ -1,99 +1,74 @@
 {
+  "allowed_use": "blocked_source_record_only",
+  "artifact": {
+    "active_path": "docs/generated/bass_extended_joint_forecast.json",
+    "artifact_id": "bass_extended_joint_forecast",
+    "artifact_kind": "derived_result_card_block_record",
+    "legacy_public_use": false,
+    "legacy_reproduction_only_path": "legacy/cf4_p0/cards/bass_extended_joint_forecast.json",
+    "producer": "scripts/bass_extended_joint_forecast.py"
+  },
   "caveats": [
-    "correlated PV covariance is the leading bulk+shear Woodbury model; full xi_ij from a velocity power spectrum / WF ensemble is BLOCKED_MISSING_FIELD_REALIZATIONS",
-    "JWST prior is a survey-design forecast on a few nearby anchors; the gain is reported, not inflated",
-    "model-independent kinematics; Sigma^2 stays partial; no family/geometry/native-solver claim"
+    "Quarantine is propagation control, not scientific remediation or validation.",
+    "All three findings remain OPEN; zero stale active consumers does not close them.",
+    "No audit sensitivity or alternative number is a replacement result.",
+    "Historical audits and frozen external packages remain immutable evidence.",
+    "PR4/NPIPE download, reduction, and analysis remain skipped by user scope."
   ],
-  "claim_tier": "diagnostic_only",
-  "cmb_data_sector": {
-    "ref": "docs/generated/k1_biposh_smica.json (real SMICA BipoSH SI measurement)",
-    "status": "measured_partial"
+  "claim_level": {
+    "level": "C1",
+    "scheme": "roadmap_rescue_v1"
   },
-  "cmb_theory_sector": {
-    "blocker": "AWAITING_NATIVE_LOWELL_SOLVER",
-    "note": "g-conditioned C_{lm,l'm'}(g) needs the native solver; not fabricated",
-    "status": "fail_closed"
-  },
-  "coupled_fisher_degeneracy_break": {
-    "degeneracy_break_factor": 1.0013156196224764,
-    "note": "tighter Omega_tilt precision reduces the Sigma^2 covariance inflation (boost leakage blocked)",
-    "rho_report": 0.5,
-    "sigma2_inflation_data": 1.0416666666666667,
-    "sigma2_inflation_jwst": 1.0402980301649583
-  },
-  "family_identification": false,
-  "jwst_forecast": {
-    "anchor_source": "matched",
-    "jwst_shrink": 0.3333333333333333,
-    "label": "forecast (hypothetical JWST prior until anchors materially matched)",
-    "n_anchor_matched": 9,
-    "omega_tilt_precision_gain": 1.0407554363160498,
-    "status": "forecast"
-  },
-  "native_solver_result": false,
-  "owner": "OBSSTAT",
-  "pv_sector": {
-    "covariance": "diag(sigma_v^2) + U Lambda U^T (Woodbury; coherent shear modes)",
-    "input_hash": "sha256:3c0f2e1a5b56b7227abb5e187406810d7eb15e924aac69e9cb0ffc1343a811ad",
-    "n_groups": 38049,
-    "sigma_star_kms": 50.0,
-    "status": "measured",
-    "tilt_correlated": {
-      "amplitude_error_kms": 4.991006069819935,
-      "amplitude_kms": 345.3913696823137,
-      "covariance": [
-        [
-          24.915396815629972,
-          -1.1438050525515109,
-          -3.1288220923777676
-        ],
-        [
-          -1.1438050525515098,
-          16.994605497083356,
-          -1.0386522121713397
-        ],
-        [
-          -3.128822092377768,
-          -1.038652212171339,
-          42.18734805588601
-        ]
-      ],
-      "n_groups": 38049,
-      "n_modes": 5,
-      "vector_kms": [
-        -292.94212818751714,
-        139.35567420026368,
-        -118.57530877962306
-      ]
+  "claim_tier": "blocked",
+  "config_hash": "7b684610685ed343747a74d76aca8cc9e4738ea1273ab4c4a696de938baa3235",
+  "findings": [
+    {
+      "claim_tier_ceiling": "blocked",
+      "finding_id": "C1-K5-MV-F1",
+      "scientific_status": "OPEN",
+      "severity": "P0",
+      "source_reference": "docs/audits/self_adversarial_audit_20260713_nsc/03_cove_correctness_ledger.json#C1-K5-MV-F1",
+      "source_sha256": "635fb02a705974e4b13678213914d57eb815f597e9799469eb8ae1925e47227c"
     },
-    "tilt_diagonal": {
-      "amplitude_error_kms": 4.968225629763412,
-      "amplitude_kms": 340.7263983377027,
-      "covariance": [
-        [
-          24.781478424539866,
-          -1.1844018156917724,
-          -3.1057551857338694
-        ],
-        [
-          -1.1844018156917724,
-          16.281736002837693,
-          -0.9994338235286968
-        ],
-        [
-          -3.1057551857338686,
-          -0.9994338235286977,
-          41.34522559595179
-        ]
-      ],
-      "n_groups": 38049,
-      "n_modes": 0,
-      "vector_kms": [
-        -292.1206259792919,
-        131.0960461311427,
-        -116.50684568054687
-      ]
+    {
+      "claim_tier_ceiling": "blocked",
+      "finding_id": "C3-K5-VCORR-ML-F1",
+      "scientific_status": "OPEN",
+      "severity": "P0",
+      "source_reference": "docs/audits/self_adversarial_audit_20260713_nsc/03_cove_correctness_ledger.json#C3-K5-VCORR-ML-F1",
+      "source_sha256": "635fb02a705974e4b13678213914d57eb815f597e9799469eb8ae1925e47227c"
+    },
+    {
+      "claim_tier_ceiling": "blocked",
+      "finding_id": "N-DATA-CF4-DOWNSTREAM",
+      "scientific_status": "OPEN",
+      "severity": "P1",
+      "source_reference": "docs/audits/jcap_prd_adversarial_audit_20260714/atomic_finding_ledger.json#N-DATA-CF4-DOWNSTREAM",
+      "source_sha256": "6e88a6f6c4f95e5154c89e939230c94854b11a8430a64c28ccb339d8c4ab6feb"
     }
-  },
-  "schema": "htt.bass_extended_joint_forecast.v1"
+  ],
+  "generating_command": "PYTHONPATH=htt/src venv/bin/python -B scripts/codex_harness/quarantine_cf4_p0_consumers.py --write",
+  "git_commit_or_worktree_state": "baseline_commit:e6da3670043596efdcd93f9ba5e631e1462146c7; PR-120 worktree hashes are bound by the canonical inventory",
+  "implementation_scope": "propagation_quarantine_only",
+  "input_hashes": [
+    "docs/research_program/long_horizon_rescue/cf4_p0_quarantine_policy.yaml:sha256:7b684610685ed343747a74d76aca8cc9e4738ea1273ab4c4a696de938baa3235",
+    "docs/generated/cf4_p0_quarantine_inventory.json:sha256:2d6eada611234b102989f2e12441637a4e35b64bf456c3096f6ee8e426fa82de",
+    "docs/codex_handoff/research_remediation_state.yaml:sha256:77d36878315f041c7bb6c273a2d650f7d3fa1c8a8dc635a577527d646fa40109"
+  ],
+  "inventory_path": "docs/generated/cf4_p0_quarantine_inventory.json",
+  "inventory_sha256": "2d6eada611234b102989f2e12441637a4e35b64bf456c3096f6ee8e426fa82de",
+  "null_mock_status": "not_applicable_quarantine_is_not_validation",
+  "owner": "COMMON",
+  "policy_path": "docs/research_program/long_horizon_rescue/cf4_p0_quarantine_policy.yaml",
+  "policy_sha256": "7b684610685ed343747a74d76aca8cc9e4738ea1273ab4c4a696de938baa3235",
+  "public_use": true,
+  "remediation_root_path": "docs/codex_handoff/research_remediation_state.yaml",
+  "remediation_root_sha256": "77d36878315f041c7bb6c273a2d650f7d3fa1c8a8dc635a577527d646fa40109",
+  "replacement_policy": "forbidden_without_later_authenticated_adjudication",
+  "replacement_value": null,
+  "schema": "htt.cf4_p0_quarantine_block.v1",
+  "scientific_effect": "none",
+  "sky_support_status": "not_applicable_to_propagation_quarantine",
+  "status": "QUARANTINED_OPEN_FINDINGS",
+  "transfer_source": "none"
 }

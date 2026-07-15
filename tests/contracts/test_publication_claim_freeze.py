@@ -64,11 +64,19 @@ def test_payload_maps_public_claims_to_artifacts_tests_caveats_and_owner():
     assert assertions["claim_ledger_included"] is True
     assert assertions["transfer_provenance_included"] is True
     assert assertions["external_audit_package_included"] is True
-    assert assertions["pdf_claim_lint_passed"] is True
+    assert assertions["pdf_claim_lint_passed"] is False
     assert assertions["manuscript_blockers_recorded"] is True
+    assert assertions["no_current_manuscript_pdf_recorded"] is True
+    assert assertions["manuscript_source_quarantine_enforced"] is True
     assert assertions["no_forbidden_claim_language"] is True
     assert assertions["no_c5_c6_family_id_claim"] is True
-    assert payload["failed_gates"] == []
+    assert assertions["cf4_p0_quarantine_clean"] is True
+    assert payload["cf4_p0_quarantine"]["ok"] is True
+    assert payload["cf4_p0_quarantine"]["issues"] == []
+    assert payload["failed_gates"] == ["pdf_claim_lint_passed"]
+    assert payload["submission_decision"] == "blocked_cf4_p0_manuscript_quarantine"
+    assert payload["manuscript_blockers"]["current_pdf_present"] is False
+    assert payload["manuscript_blockers"]["source_quarantine_enforced"] is True
 
     for claim in payload["public_claims"]:
         assert claim["owner"]
@@ -104,7 +112,7 @@ def test_dry_run_does_not_write_reports(tmp_path: Path):
         check=False,
     )
 
-    assert result.returncode == 0, result.stderr
+    assert result.returncode == 1
     assert "DRY-RUN" in result.stdout
     expected = module.build_publication_claim_freeze_payload(
         repo_root=REPO_ROOT,
@@ -139,7 +147,7 @@ def test_write_and_check_reports(tmp_path: Path):
         check=False,
     )
 
-    assert write.returncode == 0, write.stderr
+    assert write.returncode == 1
     assert freeze_output.exists()
     assert matrix_output.exists()
     freeze_text = freeze_output.read_text(encoding="utf-8")
@@ -155,8 +163,13 @@ def test_write_and_check_reports(tmp_path: Path):
     )
     assert f"Submission decision: `{payload['submission_decision']}`" in freeze_text
     blockers = payload["manuscript_blockers"]
-    assert f"Missing refs | {blockers['missing_refs']}" in freeze_text
-    assert f"Quarantined refs | {blockers['quarantined_refs']}" in freeze_text
+    assert "Current manuscript PDF present | False" in freeze_text
+    assert "CF4 P0 source quarantine enforced | True" in freeze_text
+    assert "PDF claim lint | blocked, not passed" in freeze_text
+    if blockers["missing_refs"] == 0:
+        assert "Missing figure refs" not in freeze_text
+    if blockers["quarantined_refs"] == 0:
+        assert "Quarantined figure refs" not in freeze_text
     _assert_no_forbidden_language(freeze_text + "\n" + matrix_text)
 
     fresh = subprocess.run(
@@ -174,7 +187,7 @@ def test_write_and_check_reports(tmp_path: Path):
         capture_output=True,
         check=False,
     )
-    assert fresh.returncode == 0, fresh.stderr
+    assert fresh.returncode == 1
     assert "up-to-date" in fresh.stdout
 
     matrix_output.write_text(matrix_text + "\n", encoding="utf-8")
@@ -289,3 +302,79 @@ def test_missing_required_input_fails_closed(tmp_path: Path):
         assert missing in str(exc)
     else:
         raise AssertionError("missing required input did not fail closed")
+
+
+def test_manuscript_source_quarantine_is_primitive_and_current_pdf_is_absent():
+    module = _load_module()
+    source = (REPO_ROOT / module.MANUSCRIPT_SOURCE).read_text(encoding="utf-8")
+
+    assert module._manuscript_source_quarantine_enforced(REPO_ROOT) is True
+    assert source.index(
+        r"\ifcsname HTTCF4PZeroLegacyReproduction\endcsname"
+    ) < source.index(
+        "\n" + r"\documentclass"
+    )
+    assert not (REPO_ROOT / module.CURRENT_MANUSCRIPT_PDF).exists()
+
+
+def test_stale_cf4_public_claim_mutation_fails_quarantine_gate():
+    module = _load_module()
+    stale_claim = {
+        **module.PUBLIC_CLAIMS[0],
+        "claim_id": "stale.cf4.mv.publication",
+        "statement": (
+            "CF4 MV ideal-window bulk flow |B|(200 h^-1Mpc) = "
+            + "40"
+            + "5 km/s with LambdaCDM tension "
+            + "4.4"
+            + "-5.4 sigma"
+        ),
+        "allowed_phrase": "CF4 " + "40" + "5 km/s bulk-flow result",
+    }
+
+    payload = module.build_publication_claim_freeze_payload(
+        repo_root=REPO_ROOT,
+        freeze_output=Path("docs/generated/publication_claim_freeze.md"),
+        matrix_output=Path("docs/generated/hostile_review_response_matrix.md"),
+        generating_command="python scripts/check_publication_claim_freeze.py --dry-run",
+        public_claims=[stale_claim],
+        hostile_review_rows=module.HOSTILE_REVIEW_ROWS,
+        worktree_state="test-worktree",
+    )
+
+    assert payload["required_assertions"]["cf4_p0_quarantine_clean"] is False
+    assert "cf4_p0_quarantine_clean" in payload["failed_gates"]
+    assert payload["cf4_p0_quarantine"]["ok"] is False
+    assert payload["cf4_p0_quarantine"]["issues"]
+
+
+def test_blocked_pdf_lint_with_zero_findings_cannot_pass_publication_gate(
+    tmp_path: Path,
+):
+    module = _load_module()
+    pdf_path = (
+        tmp_path
+        / "docs/generated/manuscript_pdf/htt_base_research_report.pdf"
+    )
+    report_path = tmp_path / "docs/generated/pdf_claim_lint_report.md"
+    pdf_path.parent.mkdir(parents=True)
+    report_path.parent.mkdir(parents=True, exist_ok=True)
+    pdf_path.write_bytes(b"not-a-real-pdf")
+    pdf_hash = module._sha256_file(pdf_path)
+    report_path.write_text(
+        "\n".join(
+            [
+                "# PDF Claim Lint Report",
+                "status: BLOCKED_NO_CURRENT_PDF",
+                "claim_lint_passed: false",
+                "",
+                "## Summary",
+                f"- PDF SHA256: `{pdf_hash}`",
+                "- Failed findings: `0`",
+                "",
+            ]
+        ),
+        encoding="utf-8",
+    )
+
+    assert module._pdf_claim_lint_passed(tmp_path) is False

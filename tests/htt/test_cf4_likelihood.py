@@ -199,3 +199,35 @@ def test_cf4_forward_likelihood_allows_manifested_velocity_gaussian_but_stays_bl
     assert payload["publication_ready"] is False
     assert payload["velocity_gaussian_manifest_ref"] == manifest_ref
     assert payload["velocity_gaussian_manifest_hash"].startswith("sha256:")
+
+
+def test_observed_cf4_likelihood_report_is_quarantined_method_only() -> None:
+    from pathlib import Path
+
+    repo = Path(__file__).resolve().parents[2]
+    active = json.loads(
+        (repo / "docs/generated/cf4_bulkflow_likelihood_report.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    artifact = active["artifact"]
+    assert active["status"] == "QUARANTINED_OPEN_FINDINGS"
+    assert active["claim_tier"] == "blocked"
+    assert artifact["allowed_use"] == "likelihood_schema_and_coverage_test_design_only"
+    assert artifact["observational_numeric_instantiation"]["values"] is None
+    assert artifact["observational_numeric_instantiation"]["replacement_value"] is None
+    assert "bulk_flow_amplitude_measurement" in artifact["forbidden_uses"]
+    assert "observed_likelihood_ratio" in artifact["forbidden_uses"]
+    assert "posterior_or_evidence" in artifact["forbidden_uses"]
+    assert {row["scientific_status"] for row in active["findings"]} == {"OPEN"}
+
+    legacy_root = repo / "legacy/cf4_p0"
+    assert (legacy_root / "cards/cf4_bulkflow_likelihood_report.json").is_file()
+    assert (legacy_root / "cards/cf4_bulkflow_likelihood_report.md").is_file()
+    assert (
+        legacy_root
+        / "figures/observed_current/fig_observed_cf4_bulkflow_likelihood.png"
+    ).is_file()
+    assert not (
+        repo / "figures/observed_current/fig_observed_cf4_bulkflow_likelihood.png"
+    ).exists()

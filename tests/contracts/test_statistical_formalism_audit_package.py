@@ -40,10 +40,17 @@ def test_statistical_formalism_package_includes_focused_sources():
         manifest_path="memory://statistical_formalism_audit_package_manifest.json",
         expected_artifact_path="docs/generated/statistical_formalism_audit_package.zip",
     ) == ()
-    assert not payload["failed_gates"]
+    assert payload["failed_gates"] == []
+    assert payload["required_assertions"]["cf4_p0_quarantine_clean"] is True
+    assert payload["cf4_p0_quarantine"]["ok"] is True
+    assert payload["active_package_release_authorized"] is True
+    assert payload["cf4_p0_scientific_promotion_authorized"] is False
+    assert payload["science_promotion_gates"]["cf4_p0_findings"] == "blocked_open_findings"
     for assertion in (
         "compiled_pdf_excluded",
         "latex_source_included",
+        "retained_manuscript_sources_historical_nonpublic",
+        "manuscript_hard_stop_stub_only_active_source",
         "statistical_prompt_included",
         "readiness_checklist_included",
         "figure_label_linter_report_included",
@@ -51,6 +58,7 @@ def test_statistical_formalism_package_includes_focused_sources():
         "formalism_code_included",
         "formalism_tests_included",
         "formalism_metadata_included",
+        "cf4_quarantine_controls_included",
         "formalism_figures_have_payload_and_manifest",
         "figure_manifest_lanes_safe",
         "minimal_formalism_scope_only",
@@ -73,6 +81,41 @@ def test_statistical_formalism_package_includes_focused_sources():
     assert "statistical_formalism_audit/tests/mio/test_isotropy_gap.py" in archive_paths
     assert "statistical_formalism_audit/figures/current/fig_current_qfpi_gf_semantic_split.png" in archive_paths
     assert not any(path.lower().endswith(".pdf") for path in archive_paths)
+    assert all("content_mode" in row and "public_use" in row for row in payload["archive_entries"])
+    binary_rows = [
+        row
+        for row in payload["archive_entries"]
+        if row["source_path"].lower().endswith((".png", ".pdf", ".zip"))
+    ]
+    assert binary_rows
+    assert all(
+        row.get("binary_binding", {}).get("sha256") == row["sha256"]
+        for row in binary_rows
+    )
+    by_source = {row["source_path"]: row for row in payload["archive_entries"]}
+    for path in (
+        "docs/generated/cf4_p0_quarantine_block.json",
+        "docs/generated/cf4_p0_quarantine_inventory.json",
+    ):
+        assert by_source[path]["content_mode"] == "active_public"
+        assert by_source[path]["public_use"] is True
+    manuscript_sources = {
+        source: row
+        for source, row in by_source.items()
+        if source.startswith(module.MANUSCRIPT_SOURCE_PREFIX)
+        and Path(source).suffix in {".tex", ".bib"}
+    }
+    assert manuscript_sources[module.MANUSCRIPT_HARD_STOP_STUB]["content_mode"] == "active_public"
+    assert manuscript_sources[module.MANUSCRIPT_HARD_STOP_STUB]["public_use"] is True
+    for source, row in manuscript_sources.items():
+        if source == module.MANUSCRIPT_HARD_STOP_STUB:
+            continue
+        assert row["content_mode"] == "immutable_historical_evidence", source
+        assert row["public_use"] is False, source
+    assert payload["active_manuscript_publication_source_authorized"] is False
+    assert payload["publication_gates"]["current_manuscript_source_authorized"].startswith(
+        "fail_"
+    )
 
     prompt = next(entry for entry in _entries if entry.archive_path == "AUDIT_PROMPT_STATISTICAL_FORMALISM.md").bytes(REPO_ROOT).decode("utf-8")
     assert "Novelty and substance" in prompt
@@ -80,6 +123,61 @@ def test_statistical_formalism_package_includes_focused_sources():
     assert "signed sector components" in prompt
     assert "Legacy lnB leakage" in prompt
     assert "semantic-firewall machinery" in prompt
+    assert "not a current manuscript publication source" in prompt
+    assert "public_use:false" in module.render_readme()
+
+
+def test_statistical_formalism_legacy_snapshot_is_preserved_nonpublic():
+    legacy = REPO_ROOT / "legacy/cf4_p0/packages/statistical_formalism_audit"
+    assert (legacy / "statistical_formalism_audit_package.zip").is_file()
+    assert (legacy / "statistical_formalism_audit_package_manifest.json").is_file()
+    assert (legacy / "statistical_formalism_audit_prompt.md").is_file()
+    assert (legacy / "statistical_formalism_reaudit_readiness.md").is_file()
+
+
+def test_statistical_formalism_stale_cf4_entry_fails_content_gate(monkeypatch):
+    module = _load_module()
+    original = module._file_entries
+
+    def mutated(repo_root, paths, *, group, description):
+        entries = original(
+            repo_root,
+            paths,
+            group=group,
+            description=description,
+        )
+        if group == "formalism_metadata":
+            entries.append(
+                module._virtual_entry(
+                    f"{module.ARCHIVE_ROOT}/docs/generated/mutated_cf4_result.json",
+                    "formalism_metadata",
+                    "mutation: active stale CF4 result",
+                    (
+                        '{"claim":"CF4 MV bulk flow '
+                        + "40"
+                        + "5 km/s with LambdaCDM tension "
+                        + "4.4"
+                        + '-5.4 sigma"}'
+                    ),
+                )
+            )
+        return entries
+
+    monkeypatch.setattr(module, "_file_entries", mutated)
+    payload, _entries = module.build_payload(
+        repo_root=REPO_ROOT,
+        output_zip=Path("docs/generated/statistical_formalism_audit_package.zip"),
+        output_manifest=Path("docs/generated/statistical_formalism_audit_package_manifest.json"),
+        output_prompt=Path("docs/generated/statistical_formalism_audit_prompt.md"),
+        output_readiness=Path("docs/generated/statistical_formalism_reaudit_readiness.md"),
+        generating_command="pytest",
+        git_commit="test-commit",
+        worktree_state="test-worktree",
+    )
+
+    assert payload["required_assertions"]["cf4_p0_quarantine_clean"] is False
+    assert "cf4_p0_quarantine_clean" in payload["failed_gates"]
+    assert payload["cf4_p0_quarantine"]["issues"]
 
 
 def test_statistical_formalism_package_self_reference_reuse(tmp_path: Path):

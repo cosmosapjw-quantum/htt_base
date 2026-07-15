@@ -1,6 +1,7 @@
 {
   "artifact_id": "common.conditioned_legacy_figure.quarantined-meta-v6-no-download__fig_v6_optical_ansatz_readiness",
   "artifact_path": "figures/conditioned_legacy/quarantined-meta-v6-no-download__fig_v6_optical_ansatz_readiness.png",
+  "artifact_sha256": "sha256:04622ea133c9d476fc540f13771ce0230ae70605885b28b9104cd0b626628a36",
   "caveats": [
     "Conditionally included legacy figure; not a refreshed current-code production result.",
     "shown only as a legacy manuscript-generator diagnostic under its original assumptions, with current claim ceilings made explicit.",
@@ -9,17 +10,17 @@
     "MIO diagnostics, HTT inference, and transfer provenance remain separated by owner."
   ],
   "claim_tier": "exploratory",
-  "code_version": "conditioned-legacy-gallery-v1",
-  "config_hash": "sha256:ccffa1f2eaab96360cf38d107bce9df74284d006257f32236597d2079d8a4972",
+  "code_version": "conditioned-legacy-gallery-v2",
+  "config_hash": "sha256:adf54e14622e26ba1b2968c1076c108cc44e1442ccc2210c0741ce272e4ed7d5",
   "created_by": "scripts/build_expanded_manuscript_figure_suite.py",
   "failed_gates": [],
-  "generating_command": "python scripts/build_expanded_manuscript_figure_suite.py",
-  "git_commit": "85fca53",
-  "git_commit_or_worktree_state": "85fca53+dirty",
+  "generating_command": "python scripts/build_expanded_manuscript_figure_suite.py --phase all",
+  "git_commit": "e6da367",
+  "git_commit_or_worktree_state": "e6da367+dirty",
   "implementation_scope": "common",
   "input_hashes": [
     "figures/quarantined_meta/v6_no_download/fig_v6_optical_ansatz_readiness.png:sha256:04622ea133c9d476fc540f13771ce0230ae70605885b28b9104cd0b626628a36",
-    "scripts/build_expanded_manuscript_figure_suite.py:sha256:b96cc2dc76f678a2158b7053334b182ab2908963be64209cd4aa19c7f60d228a"
+    "scripts/build_expanded_manuscript_figure_suite.py:sha256:f530556a73b1f17113a6fb4ee539733f1364a26e60ffc20d633d67a7af721106"
   ],
   "null_mock_status": "not_statistical_or_legacy_context",
   "owner": "COMMON",
@@ -33,9 +34,17 @@
   ],
   "schema_version": "artifact-manifest-v2",
   "sky_support_status": "not_directional",
+  "source_binding": {
+    "artifact_sha256": "sha256:04622ea133c9d476fc540f13771ce0230ae70605885b28b9104cd0b626628a36",
+    "current_source_sha256": "sha256:04622ea133c9d476fc540f13771ce0230ae70605885b28b9104cd0b626628a36",
+    "frozen_source_sha256": "sha256:04622ea133c9d476fc540f13771ce0230ae70605885b28b9104cd0b626628a36",
+    "source_path": "figures/quarantined_meta/v6_no_download/fig_v6_optical_ansatz_readiness.png",
+    "status": "current_source_matches_artifact"
+  },
   "statistics_definitions": {
     "legacy_source_path": "figures/quarantined_meta/v6_no_download/fig_v6_optical_ansatz_readiness.png",
-    "manuscript_role": "appendix_only_conditioned_diagnostic"
+    "manuscript_role": "appendix_only_conditioned_diagnostic",
+    "source_binding_status": "current_source_matches_artifact"
   },
   "transfer_source": "legacy_analytic_or_proxy_context"
 }

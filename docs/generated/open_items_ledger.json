@@ -36,7 +36,7 @@
     "decision_only": "waits on an explicit owner/user decision",
     "now": "executable immediately, no external dependency"
   },
-  "generated_at": "2026-07-11",
+  "generated_at": "2026-07-15",
   "not_a_report_artifact": true,
   "open_items": [
     {
@@ -64,9 +64,9 @@
     {
       "blocker": "BLOCKED_MISSING_PR4_E2E_ACCESS",
       "executability": "blocked",
-      "exit_gate": "PLA FFP10/NPIPE E2E ensembles on disk (download in flight, ~1TB); then the registered max-scan/global-p mechanics run unchanged",
+      "exit_gate": "PR4/FFP10-NPIPE E2E authority and inputs on disk; the current roadmap execution explicitly skips every PR4 download, reduction, and analysis step",
       "item": "K1 E2E-systematics null + BipoSH E2E upgrade",
-      "note": "PLA/PL3 downloads in progress (2026-07-11).",
+      "note": "The user confirms the separate PR3 E2E acquisition is complete. PR4 data are not downloaded and PR4 analysis is out of scope for the active long-horizon run.",
       "rank": 3,
       "source": "ticket EGS3-C1-k1-ffp10-npipe; BLOCKERS.md section 1",
       "ticket": "k1_ffp10_npipe.yaml",
@@ -81,25 +81,25 @@
       "rank": 4,
       "source": "ticket EGS3-C2-cf4-wfcr; BLOCKERS.md section 2",
       "ticket": "cf4_wfcr.yaml",
-      "ticket_state": "blocked"
+      "ticket_state": "quarantined_open_p0"
     },
     {
       "blocker": "BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP",
       "executability": "blocked",
-      "exit_gate": "the full nonlinear COLA/L-PICOLA survey-matched mock suite (Qin+2021 CF4TF is request-only) to fold in nonlinear velocity power + selection mode-coupling; the in-house physical forward mock (rev-r197) already calibrates the estimator and localises this residual",
-      "item": "K5 CF4 bulk-flow significance: nonlinear COLA/L-PICOLA refinement (in-house physical mock DELIVERED)",
-      "note": "REV-R197: scripts/cf4_mock_calibrated_significance.py DELIVERS an in-house PHYSICAL forward-mock ensemble (linear GRF velocity field + super-sample mode + real per-object noise at the fixed CF4 geometry, htt/obsstat/pv_forward_mocks.py; 2000 survey-matched mocks). It reproduces the analytic linear bulk-flow covariance (mock/analytic ratio ~1) -> the estimator/geometry/noise do NOT inflate the significance; the gap to the literature ~2-3 sigma is localised to nonlinear velocity power. Only the full nonlinear COLA refinement remains -- the 'no mock at all' state is discharged. (rev-r196 MV route: |B|(200)=405 km/s resolved rev-r195's withheld significance.)",
+      "exit_gate": "close C1-K5-MV-F1 and N-DATA-CF4-DOWNSTREAM through authenticated lineage, an estimator-appropriate nonlinear release-matched mock suite, all-consumer regeneration, and independent non-author adjudication",
+      "item": "K5 CF4 P0 remediation: authenticated estimator lineage, release-matched mocks, and non-author adjudication",
+      "note": "PR-120 quarantines the historical amplitude, significance, and global-tilt chain. Existing analytic and in-house mock mechanics remain method substrate only; neither supplies a replacement result or closes an OPEN finding.",
       "rank": 5,
       "source": "ticket EGS3-C2-cf4-wfcr; BLOCKERS.md section 3; registry K5-MOCKSIG",
       "ticket": "cf4_wfcr.yaml",
-      "ticket_state": "blocked"
+      "ticket_state": "quarantined_open_p0"
     },
     {
       "blocker": "BLOCKED_UPSTREAM",
       "executability": "blocked",
-      "exit_gate": "close K1+K5+K6 first (items 3-5); then assemble with explicit measured/partial/fail-closed sectors",
-      "item": "PR08-006 joint posterior artifact",
-      "note": null,
+      "exit_gate": "close the CF4 P0 lineage and matched-null gates first; then regenerate every downstream sector from authenticated sources without zero-filling blind sectors",
+      "item": "PR08-006 joint artifact regeneration after CF4 P0 closure",
+      "note": "The active artifact is a canonical blocked-source record. Historical numerical joins are legacy_reproduction_only and public_use false.",
       "rank": 6,
       "source": "BLOCKERS.md section 4",
       "ticket": null,

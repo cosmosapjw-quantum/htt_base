@@ -45,15 +45,16 @@ def test_survey_nuisance_artifact_is_json_ready():
     from htt.infer.survey_nuisance import survey_nuisance_report_artifact
 
     artifact = survey_nuisance_report_artifact(
-        {'CF4': 1.334e-3, 'CW': 1.60e-3, 'Radio': 1.50e-3},
+        {'CW': 2.0e-4, 'Radio': 3.0e-4},
         metadata={'git_commit': 'test'},
     )
 
     assert artifact['artifact_name'] == 'survey_nuisance_report_v1.json'
     assert artifact['production_allowed'] is False
     assert artifact['off_diagonal_policy'] == 'diagonal_only_conservative'
-    assert len(artifact['covariance_matrix']) == 3
-    assert set(artifact['surveys']) == {'CF4', 'CW', 'Radio'}
+    assert artifact['excluded_channels'] == ['c']
+    assert len(artifact['covariance_matrix']) == 2
+    assert set(artifact['surveys']) == {'CW', 'Radio'}
     json.dumps(artifact)
 
 
@@ -88,9 +89,12 @@ def test_shared_cause_auto_fit_is_not_hardcoded():
     target_a = 2.4e-3
 
     dp = obs['dipole_observations']
-    dp['cf4_watkins_2023']['l_deg'] = target_l
-    dp['cf4_watkins_2023']['b_deg'] = target_b
-    dp['cf4_watkins_2023']['beta'] = target_a
+    dp['cf4_watkins_2023'] = {
+        'l_deg': 1.0,
+        'b_deg': 2.0,
+        'beta': 99.0,
+        'sigma': 1.0e-12,
+    }
     dp['catwise_bohme_2025']['l_deg'] = target_l
     dp['catwise_bohme_2025']['b_deg'] = target_b
     dp['catwise_bohme_2025']['eps1'] = target_a
@@ -118,7 +122,8 @@ def test_shared_cause_report_artifact_is_json_ready():
 
     assert artifact['artifact_name'] == 'shared_cause_report_v1.json'
     assert artifact['production_allowed'] is False
-    assert artifact['fit_mode'] == 'weighted_data_fit'
-    assert len(artifact['ablation_checks']) == 3
+    assert artifact['fit_mode'] == 'weighted_non_cf4_data_fit'
+    assert artifact['excluded_channels'] == ['c']
+    assert len(artifact['ablation_checks']) == 2
     assert artifact['config_hash'] != ''
     json.dumps(artifact)

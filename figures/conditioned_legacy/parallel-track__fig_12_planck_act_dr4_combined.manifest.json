@@ -1,6 +1,7 @@
 {
   "artifact_id": "common.conditioned_legacy_figure.parallel-track__fig_12_planck_act_dr4_combined",
   "artifact_path": "figures/conditioned_legacy/parallel-track__fig_12_planck_act_dr4_combined.png",
+  "artifact_sha256": "sha256:ea0c776efa2104f9fce57af3141323736c4efc689ee8a286398990e2f9028a3c",
   "caveats": [
     "Conditionally included legacy figure; not a refreshed current-code production result.",
     "shown as parallel-track prior context under the assumptions of the original helper script; it is not a current main-claim result.",
@@ -9,17 +10,17 @@
     "MIO diagnostics, HTT inference, and transfer provenance remain separated by owner."
   ],
   "claim_tier": "exploratory",
-  "code_version": "conditioned-legacy-gallery-v1",
-  "config_hash": "sha256:406fd87d1297939a1abd80663e023f24ed61b72416317881a59dc6f2c31caf81",
+  "code_version": "conditioned-legacy-gallery-v2",
+  "config_hash": "sha256:36c69e2837909ec265d8d2fa0103803261509809f0b44aca0cb4160757eba6da",
   "created_by": "scripts/build_expanded_manuscript_figure_suite.py",
   "failed_gates": [],
-  "generating_command": "python scripts/build_expanded_manuscript_figure_suite.py",
-  "git_commit": "85fca53",
-  "git_commit_or_worktree_state": "85fca53+dirty",
+  "generating_command": "python scripts/build_expanded_manuscript_figure_suite.py --phase all",
+  "git_commit": "e6da367",
+  "git_commit_or_worktree_state": "e6da367+dirty",
   "implementation_scope": "common",
   "input_hashes": [
     "figures/parallel_track/fig_12_planck_act_dr4_combined.png:sha256:ea0c776efa2104f9fce57af3141323736c4efc689ee8a286398990e2f9028a3c",
-    "scripts/build_expanded_manuscript_figure_suite.py:sha256:b96cc2dc76f678a2158b7053334b182ab2908963be64209cd4aa19c7f60d228a"
+    "scripts/build_expanded_manuscript_figure_suite.py:sha256:f530556a73b1f17113a6fb4ee539733f1364a26e60ffc20d633d67a7af721106"
   ],
   "null_mock_status": "not_statistical_or_legacy_context",
   "owner": "COMMON",
@@ -33,9 +34,17 @@
   ],
   "schema_version": "artifact-manifest-v2",
   "sky_support_status": "not_directional",
+  "source_binding": {
+    "artifact_sha256": "sha256:ea0c776efa2104f9fce57af3141323736c4efc689ee8a286398990e2f9028a3c",
+    "current_source_sha256": "sha256:ea0c776efa2104f9fce57af3141323736c4efc689ee8a286398990e2f9028a3c",
+    "frozen_source_sha256": "sha256:ea0c776efa2104f9fce57af3141323736c4efc689ee8a286398990e2f9028a3c",
+    "source_path": "figures/parallel_track/fig_12_planck_act_dr4_combined.png",
+    "status": "current_source_matches_artifact"
+  },
   "statistics_definitions": {
     "legacy_source_path": "figures/parallel_track/fig_12_planck_act_dr4_combined.png",
-    "manuscript_role": "appendix_only_conditioned_diagnostic"
+    "manuscript_role": "appendix_only_conditioned_diagnostic",
+    "source_binding_status": "current_source_matches_artifact"
   },
   "transfer_source": "external_or_legacy_transfer_context"
 }

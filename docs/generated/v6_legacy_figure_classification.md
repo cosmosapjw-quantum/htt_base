@@ -6,7 +6,7 @@ claim_tier: diagnostic_only
 transfer_source: none
 sky_support_status: not_directional
 null_mock_status: not_statistical
-config_hash: `sha256:09d548d89de538dcabc9237de40be1f2dfa1c991008b1322e8fdad39cab78d53`
+config_hash: `sha256:e34dfbc36d8773d393790ccd5272845076472b9036b9611dc0f4d37c3c25262d`
 caveats:
 - Old root/parallel/validation figures are discarded from current claim lanes.
 - Manifest-backed conditioned_legacy copies are the only retained legacy figure lane.
@@ -16,14 +16,14 @@ git_commit_or_worktree_state: content-addressed
 
 ## Summary
 
-- Classified old figures: 88
+- Classified old figures: 84
 - Missing conditioned replacement manifests: 0
 
 ## By Kind
 
 | Kind | Count |
 | --- | ---: |
-| `old_parallel_track_figure` | 12 |
+| `old_parallel_track_figure` | 8 |
 | `old_root_result_figure` | 72 |
 | `old_validation_figure` | 4 |
 
@@ -32,10 +32,10 @@ git_commit_or_worktree_state: content-addressed
 | Class | Count |
 | --- | ---: |
 | `directional_style_only_no_geometry_claim` | 6 |
-| `legacy_ranking_or_posterior_removed` | 9 |
-| `legacy_response_label_only` | 57 |
+| `legacy_ranking_or_posterior_removed` | 8 |
+| `legacy_response_label_only` | 55 |
 | `method_or_denominator_context_only` | 8 |
-| `observed_or_validation_style_only` | 8 |
+| `observed_or_validation_style_only` | 7 |
 
 ## Classified Figures
 
@@ -114,15 +114,11 @@ git_commit_or_worktree_state: content-addressed
 | `figures/quarantined_legacy/root_sources/fig_v_pushforward.png` | `discarded_from_current_claim_lane` | `legacy_response_label_only` | `figures/conditioned_legacy/root__fig_v_pushforward.png` |
 | `figures/quarantined_legacy/root_sources/fig_vorticity_hierarchy.png` | `discarded_from_current_claim_lane` | `method_or_denominator_context_only` | `figures/conditioned_legacy/root__fig_vorticity_hierarchy.png` |
 | `figures/parallel_track/fig_01_mes_three_bounds.png` | `discarded_from_current_claim_lane` | `method_or_denominator_context_only` | `figures/conditioned_legacy/parallel-track__fig_01_mes_three_bounds.png` |
-| `figures/parallel_track/fig_02_tilted_flrw_dictionary.png` | `discarded_from_current_claim_lane` | `legacy_response_label_only` | `figures/conditioned_legacy/parallel-track__fig_02_tilted_flrw_dictionary.png` |
-| `figures/parallel_track/fig_03_colin_beta_translation.png` | `discarded_from_current_claim_lane` | `legacy_response_label_only` | `figures/conditioned_legacy/parallel-track__fig_03_colin_beta_translation.png` |
-| `figures/parallel_track/fig_04_flrw_tilt_posterior.png` | `discarded_from_current_claim_lane` | `legacy_ranking_or_posterior_removed` | `figures/conditioned_legacy/parallel-track__fig_04_flrw_tilt_posterior.png` |
 | `figures/parallel_track/fig_05_filling_fraction_scenarios.png` | `discarded_from_current_claim_lane` | `observed_or_validation_style_only` | `figures/conditioned_legacy/parallel-track__fig_05_filling_fraction_scenarios.png` |
 | `figures/parallel_track/fig_06_directional_probes_mollweide.png` | `discarded_from_current_claim_lane` | `directional_style_only_no_geometry_claim` | `figures/conditioned_legacy/parallel-track__fig_06_directional_probes_mollweide.png` |
 | `figures/parallel_track/fig_07_planck_pr3_tt.png` | `discarded_from_current_claim_lane` | `observed_or_validation_style_only` | `figures/conditioned_legacy/parallel-track__fig_07_planck_pr3_tt.png` |
 | `figures/parallel_track/fig_08_planck_pr3_tt_te_ee.png` | `discarded_from_current_claim_lane` | `observed_or_validation_style_only` | `figures/conditioned_legacy/parallel-track__fig_08_planck_pr3_tt_te_ee.png` |
 | `figures/parallel_track/fig_09_planck_lowell_envelope.png` | `discarded_from_current_claim_lane` | `observed_or_validation_style_only` | `figures/conditioned_legacy/parallel-track__fig_09_planck_lowell_envelope.png` |
-| `figures/parallel_track/fig_10_cf4_beta_variants.png` | `discarded_from_current_claim_lane` | `observed_or_validation_style_only` | `figures/conditioned_legacy/parallel-track__fig_10_cf4_beta_variants.png` |
 | `figures/parallel_track/fig_11_dipole_direction_comparison.png` | `discarded_from_current_claim_lane` | `directional_style_only_no_geometry_claim` | `figures/conditioned_legacy/parallel-track__fig_11_dipole_direction_comparison.png` |
 | `figures/parallel_track/fig_12_planck_act_dr4_combined.png` | `discarded_from_current_claim_lane` | `observed_or_validation_style_only` | `figures/conditioned_legacy/parallel-track__fig_12_planck_act_dr4_combined.png` |
 | `figures/validation/flrw_lowell_cell_camb_bass_lmax30.png` | `discarded_from_current_claim_lane` | `legacy_response_label_only` | `figures/conditioned_legacy/validation__flrw_lowell_cell_camb_bass_lmax30.png` |

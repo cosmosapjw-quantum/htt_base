@@ -6,7 +6,7 @@ H-EXT-1 DESI number-count dipole: the linear estimator RECOVERS an injected
 H-EXT-2 ACT DR6 kappa: the released a_lm loads (lmax=4000) with an auto-
         bandpower readout; the low-multipole isotropy statistic terminates in
         BLOCKED_MISSING_ACT_LENSING_SIMS;
-H-EXT-3 JWST: 14 CF4-matched anchors, CONNECTED_FORECAST;
+H-EXT-3 JWST: catalogue linkage only; downstream forecast absent and finding OPEN;
 H-EXT-4 seal PASS + scope + forbidden-token guard; no substitute estimate
         beyond the labelled mock.
 """
@@ -87,11 +87,14 @@ class HEXT2Act(unittest.TestCase):
 
 
 class HEXT3Jwst(unittest.TestCase):
-    def test_anchors_connected(self):
+    def test_anchors_are_catalogue_linkage_only(self):
         j = jwst_anchor_connection()
         self.assertEqual(j["n_anchors"], 14)
-        self.assertEqual(j["status"], "CONNECTED_FORECAST")
-        self.assertIn("joint_pv_cmb_forecast", j["connected_to"])
+        self.assertEqual(j["status"], "CATALOGUE_LINKAGE_ONLY")
+        self.assertEqual(j["finding_status"], "OPEN")
+        self.assertIn("N-DATA-CF4-DOWNSTREAM", j["finding_ids"])
+        self.assertFalse(j["downstream_public_use"])
+        self.assertIsNone(j["downstream_forecast"])
 
 
 class HEXT4SealScope(unittest.TestCase):

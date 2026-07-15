@@ -1,5 +1,6 @@
 {
   "allowed_use": "paper_appendix",
+  "analysis_mode": "reconstruction_conditioned_method_systematics",
   "artifact_id": "obsstat.report_data.cf4_depth_apex_phase_portrait",
   "artifact_mode": "paper_appendix_conditioned",
   "artifact_path": "figures/data_analysis_current/fig_data_cf4_depth_apex_phase_portrait.png",
@@ -12,11 +13,13 @@
   "caveats": [
     "Observed/prepared data analysis figure.",
     "Diagnostic-only: no posterior odds, p-value, geometry detection, or family identification.",
-    "No native low-ell solver output is used."
+    "No native low-ell solver output is used.",
+    "Numerical rows are functionals of one CF4++ Wiener-filter reconstruction, not observed bulk-flow amplitude measurements.",
+    "C1-K5-MV-F1 remains OPEN; no global-tilt coordinate or cosmological inference is permitted."
   ],
   "claim_tier": "diagnostic_only",
   "code_version": "content-addressed",
-  "config_hash": "sha256:a56410d18248d5661355d4dfee0a2e3f64758979c96bc06ac972edd4c5800486",
+  "config_hash": "sha256:002cc971bf4cc2c76f9ba9dd6871f760e270eb70d07e61eb58783a04501f7846",
   "created_by": "scripts/make_report_data_analysis_figures.py",
   "failed_gates": [
     "matched_nulls_not_bound_for_inference",
@@ -27,11 +30,12 @@
   "git_commit_or_worktree_state": "content-addressed",
   "implementation_scope": "obsstat",
   "input_hashes": [
-    "docs/generated/cf4_bulkflow_apex_depth_report.json:sha256:34191a4c61d7719d7ad3c3edb8d2d543ecad7a737168ae07fd731b56c29c2864",
+    "docs/generated/cf4_bulkflow_apex_depth_report.json:sha256:d35f9f8c2b07f417f332648a2af54a0afc03e9fa6e9b05fe42593aee35a4b057",
+    "docs/generated/cf4_p0_quarantine_block.json:sha256:7046c3bbefc18c840a36798fccd7f3dcdae9616ab1ef6f9eb2344e6c573405c7",
     "docs/generated/lowell_morphology_real_map_report.json:sha256:d1bf061318211814cf8f588bc4640d7c7bd754d2cfb4714aed32d7c804f45470",
     "workdir/raw/cf4/CF4pp_mean_std_grids.npz:sha256:78c0515c8330066a034f5e8afb3663e6c81ddf033db302a921c662344639bc91",
     "workdir/obs_bundle/cmb/maps/smica_nside16.npz:sha256:90780c4c42c6c4d371ea17d98de3db01d104a016bae2af58e8d9a6c304f88867",
-    "scripts/make_report_data_analysis_figures.py:sha256:a7dd3f43fe0e63df90d84d23fe275d3a1e341636bc5db97c59c9e94a2aff85ab"
+    "scripts/make_report_data_analysis_figures.py:sha256:6dad3adadc9d1bb298e38ead2ec6a468455679b2009444f5b71728cab30d4acd"
   ],
   "null_mock_status": "bootstrap_over_correlated_reconstruction_cells",
   "owner": "OBSSTAT",
@@ -44,7 +48,8 @@
   "promotion_blockers": [
     "matched_nulls_not_bound_for_inference",
     "full_covariance_not_bound_for_likelihood",
-    "native_morphology_atlas_absent"
+    "native_morphology_atlas_absent",
+    "C1-K5-MV-F1_OPEN"
   ],
   "required_gates": [
     "repo_local_data_input_present",
@@ -54,9 +59,17 @@
   "schema_version": "obsstat.report_data_analysis_figure.v1",
   "sky_support_status": "not_directional",
   "statistics_definitions": {
+    "cosmological_inference_allowed": false,
     "figure_lane": "report_data_analysis_current",
+    "finding_state": {
+      "canonical_source": "docs/generated/cf4_p0_quarantine_block.json",
+      "finding_id": "C1-K5-MV-F1",
+      "scientific_status": "OPEN"
+    },
     "full_sample_bulk_magnitude_kms": 133.37601563846482,
+    "global_tilt_claim_allowed": false,
     "n_shells": 7,
+    "observational_amplitude_claim_allowed": false,
     "quantity": "CF4 shell apex track and angular separations",
     "radius_range_mpc_h": [
       122.99850360601685,
@@ -64,11 +77,12 @@
     ],
     "source_artifacts": [
       "docs/generated/cf4_bulkflow_apex_depth_report.json",
+      "docs/generated/cf4_p0_quarantine_block.json",
       "docs/generated/lowell_morphology_real_map_report.json",
       "workdir/raw/cf4/CF4pp_mean_std_grids.npz",
       "workdir/obs_bundle/cmb/maps/smica_nside16.npz",
       "scripts/make_report_data_analysis_figures.py"
     ]
   },
-  "transfer_source": "none"
+  "transfer_source": "external_proxy_cf4_wf_reconstruction"
 }

@@ -24,10 +24,15 @@ from common.semantic_guards.no_overclaim import (  # noqa: E402
     issue_to_dict,
     scan_text,
 )
+from common.cf4_p0_quarantine import validate_repository  # noqa: E402
 
 
 DEFAULT_FREEZE_OUTPUT = Path("docs/generated/publication_claim_freeze.md")
 DEFAULT_MATRIX_OUTPUT = Path("docs/generated/hostile_review_response_matrix.md")
+CURRENT_MANUSCRIPT_PDF = Path(
+    "docs/generated/manuscript_pdf/htt_base_research_report.pdf"
+)
+MANUSCRIPT_SOURCE = Path("docs/manuscript/main.tex")
 SCHEMA_VERSION = "common.publication_claim_freeze.v1"
 ARTIFACT_ID = "publication_claim_freeze"
 FAMILY_ID_RE = re.compile(
@@ -171,7 +176,7 @@ PUBLIC_CLAIMS: tuple[dict[str, Any], ...] = (
         ],
         "caveats": [
             "Audit packaging is not publication readiness.",
-            "Missing manuscript figure provenance remains visible inside the package.",
+            "The CF4 P0 manuscript-source quarantine and absent current PDF remain visible inside the package.",
         ],
     },
     {
@@ -197,25 +202,25 @@ PUBLIC_CLAIMS: tuple[dict[str, Any], ...] = (
         ],
     },
     {
-        "claim_id": "manuscript.figure_inventory_blocks_submission",
+        "claim_id": "manuscript.cf4_p0_source_quarantine_blocks_submission",
         "owner": "COMMON",
         "claim_tier": "C1",
         "status": "blocked_for_submission",
-        "statement": "manuscript figure inventory records missing and quarantined figure references that block final submission freeze",
-        "allowed_phrase": "manuscript figure inventory blocks final freeze",
+        "statement": "the current manuscript source and PDF remain withheld by the CF4 P0 quarantine and PDF claim-lint gate",
+        "allowed_phrase": "current manuscript publication source remains quarantined",
         "artifacts": [
-            "docs/generated/manuscript_figure_inventory.md",
-            "docs/generated/missing_figure_references.md",
-            "docs/generated/quarantined_figures.md",
+            "docs/manuscript/main.tex",
+            "docs/generated/cf4_p0_quarantine_block.json",
+            "docs/generated/pdf_claim_lint_report.md",
         ],
-        "manifest_refs": ["docs/generated/manuscript_figure_inventory.md"],
+        "manifest_refs": ["docs/generated/cf4_p0_quarantine_block.json"],
         "tests": [
-            "tests/contracts/test_manuscript_figure_audit.py",
-            "python scripts/audit_manuscript_figures.py --dry-run",
+            "tests/contracts/test_manuscript_cf4_quarantine.py",
+            "tests/contracts/test_pdf_claim_lint.py",
         ],
         "caveats": [
-            "Missing or quarantined figures are blockers, not promoted figures.",
-            "Text audit findings are review findings, not scientific results.",
+            "No current manuscript PDF exists at the active path.",
+            "Retained chapter, bibliography, and generated TeX sources are immutable historical evidence with public_use false.",
         ],
     },
 )
@@ -246,9 +251,9 @@ HOSTILE_REVIEW_ROWS: tuple[dict[str, str], ...] = (
     {
         "reviewer": "software_reproducibility",
         "verdict": "PASS_WITH_BLOCKERS",
-        "attack": "Generated reports and audit package are reproducible, but manuscript figures remain unmanifested or missing.",
-        "response": "Freeze report maps public claims to generated artifacts and records figure blockers.",
-        "required_fix": "Resolve or quarantine every manuscript figure with manifest-backed provenance.",
+        "attack": "No current manuscript PDF or publication-authorized source exists while the CF4 P0 source quarantine is active.",
+        "response": "The primitive source gate emits no PDF in normal nonstop mode, and the freeze records the blocked PDF claim lint.",
+        "required_fix": "Close the registered source findings, authorize a new current manuscript source, then generate and lint a manifest-bound PDF.",
     },
     {
         "reviewer": "claim_hygiene_editor",
@@ -357,19 +362,61 @@ def _manuscript_blockers(repo_root: Path) -> dict[str, int | str]:
         "quarantined_refs": count_or_unknown(inventory, "Quarantined refs"),
         "text_audit_findings": count_or_unknown(inventory, "Text audit findings"),
         "claim_risk_findings": count_or_unknown(missing, "Claim-risk findings"),
+        "current_pdf_present": (repo_root / CURRENT_MANUSCRIPT_PDF).is_file(),
+        "source_quarantine_enforced": _manuscript_source_quarantine_enforced(
+            repo_root
+        ),
     }
+
+
+def _manuscript_source_quarantine_enforced(repo_root: Path) -> bool:
+    source_path = repo_root / MANUSCRIPT_SOURCE
+    if not source_path.is_file():
+        return False
+    source = source_path.read_text(encoding="utf-8")
+    gate = r"\ifcsname HTTCF4PZeroLegacyReproduction\endcsname"
+    document_class = "\n" + r"\documentclass"
+    required_markers = (
+        "NO CURRENT MANUSCRIPT PDF IS AUTHORIZED",
+        "PUBLIC_USE=FALSE",
+        r"\csname @@end\endcsname",
+    )
+    return (
+        gate in source
+        and document_class in source
+        and source.index(gate) < source.index(document_class)
+        and all(marker in source for marker in required_markers)
+    )
 
 
 def _pdf_claim_lint_passed(repo_root: Path) -> bool:
     report_path = repo_root / "docs/generated/pdf_claim_lint_report.md"
-    pdf_path = repo_root / "docs/generated/manuscript_pdf/htt_base_research_report.pdf"
+    pdf_path = repo_root / CURRENT_MANUSCRIPT_PDF
     if not report_path.is_file() or not pdf_path.is_file():
         return False
     text = report_path.read_text(encoding="utf-8")
     current_hash = _sha256_file(pdf_path)
+    statuses = re.findall(r"^status:\s*(\S+)\s*$", text, re.MULTILINE)
+    pass_flags = re.findall(
+        r"^claim_lint_passed:\s*(true|false)\s*$",
+        text,
+        re.MULTILINE | re.IGNORECASE,
+    )
+    failed_counts = re.findall(
+        r"^- Failed findings:\s+`(\d+)`\s*$",
+        text,
+        re.MULTILINE,
+    )
+    pdf_hashes = re.findall(
+        r"^- PDF SHA256:\s+`([^`]+)`\s*$",
+        text,
+        re.MULTILINE,
+    )
     return (
-        f"- Failed findings: `0`" in text
-        and f"- PDF SHA256: `{current_hash}`" in text
+        statuses == ["PASS"]
+        and [flag.lower() for flag in pass_flags] == ["true"]
+        and failed_counts == ["0"]
+        and pdf_hashes == [current_hash]
     )
 
 
@@ -419,6 +466,10 @@ def _all_claim_paths_exist(repo_root: Path, claims: Sequence[dict[str, Any]], ke
 
 
 def _submission_decision(blockers: dict[str, int | str]) -> str:
+    if blockers.get("source_quarantine_enforced") is True:
+        return "blocked_cf4_p0_manuscript_quarantine"
+    if blockers.get("current_pdf_present") is not True:
+        return "blocked_no_current_manuscript_pdf"
     missing = blockers.get("missing_refs")
     quarantined = blockers.get("quarantined_refs")
     if isinstance(missing, int) and missing > 0:
@@ -452,6 +503,23 @@ def build_publication_claim_freeze_payload(
         claims,
         native_morphology_atlas_present=native_morphology_atlas_present,
     )
+    quarantine_report = validate_repository(
+        root,
+        additional_contents={
+            "publication_claim_freeze/public_claims.json": json.dumps(
+                claims,
+                sort_keys=True,
+                indent=2,
+            ),
+            "publication_claim_freeze/hostile_review_rows.json": json.dumps(
+                review_rows,
+                sort_keys=True,
+                indent=2,
+            ),
+        },
+    )
+    quarantine_payload = quarantine_report.to_dict()
+    quarantine_report_hash = _stable_hash(quarantine_payload)
     required_assertions = {
         "all_claims_have_owner": _all_claims_have(claims, "owner"),
         "all_claims_have_artifacts": _all_claims_have(claims, "artifacts"),
@@ -465,9 +533,18 @@ def build_publication_claim_freeze_payload(
         "external_audit_package_included": (root / "docs/generated/external_audit_package_manifest.json").is_file(),
         "pdf_claim_lint_passed": _pdf_claim_lint_passed(root),
         "manuscript_blockers_recorded": isinstance(blockers.get("missing_refs"), int)
-        and isinstance(blockers.get("quarantined_refs"), int),
+        and isinstance(blockers.get("quarantined_refs"), int)
+        and isinstance(blockers.get("current_pdf_present"), bool)
+        and isinstance(blockers.get("source_quarantine_enforced"), bool),
+        "no_current_manuscript_pdf_recorded": blockers.get("current_pdf_present")
+        is False,
+        "manuscript_source_quarantine_enforced": blockers.get(
+            "source_quarantine_enforced"
+        )
+        is True,
         "no_forbidden_claim_language": not claim_issues,
         "no_c5_c6_family_id_claim": not family_id_violations,
+        "cf4_p0_quarantine_clean": quarantine_report.ok,
     }
     failed_gates = [key for key, value in required_assertions.items() if not value]
     config_hash = _stable_hash(
@@ -477,6 +554,7 @@ def build_publication_claim_freeze_payload(
             "reviewers": [row["reviewer"] for row in review_rows],
             "required_inputs": sorted(required_inputs),
             "native_morphology_atlas_present": native_morphology_atlas_present,
+            "cf4_p0_quarantine_report_hash": quarantine_report_hash,
         }
     )
     state = worktree_state or _git_state(root)
@@ -500,12 +578,14 @@ def build_publication_claim_freeze_payload(
             "Current transfer-dependent outputs remain transfer-conditional.",
             "MIO diagnostics remain separate from HTT inference.",
             "Native morphology atlas support is absent in this repository state.",
-            "Missing or quarantined manuscript figures block final submission freeze.",
+            "No current manuscript PDF exists at the active path, so PDF claim lint remains blocked rather than passed.",
+            "CF4 P0 source quarantine keeps retained chapter, bibliography, and generated TeX sources in immutable historical lanes with public_use false.",
         ],
         "generating_command": generating_command,
         "git_commit": _git_commit(root),
         "git_commit_or_worktree_state": state,
         "schema_version": SCHEMA_VERSION,
+        "cf4_p0_quarantine_report_hash": quarantine_report_hash,
     }
     return {
         **metadata,
@@ -525,6 +605,7 @@ def build_publication_claim_freeze_payload(
         "failed_gates": failed_gates,
         "claim_language_issues": claim_issues,
         "family_id_violations": family_id_violations,
+        "cf4_p0_quarantine": quarantine_payload,
     }
 
 
@@ -537,6 +618,7 @@ def _metadata_lines(payload: dict[str, Any], *, artifact_path_key: str = "artifa
         f"sky_support_status: {payload['sky_support_status']}",
         f"null_mock_status: {payload['null_mock_status']}",
         f"config_hash: `{payload['config_hash']}`",
+        f"cf4_p0_quarantine_report_hash: `{payload['cf4_p0_quarantine_report_hash']}`",
         "input_hashes:",
     ]
     lines.extend(f"- {item}" for item in payload["input_hashes"])
@@ -566,7 +648,7 @@ def render_publication_claim_freeze(payload: dict[str, Any]) -> str:
         f"- Failed gates: `{', '.join(payload['failed_gates']) if payload['failed_gates'] else 'none'}`",
         "",
         "This freeze allows only caveated status, framework, transfer-provenance, diagnostic, and audit-package claims.",
-        "It blocks stronger geometry, native-validation, or family-ID wording until the missing native and manuscript gates are closed.",
+        "It blocks current manuscript publication while the CF4 P0 source quarantine, absent current PDF, and PDF claim-lint gate remain open.",
         "",
         "## Required Assertions",
         "",
@@ -584,11 +666,22 @@ def render_publication_claim_freeze(payload: dict[str, Any]) -> str:
             "## Manuscript Blockers",
             "",
             "| Metric | Value |",
-            "| --- | ---: |",
-            f"| Includegraphics refs | {blockers['includegraphics_refs']} |",
-            f"| Resolved refs | {blockers['resolved_refs']} |",
-            f"| Missing refs | {blockers['missing_refs']} |",
-            f"| Quarantined refs | {blockers['quarantined_refs']} |",
+            "| --- | --- |",
+            f"| Current manuscript PDF present | {blockers['current_pdf_present']} |",
+            f"| CF4 P0 source quarantine enforced | {blockers['source_quarantine_enforced']} |",
+            "| PDF claim lint | blocked, not passed |",
+            f"| Figure inventory | {blockers['resolved_refs']} / {blockers['includegraphics_refs']} refs resolved |",
+        ]
+    )
+    if isinstance(blockers["missing_refs"], int) and blockers["missing_refs"] > 0:
+        lines.append(f"| Missing figure refs | {blockers['missing_refs']} |")
+    if (
+        isinstance(blockers["quarantined_refs"], int)
+        and blockers["quarantined_refs"] > 0
+    ):
+        lines.append(f"| Quarantined figure refs | {blockers['quarantined_refs']} |")
+    lines.extend(
+        [
             f"| Text audit findings | {blockers['text_audit_findings']} |",
             f"| Claim-risk findings | {blockers['claim_risk_findings']} |",
             "",
@@ -620,7 +713,7 @@ def render_publication_claim_freeze(payload: dict[str, Any]) -> str:
             "- Do not merge MIO diagnostic reports into HTT evidence or posterior quantities.",
             "- Do not use scalar x/Q/Pi/F/G, low-ell summaries, or directional coherence as geometry or family-ID evidence.",
             "- Do not present audit packaging or DAG completion as publication readiness.",
-            "- Do not submit the manuscript while missing or quarantined figure references remain unresolved.",
+            "- Do not build or submit a current manuscript while the CF4 P0 source quarantine or PDF claim-lint gate is open.",
             "",
         ]
     )
@@ -682,7 +775,7 @@ def render_hostile_review_response_matrix(payload: dict[str, Any]) -> str:
             "## Release Decision",
             "",
             "- Internal merge of the freeze gate is allowed when required assertions pass.",
-            "- Public manuscript or release submission remains blocked by manuscript figure provenance and missing native morphology atlas gates.",
+            "- Public manuscript or release submission remains blocked by the CF4 P0 source quarantine, absent current PDF, and PDF claim-lint gate.",
             "- External audit handoff may use the PR-114 disclosure package with this PR-115 freeze attached.",
             "",
         ]
@@ -754,24 +847,29 @@ def main(argv: Sequence[str] | None = None) -> int:
         generating_command=_command_from_args(argv),
         worktree_state=worktree_state,
     )
-    if payload["failed_gates"]:
+    failed = bool(payload["failed_gates"])
+    if failed:
         print("publication claim freeze failed required gates: " + ", ".join(payload["failed_gates"]))
-        return 1
     if args.dry_run:
         print("DRY-RUN: not writing publication claim freeze artifacts")
         print(f"submission_decision={payload['submission_decision']}")
         print(f"public_claim_count={len(payload['public_claims'])}")
         for key, value in sorted(payload["required_assertions"].items()):
             print(f"{key}={value}")
-        return 0
+        return 1 if failed else 0
     if args.check:
-        return _check_outputs(repo_root, payload, args.freeze_output, args.matrix_output)
+        check_result = _check_outputs(
+            repo_root, payload, args.freeze_output, args.matrix_output
+        )
+        if check_result:
+            return check_result
+        return 1 if failed else 0
     _write_outputs(repo_root, payload, args.freeze_output, args.matrix_output)
     freeze_path = args.freeze_output if args.freeze_output.is_absolute() else repo_root / args.freeze_output
     matrix_path = args.matrix_output if args.matrix_output.is_absolute() else repo_root / args.matrix_output
     print(f"wrote {freeze_path}")
     print(f"wrote {matrix_path}")
-    return 0
+    return 1 if failed else 0
 
 
 if __name__ == "__main__":

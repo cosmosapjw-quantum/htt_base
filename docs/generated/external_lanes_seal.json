@@ -42,6 +42,14 @@
     "sector": "independent-instrument CMB-lensing isotropy cross-check",
     "status": "MEASURED_MEAN_FIELD_DEBIASED"
   },
+  "caveats": [
+    "Diagnostic external-data lanes only; no anisotropy, geometry, family, or inference claim.",
+    "DESI and ACT interpretation remains limited by each lane's recorded residual gates.",
+    "JWST/CF4 is catalogue linkage only while N-DATA-CF4-DOWNSTREAM remains OPEN.",
+    "No native low-ell solver output is represented."
+  ],
+  "claim_tier": "diagnostic_only",
+  "config_hash": "sha256:431ab6f1f1858d107e46a793b2a7ec7f4821cc7c4cec57e039beaa52bc6ed712",
   "desi_number_count_dipole": {
     "estimator": "linear D = 3 <n_hat>_w (Crawford/Secrest)",
     "lane": "desi_number_count_dipole",
@@ -86,8 +94,29 @@
       "window_suppression_factor": 224.3
     }
   },
+  "generating_command": "python scripts/run_external_lanes.py",
+  "git_commit": "content-addressed",
+  "git_commit_or_worktree_state": "content-addressed",
+  "implementation_scope": "obsstat",
+  "input_hashes": [
+    "scripts/run_external_lanes.py:sha256:8b757819bdf17f12aa468ca23d21737b9fda94af2e39006d44b8ec29c0c050f4",
+    "htt/obsstat/egs3_external_lanes.py:sha256:ed833a10d894010af5f7f18848774365f5930549b7e68902f0b39d539c0d1f87",
+    "workdir/compact_products/desi/BGS_ANY_NGC_clustering_extended.npz:sha256:ea52cb7e0bbfa3ef69db396dab4a68ee95b409d8e237451d74a924e4e3cca21d",
+    "workdir/raw/desi/BGS_ANY_SGC_clustering.dat.fits:sha256:eb42e382148a5880edcf5c70fd21747a13a1c850b0037176bdea9350a0428ba4",
+    "workdir/raw/act_dr6_lensing/dr6_lensing_release/maps/baseline/kappa_alm_data_act_dr6_lensing_v1_baseline.fits:sha256:caf923c0c4ef74f8e498309a948f7291ed62c5e4071756d98caaf82c58498797",
+    "workdir/raw/act_dr6_lensing/dr6_lensing_release/maps/baseline/N_L_kk_act_dr6_lensing_v1_baseline.txt:sha256:364ef7e651b97ca638cfbb497ac04823c042f382e162c6a4541d89e2ca7595f3",
+    "docs/generated/desi_dipole_card.json:sha256:e1b282b7d2cd3d58ee7ace03a9692447c08ff6cb6d0d38ea8d8cc242ff208861",
+    "docs/generated/act_kappa_card.json:sha256:f0278ab610e324813c1f0079298dcbb8b95d82261cf205e700d9556b801a6118",
+    "docs/generated/jwst_cf4_anchors.json:sha256:8d986de2cfa47e066fa90445179ede4da61982c63de9889163733bf035ea1c40"
+  ],
   "jwst_cf4_anchors": {
-    "connected_to": "scripts/jwst_cf4_crossmatch.py -> htt/obsstat/joint_pv_cmb_forecast.py (labelled forecast, already wired)",
+    "catalogue_builder": "scripts/jwst_cf4_crossmatch.py",
+    "downstream_forecast": null,
+    "downstream_public_use": false,
+    "finding_ids": [
+      "N-DATA-CF4-DOWNSTREAM"
+    ],
+    "finding_status": "OPEN",
     "lane": "jwst_cf4_anchors",
     "methods": [
       "Cepheid",
@@ -97,12 +126,18 @@
       "maser+TRGB"
     ],
     "n_anchors": 14,
-    "scope_not_claimed": "the anchors feed a labelled survey-design forecast, not a measurement; diagnostic-only",
-    "sector": "Omega_tilt survey-design forecast (distance-anchor precision)",
-    "status": "CONNECTED_FORECAST"
+    "scope_not_claimed": "anchor linkage does not authorize an Omega_tilt precision gain, observational interpretation, or global-tilt claim",
+    "sector": "distance-anchor catalogue linkage only",
+    "status": "CATALOGUE_LINKAGE_ONLY"
   },
+  "metadata_refresh_command": "python scripts/run_external_lanes.py --metadata-only",
+  "null_mock_status": "mixed_mock_verification_and_release_sim_calibration_as_recorded",
+  "owner": "OBSSTAT",
   "scope_not_claimed": "real-data loaders + mock-verified estimators + registered blockers for the missing companion products (DESI randoms, ACT lensing sims); model-independent kinematic descriptors only; no anisotropy, geometry, family, or inference claim",
   "seal": "egs3.external_lanes",
+  "sky_support_status": "mixed_release_sky_support_recorded_in_lane_payloads",
   "status": "PASS",
-  "theorem_id": "EXT-LANES"
+  "theorem_id": "EXT-LANES",
+  "transfer_source": "none",
+  "worktree_state": "content-addressed"
 }

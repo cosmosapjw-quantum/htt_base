@@ -31,10 +31,10 @@ Lanes:
     (mean field + N0/N1), which is not in-tree ->
     BLOCKED_MISSING_ACT_LENSING_SIMS.
 
-  * JWST distance anchors: the 14 Cepheid/TRGB/maser anchors cross-matched to
-    CF4 already feed the Omega_tilt survey-design forecast
-    (scripts/jwst_cf4_crossmatch.py -> joint_pv_cmb_forecast); this lane
-    records that connection.
+  * JWST distance anchors: the Cepheid/TRGB/maser catalogue-linkage mechanics
+    are retained, but every CF4-conditioned precision or global-tilt forecast
+    is quarantined while ``N-DATA-CF4-DOWNSTREAM`` remains OPEN.  Anchor counts
+    are metadata only and carry no downstream numerical payload.
 
 Claim discipline: real-data diagnostics + mock-verified estimators + registered
 blockers; model-independent kinematic descriptors only; no anisotropy or family
@@ -266,15 +266,18 @@ def jwst_anchor_connection() -> dict:
     anchors = doc.get("anchors", [])
     return {
         "lane": "jwst_cf4_anchors",
-        "sector": "Omega_tilt survey-design forecast (distance-anchor precision)",
+        "sector": "distance-anchor catalogue linkage only",
         "n_anchors": len(anchors),
         "methods": sorted({a.get("method", "?") for a in anchors}),
-        "connected_to": "scripts/jwst_cf4_crossmatch.py -> "
-                        "htt/obsstat/joint_pv_cmb_forecast.py (labelled "
-                        "forecast, already wired)",
-        "status": "CONNECTED_FORECAST",
-        "scope_not_claimed": "the anchors feed a labelled survey-design "
-                             "forecast, not a measurement; diagnostic-only",
+        "catalogue_builder": "scripts/jwst_cf4_crossmatch.py",
+        "status": "CATALOGUE_LINKAGE_ONLY",
+        "finding_ids": ["N-DATA-CF4-DOWNSTREAM"],
+        "finding_status": "OPEN",
+        "downstream_public_use": False,
+        "downstream_forecast": None,
+        "scope_not_claimed": "anchor linkage does not authorize an Omega_tilt "
+                             "precision gain, observational interpretation, "
+                             "or global-tilt claim",
     }
 
 
@@ -288,7 +291,10 @@ def external_lanes_seal() -> dict:
           and act.get("status") in ("BLOCKED_MISSING_ACT_LENSING_SIMS",
                                      "MEASURED_MEAN_FIELD_DEBIASED")
           and act.get("lmax") == 4000
-          and jwst.get("status") == "CONNECTED_FORECAST")
+          and jwst.get("status") == "CATALOGUE_LINKAGE_ONLY"
+          and jwst.get("finding_status") == "OPEN"
+          and jwst.get("downstream_public_use") is False
+          and jwst.get("downstream_forecast") is None)
     return {
         "seal": "egs3.external_lanes",
         "theorem_id": "EXT-LANES",

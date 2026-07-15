@@ -4,11 +4,11 @@ You are an external adversarial reviewer. Audit only the research formalization 
 
 ## Inputs
 
-Use this archive only. The compiled PDF is intentionally absent.
+Use this archive only. The compiled PDF is intentionally absent. The LaTeX tree is quarantined historical evidence for diagnostic review, not a current manuscript publication source. Do not compile or redistribute it as a current manuscript.
 
 Read in this order:
-1. `research_audit_source/docs/manuscript/main.tex`
-2. chapter files included by `main.tex`
+1. `research_audit_source/docs/manuscript/main.tex` for the fail-closed quarantine notice
+2. historical chapter files retained with `public_use:false`, inspected as evidence rather than compiled
 3. `research_audit_source/docs/generated/audit_ver2_response_matrix.md`
 4. `research_audit_source/docs/generated/audit_ver2_completion_report.md`
 5. `research_audit_source/docs/generated/manuscript_plot_list_index.md`
@@ -33,6 +33,7 @@ gate bundle is demonstrably open.
 - OBSSTAT owns observable feature extraction only.
 - Scalar `x`, `Q`, `Pi`, `F`, `G_F`, direction coherence, low-ell residuals, or morphology axes do not identify a Bianchi family.
 - Bianchi family-ID and geometry-detection claims are blocked unless a native low-ell morphology atlas, matched nulls, masks, covariance, and family-equivalence gates are present.
+- CF4 P0 source quarantine blocks any current manuscript build; retained TeX/Bib sources are immutable historical evidence only.
 
 ## Token Discipline
 

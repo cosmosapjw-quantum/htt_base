@@ -58,11 +58,11 @@ claims:
     caveats: [estimator property + synthetic FPR/coverage witness; separate diagnostic surface (x_C bit-identical + frozen registered statistics untouched); Sigma2 on the real sky stays partial until data; exact physical alpha awaits the covariant low-ell transfer; no detection, family/geometry, or native solver]
   egs3.joint_pv_cmb_forecast:
     owner: OBSSTAT
-    status: DERIVED
-    evidence_type: proof_and_test
-    claim_tier: C3
-    allowed_phrase: solver-free joint PV+CMB information forecast in which a PV/JWST Omega_tilt prior breaks the Sigma2-Omega_tilt degeneracy via the coupled Fisher
-    caveats: [feasible correlated-covariance PV tilt on real CF4 (Woodbury, K5-consistent); JWST prior is a labelled survey-design forecast on few nearby anchors (modest, honestly-reported gain); theory-g CMB likelihood fail-closed (AWAITING_NATIVE_LOWELL_SOLVER); full xi_ij is BLOCKED_MISSING_FIELD_REALIZATIONS; Sigma2 stays partial; no detection/family/geometry/native solver]
+    status: QUARANTINED_OPEN_P0
+    evidence_type: synthetic_method_witness_and_blocked_source_record
+    claim_tier: C1
+    allowed_phrase: generic synthetic information-weight sensitivity remains testable, while the former CF4/JWST observational forecast is quarantined and returns no downstream value
+    caveats: [N-DATA-CF4-DOWNSTREAM remains OPEN; active inputs are deterministic synthetic catalogues only; anchor linkage is catalogue metadata with public_use false; no observational precision gain, global-tilt interpretation, detection, family/geometry, or native-solver claim]
   egs3.smica_biposh:
     owner: OBSSTAT
     status: DERIVED
@@ -212,7 +212,7 @@ claims:
     evidence_type: proof_and_test
     claim_tier: C4
     allowed_phrase: U1/U2 beta-channel correspondence -- s = tanh(beta) exact under the antipodal two-point reduction of the boost sky; R3-1 = -(3/4) t + O(t^2) on the comparator tilt coordinate; proved (3/2)s^2 and (5/2)s^2 envelopes with exact rational MES-dipole ceilings; MES ordering carried by the strictly increasing ceiling map
-    caveats: [couples the MES registry + graded comparator + active Teff lane in one seal; the two-point antipodal reduction is a REGISTERED TOY ANCHOR (continuum boost sky, not an angular average); the two-temperature mixture is the Teff representation anchor NOT a CMB spectral-distortion prediction; antipodal-specific (-3/4 vs single-species -3/2); rapidity-vs-velocity O(beta^3) disclosed; pointwise R5+R3>=2 numerically certified only; no data claim]
+    caveats: [couples the MES registry + graded comparator + active Teff lane in one seal; the two-point antipodal reduction is a REGISTERED TOY ANCHOR (continuum boost sky, not an angular average); the two-temperature mixture is the Teff representation anchor NOT a CMB spectral-distortion prediction; antipodal-specific (-3/4 vs single-species -3/2); the former CF4 numerical instantiation is quarantined by PR-120 and absent from the active seal; pointwise R5+R3>=2 numerically certified only; no data claim]
   egs3.unification_schema:
     owner: OBSSTAT
     status: DERIVED
@@ -226,7 +226,7 @@ claims:
     evidence_type: test
     claim_tier: C1
     allowed_phrase: U4 statistical closure over the Teff fingerprints -- IM coverage on the identified interval of the nonidentified mixing plus Hotelling/F calibration of the estimated-covariance joint fingerprint
-    caveats: [display mixings 0.15/0.3 DISCLOSED (diagnostic scale); the CF4/MES-scale fingerprints (~2e-6) enter only as the deterministic K5 v8 card row, never a pretended measurement; seeded synthetic experiments; no data claim]
+    caveats: [display mixings 0.15/0.3 DISCLOSED (diagnostic scale); synthetic and symbolic fingerprint mechanics only; the former CF4/K5 numerical row is quarantined behind the canonical PR-120 block while C1-K5-MV-F1 remains OPEN; seeded synthetic experiments; no data claim]
   egs3.interior_family:
     owner: OBSSTAT/BASS
     status: DERIVED
@@ -256,7 +256,7 @@ claims:
     evidence_type: test
     claim_tier: C1
     allowed_phrase: U4-v9 fingerprint statistics rerun -- regime-split acceptance stated in code before the run, disclosed seeds, Wilson CIs, exact-regime witnesses exact (known-se IM; Gaussian/Wishart Hotelling size 0.05025), approximation-lane deviations REPORTED (boundary coverage -0.0054, fingerprint Hotelling size 0.0678)
-    caveats: [v8 statistical module frozen, successor pattern; deviations are disclosed findings, not claimed away; the boundary band 0.01 and Hotelling band 0.025 are wider than pure-MC 3-sigma at n_rep=8000 BY DESIGN and printed; seeded synthetic experiments; no data claim]
+    caveats: [v8 statistical module frozen, successor pattern; deviations are disclosed findings, not claimed away; the boundary band 0.01 and Hotelling band 0.025 are wider than pure-MC 3-sigma at n_rep=8000 BY DESIGN and printed; seeded synthetic experiments only; no observed CF4 numerical instantiation; no data claim]
   egs3.mes_branch_registry:
     owner: OBSSTAT/GR
     status: REGISTERED_EXTERNAL
@@ -297,43 +297,43 @@ claims:
     status: DESI_AND_ACT_MEASURED
     evidence_type: real_data_loader_and_measurement
     claim_tier: C1
-    allowed_phrase: EXT-LANES -- the acquired external datasets are connected through real loaders + estimators + measurements; the DESI DR1 BGS randoms were downloaded (fetch.py --desi-randoms) and the window-corrected overdensity dipole is MEASURED on NGC+SGC (D=3<delta n_hat>_R = 9.49e-3, a 224x suppression of the raw footprint 2.13 down to the kinematic scale ~7e-3); the ACT DR6 lensing 400-sim ensemble was downloaded (fetch.py --act-sims), the mean-field-debiased ell=2..10 kappa band power is MEASURED CONSISTENT with the isotropic LambdaCDM sims (p=0.35), AND a 95% CL model-independent upper limit is set on excess low-multipole kappa power (< 3.28e-6, 0.47x the null band power) by injecting a flat-in-ell signal into the N0+N1-inclusive sim null; 14 JWST CF4-matched anchors feed the Omega_tilt forecast
-    caveats: [DESI stays DIAGNOSTIC: the BGS sample is low-z so the dipole MIXES the local large-scale-structure (clustering) dipole with the kinematic dipole, and the fsky~0.28 mask couples multipoles, so a calibrated amplitude + significance still need release-matched mocks. ACT: the 95% CL upper limit is a real model-independent constraint (an upper-limit/consistency statement, NOT a detection); N0/N1 enter through the end-to-end sim null (not a separate analytic subtraction) and the band is reconstruction-noise-dominated so the limit is noise-floor-limited. Model-independent kinematic descriptors only; no Bianchi family/geometry claim (the theory-g prediction is fail-closed); no data-detection headline]
+    allowed_phrase: EXT-LANES -- the acquired DESI and ACT datasets are connected through real loaders and their separately registered diagnostics; the JWST/CF4 cross-match is catalogue linkage only, with every downstream Omega_tilt forecast quarantined by PR-120
+    caveats: [DESI stays DIAGNOSTIC because the low-redshift sample mixes local large-scale structure with the kinematic component and the mask couples multipoles. ACT remains an upper-limit/consistency lane, not a detection. JWST anchor counts do not authorize a global-tilt precision claim while N-DATA-CF4-DOWNSTREAM remains OPEN. No Bianchi family/geometry or native-solver claim]
   k5.cf4_bulkflow_lcdm:
-    owner: OBSSTAT/DATA
-    status: MEASURED_SIGNIFICANCE_WITHHELD
-    evidence_type: real_data_measurement
-    claim_tier: C3
-    allowed_phrase: K5-LCDMCV -- the CF4 weighted-GLS bulk flow is a real MEASUREMENT (|B| = 340.7 +/- 5.0 km/s inverse-Fisher measurement error, apex (l,b)=(293,20) -- 37 deg from the CMB dipole and only 18 deg from the published CF4 (Watkins 2023) flow direction, Omega_tilt = 4.07e-7); the linear estimator-matched cosmic variance (mode-function window integral, validated: single-group sigma_v recovers the closed-form 1-D dispersion to 1.2%, khat/k grids converged to 0.4%) replaces the frozen release-coverage card's hand-set 150 km/s isotropic prior
-    caveats: [the LambdaCDM amplitude SIGNIFICANCE is WITHHELD -- the linear window cosmic variance (~35 km/s along B) is a LOWER BOUND because the noise-weighted GLS estimator aliases small-scale (nonlinear) velocity power that linear theory omits, so the naive chi^2 (~9 sigma) is an ARTIFACT, not a cosmological tension/anomaly; a credible amplitude significance needs the minimum-variance ideal-window estimator or release-matched mocks (BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP); model-independent kinematic descriptor; NOT a Bianchi family, geometry, or observer-frame-violation claim; frozen v7/v8/v9 K5 cards untouched; no tension/anomaly/detection headline]
+    owner: COMMON
+    status: QUARANTINED_OPEN_P0
+    evidence_type: blocked_source_record
+    claim_tier: C1
+    allowed_phrase: K5-LCDMCV is quarantined behind the canonical CF4 P0 blocked-source record; no numerical or global-tilt interpretation is allowed.
+    caveats: [C1-K5-MV-F1 and N-DATA-CF4-DOWNSTREAM remain OPEN; the historical numerical payload is legacy_reproduction_only with public_use false; quarantine is not remediation and supplies no replacement value]
   k5.cf4_mv_bulkflow:
-    owner: OBSSTAT/DATA
-    status: MEASURED_MV_BULKFLOW
-    evidence_type: real_data_measurement
-    claim_tier: C3
-    allowed_phrase: K5-MV -- the CF4 minimum-variance ideal-window bulk flow (Watkins-Feldman-Hudson) resolves the rev-r195 withheld significance: the MV weights are tied to a specified Gaussian window of scale R, so the cosmic-variance covariance is FAITHFUL and the LambdaCDM significance is reportable; |B|(200 h^-1Mpc) = 405 km/s (+/- 3 binning systematic), consistent with the published CF4 419 +/- 36; apex@50 h^-1Mpc is 8.5 deg from the published flow; validated (injected uniform flow recovered exact to 1e-14, sigma_v diagonal to <0.1%, converged vs a finer grid)
-    caveats: [the significance ~4.4-5.4 sigma (P(k)-corrected to fiducial covariance) is a LIKELY OVER-ESTIMATE and is reported as a treatment-dependent RANGE (Whitford 2023: MV uncertainties are typically underestimated -> tension overestimated; the linear Gaussian-window covariance omits the non-Gaussian + selection scatter); the fiducial EH98 P(k) runs ~15% low in sigma_v (corrected up for the conservative sigma); the AMPLITUDE is the robust quantity -- the apex swings at large R where the sparse deep CF4 sample dominates (well-constrained only at R<=100); a definitive significance needs release-matched mocks (BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP); a bulk-flow-vs-LambdaCDM kinematic statement, NOT a Bianchi family/geometry or observer-frame claim; no anisotropy discovery]
+    owner: COMMON
+    status: QUARANTINED_OPEN_P0
+    evidence_type: blocked_source_record
+    claim_tier: C1
+    allowed_phrase: K5-MV is quarantined behind the canonical CF4 P0 blocked-source record; only estimator mechanics remain reusable.
+    caveats: [C1-K5-MV-F1 remains OPEN; the historical amplitude and tension payload is legacy_reproduction_only with public_use false; no corrected value is supplied]
   k5.cf4_reconstruction_dependence:
-    owner: OBSSTAT/DATA
-    status: MEASURED_RECONSTRUCTION_SPREAD
-    evidence_type: real_data_measurement
-    claim_tier: C3
-    allowed_phrase: K5-RECON -- the CF4 bulk-flow amplitude depends on the peculiar-velocity reconstruction: the identical weighted-GLS estimator on the three catalogue PV columns (Vpds direct 319, Vpwf pure-Wiener-filter 145, Vpec ramp 341 km/s) plus four full-field reconstructions -- the CF4++ WF field (315), the external Carrick 2015 2M++ field (209), and (REV-R197, substituting the private Nusser 2026) two PUBLIC 2MRS reconstructions, the Lilow-Ganeshaiah-Veena-Nusser 2024 neural network (arXiv:2404.02278, |B|@150=140) and CORAS (Lilow-Nusser 2021, arXiv:2102.07291, |B|@150=283) -- spans 140-341 km/s across 7 reconstruction methods; the ZoA |b|-cut sensitivity is small (5 km/s / 1.4 deg -- CF4 has good sky coverage)
-    caveats: [the pure Wiener-filter shrinks the flow toward zero (the WF prior mean), which is why Vpwf is the low outlier; the field reconstructions use their own depth/window convention (a cross-method sanity comparison, not scale-matched); the 2MRS reconstructions are RECONSTRUCTION-vs-MEASUREMENT (2MRS is shallow -> the NN flow regresses to the mean at large r, published LVN |B|~220@50 -> ~90@200; the CF4 measured flow being larger is the expected reconstruction/measurement gap, NOT a tension); the LVN convention is validated by reproducing the published |B|(50)~220 km/s; the private Nusser 2026 2MRS is SUPERSEDED_BY_LILOW_2024_PUBLIC; model-independent kinematic descriptors; NOT a Bianchi family/geometry or observer-frame claim; no anisotropy discovery]
+    owner: COMMON
+    status: QUARANTINED_RECONSTRUCTION_DEPENDENT_DIAGNOSTIC
+    evidence_type: blocked_source_record
+    claim_tier: C1
+    allowed_phrase: K5-RECON survives only as a reconstruction-dependent catalogue diagnostic behind the CF4 P0 quarantine.
+    caveats: [No amplitude, tension, global-tilt, or cosmological interpretation is public while C1-K5-MV-F1 remains OPEN; exact historical comparisons are legacy_reproduction_only]
   k5.cf4_velocity_correlation:
-    owner: OBSSTAT/DATA
-    status: MEASURED_CORRELATION_DIAGNOSTIC
-    evidence_type: real_data_measurement
-    claim_tier: C3
-    allowed_phrase: K5-VCORR -- the reconstruction-INDEPENDENT statistic (the physical, well-posed replacement for an ill-posed angular pseudo-C_l): the Gorski velocity correlation function Psi_par(r)/Psi_perp(r) is measured directly from LOS-velocity pairs (NO field reconstruction), bulk-subtracted + inverse-error-weighted; the simplified pair estimator gives a DIAGNOSTIC f sigma_8 = 0.38 (Vpec, matching the published CF4 ~0.38) and 0.75 (direct Vpds, noise-limited); the cosmic Mach number is also reported
-    caveats: [the f sigma_8 is a treatment-dependent DIAGNOSTIC, not a precision constraint -- raw pairs give ~1-3 (measurement-noise + bulk-flow contaminated), bulk-flow subtraction + inverse-error weighting bring Vpec to ~0.38 but the Psi_par shape still departs from linear theory, so a precision value needs the full max-likelihood noise-aware estimator (Johnson 2014; CF4 arXiv:2604.08314, registered exit-gate); the direct Vpds is noisiest (unphysical outliers) so its diagnostic is least reliable; the estimator runs on a deterministic 12k subsample; NOT a Bianchi family/geometry or observer-frame claim; no anisotropy discovery]
+    owner: OBSSTAT
+    status: METHOD_DIAGNOSTIC_ONLY
+    evidence_type: reconstruction_conditioned_method_diagnostic
+    claim_tier: C1
+    allowed_phrase: K5-VCORR retains the pair-correlation estimator and reconstruction/noise/depth sensitivity machinery only; no active f sigma_8 measurement or replacement result is authorized
+    caveats: [This simplified pair statistic is not the invalid ML shape-correction producer, but its observational numerical instantiation is treatment- and reconstruction-conditioned and is excluded from the active PR-120 claim graph. Exact historical values are legacy_reproduction_only. C3-K5-VCORR-ML-F1 and N-DATA-CF4-DOWNSTREAM remain OPEN; no global-tilt, family, geometry, or observer-frame claim]
   k5.cf4_velocity_correlation_ml:
-    owner: OBSSTAT/DATA
-    status: MEASURED_ML_FSIGMA8
-    evidence_type: real_data_measurement
-    claim_tier: C3
-    allowed_phrase: K5-VCORR-ML -- the PRECISION upgrade of the rev-r196 pair-correlation diagnostic (the registered exit-gate): the field-level maximum-likelihood NOISE-AWARE f sigma_8 (Johnson+2014) on the binned CF4 cells, C(A)=A G+N (G the fiducial linear velocity covariance, N the per-cell noise) maximised over the velocity-field amplitude A=(f sigma_8/f sigma_8_fid)^2; f sigma_8 = 0.40 +/- 0.02 (Vpec, shape-corrected to the standard linear sigma_v; conservative octant jackknife +/- 0.10), consistent with the published CF4 ~0.38 and Planck ~0.44; injection-Monte-Carlo-validated unbiased (recovered amplitude mean 1.02, pull 1.4 sigma)
-    caveats: [the ML fits the velocity-field AMPLITUDE with the fiducial P(k) SHAPE fixed; f_sigma8_ml is shape-corrected to the standard linear sigma_v (the EH98 no-wiggle ~15% sigma_v deficit inflates the raw amplitude, same offset as the MV lane), f_sigma8_ml_raw_eh98 is the uncorrected value; the Fisher error (injection-MC-validated) is the statistical error, the octant jackknife is a conservative geometry-robustness cross-check (octant deletion over-perturbs the large-scale field); the DIRECT Vpds is noise-limited -- its ML amplitude RAILS to the prior bound (unphysical outliers), so Vpec (WF-ramp, more model-dependent) is the clean measurement; a growth-rate f sigma_8, NOT a Bianchi family/geometry or observer-frame claim; no anisotropy discovery]
+    owner: COMMON
+    status: QUARANTINED_OPEN_P0
+    evidence_type: blocked_source_record
+    claim_tier: C1
+    allowed_phrase: K5-VCORR-ML is quarantined behind the canonical CF4 P0 blocked-source record; the Gaussian likelihood mechanics remain method substrate only.
+    caveats: [C3-K5-VCORR-ML-F1 remains OPEN; the historical shape-corrected estimate and precision wording are legacy_reproduction_only; no raw or audit sensitivity is promoted as a replacement]
   k5.cf4pp_vorticity:
     owner: OBSSTAT/DATA
     status: MEASURED_WF_CURL_SUPPRESSION_CR_PARTIAL
@@ -349,12 +349,12 @@ claims:
     allowed_phrase: EXT-DESI-MOCK -- the mock-calibrated significance of the DESI DR1 BGS number-count dipole (the rev-r197 in-house-mock pattern applied to the dipole): the analytic shot-noise floor separates shot noise from clustering, and an in-house LambdaCDM clustering mock (exact ell=1 projection of the observed dN/dz -> GRF sky maps masked to the real BGS footprint + Poisson shot, run through the IDENTICAL dipole estimator) gives the LambdaCDM null; the observed dipole D=9.49e-3 is CLUSTERING-dominated (13.5 sigma above the shot-noise floor) and CONSISTENT with LambdaCDM clustering cosmic variance (mock |D|=0.021+/-0.009, p=0.90 at bias 1.5; robust across bias 1.2-2.0), NOT an excess/anomaly
     caveats: [the dipole is clustering-dominated so the relevant null is the LambdaCDM clustering cosmic variance (supplied by the mock), not the shot-noise floor; the mock uses the observed dN/dz + fiducial P(k) + a LINEAR bias (fiducial 1.5, sensitivity 1.2-2.0, not fit); BGS is low-z so the dipole still MIXES the clustering and kinematic components -- this tests consistency of the TOTAL dipole with LambdaCDM clustering, it does NOT isolate the kinematic component (sub-dominant to the clustering cosmic variance at these depths); the GRF mock is Gaussian/linear (nonlinear/lognormal + imaging-systematic residuals not modelled, sub-dominant at the dipole scale); a consistency test, NOT a clean kinematic measurement, and NOT a Bianchi family/geometry or observer-frame claim; no anisotropy discovery]
   k5.cf4_mock_calibrated_significance:
-    owner: OBSSTAT/DATA
-    status: MEASURED_MOCK_CALIBRATED_SIGNIFICANCE
-    evidence_type: real_data_measurement
-    claim_tier: C3
-    allowed_phrase: K5-MOCKSIG -- an in-house PHYSICAL forward-mock ensemble (linear Gaussian-random-field peculiar-velocity grid + super-sample bulk mode + real per-object noise at the fixed CF4 geometry, 2000 survey-matched mocks; htt/obsstat/pv_forward_mocks.py) calibrates the MV estimator's LambdaCDM sampling distribution, REPLACING the request-only CF4TF release mocks (BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP); the mock bulk-flow covariance reproduces the analytic linear-theory covariance to the grid resolution (mock/analytic ratio ~1), so the estimator + geometry + noise do NOT inflate the significance, and the mock-calibrated parametric tension is consistent with the rev-r196 analytic range
-    caveats: [this is a GRF-LINEAR + sigma_NL, POSITIONS-CONDITIONAL forward model -- MORE physical than the analytic linear-window covariance (exact geometry, real per-object noise, the super-sample mode) but NOT the full nonlinear COLA/L-PICOLA suite; the reduction to the literature ~2-3 sigma (Whitford 2023) is attributable to nonlinear velocity power beyond this linear model -- the registered COLA residual -- and is NOT claimed here; with 2000 mocks the empirical p-value floor is 1/(N+1) so when |B| exceeds all mocks the empirical sigma is a LOWER BOUND and the parametric (mock covariance) sigma is the reported estimate; a bulk-flow-vs-LambdaCDM kinematic significance calibration, NOT a Bianchi family/geometry or observer-frame claim; no anisotropy discovery]
+    owner: COMMON
+    status: QUARANTINED_OPEN_P0
+    evidence_type: blocked_source_record
+    claim_tier: C1
+    allowed_phrase: K5-MOCKSIG is quarantined because its observed input inherits C1-K5-MV-F1; mock mechanics alone do not restore the headline.
+    caveats: [C1-K5-MV-F1 remains OPEN; historical significance values are legacy_reproduction_only with public_use false; no replacement significance is supplied]
   egs3.omega_k_reopening:
     owner: OBSSTAT/GR
     status: DERIVED

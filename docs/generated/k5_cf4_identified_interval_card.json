@@ -1,301 +1,78 @@
 {
-  "allowed_use": "external_audit",
-  "artifact_id": "obsstat.k5_cf4_identified_interval_card",
-  "artifact_mode": "external_audit_conditioned",
-  "artifact_path": "docs/generated/k5_cf4_identified_interval_card.json",
-  "blocked_components": [
-    "Sigma2_hat",
-    "Sigma2_error",
-    "Omega_k_upper"
-  ],
-  "bulk_flow_summary": {
-    "amplitude_kms": 340.72639833770336,
-    "measurement_error_kms": 4.968225629763425,
-    "n_groups": 38049,
-    "sigma_cv_prior_kms_per_component": 150.0,
-    "total_error_kms": 101.87045232654711
+  "allowed_use": "blocked_source_record_only",
+  "artifact": {
+    "active_json": "docs/generated/k5_cf4_identified_interval_card.json",
+    "active_markdown": "docs/generated/k5_cf4_identified_interval_card.md",
+    "artifact_id": "k5_cf4_identified_interval_card",
+    "artifact_kind": "derived_result_card_block_record",
+    "legacy_public_use": false,
+    "legacy_reproduction_only": [
+      "legacy/cf4_p0/cards/k5_cf4_identified_interval_card.json",
+      "legacy/cf4_p0/cards/k5_cf4_identified_interval_card.md"
+    ],
+    "producer": "scripts/k5_cf4_identified_interval_card.py"
   },
   "caveats": [
-    "Diagnostic pipeline-closure card only.",
-    "W2 ceiling is the registered MES value (3/2)B_omega^2 from the ssot epsilons.",
-    "Sigma2 and Omega_k placeholders still block observational promotion.",
-    "No posterior odds, native low-ell solver output, or morphology-family promotion."
+    "Quarantine is propagation control, not scientific remediation or validation.",
+    "All three findings remain OPEN; zero stale active consumers does not close them.",
+    "No audit sensitivity or alternative number is a replacement result.",
+    "Historical audits and frozen external packages remain immutable evidence.",
+    "PR4/NPIPE download, reduction, and analysis remain skipped by user scope."
   ],
-  "claim_tier": "diagnostic_only",
-  "code_version": "content-addressed",
-  "component_input_modes": {
-    "CF4_bulk_amplitude": "REAL",
-    "K1_maxscan": "REAL_DIAGNOSTIC_INPUT_NOT_USED_AS_SIGMA2",
-    "MES_coefficients": "REGISTERED_EXTERNAL_NOT_REDERIVED",
-    "Omega_k_upper": "PLUGIN/BLOCKED",
-    "Omega_m": "DECLARED_OBS_DEFAULT",
-    "Omega_tilt_formula": "DERIVED_FROM_PARENT_IDENTITY_SEAL",
-    "Sigma2_error": "PLUGIN/BLOCKED",
-    "Sigma2_hat": "PLUGIN/BLOCKED",
-    "W2_upper": "REGISTERED_MES_CEILING"
+  "claim_level": {
+    "level": "C1",
+    "scheme": "roadmap_rescue_v1"
   },
-  "config_hash": "sha256:6419242c1eb6ce67f8442386b8d014e2ba8bf36e36f58561d24fbbecf091084a",
-  "created_by": "scripts/k5_cf4_identified_interval_card.py",
-  "failed_gates": [
-    "registered_sigma2_artifact_absent",
-    "registered_omega_k_upper_artifact_absent"
-  ],
-  "family_identification": false,
-  "generating_command": "venv/bin/python scripts/k5_cf4_identified_interval_card.py",
-  "git_commit": "content-addressed",
-  "git_commit_or_worktree_state": "content-addressed",
-  "implementation_scope": "obsstat",
-  "input_hashes": [
-    "docs/generated/k5_cf4_release_coverage.json:sha256:edcf9f9354cd326827fdae48ce1595aed963140ac5bd6a3264ebe0c5c144eee9",
-    "docs/generated/k1_global_maxscan.json:sha256:c7f8ca243eec35eca6ab6518309f216d16ddc706996df1f6dbd2a2a813867237",
-    "docs/generated/parent_identity_seal.json:sha256:16518f1770699d65fc114e704639e68029c60b153dac85091442fbe71f149c47",
-    "htt/workspace/data/obs_defaults.json:sha256:c305be5b42ea3c0a9f8d919f0314ac6befc5155424d6b8a00d92f4f9349ac1df"
-  ],
-  "k1_context": {
-    "commander_global_p": 0.12093953023488256,
-    "smica_global_p": 0.09695152423788106,
-    "use_in_card": "context_only_not_sigma2_binding"
-  },
-  "native_solver_result": false,
-  "null_mock_status": "not_statistical",
-  "observational_claim_allowed": false,
-  "owner": "OBSSTAT",
-  "parent_identity": {
-    "mes_epsilon_rederived_here": false,
-    "omega_tilt_closed_form": "(1+w) * Omega_m * sinh(beta)**2"
-  },
-  "passed_gates": [
-    "repo_local_cf4_bulk_artifact_present",
-    "parent_identity_formula_present",
-    "plugin_firewall_for_unbound_components",
-    "registered_w2_ceiling_from_mes_provenance"
-  ],
-  "policies": {
-    "cosmic_variance_inclusive": {
-      "beta": 0.0011365409277164116,
-      "branches": {
-        "all_branch[-Uk,Uk]": {
-          "component_bounds": [
-            [
-              0.0,
-              "Infinity"
-            ],
-            [
-              0.0,
-              1.3086802636835631e-06
-            ],
-            [
-              0.0,
-              "Infinity"
-            ],
-            [
-              -1e-06,
-              1e-06
-            ]
-          ],
-          "df_reachable": 2,
-          "df_residual": 2,
-          "im_95_ci": [
-            -1.267899790181675e-05,
-            3.7209921579065816e-05
-          ],
-          "im_c_n": 1.6448536287231887,
-          "interval": [
-            -2.308680263661411e-06,
-            2.6839603940910474e-05
-          ],
-          "null_extremes": [
-            -2.308680263683563e-06,
-            1e-06
-          ],
-          "policy_id": "cosmic_variance_inclusive",
-          "reachable_extremes": [
-            2.2152135032186496e-17,
-            2.5839603940910473e-05
-          ],
-          "spec_stat": 0.0,
-          "status": "FEASIBLE",
-          "tau1": 5.991464547107979,
-          "tau2": 5.991464547107979,
-          "threshold_policy": "known_chi2"
-        },
-        "open_branch[0,Uk]": {
-          "component_bounds": [
-            [
-              0.0,
-              "Infinity"
-            ],
-            [
-              0.0,
-              1.3086802636835631e-06
-            ],
-            [
-              0.0,
-              "Infinity"
-            ],
-            [
-              0.0,
-              1e-06
-            ]
-          ],
-          "df_reachable": 2,
-          "df_residual": 2,
-          "im_95_ci": [
-            -1.1678997921194496e-05,
-            3.720992159844356e-05
-          ],
-          "im_c_n": 1.6448536317967262,
-          "interval": [
-            -1.3086802636614111e-06,
-            2.6839603940910474e-05
-          ],
-          "null_extremes": [
-            -1.3086802636835631e-06,
-            1e-06
-          ],
-          "policy_id": "cosmic_variance_inclusive",
-          "reachable_extremes": [
-            2.2152135032186496e-17,
-            2.5839603940910473e-05
-          ],
-          "spec_stat": 0.0,
-          "status": "FEASIBLE",
-          "tau1": 5.991464547107979,
-          "tau2": 5.991464547107979,
-          "threshold_policy": "known_chi2"
-        }
-      },
-      "bulk_error_kms": 101.87045232654711,
-      "omega_tilt": 4.0728115626715063e-07,
-      "omega_tilt_error": 2.435381213780489e-07
+  "claim_tier": "blocked",
+  "config_hash": "7b684610685ed343747a74d76aca8cc9e4738ea1273ab4c4a696de938baa3235",
+  "findings": [
+    {
+      "claim_tier_ceiling": "blocked",
+      "finding_id": "C1-K5-MV-F1",
+      "scientific_status": "OPEN",
+      "severity": "P0",
+      "source_reference": "docs/audits/self_adversarial_audit_20260713_nsc/03_cove_correctness_ledger.json#C1-K5-MV-F1",
+      "source_sha256": "635fb02a705974e4b13678213914d57eb815f597e9799469eb8ae1925e47227c"
     },
-    "measurement_only": {
-      "beta": 0.0011365409277164116,
-      "branches": {
-        "all_branch[-Uk,Uk]": {
-          "component_bounds": [
-            [
-              0.0,
-              "Infinity"
-            ],
-            [
-              0.0,
-              1.3086802636835631e-06
-            ],
-            [
-              0.0,
-              "Infinity"
-            ],
-            [
-              -1e-06,
-              1e-06
-            ]
-          ],
-          "df_reachable": 2,
-          "df_residual": 2,
-          "im_95_ci": [
-            -1.2286126643778356e-05,
-            3.719070987709307e-05
-          ],
-          "im_c_n": 1.64485362954318,
-          "interval": [
-            -1.9235303616106864e-06,
-            2.6828113594925402e-05
-          ],
-          "null_extremes": [
-            -2.308680263683563e-06,
-            1e-06
-          ],
-          "policy_id": "measurement_only",
-          "reachable_extremes": [
-            3.8514990207287654e-07,
-            2.58281135949254e-05
-          ],
-          "spec_stat": 4.930380657631324e-32,
-          "status": "FEASIBLE",
-          "tau1": 5.991464547107979,
-          "tau2": 5.991464547107979,
-          "threshold_policy": "known_chi2"
-        },
-        "open_branch[0,Uk]": {
-          "component_bounds": [
-            [
-              0.0,
-              "Infinity"
-            ],
-            [
-              0.0,
-              1.3086802636835631e-06
-            ],
-            [
-              0.0,
-              "Infinity"
-            ],
-            [
-              0.0,
-              1e-06
-            ]
-          ],
-          "df_reachable": 2,
-          "df_residual": 2,
-          "im_95_ci": [
-            -1.1286126671726075e-05,
-            3.7190709905040787e-05
-          ],
-          "im_c_n": 1.6448536339793178,
-          "interval": [
-            -9.235303616106867e-07,
-            2.6828113594925402e-05
-          ],
-          "null_extremes": [
-            -1.3086802636835631e-06,
-            1e-06
-          ],
-          "policy_id": "measurement_only",
-          "reachable_extremes": [
-            3.8514990207287654e-07,
-            2.58281135949254e-05
-          ],
-          "spec_stat": 4.930380657631324e-32,
-          "status": "FEASIBLE",
-          "tau1": 5.991464547107979,
-          "tau2": 5.991464547107979,
-          "threshold_policy": "known_chi2"
-        }
-      },
-      "bulk_error_kms": 4.968225629763425,
-      "omega_tilt": 4.0728115626715063e-07,
-      "omega_tilt_error": 1.1877362952864287e-08
+    {
+      "claim_tier_ceiling": "blocked",
+      "finding_id": "C3-K5-VCORR-ML-F1",
+      "scientific_status": "OPEN",
+      "severity": "P0",
+      "source_reference": "docs/audits/self_adversarial_audit_20260713_nsc/03_cove_correctness_ledger.json#C3-K5-VCORR-ML-F1",
+      "source_sha256": "635fb02a705974e4b13678213914d57eb815f597e9799469eb8ae1925e47227c"
+    },
+    {
+      "claim_tier_ceiling": "blocked",
+      "finding_id": "N-DATA-CF4-DOWNSTREAM",
+      "scientific_status": "OPEN",
+      "severity": "P1",
+      "source_reference": "docs/audits/jcap_prd_adversarial_audit_20260714/atomic_finding_ledger.json#N-DATA-CF4-DOWNSTREAM",
+      "source_sha256": "6e88a6f6c4f95e5154c89e939230c94854b11a8430a64c28ccb339d8c4ab6feb"
     }
-  },
-  "production_status": "diagnostic_only",
-  "promotion_blockers": [
-    "Sigma2_hat",
-    "Sigma2_error",
-    "Omega_k_upper"
   ],
-  "required_gates": [
-    "repo_local_cf4_bulk_artifact_present",
-    "parent_identity_formula_present",
-    "plugin_firewall_for_unbound_components"
+  "generating_command": "PYTHONPATH=htt/src venv/bin/python -B scripts/codex_harness/quarantine_cf4_p0_consumers.py --write",
+  "git_commit_or_worktree_state": "baseline_commit:e6da3670043596efdcd93f9ba5e631e1462146c7; PR-120 worktree hashes are bound by the canonical inventory",
+  "implementation_scope": "propagation_quarantine_only",
+  "input_hashes": [
+    "docs/research_program/long_horizon_rescue/cf4_p0_quarantine_policy.yaml:sha256:7b684610685ed343747a74d76aca8cc9e4738ea1273ab4c4a696de938baa3235",
+    "docs/generated/cf4_p0_quarantine_inventory.json:sha256:2d6eada611234b102989f2e12441637a4e35b64bf456c3096f6ee8e426fa82de",
+    "docs/codex_handoff/research_remediation_state.yaml:sha256:77d36878315f041c7bb6c273a2d650f7d3fa1c8a8dc635a577527d646fa40109"
   ],
-  "schema": "htt.k5.cf4_identified_interval_card.v1",
-  "schema_version": "htt.k5.cf4_identified_interval_card.v1",
-  "sky_support_status": "not_directional",
-  "source_artifacts": [
-    "docs/generated/k5_cf4_release_coverage.json",
-    "docs/generated/k1_global_maxscan.json",
-    "docs/generated/parent_identity_seal.json",
-    "htt/workspace/data/obs_defaults.json"
-  ],
-  "statistics_definitions": {
-    "error_policies": [
-      "measurement_only",
-      "cosmic_variance_inclusive"
-    ],
-    "omega_tilt": "(1+w) Omega_m sinh(beta)^2 with w=0 and beta=|B|/c",
-    "plugin_firewall": "observational_claim_allowed is false while any component is PLUGIN/BLOCKED",
-    "x_comparator": "c=(1,-1,1,1) applied to branch-bounded components"
-  },
+  "inventory_path": "docs/generated/cf4_p0_quarantine_inventory.json",
+  "inventory_sha256": "2d6eada611234b102989f2e12441637a4e35b64bf456c3096f6ee8e426fa82de",
+  "null_mock_status": "not_applicable_quarantine_is_not_validation",
+  "owner": "COMMON",
+  "policy_path": "docs/research_program/long_horizon_rescue/cf4_p0_quarantine_policy.yaml",
+  "policy_sha256": "7b684610685ed343747a74d76aca8cc9e4738ea1273ab4c4a696de938baa3235",
+  "public_use": true,
+  "remediation_root_path": "docs/codex_handoff/research_remediation_state.yaml",
+  "remediation_root_sha256": "77d36878315f041c7bb6c273a2d650f7d3fa1c8a8dc635a577527d646fa40109",
+  "replacement_policy": "forbidden_without_later_authenticated_adjudication",
+  "replacement_value": null,
+  "schema": "htt.cf4_p0_quarantine_block.v1",
+  "scientific_effect": "none",
+  "sky_support_status": "not_applicable_to_propagation_quarantine",
+  "status": "QUARANTINED_OPEN_FINDINGS",
   "transfer_source": "none"
 }

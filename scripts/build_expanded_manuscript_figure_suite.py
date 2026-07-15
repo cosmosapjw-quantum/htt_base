@@ -22,6 +22,7 @@ from pathlib import Path
 import re
 import shlex
 import shutil
+import stat
 import subprocess
 import sys
 from typing import Any, Iterable
@@ -133,6 +134,16 @@ class ConditionedFigure:
     null_mock_status: str
 
 
+@dataclass(frozen=True)
+class ConditionedSourceBinding:
+    """Hash binding between an immutable conditioned copy and its source."""
+
+    status: str
+    frozen_source_sha256: str
+    current_source_sha256: str
+    artifact_sha256: str
+
+
 def _repo_relative(path: Path) -> str:
     try:
         return path.resolve().relative_to(REPO_ROOT).as_posix()
@@ -189,6 +200,181 @@ def _validate_manifest(path: Path, artifact_path: Path) -> None:
     if issues:
         rendered = "; ".join(f"{issue.code}: {issue.detail}" for issue in issues)
         raise RuntimeError(f"invalid manifest {path}: {rendered}")
+
+
+def _manifest_source_digest(payload: dict[str, Any], source_rel: str) -> str:
+    prefixes = (
+        f"{source_rel}:sha256:",
+        f"frozen-source-snapshot:{source_rel}:sha256:",
+    )
+    matches = [
+        item.removeprefix(prefix)
+        for item in payload.get("input_hashes", [])
+        if isinstance(item, str)
+        for prefix in prefixes
+        if item.startswith(prefix)
+    ]
+    if len(matches) != 1 or not re.fullmatch(r"[0-9a-f]{64}", matches[0]):
+        raise RuntimeError(
+            "conditioned legacy manifest must contain exactly one valid frozen "
+            f"source digest for {source_rel}"
+        )
+    return matches[0]
+
+
+def _frozen_source_digest(
+    conditioned: ConditionedFigure,
+    *,
+    artifact_sha256: str,
+) -> str:
+    try:
+        mode = conditioned.manifest_path.lstat().st_mode
+    except FileNotFoundError as exc:
+        raise RuntimeError(
+            "conditioned legacy source diverged from its preserved artifact, "
+            "but no frozen manifest is available: "
+            f"{_repo_relative(conditioned.manifest_path)}"
+        ) from exc
+    if conditioned.manifest_path.is_symlink() or not stat.S_ISREG(mode):
+        raise RuntimeError(
+            "conditioned legacy frozen manifest must be a regular non-symlink "
+            f"file: {_repo_relative(conditioned.manifest_path)}"
+        )
+    try:
+        payload = json.loads(conditioned.manifest_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise RuntimeError(
+            "conditioned legacy frozen manifest is unreadable or invalid JSON: "
+            f"{_repo_relative(conditioned.manifest_path)}"
+        ) from exc
+    if not isinstance(payload, dict):
+        raise RuntimeError("conditioned legacy frozen manifest must be a JSON object")
+    output_rel = _repo_relative(conditioned.output_path)
+    if payload.get("artifact_path") != output_rel:
+        raise RuntimeError(
+            "conditioned legacy frozen manifest artifact_path mismatch for "
+            f"{output_rel}"
+        )
+    recorded_artifact = payload.get("artifact_sha256")
+    if recorded_artifact is not None and recorded_artifact != f"sha256:{artifact_sha256}":
+        raise RuntimeError(
+            "conditioned legacy frozen manifest artifact digest mismatch for "
+            f"{output_rel}"
+        )
+    source_rel = _repo_relative(conditioned.source_path)
+    frozen_digest = _manifest_source_digest(payload, source_rel)
+    if frozen_digest != artifact_sha256:
+        raise RuntimeError(
+            "conditioned legacy frozen source digest does not bind the preserved "
+            f"artifact for {output_rel}"
+        )
+    return frozen_digest
+
+
+def _prepare_conditioned_source_binding(
+    conditioned: ConditionedFigure,
+) -> ConditionedSourceBinding:
+    try:
+        source_mode = conditioned.source_path.lstat().st_mode
+    except FileNotFoundError as exc:
+        raise RuntimeError(
+            f"missing conditioned legacy source: {_repo_relative(conditioned.source_path)}"
+        ) from exc
+    if conditioned.source_path.is_symlink() or not stat.S_ISREG(source_mode):
+        raise RuntimeError(
+            "conditioned legacy source must be a regular non-symlink file: "
+            f"{_repo_relative(conditioned.source_path)}"
+        )
+    current_source_sha256 = _sha256(conditioned.source_path)
+    try:
+        output_mode = conditioned.output_path.lstat().st_mode
+    except FileNotFoundError:
+        shutil.copy2(conditioned.source_path, conditioned.output_path)
+        artifact_sha256 = _sha256(conditioned.output_path)
+        if artifact_sha256 != current_source_sha256:
+            raise RuntimeError(
+                "conditioned legacy copy digest mismatch for "
+                f"{_repo_relative(conditioned.output_path)}"
+            )
+        return ConditionedSourceBinding(
+            status="current_source_matches_artifact",
+            frozen_source_sha256=current_source_sha256,
+            current_source_sha256=current_source_sha256,
+            artifact_sha256=artifact_sha256,
+        )
+    if conditioned.output_path.is_symlink() or not stat.S_ISREG(output_mode):
+        raise RuntimeError(
+            "conditioned legacy artifact must be an existing regular "
+            f"non-symlink file: {_repo_relative(conditioned.output_path)}"
+        )
+    artifact_sha256 = _sha256(conditioned.output_path)
+    if artifact_sha256 == current_source_sha256:
+        return ConditionedSourceBinding(
+            status="current_source_matches_artifact",
+            frozen_source_sha256=current_source_sha256,
+            current_source_sha256=current_source_sha256,
+            artifact_sha256=artifact_sha256,
+        )
+    return ConditionedSourceBinding(
+        status="preserved_frozen_source_digest",
+        frozen_source_sha256=_frozen_source_digest(
+            conditioned,
+            artifact_sha256=artifact_sha256,
+        ),
+        current_source_sha256=current_source_sha256,
+        artifact_sha256=artifact_sha256,
+    )
+
+
+def _validate_conditioned_manifest_binding(
+    manifest_path: Path,
+    artifact_path: Path,
+    source_path: Path,
+) -> None:
+    payload = json.loads(manifest_path.read_text(encoding="utf-8"))
+    binding = payload.get("source_binding")
+    if not isinstance(binding, dict):
+        raise RuntimeError(f"missing conditioned source_binding: {manifest_path}")
+    artifact_sha256 = _sha256(artifact_path)
+    current_source_sha256 = _sha256(source_path)
+    frozen_source_sha256 = str(binding.get("frozen_source_sha256", "")).removeprefix(
+        "sha256:"
+    )
+    status_value = binding.get("status")
+    expected = {
+        "artifact_sha256": f"sha256:{artifact_sha256}",
+        "current_source_sha256": f"sha256:{current_source_sha256}",
+        "frozen_source_sha256": f"sha256:{frozen_source_sha256}",
+        "source_path": _repo_relative(source_path),
+    }
+    mismatches = [
+        f"{key}={binding.get(key)!r} expected={value!r}"
+        for key, value in expected.items()
+        if binding.get(key) != value
+    ]
+    if frozen_source_sha256 != artifact_sha256:
+        mismatches.append("frozen source digest does not match preserved artifact")
+    if status_value == "current_source_matches_artifact":
+        if current_source_sha256 != artifact_sha256:
+            mismatches.append("current-source binding has divergent bytes")
+    elif status_value == "preserved_frozen_source_digest":
+        if current_source_sha256 == artifact_sha256:
+            mismatches.append("frozen-source binding is unnecessary for matching bytes")
+    else:
+        mismatches.append(f"unknown source binding status {status_value!r}")
+    source_rel = _repo_relative(source_path)
+    expected_input = (
+        f"{source_rel}:sha256:{artifact_sha256}"
+        if status_value == "current_source_matches_artifact"
+        else f"frozen-source-snapshot:{source_rel}:sha256:{artifact_sha256}"
+    )
+    if expected_input not in payload.get("input_hashes", []):
+        mismatches.append("input_hashes does not carry the frozen source binding")
+    if mismatches:
+        raise RuntimeError(
+            f"invalid conditioned source binding in {manifest_path}: "
+            + "; ".join(mismatches)
+        )
 
 
 def _pack_json_path(item: dict[str, object]) -> Path:
@@ -413,6 +599,7 @@ def _iter_legacy_candidates() -> tuple[Path, ...]:
     excluded_parts = {
         "current",
         "observed_current",
+        "obsdata_current",
         "data_analysis_current",
         "paper",
         "conditioned_legacy",
@@ -535,15 +722,47 @@ def _caption_for(source_path: Path) -> str:
 def _legacy_manifest_payload(
     conditioned: ConditionedFigure,
     *,
+    source_binding: ConditionedSourceBinding,
     command: str,
     commit: str | None,
     worktree_state: str,
 ) -> dict[str, Any]:
     source_rel = _repo_relative(conditioned.source_path)
     output_rel = _repo_relative(conditioned.output_path)
+    preserved_frozen_source = (
+        source_binding.status == "preserved_frozen_source_digest"
+    )
+    source_input_hash = (
+        f"frozen-source-snapshot:{source_rel}:sha256:"
+        f"{source_binding.frozen_source_sha256}"
+        if preserved_frozen_source
+        else f"{source_rel}:sha256:{source_binding.frozen_source_sha256}"
+    )
+    input_hashes = [source_input_hash]
+    caveats = [
+        "Conditionally included legacy figure; not a refreshed current-code production result.",
+        conditioned.condition,
+        "No native low-ell solver output is represented.",
+        "No Bianchi family-ID or geometry-detection claim is made.",
+        "MIO diagnostics, HTT inference, and transfer provenance remain separated by owner.",
+    ]
+    if preserved_frozen_source:
+        input_hashes.append(
+            f"current-source-candidate:{source_rel}:sha256:"
+            f"{source_binding.current_source_sha256}"
+        )
+        caveats.append(
+            "The live source path has changed since this immutable conditioned copy; "
+            "the manifest preserves the frozen source digest and records the current "
+            "candidate digest separately."
+        )
+    input_hashes.append(
+        f"scripts/build_expanded_manuscript_figure_suite.py:sha256:{_sha256(Path(__file__))}"
+    )
     payload = {
         "artifact_id": f"common.conditioned_legacy_figure.{conditioned.output_path.stem}",
         "artifact_path": output_rel,
+        "artifact_sha256": f"sha256:{source_binding.artifact_sha256}",
         "owner": "COMMON",
         "implementation_scope": "common",
         "claim_tier": "exploratory",
@@ -556,21 +775,13 @@ def _legacy_manifest_payload(
                 "source_path": source_rel,
                 "output_path": output_rel,
                 "condition": conditioned.condition,
+                "source_binding": source_binding,
             }
         ),
-        "input_hashes": [
-            f"{source_rel}:sha256:{_sha256(conditioned.source_path)}",
-            f"scripts/build_expanded_manuscript_figure_suite.py:sha256:{_sha256(Path(__file__))}",
-        ],
-        "code_version": "conditioned-legacy-gallery-v1",
+        "input_hashes": input_hashes,
+        "code_version": "conditioned-legacy-gallery-v2",
         "schema_version": "artifact-manifest-v2",
-        "caveats": [
-            "Conditionally included legacy figure; not a refreshed current-code production result.",
-            conditioned.condition,
-            "No native low-ell solver output is represented.",
-            "No Bianchi family-ID or geometry-detection claim is made.",
-            "MIO diagnostics, HTT inference, and transfer provenance remain separated by owner.",
-        ],
+        "caveats": caveats,
         "required_gates": [
             "native_low_ell_morphology_atlas_before_family_id",
             "manifest_sidecar_before_manuscript_use",
@@ -580,6 +791,14 @@ def _legacy_manifest_payload(
         "statistics_definitions": {
             "legacy_source_path": source_rel,
             "manuscript_role": "appendix_only_conditioned_diagnostic",
+            "source_binding_status": source_binding.status,
+        },
+        "source_binding": {
+            "status": source_binding.status,
+            "source_path": source_rel,
+            "frozen_source_sha256": f"sha256:{source_binding.frozen_source_sha256}",
+            "current_source_sha256": f"sha256:{source_binding.current_source_sha256}",
+            "artifact_sha256": f"sha256:{source_binding.artifact_sha256}",
         },
         "transfer_source": conditioned.transfer_source,
         "sky_support_status": conditioned.sky_support_status,
@@ -618,15 +837,21 @@ def write_conditioned_gallery(command: str) -> dict[str, Any]:
     records = _conditioned_records(command)
     CONDITIONED_DIR.mkdir(parents=True, exist_ok=True)
     for record in records:
-        shutil.copy2(record.source_path, record.output_path)
+        source_binding = _prepare_conditioned_source_binding(record)
         payload = _legacy_manifest_payload(
             record,
+            source_binding=source_binding,
             command=command,
             commit=commit,
             worktree_state=worktree_state,
         )
         _write_json(record.manifest_path, payload)
         _validate_manifest(record.manifest_path, record.output_path)
+        _validate_conditioned_manifest_binding(
+            record.manifest_path,
+            record.output_path,
+            record.source_path,
+        )
 
     lines = [
         "% Auto-generated by scripts/build_expanded_manuscript_figure_suite.py --phase aggressive",

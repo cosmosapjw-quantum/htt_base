@@ -1,8 +1,8 @@
 id: EGS2-K5-mocks
 title: CF4 release-matched forward mocks for the K5 cosmic-variance term
-state: in_house_physical_mock_delivered_nonlinear_cola_residual
-blocker: BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP
-successor: scripts/cf4_mock_calibrated_significance.py (rev-r197) -- an in-house physical forward-mock ensemble (linear GRF velocity field + super-sample mode + real per-object noise at the fixed CF4 geometry, htt/obsstat/pv_forward_mocks.py) that reproduces the analytic linear bulk-flow covariance (mock/analytic ratio ~1) and localises the residual to nonlinear velocity power; the full nonlinear COLA/L-PICOLA suite (Qin+2021 CF4TF is request-only) is the remaining refinement
+state: quarantined_open_p0
+blocker: [C1-K5-MV-F1, N-DATA-CF4-DOWNSTREAM, BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP]
+successor: none; the former observed-input mock-significance consumer is legacy_reproduction_only with public_use false, and no replacement significance is authorized
 owner_lane: cf4_reconstruction
 method: >
   CF4 WF/CR Bias-Gaussianization (Hoffman et al. 2024, arXiv:2311.01340): draw
@@ -11,5 +11,5 @@ method: >
   each mock. The mock ensemble gives the cosmic-variance-inclusive bulk-flow
   covariance and a calibrated coverage.
 mechanics_ready: htt/obsstat/bulkflow_mle.py:hierarchical_coverage_experiment + htt/obsstat/constrained_realizations.py
-exit_gate: component/amplitude coverage + bias with cosmic variance (separate covariance rows)
+exit_gate: canonical CF4 P0 remediation accepted in a future reviewed PR, followed by release-bound component/amplitude coverage and bias validation
 inputs_required: [CF4 release binding, BGc + WF/CR mock owner]

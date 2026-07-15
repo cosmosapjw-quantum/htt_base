@@ -3,6 +3,7 @@
   "artifact_id": "bass.theorem.fig_egs3_u1_beta_channel",
   "artifact_mode": "paper_appendix_conditioned",
   "artifact_path": "figures/current/fig_egs3_u1_beta_channel.png",
+  "artifact_sha256": "sha256:d3be05f649b793fdbeaa884ff82f7441cb390d83dfc7db243a38712fcf84af79",
   "caption_policy": [
     "must_state_diagnostic_only",
     "must_not_use_for_family_identification_or_family_selection",
@@ -15,7 +16,7 @@
     "No Bianchi family-ID or geometry-detection claim is made."
   ],
   "claim_tier": "diagnostic_only",
-  "config_hash": "sha256:4eed650c82e18bec9fc9f734926dcb5463a419c8100ed65471fa1d78043130c4",
+  "config_hash": "sha256:39ff926ebb165a799b90771c64c631d75b23a97b6474878c9e32386cdd8038ea",
   "covariance_status": "synthetic_only",
   "created_by": "scripts/make_egs2_egs3_theorem_figures.py",
   "failed_gates": [
@@ -24,8 +25,18 @@
     "observational_closure_not_bound"
   ],
   "family_identification": false,
+  "finding_ids": [
+    "C1-K5-MV-F1"
+  ],
+  "finding_status": "OPEN",
   "generating_command": "python scripts/make_egs2_egs3_theorem_figures.py",
+  "git_commit_or_worktree_state": "baseline_commit:e6da3670043596efdcd93f9ba5e631e1462146c7; worktree_state:PR-120-content-addressed",
   "implementation_scope": "bass_py",
+  "input_hashes": [
+    "figures/current/fig_egs3_u1_beta_channel.source.json:sha256:6a6c277b149d22178d329b79bf07dfdfaed766e673350bc6c5ecb74a3e3b6cfd",
+    "scripts/make_egs2_egs3_theorem_figures.py:sha256:b140e512d7fd620cbc7ff55f4955c0606acabfd274029edb0c12ccc434029389",
+    "htt/obsstat/egs3_teff_unification.py:sha256:427376670d34482f64e86a1bf0e18eb0f5ec8fe6dca6cf93457f0374f987d35d"
+  ],
   "native_solver_result": false,
   "null_mock_status": "synthetic_only",
   "owner": "BASS",
@@ -44,6 +55,7 @@
     "bianchi_evidence_claim": "fail_program_theorem_only",
     "family_identification_claim": "fail_blocked_pre_native_atlas"
   },
+  "quarantine_control_ref": "docs/generated/cf4_p0_quarantine_block.json",
   "required_gates": [
     "gate_test_present",
     "manifest_metadata_present",
@@ -300,7 +312,7 @@
       "-3/4",
       "+5/4"
     ],
-    "t_cf4": 2.583451698e-06,
+    "observational_numeric_instantiation": "none; the former CF4 value is quarantined by PR-120 while C1-K5-MV-F1 remains OPEN",
     "t_grid": [
       1e-06,
       0.0042026723,

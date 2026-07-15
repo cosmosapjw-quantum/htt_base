@@ -1,150 +1,74 @@
 {
-  "amplitude_binning_systematic": {
-    "B200_alt_nside8_kms": 401.97,
-    "B200_primary_nside4_kms": 405.22,
-    "systematic_kms": 3.25
-  },
-  "apex_stability": {
-    "apex_vs_R": {
-      "100": [
-        295.92,
-        -16.74
-      ],
-      "150": [
-        309.78,
-        -63.15
-      ],
-      "200": [
-        318.95,
-        -72.04
-      ],
-      "50": [
-        289.19,
-        10.6
-      ]
-    },
-    "note": "the apex is well-constrained at R<=100 (near the published CF4 flow); it swings with scale as the sparse/anisotropic deep CF4 sample takes over (Psi_par turns negative at large separation, anti-weighting deep cells) -- the AMPLITUDE, not the large-R direction, is the robust tension quantity"
-  },
-  "bulk_flow_vs_R": {
-    "100": {
-      "amplitude_kms": 135.36,
-      "apex_galactic_l_b_deg": [
-        295.92,
-        -16.74
-      ],
-      "cosmic_variance_error_kms": 84.52,
-      "cosmic_variance_error_pk_corrected_kms": 101.5,
-      "lcdm_expected_B_rms_kms": 129.01,
-      "noise_error_kms": 26.898,
-      "significance": {
-        "chi2_3dof_full": 2.333,
-        "p_value_full": 0.50615,
-        "sigma_full_fiducial_pk": 0.66,
-        "sigma_noise_only": 4.42,
-        "sigma_pk_corrected": 0.46
-      }
-    },
-    "150": {
-      "amplitude_kms": 263.14,
-      "apex_galactic_l_b_deg": [
-        309.78,
-        -63.15
-      ],
-      "cosmic_variance_error_kms": 68.09,
-      "cosmic_variance_error_pk_corrected_kms": 81.78,
-      "lcdm_expected_B_rms_kms": 93.05,
-      "noise_error_kms": 25.97,
-      "significance": {
-        "chi2_3dof_full": 13.386,
-        "p_value_full": 0.00387,
-        "sigma_full_fiducial_pk": 2.89,
-        "sigma_noise_only": 10.3,
-        "sigma_pk_corrected": 2.29
-      }
-    },
-    "200": {
-      "amplitude_kms": 405.22,
-      "apex_galactic_l_b_deg": [
-        318.95,
-        -72.04
-      ],
-      "cosmic_variance_error_kms": 62.57,
-      "cosmic_variance_error_pk_corrected_kms": 75.14,
-      "lcdm_expected_B_rms_kms": 72.69,
-      "noise_error_kms": 27.442,
-      "significance": {
-        "chi2_3dof_full": 35.903,
-        "p_value_full": 0.0,
-        "sigma_full_fiducial_pk": 5.37,
-        "sigma_noise_only": 14.81,
-        "sigma_pk_corrected": 4.44
-      }
-    },
-    "50": {
-      "amplitude_kms": 173.33,
-      "apex_galactic_l_b_deg": [
-        289.19,
-        10.6
-      ],
-      "cosmic_variance_error_kms": 120.33,
-      "cosmic_variance_error_pk_corrected_kms": 144.51,
-      "lcdm_expected_B_rms_kms": 208.01,
-      "noise_error_kms": 16.017,
-      "significance": {
-        "chi2_3dof_full": 2.039,
-        "p_value_full": 0.56436,
-        "sigma_full_fiducial_pk": 0.58,
-        "sigma_noise_only": 10.85,
-        "sigma_pk_corrected": 0.38
-      }
-    }
+  "allowed_use": "blocked_source_record_only",
+  "artifact": {
+    "active_path": "docs/generated/cf4_mv_bulkflow_card.json",
+    "artifact_id": "cf4_mv_bulkflow_card",
+    "artifact_kind": "result_card_block_record",
+    "legacy_public_use": false,
+    "legacy_reproduction_only_path": "legacy/cf4_p0/cards/cf4_mv_bulkflow_card.json",
+    "producer": "scripts/cf4_mv_bulkflow.py"
   },
   "caveats": [
-    "the significance is a LIKELY OVER-ESTIMATE and is reported as a treatment-dependent RANGE, not a single headline: Whitford 2023 shows MV bulk-flow uncertainties are typically underestimated (the linear-theory + Gaussian-window covariance omits the non-Gaussian + survey-selection scatter that release-matched mocks capture), so tension is overestimated; a definitive significance still needs the release-matched mocks (BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP)",
-    "the fiducial EH98 no-wiggle P(k) runs ~15% low in sigma_v; the cosmic variance is therefore also reported P(k)-corrected to the standard linear sigma_v (370 km/s), which lowers sigma -- a scale offset carried by the fiducial cosmology, not a data feature",
-    "the estimator uses a GAUSSIAN window of scale R (exp(-r^2/2R^2)); |B|(R) and the LambdaCDM expectation are for THAT window; the AMPLITUDE is the robust quantity (|B|(200)~370-420 km/s consistent with the published CF4 419+/-36) -- the APEX is well-constrained only at R<=100 (near the published flow) and swings at large R where the sparse deep CF4 sample dominates (see apex_stability)",
-    "the |B|(200) amplitude carries a ~3 km/s HEALPix-binning systematic (nside 4 vs 8); groups are binned into HEALPix x radial cells (standard MV practice), validated exact on an injected uniform flow, sigma_v diagonal to <0.1%, converged vs a finer k/A grid"
+    "Quarantine is propagation control, not scientific remediation or validation.",
+    "All three findings remain OPEN; zero stale active consumers does not close them.",
+    "No audit sensitivity or alternative number is a replacement result.",
+    "Historical audits and frozen external packages remain immutable evidence.",
+    "PR4/NPIPE download, reduction, and analysis remain skipped by user scope."
   ],
-  "claim": "real measurement: CF4 MV ideal-window bulk flow |B|(200 h^-1Mpc) = 405 km/s (+/- 3 binning syst), consistent with the published CF4 419+/-36; small-R apex (l,b)=(289,11) ~ 8 deg from the published flow; LambdaCDM tension in the range 4.4-5.4 sigma (P(k)-corrected to fiducial covariance; treatment-dependent per Whitford 2023, a likely over-estimate, NOT a single headline value)",
-  "estimator": "Watkins-Feldman-Hudson minimum-variance, Gaussian window scale R; groups binned into HEALPix x radial cells",
-  "fiducial_cosmology": {
-    "Omega_b": 0.0493,
-    "Omega_m": 0.3153,
-    "P_k": "EH98 no-wiggle, sigma_8-normalised (self-contained)",
-    "growth_f_Om^0.55": 0.53003,
-    "h": 0.6736,
-    "n_s": 0.9649,
-    "sigma_8": 0.8111
+  "claim_level": {
+    "level": "C1",
+    "scheme": "roadmap_rescue_v1"
   },
-  "headline_R_hmpc": 200.0,
+  "claim_tier": "blocked",
+  "config_hash": "7b684610685ed343747a74d76aca8cc9e4738ea1273ab4c4a696de938baa3235",
+  "findings": [
+    {
+      "claim_tier_ceiling": "blocked",
+      "finding_id": "C1-K5-MV-F1",
+      "scientific_status": "OPEN",
+      "severity": "P0",
+      "source_reference": "docs/audits/self_adversarial_audit_20260713_nsc/03_cove_correctness_ledger.json#C1-K5-MV-F1",
+      "source_sha256": "635fb02a705974e4b13678213914d57eb815f597e9799469eb8ae1925e47227c"
+    },
+    {
+      "claim_tier_ceiling": "blocked",
+      "finding_id": "C3-K5-VCORR-ML-F1",
+      "scientific_status": "OPEN",
+      "severity": "P0",
+      "source_reference": "docs/audits/self_adversarial_audit_20260713_nsc/03_cove_correctness_ledger.json#C3-K5-VCORR-ML-F1",
+      "source_sha256": "635fb02a705974e4b13678213914d57eb815f597e9799469eb8ae1925e47227c"
+    },
+    {
+      "claim_tier_ceiling": "blocked",
+      "finding_id": "N-DATA-CF4-DOWNSTREAM",
+      "scientific_status": "OPEN",
+      "severity": "P1",
+      "source_reference": "docs/audits/jcap_prd_adversarial_audit_20260714/atomic_finding_ledger.json#N-DATA-CF4-DOWNSTREAM",
+      "source_sha256": "6e88a6f6c4f95e5154c89e939230c94854b11a8430a64c28ccb339d8c4ab6feb"
+    }
+  ],
+  "generating_command": "PYTHONPATH=htt/src venv/bin/python -B scripts/codex_harness/quarantine_cf4_p0_consumers.py --write",
+  "git_commit_or_worktree_state": "baseline_commit:e6da3670043596efdcd93f9ba5e631e1462146c7; PR-120 worktree hashes are bound by the canonical inventory",
+  "implementation_scope": "propagation_quarantine_only",
   "input_hashes": [
-    "workdir/obs_bundle/pecvel/cf4_full/cf4_groups.npz:sha256:3c0f2e1a5b56b7227abb5e187406810d7eb15e924aac69e9cb0ffc1343a811ad"
+    "docs/research_program/long_horizon_rescue/cf4_p0_quarantine_policy.yaml:sha256:7b684610685ed343747a74d76aca8cc9e4738ea1273ab4c4a696de938baa3235",
+    "docs/generated/cf4_p0_quarantine_inventory.json:sha256:2d6eada611234b102989f2e12441637a4e35b64bf456c3096f6ee8e426fa82de",
+    "docs/codex_handoff/research_remediation_state.yaml:sha256:77d36878315f041c7bb6c273a2d650f7d3fa1c8a8dc635a577527d646fa40109"
   ],
-  "literature_crosscheck": {
-    "amplitude_deviation_kms": 13.78,
-    "apex50_separation_from_published_deg": 8.47,
-    "apex_at_50hmpc_l_b_deg": [
-      289.19,
-      10.6
-    ],
-    "our_200hmpc_kms": 405.22,
-    "watkins2023_200hmpc_kms": 419.0,
-    "whitford2023_173mpch_kms": 428.0,
-    "within_band": true
-  },
-  "n_cells": 1389,
-  "n_groups": 38038,
-  "product": "Cosmicflows-4 groups (Tully+ 2023); MV ideal-window bulk flow",
-  "residual_gate": "release-matched CF4 forward mocks (full non-Gaussian + selection covariance) to pin the amplitude significance; the linear Gaussian-window covariance here is the credible upper estimate that resolves the rev-r195 withheld-significance, pending those mocks",
-  "schema": "htt.cf4_mv_bulkflow.v1",
-  "scope_not_claimed": "a bulk-flow-vs-LambdaCDM kinematic measurement + significance; no anisotropy discovery beyond the stated covariance-treatment-dependent sigma, and NOT a Bianchi family, geometry, or observer-frame claim; the theory-g link is out of scope (it needs the native low-multipole solver)",
-  "sigma_star_kms": 50.0,
-  "status": "MEASURED_MV_BULKFLOW",
-  "validation": {
-    "cell_diagonal_sigma_v_kms": 307.96,
-    "closed_form_sigma_v_kms": 308.09,
-    "injection_recovery_error_kms": 0.0,
-    "khat_grid_convergence_rel": 0.0,
-    "passed": true
-  }
+  "inventory_path": "docs/generated/cf4_p0_quarantine_inventory.json",
+  "inventory_sha256": "2d6eada611234b102989f2e12441637a4e35b64bf456c3096f6ee8e426fa82de",
+  "null_mock_status": "not_applicable_quarantine_is_not_validation",
+  "owner": "COMMON",
+  "policy_path": "docs/research_program/long_horizon_rescue/cf4_p0_quarantine_policy.yaml",
+  "policy_sha256": "7b684610685ed343747a74d76aca8cc9e4738ea1273ab4c4a696de938baa3235",
+  "public_use": true,
+  "remediation_root_path": "docs/codex_handoff/research_remediation_state.yaml",
+  "remediation_root_sha256": "77d36878315f041c7bb6c273a2d650f7d3fa1c8a8dc635a577527d646fa40109",
+  "replacement_policy": "forbidden_without_later_authenticated_adjudication",
+  "replacement_value": null,
+  "schema": "htt.cf4_p0_quarantine_block.v1",
+  "scientific_effect": "none",
+  "sky_support_status": "not_applicable_to_propagation_quarantine",
+  "status": "QUARANTINED_OPEN_FINDINGS",
+  "transfer_source": "none"
 }

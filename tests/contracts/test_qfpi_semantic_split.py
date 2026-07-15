@@ -42,7 +42,10 @@ def test_public_qfpi_surfaces_namespace_htt_and_mio_pi():
 
     assert r"\Pi_{\rm MIO}" in appendices
     assert r"\Pi_{\rm HTT}" in appendices
-    assert r"\Pi_{\rm HTT}" in figures
+    # PR-120 replaced the mixed CF4 manuscript-figure producer with a
+    # fail-closed wrapper.  It must not retain any active Pi result language.
+    assert "require_cf4_observational_input" in figures
+    assert r"\Pi_{\rm HTT}" not in figures
     assert "HTT posterior exceedance cross-check" in htt_to_mio
     assert "legacy HTT posterior diagnostic export" in departure_posteriors
     assert "not MIO Pi" in departure_posteriors

@@ -76,10 +76,9 @@ U2 (MES -> Teff fingerprint ceilings, exact).
   B_sigma > B_omega > B_accel (imported from the frozen
   ``mes_ordering_theorem``) maps to an identically ordered ceiling triple --
   DISCLOSED as a formal order-preservation instantiation (the three MES
-  budgets are NOT three physical rapidity ceilings). The CF4 bulk-flow
-  rapidity (K5 card, |B| = 340.7264 km/s) sits strictly below the MES dipole
-  ceiling in BOTH channels: fingerprint (3/2) s_CF4^2 = 1.94e-6 < 2.28e-6 =
-  (3/2) eps_1^2, mirroring the tilt-sector containment.
+  budgets are NOT three physical rapidity ceilings). The former CF4 numerical
+  instantiation is quarantined by PR-120 while its source findings remain OPEN;
+  it is not part of the active symbolic seal.
 
 Claim discipline. Exact symbolic correspondence between registered in-repo
 mathematical objects at tier diagnostic_only; no data claim, no
@@ -100,20 +99,12 @@ from htt.obsstat.egs3_mes_provenance import (
 from htt.teff.representative import two_temperature_ratio
 
 __all__ = [
-    "BETA_CF4",
     "antipodal_boost_reduction",
     "beta_channel_correspondence",
     "fingerprint_envelope_proofs",
     "fingerprint_ceilings",
     "teff_unification_seal",
 ]
-
-# CF4 bulk-flow rapidity: |B| = 340.7264 km/s (K5 card CF4_bulk_amplitude,
-# input mode REAL) over c; the rapidity-vs-velocity distinction is O(beta^3).
-_CF4_BULK_KMS = 340.7264
-_LIGHT_SPEED_KMS = 299792.458
-BETA_CF4 = _CF4_BULK_KMS / _LIGHT_SPEED_KMS
-
 
 def _exact_ratios_in_s():
     """R_3, R_4, R_5 as exact SymPy expressions of the mixing s (imported from
@@ -260,7 +251,11 @@ def fingerprint_envelope_proofs() -> dict:
 
 def fingerprint_ceilings() -> dict:
     """U2 step 2: exact rational ceilings at the registered MES dipole
-    amplitude + the ceiling-ordering instantiation + the CF4 containment."""
+    amplitude plus the ceiling-ordering instantiation.
+
+    The former CF4 numeric containment was a contaminated downstream consumer
+    and is intentionally absent from this active method-only payload.
+    """
     reg = eps_registry_provenance()
     eps1_float = float(reg["ssot_registry"]["values"]["eps1"])
     eps1 = sp.Rational(sp.nsimplify(eps1_float, rational=True))
@@ -288,10 +283,6 @@ def fingerprint_ceilings() -> dict:
                                  float(B["B_accel"]))
     ceilings_ordered = ((3 / 2) * b_sigma ** 2 > (3 / 2) * b_omega ** 2
                         > (3 / 2) * b_accel ** 2)
-    # CF4 containment: same rapidity in both channels
-    s_cf4 = float(np.tanh(BETA_CF4))
-    fp_cf4 = 1.5 * s_cf4 ** 2
-    ceil_num = 1.5 * eps1_float ** 2
     return {
         "eps1_registered": eps1_float,
         "eps1_exact_rational": str(eps1),
@@ -311,12 +302,11 @@ def fingerprint_ceilings() -> dict:
                                       "the strictly increasing ceiling map; the "
                                       "MES budgets are NOT three physical "
                                       "rapidity ceilings",
-        "cf4_containment": {
-            "beta_cf4": BETA_CF4,
-            "s_cf4_tanh": s_cf4,
-            "fingerprint_3half_s2": fp_cf4,
-            "mes_dipole_ceiling_3half_eps1_2": ceil_num,
-            "fingerprint_below_ceiling": bool(fp_cf4 < ceil_num),
+        "cf4_numeric_instantiation": {
+            "status": "QUARANTINED_OPEN_P0",
+            "source_record": "docs/generated/cf4_p0_quarantine_block.json",
+            "finding_ids": ["C1-K5-MV-F1", "N-DATA-CF4-DOWNSTREAM"],
+            "replacement_value": None,
         },
     }
 
@@ -338,8 +328,7 @@ def teff_unification_seal() -> dict:
           and ceil["endpoints_within_quadratic_envelopes"]
           and ceil["ceiling_map_strictly_increasing"]
           and ceil["mes_ordering_holds"]
-          and ceil["ordered_ceiling_triple_from_mes_budgets"]
-          and ceil["cf4_containment"]["fingerprint_below_ceiling"])
+          and ceil["ordered_ceiling_triple_from_mes_budgets"])
     return {
         "seal": "egs3.teff_unification",
         "status": "PASS" if ok else "FAIL",
@@ -356,7 +345,8 @@ def teff_unification_seal() -> dict:
                       "(5/2) s^2 on 0 < s < 1 (polynomial root isolation); "
                       "exact rational ceilings at the registered MES dipole "
                       "amplitude; strictly-increasing ceiling map carries the "
-                      "MES ordering; CF4 rapidity contained in both channels",
+                      "MES ordering; the former CF4 numeric instantiation is "
+                      "quarantined and excluded from this active seal",
         "antipodal_boost_reduction": red,
         "beta_channel_correspondence": cor,
         "fingerprint_envelope_proofs": env,
@@ -379,6 +369,9 @@ def teff_unification_seal() -> dict:
             "the ordered ceiling triple is a formal order-preservation "
             "instantiation, not three physical rapidity ceilings",
             "pointwise R_5 + R_3 >= 2 is numerically certified only",
+            "the CF4 numerical instantiation is blocked while "
+            "C1-K5-MV-F1 and N-DATA-CF4-DOWNSTREAM remain OPEN; no replacement "
+            "value is supplied",
         ],
         "claim_boundary": "exact symbolic correspondence between registered "
                           "in-repo objects (MES registry, comparator tilt "

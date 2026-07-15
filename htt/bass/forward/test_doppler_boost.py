@@ -69,11 +69,12 @@ class TestDopplerBoostCorrection:
         d = DopplerBoostCorrection()
         assert d.R_sigma_boost(0.0) == pytest.approx(1.0)
 
-    def test_R_sigma_cf4(self):
-        """R_σ at CF4 ε₁ = 1.334e-3 ≈ 1.00358."""
+    def test_R_sigma_small_synthetic(self):
+        """R_σ follows the analytic coefficient at small synthetic ε₁."""
         d = DopplerBoostCorrection()
-        assert d.R_sigma_boost(1.334e-3) == pytest.approx(1.0 + 2.684 * 1.334e-3,
-                                                          abs=1e-8)
+        assert d.R_sigma_boost(1.2e-3) == pytest.approx(
+            1.0 + 2.684 * 1.2e-3, abs=1e-8
+        )
 
     def test_R_omega_always_one(self):
         d = DopplerBoostCorrection()

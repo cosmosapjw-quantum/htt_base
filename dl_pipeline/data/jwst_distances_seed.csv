@@ -1,9 +1,10 @@
-# Curated JWST distance-anchor seed for CF4 cross-match (pre-solver forecast input).
+# Curated JWST distance-anchor seed for diagnostic-only CF4 catalogue linkage.
 # These galaxies have published JWST-based distances (TRGB / JAGB / Cepheid); the seed
 # carries the anchor identity + the published JWST distance-modulus precision (jwst_e_dm_mag),
-# NOT a re-derived distance -- the bulk-flow forecast uses the ERROR (Fisher weight), the
-# velocity comes from CF4. The authoritative machine-readable tables are fetched by
-# dl_pipeline/scripts/download_jwst_anchors.py; this seed makes the forecast runnable offline.
+# NOT a re-derived distance. No CF4-conditioned precision/global-tilt forecast is
+# authorized while N-DATA-CF4-DOWNSTREAM is OPEN. The authoritative machine-readable
+# tables are fetched by dl_pipeline/scripts/download_jwst_anchors.py; this seed keeps
+# catalogue-linkage mechanics reproducible offline.
 # Sources: Freedman et al. 2025, ApJ 985, 203 (CCHP JWST TRGB/JAGB, doi:10.3847/1538-4357/adce78);
 #          Riess et al. 2024/2025 (SH0ES JWST Cepheids). Coordinates are J2000 host centres.
 name,ra_deg,dec_deg,jwst_e_dm_mag,method,source

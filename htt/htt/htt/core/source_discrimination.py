@@ -26,6 +26,8 @@ from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Tuple
 from scipy.stats import chi2 as chi2_dist
 
+from htt.core.cf4_observational_input import OPEN_FINDING_IDS
+
 __all__ = [
     'RedshiftBinnedDirection',
     'SourceModelComparison',
@@ -58,13 +60,6 @@ class SurveyData:
 
 # Current survey compilation
 SURVEY_CATALOG = {
-    'CF4': SurveyData(
-        name='CosmicFlows-4', z_eff=0.05, depth_Mpc=150,
-        amplitude=1.334e-3, sigma=0.267e-3,
-        l_deg=282.0, b_deg=6.0, l_sigma=15.0, b_sigma=15.0,
-        survey_type='velocity',
-        reference='Watkins+2023 (MNRAS 524, 1885)',
-        n_sources=56000, sky_fraction=0.85),
     'CatWISE': SurveyData(
         name='CatWISE+Böhme', z_eff=0.15, depth_Mpc=450,
         amplitude=1.476e-3, sigma=0.30e-3,
@@ -218,14 +213,15 @@ class RedshiftBinnedDirection:
         pval = float(1 - chi2_dist.cdf(chi2, max(ndof, 1)))
 
         if pval > 0.05:
-            interp = (f"Directions are consistent (χ²={chi2:.1f}/{ndof}, p={pval:.2f}). "
-                      f"Mean separation {mean_sep:.0f}°. Compatible with common axis "
-                      f"(GEOMETRIC), but uncertainties are large enough to also permit "
-                      f"kinematic interpretations.")
+            interp = (f"Directions are consistent within this diagnostic "
+                      f"(χ²={chi2:.1f}/{ndof}, p={pval:.2f}); mean separation "
+                      f"{mean_sep:.0f}°. This does not identify a geometric or "
+                      f"kinematic source.")
         else:
             interp = (f"Directions show tension (χ²={chi2:.1f}/{ndof}, p={pval:.3f}). "
                       f"Max separation {max_sep:.0f}° ({list(seps.keys())[np.argmax(list(seps.values()))]}). "
-                      f"Favours KINEMATIC flow or survey systematics over single global axis.")
+                      f"This is a source-discrimination candidate only; no global "
+                      f"or local source is identified.")
 
         return DirectionalConsistencyResult(
             surveys_compared=tuple(names),
@@ -345,6 +341,11 @@ class SourceModelComparison:
         )
 
     def run(self) -> Dict[str, SourceModelResult]:
+        if len(self.surveys) < 3:
+            raise ValueError(
+                "at least three independent non-CF4 surveys are required for "
+                "two-parameter source-model discrimination"
+            )
         return {
             'geometric': self._fit_geometric(),
             'kinematic': self._fit_kinematic(),
@@ -358,7 +359,13 @@ class SourceModelComparison:
 
 def run_source_discrimination(verbose: bool = True) -> Dict:
     """Run all source-discrimination analyses."""
-    results = {}
+    results = {
+        'claim_tier': 'diagnostic_only',
+        'active_observational_scope': 'non_cf4_channels_only',
+        'excluded_channels': ['c'],
+        'cf4_channel_status': 'QUARANTINED_OPEN_FINDINGS',
+        'cf4_finding_ids': list(OPEN_FINDING_IDS),
+    }
 
     if verbose:
         print(f"\n{'='*65}")
@@ -390,27 +397,36 @@ def run_source_discrimination(verbose: bool = True) -> Dict:
     if verbose:
         print(f"\n--- Source Model Comparison (AIC/BIC) ---")
     smc = SourceModelComparison()
-    models = smc.run()
-    results['source_models'] = {}
-    for key, mr in models.items():
-        results['source_models'][key] = {
-            'model': mr.model_name, 'n_params': mr.n_params,
-            'chi2': mr.chi2, 'ndof': mr.ndof, 'pvalue': mr.pvalue,
-            'aic': mr.aic, 'bic': mr.bic,
-            'params': mr.params, 'interpretation': mr.interpretation,
+    try:
+        models = smc.run()
+    except ValueError as exc:
+        results['source_models'] = {
+            'status': 'blocked_insufficient_non_cf4_surveys',
+            'reason': str(exc),
+            'n_active_surveys': len(smc.surveys),
         }
         if verbose:
-            print(f"  {mr.model_name:35s} χ²={mr.chi2:5.1f}  "
-                  f"AIC={mr.aic:6.1f}  BIC={mr.bic:6.1f}  p={mr.pvalue:.3f}")
-            print(f"    {mr.interpretation}")
+            print(f"  Blocked: {exc}")
+    else:
+        results['source_models'] = {}
+        for key, mr in models.items():
+            results['source_models'][key] = {
+                'model': mr.model_name, 'n_params': mr.n_params,
+                'chi2': mr.chi2, 'ndof': mr.ndof, 'pvalue': mr.pvalue,
+                'aic': mr.aic, 'bic': mr.bic,
+                'params': mr.params, 'interpretation': mr.interpretation,
+            }
+            if verbose:
+                print(f"  {mr.model_name:35s} χ²={mr.chi2:5.1f}  "
+                      f"AIC={mr.aic:6.1f}  BIC={mr.bic:6.1f}  p={mr.pvalue:.3f}")
+                print(f"    {mr.interpretation}")
 
-    # Best model by AIC
-    best = min(models.items(), key=lambda x: x[1].aic)
-    results['best_model_aic'] = best[0]
-    results['best_model_bic'] = min(models.items(), key=lambda x: x[1].bic)[0]
-    if verbose:
-        print(f"\n  Best by AIC: {best[0]} ({best[1].model_name})")
-        print(f"  Best by BIC: {results['best_model_bic']}")
+        best = min(models.items(), key=lambda x: x[1].aic)
+        results['best_model_aic'] = best[0]
+        results['best_model_bic'] = min(models.items(), key=lambda x: x[1].bic)[0]
+        if verbose:
+            print(f"\n  Best by AIC: {best[0]} ({best[1].model_name})")
+            print(f"  Best by BIC: {results['best_model_bic']}")
 
     # External data assessment
     if verbose:

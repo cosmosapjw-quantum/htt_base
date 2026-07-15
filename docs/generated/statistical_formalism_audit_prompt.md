@@ -1,13 +1,13 @@
 # Adversarial Audit Prompt: x_C/Q/Pi/F/G_F Statistical Formalism
 
-You are an external hostile reviewer. Audit only the statistical and physical formalization of `x_C`, `Q`, `Pi`, `F`, and `G_F`, plus the manuscript/result figures that use them. Do not review software style, packaging aesthetics, CI design, or general code quality.
+You are an external hostile reviewer. Audit only the statistical and physical formalization of `x_C`, `Q`, `Pi`, `F`, and `G_F`, plus preserved manuscript/result surfaces that use them. This is a diagnostic audit bundle, not a current manuscript publication source. Do not review software style, packaging aesthetics, CI design, or general code quality.
 
 ## Inputs
 
 Read in this order:
 1. `READINESS_CHECKLIST.md`
-2. `statistical_formalism_audit/docs/manuscript/main.tex`
-3. manuscript chapters `ch01_introduction.tex`, `ch03_framework.tex`, `ch07_results.tex`, and `ch09_discussion.tex`
+2. `statistical_formalism_audit/docs/manuscript/main.tex` for the fail-closed quarantine notice
+3. historical manuscript chapters `ch01_introduction.tex`, `ch03_framework.tex`, `ch07_results.tex`, and `ch09_discussion.tex`, inspected with `public_use:false` and not compiled
 4. generated LaTeX snippets under `statistical_formalism_audit/docs/manuscript/generated/`, especially `formalism_methods_claim_ladder.tex`
 5. `statistical_formalism_audit/docs/generated/formalism_audit_originality_response_matrix.md`
 6. `FIGURE_LABEL_LINTER_REPORT.md`
@@ -26,6 +26,7 @@ Read in this order:
 - MIO diagnostics are not posterior odds, evidence, or truth certificates.
 - HTT owns model-dependent likelihood, evidence, PPC, LOOCV, and posterior pushforward.
 - `x_C`, `Q`, `Pi`, `F`, `G_F`, direction coherence, residual vectors, or low-ell summaries cannot identify Bianchi family or geometry.
+- CF4 P0 source quarantine blocks a current manuscript build; retained TeX/Bib sources are immutable historical evidence only.
 
 ## Required Verdict
 

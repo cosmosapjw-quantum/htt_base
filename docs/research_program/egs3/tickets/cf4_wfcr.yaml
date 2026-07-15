@@ -1,8 +1,8 @@
 id: EGS3-C2-cf4-wfcr
 title: CF4 WF/CR posteriors (K6 vorticity, K5 cosmic-variance mocks)
-state: blocked
-blocker: [BLOCKED_MISSING_FIELD_REALIZATIONS, BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP]
+state: quarantined_open_p0
+blocker: [C1-K5-MV-F1, C3-K5-VCORR-ML-F1, N-DATA-CF4-DOWNSTREAM, BLOCKED_MISSING_FIELD_REALIZATIONS, BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP]
 owner_lane: cf4_reconstruction
 method: Hoffman-Ribak constrained realizations on the 3D CF4 WF field (Hoffman et al. 2024, arXiv:2311.01340); Bias-Gaussianization forward mocks
-mechanics_ready: htt/obsstat/constrained_realizations.py:curl_posterior + htt/obsstat/bulkflow_mle.py:hierarchical_coverage_experiment + htt/obsstat/pv_forward_mocks.py (in-house physical forward mock, rev-r197)
-exit_gate: realization-conditioned shear/vorticity posterior (K6, still BLOCKED_MISSING_FIELD_REALIZATIONS); K5 cosmic-variance coverage in-house physical mock DELIVERED (rev-r197, scripts/cf4_mock_calibrated_significance.py -- reproduces the analytic linear covariance, localises the residual to nonlinear power), only the full nonlinear COLA/L-PICOLA refinement remains under BLOCKED_MISSING_RELEASE_MOCK_OWNERSHIP
+mechanics_ready: synthetic/reconstruction mechanics only; observed K5 consumers are quarantined by PR-120
+exit_gate: no K5 delivery or successor is active while the three canonical CF4 findings remain OPEN; future re-entry requires a separately reviewed remediation PR plus release-bound mocks and field realizations

@@ -3,15 +3,29 @@
   "owner": "OBSSTAT",
   "implementation_scope": "obsstat",
   "claim_tier": "diagnostic_only",
-  "transfer_source": "none",
+  "status": "RECONSTRUCTION_CONDITIONED_SYSTEMATICS_DIAGNOSTIC",
+  "artifact_mode": "paper_appendix_conditioned",
+  "allowed_use": "paper_appendix",
+  "analysis_mode": "reconstruction_conditioned_method_systematics",
+  "transfer_source": "external_proxy_cf4_wf_reconstruction",
   "sky_support_status": "cf4_reconstruction_grid",
   "null_mock_status": "bootstrap_over_correlated_reconstruction_cells",
   "ticket": "LR-06F",
   "generating_command": "python scripts/make_cf4_affine_flow.py",
-  "git_commit_or_worktree_state": "8280b8f+dirty",
+  "git_commit_or_worktree_state": "e6da367+dirty",
+  "config_hash": "sha256:b467431f9f9099233040fe1b507a4c781bf2e3104ad5ecb69db0a0e514f85e63",
   "input_hashes": [
-    "workdir/raw/cf4/CF4pp_mean_std_grids.npz:sha256:78c0515c8330066a034f5e8afb3663e6c81ddf033db302a921c662344639bc91"
+    "workdir/raw/cf4/CF4pp_mean_std_grids.npz:sha256:78c0515c8330066a034f5e8afb3663e6c81ddf033db302a921c662344639bc91",
+    "docs/codex_handoff/research_remediation_state.yaml:sha256:77d36878315f041c7bb6c273a2d650f7d3fa1c8a8dc635a577527d646fa40109"
   ],
+  "finding_state": {
+    "finding_id": "C1-K5-MV-F1",
+    "scientific_status": "OPEN",
+    "canonical_source": "docs/generated/cf4_p0_quarantine_block.json"
+  },
+  "observational_amplitude_claim_allowed": false,
+  "global_tilt_claim_allowed": false,
+  "cosmological_inference_allowed": false,
   "grid": {
     "n_per_axis": 128,
     "box_mpc": 1000.0,
@@ -132,10 +146,11 @@
     "detail": "only the CF4++ reconstruction is available locally; a second independent reconstruction is required for the cross-reconstruction comparison."
   },
   "caveats": [
-    "Affine-flow decomposition of a single reconstruction; diagnostic-only.",
+    "Numerical rows are functionals of one CF4++ Wiener-filter reconstruction, not observed bulk-flow amplitude measurements.",
     "Vorticity is reconstruction-conditioned: potential/Wiener reconstructions suppress curl by construction, so a small recovered omega is a reconstruction property, not a detection.",
     "Bootstrap over correlated reconstruction cells is a lower bound on the uncertainty, not a calibrated covariance.",
     "Expansion Theta is the local divergence of the reconstruction, not a global H0 measurement.",
+    "C1-K5-MV-F1 remains OPEN; no global-tilt coordinate or cosmological inference is permitted.",
     "No Bianchi/geometry/cosmological-frame-violation claim."
   ]
 }

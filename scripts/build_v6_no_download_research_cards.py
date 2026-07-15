@@ -251,9 +251,16 @@ def _component_source_matrix(
                 "global_p_smica": k1.get("smica", {}).get("global_p"),
                 "global_p_commander": k1.get("commander", {}).get("global_p"),
             },
-            "covariance_status": "e2e_systematics_covariance_not_bound",
-            "null_mock_status": "isotropic_lcdm_grf_only_e2e_blocked",
-            "blocker": k1.get("blocker_partial", "BLOCKED_MISSING_PR4_E2E_ACCESS"),
+            "covariance_status": "pr3_ffp10_e2e_analysis_deferred_pr150",
+            "null_mock_status": (
+                "isotropic_lcdm_grf_only_pr3_ffp10_downloaded_analysis_deferred_"
+                "pr4_npipe_skipped"
+            ),
+            "blocker": "PR3_E2E_ANALYSIS_DEFERRED_TO_PR150",
+            "legacy_blocker_code": k1.get(
+                "blocker_partial", "BLOCKED_MISSING_PR4_E2E_ACCESS"
+            ),
+            "pr4_scope": "not_downloaded_download_reduction_analysis_skipped_by_user_scope",
             "allowed_use": "partial_lowell_descriptor_not_family_identification",
         },
         {
@@ -277,21 +284,15 @@ def _component_source_matrix(
             "component": "Omega_tilt",
             "signed_xC_coefficient": +1,
             "owner": "OBSSTAT",
-            "local_file": "docs/generated/k5_cf4_release_coverage.json",
-            "file_hash": _source_hash("docs/generated/k5_cf4_release_coverage.json"),
-            "source_status": sectors.get("Omega_tilt", {}).get("status", "measured"),
-            "source_mode": "estimated_conditional_coverage",
-            "value_summary": {
-                "bulk_amplitude_kms": k5.get("measured_bulk", {}).get("amplitude_kms"),
-                "total_error_kms": k5.get("coverage", {}).get("total_amplitude_error_kms"),
-                "cv_inclusive_coverage": k5.get("coverage", {})
-                .get("cosmic_variance_inclusive", {})
-                .get("amplitude_coverage"),
-            },
-            "covariance_status": "conditional_lambdacdm_sigma_cv_prior_not_release_mocks",
-            "null_mock_status": "geometry_and_error_matched_gaussian_bulkflow_mocks",
-            "blocker": "full_selection_malmquist_grouping_correlated_release_mocks_still_gate",
-            "allowed_use": "model_independent_kinematic_descriptor",
+            "local_file": "docs/generated/cf4_p0_quarantine_block.json",
+            "file_hash": _source_hash("docs/generated/cf4_p0_quarantine_block.json"),
+            "source_status": "blocked_open_p0",
+            "source_mode": "quarantined_no_active_value",
+            "value_summary": None,
+            "covariance_status": "not_evaluated_while_cf4_p0_findings_open",
+            "null_mock_status": "not_evaluated_while_cf4_p0_findings_open",
+            "blocker": "C1-K5-MV-F1_and_N-DATA-CF4-DOWNSTREAM_open",
+            "allowed_use": "blocked_source_record_only",
         },
         {
             "component": "Omega_k",
@@ -336,24 +337,32 @@ def _identified_set_card(science: dict[str, Any], pr08: dict[str, Any]) -> dict[
         response = {}
     data_rank = pr08.get("data_rank", {}) if isinstance(pr08.get("data_rank"), dict) else {}
     sectors = pr08.get("sectors", {}) if isinstance(pr08.get("sectors"), dict) else {}
-    fail_closed = [
-        name
-        for name, row in sectors.items()
-        if isinstance(row, dict) and str(row.get("status", "")).startswith("fail_closed")
-    ]
+    fail_closed = sorted(
+        {
+            "W2",
+            "Omega_k",
+            "Omega_tilt",
+            *(
+                name
+                for name, row in sectors.items()
+                if isinstance(row, dict)
+                and str(row.get("status", "")).startswith("fail_closed")
+            ),
+        }
+    )
     return {
         "card_id": "v6_current_identified_set",
         "owner": "HTT/MIO/OBSSTAT",
         "claim_tier": "diagnostic_only",
         "data_rank_count": data_rank.get("data_rank_count"),
-        "reachable_full": data_rank.get("reachable_full", []),
-        "reachable_partial": data_rank.get("reachable_partial", []),
+        "reachable_full": [],
+        "reachable_partial": ["Sigma2"],
         "fail_closed_columns": fail_closed,
         "response_overlap_projected_rank": response.get("projected_rank"),
         "response_overlap_singular_values": response.get("singular_values"),
         "response_overlap_rho_LB_GT": response.get("rho_LB_GT"),
         "x_C_interval_status": "not_certified_blind_sectors_not_zeroed",
-        "x_C_point_status": pr08.get("x_C_withheld_reason"),
+        "x_C_point_status": "withheld_cf4_omega_tilt_source_quarantined_open_p0",
         "F_status": "diagnostic_only_not_certified_filling",
         "kill_switch": (
             "if any fail_closed sector is numerically zero-filled, withhold x_C/Q/F and report vector sectors only"
@@ -455,8 +464,11 @@ def _k5_k6_feasibility() -> dict[str, Any]:
             "input_size_bytes": k5_input.stat().st_size if k5_input.exists() else None,
             "check_option_available": True,
             "heavy_run_deferred_this_turn": True,
-            "next_turn_runnable": k5_input.exists(),
-            "expected_runtime_note": "moderate deterministic run; N_MOCK=600",
+            "next_turn_runnable": False,
+            "expected_runtime_note": (
+                "execution forbidden while C1-K5-MV-F1 and "
+                "N-DATA-CF4-DOWNSTREAM remain OPEN"
+            ),
         },
         "K6": {
             "script": "scripts/k6_cf4_curl_posterior.py",
@@ -468,6 +480,31 @@ def _k5_k6_feasibility() -> dict[str, Any]:
             "next_turn_runnable": k6_input.exists(),
             "expected_runtime_note": "heavier grid/ensemble run; 128^3 velocity grid, N_CR=400",
         },
+    }
+
+
+def _k1_e2e_data_readiness() -> dict[str, Any]:
+    return {
+        "card_id": "v6_k1_e2e_data_readiness",
+        "owner": "OBSSTAT",
+        "claim_tier": "diagnostic_only",
+        "allowed_use": "input_readiness_and_scope_record_only",
+        "current_result_status": "measured_partial_isotropic_lcdm_grf_null",
+        "pr3_ffp10": {
+            "download_state": "complete",
+            "analysis_state": "deferred_to_pr150",
+            "claim_effect": "none_until_provenance_complete_analysis",
+        },
+        "pr4_npipe": {
+            "download_state": "not_downloaded",
+            "reduction_state": "skipped_by_user_scope",
+            "analysis_state": "skipped_by_user_scope",
+            "claim_effect": "none",
+        },
+        "evidence": [
+            "docs/research_program/K1_E2E_DOWNLOAD_GUIDE.md",
+            "docs/research_program/egs3/tickets/k1_ffp10_npipe.yaml",
+        ],
     }
 
 
@@ -488,7 +525,10 @@ def build_research_cards(command: str, figure_payload: dict[str, Any]) -> dict[s
         "docs/generated/k6_cf4_curl_posterior.json",
         "docs/generated/k1_biposh_smica.json",
         "docs/generated/cf4_bulkflow_apex_depth_report.json",
+        "docs/generated/cf4_p0_quarantine_block.json",
         "docs/generated/lowell_likelihood_branch_report.md",
+        "docs/research_program/K1_E2E_DOWNLOAD_GUIDE.md",
+        "docs/research_program/egs3/tickets/k1_ffp10_npipe.yaml",
     ]
     component_rows = _component_source_matrix(k1=k1, k5=k5, k6=k6, pr08=pr08)
     denominator_rows = _denominator_rows(science)
@@ -514,7 +554,9 @@ def build_research_cards(command: str, figure_payload: dict[str, Any]) -> dict[s
             "No long-run K1/K5/K6 analysis is executed by this artifact.",
             "No native low-ell solver output is represented.",
             "All cards are diagnostic/readiness objects and do not identify a Bianchi family.",
-            "K1 E2E remains blocked until the external simulation maps are locally bound.",
+            "PR3/FFP10 download is complete, but its analysis is deferred to PR-150 and has no current claim effect.",
+            "PR4/NPIPE is not downloaded; all PR4 download, reduction, and analysis work is skipped by user scope in this roadmap run.",
+            "The K5/Omega_tilt lane carries no active value while the CF4 P0 findings remain OPEN.",
         ],
         "generating_command": command,
         "git_commit_or_worktree_state": "content-addressed",
@@ -524,6 +566,7 @@ def build_research_cards(command: str, figure_payload: dict[str, Any]) -> dict[s
                 "rows": component_rows,
             },
             "identified_set_card": _identified_set_card(science, pr08),
+            "k1_e2e_data_readiness": _k1_e2e_data_readiness(),
             "denominator_sensitivity_table": {
                 "description": "MES/external/observational denominator sensitivity from current payload",
                 "rows": denominator_rows,
@@ -548,11 +591,10 @@ def build_research_cards(command: str, figure_payload: dict[str, Any]) -> dict[s
                 "attempted": False,
                 "reason": "existing CF4 shell artifacts do not provide matched covariance plus calibrated null status required by v6",
                 "evidence_read": [
-                    "docs/generated/cf4_bulkflow_apex_depth_report.json",
-                    "docs/generated/cf4_affine_flow_report.json",
+                    "docs/generated/cf4_p0_quarantine_block.json",
                     "docs/generated/cf4_bulkflow_likelihood_report.json",
                 ],
-                "allowed_next_step": "bind a matched shell covariance/null artifact before computing observed G_F",
+                "allowed_next_step": "remediate the authenticated CF4 lineage and matched covariance/null gates before any observed G_F computation",
             },
             "k5_k6_next_turn_feasibility": _k5_k6_feasibility(),
         },
@@ -618,6 +660,7 @@ def render_figure_markdown(payload: dict[str, Any]) -> str:
 def render_research_markdown(payload: dict[str, Any]) -> str:
     cards = payload["cards"]
     identified = cards["identified_set_card"]
+    k1_readiness = cards["k1_e2e_data_readiness"]
     depth = cards["depth_gap_card"]
     exceed = cards["exceedance_calibration_card"]
     feasibility = cards["k5_k6_next_turn_feasibility"]
@@ -654,6 +697,15 @@ def render_research_markdown(payload: dict[str, Any]) -> str:
         )
     lines.extend(
         [
+            "",
+            "## K1 E2E Data Readiness",
+            "",
+            f"- current_result_status: `{k1_readiness['current_result_status']}`",
+            f"- PR3/FFP10 download: `{k1_readiness['pr3_ffp10']['download_state']}`",
+            f"- PR3/FFP10 analysis: `{k1_readiness['pr3_ffp10']['analysis_state']}`",
+            f"- PR4/NPIPE download: `{k1_readiness['pr4_npipe']['download_state']}`",
+            f"- PR4/NPIPE reduction: `{k1_readiness['pr4_npipe']['reduction_state']}`",
+            f"- PR4/NPIPE analysis: `{k1_readiness['pr4_npipe']['analysis_state']}`",
             "",
             "## Identified-Set Card",
             "",

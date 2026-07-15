@@ -4,6 +4,18 @@ state: blocked
 blocker: BLOCKED_MISSING_PR4_E2E_ACCESS
 owner_lane: cmb_calibration
 data: PLA FFP10 (dx12_v3_{method}_{cmb,noise}_mc_*, 999 CMB + 300 noise/method) + NPIPE (~300 E2E)
+current_run_scope:
+  pr3_ffp10:
+    download_state: complete
+    analysis_state: deferred_to_pr150
+    claim_effect: none_until_provenance_complete_analysis
+  pr4_npipe:
+    download_state: not_downloaded
+    reduction_state: skipped_by_user_scope
+    analysis_state: skipped_by_user_scope
+    claim_effect: none
+  data_action_now: none
+  note: PR3 download completion is input readiness only; all PR4 data work is skipped for the current roadmap run.
 procedure: downgrade to NSIDE=16 FWHM~40'; compute the 6 K1 statistics per sim; tail scores; max-scan; +1 global rank p
 mechanics_ready: htt/obsstat/lowell_global_calibration.py:e2e_maxscan_from_summaries
 exit_gate: global rank p-value + matched-pipeline config hash + ensemble provenance

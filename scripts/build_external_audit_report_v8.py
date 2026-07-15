@@ -1302,9 +1302,6 @@ def v8_update_section() -> str:
     eps1r = fc.get("eps1_exact_rational", "771/625000")
     ceilR3 = fc.get("ceiling_R3_exact", "1783323/781250000000")
     ceilR5 = fc.get("ceiling_R5_exact", "594441/156250000000")
-    cf4 = fc.get("cf4_containment", {})
-    cf4_fp = cf4.get("fingerprint_3half_s2", 1.9375862709144723e-06)
-    cf4_ceil = cf4.get("mes_dipole_ceiling_3half_eps1_2", 2.2826534400000003e-06)
     caveats = tunf.get("disclosed_caveats", [])
     caveat_items = "\n".join(rf"\item {tex_escape(str(c))}" for c in caveats)
 
@@ -1328,12 +1325,8 @@ def v8_update_section() -> str:
     def cov(name, default):
         return im_rows.get(name, {}).get("coverage", default)
 
-    # ---- K5 v8 card fingerprint row -------------------------------------------
-    fpr = k5.get("v8_teff_fingerprint_row", {})
-    fpr_beta = fpr.get("beta_cf4_rapidity", 0.0011365409332612364)
-    fpr_dev = fpr.get("fingerprint_R3_deviation_3half_s2", 1.9375862709144723e-06)
-    fpr_ceil = fpr.get("mes_dipole_ceiling_R3", 2.28265344e-06)
-    obs_allowed = k5.get("observational_claim_allowed", False)
+    # ---- K5 v8 card quarantine ------------------------------------------------
+    k5_status = k5.get("status", "QUARANTINED_OPEN_FINDINGS")
 
     n_rows = len(restab.get("rows", []))
 
@@ -1372,9 +1365,9 @@ def v8_update_section() -> str:
         rf"The Teff temperature-moment ratios then obey $R_3-1={r3c}\,t+O(t^2)$ and "
         rf"$R_5-1=+{r5c.lstrip('+')}\,t+O(t^2)$, while $R_4\equiv1$ pointwise (the retained "
         rf"energy moment is invariant).  The two-point construction is antipodal-specific: a "
-        rf"single boosted species instead gives leading coefficient ${ss_r3}$.  This is the "
-        r"exact statement that one CF4 rapidity feeds both the comparator tilt sector "
-        r"($\Omega_{\rm tilt}$) and the Teff fingerprint channel.",
+        rf"single boosted species instead gives leading coefficient ${ss_r3}$.  The observer-"
+        r"boost and matter-frame tilt rapidities are physically distinct; the correspondence "
+        r"is conditional on identifying them and has no active observational instantiation.",
         r"",
         r"\paragraph{U2 --- MES-registry ceilings on the fingerprints.}"
         r" The envelopes $1-R_3\le\tfrac32 s^2$ and $R_5-1\le\tfrac52 s^2$ are proved on "
@@ -1383,8 +1376,8 @@ def v8_update_section() -> str:
         rf"$1-R_3\le {ceilR3}$ and $R_5-1\le {ceilR5}$; the strictly-increasing ceiling map "
         r"carries the registered MES budget ordering $B_\sigma>B_\omega>B_\text{accel}$ as a "
         r"formal order-preservation instantiation (not three physical rapidity ceilings).  The "
-        rf"CF4 rapidity is contained in both channels: the fingerprint deviation "
-        rf"${_texnum(cf4_fp, 3)}$ sits below the MES dipole ceiling ${_texnum(cf4_ceil, 3)}$.",
+        r"former CF4 numerical instantiation is quarantined by PR-120 while "
+        r"C1-K5-MV-F1 and N-DATA-CF4-DOWNSTREAM remain OPEN; no replacement value is supplied.",
         r"",
         r"\paragraph{U3 --- one linear-response schema, two exact instances.}"
         rf" The comparator channel response (rank {comp_rank}, exact null "
@@ -1426,8 +1419,8 @@ def v8_update_section() -> str:
         r"{\footnotesize \textbf{U1.} The exact Teff temperature-moment ratios "
         r"$R_3(t),R_4(t),R_5(t)$ plotted on the comparator tilt coordinate "
         r"$t=\Omega_{\rm tilt}/((1+w)\Omega_m)$, with the leading tangents "
-        r"$R_3-1\simeq-\tfrac34 t$, $R_5-1\simeq+\tfrac54 t$, $R_4\equiv1$, and the CF4 "
-        r"rapidity marked.}",
+        r"$R_3-1\simeq-\tfrac34 t$, $R_5-1\simeq+\tfrac54 t$, $R_4\equiv1$.  No "
+        r"observational numerical point is plotted.}",
         r"\end{center}",
         r"",
         r"\begin{center}",
@@ -1435,8 +1428,8 @@ def v8_update_section() -> str:
         r"\par\smallskip",
         r"{\footnotesize \textbf{U2.} The proved quadratic envelopes on the fingerprint "
         r"deviations $1-R_3$ and $R_5-1$ over $0<s<1$, the exact rational ceilings at the "
-        r"registered MES dipole amplitude, and the CF4-rapidity fingerprint sitting below the "
-        r"ceiling.}",
+        r"registered MES dipole amplitude.  The former observational numerical point is "
+        r"excluded by the PR-120 quarantine.}",
         r"\end{center}",
         r"",
         r"\begin{center}",
@@ -1447,19 +1440,13 @@ def v8_update_section() -> str:
         r"versus the Hotelling/$F$ branch for the estimated-covariance joint fingerprint.}",
         r"\end{center}",
         r"",
-        r"\subsection{K5/CF4 v8 card: deterministic Teff fingerprint row}",
-        rf"The end-to-end K5/CF4 identified-interval card gains a \emph{{deterministic}} Teff "
-        rf"fingerprint row driven by the \emph{{same}} CF4 bulk-flow rapidity "
-        rf"$\beta={_texnum(fpr_beta, 4)}$ that fixes the card's $\Omega_{{\rm tilt}}$ (one "
-        rf"boost, two channels, per U1).  The resulting fingerprint deviation "
-        rf"${_texnum(fpr_dev, 3)}$ lies below the registered MES dipole ceiling "
-        rf"${_texnum(fpr_ceil, 3)}$.  The external anisotropic-shear and vorticity inputs enter "
-        rf"only as registered-external, model-conditional cross-checks (template-conditional "
-        rf"published limits that do \emph{{not}} replace the MES $W^2$ registry), and the "
-        rf"anisotropic-curvature branch remains a documented null: "
-        rf"{tex_escape(str(ok_status.get('external_prior_branch','')))}.  The plugin firewall "
-        rf"and \code{{observational_claim_allowed}}$={tex_escape(str(obs_allowed))}$ are "
-        rf"unchanged; no component was promoted to a measurement.",
+        r"\subsection{K5/CF4 v8 card: PR-120 blocked source}",
+        rf"The active successor card status is \code{{{tex_escape(str(k5_status))}}}.  Its "
+        r"former observational numerical and deterministic-fingerprint rows are available "
+        r"only as exact legacy reproduction with public use false.  The active report consumes "
+        r"\code{cf4_p0_quarantine_block.json}; C1-K5-MV-F1 and "
+        r"N-DATA-CF4-DOWNSTREAM remain OPEN, and no replacement amplitude, rapidity, "
+        r"global-tilt coordinate, or Teff fingerprint value is reported.",
         r"",
         r"\subsection{Consolidated results table}",
         rf"The consolidated results table successor \code{{egs_results_table_v8}} carries "

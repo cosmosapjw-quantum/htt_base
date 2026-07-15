@@ -4,14 +4,16 @@ htt/infer/survey_nuisance.py — Survey-Specific Nuisance Layer
 Milestone M2.3 deliverable. Dedicated module for per-survey systematic
 error budgets, covariance matrices, and nuisance marginalization.
 
-Each low-z survey contributing to the bulk-flow measurement carries
+Each active non-CF4 survey contributing to the diagnostic carries
 its own systematic error profile:
 
-  - CosmicFlows-4 (CF4): Tully-Fisher calibration, Malmquist bias,
-    peculiar velocity scatter, inhomogeneous spatial coverage.
   - Cosmic Waves (CW): SNIa standardization residuals, host-galaxy
     correlations, selection effects.
   - Radio catalogs: beam systematics, RFI, catalog incompleteness.
+
+The former CF4 nuisance entry is quarantined with channel c and is available
+only in the exact historical source under ``legacy/cf4_p0``.  Active calls
+that name CF4 fail before accepting a numerical payload.
 
 The nuisance layer provides:
   1. Per-survey covariance matrices (diagonal + off-diagonal systematics).
@@ -23,8 +25,13 @@ import hashlib
 import json
 import platform
 import numpy as np
-from dataclasses import dataclass, field
-from typing import Any, Dict, List, Mapping, Optional, Tuple
+from dataclasses import dataclass
+from typing import Any, Dict, List, Mapping, Tuple
+
+from htt.core.cf4_observational_input import (
+    OPEN_FINDING_IDS,
+    require_cf4_observational_input,
+)
 
 __all__ = [
     'SurveyNuisance', 'SurveyCovariance', 'SURVEY_REGISTRY',
@@ -56,7 +63,7 @@ class SurveyCovariance:
 class SurveyNuisance:
     """Full nuisance specification for one survey."""
     covariance: SurveyCovariance
-    delta_name: str             # nuisance parameter name (e.g. 'delta_CF4')
+    delta_name: str             # nuisance parameter name (e.g. 'delta_CW')
     prior_width: float          # Gaussian prior width on the nuisance offset
     direction_systematic: float # systematic in direction (degrees)
     malmquist_correction: float # Malmquist bias correction factor
@@ -65,10 +72,6 @@ class SurveyNuisance:
 
 # ── Survey Registry ──────────────────────────────────────
 
-_CF4_COV = SurveyCovariance(
-    name='CF4', sigma_stat=0.22e-3, sigma_sys=0.05e-3,
-    sigma_calibration=0.08e-3, n_objects=8000,
-)
 _CW_COV = SurveyCovariance(
     name='CW', sigma_stat=0.35e-3, sigma_sys=0.03e-3,
     sigma_calibration=0.12e-3, n_objects=1200,
@@ -79,14 +82,6 @@ _RADIO_COV = SurveyCovariance(
 )
 
 SURVEY_REGISTRY: Dict[str, SurveyNuisance] = {
-    'CF4': SurveyNuisance(
-        covariance=_CF4_COV,
-        delta_name='delta_CF4',
-        prior_width=0.1e-3,
-        direction_systematic=5.0,
-        malmquist_correction=1.02,
-        selection_function='Volume-limited TF/FP with Malmquist correction',
-    ),
     'CW': SurveyNuisance(
         covariance=_CW_COV,
         delta_name='delta_CW',
@@ -127,6 +122,10 @@ def _config_hash(payload: Mapping[str, Any]) -> str:
 
 def get_survey_nuisance(name: str) -> SurveyNuisance:
     """Look up a survey's nuisance specification."""
+    if name == 'CF4':
+        require_cf4_observational_input(
+            consumer='survey_nuisance.get_survey_nuisance',
+        )
     if name not in SURVEY_REGISTRY:
         raise KeyError(f"Unknown survey: {name}. "
                        f"Available: {list(SURVEY_REGISTRY.keys())}")
@@ -152,6 +151,16 @@ def combined_covariance(survey_names: List[str] = None) -> np.ndarray:
     """
     if survey_names is None:
         survey_names = list(SURVEY_REGISTRY.keys())
+
+    for name in survey_names:
+        if name == 'CF4':
+            require_cf4_observational_input(
+                consumer='survey_nuisance.combined_covariance',
+            )
+        if name not in SURVEY_REGISTRY:
+            raise KeyError(
+                f"Unknown survey: {name}. Available: {list(SURVEY_REGISTRY)}"
+            )
 
     n = len(survey_names)
     cov = np.zeros((n, n))
@@ -213,6 +222,20 @@ def survey_compatibility_test(beta_values: Dict[str, float],
     from scipy.stats import chi2 as chi2_dist
 
     names = list(beta_values.keys())
+    supplied_names = set(names)
+    if sigma_values is not None:
+        supplied_names.update(sigma_values)
+    if 'CF4' in supplied_names:
+        require_cf4_observational_input(
+            consumer='survey_nuisance.survey_compatibility_test',
+        )
+    unknown = sorted(supplied_names.difference(SURVEY_REGISTRY))
+    if unknown:
+        raise KeyError(
+            f"Unknown survey(s): {unknown}. Available: {list(SURVEY_REGISTRY)}"
+        )
+    if not names:
+        raise ValueError('at least one active non-CF4 survey is required')
     betas = np.array([beta_values[n] for n in names])
 
     if sigma_values is None:
@@ -301,9 +324,14 @@ def survey_nuisance_report_artifact(
         'wall_time_sec': extra.get('wall_time_sec'),
         'python_version': extra.get('python_version', platform.python_version()),
         'numpy_version': extra.get('numpy_version', np.__version__),
-        'claim_tier': extra.get('claim_tier', 'REPORT'),
-        'scope_label': extra.get('scope_label', 'report'),
+        'owner': 'HTT',
+        'implementation_scope': 'non_cf4_survey_nuisance_diagnostic',
+        'claim_tier': extra.get('claim_tier', 'diagnostic_only'),
+        'scope_label': extra.get('scope_label', 'non_cf4_diagnostic'),
         'production_allowed': False,
+        'excluded_channels': ['c'],
+        'cf4_channel_status': 'QUARANTINED_OPEN_FINDINGS',
+        'cf4_finding_ids': list(OPEN_FINDING_IDS),
         'off_diagonal_policy': 'diagonal_only_conservative',
         'known_limitations': [
             'shared calibration off-diagonal covariance terms are not modelled',

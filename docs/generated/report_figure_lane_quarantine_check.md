@@ -6,22 +6,48 @@ claim_tier: diagnostic_only
 transfer_source: none
 sky_support_status: not_directional
 null_mock_status: not_statistical
-config_hash: `6dc5668fdb843a079149c1b6c3bceedaa065d926d86696b3893ee1d08d6c5591`
+config_hash: `fb293bbaefa59e9f0d4f1caf63aba1f459d4f871d7dc4d77bbf1c6edb696dedd`
 input_hashes:
+- figures/data_analysis_current/fig_data_act_dr6_lensing_noise_systematics.png: `4232a6b594002b1644b130cde55f5d5e67ee814c016f7702a961fa9b55d71e2e`
+- figures/data_analysis_current/fig_data_act_dr6_lensing_noise_systematics.manifest.json: `d59a3f06ff113bc98c200ecb422c144ea7e2de48c2891ed198672947ef2dbb7e`
+- figures/data_analysis_current/fig_data_cf4_affine_gradient_spectrum.png: `2d78a09bead5dcc30a983806ff19354ac6186bc3ace33bd2f71ccd68bffe77b3`
+- figures/data_analysis_current/fig_data_cf4_affine_gradient_spectrum.manifest.json: `96efaf988877d48276be592183c93322b1fbdcee8bc44681f6b57abfb85c7588`
 - figures/data_analysis_current/fig_data_cf4_catalog_sky_velocity.png: `ae3a045258cec2a0b82de88d36d76892a6f0f1f6a31e2778ada8631785e94bf0`
-- figures/data_analysis_current/fig_data_cf4_catalog_sky_velocity.manifest.json: `927eab1e922db24e73c405e280a92a59973afc9f4a5c29ace97597683b3476bc`
+- figures/data_analysis_current/fig_data_cf4_catalog_sky_velocity.manifest.json: `286579a6852fc16d8ae58ab4ed232a214486a9d0fd6251fc7f5bab2de0af86fc`
+- figures/data_analysis_current/fig_data_cf4_depth_apex_phase_portrait.png: `f29cf5a90109dbbc44072c0352fa61134ab005c90737a02a55fb226d92818aab`
+- figures/data_analysis_current/fig_data_cf4_depth_apex_phase_portrait.manifest.json: `3bfc7f639f789e7cbd4887f01f0e9571fbe64113aeeba255030f2cbf49a67722`
 - figures/data_analysis_current/fig_data_cf4_depth_velocity_profile.png: `7b8c6000be7405339a5f27740baed0cd2c1944e6142e8817e7907916022e3c21`
-- figures/data_analysis_current/fig_data_cf4_depth_velocity_profile.manifest.json: `cda70417b23ebac6814cf088d81771a0cbdf53152a1139404878a211029bf652`
+- figures/data_analysis_current/fig_data_cf4_depth_velocity_profile.manifest.json: `6b90e2b72303fce3631772d43ba505c95b352e718d8643453ecd3c9c472234c5`
+- figures/data_analysis_current/fig_data_cf4_radial_delta_stability.png: `13f8e05c095d26652b5988b3fe4c2813eff2902c893ede63f49b579b9f3842b8`
+- figures/data_analysis_current/fig_data_cf4_radial_delta_stability.manifest.json: `2218eaa85cc850fddffd5560ec10b6f2cef29d89d674c4c4d7ff750d3f102786`
+- figures/data_analysis_current/fig_data_cf4_radial_velocity_sign_transition.png: `5933092800c2caf1460497a448c10141719d39ff7b3fd1975c47e88442e30fb0`
+- figures/data_analysis_current/fig_data_cf4_radial_velocity_sign_transition.manifest.json: `684a4908cacf8c3075adc48f391f2c29b7a550e2e9ef2803c0ba18e823d04ad5`
+- figures/data_analysis_current/fig_data_cf4_shell_apex_separation_matrix.png: `02c283bf348f63b8ed7c8133d3d4eb1e678384f0fb5073d6b4a97ef120d86a0b`
+- figures/data_analysis_current/fig_data_cf4_shell_apex_separation_matrix.manifest.json: `20e0af3c08bf86c5a34a5e676ef682401288c1799af00fb39d210f4f0cbd3059`
+- figures/data_analysis_current/fig_data_compact_cmb_high_ell_products.png: `31ebd545de974b96c62210870b58f6a6a5641ab0423d60de8328b907f532b7aa`
+- figures/data_analysis_current/fig_data_compact_cmb_high_ell_products.manifest.json: `da579736c092bbe9ef7b48f0a98faf3796581f95cfe9ded3998e4c8b9f91a49f`
+- figures/data_analysis_current/fig_data_compact_lensing_bandpower_covariance.png: `8a6e581040024f48b0c13748cab6bbb084f4f137d29b3330e13e9bcb2aad500e`
+- figures/data_analysis_current/fig_data_compact_lensing_bandpower_covariance.manifest.json: `396b81bc84563fc081916ca06e3d54178fb540c9f162dbfd466791e4b562a4e2`
 - figures/data_analysis_current/fig_data_desi_bgs_cf4_targets.png: `3a12952a0cdeaff864a15166aa2dcb6b418539f3cbb6619abe2bdcc86780713e`
-- figures/data_analysis_current/fig_data_desi_bgs_cf4_targets.manifest.json: `bc31f0c17d7c9701e21188a96bbac20ae8cd847bb4a7e1a126b67148fd379427`
-- figures/data_analysis_current/fig_data_k5_cf4_bulk_flow_coverage.png: `5a0a6cd74f5fb60f34ef99e2ef05e21c7d47c7b12e0da823a43c597d454a5279`
-- figures/data_analysis_current/fig_data_k5_cf4_bulk_flow_coverage.manifest.json: `0da325c8464696326f259339596717f9038434e35700cfbc835b71f8d4bafee6`
+- figures/data_analysis_current/fig_data_desi_bgs_cf4_targets.manifest.json: `9dbb50b36b33efbb2bfa42ee630c2e2257afd57db30b3bd49046819ada069359`
+- figures/data_analysis_current/fig_data_desi_ngc_sgc_asymmetry_surface.png: `871199f945871d8ee9b5e48216681f89dbc899290a53db3cbdfcc9d601aff09d`
+- figures/data_analysis_current/fig_data_desi_ngc_sgc_asymmetry_surface.manifest.json: `95e2277c5ecea5071a5e138c456d75eee7528007a4ad887723bee21770107577`
+- figures/data_analysis_current/fig_data_desi_redshift_jackknife_ridge.png: `5763005373d808ebbfdb663e34cb3f1bbd85b51fcb809a871a4597b4201e4ae8`
+- figures/data_analysis_current/fig_data_desi_redshift_jackknife_ridge.manifest.json: `4e7bb10691e9261794d5d203962fe547ada442fc0b5f68a5504a2024217d079d`
+- figures/data_analysis_current/fig_data_desi_tracer_handoff_continuity.png: `8415d9f6e7a2708698388d5cc8cb126c82b6d982fa1c6fb794ed6dd37f50473d`
+- figures/data_analysis_current/fig_data_desi_tracer_handoff_continuity.manifest.json: `ebd9a0a14aaf43c7c40ca268ef0a729731c5e8e12de7dd8ba5e03a871893d9e6`
+- figures/data_analysis_current/fig_data_k1_lowell_tensor_conditioning.png: `8df6fc1e9115143e3404980f0f2d1ddff667ae0a2d5d4c6366035995bdbe586d`
+- figures/data_analysis_current/fig_data_k1_lowell_tensor_conditioning.manifest.json: `55c92f72bd089023bf6e5dad705329feb6528be230b8f892bbcff5c72b81c3a0`
+- figures/data_analysis_current/fig_data_k1_maxscan_waterfall.png: `6660784d85efabfc81a47db1585b697d1f8321f2778a6d0cf2601de905c650f7`
+- figures/data_analysis_current/fig_data_k1_maxscan_waterfall.manifest.json: `6986e571efce546cec7f0a37fc0b1cf113cfe8aa117aad7079cf1de4a68d47ab`
+- figures/data_analysis_current/fig_data_k1_scalar_biposh_map_stability.png: `3cb955fb05ed6064344bee5c9edd76a56d008b5cce8f4b2e581b6f42c75b561f`
+- figures/data_analysis_current/fig_data_k1_scalar_biposh_map_stability.manifest.json: `92334d52a22102e375c7df09c235e0834ae1c5ec6fa349ea7525a767910a7354`
 - figures/data_analysis_current/fig_data_k6_cf4_wf_curl_shear_diagnostic.png: `11c35fd73134b85b76357ea7a080025721bca140737fe3205cf2630274cbaaee`
-- figures/data_analysis_current/fig_data_k6_cf4_wf_curl_shear_diagnostic.manifest.json: `f4796e5f779d1f8fdc0ca5848b209c57ddac9320cc3f947684027904f692c6dc`
+- figures/data_analysis_current/fig_data_k6_cf4_wf_curl_shear_diagnostic.manifest.json: `e7fde6c79a14b01ac7ed5067f1d2c097adb86a6c06c2a9e48648511d57ce7737`
 - figures/data_analysis_current/fig_data_planck_smica_masked_temperature.png: `31d915678c9c01ff7ec2cb95f14cbef0552957a29f3f92a9359986ee959a7113`
-- figures/data_analysis_current/fig_data_planck_smica_masked_temperature.manifest.json: `e5e1694157cf4fc21e884c3ede1d655189d9c3411ebee9a5faa676575e9d81d4`
+- figures/data_analysis_current/fig_data_planck_smica_masked_temperature.manifest.json: `65acf3caf0559c7656b0ee7d4b18125d7743a5d66d3b26fbd724a5379459ad36`
 - figures/data_analysis_current/fig_data_planck_tt_binned_residual.png: `d409858fb35ec06ba7aee4afdae86c7c366ab12816643f1c7aa165a79355e4e0`
-- figures/data_analysis_current/fig_data_planck_tt_binned_residual.manifest.json: `047cfbedac0be6d35c0a8631cf52d107c43606d394ba996afaf4bb6dbf9712f0`
+- figures/data_analysis_current/fig_data_planck_tt_binned_residual.manifest.json: `1b3be316482b3b78c6f13023987810d833155fc26d10938d95b8f76b87431e37`
 - figures/quarantined_legacy/root_sources/fig_3D_constraint_volume.png: `4fbc1af9fc25cf9a7bd4c60e7846ee957d1629f6e785dd6ef57ba6f9c2d9276d`
 - figures/quarantined_legacy/root_sources/fig_3D_constraint_volume.manifest.json: `d0215b021242ee692cf332ab2cce0c6f2909ca5bbec19f6f2c2238ab035e8ddb`
 - figures/quarantined_legacy/root_sources/fig_4D_projection_atlas.png: `9f058acb94c55b71084855b604ac1699af53477e02f211a88db015bfe6570a61`
@@ -167,28 +193,28 @@ input_hashes:
 - figures/quarantined_legacy/root_sources/fig_vorticity_hierarchy.png: `a44fd532cb99f2704f1fec2f048db2c0403a3ba3fc978d2ab241df2d373ebf84`
 - figures/quarantined_legacy/root_sources/fig_vorticity_hierarchy.manifest.json: `a5f3bfbaef094216d76f4e8ecd81e3a49c241c03c538c404d958644dd24572af`
 - figures/quarantined_meta/v6_no_download/fig_v6_component_source_matrix.png: `c1d2a984f8ac18a6c8a474be900139a55e6937273ecca2951f75da0d322bfa12`
-- figures/quarantined_meta/v6_no_download/fig_v6_component_source_matrix.manifest.json: `8936599ffdab19bd87c8c05680823931610ef00380aa403bc41f52dac3ba4c9a`
+- figures/quarantined_meta/v6_no_download/fig_v6_component_source_matrix.manifest.json: `ea76ee2baaf79f8f70a6d0dc097a5385166b02df2d26a280d6d2c1b0b1f95bb0`
 - figures/quarantined_meta/v6_no_download/fig_v6_denominator_sensitivity.png: `775764bd5fe9786b2eb71a3f43eaa9d01e544ccb67e638257b63559542338bfc`
-- figures/quarantined_meta/v6_no_download/fig_v6_denominator_sensitivity.manifest.json: `19f7508d9d0f87c0d4285d22138b59c9c93cce5c6ac18b649a49f75fbd39f507`
+- figures/quarantined_meta/v6_no_download/fig_v6_denominator_sensitivity.manifest.json: `1fd68588206bd4fefa87944a24d54c57ddf01bc0b97ff1b9409cb4754d2cdc01`
 - figures/quarantined_meta/v6_no_download/fig_v6_depth_gap_and_readiness.png: `a3b45ecf6d37b517e41feae3498593b71ab772df6e26ae556a686a866e675012`
-- figures/quarantined_meta/v6_no_download/fig_v6_depth_gap_and_readiness.manifest.json: `7d5b1dce1be34deee0447bb988e40348d0db3e74ce7f2cdd4d8c9aafc075d7bd`
+- figures/quarantined_meta/v6_no_download/fig_v6_depth_gap_and_readiness.manifest.json: `d77141574c8b84004a1e828b6daba50ecf23c6e0ffe2f6777882f789ca3a0180`
 - figures/quarantined_meta/v6_no_download/fig_v6_optical_ansatz_readiness.png: `04622ea133c9d476fc540f13771ce0230ae70605885b28b9104cd0b626628a36`
-- figures/quarantined_meta/v6_no_download/fig_v6_optical_ansatz_readiness.manifest.json: `1f50863fd90d92db81ae81230af4146852ccfdf2176ccb76cd0c81ba9921ce05`
+- figures/quarantined_meta/v6_no_download/fig_v6_optical_ansatz_readiness.manifest.json: `a60dc1e0e0f5f40f20a9651fc30de686f0b4848225a692a54bdea6d81153f5ba`
 - figures/quarantined_meta/v6_no_download/fig_v6_response_class_ledger.png: `5d8a552077127d18a4a41fcfd8d562c3e79fa752bd3706710fa5311d986535f0`
-- figures/quarantined_meta/v6_no_download/fig_v6_response_class_ledger.manifest.json: `459813bbbf36d250ffc6b6551c5eafb8502a91b9845e3af0273fe809a9fa888b`
+- figures/quarantined_meta/v6_no_download/fig_v6_response_class_ledger.manifest.json: `f833d29a7cd162dd443e953d0b40671274bab8eacb75d63ebf82a13066e38537`
 caveats:
 - Quarantine inventory only; listed artifacts are not promoted by this report.
 - Missing or invalid manifests block claim-bearing use until provenance is added.
 - The checker does not regenerate figures, inspect pixels, or infer scientific meaning.
 generating_command: python scripts/check_artifact_manifests.py --scan-root figures/data_analysis_current --scan-root figures/quarantined_meta/v6_no_download --scan-root figures/quarantined_legacy/root_sources --output docs/generated/report_figure_lane_quarantine_check.md
-git_commit: 8280b8f
+git_commit: e6da367
 worktree_state: dirty
 output_path: docs/generated/report_figure_lane_quarantine_check.md
 
 ## Summary
 
 - Scan roots: figures/data_analysis_current, figures/quarantined_meta/v6_no_download, figures/quarantined_legacy/root_sources
-- Manifested figures: 84
+- Manifested figures: 97
 - Quarantined figures: 0
 - Manifest issues: 0
 
@@ -202,10 +228,23 @@ output_path: docs/generated/report_figure_lane_quarantine_check.md
 
 | Path | Reason | Manifest |
 | --- | --- | --- |
+| `figures/data_analysis_current/fig_data_act_dr6_lensing_noise_systematics.png` | `valid_manifest` | `figures/data_analysis_current/fig_data_act_dr6_lensing_noise_systematics.manifest.json` |
+| `figures/data_analysis_current/fig_data_cf4_affine_gradient_spectrum.png` | `valid_manifest` | `figures/data_analysis_current/fig_data_cf4_affine_gradient_spectrum.manifest.json` |
 | `figures/data_analysis_current/fig_data_cf4_catalog_sky_velocity.png` | `valid_manifest` | `figures/data_analysis_current/fig_data_cf4_catalog_sky_velocity.manifest.json` |
+| `figures/data_analysis_current/fig_data_cf4_depth_apex_phase_portrait.png` | `valid_manifest` | `figures/data_analysis_current/fig_data_cf4_depth_apex_phase_portrait.manifest.json` |
 | `figures/data_analysis_current/fig_data_cf4_depth_velocity_profile.png` | `valid_manifest` | `figures/data_analysis_current/fig_data_cf4_depth_velocity_profile.manifest.json` |
+| `figures/data_analysis_current/fig_data_cf4_radial_delta_stability.png` | `valid_manifest` | `figures/data_analysis_current/fig_data_cf4_radial_delta_stability.manifest.json` |
+| `figures/data_analysis_current/fig_data_cf4_radial_velocity_sign_transition.png` | `valid_manifest` | `figures/data_analysis_current/fig_data_cf4_radial_velocity_sign_transition.manifest.json` |
+| `figures/data_analysis_current/fig_data_cf4_shell_apex_separation_matrix.png` | `valid_manifest` | `figures/data_analysis_current/fig_data_cf4_shell_apex_separation_matrix.manifest.json` |
+| `figures/data_analysis_current/fig_data_compact_cmb_high_ell_products.png` | `valid_manifest` | `figures/data_analysis_current/fig_data_compact_cmb_high_ell_products.manifest.json` |
+| `figures/data_analysis_current/fig_data_compact_lensing_bandpower_covariance.png` | `valid_manifest` | `figures/data_analysis_current/fig_data_compact_lensing_bandpower_covariance.manifest.json` |
 | `figures/data_analysis_current/fig_data_desi_bgs_cf4_targets.png` | `valid_manifest` | `figures/data_analysis_current/fig_data_desi_bgs_cf4_targets.manifest.json` |
-| `figures/data_analysis_current/fig_data_k5_cf4_bulk_flow_coverage.png` | `valid_manifest` | `figures/data_analysis_current/fig_data_k5_cf4_bulk_flow_coverage.manifest.json` |
+| `figures/data_analysis_current/fig_data_desi_ngc_sgc_asymmetry_surface.png` | `valid_manifest` | `figures/data_analysis_current/fig_data_desi_ngc_sgc_asymmetry_surface.manifest.json` |
+| `figures/data_analysis_current/fig_data_desi_redshift_jackknife_ridge.png` | `valid_manifest` | `figures/data_analysis_current/fig_data_desi_redshift_jackknife_ridge.manifest.json` |
+| `figures/data_analysis_current/fig_data_desi_tracer_handoff_continuity.png` | `valid_manifest` | `figures/data_analysis_current/fig_data_desi_tracer_handoff_continuity.manifest.json` |
+| `figures/data_analysis_current/fig_data_k1_lowell_tensor_conditioning.png` | `valid_manifest` | `figures/data_analysis_current/fig_data_k1_lowell_tensor_conditioning.manifest.json` |
+| `figures/data_analysis_current/fig_data_k1_maxscan_waterfall.png` | `valid_manifest` | `figures/data_analysis_current/fig_data_k1_maxscan_waterfall.manifest.json` |
+| `figures/data_analysis_current/fig_data_k1_scalar_biposh_map_stability.png` | `valid_manifest` | `figures/data_analysis_current/fig_data_k1_scalar_biposh_map_stability.manifest.json` |
 | `figures/data_analysis_current/fig_data_k6_cf4_wf_curl_shear_diagnostic.png` | `valid_manifest` | `figures/data_analysis_current/fig_data_k6_cf4_wf_curl_shear_diagnostic.manifest.json` |
 | `figures/data_analysis_current/fig_data_planck_smica_masked_temperature.png` | `valid_manifest` | `figures/data_analysis_current/fig_data_planck_smica_masked_temperature.manifest.json` |
 | `figures/data_analysis_current/fig_data_planck_tt_binned_residual.png` | `valid_manifest` | `figures/data_analysis_current/fig_data_planck_tt_binned_residual.manifest.json` |

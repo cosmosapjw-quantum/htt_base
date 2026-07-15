@@ -11,6 +11,9 @@ P-15 deliverable. Four controls with matched parameter counts:
 Matched-complexity: all controls have the same number of amplitude
 parameters, nuisance parameters, and prior widths. Only the
 directional structure differs.
+
+PR-120 active controls contain two survey amplitudes (CatWISE and Radio);
+quarantined channel c is absent from every parameter count.
 """
 import numpy as np
 from dataclasses import dataclass, field
@@ -54,9 +57,9 @@ C1 = ControlSpec(
     name='aligned',
     code='C1',
     n_direction=0,   # fixed to CMB dipole
-    n_amplitude=4,   # A + δ_CW + δ_rad + δ_CF4
+    n_amplitude=3,   # A + δ_CW + δ_rad
     n_nuisance=2,    # σ_sys_CW + σ_sys_rad
-    n_total=6,
+    n_total=5,
     direction_constraint='Fixed at CMB dipole (l=264°, b=+48°)',
     prior_width_amplitude=2e-3,
     prior_width_nuisance=5e-4,
@@ -66,9 +69,9 @@ C2 = ControlSpec(
     name='misaligned',
     code='C2',
     n_direction=0,   # fixed 90° from CMB
-    n_amplitude=4,
+    n_amplitude=3,
     n_nuisance=2,
-    n_total=6,
+    n_total=5,
     direction_constraint='Fixed 90° from CMB dipole (l=354°, b=0°)',
     prior_width_amplitude=2e-3,
     prior_width_nuisance=5e-4,
@@ -77,10 +80,10 @@ C2 = ControlSpec(
 C3 = ControlSpec(
     name='disconnected',
     code='C3',
-    n_direction=6,   # (l,b) per survey × 3
-    n_amplitude=3,   # A_CW + A_rad + A_CF4
+    n_direction=4,   # (l,b) per active survey × 2
+    n_amplitude=2,   # A_CW + A_rad
     n_nuisance=2,
-    n_total=11,
+    n_total=8,
     direction_constraint='Independent (l,b) per survey',
     prior_width_amplitude=2e-3,
     prior_width_nuisance=5e-4,

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import json
 from pathlib import Path
 
 from common.artifact_manifest import validate_manifest_payload
@@ -55,28 +56,21 @@ def test_v7_fortification_witnesses_cover_audit_repairs():
 
 
 def test_k5_cf4_identified_interval_card_blocks_observational_promotion():
-    mod = _load_script("scripts/k5_cf4_identified_interval_card.py")
-    payload = mod.build_payload(
-        generating_command="venv/bin/python scripts/k5_cf4_identified_interval_card.py")
+    payload = json.loads(
+        (REPO_ROOT / "docs/generated/k5_cf4_identified_interval_card.json").read_text(
+            encoding="utf-8"
+        )
+    )
 
-    assert payload["schema"] == "htt.k5.cf4_identified_interval_card.v1"
-    assert payload["owner"] == "OBSSTAT"
-    assert payload["claim_tier"] == "diagnostic_only"
-    assert payload["observational_claim_allowed"] is False
-    # W2_upper promoted to the registered MES ceiling; Sigma2/Omega_k still block promotion
-    assert {"Sigma2_hat", "Omega_k_upper"} <= set(payload["blocked_components"])
-    assert "W2_upper" not in payload["blocked_components"]
-    assert payload["component_input_modes"]["W2_upper"] == "REGISTERED_MES_CEILING"
-    assert payload["component_input_modes"]["CF4_bulk_amplitude"] == "REAL"
-    assert payload["component_input_modes"]["Omega_m"] == "DECLARED_OBS_DEFAULT"
-    for policy in payload["policies"].values():
-        assert set(policy["branches"]) == {"open_branch[0,Uk]", "all_branch[-Uk,Uk]"}
-        assert all(branch["status"] == "FEASIBLE" for branch in policy["branches"].values())
-    assert validate_manifest_payload(
-        payload,
-        manifest_path="memory://k5_cf4_identified_interval_card.json",
-        expected_artifact_path="docs/generated/k5_cf4_identified_interval_card.json",
-    ) == ()
+    assert payload["schema"] == "htt.cf4_p0_quarantine_block.v1"
+    assert payload["owner"] == "COMMON"
+    assert payload["claim_tier"] == "blocked"
+    assert payload["status"] == "QUARANTINED_OPEN_FINDINGS"
+    assert payload["allowed_use"] == "blocked_source_record_only"
+    assert payload["replacement_value"] is None
+    assert "component_input_modes" not in payload
+    assert "policies" not in payload
+    assert all(row["scientific_status"] == "OPEN" for row in payload["findings"])
 
 
 def test_v7_paper_a_revision_packet_records_claim_safe_replacements():

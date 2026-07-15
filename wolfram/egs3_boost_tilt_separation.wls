@@ -44,9 +44,10 @@ rCorr = F12/Sqrt[F11 F22];
 inflationForm = Simplify[inflation - 1/(1 - rCorr^2)] === 0;
 inflationLimit = Simplify[(inflation /. beta -> 0)] === 1;
 
-(* (5b) a PV/JWST prior on Omega_tilt (larger f) STRICTLY reduces the Sigma^2 covariance
-   inflation. Since inflation = 1/(1 - rCorr^2) (proven above), it decreases in f iff the
-   response correlation rCorr^2 decreases in f: d(rCorr^2)/df < 0 (Axis-D degeneracy-breaking). *)
+(* (5b) a generic synthetic information weight f strictly reduces the Sigma^2 covariance
+   inflation in this declared Fisher toy. This is method sensitivity only: f is not an
+   observational PV/JWST prior. Since inflation = 1/(1 - rCorr^2) (proven above), it
+   decreases in f iff rCorr^2 decreases in f: d(rCorr^2)/df < 0. *)
 rho2exp = alpha kappaT^2 beta^2;                          (* rho^2, explicit (no Sqrt); alpha bound above *)
 r2Explicit = rho2exp^2/((1 + rho2exp) (f + rho2exp));    (* = F12^2/(F11 F22) *)
 priorReducesInflation = TrueQ[Simplify[D[r2Explicit, f] < 0,

@@ -103,37 +103,24 @@ class BR5CardV9(unittest.TestCase):
     def test_card_structure_and_firewall(self):
         card = json.loads(V9_CARD.read_text())
         self.assertEqual(card["schema"],
-                         "htt.k5.cf4_identified_interval_card.v2")
-        self.assertFalse(card["observational_claim_allowed"])
-        branches = card["w2_ceiling_branches"]
-        self.assertEqual(set(branches), {"W2_registered",
-                                         "W2_hybrid_literature",
-                                         "W2_sag_consistent"})
-        for wrow in branches.values():
-            self.assertEqual(set(wrow["curvature_branches"]),
-                             {"open_branch[0,Uk]", "all_branch[-Uk,Uk]"})
-        # null lower extreme keyed to -U_W on the open branch (c_W = -1;
-        # the curvature open branch contributes 0 to the lower null extreme)
-        for wrow in branches.values():
-            null_lo = wrow["curvature_branches"]["open_branch[0,Uk]"][
-                "null_extremes"][0]
-            self.assertTrue(np.array_equal(null_lo, -wrow["w2_upper"]))
-        reg = branches["W2_registered"]
-        from htt.tsc.admissibility.three_bound_hierarchy import W2_max
-        vals = eps_registry_provenance()["ssot_registry"]["values"]
-        self.assertTrue(np.array_equal(
-            reg["w2_upper"], W2_max(vals["eps1"], vals["eps2"], vals["eps3"])))
-        self.assertIn("sha256", card["based_on_frozen_cards"]["v7"])
-        self.assertIn("sha256", card["based_on_frozen_cards"]["v8"])
+                         "htt.cf4_p0_quarantine_block.v1")
+        self.assertEqual(card["owner"], "COMMON")
+        self.assertEqual(card["claim_tier"], "blocked")
+        self.assertEqual(card["status"], "QUARANTINED_OPEN_FINDINGS")
+        self.assertEqual(card["allowed_use"], "blocked_source_record_only")
+        self.assertIsNone(card["replacement_value"])
+        self.assertNotIn("w2_ceiling_branches", card)
+        self.assertNotIn("based_on_frozen_cards", card)
+        self.assertTrue(all(
+            row["scientific_status"] == "OPEN" for row in card["findings"]
+        ))
 
     def test_branch_spread_is_monotone_in_ceiling(self):
         card = json.loads(V9_CARD.read_text())
-        branches = card["w2_ceiling_branches"]
-        lows = {k: branches[k]["curvature_branches"]
-                ["open_branch[0,Uk]"]["interval"][0] for k in branches}
-        self.assertGreater(lows["W2_sag_consistent"], lows["W2_registered"])
-        self.assertGreater(lows["W2_registered"],
-                           lows["W2_hybrid_literature"])
+        self.assertNotIn("w2_ceiling_branches", card)
+        self.assertNotIn("policies", card)
+        self.assertIsNone(card["replacement_value"])
+        self.assertEqual(card["scientific_effect"], "none")
 
 
 class BRCoVeAdversarialGuard(unittest.TestCase):

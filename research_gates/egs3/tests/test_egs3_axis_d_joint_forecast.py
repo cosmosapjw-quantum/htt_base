@@ -1,16 +1,16 @@
-"""EGS3 Axis D gates: BASS-Extended joint PV+CMB information forecast (pre-solver).
+"""EGS3 Axis D gates: synthetic joint-information mechanics (pre-solver).
 
 D1 Woodbury solve/logdet == dense (feasible C_PV inversion, O(N K^2));
 D2 large-scale velocity mode basis (bulk+shear) shapes + traceless-symmetric orthonormality;
-D3 JWST-anchor Omega_tilt precision forecast: gain > 1, grows with anchors / smaller shrink, -> 1 as shrink -> 1;
-D4 joint Fisher: the PV/JWST prior strictly reduces the Sigma^2 covariance inflation (degeneracy break > 1);
+D3 former JWST/CF4 forecast API fails closed while the downstream finding is OPEN;
+D4 synthetic subset-error and generic Fisher sensitivity preserve method mechanics without observational interpretation;
 D5 BipoSH: exact Wigner-3j + an injected l<->l+1 aberration raises the L=1 bipolar power (isotropic power finite >= 0);
 D6 theory-g CMB is FAIL-CLOSED (OutOfScopeError; never an array) and the joint total is never fabricated;
 D7 deterministic under fixed inputs;
 D8 (CoVe) adversarial: gains bounded, joint total always None, BipoSH power non-negative across a seed/param grid.
 
 Chain-of-code: analytic identities recomputed two ways. Diagnostic-only; no detection, family,
-geometry, or native-solver claim; the JWST prior is a labelled forecast; Sigma^2 stays partial.
+geometry, or native-solver claim; all active inputs are explicitly synthetic.
 """
 import unittest
 import numpy as np
@@ -72,7 +72,7 @@ class D2VelocityModeTests(unittest.TestCase):
         self.assertEqual(m["kinds"].count("shear"), 5)
 
 
-class D3JwstForecastTests(unittest.TestCase):
+class D3QuarantinedForecastTests(unittest.TestCase):
     def _catalogue(self, rng):
         pos = rng.normal(size=(400, 3)) * 50.0
         r = np.linalg.norm(pos, axis=1)
@@ -81,36 +81,44 @@ class D3JwstForecastTests(unittest.TestCase):
         v = nh @ np.array([200.0, -90.0, 60.0]) + rng.normal(size=400) * np.sqrt(sig2)
         return nh, v, sig2, r
 
-    def test_gain_above_one_and_grows_with_anchors(self):
+    def test_former_jwst_forecast_fails_closed(self):
         rng = np.random.default_rng(SEED)
         nh, v, sig2, r = self._catalogue(rng)
-        order = np.argsort(r)
-        gains = []
-        for frac in (0.02, 0.05, 0.10):
-            mask = np.zeros(400, bool); mask[order[:int(frac * 400)]] = True
-            g = jf.jwst_anchor_forecast(nh, v, sig2, mask, jwst_shrink=1.0 / 3.0)
-            gains.append(g["precision_gain"])
-            self.assertGreaterEqual(g["precision_gain"], 1.0)
-        self.assertTrue(all(y2 >= y1 for y1, y2 in zip(gains, gains[1:])))  # more anchors -> more gain
+        mask = np.zeros(400, bool); mask[np.argsort(r)[:40]] = True
+        with self.assertRaisesRegex(
+            jf.QuarantinedCF4DownstreamError,
+            jf.CF4_DOWNSTREAM_OPEN,
+        ):
+            jf.jwst_anchor_forecast(nh, v, sig2, mask)
 
-    def test_gain_returns_to_one_when_no_shrink(self):
+    def test_synthetic_sensitivity_has_no_observational_payload(self):
         rng = np.random.default_rng(SEED)
         nh, v, sig2, r = self._catalogue(rng)
         mask = np.zeros(400, bool); mask[:40] = True
-        g = jf.jwst_anchor_forecast(nh, v, sig2, mask, jwst_shrink=1.0)
-        self.assertAlmostEqual(g["precision_gain"], 1.0, places=9)
+        rec = jf.synthetic_error_shrink_sensitivity(
+            nh, v, sig2, mask, error_scale=1.0
+        )
+        self.assertAlmostEqual(rec["information_multiplier"], 1.0, places=9)
+        self.assertEqual(rec["status"], "SYNTHETIC_METHOD_WITNESS")
+        self.assertIsNone(rec["observational_interpretation"])
+        self.assertFalse(rec["public_use"])
 
 
 class D4JointFisherTests(unittest.TestCase):
     def test_prior_reduces_inflation(self):
-        base = jf.joint_fisher_forecast(rho=0.6, f_omega_tilt_data=1.0, f_omega_tilt_jwst=1.0)
-        self.assertAlmostEqual(base["degeneracy_break_factor"], 1.0, places=9)
-        better = jf.joint_fisher_forecast(rho=0.6, f_omega_tilt_data=1.0, f_omega_tilt_jwst=2.0)
-        self.assertLess(better["inflation_jwst"], better["inflation_data"])
-        self.assertGreater(better["degeneracy_break_factor"], 1.0)
+        base = jf.joint_fisher_sensitivity(
+            rho=0.6, f_tilt_base=1.0, f_tilt_candidate=1.0
+        )
+        self.assertAlmostEqual(base["sensitivity_ratio"], 1.0, places=9)
+        better = jf.joint_fisher_sensitivity(
+            rho=0.6, f_tilt_base=1.0, f_tilt_candidate=2.0
+        )
+        self.assertLess(better["inflation_candidate"], better["inflation_base"])
+        self.assertGreater(better["sensitivity_ratio"], 1.0)
+        self.assertIsNone(better["observational_interpretation"])
 
     def test_inflation_monotone_in_prior(self):
-        infl = [jf.joint_fisher_forecast(rho=0.6, f_omega_tilt_jwst=f)["inflation_jwst"]
+        infl = [jf.joint_fisher_sensitivity(rho=0.6, f_tilt_candidate=f)["inflation_candidate"]
                 for f in (1.0, 2.0, 5.0, 20.0)]
         self.assertTrue(all(y2 <= y1 for y1, y2 in zip(infl, infl[1:])))
 
@@ -149,24 +157,41 @@ class D6FailClosedTests(unittest.TestCase):
         nh = pos / np.linalg.norm(pos, axis=1)[:, None]
         sig2 = (rng.uniform(50.0, 150.0, 200)) ** 2
         v = nh @ np.array([150.0, -50.0, 40.0]) + rng.normal(size=200) * np.sqrt(sig2)
-        rec = jf.evaluate_joint_loglike(n_hat=nh, vpec=v, diag_sigma2=sig2)
+        rec = jf.evaluate_joint_loglike(
+            n_hat=nh,
+            vpec=v,
+            diag_sigma2=sig2,
+            input_provenance="deterministic_synthetic_catalogue",
+        )
         self.assertIsNone(rec["joint_total_loglike"])
         self.assertEqual(rec["cmb_theory_sector"]["status"], "fail_closed")
         self.assertEqual(rec["cmb_theory_sector"]["blocker"], jf.AWAITING_NATIVE_LOWELL_SOLVER)
-        self.assertEqual(rec["pv_sector"]["status"], "measured")
+        self.assertEqual(rec["pv_sector"]["status"], "synthetic_method_witness")
         self.assertTrue(np.isfinite(rec["pv_sector"]["loglike"]))
+
+    def test_non_synthetic_joint_input_fails_closed(self):
+        with self.assertRaisesRegex(
+            jf.QuarantinedCF4DownstreamError,
+            jf.CF4_DOWNSTREAM_OPEN,
+        ):
+            jf.evaluate_joint_loglike(
+                n_hat=np.eye(3),
+                vpec=np.ones(3),
+                diag_sigma2=np.ones(3),
+                input_provenance="observed_cf4",
+            )
 
 
 class D7DeterminismTests(unittest.TestCase):
-    def test_forecast_deterministic(self):
+    def test_synthetic_sensitivity_deterministic(self):
         rng = np.random.default_rng(7)
         pos = rng.normal(size=(300, 3)) * 45.0
         nh = pos / np.linalg.norm(pos, axis=1)[:, None]
         sig2 = (rng.uniform(50.0, 150.0, 300)) ** 2
         v = nh @ np.array([180.0, -70.0, 50.0]) + rng.normal(size=300) * np.sqrt(sig2)
         mask = np.zeros(300, bool); mask[:20] = True
-        g1 = jf.jwst_anchor_forecast(nh, v, sig2, mask)
-        g2 = jf.jwst_anchor_forecast(nh, v, sig2, mask)
+        g1 = jf.synthetic_error_shrink_sensitivity(nh, v, sig2, mask)
+        g2 = jf.synthetic_error_shrink_sensitivity(nh, v, sig2, mask)
         self.assertEqual(g1, g2)
 
 
@@ -182,10 +207,17 @@ class D8CoVeAdversarialTests(unittest.TestCase):
         for frac in (0.02, 0.05, 0.10):
             for shrink in (0.2, 0.33, 0.5, 1.0):
                 mask = np.zeros(350, bool); mask[order[:int(frac * 350)]] = True
-                g = jf.jwst_anchor_forecast(nh, v, base_sig2, mask, jwst_shrink=shrink)
-                self.assertGreaterEqual(g["precision_gain"], 1.0 - 1e-9)   # never worsens
-                self.assertLess(g["precision_gain"], 1e3)                  # bounded
-                rec = jf.evaluate_joint_loglike(n_hat=nh, vpec=v, diag_sigma2=base_sig2)
+                g = jf.synthetic_error_shrink_sensitivity(
+                    nh, v, base_sig2, mask, error_scale=shrink
+                )
+                self.assertGreaterEqual(g["information_multiplier"], 1.0 - 1e-9)
+                self.assertLess(g["information_multiplier"], 1e3)
+                rec = jf.evaluate_joint_loglike(
+                    n_hat=nh,
+                    vpec=v,
+                    diag_sigma2=base_sig2,
+                    input_provenance="deterministic_synthetic_catalogue",
+                )
                 self.assertIsNone(rec["joint_total_loglike"])              # never fabricated
 
 

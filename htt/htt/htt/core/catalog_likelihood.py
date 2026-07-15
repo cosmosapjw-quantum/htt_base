@@ -165,13 +165,21 @@ class SyntheticCatalog:
     """
 
     def __init__(self, N=1000, z_range=(0.01, 0.15),
-                 beta_true=1.334e-3, tilt_direction=(264.0, 48.0),
+                 beta_true=None, tilt_direction=(264.0, 48.0),
                  sigma_v=250.0, sigma_mu_int=0.12,
                  engine=None, seed=42, z_distribution='uniform_volume',
                  Sigma2=0.0, W2=0.0):
+        if beta_true is None:
+            raise ValueError(
+                "SyntheticCatalog requires an explicit synthetic beta_true; "
+                "the quarantined CF4 observational value is not a default"
+            )
+        beta_value = float(beta_true)
+        if not np.isfinite(beta_value):
+            raise ValueError("synthetic beta_true must be finite")
         self.N = N
         self.z_range = z_range
-        self.beta_true = beta_true
+        self.beta_true = beta_value
         self.sigma_v = sigma_v
         self.sigma_mu_int = sigma_mu_int
         self.engine = engine or DistanceEngine(Sigma2=Sigma2, W2=W2)

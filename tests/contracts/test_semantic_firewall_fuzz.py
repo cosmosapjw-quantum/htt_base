@@ -123,7 +123,8 @@ def test_semantic_firewall_production_sources_are_hashed_and_packaged() -> None:
     )
     package_manifest = json.loads(
         (
-            REPO_ROOT / "docs/generated/statistical_formalism_audit_package_manifest.json"
+            REPO_ROOT
+            / "legacy/cf4_p0/packages/statistical_formalism_audit/statistical_formalism_audit_package_manifest.json"
         ).read_text(encoding="utf-8")
     )
 

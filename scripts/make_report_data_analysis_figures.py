@@ -57,6 +57,7 @@ K6_CF4_CURL_POSTERIOR = "docs/generated/k6_cf4_curl_posterior.json"
 CF4_APEX_DEPTH = "docs/generated/cf4_bulkflow_apex_depth_report.json"
 CF4_BULKFLOW_LIKELIHOOD = "docs/generated/cf4_bulkflow_likelihood_report.json"
 CF4_AFFINE_FLOW = "docs/generated/cf4_affine_flow_report.json"
+CF4_P0_BLOCK = "docs/generated/cf4_p0_quarantine_block.json"
 CF4_WF_GRID = "workdir/raw/cf4/CF4pp_mean_std_grids.npz"
 LOWELL_MORPHOLOGY = "docs/generated/lowell_morphology_real_map_report.json"
 K1_GLOBAL_MAXSCAN = "docs/generated/k1_global_maxscan.json"
@@ -119,6 +120,10 @@ COLORS = {
 
 SKIPPED_CURRENT_DATA_CANDIDATES = (
     {
+        "candidate": "K5 CF4 bulk-flow/global-tilt and forward-coverage figure set",
+        "reason": "PR-120 quarantine: K5 coverage, K5-versus-affine, forward-coverage residual, observed-sector response, and K1-K5 joint figures consume the OPEN CF4 P0 chain; historical copies are legacy_reproduction_only",
+    },
+    {
         "candidate": "MIO directional pairwise separation heatmap",
         "reason": "probe set is hardcoded/literature-level in the current checkout; source-bound report manifest is not present",
     },
@@ -127,8 +132,8 @@ SKIPPED_CURRENT_DATA_CANDIDATES = (
         "reason": "requires an explicitly bound probe tuple and matched null metadata before report-lane use",
     },
     {
-        "candidate": "CF4/JWST anchor leverage forecast",
-        "reason": "forecast product exists, but it is not a current observed-data figure",
+        "candidate": "CF4/JWST catalogue-linkage diagnostic",
+        "reason": "PR-120 quarantine: no CF4-conditioned precision or global-tilt forecast is authorized while N-DATA-CF4-DOWNSTREAM remains OPEN",
     },
     {
         "candidate": "Planck low-ell residual map with CF4 apex-track overlay",
@@ -143,6 +148,37 @@ SKIPPED_CURRENT_DATA_CANDIDATES = (
         "reason": "implemented likelihood surface needs a real-catalog driver and basis binding",
     },
 )
+
+CF4_P0_QUARANTINED_FIGURE_NAMES = frozenset(
+    {
+        "fig_data_k5_cf4_bulk_flow_coverage.png",
+        "fig_data_k5_cf4_vs_affine_consistency.png",
+        "fig_data_cf4_forward_coverage_residual.png",
+        "fig_data_observed_sector_response_vector.png",
+        "fig_data_k1_k5_joint_diagnostic_axes.png",
+    }
+)
+
+CF4_RECONSTRUCTION_FUNCTIONAL_FIGURE_NAMES = frozenset(
+    {
+        "fig_data_cf4_depth_apex_phase_portrait.png",
+        "fig_data_cf4_shell_apex_separation_matrix.png",
+        "fig_data_cf4_affine_gradient_spectrum.png",
+    }
+)
+
+
+class CF4P0FigureQuarantined(RuntimeError):
+    """Raised when a removed CF4 P0 report builder is called directly."""
+
+
+def _reject_cf4_p0_figure_builder(file_name: str) -> None:
+    if file_name not in CF4_P0_QUARANTINED_FIGURE_NAMES:
+        raise ValueError(f"unknown quarantined CF4 P0 figure: {file_name}")
+    raise CF4P0FigureQuarantined(
+        f"{file_name} is legacy_reproduction_only while the CF4 P0 findings "
+        "remain OPEN; no active figure may be generated"
+    )
 
 
 @dataclass(frozen=True)
@@ -778,6 +814,7 @@ def _plot_cf4_radial_delta_stability(output: Path) -> PlotMeta:
 
 
 def _plot_cf4_forward_coverage_residual(output: Path) -> PlotMeta:
+    _reject_cf4_p0_figure_builder("fig_data_cf4_forward_coverage_residual.png")
     payload = _load_json(CF4_BULKFLOW_LIKELIHOOD)
     rows = payload["depth_windows"]
     depth = np.asarray([row["depth_mpc"] for row in rows], dtype=float)
@@ -877,6 +914,7 @@ def _plot_cf4_depth_apex_phase_portrait(output: Path) -> PlotMeta:
         },
         sky_support_status="not_directional",
         null_mock_status=str(apex["null_mock_status"]),
+        transfer_source="external_proxy_cf4_wf_reconstruction",
     )
 
 
@@ -914,10 +952,12 @@ def _plot_cf4_shell_apex_separation_matrix(output: Path) -> PlotMeta:
         },
         sky_support_status="not_directional",
         null_mock_status=str(apex["null_mock_status"]),
+        transfer_source="external_proxy_cf4_wf_reconstruction",
     )
 
 
 def _plot_k5_cf4_vs_affine_consistency(output: Path) -> PlotMeta:
+    _reject_cf4_p0_figure_builder("fig_data_k5_cf4_vs_affine_consistency.png")
     k5 = _load_json(K5_CF4_RELEASE_COVERAGE)
     affine = _load_json(CF4_AFFINE_FLOW)
     measured = k5["measured_bulk"]
@@ -1147,6 +1187,7 @@ def _plot_k1_scalar_biposh_map_stability(output: Path) -> PlotMeta:
 
 
 def _plot_observed_sector_response_vector(output: Path) -> PlotMeta:
+    _reject_cf4_p0_figure_builder("fig_data_observed_sector_response_vector.png")
     joint = _load_json(PR08_JOINT_ARTIFACT)
     sectors = joint["sectors"]
     fig, axes = plt.subplots(1, 3, figsize=(11.2, 4.1))
@@ -1196,6 +1237,7 @@ def _plot_observed_sector_response_vector(output: Path) -> PlotMeta:
 
 
 def _plot_k1_k5_joint_diagnostic_axes(output: Path) -> PlotMeta:
+    _reject_cf4_p0_figure_builder("fig_data_k1_k5_joint_diagnostic_axes.png")
     k1 = _load_json(K1_GLOBAL_MAXSCAN)
     k5 = _load_json(K5_CF4_RELEASE_COVERAGE)
     x = np.asarray(
@@ -1241,6 +1283,7 @@ def _plot_k1_k5_joint_diagnostic_axes(output: Path) -> PlotMeta:
 
 
 def _plot_k5_cf4_bulk_flow_coverage(output: Path) -> PlotMeta:
+    _reject_cf4_p0_figure_builder("fig_data_k5_cf4_bulk_flow_coverage.png")
     k5 = _load_json(K5_CF4_RELEASE_COVERAGE)
     measured = k5["measured_bulk"]
     coverage = k5["coverage"]
@@ -1798,7 +1841,7 @@ def _plot_act_dr6_lensing_noise_systematics(output: Path) -> PlotMeta:
 
 
 def _figure_specs() -> tuple[FigureSpec, ...]:
-    return (
+    specs = (
         FigureSpec(
             artifact_id="obsstat.report_data.planck_tt_binned_residual",
             file_name="fig_data_planck_tt_binned_residual.png",
@@ -1949,17 +1992,17 @@ def _figure_specs() -> tuple[FigureSpec, ...]:
             artifact_id="obsstat.report_data.cf4_depth_apex_phase_portrait",
             file_name="fig_data_cf4_depth_apex_phase_portrait.png",
             title="CF4 depth-apex phase portrait",
-            source_paths=(CF4_APEX_DEPTH, LOWELL_MORPHOLOGY, CF4_WF_GRID, PLANCK_SMICA, SCRIPT_PATH),
+            source_paths=(CF4_APEX_DEPTH, CF4_P0_BLOCK, LOWELL_MORPHOLOGY, CF4_WF_GRID, PLANCK_SMICA, SCRIPT_PATH),
             builder=_plot_cf4_depth_apex_phase_portrait,
-            caption="CF4 shell apex track with full-sample, CMB dipole, and low-ell diagnostic-axis references.",
+            caption="CF4++ reconstruction-functional shell-apex track with reference axes; method/systematics only while C1-K5-MV-F1 remains OPEN.",
         ),
         FigureSpec(
             artifact_id="obsstat.report_data.cf4_shell_apex_separation_matrix",
             file_name="fig_data_cf4_shell_apex_separation_matrix.png",
             title="CF4 shell apex separation matrix",
-            source_paths=(CF4_APEX_DEPTH, CF4_WF_GRID, SCRIPT_PATH),
+            source_paths=(CF4_APEX_DEPTH, CF4_P0_BLOCK, CF4_WF_GRID, SCRIPT_PATH),
             builder=_plot_cf4_shell_apex_separation_matrix,
-            caption="Pairwise angular separations among CF4 shell apexes, full-sample apex, and CMB dipole.",
+            caption="Pairwise angular separations among CF4++ reconstruction-functional shell apexes; no observed amplitude or global-tilt claim.",
         ),
         FigureSpec(
             artifact_id="obsstat.report_data.k5_cf4_vs_affine_consistency",
@@ -1973,9 +2016,9 @@ def _figure_specs() -> tuple[FigureSpec, ...]:
             artifact_id="obsstat.report_data.cf4_affine_gradient_spectrum",
             file_name="fig_data_cf4_affine_gradient_spectrum.png",
             title="CF4 affine gradient spectrum",
-            source_paths=(CF4_AFFINE_FLOW, CF4_WF_GRID, SCRIPT_PATH),
+            source_paths=(CF4_AFFINE_FLOW, CF4_P0_BLOCK, CF4_WF_GRID, SCRIPT_PATH),
             builder=_plot_cf4_affine_gradient_spectrum,
-            caption="CF4 affine bulk, expansion, shear, and curl-suppressed gradient sectors by radius.",
+            caption="CF4++ affine reconstruction functionals versus radius; estimator/systematics only while C1-K5-MV-F1 remains OPEN.",
         ),
         FigureSpec(
             artifact_id="obsstat.report_data.k1_lowell_tensor_conditioning",
@@ -2028,6 +2071,11 @@ def _figure_specs() -> tuple[FigureSpec, ...]:
             caption="K1 global-tail coordinates crossed with K5 coverage coordinates; no joint null probability is reported.",
         ),
     )
+    return tuple(
+        spec
+        for spec in specs
+        if spec.file_name not in CF4_P0_QUARANTINED_FIGURE_NAMES
+    )
 
 
 def _manifest_for_spec(
@@ -2037,6 +2085,17 @@ def _manifest_for_spec(
     meta: PlotMeta,
 ) -> dict[str, Any]:
     rel_path = _repo_relative(figure_path)
+    reconstruction_functional = (
+        spec.file_name in CF4_RECONSTRUCTION_FUNCTIONAL_FIGURE_NAMES
+    )
+    reconstruction_caveats = (
+        [
+            "Numerical rows are functionals of one CF4++ Wiener-filter reconstruction, not observed bulk-flow amplitude measurements.",
+            "C1-K5-MV-F1 remains OPEN; no global-tilt coordinate or cosmological inference is permitted.",
+        ]
+        if reconstruction_functional
+        else []
+    )
     manifest = {
         "artifact_id": spec.artifact_id,
         "artifact_path": rel_path,
@@ -2046,6 +2105,11 @@ def _manifest_for_spec(
         "production_status": "diagnostic_only",
         "artifact_mode": "paper_appendix_conditioned",
         "allowed_use": "paper_appendix",
+        "analysis_mode": (
+            "reconstruction_conditioned_method_systematics"
+            if reconstruction_functional
+            else "observed_or_prepared_data_diagnostic"
+        ),
         "caption_policy": [
             "must_state_observed_data_diagnostic",
             "must_not_state_family_identification",
@@ -2056,6 +2120,7 @@ def _manifest_for_spec(
             "matched_nulls_not_bound_for_inference",
             "full_covariance_not_bound_for_likelihood",
             "native_morphology_atlas_absent",
+            *(["C1-K5-MV-F1_OPEN"] if reconstruction_functional else []),
         ],
         "created_by": SCRIPT_PATH,
         "git_commit": "content-addressed",
@@ -2075,6 +2140,7 @@ def _manifest_for_spec(
             "Observed/prepared data analysis figure.",
             "Diagnostic-only: no posterior odds, p-value, geometry detection, or family identification.",
             "No native low-ell solver output is used.",
+            *reconstruction_caveats,
         ],
         "required_gates": [
             "repo_local_data_input_present",
@@ -2092,6 +2158,20 @@ def _manifest_for_spec(
         ],
         "statistics_definitions": {
             "source_artifacts": list(spec.source_paths),
+            **(
+                {
+                    "finding_state": {
+                        "finding_id": "C1-K5-MV-F1",
+                        "scientific_status": "OPEN",
+                        "canonical_source": "docs/generated/cf4_p0_quarantine_block.json",
+                    },
+                    "observational_amplitude_claim_allowed": False,
+                    "global_tilt_claim_allowed": False,
+                    "cosmological_inference_allowed": False,
+                }
+                if reconstruction_functional
+                else {}
+            ),
             **meta.statistics_definitions,
         },
         "transfer_source": meta.transfer_source,
@@ -2244,6 +2324,13 @@ def check_outputs(argv: list[str] | None) -> int:
             stale.append(_repo_relative(figure_path))
         if not sidecar.exists():
             stale.append(_repo_relative(sidecar))
+    for file_name in sorted(CF4_P0_QUARANTINED_FIGURE_NAMES):
+        figure_path = FIGURE_DIR / file_name
+        sidecar = _sidecar_path(figure_path)
+        if figure_path.exists():
+            stale.append(f"{_repo_relative(figure_path)} (must be quarantined)")
+        if sidecar.exists():
+            stale.append(f"{_repo_relative(sidecar)} (must be quarantined)")
     if stale:
         print("report data-analysis figures are stale:", file=sys.stderr)
         for path in stale:

@@ -3,6 +3,32 @@
 %  VER06 — Species-resolved expansion, all chapters integrated
 %  Compiled: 2026-03-30
 % ============================================================
+% PR-120 fail-closed gate.  This must execute before \documentclass: a LaTeX
+% package error after class loading can still leave a complete PDF behind when
+% pdflatex runs in nonstop mode.  The primitive termination below records an
+% error and exits before any output driver or page builder is initialized.
+%
+% This source preserves historical CF4 numerical instantiations whose
+% active/public interpretation is blocked by C1-K5-MV-F1,
+% C3-K5-VCORR-ML-F1, and N-DATA-CF4-DOWNSTREAM.  A normal build is forbidden.
+% Exact historical reproduction must opt in explicitly from docs/manuscript:
+%   pdflatex '\expandafter\def\csname HTTCF4PZeroLegacyReproduction\endcsname{1}\input{main.tex}'
+% Any resulting bytes remain immutable historical evidence with public_use
+% false; opting in does not authorize a current manuscript or publication use.
+% \ifcsname is required because ordinary TeX control-word names cannot contain
+% the digit in the stable policy marker HTTCF4PZeroLegacyReproduction.
+\ifcsname HTTCF4PZeroLegacyReproduction\endcsname
+  \immediate\write16{HTT CF4 P0 MODE: LEGACY_REPRODUCTION_ONLY; PUBLIC_USE=FALSE}
+  \let\HTTCFPZeroAbort\relax
+\else
+  \def\HTTCFPZeroAbort{%
+    \immediate\write16{HTT CF4 P0 BLOCK: NO CURRENT MANUSCRIPT PDF IS AUTHORIZED}%
+    \errmessage{CF4 P0 manuscript source quarantine: legacy reproduction only;
+      public_use=false while registered findings remain OPEN}%
+    \csname @@end\endcsname}
+\fi
+\HTTCFPZeroAbort
+
 \documentclass[12pt,a4paper]{report}
 
 % ── Packages ─────────────────────────────────────────────────

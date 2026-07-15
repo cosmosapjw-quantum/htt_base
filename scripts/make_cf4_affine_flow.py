@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""LR-06F: 3D local-flow affine-gradient posterior from the CF4++ reconstruction.
+"""LR-06F: 3D local-flow affine-gradient functionals of the CF4++ reconstruction.
 
 Loads the local CF4++ supergalactic velocity grid
 (`workdir/raw/cf4/CF4pp_mean_std_grids.npz`, 128^3, 1000 Mpc box) and fits the
@@ -8,10 +8,11 @@ bulk B, expansion Theta, shear sigma, and vorticity omega. Reports a
 bootstrap spread (lower bound, correlated cells), a boundary-cut (radius) sweep,
 and a curl-injection recovery test.
 
-Diagnostic-only OBSSTAT result. Vorticity is reconstruction-conditioned; the
+Reconstruction-conditioned OBSSTAT systematics diagnostic. Vorticity is reconstruction-conditioned; the
 cross-reconstruction comparison is BLOCKED_MISSING_FIELD_REALIZATIONS (only the
 CF4++ reconstruction is available locally). No Bianchi/geometry/frame-violation
-claim.
+claim. C1-K5-MV-F1 remains OPEN, so the numerical functionals are not an
+observed bulk-flow amplitude, global-tilt coordinate, or cosmological result.
 """
 from __future__ import annotations
 
@@ -25,13 +26,16 @@ import sys
 import numpy as np
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-for p in (REPO_ROOT / "htt", REPO_ROOT):
+for p in (REPO_ROOT / "htt", REPO_ROOT / "htt" / "src", REPO_ROOT):
     if str(p) not in sys.path:
         sys.path.insert(0, str(p))
 
 from obsstat.affine_flow import fit_affine_flow, bootstrap_affine, curl_injection_recovery  # noqa: E402
+from common.cf4_p0_quarantine import load_block_record  # noqa: E402
 
 GRID = REPO_ROOT / "workdir/raw/cf4/CF4pp_mean_std_grids.npz"
+CF4_BLOCK = REPO_ROOT / "docs/generated/cf4_p0_quarantine_block.json"
+REMEDIATION_ROOT = REPO_ROOT / "docs/codex_handoff/research_remediation_state.yaml"
 BOX_MPC = 1000.0
 RADII = [50.0, 100.0, 150.0, 200.0, 250.0]
 REPORT_JSON = REPO_ROOT / "docs/generated/cf4_affine_flow_report.json"
@@ -65,6 +69,9 @@ def _load_field():
 
 
 def build_report(*, generating_command: str) -> dict:
+    block = load_block_record(REPO_ROOT)
+    if block.status != "QUARANTINED_OPEN_FINDINGS":
+        raise RuntimeError("CF4 affine diagnostics require the canonical OPEN quarantine block")
     positions, velocities, n, delta = _load_field()
     radius_rows = []
     for r in RADII:
@@ -80,18 +87,42 @@ def build_report(*, generating_command: str) -> dict:
     boot = bootstrap_affine(positions, velocities, radius=150.0, n_boot=300, seed=12345)
     # curl injection at a physically small rate (1 km/s/Mpc about SGZ).
     inj = curl_injection_recovery(positions, velocities, radius=150.0, omega_inject=np.array([0.0, 0.0, 1.0]))
+    config = {
+        "radii_mpc": list(RADII),
+        "bootstrap": {"radius_mpc": 150.0, "n_boot": 300, "seed": 12345},
+        "curl_injection_omega_kms_per_mpc": [0.0, 0.0, 1.0],
+    }
+    config_hash = "sha256:" + hashlib.sha256(
+        json.dumps(config, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    ).hexdigest()
     return {
         "artifact_id": "obsstat.cf4_affine_flow",
         "owner": "OBSSTAT",
         "implementation_scope": "obsstat",
         "claim_tier": "diagnostic_only",
-        "transfer_source": "none",
+        "status": "RECONSTRUCTION_CONDITIONED_SYSTEMATICS_DIAGNOSTIC",
+        "artifact_mode": "paper_appendix_conditioned",
+        "allowed_use": "paper_appendix",
+        "analysis_mode": "reconstruction_conditioned_method_systematics",
+        "transfer_source": "external_proxy_cf4_wf_reconstruction",
         "sky_support_status": "cf4_reconstruction_grid",
         "null_mock_status": "bootstrap_over_correlated_reconstruction_cells",
         "ticket": "LR-06F",
         "generating_command": generating_command,
         "git_commit_or_worktree_state": _git_state(),
-        "input_hashes": [f"{GRID.relative_to(REPO_ROOT).as_posix()}:{_sha256(GRID)}"],
+        "config_hash": config_hash,
+        "input_hashes": [
+            f"{GRID.relative_to(REPO_ROOT).as_posix()}:{_sha256(GRID)}",
+            f"{REMEDIATION_ROOT.relative_to(REPO_ROOT).as_posix()}:{_sha256(REMEDIATION_ROOT)}",
+        ],
+        "finding_state": {
+            "finding_id": "C1-K5-MV-F1",
+            "scientific_status": "OPEN",
+            "canonical_source": "docs/generated/cf4_p0_quarantine_block.json",
+        },
+        "observational_amplitude_claim_allowed": False,
+        "global_tilt_claim_allowed": False,
+        "cosmological_inference_allowed": False,
         "grid": {"n_per_axis": n, "box_mpc": BOX_MPC, "cell_mpc": round(delta, 4),
                  "frame": "supergalactic_cartesian"},
         "radius_sweep": radius_rows,
@@ -103,12 +134,13 @@ def build_report(*, generating_command: str) -> dict:
                       "reconstruction is required for the cross-reconstruction comparison.",
         },
         "caveats": [
-            "Affine-flow decomposition of a single reconstruction; diagnostic-only.",
+            "Numerical rows are functionals of one CF4++ Wiener-filter reconstruction, not observed bulk-flow amplitude measurements.",
             "Vorticity is reconstruction-conditioned: potential/Wiener reconstructions suppress curl "
             "by construction, so a small recovered omega is a reconstruction property, not a detection.",
             "Bootstrap over correlated reconstruction cells is a lower bound on the uncertainty, "
             "not a calibrated covariance.",
             "Expansion Theta is the local divergence of the reconstruction, not a global H0 measurement.",
+            "C1-K5-MV-F1 remains OPEN; no global-tilt coordinate or cosmological inference is permitted.",
             "No Bianchi/geometry/cosmological-frame-violation claim.",
         ],
     }
@@ -118,7 +150,14 @@ def render_md(r: dict) -> str:
     lines = [
         "# CF4++ Affine Local-Flow Decomposition (LR-06F)",
         "",
-        f"owner: {r['owner']} · claim_tier: {r['claim_tier']} · ticket: {r['ticket']}",
+        f"owner: {r['owner']} · claim_tier: {r['claim_tier']} · status: {r['status']} · ticket: {r['ticket']}",
+        f"allowed_use: {r['allowed_use']}",
+        f"config_hash: `{r['config_hash']}`",
+        "input_hashes:",
+        *[f"- {item}" for item in r["input_hashes"]],
+        f"generating_command: `{r['generating_command']}`",
+        f"git_commit_or_worktree_state: {r['git_commit_or_worktree_state']}",
+        "finding_state: C1-K5-MV-F1 OPEN (canonical PR-120 block)",
         f"grid: {r['grid']['n_per_axis']}^3, box {r['grid']['box_mpc']} Mpc, cell {r['grid']['cell_mpc']} Mpc "
         f"({r['grid']['frame']})",
         "",
@@ -165,15 +204,23 @@ def _figure_manifest(r: dict) -> dict:
     return {
         "artifact_id": "obsstat.cf4_affine_flow.figure",
         "artifact_path": f"figures/observed_current/{FIG.name}",
+        "artifact_sha256": _sha256(FIG),
         "owner": "OBSSTAT", "implementation_scope": "obsstat",
         "claim_tier": "diagnostic_only", "production_status": "diagnostic_only",
-        "artifact_mode": "paper_appendix_conditioned", "allowed_use": "paper_appendix",
-        "transfer_source": "none", "sky_support_status": "cf4_reconstruction_grid",
+        "artifact_mode": "paper_appendix_conditioned",
+        "allowed_use": "paper_appendix",
+        "analysis_mode": "reconstruction_conditioned_method_systematics",
+        "transfer_source": "external_proxy_cf4_wf_reconstruction", "sky_support_status": "cf4_reconstruction_grid",
         "null_mock_status": "bootstrap_over_correlated_reconstruction_cells",
         "family_identification": False, "native_solver_result": False,
         "ticket": "LR-06F", "generating_command": "python scripts/make_cf4_affine_flow.py",
         "git_commit_or_worktree_state": w, "git_commit": w.split("+")[0], "code_version": w,
         "schema_version": "obsstat.cf4_affine_flow_figure.v1",
+        "config_hash": r["config_hash"],
+        "finding_state": r["finding_state"],
+        "observational_amplitude_claim_allowed": False,
+        "global_tilt_claim_allowed": False,
+        "cosmological_inference_allowed": False,
         "caption_policy": [
             "must_state_diagnostic_only",
             "must_not_use_for_family_identification_or_family_selection",
@@ -183,6 +230,7 @@ def _figure_manifest(r: dict) -> dict:
             "native_solver_validation_absent",
             "native_morphology_atlas_absent",
             "family_identification_blocked_pre_native_atlas",
+            "C1-K5-MV-F1_OPEN",
         ],
         "caveats": r["caveats"],
         "input_hashes": r["input_hashes"],
@@ -198,7 +246,7 @@ def _write_figure(r: dict) -> None:
     fig, axs = plt.subplots(1, 2, figsize=(7.2, 3.8))
     axs[0].plot(R, [x["bulk_amplitude_kms"] for x in rows], "o-", color="#2563eb")
     axs[0].set_xlabel("sphere radius [Mpc]"); axs[0].set_ylabel("bulk |B| [km/s]")
-    axs[0].set_title("LR-06F: CF4++ bulk flow vs radius")
+    axs[0].set_title("LR-06F: CF4++ reconstruction functional vs radius")
     axs[1].plot(R, [x["shear_amplitude_kms_per_mpc"] for x in rows], "s-", color="#16a34a", label="shear")
     axs[1].plot(R, [x["vorticity_amplitude_kms_per_mpc"] for x in rows], "d--", color="#ea580c", label="vorticity")
     axs[1].plot(R, [abs(x["expansion_kms_per_mpc"]) for x in rows], "^:", color="#7c3aed", label="|expansion|")

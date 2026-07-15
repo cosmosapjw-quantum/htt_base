@@ -1,22 +1,24 @@
-# CF4 Bulk-Flow Likelihood on the Full Group Release (LR-06D)
+# cf4_bulkflow_likelihood_report - PR-120 conditioned method record
 
-owner: OBSSTAT · claim_tier: diagnostic_only · ticket: LR-06D
-release: Cosmicflows-4 (Tully+ 2023) VizieR J/ApJ/944/94 table4 · 38053 usable groups
+owner: OBSSTAT
+implementation_scope: obsstat_method_and_systematics_only
+claim_tier: blocked
+transfer_source: none
+sky_support_status: not_evaluated_on_active_path
+covariance_status: not_bound_on_active_path
+null_mock_status: not_bound_on_active_path
+status: QUARANTINED_OPEN_FINDINGS
+findings: C1-K5-MV-F1, C3-K5-VCORR-ML-F1, N-DATA-CF4-DOWNSTREAM
+allowed_use: likelihood_schema_and_coverage_test_design_only
+replacement_value: none
 
-| depth [Mpc] | N | sky frac | sigma_star | |B| [km/s] | apex (l,b) | mock coverage |
-| --- | ---: | ---: | ---: | --- | --- | ---: |
-| 60 | 3916 | 0.97 | 90 | 320 +/- 7 | (296, 20) | 0.68 |
-| 100 | 8540 | 0.98 | 50 | 351 +/- 5 | (293, 22) | 0.72 |
-| 150 | 13844 | 0.99 | 50 | 347 +/- 5 | (293, 21) | 0.65 |
-| 200 | 18191 | 0.99 | 50 | 346 +/- 5 | (293, 21) | 0.67 |
-| 300 | 26363 | 0.99 | 50 | 345 +/- 5 | (293, 21) | 0.67 |
+## Retained method substrate
 
-Observer-frame note: peculiar velocities use the catalog ramp Vpec (V3k cosmological frame for the error scaling); a full Vh/Vls/V3k frame ablation is a follow-up.
+- Retain the forward-likelihood schema, nuisance decomposition, and coverage-test design.
+- Require authenticated catalogue support, full covariance, matched nulls, and response-rank audit before observational evaluation.
+- Keep local-flow and global-vector terms distinct; no data-derived global component is available on this active path.
 
-## Caveats
+## Claim boundary
 
-- Weighted-GLS bulk flow on the CF4 group peculiar velocities; diagnostic-only.
-- sigma_star is fitted to reduced chi^2 ~ 1; covariance is the inverse Fisher matrix.
-- Forward-mock coverage uses the real geometry + errors with the recovered B as the injected truth.
-- No global-tilt or Bianchi-geometry claim is made from CF4 distances alone.
-- Selection and Malmquist/inhomogeneous-sampling biases are not fully forward-modelled here.
+No observational numerical instantiation is active. Historical bytes are legacy reproduction only and public use is false.
+Quarantine is propagation control, not scientific remediation.

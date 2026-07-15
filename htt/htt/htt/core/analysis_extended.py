@@ -25,6 +25,11 @@ from typing import Any, Mapping
 from htt.core.ssot import C, sigma_H_from_Sig2
 from htt.core.bounds import (B_sigma as B_sigma_lin, B_sigma_corrected, Sig2_max_MES,
                     eps1_from_beta, beta_safe, Sig2_BV, filling_fraction)
+from htt.core.cf4_observational_input import (
+    ACTIVE_DEFAULT_CHANNELS,
+    OPEN_FINDING_IDS,
+    normalize_active_channels,
+)
 
 __all__ = ['FillingFraction', 'GrowingMode', 'ScenarioTable',
            'ForecastTable', 'EvidenceComparison',
@@ -34,10 +39,10 @@ __all__ = ['FillingFraction', 'GrowingMode', 'ScenarioTable',
 SCENARIOS = {
     'S0':  {'eps1': 0.0,       'beta': 0.0,       'desc': 'FLRW'},
     'S1':  {'eps1': 1.233e-3,  'beta': 0.0,       'desc': 'Kinematic dipole'},
-    'S2a': {'eps1': 1.476e-3,  'beta': 1.334e-3,  'desc': 'CatWISE'},
-    'S2b': {'eps1': 1.233e-3,  'beta': 1.334e-3,  'desc': 'Kinematic+tilt'},
-    'S2c': {'eps1': 3.296e-3,  'beta': 1.334e-3,  'desc': 'Radio'},
-    'S3':  {'eps1': 1.476e-3,  'beta': 1.334e-3,  'desc': 'Full anomaly'},
+    'S2a': {'eps1': 1.476e-3,  'beta': None, 'desc': 'CatWISE; CF4 beta quarantined'},
+    'S2b': {'eps1': 1.233e-3,  'beta': None, 'desc': 'Kinematic; CF4 beta quarantined'},
+    'S2c': {'eps1': 3.296e-3,  'beta': None, 'desc': 'Radio; CF4 beta quarantined'},
+    'S3':  {'eps1': 1.476e-3,  'beta': None, 'desc': 'Non-CF4 active channels only'},
 }
 
 EVIDENCE_MODEL_TAGS = [
@@ -293,6 +298,8 @@ class ScenarioTable:
         
         return {
             'scenario': scenario_name, 'eps1': e1, 'beta': beta,
+            'cf4_channel_status': 'QUARANTINED_OPEN_FINDINGS',
+            'cf4_finding_ids': list(OPEN_FINDING_IDS),
             'B_sigma_orig': Bs_orig, 'B_sigma_corr': Bs_corr,
             'Sigma2_orig': S2_orig, 'Sigma2_corr': S2_corr,
             'beta_max_orig': beta_orig, 'beta_max_corr': beta_corr,
@@ -360,8 +367,11 @@ class EvidenceComparison:
     # All 16 model classes (15 Bianchi + 1 FLRW reference)
     MODEL_REGISTRY = None  # Lazy-loaded
     
-    def __init__(self, channels='abcdefh', obs=None):
-        self.channels = channels
+    def __init__(self, channels=None, obs=None):
+        self.channels = normalize_active_channels(
+            channels,
+            consumer="EvidenceComparison",
+        )
         self.obs = obs  # custom ObsData, or None for default
         self._load_models()
     
@@ -370,24 +380,16 @@ class EvidenceComparison:
         if EvidenceComparison.MODEL_REGISTRY is not None:
             return
 
-        try:
-            from evidence_models import (
-                FLRW, FLRW_tilt,
-                BianchiI_orth, BianchiVII0_orth, BianchiII_orth,
-                BianchiVI0_orth, BianchiVIII_orth, BianchiIX_orth,
-                BianchiVIIh_orth, BianchiVIIh_orth_grow,
-                BianchiI_tilt, BianchiV_tilt, BianchiIII_tilt,
-                BianchiIX_tilt, BianchiVIIh_tilt, BianchiVIIh_tilt_grow,
-            )
-        except ImportError:
-            from evidence_models_R03a import (
-                FLRW, FLRW_tilt,
-                BianchiI_orth, BianchiVII0_orth, BianchiII_orth,
-                BianchiVI0_orth, BianchiVIII_orth, BianchiIX_orth,
-                BianchiVIIh_orth, BianchiVIIh_orth_grow,
-                BianchiI_tilt, BianchiV_tilt, BianchiIII_tilt,
-                BianchiIX_tilt, BianchiVIIh_tilt, BianchiVIIh_tilt_grow,
-            )
+        # R03a carries the active channel-c quarantine.  Do not fall back to
+        # pre-quarantine evidence modules with numerical CF4 defaults.
+        from htt.core.evidence_models_R03a import (
+            FLRW, FLRW_tilt,
+            BianchiI_orth, BianchiVII0_orth, BianchiII_orth,
+            BianchiVI0_orth, BianchiVIII_orth, BianchiIX_orth,
+            BianchiVIIh_orth, BianchiVIIh_orth_grow,
+            BianchiI_tilt, BianchiV_tilt, BianchiIII_tilt,
+            BianchiIX_tilt, BianchiVIIh_tilt, BianchiVIIh_tilt_grow,
+        )
         
         EvidenceComparison.MODEL_REGISTRY = {
             'FLRW':             FLRW,
@@ -410,7 +412,10 @@ class EvidenceComparison:
     
     def flrw_evidence(self, channels=None):
         """FLRW reference log-evidence (analytic)."""
-        ch = channels or self.channels
+        ch = normalize_active_channels(
+            self.channels if channels is None else channels,
+            consumer="EvidenceComparison.flrw_evidence",
+        )
         return self.MODEL_REGISTRY['FLRW'](obs=self.obs, channels=ch).log_evidence()
     
     def run_single(self, tag, nlive=500, dlogz=0.1, channels=None):
@@ -421,7 +426,10 @@ class EvidenceComparison:
         import dynesty
         from dynesty.utils import resample_equal
         
-        ch = channels or self.channels
+        ch = normalize_active_channels(
+            self.channels if channels is None else channels,
+            consumer="EvidenceComparison.run_single",
+        )
         Mcls = self.MODEL_REGISTRY[tag]
         m = Mcls(obs=self.obs, channels=ch)
         Z0 = self.flrw_evidence(ch)

@@ -10,7 +10,7 @@
   ],
   "claim_tier": "diagnostic_only",
   "code_version": "content-addressed",
-  "config_hash": "sha256:08e0a7b415086c2f594725baed96f813e1dee4c5ee12a346c0b20c3c3c6a2846",
+  "config_hash": "sha256:f78e1784742140a8dc21f95bbc8a93d1bf2d34438796809d309bc65bd8700d3c",
   "created_by": "scripts/build_v7_external_audit_synthesis.py",
   "failed_gates": [
     "native_low_ell_solver_absent",
@@ -29,14 +29,14 @@
       "target": "htt/obsstat/egs3_identified_set.py"
     },
     {
-      "acceptance": "real CF4 bulk enters Omega_tilt; unbound components block promotion.",
+      "acceptance": "C1-K5-MV-F1 and N-DATA-CF4-DOWNSTREAM remain OPEN; only generic synthetic mechanics may execute.",
       "claim_risk": "pipeline_not_demonstrated",
       "finding": "No closed y -> R -> tau -> interval/status card was present on current data.",
       "id": "F2",
-      "owner": "OBSSTAT",
-      "repo_response": "Add K5/CF4 identified-interval diagnostic card with plugin firewall.",
+      "owner": "COMMON",
+      "repo_response": "PR-120 quarantines the K5/CF4 numerical card and every downstream consumer; no replacement result is supplied.",
       "severity": "fatal_if_unfixed",
-      "target": "scripts/k5_cf4_identified_interval_card.py"
+      "target": "docs/generated/cf4_p0_quarantine_block.json"
     },
     {
       "acceptance": "report-facing figures remain concrete data analyses, not meta/process figures.",

@@ -6,24 +6,24 @@ claim_tier: diagnostic_only
 transfer_source: mixed_manifest_backed_current_and_conditioned_legacy
 sky_support_status: pending_or_unknown_for_existing_directional_artifacts
 null_mock_status: mixed_current_and_legacy_context
-config_hash: `sha256:32f4cc609e5d99b3d1c75a4faff25b8de4e5eaf188e3e98a2203aa6df4ca4f8b`
+config_hash: `sha256:b506ab9aab85c4b399f5900dcc1e80387d503ea508262b292132633b69ebf46f`
 input_hashes:
-- scripts/build_expanded_manuscript_figure_suite.py:sha256:b96cc2dc76f678a2158b7053334b182ab2908963be64209cd4aa19c7f60d228a
+- scripts/build_expanded_manuscript_figure_suite.py:sha256:f530556a73b1f17113a6fb4ee539733f1364a26e60ffc20d633d67a7af721106
 - docs/generated/current_manuscript_plot_list.md:sha256:4f59d13bd1cec34abbddcb29c9537b78a2c2c02115b6aa7c5314bc59d025c3ee
 caveats:
 - The manifest-backed current figure deck remains the conservative core manuscript deck.
 - VER2 pack figures are current-code, manifest-backed diagnostics with explicit claim ceilings.
 - Conditioned legacy figures are appendix-only hypothesis-conditioned diagnostics.
 - No listed figure claims native low-ell solver output or Bianchi family-ID.
-generating_command: `python scripts/build_expanded_manuscript_figure_suite.py`
-git_commit_or_worktree_state: `85fca53+dirty`
+generating_command: `python scripts/build_expanded_manuscript_figure_suite.py --phase all`
+git_commit_or_worktree_state: `e6da367+dirty`
 
 ## Summary
 
 - Existing current-code core figures: 10
 - Added current-code VER2 pack figures: 5
-- Added conditioned legacy appendix figures: 93
-- Manuscript figure target after expansion: 108
+- Added conditioned legacy appendix figures: 89
+- Manuscript figure target after expansion: 104
 
 ## Added Current-Code VER2 Figures
 
@@ -40,15 +40,11 @@ git_commit_or_worktree_state: `85fca53+dirty`
 | Source | Conditioned Figure | Manifest | Condition |
 | --- | --- | --- | --- |
 | `figures/parallel_track/fig_01_mes_three_bounds.png` | `figures/conditioned_legacy/parallel-track__fig_01_mes_three_bounds.png` | `figures/conditioned_legacy/parallel-track__fig_01_mes_three_bounds.manifest.json` | shown as parallel-track prior context under the assumptions of the original helper script; it is not a current main-claim result. |
-| `figures/parallel_track/fig_02_tilted_flrw_dictionary.png` | `figures/conditioned_legacy/parallel-track__fig_02_tilted_flrw_dictionary.png` | `figures/conditioned_legacy/parallel-track__fig_02_tilted_flrw_dictionary.manifest.json` | shown as parallel-track prior context under the assumptions of the original helper script; it is not a current main-claim result. |
-| `figures/parallel_track/fig_03_colin_beta_translation.png` | `figures/conditioned_legacy/parallel-track__fig_03_colin_beta_translation.png` | `figures/conditioned_legacy/parallel-track__fig_03_colin_beta_translation.manifest.json` | shown as parallel-track prior context under the assumptions of the original helper script; it is not a current main-claim result. |
-| `figures/parallel_track/fig_04_flrw_tilt_posterior.png` | `figures/conditioned_legacy/parallel-track__fig_04_flrw_tilt_posterior.png` | `figures/conditioned_legacy/parallel-track__fig_04_flrw_tilt_posterior.manifest.json` | shown as parallel-track prior context under the assumptions of the original helper script; it is not a current main-claim result. |
 | `figures/parallel_track/fig_05_filling_fraction_scenarios.png` | `figures/conditioned_legacy/parallel-track__fig_05_filling_fraction_scenarios.png` | `figures/conditioned_legacy/parallel-track__fig_05_filling_fraction_scenarios.manifest.json` | shown as parallel-track prior context under the assumptions of the original helper script; it is not a current main-claim result. |
 | `figures/parallel_track/fig_06_directional_probes_mollweide.png` | `figures/conditioned_legacy/parallel-track__fig_06_directional_probes_mollweide.png` | `figures/conditioned_legacy/parallel-track__fig_06_directional_probes_mollweide.manifest.json` | shown as parallel-track prior context under the assumptions of the original helper script; it is not a current main-claim result. |
 | `figures/parallel_track/fig_07_planck_pr3_tt.png` | `figures/conditioned_legacy/parallel-track__fig_07_planck_pr3_tt.png` | `figures/conditioned_legacy/parallel-track__fig_07_planck_pr3_tt.manifest.json` | shown as parallel-track prior context under the assumptions of the original helper script; it is not a current main-claim result. |
 | `figures/parallel_track/fig_08_planck_pr3_tt_te_ee.png` | `figures/conditioned_legacy/parallel-track__fig_08_planck_pr3_tt_te_ee.png` | `figures/conditioned_legacy/parallel-track__fig_08_planck_pr3_tt_te_ee.manifest.json` | shown as parallel-track prior context under the assumptions of the original helper script; it is not a current main-claim result. |
 | `figures/parallel_track/fig_09_planck_lowell_envelope.png` | `figures/conditioned_legacy/parallel-track__fig_09_planck_lowell_envelope.png` | `figures/conditioned_legacy/parallel-track__fig_09_planck_lowell_envelope.manifest.json` | shown as parallel-track prior context under the assumptions of the original helper script; it is not a current main-claim result. |
-| `figures/parallel_track/fig_10_cf4_beta_variants.png` | `figures/conditioned_legacy/parallel-track__fig_10_cf4_beta_variants.png` | `figures/conditioned_legacy/parallel-track__fig_10_cf4_beta_variants.manifest.json` | shown as parallel-track prior context under the assumptions of the original helper script; it is not a current main-claim result. |
 | `figures/parallel_track/fig_11_dipole_direction_comparison.png` | `figures/conditioned_legacy/parallel-track__fig_11_dipole_direction_comparison.png` | `figures/conditioned_legacy/parallel-track__fig_11_dipole_direction_comparison.manifest.json` | shown as parallel-track prior context under the assumptions of the original helper script; it is not a current main-claim result. |
 | `figures/parallel_track/fig_12_planck_act_dr4_combined.png` | `figures/conditioned_legacy/parallel-track__fig_12_planck_act_dr4_combined.png` | `figures/conditioned_legacy/parallel-track__fig_12_planck_act_dr4_combined.manifest.json` | shown as parallel-track prior context under the assumptions of the original helper script; it is not a current main-claim result. |
 | `figures/quarantined_legacy/root_sources/fig_3D_constraint_volume.png` | `figures/conditioned_legacy/quarantined-legacy-root-sources__fig_3D_constraint_volume.png` | `figures/conditioned_legacy/quarantined-legacy-root-sources__fig_3D_constraint_volume.manifest.json` | shown only as a legacy manuscript-generator diagnostic under its original assumptions, with current claim ceilings made explicit. |

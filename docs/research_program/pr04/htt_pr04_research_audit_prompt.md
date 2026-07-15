@@ -42,7 +42,7 @@ reports.
 - an identified Bianchi family or detected anisotropic geometry;
 - a global-tilt claim from CF4 distance data alone;
 - native-solver validation for any external/proxy transfer output;
-- a MIO certificate used as posterior odds or HTT evidence;
+- a MIO diagnostic certificate used as a model-dependent inference input;
 - a vorticity detection from a curl-suppressed reconstruction;
 - a globally significant low-ell anomaly (K1 p-values are local, single-sky,
   look-elsewhere-tracked, not full-covariance/mask-coupled).

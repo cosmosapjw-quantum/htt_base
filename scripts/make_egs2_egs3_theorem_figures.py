@@ -26,8 +26,9 @@ low-ell solver, no Bianchi family or geometry identification):
                            vertex; x_C = tr(C M) is bit-identical.
 
 Each figure ships a deterministic source.json (plotted values) + a gated
-manifest; --check compares those sidecars byte-for-byte. Manifests are
-content-addressed only (no git state) so --check is stable across commits.
+manifest; --check compares those sidecars byte-for-byte. PR-120's changed U1/U2
+manifests bind their source/module/quarantine inputs and record the baseline
+worktree state without embedding a moving ``HEAD`` value.
 """
 from __future__ import annotations
 
@@ -45,6 +46,15 @@ import matplotlib.pyplot as plt  # noqa: E402
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 FIG_DIR = REPO_ROOT / "figures" / "current"
+_PR120_BOUND_STEMS = frozenset(
+    {
+        "fig_egs3_d_joint_forecast",
+        "fig_egs3_d_biposh",
+        "fig_egs3_u1_beta_channel",
+        "fig_egs3_u2_fingerprint_ceilings",
+    }
+)
+_PR120_BASELINE = "e6da3670043596efdcd93f9ba5e631e1462146c7"
 
 # canonical modules (import lazily inside _sources so --help works without deps)
 
@@ -55,8 +65,38 @@ def _config_hash(payload: dict) -> str:
     ).hexdigest()
 
 
-def _manifest(stem: str, theorem_id: str, title: str, source: dict) -> dict:
-    return {
+def _sha256_bytes(payload: bytes) -> str:
+    return hashlib.sha256(payload).hexdigest()
+
+
+def _sha256_path(relative: str) -> str:
+    return _sha256_bytes((REPO_ROOT / relative).read_bytes())
+
+
+def _pr120_input_hashes(stem: str, source: dict) -> list[str]:
+    source_bytes = (
+        json.dumps(source, indent=2, sort_keys=True) + "\n"
+    ).encode("utf-8")
+    paths = ["scripts/make_egs2_egs3_theorem_figures.py"]
+    if stem.startswith("fig_egs3_d_"):
+        paths.append("htt/obsstat/joint_pv_cmb_forecast.py")
+    else:
+        paths.append("htt/obsstat/egs3_teff_unification.py")
+    return [
+        f"figures/current/{stem}.source.json:sha256:{_sha256_bytes(source_bytes)}",
+        *(f"{relative}:sha256:{_sha256_path(relative)}" for relative in paths),
+    ]
+
+
+def _manifest(
+    stem: str,
+    theorem_id: str,
+    title: str,
+    source: dict,
+    *,
+    artifact_sha256: str | None = None,
+) -> dict:
+    manifest = {
         "artifact_id": f"bass.theorem.{stem}",
         "artifact_path": f"figures/current/{stem}.png",
         "owner": "BASS",
@@ -117,6 +157,36 @@ def _manifest(stem: str, theorem_id: str, title: str, source: dict) -> dict:
         "title": title,
         "source": source,
     }
+    if stem in _PR120_BOUND_STEMS:
+        if artifact_sha256 is None:
+            raise FileNotFoundError(
+                f"PR-120 theorem figure must exist before manifest binding: {stem}.png"
+            )
+        manifest["artifact_sha256"] = artifact_sha256
+        manifest["input_hashes"] = _pr120_input_hashes(stem, source)
+        manifest["git_commit_or_worktree_state"] = (
+            f"baseline_commit:{_PR120_BASELINE}; "
+            "worktree_state:PR-120-content-addressed"
+        )
+    if stem.startswith("fig_egs3_d_"):
+        manifest.update(
+            {
+                "artifact_mode": "synthetic_method_witness",
+                "allowed_use": "internal_method_audit_only",
+                "public_use": False,
+                "finding_ids": ["N-DATA-CF4-DOWNSTREAM"],
+                "finding_status": "OPEN",
+                "observational_interpretation": None,
+                "quarantine_control_ref": "docs/generated/cf4_p0_quarantine_block.json",
+            }
+        )
+    elif stem in _PR120_BOUND_STEMS:
+        manifest["quarantine_control_ref"] = (
+            "docs/generated/cf4_p0_quarantine_block.json"
+        )
+        manifest["finding_ids"] = ["C1-K5-MV-F1"]
+        manifest["finding_status"] = "OPEN"
+    return manifest
 
 
 def _sources() -> dict[str, dict]:
@@ -280,26 +350,30 @@ def _sources() -> dict[str, dict]:
         "covariance_inflation": inflation,
     }
 
-    # --- D BASS-Extended joint PV+CMB forecast + BipoSH ------------------
-    from htt.obsstat import pv_covariance as pv_cov
+    # --- D synthetic joint-information sensitivity + BipoSH --------------
     from htt.obsstat import joint_pv_cmb_forecast as jfc
     from htt.obsstat import biposh_smica as bsm
     from htt.obsstat.lowell_map_features import _packed_index
-    rng = np.random.default_rng(20260702)
-    pos = rng.normal(size=(600, 3)) * 50.0
-    rad = np.linalg.norm(pos, axis=1); nh = pos / rad[:, None]
-    mo = pv_cov.velocity_field_modes(pos, sigma_shear_kms_per_mpc=0.3)
-    Uc, Lc = mo["U"][:, 3:], mo["Lambda"][3:]
-    sig2 = (rng.uniform(50.0, 150.0, 600)) ** 2
-    vv = nh @ np.array([200.0, -90.0, 60.0]) + rng.normal(size=600) * np.sqrt(sig2)
-    order = np.argsort(rad)
-    fracs = [0.01, 0.02, 0.05, 0.10, 0.15, 0.20]
-    gains = []
-    for fr in fracs:
-        mask = np.zeros(600, bool); mask[order[:int(fr * 600)]] = True
-        gains.append(jfc.jwst_anchor_forecast(nh, vv, sig2, mask, jwst_shrink=1 / 3, U=Uc, Lambda=Lc)["precision_gain"])
     f_grid = list(np.linspace(1.0, 20.0, 20))
-    infl = [jfc.joint_fisher_forecast(rho=0.6, f_omega_tilt_jwst=f)["inflation_jwst"] for f in f_grid]
+    infl = [
+        jfc.joint_fisher_sensitivity(
+            rho=0.6, f_tilt_candidate=f
+        )["inflation_candidate"]
+        for f in f_grid
+    ]
+    rho_sensitivity = list(np.linspace(0.0, 0.9, 19))
+    base_inflation = [
+        jfc.joint_fisher_sensitivity(
+            rho=rho, f_tilt_candidate=1.0
+        )["inflation_candidate"]
+        for rho in rho_sensitivity
+    ]
+    candidate_inflation = [
+        jfc.joint_fisher_sensitivity(
+            rho=rho, f_tilt_candidate=3.0
+        )["inflation_candidate"]
+        for rho in rho_sensitivity
+    ]
     # BipoSH L=1 aberration mechanism: isotropic vs injected l<->l+1
     lmax = 8
     def _packed(seed):
@@ -317,9 +391,26 @@ def _sources() -> dict[str, dict]:
             for m in range(0, l + 1):
                 aa[_packed_index(lmax, l + 1, m)] += 0.3 * a[_packed_index(lmax, l, m)]
         ab_L1.append(bsm.compute_biposh_from_alm(aa, lmax, L_values=(1,)).power_by_L[1])
-    dfig = {"theorem_id": "EGS3-D", "anchor_fraction": fracs, "precision_gain": gains,
-            "f_grid": f_grid, "inflation": infl, "rho": 0.6}
-    dbip = {"theorem_id": "EGS3-D", "iso_L1": iso_L1, "aberrated_L1": ab_L1, "coupling_eps": 0.3}
+    dfig = {
+        "theorem_id": "EGS3-D",
+        "status": "SYNTHETIC_METHOD_WITNESS",
+        "information_weight": f_grid,
+        "inflation_at_rho_0p6": infl,
+        "rho": rho_sensitivity,
+        "inflation_base_weight_1": base_inflation,
+        "inflation_candidate_weight_3": candidate_inflation,
+        "observational_interpretation": None,
+        "public_use": False,
+        "quarantined_finding": "N-DATA-CF4-DOWNSTREAM",
+    }
+    dbip = {
+        "theorem_id": "EGS3-D",
+        "status": "SYNTHETIC_METHOD_WITNESS",
+        "iso_L1": iso_L1,
+        "aberrated_L1": ab_L1,
+        "coupling_eps": 0.3,
+        "observational_interpretation": None,
+    }
 
     # --- E identified-set semantics: IM coverage + refutability power ----
     from htt.obsstat.egs3_identified_set import (
@@ -367,8 +458,7 @@ def _sources() -> dict[str, dict]:
 
     # --- U1/U2 unification: beta-channel correspondence + fingerprint ceilings
     import sympy as _sp
-    from htt.obsstat.egs3_teff_unification import (
-        BETA_CF4, fingerprint_ceilings as _fpc)
+    from htt.obsstat.egs3_teff_unification import fingerprint_ceilings as _fpc
     from htt.teff.representative import two_temperature_ratio as _ttr
 
     _s = _sp.Symbol("s", positive=True)
@@ -386,8 +476,11 @@ def _sources() -> dict[str, dict]:
         "R5_of_t": [round(float(_R5t(x)), 12) for x in t_grid],
         "tangent_R3": [round(1.0 - 0.75 * x, 12) for x in t_grid],
         "tangent_R5": [round(1.0 + 1.25 * x, 12) for x in t_grid],
-        "t_cf4": round(2.0 * float(np.sinh(BETA_CF4)) ** 2, 15),
         "leading_coeffs": ["-3/4", "+5/4"],
+        "observational_numeric_instantiation": (
+            "none; the former CF4 value is quarantined by PR-120 while "
+            "C1-K5-MV-F1 remains OPEN"
+        ),
     }
     _R3s = _sp.lambdify(_s, _ttr(3)[0].subs(_ttr(3)[1], _s), "numpy")
     _R5s = _sp.lambdify(_s, _ttr(5)[0].subs(_ttr(5)[1], _s), "numpy")
@@ -402,8 +495,9 @@ def _sources() -> dict[str, dict]:
         "eps1": _ceil["eps1_registered"],
         "ceiling_R3": _ceil["ceiling_R3_float"],
         "ceiling_R5": _ceil["ceiling_R5_float"],
-        "s_cf4": _ceil["cf4_containment"]["s_cf4_tanh"],
-        "fp_cf4": _ceil["cf4_containment"]["fingerprint_3half_s2"],
+        "observational_numeric_instantiation": _ceil[
+            "cf4_numeric_instantiation"
+        ],
     }
     # --- U4 statistical closure (from the deterministic seal artifact)
     _seal = json.loads((REPO_ROOT / "docs/generated/teff_statistical_seal.json")
@@ -611,23 +705,24 @@ def _render(src: dict) -> None:
                  "(estimator property; Σ² stays partial)", fontsize=8)
     fig.tight_layout(); fig.savefig(FIG_DIR / "fig_egs3_c_deprojection.png", dpi=140); plt.close(fig)
 
-    # D BASS-Extended joint forecast: JWST Omega_tilt gain + Sigma^2 inflation reduction
+    # D generic synthetic information-weight sensitivity.
     dd = src["d"]
     fig, (axa, axb) = plt.subplots(1, 2, figsize=(7.4, 3.6))
-    axa.plot([100 * f for f in dd["anchor_fraction"]], dd["precision_gain"], marker="o", color=blue)
-    axa.axhline(1.0, color=grey, ls="--", label="no gain")
-    axa.set_xlabel("JWST-anchored fraction of groups (%)")
-    axa.set_ylabel("Ω_tilt precision gain (feasible Woodbury GLS)")
-    axa.set_title("EGS3-D1: PV Ω_tilt precision vs JWST anchors\n(survey-design forecast)")
+    axa.plot(dd["information_weight"], dd["inflation_at_rho_0p6"], marker="o", color=blue)
+    axa.axhline(1.0, color=grey, ls="--", label="uncoupled limit")
+    axa.set_xlabel("generic tilt-information weight f")
+    axa.set_ylabel("Σ² covariance inflation  1/(1−r²)")
+    axa.set_title("EGS3-D: synthetic information-weight sensitivity\n(no observational prior)")
     axa.legend(fontsize=7)
-    axb.plot(dd["f_grid"], dd["inflation"], color=green, lw=2)
+    axb.plot(dd["rho"], dd["inflation_base_weight_1"], color=orange, lw=2, label="f=1")
+    axb.plot(dd["rho"], dd["inflation_candidate_weight_3"], color=green, lw=2, label="f=3")
     axb.axhline(1.0, color=grey, ls="--", label="no coupling")
-    axb.set_xlabel("PV/JWST Ω_tilt prior precision  f")
+    axb.set_xlabel("synthetic response coupling ρ")
     axb.set_ylabel("Σ² covariance inflation  1/(1−r²)")
-    axb.set_title("EGS3-D2: prior breaks the Σ²–Ω_tilt degeneracy\n(inflation ↓ as prior ↑; ρ=0.6)")
+    axb.set_title("generic Fisher sensitivity\n(synthetic weights only)")
     axb.legend(fontsize=7)
-    fig.suptitle("EGS3-D: joint PV+CMB forecast — a PV Ω_tilt prior removes the observer-boost "
-                 "Σ² leakage (forecast; Σ² stays partial; theory-g CMB fail-closed)", fontsize=7.5)
+    fig.suptitle("EGS3-D synthetic method witness — CF4/JWST forecast quarantined "
+                 "(N-DATA-CF4-DOWNSTREAM OPEN)", fontsize=7.5)
     fig.tight_layout(); fig.savefig(FIG_DIR / "fig_egs3_d_joint_forecast.png", dpi=140); plt.close(fig)
 
     # D BipoSH L=1 aberration channel (mechanism): isotropic vs injected l<->l+1
@@ -637,8 +732,7 @@ def _render(src: dict) -> None:
     ax.hist(db["aberrated_L1"], bins=18, color=red, alpha=0.5, label=f"+ l↔l+1 aberration (ε={db['coupling_eps']})")
     ax.set_xlabel("L=1 BipoSH power  D¹  (boost/aberration channel)")
     ax.set_ylabel("count")
-    ax.set_title("EGS3-D3: the L=1 BipoSH channel responds to an\nobserver-boost aberration "
-                 "(measured on real SMICA, k1_biposh_smica)")
+    ax.set_title("EGS3-D3: synthetic L=1 BipoSH response to an\ninjected aberration coupling")
     ax.legend(fontsize=8); fig.tight_layout()
     fig.savefig(FIG_DIR / "fig_egs3_d_biposh.png", dpi=140); plt.close(fig)
 
@@ -702,8 +796,6 @@ def _render(src: dict) -> None:
     ax.plot(u1["t_grid"], u1["tangent_R5"], color=green, ls="--", lw=1,
             label="1 + (5/4)t")
     ax.axhline(1.0, color=grey, lw=0.8)
-    ax.axvline(u1["t_cf4"], color=red, ls=":",
-               label="t at the CF4 bulk-flow rapidity")
     ax.set_xlabel("t = Ω_tilt / ((1+w) Ω_m)   (comparator tilt coordinate)")
     ax.set_ylabel("two-temperature moment ratio")
     ax.set_title("EGS3-U1: one rapidity, two channels\nTeff ratios as exact "
@@ -711,7 +803,8 @@ def _render(src: dict) -> None:
     ax.legend(fontsize=7); fig.tight_layout()
     fig.savefig(FIG_DIR / "fig_egs3_u1_beta_channel.png", dpi=140); plt.close(fig)
 
-    # U2 fingerprint ceilings: proved envelopes + MES eps1 ceiling + CF4 point
+    # U2 fingerprint ceilings: proved envelopes + MES eps1 ceiling.  The
+    # former CF4 numerical point is deliberately absent while its P0 is OPEN.
     u2 = src["u2"]
     fig, ax = plt.subplots(figsize=(5.6, 4.2))
     ax.loglog(u2["s_grid"], u2["dev_R3"], color=blue, lw=2, label="1 − R₃(s)")
@@ -721,8 +814,6 @@ def _render(src: dict) -> None:
     ax.loglog(u2["s_grid"], u2["env_R5"], color=green, ls="--", lw=1,
               label="(5/2) s² envelope (proved)")
     ax.axvline(u2["eps1"], color=red, ls=":", label="registered MES ε₁")
-    ax.plot([u2["s_cf4"]], [u2["fp_cf4"]], marker="*", ms=11, color=orange,
-            ls="none", label="CF4 rapidity (deterministic row)")
     ax.set_xlabel("two-temperature mixing s")
     ax.set_ylabel("fingerprint deviation")
     ax.set_title("EGS3-U2: MES-registry ceilings on the Teff fingerprints\n"
@@ -819,8 +910,8 @@ _SPECS = [
     ("fig_egs2_nt2b1_bracket", "NT2-B1", "Two-sided shear/F bracket excluding zero", "nt2b1"),
     ("fig_egs3_psd_cone", "EGS3-PSD", "PSD-cone comparator redesign", "psd"),
     ("fig_egs3_c_deprojection", "EGS3-C", "Kinematic deprojection of the observer-boost quadrupole", "c"),
-    ("fig_egs3_d_joint_forecast", "EGS3-D", "BASS-Extended joint PV+CMB information forecast", "d"),
-    ("fig_egs3_d_biposh", "EGS3-D", "SMICA BipoSH L=1 boost-aberration channel", "dbip"),
+    ("fig_egs3_d_joint_forecast", "EGS3-D", "Synthetic joint-information sensitivity", "d"),
+    ("fig_egs3_d_biposh", "EGS3-D", "Synthetic BipoSH L=1 response channel", "dbip"),
     ("fig_egs3_e_im_coverage", "EGS3-E2", "Imbens-Manski vs projection interval coverage", "e_im"),
     ("fig_egs3_e_refutability_power", "EGS3-E3", "Refutability (empty-set) power curve", "e_pow"),
     ("fig_egs3_f_shear_memory_bias", "EGS3-F3", "Shear-memory kernel kappa-inference bias", "f_smb"),
@@ -835,9 +926,25 @@ def _sidecar_payloads(src: dict) -> dict[str, tuple[str, str]]:
     out = {}
     for stem, tid, title, key in _SPECS:
         source = src[key]
+        artifact_sha256 = None
+        if stem in _PR120_BOUND_STEMS:
+            artifact_sha256 = "sha256:" + _sha256_bytes(
+                (FIG_DIR / f"{stem}.png").read_bytes()
+            )
         out[stem] = (
             json.dumps(source, indent=2, sort_keys=True) + "\n",
-            json.dumps(_manifest(stem, tid, title, source), indent=2, sort_keys=True) + "\n",
+            json.dumps(
+                _manifest(
+                    stem,
+                    tid,
+                    title,
+                    source,
+                    artifact_sha256=artifact_sha256,
+                ),
+                indent=2,
+                sort_keys=True,
+            )
+            + "\n",
         )
     return out
 
@@ -847,8 +954,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args(argv)
     src = _sources()
-    payloads = _sidecar_payloads(src)
     if args.check:
+        payloads = _sidecar_payloads(src)
         stale = []
         for stem, (exp_src, exp_man) in payloads.items():
             for path, content in ((FIG_DIR / f"{stem}.source.json", exp_src),
@@ -861,6 +968,7 @@ def main(argv: list[str] | None = None) -> int:
         print("EGS2/EGS3 theorem figure sidecars up to date")
         return 0
     _render(src)
+    payloads = _sidecar_payloads(src)
     for stem, (exp_src, exp_man) in payloads.items():
         (FIG_DIR / f"{stem}.source.json").write_text(exp_src, encoding="utf-8")
         (FIG_DIR / f"{stem}.manifest.json").write_text(exp_man, encoding="utf-8")

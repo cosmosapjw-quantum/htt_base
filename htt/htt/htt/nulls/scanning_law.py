@@ -31,7 +31,6 @@ class ScanningLawNull(NullFamily):
 
         cw = obs_base['dipole_observations']['catwise_bohme_2025']
         rad = obs_base['dipole_observations']['radio_secrest_2021']
-        cf4 = obs_base['dipole_observations']['cf4_watkins_2023']
 
         # CatWISE: inject scanning-law dipole (β_true = 0)
         e1_CW = A + rng.normal(0, cw['sigma_stat'])
@@ -40,15 +39,14 @@ class ScanningLawNull(NullFamily):
         # Radio: unaffected by WISE scanning
         e1_rad = abs(rng.normal(0, rad['sigma_stat']))
 
-        # CF4: unaffected
-        b_CF4 = abs(rng.normal(0, cf4['sigma']))
-
         return NullDataset(
             seed=seed, family=self.name,
             e1_CW=e1_CW, e1_CW_s=cw['sigma_stat'],
             e1_rad=e1_rad, e1_rad_s=rad['sigma_stat'],
             rho_CW_radio=0.1,
-            b_CF4=b_CF4, b_CF4_s=cf4['sigma'],
+            # Legacy interface placeholders. Channel c is disabled and is
+            # never read by the active null runner.
+            b_CF4=0.0, b_CF4_s=np.inf,
             eps2=3.56e-6, eps3=6.07e-6,
             systematic_amplitude=A,
             systematic_type='scanning_law',

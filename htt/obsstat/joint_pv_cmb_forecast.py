@@ -1,27 +1,23 @@
-"""EGS3 Axis D: BASS-Extended joint PV+CMB information forecast (pre-solver).
+"""EGS3 Axis D: synthetic joint-information mechanics (pre-solver).
 
 Critical evaluation of the proposed joint likelihood ln L_Total = ln L_PV + ln L_CMB,
 ported to what is honestly runnable before the native low-ell solver (BASS):
 
-  * PV sector (REAL, now): a feasible correlated-covariance bulk-flow / tilt GLS on
-    the real CF4 catalogue (`pv_covariance`, Woodbury; never a dense N x N inversion).
-    A JWST-anchored distance prior tightens the Omega_tilt precision (FORECAST until the
-    anchors are materially matched; the actual gain is reported, not inflated).
-  * The joint benefit -- "PV pins Omega_tilt so the CMB inversion cannot leak power into a
-    false Sigma^2" -- is realized solver-free at the Fisher level: the PV Omega_tilt prior
-    precision enters the rev-r141 coupled Fisher `f_omega_tilt` diagonal, which strictly
-    reduces the Sigma^2 covariance inflation 1/(1-r^2) and breaks the Sigma^2-Omega_tilt
-    degeneracy.
-  * CMB DATA sector (REAL, now): the off-diagonal BipoSH statistic from the real SMICA map
-    (`biposh_smica`), null-calibrated -- a measurement, not a theory fit.
+  * The reusable PV substrate is a correlated-covariance GLS using Woodbury identities.
+    PR-120 permits only explicit synthetic inputs in this module while the CF4 P0
+    downstream finding is OPEN.
+  * A generic information multiplier can be propagated through the coupled Fisher to
+    demonstrate covariance sensitivity.  It is not a JWST/CF4 precision forecast and
+    carries no observational value.
+  * The BipoSH helper may receive explicit synthetic alms as a method witness.  Real-sky
+    observational results remain in their separately gated data lane.
   * CMB THEORY sector (BLOCKED): the mode-coupled C_{lm,l'm'}(g) / A^{LM}_{ll'}(g) prediction
     for a proposed Bianchi g needs the native solver and is FAIL-CLOSED here -- it raises
     `OutOfScopeError` (`AWAITING_NATIVE_LOWELL_SOLVER`) and NEVER returns a fabricated
     covariance. `evaluate_joint_loglike` therefore never fabricates a g-conditioned total.
 
-Diagnostic-only: model-independent kinematics + a real SI descriptor + a labelled forecast;
-no Bianchi family, geometry, frame-violation, native-solver, or MIO-as-odds claim; Sigma^2 on
-the real sky stays partial.
+Diagnostic-only synthetic mechanics; no CF4/JWST forecast, Bianchi family, geometry,
+frame-violation, native-solver, or MIO-as-odds claim.
 """
 from __future__ import annotations
 
@@ -33,14 +29,22 @@ from htt.obsstat import pv_covariance as pv
 
 __all__ = [
     "jwst_anchor_forecast",
-    "joint_fisher_forecast",
+    "synthetic_error_shrink_sensitivity",
+    "joint_fisher_sensitivity",
     "anisotropic_cmb_covariance",
     "anisotropic_cmb_loglike",
     "evaluate_joint_loglike",
     "AWAITING_NATIVE_LOWELL_SOLVER",
+    "CF4_DOWNSTREAM_OPEN",
+    "QuarantinedCF4DownstreamError",
 ]
 
 AWAITING_NATIVE_LOWELL_SOLVER = "AWAITING_NATIVE_LOWELL_SOLVER"
+CF4_DOWNSTREAM_OPEN = "N-DATA-CF4-DOWNSTREAM"
+
+
+class QuarantinedCF4DownstreamError(RuntimeError):
+    """Raised when an active caller requests the quarantined CF4/JWST lane."""
 
 
 def _tilt_precision(n_hat, vpec, diag_sigma2, U, Lambda) -> float:
@@ -48,47 +52,67 @@ def _tilt_precision(n_hat, vpec, diag_sigma2, U, Lambda) -> float:
     return pv.omega_tilt_precision(fit.covariance)
 
 
-def jwst_anchor_forecast(n_hat, vpec, diag_sigma2, anchor_mask, *,
-                         jwst_shrink: float = 1.0 / 3.0,
-                         U=None, Lambda=None) -> dict:
-    """Forecast the Omega_tilt precision gain from shrinking the JWST-anchored groups'
-    distance errors by `jwst_shrink` (a hypothetical prior until the anchors are matched).
+def jwst_anchor_forecast(*args, **kwargs) -> dict:
+    """Fail closed: the former observational forecast is quarantined by PR-120."""
+    del args, kwargs
+    raise QuarantinedCF4DownstreamError(
+        "JWST/CF4 downstream forecasting is unavailable while "
+        f"{CF4_DOWNSTREAM_OPEN} remains OPEN; catalogue linkage only"
+    )
 
-    f_omega_tilt_data is normalised to 1; f_omega_tilt_jwst = gain = precision_jwst /
-    precision_data (>= 1). Uses the feasible correlated-covariance GLS (`pv_covariance`)."""
+
+def synthetic_error_shrink_sensitivity(
+    n_hat,
+    vpec,
+    diag_sigma2,
+    subset_mask,
+    *,
+    error_scale: float = 1.0 / 3.0,
+    U=None,
+    Lambda=None,
+) -> dict:
+    """Synthetic-only GLS sensitivity to reducing errors on a toy subset."""
     d = np.asarray(diag_sigma2, dtype=float).reshape(-1).copy()
-    mask = np.asarray(anchor_mask, dtype=bool).reshape(-1)
-    prec_data = _tilt_precision(n_hat, vpec, d, U, Lambda)
-    d_jwst = d.copy()
-    d_jwst[mask] = d[mask] * (float(jwst_shrink) ** 2)     # sigma_v -> shrink * sigma_v
-    prec_jwst = _tilt_precision(n_hat, vpec, d_jwst, U, Lambda)
-    gain = float(prec_jwst / prec_data) if prec_data > 0 else 1.0
+    mask = np.asarray(subset_mask, dtype=bool).reshape(-1)
+    prec_base = _tilt_precision(n_hat, vpec, d, U, Lambda)
+    d_candidate = d.copy()
+    d_candidate[mask] = d[mask] * (float(error_scale) ** 2)
+    prec_candidate = _tilt_precision(n_hat, vpec, d_candidate, U, Lambda)
+    gain = float(prec_candidate / prec_base) if prec_base > 0 else 1.0
     return {
-        "f_omega_tilt_data": 1.0,
-        "f_omega_tilt_jwst": gain,
-        "precision_gain": gain,
-        "n_anchor": int(mask.sum()),
+        "status": "SYNTHETIC_METHOD_WITNESS",
+        "input_provenance": "deterministic_synthetic_catalogue",
+        "information_multiplier": gain,
+        "n_selected": int(mask.sum()),
         "n_total": int(mask.size),
-        "jwst_shrink": float(jwst_shrink),
-        "label": "forecast (hypothetical JWST prior until anchors materially matched)",
+        "error_scale": float(error_scale),
+        "observational_interpretation": None,
+        "public_use": False,
+        "label": "synthetic subset-error sensitivity; not a survey forecast",
     }
 
 
-def joint_fisher_forecast(*, rho: float, f_omega_tilt_data: float = 1.0,
-                          f_omega_tilt_jwst: float = 1.0) -> dict:
-    """The PV Omega_tilt prior reduces the Sigma^2 covariance inflation at fixed boost-tilt
-    coupling rho. Uses the rev-r141 coupled Fisher with beta=rho, kappa_tilt=alpha=1 so the
-    off-diagonal is rho^2; the prior enters the `f_omega_tilt` diagonal."""
+def joint_fisher_sensitivity(
+    *,
+    rho: float,
+    f_tilt_base: float = 1.0,
+    f_tilt_candidate: float = 1.0,
+) -> dict:
+    """Generic synthetic sensitivity of covariance inflation to information weight."""
     infl_data = covariance_inflation(rho, kappa_tilt=1.0, alpha=1.0,
-                                     f_omega_tilt=float(f_omega_tilt_data))
-    infl_jwst = covariance_inflation(rho, kappa_tilt=1.0, alpha=1.0,
-                                     f_omega_tilt=float(f_omega_tilt_jwst))
+                                     f_omega_tilt=float(f_tilt_base))
+    infl_candidate = covariance_inflation(rho, kappa_tilt=1.0, alpha=1.0,
+                                          f_omega_tilt=float(f_tilt_candidate))
     return {
+        "status": "SYNTHETIC_METHOD_WITNESS",
         "rho": float(rho),
-        "inflation_data": float(infl_data),
-        "inflation_jwst": float(infl_jwst),
-        "degeneracy_break_factor": float(infl_data / infl_jwst) if infl_jwst > 0 else 1.0,
-        "note": "higher PV/JWST Omega_tilt precision -> lower Sigma^2 covariance inflation",
+        "inflation_base": float(infl_data),
+        "inflation_candidate": float(infl_candidate),
+        "sensitivity_ratio": (
+            float(infl_data / infl_candidate) if infl_candidate > 0 else 1.0
+        ),
+        "observational_interpretation": None,
+        "note": "generic information-weight sensitivity; no CF4/JWST prior",
     }
 
 
@@ -112,11 +136,14 @@ def anisotropic_cmb_loglike(g, alm, l_max: int = 30):
         "(biposh_smica) for a solver-free SI measurement instead.")
 
 
-def evaluate_joint_loglike(*, n_hat, vpec, diag_sigma2, U=None, Lambda=None,
-                           alm=None, lmax: int = 8) -> dict:
-    """The honest joint record: a REAL PV GLS fit + (optionally) the REAL SMICA BipoSH data
-    statistic + the FAIL-CLOSED theory-g CMB sector. NEVER returns a fabricated g-conditioned
-    total log-likelihood (that needs BASS)."""
+def evaluate_joint_loglike(*, n_hat, vpec, diag_sigma2, input_provenance: str,
+                           U=None, Lambda=None, alm=None, lmax: int = 8) -> dict:
+    """Synthetic method record plus the fail-closed theory-g CMB sector."""
+    if input_provenance != "deterministic_synthetic_catalogue":
+        raise QuarantinedCF4DownstreamError(
+            "only deterministic_synthetic_catalogue inputs are authorized; "
+            f"observational CF4 consumers remain blocked by {CF4_DOWNSTREAM_OPEN}"
+        )
     d = np.asarray(diag_sigma2, dtype=float).reshape(-1)
     fit = pv.pv_tilt_gls(n_hat, vpec, d, U, Lambda)
     # PV Gaussian log-likelihood at the ML tilt (real number characterising the PV fit)
@@ -133,13 +160,15 @@ def evaluate_joint_loglike(*, n_hat, vpec, diag_sigma2, U=None, Lambda=None,
     if alm is not None:
         from htt.obsstat.biposh_smica import compute_biposh_from_alm
         meas = compute_biposh_from_alm(alm, lmax, L_values=(1, 2))
-        cmb_data = {"biposh_power_by_L": meas.power_by_L,
-                    "note": "real single-sky SI descriptor (null calibration in k1_biposh_smica)"}
+        cmb_data = {
+            "biposh_power_by_L": meas.power_by_L,
+            "note": "synthetic-alm BipoSH method witness; no real-sky claim",
+        }
 
     return {
-        "schema": "htt.egs3.axis_d.joint_loglike.v1",
-        "pv_sector": {"status": "measured", "tilt": fit.as_dict(), "loglike": float(pv_loglike)},
-        "cmb_data_sector": ({"status": "measured_partial", **cmb_data} if cmb_data
+        "schema": "htt.egs3.axis_d.synthetic_joint_method.v2",
+        "pv_sector": {"status": "synthetic_method_witness", "tilt": fit.as_dict(), "loglike": float(pv_loglike)},
+        "cmb_data_sector": ({"status": "synthetic_method_witness", **cmb_data} if cmb_data
                             else {"status": "not_supplied"}),
         "cmb_theory_sector": {"status": "fail_closed", "blocker": AWAITING_NATIVE_LOWELL_SOLVER,
                               "note": "g-conditioned C_{lm,l'm'}(g) needs the native solver; not fabricated"},
@@ -147,5 +176,5 @@ def evaluate_joint_loglike(*, n_hat, vpec, diag_sigma2, U=None, Lambda=None,
         "joint_withheld_reason": ("the g-conditioned CMB theory likelihood is fail-closed, so a "
                                   "single joint scalar would require fabricating the blocked sector; "
                                   "the PV loglike and the CMB-data BipoSH are reported separately"),
-        "scope": "PV real + SMICA BipoSH real + theory-g CMB fail-closed; Sigma^2 stays partial",
+        "scope": "synthetic PV/BipoSH mechanics + theory-g CMB fail-closed; no observational interpretation",
     }

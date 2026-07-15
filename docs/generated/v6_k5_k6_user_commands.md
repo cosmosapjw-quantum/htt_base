@@ -6,7 +6,7 @@ claim_tier: diagnostic_only
 transfer_source: mixed_none_and_external_transfer_conditioned
 sky_support_status: not_directional
 null_mock_status: mixed_diagnostic_and_blocked
-config_hash: `sha256:d4498a1186f1a779c43921e7a125fbbbd386ec743055340996437de3fa43d299`
+config_hash: `sha256:309ee63452f1cea56b3fb97fc9af38781ccb68cf7981171964c91191a689c52c`
 caveats:
 - Commands only; this generator did not execute K5 or K6.
 - Report stdout tail and the generated JSON path after running.
@@ -20,10 +20,10 @@ git_commit_or_worktree_state: content-addressed
 
 - input: `workdir/obs_bundle/pecvel/cf4_full/cf4_groups.npz`
 - input_present: `True`
-- next_turn_runnable: `True`
+- next_turn_runnable: `False`
 - run: `venv/bin/python scripts/k5_cf4_release_coverage.py`
 - check after run: `venv/bin/python scripts/k5_cf4_release_coverage.py --check`
-- note: moderate deterministic run; N_MOCK=600
+- note: execution forbidden while C1-K5-MV-F1 and N-DATA-CF4-DOWNSTREAM remain OPEN
 
 ### K6
 

@@ -6,15 +6,15 @@ JWST-based galaxy distances (CCHP TRGB/JAGB, SH0ES Cepheids, TRGB-SBF) are publi
 IOPscience / arXiv machine-readable tables (not yet in VizieR as of 2026-07). This fetches
 the authoritative tables when reachable and writes them to `workdir/raw/jwst_anchors/`
 (gitignored) with a provenance manifest. When offline, the committed cited seed
-`dl_pipeline/data/jwst_distances_seed.csv` keeps the downstream forecast runnable.
+`dl_pipeline/data/jwst_distances_seed.csv` preserves catalogue-linkage mechanics.
 
 Targets (real, published):
   * Freedman et al. 2025, ApJ 985, 203  (CCHP JWST TRGB/JAGB), doi:10.3847/1538-4357/adce78
   * Riess et al. 2024/2025 (SH0ES JWST Cepheids)
   * Blakeslee et al. 2025 (TRGB-SBF Project III), arXiv:2502.15935
 
-Diagnostic-only acquisition; the anchors feed a labelled Omega_tilt precision FORECAST, not
-a measurement. No family/geometry/native-solver claim.
+Diagnostic-only acquisition and catalogue linkage.  PR-120 blocks every CF4-conditioned
+precision or global-tilt forecast while N-DATA-CF4-DOWNSTREAM remains OPEN.
 """
 from __future__ import annotations
 
@@ -79,8 +79,9 @@ def main(argv=None) -> int:
         "seed_sha256": _sha256(SEED) if seed_present else None,
         "status": "downloaded" if fetched else "seed_only_offline",
         "note": ("authoritative JWST tables are IOPscience/arXiv (not yet in VizieR); the "
-                 "committed cited seed keeps the forecast runnable offline. Diagnostic-only; "
-                 "the anchors feed a labelled Omega_tilt FORECAST, not a measurement."),
+                 "committed cited seed preserves catalogue-linkage mechanics offline. "
+                 "Downstream public_use is false while N-DATA-CF4-DOWNSTREAM is OPEN; "
+                 "no precision or global-tilt forecast is authorized."),
     }
     (raw / "jwst_anchors_manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
     print(f"JWST anchors: fetched {len(fetched)}, missing {len(missing)}, "
