@@ -6,29 +6,36 @@
       "DAG completion is project bookkeeping only and is not scientific readiness.",
       "Rows never promote external-transfer outputs to native solver validation.",
       "DAG completion, artifact readiness, allowed use, and production validation are separate axes.",
-      "production_validated remains false unless an explicit artifact gate output says otherwise."
+      "production_validated remains false unless an explicit artifact gate output says otherwise.",
+      "Execution resolutions are process receipts only and never promote scientific status or claim tier."
     ],
     "claim_tier": "diagnostic_only",
-    "completed_prs": 65,
-    "config_hash": "621770633211e76eabe9f15d83caa273b315aee281d38b15c9b00f86697a86e6",
-    "generated_on": "2026-07-13T18:30:57+00:00",
+    "completed_prs": 66,
+    "config_hash": "f768a0d4d0dd7b13fbde1c4f80db4265322bfb5703f63699f94bcdcaacd916ef",
+    "dormant_external_prs": 8,
+    "execution_resolution_count": 1,
+    "execution_resolution_prs": [
+      "PR-119"
+    ],
+    "generated_on": "2026-07-15T05:56:30+00:00",
     "generating_command": "python -m common.status_snapshot --backlog docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --write docs/generated/status_snapshot.json",
     "implementation_scope": "common",
     "in_progress_prs": 0,
     "input_hashes": [
-      "docs/codex_handoff/pr_backlog.yaml:960bb4ebb6a4a262f2f5e3c5b622881f1736bbb93fd0af707876acefb9a18309",
-      "docs/codex_handoff/pr_status.yaml:72205499f97275dcdc232e57cf9eac0a129dc748d5226e6d1ac64d4694b2e731",
+      "docs/codex_handoff/pr_backlog.yaml:03ec8869094d65ceda007661949cb0513c42f7620529d4b963190c183a803e71",
+      "docs/codex_handoff/pr_status.yaml:ca72ac424328ecfb0cde619a4d3be66d3361ce19008de7e0bf8b84d62528bd43",
       "docs/codex_handoff/artifact_gate_outputs.yaml:66fe6f798fe4e02b7240e7916dced3ab3116b68081775fe96e79c81490674836"
     ],
     "null_mock_status": "not_statistical",
     "owner": "COMMON",
-    "pending_prs": 0,
+    "pending_prs": 39,
     "semantic_source": "common.contracts.ClaimLedgerEntry",
+    "skipped_prs": 0,
     "sky_support_status": "not_directional",
     "source": "common.status_snapshot.claim_ledger",
-    "source_commit": "f96e8d9+dirty",
+    "source_commit": "f70e0cd+dirty",
     "status_path": "docs/codex_handoff/pr_status.yaml",
-    "total_prs": 65,
+    "total_prs": 113,
     "transfer_source": "none",
     "worktree_state": "dirty"
   },
@@ -55,7 +62,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -79,7 +86,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -103,7 +110,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -127,7 +134,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -151,7 +158,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -175,7 +182,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -199,7 +206,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -223,7 +230,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -247,7 +254,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -271,7 +278,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -295,7 +302,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -319,7 +326,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -343,7 +350,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -367,7 +374,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -391,7 +398,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -415,7 +422,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -439,7 +446,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -463,7 +470,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "MIO",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -487,7 +494,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -511,7 +518,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -535,7 +542,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -559,7 +566,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "BASS",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -583,7 +590,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -607,7 +614,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -631,7 +638,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "MIO",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -655,7 +662,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -679,7 +686,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -703,7 +710,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "BASS",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -727,7 +734,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -751,7 +758,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "MIO",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -775,7 +782,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -799,7 +806,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -823,7 +830,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "BASS",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -847,7 +854,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -871,7 +878,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "MIO",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -895,7 +902,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -919,7 +926,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "BASS",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -943,7 +950,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "MIO",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -967,7 +974,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -991,7 +998,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "MIO",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -1015,7 +1022,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -1039,7 +1046,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "MIO",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -1063,7 +1070,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -1087,7 +1094,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -1112,7 +1119,7 @@
         "sky_support_status=directional_certificate_readiness_recorded"
       ],
       "owner": "MIO",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -1136,7 +1143,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -1160,7 +1167,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -1184,7 +1191,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -1211,7 +1218,7 @@
         "g_f_bridge_status=diagnostic_bridge_metadata_recorded"
       ],
       "owner": "MIO",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -1238,7 +1245,7 @@
         "tail_probability_status=descriptive_until_null_gate_passes"
       ],
       "owner": "MIO",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -1266,7 +1273,7 @@
         "claim_scope=dag_row_not_artifact_payload"
       ],
       "owner": "HTT",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -1290,7 +1297,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -1314,7 +1321,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -1338,7 +1345,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -1362,7 +1369,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -1386,7 +1393,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -1410,7 +1417,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -1434,7 +1441,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "MIO",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -1458,7 +1465,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -1482,7 +1489,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -1506,7 +1513,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -1530,7 +1537,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -1554,7 +1561,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -1578,7 +1585,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_claims": [
@@ -1602,7 +1609,1159 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-119 is marked completed in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-119",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=Post-PR-118 DAG intake\uc640 claim \uc0c1\ud0dc\uae30\uacc4",
+        "state=completed",
+        "depends=PR-118",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "COMMON",
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-120 is marked pending in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-120",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=\ub450 CF4 P0\uc640 downstream consumer\uc758 \uc989\uc2dc quarantine",
+        "state=pending",
+        "depends=PR-119",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "COMMON",
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-121 is marked pending in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-121",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=Hermetic install, owner namespace\uc640 detached replay",
+        "state=pending",
+        "depends=PR-119",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "COMMON",
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-122 is marked pending in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-122",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=Claim-addressed evidence graph\uc640 content-addressed build DAG",
+        "state=pending",
+        "depends=PR-119,PR-121",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "COMMON",
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-123 is marked pending in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-123",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=\ub3c5\ub9bd \uc218\uce58 oracle, K6 continuum branch\uc640 mutation laboratory",
+        "state=pending",
+        "depends=PR-121,PR-122",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "COMMON",
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-124 is marked pending in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-124",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=Dual-engine theorem/convention oracle",
+        "state=pending",
+        "depends=PR-123",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "COMMON",
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-125 is marked pending in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-125",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=Canonical frame, order, domain\uacfc premise contract",
+        "state=pending",
+        "depends=PR-124",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "COMMON",
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-126 is marked pending in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-126",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=One-way FLRW/EGS\uc640 counterexample registry",
+        "state=pending",
+        "depends=PR-124,PR-125",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "COMMON",
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-127 is marked pending in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-127",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=Cancellation-preserving graded/PSD-cone non-identification theorem",
+        "state=pending",
+        "depends=PR-125,PR-126",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "COMMON",
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-128 is marked pending in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-128",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=NT2 coefficient authority\uc640 downstream invalidation",
+        "state=pending",
+        "depends=PR-124,PR-125,PR-127",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "COMMON",
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-129 is marked pending in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-129",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=NTA3 estimator/domain registry\uc640 universal-floor \uae08\uc9c0",
+        "state=pending",
+        "depends=PR-124,PR-125",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "OBSSTAT",
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-130 is marked pending in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-130",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=Low-multipole convergence\uc640 statistical sufficiency\uc758 \ubd84\ub9ac",
+        "state=pending",
+        "depends=PR-128,PR-129",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "OBSSTAT",
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-131 is marked pending in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-131",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=Near-FLRW symbolic expansion\uacfc singular-boundary map",
+        "state=pending",
+        "depends=PR-124,PR-125,PR-126,PR-127,PR-128",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "COMMON",
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-132 is marked pending in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-132",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=Interval/high-precision remainder certification\uacfc uncertainty propagation",
+        "state=pending",
+        "depends=PR-131",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "COMMON",
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-133 is marked pending in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-133",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=Local observer boost, global tilt\uc640 source-response type system",
+        "state=pending",
+        "depends=PR-125,PR-127,PR-132",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "COMMON",
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-134 is marked pending in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-134",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=Estimand, population, dependency, selection\uc640 nuisance registry",
+        "state=pending",
+        "depends=PR-122,PR-125,PR-133",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "COMMON",
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-135 is marked pending in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-135",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=Exchangeable observation-inclusive finite-null global ranking",
+        "state=pending",
+        "depends=PR-123,PR-134",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "OBSSTAT",
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-136 is marked pending in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-136",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=Generic partial-identification\uc640 identified-set engine",
+        "state=pending",
+        "depends=PR-127,PR-134",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "HTT",
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-137 is marked pending in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-137",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=Weak-identification boundary\uc640 grid-conditional simultaneous coverage",
+        "state=pending",
+        "depends=PR-123,PR-135,PR-136",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "HTT",
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-138 is marked pending in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-138",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=Lineage-bound posterior draws, SBC\uc640 \uc2e4\uc81c replicated-data PPC",
+        "state=pending",
+        "depends=PR-122,PR-134,PR-137",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "HTT",
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-139 is marked pending in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-139",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=Dependency-aware holdout\uc640 train-only refit",
+        "state=pending",
+        "depends=PR-134,PR-138",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "HTT",
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-140 is marked pending in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-140",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=Normalized-prior coherent evidence\uc640 \ub450 \ub3c5\ub9bd engine",
+        "state=pending",
+        "depends=PR-122,PR-134,PR-138,PR-139",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "HTT",
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-141 is marked pending in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-141",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=Contamination-aware local/global mixture\uc640 mandatory abstention",
+        "state=pending",
+        "depends=PR-133,PR-136,PR-137,PR-138,PR-139,PR-140",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "HTT",
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-142 is marked pending in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-142",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=MIO joint-measure `F/Pi/G_F` invariance\uc640 matched-null calibration",
+        "state=pending",
+        "depends=PR-134,PR-135,PR-136,PR-137,PR-141",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "MIO",
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-143 is marked pending in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-143",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=\ud1b5\ud569 synthetic calibration\uacfc hostile statistical adjudication",
+        "state=pending",
+        "depends=PR-135,PR-136,PR-137,PR-138,PR-139,PR-140,PR-141,PR-142",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "COMMON",
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-144 is marked pending in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-144",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=Authenticated CF4 row/group/selection manifest",
+        "state=pending",
+        "depends=PR-120,PR-134,PR-143",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "OBSSTAT",
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-145 is marked pending in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-145",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=Radial-monopole\uc640 velocity-shape estimator mechanics",
+        "state=pending",
+        "depends=PR-123,PR-134,PR-135,PR-136,PR-137,PR-144",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "OBSSTAT",
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-146 is marked pending in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-146",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=Correlated-flow, distance-error, selection/grouping E2E mocks",
+        "state=pending",
+        "depends=PR-123,PR-135,PR-137,PR-144,PR-145",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "OBSSTAT",
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-147 is marked pending in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-147",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=Nuisance-augmented CF4 identified sets",
+        "state=pending",
+        "depends=PR-136,PR-137,PR-145,PR-146",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "HTT",
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-148 is marked pending in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-148",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=Depth-resolved `f\u03c38`\uc640 same-data joint covariance bound",
+        "state=pending",
+        "depends=PR-139,PR-140,PR-141,PR-147",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "HTT",
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-149 is marked pending in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-149",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=Planck/K1 canonical convention, mask\uc640 transfer path",
+        "state=pending",
+        "depends=PR-123,PR-125,PR-135,PR-143",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "OBSSTAT",
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-150 is marked pending in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-150",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=K1 exchangeable global scan\uacfc Planck E2E calibration",
+        "state=pending",
+        "depends=PR-135,PR-149",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "OBSSTAT",
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-151 is marked pending in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-151",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=DESI exact-selection mock\uc640 per-mock refit",
+        "state=pending",
+        "depends=PR-134,PR-135,PR-143",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "OBSSTAT",
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-152 is marked pending in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-152",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=ACT raw-QE acquisition gate\uc640 release-simulation cross-fit",
+        "state=pending",
+        "depends=PR-135,PR-143",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "OBSSTAT",
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-153 is marked pending in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-153",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=JWST authenticated row, crossmatch\uc640 calibration manifest",
+        "state=pending",
+        "depends=PR-122,PR-134,PR-143",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "OBSSTAT",
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-154 is marked pending in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-154",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=JWST hierarchical covariance forecast",
+        "state=pending",
+        "depends=PR-138,PR-139,PR-153",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "HTT",
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-155 is marked pending in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-155",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=Cross-survey direction negative controls\uc640 joint covariance",
+        "state=pending",
+        "depends=PR-148,PR-150,PR-151,PR-152,PR-153,PR-154",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "HTT",
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-156 is marked pending in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-156",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=Multi-probe response-rank\uc640 held-out local/global/systematics injection",
+        "state=pending",
+        "depends=PR-133,PR-141,PR-143,PR-155",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "HTT",
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-157 is marked pending in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-157",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=Pre-solver independent finding adjudication",
+        "state=pending",
+        "depends=PR-143,PR-144,PR-145,PR-146,PR-147,PR-148,PR-149,PR-150,PR-151,PR-152,PR-153,PR-154,PR-155,PR-156",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "COMMON",
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-158 is marked pending in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-158",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=\uac80\uc99d\ub41c claim\ub9cc \uc0ac\uc6a9\ud558\ub294 methods/negative-audit manuscript rebuild",
+        "state=pending",
+        "depends=PR-157",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "COMMON",
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-159 is marked dormant external in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-159",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=Authenticated native-delivery intake",
+        "state=dormant_external",
+        "depends=PR-122,PR-124,PR-125",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "BASS",
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-160 is marked dormant external in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-160",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=Producer/consumer transport conformance\uc640 closure rejection challenge",
+        "state=dormant_external",
+        "depends=PR-159,PR-121,PR-122,PR-123,PR-124,PR-125,PR-133",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "BASS",
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-161 is marked dormant external in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-161",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=Atlas convergence, interpolation, versioning\uc640 held-out samples",
+        "state=dormant_external",
+        "depends=PR-127,PR-133,PR-160",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "BASS",
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-162 is marked dormant external in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-162",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=Matched-mask/null/covariance native morphology features",
+        "state=dormant_external",
+        "depends=PR-150,PR-155,PR-161",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "OBSSTAT",
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-163 is marked dormant external in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-163",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=Blinded morphology-equivalence challenge",
+        "state=dormant_external",
+        "depends=PR-127,PR-133,PR-161,PR-162",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "COMMON",
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-164 is marked dormant external in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-164",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=HTT set-valued equivalence inference\uc640 mandatory abstention",
+        "state=dormant_external",
+        "depends=PR-140,PR-141,PR-142,PR-143,PR-163",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "HTT",
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-165 is marked dormant external in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-165",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=\uc678\ubd80 \ub3c5\ub9bd validation\uacfc family-identification gate \uc2ec\uc0ac",
+        "state=dormant_external",
+        "depends=PR-164",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "COMMON",
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-166 is marked dormant external in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-166",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=Post-native publication adjudication",
+        "state=dormant_external",
+        "depends=PR-165",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "COMMON",
+      "source_commit": "f70e0cd+dirty"
     }
   ]
 }

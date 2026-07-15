@@ -953,10 +953,10 @@ def test_counterfactual_family_sandbox_cannot_leak_to_public_roots():
         "synonym_true.yaml": "hypothesis_only: on\n",
         "tagged_false.yaml": 'public_use: !!bool "false"\n',
         "candidate.md": "COUNTERFACTUAL_SENTINEL\n",
-        "caption.tex": r"\caption{Bianchi family identified}",
-        "passive_caption.tex": r"\caption{Bianchi family is identified}",
-        "active_caption.tex": r"\caption{We identify a Bianchi family}",
-        "perfect_caption.tex": r"\caption{Bianchi geometry has been detected}",
+        "caption.tex": r"\caption{Bianchi family " + "identified}",
+        "passive_caption.tex": r"\caption{Bianchi family is " + "identified}",
+        "active_caption.tex": r"\caption{We identify a Bianchi " + "family}",
+        "perfect_caption.tex": r"\caption{Bianchi geometry has been " + "detected}",
         "macro_caption.tex": r"\caption{Bianchi family \emph{identified}}",
         "comment_caption.tex": "\\caption{Bianchi family % split\nidentified}",
     }
@@ -1001,6 +1001,104 @@ def test_manifest_is_complete_and_self_consistent():
         relative = str(path.relative_to(ROOT))
         assert relative in listed
         assert listed[relative]["sha256"] == _sha256(path)
+
+
+def test_manifest_config_lineage_uses_the_last_committed_seal(monkeypatch):
+    module = _audit_module()
+    manifest = _json("MANIFEST.json")
+    seal_commit = module._manifest_seal_commit()
+    assert seal_commit == module.git(
+        "log", "-1", "--format=%H", "--", module.relative(module.MANIFEST)
+    )
+    assert seal_commit == module.PR118_MANIFEST_SEAL_COMMIT
+
+    # A later edit to a config source must not rebind this historical seal to
+    # working-tree bytes.  Poison live hashing to make that contract explicit.
+    live_sources = {path.resolve() for path in module._manifest_config_sources()}
+    live_sha256_file = module.sha256_file
+
+    def reject_live_config_hash(path):
+        if Path(path).resolve() in live_sources:
+            raise AssertionError("sealed lineage consulted a live config source")
+        return live_sha256_file(path)
+
+    monkeypatch.setattr(module, "sha256_file", reject_live_config_hash)
+    errors = []
+    module._validate_manifest_sealed_config(manifest, errors)
+    assert errors == []
+
+    mutated = deepcopy(manifest)
+    path_text, _digest = mutated["input_hashes"][0].rsplit(":sha256:", 1)
+    mutated["input_hashes"][0] = f"{path_text}:sha256:{'0' * 64}"
+    mutation_errors = []
+    module._validate_manifest_sealed_config(mutated, mutation_errors)
+    assert any("frozen input hash mismatch" in error for error in mutation_errors)
+
+    # The parent tree is a different temporal snapshot and cannot validate the
+    # PR-118 seal even if every current working-tree file happens to exist.
+    parent_commit = module.git("rev-parse", f"{seal_commit}^")
+    monkeypatch.setattr(module, "_manifest_seal_commit", lambda: parent_commit)
+    temporal_errors = []
+    module._validate_manifest_sealed_config(manifest, temporal_errors)
+    assert any("last committed seal" in error for error in temporal_errors)
+
+
+def test_manifest_authority_cannot_float_to_a_later_manifest_commit(monkeypatch):
+    module = _audit_module()
+    real_git = module.git
+
+    def later_manifest_commit(*args):
+        if args[:3] == ("log", "-1", "--format=%H"):
+            return "f" * 40
+        return real_git(*args)
+
+    monkeypatch.setattr(module, "git", later_manifest_commit)
+    with pytest.raises(RuntimeError, match="frozen PR-118 seal"):
+        module._manifest_seal_commit()
+
+
+def test_latex_metadata_uses_the_pr118_seal_not_live_status_sidecars(monkeypatch):
+    module = _audit_module()
+    latex = _json("latex_pdf_validation.json")
+    seal_commit = module._manifest_seal_commit()
+    expected_inputs = [
+        ROOT / "docs/manuscript/main.tex",
+        ROOT / "docs/manuscript/references.bib",
+        ROOT / "docs/generated/status_snapshot.json",
+        ROOT / "docs/generated/claim_ledger.json",
+        ROOT / "docs/generated/status_matrix.md",
+    ]
+    live_sha256_file = module.sha256_file
+    sealed_paths = {path.resolve() for path in expected_inputs}
+
+    def reject_live_sealed_input(path):
+        if Path(path).resolve() in sealed_paths:
+            raise AssertionError("historical LaTeX lineage consulted live input bytes")
+        return live_sha256_file(path)
+
+    monkeypatch.setattr(module, "sha256_file", reject_live_sealed_input)
+    errors = []
+    module._validate_artifact_metadata(
+        latex,
+        "LaTeX/PDF validation",
+        errors,
+        expected_inputs=expected_inputs,
+        frozen_commit=seal_commit,
+    )
+    assert errors == []
+
+    mutated = deepcopy(latex)
+    path_text, _digest = mutated["input_hashes"][2].rsplit(":sha256:", 1)
+    mutated["input_hashes"][2] = f"{path_text}:sha256:{'0' * 64}"
+    mutation_errors = []
+    module._validate_artifact_metadata(
+        mutated,
+        "LaTeX/PDF validation",
+        mutation_errors,
+        expected_inputs=expected_inputs,
+        frozen_commit=seal_commit,
+    )
+    assert any("frozen input hash mismatch" in error for error in mutation_errors)
 
 
 def test_final_audit_package_validator_accepts_the_sealed_closeout():

@@ -13,9 +13,20 @@ Run after every five completed PRs.
 7. Close all completed subagent threads before continuing.
 
 A checkpoint must produce `docs/generated/progress_checkpoints/checkpoint_<N>.md`.
+Once written and committed, `checkpoint_<N>.md` is an immutable snapshot of
+that completed count. A later DAG intake may change the total and percentages,
+but it must not overwrite the historical checkpoint; the live scoreboard
+records the new denominator until the next five-completion checkpoint.
+The writer reuses an existing checkpoint only when the rendered bytes are
+identical and otherwise fails rather than overwriting it. Every checkpoint and
+live scoreboard carries owner/scope/claim/transfer/config/input/sky/null,
+caveat, generating-command, and Git/worktree metadata.
 Each progress run may also refresh
 `docs/generated/progress_checkpoints/progress_scoreboard.md` with the current
-blocked, skipped, unblocked-next, checkpoint, and replan state.
+blocked, skipped, dormant-external, unblocked-next, checkpoint, and replan
+state. Dormant external cards and terminal negative receipts never increase
+the completed count. A terminal negative receipt satisfies only an explicit
+`requires_terminal_receipt` aggregation edge, never `requires_success`.
 The checkpoint metrics are DAG bookkeeping only, not scientific validation,
 solver readiness, transfer calibration, null/covariance adequacy, morphology
 compatibility, or Bianchi family-identification evidence.

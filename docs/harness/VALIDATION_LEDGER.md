@@ -1854,3 +1854,49 @@ installer dependencies, fixed-count skill tests, missing agent nicknames,
 permanent root-hash locking, invalid manifest metadata, EOL conversion risk,
 contaminated reinstall acceptance, and ambiguous initializer evidence. Upstream
 validator success remains workflow reachability only, not science validation.
+
+## PR-119 - long-horizon DAG intake and remediation state (2026-07-15)
+
+Change classification: COMMON contracts, harness, generated governance
+artifacts, and SSoT documentation. No numerical method, transfer calculation,
+solver output, data result, posterior, p-value, or scientific finding status
+changed.
+
+| Command | CWD | Result | Notes |
+| --- | --- | --- | --- |
+| `venv/bin/python -B scripts/codex_harness/intake_long_horizon_roadmap.py --check` | repo root | PASS | Exact PR-119..166 intake; PR-167..183 absent. |
+| `venv/bin/python -B scripts/codex_harness/sync_pr_dag_mirrors.py --check` | repo root | PASS | YAML/status byte parity and backlog JSON semantic parity. |
+| `venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice --json` | repo root | PASS | 113 cards, 294 edges, typed slice valid. |
+| `PYTHONPATH=htt/src venv/bin/python -B scripts/codex_harness/validate_research_remediation.py --check` | repo root | PASS | 102 OPEN, zero RESCUED; authority, crosswalk, reconciliation, and immutable checkpoint valid. |
+| `venv/bin/python -B scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --checkpoint-every 5 --json` | repo root | PASS | 66/113 = 58.41%; dependency weighted 50.61%; critical path 44.64%; next PR-120/121; 8 dormant. |
+| focused PR-119 contract suite | repo root | PASS | `232 passed in 32.63s`; zero failures/errors/skips. |
+| `venv/bin/python -B -m pytest -p no:cacheprovider --collect-only -q` | repo root | PASS | 8,066/8,125 collected; 59 deselected. |
+| `venv/bin/python -B -m pytest -p no:cacheprovider -m smoke -q` | repo root | PASS | 6 passed, 8,119 deselected. |
+| `venv/bin/python -B scripts/audits/jcap_prd_20260714.py validate --final` | repo root | PASS | Historical PR-118 seal remains valid against its Git tree after live status refresh. |
+| PR-119 scoped claim-language and provenance scans | repo root | PASS | Zero forbidden patterns and zero unmarked strong claims. |
+| repo-wide claim-language/status/forbidden scans | repo root | FAIL, PRE-EXISTING | Historical report prose, guardrail examples, and negative test fixtures remain in the global inventory. Re-running all three scans over every PR-119 changed surface returned zero issues. |
+| repo-wide `check_no_mock_results.py` | repo root | FAIL, PRE-EXISTING | Historical `calibration_factor` and mock-marker inventory; scoped search over PR-119 changed surfaces returned zero hits. No failure hidden or relabeled as scientific success. |
+
+Generated artifacts: `status_snapshot.json`, `claim_ledger.json`,
+`status_matrix.md`, live progress scoreboard, active remediation root, proposal
+crosswalk, and intake reconciliation. Checkpoint 065 remained byte-identical.
+
+Final adversarial review initially failed the patch. Corrections added
+hash-bound typed receipt loading, exact `native_low_ell_delivery` scope,
+registry/verifier/validity/revocation/independence checks, fail-closed CLI
+behavior without a trust root, strict terminal-bucket resolution mappings,
+scheme-qualified claim prose, immutable reconciliation/checkpoint handling,
+pinned frozen authority inputs, complete Markdown artifact metadata, and an
+unconditional PR4 subset-download/reduction/analysis/output prohibition for
+PR-150. Forged, missing, hash-mismatched, wrong-scope, unknown, expired,
+revoked, and internally correlated receipts are covered by regressions.
+The final re-review additionally required a nonempty accepted-claim subset,
+top-level process-receipt schema parity between both validators, and
+deterministic repair of drifted long-horizon policy/order/wave metadata. All
+three corrections have mutation and rejection regressions.
+
+Scientific/claim impact: none. Every remediation finding remains OPEN, all
+status artifacts remain diagnostic-only, `production_validated=false`, and the
+PR3-complete/PR4-skip constraint reduces PR-150 to a PR3-conditional
+`roadmap_rescue_v1:C2` ceiling
+without generating data output.

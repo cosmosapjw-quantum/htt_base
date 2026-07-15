@@ -2,7 +2,30 @@
 
 Open blockers, owner, required resolution, and PR dependency impact.
 
+## 2026-07-15 - PR-119 intake blockers and dormant branch
+
+- The 102-row active remediation root remains entirely `OPEN`; DAG intake and
+  terminal process receipts close no scientific finding.
+- PR-120 must quarantine the two CF4 P0 producers and every active downstream
+  consumer before later data cards can publish or package those values.
+- PR-150 may use the already downloaded PR3/FFP10 E2E inputs, but PR4/NPIPE is
+  not downloaded and all PR4 analysis is explicitly skipped. The original
+  joint `roadmap_rescue_v1:C3` gate remains unsatisfied and no PR4-derived
+  output may be inferred.
+- PR-159--166 are dormant until an independently authenticated native solver
+  delivery exists. Shape-only status YAML, unknown/expired/revoked/internal
+  providers, wrong scope, and missing/hash-mismatched/forged receipts cannot
+  unlock the branch. This expected external wait is not permission to
+  substitute external transfer output or a synthetic solver.
+- Checkpoint 065 is immutable historical bookkeeping; the next live checkpoint
+  occurs at 70 completions. Current progress is 66/113, not 100%.
+
+These constraints do not block PR-120 or PR-121; both are runnable after
+PR-119, with PR-120 first under the sequential policy.
+
 ## 2026-07-14 - PR-118 audit blockers
+
+Status: `OPEN`; blocker inventory is `DIAGNOSTIC_ONLY`.
 
 - **P0 production blockers remain open:** the CF4 radial-monopole-sensitive
   headline and the unsupported nonlinear/linear velocity-shape correction have
@@ -10,7 +33,8 @@ Open blockers, owner, required resolution, and PR dependency impact.
 - **Estimator/null blockers:** observed and null paths are not uniformly
   exchangeable; matched masks, end-to-end nulls, trial accounting, covariance,
   and independent numerical oracles remain incomplete.
-- **Data blockers:** ACT lacks the required upstream QE inputs/validated low-L
+- **Data blockers remain `OPEN` (`DIAGNOSTIC_ONLY`):** ACT lacks the required
+  upstream QE inputs/validated low-L
   transfer; DESI exact-support mock execution is incomplete; JWST lacks an
   authoritative row manifest, per-host error use, probabilistic crossmatch,
   and shared calibration covariance.

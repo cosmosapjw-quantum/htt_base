@@ -90,6 +90,9 @@ def test_status_bundle_is_generated_from_dag_status_files(tmp_path: Path) -> Non
     assert bundle.metadata["source"] == "common.status_snapshot"
     assert bundle.metadata["total_prs"] == 6
     assert bundle.metadata["completed_prs"] == 2
+    assert bundle.metadata["pending_prs"] == 3
+    assert bundle.metadata["dormant_external_prs"] == 0
+    assert bundle.metadata["skipped_prs"] == 0
     assert [row["artifact_id"] for row in bundle.status_rows] == [
         "codex_dag.PR-000",
         "codex_dag.PR-010",
@@ -100,6 +103,9 @@ def test_status_bundle_is_generated_from_dag_status_files(tmp_path: Path) -> Non
     ]
     assert bundle.status_rows[0]["implemented"] is True
     assert bundle.status_rows[2]["implemented"] is False
+    assert bundle.status_rows[0]["orchestration_state"] == "completed"
+    assert bundle.status_rows[2]["orchestration_state"] == "in_progress"
+    assert bundle.status_rows[3]["orchestration_state"] == "pending"
     assert all(row["production_validated"] is False for row in bundle.status_rows)
     assert all(row["artifact_readiness"] in {"generated", "missing"} for row in bundle.status_rows)
     assert all("allowed_use" in row for row in bundle.status_rows)
@@ -114,6 +120,91 @@ def test_status_bundle_is_generated_from_dag_status_files(tmp_path: Path) -> Non
     assert bundle.metadata["input_hashes"]
     assert bundle.metadata["caveats"]
     assert "common.status_snapshot" in bundle.metadata["generating_command"]
+
+
+def test_status_bundle_preserves_orthogonal_orchestration_states(
+    tmp_path: Path,
+) -> None:
+    pr_ids = [f"PR-{number:03d}" for number in range(1, 7)]
+    backlog = {
+        "policy": {"topological_order": pr_ids},
+        "prs": [
+            {
+                "id": pr_id,
+                "title": f"Card {pr_id}",
+                "owner": "COMMON",
+                "depends": [],
+                "scope": "pre-solver",
+            }
+            for pr_id in pr_ids
+        ],
+    }
+    status = {
+        "completed": ["PR-001"],
+        "blocked": ["PR-002"],
+        "skipped": ["PR-003"],
+        "in_progress": "PR-004",
+        "pending": ["PR-005"],
+        "dormant_external": ["PR-006"],
+        "execution_resolutions": {
+            "PR-001": {
+                "resolution": "COMPLETED_SUCCESS",
+                "receipt": "docs/PR_DELTAS/pr-001.md",
+            }
+        },
+    }
+    backlog_path = tmp_path / "pr_backlog.yaml"
+    status_path = tmp_path / "pr_status.yaml"
+    backlog_path.write_text(yaml.safe_dump(backlog), encoding="utf-8")
+    status_path.write_text(yaml.safe_dump(status), encoding="utf-8")
+
+    bundle = build_status_bundle(
+        backlog_path=backlog_path,
+        status_path=status_path,
+        source_commit="abc123",
+    )
+
+    states = {
+        row["artifact_id"]: row["orchestration_state"]
+        for row in bundle.status_rows
+    }
+    assert states == {
+        "codex_dag.PR-001": "completed",
+        "codex_dag.PR-002": "blocked",
+        "codex_dag.PR-003": "skipped",
+        "codex_dag.PR-004": "in_progress",
+        "codex_dag.PR-005": "pending",
+        "codex_dag.PR-006": "dormant_external",
+    }
+    assert bundle.metadata["completed_prs"] == 1
+    assert bundle.metadata["blocked_prs"] == 1
+    assert bundle.metadata["skipped_prs"] == 1
+    assert bundle.metadata["in_progress_prs"] == 1
+    assert bundle.metadata["pending_prs"] == 1
+    assert bundle.metadata["dormant_external_prs"] == 1
+    assert bundle.metadata["execution_resolution_count"] == 1
+    assert bundle.metadata["execution_resolution_prs"] == ["PR-001"]
+
+    completed_row = bundle.status_rows[0]
+    assert completed_row["claim_tier"] == "diagnostic_only"
+    assert completed_row["production_validated"] is False
+    matrix = render_status_matrix(bundle)
+    assert "| Dormant external PRs | 1 |" in matrix
+    assert "| `dormant_external` | 1 |" in matrix
+    assert "| `pending` | 1 |" in matrix
+    assert "| `in_progress` | 1 |" in matrix
+    assert "| `skipped` | 1 |" in matrix
+    for required_metadata in (
+        "| Owner | `COMMON` |",
+        "| Implementation scope | `common` |",
+        "| Input hashes |",
+        "| Sky support status | `not_directional` |",
+        "| Null/mock status | `not_statistical` |",
+        "| Caveats |",
+        "| Generating command |",
+    ):
+        assert required_metadata in matrix
+    validate_status_matrix_matches_snapshot(matrix, bundle.status_snapshot_payload())
 
 
 def test_status_bundle_uses_gate_outputs_for_artifact_promotion_axes(
@@ -488,6 +579,29 @@ def test_status_matrix_validation_blocks_manual_count_drift(tmp_path: Path) -> N
         assert "generated status matrix count mismatch" in str(exc)
     else:  # pragma: no cover
         raise AssertionError("manual status count drift was not blocked")
+
+
+def test_status_matrix_validation_accepts_legacy_snapshot_without_new_counts() -> None:
+    legacy_snapshot = {
+        "metadata": {
+            "total_prs": 3,
+            "completed_prs": 1,
+            "blocked_prs": 0,
+            "in_progress_prs": 1,
+            "pending_prs": 1,
+        }
+    }
+    legacy_matrix = """\
+| Metric | Value |
+| --- | ---: |
+| Total PRs | 3 |
+| Completed PRs | 1 |
+| Blocked PRs | 0 |
+| In progress | 1 |
+| Pending PRs | 1 |
+"""
+
+    validate_status_matrix_matches_snapshot(legacy_matrix, legacy_snapshot)
 
 
 def test_cli_writes_default_companion_artifacts(tmp_path: Path) -> None:

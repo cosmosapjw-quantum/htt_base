@@ -55,6 +55,7 @@ ATOMIC_LEDGER = AUDIT / "atomic_finding_ledger.json"
 SHORTLIST_FREEZE = AUDIT / "shortlist_freeze.json"
 BASELINE_HEAD = "8af39b36c1d5ed4f9b16f0bc71dbecd8b22548d4"
 PR117_COMMIT = "f96e8d9eed9d318141d9ea77ab3ce47c2acecef3"
+PR118_MANIFEST_SEAL_COMMIT = "294d74ce07de030da2f18720d3d45c8a2fef6e17"
 PR117_SEALED_RUNNER_SHA256 = (
     "sha256:614630a438c046418703ec07dd91cf2d305b7ce8962b27904960c4d588c3fa0c"
 )
@@ -2114,6 +2115,102 @@ def _manifest_config_sources() -> list[Path]:
     ]
 
 
+def _manifest_seal_commit() -> str:
+    """Return the one frozen PR-118 manifest-seal commit.
+
+    A later commit that edits ``MANIFEST.json`` is not allowed to redefine the
+    historical authority root implicitly.  A new audit package needs a new
+    identifier and an explicit seal constant instead.
+    """
+
+    latest_commit = git("log", "-1", "--format=%H", "--", relative(MANIFEST))
+    if not latest_commit:
+        raise RuntimeError(f"no committed seal found for {relative(MANIFEST)}")
+    if latest_commit != PR118_MANIFEST_SEAL_COMMIT:
+        raise RuntimeError(
+            "latest MANIFEST commit does not match the frozen PR-118 seal: "
+            f"{latest_commit} != {PR118_MANIFEST_SEAL_COMMIT}"
+        )
+    return PR118_MANIFEST_SEAL_COMMIT
+
+
+def _git_blob(commit: str, path_text: str) -> bytes:
+    """Read exact repository bytes without consulting the working tree."""
+
+    run = subprocess.run(
+        ["git", "show", f"{commit}:{path_text}"],
+        cwd=REPO,
+        capture_output=True,
+        check=False,
+    )
+    if run.returncode:
+        detail = run.stderr.decode("utf-8", errors="replace").strip()
+        raise RuntimeError(detail or f"git show {commit}:{path_text} failed")
+    return run.stdout
+
+
+def _validate_manifest_sealed_config(
+    manifest: dict[str, Any], errors: list[str]
+) -> None:
+    """Validate PR-118 lineage against its frozen Git tree, not live inputs.
+
+    The audit package is a sealed closeout.  Later DAG, runner, or contract-test
+    edits must not force a historical MANIFEST rewrite; only a new commit that
+    changes MANIFEST establishes a new authoritative seal tree.
+    """
+
+    try:
+        seal_commit = _manifest_seal_commit()
+        frozen_manifest = _git_blob(seal_commit, relative(MANIFEST))
+    except RuntimeError as exc:
+        errors.append(f"manifest seal commit is unavailable: {exc}")
+        return
+
+    if not MANIFEST.is_file() or MANIFEST.read_bytes() != frozen_manifest:
+        errors.append("manifest bytes do not match the last committed seal")
+
+    rows = manifest.get("input_hashes")
+    if not isinstance(rows, list):
+        errors.append("manifest input_hashes must be a list")
+        return
+
+    declared: dict[str, str] = {}
+    for raw in rows:
+        if not isinstance(raw, str) or ":sha256:" not in raw:
+            errors.append(f"manifest has malformed input hash row {raw!r}")
+            continue
+        path_text, hex_digest = raw.rsplit(":sha256:", 1)
+        digest = "sha256:" + hex_digest
+        if not path_text or not re.fullmatch(r"sha256:[0-9a-f]{64}", digest):
+            errors.append(f"manifest has malformed input hash row {raw!r}")
+            continue
+        if path_text in declared:
+            errors.append(f"manifest repeats input path {path_text}")
+            continue
+        declared[path_text] = digest
+
+    expected_paths = {relative(path) for path in _manifest_config_sources()}
+    if set(declared) != expected_paths:
+        errors.append("manifest input_hashes do not bind the sealed config/test inputs")
+
+    frozen_inputs: dict[str, str] = {}
+    for path_text in sorted(expected_paths):
+        try:
+            frozen_inputs[path_text] = sha256_bytes(_git_blob(seal_commit, path_text))
+        except RuntimeError as exc:
+            errors.append(
+                f"manifest sealed input is unavailable at {path_text}: {exc}"
+            )
+            continue
+        if declared.get(path_text) != frozen_inputs[path_text]:
+            errors.append(f"manifest frozen input hash mismatch: {path_text}")
+
+    if len(frozen_inputs) == len(expected_paths):
+        expected_config_hash = sha256_json(frozen_inputs)
+        if manifest.get("config_hash") != expected_config_hash:
+            errors.append("manifest config_hash does not bind the sealed inputs")
+
+
 def build_manifest() -> dict[str, Any]:
     state = repo_state()
     files = _manifest_files()
@@ -2259,8 +2356,14 @@ def _validate_artifact_metadata(
     errors: list[str],
     *,
     expected_inputs: Iterable[Path] | None = None,
+    frozen_commit: str | None = None,
 ) -> None:
-    """Recompute metadata lineage instead of trusting a newly sealed output."""
+    """Recompute metadata lineage instead of trusting a newly sealed output.
+
+    Historical closeout artifacts may bind inputs from their immutable Git
+    seal tree. Later generated-status refreshes must not force those artifacts
+    to rewrite history or compare against mutable working-tree bytes.
+    """
 
     if not payload:
         return
@@ -2278,13 +2381,25 @@ def _validate_artifact_metadata(
         if path_text in input_map:
             errors.append(f"{label} repeats input path {path_text}")
             continue
-        path = Path(path_text)
-        if not path.is_absolute():
-            path = REPO / path
-        if not path.is_file():
-            errors.append(f"{label} input is missing: {path_text}")
-        elif sha256_file(path) != digest:
-            errors.append(f"{label} input hash is stale: {path_text}")
+        if frozen_commit is not None:
+            if Path(path_text).is_absolute():
+                errors.append(f"{label} sealed input path must be repository-relative: {path_text}")
+            else:
+                try:
+                    observed_digest = sha256_bytes(_git_blob(frozen_commit, path_text))
+                except RuntimeError as exc:
+                    errors.append(f"{label} sealed input is unavailable: {path_text}: {exc}")
+                else:
+                    if observed_digest != digest:
+                        errors.append(f"{label} frozen input hash mismatch: {path_text}")
+        else:
+            path = Path(path_text)
+            if not path.is_absolute():
+                path = REPO / path
+            if not path.is_file():
+                errors.append(f"{label} input is missing: {path_text}")
+            elif sha256_file(path) != digest:
+                errors.append(f"{label} input hash is stale: {path_text}")
         input_map[path_text] = digest
     if expected_inputs is not None:
         expected = {relative(path) for path in expected_inputs}
@@ -2706,6 +2821,27 @@ def _validate_pr118_receipts(
     if missing:
         errors.append(f"missing required PR-118 receipts: {missing}")
     environment_digest = sha256_file(environment_path)
+    frozen_inputs: dict[str, str] = {}
+    try:
+        seal_commit = _manifest_seal_commit()
+    except RuntimeError as exc:
+        errors.append(f"PR-118 receipt seal commit is unavailable: {exc}")
+    else:
+        sealed_paths = {
+            str(item.get("path", ""))
+            for command_id in PR118_REQUIRED_RECEIPTS
+            for item in by_id.get(command_id, {}).get("input_hashes", [])
+            if item.get("status") == "present" and item.get("path")
+        }
+        for path_text in sorted(sealed_paths):
+            try:
+                frozen_inputs[path_text] = sha256_bytes(
+                    _git_blob(seal_commit, path_text)
+                )
+            except RuntimeError as exc:
+                errors.append(
+                    f"PR-118 sealed receipt input is unavailable at {path_text}: {exc}"
+                )
     required_bindings = {
         relative(Path(__file__)),
         "tests/contracts/test_jcap_prd_adversarial_audit.py",
@@ -2743,7 +2879,12 @@ def _validate_pr118_receipts(
         if not retained_attempt and not required_bindings <= bound_paths:
             errors.append(f"{command_id} lacks runner/test config bindings")
         if not retained_attempt:
-            _validate_current_input_hashes(row, command_id, errors)
+            _validate_current_input_hashes(
+                row,
+                command_id,
+                errors,
+                frozen_hashes=frozen_inputs,
+            )
         resource = row.get("resource", {})
         if not resource.get("gnu_time_sha256") or (
             expected_result != "BLOCKED_MISSING_DECLARED_INPUT"
@@ -2770,15 +2911,15 @@ def _validate_current_input_hashes(
         if item.get("status") != "present":
             errors.append(f"{label} has non-present decisive input {raw}")
             continue
-        if not path.is_file():
-            errors.append(f"{label} decisive input is not a file: {raw}")
-            continue
         if raw in frozen_hashes:
             if item.get("sha256") != frozen_hashes[raw]:
                 errors.append(
                     f"{label} frozen input hash mismatch for {raw}: "
                     f"stored={item.get('sha256')} expected={frozen_hashes[raw]}"
                 )
+            continue
+        if not path.is_file():
+            errors.append(f"{label} decisive input is not a file: {raw}")
             continue
         actual = sha256_file(path)
         if item.get("sha256") != actual:
@@ -5163,6 +5304,11 @@ def _validate_final_closeout(
             "htt.pr118.latex_pdf_validation.v1",
             errors,
         )
+        try:
+            latex_seal_commit = _manifest_seal_commit()
+        except RuntimeError as exc:
+            errors.append(f"LaTeX/PDF validation seal commit is unavailable: {exc}")
+            latex_seal_commit = None
         _validate_artifact_metadata(
             latex,
             "LaTeX/PDF validation",
@@ -5174,6 +5320,7 @@ def _validate_final_closeout(
                 REPO / "docs/generated/claim_ledger.json",
                 REPO / "docs/generated/status_matrix.md",
             ],
+            frozen_commit=latex_seal_commit,
         )
         accepted = [row for row in latex.get("attempts", []) if row.get("status") == "PASS_BUILD_MECHANICS_ONLY"]
         if len(accepted) != 1 or accepted[0].get("exit_code") != 0:
@@ -5657,17 +5804,7 @@ def validate(*, final: bool = False) -> list[str]:
                 errors.append(f"manifest missing/empty {field}")
         if manifest.get("counterfactual_contract") != COUNTERFACTUAL_FIELDS:
             errors.append("counterfactual contract drift")
-        config_sources = [path for path in _manifest_config_sources() if path.exists()]
-        expected_config_hash = sha256_json(
-            {relative(path): sha256_file(path) for path in config_sources}
-        )
-        if manifest.get("config_hash") != expected_config_hash:
-            errors.append("manifest config_hash is stale")
-        expected_inputs = {
-            f"{relative(path)}:{sha256_file(path)}" for path in config_sources
-        }
-        if set(manifest.get("input_hashes", [])) != expected_inputs:
-            errors.append("manifest input_hashes do not bind current config/test inputs")
+        _validate_manifest_sealed_config(manifest, errors)
         listed = {row["path"]: row for row in manifest.get("files", [])}
         if len(listed) != len(manifest.get("files", [])):
             errors.append("manifest contains duplicate file paths")

@@ -6,29 +6,36 @@
       "DAG completion is project bookkeeping only and is not scientific readiness.",
       "Rows never promote external-transfer outputs to native solver validation.",
       "DAG completion, artifact readiness, allowed use, and production validation are separate axes.",
-      "production_validated remains false unless an explicit artifact gate output says otherwise."
+      "production_validated remains false unless an explicit artifact gate output says otherwise.",
+      "Execution resolutions are process receipts only and never promote scientific status or claim tier."
     ],
     "claim_tier": "diagnostic_only",
-    "completed_prs": 65,
-    "config_hash": "621770633211e76eabe9f15d83caa273b315aee281d38b15c9b00f86697a86e6",
-    "generated_on": "2026-07-13T18:30:57+00:00",
+    "completed_prs": 66,
+    "config_hash": "f768a0d4d0dd7b13fbde1c4f80db4265322bfb5703f63699f94bcdcaacd916ef",
+    "dormant_external_prs": 8,
+    "execution_resolution_count": 1,
+    "execution_resolution_prs": [
+      "PR-119"
+    ],
+    "generated_on": "2026-07-15T05:56:30+00:00",
     "generating_command": "python -m common.status_snapshot --backlog docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --write docs/generated/status_snapshot.json",
     "implementation_scope": "common",
     "in_progress_prs": 0,
     "input_hashes": [
-      "docs/codex_handoff/pr_backlog.yaml:960bb4ebb6a4a262f2f5e3c5b622881f1736bbb93fd0af707876acefb9a18309",
-      "docs/codex_handoff/pr_status.yaml:72205499f97275dcdc232e57cf9eac0a129dc748d5226e6d1ac64d4694b2e731",
+      "docs/codex_handoff/pr_backlog.yaml:03ec8869094d65ceda007661949cb0513c42f7620529d4b963190c183a803e71",
+      "docs/codex_handoff/pr_status.yaml:ca72ac424328ecfb0cde619a4d3be66d3361ce19008de7e0bf8b84d62528bd43",
       "docs/codex_handoff/artifact_gate_outputs.yaml:66fe6f798fe4e02b7240e7916dced3ab3116b68081775fe96e79c81490674836"
     ],
     "null_mock_status": "not_statistical",
     "owner": "COMMON",
-    "pending_prs": 0,
+    "pending_prs": 39,
     "semantic_source": "common.contracts.StatusSnapshotEntry",
+    "skipped_prs": 0,
     "sky_support_status": "not_directional",
     "source": "common.status_snapshot",
-    "source_commit": "f96e8d9+dirty",
+    "source_commit": "f70e0cd+dirty",
     "status_path": "docs/codex_handoff/pr_status.yaml",
-    "total_prs": 65,
+    "total_prs": 113,
     "transfer_source": "none",
     "worktree_state": "dirty"
   },
@@ -46,6 +53,7 @@
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "COMMON",
       "production_validated": false,
       "promotion_blockers": [
@@ -61,7 +69,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -76,6 +84,7 @@
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "COMMON",
       "production_validated": false,
       "promotion_blockers": [
@@ -91,7 +100,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -106,6 +115,7 @@
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "COMMON",
       "production_validated": false,
       "promotion_blockers": [
@@ -121,7 +131,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -136,6 +146,7 @@
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "COMMON",
       "production_validated": false,
       "promotion_blockers": [
@@ -151,7 +162,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -166,6 +177,7 @@
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "COMMON",
       "production_validated": false,
       "promotion_blockers": [
@@ -181,7 +193,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -196,6 +208,7 @@
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "COMMON",
       "production_validated": false,
       "promotion_blockers": [
@@ -211,7 +224,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -226,6 +239,7 @@
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "COMMON",
       "production_validated": false,
       "promotion_blockers": [
@@ -241,7 +255,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -256,6 +270,7 @@
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "COMMON",
       "production_validated": false,
       "promotion_blockers": [
@@ -271,7 +286,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -286,6 +301,7 @@
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "COMMON",
       "production_validated": false,
       "promotion_blockers": [
@@ -301,7 +317,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -316,6 +332,7 @@
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "COMMON",
       "production_validated": false,
       "promotion_blockers": [
@@ -331,7 +348,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -346,6 +363,7 @@
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "COMMON",
       "production_validated": false,
       "promotion_blockers": [
@@ -361,7 +379,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -376,6 +394,7 @@
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "COMMON",
       "production_validated": false,
       "promotion_blockers": [
@@ -391,7 +410,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -406,6 +425,7 @@
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "COMMON",
       "production_validated": false,
       "promotion_blockers": [
@@ -421,7 +441,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -436,6 +456,7 @@
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "COMMON",
       "production_validated": false,
       "promotion_blockers": [
@@ -451,7 +472,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -466,6 +487,7 @@
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "COMMON",
       "production_validated": false,
       "promotion_blockers": [
@@ -481,7 +503,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -496,6 +518,7 @@
       "implementation_scope": "obsstat",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "OBSSTAT",
       "production_validated": false,
       "promotion_blockers": [
@@ -511,7 +534,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -526,6 +549,7 @@
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "COMMON",
       "production_validated": false,
       "promotion_blockers": [
@@ -541,7 +565,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -556,6 +580,7 @@
       "implementation_scope": "mio",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "MIO",
       "production_validated": false,
       "promotion_blockers": [
@@ -571,7 +596,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -586,6 +611,7 @@
       "implementation_scope": "htt",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "HTT",
       "production_validated": false,
       "promotion_blockers": [
@@ -601,7 +627,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -616,6 +642,7 @@
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "COMMON",
       "production_validated": false,
       "promotion_blockers": [
@@ -631,7 +658,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -646,6 +673,7 @@
       "implementation_scope": "obsstat",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "OBSSTAT",
       "production_validated": false,
       "promotion_blockers": [
@@ -661,7 +689,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -676,6 +704,7 @@
       "implementation_scope": "bass_py",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "BASS",
       "production_validated": false,
       "promotion_blockers": [
@@ -692,7 +721,7 @@
         "transfer_registry_contract": "pass"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -707,6 +736,7 @@
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "COMMON",
       "production_validated": false,
       "promotion_blockers": [
@@ -722,7 +752,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -736,6 +766,7 @@
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": true,
+      "orchestration_state": "completed",
       "owner": "COMMON",
       "production_validated": false,
       "promotion_blockers": [
@@ -752,7 +783,7 @@
         "figure_content_science_audit": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -767,6 +798,7 @@
       "implementation_scope": "mio",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "MIO",
       "production_validated": false,
       "promotion_blockers": [
@@ -782,7 +814,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -797,6 +829,7 @@
       "implementation_scope": "htt",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "HTT",
       "production_validated": false,
       "promotion_blockers": [
@@ -812,7 +845,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -827,6 +860,7 @@
       "implementation_scope": "obsstat",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "OBSSTAT",
       "production_validated": false,
       "promotion_blockers": [
@@ -842,7 +876,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -857,6 +891,7 @@
       "implementation_scope": "bass_py",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "BASS",
       "production_validated": false,
       "promotion_blockers": [
@@ -872,7 +907,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -887,6 +922,7 @@
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "COMMON",
       "production_validated": false,
       "promotion_blockers": [
@@ -902,7 +938,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -917,6 +953,7 @@
       "implementation_scope": "mio",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "MIO",
       "production_validated": false,
       "promotion_blockers": [
@@ -932,7 +969,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -947,6 +984,7 @@
       "implementation_scope": "htt",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "HTT",
       "production_validated": false,
       "promotion_blockers": [
@@ -962,7 +1000,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -977,6 +1015,7 @@
       "implementation_scope": "obsstat",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "OBSSTAT",
       "production_validated": false,
       "promotion_blockers": [
@@ -992,7 +1031,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -1007,6 +1046,7 @@
       "implementation_scope": "bass_py",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "BASS",
       "production_validated": false,
       "promotion_blockers": [
@@ -1023,7 +1063,7 @@
         "native_morphology_atlas": "fail"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -1038,6 +1078,7 @@
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "COMMON",
       "production_validated": false,
       "promotion_blockers": [
@@ -1053,7 +1094,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -1068,6 +1109,7 @@
       "implementation_scope": "mio",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "MIO",
       "production_validated": false,
       "promotion_blockers": [
@@ -1083,7 +1125,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -1098,6 +1140,7 @@
       "implementation_scope": "obsstat",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "OBSSTAT",
       "production_validated": false,
       "promotion_blockers": [
@@ -1113,7 +1156,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -1128,6 +1171,7 @@
       "implementation_scope": "bass_py",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "BASS",
       "production_validated": false,
       "promotion_blockers": [
@@ -1144,7 +1188,7 @@
         "native_solver_execution": "fail"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -1159,6 +1203,7 @@
       "implementation_scope": "mio",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "MIO",
       "production_validated": false,
       "promotion_blockers": [
@@ -1174,7 +1219,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -1189,6 +1234,7 @@
       "implementation_scope": "obsstat",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "OBSSTAT",
       "production_validated": false,
       "promotion_blockers": [
@@ -1204,7 +1250,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -1219,6 +1265,7 @@
       "implementation_scope": "mio",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "MIO",
       "production_validated": false,
       "promotion_blockers": [
@@ -1234,7 +1281,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -1249,6 +1296,7 @@
       "implementation_scope": "obsstat",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "OBSSTAT",
       "production_validated": false,
       "promotion_blockers": [
@@ -1264,7 +1312,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -1279,6 +1327,7 @@
       "implementation_scope": "mio",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "MIO",
       "production_validated": false,
       "promotion_blockers": [
@@ -1294,7 +1343,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -1309,6 +1358,7 @@
       "implementation_scope": "htt",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "HTT",
       "production_validated": false,
       "promotion_blockers": [
@@ -1324,7 +1374,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -1339,6 +1389,7 @@
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "COMMON",
       "production_validated": false,
       "promotion_blockers": [
@@ -1354,7 +1405,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -1369,6 +1420,7 @@
       "implementation_scope": "mio",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "MIO",
       "production_validated": false,
       "promotion_blockers": [
@@ -1385,7 +1437,7 @@
         "posterior_evidence_merge": "fail"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -1400,6 +1452,7 @@
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "COMMON",
       "production_validated": false,
       "promotion_blockers": [
@@ -1415,7 +1468,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -1430,6 +1483,7 @@
       "implementation_scope": "htt",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "HTT",
       "production_validated": false,
       "promotion_blockers": [
@@ -1445,7 +1499,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -1460,6 +1514,7 @@
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "COMMON",
       "production_validated": false,
       "promotion_blockers": [
@@ -1475,7 +1530,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -1489,6 +1544,7 @@
       "implementation_scope": "mio",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "MIO",
       "production_validated": false,
       "promotion_blockers": [
@@ -1505,7 +1561,7 @@
         "redshift_coherence_certificate_generated": "pass"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -1519,6 +1575,7 @@
       "implementation_scope": "mio",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "MIO",
       "production_validated": false,
       "promotion_blockers": [
@@ -1535,7 +1592,7 @@
         "public_tail_probability_claim": "fail"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -1550,6 +1607,7 @@
       "implementation_scope": "htt",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "HTT",
       "production_validated": false,
       "promotion_blockers": [
@@ -1565,7 +1623,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -1580,6 +1638,7 @@
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "COMMON",
       "production_validated": false,
       "promotion_blockers": [
@@ -1595,7 +1654,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -1610,6 +1669,7 @@
       "implementation_scope": "htt",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "HTT",
       "production_validated": false,
       "promotion_blockers": [
@@ -1625,7 +1685,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "paper_appendix",
@@ -1640,6 +1700,7 @@
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": true,
+      "orchestration_state": "completed",
       "owner": "COMMON",
       "production_validated": false,
       "promotion_blockers": [
@@ -1658,7 +1719,7 @@
         "scalar_morphology_boundary": "pass"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -1673,6 +1734,7 @@
       "implementation_scope": "htt",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "HTT",
       "production_validated": false,
       "promotion_blockers": [
@@ -1688,7 +1750,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -1703,6 +1765,7 @@
       "implementation_scope": "htt",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "HTT",
       "production_validated": false,
       "promotion_blockers": [
@@ -1718,7 +1781,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -1733,6 +1796,7 @@
       "implementation_scope": "htt",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "HTT",
       "production_validated": false,
       "promotion_blockers": [
@@ -1748,7 +1812,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -1763,6 +1827,7 @@
       "implementation_scope": "mio",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "MIO",
       "production_validated": false,
       "promotion_blockers": [
@@ -1778,7 +1843,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -1793,6 +1858,7 @@
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": true,
+      "orchestration_state": "completed",
       "owner": "COMMON",
       "production_validated": false,
       "promotion_blockers": [
@@ -1811,7 +1877,7 @@
         "production_inference": "fail"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "paper_appendix",
@@ -1826,6 +1892,7 @@
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": true,
+      "orchestration_state": "completed",
       "owner": "COMMON",
       "production_validated": false,
       "promotion_blockers": [
@@ -1842,7 +1909,7 @@
         "truth_certificate_claim": "fail"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -1857,6 +1924,7 @@
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": true,
+      "orchestration_state": "completed",
       "owner": "COMMON",
       "production_validated": false,
       "promotion_blockers": [
@@ -1875,7 +1943,7 @@
         "production_science_validation": "fail"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -1889,6 +1957,7 @@
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": true,
+      "orchestration_state": "completed",
       "owner": "COMMON",
       "production_validated": false,
       "promotion_blockers": [
@@ -1907,7 +1976,7 @@
         "null_mask_covariance_family_equivalence_stack": "fail"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -1922,6 +1991,7 @@
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "COMMON",
       "production_validated": false,
       "promotion_blockers": [
@@ -1937,7 +2007,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -1952,6 +2022,7 @@
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "COMMON",
       "production_validated": false,
       "promotion_blockers": [
@@ -1967,7 +2038,7 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
     },
     {
       "allowed_use": "external_audit",
@@ -1982,6 +2053,7 @@
       "implementation_scope": "common",
       "implemented": true,
       "manuscript_used": false,
+      "orchestration_state": "completed",
       "owner": "COMMON",
       "production_validated": false,
       "promotion_blockers": [
@@ -1997,7 +2069,1448 @@
         "native_solver_validation": "not_applicable"
       },
       "smoke_tested": true,
-      "source_commit": "f96e8d9+dirty"
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_use": "external_audit",
+      "artifact_id": "codex_dag.PR-119",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "generated",
+      "caption_policy": [
+        "must_state_dag_row_not_science_readiness",
+        "must_state_no_native_solver_validation"
+      ],
+      "claim_tier": "diagnostic_only",
+      "implementation_scope": "common",
+      "implemented": true,
+      "manuscript_used": false,
+      "orchestration_state": "completed",
+      "owner": "COMMON",
+      "production_validated": false,
+      "promotion_blockers": [
+        "native_solver_validation_absent"
+      ],
+      "publication_gates": {
+        "dag_completion_not_publication_readiness": "pass"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "native_solver_validation": "not_applicable"
+      },
+      "smoke_tested": true,
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "codex_dag.PR-120",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "missing",
+      "caption_policy": [
+        "must_state_not_completed"
+      ],
+      "claim_tier": "diagnostic_only",
+      "implementation_scope": "common",
+      "implemented": false,
+      "manuscript_used": false,
+      "orchestration_state": "pending",
+      "owner": "COMMON",
+      "production_validated": false,
+      "promotion_blockers": [
+        "dag_status_not_completed"
+      ],
+      "publication_gates": {
+        "implementation_complete": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "implementation_complete": "fail"
+      },
+      "smoke_tested": false,
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "codex_dag.PR-121",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "missing",
+      "caption_policy": [
+        "must_state_not_completed"
+      ],
+      "claim_tier": "diagnostic_only",
+      "implementation_scope": "common",
+      "implemented": false,
+      "manuscript_used": false,
+      "orchestration_state": "pending",
+      "owner": "COMMON",
+      "production_validated": false,
+      "promotion_blockers": [
+        "dag_status_not_completed"
+      ],
+      "publication_gates": {
+        "implementation_complete": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "implementation_complete": "fail"
+      },
+      "smoke_tested": false,
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "codex_dag.PR-122",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "missing",
+      "caption_policy": [
+        "must_state_not_completed"
+      ],
+      "claim_tier": "diagnostic_only",
+      "implementation_scope": "common",
+      "implemented": false,
+      "manuscript_used": false,
+      "orchestration_state": "pending",
+      "owner": "COMMON",
+      "production_validated": false,
+      "promotion_blockers": [
+        "dag_status_not_completed"
+      ],
+      "publication_gates": {
+        "implementation_complete": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "implementation_complete": "fail"
+      },
+      "smoke_tested": false,
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "codex_dag.PR-123",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "missing",
+      "caption_policy": [
+        "must_state_not_completed"
+      ],
+      "claim_tier": "diagnostic_only",
+      "implementation_scope": "common",
+      "implemented": false,
+      "manuscript_used": false,
+      "orchestration_state": "pending",
+      "owner": "COMMON",
+      "production_validated": false,
+      "promotion_blockers": [
+        "dag_status_not_completed"
+      ],
+      "publication_gates": {
+        "implementation_complete": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "implementation_complete": "fail"
+      },
+      "smoke_tested": false,
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "codex_dag.PR-124",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "missing",
+      "caption_policy": [
+        "must_state_not_completed"
+      ],
+      "claim_tier": "diagnostic_only",
+      "implementation_scope": "common",
+      "implemented": false,
+      "manuscript_used": false,
+      "orchestration_state": "pending",
+      "owner": "COMMON",
+      "production_validated": false,
+      "promotion_blockers": [
+        "dag_status_not_completed"
+      ],
+      "publication_gates": {
+        "implementation_complete": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "implementation_complete": "fail"
+      },
+      "smoke_tested": false,
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "codex_dag.PR-125",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "missing",
+      "caption_policy": [
+        "must_state_not_completed"
+      ],
+      "claim_tier": "diagnostic_only",
+      "implementation_scope": "common",
+      "implemented": false,
+      "manuscript_used": false,
+      "orchestration_state": "pending",
+      "owner": "COMMON",
+      "production_validated": false,
+      "promotion_blockers": [
+        "dag_status_not_completed"
+      ],
+      "publication_gates": {
+        "implementation_complete": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "implementation_complete": "fail"
+      },
+      "smoke_tested": false,
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "codex_dag.PR-126",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "missing",
+      "caption_policy": [
+        "must_state_not_completed"
+      ],
+      "claim_tier": "diagnostic_only",
+      "implementation_scope": "common",
+      "implemented": false,
+      "manuscript_used": false,
+      "orchestration_state": "pending",
+      "owner": "COMMON",
+      "production_validated": false,
+      "promotion_blockers": [
+        "dag_status_not_completed"
+      ],
+      "publication_gates": {
+        "implementation_complete": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "implementation_complete": "fail"
+      },
+      "smoke_tested": false,
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "codex_dag.PR-127",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "missing",
+      "caption_policy": [
+        "must_state_not_completed"
+      ],
+      "claim_tier": "diagnostic_only",
+      "implementation_scope": "common",
+      "implemented": false,
+      "manuscript_used": false,
+      "orchestration_state": "pending",
+      "owner": "COMMON",
+      "production_validated": false,
+      "promotion_blockers": [
+        "dag_status_not_completed"
+      ],
+      "publication_gates": {
+        "implementation_complete": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "implementation_complete": "fail"
+      },
+      "smoke_tested": false,
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "codex_dag.PR-128",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "missing",
+      "caption_policy": [
+        "must_state_not_completed"
+      ],
+      "claim_tier": "diagnostic_only",
+      "implementation_scope": "common",
+      "implemented": false,
+      "manuscript_used": false,
+      "orchestration_state": "pending",
+      "owner": "COMMON",
+      "production_validated": false,
+      "promotion_blockers": [
+        "dag_status_not_completed"
+      ],
+      "publication_gates": {
+        "implementation_complete": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "implementation_complete": "fail"
+      },
+      "smoke_tested": false,
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "codex_dag.PR-129",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "missing",
+      "caption_policy": [
+        "must_state_not_completed"
+      ],
+      "claim_tier": "diagnostic_only",
+      "implementation_scope": "obsstat",
+      "implemented": false,
+      "manuscript_used": false,
+      "orchestration_state": "pending",
+      "owner": "OBSSTAT",
+      "production_validated": false,
+      "promotion_blockers": [
+        "dag_status_not_completed"
+      ],
+      "publication_gates": {
+        "implementation_complete": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "implementation_complete": "fail"
+      },
+      "smoke_tested": false,
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "codex_dag.PR-130",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "missing",
+      "caption_policy": [
+        "must_state_not_completed"
+      ],
+      "claim_tier": "diagnostic_only",
+      "implementation_scope": "obsstat",
+      "implemented": false,
+      "manuscript_used": false,
+      "orchestration_state": "pending",
+      "owner": "OBSSTAT",
+      "production_validated": false,
+      "promotion_blockers": [
+        "dag_status_not_completed"
+      ],
+      "publication_gates": {
+        "implementation_complete": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "implementation_complete": "fail"
+      },
+      "smoke_tested": false,
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "codex_dag.PR-131",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "missing",
+      "caption_policy": [
+        "must_state_not_completed"
+      ],
+      "claim_tier": "diagnostic_only",
+      "implementation_scope": "common",
+      "implemented": false,
+      "manuscript_used": false,
+      "orchestration_state": "pending",
+      "owner": "COMMON",
+      "production_validated": false,
+      "promotion_blockers": [
+        "dag_status_not_completed"
+      ],
+      "publication_gates": {
+        "implementation_complete": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "implementation_complete": "fail"
+      },
+      "smoke_tested": false,
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "codex_dag.PR-132",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "missing",
+      "caption_policy": [
+        "must_state_not_completed"
+      ],
+      "claim_tier": "diagnostic_only",
+      "implementation_scope": "common",
+      "implemented": false,
+      "manuscript_used": false,
+      "orchestration_state": "pending",
+      "owner": "COMMON",
+      "production_validated": false,
+      "promotion_blockers": [
+        "dag_status_not_completed"
+      ],
+      "publication_gates": {
+        "implementation_complete": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "implementation_complete": "fail"
+      },
+      "smoke_tested": false,
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "codex_dag.PR-133",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "missing",
+      "caption_policy": [
+        "must_state_not_completed"
+      ],
+      "claim_tier": "diagnostic_only",
+      "implementation_scope": "common",
+      "implemented": false,
+      "manuscript_used": false,
+      "orchestration_state": "pending",
+      "owner": "COMMON",
+      "production_validated": false,
+      "promotion_blockers": [
+        "dag_status_not_completed"
+      ],
+      "publication_gates": {
+        "implementation_complete": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "implementation_complete": "fail"
+      },
+      "smoke_tested": false,
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "codex_dag.PR-134",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "missing",
+      "caption_policy": [
+        "must_state_not_completed"
+      ],
+      "claim_tier": "diagnostic_only",
+      "implementation_scope": "common",
+      "implemented": false,
+      "manuscript_used": false,
+      "orchestration_state": "pending",
+      "owner": "COMMON",
+      "production_validated": false,
+      "promotion_blockers": [
+        "dag_status_not_completed"
+      ],
+      "publication_gates": {
+        "implementation_complete": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "implementation_complete": "fail"
+      },
+      "smoke_tested": false,
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "codex_dag.PR-135",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "missing",
+      "caption_policy": [
+        "must_state_not_completed"
+      ],
+      "claim_tier": "diagnostic_only",
+      "implementation_scope": "obsstat",
+      "implemented": false,
+      "manuscript_used": false,
+      "orchestration_state": "pending",
+      "owner": "OBSSTAT",
+      "production_validated": false,
+      "promotion_blockers": [
+        "dag_status_not_completed"
+      ],
+      "publication_gates": {
+        "implementation_complete": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "implementation_complete": "fail"
+      },
+      "smoke_tested": false,
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "codex_dag.PR-136",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "missing",
+      "caption_policy": [
+        "must_state_not_completed"
+      ],
+      "claim_tier": "diagnostic_only",
+      "implementation_scope": "htt",
+      "implemented": false,
+      "manuscript_used": false,
+      "orchestration_state": "pending",
+      "owner": "HTT",
+      "production_validated": false,
+      "promotion_blockers": [
+        "dag_status_not_completed"
+      ],
+      "publication_gates": {
+        "implementation_complete": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "implementation_complete": "fail"
+      },
+      "smoke_tested": false,
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "codex_dag.PR-137",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "missing",
+      "caption_policy": [
+        "must_state_not_completed"
+      ],
+      "claim_tier": "diagnostic_only",
+      "implementation_scope": "htt",
+      "implemented": false,
+      "manuscript_used": false,
+      "orchestration_state": "pending",
+      "owner": "HTT",
+      "production_validated": false,
+      "promotion_blockers": [
+        "dag_status_not_completed"
+      ],
+      "publication_gates": {
+        "implementation_complete": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "implementation_complete": "fail"
+      },
+      "smoke_tested": false,
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "codex_dag.PR-138",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "missing",
+      "caption_policy": [
+        "must_state_not_completed"
+      ],
+      "claim_tier": "diagnostic_only",
+      "implementation_scope": "htt",
+      "implemented": false,
+      "manuscript_used": false,
+      "orchestration_state": "pending",
+      "owner": "HTT",
+      "production_validated": false,
+      "promotion_blockers": [
+        "dag_status_not_completed"
+      ],
+      "publication_gates": {
+        "implementation_complete": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "implementation_complete": "fail"
+      },
+      "smoke_tested": false,
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "codex_dag.PR-139",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "missing",
+      "caption_policy": [
+        "must_state_not_completed"
+      ],
+      "claim_tier": "diagnostic_only",
+      "implementation_scope": "htt",
+      "implemented": false,
+      "manuscript_used": false,
+      "orchestration_state": "pending",
+      "owner": "HTT",
+      "production_validated": false,
+      "promotion_blockers": [
+        "dag_status_not_completed"
+      ],
+      "publication_gates": {
+        "implementation_complete": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "implementation_complete": "fail"
+      },
+      "smoke_tested": false,
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "codex_dag.PR-140",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "missing",
+      "caption_policy": [
+        "must_state_not_completed"
+      ],
+      "claim_tier": "diagnostic_only",
+      "implementation_scope": "htt",
+      "implemented": false,
+      "manuscript_used": false,
+      "orchestration_state": "pending",
+      "owner": "HTT",
+      "production_validated": false,
+      "promotion_blockers": [
+        "dag_status_not_completed"
+      ],
+      "publication_gates": {
+        "implementation_complete": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "implementation_complete": "fail"
+      },
+      "smoke_tested": false,
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "codex_dag.PR-141",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "missing",
+      "caption_policy": [
+        "must_state_not_completed"
+      ],
+      "claim_tier": "diagnostic_only",
+      "implementation_scope": "htt",
+      "implemented": false,
+      "manuscript_used": false,
+      "orchestration_state": "pending",
+      "owner": "HTT",
+      "production_validated": false,
+      "promotion_blockers": [
+        "dag_status_not_completed"
+      ],
+      "publication_gates": {
+        "implementation_complete": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "implementation_complete": "fail"
+      },
+      "smoke_tested": false,
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "codex_dag.PR-142",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "missing",
+      "caption_policy": [
+        "must_state_not_completed"
+      ],
+      "claim_tier": "diagnostic_only",
+      "implementation_scope": "mio",
+      "implemented": false,
+      "manuscript_used": false,
+      "orchestration_state": "pending",
+      "owner": "MIO",
+      "production_validated": false,
+      "promotion_blockers": [
+        "dag_status_not_completed"
+      ],
+      "publication_gates": {
+        "implementation_complete": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "implementation_complete": "fail"
+      },
+      "smoke_tested": false,
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "codex_dag.PR-143",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "missing",
+      "caption_policy": [
+        "must_state_not_completed"
+      ],
+      "claim_tier": "diagnostic_only",
+      "implementation_scope": "common",
+      "implemented": false,
+      "manuscript_used": false,
+      "orchestration_state": "pending",
+      "owner": "COMMON",
+      "production_validated": false,
+      "promotion_blockers": [
+        "dag_status_not_completed"
+      ],
+      "publication_gates": {
+        "implementation_complete": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "implementation_complete": "fail"
+      },
+      "smoke_tested": false,
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "codex_dag.PR-144",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "missing",
+      "caption_policy": [
+        "must_state_not_completed"
+      ],
+      "claim_tier": "diagnostic_only",
+      "implementation_scope": "obsstat",
+      "implemented": false,
+      "manuscript_used": false,
+      "orchestration_state": "pending",
+      "owner": "OBSSTAT",
+      "production_validated": false,
+      "promotion_blockers": [
+        "dag_status_not_completed"
+      ],
+      "publication_gates": {
+        "implementation_complete": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "implementation_complete": "fail"
+      },
+      "smoke_tested": false,
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "codex_dag.PR-145",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "missing",
+      "caption_policy": [
+        "must_state_not_completed"
+      ],
+      "claim_tier": "diagnostic_only",
+      "implementation_scope": "obsstat",
+      "implemented": false,
+      "manuscript_used": false,
+      "orchestration_state": "pending",
+      "owner": "OBSSTAT",
+      "production_validated": false,
+      "promotion_blockers": [
+        "dag_status_not_completed"
+      ],
+      "publication_gates": {
+        "implementation_complete": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "implementation_complete": "fail"
+      },
+      "smoke_tested": false,
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "codex_dag.PR-146",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "missing",
+      "caption_policy": [
+        "must_state_not_completed"
+      ],
+      "claim_tier": "diagnostic_only",
+      "implementation_scope": "obsstat",
+      "implemented": false,
+      "manuscript_used": false,
+      "orchestration_state": "pending",
+      "owner": "OBSSTAT",
+      "production_validated": false,
+      "promotion_blockers": [
+        "dag_status_not_completed"
+      ],
+      "publication_gates": {
+        "implementation_complete": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "implementation_complete": "fail"
+      },
+      "smoke_tested": false,
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "codex_dag.PR-147",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "missing",
+      "caption_policy": [
+        "must_state_not_completed"
+      ],
+      "claim_tier": "diagnostic_only",
+      "implementation_scope": "htt",
+      "implemented": false,
+      "manuscript_used": false,
+      "orchestration_state": "pending",
+      "owner": "HTT",
+      "production_validated": false,
+      "promotion_blockers": [
+        "dag_status_not_completed"
+      ],
+      "publication_gates": {
+        "implementation_complete": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "implementation_complete": "fail"
+      },
+      "smoke_tested": false,
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "codex_dag.PR-148",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "missing",
+      "caption_policy": [
+        "must_state_not_completed"
+      ],
+      "claim_tier": "diagnostic_only",
+      "implementation_scope": "htt",
+      "implemented": false,
+      "manuscript_used": false,
+      "orchestration_state": "pending",
+      "owner": "HTT",
+      "production_validated": false,
+      "promotion_blockers": [
+        "dag_status_not_completed"
+      ],
+      "publication_gates": {
+        "implementation_complete": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "implementation_complete": "fail"
+      },
+      "smoke_tested": false,
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "codex_dag.PR-149",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "missing",
+      "caption_policy": [
+        "must_state_not_completed"
+      ],
+      "claim_tier": "diagnostic_only",
+      "implementation_scope": "obsstat",
+      "implemented": false,
+      "manuscript_used": false,
+      "orchestration_state": "pending",
+      "owner": "OBSSTAT",
+      "production_validated": false,
+      "promotion_blockers": [
+        "dag_status_not_completed"
+      ],
+      "publication_gates": {
+        "implementation_complete": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "implementation_complete": "fail"
+      },
+      "smoke_tested": false,
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "codex_dag.PR-150",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "missing",
+      "caption_policy": [
+        "must_state_not_completed"
+      ],
+      "claim_tier": "diagnostic_only",
+      "implementation_scope": "obsstat",
+      "implemented": false,
+      "manuscript_used": false,
+      "orchestration_state": "pending",
+      "owner": "OBSSTAT",
+      "production_validated": false,
+      "promotion_blockers": [
+        "dag_status_not_completed"
+      ],
+      "publication_gates": {
+        "implementation_complete": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "implementation_complete": "fail"
+      },
+      "smoke_tested": false,
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "codex_dag.PR-151",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "missing",
+      "caption_policy": [
+        "must_state_not_completed"
+      ],
+      "claim_tier": "diagnostic_only",
+      "implementation_scope": "obsstat",
+      "implemented": false,
+      "manuscript_used": false,
+      "orchestration_state": "pending",
+      "owner": "OBSSTAT",
+      "production_validated": false,
+      "promotion_blockers": [
+        "dag_status_not_completed"
+      ],
+      "publication_gates": {
+        "implementation_complete": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "implementation_complete": "fail"
+      },
+      "smoke_tested": false,
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "codex_dag.PR-152",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "missing",
+      "caption_policy": [
+        "must_state_not_completed"
+      ],
+      "claim_tier": "diagnostic_only",
+      "implementation_scope": "obsstat",
+      "implemented": false,
+      "manuscript_used": false,
+      "orchestration_state": "pending",
+      "owner": "OBSSTAT",
+      "production_validated": false,
+      "promotion_blockers": [
+        "dag_status_not_completed"
+      ],
+      "publication_gates": {
+        "implementation_complete": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "implementation_complete": "fail"
+      },
+      "smoke_tested": false,
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "codex_dag.PR-153",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "missing",
+      "caption_policy": [
+        "must_state_not_completed"
+      ],
+      "claim_tier": "diagnostic_only",
+      "implementation_scope": "obsstat",
+      "implemented": false,
+      "manuscript_used": false,
+      "orchestration_state": "pending",
+      "owner": "OBSSTAT",
+      "production_validated": false,
+      "promotion_blockers": [
+        "dag_status_not_completed"
+      ],
+      "publication_gates": {
+        "implementation_complete": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "implementation_complete": "fail"
+      },
+      "smoke_tested": false,
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "codex_dag.PR-154",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "missing",
+      "caption_policy": [
+        "must_state_not_completed"
+      ],
+      "claim_tier": "diagnostic_only",
+      "implementation_scope": "htt",
+      "implemented": false,
+      "manuscript_used": false,
+      "orchestration_state": "pending",
+      "owner": "HTT",
+      "production_validated": false,
+      "promotion_blockers": [
+        "dag_status_not_completed"
+      ],
+      "publication_gates": {
+        "implementation_complete": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "implementation_complete": "fail"
+      },
+      "smoke_tested": false,
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "codex_dag.PR-155",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "missing",
+      "caption_policy": [
+        "must_state_not_completed"
+      ],
+      "claim_tier": "diagnostic_only",
+      "implementation_scope": "htt",
+      "implemented": false,
+      "manuscript_used": false,
+      "orchestration_state": "pending",
+      "owner": "HTT",
+      "production_validated": false,
+      "promotion_blockers": [
+        "dag_status_not_completed"
+      ],
+      "publication_gates": {
+        "implementation_complete": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "implementation_complete": "fail"
+      },
+      "smoke_tested": false,
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "codex_dag.PR-156",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "missing",
+      "caption_policy": [
+        "must_state_not_completed"
+      ],
+      "claim_tier": "diagnostic_only",
+      "implementation_scope": "htt",
+      "implemented": false,
+      "manuscript_used": false,
+      "orchestration_state": "pending",
+      "owner": "HTT",
+      "production_validated": false,
+      "promotion_blockers": [
+        "dag_status_not_completed"
+      ],
+      "publication_gates": {
+        "implementation_complete": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "implementation_complete": "fail"
+      },
+      "smoke_tested": false,
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "codex_dag.PR-157",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "missing",
+      "caption_policy": [
+        "must_state_not_completed"
+      ],
+      "claim_tier": "diagnostic_only",
+      "implementation_scope": "common",
+      "implemented": false,
+      "manuscript_used": false,
+      "orchestration_state": "pending",
+      "owner": "COMMON",
+      "production_validated": false,
+      "promotion_blockers": [
+        "dag_status_not_completed"
+      ],
+      "publication_gates": {
+        "implementation_complete": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "implementation_complete": "fail"
+      },
+      "smoke_tested": false,
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "codex_dag.PR-158",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "missing",
+      "caption_policy": [
+        "must_state_not_completed"
+      ],
+      "claim_tier": "diagnostic_only",
+      "implementation_scope": "common",
+      "implemented": false,
+      "manuscript_used": false,
+      "orchestration_state": "pending",
+      "owner": "COMMON",
+      "production_validated": false,
+      "promotion_blockers": [
+        "dag_status_not_completed"
+      ],
+      "publication_gates": {
+        "implementation_complete": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "implementation_complete": "fail"
+      },
+      "smoke_tested": false,
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "codex_dag.PR-159",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "missing",
+      "caption_policy": [
+        "must_state_not_completed"
+      ],
+      "claim_tier": "diagnostic_only",
+      "implementation_scope": "bass_py",
+      "implemented": false,
+      "manuscript_used": false,
+      "orchestration_state": "dormant_external",
+      "owner": "BASS",
+      "production_validated": false,
+      "promotion_blockers": [
+        "dag_status_not_completed"
+      ],
+      "publication_gates": {
+        "implementation_complete": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "implementation_complete": "fail"
+      },
+      "smoke_tested": false,
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "codex_dag.PR-160",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "missing",
+      "caption_policy": [
+        "must_state_not_completed"
+      ],
+      "claim_tier": "diagnostic_only",
+      "implementation_scope": "bass_py",
+      "implemented": false,
+      "manuscript_used": false,
+      "orchestration_state": "dormant_external",
+      "owner": "BASS",
+      "production_validated": false,
+      "promotion_blockers": [
+        "dag_status_not_completed"
+      ],
+      "publication_gates": {
+        "implementation_complete": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "implementation_complete": "fail"
+      },
+      "smoke_tested": false,
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "codex_dag.PR-161",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "missing",
+      "caption_policy": [
+        "must_state_not_completed"
+      ],
+      "claim_tier": "diagnostic_only",
+      "implementation_scope": "bass_py",
+      "implemented": false,
+      "manuscript_used": false,
+      "orchestration_state": "dormant_external",
+      "owner": "BASS",
+      "production_validated": false,
+      "promotion_blockers": [
+        "dag_status_not_completed"
+      ],
+      "publication_gates": {
+        "implementation_complete": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "implementation_complete": "fail"
+      },
+      "smoke_tested": false,
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "codex_dag.PR-162",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "missing",
+      "caption_policy": [
+        "must_state_not_completed"
+      ],
+      "claim_tier": "diagnostic_only",
+      "implementation_scope": "obsstat",
+      "implemented": false,
+      "manuscript_used": false,
+      "orchestration_state": "dormant_external",
+      "owner": "OBSSTAT",
+      "production_validated": false,
+      "promotion_blockers": [
+        "dag_status_not_completed"
+      ],
+      "publication_gates": {
+        "implementation_complete": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "implementation_complete": "fail"
+      },
+      "smoke_tested": false,
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "codex_dag.PR-163",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "missing",
+      "caption_policy": [
+        "must_state_not_completed"
+      ],
+      "claim_tier": "diagnostic_only",
+      "implementation_scope": "common",
+      "implemented": false,
+      "manuscript_used": false,
+      "orchestration_state": "dormant_external",
+      "owner": "COMMON",
+      "production_validated": false,
+      "promotion_blockers": [
+        "dag_status_not_completed"
+      ],
+      "publication_gates": {
+        "implementation_complete": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "implementation_complete": "fail"
+      },
+      "smoke_tested": false,
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "codex_dag.PR-164",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "missing",
+      "caption_policy": [
+        "must_state_not_completed"
+      ],
+      "claim_tier": "diagnostic_only",
+      "implementation_scope": "htt",
+      "implemented": false,
+      "manuscript_used": false,
+      "orchestration_state": "dormant_external",
+      "owner": "HTT",
+      "production_validated": false,
+      "promotion_blockers": [
+        "dag_status_not_completed"
+      ],
+      "publication_gates": {
+        "implementation_complete": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "implementation_complete": "fail"
+      },
+      "smoke_tested": false,
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "codex_dag.PR-165",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "missing",
+      "caption_policy": [
+        "must_state_not_completed"
+      ],
+      "claim_tier": "diagnostic_only",
+      "implementation_scope": "common",
+      "implemented": false,
+      "manuscript_used": false,
+      "orchestration_state": "dormant_external",
+      "owner": "COMMON",
+      "production_validated": false,
+      "promotion_blockers": [
+        "dag_status_not_completed"
+      ],
+      "publication_gates": {
+        "implementation_complete": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "implementation_complete": "fail"
+      },
+      "smoke_tested": false,
+      "source_commit": "f70e0cd+dirty"
+    },
+    {
+      "allowed_use": "internal_only",
+      "artifact_id": "codex_dag.PR-166",
+      "artifact_mode": "governance_diagnostic",
+      "artifact_readiness": "missing",
+      "caption_policy": [
+        "must_state_not_completed"
+      ],
+      "claim_tier": "diagnostic_only",
+      "implementation_scope": "common",
+      "implemented": false,
+      "manuscript_used": false,
+      "orchestration_state": "dormant_external",
+      "owner": "COMMON",
+      "production_validated": false,
+      "promotion_blockers": [
+        "dag_status_not_completed"
+      ],
+      "publication_gates": {
+        "implementation_complete": "fail"
+      },
+      "report_generation_gates": {
+        "dag_status_row_generated": "pass"
+      },
+      "science_promotion_gates": {
+        "implementation_complete": "fail"
+      },
+      "smoke_tested": false,
+      "source_commit": "f70e0cd+dirty"
     }
   ]
 }

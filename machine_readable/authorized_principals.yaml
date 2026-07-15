@@ -1,0 +1,50 @@
+schema: htt.authorized_principals.v1
+registry_id: long_horizon_rescue_principals
+registry_status: bootstrap_default_deny
+owner: COMMON
+implementation_scope: common
+claim_tier: exploratory
+artifact_mode: governance_diagnostic
+allowed_use: internal_orchestration_only
+transfer_source: none
+config_hash: 406919201c4ff62ce40fcdc43bb3774780ff0f4fff43ef2e7409806c1ecfe609
+input_hashes:
+  - docs/research_program/long_horizon_rescue/pr119_spec.yaml:406919201c4ff62ce40fcdc43bb3774780ff0f4fff43ef2e7409806c1ecfe609
+sky_support_status: not_applicable_governance
+null_mock_status: not_applicable_governance
+caveats:
+  - Registered Codex principals are correlated internal process identities only.
+  - This bootstrap registry grants no scientific-status promotion authority.
+  - External/domain adjudicators remain unregistered until independently verified.
+generating_command: repository-local apply_patch under approved PR-119 SPEC
+git_commit_or_worktree_state: PR-119_worktree
+default_deny: true
+maximum_status_without_verified_external_authority: ADJUDICATION_PENDING
+principals:
+  - principal_id: codex:/root
+    identity_fingerprint: 195501457b5ed8e0d4cf4810092d464be53ad8110b9075b250e5c5c310d824cc
+    aliases: []
+    allowed_roles:
+      - author
+    allowed_scopes:
+      - PR-119
+    independence_class: correlated_internal_author
+    valid_from: '2026-07-15T00:00:00+09:00'
+    valid_until: '2027-07-15T00:00:00+09:00'
+    revoked: false
+    verifier: unverified_internal_process_identity
+    can_promote_scientific_status: false
+  - principal_id: codex:/root/pr119_spec
+    identity_fingerprint: 7384d9fd1ac04e353d138ee2d4cc6a68e4c29238cb6792a6abe6ce8235e4e771
+    aliases: []
+    allowed_roles:
+      - adjudicator
+    allowed_scopes:
+      - PR-119
+    independence_class: correlated_internal_non_author_review
+    valid_from: '2026-07-15T00:00:00+09:00'
+    valid_until: '2027-07-15T00:00:00+09:00'
+    revoked: false
+    verifier: unverified_internal_process_identity
+    can_promote_scientific_status: false
+external_scientific_adjudicators: []

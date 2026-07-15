@@ -113,7 +113,11 @@ def build_status_bundle(
     prs = _ordered_prs(backlog)
     completed = _status_set(status.get("completed"))
     blocked = _status_set(status.get("blocked"))
+    skipped = _status_set(status.get("skipped"))
+    pending = _status_set(status.get("pending"))
+    dormant_external = _status_set(status.get("dormant_external"))
     in_progress = _status_set(status.get("in_progress"))
+    execution_resolutions = _execution_resolutions(status.get("execution_resolutions"))
     source = source_commit or _current_source_commit()
     command = generating_command or (
         "python -m common.status_snapshot --write docs/generated/status_snapshot.json"
@@ -129,6 +133,9 @@ def build_status_bundle(
             pr_id=pr_id,
             completed=completed,
             blocked=blocked,
+            skipped=skipped,
+            pending=pending,
+            dormant_external=dormant_external,
             in_progress=in_progress,
         )
         promotion = _promotion_profile(
@@ -138,29 +145,32 @@ def build_status_bundle(
         )
         claim_tier = promotion["claim_tier"]
         implemented = state == "completed"
-        status_rows.append(
-            snapshot_entry_to_dict(
-                StatusSnapshotEntry(
-                    artifact_id=f"codex_dag.{pr_id}",
-                    owner=owner,
-                    implementation_scope=scope,
-                    claim_tier=claim_tier,
-                    implemented=implemented,
-                    smoke_tested=implemented,
-                    production_validated=bool(promotion["production_validated"]),
-                    manuscript_used=bool(promotion["manuscript_used"]),
-                    source_commit=source,
-                    artifact_readiness=str(promotion["artifact_readiness"]),
-                    artifact_mode=ArtifactMode(str(promotion["artifact_mode"])),
-                    allowed_use=AllowedUse(str(promotion["allowed_use"])),
-                    caption_policy=tuple(promotion["caption_policy"]),
-                    promotion_blockers=tuple(promotion["promotion_blockers"]),
-                    report_generation_gates=dict(promotion["report_generation_gates"]),
-                    science_promotion_gates=dict(promotion["science_promotion_gates"]),
-                    publication_gates=dict(promotion["publication_gates"]),
-                )
+        status_row = snapshot_entry_to_dict(
+            StatusSnapshotEntry(
+                artifact_id=f"codex_dag.{pr_id}",
+                owner=owner,
+                implementation_scope=scope,
+                claim_tier=claim_tier,
+                implemented=implemented,
+                smoke_tested=implemented,
+                production_validated=bool(promotion["production_validated"]),
+                manuscript_used=bool(promotion["manuscript_used"]),
+                source_commit=source,
+                artifact_readiness=str(promotion["artifact_readiness"]),
+                artifact_mode=ArtifactMode(str(promotion["artifact_mode"])),
+                allowed_use=AllowedUse(str(promotion["allowed_use"])),
+                caption_policy=tuple(promotion["caption_policy"]),
+                promotion_blockers=tuple(promotion["promotion_blockers"]),
+                report_generation_gates=dict(promotion["report_generation_gates"]),
+                science_promotion_gates=dict(promotion["science_promotion_gates"]),
+                publication_gates=dict(promotion["publication_gates"]),
             )
         )
+        # Orchestration state is orthogonal to implementation/readiness/claim
+        # axes. Keep it explicit in the generated row instead of trying to
+        # reconstruct it from ``implemented`` or ``claim_tier``.
+        status_row["orchestration_state"] = state
+        status_rows.append(status_row)
         claim_rows.append(
             claim_entry_to_dict(
                 ClaimLedgerEntry(
@@ -189,6 +199,7 @@ def build_status_bundle(
     if resolved_gate_outputs is not None:
         input_paths.append(resolved_gate_outputs)
     input_hashes = _input_hashes(input_paths)
+    state_counts = Counter(_state_from_row(row) for row in status_rows)
     config_hash = _config_hash(
         {
             "backlog": _display_path(resolved_backlog),
@@ -200,9 +211,13 @@ def build_status_bundle(
             ),
             "input_hashes": input_hashes,
             "total_prs": len(prs),
-            "completed_prs": len(completed),
-            "blocked_prs": len(blocked),
-            "in_progress_prs": len(in_progress),
+            "completed_prs": state_counts["completed"],
+            "blocked_prs": state_counts["blocked"],
+            "skipped_prs": state_counts["skipped"],
+            "in_progress_prs": state_counts["in_progress"],
+            "pending_prs": state_counts["pending"],
+            "dormant_external_prs": state_counts["dormant_external"],
+            "execution_resolution_prs": sorted(execution_resolutions),
         }
     )
     metadata: dict[str, object] = {
@@ -212,10 +227,14 @@ def build_status_bundle(
         "backlog_path": _display_path(resolved_backlog),
         "status_path": _display_path(resolved_status),
         "total_prs": len(prs),
-        "completed_prs": sum(row["implemented"] is True for row in status_rows),
-        "blocked_prs": len(blocked),
-        "in_progress_prs": len(in_progress),
-        "pending_prs": len(prs) - len(completed) - len(blocked) - len(in_progress),
+        "completed_prs": state_counts["completed"],
+        "blocked_prs": state_counts["blocked"],
+        "skipped_prs": state_counts["skipped"],
+        "in_progress_prs": state_counts["in_progress"],
+        "pending_prs": state_counts["pending"],
+        "dormant_external_prs": state_counts["dormant_external"],
+        "execution_resolution_count": len(execution_resolutions),
+        "execution_resolution_prs": sorted(execution_resolutions),
         "owner": Owner.COMMON.value,
         "implementation_scope": ImplementationScope.COMMON.value,
         "claim_tier": ClaimTier.DIAGNOSTIC_ONLY.value,
@@ -229,6 +248,7 @@ def build_status_bundle(
             "Rows never promote external-transfer outputs to native solver validation.",
             "DAG completion, artifact readiness, allowed use, and production validation are separate axes.",
             "production_validated remains false unless an explicit artifact gate output says otherwise.",
+            "Execution resolutions are process receipts only and never promote scientific status or claim tier.",
         ],
         "generating_command": command,
         "source_commit": source,
@@ -257,6 +277,10 @@ def render_status_matrix(bundle: StatusBundle) -> str:
     state_lines = "\n".join(
         f"| `{state}` | {count} |" for state, count in sorted(by_state.items())
     )
+    input_hashes = "<br>".join(
+        f"`{item}`" for item in metadata.get("input_hashes", [])
+    ) or "`none`"
+    caveats = "<br>".join(str(item) for item in metadata.get("caveats", [])) or "none"
     return "\n".join(
         (
             "<!-- Generated by common.status_snapshot; do not edit counts by hand. -->",
@@ -271,14 +295,23 @@ def render_status_matrix(bundle: StatusBundle) -> str:
             f"| Total PRs | {metadata['total_prs']} |",
             f"| Completed PRs | {metadata['completed_prs']} |",
             f"| Blocked PRs | {metadata['blocked_prs']} |",
+            f"| Skipped PRs | {metadata.get('skipped_prs', 0)} |",
             f"| In progress | {metadata['in_progress_prs']} |",
             f"| Pending PRs | {metadata['pending_prs']} |",
+            f"| Dormant external PRs | {metadata.get('dormant_external_prs', 0)} |",
             "",
             "| Metadata | Value |",
             "| --- | --- |",
+            f"| Owner | `{metadata['owner']}` |",
+            f"| Implementation scope | `{metadata['implementation_scope']}` |",
             f"| Claim tier | `{metadata['claim_tier']}` |",
             f"| Transfer source | `{metadata['transfer_source']}` |",
             f"| Config hash | `{metadata['config_hash']}` |",
+            f"| Input hashes | {input_hashes} |",
+            f"| Sky support status | `{metadata['sky_support_status']}` |",
+            f"| Null/mock status | `{metadata['null_mock_status']}` |",
+            f"| Caveats | {caveats} |",
+            f"| Generating command | `{metadata['generating_command']}` |",
             f"| Source commit | `{metadata['source_commit']}` |",
             f"| Worktree state | `{metadata['worktree_state']}` |",
             "",
@@ -485,6 +518,10 @@ def validate_status_matrix_matches_snapshot(
         "In progress": int(metadata["in_progress_prs"]),
         "Pending PRs": int(metadata["pending_prs"]),
     }
+    if "skipped_prs" in metadata:
+        expected["Skipped PRs"] = int(metadata["skipped_prs"])
+    if "dormant_external_prs" in metadata:
+        expected["Dormant external PRs"] = int(metadata["dormant_external_prs"])
     mismatches = [
         f"{metric}: markdown={matrix_counts.get(metric)!r} snapshot={value!r}"
         for metric, value in expected.items()
@@ -788,23 +825,56 @@ def _status_set(value: object) -> set[str]:
     raise ValueError("status fields must be null, a string, or a list")
 
 
+def _execution_resolutions(value: object) -> Mapping[str, object]:
+    """Return process-only execution receipts without interpreting them.
+
+    Resolution content is deliberately excluded from promotion logic. The
+    status snapshot records only which PRs have receipts so a process outcome
+    cannot become scientific evidence through this generator.
+    """
+
+    if value is None:
+        return {}
+    if not isinstance(value, Mapping):
+        raise ValueError("status execution_resolutions must be a mapping")
+    if not all(isinstance(pr_id, str) and pr_id for pr_id in value):
+        raise ValueError("status execution_resolutions keys must be PR ids")
+    return value
+
+
 def _state_for_pr(
     *,
     pr_id: str,
     completed: set[str],
     blocked: set[str],
+    skipped: set[str],
+    pending: set[str],
+    dormant_external: set[str],
     in_progress: set[str],
 ) -> str:
     if pr_id in completed:
         return "completed"
     if pr_id in blocked:
         return "blocked"
+    if pr_id in skipped:
+        return "skipped"
     if pr_id in in_progress:
         return "in_progress"
+    if pr_id in dormant_external:
+        return "dormant_external"
+    if pr_id in pending:
+        return "pending"
+    # Legacy status files did not enumerate pending rows. Preserve that
+    # behavior for any row absent from all explicit state lists.
     return "pending"
 
 
 def _state_from_row(row: Mapping[str, object]) -> str:
+    state = row.get("orchestration_state")
+    if isinstance(state, str) and state:
+        return state
+    # Compatibility with snapshots generated before orchestration_state was
+    # an explicit orthogonal row field.
     if bool(row.get("implemented")):
         return "completed"
     if row.get("claim_tier") == ClaimTier.BLOCKED.value:

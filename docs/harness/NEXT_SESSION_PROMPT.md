@@ -1,63 +1,70 @@
 # Next Session Prompt
 
-Continue from `/home/cosmosapjw/Dropbox/bianchi/htt_base` only after reading:
+Continue from `/home/cosmosapjw/Dropbox/bianchi/htt_base` at PR-120. Read:
 
 - `AGENTS.md`
 - `.agents/skills/htt-dag-orchestrator/SKILL.md`
-- `.agents/skills/htt-adversarial-review-loop/SKILL.md`
-- `.agents/skills/htt-physics-math-audit/SKILL.md`
-- `.agents/skills/htt-statistical-hardening/SKILL.md`
 - `.agents/skills/htt-claim-firewall/SKILL.md`
 - `.agents/skills/htt-claim-provenance-ledger/SKILL.md`
-- `.agents/skills/htt-ssot-handoff-maintainer/SKILL.md`
-- `docs/audits/jcap_prd_adversarial_audit_20260714/final_referee_report.md`
-- `docs/audits/jcap_prd_adversarial_audit_20260714/executive_summary_ko.md`
+- `.agents/skills/htt-adversarial-review-loop/SKILL.md`
+- `docs/PR_DELTAS/pr-119.md`
+- `docs/research_program/long_horizon_rescue/pr119_spec.yaml`
+- `docs/codex_handoff/research_remediation_state.yaml`
+- `docs/codex_handoff/authorized_principals.yaml`
+- `docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md`
 - `docs/audits/jcap_prd_adversarial_audit_20260714/criticism_response_matrix.json`
-- `docs/audits/jcap_prd_adversarial_audit_20260714/next_dag_candidates.json`
-- `docs/generated/progress_checkpoints/checkpoint_065.md`
 
 ## Current state
 
-- The active DAG is 65/65 complete: 100% by count, dependency weight, and
-  critical path. This is bookkeeping only, not scientific readiness.
-- The as-shipped manuscript decision is unanimous `REJECT` (1.0-1.5/10).
-- A distinct pre-solver methods/negative-audit submission is only potentially
-  defensible after major rebuild (5.0-6.5/10).
-- Prior findings remain 55 `KNOWN_OPEN` (`P0 2 / P1 14 / P2 17 / P3 22`),
-  with 14 audit gaps and 33 new open atomic deltas (`P1 22 / P2 11`).
-- The advocate program contains 32 candidates, a 12-candidate bounded final
-  CRAG, and a 102-row criticism-response matrix.
-- No production scientific result or manuscript number was repaired by the
-  audit. Raw `legacy/` and the two original GPT-5.6 ZIPs remain untracked.
+- Active DAG: 113 total, 66 completed, 39 pending, 8 dormant external.
+  Progress is 58.41% by count, 50.61% dependency weighted, and 44.64% on the
+  current critical-path proxy. These are bookkeeping only.
+- Exactly `PR-119..166` are active. `PR-167..183` are absent and remain owned
+  by the later PR-167 intake.
+- All 102 findings remain `OPEN`; rescued count is zero. Response dispositions
+  are historical recommendations, not scientific status.
+- PR-120 and PR-121 are runnable; use sequential policy and start PR-120.
+- Checkpoint 065 is immutable. The next five-completion checkpoint is 70.
 
-## Authority boundary
+## PR-120 objective
 
-There is no active next DAG card. `AUD-R01A` through `AUD-R05C` are staged proposals,
-not authorized implementation work. Before starting one, add it through an
-explicit DAG intake/review that assigns owner, dependencies, tests, claim
-ceiling, decisive inputs, and kill conditions.
+Quarantine both CF4 P0 producers and all active downstream consumers. Build a
+hash-bound producer/consumer inventory and make publication/package builders
+reject stale values. Preserve historical and legacy reproduction surfaces;
+do not replace the values with audit-only sensitivity estimates and do not
+claim remediation merely because quarantine scans pass.
 
-Recommended first intake is `AUD-R01A`: quarantine the two open P0-dependent
-CF4 headline/correction paths and rebuild estimator/downstream propagation.
-Its entry gate is authenticated CF4 row/group/selection lineage plus a
-preregistered injection/coverage design. It may yield only estimator
-validation or an identified-region result.
+Run the required four-role divergence, SPEC review, focused tests, claim scans,
+adversarial review, commit, status receipt, and generated artifact refresh.
+
+## Persistent execution constraint
+
+- PR3/FFP10 E2E download is complete.
+- PR4/NPIPE is not downloaded.
+- At PR-150, skip every PR4 download/reduction/data-analysis action. Emit a
+  scope receipt only. Do not produce PR4 numbers or combined PR3+PR4 results.
+- The original joint `roadmap_rescue_v1:C3` gate remains unavailable; the
+  active PR-150 ceiling is PR3-conditional diagnostic
+  `roadmap_rescue_v1:C2`.
 
 ## Hard boundaries
 
-- Do not implement a native low-ell Bianchi solver in this repository.
-- Do not label external/AniCLASS output as native or validated transfer.
-- Do not merge MIO diagnostics into HTT posterior/evidence semantics.
-- Do not replace production numbers from audit-only sensitivity reruns.
-- Keep every family/geometry counterfactual `hypothesis_only=true` and
-  `public_use=false` until native atlas, matched masks/nulls/covariance,
-  family equivalence, rank, and external validation gates all pass.
+- Do not implement or simulate the external native low-ell solver.
+- Do not relabel external/AniCLASS/proxy transfer output as native.
+- Shape-only status records never unlock post-native work; exact
+  `native_low_ell_delivery` scope, a hash-bound typed receipt, a registered
+  independent provider, and an injected trusted verifier are required.
+- Keep MIO diagnostics separate from HTT posterior/evidence semantics.
+- Never infer scientific promotion from DAG completion or a terminal receipt.
+- No family/geometry identification before native atlas plus matched
+  mask/null/covariance/equivalence/rank/external gates.
 
 ## Immediate verification
 
 ```bash
-venv/bin/python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
-venv/bin/python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --checkpoint-every 5 --json
+venv/bin/python -B scripts/codex_harness/sync_pr_dag_mirrors.py --check
+venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice
+PYTHONPATH=htt/src venv/bin/python -B scripts/codex_harness/validate_research_remediation.py --check
+venv/bin/python -B scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml --checkpoint-every 5 --json
 venv/bin/python -B scripts/audits/jcap_prd_20260714.py validate --final
-venv/bin/python -B -m pytest -p no:cacheprovider tests/contracts/test_jcap_prd_adversarial_audit.py -q
 ```

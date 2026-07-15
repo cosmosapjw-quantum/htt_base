@@ -457,3 +457,40 @@ Record accepted, rejected, and deferred design decisions.
   replication, or external transfer as native evidence.
 - Deferred: the actual delta audit, legacy disposition ledger, advocate
   ranking, and referee decision belong to PR-117 and PR-118.
+
+## 2026-07-15 - PR-119 remediation-state and DAG authority decision
+
+- Accepted: `docs/codex_handoff/pr_backlog.yaml` is the canonical active DAG
+  root; JSON and `machine_readable/` copies are generated mirrors.
+- Accepted: intake exactly `PR-119..166` now; defer `PR-167..183` to PR-167.
+- Accepted: orchestration state, execution resolution, and scientific status
+  are orthogonal typed axes. A completed PR does not imply evidence readiness.
+- Accepted: terminal negative receipts may satisfy only an explicit
+  `requires_terminal_receipt` aggregation edge. `requires_success` accepts only
+  a receipted success; scientific consumption needs an independently
+  authenticated adjudicated claim subset.
+- Accepted: claim levels are scheme-qualified. Identically spelled `C1` values
+  in family-gate and roadmap-planning schemes have no automatic mapping.
+- Accepted: the bootstrap authority registry is default-deny, bounded, and
+  grants internal author/adjudicator roles only. Internal subagents are
+  correlated review, not external replication, and cannot promote science.
+- Accepted: adjudication/native dependency edges load repository-local receipt
+  bytes only through path+SHA-256 pointers and typed authority validation.
+  Native delivery is bound to `native_low_ell_delivery`; the progress CLI has
+  no implicit trust callback, so authenticated edges remain unsatisfied until
+  an explicit trusted verifier is integrated.
+- Accepted: the 102 authoritative findings start and remain `OPEN`; historical
+  response dispositions and contradictory prose do not override the structured
+  active root.
+- Accepted: checkpoint 065 and the PR-118 audit package remain immutable and
+  validate against the Git seal tree, not mutable live status sidecars.
+- Accepted: PR-150 records PR3/FFP10 download complete and PR4/NPIPE download
+  not started; all PR4 data analysis is skipped by explicit user instruction.
+  The original joint `roadmap_rescue_v1:C3` gate remains unavailable and the
+  active lane is capped at PR3-conditional diagnostic
+  `roadmap_rescue_v1:C2`.
+- Rejected: active TEFF/TSC ownership, bare claim levels, self-adjudication,
+  boolean or shape-only receipt assertions, terminal bucket/resolution
+  mismatch, hidden completed cards, premature PR-167 intake, synthetic
+  native-delivery substitution, and any inference from process success to
+  scientific rescue.

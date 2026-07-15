@@ -67,11 +67,64 @@ policy:
   - PR-116
   - PR-117
   - PR-118
+  - PR-119
+  - PR-120
+  - PR-121
+  - PR-122
+  - PR-123
+  - PR-124
+  - PR-125
+  - PR-126
+  - PR-127
+  - PR-128
+  - PR-129
+  - PR-130
+  - PR-131
+  - PR-132
+  - PR-133
+  - PR-134
+  - PR-135
+  - PR-136
+  - PR-137
+  - PR-138
+  - PR-139
+  - PR-140
+  - PR-141
+  - PR-142
+  - PR-143
+  - PR-144
+  - PR-145
+  - PR-146
+  - PR-147
+  - PR-148
+  - PR-149
+  - PR-150
+  - PR-151
+  - PR-152
+  - PR-153
+  - PR-154
+  - PR-155
+  - PR-156
+  - PR-157
+  - PR-158
+  - PR-159
+  - PR-160
+  - PR-161
+  - PR-162
+  - PR-163
+  - PR-164
+  - PR-165
+  - PR-166
   checkpoint_every_completed_prs: 5
   no_native_lowell_solver_implementation: true
   family_identification_claims_blocked_until_native_morphology_atlas: true
   mio_htt_merge_forbidden: true
   treat_external_transfer_as_transfer_conditional: true
+  long_horizon_intake:
+    spec: docs/research_program/long_horizon_rescue/pr119_spec.yaml
+    active_slice: PR-119..PR-166
+    advocate_slice: deferred_to_PR-167
+    scientific_rescue_count_on_intake: 0
 waves:
 - wave: 0
   title: Intake, packaging, DAG harness, and no-science preflight
@@ -100,6 +153,24 @@ waves:
   title: Result packs, manuscript/figure integration, and external audit freeze
 - wave: 12
   title: JCAP/PRD delta audit, counterfactual advocate, and evidence closeout
+- wave: 13
+  title: Authority, quarantine, and reproducibility foundation
+- wave: 14
+  title: 'Theory foundation I: authority and non-identification'
+- wave: 15
+  title: 'Theory foundation II: estimators and local/global separation'
+- wave: 16
+  title: 'Statistics I: estimands, finite nulls, and partial identification'
+- wave: 17
+  title: 'Statistics II: holdout, evidence, abstention, and MIO calibration'
+- wave: 18
+  title: CF4 and velocity-field research
+- wave: 19
+  title: Planck, DESI, ACT, and JWST provenance
+- wave: 20
+  title: Hierarchical forecasts, cross-survey tests, and adjudication
+- wave: 21
+  title: Dormant post-native solver and atlas programme
 prs:
 - id: PR-000
   wave: 0
@@ -1441,3 +1512,2691 @@ prs:
   level: L4
   scope: pre-solver audit closeout
   risk: high
+- id: PR-119
+  wave: 13
+  title: Post-PR-118 DAG intake와 claim 상태기계
+  owner: COMMON
+  contributors: []
+  adjudicator_role: internal_non_author_reviewer
+  implementation_scopes:
+  - common
+  depends:
+  - PR-118
+  dependency_contracts:
+  - upstream_id: PR-118
+    mode: requires_success
+  targets:
+  - 현재 `rescued=0` 권위 상태, `GAP-13`, `GAP-14`, 역사적 “three rescued” 문구와 SSoT 불일치.
+  files:
+  - htt/src/common
+  - scripts/codex_harness
+  - tests/contracts
+  - docs/PR_DELTAS/pr-119.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_119_post_pr_118_dag_intake_claim.py
+  dod:
+  - PR-119--166을 양쪽 backlog/status mirror에 추가하기 전 이 문서와 umbrella crosswalk를 검토한다. orchestration state,
+    terminal execution resolution과 `OPEN → IN_REMEDIATION → EVIDENCE_READY → ADJUDICATION_PENDING → RESCUED
+    | CORRECTED_SUPERSEDED | FALSIFIED | BLOCKED | ABANDONED` scientific state를 서로 다른 필드로 고정한다. `BLOCKED_WITH_RECEIPT`/`ABANDONED_WITH_RECEIPT`는
+    dependency를 닫되 scientific state를 올리지 않는 resolution으로 정의한다. active finding root, historical referee
+    response, generated summary의 authority와 immutability, authorized-principal registry를 명시한다. 모든 카드에
+    canonical owner, contributors/adjudicator, implementation scope, dependency, DoD, kill switch, cost와
+    두 claim ceiling을 넣는다.
+  - DAG validator, progress report, mirror byte/semantic parity, process/science 직교 상태 전이와 author-adjudicator
+    inequality property tests, `docs/PR_DELTAS/pr-119.md`, proposal-to-active crosswalk와 reconciliation
+    report.
+  kill: 48개 ID, dependency, checkpoint가 양쪽 mirror에서 일치하고 기존 65개 완료 상태가 보존되어야 한다. cycle, duplicate ID,
+    hidden completed 상태가 하나라도 있으면 이후 PR 금지.
+  cost: low
+  level: L1
+  scope: pre-solver
+  risk: low
+  claim_tier_ceiling: exploratory
+  claim_level:
+    scheme: not_applicable_governance_v1
+    level: NOT_APPLICABLE
+  claim_impact: orchestration/ledger correctness roadmap_rescue_v1:C1; 과학 rescue 없음.
+  forbidden:
+  - 역사적 agent/referee 원문을 현재 결론에 맞게 재작성하지 않는다. PR을 backlog에 넣었다는 이유로 finding을 `IN_REMEDIATION`보다 높이지 않는다.
+  anti_drift:
+  - 현재 65/65는 science readiness가 아니다. `next_dag_candidates.json`과 옛 `PR-R*` 제안을 동시에 active로 두지 않는다. ID
+    alias와 `superseded_by`를 생성한다.
+  roadmap_anchor: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md#pr-119
+  activation_state: PENDING
+  scientific_status_on_intake: OPEN
+- id: PR-120
+  wave: 13
+  title: 두 CF4 P0와 downstream consumer의 즉시 quarantine
+  owner: COMMON
+  contributors:
+  - OBSSTAT
+  adjudicator_role: internal_non_author_reviewer
+  implementation_scopes:
+  - common
+  depends:
+  - PR-119
+  dependency_contracts:
+  - upstream_id: PR-119
+    mode: requires_success
+  targets:
+  - '`C1-K5-MV-F1`, `C3-K5-VCORR-ML-F1`, `N-DATA-CF4-DOWNSTREAM` 및 이 값을 소비하는 result card, figure, manuscript,
+    package.'
+  files:
+  - htt/src/common
+  - scripts/codex_harness
+  - tests/contracts
+  - docs/PR_DELTAS/pr-120.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_120_cf4_p0_downstream_consumer_quarantine.py
+  dod:
+  - 두 P0 수치와 파생 `4.9σ`, global-tilt, shape-correction 문구의 producer/consumer graph를 만든다. active consumer는
+    blocked/quarantined source record만 소비하게 하고 legacy reproduction은 별도 mode로 보존한다. publication freeze와
+    package builder가 stale value를 거부하는 mutation test를 추가한다.
+  - hash-bound consumer inventory, stale-number mutation corpus, generated block record, claim-language
+    scan, result-pack/manuscript negative tests.
+  kill: active/public consumer의 stale P0 경로가 0이어야 한다. 숨은 hard-coded value 또는 generated copy가 남으면 모든 data
+    PR을 block한다.
+  cost: low--medium
+  level: L1
+  scope: pre-solver
+  risk: medium
+  claim_tier_ceiling: exploratory
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C1
+  claim_impact: unsafe result propagation 차단 roadmap_rescue_v1:C1.
+  forbidden:
+  - 이 PR에서 405 km/s를 94 km/s 등 audit-only 대체값으로 교체하거나 새로운 cosmological result를 계산하지 않는다.
+  anti_drift:
+  - quarantine은 remediation이 아니다. negative scan이 green이어도 P0는 open이다. archive와 역사적 audit 원문은 삭제하지 않는다.
+  roadmap_anchor: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md#pr-120
+  activation_state: PENDING
+  scientific_status_on_intake: OPEN
+- id: PR-121
+  wave: 13
+  title: Hermetic install, owner namespace와 detached replay
+  owner: COMMON
+  contributors: []
+  adjudicator_role: internal_non_author_reviewer
+  implementation_scopes:
+  - common
+  depends:
+  - PR-119
+  dependency_contracts:
+  - upstream_id: PR-119
+    mode: requires_success
+  targets:
+  - environment-sensitive import, duplicate `htt` package path, optional dependency drift, `N-CODE-CLEAN-IMPORT`
+    계열 위험.
+  files:
+  - htt/src/common
+  - scripts/codex_harness
+  - tests/contracts
+  - docs/PR_DELTAS/pr-121.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_121_hermetic_install_owner_namespace_detached_replay.py
+  dod:
+  - clean temporary environment와 detached checkout에서 editable/non-editable install, import ownership,
+    CLI와 대표 generators를 재생한다. dependency lock/receipt를 만들고 local cache, cwd, implicit `PYTHONPATH`, untracked
+    파일 의존을 mutation한다.
+  - clean-install matrix, wheel/sdist smoke, detached replay receipt, owner namespace test, temp-CWD import
+    test, environment hash.
+  kill: tracked inputs만으로 collect/smoke/representative generation이 재현되어야 한다. cwd 또는 untracked data가 없으면
+    결과가 달라질 경우 PR-122 이후 evidence를 신뢰하지 않는다.
+  cost: medium
+  level: L1
+  scope: pre-solver
+  risk: medium
+  claim_tier_ceiling: exploratory
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C1
+  claim_impact: clean-install/replay mechanics roadmap_rescue_v1:C1.
+  forbidden:
+  - public package rename이나 대규모 layout migration을 한 번에 수행하지 않는다. optional dependency 미설치를 silent skip으로
+    바꾸지 않는다.
+  anti_drift:
+  - clean replay 성공은 science validation이 아니다. legacy import compatibility와 active owner를 구분한다.
+  roadmap_anchor: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md#pr-121
+  activation_state: PENDING
+  scientific_status_on_intake: OPEN
+- id: PR-122
+  wave: 13
+  title: Claim-addressed evidence graph와 content-addressed build DAG
+  owner: COMMON
+  contributors: []
+  adjudicator_role: internal_non_author_reviewer
+  implementation_scopes:
+  - common
+  depends:
+  - PR-119
+  - PR-121
+  dependency_contracts:
+  - upstream_id: PR-119
+    mode: requires_success
+  - upstream_id: PR-121
+    mode: requires_success
+  targets:
+  - '`CO-01`, `CO-03`, `N-CODE-FALSE-GREEN`, `N-STAT-SPOOFABLE-GATE`, `C7-MES-F2`, `N-THEORY-D2-AUTHORITY`.'
+  files:
+  - htt/src/common
+  - scripts/codex_harness
+  - tests/contracts
+  - docs/PR_DELTAS/pr-122.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_122_claim_addressed_evidence_graph_content_addressed.py
+  dod:
+  - claim → producer → input/config/environment → test/oracle → artifact → consumer edge를 typed graph로
+    표현한다. `process_result`와 `scientific_status`를 분리하고 blocked/missing/stale/invalid/skipped/xfail을 서로
+    다른 상태로 둔다. receipt ID/version, authorized principal attestation, parent/independence edge를 content-address하고
+    package/freeze가 exact receipt를 소비하도록 한다. test selector와 실제 collected/executed count를 edge에 넣어 zero-test
+    Rust/Python target을 authority로 세지 않으며, active MES consumer가 typed successor registry를 거치지 않으면 release를
+    막는다.
+  - nonexistent/zero-collected test, stale generator, hash mismatch, blocked science, invalid manifest,
+    fabricated/self-signed/circular-parent receipt, author=adjudicator, dependency cycle, stale MES triple,
+    임의 객체의 `ready_for_claims=true`, caller-supplied pseudo-PPC/Bayes scalar mutation; graph schema와 CLI;
+    per-claim closure report.
+  kill: 모든 mutation이 fail/downclaim되고 clean fixture만 reproducibly pass해야 한다. blocked science가 green package에
+    들어가면 release 작업 중단.
+  cost: medium--high
+  level: L1
+  scope: pre-solver
+  risk: high
+  claim_tier_ceiling: exploratory
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C1
+  claim_impact: fail-closed release/evidence mechanics roadmap_rescue_v1:C1.
+  forbidden:
+  - graph가 있다는 이유로 estimand correctness나 independent validation을 주장하지 않는다. 기존 manifest를 포장하는 wrapper-only
+    구현을 만들지 않는다.
+  anti_drift:
+  - verifier와 policy가 새 trust root가 된다. mutation corpus가 없거나 self-oracle만 연결되면 false-green이 계속된다.
+  roadmap_anchor: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md#pr-122
+  activation_state: PENDING
+  scientific_status_on_intake: OPEN
+- id: PR-123
+  wave: 13
+  title: 독립 수치 oracle, K6 continuum branch와 mutation laboratory
+  owner: COMMON
+  contributors: []
+  adjudicator_role: internal_non_author_reviewer
+  implementation_scopes:
+  - common
+  depends:
+  - PR-121
+  - PR-122
+  dependency_contracts:
+  - upstream_id: PR-121
+    mode: requires_success
+  - upstream_id: PR-122
+    mode: requires_success
+  targets:
+  - '`CO-04`와 CF4, GRF, DESI, K6, ACT, JWST의 알려진 defect corpus; `C6-K6-CURL-F1/F3/F4`의 CF4-catalog-independent
+    numerical mechanics.'
+  files:
+  - htt/src/common
+  - scripts/codex_harness
+  - tests/contracts
+  - docs/PR_DELTAS/pr-123.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_123_oracle_k6_continuum_branch_mutation_laboratory.py
+  dod:
+  - production과 알고리즘·소스 lineage가 다른 작은 reference를 만든다. shell-monopole leak, non-Hermitian rFFT plane,
+    fixed-alpha mock, low-order curl stencil, ignored host error, asymmetric global rank, fitted-score
+    pseudo-Bayes factor, plug-in pseudo-PPC, stale transfer range를 각각 mutation으로 고정한다. K6는 CF4 row/selection
+    authority와 분리된 branch에서 analytic solid-body/potential/mixed Helmholtz/manufactured-boundary fields,
+    최소 4개 grid와 2개 stencil order, interpolation/boundary/amplitude-gradient decomposition, continuum extrapolation과
+    analytic `sqrt(2)` residual lock을 실행한다. manufactured solution, invariance/property, convergence, coverage를
+    lane별로 정의한다.
+  - mutation kill matrix, oracle lineage manifest, per-lane independent reference, multi-seed property/coverage
+    suite, K6 continuum-order/upper-bound/no-empirical-consumer card, surviving mutation report.
+  kill: 사전 등록한 known mutation 하나라도 살아남거나 두 oracle의 독립성을 입증하지 못하면 해당 lane validation은 blocked다.
+  cost: high
+  level: L1
+  scope: pre-solver
+  risk: high
+  claim_tier_ceiling: conditional
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C2
+  claim_impact: lane-specific numerical mechanics roadmap_rescue_v1:C2; cosmological inference 아님.
+  forbidden:
+  - production 코드를 조금 바꾼 것을 independent implementation이라 부르지 않는다. mechanics pass를 matched data/null/covariance
+    pass로 승격하지 않는다.
+  anti_drift:
+  - 같은 논문식·fixture·author를 공유한 oracle 간 상관을 기록한다. reference가 production보다 복잡해지면 새 defect source가 된다.
+  roadmap_anchor: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md#pr-123
+  activation_state: PENDING
+  scientific_status_on_intake: OPEN
+- id: PR-124
+  wave: 14
+  title: Dual-engine theorem/convention oracle
+  owner: COMMON
+  contributors:
+  - BASS
+  adjudicator_role: internal_non_author_reviewer
+  implementation_scopes:
+  - common
+  depends:
+  - PR-123
+  dependency_contracts:
+  - upstream_id: PR-123
+    mode: requires_success
+  targets:
+  - '`CO-05`, `C8-FRAMEWORK-F3/F4`, `C7-MES-F1--F4`, `N-THEORY-D2-AUTHORITY`, theorem-count와 조건 누락.'
+  files:
+  - htt/src/common
+  - scripts/codex_harness
+  - tests/contracts
+  - docs/PR_DELTAS/pr-124.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_124_dual_engine_theorem_convention_oracle.py
+  dod:
+  - theorem registry가 quantified variables, hypotheses, frame/order/domain과 `published_proof / independent_derivation
+    / checked_derivation / numerical_test / sanity_anchor / specification` 증거등급을 생성하게 한다. symbolic engine과
+    독립 metric/tetrad 또는 exact-arithmetic engine을 분리한다. MES에는 geodesic/non-geodesic/acceleration branch별
+    source DOI/arXiv 또는 scan authority, page/equation, convention translation, 실제 독립 derivation 수와 물리
+    가정 불확실성을 별도 필드로 둔다. legacy registry는 byte-stable reproduction으로 격리하고 active consumer는 typed successor
+    pointer만 사용한다. D2 authority는 Python anchor와 출발식/author가 분리된 nonzero Rust target의 source/input/output/toolchain
+    hash와 실제 collected/executed count를 요구한다. sanity anchor와 같은 식의 재평가는 theorem/independent-derivation
+    count에서 제외한다.
+  - theorem inventory, MES source/equation/branch authority와 successor-registry table, convention translation
+    fixtures, sign/unit/limit mutations, stale triple/branch swap/source-count inflation/zero-test mutation,
+    nonzero independent Rust receipt, old overstatement negative test, all-consumer/manuscript reconciliation과
+    lineage receipt.
+  kill: engine 간 sign/coefficient/domain 불일치가 0이어야 하며, MES active consumer의 stale triple이 0이고 D2 target이
+    실제 nonzero로 독립 실행되어야 한다. 하나라도 실패하면 해당 branch/theorem과 모든 dependent result를 blocked 처리한다.
+  cost: medium
+  level: L2
+  scope: pre-solver
+  risk: medium
+  claim_tier_ceiling: exploratory
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C1
+  claim_impact: domain/frame-conditional derived mechanics roadmap_rescue_v1:C1.
+  forbidden:
+  - 같은 AST나 generated expression을 두 backend에서 평가한 것을 두 derivation으로 세지 않는다. numeric spot check를 proof로
+    부르지 않는다.
+  anti_drift:
+  - theorem statement가 바뀌면 모든 consumer hash를 invalidate한다. all-parameter prose는 checked signature에서만 생성한다.
+  roadmap_anchor: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md#pr-124
+  activation_state: PENDING
+  scientific_status_on_intake: OPEN
+- id: PR-125
+  wave: 14
+  title: Canonical frame, order, domain과 premise contract
+  owner: COMMON
+  contributors:
+  - BASS
+  adjudicator_role: internal_non_author_reviewer
+  implementation_scopes:
+  - common
+  - bass_py
+  depends:
+  - PR-124
+  dependency_contracts:
+  - upstream_id: PR-124
+    mode: requires_success
+  targets:
+  - '`N-THEORY-FRAME-SCOPE`, `C8-FRAMEWORK-F2/F5`, 암묵적 signature/frame/order.'
+  files:
+  - htt/src/common
+  - scripts/codex_harness
+  - tests/contracts
+  - htt/bass
+  - tests/bass
+  - docs/PR_DELTAS/pr-125.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_125_canonical_frame_order_domain_premise_contract.py
+  dod:
+  - normal, matter, electron, CMB, local-observer frame; perturbative order; background class; units;
+    harmonic convention; redshift/depth convention을 typed object로 만든다. theorem, transfer, estimator artifact가
+    같은 contract를 참조하도록 한다.
+  - frame round-trip, vorticity/tilt sign, FLRW/no-tilt/local-boost/global-tilt limits, unknown/default
+    rejection, theorem-to-frame dependency graph.
+  kill: active theorem/estimator가 암묵적 frame/order로 생성되면 downstream theory PR을 금지한다.
+  cost: medium
+  level: L2
+  scope: pre-solver
+  risk: medium
+  claim_tier_ceiling: exploratory
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C1
+  claim_impact: convention contract correctness roadmap_rescue_v1:C1.
+  forbidden:
+  - frame transform이 없는 scalar alias를 만들어 차이를 숨기지 않는다. `beta=0`를 EGS/FLRW premise 전체로 대체하지 않는다.
+  anti_drift:
+  - legacy defaults는 reproduction mode에서만 허용하고 active producer는 explicit fields 없으면 fail한다.
+  roadmap_anchor: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md#pr-125
+  activation_state: PENDING
+  scientific_status_on_intake: OPEN
+- id: PR-126
+  wave: 14
+  title: One-way FLRW/EGS와 counterexample registry
+  owner: COMMON
+  contributors:
+  - BASS
+  adjudicator_role: internal_non_author_reviewer
+  implementation_scopes:
+  - common
+  depends:
+  - PR-124
+  - PR-125
+  dependency_contracts:
+  - upstream_id: PR-124
+    mode: requires_success
+  - upstream_id: PR-125
+    mode: requires_success
+  targets:
+  - '`N-THEORY-FLRW-CONVERSE`, `N-THEORY-EGS-CONVERSE`, `TH-01`.'
+  files:
+  - htt/src/common
+  - scripts/codex_harness
+  - tests/contracts
+  - docs/PR_DELTAS/pr-126.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_126_one_way_flrw_egs_counterexample_registry.py
+  dod:
+  - exact EGS와 almost-EGS의 matter, differentiability, radiation multipole, observer congruence premises를
+    DAG로 분리한다. comparator-matched FLRW → `x_C=0`의 one-way statement와 `x_C=0`이 FLRW를 보장하지 않는 cancellation
+    witness를 함께 봉인한다. almost-EGS는 정량 regularity/remainder가 없는 한 specified 상태로 둔다.
+  - premise DAG, SymPy/independent tensor reassembly, random cancellation property test, nonzero-shear/beta-zero
+    witness, generated safe theorem text.
+  kill: premise-complete FLRW state에서 `x_C≠0`이 나오거나 counterexample registry를 통과하지 못하면 statement를 폐기한다.
+  cost: medium--high
+  level: L2
+  scope: pre-solver
+  risk: high
+  claim_tier_ceiling: conditional
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C2
+  claim_impact: conditional mathematics roadmap_rescue_v1:C2; FLRW certificate 없음.
+  forbidden:
+  - converse, truth certificate, `beta=0 ⇒ EGS`, scalar-to-geometry language를 사용하지 않는다.
+  anti_drift:
+  - counterexample를 새 premise로 사후 제거하면 새 theorem ID를 발급한다. exact와 almost theorem을 한 claim으로 합치지 않는다.
+  roadmap_anchor: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md#pr-126
+  activation_state: PENDING
+  scientific_status_on_intake: OPEN
+- id: PR-127
+  wave: 14
+  title: Cancellation-preserving graded/PSD-cone non-identification theorem
+  owner: COMMON
+  contributors:
+  - HTT
+  - BASS
+  adjudicator_role: internal_non_author_reviewer
+  implementation_scopes:
+  - common
+  depends:
+  - PR-125
+  - PR-126
+  dependency_contracts:
+  - upstream_id: PR-125
+    mode: requires_success
+  - upstream_id: PR-126
+    mode: requires_success
+  targets:
+  - '`TH-02`, `N-STAT-ID-REGISTRY-HISTORY`, scalar family-ID 위험.'
+  files:
+  - htt/src/common
+  - scripts/codex_harness
+  - tests/contracts
+  - docs/PR_DELTAS/pr-127.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_127_cancellation_preserving_graded_psd_cone_non_iden.py
+  dod:
+  - response map의 kernel, cancellation cone, rank-deficient sectors와 set-valued equivalence class를 정의한다.
+    shear/vorticity처럼 양의 quadratic component는 PSD cone으로, signed `Delta Omega_k`는 별도 `R` 축 또는 branch-signed
+    cone으로 표현해 ambient algebraic carrier를 예컨대 `S_+^3 x R`로 둔다. 각 class/branch의 Hamiltonian·momentum constraint,
+    matter positivity와 domain 조건을 만족하는 물리 subset `A_C`를 별도로 정의하고 constraint verifier가 없는 witness는 `algebraic_only`로
+    표시한다. constructive witnesses로 point identification 불가능 영역을 보이고, 추가 observable이 rank를 실제로 올리는 조건을 theorem/API로
+    만든다.
+  - exact kernel witnesses, ambient-carrier와 `A_C` 분리, Gauss/Hamiltonian/momentum/matter-positivity constraint
+    fixtures, randomized cone tests, rank under mask/window fixtures, empty/unbounded/multi-component
+    identified-set outputs.
+  kill: 독립 engine이 rank/kernel에 동의하지 않으면 stronger inference를 block한다.
+  cost: medium--high
+  level: L2
+  scope: pre-solver
+  risk: high
+  claim_tier_ceiling: conditional
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C2
+  claim_impact: declared response map의 formal non-identification roadmap_rescue_v1:C2.
+  forbidden:
+  - non-identification을 isotropy의 증명으로 해석하거나 nuisance class를 결과를 보고 축소하지 않는다.
+  anti_drift:
+  - scalar 차원 수가 parameter 수와 같다는 이유로 rank를 가정하지 않는다. signed 변수를 PSD projection으로 잘라 cancellation witness를
+    없애지 않는다. transfer/mask/window가 response rank를 바꾼다.
+  roadmap_anchor: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md#pr-127
+  activation_state: PENDING
+  scientific_status_on_intake: OPEN
+- id: PR-128
+  wave: 14
+  title: NT2 coefficient authority와 downstream invalidation
+  owner: COMMON
+  contributors:
+  - OBSSTAT
+  - BASS
+  adjudicator_role: internal_non_author_reviewer
+  implementation_scopes:
+  - common
+  depends:
+  - PR-124
+  - PR-125
+  - PR-127
+  dependency_contracts:
+  - upstream_id: PR-124
+    mode: requires_success
+  - upstream_id: PR-125
+    mode: requires_success
+  - upstream_id: PR-127
+    mode: requires_success
+  targets:
+  - '`N-THEORY-NT2-COEFFICIENT`, NT2 bracket consumer.'
+  files:
+  - htt/src/common
+  - scripts/codex_harness
+  - tests/contracts
+  - docs/PR_DELTAS/pr-128.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_128_nt2_coefficient_authority_downstream_invalidatio.py
+  dod:
+  - specification-first로 `a2 = kappa Sigma (1+delta)`의 coefficient 방향과 domain을 정하고, exact Fraction과 독립
+    symbolic/numeric derivation을 수행한다. 올바른 lower bracket과 `F_lo`를 생성하고 reciprocal-wrong consumer를 전수 invalidate/regenerate한다.
+  - exact proof record, randomized admissible states, zero/negative denominator rejection, consumer graph와
+    before/after table.
+  kill: admissible case 하나라도 bound를 위반하거나 engine이 coefficient 방향에 불일치하면 모든 NT2/F consumer를 blocked한다.
+  cost: medium
+  level: L2
+  scope: pre-solver
+  risk: medium
+  claim_tier_ceiling: conditional
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C2
+  claim_impact: closure/H3-conditional algebraic bracket roadmap_rescue_v1:C1--roadmap_rescue_v1:C2.
+  forbidden:
+  - 기존 출력과 가까운 계수를 선택하거나 upper MES placeholder와 lower theorem을 한 proven interval로 합치지 않는다.
+  anti_drift:
+  - coefficient normalization이나 response convention이 달라지면 새 config/theorem ID를 발급한다.
+  roadmap_anchor: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md#pr-128
+  activation_state: PENDING
+  scientific_status_on_intake: OPEN
+- id: PR-129
+  wave: 15
+  title: NTA3 estimator/domain registry와 universal-floor 금지
+  owner: OBSSTAT
+  contributors:
+  - BASS
+  - HTT
+  adjudicator_role: internal_non_author_reviewer
+  implementation_scopes:
+  - obsstat
+  depends:
+  - PR-124
+  - PR-125
+  dependency_contracts:
+  - upstream_id: PR-124
+    mode: requires_success
+  - upstream_id: PR-125
+    mode: requires_success
+  targets:
+  - '`N-THEORY-NTA3-REGRESSION`.'
+  files:
+  - htt/obsstat
+  - htt/src/obsstat
+  - tests/obsstat
+  - docs/PR_DELTAS/pr-129.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_129_nta3_estimator_domain_registry_universal_floor.py
+  dod:
+  - 이상적 full-sky Gaussian quadrupole-power estimator에 대한 `sd(Fhat)/F=sqrt(2/5)`를 estimator/domain-specific
+    theorem으로 등록한다. multi-multipole Fisher quantity와 분리하고 독립 chi-square Monte Carlo로 확인한다.
+  - typed estimator registry, analytic/MC comparison, all-consumer negative scan과 generated captions.
+  kill: 선언한 이상 조건에서 MC가 사전 오차 이상 벗어나면 analytic/implementation을 재검토하고 claim을 내지 않는다.
+  cost: low--medium
+  level: L2
+  scope: pre-solver
+  risk: medium
+  claim_tier_ceiling: exploratory
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C1
+  claim_impact: estimator-specific theorem roadmap_rescue_v1:C1.
+  forbidden:
+  - universal/minimax/Cramér--Rao floor, mask/noise/general estimator에 대한 “더 잘할 수 없음” 문구를 유지하지 않는다.
+  anti_drift:
+  - 이것은 원 universal claim의 literal rescue가 아니라 corrected supersession이다.
+  roadmap_anchor: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md#pr-129
+  activation_state: PENDING
+  scientific_status_on_intake: OPEN
+- id: PR-130
+  wave: 15
+  title: Low-multipole convergence와 statistical sufficiency의 분리
+  owner: OBSSTAT
+  contributors:
+  - BASS
+  - HTT
+  adjudicator_role: internal_non_author_reviewer
+  implementation_scopes:
+  - obsstat
+  depends:
+  - PR-128
+  - PR-129
+  dependency_contracts:
+  - upstream_id: PR-128
+    mode: requires_success
+  - upstream_id: PR-129
+    mode: requires_success
+  targets:
+  - '`N-THEORY-NT2-SUFFICIENCY`.'
+  files:
+  - htt/obsstat
+  - htt/src/obsstat
+  - tests/obsstat
+  - docs/PR_DELTAS/pr-130.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_130_low_multipole_convergence_statistical_sufficienc.py
+  dod:
+  - 등록 response에서 finite/infinite Fisher tail의 양수성·수렴률을 analytic bound와 arbitrary-precision sum으로 계산한다.
+    factorization theorem이 없는 한 `sufficient`를 금지하고 truncation error/convergence만 보고한다.
+  - tail bound/zeta expression, high-precision sum, transfer profile sensitivity, forbidden-sufficiency
+    scan.
+  kill: tail이 0이 아니거나 factorization이 없으면 exact sufficiency claim은 영구 금지한다.
+  cost: medium
+  level: L2
+  scope: pre-solver
+  risk: medium
+  claim_tier_ceiling: exploratory
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C1
+  claim_impact: toy/transfer-conditional convergence theorem roadmap_rescue_v1:C1.
+  forbidden:
+  - tail이 작거나 L=80 결과가 안정적이라는 이유로 Rao--Blackwell/sufficiency를 주장하지 않는다.
+  anti_drift:
+  - response profile 또는 transfer가 바뀌면 tail theorem domain도 바뀐다. toy response를 observed low-ell information으로
+    해석하지 않는다.
+  roadmap_anchor: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md#pr-130
+  activation_state: PENDING
+  scientific_status_on_intake: OPEN
+- id: PR-131
+  wave: 15
+  title: Near-FLRW symbolic expansion과 singular-boundary map
+  owner: COMMON
+  contributors:
+  - BASS
+  adjudicator_role: internal_non_author_reviewer
+  implementation_scopes:
+  - common
+  - bass_py
+  depends:
+  - PR-124
+  - PR-125
+  - PR-126
+  - PR-127
+  - PR-128
+  dependency_contracts:
+  - upstream_id: PR-124
+    mode: requires_success
+  - upstream_id: PR-125
+    mode: requires_success
+  - upstream_id: PR-126
+    mode: requires_success
+  - upstream_id: PR-127
+    mode: requires_success
+  - upstream_id: PR-128
+    mode: requires_success
+  targets:
+  - '`N-THEORY-OMK-DOMAIN`, `TH-07`의 symbolic half.'
+  files:
+  - htt/src/common
+  - scripts/codex_harness
+  - tests/contracts
+  - htt/bass
+  - tests/bass
+  - docs/PR_DELTAS/pr-131.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_131_near_flrw_symbolic_expansion_singular_boundary_m.py
+  dod:
+  - named LRS-III/KS reduced system, background `q0/w`, frame와 expansion parameter를 고정한다. constraint-surface와
+    metric/tetrad 두 경로로 linear/next-order coefficient, transient mode, singular/zero-denominator boundary를
+    도출한다.
+  - symbolic Jacobian/eigenvector, independent finite-difference derivative as `K→0`, dimensional/sign/FLRW/vacuum/radiation/dust
+    checks, singular map.
+  kill: derivative plateau가 analytic coefficient와 불일치하거나 class 내부 singularity가 선언 domain에 들어오면 domain을
+    축소하거나 abandon한다.
+  cost: high
+  level: L2
+  scope: pre-solver
+  risk: high
+  claim_tier_ceiling: conditional
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C2
+  claim_impact: class-conditional asymptotic coefficient roadmap_rescue_v1:C2.
+  forbidden:
+  - '`q`를 고정하지 않은 global equality, six finite ceiling, observational curvature/shear 값을 이 PR에서 복구하지 않는다.'
+  anti_drift:
+  - class mirror와 sign convention을 분리한다. fitted line은 derivation이 아니다.
+  roadmap_anchor: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md#pr-131
+  activation_state: PENDING
+  scientific_status_on_intake: OPEN
+- id: PR-132
+  wave: 15
+  title: Interval/high-precision remainder certification과 uncertainty propagation
+  owner: COMMON
+  contributors:
+  - BASS
+  adjudicator_role: internal_non_author_reviewer
+  implementation_scopes:
+  - common
+  depends:
+  - PR-131
+  dependency_contracts:
+  - upstream_id: PR-131
+    mode: requires_success
+  targets:
+  - '`N-THEORY-OMK-DOMAIN`, OMK finite-use readiness.'
+  files:
+  - htt/src/common
+  - scripts/codex_harness
+  - tests/contracts
+  - docs/PR_DELTAS/pr-132.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_132_interval_high_precision_remainder_certification_.py
+  dod:
+  - compact declared domain에서 `O(K^2)`와 transient remainder를 interval 또는 independent high-precision enclosure로
+    bound한다. domain API가 외부 평가를 거부하게 하고 remainder를 every downstream ceiling/forecast에 uncertainty로 전파한다.
+    numerical enclosure, source/convention uncertainty, physical model-form uncertainty와 in-house conservative
+    rule을 서로 다른 component로 보존하며 MES 소비자에도 같은 분리를 적용한다.
+  - interval/high-precision certificate, boundary adversarial states, propagation tests, domain rejection
+    mutations.
+  kill: admissible state가 enclosure를 벗어나면 즉시 claim block; domain 축소는 새 version으로 기록한다.
+  cost: high
+  level: L2
+  scope: pre-solver
+  risk: high
+  claim_tier_ceiling: conditional
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C2
+  claim_impact: explicit remainder를 가진 class-conditional asymptotic theorem roadmap_rescue_v1:C2.
+  forbidden:
+  - finite grid sampling을 uniform proof라고 부르거나 remainder를 central coefficient에 흡수하지 않는다.
+  anti_drift:
+  - bound가 넓어 유용하지 않아도 성공 결과다. domain을 observed value에 맞게 사후 확대하지 않는다.
+  roadmap_anchor: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md#pr-132
+  activation_state: PENDING
+  scientific_status_on_intake: OPEN
+- id: PR-133
+  wave: 15
+  title: Local observer boost, global tilt와 source-response type system
+  owner: COMMON
+  contributors:
+  - BASS
+  - OBSSTAT
+  adjudicator_role: internal_non_author_reviewer
+  implementation_scopes:
+  - common
+  - bass_py
+  - obsstat
+  depends:
+  - PR-125
+  - PR-127
+  - PR-132
+  dependency_contracts:
+  - upstream_id: PR-125
+    mode: requires_success
+  - upstream_id: PR-127
+    mode: requires_success
+  - upstream_id: PR-132
+    mode: requires_success
+  targets:
+  - '`N-THEORY-OMEGA-SEMANTICS`, `TH-03`, `TH-04`의 pre-solver interface.'
+  files:
+  - htt/src/common
+  - scripts/codex_harness
+  - tests/contracts
+  - htt/bass
+  - tests/bass
+  - htt/obsstat
+  - htt/src/obsstat
+  - tests/obsstat
+  - docs/PR_DELTAS/pr-133.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_133_local_observer_boost_global_tilt_source_response.py
+  dod:
+  - linear observer proxy `A_v`, physical `Omega_tilt`, vorticity, shear, curvature와 background geometry를
+    서로 다른 type으로 분리한다. frame/order transformation, response vector, blind/aligned sector, source-response
+    equivalence edge를 기록한다. 각 후보는 `algebraic_witness -> constraint_admissible -> local_dynamics_admissible
+    -> global_dynamics_admissible` 사다리 중 도달한 단계만 표시한다. deprojection은 synthetic local-boost estimator property로만
+    검증한다.
+  - typed rename migration, harmonic boost derivation, local/global injections, frame/axis invariance,
+    response graph와 non-bridge semantic guard.
+  kill: pure local boost가 declared order에서 제거되지 않거나 global/local response가 rank-deficient이면 출력은 `non_identified`다.
+  cost: high
+  level: L2
+  scope: pre-solver
+  risk: high
+  claim_tier_ceiling: diagnostic_only
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C3
+  claim_impact: pre-solver discrimination diagnostic roadmap_rescue_v1:C2--roadmap_rescue_v1:C3; 측정/geometry
+    아님.
+  forbidden:
+  - '`A_v`와 `Omega_tilt` 자동 bridge, scalar value로 Bianchi family 또는 global tilt 측정, aligned-axis rank-1
+    예외 은폐를 하지 않는다.'
+  anti_drift:
+  - transfer/mask/window가 response collinearity를 바꾸므로 analytic rank와 observed rank를 구분한다. algebraic cancellation이나
+    constraint 해를 실제 Einstein--matter trajectory 또는 global cosmology로 승격하지 않는다.
+  roadmap_anchor: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md#pr-133
+  activation_state: PENDING
+  scientific_status_on_intake: OPEN
+- id: PR-134
+  wave: 16
+  title: Estimand, population, dependency, selection와 nuisance registry
+  owner: COMMON
+  contributors:
+  - OBSSTAT
+  - HTT
+  adjudicator_role: internal_non_author_reviewer
+  implementation_scopes:
+  - common
+  depends:
+  - PR-122
+  - PR-125
+  - PR-133
+  dependency_contracts:
+  - upstream_id: PR-122
+    mode: requires_success
+  - upstream_id: PR-125
+    mode: requires_success
+  - upstream_id: PR-133
+    mode: requires_success
+  targets:
+  - estimand mismatch, hidden sample/window/depth conventions, `N-STAT-PRIOR-PROVENANCE`의 upstream, `C1-K5-MV-F4/F5`,
+    `C3-K5-VCORR-ML-F6`.
+  files:
+  - htt/src/common
+  - scripts/codex_harness
+  - tests/contracts
+  - docs/PR_DELTAS/pr-134.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_134_estimand_population_dependency_selection_nuisanc.py
+  dod:
+  - 각 analysis에 target population, observation unit, dependence cluster, selection/mask/window, preprocessing,
+    estimand, nuisance family, prior/null/multiplicity와 allowed transformations를 typed registry로 만든다.
+    deterministic-template mean와 stochastic covariance data factor를 별도 generative branch로 표현한다.
+  - CF4/K1/DESI/ACT/JWST representative contracts, round-trip/schema tests, hidden-default mutation, estimand
+    fingerprint와 dependency graph.
+  kill: active inference가 registry 없이 실행되거나 template/covariance branch를 혼합하면 통계 PR 전체를 block한다.
+  cost: high
+  level: L3
+  scope: pre-solver
+  risk: high
+  claim_tier_ceiling: exploratory
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C1
+  claim_impact: estimand/analysis specification mechanics roadmap_rescue_v1:C1.
+  forbidden:
+  - 모든 survey를 같은 “channel” type으로 평탄화하거나 dependency를 독립 행으로 가정하지 않는다. generic contract만 추가하고 실제 CF4/K1/DESI
+    fixtures가 없는 PR로 끝내지 않는다.
+  anti_drift:
+  - registry 수정은 analysis-family 변경이다. observed result를 본 뒤 nuisance/depth/window를 수정하면 새 ID와 multiplicity를
+    요구한다.
+  roadmap_anchor: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md#pr-134
+  activation_state: PENDING
+  scientific_status_on_intake: OPEN
+- id: PR-135
+  wave: 16
+  title: Exchangeable observation-inclusive finite-null global ranking
+  owner: OBSSTAT
+  contributors: []
+  adjudicator_role: internal_non_author_reviewer
+  implementation_scopes:
+  - obsstat
+  depends:
+  - PR-123
+  - PR-134
+  dependency_contracts:
+  - upstream_id: PR-123
+    mode: requires_success
+  - upstream_id: PR-134
+    mode: requires_success
+  targets:
+  - '`ST-03`, `N-STAT-K1-EXCHANGE`, `N-STAT-DEGENERATE-NULL`, `C2-K5-MOCKSIG-F3`, `C5-EXT-ACT-F4`.'
+  files:
+  - htt/obsstat
+  - htt/src/obsstat
+  - tests/obsstat
+  - docs/PR_DELTAS/pr-135.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_135_exchangeable_observation_inclusive_finite_null_g.py
+  dod:
+  - observation과 모든 null row를 같은 방식으로 score/maximize하는 pooled 또는 leave-one-row-out rank API를 만든다. `(+1)/(N+1)`,
+    tie policy, discrete interval, max-statistic와 independent calibration/evaluation split을 지원한다. correlated
+    scan statistics는 row 내부 dependence를 보존한다.
+  - exact enumeration small-N fixtures, super-uniform type-I simulations, tied/discrete cases, dependence-preserving
+    max scan, finite-rank report schema. Monte Carlo p-value는 [Phipson--Smyth](https://arxiv.org/abs/1603.05766)의
+    exact-discrete 관점을 따른다.
+  kill: registered null families와 operational N에서 super-uniformity/size가 실패하면 global p interpretation을
+    폐기한다.
+  cost: medium
+  level: L3
+  scope: pre-solver
+  risk: medium
+  claim_tier_ceiling: conditional
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C2
+  claim_impact: matched-null-conditioned global calibration roadmap_rescue_v1:C2.
+  forbidden:
+  - observation에만 가능한 local rank를 만들거나 0 p-value, finite resolution 아래 Gaussian sigma를 보고하지 않는다.
+  anti_drift:
+  - statistic family, scan range, mask 또는 tie policy가 바뀌면 global calibration을 전부 다시 한다.
+  roadmap_anchor: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md#pr-135
+  activation_state: PENDING
+  scientific_status_on_intake: OPEN
+- id: PR-136
+  wave: 16
+  title: Generic partial-identification와 identified-set engine
+  owner: HTT
+  contributors: []
+  adjudicator_role: internal_non_author_reviewer
+  implementation_scopes:
+  - htt
+  depends:
+  - PR-127
+  - PR-134
+  dependency_contracts:
+  - upstream_id: PR-127
+    mode: requires_success
+  - upstream_id: PR-134
+    mode: requires_success
+  targets:
+  - '`ST-04`, `N-STAT-PI-COVERAGE`, CF4/fσ8/local-global point-identification 과장.'
+  files:
+  - htt/htt
+  - tests/htt
+  - docs/PR_DELTAS/pr-136.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_136_generic_partial_identification_identified_set_en.py
+  dod:
+  - equality/inequality constraints, nuisance projection, bounded/empty/unbounded/disconnected set와 response-rank
+    deficiency를 한 API로 계산한다. full parameter와 subvector identified set을 분리하고 scalar summary 대신 set-valued
+    artifact를 생성한다.
+  - analytic toy sets, kernel/cancellation fixtures, interval/LP/nonlinear cross-engine comparisons, set
+    topology and provenance manifest. 방법론 기준은 identified set에 대한 Monte Carlo confidence set 연구인 [Chen--Christensen--Tamer](https://arxiv.org/abs/1605.00499)를
+    참조한다.
+  kill: independent engine이 set boundary/status에 불일치하면 downstream numerical claim을 block한다.
+  cost: high
+  level: L3
+  scope: pre-solver
+  risk: high
+  claim_tier_ceiling: conditional
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C2
+  claim_impact: formal/algorithmic identified region roadmap_rescue_v1:C2.
+  forbidden:
+  - empty set을 detection으로, broad set을 central estimate로, solver nonconvergence를 non-identification으로
+    혼동하지 않는다.
+  anti_drift:
+  - nuisance class와 admissible set을 observed fit에 맞게 줄이지 않는다. projection과 optimization tolerance를 uncertainty
+    밖으로 숨기지 않는다.
+  roadmap_anchor: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md#pr-136
+  activation_state: PENDING
+  scientific_status_on_intake: OPEN
+- id: PR-137
+  wave: 16
+  title: Weak-identification boundary와 grid-conditional simultaneous coverage
+  owner: HTT
+  contributors:
+  - OBSSTAT
+  adjudicator_role: internal_non_author_reviewer
+  implementation_scopes:
+  - htt
+  depends:
+  - PR-123
+  - PR-135
+  - PR-136
+  dependency_contracts:
+  - upstream_id: PR-123
+    mode: requires_success
+  - upstream_id: PR-135
+    mode: requires_success
+  - upstream_id: PR-136
+    mode: requires_success
+  targets:
+  - '`N-STAT-PI-COVERAGE`, `GAP-05`, near-null nuisance와 boundary posterior.'
+  files:
+  - htt/htt
+  - tests/htt
+  - docs/PR_DELTAS/pr-137.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_137_weak_identification_boundary_grid_conditional_si.py
+  dod:
+  - point/partial/unidentified regimes를 연속적으로 가로지르는 DGP grid를 사전 등록한다. complete frozen algorithm의 simultaneous
+    coverage, empty/unbounded rate, boundary behavior와 optimization failure를 측정한다. 기본 pre-registration은
+    nominal coverage 0.95, 허용 undercoverage 0.02, grid point당 최소 2,000 independent replicates를 최소 10 seed에
+    분배하고, family-wise 99% binomial lower bound가 0.93 경계에서 0.01 이내면 최대 10,000까지 연장한다. 최소 두 mesh refinement에서
+    coverage 변화와 optimizer endpoint error를 보고한다. continuity/mesh-error theorem이 있을 때만 nuisance class 전체의
+    uniform coverage라 부르고, 그렇지 않으면 grid-conditional simultaneous empirical coverage로 제한한다.
+  - 최소 10-seed/2,000-replicate DGP grid, family-wise 99% binomial lower intervals, two-level mesh/optimizer-error
+    report, boundary/adversarial fixtures, coverage dashboard와 fail-closed status.
+  kill: retained grid point의 lower bound가 0.93 미만이거나 mesh refinement에서 coverage가 0.01 넘게 변하거나 optimizer
+    error가 reported endpoint tolerance의 10%를 넘으면 scientific bound를 내지 않고 failure map을 보존한다. uniform이라는
+    단어는 continuity/mesh certificate가 없으면 lint가 거부한다.
+  cost: high
+  level: L3
+  scope: pre-solver
+  risk: high
+  claim_tier_ceiling: conditional
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C2
+  claim_impact: grid-conditional coverage-calibrated partial-identification mechanics roadmap_rescue_v1:C2;
+    uniform class-wide claim은 별도 theorem이 있을 때만.
+  forbidden:
+  - central/high-signal cases만 골라 coverage를 주장하거나 실패한 nuisance corner를 domain에서 조용히 제거하지 않는다.
+  anti_drift:
+  - threshold를 coverage 결과에 맞게 튜닝하면 calibration/evaluation split을 새로 만든다.
+  roadmap_anchor: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md#pr-137
+  activation_state: PENDING
+  scientific_status_on_intake: OPEN
+- id: PR-138
+  wave: 16
+  title: Lineage-bound posterior draws, SBC와 실제 replicated-data PPC
+  owner: HTT
+  contributors: []
+  adjudicator_role: internal_non_author_reviewer
+  implementation_scopes:
+  - htt
+  depends:
+  - PR-122
+  - PR-134
+  - PR-137
+  dependency_contracts:
+  - upstream_id: PR-122
+    mode: requires_success
+  - upstream_id: PR-134
+    mode: requires_success
+  - upstream_id: PR-137
+    mode: requires_success
+  targets:
+  - '`N-STAT-PSEUDO-PPC`, `ST-02`, arbitrary caller-supplied p-value/prediction.'
+  files:
+  - htt/htt
+  - tests/htt
+  - docs/PR_DELTAS/pr-138.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_138_lineage_bound_posterior_draws_sbc_replicated_dat.py
+  dod:
+  - posterior draw를 normalized prior, likelihood/data/config/transfer와 sampler diagnostics에 content-address한다.
+    prior predictive stress, simulation-based calibration, replicated observations, preregistered discrepancy와
+    posterior-predictive calibration을 구현한다. old plug-in residual은 별도 `residual_check` type으로 유지한다.
+  - rank-uniform SBC tests, replicated-data hashes, multiple frozen discrepancies, posterior lineage mutation,
+    synthetic known-good/known-bad models. SBC 기준은 [Talts et al.](https://arxiv.org/abs/1804.06788)을 따른다.
+  kill: SBC, sampler diagnostics 또는 frozen PPC가 실패하면 `inadequate/blocked`; evidence claim 금지.
+  cost: high
+  level: L3
+  scope: pre-solver
+  risk: high
+  claim_tier_ceiling: diagnostic_only
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C3
+  claim_impact: model/transfer-conditional predictive adequacy roadmap_rescue_v1:C2--roadmap_rescue_v1:C3.
+  forbidden:
+  - caller-supplied point prediction/p-value를 PPC receipt로 받거나 실패 후 discrepancy를 교체하지 않는다. invalid posterior에서
+    PPC를 실행하지 않는다.
+  anti_drift:
+  - PPC 통과는 model truth가 아니며, failure는 threshold tuning이 아니라 inadequacy 결과다. SBC는 computation calibration이고
+    observed fit 검증과 다르다.
+  roadmap_anchor: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md#pr-138
+  activation_state: PENDING
+  scientific_status_on_intake: OPEN
+- id: PR-139
+  wave: 17
+  title: Dependency-aware holdout와 train-only refit
+  owner: HTT
+  contributors: []
+  adjudicator_role: internal_non_author_reviewer
+  implementation_scopes:
+  - htt
+  depends:
+  - PR-134
+  - PR-138
+  dependency_contracts:
+  - upstream_id: PR-134
+    mode: requires_success
+  - upstream_id: PR-138
+    mode: requires_success
+  targets:
+  - '`N-STAT-PSEUDO-LOOCV`, `ST-02`.'
+  files:
+  - htt/htt
+  - tests/htt
+  - docs/PR_DELTAS/pr-139.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_139_dependency_aware_holdout_train_only_refit.py
+  dod:
+  - observation/group/survey/depth 단위의 dependency graph를 바탕으로 valid fold를 선택한다. 모든 preprocessing, nuisance
+    fit, axis/feature selection을 training data에서만 다시 실행하고 held-out joint log predictive density를 계산한다.
+    exact refit을 기준으로 PSIS 근사를 검증한다.
+  - leakage mutations, train-only transform hashes, exact-vs-PSIS comparison, influential fold report,
+    dependency-bound ELPD. 기준 방법은 [Vehtari--Gelman--Gabry](https://arxiv.org/abs/1507.04544)를 참조한다.
+  kill: leakage 또는 fold dependency 위반, approximate/exact disagreement가 허용폭을 넘으면 predictive comparison을
+    block한다.
+  cost: high
+  level: L3
+  scope: pre-solver
+  risk: high
+  claim_tier_ceiling: diagnostic_only
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C3
+  claim_impact: dependency-qualified held-out predictive score roadmap_rescue_v1:C2--roadmap_rescue_v1:C3.
+  forbidden:
+  - channel ablation이나 full-vs-fold evidence difference를 LOOCV라 부르지 않는다. dependent row를 독립 LOO unit으로
+    사용하지 않는다.
+  anti_drift:
+  - valid exchangeable unit이 없으면 `LOO_not_identified`; channel ablation은 별도 sensitivity로 남긴다. PSIS diagnostic이
+    나쁘면 exact refit으로 돌아간다.
+  roadmap_anchor: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md#pr-139
+  activation_state: PENDING
+  scientific_status_on_intake: OPEN
+- id: PR-140
+  wave: 17
+  title: Normalized-prior coherent evidence와 두 독립 engine
+  owner: HTT
+  contributors: []
+  adjudicator_role: internal_non_author_reviewer
+  implementation_scopes:
+  - htt
+  depends:
+  - PR-122
+  - PR-134
+  - PR-138
+  - PR-139
+  dependency_contracts:
+  - upstream_id: PR-122
+    mode: requires_success
+  - upstream_id: PR-134
+    mode: requires_success
+  - upstream_id: PR-138
+    mode: requires_success
+  - upstream_id: PR-139
+    mode: requires_success
+  targets:
+  - '`N-STAT-PSEUDO-BAYES`, `N-STAT-PRIOR-PROVENANCE`, `ST-01`의 기반.'
+  files:
+  - htt/htt
+  - tests/htt
+  - docs/PR_DELTAS/pr-140.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_140_normalized_prior_coherent_evidence_engine.py
+  dod:
+  - normalized prior family, likelihood/data hash, evidence engine/config/diagnostics를 한 receipt에 묶는다.
+    nested/bridge/thermodynamic 또는 analytic small-model reference 중 두 독립 경로를 사용하고 prior-scale, covariance,
+    nuisance sensitivity를 사전 grid에서 평가한다.
+  - analytic evidence fixtures, prior normalization/property tests, engine disagreement policy, sensitivity
+    surface와 arbitrary-summary mutation.
+  kill: engine disagreement, insufficient ESS/diagnostics 또는 prior sensitivity가 preregistered ceiling을
+    넘으면 evidence claim은 `indeterminate`다.
+  cost: high
+  level: L3
+  scope: pre-solver
+  risk: high
+  claim_tier_ceiling: diagnostic_only
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C3
+  claim_impact: coherent model comparison conditional on registered model/prior roadmap_rescue_v1:C3.
+  forbidden:
+  - fitted score, unnormalized prior, caller-supplied scalar를 Bayes factor로 부르지 않는다. 두 engine을 같은 samples/weights로
+    단순 후처리하지 않는다.
+  anti_drift:
+  - evidence agreement가 generative model correctness를 보장하지 않는다. prior-dominated 결과는 그대로 표시한다.
+  roadmap_anchor: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md#pr-140
+  activation_state: PENDING
+  scientific_status_on_intake: OPEN
+- id: PR-141
+  wave: 17
+  title: Contamination-aware local/global mixture와 mandatory abstention
+  owner: HTT
+  contributors: []
+  adjudicator_role: internal_non_author_reviewer
+  implementation_scopes:
+  - htt
+  depends:
+  - PR-133
+  - PR-136
+  - PR-137
+  - PR-138
+  - PR-139
+  - PR-140
+  dependency_contracts:
+  - upstream_id: PR-133
+    mode: requires_success
+  - upstream_id: PR-136
+    mode: requires_success
+  - upstream_id: PR-137
+    mode: requires_success
+  - upstream_id: PR-138
+    mode: requires_success
+  - upstream_id: PR-139
+    mode: requires_success
+  - upstream_id: PR-140
+    mode: requires_success
+  targets:
+  - '`ST-01`, `ST-07`, local boost/global tilt/systematics 분리.'
+  files:
+  - htt/htt
+  - tests/htt
+  - docs/PR_DELTAS/pr-141.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_141_contamination_aware_local_global_mixture_mandato.py
+  dod:
+  - isotropy, local boost, survey/calibration systematic, shared/global anisotropy candidate를 명시적 competitor로
+    둔다. response-rank, posterior/predictive adequacy, held-out gain, prior sensitivity가 부족하면 mandatory
+    abstention을 반환한다. deterministic/covariance branch를 따로 비교한다.
+  - synthetic recovery/confusion/abstention matrix, null/systematic/local/global held-out simulations,
+    posterior calibration과 model misspecification cases.
+  kill: rank deficiency, failed PPC/LOO, no predictive gain, high prior sensitivity이면 `abstain/non_identified`가
+    유일한 허용 결과다.
+  cost: high
+  level: L3
+  scope: pre-solver
+  risk: high
+  claim_tier_ceiling: conditional
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C3
+  claim_impact: local/global discrimination candidate roadmap_rescue_v1:C3; geometry/family 아님.
+  forbidden:
+  - 모든 residual을 global component로 흡수하거나 MIO score를 likelihood factor로 사용하지 않는다.
+  anti_drift:
+  - model list와 contamination prior를 observed outcome 후 바꾸면 새 family와 multiplicity를 등록한다. positive global
+    result를 목표 함수로 삼지 않는다.
+  roadmap_anchor: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md#pr-141
+  activation_state: PENDING
+  scientific_status_on_intake: OPEN
+- id: PR-142
+  wave: 17
+  title: MIO joint-measure `F/Pi/G_F` invariance와 matched-null calibration
+  owner: MIO
+  contributors: []
+  adjudicator_role: internal_non_author_reviewer
+  implementation_scopes:
+  - mio
+  depends:
+  - PR-134
+  - PR-135
+  - PR-136
+  - PR-137
+  - PR-141
+  dependency_contracts:
+  - upstream_id: PR-134
+    mode: requires_success
+  - upstream_id: PR-135
+    mode: requires_success
+  - upstream_id: PR-136
+    mode: requires_success
+  - upstream_id: PR-137
+    mode: requires_success
+  - upstream_id: PR-141
+    mode: requires_success
+  targets:
+  - '`ST-06`, `N-STAT-MIO-F-MEASURE`, MIO diagnostic calibration gap.'
+  files:
+  - htt/mio
+  - tests/mio
+  - docs/PR_DELTAS/pr-142.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_142_mio_joint_measure_f_pi_g_f_invariance_matched_nu.py
+  dod:
+  - identity, weights, pairing, depth/reference policy를 가진 `MeasureSpec`을 정의한다. `F`, `Pi`, `G_F`의 permutation/pairing/depth
+    sensitivity, uncertainty와 matched-null distribution을 diagnostic report로 만든다. invalid/no-justified-measure
+    상태를 허용한다.
+  - MeasureSpec contract, relabel/permutation invariance, paired/unpaired counterexamples, matched-null
+    calibration, MIO/HTT no-merge tests.
+  kill: scientifically defensible joint measure가 없으면 measure-family sensitivity만 보고하고 calibrated scalar를
+    내지 않는다.
+  cost: high
+  level: L3
+  scope: pre-solver
+  risk: high
+  claim_tier_ceiling: conditional
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C2
+  claim_impact: calibrated MIO diagnostic roadmap_rescue_v1:C2; posterior/evidence 없음.
+  forbidden:
+  - posterior probability, evidence, truth certificate, HTT likelihood term을 만들지 않는다. `Q`, `F`, `Pi`를
+    서로 대체하지 않는다.
+  anti_drift:
+  - joint measure 선택은 scientific assumption이다. 결과를 보고 weight/pairing을 변경하면 새 diagnostic family로 센다.
+  roadmap_anchor: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md#pr-142
+  activation_state: PENDING
+  scientific_status_on_intake: OPEN
+- id: PR-143
+  wave: 17
+  title: 통합 synthetic calibration과 hostile statistical adjudication
+  owner: COMMON
+  contributors: []
+  adjudicator_role: internal_non_author_reviewer
+  implementation_scopes:
+  - common
+  depends:
+  - PR-135
+  - PR-136
+  - PR-137
+  - PR-138
+  - PR-139
+  - PR-140
+  - PR-141
+  - PR-142
+  dependency_contracts:
+  - upstream_id: PR-135
+    mode: requires_success
+  - upstream_id: PR-136
+    mode: requires_success
+  - upstream_id: PR-137
+    mode: requires_success
+  - upstream_id: PR-138
+    mode: requires_success
+  - upstream_id: PR-139
+    mode: requires_success
+  - upstream_id: PR-140
+    mode: requires_success
+  - upstream_id: PR-141
+    mode: requires_success
+  - upstream_id: PR-142
+    mode: requires_success
+  targets:
+  - 통계 foundation 전체, `GAP-05`, `CO-04/ST-03/ST-04` acceptance.
+  files:
+  - htt/src/common
+  - scripts/codex_harness
+  - tests/contracts
+  - docs/PR_DELTAS/pr-143.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_143_synthetic_calibration_hostile_statistical_adjudi.py
+  dod:
+  - known-null, local, global, systematic, weak-ID, dependent-mock, covariance-misspecified DGP를 blind
+    challenge로 구성한다. 각 method가 size, coverage, calibration, abstention, computational failure를 preregistered
+    기준에서 충족하는지 non-author referee가 판정한다.
+  - sealed challenge inputs, predictions, size/coverage/confusion results, independent referee report,
+    method-ready/block matrix.
+  kill: foundation method 하나가 실패하면 그 방법에 의존하는 data PR만 block하고 실패를 숨기지 않는다.
+  cost: high
+  level: L3
+  scope: pre-solver
+  risk: high
+  claim_tier_ceiling: diagnostic_only
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C3
+  claim_impact: pre-data method calibration roadmap_rescue_v1:C2--roadmap_rescue_v1:C3.
+  forbidden:
+  - data-specific favorable case만 고르거나 failed method를 threshold retuning 후 같은 challenge ID로 재평가하지 않는다.
+  anti_drift:
+  - synthetic challenge 통과는 observed validity가 아니라 method readiness다. generator와 analyst의 분리를 receipt에
+    기록한다.
+  roadmap_anchor: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md#pr-143
+  activation_state: PENDING
+  scientific_status_on_intake: OPEN
+- id: PR-144
+  wave: 18
+  title: Authenticated CF4 row/group/selection manifest
+  owner: OBSSTAT
+  contributors: []
+  adjudicator_role: internal_non_author_reviewer
+  implementation_scopes:
+  - obsstat
+  depends:
+  - PR-120
+  - PR-134
+  - PR-143
+  dependency_contracts:
+  - upstream_id: PR-120
+    mode: requires_success
+  - upstream_id: PR-134
+    mode: requires_success
+  - upstream_id: PR-143
+    mode: requires_success
+  targets:
+  - 두 CF4 P0의 data lineage, `C1-K5-MV-F4/F5`, `N-DATA-CF4-DOWNSTREAM`.
+  files:
+  - htt/obsstat
+  - htt/src/obsstat
+  - tests/obsstat
+  - docs/PR_DELTAS/pr-144.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_144_authenticated_cf4_row_group_selection_manifest.py
+  dod:
+  - exact catalogue/release, row/group ID, RA/Dec/redshift frame, `Dist/e_DMzp/Vpds/Vpwf/Vpec` 정의·units·producer,
+    indicator/calibration group, selection/completeness, grouping, duplicate/missing과 transformations를
+    row-level hash로 묶는다. 각 column이 observable, proxy, reconstruction 또는 derived correction인지 구분한다.
+  - row count/ID parity, units/range/coordinate fixtures, source hash/transform replay, duplicate/group
+    graph, `cf4_authenticated_manifest` 또는 explicit missing-authority report.
+  kill: row/group/selection과 core column authority를 재현할 수 없으면 PR-145--148을 `BLOCKED`로 유지한다.
+  cost: medium, 입력 권위에 따라 blocked 가능
+  level: L3
+  scope: pre-solver
+  risk: medium
+  claim_tier_ceiling: exploratory
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C1
+  claim_impact: dataset/estimand provenance roadmap_rescue_v1:C1.
+  forbidden:
+  - Vpec/Vpwf를 true flow로 선택하거나 audit 94 km/s 값을 observed replacement로 승격하지 않는다. 권위가 불명확한 column을 이름만
+    보고 사용하지 않는다.
+  anti_drift:
+  - release 또는 depth convention이 바뀌면 새 dataset identity다. raw data는 read-only 외부 경로에 두고 manifest만 version한다.
+  roadmap_anchor: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md#pr-144
+  activation_state: PENDING
+  scientific_status_on_intake: OPEN
+- id: PR-145
+  wave: 18
+  title: Radial-monopole와 velocity-shape estimator mechanics
+  owner: OBSSTAT
+  contributors: []
+  adjudicator_role: internal_non_author_reviewer
+  implementation_scopes:
+  - obsstat
+  depends:
+  - PR-123
+  - PR-134
+  - PR-135
+  - PR-136
+  - PR-137
+  - PR-144
+  dependency_contracts:
+  - upstream_id: PR-123
+    mode: requires_success
+  - upstream_id: PR-134
+    mode: requires_success
+  - upstream_id: PR-135
+    mode: requires_success
+  - upstream_id: PR-136
+    mode: requires_success
+  - upstream_id: PR-137
+    mode: requires_success
+  - upstream_id: PR-144
+    mode: requires_success
+  targets:
+  - '`C1-K5-MV-F1` P0, `C3-K5-VCORR-ML-F1` P0, `C1-F2/F5`, `C3-F4/F5/F6`, `C9-F1/F2`.'
+  files:
+  - htt/obsstat
+  - htt/src/obsstat
+  - tests/obsstat
+  - docs/PR_DELTAS/pr-145.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_145_radial_monopole_velocity_shape_estimator_mechani.py
+  dod:
+  - raw distance observable에서 standard MV/GLS, flow+radial-monopole constrained estimator, registered
+    distance likelihood, velocity-correlation linear/nonlinear branches를 한 estimand registry에서 구현한다. Vpds/Vpec
+    injection은 별도 config/seed/hash로 수행한다. 정확한 eight-region partition, leverage, non-railed nuisance fit과
+    common-window response를 추가한다.
+  - independent constrained linear oracle, flow/monopole/calibration injections, per-column 68/95% coverage,
+    partition/leverage mutations, dimensional/window tests, two P0 production-remediation candidate receipts.
+  kill: rank deficiency 또는 preregistered bias/coverage 실패 시 P0는 open이고 point estimate를 내지 않는다. P0 폐쇄는
+    PR-157 adjudication 전에는 불가하다.
+  cost: high
+  level: L3
+  scope: pre-solver
+  risk: high
+  claim_tier_ceiling: conditional
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C2
+  claim_impact: observable-estimator mechanics roadmap_rescue_v1:C2.
+  forbidden:
+  - constrained estimator의 중앙값을 truth로 선언하거나 기존 P0 headline에 가장 가까운 nuisance/model을 선택하지 않는다. ten-key
+    partition을 “octant”로 유지하지 않는다.
+  anti_drift:
+  - estimator 비교는 vector와 full covariance로 하며 scalar amplitude overlap만 보고하지 않는다. correction과 data가 같으면
+    joint covariance가 필요하다.
+  roadmap_anchor: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md#pr-145
+  activation_state: PENDING
+  scientific_status_on_intake: OPEN
+- id: PR-146
+  wave: 18
+  title: Correlated-flow, distance-error, selection/grouping E2E mocks
+  owner: OBSSTAT
+  contributors: []
+  adjudicator_role: internal_non_author_reviewer
+  implementation_scopes:
+  - obsstat
+  depends:
+  - PR-123
+  - PR-135
+  - PR-137
+  - PR-144
+  - PR-145
+  dependency_contracts:
+  - upstream_id: PR-123
+    mode: requires_success
+  - upstream_id: PR-135
+    mode: requires_success
+  - upstream_id: PR-137
+    mode: requires_success
+  - upstream_id: PR-144
+    mode: requires_success
+  - upstream_id: PR-145
+    mode: requires_success
+  targets:
+  - '`C2-K5-MOCKSIG-F3/F5`, `C3-K5-VCORR-ML-F4/F5`, K5 catalogue mock/realization blocker. K6는 PR-123의
+    독립 branch 소유다.'
+  files:
+  - htt/obsstat
+  - htt/src/obsstat
+  - tests/obsstat
+  - docs/PR_DELTAS/pr-146.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_146_correlated_flow_distance_error_selection_groupin.py
+  dod:
+  - Hermitian GRF와 independent box/observer units, correlated flow, nonlinear variants, non-Gaussian distance
+    error, indicator calibration, selection/Malmquist와 grouping을 포함하는 CF4 catalogue forward mocks를 만든다.
+    every mock에서 estimator/nuisance를 재적합한다.
+  - generator component power/variance, mutation kill, per-depth simultaneous grid-conditional coverage,
+    effective-N audit와 CF4 catalogue simulator card.
+  kill: Hermitian/component variance, coverage 또는 release-selection match가 실패하면 rare-tail/significance
+    claim을 생성하지 않는다.
+  cost: high
+  level: L3
+  scope: pre-solver
+  risk: high
+  claim_tier_ceiling: conditional
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C2
+  claim_impact: CF4 simulator/reconstruction-conditioned coverage roadmap_rescue_v1:C2.
+  forbidden:
+  - same-box octant를 independent mock으로 세거나 WF mean 하나를 posterior/CR ensemble로 사용하지 않는다. K6 numerical
+    rescue를 CF4 catalogue authority에 다시 결속하지 않는다.
+  anti_drift:
+  - generator와 estimator가 같은 bug를 공유하지 않도록 independent reference를 사용한다. effective N와 covariance uncertainty를
+    보고한다.
+  roadmap_anchor: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md#pr-146
+  activation_state: PENDING
+  scientific_status_on_intake: OPEN
+- id: PR-147
+  wave: 18
+  title: Nuisance-augmented CF4 identified sets
+  owner: HTT
+  contributors: []
+  adjudicator_role: internal_non_author_reviewer
+  implementation_scopes:
+  - htt
+  depends:
+  - PR-136
+  - PR-137
+  - PR-145
+  - PR-146
+  dependency_contracts:
+  - upstream_id: PR-136
+    mode: requires_success
+  - upstream_id: PR-137
+    mode: requires_success
+  - upstream_id: PR-145
+    mode: requires_success
+  - upstream_id: PR-146
+    mode: requires_success
+  targets:
+  - '`ST-04`, `N-DATA-CF4-DOWNSTREAM`, `C1-F2/F4/F5`, `C9-F3/F5`.'
+  files:
+  - htt/htt
+  - tests/htt
+  - docs/PR_DELTAS/pr-147.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_147_nuisance_augmented_cf4_identified_sets.py
+  dod:
+  - monopole, calibration, distance convention, grouping, selection, reconstruction/window, nonlinear
+    velocity nuisance를 declared set으로 묶는다. depth별 flow vector/amplitude/apex와 reconstruction compatibility를
+    bounded/empty/unbounded/nonidentified set으로 반환한다. common-window injected fields로 GLS/MV difference를
+    예측한다.
+  - grid-conditional simultaneous coverage, mesh sensitivity, independent endpoint solver, depth/window
+    sensitivity, machine-readable comparability table. class-wide uniformity는 PR-137의 continuity/mesh
+    theorem이 있을 때만 표기한다.
+  kill: coverage 실패 또는 plausible nuisance에서 unbounded면 그대로 보고하며 anomaly/global tilt claim을 중단한다.
+  cost: high
+  level: L3
+  scope: pre-solver
+  risk: high
+  claim_tier_ceiling: diagnostic_only
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C3
+  claim_impact: coverage-calibrated identified-region result roadmap_rescue_v1:C3.
+  forbidden:
+  - identified set에서 유리한 endpoint만 point estimate로 선택하거나 set이 0을 포함한다는 이유로 isotropy를 증명하지 않는다.
+  anti_drift:
+  - nuisance bounds와 depth grid는 observed result 전에 freeze한다. set topology 변화와 optimization uncertainty를
+    숨기지 않는다.
+  roadmap_anchor: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md#pr-147
+  activation_state: PENDING
+  scientific_status_on_intake: OPEN
+- id: PR-148
+  wave: 18
+  title: Depth-resolved `fσ8`와 same-data joint covariance bound
+  owner: HTT
+  contributors: []
+  adjudicator_role: internal_non_author_reviewer
+  implementation_scopes:
+  - htt
+  depends:
+  - PR-139
+  - PR-140
+  - PR-141
+  - PR-147
+  dependency_contracts:
+  - upstream_id: PR-139
+    mode: requires_success
+  - upstream_id: PR-140
+    mode: requires_success
+  - upstream_id: PR-141
+    mode: requires_success
+  - upstream_id: PR-147
+    mode: requires_success
+  targets:
+  - '`N-DATA-FS8-DEPTH`, 기존 `4.9σ` 및 growth/local-global downstream.'
+  files:
+  - htt/htt
+  - tests/htt
+  - docs/PR_DELTAS/pr-148.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_148_depth_resolved_f_8_same_data_joint_covariance_bo.py
+  dod:
+  - frozen velocity observable/correction, depth/shell grid, comparator provenance와 same-data correlation을
+    명시한다. simultaneous depth coverage, shell stability, joint covariance 또는 defensible correlation bounds를
+    계산한다. estimator uncertainty와 theoretical comparator uncertainty를 분리한다.
+  - joint simulation, covariance PSD/eigen diagnostics, simultaneous intervals, held-out depth prediction,
+    identified growth-difference report.
+  kill: covariance가 식별되지 않거나 depth instability가 preregistered limit을 넘으면 precision sigma 대신 bound/nonidentification을
+    보고한다.
+  cost: high
+  level: L3
+  scope: pre-solver
+  risk: high
+  claim_tier_ceiling: diagnostic_only
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C3
+  claim_impact: joint-covariance-conditioned growth difference bound roadmap_rescue_v1:C3; global tilt
+    없음.
+  forbidden:
+  - shell-dependent bias를 하나의 weighted point로 숨기거나 correlation=0/1 endpoint를 선택해 원하는 sigma를 만들지 않는다. `4.9σ`
+    복구를 목표로 하지 않는다.
+  anti_drift:
+  - correction과 comparator가 같은 catalogue/mocks를 쓰면 cross-covariance가 필수다. depth cut 변경은 multiplicity family
+    변경이다.
+  roadmap_anchor: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md#pr-148
+  activation_state: PENDING
+  scientific_status_on_intake: OPEN
+- id: PR-149
+  wave: 19
+  title: Planck/K1 canonical convention, mask와 transfer path
+  owner: OBSSTAT
+  contributors: []
+  adjudicator_role: internal_non_author_reviewer
+  implementation_scopes:
+  - obsstat
+  depends:
+  - PR-123
+  - PR-125
+  - PR-135
+  - PR-143
+  dependency_contracts:
+  - upstream_id: PR-123
+    mode: requires_success
+  - upstream_id: PR-125
+    mode: requires_success
+  - upstream_id: PR-135
+    mode: requires_success
+  - upstream_id: PR-143
+    mode: requires_success
+  targets:
+  - '`N-DATA-K1-CONVENTION`, `C10-K1-JWST-F4/F5`, structural zero/trials 문제.'
+  files:
+  - htt/obsstat
+  - htt/src/obsstat
+  - tests/obsstat
+  - docs/PR_DELTAS/pr-149.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_149_planck_k1_canonical_convention_mask_transfer_pat.py
+  dod:
+  - observed/null map이 동일한 coordinate, alm indexing/phase/reality, beam/pixel/downgrade, mask, cut-sky
+    feature, orientation/max scan을 통과하게 한다. TT BiPoSH odd-L diagonal structural zero와 monotone/equivalent
+    scan을 quotient하고 effective family를 freeze한다.
+  - alm reality/round-trip/rotation, arbitrary-real-alm structural zeros, mask/beam injections, observed/null
+    path equality와 scan-family ledger.
+  kill: canonical independent oracle와 coefficient/sign/order가 불일치하면 K1 statistic을 폐기한다. convention이 확정되기
+    전에는 PR-150의 raw-deletion swap을 승인하지 않는다.
+  cost: medium--high
+  level: L3
+  scope: pre-solver
+  risk: high
+  claim_tier_ceiling: conditional
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C2
+  claim_impact: observable feature extraction/basis theorem roadmap_rescue_v1:C1--roadmap_rescue_v1:C2.
+  forbidden:
+  - hash만 기록하고 실제 map path에서 mask를 적용하지 않거나 hard-coded/stale Planck axis를 discovery 결과로 사용하지 않는다.
+  anti_drift:
+  - convention mutation이 observed/null 양쪽에 같이 들어가 self-consistency로 숨을 수 있으므로 independent alm/Wigner/rotation
+    oracle가 필요하다. **이 카드가 mask/proc-nside/convention을 freeze하는 것이 PR-150의 PR3 raw 삭제 전제조건이다**(reduced-cache의
+    유일 재다운로드 trigger가 mask/proc-nside > 128 변경이므로, PR-149가 닫히기 전 PR3 raw를 삭제하지 않는다 — `docs/research_program/K1_E2E_REPRODUCIBILITY_RETENTION.md`).
+  roadmap_anchor: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md#pr-149
+  activation_state: PENDING
+  scientific_status_on_intake: OPEN
+- id: PR-150
+  wave: 19
+  title: K1 exchangeable global scan과 Planck E2E calibration
+  owner: OBSSTAT
+  contributors: []
+  adjudicator_role: internal_non_author_reviewer
+  implementation_scopes:
+  - obsstat
+  depends:
+  - PR-135
+  - PR-149
+  dependency_contracts:
+  - upstream_id: PR-135
+    mode: requires_success
+  - upstream_id: PR-149
+    mode: requires_success
+  targets:
+  - '`N-STAT-K1-EXCHANGE`, `N-STAT-DEGENERATE-NULL`, `N-DATA-K1-STALE-DIRECTION`, `C10-F5`.'
+  files:
+  - htt/obsstat
+  - htt/src/obsstat
+  - tests/obsstat
+  - docs/PR_DELTAS/pr-150.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_150_k1_exchangeable_global_scan_planck_e2e_calibrati.py
+  dod:
+  - PR3/FFP10 E2E 입력은 다운로드 완료 상태로 intake하고 PR-149에서 freeze한 동일 mask/transfer/statistic/max-scan 경로로 exchangeable
+    pooled-rank calibration을 수행한다. PR4/NPIPE는 full-frequency, component-separated, single-channel, subset-stream,
+    partial-range를 포함한 어떤 데이터도 다운로드하지 않고 reduction·분석도 전부 실행하지 않는다.
+  - PR3 input license/hash manifest, observed/null byte-equivalent runner, finite-rank intervals, method-wise/global
+    scan, Tier-1/Tier-2 retention receipt와 faithful-cache gate. PR4 관련 산출물은 비수치 SKIPPED_BY_USER_SCOPE
+    receipt만 만들고 PR4/NPIPE 수치·표·그림·p-value·method comparison·PR3+PR4 결합 결과를 생성하지 않는다.
+  kill: PR3 E2E input/support가 없거나 observed/null path가 다르면 scientific status는 BLOCKED로 유지한다. PR4/NPIPE
+    payload를 종류·채널·subset·부분 범위와 무관하게 다운로드하거나 reduction/분석에 사용하거나, PR4 수치·표·그림·결합 산출물을 만들거나, PR4가 없는 상태를
+    joint PR3+PR4 calibration으로 대체하거나 original roadmap_rescue_v1:C3 gate 통과로 기록하면 실패다. PR3 raw는 faithful-cache
+    gate GREEN 전 삭제하지 않는다.
+  cost: high, E2E input에 따라 blocked
+  level: L3
+  scope: pre-solver
+  risk: high
+  claim_tier_ceiling: diagnostic_only
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C2
+  claim_impact: PR3/FFP10-E2E-conditional morphology diagnostic roadmap_rescue_v1:C2 only; PR4/NPIPE systematics
+    comparison and original joint roadmap_rescue_v1:C3 claim remain unavailable.
+  forbidden:
+  - PR4/NPIPE 데이터는 full-frequency, component-separated, single-channel, subset-stream, partial-range 등
+    어떤 형태로도 다운로드하지 않는다. 기존 또는 외부 PR4 payload도 intake·reduction·cache·analysis에 사용하지 않는다. PR4/NPIPE numeric
+    result, table, figure, p-value, method comparison, PR3+PR4 combined output을 생성하지 않는다. 허용되는 PR4 산출물은
+    비수치 SKIPPED_BY_USER_SCOPE receipt뿐이다.
+  anti_drift:
+  - 원 로드맵은 PR4를 필수 추가분석으로 정의하지만 2026-07-15 사용자 지시에 따라 PR4/NPIPE의 모든 다운로드·reduction·데이터 분석과 수치·표·그림·결합
+    산출물을 전부 스킵한다. 이 scope reduction은 PR4를 optional evidence로 재해석하지 않으며, PR4 의존 결론은 BLOCKED/미판정으로 남긴다.
+  roadmap_anchor: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md#pr-150
+  activation_state: PENDING
+  scientific_status_on_intake: OPEN
+  execution_constraints:
+    recorded_on: '2026-07-15'
+    authority: explicit_user_instruction
+    pr3_ffp10_e2e_download: COMPLETE
+    pr4_npipe_e2e_download: NOT_STARTED
+    pr4_npipe_all_downloads: FORBIDDEN
+    pr4_npipe_reduction: SKIP_ENTIRELY
+    pr4_data_analysis: SKIP_ENTIRELY
+    pr4_numeric_figure_combined_outputs: FORBIDDEN
+    original_joint_pr3_pr4_c3_gate_satisfied: false
+- id: PR-151
+  wave: 19
+  title: DESI exact-selection mock와 per-mock refit
+  owner: OBSSTAT
+  contributors: []
+  adjudicator_role: internal_non_author_reviewer
+  implementation_scopes:
+  - obsstat
+  depends:
+  - PR-134
+  - PR-135
+  - PR-143
+  dependency_contracts:
+  - upstream_id: PR-134
+    mode: requires_success
+  - upstream_id: PR-135
+    mode: requires_success
+  - upstream_id: PR-143
+    mode: requires_success
+  targets:
+  - '`N-DATA-DESI-READINESS`, `C4-EXT-DESI-F1`--`F7`.'
+  files:
+  - htt/obsstat
+  - htt/src/obsstat
+  - tests/obsstat
+  - docs/PR_DELTAS/pr-151.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_151_desi_exact_selection_mock_per_mock_refit.py
+  dod:
+  - estimator의 `nz`, quadrature, lmax/mask leakage, NGC/SGC cap과 raw/corrected ratio를 repair한다. every
+    mock에서 alpha와 nuisance를 재적합한다. official release/selection/window/randoms에 맞는 mock manifest를 만든 뒤 fast
+    covariance tier와 high-realism validation tier를 분리한다. clustering, kinematic, selection/systematics
+    injections을 동일 estimator로 비교한다.
+  - convergence curves, per-mock refit receipt, exact finite ranks, two-tier covariance/validation, cap-wise
+    source-derived ratios와 component confusion matrix.
+  kill: exact-support mock/selection이 없거나 causal components가 분리되지 않으면 survey-conditional null까지만 보고하고
+    attribution을 abandon한다.
+  cost: high
+  level: L3
+  scope: pre-solver
+  risk: high
+  claim_tier_ceiling: diagnostic_only
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C3
+  claim_impact: DESI-survey-conditional estimator/null result roadmap_rescue_v1:C3.
+  forbidden:
+  - hard-coded cap ratio, fixed-alpha mocks, generic GRF만으로 “clustering-dominated” causal attribution을
+    주장하지 않는다.
+  anti_drift:
+  - 현재 official DESI DR1 문서는 1000 EZmocks와 25 AbacusSummit validation mocks를 제공한다고 명시한다. 이 가용성은 estimator
+    support를 자동 보장하지 않으므로 exact selection/weights/window match를 먼저 확인한다. [DESI DR1 docs](https://data.desi.lbl.gov/doc/releases/dr1/)
+  roadmap_anchor: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md#pr-151
+  activation_state: PENDING
+  scientific_status_on_intake: OPEN
+- id: PR-152
+  wave: 19
+  title: ACT raw-QE acquisition gate와 release-simulation cross-fit
+  owner: OBSSTAT
+  contributors: []
+  adjudicator_role: internal_non_author_reviewer
+  implementation_scopes:
+  - obsstat
+  depends:
+  - PR-135
+  - PR-143
+  dependency_contracts:
+  - upstream_id: PR-135
+    mode: requires_success
+  - upstream_id: PR-143
+    mode: requires_success
+  targets:
+  - '`N-DATA-ACT-RANGE`, `C5-EXT-ACT-F1`--`F6`.'
+  files:
+  - htt/obsstat
+  - htt/src/obsstat
+  - tests/obsstat
+  - docs/PR_DELTAS/pr-152.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_152_act_raw_qe_acquisition_gate_release_simulation_c.py
+  dod:
+  - release simulation에서는 leave-one-simulation/cross-fit mean field, exact finite rank, stochastic/fixed-template
+    injection-law 구분, residual mean과 rounding uncertainty를 repair한다. 별도로 filtered maps/QE inputs, mask/filter,
+    response, mean field, N0/N1, validated multipole range를 authenticated inventory로 조사한다.
+  - cross-fit delta-p/MC resolution, injection coverage, product/range manifest, upstream availability
+    decision. 입력이 있으면 mask→QE→response→mean-field→N0/N1 E2E injection을 추가한다.
+  kill: 충분히 upstream input이 없으면 `ABANDON_CURRENT_DATASET_FOR_NATIVE_LOW_L_SKY_POWER`; release-simulation
+    diagnostic만 닫는다.
+  cost: medium if no-go, high if upstream inputs exist
+  level: L3
+  scope: pre-solver
+  risk: high
+  claim_tier_ceiling: diagnostic_only
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C3
+  claim_impact: release conditional diagnostic roadmap_rescue_v1:C2, 또는 완전 E2E 통과 시 ACT-pipeline-conditioned
+    measurement roadmap_rescue_v1:C3.
+  forbidden:
+  - released kappa alm에 signal을 더한 것을 pre-QE transfer라고 부르거나 input 부재에서 `L=2..10` sky-power limit을 계산하지
+    않는다.
+  anti_drift:
+  - '[ACT DR6 official products](https://act.princeton.edu/act-dr6-data-products)가 공개되어 있어도 필요한 upstream
+    QE 단계가 포함되는지는 별도 확인해야 한다. release-product diagnostic과 raw-QE inference를 분리한다.'
+  roadmap_anchor: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md#pr-152
+  activation_state: PENDING
+  scientific_status_on_intake: OPEN
+- id: PR-153
+  wave: 19
+  title: JWST authenticated row, crossmatch와 calibration manifest
+  owner: OBSSTAT
+  contributors: []
+  adjudicator_role: internal_non_author_reviewer
+  implementation_scopes:
+  - obsstat
+  depends:
+  - PR-122
+  - PR-134
+  - PR-143
+  dependency_contracts:
+  - upstream_id: PR-122
+    mode: requires_success
+  - upstream_id: PR-134
+    mode: requires_success
+  - upstream_id: PR-143
+    mode: requires_success
+  targets:
+  - '`N-DATA-JWST-ACQUISITION`, `N-DATA-JWST-CROSSMATCH`, `C10-K1-JWST-F1/F2`.'
+  files:
+  - htt/obsstat
+  - htt/src/obsstat
+  - tests/obsstat
+  - docs/PR_DELTAS/pr-153.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_153_jwst_authenticated_row_crossmatch_calibration_ma.py
+  dod:
+  - anchor별 authoritative URL/dataset ID, retrieval time/hash/license, object/host IDs와 aliases, coordinate/redshift
+    evidence, original uncertainty, method/calibration group, deterministic transform을 row-complete manifest로
+    만든다. probabilistic identity match, ambiguity와 duplicate policy를 구현한다.
+  - independent row replay, crossmatch probability/tolerance sensitivity, leave-one-match/group report,
+    label-substitution negative test.
+  kill: authoritative row/identity/uncertainty를 재현하지 못하면 JWST lane은 `synthetic scenario`로 유지한다.
+  cost: medium--high, source availability에 따라 blocked
+  level: L3
+  scope: pre-solver
+  risk: high
+  claim_tier_ceiling: exploratory
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C1
+  claim_impact: authenticated anchor dataset roadmap_rescue_v1:C1.
+  forbidden:
+  - coordinate radius 하나만으로 identity를 확정하거나 synthetic 14-anchor fixture를 observed JWST data로 이름 바꾸지 않는다.
+  anti_drift:
+  - source row가 수정되면 dataset identity와 forecast를 새로 생성한다. prior, anchor count/fraction, covariance endpoint를
+    서로 교환하지 않는다.
+  roadmap_anchor: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md#pr-153
+  activation_state: PENDING
+  scientific_status_on_intake: OPEN
+- id: PR-154
+  wave: 20
+  title: JWST hierarchical covariance forecast
+  owner: HTT
+  contributors: []
+  adjudicator_role: internal_non_author_reviewer
+  implementation_scopes:
+  - htt
+  depends:
+  - PR-138
+  - PR-139
+  - PR-153
+  dependency_contracts:
+  - upstream_id: PR-138
+    mode: requires_success
+  - upstream_id: PR-139
+    mode: requires_success
+  - upstream_id: PR-153
+    mode: requires_success
+  targets:
+  - '`N-DATA-JWST-WEIGHTING`, `N-DATA-JWST-COVARIANCE`, `C10-F1/F3`.'
+  files:
+  - htt/htt
+  - tests/htt
+  - docs/PR_DELTAS/pr-154.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_154_jwst_hierarchical_covariance_forecast.py
+  dod:
+  - per-host measurement, host latent, zero-point, method/calibration group와 CF4 overlap covariance를 계층
+    모델에 넣는다. probabilistic match를 marginalize하고 leave-host/group-out, SBC, PPC와 forecast coverage를 수행한다.
+  - hierarchical simulation recovery, calibration-group deletion, match uncertainty propagation, held-out
+    predictive score와 scenario table.
+  kill: leave-group instability, failed coverage/PPC 또는 gain 소멸을 숨기지 않고 null/no-gain forecast로 보고한다.
+  cost: high
+  level: L3
+  scope: pre-solver
+  risk: high
+  claim_tier_ceiling: diagnostic_only
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C3
+  claim_impact: provenance/covariance-conditional forecast roadmap_rescue_v1:C3.
+  forbidden:
+  - 모든 row uncertainty를 global 1/3로 줄이거나 gain이 작다는 이유로 shared covariance를 제거하지 않는다.
+  anti_drift:
+  - forecast input과 prior를 endpoint 결과 후 변경하면 새 scenario다. synthetic과 authenticated rows를 합쳐 하나의 observed
+    forecast로 부르지 않는다.
+  roadmap_anchor: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md#pr-154
+  activation_state: PENDING
+  scientific_status_on_intake: OPEN
+- id: PR-155
+  wave: 20
+  title: Cross-survey direction negative controls와 joint covariance
+  owner: HTT
+  contributors:
+  - OBSSTAT
+  adjudicator_role: internal_non_author_reviewer
+  implementation_scopes:
+  - htt
+  depends:
+  - PR-148
+  - PR-150
+  - PR-151
+  - PR-152
+  - PR-153
+  - PR-154
+  dependency_contracts:
+  - upstream_id: PR-148
+    mode: requires_success
+  - upstream_id: PR-150
+    mode: requires_success
+  - upstream_id: PR-151
+    mode: requires_success
+  - upstream_id: PR-152
+    mode: requires_success
+  - upstream_id: PR-153
+    mode: requires_success
+  - upstream_id: PR-154
+    mode: requires_success
+  targets:
+  - '`DA-07`, `N-DATA-K1-STALE-DIRECTION`, cross-probe independent-confirmation 위험.'
+  files:
+  - htt/htt
+  - tests/htt
+  - docs/PR_DELTAS/pr-155.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_155_cross_survey_direction_negative_controls_joint_c.py
+  dod:
+  - rotation, antipode, depth reversal, mask perturbation, cap/survey split, calibration deletion과 fixed/pre-estimated/re-estimated
+    axis를 preregister한다. shared sky/foreground/selection/calibration/data overlap의 joint covariance 또는
+    conservative bound를 계산한다.
+  - control matrix, direction uncertainty geometry, covariance decomposition, missing-sector artifact와
+    multiplicity correction.
+  kill: joint covariance가 식별되지 않거나 negative-control distribution과 분리되지 않으면 coherence/shared-cause claim을
+    중단한다.
+  cost: high
+  level: L3
+  scope: pre-solver
+  risk: high
+  claim_tier_ceiling: diagnostic_only
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C3
+  claim_impact: diagnostic cross-survey falsification roadmap_rescue_v1:C2--roadmap_rescue_v1:C3.
+  forbidden:
+  - dependent p-values를 곱하거나 동일 Planck/CF4 information을 독립 confirmation으로 센다. failed/blocked lane을 joint
+    score에 0으로 채우지 않는다.
+  anti_drift:
+  - negative control이 본 방향과 비슷한 coherence를 보이면 결과는 systematics/non-identification이다.
+  roadmap_anchor: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md#pr-155
+  activation_state: PENDING
+  scientific_status_on_intake: OPEN
+- id: PR-156
+  wave: 20
+  title: Multi-probe response-rank와 held-out local/global/systematics injection
+  owner: HTT
+  contributors: []
+  adjudicator_role: internal_non_author_reviewer
+  implementation_scopes:
+  - htt
+  depends:
+  - PR-133
+  - PR-141
+  - PR-143
+  - PR-155
+  dependency_contracts:
+  - upstream_id: PR-133
+    mode: requires_success
+  - upstream_id: PR-141
+    mode: requires_success
+  - upstream_id: PR-143
+    mode: requires_success
+  - upstream_id: PR-155
+    mode: requires_success
+  targets:
+  - '`ST-07`, `TH-03/04` pre-native use, local/global discrimination 장기 rescue.'
+  files:
+  - htt/htt
+  - tests/htt
+  - docs/PR_DELTAS/pr-156.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_156_multi_probe_response_rank_held_out_local_global_.py
+  dod:
+  - 통과한 lane만 사용해 local boost, global candidate, survey/systematic, isotropy response uncertainty를 nuisance
+    projection 후 평가한다. blind held-out injections에서 rank interval, confusion, abstention, predictive gain과
+    prior sensitivity를 계산한다.
+  - sealed injection bank, confusion/coverage/abstention surface, held-out score, response principal-angle/rank
+    report.
+  kill: plausible nuisance에서 rank가 사라지거나 PPC/LOO/null/prior gate 하나라도 실패하면 `abstain/non_identified`다.
+  cost: high
+  level: L3
+  scope: pre-solver
+  risk: high
+  claim_tier_ceiling: conditional
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C3
+  claim_impact: pre-solver local/global discrimination candidate roadmap_rescue_v1:C3.
+  forbidden:
+  - full-rank point estimate 하나로 식별을 선언하거나 shared latent cause를 Bianchi geometry로 이름 붙이지 않는다.
+  anti_drift:
+  - blocked lane은 zero response로 대체하지 않는다. response provider/transfer가 바뀌면 challenge를 재동결한다.
+  roadmap_anchor: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md#pr-156
+  activation_state: PENDING
+  scientific_status_on_intake: OPEN
+- id: PR-157
+  wave: 20
+  title: Pre-solver independent finding adjudication
+  owner: COMMON
+  contributors: []
+  adjudicator_role: independent_non_author_finding_panel
+  implementation_scopes:
+  - common
+  depends:
+  - PR-143
+  - PR-144
+  - PR-145
+  - PR-146
+  - PR-147
+  - PR-148
+  - PR-149
+  - PR-150
+  - PR-151
+  - PR-152
+  - PR-153
+  - PR-154
+  - PR-155
+  - PR-156
+  dependency_contracts:
+  - upstream_id: PR-143
+    mode: requires_terminal_receipt
+  - upstream_id: PR-144
+    mode: requires_terminal_receipt
+  - upstream_id: PR-145
+    mode: requires_terminal_receipt
+  - upstream_id: PR-146
+    mode: requires_terminal_receipt
+  - upstream_id: PR-147
+    mode: requires_terminal_receipt
+  - upstream_id: PR-148
+    mode: requires_terminal_receipt
+  - upstream_id: PR-149
+    mode: requires_terminal_receipt
+  - upstream_id: PR-150
+    mode: requires_terminal_receipt
+  - upstream_id: PR-151
+    mode: requires_terminal_receipt
+  - upstream_id: PR-152
+    mode: requires_terminal_receipt
+  - upstream_id: PR-153
+    mode: requires_terminal_receipt
+  - upstream_id: PR-154
+    mode: requires_terminal_receipt
+  - upstream_id: PR-155
+    mode: requires_terminal_receipt
+  - upstream_id: PR-156
+    mode: requires_terminal_receipt
+  targets:
+  - 102-row matrix 중 literal rescue, corrected supersession, falsified/blocked/abandoned의 권위 갱신.
+  files:
+  - htt/src/common
+  - scripts/codex_harness
+  - tests/contracts
+  - docs/PR_DELTAS/pr-157.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_157_pre_solver_independent_finding_adjudication.py
+  dod:
+  - PR-143--156 각각에서 `COMPLETED_SUCCESS | COMPLETED_FAILED_WITH_RECEIPT | BLOCKED_WITH_RECEIPT | ABANDONED_WITH_RECEIPT`
+    terminal receipt를 수집하는 deterministic aggregation을 만든다. raw production receipts만 사용해 identity diff,
+    falsifier, independent oracle, coverage/proof/domain, all-consumer freshness를 판정한다. literal rescue와
+    새 claim을 분리하고 반대의견을 보존한다.
+  - updated authoritative matrix, before/after counts generated from JSON, disputed rows, stale consumer
+    scan, adjudicator prompt/response receipts.
+  kill: PR-143--156 중 terminal receipt가 하나라도 없거나 identity/provenance/consumer 중 하나라도 불완전하면 해당 lane은 미판정
+    또는 `downclaimed/rebuild_required/blocked`로 유지한다. blocked/abandoned receipt는 aggregation을 끝내지만 rescue
+    표가 될 수 없다.
+  cost: medium
+  level: L3
+  scope: pre-solver
+  risk: medium
+  claim_tier_ceiling: diagnostic_only
+  claim_level:
+    scheme: not_applicable_governance_v1
+    level: NOT_APPLICABLE
+  claim_impact: adjudicated evidence state; 자체 과학 claim 없음.
+  forbidden:
+  - PR author/후보 생성자가 자신의 상태를 승인하거나 methods score를 evidence로 사용하지 않는다. 미완료 lane을 bulk close하지 않는다.
+  anti_drift:
+  - 역사적 finding/source는 immutable하다. disposition 변경은 new adjudication record와 source hash로만 한다.
+  roadmap_anchor: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md#pr-157
+  activation_state: PENDING
+  scientific_status_on_intake: OPEN
+- id: PR-158
+  wave: 20
+  title: 검증된 claim만 사용하는 methods/negative-audit manuscript rebuild
+  owner: COMMON
+  contributors: []
+  adjudicator_role: internal_non_author_reviewer
+  implementation_scopes:
+  - common
+  depends:
+  - PR-157
+  dependency_contracts:
+  - upstream_id: PR-157
+    mode: requires_adjudicated_claim_set
+  targets:
+  - as-shipped REJECT를 positive headline 수정이 아닌 새 방어 가능한 thesis로 전환.
+  files:
+  - htt/src/common
+  - scripts/codex_harness
+  - tests/contracts
+  - docs/PR_DELTAS/pr-158.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_158_claim_methods_negative_audit_manuscript_rebuild.py
+  dod:
+  - methods/non-identification/conditional theorem/numerical upper bound/finite-null/identified-set 결과
+    중 PR-157에서 승인된 것만 manuscript와 figures에 생성한다. 모든 숫자는 generated source, 모든 figure는 manifest, 모든 blocked/no-go는
+    명시한다. clean LaTeX/PDF visual review와 digest-blind external-style review를 수행한다.
+  - generated claim/table/figure sources, provenance/freshness, claim/transfer lint, clean TeX build,
+    rendered PDF inspection, independent referee decisions와 release manifest.
+  kill: current authoritative ledger보다 강한 문구, manual number, stale figure, invalid manifest 또는 unresolved
+    P0 consumer가 있으면 publication freeze를 reject한다.
+  cost: high
+  level: L3
+  scope: pre-solver
+  risk: high
+  claim_tier_ceiling: diagnostic_only
+  claim_level:
+    scheme: not_applicable_governance_v1
+    level: NOT_APPLICABLE
+  claim_impact: 실제 승인 결과에 따른 methods/negative-audit paper; pre-native family/geometry 없음.
+  forbidden:
+  - rescue 수를 늘려 narrative를 긍정적으로 만들거나 audit/governance figure를 science result figure로 채우지 않는다. open P0,
+    family, geometry, native transfer, global-tilt detection headline을 넣지 않는다.
+  anti_drift:
+  - report-facing figure는 bound data/analysis를 보여야 하며 internal gates는 appendix로 제한한다. post-surgery score는
+    readiness 증거가 아니다.
+  roadmap_anchor: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md#pr-158
+  activation_state: PENDING
+  scientific_status_on_intake: OPEN
+- id: PR-159
+  wave: 21
+  title: Authenticated native-delivery intake
+  owner: BASS
+  contributors: []
+  adjudicator_role: internal_non_author_reviewer
+  implementation_scopes:
+  - bass_py
+  depends:
+  - PR-122
+  - PR-124
+  - PR-125
+  dependency_contracts:
+  - upstream_id: PR-122
+    mode: requires_success
+  - upstream_id: PR-124
+    mode: requires_success
+  - upstream_id: PR-125
+    mode: requires_success
+  targets:
+  - 'Roadmap card PR-159: Authenticated native-delivery intake'
+  files:
+  - htt/bass
+  - tests/bass
+  - docs/PR_DELTAS/pr-159.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_159_authenticated_native_delivery_intake.py
+  dod:
+  - producer identity/version/license, source/build/config hash, coefficient conventions, frame/units,
+    parameter domain, output schema, test vectors와 rejection behavior를 검증한다. read-only immutable intake
+    snapshot과 delivery receipt를 만든다.
+  - authenticity/checksum, schema rejection fixtures, FLRW/no-tilt/domain boundary examples, native-source
+    registry.
+  kill: authenticity, convention 또는 version을 독립 확인할 수 없으면 PR-160--166을 계속 dormant로 둔다.
+  cost: blocked until delivery
+  level: L4
+  scope: post-native
+  risk: low
+  claim_tier_ceiling: blocked
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C1
+  claim_impact: authenticated delivery intake roadmap_rescue_v1:C1.
+  forbidden:
+  - 이름이나 파일 layout만 보고 native라고 승인하거나 AniCLASS/external/proxy를 native alias로 등록하지 않는다.
+  anti_drift:
+  - delivery update는 새 version이며 old/new output을 섞지 않는다. conformance와 physics validation을 분리한다.
+  roadmap_anchor: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md#pr-159
+  activation_state: DORMANT_EXTERNAL
+  scientific_status_on_intake: OPEN
+  external_dependency_contracts:
+  - upstream_id: AUTHENTICATED_NATIVE_DELIVERY
+    mode: requires_authenticated_external_receipt
+    scope: native_low_ell_delivery
+- id: PR-160
+  wave: 21
+  title: Producer/consumer transport conformance와 closure rejection challenge
+  owner: BASS
+  contributors: []
+  adjudicator_role: internal_non_author_reviewer
+  implementation_scopes:
+  - bass_py
+  depends:
+  - PR-159
+  - PR-121
+  - PR-122
+  - PR-123
+  - PR-124
+  - PR-125
+  - PR-133
+  dependency_contracts:
+  - upstream_id: PR-159
+    mode: requires_success
+  - upstream_id: PR-121
+    mode: requires_success
+  - upstream_id: PR-122
+    mode: requires_success
+  - upstream_id: PR-123
+    mode: requires_success
+  - upstream_id: PR-124
+    mode: requires_success
+  - upstream_id: PR-125
+    mode: requires_success
+  - upstream_id: PR-133
+    mode: requires_success
+  targets:
+  - 'Roadmap card PR-160: Producer/consumer transport conformance와 closure rejection challenge'
+  files:
+  - htt/bass
+  - tests/bass
+  - docs/PR_DELTAS/pr-160.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_160_producer_consumer_transport_conformance_closure_.py
+  dod:
+  - adapter round-trip, units/frame/harmonic indexing, parameter rejection, conservation/constraint residual,
+    deterministic replay와 convergence metadata를 검증한다. legacy memory-kernel/Teff 아이디어는 causality, passivity,
+    stability, reflection, phase와 observable-bias 기준을 가진 optional rejection challenge로만 비교한다.
+  - conformance corpus, rejected malformed/out-of-domain inputs, FLRW and known-limit comparisons, closure
+    pass/fail/no-go report.
+  kill: unit/frame/index mismatch, nondeterministic replay 또는 constraint failure가 하나라도 있으면 native output
+    ingestion을 block한다.
+  cost: high
+  level: L4
+  scope: post-native
+  risk: high
+  claim_tier_ceiling: blocked
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C2
+  claim_impact: native transport/adapter conformance roadmap_rescue_v1:C2.
+  forbidden:
+  - adapter conformance를 physical correctness라고 부르거나 closure가 native reference를 대체하게 하지 않는다. TSC/Teff
+    active owner를 복구하지 않는다.
+  anti_drift:
+  - native producer와 adapter가 같은 bug를 공유할 수 있어 external test vectors와 independent limit이 필요하다.
+  roadmap_anchor: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md#pr-160
+  activation_state: DORMANT_EXTERNAL
+  scientific_status_on_intake: OPEN
+- id: PR-161
+  wave: 21
+  title: Atlas convergence, interpolation, versioning와 held-out samples
+  owner: BASS
+  contributors: []
+  adjudicator_role: internal_non_author_reviewer
+  implementation_scopes:
+  - bass_py
+  - canonical_BASS
+  depends:
+  - PR-127
+  - PR-133
+  - PR-160
+  dependency_contracts:
+  - upstream_id: PR-127
+    mode: requires_success
+  - upstream_id: PR-133
+    mode: requires_success
+  - upstream_id: PR-160
+    mode: requires_success
+  targets:
+  - 'Roadmap card PR-161: Atlas convergence, interpolation, versioning와 held-out samples'
+  files:
+  - htt/bass
+  - tests/bass
+  - docs/PR_DELTAS/pr-161.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_161_atlas_convergence_interpolation_versioning_held_.py
+  dod:
+  - native T/E/B mean/covariance/morphology atlas의 grid density, interpolation error, solver tolerance,
+    parameter/orientation/handedness/version metadata와 held-out solver samples를 검증한다. PR-127의 ambient/constraint-admissible
+    분리와 PR-133의 source-response/admissibility ladder를 소비해 family/orientation/limiting-case group action과
+    equivalence annotation을 versioned schema에 넣는다.
+  - held-out interpolation coverage, solver-tolerance convergence, boundary/limiting family fixtures,
+    versioned equivalence registry.
+  kill: interpolation/solver error가 morphology separation보다 크거나 equivalence annotation이 불완전하면 inference
+    PR을 block한다.
+  cost: high
+  level: L4
+  scope: post-native
+  risk: high
+  claim_tier_ceiling: blocked
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C4
+  claim_impact: native atlas numerical validation roadmap_rescue_v1:C3--roadmap_rescue_v1:C4.
+  forbidden:
+  - nearest atlas entry 또는 interpolation central value를 family identification으로 사용하지 않는다.
+  anti_drift:
+  - atlas update는 모든 downstream feature/likelihood를 invalidate한다. interpolation uncertainty를 observational
+    covariance에 몰래 흡수하지 않는다.
+  roadmap_anchor: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md#pr-161
+  activation_state: DORMANT_EXTERNAL
+  scientific_status_on_intake: OPEN
+- id: PR-162
+  wave: 21
+  title: Matched-mask/null/covariance native morphology features
+  owner: OBSSTAT
+  contributors: []
+  adjudicator_role: internal_non_author_reviewer
+  implementation_scopes:
+  - obsstat
+  depends:
+  - PR-150
+  - PR-155
+  - PR-161
+  dependency_contracts:
+  - upstream_id: PR-150
+    mode: requires_success
+  - upstream_id: PR-155
+    mode: requires_success
+  - upstream_id: PR-161
+    mode: requires_success
+  targets:
+  - 'Roadmap card PR-162: Matched-mask/null/covariance native morphology features'
+  files:
+  - htt/obsstat
+  - htt/src/obsstat
+  - tests/obsstat
+  - docs/PR_DELTAS/pr-162.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_162_matched_mask_null_covariance_native_morphology_f.py
+  dod:
+  - observed map, native injections와 null/systematic simulations를 같은 mask/beam/pixel/filter/alm/template/BiPoSH/covariance/maximization
+    pipeline에 통과시킨다. interpolation/solver/foreground/instrument covariance를 분리한다.
+  - held-out injection recovery, matched-null size, feature rank/conditioning, mask/foreground/systematic
+    negative controls.
+  kill: size/coverage/rank가 실패하면 morphology compatibility claim을 내지 않는다.
+  cost: high
+  level: L4
+  scope: post-native
+  risk: high
+  claim_tier_ceiling: blocked
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C5
+  claim_impact: matched-pipeline morphology feature validation roadmap_rescue_v1:C4--roadmap_rescue_v1:C5.
+  forbidden:
+  - full-sky atlas와 cut-sky observation을 직접 비교하거나 scalar feature 한 개로 family를 rank하지 않는다.
+  anti_drift:
+  - feature/scan/mask 선택은 held-out challenge 전에 freeze한다. deterministic mean와 covariance morphology branch를
+    유지한다.
+  roadmap_anchor: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md#pr-162
+  activation_state: DORMANT_EXTERNAL
+  scientific_status_on_intake: OPEN
+- id: PR-163
+  wave: 21
+  title: Blinded morphology-equivalence challenge
+  owner: COMMON
+  contributors: []
+  adjudicator_role: independent_blinded_challenge_adjudicator
+  implementation_scopes:
+  - common
+  depends:
+  - PR-127
+  - PR-133
+  - PR-161
+  - PR-162
+  dependency_contracts:
+  - upstream_id: PR-127
+    mode: requires_success
+  - upstream_id: PR-133
+    mode: requires_success
+  - upstream_id: PR-161
+    mode: requires_success
+  - upstream_id: PR-162
+    mode: requires_success
+  targets:
+  - 'Roadmap card PR-163: Blinded morphology-equivalence challenge'
+  files:
+  - htt/src/common
+  - scripts/codex_harness
+  - tests/contracts
+  - docs/PR_DELTAS/pr-163.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_163_blinded_morphology_equivalence_challenge.py
+  dod:
+  - training/validation/held-out native atlas entries, equivalent/near-equivalent families, nuisance/systematics와
+    null을 sealed challenge로 구성한다. analyst는 label을 보지 않고 equivalence set, uncertainty와 abstention을 제출한다.
+  - equivalence-aware coverage/confusion/abstention, hidden-label receipts, nuisance robustness와 external
+    referee report.
+  kill: family-equivalence coverage 또는 null/systematic rejection이 실패하면 roadmap_rescue_v1:C5 이상 승격을 중단한다.
+  cost: high
+  level: L4
+  scope: post-native
+  risk: high
+  claim_tier_ceiling: blocked
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C5
+  claim_impact: blinded morphology-equivalence compatibility roadmap_rescue_v1:C5.
+  forbidden:
+  - best-fit single label accuracy만 최적화하거나 equivalent family를 오답으로 센 뒤 arbitrary tie-break를 만들지 않는다.
+  anti_drift:
+  - challenge designer/analyst/adjudicator를 분리한다. 실패 후 held-out set을 training에 넣으면 new challenge version이다.
+  roadmap_anchor: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md#pr-163
+  activation_state: DORMANT_EXTERNAL
+  scientific_status_on_intake: OPEN
+- id: PR-164
+  wave: 21
+  title: HTT set-valued equivalence inference와 mandatory abstention
+  owner: HTT
+  contributors: []
+  adjudicator_role: internal_non_author_reviewer
+  implementation_scopes:
+  - htt
+  depends:
+  - PR-140
+  - PR-141
+  - PR-142
+  - PR-143
+  - PR-163
+  dependency_contracts:
+  - upstream_id: PR-140
+    mode: requires_success
+  - upstream_id: PR-141
+    mode: requires_success
+  - upstream_id: PR-142
+    mode: requires_success
+  - upstream_id: PR-143
+    mode: requires_success
+  - upstream_id: PR-163
+    mode: requires_success
+  targets:
+  - 'Roadmap card PR-164: HTT set-valued equivalence inference와 mandatory abstention'
+  files:
+  - htt/htt
+  - tests/htt
+  - docs/PR_DELTAS/pr-164.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_164_htt_set_valued_equivalence_inference_mandatory_a.py
+  dod:
+  - native-atlas likelihood, normalized priors, interpolation/systematic nuisance, PPC, dependency-aware
+    holdout와 equivalence-aware identified set을 결합한다. output은 single winner가 아니라 compatible equivalence
+    set, excluded set, unidentified directions와 abstention이다.
+  - prior sensitivity, evidence-engine agreement, PPC/holdout, held-out set coverage, mandatory-abstention
+    tests.
+  kill: predictive gain/coverage/equivalence separation 중 하나라도 실패하면 compatibility set 또는 abstention에 머문다.
+  cost: high
+  level: L4
+  scope: post-native
+  risk: high
+  claim_tier_ceiling: blocked
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C5
+  claim_impact: native-atlas-conditioned morphology compatibility set roadmap_rescue_v1:C5.
+  forbidden:
+  - MIO diagnostic을 likelihood에 넣거나 scalar/Bayes-factor 최고값을 family identified로 바꾸지 않는다.
+  anti_drift:
+  - prior, family universe와 equivalence policy를 unblinding 전에 freeze한다. family list 변경은 새 analysis다.
+  roadmap_anchor: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md#pr-164
+  activation_state: DORMANT_EXTERNAL
+  scientific_status_on_intake: OPEN
+- id: PR-165
+  wave: 21
+  title: 외부 독립 validation과 family-identification gate 심사
+  owner: COMMON
+  contributors: []
+  adjudicator_role: external_non_author_panel
+  implementation_scopes:
+  - common
+  depends:
+  - PR-164
+  dependency_contracts:
+  - upstream_id: PR-164
+    mode: requires_success
+  targets:
+  - 'Roadmap card PR-165: 외부 독립 validation과 family-identification gate 심사'
+  files:
+  - htt/src/common
+  - scripts/codex_harness
+  - tests/contracts
+  - docs/PR_DELTAS/pr-165.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_165_validation_family_identification_gate.py
+  dod:
+  - raw native inputs, independent implementation/solver samples, matched pipelines와 complete receipts를
+    외부 심사에 제공한다. frame/domain/atlas/null/mask/covariance/equivalence/trials/PPC/holdout/independence gate를
+    각각 판정한다.
+  - independent reproduction or explicit non-reproduction, gate matrix, dissent, raw command/data receipts와
+    signed decision.
+  kill: 모든 gate가 통과하지 않으면 family identification program을 열지 않고 roadmap_rescue_v1:C5 compatibility/abstention을
+    유지한다.
+  cost: high/external
+  level: L4
+  scope: post-native
+  risk: high
+  claim_tier_ceiling: blocked
+  claim_level:
+    scheme: not_applicable_governance_v1
+    level: NOT_APPLICABLE
+  claim_impact: gate adjudication; 통과 전 family identification 없음.
+  forbidden:
+  - 내부 multi-agent agreement를 external replication이라 부르거나 하나의 failed gate를 다른 강한 score로 상쇄하지 않는다.
+  anti_drift:
+  - 외부 reviewer의 dissent와 blocked asset을 그대로 보존한다. family-ID gate는 conjunctive하다.
+  roadmap_anchor: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md#pr-165
+  activation_state: DORMANT_EXTERNAL
+  scientific_status_on_intake: OPEN
+- id: PR-166
+  wave: 21
+  title: Post-native publication adjudication
+  owner: COMMON
+  contributors: []
+  adjudicator_role: external_non_author_panel
+  implementation_scopes:
+  - common
+  depends:
+  - PR-165
+  dependency_contracts:
+  - upstream_id: PR-165
+    mode: requires_adjudicated_claim_set
+  targets:
+  - 'Roadmap card PR-166: Post-native publication adjudication'
+  files:
+  - htt/src/common
+  - scripts/codex_harness
+  - tests/contracts
+  - docs/PR_DELTAS/pr-166.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_166_post_native_publication_adjudication.py
+  dod:
+  - PR-165 판정에 따라 morphology-compatibility, non-identification 또는 별도의 family-identification review-ready
+    claim만 생성한다. atlas/version/mask/null/covariance/equivalence/holdout provenance를 모든 숫자·그림에 결속한다.
+  - full package reproduction, claim/transfer/family lint, clean PDF render, external reviewer response와
+    final manifest.
+  kill: provenance/figure/family gate 불일치가 있으면 release를 reject한다.
+  cost: medium--high
+  level: L4
+  scope: post-native
+  risk: high
+  claim_tier_ceiling: blocked
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C5
+  claim_impact: PR-165가 실제 승인한 범위. 기본값은 roadmap_rescue_v1:C5 morphology compatibility 또는 abstention이다.
+  forbidden:
+  - PR-165가 reject/blocked인데 wording만 약하게 바꿔 family result를 남기지 않는다.
+  anti_drift:
+  - native version이나 atlas 변경 시 publication freeze를 invalidate한다.
+  roadmap_anchor: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md#pr-166
+  activation_state: DORMANT_EXTERNAL
+  scientific_status_on_intake: OPEN

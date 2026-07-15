@@ -71,3 +71,27 @@ Date: 2026-07-14
 - Scope caveat: 100% DAG completion is not science readiness and supplies no
   native solver, transfer, null, covariance, morphology, geometry, or family
   validation.
+
+## PR-119 intake progress (not a five-PR checkpoint)
+
+Date: 2026-07-15
+
+- Active DAG after intake: 66/113 complete = 58.41%.
+- Dependency-weighted completion: 50.61%.
+- Critical-path proxy completion: 25/56 = 44.64%.
+- Pending: 39; dormant external: 8; blocked/skipped: 0.
+- Unblocked next: PR-120 and PR-121; sequential policy chooses PR-120 first.
+- Checkpoint 065 remains immutable at its historical denominator. No new
+  checkpoint is due; next checkpoint count is 70.
+- Claim-tier drift: none. The 102-row root remains entirely OPEN and zero
+  RESCUED. PR-150's explicit PR4 skip removes the original joint
+  `roadmap_rescue_v1:C3` path and leaves only a PR3-conditional diagnostic
+  `roadmap_rescue_v1:C2` ceiling.
+- Subagents used and closed: code mapper, harness engineer,
+  physics/statistics auditor, claim-gate reviewer, status-snapshot engineer,
+  hostile contract reviewer, typed-progress engineer, and final independent
+  correctness/claim/maintainability reviewers.
+- Validation: 232 focused passes, full collection 8,066/8,125 with 59
+  deselected, smoke 6 passes and 8,119 deselected, strict DAG/remediation/mirror
+  checks and changed-surface claim scans green. Repo-wide legacy claim and
+  mock-marker scans retain documented historical findings.

@@ -1,5 +1,44 @@
 # Project State
 
+## 2026-07-15 - PR-119 long-horizon intake closeout
+
+This section supersedes older active-DAG statements below; older sections are
+retained as historical records.
+
+- Active DAG: 113 cards, 66 completed, 39 pending, 8 dormant external.
+  Count completion is 58.41%, dependency-weighted completion 50.61%, and the
+  current critical-path proxy 44.64%. These are bookkeeping metrics only.
+- PR-119 intakes exactly `PR-119..PR-166`; `PR-167..183` remain absent until
+  the separate PR-167 advocate-track transaction.
+- Canonical authoring roots are `docs/codex_handoff/pr_backlog.yaml` and
+  `docs/codex_handoff/pr_status.yaml`; `machine_readable/` files are generated
+  mirrors. `docs/02_long_range_PR_backlog.md` is historical only.
+- The active scientific authority is
+  `docs/codex_handoff/research_remediation_state.yaml`: 102 findings, all
+  `OPEN`, zero `RESCUED`. Historical response dispositions are not scientific
+  statuses.
+- Orchestration state, terminal execution resolution, and scientific finding
+  status are separate axes. Negative terminal receipts close only explicit
+  aggregation dependencies.
+- `PR-159..166` remain dormant pending independently authenticated native
+  delivery. The event is bound to exact scope `native_low_ell_delivery` and a
+  hash-bound typed receipt verified through an injected trust root; the CLI
+  has no implicit verifier and remains fail-closed. External/AniCLASS/proxy
+  outputs cannot satisfy that event.
+- User execution constraint for PR-150: PR3/FFP10 E2E download is complete;
+  PR4/NPIPE is not downloaded and all PR4 data analysis is skipped. The joint
+  PR3+PR4 `roadmap_rescue_v1:C3` gate is unavailable; only the PR3-conditional
+  `roadmap_rescue_v1:C2` diagnostic lane remains in scope.
+- PR-118's MANIFEST, audit package, and checkpoint 065 remain immutable and
+  are verified against seal commit
+  `294d74ce07de030da2f18720d3d45c8a2fef6e17` rather than live DAG files.
+- Next runnable cards: PR-120 and PR-121. The sequential policy starts PR-120
+  first. Next immutable checkpoint: 70 completed cards.
+
+No scientific result was repaired by PR-119. The as-shipped manuscript remains
+REJECT, all CF4/K1/DESI/ACT/JWST and theory/statistics findings retain their
+recorded blockers, and family/geometry identification remains blocked.
+
 ## 2026-07-14 - PR-118 adversarial-audit closeout
 
 The active DAG is complete at 65/65 (100% by count, dependency weight, and
