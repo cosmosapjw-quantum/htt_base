@@ -6,8 +6,8 @@ This is a propagation-control artifact. It does not remediate or validate a CF4 
 - Implementation scope: `propagation_quarantine_only`
 - Claim tier: `blocked`
 - Transfer source: `none`
-- Config hash: `7b684610685ed343747a74d76aca8cc9e4738ea1273ab4c4a696de938baa3235`
-- Policy SHA-256: `7b684610685ed343747a74d76aca8cc9e4738ea1273ab4c4a696de938baa3235`
+- Config hash: `a6ebc87d0ea2008427c9663fca118c8a9fb2ce6a839191cd8274f5dab349a165`
+- Policy SHA-256: `a6ebc87d0ea2008427c9663fca118c8a9fb2ce6a839191cd8274f5dab349a165`
 - Remediation-root SHA-256: `77d36878315f041c7bb6c273a2d650f7d3fa1c8a8dc635a577527d646fa40109`
 - Sky support: `not_applicable_to_propagation_quarantine`
 - Null/mock status: `not_applicable_quarantine_is_not_validation`
@@ -67,14 +67,14 @@ This is a propagation-control artifact. It does not remediate or validate a CF4 
 | `figures/current/fig_egs3_b2_volterra.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
 | `figures/current/fig_egs3_b3_vorticity.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
 | `figures/current/fig_egs3_c_deprojection.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
-| `figures/current/fig_egs3_d_biposh.png` | `active_public_binary` | `active_public_binary` | `dynamic:sidecar_artifact_sha256` | `true` |
-| `figures/current/fig_egs3_d_joint_forecast.png` | `active_public_binary` | `active_public_binary` | `dynamic:sidecar_artifact_sha256` | `true` |
+| `figures/current/fig_egs3_d_biposh.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
+| `figures/current/fig_egs3_d_joint_forecast.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
 | `figures/current/fig_egs3_e_im_coverage.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
 | `figures/current/fig_egs3_e_refutability_power.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
 | `figures/current/fig_egs3_f_shear_memory_bias.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
 | `figures/current/fig_egs3_psd_cone.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
-| `figures/current/fig_egs3_u1_beta_channel.png` | `active_public_binary` | `active_public_binary` | `dynamic:sidecar_artifact_sha256` | `true` |
-| `figures/current/fig_egs3_u2_fingerprint_ceilings.png` | `active_public_binary` | `active_public_binary` | `dynamic:sidecar_artifact_sha256` | `true` |
+| `figures/current/fig_egs3_u1_beta_channel.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
+| `figures/current/fig_egs3_u2_fingerprint_ceilings.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
 | `figures/current/fig_egs3_u4_teff_im_coverage.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
 | `figures/current/fig_egs3_u4v9_teff_im_coverage.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
 | `figures/current/fig_pr04_a1_rank_ladder.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
@@ -117,8 +117,8 @@ This is a propagation-control artifact. It does not remediate or validate a CF4 
 | `figures/obsdata_current/fig_obs_act_kappa.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
 | `figures/obsdata_current/fig_obs_cf4pp_vorticity.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
 | `figures/obsdata_current/fig_obs_desi_dipole_mock.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
-| `figures/observed_current/fig_observed_cf4_affine_flow.png` | `active_public_binary` | `active_public_binary` | `dynamic:sidecar_artifact_sha256` | `true` |
-| `figures/observed_current/fig_observed_cf4_bulkflow_apex_depth.png` | `active_public_binary` | `active_public_binary` | `dynamic:sidecar_artifact_sha256` | `true` |
+| `figures/observed_current/fig_observed_cf4_affine_flow.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
+| `figures/observed_current/fig_observed_cf4_bulkflow_apex_depth.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
 | `figures/observed_current/fig_observed_cf4_depth_response.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
 | `figures/observed_current/fig_observed_cf4_velocity_density.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
 | `figures/observed_current/fig_observed_desi_footprint_depth.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
@@ -806,7 +806,7 @@ This is a propagation-control artifact. It does not remediate or validate a CF4 
 | `scripts/make_cf4_bulkflow_apex_depth.py` | `reconstruction_conditioned_diagnostic` | `active_block_consumer` | `1f73afdfca50c2732a3d4a5b20e371e06c619962884fce11cccc0462cfbc4fc7` | `true` |
 | `scripts/make_cf4_bulkflow_likelihood.py` | `conditioned_method_wrapper` | `active_block_consumer` | `3aaafc76c3e43ad5bfd16ac9e4573249b00fa4baa10601d350b1174a7d641a52` | `true` |
 | `scripts/make_data_proxy_coordinates_figure.py` | `active_derived_figure_wrapper` | `active_block_consumer` | `3dd2a213b8f6cc8c0920ad8487fa0c0297431772be724fda17e088987c4857d3` | `true` |
-| `scripts/make_egs2_egs3_theorem_figures.py` | `symbolic_theorem_figure_consumer` | `active_block_consumer` | `b140e512d7fd620cbc7ff55f4955c0606acabfd274029edb0c12ccc434029389` | `true` |
+| `scripts/make_egs2_egs3_theorem_figures.py` | `symbolic_theorem_figure_consumer` | `active_block_consumer` | `9fdfa73f4f7852c1be37834978020b22ef218da8c50b24a959487bc1c0ceb548` | `true` |
 | `scripts/make_obsdata_r195_r198_figures.py` | `active_figure_block_wrapper` | `active_block_consumer` | `83b4c74d2fe453b25aa7ab9aab807901a4458b13a7ac3dd2bfeeb82623d07e97` | `true` |
 | `scripts/make_report_data_analysis_figures.py` | `report_figure_consumer` | `active_block_consumer` | `6dad3adadc9d1bb298e38ead2ec6a468455679b2009444f5b71728cab30d4acd` | `true` |
 | `scripts/pdf_claim_lint.py` | `compiled_claim_surface_gate` | `active_block_consumer` | `6e4528de93d084faa37e9f526d4c7d062f657ff5699ea864c2b5d7f9e15af42c` | `true` |
@@ -817,7 +817,7 @@ This is a propagation-control artifact. It does not remediate or validate a CF4 
 | `tests/fixtures/fb6/pontzen_challinor_2009_sec4_ix_closed_quadrupole_grid.npz` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
 | `tests/fixtures/fb6/pontzen_challinor_2009_vii_h_off_diagonal_ctt.npz` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
 | `tests/obsstat/test_cf4_velocity_correlation_ml.py` | `active_block_regression_test` | `mutation_corpus_only` | `27abf869e862f353d24abea85983baf27571edb8d16586754315c5cefc88fd0c` | `false` |
-| `tests/pr_cards/test_pr_120_cf4_p0_downstream_consumer_quarantine.py` | `mutation_and_contract_tests` | `mutation_corpus_only` | `98c9591f0ab5c10a7a6134e5c8c63955e81c4f605a55dedc827aa57744474226` | `false` |
+| `tests/pr_cards/test_pr_120_cf4_p0_downstream_consumer_quarantine.py` | `mutation_and_contract_tests` | `mutation_corpus_only` | `6e7754e7226393d95a608937671ff1377d0185d0f3ad84089dcc2a9b47b55c9a` | `false` |
 
 ## Producer/consumer lineage
 
@@ -840,7 +840,7 @@ This is a propagation-control artifact. It does not remediate or validate a CF4 
 
 ## Input hashes
 
-- `docs/research_program/long_horizon_rescue/cf4_p0_quarantine_policy.yaml:sha256:7b684610685ed343747a74d76aca8cc9e4738ea1273ab4c4a696de938baa3235`
+- `docs/research_program/long_horizon_rescue/cf4_p0_quarantine_policy.yaml:sha256:a6ebc87d0ea2008427c9663fca118c8a9fb2ce6a839191cd8274f5dab349a165`
 - `docs/codex_handoff/research_remediation_state.yaml:sha256:77d36878315f041c7bb6c273a2d650f7d3fa1c8a8dc635a577527d646fa40109`
 
 Generating command: `PYTHONPATH=htt/src venv/bin/python -B scripts/codex_harness/quarantine_cf4_p0_consumers.py --write`

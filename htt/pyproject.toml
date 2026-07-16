@@ -5,15 +5,17 @@ description = "BASS-py â€” Bianchi Anisotropy System Solver (Python side, low-â„
 requires-python = ">=3.10"
 dependencies = [
     "emcee>=3.1,<3.2",
+    "matplotlib>=3.8",
     "numpy>=1.24",
+    "PyYAML>=6.0",
     "scipy>=1.10",
+    "sympy>=1.12",
+    "tomli>=1.1.0; python_version < '3.11'",
 ]
 
 [project.optional-dependencies]
 dev = [
     "pytest>=7.4",
-    "matplotlib>=3.8",
-    "PyYAML>=6.0",
 ]
 
 [tool.pytest.ini_options]
@@ -35,6 +37,43 @@ markers = [
 requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
+[tool.setuptools]
+include-package-data = false
+
 [tool.setuptools.packages.find]
 where = [".", "src"]
-include = ["bass*", "tsc*", "tsc_legacy*", "common*", "mio*", "workspace*", "htt*", "obsstat*"]
+include = ["bass*", "tsc*", "tsc_legacy*", "common*", "mio*", "workspace*", "htt*", "obsstat*", "teff*"]
+exclude = [
+    "build*",
+    "*.build*",
+    "__pycache__*",
+    "*.__pycache__*",
+    "*.egg-info*",
+    "*.egg_info*",
+]
+namespaces = false
+
+[tool.setuptools.package-data]
+"bass.recombination" = [
+    "fixtures/recombination_ref_planck2018.csv",
+    "fixtures/recombination_ref_planck2018_z1e10.csv",
+]
+"bass.validation" = ["_d2_anchor_golden.json"]
+"htt.tests" = [
+    "fixtures/pipeline_outputs/FLRW_tilt_results.json",
+    "fixtures/pipeline_outputs/IS06_3D_posterior.npz",
+    "fixtures/pipeline_outputs/robustness_sweeps_integrated.json",
+]
+"workspace" = ["data/obs_defaults.json"]
+
+[tool.setuptools.exclude-package-data]
+"*" = [
+    "build/*",
+    "build/**/*",
+    "*/build/*",
+    "*/build/**/*",
+    "__pycache__/*",
+    "*/__pycache__/*",
+    "*.egg-info/*",
+    "*/*.egg-info/*",
+]

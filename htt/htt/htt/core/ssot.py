@@ -15,6 +15,7 @@ Conversions:
   (ω/H) = √(3W²)        [Saadeh convention]
 """
 import json, numpy as np
+from importlib import resources
 from pathlib import Path
 
 __all__ = ['load_obs', 'C', 'eps_ell', 'D_ell_from_eps',
@@ -22,31 +23,43 @@ __all__ = ['load_obs', 'C', 'eps_ell', 'D_ell_from_eps',
            'omega_tilt']
 
 # ─── Load defaults ───────────────────────────────────────────
-def _find_obs_defaults() -> Path:
-    """Search for obs_defaults.json in standard locations."""
-    candidates = [
-        Path(__file__).resolve().parent / 'obs_defaults.json',          # legacy: next to module
-        Path(__file__).resolve().parent.parent.parent.parent / 'workspace' / 'data' / 'obs_defaults.json',  # workspace
-    ]
+def _find_obs_defaults():
+    """Find obs_defaults.json, including the installed package resource."""
     import os
     env = os.environ.get('HTT_OBS_DEFAULTS')
     if env:
-        candidates.insert(0, Path(env))
-    for p in candidates:
-        if p.exists():
-            return p
-    return candidates[0]  # fallback (may not exist)
+        override = Path(env)
+        if override.is_file():
+            return override
+
+    legacy = Path(__file__).resolve().parent / 'obs_defaults.json'
+    if legacy.is_file():
+        return legacy
+
+    try:
+        packaged = resources.files('workspace').joinpath('data').joinpath('obs_defaults.json')
+    except (ModuleNotFoundError, TypeError):
+        packaged = None
+    if packaged is not None and packaged.is_file():
+        return packaged
+
+    workspace = (
+        Path(__file__).resolve().parent.parent.parent.parent
+        / 'workspace' / 'data' / 'obs_defaults.json'
+    )
+    if workspace.is_file():
+        return workspace
+    return legacy  # fail at load time with the historically expected path
 
 _DEFAULT_PATH = _find_obs_defaults()
 
 def load_obs(path=None):
     """Load the observational defaults JSON and return as dict."""
     p = Path(path) if path else _DEFAULT_PATH
-    with open(p) as f:
-        return json.load(f)
+    return json.loads(p.read_text(encoding='utf-8'))
 
 # ─── Constants (loaded once at import) ───────────────────────
-_OBS = load_obs() if _DEFAULT_PATH.exists() else {}
+_OBS = load_obs() if _DEFAULT_PATH.is_file() else {}
 
 class C:
     """Namespace for physical constants (VA-02 standard)."""

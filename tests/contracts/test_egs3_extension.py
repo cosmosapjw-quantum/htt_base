@@ -26,7 +26,7 @@ def test_a3_pi_evalue_markov_bound():
 
 
 def test_b1_floor_is_k_profile():
-    from htt.bass.transfer.shear_quadrupole_seminative import floor_profile_vs_k
+    from bass.transfer.shear_quadrupole_seminative import floor_profile_vs_k
     prof = floor_profile_vs_k([1e-5, 2e-3], lmax=40)
     floors = sorted((v["k_chi_star"], v["floor"]) for v in prof.values())
     assert abs(floors[0][1] - (2 / 5) ** 0.5) < 1e-2     # super-horizon -> 0.632

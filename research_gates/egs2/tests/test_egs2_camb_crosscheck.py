@@ -25,8 +25,8 @@ try:
 except Exception:
     _HAVE_CAMB = False
 
-from htt.bass.transfer import visibility_camb_crosscheck as vcc
-from htt.bass.transfer.visibility_camb_crosscheck import (
+from bass.transfer import visibility_camb_crosscheck as vcc
+from bass.transfer.visibility_camb_crosscheck import (
     seminative_camb_crosscheck_seal, SINGLE_L_FLOOR,
 )
 from htt.obsstat.egs3_graded_comparator import COMPARATOR_SIGNS

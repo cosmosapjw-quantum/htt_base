@@ -658,30 +658,17 @@ def _policy_with_reviewed_binary_pin(
     return target
 
 
-def test_reviewed_changed_binary_requires_and_uses_exact_sidecar_pins(
-    tmp_path: Path,
-    monkeypatch,
-):
+def test_committed_binary_uses_head_authority_after_reviewed_pin_retirement():
     binary = "figures/current/fig_egs3_u1_beta_channel.png"
-    sidecar = "figures/current/fig_egs3_u1_beta_channel.manifest.json"
-    policy_path = _policy_with_reviewed_binary_pin(
-        tmp_path,
-        binary_path=binary,
-        sidecar_path=sidecar,
-    )
-    policy, _ = quarantine.load_policy(REPO, policy_path=policy_path)
+    policy, _ = quarantine.load_policy(REPO)
+    assert policy["inventory"]["reviewed_active_binary_sidecars"] == {}
+
     entry = quarantine._binary_inventory_entry(REPO, binary, policy)
-    assert entry["binding_method"] == "sidecar_artifact_sha256"
-    assert entry["trusted_source"].startswith("reviewed-pin:")
-    assert entry["reviewed_sidecar_path"] == sidecar
-    assert entry["reviewed_artifact_sha256"].startswith("sha256:")
-    monkeypatch.setattr(quarantine, "load_policy", lambda root: (policy, "0" * 64))
-    assert quarantine.reviewed_active_binary_sidecar_pin(REPO, binary) == (
-        sidecar,
-        policy["inventory"]["reviewed_active_binary_sidecars"][binary][
-            "sidecar_sha256"
-        ],
-    )
+    assert entry["binding_method"] == "git_head_exact_bytes"
+    assert entry["trusted_source"] == f"git-head:{binary}"
+    assert "reviewed_sidecar_path" not in entry
+    assert "reviewed_artifact_sha256" not in entry
+    assert quarantine.reviewed_active_binary_sidecar_pin(REPO, binary) is None
 
 
 def test_reviewed_binary_policy_rejects_placeholder_or_stale_digest(

@@ -127,7 +127,7 @@ def admissibility(M: np.ndarray, *, tol: float = 1e-15) -> Admissibility:
     Omega_k_aniso = Omega_k - Omega_k_ref  with  Omega_k = -^3R/(6 H^2), is a
     SIGNED comparator coordinate: it is negative for closed types (Omega_k < 0 when
     ^3R > 0) and for negative anisotropic-curvature departures
-    (`htt.bass.validation.comparator_policy` / `htt.src.common.departure_contracts`,
+    (`bass.validation.comparator_policy` / `htt.src.common.departure_contracts`,
     ch03 Prop `x-sign`, which classifies an `irrotational_negative` sector).  It is
     therefore NOT a second moment and NOT subject to PSD positivity; its sign is
     carried by the signature C in x_C = tr(C M).  Restricting the cone to the

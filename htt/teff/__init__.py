@@ -1,26 +1,26 @@
-"""htt.teff -- active max-entropy Effective-Temperature representative lane (v8).
+"""Legacy Teff compatibility and reproducibility surface.
 
-Owner: TEFF (active, diagnostic-only). This package implements the rigorous
-theory of the draft "Maximum-Entropy Effective-Temperature Representatives and
-Nonlinear Angular Response Ledgers", which supersedes the frozen Teff-characteristics
-Papers I-V. It is DISTINCT from the frozen TSC_LEGACY reproduction surface
-(htt/tsc, PR-030): the legacy surface stays a legacy-reproduction owner, while the
-new representative theorems are owned here as an active-but-diagnostic-only lane.
+The canonical package is ``teff``; ``htt.teff`` remains a legacy import alias.
 
-It reuses the existing computational substrate (tsc.charts.laguerre_basis spectral
-moments, the zeta(4) radial integrals) but adds the genuinely new objects: the
-max-entropy representative theorem's radial constants a_xi, the (n,k) insertion
-ledger's radial fingerprints c_p, the SO(3) Gram ledgers + exact L^2 staircase, and
-the equal-information nonidentifiability theorem with its two-temperature anchor.
+Owner: TSC_LEGACY (compatibility/reproducibility only).  The historical
+representative functions remain importable so frozen Teff-era calculations can
+be reproduced, but this package is not an active scientific owner and must not
+emit current scientific artifacts, posterior/evidence products, MIO
+certificates, native-solver results, or family-identification claims.
 
-Claim discipline (TEFF owner ceiling = diagnostic_only): representation theory +
-exact closed forms only. No data claim, no detection, no Bianchi-family/geometry
-identification, no native-solver-produced claim, no posterior/likelihood claim. The
-draft's own explicit nonclaims (transport closure, boundary conditioning near
-realizability loss, global two-field diffeomorphism, global-in-time stability) are
-NOT asserted here.
+The functions below reproduce the archived max-entropy representative and
+nonlinear angular-response ledgers.  Historical submodules may preserve frozen
+``owner: TEFF`` metadata as reproduction evidence, but that metadata cannot
+authorize new work or revive ``TEFF`` ownership.  Any current consumer must
+treat the output as a TSC_LEGACY legacy-reproduction artifact with explicit
+caveats.
+
+Claim discipline: legacy reproduction only; no current data, detection,
+Bianchi-family/geometry, native-solver, posterior, likelihood, or ownership
+claim.  The historical draft's transport-closure, boundary-conditioning,
+global-diffeomorphism, and global-stability nonclaims remain nonclaims.
 """
-from htt.teff.representative import (  # noqa: F401
+from .representative import (  # noqa: F401
     RADIAL_CONSTANTS,
     radial_constant,
     radial_fingerprint,
@@ -31,6 +31,33 @@ from htt.teff.representative import (  # noqa: F401
     teff_representative_seal,
 )
 
-TEFF_OWNER = "TEFF"
+TEFF_LEGACY_IMPORT_COMPATIBLE = True
+TEFF_ACTIVE_SCIENCE_OWNER = False
+TEFF_OWNER = "TSC_LEGACY"
+TEFF_IMPLEMENTATION_SCOPE = "tsc_legacy"
 TEFF_CLAIM_TIER = "diagnostic_only"
-TEFF_BUNDLE_KIND = "teff_representative"
+TEFF_BUNDLE_KIND = "legacy_reproduction"
+TEFF_DEPRECATION_STATUS = "legacy_reproduction_only"
+TEFF_DEPRECATION_CAVEAT = (
+    "Teff is retained only for frozen compatibility and reproducibility; "
+    "historical TEFF-labelled payloads are not current-owner artifacts."
+)
+
+__all__ = [
+    "RADIAL_CONSTANTS",
+    "TEFF_ACTIVE_SCIENCE_OWNER",
+    "TEFF_BUNDLE_KIND",
+    "TEFF_CLAIM_TIER",
+    "TEFF_DEPRECATION_CAVEAT",
+    "TEFF_DEPRECATION_STATUS",
+    "TEFF_IMPLEMENTATION_SCOPE",
+    "TEFF_LEGACY_IMPORT_COMPATIBLE",
+    "TEFF_OWNER",
+    "equal_information_nonidentifiability",
+    "gram_ledger_psd",
+    "l2_staircase_monotone",
+    "radial_constant",
+    "radial_fingerprint",
+    "teff_representative_seal",
+    "two_temperature_ratio",
+]

@@ -195,7 +195,7 @@ def _sources() -> dict[str, dict]:
     )
     from htt.obsstat.egs3_calibration import evalue_markov_calibration
     from htt.obsstat.egs2_fisher import fisher_floor, single_ell_sampling_dispersion
-    from htt.bass.transfer.shear_quadrupole_seminative import (
+    from bass.transfer.shear_quadrupole_seminative import (
         floor_profile_vs_k, shear_multipole_response,
     )
     from htt.obsstat.egs3_volterra_memory import volterra_shear

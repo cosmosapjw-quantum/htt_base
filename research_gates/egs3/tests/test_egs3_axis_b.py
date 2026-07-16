@@ -1,7 +1,7 @@
 """EGS3 Axis B gates: B1 semi-native transfer, B2 Volterra memory, B3 vorticity re-opening."""
 import unittest
 
-from htt.bass.transfer.shear_quadrupole_seminative import (
+from bass.transfer.shear_quadrupole_seminative import (
     shear_multipole_response, fisher_floor_from_transfer, floor_profile_vs_k,
 )
 from htt.obsstat.egs3_volterra_memory import volterra_memory_check

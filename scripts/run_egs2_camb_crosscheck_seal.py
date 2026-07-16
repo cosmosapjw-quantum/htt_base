@@ -29,7 +29,7 @@ def main(argv: list[str] | None = None) -> int:
     argv = sys.argv[1:] if argv is None else argv
     check = "--check" in argv
 
-    from htt.bass.transfer.visibility_camb_crosscheck import (
+    from bass.transfer.visibility_camb_crosscheck import (
         seminative_camb_crosscheck_seal)
     seal = seminative_camb_crosscheck_seal()
     payload = json.dumps(seal, indent=2, default=float) + "\n"

@@ -198,37 +198,7 @@ inventory:
   # New/changed active binaries may use this lane only after an explicit
   # reviewer pins both the sidecar and artifact digests. HEAD-identical binaries
   # need no entry. Root fills final entries after figure regeneration.
-  reviewed_active_binary_sidecars:
-    figures/current/fig_egs3_d_joint_forecast.png:
-      sidecar_path: figures/current/fig_egs3_d_joint_forecast.manifest.json
-      sidecar_sha256: sha256:ed062f1ed4825ce37d4d277bd641f87148711d83045456bb31dffa81b5a4767f
-      artifact_sha256: sha256:495c6e1dceedf638a44e4d4d03db422feff15df9945c15e84c68b2ca8b9181a9
-      review_scope: PR-120-reviewed-active-binary
-    figures/current/fig_egs3_d_biposh.png:
-      sidecar_path: figures/current/fig_egs3_d_biposh.manifest.json
-      sidecar_sha256: sha256:71c334246cfd992ec3d44142ee7fd7b365f12934d48d3c2d581481da3cd22ff6
-      artifact_sha256: sha256:7851a906428232c61a3e627b1820e8e6bca23fe0613d52bab91cfeb33b1aa8d6
-      review_scope: PR-120-reviewed-active-binary
-    figures/current/fig_egs3_u1_beta_channel.png:
-      sidecar_path: figures/current/fig_egs3_u1_beta_channel.manifest.json
-      sidecar_sha256: sha256:77013cae1681220f471c2c6a38f87b1801fa1eed3890e3c2d6c5cb58458b15f3
-      artifact_sha256: sha256:d3be05f649b793fdbeaa884ff82f7441cb390d83dfc7db243a38712fcf84af79
-      review_scope: PR-120-reviewed-active-binary
-    figures/current/fig_egs3_u2_fingerprint_ceilings.png:
-      sidecar_path: figures/current/fig_egs3_u2_fingerprint_ceilings.manifest.json
-      sidecar_sha256: sha256:08364699fa1d5fdeb5ff35afd1e71130e926d53f5dd904be5e3a05b60a61ab2a
-      artifact_sha256: sha256:c47adcc1222a3a7f9e2238074532ba6335cb79d0ba1f9738261db3007a9356f3
-      review_scope: PR-120-reviewed-active-binary
-    figures/observed_current/fig_observed_cf4_affine_flow.png:
-      sidecar_path: figures/observed_current/fig_observed_cf4_affine_flow.manifest.json
-      sidecar_sha256: sha256:5aed3884f7ae8b484e0953685590421741f47e5b9c94dc106975691a273feed2
-      artifact_sha256: sha256:3e53343871e3935b550b9771032db2266e66a5fda388163bb72238eb3d7d5a3e
-      review_scope: PR-120-reviewed-active-binary
-    figures/observed_current/fig_observed_cf4_bulkflow_apex_depth.png:
-      sidecar_path: figures/observed_current/fig_observed_cf4_bulkflow_apex_depth.manifest.json
-      sidecar_sha256: sha256:39826fadbc807d77ace7c013d7df91e4746e42173588f71908c7c217fecd8b4e
-      artifact_sha256: sha256:5394d759a691d62ac6ed6576110778287e05ea3040249825086279504ace4ed7
-      review_scope: PR-120-reviewed-active-binary
+  reviewed_active_binary_sidecars: {}
   # These four self-containing release archives embed the canonical inventory,
   # so their own digest cannot enter it without an impossible hash fixed point.
   # They remain exact-path enumerated and are accepted only with their pinned

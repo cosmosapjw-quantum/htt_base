@@ -2,7 +2,7 @@
 
 Closes the ``semi_native_shear_to_quadrupole`` exit gate ("exact-FLRW-anchored
 single-mode shear transfer cross-checked vs CAMB/CLASS visibility"). The
-v7-frozen module ``htt.bass.transfer.shear_quadrupole_seminative`` uses an
+v7-frozen module ``bass.transfer.shear_quadrupole_seminative`` uses an
 analytic Gaussian last-scattering visibility as a stand-in; this successor
 recomputes the SAME line-of-sight Bessel projection through the actual CAMB
 recombination visibility g(eta) (camb.get_background_time_evolution) and
@@ -41,7 +41,7 @@ from functools import lru_cache
 import numpy as np
 from scipy.special import spherical_jn
 
-from htt.bass.transfer.shear_quadrupole_seminative import (
+from bass.transfer.shear_quadrupole_seminative import (
     TransferResponse, shear_multipole_response, fisher_floor_from_transfer,
 )
 

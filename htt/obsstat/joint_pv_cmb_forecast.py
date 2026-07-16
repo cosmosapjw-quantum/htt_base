@@ -23,7 +23,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from htt.bass.los.flrw_bessel_projector import OutOfScopeError
+from bass.los.flrw_bessel_projector import OutOfScopeError
 from htt.obsstat.egs3_kinematic_deprojection import coupled_fisher, covariance_inflation
 from htt.obsstat import pv_covariance as pv
 

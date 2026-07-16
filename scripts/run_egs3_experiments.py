@@ -19,7 +19,7 @@ from pathlib import Path
 import sys
 
 REPO = Path(__file__).resolve().parents[1]
-# make `import htt.bass...` / `import htt.obsstat...` resolve regardless of cwd
+# make canonical `bass...` / `obsstat...` imports resolve regardless of cwd
 if str(REPO) not in sys.path:
     sys.path.insert(0, str(REPO))
 OUT = REPO / "docs/generated/egs3_experiments.json"
@@ -166,7 +166,7 @@ def axis_a() -> dict:
 
 
 def axis_b() -> dict:
-    from htt.bass.transfer.shear_quadrupole_seminative import floor_profile_vs_k, shear_multipole_response
+    from bass.transfer.shear_quadrupole_seminative import floor_profile_vs_k, shear_multipole_response
     from htt.obsstat.egs3_volterra_memory import volterra_memory_check
     from htt.obsstat.egs3_vorticity_channels import vorticity_reopening
     prof = floor_profile_vs_k([1e-5, 7e-5, 5e-4, 2e-3], lmax=40)

@@ -18,12 +18,11 @@ observer-frame claim.
 from __future__ import annotations
 
 import json
-from pathlib import Path
+from importlib import resources
 
 import numpy as np
 
-REPO = Path(__file__).resolve().parents[2]
-OBS_DEFAULTS = REPO / "htt/workspace/data/obs_defaults.json"
+OBS_DEFAULTS = resources.files("workspace").joinpath("data").joinpath("obs_defaults.json")
 
 # fiducial LambdaCDM extras not carried in obs_defaults (Planck 2018 base)
 OMEGA_B = 0.0493
@@ -111,7 +110,7 @@ def fiducial():
 
     Returns a dict: om, ob, h, f_growth, hf2 = (100 f)^2, pk callable, and the
     linear 1-D velocity dispersion sigma_v_1d (km/s)."""
-    obs = json.loads(OBS_DEFAULTS.read_text())
+    obs = json.loads(OBS_DEFAULTS.read_text(encoding="utf-8"))
     om, h = float(obs["Omega_m"]), float(obs["h"])
     f = om ** 0.55
     hf2 = (100.0 * f) ** 2

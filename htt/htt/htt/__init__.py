@@ -17,7 +17,7 @@ if _SRC.is_dir():
 
 from . import rest_frame
 
-__version__ = "0.1.0"
+__version__ = "8.3.0"
 __all__ = [
     "core",
     "nulls",
