@@ -50,6 +50,46 @@
       "fail_condition": "Any unexpected failure, stale artifact, claim drift, or PR4 execution.",
       "owner": "main",
       "status": "pass"
+    },
+    {
+      "gate_id": "G-PR123-SPEC",
+      "spec_refs": ["docs/research_program/long_horizon_rescue/pr123_spec.yaml"],
+      "statement": "PR-123 has a reviewed, claim-bounded acceptance and mutation contract before implementation.",
+      "required_evidence": ["E-PR123-CARD", "E-PR123-SPEC"],
+      "pass_condition": "Four-role divergence closes scope, lane ownership, properties, mutation IDs, independence fields, and kill switches in a tracked spec.",
+      "fail_condition": "Implementation starts before the reviewed spec or absorbs later production-remediation ownership.",
+      "owner": "main",
+      "status": "pass"
+    },
+    {
+      "gate_id": "G-PR123-ORACLE-INDEPENDENCE",
+      "spec_refs": ["docs/research_program/long_horizon_rescue/pr123_spec.yaml#oracle_lineage_contract"],
+      "statement": "Every PR-123 reference records algorithm, source, equation, fixture, author, and random-stream lineage.",
+      "required_evidence": ["E-PR123-SPEC", "E-PR123-LINEAGE", "E-PR123-ATTEMPTS"],
+      "pass_condition": "Reference code is smaller than production and shared lineage is explicit; file-path separation alone is insufficient.",
+      "fail_condition": "A self-oracle or unrecorded correlated reference is counted as independent.",
+      "owner": "main",
+      "status": "pass"
+    },
+    {
+      "gate_id": "G-PR123-MUTATIONS",
+      "spec_refs": ["docs/research_program/long_horizon_rescue/pr123_spec.yaml#mutation_registry"],
+      "statement": "All preregistered defect mutations are executed and killed lane by lane.",
+      "required_evidence": ["E-PR123-SPEC", "E-PR123-MUTATIONS", "E-PR123-ATTEMPTS"],
+      "pass_condition": "The exact mutation matrix has no survivor; any survivor blocks only its lane and remains reported.",
+      "fail_condition": "A registered mutation survives, is skipped, or is replaced after results are known.",
+      "owner": "main",
+      "status": "pass"
+    },
+    {
+      "gate_id": "G-PR123-K6-CONTINUUM",
+      "spec_refs": ["docs/research_program/long_horizon_rescue/pr123_spec.yaml#k6_continuum_contract"],
+      "statement": "The K6 branch is catalog-independent and checks analytic fields, convergence, decomposition, and the sqrt(2) residual lock.",
+      "required_evidence": ["E-PR123-SPEC", "E-PR123-K6", "E-PR123-MANIFEST"],
+      "pass_condition": "At least four grids and two stencil orders pass registered continuum/order/upper-bound properties with zero empirical consumers.",
+      "fail_condition": "Any catalog input enters, convergence/order fails, or the analytic residual lock is not reproduced.",
+      "owner": "main",
+      "status": "pass"
     }
   ]
 }

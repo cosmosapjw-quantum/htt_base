@@ -8,11 +8,11 @@ Manual status counts are prohibited; use `docs/generated/status_snapshot.json` a
 | Metric | Value |
 | --- | ---: |
 | Total PRs | 113 |
-| Completed PRs | 69 |
+| Completed PRs | 70 |
 | Blocked PRs | 0 |
 | Skipped PRs | 0 |
 | In progress | 0 |
-| Pending PRs | 36 |
+| Pending PRs | 35 |
 | Dormant external PRs | 8 |
 
 | Metadata | Value |
@@ -21,13 +21,13 @@ Manual status counts are prohibited; use `docs/generated/status_snapshot.json` a
 | Implementation scope | `common` |
 | Claim tier | `diagnostic_only` |
 | Transfer source | `none` |
-| Config hash | `dde792a9e62c3893f9d1bb9d0eed5ed8106c445d8be282dfeafda798fb48474f` |
-| Input hashes | `docs/codex_handoff/pr_backlog.yaml:dec20a60c32a15c1e65bbaff859e52cf51d89299e33dacc1fa60efbcbf16eb50`<br>`docs/codex_handoff/pr_status.yaml:6fae021fc309e1a72e1d1c88880a3ccf8ca1df646752d02c218060c9fc9c5fc2`<br>`docs/codex_handoff/artifact_gate_outputs.yaml:66fe6f798fe4e02b7240e7916dced3ab3116b68081775fe96e79c81490674836` |
+| Config hash | `b6327fc97bb3ae4b9a5b4d800397a9c26243edaa27dd84b68c15aba13b780cb1` |
+| Input hashes | `docs/codex_handoff/pr_backlog.yaml:dec20a60c32a15c1e65bbaff859e52cf51d89299e33dacc1fa60efbcbf16eb50`<br>`docs/codex_handoff/pr_status.yaml:a90b81c753c73a2e52f789c60753766bd389e6c7b592410a69e026cd303ec695`<br>`docs/codex_handoff/artifact_gate_outputs.yaml:66fe6f798fe4e02b7240e7916dced3ab3116b68081775fe96e79c81490674836` |
 | Sky support status | `not_directional` |
 | Null/mock status | `not_statistical` |
 | Caveats | DAG completion is project bookkeeping only and is not scientific readiness.<br>Rows never promote external-transfer outputs to native solver validation.<br>DAG completion, artifact readiness, allowed use, and production validation are separate axes.<br>production_validated remains false unless an explicit artifact gate output says otherwise.<br>Execution resolutions are process receipts only and never promote scientific status or claim tier. |
-| Generating command | `python -m common.status_snapshot --write docs/generated/status_snapshot.json` |
-| Source commit | `461fe4c+dirty` |
+| Generating command | `python -m common.status_snapshot --backlog docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --write docs/generated/status_snapshot.json` |
+| Source commit | `e775101+dirty` |
 | Worktree state | `dirty` |
 
 | Owner | Rows |
@@ -40,9 +40,9 @@ Manual status counts are prohibited; use `docs/generated/status_snapshot.json` a
 
 | State | Rows |
 | --- | ---: |
-| `completed` | 69 |
+| `completed` | 70 |
 | `dormant_external` | 8 |
-| `pending` | 36 |
+| `pending` | 35 |
 
 | Claim Tier | Rows |
 | --- | ---: |
@@ -51,14 +51,14 @@ Manual status counts are prohibited; use `docs/generated/status_snapshot.json` a
 
 | Artifact Readiness | Rows |
 | --- | ---: |
-| `generated` | 63 |
-| `missing` | 44 |
+| `generated` | 64 |
+| `missing` | 43 |
 | `validation_candidate` | 6 |
 
 | Allowed Use | Rows |
 | --- | ---: |
-| `external_audit` | 67 |
-| `internal_only` | 44 |
+| `external_audit` | 68 |
+| `internal_only` | 43 |
 | `paper_appendix` | 2 |
 
 | Artifact Mode | Rows |

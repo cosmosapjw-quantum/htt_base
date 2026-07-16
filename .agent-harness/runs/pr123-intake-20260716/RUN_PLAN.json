@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "run_id": "pr123-intake-20260716",
+  "created_at": "2026-07-16T15:02:28+00:00",
+  "spec_ref": "docs/codex_handoff/pr_backlog.yaml",
+  "base_ref": "e77510170424eecd49112ed6c33424ce455b154c",
+  "head_ref": "HEAD",
+  "context_version": "83a4bc3b6dd148d98c68afebd1aadd23baff5d3cf9184b3050bbd034da56c9dc",
+  "budget": {
+    "max_concurrent": 4,
+    "max_total": 8,
+    "max_depth": 2
+  },
+  "stages": [
+    "context-build",
+    "independent-analysis",
+    "deduplication",
+    "targeted-adjudication",
+    "gate-evaluation",
+    "single-writer-update"
+  ],
+  "status": "initialized"
+}

@@ -1,0 +1,132 @@
+{
+  "schema_version": 1,
+  "run_id": "pr123-attempt3-final-review-20260716",
+  "assignment_id": "A-PR123-A3-K6",
+  "context_version": "721f26ec63a455745fde6b935633150c2aea9ef2e76c2fac2e36eee2ca9924ba",
+  "agent_type": "hostile_k6_domain_reviewer",
+  "independence_mode": "blind-results",
+  "result_path": ".agent-harness/runs/pr123-attempt3-final-review-20260716/results/A-PR123-A3-K6.json",
+  "status": "pass",
+  "started_at": "2026-07-17T01:22:00+09:00",
+  "completed_at": "2026-07-17T01:38:00+09:00",
+  "tool_versions": {
+    "git_head": "e77510170424eecd49112ed6c33424ce455b154c",
+    "python": "3.12.3",
+    "numpy": "2.5.0",
+    "pytest": "9.0.3",
+    "pyyaml": "6.0.3"
+  },
+  "review_scope": {
+    "classification": "catalog-independent numerical-method and mechanics validation",
+    "owner": "COMMON",
+    "claim_ceiling": "roadmap_rescue_v1:C2",
+    "scientific_status": "OPEN",
+    "empirical_analysis_permitted": false
+  },
+  "commands": [
+    {
+      "command": "isolated venv Python -I -S -B runpy execution of scripts/codex_harness/run_pr123_oracle_lab.py --check --tier contract",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "return_code": 0,
+      "result": "status=current for all six PR-123 generated artifacts",
+      "wall_time_seconds": 0.87
+    },
+    {
+      "command": "isolated venv Python -I -S -B pytest -p no:cacheprovider -q tests/contracts/test_pr123_k6_continuum_oracle.py tests/pr_cards/test_pr_123_oracle_k6_continuum_branch_mutation_laboratory.py",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "return_code": 0,
+      "result": "12 passed in 1.06s",
+      "wall_time_seconds": 1.07
+    },
+    {
+      "command": "rg literal module, symbol, and pr123_k6_continuum_card consumers under htt scripts tests docs, excluding the K6 implementation/spec/generated PR-123 bundle",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "return_code": 0,
+      "result": "only the PR-123 generator, contract tests, PR-card test, and artifact-contract test consume the module or card; no empirical consumer found"
+    },
+    {
+      "command": "independent algebraic replay of D2/D4 coefficients, manufactured curl/divergence, signed gradient atom moments, and curl/divergence energy contraction",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "return_code": 0,
+      "result": "D2 and D4 signs and closures agree with the registered equations; 18 signed atoms have mean zero and covariance I9/9; energies are 2/3 and 1/3, giving sqrt(2)"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/research_program/long_horizon_rescue/pr123_spec.yaml",
+      "sha256": "130248146a294c3b3e3adbfc0ba21d0d7852ff68f039afedb302d1e9eb74b376"
+    },
+    {
+      "path": "htt/src/common/k6_continuum_oracle.py",
+      "sha256": "d7f2e23de8adc15c80abbe066fe3d5b0f07a0b7e3960ea9f816afe5087e2c14d"
+    },
+    {
+      "path": "tests/contracts/test_pr123_k6_continuum_oracle.py",
+      "sha256": "6a3eb624679735b374d7a6b3c7a189f4a75ad314019c8ac57c1511b82964c88d"
+    },
+    {
+      "path": "tests/pr_cards/test_pr_123_oracle_k6_continuum_branch_mutation_laboratory.py",
+      "sha256": "7990569e90cfa5e1a704fc1d68c1510563a2d00cf47bb208fed24853fc8a1235"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr123_oracle_lab.py",
+      "sha256": "eddcb013173ff96cad5cd92fb49101c8a0c703c283d3813d89f23160a940f763"
+    },
+    {
+      "path": "docs/generated/pr123_k6_continuum_card.json",
+      "sha256": "f549411dc55b8b747c15b835591ecc0a0fdf198584fd93c85f736bf8e602d9cf"
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "F-PR123-A3-K6-PASS",
+      "claim_id": "C-PR123-MECHANICS",
+      "verdict": "pass",
+      "severity": "none",
+      "statement": "No K6 domain or numerical false-green was reproduced. The attempt-3 implementation explicitly evaluates all 18 +/- coordinate-gradient atoms, obtains zero mean and covariance I9/9, numerically reproduces curl energy 2/3, divergence energy 1/3, and RMS ratio sqrt(2) for both D2 and D4, and rejects the lock for the correlated all-ones-gradient challenge (ratio 0). The D2/D4 periodic and one-sided boundary formulas, manufactured analytic curl/divergence, four periodic grids, four closed-boundary grids, interior/collar decomposition, midpoint interpolation order, amplitude-gradient product closure, continuum fits, and numerical D2-as-D4 mutant all replay consistently with the frozen contract. Current literal module/symbol/card-path searches find no empirical consumer; only registered PR-123 generator/test/artifact surfaces consume the mechanics card. The generated card is byte-current and the focused suite passes 12/12.",
+      "assumptions_used": [
+        "The registered claim is C2 numerical mechanics only, not empirical vorticity inference or production remediation.",
+        "The sqrt(2) identity depends only on the registered zero mean and second-moment tensor E[G_ij G_kl]=(1/9) delta_ik delta_jl; full joint Gaussianity is not required for this quadratic energy ratio.",
+        "Cartesian curl uses curl(v)_i=epsilon_ijk partial_j v_k and divergence uses partial_i v_i.",
+        "The checked-in four-grid sets and thresholds in pr123_spec.yaml are frozen inputs to this replay.",
+        "PR-123 tests and generated mechanics artifacts are allowed consumers and are not empirical consumers."
+      ],
+      "evidence_refs": [
+        "docs/research_program/long_horizon_rescue/pr123_spec.yaml:330-338",
+        "docs/research_program/long_horizon_rescue/pr123_spec.yaml:519-542",
+        "docs/research_program/long_horizon_rescue/pr123_spec.yaml:679-719",
+        "docs/research_program/long_horizon_rescue/pr123_spec.yaml:750-757",
+        "htt/src/common/k6_continuum_oracle.py:15-57",
+        "htt/src/common/k6_continuum_oracle.py:74-103",
+        "htt/src/common/k6_continuum_oracle.py:122-199",
+        "htt/src/common/k6_continuum_oracle.py:202-220",
+        "htt/src/common/k6_continuum_oracle.py:223-358",
+        "scripts/codex_harness/run_pr123_oracle_lab.py:374-395",
+        "tests/contracts/test_pr123_k6_continuum_oracle.py:21-103",
+        "tests/pr_cards/test_pr_123_oracle_k6_continuum_branch_mutation_laboratory.py:98-119",
+        "docs/generated/pr123_k6_continuum_card.json (sha256 f549411dc55b8b747c15b835591ecc0a0fdf198584fd93c85f736bf8e602d9cf)"
+      ],
+      "evidence_fingerprint": "sha256:4492d17f7dcb2edf33bbe17466bdf3b8879ceb7ab94c37c9888a276cb4a41c82",
+      "counterevidence_refs": [],
+      "reproduction": [
+        "Run the isolated artifact --check command recorded above and require return code 0 with status=current.",
+        "Run the two focused pytest files recorded above and require 12 passed.",
+        "Search htt, scripts, tests, and docs for the module path, all exported K6 symbols, PR123-K6-CONTINUUM, and pr123_k6_continuum_card; classify every hit against the registered allowed-consumer list."
+      ],
+      "confidence": 0.97,
+      "unresolved": [
+        "The built-in runtime consumer inventory is literal-text heuristic rather than an AST/dataflow proof and would not by itself detect an arbitrary future reader of the generated card path. Independent current-tree literal card-path and symbol scans found no violating consumer, so this is a follow-up hardening risk, not a reproduced current gate failure.",
+        "No broad repository suite was run because this assignment is a targeted read-only K6 replay; the byte-current builder check plus the two focused files cover the registered K6 gate."
+      ]
+    }
+  ],
+  "proposed_changes": [],
+  "tests_to_run": [],
+  "risks_and_kill_switches": [
+    "Any non-allowlisted empirical module or generated-card consumer must block no_empirical_consumer.",
+    "Any loss of either stencil order, any grid count below four, any failed interior/collar/order/interpolation/decomposition/continuum threshold, any nonzero signed-atom mean or covariance mismatch, any sqrt(2) miss, or any surviving D2-as-D4 mutant must block the K6 lane.",
+    "No K6 mechanics result may promote scientific_status beyond OPEN or be described as observed vorticity."
+  ],
+  "artifacts_status_updates_needed": [],
+  "errors": []
+}

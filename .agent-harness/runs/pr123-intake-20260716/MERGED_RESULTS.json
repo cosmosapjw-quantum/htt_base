@@ -1,0 +1,809 @@
+{
+  "schema_version": 1,
+  "run_id": "pr123-intake-20260716",
+  "generated_at": "2026-07-16T15:19:44+00:00",
+  "result_count": 4,
+  "raw_finding_count": 18,
+  "unique_finding_count": 18,
+  "findings": [
+    {
+      "finding_id": "F-PR123-CLAIM-01",
+      "claim_id": "C-PR123-MECHANICS",
+      "verdict": "block_implementation_until_reviewed_spec_and_lane_owners_are_frozen",
+      "severity": "high",
+      "statement": "The active PR card correctly names COMMON and C2 conditional mechanics but still has contributors=[]; the reviewed spec must assign OBSSTAT/HTT lane ownership and freeze the exact claim before implementation.",
+      "assumptions_used": [
+        "The current PR-123 card and gate registry are authoritative during intake."
+      ],
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml:1739-1793",
+        "docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md:287-296",
+        ".agent-harness/context/GATE_REGISTRY.json#G-PR123-SPEC"
+      ],
+      "evidence_fingerprint": "sha256:dec20a60c32a15c1e65bbaff859e52cf51d89299e33dacc1fa60efbcbf16eb50",
+      "counterevidence_refs": [],
+      "reproduction": [
+        "sed -n '1739,1793p' docs/codex_handoff/pr_backlog.yaml"
+      ],
+      "confidence": 0.99,
+      "unresolved": [
+        "Reviewed pr123_spec.yaml does not yet exist."
+      ],
+      "source_finding_ids": [
+        "F-PR123-CLAIM-01"
+      ],
+      "supporting_assignments": [
+        "A-PR123-CLAIM"
+      ],
+      "supporting_agent_types": [
+        "claim_gate_reviewer"
+      ],
+      "duplicate_count": 1
+    },
+    {
+      "finding_id": "F-PR123-CLAIM-02",
+      "claim_id": "C-PR123-MECHANICS",
+      "verdict": "conditional_c2_ceiling_only",
+      "severity": "critical",
+      "statement": "The strongest admissible result is lane-specific conditional C2 numerical mechanics; no observed inference, matched validation, production remediation, or finding disposition follows from a mutation kill.",
+      "assumptions_used": [
+        "All 102 remediation findings remain OPEN during PR-123."
+      ],
+      "evidence_refs": [
+        "docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md:66-76",
+        "docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md:287-300",
+        ".agent-harness/generated/CONTEXT_PACK.md#Frozen-scope"
+      ],
+      "evidence_fingerprint": "sha256:d653d056789ca1362cebf95287f863d68b62f8859e3d91d69ff4b4f3725cf443",
+      "counterevidence_refs": [],
+      "reproduction": [
+        "sed -n '66,76p;287,300p' docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md"
+      ],
+      "confidence": 1.0,
+      "unresolved": [],
+      "source_finding_ids": [
+        "F-PR123-CLAIM-02"
+      ],
+      "supporting_assignments": [
+        "A-PR123-CLAIM"
+      ],
+      "supporting_agent_types": [
+        "claim_gate_reviewer"
+      ],
+      "duplicate_count": 1
+    },
+    {
+      "finding_id": "F-PR123-CLAIM-03",
+      "claim_id": "C-PR123-MECHANICS",
+      "verdict": "oracle_independence_is_pending_and_fail_closed",
+      "severity": "high",
+      "statement": "Reference-path separation is insufficient; algorithm/source distinction and all shared equation, fixture, author, and random-stream correlations must be recorded, with production-call exclusion and a preregistered smaller-reference criterion.",
+      "assumptions_used": [
+        "Internal agents are correlated process evidence and not external replication."
+      ],
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml:1766-1790",
+        "docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md:103-114",
+        ".agent-harness/context/GATE_REGISTRY.json#G-PR123-ORACLE-INDEPENDENCE"
+      ],
+      "evidence_fingerprint": "sha256:35da8de530b3b24324fb1ee62e0cfb7b11849b232a66b21359c1cbf237acbdaf",
+      "counterevidence_refs": [],
+      "reproduction": [
+        "sed -n '1766,1790p' docs/codex_handoff/pr_backlog.yaml"
+      ],
+      "confidence": 0.98,
+      "unresolved": [
+        "The spec must define the smaller-reference complexity measure before code execution."
+      ],
+      "source_finding_ids": [
+        "F-PR123-CLAIM-03"
+      ],
+      "supporting_assignments": [
+        "A-PR123-CLAIM"
+      ],
+      "supporting_agent_types": [
+        "claim_gate_reviewer"
+      ],
+      "duplicate_count": 1
+    },
+    {
+      "finding_id": "F-PR123-CLAIM-04",
+      "claim_id": "C-PR123-MECHANICS",
+      "verdict": "pr123_may_test_but_must_not_steal_later_production_remediation",
+      "severity": "high",
+      "statement": "The nine mutations are cross-lane regression oracles only; production fixes and scientific disposition remain owned by PR-135/138/140/145-154 and PR-157 as mapped in this result.",
+      "assumptions_used": [
+        "The long-horizon roadmap's downstream card ownership remains unchanged."
+      ],
+      "evidence_refs": [
+        "docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md:437-446",
+        "docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md:470-505",
+        "docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md:544-680",
+        "docs/audits/jcap_prd_adversarial_audit_20260714/criticism_response_matrix.json"
+      ],
+      "evidence_fingerprint": "sha256:f0c8c5316d8384bf223addd21c3f319039a26134bdc8507f4ae432206e7e9b0d",
+      "counterevidence_refs": [],
+      "reproduction": [
+        "jq -c '.rows[] | select(.criticism_id==\"N-STAT-PSEUDO-BAYES\" or .criticism_id==\"N-STAT-PSEUDO-PPC\" or .criticism_id==\"N-DATA-ACT-RANGE\" or .criticism_id==\"N-DATA-JWST-WEIGHTING\" or .criticism_id==\"N-STAT-K1-EXCHANGE\")' docs/audits/jcap_prd_adversarial_audit_20260714/criticism_response_matrix.json"
+      ],
+      "confidence": 0.96,
+      "unresolved": [],
+      "source_finding_ids": [
+        "F-PR123-CLAIM-04"
+      ],
+      "supporting_assignments": [
+        "A-PR123-CLAIM"
+      ],
+      "supporting_agent_types": [
+        "claim_gate_reviewer"
+      ],
+      "duplicate_count": 1
+    },
+    {
+      "finding_id": "F-PR123-CLAIM-05",
+      "claim_id": "C-PR123-MECHANICS",
+      "verdict": "absolute_pr4_data_firewall_required",
+      "severity": "critical",
+      "statement": "PR4/NPIPE remains wholly absent and skipped; any PR4 data-path command, derived value, or PR3+PR4 joint artifact fails the entire run, while policy-only documentation may record the skip without probing data.",
+      "assumptions_used": [
+        "No new user authorization for PR4 has been given."
+      ],
+      "evidence_refs": [
+        "docs/research_program/long_horizon_rescue/pr122_spec.yaml:652-660",
+        "docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md:620-631",
+        ".agent-harness/context/FROZEN_DECISIONS.md#D-PR4-SKIP"
+      ],
+      "evidence_fingerprint": "sha256:15ae65cba4e7e5572a827723daca179731ba470da75870f0e1215f43fc6218d9",
+      "counterevidence_refs": [],
+      "reproduction": [
+        "sed -n '652,660p' docs/research_program/long_horizon_rescue/pr122_spec.yaml",
+        "sed -n '620,631p' docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md"
+      ],
+      "confidence": 1.0,
+      "unresolved": [],
+      "source_finding_ids": [
+        "F-PR123-CLAIM-05"
+      ],
+      "supporting_assignments": [
+        "A-PR123-CLAIM"
+      ],
+      "supporting_agent_types": [
+        "claim_gate_reviewer"
+      ],
+      "duplicate_count": 1
+    },
+    {
+      "finding_id": "F-PR123-CODE-001",
+      "claim_id": "C-PR123-MECHANICS",
+      "verdict": "pass",
+      "severity": "high",
+      "statement": "All nine preregistered PR-123 defect mutations map to exact current code and test gaps, while their production remediation remains assigned to later PR cards.",
+      "assumptions_used": [
+        "A mutation-laboratory reference may use synthetic or manufactured fixtures only and must not be exported as a replacement scientific producer.",
+        "An active quarantine wrapper is not a numerical production locus; the retained reusable mechanic and frozen legacy producer are both recorded where applicable.",
+        "The phrase 'ignored host error' denotes the JWST per-host uncertainty emitted by the crossmatch but ignored by the former global one-third shrink forecast.",
+        "PR4/NPIPE is forbidden input: no PR4 download, intake, reduction, analysis, or numerical output may be used by any mutation test."
+      ],
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml:1739-1792",
+        "docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md:287-296",
+        ".agent-harness/context/SHARED_CONTEXT.md:39-54",
+        "scripts/audits/jcap_prd_20260714.py:965-1015",
+        "scripts/audits/jcap_prd_20260714.py:1122-1183",
+        "scripts/audits/jcap_prd_20260714.py:1288-1418",
+        "scripts/audits/jcap_prd_20260714.py:1429-1482",
+        "docs/audits/jcap_prd_adversarial_audit_20260714/criticism_response_matrix.md:99-101"
+      ],
+      "evidence_fingerprint": "sha256:c9876b6898f2dbd49ae0d02c24f0ecb5264c49392c92c9bfe65602d7bcf29d19",
+      "counterevidence_refs": [],
+      "reproduction": [
+        "nl -ba docs/codex_handoff/pr_backlog.yaml | sed -n '1739,1792p'",
+        "rg -n 'mv_weights|linear_velocity_grid|mock_dipole_amplitudes|calibrate_max_scan|build_posterior_predictive_report' htt scripts tests",
+        "nl -ba scripts/audits/jcap_prd_20260714.py | sed -n '960,1185p;1288,1482p'"
+      ],
+      "confidence": 0.98,
+      "unresolved": [
+        "The reviewed PR-123 implementation spec is still pending, so mutation thresholds, seed counts, and exact artifact schemas remain acceptance decisions rather than implemented evidence."
+      ],
+      "mutation_map": [
+        {
+          "mutation_id": "M-PR123-CF4-SHELL-MONOPOLE",
+          "lane": "CF4 constrained bulk-flow mechanics",
+          "defect": "shell-monopole nuisance columns are absent from the estimator constraints",
+          "current_loci": [
+            "scripts/cf4_mv_bulkflow.py:1-18 is now quarantine-only and has no numerical path",
+            "htt/obsstat/mv_bulkflow.py:129-150 implements the retained estimator with G=n_hat only",
+            "legacy/cf4_p0/scripts/cf4_mv_bulkflow.py:104-126 and 139-206 preserve the frozen cell binning and affected producer",
+            "scripts/audits/jcap_prd_20260714.py:965-1015 contains a separate generalized constrained sensitivity calculation"
+          ],
+          "current_tests": [
+            "tests/obsstat/test_cf4_mv_bulkflow.py:24-45 checks quarantine and legacy preservation only",
+            "No current test asserts W times shell_basis equals zero or recovers a bulk plus shell-monopole synthetic fixture"
+          ],
+          "small_reference": "Solve the per-component augmented KKT system for min(0.5*w^T R w-Q_i^T w) subject to [n_hat,shell_basis]^T w=[e_i,0], rather than copying the production Schur-complement path.",
+          "mutation_fixture_property": "On a small well-conditioned synthetic sky, add registered radial-shell offsets to a known bulk vector; the clean KKT reference must satisfy W@n_hat=I and W@shell_basis=0 and retain registered toy coverage, while the mutant that drops shell_basis must fail.",
+          "later_production_owner": "PR-145 for the radial-monopole/velocity-shape estimator, then PR-146 E2E mocks and PR-147/157 adjudication; docs/codex_handoff/pr_backlog.yaml:2955-3017 and roadmap:1129",
+          "pr123_boundary": "Do not unquarantine CF4, load a CF4 row, emit a replacement bulk-flow value, or claim P0 closure."
+        },
+        {
+          "mutation_id": "M-PR123-GRF-NONHERMITIAN-RFFT",
+          "lane": "CF4 forward-mock Fourier mechanics",
+          "defect": "independent complex coefficients are drawn on rFFT self-conjugate planes without the required Hermitian relation",
+          "current_loci": [
+            "htt/obsstat/pv_forward_mocks.py:60-91, especially 72-90",
+            "scripts/audits/jcap_prd_20260714.py:1122-1183 gives the independent real-white-noise to rfftn reference and multi-seed variance comparison"
+          ],
+          "current_tests": [
+            "No current test directly exercises linear_velocity_grid special-plane conjugacy or component-power calibration"
+          ],
+          "small_reference": "Draw a real white-noise cube, transform with rfftn, and apply the requested nonnegative spectral scaling; inspect kz=0 and Nyquist-plane conjugacy and compare component variance with an analytic discrete lattice sum.",
+          "mutation_fixture_property": "Across small fixed grids and multiple independent seed namespaces, clean special planes must be conjugate and component variance must match the discrete target within preregistered Monte Carlo bounds; the direct-complex-plane mutant must fail at least one invariant.",
+          "later_production_owner": "PR-146 owns the Hermitian CF4 catalogue forward generator and its E2E coverage; docs/codex_handoff/pr_backlog.yaml:3020-3077",
+          "pr123_boundary": "Do not replace linear_velocity_grid or construct catalogue mocks in PR-123."
+        },
+        {
+          "mutation_id": "M-PR123-DESI-FIXED-ALPHA",
+          "lane": "DESI per-mock normalization mechanics",
+          "defect": "the observed cap alpha is captured once and reused for every Poisson mock",
+          "current_loci": [
+            "scripts/desi_dipole_mock_significance.py:85-86 and 118-123",
+            "htt/obsstat/number_count_dipole.py:117-136, especially 126-134",
+            "scripts/audits/jcap_prd_20260714.py:1347-1418 independently contrasts fixed and refitted alpha"
+          ],
+          "current_tests": [
+            "tests/obsstat/test_desi_dipole_mock_significance.py:32-74 reads the committed card and claim labels but never checks per-mock refitting"
+          ],
+          "small_reference": "For each small synthetic cap and mock, compute alpha_i=sum(counts_mask)/sum(randoms_mask) by direct scalar reduction before forming residuals.",
+          "mutation_fixture_property": "The clean residual has exactly zero random-weighted cap monopole for every mock; a mutant using the frozen observed alpha fails this identity for at least one preregistered seed.",
+          "later_production_owner": "PR-151 owns exact-selection DESI mocks, per-mock nuisance refits, and survey-conditioned calibration; docs/codex_handoff/pr_backlog.yaml:3323-3376",
+          "pr123_boundary": "Do not load DESI data/randoms, build official mocks, or alter the DESI producer."
+        },
+        {
+          "mutation_id": "M-PR123-K6-LOW-ORDER-CURL",
+          "lane": "K6 catalog-independent continuum mechanics",
+          "defect": "a second-order/default-boundary derivative floor is treated as a field quantity without analytic anchors or continuum separation",
+          "current_loci": [
+            "htt/obsstat/velocity_field_curl.py:29-40 uses np.gradient for curl and divergence",
+            "scripts/cf4pp_vorticity_posterior.py:58-95 consumes that derivative on the empirical CF4++ field",
+            "scripts/audits/jcap_prd_20260714.py:1485-1567 compares second/fourth order on block-averaged empirical data but is not a continuum oracle"
+          ],
+          "current_tests": [
+            "tests/obsstat/test_cf4pp_vorticity.py:31-73 checks a committed empirical card, not exact derivatives",
+            "tests/obsstat/test_k6_cf4_curl_posterior.py:36-52 checks the predecessor affine estimator and a real grid, not the new grid derivative"
+          ],
+          "small_reference": "Use explicit coefficient tables for second- and fourth-order central and one-sided finite differences on analytic vector fields, with exact symbolic/closed-form truth evaluated independently.",
+          "mutation_fixture_property": "Solid-body, potential, mixed Helmholtz, and manufactured-boundary fixtures must pass exact/invariance checks and registered convergence on at least four grids; the second-order-only/no-boundary-decomposition mutant must fail.",
+          "later_production_owner": "PR-123 itself owns only this catalog-independent K6 continuum branch; any empirical-field interpretation remains outside it and final closeout also requires PR-157 (roadmap:1096-1098,1138).",
+          "pr123_boundary": "No workdir/raw/cf4 path, CF4 artifact, row/selection authority, empirical mask, or empirical result consumer may enter the branch."
+        },
+        {
+          "mutation_id": "M-PR123-JWST-IGNORED-HOST-ERROR",
+          "lane": "JWST per-host weighting mechanics",
+          "defect": "per-host uncertainties are emitted by the linkage artifact but the former forecast applies one global one-third shrink",
+          "current_loci": [
+            "scripts/jwst_cf4_crossmatch.py:145-152 emits jwst_e_dm_mag",
+            "htt/obsstat/joint_pv_cmb_forecast.py:55-61 quarantines observational forecasting and 64-92 retains only a synthetic uniform-shrink witness",
+            "legacy/cf4_p0/scripts/bass_extended_joint_forecast.py:95-123 preserves the former mask plus global JWST_SHRINK call"
+          ],
+          "current_tests": [
+            "tests/obsstat/test_jwst_cf4_crossmatch_claim_boundary.py:13-40 verifies linkage-only quarantine but not use of individual errors"
+          ],
+          "small_reference": "On a tiny synthetic linear model, form the diagonal covariance and Fisher/GLS weight by direct per-row sigma_i values; the mutant discards sigma_i and applies one shared scale.",
+          "mutation_fixture_property": "Permuting unequal host errors across unequal design rows changes the clean information matrix by the direct analytic amount, while the ignored-error mutant is invariant and must be killed.",
+          "later_production_owner": "PR-154 owns the hierarchical per-host/shared calibration covariance forecast; docs/codex_handoff/pr_backlog.yaml:3485-3533 and roadmap:1115",
+          "pr123_boundary": "Do not unquarantine JWST/CF4, consume matched hosts as observed data, or implement the hierarchy."
+        },
+        {
+          "mutation_id": "M-PR123-K1-ASYMMETRIC-GLOBAL-RANK",
+          "lane": "finite-null max-scan mechanics",
+          "defect": "the observation and null rows use asymmetric rank formulas, so null self-ranks cannot attain the observation's minimum rank",
+          "current_loci": [
+            "htt/obsstat/lowell_global_calibration.py:36-76, especially observation rank at 68 and null self-rank at 69-72",
+            "scripts/k1_global_maxscan.py:381-398 consumes calibrate_max_scan"
+          ],
+          "current_tests": [
+            "tests/obsstat/test_k1_global_maxscan.py:26-35 checks only range and global>=minimum-local",
+            "tests/contracts/test_egs2_extension.py:38-47 uses synthetic summaries and the same weak inequality"
+          ],
+          "small_reference": "Pool observation plus S null rows, compute every row's rank as count(pool_score>=row_score)/(S+1), and exhaustively relabel each row as the observation on tiny arrays.",
+          "mutation_fixture_property": "The clean pooled result is invariant under every row permutation and has exact small-N super-uniform frequencies; the extra-plus-one null-self mutant fails relabeling invariance.",
+          "later_production_owner": "PR-135 owns the exchangeable finite-null API; PR-149/150 later consume it for K1, with PR4 entirely skipped by user scope; docs/codex_handoff/pr_backlog.yaml:2393-2443 and 3282-3322",
+          "pr123_boundary": "Use synthetic arrays only. Do not run PR3 data analysis early and do not execute any PR4 command or create PR4 numerical output."
+        },
+        {
+          "mutation_id": "M-PR123-HTT-FITTED-SCORE-BAYES",
+          "lane": "HTT evidence semantics",
+          "defect": "a fitted directional log-likelihood difference is labeled ln Bayes factor without normalized priors or marginalization",
+          "current_loci": [
+            "htt/htt/htt/infer/shared_cause.py:25-38 defines lnB/S2_preferred fields",
+            "htt/htt/htt/infer/shared_cause.py:60-68 assigns Jeffreys-style labels",
+            "htt/htt/htt/infer/shared_cause.py:183-223 computes delta=max/fitted logL minus null logL",
+            "htt/htt/htt/infer/shared_cause.py:260-289 emits the Bayes-labeled artifact fields"
+          ],
+          "current_tests": [
+            "tests/htt/test_cf4_active_input_quarantine.py:253-274 checks CF4 exclusion only and does not validate evidence semantics"
+          ],
+          "small_reference": "For a hard-coded finite synthetic parameter support, compute exact marginal likelihood by explicit sum of normalized prior_mass times likelihood; keep it private to the oracle lab and type the production mutant as fitted_score.",
+          "mutation_fixture_property": "Changing normalized prior mass changes the finite reference evidence but not the fitted maximum score; any object lacking integration and prior provenance must be rejected as Bayes evidence.",
+          "later_production_owner": "PR-140 owns normalized-prior evidence and two independent engines; docs/codex_handoff/pr_backlog.yaml:2657-2710",
+          "pr123_boundary": "Do not build a general evidence engine, repair shared_cause, or export an HTT evidence receipt."
+        },
+        {
+          "mutation_id": "M-PR123-HTT-PLUGIN-PPC",
+          "lane": "HTT predictive-check semantics",
+          "defect": "caller-supplied point predictions and p-values are accepted as a posterior-predictive receipt without posterior draws or replicated data",
+          "current_loci": [
+            "htt/htt/htt/infer/posterior_predictive.py:25-45 stores point predicted/sigma/pvalue fields",
+            "htt/htt/htt/infer/posterior_predictive.py:126-173 accepts caller-supplied predicted, sigma, and pvalue and marks readiness",
+            "tests/htt/test_inference_adequacy_gates.py:111-129 constructs such a report directly and 180-194 accepts it as ready"
+          ],
+          "current_tests": [
+            "The current adequacy tests validate thresholds and manifests but have no posterior-draw, replicated-data, or discrepancy-lineage requirement"
+          ],
+          "small_reference": "Use one tiny finite synthetic model with exact posterior weights and exact or seeded replicated observations, compute one frozen discrepancy from replicas, and reject any receipt that has only point predictions/caller pvalue. Keep the enumerator oracle-private.",
+          "mutation_fixture_property": "The clean result binds posterior-support/prior/likelihood/replicate/discrepancy hashes and changes under the registered posterior mixture; the plug-in mutant either lacks those hashes or disagrees with exact enumeration and must fail.",
+          "later_production_owner": "PR-138 owns lineage-bound posterior draws, SBC, replicated-data PPC, and the residual_check downclaim; docs/codex_handoff/pr_backlog.yaml:2553-2603 and roadmap:1118",
+          "pr123_boundary": "Do not implement a production PPC/SBC sampler or change the HTT report API."
+        },
+        {
+          "mutation_id": "M-PR123-ACT-STALE-TRANSFER-RANGE",
+          "lane": "ACT transfer-support semantics",
+          "defect": "the repository computes L=2..10 from released kappa alms while the frozen published validation support is 40<L<763 and raw upstream QE inputs are absent",
+          "current_loci": [
+            "scripts/act_kappa_isotropy_measure.py:48-59 hard-codes ELL_MIN=2 and ELL_MAX=10",
+            "scripts/act_kappa_isotropy_measure.py:132-233 builds a low-L result without an authenticated validated-range gate",
+            "scripts/audits/jcap_prd_20260714.py:1429-1482 records zero raw QE inputs and the disjoint 2..10 versus 40<L<763 supports"
+          ],
+          "current_tests": [
+            "tests/contracts/test_obsdata_figures.py:28-45 keeps the ACT figure current but does not validate transfer support",
+            "No current ACT test rejects a target band outside the authenticated support"
+          ],
+          "small_reference": "Represent requested and validated multipole support as explicit closed/open integer interval sets and require requested_support to be a subset of authenticated_support before any transfer-dependent status can pass.",
+          "mutation_fixture_property": "The exact fixture requested={2,...,10}, validated={41,...,762} must fail deterministically; randomized interval containment properties kill a mutant that trusts product presence or stale range metadata.",
+          "later_production_owner": "PR-152 owns the raw-QE inventory, validated-range manifest, release-simulation cross-fit, and possible abandon decision; docs/codex_handoff/pr_backlog.yaml:3379-3429 and roadmap:1110",
+          "pr123_boundary": "No ACT files, download, QE execution, or low-L result regeneration belongs in PR-123."
+        }
+      ],
+      "source_finding_ids": [
+        "F-PR123-CODE-001"
+      ],
+      "supporting_assignments": [
+        "A-PR123-CODE"
+      ],
+      "supporting_agent_types": [
+        "code_mapper"
+      ],
+      "duplicate_count": 1
+    },
+    {
+      "finding_id": "F-PR123-CODE-002",
+      "claim_id": "C-PR123-MECHANICS",
+      "verdict": "pass",
+      "severity": "high",
+      "statement": "The smallest viable K6 completion is a pure manufactured-field continuum module with explicit second/fourth-order stencils, decomposition, extrapolation, sqrt(2) lock, and a machine-checked zero-empirical-consumer contract.",
+      "assumptions_used": [
+        "K6 continuum mechanics may supersede only C6-K6-CURL-F1/F3/F4 at the synthetic/manufactured numerical-mechanics tier.",
+        "A solid-body exactness anchor alone cannot establish convergence; a smooth non-polynomial potential/mixed field is needed for order estimation.",
+        "Block-averaging an empirical reconstruction is not a continuum refinement study because the inverse problem is not recomputed."
+      ],
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml:1767-1776",
+        "docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md:1096-1098",
+        "docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md:1138-1138",
+        "htt/obsstat/velocity_field_curl.py:29-58",
+        "docs/audits/jcap_prd_adversarial_audit_20260714/criticism_response_matrix.md:47-50",
+        "docs/audits/jcap_prd_adversarial_audit_20260714/prior_crosswalk.md:40-43"
+      ],
+      "evidence_fingerprint": "sha256:5f9c8355d2b7697596decfc8edf1f2f30e4ccb59baa8d78ceacd4c3424eeba00",
+      "counterevidence_refs": [
+        "scripts/audits/jcap_prd_20260714.py:1526-1567 is useful empirical stencil evidence but cannot be counted as the required catalog-independent continuum oracle"
+      ],
+      "reproduction": [
+        "nl -ba htt/obsstat/velocity_field_curl.py | sed -n '29,58p'",
+        "nl -ba docs/audits/jcap_prd_adversarial_audit_20260714/criticism_response_matrix.md | sed -n '47,50p'"
+      ],
+      "confidence": 0.97,
+      "unresolved": [
+        "The reviewed spec must preregister the actual four-or-more grids, error norms, fitted-order tolerances, continuum-intercept rule, and Monte Carlo tolerance for the residual lock before execution."
+      ],
+      "proposed_api": {
+        "file": "htt/src/common/k6_continuum_oracle.py",
+        "symbols": [
+          "GridSpec: immutable domain, shape, spacing, and boundary policy",
+          "ManufacturedVelocityField: values plus independent exact curl/divergence and optional Helmholtz parts",
+          "differentiate_axis(values, grid, axis, order): explicit order-2/order-4 central and one-sided coefficients",
+          "evaluate_curl_divergence(field, grid, order): numerical values and separate interior/boundary error norms",
+          "fit_continuum_order(rows): observed order and zero-limit/upper-bound report without empirical interpretation",
+          "decompose_amplitude_modulated_residual(a, grad_a, u, curl_u): verify curl(a*u)=grad(a) cross u+a*curl(u)",
+          "isotropic_residual_lock(...): analytic sqrt(2) target plus independent seeded simulation receipt"
+        ],
+        "manufactured_cases": [
+          "solid_body: v=Omega cross x, exact curl=2*Omega and div=0",
+          "potential: v=grad(phi) for smooth trigonometric phi, exact curl=0 and div=Laplacian(phi)",
+          "mixed_helmholtz: registered potential plus solenoidal field with separately known components",
+          "manufactured_boundary: smooth non-polynomial vector field evaluated on the closed box to exercise one-sided boundary stencils"
+        ],
+        "refinement_contract": [
+          "Use at least four nested or monotonically refined grids; odd grids such as 17,25,33,49 on [-1,1]^3 are sufficient if fixed in the spec.",
+          "Run both order=2 and order=4 on identical exact samples.",
+          "Report L2 and Linf errors separately for strict interior and boundary bands.",
+          "Estimate order only on a nonzero-error smooth case; exact solid-body recovery is an invariant, not an order estimate.",
+          "Separate exact-sampling derivative error from trilinear-interpolation error by evaluating both paths against the same analytic truth.",
+          "Fit and report the continuum intercept/upper bound with preregistered admissibility rules; do not reinterpret it as observed vorticity."
+        ],
+        "residual_contract": [
+          "Report stationary-kernel contribution, grad(amplitude) cross kernel contribution, and boundary contribution separately.",
+          "Assert the analytic isotropic three-component RMS curl/RMS divergence ratio equals sqrt(2).",
+          "Use a distinct seed namespace for the numerical residual check and record RNG algorithm, seed list, and fixture hash."
+        ],
+        "no_empirical_consumer_gate": [
+          "Reject imports from obsstat/htt empirical producers and any path or artifact reference containing workdir/raw, CF4, DESI, ACT, JWST, Planck, PR3, or PR4.",
+          "The generated K6 card must declare input_mode=analytic_manufactured, input_hashes limited to spec/source/fixture hashes, empirical_consumers=[], and claim ceiling C2 numerical mechanics.",
+          "A contract test must scan the branch imports, generator inputs, and generated consumer list; any empirical input or consumer fails the lane."
+        ]
+      },
+      "source_finding_ids": [
+        "F-PR123-CODE-002"
+      ],
+      "supporting_assignments": [
+        "A-PR123-CODE"
+      ],
+      "supporting_agent_types": [
+        "code_mapper"
+      ],
+      "duplicate_count": 1
+    },
+    {
+      "finding_id": "F-PR123-CODE-003",
+      "claim_id": "C-PR123-MECHANICS",
+      "verdict": "pass",
+      "severity": "medium",
+      "statement": "A two-module COMMON implementation and three consolidated generated artifacts are sufficient; editing any mapped production producer would exceed PR-123 ownership.",
+      "assumptions_used": [
+        "Artifact count should be minimized while retaining a separately auditable lineage manifest and K6 no-empirical-consumer card.",
+        "The generator may reproduce compact mutant functions inside the oracle lab; it should bind mapped production path/symbol/hash rather than import production output as expected truth."
+      ],
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml:1758-1765",
+        "docs/codex_handoff/pr_backlog.yaml:1785-1790",
+        ".agent-harness/context/GATE_REGISTRY.json:55-92",
+        "docs/codex_handoff/pr_backlog.yaml:2393-2443",
+        "docs/codex_handoff/pr_backlog.yaml:2553-2603",
+        "docs/codex_handoff/pr_backlog.yaml:2657-2710",
+        "docs/codex_handoff/pr_backlog.yaml:2955-3077",
+        "docs/codex_handoff/pr_backlog.yaml:3323-3429",
+        "docs/codex_handoff/pr_backlog.yaml:3485-3533"
+      ],
+      "evidence_fingerprint": "sha256:373a596db06df86c6af789f4828517b0518dc4be9ef32eb6fbb80ee9744b2115",
+      "counterevidence_refs": [],
+      "reproduction": [
+        "nl -ba .agent-harness/context/GATE_REGISTRY.json | sed -n '55,92p'",
+        "nl -ba docs/codex_handoff/pr_backlog.yaml | sed -n '2393,2443p;2553,2603p;2657,2710p;2955,3077p;3323,3429p;3485,3533p'"
+      ],
+      "confidence": 0.96,
+      "unresolved": [
+        "G-PR123-SPEC remains pending; no implementation should begin until the four-role reviewed spec freezes IDs, thresholds, lineage fields, and kill switches."
+      ],
+      "minimal_file_plan": {
+        "precondition": [
+          "docs/research_program/long_horizon_rescue/pr123_spec.yaml"
+        ],
+        "production_files_owned_by_pr123": [
+          "htt/src/common/oracle_lab.py",
+          "htt/src/common/k6_continuum_oracle.py",
+          "scripts/codex_harness/build_pr123_oracle_lab.py"
+        ],
+        "tests": [
+          "tests/contracts/test_pr123_oracle_lab.py",
+          "tests/contracts/test_pr123_k6_continuum_oracle.py",
+          "tests/pr_cards/test_pr_123_oracle_k6_continuum_branch_mutation_laboratory.py"
+        ],
+        "generated_artifacts": [
+          "docs/generated/pr123_oracle_lineage_manifest.json",
+          "docs/generated/pr123_mutation_lab_report.json containing the kill matrix, per-lane properties/coverage, blockers, and explicit survivor list",
+          "docs/generated/pr123_k6_continuum_card.json"
+        ],
+        "status_document": "docs/PR_DELTAS/pr-123.md",
+        "must_not_edit": [
+          "htt/obsstat/mv_bulkflow.py",
+          "htt/obsstat/pv_forward_mocks.py",
+          "scripts/desi_dipole_mock_significance.py",
+          "htt/obsstat/number_count_dipole.py",
+          "htt/obsstat/velocity_field_curl.py",
+          "htt/obsstat/joint_pv_cmb_forecast.py",
+          "htt/obsstat/lowell_global_calibration.py",
+          "htt/htt/htt/infer/shared_cause.py",
+          "htt/htt/htt/infer/posterior_predictive.py",
+          "scripts/act_kappa_isotropy_measure.py"
+        ]
+      },
+      "oracle_lab_api": [
+        "OracleLineage records lane, mutation ID, production path/symbol/hash, reference path/symbol/hash, algorithm family, equation IDs, fixture hashes, author identity, RNG algorithm/seed namespace, shared-lineage disclosures, claim ceiling, and later owner.",
+        "MutationCase binds one immutable clean reference, one immutable known-defect mutant, properties, seeds, and lane-local kill rule.",
+        "MutationOutcome records clean pass, mutant killed, evidence hashes, and blocker without permitting one lane to mask another.",
+        "run_registered_lab(registry) rejects missing/skipped/replaced mutations and emits all survivors rather than short-circuiting."
+      ],
+      "test_contract": [
+        "Registry contains exactly the nine frozen mutation IDs and no post-result substitution.",
+        "Every clean reference passes; every registered mutant is executed and killed; a deliberately surviving mutant blocks only its lane and remains in the report.",
+        "Every lineage row has nonempty algorithm/source/equation/fixture/author/random-stream fields and an explicit later production owner.",
+        "Reference code-size and import-lineage checks prevent production wrappers or self-oracles from counting as independent.",
+        "K6 runs at least four grids and two orders over all four manufactured cases; order/intercept, decomposition, sqrt(2), and no-empirical-consumer gates are mandatory.",
+        "No test imports, reads, or executes PR4/NPIPE; no PR4 numeric/table/figure/combined output is generated.",
+        "All artifacts carry owner, implementation scope, claim tier, transfer source, config hash, input hashes, sky support status, null/mock status, caveats, generating command, and git/worktree state."
+      ],
+      "risks_and_kill_switches": [
+        "If the spec is not reviewed first, stop before implementation.",
+        "If any mutation survives or is skipped, block that lane and preserve the survivor artifact.",
+        "If reference and mutant share implementation or undisclosed equation/fixture/author/RNG lineage, do not count independence.",
+        "If K6 imports or consumes empirical data/artifacts, block K6.",
+        "If a mechanics pass is used to mark any of the 102 remediation findings RESCUED or to promote matched data/null/covariance claims, fail the PR.",
+        "If any PR4 command or payload use is observed, fail the PR under explicit user scope."
+      ],
+      "dag_skill_output": {
+        "evidence_read": [
+          "PR-123 card and roadmap",
+          "current code and tests for all nine mutations",
+          "audit references and criticism crosswalk",
+          "later production-remediation cards",
+          "shared-context gates and PR4 scope"
+        ],
+        "proposed_changes": "The minimal file plan above; no worktree production code was edited by this assignment.",
+        "tests": "Read-only mapping and hashes only. The proposed PR-123 tests do not yet exist and therefore were not run.",
+        "risks_kill_switches": "Recorded above, especially pending spec, self-oracle, ownership theft, empirical K6 coupling, claim promotion, and PR4 execution.",
+        "artifacts_status_updates": "Only this registered result envelope was written. PR-123 status and all G-PR123 gates remain pending."
+      },
+      "source_finding_ids": [
+        "F-PR123-CODE-003"
+      ],
+      "supporting_assignments": [
+        "A-PR123-CODE"
+      ],
+      "supporting_agent_types": [
+        "code_mapper"
+      ],
+      "duplicate_count": 1
+    },
+    {
+      "finding_id": "PR123-HARN-001",
+      "claim_id": "C-PR123-MECHANICS",
+      "verdict": "require one reviewed, hash-frozen PR-123 spec before any implementation",
+      "evidence_fingerprint": "983d6dc912a29929d668dab23d36f796bff6882a07447b7ab503613bdd244518",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml:1739",
+        "docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md:287"
+      ],
+      "assumptions": [
+        "PR-121 and PR-122 remain successful dependencies"
+      ],
+      "reproducible_command": "sed -n '1739,1793p' docs/codex_handoff/pr_backlog.yaml",
+      "source_finding_ids": [
+        "PR123-HARN-001"
+      ],
+      "supporting_assignments": [
+        "A-PR123-HARNESS"
+      ],
+      "supporting_agent_types": [
+        "harness_engineer"
+      ],
+      "duplicate_count": 1
+    },
+    {
+      "finding_id": "PR123-HARN-002",
+      "claim_id": "C-PR123-MECHANICS",
+      "verdict": "use bounded manufactured contract and extended tiers; do not rerun large empirical diagnostics in default tests",
+      "evidence_fingerprint": "c93c939fe292944963f8b2f7ec635ef09417bf2875765222ac0023d412177e33",
+      "evidence_refs": [
+        "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/finalhash_desi.time.txt",
+        "docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/finalhash_k6.time.txt"
+      ],
+      "assumptions": [
+        "reference host remains CPU-capable",
+        "GPU availability is not hermetic"
+      ],
+      "reproducible_command": "sed -n '1,24p' docs/audits/jcap_prd_adversarial_audit_20260714/evidence/commands/finalhash_desi.time.txt",
+      "source_finding_ids": [
+        "PR123-HARN-002"
+      ],
+      "supporting_assignments": [
+        "A-PR123-HARNESS"
+      ],
+      "supporting_agent_types": [
+        "harness_engineer"
+      ],
+      "duplicate_count": 1
+    },
+    {
+      "finding_id": "PR123-HARN-003",
+      "claim_id": "C-PR123-MECHANICS",
+      "verdict": "freeze exactly nine card-owned mutations and keep later production remediation ownership intact",
+      "evidence_fingerprint": "d558f7b90c21918b819f69f6f3fabdb2b2ca1540938943edaa768e06b61a6d2b",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml:1767",
+        "machine_readable/research_remediation_state.yaml"
+      ],
+      "assumptions": [
+        "PR-122 process/science mutation is consumed as an invariant, not duplicated as mutation ten"
+      ],
+      "reproducible_command": "rg -n -C 8 'PR-123|N-STAT-PSEUDO-BAYES|N-STAT-PSEUDO-PPC|N-STAT-K1-EXCHANGE' docs/codex_handoff/pr_backlog.yaml machine_readable/research_remediation_state.yaml",
+      "source_finding_ids": [
+        "PR123-HARN-003"
+      ],
+      "supporting_assignments": [
+        "A-PR123-HARNESS"
+      ],
+      "supporting_agent_types": [
+        "harness_engineer"
+      ],
+      "duplicate_count": 1
+    },
+    {
+      "finding_id": "PR123-HARN-004",
+      "claim_id": "C-PR123-MECHANICS",
+      "verdict": "lineage independence must be proved over algorithm, source, equations, fixtures, authors, and streams; path separation is insufficient",
+      "evidence_fingerprint": "e37a0849ae9cad8bb85fbb6852099bc5830f862cd5694b96d481bc1ba76ebb5c",
+      "evidence_refs": [
+        "docs/audits/jcap_prd_adversarial_audit_20260714/advocate_candidate_ledger.json",
+        "docs/codex_handoff/pr_backlog.yaml:1786"
+      ],
+      "assumptions": [
+        "main-writer transcription can be distinguished from independent design authorship in the manifest"
+      ],
+      "reproducible_command": "jq '.. | objects | select(.candidate_id? == \"CO-04\")' docs/audits/jcap_prd_adversarial_audit_20260714/advocate_candidate_ledger.json",
+      "source_finding_ids": [
+        "PR123-HARN-004"
+      ],
+      "supporting_assignments": [
+        "A-PR123-HARNESS"
+      ],
+      "supporting_agent_types": [
+        "harness_engineer"
+      ],
+      "duplicate_count": 1
+    },
+    {
+      "finding_id": "PR123-HARN-005",
+      "claim_id": "C-PR123-MECHANICS",
+      "verdict": "K6 acceptance requires four grids, two stencil orders, exact fields, decomposition, sqrt(2) lock, and zero empirical consumers",
+      "evidence_fingerprint": "e6515c94eb50bfe83ea95dcb4feed3d337a335769389ac9904bb124fa2947afa",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml:1770",
+        "machine_readable/research_remediation_state.yaml:704"
+      ],
+      "assumptions": [
+        "the final physics/statistics reviewer may tighten preregistered numerical tolerances before the spec freeze, never after results"
+      ],
+      "reproducible_command": "sed -n '704,770p' machine_readable/research_remediation_state.yaml",
+      "source_finding_ids": [
+        "PR123-HARN-005"
+      ],
+      "supporting_assignments": [
+        "A-PR123-HARNESS"
+      ],
+      "supporting_agent_types": [
+        "harness_engineer"
+      ],
+      "duplicate_count": 1
+    },
+    {
+      "finding_id": "PR123-HARN-006",
+      "claim_id": "C-PR123-MECHANICS",
+      "verdict": "always emit a surviving-mutation report and full metadata even when the survivor count is zero",
+      "evidence_fingerprint": "4ece8d6498fe99b4a3f9c02d2e3fe95eebe627ccaa5617286361809a48022751",
+      "evidence_refs": [
+        "AGENTS.md minimum artifact metadata",
+        "docs/codex_handoff/pr_backlog.yaml:1774"
+      ],
+      "assumptions": [
+        "PR-122 evidence graph remains the content-addressed consumer"
+      ],
+      "reproducible_command": "sed -n '1767,1791p' docs/codex_handoff/pr_backlog.yaml",
+      "source_finding_ids": [
+        "PR123-HARN-006"
+      ],
+      "supporting_assignments": [
+        "A-PR123-HARNESS"
+      ],
+      "supporting_agent_types": [
+        "harness_engineer"
+      ],
+      "duplicate_count": 1
+    },
+    {
+      "finding_id": "PR123-PHYSSTAT-K6-ORACLE-CONTRACT",
+      "claim_id": "C-PR123-MECHANICS",
+      "verdict": "required_for_pass",
+      "severity": "blocking_if_omitted",
+      "evidence_fingerprint": "sha256:023b9b0566159ea5c395a1e5ca42948fe8c73fae41ef0af7b1a46cedac761897",
+      "statement": "The K6 lane needs exact solid-body, non-tautological potential, mixed Helmholtz, manufactured-boundary, multi-grid/multi-stencil, continuum, and numerical-upper-bound clauses. A same-stencil discrete-gradient self-oracle is insufficient.",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml:1767-1776",
+        "machine_readable/research_remediation_state.yaml:704-735",
+        "docs/audits/self_adversarial_audit_20260713_nsc/03_cove_correctness_ledger.json:510-522"
+      ],
+      "required_action": "Freeze the fields, grids, stencils, boundary closures, exact modified-wavenumber formulas, convergence bands, and lane-local kill behavior in pr123_spec.yaml before implementation.",
+      "source_finding_ids": [
+        "PR123-PHYSSTAT-K6-ORACLE-CONTRACT"
+      ],
+      "supporting_assignments": [
+        "A-PR123-PHYSSTAT"
+      ],
+      "supporting_agent_types": [
+        "physics_stat_auditor"
+      ],
+      "duplicate_count": 1
+    },
+    {
+      "finding_id": "PR123-PHYSSTAT-SQRT2-DOMAIN",
+      "claim_id": "C-PR123-MECHANICS",
+      "verdict": "required_for_pass",
+      "severity": "blocking_if_misapplied",
+      "evidence_fingerprint": "sha256:464f99db813da08b89b8cd96e5da15831d7dae84712133f76ec4565e322a9e47",
+      "statement": "The sqrt(2) residual ratio is an analytic covariance lock only for iid-component isotropic stationary derivatives. Componentwise spatial v_std scaling creates amplitude-gradient terms and invalidates an unconditional lock.",
+      "evidence_refs": [
+        "machine_readable/research_remediation_state.yaml:736-767",
+        "htt/obsstat/velocity_field_curl.py:47-58",
+        "docs/audits/self_adversarial_audit_20260713_nsc/03_cove_correctness_ledger.json:515-517,565-576"
+      ],
+      "required_action": "Implement the analytic constant-amplitude lock, the componentwise product-rule decomposition, and challenge fixtures that suspend the lock under anisotropy, amplitude gradients, or boundary contamination.",
+      "source_finding_ids": [
+        "PR123-PHYSSTAT-SQRT2-DOMAIN"
+      ],
+      "supporting_assignments": [
+        "A-PR123-PHYSSTAT"
+      ],
+      "supporting_agent_types": [
+        "physics_stat_auditor"
+      ],
+      "duplicate_count": 1
+    },
+    {
+      "finding_id": "PR123-PHYSSTAT-MUTATION-NONTAUTOLOGY",
+      "claim_id": "C-PR123-MECHANICS",
+      "verdict": "required_for_pass",
+      "severity": "blocking_if_omitted",
+      "evidence_fingerprint": "sha256:0ae84643e8523efeffb70199f4e20c774edd899ff77d587d2ca2932d90f8ccf0",
+      "statement": "Each historical mutation needs a mechanism-sensitive metamorphic or closed-form property, not a schema flag or stored expected number. The nine required property families are enumerated in statistical_mutation_properties.",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml:1767-1776",
+        "docs/audits/jcap_prd_adversarial_audit_20260714/criticism_response_matrix.json:49-77,367-395,744-772,2107-2132,2307-2332,2479-2507,2597-2624,2654-2681"
+      ],
+      "required_action": "Register the exact mutation IDs, clean fixtures, independent reference lineages, seed roots, and kill properties before executing the matrix; retain every survivor as a lane blocker.",
+      "source_finding_ids": [
+        "PR123-PHYSSTAT-MUTATION-NONTAUTOLOGY"
+      ],
+      "supporting_assignments": [
+        "A-PR123-PHYSSTAT"
+      ],
+      "supporting_agent_types": [
+        "physics_stat_auditor"
+      ],
+      "duplicate_count": 1
+    },
+    {
+      "finding_id": "PR123-PHYSSTAT-CLAIM-BOUNDARY",
+      "claim_id": "C-PR123-MECHANICS",
+      "verdict": "required_for_pass",
+      "severity": "fatal_on_promotion",
+      "evidence_fingerprint": "sha256:dc7bd4b0b12d129bbf033197806398294aaf0921d5799f7bd4f80e0dfa0d693c",
+      "statement": "PR-123 can validate only lane-specific synthetic/analytic mechanics. It must have zero empirical consumers and must not close any remediation finding or promote matched-null/covariance/scientific status.",
+      "evidence_refs": [
+        "docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md:290-296",
+        "machine_readable/research_remediation_state.yaml:704-767",
+        ".agent-harness/generated/CONTEXT_PACK.md#Frozen-scope"
+      ],
+      "required_action": "Require explicit empirical_inputs=[], empirical_consumer_count=0, transfer_source=none_or_synthetic, and C2 mechanics-only caveats in the K6 card and result graph.",
+      "source_finding_ids": [
+        "PR123-PHYSSTAT-CLAIM-BOUNDARY"
+      ],
+      "supporting_assignments": [
+        "A-PR123-PHYSSTAT"
+      ],
+      "supporting_agent_types": [
+        "physics_stat_auditor"
+      ],
+      "duplicate_count": 1
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,143 @@
+{
+  "schema_version": 1,
+  "run_id": "pr123-attempt4-closeout-review-20260717",
+  "assignment_id": "A-PR123-A4-MAINT",
+  "context_version": "70dfa106e595d6c24f0e8b0c881dab6a7be79fce9552fd3efa623fcc20b93f7d",
+  "agent_type": "context_mapper",
+  "independence_mode": "blind-results",
+  "result_path": ".agent-harness/runs/pr123-attempt4-closeout-review-20260717/results/A-PR123-A4-MAINT.json",
+  "status": "fail",
+  "started_at": "2026-07-17T01:50:00+09:00",
+  "completed_at": "2026-07-17T01:57:00+09:00",
+  "tool_versions": {
+    "python": "3.12.3",
+    "numpy": "2.5.0",
+    "pytest": "9.0.3"
+  },
+  "summary": "Attempt 4 closes the reviewed derived-state, exact seed type, stale artifact, and repeated deterministic check defects, but it is not closeout-ready: the production-symbol scanner still false-greens five ordinary callable-transport patterns that execute a forbidden mapped symbol.",
+  "commands": [
+    "PYTHONDONTWRITEBYTECODE=1 venv/bin/python -B scripts/codex_harness/run_pr123_oracle_lab.py --check --tier contract (run twice; both current)",
+    "PYTHONDONTWRITEBYTECODE=1 venv/bin/python -B -m pytest -p no:cacheprovider -q tests/contracts/test_pr123_oracle_lab.py tests/contracts/test_pr123_artifact_contract.py tests/contracts/test_pr123_k6_continuum_oracle.py tests/pr_cards/test_pr_123_oracle_k6_continuum_branch_mutation_laboratory.py",
+    "Inline tempfile attack corpus invoking _automated_scan_checks for container_index, partial_transport, computed_dunder_dict, computed_getattribute, and higher_order_map"
+  ],
+  "artifacts": [
+    {
+      "path": "scripts/codex_harness/run_pr123_oracle_lab.py",
+      "sha256": "ebc154806a7167ff4daa6df4a94f8bcf4c2de61d71c170de35b3ffb2bd318c98"
+    },
+    {
+      "path": "docs/research_program/long_horizon_rescue/pr123_spec.yaml",
+      "sha256": "1b6463ba3ae8097e28302a96f9c3ead13eb491991571fad99eb90db7be6a145d"
+    },
+    {
+      "path": "docs/generated/pr123_artifact_manifest.json",
+      "sha256": "a14a7c80b6c81164b83d92446daef0c212d0519d0caae1917df522a5d621b676"
+    },
+    {
+      "path": "docs/generated/pr123_mutation_lab_report.json",
+      "sha256": "c2b5477b6a5d2670447603d96e2fb354c0bbfc3a4cdd50ffb27e88a4787d7e61"
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "C-PR123-MECHANICS",
+      "verdict": "fail_closeout_scanner_false_green",
+      "statement": "The current attempt-4 artifacts are reproducible, but the required no-production-call lineage gate is not sound against direct callable transport and therefore cannot yet support closeout."
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "PR123-A4-MAINT-001",
+      "claim_id": "C-PR123-MECHANICS",
+      "verdict": "fail",
+      "severity": "P1",
+      "classification": "must_fix_source_scanner_false_green",
+      "closeout_blocking": true,
+      "statement": "_automated_scan_checks only taints selected direct assignment and call shapes. It returns all three checks true even when a reference executes the forbidden mapped symbol mv_weights after transport through (1) a list then subscript call, (2) functools.partial, (3) obj.__dict__ with a computed name, (4) obj.__getattribute__ with a computed name, or (5) map as a higher-order callback. The checked-in lineage can therefore report all_rows_valid=true while violating the spec hard requirement that reference/mutant call closures do not call mapped production implementations.",
+      "assumptions_used": [
+        "The spec clause oracle_lineage_contract.hard_requirements is authoritative.",
+        "A mapped production callable passed to a container or higher-order function remains a production call even when it is not the immediate ast.Call.func node.",
+        "Static scan evidence must fail closed for ordinary Python callable transport because it is consumed as an automated independence gate."
+      ],
+      "evidence_refs": [
+        "docs/research_program/long_horizon_rescue/pr123_spec.yaml:271-289",
+        "scripts/codex_harness/run_pr123_oracle_lab.py:133-249",
+        "tests/contracts/test_pr123_artifact_contract.py:135-206",
+        "attack: container_index -> all checks true",
+        "attack: partial_transport -> all checks true",
+        "attack: computed_dunder_dict -> all checks true",
+        "attack: computed_getattribute -> all checks true",
+        "attack: higher_order_map -> all checks true"
+      ],
+      "evidence_fingerprint": "sha256:604482f2550affcd127aa928899e882dbcdd7067ef948ca8af44d34b975b875a",
+      "counterevidence_refs": [
+        "The three attempt-3 review snippets for a direct alias, getattr alias, and __builtins__['getattr'] are now rejected by tests.",
+        "The current oracle source files themselves do not visibly contain any of the five attack patterns."
+      ],
+      "reproduction": [
+        "Import scripts/codex_harness/run_pr123_oracle_lab.py as a module, write each attack to a tempfile, and call _automated_scan_checks(path, {'mv_weights'}).",
+        "container_index: def reference(obj,x): fs=[obj.mv_weights]; return fs[0](x)",
+        "partial_transport: import functools; def reference(obj,x): f=functools.partial(obj.mv_weights); return f(x)",
+        "computed_dunder_dict: def reference(obj,x): name='mv_'+'weights'; return obj.__dict__[name](x)",
+        "computed_getattribute: def reference(obj,x): name='mv_'+'weights'; return obj.__getattribute__(name)(x)",
+        "higher_order_map: def reference(obj,xs): return list(map(obj.mv_weights,xs))",
+        "Observed for every attack: {'forbidden_import_prefixes_clean': True, 'mapped_production_symbol_calls_clean': True, 'dynamic_import_and_codegen_clean': True}."
+      ],
+      "required_resolution": "Make the scan reject forbidden symbols wherever they are loaded or transported, not only when they are the immediate call target. Conservatively reject reflection/callable-transport surfaces used by the attacks (including __dict__, __getattribute__, partial, and higher-order callbacks), add these five negative regressions, regenerate the lineage and dependent artifacts, and rerun check plus the four PR123 test files.",
+      "confidence": 0.99,
+      "unresolved": []
+    },
+    {
+      "finding_id": "PR123-A4-MAINT-002",
+      "claim_id": "C-PR123-MECHANICS",
+      "verdict": "pass",
+      "severity": "info",
+      "classification": "verified_attempt4_repairs",
+      "closeout_blocking": false,
+      "statement": "Within the reviewed current source snapshot, primitive outcome state is recomputed, seed ledger integer fields reject bool aliases, manifest/input hashes are current, two consecutive contract-tier check runs are byte-current and read-only, and all 37 targeted PR123 tests pass.",
+      "assumptions_used": [
+        "Exact byte replay on the pinned local Python/NumPy environment is the relevant deterministic check scope.",
+        "The four named PR123 test files are the bounded closeout suite for this assignment."
+      ],
+      "evidence_refs": [
+        "htt/src/common/oracle_lab.py:224-330",
+        "htt/src/common/oracle_lab.py:335-396",
+        "tests/contracts/test_pr123_oracle_lab.py:172-272",
+        "tests/contracts/test_pr123_artifact_contract.py:68-116",
+        "builder --check --tier contract: current twice",
+        "targeted pytest: 37 passed in 7.50s"
+      ],
+      "evidence_fingerprint": "sha256:10aee7c18e40c3f2703e189784b4bb365161877ed3b4256f917ff441a1f41419",
+      "counterevidence_refs": [
+        "This pass does not override PR123-A4-MAINT-001 and does not validate cross-platform floating-point byte identity."
+      ],
+      "reproduction": [
+        "Run the recorded builder check twice.",
+        "Run the recorded four-file pytest command."
+      ],
+      "confidence": 0.98,
+      "unresolved": []
+    }
+  ],
+  "proposed_changes": [
+    "Broaden AST tainting from immediate calls/assignments to every forbidden callable load and common callable-transport/reflection construct.",
+    "Add the five attack snippets as parameterized negative scanner tests.",
+    "Regenerate all six PR123 artifacts only after scanner tests pass."
+  ],
+  "tests_to_run": [
+    "The five new scanner regressions.",
+    "venv/bin/python -B scripts/codex_harness/run_pr123_oracle_lab.py --write --tier contract",
+    "venv/bin/python -B scripts/codex_harness/run_pr123_oracle_lab.py --check --tier contract",
+    "The four-file 37-test PR123 suite."
+  ],
+  "risks_and_kill_switches": [
+    "Do not mark G-PR123-ORACLE-INDEPENDENCE or G-PR123-MUTATIONS pass while a mapped-call attack is scanner-clean.",
+    "Do not consume attempt-4 PASS counts until regenerated artifacts have a passing closeout replay.",
+    "Keep scientific_status OPEN and claim_release_allowed false."
+  ],
+  "artifacts_status_updates_needed": [
+    "Regenerate pr123_oracle_lineage_manifest.json and every dependent PR123 artifact after the scanner repair.",
+    "Retain attempt 4 as pending/failed closeout until a new content-addressed review result passes."
+  ],
+  "errors": []
+}

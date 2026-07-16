@@ -1,0 +1,139 @@
+{
+  "schema_version": 1,
+  "run_id": "pr123-attempt4-closeout-review-20260717",
+  "assignment_id": "A-PR123-A4-REPLAY",
+  "context_version": "70dfa106e595d6c24f0e8b0c881dab6a7be79fce9552fd3efa623fcc20b93f7d",
+  "agent_type": "context_mapper",
+  "independence_mode": "blind-results",
+  "result_path": ".agent-harness/runs/pr123-attempt4-closeout-review-20260717/results/A-PR123-A4-REPLAY.json",
+  "status": "fail",
+  "started_at": "2026-07-17T01:48:00+09:00",
+  "completed_at": "2026-07-17T01:54:39+09:00",
+  "tool_versions": {
+    "python": "3.12.3",
+    "numpy": "2.5.0",
+    "pytest": "9.0.3",
+    "pyyaml": "6.0.3"
+  },
+  "commands": [
+    {
+      "command": "venv/bin/python -B -m pytest -p no:cacheprovider tests/contracts/test_pr123_oracle_lab.py tests/contracts/test_pr123_artifact_contract.py tests/contracts/test_pr123_k6_continuum_oracle.py tests/pr_cards/test_pr_123_oracle_k6_continuum_branch_mutation_laboratory.py -q",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "return_code": 0,
+      "result": "37 passed in 7.17s"
+    },
+    {
+      "command": "PYTHONPATH=htt/src venv/bin/python -B scripts/codex_harness/run_pr123_oracle_lab.py --check --tier contract",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "return_code": 0,
+      "result": "all six checked-in artifacts current"
+    },
+    {
+      "command": "inline hostile replay of derived-state replacements and exact seed-ledger bool aliases",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "return_code": 0,
+      "result": "clean_passed, mutant_killed, status, bool execution count, row/slot/root bool substitutions all rejected"
+    },
+    {
+      "command": "inline tempfile replay of _automated_scan_checks against list/dict callable aliases and dunder string-concatenation indirection",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "return_code": 0,
+      "result": "four forbidden-call specimens incorrectly returned all three scan checks true"
+    },
+    {
+      "command": "git diff --check",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "return_code": 0,
+      "result": "clean"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "scripts/codex_harness/run_pr123_oracle_lab.py",
+      "sha256": "ebc154806a7167ff4daa6df4a94f8bcf4c2de61d71c170de35b3ffb2bd318c98"
+    },
+    {
+      "path": "htt/src/common/oracle_lab.py",
+      "sha256": "b724f22d95b92d7c7e7e41105347b7fc289628c6226ec0bd988db10f1de12ec9"
+    },
+    {
+      "path": "docs/research_program/long_horizon_rescue/pr123_spec.yaml",
+      "sha256": "1b6463ba3ae8097e28302a96f9c3ead13eb491991571fad99eb90db7be6a145d"
+    },
+    {
+      "path": "docs/generated/pr123_artifact_manifest.json",
+      "sha256": "a14a7c80b6c81164b83d92446daef0c212d0519d0caae1917df522a5d621b676"
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "F-PR123-A4-REPLAY-001",
+      "claim_id": "C-PR123-MECHANICS",
+      "verdict": "fail_must_fix_alias_dynamic_scan_false_green",
+      "severity": "P1",
+      "statement": "Attempt 4 does not close the prior alias/dynamic callable-scan false-green class. _automated_scan_checks propagates only scalar Name/Attribute/Subscript/Call assignments and inspects only direct Call nodes. Consequently aliases=[mv_weights]; aliases[0](x), aliases={'m': mv_weights}; aliases['m'](x), obj.__dict__['mv_'+'weights'](x), and obj.__getattribute__('mv_'+'weights')(x) all invoke the forbidden mapped symbol while forbidden_import_prefixes_clean, mapped_production_symbol_calls_clean, and dynamic_import_and_codegen_clean are all true. The generated lineage can therefore assert all_rows_valid despite a resolvable mapped-production call, contrary to the spec hard requirement and acceptance gate.",
+      "assumptions_used": [
+        "The scanner is intended to fail closed on resolvable calls to every symbol supplied in forbidden_symbols.",
+        "A high-severity false-green is blocking even when the currently checked-in reference happens not to use the demonstrated spelling.",
+        "No current-run sibling result was inspected."
+      ],
+      "evidence_refs": [
+        "docs/research_program/long_horizon_rescue/pr123_spec.yaml:256-294",
+        "docs/research_program/long_horizon_rescue/pr123_spec.yaml:769-780",
+        "scripts/codex_harness/run_pr123_oracle_lab.py:133-248",
+        "tests/contracts/test_pr123_artifact_contract.py:158-207",
+        "hostile replay stdout: list_alias/dict_alias/dunder_concat/getattribute_concat each returned {forbidden_import_prefixes_clean: true, mapped_production_symbol_calls_clean: true, dynamic_import_and_codegen_clean: true}"
+      ],
+      "evidence_fingerprint": "sha256:3dbb3557abcda17eec787eb5438bce965769bc2612bb4858b6a498b751ff93b1",
+      "counterevidence_refs": [
+        "The registered 37-test suite passes and covers direct aliases, getattr aliases, and __builtins__['getattr'], but not container alias propagation or dunder/string-concatenation indirection.",
+        "The exact checked-in source is hash-bound and manually inspectable; this reduces accidental drift but does not make the automated clean verdict fail closed."
+      ],
+      "reproduction": [
+        "Load scripts/codex_harness/run_pr123_oracle_lab.py as a module.",
+        "Write a temporary source containing aliases = [mv_weights] followed by return aliases[0](x).",
+        "Call _automated_scan_checks(temp_path, {'mv_weights'}).",
+        "Observe that every returned boolean is true; repeat with a dict alias or obj.__dict__['mv_' + 'weights'](x)."
+      ],
+      "confidence": 0.99,
+      "unresolved": [
+        "Patch the scan architecture or replace the blacklist with a conservative allowlisted reference-language policy, then add these four falsifiers and rerun artifact generation/review."
+      ]
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "C-PR123-MECHANICS",
+      "verdict": "fail_attempt4_closeout_pending_scan_false_green_fix",
+      "reason": "One prior false-green class remains reproducibly open despite passing registered tests; PR123 must not be accepted or committed from this snapshot."
+    }
+  ],
+  "review_summary": {
+    "evidence_read": [
+      "canonical context pack and registered assignment",
+      "PR123 v4 spec",
+      "oracle outcome and seed validators",
+      "lineage scanner and artifact builder",
+      "targeted tests and generated artifacts"
+    ],
+    "proposed_changes": [
+      "Make mapped-symbol taint propagation recursive through list, tuple, set, dict, BinOp/JoinedStr string construction, and subscript retrieval, or enforce a strict allowlisted AST subset for reference files.",
+      "Treat __dict__, __getattribute__, operator.attrgetter, and similar reflective attribute access as dynamic indirection and fail closed.",
+      "Add the four demonstrated specimens as regression falsifiers before regenerating v4 artifacts."
+    ],
+    "tests_to_run": [
+      "the four targeted PR123 files",
+      "the four new scanner falsifiers",
+      "source-only artifact --check after regeneration"
+    ],
+    "risks_and_kill_switches": [
+      "Keep G-PR123-ORACLE-INDEPENDENCE and G-PR123-MUTATIONS pending while any forbidden-call specimen scans clean.",
+      "Do not consume attempt-4 PASS_MECHANICS_C2 counts until a fresh independent replay passes."
+    ],
+    "artifacts_status_updates_needed": [
+      "No production/shared file was edited by this reviewer.",
+      "Main adjudicator should retain attempt 4 as invalid/pending rather than mark PR123 complete."
+    ]
+  },
+  "errors": []
+}

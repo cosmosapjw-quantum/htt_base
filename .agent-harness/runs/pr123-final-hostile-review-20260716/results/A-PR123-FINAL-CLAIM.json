@@ -1,0 +1,283 @@
+{
+  "schema_version": 1,
+  "run_id": "pr123-final-hostile-review-20260716",
+  "assignment_id": "A-PR123-FINAL-CLAIM",
+  "context_version": "2ba8ea93b62cb55b587e67434051c35aa160f1bfef6e117a7b4b080540408491",
+  "status": "fail",
+  "agent_type": "hostile_lineage_claim_reviewer",
+  "independence_mode": "blind-results",
+  "result_path": ".agent-harness/runs/pr123-final-hostile-review-20260716/results/A-PR123-FINAL-CLAIM.json",
+  "summary": "Attempt 2 materially improves attempt-history retention, metadata closure, owner boundaries, and C2/OPEN language, but G-PR123-ORACLE-INDEPENDENCE is not yet passable. Runtime fixture receipts are not bound to the lineage fixture commitments, equation/source identifiers are not resolvable records, the callable scan has a demonstrated false-green indirection, and the authoritative gate's smaller-than-production condition is false for two recorded lanes. The 102-row OPEN assertion is currently true in the repository but is not an input-bound artifact claim.",
+  "steelman": {
+    "strongest_case_for_acceptance": [
+      "Attempt 1 remains explicitly INVALIDATED_FALSE_GREEN, its counts are nonconsumable, its five artifact hashes and invalidating review hashes are recorded, and attempt 2 explicitly disclaims prospective preregistration.",
+      "All six generated artifacts contain the required metadata, retain claim tier conditional/C2 and scientific status OPEN, forbid scientific promotion, and the artifact manifest keeps claim_release_allowed false.",
+      "The current five non-self artifact byte hashes and sizes match the manifest, all 14 declared metadata inputs match their byte hashes, the source-snapshot digest recomputes exactly, and the source-only builder reports current.",
+      "The current reference files contain no mapped production import, direct mapped-symbol call, or dynamic code-generation call found by targeted inspection; mapped production files are unchanged from baseline e77510170424eecd49112ed6c33424ce455b154c.",
+      "Every recorded reference/evaluator remains within its preregistered absolute max_sloc/max_branches budget, and the correlated internal-review limitation is disclosed rather than presented as external replication.",
+      "The PR4 receipt is correctly limited to the current generator process and registered patch, declares zero in-process commands and no inputs, and explicitly declines a historical shell-audit claim.",
+      "Independent inspection of the authoritative 102-row criticism matrix at SHA-256 f0c8c5316d8384bf223addd21c3f319039a26134bdc8507f4ae432206e7e9b0d confirms 69 KNOWN_OPEN plus 33 NEW_OPEN rows."
+    ],
+    "why_that_case_is_insufficient": "The mechanics numbers may be reproducible on the current snapshot, but the authoritative independence gate is fail-closed. A disconnected fixture commitment and a callable scan with a concrete false-green witness mean the generated all_rows_valid=true statement does not establish the lineage claim it purports to establish."
+  },
+  "claim_audit": [
+    {
+      "claim_id": "C-PR123-MECHANICS",
+      "owner": "COMMON",
+      "status": "CONDITIONAL_C2_IMPLEMENTED_BUT_PROVENANCE_GATE_FAILED",
+      "evidence_type": "test_and_generated_artifact",
+      "transfer_source": "none_or_synthetic",
+      "claim_tier": "C2",
+      "risk": "False-green oracle-independence receipt",
+      "required_fix": "Close findings F-PR123-FIXTURE-BINDING, F-PR123-SOURCE-REGISTRY, F-PR123-CALLABLE-SCAN, and F-PR123-SLOC-GATE before marking the independence gate pass."
+    },
+    {
+      "claim_id": "C-PR123-MECHANICS",
+      "owner": "COMMON",
+      "status": "ATTEMPT1_INVALIDATION_RETAINED",
+      "evidence_type": "content-addressed attempt history",
+      "transfer_source": "none_or_synthetic",
+      "claim_tier": "C2",
+      "risk": "Original attempt-1 payload bytes are not archived under distinct paths; only their hashes and invalidating review remain.",
+      "required_fix": "No acceptance blocker under the current spec, but preserve raw invalid artifacts in a quarantined archive if replayability rather than commitment-only retention is desired."
+    },
+    {
+      "claim_id": "C-PR123-MECHANICS",
+      "owner": "COMMON",
+      "status": "PR4_SCOPE_WORDING_PASS",
+      "evidence_type": "scope declaration",
+      "transfer_source": "none_or_synthetic",
+      "claim_tier": "C2",
+      "risk": "The zero count is deliberately not authenticated historical shell evidence.",
+      "required_fix": "Retain the present narrow wording; do not relabel it as a historical audit."
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "F-PR123-FIXTURE-BINDING",
+      "claim_id": "C-PR123-MECHANICS",
+      "verdict": "fail",
+      "severity": "P1",
+      "evidence_fingerprint": "27cf7e0700064e14163143dad9e3f8ae6cc17ca0c075a8d3ae620d093a2ecce8",
+      "statement": "The lineage fixture commitment is not bound to the fixture hash consumed by the execution receipt.",
+      "evidence_refs": [
+        "docs/generated/pr123_oracle_lineage_manifest.json:34-38",
+        "docs/generated/pr123_mutation_lab_report.json:1190",
+        "scripts/codex_harness/run_pr123_oracle_lab.py:277-307",
+        "htt/src/common/oracle_lab.py:200-217",
+        "htt/src/common/oracle_references.py:280",
+        "htt/src/common/k6_continuum_oracle.py:308-316"
+      ],
+      "evidence": "For shell_monopole_leak the lineage records 933f984b... while the executed outcome records 80bbee36...; the same two-domain mismatch occurs in every lane. The lineage hash commits a spec declaration, while each runtime fixture hash commits a different hand-built payload. validate_outcomes checks only that the runtime value is nonempty and 64 characters; it never compares it with lineage or a frozen expected registry value.",
+      "impact": "A runtime fixture can drift or be substituted while all_rows_valid, executed, killed, and PASS_MECHANICS_C2 remain true. This directly reopens the prior fixture-lineage false-green class.",
+      "required_fix": "Define one canonical fixture commitment per lane that includes the actual runtime arrays/parameters and seed namespace, pass that expected digest through expected_registry, require exact equality in validate_outcomes, and require the lineage row to carry the identical digest. Add a negative test that substitutes a different well-formed 64-character fixture hash and must fail.",
+      "reproducible_command": "python3 - <<'PY'\nimport json\nl=json.load(open('docs/generated/pr123_oracle_lineage_manifest.json'))\nm=json.load(open('docs/generated/pr123_mutation_lab_report.json'))\nfor a,b in zip(l['lineage_rows'],m['summary']['outcomes']): print(a['mutation_id'],a['fixture_ids_and_hashes'][0]['sha256'],b['fixture_hash'],a['fixture_ids_and_hashes'][0]['sha256']==b['fixture_hash'])\nPY"
+    },
+    {
+      "finding_id": "F-PR123-SOURCE-REGISTRY",
+      "claim_id": "C-PR123-MECHANICS",
+      "verdict": "fail",
+      "severity": "P1",
+      "evidence_fingerprint": "49b823ddaf133cc98fce74e4468d714a686f08b30273f4806b8854d5a732bef3",
+      "statement": "The equation/source registry contains opaque labels, not resolvable and hash-bound equation or source records.",
+      "evidence_refs": [
+        "docs/research_program/long_horizon_rescue/pr123_spec.yaml:240-268",
+        "docs/generated/pr123_oracle_lineage_manifest.json:25-28",
+        "scripts/codex_harness/run_pr123_oracle_lab.py:277-307"
+      ],
+      "evidence": "A targeted exact-ID search finds every PR123-EQ, PR123-SOURCE, and NUMPY convention identifier only in the spec and its generated echo. No identifier resolves to a formula, assumptions, normalization, local path plus hash, citation/section, or dependency version. The fixture hash commits the opaque strings, not the missing source content.",
+      "impact": "The manifest records the existence of names but cannot establish which equation or external convention was transcribed, so the source/equation lineage clause and the gate statement are not reproducible.",
+      "required_fix": "Add an authoritative equation_source_definitions mapping keyed by every ID with canonical statement, assumptions/domain, units/conventions, source kind, and either a repository path plus SHA-256 or a precise citation/version. Validate full key coverage and bind the resolved records, not only their labels, into each fixture and lineage digest.",
+      "reproducible_command": "rg -n 'PR123-EQ-|PR123-SOURCE-|NUMPY-RFFTN-REAL-INPUT-CONVENTION' docs/research_program/long_horizon_rescue/pr123_spec.yaml htt/src/common/oracle_references.py htt/src/common/k6_continuum_oracle.py scripts/codex_harness/run_pr123_oracle_lab.py docs/generated/pr123_oracle_lineage_manifest.json"
+    },
+    {
+      "finding_id": "F-PR123-CALLABLE-SCAN",
+      "claim_id": "C-PR123-MECHANICS",
+      "verdict": "fail",
+      "severity": "P1",
+      "evidence_fingerprint": "acd746f601389e72a6da5670678271ef18500f1c0b0237aa85e7a087aaa49a60",
+      "statement": "The automated callable scan has a concrete indirect-call false green.",
+      "evidence_refs": [
+        "scripts/codex_harness/run_pr123_oracle_lab.py:45-50",
+        "scripts/codex_harness/run_pr123_oracle_lab.py:125-149",
+        "docs/generated/pr123_oracle_lineage_manifest.json:8-12",
+        "tests/contracts/test_pr123_artifact_contract.py:148-157"
+      ],
+      "evidence": "The scan rejects a direct mv_weights(...) call, but `from htt import obsstat; getattr(obsstat, 'mv_weights')(x)` returns all three checks as true. ImportFrom records only module `htt`, getattr is not classified as dynamic or a mapped call, and an ast.Call whose func is another ast.Call is ignored. The checked-in reference source does not presently contain this pattern, but all_rows_valid=true overstates the fail-closed automated guarantee.",
+      "impact": "A mapped production implementation can be called through a simple resolvable indirection without blocking oracle independence, repeating the prior import-only-scan failure class in a slightly different syntax.",
+      "required_fix": "Resolve import aliases and attribute provenance, reject getattr/vars/globals/subscript/callback indirection over mapped modules or conservatively block unresolved dynamic call targets in oracle closures. Add negative tests for from-htt import aliases, getattr, module dictionaries, imported aliases, and callback passing.",
+      "reproducible_command": "PYTHONPATH=htt/src venv/bin/python -B - <<'PY'\nimport importlib.util\nfrom pathlib import Path\ns=importlib.util.spec_from_file_location('b',Path('scripts/codex_harness/run_pr123_oracle_lab.py')); m=importlib.util.module_from_spec(s); s.loader.exec_module(m)\nclass P:\n def read_text(self,**kwargs): return \"from htt import obsstat\\ndef reference(x):\\n return getattr(obsstat, 'mv_weights')(x)\\n\"\n def __str__(self): return '<memory>'\nprint(m._automated_scan_checks(P(),{'mv_weights'}))\nPY"
+    },
+    {
+      "finding_id": "F-PR123-SLOC-GATE",
+      "claim_id": "C-PR123-MECHANICS",
+      "verdict": "fail",
+      "severity": "P1",
+      "evidence_fingerprint": "2aa110752c19eefb25c72bdb9bd360fad1a24a64cea13cda7cd76e3397b9a5f0",
+      "statement": "The authoritative smaller-than-production gate condition is false for two recorded lanes and is not validated.",
+      "evidence_refs": [
+        ".agent-harness/context/GATE_REGISTRY.json:65-72",
+        "docs/generated/pr123_oracle_lineage_manifest.json:13-20",
+        "docs/generated/pr123_oracle_lineage_manifest.json:64-68",
+        "docs/generated/pr123_oracle_lineage_manifest.json:244-250",
+        "docs/generated/pr123_oracle_lineage_manifest.json:308-312",
+        "htt/src/common/oracle_lab.py:279-290"
+      ],
+      "evidence": "The shell reference+mutant local closure records 20 SLOC versus 10 SLOC for the mapped production call closure; K6 records 276 versus 132. validate_lineage_rows checks only the independently chosen max_sloc/max_branches ceilings and never enforces the gate's reference-smaller-than-production comparison.",
+      "impact": "G-PR123-ORACLE-INDEPENDENCE cannot be marked pass under its current machine-readable pass condition even though the preregistered absolute ceilings pass.",
+      "required_fix": "Either reduce/split the two reference closures until the recorded comparison passes and validate it, or register an explicit gate meta-finding and amend the gate before acceptance to a defensible complexity/algorithm-independence condition. Do not silently treat max_sloc compliance as satisfying the existing gate.",
+      "reproducible_command": "python3 - <<'PY'\nimport json\nd=json.load(open('docs/generated/pr123_oracle_lineage_manifest.json'))\nfor r in d['lineage_rows']:\n a=r['reference_metrics']['sloc']; b=r['complexity_budget']['mapped_production_call_closure_sloc']\n if a>=b: print(r['mutation_id'],a,b)\nPY"
+    },
+    {
+      "finding_id": "F-PR123-OPEN102-BINDING",
+      "claim_id": "C-PR123-MECHANICS",
+      "verdict": "fail",
+      "severity": "P2",
+      "evidence_fingerprint": "c8ab3842a7279778b7c493eff3f9fd91e458d53e03c2765ec871623adcf0490c",
+      "statement": "The statement that all 102 remediation findings remain OPEN is true in the current repository but is not content-addressed into the PR-123 artifact inputs or acceptance calculation.",
+      "evidence_refs": [
+        "docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md:46-49",
+        "docs/research_program/long_horizon_rescue/pr123_spec.yaml:548-559",
+        "docs/generated/pr123_mutation_lab_report.json:11-14",
+        "docs/generated/pr123_mutation_lab_report.json:46-102",
+        "docs/generated/pr123_mutation_lab_report.json:117",
+        "scripts/codex_harness/run_pr123_oracle_lab.py:170-180",
+        "scripts/codex_harness/run_pr123_oracle_lab.py:396-413"
+      ],
+      "evidence": "The authoritative matrix currently has row_count 102 with authoritative_state counts KNOWN_OPEN=69 and NEW_OPEN=33 at the roadmap-pinned SHA-256. PR-123 artifacts merely state that all findings remain OPEN and emit remediation_disposition_changes=[], while their 14 input hashes omit the matrix and no builder check reads its count/states.",
+      "impact": "The no-promotion language is good, but the artifact cannot detect a changed authoritative disposition and therefore cannot substantiate its own all-102-OPEN caveat as a hash-closed claim.",
+      "required_fix": "Add the authoritative matrix path/hash to input_hashes, record row_count and state counts, and fail unless all 102 rows remain KNOWN_OPEN or NEW_OPEN and no disposition change is emitted by PR-123.",
+      "reproducible_command": "python3 - <<'PY'\nimport json,collections\nd=json.load(open('docs/audits/jcap_prd_adversarial_audit_20260714/criticism_response_matrix.json')); print(d['row_count'],collections.Counter(r['authoritative_state'] for r in d['rows']))\nm=json.load(open('docs/generated/pr123_artifact_manifest.json')); print(any('criticism_response_matrix' in r['path'] for r in m['metadata']['input_hashes']))\nPY"
+    }
+  ],
+  "closed_controls": [
+    {
+      "control": "Attempt-1 invalidation and no preregistration laundering",
+      "verdict": "pass",
+      "evidence_refs": [
+        "docs/research_program/long_horizon_rescue/pr123_spec.yaml:31-59",
+        "docs/generated/pr123_attempt_history.json:2-32"
+      ]
+    },
+    {
+      "control": "C2 conditional mechanics ceiling, OPEN science, and no claim release",
+      "verdict": "pass",
+      "evidence_refs": [
+        "docs/research_program/long_horizon_rescue/pr123_spec.yaml:11-29",
+        "docs/generated/pr123_artifact_manifest.json:31-50",
+        "docs/generated/pr123_artifact_manifest.json:145-146"
+      ]
+    },
+    {
+      "control": "Owner boundaries and no mapped production remediation",
+      "verdict": "pass",
+      "evidence_refs": [
+        "docs/research_program/long_horizon_rescue/pr123_spec.yaml:116-134",
+        "docs/research_program/long_horizon_rescue/pr123_spec.yaml:285-314"
+      ]
+    },
+    {
+      "control": "PR4 zero-command wording is scope-limited rather than historically overclaimed",
+      "verdict": "pass",
+      "evidence_refs": [
+        "docs/research_program/long_horizon_rescue/pr123_spec.yaml:136-146",
+        "docs/generated/pr123_mutation_lab_report.json:110-115",
+        "docs/generated/pr123_artifact_manifest.json:139-144"
+      ]
+    },
+    {
+      "control": "Current artifact bytes, declared inputs, and source-only check",
+      "verdict": "pass",
+      "evidence_refs": [
+        "docs/generated/pr123_artifact_manifest.json:2-30",
+        "docs/generated/pr123_artifact_manifest.json:68-132"
+      ]
+    }
+  ],
+  "evidence_read": [
+    "AGENTS.md",
+    ".agent-harness/generated/CONTEXT_PACK.md",
+    ".agent-harness/runs/pr123-final-hostile-review-20260716/assignments/A-PR123-FINAL-CLAIM.json",
+    ".agent-harness/context/GATE_REGISTRY.json",
+    "docs/research_program/long_horizon_rescue/pr123_spec.yaml",
+    "docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md",
+    "docs/audits/jcap_prd_adversarial_audit_20260714/criticism_response_matrix.json",
+    "htt/src/common/oracle_lab.py",
+    "htt/src/common/oracle_references.py",
+    "htt/src/common/k6_continuum_oracle.py",
+    "scripts/codex_harness/run_pr123_oracle_lab.py",
+    "docs/generated/pr123_oracle_lineage_manifest.json",
+    "docs/generated/pr123_mutation_lab_report.json",
+    "docs/generated/pr123_k6_continuum_card.json",
+    "docs/generated/pr123_surviving_mutations.json",
+    "docs/generated/pr123_attempt_history.json",
+    "docs/generated/pr123_artifact_manifest.json",
+    "tests/contracts/test_pr123_oracle_lab.py",
+    "tests/contracts/test_pr123_artifact_contract.py",
+    "tests/contracts/test_pr123_k6_continuum_oracle.py",
+    "tests/pr_cards/test_pr_123_oracle_k6_continuum_branch_mutation_laboratory.py"
+  ],
+  "commands_and_receipts": [
+    {
+      "command": "venv/bin/python -B scripts/codex_harness/run_pr123_oracle_lab.py --check --tier contract",
+      "result": "pass; all six artifacts current"
+    },
+    {
+      "command": "venv/bin/python -B -m pytest -p no:cacheprovider -q tests/contracts/test_pr123_oracle_lab.py tests/contracts/test_pr123_artifact_contract.py tests/pr_cards/test_pr_123_oracle_k6_continuum_branch_mutation_laboratory.py",
+      "result": "25 passed in 3.26s"
+    },
+    {
+      "command": "sha256sum .agent-harness/runs/pr123-adversarial-review-20260716/MERGED_RESULTS.json and its three role results",
+      "result": "all four current hashes match the spec; merged hash c4214e0719d3b7ad3a25b002223e07a5927e0ec9b0caf099c354c6a4c81bb2ff"
+    },
+    {
+      "command": "git diff --name-only e77510170424eecd49112ed6c33424ce455b154c -- <all mapped production paths>",
+      "result": "empty"
+    },
+    {
+      "command": "recompute every artifact-manifest hash, all 14 metadata input hashes, and source_snapshot_sha256",
+      "result": "all exact matches"
+    }
+  ],
+  "tool_versions": {
+    "python": "3.12.3",
+    "numpy": "2.4.2",
+    "pyyaml": "6.0.1",
+    "pytest": "repository venv invocation; 25 selected tests passed",
+    "platform": "Linux 6.17.0-35-generic x86_64, glibc 2.39"
+  },
+  "assumptions": [
+    "The context-version-matched GATE_REGISTRY is authoritative; its smaller-than-production pass condition cannot be silently replaced by the spec's absolute max_sloc ceiling.",
+    "A lineage identifier must resolve to a reviewable equation/source record; an opaque string echoed into a generated manifest is not sufficient provenance.",
+    "A fixture lineage claim requires exact equality between the lineage commitment and the fixture commitment consumed by the execution receipt.",
+    "No sibling result from the current final-hostile-review run was inspected."
+  ],
+  "proposed_changes": [
+    "Unify lineage and runtime fixture commitments and enforce exact registry equality.",
+    "Make equation/source IDs resolvable and content-address their definitions.",
+    "Harden callable provenance analysis against alias and dynamic indirection.",
+    "Resolve the two-lane SLOC gate mismatch explicitly, either in code or through an adjudicated gate amendment.",
+    "Bind the authoritative 102-row matrix and OPEN state counts into generated evidence."
+  ],
+  "tests_to_run": [
+    "Negative fixture-substitution test using a different valid 64-character digest.",
+    "Negative equation/source missing-key, stale-hash, and unresolved-citation tests.",
+    "Negative callable-scan tests for alias imports, getattr, module __dict__, subscript, and callbacks.",
+    "Gate test asserting reference closure SLOC is strictly smaller than the recorded production closure, or a revised adjudicated gate invariant.",
+    "Matrix drift test that changes one authoritative_state away from OPEN and requires builder failure.",
+    "Rerun the four PR-123 test files and source-only --check after regeneration."
+  ],
+  "risks_and_kill_switches": [
+    "Keep G-PR123-ORACLE-INDEPENDENCE pending/failed; do not promote PR-123 status while any P1 remains.",
+    "Keep scientific_status OPEN and claim_release_allowed false regardless of mechanics results.",
+    "Do not consume attempt-1 counts or relabel attempt 2 as prospectively preregistered.",
+    "Do not run any PR4 download, lookup, intake, reduction, or analysis command.",
+    "Do not modify mapped production producers under PR-123."
+  ],
+  "artifacts_status_updates_needed": [
+    "Regenerate pr123_oracle_lineage_manifest.json, pr123_mutation_lab_report.json, pr123_k6_continuum_card.json, pr123_surviving_mutations.json, pr123_attempt_history.json, and pr123_artifact_manifest.json after the provenance fixes.",
+    "Retain attempt-1 INVALIDATED_FALSE_GREEN and attempt-2 prospective_preregistration_claimed=false during regeneration.",
+    "Do not mark G-PR123-ORACLE-INDEPENDENCE pass until a fresh hostile replay closes all four P1 findings."
+  ],
+  "errors": []
+}

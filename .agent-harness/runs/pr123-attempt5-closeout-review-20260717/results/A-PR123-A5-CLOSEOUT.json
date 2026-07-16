@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "run_id": "pr123-attempt5-closeout-review-20260717",
+  "assignment_id": "A-PR123-A5-CLOSEOUT",
+  "context_version": "281029fc7f322dbc179eff00072055b5b3cf14367ba123f0193168eedb9cabbf",
+  "agent_type": "cas_common",
+  "independence_mode": "blind-results",
+  "status": "pass",
+  "result_path": ".agent-harness/runs/pr123-attempt5-closeout-review-20260717/results/A-PR123-A5-CLOSEOUT.json",
+  "summary": "No P1 blocker was found. PR-123 attempt 5 is exactly bound to the v5 specification and current generated artifacts; attempts 1-4 remain INVALIDATED_FALSE_GREEN and nonconsumable with their registered review/result hashes intact. The source-only artifact check is current, the exact four-file PR-123 suite passes 43/43 tests, all nine frozen mutations execute and are killed with zero survivors, all 102 remediation findings remain OPEN, claim promotion is false, and PR4 has zero declared in-process commands and zero inputs. Acceptance remains bounded to internal C2 analytic/synthetic mechanics.",
+  "findings": [
+    {
+      "finding_id": "F-PR123-A5-CLOSEOUT-PASS",
+      "claim_id": "C-PR123-MECHANICS",
+      "verdict": "pass_no_p1_blocker",
+      "severity": "none",
+      "evidence_fingerprint": "c04c96f8bed18e9f658e93e3994b9ee674b1ff4816b2dcb5b155f1ad18263202",
+      "evidence_refs": [
+        "docs/research_program/long_horizon_rescue/pr123_spec.yaml@sha256:6f367dfcb1529d5ab39cf205447930fcf1c81ecda27e7b6b4692a7c8177961a4",
+        "docs/generated/pr123_oracle_lineage_manifest.json@sha256:16328a8500bf0dedc579603ae50dbddc5b6335cf3ccd0ab94c32f965e433138b",
+        "docs/generated/pr123_mutation_lab_report.json@sha256:bca445fbc6699a14c7c86527791794f798c9cc4f2f747f9aac96ef404b00961a",
+        "docs/generated/pr123_k6_continuum_card.json@sha256:d05c056d71ec80f8a8cbe1f6af72ed4490c866eaf9b3885bc8c415fe6f01f1a7",
+        "docs/generated/pr123_attempt_history.json@sha256:f184cfd08cd813b6cad4295b6350e6969fe34ab98a189ab6e60392e040d34fe3",
+        "docs/generated/pr123_artifact_manifest.json@sha256:8da64c2675b008f78e39b75274ca83dfbdc925c6bac4263945a2b2ae87f16196",
+        "docs/codex_handoff/research_remediation_state.yaml@sha256:bdb7779955710d3d84b137081748027746ea308fbf89dc0c179dd937f63c6311",
+        ".agent-harness/runs/pr123-attempt4-closeout-review-20260717/MERGED_RESULTS.json@sha256:976605182c888f278dc6d6f02275e1cdb0bfac744433ddcfb5cb598ea07732f1",
+        "tests/contracts/test_pr123_oracle_lab.py",
+        "tests/contracts/test_pr123_k6_continuum_oracle.py",
+        "tests/contracts/test_pr123_artifact_contract.py",
+        "tests/pr_cards/test_pr_123_oracle_k6_continuum_branch_mutation_laboratory.py"
+      ],
+      "attempt_history": {
+        "attempt_count": 5,
+        "invalidated_attempts": 4,
+        "invalidated_status": "INVALIDATED_FALSE_GREEN",
+        "invalidated_counts_consumable": false,
+        "current_attempt": "PR123-ATTEMPT-5",
+        "current_config_hash": "6f367dfcb1529d5ab39cf205447930fcf1c81ecda27e7b6b4692a7c8177961a4",
+        "current_status": "PASS_MECHANICS_C2",
+        "prospective_preregistration_claimed": false
+      },
+      "artifact_binding": {
+        "manifest_nonself_artifact_count": 5,
+        "all_hashes_match": true,
+        "all_sizes_match": true,
+        "source_only_check_current": true
+      },
+      "mechanics_and_claim_boundary": {
+        "registered_mutations": 9,
+        "executed_mutations": 9,
+        "clean_passed": 9,
+        "killed_mutations": 9,
+        "survivors": 0,
+        "remediation_findings_open": 102,
+        "remediation_findings_rescued": 0,
+        "claim_promotion_allowed": false,
+        "scientific_status": "OPEN",
+        "pr4_declared_in_process_commands_run": 0,
+        "pr4_inputs": []
+      },
+      "p1_blockers": [],
+      "safe_claim": "PR-123 attempt 5 supports only roadmap_rescue_v1:C2 analytic/synthetic numerical mechanics; it does not validate observed data, a native transfer, geometry, family identity, or any remediation finding."
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "C-PR123-MECHANICS",
+      "verdict": "pass_no_p1_blocker",
+      "claim_tier_recommendation": "conditional C2 mechanics only; scientific_status OPEN",
+      "reason": "Exact attempt-history equality, historical review/result hash checks, current manifest hash/size checks, source-only regeneration check, 43 passing tests, zero claim-language issues, and independent OPEN/PR4 census checks all pass."
+    }
+  ],
+  "commands": [
+    {
+      "command": "venv/bin/python -B scripts/codex_harness/run_pr123_oracle_lab.py --check --tier contract",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "return_code": 0,
+      "result": "current: six artifacts",
+      "elapsed_seconds": 1.25,
+      "max_rss_kib": 114520
+    },
+    {
+      "command": "venv/bin/python -B -m pytest -p no:cacheprovider tests/contracts/test_pr123_oracle_lab.py tests/contracts/test_pr123_k6_continuum_oracle.py tests/contracts/test_pr123_artifact_contract.py tests/pr_cards/test_pr_123_oracle_k6_continuum_branch_mutation_laboratory.py -q",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "return_code": 0,
+      "result": "43 passed in 7.69s",
+      "elapsed_seconds": 7.89,
+      "max_rss_kib": 125108
+    },
+    {
+      "command": "venv/bin/python -B scripts/check_claim_language.py --dry-run --format json <six PR123 generated artifacts>",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "return_code": 0,
+      "result": "issue_count=0"
+    },
+    {
+      "command": "independent in-memory equality check of spec invalidated_attempts versus generated attempt history, current manifest hashes/sizes, remediation census, claim flag, and PR4 receipt",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "return_code": 0,
+      "result": "attempts=5; invalidated=4; current=PASS_MECHANICS_C2; mutations=9/9; OPEN=102/102; claim_promotion=false; PR4=0"
+    }
+  ],
+  "tool_versions": {
+    "python": "3.12.3",
+    "numpy": "2.5.0",
+    "pytest": "9.0.3",
+    "pyyaml": "6.0.3"
+  },
+  "errors": [],
+  "remaining_non_p1_limits": [
+    "All evidence is internal analytic/synthetic mechanics and is not external replication or observed scientific validation.",
+    "The PR4 receipt is explicitly an in-process declaration, not authenticated historical shell provenance.",
+    "Production remediation and external adjudication remain downstream responsibilities."
+  ]
+}

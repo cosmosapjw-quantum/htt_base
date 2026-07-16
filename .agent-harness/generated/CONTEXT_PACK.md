@@ -1,7 +1,7 @@
 # Canonical Shared Context Pack
 
-Context version: `86126dd80915defb7dad67dfa416ed66acd4dcbca1edcd4801ccdd3b85aade9c`
-Built at: `2026-07-16T14:55:04+00:00`
+Context version: `c2dd9da6cb3dcf438d234aa399f87a197d5b02a4eebffd4cf6566e073df76c0e`
+Built at: `2026-07-16T17:15:05+00:00`
 
 This pack contains only the shared Tier-0 context. Assignment-specific context and sibling results are intentionally excluded.
 
@@ -9,20 +9,20 @@ This pack contains only the shared Tier-0 context. Assignment-specific context a
 
 ## Source: `.agent-harness/context/SHARED_CONTEXT.md`
 
-SHA-256: `1aa03bc2dd5be288901b32921e16672cfcbe432d4e2d3a1e3b7d39b5207ca565`
+SHA-256: `1701568302da236cbbe402a6ec9b9f5d61bd7420684ab74ace8473b8234f1330`
 
 # Shared Context — long-horizon rescue execution
 
 ## Project objective
 
-- Objective: execute `PR-119..PR-166` in topological order as a claim-tiered,
+- Objective: execute `PR-119..PR-183` in topological order as a claim-tiered,
   manifest-backed pre-solver observatory without fabricating native-solver or
   Bianchi-family evidence.
-- Current milestone / PR: PR-122 sealed; PR-123 intake is next, followed by
-  checkpoint 070.
-- Governing specification: `docs/research_program/long_horizon_rescue/pr122_spec.yaml`.
+- Current milestone / PR: PR-123 completed at attempt 6 after attempts 1-5 were
+  invalidated as false-greens; checkpoint 070 is sealed and execution is paused.
+- Governing specification: `docs/research_program/long_horizon_rescue/pr123_spec.yaml`.
 - Governing roadmap: `docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md`.
-- Base revision: `461fe4ca8f1ca1ebdcf3571ad077aac4b5e25b38`;
+- Base revision: `e77510170424eecd49112ed6c33424ce455b154c`;
   comparison target: current worktree on `research/pr04-multicomponent`.
 
 ## Current changed surface
@@ -34,6 +34,7 @@ SHA-256: `1aa03bc2dd5be288901b32921e16672cfcbe432d4e2d3a1e3b7d39b5207ca565`
 | MES authority | `common.mes_successor_registry`, active-consumer inventory | Inventories current consumers while preserving PR-124 blockers | `docs/generated/pr122_mes_successor_scan.json` |
 | Audit consumers | publication freeze and external audit package | Audit disclosure only; current PDF gate remains blocked; policy pins are schema-checked once per build-local snapshot and hash-rechecked | `docs/generated/publication_claim_freeze.md` |
 | Shared-agent harness | `AGENTS.md`, `.agent-harness/`, `.codex/hooks*`, repo-local orchestrator skill | Registers all future subagent assignments and versioned context | `.agent-harness/generated/CONTEXT_PACK.md` |
+| PR-123 oracle lab | `common` oracle contracts, mutation lab, K6 catalog-independent continuum branch | Attempts 1-5 are retained as invalid; attempt 6 passed bounded C2 mechanics review with scientific status OPEN | `docs/generated/pr123_attempt_history.json` |
 
 ## Common assumptions and conventions
 
@@ -44,22 +45,28 @@ SHA-256: `1aa03bc2dd5be288901b32921e16672cfcbe432d4e2d3a1e3b7d39b5207ca565`
   never native-solver results.
 - Python evidence production uses the repository venv through the tracked
   source-only launcher with `-I -S -B` and an empty external cache.
-- The checked-in PR-122 author and adjudicator are correlated internal process
-  identities and cannot promote scientific status.
-- No mathematical or physical claim in PR-122 requires a CAS derivation.
+- Internal author/reviewer identities are correlated process evidence and
+  cannot independently promote scientific status.
+- PR-123 references must be smaller than production, use distinct algorithm
+  lineage, and record shared equations, fixtures, authors, and random streams.
 
 ## Frozen scope
 
-- In scope: PR-122 C1 release mechanics, manifests, receipts, exact test
-  evidence, authority snapshot, package/freeze consumption, and harness
-  integration.
-- Explicit non-goals: scientific estimand validation, native solver work,
-  morphology compatibility, geometry evidence, or Bianchi-family inference.
+- In scope: analytic and manufactured references, registered known mutations,
+  multi-seed properties/coverage, K6 continuum-order and upper-bound mechanics,
+  oracle lineage, surviving-mutation reports, and no-empirical-consumer gates.
+- Explicit non-goals: production defect remediation owned by later cards,
+  observed-data inference, matched catalog/null/covariance promotion, native
+  solver work, morphology compatibility, or geometry/family conclusions.
 - PR3/FFP10 E2E download is complete; its analysis remains deferred to PR-150.
 - PR4/NPIPE is not downloaded. PR4 download, intake, reduction, and all data
   analysis are skipped entirely by user scope; no PR4 command may run.
-- All 102 remediation findings remain `OPEN`; no PR-122 mechanism may mark a
-  finding `RESCUED`.
+- All 102 remediation findings remain `OPEN`; a mechanics mutation kill does
+  not mark a finding `RESCUED`.
+- The integrated roadmap contains 130 actual cards through PR-183. The current
+  machine-readable DAG contains 113 cards through PR-166; PR-167 is the frozen
+  intake card that later registers PR-167..183, so progress reports must show
+  integrated-roadmap and registered-DAG denominators separately.
 
 ## Shared evidence pointers
 
@@ -71,12 +78,26 @@ SHA-256: `1aa03bc2dd5be288901b32921e16672cfcbe432d4e2d3a1e3b7d39b5207ca565`
 | E-PR122-RECEIPT | `docs/generated/pr122_release_receipt.json` | source-only graph builder | `3c40f202e6e9c46853bea1e03ffffa9881cdffaa210ed480cb2c7be45ec65012` | C-PR122-NONPROMOTION |
 | E-HARNESS-ZIP | `codex_shared_context_harness_v1.zip` | user-supplied installation packet | `1f020bf290476491b07869ed40eb4d05fb99b6f38efe420453a02faf243ff94f` | C-HARNESS-INSTALL |
 | E-PR122-PERF | `.agent-harness/runs/pr122-closeout-20260716/results/A-PR122-PERF.json` | registered read-only performance audit | `6c4fedbaa86667af449e70c9a8eb58712b41030def2ba4fd70655083b771cc53` | C-HARNESS-INSTALL, C-PR122-MECHANICS |
+| E-PR123-CARD | `docs/codex_handoff/pr_backlog.yaml` | PR-119 DAG intake | `dec20a60c32a15c1e65bbaff859e52cf51d89299e33dacc1fa60efbcbf16eb50` | C-PR123-MECHANICS, C-PR4-SKIP |
+| E-PR123-SPEC | `docs/research_program/long_horizon_rescue/pr123_spec.yaml` | four-role intake, five invalidating hostile reviews, and main-thread v6 adjudication | `6356835da8099c4714a847864b849f8885a2bccda5e536f0f4c8dc508e282184` | C-PR123-MECHANICS, C-PR4-SKIP |
+| E-PR123-LINEAGE | `docs/generated/pr123_oracle_lineage_manifest.json` | source-only PR-123 builder | `dffb8851397cd713ff8240fd832feb3c28771b0a71bf9ffaa7b5d2c331a95ee6` | C-PR123-MECHANICS |
+| E-PR123-MUTATIONS | `docs/generated/pr123_mutation_lab_report.json` | source-only PR-123 builder | `9f9a69382427082d424bd260543d006b0fbf72e18be7e9c19e30946e98f51e14` | C-PR123-MECHANICS, C-PR4-SKIP |
+| E-PR123-K6 | `docs/generated/pr123_k6_continuum_card.json` | source-only PR-123 builder | `4d1e15919259e67ba856a8b2e0966147f3c293a2756c080b795c1a65d72c7b54` | C-PR123-MECHANICS |
+| E-PR123-ATTEMPTS | `docs/generated/pr123_attempt_history.json` | source-only PR-123 builder | `e19dd322c2d3435ecbed9193ef22880fe8acc733e033ab6cff74ce1c0f90aac2` | C-PR123-MECHANICS |
+| E-PR123-MANIFEST | `docs/generated/pr123_artifact_manifest.json` | source-only PR-123 builder | `a1e2ce4eecb22ec43b947ec0b95f88d9e3d271be78cdd7bd06454636c7705869` | C-PR123-MECHANICS, C-PR4-SKIP |
+| E-PR123-REVIEW2 | `.agent-harness/runs/pr123-final-hostile-review-20260716/MERGED_RESULTS.json` | registered blind hostile replay | `12c7316f435251810956d2f4b6c641977364abc96f5366737a057a732ddca076` | C-PR123-MECHANICS |
+| E-PR123-REVIEW3 | `.agent-harness/runs/pr123-attempt3-final-review-20260716/MERGED_RESULTS.json` | registered blind hostile replay | `b30f9039af6b2cec157f8e4881957ef3294c1631db0fb70cd702aae35c2615ff` | C-PR123-MECHANICS |
+| E-PR123-REVIEW4 | `.agent-harness/runs/pr123-attempt4-closeout-review-20260717/MERGED_RESULTS.json` | registered blind hostile replay | `976605182c888f278dc6d6f02275e1cdb0bfac744433ddcfb5cb598ea07732f1` | C-PR123-MECHANICS |
+| E-PR123-REVIEW5 | `.agent-harness/runs/pr123-attempt5-closeout-review-20260717/MERGED_RESULTS.json` | registered blind hostile replay | `6c6f5f1499400a410ad46cfc00a5900fb09d435b6df5814faffb4be0d84327f2` | C-PR123-MECHANICS |
+| E-PR123-REVIEW6 | `.agent-harness/runs/pr123-attempt6-final-scanner-review-20260717/MERGED_RESULTS.json` | registered bounded hostile replay | `0999233e21828a9cbffa99eda2ea061a3f140f91c5cf0b163b976ec1d61ade99` | C-PR123-MECHANICS |
 
 ## Known disputes and open questions
 
 | Question ID | Question | Required discriminating evidence | Owner |
 |---|---|---|---|
-| Q-PR123-SCOPE | Which analytic-only oracle mutations belong to PR-123 without stealing later PR ownership? | registered PR-123 assignments and exact roadmap/spec clauses | next run |
+No unresolved PR-123 P1 dispute remains inside the finite registered contract.
+The static scanner remains a bounded fail-closed check plus disclosed manual
+adjudication, not a proof of arbitrary Python-program independence.
 
 ---
 
@@ -123,7 +144,7 @@ meta-finding with new evidence and an explicit reopen condition.
 
 ## Source: `.agent-harness/context/GATE_REGISTRY.json`
 
-SHA-256: `403b10160b7c8057031de32cb5b2f8ac28295acde28703c33854dc0cba325cb2`
+SHA-256: `f9b08085938916df5eed592d5b18871dfa7c572b575cff824ee60f21d38baa95`
 
 {
   "schema_version": 1,
@@ -175,6 +196,46 @@ SHA-256: `403b10160b7c8057031de32cb5b2f8ac28295acde28703c33854dc0cba325cb2`
       "required_evidence": ["E-PR122-GRAPH"],
       "pass_condition": "Harness validation, CF4 quarantine, freeze, package, smoke, collection, and PR-122 integration checks pass with only the documented PDF blocker.",
       "fail_condition": "Any unexpected failure, stale artifact, claim drift, or PR4 execution.",
+      "owner": "main",
+      "status": "pass"
+    },
+    {
+      "gate_id": "G-PR123-SPEC",
+      "spec_refs": ["docs/research_program/long_horizon_rescue/pr123_spec.yaml"],
+      "statement": "PR-123 has a reviewed, claim-bounded acceptance and mutation contract before implementation.",
+      "required_evidence": ["E-PR123-CARD", "E-PR123-SPEC"],
+      "pass_condition": "Four-role divergence closes scope, lane ownership, properties, mutation IDs, independence fields, and kill switches in a tracked spec.",
+      "fail_condition": "Implementation starts before the reviewed spec or absorbs later production-remediation ownership.",
+      "owner": "main",
+      "status": "pass"
+    },
+    {
+      "gate_id": "G-PR123-ORACLE-INDEPENDENCE",
+      "spec_refs": ["docs/research_program/long_horizon_rescue/pr123_spec.yaml#oracle_lineage_contract"],
+      "statement": "Every PR-123 reference records algorithm, source, equation, fixture, author, and random-stream lineage.",
+      "required_evidence": ["E-PR123-SPEC", "E-PR123-LINEAGE", "E-PR123-ATTEMPTS"],
+      "pass_condition": "Reference code is smaller than production and shared lineage is explicit; file-path separation alone is insufficient.",
+      "fail_condition": "A self-oracle or unrecorded correlated reference is counted as independent.",
+      "owner": "main",
+      "status": "pass"
+    },
+    {
+      "gate_id": "G-PR123-MUTATIONS",
+      "spec_refs": ["docs/research_program/long_horizon_rescue/pr123_spec.yaml#mutation_registry"],
+      "statement": "All preregistered defect mutations are executed and killed lane by lane.",
+      "required_evidence": ["E-PR123-SPEC", "E-PR123-MUTATIONS", "E-PR123-ATTEMPTS"],
+      "pass_condition": "The exact mutation matrix has no survivor; any survivor blocks only its lane and remains reported.",
+      "fail_condition": "A registered mutation survives, is skipped, or is replaced after results are known.",
+      "owner": "main",
+      "status": "pass"
+    },
+    {
+      "gate_id": "G-PR123-K6-CONTINUUM",
+      "spec_refs": ["docs/research_program/long_horizon_rescue/pr123_spec.yaml#k6_continuum_contract"],
+      "statement": "The K6 branch is catalog-independent and checks analytic fields, convergence, decomposition, and the sqrt(2) residual lock.",
+      "required_evidence": ["E-PR123-SPEC", "E-PR123-K6", "E-PR123-MANIFEST"],
+      "pass_condition": "At least four grids and two stencil orders pass registered continuum/order/upper-bound properties with zero empirical consumers.",
+      "fail_condition": "Any catalog input enters, convergence/order fails, or the analytic residual lock is not reproduced.",
       "owner": "main",
       "status": "pass"
     }

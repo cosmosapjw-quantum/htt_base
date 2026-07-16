@@ -1,0 +1,120 @@
+{
+  "schema_version": 1,
+  "run_id": "pr123-attempt5-closeout-review-20260717",
+  "generated_at": "2026-07-16T17:06:09+00:00",
+  "result_count": 2,
+  "raw_finding_count": 2,
+  "unique_finding_count": 2,
+  "findings": [
+    {
+      "finding_id": "F-PR123-A5-CLOSEOUT-PASS",
+      "claim_id": "C-PR123-MECHANICS",
+      "verdict": "pass_no_p1_blocker",
+      "severity": "none",
+      "evidence_fingerprint": "c04c96f8bed18e9f658e93e3994b9ee674b1ff4816b2dcb5b155f1ad18263202",
+      "evidence_refs": [
+        "docs/research_program/long_horizon_rescue/pr123_spec.yaml@sha256:6f367dfcb1529d5ab39cf205447930fcf1c81ecda27e7b6b4692a7c8177961a4",
+        "docs/generated/pr123_oracle_lineage_manifest.json@sha256:16328a8500bf0dedc579603ae50dbddc5b6335cf3ccd0ab94c32f965e433138b",
+        "docs/generated/pr123_mutation_lab_report.json@sha256:bca445fbc6699a14c7c86527791794f798c9cc4f2f747f9aac96ef404b00961a",
+        "docs/generated/pr123_k6_continuum_card.json@sha256:d05c056d71ec80f8a8cbe1f6af72ed4490c866eaf9b3885bc8c415fe6f01f1a7",
+        "docs/generated/pr123_attempt_history.json@sha256:f184cfd08cd813b6cad4295b6350e6969fe34ab98a189ab6e60392e040d34fe3",
+        "docs/generated/pr123_artifact_manifest.json@sha256:8da64c2675b008f78e39b75274ca83dfbdc925c6bac4263945a2b2ae87f16196",
+        "docs/codex_handoff/research_remediation_state.yaml@sha256:bdb7779955710d3d84b137081748027746ea308fbf89dc0c179dd937f63c6311",
+        ".agent-harness/runs/pr123-attempt4-closeout-review-20260717/MERGED_RESULTS.json@sha256:976605182c888f278dc6d6f02275e1cdb0bfac744433ddcfb5cb598ea07732f1",
+        "tests/contracts/test_pr123_oracle_lab.py",
+        "tests/contracts/test_pr123_k6_continuum_oracle.py",
+        "tests/contracts/test_pr123_artifact_contract.py",
+        "tests/pr_cards/test_pr_123_oracle_k6_continuum_branch_mutation_laboratory.py"
+      ],
+      "attempt_history": {
+        "attempt_count": 5,
+        "invalidated_attempts": 4,
+        "invalidated_status": "INVALIDATED_FALSE_GREEN",
+        "invalidated_counts_consumable": false,
+        "current_attempt": "PR123-ATTEMPT-5",
+        "current_config_hash": "6f367dfcb1529d5ab39cf205447930fcf1c81ecda27e7b6b4692a7c8177961a4",
+        "current_status": "PASS_MECHANICS_C2",
+        "prospective_preregistration_claimed": false
+      },
+      "artifact_binding": {
+        "manifest_nonself_artifact_count": 5,
+        "all_hashes_match": true,
+        "all_sizes_match": true,
+        "source_only_check_current": true
+      },
+      "mechanics_and_claim_boundary": {
+        "registered_mutations": 9,
+        "executed_mutations": 9,
+        "clean_passed": 9,
+        "killed_mutations": 9,
+        "survivors": 0,
+        "remediation_findings_open": 102,
+        "remediation_findings_rescued": 0,
+        "claim_promotion_allowed": false,
+        "scientific_status": "OPEN",
+        "pr4_declared_in_process_commands_run": 0,
+        "pr4_inputs": []
+      },
+      "p1_blockers": [],
+      "safe_claim": "PR-123 attempt 5 supports only roadmap_rescue_v1:C2 analytic/synthetic numerical mechanics; it does not validate observed data, a native transfer, geometry, family identity, or any remediation finding.",
+      "source_finding_ids": [
+        "F-PR123-A5-CLOSEOUT-PASS"
+      ],
+      "supporting_assignments": [
+        "A-PR123-A5-CLOSEOUT"
+      ],
+      "supporting_agent_types": [
+        "cas_common"
+      ],
+      "duplicate_count": 1
+    },
+    {
+      "finding_id": "F-PR123-A5-SCANNER-001",
+      "claim_id": "C-PR123-MECHANICS",
+      "verdict": "fail_must_fix_scope_insensitive_shadow_false_green",
+      "severity": "P1",
+      "statement": "The six registered attempt-4 bypasses are closed, but attempt 5 remains false-green-capable under the declared exact-symbol policy because locally_bound_names is collected across the entire module rather than per lexical scope. Any Store or argument named mv_weights anywhere suppresses every bare mv_weights Load in mapped_symbol_reference, including unrelated module or function scopes. Since container and higher-order RHS values are not recursively tainted, a mapped callable can then be invoked through aliases[0] or partial while all three scan booleans remain true. This is a concrete extension of the same registered alias false-green, not an unbounded demand for perfect Python static analysis.",
+      "assumptions_used": [
+        "A bare Load whose identifier equals an exact forbidden production symbol is within the scanner's declared policy unless that Load is lexically resolved to a local binding in its own scope.",
+        "Bindings in unrelated functions or comprehensions must not suppress a module-global or different-function forbidden-symbol Load.",
+        "No current-run sibling result was inspected."
+      ],
+      "evidence_refs": [
+        "scripts/codex_harness/run_pr123_oracle_lab.py:242-260",
+        "scripts/codex_harness/run_pr123_oracle_lab.py:269-288",
+        "docs/research_program/long_horizon_rescue/pr123_spec.yaml:256-294",
+        "docs/research_program/long_horizon_rescue/pr123_spec.yaml:769-780",
+        "hostile replay: cross_scope_shadow_list, cross_scope_shadow_partial, parameter_container, parameter_partial, comprehension_shadow_list, and default_arg_cross_scope_shadow each returned all three checks true"
+      ],
+      "evidence_fingerprint": "sha256:86ac2828374faea340dbac5e7284e9f61c903cb52a0f9b2b8fd5cea4f1fc3bc3",
+      "counterevidence_refs": [
+        "All exact six attempt-4 specimens are now rejected by the intended scan axis.",
+        "The 43 registered tests pass, the source-only builder is current, and legitimate local numeric variables named curl/divergence remain allowed.",
+        "These positive results do not exercise lexical-scope separation for a forbidden identifier."
+      ],
+      "reproduction": [
+        "Create a temporary module with `def harmless(x): mv_weights=x; return mv_weights`, then at module scope `aliases=[mv_weights]`, and in reference return `aliases[0](x)`.",
+        "Call _automated_scan_checks(path, {'mv_weights'}).",
+        "Observe forbidden_import_prefixes_clean=true, mapped_production_symbol_calls_clean=true, and dynamic_import_and_codegen_clean=true.",
+        "Alternatively use `def reference(mv_weights,x): aliases=[mv_weights]; return aliases[0](x)` or partial(mv_weights)(x); both also scan clean."
+      ],
+      "confidence": 0.99,
+      "unresolved": [
+        "Make forbidden-name resolution lexical-scope-aware, or conservatively reject forbidden identifiers used as arguments/Stores when they flow into containers or higher-order calls.",
+        "Add cross-scope and parameter-container regression falsifiers while retaining the current local numeric curl/divergence success case.",
+        "Regenerate artifacts and run a fresh targeted independent replay before accepting PR123."
+      ],
+      "source_finding_ids": [
+        "F-PR123-A5-SCANNER-001"
+      ],
+      "supporting_assignments": [
+        "A-PR123-A5-SCANNER"
+      ],
+      "supporting_agent_types": [
+        "context_mapper"
+      ],
+      "duplicate_count": 1
+    }
+  ],
+  "errors": []
+}

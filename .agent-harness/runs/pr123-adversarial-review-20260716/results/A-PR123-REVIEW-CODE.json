@@ -1,0 +1,203 @@
+{
+  "schema_version": 1,
+  "run_id": "pr123-adversarial-review-20260716",
+  "assignment_id": "A-PR123-REVIEW-CODE",
+  "context_version": "874a8cf4659075de42008b5b8c0d8e86e61384c4b7fc018f3cbb255c64b2b877",
+  "agent_type": "adversarial_code_reviewer",
+  "status": "fail",
+  "started_at": "2026-07-17T00:33:00+09:00",
+  "completed_at": "2026-07-17T00:43:25+09:00",
+  "tool_versions": {
+    "python": "3.12.3",
+    "numpy": "2.5.0",
+    "pytest": "9.0.3",
+    "pyyaml": "6.0.3",
+    "git_base": "e77510170424eecd49112ed6c33424ce455b154c"
+  },
+  "commands": [
+    "git status --short && git diff --stat e77510170424eecd49112ed6c33424ce455b154c && git diff --name-only e77510170424eecd49112ed6c33424ce455b154c",
+    "venv/bin/python -m pytest -q tests/contracts/test_pr123_oracle_lab.py tests/contracts/test_pr123_k6_continuum_oracle.py tests/contracts/test_pr123_artifact_contract.py tests/pr_cards/test_pr_123_oracle_k6_continuum_branch_mutation_laboratory.py",
+    "rg -n 'mutant_symbol|reference_symbol|executed=True|PropertyResult\\([^\\n]+True' scripts/codex_harness/run_pr123_oracle_lab.py htt/src/common/oracle_references.py htt/src/common/k6_continuum_oracle.py",
+    "venv/bin/python - <<'PY' # replace constrained_shell_weights with all-zero weights and execute run_non_k6_reference_cases; observed PASS_MECHANICS_C2",
+    "venv/bin/python - <<'PY' # inspect generated K6 boundary keys and low-order mutation property IDs"
+  ],
+  "artifacts": [
+    {
+      "path": "htt/src/common/oracle_references.py",
+      "sha256": "cc85036459bfe9545a465a42948b35078d1e60648f904d761bbb9a89e616603c"
+    },
+    {
+      "path": "htt/src/common/k6_continuum_oracle.py",
+      "sha256": "8297a47e0ccaa7f39d5c3280ed82283a5dfd94554e80814e8db71204d03f4ba6"
+    },
+    {
+      "path": "htt/src/common/oracle_lab.py",
+      "sha256": "fa50b954c0386cd2b7f331778a9f6e23902bae941e575229603659dd512d3414"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr123_oracle_lab.py",
+      "sha256": "ae188538c2d0e0e5379d03530f25eb6899a078e02cf017a508f5e7e05c5f9400"
+    },
+    {
+      "path": "docs/research_program/long_horizon_rescue/pr123_spec.yaml",
+      "sha256": "a08c4ee6f95c9ebeeaa9d0131ca7edaf3e58119d7a8adedef322a677e77f5246"
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "F-PR123-CODE-001",
+      "claim_id": "C-PR123-MECHANICS",
+      "verdict": "fail",
+      "severity": "high",
+      "statement": "The mutation report can false-green a broken clean oracle because several registered properties and every executed flag are asserted rather than measured, and the builder never resolves or validates mutant_symbol. In the shell lane, the property named uniform_flow is computed from the shell-null residual a second time; replacing constrained_shell_weights with all-zero weights still yields clean_passed=true and PASS_MECHANICS_C2 even though W N is zero instead of the identity. row_permutation, pixel_permutation, and label_permutation are also literal True values. Therefore the checked-in 9/9 executed-and-killed summary does not establish the spec's conjunctive clean-property and executed-mutation contract.",
+      "assumptions_used": [
+        "The reviewed spec at lines 118-132 and 458-469 is authoritative.",
+        "A clean constrained bulk-flow oracle must satisfy both W N = I and W S = 0.",
+        "An executed mutation receipt must be derived from an actual registered callable execution, not a caller-supplied boolean."
+      ],
+      "evidence_refs": [
+        "docs/research_program/long_horizon_rescue/pr123_spec.yaml:118-132",
+        "docs/research_program/long_horizon_rescue/pr123_spec.yaml:458-469",
+        "htt/src/common/oracle_references.py:239-256",
+        "htt/src/common/oracle_references.py:296-305",
+        "htt/src/common/oracle_references.py:339-355",
+        "scripts/codex_harness/run_pr123_oracle_lab.py:147-219",
+        "htt/src/common/oracle_lab.py:110-138"
+      ],
+      "evidence_fingerprint": "sha256:953b8edcdd7a6abee13c3b1e9ca06832fbb2e3a223da22016e336194f2bb83f3",
+      "counterevidence_refs": [
+        "The targeted PR-123 suite passes 23/23, but those tests do not exercise the demonstrated false-green path."
+      ],
+      "reproduction": [
+        "Monkeypatch common.oracle_references.constrained_shell_weights to return np.zeros((3, len(directions))), then call run_non_k6_reference_cases(root_seed=202607123, replicates=16, ppc_draws=2048). The shell outcome reports status=PASS_MECHANICS_C2, clean_passed=true, and uniform_flow_property=true with clean_shell_max=0.0.",
+        "rg shows mutant_symbol is absent from the builder while all nine outcome sites pass executed=True directly."
+      ],
+      "confidence": 0.99,
+      "unresolved": [
+        "Bind every mutation_registry reference_symbol and mutant_symbol to an exact callable and execution trace; compute W N - I, actual paired permutations, and all other properties from returned values; remove caller-controlled executed booleans from authoritative receipts."
+      ]
+    },
+    {
+      "finding_id": "F-PR123-CODE-002",
+      "claim_id": "C-PR123-MECHANICS",
+      "verdict": "fail",
+      "severity": "high",
+      "statement": "The K6 result does not implement two preregistered acceptance surfaces and its low-order mutation is only a declarative list mismatch. The spec requires separate full-volume, interior, and boundary-collar reporting plus continuum gates. The implementation reports one aggregate manufactured error and a collar-width label, and computes continuum fit fields without any PropertyResult or acceptance threshold. The alleged low-order mutant merely returns {'stencil_orders':[2]} and is marked killed because that list differs from [2,4]; no second-order-only numerical path is run against the same fixtures. Thus PASS_MECHANICS_C2 can be issued without the required boundary decomposition, continuum gate, or numerical mutant execution.",
+      "assumptions_used": [
+        "K6 boundary_reporting and acceptance_and_kill_switches in the reviewed spec are mandatory.",
+        "A mutation of the numerical stencil must execute altered numerical behavior on common fixtures to count as killed."
+      ],
+      "evidence_refs": [
+        "docs/research_program/long_horizon_rescue/pr123_spec.yaml:418-423",
+        "docs/research_program/long_horizon_rescue/pr123_spec.yaml:458-465",
+        "htt/src/common/k6_continuum_oracle.py:110-119",
+        "htt/src/common/k6_continuum_oracle.py:168-170",
+        "htt/src/common/k6_continuum_oracle.py:197-212",
+        "htt/src/common/k6_continuum_oracle.py:218-230",
+        "docs/generated/pr123_k6_continuum_card.json"
+      ],
+      "evidence_fingerprint": "sha256:bfba72c20a2504b8e214c2a451830bd3df87af52aaebc90068344fc529bbc226",
+      "counterevidence_refs": [
+        "The aggregate manufactured errors exhibit approximately second- and fourth-order convergence, but that does not supply the missing decomposition or a gated continuum criterion."
+      ],
+      "reproduction": [
+        "Inspect docs/generated/pr123_k6_continuum_card.json: each boundary order has only boundary_collar_width, manufactured_errors, manufactured_observed_order, solid_body_max_error, and spacings.",
+        "Inspect the low_order_curl_stencil outcome: its property IDs omit any continuum gate, and mutant_killed is only second_order_only_summary()['stencil_orders'] != orders."
+      ],
+      "confidence": 0.99,
+      "unresolved": [
+        "Compute and gate full/interior/collar errors separately; preregister an operational continuum upper-bound criterion; execute a real second-order-only substitution on the identical fields and require its registered failures."
+      ]
+    },
+    {
+      "finding_id": "F-PR123-CODE-003",
+      "claim_id": "C-PR123-MECHANICS",
+      "verdict": "fail",
+      "severity": "medium",
+      "statement": "The PPC random-stream evidence violates the frozen seed derivation and does not bind all executed randomness. The spec says streams derive by SeedSequence root then stable registry-index spawn, but PPC creates a separate arithmetic root_seed+991. It records only clean_child even though mutant_child drives the plug-in mutant, and the lineage disclosure says paired inputs are shared although clean and mutant use independent child streams. The seed_ledger_hash therefore cannot reproduce or authenticate the mutant execution it purports to cover.",
+      "assumptions_used": [
+        "seed_contract.derivation and seed_ledger_required are exact provenance requirements.",
+        "Every random stream affecting a mutation verdict must appear in the ledger."
+      ],
+      "evidence_refs": [
+        "docs/research_program/long_horizon_rescue/pr123_spec.yaml:134-143",
+        "htt/src/common/oracle_references.py:377-405",
+        "scripts/codex_harness/run_pr123_oracle_lab.py:202-207",
+        "scripts/codex_harness/run_pr123_oracle_lab.py:233-258"
+      ],
+      "evidence_fingerprint": "sha256:3f004dd26db838f054e89b8dd2827610582396364d9f6d128a2a765178abc405",
+      "counterevidence_refs": [
+        "The current run is deterministic on this environment, but determinism alone does not make the omitted mutant stream provenance-complete."
+      ],
+      "reproduction": [
+        "Count the PPC loop's two SeedSequence children per replicate and compare with the one _seed_record call per replicate.",
+        "Trace ppc_children to _rng_children(root_seed + 991, replicates * 2), which is not a child spawn from the frozen root SeedSequence."
+      ],
+      "confidence": 0.98,
+      "unresolved": [
+        "Allocate all lane streams from one stable root spawn tree, record clean and mutant child identities, and either use common random numbers or correct the paired-input disclosure."
+      ]
+    },
+    {
+      "finding_id": "F-PR123-CODE-004",
+      "claim_id": "C-PR123-MECHANICS",
+      "verdict": "fail",
+      "severity": "medium",
+      "statement": "Oracle-independence validation is materially weaker than the declared gate. The scan named production_import_scan_clean inspects import statements only, although the spec requires rejection of imports or calls, generated-code sharing, renamed same algorithms, and non-substantive algorithm-family differences. Complexity is measured only for the tiny reference_symbol, while the 206-line run_non_k6_reference_cases routine owns the fixtures, expected properties, and kill decisions and is excluded from the budget. all_rows_valid is then emitted as literal true. This structure permits the exact tautologies found above while presenting a passing independent-lineage manifest.",
+      "assumptions_used": [
+        "The oracle_lineage_contract hard requirements and fail_closed_on list define the evidence required for G-PR123-ORACLE-INDEPENDENCE.",
+        "Code that computes expected properties and kill decisions is part of the oracle complexity and lineage surface."
+      ],
+      "evidence_refs": [
+        "docs/research_program/long_horizon_rescue/pr123_spec.yaml:164-198",
+        "scripts/codex_harness/run_pr123_oracle_lab.py:61-101",
+        "scripts/codex_harness/run_pr123_oracle_lab.py:147-219",
+        "scripts/codex_harness/run_pr123_oracle_lab.py:242-249",
+        "htt/src/common/oracle_references.py:222-427",
+        "htt/src/common/oracle_lab.py:174-211"
+      ],
+      "evidence_fingerprint": "sha256:f362b1c32ad010a66aedf52284f9ca74b4f34583a1741aa9c6d6e13c6b1eb1e9",
+      "counterevidence_refs": [
+        "Manual inspection found no current direct mapped-production import in the reference files; the finding is that the authoritative validator cannot establish the stronger declared facts or prevent regression."
+      ],
+      "reproduction": [
+        "Inspect _reference_import_scan_clean: it is only a set-membership check over ast.Import and ast.ImportFrom results.",
+        "Compare _function_metrics(reference_path, mutation['reference_symbol']) with the unbudgeted run_non_k6_reference_cases body that constructs every non-K6 verdict."
+      ],
+      "confidence": 0.96,
+      "unresolved": [
+        "Include evaluator/mutant/fixture code in the complexity and hash surface, statically reject mapped symbol calls and dynamic imports, and replace literal independence booleans with machine-readable checks plus explicit manual adjudication for algorithm-family independence."
+      ]
+    },
+    {
+      "finding_id": "F-PR123-CODE-005",
+      "claim_id": "C-PR123-MECHANICS",
+      "verdict": "fail",
+      "severity": "medium",
+      "statement": "The sqrt(2) fixture does not inhabit the domain recorded in the K6 card. The card declares iid-component isotropic stationary derivatives, but _sqrt2_ratio assigns the same scalar field to all three velocity components, making them perfectly correlated. With equal-frequency sine terms, both registered stencils apply the same modified-wavenumber factor, so the ratio is algebraically sqrt(2) even though the stated iid-component covariance was never exercised. The exact lock is therefore a specially constructed identity rather than evidence for the declared residual domain.",
+      "assumptions_used": [
+        "The generated card's sqrt2_domain must describe the actual fixture rather than only the intended analytic argument.",
+        "iid vector components exclude three identical component fields."
+      ],
+      "evidence_refs": [
+        "docs/research_program/long_horizon_rescue/pr123_spec.yaml:411-413",
+        "htt/src/common/k6_continuum_oracle.py:160-165",
+        "htt/src/common/k6_continuum_oracle.py:216-224",
+        "docs/generated/pr123_k6_continuum_card.json"
+      ],
+      "evidence_fingerprint": "sha256:c3919f61df929cb4d3e1a304a52865c39bf225218a0eb18adb47a44065453701",
+      "counterevidence_refs": [
+        "The constructed field does return sqrt(2) to floating-point precision; the issue is domain mismatch and lack of the preregistered covariance test, not arithmetic output."
+      ],
+      "reproduction": [
+        "Inspect _sqrt2_ratio: velocity = np.array((scalar, scalar, scalar)).",
+        "The checked-in card reports exactly sqrt(2) for both D2 and D4 despite using different finite-difference formulas, consistent with cancellation of their common modified-wavenumber factor."
+      ],
+      "confidence": 0.94,
+      "unresolved": [
+        "Use a deterministic orthogonal ensemble or multiseed random gradient-tensor construction whose empirical covariance matches the declared iid/isotropic domain, bind its seed lineage, and gate the ensemble ratio with a preregistered finite-sample tolerance."
+      ]
+    }
+  ],
+  "errors": []
+}

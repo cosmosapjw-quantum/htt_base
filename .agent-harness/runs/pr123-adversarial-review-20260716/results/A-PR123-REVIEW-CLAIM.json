@@ -1,0 +1,216 @@
+{
+  "schema_version": 1,
+  "run_id": "pr123-adversarial-review-20260716",
+  "assignment_id": "A-PR123-REVIEW-CLAIM",
+  "agent_type": "adversarial_claim_reviewer",
+  "context_version": "874a8cf4659075de42008b5b8c0d8e86e61384c4b7fc018f3cbb255c64b2b877",
+  "independence_mode": "blind-results",
+  "result_path": ".agent-harness/runs/pr123-adversarial-review-20260716/results/A-PR123-REVIEW-CLAIM.json",
+  "status": "fail",
+  "summary": "PR-123 preserves the C2 synthetic-mechanics ceiling, owner split, OPEN scientific state, and explicit no-PR4 scope, but its aggregate PASS_MECHANICS_C2 receipt is false-green. The K6 mutant is never executed, several clean properties are constants or mislabeled execution counts, the sqrt(2) fixture contradicts its declared iid-component domain, and the lineage validator proves imports rather than the specified import-or-call and independent-source contract. Acceptance must remain blocked until those receipts are made executable and artifacts are regenerated.",
+  "claim_results": [
+    {
+      "claim_id": "C-PR123-MECHANICS",
+      "verdict": "fail_must_fix_before_acceptance",
+      "claim_ceiling_observed": "roadmap_rescue_v1:C2 conditional synthetic mechanics only",
+      "scientific_status_observed": "OPEN",
+      "reason": "The claim is conjunctive over all nine executed mutants, every clean property, and validated lineage. At least four required predicates are not established by the implementation even though the generated aggregate reports PASS_MECHANICS_C2."
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "F-PR123-K6-MUTANT-NOT-EXECUTED",
+      "claim_id": "C-PR123-MECHANICS",
+      "severity": "P1",
+      "verdict": "fail_must_fix",
+      "title": "The K6 second-order-only mutant is classified by descriptor inequality instead of being executed",
+      "evidence_fingerprint": "sha256:5695bd21aff25008bb0493839c2b21f4b8af40e57572a6132964a74344dfd659",
+      "evidence": [
+        "htt/src/common/k6_continuum_oracle.py:168-170 returns only a two-field descriptor for the known mutant.",
+        "htt/src/common/k6_continuum_oracle.py:227-231 hard-codes executed=True and sets mutant_killed from mutant['stencil_orders'] != orders; it does not pass a mutant implementation through any registered K6 property.",
+        "docs/research_program/long_horizon_rescue/pr123_spec.yaml:458-468 requires every frozen mutation to execute and be killed, with any omitted or skipped mutation blocking its lane.",
+        "htt/src/common/oracle_lab.py:158-170 consequently counts this descriptor comparison as one executed and killed mutation and can emit aggregate PASS_MECHANICS_C2."
+      ],
+      "assumptions": [
+        "Executed means the mutated computation is run on the same frozen fixture and fails at least one preregistered property, not merely that its metadata differs from the clean contract."
+      ],
+      "consequence": "The zero-survivor report and 9/9 executed/killed counts overstate the evidence and violate the spec's fail-closed mutation rule.",
+      "required_change": "Implement an executable second-order-only/finite-grid-content mutant, run it against the frozen K6 fixtures, record the failed property and metric, and derive executed and mutant_killed from that receipt. Add a negative test that would fail if the descriptor-only shortcut returns.",
+      "reproducible_check": "nl -ba htt/src/common/k6_continuum_oracle.py | sed -n '160,170p;217,231p'"
+    },
+    {
+      "finding_id": "F-PR123-CLEAN-PROPERTIES-FALSE-GREEN",
+      "claim_id": "C-PR123-MECHANICS",
+      "severity": "P1",
+      "verdict": "fail_must_fix",
+      "title": "Several registered clean properties are constants, stream counts, or the wrong observable",
+      "evidence_fingerprint": "sha256:81408c002f94dd3a547fc67a32079a6893dc4368f8146a0e7769a98fa2ade039",
+      "evidence": [
+        "htt/src/common/oracle_references.py:230-256 computes clean @ shells for both uniform_flow and zero_shell_response; it never verifies the required uniform-flow normalization against directions, and row_permutation is literal True.",
+        "htt/src/common/oracle_references.py:270-280 labels len(plane_clean) == replicates as multiseed_plane_coverage, which proves stream completion rather than plane/component coverage.",
+        "htt/src/common/oracle_references.py:296-306 makes pixel_permutation literal True and uses len(alpha_clean) == replicates for multiseed_scale_shift rather than testing a transformed fixture.",
+        "htt/src/common/oracle_references.py:346-356 makes label_permutation literal True rather than executing a relabeling invariance test.",
+        "docs/research_program/long_horizon_rescue/pr123_spec.yaml:458-468 makes every clean property passing a conjunctive acceptance requirement."
+      ],
+      "assumptions": [
+        "A named property is evidence only when the corresponding transformation or physical constraint is evaluated and its metric is sensitive to a violating implementation.",
+        "A count of completed random streams is not coverage of Fourier planes, scale shifts, or permutations."
+      ],
+      "consequence": "clean_pass_count=9 and the lane PASS statuses are stronger than the executed evidence; regressions in uniform-flow normalization or invariance behavior can remain green.",
+      "required_change": "Compute uniform-flow response explicitly, execute row/pixel/label permutations on frozen paired fixtures, replace stream-count proxies with preregistered coverage metrics or rename them to completion checks, and add one corruption/negative test per property to demonstrate gate sensitivity.",
+      "reproducible_check": "nl -ba htt/src/common/oracle_references.py | sed -n '230,306p;339,356p'"
+    },
+    {
+      "finding_id": "F-PR123-SQRT2-DOMAIN-MISMATCH",
+      "claim_id": "C-PR123-MECHANICS",
+      "severity": "P1",
+      "verdict": "fail_must_fix",
+      "title": "The sqrt(2) residual fixture contradicts its declared iid isotropic-component domain",
+      "evidence_fingerprint": "sha256:7f38417ef8a55069663ed9376a84f5bd6d757d85f969d9bad4176e75fcd667f3",
+      "evidence": [
+        "htt/src/common/k6_continuum_oracle.py:160-165 sets all three velocity components equal to the same scalar field, producing perfect cross-component correlation.",
+        "htt/src/common/k6_continuum_oracle.py:216-224 nevertheless treats agreement with sqrt(2) as a constant-amplitude isotropic-component lock.",
+        "htt/src/common/k6_continuum_oracle.py:244 publishes the spec's domain label unchanged.",
+        "docs/research_program/long_horizon_rescue/pr123_spec.yaml:391-417 declares the domain iid_component_isotropic_stationary_derivatives_constant_amplitude_only."
+      ],
+      "assumptions": [
+        "iid components cannot be represented by three identical component fields.",
+        "An algebraic coincidence at one perfectly correlated fixture does not establish a covariance-domain expectation."
+      ],
+      "consequence": "The K6 card assigns a stronger stochastic-domain interpretation than the fixture supports, so the registered sqrt2 property is not established as specified.",
+      "required_change": "Use independent component fields or an analytic covariance reference that actually satisfies the declared domain; preregister an appropriate finite-sample interval when random, and add a correlated/anisotropic challenge that breaks or suspends the lock. Regenerate the K6 card and hashes.",
+      "reproducible_check": "nl -ba htt/src/common/k6_continuum_oracle.py | sed -n '160,165p;216,225p;240,245p'"
+    },
+    {
+      "finding_id": "F-PR123-LINEAGE-CONTRACT-NOT-PROVEN",
+      "claim_id": "C-PR123-MECHANICS",
+      "severity": "P1",
+      "verdict": "fail_must_fix",
+      "title": "The lineage manifest validates field presence and imports, not the specified independence contract",
+      "evidence_fingerprint": "sha256:422801663b9c9dde1831fe9b5ecd7ff4c53d39a8d8824cb234f2bf8c52d20e24",
+      "evidence": [
+        "docs/research_program/long_horizon_rescue/pr123_spec.yaml:164-198 requires equation_or_source_ids, no import or call of mapped production, no shared generated AST/codegen, independently derived expected values, and substantive algorithm-family difference.",
+        "scripts/codex_harness/run_pr123_oracle_lab.py:85-101 scans only AST import nodes; it does not inspect calls, symbol/name reuse, code generation, copied expressions, or expected-value derivation.",
+        "scripts/codex_harness/run_pr123_oracle_lab.py:170-197 hashes a partial fixture declaration and fills equation_or_source_ids with mutation property_ids rather than equation or source identifiers.",
+        "scripts/codex_harness/run_pr123_oracle_lab.py:215-219 converts the import-only check into the broader production_import_scan_clean lineage field.",
+        "scripts/codex_harness/run_pr123_oracle_lab.py:240-249 emits production_import_scan_failures=[] and all_rows_valid=True as constants after structural validation.",
+        "htt/src/common/oracle_lab.py:174-212 checks non-empty sequences, import-scan boolean, and complexity budgets but does not validate the semantic independence requirements."
+      ],
+      "assumptions": [
+        "Property IDs such as uniform_flow or parseval are not equation/source provenance identifiers unless separately bound to immutable source records.",
+        "An import-only AST scan cannot justify a field or acceptance statement that says import-or-call."
+      ],
+      "consequence": "G-PR123-ORACLE-INDEPENDENCE and the claim clause that lineage satisfies the independence contract remain unproven even though all_rows_valid is emitted true.",
+      "required_change": "Register immutable equation/audit/source IDs, bind complete fixture declarations, implement and name the actual import/call/name/codegen checks, derive failure lists and all_rows_valid from those checks, and either prove independent expected-value derivation or narrow the independence claim to the evidence actually collected.",
+      "reproducible_check": "nl -ba scripts/codex_harness/run_pr123_oracle_lab.py | sed -n '85,101p;147,219p;240,249p'"
+    },
+    {
+      "finding_id": "F-PR123-K6-LATER-OWNER-MISLABELED",
+      "claim_id": "C-PR123-MECHANICS",
+      "severity": "P2",
+      "verdict": "fail_followup_required",
+      "title": "PR-157 is recorded as the K6 later production owner even though it is an adjudication-only PR",
+      "evidence_fingerprint": "sha256:04a9596af8b36f39a64fc111fd6994e7896040724728b7ca55fd3c04691a432f",
+      "evidence": [
+        "docs/research_program/long_horizon_rescue/pr123_spec.yaml:273-289 sets later_production_owner: PR-157 for low_order_curl_stencil.",
+        "docs/codex_handoff/pr_backlog.yaml:3653-3660 defines PR-157 as COMMON-owned pre-solver independent finding adjudication.",
+        "docs/codex_handoff/pr_backlog.yaml:3705-3735 limits PR-157 to aggregation/adjudication, with diagnostic-only governance scope and no scientific claim."
+      ],
+      "assumptions": [
+        "The field name later_production_owner denotes authority to remediate or own a production lane, not merely a downstream adjudicator that consumes its receipt."
+      ],
+      "consequence": "The manifest can blur production ownership with non-author adjudication and invite PR-157 to absorb work outside its registered scope.",
+      "required_change": "Split later_production_owner from later_adjudication_owner. Keep PR-157 only as adjudicator/consumer, and name a real production remediation PR or explicit blocked/none state for K6.",
+      "reproducible_check": "nl -ba docs/codex_handoff/pr_backlog.yaml | sed -n '3653,3738p'"
+    },
+    {
+      "finding_id": "F-PR123-PR4-RECEIPT-IS-DECLARATIVE",
+      "claim_id": "C-PR123-MECHANICS",
+      "severity": "P2",
+      "verdict": "pass_scope_with_residual_risk",
+      "title": "No PR4 access was found in the reviewed patch, but the artifact's zero-command field is declarative rather than authenticated history",
+      "evidence_fingerprint": "sha256:305215749617925aaf0d49a7a2aabb8ff8ad3a86709c817bf68b831a13aeb838",
+      "evidence": [
+        "docs/research_program/long_horizon_rescue/pr123_spec.yaml:106-116 correctly forbids all PR4 download, lookup, intake, reduction, and analysis work.",
+        "scripts/codex_harness/run_pr123_oracle_lab.py:250-262 and 289-305 write pr4_commands_run=0 and empty inputs as constants.",
+        "The reviewed PR-123 implementation and generated-artifact paths contain no PR4 reader, downloader, or empirical consumer."
+      ],
+      "assumptions": [
+        "A generated constant can document declared scope for the current process but cannot authenticate complete shell/process history by itself."
+      ],
+      "consequence": "There is no evidence of a PR4 scope violation, but consumers must not treat pr4_commands_run=0 as an independently verified audit receipt.",
+      "required_change": "Rename or caveat the field as a declared in-process scope receipt, or bind it to a harness command/event ledger if historical authentication is required. Continue to skip all PR4 data work.",
+      "reproducible_check": "rg -n 'PR4|NPIPE|pr4_' htt/src/common scripts/codex_harness/run_pr123_oracle_lab.py tests/contracts tests/pr_cards/test_pr_123_oracle_k6_continuum_branch_mutation_laboratory.py"
+    }
+  ],
+  "positive_controls": {
+    "claim_firewall": [
+      "All generated artifacts retain scientific_status OPEN.",
+      "The artifact manifest has claim_release_allowed=false.",
+      "The spec and metadata label the work conditional C2 synthetic/analytic mechanics with no empirical inputs or consumers.",
+      "Forbidden native-solver, family-identification, geometry-detection, posterior, and evidence language appears only in explicit forbidden/caveat contexts in the reviewed surfaces."
+    ],
+    "ownership": [
+      "COMMON owns the generic lab and manifests; OBSSTAT and HTT remain contributors and lane owners rather than being merged.",
+      "No MIO posterior/evidence ownership or TSC/Teff active-science ownership was introduced."
+    ],
+    "artifact_metadata": "The five generated artifacts carry the required owner, scope, claim tier/level, transfer source, config and input hashes, sky/null status, caveats, generating command, worktree state, and consumer list.",
+    "pr4_scope": "No PR4 data command, input, or derived analysis path was found in the reviewed PR-123 surfaces."
+  },
+  "evidence_read": [
+    ".agent-harness/generated/CONTEXT_PACK.md",
+    ".agent-harness/runs/pr123-adversarial-review-20260716/assignments/A-PR123-REVIEW-CLAIM.json",
+    "docs/research_program/long_horizon_rescue/pr123_spec.yaml",
+    "docs/codex_handoff/pr_backlog.yaml:3653-3738",
+    "docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md:705-714",
+    "htt/src/common/oracle_lab.py",
+    "htt/src/common/oracle_references.py",
+    "htt/src/common/k6_continuum_oracle.py",
+    "scripts/codex_harness/run_pr123_oracle_lab.py",
+    "tests/contracts/test_pr123_artifact_contract.py",
+    "tests/contracts/test_pr123_k6_continuum_oracle.py",
+    "tests/contracts/test_pr123_oracle_lab.py",
+    "tests/pr_cards/test_pr_123_oracle_k6_continuum_branch_mutation_laboratory.py",
+    "docs/generated/pr123_oracle_lineage_manifest.json",
+    "docs/generated/pr123_mutation_lab_report.json",
+    "docs/generated/pr123_k6_continuum_card.json",
+    "docs/generated/pr123_surviving_mutations.json",
+    "docs/generated/pr123_artifact_manifest.json"
+  ],
+  "tests_observed": [
+    {
+      "command": "venv/bin/python -B -m pytest -p no:cacheprovider -q tests/contracts/test_pr123_artifact_contract.py tests/contracts/test_pr123_k6_continuum_oracle.py tests/contracts/test_pr123_oracle_lab.py tests/pr_cards/test_pr_123_oracle_k6_continuum_branch_mutation_laboratory.py",
+      "result": "23 passed in 1.79s",
+      "interpretation": "Regression suite is green but does not falsify the semantic false-green defects above."
+    }
+  ],
+  "proposed_changes": [
+    "Replace descriptor/constant mutation and property receipts with executed paired-fixture checks.",
+    "Correct the sqrt(2) fixture or narrow its domain statement.",
+    "Make lineage evidence match the import-or-call, source-ID, complete-fixture, and independent-derivation contract.",
+    "Separate downstream production ownership from PR-157 adjudication ownership.",
+    "Regenerate all PR-123 JSON artifacts and hashes after fixes while retaining OPEN/C2/no-PR4 ceilings."
+  ],
+  "tests_to_run": [
+    "Add a K6 test that corrupts/removes the D4 execution and observes BLOCKED_MUTATION_SURVIVED or BLOCKED_PROPERTY_FAILURE.",
+    "Add negative controls for uniform-flow response plus row, pixel, and label permutations and for claimed randomized coverage metrics.",
+    "Add iid, correlated, and anisotropic sqrt(2)-domain fixtures with preregistered expectations.",
+    "Add lineage fixtures containing a forbidden mapped-production call without an import, bogus property-as-source IDs, and incomplete fixture declarations; each must fail closed.",
+    "Rerun the four targeted PR-123 test files, artifact --check mode, DAG validation, claim-language lint, smoke, and collect-only gates."
+  ],
+  "risks_and_kill_switches": [
+    "Do not accept PR-123 or mark its DAG status complete while any registered mutation is descriptor-only or any named property is literal True/count-only.",
+    "Do not promote the K6 sqrt(2) card beyond analytic/synthetic C2 mechanics; mismatch of fixture and declared stochastic domain blocks the K6 lane.",
+    "Do not call the lineage manifest independent-oracle validation until call/source/fixture derivation checks are executable.",
+    "Do not run, inspect, download, or analyze PR4 data while applying these fixes.",
+    "Keep all 102 remediation findings OPEN and claim_release_allowed=false."
+  ],
+  "artifacts_status_updates_needed": [
+    "Regenerate docs/generated/pr123_oracle_lineage_manifest.json after lineage fixes.",
+    "Regenerate docs/generated/pr123_mutation_lab_report.json and pr123_surviving_mutations.json from real mutation execution receipts.",
+    "Regenerate docs/generated/pr123_k6_continuum_card.json after mutant and sqrt(2) corrections.",
+    "Regenerate docs/generated/pr123_artifact_manifest.json last so hashes bind corrected payloads.",
+    "Record this review as failed/must-fix; do not update PR status to completed until rerun adjudication passes."
+  ],
+  "errors": []
+}

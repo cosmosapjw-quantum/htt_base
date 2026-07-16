@@ -1,0 +1,295 @@
+{
+  "schema_version": 1,
+  "run_id": "pr123-final-hostile-review-20260716",
+  "assignment_id": "A-PR123-FINAL-REPLAY",
+  "context_version": "2ba8ea93b62cb55b587e67434051c35aa160f1bfef6e117a7b4b080540408491",
+  "agent_type": "hostile_false_green_replayer",
+  "independence_mode": "blind-results",
+  "result_path": ".agent-harness/runs/pr123-final-hostile-review-20260716/results/A-PR123-FINAL-REPLAY.json",
+  "status": "fail",
+  "started_at": "2026-07-17T00:55:00+09:00",
+  "completed_at": "2026-07-17T01:17:24+09:00",
+  "tool_versions": {
+    "python": "3.12.3",
+    "numpy": "2.5.0",
+    "pytest": "9.0.3",
+    "pyyaml": "6.0.3",
+    "git_head": "e77510170424eecd49112ed6c33424ce455b154c"
+  },
+  "steelman": {
+    "summary": "Attempt 2 materially repairs attempt 1: clean shell/permutation properties are measured, exact lane/property/reference/mutant names are registry-checked, the D2-only K6 mutant executes on four grids, boundary/interior/collar and continuum gates exist, all 96 current stochastic child streams replay from one SeedSequence root, review inputs are hash-verified, and generated payloads are byte-deterministic and downclaimed to C2 mechanics with scientific status OPEN.",
+    "positive_evidence": [
+      "The targeted PR-123 suite passed 30/30 in 4.13 seconds.",
+      "The contract builder --check returned current, and two independent in-memory builds were byte-identical with the checked-in artifact hashes.",
+      "The current 96-row seed ledger has 96 unique spawn keys and every stream_hash exactly matches SeedSequence(202607123).spawn(96).",
+      "The prior hostile merged result currently matches its pinned SHA-256 c4214e0719d3b7ad3a25b002223e07a5927e0ec9b0caf099c354c6a4c81bb2ff.",
+      "K6 now numerically executes D2 and D4 on four periodic and four boundary grids, reports full/interior/collar curves, and retains zero empirical consumers."
+    ]
+  },
+  "commands": [
+    "cat AGENTS.md; cat .agent-harness/generated/CONTEXT_PACK.md; cat .agent-harness/runs/pr123-final-hostile-review-20260716/assignments/A-PR123-FINAL-REPLAY.json",
+    "sha256sum .agent-harness/runs/pr123-adversarial-review-20260716/MERGED_RESULTS.json",
+    "venv/bin/python -B scripts/codex_harness/run_pr123_oracle_lab.py --check --tier contract",
+    "venv/bin/python -B -c '<import builder and compare two build_payloads(contract) mappings byte-for-byte>'",
+    "venv/bin/python -B -m pytest -p no:cacheprovider -q tests/contracts/test_pr123_oracle_lab.py tests/contracts/test_pr123_k6_continuum_oracle.py tests/contracts/test_pr123_artifact_contract.py tests/pr_cards/test_pr_123_oracle_k6_continuum_branch_mutation_laboratory.py",
+    "PYTHONPATH=htt/src venv/bin/python -B -c '<instrument every registered reference/mutant callable, execute both evaluators, tamper one MutationOutcome, replay the root seed ledger, and inject a malformed ledger into build_payloads>'",
+    "venv/bin/python -B -c '<compute mean, centered covariance, and second moment of the nine implemented positive gradient-tensor basis members and the required 18 signed members>'",
+    "venv/bin/python -B -c '<compare AST call-only and name-load local K6 closures>'"
+  ],
+  "artifacts": [
+    {
+      "path": "docs/research_program/long_horizon_rescue/pr123_spec.yaml",
+      "sha256": "5c710e0aafde04c9e295a346eca32c12e0c0510934e90dd8efbb5a81740c44dd"
+    },
+    {
+      "path": "htt/src/common/oracle_lab.py",
+      "sha256": "a698e9aa09ac73424dc130abe4c79be62753a32ada671423b57d51a0ba914c5a"
+    },
+    {
+      "path": "htt/src/common/oracle_references.py",
+      "sha256": "0e17b96cac88c7a741a68740934086c8d970df51f70ea6429cdac221b909cfb2"
+    },
+    {
+      "path": "htt/src/common/k6_continuum_oracle.py",
+      "sha256": "39efa51ac0f1200821e790ee2cccbcb14c86a682d3ff0aab1e79d7f38217d06b"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr123_oracle_lab.py",
+      "sha256": "67d2c9d6f9408841d2fe4f726dee7b96f444f3e99a6e8283bce6b539a99e2f6b"
+    },
+    {
+      "path": "docs/generated/pr123_mutation_lab_report.json",
+      "sha256": "2ba4103ad32e0ee193ae10bdf1100571af6d6b22d8869a584770722efa3a86ef"
+    },
+    {
+      "path": "docs/generated/pr123_oracle_lineage_manifest.json",
+      "sha256": "620fc5c0ba290bf7eb4273b148752f4828bc869c31b9ee87cab2a883e4f3ddcd"
+    },
+    {
+      "path": "docs/generated/pr123_k6_continuum_card.json",
+      "sha256": "61008de254162659f4ae82a66f1f28cb5d4dea9b61fe2d38aaaccb7d9948700e"
+    },
+    {
+      "path": "docs/generated/pr123_artifact_manifest.json",
+      "sha256": "00d416ab06a2e9a8a0a040250b05ad9a7e5e34c120e3d7f243333d629b08cf76"
+    }
+  ],
+  "prior_finding_replay": [
+    {
+      "prior_ids": ["F-PR123-CODE-001", "F-PR123-HARNESS-001", "F-PR123-HARNESS-002"],
+      "verdict": "partially_closed",
+      "closed": "Uniform-flow and all three permutation properties are now measured; lane, ordered property, reference symbol, and mutant symbol substitutions are rejected.",
+      "open": "Fixture/receipt/count evidence remains caller-controlled and can still false-green; see F-PR123-FINAL-REPLAY-001."
+    },
+    {
+      "prior_ids": ["F-PR123-CODE-002"],
+      "verdict": "closed",
+      "closed": "The numerical D2-only mutant executes four grids, and boundary decomposition plus continuum upper-bound properties are present and gated.",
+      "open": "None for the prior descriptor-only mutation finding."
+    },
+    {
+      "prior_ids": ["F-PR123-CODE-003", "F-PR123-HARNESS-003"],
+      "verdict": "partially_closed",
+      "closed": "The checked-in clean and mutant PPC streams now derive from the sole root and all 96 consumed child hashes replay exactly.",
+      "open": "The builder does not validate role, spawn-key uniqueness, bit generator, or replayed stream hash before emitting PASS; see F-PR123-FINAL-REPLAY-002."
+    },
+    {
+      "prior_ids": ["F-PR123-CODE-004", "F-PR123-HARNESS-005"],
+      "verdict": "partially_closed",
+      "closed": "Import, mapped-call, dynamic-code checks, local reference/mutant closures, evaluator disclosure, source IDs, and absolute budgets were added.",
+      "open": "The authoritative smaller-than-production pass condition is not evaluated and is contradicted by two emitted rows; see F-PR123-FINAL-REPLAY-004."
+    },
+    {
+      "prior_ids": ["F-PR123-CODE-005"],
+      "verdict": "partially_closed",
+      "closed": "The prior perfectly correlated three-component fixture was replaced by a gradient-tensor basis and a correlated challenge now suspends the lock.",
+      "open": "Only the nine positive basis elements execute, while the recorded domain says signed zero-mean iid covariance; see F-PR123-FINAL-REPLAY-003."
+    },
+    {
+      "prior_ids": ["F-PR123-HARNESS-004"],
+      "verdict": "closed",
+      "closed": "All intake and hostile-review artifacts are verified against pinned hashes and included in input_hashes; worktree wording was replaced by a commit-independent exact source snapshot.",
+      "open": "None for the prior provenance-input and hardcoded-state finding."
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "F-PR123-FINAL-REPLAY-001",
+      "claim_id": "C-PR123-MECHANICS",
+      "verdict": "fail_false_green_execution_and_fixture_receipt",
+      "severity": "critical",
+      "statement": "Attempt 2 still does not bind an outcome to an exact executed fixture/receipt. validate_outcomes checks only that fixture_hash and execution_receipt_hash have length 64, trusts caller-supplied positive counts and mutant_failed_properties, never recomputes the receipt, and the receipt payload omits the clean PropertyResult records. A read-only reproduction replaced the shell row with non-hex fixture_hash='z'*64, receipt_hash='q'*64, counts 1/1, and metrics={}, yet aggregate_status remained PASS_MECHANICS_C2. Instrumented execution also disproved the reported count semantics for five lanes: shell reference 32 actual calls versus 16 reported, alpha 32 versus 16, host 20 versus 19, pooled rank 3 versus 2, and K6 suite/mutant 1/1 callable invocations versus 16/4 reported. The lineage fixture hash is a different declaration hash and is never compared with the outcome fixture hash. Therefore the exact execution/fixture portion of the original critical finding remains open even though lane/property/symbol names are fixed.",
+      "assumptions_used": [
+        "The spec's exact executed mutation and fixture contract requires a receipt derived from observed invocation evidence, not arbitrary positive counters.",
+        "A field named reference_execution_count for a bound reference_symbol must either count that callable or declare and validate a different unit.",
+        "A content-addressed receipt must be recomputed and must cover the property results that decide clean_passed."
+      ],
+      "evidence_refs": [
+        "htt/src/common/oracle_lab.py:127-179",
+        "htt/src/common/oracle_lab.py:182-221",
+        "scripts/codex_harness/run_pr123_oracle_lab.py:370-380",
+        "docs/generated/pr123_oracle_lineage_manifest.json:34-38",
+        "docs/generated/pr123_mutation_lab_report.json summary.outcomes[0]",
+        "reproduction output OUTCOME_TAMPER_ACCEPTED aggregate_status=PASS_MECHANICS_C2"
+      ],
+      "evidence_fingerprint": "sha256:062781d16db86e61c373c864af356e4bca3020a82c5af37484087ef288a78f21",
+      "counterevidence_refs": [
+        "The current evaluator really invokes every registered reference and mutant and today's numerical metrics discriminate all nine known mutations.",
+        "Exact lane, ordered property IDs, and reference/mutant symbol strings are now registry-checked.",
+        "The generated artifact manifest and --check detect byte tampering after generation."
+      ],
+      "reproduction": [
+        "Generate the nine current outcomes, dataclasses.replace the shell outcome with fixture_hash='z'*64, execution_receipt_hash='q'*64, reference_execution_count=1, mutant_execution_count=1, and metrics={}, then call validate_outcomes; observe PASS_MECHANICS_C2.",
+        "Wrap each registered callable with a counter and rerun the two evaluators; compare observed call counts with each MutationOutcome count."
+      ],
+      "confidence": 1.0,
+      "must_fix": [
+        "Define the count unit and derive exact invocation/evaluation receipts in the evaluator rather than accepting counters from make_outcome callers.",
+        "Include the complete ordered property records in the receipt hash and recompute the hash in validate_outcomes.",
+        "Add a spec-derived expected fixture/declaration hash (or an explicit two-hash relation) and require valid lowercase hex digests.",
+        "Derive mutant_failed_properties from recorded paired mutant PropertyResults and add a negative monkeypatch for every mutant, not only the shell reference."
+      ]
+    },
+    {
+      "finding_id": "F-PR123-FINAL-REPLAY-002",
+      "claim_id": "C-PR123-MECHANICS",
+      "verdict": "fail_incomplete_seed_receipt_validation",
+      "severity": "high",
+      "statement": "The current 96 stream receipts are correct, but the authoritative builder validates only ledger length and root_entropy. It does not validate required roles, unique/expected spawn keys, PCG64DXSM, or stream_hash replay. Injecting 96 rows containing only the correct root_entropy still let build_payloads emit a PASS report. The checked-in test catches roles and key uniqueness after generation but does not recompute stream_hash or check bit_generator, so a plausible ledger with bogus hashes/generator can survive both builder validation and the current tests. This remains a fail-closed provenance gap, not a defect in today's actual stream draws.",
+      "assumptions_used": [
+        "seed_contract.every_consumed_child_must_be_recorded and seed_ledger_required require reproducible stream identity fields, not only row count and root entropy.",
+        "validate-all-before-write means malformed evidence should be rejected by the builder before artifacts are emitted."
+      ],
+      "evidence_refs": [
+        "docs/research_program/long_horizon_rescue/pr123_spec.yaml:164-179",
+        "scripts/codex_harness/run_pr123_oracle_lab.py:352-363",
+        "tests/contracts/test_pr123_artifact_contract.py:132-145",
+        "reproduction output SEED_REPLAY all_expected_stream_hashes_match=True",
+        "reproduction output SEED_LEDGER_TAMPER_ACCEPTED aggregate_status=PASS_MECHANICS_C2"
+      ],
+      "evidence_fingerprint": "sha256:4a3660ab7cb2a48f2b29dc3696c3707d3de279c8fecb7f9ab6cdcc81fafd67aa",
+      "counterevidence_refs": [
+        "All 96 checked-in child stream hashes independently replay from the sole frozen root and all spawn keys are unique.",
+        "The existing artifact test checks the four role names, root entropy, and spawn-key uniqueness."
+      ],
+      "reproduction": [
+        "Monkeypatch the builder's run_non_k6_reference_cases return ledger to 96 objects containing only root_entropy=202607123; build_payloads(contract) still returns a mutation report with PASS_MECHANICS_C2.",
+        "A less obvious variant can preserve role/root/unique spawn_key while replacing bit_generator and stream_hash; the present test assertions do not inspect those two fields."
+      ],
+      "confidence": 0.99,
+      "must_fix": [
+        "Reconstruct the exact stable spawn tree from the frozen root and validate every lane, replicate, role, spawn_key, bit generator, and stream hash before report construction.",
+        "Add a negative test for bogus stream hashes and generator names, plus an exact role/count matrix."
+      ]
+    },
+    {
+      "finding_id": "F-PR123-FINAL-REPLAY-003",
+      "claim_id": "C-PR123-MECHANICS",
+      "verdict": "fail_k6_sqrt2_domain_mismatch",
+      "severity": "high",
+      "statement": "The K6 sqrt(2) arithmetic is correct for a second-moment cubature, but the implemented ensemble still does not inhabit the recorded signed iid-covariance domain. The spec says equal_weight_signed_gradient_tensor_basis_with_iid_isotropic_covariance, while _sqrt2_tensor_ensemble executes only the nine positive E_ij basis tensors and no negative partners. Those nine members have nonzero component mean 1/9 and centered off-diagonal covariance magnitude 1/81, so they are not a zero-mean iid isotropic covariance ensemble. Adding the nine negative partners yields zero mean and diagonal covariance. Because curl/divergence energies ignore the sign, the current property passes exactly sqrt(2) without testing the declared signed covariance; the prior domain-mismatch finding is only partially closed.",
+      "assumptions_used": [
+        "Covariance means centered second moment unless the artifact explicitly declares an uncentered second-moment cubature.",
+        "The word signed in the frozen domain requires both positive and negative basis members or an equivalent zero-mean construction."
+      ],
+      "evidence_refs": [
+        "docs/research_program/long_horizon_rescue/pr123_spec.yaml:477-500",
+        "htt/src/common/k6_continuum_oracle.py:160-185",
+        "htt/src/common/k6_continuum_oracle.py:285-300",
+        "docs/generated/pr123_k6_continuum_card.json sqrt2_residual_lock.domain",
+        "reproduction: nine positive members mean_max_abs=0.1111111111111111 and centered_cov_offdiag_max_abs=0.012345679012345678; eighteen signed members give both zero"
+      ],
+      "evidence_fingerprint": "sha256:fe07b95062037acf5cb5e3649e4f6f765677db1ab903cf3eb2a8a99cb901c550",
+      "counterevidence_refs": [
+        "The uncentered second moment of the nine positive basis members is diagonal and produces curl/divergence energy ratio sqrt(2).",
+        "The correlated all-components challenge correctly gives ratio zero and suspends the lock."
+      ],
+      "reproduction": [
+        "Construct the nine flattened E_ij members used by lines 166-169 and compute np.mean plus np.cov(..., bias=True); observe nonzero mean and off-diagonal centered covariance.",
+        "Concatenate their negatives and recompute; observe zero mean and diagonal covariance with the same sqrt(2) energy identity."
+      ],
+      "confidence": 0.99,
+      "must_fix": [
+        "Execute both signs with weight 1/18 and record/gate zero mean plus covariance-diagonal residual, or rename and amend the frozen domain to an uncentered second-moment cubature through explicit adjudication.",
+        "Retain the correlated challenge as a separate kill switch."
+      ]
+    },
+    {
+      "finding_id": "F-PR123-FINAL-REPLAY-004",
+      "claim_id": "C-PR123-MECHANICS",
+      "verdict": "fail_oracle_independence_gate_condition_unmet",
+      "severity": "high",
+      "statement": "G-PR123-ORACLE-INDEPENDENCE says reference code must be smaller than production, but the validator never compares the emitted metrics and two rows contradict that condition: shell reference_metrics.sloc=20 versus mapped production closure 10, and K6 reference_metrics.sloc=276 versus production closure 132. all_rows_valid is nevertheless true because validate_lineage_rows checks only absolute max_sloc/max_branches. The K6 call-only closure also omits derivative_closed reached through a local function alias; a name-load closure is 296 rather than the reported 276 (still within the absolute 300 budget). This does not show a current mapped-production import, but it prevents the pending independence gate from being marked pass under its authoritative wording.",
+      "assumptions_used": [
+        "The current gate registry is authoritative and cannot be silently weakened by substituting an absolute budget for the stated relative-size condition.",
+        "A local dependency closure includes functions selected through a resolvable local alias."
+      ],
+      "evidence_refs": [
+        ".agent-harness/context/GATE_REGISTRY.json G-PR123-ORACLE-INDEPENDENCE",
+        "docs/generated/pr123_oracle_lineage_manifest.json:13-19",
+        "docs/generated/pr123_oracle_lineage_manifest.json:64-68",
+        "docs/generated/pr123_oracle_lineage_manifest.json:244-250",
+        "docs/generated/pr123_oracle_lineage_manifest.json:308-312",
+        "htt/src/common/k6_continuum_oracle.py:50-57",
+        "scripts/codex_harness/run_pr123_oracle_lab.py:93-122",
+        "htt/src/common/oracle_lab.py:279-290"
+      ],
+      "evidence_fingerprint": "sha256:fb69aa60d1771024dd9d01971bf4ff4d0bb669b978db6cf8a14e71afc81cd612",
+      "counterevidence_refs": [
+        "Every current reference remains within its absolute preregistered SLOC/branch budget.",
+        "Current import, mapped symbol call, and dynamic-code scans are clean, with internal process correlation explicitly disclosed.",
+        "The alias-complete K6 closure is 296 and remains below max_sloc=300."
+      ],
+      "reproduction": [
+        "Read the two generated metric pairs and compare reference_metrics.sloc with mapped_production_call_closure_sloc; no validator branch rejects either inversion.",
+        "Traverse local ast.Name loads as dependencies in addition to direct ast.Call names; derivative_closed enters the K6 closure and raises SLOC from 276 to 296."
+      ],
+      "confidence": 0.98,
+      "must_fix": [
+        "Either enforce the authoritative smaller-than-production condition with a well-defined comparable closure metric, or explicitly amend the gate before acceptance with an adjudicated rationale.",
+        "Make local closure discovery follow resolvable aliases/callback references and add negative tests."
+      ]
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "C-PR123-MECHANICS",
+      "verdict": "blocked_pending_final_false_green_remediation",
+      "summary": "Attempt 2 is a substantial repair and its present numerical outputs are deterministic, but G-PR123-MUTATIONS, G-PR123-ORACLE-INDEPENDENCE, and the signed-domain part of G-PR123-K6-CONTINUUM cannot pass until the four concrete findings are resolved and replayed.",
+      "tests_run": {
+        "targeted_suite": "30 passed in 4.13s",
+        "builder_check": "current",
+        "in_memory_build_determinism": "two builds byte-identical",
+        "pr4_commands_run": 0
+      },
+      "scientific_status": "OPEN",
+      "claim_promotion_allowed": false
+    }
+  ],
+  "proposed_changes": [
+    "Replace caller-asserted execution fields with validated exact receipts covering fixture, callable/evaluation unit, ordered clean and mutant property results, counts, and digest recomputation.",
+    "Validate the full deterministic seed ledger inside the builder before writes.",
+    "Execute and gate a truly signed K6 gradient-tensor ensemble or adjudicate a narrower uncentered-second-moment domain.",
+    "Resolve the relative oracle-size gate and alias-complete closure metric before changing pending gate statuses."
+  ],
+  "tests_to_run_after_fix": [
+    "The existing 30-test PR-123 suite.",
+    "Negative outcome tests for arbitrary/non-hex fixture and receipt hashes, altered counts, altered property payloads, and clean-substituted mutants for every lane.",
+    "Negative seed-ledger tests for bogus role, duplicate/missing spawn key, wrong bit generator, wrong stream hash, and wrong lane/replicate matrix.",
+    "K6 signed-ensemble mean/covariance invariant and correlated challenge tests.",
+    "Oracle-size comparison and alias-resolved closure regression tests.",
+    "Builder --write to an isolated registered test directory followed by --check and byte-for-byte repeat generation."
+  ],
+  "risks_and_kill_switches": [
+    "Do not mark any PR-123 pending gate pass from the current 9/9 summary.",
+    "Do not promote C2 mechanics to scientific validation; all 102 remediation findings remain OPEN.",
+    "Do not run PR4 download, inspection, intake, reduction, or analysis commands.",
+    "Retain attempt 1 as INVALIDATED_FALSE_GREEN and retain this failed replay as review evidence."
+  ],
+  "artifacts_status_updates_needed": [
+    "Patch source/spec only through the main writer, regenerate all six PR-123 artifacts, and pin the new final-review result hashes.",
+    "Keep G-PR123-ORACLE-INDEPENDENCE, G-PR123-MUTATIONS, and G-PR123-K6-CONTINUUM pending or failed until a new hostile replay passes.",
+    "Add a human-readable adjudication mapping each prior and current finding to exact closure evidence."
+  ],
+  "errors": []
+}

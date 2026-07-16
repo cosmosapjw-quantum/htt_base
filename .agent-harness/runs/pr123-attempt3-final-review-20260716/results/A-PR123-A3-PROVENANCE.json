@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "run_id": "pr123-attempt3-final-review-20260716",
+  "assignment_id": "A-PR123-A3-PROVENANCE",
+  "context_version": "721f26ec63a455745fde6b935633150c2aea9ef2e76c2fac2e36eee2ca9924ba",
+  "agent_type": "hostile_lineage_provenance_reviewer",
+  "independence_mode": "blind-results",
+  "result_path": ".agent-harness/runs/pr123-attempt3-final-review-20260716/results/A-PR123-A3-PROVENANCE.json",
+  "status": "fail",
+  "summary": "Attempt 3 is internally hash-current and remains downclaimed to C2/OPEN, but its production-call independence scanner can be bypassed by callable aliases and dynamic builtins indirection. Therefore the lineage manifest's all_rows_valid=true cannot establish the spec's fail-closed production_import_or_resolvable_call condition.",
+  "claim_results": [
+    {
+      "claim_id": "C-PR123-MECHANICS",
+      "verdict": "fail_pending_alias_and_dynamic_scan_hardening",
+      "reason": "One mandatory oracle-independence kill switch remains false-green even though the checked-in references themselves currently scan clean."
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "PR123-A3-PROV-001",
+      "claim_id": "C-PR123-MECHANICS",
+      "verdict": "must_fix",
+      "severity": "high",
+      "title": "Callable aliases and dynamic builtin indirection bypass the lineage scanner",
+      "evidence_fingerprint": "c4bcbd402d073b80c8bdabc206d0f4004f07e8c31934fecd7836951c74899234",
+      "evidence_refs": [
+        "docs/research_program/long_horizon_rescue/pr123_spec.yaml:258",
+        "docs/research_program/long_horizon_rescue/pr123_spec.yaml:269",
+        "docs/research_program/long_horizon_rescue/pr123_spec.yaml:273",
+        "scripts/codex_harness/run_pr123_oracle_lab.py:133",
+        "scripts/codex_harness/run_pr123_oracle_lab.py:157",
+        "tests/contracts/test_pr123_artifact_contract.py:157",
+        "tests/contracts/test_pr123_artifact_contract.py:174"
+      ],
+      "assumptions": [
+        "The spec's fail_closed_on production_import_or_resolvable_call requirement covers semantically resolvable aliases and dynamic builtin access, not only direct ast.Call names.",
+        "A negative scanner probe may use a temporary file outside the worktree without changing repository state."
+      ],
+      "reproduction": {
+        "environment": "Python 3.12.3, repository venv, git HEAD e77510170424eecd49112ed6c33424ce455b154c",
+        "command_summary": "Import the PR-123 builder and call _automated_scan_checks(path, {'mv_weights'}) on three temporary snippets: g=getattr followed by g(obj,'mv_weights')(x); alias=mv_weights followed by alias(x); and __builtins__['getattr'](obj,'mv_weights')(x).",
+        "observed": {
+          "getattr_alias": {
+            "forbidden_import_prefixes_clean": true,
+            "mapped_production_symbol_calls_clean": true,
+            "dynamic_import_and_codegen_clean": true
+          },
+          "symbol_alias": {
+            "forbidden_import_prefixes_clean": true,
+            "mapped_production_symbol_calls_clean": true,
+            "dynamic_import_and_codegen_clean": true
+          },
+          "builtin_subscript": {
+            "forbidden_import_prefixes_clean": true,
+            "mapped_production_symbol_calls_clean": true,
+            "dynamic_import_and_codegen_clean": true
+          }
+        },
+        "expected": "At least one scanner check must be false for every snippet."
+      },
+      "source": "_automated_scan_checks records only direct ast.Name/ast.Attribute callees. It does not propagate assignments that alias forbidden symbols or dynamic builtins, and it does not recognize subscripted builtins access.",
+      "consequence": "A reference can call a mapped production implementation while receiving an all-green automated_scan_checks record. The generated all_rows_valid=true and PASS_MECHANICS_C2 lineage status therefore overstate the enforced independence guarantee.",
+      "required_fix": "Add fail-closed alias/dataflow handling or conservatively reject callable aliasing and dynamic builtin access in reference closures. Add negative tests for direct aliases, getattr aliases, imported dynamic-call aliases, and __builtins__ subscript access; then regenerate and replay all PR-123 artifacts."
+    }
+  ],
+  "evidence_read": [
+    "AGENTS.md",
+    ".agent-harness/generated/CONTEXT_PACK.md",
+    ".agent-harness/runs/pr123-attempt3-final-review-20260716/assignments/A-PR123-A3-PROVENANCE.json",
+    "docs/research_program/long_horizon_rescue/pr123_spec.yaml",
+    "docs/generated/pr123_oracle_lineage_manifest.json",
+    "docs/generated/pr123_mutation_lab_report.json",
+    "docs/generated/pr123_k6_continuum_card.json",
+    "docs/generated/pr123_attempt_history.json",
+    "docs/generated/pr123_artifact_manifest.json",
+    "htt/src/common/oracle_lab.py",
+    "htt/src/common/oracle_references.py",
+    "scripts/codex_harness/run_pr123_oracle_lab.py",
+    "tests/contracts/test_pr123_artifact_contract.py",
+    "tests/contracts/test_pr123_oracle_lab.py",
+    "tests/contracts/test_pr123_k6_continuum_oracle.py",
+    "tests/pr_cards/test_pr_123_oracle_k6_continuum_branch_mutation_laboratory.py"
+  ],
+  "tests_run": [
+    {
+      "command": "venv/bin/python -B scripts/codex_harness/run_pr123_oracle_lab.py --check --tier contract",
+      "result": "pass; all six artifacts current"
+    },
+    {
+      "command": "venv/bin/python -B -m pytest -q tests/contracts/test_pr123_artifact_contract.py tests/contracts/test_pr123_oracle_lab.py tests/contracts/test_pr123_k6_continuum_oracle.py tests/pr_cards/test_pr_123_oracle_k6_continuum_branch_mutation_laboratory.py",
+      "result": "33 passed in 6.61s"
+    },
+    {
+      "command": "read-only temporary AST scanner probe for getattr alias, mapped-symbol alias, and __builtins__ subscript indirection",
+      "result": "fail; every malicious snippet incorrectly returned all checks true"
+    }
+  ],
+  "passed_checks": [
+    "Spawn header, assignment, context index, and context pack versions match.",
+    "Execution fixture hashes equal the lineage commitments for all nine lanes under the checked-in contract tests.",
+    "All equation/source IDs resolve exactly; repository-source and mapped-production hashes match during the source-only rebuild check.",
+    "Every recorded reference closure is smaller than its mapped production call closure and remains inside its registered SLOC/branch budget.",
+    "The remediation-state root hash is bound and its census remains 102 OPEN, 0 RESCUED, with no disposition changes.",
+    "Required artifact metadata is complete, attempts 1 and 2 remain content-addressed and nonconsumable, and attempt 3 is explicitly non-prospective.",
+    "All generated claims remain conditional C2 mechanics with scientific_status OPEN and claim_release_allowed false.",
+    "PR4 is represented only by a zero-command current-process declaration with historical_shell_audit_claimed false and no inputs."
+  ],
+  "proposed_changes": [
+    "Harden _automated_scan_checks against alias assignment, alias import, nested attribute resolution, and subscripted dynamic builtins.",
+    "Add the three exact reproductions plus an imported import_module alias case as fail-closed regression tests.",
+    "Do not consume attempt-3 PASS counts; record this invalidating review in attempt history and create a newly hashed attempt before promotion."
+  ],
+  "risks_and_kill_switches": [
+    "Keep G-PR123-ORACLE-INDEPENDENCE pending and block PR-123 completion while any alias/dynamic probe returns all green.",
+    "Do not infer that currently clean source means the enforcement mechanism is fail-closed.",
+    "No scientific or remediation promotion is allowed; C2/OPEN and PR4 skip remain hard boundaries."
+  ],
+  "artifacts_status_updates_needed": [
+    "After the scanner and tests are fixed, regenerate all six PR-123 artifacts and rerun the source-only check.",
+    "Update pr123_attempt_history.json and its governing spec so this failed hostile replay is content-addressed rather than silently rewriting attempt 3.",
+    "Run a fresh registered blind hostile review before changing the oracle-independence gate to pass."
+  ]
+}
