@@ -1,0 +1,116 @@
+{
+  "schema_version": 1,
+  "run_id": "pr122-final-review-20260716",
+  "assignment_id": "A-PR122-HARNESS",
+  "agent_type": "context_mapper",
+  "context_version": "548a657c36099f1b2b58b7fd378a39c69e9be9952e843ff48101d5a006deae09",
+  "independence_mode": "blind-results",
+  "status": "fail",
+  "summary": "The clean-target harness installation and the build-local CF4 pin snapshot/test caching design are coherent, but C-HARNESS-INSTALL fails because the installer destroys pre-existing repository policy/configuration, SubagentStop accepts an unregistered empty result envelope, and the current CF4 inventory/block artifacts are stale so the audit-package consumer gate is red.",
+  "steelman": [
+    "The context pack and registered assignment agree on the exact context version, and blind-results isolation was operational for this review.",
+    "Codex CLI 0.144.4 reports hooks and multi_agent as stable; the checked-in config parses through the repository validator, and a clean temporary installation passes skill-layout, shared-context harness, PR-DAG, coding-harness, and research-harness validation.",
+    "ReviewedActiveBinaryPinSnapshot intentionally avoids a module-global production cache: one fully validated policy/pin view is reused only within a package build and the policy byte hash is rechecked at the end. A focused probe observed exactly one snapshot load and one recheck for two entries.",
+    "The pytest acceleration caches canonical JSON and immutable archive bytes only for read-only assertions. _payload reparses JSON for a fresh object, while mutation and CLI tests use fresh modules/processes, which substantially limits cross-test contamination."
+  ],
+  "claim_results": [
+    {
+      "claim_id": "C-HARNESS-INSTALL",
+      "verdict": "fail",
+      "evidence_fingerprint": "installer-clobber+unregistered-empty-stop-result+stale-cf4-consumers-20260716",
+      "evidence_refs": [
+        "INSTALL_NOTES.md:3-4",
+        ".agent-harness/README.md:16-18",
+        ".codex/config.toml:1-2",
+        "scripts/install_codex_handoff.sh:19-22",
+        "scripts/codex_harness/test_codex_assets.py:143-193",
+        "scripts/codex_harness/test_codex_assets.py:368-405",
+        "tests/contracts/test_audit_package_generator.py:58-84",
+        "htt/src/common/cf4_p0_quarantine.py:291-301",
+        "htt/src/common/cf4_p0_quarantine.py:2334-2371"
+      ],
+      "assumptions": [
+        "A handoff installer must preserve existing repository-specific AGENTS and intentional Codex model/provider settings because its own installation notes require merge semantics.",
+        "G-HARNESS-INSTALL's invalid-result fail condition requires SubagentStop to reject a missing assignment and a non-schema result file, not merely validate the final marker fields.",
+        "The current audit-package dry run is an acceptance consumer, so stale canonical CF4 inventory/block artifacts are a closeout blocker even though the underlying code change is fail-closed."
+      ],
+      "tool_versions": {
+        "codex": "codex-cli 0.144.4",
+        "python": "Python 3.12.3"
+      },
+      "reproduction_commands": [
+        "python scripts/codex_harness/validate_codex_config_shape.py .",
+        "TARGET=$(mktemp -d)/installed; mkdir -p \"$TARGET/.codex\"; printf 'LOCAL_POLICY_MARKER\\n' > \"$TARGET/AGENTS.md\"; printf 'model = \\\"intentional-model\\\"\\n' > \"$TARGET/.codex/config.toml\"; bash scripts/install_codex_handoff.sh \"$TARGET\" >/dev/null; rg -q LOCAL_POLICY_MARKER \"$TARGET/AGENTS.md\"; rg -q intentional-model \"$TARGET/.codex/config.toml\"",
+        "scripts/codex_harness/run_pr122_source_only.sh scripts/build_external_audit_package.py --dry-run",
+        "/usr/bin/python -B -c 'import sys; sys.path.insert(0,\"htt/src\"); from common.cf4_p0_quarantine import validate_repository; print(validate_repository(\".\").to_dict())'"
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "HARN-001",
+      "claim_id": "C-HARNESS-INSTALL",
+      "rank": 1,
+      "severity": "high",
+      "verdict": "fail",
+      "evidence_fingerprint": "sha256:1731002fb84c0ef966458c18b68b1aa23f1254551c407793f3066db8a3b0e7c3",
+      "title": "Installer overwrites existing repository policy and intentional Codex configuration",
+      "evidence": "INSTALL_NOTES.md and .agent-harness/README.md require merging AGENTS.md.fragment and .codex/config.toml, and config.toml itself warns not to overwrite intentional settings. scripts/install_codex_handoff.sh instead copies AGENTS.md and all .codex assets directly over the target. A focused temporary-target probe returned agents_preserved=false and config_preserved=false. The installer test creates an empty target, so it cannot detect this destructive upgrade-path behavior.",
+      "impact": "Installing or upgrading the harness in a real repository can silently erase durable operating policy and model/provider configuration before validation runs; a later validator failure also leaves a partially overwritten target.",
+      "remediation": "Implement an explicit merge-or-refuse transaction: preserve an existing AGENTS.md and config.toml, append/merge only missing harness keys/fragment after conflict checks, stage into a temporary tree, validate, then atomically promote. Add an existing-target preservation/conflict test."
+    },
+    {
+      "finding_id": "HARN-002",
+      "claim_id": "C-HARNESS-INSTALL",
+      "rank": 2,
+      "severity": "high",
+      "verdict": "fail",
+      "evidence_fingerprint": "sha256:5a8595f766e41fc224a2a63c84360a9a0c3d31f2c11121f14e0dd7fc6d19c047",
+      "title": "SubagentStop accepts an unregistered assignment with an empty result object",
+      "evidence": "The accepted-path fixture in scripts/codex_harness/test_codex_assets.py creates ACTIVE_RUN, CONTEXT_INDEX.json, and a result file containing only {}, but creates no assignment JSON; it then expects the stop hook to accept silently. A focused execution reproduced acceptance for that unregistered empty result, while invalid status and stale context were correctly blocked.",
+      "impact": "A subagent can stop successfully without the registered Tier-1 assignment or schema-valid evidence envelope, contradicting the mandatory handoff contract and G-HARNESS-INSTALL's invalid-result fail condition. Later merge validation is too late to make SubagentStop fail closed.",
+      "remediation": "At SubagentStop, resolve ACTIVE_RUN, require the registered assignment file, bind assignment_id/context_version/result_path/independence_mode to it, parse the result JSON against the result-envelope schema, and reject missing required evidence fields. Replace the current accepted fixture with a real minimal valid assignment and envelope, plus negative unregistered/empty/path-traversal tests."
+    },
+    {
+      "finding_id": "HARN-003",
+      "claim_id": "C-HARNESS-INSTALL",
+      "rank": 3,
+      "severity": "high",
+      "verdict": "fail",
+      "evidence_fingerprint": "sha256:67503c772030147f971561051c8fa58b214a1359cc9ef2cf231a3779d9c00299",
+      "title": "Current CF4 canonical artifacts are stale, leaving the audit-package consumer gate red",
+      "evidence": "The targeted source-only audit-package dry run exits nonzero with 'audit package failed required gates: cf4_p0_quarantine_clean'. validate_repository('.') reports invalid_quarantine_inventory and invalid_quarantine_block because docs/generated/cf4_p0_quarantine_inventory.json is stale/non-canonical and the block depends on it.",
+      "impact": "The current worktree does not satisfy the final-consumer freshness condition; package/freeze closeout cannot be accepted even though the validator fails safely.",
+      "remediation": "Regenerate the canonical CF4 inventory and dependent block through the authorized PR-120 generator, review the resulting diff, then rerun the quarantine and audit-package dry-run/check gates."
+    },
+    {
+      "finding_id": "HARN-004",
+      "claim_id": "C-HARNESS-INSTALL",
+      "rank": 4,
+      "severity": "medium",
+      "verdict": "inconclusive",
+      "evidence_fingerprint": "sha256:3dc6d82c283f6a7d1dfa63591dbdafb8346a8d576922d221f55254e34a1dbc26",
+      "title": "Codex hook/config compatibility coverage is structural but not end-to-end",
+      "evidence": "test_shared_context_packet_is_merged_and_versioned checks only the hook event-name set. The custom config validator checks a local allowlist but does not validate hooks.json. SessionStart and SubagentStart are not executed in the declared asset test; only SubagentStop is invoked directly. Local Codex 0.144.4 does report hooks as stable and loads the current project config, so this is a coverage gap rather than evidence of incompatibility.",
+      "impact": "Matcher, command, timeout, trust, and injection regressions can pass the asset suite even when the live Codex hook path is broken.",
+      "remediation": "Add a Codex-version-pinned hook schema/doctor check and isolated SessionStart/SubagentStart integration fixtures that assert exact injected context and stale/missing assignment behavior."
+    },
+    {
+      "finding_id": "HARN-005",
+      "claim_id": "C-HARNESS-INSTALL",
+      "rank": 5,
+      "severity": "low",
+      "verdict": "inconclusive",
+      "evidence_fingerprint": "sha256:6bd1fb92882e0fef39e3bf3a374dc205df29f3e3d5f98510ea79ba3184074500",
+      "title": "Performance safeguards lack adversarial state-change tests",
+      "evidence": "The new test proves one snapshot and one final policy recheck, but does not mutate policy/sidecar state between those points. The lru_cache tests document read-only use but do not assert that cached helpers are never consumed by a repository-mutating test.",
+      "impact": "Future refactors could broaden cache scope or weaken the build-local recheck without a targeted test failing.",
+      "remediation": "Add a temporary-repository mutation test showing policy drift is rejected after row construction and retain explicit cache-clear/fresh-process tests for mutation lanes."
+    }
+  ],
+  "residual_risks": [
+    "The declared pytest asset suite could not be executed because the available repository/system Python has no pytest module; this was recorded as an environment bootstrap failure, not a product-code failure.",
+    "No full integration suite was run, per the targeted assignment and parent direction.",
+    "The current stale CF4 artifacts may be mechanically regenerable, but they remain a blocker until regenerated and revalidated."
+  ]
+}

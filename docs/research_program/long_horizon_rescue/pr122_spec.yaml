@@ -1,0 +1,685 @@
+schema: htt.long_horizon.pr122_claim_evidence_graph.v2
+spec_version: 2
+pr_id: PR-122
+title: Claim-addressed evidence graph and content-addressed build DAG
+baseline_commit: 461fe4ca8f1ca1ebdcf3571ad077aac4b5e25b38
+owner: COMMON
+contributors:
+  - HTT
+implementation_scope:
+  - common
+  - htt
+artifact_mode: governance_diagnostic
+allowed_use: internal_release_mechanics_and_external_audit_disclosure_only
+public_use: false
+claim_tier: exploratory
+claim_tier_ceiling: exploratory
+claim_level:
+  scheme: roadmap_rescue_v1
+  level: C1
+scientific_claim_level:
+  scheme: roadmap_rescue_v1
+  level: C1
+scientific_effect: none
+transfer_source: none
+sky_support_status: not_directional
+null_mock_status: not_statistical
+
+spec_amendment:
+  amendment_id: PR122-SPEC-V2-POST-IMPLEMENTATION-20260716
+  amended_on: '2026-07-16'
+  timing: post_implementation
+  previous_schema: htt.long_horizon.pr122_claim_evidence_graph.v1
+  previous_spec_source_sha256: dc84151d0c11abe44757f988a7a16b1a5ac9ff1819b912033ec893ec9e640b36
+  implementation_and_test_outputs_visible_before_amendment: true
+  spec_first_contract_met: false
+  retroactive_preregistration_claimed: false
+  rationale: >-
+    The v1 document did not carry the complete claim/finding identity,
+    typed success/falsifier, edge, or approval fields required by roadmap
+    section 4.5, and implementation plus test outputs already existed when
+    this omission was found. Version 2 records the omission instead of
+    relabeling post-implementation criteria as prospective preregistration.
+  identity_before:
+    claim_id: absent_in_v1
+    identity_fingerprint: null
+  identity_after:
+    claim_id: GOV-PR122-FAIL-CLOSED-EVIDENCE-MECHANICS-V2
+    identity_fingerprint: 84a71ecda87b322664f5756db0a0637e6cd69e3af52da4d767673a8adc939cad
+  identity_diff:
+    classification: new_spec_version_and_new_claim_identity
+    changed_semantic_fields:
+      - claim_id
+      - claim_text
+      - quantifier
+      - estimand
+      - target_population
+      - domain
+      - frame
+      - perturbative_order
+      - units
+      - data_release
+      - sky_support_mask_selection
+      - statistic_pipeline
+      - transfer_source
+      - nuisance_prior_null_multiplicity
+      - claim_level_scheme
+      - claim_level
+      - claim_tier_ceiling
+    unchanged_claim_boundaries:
+      - governance mechanics only
+      - no scientific effect
+      - no data analysis
+      - no native solver or family-identification claim
+  disposition_constraint: >-
+    This amendment cannot support a RESCUED disposition or prove prospective
+    preregistration. It may support only conditional C1 mechanics review after
+    every amended acceptance criterion and falsifier gate is executed.
+
+claim_identity:
+  claim_id: GOV-PR122-FAIL-CLOSED-EVIDENCE-MECHANICS-V2
+  claim_text: >-
+    Within the repository-local pre-solver release path, PR-122's typed
+    evidence graph can establish only fail-closed C1 release/evidence
+    mechanics when exact graph closure, executable test evidence, authorized
+    non-self attestation, and consumer binding all pass; it does not validate
+    scientific estimands.
+  quantifier: all_registered_PR122_mechanics_claims_and_bound_release_consumers
+  estimand: repository_local_fail_closed_release_and_evidence_mechanics
+  target_population: PR122_registered_claim_nodes_receipts_and_bound_release_consumers
+  domain: htt_base_pre_solver_internal_release_and_external_audit_disclosure_paths
+  frame: not_applicable_governance_mechanics
+  perturbative_order: not_applicable_governance_mechanics
+  units: not_applicable_governance_mechanics
+  data_release: not_applicable_no_data_analysis
+  sky_support_mask_selection: not_applicable_not_directional
+  statistic_pipeline: typed_claim_evidence_graph_receipt_lineage_and_release_binding
+  transfer_source: none
+  nuisance_prior_null_multiplicity: not_applicable_no_statistical_inference
+  claim_level_scheme: roadmap_rescue_v1
+  claim_level: C1
+  claim_tier_ceiling: exploratory
+  canonicalization: sorted_compact_json_utf8_v1
+  identity_fingerprint: 84a71ecda87b322664f5756db0a0637e6cd69e3af52da4d767673a8adc939cad
+
+finding_identity:
+  canonicalization: sorted_compact_json_utf8_v1
+  fingerprint_inputs:
+    claim_tier_ceiling: exploratory
+    finding_ids:
+      - C7-MES-F2
+      - CO-01
+      - CO-03
+      - N-CODE-FALSE-GREEN
+      - N-STAT-SPOOFABLE-GATE
+      - N-THEORY-D2-AUTHORITY
+    remediation_claim_id: GOV-PR122-FAIL-CLOSED-EVIDENCE-MECHANICS-V2
+    target_surface: claim_evidence_graph_test_receipts_authority_lineage_mes_registry_and_release_consumers
+  identity_fingerprint: 6035471a398d5890d5b8518bcfc4e59fa1a8bb72cfb4315114fa22da6328f7af
+
+public_interface:
+  stability: internal_v2_fail_closed
+  python_entrypoints:
+    - common.evidence_graph.EvidenceGraph
+    - common.evidence_graph.EvidenceReceipt
+    - common.mes_successor_registry.current_mes_successor_registry
+    - common.release_evidence_binding.consume_release_evidence
+  cli_entrypoint: scripts/codex_harness/run_pr122_source_only.sh
+  cli_target: scripts/codex_harness/build_claim_evidence_graph.py
+  input_types:
+    - htt.long_horizon.pr122_claim_evidence_graph.v2
+    - htt.long_horizon.pr122_active_mes_consumers.v1
+    - common.pytest_execution_evidence.v2
+    - common.remediation_state.AuthorityRegistry
+    - htt.pr122.authority_snapshot.v1
+  output_types:
+    - claim_evidence_graph_v1
+    - htt.pr122.claim_evidence_graph_bundle.v1
+    - claim_evidence_receipt_v2
+    - htt.pr122.mes_successor_scan.v1
+    - htt.pr122.artifact_manifest.v1
+  unknown_or_unverified_input_policy: reject_or_block
+
+spec_edges:
+  upstream:
+    - edge_id: PR119_AUTHORITY_REGISTRY_TO_PR122
+      upstream_pr_id: PR-119
+      relation: requires_success
+      artifact: docs/codex_handoff/authorized_principals.yaml
+      required_resolution: COMPLETED_SUCCESS
+    - edge_id: PR121_HERMETIC_REPLAY_TO_PR122
+      upstream_pr_id: PR-121
+      relation: requires_success
+      artifact: docs/generated/pr121_hermetic_replay_receipt.json
+      required_resolution: COMPLETED_SUCCESS
+  downstream_dag:
+    - edge_id: PR122_TO_PR123
+      downstream_pr_id: PR-123
+      relation: requires_success
+    - edge_id: PR122_TO_PR134
+      downstream_pr_id: PR-134
+      relation: requires_success
+    - edge_id: PR122_TO_PR138
+      downstream_pr_id: PR-138
+      relation: requires_success
+    - edge_id: PR122_TO_PR140
+      downstream_pr_id: PR-140
+      relation: requires_success
+    - edge_id: PR122_TO_PR153
+      downstream_pr_id: PR-153
+      relation: requires_success
+    - edge_id: PR122_TO_PR159
+      downstream_pr_id: PR-159
+      relation: requires_success
+    - edge_id: PR122_TO_PR160
+      downstream_pr_id: PR-160
+      relation: requires_success
+  runtime_consumers:
+    - edge_id: PR122_RECEIPT_TO_PUBLICATION_FREEZE
+      consumer: scripts/check_publication_claim_freeze.py
+      relation: consumes_exact_release_evidence
+    - edge_id: PR122_RECEIPT_TO_EXTERNAL_AUDIT_PACKAGE
+      consumer: scripts/build_external_audit_package.py
+      relation: consumes_exact_release_evidence
+    - edge_id: PR122_TYPED_POLICY_TO_HTT_INFERENCE_GATE
+      consumer: htt/htt/htt/infer/prior_sweep.py
+      relation: implements_registered_typed_readiness_guard
+
+non_author_approval_attestation:
+  decision: APPROVED_WITH_CONDITIONS_FOR_INTERNAL_C1_MECHANICS_REVIEW
+  approval_scope: post_implementation_v2_amendment_only
+  approved_spec_version: 2
+  issued_on: '2026-07-16'
+  principal_id: codex:/root/pr122_claim_auditor
+  principal_identity_fingerprint: 2034d7613e805cce29e9113d850794cd94adb5a6adc52d0ffc00bc608caddc3b
+  registry_path: docs/research_program/long_horizon_rescue/pr122_authority_snapshot.yaml
+  registry_role: adjudicator
+  registry_scope: PR-122
+  independence_class: correlated_internal_non_author_review
+  verifier: unverified_internal_process_identity
+  can_promote_scientific_status: false
+  external_independence_claimed: false
+  approval_does_not_retroactively_open_implementation_gate: true
+  canonicalization: sorted_compact_json_utf8_v1
+  attestation_payload:
+    amendment_id: PR122-SPEC-V2-POST-IMPLEMENTATION-20260716
+    claim_identity_fingerprint: 84a71ecda87b322664f5756db0a0637e6cd69e3af52da4d767673a8adc939cad
+    decision: APPROVED_WITH_CONDITIONS_FOR_INTERNAL_C1_MECHANICS_REVIEW
+    finding_identity_fingerprint: 6035471a398d5890d5b8518bcfc4e59fa1a8bb72cfb4315114fa22da6328f7af
+    principal_id: codex:/root/pr122_claim_auditor
+    principal_identity_fingerprint: 2034d7613e805cce29e9113d850794cd94adb5a6adc52d0ffc00bc608caddc3b
+    scientific_status_promotion: forbidden
+    spec_version: 2
+  attestation_hash: 838685aaee93f2c76fefafc721e865a1fb46eb8d3bad219a9ac354968be55a94
+
+pre_registered_success:
+  registration_status: NOT_PRE_REGISTERED_POST_IMPLEMENTATION
+  criterion_role: post_implementation_acceptance_lock_only
+  retroactive_preregistration_claimed: false
+  criteria:
+    - criterion_id: PR122-SUCCESS-01
+      criterion_type: deterministic_graph_closure
+      statement: Clean tracked inputs reproduce one exact graph root and closure receipt.
+      required_resolution: passed
+    - criterion_id: PR122-SUCCESS-02
+      criterion_type: executable_mutation_kill
+      statement: Every registered mutation fails or produces an explicit downclaim.
+      required_resolution: passed_or_explicitly_downclaimed
+    - criterion_id: PR122-SUCCESS-03
+      criterion_type: exact_consumer_binding
+      statement: Publication freeze and audit packages consume the exact receipt path, digest, ID, and version.
+      required_resolution: passed
+    - criterion_id: PR122-SUCCESS-04
+      criterion_type: authority_and_lineage
+      statement: Self, circular, fabricated, correlated-as-independent, and author-equals-adjudicator authority paths are rejected.
+      required_resolution: passed
+    - criterion_id: PR122-SUCCESS-05
+      criterion_type: executed_test_identity
+      statement: Nonexistent and zero-collected Python or Rust targets cannot authorize a claim.
+      required_resolution: passed
+    - criterion_id: PR122-SUCCESS-06
+      criterion_type: scientific_status_firewall
+      statement: Blocked science cannot produce a green claim-release decision even when process execution passed.
+      required_resolution: passed
+    - criterion_id: PR122-SUCCESS-07
+      criterion_type: mes_successor_firewall
+      statement: An active MES consumer that lacks verified typed successor authority blocks release.
+      required_resolution: passed
+
+decisive_falsifier:
+  registration_status: NOT_PRE_REGISTERED_POST_IMPLEMENTATION
+  trigger_semantics: any_condition_is_decisive
+  action: keep_PR122_open_and_stop_all_downstream_release_operations
+  conditions:
+    - falsifier_id: PR122-FALSIFIER-01
+      falsifier_type: surviving_mutation
+      condition: Any registered false-green mutation survives without rejection or explicit downclaim.
+    - falsifier_id: PR122-FALSIFIER-02
+      falsifier_type: zero_test_authority
+      condition: Any nonexistent or zero-executed Python or Rust target is accepted as authority.
+    - falsifier_id: PR122-FALSIFIER-03
+      falsifier_type: invalid_authority_lineage
+      condition: Any fabricated, self-signed, circular, correlated-as-independent, or self-adjudicated receipt validates.
+    - falsifier_id: PR122-FALSIFIER-04
+      falsifier_type: integrity_hidden_by_policy
+      condition: A missing, stale, or invalid artifact is hidden by a blocked policy state and reaches a consumer.
+    - falsifier_id: PR122-FALSIFIER-05
+      falsifier_type: blocked_science_green_release
+      condition: Blocked scientific status enters a green claim-release path.
+    - falsifier_id: PR122-FALSIFIER-06
+      falsifier_type: mes_registry_bypass
+      condition: A stale or undeclared MES consumer reaches release without verified typed successor authority.
+
+dependencies:
+  - pr_id: PR-119
+    receipt: docs/PR_DELTAS/pr-119.md
+    required_resolution: COMPLETED_SUCCESS
+  - pr_id: PR-121
+    receipt: docs/generated/pr121_hermetic_replay_receipt.json
+    required_resolution: COMPLETED_SUCCESS
+
+evidence_first_roles:
+  code_mapper:
+    steelman: >-
+      Reuse ClaimIdentity, AuthorityRegistry, package hash primitives, manifest
+      validation, and exact receipt loading while adding only the missing typed
+      graph, parent-DAG, and closure contracts.
+  harness_engineer:
+    steelman: >-
+      Bind selectors, collected node IDs, executed node IDs, bucket counts,
+      environment, toolchain, and input hashes; a non-existent or zero-executed
+      Python or Rust target can never authorize a claim.
+  physics_statistics_auditor:
+    steelman: >-
+      Preserve process, evidence, and scientific status as three orthogonal
+      axes; keep current MES successor and D2 authority blocked until PR-124.
+  claim_gate_reviewer:
+    steelman: >-
+      Derive readiness only from verified closure, prohibit caller booleans or
+      pseudo-PPC/Bayes scalars, and allow blocked material only in explicitly
+      downclaimed audit-disclosure packages.
+
+chosen_patch:
+  - Add one immutable COMMON evidence-graph kernel with typed nodes and edges.
+  - Content-address graph nodes, graph roots, parent receipts, and exact consumers.
+  - Launch every bound producer and consumer before Python site, .pth, or workspace bytecode processing.
+  - Bind authorized principals through the PR-119 registry without creating a self-signed trust root.
+  - Freeze the exact PR-122 authority slice so later default-deny registry evolution cannot rewrite historical receipts.
+  - Add exact collected/executed test identity and count receipts.
+  - Make publication freeze and active audit package builders consume the exact closure receipt.
+  - Remove completed-equals-smoke-tested and arbitrary ready_for_claims inference paths.
+  - Add a typed MES successor registry whose active successor is blocked_pending_PR124.
+
+state_axes:
+  process_result:
+    - passed
+    - failed
+    - not_run
+  evidence_state:
+    - valid
+    - blocked
+    - missing
+    - stale
+    - invalid
+    - skipped
+    - xfail
+  scientific_status:
+    source: common.remediation_state.ScientificStatus
+    maximum_without_verified_external_authority: ADJUDICATION_PENDING
+    execution_never_promotes_science: true
+
+graph_contract:
+  canonical_path: docs/generated/pr122_claim_evidence_graph.json
+  closure_json: docs/generated/pr122_claim_closure_report.json
+  closure_markdown: docs/generated/pr122_claim_closure_report.md
+  release_receipt: docs/generated/pr122_release_receipt.json
+  parent_receipt: docs/generated/pr122_parent_receipt.json
+  artifact_manifest: docs/generated/pr122_artifact_manifest.json
+  release_receipt_schema: claim_evidence_receipt_v2
+  canonicalization: sorted_compact_json_utf8_v1
+  required_node_kinds:
+    - claim
+    - producer
+    - input
+    - config
+    - environment
+    - test
+    - oracle
+    - artifact
+    - consumer
+  required_path:
+    - claim_to_producer
+    - producer_to_input_config_environment
+    - producer_to_test_oracle
+    - test_oracle_to_artifact
+    - artifact_to_consumer
+  forbidden_unknown_fields:
+    - ready_for_claims
+    - ppc_passed
+    - bayes_factor
+    - pseudo_ppc
+  parent_policy:
+    exact_parent_id_and_sha256_required: true
+    self_parent_forbidden: true
+    orphan_parent_forbidden: true
+    circular_parent_forbidden: true
+  independence_policy:
+    canonical_id_and_fingerprint_comparison: true
+    author_equals_adjudicator_forbidden: true
+    correlated_internal_review_is_external_replication: false
+    receipt_selects_its_own_verifier: false
+
+authority_snapshot_contract:
+  canonical_path: docs/research_program/long_horizon_rescue/pr122_authority_snapshot.yaml
+  source_registry: docs/codex_handoff/authorized_principals.yaml
+  selection_rule: exact_pr122_scope_rows_at_issuance
+  immutable_after_issuance: true
+  exact_principals:
+    - codex:/root
+    - codex:/root/pr122_claim_auditor
+  future_scope_pre_authorization: forbidden
+  current_evolving_registry_recheck_during_consumption: forbidden
+  scientific_status_promotion: forbidden
+
+test_evidence_contract:
+  selector_argv_bound: true
+  selector_hash_bound: true
+  collected_node_ids_bound: true
+  executed_node_ids_bound: true
+  collected_count_minimum: 1
+  executed_count_minimum: 1
+  executed_subset_of_collected: true
+  skipped_is_pass: false
+  xfail_is_pass: false
+  zero_test_authority: forbidden
+  current_d2_rust_authority: blocked_pending_PR124_nonzero_independent_target
+  python_startup_site_processing: forbidden
+  executable_pth_processing: forbidden
+  workspace_pyc_loading: forbidden
+  source_only_launcher: scripts/codex_harness/run_pr122_source_only.sh
+  launcher_marker_is_independent_authority: false
+
+mes_successor_contract:
+  legacy_seal: docs/generated/mes_branch_registry_seal.json
+  legacy_seal_role: diagnostic_input_only
+  active_successor_status: blocked_pending_PR124
+  direct_legacy_triple_authority: forbidden
+  physics_rederivation_in_this_pr: forbidden
+  stale_or_bypassing_consumer_blocks_release: true
+
+release_policy:
+  green_claim_release_requires:
+    - exact_root_receipt
+    - valid_transitive_closure
+    - verified_test_execution
+    - valid_artifact_and_manifest_hashes
+    - authorized_non_self_attestation
+    - nonblocked_scientific_status
+    - typed_mes_successor_when_mes_dependent
+  audit_disclosure_may_include_blocked_science: true
+  audit_disclosure_must_be_downclaimed: true
+  audit_disclosure_ready_for_claims: false
+  process_pass_implies_science_pass: false
+
+mutations:
+  - nonexistent_python_selector
+  - zero_collected_python_selector
+  - zero_collected_rust_selector
+  - collected_executed_identity_mismatch
+  - skipped_or_xfail_counted_as_pass
+  - setup_or_teardown_failure_laundering
+  - stale_generator
+  - input_or_config_hash_mismatch
+  - artifact_hash_mismatch
+  - invalid_manifest
+  - process_pass_with_blocked_science
+  - fabricated_or_unknown_principal
+  - unknown_authority_snapshot_schema
+  - self_signed_receipt
+  - author_equals_adjudicator
+  - tampered_receipt_id
+  - missing_or_tampered_parent
+  - self_or_circular_parent
+  - graph_dependency_cycle
+  - stale_mes_triple_or_registry_bypass
+  - arbitrary_ready_for_claims_object
+  - caller_supplied_pseudo_ppc_or_bayes_scalar
+  - selector_source_drift
+  - omitted_pytest_environment_contract
+  - tampered_pytest_environment_or_plugin_binding
+  - arbitrary_pytest_import_origin_exemption
+  - ordinary_import_origin_omission
+  - noncanonical_pin_exemption_source
+  - pin_alias_reentry
+  - canonical_pin_module_object_substitution
+  - eager_release_pin_import
+  - fileless_pin_alias_reentry
+  - workspace_checked_hash_pyc_shadow
+  - executable_pth_or_direct_cli_bypass
+  - evolving_authority_registry_churn
+  - executable_release_pin_payload
+  - mes_consumer_source_drift
+  - hidden_mes_consumer
+  - dead_mes_registry_call_decoy
+  - available_mes_successor_self_authority
+  - diagnostic_witness_seal_drift
+  - correlated_internal_as_independent
+  - same_name_verifier_swap
+  - verifier_callable_state_swap
+  - verifier_alias_topology_collision
+  - caller_declared_verifier_ref_bypass
+  - opaque_verifier_state
+  - blocked_plus_invalid_laundering
+  - stale_release_verifier
+  - stale_release_pin
+  - failed_pr121_environment_receipt
+  - duck_typed_matched_null_hook
+  - contradictory_matched_null_hook
+  - ready_matched_null_hook_without_report
+  - tampered_matched_null_report_hash
+  - matched_null_fpr_threshold_robustness_spoof
+
+mutation_execution_matrix:
+  - mutation_id: nonexistent_python_selector
+    test_node_id: tests/contracts/test_pytest_execution_evidence.py::test_nonexistent_python_selector_cannot_create_authority
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: zero_collected_python_selector
+    test_node_id: tests/contracts/test_pytest_execution_evidence.py::test_zero_collection_is_not_authority
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: zero_collected_rust_selector
+    test_node_id: tests/contracts/test_evidence_graph.py::test_zero_collected_rust_target_is_explicit_non_authority
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: collected_executed_identity_mismatch
+    test_node_id: tests/contracts/test_evidence_graph.py::test_test_execution_reconciles_identities_and_counts
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: skipped_or_xfail_counted_as_pass
+    test_node_id: tests/contracts/test_evidence_graph.py::test_zero_collection_skip_and_xfail_are_distinct_non_authority
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: setup_or_teardown_failure_laundering
+    test_node_id: tests/contracts/test_pytest_execution_evidence.py::test_setup_and_teardown_failures_cannot_be_laundered_as_call_passes
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: stale_generator
+    test_node_id: tests/contracts/test_release_evidence_binding.py::test_graph_bound_verifier_source_drift_is_rejected
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: input_or_config_hash_mismatch
+    test_node_id: tests/contracts/test_evidence_graph.py::test_graph_record_hash_mismatch_is_rejected
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: artifact_hash_mismatch
+    test_node_id: tests/contracts/test_evidence_graph.py::test_exact_repo_loaders_require_expected_content_addresses
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: invalid_manifest
+    test_node_id: tests/contracts/test_release_evidence_binding.py::test_invalid_artifact_manifest_structure_is_rejected
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: process_pass_with_blocked_science
+    test_node_id: tests/contracts/test_evidence_graph.py::test_blocked_supporting_science_cannot_hide_behind_green_process_evidence
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: fabricated_or_unknown_principal
+    test_node_id: tests/contracts/test_evidence_graph.py::test_fabricated_attestation_and_wrong_exact_graph_fail
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: unknown_authority_snapshot_schema
+    test_node_id: tests/pr_cards/test_pr_122_claim_addressed_evidence_graph_content_addressed.py::test_pr122_authority_snapshot_is_an_immutable_exact_scope_slice
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: self_signed_receipt
+    test_node_id: tests/contracts/test_evidence_graph.py::test_author_and_adjudicator_must_be_distinct_before_signing
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: author_equals_adjudicator
+    test_node_id: tests/contracts/test_evidence_graph.py::test_author_and_adjudicator_must_be_distinct_before_signing
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: tampered_receipt_id
+    test_node_id: tests/contracts/test_evidence_graph.py::test_missing_parent_and_tampered_receipt_id_fail_closed
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: missing_or_tampered_parent
+    test_node_id: tests/contracts/test_evidence_graph.py::test_missing_parent_and_tampered_receipt_id_fail_closed
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: self_or_circular_parent
+    test_node_id: tests/contracts/test_evidence_graph.py::test_receipt_self_reference_and_two_node_cycles_fail_closed
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: graph_dependency_cycle
+    test_node_id: tests/contracts/test_evidence_graph.py::test_graph_dependency_cycle_is_rejected
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: stale_mes_triple_or_registry_bypass
+    test_node_id: tests/contracts/test_mes_successor_registry.py::test_dead_or_bare_registry_call_cannot_clear_stale_literal_blocker
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: arbitrary_ready_for_claims_object
+    test_node_id: tests/pr_cards/test_pr_122_claim_addressed_evidence_graph_content_addressed.py::test_arbitrary_readiness_field_is_rejected_at_graph_boundary
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: caller_supplied_pseudo_ppc_or_bayes_scalar
+    test_node_id: tests/htt/test_inference_adequacy_gates.py::test_inference_adequacy_rejects_caller_scalar_pseudo_evidence[posterior_predictive_report-0.42]
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: selector_source_drift
+    test_node_id: tests/contracts/test_evidence_graph.py::test_selector_source_drift_is_rechecked_at_consumption
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: omitted_pytest_environment_contract
+    test_node_id: tests/contracts/test_pytest_execution_evidence.py::test_omitted_pytest_environment_contract_cannot_authorize_receipt
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: tampered_pytest_environment_or_plugin_binding
+    test_node_id: tests/contracts/test_pytest_execution_evidence.py::test_tampered_pytest_environment_or_plugin_binding_fails_live_rehash
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: arbitrary_pytest_import_origin_exemption
+    test_node_id: tests/contracts/test_pytest_execution_evidence.py::test_arbitrary_pytest_import_origin_exemption_is_rejected
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: ordinary_import_origin_omission
+    test_node_id: tests/contracts/test_pytest_execution_evidence.py::test_ordinary_import_origin_omission_fails_exact_replay
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: noncanonical_pin_exemption_source
+    test_node_id: tests/contracts/test_pytest_execution_evidence.py::test_noncanonical_pytest_pin_exemption_source_cannot_be_hidden
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: pin_alias_reentry
+    test_node_id: tests/contracts/test_pytest_execution_evidence.py::test_release_pin_path_alias_cannot_reenter_import_inventory
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: canonical_pin_module_object_substitution
+    test_node_id: tests/contracts/test_pytest_execution_evidence.py::test_canonical_pin_path_cannot_mask_replaced_module_object
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: eager_release_pin_import
+    test_node_id: tests/contracts/test_pytest_execution_evidence.py::test_release_pin_module_is_not_eagerly_imported
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: fileless_pin_alias_reentry
+    test_node_id: tests/contracts/test_pytest_execution_evidence.py::test_fileless_release_pin_object_cannot_hide_under_an_alias
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: workspace_checked_hash_pyc_shadow
+    test_node_id: tests/contracts/test_pytest_execution_evidence.py::test_checked_hash_workspace_pyc_is_bypassed_by_isolated_prefix
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: executable_pth_or_direct_cli_bypass
+    test_node_id: tests/contracts/test_pytest_execution_evidence.py::test_source_only_launcher_rejects_direct_cli_and_ignores_executable_pth
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: evolving_authority_registry_churn
+    test_node_id: tests/pr_cards/test_pr_122_claim_addressed_evidence_graph_content_addressed.py::test_pr122_authority_snapshot_is_an_immutable_exact_scope_slice
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: executable_release_pin_payload
+    test_node_id: tests/contracts/test_release_evidence_binding.py::test_executable_release_pin_payload_is_rejected_without_execution
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: mes_consumer_source_drift
+    test_node_id: tests/contracts/test_mes_successor_registry.py::test_excluded_consumer_hash_mutation_is_a_distinct_blocker
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: hidden_mes_consumer
+    test_node_id: tests/contracts/test_mes_successor_registry.py::test_ast_discovery_reports_undeclared_exact_mes_consumer
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: dead_mes_registry_call_decoy
+    test_node_id: tests/contracts/test_mes_successor_registry.py::test_dead_or_bare_registry_call_cannot_clear_stale_literal_blocker
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: available_mes_successor_self_authority
+    test_node_id: tests/contracts/test_mes_successor_registry.py::test_available_successor_cannot_self_assert_authority_before_pr124[typed-enums]
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: diagnostic_witness_seal_drift
+    test_node_id: tests/contracts/test_mes_successor_registry.py::test_witness_source_and_seal_hashes_are_checked_separately
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: correlated_internal_as_independent
+    test_node_id: tests/contracts/test_evidence_graph.py::test_distinct_correlated_internal_receipts_are_not_independent
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: same_name_verifier_swap
+    test_node_id: tests/contracts/test_evidence_graph.py::test_authority_registry_ref_binds_same_name_verifier_implementation
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: verifier_callable_state_swap
+    test_node_id: tests/contracts/test_evidence_graph.py::test_authority_registry_ref_binds_verifier_callable_state
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: verifier_alias_topology_collision
+    test_node_id: tests/contracts/test_evidence_graph.py::test_authority_registry_ref_binds_graph_wide_alias_topology
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: caller_declared_verifier_ref_bypass
+    test_node_id: tests/contracts/test_evidence_graph.py::test_caller_declared_verifier_ref_cannot_replace_semantic_binding
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: opaque_verifier_state
+    test_node_id: tests/contracts/test_evidence_graph.py::test_unverifiable_verifier_state_is_rejected
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: blocked_plus_invalid_laundering
+    test_node_id: tests/contracts/test_evidence_graph.py::test_invalid_integrity_dominates_an_expected_policy_block
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: stale_release_verifier
+    test_node_id: tests/contracts/test_release_evidence_binding.py::test_graph_bound_verifier_source_drift_is_rejected
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: stale_release_pin
+    test_node_id: tests/contracts/test_release_evidence_binding.py::test_stale_but_well_formed_release_pin_is_rejected_before_audit_disclosure
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: failed_pr121_environment_receipt
+    test_node_id: tests/pr_cards/test_pr_122_claim_addressed_evidence_graph_content_addressed.py::test_failed_or_tampered_pr121_environment_receipt_is_rejected
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: duck_typed_matched_null_hook
+    test_node_id: tests/htt/test_inference_adequacy_gates.py::test_inference_adequacy_rejects_duck_typed_matched_null_hook
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: contradictory_matched_null_hook
+    test_node_id: tests/htt/test_inference_adequacy_gates.py::test_inference_adequacy_rejects_contradictory_exact_matched_null_hook
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: ready_matched_null_hook_without_report
+    test_node_id: tests/htt/test_inference_adequacy_gates.py::test_ready_matched_null_hook_without_exact_report_is_rejected
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: tampered_matched_null_report_hash
+    test_node_id: tests/htt/test_inference_adequacy_gates.py::test_tampered_matched_null_report_hash_cannot_authorize_readiness
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+  - mutation_id: matched_null_fpr_threshold_robustness_spoof
+    test_node_id: tests/htt/test_inference_adequacy_gates.py::test_matched_null_builder_rejects_fpr_threshold_robustness_spoof
+    expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
+
+data_scope:
+  pr3_e2e_download: complete_analysis_deferred_to_PR-150
+  pr4_download: not_started
+  pr4_data_work: skip_entirely_by_user_scope
+  forbidden_actions:
+    - PR4 download
+    - PR4 intake
+    - PR4 reduction
+    - PR4 analysis
+
+caveats:
+  - Graph closure proves fail-closed mechanics, not estimand correctness or independent scientific validation.
+  - Current repository principals are correlated internal identities and cannot promote scientific status.
+  - The launcher self-hash marker is supplemental runtime evidence, never authorization by itself.
+  - The PR-122 authority snapshot is historical; future scopes remain in the evolving default-deny registry.
+  - Existing MES branch PASS is a diagnostic seal result, not theorem or successor authority.
+  - The native low-ell solver and morphology atlas remain absent.
+  - No Bianchi family, geometry, posterior, evidence, or detection claim is created.
+
+acceptance:
+  - Clean fixtures reproduce one exact graph root and closure receipt.
+  - Every registered mutation fails or is explicitly downclaimed.
+  - Publication freeze and audit packages bind the exact receipt path, digest, ID, and version.
+  - Blocked science cannot produce a green claim-release decision even when process execution passed.
+  - Active MES consumers cannot bypass the typed missing successor without blocking release.
+  - Status generation does not infer smoke-tested from DAG completion.
+  - Arbitrary readiness objects and scalar pseudo-PPC/Bayes inputs cannot open inference gates.
+  - Bound CLIs reject ordinary startup, executable .pth processing, and workspace bytecode shadowing.
+  - Later authority-registry evolution cannot invalidate or broaden the immutable PR-122 authority slice.
+
+kill_switch: >-
+  If any mutation survives, any zero-test target is accepted as authority, any
+  self/circular receipt validates, or blocked science enters a green claim
+  release, PR-122 remains open and every downstream release operation stops.

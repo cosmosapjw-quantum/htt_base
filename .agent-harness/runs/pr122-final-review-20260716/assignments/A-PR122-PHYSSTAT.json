@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "run_id": "pr122-final-review-20260716",
+  "assignment_id": "A-PR122-PHYSSTAT",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "context_mapper",
+  "context_version": "548a657c36099f1b2b58b7fd378a39c69e9be9952e843ff48101d5a006deae09",
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-PR122-NONPROMOTION",
+    "C-PR4-SKIP"
+  ],
+  "task": "Audit the final PR-122 physics/statistics and claim boundaries, including OPEN findings, no-promotion semantics, MES blockers, and the complete PR4 data skip without editing repository files.",
+  "required_inputs": [
+    ".agent-harness/generated/CONTEXT_PACK.md",
+    ".agent-harness/runs/pr122-final-review-20260716/assignments/A-PR122-PHYSSTAT.json",
+    "docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md",
+    "docs/research_program/long_horizon_rescue/pr122_spec.yaml",
+    "docs/research_program/long_horizon_rescue/pr122_active_mes_consumers.yaml",
+    "docs/research_program/long_horizon_rescue/pr122_authority_snapshot.yaml",
+    "docs/generated/pr122_claim_closure_report.json",
+    "docs/generated/pr122_mes_successor_scan.json",
+    "docs/generated/publication_claim_freeze.md",
+    "docs/harness/CLAIM_LEDGER.md",
+    "docs/harness/BLOCKERS.md",
+    "htt/src/common/semantic_guards/admissibility_status.py"
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "read-only shell commands",
+    "targeted claim-language and artifact consistency checks"
+  ],
+  "required_outputs": [
+    "steelman of the no-promotion and complete PR4 data-skip posture",
+    "ranked physics, statistics, ownership, MES-blocker, and claim-tier findings",
+    "explicit pass or fail verdict with residual risks",
+    "result envelope at the declared result_path",
+    "HARNESS_RESULT final line"
+  ],
+  "result_path": ".agent-harness/runs/pr122-final-review-20260716/results/A-PR122-PHYSSTAT.json",
+  "status": "registered"
+}

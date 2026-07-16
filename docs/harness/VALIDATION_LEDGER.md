@@ -2,6 +2,57 @@
 
 Record commands actually run. Never mark skipped checks as passed.
 
+## PR-122 - Claim-addressed evidence graph and content-addressed build DAG
+
+Date: 2026-07-16
+
+Changed surfaces: typed evidence/receipt contracts, hermetic pytest evidence,
+authority and MES registries, exact release binding, HTT matched-null adequacy,
+audit/freeze consumers, generated PR-122 artifacts, CF4 quarantine metadata,
+status mirrors, and handoff documents. PR4 download, intake, reduction, and
+data analysis remained entirely skipped.
+
+| Command or check | Result | Notes |
+|---|---:|---|
+| Isolated authoritative pytest receipt selector | PASS | `132 collected`, `132 executed`, `132 passed`; exact selector, source, interpreter, plugin, conftest, import-origin, PR-121 environment, and outcome identities bound. |
+| Registered mutation matrix | PASS | `56/56` exact mutation IDs map to executed passing node IDs. |
+| `scripts/codex_harness/run_pr122_source_only.sh scripts/codex_harness/build_claim_evidence_graph.py --check` | PASS | Exact source-only subprocess replay; graph `86096ced...435a3`; receipt `eda4df39...c628`; `claim_release_allowed=False`. |
+| PR-122 contract and consumer integration suite | PASS | `196 passed in 430.47s`; run without the evidence producer plugin after receipt generation to avoid session-finalization self-reference. This is 51.6% faster than the 889.86s baseline despite one additional test. |
+| `venv/bin/python -m pytest tests/contracts/test_audit_package_generator.py -q` | PASS | `19 passed in 246.09s`; mutation/CLI/determinism tests remained fresh. |
+| Six-package/PR-120 combined pre-reseal suite | FAIL (retained) | `168 passed, 4 failed in 766.28s`; three stale package manifests and one obsolete direct external-package check command were exposed before final reseal. The command was corrected to the source-only launcher and the packages were scheduled for canonical regeneration. |
+| Previously failing deterministic release-output closeout cases | PASS | `4 passed in 81.03s` after canonical package regeneration and source-only check-command correction. |
+| MES focused hostile suite | PASS | `44 passed`; 22 active consumers inventoried; expected PR-124 science/release blockers retained. |
+| `scripts/codex_harness/quarantine_cf4_p0_consumers.py --check` | PASS | `2,865` files scanned; `0` issues; `0` drift after metadata-only regeneration. |
+| External audit package write/check | PASS | Deterministic ZIP and manifest current; audit disclosure only. |
+| Publication claim freeze write/check | EXPECTED BLOCK | Outputs current; only `pdf_claim_lint_passed` remains false because no current admissible PDF exists. |
+| Python 3.10 compile/import/help compatibility | PASS | `StrEnum` fallback and PR-122 package/freeze entrypoints load under `/usr/bin/python3.10`. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider -m smoke -q` | PASS | `6 passed, 8,516 deselected`; reachability only, not scientific validation. |
+| `PYTHONDONTWRITEBYTECODE=1 venv/bin/python -m pytest -p no:cacheprovider --collect-only -q` | PASS | `8,463/8,522 tests collected`, `59 deselected`; no PR4 data command executed. |
+| DAG, remediation, mirror, and claim-language validators | PASS | 113-card strict rescue slice valid; mirrors synchronized; remediation root valid; research/production claim scans clean. |
+| DAG/progress and docs/machine mirrors | PASS | `69/113 = 61.06%`; dependency-weighted `54.05%`; critical-path proxy `48.21%`; PR-123 is sole unblocked next card. |
+
+Hostile review first found and then closed order-sensitive MES replay,
+setup/teardown laundering, verifier implementation/state/alias collisions,
+resealed environment substitution, fabricated matched-null readiness, and two
+content-address fixed-point cycles. It also rejected resealed ordinary-origin
+omission, noncanonical pin-source substitution, and pin-path alias reentry.
+The release pin remains a literal-only, commit-reviewed trust root outside the
+graph. It is parsed without import or execution, the authoritative pytest
+environment permits no import-origin exemptions, and the source-only launcher
+binds startup flags, paths, cache policy, target, and hidden controls.
+
+Performance evidence: the original 195-test integration took `889.86s`. A
+profiled payload found 559 repeated policy loads and 564 YAML parses; one
+validated immutable build-local policy snapshot reduced the same unprofiled
+payload from `41.413s` to `17.284s` (58.3%). GPU/NumPy paths were rejected as a
+workload mismatch. Process parallelism remains gated on separating read-only
+tests from shared artifact writers and proving deterministic byte-identical
+outputs, unchanged mutation kills, and bounded RSS.
+
+Numerical/scientific impact: none. PR-122 establishes C1 release mechanics; it
+does not validate a transfer, scientific estimand, native solver result,
+morphology compatibility, geometry evidence, or family identification.
+
 ## PR-001 - Editable install and import-path stabilization
 
 Date: 2026-06-12

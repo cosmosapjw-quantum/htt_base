@@ -1,0 +1,148 @@
+{
+  "schema_version": 1,
+  "run_id": "pr122-final-review-20260716",
+  "assignment_id": "A-PR122-CODE",
+  "context_version": "548a657c36099f1b2b58b7fd378a39c69e9be9952e843ff48101d5a006deae09",
+  "agent_type": "context_mapper",
+  "status": "fail",
+  "started_at": "2026-07-16T13:19:30Z",
+  "completed_at": "2026-07-16T13:27:47Z",
+  "tool_versions": {
+    "python": "3.12.3",
+    "pytest": "9.0.3",
+    "review_skill": "htt-adversarial-review-loop"
+  },
+  "commands": [
+    "git diff --stat 461fe4ca8f1ca1ebdcf3571ad077aac4b5e25b38 -- <declared PR-122 paths>",
+    "rg -n \"^(class|def) |^@dataclass|^    def \" <declared PR-122 paths>",
+    "rg -n \"_authority_registry\\(|DEFAULT_AUTHORITY|authority_path\" scripts/codex_harness/build_claim_evidence_graph.py",
+    "rg -n \"authority snapshot|authority_snapshot|snapshot schema|snapshot_status|unknown schema|immutable\" tests/contracts/test_evidence_graph.py tests/contracts/test_release_evidence_binding.py tests/contracts/test_audit_package_generator.py",
+    "venv/bin/python -m pytest -p no:cacheprovider -q tests/contracts/test_release_evidence_binding.py tests/contracts/test_evidence_graph.py::test_clean_graph_is_deterministic_closed_and_round_trips tests/contracts/test_evidence_graph.py::test_graph_dependency_cycle_is_rejected tests/contracts/test_evidence_graph.py::test_authority_registry_ref_binds_same_name_verifier_implementation tests/contracts/test_evidence_graph.py::test_authority_registry_ref_binds_verifier_callable_state tests/contracts/test_evidence_graph.py::test_authority_registry_ref_binds_graph_wide_alias_topology tests/contracts/test_evidence_graph.py::test_caller_declared_verifier_ref_cannot_replace_semantic_binding tests/contracts/test_evidence_graph.py::test_unverifiable_verifier_state_is_rejected tests/contracts/test_evidence_graph.py::test_invalid_integrity_dominates_an_expected_policy_block tests/contracts/test_evidence_graph.py::test_distinct_correlated_internal_receipts_are_not_independent tests/contracts/test_evidence_graph.py::test_receipt_self_reference_and_two_node_cycles_fail_closed tests/contracts/test_audit_package_generator.py::test_entry_rows_loads_one_build_local_reviewed_pin_snapshot"
+  ],
+  "artifacts": [
+    {
+      "path": "scripts/codex_harness/build_claim_evidence_graph.py",
+      "sha256": "a3908af29cb87307050a0c12447819c0ea46750e3cd9b120f40865ed37a28294",
+      "role": "authority-snapshot and fixed-point builder under review"
+    },
+    {
+      "path": "htt/src/common/evidence_graph.py",
+      "sha256": "68ccc0337643c1b790be90e70a170e5d027e6bec92abfb65e6cc7320ab34ce0d",
+      "role": "typed graph, closure, receipt, and authority-binding kernel"
+    },
+    {
+      "path": "htt/src/common/release_evidence_binding.py",
+      "sha256": "927bf019090796c4544f7a6c9b47db77b7e5da1b9de127d0de55e38acfd2cffb",
+      "role": "exact pinned consumer"
+    },
+    {
+      "path": "htt/src/common/cf4_p0_quarantine.py",
+      "sha256": "11f59f49a0c184e52e9eff6977857d419da1310afe7935e4064ee313c49cc5e8",
+      "role": "build-local reviewed-binary pin snapshot"
+    },
+    {
+      "path": "scripts/build_external_audit_package.py",
+      "sha256": "e6f2afc165a1153fab025319c3f7f0ac4120c12f63584e43b52cc7aced196b1e",
+      "role": "audit-disclosure and cache consumer"
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "F-PR122-CODE-001",
+      "claim_id": "C-PR122-MECHANICS",
+      "verdict": "fail",
+      "severity": "high",
+      "statement": "MUST FIX: the immutable authority-snapshot loader is schema fail-open. _authority_registry constructs an AuthorityRegistry for every YAML mapping and invokes _validate_authority_snapshot only when payload.schema already equals htt.pr122.authority_snapshot.v1; a missing, misspelled, or attacker-selected schema therefore bypasses every snapshot_status, immutable, exact-principal, exact-role/scope, selected-row-hash, and snapshot-registry-ref check. The only production call site supplies DEFAULT_AUTHORITY, so there is no declared alternate schema that justifies this fallback. This violates the spec's exact immutable snapshot contract even though the current checked-in snapshot passes.",
+      "assumptions_used": [
+        "docs/research_program/long_horizon_rescue/pr122_spec.yaml:372-382 makes htt.pr122.authority_snapshot.v1 the exact PR-122 authority input contract.",
+        "The targeted call-site search is complete within the declared builder input and shows _authority_registry is used only for the PR-122 authority_path.",
+        "Unknown or unverified inputs must reject or block, per pr122_spec.yaml:120-141."
+      ],
+      "evidence_refs": [
+        "scripts/codex_harness/build_claim_evidence_graph.py:416-442",
+        "scripts/codex_harness/build_claim_evidence_graph.py:445-509",
+        "scripts/codex_harness/build_claim_evidence_graph.py:1358-1373",
+        "docs/research_program/long_horizon_rescue/pr122_spec.yaml:120-141",
+        "docs/research_program/long_horizon_rescue/pr122_spec.yaml:372-382"
+      ],
+      "evidence_fingerprint": "sha256:a3908af29cb87307050a0c12447819c0ea46750e3cd9b120f40865ed37a28294",
+      "counterevidence_refs": [
+        "scripts/codex_harness/build_claim_evidence_graph.py:445-509 thoroughly validates the snapshot after the conditional branch selects it.",
+        "The current targeted suite passed 29/29; that confirms current-fixture behavior, not unknown-schema rejection."
+      ],
+      "reproduction": [
+        "Inspect lines 416-442: change payload.schema to any value other than htt.pr122.authority_snapshot.v1; control flow skips _validate_authority_snapshot and returns the generic registry.",
+        "Run the declared test-coverage rg command; none of the three declared test files contains an unknown/missing authority-snapshot schema mutation.",
+        "Patch by requiring payload.get('schema') == 'htt.pr122.authority_snapshot.v1' unconditionally before constructing or returning the registry, then always call _validate_authority_snapshot.",
+        "Add a regression test that mutates/removes schema while keeping principal rows otherwise constructible and asserts rejection before graph or receipt production."
+      ],
+      "confidence": 0.99,
+      "unresolved": [
+        "Keep PR-122 and G-PR122-FINAL-CONSUMERS open until the fail-open branch and its mutation test are fixed.",
+        "After the patch, regenerate the content-addressed graph, receipts, manifest, and literal pin because the builder source hash is graph-bound, then rerun exact consumer checks."
+      ]
+    },
+    {
+      "finding_id": "F-PR122-CODE-002",
+      "claim_id": "C-PR122-MECHANICS",
+      "verdict": "pass",
+      "severity": "low",
+      "statement": "STEELMAN / FIXED-POINT REVIEW: apart from F-PR122-CODE-001, the design is internally coherent and materially stronger than a boolean readiness gate. Nodes, edges, closures, test executions, receipts, verifier semantics, and lineage are canonical content addresses; every direct claim producer must own an input/config/environment/check chain; test authority is derived from exact collected/executed/outcome identities; invalid/stale/missing evidence outranks an expected policy block; the literal-only pin is parsed without execution and breaks the verifier-to-graph cycle; consumers rehash graph sources, MES consumers, manifest inputs/artifacts, and exact closure/receipt axes while preserving claim_release_allowed=false.",
+      "assumptions_used": [
+        "The checked-in literal pin is the commit-reviewed process trust root described by frozen decision D-PIN-LITERAL.",
+        "This verdict is about C1 mechanics only and does not promote scientific status or validate an estimand."
+      ],
+      "evidence_refs": [
+        "htt/src/common/evidence_graph.py:75-131",
+        "htt/src/common/evidence_graph.py:1888-2301",
+        "htt/src/common/evidence_graph.py:2547-2800",
+        "htt/src/common/evidence_graph.py:2874-3466",
+        "htt/src/common/release_evidence_binding.py:298-486",
+        "htt/src/common/release_evidence_pin.py:1-27"
+      ],
+      "evidence_fingerprint": "sha256:68ccc0337643c1b790be90e70a170e5d027e6bec92abfb65e6cc7320ab34ce0d",
+      "counterevidence_refs": [
+        "The literal pin remains a manually reviewed trust root outside the graph and must be regenerated after any graph-bound source change.",
+        "The v2 acceptance lock is explicitly post-implementation, not prospective preregistration."
+      ],
+      "reproduction": [
+        "Targeted authority, closure, lineage, and release-binding checks passed as part of 29 passed in 5.02s.",
+        "Kill switch: any graph/source/receipt/manifest/pin mismatch or any blocked-plus-invalid evidence state must stop consumer production."
+      ],
+      "confidence": 0.96,
+      "unresolved": [
+        "Residual process risk remains concentrated in commit review of the literal pin and immutable snapshot provenance; neither is independent scientific authority."
+      ]
+    },
+    {
+      "finding_id": "F-PR122-CODE-003",
+      "claim_id": "C-PR122-MECHANICS",
+      "verdict": "pass",
+      "severity": "low",
+      "statement": "CACHE-AUTHORITY / REGRESSION REVIEW: the CF4 reviewed-binary pin optimization is build-local rather than module-global. _entry_rows loads one validated snapshot, reuses only its typed pin mapping, rehashes the policy before returning, and build_zip_bytes re-reads every source and verifies bytes, hashes, content mode, and binary binding before opening the ZIP writer. The dedicated call-count test passed. This preserves authority while removing repeated policy parsing.",
+      "assumptions_used": [
+        "Package construction remains single-process and uses the returned rows without caller mutation.",
+        "Repository-wide quarantine validation remains the final pre-ZIP gate."
+      ],
+      "evidence_refs": [
+        "htt/src/common/cf4_p0_quarantine.py:2334-2371",
+        "scripts/build_external_audit_package.py:984-1062",
+        "scripts/build_external_audit_package.py:1448-1504",
+        "tests/contracts/test_audit_package_generator.py:87-120"
+      ],
+      "evidence_fingerprint": "sha256:11f59f49a0c184e52e9eff6977857d419da1310afe7935e4064ee313c49cc5e8",
+      "counterevidence_refs": [
+        "A concurrent policy mutation after _entry_rows returns is not directly exercised by the call-count test, although later source-byte, binary-binding, and repository quarantine checks remain fail-closed."
+      ],
+      "reproduction": [
+        "tests/contracts/test_audit_package_generator.py::test_entry_rows_loads_one_build_local_reviewed_pin_snapshot passed.",
+        "If cache scope is widened beyond one _entry_rows call, require a new mutation test that changes policy bytes between payload and archive construction."
+      ],
+      "confidence": 0.9,
+      "unresolved": [
+        "Follow-up only: add an explicit between-payload-and-ZIP policy-race test if multi-process or long-lived package builders are introduced."
+      ]
+    }
+  ],
+  "errors": []
+}

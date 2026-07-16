@@ -1,4 +1,5 @@
 """PR-120 CF4 P0 producer/consumer quarantine contract and mutations."""
+
 from __future__ import annotations
 
 import hashlib
@@ -111,9 +112,12 @@ def test_contextual_mutation_corpus_is_rejected(signature_id: str, text: str):
     ],
 )
 def test_contextual_scan_preserves_false_positive_controls(text: str):
-    assert quarantine.validate_active_text(
-        "release/unrelated_note.txt", text, repo_root=REPO
-    ) == ()
+    assert (
+        quarantine.validate_active_text(
+            "release/unrelated_note.txt", text, repo_root=REPO
+        )
+        == ()
+    )
 
 
 @pytest.mark.parametrize("padding", [255, 256, 300, 420, 421])
@@ -318,8 +322,7 @@ def test_manuscript_snapshot_is_typed_historical_but_main_gate_stays_active():
     }
     assert historical <= set(policy["scan"]["immutable_historical_paths"])
     assert all(
-        quarantine._is_repository_exception(relative, policy)
-        for relative in historical
+        quarantine._is_repository_exception(relative, policy) for relative in historical
     )
     assert quarantine._is_repository_exception(
         "docs/manuscript/generated/current_figures_results.tex", policy
@@ -439,9 +442,7 @@ def test_inventory_pins_active_producers_and_shared_release_gates():
 
 def test_binary_binding_validator_is_hash_pinned_and_in_release_lineage():
     policy, _ = quarantine.load_policy(REPO)
-    pinned = {
-        row["path"]: row for row in policy["inventory"]["pinned_paths"]
-    }
+    pinned = {row["path"]: row for row in policy["inventory"]["pinned_paths"]}
     helper = pinned["htt/src/common/package_binary_binding.py"]
     assert helper["mode"] == "validator_support"
     assert helper["role"] == "binary_release_binding_validator"
@@ -450,8 +451,7 @@ def test_binary_binding_validator_is_hash_pinned_and_in_release_lineage():
     assert htt_gate["mode"] == "active_block_consumer"
     assert htt_gate["role"] == "active_htt_cf4_input_gate"
     ledger_path = (
-        "docs/research_program/long_horizon_rescue/"
-        "cf4_p0_legacy_package_hashes.json"
+        "docs/research_program/long_horizon_rescue/" "cf4_p0_legacy_package_hashes.json"
     )
     ledger = pinned[ledger_path]
     assert ledger["mode"] == "validator_support"
@@ -503,9 +503,7 @@ def test_inventory_carries_explicit_producer_consumer_lineage_graph():
         "canonical_block_to_release_consumers",
     } == set(edges)
     all_findings = {
-        finding
-        for edge in edges.values()
-        for finding in edge["finding_ids"]
+        finding for edge in edges.values() for finding in edge["finding_ids"]
     }
     assert all_findings == EXPECTED_FINDINGS
     assert all(edge["disposition"] for edge in edges.values())
@@ -661,7 +659,7 @@ def _policy_with_reviewed_binary_pin(
 def test_committed_binary_uses_head_authority_after_reviewed_pin_retirement():
     binary = "figures/current/fig_egs3_u1_beta_channel.png"
     policy, _ = quarantine.load_policy(REPO)
-    assert policy["inventory"]["reviewed_active_binary_sidecars"] == {}
+    assert binary not in policy["inventory"]["reviewed_active_binary_sidecars"]
 
     entry = quarantine._binary_inventory_entry(REPO, binary, policy)
     assert entry["binding_method"] == "git_head_exact_bytes"
@@ -669,6 +667,49 @@ def test_committed_binary_uses_head_authority_after_reviewed_pin_retirement():
     assert "reviewed_sidecar_path" not in entry
     assert "reviewed_artifact_sha256" not in entry
     assert quarantine.reviewed_active_binary_sidecar_pin(REPO, binary) is None
+
+
+def test_reviewed_binary_pin_snapshot_is_build_local_and_hash_rechecked():
+    snapshot = quarantine.reviewed_active_binary_sidecar_pin_snapshot(REPO)
+    assert snapshot.pins["codex_shared_context_harness_v1.zip"] == (
+        "codex_shared_context_harness_v1.zip.manifest.json",
+        "sha256:7671e787f23ba9018859133c0f41488ffd89456f0a5696fff705f810eb24e54b",
+    )
+    with pytest.raises(TypeError):
+        snapshot.pins["unexpected.zip"] = ("unexpected.json", "sha256:" + "0" * 64)
+    quarantine.assert_reviewed_active_binary_pin_snapshot_current(REPO, snapshot)
+
+    stale = quarantine.ReviewedActiveBinaryPinSnapshot(
+        policy_sha256="0" * 64,
+        pins=snapshot.pins,
+    )
+    with pytest.raises(
+        quarantine.CF4P0PolicyError,
+        match="policy changed during package construction",
+    ):
+        quarantine.assert_reviewed_active_binary_pin_snapshot_current(REPO, stale)
+
+
+def test_reviewed_binary_pin_snapshot_rejects_actual_policy_byte_drift(monkeypatch):
+    snapshot = quarantine.reviewed_active_binary_sidecar_pin_snapshot(REPO)
+    original_reader = quarantine._read_absolute_regular_bytes
+
+    def drifted_reader(path, *, label):
+        data = original_reader(path, label=label)
+        if Path(path).name == "cf4_p0_quarantine_policy.yaml":
+            return data + b"\n# concurrent drift\n"
+        return data
+
+    monkeypatch.setattr(
+        quarantine,
+        "_read_absolute_regular_bytes",
+        drifted_reader,
+    )
+    with pytest.raises(
+        quarantine.CF4P0PolicyError,
+        match="policy changed during package construction",
+    ):
+        quarantine.assert_reviewed_active_binary_pin_snapshot_current(REPO, snapshot)
 
 
 def test_reviewed_binary_policy_rejects_placeholder_or_stale_digest(
@@ -684,7 +725,7 @@ def test_reviewed_binary_policy_rejects_placeholder_or_stale_digest(
     payload = yaml.safe_load(policy_path.read_text(encoding="utf-8"))
     payload["inventory"]["reviewed_active_binary_sidecars"][binary][
         "sidecar_sha256"
-    ] = "sha256:" + "0" * 64
+    ] = ("sha256:" + "0" * 64)
     policy_path.write_text(yaml.safe_dump(payload, sort_keys=False), encoding="utf-8")
     with pytest.raises(quarantine.CF4P0PolicyError, match="sidecar pin is stale"):
         quarantine.load_policy(REPO, policy_path=policy_path)
@@ -789,9 +830,7 @@ def test_additional_package_content_never_inherits_historical_exception():
         },
     )
     assert not report.ok
-    assert any(
-        issue.signature_id == "cf4_mv_r200_headline" for issue in report.issues
-    )
+    assert any(issue.signature_id == "cf4_mv_r200_headline" for issue in report.issues)
 
 
 def test_exact_canonical_controls_can_be_relocated_inside_a_package():
@@ -813,9 +852,7 @@ def test_mutated_canonical_control_copy_loses_its_package_exception():
         REPO,
         additional_contents={"package/quarantine/mutated_inventory.json": content},
     )
-    assert any(
-        issue.signature_id == "cf4_mv_r200_headline" for issue in report.issues
-    )
+    assert any(issue.signature_id == "cf4_mv_r200_headline" for issue in report.issues)
 
 
 def test_hash_bound_governance_package_entry_is_typed_and_accepted():
@@ -882,9 +919,12 @@ def test_typed_governance_mode_rejects_mutated_or_unlisted_source():
 
 
 def test_binary_package_payloads_defer_to_manifest_and_pdf_gates():
-    assert quarantine.validate_active_text(
-        "figures/public.png", b"\x89PNG\r\n\x1a\n\xff", repo_root=REPO
-    ) == ()
+    assert (
+        quarantine.validate_active_text(
+            "figures/public.png", b"\x89PNG\r\n\x1a\n\xff", repo_root=REPO
+        )
+        == ()
+    )
 
 
 def test_assert_repository_clean_raises_on_public_mutation():
@@ -912,7 +952,9 @@ def test_stale_embedded_block_copy_is_rejected_without_numeric_signature():
 
 
 def _raw_canonical_block() -> dict:
-    return json.loads((REPO / quarantine.BLOCK_RELATIVE_PATH).read_text(encoding="utf-8"))
+    return json.loads(
+        (REPO / quarantine.BLOCK_RELATIVE_PATH).read_text(encoding="utf-8")
+    )
 
 
 def _valid_minimal_artifact() -> dict:
@@ -949,12 +991,11 @@ def test_nested_artifact_cannot_inject_science_or_public_promotion(
         canonical,
         require_path_match=False,
     )
+    assert any(issue.code == "embedded_quarantine_promotion" for issue in issues), [
+        issue.to_dict() for issue in issues
+    ]
     assert any(
-        issue.code == "embedded_quarantine_promotion" for issue in issues
-    ), [issue.to_dict() for issue in issues]
-    assert any(
-        issue.code == "invalid_embedded_quarantine_artifact_schema"
-        for issue in issues
+        issue.code == "invalid_embedded_quarantine_artifact_schema" for issue in issues
     )
 
 
@@ -968,7 +1009,10 @@ def test_existing_embedded_block_artifacts_match_a_finite_strict_schema():
             payload = json.loads(source.read_text(encoding="utf-8"))
         except (UnicodeError, json.JSONDecodeError):
             continue
-        if not isinstance(payload, dict) or payload.get("schema") != quarantine.BLOCK_SCHEMA:
+        if (
+            not isinstance(payload, dict)
+            or payload.get("schema") != quarantine.BLOCK_SCHEMA
+        ):
             continue
         if "artifact" not in payload:
             continue
@@ -1220,11 +1264,7 @@ def test_historical_external_report_builders_are_fail_closed_gateways(
     )
     assert module.main(["--check"]) == 2
     assert not (REPO / legacy_package).exists()
-    assert (
-        REPO
-        / "legacy/cf4_p0/packages/external_reports"
-        / legacy_package
-    ).is_dir()
+    assert (REPO / "legacy/cf4_p0/packages/external_reports" / legacy_package).is_dir()
 
 
 def test_historical_v7_v8_table_sources_and_outputs_keep_baseline_bytes():
@@ -1294,7 +1334,9 @@ def test_table_gateway_import_never_reads_or_executes_legacy_python(
             "legacy/cf4_p0/scripts/build_egs_results_table.py",
             "legacy/cf4_p0/scripts/build_egs_results_table_v8.py",
         }:
-            pytest.fail(f"legacy Python read before an explicit reproduction gate: {candidate}")
+            pytest.fail(
+                f"legacy Python read before an explicit reproduction gate: {candidate}"
+            )
         return original(path)
 
     monkeypatch.setattr(Path, "read_bytes", guarded_read_bytes)
@@ -1352,9 +1394,7 @@ def test_figure_legacy_runner_mutates_only_temp_copy_and_raises(monkeypatch):
     frozen = SimpleNamespace()
 
     def _mutate_temp(argv):
-        (frozen.FIGURE_DIR / f"{spec.stem}.png").write_bytes(
-            b"mutated disposable PNG"
-        )
+        (frozen.FIGURE_DIR / f"{spec.stem}.png").write_bytes(b"mutated disposable PNG")
         return 0
 
     frozen.main = _mutate_temp

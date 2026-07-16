@@ -2100,10 +2100,13 @@
       "wave": 13,
       "title": "Claim-addressed evidence graph와 content-addressed build DAG",
       "owner": "COMMON",
-      "contributors": [],
+      "contributors": [
+        "HTT"
+      ],
       "adjudicator_role": "internal_non_author_reviewer",
       "implementation_scopes": [
-        "common"
+        "common",
+        "htt"
       ],
       "depends": [
         "PR-119",
@@ -2124,8 +2127,23 @@
       ],
       "files": [
         "htt/src/common",
+        "htt/htt/htt/infer/prior_sweep.py",
         "scripts/codex_harness",
+        "scripts/build_external_audit_package.py",
+        "scripts/check_publication_claim_freeze.py",
         "tests/contracts",
+        "tests/htt/test_inference_adequacy_gates.py",
+        "tests/pr_cards/test_pr_122_claim_addressed_evidence_graph_content_addressed.py",
+        "docs/research_program/long_horizon_rescue/pr122_spec.yaml",
+        "docs/research_program/long_horizon_rescue/pr122_active_mes_consumers.yaml",
+        "docs/generated/pr122_claim_evidence_graph.json",
+        "docs/generated/pr122_claim_closure_report.json",
+        "docs/generated/pr122_claim_closure_report.md",
+        "docs/generated/pr122_release_receipt.json",
+        "docs/generated/pr122_parent_receipt.json",
+        "docs/generated/pr122_artifact_manifest.json",
+        "docs/generated/pr122_mes_successor_scan.json",
+        "docs/generated/pr122_test_execution.json",
         "docs/PR_DELTAS/pr-122.md"
       ],
       "tests": [

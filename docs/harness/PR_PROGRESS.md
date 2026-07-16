@@ -2,6 +2,25 @@
 
 Update every five PRs with percent complete and blockers.
 
+## PR-122 progress (not a five-PR checkpoint)
+
+Date: 2026-07-16
+
+- Active DAG: 69/113 complete = 61.06%.
+- Dependency-weighted completion: 54.05%.
+- Critical-path proxy: 27/56 = 48.21%.
+- Pending: 36; dormant external: 8; blocked/skipped: 0.
+- Sole unblocked next: PR-123. Completing it triggers checkpoint 070.
+- PR-122 mechanics: exact content-addressed graph/receipt closure is
+  implemented; audit disclosure is caveated; scientific status stays `OPEN`
+  and claim release stays false.
+- Scientific blockers: all 102 findings remain `OPEN`; MES and D2 authority
+  remain blocked pending PR-124; the current PDF gate remains blocked.
+- Data scope: PR3 analysis remains deferred to PR-150. PR4 download, intake,
+  reduction, and data analysis remain entirely skipped by user scope.
+- Scope caveat: these percentages and process receipts are DAG/mechanics
+  bookkeeping only, not scientific readiness or validation evidence.
+
 ## Checkpoint 005 materialized by PR-005
 
 Date: 2026-06-12

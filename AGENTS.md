@@ -154,3 +154,79 @@ Every five completed PRs, run the DAG/progress harness and record:
 5. next DAG slice or replanned DAG edges.
 
 If progress percentage does not advance after five PRs, perform step-back/adversarial self-ask and replan the DAG instead of making cosmetic claim gates.
+
+## Mandatory shared-context protocol for subagent workflows
+
+This repository uses spec-driven development and evidence-bearing subagent audits. `AGENTS.md` contains durable policy only. Volatile project state, PR state, evidence, assignments, and results live under `.agent-harness/`.
+
+### 1. Canonical context and compulsory bootstrap
+
+- Before spawning any subagent, the main agent MUST ensure that `.agent-harness/context/CONTEXT_INDEX.json` and `.agent-harness/generated/CONTEXT_PACK.md` are current by running:
+  `python3 .agent-harness/scripts/build_context_pack.py`
+- Every spawned subagent MUST receive a spawn header containing all four fields:
+  `RUN_ID`, `ASSIGNMENT_ID`, `CONTEXT_VERSION`, and `INDEPENDENCE_MODE`.
+- Every subagent MUST load, in this order:
+  1. `.agent-harness/generated/CONTEXT_PACK.md`
+  2. `.agent-harness/runs/<RUN_ID>/assignments/<ASSIGNMENT_ID>.json`
+  3. only the role-specific and evidence files named by that assignment.
+- The `SubagentStart` hook injects the shared context contract automatically. A subagent MUST NOT begin repo-wide exploration before validating that its assignment context version matches the current context index.
+- If the spawn header or assignment file is missing, stale, or inconsistent, the subagent MUST stop substantive work and report the contract violation.
+
+### 2. Context tiers and independence
+
+Use explicit context tiers rather than relying on hidden parent-thread state:
+
+- Tier 0 — shared core: specification pointer, conventions, symbol table, frozen decisions, changed-surface map, gate definitions, claim/evidence indices, tool availability, and non-goals. All subagents receive this tier.
+- Tier 1 — assignment slice: claim IDs, files, symbols, tests, datasets, allowed tools, and expected output schema for one bounded task.
+- Tier 2 — sibling results: withheld by default. An agent may read sibling results only when its assignment has `independence_mode = "adjudication"` or explicitly lists those result paths.
+
+`blind-results` means that agents share the problem definition, conventions, assumptions, target form, and test vectors, but MUST NOT inspect another solver or reviewer’s derivation, verdict, or result before submitting their own.
+
+### 3. Spawn budget and topology
+
+- Maximum concurrently active subagents: 4.
+- Maximum total subagents per run: 8.
+- Maximum nesting depth: 2.
+- Depth-2 delegation is allowed only when the parent assignment explicitly grants `may_spawn = true`, lists the unowned claim IDs to delegate, and registers the child assignment before spawning it.
+- The main agent MUST create every assignment through `.agent-harness/scripts/new_assignment.py`; unregistered subagents are forbidden.
+- A second wave is allowed when it covers new evidence, a disjoint failure class, a genuine independent derivation, or a disputed claim. A differently named reviewer repeating the same evidence and question is not a new wave.
+
+### 4. No duplicate discovery by default
+
+- The main agent or one designated context mapper owns repo mapping and shared evidence collection.
+- Other agents MUST use the context pack and assignment slice. They MUST NOT rescan the whole repository unless the assignment sets `discovery_mode = "independent"` and explains why independent discovery is epistemically required.
+- Re-reading a file is allowed when the agent verifies a cited claim, but broad rediscovery must be reported as a context defect and added to the shared evidence map rather than repeated by every agent.
+- Common command output, large logs, diffs, and generated artifacts must be stored once and referenced by path plus hash; do not paste the same long output into multiple agent prompts.
+
+### 5. Evidence and result contract
+
+- Findings are keyed by stable `claim_id`; prose similarity is not a distinct finding.
+- Every substantive verdict MUST include exact evidence references, assumptions used, tool/version information, and a reproducible command or proof artifact when applicable.
+- Each subagent writes only to its unique result path declared in the assignment. It must not edit shared context, specs, gates, or another agent’s result.
+- Before stopping, every subagent MUST write a result envelope and end its final message with one line of the form:
+  `HARNESS_RESULT: {"assignment_id":"...","context_version":"...","status":"pass|fail|inconclusive|error","result_path":"..."}`
+- The main agent deduplicates by `(claim_id, evidence_fingerprint, verdict)` before adjudication.
+
+### 6. Spec and gate authority
+
+- The current specification and gate registry are authoritative for scope, pass/fail criteria, and required evidence.
+- Agents may challenge a gate, but must record that as a separate meta-finding; they may not silently redefine success criteria.
+- Implementation may begin only after the relevant assignment identifies its governing spec clauses and gates.
+- Final acceptance requires machine-readable gate results plus a human-readable adjudication note.
+
+### 7. Four-axis CAS cross-validation
+
+For mathematical or physical claims requiring CAS verification, the default independent axes are:
+
+1. Wolfram Language + xAct
+2. SageMath + Singular
+3. Lean + mathlib or project proof libraries
+4. SymPy, with high-precision numerical checks where useful
+
+All four axes share the same `CAS_CONTRACT.json`: mathematical statement, conventions, domains, assumptions, branch choices, target canonical form, invariants, test vectors, tolerances, and forbidden shortcuts. Until adjudication, each axis MUST NOT read another axis’s scripts, derivation, or result. Agreement without assumption/branch alignment is not counted as cross-validation.
+
+### 8. Write ownership
+
+- Parallel agents may write only isolated evidence or result artifacts under their assignment directories.
+- One designated main writer owns production code, shared documentation, specifications, and gate files.
+- The adjudicator reads normalized result envelopes; it does not redo every full analysis unless a disputed claim requires a targeted rerun.

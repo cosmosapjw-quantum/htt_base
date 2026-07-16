@@ -1,0 +1,618 @@
+{
+  "allowed_use": "internal_release_mechanics_and_external_audit_disclosure_only",
+  "artifact_manifest_path": "docs/generated/pr122_artifact_manifest.json",
+  "artifact_mode": "governance_diagnostic",
+  "audit_disclosure_allowed": true,
+  "authority_registry_ref": "23802d0d5ea9625098961366f533c04b1b4e81b45ef694cbbc941b8d79e308b9",
+  "caveats": [
+    "Evidence closure validates mechanics, not estimand correctness or scientific truth.",
+    "The receipt is correlated internal process disclosure and is not a verified external adjudication.",
+    "MES and D2 scientific authority remain blocked pending PR-124.",
+    "No native solver, family, geometry, posterior, or detection claim is created."
+  ],
+  "claim_level": {
+    "level": "C1",
+    "scheme": "roadmap_rescue_v1"
+  },
+  "claim_release_allowed": false,
+  "claim_tier": "exploratory",
+  "config_hash": "15ae65cba4e7e5572a827723daca179731ba470da75870f0e1215f43fc6218d9",
+  "d2_closure": {
+    "claim_ref": "b4618df02940e3176a0fde9b93b6e2e7bb2d2f15a5070918dc258e2436622e9d",
+    "claim_release_eligible": false,
+    "closure_ref": "666d7a7eee134f1e20decd42c3cbc5fb6c005db6ee6662dbc7020ed324744f85",
+    "edge_refs": [
+      "009475ecd8b46044a112a48d1dad3eec2117d5a54119f23af19935719c1942a8",
+      "3c5d95289e98123f7b97bcce40f0150da062ea5d12fff6fe8fd7104682eed3c6",
+      "5c79d7ef838d90680b76bd457f309ccc47e66d307458334db42745192f16fe08",
+      "5cf10e2dcf166f53b4f4bb55ee32da9920860618e31d8b608eb52d748553b0af",
+      "6b46306e65a4d81db591478d9c9fd383be771328d42fada7e8681666f0cfa011",
+      "7e3fb44b618ee9995d57d89a9fd350ddf8c1d1f2f2180a2dda48ce718f4f2bfe",
+      "aa68d18622a3f696b1b0c32146772d49513909f7ab6be97b11d1dbab71bb2b91",
+      "b797dd2f092aeed7e614b6a83e2c802c21f64f8da92a7caf0e2fd6a65170cc76"
+    ],
+    "evidence_status": "BLOCKED",
+    "evidence_statuses": [
+      "BLOCKED",
+      "PRESENT"
+    ],
+    "mechanics_closed": false,
+    "missing_edge_kinds": [],
+    "missing_node_requirements": [],
+    "node_refs": [
+      "026cbe487d192d5665e47f8c7273d1faf6a87a81143b1be32d7dcb6f96eab1a4",
+      "37a355e063bce2e39b95dd2f3b643109cf3aea6e5a35fe3e8d1dcd31a418cbb6",
+      "4dce6c0e865e063f476a36f21e4fa63f4e644be4cae1af64b0a0b1e73038ae27",
+      "5399a896ca48c5e08b22d59b13b9c7c9f4197cec81088b79d996fe0671888ffe",
+      "57db2ca07b92968963e8d6ad9b640da1833f41cac5e87e4776c87619b5828a52",
+      "68402ee91249916054d27d4eeaca94ff50a67be58b7918e7f01340b83511b850",
+      "85b85d259dc4a41880915bc841e3fb3fee8330b070cf5a52bfe49aad392cb8e5",
+      "9da983759570e7cf63e233428c17038861e127a46ff3291c7ea67ef4f255e120",
+      "b4618df02940e3176a0fde9b93b6e2e7bb2d2f15a5070918dc258e2436622e9d"
+    ],
+    "package_eligible": false,
+    "process_result": "NOT_RUN",
+    "scientific_status": "OPEN",
+    "scientific_statuses": [
+      "BLOCKED",
+      "OPEN"
+    ]
+  },
+  "generating_command": "scripts/codex_harness/run_pr122_source_only.sh scripts/codex_harness/build_claim_evidence_graph.py",
+  "git_commit_or_worktree_state": "HEAD:461fe4ca8f1ca1ebdcf3571ad077aac4b5e25b38;bound_input_state_sha256:91b8ea0711176f43477d270b80b31ccc1dd681a2de5bd0585d82ff695af54718",
+  "graph_ref": "86096ceda0436591b4c61b9695ee1172aed2c62a2f4abcbfdca9b04fcea435a3",
+  "implementation_scope": "common",
+  "input_hashes": [
+    "docs/generated/mes_branch_registry_seal.json:89dc03551342e89b277790fa50707097d314e0bce9c4b04e8260bbcb76930c04",
+    "docs/generated/pr121_hermetic_replay_receipt.json:ddef2122d0730579ebe261e178e0e149d8403bde420bf05c324a1ece2eb202f3",
+    "docs/generated/pr122_test_execution.json:0628a9a23c84c8d26e500c05749c6f3d94c5d19c9f9a7f63b1438405229ea554",
+    "docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md:d653d056789ca1362cebf95287f863d68b62f8859e3d91d69ff4b4f3725cf443",
+    "docs/research_program/long_horizon_rescue/pr122_active_mes_consumers.yaml:d8a477e1b7a02132b75a61c9ce273bfb0a20c63d4e2d3b971ce364155de13d71",
+    "docs/research_program/long_horizon_rescue/pr122_authority_snapshot.yaml:7841941e66ea1ef2de88855c512ceef8235041066cbe3aa2f36c84d1c07f57cc",
+    "docs/research_program/long_horizon_rescue/pr122_spec.yaml:15ae65cba4e7e5572a827723daca179731ba470da75870f0e1215f43fc6218d9",
+    "htt/bass/atlas/budget_ceiling_optimizer.py:af3ea2eb6817ce56cbf1d870de6f53a7814ea949902ba43a1ab0612842967cae",
+    "htt/bass/forward/__init__.py:14cada3214984e2ffea58c9c820b98c16192e5628e30bbffc02c2926c86f867b",
+    "htt/bass/forward/doppler_boost.py:e2c8dea7f2d57fc72dfcc01c9440a72db20dad1ab436f8dab5dbd82de2333929",
+    "htt/bass/forward/teff_mes_bounds.py:b56df2da29313c27de19d4b7d751becd4532148b51fd73843434e200a909d4eb",
+    "htt/bass/observational/beta_threshold.py:20e3a7e656add2337bff88619f2b5244d867f40bd59def553671a83b2f9801a6",
+    "htt/bass/observational/planck_mes_bounds.py:5b507fec0ef16a6351938ee638f6a9f247d1a83d1c173ffc5217dc421e7e88a1",
+    "htt/htt/htt/core/__init__.py:9cd1d2ba2bfc5083d28fae36d0c35027890c1bd9a52f4ff446bcd26d0c7a1a89",
+    "htt/htt/htt/core/analysis_extended.py:c23e48691098b6d7618b4d091721196437ec5062b6eb8b40febfca90ff333807",
+    "htt/htt/htt/core/bounds.py:a7344c5d64d8c25b45082163898c0236402feca844ced3b43a6a9f86b8bed569",
+    "htt/htt/htt/core/departure_posteriors.py:cfb7705832c4f8dcde9c596f26db1f9ca18896e8c7e9450f4bb9c112a7944a4c",
+    "htt/htt/htt/core/evidence_models_R03a.py:c52de64b814731cb6ced432a6a089e82aa39db7fca424cb45a6196c29e6ceb30",
+    "htt/htt/htt/core/teff_extended.py:2ab9b79aae458e202accf3740d6b5fe127ea39520c52e78893d27362140d1783",
+    "htt/htt/htt/figures/fig_3D_constraint_volume.py:9cfb944ab0e04746f9066a6e4146bf2024183afce320734e4854f3c3e887143d",
+    "htt/htt/htt/figures/fig_4D_projection_atlas.py:183c20564e33d823fe759e194de8434b1f69ba2cf9f7efe104cef2cab74e320a",
+    "htt/htt/htt/figures/fig_MES_three_bounds.py:956dc739d193c85b1ef5cf08bfbd7e66532f28be9375980b6b8319eb3d379ac2",
+    "htt/htt/htt/figures/fig_nonlinear_heatmap_vorticity_accel.py:1da9be848d8b67af3354cd4b990a866164f19bdf5555d737e5d42c3704567f5b",
+    "htt/htt/htt/figures/fig_sigma_accel_contour.py:60889a484e207cc98186cb19e48edda62a23078ff8e9ef6e418c661e91ca7bbb",
+    "htt/htt/htt/figures/fig_sigma_omega_contour.py:17401d64eda8e810751cc4a8bd9f9fe07be61e5854b26939457a8cf6c3fa71bf",
+    "htt/htt/htt/figures/fig_type_by_type_summary.py:da2855f5f23b5ef7df29ec2ba4984784d442cbf0f7b346477ded979b051e068c",
+    "htt/htt/htt/figures/fig_vorticity_hierarchy.py:b7fcc52cfffe0433f8056512e1826015afe70b358417801ba2a8bb0f00d30586",
+    "htt/htt/htt/infer/null_competition.py:98e175b484ec3e61c67eb21e80d5d998c37a5261334960f3cda3fc30a142403b",
+    "htt/htt/htt/infer/prior_sweep.py:d0c36842f0f5d2c0777614f6031e4b89ab9d0a3e9effde52c6cebea53e4e4115",
+    "htt/mio/core/ceiling_families.py:96a5d6c3504e12d8b79d594ed985f5fef863cd9b27138abbe75a5b60e3bb7b5d",
+    "htt/mio/formalism/budget_spec.py:e836268d37323288d4b9e6bc3442f8eab2b3928ac6ebc91b7caef46d6210166a",
+    "htt/obsstat/egs3_mes_branch_registry.py:9b0817c99944e796b4c980cad43df724d0abde9381c8f542195d249447bfe816",
+    "htt/src/common/contracts.py:c71818ba3108a922d2bfbcf4c8dd2b65ea16efc5d43561c2792c8fbc52fd0181",
+    "htt/src/common/evidence_graph.py:68ccc0337643c1b790be90e70a170e5d027e6bec92abfb65e6cc7320ab34ce0d",
+    "htt/src/common/mes_successor_registry.py:ecd7f3999c3edd29b64820629ad9453437a52522694d309a72ea6446f4f2b970",
+    "htt/src/common/pytest_execution_evidence.py:7bd592b08f918bbfd1d44d20cbc74a6fe883d57a6314b28b2f96a51a50077247",
+    "htt/src/common/release_evidence_binding.py:927bf019090796c4544f7a6c9b47db77b7e5da1b9de127d0de55e38acfd2cffb",
+    "htt/src/common/remediation_state.py:f595cc0b81d33849a69d79691086e431386a1c731658bd7960f11384e6958fcb",
+    "htt/src/common/status_snapshot.py:78464fec0ac90d8e209c91de53ca59ee09d42a2cb73da06843ebd390304637b3",
+    "scripts/build_external_audit_package.py:e6f2afc165a1153fab025319c3f7f0ac4120c12f63584e43b52cc7aced196b1e",
+    "scripts/check_publication_claim_freeze.py:57e8bd7febce6ae299f9c395d9afb868ab9a15e514d899e65327cf41b00a7175",
+    "scripts/codex_harness/build_claim_evidence_graph.py:1a64facbb10a6ba999121835d9a8806d58d2056cca7dd16ff500cb491193ba4a",
+    "scripts/codex_harness/run_pr122_source_only.sh:72bed4818b6799cb872f877397877199455888904a777bc4efa13231a59cd982"
+  ],
+  "mechanics_closure": {
+    "claim_ref": "12e5e6c42cadea6fabc759d98fb2d9b0bea1b72ca2d1a9c08ef22cfb54c198b9",
+    "claim_release_eligible": false,
+    "closure_ref": "1e61cd8b4bd8e8a0a5132385d695b022c4c64eb93064df75fad6b4ca933ca3d6",
+    "edge_refs": [
+      "01e27dde0ff8b1946639228f1d049fda8c8c2dd4a4f729915feec25ed3a6d8fe",
+      "15d2cd1761b91d4f5312681a4dbbc14a2a8eeeaf8cce52c13358d087c90402e7",
+      "2b976df9a24d56d5c9da56d6b812fe6019686c9217717f3348e19192cf4fc3f9",
+      "2f10ec6a4a4bf6e3c4fc3ddcd6546817218730f7a8ed5155f5b635dfa536eabe",
+      "300b9a82d73deb0efff04f6eb9615cd4589611cac47e3b8d4bedeba3c53c9f1a",
+      "3354f902b61d061c78ba17cee13391841833995509c0191c7b8a7b03b09e5d4a",
+      "3c5d95289e98123f7b97bcce40f0150da062ea5d12fff6fe8fd7104682eed3c6",
+      "6a9a6ea1cb7c3a47385b76891eca09c58e8416a9cfca22045d1a6472eae1a6f0",
+      "7e3fb44b618ee9995d57d89a9fd350ddf8c1d1f2f2180a2dda48ce718f4f2bfe",
+      "891ab57a5e53ea337b549a630aab9acc2ce8a93b6c43218abfa6337fd9ba1a88",
+      "a27a2315b545162d8a00522283431d66e0df17784a8958bf91315142af14d2f9",
+      "b74269a85f34e04b59bfb50c43b2f594c3b622bf5d909888f04f17b178b5643b",
+      "c3d268e9130dc841cdbb6c958680f2e8f1f8eb35b92cd3499b35a191605f257f",
+      "cb703cfc80c1c5e729c0e93a2d73c7e4440795d2b03ace208d5634fe5adf58c8",
+      "dc67bf03d4f60ca88537810bc9d8d7f2bc83ccd5fc20d39adfc5dfc2e52f3cba",
+      "e31b018cae11835b166c6f0bea9f1f5a4f9e7877d97e56bf094396c2c89b71e5",
+      "e6e7baa5b9118db4aeef62f9150d80200d2dd330819fce0661401c3bfe9b2bf2",
+      "f7976d16feaacdbb7610e9ba7a4374d971f156cac8b3a04b99318d94676141ce"
+    ],
+    "evidence_status": "PRESENT",
+    "evidence_statuses": [
+      "PRESENT"
+    ],
+    "mechanics_closed": true,
+    "missing_edge_kinds": [],
+    "missing_node_requirements": [],
+    "node_refs": [
+      "026cbe487d192d5665e47f8c7273d1faf6a87a81143b1be32d7dcb6f96eab1a4",
+      "12e5e6c42cadea6fabc759d98fb2d9b0bea1b72ca2d1a9c08ef22cfb54c198b9",
+      "1c21ab962e89c39b4c353bbf88e0ced896ba0292a4564d5ed6cecb3a4b4670d7",
+      "348967adf4234763e88e9c189b1eb0deb3109902f60583cd3c92255329dc5e0b",
+      "37a355e063bce2e39b95dd2f3b643109cf3aea6e5a35fe3e8d1dcd31a418cbb6",
+      "4dce6c0e865e063f476a36f21e4fa63f4e644be4cae1af64b0a0b1e73038ae27",
+      "5399a896ca48c5e08b22d59b13b9c7c9f4197cec81088b79d996fe0671888ffe",
+      "57db2ca07b92968963e8d6ad9b640da1833f41cac5e87e4776c87619b5828a52",
+      "85b85d259dc4a41880915bc841e3fb3fee8330b070cf5a52bfe49aad392cb8e5",
+      "8fa07a739358809ff84f9d2a34fc9eb61fc093c311dabb8f26efba6affacbc31",
+      "ee353b3dd297231336748d630a8527962068b015473a5bd363f8e89c7612f320",
+      "f6e415ea0a104927b842873d49060b1b92d2c4ac36899b7731d0b23e939a0671",
+      "ff9f4e351b0b1aefbf2a1146c0462c3c6e7a0b6c5a88f22b61aff59f486e3c83"
+    ],
+    "package_eligible": false,
+    "process_result": "PASS",
+    "scientific_status": "OPEN",
+    "scientific_statuses": [
+      "OPEN"
+    ]
+  },
+  "mes_release": {
+    "consumers_scanned": 22,
+    "finding_codes": [
+      "SCIENTIFIC_AUTHORITY_BLOCKED",
+      "STALE_MES_TRIPLE",
+      "SUCCESSOR_BYPASS",
+      "SUCCESSOR_MISSING",
+      "SUCCESSOR_POINTER_MISSING"
+    ],
+    "scan_path": "docs/generated/pr122_mes_successor_scan.json",
+    "scan_sha256": "5dc04616e9b435ec1f8e5248e19377bae22fd26ffdc65de705104d0c3d8f8350",
+    "status": "BLOCKED_PENDING_PR124"
+  },
+  "null_mock_status": "not_statistical",
+  "owner": "COMMON",
+  "parent_receipt": {
+    "authority_registry_ref": "23802d0d5ea9625098961366f533c04b1b4e81b45ef694cbbc941b8d79e308b9",
+    "authority_status": "REQUIRES_TRUSTED_REGISTRY_VALIDATION",
+    "caveat": "Receipt presence and process success are not scientific validation or independent adjudication.",
+    "claim_ceiling": "roadmap_rescue_v1:C1 mechanics only",
+    "claim_ref": "12e5e6c42cadea6fabc759d98fb2d9b0bea1b72ca2d1a9c08ef22cfb54c198b9",
+    "closure_ref": "1e61cd8b4bd8e8a0a5132385d695b022c4c64eb93064df75fad6b4ca933ca3d6",
+    "evidence_status": "PRESENT",
+    "evidence_statuses": [
+      "PRESENT"
+    ],
+    "graph_ref": "86096ceda0436591b4c61b9695ee1172aed2c62a2f4abcbfdca9b04fcea435a3",
+    "process_result": "PASS",
+    "receipt_id": "756bf6a094aca545c2e31d301d93417c6d6590447e8d03af01926c49491ea1e7",
+    "schema_version": "claim_evidence_receipt_v2",
+    "scientific_status": "OPEN"
+  },
+  "parent_receipt_id": "756bf6a094aca545c2e31d301d93417c6d6590447e8d03af01926c49491ea1e7",
+  "pr4_scope_firewall": {
+    "commands_run": 0,
+    "data_work": "skipped_entirely_by_user_scope",
+    "download": "not_started"
+  },
+  "release_closure": {
+    "claim_ref": "c1a7c9f82601c5b4c1f8231eccad9df5092e104a4e45a38306aaf7fbc01b1d58",
+    "claim_release_eligible": false,
+    "closure_ref": "be89ab6ad27923d3544b6724ca2005f1724b5dadeae7131b6006a914d55f1987",
+    "edge_refs": [
+      "01e27dde0ff8b1946639228f1d049fda8c8c2dd4a4f729915feec25ed3a6d8fe",
+      "06625603ae6c3d787915b8d75ef193e6b4b46323fb90ba5f536c09b32211c79e",
+      "0af37e88cce29d2532bfd8068ed76f5cb9ba5925f569bb770a7a1380050f6a45",
+      "172a6028fbbc13467c50cf0d2abef76ef0d3942c1d71be7db4a61601da8bbf9c",
+      "1ad77c3ab1e40a3a386f0edcd15f1b81c432ec0feb09a45b9db656cad404e7f6",
+      "1e854525709316474986950af4bbbb5512c56f08e6075639c87e77ae5e5a0617",
+      "26bd040810d19b60c19e29fc9d15edc123f34dbf578610dc68d4f0e46557c490",
+      "2d003bb7453dfd7ef8faa991ca44ddecd6bb31b6a095b6658097168fab835e67",
+      "2f10ec6a4a4bf6e3c4fc3ddcd6546817218730f7a8ed5155f5b635dfa536eabe",
+      "300b9a82d73deb0efff04f6eb9615cd4589611cac47e3b8d4bedeba3c53c9f1a",
+      "371f6231e4a82c03e90d6fd3d6cf6f0af1413bbae9f6442ff0dec1c6dedae7a3",
+      "3a0e553d6509e52ac7312db116cf254734d56ae0f54502c7dd791eeeda57ab1e",
+      "3c5d95289e98123f7b97bcce40f0150da062ea5d12fff6fe8fd7104682eed3c6",
+      "5abd84117509c5159f93ad7d16a547e701566ad925a98a3a030a3e8714e53fcc",
+      "6298a6fb3ecdbbead71c454b86d8bfb82b2488287bdbc494e3fe2aa556012c64",
+      "74b4bc2433509063d0268556b98834e235e275effee22d649572430ae221aab0",
+      "7d46a60e8ae4a9e7106f6e370e619c43b098d8676ca6e05fb325487beca05753",
+      "7e3fb44b618ee9995d57d89a9fd350ddf8c1d1f2f2180a2dda48ce718f4f2bfe",
+      "7ed8d23a9f3e1e2bf84f459b6e80494c72c2e7d27a64eae27764d251f191cb8c",
+      "7fbea9d0284e9a669198cf4cda62ef7a4fcee2e4b8cf8cab2144a69480c2424c",
+      "84407493c3870a68fd565af4403c87103f2d64a3b59906754b25ef4655e5cbb2",
+      "86dacc2f8d6fd48b8101e70637545a4721aca0837e322d33f651fae186837142",
+      "8dafae436dec5f19db941b68d0739f8c1b4eea045f004c0972b0f7f59935c096",
+      "a0e8fa632c55ca426e9832e76365ed7c20edefd6bd30d6ed043b70ba7057ccf8",
+      "a2f856393ce6a1ad672faaec991cfa108e6abcde89cd5cbfb97f6628a3b86bf6",
+      "a8b3f63ca3d5264abd6e2b4e4d3d9041c2fb692ffd6b2385604f41ce8276679d",
+      "ac645ad9ce5c43e7afa94a9b8211cc5e5e591dc52846de219e9109d5eab44db8",
+      "ad3a3eb68b819368db9d73c7bf7a77387ab4a0e6128afd9a568aedbe9b0a25c3",
+      "af3d3723586a8f9c602d22ab3ff410f2de1752d3c2c5bc63f2636e32c6cd0020",
+      "cb023b2a856c0019a5ccd1f7be4c9c1399d70ec9fe686711fca0df37c71fe31b",
+      "cce4bad7e09558b7af672f412470357b745fc52a5d49821c099d9ad1429fc643",
+      "d51c5dcf4c8ef39bf3ebbea133c46a0e77de3d7dc0415f773eadf17849eb849e",
+      "d5e3597c7406a313411332f006ee28edf5bc7a5e0c1909defb7a477b505aa4db",
+      "d62da59bd7fbd361ec6af44667616d512690d4fcd9fceb0007f8764804adb266",
+      "dc67bf03d4f60ca88537810bc9d8d7f2bc83ccd5fc20d39adfc5dfc2e52f3cba",
+      "e31b018cae11835b166c6f0bea9f1f5a4f9e7877d97e56bf094396c2c89b71e5",
+      "e74ec1c08db1756279e84ba6ac5f9f2f137f112b120639a6dadee4d05c68de11",
+      "e799a5004de0067ed55aaaf3d340f12fd6d41d0769634361230823b333cdbf30",
+      "f9fb80c6b4803b1915d84c0f246299995773240743aa740f368b2cb4cc90bda9",
+      "fa5d68c1aef4de47dc20adf5c56e5d21d37a89df154ce097eb3a642fed2df6d3",
+      "fd72b1be2ad2c6db5dd9fe1a62e0e42dc0c0f9551cd8cb6f437d8673751489a5"
+    ],
+    "evidence_status": "BLOCKED",
+    "evidence_statuses": [
+      "BLOCKED",
+      "PRESENT"
+    ],
+    "mechanics_closed": false,
+    "missing_edge_kinds": [],
+    "missing_node_requirements": [],
+    "node_refs": [
+      "026cbe487d192d5665e47f8c7273d1faf6a87a81143b1be32d7dcb6f96eab1a4",
+      "054eddb04f87c840a7da86e92b9ca0759e710c17ee415a02d65547c944b109f9",
+      "19e07b2900c34a299974043d7370def79554c950de2514fad15d22d00ae55380",
+      "1cc3424f9add0fbcb98e6852adb19cda252be5fe023965b6267e656eab9d88b1",
+      "1de25ad670633f7a7e7e7ccff6c153ab48671f3c3ce2d80bb4ff81eee3bbaba5",
+      "2c2e2dae2a80c4e501360702ca1b00660c6e90545e813e610d0c86a2ff7ae3a5",
+      "37a355e063bce2e39b95dd2f3b643109cf3aea6e5a35fe3e8d1dcd31a418cbb6",
+      "37f48749fc0c0d2a603ea6021c23d1b2070afa3140323f4067967a67d04ff279",
+      "39dfeff92b734c46c6a7b4e0be9a4b37bfb8bcafa0b3ee25721954f5e0fe0e4e",
+      "44b1536705889fc333098101ba5174ffcf13fb319e61c859995a56d4ee5c125d",
+      "44c029712d368adc0c2844f8dbf7b3e85a8b65d7cf529fbaa9512936ea9dcb00",
+      "4dce6c0e865e063f476a36f21e4fa63f4e644be4cae1af64b0a0b1e73038ae27",
+      "531e2d6a874199fc5a49973864772788f848c864316fa4b7970c5f05938aabb4",
+      "5399a896ca48c5e08b22d59b13b9c7c9f4197cec81088b79d996fe0671888ffe",
+      "554b049470a1acf93bfb098c9845729616307ebb0438f008eff283b67dc30463",
+      "558d4bcc3132da96de059e9da6480b3c317fa4a5a2cb3b09d522aaf63f6c684e",
+      "57db2ca07b92968963e8d6ad9b640da1833f41cac5e87e4776c87619b5828a52",
+      "5860f4ae49d999316f6bf756b8b42f56623b8ed131e052adb28409d8d033544c",
+      "5b7a50533b97d3c3ac8c803006878ae63ddc283d66d20a3fb2052a0d13cf9b37",
+      "67b64fe04a4a126f13f02af3d3963303a3060e8a9b59fd932138a724ba0b5e19",
+      "6b4aa847cafd350acec9bd6bea073de96590cbba9bd7fd1b9ba8e17f50fdb6b9",
+      "6d2e7cc52cceaffa5f1c902fbd06b06102164182e1a4fd0cb163448324f0eaf9",
+      "8267b67d23f13b9608b4dce19d7c0416715ebd793b4ddf40dcd02a3915e3a413",
+      "85b85d259dc4a41880915bc841e3fb3fee8330b070cf5a52bfe49aad392cb8e5",
+      "87fdea9292830defa3835880ee2c9d77a45b321a0f8ce83ac8e82cbf4a7383c4",
+      "99f3abb1f35dcb776cbfbae105fc0387c4886a9fee550a956c4d8508a97d4bbb",
+      "b23e417c690b7b8938eb860fc2269da0ac175cb44b1a14b34058f9098ae4d4a2",
+      "b24bdb0662971c7c04f4f7a850e9c64e0d7c01c81d4c75540c3e59351ce861fa",
+      "bb1336edf629d9e8e313f0a6c4d62c8fc01e8155050b095255c4c9b94cae3c95",
+      "c1a7c9f82601c5b4c1f8231eccad9df5092e104a4e45a38306aaf7fbc01b1d58",
+      "db554df296adddf721db362c5e7ad457bb6753f6855e64dd1cac38abafe37c44",
+      "dc34057ae7d8eba5777aa79a151e7942a32869738599e5f899d4179438f6acef",
+      "dc44fd972525d4c8cbf9d16019a3f606e2db4a28e9205f83aa4d08235cc93179",
+      "dceedfd5e365c6953527e42338d7fd15d8f682c5a58a2f18b5059da06988da3d",
+      "dd1065e3f0583d3b01e329cf77f46f0b9959dcb86d8bfde2e8b598859a3b2faa",
+      "e429e755244bc75015852c2882b7a2e4bea0eee985f4307c95c204fa7887bbe8",
+      "e6440cf91f54f7032c552befcff54e5c50d8479e97e59f056154a23b4632f7a7",
+      "ee353b3dd297231336748d630a8527962068b015473a5bd363f8e89c7612f320",
+      "f6e415ea0a104927b842873d49060b1b92d2c4ac36899b7731d0b23e939a0671"
+    ],
+    "package_eligible": false,
+    "process_result": "PASS",
+    "scientific_status": "OPEN",
+    "scientific_statuses": [
+      "OPEN"
+    ]
+  },
+  "release_receipt": {
+    "authority_registry_ref": "23802d0d5ea9625098961366f533c04b1b4e81b45ef694cbbc941b8d79e308b9",
+    "authority_status": "REQUIRES_TRUSTED_REGISTRY_VALIDATION",
+    "caveat": "Receipt presence and process success are not scientific validation or independent adjudication.",
+    "claim_ceiling": "roadmap_rescue_v1:C1 mechanics only",
+    "claim_ref": "c1a7c9f82601c5b4c1f8231eccad9df5092e104a4e45a38306aaf7fbc01b1d58",
+    "closure_ref": "be89ab6ad27923d3544b6724ca2005f1724b5dadeae7131b6006a914d55f1987",
+    "evidence_status": "BLOCKED",
+    "evidence_statuses": [
+      "BLOCKED",
+      "PRESENT"
+    ],
+    "graph_ref": "86096ceda0436591b4c61b9695ee1172aed2c62a2f4abcbfdca9b04fcea435a3",
+    "process_result": "PASS",
+    "receipt_id": "eda4df392574c5e08a54269b3caea4b1c2f03fba358582636fe2907e9f1bc628",
+    "schema_version": "claim_evidence_receipt_v2",
+    "scientific_status": "OPEN"
+  },
+  "release_receipt_id": "eda4df392574c5e08a54269b3caea4b1c2f03fba358582636fe2907e9f1bc628",
+  "schema": "htt.pr122.claim_evidence_graph_bundle.v1",
+  "sky_support_status": "not_directional",
+  "test_execution": {
+    "collected_count": 132,
+    "environment_ref": "30765a2c0c59a0174c23600b546ff77dbe1e497517d7137afadb9d19b7a62d10",
+    "evidence_status": "PRESENT",
+    "executed_count": 132,
+    "execution_ref": "911e8e63a79986e43ac41783cc27b73a9b6c69a969d7cfabbb497308dcb64663",
+    "mutation_execution_matrix": [
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "arbitrary_pytest_import_origin_exemption",
+        "test_node_id": "tests/contracts/test_pytest_execution_evidence.py::test_arbitrary_pytest_import_origin_exemption_is_rejected"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "arbitrary_ready_for_claims_object",
+        "test_node_id": "tests/pr_cards/test_pr_122_claim_addressed_evidence_graph_content_addressed.py::test_arbitrary_readiness_field_is_rejected_at_graph_boundary"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "artifact_hash_mismatch",
+        "test_node_id": "tests/contracts/test_evidence_graph.py::test_exact_repo_loaders_require_expected_content_addresses"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "author_equals_adjudicator",
+        "test_node_id": "tests/contracts/test_evidence_graph.py::test_author_and_adjudicator_must_be_distinct_before_signing"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "available_mes_successor_self_authority",
+        "test_node_id": "tests/contracts/test_mes_successor_registry.py::test_available_successor_cannot_self_assert_authority_before_pr124[typed-enums]"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "blocked_plus_invalid_laundering",
+        "test_node_id": "tests/contracts/test_evidence_graph.py::test_invalid_integrity_dominates_an_expected_policy_block"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "caller_declared_verifier_ref_bypass",
+        "test_node_id": "tests/contracts/test_evidence_graph.py::test_caller_declared_verifier_ref_cannot_replace_semantic_binding"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "caller_supplied_pseudo_ppc_or_bayes_scalar",
+        "test_node_id": "tests/htt/test_inference_adequacy_gates.py::test_inference_adequacy_rejects_caller_scalar_pseudo_evidence[posterior_predictive_report-0.42]"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "canonical_pin_module_object_substitution",
+        "test_node_id": "tests/contracts/test_pytest_execution_evidence.py::test_canonical_pin_path_cannot_mask_replaced_module_object"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "collected_executed_identity_mismatch",
+        "test_node_id": "tests/contracts/test_evidence_graph.py::test_test_execution_reconciles_identities_and_counts"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "contradictory_matched_null_hook",
+        "test_node_id": "tests/htt/test_inference_adequacy_gates.py::test_inference_adequacy_rejects_contradictory_exact_matched_null_hook"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "correlated_internal_as_independent",
+        "test_node_id": "tests/contracts/test_evidence_graph.py::test_distinct_correlated_internal_receipts_are_not_independent"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "dead_mes_registry_call_decoy",
+        "test_node_id": "tests/contracts/test_mes_successor_registry.py::test_dead_or_bare_registry_call_cannot_clear_stale_literal_blocker"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "diagnostic_witness_seal_drift",
+        "test_node_id": "tests/contracts/test_mes_successor_registry.py::test_witness_source_and_seal_hashes_are_checked_separately"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "duck_typed_matched_null_hook",
+        "test_node_id": "tests/htt/test_inference_adequacy_gates.py::test_inference_adequacy_rejects_duck_typed_matched_null_hook"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "eager_release_pin_import",
+        "test_node_id": "tests/contracts/test_pytest_execution_evidence.py::test_release_pin_module_is_not_eagerly_imported"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "evolving_authority_registry_churn",
+        "test_node_id": "tests/pr_cards/test_pr_122_claim_addressed_evidence_graph_content_addressed.py::test_pr122_authority_snapshot_is_an_immutable_exact_scope_slice"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "executable_pth_or_direct_cli_bypass",
+        "test_node_id": "tests/contracts/test_pytest_execution_evidence.py::test_source_only_launcher_rejects_direct_cli_and_ignores_executable_pth"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "executable_release_pin_payload",
+        "test_node_id": "tests/contracts/test_release_evidence_binding.py::test_executable_release_pin_payload_is_rejected_without_execution"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "fabricated_or_unknown_principal",
+        "test_node_id": "tests/contracts/test_evidence_graph.py::test_fabricated_attestation_and_wrong_exact_graph_fail"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "failed_pr121_environment_receipt",
+        "test_node_id": "tests/pr_cards/test_pr_122_claim_addressed_evidence_graph_content_addressed.py::test_failed_or_tampered_pr121_environment_receipt_is_rejected"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "fileless_pin_alias_reentry",
+        "test_node_id": "tests/contracts/test_pytest_execution_evidence.py::test_fileless_release_pin_object_cannot_hide_under_an_alias"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "graph_dependency_cycle",
+        "test_node_id": "tests/contracts/test_evidence_graph.py::test_graph_dependency_cycle_is_rejected"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "hidden_mes_consumer",
+        "test_node_id": "tests/contracts/test_mes_successor_registry.py::test_ast_discovery_reports_undeclared_exact_mes_consumer"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "input_or_config_hash_mismatch",
+        "test_node_id": "tests/contracts/test_evidence_graph.py::test_graph_record_hash_mismatch_is_rejected"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "invalid_manifest",
+        "test_node_id": "tests/contracts/test_release_evidence_binding.py::test_invalid_artifact_manifest_structure_is_rejected"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "matched_null_fpr_threshold_robustness_spoof",
+        "test_node_id": "tests/htt/test_inference_adequacy_gates.py::test_matched_null_builder_rejects_fpr_threshold_robustness_spoof"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "mes_consumer_source_drift",
+        "test_node_id": "tests/contracts/test_mes_successor_registry.py::test_excluded_consumer_hash_mutation_is_a_distinct_blocker"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "missing_or_tampered_parent",
+        "test_node_id": "tests/contracts/test_evidence_graph.py::test_missing_parent_and_tampered_receipt_id_fail_closed"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "noncanonical_pin_exemption_source",
+        "test_node_id": "tests/contracts/test_pytest_execution_evidence.py::test_noncanonical_pytest_pin_exemption_source_cannot_be_hidden"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "nonexistent_python_selector",
+        "test_node_id": "tests/contracts/test_pytest_execution_evidence.py::test_nonexistent_python_selector_cannot_create_authority"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "omitted_pytest_environment_contract",
+        "test_node_id": "tests/contracts/test_pytest_execution_evidence.py::test_omitted_pytest_environment_contract_cannot_authorize_receipt"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "opaque_verifier_state",
+        "test_node_id": "tests/contracts/test_evidence_graph.py::test_unverifiable_verifier_state_is_rejected"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "ordinary_import_origin_omission",
+        "test_node_id": "tests/contracts/test_pytest_execution_evidence.py::test_ordinary_import_origin_omission_fails_exact_replay"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "pin_alias_reentry",
+        "test_node_id": "tests/contracts/test_pytest_execution_evidence.py::test_release_pin_path_alias_cannot_reenter_import_inventory"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "process_pass_with_blocked_science",
+        "test_node_id": "tests/contracts/test_evidence_graph.py::test_blocked_supporting_science_cannot_hide_behind_green_process_evidence"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "ready_matched_null_hook_without_report",
+        "test_node_id": "tests/htt/test_inference_adequacy_gates.py::test_ready_matched_null_hook_without_exact_report_is_rejected"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "same_name_verifier_swap",
+        "test_node_id": "tests/contracts/test_evidence_graph.py::test_authority_registry_ref_binds_same_name_verifier_implementation"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "selector_source_drift",
+        "test_node_id": "tests/contracts/test_evidence_graph.py::test_selector_source_drift_is_rechecked_at_consumption"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "self_or_circular_parent",
+        "test_node_id": "tests/contracts/test_evidence_graph.py::test_receipt_self_reference_and_two_node_cycles_fail_closed"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "self_signed_receipt",
+        "test_node_id": "tests/contracts/test_evidence_graph.py::test_author_and_adjudicator_must_be_distinct_before_signing"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "setup_or_teardown_failure_laundering",
+        "test_node_id": "tests/contracts/test_pytest_execution_evidence.py::test_setup_and_teardown_failures_cannot_be_laundered_as_call_passes"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "skipped_or_xfail_counted_as_pass",
+        "test_node_id": "tests/contracts/test_evidence_graph.py::test_zero_collection_skip_and_xfail_are_distinct_non_authority"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "stale_generator",
+        "test_node_id": "tests/contracts/test_release_evidence_binding.py::test_graph_bound_verifier_source_drift_is_rejected"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "stale_mes_triple_or_registry_bypass",
+        "test_node_id": "tests/contracts/test_mes_successor_registry.py::test_dead_or_bare_registry_call_cannot_clear_stale_literal_blocker"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "stale_release_pin",
+        "test_node_id": "tests/contracts/test_release_evidence_binding.py::test_stale_but_well_formed_release_pin_is_rejected_before_audit_disclosure"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "stale_release_verifier",
+        "test_node_id": "tests/contracts/test_release_evidence_binding.py::test_graph_bound_verifier_source_drift_is_rejected"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "tampered_matched_null_report_hash",
+        "test_node_id": "tests/htt/test_inference_adequacy_gates.py::test_tampered_matched_null_report_hash_cannot_authorize_readiness"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "tampered_pytest_environment_or_plugin_binding",
+        "test_node_id": "tests/contracts/test_pytest_execution_evidence.py::test_tampered_pytest_environment_or_plugin_binding_fails_live_rehash"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "tampered_receipt_id",
+        "test_node_id": "tests/contracts/test_evidence_graph.py::test_missing_parent_and_tampered_receipt_id_fail_closed"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "unknown_authority_snapshot_schema",
+        "test_node_id": "tests/pr_cards/test_pr_122_claim_addressed_evidence_graph_content_addressed.py::test_pr122_authority_snapshot_is_an_immutable_exact_scope_slice"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "verifier_alias_topology_collision",
+        "test_node_id": "tests/contracts/test_evidence_graph.py::test_authority_registry_ref_binds_graph_wide_alias_topology"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "verifier_callable_state_swap",
+        "test_node_id": "tests/contracts/test_evidence_graph.py::test_authority_registry_ref_binds_verifier_callable_state"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "workspace_checked_hash_pyc_shadow",
+        "test_node_id": "tests/contracts/test_pytest_execution_evidence.py::test_checked_hash_workspace_pyc_is_bypassed_by_isolated_prefix"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "zero_collected_python_selector",
+        "test_node_id": "tests/contracts/test_pytest_execution_evidence.py::test_zero_collection_is_not_authority"
+      },
+      {
+        "expected_outcome": "PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM",
+        "mutation_id": "zero_collected_rust_selector",
+        "test_node_id": "tests/contracts/test_evidence_graph.py::test_zero_collected_rust_target_is_explicit_non_authority"
+      }
+    ],
+    "process_result": "PASS",
+    "source_only_launcher_sha256": "72bed4818b6799cb872f877397877199455888904a777bc4efa13231a59cd982",
+    "source_only_producer_command": "scripts/codex_harness/run_pr122_source_only.sh scripts/codex_harness/build_claim_evidence_graph.py --write-test-execution"
+  },
+  "transfer_source": "none"
+}

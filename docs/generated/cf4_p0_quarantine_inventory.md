@@ -6,15 +6,15 @@ This is a propagation-control artifact. It does not remediate or validate a CF4 
 - Implementation scope: `propagation_quarantine_only`
 - Claim tier: `blocked`
 - Transfer source: `none`
-- Config hash: `a6ebc87d0ea2008427c9663fca118c8a9fb2ce6a839191cd8274f5dab349a165`
-- Policy SHA-256: `a6ebc87d0ea2008427c9663fca118c8a9fb2ce6a839191cd8274f5dab349a165`
-- Remediation-root SHA-256: `77d36878315f041c7bb6c273a2d650f7d3fa1c8a8dc635a577527d646fa40109`
+- Config hash: `4c54afee9f3fbdf03b30e111fdf97e1c1fe95638120587a7557a48a11a821fe7`
+- Policy SHA-256: `4c54afee9f3fbdf03b30e111fdf97e1c1fe95638120587a7557a48a11a821fe7`
+- Remediation-root SHA-256: `bdb7779955710d3d84b137081748027746ea308fbf89dc0c179dd937f63c6311`
 - Sky support: `not_applicable_to_propagation_quarantine`
 - Null/mock status: `not_applicable_quarantine_is_not_validation`
 - Git/worktree state: `baseline_commit:e6da3670043596efdcd93f9ba5e631e1462146c7; PR-120 worktree hashes are bound per inventory entry`
-- Entries: `798`
+- Entries: `799`
 - Legacy-only entries: `604`
-- Dynamically bound active/public binaries: `134`
+- Dynamically bound active/public binaries: `135`
 - Deterministic release outputs: `4`
 - Producer/consumer lineage edges: `8`
 
@@ -22,6 +22,7 @@ This is a propagation-control artifact. It does not remediate or validate a CF4 
 |---|---|---|---|---|
 | `PRE_MANUSCRIPT_STAGE2B5_v0_9_1.pdf` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
 | `codex_handoff_htt_presolver_v3_skillset_augmented_2026-06-11.zip` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
+| `codex_shared_context_harness_v1.zip` | `active_public_binary` | `active_public_binary` | `dynamic:sidecar_artifact_sha256` | `true` |
 | `data/camb_ref_planck2018.npz` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
 | `data/class_massive_neutrino_fixtures/0.06.npz` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
 | `data/class_massive_neutrino_fixtures/0.12.npz` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
@@ -156,7 +157,7 @@ This is a propagation-control artifact. It does not remediate or validate a CF4 
 | `htt/obsstat/egs3_teff_statistical_v9.py` | `symbolic_teff_consumer` | `active_block_consumer` | `4aa9d25b286d1432c046d36bffe76b0aab3ec35d124268a0ed8800c5e0d0d501` | `true` |
 | `htt/obsstat/egs3_teff_unification.py` | `symbolic_teff_consumer` | `active_block_consumer` | `427376670d34482f64e86a1bf0e18eb0f5ec8fe6dca6cf93457f0374f987d35d` | `true` |
 | `htt/obsstat/pv_forward_mocks.py` | `forward_mock_method_consumer` | `active_block_consumer` | `986d3bb0f1d625242ce23cb66ad802e0e98def3c1de0fa7d54dd0095bf39ecdf` | `true` |
-| `htt/src/common/cf4_p0_quarantine.py` | `shared_validator` | `validator_support` | `4ad55734a8c132f4783a9444174fa26ce2c0dee313ff8142b63774b9743e9c00` | `false` |
+| `htt/src/common/cf4_p0_quarantine.py` | `shared_validator` | `validator_support` | `c52c69b65b07a95a4f0960ff595e554c7195cd46a3b4d18e19d0d6fbf9f68ab5` | `false` |
 | `htt/src/common/package_binary_binding.py` | `binary_release_binding_validator` | `validator_support` | `98b9463b2473a296c3fcda897450aa8ddf8914bca4fd3da6ba2b0964ea33695f` | `false` |
 | `htt_base_delta_patch_20260707.zip` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
 | `htt_base_research_evaluation_package.zip` | `deterministic_release_output` | `deterministic_release_output` | `deterministic:mandatory_builder_--check` | `true` |
@@ -774,15 +775,15 @@ This is a propagation-control artifact. It does not remediate or validate a CF4 
 | `scripts/build_egs_results_table.py` | `legacy_result_table_gateway` | `active_block_consumer` | `9482ab593dc2e538a109ee32565657ec20445e9832650ed73fb35886e28fdcc8` | `true` |
 | `scripts/build_egs_results_table_v8.py` | `legacy_result_table_gateway` | `active_block_consumer` | `fbef5129fbf4992c500f5f9dfda693155d8fe264c37d8e6734a7cd12f2a8b860` | `true` |
 | `scripts/build_egs_results_table_v9.py` | `result_table_builder` | `active_block_consumer` | `58acdd46fe18a2cc39311cf71e64652e76d92212fcc0a496ccf850b14db0cb68` | `true` |
-| `scripts/build_external_audit_package.py` | `package_builder` | `active_block_consumer` | `8685b5bd6047d348a2393068edfb56ead78065ebb8c2f2eac4bcbea0dd104f91` | `true` |
+| `scripts/build_external_audit_package.py` | `package_builder` | `active_block_consumer` | `e6f2afc165a1153fab025319c3f7f0ac4120c12f63584e43b52cc7aced196b1e` | `true` |
 | `scripts/build_external_audit_report_v6.py` | `historical_report_gateway` | `active_block_consumer` | `5e0d28ae667a019ff9bfc1f8eb21a237305cefcb830fd73d47f5dfb6e4ccdf85` | `true` |
 | `scripts/build_external_audit_report_v7.py` | `historical_report_gateway` | `active_block_consumer` | `d6b58c2f7499b070e6a95c599a5b4bf007319eeb07560f7bfa88109ac2d23768` | `true` |
 | `scripts/build_external_audit_report_v8.py` | `report_consumer` | `active_block_consumer` | `6c332d24184973c48597e4c9a0666e34d3efc626617047bc95012c54479f3ffa` | `true` |
 | `scripts/build_external_audit_report_v9.py` | `report_consumer` | `active_block_consumer` | `f6e5f91b45a4324d2810601704927fb20b7bca42d878b8106e0197211e27d5ca` | `true` |
 | `scripts/build_open_items_ledger.py` | `claim_status_consumer` | `active_block_consumer` | `e42806dc52a0dd96519dce6bdfae2ecb4436aaec3809c7887f80fdeeb3948e86` | `true` |
-| `scripts/build_research_evaluation_package.py` | `package_builder` | `active_block_consumer` | `866014561174e8f5b1ad66f8b96964c26ba0657804cee8d8a73382d13ace703a` | `true` |
-| `scripts/build_research_only_audit_package.py` | `package_builder` | `active_block_consumer` | `6e2dbbb0cab8e48cafc10e004c52d5b11bd10d9c36ac3bd82ad1056949998e44` | `true` |
-| `scripts/build_statistical_formalism_audit_package.py` | `package_builder` | `active_block_consumer` | `041ebd8fa82e5686b2d682184ec008004d493157cbf5f5d5da4deede0123270d` | `true` |
+| `scripts/build_research_evaluation_package.py` | `package_builder` | `active_block_consumer` | `3f18412e26e76b96022f13427781072b9dfaa76ce20ec859af982918c4f73ddf` | `true` |
+| `scripts/build_research_only_audit_package.py` | `package_builder` | `active_block_consumer` | `e69372e11ed623a58ab69ff4bc43147a6a2c3d2aaf51a9e347c1dba22e357fb4` | `true` |
+| `scripts/build_statistical_formalism_audit_package.py` | `package_builder` | `active_block_consumer` | `91e0057cf2c7ed157735204f40eaead6d8385f7c6d27ca8b1a46b7064450e012` | `true` |
 | `scripts/build_v6_compact_data_analysis.py` | `result_pack_consumer` | `active_block_consumer` | `7dc9fac41abb0699c5bbe618603b2238e166baae615e523e103776060e18fbea` | `true` |
 | `scripts/build_v6_no_download_research_cards.py` | `result_card_consumer` | `active_block_consumer` | `fade339fe0999e18305e89f6566a2aad09766825e92f431b702b998689f705dd` | `true` |
 | `scripts/cf4_bulkflow_lcdm_variance.py` | `active_result_card_wrapper` | `active_block_consumer` | `fcfd1208db27931d5ea0a3ed968c1a1bccd91b7e4598533b95512b4cda6ec00a` | `true` |
@@ -794,7 +795,7 @@ This is a propagation-control artifact. It does not remediate or validate a CF4 
 | `scripts/cf4_reconstruction_dependence.py` | `conditioned_method_wrapper` | `active_block_consumer` | `7ddba4f5848171ce5ec88c2d16f5628bce83a47112cd95f401fcc9c3bc128256` | `true` |
 | `scripts/cf4_velocity_correlation.py` | `conditioned_method_wrapper` | `active_block_consumer` | `7e247aae07a8ddf604c405c4041e7eb9368d217a0d6b019988ced016faf9bde9` | `true` |
 | `scripts/cf4_velocity_correlation_ml.py` | `active_result_card_wrapper` | `active_block_consumer` | `5087e0c4f4423be63af2eb1c88606997f97092232cc6ed3edc6d3441a4c1fad0` | `true` |
-| `scripts/check_publication_claim_freeze.py` | `publication_freeze` | `active_block_consumer` | `b8e52a894d9b4734d11bbd4a5cdf604fd911ffe08ba54c87bee89d1090eb173f` | `true` |
+| `scripts/check_publication_claim_freeze.py` | `publication_freeze` | `active_block_consumer` | `57e8bd7febce6ae299f9c395d9afb868ab9a15e514d899e65327cf41b00a7175` | `true` |
 | `scripts/codex_harness/quarantine_cf4_p0_consumers.py` | `validator_cli` | `validator_support` | `d9ceebc740b358b8f7b1664a6b3cdec43e6001c61c606f3ea68a6782219b08f7` | `false` |
 | `scripts/jwst_cf4_crossmatch.py` | `catalogue_linkage_consumer` | `active_block_consumer` | `5ec7895002e32a03fcef0d26b1456e0f520dbc0a8360edd39c31eaad9b1f0f8c` | `true` |
 | `scripts/k5_cf4_identified_interval_card.py` | `active_derived_card_wrapper` | `active_block_consumer` | `dd0443dd13b71dfc31da1e569324112aa25306041da50b3dc6716a6585e79f1a` | `true` |
@@ -817,7 +818,7 @@ This is a propagation-control artifact. It does not remediate or validate a CF4 
 | `tests/fixtures/fb6/pontzen_challinor_2009_sec4_ix_closed_quadrupole_grid.npz` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
 | `tests/fixtures/fb6/pontzen_challinor_2009_vii_h_off_diagonal_ctt.npz` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
 | `tests/obsstat/test_cf4_velocity_correlation_ml.py` | `active_block_regression_test` | `mutation_corpus_only` | `27abf869e862f353d24abea85983baf27571edb8d16586754315c5cefc88fd0c` | `false` |
-| `tests/pr_cards/test_pr_120_cf4_p0_downstream_consumer_quarantine.py` | `mutation_and_contract_tests` | `mutation_corpus_only` | `6e7754e7226393d95a608937671ff1377d0185d0f3ad84089dcc2a9b47b55c9a` | `false` |
+| `tests/pr_cards/test_pr_120_cf4_p0_downstream_consumer_quarantine.py` | `mutation_and_contract_tests` | `mutation_corpus_only` | `54c756c5328804c5ee535efd207b2d0d033fdf28c8076dba5c16de631573627d` | `false` |
 
 ## Producer/consumer lineage
 
@@ -840,7 +841,7 @@ This is a propagation-control artifact. It does not remediate or validate a CF4 
 
 ## Input hashes
 
-- `docs/research_program/long_horizon_rescue/cf4_p0_quarantine_policy.yaml:sha256:a6ebc87d0ea2008427c9663fca118c8a9fb2ce6a839191cd8274f5dab349a165`
-- `docs/codex_handoff/research_remediation_state.yaml:sha256:77d36878315f041c7bb6c273a2d650f7d3fa1c8a8dc635a577527d646fa40109`
+- `docs/research_program/long_horizon_rescue/cf4_p0_quarantine_policy.yaml:sha256:4c54afee9f3fbdf03b30e111fdf97e1c1fe95638120587a7557a48a11a821fe7`
+- `docs/codex_handoff/research_remediation_state.yaml:sha256:bdb7779955710d3d84b137081748027746ea308fbf89dc0c179dd937f63c6311`
 
 Generating command: `PYTHONPATH=htt/src venv/bin/python -B scripts/codex_harness/quarantine_cf4_p0_consumers.py --write`

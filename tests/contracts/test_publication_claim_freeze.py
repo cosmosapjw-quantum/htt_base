@@ -4,18 +4,37 @@ from pathlib import Path
 import subprocess
 
 from common.artifact_manifest import validate_manifest_payload
+from common.release_evidence_binding import DEFAULT_RELEASE_EVIDENCE_PIN
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 SCRIPT_PATH = REPO_ROOT / "scripts/check_publication_claim_freeze.py"
+SOURCE_ONLY_LAUNCHER = REPO_ROOT / "scripts/codex_harness/run_pr122_source_only.sh"
+SOURCE_ONLY_TARGET = "scripts/check_publication_claim_freeze.py"
+CLAIM_EVIDENCE_INPUTS = {
+    "docs/generated/pr122_claim_evidence_graph.json",
+    "docs/generated/pr122_claim_closure_report.json",
+    "docs/generated/pr122_claim_closure_report.md",
+    "docs/generated/pr122_release_receipt.json",
+    "docs/generated/pr122_parent_receipt.json",
+    "docs/generated/pr122_artifact_manifest.json",
+    "docs/generated/pr122_mes_successor_scan.json",
+    "docs/generated/pr122_test_execution.json",
+}
 
 
 def _load_module():
-    spec = importlib.util.spec_from_file_location("publication_claim_freeze", SCRIPT_PATH)
+    spec = importlib.util.spec_from_file_location(
+        "publication_claim_freeze", SCRIPT_PATH
+    )
     assert spec is not None and spec.loader is not None
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
+
+
+def _cli(*args: str) -> list[str]:
+    return [str(SOURCE_ONLY_LAUNCHER), SOURCE_ONLY_TARGET, *args]
 
 
 def _payload():
@@ -47,11 +66,14 @@ def test_payload_maps_public_claims_to_artifacts_tests_caveats_and_owner():
     assert payload["implementation_scope"] == "common"
     assert payload["claim_tier"] == "diagnostic_only"
     assert payload["transfer_source"] == "none"
-    assert validate_manifest_payload(
-        payload,
-        manifest_path="memory://publication_claim_freeze.md",
-        expected_artifact_path="docs/generated/publication_claim_freeze.md",
-    ) == ()
+    assert (
+        validate_manifest_payload(
+            payload,
+            manifest_path="memory://publication_claim_freeze.md",
+            expected_artifact_path="docs/generated/publication_claim_freeze.md",
+        )
+        == ()
+    )
 
     assertions = payload["required_assertions"]
     assert assertions["all_claims_have_owner"] is True
@@ -71,12 +93,44 @@ def test_payload_maps_public_claims_to_artifacts_tests_caveats_and_owner():
     assert assertions["no_forbidden_claim_language"] is True
     assert assertions["no_c5_c6_family_id_claim"] is True
     assert assertions["cf4_p0_quarantine_clean"] is True
+    assert assertions["exact_claim_evidence_receipt_consumed"] is True
+    assert assertions["claim_release_blocked_by_evidence_graph"] is True
     assert payload["cf4_p0_quarantine"]["ok"] is True
     assert payload["cf4_p0_quarantine"]["issues"] == []
     assert payload["failed_gates"] == ["pdf_claim_lint_passed"]
     assert payload["submission_decision"] == "blocked_cf4_p0_manuscript_quarantine"
     assert payload["manuscript_blockers"]["current_pdf_present"] is False
     assert payload["manuscript_blockers"]["source_quarantine_enforced"] is True
+
+    evidence = payload["claim_evidence_receipt"]
+    pin = DEFAULT_RELEASE_EVIDENCE_PIN
+    assert evidence["mode"] == "audit_disclosure"
+    assert evidence["graph_path"] == pin.graph_path
+    assert evidence["graph_file_sha256"] == pin.graph_file_sha256
+    assert evidence["graph_ref"] == pin.graph_ref
+    assert evidence["receipt_path"] == pin.receipt_path
+    assert evidence["receipt_file_sha256"] == pin.receipt_file_sha256
+    assert evidence["receipt_id"] == pin.receipt_id
+    assert evidence["parent_receipt_id"] == pin.parent_receipt_id
+    assert evidence["receipt_version"] == "claim_evidence_receipt_v2"
+    assert evidence["closure_path"] == pin.closure_path
+    assert evidence["closure_file_sha256"] == pin.closure_file_sha256
+    assert evidence["artifact_manifest_file_sha256"] == (
+        pin.artifact_manifest_file_sha256
+    )
+    assert evidence["authority_registry_ref"] == pin.authority_registry_ref
+    assert evidence["process_result"] == "PASS"
+    assert evidence["evidence_status"] == "BLOCKED"
+    assert evidence["scientific_status"] == "OPEN"
+    assert evidence["authority_status"] == "REQUIRES_TRUSTED_REGISTRY_VALIDATION"
+    assert evidence["claim_release_allowed"] is False
+    assert evidence["audit_disclosure_allowed"] is True
+
+    hashed_input_paths = {
+        item.partition(":sha256:")[0] for item in payload["input_hashes"]
+    }
+    assert CLAIM_EVIDENCE_INPUTS <= set(_load_module().DEFAULT_REQUIRED_INPUTS)
+    assert CLAIM_EVIDENCE_INPUTS <= hashed_input_paths
 
     for claim in payload["public_claims"]:
         assert claim["owner"]
@@ -97,15 +151,13 @@ def test_dry_run_does_not_write_reports(tmp_path: Path):
     matrix_output = tmp_path / "matrix.md"
 
     result = subprocess.run(
-        [
-            str(REPO_ROOT / "venv/bin/python"),
-            str(SCRIPT_PATH),
+        _cli(
             "--dry-run",
             "--freeze-output",
             str(freeze_output),
             "--matrix-output",
             str(matrix_output),
-        ],
+        ),
         cwd=REPO_ROOT,
         text=True,
         capture_output=True,
@@ -133,14 +185,12 @@ def test_write_and_check_reports(tmp_path: Path):
     matrix_output = tmp_path / "matrix.md"
 
     write = subprocess.run(
-        [
-            str(REPO_ROOT / "venv/bin/python"),
-            str(SCRIPT_PATH),
+        _cli(
             "--freeze-output",
             str(freeze_output),
             "--matrix-output",
             str(matrix_output),
-        ],
+        ),
         cwd=REPO_ROOT,
         text=True,
         capture_output=True,
@@ -166,6 +216,20 @@ def test_write_and_check_reports(tmp_path: Path):
     assert "Current manuscript PDF present | False" in freeze_text
     assert "CF4 P0 source quarantine enforced | True" in freeze_text
     assert "PDF claim lint | blocked, not passed" in freeze_text
+    evidence = payload["claim_evidence_receipt"]
+    assert (
+        f"BLOCKED audit-disclosure evidence receipt: `{evidence['receipt_id']}`"
+        in freeze_text
+    )
+    assert (
+        "Claim release from that receipt: `blocked`; audit disclosure only."
+        in freeze_text
+    )
+    assert "| `exact_claim_evidence_receipt_consumed` | `True` |" in freeze_text
+    assert "| `claim_release_blocked_by_evidence_graph` | `True` |" in freeze_text
+    for path in CLAIM_EVIDENCE_INPUTS:
+        assert f"- {path}:sha256:" in freeze_text
+        assert f"- {path}:sha256:" in matrix_text
     if blockers["missing_refs"] == 0:
         assert "Missing figure refs" not in freeze_text
     if blockers["quarantined_refs"] == 0:
@@ -173,15 +237,13 @@ def test_write_and_check_reports(tmp_path: Path):
     _assert_no_forbidden_language(freeze_text + "\n" + matrix_text)
 
     fresh = subprocess.run(
-        [
-            str(REPO_ROOT / "venv/bin/python"),
-            str(SCRIPT_PATH),
+        _cli(
             "--check",
             "--freeze-output",
             str(freeze_output),
             "--matrix-output",
             str(matrix_output),
-        ],
+        ),
         cwd=REPO_ROOT,
         text=True,
         capture_output=True,
@@ -192,15 +254,13 @@ def test_write_and_check_reports(tmp_path: Path):
 
     matrix_output.write_text(matrix_text + "\n", encoding="utf-8")
     stale = subprocess.run(
-        [
-            str(REPO_ROOT / "venv/bin/python"),
-            str(SCRIPT_PATH),
+        _cli(
             "--check",
             "--freeze-output",
             str(freeze_output),
             "--matrix-output",
             str(matrix_output),
-        ],
+        ),
         cwd=REPO_ROOT,
         text=True,
         capture_output=True,
@@ -311,9 +371,7 @@ def test_manuscript_source_quarantine_is_primitive_and_current_pdf_is_absent():
     assert module._manuscript_source_quarantine_enforced(REPO_ROOT) is True
     assert source.index(
         r"\ifcsname HTTCF4PZeroLegacyReproduction\endcsname"
-    ) < source.index(
-        "\n" + r"\documentclass"
-    )
+    ) < source.index("\n" + r"\documentclass")
     assert not (REPO_ROOT / module.CURRENT_MANUSCRIPT_PDF).exists()
 
 
@@ -352,10 +410,7 @@ def test_blocked_pdf_lint_with_zero_findings_cannot_pass_publication_gate(
     tmp_path: Path,
 ):
     module = _load_module()
-    pdf_path = (
-        tmp_path
-        / "docs/generated/manuscript_pdf/htt_base_research_report.pdf"
-    )
+    pdf_path = tmp_path / "docs/generated/manuscript_pdf/htt_base_research_report.pdf"
     report_path = tmp_path / "docs/generated/pdf_claim_lint_report.md"
     pdf_path.parent.mkdir(parents=True)
     report_path.parent.mkdir(parents=True, exist_ok=True)

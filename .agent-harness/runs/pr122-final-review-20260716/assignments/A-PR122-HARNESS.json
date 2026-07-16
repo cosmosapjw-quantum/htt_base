@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "run_id": "pr122-final-review-20260716",
+  "assignment_id": "A-PR122-HARNESS",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "context_mapper",
+  "context_version": "548a657c36099f1b2b58b7fd378a39c69e9be9952e843ff48101d5a006deae09",
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-HARNESS-INSTALL"
+  ],
+  "task": "Review the final shared-context harness integration, Codex config/hooks compatibility, test acceleration semantics, and fail-closed validation coverage without editing repository files.",
+  "required_inputs": [
+    ".agent-harness/generated/CONTEXT_PACK.md",
+    ".agent-harness/runs/pr122-final-review-20260716/assignments/A-PR122-HARNESS.json",
+    "AGENTS.md",
+    "AGENTS.md.fragment",
+    "INSTALL_NOTES.md",
+    ".agent-harness/README.md",
+    ".codex/config.toml",
+    ".codex/hooks.json",
+    "scripts/codex_harness/test_codex_assets.py",
+    "scripts/codex_harness/validate_codex_config_shape.py",
+    "scripts/install_codex_handoff.sh",
+    "tests/contracts/test_audit_package_generator.py",
+    "htt/src/common/cf4_p0_quarantine.py"
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "read-only shell commands",
+    "targeted harness and Codex asset validation commands",
+    "targeted read-only tests that write caches or temporary files only"
+  ],
+  "required_outputs": [
+    "steelman of the installed shared-context harness and performance patch",
+    "ranked harness, hook, config, cache-safety, determinism, and test-coverage findings",
+    "explicit pass or fail verdict with residual risks",
+    "result envelope at the declared result_path",
+    "HARNESS_RESULT final line"
+  ],
+  "result_path": ".agent-harness/runs/pr122-final-review-20260716/results/A-PR122-HARNESS.json",
+  "status": "registered"
+}

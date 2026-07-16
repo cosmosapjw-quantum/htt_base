@@ -15,11 +15,23 @@ The VER2 rule is:
 * all dataclasses remain frozen so downstream code cannot silently mutate
   ownership or claim-tier metadata.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from enum import StrEnum
+from enum import Enum
 from typing import Any, Mapping, Optional, Literal
+
+try:  # Python 3.11+
+    from enum import StrEnum
+except ImportError:  # pragma: no cover - exercised by the Python 3.10 replay
+
+    class StrEnum(str, Enum):
+        """Minimal stdlib-compatible fallback for the declared Python 3.10 floor."""
+
+        def __str__(self) -> str:
+            return str(self.value)
+
 
 import numpy as np
 
@@ -73,7 +85,9 @@ class ArtifactMode(StrEnum):
     INTERNAL_EXPLORATORY = "internal_exploratory"
     EXTERNAL_AUDIT_CONDITIONED = "external_audit_conditioned"
     FORECAST_ONLY = "forecast_only"
-    DISPLAY_ONLY_PRIOR_SENSITIVITY_SCHEMATIC = "display_only_prior_sensitivity_schematic"
+    DISPLAY_ONLY_PRIOR_SENSITIVITY_SCHEMATIC = (
+        "display_only_prior_sensitivity_schematic"
+    )
     DISPLAY_ONLY_ERROR_BUDGET_SCHEMATIC = "display_only_error_budget_schematic"
     METHODS_NEGATIVE_RESULT = "methods_negative_result"
     PAPER_APPENDIX_CONDITIONED = "paper_appendix_conditioned"
@@ -188,7 +202,17 @@ _ALLOWED_TSC_CHART_STATUSES = {
 }
 _ALLOWED_SOURCE_STATUSES = {"adequate", "inadequate", "pending"}
 _ALLOWED_PROPAGATION_STATUSES = {"pending", "validated", "blocked"}
-_ALLOWED_CHANNELS = {"TT", "TE", "EE", "BB", "TB", "EB", "BiPoSH", "template", "scalar_summary"}
+_ALLOWED_CHANNELS = {
+    "TT",
+    "TE",
+    "EE",
+    "BB",
+    "TB",
+    "EB",
+    "BiPoSH",
+    "template",
+    "scalar_summary",
+}
 _ALLOWED_QUADRUPOLE_CONVENTIONS = {"mu2_minus_one_third", "legendre_P2"}
 _ALLOWED_QUADRUPOLE_PARAMETER_NAMES = {"Q_mu", "q"}
 
@@ -243,7 +267,9 @@ TscChartStatus = Literal[
 ]
 SourceStatus = Literal["adequate", "inadequate", "pending"]
 PropagationStatus = Literal["pending", "validated", "blocked"]
-Channel = Literal["TT", "TE", "EE", "BB", "TB", "EB", "BiPoSH", "template", "scalar_summary"]
+Channel = Literal[
+    "TT", "TE", "EE", "BB", "TB", "EB", "BiPoSH", "template", "scalar_summary"
+]
 QuadrupoleConvention = Literal["mu2_minus_one_third", "legendre_P2"]
 QuadrupoleParameterName = Literal["Q_mu", "q"]
 
@@ -360,13 +386,13 @@ class ArtifactManifest:
         _set_canonical_implementation_scope(self)
         _set_canonical_claim_tier(self)
         if not isinstance(self.artifact_mode, ArtifactMode):
-            object.__setattr__(self, "artifact_mode", ArtifactMode(str(self.artifact_mode)))
+            object.__setattr__(
+                self, "artifact_mode", ArtifactMode(str(self.artifact_mode))
+            )
         if not isinstance(self.allowed_use, AllowedUse):
             object.__setattr__(self, "allowed_use", AllowedUse(str(self.allowed_use)))
         if self.production_status not in _ALLOWED_PRODUCTION_STATUSES:
-            raise ValueError(
-                f"Unknown production_status {self.production_status!r}"
-            )
+            raise ValueError(f"Unknown production_status {self.production_status!r}")
         if not self.created_by:
             raise ValueError("ArtifactManifest.created_by must be non-empty")
         if not self.config_hash:
@@ -406,9 +432,7 @@ class SkySupport:
         if self.sky_fraction is not None:
             sky_fraction = float(self.sky_fraction)
             if not np.isfinite(sky_fraction) or not (0.0 <= sky_fraction <= 1.0):
-                raise ValueError(
-                    "SkySupport.sky_fraction must be finite and in [0, 1]"
-                )
+                raise ValueError("SkySupport.sky_fraction must be finite and in [0, 1]")
             object.__setattr__(self, "sky_fraction", sky_fraction)
         if not self.completeness_status:
             raise ValueError("SkySupport.completeness_status must be non-empty")
@@ -463,11 +487,11 @@ class StatusSnapshotEntry:
         _set_canonical_implementation_scope(self)
         _set_canonical_claim_tier(self)
         if self.artifact_readiness not in _ALLOWED_ARTIFACT_READINESS:
-            raise ValueError(
-                f"Unknown artifact_readiness {self.artifact_readiness!r}"
-            )
+            raise ValueError(f"Unknown artifact_readiness {self.artifact_readiness!r}")
         if not isinstance(self.artifact_mode, ArtifactMode):
-            object.__setattr__(self, "artifact_mode", ArtifactMode(str(self.artifact_mode)))
+            object.__setattr__(
+                self, "artifact_mode", ArtifactMode(str(self.artifact_mode))
+            )
         if not isinstance(self.allowed_use, AllowedUse):
             object.__setattr__(self, "allowed_use", AllowedUse(str(self.allowed_use)))
         if not self.artifact_id:
@@ -525,15 +549,12 @@ class RuntimeReductionDecision:
         owner = _set_canonical_owner(self)
         if owner is not Owner.BASS:
             raise ValueError(
-                "RuntimeReductionDecision.owner must be 'BASS' "
-                f"(got {self.owner!r})"
+                "RuntimeReductionDecision.owner must be 'BASS' " f"(got {self.owner!r})"
             )
         if self.source_status not in _ALLOWED_SOURCE_STATUSES:
             raise ValueError(f"Unknown source_status {self.source_status!r}")
         if self.propagation_status not in _ALLOWED_PROPAGATION_STATUSES:
-            raise ValueError(
-                f"Unknown propagation_status {self.propagation_status!r}"
-            )
+            raise ValueError(f"Unknown propagation_status {self.propagation_status!r}")
         _set_canonical_claim_tier(self)
         if not self.reason:
             raise ValueError("RuntimeReductionDecision.reason must be non-empty")
@@ -731,7 +752,9 @@ class TscResidualReport:
     trace_residual_q_tr: float | None
     spin2_residual: float | None
     high_residual: float | None
-    residual_origin: Literal["trace", "eta_tangent", "spin2", "high", "mixed", "unknown"]
+    residual_origin: Literal[
+        "trace", "eta_tangent", "spin2", "high", "mixed", "unknown"
+    ]
     labels: tuple[str, ...]
     manifest: ArtifactManifest
 
@@ -775,7 +798,9 @@ class TscSourceBridgeReport:
             )
         if self.source_status not in _ALLOWED_SOURCE_STATUSES:
             raise ValueError(f"Unknown source_status {self.source_status!r}")
-        _require_manifest_owner(self.manifest, Owner.TSC_LEGACY, "TscSourceBridgeReport")
+        _require_manifest_owner(
+            self.manifest, Owner.TSC_LEGACY, "TscSourceBridgeReport"
+        )
 
 
 @dataclass(frozen=True)
@@ -801,12 +826,12 @@ class TscChannelAdequacyBudget:
         if self.source_status not in _ALLOWED_SOURCE_STATUSES:
             raise ValueError(f"Unknown source_status {self.source_status!r}")
         if self.propagation_status not in _ALLOWED_PROPAGATION_STATUSES:
-            raise ValueError(
-                f"Unknown propagation_status {self.propagation_status!r}"
-            )
+            raise ValueError(f"Unknown propagation_status {self.propagation_status!r}")
         if _enum_value(self.claim_ceiling) not in _ALLOWED_CLAIM_TIERS:
             raise ValueError(f"Unknown claim_ceiling {self.claim_ceiling!r}")
-        _require_manifest_owner(self.manifest, Owner.TSC_LEGACY, "TscChannelAdequacyBudget")
+        _require_manifest_owner(
+            self.manifest, Owner.TSC_LEGACY, "TscChannelAdequacyBudget"
+        )
 
 
 @dataclass(frozen=True)
@@ -835,12 +860,12 @@ class TscUpgradeRecommendation:
         if self.current_chart not in _ALLOWED_TSC_CHARTS:
             raise ValueError(f"Unknown current_chart {self.current_chart!r}")
         if self.recommended_chart not in _ALLOWED_TSC_CHARTS:
-            raise ValueError(
-                f"Unknown recommended_chart {self.recommended_chart!r}"
-            )
+            raise ValueError(f"Unknown recommended_chart {self.recommended_chart!r}")
         if self.severity not in {"info", "warn", "block"}:
             raise ValueError(f"Unknown severity {self.severity!r}")
-        _require_manifest_owner(self.manifest, Owner.TSC_LEGACY, "TscUpgradeRecommendation")
+        _require_manifest_owner(
+            self.manifest, Owner.TSC_LEGACY, "TscUpgradeRecommendation"
+        )
 
 
 @dataclass(frozen=True)
@@ -926,18 +951,14 @@ class SkySelectionConfig:
                 "are mutually exclusive"
             )
         if self.production_mode and not self.require_mock_calibration:
-            raise ValueError(
-                "production_mode requires mock calibration"
-            )
+            raise ValueError("production_mode requires mock calibration")
         if not (0.0 <= self.min_retention_fraction <= 1.0):
             raise ValueError(
                 f"min_retention_fraction must be in [0, 1]; "
                 f"got {self.min_retention_fraction}"
             )
         if self.nside <= 0 or (self.nside & (self.nside - 1)) != 0:
-            raise ValueError(
-                f"nside must be a positive power of two; got {self.nside}"
-            )
+            raise ValueError(f"nside must be a positive power of two; got {self.nside}")
 
 
 @dataclass(frozen=True)
@@ -958,11 +979,11 @@ class DirectionalSummary:
 class DynestyResult:
     """Dynesty Layer C posterior output container."""
 
-    samples: np.ndarray          # (n_samples, n_params)
-    logwt: np.ndarray            # (n_samples,) log-weights
-    logz: float                  # log-evidence
-    ncall: int                   # likelihood evaluations used
-    config: Mapping[str, Any]    # dynesty config echo
+    samples: np.ndarray  # (n_samples, n_params)
+    logwt: np.ndarray  # (n_samples,) log-weights
+    logz: float  # log-evidence
+    ncall: int  # likelihood evaluations used
+    config: Mapping[str, Any]  # dynesty config echo
 
     def __post_init__(self) -> None:
         if self.samples.ndim != 2:
@@ -991,9 +1012,7 @@ class MockCalibrationReport:
 
     def __post_init__(self) -> None:
         if not (0.0 <= self.coverage_68 <= 1.0):
-            raise ValueError(
-                f"coverage_68 must be in [0, 1]; got {self.coverage_68}"
-            )
+            raise ValueError(f"coverage_68 must be in [0, 1]; got {self.coverage_68}")
         if self.credible_radius_deg < 0:
             raise ValueError(
                 f"credible_radius_deg must be ≥ 0; got {self.credible_radius_deg}"

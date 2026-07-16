@@ -1,0 +1,264 @@
+{
+  "schema_version": 1,
+  "run_id": "pr122-final-review-20260716",
+  "assignment_id": "A-PR122-PHYSSTAT",
+  "context_version": "548a657c36099f1b2b58b7fd378a39c69e9be9952e843ff48101d5a006deae09",
+  "independence_mode": "blind-results",
+  "status": "fail",
+  "result_path": ".agent-harness/runs/pr122-final-review-20260716/results/A-PR122-PHYSSTAT.json",
+  "summary": "The PR-122 no-promotion firewall is scientifically sound in the declared evidence: process, evidence, and scientific status remain orthogonal; scientific status is OPEN; claim release is false; correlated internal principals cannot promote science; MES and D2 authority remain blocked; and no native/family/posterior claim is created. Final closeout nevertheless fails because the publication freeze pins stale PR-122 closure, graph, receipt, and MES-scan hashes while asserting exact receipt consumption, and because the governing roadmap's PR-150 card still mandates PR4/NPIPE download and analysis despite the frozen complete-skip instruction.",
+  "governing_claim_ids": [
+    "C-PR122-NONPROMOTION",
+    "C-PR4-SKIP"
+  ],
+  "steelman": {
+    "no_promotion": "The design is strong: the v2 spec openly records that it is a post-implementation amendment and cannot establish preregistration or RESCUED status; it caps the artifact at exploratory C1 governance mechanics; an immutable exact-scope authority snapshot separates author and adjudicator roles while marking both as correlated internal identities unable to promote science; the closure keeps mechanics PASS separate from scientific OPEN and claim_release_allowed=false; MES/D2 remain explicitly blocked pending PR-124; the publication freeze and semantic guard prohibit native, family, MIO-posterior, and statistical-validation promotion.",
+    "pr4_skip": "The latest PR-122 spec gives the user-directed data boundary an explicit typed firewall: PR4 download is not started, all PR4 work is skipped, and download/intake/reduction/analysis are forbidden. The closure records commands_run=0 and no data work, while BLOCKERS.md bars any combined PR3+PR4 inference. This is the correct fail-closed posture and should supersede older planning text.",
+    "family_identification_gate": {
+      "requested_claim_tier": "C1 governance mechanics only",
+      "allowed_claim_tier": "exploratory C1; diagnostic-only blocked inventories may be disclosed",
+      "missing_gates": [
+        "authenticated native low-ell morphology atlas",
+        "matched mask/null/covariance and equivalence-class gates",
+        "external independent scientific adjudication"
+      ],
+      "verdict": "No C5/C6 morphology compatibility, geometry, family-identification, posterior, evidence, or detection claim is allowed or present in the core PR-122 closure."
+    }
+  },
+  "claim_results": [
+    {
+      "claim_id": "C-PR122-NONPROMOTION",
+      "verdict": "pass",
+      "evidence_fingerprint": "pr122_spec:eab2fc002d85522a33f83a3039144fc66d3cb4b5cfafc16fb66efe653d671e87|authority_snapshot:7841941e66ea1ef2de88855c512ceef8235041066cbe3aa2f36c84d1c07f57cc|closure:acba9616e5941f058090e2f7c21b1fed2b75026b60a64f5d3fcbd46ea5da1526|mes_scan:1d5f9379e905fecdfa2c6ef4f9252d1d7056b57cd649de8c7e2e10223875337c",
+      "basis": [
+        "pr122_spec.yaml:1-26 and 74-103 cap scope at exploratory C1 governance mechanics with scientific_effect=none and no statistical estimand validation.",
+        "pr122_spec.yaml:188-213 and pr122_authority_snapshot.yaml:25-58 identify the reviewer as correlated internal, unverified, and forbidden to promote scientific status.",
+        "pr122_claim_closure_report.json:17-18, 20-59, 110-160, 163-174, and 201-323 keep claim release false, scientific status OPEN, D2 blocked, MES blocked, and release closure ineligible.",
+        "publication_claim_freeze.md:45-66 and 116-122 preserves transfer, MIO/HTT, native-atlas, family-ID, and publication boundaries, notwithstanding the stale-hash defect below.",
+        "admissibility_status.py:55-61 and 206-235 labels observable adequacy as semantic-only and explicitly excludes statistical validation, transfer provenance, native morphology, and family identification."
+      ],
+      "residual_risk": "The declared inputs assert that all 102 remediation rows remain OPEN, but the 102-row authority root itself was not an allowed input; this audit therefore verifies the no-promotion mechanism and consistent OPEN assertions, not a row-by-row recount."
+    },
+    {
+      "claim_id": "C-PR4-SKIP",
+      "verdict": "fail",
+      "evidence_fingerprint": "context:D-PR4-SKIP|roadmap:b64847e8aa0f2165b09662d2862aeea117b5ace2039044feae815e09c28a2f5b:624-630|spec:eab2fc002d85522a33f83a3039144fc66d3cb4b5cfafc16fb66efe653d671e87:648-656|closure:acba9616e5941f058090e2f7c21b1fed2b75026b60a64f5d3fcbd46ea5da1526:196-200",
+      "basis": [
+        "The current context pack at lines 98 and 113 freezes a zero-command, complete PR4 skip that can be reopened only by new explicit user direction plus authenticated inputs.",
+        "pr122_spec.yaml:648-656 forbids PR4 download, intake, reduction, and analysis; pr122_claim_closure_report.json:196-200 records commands_run=0; BLOCKERS.md:17-19 prohibits combined PR3+PR4 inference.",
+        "The governing roadmap contradicts that boundary at lines 624-630: PR-150 requires both FFP10(PR3) and NPIPE(PR4), instructs a later PR4 download and analysis, calls PR4 mandatory rather than optional, names a PR4 size probe, and gives a combined PR3+PR4 C3 ceiling."
+      ],
+      "consequence": "The present artifact assertion of zero PR4 commands is plausible, but the complete-skip posture is not coherent across its governing instructions. A future agent following the roadmap could directly violate the user's frozen scope.",
+      "required_resolution": "Reconcile or supersede the PR-150 roadmap card so no PR4/NPIPE download, intake, reduction, size probe, cache workflow, analysis, or combined PR3+PR4 claim remains executable without a new explicit user decision. Preserve PR3/FFP10 analysis as a separate PR-150 lane if authorized."
+    }
+  ],
+  "findings": [
+    {
+      "rank": 1,
+      "finding_id": "PR122-PHYSSTAT-001",
+      "claim_id": "C-PR122-NONPROMOTION",
+      "severity": "P0",
+      "axis": "release_consumer_integrity_and_claim_provenance",
+      "verdict": "fail",
+      "title": "Publication freeze asserts exact PR-122 consumption while pinning stale PR-122 artifacts",
+      "evidence_fingerprint": "freeze:c0b92d74cda1dc72c5ab9cd106edace3b21f43b0f7588f7cc56fbabb3da09747|closure_expected:7465abab7631c7e74b1db56ceca2f404fd47d44f2ac07e62f779b17f65289996|closure_actual:acba9616e5941f058090e2f7c21b1fed2b75026b60a64f5d3fcbd46ea5da1526|scan_expected:2a2358f2e2787a7c356f149e0764083c3cc6d665d1466ccb786ffb07810c9824|scan_actual:1d5f9379e905fecdfa2c6ef4f9252d1d7056b57cd649de8c7e2e10223875337c",
+      "evidence": [
+        "publication_claim_freeze.md:22 pins pr122_claim_closure_report.json to 7465abab..., but sha256sum returns acba9616....",
+        "publication_claim_freeze.md:25 pins pr122_mes_successor_scan.json to 2a2358f2..., but sha256sum returns 1d5f9379....",
+        "CONTEXT_PACK.md:70-71 identifies the current graph and release-receipt hashes as c82c686f... and 3766b160..., while publication_claim_freeze.md:24 and 27 pins 33913d83... and 0e81d6b7....",
+        "publication_claim_freeze.md:81-82 nevertheless reports claim_release_blocked_by_evidence_graph=True and exact_claim_evidence_receipt_consumed=True.",
+        "pr122_spec.yaml:229-231 and 410-422 requires exact consumer binding; lines 263-268 make stale/invalid integrity hidden by policy a decisive falsifier."
+      ],
+      "consequence": "The freeze is not a current exact consumer of the declared PR-122 fixed point. Expected BLOCKED scientific policy cannot launder stale integrity, so G-PR122-FINAL-CONSUMERS and PR-122 closeout must remain failed even though no scientific promotion occurred.",
+      "required_resolution": "After the current graph/closure/receipt/MES artifacts are final, rebuild the publication freeze through the source-only launcher, verify every pinned path/hash/receipt ID/version, and rerun its check mode. Do not manually update hashes."
+    },
+    {
+      "rank": 2,
+      "finding_id": "PR122-PHYSSTAT-002",
+      "claim_id": "C-PR4-SKIP",
+      "severity": "P0",
+      "axis": "user_scope_and_data_governance",
+      "verdict": "fail",
+      "title": "PR-150 roadmap card still mandates the forbidden PR4/NPIPE data lane",
+      "evidence_fingerprint": "context:548a657c36099f1b2b58b7fd378a39c69e9be9952e843ff48101d5a006deae09:98,113|roadmap:b64847e8aa0f2165b09662d2862aeea117b5ace2039044feae815e09c28a2f5b:624-630|spec:eab2fc002d85522a33f83a3039144fc66d3cb4b5cfafc16fb66efe653d671e87:648-656",
+      "evidence": [
+        "The frozen context and current spec require a complete zero-command PR4 skip.",
+        "The roadmap requires both PR3 and PR4 ensembles, a PR4 download, a PR4 size-probe decision, PR4 null analysis, and a combined C3 output; it explicitly says PR4 is mandatory, not optional."
+      ],
+      "consequence": "The current run can honestly report commands_run=0, but the repository's governing execution plan still contains an instruction that would violate user scope.",
+      "required_resolution": "Downscope/replan PR-150 before it becomes runnable, with an explicit supersession note and no inferred PR4 completion or PR3+PR4 result."
+    },
+    {
+      "rank": 3,
+      "finding_id": "PR122-PHYSSTAT-003",
+      "claim_id": "C-PR122-NONPROMOTION",
+      "severity": "P2",
+      "axis": "ownership",
+      "verdict": "fail",
+      "title": "Human claim ledger conflates canonical owner and contributor",
+      "evidence_fingerprint": "claim_ledger:c4f2934e9b08dba2903961b8025681e1382e0cdbfb6ef01afbb1b10cc0e5ee4c:9|spec:eab2fc002d85522a33f83a3039144fc66d3cb4b5cfafc16fb66efe653d671e87:6-11",
+      "evidence": [
+        "pr122_spec.yaml:6-11 correctly records owner COMMON, contributor HTT, and implementation scopes common/htt.",
+        "CLAIM_LEDGER.md:9 instead records Owner as COMMON/HTT.",
+        "The roadmap at lines 110-112 requires one canonical owner and separate contributors/adjudicator/implementation scope."
+      ],
+      "consequence": "The ledger weakens the ownership boundary and makes automated or human interpretation of the PR-122 claim owner ambiguous.",
+      "required_resolution": "Record COMMON as the sole owner and HTT as contributor/subject scope in a separate field or caveat."
+    },
+    {
+      "rank": 4,
+      "finding_id": "PR122-PHYSSTAT-004",
+      "claim_id": "C-PR122-NONPROMOTION",
+      "severity": "P2",
+      "axis": "test_number_provenance",
+      "verdict": "fail",
+      "title": "Claim ledger publishes an unbound 195-test integration count",
+      "evidence_fingerprint": "claim_ledger:c4f2934e9b08dba2903961b8025681e1382e0cdbfb6ef01afbb1b10cc0e5ee4c:9|closure:acba9616e5941f058090e2f7c21b1fed2b75026b60a64f5d3fcbd46ea5da1526:325-608",
+      "evidence": [
+        "CLAIM_LEDGER.md:9 cites a 132-test authoritative receipt and a 195-test consumer integration count without a path/hash/selector/environment receipt for the latter.",
+        "pr122_claim_closure_report.json:325-608 binds only the 132 collected and 132 executed authoritative receipt."
+      ],
+      "consequence": "The additional count is not reproducibly attributable from the assignment-declared evidence and can drift independently of the content-addressed graph.",
+      "required_resolution": "Either bind the 195-test suite to an exact execution receipt with selector/environment hashes or remove the count and cite the reproducible check command without a manual number."
+    },
+    {
+      "rank": 5,
+      "finding_id": "PR122-PHYSSTAT-005",
+      "claim_id": "C-PR122-NONPROMOTION",
+      "severity": "P3",
+      "axis": "claim_tier_clarity",
+      "verdict": "advisory",
+      "title": "Publication freeze labels roadmap C-levels as Tier without distinguishing canonical ClaimTier",
+      "evidence_fingerprint": "freeze:c0b92d74cda1dc72c5ab9cd106edace3b21f43b0f7588f7cc56fbabb3da09747:3-8,103-114|roadmap:b64847e8aa0f2165b09662d2862aeea117b5ace2039044feae815e09c28a2f5b:66-76",
+      "evidence": [
+        "publication_claim_freeze.md:3-8 gives the artifact canonical claim_tier diagnostic_only, while the table at lines 103-114 uses a column named Tier containing C1-C4 roadmap levels.",
+        "The roadmap at lines 66-76 explicitly says the C0-C6 ladder and canonical ClaimTier are not one ordered enum."
+      ],
+      "consequence": "Readers can mistake scientific level C2/C4 for canonical conditional/validated status even though caveats correctly downclaim the rows.",
+      "required_resolution": "Rename the table column to Scientific level and, where material, add a separate canonical ClaimTier column."
+    }
+  ],
+  "passing_boundaries": [
+    "All core PR-122 artifacts keep COMMON ownership for release mechanics; HTT remains a contributor/consumer rather than a scientific authority for PR-122.",
+    "MIO diagnostics remain separate from HTT inference and cannot create posterior odds or evidence.",
+    "Existing EGS3/MES PASS is treated as diagnostic process evidence only; 22 active MES consumers remain blocked and the typed successor is missing pending PR-124.",
+    "D2 nonzero independent Rust authority remains NOT_RUN/BLOCKED pending PR-124.",
+    "External/proxy transfer is not relabeled native; native low-ell morphology support is absent.",
+    "No exact forbidden production phrase was found in the declared evidence set.",
+    "No CAS audit was needed because PR-122 introduces no mathematical or physical derivation."
+  ],
+  "residual_risks": [
+    "The 102-row OPEN count was not independently recounted because the authority root was not a declared input.",
+    "commands_run=0 for PR4 is a generated assertion, not an append-only shell-history proof in the declared evidence set; no repo-wide discovery was permitted. The roadmap contradiction is independently sufficient to fail complete-skip coherence.",
+    "The current publication freeze may contain additional stale PR-122 pins beyond the four directly cross-checkable mismatches; all pins should be revalidated by the owner after regeneration.",
+    "Correlated internal author/reviewer separation is useful process review but is not external scientific independence."
+  ],
+  "risks_and_kill_switches": [
+    "PR-122 remains open and all downstream release operations stop while an exact consumer is stale.",
+    "No PR4/NPIPE command may run; any future PR-150 action remains limited to the explicitly authorized PR3/FFP10 lane until the user changes scope.",
+    "No MES-dependent active release may pass until PR-124 provides verified typed theorem/convention authority and all active consumers traverse it.",
+    "No scientific status promotion may be inferred from PASS process receipts, audit packaging, DAG completion, internal review, or semantic adequacy metadata."
+  ],
+  "proposed_changes_for_main_writer": [
+    "Regenerate and check publication_claim_freeze.md after the final PR-122 fixed point; verify the current graph, receipt, parent, closure, manifest, verifier, test execution, and MES scan hashes.",
+    "Reconcile the PR-150 roadmap card with D-PR4-SKIP and pr122_spec.data_scope before PR-123/checkpoint handoff can make that card reachable.",
+    "Normalize CLAIM_LEDGER.md PR-122 owner to COMMON with HTT recorded separately as contributor, and remove or receipt-bind the 195-test count.",
+    "Rename the publication-freeze claim table's Tier column to Scientific level or split the two tier systems."
+  ],
+  "tests_to_run_after_owner_changes": [
+    "scripts/codex_harness/run_pr122_source_only.sh scripts/check_publication_claim_freeze.py --check",
+    "sha256sum docs/generated/pr122_claim_closure_report.json docs/generated/pr122_mes_successor_scan.json and compare against the regenerated freeze input_hashes",
+    "targeted claim-language scan over the reconciled roadmap, spec, freeze, ledger, and blockers",
+    "targeted PR4/NPIPE text scan confirming only skip/prohibition/historical-superseded language remains in active governing instructions"
+  ],
+  "artifact_status_updates_needed": [
+    "Keep G-PR122-FINAL-CONSUMERS failed/pending until the freeze is rebuilt and exact-hash checked.",
+    "Keep all 102 remediation findings OPEN; this audit creates no rescue or scientific disposition.",
+    "Keep MES and D2 authority blocked pending PR-124.",
+    "Record the roadmap PR4 conflict as an active scope blocker until reconciled."
+  ],
+  "evidence_read": [
+    {
+      "path": ".agent-harness/generated/CONTEXT_PACK.md",
+      "sha256": "debfe8f97bde913607c1e2ad95468e22aad0dcc13c8428c2f9cf730da90a02a3"
+    },
+    {
+      "path": ".agent-harness/runs/pr122-final-review-20260716/assignments/A-PR122-PHYSSTAT.json",
+      "sha256": "3f725233a0abf2d1c50996d0f245ab47151061e6a5d5a511f24392140b2718de"
+    },
+    {
+      "path": "docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md",
+      "sha256": "b64847e8aa0f2165b09662d2862aeea117b5ace2039044feae815e09c28a2f5b"
+    },
+    {
+      "path": "docs/research_program/long_horizon_rescue/pr122_spec.yaml",
+      "sha256": "eab2fc002d85522a33f83a3039144fc66d3cb4b5cfafc16fb66efe653d671e87"
+    },
+    {
+      "path": "docs/research_program/long_horizon_rescue/pr122_active_mes_consumers.yaml",
+      "sha256": "d8a477e1b7a02132b75a61c9ce273bfb0a20c63d4e2d3b971ce364155de13d71"
+    },
+    {
+      "path": "docs/research_program/long_horizon_rescue/pr122_authority_snapshot.yaml",
+      "sha256": "7841941e66ea1ef2de88855c512ceef8235041066cbe3aa2f36c84d1c07f57cc"
+    },
+    {
+      "path": "docs/generated/pr122_claim_closure_report.json",
+      "sha256": "acba9616e5941f058090e2f7c21b1fed2b75026b60a64f5d3fcbd46ea5da1526"
+    },
+    {
+      "path": "docs/generated/pr122_mes_successor_scan.json",
+      "sha256": "1d5f9379e905fecdfa2c6ef4f9252d1d7056b57cd649de8c7e2e10223875337c"
+    },
+    {
+      "path": "docs/generated/publication_claim_freeze.md",
+      "sha256": "c0b92d74cda1dc72c5ab9cd106edace3b21f43b0f7588f7cc56fbabb3da09747"
+    },
+    {
+      "path": "docs/harness/CLAIM_LEDGER.md",
+      "sha256": "c4f2934e9b08dba2903961b8025681e1382e0cdbfb6ef01afbb1b10cc0e5ee4c"
+    },
+    {
+      "path": "docs/harness/BLOCKERS.md",
+      "sha256": "5bb843bf16852acf8caa5c131e6cc5265dd0a581f2c538050ed66f555595a0fe"
+    },
+    {
+      "path": "htt/src/common/semantic_guards/admissibility_status.py",
+      "sha256": "71ab01853f84cd111ba5f488f6a0f8c10e1aacd9cccc7aaa661c8a1b59f61b4b"
+    }
+  ],
+  "commands": [
+    {
+      "command": "sha256sum <all assignment-declared inputs>",
+      "exit_code": 0,
+      "purpose": "Bind the reviewed evidence and expose stale publication-freeze pins."
+    },
+    {
+      "command": "jq targeted projections of pr122_claim_closure_report.json and pr122_mes_successor_scan.json",
+      "exit_code": 0,
+      "purpose": "Audit process/evidence/science axes, MES blockers, release eligibility, test counts, and PR4 firewall without executing production code."
+    },
+    {
+      "command": "rg targeted PR4/NPIPE consistency scan over assignment-declared inputs",
+      "exit_code": 0,
+      "purpose": "Compare frozen skip policy against governing roadmap instructions."
+    },
+    {
+      "command": "rg exact forbidden-claim phrase scan over assignment-declared inputs",
+      "exit_code": 1,
+      "purpose": "Confirm no exact forbidden production phrase was present; ripgrep exit 1 means no matches."
+    }
+  ],
+  "tool_versions": {
+    "python": "3.12.3",
+    "jq": "1.7",
+    "ripgrep": "14.1.0",
+    "sha256sum": "GNU coreutils 9.4"
+  },
+  "assumptions": [
+    "The context pack and assignment were current and matched context version 548a657c....",
+    "No sibling result was read.",
+    "Only assignment-declared evidence files were used for substantive evidence; repo-local skills supplied review criteria only.",
+    "No repository-wide PR4 artifact discovery, command-history audit, integration suite, network access, or CAS derivation was performed."
+  ]
+}

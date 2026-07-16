@@ -10,7 +10,18 @@ from __future__ import annotations
 
 from collections.abc import Sequence
 from dataclasses import dataclass, field, replace
-from enum import StrEnum
+from enum import Enum
+
+try:  # Python 3.11+
+    from enum import StrEnum
+except ImportError:  # pragma: no cover - exercised by the Python 3.10 replay
+
+    class StrEnum(str, Enum):
+        """Minimal stdlib-compatible fallback for the declared Python floor."""
+
+        def __str__(self) -> str:
+            return str(self.value)
+
 
 from common.contracts import (
     ArtifactManifest,
@@ -74,13 +85,17 @@ _CLAIM_TIER_RANK = {
 }
 
 
-def _normalize_status(enum_type: type[StrEnum], value: object, field_name: str) -> StrEnum:
+def _normalize_status(
+    enum_type: type[StrEnum], value: object, field_name: str
+) -> StrEnum:
     raw = value.value if isinstance(value, StrEnum) else str(value)
     try:
         return enum_type(raw)
     except ValueError as exc:
         allowed = ", ".join(member.value for member in enum_type)
-        raise ValueError(f"Unknown {field_name} {raw!r}; expected one of {allowed}") from exc
+        raise ValueError(
+            f"Unknown {field_name} {raw!r}; expected one of {allowed}"
+        ) from exc
 
 
 def _normalize_text_sequence(value: Sequence[str], field_name: str) -> tuple[str, ...]:
@@ -154,9 +169,13 @@ class SemanticAdequacyRecord:
         object.__setattr__(self, "semantic_guard_owner", owner)
         object.__setattr__(self, "implementation_scope", scope)
         if owner is not Owner.COMMON:
-            raise ValueError("SemanticAdequacyRecord.semantic_guard_owner must be COMMON")
+            raise ValueError(
+                "SemanticAdequacyRecord.semantic_guard_owner must be COMMON"
+            )
         if scope is not ImplementationScope.COMMON:
-            raise ValueError("SemanticAdequacyRecord.implementation_scope must be common")
+            raise ValueError(
+                "SemanticAdequacyRecord.implementation_scope must be common"
+            )
         if observable_status is ObservableAdequacyStatus.ADEQUATE:
             if source_status is not SourceAdequacyStatus.ADEQUATE:
                 raise ValueError(

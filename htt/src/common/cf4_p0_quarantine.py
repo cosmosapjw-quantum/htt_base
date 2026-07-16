@@ -6,10 +6,11 @@ truth, or advance any scientific finding beyond ``OPEN``.  The same typed,
 content-addressed validator is shared by producer wrappers, publication
 freeze, and package builders.
 """
+
 from __future__ import annotations
 
 import copy
-from enum import StrEnum
+from enum import Enum
 import hashlib
 import json
 import os
@@ -19,9 +20,21 @@ import subprocess
 import tempfile
 from dataclasses import dataclass
 from pathlib import Path, PurePosixPath
+from types import MappingProxyType
 from typing import Any, Mapping, Sequence
 
 import yaml
+
+try:  # Python 3.11+
+    from enum import StrEnum
+except ImportError:  # pragma: no cover - exercised by the Python 3.10 replay
+
+    class StrEnum(str, Enum):
+        """Minimal stdlib-compatible fallback for the declared Python floor."""
+
+        def __str__(self) -> str:
+            return str(self.value)
+
 
 from .package_binary_binding import (
     BINARY_SUFFIXES,
@@ -177,7 +190,8 @@ _EXPECTED_DETERMINISTIC_RELEASE_OUTPUTS: Mapping[str, Mapping[str, str]] = {
         "builder_path": "scripts/build_external_audit_package.py",
         "manifest_path": "docs/generated/external_audit_package_manifest.json",
         "check_command": (
-            "venv/bin/python scripts/build_external_audit_package.py --check"
+            "scripts/codex_harness/run_pr122_source_only.sh "
+            "scripts/build_external_audit_package.py --check"
         ),
     },
     "docs/generated/research_only_external_audit_package.zip": {
@@ -260,7 +274,9 @@ class QuarantineContent:
         try:
             mode = ContentMode(self.mode)
         except ValueError as exc:
-            raise CF4P0PolicyError(f"unknown package content mode {self.mode!r}") from exc
+            raise CF4P0PolicyError(
+                f"unknown package content mode {self.mode!r}"
+            ) from exc
         object.__setattr__(self, "mode", mode)
         object.__setattr__(
             self,
@@ -272,6 +288,19 @@ class QuarantineContent:
             "source_sha256",
             _require_sha256(self.source_sha256, "package content source_sha256"),
         )
+
+
+@dataclass(frozen=True)
+class ReviewedActiveBinaryPinSnapshot:
+    """One validated, build-local view of reviewed active-binary pins.
+
+    The snapshot deliberately has no module-global cache. Package builders may
+    reuse it only within one payload construction and must recheck the policy
+    byte hash before returning the rows that consumed it.
+    """
+
+    policy_sha256: str
+    pins: Mapping[str, tuple[str, str]]
 
 
 @dataclass(frozen=True)
@@ -421,9 +450,7 @@ def _assert_regular_nonsymlink(
                     f"{label} parent is not a directory: {normalized}"
                 )
         elif not stat.S_ISREG(info.st_mode):
-            raise CF4P0PolicyError(
-                f"{label} must be a regular file: {normalized}"
-            )
+            raise CF4P0PolicyError(f"{label} must be a regular file: {normalized}")
     return current
 
 
@@ -543,9 +570,7 @@ def load_policy(
     path = Path(policy_path) if policy_path is not None else root / POLICY_RELATIVE_PATH
     if not path.is_absolute():
         path = root / path
-    raw_policy = _read_absolute_regular_bytes(
-        path, label="CF4 P0 quarantine policy"
-    )
+    raw_policy = _read_absolute_regular_bytes(path, label="CF4 P0 quarantine policy")
     try:
         payload = yaml.safe_load(raw_policy.decode("utf-8"))
     except (UnicodeError, yaml.YAMLError) as exc:
@@ -573,9 +598,7 @@ def load_policy(
     ids = []
     for index, record in enumerate(findings):
         if not isinstance(record, Mapping):
-            raise CF4P0PolicyError(
-                f"required_open_findings[{index}] must be a mapping"
-            )
+            raise CF4P0PolicyError(f"required_open_findings[{index}] must be a mapping")
         finding_id = str(record.get("finding_id", ""))
         ids.append(finding_id)
         _require_sha256(
@@ -675,9 +698,7 @@ def load_policy(
             "package_content_modes.governance_control_paths must be a sequence"
         )
     normalized_governance = [
-        _normal_relative_path(
-            value, "package_content_modes.governance_control_paths"
-        )
+        _normal_relative_path(value, "package_content_modes.governance_control_paths")
         for value in governance_paths
     ]
     if len(normalized_governance) != len(set(normalized_governance)):
@@ -843,9 +864,10 @@ def load_policy(
             raise CF4P0PolicyError(
                 f"deterministic release manifest is invalid: {manifest_path}: {exc}"
             ) from exc
-        if not isinstance(manifest, Mapping) or manifest.get(
-            "artifact_path"
-        ) != output_path:
+        if (
+            not isinstance(manifest, Mapping)
+            or manifest.get("artifact_path") != output_path
+        ):
             raise CF4P0PolicyError(
                 f"deterministic release manifest does not name {output_path}"
             )
@@ -882,10 +904,7 @@ def load_policy(
         if mode == "active_block_consumer":
             active_consumer_paths.add(normalized)
     missing_release_builders = sorted(
-        {
-            str(record["builder_path"])
-            for record in deterministic_outputs.values()
-        }
+        {str(record["builder_path"]) for record in deterministic_outputs.values()}
         - active_consumer_paths
     )
     if missing_release_builders:
@@ -915,7 +934,9 @@ def load_policy(
         ]
         to_paths = edge.get("to_paths")
         if not isinstance(to_paths, Sequence) or isinstance(to_paths, (str, bytes)):
-            raise CF4P0PolicyError(f"lineage_edges[{index}].to_paths must be a sequence")
+            raise CF4P0PolicyError(
+                f"lineage_edges[{index}].to_paths must be a sequence"
+            )
         endpoints.extend(
             _normal_relative_path(value, f"lineage_edges[{index}].to_paths")
             for value in to_paths
@@ -929,13 +950,9 @@ def load_policy(
         covered_consumers.update(endpoints[1:])
         finding_ids = tuple(str(value) for value in edge.get("finding_ids", ()))
         if not finding_ids or not set(finding_ids).issubset(_EXPECTED_FINDINGS):
-            raise CF4P0PolicyError(
-                f"lineage edge {edge_id!r} has invalid finding IDs"
-            )
+            raise CF4P0PolicyError(f"lineage edge {edge_id!r} has invalid finding IDs")
         if not str(edge.get("disposition", "")).strip():
-            raise CF4P0PolicyError(
-                f"lineage edge {edge_id!r} requires a disposition"
-            )
+            raise CF4P0PolicyError(f"lineage edge {edge_id!r} requires a disposition")
 
     missing_lineage = sorted(active_consumer_paths - covered_consumers)
     if missing_lineage:
@@ -995,9 +1012,7 @@ def _validate_open_roots(
     if not isinstance(rows, Sequence) or isinstance(rows, (str, bytes)):
         raise CF4P0PolicyError("remediation root findings must be a sequence")
     by_id = {
-        str(row.get("finding_id")): row
-        for row in rows
-        if isinstance(row, Mapping)
+        str(row.get("finding_id")): row for row in rows if isinstance(row, Mapping)
     }
     for required in root_policy["required_open_findings"]:
         finding_id = required["finding_id"]
@@ -1080,7 +1095,9 @@ def _repository_candidate_paths(root: Path) -> tuple[str, ...]:
             check=False,
         )
     except OSError as exc:
-        raise CF4P0PolicyError(f"cannot enumerate repository paths with Git: {exc}") from exc
+        raise CF4P0PolicyError(
+            f"cannot enumerate repository paths with Git: {exc}"
+        ) from exc
     if completed.returncode != 0:
         raise CF4P0PolicyError(
             "exhaustive CF4 quarantine scan requires a readable Git worktree"
@@ -1097,9 +1114,7 @@ def _repository_candidate_paths(root: Path) -> tuple[str, ...]:
     return tuple(sorted(result))
 
 
-def _active_binary_paths(
-    root: Path, policy: Mapping[str, Any]
-) -> tuple[str, ...]:
+def _active_binary_paths(root: Path, policy: Mapping[str, Any]) -> tuple[str, ...]:
     """Return every active/public binary outside typed historical lanes."""
 
     result: list[str] = []
@@ -1120,9 +1135,7 @@ def _binary_inventory_entry(
 ) -> Mapping[str, Any]:
     """Validate an active binary without embedding self-referential output bytes."""
 
-    deterministic = policy["inventory"]["deterministic_release_outputs"].get(
-        relative
-    )
+    deterministic = policy["inventory"]["deterministic_release_outputs"].get(relative)
     if isinstance(deterministic, Mapping):
         return {
             "path": relative,
@@ -1210,14 +1223,18 @@ def _walk_regular_tree(root: Path, relative_root: str) -> tuple[str, ...]:
         try:
             entries = sorted(os.scandir(directory), key=lambda value: value.name)
         except OSError as exc:
-            raise CF4P0PolicyError(f"cannot enumerate tree {normalized_root}: {exc}") from exc
+            raise CF4P0PolicyError(
+                f"cannot enumerate tree {normalized_root}: {exc}"
+            ) from exc
         for entry in entries:
             path = Path(entry.path)
             relative = _repo_relative(path, root, "tree entry")
             try:
                 info = path.lstat()
             except OSError as exc:
-                raise CF4P0PolicyError(f"cannot inspect tree entry {relative}: {exc}") from exc
+                raise CF4P0PolicyError(
+                    f"cannot inspect tree entry {relative}: {exc}"
+                ) from exc
             if stat.S_ISLNK(info.st_mode):
                 raise CF4P0PolicyError(
                     f"tree entry cannot be a symlink component: {relative}"
@@ -1253,7 +1270,9 @@ def build_inventory_payload(
                 relative=relative,
                 role=str(record["role"]),
                 mode=str(record["mode"]),
-                required_markers=tuple(str(v) for v in record.get("required_markers", ())),
+                required_markers=tuple(
+                    str(v) for v in record.get("required_markers", ())
+                ),
             )
         )
         seen.add(relative)
@@ -1312,9 +1331,7 @@ def build_inventory_payload(
         ),
         "lineage_edges": lineage_edges,
         "lineage_edge_count": len(lineage_edges),
-        "stale_signature_ids": [
-            rule["id"] for rule in policy["stale_signatures"]
-        ],
+        "stale_signature_ids": [rule["id"] for rule in policy["stale_signatures"]],
         "sky_support_status": "not_applicable_to_propagation_quarantine",
         "null_mock_status": "not_applicable_quarantine_is_not_validation",
         "caveats": list(policy["caveats"]),
@@ -1515,9 +1532,9 @@ def canonical_artifact_bytes(
             inventory
         ).encode("utf-8"),
         BLOCK_RELATIVE_PATH.as_posix(): _canonical_json_bytes(block),
-        "docs/generated/cf4_p0_quarantine_block.md": render_block_markdown(block).encode(
-            "utf-8"
-        ),
+        "docs/generated/cf4_p0_quarantine_block.md": render_block_markdown(
+            block
+        ).encode("utf-8"),
     }
 
 
@@ -1575,10 +1592,17 @@ def load_block_record(
     if raw != _canonical_json_bytes(expected):
         raise CF4P0PolicyError("block record is stale or non-canonical")
     if payload.get("replacement_value") is not None:
-        raise CF4P0PolicyError("canonical block record cannot carry a replacement value")
+        raise CF4P0PolicyError(
+            "canonical block record cannot carry a replacement value"
+        )
     if payload.get("status") != "QUARANTINED_OPEN_FINDINGS":
-        raise CF4P0PolicyError("canonical block record must retain OPEN quarantine status")
-    if tuple(row["finding_id"] for row in payload.get("findings", ())) != _EXPECTED_FINDINGS:
+        raise CF4P0PolicyError(
+            "canonical block record must retain OPEN quarantine status"
+        )
+    if (
+        tuple(row["finding_id"] for row in payload.get("findings", ()))
+        != _EXPECTED_FINDINGS
+    ):
         raise CF4P0PolicyError("canonical block record finding roots drifted")
     if inventory.get("remediation_root_sha256") != root_hash:
         raise CF4P0PolicyError("inventory remediation root binding drifted")
@@ -1775,9 +1799,10 @@ def _validate_artifact_schema(
         )
 
     artifact_id = artifact.get("artifact_id")
-    if not isinstance(artifact_id, str) or re.fullmatch(
-        r"[A-Za-z0-9_.-]+", artifact_id
-    ) is None:
+    if (
+        not isinstance(artifact_id, str)
+        or re.fullmatch(r"[A-Za-z0-9_.-]+", artifact_id) is None
+    ):
         issues.append(
             _artifact_issue(
                 path,
@@ -1849,9 +1874,11 @@ def _validate_artifact_schema(
                 )
     legacy_many = artifact.get("legacy_reproduction_only")
     if legacy_many is not None:
-        if not isinstance(legacy_many, Sequence) or isinstance(
-            legacy_many, (str, bytes)
-        ) or not legacy_many:
+        if (
+            not isinstance(legacy_many, Sequence)
+            or isinstance(legacy_many, (str, bytes))
+            or not legacy_many
+        ):
             issues.append(
                 _artifact_issue(
                     path,
@@ -1883,9 +1910,10 @@ def _validate_artifact_schema(
                         )
                     )
 
-    if str(kind).startswith("figure_") and artifact.get(
-        "active_png_status"
-    ) != "ABSENT_BY_QUARANTINE":
+    if (
+        str(kind).startswith("figure_")
+        and artifact.get("active_png_status") != "ABSENT_BY_QUARANTINE"
+    ):
         issues.append(
             _artifact_issue(
                 path,
@@ -2305,6 +2333,46 @@ def reviewed_active_binary_sidecar_pin(
     return str(record["sidecar_path"]), str(record["sidecar_sha256"])
 
 
+def reviewed_active_binary_sidecar_pin_snapshot(
+    repo_root: Path | str | None,
+) -> ReviewedActiveBinaryPinSnapshot:
+    """Load and validate all reviewed pins once for one package build."""
+
+    root = Path(repo_root or repository_root()).resolve()
+    policy, policy_sha256 = load_policy(root)
+    records = policy["inventory"]["reviewed_active_binary_sidecars"]
+    pins = {
+        str(source_path): (
+            str(record["sidecar_path"]),
+            str(record["sidecar_sha256"]),
+        )
+        for source_path, record in records.items()
+    }
+    return ReviewedActiveBinaryPinSnapshot(
+        policy_sha256=policy_sha256,
+        pins=MappingProxyType(pins),
+    )
+
+
+def assert_reviewed_active_binary_pin_snapshot_current(
+    repo_root: Path | str | None,
+    snapshot: ReviewedActiveBinaryPinSnapshot,
+) -> None:
+    """Fail if canonical policy bytes changed while a build used ``snapshot``."""
+
+    root = Path(repo_root or repository_root()).resolve()
+    policy_bytes = _read_absolute_regular_bytes(
+        root / POLICY_RELATIVE_PATH,
+        label="CF4 P0 quarantine policy snapshot recheck",
+    )
+    current_sha256 = _sha256_bytes(policy_bytes)
+    if current_sha256 != snapshot.policy_sha256:
+        raise CF4P0PolicyError(
+            "CF4 P0 quarantine policy changed during package construction: "
+            f"expected {snapshot.policy_sha256}, got {current_sha256}"
+        )
+
+
 def _is_exact_generated_contract_payload(
     root: Path,
     content: str | bytes,
@@ -2319,9 +2387,7 @@ def _is_exact_generated_contract_payload(
     falls back to the ordinary active/public scan.
     """
 
-    content_bytes = (
-        content.encode("utf-8") if isinstance(content, str) else content
-    )
+    content_bytes = content.encode("utf-8") if isinstance(content, str) else content
     for relative in policy["scan"].get("generated_contract_paths", ()):
         try:
             source_bytes = _read_regular_bytes(
@@ -2336,9 +2402,7 @@ def _is_exact_generated_contract_payload(
     return False
 
 
-def _active_repository_paths(
-    root: Path, policy: Mapping[str, Any]
-) -> tuple[str, ...]:
+def _active_repository_paths(root: Path, policy: Mapping[str, Any]) -> tuple[str, ...]:
     """Enumerate every candidate; exceptions apply only after component checks."""
 
     del policy  # The caller must not apply content exceptions before path safety.

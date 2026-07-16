@@ -1,0 +1,161 @@
+{
+  "schema_version": 1,
+  "run_id": "pr122-final-review-20260716",
+  "assignment_id": "A-PR122-FINAL-ADJ",
+  "agent_type": "adjudicator",
+  "context_version": "548a657c36099f1b2b58b7fd378a39c69e9be9952e843ff48101d5a006deae09",
+  "independence_mode": "adjudication",
+  "status": "pass",
+  "result_path": ".agent-harness/runs/pr122-final-review-20260716/results/A-PR122-FINAL-ADJ.json",
+  "summary": "All nine corrective findings are certified closed. The original fixed-point and build-local-cache passes remain accepted, the PR4 zero-command boundary and nonpromotion boundary pass, and no new corrective defect remains. PR-122 final acceptance is still pending only on the expected CF4, publication-freeze, and external-audit-package reseal/check sequence; HARN-004 remains a nonblocking lifecycle-coverage risk.",
+  "final_acceptance": {
+    "verdict": "conditional_pass_pending_expected_reseal",
+    "new_corrective_defects": 0,
+    "closed_corrective_findings": 9,
+    "expected_closeout_blockers": [
+      "HARN-003",
+      "PR122-PHYSSTAT-001"
+    ],
+    "nonblocking_open_review_risks": [
+      "HARN-004"
+    ]
+  },
+  "claim_results": [
+    {
+      "claim_id": "C-PR122-MECHANICS",
+      "verdict": "pass",
+      "basis": "F-PR122-CODE-001 is closed by fail-closed schema rejection, an exact missing/unknown-schema mutation test, a 132/132 authoritative receipt, and a passing source-only fixed-point check. F-PR122-CODE-002 and F-PR122-CODE-003 remain accepted passes."
+    },
+    {
+      "claim_id": "C-HARNESS-INSTALL",
+      "verdict": "pass_corrective_scope_pending_final_consumer_reseal",
+      "basis": "HARN-001, HARN-002, HARN-005, and ADJ-PR122-MERGE-001 are closed. The current merged artifact preserves 22/22 findings with errors=[]; HARN-003 is only expected stale CF4/package consumer state, and HARN-004 is nonblocking coverage risk."
+    },
+    {
+      "claim_id": "C-PR122-NONPROMOTION",
+      "verdict": "pass_boundary_pending_freeze_reseal",
+      "basis": "PR122-PHYSSTAT-003, -004, and -005 are resolved; claim_release_allowed remains false and scientific status remains OPEN. PR122-PHYSSTAT-001 is only the expected stale publication-freeze consumer pending final reseal."
+    },
+    {
+      "claim_id": "C-PR4-SKIP",
+      "verdict": "pass",
+      "basis": "PR122-PHYSSTAT-002 is resolved: the active roadmap/backlog forbid PR4 commands and numeric derivatives, retain commands_run=0, and do not infer a joint PR3+PR4 result."
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "FINAL-ADJ-PR122-MECHANICS-001",
+      "claim_id": "C-PR122-MECHANICS",
+      "verdict": "pass",
+      "severity": "none_after_correction",
+      "evidence_fingerprint": "sha256:1fb89ad1a18e82072bfdebc12396704801a3acc0c6d64a5f06bce21be1e12d3f",
+      "statement": "The sole original mechanics failure is closed; the two original mechanics passes remain accepted."
+    },
+    {
+      "finding_id": "FINAL-ADJ-PR122-HARNESS-001",
+      "claim_id": "C-HARNESS-INSTALL",
+      "verdict": "pass",
+      "severity": "corrective_scope_closed",
+      "evidence_fingerprint": "sha256:3c53d2a3eecb15e9aac624a67e570c61d9e6f29763e8892c08add9d38c2aeac0",
+      "statement": "All assigned harness corrections and the merge-contract correction are closed; final CF4/package freshness is an expected reseal condition, not a new harness defect."
+    },
+    {
+      "finding_id": "FINAL-ADJ-PR122-NONPROMOTION-001",
+      "claim_id": "C-PR122-NONPROMOTION",
+      "verdict": "pass",
+      "severity": "boundary_intact",
+      "evidence_fingerprint": "sha256:458469b9f3dbcaf846ff42a62089e85eb5191ba2f1120617d56c4d702abf88d9",
+      "statement": "Ownership, numeric-test provenance, and tier/level wording corrections are closed; science remains OPEN and release remains blocked."
+    },
+    {
+      "finding_id": "FINAL-ADJ-PR122-PR4-SKIP-001",
+      "claim_id": "C-PR4-SKIP",
+      "verdict": "pass",
+      "severity": "scope_boundary_intact",
+      "evidence_fingerprint": "sha256:543ddf47a43db5d8ef285dc371b1e13b6d87f14ebf1168c2d83446490b53e29b",
+      "statement": "The active plan now enforces the complete PR4/NPIPE skip and contains no executable PR4-derived numeric lane."
+    }
+  ],
+  "closure_map": [
+    {
+      "original_finding": "F-PR122-CODE-001",
+      "corrective_finding": "F-PR122-CODE-001",
+      "disposition": "closed"
+    },
+    {
+      "original_finding": "HARN-001",
+      "corrective_finding": "CLOSE-HARN-001",
+      "disposition": "closed"
+    },
+    {
+      "original_finding": "HARN-002",
+      "corrective_finding": "CLOSE-HARN-002",
+      "disposition": "closed"
+    },
+    {
+      "original_finding": "HARN-005",
+      "corrective_finding": "CLOSE-HARN-005",
+      "disposition": "closed"
+    },
+    {
+      "original_finding": "ADJ-PR122-MERGE-001",
+      "corrective_finding": "CLOSE-ADJ-PR122-MERGE-001",
+      "disposition": "closed"
+    },
+    {
+      "original_finding": "PR122-PHYSSTAT-002",
+      "corrective_finding": "PR122-PHYSSTAT-002",
+      "disposition": "resolved"
+    },
+    {
+      "original_finding": "PR122-PHYSSTAT-003",
+      "corrective_finding": "PR122-PHYSSTAT-003",
+      "disposition": "resolved"
+    },
+    {
+      "original_finding": "PR122-PHYSSTAT-004",
+      "corrective_finding": "PR122-PHYSSTAT-004",
+      "disposition": "resolved"
+    },
+    {
+      "original_finding": "PR122-PHYSSTAT-005",
+      "corrective_finding": "PR122-PHYSSTAT-005",
+      "disposition": "resolved"
+    }
+  ],
+  "remaining_expected_reseal_conditions": [
+    {
+      "source_finding": "HARN-003",
+      "condition": "Regenerate and verify the canonical CF4 inventory and dependent block, then require quarantine-clean and external-audit-package check success."
+    },
+    {
+      "source_finding": "PR122-PHYSSTAT-001",
+      "condition": "After final upstream state is stable, rebuild and check the publication freeze so every graph, receipt, closure, manifest, MES, and policy pin is exact."
+    },
+    {
+      "source_finding": "Q-PR122-FINAL",
+      "condition": "Rebuild the final external audit package and shared context pack, validate the harness, and keep claim_release_allowed=false with scientific status OPEN."
+    }
+  ],
+  "residual_risks": [
+    "HARN-004 remains a nonblocking gap in live SessionStart/SubagentStart lifecycle coverage; the stop-hook contract itself is directly tested.",
+    "The Tier-0 evidence hashes must be refreshed with the final reseal before the next assignment.",
+    "PR4 commands_run=0 is repository-bound evidence rather than an operating-system forensic claim; do not broaden it.",
+    "Internal author/reviewer evidence remains correlated process evidence and cannot promote scientific status."
+  ],
+  "consistency_check": {
+    "merged_result_count": 6,
+    "raw_finding_count": 22,
+    "unique_finding_count": 22,
+    "all_duplicate_counts_one": true,
+    "errors": []
+  },
+  "inputs_used": [
+    ".agent-harness/runs/pr122-final-review-20260716/MERGED_RESULTS.json",
+    ".agent-harness/runs/pr122-final-review-20260716/results/A-PR122-CLAIM.json",
+    ".agent-harness/runs/pr122-final-review-20260716/results/A-PR122-CODE-RECHECK.json",
+    ".agent-harness/runs/pr122-final-review-20260716/results/A-PR122-HARNESS-RECHECK.json",
+    ".agent-harness/runs/pr122-final-review-20260716/results/A-PR122-CLAIMS-RECHECK.json"
+  ],
+  "errors": []
+}

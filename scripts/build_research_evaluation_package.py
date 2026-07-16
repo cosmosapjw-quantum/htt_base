@@ -38,10 +38,11 @@ if str(COMMON_ROOT) not in sys.path:
 from common.cf4_p0_quarantine import (  # noqa: E402
     ContentMode,
     QuarantineContent,
+    assert_reviewed_active_binary_pin_snapshot_current,
     read_regular_bytes,
     read_regular_text,
     repository_content,
-    reviewed_active_binary_sidecar_pin,
+    reviewed_active_binary_sidecar_pin_snapshot,
     validate_repository,
 )
 from common.package_binary_binding import (  # noqa: E402
@@ -204,7 +205,11 @@ class Entry:
         return read_regular_bytes(repo_root, self.source_path)
 
     def source_text(self) -> str:
-        return self.source_path.as_posix() if self.source_path is not None else f"virtual:{self.archive_path}"
+        return (
+            self.source_path.as_posix()
+            if self.source_path is not None
+            else f"virtual:{self.archive_path}"
+        )
 
 
 def _sha256(data: bytes) -> str:
@@ -233,12 +238,16 @@ def verify_pdf_manifest_pair(
     try:
         payload = json.loads(read_regular_text(repo_root, manifest_path))
     except (OSError, UnicodeError, json.JSONDecodeError) as exc:
-        raise ValueError(f"cannot parse PDF companion manifest {manifest_path}: {exc}") from exc
+        raise ValueError(
+            f"cannot parse PDF companion manifest {manifest_path}: {exc}"
+        ) from exc
     if not isinstance(payload, dict):
         raise ValueError(f"PDF companion manifest must be an object: {manifest_path}")
     rows = payload.get("archive_entries")
     if not isinstance(rows, list):
-        raise ValueError(f"PDF companion manifest lacks archive_entries: {manifest_path}")
+        raise ValueError(
+            f"PDF companion manifest lacks archive_entries: {manifest_path}"
+        )
     matches = [
         row
         for row in rows
@@ -312,7 +321,10 @@ def _collect_entries(repo_root: Path) -> list[Entry]:
                 raise FileNotFoundError(f"required {group} missing: {rel}")
             entries.append(_file_entry(rel, group))
     for stem in FIGURE_STEMS:
-        for suffix, grp in ((".png", "figure_payload"), (".manifest.json", "figure_manifest")):
+        for suffix, grp in (
+            (".png", "figure_payload"),
+            (".manifest.json", "figure_manifest"),
+        ):
             rel = f"{stem}{suffix}"
             if not (repo_root / rel).is_file():
                 raise FileNotFoundError(f"required figure file missing: {rel}")
@@ -323,6 +335,15 @@ def _collect_entries(repo_root: Path) -> list[Entry]:
 def _entry_rows(repo_root: Path, entries: Sequence[Entry]) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     seen: set[str] = set()
+    policy_path = (
+        repo_root
+        / "docs/research_program/long_horizon_rescue/cf4_p0_quarantine_policy.yaml"
+    )
+    reviewed_snapshot = (
+        reviewed_active_binary_sidecar_pin_snapshot(repo_root)
+        if policy_path.is_file()
+        else None
+    )
     for entry in sorted(entries, key=lambda e: e.archive_path):
         parts = Path(entry.archive_path).parts
         if entry.archive_path.startswith("/") or ".." in parts:
@@ -355,9 +376,8 @@ def _entry_rows(repo_root: Path, entries: Sequence[Entry]) -> list[dict[str, Any
         seen.add(entry.archive_path)
         data = entry.bytes(repo_root)
         reviewed_pin = (
-            reviewed_active_binary_sidecar_pin(repo_root, entry.source_path)
-            if entry.source_path is not None
-            and (repo_root / "docs/research_program/long_horizon_rescue/cf4_p0_quarantine_policy.yaml").is_file()
+            reviewed_snapshot.pins.get(entry.source_path.as_posix())
+            if entry.source_path is not None and reviewed_snapshot is not None
             else None
         )
         binary_binding = (
@@ -372,17 +392,22 @@ def _entry_rows(repo_root: Path, entries: Sequence[Entry]) -> list[dict[str, Any
             else None
         )
         row = {
-                "source_path": entry.source_text(),
-                "archive_path": entry.archive_path,
-                "group": entry.group,
-                "content_mode": entry.content_mode.value,
-                "public_use": entry.public_use,
-                "sha256": _sha256(data),
-                "size_bytes": len(data),
-            }
+            "source_path": entry.source_text(),
+            "archive_path": entry.archive_path,
+            "group": entry.group,
+            "content_mode": entry.content_mode.value,
+            "public_use": entry.public_use,
+            "sha256": _sha256(data),
+            "size_bytes": len(data),
+        }
         if binary_binding is not None:
             row["binary_binding"] = binary_binding
         rows.append(row)
+    if reviewed_snapshot is not None:
+        assert_reviewed_active_binary_pin_snapshot_current(
+            repo_root,
+            reviewed_snapshot,
+        )
     return rows
 
 
@@ -392,7 +417,10 @@ def _quarantine_package_contents(
 ) -> dict[str, bytes | QuarantineContent]:
     contents: dict[str, bytes | QuarantineContent] = {}
     for entry in entries:
-        if entry.source_path is not None and entry.content_mode is not ContentMode.ACTIVE_PUBLIC:
+        if (
+            entry.source_path is not None
+            and entry.content_mode is not ContentMode.ACTIVE_PUBLIC
+        ):
             contents[entry.archive_path] = repository_content(
                 repo_root,
                 entry.source_path,
@@ -432,16 +460,23 @@ def _assertions(rows: Sequence[dict[str, Any]]) -> dict[str, bool]:
         "gate_tests_present": groups.count("gate_test") >= 8,
         "result_records_present": groups.count("result_record") >= 10,
         "reproducibility_refs_present": groups.count("reproducibility_ref") >= 13,
-        "joint_artifact_included": f"{ARCHIVE_ROOT}/docs/generated/pr08_006_joint_artifact.json" in paths,
-        "results_table_included": f"{ARCHIVE_ROOT}/docs/generated/egs_results_table_v9.json" in paths,
-        "blockers_included": f"{ARCHIVE_ROOT}/docs/research_program/BLOCKERS.md" in paths,
+        "joint_artifact_included": f"{ARCHIVE_ROOT}/docs/generated/pr08_006_joint_artifact.json"
+        in paths,
+        "results_table_included": f"{ARCHIVE_ROOT}/docs/generated/egs_results_table_v9.json"
+        in paths,
+        "blockers_included": f"{ARCHIVE_ROOT}/docs/research_program/BLOCKERS.md"
+        in paths,
     }
 
 
-def build_payload(*, repo_root: Path = REPO_ROOT, output_zip: Path = DEFAULT_OUTPUT_ZIP,
-                  output_manifest: Path = DEFAULT_OUTPUT_MANIFEST,
-                  output_prompt: Path = DEFAULT_OUTPUT_PROMPT,
-                  generating_command: str) -> tuple[dict[str, Any], Sequence[Entry]]:
+def build_payload(
+    *,
+    repo_root: Path = REPO_ROOT,
+    output_zip: Path = DEFAULT_OUTPUT_ZIP,
+    output_manifest: Path = DEFAULT_OUTPUT_MANIFEST,
+    output_prompt: Path = DEFAULT_OUTPUT_PROMPT,
+    generating_command: str,
+) -> tuple[dict[str, Any], Sequence[Entry]]:
     root = Path(repo_root).resolve()
     entries = _collect_entries(root)
     rows = _entry_rows(root, entries)
@@ -452,8 +487,11 @@ def build_payload(*, repo_root: Path = REPO_ROOT, output_zip: Path = DEFAULT_OUT
     )
     assertions["cf4_p0_quarantine"] = quarantine_report.ok
     failed = [name for name, ok in assertions.items() if not ok]
-    config = {"schema_version": SCHEMA_VERSION, "archive_paths": [r["archive_path"] for r in rows],
-              "assertions": sorted(assertions)}
+    config = {
+        "schema_version": SCHEMA_VERSION,
+        "archive_paths": [r["archive_path"] for r in rows],
+        "assertions": sorted(assertions),
+    }
     payload: dict[str, Any] = {
         "artifact_id": ARTIFACT_ID,
         "artifact_path": output_zip.as_posix(),
@@ -677,13 +715,17 @@ def _render_manifest(payload: dict[str, Any]) -> str:
     return json.dumps(payload, indent=2, sort_keys=True) + "\n"
 
 
-def _build_zip_bytes(repo_root: Path, payload: dict[str, Any], entries: Sequence[Entry]) -> bytes:
+def _build_zip_bytes(
+    repo_root: Path, payload: dict[str, Any], entries: Sequence[Entry]
+) -> bytes:
     from io import BytesIO
 
     by_path = {e.archive_path: e for e in entries}
     buffer = BytesIO()
     with zipfile.ZipFile(buffer, mode="w", compression=zipfile.ZIP_DEFLATED) as archive:
-        archive.writestr(_zip_info("MANIFEST.json"), _render_manifest(payload).encode("utf-8"))
+        archive.writestr(
+            _zip_info("MANIFEST.json"), _render_manifest(payload).encode("utf-8")
+        )
         for row in sorted(payload["archive_entries"], key=lambda r: r["archive_path"]):
             entry = by_path[row["archive_path"]]
             data = entry.bytes(repo_root)
@@ -708,7 +750,9 @@ def _resolve(repo_root: Path, path: Path) -> Path:
     return path if path.is_absolute() else repo_root / path
 
 
-def _write_outputs(repo_root, payload, entries, output_zip, output_manifest, output_prompt) -> None:
+def _write_outputs(
+    repo_root, payload, entries, output_zip, output_manifest, output_prompt
+) -> None:
     zip_path = _resolve(repo_root, output_zip)
     man_path = _resolve(repo_root, output_manifest)
     prompt_path = _resolve(repo_root, output_prompt)
@@ -719,7 +763,9 @@ def _write_outputs(repo_root, payload, entries, output_zip, output_manifest, out
     prompt_path.write_text(render_prompt(), encoding="utf-8")
 
 
-def _check_outputs(repo_root, payload, entries, output_zip, output_manifest, output_prompt) -> int:
+def _check_outputs(
+    repo_root, payload, entries, output_zip, output_manifest, output_prompt
+) -> int:
     zip_path = _resolve(repo_root, output_zip)
     man_path = _resolve(repo_root, output_manifest)
     prompt_path = _resolve(repo_root, output_prompt)
@@ -740,8 +786,14 @@ def _check_outputs(repo_root, payload, entries, output_zip, output_manifest, out
 
 
 def _command_from_args(argv: Sequence[str] | None) -> str:
-    args = [a for a in (sys.argv[1:] if argv is None else list(argv)) if a not in ("--check", "--dry-run")]
-    return " ".join(["python", "scripts/build_research_evaluation_package.py", *args]).strip()
+    args = [
+        a
+        for a in (sys.argv[1:] if argv is None else list(argv))
+        if a not in ("--check", "--dry-run")
+    ]
+    return " ".join(
+        ["python", "scripts/build_research_evaluation_package.py", *args]
+    ).strip()
 
 
 def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
@@ -760,11 +812,17 @@ def main(argv: Sequence[str] | None = None) -> int:
     args = parse_args(argv)
     repo_root = args.repo_root.resolve()
     payload, entries = build_payload(
-        repo_root=repo_root, output_zip=args.output_zip, output_manifest=args.output_manifest,
-        output_prompt=args.output_prompt, generating_command=_command_from_args(argv),
+        repo_root=repo_root,
+        output_zip=args.output_zip,
+        output_manifest=args.output_manifest,
+        output_prompt=args.output_prompt,
+        generating_command=_command_from_args(argv),
     )
     if payload["failed_gates"]:
-        print("research-evaluation package failed gates: " + ", ".join(payload["failed_gates"]))
+        print(
+            "research-evaluation package failed gates: "
+            + ", ".join(payload["failed_gates"])
+        )
         return 1
     if args.dry_run:
         print(f"DRY-RUN archive_entry_count={payload['archive_entry_count']}")
@@ -772,8 +830,22 @@ def main(argv: Sequence[str] | None = None) -> int:
             print(f"{key}={value}")
         return 0
     if args.check:
-        return _check_outputs(repo_root, payload, entries, args.output_zip, args.output_manifest, args.output_prompt)
-    _write_outputs(repo_root, payload, entries, args.output_zip, args.output_manifest, args.output_prompt)
+        return _check_outputs(
+            repo_root,
+            payload,
+            entries,
+            args.output_zip,
+            args.output_manifest,
+            args.output_prompt,
+        )
+    _write_outputs(
+        repo_root,
+        payload,
+        entries,
+        args.output_zip,
+        args.output_manifest,
+        args.output_prompt,
+    )
     print(f"wrote {_resolve(repo_root, args.output_zip)}")
     print(f"wrote {_resolve(repo_root, args.output_manifest)}")
     print(f"wrote {_resolve(repo_root, args.output_prompt)}")

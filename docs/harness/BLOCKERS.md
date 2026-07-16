@@ -2,6 +2,25 @@
 
 Open blockers, owner, required resolution, and PR dependency impact.
 
+## 2026-07-16 - PR-122 residual authority blockers
+
+- The 102-row remediation root remains entirely `OPEN`; content-addressed
+  mechanics and terminal receipts rescue no scientific finding.
+- Claim release is blocked. The checked-in graph permits only downclaimed audit
+  disclosure because no independently adjudicated positive terminal scientific
+  status exists.
+- Typed MES theorem/convention authority and nonzero independent D2 execution
+  remain absent pending PR-124. The 22 active consumers stay inventoried and
+  blocked; legacy triples and the EGS3 diagnostic witness are non-authoritative.
+- The publication freeze remains blocked by `pdf_claim_lint_passed=false`; the
+  current package is an audit disclosure, not submission readiness.
+- PR-150 may use already downloaded PR3/FFP10 E2E inputs. PR4/NPIPE is not
+  downloaded and all PR4 download, intake, reduction, and data analysis remain
+  explicitly skipped; no combined PR3+PR4 result may be inferred.
+- PR-159--166 remain dormant until independently authenticated native solver
+  delivery. PR-123 is the sole runnable next card and is not blocked by the
+  authority conditions above; its completion triggers checkpoint 070.
+
 ## 2026-07-15 - PR-119 intake blockers and dormant branch
 
 - The 102-row active remediation root remains entirely `OPEN`; DAG intake and

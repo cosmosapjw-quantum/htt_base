@@ -2,19 +2,46 @@ from __future__ import annotations
 
 import importlib.util
 from io import BytesIO
+from functools import lru_cache
 import hashlib
 import json
 from pathlib import Path
 import subprocess
 import sys
+from typing import Any
 import zipfile
 
 from common.artifact_manifest import validate_manifest_payload
 from common.cf4_p0_quarantine import CF4P0QuarantineViolation
+from common.release_evidence_binding import DEFAULT_RELEASE_EVIDENCE_PIN
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 SCRIPT_PATH = REPO_ROOT / "scripts/build_external_audit_package.py"
+SOURCE_ONLY_LAUNCHER = REPO_ROOT / "scripts/codex_harness/run_pr122_source_only.sh"
+SOURCE_ONLY_TARGET = "scripts/build_external_audit_package.py"
+CLAIM_EVIDENCE_ARCHIVE_PATHS = {
+    "docs/generated/pr122_claim_evidence_graph.json": (
+        "status/pr122_claim_evidence_graph.json"
+    ),
+    "docs/generated/pr122_claim_closure_report.json": (
+        "status/pr122_claim_closure_report.json"
+    ),
+    "docs/generated/pr122_claim_closure_report.md": (
+        "status/pr122_claim_closure_report.md"
+    ),
+    "docs/generated/pr122_release_receipt.json": ("status/pr122_release_receipt.json"),
+    "docs/generated/pr122_parent_receipt.json": ("status/pr122_parent_receipt.json"),
+    "docs/generated/pr122_artifact_manifest.json": (
+        "status/pr122_artifact_manifest.json"
+    ),
+    "docs/generated/pr122_mes_successor_scan.json": (
+        "status/pr122_mes_successor_scan.json"
+    ),
+    "docs/generated/pr122_test_execution.json": ("status/pr122_test_execution.json"),
+}
+
+
 def _load_module():
     spec = importlib.util.spec_from_file_location("audit_package", SCRIPT_PATH)
     assert spec is not None and spec.loader is not None
@@ -24,15 +51,73 @@ def _load_module():
     return module
 
 
-def _payload():
+def _cli(*args: str) -> list[str]:
+    return [str(SOURCE_ONLY_LAUNCHER), SOURCE_ONLY_TARGET, *args]
+
+
+@lru_cache(maxsize=1)
+def _cached_payload_json() -> str:
+    """Build once for read-only assertion tests; mutation/CLI tests stay fresh."""
+
     module = _load_module()
-    return module.build_audit_package_payload(
+    payload = module.build_audit_package_payload(
         repo_root=REPO_ROOT,
         output_zip=Path("docs/generated/external_audit_package.zip"),
         output_manifest=Path("docs/generated/external_audit_package_manifest.json"),
         generating_command="python scripts/build_external_audit_package.py --dry-run",
         worktree_state="test-worktree",
     )
+    return json.dumps(payload, sort_keys=True)
+
+
+def _payload():
+    # Return an independent object so an assertion test cannot contaminate the
+    # shared immutable fixture for a later test.
+    return json.loads(_cached_payload_json())
+
+
+@lru_cache(maxsize=1)
+def _cached_archive_bytes() -> bytes:
+    """Share one immutable archive only between read-only content assertions."""
+
+    module = _load_module()
+    return module.build_zip_bytes(REPO_ROOT, _payload())
+
+
+def test_entry_rows_loads_one_build_local_reviewed_pin_snapshot(monkeypatch):
+    module = _load_module()
+    calls = {"snapshot": 0, "recheck": 0}
+    original_snapshot = module.reviewed_active_binary_sidecar_pin_snapshot
+    original_recheck = module.assert_reviewed_active_binary_pin_snapshot_current
+
+    def counted_snapshot(repo_root):
+        calls["snapshot"] += 1
+        return original_snapshot(repo_root)
+
+    def counted_recheck(repo_root, snapshot):
+        calls["recheck"] += 1
+        return original_recheck(repo_root, snapshot)
+
+    monkeypatch.setattr(
+        module,
+        "reviewed_active_binary_sidecar_pin_snapshot",
+        counted_snapshot,
+    )
+    monkeypatch.setattr(
+        module,
+        "assert_reviewed_active_binary_pin_snapshot_current",
+        counted_recheck,
+    )
+    rows = module._entry_rows(
+        REPO_ROOT,
+        (
+            module._entry("AGENTS.md", "controls/AGENTS.md", "control", "control"),
+            module._entry(".gitignore", "controls/gitignore", "control", "control"),
+        ),
+    )
+
+    assert len(rows) == 2
+    assert calls == {"snapshot": 1, "recheck": 1}
 
 
 def _assert_no_forbidden_language(text: str) -> None:
@@ -46,24 +131,84 @@ def _assert_no_forbidden_language(text: str) -> None:
     assert ("external transfer " + "validated " + "as native") not in lowered
 
 
+def _assert_claim_evidence_manifest_contract(payload: dict[str, Any]) -> None:
+    rows = [
+        row for row in payload["archive_entries"] if row["group"] == "claim_evidence"
+    ]
+    assert {
+        row["source_path"]: row["archive_path"] for row in rows
+    } == CLAIM_EVIDENCE_ARCHIVE_PATHS
+    assert all(row["content_mode"] == "active_public" for row in rows)
+    assert all(row["public_use"] is True for row in rows)
+    for row in rows:
+        source_path = REPO_ROOT / row["source_path"]
+        assert row["sha256"] == (
+            "sha256:" + hashlib.sha256(source_path.read_bytes()).hexdigest()
+        )
+        assert f"{row['source_path']}:{row['sha256']}" in payload["input_hashes"]
+
+    claim_inputs = {
+        item["path"]: item["archive_path"]
+        for item in payload["input_artifacts"]
+        if item["group"] == "claim_evidence"
+    }
+    assert claim_inputs == CLAIM_EVIDENCE_ARCHIVE_PATHS
+
+    receipt = payload["claim_evidence_receipt"]
+    pin = DEFAULT_RELEASE_EVIDENCE_PIN
+    assert receipt["mode"] == "audit_disclosure"
+    assert receipt["graph_path"] == pin.graph_path
+    assert receipt["graph_file_sha256"] == pin.graph_file_sha256
+    assert receipt["graph_ref"] == pin.graph_ref
+    assert receipt["receipt_path"] == pin.receipt_path
+    assert receipt["receipt_file_sha256"] == pin.receipt_file_sha256
+    assert receipt["receipt_id"] == pin.receipt_id
+    assert receipt["parent_receipt_id"] == pin.parent_receipt_id
+    assert receipt["closure_path"] == pin.closure_path
+    assert receipt["closure_file_sha256"] == pin.closure_file_sha256
+    assert receipt["artifact_manifest_file_sha256"] == (
+        pin.artifact_manifest_file_sha256
+    )
+    assert receipt["authority_registry_ref"] == pin.authority_registry_ref
+    assert receipt["process_result"] == "PASS"
+    assert receipt["evidence_status"] == "BLOCKED"
+    assert receipt["scientific_status"] == "OPEN"
+    assert receipt["authority_status"] == "REQUIRES_TRUSTED_REGISTRY_VALIDATION"
+    assert receipt["audit_disclosure_allowed"] is True
+    assert receipt["claim_release_allowed"] is False
+
+
 def test_payload_includes_required_groups_manifest_and_kill_switches():
     payload = _payload()
 
     assert payload["owner"] == "COMMON"
     assert payload["implementation_scope"] == "common"
     assert payload["claim_tier"] == "diagnostic_only"
-    assert payload["transfer_source"] == "mixed_none_observed_reference_external_transfer_conditioned_legacy"
-    assert payload["sky_support_status"] == "pending_or_unknown_for_existing_directional_artifacts"
-    assert payload["null_mock_status"] == "mixed_not_statistical_jackknife_bootstrap_diagnostic_and_legacy_conditioned"
-    assert validate_manifest_payload(
-        payload,
-        manifest_path="memory://external_audit_package_manifest.json",
-    ) == ()
+    assert (
+        payload["transfer_source"]
+        == "mixed_none_observed_reference_external_transfer_conditioned_legacy"
+    )
+    assert (
+        payload["sky_support_status"]
+        == "pending_or_unknown_for_existing_directional_artifacts"
+    )
+    assert (
+        payload["null_mock_status"]
+        == "mixed_not_statistical_jackknife_bootstrap_diagnostic_and_legacy_conditioned"
+    )
+    assert (
+        validate_manifest_payload(
+            payload,
+            manifest_path="memory://external_audit_package_manifest.json",
+        )
+        == ()
+    )
 
     groups = {entry["group"] for entry in payload["archive_entries"]}
     assert {
         "audit_prompts",
         "code_snapshot",
+        "claim_evidence",
         "framework_reports",
         "figure_manifest",
         "figure_payload",
@@ -94,6 +239,9 @@ def test_payload_includes_required_groups_manifest_and_kill_switches():
     )
     assertions = payload["required_assertions"]
     assert assertions["claim_ledger_included"] is True
+    assert assertions["claim_evidence_bundle_included"] is True
+    assert assertions["exact_claim_evidence_receipt_consumed"] is True
+    assert assertions["claim_release_blocked_by_evidence_graph"] is True
     assert assertions["transfer_provenance_included"] is True
     assert assertions["figure_inventory_included"] is True
     assert assertions["figure_payloads_included"] is True
@@ -112,13 +260,24 @@ def test_payload_includes_required_groups_manifest_and_kill_switches():
     assert payload["failed_gates"] == []
     assert payload["report_generation_gates"]["figure_payload_inclusion"] == "pass"
     assert payload["report_generation_gates"]["figure_manifest_claim_lanes"] == "pass"
-    assert payload["report_generation_gates"]["known_quarantine_inventory_preserved"] == "warn"
+    assert (
+        payload["report_generation_gates"]["known_quarantine_inventory_preserved"]
+        == "warn"
+    )
+    assert payload["report_generation_gates"]["exact_claim_evidence_receipt"] == "pass"
     assert payload["science_promotion_gates"]["native_morphology_atlas"] == "fail"
+    assert (
+        payload["science_promotion_gates"]["claim_evidence_release"]
+        == "fail_blocked_pending_PR124"
+    )
     assert payload["publication_gates"]["publication_readiness"] == "fail"
+    assert payload["publication_gates"]["claim_evidence_audit_disclosure"] == "pass"
+    assert payload["publication_gates"]["claim_evidence_claim_release"] == "fail"
     assert "manual_status_number_findings" in payload["manuscript_blockers"]
     assert "repository_quarantined_figures" in payload["manuscript_blockers"]
     assert payload["input_artifacts"]
     assert all(item["included"] is True for item in payload["input_artifacts"])
+    _assert_claim_evidence_manifest_contract(payload)
     _assert_no_forbidden_language(json.dumps(payload, sort_keys=True))
 
 
@@ -127,15 +286,13 @@ def test_cli_dry_run_does_not_write_outputs(tmp_path: Path):
     output_manifest = tmp_path / "manifest.json"
 
     result = subprocess.run(
-        [
-            str(REPO_ROOT / "venv/bin/python"),
-            str(SCRIPT_PATH),
+        _cli(
             "--dry-run",
             "--output-zip",
             str(output_zip),
             "--output-manifest",
             str(output_manifest),
-        ],
+        ),
         cwd=REPO_ROOT,
         text=True,
         capture_output=True,
@@ -145,6 +302,9 @@ def test_cli_dry_run_does_not_write_outputs(tmp_path: Path):
     assert result.returncode == 0, result.stderr
     assert "DRY-RUN" in result.stdout
     assert "claim_ledger_included=True" in result.stdout
+    assert "claim_evidence_bundle_included=True" in result.stdout
+    assert "exact_claim_evidence_receipt_consumed=True" in result.stdout
+    assert "claim_release_blocked_by_evidence_graph=True" in result.stdout
     assert "transfer_provenance_included=True" in result.stdout
     assert not output_zip.exists()
     assert not output_manifest.exists()
@@ -155,14 +315,12 @@ def test_cli_writes_zip_manifest_and_required_contents(tmp_path: Path):
     output_manifest = tmp_path / "manifest.json"
 
     result = subprocess.run(
-        [
-            str(REPO_ROOT / "venv/bin/python"),
-            str(SCRIPT_PATH),
+        _cli(
             "--output-zip",
             str(output_zip),
             "--output-manifest",
             str(output_manifest),
-        ],
+        ),
         cwd=REPO_ROOT,
         text=True,
         capture_output=True,
@@ -174,7 +332,16 @@ def test_cli_writes_zip_manifest_and_required_contents(tmp_path: Path):
     assert output_manifest.exists()
     manifest = json.loads(output_manifest.read_text(encoding="utf-8"))
     assert manifest["required_assertions"]["claim_ledger_included"] is True
+    assert manifest["required_assertions"]["claim_evidence_bundle_included"] is True
+    assert (
+        manifest["required_assertions"]["exact_claim_evidence_receipt_consumed"] is True
+    )
+    assert (
+        manifest["required_assertions"]["claim_release_blocked_by_evidence_graph"]
+        is True
+    )
     assert manifest["required_assertions"]["transfer_provenance_included"] is True
+    _assert_claim_evidence_manifest_contract(manifest)
 
     with zipfile.ZipFile(output_zip) as archive:
         names = set(archive.namelist())
@@ -182,6 +349,7 @@ def test_cli_writes_zip_manifest_and_required_contents(tmp_path: Path):
         assert "README.md" in names
         assert "status/claim_ledger.json" in names
         assert "status/pr_status.yaml" in names
+        assert set(CLAIM_EVIDENCE_ARCHIVE_PATHS.values()) <= names
         assert "reports/result_pack_A.md" in names
         assert "reports/result_pack_B.md" in names
         assert "reports/result_pack_C.md" in names
@@ -202,8 +370,7 @@ def test_cli_writes_zip_manifest_and_required_contents(tmp_path: Path):
             ".toc",
         )
         assert not any(
-            name.startswith("manuscript/")
-            and name.endswith(latex_byproduct_suffixes)
+            name.startswith("manuscript/") and name.endswith(latex_byproduct_suffixes)
             for name in names
         )
         assert "manuscript/current_manuscript_plot_list.md" in names
@@ -221,8 +388,14 @@ def test_cli_writes_zip_manifest_and_required_contents(tmp_path: Path):
         assert "status/hostile_review_response_matrix.md" in names
         assert "figures/current/fig_current_transfer_provenance.png" in names
         assert "figures/current/fig_current_transfer_provenance.manifest.json" in names
-        assert "figures/observed_current/fig_observed_longrun_jackknife_bootstrap.png" in names
-        assert "figures/observed_current/fig_observed_longrun_jackknife_bootstrap.manifest.json" in names
+        assert (
+            "figures/observed_current/fig_observed_longrun_jackknife_bootstrap.png"
+            in names
+        )
+        assert (
+            "figures/observed_current/fig_observed_longrun_jackknife_bootstrap.manifest.json"
+            in names
+        )
         observed_pngs = {
             name.removesuffix(".png")
             for name in names
@@ -231,7 +404,8 @@ def test_cli_writes_zip_manifest_and_required_contents(tmp_path: Path):
         observed_manifests = {
             name.removesuffix(".manifest.json")
             for name in names
-            if name.startswith("figures/observed_current/") and name.endswith(".manifest.json")
+            if name.startswith("figures/observed_current/")
+            and name.endswith(".manifest.json")
         }
         assert observed_pngs
         assert observed_pngs == observed_manifests
@@ -253,14 +427,25 @@ def test_cli_writes_zip_manifest_and_required_contents(tmp_path: Path):
             }
             assert pngs
             assert pngs == manifests
-        assert any(name.startswith("figures/conditioned_legacy/") and name.endswith(".png") for name in names)
+        assert any(
+            name.startswith("figures/conditioned_legacy/") and name.endswith(".png")
+            for name in names
+        )
         assert "prompts/README.md" in names
         assert "code_snapshot/scripts/build_external_audit_package.py" in names
         assert "code_snapshot/scripts/inventory_observational_data.py" in names
         assert "code_snapshot/scripts/make_observed_data_manuscript_figures.py" in names
         assert "code_snapshot/tests/contracts/test_observed_data_figures.py" in names
+        for source_path, archive_path in CLAIM_EVIDENCE_ARCHIVE_PATHS.items():
+            assert archive.read(archive_path) == (REPO_ROOT / source_path).read_bytes()
+        readme = archive.read("README.md").decode("utf-8")
+        assert "claim_evidence_bundle_included: True" in readme
+        assert "exact_claim_evidence_receipt_consumed: True" in readme
         zipped_manifest = json.loads(archive.read("MANIFEST.json").decode("utf-8"))
     assert zipped_manifest == manifest
+    assert (
+        zipped_manifest["claim_evidence_receipt"] == manifest["claim_evidence_receipt"]
+    )
     _assert_no_forbidden_language(json.dumps(manifest, sort_keys=True))
 
 
@@ -284,7 +469,10 @@ def test_audit_package_uses_only_tracked_sources():
         item["path"] in tracked or item["path"] in allowed_generated
         for item in payload["input_artifacts"]
     )
-    assert all("content_mode" in row and "public_use" in row for row in payload["archive_entries"])
+    assert all(
+        "content_mode" in row and "public_use" in row
+        for row in payload["archive_entries"]
+    )
     by_source = {row["source_path"]: row for row in payload["archive_entries"]}
     for path in module.GENERATED_QUARANTINE_CONTROLS:
         assert by_source[path]["content_mode"] == "active_public"
@@ -315,9 +503,7 @@ def test_packaged_figure_manifests_do_not_promote_claim_lanes():
 
 
 def test_packaged_result_reports_do_not_surface_legacy_readiness_tokens():
-    module = _load_module()
-    payload = _payload()
-    archive_bytes = module.build_zip_bytes(REPO_ROOT, payload)
+    archive_bytes = _cached_archive_bytes()
     forbidden = (
         "production_candidate",
         "production_validated",
@@ -341,9 +527,7 @@ def test_packaged_result_reports_do_not_surface_legacy_readiness_tokens():
 
 
 def test_full_audit_package_legacy_readiness_tokens_are_archival_only():
-    module = _load_module()
-    payload = _payload()
-    archive_bytes = module.build_zip_bytes(REPO_ROOT, payload)
+    archive_bytes = _cached_archive_bytes()
     tokens = (
         "production_candidate",
         "production_validated",
@@ -403,15 +587,13 @@ def test_cli_check_detects_missing_and_stale_outputs(tmp_path: Path):
     output_manifest = tmp_path / "manifest.json"
 
     missing = subprocess.run(
-        [
-            str(REPO_ROOT / "venv/bin/python"),
-            str(SCRIPT_PATH),
+        _cli(
             "--check",
             "--output-zip",
             str(output_zip),
             "--output-manifest",
             str(output_manifest),
-        ],
+        ),
         cwd=REPO_ROOT,
         text=True,
         capture_output=True,
@@ -421,14 +603,12 @@ def test_cli_check_detects_missing_and_stale_outputs(tmp_path: Path):
     assert "missing audit package output" in missing.stdout
 
     write = subprocess.run(
-        [
-            str(REPO_ROOT / "venv/bin/python"),
-            str(SCRIPT_PATH),
+        _cli(
             "--output-zip",
             str(output_zip),
             "--output-manifest",
             str(output_manifest),
-        ],
+        ),
         cwd=REPO_ROOT,
         text=True,
         capture_output=True,
@@ -437,15 +617,13 @@ def test_cli_check_detects_missing_and_stale_outputs(tmp_path: Path):
     assert write.returncode == 0, write.stderr
 
     fresh = subprocess.run(
-        [
-            str(REPO_ROOT / "venv/bin/python"),
-            str(SCRIPT_PATH),
+        _cli(
             "--check",
             "--output-zip",
             str(output_zip),
             "--output-manifest",
             str(output_manifest),
-        ],
+        ),
         cwd=REPO_ROOT,
         text=True,
         capture_output=True,
@@ -459,15 +637,13 @@ def test_cli_check_detects_missing_and_stale_outputs(tmp_path: Path):
         encoding="utf-8",
     )
     stale = subprocess.run(
-        [
-            str(REPO_ROOT / "venv/bin/python"),
-            str(SCRIPT_PATH),
+        _cli(
             "--check",
             "--output-zip",
             str(output_zip),
             "--output-manifest",
             str(output_manifest),
-        ],
+        ),
         cwd=REPO_ROOT,
         text=True,
         capture_output=True,
@@ -626,8 +802,7 @@ def test_copied_legacy_pdf_at_active_archive_path_is_rejected():
 def test_preserved_manuscript_pdf_pair_is_digest_inconsistent_and_omitted():
     module = _load_module()
     pdf = (
-        REPO_ROOT
-        / "legacy/cf4_p0/packages/manuscript_pdf/htt_base_research_report.pdf"
+        REPO_ROOT / "legacy/cf4_p0/packages/manuscript_pdf/htt_base_research_report.pdf"
     )
     manifest_path = (
         REPO_ROOT

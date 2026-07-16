@@ -1,0 +1,367 @@
+{
+  "allowed_use": "release_blocker_inventory_only",
+  "artifact_mode": "governance_diagnostic",
+  "caveats": [
+    "MES scan success is process evidence only.",
+    "The typed scientific successor remains blocked pending PR-124.",
+    "No MES coefficient is validated or replaced by PR-122."
+  ],
+  "claim_tier": "diagnostic_only",
+  "config_hash": "d8a477e1b7a02132b75a61c9ce273bfb0a20c63d4e2d3b971ce364155de13d71",
+  "generating_command": "scripts/codex_harness/run_pr122_source_only.sh scripts/codex_harness/build_claim_evidence_graph.py",
+  "git_commit_or_worktree_state": "HEAD:461fe4ca8f1ca1ebdcf3571ad077aac4b5e25b38;bound_input_state_sha256:91b8ea0711176f43477d270b80b31ccc1dd681a2de5bd0585d82ff695af54718",
+  "implementation_scope": "common",
+  "input_hashes": [
+    "docs/research_program/long_horizon_rescue/pr122_active_mes_consumers.yaml:d8a477e1b7a02132b75a61c9ce273bfb0a20c63d4e2d3b971ce364155de13d71",
+    "htt/obsstat/egs3_mes_branch_registry.py:9b0817c99944e796b4c980cad43df724d0abde9381c8f542195d249447bfe816",
+    "docs/generated/mes_branch_registry_seal.json:89dc03551342e89b277790fa50707097d314e0bce9c4b04e8260bbcb76930c04",
+    "htt/bass/atlas/budget_ceiling_optimizer.py:af3ea2eb6817ce56cbf1d870de6f53a7814ea949902ba43a1ab0612842967cae",
+    "htt/bass/forward/__init__.py:14cada3214984e2ffea58c9c820b98c16192e5628e30bbffc02c2926c86f867b",
+    "htt/bass/forward/doppler_boost.py:e2c8dea7f2d57fc72dfcc01c9440a72db20dad1ab436f8dab5dbd82de2333929",
+    "htt/bass/forward/teff_mes_bounds.py:b56df2da29313c27de19d4b7d751becd4532148b51fd73843434e200a909d4eb",
+    "htt/bass/observational/beta_threshold.py:20e3a7e656add2337bff88619f2b5244d867f40bd59def553671a83b2f9801a6",
+    "htt/bass/observational/planck_mes_bounds.py:5b507fec0ef16a6351938ee638f6a9f247d1a83d1c173ffc5217dc421e7e88a1",
+    "htt/htt/htt/core/__init__.py:9cd1d2ba2bfc5083d28fae36d0c35027890c1bd9a52f4ff446bcd26d0c7a1a89",
+    "htt/htt/htt/core/analysis_extended.py:c23e48691098b6d7618b4d091721196437ec5062b6eb8b40febfca90ff333807",
+    "htt/htt/htt/core/bounds.py:a7344c5d64d8c25b45082163898c0236402feca844ced3b43a6a9f86b8bed569",
+    "htt/htt/htt/core/departure_posteriors.py:cfb7705832c4f8dcde9c596f26db1f9ca18896e8c7e9450f4bb9c112a7944a4c",
+    "htt/htt/htt/core/evidence_models_R03a.py:c52de64b814731cb6ced432a6a089e82aa39db7fca424cb45a6196c29e6ceb30",
+    "htt/htt/htt/core/teff_extended.py:2ab9b79aae458e202accf3740d6b5fe127ea39520c52e78893d27362140d1783",
+    "htt/htt/htt/figures/fig_3D_constraint_volume.py:9cfb944ab0e04746f9066a6e4146bf2024183afce320734e4854f3c3e887143d",
+    "htt/htt/htt/figures/fig_4D_projection_atlas.py:183c20564e33d823fe759e194de8434b1f69ba2cf9f7efe104cef2cab74e320a",
+    "htt/htt/htt/figures/fig_MES_three_bounds.py:956dc739d193c85b1ef5cf08bfbd7e66532f28be9375980b6b8319eb3d379ac2",
+    "htt/htt/htt/figures/fig_nonlinear_heatmap_vorticity_accel.py:1da9be848d8b67af3354cd4b990a866164f19bdf5555d737e5d42c3704567f5b",
+    "htt/htt/htt/figures/fig_sigma_accel_contour.py:60889a484e207cc98186cb19e48edda62a23078ff8e9ef6e418c661e91ca7bbb",
+    "htt/htt/htt/figures/fig_sigma_omega_contour.py:17401d64eda8e810751cc4a8bd9f9fe07be61e5854b26939457a8cf6c3fa71bf",
+    "htt/htt/htt/figures/fig_type_by_type_summary.py:da2855f5f23b5ef7df29ec2ba4984784d442cbf0f7b346477ded979b051e068c",
+    "htt/htt/htt/figures/fig_vorticity_hierarchy.py:b7fcc52cfffe0433f8056512e1826015afe70b358417801ba2a8bb0f00d30586",
+    "htt/mio/core/ceiling_families.py:96a5d6c3504e12d8b79d594ed985f5fef863cd9b27138abbe75a5b60e3bb7b5d",
+    "htt/mio/formalism/budget_spec.py:e836268d37323288d4b9e6bc3442f8eab2b3928ac6ebc91b7caef46d6210166a"
+  ],
+  "null_mock_status": "not_statistical",
+  "owner": "COMMON",
+  "registry_scan": {
+    "consumers_scanned": 0,
+    "findings": [
+      {
+        "code": "SUCCESSOR_MISSING",
+        "detail": "typed MES theorem/convention authority has not been delivered",
+        "subject": "mes.typed-successor.pr124"
+      },
+      {
+        "code": "SCIENTIFIC_AUTHORITY_BLOCKED",
+        "detail": "BLOCKED_PENDING_PR124",
+        "subject": "mes.typed-successor.pr124"
+      }
+    ],
+    "registry": {
+      "caveat": "EGS3 process PASS is diagnostic evidence only; the typed MES scientific authority is blocked pending PR-124.",
+      "claim_tier": "diagnostic_only",
+      "egs3_branch_witness": {
+        "allowed_uses": [
+          "legacy reproduction",
+          "diagnostic process witness"
+        ],
+        "forbidden_uses": [
+          "typed MES scientific authority",
+          "active release coefficient source",
+          "observational or geometry claim"
+        ],
+        "process_result": "PASS",
+        "scientific_authority": false,
+        "seal": {
+          "availability": "AVAILABLE",
+          "path": "docs/generated/mes_branch_registry_seal.json",
+          "sha256": "89dc03551342e89b277790fa50707097d314e0bce9c4b04e8260bbcb76930c04"
+        },
+        "source": {
+          "availability": "AVAILABLE",
+          "path": "htt/obsstat/egs3_mes_branch_registry.py",
+          "sha256": "9b0817c99944e796b4c980cad43df724d0abde9381c8f542195d249447bfe816"
+        },
+        "witness_id": "egs3.mes_branch_registry"
+      },
+      "legacy_reproduction_source": {
+        "availability": "AVAILABLE",
+        "path": "htt/tsc/admissibility/three_bound_hierarchy.py",
+        "sha256": "cc3ba841a4b61ac10a1d7a82e56b96391afcd81d8bd169bd8ca33940c7cf671e"
+      },
+      "owner": "COMMON",
+      "release_claim_allowed": false,
+      "schema_version": "pr122.mes_successor_registry.v1",
+      "typed_successor": {
+        "authority_receipt_id": null,
+        "process_result": "NOT_RUN",
+        "scientific_authority": false,
+        "scientific_status": "BLOCKED_PENDING_PR124",
+        "source": {
+          "availability": "MISSING",
+          "path": "htt/src/common/mes_theorem_authority.py",
+          "sha256": null
+        },
+        "successor_id": "mes.typed-successor.pr124"
+      }
+    },
+    "release_allowed": false,
+    "schema_version": "pr122.mes_successor_registry.v1"
+  },
+  "scan": {
+    "consumers_scanned": 22,
+    "findings": [
+      {
+        "code": "SUCCESSOR_MISSING",
+        "detail": "typed MES theorem/convention authority has not been delivered",
+        "subject": "mes.typed-successor.pr124"
+      },
+      {
+        "code": "SCIENTIFIC_AUTHORITY_BLOCKED",
+        "detail": "BLOCKED_PENDING_PR124",
+        "subject": "mes.typed-successor.pr124"
+      },
+      {
+        "code": "SUCCESSOR_POINTER_MISSING",
+        "detail": "active MES consumer does not call the typed COMMON current_mes_successor_registry entrypoint",
+        "subject": "bass.atlas.budget_ceiling_optimizer"
+      },
+      {
+        "code": "SUCCESSOR_POINTER_MISSING",
+        "detail": "active MES consumer does not call the typed COMMON current_mes_successor_registry entrypoint",
+        "subject": "bass.forward.doppler_boost"
+      },
+      {
+        "code": "SUCCESSOR_POINTER_MISSING",
+        "detail": "active MES consumer does not call the typed COMMON current_mes_successor_registry entrypoint",
+        "subject": "bass.forward.namespace"
+      },
+      {
+        "code": "SUCCESSOR_POINTER_MISSING",
+        "detail": "active MES consumer does not call the typed COMMON current_mes_successor_registry entrypoint",
+        "subject": "bass.forward.teff_mes_bounds"
+      },
+      {
+        "code": "SUCCESSOR_POINTER_MISSING",
+        "detail": "active MES consumer does not call the typed COMMON current_mes_successor_registry entrypoint",
+        "subject": "bass.observational.beta_threshold"
+      },
+      {
+        "code": "SUCCESSOR_POINTER_MISSING",
+        "detail": "active MES consumer does not call the typed COMMON current_mes_successor_registry entrypoint",
+        "subject": "bass.observational.planck_mes_bounds"
+      },
+      {
+        "code": "SUCCESSOR_POINTER_MISSING",
+        "detail": "active MES consumer does not call the typed COMMON current_mes_successor_registry entrypoint",
+        "subject": "htt.core.analysis_extended"
+      },
+      {
+        "code": "SUCCESSOR_BYPASS",
+        "detail": "direct non-authoritative MES import: htt.core.bounds",
+        "subject": "htt.core.analysis_extended"
+      },
+      {
+        "code": "SUCCESSOR_POINTER_MISSING",
+        "detail": "active MES consumer does not call the typed COMMON current_mes_successor_registry entrypoint",
+        "subject": "htt.core.bounds"
+      },
+      {
+        "code": "STALE_MES_TRIPLE",
+        "detail": "legacy_non_geodesic_acceleration",
+        "subject": "htt.core.bounds"
+      },
+      {
+        "code": "STALE_MES_TRIPLE",
+        "detail": "legacy_non_geodesic_omega",
+        "subject": "htt.core.bounds"
+      },
+      {
+        "code": "SUCCESSOR_POINTER_MISSING",
+        "detail": "active MES consumer does not call the typed COMMON current_mes_successor_registry entrypoint",
+        "subject": "htt.core.departure_posteriors"
+      },
+      {
+        "code": "SUCCESSOR_BYPASS",
+        "detail": "direct non-authoritative MES import: htt.core.bounds",
+        "subject": "htt.core.departure_posteriors"
+      },
+      {
+        "code": "SUCCESSOR_POINTER_MISSING",
+        "detail": "active MES consumer does not call the typed COMMON current_mes_successor_registry entrypoint",
+        "subject": "htt.core.evidence_models_R03a"
+      },
+      {
+        "code": "SUCCESSOR_POINTER_MISSING",
+        "detail": "active MES consumer does not call the typed COMMON current_mes_successor_registry entrypoint",
+        "subject": "htt.core.namespace"
+      },
+      {
+        "code": "SUCCESSOR_BYPASS",
+        "detail": "direct non-authoritative MES import: htt.core.bounds",
+        "subject": "htt.core.namespace"
+      },
+      {
+        "code": "SUCCESSOR_POINTER_MISSING",
+        "detail": "active MES consumer does not call the typed COMMON current_mes_successor_registry entrypoint",
+        "subject": "htt.core.teff_extended"
+      },
+      {
+        "code": "STALE_MES_TRIPLE",
+        "detail": "legacy_non_geodesic_acceleration",
+        "subject": "htt.core.teff_extended"
+      },
+      {
+        "code": "STALE_MES_TRIPLE",
+        "detail": "legacy_non_geodesic_omega",
+        "subject": "htt.core.teff_extended"
+      },
+      {
+        "code": "SUCCESSOR_POINTER_MISSING",
+        "detail": "active MES consumer does not call the typed COMMON current_mes_successor_registry entrypoint",
+        "subject": "htt.figures.constraint_volume_3d"
+      },
+      {
+        "code": "STALE_MES_TRIPLE",
+        "detail": "legacy_non_geodesic_acceleration",
+        "subject": "htt.figures.constraint_volume_3d"
+      },
+      {
+        "code": "STALE_MES_TRIPLE",
+        "detail": "legacy_non_geodesic_omega",
+        "subject": "htt.figures.constraint_volume_3d"
+      },
+      {
+        "code": "SUCCESSOR_POINTER_MISSING",
+        "detail": "active MES consumer does not call the typed COMMON current_mes_successor_registry entrypoint",
+        "subject": "htt.figures.mes_three_bounds"
+      },
+      {
+        "code": "SUCCESSOR_POINTER_MISSING",
+        "detail": "active MES consumer does not call the typed COMMON current_mes_successor_registry entrypoint",
+        "subject": "htt.figures.nonlinear_heatmap_vorticity_accel"
+      },
+      {
+        "code": "STALE_MES_TRIPLE",
+        "detail": "legacy_non_geodesic_acceleration",
+        "subject": "htt.figures.nonlinear_heatmap_vorticity_accel"
+      },
+      {
+        "code": "STALE_MES_TRIPLE",
+        "detail": "legacy_non_geodesic_omega",
+        "subject": "htt.figures.nonlinear_heatmap_vorticity_accel"
+      },
+      {
+        "code": "SUCCESSOR_POINTER_MISSING",
+        "detail": "active MES consumer does not call the typed COMMON current_mes_successor_registry entrypoint",
+        "subject": "htt.figures.projection_atlas_4d"
+      },
+      {
+        "code": "STALE_MES_TRIPLE",
+        "detail": "legacy_non_geodesic_acceleration",
+        "subject": "htt.figures.projection_atlas_4d"
+      },
+      {
+        "code": "STALE_MES_TRIPLE",
+        "detail": "legacy_non_geodesic_omega",
+        "subject": "htt.figures.projection_atlas_4d"
+      },
+      {
+        "code": "SUCCESSOR_POINTER_MISSING",
+        "detail": "active MES consumer does not call the typed COMMON current_mes_successor_registry entrypoint",
+        "subject": "htt.figures.sigma_accel_contour"
+      },
+      {
+        "code": "STALE_MES_TRIPLE",
+        "detail": "legacy_non_geodesic_acceleration",
+        "subject": "htt.figures.sigma_accel_contour"
+      },
+      {
+        "code": "SUCCESSOR_POINTER_MISSING",
+        "detail": "active MES consumer does not call the typed COMMON current_mes_successor_registry entrypoint",
+        "subject": "htt.figures.sigma_omega_contour"
+      },
+      {
+        "code": "STALE_MES_TRIPLE",
+        "detail": "legacy_non_geodesic_acceleration",
+        "subject": "htt.figures.sigma_omega_contour"
+      },
+      {
+        "code": "STALE_MES_TRIPLE",
+        "detail": "legacy_non_geodesic_omega",
+        "subject": "htt.figures.sigma_omega_contour"
+      },
+      {
+        "code": "SUCCESSOR_POINTER_MISSING",
+        "detail": "active MES consumer does not call the typed COMMON current_mes_successor_registry entrypoint",
+        "subject": "htt.figures.type_by_type_summary"
+      },
+      {
+        "code": "SUCCESSOR_POINTER_MISSING",
+        "detail": "active MES consumer does not call the typed COMMON current_mes_successor_registry entrypoint",
+        "subject": "htt.figures.vorticity_hierarchy"
+      },
+      {
+        "code": "SUCCESSOR_POINTER_MISSING",
+        "detail": "active MES consumer does not call the typed COMMON current_mes_successor_registry entrypoint",
+        "subject": "mio.core.ceiling_families"
+      },
+      {
+        "code": "SUCCESSOR_POINTER_MISSING",
+        "detail": "active MES consumer does not call the typed COMMON current_mes_successor_registry entrypoint",
+        "subject": "mio.formalism.budget_spec"
+      }
+    ],
+    "registry": {
+      "caveat": "EGS3 process PASS is diagnostic evidence only; the typed MES scientific authority is blocked pending PR-124.",
+      "claim_tier": "diagnostic_only",
+      "egs3_branch_witness": {
+        "allowed_uses": [
+          "legacy reproduction",
+          "diagnostic process witness"
+        ],
+        "forbidden_uses": [
+          "typed MES scientific authority",
+          "active release coefficient source",
+          "observational or geometry claim"
+        ],
+        "process_result": "PASS",
+        "scientific_authority": false,
+        "seal": {
+          "availability": "AVAILABLE",
+          "path": "docs/generated/mes_branch_registry_seal.json",
+          "sha256": "89dc03551342e89b277790fa50707097d314e0bce9c4b04e8260bbcb76930c04"
+        },
+        "source": {
+          "availability": "AVAILABLE",
+          "path": "htt/obsstat/egs3_mes_branch_registry.py",
+          "sha256": "9b0817c99944e796b4c980cad43df724d0abde9381c8f542195d249447bfe816"
+        },
+        "witness_id": "egs3.mes_branch_registry"
+      },
+      "legacy_reproduction_source": {
+        "availability": "AVAILABLE",
+        "path": "htt/tsc/admissibility/three_bound_hierarchy.py",
+        "sha256": "cc3ba841a4b61ac10a1d7a82e56b96391afcd81d8bd169bd8ca33940c7cf671e"
+      },
+      "owner": "COMMON",
+      "release_claim_allowed": false,
+      "schema_version": "pr122.mes_successor_registry.v1",
+      "typed_successor": {
+        "authority_receipt_id": null,
+        "process_result": "NOT_RUN",
+        "scientific_authority": false,
+        "scientific_status": "BLOCKED_PENDING_PR124",
+        "source": {
+          "availability": "MISSING",
+          "path": "htt/src/common/mes_theorem_authority.py",
+          "sha256": null
+        },
+        "successor_id": "mes.typed-successor.pr124"
+      }
+    },
+    "release_allowed": false,
+    "schema_version": "pr122.mes_successor_registry.v1"
+  },
+  "schema": "htt.pr122.mes_successor_scan.v1",
+  "sky_support_status": "not_directional",
+  "status": "EXPECTED_BLOCKED_PENDING_PR124",
+  "transfer_source": "none"
+}

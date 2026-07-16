@@ -17,6 +17,13 @@ scientific boundaries to unrelated projects.
 - `.codex/agents`: project custom subagent profiles. Read-only reviewers must
   remain read-only; implementation-focused harness/test roles may use
   `workspace-write`.
+- `.codex/config.toml` and `.codex/hooks.json`: trusted-project concurrency and
+  lifecycle-hook settings for the versioned shared-context protocol. The
+  repository pins four concurrent threads, depth two, and fail-closed context
+  and result-envelope hooks.
+- `.agent-harness`: canonical shared context, assignment/result schemas,
+  registrar, validator, and per-run evidence. Build the context pack before
+  every spawn and never reuse an assignment identifier.
 - `.codex/rules/default.rules`: project-local execpolicy examples and command
   decisions for common harness, pytest, and git operations.
 - `docs/codex_handoff/pr_backlog.yaml`: DAG authority for the next PR.
@@ -31,6 +38,8 @@ or rules:
 python scripts/codex_harness/verify_skill_layout.py .
 python scripts/codex_harness/skill_index.py .
 python scripts/codex_harness/validate_codex_config_shape.py .
+python .agent-harness/scripts/validate_harness.py
+codex features list
 codex execpolicy check --pretty --rules .codex/rules/default.rules -- python -m pytest -q
 python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
 venv/bin/python -m pytest scripts/codex_harness/test_codex_assets.py -q
@@ -43,13 +52,24 @@ It does not execute the checked command.
 
 Codex reads repository `AGENTS.md` as project instructions, scans
 `.agents/skills` from the current working directory up to the repository root,
-and loads trusted project `.codex` layers for custom agents and rules.
+and loads trusted project `.codex` layers for custom agents, rules, config, and
+hooks. Use `/hooks` after opening or resuming a trusted project session to
+confirm the three shared-context lifecycle hooks are active.
 
 Start Codex from `/home/cosmosapjw/Dropbox/bianchi/htt_base` or a child path of
 that checkout so repository-local skills and project instructions are in scope.
 If project trust is disabled, project `.codex` layers can be skipped by Codex;
 in that case, verify with the explicit commands above before relying on rules or
 custom subagents.
+
+`scripts/install_codex_handoff.sh` copies the canonical harness context,
+scripts, and templates, then builds and validates a fresh context pack. It does
+not copy an `ACTIVE_RUN`, prior run results, or raw logs, and it fails closed if
+the destination already has an active harness run. Existing `AGENTS.md`,
+`agent.md`, `AGENTS.md.fragment`, and `.codex` files are merge-only: identical
+files are retained, while divergent files or symlinks stop the installation
+before the first destination write so repository policy and intentional Codex
+settings cannot be silently replaced.
 
 ## Scientific Scope
 

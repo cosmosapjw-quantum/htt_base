@@ -30,9 +30,10 @@ from common.artifact_manifest import validate_manifest_payload  # noqa: E402
 from common.cf4_p0_quarantine import (  # noqa: E402
     ContentMode,
     QuarantineContent,
+    assert_reviewed_active_binary_pin_snapshot_current,
     read_regular_bytes,
     repository_content,
-    reviewed_active_binary_sidecar_pin,
+    reviewed_active_binary_sidecar_pin_snapshot,
     validate_repository,
 )
 from common.package_binary_binding import (  # noqa: E402
@@ -42,7 +43,9 @@ from common.package_binary_binding import (  # noqa: E402
 
 
 DEFAULT_OUTPUT_ZIP = Path("docs/generated/research_only_external_audit_package.zip")
-DEFAULT_OUTPUT_MANIFEST = Path("docs/generated/research_only_external_audit_package_manifest.json")
+DEFAULT_OUTPUT_MANIFEST = Path(
+    "docs/generated/research_only_external_audit_package_manifest.json"
+)
 DEFAULT_OUTPUT_PROMPT = Path("docs/generated/research_only_external_audit_prompt.md")
 SCHEMA_VERSION = "common.research_only_external_audit_package.v1"
 ARTIFACT_ID = "research_only_external_audit_package"
@@ -157,7 +160,11 @@ class PackageEntry:
         return read_regular_bytes(repo_root, self.source_path)
 
     def source_text(self) -> str:
-        return self.source_path.as_posix() if self.source_path is not None else f"virtual:{self.archive_path}"
+        return (
+            self.source_path.as_posix()
+            if self.source_path is not None
+            else f"virtual:{self.archive_path}"
+        )
 
 
 def _repo_relative(path: Path, repo_root: Path = REPO_ROOT) -> str:
@@ -176,7 +183,9 @@ def _sha256_file(path: Path) -> str:
 
 
 def _stable_hash(payload: Any) -> str:
-    encoded = json.dumps(payload, sort_keys=True, separators=(",", ":"), allow_nan=False).encode("utf-8")
+    encoded = json.dumps(
+        payload, sort_keys=True, separators=(",", ":"), allow_nan=False
+    ).encode("utf-8")
     return _sha256_bytes(encoded)
 
 
@@ -206,8 +215,14 @@ def _git_state(repo_root: Path) -> str:
 
 
 def _command_from_args(argv: Sequence[str] | None) -> str:
-    args = [arg for arg in (sys.argv[1:] if argv is None else list(argv)) if arg != "--check"]
-    return " ".join(["python", "scripts/build_research_only_audit_package.py", *args]).strip()
+    args = [
+        arg
+        for arg in (sys.argv[1:] if argv is None else list(argv))
+        if arg != "--check"
+    ]
+    return " ".join(
+        ["python", "scripts/build_research_only_audit_package.py", *args]
+    ).strip()
 
 
 def _entry(source: str, archive: str, group: str, description: str) -> PackageEntry:
@@ -228,9 +243,11 @@ def _entry(source: str, archive: str, group: str, description: str) -> PackageEn
                 "research_gates/pr04/",
             )
         )
-        else ContentMode.GOVERNANCE_CONTROL
-        if source in GOVERNANCE_CONTROL_PATHS
-        else ContentMode.ACTIVE_PUBLIC
+        else (
+            ContentMode.GOVERNANCE_CONTROL
+            if source in GOVERNANCE_CONTROL_PATHS
+            else ContentMode.ACTIVE_PUBLIC
+        )
     )
     return PackageEntry(
         source_path=Path(source),
@@ -242,7 +259,9 @@ def _entry(source: str, archive: str, group: str, description: str) -> PackageEn
     )
 
 
-def _virtual_entry(archive: str, group: str, description: str, text: str) -> PackageEntry:
+def _virtual_entry(
+    archive: str, group: str, description: str, text: str
+) -> PackageEntry:
     return PackageEntry(
         archive_path=archive,
         group=group,
@@ -283,11 +302,19 @@ def _figure_entries(repo_root: Path) -> list[PackageEntry]:
     seen: set[str] = set()
     missing: list[str] = []
     for record in audit.figure_records:
-        if record.status != "resolved" or record.resolved_path is None or record.manifest_path is None:
-            missing.append(f"{record.tex_path}:{record.line}:{record.include_path}:{record.status}")
+        if (
+            record.status != "resolved"
+            or record.resolved_path is None
+            or record.manifest_path is None
+        ):
+            missing.append(
+                f"{record.tex_path}:{record.line}:{record.include_path}:{record.status}"
+            )
             continue
         candidate_paths = [record.resolved_path, record.manifest_path]
-        source_json = Path(record.resolved_path).with_name(Path(record.resolved_path).stem + ".source.json")
+        source_json = Path(record.resolved_path).with_name(
+            Path(record.resolved_path).stem + ".source.json"
+        )
         if (repo_root / source_json).is_file():
             candidate_paths.append(source_json.as_posix())
         for rel in candidate_paths:
@@ -298,16 +325,23 @@ def _figure_entries(repo_root: Path) -> list[PackageEntry]:
                 _entry(
                     rel,
                     rel,
-                    "manuscript_figure_payload"
-                    if rel.endswith(".png")
-                    else "manuscript_figure_source_json"
-                    if rel.endswith(".source.json")
-                    else "manuscript_figure_manifest",
+                    (
+                        "manuscript_figure_payload"
+                        if rel.endswith(".png")
+                        else (
+                            "manuscript_figure_source_json"
+                            if rel.endswith(".source.json")
+                            else "manuscript_figure_manifest"
+                        )
+                    ),
                     "manuscript figure payload, source JSON, or sidecar manifest referenced by LaTeX",
                 )
             )
     if missing:
-        raise RuntimeError("research audit package requires all manuscript figures to be resolved with manifests: " + "; ".join(missing[:8]))
+        raise RuntimeError(
+            "research audit package requires all manuscript figures to be resolved with manifests: "
+            + "; ".join(missing[:8])
+        )
     return entries
 
 
@@ -369,9 +403,20 @@ def _code_sample_entries(repo_root: Path) -> list[PackageEntry]:
     return entries
 
 
-def _entry_rows(repo_root: Path, entries: Sequence[PackageEntry]) -> list[dict[str, Any]]:
+def _entry_rows(
+    repo_root: Path, entries: Sequence[PackageEntry]
+) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     seen: set[str] = set()
+    policy_path = (
+        repo_root
+        / "docs/research_program/long_horizon_rescue/cf4_p0_quarantine_policy.yaml"
+    )
+    reviewed_snapshot = (
+        reviewed_active_binary_sidecar_pin_snapshot(repo_root)
+        if policy_path.is_file()
+        else None
+    )
     for entry in sorted(entries, key=lambda item: item.archive_path):
         path_parts = Path(entry.archive_path).parts
         if entry.archive_path.startswith("/") or ".." in path_parts:
@@ -379,7 +424,9 @@ def _entry_rows(repo_root: Path, entries: Sequence[PackageEntry]) -> list[dict[s
         if entry.archive_path in seen:
             raise ValueError(f"duplicate archive path: {entry.archive_path}")
         if entry.archive_path.lower().endswith(".pdf"):
-            raise ValueError(f"PDF files are intentionally excluded: {entry.archive_path}")
+            raise ValueError(
+                f"PDF files are intentionally excluded: {entry.archive_path}"
+            )
         if entry.content_mode is ContentMode.ACTIVE_PUBLIC and not entry.public_use:
             raise ValueError(
                 f"active/public package entry cannot set public_use=false: {entry.archive_path}"
@@ -392,10 +439,9 @@ def _entry_rows(repo_root: Path, entries: Sequence[PackageEntry]) -> list[dict[s
                 f"historical package entry cannot set public_use=true: {entry.archive_path}"
             )
         source_path = entry.source_path.as_posix() if entry.source_path else ""
-        if (
-            source_path.startswith(MANUSCRIPT_SOURCE_PREFIX)
-            and Path(source_path).suffix in {".tex", ".bib"}
-        ):
+        if source_path.startswith(MANUSCRIPT_SOURCE_PREFIX) and Path(
+            source_path
+        ).suffix in {".tex", ".bib"}:
             if source_path == MANUSCRIPT_HARD_STOP_STUB:
                 if (
                     entry.content_mode is not ContentMode.ACTIVE_PUBLIC
@@ -406,8 +452,7 @@ def _entry_rows(repo_root: Path, entries: Sequence[PackageEntry]) -> list[dict[s
                         "active/public control surface"
                     )
             elif (
-                entry.content_mode
-                is not ContentMode.IMMUTABLE_HISTORICAL_EVIDENCE
+                entry.content_mode is not ContentMode.IMMUTABLE_HISTORICAL_EVIDENCE
                 or entry.public_use
             ):
                 raise ValueError(
@@ -428,9 +473,8 @@ def _entry_rows(repo_root: Path, entries: Sequence[PackageEntry]) -> list[dict[s
         seen.add(entry.archive_path)
         data = entry.bytes(repo_root)
         reviewed_pin = (
-            reviewed_active_binary_sidecar_pin(repo_root, entry.source_path)
-            if entry.source_path is not None
-            and (repo_root / "docs/research_program/long_horizon_rescue/cf4_p0_quarantine_policy.yaml").is_file()
+            reviewed_snapshot.pins.get(entry.source_path.as_posix())
+            if entry.source_path is not None and reviewed_snapshot is not None
             else None
         )
         binary_binding = (
@@ -445,18 +489,23 @@ def _entry_rows(repo_root: Path, entries: Sequence[PackageEntry]) -> list[dict[s
             else None
         )
         row = {
-                "source_path": entry.source_text(),
-                "archive_path": entry.archive_path,
-                "group": entry.group,
-                "description": entry.description,
-                "content_mode": entry.content_mode.value,
-                "public_use": entry.public_use,
-                "sha256": _sha256_bytes(data),
-                "size_bytes": len(data),
-            }
+            "source_path": entry.source_text(),
+            "archive_path": entry.archive_path,
+            "group": entry.group,
+            "description": entry.description,
+            "content_mode": entry.content_mode.value,
+            "public_use": entry.public_use,
+            "sha256": _sha256_bytes(data),
+            "size_bytes": len(data),
+        }
         if binary_binding is not None:
             row["binary_binding"] = binary_binding
         rows.append(row)
+    if reviewed_snapshot is not None:
+        assert_reviewed_active_binary_pin_snapshot_current(
+            repo_root,
+            reviewed_snapshot,
+        )
     return rows
 
 
@@ -489,7 +538,8 @@ def _required_assertions(rows: Sequence[dict[str, Any]]) -> dict[str, bool]:
     figure_manifest = {
         path[: -len(".manifest.json")]
         for path in archive_paths
-        if path.startswith(f"{ARCHIVE_ROOT}/figures/") and path.endswith(".manifest.json")
+        if path.startswith(f"{ARCHIVE_ROOT}/figures/")
+        and path.endswith(".manifest.json")
     }
     figure_source_json = {
         path[: -len(".source.json")]
@@ -513,16 +563,22 @@ def _required_assertions(rows: Sequence[dict[str, Any]]) -> dict[str, bool]:
         if row["source_path"] == MANUSCRIPT_HARD_STOP_STUB
     ]
     return {
-        "compiled_pdf_excluded": not any(path.lower().endswith(".pdf") for path in archive_paths),
-        "latex_source_included": f"{ARCHIVE_ROOT}/docs/manuscript/main.tex" in archive_paths
+        "compiled_pdf_excluded": not any(
+            path.lower().endswith(".pdf") for path in archive_paths
+        ),
+        "latex_source_included": f"{ARCHIVE_ROOT}/docs/manuscript/main.tex"
+        in archive_paths
         and f"{ARCHIVE_ROOT}/docs/manuscript/references.bib" in archive_paths,
-        "generated_tex_snippets_included": any(path.startswith(f"{ARCHIVE_ROOT}/docs/manuscript/generated/") and path.endswith(".tex") for path in archive_paths),
+        "generated_tex_snippets_included": any(
+            path.startswith(f"{ARCHIVE_ROOT}/docs/manuscript/generated/")
+            and path.endswith(".tex")
+            for path in archive_paths
+        ),
         "retained_manuscript_sources_historical_nonpublic": bool(
             retained_manuscript_rows
         )
         and all(
-            row["content_mode"]
-            == ContentMode.IMMUTABLE_HISTORICAL_EVIDENCE.value
+            row["content_mode"] == ContentMode.IMMUTABLE_HISTORICAL_EVIDENCE.value
             and row["public_use"] is False
             for row in retained_manuscript_rows
         ),
@@ -533,18 +589,26 @@ def _required_assertions(rows: Sequence[dict[str, Any]]) -> dict[str, bool]:
             row["content_mode"] == ContentMode.ACTIVE_PUBLIC.value
             for row in retained_manuscript_rows
         ),
-        "all_manuscript_figures_have_payload_and_manifest": bool(figure_png) and figure_png == figure_manifest,
-        "available_figure_source_json_included": bool(figure_source_json) and figure_source_json <= figure_png,
-        "plot_lists_included": f"{ARCHIVE_ROOT}/docs/generated/manuscript_plot_list_index.md" in archive_paths
-        and f"{ARCHIVE_ROOT}/docs/generated/observed_current_plot_list.md" in archive_paths
-        and f"{ARCHIVE_ROOT}/docs/generated/current_manuscript_plot_list.md" in archive_paths
-        and f"{ARCHIVE_ROOT}/docs/generated/expanded_manuscript_plot_list.md" in archive_paths,
+        "all_manuscript_figures_have_payload_and_manifest": bool(figure_png)
+        and figure_png == figure_manifest,
+        "available_figure_source_json_included": bool(figure_source_json)
+        and figure_source_json <= figure_png,
+        "plot_lists_included": f"{ARCHIVE_ROOT}/docs/generated/manuscript_plot_list_index.md"
+        in archive_paths
+        and f"{ARCHIVE_ROOT}/docs/generated/observed_current_plot_list.md"
+        in archive_paths
+        and f"{ARCHIVE_ROOT}/docs/generated/current_manuscript_plot_list.md"
+        in archive_paths
+        and f"{ARCHIVE_ROOT}/docs/generated/expanded_manuscript_plot_list.md"
+        in archive_paths,
         "result_packs_included": all(
             f"{ARCHIVE_ROOT}/docs/generated/result_pack_{letter}.md" in archive_paths
             for letter in ("A", "B", "C")
         ),
-        "claim_and_transfer_metadata_included": f"{ARCHIVE_ROOT}/docs/generated/claim_ledger.json" in archive_paths
-        and f"{ARCHIVE_ROOT}/docs/generated/transfer_sensitivity_report.md" in archive_paths,
+        "claim_and_transfer_metadata_included": f"{ARCHIVE_ROOT}/docs/generated/claim_ledger.json"
+        in archive_paths
+        and f"{ARCHIVE_ROOT}/docs/generated/transfer_sensitivity_report.md"
+        in archive_paths,
         "cf4_quarantine_controls_included": (
             f"{ARCHIVE_ROOT}/docs/generated/cf4_p0_quarantine_block.json"
             in archive_paths
@@ -553,18 +617,23 @@ def _required_assertions(rows: Sequence[dict[str, Any]]) -> dict[str, bool]:
         ),
         "minimal_code_samples_only": "minimal_code_sample" in groups
         and not any(path.startswith(f"{ARCHIVE_ROOT}/htt/") for path in archive_paths)
-        and not any(path.startswith(f"{ARCHIVE_ROOT}/code_snapshot/") for path in archive_paths),
+        and not any(
+            path.startswith(f"{ARCHIVE_ROOT}/code_snapshot/") for path in archive_paths
+        ),
         "research_prompt_included": "AUDIT_PROMPT_RESEARCH_ONLY.md" in archive_paths,
         "revision_program_files_included": all(
             f"{ARCHIVE_ROOT}/{rel}" in archive_paths for rel in REVISION_PROGRAM_FILES
         ),
         "rev_r087_research_context_included": all(
-            f"{ARCHIVE_ROOT}/{rel}" in archive_paths for rel in REV_R087_RESEARCH_CONTEXT_FILES
+            f"{ARCHIVE_ROOT}/{rel}" in archive_paths
+            for rel in REV_R087_RESEARCH_CONTEXT_FILES
         ),
         "theorem_registry_assets_included": f"{ARCHIVE_ROOT}/docs/generated/theorem_extension_registry.md"
         in archive_paths
-        and f"{ARCHIVE_ROOT}/docs/generated/theorem_extension_registry.json" in archive_paths
-        and f"{ARCHIVE_ROOT}/docs/generated/research_program_theorem_registry.yaml" in archive_paths,
+        and f"{ARCHIVE_ROOT}/docs/generated/theorem_extension_registry.json"
+        in archive_paths
+        and f"{ARCHIVE_ROOT}/docs/generated/research_program_theorem_registry.yaml"
+        in archive_paths,
         "rev_r086_checkpoint_included": f"{ARCHIVE_ROOT}/docs/generated/progress_checkpoints/revision_checkpoint_rev_r086.md"
         in archive_paths,
     }
@@ -583,8 +652,18 @@ def build_payload(
     root = Path(repo_root).resolve()
     prompt_text = render_prompt()
     entries: list[PackageEntry] = [
-        _virtual_entry("README.md", "package_readme", "research-only audit package guide", render_readme()),
-        _virtual_entry("AUDIT_PROMPT_RESEARCH_ONLY.md", "research_prompt", "adversarial physics/math/statistics audit prompt", prompt_text),
+        _virtual_entry(
+            "README.md",
+            "package_readme",
+            "research-only audit package guide",
+            render_readme(),
+        ),
+        _virtual_entry(
+            "AUDIT_PROMPT_RESEARCH_ONLY.md",
+            "research_prompt",
+            "adversarial physics/math/statistics audit prompt",
+            prompt_text,
+        ),
         *_latex_source_entries(root),
         *_figure_entries(root),
         *_metadata_entries(root),
@@ -641,22 +720,34 @@ def build_payload(
         "passed_gates": sorted(name for name, ok in assertions.items() if ok),
         "failed_gates": failed_gates,
         "report_generation_gates": {
-            "latex_source_packaging": "pass" if assertions.get("latex_source_included") else "fail",
-            "figure_payload_manifest_pairing": "pass" if assertions.get("all_manuscript_figures_have_payload_and_manifest") else "fail",
-            "compiled_pdf_excluded": "pass" if assertions.get("compiled_pdf_excluded") else "fail",
-            "minimal_code_policy": "pass" if assertions.get("minimal_code_samples_only") else "fail",
-            "cf4_p0_quarantine": "pass"
-            if assertions.get("cf4_p0_quarantine_clean")
-            else "fail",
+            "latex_source_packaging": (
+                "pass" if assertions.get("latex_source_included") else "fail"
+            ),
+            "figure_payload_manifest_pairing": (
+                "pass"
+                if assertions.get("all_manuscript_figures_have_payload_and_manifest")
+                else "fail"
+            ),
+            "compiled_pdf_excluded": (
+                "pass" if assertions.get("compiled_pdf_excluded") else "fail"
+            ),
+            "minimal_code_policy": (
+                "pass" if assertions.get("minimal_code_samples_only") else "fail"
+            ),
+            "cf4_p0_quarantine": (
+                "pass" if assertions.get("cf4_p0_quarantine_clean") else "fail"
+            ),
         },
         "science_promotion_gates": {
             "native_low_ell_solver_validation": "fail_not_available",
             "native_morphology_atlas": "fail_not_available",
             "matched_mask_covariance_family_equivalence_stack": "not_uniformly_bound_across_legacy_material",
             "research_only_external_review": "pending",
-            "revision_program_external_audit_context": "pass"
-            if assertions.get("revision_program_files_included")
-            else "fail_missing_required_revision_files",
+            "revision_program_external_audit_context": (
+                "pass"
+                if assertions.get("revision_program_files_included")
+                else "fail_missing_required_revision_files"
+            ),
         },
         "publication_gates": {
             "external_research_audit_ready": "pass" if not failed_gates else "fail",
@@ -848,14 +939,20 @@ def _render_manifest(payload: dict[str, Any]) -> str:
     return json.dumps(payload, indent=2, sort_keys=True) + "\n"
 
 
-def _build_zip_bytes(repo_root: Path, payload: dict[str, Any], entries: Sequence[PackageEntry]) -> bytes:
+def _build_zip_bytes(
+    repo_root: Path, payload: dict[str, Any], entries: Sequence[PackageEntry]
+) -> bytes:
     from io import BytesIO
 
     entry_by_archive = {entry.archive_path: entry for entry in entries}
     buffer = BytesIO()
     with zipfile.ZipFile(buffer, mode="w", compression=zipfile.ZIP_DEFLATED) as archive:
-        archive.writestr(_zip_info("MANIFEST.json"), _render_manifest(payload).encode("utf-8"))
-        for row in sorted(payload["archive_entries"], key=lambda item: item["archive_path"]):
+        archive.writestr(
+            _zip_info("MANIFEST.json"), _render_manifest(payload).encode("utf-8")
+        )
+        for row in sorted(
+            payload["archive_entries"], key=lambda item: item["archive_path"]
+        ):
             entry = entry_by_archive[row["archive_path"]]
             data = entry.bytes(repo_root)
             if entry.source_path is not None:
@@ -875,10 +972,23 @@ def _build_zip_bytes(repo_root: Path, payload: dict[str, Any], entries: Sequence
     return buffer.getvalue()
 
 
-def _write_outputs(repo_root: Path, payload: dict[str, Any], entries: Sequence[PackageEntry], output_zip: Path, output_manifest: Path, output_prompt: Path) -> None:
+def _write_outputs(
+    repo_root: Path,
+    payload: dict[str, Any],
+    entries: Sequence[PackageEntry],
+    output_zip: Path,
+    output_manifest: Path,
+    output_prompt: Path,
+) -> None:
     output_zip_path = output_zip if output_zip.is_absolute() else repo_root / output_zip
-    output_manifest_path = output_manifest if output_manifest.is_absolute() else repo_root / output_manifest
-    output_prompt_path = output_prompt if output_prompt.is_absolute() else repo_root / output_prompt
+    output_manifest_path = (
+        output_manifest
+        if output_manifest.is_absolute()
+        else repo_root / output_manifest
+    )
+    output_prompt_path = (
+        output_prompt if output_prompt.is_absolute() else repo_root / output_prompt
+    )
     output_zip_path.parent.mkdir(parents=True, exist_ok=True)
     output_manifest_path.parent.mkdir(parents=True, exist_ok=True)
     output_prompt_path.parent.mkdir(parents=True, exist_ok=True)
@@ -887,11 +997,28 @@ def _write_outputs(repo_root: Path, payload: dict[str, Any], entries: Sequence[P
     output_prompt_path.write_text(render_prompt(), encoding="utf-8")
 
 
-def _check_outputs(repo_root: Path, payload: dict[str, Any], entries: Sequence[PackageEntry], output_zip: Path, output_manifest: Path, output_prompt: Path) -> int:
+def _check_outputs(
+    repo_root: Path,
+    payload: dict[str, Any],
+    entries: Sequence[PackageEntry],
+    output_zip: Path,
+    output_manifest: Path,
+    output_prompt: Path,
+) -> int:
     output_zip_path = output_zip if output_zip.is_absolute() else repo_root / output_zip
-    output_manifest_path = output_manifest if output_manifest.is_absolute() else repo_root / output_manifest
-    output_prompt_path = output_prompt if output_prompt.is_absolute() else repo_root / output_prompt
-    if not output_zip_path.exists() or not output_manifest_path.exists() or not output_prompt_path.exists():
+    output_manifest_path = (
+        output_manifest
+        if output_manifest.is_absolute()
+        else repo_root / output_manifest
+    )
+    output_prompt_path = (
+        output_prompt if output_prompt.is_absolute() else repo_root / output_prompt
+    )
+    if (
+        not output_zip_path.exists()
+        or not output_manifest_path.exists()
+        or not output_prompt_path.exists()
+    ):
         print("missing research-only audit package output")
         return 1
     if output_manifest_path.read_text(encoding="utf-8") != _render_manifest(payload):
@@ -923,7 +1050,11 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
 def main(argv: Sequence[str] | None = None) -> int:
     args = parse_args(argv)
     repo_root = args.repo_root.resolve()
-    check_manifest_path = args.output_manifest if args.output_manifest.is_absolute() else repo_root / args.output_manifest
+    check_manifest_path = (
+        args.output_manifest
+        if args.output_manifest.is_absolute()
+        else repo_root / args.output_manifest
+    )
     check_metadata: dict[str, Any] = {}
     if args.check and check_manifest_path.exists():
         existing_manifest = json.loads(check_manifest_path.read_text(encoding="utf-8"))
@@ -942,7 +1073,10 @@ def main(argv: Sequence[str] | None = None) -> int:
         git_commit=check_metadata.get("git_commit"),
     )
     if payload["failed_gates"]:
-        print("research-only package failed required gates: " + ", ".join(payload["failed_gates"]))
+        print(
+            "research-only package failed required gates: "
+            + ", ".join(payload["failed_gates"])
+        )
         return 1
     if args.dry_run:
         print("DRY-RUN: not writing research-only audit package")
@@ -951,11 +1085,31 @@ def main(argv: Sequence[str] | None = None) -> int:
             print(f"{key}={value}")
         return 0
     if args.check:
-        return _check_outputs(repo_root, payload, entries, args.output_zip, args.output_manifest, args.output_prompt)
-    _write_outputs(repo_root, payload, entries, args.output_zip, args.output_manifest, args.output_prompt)
-    print(f"wrote {repo_root / args.output_zip if not args.output_zip.is_absolute() else args.output_zip}")
-    print(f"wrote {repo_root / args.output_manifest if not args.output_manifest.is_absolute() else args.output_manifest}")
-    print(f"wrote {repo_root / args.output_prompt if not args.output_prompt.is_absolute() else args.output_prompt}")
+        return _check_outputs(
+            repo_root,
+            payload,
+            entries,
+            args.output_zip,
+            args.output_manifest,
+            args.output_prompt,
+        )
+    _write_outputs(
+        repo_root,
+        payload,
+        entries,
+        args.output_zip,
+        args.output_manifest,
+        args.output_prompt,
+    )
+    print(
+        f"wrote {repo_root / args.output_zip if not args.output_zip.is_absolute() else args.output_zip}"
+    )
+    print(
+        f"wrote {repo_root / args.output_manifest if not args.output_manifest.is_absolute() else args.output_manifest}"
+    )
+    print(
+        f"wrote {repo_root / args.output_prompt if not args.output_prompt.is_absolute() else args.output_prompt}"
+    )
     return 0
 
 

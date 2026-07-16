@@ -1,0 +1,58 @@
+schema: htt.pr122.authority_snapshot.v1
+snapshot_id: PR122-AUTHORITY-SLICE-20260716
+snapshot_status: immutable_historical_authority_slice
+immutable: true
+scope: PR-122
+selection_rule: exact_pr122_scope_rows_at_issuance
+owner: COMMON
+implementation_scope: common
+claim_tier: exploratory
+artifact_mode: governance_diagnostic
+allowed_use: PR122_internal_receipt_authorship_and_correlated_review_only
+transfer_source: none
+config_hash: eab2fc002d85522a33f83a3039144fc66d3cb4b5cfafc16fb66efe653d671e87
+input_hashes:
+  - docs/codex_handoff/authorized_principals.yaml:1d3cc58f82f40e2024c735a655d2d32494f4e707c4bf632773eebd5ded8f90ce
+  - docs/research_program/long_horizon_rescue/pr122_spec.yaml:eab2fc002d85522a33f83a3039144fc66d3cb4b5cfafc16fb66efe653d671e87
+source_registry:
+  path: docs/codex_handoff/authorized_principals.yaml
+  file_sha256_at_issuance: 1d3cc58f82f40e2024c735a655d2d32494f4e707c4bf632773eebd5ded8f90ce
+  authority_registry_ref_at_issuance: df738f5d4ea16e3eb9b19cfc8b0af68e66d9cff1c6aa3d85cd36dc967b863d9d
+selected_principal_rows_sha256: 388977255d16ff70a47e4aefde83bc2048a7793606f7028ef425dd297efca26d
+snapshot_authority_registry_ref: 23802d0d5ea9625098961366f533c04b1b4e81b45ef694cbbc941b8d79e308b9
+sky_support_status: not_applicable_governance
+null_mock_status: not_applicable_governance
+caveats:
+  - This is an immutable historical slice, not the evolving default-deny registry.
+  - Both principals are correlated internal process identities.
+  - Neither principal can promote scientific status or claim external independence.
+  - Later scopes and principals must be registered in the evolving global registry and cannot broaden this snapshot.
+generating_command: repository-local apply_patch from the exact PR-122 scope rows
+git_commit_or_worktree_state: 'HEAD:461fe4ca8f1ca1ebdcf3571ad077aac4b5e25b38;source_registry_sha256:1d3cc58f82f40e2024c735a655d2d32494f4e707c4bf632773eebd5ded8f90ce'
+principals:
+  - principal_id: codex:/root
+    identity_fingerprint: 195501457b5ed8e0d4cf4810092d464be53ad8110b9075b250e5c5c310d824cc
+    aliases: []
+    allowed_roles:
+      - author
+    allowed_scopes:
+      - PR-122
+    independence_class: correlated_internal_author
+    valid_from: '2026-07-15T00:00:00+09:00'
+    valid_until: '2027-07-15T00:00:00+09:00'
+    revoked: false
+    verifier: unverified_internal_process_identity
+    can_promote_scientific_status: false
+  - principal_id: codex:/root/pr122_claim_auditor
+    identity_fingerprint: 2034d7613e805cce29e9113d850794cd94adb5a6adc52d0ffc00bc608caddc3b
+    aliases: []
+    allowed_roles:
+      - adjudicator
+    allowed_scopes:
+      - PR-122
+    independence_class: correlated_internal_non_author_review
+    valid_from: '2026-07-16T00:00:00+09:00'
+    valid_until: '2027-07-16T00:00:00+09:00'
+    revoked: false
+    verifier: unverified_internal_process_identity
+    can_promote_scientific_status: false

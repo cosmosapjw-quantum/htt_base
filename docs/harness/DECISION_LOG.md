@@ -2,6 +2,82 @@
 
 Record accepted, rejected, and deferred design decisions.
 
+## 2026-07-16 - PR-122 evidence-authority boundary
+
+- Accepted: process result, evidence availability/integrity, and scientific
+  status are orthogonal axes. A process PASS with blocked science may enter an
+  explicitly caveated audit disclosure but cannot authorize claim release.
+- Accepted: release evidence is a typed, acyclic, content-addressed graph whose
+  root binds generator/verifier code, selector and execution identities,
+  execution environment, parent receipt, authority registry, artifact
+  manifest, and downstream consumers.
+- Accepted: trusted verifier identity includes code plus decision-bearing
+  closure/default/global/callable state. A caller-declared digest is never an
+  independent substitute for verifiable semantics.
+- Accepted: ready matched-null inference requires an exact canonical
+  `MatchedNullCompetitionReport` that can be rebuilt from typed content,
+  source lineage, FPR threshold, and report hash. A compact hook or scalar is
+  not evidence by itself.
+- Accepted: the literal-only release-pin fields remain outside the
+  verifier/graph hash cycle as an explicit commit-reviewed trust root. They are
+  parsed without module import or execution, and the authoritative environment
+  permits no import-origin exclusions.
+- Accepted: authoritative graph, freeze, and package CLIs start through the
+  tracked source-only launcher before site hooks or workspace bytecode can run.
+  PR-122 consumes an immutable exact-scope authority snapshot; later global
+  principal registrations cannot broaden or invalidate the historical slice.
+- Accepted: the active MES inventory remains blocked until PR-124 supplies a
+  typed independently supported theorem/convention successor and nonzero D2
+  authority. Legacy triples and diagnostic witnesses are not promoted.
+- Rejected: self-signed/circular receipts, correlated internal identities as
+  external replication, arbitrary readiness flags, zero-test authority,
+  caller pseudo-PPC/Bayes values, fabricated matched-null hashes, dead MES
+  pointer decoys, and unbound/opaque verifier or pytest-environment state.
+- Deferred: scientific estimand, matched data/null/covariance, transfer,
+  native solver, morphology, geometry, and family validation remain downstream
+  work. PR4 data work remains entirely skipped by user scope.
+
+## 2026-07-16 - PR-122 harness integration and suite acceleration
+
+- Accepted: the uploaded shared-context packet is repository-scoped and
+  versioned. Every subagent spawn uses a built context pack, registered unique
+  assignment, exact four-field header, bounded fan-out, isolated result path,
+  and schema-checked stop envelope. Independent results are merged before
+  adjudication; missing evidence fingerprints fail closed.
+- Accepted: installer upgrades are merge-or-refuse. Existing `AGENTS.md`,
+  `agent.md`, `AGENTS.md.fragment`, and `.codex` files are never overwritten
+  when divergent or symlinked; conflicts stop before destination writes.
+- Measured: the original 195-test PR-122 consumer suite took 889.86 seconds.
+  A single payload profile attributed 58.345 cumulative seconds to entry-row
+  construction, including 559 repeated policy loads (57.002 seconds) and 564
+  YAML parses (41.037 seconds). The unprofiled payload fell from 41.413 to
+  17.284 seconds with one validated build-local policy snapshot, a 58.3%
+  reduction.
+- Accepted: package builders may reuse one immutable reviewed-binary pin map
+  only within a single payload construction and must rehash canonical policy
+  bytes before returning. There is no production module-global/LRU policy
+  cache. Pure assertion tests may share canonical JSON/archive bytes only when
+  every caller receives an independent object; mutation, CLI, determinism, and
+  fail-closed tests remain fresh.
+- Rejected for this workload: GPU offload and NumPy vectorization. The measured
+  work is YAML/path/stat/regex/SHA/Git/DEFLATE control flow rather than a dense
+  numerical kernel; transfer overhead and a larger trusted dependency surface
+  would dominate.
+- Deferred: `pytest-xdist` or process-parallel repository scanning. The host
+  has 12 physical/24 logical CPU cores and an RTX 3080 Ti, but xdist is not
+  installed. Parallel execution is considered only after duplicate work is
+  removed and artifact-writing tests are isolated, with unchanged sorted
+  findings, ZIP bytes, mutation kills, RSS bounds, and cold/warm benchmarks.
+- Measured after the change: the focused 19-test audit-package generator suite
+  completed in 246.09 seconds. A broader six-package/PR-120 pre-reseal run
+  completed in 766.28 seconds with 168 passes and four expected closeout
+  failures: three stale package manifests and one obsolete direct package
+  check. The direct check was corrected to the source-only launcher; the
+  failures remain recorded. After canonical reseal, the exact four failing
+  cases passed in 81.03 seconds. The full PR-122 consumer suite then passed all
+  196 tests in 430.47 seconds, a 51.6% wall-time reduction from the 889.86-second
+  baseline despite one additional test.
+
 ## 2026-07-14 - PR-118 final adversarial-audit decision
 
 - Accepted: preserve all 55 prior findings as `KNOWN_OPEN`, keep the 14 audit

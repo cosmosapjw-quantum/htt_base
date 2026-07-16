@@ -10,15 +10,30 @@ Claim levels are scheme-qualified.  The identically-spelled ``C1`` in the
 family gate and roadmap planning schemes is not comparable, and governance
 records use the separate ``NOT_APPLICABLE`` scheme.
 """
+
 from __future__ import annotations
 
 import hashlib
 import json
 import re
 from dataclasses import dataclass
-from datetime import UTC, date, datetime, time
-from enum import Enum, StrEnum
+from datetime import date, datetime, time, timezone
+from enum import Enum
+from types import MappingProxyType
 from typing import Callable, Mapping, Sequence
+
+try:  # Python 3.11+
+    from enum import StrEnum
+except ImportError:  # pragma: no cover - exercised by the Python 3.10 replay
+
+    class StrEnum(str, Enum):
+        """Minimal stdlib-compatible fallback for the declared Python 3.10 floor."""
+
+        def __str__(self) -> str:
+            return str(self.value)
+
+
+UTC = timezone.utc
 
 
 class RemediationContractError(ValueError):
@@ -100,9 +115,7 @@ class DependencyMode(StrEnum):
 
     REQUIRES_SUCCESS = "requires_success"
     REQUIRES_TERMINAL_RECEIPT = "requires_terminal_receipt"
-    REQUIRES_AUTHENTICATED_EXTERNAL_RECEIPT = (
-        "requires_authenticated_external_receipt"
-    )
+    REQUIRES_AUTHENTICATED_EXTERNAL_RECEIPT = "requires_authenticated_external_receipt"
     REQUIRES_ADJUDICATED_CLAIM_SET = "requires_adjudicated_claim_set"
 
 
@@ -122,12 +135,8 @@ _ADJUDICATED_SCIENTIFIC_STATUSES = {
 _SCIENTIFIC_TRANSITIONS: Mapping[ScientificStatus, frozenset[ScientificStatus]] = {
     ScientificStatus.OPEN: frozenset({ScientificStatus.IN_REMEDIATION}),
     ScientificStatus.IN_REMEDIATION: frozenset({ScientificStatus.EVIDENCE_READY}),
-    ScientificStatus.EVIDENCE_READY: frozenset(
-        {ScientificStatus.ADJUDICATION_PENDING}
-    ),
-    ScientificStatus.ADJUDICATION_PENDING: frozenset(
-        _ADJUDICATED_SCIENTIFIC_STATUSES
-    ),
+    ScientificStatus.EVIDENCE_READY: frozenset({ScientificStatus.ADJUDICATION_PENDING}),
+    ScientificStatus.ADJUDICATION_PENDING: frozenset(_ADJUDICATED_SCIENTIFIC_STATUSES),
 }
 _NEGATIVE_EXECUTION_RESOLUTIONS = {
     ExecutionResolution.COMPLETED_FAILED_WITH_RECEIPT,
@@ -470,16 +479,12 @@ class PrincipalRecord:
 
     def __post_init__(self) -> None:
         principal_id = _authority_text(self.principal_id, "principal_id")
-        fingerprint = _authority_text(
-            self.identity_fingerprint, "identity_fingerprint"
-        )
+        fingerprint = _authority_text(self.identity_fingerprint, "identity_fingerprint")
         if not _FINGERPRINT_RE.fullmatch(fingerprint):
             raise AuthorityError(
                 "principal identity_fingerprint must be a lowercase SHA-256 digest"
             )
-        aliases = _normalized_unique_texts(
-            self.aliases, "aliases", allow_empty=True
-        )
+        aliases = _normalized_unique_texts(self.aliases, "aliases", allow_empty=True)
         if principal_id in aliases:
             raise AuthorityError("aliases must not repeat principal_id")
         roles = _normalized_unique_texts(self.allowed_roles, "allowed_roles")
@@ -532,9 +537,7 @@ class PrincipalRecord:
                 f"principal {self.principal_id!r} is not allowed scope {scope!r}"
             )
         if identity_fingerprint is not None:
-            candidate = _authority_text(
-                identity_fingerprint, "identity_fingerprint"
-            )
+            candidate = _authority_text(identity_fingerprint, "identity_fingerprint")
             if candidate != self.identity_fingerprint:
                 raise AuthorityError(
                     f"principal {self.principal_id!r} fingerprint mismatch"
@@ -550,13 +553,11 @@ class AuthorityRegistry:
         self,
         principals: Sequence[PrincipalRecord] = (),
         *,
-        verifiers: Mapping[
-            str, Callable[[PrincipalRecord, bytes, str], bool]
-        ] | None = None,
+        verifiers: (
+            Mapping[str, Callable[[PrincipalRecord, bytes, str], bool]] | None
+        ) = None,
     ) -> None:
-        if isinstance(principals, (str, bytes)) or not isinstance(
-            principals, Sequence
-        ):
+        if isinstance(principals, (str, bytes)) or not isinstance(principals, Sequence):
             raise TypeError("principals must be a sequence of PrincipalRecord")
         self._principals: dict[str, PrincipalRecord] = {}
         self._identifiers: dict[str, str] = {}
@@ -582,9 +583,7 @@ class AuthorityRegistry:
                 f"principal identifier collision: {sorted(collisions)!r}"
             )
         if principal.principal_id in self._principals:
-            raise AuthorityError(
-                f"duplicate principal_id {principal.principal_id!r}"
-            )
+            raise AuthorityError(f"duplicate principal_id {principal.principal_id!r}")
         fingerprint_owner = self._fingerprints.get(principal.identity_fingerprint)
         if fingerprint_owner is not None:
             raise AuthorityError(
@@ -624,6 +623,19 @@ class AuthorityRegistry:
     def all(self) -> tuple[PrincipalRecord, ...]:
         return tuple(self._principals.values())
 
+    def verifier_bindings(
+        self,
+    ) -> Mapping[str, Callable[[PrincipalRecord, bytes, str], bool]]:
+        """Return a read-only snapshot of the configured verifier callbacks.
+
+        Callers which content-address an authority registry must bind the
+        implementation of each trusted verifier, not merely the verifier name
+        carried by a principal record.  A copy prevents callers from mutating
+        the registry through this inspection surface.
+        """
+
+        return MappingProxyType(dict(self._verifiers))
+
     def verify_attestation(
         self,
         principal: PrincipalRecord,
@@ -651,14 +663,22 @@ class AuthorityRegistry:
             raise AuthorityError("receipt attestation verification failed")
 
 
-def _require_independent_external(
-    principal: PrincipalRecord, *, use: str
-) -> None:
+def _require_independent_external(principal: PrincipalRecord, *, use: str) -> None:
     if principal.independence_class not in _INDEPENDENT_EXTERNAL_CLASSES:
         raise AuthorityError(
             f"{use} requires an independently authenticated external principal; "
             f"got independence_class {principal.independence_class!r}"
         )
+
+
+def require_independent_external_principal(
+    principal: PrincipalRecord, *, use: str
+) -> None:
+    """Public fail-closed guard for independently authenticated principals."""
+
+    if not isinstance(principal, PrincipalRecord):
+        raise TypeError("principal must be a PrincipalRecord")
+    _require_independent_external(principal, use=_exact_nonempty_text(use, "use"))
 
 
 def assert_distinct_author_adjudicator(
@@ -679,8 +699,7 @@ def assert_distinct_author_adjudicator(
     )
     if (
         author_record.principal_id == adjudicator_record.principal_id
-        or author_record.identity_fingerprint
-        == adjudicator_record.identity_fingerprint
+        or author_record.identity_fingerprint == adjudicator_record.identity_fingerprint
     ):
         raise AuthorityError(
             "author and adjudicator must have distinct canonical identities"
@@ -751,9 +770,7 @@ class ExternalDeliveryReceipt:
         object.__setattr__(
             self, "receipt_id", _exact_nonempty_text(self.receipt_id, "receipt_id")
         )
-        object.__setattr__(
-            self, "provider", _authority_text(self.provider, "provider")
-        )
+        object.__setattr__(self, "provider", _authority_text(self.provider, "provider"))
         object.__setattr__(
             self,
             "provider_identity_fingerprint",
@@ -815,9 +832,7 @@ class ExternalDeliveryReceipt:
             at=self.issued_at,
             identity_fingerprint=self.provider_identity_fingerprint,
         )
-        _require_independent_external(
-            provider_record, use="external delivery receipt"
-        )
+        _require_independent_external(provider_record, use="external delivery receipt")
         registry.verify_attestation(
             provider_record,
             payload=self.canonical_attestation_payload(),
@@ -908,9 +923,7 @@ class AdjudicationReceipt:
                 for claim in self.accepted_claims
             ],
             "adjudicator": self.adjudicator,
-            "adjudicator_identity_fingerprint": (
-                self.adjudicator_identity_fingerprint
-            ),
+            "adjudicator_identity_fingerprint": (self.adjudicator_identity_fingerprint),
             "author": self.author,
             "author_identity_fingerprint": self.author_identity_fingerprint,
             "issued_at": self.issued_at.isoformat(),
@@ -1194,9 +1207,7 @@ def validate_scientific_transition(
     expected_fingerprint = _sha256_digest(
         claim_identity_fingerprint, "claim_identity_fingerprint"
     )
-    _, adjudicator_record = attestation.validate(
-        registry, expected_scope=scope, at=at
-    )
+    _, adjudicator_record = attestation.validate(registry, expected_scope=scope, at=at)
     matching_claims = tuple(
         claim
         for claim in attestation.accepted_claims
@@ -1216,9 +1227,7 @@ def validate_scientific_transition(
         at=attestation.issued_at,
         identity_fingerprint=attestation.adjudicator_identity_fingerprint,
     )
-    _require_independent_external(
-        promotion_record, use="scientific status promotion"
-    )
+    _require_independent_external(promotion_record, use="scientific status promotion")
     return target_status
 
 
@@ -1235,9 +1244,7 @@ class DependencyEvidence:
             resolution = None
         else:
             try:
-                resolution = ExecutionResolution(
-                    _enum_value(self.execution_resolution)
-                )
+                resolution = ExecutionResolution(_enum_value(self.execution_resolution))
             except ValueError as exc:
                 raise RemediationContractError(
                     f"unknown execution resolution {self.execution_resolution!r}"
@@ -1292,8 +1299,7 @@ def resolve_dependency(
 
     if parsed_mode is DependencyMode.REQUIRES_SUCCESS:
         satisfied = (
-            evidence.execution_resolution
-            is ExecutionResolution.COMPLETED_SUCCESS
+            evidence.execution_resolution is ExecutionResolution.COMPLETED_SUCCESS
         )
         return DependencyDecision(
             mode=parsed_mode,
@@ -1345,9 +1351,7 @@ def resolve_dependency(
         raise AuthorityError(
             "adjudicated claim-set resolution requires a registry and exact scope"
         )
-    _, adjudicator_record = receipt.validate(
-        registry, expected_scope=scope, at=at
-    )
+    _, adjudicator_record = receipt.validate(registry, expected_scope=scope, at=at)
     accepted = tuple(receipt.accepted_claims)
     if accepted:
         promotion_record = registry.resolve(
@@ -1409,6 +1413,7 @@ __all__ = [
     "claim_identity_fingerprint",
     "compare_claim_levels",
     "is_negative_execution_receipt",
+    "require_independent_external_principal",
     "resolve_dependency",
     "validate_active_owner",
     "validate_scientific_transition",

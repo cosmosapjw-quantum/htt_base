@@ -1,0 +1,128 @@
+{
+  "schema_version": 1,
+  "run_id": "pr122-final-review-20260716",
+  "assignment_id": "A-PR122-CODE-RECHECK",
+  "context_version": "548a657c36099f1b2b58b7fd378a39c69e9be9952e843ff48101d5a006deae09",
+  "independence_mode": "blind-results",
+  "status": "pass",
+  "claim_ids": [
+    "C-PR122-MECHANICS"
+  ],
+  "closure_verdict": {
+    "finding_id": "F-PR122-CODE-001",
+    "verdict": "closed",
+    "severity_after_fix": "none",
+    "evidence_fingerprint": "ebe7f76c5f30807f0f0e923fe9e8dca6dc83d92d87a67e2ee5ac0c4673c38645",
+    "reason": "The builder rejects missing or unknown authority-snapshot schemas before PrincipalRecord construction; the registered mutation maps to the exact negative test that exercises both missing and v2 schemas; the authoritative receipt records that node as collected, executed, and passed; and the source-only graph check confirms the resealed graph/receipt fixed point with claim release false."
+  },
+  "findings": [
+    {
+      "finding_id": "F-PR122-CODE-001",
+      "claim_id": "C-PR122-MECHANICS",
+      "verdict": "closed",
+      "classification": "closure",
+      "evidence_fingerprint": "ebe7f76c5f30807f0f0e923fe9e8dca6dc83d92d87a67e2ee5ac0c4673c38645",
+      "evidence": [
+        {
+          "path": "scripts/codex_harness/build_claim_evidence_graph.py",
+          "lines": "416-443",
+          "observation": "_authority_registry requires schema htt.pr122.authority_snapshot.v1 before constructing the registry, then calls _validate_authority_snapshot."
+        },
+        {
+          "path": "docs/research_program/long_horizon_rescue/pr122_spec.yaml",
+          "lines": "424-459,519-521",
+          "observation": "unknown_authority_snapshot_schema is registered and maps to the exact immutable-snapshot test with fail-closed expected outcome."
+        },
+        {
+          "path": "tests/pr_cards/test_pr_122_claim_addressed_evidence_graph_content_addressed.py",
+          "lines": "208-247",
+          "observation": "The test verifies the valid snapshot and rejects both a missing schema and an unknown v2 schema through _authority_registry."
+        },
+        {
+          "path": "docs/generated/pr122_test_execution.json",
+          "json_pointer": "/counts and /collected_node_ids, /executed_node_ids, /passed_node_ids",
+          "observation": "The authoritative receipt is 132 collected, 132 executed, 132 passed, with the exact authority-snapshot node present in all three identity sets; content_sha256 is 308848a51478c9e0288e45a94e426016352f833edbf0c1056a26c154a43141e4."
+        },
+        {
+          "path": "docs/generated/pr122_claim_evidence_graph.json",
+          "json_pointer": "/graph_ref and authority/spec/builder nodes",
+          "observation": "graph_ref is 86096ceda0436591b4c61b9695ee1172aed2c62a2f4abcbfdca9b04fcea435a3; the builder and spec node hashes equal the current declared files."
+        },
+        {
+          "path": "htt/src/common/release_evidence_pin.py",
+          "lines": "10-24",
+          "observation": "The literal pin binds the current graph file hash aba2a4285105e85720dc560e08ccbc7f9f6a384f9ffc23e4aa6872d8674e45d6, graph_ref, receipt file hash 3c40f202e6e9c46853bea1e03ffffa9881cdffaa210ed480cb2c7be45ec65012, receipt_id, and authority registry ref."
+        }
+      ]
+    }
+  ],
+  "review_axes": {
+    "correctness": "pass: schema rejection is on the production registry-loading path used by bundle construction",
+    "regressions": "pass within bounded scope: focused mutation test and current fixed-point check both pass",
+    "test_adequacy": "pass for F-PR122-CODE-001: the test mutates the schema to missing and unknown values, not merely asserting a declared constant",
+    "scientific_claim_hygiene": "pass: receipt remains correlated internal process evidence and claim_release_allowed remains false",
+    "maintainability": "pass: schema gate is localized at the loader boundary and the exact mutation identity is spec-registered"
+  },
+  "commands": [
+    {
+      "command": "PYTHONPATH=htt/src:htt python -m pytest -q tests/pr_cards/test_pr_122_claim_addressed_evidence_graph_content_addressed.py::test_pr122_authority_snapshot_is_an_immutable_exact_scope_slice",
+      "status": "environment_error",
+      "exit_code": 1,
+      "output_summary": "/usr/bin/python had no pytest module; this supplied no test verdict."
+    },
+    {
+      "command": "PYTHONPATH=htt/src:htt venv/bin/python -m pytest -q tests/pr_cards/test_pr_122_claim_addressed_evidence_graph_content_addressed.py::test_pr122_authority_snapshot_is_an_immutable_exact_scope_slice",
+      "status": "pass",
+      "exit_code": 0,
+      "output_summary": "1 passed in 0.15s"
+    },
+    {
+      "command": "scripts/codex_harness/run_pr122_source_only.sh scripts/codex_harness/build_claim_evidence_graph.py --check",
+      "status": "pass",
+      "exit_code": 0,
+      "output_summary": "up-to-date graph_ref=86096ceda0436591b4c61b9695ee1172aed2c62a2f4abcbfdca9b04fcea435a3 receipt_id=eda4df392574c5e08a54269b3caea4b1c2f03fba358582636fe2907e9f1bc628 claim_release_allowed=False"
+    }
+  ],
+  "tool_versions": {
+    "python": "CPython 3.12.3",
+    "pytest": "9.0.3",
+    "platform": "linux"
+  },
+  "evidence_read": [
+    ".agent-harness/generated/CONTEXT_PACK.md",
+    ".agent-harness/runs/pr122-final-review-20260716/assignments/A-PR122-CODE-RECHECK.json",
+    "docs/research_program/long_horizon_rescue/pr122_spec.yaml",
+    "scripts/codex_harness/build_claim_evidence_graph.py",
+    "tests/pr_cards/test_pr_122_claim_addressed_evidence_graph_content_addressed.py",
+    "docs/generated/pr122_test_execution.json",
+    "docs/generated/pr122_claim_evidence_graph.json",
+    "docs/generated/pr122_release_receipt.json",
+    "htt/src/common/release_evidence_pin.py"
+  ],
+  "proposed_changes": [],
+  "remaining_risks": [
+    {
+      "risk_id": "R-PR122-CONTEXT-HASH-001",
+      "disposition": "follow_up_outside_F-PR122-CODE-001",
+      "evidence_fingerprint": "41215f3da58090f6a8848d42c06a459ec875d45a87f3f39e9849d51b1c233ab7",
+      "statement": "The Tier-0 shared evidence table still names pre-reseal SHA-256 values for E-PR122-TEST, E-PR122-GRAPH, and E-PR122-RECEIPT. Current declared-file hashes are respectively 0628a9a23c84c8d26e500c05749c6f3d94c5d19c9f9a7f63b1438405229ea554, aba2a4285105e85720dc560e08ccbc7f9f6a384f9ffc23e4aa6872d8674e45d6, and 3c40f202e6e9c46853bea1e03ffffa9881cdffaa210ed480cb2c7be45ec65012. This does not reopen the code finding, but the main writer should refresh the shared evidence map and rebuild the context pack before the next assignment."
+    },
+    {
+      "risk_id": "R-PR122-MUTATION-SEMANTICS-001",
+      "disposition": "accepted_residual",
+      "evidence_fingerprint": "955b1b671f539d5dc78687a58668d22e7b1074eb6eeeb77a35ad482daa2c8180",
+      "statement": "The mutation matrix machine-checks exact execution identity and pass outcome, but semantic correspondence between a mutation_id and its test body remains review-bound. For this finding, direct inspection confirms correspondence because the mapped test explicitly removes schema and substitutes v2."
+    }
+  ],
+  "exact_post_reseal_checks": [
+    "PYTHONPATH=htt/src:htt venv/bin/python -m pytest -q tests/pr_cards/test_pr_122_claim_addressed_evidence_graph_content_addressed.py::test_pr122_authority_snapshot_is_an_immutable_exact_scope_slice",
+    "scripts/codex_harness/run_pr122_source_only.sh scripts/codex_harness/build_claim_evidence_graph.py --check"
+  ],
+  "kill_switches": [
+    "Reopen F-PR122-CODE-001 if the loader accepts any schema other than htt.pr122.authority_snapshot.v1, if the mutation no longer maps to the exact negative test, or if that node is absent/nonpassing in the authoritative receipt.",
+    "Keep PR-122 release operations blocked if the source-only fixed-point check fails or claim_release_allowed becomes true."
+  ],
+  "artifact_status_updates_needed": [
+    "Refresh the three stale Tier-0 shared evidence hashes and rebuild CONTEXT_PACK.md before spawning the next assignment; no PR-122 production artifact change is requested by this review."
+  ]
+}

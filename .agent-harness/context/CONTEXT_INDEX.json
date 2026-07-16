@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "context_version": "86126dd80915defb7dad67dfa416ed66acd4dcbca1edcd4801ccdd3b85aade9c",
+  "max_injected_chars": 24000,
+  "shared_files": [
+    ".agent-harness/context/SHARED_CONTEXT.md",
+    ".agent-harness/context/SYMBOLS.md",
+    ".agent-harness/context/FROZEN_DECISIONS.md",
+    ".agent-harness/context/GATE_REGISTRY.json"
+  ],
+  "reference_only_files": [
+    ".agent-harness/context/CLAIM_REGISTRY.jsonl"
+  ],
+  "role_files": {
+    "context_mapper": [
+      ".agent-harness/context/roles/context_mapper.md"
+    ],
+    "cas_wolfram_xact": [
+      ".agent-harness/context/roles/cas_common.md",
+      ".agent-harness/context/roles/cas_wolfram_xact.md"
+    ],
+    "cas_sage_singular": [
+      ".agent-harness/context/roles/cas_common.md",
+      ".agent-harness/context/roles/cas_sage_singular.md"
+    ],
+    "cas_lean": [
+      ".agent-harness/context/roles/cas_common.md",
+      ".agent-harness/context/roles/cas_lean.md"
+    ],
+    "cas_sympy": [
+      ".agent-harness/context/roles/cas_common.md",
+      ".agent-harness/context/roles/cas_sympy.md"
+    ],
+    "adjudicator": [
+      ".agent-harness/context/roles/adjudicator.md"
+    ]
+  },
+  "never_inject_globs": [
+    ".agent-harness/runs/*/results/*",
+    ".agent-harness/runs/*/raw_logs/*"
+  ],
+  "built_at": "2026-07-16T14:55:04+00:00",
+  "file_hashes": {
+    ".agent-harness/context/SHARED_CONTEXT.md": "1aa03bc2dd5be288901b32921e16672cfcbe432d4e2d3a1e3b7d39b5207ca565",
+    ".agent-harness/context/SYMBOLS.md": "5c51f848f93430c8b49d46bd66219162409f06b35fdf778ea9f44c0bf5d214cb",
+    ".agent-harness/context/FROZEN_DECISIONS.md": "82be3a48c424f2f831705f66214b616ac875d6a209e648c6c4d75dd68ee0dd9c",
+    ".agent-harness/context/GATE_REGISTRY.json": "403b10160b7c8057031de32cb5b2f8ac28295acde28703c33854dc0cba325cb2"
+  }
+}

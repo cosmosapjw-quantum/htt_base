@@ -30,10 +30,11 @@ from common.cf4_p0_quarantine import (  # noqa: E402
     CF4P0QuarantineError,
     ContentMode,
     QuarantineContent,
+    assert_reviewed_active_binary_pin_snapshot_current,
     load_block_record,
     read_regular_bytes,
     repository_content,
-    reviewed_active_binary_sidecar_pin,
+    reviewed_active_binary_sidecar_pin_snapshot,
     validate_repository,
 )
 from common.package_binary_binding import (  # noqa: E402
@@ -43,9 +44,13 @@ from common.package_binary_binding import (  # noqa: E402
 
 
 DEFAULT_OUTPUT_ZIP = Path("docs/generated/statistical_formalism_audit_package.zip")
-DEFAULT_OUTPUT_MANIFEST = Path("docs/generated/statistical_formalism_audit_package_manifest.json")
+DEFAULT_OUTPUT_MANIFEST = Path(
+    "docs/generated/statistical_formalism_audit_package_manifest.json"
+)
 DEFAULT_OUTPUT_PROMPT = Path("docs/generated/statistical_formalism_audit_prompt.md")
-DEFAULT_OUTPUT_READINESS = Path("docs/generated/statistical_formalism_reaudit_readiness.md")
+DEFAULT_OUTPUT_READINESS = Path(
+    "docs/generated/statistical_formalism_reaudit_readiness.md"
+)
 SCHEMA_VERSION = "common.statistical_formalism_audit_package.v1"
 ARTIFACT_ID = "statistical_formalism_audit_package"
 ARCHIVE_ROOT = "statistical_formalism_audit"
@@ -164,16 +169,36 @@ FORMALISM_FIGURE_BASES = (
 )
 
 REQUIRED_CURRENT_ASSERTIONS = (
-    ("full_external_package_check", "venv/bin/python scripts/build_external_audit_package.py --check", "pass"),
-    ("research_only_package_check", "venv/bin/python scripts/build_research_only_audit_package.py --check", "pass"),
-    ("ver2_export_check", "venv/bin/python scripts/ver2_artifact_export.py --check", "pass"),
+    (
+        "full_external_package_check",
+        "venv/bin/python scripts/build_external_audit_package.py --check",
+        "pass",
+    ),
+    (
+        "research_only_package_check",
+        "venv/bin/python scripts/build_research_only_audit_package.py --check",
+        "pass",
+    ),
+    (
+        "ver2_export_check",
+        "venv/bin/python scripts/ver2_artifact_export.py --check",
+        "pass",
+    ),
     (
         "publication_claim_freeze_check",
         "venv/bin/python scripts/check_publication_claim_freeze.py --check",
         "blocked_nonzero_pdf_claim_lint_passed",
     ),
-    ("manuscript_figure_audit", "venv/bin/python scripts/audit_manuscript_figures.py --dry-run", "0 missing, 0 quarantined, 0 claim-risk"),
-    ("focused_package_tests", "venv/bin/python -m pytest tests/contracts/test_audit_package_generator.py tests/contracts/test_research_only_audit_package.py scripts/test_ver2_artifact_export.py -q", "pass"),
+    (
+        "manuscript_figure_audit",
+        "venv/bin/python scripts/audit_manuscript_figures.py --dry-run",
+        "0 missing, 0 quarantined, 0 claim-risk",
+    ),
+    (
+        "focused_package_tests",
+        "venv/bin/python -m pytest tests/contracts/test_audit_package_generator.py tests/contracts/test_research_only_audit_package.py scripts/test_ver2_artifact_export.py -q",
+        "pass",
+    ),
 )
 
 
@@ -195,7 +220,11 @@ class PackageEntry:
         return read_regular_bytes(repo_root, self.source_path)
 
     def source_text(self) -> str:
-        return self.source_path.as_posix() if self.source_path else f"virtual:{self.archive_path}"
+        return (
+            self.source_path.as_posix()
+            if self.source_path
+            else f"virtual:{self.archive_path}"
+        )
 
 
 def _sha256_bytes(data: bytes) -> str:
@@ -207,7 +236,9 @@ def _sha256_file(path: Path) -> str:
 
 
 def _stable_hash(payload: Any) -> str:
-    encoded = json.dumps(payload, sort_keys=True, separators=(",", ":"), allow_nan=False).encode("utf-8")
+    encoded = json.dumps(
+        payload, sort_keys=True, separators=(",", ":"), allow_nan=False
+    ).encode("utf-8")
     return _sha256_bytes(encoded)
 
 
@@ -237,8 +268,14 @@ def _git_state(repo_root: Path) -> str:
 
 
 def _command_from_args(argv: Sequence[str] | None) -> str:
-    args = [arg for arg in (sys.argv[1:] if argv is None else list(argv)) if arg != "--check"]
-    return " ".join(["python", "scripts/build_statistical_formalism_audit_package.py", *args]).strip()
+    args = [
+        arg
+        for arg in (sys.argv[1:] if argv is None else list(argv))
+        if arg != "--check"
+    ]
+    return " ".join(
+        ["python", "scripts/build_statistical_formalism_audit_package.py", *args]
+    ).strip()
 
 
 def _entry(source: str, archive: str, group: str, description: str) -> PackageEntry:
@@ -262,7 +299,9 @@ def _entry(source: str, archive: str, group: str, description: str) -> PackageEn
     )
 
 
-def _virtual_entry(archive: str, group: str, description: str, text: str) -> PackageEntry:
+def _virtual_entry(
+    archive: str, group: str, description: str, text: str
+) -> PackageEntry:
     return PackageEntry(
         archive_path=archive,
         group=group,
@@ -281,7 +320,9 @@ def _file_entries(
     entries: list[PackageEntry] = []
     for rel in paths:
         if not (repo_root / rel).is_file():
-            raise FileNotFoundError(f"required statistical-formalism audit input missing: {rel}")
+            raise FileNotFoundError(
+                f"required statistical-formalism audit input missing: {rel}"
+            )
         entries.append(_entry(rel, rel, group, description))
     return entries
 
@@ -292,20 +333,56 @@ def _figure_entries(repo_root: Path) -> list[PackageEntry]:
         png = Path(base + ".png")
         manifest = Path(base + ".manifest.json")
         if not (repo_root / png).is_file():
-            raise FileNotFoundError(f"required statistical-formalism figure missing: {png}")
+            raise FileNotFoundError(
+                f"required statistical-formalism figure missing: {png}"
+            )
         if not (repo_root / manifest).is_file():
-            raise FileNotFoundError(f"required statistical-formalism figure manifest missing: {manifest}")
-        entries.append(_entry(png.as_posix(), png.as_posix(), "formalism_figure", "x_C/Q/Pi/F/G_F or related diagnostic figure payload"))
-        entries.append(_entry(manifest.as_posix(), manifest.as_posix(), "formalism_figure_manifest", "sidecar manifest for included formalism figure"))
+            raise FileNotFoundError(
+                f"required statistical-formalism figure manifest missing: {manifest}"
+            )
+        entries.append(
+            _entry(
+                png.as_posix(),
+                png.as_posix(),
+                "formalism_figure",
+                "x_C/Q/Pi/F/G_F or related diagnostic figure payload",
+            )
+        )
+        entries.append(
+            _entry(
+                manifest.as_posix(),
+                manifest.as_posix(),
+                "formalism_figure_manifest",
+                "sidecar manifest for included formalism figure",
+            )
+        )
         caption = Path(base + ".caption.txt")
         if (repo_root / caption).is_file():
-            entries.append(_entry(caption.as_posix(), caption.as_posix(), "formalism_figure_caption", "caption sidecar for VER2 formalism figure"))
+            entries.append(
+                _entry(
+                    caption.as_posix(),
+                    caption.as_posix(),
+                    "formalism_figure_caption",
+                    "caption sidecar for VER2 formalism figure",
+                )
+            )
     return entries
 
 
-def _entry_rows(repo_root: Path, entries: Sequence[PackageEntry]) -> list[dict[str, Any]]:
+def _entry_rows(
+    repo_root: Path, entries: Sequence[PackageEntry]
+) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     seen: set[str] = set()
+    policy_path = (
+        repo_root
+        / "docs/research_program/long_horizon_rescue/cf4_p0_quarantine_policy.yaml"
+    )
+    reviewed_snapshot = (
+        reviewed_active_binary_sidecar_pin_snapshot(repo_root)
+        if policy_path.is_file()
+        else None
+    )
     for entry in sorted(entries, key=lambda item: item.archive_path):
         parts = Path(entry.archive_path).parts
         if entry.archive_path.startswith("/") or ".." in parts:
@@ -313,7 +390,9 @@ def _entry_rows(repo_root: Path, entries: Sequence[PackageEntry]) -> list[dict[s
         if entry.archive_path in seen:
             raise ValueError(f"duplicate archive path: {entry.archive_path}")
         if entry.archive_path.lower().endswith(".pdf"):
-            raise ValueError(f"PDF files are intentionally excluded: {entry.archive_path}")
+            raise ValueError(
+                f"PDF files are intentionally excluded: {entry.archive_path}"
+            )
         if entry.content_mode is ContentMode.ACTIVE_PUBLIC and not entry.public_use:
             raise ValueError(
                 f"active/public package entry cannot set public_use=false: {entry.archive_path}"
@@ -326,10 +405,9 @@ def _entry_rows(repo_root: Path, entries: Sequence[PackageEntry]) -> list[dict[s
                 f"historical package entry cannot set public_use=true: {entry.archive_path}"
             )
         source_path = entry.source_path.as_posix() if entry.source_path else ""
-        if (
-            source_path.startswith(MANUSCRIPT_SOURCE_PREFIX)
-            and Path(source_path).suffix in {".tex", ".bib"}
-        ):
+        if source_path.startswith(MANUSCRIPT_SOURCE_PREFIX) and Path(
+            source_path
+        ).suffix in {".tex", ".bib"}:
             if source_path == MANUSCRIPT_HARD_STOP_STUB:
                 if (
                     entry.content_mode is not ContentMode.ACTIVE_PUBLIC
@@ -340,8 +418,7 @@ def _entry_rows(repo_root: Path, entries: Sequence[PackageEntry]) -> list[dict[s
                         "active/public control surface"
                     )
             elif (
-                entry.content_mode
-                is not ContentMode.IMMUTABLE_HISTORICAL_EVIDENCE
+                entry.content_mode is not ContentMode.IMMUTABLE_HISTORICAL_EVIDENCE
                 or entry.public_use
             ):
                 raise ValueError(
@@ -362,9 +439,8 @@ def _entry_rows(repo_root: Path, entries: Sequence[PackageEntry]) -> list[dict[s
         seen.add(entry.archive_path)
         data = entry.bytes(repo_root)
         reviewed_pin = (
-            reviewed_active_binary_sidecar_pin(repo_root, entry.source_path)
-            if entry.source_path is not None
-            and (repo_root / "docs/research_program/long_horizon_rescue/cf4_p0_quarantine_policy.yaml").is_file()
+            reviewed_snapshot.pins.get(entry.source_path.as_posix())
+            if entry.source_path is not None and reviewed_snapshot is not None
             else None
         )
         binary_binding = (
@@ -379,18 +455,23 @@ def _entry_rows(repo_root: Path, entries: Sequence[PackageEntry]) -> list[dict[s
             else None
         )
         row = {
-                "source_path": entry.source_text(),
-                "archive_path": entry.archive_path,
-                "group": entry.group,
-                "description": entry.description,
-                "content_mode": entry.content_mode.value,
-                "public_use": entry.public_use,
-                "sha256": _sha256_bytes(data),
-                "size_bytes": len(data),
-            }
+            "source_path": entry.source_text(),
+            "archive_path": entry.archive_path,
+            "group": entry.group,
+            "description": entry.description,
+            "content_mode": entry.content_mode.value,
+            "public_use": entry.public_use,
+            "sha256": _sha256_bytes(data),
+            "size_bytes": len(data),
+        }
         if binary_binding is not None:
             row["binary_binding"] = binary_binding
         rows.append(row)
+    if reviewed_snapshot is not None:
+        assert_reviewed_active_binary_pin_snapshot_current(
+            repo_root,
+            reviewed_snapshot,
+        )
     return rows
 
 
@@ -400,7 +481,10 @@ def _quarantine_package_contents(
 ) -> dict[str, bytes | QuarantineContent]:
     contents: dict[str, bytes | QuarantineContent] = {}
     for entry in entries:
-        if entry.source_path is not None and entry.content_mode is not ContentMode.ACTIVE_PUBLIC:
+        if (
+            entry.source_path is not None
+            and entry.content_mode is not ContentMode.ACTIVE_PUBLIC
+        ):
             contents[entry.archive_path] = repository_content(
                 repo_root,
                 entry.source_path,
@@ -411,7 +495,9 @@ def _quarantine_package_contents(
     return contents
 
 
-def _figure_manifest_lanes_safe(repo_root: Path, rows: Sequence[dict[str, Any]]) -> bool:
+def _figure_manifest_lanes_safe(
+    repo_root: Path, rows: Sequence[dict[str, Any]]
+) -> bool:
     for row in rows:
         if row["group"] != "formalism_figure_manifest":
             continue
@@ -436,7 +522,9 @@ def _figure_manifest_lanes_safe(repo_root: Path, rows: Sequence[dict[str, Any]])
     return True
 
 
-def _required_assertions(repo_root: Path, rows: Sequence[dict[str, Any]]) -> dict[str, bool]:
+def _required_assertions(
+    repo_root: Path, rows: Sequence[dict[str, Any]]
+) -> dict[str, bool]:
     archive_paths = {row["archive_path"] for row in rows}
     groups = {row["group"] for row in rows}
     figure_png = {
@@ -447,7 +535,8 @@ def _required_assertions(repo_root: Path, rows: Sequence[dict[str, Any]]) -> dic
     figure_manifest = {
         path[: -len(".manifest.json")]
         for path in archive_paths
-        if path.startswith(f"{ARCHIVE_ROOT}/figures/") and path.endswith(".manifest.json")
+        if path.startswith(f"{ARCHIVE_ROOT}/figures/")
+        and path.endswith(".manifest.json")
     }
     manuscript_rows = [
         row
@@ -466,14 +555,16 @@ def _required_assertions(repo_root: Path, rows: Sequence[dict[str, Any]]) -> dic
         if row["source_path"] == MANUSCRIPT_HARD_STOP_STUB
     ]
     return {
-        "compiled_pdf_excluded": not any(path.lower().endswith(".pdf") for path in archive_paths),
-        "latex_source_included": f"{ARCHIVE_ROOT}/docs/manuscript/main.tex" in archive_paths,
+        "compiled_pdf_excluded": not any(
+            path.lower().endswith(".pdf") for path in archive_paths
+        ),
+        "latex_source_included": f"{ARCHIVE_ROOT}/docs/manuscript/main.tex"
+        in archive_paths,
         "retained_manuscript_sources_historical_nonpublic": bool(
             retained_manuscript_rows
         )
         and all(
-            row["content_mode"]
-            == ContentMode.IMMUTABLE_HISTORICAL_EVIDENCE.value
+            row["content_mode"] == ContentMode.IMMUTABLE_HISTORICAL_EVIDENCE.value
             and row["public_use"] is False
             for row in retained_manuscript_rows
         ),
@@ -484,22 +575,36 @@ def _required_assertions(repo_root: Path, rows: Sequence[dict[str, Any]]) -> dic
             row["content_mode"] == ContentMode.ACTIVE_PUBLIC.value
             for row in retained_manuscript_rows
         ),
-        "statistical_prompt_included": "AUDIT_PROMPT_STATISTICAL_FORMALISM.md" in archive_paths,
+        "statistical_prompt_included": "AUDIT_PROMPT_STATISTICAL_FORMALISM.md"
+        in archive_paths,
         "readiness_checklist_included": "READINESS_CHECKLIST.md" in archive_paths,
-        "figure_label_linter_report_included": "FIGURE_LABEL_LINTER_REPORT.md" in archive_paths,
-        "formalism_code_included": all(f"{ARCHIVE_ROOT}/{rel}" in archive_paths for rel in FORMALISM_CODE_FILES),
-        "formalism_tests_included": all(f"{ARCHIVE_ROOT}/{rel}" in archive_paths for rel in FORMALISM_TEST_FILES),
-        "formalism_metadata_included": all(f"{ARCHIVE_ROOT}/{rel}" in archive_paths for rel in FORMALISM_METADATA_FILES),
+        "figure_label_linter_report_included": "FIGURE_LABEL_LINTER_REPORT.md"
+        in archive_paths,
+        "formalism_code_included": all(
+            f"{ARCHIVE_ROOT}/{rel}" in archive_paths for rel in FORMALISM_CODE_FILES
+        ),
+        "formalism_tests_included": all(
+            f"{ARCHIVE_ROOT}/{rel}" in archive_paths for rel in FORMALISM_TEST_FILES
+        ),
+        "formalism_metadata_included": all(
+            f"{ARCHIVE_ROOT}/{rel}" in archive_paths for rel in FORMALISM_METADATA_FILES
+        ),
         "cf4_quarantine_controls_included": (
             f"{ARCHIVE_ROOT}/docs/generated/cf4_p0_quarantine_block.json"
             in archive_paths
             and f"{ARCHIVE_ROOT}/docs/generated/cf4_p0_quarantine_inventory.json"
             in archive_paths
         ),
-        "formalism_figures_have_payload_and_manifest": bool(figure_png) and figure_png == figure_manifest,
+        "formalism_figures_have_payload_and_manifest": bool(figure_png)
+        and figure_png == figure_manifest,
         "figure_manifest_lanes_safe": _figure_manifest_lanes_safe(repo_root, rows),
-        "minimal_formalism_scope_only": {"formalism_code", "formalism_test"}.issubset(groups)
-        and not any(path.startswith(f"{ARCHIVE_ROOT}/docs/generated/manuscript_pdf/") for path in archive_paths),
+        "minimal_formalism_scope_only": {"formalism_code", "formalism_test"}.issubset(
+            groups
+        )
+        and not any(
+            path.startswith(f"{ARCHIVE_ROOT}/docs/generated/manuscript_pdf/")
+            for path in archive_paths
+        ),
     }
 
 
@@ -538,7 +643,10 @@ def render_readiness_checklist() -> str:
         "## Validation Commands To Re-Run",
         "",
     ]
-    lines.extend(f"- `{command}` -> {status}" for _name, command, status in REQUIRED_CURRENT_ASSERTIONS)
+    lines.extend(
+        f"- `{command}` -> {status}"
+        for _name, command, status in REQUIRED_CURRENT_ASSERTIONS
+    )
     lines.extend(
         [
             "",
@@ -758,14 +866,54 @@ def build_payload(
     root = Path(repo_root).resolve()
     linter_report, linter_passed = render_figure_label_linter_report(root)
     entries: list[PackageEntry] = [
-        _virtual_entry("README.md", "package_readme", "statistical formalism audit package guide", render_readme()),
-        _virtual_entry("AUDIT_PROMPT_STATISTICAL_FORMALISM.md", "statistical_prompt", "adversarial statistical formalism audit prompt", render_prompt()),
-        _virtual_entry("READINESS_CHECKLIST.md", "readiness_checklist", "pre re-audit finding/fix checklist", render_readiness_checklist()),
-        _virtual_entry("FIGURE_LABEL_LINTER_REPORT.md", "figure_label_linter_report", "generated formalism figure-label linter report", linter_report),
-        *_file_entries(root, LATEX_SOURCE_FILES, group="latex_source", description="LaTeX source and generated snippets needed to locate formalism claims"),
-        *_file_entries(root, FORMALISM_METADATA_FILES, group="formalism_metadata", description="generated result packs, ledgers, and payloads for formalism audit"),
-        *_file_entries(root, FORMALISM_CODE_FILES, group="formalism_code", description="minimal formalism code required to audit definitions"),
-        *_file_entries(root, FORMALISM_TEST_FILES, group="formalism_test", description="formalism tests documenting constraints and forbidden semantics"),
+        _virtual_entry(
+            "README.md",
+            "package_readme",
+            "statistical formalism audit package guide",
+            render_readme(),
+        ),
+        _virtual_entry(
+            "AUDIT_PROMPT_STATISTICAL_FORMALISM.md",
+            "statistical_prompt",
+            "adversarial statistical formalism audit prompt",
+            render_prompt(),
+        ),
+        _virtual_entry(
+            "READINESS_CHECKLIST.md",
+            "readiness_checklist",
+            "pre re-audit finding/fix checklist",
+            render_readiness_checklist(),
+        ),
+        _virtual_entry(
+            "FIGURE_LABEL_LINTER_REPORT.md",
+            "figure_label_linter_report",
+            "generated formalism figure-label linter report",
+            linter_report,
+        ),
+        *_file_entries(
+            root,
+            LATEX_SOURCE_FILES,
+            group="latex_source",
+            description="LaTeX source and generated snippets needed to locate formalism claims",
+        ),
+        *_file_entries(
+            root,
+            FORMALISM_METADATA_FILES,
+            group="formalism_metadata",
+            description="generated result packs, ledgers, and payloads for formalism audit",
+        ),
+        *_file_entries(
+            root,
+            FORMALISM_CODE_FILES,
+            group="formalism_code",
+            description="minimal formalism code required to audit definitions",
+        ),
+        *_file_entries(
+            root,
+            FORMALISM_TEST_FILES,
+            group="formalism_test",
+            description="formalism tests documenting constraints and forbidden semantics",
+        ),
         *_figure_entries(root),
     ]
     rows = _entry_rows(root, entries)
@@ -816,7 +964,8 @@ def build_payload(
         "cf4_p0_quarantine": quarantine_payload,
         "active_package_release_authorized": active_package_release_authorized,
         "cf4_p0_scientific_promotion_authorized": (
-            block_status not in {
+            block_status
+            not in {
                 "QUARANTINED_OPEN_FINDINGS",
                 "INVALID_OR_STALE_QUARANTINE_CONTROL",
             }
@@ -834,15 +983,25 @@ def build_payload(
         "failed_gates": failed_gates,
         "report_generation_gates": {
             "archive_build": "pass" if not failed_gates else "fail",
-            "figure_payload_manifest_pairing": "pass" if assertions.get("formalism_figures_have_payload_and_manifest") else "fail",
-            "figure_manifest_claim_lanes": "pass" if assertions.get("figure_manifest_lanes_safe") else "fail",
-            "compiled_pdf_excluded": "pass" if assertions.get("compiled_pdf_excluded") else "fail",
-            "cf4_p0_quarantine": "pass"
-            if assertions.get("cf4_p0_quarantine_clean")
-            else "fail",
-            "active_package_release": "pass"
-            if active_package_release_authorized
-            else "fail_quarantine_not_clean",
+            "figure_payload_manifest_pairing": (
+                "pass"
+                if assertions.get("formalism_figures_have_payload_and_manifest")
+                else "fail"
+            ),
+            "figure_manifest_claim_lanes": (
+                "pass" if assertions.get("figure_manifest_lanes_safe") else "fail"
+            ),
+            "compiled_pdf_excluded": (
+                "pass" if assertions.get("compiled_pdf_excluded") else "fail"
+            ),
+            "cf4_p0_quarantine": (
+                "pass" if assertions.get("cf4_p0_quarantine_clean") else "fail"
+            ),
+            "active_package_release": (
+                "pass"
+                if active_package_release_authorized
+                else "fail_quarantine_not_clean"
+            ),
         },
         "science_promotion_gates": {
             "native_low_ell_solver_validation": "fail_not_available",
@@ -856,7 +1015,9 @@ def build_payload(
             ),
         },
         "publication_gates": {
-            "external_statistical_formalism_audit_ready": "pass" if not failed_gates else "fail",
+            "external_statistical_formalism_audit_ready": (
+                "pass" if not failed_gates else "fail"
+            ),
             "publication_ready": "fail_diagnostic_only",
             "current_manuscript_source_authorized": "fail_cf4_p0_source_quarantine",
         },
@@ -900,14 +1061,20 @@ def _render_manifest(payload: dict[str, Any]) -> str:
     return json.dumps(payload, indent=2, sort_keys=True) + "\n"
 
 
-def _build_zip_bytes(repo_root: Path, payload: dict[str, Any], entries: Sequence[PackageEntry]) -> bytes:
+def _build_zip_bytes(
+    repo_root: Path, payload: dict[str, Any], entries: Sequence[PackageEntry]
+) -> bytes:
     from io import BytesIO
 
     entry_by_archive = {entry.archive_path: entry for entry in entries}
     buffer = BytesIO()
     with zipfile.ZipFile(buffer, mode="w", compression=zipfile.ZIP_DEFLATED) as archive:
-        archive.writestr(_zip_info("MANIFEST.json"), _render_manifest(payload).encode("utf-8"))
-        for row in sorted(payload["archive_entries"], key=lambda item: item["archive_path"]):
+        archive.writestr(
+            _zip_info("MANIFEST.json"), _render_manifest(payload).encode("utf-8")
+        )
+        for row in sorted(
+            payload["archive_entries"], key=lambda item: item["archive_path"]
+        ):
             entry = entry_by_archive[row["archive_path"]]
             data = entry.bytes(repo_root)
             if entry.source_path is not None:
@@ -937,9 +1104,19 @@ def _write_outputs(
     output_readiness: Path,
 ) -> None:
     output_zip_path = output_zip if output_zip.is_absolute() else repo_root / output_zip
-    output_manifest_path = output_manifest if output_manifest.is_absolute() else repo_root / output_manifest
-    output_prompt_path = output_prompt if output_prompt.is_absolute() else repo_root / output_prompt
-    output_readiness_path = output_readiness if output_readiness.is_absolute() else repo_root / output_readiness
+    output_manifest_path = (
+        output_manifest
+        if output_manifest.is_absolute()
+        else repo_root / output_manifest
+    )
+    output_prompt_path = (
+        output_prompt if output_prompt.is_absolute() else repo_root / output_prompt
+    )
+    output_readiness_path = (
+        output_readiness
+        if output_readiness.is_absolute()
+        else repo_root / output_readiness
+    )
     output_zip_path.parent.mkdir(parents=True, exist_ok=True)
     output_zip_path.write_bytes(_build_zip_bytes(repo_root, payload, entries))
     output_manifest_path.write_text(_render_manifest(payload), encoding="utf-8")
@@ -957,9 +1134,19 @@ def _check_outputs(
     output_readiness: Path,
 ) -> int:
     output_zip_path = output_zip if output_zip.is_absolute() else repo_root / output_zip
-    output_manifest_path = output_manifest if output_manifest.is_absolute() else repo_root / output_manifest
-    output_prompt_path = output_prompt if output_prompt.is_absolute() else repo_root / output_prompt
-    output_readiness_path = output_readiness if output_readiness.is_absolute() else repo_root / output_readiness
+    output_manifest_path = (
+        output_manifest
+        if output_manifest.is_absolute()
+        else repo_root / output_manifest
+    )
+    output_prompt_path = (
+        output_prompt if output_prompt.is_absolute() else repo_root / output_prompt
+    )
+    output_readiness_path = (
+        output_readiness
+        if output_readiness.is_absolute()
+        else repo_root / output_readiness
+    )
     if not output_zip_path.exists() or not output_manifest_path.exists():
         print("missing statistical formalism audit package output")
         return 1
@@ -972,7 +1159,10 @@ def _check_outputs(
     if output_prompt_path.read_text(encoding="utf-8") != render_prompt():
         print("stale statistical formalism audit prompt")
         return 1
-    if output_readiness_path.read_text(encoding="utf-8") != render_readiness_checklist():
+    if (
+        output_readiness_path.read_text(encoding="utf-8")
+        != render_readiness_checklist()
+    ):
         print("stale statistical formalism audit readiness checklist")
         return 1
     if output_zip_path.read_bytes() != _build_zip_bytes(repo_root, payload, entries):
@@ -986,7 +1176,11 @@ def _existing_manifest_self_reference_fields(
     repo_root: Path,
     output_manifest: Path,
 ) -> tuple[str | None, str | None]:
-    manifest_path = output_manifest if output_manifest.is_absolute() else repo_root / output_manifest
+    manifest_path = (
+        output_manifest
+        if output_manifest.is_absolute()
+        else repo_root / output_manifest
+    )
     if not manifest_path.exists():
         return None, None
     try:
@@ -1004,7 +1198,9 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--output-zip", type=Path, default=DEFAULT_OUTPUT_ZIP)
     parser.add_argument("--output-manifest", type=Path, default=DEFAULT_OUTPUT_MANIFEST)
     parser.add_argument("--output-prompt", type=Path, default=DEFAULT_OUTPUT_PROMPT)
-    parser.add_argument("--output-readiness", type=Path, default=DEFAULT_OUTPUT_READINESS)
+    parser.add_argument(
+        "--output-readiness", type=Path, default=DEFAULT_OUTPUT_READINESS
+    )
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--dry-run", action="store_true")
     mode.add_argument("--check", action="store_true")
@@ -1030,7 +1226,10 @@ def main(argv: Sequence[str] | None = None) -> int:
         worktree_state=worktree_state,
     )
     if payload["failed_gates"]:
-        print("statistical formalism audit package failed required gates: " + ", ".join(payload["failed_gates"]))
+        print(
+            "statistical formalism audit package failed required gates: "
+            + ", ".join(payload["failed_gates"])
+        )
         return 1
     if args.dry_run:
         print("DRY-RUN: not writing statistical formalism audit package")
@@ -1057,10 +1256,26 @@ def main(argv: Sequence[str] | None = None) -> int:
         args.output_prompt,
         args.output_readiness,
     )
-    output_zip = args.output_zip if args.output_zip.is_absolute() else repo_root / args.output_zip
-    output_manifest = args.output_manifest if args.output_manifest.is_absolute() else repo_root / args.output_manifest
-    output_prompt = args.output_prompt if args.output_prompt.is_absolute() else repo_root / args.output_prompt
-    output_readiness = args.output_readiness if args.output_readiness.is_absolute() else repo_root / args.output_readiness
+    output_zip = (
+        args.output_zip
+        if args.output_zip.is_absolute()
+        else repo_root / args.output_zip
+    )
+    output_manifest = (
+        args.output_manifest
+        if args.output_manifest.is_absolute()
+        else repo_root / args.output_manifest
+    )
+    output_prompt = (
+        args.output_prompt
+        if args.output_prompt.is_absolute()
+        else repo_root / args.output_prompt
+    )
+    output_readiness = (
+        args.output_readiness
+        if args.output_readiness.is_absolute()
+        else repo_root / args.output_readiness
+    )
     print(f"wrote {output_zip}")
     print(f"wrote {output_manifest}")
     print(f"wrote {output_prompt}")

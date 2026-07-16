@@ -11,7 +11,7 @@ transfer_source: none
 root_state:
   canonical_path: docs/codex_handoff/research_remediation_state.yaml
   mirror_path: machine_readable/research_remediation_state.yaml
-  sha256: 77d36878315f041c7bb6c273a2d650f7d3fa1c8a8dc635a577527d646fa40109
+  sha256: bdb7779955710d3d84b137081748027746ea308fbf89dc0c179dd937f63c6311
   finding_count: 102
   rescued_count: 0
   required_open_findings:
@@ -30,6 +30,16 @@ root_state:
       authoritative_source_state: NEW_OPEN
       source_reference: docs/audits/jcap_prd_adversarial_audit_20260714/atomic_finding_ledger.json#N-DATA-CF4-DOWNSTREAM
       source_sha256: 6e88a6f6c4f95e5154c89e939230c94854b11a8430a64c28ccb339d8c4ab6feb
+root_refresh:
+  refresh_id: PR122-BACKLOG-HASH-REFRESH-20260716
+  refreshed_by_pr: PR-122
+  previous_root_sha256: 77d36878315f041c7bb6c273a2d650f7d3fa1c8a8dc635a577527d646fa40109
+  current_root_sha256: bdb7779955710d3d84b137081748027746ea308fbf89dc0c179dd937f63c6311
+  changed_input: docs/codex_handoff/pr_backlog.yaml
+  rationale: PR-122 expanded only its registered implementation and artifact paths in the canonical DAG backlog.
+  finding_state_effect: none_all_102_findings_remain_OPEN
+  scientific_status_effect: none_zero_RESCUED
+  historical_pr120_spec_mutated: false
 legacy_output_roots:
   - legacy/cf4_p0
 scan:
@@ -198,7 +208,12 @@ inventory:
   # New/changed active binaries may use this lane only after an explicit
   # reviewer pins both the sidecar and artifact digests. HEAD-identical binaries
   # need no entry. Root fills final entries after figure regeneration.
-  reviewed_active_binary_sidecars: {}
+  reviewed_active_binary_sidecars:
+    codex_shared_context_harness_v1.zip:
+      sidecar_path: codex_shared_context_harness_v1.zip.manifest.json
+      sidecar_sha256: sha256:7671e787f23ba9018859133c0f41488ffd89456f0a5696fff705f810eb24e54b
+      artifact_sha256: sha256:1f020bf290476491b07869ed40eb4d05fb99b6f38efe420453a02faf243ff94f
+      review_scope: PR-120-reviewed-active-binary
   # These four self-containing release archives embed the canonical inventory,
   # so their own digest cannot enter it without an impossible hash fixed point.
   # They remain exact-path enumerated and are accepted only with their pinned
@@ -207,7 +222,7 @@ inventory:
     docs/generated/external_audit_package.zip:
       builder_path: scripts/build_external_audit_package.py
       manifest_path: docs/generated/external_audit_package_manifest.json
-      check_command: venv/bin/python scripts/build_external_audit_package.py --check
+      check_command: scripts/codex_harness/run_pr122_source_only.sh scripts/build_external_audit_package.py --check
     docs/generated/research_only_external_audit_package.zip:
       builder_path: scripts/build_research_only_audit_package.py
       manifest_path: docs/generated/research_only_external_audit_package_manifest.json

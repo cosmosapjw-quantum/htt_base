@@ -1,5 +1,35 @@
 # Project State
 
+## 2026-07-16 - PR-122 content-addressed evidence closeout
+
+This section supersedes the PR-119 active-DAG position below; older sections
+remain historical records.
+
+- Active DAG: 113 cards, 69 completed, 36 pending, 8 dormant external.
+  Count completion is 61.06%, dependency-weighted completion 54.05%, and the
+  current critical-path proxy 48.21%. These are bookkeeping metrics only.
+- PR-122 closes its registered C1 mechanics with typed claim/evidence edges,
+  exact pytest execution evidence, parent/child receipts, authority-registry
+  bindings, an artifact manifest, and package/freeze consumption.
+- The final 196-test consumer integration passed in 430.47 seconds versus the
+  889.86-second baseline, a 51.6% wall-time reduction. The accepted change is
+  a build-local immutable policy-pin snapshot with final byte rehash; GPU and
+  NumPy paths are a workload mismatch, while process parallelism remains gated
+  on isolating shared artifact writers.
+- The checked-in closure separates `process=PASS` and evidence presence from
+  scientific status. Audit disclosure is allowed only with explicit caveats;
+  scientific status remains `OPEN` and claim release remains false.
+- The active MES inventory contains 22 hash-bound consumers. Typed MES and D2
+  scientific authority remain blocked pending PR-124; zero Rust execution and
+  the diagnostic EGS3 witness cannot substitute for that authority.
+- All 102 remediation findings remain `OPEN`, with zero `RESCUED`. PR-122
+  proves no estimand, null, covariance, transfer, solver, morphology, geometry,
+  or family claim.
+- PR3/FFP10 E2E download remains complete with analysis deferred to PR-150.
+  PR4/NPIPE remains not downloaded; PR4 download, intake, reduction, and data
+  analysis stay entirely skipped by user scope.
+- PR-123 is the sole runnable next card. Completing it reaches checkpoint 070.
+
 ## 2026-07-15 - PR-119 long-horizon intake closeout
 
 This section supersedes older active-DAG statements below; older sections are

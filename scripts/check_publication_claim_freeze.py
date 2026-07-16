@@ -8,11 +8,88 @@ submission readiness blocked where required evidence is absent.
 import argparse
 import hashlib
 import json
+import os
 from pathlib import Path
 import re
 import subprocess
 import sys
 from typing import Any, Iterable, Sequence
+
+
+_SOURCE_ONLY_PREFIX_ENV = "HTT_PR122_SOURCE_ONLY_PREFIX"
+_SOURCE_ONLY_LAUNCHER_HASH_ENV = "HTT_PR122_SOURCE_ONLY_LAUNCHER_SHA256"
+_SOURCE_ONLY_SITE_ENV = "HTT_PR122_SOURCE_ONLY_SITE_PACKAGES"
+_SOURCE_ONLY_TARGET_ENV = "HTT_PR122_SOURCE_ONLY_TARGET"
+_SOURCE_ONLY_TARGET = "scripts/check_publication_claim_freeze.py"
+_SOURCE_ONLY_LAUNCHER = "scripts/codex_harness/run_pr122_source_only.sh"
+
+
+def _require_source_only_launcher() -> None:
+    """Fail before project imports unless the bound launcher is active."""
+
+    root = Path(__file__).resolve().parents[1]
+    launcher = root / _SOURCE_ONLY_LAUNCHER
+    prefix_raw = os.environ.get(_SOURCE_ONLY_PREFIX_ENV)
+    expected_site = str(
+        root
+        / "venv/lib"
+        / f"python{sys.version_info.major}.{sys.version_info.minor}"
+        / "site-packages"
+    )
+    hidden = (
+        "PYTHONHOME",
+        "PYTHONPATH",
+        "PYTHONSTARTUP",
+        "PYTHONUSERBASE",
+        "PYTEST_ADDOPTS",
+        "PYTEST_PLUGINS",
+    )
+    if (
+        not sys.flags.isolated
+        or not sys.flags.no_site
+        or not sys.dont_write_bytecode
+        or os.environ.get("PYTEST_DISABLE_PLUGIN_AUTOLOAD") != "1"
+        or any(os.environ.get(key) is not None for key in hidden)
+        or os.environ.get(_SOURCE_ONLY_TARGET_ENV) != _SOURCE_ONLY_TARGET
+        or not isinstance(prefix_raw, str)
+        or not prefix_raw
+        or sys.pycache_prefix != prefix_raw
+        or os.environ.get(_SOURCE_ONLY_SITE_ENV) != expected_site
+        or sys.path[:3] != [str(root / "htt/src"), str(root / "htt"), expected_site]
+        or Path.cwd().resolve() != root
+        or launcher.is_symlink()
+        or not launcher.is_file()
+    ):
+        raise SystemExit(
+            "PR-122 CLI requires scripts/codex_harness/" "run_pr122_source_only.sh"
+        )
+    prefix = Path(prefix_raw)
+    if (
+        not prefix.is_absolute()
+        or prefix.is_symlink()
+        or not prefix.is_dir()
+        or any(prefix.iterdir())
+    ):
+        raise SystemExit("invalid PR-122 source-only cache state")
+    resolved_prefix = prefix.resolve()
+    for forbidden in (
+        root,
+        root / "venv",
+        Path(sys.prefix).resolve(),
+        Path(sys.base_prefix).resolve(),
+    ):
+        try:
+            resolved_prefix.relative_to(forbidden.resolve())
+        except ValueError:
+            continue
+        raise SystemExit("PR-122 source-only cache is not external")
+    expected_hash = hashlib.sha256(launcher.read_bytes()).hexdigest()
+    if os.environ.get(_SOURCE_ONLY_LAUNCHER_HASH_ENV) != expected_hash:
+        raise SystemExit("PR-122 source-only launcher hash mismatch")
+
+
+if __name__ == "__main__":
+    _require_source_only_launcher()
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -25,6 +102,7 @@ from common.semantic_guards.no_overclaim import (  # noqa: E402
     scan_text,
 )
 from common.cf4_p0_quarantine import validate_repository  # noqa: E402
+from common.release_evidence_binding import consume_release_evidence  # noqa: E402
 
 
 DEFAULT_FREEZE_OUTPUT = Path("docs/generated/publication_claim_freeze.md")
@@ -42,11 +120,27 @@ FAMILY_ID_RE = re.compile(
 
 
 DEFAULT_REQUIRED_INPUTS: tuple[str, ...] = (
+    "scripts/codex_harness/run_pr122_source_only.sh",
     "scripts/check_publication_claim_freeze.py",
     "tests/contracts/test_publication_claim_freeze.py",
     "docs/generated/status_snapshot.json",
     "docs/generated/claim_ledger.json",
     "docs/generated/status_matrix.md",
+    "docs/generated/pr122_claim_evidence_graph.json",
+    "docs/generated/pr122_claim_closure_report.json",
+    "docs/generated/pr122_claim_closure_report.md",
+    "docs/generated/pr122_release_receipt.json",
+    "docs/generated/pr122_parent_receipt.json",
+    "docs/generated/pr122_artifact_manifest.json",
+    "docs/generated/pr122_mes_successor_scan.json",
+    "docs/generated/pr122_test_execution.json",
+    "htt/src/common/release_evidence_binding.py",
+    "htt/src/common/release_evidence_pin.py",
+    "htt/src/common/pytest_execution_evidence.py",
+    "scripts/codex_harness/build_claim_evidence_graph.py",
+    "docs/research_program/long_horizon_rescue/pr122_spec.yaml",
+    "docs/research_program/long_horizon_rescue/pr122_active_mes_consumers.yaml",
+    "docs/research_program/long_horizon_rescue/pr122_authority_snapshot.yaml",
     "docs/generated/result_pack_A.md",
     "docs/generated/result_pack_B.md",
     "docs/generated/result_pack_C.md",
@@ -172,7 +266,7 @@ PUBLIC_CLAIMS: tuple[dict[str, Any], ...] = (
         "manifest_refs": ["docs/generated/external_audit_package_manifest.json"],
         "tests": [
             "tests/contracts/test_audit_package_generator.py",
-            "python scripts/build_external_audit_package.py --check",
+            "scripts/codex_harness/run_pr122_source_only.sh scripts/build_external_audit_package.py --check",
         ],
         "caveats": [
             "Audit packaging is not publication readiness.",
@@ -277,7 +371,9 @@ def _sha256_file(path: Path) -> str:
 
 
 def _stable_hash(payload: Any) -> str:
-    data = json.dumps(payload, sort_keys=True, separators=(",", ":"), allow_nan=False).encode("utf-8")
+    data = json.dumps(
+        payload, sort_keys=True, separators=(",", ":"), allow_nan=False
+    ).encode("utf-8")
     return "sha256:" + hashlib.sha256(data).hexdigest()
 
 
@@ -311,14 +407,22 @@ def _git_state(repo_root: Path) -> str:
 def _command_from_args(argv: Sequence[str] | None) -> str:
     args = list(sys.argv[1:] if argv is None else argv)
     args = [arg for arg in args if arg != "--check"]
-    return " ".join(["python", "scripts/check_publication_claim_freeze.py", *args]).strip()
+    return " ".join(
+        [
+            "scripts/codex_harness/run_pr122_source_only.sh",
+            "scripts/check_publication_claim_freeze.py",
+            *args,
+        ]
+    ).strip()
 
 
 def _normalise(path: Path) -> str:
     return path.as_posix()
 
 
-def _required_input_hashes(repo_root: Path, required_inputs: Iterable[str]) -> list[str]:
+def _required_input_hashes(
+    repo_root: Path, required_inputs: Iterable[str]
+) -> list[str]:
     hashes: list[str] = []
     missing: list[str] = []
     for item in sorted(set(required_inputs)):
@@ -349,8 +453,13 @@ def _extract_summary_count(text: str, label: str) -> int | None:
 
 
 def _manuscript_blockers(repo_root: Path) -> dict[str, int | str]:
-    inventory = (repo_root / "docs/generated/manuscript_figure_inventory.md").read_text(encoding="utf-8")
-    missing = (repo_root / "docs/generated/missing_figure_references.md").read_text(encoding="utf-8")
+    inventory = (repo_root / "docs/generated/manuscript_figure_inventory.md").read_text(
+        encoding="utf-8"
+    )
+    missing = (repo_root / "docs/generated/missing_figure_references.md").read_text(
+        encoding="utf-8"
+    )
+
     def count_or_unknown(text: str, label: str) -> int | str:
         count = _extract_summary_count(text, label)
         return "unknown" if count is None else count
@@ -363,9 +472,7 @@ def _manuscript_blockers(repo_root: Path) -> dict[str, int | str]:
         "text_audit_findings": count_or_unknown(inventory, "Text audit findings"),
         "claim_risk_findings": count_or_unknown(missing, "Claim-risk findings"),
         "current_pdf_present": (repo_root / CURRENT_MANUSCRIPT_PDF).is_file(),
-        "source_quarantine_enforced": _manuscript_source_quarantine_enforced(
-            repo_root
-        ),
+        "source_quarantine_enforced": _manuscript_source_quarantine_enforced(repo_root),
     }
 
 
@@ -457,7 +564,9 @@ def _all_claims_have(claims: Sequence[dict[str, Any]], key: str) -> bool:
     return all(bool(claim.get(key)) for claim in claims)
 
 
-def _all_claim_paths_exist(repo_root: Path, claims: Sequence[dict[str, Any]], key: str) -> bool:
+def _all_claim_paths_exist(
+    repo_root: Path, claims: Sequence[dict[str, Any]], key: str
+) -> bool:
     for claim in claims:
         for item in claim.get(key, ()):
             if not (repo_root / str(item)).exists():
@@ -492,6 +601,7 @@ def build_publication_claim_freeze_payload(
     worktree_state: str | None = None,
 ) -> dict[str, Any]:
     root = Path(repo_root).resolve()
+    evidence_binding = consume_release_evidence(root, mode="audit_disclosure")
     claims = [dict(claim) for claim in public_claims]
     review_rows = [dict(row) for row in hostile_review_rows]
     input_hashes = _required_input_hashes(root, required_inputs)
@@ -525,12 +635,18 @@ def build_publication_claim_freeze_payload(
         "all_claims_have_artifacts": _all_claims_have(claims, "artifacts"),
         "all_claim_artifacts_exist": _all_claim_paths_exist(root, claims, "artifacts"),
         "all_claims_have_manifest_refs": _all_claims_have(claims, "manifest_refs"),
-        "all_manifest_refs_exist": _all_claim_paths_exist(root, claims, "manifest_refs"),
+        "all_manifest_refs_exist": _all_claim_paths_exist(
+            root, claims, "manifest_refs"
+        ),
         "all_claims_have_tests": _all_claims_have(claims, "tests"),
         "all_claims_have_caveats": _all_claims_have(claims, "caveats"),
         "claim_ledger_included": (root / "docs/generated/claim_ledger.json").is_file(),
-        "transfer_provenance_included": (root / "docs/generated/transfer_sensitivity_report.md").is_file(),
-        "external_audit_package_included": (root / "docs/generated/external_audit_package_manifest.json").is_file(),
+        "transfer_provenance_included": (
+            root / "docs/generated/transfer_sensitivity_report.md"
+        ).is_file(),
+        "external_audit_package_included": (
+            root / "docs/generated/external_audit_package_manifest.json"
+        ).is_file(),
         "pdf_claim_lint_passed": _pdf_claim_lint_passed(root),
         "manuscript_blockers_recorded": isinstance(blockers.get("missing_refs"), int)
         and isinstance(blockers.get("quarantined_refs"), int)
@@ -545,6 +661,14 @@ def build_publication_claim_freeze_payload(
         "no_forbidden_claim_language": not claim_issues,
         "no_c5_c6_family_id_claim": not family_id_violations,
         "cf4_p0_quarantine_clean": quarantine_report.ok,
+        "exact_claim_evidence_receipt_consumed": (
+            evidence_binding["audit_disclosure_allowed"] is True
+            and evidence_binding["claim_release_allowed"] is False
+        ),
+        "claim_release_blocked_by_evidence_graph": (
+            evidence_binding["claim_release_allowed"] is False
+            and evidence_binding["evidence_status"] == "BLOCKED"
+        ),
     }
     failed_gates = [key for key, value in required_assertions.items() if not value]
     config_hash = _stable_hash(
@@ -555,6 +679,8 @@ def build_publication_claim_freeze_payload(
             "required_inputs": sorted(required_inputs),
             "native_morphology_atlas_present": native_morphology_atlas_present,
             "cf4_p0_quarantine_report_hash": quarantine_report_hash,
+            "claim_evidence_receipt_id": evidence_binding["receipt_id"],
+            "claim_evidence_graph_ref": evidence_binding["graph_ref"],
         }
     )
     state = worktree_state or _git_state(root)
@@ -586,6 +712,7 @@ def build_publication_claim_freeze_payload(
         "git_commit_or_worktree_state": state,
         "schema_version": SCHEMA_VERSION,
         "cf4_p0_quarantine_report_hash": quarantine_report_hash,
+        "claim_evidence_receipt": evidence_binding,
     }
     return {
         **metadata,
@@ -601,7 +728,9 @@ def build_publication_claim_freeze_payload(
         "hostile_review_rows": review_rows,
         "manuscript_blockers": blockers,
         "required_assertions": required_assertions,
-        "passed_gates": sorted(key for key, value in required_assertions.items() if value),
+        "passed_gates": sorted(
+            key for key, value in required_assertions.items() if value
+        ),
         "failed_gates": failed_gates,
         "claim_language_issues": claim_issues,
         "family_id_violations": family_id_violations,
@@ -609,7 +738,9 @@ def build_publication_claim_freeze_payload(
     }
 
 
-def _metadata_lines(payload: dict[str, Any], *, artifact_path_key: str = "artifact_path") -> list[str]:
+def _metadata_lines(
+    payload: dict[str, Any], *, artifact_path_key: str = "artifact_path"
+) -> list[str]:
     lines = [
         f"owner: {payload['owner']}",
         f"implementation_scope: {payload['implementation_scope']}",
@@ -646,6 +777,8 @@ def render_publication_claim_freeze(payload: dict[str, Any]) -> str:
         f"- Native morphology atlas present: `{payload['native_morphology_atlas_present']}`",
         f"- Public claim count: `{len(payload['public_claims'])}`",
         f"- Failed gates: `{', '.join(payload['failed_gates']) if payload['failed_gates'] else 'none'}`",
+        f"- BLOCKED audit-disclosure evidence receipt: `{payload['claim_evidence_receipt']['receipt_id']}`",
+        "- Claim release from that receipt: `blocked`; audit disclosure only.",
         "",
         "This freeze allows only caveated status, framework, transfer-provenance, diagnostic, and audit-package claims.",
         "It blocks current manuscript publication while the CF4 P0 source quarantine, absent current PDF, and PDF claim-lint gate remain open.",
@@ -687,7 +820,7 @@ def render_publication_claim_freeze(payload: dict[str, Any]) -> str:
             "",
             "## Frozen Public Claims",
             "",
-            "| Claim ID | Owner | Tier | Status | Allowed Phrase | Artifacts | Tests | Caveats |",
+            "| Claim ID | Owner | Scientific level | Status | Allowed Phrase | Artifacts | Tests | Caveats |",
             "| --- | --- | --- | --- | --- | --- | --- | --- |",
         ]
     )
@@ -783,18 +916,32 @@ def render_hostile_review_response_matrix(payload: dict[str, Any]) -> str:
     return "\n".join(lines)
 
 
-def _write_outputs(repo_root: Path, payload: dict[str, Any], freeze_output: Path, matrix_output: Path) -> None:
-    freeze_path = freeze_output if freeze_output.is_absolute() else repo_root / freeze_output
-    matrix_path = matrix_output if matrix_output.is_absolute() else repo_root / matrix_output
+def _write_outputs(
+    repo_root: Path, payload: dict[str, Any], freeze_output: Path, matrix_output: Path
+) -> None:
+    freeze_path = (
+        freeze_output if freeze_output.is_absolute() else repo_root / freeze_output
+    )
+    matrix_path = (
+        matrix_output if matrix_output.is_absolute() else repo_root / matrix_output
+    )
     freeze_path.parent.mkdir(parents=True, exist_ok=True)
     matrix_path.parent.mkdir(parents=True, exist_ok=True)
     freeze_path.write_text(render_publication_claim_freeze(payload), encoding="utf-8")
-    matrix_path.write_text(render_hostile_review_response_matrix(payload), encoding="utf-8")
+    matrix_path.write_text(
+        render_hostile_review_response_matrix(payload), encoding="utf-8"
+    )
 
 
-def _check_outputs(repo_root: Path, payload: dict[str, Any], freeze_output: Path, matrix_output: Path) -> int:
-    freeze_path = freeze_output if freeze_output.is_absolute() else repo_root / freeze_output
-    matrix_path = matrix_output if matrix_output.is_absolute() else repo_root / matrix_output
+def _check_outputs(
+    repo_root: Path, payload: dict[str, Any], freeze_output: Path, matrix_output: Path
+) -> int:
+    freeze_path = (
+        freeze_output if freeze_output.is_absolute() else repo_root / freeze_output
+    )
+    matrix_path = (
+        matrix_output if matrix_output.is_absolute() else repo_root / matrix_output
+    )
     if not freeze_path.exists() or not matrix_path.exists():
         print("missing publication claim freeze output")
         return 1
@@ -812,7 +959,9 @@ def _check_outputs(repo_root: Path, payload: dict[str, Any], freeze_output: Path
 
 
 def _existing_freeze_git_state(repo_root: Path, freeze_output: Path) -> str | None:
-    freeze_path = freeze_output if freeze_output.is_absolute() else repo_root / freeze_output
+    freeze_path = (
+        freeze_output if freeze_output.is_absolute() else repo_root / freeze_output
+    )
     if not freeze_path.exists():
         return None
     for line in freeze_path.read_text(encoding="utf-8").splitlines():
@@ -833,6 +982,7 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
 
 
 def main(argv: Sequence[str] | None = None) -> int:
+    _require_source_only_launcher()
     args = parse_args(argv)
     repo_root = args.repo_root.resolve()
     worktree_state = (
@@ -849,7 +999,10 @@ def main(argv: Sequence[str] | None = None) -> int:
     )
     failed = bool(payload["failed_gates"])
     if failed:
-        print("publication claim freeze failed required gates: " + ", ".join(payload["failed_gates"]))
+        print(
+            "publication claim freeze failed required gates: "
+            + ", ".join(payload["failed_gates"])
+        )
     if args.dry_run:
         print("DRY-RUN: not writing publication claim freeze artifacts")
         print(f"submission_decision={payload['submission_decision']}")
@@ -865,8 +1018,16 @@ def main(argv: Sequence[str] | None = None) -> int:
             return check_result
         return 1 if failed else 0
     _write_outputs(repo_root, payload, args.freeze_output, args.matrix_output)
-    freeze_path = args.freeze_output if args.freeze_output.is_absolute() else repo_root / args.freeze_output
-    matrix_path = args.matrix_output if args.matrix_output.is_absolute() else repo_root / args.matrix_output
+    freeze_path = (
+        args.freeze_output
+        if args.freeze_output.is_absolute()
+        else repo_root / args.freeze_output
+    )
+    matrix_path = (
+        args.matrix_output
+        if args.matrix_output.is_absolute()
+        else repo_root / args.matrix_output
+    )
     print(f"wrote {freeze_path}")
     print(f"wrote {matrix_path}")
     return 1 if failed else 0

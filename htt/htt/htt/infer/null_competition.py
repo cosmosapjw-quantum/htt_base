@@ -15,6 +15,7 @@ This is the adversarial complement to shared_cause.py: the null families
 try to mimic the signal, and the competition engine measures how often
 they succeed.
 """
+
 from __future__ import annotations
 
 import hashlib
@@ -38,12 +39,16 @@ from htt.nulls.common_interface import NullFamily
 from htt.infer.dipole_vector_likelihood import DipoleVectorLikelihood
 
 __all__ = [
-    'NullCompetitionResult', 'FamilyCompetitionResult',
-    'NullCompetitionHook', 'MatchedNullCompetitionReport',
-    'GFMatchedNullForecastReport',
-    'build_matched_null_competition_report',
-    'build_gf_matched_null_forecast_report',
-    'NullCompetitionEngine', 'build_null_competition_hook', 'run_null_competition',
+    "NullCompetitionResult",
+    "FamilyCompetitionResult",
+    "NullCompetitionHook",
+    "MatchedNullCompetitionReport",
+    "GFMatchedNullForecastReport",
+    "build_matched_null_competition_report",
+    "build_gf_matched_null_forecast_report",
+    "NullCompetitionEngine",
+    "build_null_competition_hook",
+    "run_null_competition",
 ]
 
 
@@ -106,7 +111,9 @@ def _non_empty(value: object, field_name: str) -> str:
     return text
 
 
-def _input_hashes(values: tuple[object, ...] | list[object], field_name: str) -> tuple[str, ...]:
+def _input_hashes(
+    values: tuple[object, ...] | list[object], field_name: str
+) -> tuple[str, ...]:
     if isinstance(values, (str, bytes)) or not values:
         raise ValueError(f"{field_name} must be a non-empty sequence")
     return tuple(_non_empty(value, field_name) for value in values)
@@ -175,8 +182,8 @@ def _wilson_interval(k: int, n: int, *, z: float) -> tuple[float, float]:
     z2 = z_value * z_value
     denom = 1.0 + z2 / n
     center = (p_hat + z2 / (2.0 * n)) / denom
-    half_width = z_value / denom * math.sqrt(
-        (p_hat * (1.0 - p_hat) / n) + (z2 / (4.0 * n * n))
+    half_width = (
+        z_value / denom * math.sqrt((p_hat * (1.0 - p_hat) / n) + (z2 / (4.0 * n * n)))
     )
     return max(0.0, center - half_width), min(1.0, center + half_width)
 
@@ -184,14 +191,15 @@ def _wilson_interval(k: int, n: int, *, z: float) -> tuple[float, float]:
 @dataclass(frozen=True)
 class FamilyCompetitionResult:
     """Result of competing one null family against shared-cause."""
+
     family_name: str
     n_realizations: int
-    n_false_positives: int      # times shared-cause preferred on null data
-    fpr: float                  # false-positive rate
-    mean_lnB_null: float        # mean ln B(shared-cause vs null) on null data
+    n_false_positives: int  # times shared-cause preferred on null data
+    fpr: float  # false-positive rate
+    mean_lnB_null: float  # mean ln B(shared-cause vs null) on null data
     std_lnB_null: float
-    robust: bool                # True if fpr < threshold
-    status: str = 'diagnostic_only'
+    robust: bool  # True if fpr < threshold
+    status: str = "diagnostic_only"
 
     def __post_init__(self) -> None:
         if not self.family_name:
@@ -218,14 +226,15 @@ class FamilyCompetitionResult:
 @dataclass(frozen=True)
 class NullCompetitionResult:
     """Full competition result across all null families."""
+
     families_tested: int
     families_robust: int
     families_vulnerable: int
     worst_family: str
     worst_fpr: float
-    overall_robust: bool        # True if ALL families are robust
+    overall_robust: bool  # True if ALL families are robust
     family_results: Dict[str, FamilyCompetitionResult] = field(default_factory=dict)
-    status: str = 'diagnostic_only'
+    status: str = "diagnostic_only"
 
     def __post_init__(self) -> None:
         if self.status != "diagnostic_only":
@@ -234,11 +243,17 @@ class NullCompetitionResult:
             raise ValueError("families_tested must be positive")
         if int(self.families_robust) < 0 or int(self.families_vulnerable) < 0:
             raise ValueError("family counts must be non-negative")
-        if int(self.families_robust) + int(self.families_vulnerable) != int(self.families_tested):
-            raise ValueError("family robust/vulnerable counts must sum to families_tested")
+        if int(self.families_robust) + int(self.families_vulnerable) != int(
+            self.families_tested
+        ):
+            raise ValueError(
+                "family robust/vulnerable counts must sum to families_tested"
+            )
         if not self.worst_family:
             raise ValueError("worst_family must be non-empty")
-        if not math.isfinite(float(self.worst_fpr)) or not (0.0 <= float(self.worst_fpr) <= 1.0):
+        if not math.isfinite(float(self.worst_fpr)) or not (
+            0.0 <= float(self.worst_fpr) <= 1.0
+        ):
             raise ValueError("worst_fpr must be finite and in [0, 1]")
         if not self.family_results:
             raise ValueError("family_results must be non-empty")
@@ -249,7 +264,9 @@ class NullCompetitionResult:
                 raise TypeError("family_results values must be FamilyCompetitionResult")
             if family_name != family_result.family_name:
                 raise ValueError("family_results keys must match family_name")
-        robust_count = sum(1 for result in self.family_results.values() if result.robust)
+        robust_count = sum(
+            1 for result in self.family_results.values() if result.robust
+        )
         if robust_count != int(self.families_robust):
             raise ValueError("families_robust must match family_results")
         if int(self.families_tested) - robust_count != int(self.families_vulnerable):
@@ -277,7 +294,7 @@ class NullCompetitionHook:
     ready_for_inference: bool
     worst_family: str | None
     worst_fpr: float | None
-    scope: str = 'pre_posterior'
+    scope: str = "pre_posterior"
     matched_complexity_ready: bool = False
     matched_null_report_hash: str | None = None
     matched_null_status: str = "pending"
@@ -306,7 +323,9 @@ class NullCompetitionHook:
                 "blocked_reasons",
                 _dedupe((*self.blocked_reasons, "matched_complexity_report_missing")),
             )
-            object.__setattr__(self, "matched_null_status", "blocked_missing_matched_complexity")
+            object.__setattr__(
+                self, "matched_null_status", "blocked_missing_matched_complexity"
+            )
         if self.ready_for_inference and not self.matched_null_report_hash:
             object.__setattr__(self, "ready_for_inference", False)
             object.__setattr__(
@@ -314,11 +333,15 @@ class NullCompetitionHook:
                 "blocked_reasons",
                 _dedupe((*self.blocked_reasons, "matched_null_report_hash_missing")),
             )
-            object.__setattr__(self, "matched_null_status", "blocked_missing_report_hash")
+            object.__setattr__(
+                self, "matched_null_status", "blocked_missing_report_hash"
+            )
         if self.ready_for_inference:
             object.__setattr__(self, "matched_null_status", "matched_null_ready")
         elif self.matched_null_status == "matched_null_ready":
-            object.__setattr__(self, "matched_null_status", "blocked_matched_null_prerequisites")
+            object.__setattr__(
+                self, "matched_null_status", "blocked_matched_null_prerequisites"
+            )
             object.__setattr__(
                 self,
                 "blocked_reasons",
@@ -370,7 +393,9 @@ class MatchedNullCompetitionReport:
                     ),
                 },
                 "matched_complexity_gap": (
-                    None if score is None else int(score - self.alternative_complexity_score)
+                    None
+                    if score is None
+                    else int(score - self.alternative_complexity_score)
                 ),
             }
         return _json_ready(
@@ -718,26 +743,45 @@ def build_matched_null_competition_report(
     still owns prior-sweep, PPC, and LOOCV gates.
     """
 
-    if not isinstance(null_result, NullCompetitionResult):
-        raise TypeError("null_result must be a NullCompetitionResult")
+    if type(null_result) is not NullCompetitionResult:
+        raise TypeError("null_result must be an exact NullCompetitionResult")
     if (
         matched_complexity_hook is not None
-        and not isinstance(matched_complexity_hook, MatchedComplexityHook)
+        and type(matched_complexity_hook) is not MatchedComplexityHook
     ):
-        raise TypeError("matched_complexity_hook must be a MatchedComplexityHook")
+        raise TypeError(
+            "matched_complexity_hook must be an exact MatchedComplexityHook"
+        )
     threshold = _fpr_threshold(fpr_threshold)
+    for family_name, result in null_result.family_results.items():
+        if type(result) is not FamilyCompetitionResult:
+            raise TypeError(
+                "null_result family_results require exact FamilyCompetitionResult values"
+            )
+        if type(result.robust) is not bool:
+            raise TypeError(f"family robust flag must be bool: {family_name}")
+        if result.robust != (float(result.fpr) < threshold):
+            raise ValueError(
+                "family robust flag must equal the strict fpr < fpr_threshold rule"
+            )
     artifact_id_text = _non_empty(artifact_id, "artifact_id")
     artifact_path_text = _non_empty(artifact_path, "artifact_path")
     config_hash_text = _non_empty(config_hash, "config_hash")
     input_hash_tuple = _input_hashes(input_hashes, "input_hashes")
     command_text = _non_empty(generating_command, "generating_command")
-    worktree_text = None if worktree_state is None else _non_empty(worktree_state, "worktree_state")
-    git_commit_text = None if git_commit is None else _non_empty(git_commit, "git_commit")
+    worktree_text = (
+        None if worktree_state is None else _non_empty(worktree_state, "worktree_state")
+    )
+    git_commit_text = (
+        None if git_commit is None else _non_empty(git_commit, "git_commit")
+    )
     if worktree_text is None and git_commit_text is None:
         raise ValueError("git_commit or worktree_state is required")
     transfer_source_text = _non_empty(transfer_source, "transfer_source")
     if transfer_source_text != "none":
-        raise ValueError("PR-064 matched null report only supports transfer_source='none'")
+        raise ValueError(
+            "PR-064 matched null report only supports transfer_source='none'"
+        )
     caveat_tuple = tuple(_non_empty(item, "caveat") for item in caveats)
     if not caveat_tuple:
         raise ValueError("caveats must be non-empty")
@@ -745,7 +789,11 @@ def build_matched_null_competition_report(
         candidate_log_bayes_factor,
         "candidate_log_bayes_factor",
     )
-    if headline_requested and candidate_ln_b is not None and matched_complexity_hook is None:
+    if (
+        headline_requested
+        and candidate_ln_b is not None
+        and matched_complexity_hook is None
+    ):
         raise ValueError(
             "headline evidence language requires a matched-complexity report"
         )
@@ -765,10 +813,14 @@ def build_matched_null_competition_report(
         null_flexibility_scores=null_scores,
     )
     ready = not blockers
-    status = "matched_null_ready" if ready else (
-        "blocked_missing_matched_complexity"
-        if "matched_complexity_report_missing" in blockers
-        else "blocked_matched_null_prerequisites"
+    status = (
+        "matched_null_ready"
+        if ready
+        else (
+            "blocked_missing_matched_complexity"
+            if "matched_complexity_report_missing" in blockers
+            else "blocked_matched_null_prerequisites"
+        )
     )
     report_hash = _stable_hash(
         _report_hash_payload(
@@ -832,7 +884,9 @@ def build_matched_null_competition_report(
             "matched_null_status": status,
             "fpr_threshold": threshold,
             "candidate_log_bayes_factor_status": (
-                "diagnostic_input_only" if candidate_ln_b is not None else "not_supplied"
+                "diagnostic_input_only"
+                if candidate_ln_b is not None
+                else "not_supplied"
             ),
             "decisive_evidence_status": "blocked_until_pr065_prior_ppc_loocv",
             "null_family_count": int(null_result.families_tested),
@@ -920,9 +974,7 @@ def build_gf_matched_null_forecast_report(
     )
     passed = base_report.evidence_claim_prerequisite_met
     status = (
-        "forecast_matched_null_passed"
-        if passed
-        else "forecast_matched_null_blocked"
+        "forecast_matched_null_passed" if passed else "forecast_matched_null_blocked"
     )
     blocked = list(base_report.blocked_reasons)
     if not passed:
@@ -936,8 +988,12 @@ def build_gf_matched_null_forecast_report(
     config_hash_text = _non_empty(config_hash, "config_hash")
     input_hash_tuple = _input_hashes(input_hashes, "input_hashes")
     command_text = _non_empty(generating_command, "generating_command")
-    worktree_text = None if worktree_state is None else _non_empty(worktree_state, "worktree_state")
-    git_commit_text = None if git_commit is None else _non_empty(git_commit, "git_commit")
+    worktree_text = (
+        None if worktree_state is None else _non_empty(worktree_state, "worktree_state")
+    )
+    git_commit_text = (
+        None if git_commit is None else _non_empty(git_commit, "git_commit")
+    )
     if worktree_text is None and git_commit_text is None:
         raise ValueError("git_commit or worktree_state is required")
     report_hash = _stable_hash(
@@ -1033,9 +1089,12 @@ class NullCompetitionEngine:
     and tests whether the shared-cause model produces false positives.
     """
 
-    def __init__(self, n_realizations: int = 50,
-                 fpr_threshold: float = 0.10,
-                 obs_base: Optional[dict] = None):
+    def __init__(
+        self,
+        n_realizations: int = 50,
+        fpr_threshold: float = 0.10,
+        obs_base: Optional[dict] = None,
+    ):
         """
         Parameters
         ----------
@@ -1048,8 +1107,8 @@ class NullCompetitionEngine:
         """
         self.n_realizations = n_realizations
         self.fpr_threshold = fpr_threshold
-        self.excluded_channels = ('c',)
-        self.cf4_channel_status = 'QUARANTINED_OPEN_FINDINGS'
+        self.excluded_channels = ("c",)
+        self.cf4_channel_status = "QUARANTINED_OPEN_FINDINGS"
 
         if obs_base is not None:
             self.obs_base = obs_base
@@ -1057,20 +1116,33 @@ class NullCompetitionEngine:
             # Load from canonical obs_defaults.json
             import json
             from pathlib import Path
-            obs_path = Path(__file__).resolve().parent.parent.parent.parent / \
-                'workspace' / 'data' / 'obs_defaults.json'
+
+            obs_path = (
+                Path(__file__).resolve().parent.parent.parent.parent
+                / "workspace"
+                / "data"
+                / "obs_defaults.json"
+            )
             if obs_path.exists():
                 with open(obs_path) as f:
                     self.obs_base = json.load(f)
             else:
                 # Minimal fallback for testing
                 self.obs_base = {
-                    'dipole_observations': {
-                        'catwise_bohme_2025': {'eps1': 1.5e-2, 'sigma_stat': 3e-3, 'sigma_sys': 1e-3},
-                        'radio_secrest_2021': {'eps1': 1.3e-2, 'sigma_stat': 4e-3, 'sigma_sys': 2e-3},
-                        'rho_CW_radio': 0.0,
+                    "dipole_observations": {
+                        "catwise_bohme_2025": {
+                            "eps1": 1.5e-2,
+                            "sigma_stat": 3e-3,
+                            "sigma_sys": 1e-3,
+                        },
+                        "radio_secrest_2021": {
+                            "eps1": 1.3e-2,
+                            "sigma_stat": 4e-3,
+                            "sigma_sys": 2e-3,
+                        },
+                        "rho_CW_radio": 0.0,
                     },
-                    'planck2018': {'eps1': 1.2336e-3},
+                    "planck2018": {"eps1": 1.2336e-3},
                 }
 
     def compete_family(self, family_name: str) -> FamilyCompetitionResult:
@@ -1090,25 +1162,25 @@ class NullCompetitionEngine:
 
             # Convert NullDataset → obs_data format for shared-cause test
             obs_data = {
-                'dipole_observations': {
-                    'catwise_bohme_2025': {
-                        'eps1': null_data.e1_CW,
-                        'sigma_stat': null_data.e1_CW_s,
-                        'sigma_sys': 0.0,
+                "dipole_observations": {
+                    "catwise_bohme_2025": {
+                        "eps1": null_data.e1_CW,
+                        "sigma_stat": null_data.e1_CW_s,
+                        "sigma_sys": 0.0,
                     },
-                    'radio_secrest_2021': {
-                        'eps1': null_data.e1_rad,
-                        'sigma_stat': null_data.e1_rad_s,
-                        'sigma_sys': 0.0,
+                    "radio_secrest_2021": {
+                        "eps1": null_data.e1_rad,
+                        "sigma_stat": null_data.e1_rad_s,
+                        "sigma_sys": 0.0,
                     },
-                    'rho_CW_radio': null_data.rho_CW_radio,
+                    "rho_CW_radio": null_data.rho_CW_radio,
                 },
             }
 
             # Active null diagnostic uses only CatWISE+Radio amplitudes and
             # directions. It is not the historical three-survey shared-cause
             # result and must not be promoted as observed-data evidence.
-            likelihood = DipoleVectorLikelihood(obs_data=obs_data, control='C1')
+            likelihood = DipoleVectorLikelihood(obs_data=obs_data, control="C1")
             active_amplitudes = np.asarray(
                 [null_data.e1_CW, null_data.e1_rad], dtype=float
             )
@@ -1117,14 +1189,11 @@ class NullCompetitionEngine:
             )
             weights = 1.0 / np.square(active_sigmas)
             amplitude = float(np.sum(weights * active_amplitudes) / np.sum(weights))
-            lnB = (
-                likelihood.directional_log_likelihood(
-                    likelihood.CMB_L,
-                    likelihood.CMB_B,
-                    amplitude,
-                )
-                - likelihood.scalar_log_likelihood(0.0)
-            )
+            lnB = likelihood.directional_log_likelihood(
+                likelihood.CMB_L,
+                likelihood.CMB_B,
+                amplitude,
+            ) - likelihood.scalar_log_likelihood(0.0)
 
             lnB_values.append(lnB)
             if lnB > 5.0:
@@ -1164,8 +1233,9 @@ class NullCompetitionEngine:
         )
 
 
-def run_null_competition(n_realizations: int = 50,
-                         fpr_threshold: float = 0.10) -> NullCompetitionResult:
+def run_null_competition(
+    n_realizations: int = 50, fpr_threshold: float = 0.10
+) -> NullCompetitionResult:
     """Convenience function to run full null competition."""
     engine = NullCompetitionEngine(
         n_realizations=n_realizations,
@@ -1184,9 +1254,15 @@ def build_null_competition_hook(
     matched_null_report_hash: str | None = None,
 ) -> NullCompetitionHook:
     if matched_null_report is not None:
+        if type(matched_null_report) is not MatchedNullCompetitionReport:
+            raise TypeError(
+                "matched_null_report must be an exact MatchedNullCompetitionReport"
+            )
         result = matched_null_report.null_result
         matched_complexity_hook = matched_null_report.matched_complexity_hook
         matched_null_report_hash = matched_null_report.report_hash
+        required_families = list(result.family_results)
+        fpr_threshold = matched_null_report.fpr_threshold
     families = tuple(
         required_families
         or (
@@ -1203,26 +1279,32 @@ def build_null_competition_hook(
     report_hash = (
         matched_null_report_hash
         if matched_null_report_hash is not None
-        else (matched_null_report.report_hash if matched_null_report is not None else None)
-    )
-    ready = bool(result and result.overall_robust and matched_ready and report_hash)
-    blocked: list[str] = []
-    if result is None:
-        blocked.append("null_competition_result_missing")
-    elif not result.overall_robust:
-        blocked.append("structured_nulls_not_robust")
-    if matched_complexity_hook is None:
-        blocked.append("matched_complexity_report_missing")
-    elif not matched_complexity_hook.overall_pass:
-        blocked.append("matched_complexity_failed")
-        blocked.extend(
-            f"matched_complexity_violation:{violation}"
-            for violation in matched_complexity_hook.violations
+        else (
+            matched_null_report.report_hash if matched_null_report is not None else None
         )
-    elif not matched_complexity_hook.controls_required:
-        blocked.append("matched_complexity_controls_missing")
-    if result is not None and matched_ready and not report_hash:
-        blocked.append("matched_null_report_hash_missing")
+    )
+    if matched_null_report is not None:
+        ready = matched_null_report.evidence_claim_prerequisite_met
+        blocked = list(matched_null_report.blocked_reasons)
+    else:
+        ready = bool(result and result.overall_robust and matched_ready and report_hash)
+        blocked = []
+        if result is None:
+            blocked.append("null_competition_result_missing")
+        elif not result.overall_robust:
+            blocked.append("structured_nulls_not_robust")
+        if matched_complexity_hook is None:
+            blocked.append("matched_complexity_report_missing")
+        elif not matched_complexity_hook.overall_pass:
+            blocked.append("matched_complexity_failed")
+            blocked.extend(
+                f"matched_complexity_violation:{violation}"
+                for violation in matched_complexity_hook.violations
+            )
+        elif not matched_complexity_hook.controls_required:
+            blocked.append("matched_complexity_controls_missing")
+        if result is not None and matched_ready and not report_hash:
+            blocked.append("matched_null_report_hash_missing")
     return NullCompetitionHook(
         required_families=families,
         fpr_threshold=float(fpr_threshold),
@@ -1232,7 +1314,11 @@ def build_null_competition_hook(
         matched_complexity_ready=matched_ready,
         matched_null_report_hash=report_hash,
         matched_null_status=(
-            "matched_null_ready" if ready else "blocked_matched_null_prerequisites"
+            matched_null_report.matched_null_status
+            if matched_null_report is not None
+            else (
+                "matched_null_ready" if ready else "blocked_matched_null_prerequisites"
+            )
         ),
         blocked_reasons=_dedupe(blocked),
     )

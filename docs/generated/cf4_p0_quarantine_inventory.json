@@ -1,6 +1,6 @@
 {
   "active_block_consumer_count": 50,
-  "active_public_binary_count": 134,
+  "active_public_binary_count": 135,
   "caveats": [
     "Quarantine is propagation control, not scientific remediation or validation.",
     "All three findings remain OPEN; zero stale active consumers does not close them.",
@@ -13,7 +13,7 @@
     "scheme": "roadmap_rescue_v1"
   },
   "claim_tier": "blocked",
-  "config_hash": "a6ebc87d0ea2008427c9663fca118c8a9fb2ce6a839191cd8274f5dab349a165",
+  "config_hash": "4c54afee9f3fbdf03b30e111fdf97e1c1fe95638120587a7557a48a11a821fe7",
   "deterministic_release_output_count": 4,
   "entries": [
     {
@@ -37,6 +37,21 @@
       "required_markers": [],
       "role": "active_public_binary",
       "trusted_source": "git-head:codex_handoff_htt_presolver_v3_skillset_augmented_2026-06-11.zip"
+    },
+    {
+      "binding_gate": "htt/src/common/package_binary_binding.py:verify_package_binary_binding",
+      "binding_method": "sidecar_artifact_sha256",
+      "byte_validation": "dynamic_fail_closed_no_self_reference",
+      "mode": "active_public_binary",
+      "path": "codex_shared_context_harness_v1.zip",
+      "public_use": true,
+      "required_markers": [],
+      "review_scope": "PR-120-reviewed-active-binary",
+      "reviewed_artifact_sha256": "sha256:1f020bf290476491b07869ed40eb4d05fb99b6f38efe420453a02faf243ff94f",
+      "reviewed_sidecar_path": "codex_shared_context_harness_v1.zip.manifest.json",
+      "reviewed_sidecar_sha256": "sha256:7671e787f23ba9018859133c0f41488ffd89456f0a5696fff705f810eb24e54b",
+      "role": "active_public_binary",
+      "trusted_source": "reviewed-pin:codex_shared_context_harness_v1.zip.manifest.json@sha256:7671e787f23ba9018859133c0f41488ffd89456f0a5696fff705f810eb24e54b"
     },
     {
       "binding_gate": "htt/src/common/package_binary_binding.py:verify_package_binary_binding",
@@ -195,7 +210,7 @@
     {
       "builder_path": "scripts/build_external_audit_package.py",
       "byte_validation": "mandatory_deterministic_builder_check_at_closeout",
-      "check_command": "venv/bin/python scripts/build_external_audit_package.py --check",
+      "check_command": "scripts/codex_harness/run_pr122_source_only.sh scripts/build_external_audit_package.py --check",
       "digest_exclusion_reason": "archive_embeds_canonical_inventory",
       "manifest_path": "docs/generated/external_audit_package_manifest.json",
       "mode": "deterministic_release_output",
@@ -1526,8 +1541,8 @@
         "htt.cf4_p0_quarantine_block.v1"
       ],
       "role": "shared_validator",
-      "sha256": "4ad55734a8c132f4783a9444174fa26ce2c0dee313ff8142b63774b9743e9c00",
-      "size_bytes": 102242
+      "sha256": "c52c69b65b07a95a4f0960ff595e554c7195cd46a3b4d18e19d0d6fbf9f68ab5",
+      "size_bytes": 104519
     },
     {
       "mode": "validator_support",
@@ -7119,8 +7134,8 @@
         "cf4_p0_quarantine"
       ],
       "role": "package_builder",
-      "sha256": "8685b5bd6047d348a2393068edfb56ead78065ebb8c2f2eac4bcbea0dd104f91",
-      "size_bytes": 47111
+      "sha256": "e6f2afc165a1153fab025319c3f7f0ac4120c12f63584e43b52cc7aced196b1e",
+      "size_bytes": 59491
     },
     {
       "mode": "active_block_consumer",
@@ -7187,8 +7202,8 @@
         "cf4_p0_quarantine"
       ],
       "role": "package_builder",
-      "sha256": "866014561174e8f5b1ad66f8b96964c26ba0657804cee8d8a73382d13ace703a",
-      "size_bytes": 36953
+      "sha256": "3f18412e26e76b96022f13427781072b9dfaa76ce20ec859af982918c4f73ddf",
+      "size_bytes": 37791
     },
     {
       "mode": "active_block_consumer",
@@ -7198,8 +7213,8 @@
         "cf4_p0_quarantine"
       ],
       "role": "package_builder",
-      "sha256": "6e2dbbb0cab8e48cafc10e004c52d5b11bd10d9c36ac3bd82ad1056949998e44",
-      "size_bytes": 45700
+      "sha256": "e69372e11ed623a58ab69ff4bc43147a6a2c3d2aaf51a9e347c1dba22e357fb4",
+      "size_bytes": 47485
     },
     {
       "mode": "active_block_consumer",
@@ -7209,8 +7224,8 @@
         "cf4_p0_quarantine"
       ],
       "role": "package_builder",
-      "sha256": "041ebd8fa82e5686b2d682184ec008004d493157cbf5f5d5da4deede0123270d",
-      "size_bytes": 52004
+      "sha256": "91e0057cf2c7ed157735204f40eaead6d8385f7c6d27ca8b1a46b7064450e012",
+      "size_bytes": 54463
     },
     {
       "mode": "active_block_consumer",
@@ -7343,8 +7358,8 @@
         "cf4_p0_quarantine"
       ],
       "role": "publication_freeze",
-      "sha256": "b8e52a894d9b4734d11bbd4a5cdf604fd911ffe08ba54c87bee89d1090eb173f",
-      "size_bytes": 37548
+      "sha256": "57e8bd7febce6ae299f9c395d9afb868ab9a15e514d899e65327cf41b00a7175",
+      "size_bytes": 42602
     },
     {
       "mode": "validator_support",
@@ -7601,17 +7616,17 @@
         "cf4_ml_shape_factor"
       ],
       "role": "mutation_and_contract_tests",
-      "sha256": "6e7754e7226393d95a608937671ff1377d0185d0f3ad84089dcc2a9b47b55c9a",
-      "size_bytes": 50949
+      "sha256": "54c756c5328804c5ee535efd207b2d0d033fdf28c8076dba5c16de631573627d",
+      "size_bytes": 52658
     }
   ],
-  "entry_count": 798,
+  "entry_count": 799,
   "generating_command": "PYTHONPATH=htt/src venv/bin/python -B scripts/codex_harness/quarantine_cf4_p0_consumers.py --write",
   "git_commit_or_worktree_state": "baseline_commit:e6da3670043596efdcd93f9ba5e631e1462146c7; PR-120 worktree hashes are bound per inventory entry",
   "implementation_scope": "propagation_quarantine_only",
   "input_hashes": [
-    "docs/research_program/long_horizon_rescue/cf4_p0_quarantine_policy.yaml:sha256:a6ebc87d0ea2008427c9663fca118c8a9fb2ce6a839191cd8274f5dab349a165",
-    "docs/codex_handoff/research_remediation_state.yaml:sha256:77d36878315f041c7bb6c273a2d650f7d3fa1c8a8dc635a577527d646fa40109"
+    "docs/research_program/long_horizon_rescue/cf4_p0_quarantine_policy.yaml:sha256:4c54afee9f3fbdf03b30e111fdf97e1c1fe95638120587a7557a48a11a821fe7",
+    "docs/codex_handoff/research_remediation_state.yaml:sha256:bdb7779955710d3d84b137081748027746ea308fbf89dc0c179dd937f63c6311"
   ],
   "legacy_entry_count": 604,
   "lineage_edge_count": 8,
@@ -7790,8 +7805,8 @@
   "null_mock_status": "not_applicable_quarantine_is_not_validation",
   "owner": "COMMON",
   "policy_path": "docs/research_program/long_horizon_rescue/cf4_p0_quarantine_policy.yaml",
-  "policy_sha256": "a6ebc87d0ea2008427c9663fca118c8a9fb2ce6a839191cd8274f5dab349a165",
-  "remediation_root_sha256": "77d36878315f041c7bb6c273a2d650f7d3fa1c8a8dc635a577527d646fa40109",
+  "policy_sha256": "4c54afee9f3fbdf03b30e111fdf97e1c1fe95638120587a7557a48a11a821fe7",
+  "remediation_root_sha256": "bdb7779955710d3d84b137081748027746ea308fbf89dc0c179dd937f63c6311",
   "schema": "htt.cf4_p0_quarantine_inventory.v1",
   "sky_support_status": "not_applicable_to_propagation_quarantine",
   "stale_signature_ids": [

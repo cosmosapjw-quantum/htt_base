@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "run_id": "pr122-closeout-20260716",
+  "generated_at": "2026-07-16T13:15:10+00:00",
+  "result_count": 1,
+  "unique_finding_count": 3,
+  "findings": [
+    {
+      "finding_id": "PERF-PR122-001",
+      "claim_id": "C-HARNESS-INSTALL",
+      "rank": 1,
+      "verdict": "confirmed_primary_hotspot",
+      "statement": "_entry_rows resolves a reviewed sidecar pin independently for every package entry; that helper reparses and fully validates the same YAML policy on every call.",
+      "evidence": [
+        "scripts/build_external_audit_package.py:983-1026 loops over 555 entries and calls reviewed_active_binary_sidecar_pin at line 1013.",
+        "htt/src/common/cf4_p0_quarantine.py:2297-2318 shows that every helper call invokes load_policy at line 2314.",
+        "htt/src/common/cf4_p0_quarantine.py:547-560 reads and yaml.safe_load parses the policy; the remainder of load_policy validates paths, pins, sidecars, and artifact digests.",
+        "cProfile: build_audit_package_payload 88.806 s; _entry_rows 58.345 s; 559 load_policy calls 57.002 s; 564 yaml.safe_load calls 41.037 s.",
+        "Unprofiled baseline payload: 41.412723 s for 555 entries and 3268 scanned paths.",
+        "Process-local simulation of one validated policy snapshot for one build: 17.283692 s, with 559 call sites but one actual load; absolute saving 24.129031 s and relative saving 58.27%.",
+        "A second simulation covering payload plus build_zip_bytes took 33.614993 s: payload 17.563609 s and ZIP 16.051384 s, with 563 policy call sites and one actual load."
+      ],
+      "assumptions": [
+        "The working tree remained unchanged during each isolated measurement.",
+        "The in-memory monkeypatch changed only repeated load_policy evaluation; it did not bypass source-byte, sidecar, Git HEAD, quarantine, or ZIP revalidation paths.",
+        "cProfile cumulative times have instrumentation overhead, so unprofiled timings are used for expected wall-time benefit."
+      ],
+      "supporting_assignments": [
+        "A-PR122-PERF"
+      ],
+      "supporting_agent_types": [
+        null
+      ],
+      "duplicate_count": 1
+    },
+    {
+      "finding_id": "PERF-PR122-002",
+      "claim_id": "C-HARNESS-INSTALL",
+      "rank": 2,
+      "verdict": "confirmed_secondary_hotspot_and_test_amplifier",
+      "statement": "Every payload performs an exhaustive repository quarantine validation, every ZIP build performs another, and the test module repeats both operations many times.",
+      "evidence": [
+        "scripts/build_external_audit_package.py:1231-1248 calls validate_repository once per payload.",
+        "scripts/build_external_audit_package.py:1436-1476 revalidates all packaged bytes and calls assert_repository_clean once per ZIP build.",
+        "htt/src/common/cf4_p0_quarantine.py:2357-2453 enumerates and scans active repository paths; _repository_candidate_paths uses git ls-files at lines 1072-1099.",
+        "cProfile: validate_repository 24.631 s and _scan_text 6.211 s for one profiled payload.",
+        "Static call counting in tests/contracts/test_audit_package_generator.py finds 13 successful full payload constructions and 7 ZIP constructions: six _payload calls, one direct payload call, six CLI payloads, four direct/fixtureless ZIP builds, and three CLI ZIP builds. This implies 20 exhaustive validation passes in this test module.",
+        "The exact source-only --check observation supplied by the main writer was 41.99 s at 103% CPU and 183564 KiB RSS before reporting a stale manifest."
+      ],
+      "assumptions": [
+        "The observed 195-test integration includes tests/contracts/test_audit_package_generator.py.",
+        "The static count describes the successful paths in the current tests; early-failing negative payload tests were excluded because they do not reach repository validation."
+      ],
+      "supporting_assignments": [
+        "A-PR122-PERF"
+      ],
+      "supporting_agent_types": [
+        null
+      ],
+      "duplicate_count": 1
+    },
+    {
+      "finding_id": "PERF-PR122-003",
+      "claim_id": "C-HARNESS-INSTALL",
+      "rank": 3,
+      "verdict": "confirmed_secondary_only",
+      "statement": "Per-binary Git binding launches many subprocesses, but it is not the cause of the order-of-magnitude delay.",
+      "evidence": [
+        "htt/src/common/package_binary_binding.py:133-166 invokes git rev-parse and git show for same-path HEAD byte checks; verify_package_binary_binding invokes this path at lines 402-449.",
+        "cProfile: 825 verify_package_binary_binding calls consumed 3.372 s; 1009 subprocess.run calls consumed 2.510 s; _repository_candidate_paths itself consumed 0.259 s."
+      ],
+      "assumptions": [
+        "Git object data was warm enough for the measured run; cold storage could increase this component, but it remains below repeated YAML validation in the measured profile."
+      ],
+      "supporting_assignments": [
+        "A-PR122-PERF"
+      ],
+      "supporting_agent_types": [
+        null
+      ],
+      "duplicate_count": 1
+    }
+  ],
+  "errors": []
+}

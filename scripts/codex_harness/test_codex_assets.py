@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import importlib.util
 import json
 import shutil
 import subprocess
@@ -47,7 +48,9 @@ REQUIRED_INSTALL_SNIPPETS = {
 def _run_codex_policy(command: list[str]) -> subprocess.CompletedProcess[str]:
     codex = shutil.which("codex")
     if codex is None:
-        pytest.skip("Codex CLI executable not installed; cannot validate execpolicy rules")
+        pytest.skip(
+            "Codex CLI executable not installed; cannot validate execpolicy rules"
+        )
     return subprocess.run(
         [
             codex,
@@ -75,8 +78,7 @@ def _strictest_decision(output: str) -> str:
 
 def _skill_names(root: Path) -> set[str]:
     return {
-        path.parent.name
-        for path in (root / ".agents" / "skills").glob("*/SKILL.md")
+        path.parent.name for path in (root / ".agents" / "skills").glob("*/SKILL.md")
     }
 
 
@@ -117,6 +119,218 @@ def test_repo_scoped_skill_layout_is_valid() -> None:
     assert _reported_skill_names(completed.stdout) == expected
 
 
+def test_shared_context_packet_is_merged_and_versioned() -> None:
+    fragment = (REPO_ROOT / "AGENTS.md.fragment").read_text(encoding="utf-8").strip()
+    agents_text = (REPO_ROOT / "AGENTS.md").read_text(encoding="utf-8").strip()
+    assert fragment
+    assert agents_text.endswith(fragment)
+    assert agents_text.count(fragment) == 1
+
+    config = tomllib.loads(
+        (REPO_ROOT / ".codex/config.toml").read_text(encoding="utf-8")
+    )
+    assert config["project_doc_max_bytes"] == 65536
+    assert config["approvals_reviewer"] == "user"
+    assert config["features"]["hooks"] is True
+    assert config["agents"] == {
+        "max_threads": 4,
+        "max_depth": 2,
+        "job_max_runtime_seconds": 1800,
+    }
+
+    hooks = json.loads((REPO_ROOT / ".codex/hooks.json").read_text(encoding="utf-8"))
+    assert set(hooks["hooks"]) == {"SessionStart", "SubagentStart", "SubagentStop"}
+
+
+def test_shared_context_harness_and_stop_hook_fail_closed(tmp_path: Path) -> None:
+    validated = subprocess.run(
+        [sys.executable, ".agent-harness/scripts/validate_harness.py"],
+        cwd=REPO_ROOT,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    assert validated.returncode == 0, validated.stdout + validated.stderr
+    assert json.loads(validated.stdout)["ok"] is True
+
+    harness = tmp_path / ".agent-harness"
+    (harness / "context").mkdir(parents=True)
+    (harness / "ACTIVE_RUN").write_text("test-run\n", encoding="utf-8")
+    (harness / "context/CONTEXT_INDEX.json").write_text(
+        json.dumps({"context_version": "test-version"}) + "\n",
+        encoding="utf-8",
+    )
+    assignment = {
+        "schema_version": 1,
+        "run_id": "test-run",
+        "assignment_id": "A-001",
+        "agent_type": "context_mapper",
+        "context_version": "test-version",
+        "independence_mode": "shared-core",
+        "claim_ids": ["C-001"],
+        "result_path": ".agent-harness/runs/test-run/results/A-001.json",
+    }
+    assignment_path = harness / "runs/test-run/assignments/A-001.json"
+    assignment_path.parent.mkdir(parents=True)
+    assignment_path.write_text(json.dumps(assignment) + "\n", encoding="utf-8")
+    blocked = subprocess.run(
+        [sys.executable, str(REPO_ROOT / ".codex/hooks/subagent_stop_validate.py")],
+        cwd=tmp_path,
+        input=json.dumps({"last_assistant_message": "missing envelope"}),
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    assert blocked.returncode == 0, blocked.stdout + blocked.stderr
+    assert json.loads(blocked.stdout)["decision"] == "block"
+    assert "HARNESS_RESULT" in json.loads(blocked.stdout)["reason"]
+
+    result = harness / "runs/test-run/results/A-001.json"
+    result.parent.mkdir(parents=True)
+    result_payload = {
+        "schema_version": 1,
+        "run_id": "test-run",
+        "assignment_id": "A-001",
+        "context_version": "test-version",
+        "agent_type": "context_mapper",
+        "status": "pass",
+        "findings": [
+            {
+                "finding_id": "F-001",
+                "claim_id": "C-001",
+                "verdict": "pass",
+                "evidence_fingerprint": "sha256:" + "1" * 64,
+            }
+        ],
+        "errors": [],
+    }
+    result.write_text(json.dumps(result_payload) + "\n", encoding="utf-8")
+    marker = {
+        "assignment_id": "A-001",
+        "context_version": "test-version",
+        "status": "pass",
+        "result_path": ".agent-harness/runs/test-run/results/A-001.json",
+    }
+    accepted = subprocess.run(
+        [sys.executable, str(REPO_ROOT / ".codex/hooks/subagent_stop_validate.py")],
+        cwd=tmp_path,
+        input=json.dumps(
+            {"last_assistant_message": f"HARNESS_RESULT: {json.dumps(marker)}"}
+        ),
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    assert accepted.returncode == 0, accepted.stdout + accepted.stderr
+    assert accepted.stdout == ""
+
+    unregistered_result = harness / "runs/test-run/results/A-404.json"
+    unregistered_result.write_text(
+        json.dumps(
+            {
+                **result_payload,
+                "assignment_id": "A-404",
+            }
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    unregistered_marker = {
+        **marker,
+        "assignment_id": "A-404",
+        "result_path": ".agent-harness/runs/test-run/results/A-404.json",
+    }
+    unregistered = subprocess.run(
+        [sys.executable, str(REPO_ROOT / ".codex/hooks/subagent_stop_validate.py")],
+        cwd=tmp_path,
+        input=json.dumps(
+            {
+                "last_assistant_message": f"HARNESS_RESULT: {json.dumps(unregistered_marker)}"
+            }
+        ),
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    assert json.loads(unregistered.stdout)["decision"] == "block"
+    assert "registered assignment" in json.loads(unregistered.stdout)["reason"]
+
+    result.write_text("{}\n", encoding="utf-8")
+    empty_result = subprocess.run(
+        [sys.executable, str(REPO_ROOT / ".codex/hooks/subagent_stop_validate.py")],
+        cwd=tmp_path,
+        input=json.dumps(
+            {"last_assistant_message": f"HARNESS_RESULT: {json.dumps(marker)}"}
+        ),
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    assert json.loads(empty_result.stdout)["decision"] == "block"
+    assert "Invalid result artifact" in json.loads(empty_result.stdout)["reason"]
+
+    result.write_text(json.dumps(result_payload) + "\n", encoding="utf-8")
+    mismatched_marker = {**marker, "status": "fail"}
+    mismatched = subprocess.run(
+        [sys.executable, str(REPO_ROOT / ".codex/hooks/subagent_stop_validate.py")],
+        cwd=tmp_path,
+        input=json.dumps(
+            {
+                "last_assistant_message": f"HARNESS_RESULT: {json.dumps(mismatched_marker)}"
+            }
+        ),
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    assert json.loads(mismatched.stdout)["decision"] == "block"
+    assert "status does not match" in json.loads(mismatched.stdout)["reason"]
+
+    unsafe_marker = {
+        **marker,
+        "assignment_id": "../A-001",
+        "result_path": ".agent-harness/runs/test-run/results/A-001.json",
+    }
+    unsafe = subprocess.run(
+        [sys.executable, str(REPO_ROOT / ".codex/hooks/subagent_stop_validate.py")],
+        cwd=tmp_path,
+        input=json.dumps(
+            {"last_assistant_message": f"HARNESS_RESULT: {json.dumps(unsafe_marker)}"}
+        ),
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    assert json.loads(unsafe.stdout)["decision"] == "block"
+    assert "unsafe" in json.loads(unsafe.stdout)["reason"]
+
+
+def test_shared_context_result_merge_never_collapses_missing_fingerprints(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    scripts = REPO_ROOT / ".agent-harness/scripts"
+    monkeypatch.syspath_prepend(str(scripts))
+    spec = importlib.util.spec_from_file_location(
+        "shared_context_merge_results",
+        scripts / "merge_results.py",
+    )
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+
+    first = {
+        "finding_id": "HARN-001",
+        "claim_id": "C-HARNESS-INSTALL",
+        "verdict": "fail",
+    }
+    second = {
+        "finding_id": "HARN-002",
+        "claim_id": "C-HARNESS-INSTALL",
+        "verdict": "fail",
+    }
+    assert module.canonical_key(first) != module.canonical_key(second)
+
+
 def test_custom_agent_configs_are_well_formed_and_named() -> None:
     agent_dir = REPO_ROOT / ".codex" / "agents"
     agents = {}
@@ -125,20 +339,24 @@ def test_custom_agent_configs_are_well_formed_and_named() -> None:
         agents[data["name"]] = data
         assert data["description"]
         assert data["sandbox_mode"] in {"read-only", "workspace-write"}
-        assert data["model_reasoning_effort"] in {"medium", "high"}
+        assert data["model_reasoning_effort"] in {"low", "medium", "high", "xhigh"}
         assert data["developer_instructions"].strip()
-        assert data["nickname_candidates"]
+        if "nickname_candidates" in data:
+            assert isinstance(data["nickname_candidates"], list)
+            assert data["nickname_candidates"]
 
     assert REQUIRED_AGENT_NAMES <= set(agents)
     for name in READ_ONLY_AGENT_NAMES:
         assert agents[name]["sandbox_mode"] == "read-only"
 
 
-def test_gitignore_allows_versioned_codex_assets_but_ignores_project_config() -> None:
+def test_gitignore_allows_versioned_codex_assets_and_harness_config() -> None:
     checks = [
         (["git", "check-ignore", "-q", ".codex/agents/code-cartographer.toml"], 1),
         (["git", "check-ignore", "-q", ".codex/rules/default.rules"], 1),
-        (["git", "check-ignore", "-q", ".codex/config.toml"], 0),
+        (["git", "check-ignore", "-q", ".codex/config.toml"], 1),
+        (["git", "check-ignore", "-q", ".codex/hooks.json"], 1),
+        (["git", "check-ignore", "-q", ".codex/hooks/session_start_context.py"], 1),
     ]
     for command, expected_returncode in checks:
         completed = subprocess.run(
@@ -167,18 +385,24 @@ def test_execpolicy_rules_load_and_match_pr_card_commands() -> None:
             "docs/codex_handoff/pr_backlog.yaml",
         ]
     )
-    assert harness_command.returncode == 0, harness_command.stdout + harness_command.stderr
+    assert harness_command.returncode == 0, (
+        harness_command.stdout + harness_command.stderr
+    )
     assert _strictest_decision(harness_command.stdout) == "allow"
 
     forbidden_command = _run_codex_policy(["rm", "-rf", "/tmp/foo"])
-    assert forbidden_command.returncode == 0, forbidden_command.stdout + forbidden_command.stderr
+    assert forbidden_command.returncode == 0, (
+        forbidden_command.stdout + forbidden_command.stderr
+    )
     assert _strictest_decision(forbidden_command.stdout) == "forbidden"
 
 
 def test_execpolicy_rejects_unmatched_rule_examples(tmp_path: Path) -> None:
     codex = shutil.which("codex")
     if codex is None:
-        pytest.skip("Codex CLI executable not installed; cannot validate execpolicy rules")
+        pytest.skip(
+            "Codex CLI executable not installed; cannot validate execpolicy rules"
+        )
     bad_rules = tmp_path / "bad.rules"
     bad_rules.write_text(
         """
@@ -215,13 +439,17 @@ prefix_rule(
     assert "unmatched examples" in completed.stderr
 
 
-def test_project_codex_config_shape_validator_accepts_no_config_and_rejects_bad_agents(
+def test_project_codex_config_shape_validator_accepts_supported_globals_and_rejects_bad_agents(
     tmp_path: Path,
 ) -> None:
     no_config = tmp_path / "no_config"
     no_config.mkdir()
     accepted = subprocess.run(
-        [sys.executable, str(REPO_ROOT / "scripts/codex_harness/validate_codex_config_shape.py"), str(no_config)],
+        [
+            sys.executable,
+            str(REPO_ROOT / "scripts/codex_harness/validate_codex_config_shape.py"),
+            str(no_config),
+        ],
         cwd=REPO_ROOT,
         text=True,
         capture_output=True,
@@ -230,12 +458,43 @@ def test_project_codex_config_shape_validator_accepts_no_config_and_rejects_bad_
     assert accepted.returncode == 0, accepted.stdout + accepted.stderr
     assert "no project-local .codex/config.toml present" in accepted.stdout
 
+    good_config = tmp_path / "good_config" / ".codex"
+    good_config.mkdir(parents=True)
+    (good_config / "config.toml").write_text(
+        """
+project_doc_max_bytes = 65536
+approvals_reviewer = "user"
+
+[features]
+hooks = true
+
+[agents]
+max_threads = 4
+max_depth = 2
+job_max_runtime_seconds = 1800
+""".lstrip(),
+        encoding="utf-8",
+    )
+    supported = subprocess.run(
+        [
+            sys.executable,
+            str(REPO_ROOT / "scripts/codex_harness/validate_codex_config_shape.py"),
+            str(tmp_path / "good_config"),
+        ],
+        cwd=REPO_ROOT,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    assert supported.returncode == 0, supported.stdout + supported.stderr
+    assert "supported shared-context harness fields" in supported.stdout
+
     bad_config = tmp_path / "bad_config" / ".codex"
     bad_config.mkdir(parents=True)
     (bad_config / "config.toml").write_text(
         """
 [agents]
-max_threads = 6
+max_threads = "many"
 """.lstrip(),
         encoding="utf-8",
     )
@@ -251,13 +510,17 @@ max_threads = 6
         check=False,
     )
     assert rejected.returncode == 1, rejected.stdout + rejected.stderr
-    assert "scalar values under [agents]" in rejected.stdout
+    assert "agents.max_threads must be int" in rejected.stdout
 
 
-def test_installer_copies_repo_scoped_assets_without_project_config(tmp_path: Path) -> None:
+def test_installer_copies_repo_scoped_assets_with_project_harness_config(
+    tmp_path: Path,
+) -> None:
     codex = shutil.which("codex")
     if codex is None:
-        pytest.skip("Codex CLI executable not installed; cannot validate installed rules")
+        pytest.skip(
+            "Codex CLI executable not installed; cannot validate installed rules"
+        )
     target = tmp_path / "installed"
     completed = subprocess.run(
         ["bash", "scripts/install_codex_handoff.sh", str(target)],
@@ -271,38 +534,81 @@ def test_installer_copies_repo_scoped_assets_without_project_config(tmp_path: Pa
 
     for path in [
         "AGENTS.md",
+        "AGENTS.md.fragment",
         ".agents/skills/htt-dag-orchestrator/SKILL.md",
         ".codex/agents/code-cartographer.toml",
+        ".codex/config.toml",
+        ".codex/hooks.json",
+        ".codex/hooks/session_start_context.py",
         ".codex/rules/default.rules",
+        ".agent-harness/README.md",
+        ".agent-harness/generated/CONTEXT_PACK.md",
+        ".agent-harness/scripts/validate_harness.py",
+        ".agent-harness/templates/RESULT_ENVELOPE.json",
         "docs/codex_handoff/pr_backlog.yaml",
         "scripts/codex_harness/verify_skill_layout.py",
         "harness_templates/vendor/physmath-gpt56/3.1.0/coding/manifest.json",
         "harness_templates/vendor/physmath-gpt56/3.1.0/research/manifest.json",
     ]:
         assert (target / path).exists(), path
-    assert not (target / ".codex/config.toml").exists()
     assert not (target / "docs/codex_handoff/codex_handoff").exists()
     assert not (target / "docs/codex_handoff/PR_DELTAS").exists()
     assert not (target / "docs/codex_handoff/generated").exists()
+    assert not (target / ".agent-harness/ACTIVE_RUN").exists()
+    assert not (target / ".agent-harness/runs").exists()
 
     installed_skills = subprocess.run(
-        ["python", str(target / "scripts/codex_harness/verify_skill_layout.py"), str(target)],
+        [
+            "python",
+            str(target / "scripts/codex_harness/verify_skill_layout.py"),
+            str(target),
+        ],
         cwd=REPO_ROOT,
         text=True,
         capture_output=True,
         check=False,
     )
-    assert installed_skills.returncode == 0, installed_skills.stdout + installed_skills.stderr
+    assert installed_skills.returncode == 0, (
+        installed_skills.stdout + installed_skills.stderr
+    )
     expected = _skill_names(REPO_ROOT)
     assert REQUIRED_SKILL_NAMES <= expected
     assert f"{len(expected)} skills OK" in installed_skills.stdout
     assert _reported_skill_names(installed_skills.stdout) == expected
 
+    installed_config = subprocess.run(
+        [
+            sys.executable,
+            str(target / "scripts/codex_harness/validate_codex_config_shape.py"),
+            str(target),
+        ],
+        cwd=target,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    assert installed_config.returncode == 0, (
+        installed_config.stdout + installed_config.stderr
+    )
+
+    installed_harness = subprocess.run(
+        [sys.executable, str(target / ".agent-harness/scripts/validate_harness.py")],
+        cwd=target,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    assert installed_harness.returncode == 0, (
+        installed_harness.stdout + installed_harness.stderr
+    )
+
     for mode, expected_message in [
         ("coding", "Coding harness validation passed."),
         ("research", "Research harness validation passed."),
     ]:
-        validator = "validate_harness.py" if mode == "coding" else "validate_workspace.py"
+        validator = (
+            "validate_harness.py" if mode == "coding" else "validate_workspace.py"
+        )
         validated = subprocess.run(
             [
                 sys.executable,
@@ -329,7 +635,9 @@ def test_installer_copies_repo_scoped_assets_without_project_config(tmp_path: Pa
         capture_output=True,
         check=False,
     )
-    assert clean_reinstall.returncode == 0, clean_reinstall.stdout + clean_reinstall.stderr
+    assert clean_reinstall.returncode == 0, (
+        clean_reinstall.stdout + clean_reinstall.stderr
+    )
 
     rogue = target / "harness_templates/vendor/physmath-gpt56/3.1.0/coding/ROGUE.txt"
     rogue.write_text("unreceipted\n", encoding="utf-8")
@@ -341,7 +649,10 @@ def test_installer_copies_repo_scoped_assets_without_project_config(tmp_path: Pa
         check=False,
     )
     assert contaminated.returncode == 1
-    assert "Refusing to overwrite a divergent physmath vendor snapshot" in contaminated.stderr
+    assert (
+        "Refusing to overwrite a divergent physmath vendor snapshot"
+        in contaminated.stderr
+    )
 
     installed_policy = subprocess.run(
         [
@@ -362,8 +673,59 @@ def test_installer_copies_repo_scoped_assets_without_project_config(tmp_path: Pa
         capture_output=True,
         check=False,
     )
-    assert installed_policy.returncode == 0, installed_policy.stdout + installed_policy.stderr
+    assert installed_policy.returncode == 0, (
+        installed_policy.stdout + installed_policy.stderr
+    )
     assert _strictest_decision(installed_policy.stdout) == "allow"
+
+
+def test_installer_refuses_divergent_merge_only_assets_without_partial_overwrite(
+    tmp_path: Path,
+) -> None:
+    policy_target = tmp_path / "policy-target"
+    (policy_target / ".codex").mkdir(parents=True)
+    local_policy = "LOCAL_POLICY_MARKER\n"
+    local_config = 'model = "intentional-model"\n'
+    (policy_target / "AGENTS.md").write_text(local_policy, encoding="utf-8")
+    (policy_target / ".codex/config.toml").write_text(
+        local_config,
+        encoding="utf-8",
+    )
+    policy_refusal = subprocess.run(
+        ["bash", "scripts/install_codex_handoff.sh", str(policy_target)],
+        cwd=REPO_ROOT,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    assert policy_refusal.returncode == 1
+    assert "divergent merge-only asset (AGENTS.md)" in policy_refusal.stderr
+    assert (policy_target / "AGENTS.md").read_text(encoding="utf-8") == local_policy
+    assert (policy_target / ".codex/config.toml").read_text(
+        encoding="utf-8"
+    ) == local_config
+    assert not (policy_target / "agent.md").exists()
+
+    config_target = tmp_path / "config-target"
+    (config_target / ".codex").mkdir(parents=True)
+    (config_target / "AGENTS.md").write_bytes((REPO_ROOT / "AGENTS.md").read_bytes())
+    (config_target / ".codex/config.toml").write_text(
+        local_config,
+        encoding="utf-8",
+    )
+    config_refusal = subprocess.run(
+        ["bash", "scripts/install_codex_handoff.sh", str(config_target)],
+        cwd=REPO_ROOT,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    assert config_refusal.returncode == 1
+    assert "divergent merge-only asset (.codex/config.toml)" in config_refusal.stderr
+    assert (config_target / ".codex/config.toml").read_text(
+        encoding="utf-8"
+    ) == local_config
+    assert not (config_target / "agent.md").exists()
 
 
 def test_claim_scanners_handle_explicit_agent_skill_paths(tmp_path: Path) -> None:

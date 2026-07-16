@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "run_id": "pr122-closeout-20260716",
+  "assignment_id": "A-PR122-PERF",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "context_mapper",
+  "context_version": "0e22f2736cad412cfce299f9d3b86054c694b0719fda8fcd6f847e8dd7e33204",
+  "independence_mode": "shared-core",
+  "discovery_mode": "targeted",
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-HARNESS-INSTALL"
+  ],
+  "task": "Diagnose the 889.86-second PR-122 integration bottleneck and propose evidence-backed safe acceleration options without editing repository files or running the full suite.",
+  "required_inputs": [
+    ".agent-harness/generated/CONTEXT_PACK.md",
+    ".agent-harness/runs/pr122-closeout-20260716/assignments/A-PR122-PERF.json",
+    "scripts/build_external_audit_package.py",
+    "scripts/codex_harness/run_pr122_source_only.sh",
+    "tests/contracts/test_audit_package_generator.py",
+    "htt/src/common/cf4_p0_quarantine.py",
+    "htt/src/common/package_binary_binding.py"
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "read-only shell commands",
+    "single-package-check timing or profiling commands that write only below /tmp"
+  ],
+  "required_outputs": [
+    "ranked hotspot evidence tied to exact functions or subprocesses",
+    "safe acceleration options with expected benefit and determinism risks",
+    "explicit GPU and Python-vectorization applicability assessment",
+    "result envelope at the declared result_path",
+    "HARNESS_RESULT final line"
+  ],
+  "result_path": ".agent-harness/runs/pr122-closeout-20260716/results/A-PR122-PERF.json",
+  "status": "registered"
+}

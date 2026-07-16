@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "run_id": "long-horizon-20260716",
+  "assignment_id": "A-PR122-HARNESS",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "context_mapper",
+  "context_version": "c771f2f513f9851f833a30d2d7963eb649c2439ca59e7a9056c589b7bdec3edd",
+  "independence_mode": "shared-core",
+  "discovery_mode": "targeted",
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-HARNESS-INSTALL"
+  ],
+  "task": "Verify the installed shared-context harness and AGENTS fragment against the user-supplied packet, run the registered harness gates, and report only exact actionable discrepancies without editing shared files.",
+  "required_inputs": [
+    ".agent-harness/generated/CONTEXT_PACK.md",
+    ".agent-harness/context/roles/context_mapper.md",
+    "AGENTS.md.fragment",
+    "INSTALL_NOTES.md",
+    ".agent-harness/README.md",
+    ".codex/config.toml",
+    ".codex/hooks.json",
+    "codex_shared_context_harness_v1.zip"
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "read-only shell commands",
+    "python3 .agent-harness/scripts/validate_harness.py"
+  ],
+  "required_outputs": [
+    "result envelope at the declared result_path",
+    "exact evidence references and reproducible commands",
+    "HARNESS_RESULT final line"
+  ],
+  "result_path": ".agent-harness/runs/long-horizon-20260716/results/A-PR122-HARNESS.json",
+  "status": "registered"
+}

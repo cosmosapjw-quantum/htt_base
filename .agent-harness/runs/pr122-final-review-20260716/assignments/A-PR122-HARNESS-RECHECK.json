@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "run_id": "pr122-final-review-20260716",
+  "assignment_id": "A-PR122-HARNESS-RECHECK",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "context_mapper",
+  "context_version": "548a657c36099f1b2b58b7fd378a39c69e9be9952e843ff48101d5a006deae09",
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-HARNESS-INSTALL"
+  ],
+  "task": "Verify installer merge-or-refuse behavior, registered result-envelope enforcement, merge preservation, and cache safety; report whether HARN-001, HARN-002, HARN-005, and ADJ-PR122-MERGE-001 are closed.",
+  "required_inputs": [
+    ".agent-harness/generated/CONTEXT_PACK.md",
+    ".agent-harness/runs/pr122-final-review-20260716/assignments/A-PR122-HARNESS-RECHECK.json",
+    "scripts/install_codex_handoff.sh",
+    "docs/codex_handoff/INSTALL.md",
+    ".agent-harness/scripts/_harness.py",
+    ".agent-harness/scripts/init_run.py",
+    ".agent-harness/scripts/new_assignment.py",
+    ".agent-harness/scripts/merge_results.py",
+    ".agent-harness/scripts/validate_harness.py",
+    ".codex/hooks/subagent_stop_validate.py",
+    "scripts/codex_harness/test_codex_assets.py",
+    "htt/src/common/cf4_p0_quarantine.py",
+    "tests/pr_cards/test_pr_120_cf4_p0_downstream_consumer_quarantine.py",
+    ".agent-harness/runs/pr122-final-review-20260716/MERGED_RESULTS.json"
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "read-only shell commands",
+    "targeted harness, installer, hook, merge, and cache tests"
+  ],
+  "required_outputs": [
+    "explicit closure verdicts for HARN-001, HARN-002, HARN-005, and ADJ-PR122-MERGE-001",
+    "evidence that invalid handoffs fail closed and all 13 raw findings survive merge",
+    "remaining risks and exact post-reseal checks",
+    "result envelope at the declared result_path",
+    "HARNESS_RESULT final line"
+  ],
+  "result_path": ".agent-harness/runs/pr122-final-review-20260716/results/A-PR122-HARNESS-RECHECK.json",
+  "status": "registered"
+}

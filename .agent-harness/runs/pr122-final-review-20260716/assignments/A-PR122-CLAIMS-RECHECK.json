@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "run_id": "pr122-final-review-20260716",
+  "assignment_id": "A-PR122-CLAIMS-RECHECK",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "context_mapper",
+  "context_version": "548a657c36099f1b2b58b7fd378a39c69e9be9952e843ff48101d5a006deae09",
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-PR122-NONPROMOTION",
+    "C-PR4-SKIP"
+  ],
+  "task": "Verify PR-150 active-roadmap PR4 supersession, PR-122 owner/contributor provenance, removal of unbound integration count, and scientific-level wording without editing files.",
+  "required_inputs": [
+    ".agent-harness/generated/CONTEXT_PACK.md",
+    ".agent-harness/runs/pr122-final-review-20260716/assignments/A-PR122-CLAIMS-RECHECK.json",
+    "docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md",
+    "docs/codex_handoff/pr_backlog.yaml",
+    "docs/harness/CLAIM_LEDGER.md",
+    "scripts/check_publication_claim_freeze.py",
+    "docs/research_program/long_horizon_rescue/pr122_spec.yaml",
+    "docs/generated/pr122_claim_closure_report.json"
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "read-only shell commands",
+    "targeted PR4/NPIPE and claim-provenance text checks"
+  ],
+  "required_outputs": [
+    "explicit closure verdicts for PR122-PHYSSTAT-002 through -005",
+    "proof that active PR4 execution is absent and owner/contributor/tier systems are separated",
+    "remaining risks and exact post-reseal checks",
+    "result envelope at the declared result_path",
+    "HARNESS_RESULT final line"
+  ],
+  "result_path": ".agent-harness/runs/pr122-final-review-20260716/results/A-PR122-CLAIMS-RECHECK.json",
+  "status": "registered"
+}

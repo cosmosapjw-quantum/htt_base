@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "run_id": "pr122-final-review-20260716",
+  "assignment_id": "A-PR122-CODE-RECHECK",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "context_mapper",
+  "context_version": "548a657c36099f1b2b58b7fd378a39c69e9be9952e843ff48101d5a006deae09",
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-PR122-MECHANICS"
+  ],
+  "task": "Verify the authority-snapshot schema fix and its mutation binding; inspect only the corrected code/spec/tests and report whether F-PR122-CODE-001 is closed.",
+  "required_inputs": [
+    ".agent-harness/generated/CONTEXT_PACK.md",
+    ".agent-harness/runs/pr122-final-review-20260716/assignments/A-PR122-CODE-RECHECK.json",
+    "docs/research_program/long_horizon_rescue/pr122_spec.yaml",
+    "scripts/codex_harness/build_claim_evidence_graph.py",
+    "tests/pr_cards/test_pr_122_claim_addressed_evidence_graph_content_addressed.py",
+    "docs/generated/pr122_test_execution.json",
+    "docs/generated/pr122_claim_evidence_graph.json",
+    "docs/generated/pr122_release_receipt.json",
+    "htt/src/common/release_evidence_pin.py"
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "read-only shell commands",
+    "targeted authority-snapshot and graph checks"
+  ],
+  "required_outputs": [
+    "explicit closure verdict for F-PR122-CODE-001",
+    "mutation/spec/test/fixed-point evidence",
+    "remaining risks and exact post-reseal checks",
+    "result envelope at the declared result_path",
+    "HARNESS_RESULT final line"
+  ],
+  "result_path": ".agent-harness/runs/pr122-final-review-20260716/results/A-PR122-CODE-RECHECK.json",
+  "status": "registered"
+}

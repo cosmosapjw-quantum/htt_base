@@ -2,6 +2,14 @@
 
 Each claim needs owner, status, evidence, transfer source, claim tier, and caveats.
 
+## PR-122 - Content-addressed evidence mechanics
+
+| Claim | Owner | Status | Evidence | Transfer source | Claim tier | Caveats |
+|---|---|---|---|---|---|---|
+| The PR-122 graph and receipts close the registered fail-closed process mechanics for exact inputs, tests, authority bindings, manifests, and consumers. | COMMON | IMPLEMENTED | `docs/generated/pr122_claim_evidence_graph.json`; `docs/generated/pr122_release_receipt.json`; `docs/generated/pr122_test_execution.json`; reproducible final-consumer command recorded in `docs/PR_DELTAS/pr-122.md` | none | exploratory / `roadmap_rescue_v1:C1`; governance diagnostic | HTT is a contributor/consumer, not co-owner. Process PASS and evidence presence do not change scientific status. The v2 SPEC is a post-implementation acceptance amendment, not prospective preregistration. |
+| Audit-package and publication-freeze consumers rehash and consume the exact PR-122 graph, receipt, parent, closure, manifest, verifier, and selector/environment inputs. | COMMON | IMPLEMENTED | deterministic package write/check; publication-freeze write/check with expected PDF blocker | none | exploratory; governance diagnostic | Audit disclosure remains downclaimed. `claim_release_eligible=false`; publication readiness remains blocked. |
+| The 22-consumer active MES inventory is hash-bound and bypass/stale-formula checked. | COMMON | EXPECTED_BLOCKED | `docs/generated/pr122_mes_successor_scan.json` plus MES hostile tests | none | blocked | Typed MES and D2 authority remain absent pending PR-124. The EGS3 process witness and zero Rust execution are not scientific authority. |
+
 ## PR-011 - Quarantined figure inventory
 
 | Claim | Owner | Status | Evidence | Transfer source | Claim tier | Caveats |
