@@ -1,5 +1,7 @@
 name: PR07 audit-repair gates
 
+# First-push CI is intentionally quiet: no push trigger. Run manually via
+# workflow_dispatch or open a PR touching the gated paths.
 on:
   pull_request:
     paths:
@@ -9,8 +11,6 @@ on:
       - 'scripts/cove_verify_pr07.py'
       - 'docs/final_report/main.tex'
       - '.github/workflows/pr07-audit-repair-gates.yml'
-  push:
-    branches: [main]
   workflow_dispatch:
 
 permissions:

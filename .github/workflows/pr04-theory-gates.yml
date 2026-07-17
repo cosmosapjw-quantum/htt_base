@@ -1,13 +1,13 @@
 name: PR04 theory and integration gates
 
+# First-push CI is intentionally quiet: no push trigger. Run manually via
+# workflow_dispatch or open a PR touching the gated paths.
 on:
   pull_request:
     paths:
       - 'htt/**'
       - 'research_gates/pr04/**'
       - '.github/workflows/pr04-theory-gates.yml'
-  push:
-    branches: [main]
   workflow_dispatch:
 
 permissions:
