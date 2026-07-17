@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "artifact_id": "shared-context-cas-harness-final-audit-20260717",
+  "artifact_mode": "diagnostic_audit",
+  "owner": "COMMON",
+  "implementation_scope": "common/codex-harness/process",
+  "claim_tier": "diagnostic_only",
+  "allowed_use": [
+    "internal harness repair planning",
+    "PR-124 preflight policy amendment",
+    "token and evidence economy review"
+  ],
+  "forbidden_use": [
+    "scientific claim validation",
+    "Bianchi family or geometry identification",
+    "native solver or transfer validation",
+    "external independent replication claim",
+    "claim that tool installation equals four-axis CAS validation"
+  ],
+  "transfer_source": "none",
+  "config_hash": "c2dd9da6cb3dcf438d234aa399f87a197d5b02a4eebffd4cf6566e073df76c0e",
+  "input_hashes": {
+    "AGENTS.md": "dab0eaeefb695495b766d753e1bea1b93a5040ae38adc9e277df30a1c89d4b6b",
+    "docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md": "d653d056789ca1362cebf95287f863d68b62f8859e3d91d69ff4b4f3725cf443",
+    ".agent-harness/README.md": "464154c992b4050eed19a7e2ef88ad7a66c09e17505bdf9a9c0c406c3ae6f93f",
+    ".agent-harness/templates/CAS_CONTRACT.json": "6ad379de80ee8e6c57f05fd958e98ed0be0dbb7aef8a4d08d0132d5c644ca28e",
+    ".agent-harness/scripts/_harness.py": "b765d2e7ab2f5f98a277d0daaa4e3f8904894a71704e8fd5d964909d18a5a10e",
+    ".agent-harness/scripts/build_context_pack.py": "b8159981036b2ef737b6cf11395080d00ce2c5a1514068009ebf7bdb5c30f0b4",
+    ".agent-harness/scripts/new_assignment.py": "1d45c4d6f40e0c3a093af2fc4291ac2a608955cba8b9aad8b532c8165edc82ca",
+    ".agent-harness/scripts/merge_results.py": "623d313aac11ac0d047178b24bd009404b401f23d9d0df06a1fc6059af27857c",
+    ".agent-harness/scripts/validate_harness.py": "1ab23c424539c2f9b71d166b4fcd4d2e23e4f40a049e4167fd91b9d201ecfcc8",
+    ".codex/hooks/subagent_start_context.py": "007fab2a04e51993f2f93160c6a5ebf7845676d0a253012d5fb48c474a2cbfdc",
+    ".codex/hooks/subagent_stop_validate.py": "5df06a01f63f2899445f6e580f147fa961fa971745b9778f75bb09ff19059845",
+    "scripts/codex_harness/test_codex_assets.py": "9a1e31f268b0a58c3f7a95dccd7443aacc3cd58f81c5413000ccb7571abe785e",
+    "scripts/run_egs3_v9_seals.py": "a775e8acb8968fee6a59e33efbcc074350c08099a387c95c30d3565938898d86",
+    "formal/lean-toolchain": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee",
+    "docs/audits/harness_intake_20260714/INTEGRATION_MAP.md": "cf0c7f8d42b18014fdc4ecb90105ec1ebbaff8c97fe4cd5e67b800242a99175b",
+    "docs/audits/harness_intake_20260714/SECURITY_REVIEW.md": "7c2919bf1629d72d3cffb47fa9bf018fa5ac4796789e8b9008171af27a3bfbf7",
+    "docs/audits/harness_intake_20260714/receipt.json": "78f64e2ce9368757df1ac97ae615e6eeaf0e1727625c5c3b5601c3630d9e992a"
+  },
+  "files": {
+    "FINAL_AUDIT_AND_REPAIR_RECOMMENDATION.md": {
+      "sha256": "6e149973d7caadc774138bec579385ef8712eb41e80067e33be1b656117ba8c7",
+      "purpose": "human-readable final verdict and bounded repair plan"
+    },
+    "AUDIT_EXECUTION.json": {
+      "sha256": "9ac481aa1981566c265f715993c985aaf76fa568d6cf96a8674ef79e27750911",
+      "purpose": "machine-readable assignments, root adjudications, command receipts, and limitations"
+    }
+  },
+  "sky_support_status": "not_applicable",
+  "mask_status": "not_applicable",
+  "covariance_status": "not_applicable",
+  "null_mock_status": "not_applicable",
+  "generating_command": "repository-local evidence inspection and apply_patch authoring; exact command summaries are in AUDIT_EXECUTION.json",
+  "git": {
+    "base_commit": "14fa510fa3ed9e3895340b3a78291714e1547c62",
+    "branch": "research/pr04-multicomponent",
+    "worktree_state": "uncommitted audit package only at closeout"
+  },
+  "validation": [
+    {
+      "command": "python3 .agent-harness/scripts/validate_harness.py",
+      "result": "pass; active_run=post-pr123-paused-20260717"
+    },
+    {
+      "command": "venv/bin/python -B -m pytest scripts/codex_harness/test_codex_assets.py -q",
+      "result": "14 passed in 5.21s; coverage gaps documented"
+    },
+    {
+      "command": "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0 lake --dir formal build",
+      "result": "pass; 6 jobs"
+    },
+    {
+      "command": "python -m json.tool AUDIT_EXECUTION.json and MANIFEST.json",
+      "result": "pass at closeout"
+    },
+    {
+      "command": "git diff --check",
+      "result": "pass at closeout"
+    }
+  ],
+  "caveats": [
+    "The subagents were generic prompted reviewers in one correlated runtime lineage, not externally attested custom profiles.",
+    "No claim-specific four-axis CAS execution occurred; only policy, runner behavior, and host-local tool readiness were audited.",
+    "A bounded final fact-check assignment timed out without a result and was excluded from evidence.",
+    "Tool and license readiness is time- and host-dependent.",
+    "PR4/NPIPE data analysis remains skipped because the required download is absent."
+  ]
+}

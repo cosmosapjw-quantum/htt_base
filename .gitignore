@@ -236,6 +236,9 @@ $RECYCLE.BIN/
 *.key
 secrets/
 .claude/*
+!.claude/settings.json
+!.claude/hooks/
+!.claude/hooks/*.py
 .codex/*
 !.codex/agents/
 !.codex/agents/*.toml
@@ -245,9 +248,10 @@ secrets/
 !.codex/hooks.json
 !.codex/hooks/
 !.codex/hooks/*.py
-AGENTS.md
-CLAUDE.md
 workdir/raw/
+# Legacy root AGENTS variant (byte-duplicate of the deleted "AGENTS(9).md";
+# canonical operating contract is AGENTS.md, which IS tracked).
+/agent.md
 
 # Lean 4 (formal/) build output
 /formal/.lake/
