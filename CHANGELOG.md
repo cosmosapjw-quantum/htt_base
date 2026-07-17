@@ -7,6 +7,36 @@
 
 ## [Unreleased]
 
+### PR-131 — Near-FLRW symbolic expansion and singular-boundary map (rev-r208, 2026-07-18)
+
+Roadmap Wave-15 PR-131 (deps PR-124..128; TH-07 symbolic half).
+`htt/src/common/omk_near_flrw_expansion.py`: named LRS-III/KS reduced
+system (rev-r184 conventions string-verified; KS mirror = separated
+sign convention, legacy module untouched). Slaved-mode expansion
+`Σ = κK + c₂K² + O(K³)` with EXACT class-conditional coefficients
+`κ = −2/(5+3w)` and `c₂ = −2(9w²+18w+13)/((3w+5)²(9w+7))` (dust
+−26/175, radiation −1/9; c₃ computed for envelope sizing only) —
+derived by TWO independent symbolic paths (constraint-surface
+invariance equation + metric-level Einstein reduction from the
+diagonal LRS metric via first-principles Christoffel/Ricci, BOTH
+2-plane signatures, exact RHS equality; one-path claims rejected) and
+confirmed by an mpmath FD plateau on BOTH branches (K>0 and KS K<0)
+under preregistered envelopes with the linear-seed transient provably
+below them (deviations track |c₃|K). Singular map = the EXACT
+resonance family `n·λ_K = λ_Σ` at `w_n = −(2n+3)/(6n−3)` ⊂ [−5/3,
+−1/3) accumulating at −1/3 (κ pole, c₂/c₃ denominator factors via
+real polynomial divisibility) + marginal w = −1/3, w = 1; declared
+open domain (−1/3, 1) validated by EXACT monotone inversion (no
+truncated scan). 6/6 mutations killed on production paths (incl.
+preregistered rhs_tamper through the real path-B equality gate).
+Adversarial lane pre-commit: 1 P0 (fabricated baseline-commit tail —
+fixed + runner now refuses unresolvable pins) + 3 P1 + 4 P2 all
+fixed. Gates: `run_pr131_omk_near_flrw.py --check` byte-stable +
+`test_pr131_omk_near_flrw.py` (9). C2 class-conditional asymptotic
+coefficient at fixed q0(w) — no global equality, no ceiling recovery,
+no observational value; 102 OPEN; DAG 78/113, next PR-132. See
+docs/PR_DELTAS/pr-131.md.
+
 ### PR-130 — Low-multipole convergence vs statistical sufficiency separation (rev-r207, 2026-07-18)
 
 Roadmap Wave-15 PR-130 (deps PR-128/129).

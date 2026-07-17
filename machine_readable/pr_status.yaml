@@ -77,9 +77,9 @@ completed:
 - PR-128
 - PR-129
 - PR-130
+- PR-131
 blocked: []
 pending:
-- PR-131
 - PR-132
 - PR-133
 - PR-134
@@ -118,6 +118,12 @@ dormant_external:
 - PR-166
 in_progress: null
 execution_resolutions:
+  PR-131:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-131.md
+    resolved_on: '2026-07-18'
+    scientific_status_effect: none
+    scientific_status_after: OPEN
   PR-130:
     resolution: COMPLETED_SUCCESS
     receipt: docs/PR_DELTAS/pr-130.md
@@ -850,3 +856,24 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   preregistered mutations killed on production validator paths.
   Toy/transfer-conditional convergence theorem only; 102 findings OPEN;
   PR4 skipped.
+  PR-131 registers the named LRS Bianchi III / Kantowski-Sachs reduced
+  system (rev-r184 conventions, KS mirror = separated sign convention)
+  and derives the near-FLRW slaved-mode expansion Sigma = kappa K +
+  c2 K^2 + O(K^3) with exact class-conditional coefficients kappa =
+  -2/(5+3w) and c2 = -2(9w^2+18w+13)/((3w+5)^2 (9w+7)) (dust -26/175,
+  radiation -1/9) by TWO independent symbolic paths — the
+  constraint-surface invariance equation and a metric-level Einstein
+  reduction from the diagonal LRS metric on BOTH 2-plane signatures —
+  plus an arbitrary-precision finite-difference plateau on BOTH
+  branches (K positive and the KS K negative) under preregistered
+  envelopes with the linear-seed transient provably below them. The
+  singular-boundary map is the exact resonance family w_n =
+  -(2n+3)/(6n-3) (order-n resonance n lambda_K = lambda_Sigma,
+  contained in [-5/3, -1/3), accumulating at -1/3) plus the marginal
+  boundaries w = -1/3 and w = 1; the declared open domain (-1/3, 1)
+  excludes all of them, decided EXACTLY by monotone inversion rather
+  than a truncated scan. Six preregistered mutations killed on
+  production validator paths; the adversarial lane caught and fixed a
+  fabricated baseline-commit tail pre-commit (runner now refuses
+  unresolvable pins). Class-conditional asymptotic coefficients at
+  fixed q0(w) only; 102 findings OPEN; PR4 skipped.

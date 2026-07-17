@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "run_id": "post-pr131-paused-20260718",
+  "work_unit_id": "pr131-omk-near-flrw",
+  "created_at": "2026-07-17T17:50:56+00:00",
+  "spec_ref": "docs/research_program/long_horizon_rescue/pr131_spec.yaml",
+  "base_ref": "main",
+  "head_ref": "HEAD",
+  "context_version": "a85f5583848f8a09c4941ae0d0b18ff2402c7c779e80a664f40956bc18a3a62c",
+  "budget": {
+    "max_concurrent": 4,
+    "max_total": 8,
+    "max_total_per_work_unit": 16,
+    "max_depth": 2
+  },
+  "stages": [
+    "context-build",
+    "independent-analysis",
+    "deduplication",
+    "targeted-adjudication",
+    "gate-evaluation",
+    "single-writer-update"
+  ],
+  "status": "initialized"
+}

@@ -1,0 +1,24 @@
+{
+  "c2_exact": "-2*(9*w**2 + 18*w + 13)/((3*w + 5)**2*(9*w + 7))",
+  "c3_envelope_sizing": "-2*(81*w**4 + 324*w**3 + 594*w**2 + 460*w + 141)/((3*w + 5)**3*(5*w + 3)*(9*w + 7))",
+  "claimed_orders": [
+    "kappa",
+    "c2"
+  ],
+  "construction": "invariance equation dh/dK * F_K(h(K), K) = F_Sigma(h(K), K) for h(K) = kappa K + c2 K^2 + O(K^3), solved exactly order by order",
+  "kappa_exact": "-2/(3*w + 5)",
+  "reference_values": {
+    "dust": {
+      "c2": "-26/175",
+      "c3": "-94/875",
+      "kappa": "-2/5"
+    },
+    "radiation": {
+      "c2": "-1/9",
+      "c3": "-2/27",
+      "kappa": "-1/3"
+    }
+  },
+  "schema": "pr131.coefficients.v1",
+  "vacuum_anchor": "exact stationarity of (Sigma, K) = (-1/2, 3/4) as a system check (not part of the expansion)"
+}

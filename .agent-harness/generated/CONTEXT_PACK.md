@@ -1,7 +1,7 @@
 # Canonical Shared Context Pack
 
-Context version: `faf0d7f53e0e80bea043c470620448f27996d0251456ce04344884c86dfd86bb`
-Built at: `2026-07-17T16:56:03+00:00`
+Context version: `a85f5583848f8a09c4941ae0d0b18ff2402c7c779e80a664f40956bc18a3a62c`
+Built at: `2026-07-17T17:50:56+00:00`
 
 This pack contains only the shared Tier-0 context. Assignment-specific context and sibling results are intentionally excluded.
 
@@ -9,7 +9,7 @@ This pack contains only the shared Tier-0 context. Assignment-specific context a
 
 ## Source: `.agent-harness/context/SHARED_CONTEXT.md`
 
-SHA-256: `fe93a55ae7aa330de2b6393f5d016596194ac595bc5ae57841c449cd6e243362`
+SHA-256: `26ae3e73ff1131847c3b171a6616f5a4190e47f7558b9a06a83aee5a1f7e5888`
 
 # Shared Context — long-horizon rescue execution
 
@@ -121,6 +121,10 @@ SHA-256: `fe93a55ae7aa330de2b6393f5d016596194ac595bc5ae57841c449cd6e243362`
 | E-PR130-THEOREM | `docs/generated/pr130_tail_theorem.json` | PR-130 runner (exact tail theorem + gate exercises) | `d5e5c8754898754ce41d8d9763074eb4f691093c444f523d1e0d6ab42e3af716` | C-PR130-NT2-TAIL |
 | E-PR130-PRECISION | `docs/generated/pr130_precision_report.json` | PR-130 runner (three-engine enclosure) | `6b67f781424b4ad461c00ddf0b256af1bbcd51d67b2b5f02ac4d9f61a9928572` | C-PR130-NT2-TAIL |
 | E-PR130-LEGACY | `docs/generated/pr130_legacy_invalidation.json` | PR-130 runner (byte-frozen pin + relabeled surfaces) | `6f0e707c27cad5d53666bd9d3c3c16b54610988a0454dfcf3b592574c4eea014` | C-PR130-NT2-TAIL |
+| E-PR131-SPEC | `docs/research_program/long_horizon_rescue/pr131_spec.yaml` | reviewed repository edit (specification-first) | `7dae9316200d1f5baf9adc31e980083d892870e3c18aa30d3bea332638f935c0` | C-PR131-OMK-NEARFLRW |
+| E-PR131-TWOPATH | `docs/generated/pr131_two_path_report.json` | PR-131 runner (metric-level reduction, both signatures) | `e9809a19f964f28404734435a3ee4c1ac92b7de04f43a06d753a67a6554ba637` | C-PR131-OMK-NEARFLRW |
+| E-PR131-FD | `docs/generated/pr131_fd_plateau.json` | PR-131 runner (both-branch FD plateau) | `9b29205725859d86fd3c5a43a2239d6c3630fea2d43d7f59cd1bdba2400c9823` | C-PR131-OMK-NEARFLRW |
+| E-PR131-SINGULAR | `docs/generated/pr131_singular_map.json` | PR-131 runner (exact singular map + domain) | `2b0b4610429205efcc86c4596991a25575a9362b5c89527e7546828ae09f4ae8` | C-PR131-OMK-NEARFLRW |
 
 ## Known disputes and open questions
 
