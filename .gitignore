@@ -258,3 +258,54 @@ workdir/raw/
 # Lean 4 mathlib lane (formal_mathlib/) build output (~7 GB mathlib cache)
 /formal_mathlib/.lake/
 /sage/*.sage.py
+
+# ─────────────────────────────────────────────────────────────────────
+#  Agent-harness retention (PR-124 preflight, 2026-07-17)
+#  Future run directories are summarised (RUN_SUMMARY.json via
+#  run_summary.py), not committed. The 13 historical run dirs remain
+#  tracked (ignore rules do not affect already-tracked files); promote
+#  load-bearing artifacts with `git add -f` + RETENTION_LEDGER.jsonl.
+# ─────────────────────────────────────────────────────────────────────
+.agent-harness/runs/*/
+.agent-harness/evidence/
+.agent-harness/receipts/
+
+# ─────────────────────────────────────────────────────────────────────
+#  Bulk artifact quarantine (PR-124 preflight, 2026-07-17)
+#  Bytes are preserved on disk (Dropbox) and in the off-repo backup
+#  bundle; they are excluded from version control to keep the repo
+#  pushable. Byte authority for frozen packages =
+#  docs/research_program/long_horizon_rescue/cf4_p0_legacy_package_hashes.json
+# ─────────────────────────────────────────────────────────────────────
+# Archived/deprecated tree (206 MB cf4_p0 packages + session zips)
+/legacy/
+# Generated audit/report packages (regenerable; --check builders read disk)
+/docs/generated/*.zip
+/docs/generated/manuscript_pdf/*.pdf
+/docs/code_capability_audit/*.zip
+/docs/research_program/pr04/*.zip
+/docs/final_report/*.zip
+# External audit input drops (zips preserved on disk only)
+/docs/audits/external_research_inputs_2026-06-20/*.zip
+# Raw multi-agent audit-run evidence (verdicts/manifests stay tracked)
+/docs/audits/jcap_prd_adversarial_audit_20260714/evidence/
+/docs/audits/jcap_prd_adversarial_audit_20260714/agents/
+/docs/audits/jcap_prd_adversarial_audit_20260714/execution_ledger.jsonl
+# Copyrighted reference texts (never push)
+/docs/Kolb-Turner - The Early Universe.pdf
+/docs/ellis-relativistic-cosmology.pdf
+/docs/lecture notes in cosmology.pdf
+# Root-level handoff/input-drop archives (installed content lives in-tree)
+/codex_handoff_htt_presolver_v3_skillset_augmented_2026-06-11/
+/codex_handoff_htt_presolver_v3_skillset_augmented_2026-06-11.zip
+/codex_shared_context_harness_v1.zip
+/codex_shared_context_harness_v1.zip.manifest.json
+/physmath-coding-harness-gpt56.zip
+/physmath-research-harness-gpt56.zip
+/dl_pipeline.zip
+/htt_base_delta_patch_20260707.zip
+/htt_base_research_evaluation_package.zip
+/htt_v6_critical_review_bundle.zip
+/htt_v6_referee_fortification_package_v2.zip
+/htt_v6_referee_package_20260709.zip
+/htt_v6_strengthened_publication_bundle.zip
