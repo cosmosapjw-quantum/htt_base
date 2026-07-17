@@ -81,9 +81,9 @@ completed:
 - PR-132
 - PR-133
 - PR-134
+- PR-135
 blocked: []
 pending:
-- PR-135
 - PR-136
 - PR-137
 - PR-138
@@ -118,6 +118,12 @@ dormant_external:
 - PR-166
 in_progress: null
 execution_resolutions:
+  PR-135:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-135.md
+    resolved_on: '2026-07-18'
+    scientific_status_effect: none
+    scientific_status_after: OPEN
   PR-134:
     resolution: COMPLETED_SUCCESS
     receipt: docs/PR_DELTAS/pr-134.md
@@ -975,3 +981,28 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   specification-only data scope and fixed one P0 (separator-evadable
   independence guard) plus four P1 and two P2. Estimand/analysis
   specification mechanics only; 102 findings OPEN; PR4 skipped.
+  PR-135 builds the exchangeable observation-inclusive finite-null
+  global ranking. The observation and every null row are scored and
+  maximized the SAME way, and the global p-value is the exchangeable
+  pooled rank p = (1 + b)/(N + 1) with b the conservative count of null
+  scores at least the observation (Phipson-Smyth exact-discrete), whose
+  support is the finite grid from 1/(N+1) to 1 — never zero and never
+  below the 1/(N+1) resolution. Super-uniformity is demonstrated two
+  ways. First a REAL exact enumeration places the observation at each of
+  the N+1 gaps among N nulls, calls the actual estimator, and confirms
+  the enumerated p-values equal the grid exactly. Second a seeded
+  type-I simulation uses an alpha grid that includes a sub-resolution
+  point where the correct estimator rejects with probability zero while
+  a b/N negative control rejects and produces exact-zero p-values
+  caught by the floor gate. The max-scan reduces within each row to one
+  score per null (the dependence-preserving reduction; flattening the
+  scan points into one iid pool is rejected), and a load-bearing
+  calibration/evaluation split computes the global p over the held-out
+  evaluation rows only. A Gaussian sigma finer than the finite
+  resolution, a zero p-value via the naive b/N form, and a
+  calibration/evaluation overlap are all refused. Six preregistered
+  mutations killed on production paths; the adversarial lane confirmed
+  the core statistics match Phipson-Smyth and fixed two P0 (a
+  tautological enumeration and a powerless type-I control) plus three P1
+  and two P2. Matched-null-conditioned global calibration mechanics
+  only; no detection; 102 findings OPEN; PR4 skipped.

@@ -124,6 +124,10 @@
 | E-PR134-REGISTRY | `docs/generated/pr134_contract_registry.json` | PR-134 runner (five typed representative contracts) | `885a3a972ffed53d40f4ffdcd2b2709bf555037eea3f882e63039b5cf87228c7` | C-PR134-ESTIMAND-REGISTRY |
 | E-PR134-GRAPH | `docs/generated/pr134_dependency_graph.json` | PR-134 runner (named dependence clusters) | `10db8ee186f4dfdddb5609d2ea48476694efb1c857fd0d9a324118705104bda8` | C-PR134-ESTIMAND-REGISTRY |
 | E-PR134-BRANCHES | `docs/generated/pr134_branch_separation.json` | PR-134 runner (template/covariance branch separation) | `ef1d9e07830efeb612d6659287b5967fd697d955b042294ffd9fad215dcc15b8` | C-PR134-ESTIMAND-REGISTRY |
+| E-PR135-SPEC | `docs/research_program/long_horizon_rescue/pr135_spec.yaml` | reviewed repository edit (specification-first) | `ac1fef7232cce95bb63aed79d8dd2686df5f69d724f30e0cfb849386997c35cf` | C-PR135-FINITE-NULL-RANK |
+| E-PR135-ENUM | `docs/generated/pr135_exact_enumeration.json` | PR-135 runner (real exact enumeration exercising the estimator) | `846d90d73bff86a800f9f5b168f9387167152f263f8ff2c6513d79967fdc7846` | C-PR135-FINITE-NULL-RANK |
+| E-PR135-SIM | `docs/generated/pr135_type_i_simulation.json` | PR-135 runner (super-uniform type-I + b/N negative control) | `8240df0f24dc5d355424ae73cf4d05ebb93ee4d16ae562d8301db3e32f7e6a78` | C-PR135-FINITE-NULL-RANK |
+| E-PR135-SCAN | `docs/generated/pr135_max_scan.json` | PR-135 runner (dependence-preserving scan + split) | `c80ad41f95ecad3ef5231cfd1ad364c5d80f18f4e85d174a561b093fbe814631` | C-PR135-FINITE-NULL-RANK |
 
 ## Known disputes and open questions
 

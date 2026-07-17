@@ -7,6 +7,32 @@
 
 ## [Unreleased]
 
+### PR-135 — Exchangeable observation-inclusive finite-null global ranking (rev-r212, 2026-07-18)
+
+Roadmap Wave-16 PR-135 (deps PR-123/134).
+`htt/src/common/finite_null_ranking.py`: the observation and every null
+row scored/maximized the SAME way; global p = (1+b)/(N+1), conservative
+>= ties (Phipson-Smyth exact-discrete, arXiv:1603.05766) on support
+{1/(N+1),...,1} — never 0, never below the 1/(N+1) resolution.
+Super-uniformity shown two ways: a REAL exact enumeration (obs placed
+at each of N+1 gaps, ACTUAL estimator called, enumerated p-values equal
+the grid exactly) and a seeded type-I sim whose alpha grid includes a
+sub-resolution 0.01 < 1/40 where the correct estimator rejects at 0
+while a b/N NEGATIVE CONTROL rejects at 2.2% with exact-zeros caught by
+the floor gate. Resolution guard refuses a sigma at/below the floor
+(erfinv matches scipy.norm.isf ~1e-8). Max-scan reduces within-row to
+one score per null (flattened iid pool rejected by
+require_rowwise_reduction); load-bearing cal/eval split computes p over
+held-out evaluation rows only. 6/6 mutations killed on production
+paths. Adversarial lane CONFIRMED the core statistics match
+Phipson-Smyth and fixed 2 P0 (tautological enumeration, powerless
+type-I control) + 3 P1 (kill-by-construction zero-p mutant, length-only
+dependence guard, unused cal/eval split) + 2 P2, all pre-commit. Gates:
+`run_pr135_finite_null_ranking.py --check` byte-stable +
+`test_pr135_finite_null_ranking.py` (13). C2 matched-null-conditioned
+global calibration — no detection; 102 OPEN; DAG 82/113, next PR-136.
+See docs/PR_DELTAS/pr-135.md.
+
 ### PR-134 — Estimand/population/dependency/selection/nuisance registry (rev-r211, 2026-07-18)
 
 Roadmap Wave-16 PR-134 (deps PR-122/125/133).

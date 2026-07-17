@@ -1,0 +1,47 @@
+{
+  "allowed_use": [
+    "exchangeable_pooled_rank",
+    "phipson_smyth_exact_discrete_p",
+    "dependence_preserving_max_scan",
+    "super_uniformity_type_i_simulation"
+  ],
+  "artifact_mode": "statistical_governance_diagnostic",
+  "artifacts": {
+    "docs/generated/pr135_captions.json": "b13cc5e1950d3d11690867bc54117b89ba5b34c4f665a03c5c6cbd1d6faef5fc",
+    "docs/generated/pr135_exact_enumeration.json": "846d90d73bff86a800f9f5b168f9387167152f263f8ff2c6513d79967fdc7846",
+    "docs/generated/pr135_max_scan.json": "c80ad41f95ecad3ef5231cfd1ad364c5d80f18f4e85d174a561b093fbe814631",
+    "docs/generated/pr135_mutation_report.json": "11f0274ac13c5542bcb4058e5eadc562a52a4140478615322cff195ffe7427f7",
+    "docs/generated/pr135_rank_estimator.json": "b7064b88abb9960b2fbc3cee066a8919f479cc47f7f5cc98b75b0b97948eec98",
+    "docs/generated/pr135_type_i_simulation.json": "8240df0f24dc5d355424ae73cf4d05ebb93ee4d16ae562d8301db3e32f7e6a78"
+  },
+  "caveats": [
+    "Matched-null-conditioned global calibration mechanics at C2 only.",
+    "The p-value is exact-discrete on {1/(N+1), ..., 1} — never 0, never below the finite resolution.",
+    "The max scan preserves within-row dependence; no iid per-scan-point draw.",
+    "No detection; no significance finer than the resolution.",
+    "All 102 remediation findings remain OPEN."
+  ],
+  "claim_level": {
+    "level": "C2",
+    "scheme": "roadmap_rescue_v1"
+  },
+  "claim_tier": "conditional",
+  "config_hash": "ac1fef7232cce95bb63aed79d8dd2686df5f69d724f30e0cfb849386997c35cf",
+  "forbidden_use": [
+    "p-value of zero",
+    "local rank on the observation",
+    "sigma beyond the resolution",
+    "shear detected",
+    "isotropy established",
+    "Bianchi geometry detected",
+    "Bianchi family identified",
+    "finding rescued",
+    "validated as native"
+  ],
+  "input_hashes": [
+    "htt/src/common/finite_null_ranking.py:cd3413b96d4c734f3b3d148274c6fe486b6f5c4db46f9e29a89bbf2677aabf14"
+  ],
+  "owner": "OBSSTAT",
+  "schema": "pr135.artifact_manifest.v1",
+  "transfer_source": "none"
+}

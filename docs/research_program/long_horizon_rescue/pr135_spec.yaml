@@ -1,0 +1,171 @@
+schema: htt.long_horizon.pr135_finite_null_ranking.v1
+spec_version: 1
+pr_id: PR-135
+title: Exchangeable observation-inclusive finite-null global ranking
+baseline_commit: 134dbbf62c0a59689925cbc3d854ffab5cae07d3
+reviewed_on: '2026-07-18'
+owner: OBSSTAT
+contributors:
+  - COMMON
+implementation_scope:
+  - common
+artifact_mode: statistical_governance_diagnostic
+allowed_use:
+  - exchangeable_pooled_rank
+  - phipson_smyth_exact_discrete_p
+  - dependence_preserving_max_scan
+  - super_uniformity_type_i_simulation
+public_use: false
+claim_tier: conditional
+claim_tier_ceiling: conditional
+claim_level:
+  scheme: roadmap_rescue_v1
+  level: C2
+scientific_status: OPEN
+scientific_effect: none
+transfer_source: none
+
+claim_identity:
+  claim_id: C-PR135-FINITE-NULL-RANK
+  claim_text: >-
+    The observation and every null row are scored and maximized the
+    SAME way, and the global p-value is the exchangeable pooled rank
+    p = (1 + #{null_score >= obs_score}) / (N + 1) with the tie policy
+    conservative (>=), a Phipson-Smyth exact-discrete estimator whose
+    support is the finite grid {1/(N+1), 2/(N+1), ..., 1} — never 0 and
+    never below the 1/(N+1) resolution. Under exchangeability the
+    top-rank of the observation among the N+1 pooled scores is uniform
+    on {1..N+1}, so the p-value is SUPER-UNIFORM (verified by exact
+    small-N enumeration and seeded type-I simulation). The max-statistic
+    scan preserves within-row dependence: each null row is a full
+    correlated scan maximized identically to the observation, so the
+    global calibration conditions on the matched null. No local
+    observation-only rank, no zero p-value, and no Gaussian sigma finer
+    than the finite 1/(N+1) resolution may be reported. Any change of
+    statistic family, scan range, mask, or tie policy invalidates the
+    calibration and requires a full recomputation. Matched-null-
+    conditioned global calibration mechanics only — no detection.
+  domain: exchangeable_finite_null_pooled_ranking_only
+  frame: binds_pr123_oracle_lab_and_pr134_estimand_registry
+  claim_level_scheme: roadmap_rescue_v1
+  claim_level: C2
+
+scope_and_non_goals:
+  local_observation_only_rank: forbidden
+  zero_p_value: forbidden
+  gaussian_sigma_below_finite_resolution: forbidden
+  mixing_calibration_and_evaluation_split: forbidden
+  silent_recalibration_on_family_change: forbidden
+  remediation_disposition_change: forbidden
+
+remediation_state_contract:
+  path: docs/codex_handoff/research_remediation_state.yaml
+  sha256: f16d9754828bb32ae4cef92f585af82ae7fd1caa2687a7b4144bc1e942328dd9
+  finding_count: 102
+  required_scientific_status_counts: {OPEN: 102}
+  rescued_count: 0
+
+data_scope:
+  pr4_data_work: skip_entirely_by_user_scope
+  pr4_commands_run_required: 0
+
+ranking:
+  module: htt/src/common/finite_null_ranking.py
+  estimator: 'p = (1 + b) / (N + 1), b = #{null_score >= obs_score} (Phipson-Smyth exact-discrete)'
+  tie_policy: conservative_ge
+  support: 'discrete grid k/(N+1), k = 1..N+1; minimum 1/(N+1); never 0'
+  max_scan_rule: >-
+    the score of each row (observation and every null) is the maximum of
+    the same statistic over the same scan range within that row;
+    within-row dependence is preserved because each null row is a full
+    correlated scan, not an iid draw.
+  calibration_split_rule: >-
+    calibration and evaluation null rows are disjoint sets; a row used
+    to calibrate is never reused to evaluate.
+  recalibration_rule: >-
+    the calibration is fingerprinted over (statistic_family, scan_range,
+    mask, tie_policy, N); any change mints a new calibration id and the
+    global p is recomputed from scratch.
+
+resolution_guard:
+  min_p: '1/(N+1)'
+  sigma_rule: >-
+    a two-sided Gaussian-equivalent sigma may be reported only for p
+    strictly greater than the resolution floor 1/(N+1); a sigma implied
+    by p <= 1/(N+1) is refused (finite resolution caps the reportable
+    significance).
+
+verification:
+  exact_enumeration:
+    description: for small N the pooled rank distribution is enumerated exactly and matches uniform-on-grid
+    N_values: [4, 8, 16]
+  type_i_simulation:
+    bit_generator: PCG64
+    seed: 20260719
+    trials: 20000
+    N: 39
+    alpha_grid: ['0.01', '0.05', '0.1', '0.25', '0.5']
+    sub_resolution_alpha: '0.01'
+    super_uniform_rule: 'empirical P(p <= alpha) <= alpha + binomial slack at every alpha (super-uniformity); at the sub-resolution alpha 0.01 < 1/40 the correct estimator rejects with probability 0, and a b/N negative control produces exact-0 p-values caught by the floor gate (discriminating power)'
+  tied_discrete:
+    description: tied scores are handled by the conservative >= count; a fully-tied column gives p = 1
+
+negative_scan:
+  targets:
+    - htt/src/common/finite_null_ranking.py
+    - docs/generated/pr135_captions.json
+  forbidden_patterns:
+    - 'p-value of zero'
+    - 'p = 0'
+    - 'local rank on the observation'
+    - 'sigma beyond the resolution'
+    - 'detection at'
+  rule: >-
+    active PR-135 surfaces must never report a zero p-value, an
+    observation-only local rank, a sigma below the finite resolution,
+    or a detection.
+
+mutation_registry:
+  - mutation_id: zero_p_value
+    kill_rule: the naive b/N estimator (which returns 0 when no null exceeds the observation) is rejected by the production validate_reported_p floor gate that every reported p passes through
+  - mutation_id: local_observation_only_rank
+    kill_rule: scoring the observation differently from the null rows (a local rank) is rejected by the identical-scoring guard
+  - mutation_id: subresolution_sigma
+    kill_rule: converting p <= 1/(N+1) to a Gaussian sigma is rejected by the resolution guard
+  - mutation_id: non_conservative_tie
+    kill_rule: any tie policy other than the pinned conservative >= (e.g. an anti-conservative strict >) is rejected by the tie-policy pin
+  - mutation_id: dependence_broken_scan
+    kill_rule: flattening the scan points of all rows into one iid pool (N*scan_len scores instead of N row scores) is rejected by require_rowwise_reduction, the same guard scan_pooled_rank_p calls
+  - mutation_id: calibration_evaluation_overlap
+    kill_rule: reusing a calibration row in the evaluation split is rejected by the disjoint-split guard
+
+artifact_contract:
+  outputs:
+    - docs/generated/pr135_rank_estimator.json
+    - docs/generated/pr135_exact_enumeration.json
+    - docs/generated/pr135_type_i_simulation.json
+    - docs/generated/pr135_max_scan.json
+    - docs/generated/pr135_captions.json
+    - docs/generated/pr135_mutation_report.json
+    - docs/generated/pr135_artifact_manifest.json
+  check_policy: fresh_build_must_equal_disk_bytes
+
+acceptance_and_kill_switches:
+  - the estimator is exactly (1+b)/(N+1) with the conservative tie count and a minimum of 1/(N+1)
+  - the exact small-N enumeration matches the uniform-on-grid rank distribution
+  - the seeded type-I simulation is super-uniform at every alpha
+  - the max scan preserves within-row dependence and scores the observation identically to the nulls
+  - a zero p-value, a sub-resolution sigma, and a calibration/evaluation overlap are all refused
+  - every registered mutation executes and is killed
+  - all 102 remediation findings remain OPEN
+
+forbidden_output_language:
+  - p-value of zero
+  - local rank on the observation
+  - sigma beyond the resolution
+  - shear detected
+  - isotropy established
+  - Bianchi geometry detected
+  - Bianchi family identified
+  - finding rescued
+  - validated as native
