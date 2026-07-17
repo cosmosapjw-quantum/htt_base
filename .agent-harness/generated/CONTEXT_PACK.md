@@ -1,7 +1,7 @@
 # Canonical Shared Context Pack
 
-Context version: `a85f5583848f8a09c4941ae0d0b18ff2402c7c779e80a664f40956bc18a3a62c`
-Built at: `2026-07-17T17:50:56+00:00`
+Context version: `9f43e66cfef7067675d89e116a38cdaf1bd148f1619d30eef7f15fad4fa98ccb`
+Built at: `2026-07-17T18:31:23+00:00`
 
 This pack contains only the shared Tier-0 context. Assignment-specific context and sibling results are intentionally excluded.
 
@@ -9,7 +9,7 @@ This pack contains only the shared Tier-0 context. Assignment-specific context a
 
 ## Source: `.agent-harness/context/SHARED_CONTEXT.md`
 
-SHA-256: `26ae3e73ff1131847c3b171a6616f5a4190e47f7558b9a06a83aee5a1f7e5888`
+SHA-256: `e276a5d1026fd0569cb021fb943d397b3a07399faeca63e257b5b1b74fb98f80`
 
 # Shared Context — long-horizon rescue execution
 
@@ -125,6 +125,10 @@ SHA-256: `26ae3e73ff1131847c3b171a6616f5a4190e47f7558b9a06a83aee5a1f7e5888`
 | E-PR131-TWOPATH | `docs/generated/pr131_two_path_report.json` | PR-131 runner (metric-level reduction, both signatures) | `e9809a19f964f28404734435a3ee4c1ac92b7de04f43a06d753a67a6554ba637` | C-PR131-OMK-NEARFLRW |
 | E-PR131-FD | `docs/generated/pr131_fd_plateau.json` | PR-131 runner (both-branch FD plateau) | `9b29205725859d86fd3c5a43a2239d6c3630fea2d43d7f59cd1bdba2400c9823` | C-PR131-OMK-NEARFLRW |
 | E-PR131-SINGULAR | `docs/generated/pr131_singular_map.json` | PR-131 runner (exact singular map + domain) | `2b0b4610429205efcc86c4596991a25575a9362b5c89527e7546828ae09f4ae8` | C-PR131-OMK-NEARFLRW |
+| E-PR132-SPEC | `docs/research_program/long_horizon_rescue/pr132_spec.yaml` | reviewed repository edit (specification-first) | `12f30178f8bd3329685b1be7c3aa89fbbeb2f5bb5748860fa9dd01e89f4c8d46` | C-PR132-OMK-REMAINDER |
+| E-PR132-CERT | `docs/generated/pr132_trapping_certificate.json` | PR-132 runner (exact interval trapping certificate) | `f360299d78f993da54da6fc053b4a58507db17b2a457869514e9b39f701973b2` | C-PR132-OMK-REMAINDER |
+| E-PR132-BUDGET | `docs/generated/pr132_uncertainty_budget.json` | PR-132 runner (component-separated propagation) | `8f5a9afddbc76c5f4aaddfe455f2bd63a7aa21d6af590ca721a3b48556b7f8c4` | C-PR132-OMK-REMAINDER |
+| E-PR132-BOUNDARY | `docs/generated/pr132_boundary_states.json` | PR-132 runner (boundary states + FD probes in-trap) | `f549166444dd08804bce8547a678276bc9076a8db8ebd727a59f3a4a4d90d720` | C-PR132-OMK-REMAINDER |
 
 ## Known disputes and open questions
 

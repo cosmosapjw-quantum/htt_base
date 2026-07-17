@@ -1,0 +1,50 @@
+{
+  "central_value_rule": "the central value is EXACTLY kappa K + c2 K^2; any report whose central value differs from the bare two-term prediction has absorbed remainder and is rejected.",
+  "downstream_rule": "ceiling/forecast propagation maps the full enclosure interval (never the central value alone) with components preserved; MES consumers receive the same separation as comparison-only rows.",
+  "reference_propagations": [
+    {
+      "K": "1/100",
+      "central": "-3513/875000",
+      "delta_omega_k_enclosure": [
+        "28097/2800000",
+        "28111/2800000"
+      ],
+      "mes_consumer_note": "comparison-only rows inherit the same component separation; nothing is promoted and no observational value is implied",
+      "sigma_enclosure": [
+        "-28111/7000000",
+        "-28097/7000000"
+      ],
+      "uncertainty_components": {
+        "collapsed_single_number": null,
+        "inhouse_conservative_rule": "M = 1 chosen above the envelope-sizing |c3| = |-94/875| (in-house margin, labeled)",
+        "numerical_enclosure": "remainder |R| <= 1*|K|^3 = 1/1000000 (certified interval [-28111/7000000, -28097/7000000])",
+        "physical_model_form": "single-fluid fixed-w class assumption — UNQUANTIFIED_CONDITIONAL (never numeric zero)",
+        "source_convention": "registered PR-125 convention channel; the legacy reproduction channel carries its own labeled delta and is never merged here"
+      },
+      "w": "0"
+    },
+    {
+      "K": "-1/100",
+      "central": "299/90000",
+      "delta_omega_k_enclosure": [
+        "-29909/3000000",
+        "-29891/3000000"
+      ],
+      "mes_consumer_note": "comparison-only rows inherit the same component separation; nothing is promoted and no observational value is implied",
+      "sigma_enclosure": [
+        "29891/9000000",
+        "29909/9000000"
+      ],
+      "uncertainty_components": {
+        "collapsed_single_number": null,
+        "inhouse_conservative_rule": "M = 1 chosen above the envelope-sizing |c3| = |-2/27| (in-house margin, labeled)",
+        "numerical_enclosure": "remainder |R| <= 1*|K|^3 = 1/1000000 (certified interval [29891/9000000, 29909/9000000])",
+        "physical_model_form": "single-fluid fixed-w class assumption — UNQUANTIFIED_CONDITIONAL (never numeric zero)",
+        "source_convention": "registered PR-125 convention channel; the legacy reproduction channel carries its own labeled delta and is never merged here"
+      },
+      "w": "1/3"
+    }
+  ],
+  "schema": "pr132.uncertainty_budget.v1",
+  "separation_rule": "four typed components, never collapsed into a single number and never folded into the central value — numerical_enclosure (M |K|^3 remainder + engine enclosure widths), source_convention (registered PR-125 convention channel deltas, labeled), physical_model_form (single-fluid fixed-w class assumption, carried as UNQUANTIFIED_CONDITIONAL, never numeric zero), inhouse_conservative_rule (the margin between M and the envelope-sizing |c3|, labeled in-house choice)."
+}

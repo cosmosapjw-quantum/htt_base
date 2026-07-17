@@ -78,9 +78,9 @@ completed:
 - PR-129
 - PR-130
 - PR-131
+- PR-132
 blocked: []
 pending:
-- PR-132
 - PR-133
 - PR-134
 - PR-135
@@ -118,6 +118,12 @@ dormant_external:
 - PR-166
 in_progress: null
 execution_resolutions:
+  PR-132:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-132.md
+    resolved_on: '2026-07-18'
+    scientific_status_effect: none
+    scientific_status_after: OPEN
   PR-131:
     resolution: COMPLETED_SUCCESS
     receipt: docs/PR_DELTAS/pr-131.md
@@ -877,3 +883,25 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   fabricated baseline-commit tail pre-commit (runner now refuses
   unresolvable pins). Class-conditional asymptotic coefficients at
   fixed q0(w) only; 102 findings OPEN; PR4 skipped.
+  PR-132 certifies the PR-131 slaved-mode prediction on the compact
+  declared domain omk_domain_v1 (|K| <= 1/10, w in [0, 1/2], both
+  2-plane branches). The tube |Sigma - (kappa K + c2 K^2)| <= M |K|^3
+  with M = 1 is forward invariant while |K| stays in the domain, proven
+  UNIFORMLY by exact-Fraction interval branch-and-bound on the four
+  boundary sign conditions (positive denominators, lowest K-power
+  factored; never grid sampling) and independently corroborated by
+  direct mpmath integration of boundary-seeded trajectories on both
+  branches. The remainder propagates downstream as an EXPLICIT
+  uncertainty component; four typed components stay separate (numerical
+  enclosure, source convention, physical model-form
+  UNQUANTIFIED_CONDITIONAL, in-house conservative rule) and the central
+  value equals the bare two-term prediction. The compact domain API
+  refuses out-of-domain evaluation and post-hoc expansion (shrinks mint
+  a new version); an admissible in-domain state escaping the enclosure
+  blocks the claim immediately; every PR-131 FD probe verified in-trap.
+  Six preregistered mutations killed on production paths (M = 1/100
+  fails with a concrete rational counterexample from the same prover);
+  the adversarial-lane KS-orientation concern was verified by direct
+  integration pre-commit. Class-conditional asymptotic theorem with
+  explicit remainder at fixed q0(w); wide bounds are a success
+  condition; 102 findings OPEN; PR4 skipped.

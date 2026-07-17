@@ -6,8 +6,8 @@ This is a propagation-control artifact. It does not remediate or validate a CF4 
 - Implementation scope: `propagation_quarantine_only`
 - Claim tier: `blocked`
 - Transfer source: `none`
-- Config hash: `4cfe8eb69e449ebe1b7503ebac992856b5e9bf498eee5d4be8222f0abe8f354b`
-- Policy SHA-256: `4cfe8eb69e449ebe1b7503ebac992856b5e9bf498eee5d4be8222f0abe8f354b`
+- Config hash: `f06b45fd554d190c530dc4c374c84252937fc3c636e2f5828af80a03279c065c`
+- Policy SHA-256: `f06b45fd554d190c530dc4c374c84252937fc3c636e2f5828af80a03279c065c`
 - Remediation-root SHA-256: `f16d9754828bb32ae4cef92f585af82ae7fd1caa2687a7b4144bc1e942328dd9`
 - Sky support: `not_applicable_to_propagation_quarantine`
 - Null/mock status: `not_applicable_quarantine_is_not_validation`
@@ -823,7 +823,7 @@ This is a propagation-control artifact. It does not remediate or validate a CF4 
 
 ## Input hashes
 
-- `docs/research_program/long_horizon_rescue/cf4_p0_quarantine_policy.yaml:sha256:4cfe8eb69e449ebe1b7503ebac992856b5e9bf498eee5d4be8222f0abe8f354b`
+- `docs/research_program/long_horizon_rescue/cf4_p0_quarantine_policy.yaml:sha256:f06b45fd554d190c530dc4c374c84252937fc3c636e2f5828af80a03279c065c`
 - `docs/codex_handoff/research_remediation_state.yaml:sha256:f16d9754828bb32ae4cef92f585af82ae7fd1caa2687a7b4144bc1e942328dd9`
 
 Generating command: `PYTHONPATH=htt/src venv/bin/python -B scripts/codex_harness/quarantine_cf4_p0_consumers.py --write`

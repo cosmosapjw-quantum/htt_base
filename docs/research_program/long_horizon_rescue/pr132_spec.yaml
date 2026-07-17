@@ -1,0 +1,196 @@
+schema: htt.long_horizon.pr132_remainder_certification.v1
+spec_version: 1
+pr_id: PR-132
+title: Interval/high-precision remainder certification and uncertainty propagation
+baseline_commit: 59b9806fab0ee0fc9b84d1d0066a7081669b403b
+reviewed_on: '2026-07-18'
+owner: COMMON
+contributors:
+  - BASS
+implementation_scope:
+  - common
+artifact_mode: symbolic_governance_diagnostic
+allowed_use:
+  - trapping_region_certificate
+  - compact_domain_api
+  - component_separated_uncertainty_propagation
+  - boundary_adversarial_states
+public_use: false
+claim_tier: conditional
+claim_tier_ceiling: conditional
+claim_level:
+  scheme: roadmap_rescue_v1
+  level: C2
+scientific_status: OPEN
+scientific_effect: none
+transfer_source: none
+
+claim_identity:
+  claim_id: C-PR132-OMK-REMAINDER
+  claim_text: >-
+    On the compact declared domain |K| <= 1/10, w in [0, 1/2] (BOTH
+    2-plane branches), the PR-131 slaved-mode prediction Sigma =
+    kappa K + c2 K^2 carries the RIGOROUS forward-invariant remainder
+    bound |Sigma - (kappa K + c2 K^2)| <= M |K|^3 with M = 1, proven
+    UNIFORMLY by exact-Fraction interval arithmetic with conclusive
+    branch-and-bound on the trapping-region boundary sign conditions —
+    never by finite grid sampling. The remainder propagates to every
+    downstream ceiling/forecast as an EXPLICIT uncertainty component,
+    never absorbed into the central coefficient, with
+    numerical-enclosure, source-convention, physical-model-form, and
+    in-house-conservative-rule uncertainties kept as SEPARATE typed
+    components (the same separation applied to MES comparison
+    consumers, comparison-only, nothing promoted). The domain API
+    refuses evaluation outside the compact domain; post-hoc expansion
+    is refused; a domain shrink mints a new version. An admissible
+    state escaping the enclosure blocks the claim immediately.
+    Class-conditional asymptotic theorem with explicit remainder at
+    fixed q0(w) only.
+  domain: compact_omk_domain_v1_abs_k_le_1_over_10_w_in_0_to_half_both_branches
+  frame: expansion_normalized_orthonormal_lrs_frame_pr125_registered
+  claim_level_scheme: roadmap_rescue_v1
+  claim_level: C2
+
+scope_and_non_goals:
+  finite_grid_sampling_called_uniform_proof: forbidden
+  remainder_absorbed_into_central_coefficient: forbidden
+  posthoc_domain_expansion_to_fit_observed_values: forbidden
+  component_collapse_into_single_number: forbidden
+  mes_promotion_or_observational_claim: forbidden
+  remediation_disposition_change: forbidden
+
+remediation_state_contract:
+  path: docs/codex_handoff/research_remediation_state.yaml
+  sha256: f16d9754828bb32ae4cef92f585af82ae7fd1caa2687a7b4144bc1e942328dd9
+  finding_count: 102
+  required_scientific_status_counts: {OPEN: 102}
+  rescued_count: 0
+
+data_scope:
+  pr4_data_work: skip_entirely_by_user_scope
+  pr4_commands_run_required: 0
+
+compact_domain:
+  module: htt/src/common/omk_remainder_certificate.py
+  version: omk_domain_v1
+  w_box: ['0', '1/2']
+  k_abs_max: '1/10'
+  branches: both
+  api_rule: >-
+    enclose/evaluate refuse any state outside the compact domain
+    (fail-closed); a proposed domain that is not a subset of
+    omk_domain_v1 is refused as post-hoc expansion; a shrink mints a
+    new version string and never silently replaces v1.
+
+trapping_certificate:
+  statement: >-
+    the tube |Sigma - (kappa K + c2 K^2)| <= M |K|^3 is forward
+    invariant for the registered reduced flow WHILE |K| stays in the
+    compact domain (both branches): on each Sigma-boundary curve the
+    field points inward, so a trajectory can leave only through the
+    |K| = k_abs_max faces. No bound is claimed once |K| exits the
+    domain (|K| grows on both branches).
+  numeric_corroboration: >-
+    independently confirmed by direct mpmath integration (40 dps) of
+    boundary-seeded trajectories on both branches, both w endpoints,
+    both sides: every trajectory stays inside the tube until |K| exits
+    the domain. This corroborates but does not replace the exact
+    interval proof.
+  M_exact: '1'
+  proof_method: >-
+    boundary sign conditions reduced to exact rational polynomials
+    (denominators 2(3w+5)^6(9w+7)^3 proven positive on the box; the
+    lowest K-power factored exactly), then proven UNIFORMLY by
+    monomial-wise exact-Fraction interval bounds with conclusive
+    branch-and-bound bisection (max depth 14; an inconclusive result
+    fails closed — grid sampling is never accepted as proof).
+  transient_note: >-
+    the certificate bounds trajectories seeded inside the trap; the
+    PR-131 slaved trajectories (linear seed, K0 = 1e-8) are verified
+    in-trap at every recorded FD probe via the cross-artifact check.
+
+uncertainty_components:
+  separation_rule: >-
+    four typed components, never collapsed into a single number and
+    never folded into the central value — numerical_enclosure
+    (M |K|^3 remainder + engine enclosure widths),
+    source_convention (registered PR-125 convention channel deltas,
+    labeled), physical_model_form (single-fluid fixed-w class
+    assumption, carried as UNQUANTIFIED_CONDITIONAL, never numeric
+    zero), inhouse_conservative_rule (the margin between M and the
+    envelope-sizing |c3|, labeled in-house choice).
+  central_value_rule: >-
+    the central value is EXACTLY kappa K + c2 K^2; any report whose
+    central value differs from the bare two-term prediction has
+    absorbed remainder and is rejected.
+  downstream_rule: >-
+    ceiling/forecast propagation maps the full enclosure interval
+    (never the central value alone) with components preserved; MES
+    consumers receive the same separation as comparison-only rows.
+
+boundary_adversarial_states:
+  in_trap: corners of the compact domain on both boundary curves (8 states) must be accepted by the enclosure
+  out_of_trap: states just outside the trap at the same (K, w) must trigger the immediate claim block
+  cross_artifact: every PR-131 FD probe state (docs/generated/pr131_fd_plateau.json) must lie inside the trap
+
+negative_scan:
+  targets:
+    - htt/src/common/omk_remainder_certificate.py
+    - docs/generated/pr132_captions.json
+  forbidden_patterns:
+    - 'uniform by sampling'
+    - 'grid-verified proof'
+    - 'absorbed into the central'
+    - 'single combined uncertainty'
+    - 'observed curvature'
+  rule: >-
+    active PR-132 surfaces must never present sampling as uniform
+    proof, absorb remainder, collapse components, or carry
+    observational readings.
+
+mutation_registry:
+  - mutation_id: grid_sampling_as_uniform_proof
+    kill_rule: a certificate whose proof method is finite grid evaluation is rejected by the certificate validator
+  - mutation_id: remainder_absorbed_into_central
+    kill_rule: a report whose central value differs from the bare kappa K + c2 K^2 prediction is rejected by the central-value rule
+  - mutation_id: posthoc_domain_expansion
+    kill_rule: evaluation outside the compact domain raises, and a proposed superset domain is refused as expansion
+  - mutation_id: enclosure_escape_claim_block
+    kill_rule: an admissible in-domain state outside the trap triggers the immediate claim block
+  - mutation_id: component_collapse
+    kill_rule: a budget collapsed to one number without the four typed components is rejected by the separation validator
+  - mutation_id: wrong_trap_constant
+    kill_rule: M = 1/100 (below the envelope-sizing |c3|) makes the boundary sign proof fail with a concrete rational counterexample found by the SAME production prover
+
+artifact_contract:
+  outputs:
+    - docs/generated/pr132_trapping_certificate.json
+    - docs/generated/pr132_domain_api.json
+    - docs/generated/pr132_uncertainty_budget.json
+    - docs/generated/pr132_boundary_states.json
+    - docs/generated/pr132_captions.json
+    - docs/generated/pr132_mutation_report.json
+    - docs/generated/pr132_artifact_manifest.json
+  check_policy: fresh_build_must_equal_disk_bytes
+
+acceptance_and_kill_switches:
+  - the boundary sign conditions are proven conclusively on BOTH branches by the exact interval prover (inconclusive -> fail closed)
+  - every PR-131 FD probe state lies inside the trap (cross-artifact)
+  - the 8 boundary states are accepted and the out-of-trap states trigger the claim block
+  - the four uncertainty components stay separate through propagation and the central value equals the bare prediction
+  - the domain API refuses out-of-domain evaluation and superset registration
+  - every registered mutation executes and is killed
+  - all 102 remediation findings remain OPEN
+
+forbidden_output_language:
+  - uniform by sampling
+  - grid-verified proof
+  - absorbed into the central
+  - single combined uncertainty
+  - observed curvature
+  - shear detected
+  - isotropy established
+  - Bianchi geometry detected
+  - Bianchi family identified
+  - finding rescued
+  - validated as native

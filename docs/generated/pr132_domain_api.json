@@ -1,0 +1,17 @@
+{
+  "api_rule": "enclose/evaluate refuse any state outside the compact domain (fail-closed); a proposed domain that is not a subset of omk_domain_v1 is refused as post-hoc expansion; a shrink mints a new version string and never silently replaces v1.",
+  "branches": "both",
+  "exercises": {
+    "expansion_refused": true,
+    "out_of_domain_refused": true,
+    "same_version_shrink_refused": true,
+    "versioned_shrink_accepted": true
+  },
+  "k_abs_max": "1/10",
+  "registered_version": "omk_domain_v1",
+  "schema": "pr132.domain_api.v1",
+  "w_box": [
+    "0",
+    "1/2"
+  ]
+}

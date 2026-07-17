@@ -7,6 +7,37 @@
 
 ## [Unreleased]
 
+### PR-132 — Interval remainder certification and uncertainty propagation (rev-r209, 2026-07-18)
+
+Roadmap Wave-15 PR-132 (deps PR-131).
+`htt/src/common/omk_remainder_certificate.py`: on the compact domain
+omk_domain_v1 (|K| ≤ 1/10, w ∈ [0, 1/2], both branches), the tube
+|Σ − (κK + c₂K²)| ≤ M|K|³ with M = 1 is FORWARD INVARIANT while |K|
+stays in the domain — proven UNIFORMLY by exact-Fraction interval
+branch-and-bound on the four boundary inward-flow conditions (positive
+denominators 2(3w+5)⁶(9w+7)³, lowest K-power factored; KS K<0 via exact
+K=−J substitution; conclusive bisection, never grid sampling) and
+independently corroborated by direct mpmath integration of
+boundary-seeded trajectories on both branches. Remainder propagates as
+an EXPLICIT component; four typed uncertainty components stay separate
+(numerical enclosure / source convention / physical model-form
+UNQUANTIFIED_CONDITIONAL / in-house rule) and the central value equals
+the bare two-term prediction; `propagate_to_ceiling` maps the full
+enclosure through Σ/κ (κ<0 sorted). Compact domain API fail-closed
+(out-of-domain + post-hoc-expansion refused; shrinks mint a new
+version); admissible in-domain enclosure escape → immediate claim
+block; all 12 PR-131 FD probes verified in-trap. 6/6 mutations killed
+on production paths (M=1/100 fails with a concrete rational
+counterexample from the same prover). Review lane died on an
+API-credit error mid-run; the load-bearing angles were verified
+inline (trapping invariance by direct integration incl. KS
+orientation; prover soundness) and the certificate scoped to "while
+|K| in domain". Gates: `run_pr132_remainder_certificate.py --check`
+byte-stable + `test_pr132_remainder_certificate.py` (9). C2
+class-conditional asymptotic theorem with explicit remainder — wide
+bounds are a success condition, no observational value; 102 OPEN; DAG
+79/113, next PR-133. See docs/PR_DELTAS/pr-132.md.
+
 ### PR-131 — Near-FLRW symbolic expansion and singular-boundary map (rev-r208, 2026-07-18)
 
 Roadmap Wave-15 PR-131 (deps PR-124..128; TH-07 symbolic half).
