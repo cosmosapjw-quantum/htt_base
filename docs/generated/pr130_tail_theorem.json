@@ -1,0 +1,99 @@
+{
+  "closed_form": "I_inf = f_sky (8 (zeta(2)-1) + 4 (zeta(3)-1)); tail T(L) = f_sky (8 (zeta(2) - H_L^(2)) + 4 (zeta(3) - H_L^(3)))",
+  "convergence_domain": "p > 1 (t_l ~ 2^(2p) l^(1-2p); p = 1 harmonic-divergent, excluded)",
+  "factorization_registry_state": "EMPTY",
+  "fisher_term": "t_l = ((2l+1)/2) * f_sky * (2/l)^(2p)",
+  "module_schema": "pr130.nt2_tail_convergence.v1",
+  "negative_scan": {
+    "forbidden_pattern_registry_size": 7,
+    "targets": {
+      "docs/generated/pr130_captions.json": {
+        "hits": [],
+        "lines_scanned": 8,
+        "sha256": "b88e1439d4fb857ea1245e34c9c92ea6046be931f8ffbc6f6705318d346b0e61",
+        "source": "fresh_build"
+      },
+      "docs/research_program/egs2/PRIOR_ART.md": {
+        "hits": [],
+        "lines_scanned": 30,
+        "sha256": "cc6ec100fcc6f1e37d1fdde4951d640c3e7b445524c65f3956eadb713c104bc8",
+        "source": "disk"
+      },
+      "docs/research_program/egs2/THEOREM_MAP.md": {
+        "hits": [],
+        "lines_scanned": 33,
+        "sha256": "346c1fb20b55c4dff8da78ad4e3a3569cd026306b5f70e8b4ed6107faefac07a",
+        "source": "disk"
+      },
+      "htt/src/common/nt2_tail_convergence.py": {
+        "hits": [],
+        "lines_scanned": 475,
+        "sha256": "d379eb1712e0b2ab30a57e2e4166bcd2724463168ab5910d2f83edd5ed429d3e",
+        "source": "disk"
+      },
+      "research_gates/egs2/tests/test_egs2_fisher_bracket.py": {
+        "hits": [],
+        "lines_scanned": 91,
+        "sha256": "53f9484776cc2cb0a592037c785dfd7ce93ced2cc9bdc963bf5d7be4767c27c7",
+        "source": "disk"
+      }
+    },
+    "total_hits": 0
+  },
+  "permanent_exit_rule": "the tail is strictly positive at every finite L on the registered family, so the exact-sufficiency claim is PERMANENTLY forbidden per the roadmap exit condition; only truncation error and convergence rate may be reported.",
+  "prohibition_cross_list_covered": 7,
+  "registered_f_sky": "1",
+  "registered_profile_p": "3/2",
+  "response_family": "r_l = (2/l)^p for l >= 2 (r_2 = 1 for every p)",
+  "schema": "pr130.tail_theorem.v1",
+  "sufficiency_gate_positive_controls_passed": 2,
+  "tail_strictly_positive_at_every_probe": true,
+  "truncation_probes": [
+    {
+      "L": 10,
+      "certified_lower": "90/121",
+      "certified_upper": "41/50",
+      "convergence_rate": "O(1/L) at the registered p = 3/2 (order L^(2-2p) in general)",
+      "reading": "truncation error and convergence rate only; the nonzero tail forbids any finite-set sufficiency reading",
+      "single_term_positive_witness": "92/1331",
+      "tail_strictly_positive": true
+    },
+    {
+      "L": 40,
+      "certified_lower": "330/1681",
+      "certified_upper": "161/800",
+      "convergence_rate": "O(1/L) at the registered p = 3/2 (order L^(2-2p) in general)",
+      "reading": "truncation error and convergence rate only; the nonzero tail forbids any finite-set sufficiency reading",
+      "single_term_positive_witness": "332/68921",
+      "tail_strictly_positive": true
+    },
+    {
+      "L": 80,
+      "certified_lower": "650/6561",
+      "certified_upper": "321/3200",
+      "convergence_rate": "O(1/L) at the registered p = 3/2 (order L^(2-2p) in general)",
+      "reading": "truncation error and convergence rate only; the nonzero tail forbids any finite-set sufficiency reading",
+      "single_term_positive_witness": "652/531441",
+      "tail_strictly_positive": true
+    },
+    {
+      "L": 200,
+      "certified_lower": "1610/40401",
+      "certified_upper": "801/20000",
+      "convergence_rate": "O(1/L) at the registered p = 3/2 (order L^(2-2p) in general)",
+      "reading": "truncation error and convergence rate only; the nonzero tail forbids any finite-set sufficiency reading",
+      "single_term_positive_witness": "1612/8120601",
+      "tail_strictly_positive": true
+    },
+    {
+      "L": 1000,
+      "certified_lower": "8010/1002001",
+      "certified_upper": "4001/500000",
+      "convergence_rate": "O(1/L) at the registered p = 3/2 (order L^(2-2p) in general)",
+      "reading": "truncation error and convergence rate only; the nonzero tail forbids any finite-set sufficiency reading",
+      "single_term_positive_witness": "8012/1003003001",
+      "tail_strictly_positive": true
+    }
+  ],
+  "two_sided_bracket": "f_sky (8/(L+1) + 2/(L+1)^2) < T(L) < f_sky (8/L + 2/L^2)"
+}

@@ -1,4 +1,5 @@
-"""EGS2 gates: NT2-A1 genuine Fisher floor, NT2-A2 sufficiency, NT2-B1 bracket."""
+"""EGS2 gates: NT2-A1 genuine Fisher floor, NT2-A2 tail convergence
+(the former sufficiency reading is superseded by PR-130), NT2-B1 bracket."""
 import unittest
 
 from htt.obsstat.egs2_fisher import (

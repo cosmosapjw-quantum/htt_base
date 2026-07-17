@@ -104,6 +104,10 @@
 | E-PR129-REGISTRY | `docs/generated/pr129_estimator_registry.json` | PR-129 runner (three-way exact verification) | `5bd311f9fedf321e7a2748ee71e967b6566883049a89124126ffe54808ff8761` | C-PR129-NTA3-REGISTRY |
 | E-PR129-MC | `docs/generated/pr129_mc_report.json` | PR-129 runner (estimator-level seeded MC) | `75c704e03a38f1f122032bad3bf875580939ba3c7287d5d62bc95bdadc901971` | C-PR129-NTA3-REGISTRY |
 | E-PR129-SCAN | `docs/generated/pr129_negative_scan.json` | PR-129 runner (8-target pinned negative scan) | `cd217cb7438ab32a473381a7c179b0f235ffd62f40600d7836830efc792f409e` | C-PR129-NTA3-REGISTRY |
+| E-PR130-SPEC | `docs/research_program/long_horizon_rescue/pr130_spec.yaml` | reviewed repository edit (specification-first) | `2c32d8a16ac4a35ef2833fb54a8e6c1bcbb69edc4860f0ef391618662ba447a9` | C-PR130-NT2-TAIL |
+| E-PR130-THEOREM | `docs/generated/pr130_tail_theorem.json` | PR-130 runner (exact tail theorem + gate exercises) | `d5e5c8754898754ce41d8d9763074eb4f691093c444f523d1e0d6ab42e3af716` | C-PR130-NT2-TAIL |
+| E-PR130-PRECISION | `docs/generated/pr130_precision_report.json` | PR-130 runner (three-engine enclosure) | `6b67f781424b4ad461c00ddf0b256af1bbcd51d67b2b5f02ac4d9f61a9928572` | C-PR130-NT2-TAIL |
+| E-PR130-LEGACY | `docs/generated/pr130_legacy_invalidation.json` | PR-130 runner (byte-frozen pin + relabeled surfaces) | `6f0e707c27cad5d53666bd9d3c3c16b54610988a0454dfcf3b592574c4eea014` | C-PR130-NT2-TAIL |
 
 ## Known disputes and open questions
 

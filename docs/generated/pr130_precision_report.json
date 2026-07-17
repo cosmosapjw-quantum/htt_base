@@ -1,0 +1,24 @@
+{
+  "enclosure_rule": "exact Fraction partial sum plus the rigorous two-sided integral remainder bracket must enclose the mpmath closed-form value; the sympy symbolic identity must simplify to zero exactly. Disagreement of any engine pair -> no claim.",
+  "result": {
+    "certificate": "binary 200-bit mpf comparison of the exact rationals with an asserted margin-dominates-rounding bound (2^-190 relative); displays are nearest-rounded",
+    "enclosure_lower_50_digits_display": "5.9677001074288550000476096454616771833649852053491",
+    "enclosure_upper_50_digits_display": "5.9677001874248552000476076458616171913639853253351",
+    "enclosure_width_exact": "400060001/5001000050000000",
+    "engines": [
+      "fraction_partial_sum_with_remainder_bracket",
+      "mpmath_zeta_60dps",
+      "sympy_symbolic_zeta"
+    ],
+    "exact_enclosure_digit_counts": {
+      "lower_denominator": 13046,
+      "lower_numerator": 13047
+    },
+    "exact_enclosure_lower_sha256": "de576e073db2185756b71499a81e88837b79c58fded59aab107c1ad104cb4a36",
+    "exact_enclosure_upper_sha256": "c49126cef7d2e73413aff0eba6296e77afb79cfbf20f00704c9e2a620bbfe7a5",
+    "mpmath_closed_form_50_digits": "5.9677001474241886333782739792140014768115443790164",
+    "partial_sum_L": 10000,
+    "sympy_identity_vanishes": true
+  },
+  "schema": "pr130.precision_report.v1"
+}

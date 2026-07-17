@@ -12,7 +12,7 @@ Grounding for the NT2-\* theorems and the blocker discharges (web-checked June 2
 - **Ehlers–Geren–Sachs 1968**; **Stoeger–Maartens–Ellis 1995** (ApJ 443, 1); **Maartens–Ellis–Stoeger 1995** (PRD 51, 1525): almost-EGS bounds; hypotheses H1 (Copernican), H2 (multipoles never larger than now), **H3** (multipole derivatives bounded by the multipoles).
 - **Ellis–Treciokas–Matravers** / **Treciokas–Ellis 1971** (CMP 23, 1): the ℓ=2 free-streaming closure, `κ=4/21` — the shear↔quadrupole coefficient.
 - **Nilsson–Uggla–Wainwright–Lim 1999** (ApJ 522, L1): if H3 fails, an almost-isotropic CMB bounds neither shear nor Weyl (shear→0 but Weyl↛0) — the loophole behind NT2-B3(i) and the H3 condition in NT2-B1.
-- **Delta:** NT2-B1 adds a *two-sided* bracket (lower bound excluding zero shear-filling), not the usual one-sided MES limit; NT2-A2 states octupole sufficiency for the diagnostic; NT2-B3 unions the Weyl loophole with the radial no-go.
+- **Delta:** NT2-B1 adds a *two-sided* bracket (lower bound excluding zero shear-filling), not the usual one-sided MES limit; NT2-A2 states octupole tail convergence for the diagnostic (the former sufficiency reading is superseded by PR-130); NT2-B3 unions the Weyl loophole with the radial no-go.
 
 ## Velocity-field blockers (K5, K6)
 

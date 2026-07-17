@@ -1,0 +1,42 @@
+{
+  "mutations": [
+    {
+      "kill_message_redacted": "caption attaches forbidden sufficiency language",
+      "kill_rule": "a caption asserting a finite multipole set is sufficient fails the real language lint",
+      "killed": true,
+      "mutation_id": "sufficiency_language"
+    },
+    {
+      "kill_message_redacted": "a small tail fraction or a stable L = 80 result is never an accepted basis for a sufficiency-type claim",
+      "kill_rule": "a sufficiency claim based on a small tail fraction without a registered factorization reference is rejected by the sufficiency gate",
+      "killed": true,
+      "mutation_id": "rao_blackwell_from_small_tail"
+    },
+    {
+      "kill_message_redacted": "claimed truncation error 0 at L = 80 is at or below the certified strict lower bracket 650/6561 — understatement rejected",
+      "kill_rule": "a claimed zero tail at finite L is refuted by the exact positive Fraction lower bound",
+      "killed": true,
+      "mutation_id": "zero_tail_claim"
+    },
+    {
+      "kill_message_redacted": "three-engine enclosure failed: the mpmath closed form is outside the certified Fraction enclosure — no claim",
+      "kill_rule": "a tampered closed-form constant injected through the preregistered closed_form_shift point is rejected by the PRODUCTION enclosure comparison inside three_engine_enclosure",
+      "killed": true,
+      "mutation_id": "wrong_zeta_constant"
+    },
+    {
+      "kill_message_redacted": "profile p = 1 is outside the convergence domain p > 1 (the l^(1-2p) term is not summable); divergent profiles must never be presented as convergent",
+      "kill_rule": "presenting the p = 1 profile as convergent is rejected by the domain validator",
+      "killed": true,
+      "mutation_id": "divergent_profile_smuggling"
+    },
+    {
+      "kill_message_redacted": "claimed truncation error 1/1000 at L = 80 is at or below the certified strict lower bracket 650/6561 — understatement rejected",
+      "kill_rule": "a claimed truncation error below the certified lower bracket at the same L is rejected by the bracket check",
+      "killed": true,
+      "mutation_id": "truncation_error_understated"
+    }
+  ],
+  "schema": "pr130.mutation_report.v1",
+  "surviving_mutation_count": 0
+}

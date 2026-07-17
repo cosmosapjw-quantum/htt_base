@@ -7,6 +7,35 @@
 
 ## [Unreleased]
 
+### PR-130 — Low-multipole convergence vs statistical sufficiency separation (rev-r207, 2026-07-18)
+
+Roadmap Wave-15 PR-130 (deps PR-128/129).
+`htt/src/common/nt2_tail_convergence.py`: on the registered toy
+response `r_l = (2/l)^p`, the Fisher tail beyond any finite L is an
+EXACT zeta object — convergence domain exactly p > 1 (p = 1 harmonic
+divergence certified with exact Fraction rows); at the registered
+p = 3/2, `t_l = 8/l² + 4/l³` exactly, `I_inf = 8(ζ(2)−1)+4(ζ(3)−1) ≈
+5.9677`, strict two-sided bracket `8/(L+1)+2/(L+1)² < T(L) < 8/L+2/L²`
+(rate O(1/L)), and STRICT POSITIVITY at every finite L (single-term
+witness t_{L+1}). Three-engine certificate: exact Fraction partial sum
+(L=10⁴) + rigorous remainder bracket encloses mpmath ζ (60 dps, with an
+asserted margin-dominates-rounding 2^−190 bound), sympy identity
+vanishes; exact endpoints sha-pinned. Sufficiency gate FAIL-CLOSED:
+empty typed factorization registry (toy family permanently barred;
+registration needs proof artifact + reviewer + family binding) rejects
+every sufficiency-type claim incl. completeness-synonym paraphrases;
+"insufficient" negations exempted; at-or-below-lower-bracket truncation
+claims rejected as provable understatements. Audited NT2-A2 narrative
+superseded: `egs2_fisher.py` byte-frozen + invalidation table; THEOREM_
+MAP/PRIOR_ART/egs2-gate-docstring relabeled with supersession pointers
+(egs2 gates 8/8; pr04 package manifest rows = frozen historical record,
+builder xfail-by-design since the r200 rewrite). 6/6 mutations killed
+on production paths. Adversarial lane pre-commit: 3 P1 + 6 P2 all
+fixed. Gates: `run_pr130_tail_convergence.py --check` byte-stable +
+`test_pr130_tail_convergence.py` (15). C1 toy/transfer-conditional
+convergence theorem — no sufficiency, no observational reading; 102
+OPEN; DAG 77/113, next PR-131. See docs/PR_DELTAS/pr-130.md.
+
 ### PR-129 — NTA3 estimator/domain registry and universal-floor prohibition (rev-r206, 2026-07-18)
 
 Roadmap Wave-15 PR-129 (deps PR-125/128 context).
