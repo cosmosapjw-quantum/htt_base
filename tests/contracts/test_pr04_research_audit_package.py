@@ -3,6 +3,12 @@ from __future__ import annotations
 import importlib.util
 from pathlib import Path
 import sys
+import pytest
+
+pytestmark = pytest.mark.xfail(
+    reason="PR-120 quarantined the CF4-P0 final report (docs/final_report/main.tex deleted; PDF legacy-only, public_use=false); this builder is red by quarantine design until a post-quarantine report exists.",
+    strict=False,
+)
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
