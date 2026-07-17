@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "run_id": "pr123-attempt3-final-review-20260716",
+  "work_unit_id": null,
+  "created_at": "2026-07-16T16:32:43+00:00",
+  "context_version": "721f26ec63a455745fde6b935633150c2aea9ef2e76c2fac2e36eee2ca9924ba",
+  "assignment_count": 3,
+  "results": [
+    {
+      "assignment_id": "A-PR123-A3-K6",
+      "agent_type": "hostile_k6_domain_reviewer",
+      "status": "pass",
+      "path": ".agent-harness/runs/pr123-attempt3-final-review-20260716/results/A-PR123-A3-K6.json",
+      "sha256": "d0e4fafc40f69ddafa5e08dd5b57ccec181e8339a0020402690f1a3f288667b3",
+      "bytes": 8163
+    },
+    {
+      "assignment_id": "A-PR123-A3-PROVENANCE",
+      "agent_type": "hostile_lineage_provenance_reviewer",
+      "status": "fail",
+      "path": ".agent-harness/runs/pr123-attempt3-final-review-20260716/results/A-PR123-A3-PROVENANCE.json",
+      "sha256": "ac131f15acb40182dea6bfba2ff00c4cb9bf98b66e0abe05eb0b3018e8c7c649",
+      "bytes": 8141
+    },
+    {
+      "assignment_id": "A-PR123-A3-REPLAY",
+      "agent_type": "hostile_exact_receipt_replayer",
+      "status": "fail",
+      "path": ".agent-harness/runs/pr123-attempt3-final-review-20260716/results/A-PR123-A3-REPLAY.json",
+      "sha256": "25971052e69393011a11b16da2f191beea239709cdab29acc833c723d4528ab5",
+      "bytes": 2894
+    }
+  ],
+  "merged_results": {
+    "path": ".agent-harness/runs/pr123-attempt3-final-review-20260716/MERGED_RESULTS.json",
+    "sha256": "b30f9039af6b2cec157f8e4881957ef3294c1631db0fb70cd702aae35c2615ff",
+    "bytes": 10387
+  },
+  "disposition": "historical_frozen"
+}

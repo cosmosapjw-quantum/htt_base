@@ -14,7 +14,18 @@ def main() -> None:
     parser.add_argument("--spec-ref", default="SPEC.md")
     parser.add_argument("--base-ref", default="main")
     parser.add_argument("--head-ref", default="HEAD")
+    parser.add_argument(
+        "--work-unit",
+        required=True,
+        help=(
+            "Work-unit identifier (normally the PR id, e.g. PR-124). The spawn "
+            "budget is cumulative across every run sharing this work unit "
+            "(audit H7: run-local budgets reset by creating a new run)."
+        ),
+    )
     args = parser.parse_args()
+    if not is_safe_identifier(args.work_unit):
+        raise SystemExit("work-unit must be a safe 1-128 character identifier")
 
     repo = root()
     harness = repo / ".agent-harness"
@@ -34,6 +45,7 @@ def main() -> None:
     template.update(
         {
             "run_id": run_id,
+            "work_unit_id": args.work_unit,
             "created_at": utc_now(),
             "spec_ref": args.spec_ref,
             "base_ref": args.base_ref,
