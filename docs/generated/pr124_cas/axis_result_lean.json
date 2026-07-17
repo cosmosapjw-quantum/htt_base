@@ -1,0 +1,58 @@
+{
+  "axis": "lean",
+  "checks": {
+    "boundary_e1_crit_equality": true,
+    "e1_crit_coefficients": true,
+    "hierarchy_e1_zero_strict": true,
+    "hierarchy_observed_fails": true,
+    "omega_reduction": true,
+    "sigma2_ceiling_exact": true,
+    "sigma_reduction": true,
+    "w2_ceiling_exact": true
+  },
+  "commands": [
+    {
+      "cmd": "bash -c cd /home/cosmosapjw/Dropbox/bianchi/htt_base/formal_pr124 && ~/.elan/bin/lake build >&2 && ~/.elan/bin/lake exe pr124mes",
+      "exit": 0
+    }
+  ],
+  "completed_at": "2026-07-17T09:39:42+00:00",
+  "computed": {
+    "B_omega_exact": "1186543/2500000000000",
+    "B_sigma_exact": "46474041/3500000000000",
+    "Sigma2_max_exact": "6479509460609043/24500000000000000000000000",
+    "W2_max_exact": "4223652872547/12500000000000000000000000",
+    "omega_triple": [
+      "10/3",
+      "2/15",
+      "0"
+    ],
+    "sigma_triple": [
+      "5/3",
+      "3",
+      "3/7"
+    ]
+  },
+  "contract_id": "CAS-PR124-MES-GEODESIC-001",
+  "contract_sha256": "d5769f5fe06c886f4408593b7c5e756a338e18cbf7eb4726f42b03aff757c73f",
+  "counterexample": null,
+  "domain_assumption_diff": [],
+  "evidence_class": "exact",
+  "schema_version": 1,
+  "source_output_hashes": [
+    {
+      "path": "formal_pr124/Pr124Mes/Basic.lean",
+      "producer": "axis script source",
+      "sha256": "25a8e10da65c014467ccc55645e86ae8d9750ec09e258fc949f87cd2fc6451ce"
+    },
+    {
+      "path": "formal_pr124/Pr124Mes.lean",
+      "producer": "axis script source",
+      "sha256": "464c81dee04f975bb9db5a10dd9956d7a515f4d838e8c4117c76e5271daf6905"
+    }
+  ],
+  "status": "PASS",
+  "tool_versions": {
+    "reported": "lean4:v4.31.0-repo-pinned"
+  }
+}

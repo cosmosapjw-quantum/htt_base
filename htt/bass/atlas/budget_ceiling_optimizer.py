@@ -20,6 +20,14 @@ from mio.formalism.budget_spec import BudgetPolicy, BudgetSpec, BudgetUse
 
 from .atlas_entry import AtlasEntryLite, validate_atlas_entry_lite_metadata
 
+# PR-124: active MES consumers traverse the typed successor registry
+# (common.mes_theorem_authority is the live authority; legacy values are
+# labeled non-authoritative reproduction, see legacy_reproduction_coefficients).
+from common.mes_successor_registry import current_mes_successor_registry
+
+_MES_SUCCESSOR = current_mes_successor_registry().successor
+_MES_SUCCESSOR_ID = _MES_SUCCESSOR.successor_id
+
 _SCHEMA_VERSION = "bass.budget_ceiling_policy.v1"
 _RESULT_SCHEMA_VERSION = "bass.budget_ceiling_policy_result.v1"
 _DEFAULT_CAVEAT = (

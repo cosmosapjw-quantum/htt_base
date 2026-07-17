@@ -171,6 +171,11 @@ FREEZE_CONSUMER = Path("scripts/check_publication_claim_freeze.py")
 PACKAGE_CONSUMER = Path("scripts/build_external_audit_package.py")
 GRAPH_PRODUCER = Path("htt/src/common/evidence_graph.py")
 MES_PRODUCER = Path("htt/src/common/mes_successor_registry.py")
+# PR-124 typed authority surfaces (hash-bound into the MES scan provenance)
+MES_AUTHORITY_PRODUCER = Path("htt/src/common/mes_theorem_authority.py")
+MES_AUTHORITY_TABLE = Path("docs/generated/pr124_mes_authority_table.json")
+PR124_CAS_ADJUDICATION = Path("docs/generated/pr124_cas_adjudication.json")
+PR124_D2_RECEIPT = Path("docs/generated/pr124_d2_authority_receipt.json")
 GRAPH_BUILDER = Path("scripts/codex_harness/build_claim_evidence_graph.py")
 SOURCE_ONLY_LAUNCHER = Path(_SOURCE_ONLY_LAUNCHER)
 EVIDENCE_VERIFIER = Path("htt/src/common/release_evidence_binding.py")
@@ -774,30 +779,33 @@ def _build_bundle(
         MesConsumerIssueCode.DECLARED_CONSUMER_NOT_DISCOVERED.value,
         MesConsumerIssueCode.EXCLUSION_HASH_MISMATCH.value,
     }
-    if not required_blockers <= codes:
+    # PR-124: the typed MES authority is delivered — the kill switch inverts.
+    # The live scan must be CLEAN (no successor blocker, no stale triple, no
+    # bypass) and the receipt-verified MES governance release must hold at
+    # conditional C1. Receipt drift re-introduces SCIENTIFIC_AUTHORITY_BLOCKED
+    # via the live verifier and trips this gate.
+    if codes & required_blockers:
         raise ValueError(
-            "MES release scan no longer records the required pre-PR124 blockers"
+            "MES release scan carries successor blockers after PR-124: "
+            f"{sorted(codes & required_blockers)}"
         )
     if codes & integrity_failures:
         raise ValueError(
             f"MES release scan has integrity failures: {sorted(codes & integrity_failures)}"
         )
-    if mes_report.release_allowed:
-        raise ValueError("MES release unexpectedly became allowed before PR-124")
+    if not mes_report.release_allowed:
+        raise ValueError(
+            "MES governance release is not allowed despite the PR-124 authority"
+        )
     if registry_codes & integrity_failures:
         raise ValueError(
             "MES registry witness has integrity failures: "
             f"{sorted(registry_codes & integrity_failures)}"
         )
-    if (
-        not {
-            MesConsumerIssueCode.SUCCESSOR_MISSING.value,
-            MesConsumerIssueCode.SCIENTIFIC_AUTHORITY_BLOCKED.value,
-        }
-        <= registry_codes
-        or registry_report.release_allowed
-    ):
-        raise ValueError("MES registry lost its pre-PR124 authority blocker")
+    if registry_codes & required_blockers or not registry_report.release_allowed:
+        raise ValueError(
+            "MES registry witness is not clean under the PR-124 authority"
+        )
 
     provenance_paths = (
         spec_path,
@@ -810,6 +818,10 @@ def _build_bundle(
         GRAPH_BUILDER,
         SOURCE_ONLY_LAUNCHER,
         MES_PRODUCER,
+        MES_AUTHORITY_PRODUCER,
+        MES_AUTHORITY_TABLE,
+        PR124_CAS_ADJUDICATION,
+        PR124_D2_RECEIPT,
         EVIDENCE_VERIFIER,
         PYTEST_EVIDENCE_PLUGIN,
         REMEDIATION_KERNEL,
@@ -858,12 +870,21 @@ def _build_bundle(
         "null_mock_status": "not_statistical",
         "caveats": [
             "MES scan success is process evidence only.",
-            "The typed scientific successor remains blocked pending PR-124.",
-            "No MES coefficient is validated or replaced by PR-122.",
+            (
+                "The typed successor is AUTHORIZED_BY_PR124 at conditional C1 "
+                "(governance mechanics); it validates no observed result and "
+                "rescues no remediation finding."
+            ),
+            (
+                "Active consumers keep byte-stable legacy values through the "
+                "labeled legacy_reproduction_coefficients channel; flowing "
+                "authorized geodesic values into results is a later "
+                "result-regeneration event."
+            ),
         ],
         "generating_command": GRAPH_GENERATING_COMMAND,
         "git_commit_or_worktree_state": worktree_state,
-        "status": "EXPECTED_BLOCKED_PENDING_PR124",
+        "status": "AUTHORIZED_BY_PR124_CONDITIONAL_C1",
         "scan": mes_report.as_payload(),
         "registry_scan": registry_report.as_payload(),
     }
@@ -887,7 +908,11 @@ def _build_bundle(
         payload={
             "claim_id": "pr122.mes_release_authority",
             "claim_level": "roadmap_rescue_v1:C1",
-            "statement": "active MES release remains blocked until the PR-124 typed successor is authorized",
+            "statement": (
+                "the PR-124 typed successor is authorized at conditional C1; "
+                "active consumers traverse it with zero stale triples, and "
+                "claim release stays gated by the remediation state"
+            ),
         },
         axes=present,
     )
@@ -898,8 +923,10 @@ def _build_bundle(
             "claim_id": "pr122.d2_rust_authority",
             "claim_level": "roadmap_rescue_v1:C1",
             "statement": (
-                "D2 Rust authority remains blocked until PR-124 supplies a "
-                "nonzero independently verified target and execution receipt"
+                "the PR-124 D2 receipt records a nonzero executed Rust "
+                "production-path target with hash-bound sources; the "
+                "dump_dl_spectrum_sparse bit-identical anchor remains a "
+                "documented gap, not reproduced by this receipt"
             ),
         },
         axes=present,
@@ -1001,38 +1028,46 @@ def _build_bundle(
         label="pr122_authority_snapshot",
         path=authority_path,
     )
+    # PR-124: the typed successor and the D2 target are DELIVERED — the
+    # graph nodes carry the authorized/executed state with hash bindings.
+    # Scientific status stays OPEN (governance mechanics only).
     missing_successor = _inline_node(
         kind=EvidenceNodeKind.INPUT,
         label="mes.typed-successor.pr124",
         payload={
-            "availability": "MISSING",
-            "scientific_status": "BLOCKED_PENDING_PR124",
+            "availability": "AVAILABLE",
+            "scientific_status": "AUTHORIZED_BY_PR124_CONDITIONAL_C1",
             "source": "htt/src/common/mes_theorem_authority.py",
+            "source_sha256": _sha256_file(
+                _resolve(root, MES_AUTHORITY_PRODUCER)
+            ),
+            "authority_receipt_path": MES_AUTHORITY_TABLE.as_posix(),
+            "authority_receipt_sha256": _sha256_file(
+                _resolve(root, MES_AUTHORITY_TABLE)
+            ),
+            "claim_boundary": (
+                "governance authorization at conditional C1 only; validates "
+                "no observed result and rescues no remediation finding"
+            ),
         },
-        axes=blocked,
+        axes=present,
     )
     missing_d2_target = _inline_node(
         kind=EvidenceNodeKind.INPUT,
         label="d2.rust-target.pr124",
         payload={
-            "availability": "MISSING",
-            "process_result": "NOT_RUN",
-            "scientific_status": "BLOCKED_PENDING_PR124",
-            "required": [
-                "nonzero_rust_target_identity",
-                "source_hash",
-                "input_hashes",
-                "toolchain_lock",
-                "collected_test_ids",
-                "executed_test_ids",
-                "independent_execution_receipt",
-            ],
+            "availability": "AVAILABLE",
+            "process_result": "PASS",
+            "scientific_status": "EXECUTED_NONZERO_CONDITIONAL_C1",
+            "receipt_path": PR124_D2_RECEIPT.as_posix(),
+            "receipt_sha256": _sha256_file(_resolve(root, PR124_D2_RECEIPT)),
+            "claim_boundary": (
+                "nonzero executed production-path receipt; the "
+                "dump_dl_spectrum_sparse bit-identical anchor remains a "
+                "documented gap, not reproduced by this receipt"
+            ),
         },
-        axes=_axes(
-            EvidenceStatus.BLOCKED,
-            process_result=ProcessResult.NOT_RUN,
-            scientific_status=ScientificStatus.BLOCKED,
-        ),
+        axes=present,
     )
     config_node = _file_node(
         root, kind=EvidenceNodeKind.CONFIG, label="pr122_spec", path=spec_path
@@ -1344,17 +1379,26 @@ def _build_bundle(
     d2_closure = graph.closure(d2_claim.node_ref)
     if not mechanics_closure.mechanics_closed:
         raise EvidenceGraphError("clean PR-122 mechanics claim did not close")
+    # PR-124: the MES/D2 authority claims now mechanics-close over PRESENT
+    # inputs (governance mechanics at conditional C1), but claim-release
+    # eligibility must STAY false while the remediation findings are OPEN.
     if (
-        release_closure.package_eligible
-        or release_closure.evidence_status is not EvidenceStatus.BLOCKED
+        not release_closure.mechanics_closed
+        or release_closure.claim_release_eligible
     ):
-        raise EvidenceGraphError("pre-PR124 MES release claim did not fail closed")
+        raise EvidenceGraphError(
+            "PR-124 MES authority claim must mechanics-close WITHOUT "
+            "claim-release eligibility"
+        )
     if (
-        d2_closure.process_result is not ProcessResult.NOT_RUN
-        or d2_closure.evidence_status is not EvidenceStatus.BLOCKED
+        d2_closure.process_result is not ProcessResult.PASS
+        or not d2_closure.mechanics_closed
         or d2_closure.claim_release_eligible
     ):
-        raise EvidenceGraphError("pre-PR124 D2 authority claim did not fail closed")
+        raise EvidenceGraphError(
+            "PR-124 D2 authority claim must mechanics-close WITHOUT "
+            "claim-release eligibility"
+        )
 
     registry = _authority_registry(authority)
     author = registry.resolve(AUTHOR, role="author", scope="PR-122", at=ISSUED_AT)
@@ -1420,7 +1464,11 @@ def _build_bundle(
         "caveats": [
             "Evidence closure validates mechanics, not estimand correctness or scientific truth.",
             "The receipt is correlated internal process disclosure and is not a verified external adjudication.",
-            "MES and D2 scientific authority remain blocked pending PR-124.",
+            (
+                "MES and D2 authority are PR-124 governance mechanics at "
+                "conditional C1; scientific claim release remains blocked by "
+                "the remediation state."
+            ),
             "No native solver, family, geometry, posterior, or detection claim is created.",
         ],
         "generating_command": GRAPH_GENERATING_COMMAND,
@@ -1453,7 +1501,7 @@ def _build_bundle(
             ),
         },
         "mes_release": {
-            "status": "BLOCKED_PENDING_PR124",
+            "status": "AUTHORIZED_BY_PR124_CONDITIONAL_C1",
             "consumers_scanned": mes_report.consumers_scanned,
             "finding_codes": sorted(codes),
             "scan_path": mes_scan_path.as_posix(),

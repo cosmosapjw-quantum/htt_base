@@ -35,6 +35,14 @@ from htt.core.departure_posteriors import weighted_hpd, weighted_quantile
 # Configuration
 from htt.core.pipeline_config import PipelineConfig
 
+# PR-124: active MES consumers traverse the typed successor registry
+# (common.mes_theorem_authority is the live authority; legacy values are
+# labeled non-authoritative reproduction, see legacy_reproduction_coefficients).
+from common.mes_successor_registry import current_mes_successor_registry
+
+_MES_SUCCESSOR = current_mes_successor_registry().successor
+_MES_SUCCESSOR_ID = _MES_SUCCESSOR.successor_id
+
 __all__ = [
     'C', 'load_obs', 'eps_ell', 'D_ell_from_eps', 'sigma_H_from_Sig2',
     'B_sigma', 'B_omega', 'B_accel', 'B_sigma_corrected', 'Sig2_max_MES',

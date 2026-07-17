@@ -200,22 +200,29 @@ def _verify_mes_inventory(root: Path, graph: EvidenceGraph) -> None:
         raise EvidenceGraphError(
             f"live MES inventory integrity failure: {sorted(failures)}"
         )
-    required_blockers = {
+    # PR-124: the typed MES authority is delivered. The kill switch inverts —
+    # the live scan must now be CLEAN (no successor blocker, no stale triple,
+    # no bypass) and the receipt-verified MES governance release must hold at
+    # conditional C1. Any receipt drift re-introduces
+    # SCIENTIFIC_AUTHORITY_BLOCKED via the live verifier and trips this gate.
+    forbidden_blockers = {
         MesConsumerIssueCode.SUCCESSOR_MISSING.value,
         MesConsumerIssueCode.SCIENTIFIC_AUTHORITY_BLOCKED.value,
         MesConsumerIssueCode.SUCCESSOR_POINTER_MISSING.value,
+        MesConsumerIssueCode.SUCCESSOR_BYPASS.value,
+        MesConsumerIssueCode.STALE_MES_TRIPLE.value,
+        MesConsumerIssueCode.SUCCESSOR_ID_MISMATCH.value,
     }
-    if not required_blockers <= codes or report.release_allowed:
-        raise EvidenceGraphError("live MES inventory lost its pre-PR124 kill switch")
-    if (
-        not {
-            MesConsumerIssueCode.SUCCESSOR_MISSING.value,
-            MesConsumerIssueCode.SCIENTIFIC_AUTHORITY_BLOCKED.value,
-        }
-        <= registry_codes
-        or registry_report.release_allowed
-    ):
-        raise EvidenceGraphError("live MES witness lost its pre-PR124 kill switch")
+    if codes & forbidden_blockers or not report.release_allowed:
+        raise EvidenceGraphError(
+            "live MES inventory is not clean under the PR-124 authority: "
+            f"{sorted(codes & forbidden_blockers)}"
+        )
+    if registry_codes & forbidden_blockers or not registry_report.release_allowed:
+        raise EvidenceGraphError(
+            "live MES witness is not clean under the PR-124 authority: "
+            f"{sorted(registry_codes & forbidden_blockers)}"
+        )
 
 
 def _load_json(path: Path, *, artifact: str) -> Mapping[str, object]:
@@ -450,9 +457,17 @@ def consume_release_evidence(
         )
     if receipt.body.process_result is not ProcessResult.PASS:
         raise EvidenceGraphError("audit disclosure receipt process did not pass")
-    if receipt.body.evidence_status is not EvidenceStatus.BLOCKED:
+    # PR-124: the mechanics evidence is PRESENT (governance authority
+    # delivered) while claim release stays ineligible; disclosure must
+    # expose exactly the current derived state — never a claim release.
+    if receipt.body.evidence_status is not closure.evidence_status:
         raise EvidenceGraphError(
-            "audit disclosure must expose the current blocked evidence"
+            "audit disclosure must expose the current derived evidence state"
+        )
+    if closure.claim_release_eligible:
+        raise EvidenceGraphError(
+            "audit disclosure cannot proceed once a claim appears "
+            "release-eligible without trusted authority validation"
         )
 
     disclosure = receipt.audit_disclosure()

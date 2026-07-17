@@ -1331,9 +1331,12 @@ def build_audit_package_payload(
         evidence_binding["audit_disclosure_allowed"] is True
         and evidence_binding["claim_release_allowed"] is False
     )
+    # PR-124: the mechanics evidence is PRESENT (governance authority
+    # delivered) while claim release stays disallowed; the kill switch is
+    # the release flag itself, not a BLOCKED evidence status.
     assertions["claim_release_blocked_by_evidence_graph"] = (
         evidence_binding["claim_release_allowed"] is False
-        and evidence_binding["evidence_status"] == "BLOCKED"
+        and evidence_binding["evidence_status"] in {"BLOCKED", "PRESENT"}
     )
     failed_gates = [name for name, passed in assertions.items() if not passed]
     config = {

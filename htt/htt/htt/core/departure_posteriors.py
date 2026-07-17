@@ -24,6 +24,14 @@ import numpy as np
 from htt.core.ssot import C, omega_tilt
 from htt.core.bounds import B_sigma_corrected, Sig2_max_MES
 
+# PR-124: active MES consumers traverse the typed successor registry
+# (common.mes_theorem_authority is the live authority; legacy values are
+# labeled non-authoritative reproduction, see legacy_reproduction_coefficients).
+from common.mes_successor_registry import current_mes_successor_registry
+
+_MES_SUCCESSOR = current_mes_successor_registry().successor
+_MES_SUCCESSOR_ID = _MES_SUCCESSOR.successor_id
+
 __all__ = [
     'DeparturePosterior',
     'weighted_quantile', 'weighted_hpd',

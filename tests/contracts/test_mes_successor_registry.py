@@ -64,11 +64,19 @@ def _copy_current_registry_inputs(tmp_path: Path) -> MesSuccessorRegistry:
         registry.legacy_reproduction_source,
         registry.egs3_branch_witness.source,
         registry.egs3_branch_witness.seal,
+        # PR-124: the successor source is AVAILABLE and hash-pinned
+        registry.successor.source,
     ):
         target = tmp_path / binding.path
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_bytes((REPO_ROOT / binding.path).read_bytes())
     return registry
+
+
+# In a tmp copy the PR-124 receipt artifacts are absent by construction, so
+# the live receipt verification fails closed there: tmp validations carry
+# exactly this authority blocker on top of any injected defect.
+TMP_AUTHORITY_BLOCKER = MesConsumerIssueCode.SCIENTIFIC_AUTHORITY_BLOCKED.value
 
 
 def _inventory() -> dict[str, object]:
@@ -97,52 +105,58 @@ def _inventory_declarations(
     )
 
 
-def test_current_successor_is_explicitly_missing_and_pr124_blocked() -> None:
+def test_current_successor_is_available_and_pr124_authorized() -> None:
     registry = current_mes_successor_registry()
     pointer = registry.successor
 
     assert pointer.successor_id == CURRENT_SUCCESSOR_ID
-    assert pointer.source.availability is SourceAvailability.MISSING
-    assert pointer.source.sha256 is None
-    assert pointer.process_result is MesProcessResult.NOT_RUN
+    assert pointer.source.availability is SourceAvailability.AVAILABLE
+    assert pointer.source.sha256 == _digest(REPO_ROOT / pointer.source.path)
+    assert pointer.process_result is MesProcessResult.PASS
     assert (
-        pointer.scientific_status is MesScientificAuthorityStatus.BLOCKED_PENDING_PR124
+        pointer.scientific_status is MesScientificAuthorityStatus.AUTHORIZED_BY_PR124
     )
-    assert pointer.scientific_authority is False
-    assert registry.as_payload()["release_claim_allowed"] is False
+    # governance authority at conditional C1 (pins match + live verification
+    # is re-run by validate_mes_successor_registry below)
+    assert pointer.scientific_authority is True
+    assert registry.as_payload()["release_claim_allowed"] is True
 
 
 @pytest.mark.parametrize(
-    ("process_result", "scientific_status", "receipt"),
+    ("process_result", "scientific_status", "receipt", "match"),
     [
         pytest.param(
             MesProcessResult.PASS,
             MesScientificAuthorityStatus.AUTHORIZED_BY_PR124,
             "x",
-            id="typed-enums",
-        ),
-        pytest.param(
-            "PASS",
-            "AUTHORIZED_BY_PR124",
-            "arbitrary-caller-string",
-            id="caller-strings",
+            "authority_receipt_id",
+            id="malformed-receipt",
         ),
         pytest.param(
             MesProcessResult.FAIL,
-            MesScientificAuthorityStatus.BLOCKED_PENDING_PR124,
-            None,
+            MesScientificAuthorityStatus.AUTHORIZED_BY_PR124,
+            "0" * 64,
+            "PR-124 gate PASS",
             id="failed-process",
+        ),
+        pytest.param(
+            MesProcessResult.PASS,
+            MesScientificAuthorityStatus.BLOCKED_PENDING_PR124,
+            "0" * 64,
+            "AUTHORIZED_BY_PR124",
+            id="blocked-status",
         ),
     ],
 )
-def test_available_successor_cannot_self_assert_authority_before_pr124(
+def test_available_successor_shape_is_fail_closed(
     process_result: MesProcessResult | str,
     scientific_status: MesScientificAuthorityStatus | str,
     receipt: str | None,
+    match: str,
 ) -> None:
     available = SourceHashBinding("future.py", SourceAvailability.AVAILABLE, "0" * 64)
 
-    with pytest.raises(MesRegistryError, match="blocked until PR-124"):
+    with pytest.raises(MesRegistryError, match=match):
         MesSuccessorPointer(
             CURRENT_SUCCESSOR_ID,
             available,
@@ -150,6 +164,20 @@ def test_available_successor_cannot_self_assert_authority_before_pr124(
             scientific_status,
             receipt,
         )
+
+
+def test_foreign_receipt_string_never_carries_authority() -> None:
+    """A well-formed pointer with a receipt hash that is not the module pin
+    has NO scientific authority — caller strings alone never escalate."""
+    available = SourceHashBinding("future.py", SourceAvailability.AVAILABLE, "0" * 64)
+    pointer = MesSuccessorPointer(
+        CURRENT_SUCCESSOR_ID,
+        available,
+        MesProcessResult.PASS,
+        MesScientificAuthorityStatus.AUTHORIZED_BY_PR124,
+        "f" * 64,
+    )
+    assert pointer.scientific_authority is False
 
 
 def test_egs3_pass_binds_source_and_seal_but_has_no_scientific_authority() -> None:
@@ -169,18 +197,12 @@ def test_egs3_pass_binds_source_and_seal_but_has_no_scientific_authority() -> No
     )
 
 
-def test_current_registry_validates_seal_and_only_blocks_successor() -> None:
+def test_current_registry_validates_clean_under_pr124_authority() -> None:
     report = validate_mes_successor_registry(REPO_ROOT)
 
-    assert finding_codes(report) == frozenset(
-        {
-            MesConsumerIssueCode.SUCCESSOR_MISSING.value,
-            MesConsumerIssueCode.SCIENTIFIC_AUTHORITY_BLOCKED.value,
-        }
-    )
-    assert report.release_allowed is False
-    with pytest.raises(MesRegistryError, match="MES release blocked"):
-        report.assert_release_allowed()
+    assert finding_codes(report) == frozenset()
+    assert report.release_allowed is True
+    report.assert_release_allowed()
 
 
 def test_witness_source_and_seal_hashes_are_checked_separately(
@@ -322,7 +344,7 @@ def test_direct_legacy_import_is_a_bypass_even_with_typed_import(
         "from common.mes_successor_registry import current_mes_successor_registry\n"
         "POINTER = current_mes_successor_registry().successor\n"
         "POINTER_ID = POINTER.successor_id\n"
-        "from htt.core.bounds import Sig2_max_MES\n",
+        "from htt.tsc.admissibility.three_bound_hierarchy import W2_max\n",
     )
 
     report = scan_declared_mes_consumers(tmp_path, (declaration,))
@@ -448,8 +470,9 @@ def test_clean_typed_consumer_has_no_pointer_or_literal_blocker(
 
     report = scan_declared_mes_consumers(tmp_path, (declaration,))
     codes = finding_codes(report)
-    assert MesConsumerIssueCode.SUCCESSOR_MISSING.value in codes
-    assert MesConsumerIssueCode.SCIENTIFIC_AUTHORITY_BLOCKED.value in codes
+    # tmp copies lack the PR-124 receipt artifacts, so the authority blocker
+    # is present; the CONSUMER itself must be clean.
+    assert TMP_AUTHORITY_BLOCKER in codes
     assert MesConsumerIssueCode.SUCCESSOR_POINTER_MISSING.value not in codes
     assert MesConsumerIssueCode.SUCCESSOR_BYPASS.value not in codes
     assert MesConsumerIssueCode.STALE_MES_TRIPLE.value not in codes
@@ -540,7 +563,7 @@ def test_dynamic_legacy_import_is_a_bypass(tmp_path: Path) -> None:
         "from common.mes_successor_registry import current_mes_successor_registry\n"
         "POINTER = current_mes_successor_registry().successor\n"
         "POINTER_ID = POINTER.successor_id\n"
-        "LEGACY = import_module('htt.core.bounds')\n",
+        "LEGACY = import_module('htt.tsc.admissibility.three_bound_hierarchy')\n",
     )
 
     report = scan_declared_mes_consumers(tmp_path, (declaration,))
@@ -557,7 +580,7 @@ def test_constant_folded_dynamic_legacy_import_is_a_bypass(
         "from common.mes_successor_registry import current_mes_successor_registry\n"
         "POINTER = current_mes_successor_registry().successor\n"
         "POINTER_ID = POINTER.successor_id\n"
-        "LEGACY = import_module('htt.core.' + 'bounds')\n",
+        "LEGACY = import_module('htt.tsc.admissibility.' + 'three_bound_hierarchy')\n",
     )
 
     report = scan_declared_mes_consumers(tmp_path, (declaration,))
@@ -567,19 +590,20 @@ def test_constant_folded_dynamic_legacy_import_is_a_bypass(
     )
 
 
-def test_unregistered_planned_source_presence_is_not_auto_promoted(
+def test_self_asserted_successor_source_is_not_auto_promoted(
     tmp_path: Path,
 ) -> None:
+    """Replacing the pinned authority module with self-asserted bytes is a
+    hash mismatch, never a promotion (PR-124 pin discipline)."""
     registry = _copy_current_registry_inputs(tmp_path)
     planned = tmp_path / registry.successor.source.path
     planned.parent.mkdir(parents=True, exist_ok=True)
     planned.write_text("AUTHORITY = 'self-asserted'\n", encoding="utf-8")
 
     report = validate_mes_successor_registry(tmp_path)
-    assert (
-        MesConsumerIssueCode.UNREGISTERED_SUCCESSOR_SOURCE_PRESENT.value
-        in finding_codes(report)
-    )
+    codes = finding_codes(report)
+    assert MesConsumerIssueCode.SOURCE_HASH_MISMATCH.value in codes
+    assert TMP_AUTHORITY_BLOCKER in codes
     assert report.release_allowed is False
 
 

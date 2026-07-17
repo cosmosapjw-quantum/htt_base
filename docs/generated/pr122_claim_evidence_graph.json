@@ -2,15 +2,6 @@
   "canonicalization": "sorted_compact_json_utf8_v1",
   "edges": [
     {
-      "edge_ref": "009475ecd8b46044a112a48d1dad3eec2117d5a54119f23af19935719c1942a8",
-      "kind": "uses_config",
-      "metadata": {
-        "role": "PR-122 D2 blocker policy"
-      },
-      "source_ref": "68402ee91249916054d27d4eeaca94ff50a67be58b7918e7f01340b83511b850",
-      "target_ref": "4dce6c0e865e063f476a36f21e4fa63f4e644be4cae1af64b0a0b1e73038ae27"
-    },
-    {
       "edge_ref": "01e27dde0ff8b1946639228f1d049fda8c8c2dd4a4f729915feec25ed3a6d8fe",
       "kind": "uses_input",
       "metadata": {
@@ -18,15 +9,6 @@
       },
       "source_ref": "f6e415ea0a104927b842873d49060b1b92d2c4ac36899b7731d0b23e939a0671",
       "target_ref": "ee353b3dd297231336748d630a8527962068b015473a5bd363f8e89c7612f320"
-    },
-    {
-      "edge_ref": "06625603ae6c3d787915b8d75ef193e6b4b46323fb90ba5f536c09b32211c79e",
-      "kind": "uses_input",
-      "metadata": {
-        "role": "hash-bound declared MES consumer source"
-      },
-      "source_ref": "558d4bcc3132da96de059e9da6480b3c317fa4a5a2cb3b09d522aaf63f6c684e",
-      "target_ref": "db554df296adddf721db362c5e7ad457bb6753f6855e64dd1cac38abafe37c44"
     },
     {
       "edge_ref": "0fb65c455b87ccb5ba45345e0eb80ff3042d2752dbd2d37a093bb68e3971d4db",
@@ -38,24 +20,6 @@
       "target_ref": "f6467b4cd3a627d819776694092cae692207c1a1ce4fe859c862296568e3ccbb"
     },
     {
-      "edge_ref": "15d2cd1761b91d4f5312681a4dbbc14a2a8eeeaf8cce52c13358d087c90402e7",
-      "kind": "uses_environment",
-      "metadata": {
-        "role": "PR-121 hermetic receipt"
-      },
-      "source_ref": "348967adf4234763e88e9c189b1eb0deb3109902f60583cd3c92255329dc5e0b",
-      "target_ref": "85b85d259dc4a41880915bc841e3fb3fee8330b070cf5a52bfe49aad392cb8e5"
-    },
-    {
-      "edge_ref": "172a6028fbbc13467c50cf0d2abef76ef0d3942c1d71be7db4a61601da8bbf9c",
-      "kind": "uses_input",
-      "metadata": {
-        "role": "diagnostic witness seal"
-      },
-      "source_ref": "558d4bcc3132da96de059e9da6480b3c317fa4a5a2cb3b09d522aaf63f6c684e",
-      "target_ref": "19e07b2900c34a299974043d7370def79554c950de2514fad15d22d00ae55380"
-    },
-    {
       "edge_ref": "19271254dae84ab883f8aae019c5fbd187c160fdabed2e2cbd72df8d033923e5",
       "kind": "uses_input",
       "metadata": {
@@ -65,130 +29,175 @@
       "target_ref": "f6467b4cd3a627d819776694092cae692207c1a1ce4fe859c862296568e3ccbb"
     },
     {
-      "edge_ref": "1ad77c3ab1e40a3a386f0edcd15f1b81c432ec0feb09a45b9db656cad404e7f6",
-      "kind": "uses_environment",
-      "metadata": {
-        "role": "PR-121 hermetic receipt"
-      },
-      "source_ref": "558d4bcc3132da96de059e9da6480b3c317fa4a5a2cb3b09d522aaf63f6c684e",
-      "target_ref": "85b85d259dc4a41880915bc841e3fb3fee8330b070cf5a52bfe49aad392cb8e5"
-    },
-    {
-      "edge_ref": "1e854525709316474986950af4bbbb5512c56f08e6075639c87e77ae5e5a0617",
-      "kind": "uses_input",
-      "metadata": {
-        "role": "hash-bound declared MES consumer source"
-      },
-      "source_ref": "558d4bcc3132da96de059e9da6480b3c317fa4a5a2cb3b09d522aaf63f6c684e",
-      "target_ref": "e6440cf91f54f7032c552befcff54e5c50d8479e97e59f056154a23b4632f7a7"
-    },
-    {
-      "edge_ref": "26bd040810d19b60c19e29fc9d15edc123f34dbf578610dc68d4f0e46557c490",
-      "kind": "uses_input",
-      "metadata": {
-        "role": "hash-bound declared MES consumer source"
-      },
-      "source_ref": "558d4bcc3132da96de059e9da6480b3c317fa4a5a2cb3b09d522aaf63f6c684e",
-      "target_ref": "dd1065e3f0583d3b01e329cf77f46f0b9959dcb86d8bfde2e8b598859a3b2faa"
-    },
-    {
-      "edge_ref": "2b976df9a24d56d5c9da56d6b812fe6019686c9217717f3348e19192cf4fc3f9",
+      "edge_ref": "1db39229c1fa54509a9afcafed33a62dae9dd1d5b155d5bbf367371ee49c2ff0",
       "kind": "generates",
       "metadata": {
         "role": "pytest plugin execution receipt"
       },
       "source_ref": "1c21ab962e89c39b4c353bbf88e0ced896ba0292a4564d5ed6cecb3a4b4670d7",
-      "target_ref": "37a355e063bce2e39b95dd2f3b643109cf3aea6e5a35fe3e8d1dcd31a418cbb6"
+      "target_ref": "c8baf620f98f1f779c3b94bb52a1e9964b4683575c028cb8f28c2a21996dad44"
     },
     {
-      "edge_ref": "2d003bb7453dfd7ef8faa991ca44ddecd6bb31b6a095b6658097168fab835e67",
-      "kind": "uses_input",
-      "metadata": {
-        "role": "hash-bound declared MES consumer source"
-      },
-      "source_ref": "558d4bcc3132da96de059e9da6480b3c317fa4a5a2cb3b09d522aaf63f6c684e",
-      "target_ref": "99f3abb1f35dcb776cbfbae105fc0387c4886a9fee550a956c4d8508a97d4bbb"
-    },
-    {
-      "edge_ref": "2f10ec6a4a4bf6e3c4fc3ddcd6546817218730f7a8ed5155f5b635dfa536eabe",
-      "kind": "uses_config",
-      "metadata": {
-        "role": "PR-122 config"
-      },
-      "source_ref": "f6e415ea0a104927b842873d49060b1b92d2c4ac36899b7731d0b23e939a0671",
-      "target_ref": "4dce6c0e865e063f476a36f21e4fa63f4e644be4cae1af64b0a0b1e73038ae27"
-    },
-    {
-      "edge_ref": "3354f902b61d061c78ba17cee13391841833995509c0191c7b8a7b03b09e5d4a",
+      "edge_ref": "224d457c969ca28b8adba3083892d8aa1f41f33fcce1c62c9e2b66b16efa672b",
       "kind": "depends_on",
       "metadata": {
-        "role": "pytest execution plugin"
+        "role": "typed closure kernel"
       },
-      "source_ref": "348967adf4234763e88e9c189b1eb0deb3109902f60583cd3c92255329dc5e0b",
-      "target_ref": "1c21ab962e89c39b4c353bbf88e0ced896ba0292a4564d5ed6cecb3a4b4670d7"
+      "source_ref": "ee9f8524a38c63ed29746a5c025f935e41f5ce198198b761192f4a872426a317",
+      "target_ref": "f6e415ea0a104927b842873d49060b1b92d2c4ac36899b7731d0b23e939a0671"
     },
     {
-      "edge_ref": "371f6231e4a82c03e90d6fd3d6cf6f0af1413bbae9f6442ff0dec1c6dedae7a3",
+      "edge_ref": "230931fa750e12d083f2484a2e806ee365950de674de54f467b1ae2f717076ca",
       "kind": "uses_input",
       "metadata": {
         "role": "hash-bound declared MES consumer source"
       },
-      "source_ref": "558d4bcc3132da96de059e9da6480b3c317fa4a5a2cb3b09d522aaf63f6c684e",
-      "target_ref": "39dfeff92b734c46c6a7b4e0be9a4b37bfb8bcafa0b3ee25721954f5e0fe0e4e"
+      "source_ref": "c57f59df8a2e70f01a113b0fa2f2c5a313d4112523d27913d8be5492e7c6c2dc",
+      "target_ref": "c5af54b70f418772e4d9f7753f848cc7b738c71d6f6b288a0a6c6df8719d8a48"
     },
     {
-      "edge_ref": "3a0e553d6509e52ac7312db116cf254734d56ae0f54502c7dd791eeeda57ab1e",
-      "kind": "uses_input",
-      "metadata": {
-        "role": "hash-bound declared MES consumer source"
-      },
-      "source_ref": "558d4bcc3132da96de059e9da6480b3c317fa4a5a2cb3b09d522aaf63f6c684e",
-      "target_ref": "dc34057ae7d8eba5777aa79a151e7942a32869738599e5f899d4179438f6acef"
-    },
-    {
-      "edge_ref": "3c5d95289e98123f7b97bcce40f0150da062ea5d12fff6fe8fd7104682eed3c6",
-      "kind": "generates",
-      "metadata": {
-        "role": "actual test execution receipt"
-      },
-      "source_ref": "5399a896ca48c5e08b22d59b13b9c7c9f4197cec81088b79d996fe0671888ffe",
-      "target_ref": "37a355e063bce2e39b95dd2f3b643109cf3aea6e5a35fe3e8d1dcd31a418cbb6"
-    },
-    {
-      "edge_ref": "5abd84117509c5159f93ad7d16a547e701566ad925a98a3a030a3e8714e53fcc",
-      "kind": "uses_input",
-      "metadata": {
-        "role": "hash-bound declared MES consumer source"
-      },
-      "source_ref": "558d4bcc3132da96de059e9da6480b3c317fa4a5a2cb3b09d522aaf63f6c684e",
-      "target_ref": "b23e417c690b7b8938eb860fc2269da0ac175cb44b1a14b34058f9098ae4d4a2"
-    },
-    {
-      "edge_ref": "5cf10e2dcf166f53b4f4bb55ee32da9920860618e31d8b608eb52d748553b0af",
+      "edge_ref": "23554a12f01b9d62efd5cd94f62beb0689815b48638ada0991a7c05c2cd2a2f1",
       "kind": "checked_by",
       "metadata": {
         "role": "zero-test fail-closed mutation"
       },
       "source_ref": "68402ee91249916054d27d4eeaca94ff50a67be58b7918e7f01340b83511b850",
-      "target_ref": "5399a896ca48c5e08b22d59b13b9c7c9f4197cec81088b79d996fe0671888ffe"
+      "target_ref": "27b0338fb0f6f4c3cf62ff41da7ad851758c7881204571f54711452ae7e9c81f"
     },
     {
-      "edge_ref": "6298a6fb3ecdbbead71c454b86d8bfb82b2488287bdbc494e3fe2aa556012c64",
+      "edge_ref": "28b0472837bda252e1488d10d39bb0dac4f49eae5035fa1e4a73022a3097021c",
       "kind": "uses_input",
       "metadata": {
         "role": "hash-bound declared MES consumer source"
       },
-      "source_ref": "558d4bcc3132da96de059e9da6480b3c317fa4a5a2cb3b09d522aaf63f6c684e",
-      "target_ref": "1de25ad670633f7a7e7e7ccff6c153ab48671f3c3ce2d80bb4ff81eee3bbaba5"
+      "source_ref": "c57f59df8a2e70f01a113b0fa2f2c5a313d4112523d27913d8be5492e7c6c2dc",
+      "target_ref": "100e772145062c547b6da1cfeac7f57e89554708c5e4aeb0b2208389bf43f1dd"
     },
     {
-      "edge_ref": "6a9a6ea1cb7c3a47385b76891eca09c58e8416a9cfca22045d1a6472eae1a6f0",
+      "edge_ref": "29c6c43118b702d138afcabe2ede9004c724be4bf76d7e5440373ca399ceaf00",
+      "kind": "consumed_by",
+      "metadata": {
+        "role": "exact blocked release closure"
+      },
+      "source_ref": "2cde556a3e64850f1d92aaa1e343dd7098388b29b931b031b9ad0efca45f8899",
+      "target_ref": "2e4f9feacdc69ce213778dd156b2cae877fd63da703b9e9fbd09fb4eb3d73b4b"
+    },
+    {
+      "edge_ref": "2c73ec55c133db094f58a8a0372d6c8bf9e50bfe13db709300c42c51b30d32b4",
+      "kind": "uses_input",
+      "metadata": {
+        "role": "roadmap contract"
+      },
+      "source_ref": "ee9f8524a38c63ed29746a5c025f935e41f5ce198198b761192f4a872426a317",
+      "target_ref": "f6467b4cd3a627d819776694092cae692207c1a1ce4fe859c862296568e3ccbb"
+    },
+    {
+      "edge_ref": "2cbdcdd317ebff775a5f008063a1637942235973fe84ba014f196fca3876567c",
+      "kind": "uses_input",
+      "metadata": {
+        "role": "hash-bound declared MES consumer source"
+      },
+      "source_ref": "c57f59df8a2e70f01a113b0fa2f2c5a313d4112523d27913d8be5492e7c6c2dc",
+      "target_ref": "cafe18707f2b82f7e2d6ed82ffcd118f14dc74be4e6738c7168b7034988ca275"
+    },
+    {
+      "edge_ref": "38e54005aa142ad1944991caab5e43b4e3a89e7577e36393d32c98509310d3a3",
+      "kind": "depends_on",
+      "metadata": {
+        "role": "pytest execution plugin"
+      },
+      "source_ref": "ee9f8524a38c63ed29746a5c025f935e41f5ce198198b761192f4a872426a317",
+      "target_ref": "1c21ab962e89c39b4c353bbf88e0ced896ba0292a4564d5ed6cecb3a4b4670d7"
+    },
+    {
+      "edge_ref": "419be6d3d1a9fdb33e8218578c3ef7f7bc14fe482a3741e9d8c8867bc191ae49",
+      "kind": "consumed_by",
+      "metadata": {
+        "role": "audit disclosure only"
+      },
+      "source_ref": "2cde556a3e64850f1d92aaa1e343dd7098388b29b931b031b9ad0efca45f8899",
+      "target_ref": "e693823770dd3a10d249b952edc9b2273a9c768427415b492bd397f6ff467401"
+    },
+    {
+      "edge_ref": "4264e3786294930b1c63f499e5c697565840feb7a100da9d881f57f728814cec",
       "kind": "uses_config",
       "metadata": {
-        "role": "PR-122 config"
+        "role": "PR-122 D2 blocker policy"
       },
-      "source_ref": "348967adf4234763e88e9c189b1eb0deb3109902f60583cd3c92255329dc5e0b",
-      "target_ref": "4dce6c0e865e063f476a36f21e4fa63f4e644be4cae1af64b0a0b1e73038ae27"
+      "source_ref": "68402ee91249916054d27d4eeaca94ff50a67be58b7918e7f01340b83511b850",
+      "target_ref": "03c8064275532e1cfea72798fce0f6145d22e3143ae9e2f410df35f53fb74d66"
+    },
+    {
+      "edge_ref": "4464508880a63e27c6aedae86a4ed3cb4f281c02c186253899657af408c30b12",
+      "kind": "uses_input",
+      "metadata": {
+        "role": "hash-bound declared MES consumer source"
+      },
+      "source_ref": "c57f59df8a2e70f01a113b0fa2f2c5a313d4112523d27913d8be5492e7c6c2dc",
+      "target_ref": "895ea8980fd45164d33f3af6389e6e084125106992ba1ebd5d5c370c9762d93e"
+    },
+    {
+      "edge_ref": "49f22c9f80244cddbbaab3adec2a1ec809daad9d168bded0e1ea4fe8c2e9b8a0",
+      "kind": "uses_config",
+      "metadata": {
+        "role": "PR-122 release policy"
+      },
+      "source_ref": "c57f59df8a2e70f01a113b0fa2f2c5a313d4112523d27913d8be5492e7c6c2dc",
+      "target_ref": "03c8064275532e1cfea72798fce0f6145d22e3143ae9e2f410df35f53fb74d66"
+    },
+    {
+      "edge_ref": "4bb60af09b84ef4b8f3b87542051abacfae04803feffc1a291ca208886150316",
+      "kind": "uses_input",
+      "metadata": {
+        "role": "hash-bound declared MES consumer source"
+      },
+      "source_ref": "c57f59df8a2e70f01a113b0fa2f2c5a313d4112523d27913d8be5492e7c6c2dc",
+      "target_ref": "de81bd60c33d103516461713d88319ab861f4de957396ad183d4c601975da4c4"
+    },
+    {
+      "edge_ref": "4e7d11a093fd3aaa65f90ca0196364eb58a12fdc791f72f929cab62f89ed5451",
+      "kind": "uses_input",
+      "metadata": {
+        "role": "hash-bound declared MES consumer source"
+      },
+      "source_ref": "c57f59df8a2e70f01a113b0fa2f2c5a313d4112523d27913d8be5492e7c6c2dc",
+      "target_ref": "3c5c6f4167cb24f0e81e0f911aa4e9f4e6eff3cd3b8e395adb8a92cd15b56857"
+    },
+    {
+      "edge_ref": "568a0598f63bb8f28bdb335edabb134ff3771bcd266287170ab2d89222e671f9",
+      "kind": "checked_by",
+      "metadata": {
+        "role": "identity-bound mutation suite"
+      },
+      "source_ref": "f6e415ea0a104927b842873d49060b1b92d2c4ac36899b7731d0b23e939a0671",
+      "target_ref": "27b0338fb0f6f4c3cf62ff41da7ad851758c7881204571f54711452ae7e9c81f"
+    },
+    {
+      "edge_ref": "57aca90a16e912f2b619083722700e9cf04775edc9a8bf6a16896dcdfe843822",
+      "kind": "generates",
+      "metadata": {
+        "role": "deterministic MES blocker scan"
+      },
+      "source_ref": "c57f59df8a2e70f01a113b0fa2f2c5a313d4112523d27913d8be5492e7c6c2dc",
+      "target_ref": "2cde556a3e64850f1d92aaa1e343dd7098388b29b931b031b9ad0efca45f8899"
+    },
+    {
+      "edge_ref": "64d269110421b470e2e91a1413272df9aca9ff842e90de218e2ed91b7b346f97",
+      "kind": "uses_input",
+      "metadata": {
+        "role": "hash-bound declared MES consumer source"
+      },
+      "source_ref": "c57f59df8a2e70f01a113b0fa2f2c5a313d4112523d27913d8be5492e7c6c2dc",
+      "target_ref": "40d417e0db5663d17ba769ea2ccdf238bdee88f712162191243d1a69596f2a1a"
+    },
+    {
+      "edge_ref": "666980538938e05eb08544a121375d048ef1b1dfe18adbee6c0680a5c7a3506b",
+      "kind": "uses_input",
+      "metadata": {
+        "role": "hash-bound declared MES consumer source"
+      },
+      "source_ref": "c57f59df8a2e70f01a113b0fa2f2c5a313d4112523d27913d8be5492e7c6c2dc",
+      "target_ref": "b1322ea8f19bbeedf2e6fdd305512fa39f1b51fe7b2753c98e2b77e76efd5afb"
     },
     {
       "edge_ref": "6b46306e65a4d81db591478d9c9fd383be771328d42fada7e8681666f0cfa011",
@@ -200,247 +209,238 @@
       "target_ref": "85b85d259dc4a41880915bc841e3fb3fee8330b070cf5a52bfe49aad392cb8e5"
     },
     {
-      "edge_ref": "74b4bc2433509063d0268556b98834e235e275effee22d649572430ae221aab0",
-      "kind": "uses_input",
-      "metadata": {
-        "role": "hash-bound declared MES consumer source"
-      },
-      "source_ref": "558d4bcc3132da96de059e9da6480b3c317fa4a5a2cb3b09d522aaf63f6c684e",
-      "target_ref": "8267b67d23f13b9608b4dce19d7c0416715ebd793b4ddf40dcd02a3915e3a413"
-    },
-    {
-      "edge_ref": "7e3fb44b618ee9995d57d89a9fd350ddf8c1d1f2f2180a2dda48ce718f4f2bfe",
-      "kind": "consumed_by",
-      "metadata": {
-        "role": "builder loads exact execution receipt"
-      },
-      "source_ref": "37a355e063bce2e39b95dd2f3b643109cf3aea6e5a35fe3e8d1dcd31a418cbb6",
-      "target_ref": "026cbe487d192d5665e47f8c7273d1faf6a87a81143b1be32d7dcb6f96eab1a4"
-    },
-    {
-      "edge_ref": "7ed8d23a9f3e1e2bf84f459b6e80494c72c2e7d27a64eae27764d251f191cb8c",
-      "kind": "uses_input",
-      "metadata": {
-        "role": "hash-bound all-consumer inventory"
-      },
-      "source_ref": "558d4bcc3132da96de059e9da6480b3c317fa4a5a2cb3b09d522aaf63f6c684e",
-      "target_ref": "054eddb04f87c840a7da86e92b9ca0759e710c17ee415a02d65547c944b109f9"
-    },
-    {
-      "edge_ref": "7ef089867c863c2bb0f5933f704a272888259f1e12863dc766733324be137ed8",
-      "kind": "consumed_by",
-      "metadata": {
-        "role": "audit disclosure only"
-      },
-      "source_ref": "22243d0331d417621d8b97bb0c42018f3723604c398cb866105036893d5c1c60",
-      "target_ref": "84b2de51c64ab216ff9646c8422cdb460a39c14223e6e4ec69aaab5dc3e96a89"
-    },
-    {
-      "edge_ref": "7fbea9d0284e9a669198cf4cda62ef7a4fcee2e4b8cf8cab2144a69480c2424c",
-      "kind": "uses_input",
-      "metadata": {
-        "role": "hash-bound declared MES consumer source"
-      },
-      "source_ref": "558d4bcc3132da96de059e9da6480b3c317fa4a5a2cb3b09d522aaf63f6c684e",
-      "target_ref": "6b4aa847cafd350acec9bd6bea073de96590cbba9bd7fd1b9ba8e17f50fdb6b9"
-    },
-    {
-      "edge_ref": "84407493c3870a68fd565af4403c87103f2d64a3b59906754b25ef4655e5cbb2",
-      "kind": "checked_by",
-      "metadata": {
-        "role": "MES bypass mutations"
-      },
-      "source_ref": "558d4bcc3132da96de059e9da6480b3c317fa4a5a2cb3b09d522aaf63f6c684e",
-      "target_ref": "5399a896ca48c5e08b22d59b13b9c7c9f4197cec81088b79d996fe0671888ffe"
-    },
-    {
-      "edge_ref": "86dacc2f8d6fd48b8101e70637545a4721aca0837e322d33f651fae186837142",
-      "kind": "produced_by",
-      "metadata": {
-        "role": "MES release policy producer"
-      },
-      "source_ref": "c1a7c9f82601c5b4c1f8231eccad9df5092e104a4e45a38306aaf7fbc01b1d58",
-      "target_ref": "558d4bcc3132da96de059e9da6480b3c317fa4a5a2cb3b09d522aaf63f6c684e"
-    },
-    {
-      "edge_ref": "891ab57a5e53ea337b549a630aab9acc2ce8a93b6c43218abfa6337fd9ba1a88",
-      "kind": "checked_by",
-      "metadata": {
-        "role": "identity-bound mutation suite"
-      },
-      "source_ref": "348967adf4234763e88e9c189b1eb0deb3109902f60583cd3c92255329dc5e0b",
-      "target_ref": "5399a896ca48c5e08b22d59b13b9c7c9f4197cec81088b79d996fe0671888ffe"
-    },
-    {
-      "edge_ref": "8dafae436dec5f19db941b68d0739f8c1b4eea045f004c0972b0f7f59935c096",
-      "kind": "uses_input",
-      "metadata": {
-        "role": "hash-bound declared MES consumer source"
-      },
-      "source_ref": "558d4bcc3132da96de059e9da6480b3c317fa4a5a2cb3b09d522aaf63f6c684e",
-      "target_ref": "bb1336edf629d9e8e313f0a6c4d62c8fc01e8155050b095255c4c9b94cae3c95"
-    },
-    {
-      "edge_ref": "a0e8fa632c55ca426e9832e76365ed7c20edefd6bd30d6ed043b70ba7057ccf8",
-      "kind": "uses_input",
-      "metadata": {
-        "role": "typed successor pointer"
-      },
-      "source_ref": "558d4bcc3132da96de059e9da6480b3c317fa4a5a2cb3b09d522aaf63f6c684e",
-      "target_ref": "2c2e2dae2a80c4e501360702ca1b00660c6e90545e813e610d0c86a2ff7ae3a5"
-    },
-    {
-      "edge_ref": "a27a2315b545162d8a00522283431d66e0df17784a8958bf91315142af14d2f9",
+      "edge_ref": "6bf0e1aa9ecafbf08982a87e72994725f515e2ec8228d0ae86e84ced18a801b9",
       "kind": "depends_on",
       "metadata": {
         "role": "source-only launcher"
       },
-      "source_ref": "348967adf4234763e88e9c189b1eb0deb3109902f60583cd3c92255329dc5e0b",
+      "source_ref": "ee9f8524a38c63ed29746a5c025f935e41f5ce198198b761192f4a872426a317",
       "target_ref": "8fa07a739358809ff84f9d2a34fc9eb61fc093c311dabb8f26efba6affacbc31"
     },
     {
-      "edge_ref": "a2f856393ce6a1ad672faaec991cfa108e6abcde89cd5cbfb97f6628a3b86bf6",
-      "kind": "uses_input",
-      "metadata": {
-        "role": "hash-bound declared MES consumer source"
-      },
-      "source_ref": "558d4bcc3132da96de059e9da6480b3c317fa4a5a2cb3b09d522aaf63f6c684e",
-      "target_ref": "dc44fd972525d4c8cbf9d16019a3f606e2db4a28e9205f83aa4d08235cc93179"
-    },
-    {
-      "edge_ref": "a8b3f63ca3d5264abd6e2b4e4d3d9041c2fb692ffd6b2385604f41ce8276679d",
-      "kind": "uses_input",
-      "metadata": {
-        "role": "hash-bound declared MES consumer source"
-      },
-      "source_ref": "558d4bcc3132da96de059e9da6480b3c317fa4a5a2cb3b09d522aaf63f6c684e",
-      "target_ref": "531e2d6a874199fc5a49973864772788f848c864316fa4b7970c5f05938aabb4"
-    },
-    {
-      "edge_ref": "aa68d18622a3f696b1b0c32146772d49513909f7ab6be97b11d1dbab71bb2b91",
-      "kind": "uses_input",
-      "metadata": {
-        "role": "missing nonzero Rust target"
-      },
-      "source_ref": "68402ee91249916054d27d4eeaca94ff50a67be58b7918e7f01340b83511b850",
-      "target_ref": "9da983759570e7cf63e233428c17038861e127a46ff3291c7ea67ef4f255e120"
-    },
-    {
-      "edge_ref": "ad3a3eb68b819368db9d73c7bf7a77387ab4a0e6128afd9a568aedbe9b0a25c3",
-      "kind": "uses_input",
-      "metadata": {
-        "role": "hash-bound declared MES consumer source"
-      },
-      "source_ref": "558d4bcc3132da96de059e9da6480b3c317fa4a5a2cb3b09d522aaf63f6c684e",
-      "target_ref": "554b049470a1acf93bfb098c9845729616307ebb0438f008eff283b67dc30463"
-    },
-    {
-      "edge_ref": "af3d3723586a8f9c602d22ab3ff410f2de1752d3c2c5bc63f2636e32c6cd0020",
-      "kind": "uses_input",
-      "metadata": {
-        "role": "hash-bound declared MES consumer source"
-      },
-      "source_ref": "558d4bcc3132da96de059e9da6480b3c317fa4a5a2cb3b09d522aaf63f6c684e",
-      "target_ref": "6d2e7cc52cceaffa5f1c902fbd06b06102164182e1a4fd0cb163448324f0eaf9"
-    },
-    {
-      "edge_ref": "b74269a85f34e04b59bfb50c43b2f594c3b622bf5d909888f04f17b178b5643b",
-      "kind": "depends_on",
-      "metadata": {
-        "role": "graph-bound release verifier"
-      },
-      "source_ref": "348967adf4234763e88e9c189b1eb0deb3109902f60583cd3c92255329dc5e0b",
-      "target_ref": "ff9f4e351b0b1aefbf2a1146c0462c3c6e7a0b6c5a88f22b61aff59f486e3c83"
-    },
-    {
-      "edge_ref": "b797dd2f092aeed7e614b6a83e2c802c21f64f8da92a7caf0e2fd6a65170cc76",
-      "kind": "produced_by",
-      "metadata": {
-        "role": "D2 authority gate"
-      },
-      "source_ref": "b4618df02940e3176a0fde9b93b6e2e7bb2d2f15a5070918dc258e2436622e9d",
-      "target_ref": "68402ee91249916054d27d4eeaca94ff50a67be58b7918e7f01340b83511b850"
-    },
-    {
-      "edge_ref": "b8bc1a18ea6e7e178bc361e612092f78189ea1a4c351c40e75d64e3f85e1cad0",
-      "kind": "generates",
-      "metadata": {
-        "role": "deterministic MES blocker scan"
-      },
-      "source_ref": "558d4bcc3132da96de059e9da6480b3c317fa4a5a2cb3b09d522aaf63f6c684e",
-      "target_ref": "22243d0331d417621d8b97bb0c42018f3723604c398cb866105036893d5c1c60"
-    },
-    {
-      "edge_ref": "c3d268e9130dc841cdbb6c958680f2e8f1f8eb35b92cd3499b35a191605f257f",
-      "kind": "depends_on",
-      "metadata": {
-        "role": "typed closure kernel"
-      },
-      "source_ref": "348967adf4234763e88e9c189b1eb0deb3109902f60583cd3c92255329dc5e0b",
-      "target_ref": "f6e415ea0a104927b842873d49060b1b92d2c4ac36899b7731d0b23e939a0671"
-    },
-    {
-      "edge_ref": "cb023b2a856c0019a5ccd1f7be4c9c1399d70ec9fe686711fca0df37c71fe31b",
+      "edge_ref": "6c738c3c740d4c022ed10c03daab5c8134078d6fd856d0c751be4cd1ec3d064a",
       "kind": "depends_on",
       "metadata": {
         "role": "shared closure kernel"
       },
-      "source_ref": "558d4bcc3132da96de059e9da6480b3c317fa4a5a2cb3b09d522aaf63f6c684e",
+      "source_ref": "c57f59df8a2e70f01a113b0fa2f2c5a313d4112523d27913d8be5492e7c6c2dc",
       "target_ref": "f6e415ea0a104927b842873d49060b1b92d2c4ac36899b7731d0b23e939a0671"
     },
     {
-      "edge_ref": "cb703cfc80c1c5e729c0e93a2d73c7e4440795d2b03ace208d5634fe5adf58c8",
+      "edge_ref": "727e79cc58f3a72620cbb0c4a9af4ba019b4813ee966836208b0341006f1a354",
+      "kind": "uses_input",
+      "metadata": {
+        "role": "hash-bound declared MES consumer source"
+      },
+      "source_ref": "c57f59df8a2e70f01a113b0fa2f2c5a313d4112523d27913d8be5492e7c6c2dc",
+      "target_ref": "12fde7e86d52eab41e062c16a795bf9c46fbe66783a904a8ab6f45af1cb22862"
+    },
+    {
+      "edge_ref": "73735b674f01629baa26d608d1baf2b77f943d92ac268b20000f56b04dd9addc",
+      "kind": "uses_input",
+      "metadata": {
+        "role": "hash-bound declared MES consumer source"
+      },
+      "source_ref": "c57f59df8a2e70f01a113b0fa2f2c5a313d4112523d27913d8be5492e7c6c2dc",
+      "target_ref": "231ff3bb0c83dd38fc4e3b9d934f6928044ac514e7c0cb5473cdab95faafb177"
+    },
+    {
+      "edge_ref": "78a96971e35d2090dacb1b48f4f5a83c7ddd5af36b6931558713735ff1dfba39",
+      "kind": "uses_input",
+      "metadata": {
+        "role": "hash-bound declared MES consumer source"
+      },
+      "source_ref": "c57f59df8a2e70f01a113b0fa2f2c5a313d4112523d27913d8be5492e7c6c2dc",
+      "target_ref": "d7440272af8fb423982473632fb3f763ad499ba6a85a1676570769371c0b5202"
+    },
+    {
+      "edge_ref": "7d6504d7bdf9ca063fc7f2bb00f60b02151ba1de5d651e11d9ec841b7a061385",
+      "kind": "uses_environment",
+      "metadata": {
+        "role": "PR-121 hermetic receipt"
+      },
+      "source_ref": "c57f59df8a2e70f01a113b0fa2f2c5a313d4112523d27913d8be5492e7c6c2dc",
+      "target_ref": "85b85d259dc4a41880915bc841e3fb3fee8330b070cf5a52bfe49aad392cb8e5"
+    },
+    {
+      "edge_ref": "7d77ba0ad7ef093f0e05a7da77a8034a08400fa775b14b0fa5be54b52c17899d",
+      "kind": "uses_input",
+      "metadata": {
+        "role": "hash-bound declared MES consumer source"
+      },
+      "source_ref": "c57f59df8a2e70f01a113b0fa2f2c5a313d4112523d27913d8be5492e7c6c2dc",
+      "target_ref": "f31db56ef42ae575d6943cccc5abcd46520cac0e146d45a6b61fae03f191f452"
+    },
+    {
+      "edge_ref": "86f5b5d05e04e9cfcaa3a88fdc43b3c2ebbffd7c9b3dd5126821a01e1c913989",
       "kind": "produced_by",
       "metadata": {
         "role": "claim graph builder"
       },
       "source_ref": "12e5e6c42cadea6fabc759d98fb2d9b0bea1b72ca2d1a9c08ef22cfb54c198b9",
-      "target_ref": "348967adf4234763e88e9c189b1eb0deb3109902f60583cd3c92255329dc5e0b"
+      "target_ref": "ee9f8524a38c63ed29746a5c025f935e41f5ce198198b761192f4a872426a317"
     },
     {
-      "edge_ref": "cce4bad7e09558b7af672f412470357b745fc52a5d49821c099d9ad1429fc643",
+      "edge_ref": "884a20edba1b852ffb029262ba1ab356ea8512f7e5b5b912b7a89c199115743a",
+      "kind": "uses_input",
+      "metadata": {
+        "role": "diagnostic witness seal"
+      },
+      "source_ref": "c57f59df8a2e70f01a113b0fa2f2c5a313d4112523d27913d8be5492e7c6c2dc",
+      "target_ref": "19e07b2900c34a299974043d7370def79554c950de2514fad15d22d00ae55380"
+    },
+    {
+      "edge_ref": "8e254b4985fab9031d5592ecde763caf498be6033f107895253deac9b283a185",
+      "kind": "uses_input",
+      "metadata": {
+        "role": "hash-bound declared MES consumer source"
+      },
+      "source_ref": "c57f59df8a2e70f01a113b0fa2f2c5a313d4112523d27913d8be5492e7c6c2dc",
+      "target_ref": "0a0dddee808b4ef217ca7ed26cd9fc0b1787d726afc92259ddf25fe1868d020f"
+    },
+    {
+      "edge_ref": "8e3181c339a4e224d9f754b64150ce06a4976234bfdaf351753d7ed49078d0b0",
       "kind": "uses_config",
       "metadata": {
-        "role": "PR-122 release policy"
+        "role": "PR-122 config"
       },
-      "source_ref": "558d4bcc3132da96de059e9da6480b3c317fa4a5a2cb3b09d522aaf63f6c684e",
-      "target_ref": "4dce6c0e865e063f476a36f21e4fa63f4e644be4cae1af64b0a0b1e73038ae27"
+      "source_ref": "f6e415ea0a104927b842873d49060b1b92d2c4ac36899b7731d0b23e939a0671",
+      "target_ref": "03c8064275532e1cfea72798fce0f6145d22e3143ae9e2f410df35f53fb74d66"
     },
     {
-      "edge_ref": "d2ca3a5cb619f9c65aaecfd7510a7cb00eeedc1020813e2ee10d856f8a836798",
-      "kind": "uses_input",
-      "metadata": {
-        "role": "roadmap contract"
-      },
-      "source_ref": "348967adf4234763e88e9c189b1eb0deb3109902f60583cd3c92255329dc5e0b",
-      "target_ref": "f6467b4cd3a627d819776694092cae692207c1a1ce4fe859c862296568e3ccbb"
-    },
-    {
-      "edge_ref": "d51c5dcf4c8ef39bf3ebbea133c46a0e77de3d7dc0415f773eadf17849eb849e",
+      "edge_ref": "97ef9b144fec0ea6b8ec34f8115193277a9e34d49d612ac70784253cd5f3acfa",
       "kind": "uses_input",
       "metadata": {
         "role": "hash-bound declared MES consumer source"
       },
-      "source_ref": "558d4bcc3132da96de059e9da6480b3c317fa4a5a2cb3b09d522aaf63f6c684e",
-      "target_ref": "37f48749fc0c0d2a603ea6021c23d1b2070afa3140323f4067967a67d04ff279"
+      "source_ref": "c57f59df8a2e70f01a113b0fa2f2c5a313d4112523d27913d8be5492e7c6c2dc",
+      "target_ref": "f299c6a246901e660f4ad80daba19b9e2698a6e2e63c635a1ee7c493fa8b53b7"
     },
     {
-      "edge_ref": "d5e3597c7406a313411332f006ee28edf5bc7a5e0c1909defb7a477b505aa4db",
+      "edge_ref": "9ba885a5e6fb24317b80debcb9ea00f8dfa90344868205aea5b18bf8355ccc15",
       "kind": "uses_input",
       "metadata": {
         "role": "hash-bound declared MES consumer source"
       },
-      "source_ref": "558d4bcc3132da96de059e9da6480b3c317fa4a5a2cb3b09d522aaf63f6c684e",
-      "target_ref": "5b7a50533b97d3c3ac8c803006878ae63ddc283d66d20a3fb2052a0d13cf9b37"
+      "source_ref": "c57f59df8a2e70f01a113b0fa2f2c5a313d4112523d27913d8be5492e7c6c2dc",
+      "target_ref": "41457a2267cc98fa82d9d4f65e42f6cfca0d27269ba732b6220a616045040577"
     },
     {
-      "edge_ref": "d62da59bd7fbd361ec6af44667616d512690d4fcd9fceb0007f8764804adb266",
+      "edge_ref": "a14fe0b951636b04d45309c19e5d62546cc442072df8725c2f2c27824a69d0e7",
+      "kind": "uses_config",
+      "metadata": {
+        "role": "PR-122 config"
+      },
+      "source_ref": "ee9f8524a38c63ed29746a5c025f935e41f5ce198198b761192f4a872426a317",
+      "target_ref": "03c8064275532e1cfea72798fce0f6145d22e3143ae9e2f410df35f53fb74d66"
+    },
+    {
+      "edge_ref": "a25960473f4ff7b6601a5d97ac450cdf2fbe8e4a00d589398bea32d24e76b015",
       "kind": "uses_input",
       "metadata": {
         "role": "hash-bound declared MES consumer source"
       },
-      "source_ref": "558d4bcc3132da96de059e9da6480b3c317fa4a5a2cb3b09d522aaf63f6c684e",
-      "target_ref": "5860f4ae49d999316f6bf756b8b42f56623b8ed131e052adb28409d8d033544c"
+      "source_ref": "c57f59df8a2e70f01a113b0fa2f2c5a313d4112523d27913d8be5492e7c6c2dc",
+      "target_ref": "2e4bbc2607b2d1de9a3381674f9336237f21b3cc1c19b2c9ea1d58a2609c4863"
+    },
+    {
+      "edge_ref": "a3159fa46247ad1271c89cee412607efa0d5b7c009b4b73119e2463f4a6a80f9",
+      "kind": "checked_by",
+      "metadata": {
+        "role": "MES bypass mutations"
+      },
+      "source_ref": "c57f59df8a2e70f01a113b0fa2f2c5a313d4112523d27913d8be5492e7c6c2dc",
+      "target_ref": "27b0338fb0f6f4c3cf62ff41da7ad851758c7881204571f54711452ae7e9c81f"
+    },
+    {
+      "edge_ref": "a469579cc31eef79df257139149307fbd2fa48bfbf5dd72d84116499f7364fbd",
+      "kind": "uses_input",
+      "metadata": {
+        "role": "hash-bound declared MES consumer source"
+      },
+      "source_ref": "c57f59df8a2e70f01a113b0fa2f2c5a313d4112523d27913d8be5492e7c6c2dc",
+      "target_ref": "b117f71589d6fe996beadd4fe650d1abce02c291adf7e54e9131a98af8484364"
+    },
+    {
+      "edge_ref": "abdae99e28459550e669d34cee62a5564b2988a6e2a7b30c98d9c6365a95babf",
+      "kind": "depends_on",
+      "metadata": {
+        "role": "graph-bound release verifier"
+      },
+      "source_ref": "ee9f8524a38c63ed29746a5c025f935e41f5ce198198b761192f4a872426a317",
+      "target_ref": "fc574f7245b6cfa489d6e0f2d45006a29c0c68ee9bf0be4b36cc03a2c1457c79"
+    },
+    {
+      "edge_ref": "ad1f8556863ada6390081617c013e12cbb0373be16994441ef929dbd36094fff",
+      "kind": "consumed_by",
+      "metadata": {
+        "role": "builder loads exact execution receipt"
+      },
+      "source_ref": "c8baf620f98f1f779c3b94bb52a1e9964b4683575c028cb8f28c2a21996dad44",
+      "target_ref": "b66ba888b64aaf09c20dad7f23d92929b5c06922d526b1573dbef40b20da32ee"
+    },
+    {
+      "edge_ref": "b013730735957ef149f737259528a4538bf85fd0f7979adbbfb4d6868df49b3e",
+      "kind": "uses_input",
+      "metadata": {
+        "role": "hash-bound declared MES consumer source"
+      },
+      "source_ref": "c57f59df8a2e70f01a113b0fa2f2c5a313d4112523d27913d8be5492e7c6c2dc",
+      "target_ref": "e542641380d301e0de16a9136b3386913a406003c92a956d980a02fea6886101"
+    },
+    {
+      "edge_ref": "b363f6b7a8bbff043ee6680215e8d18792da5c125cda4f70a0f1c5184841449c",
+      "kind": "uses_input",
+      "metadata": {
+        "role": "missing nonzero Rust target"
+      },
+      "source_ref": "68402ee91249916054d27d4eeaca94ff50a67be58b7918e7f01340b83511b850",
+      "target_ref": "794fc8e36c1a3a33be2d662a23d7923da226446ae6406574a3f75df06f697441"
+    },
+    {
+      "edge_ref": "be441a249b89990fc5f587010f8380fa01a06ed86c64278e3485248e4b38c068",
+      "kind": "uses_input",
+      "metadata": {
+        "role": "hash-bound declared MES consumer source"
+      },
+      "source_ref": "c57f59df8a2e70f01a113b0fa2f2c5a313d4112523d27913d8be5492e7c6c2dc",
+      "target_ref": "a6c7530fcff3b09906fb92a89da44710aa64295e29d008447a8e6f099d86d999"
+    },
+    {
+      "edge_ref": "c081386b4ca399255c5fc078704b3273c57a4b392e44f580655513b92db56aec",
+      "kind": "produced_by",
+      "metadata": {
+        "role": "MES release policy producer"
+      },
+      "source_ref": "8039252828b967e8b54943ca7a933cd56b9b3c558cddad0e539eafc84a9c04ab",
+      "target_ref": "c57f59df8a2e70f01a113b0fa2f2c5a313d4112523d27913d8be5492e7c6c2dc"
+    },
+    {
+      "edge_ref": "d3872aa22224971dfaa125fef7e18895397b89defb8564762201c0f1f4d6ebec",
+      "kind": "uses_input",
+      "metadata": {
+        "role": "hash-bound declared MES consumer source"
+      },
+      "source_ref": "c57f59df8a2e70f01a113b0fa2f2c5a313d4112523d27913d8be5492e7c6c2dc",
+      "target_ref": "9551f9b308386315a4b3fcf7218ab5996ee5c63c644fbfe3441a9ed934278bc0"
+    },
+    {
+      "edge_ref": "d771fdafd293fa3da2631bcd44a3b124dcc69c221bcb20f3c16f2556c94506d0",
+      "kind": "uses_input",
+      "metadata": {
+        "role": "hash-bound all-consumer inventory"
+      },
+      "source_ref": "c57f59df8a2e70f01a113b0fa2f2c5a313d4112523d27913d8be5492e7c6c2dc",
+      "target_ref": "9c18e2ee063b0a99c1ff893afea364a4285fc7795d685560dd79b37d07be2736"
+    },
+    {
+      "edge_ref": "dc383f946d118c1d03e3f1c6b55ca5a1f6ecdf2b9dbc50b0b866a9344ba9fbae",
+      "kind": "uses_input",
+      "metadata": {
+        "role": "typed successor pointer"
+      },
+      "source_ref": "c57f59df8a2e70f01a113b0fa2f2c5a313d4112523d27913d8be5492e7c6c2dc",
+      "target_ref": "e7f6a9c0fc4715cde0d493c2e9f261da4f948dae928184eeff96fe57d6601dd1"
     },
     {
       "edge_ref": "dc67bf03d4f60ca88537810bc9d8d7f2bc83ccd5fc20d39adfc5dfc2e52f3cba",
@@ -452,79 +452,79 @@
       "target_ref": "85b85d259dc4a41880915bc841e3fb3fee8330b070cf5a52bfe49aad392cb8e5"
     },
     {
-      "edge_ref": "e31b018cae11835b166c6f0bea9f1f5a4f9e7877d97e56bf094396c2c89b71e5",
-      "kind": "checked_by",
+      "edge_ref": "e4cb8250adc70fdfa81a19aabf7a2a4fddea37191aafa1e6d3216d99db4c7489",
+      "kind": "uses_input",
       "metadata": {
-        "role": "identity-bound mutation suite"
+        "role": "hash-bound declared MES consumer source"
       },
-      "source_ref": "f6e415ea0a104927b842873d49060b1b92d2c4ac36899b7731d0b23e939a0671",
-      "target_ref": "5399a896ca48c5e08b22d59b13b9c7c9f4197cec81088b79d996fe0671888ffe"
+      "source_ref": "c57f59df8a2e70f01a113b0fa2f2c5a313d4112523d27913d8be5492e7c6c2dc",
+      "target_ref": "5f26a635559a44773be44c6330c929855403667584a827a24967a739cbee3704"
     },
     {
-      "edge_ref": "e6e7baa5b9118db4aeef62f9150d80200d2dd330819fce0661401c3bfe9b2bf2",
+      "edge_ref": "e9446972b53442851b5cbae3366bfae64c589e09d6f29cd87cf569fd583930d0",
+      "kind": "produced_by",
+      "metadata": {
+        "role": "D2 authority gate"
+      },
+      "source_ref": "1f0f464d64608b179df027f27ecb0c8dcce643c44c6cd24320b4f390dcda87af",
+      "target_ref": "68402ee91249916054d27d4eeaca94ff50a67be58b7918e7f01340b83511b850"
+    },
+    {
+      "edge_ref": "ea4c91fa50f628de1dc695416df61df37befb906d233f001920cf92a8cf1ed27",
       "kind": "uses_input",
       "metadata": {
         "role": "immutable PR-122 authority slice"
       },
-      "source_ref": "348967adf4234763e88e9c189b1eb0deb3109902f60583cd3c92255329dc5e0b",
+      "source_ref": "ee9f8524a38c63ed29746a5c025f935e41f5ce198198b761192f4a872426a317",
       "target_ref": "ee353b3dd297231336748d630a8527962068b015473a5bd363f8e89c7612f320"
     },
     {
-      "edge_ref": "e74ec1c08db1756279e84ba6ac5f9f2f137f112b120639a6dadee4d05c68de11",
+      "edge_ref": "f0aef9e60da1faa9a76c568a869394aa40402f1654843496f559fab95f8e1b76",
+      "kind": "generates",
+      "metadata": {
+        "role": "actual test execution receipt"
+      },
+      "source_ref": "27b0338fb0f6f4c3cf62ff41da7ad851758c7881204571f54711452ae7e9c81f",
+      "target_ref": "c8baf620f98f1f779c3b94bb52a1e9964b4683575c028cb8f28c2a21996dad44"
+    },
+    {
+      "edge_ref": "f370a004de056ea419a6e2e50ed4ba38bfb4bc15a63bebc62fdea7490385a39a",
+      "kind": "uses_environment",
+      "metadata": {
+        "role": "PR-121 hermetic receipt"
+      },
+      "source_ref": "ee9f8524a38c63ed29746a5c025f935e41f5ce198198b761192f4a872426a317",
+      "target_ref": "85b85d259dc4a41880915bc841e3fb3fee8330b070cf5a52bfe49aad392cb8e5"
+    },
+    {
+      "edge_ref": "f650b0a0f8bfbe53ea046a8423177976bed2325571d55bf6a6fb447b50f0cb0c",
       "kind": "uses_input",
       "metadata": {
         "role": "hash-bound declared MES consumer source"
       },
-      "source_ref": "558d4bcc3132da96de059e9da6480b3c317fa4a5a2cb3b09d522aaf63f6c684e",
-      "target_ref": "1cc3424f9add0fbcb98e6852adb19cda252be5fe023965b6267e656eab9d88b1"
+      "source_ref": "c57f59df8a2e70f01a113b0fa2f2c5a313d4112523d27913d8be5492e7c6c2dc",
+      "target_ref": "354dc51543f1937af7b9f721d13da9ec86f45c58865208194bc86a79f0ee5a14"
     },
     {
-      "edge_ref": "e799a5004de0067ed55aaaf3d340f12fd6d41d0769634361230823b333cdbf30",
-      "kind": "uses_input",
+      "edge_ref": "f8ada8bbe7c98e828248a98fe11115aa2c223cb2011cbc19979662f1cb567be3",
+      "kind": "checked_by",
       "metadata": {
-        "role": "hash-bound declared MES consumer source"
+        "role": "identity-bound mutation suite"
       },
-      "source_ref": "558d4bcc3132da96de059e9da6480b3c317fa4a5a2cb3b09d522aaf63f6c684e",
-      "target_ref": "44c029712d368adc0c2844f8dbf7b3e85a8b65d7cf529fbaa9512936ea9dcb00"
+      "source_ref": "ee9f8524a38c63ed29746a5c025f935e41f5ce198198b761192f4a872426a317",
+      "target_ref": "27b0338fb0f6f4c3cf62ff41da7ad851758c7881204571f54711452ae7e9c81f"
     },
     {
-      "edge_ref": "f6ee97df65d21badbad5abaec6bff38fa7c6bd3a870d39da1e74a402daca4074",
-      "kind": "consumed_by",
-      "metadata": {
-        "role": "exact blocked release closure"
-      },
-      "source_ref": "22243d0331d417621d8b97bb0c42018f3723604c398cb866105036893d5c1c60",
-      "target_ref": "44b1536705889fc333098101ba5174ffcf13fb319e61c859995a56d4ee5c125d"
-    },
-    {
-      "edge_ref": "f9fb80c6b4803b1915d84c0f246299995773240743aa740f368b2cb4cc90bda9",
-      "kind": "uses_input",
-      "metadata": {
-        "role": "hash-bound declared MES consumer source"
-      },
-      "source_ref": "558d4bcc3132da96de059e9da6480b3c317fa4a5a2cb3b09d522aaf63f6c684e",
-      "target_ref": "87fdea9292830defa3835880ee2c9d77a45b321a0f8ce83ac8e82cbf4a7383c4"
-    },
-    {
-      "edge_ref": "fa5d68c1aef4de47dc20adf5c56e5d21d37a89df154ce097eb3a642fed2df6d3",
+      "edge_ref": "fe9382d84f4349c1619684bdbd06dbd80ca4e2683a3ba20a9d09efc55484ecd6",
       "kind": "uses_input",
       "metadata": {
         "role": "diagnostic witness implementation"
       },
-      "source_ref": "558d4bcc3132da96de059e9da6480b3c317fa4a5a2cb3b09d522aaf63f6c684e",
+      "source_ref": "c57f59df8a2e70f01a113b0fa2f2c5a313d4112523d27913d8be5492e7c6c2dc",
       "target_ref": "dceedfd5e365c6953527e42338d7fd15d8f682c5a58a2f18b5059da06988da3d"
-    },
-    {
-      "edge_ref": "fd72b1be2ad2c6db5dd9fe1a62e0e42dc0c0f9551cd8cb6f437d8673751489a5",
-      "kind": "uses_input",
-      "metadata": {
-        "role": "hash-bound declared MES consumer source"
-      },
-      "source_ref": "558d4bcc3132da96de059e9da6480b3c317fa4a5a2cb3b09d522aaf63f6c684e",
-      "target_ref": "b24bdb0662971c7c04f4f7a850e9c64e0d7c01c81d4c75540c3e59351ce861fa"
     }
   ],
-  "graph_ref": "91957d10546783d6668c22a9adcd29e2f21e35e0e2f351364002db106fac7b32",
+  "graph_ref": "ae15e1e624d1b16b47d2e64b494848bded68696f0403a5ad0e3c4bbe0da7bf3f",
   "nodes": [
     {
       "axes": {
@@ -532,13 +532,13 @@
         "process_result": "PASS",
         "scientific_status": "OPEN"
       },
-      "content_sha256": "1a64facbb10a6ba999121835d9a8806d58d2056cca7dd16ff500cb491193ba4a",
-      "kind": "consumer",
-      "label": "claim_graph.test_execution_loader",
+      "content_sha256": "845f80b27a5bf16c69cac34b32729fdfc43623a6901ebf8c6d3cab44cc9320bd",
+      "kind": "config",
+      "label": "pr122_spec",
       "metadata": {
-        "path": "scripts/codex_harness/build_claim_evidence_graph.py"
+        "path": "docs/research_program/long_horizon_rescue/pr122_spec.yaml"
       },
-      "node_ref": "026cbe487d192d5665e47f8c7273d1faf6a87a81143b1be32d7dcb6f96eab1a4",
+      "node_ref": "03c8064275532e1cfea72798fce0f6145d22e3143ae9e2f410df35f53fb74d66",
       "test_execution": null
     },
     {
@@ -547,13 +547,30 @@
         "process_result": "PASS",
         "scientific_status": "OPEN"
       },
-      "content_sha256": "d8a477e1b7a02132b75a61c9ce273bfb0a20c63d4e2d3b971ce364155de13d71",
+      "content_sha256": "4f03f76158f5456ed25207f88dda8a04bb532a61013f0e469b8c370c49657f04",
       "kind": "input",
-      "label": "active_mes_consumers",
+      "label": "mes_consumer.bass.forward.doppler_boost",
       "metadata": {
-        "path": "docs/research_program/long_horizon_rescue/pr122_active_mes_consumers.yaml"
+        "consumer_id": "bass.forward.doppler_boost",
+        "path": "htt/bass/forward/doppler_boost.py"
       },
-      "node_ref": "054eddb04f87c840a7da86e92b9ca0759e710c17ee415a02d65547c944b109f9",
+      "node_ref": "0a0dddee808b4ef217ca7ed26cd9fc0b1787d726afc92259ddf25fe1868d020f",
+      "test_execution": null
+    },
+    {
+      "axes": {
+        "evidence_status": "PRESENT",
+        "process_result": "PASS",
+        "scientific_status": "OPEN"
+      },
+      "content_sha256": "49b0afc480d4a311eedbae1bfaf6b7b8076a72cc11fc43d069b758b47f1a182f",
+      "kind": "input",
+      "label": "mes_consumer.mio.formalism.budget_spec",
+      "metadata": {
+        "consumer_id": "mio.formalism.budget_spec",
+        "path": "htt/mio/formalism/budget_spec.py"
+      },
+      "node_ref": "100e772145062c547b6da1cfeac7f57e89554708c5e4aeb0b2208389bf43f1dd",
       "test_execution": null
     },
     {
@@ -573,6 +590,22 @@
         }
       },
       "node_ref": "12e5e6c42cadea6fabc759d98fb2d9b0bea1b72ca2d1a9c08ef22cfb54c198b9",
+      "test_execution": null
+    },
+    {
+      "axes": {
+        "evidence_status": "PRESENT",
+        "process_result": "PASS",
+        "scientific_status": "OPEN"
+      },
+      "content_sha256": "6eb4457c5f352f7303eb99f61e911474e6f87de1de0a243f0812847e180c8633",
+      "kind": "input",
+      "label": "mes_consumer.bass.forward.namespace",
+      "metadata": {
+        "consumer_id": "bass.forward.namespace",
+        "path": "htt/bass/forward/__init__.py"
+      },
+      "node_ref": "12fde7e86d52eab41e062c16a795bf9c46fbe66783a904a8ab6f45af1cb22862",
       "test_execution": null
     },
     {
@@ -612,65 +645,17 @@
         "process_result": "PASS",
         "scientific_status": "OPEN"
       },
-      "content_sha256": "96a5d6c3504e12d8b79d594ed985f5fef863cd9b27138abbe75a5b60e3bb7b5d",
-      "kind": "input",
-      "label": "mes_consumer.mio.core.ceiling_families",
-      "metadata": {
-        "consumer_id": "mio.core.ceiling_families",
-        "path": "htt/mio/core/ceiling_families.py"
-      },
-      "node_ref": "1cc3424f9add0fbcb98e6852adb19cda252be5fe023965b6267e656eab9d88b1",
-      "test_execution": null
-    },
-    {
-      "axes": {
-        "evidence_status": "PRESENT",
-        "process_result": "PASS",
-        "scientific_status": "OPEN"
-      },
-      "content_sha256": "cfb7705832c4f8dcde9c596f26db1f9ca18896e8c7e9450f4bb9c112a7944a4c",
-      "kind": "input",
-      "label": "mes_consumer.htt.core.departure_posteriors",
-      "metadata": {
-        "consumer_id": "htt.core.departure_posteriors",
-        "path": "htt/htt/htt/core/departure_posteriors.py"
-      },
-      "node_ref": "1de25ad670633f7a7e7e7ccff6c153ab48671f3c3ce2d80bb4ff81eee3bbaba5",
-      "test_execution": null
-    },
-    {
-      "axes": {
-        "evidence_status": "PRESENT",
-        "process_result": "PASS",
-        "scientific_status": "OPEN"
-      },
-      "content_sha256": "bd132bcc58800581cc5ee4d1607c65f7a310db8f3f60f4595b0a4b9a3d7c9325",
-      "kind": "artifact",
-      "label": "pr122_mes_successor_scan",
-      "metadata": {
-        "path": "docs/generated/pr122_mes_successor_scan.json",
-        "status": "expected_blocked_pending_PR124"
-      },
-      "node_ref": "22243d0331d417621d8b97bb0c42018f3723604c398cb866105036893d5c1c60",
-      "test_execution": null
-    },
-    {
-      "axes": {
-        "evidence_status": "BLOCKED",
-        "process_result": "PASS",
-        "scientific_status": "OPEN"
-      },
-      "content_sha256": "20cccfcd4b3ae0fc96175317674c17011de47c0ffc271c02cbe27b36ed08561c",
-      "kind": "input",
-      "label": "mes.typed-successor.pr124",
+      "content_sha256": "4e3ab3336cf7a41e0d37aa0ad3bebd904a30a22dfbb1dd0701543fc041c32fe1",
+      "kind": "claim",
+      "label": "pr122.d2_rust_authority",
       "metadata": {
         "inline_contract": {
-          "availability": "MISSING",
-          "scientific_status": "BLOCKED_PENDING_PR124",
-          "source": "htt/src/common/mes_theorem_authority.py"
+          "claim_id": "pr122.d2_rust_authority",
+          "claim_level": "roadmap_rescue_v1:C1",
+          "statement": "the PR-124 D2 receipt records a nonzero executed Rust production-path target with hash-bound sources; the dump_dl_spectrum_sparse bit-identical anchor remains a documented gap, not reproduced by this receipt"
         }
       },
-      "node_ref": "2c2e2dae2a80c4e501360702ca1b00660c6e90545e813e610d0c86a2ff7ae3a5",
+      "node_ref": "1f0f464d64608b179df027f27ecb0c8dcce643c44c6cd24320b4f390dcda87af",
       "test_execution": null
     },
     {
@@ -679,51 +664,14 @@
         "process_result": "PASS",
         "scientific_status": "OPEN"
       },
-      "content_sha256": "1a64facbb10a6ba999121835d9a8806d58d2056cca7dd16ff500cb491193ba4a",
-      "kind": "producer",
-      "label": "codex_harness.build_claim_evidence_graph",
-      "metadata": {
-        "authoritative_test_receipt_argv": [
-          "--write-test-execution"
-        ],
-        "path": "scripts/codex_harness/build_claim_evidence_graph.py",
-        "source_only_invocation": [
-          "scripts/codex_harness/run_pr122_source_only.sh",
-          "scripts/codex_harness/build_claim_evidence_graph.py"
-        ]
-      },
-      "node_ref": "348967adf4234763e88e9c189b1eb0deb3109902f60583cd3c92255329dc5e0b",
-      "test_execution": null
-    },
-    {
-      "axes": {
-        "evidence_status": "PRESENT",
-        "process_result": "PASS",
-        "scientific_status": "OPEN"
-      },
-      "content_sha256": "0628a9a23c84c8d26e500c05749c6f3d94c5d19c9f9a7f63b1438405229ea554",
-      "kind": "artifact",
-      "label": "pr122_test_execution",
-      "metadata": {
-        "path": "docs/generated/pr122_test_execution.json"
-      },
-      "node_ref": "37a355e063bce2e39b95dd2f3b643109cf3aea6e5a35fe3e8d1dcd31a418cbb6",
-      "test_execution": null
-    },
-    {
-      "axes": {
-        "evidence_status": "PRESENT",
-        "process_result": "PASS",
-        "scientific_status": "OPEN"
-      },
-      "content_sha256": "b7fcc52cfffe0433f8056512e1826015afe70b358417801ba2a8bb0f00d30586",
+      "content_sha256": "ee891940e2691426b38975dffe5f265174a5317f13f113cf75ae87ca0b2618ee",
       "kind": "input",
-      "label": "mes_consumer.htt.figures.vorticity_hierarchy",
+      "label": "mes_consumer.bass.forward.teff_mes_bounds",
       "metadata": {
-        "consumer_id": "htt.figures.vorticity_hierarchy",
-        "path": "htt/htt/htt/figures/fig_vorticity_hierarchy.py"
+        "consumer_id": "bass.forward.teff_mes_bounds",
+        "path": "htt/bass/forward/teff_mes_bounds.py"
       },
-      "node_ref": "37f48749fc0c0d2a603ea6021c23d1b2070afa3140323f4067967a67d04ff279",
+      "node_ref": "231ff3bb0c83dd38fc4e3b9d934f6928044ac514e7c0cb5473cdab95faafb177",
       "test_execution": null
     },
     {
@@ -732,94 +680,16 @@
         "process_result": "PASS",
         "scientific_status": "OPEN"
       },
-      "content_sha256": "1da9be848d8b67af3354cd4b990a866164f19bdf5555d737e5d42c3704567f5b",
-      "kind": "input",
-      "label": "mes_consumer.htt.figures.nonlinear_heatmap_vorticity_accel",
-      "metadata": {
-        "consumer_id": "htt.figures.nonlinear_heatmap_vorticity_accel",
-        "path": "htt/htt/htt/figures/fig_nonlinear_heatmap_vorticity_accel.py"
-      },
-      "node_ref": "39dfeff92b734c46c6a7b4e0be9a4b37bfb8bcafa0b3ee25721954f5e0fe0e4e",
-      "test_execution": null
-    },
-    {
-      "axes": {
-        "evidence_status": "PRESENT",
-        "process_result": "PASS",
-        "scientific_status": "OPEN"
-      },
-      "content_sha256": "57e8bd7febce6ae299f9c395d9afb868ab9a15e514d899e65327cf41b00a7175",
-      "kind": "consumer",
-      "label": "publication_claim_freeze",
-      "metadata": {
-        "path": "scripts/check_publication_claim_freeze.py"
-      },
-      "node_ref": "44b1536705889fc333098101ba5174ffcf13fb319e61c859995a56d4ee5c125d",
-      "test_execution": null
-    },
-    {
-      "axes": {
-        "evidence_status": "PRESENT",
-        "process_result": "PASS",
-        "scientific_status": "OPEN"
-      },
-      "content_sha256": "9cfb944ab0e04746f9066a6e4146bf2024183afce320734e4854f3c3e887143d",
-      "kind": "input",
-      "label": "mes_consumer.htt.figures.constraint_volume_3d",
-      "metadata": {
-        "consumer_id": "htt.figures.constraint_volume_3d",
-        "path": "htt/htt/htt/figures/fig_3D_constraint_volume.py"
-      },
-      "node_ref": "44c029712d368adc0c2844f8dbf7b3e85a8b65d7cf529fbaa9512936ea9dcb00",
-      "test_execution": null
-    },
-    {
-      "axes": {
-        "evidence_status": "PRESENT",
-        "process_result": "PASS",
-        "scientific_status": "OPEN"
-      },
-      "content_sha256": "15ae65cba4e7e5572a827723daca179731ba470da75870f0e1215f43fc6218d9",
-      "kind": "config",
-      "label": "pr122_spec",
-      "metadata": {
-        "path": "docs/research_program/long_horizon_rescue/pr122_spec.yaml"
-      },
-      "node_ref": "4dce6c0e865e063f476a36f21e4fa63f4e644be4cae1af64b0a0b1e73038ae27",
-      "test_execution": null
-    },
-    {
-      "axes": {
-        "evidence_status": "PRESENT",
-        "process_result": "PASS",
-        "scientific_status": "OPEN"
-      },
-      "content_sha256": "a7344c5d64d8c25b45082163898c0236402feca844ced3b43a6a9f86b8bed569",
-      "kind": "input",
-      "label": "mes_consumer.htt.core.bounds",
-      "metadata": {
-        "consumer_id": "htt.core.bounds",
-        "path": "htt/htt/htt/core/bounds.py"
-      },
-      "node_ref": "531e2d6a874199fc5a49973864772788f848c864316fa4b7970c5f05938aabb4",
-      "test_execution": null
-    },
-    {
-      "axes": {
-        "evidence_status": "PRESENT",
-        "process_result": "PASS",
-        "scientific_status": "OPEN"
-      },
-      "content_sha256": "911e8e63a79986e43ac41783cc27b73a9b6c69a969d7cfabbb497308dcb64663",
+      "content_sha256": "ba4eca7e3e4be69b78682dbda222705a6daaf1255e7e81e7f5cce8e3aa988b3f",
       "kind": "test",
       "label": "pr122_mutation_and_contract_suite",
       "metadata": {
-        "environment_ref": "30765a2c0c59a0174c23600b546ff77dbe1e497517d7137afadb9d19b7a62d10",
-        "file_sha256": "0628a9a23c84c8d26e500c05749c6f3d94c5d19c9f9a7f63b1438405229ea554",
+        "environment_ref": "f29c1f31bb962e849ec1628e10e0da54c75ea2c5eefc9ff5bc3f51cd7e94d70a",
+        "file_sha256": "d0fea4dcf8c8d6c65455740a1420b20f9463481bb37304712ebf727f23b68909",
         "parent_environment_receipt_sha256": "ddef2122d0730579ebe261e178e0e149d8403bde420bf05c324a1ece2eb202f3",
         "path": "docs/generated/pr122_test_execution.json"
       },
-      "node_ref": "5399a896ca48c5e08b22d59b13b9c7c9f4197cec81088b79d996fe0671888ffe",
+      "node_ref": "27b0338fb0f6f4c3cf62ff41da7ad851758c7881204571f54711452ae7e9c81f",
       "test_execution": {
         "collected_test_ids": [
           "tests/contracts/test_evidence_graph.py::test_author_and_adjudicator_must_be_distinct_before_signing",
@@ -860,9 +730,9 @@
           "tests/contracts/test_evidence_graph.py::test_zero_collection_skip_and_xfail_are_distinct_non_authority",
           "tests/contracts/test_mes_successor_registry.py::test_ast_discovery_rejects_declared_decoy_with_only_non_mes_import",
           "tests/contracts/test_mes_successor_registry.py::test_ast_discovery_reports_undeclared_exact_mes_consumer",
-          "tests/contracts/test_mes_successor_registry.py::test_available_successor_cannot_self_assert_authority_before_pr124[caller-strings]",
-          "tests/contracts/test_mes_successor_registry.py::test_available_successor_cannot_self_assert_authority_before_pr124[failed-process]",
-          "tests/contracts/test_mes_successor_registry.py::test_available_successor_cannot_self_assert_authority_before_pr124[typed-enums]",
+          "tests/contracts/test_mes_successor_registry.py::test_available_successor_shape_is_fail_closed[blocked-status]",
+          "tests/contracts/test_mes_successor_registry.py::test_available_successor_shape_is_fail_closed[failed-process]",
+          "tests/contracts/test_mes_successor_registry.py::test_available_successor_shape_is_fail_closed[malformed-receipt]",
           "tests/contracts/test_mes_successor_registry.py::test_caller_supplied_registry_is_never_a_release_trust_root",
           "tests/contracts/test_mes_successor_registry.py::test_clean_typed_consumer_has_no_pointer_or_literal_blocker",
           "tests/contracts/test_mes_successor_registry.py::test_constant_folded_dynamic_legacy_import_is_a_bypass",
@@ -871,8 +741,8 @@
           "tests/contracts/test_mes_successor_registry.py::test_copied_stale_triple_is_blocked[(3 / 4, 2, 2 / 7)]",
           "tests/contracts/test_mes_successor_registry.py::test_copied_stale_triple_is_blocked[(3. / 4, 2., 2. / 7)]",
           "tests/contracts/test_mes_successor_registry.py::test_copied_stale_triple_is_blocked[(Fraction(3, 4), Fraction(2), Fraction(2, 7))]",
-          "tests/contracts/test_mes_successor_registry.py::test_current_registry_validates_seal_and_only_blocks_successor",
-          "tests/contracts/test_mes_successor_registry.py::test_current_successor_is_explicitly_missing_and_pr124_blocked",
+          "tests/contracts/test_mes_successor_registry.py::test_current_registry_validates_clean_under_pr124_authority",
+          "tests/contracts/test_mes_successor_registry.py::test_current_successor_is_available_and_pr124_authorized",
           "tests/contracts/test_mes_successor_registry.py::test_dead_or_bare_registry_call_cannot_clear_stale_literal_blocker",
           "tests/contracts/test_mes_successor_registry.py::test_dead_pointer_cannot_clear_inline_stale_affine_formula[if-zero]",
           "tests/contracts/test_mes_successor_registry.py::test_dead_pointer_cannot_clear_inline_stale_affine_formula[never-called-function]",
@@ -883,6 +753,7 @@
           "tests/contracts/test_mes_successor_registry.py::test_egs3_import_is_process_evidence_bypass_not_authority",
           "tests/contracts/test_mes_successor_registry.py::test_egs3_pass_binds_source_and_seal_but_has_no_scientific_authority",
           "tests/contracts/test_mes_successor_registry.py::test_excluded_consumer_hash_mutation_is_a_distinct_blocker",
+          "tests/contracts/test_mes_successor_registry.py::test_foreign_receipt_string_never_carries_authority",
           "tests/contracts/test_mes_successor_registry.py::test_hash_bound_but_semantically_invalid_witness_seal_is_blocked[seal-branch-status-promoted]",
           "tests/contracts/test_mes_successor_registry.py::test_hash_bound_but_semantically_invalid_witness_seal_is_blocked[seal-required-key-missing]",
           "tests/contracts/test_mes_successor_registry.py::test_hash_bound_but_semantically_invalid_witness_seal_is_blocked[seal-status-fail]",
@@ -896,9 +767,9 @@
           "tests/contracts/test_mes_successor_registry.py::test_missing_successor_cannot_spoof_pass_or_authority",
           "tests/contracts/test_mes_successor_registry.py::test_module_alias_call_counts_as_typed_successor_consumption",
           "tests/contracts/test_mes_successor_registry.py::test_repository_inventory_roots_and_exclusions_cannot_be_overridden",
+          "tests/contracts/test_mes_successor_registry.py::test_self_asserted_successor_source_is_not_auto_promoted",
           "tests/contracts/test_mes_successor_registry.py::test_source_binding_rejects_unhashed_available_and_hashed_missing",
           "tests/contracts/test_mes_successor_registry.py::test_successor_id_and_pointer_import_are_independent_gates",
-          "tests/contracts/test_mes_successor_registry.py::test_unregistered_planned_source_presence_is_not_auto_promoted",
           "tests/contracts/test_mes_successor_registry.py::test_witness_source_and_seal_hashes_are_checked_separately",
           "tests/contracts/test_mes_successor_registry.py::test_yaml_active_hash_cannot_be_replaced_by_caller_declaration",
           "tests/contracts/test_mes_successor_registry.py::test_zero_consumer_set_cannot_pass_vacuously",
@@ -982,7 +853,7 @@
           "tests/pr_cards/test_pr_122_claim_addressed_evidence_graph_content_addressed.py::test_failed_or_tampered_pr121_environment_receipt_is_rejected",
           "tests/pr_cards/test_pr_122_claim_addressed_evidence_graph_content_addressed.py::test_pr122_authority_snapshot_is_an_immutable_exact_scope_slice"
         ],
-        "environment_ref": "30765a2c0c59a0174c23600b546ff77dbe1e497517d7137afadb9d19b7a62d10",
+        "environment_ref": "f29c1f31bb962e849ec1628e10e0da54c75ea2c5eefc9ff5bc3f51cd7e94d70a",
         "executed_test_ids": [
           "tests/contracts/test_evidence_graph.py::test_author_and_adjudicator_must_be_distinct_before_signing",
           "tests/contracts/test_evidence_graph.py::test_authority_registry_ref_binds_graph_wide_alias_topology",
@@ -1022,9 +893,9 @@
           "tests/contracts/test_evidence_graph.py::test_zero_collection_skip_and_xfail_are_distinct_non_authority",
           "tests/contracts/test_mes_successor_registry.py::test_ast_discovery_rejects_declared_decoy_with_only_non_mes_import",
           "tests/contracts/test_mes_successor_registry.py::test_ast_discovery_reports_undeclared_exact_mes_consumer",
-          "tests/contracts/test_mes_successor_registry.py::test_available_successor_cannot_self_assert_authority_before_pr124[caller-strings]",
-          "tests/contracts/test_mes_successor_registry.py::test_available_successor_cannot_self_assert_authority_before_pr124[failed-process]",
-          "tests/contracts/test_mes_successor_registry.py::test_available_successor_cannot_self_assert_authority_before_pr124[typed-enums]",
+          "tests/contracts/test_mes_successor_registry.py::test_available_successor_shape_is_fail_closed[blocked-status]",
+          "tests/contracts/test_mes_successor_registry.py::test_available_successor_shape_is_fail_closed[failed-process]",
+          "tests/contracts/test_mes_successor_registry.py::test_available_successor_shape_is_fail_closed[malformed-receipt]",
           "tests/contracts/test_mes_successor_registry.py::test_caller_supplied_registry_is_never_a_release_trust_root",
           "tests/contracts/test_mes_successor_registry.py::test_clean_typed_consumer_has_no_pointer_or_literal_blocker",
           "tests/contracts/test_mes_successor_registry.py::test_constant_folded_dynamic_legacy_import_is_a_bypass",
@@ -1033,8 +904,8 @@
           "tests/contracts/test_mes_successor_registry.py::test_copied_stale_triple_is_blocked[(3 / 4, 2, 2 / 7)]",
           "tests/contracts/test_mes_successor_registry.py::test_copied_stale_triple_is_blocked[(3. / 4, 2., 2. / 7)]",
           "tests/contracts/test_mes_successor_registry.py::test_copied_stale_triple_is_blocked[(Fraction(3, 4), Fraction(2), Fraction(2, 7))]",
-          "tests/contracts/test_mes_successor_registry.py::test_current_registry_validates_seal_and_only_blocks_successor",
-          "tests/contracts/test_mes_successor_registry.py::test_current_successor_is_explicitly_missing_and_pr124_blocked",
+          "tests/contracts/test_mes_successor_registry.py::test_current_registry_validates_clean_under_pr124_authority",
+          "tests/contracts/test_mes_successor_registry.py::test_current_successor_is_available_and_pr124_authorized",
           "tests/contracts/test_mes_successor_registry.py::test_dead_or_bare_registry_call_cannot_clear_stale_literal_blocker",
           "tests/contracts/test_mes_successor_registry.py::test_dead_pointer_cannot_clear_inline_stale_affine_formula[if-zero]",
           "tests/contracts/test_mes_successor_registry.py::test_dead_pointer_cannot_clear_inline_stale_affine_formula[never-called-function]",
@@ -1045,6 +916,7 @@
           "tests/contracts/test_mes_successor_registry.py::test_egs3_import_is_process_evidence_bypass_not_authority",
           "tests/contracts/test_mes_successor_registry.py::test_egs3_pass_binds_source_and_seal_but_has_no_scientific_authority",
           "tests/contracts/test_mes_successor_registry.py::test_excluded_consumer_hash_mutation_is_a_distinct_blocker",
+          "tests/contracts/test_mes_successor_registry.py::test_foreign_receipt_string_never_carries_authority",
           "tests/contracts/test_mes_successor_registry.py::test_hash_bound_but_semantically_invalid_witness_seal_is_blocked[seal-branch-status-promoted]",
           "tests/contracts/test_mes_successor_registry.py::test_hash_bound_but_semantically_invalid_witness_seal_is_blocked[seal-required-key-missing]",
           "tests/contracts/test_mes_successor_registry.py::test_hash_bound_but_semantically_invalid_witness_seal_is_blocked[seal-status-fail]",
@@ -1058,9 +930,9 @@
           "tests/contracts/test_mes_successor_registry.py::test_missing_successor_cannot_spoof_pass_or_authority",
           "tests/contracts/test_mes_successor_registry.py::test_module_alias_call_counts_as_typed_successor_consumption",
           "tests/contracts/test_mes_successor_registry.py::test_repository_inventory_roots_and_exclusions_cannot_be_overridden",
+          "tests/contracts/test_mes_successor_registry.py::test_self_asserted_successor_source_is_not_auto_promoted",
           "tests/contracts/test_mes_successor_registry.py::test_source_binding_rejects_unhashed_available_and_hashed_missing",
           "tests/contracts/test_mes_successor_registry.py::test_successor_id_and_pointer_import_are_independent_gates",
-          "tests/contracts/test_mes_successor_registry.py::test_unregistered_planned_source_presence_is_not_auto_promoted",
           "tests/contracts/test_mes_successor_registry.py::test_witness_source_and_seal_hashes_are_checked_separately",
           "tests/contracts/test_mes_successor_registry.py::test_yaml_active_hash_cannot_be_replaced_by_caller_declaration",
           "tests/contracts/test_mes_successor_registry.py::test_zero_consumer_set_cannot_pass_vacuously",
@@ -1117,10 +989,10 @@
           "tests/pr_cards/test_pr_122_claim_addressed_evidence_graph_content_addressed.py::test_pr122_authority_snapshot_is_an_immutable_exact_scope_slice",
           "tests/pr_cards/test_pr_122_claim_addressed_evidence_graph_content_addressed.py::test_spec_registers_every_required_false_green_mutation_and_pr4_firewall"
         ],
-        "execution_ref": "911e8e63a79986e43ac41783cc27b73a9b6c69a969d7cfabbb497308dcb64663",
+        "execution_ref": "ba4eca7e3e4be69b78682dbda222705a6daaf1255e7e81e7f5cce8e3aa988b3f",
         "framework": "pytest:9.0.3",
-        "reported_collected_count": 132,
-        "reported_executed_count": 132,
+        "reported_collected_count": 133,
+        "reported_executed_count": 133,
         "results": [
           {
             "outcome": "PASSED",
@@ -1276,15 +1148,15 @@
           },
           {
             "outcome": "PASSED",
-            "test_id": "tests/contracts/test_mes_successor_registry.py::test_available_successor_cannot_self_assert_authority_before_pr124[caller-strings]"
+            "test_id": "tests/contracts/test_mes_successor_registry.py::test_available_successor_shape_is_fail_closed[blocked-status]"
           },
           {
             "outcome": "PASSED",
-            "test_id": "tests/contracts/test_mes_successor_registry.py::test_available_successor_cannot_self_assert_authority_before_pr124[failed-process]"
+            "test_id": "tests/contracts/test_mes_successor_registry.py::test_available_successor_shape_is_fail_closed[failed-process]"
           },
           {
             "outcome": "PASSED",
-            "test_id": "tests/contracts/test_mes_successor_registry.py::test_available_successor_cannot_self_assert_authority_before_pr124[typed-enums]"
+            "test_id": "tests/contracts/test_mes_successor_registry.py::test_available_successor_shape_is_fail_closed[malformed-receipt]"
           },
           {
             "outcome": "PASSED",
@@ -1320,11 +1192,11 @@
           },
           {
             "outcome": "PASSED",
-            "test_id": "tests/contracts/test_mes_successor_registry.py::test_current_registry_validates_seal_and_only_blocks_successor"
+            "test_id": "tests/contracts/test_mes_successor_registry.py::test_current_registry_validates_clean_under_pr124_authority"
           },
           {
             "outcome": "PASSED",
-            "test_id": "tests/contracts/test_mes_successor_registry.py::test_current_successor_is_explicitly_missing_and_pr124_blocked"
+            "test_id": "tests/contracts/test_mes_successor_registry.py::test_current_successor_is_available_and_pr124_authorized"
           },
           {
             "outcome": "PASSED",
@@ -1365,6 +1237,10 @@
           {
             "outcome": "PASSED",
             "test_id": "tests/contracts/test_mes_successor_registry.py::test_excluded_consumer_hash_mutation_is_a_distinct_blocker"
+          },
+          {
+            "outcome": "PASSED",
+            "test_id": "tests/contracts/test_mes_successor_registry.py::test_foreign_receipt_string_never_carries_authority"
           },
           {
             "outcome": "PASSED",
@@ -1420,15 +1296,15 @@
           },
           {
             "outcome": "PASSED",
+            "test_id": "tests/contracts/test_mes_successor_registry.py::test_self_asserted_successor_source_is_not_auto_promoted"
+          },
+          {
+            "outcome": "PASSED",
             "test_id": "tests/contracts/test_mes_successor_registry.py::test_source_binding_rejects_unhashed_available_and_hashed_missing"
           },
           {
             "outcome": "PASSED",
             "test_id": "tests/contracts/test_mes_successor_registry.py::test_successor_id_and_pointer_import_are_independent_gates"
-          },
-          {
-            "outcome": "PASSED",
-            "test_id": "tests/contracts/test_mes_successor_registry.py::test_unregistered_planned_source_presence_is_not_auto_promoted"
           },
           {
             "outcome": "PASSED",
@@ -1652,7 +1528,7 @@
           }
         ],
         "selector": "[\"tests/contracts/test_evidence_graph.py\",\"tests/contracts/test_pytest_execution_evidence.py\",\"tests/contracts/test_mes_successor_registry.py\",\"tests/htt/test_inference_adequacy_gates.py\",\"tests/contracts/test_release_evidence_binding.py::test_data_only_pin_rejects_noncanonical_trust_root_fields\",\"tests/contracts/test_release_evidence_binding.py::test_stale_but_well_formed_release_pin_is_rejected_before_audit_disclosure\",\"tests/contracts/test_release_evidence_binding.py::test_invalid_artifact_manifest_structure_is_rejected\",\"tests/contracts/test_release_evidence_binding.py::test_graph_bound_verifier_source_drift_is_rejected\",\"tests/contracts/test_release_evidence_binding.py::test_executable_release_pin_payload_is_rejected_without_execution\",\"tests/pr_cards/test_pr_122_claim_addressed_evidence_graph_content_addressed.py::test_spec_registers_every_required_false_green_mutation_and_pr4_firewall\",\"tests/pr_cards/test_pr_122_claim_addressed_evidence_graph_content_addressed.py::test_arbitrary_readiness_field_is_rejected_at_graph_boundary\",\"tests/pr_cards/test_pr_122_claim_addressed_evidence_graph_content_addressed.py::test_failed_or_tampered_pr121_environment_receipt_is_rejected\",\"tests/pr_cards/test_pr_122_claim_addressed_evidence_graph_content_addressed.py::test_pr122_authority_snapshot_is_an_immutable_exact_scope_slice\"]",
-        "source_receipt_sha256": "308848a51478c9e0288e45a94e426016352f833edbf0c1056a26c154a43141e4"
+        "source_receipt_sha256": "1aa0e6d639f5821bd915fbc208ad355e5ef1d1030f7b6a96a203d34fbcb6d23d"
       }
     },
     {
@@ -1661,14 +1537,30 @@
         "process_result": "PASS",
         "scientific_status": "OPEN"
       },
-      "content_sha256": "20e3a7e656add2337bff88619f2b5244d867f40bd59def553671a83b2f9801a6",
+      "content_sha256": "b4298dd6288b7c42a25f9ab771df22654b2f64ab8add48ee64de64defe57927e",
+      "kind": "artifact",
+      "label": "pr122_mes_successor_scan",
+      "metadata": {
+        "path": "docs/generated/pr122_mes_successor_scan.json",
+        "status": "expected_blocked_pending_PR124"
+      },
+      "node_ref": "2cde556a3e64850f1d92aaa1e343dd7098388b29b931b031b9ad0efca45f8899",
+      "test_execution": null
+    },
+    {
+      "axes": {
+        "evidence_status": "PRESENT",
+        "process_result": "PASS",
+        "scientific_status": "OPEN"
+      },
+      "content_sha256": "faa4e3f7e0184cad556c073654c03a9dee2d4385d2e37772bd3e3e429470b9fa",
       "kind": "input",
       "label": "mes_consumer.bass.observational.beta_threshold",
       "metadata": {
         "consumer_id": "bass.observational.beta_threshold",
         "path": "htt/bass/observational/beta_threshold.py"
       },
-      "node_ref": "554b049470a1acf93bfb098c9845729616307ebb0438f008eff283b67dc30463",
+      "node_ref": "2e4bbc2607b2d1de9a3381674f9336237f21b3cc1c19b2c9ea1d58a2609c4863",
       "test_execution": null
     },
     {
@@ -1677,13 +1569,13 @@
         "process_result": "PASS",
         "scientific_status": "OPEN"
       },
-      "content_sha256": "ecd7f3999c3edd29b64820629ad9453437a52522694d309a72ea6446f4f2b970",
-      "kind": "producer",
-      "label": "common.mes_successor_registry",
+      "content_sha256": "21f831982e6e075a485c69539fe2651bd82672cdbc2eb5de0fb5056fe3ea5db7",
+      "kind": "consumer",
+      "label": "publication_claim_freeze",
       "metadata": {
-        "path": "htt/src/common/mes_successor_registry.py"
+        "path": "scripts/check_publication_claim_freeze.py"
       },
-      "node_ref": "558d4bcc3132da96de059e9da6480b3c317fa4a5a2cb3b09d522aaf63f6c684e",
+      "node_ref": "2e4f9feacdc69ce213778dd156b2cae877fd63da703b9e9fbd09fb4eb3d73b4b",
       "test_execution": null
     },
     {
@@ -1692,14 +1584,14 @@
         "process_result": "PASS",
         "scientific_status": "OPEN"
       },
-      "content_sha256": "956dc739d193c85b1ef5cf08bfbd7e66532f28be9375980b6b8319eb3d379ac2",
+      "content_sha256": "86abda3ab073700cd3f8382617821093c4dad7b04d03ce5bf5cc2bbbd2e8afe9",
       "kind": "input",
-      "label": "mes_consumer.htt.figures.mes_three_bounds",
+      "label": "mes_consumer.htt.core.departure_posteriors",
       "metadata": {
-        "consumer_id": "htt.figures.mes_three_bounds",
-        "path": "htt/htt/htt/figures/fig_MES_three_bounds.py"
+        "consumer_id": "htt.core.departure_posteriors",
+        "path": "htt/htt/htt/core/departure_posteriors.py"
       },
-      "node_ref": "5860f4ae49d999316f6bf756b8b42f56623b8ed131e052adb28409d8d033544c",
+      "node_ref": "354dc51543f1937af7b9f721d13da9ec86f45c58865208194bc86a79f0ee5a14",
       "test_execution": null
     },
     {
@@ -1708,14 +1600,62 @@
         "process_result": "PASS",
         "scientific_status": "OPEN"
       },
-      "content_sha256": "e2c8dea7f2d57fc72dfcc01c9440a72db20dad1ab436f8dab5dbd82de2333929",
+      "content_sha256": "face5b75033a109179cf1f33c257141b40c7ea888dfc603022323007f3972cb5",
       "kind": "input",
-      "label": "mes_consumer.bass.forward.doppler_boost",
+      "label": "mes_consumer.htt.figures.type_by_type_summary",
       "metadata": {
-        "consumer_id": "bass.forward.doppler_boost",
-        "path": "htt/bass/forward/doppler_boost.py"
+        "consumer_id": "htt.figures.type_by_type_summary",
+        "path": "htt/htt/htt/figures/fig_type_by_type_summary.py"
       },
-      "node_ref": "5b7a50533b97d3c3ac8c803006878ae63ddc283d66d20a3fb2052a0d13cf9b37",
+      "node_ref": "3c5c6f4167cb24f0e81e0f911aa4e9f4e6eff3cd3b8e395adb8a92cd15b56857",
+      "test_execution": null
+    },
+    {
+      "axes": {
+        "evidence_status": "PRESENT",
+        "process_result": "PASS",
+        "scientific_status": "OPEN"
+      },
+      "content_sha256": "87fda67ef4135f962f5d57344bafdcc4e489d6ada0636ebe0957d5e3a99dddc9",
+      "kind": "input",
+      "label": "mes_consumer.htt.figures.projection_atlas_4d",
+      "metadata": {
+        "consumer_id": "htt.figures.projection_atlas_4d",
+        "path": "htt/htt/htt/figures/fig_4D_projection_atlas.py"
+      },
+      "node_ref": "40d417e0db5663d17ba769ea2ccdf238bdee88f712162191243d1a69596f2a1a",
+      "test_execution": null
+    },
+    {
+      "axes": {
+        "evidence_status": "PRESENT",
+        "process_result": "PASS",
+        "scientific_status": "OPEN"
+      },
+      "content_sha256": "bbbb4f6ad6350316524b3f2b0f85489e9b140fa5e86a34c24ba81de39e0cf0c8",
+      "kind": "input",
+      "label": "mes_consumer.htt.core.namespace",
+      "metadata": {
+        "consumer_id": "htt.core.namespace",
+        "path": "htt/htt/htt/core/__init__.py"
+      },
+      "node_ref": "41457a2267cc98fa82d9d4f65e42f6cfca0d27269ba732b6220a616045040577",
+      "test_execution": null
+    },
+    {
+      "axes": {
+        "evidence_status": "PRESENT",
+        "process_result": "PASS",
+        "scientific_status": "OPEN"
+      },
+      "content_sha256": "fec33e6fcd768abc809563731ac3828764324a4bd278afb3b5eb0be0ae0c2953",
+      "kind": "input",
+      "label": "mes_consumer.bass.atlas.budget_ceiling_optimizer",
+      "metadata": {
+        "consumer_id": "bass.atlas.budget_ceiling_optimizer",
+        "path": "htt/bass/atlas/budget_ceiling_optimizer.py"
+      },
+      "node_ref": "5f26a635559a44773be44c6330c929855403667584a827a24967a739cbee3704",
       "test_execution": null
     },
     {
@@ -1739,14 +1679,20 @@
         "process_result": "PASS",
         "scientific_status": "OPEN"
       },
-      "content_sha256": "183c20564e33d823fe759e194de8434b1f69ba2cf9f7efe104cef2cab74e320a",
+      "content_sha256": "a9e1fd7b193a9b63900aba1d16f7b385aa0880342666f9a8d3793ab4f6afd300",
       "kind": "input",
-      "label": "mes_consumer.htt.figures.projection_atlas_4d",
+      "label": "d2.rust-target.pr124",
       "metadata": {
-        "consumer_id": "htt.figures.projection_atlas_4d",
-        "path": "htt/htt/htt/figures/fig_4D_projection_atlas.py"
+        "inline_contract": {
+          "availability": "AVAILABLE",
+          "claim_boundary": "nonzero executed production-path receipt; the dump_dl_spectrum_sparse bit-identical anchor remains a documented gap, not reproduced by this receipt",
+          "process_result": "PASS",
+          "receipt_path": "docs/generated/pr124_d2_authority_receipt.json",
+          "receipt_sha256": "d0d11f95e006da19f4c56239a273d58e8354757f007fff2e187cba47e1754db3",
+          "scientific_status": "EXECUTED_NONZERO_CONDITIONAL_C1"
+        }
       },
-      "node_ref": "6b4aa847cafd350acec9bd6bea073de96590cbba9bd7fd1b9ba8e17f50fdb6b9",
+      "node_ref": "794fc8e36c1a3a33be2d662a23d7923da226446ae6406574a3f75df06f697441",
       "test_execution": null
     },
     {
@@ -1755,45 +1701,17 @@
         "process_result": "PASS",
         "scientific_status": "OPEN"
       },
-      "content_sha256": "60889a484e207cc98186cb19e48edda62a23078ff8e9ef6e418c661e91ca7bbb",
-      "kind": "input",
-      "label": "mes_consumer.htt.figures.sigma_accel_contour",
+      "content_sha256": "ea592b442d85641a1df98203458a12197b817709b8807fc1735cefd2597cc220",
+      "kind": "claim",
+      "label": "pr122.mes_release_authority",
       "metadata": {
-        "consumer_id": "htt.figures.sigma_accel_contour",
-        "path": "htt/htt/htt/figures/fig_sigma_accel_contour.py"
+        "inline_contract": {
+          "claim_id": "pr122.mes_release_authority",
+          "claim_level": "roadmap_rescue_v1:C1",
+          "statement": "the PR-124 typed successor is authorized at conditional C1; active consumers traverse it with zero stale triples, and claim release stays gated by the remediation state"
+        }
       },
-      "node_ref": "6d2e7cc52cceaffa5f1c902fbd06b06102164182e1a4fd0cb163448324f0eaf9",
-      "test_execution": null
-    },
-    {
-      "axes": {
-        "evidence_status": "PRESENT",
-        "process_result": "PASS",
-        "scientific_status": "OPEN"
-      },
-      "content_sha256": "9cd1d2ba2bfc5083d28fae36d0c35027890c1bd9a52f4ff446bcd26d0c7a1a89",
-      "kind": "input",
-      "label": "mes_consumer.htt.core.namespace",
-      "metadata": {
-        "consumer_id": "htt.core.namespace",
-        "path": "htt/htt/htt/core/__init__.py"
-      },
-      "node_ref": "8267b67d23f13b9608b4dce19d7c0416715ebd793b4ddf40dcd02a3915e3a413",
-      "test_execution": null
-    },
-    {
-      "axes": {
-        "evidence_status": "PRESENT",
-        "process_result": "PASS",
-        "scientific_status": "OPEN"
-      },
-      "content_sha256": "9dd8d155b1a09eda7a360179ce76db6ad7e3b43ced8236b03742dbf456309ce9",
-      "kind": "consumer",
-      "label": "external_audit_package",
-      "metadata": {
-        "path": "scripts/build_external_audit_package.py"
-      },
-      "node_ref": "84b2de51c64ab216ff9646c8422cdb460a39c14223e6e4ec69aaab5dc3e96a89",
+      "node_ref": "8039252828b967e8b54943ca7a933cd56b9b3c558cddad0e539eafc84a9c04ab",
       "test_execution": null
     },
     {
@@ -1818,14 +1736,14 @@
         "process_result": "PASS",
         "scientific_status": "OPEN"
       },
-      "content_sha256": "5b507fec0ef16a6351938ee638f6a9f247d1a83d1c173ffc5217dc421e7e88a1",
+      "content_sha256": "7946a9359a3459448b1508d95aa7204fdfe36de5598352d9c14605fd5eeadefb",
       "kind": "input",
-      "label": "mes_consumer.bass.observational.planck_mes_bounds",
+      "label": "mes_consumer.htt.core.analysis_extended",
       "metadata": {
-        "consumer_id": "bass.observational.planck_mes_bounds",
-        "path": "htt/bass/observational/planck_mes_bounds.py"
+        "consumer_id": "htt.core.analysis_extended",
+        "path": "htt/htt/htt/core/analysis_extended.py"
       },
-      "node_ref": "87fdea9292830defa3835880ee2c9d77a45b321a0f8ce83ac8e82cbf4a7383c4",
+      "node_ref": "895ea8980fd45164d33f3af6389e6e084125106992ba1ebd5d5c370c9762d93e",
       "test_execution": null
     },
     {
@@ -1855,42 +1773,14 @@
         "process_result": "PASS",
         "scientific_status": "OPEN"
       },
-      "content_sha256": "b56df2da29313c27de19d4b7d751becd4532148b51fd73843434e200a909d4eb",
+      "content_sha256": "61b245cce5119e9c8b819a680cdd58f7a0e6959e4d5c813937aeed99928ac4a4",
       "kind": "input",
-      "label": "mes_consumer.bass.forward.teff_mes_bounds",
+      "label": "mes_consumer.htt.figures.sigma_accel_contour",
       "metadata": {
-        "consumer_id": "bass.forward.teff_mes_bounds",
-        "path": "htt/bass/forward/teff_mes_bounds.py"
+        "consumer_id": "htt.figures.sigma_accel_contour",
+        "path": "htt/htt/htt/figures/fig_sigma_accel_contour.py"
       },
-      "node_ref": "99f3abb1f35dcb776cbfbae105fc0387c4886a9fee550a956c4d8508a97d4bbb",
-      "test_execution": null
-    },
-    {
-      "axes": {
-        "evidence_status": "BLOCKED",
-        "process_result": "NOT_RUN",
-        "scientific_status": "BLOCKED"
-      },
-      "content_sha256": "c8394fd68f85a1d5ae949c7f3e22c1f5be20665ec14c8a97562873749c3925a6",
-      "kind": "input",
-      "label": "d2.rust-target.pr124",
-      "metadata": {
-        "inline_contract": {
-          "availability": "MISSING",
-          "process_result": "NOT_RUN",
-          "required": [
-            "nonzero_rust_target_identity",
-            "source_hash",
-            "input_hashes",
-            "toolchain_lock",
-            "collected_test_ids",
-            "executed_test_ids",
-            "independent_execution_receipt"
-          ],
-          "scientific_status": "BLOCKED_PENDING_PR124"
-        }
-      },
-      "node_ref": "9da983759570e7cf63e233428c17038861e127a46ff3291c7ea67ef4f255e120",
+      "node_ref": "9551f9b308386315a4b3fcf7218ab5996ee5c63c644fbfe3441a9ed934278bc0",
       "test_execution": null
     },
     {
@@ -1899,14 +1789,13 @@
         "process_result": "PASS",
         "scientific_status": "OPEN"
       },
-      "content_sha256": "14cada3214984e2ffea58c9c820b98c16192e5628e30bbffc02c2926c86f867b",
+      "content_sha256": "1c2e9a3d4fd5cc8f77d6b06c1dc1082c748c10c8fc4d0232aa4b67886a130bb0",
       "kind": "input",
-      "label": "mes_consumer.bass.forward.namespace",
+      "label": "active_mes_consumers",
       "metadata": {
-        "consumer_id": "bass.forward.namespace",
-        "path": "htt/bass/forward/__init__.py"
+        "path": "docs/research_program/long_horizon_rescue/pr122_active_mes_consumers.yaml"
       },
-      "node_ref": "b23e417c690b7b8938eb860fc2269da0ac175cb44b1a14b34058f9098ae4d4a2",
+      "node_ref": "9c18e2ee063b0a99c1ff893afea364a4285fc7795d685560dd79b37d07be2736",
       "test_execution": null
     },
     {
@@ -1915,14 +1804,30 @@
         "process_result": "PASS",
         "scientific_status": "OPEN"
       },
-      "content_sha256": "17401d64eda8e810751cc4a8bd9f9fe07be61e5854b26939457a8cf6c3fa71bf",
+      "content_sha256": "e06c1f8659452724054a43a073a969f1c6b17095fb9c0aefb2e6cf5f6491a7e3",
+      "kind": "input",
+      "label": "mes_consumer.bass.observational.planck_mes_bounds",
+      "metadata": {
+        "consumer_id": "bass.observational.planck_mes_bounds",
+        "path": "htt/bass/observational/planck_mes_bounds.py"
+      },
+      "node_ref": "a6c7530fcff3b09906fb92a89da44710aa64295e29d008447a8e6f099d86d999",
+      "test_execution": null
+    },
+    {
+      "axes": {
+        "evidence_status": "PRESENT",
+        "process_result": "PASS",
+        "scientific_status": "OPEN"
+      },
+      "content_sha256": "42e3c5a3dd30d7584c8e00c8b4ddb570239366b6087f0fe8d1fff1f8b4e5974f",
       "kind": "input",
       "label": "mes_consumer.htt.figures.sigma_omega_contour",
       "metadata": {
         "consumer_id": "htt.figures.sigma_omega_contour",
         "path": "htt/htt/htt/figures/fig_sigma_omega_contour.py"
       },
-      "node_ref": "b24bdb0662971c7c04f4f7a850e9c64e0d7c01c81d4c75540c3e59351ce861fa",
+      "node_ref": "b117f71589d6fe996beadd4fe650d1abce02c291adf7e54e9131a98af8484364",
       "test_execution": null
     },
     {
@@ -1931,68 +1836,14 @@
         "process_result": "PASS",
         "scientific_status": "OPEN"
       },
-      "content_sha256": "4688124f87a1648f9886a412ba28adf94cb26c694a658cdb7e84ae6a60732ce4",
-      "kind": "claim",
-      "label": "pr122.d2_rust_authority",
-      "metadata": {
-        "inline_contract": {
-          "claim_id": "pr122.d2_rust_authority",
-          "claim_level": "roadmap_rescue_v1:C1",
-          "statement": "D2 Rust authority remains blocked until PR-124 supplies a nonzero independently verified target and execution receipt"
-        }
-      },
-      "node_ref": "b4618df02940e3176a0fde9b93b6e2e7bb2d2f15a5070918dc258e2436622e9d",
-      "test_execution": null
-    },
-    {
-      "axes": {
-        "evidence_status": "PRESENT",
-        "process_result": "PASS",
-        "scientific_status": "OPEN"
-      },
-      "content_sha256": "da2855f5f23b5ef7df29ec2ba4984784d442cbf0f7b346477ded979b051e068c",
-      "kind": "input",
-      "label": "mes_consumer.htt.figures.type_by_type_summary",
-      "metadata": {
-        "consumer_id": "htt.figures.type_by_type_summary",
-        "path": "htt/htt/htt/figures/fig_type_by_type_summary.py"
-      },
-      "node_ref": "bb1336edf629d9e8e313f0a6c4d62c8fc01e8155050b095255c4c9b94cae3c95",
-      "test_execution": null
-    },
-    {
-      "axes": {
-        "evidence_status": "PRESENT",
-        "process_result": "PASS",
-        "scientific_status": "OPEN"
-      },
-      "content_sha256": "2d6708459bfb4936933b45ecd6f5aa2cdab6f10e29dd37045f60fef4b3fe7940",
-      "kind": "claim",
-      "label": "pr122.mes_release_authority",
-      "metadata": {
-        "inline_contract": {
-          "claim_id": "pr122.mes_release_authority",
-          "claim_level": "roadmap_rescue_v1:C1",
-          "statement": "active MES release remains blocked until the PR-124 typed successor is authorized"
-        }
-      },
-      "node_ref": "c1a7c9f82601c5b4c1f8231eccad9df5092e104a4e45a38306aaf7fbc01b1d58",
-      "test_execution": null
-    },
-    {
-      "axes": {
-        "evidence_status": "PRESENT",
-        "process_result": "PASS",
-        "scientific_status": "OPEN"
-      },
-      "content_sha256": "c52de64b814731cb6ced432a6a089e82aa39db7fca424cb45a6196c29e6ceb30",
+      "content_sha256": "b83b8fb1ccdf3e68979a77d7aefd44243f0140f98e1c0eb6400e0c6f40ef1f3c",
       "kind": "input",
       "label": "mes_consumer.htt.core.evidence_models_R03a",
       "metadata": {
         "consumer_id": "htt.core.evidence_models_R03a",
         "path": "htt/htt/htt/core/evidence_models_R03a.py"
       },
-      "node_ref": "db554df296adddf721db362c5e7ad457bb6753f6855e64dd1cac38abafe37c44",
+      "node_ref": "b1322ea8f19bbeedf2e6fdd305512fa39f1b51fe7b2753c98e2b77e76efd5afb",
       "test_execution": null
     },
     {
@@ -2001,14 +1852,13 @@
         "process_result": "PASS",
         "scientific_status": "OPEN"
       },
-      "content_sha256": "af3ea2eb6817ce56cbf1d870de6f53a7814ea949902ba43a1ab0612842967cae",
-      "kind": "input",
-      "label": "mes_consumer.bass.atlas.budget_ceiling_optimizer",
+      "content_sha256": "c5f50c92b2f502cedb7c8ccb223993f0648c61de077c6c70e71520c2c4a88704",
+      "kind": "consumer",
+      "label": "claim_graph.test_execution_loader",
       "metadata": {
-        "consumer_id": "bass.atlas.budget_ceiling_optimizer",
-        "path": "htt/bass/atlas/budget_ceiling_optimizer.py"
+        "path": "scripts/codex_harness/build_claim_evidence_graph.py"
       },
-      "node_ref": "dc34057ae7d8eba5777aa79a151e7942a32869738599e5f899d4179438f6acef",
+      "node_ref": "b66ba888b64aaf09c20dad7f23d92929b5c06922d526b1573dbef40b20da32ee",
       "test_execution": null
     },
     {
@@ -2017,14 +1867,76 @@
         "process_result": "PASS",
         "scientific_status": "OPEN"
       },
-      "content_sha256": "e836268d37323288d4b9e6bc3442f8eab2b3928ac6ebc91b7caef46d6210166a",
-      "kind": "input",
-      "label": "mes_consumer.mio.formalism.budget_spec",
+      "content_sha256": "13b844b086f954d841dd6d3e38bbca9ef226ab07dac91f17beb0296c03fae72a",
+      "kind": "producer",
+      "label": "common.mes_successor_registry",
       "metadata": {
-        "consumer_id": "mio.formalism.budget_spec",
-        "path": "htt/mio/formalism/budget_spec.py"
+        "path": "htt/src/common/mes_successor_registry.py"
       },
-      "node_ref": "dc44fd972525d4c8cbf9d16019a3f606e2db4a28e9205f83aa4d08235cc93179",
+      "node_ref": "c57f59df8a2e70f01a113b0fa2f2c5a313d4112523d27913d8be5492e7c6c2dc",
+      "test_execution": null
+    },
+    {
+      "axes": {
+        "evidence_status": "PRESENT",
+        "process_result": "PASS",
+        "scientific_status": "OPEN"
+      },
+      "content_sha256": "4e57adcaa6bfef1353ab143c33090984da418df6ff6685f06d023df4285e19f1",
+      "kind": "input",
+      "label": "mes_consumer.mio.core.ceiling_families",
+      "metadata": {
+        "consumer_id": "mio.core.ceiling_families",
+        "path": "htt/mio/core/ceiling_families.py"
+      },
+      "node_ref": "c5af54b70f418772e4d9f7753f848cc7b738c71d6f6b288a0a6c6df8719d8a48",
+      "test_execution": null
+    },
+    {
+      "axes": {
+        "evidence_status": "PRESENT",
+        "process_result": "PASS",
+        "scientific_status": "OPEN"
+      },
+      "content_sha256": "d0fea4dcf8c8d6c65455740a1420b20f9463481bb37304712ebf727f23b68909",
+      "kind": "artifact",
+      "label": "pr122_test_execution",
+      "metadata": {
+        "path": "docs/generated/pr122_test_execution.json"
+      },
+      "node_ref": "c8baf620f98f1f779c3b94bb52a1e9964b4683575c028cb8f28c2a21996dad44",
+      "test_execution": null
+    },
+    {
+      "axes": {
+        "evidence_status": "PRESENT",
+        "process_result": "PASS",
+        "scientific_status": "OPEN"
+      },
+      "content_sha256": "c78c36be6c50aa8d9346d83af5bf02c400c54c2183ce2dd7d3b7256e66b7d494",
+      "kind": "input",
+      "label": "mes_consumer.htt.figures.mes_three_bounds",
+      "metadata": {
+        "consumer_id": "htt.figures.mes_three_bounds",
+        "path": "htt/htt/htt/figures/fig_MES_three_bounds.py"
+      },
+      "node_ref": "cafe18707f2b82f7e2d6ed82ffcd118f14dc74be4e6738c7168b7034988ca275",
+      "test_execution": null
+    },
+    {
+      "axes": {
+        "evidence_status": "PRESENT",
+        "process_result": "PASS",
+        "scientific_status": "OPEN"
+      },
+      "content_sha256": "9ef8a57b61e68ebb8977a5650cf9eb732f3fa1bd0d513bfeabde59062116cdeb",
+      "kind": "input",
+      "label": "mes_consumer.htt.core.bounds",
+      "metadata": {
+        "consumer_id": "htt.core.bounds",
+        "path": "htt/htt/htt/core/bounds.py"
+      },
+      "node_ref": "d7440272af8fb423982473632fb3f763ad499ba6a85a1676570769371c0b5202",
       "test_execution": null
     },
     {
@@ -2049,14 +1961,14 @@
         "process_result": "PASS",
         "scientific_status": "OPEN"
       },
-      "content_sha256": "2ab9b79aae458e202accf3740d6b5fe127ea39520c52e78893d27362140d1783",
+      "content_sha256": "67ce36f51a4ae2cafac0b4b5cb10bb5105aac6c2fcd60492aaf238e21f5f465b",
       "kind": "input",
       "label": "mes_consumer.htt.core.teff_extended",
       "metadata": {
         "consumer_id": "htt.core.teff_extended",
         "path": "htt/htt/htt/core/teff_extended.py"
       },
-      "node_ref": "dd1065e3f0583d3b01e329cf77f46f0b9959dcb86d8bfde2e8b598859a3b2faa",
+      "node_ref": "de81bd60c33d103516461713d88319ab861f4de957396ad183d4c601975da4c4",
       "test_execution": null
     },
     {
@@ -2065,14 +1977,52 @@
         "process_result": "PASS",
         "scientific_status": "OPEN"
       },
-      "content_sha256": "c23e48691098b6d7618b4d091721196437ec5062b6eb8b40febfca90ff333807",
+      "content_sha256": "4e0158d2a49299b5b1cb1f5837d3b54aefcc0033f44939349a4a49fe0dc0ef18",
       "kind": "input",
-      "label": "mes_consumer.htt.core.analysis_extended",
+      "label": "mes_consumer.htt.figures.nonlinear_heatmap_vorticity_accel",
       "metadata": {
-        "consumer_id": "htt.core.analysis_extended",
-        "path": "htt/htt/htt/core/analysis_extended.py"
+        "consumer_id": "htt.figures.nonlinear_heatmap_vorticity_accel",
+        "path": "htt/htt/htt/figures/fig_nonlinear_heatmap_vorticity_accel.py"
       },
-      "node_ref": "e6440cf91f54f7032c552befcff54e5c50d8479e97e59f056154a23b4632f7a7",
+      "node_ref": "e542641380d301e0de16a9136b3386913a406003c92a956d980a02fea6886101",
+      "test_execution": null
+    },
+    {
+      "axes": {
+        "evidence_status": "PRESENT",
+        "process_result": "PASS",
+        "scientific_status": "OPEN"
+      },
+      "content_sha256": "d9e12c1df71942ccf420cfbc612579e6896b63109c39040fe29dbf7b6d1fbe0d",
+      "kind": "consumer",
+      "label": "external_audit_package",
+      "metadata": {
+        "path": "scripts/build_external_audit_package.py"
+      },
+      "node_ref": "e693823770dd3a10d249b952edc9b2273a9c768427415b492bd397f6ff467401",
+      "test_execution": null
+    },
+    {
+      "axes": {
+        "evidence_status": "PRESENT",
+        "process_result": "PASS",
+        "scientific_status": "OPEN"
+      },
+      "content_sha256": "d851461b13e6a17e4416f617d33bd827e670afe4915ebf712abf2ee565cd5faa",
+      "kind": "input",
+      "label": "mes.typed-successor.pr124",
+      "metadata": {
+        "inline_contract": {
+          "authority_receipt_path": "docs/generated/pr124_mes_authority_table.json",
+          "authority_receipt_sha256": "81ad8c382fbe481eaf715b971680199fed5142e2498928cff57ae9d847cc20f3",
+          "availability": "AVAILABLE",
+          "claim_boundary": "governance authorization at conditional C1 only; validates no observed result and rescues no remediation finding",
+          "scientific_status": "AUTHORIZED_BY_PR124_CONDITIONAL_C1",
+          "source": "htt/src/common/mes_theorem_authority.py",
+          "source_sha256": "d149d8599eba65dd1af536d30f289466b642e990bd8cee6cc8639566ab787af8"
+        }
+      },
+      "node_ref": "e7f6a9c0fc4715cde0d493c2e9f261da4f948dae928184eeff96fe57d6601dd1",
       "test_execution": null
     },
     {
@@ -2088,6 +2038,60 @@
         "path": "docs/research_program/long_horizon_rescue/pr122_authority_snapshot.yaml"
       },
       "node_ref": "ee353b3dd297231336748d630a8527962068b015473a5bd363f8e89c7612f320",
+      "test_execution": null
+    },
+    {
+      "axes": {
+        "evidence_status": "PRESENT",
+        "process_result": "PASS",
+        "scientific_status": "OPEN"
+      },
+      "content_sha256": "c5f50c92b2f502cedb7c8ccb223993f0648c61de077c6c70e71520c2c4a88704",
+      "kind": "producer",
+      "label": "codex_harness.build_claim_evidence_graph",
+      "metadata": {
+        "authoritative_test_receipt_argv": [
+          "--write-test-execution"
+        ],
+        "path": "scripts/codex_harness/build_claim_evidence_graph.py",
+        "source_only_invocation": [
+          "scripts/codex_harness/run_pr122_source_only.sh",
+          "scripts/codex_harness/build_claim_evidence_graph.py"
+        ]
+      },
+      "node_ref": "ee9f8524a38c63ed29746a5c025f935e41f5ce198198b761192f4a872426a317",
+      "test_execution": null
+    },
+    {
+      "axes": {
+        "evidence_status": "PRESENT",
+        "process_result": "PASS",
+        "scientific_status": "OPEN"
+      },
+      "content_sha256": "aaaa365750dc107e0c27f34839e4119fa6ac31ea22b18329c076ed9fd9137dca",
+      "kind": "input",
+      "label": "mes_consumer.htt.figures.constraint_volume_3d",
+      "metadata": {
+        "consumer_id": "htt.figures.constraint_volume_3d",
+        "path": "htt/htt/htt/figures/fig_3D_constraint_volume.py"
+      },
+      "node_ref": "f299c6a246901e660f4ad80daba19b9e2698a6e2e63c635a1ee7c493fa8b53b7",
+      "test_execution": null
+    },
+    {
+      "axes": {
+        "evidence_status": "PRESENT",
+        "process_result": "PASS",
+        "scientific_status": "OPEN"
+      },
+      "content_sha256": "71530d4d92622551105adadd5dd4a968642af6f153533a88620ce9d4b9cfb1b6",
+      "kind": "input",
+      "label": "mes_consumer.htt.figures.vorticity_hierarchy",
+      "metadata": {
+        "consumer_id": "htt.figures.vorticity_hierarchy",
+        "path": "htt/htt/htt/figures/fig_vorticity_hierarchy.py"
+      },
+      "node_ref": "f31db56ef42ae575d6943cccc5abcd46520cac0e146d45a6b61fae03f191f452",
       "test_execution": null
     },
     {
@@ -2126,14 +2130,14 @@
         "process_result": "PASS",
         "scientific_status": "OPEN"
       },
-      "content_sha256": "927bf019090796c4544f7a6c9b47db77b7e5da1b9de127d0de55e38acfd2cffb",
+      "content_sha256": "a3cbba6f9239d1e13b54b07eebdf468c92648dd1605d252958df977c6fed6367",
       "kind": "producer",
       "label": "common.release_evidence_binding",
       "metadata": {
         "path": "htt/src/common/release_evidence_binding.py",
         "trust_role": "graph-bound verifier implementation"
       },
-      "node_ref": "ff9f4e351b0b1aefbf2a1146c0462c3c6e7a0b6c5a88f22b61aff59f486e3c83",
+      "node_ref": "fc574f7245b6cfa489d6e0f2d45006a29c0c68ee9bf0be4b36cc03a2c1457c79",
       "test_execution": null
     }
   ],

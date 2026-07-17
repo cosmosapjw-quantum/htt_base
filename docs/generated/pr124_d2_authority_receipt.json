@@ -1,0 +1,31 @@
+{
+  "derivation_stream_separation": "Rust MB-95 synchronous-gauge CAMB-convention Boltzmann hierarchy (Ma-Bertschinger 1995 lineage) vs Python PSTF 1+3 covariant hierarchy (Ellis-van Elst lineage); the Python route-B anchor constants are frozen-pinned and bit-identical-enforced",
+  "documented_anchor_gap": "the bit-identical production anchor D_2 = 1002.086744 uK^2 is enforced by the bass_rs dump_dl_spectrum_sparse configuration, which is not present as an executable binary in this repository; the executed Rust receipt in this PR uses the in-tree production-path test configuration (test_dl_200k: lmax_g=16, n_k=200) and records its own nonzero D_2. The receipt claims execution of the MB-95 production path, not bit-identical reproduction of the 1002.086744 anchor. Claiming the latter from this receipt is forbidden.",
+  "pstf_python_closure_status": "xfail_open_PR-024c_recorded_not_executed_here",
+  "python_anchor": {
+    "bit_identical_rule": "numpy allclose atol=0 rtol=0 (golden-pinned)",
+    "golden_path": "htt/bass/validation/_d2_anchor_golden.json",
+    "golden_sha256": "4ba806602992b6d9be07586e46f0bd2cd621bdc4ff0389e8ac49a4b02cd0233d",
+    "test_path": "htt/bass/validation/test_d2_regression_anchor.py",
+    "test_sha256": "a435eebd2344ea2f32b7f0b4e90ed298a2e9555528c7355056bb97e211094d66",
+    "tests_collected": 6,
+    "tests_passed": 6
+  },
+  "rust_target": {
+    "cargo_manifest_path": "Cargo.toml",
+    "cargo_manifest_sha256": "edefba17d7d7f7565a381bbe65f9de359dce5704d49786669526802c336a58ed",
+    "command": "cargo test --release --lib solver::sync_gauge_camb::test_dl_200k -- --exact --nocapture",
+    "config_note": "test_dl_200k production-path configuration (lmax_g=16, n_k=200); NOT the dump_dl_spectrum_sparse anchor configuration",
+    "d2_value_uK2": 978.6,
+    "source_path": "src/solver/sync_gauge_camb.rs",
+    "source_sha256": "e031d3b20e0e1c521945e939dfdd7850c6c694728d4c9903a598e0a275cbeaf2",
+    "tests_collected": 1,
+    "tests_failed": 0,
+    "tests_passed": 1,
+    "toolchain": "cargo 1.94.1 (29ea6fb6a 2026-03-24) / rustc 1.94.1 (e408947bf 2026-03-25)",
+    "transcript_path": "docs/audits/pr124_d2_authority/rust_test_dl_200k_20260717.log",
+    "transcript_sha256": "fbdc8bfb6ac4d651bdc0fa1c9d26fa2a61ab137e195a219e8aeb480073e90c7d"
+  },
+  "schema": "pr124.d2_authority_receipt.v1",
+  "transcript_evidence_class": "hash-bound local execution disclosure produced by this runner (--run-rust); NOT a remote attestation — fabrication is excluded by process discipline, not cryptography"
+}

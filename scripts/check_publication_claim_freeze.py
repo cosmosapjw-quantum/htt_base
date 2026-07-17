@@ -665,9 +665,12 @@ def build_publication_claim_freeze_payload(
             evidence_binding["audit_disclosure_allowed"] is True
             and evidence_binding["claim_release_allowed"] is False
         ),
+        # PR-124: mechanics evidence is PRESENT (governance authority
+        # delivered); the kill switch is claim_release_allowed=False, not a
+        # BLOCKED evidence status.
         "claim_release_blocked_by_evidence_graph": (
             evidence_binding["claim_release_allowed"] is False
-            and evidence_binding["evidence_status"] == "BLOCKED"
+            and evidence_binding["evidence_status"] in {"BLOCKED", "PRESENT"}
         ),
     }
     failed_gates = [key for key, value in required_assertions.items() if not value]

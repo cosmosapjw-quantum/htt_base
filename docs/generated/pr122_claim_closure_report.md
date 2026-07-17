@@ -5,66 +5,70 @@ implementation_scope: common
 claim_tier: exploratory
 claim_level: roadmap_rescue_v1:C1
 transfer_source: none
-config_hash: `15ae65cba4e7e5572a827723daca179731ba470da75870f0e1215f43fc6218d9`
+config_hash: `845f80b27a5bf16c69cac34b32729fdfc43623a6901ebf8c6d3cab44cc9320bd`
 input_hashes:
 - `docs/generated/mes_branch_registry_seal.json:89dc03551342e89b277790fa50707097d314e0bce9c4b04e8260bbcb76930c04`
 - `docs/generated/pr121_hermetic_replay_receipt.json:ddef2122d0730579ebe261e178e0e149d8403bde420bf05c324a1ece2eb202f3`
-- `docs/generated/pr122_test_execution.json:0628a9a23c84c8d26e500c05749c6f3d94c5d19c9f9a7f63b1438405229ea554`
+- `docs/generated/pr122_test_execution.json:d0fea4dcf8c8d6c65455740a1420b20f9463481bb37304712ebf727f23b68909`
+- `docs/generated/pr124_cas_adjudication.json:59ab201c65a55a5e22286be394aa4b4e9caaa9fdbda4ced9eb59a1d98607fcd7`
+- `docs/generated/pr124_d2_authority_receipt.json:d0d11f95e006da19f4c56239a273d58e8354757f007fff2e187cba47e1754db3`
+- `docs/generated/pr124_mes_authority_table.json:81ad8c382fbe481eaf715b971680199fed5142e2498928cff57ae9d847cc20f3`
 - `docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md:caaab4b7255181e75093a5b662f4febf278330db07dad7cdce65e44c6587b361`
-- `docs/research_program/long_horizon_rescue/pr122_active_mes_consumers.yaml:d8a477e1b7a02132b75a61c9ce273bfb0a20c63d4e2d3b971ce364155de13d71`
+- `docs/research_program/long_horizon_rescue/pr122_active_mes_consumers.yaml:1c2e9a3d4fd5cc8f77d6b06c1dc1082c748c10c8fc4d0232aa4b67886a130bb0`
 - `docs/research_program/long_horizon_rescue/pr122_authority_snapshot.yaml:7841941e66ea1ef2de88855c512ceef8235041066cbe3aa2f36c84d1c07f57cc`
-- `docs/research_program/long_horizon_rescue/pr122_spec.yaml:15ae65cba4e7e5572a827723daca179731ba470da75870f0e1215f43fc6218d9`
-- `htt/bass/atlas/budget_ceiling_optimizer.py:af3ea2eb6817ce56cbf1d870de6f53a7814ea949902ba43a1ab0612842967cae`
-- `htt/bass/forward/__init__.py:14cada3214984e2ffea58c9c820b98c16192e5628e30bbffc02c2926c86f867b`
-- `htt/bass/forward/doppler_boost.py:e2c8dea7f2d57fc72dfcc01c9440a72db20dad1ab436f8dab5dbd82de2333929`
-- `htt/bass/forward/teff_mes_bounds.py:b56df2da29313c27de19d4b7d751becd4532148b51fd73843434e200a909d4eb`
-- `htt/bass/observational/beta_threshold.py:20e3a7e656add2337bff88619f2b5244d867f40bd59def553671a83b2f9801a6`
-- `htt/bass/observational/planck_mes_bounds.py:5b507fec0ef16a6351938ee638f6a9f247d1a83d1c173ffc5217dc421e7e88a1`
-- `htt/htt/htt/core/__init__.py:9cd1d2ba2bfc5083d28fae36d0c35027890c1bd9a52f4ff446bcd26d0c7a1a89`
-- `htt/htt/htt/core/analysis_extended.py:c23e48691098b6d7618b4d091721196437ec5062b6eb8b40febfca90ff333807`
-- `htt/htt/htt/core/bounds.py:a7344c5d64d8c25b45082163898c0236402feca844ced3b43a6a9f86b8bed569`
-- `htt/htt/htt/core/departure_posteriors.py:cfb7705832c4f8dcde9c596f26db1f9ca18896e8c7e9450f4bb9c112a7944a4c`
-- `htt/htt/htt/core/evidence_models_R03a.py:c52de64b814731cb6ced432a6a089e82aa39db7fca424cb45a6196c29e6ceb30`
-- `htt/htt/htt/core/teff_extended.py:2ab9b79aae458e202accf3740d6b5fe127ea39520c52e78893d27362140d1783`
-- `htt/htt/htt/figures/fig_3D_constraint_volume.py:9cfb944ab0e04746f9066a6e4146bf2024183afce320734e4854f3c3e887143d`
-- `htt/htt/htt/figures/fig_4D_projection_atlas.py:183c20564e33d823fe759e194de8434b1f69ba2cf9f7efe104cef2cab74e320a`
-- `htt/htt/htt/figures/fig_MES_three_bounds.py:956dc739d193c85b1ef5cf08bfbd7e66532f28be9375980b6b8319eb3d379ac2`
-- `htt/htt/htt/figures/fig_nonlinear_heatmap_vorticity_accel.py:1da9be848d8b67af3354cd4b990a866164f19bdf5555d737e5d42c3704567f5b`
-- `htt/htt/htt/figures/fig_sigma_accel_contour.py:60889a484e207cc98186cb19e48edda62a23078ff8e9ef6e418c661e91ca7bbb`
-- `htt/htt/htt/figures/fig_sigma_omega_contour.py:17401d64eda8e810751cc4a8bd9f9fe07be61e5854b26939457a8cf6c3fa71bf`
-- `htt/htt/htt/figures/fig_type_by_type_summary.py:da2855f5f23b5ef7df29ec2ba4984784d442cbf0f7b346477ded979b051e068c`
-- `htt/htt/htt/figures/fig_vorticity_hierarchy.py:b7fcc52cfffe0433f8056512e1826015afe70b358417801ba2a8bb0f00d30586`
+- `docs/research_program/long_horizon_rescue/pr122_spec.yaml:845f80b27a5bf16c69cac34b32729fdfc43623a6901ebf8c6d3cab44cc9320bd`
+- `htt/bass/atlas/budget_ceiling_optimizer.py:fec33e6fcd768abc809563731ac3828764324a4bd278afb3b5eb0be0ae0c2953`
+- `htt/bass/forward/__init__.py:6eb4457c5f352f7303eb99f61e911474e6f87de1de0a243f0812847e180c8633`
+- `htt/bass/forward/doppler_boost.py:4f03f76158f5456ed25207f88dda8a04bb532a61013f0e469b8c370c49657f04`
+- `htt/bass/forward/teff_mes_bounds.py:ee891940e2691426b38975dffe5f265174a5317f13f113cf75ae87ca0b2618ee`
+- `htt/bass/observational/beta_threshold.py:faa4e3f7e0184cad556c073654c03a9dee2d4385d2e37772bd3e3e429470b9fa`
+- `htt/bass/observational/planck_mes_bounds.py:e06c1f8659452724054a43a073a969f1c6b17095fb9c0aefb2e6cf5f6491a7e3`
+- `htt/htt/htt/core/__init__.py:bbbb4f6ad6350316524b3f2b0f85489e9b140fa5e86a34c24ba81de39e0cf0c8`
+- `htt/htt/htt/core/analysis_extended.py:7946a9359a3459448b1508d95aa7204fdfe36de5598352d9c14605fd5eeadefb`
+- `htt/htt/htt/core/bounds.py:9ef8a57b61e68ebb8977a5650cf9eb732f3fa1bd0d513bfeabde59062116cdeb`
+- `htt/htt/htt/core/departure_posteriors.py:86abda3ab073700cd3f8382617821093c4dad7b04d03ce5bf5cc2bbbd2e8afe9`
+- `htt/htt/htt/core/evidence_models_R03a.py:b83b8fb1ccdf3e68979a77d7aefd44243f0140f98e1c0eb6400e0c6f40ef1f3c`
+- `htt/htt/htt/core/teff_extended.py:67ce36f51a4ae2cafac0b4b5cb10bb5105aac6c2fcd60492aaf238e21f5f465b`
+- `htt/htt/htt/figures/fig_3D_constraint_volume.py:aaaa365750dc107e0c27f34839e4119fa6ac31ea22b18329c076ed9fd9137dca`
+- `htt/htt/htt/figures/fig_4D_projection_atlas.py:87fda67ef4135f962f5d57344bafdcc4e489d6ada0636ebe0957d5e3a99dddc9`
+- `htt/htt/htt/figures/fig_MES_three_bounds.py:c78c36be6c50aa8d9346d83af5bf02c400c54c2183ce2dd7d3b7256e66b7d494`
+- `htt/htt/htt/figures/fig_nonlinear_heatmap_vorticity_accel.py:4e0158d2a49299b5b1cb1f5837d3b54aefcc0033f44939349a4a49fe0dc0ef18`
+- `htt/htt/htt/figures/fig_sigma_accel_contour.py:61b245cce5119e9c8b819a680cdd58f7a0e6959e4d5c813937aeed99928ac4a4`
+- `htt/htt/htt/figures/fig_sigma_omega_contour.py:42e3c5a3dd30d7584c8e00c8b4ddb570239366b6087f0fe8d1fff1f8b4e5974f`
+- `htt/htt/htt/figures/fig_type_by_type_summary.py:face5b75033a109179cf1f33c257141b40c7ea888dfc603022323007f3972cb5`
+- `htt/htt/htt/figures/fig_vorticity_hierarchy.py:71530d4d92622551105adadd5dd4a968642af6f153533a88620ce9d4b9cfb1b6`
 - `htt/htt/htt/infer/null_competition.py:98e175b484ec3e61c67eb21e80d5d998c37a5261334960f3cda3fc30a142403b`
 - `htt/htt/htt/infer/prior_sweep.py:d0c36842f0f5d2c0777614f6031e4b89ab9d0a3e9effde52c6cebea53e4e4115`
-- `htt/mio/core/ceiling_families.py:96a5d6c3504e12d8b79d594ed985f5fef863cd9b27138abbe75a5b60e3bb7b5d`
-- `htt/mio/formalism/budget_spec.py:e836268d37323288d4b9e6bc3442f8eab2b3928ac6ebc91b7caef46d6210166a`
+- `htt/mio/core/ceiling_families.py:4e57adcaa6bfef1353ab143c33090984da418df6ff6685f06d023df4285e19f1`
+- `htt/mio/formalism/budget_spec.py:49b0afc480d4a311eedbae1bfaf6b7b8076a72cc11fc43d069b758b47f1a182f`
 - `htt/obsstat/egs3_mes_branch_registry.py:9b0817c99944e796b4c980cad43df724d0abde9381c8f542195d249447bfe816`
 - `htt/src/common/contracts.py:c71818ba3108a922d2bfbcf4c8dd2b65ea16efc5d43561c2792c8fbc52fd0181`
 - `htt/src/common/evidence_graph.py:68ccc0337643c1b790be90e70a170e5d027e6bec92abfb65e6cc7320ab34ce0d`
-- `htt/src/common/mes_successor_registry.py:ecd7f3999c3edd29b64820629ad9453437a52522694d309a72ea6446f4f2b970`
+- `htt/src/common/mes_successor_registry.py:13b844b086f954d841dd6d3e38bbca9ef226ab07dac91f17beb0296c03fae72a`
+- `htt/src/common/mes_theorem_authority.py:d149d8599eba65dd1af536d30f289466b642e990bd8cee6cc8639566ab787af8`
 - `htt/src/common/pytest_execution_evidence.py:7bd592b08f918bbfd1d44d20cbc74a6fe883d57a6314b28b2f96a51a50077247`
-- `htt/src/common/release_evidence_binding.py:927bf019090796c4544f7a6c9b47db77b7e5da1b9de127d0de55e38acfd2cffb`
+- `htt/src/common/release_evidence_binding.py:a3cbba6f9239d1e13b54b07eebdf468c92648dd1605d252958df977c6fed6367`
 - `htt/src/common/remediation_state.py:f595cc0b81d33849a69d79691086e431386a1c731658bd7960f11384e6958fcb`
 - `htt/src/common/status_snapshot.py:78464fec0ac90d8e209c91de53ca59ee09d42a2cb73da06843ebd390304637b3`
-- `scripts/build_external_audit_package.py:9dd8d155b1a09eda7a360179ce76db6ad7e3b43ced8236b03742dbf456309ce9`
-- `scripts/check_publication_claim_freeze.py:57e8bd7febce6ae299f9c395d9afb868ab9a15e514d899e65327cf41b00a7175`
-- `scripts/codex_harness/build_claim_evidence_graph.py:1a64facbb10a6ba999121835d9a8806d58d2056cca7dd16ff500cb491193ba4a`
+- `scripts/build_external_audit_package.py:d9e12c1df71942ccf420cfbc612579e6896b63109c39040fe29dbf7b6d1fbe0d`
+- `scripts/check_publication_claim_freeze.py:21f831982e6e075a485c69539fe2651bd82672cdbc2eb5de0fb5056fe3ea5db7`
+- `scripts/codex_harness/build_claim_evidence_graph.py:c5f50c92b2f502cedb7c8ccb223993f0648c61de077c6c70e71520c2c4a88704`
 - `scripts/codex_harness/run_pr122_source_only.sh:72bed4818b6799cb872f877397877199455888904a777bc4efa13231a59cd982`
 sky_support_status: not_directional
 null_mock_status: not_statistical
 caveats:
 - Evidence closure validates mechanics, not estimand correctness or scientific truth.
 - The receipt is correlated internal process disclosure and is not a verified external adjudication.
-- MES and D2 scientific authority remain blocked pending PR-124.
+- MES and D2 authority are PR-124 governance mechanics at conditional C1; scientific claim release remains blocked by the remediation state.
 - No native solver, family, geometry, posterior, or detection claim is created.
 generating_command: `scripts/codex_harness/run_pr122_source_only.sh scripts/codex_harness/build_claim_evidence_graph.py`
-git_commit_or_worktree_state: `HEAD:6af20d747a869990739220f3b534bb8457d134cf;bound_input_state_sha256:582e50615dc1a9cd4c4820cc7396059fd9c4a3984bc594e9f620652235c4ba19`
+git_commit_or_worktree_state: `HEAD:79c2cee9bacbd7250d14137ce9ea80d8e55d1033;bound_input_state_sha256:c88efa13f732b5a4a9dd603ef5db56b49839f6b5ef162970d9c781330e4e191b`
 
 ## Exact content addresses
 
-- Graph root: `91957d10546783d6668c22a9adcd29e2f21e35e0e2f351364002db106fac7b32`
-- Release receipt: `ad8d982be6696a430fcc0b021780a44670d3a8102aff7ddfa59bbf3ca83c91f0`
-- Parent mechanics receipt: `8aebd24008f65fbc12f4a485b78d9d0a91eefcc51c7b34d0769766bd4859c53a`
+- Graph root: `ae15e1e624d1b16b47d2e64b494848bded68696f0403a5ad0e3c4bbe0da7bf3f`
+- Release receipt: `e53df027b0d71aaece136a88ff8fb36066680ae78f5a2c68e6eeef3b44966881`
+- Parent mechanics receipt: `4c7bbd1d1adca0ef6a11fe5c1238ca30a2c4d12e8492c5bd1204882f960a3165`
 - Authority registry: `23802d0d5ea9625098961366f533c04b1b4e81b45ef694cbbc941b8d79e308b9`
 
 ## Orthogonal closure axes
@@ -72,23 +76,23 @@ git_commit_or_worktree_state: `HEAD:6af20d747a869990739220f3b534bb8457d134cf;bou
 | Claim | Process | Evidence | Science | Mechanics closed | Package eligible |
 | --- | --- | --- | --- | --- | --- |
 | clean mechanics | PASS | PRESENT | OPEN | True | False |
-| MES release | PASS | BLOCKED | OPEN | False | False |
-| D2 Rust authority | NOT_RUN | BLOCKED | OPEN | False | False |
+| MES release | PASS | PRESENT | OPEN | True | False |
+| D2 Rust authority | PASS | PRESENT | OPEN | True | False |
 
 ## Test execution identity
 
-- Collected: `132`
-- Executed: `132`
-- Execution ref: `911e8e63a79986e43ac41783cc27b73a9b6c69a969d7cfabbb497308dcb64663`
-- Environment ref: `30765a2c0c59a0174c23600b546ff77dbe1e497517d7137afadb9d19b7a62d10`
+- Collected: `133`
+- Executed: `133`
+- Execution ref: `ba4eca7e3e4be69b78682dbda222705a6daaf1255e7e81e7f5cce8e3aa988b3f`
+- Environment ref: `f29c1f31bb962e849ec1628e10e0da54c75ea2c5eefc9ff5bc3f51cd7e94d70a`
 
 ## Release decision
 
 - Claim release allowed: `false`
 - Audit disclosure allowed: `true`
-- MES successor status: `BLOCKED_PENDING_PR124`
+- MES successor status: `AUTHORIZED_BY_PR124_CONDITIONAL_C1`
 - Active MES consumers scanned: `22`
-- MES finding codes: `SCIENTIFIC_AUTHORITY_BLOCKED, STALE_MES_TRIPLE, SUCCESSOR_BYPASS, SUCCESSOR_MISSING, SUCCESSOR_POINTER_MISSING`
+- MES finding codes: ``
 - The correlated internal receipt is not a scientific attestation.
 
 ## User data-scope firewall

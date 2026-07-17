@@ -14,6 +14,21 @@ Key result: ALL heatmaps have vertical contours → ω is irrelevant.
 """
 import numpy as np
 import matplotlib
+
+# PR-124: active MES consumers traverse the typed successor registry
+# (common.mes_theorem_authority is the live authority; legacy values are
+# labeled non-authoritative reproduction, see legacy_reproduction_coefficients).
+from common.mes_successor_registry import (
+    current_mes_successor_registry,
+    legacy_reproduction_coefficients,
+)
+
+_MES_SUCCESSOR = current_mes_successor_registry().successor
+_MES_SUCCESSOR_ID = _MES_SUCCESSOR.successor_id
+_MES_LEGACY_COEFFS = legacy_reproduction_coefficients()
+_C_SIG1, _C_SIG2, _C_SIG3 = (float(c) for c in _MES_LEGACY_COEFFS["sigma"])
+_C_OM1, _C_OM2, _C_OM3 = (float(c) for c in _MES_LEGACY_COEFFS["omega"])
+_C_AC1, _C_AC2, _C_AC3 = (float(c) for c in _MES_LEGACY_COEFFS["accel"])
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.colors import LogNorm
@@ -37,11 +52,11 @@ _NGL = 200
 _MU, _W = roots_legendre(_NGL)
 
 def B_sigma_lin(e1):
-    return (5./3)*e1 + 3.*eps2 + (3./7)*eps3
+    return _C_SIG1*e1 + _C_SIG2*eps2 + _C_SIG3*eps3
 def B_omega_lin(e1):
-    return (3./4)*e1 + 2.*eps2 + (2./7)*eps3
+    return _C_OM1*e1 + _C_OM2*eps2 + _C_OM3*eps3
 def B_accel_lin(e1):
-    return (3./4)*e1 + eps2 + (3./14)*eps3
+    return _C_AC1*e1 + _C_AC2*eps2 + _C_AC3*eps3
 
 def _Theta(mu, A, Q):
     return 1.0 + A*mu + Q*(mu**2 - 1./3)
@@ -73,13 +88,13 @@ def compute_R(e1, bound_type='sigma'):
 
     if bound_type == 'sigma':
         Bl = B_sigma_lin(e1)
-        Bnl = (5./3)*e1e + 3.*e2e + (3./7)*(eps3 + e3e)
+        Bnl = _C_SIG1*e1e + _C_SIG2*e2e + _C_SIG3*(eps3 + e3e)
     elif bound_type == 'omega':
         Bl = B_omega_lin(e1)
-        Bnl = (3./4)*e1e + 2.*e2e + (2./7)*(eps3 + e3e)
+        Bnl = _C_OM1*e1e + _C_OM2*e2e + _C_OM3*(eps3 + e3e)
     elif bound_type == 'accel':
         Bl = B_accel_lin(e1)
-        Bnl = (3./4)*e1e + e2e + (3./14)*(eps3 + e3e)
+        Bnl = _C_AC1*e1e + _C_AC2*e2e + _C_AC3*(eps3 + e3e)
     else:
         raise ValueError
     return Bnl / Bl if Bl > 0 else 1.0

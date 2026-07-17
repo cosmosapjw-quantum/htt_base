@@ -171,7 +171,9 @@ def _assert_claim_evidence_manifest_contract(payload: dict[str, Any]) -> None:
     )
     assert receipt["authority_registry_ref"] == pin.authority_registry_ref
     assert receipt["process_result"] == "PASS"
-    assert receipt["evidence_status"] == "BLOCKED"
+    # PR-124: mechanics evidence is PRESENT; the kill switch is
+    # claim_release_allowed=False, not a BLOCKED evidence status.
+    assert receipt["evidence_status"] == "PRESENT"
     assert receipt["scientific_status"] == "OPEN"
     assert receipt["authority_status"] == "REQUIRES_TRUSTED_REGISTRY_VALIDATION"
     assert receipt["audit_disclosure_allowed"] is True

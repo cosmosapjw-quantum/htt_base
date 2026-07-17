@@ -1,14 +1,24 @@
-"""Fail-closed pointer and consumer scanner for the future MES authority.
+"""Fail-closed pointer and consumer scanner for the MES authority.
 
-PR-122 deliberately does *not* choose MES coefficients or promote an EGS3
-seal into scientific authority.  It only establishes the typed pointer that
-active consumers must traverse after PR-124 supplies an independently checked
-theorem/convention authority.  Until then the current pointer is explicitly
-``MISSING`` and ``BLOCKED_PENDING_PR124``.
+PR-122 established the typed pointer that active consumers must traverse;
+PR-124 delivered the typed theorem/convention authority
+(``htt/src/common/mes_theorem_authority.py``) with a four-axis CAS
+adjudication, a derivation-lineage oracle, and hash-bound receipts.  The
+successor pointer is now ``AVAILABLE`` and ``AUTHORIZED_BY_PR124`` at
+roadmap_rescue_v1:C1 (domain/frame-conditional derived mechanics).
 
-The EGS3 branch-registry seal is retained as hash-bound process evidence.  Its
-``PASS`` result means that its own diagnostic checks executed successfully; it
-is not a theorem-authority receipt and cannot make a release claim-ready.
+Authorization is never a caller-supplied string: the pointer's
+``scientific_authority`` requires the module-pinned receipt hash, and every
+governance validation (``validate_mes_successor_registry``) re-verifies the
+exact receipt bytes live through ``mes_theorem_authority``.  Receipt drift,
+a failed four-axis adjudication, a zero D2 receipt, or a stale MES triple
+in an active consumer re-blocks the authority.
+
+The EGS3 branch-registry seal is retained as hash-bound process evidence.
+Its ``PASS`` result means that its own diagnostic checks executed
+successfully; it is not a theorem-authority receipt and cannot make a
+release claim-ready.  PR-124 authority is governance mechanics only — it
+rescues no remediation finding and validates no observed result.
 """
 
 from __future__ import annotations
@@ -20,6 +30,7 @@ import re
 from dataclasses import dataclass
 from enum import Enum
 from fractions import Fraction
+from functools import lru_cache
 from pathlib import Path, PurePosixPath
 from typing import Iterable, Mapping, Sequence
 
@@ -29,6 +40,19 @@ import yaml
 SCHEMA_VERSION = "pr122.mes_successor_registry.v1"
 CURRENT_SUCCESSOR_ID = "mes.typed-successor.pr124"
 PLANNED_PR124_SOURCE = "htt/src/common/mes_theorem_authority.py"
+
+# PR-124 delivery pins.  The authority-source pin binds the exact bytes of
+# the typed authority module; the receipt pin binds the exact bytes of the
+# generated authority table (docs/generated/pr124_mes_authority_table.json).
+# Regenerating either is a sanctioned governance event that must update
+# these constants (and re-run the PR-122 evidence-graph resync ritual);
+# silent drift is re-blocked by validate_mes_successor_registry.
+PR124_AUTHORITY_SOURCE_SHA256 = (
+    "d149d8599eba65dd1af536d30f289466b642e990bd8cee6cc8639566ab787af8"
+)
+PR124_AUTHORITY_RECEIPT_SHA256 = (
+    "81ad8c382fbe481eaf715b971680199fed5142e2498928cff57ae9d847cc20f3"
+)
 
 # These hashes bind the PR-122 registry to the exact legacy reproduction and
 # EGS3 diagnostic-witness bytes that were inspected.  Updating either source
@@ -71,10 +95,13 @@ _SHA256_RE = re.compile(r"[0-9a-f]{64}\Z")
 _TYPED_REGISTRY_MODULES = frozenset(
     {"common.mes_successor_registry", "htt.common.mes_successor_registry"}
 )
+# PR-124: htt.core.bounds was removed from the bypass set after it was
+# rewired to traverse the typed successor and fetch its legacy-reproduction
+# values through legacy_reproduction_coefficients() (no unmanaged literals).
+# The frozen legacy reproduction module and the EGS3 diagnostic modules
+# remain bypasses for active consumers.
 _BYPASS_MODULES = frozenset(
     {
-        "htt.core.bounds",
-        "htt.htt.htt.core.bounds",
         "tsc.admissibility.three_bound_hierarchy",
         "htt.tsc.admissibility.three_bound_hierarchy",
     }
@@ -133,7 +160,8 @@ _MES_EXACT_DATA_LABELS = frozenset({"MES algebraic\nbound"})
 
 # These are identifiers for legacy, non-geodesic registered triples.  They are
 # intentionally not exposed as a replacement numerical authority.  The values
-# are used only by the static mutation scanner to detect copied stale literals.
+# are used only by the static mutation scanner to detect copied stale literals
+# and by the labeled legacy-reproduction channel below.
 _STALE_TRIPLES = {
     "legacy_non_geodesic_omega": (
         Fraction(3, 4),
@@ -146,6 +174,30 @@ _STALE_TRIPLES = {
         Fraction(3, 14),
     ),
 }
+
+# The sigma triple is branch-independent (geodesic == registered).
+_LEGACY_SIGMA_TRIPLE = (Fraction(5, 3), Fraction(3, 1), Fraction(3, 7))
+
+
+def legacy_reproduction_coefficients() -> dict[str, tuple[Fraction, ...]]:
+    """Labeled legacy-reproduction MES coefficient triples (PR-124 channel).
+
+    Active consumers that must keep their historical numerical outputs
+    byte-stable fetch the legacy triples HERE instead of carrying unmanaged
+    stale literals.  These are the pre-refreeze registered values: the sigma
+    triple equals the verified geodesic one, while the omega/accel triples
+    are the UNVERIFIED print-only non-geodesic MESb values (in-house
+    reconstruction REFUTED, rev-r190).  They are explicitly NON-AUTHORITATIVE:
+    the live authority is the typed successor
+    (``mes_theorem_authority.BRANCHES``), and flowing the authorized geodesic
+    values into result-producing consumers is a result-regeneration event
+    owned by later PRs, not by this accessor.
+    """
+    return {
+        "sigma": _LEGACY_SIGMA_TRIPLE,
+        "omega": _STALE_TRIPLES["legacy_non_geodesic_omega"],
+        "accel": _STALE_TRIPLES["legacy_non_geodesic_acceleration"],
+    }
 
 
 class MesRegistryError(ValueError):
@@ -367,16 +419,24 @@ class MesSuccessorPointer:
             if receipt is not None:
                 raise MesRegistryError("a MISSING successor cannot carry a receipt")
         else:
-            # PR-122 has no authenticated PR-124 receipt schema, verifier, or
-            # authority registry path.  Therefore AVAILABLE/PASS/status strings
-            # are not a capability.  PR-124 must replace this constructor gate
-            # with a verifier that derives authorization from exact receipt
-            # bytes; accepting a caller-supplied string here would be a direct
-            # scientific-authority escalation.
-            raise MesRegistryError(
-                "an AVAILABLE MES successor is blocked until PR-124 implements "
-                "verified authorization"
-            )
+            # PR-124 delivered the receipt schema and verifier.  An AVAILABLE
+            # successor must carry the exact shape below, and its authority
+            # is still NOT a caller-supplied capability: scientific_authority
+            # requires the module-pinned receipt hash, and every governance
+            # validation re-verifies the receipt bytes live through
+            # mes_theorem_authority.verify_authority_receipt.
+            if process_result is not MesProcessResult.PASS:
+                raise MesRegistryError(
+                    "an AVAILABLE successor must record the PR-124 gate PASS"
+                )
+            if (
+                scientific_status
+                is not MesScientificAuthorityStatus.AUTHORIZED_BY_PR124
+            ):
+                raise MesRegistryError(
+                    "an AVAILABLE successor must be AUTHORIZED_BY_PR124"
+                )
+            receipt = _sha256(receipt, "authority_receipt_id")
 
         object.__setattr__(self, "successor_id", successor_id)
         object.__setattr__(self, "process_result", process_result)
@@ -385,9 +445,17 @@ class MesSuccessorPointer:
 
     @property
     def scientific_authority(self) -> bool:
-        # Fail closed for the entire v1/PR-122 schema.  Merely changing strings,
-        # source availability, or a receipt identifier can never promote it.
-        return False
+        # Strings alone never escalate: authority requires the AVAILABLE
+        # pointer shape AND the module-pinned PR-124 receipt hash.  Live
+        # byte re-verification happens in validate_mes_successor_registry;
+        # any receipt drift re-blocks the release there.
+        return (
+            self.source.availability is SourceAvailability.AVAILABLE
+            and self.process_result is MesProcessResult.PASS
+            and self.scientific_status
+            is MesScientificAuthorityStatus.AUTHORIZED_BY_PR124
+            and self.authority_receipt_id == PR124_AUTHORITY_RECEIPT_SHA256
+        )
 
     def as_payload(self) -> dict[str, object]:
         return {
@@ -527,9 +595,41 @@ class MesConsumerScanReport:
             raise MesRegistryError(f"MES release blocked: {codes or 'no authority'}")
 
 
-def current_mes_successor_registry() -> MesSuccessorRegistry:
-    """Return the current PR-122 pointer without importing a physics module."""
+@lru_cache(maxsize=1)
+def _live_receipt_pin_check() -> str:
+    """Cheap, once-per-process check that the on-disk PR-124 authority
+    receipt bytes match the module pin.
 
+    This closes the string-tautology escalation route: a consumer that reads
+    ``current_mes_successor_registry().as_payload()`` without running the
+    governance validation still cannot obtain an AVAILABLE/AUTHORIZED
+    pointer unless the actual receipt bytes on disk hash to the pin. Deep
+    content verification remains in ``validate_mes_successor_registry``.
+    """
+    repo_root = Path(__file__).resolve().parents[3]
+    receipt = repo_root / "docs/generated/pr124_mes_authority_table.json"
+    if not receipt.is_file():
+        raise MesRegistryError(
+            "PR-124 authority receipt is missing on disk; the typed MES "
+            "successor cannot be constructed without its receipt bytes"
+        )
+    digest = sha256_file(receipt)
+    if digest != PR124_AUTHORITY_RECEIPT_SHA256:
+        raise MesRegistryError(
+            "PR-124 authority receipt bytes do not match the module pin "
+            f"({digest}); regenerate + re-pin before consuming the successor"
+        )
+    return digest
+
+
+def current_mes_successor_registry() -> MesSuccessorRegistry:
+    """Return the current PR-122 pointer without importing a physics module.
+
+    PR-124: constructing the AVAILABLE successor requires the live receipt
+    bytes on disk to hash to the module pin (fail-closed, memoized once per
+    process)."""
+
+    _live_receipt_pin_check()
     return MesSuccessorRegistry(
         schema_version=SCHEMA_VERSION,
         legacy_reproduction_source=SourceHashBinding(
@@ -564,12 +664,12 @@ def current_mes_successor_registry() -> MesSuccessorRegistry:
             successor_id=CURRENT_SUCCESSOR_ID,
             source=SourceHashBinding(
                 path=PLANNED_PR124_SOURCE,
-                availability=SourceAvailability.MISSING,
-                sha256=None,
+                availability=SourceAvailability.AVAILABLE,
+                sha256=PR124_AUTHORITY_SOURCE_SHA256,
             ),
-            process_result=MesProcessResult.NOT_RUN,
-            scientific_status=(MesScientificAuthorityStatus.BLOCKED_PENDING_PR124),
-            authority_receipt_id=None,
+            process_result=MesProcessResult.PASS,
+            scientific_status=(MesScientificAuthorityStatus.AUTHORIZED_BY_PR124),
+            authority_receipt_id=PR124_AUTHORITY_RECEIPT_SHA256,
         ),
     )
 
@@ -783,6 +883,46 @@ def validate_mes_successor_registry(
                 "typed MES theorem/convention authority has not been delivered",
             )
         )
+    else:
+        # PR-124: authorization derives from exact receipt bytes.  Re-verify
+        # the receipts live; any drift, a failed four-axis adjudication, a
+        # zero D2 receipt, or a stale consumer triple re-blocks the release.
+        try:
+            from common.mes_theorem_authority import verify_authority_receipt
+
+            verification = verify_authority_receipt(repo_root)
+            if verification.receipt_sha256 != PR124_AUTHORITY_RECEIPT_SHA256:
+                findings.append(
+                    MesConsumerFinding(
+                        MesConsumerIssueCode.SCIENTIFIC_AUTHORITY_BLOCKED,
+                        selected.successor.successor_id,
+                        (
+                            "authority receipt bytes drifted from the pinned "
+                            f"hash ({verification.receipt_sha256})"
+                        ),
+                    )
+                )
+            elif (
+                selected.successor.authority_receipt_id
+                != verification.receipt_sha256
+            ):
+                findings.append(
+                    MesConsumerFinding(
+                        MesConsumerIssueCode.SCIENTIFIC_AUTHORITY_BLOCKED,
+                        selected.successor.successor_id,
+                        "successor pointer carries a foreign receipt id",
+                    )
+                )
+        except MesRegistryError:
+            raise
+        except Exception as exc:  # MesAuthorityError and any receipt failure
+            findings.append(
+                MesConsumerFinding(
+                    MesConsumerIssueCode.SCIENTIFIC_AUTHORITY_BLOCKED,
+                    selected.successor.successor_id,
+                    f"authority receipt verification failed: {exc}",
+                )
+            )
     if not selected.successor.scientific_authority:
         findings.append(
             MesConsumerFinding(
@@ -1360,6 +1500,173 @@ def _load_inventory_controls(
     return roots, tuple(declarations), tuple(exclusions), True
 
 
+def _consumer_scan_findings(
+    repo_root: Path,
+    declarations: Sequence[MesConsumerDeclaration],
+    selected_exclusions: Sequence[MesConsumerExclusion],
+    roots: Sequence[str],
+    successor_id: str,
+) -> list[MesConsumerFinding]:
+    """Consumer-level findings only (no successor-registry validation).
+
+    This layer is shared by ``scan_declared_mes_consumers`` (which prepends
+    the registry validation findings) and by the PR-124 authority verifier
+    (which must not recurse through the registry validation that depends on
+    its own verdict).
+    """
+    findings: list[MesConsumerFinding] = []
+    source_paths = tuple(item.source.path for item in declarations)
+    exclusion_paths = tuple(item.source.path for item in selected_exclusions)
+
+    for exclusion in selected_exclusions:
+        binding_findings = _verify_binding(
+            repo_root,
+            exclusion.source,
+            subject=exclusion.exclusion_id,
+        )
+        for finding in binding_findings:
+            findings.append(
+                MesConsumerFinding(
+                    MesConsumerIssueCode.EXCLUSION_HASH_MISMATCH,
+                    exclusion.exclusion_id,
+                    f"{finding.code.value}: {finding.detail}",
+                )
+            )
+
+    discovered, discovery_findings, discovery_enabled = _discover_active_mes_consumers(
+        repo_root, roots
+    )
+    findings.extend(discovery_findings)
+    if discovery_enabled:
+        declared_set = set(source_paths)
+        excluded_set = set(exclusion_paths)
+        for path in sorted(discovered - declared_set - excluded_set):
+            findings.append(
+                MesConsumerFinding(
+                    MesConsumerIssueCode.UNDECLARED_ACTIVE_CONSUMER,
+                    path,
+                    (
+                        "discovered exact MES identifier/import is neither "
+                        "declared nor excluded"
+                    ),
+                )
+            )
+        for path in sorted(declared_set - discovered):
+            findings.append(
+                MesConsumerFinding(
+                    MesConsumerIssueCode.DECLARED_CONSUMER_NOT_DISCOVERED,
+                    path,
+                    "declared source has no exact active MES identifier/import",
+                )
+            )
+
+    for declaration in sorted(declarations, key=lambda item: item.consumer_id):
+        findings.extend(
+            _verify_binding(
+                repo_root,
+                declaration.source,
+                subject=declaration.consumer_id,
+            )
+        )
+        if declaration.expected_successor_id != successor_id:
+            findings.append(
+                MesConsumerFinding(
+                    MesConsumerIssueCode.SUCCESSOR_ID_MISMATCH,
+                    declaration.consumer_id,
+                    (
+                        f"expected {declaration.expected_successor_id}, registry has "
+                        f"{successor_id}"
+                    ),
+                )
+            )
+
+        path = _bound_path(repo_root, declaration.source)
+        if path.is_symlink() or not path.is_file():
+            continue
+        try:
+            tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
+        except (OSError, UnicodeDecodeError, SyntaxError) as exc:
+            findings.append(
+                MesConsumerFinding(
+                    MesConsumerIssueCode.CONSUMER_PARSE_ERROR,
+                    declaration.consumer_id,
+                    str(exc),
+                )
+            )
+            continue
+
+        modules = _imported_modules(tree)
+        if not _uses_typed_successor_entrypoint(tree):
+            findings.append(
+                MesConsumerFinding(
+                    MesConsumerIssueCode.SUCCESSOR_POINTER_MISSING,
+                    declaration.consumer_id,
+                    (
+                        "active MES consumer does not call the typed COMMON "
+                        "current_mes_successor_registry entrypoint"
+                    ),
+                )
+            )
+        bypass_modules = {
+            module for module in modules if _is_bypass_module(module)
+        } | _dynamic_bypass_modules(tree)
+        for module in sorted(bypass_modules):
+            findings.append(
+                MesConsumerFinding(
+                    MesConsumerIssueCode.SUCCESSOR_BYPASS,
+                    declaration.consumer_id,
+                    f"direct non-authoritative MES import: {module}",
+                )
+            )
+        for triple_name in sorted(_stale_triples(tree)):
+            findings.append(
+                MesConsumerFinding(
+                    MesConsumerIssueCode.STALE_MES_TRIPLE,
+                    declaration.consumer_id,
+                    triple_name,
+                )
+            )
+    return findings
+
+
+def scan_consumer_sources_only(
+    repo_root: Path,
+) -> tuple[MesConsumerFinding, ...]:
+    """Run the consumer-level scan from the repository inventory alone.
+
+    Used by the PR-124 authority verifier: it needs the stale-triple and
+    bypass verdicts without recursing through the successor-registry
+    validation whose authority depends on that very verdict.
+    """
+    (
+        inventory_roots,
+        inventory_declarations,
+        inventory_exclusions,
+        inventory_present,
+    ) = _load_inventory_controls(repo_root)
+    if not inventory_present:
+        raise MesRegistryError(
+            "the MES consumer inventory is required for the consumer scan"
+        )
+    if not inventory_declarations:
+        return (
+            MesConsumerFinding(
+                MesConsumerIssueCode.NO_ACTIVE_CONSUMERS_DECLARED,
+                "active_mes_consumers",
+                "the all-consumer set must be explicit and non-empty",
+            ),
+        )
+    return tuple(
+        _consumer_scan_findings(
+            repo_root,
+            inventory_declarations,
+            inventory_exclusions,
+            inventory_roots,
+            CURRENT_SUCCESSOR_ID,
+        )
+    )
+
+
 def scan_declared_mes_consumers(
     repo_root: Path,
     declarations: Sequence[MesConsumerDeclaration],
@@ -1442,116 +1749,16 @@ def scan_declared_mes_consumers(
         )
         return MesConsumerScanReport(base.registry, 0, tuple(findings))
 
-    for exclusion in selected_exclusions:
-        binding_findings = _verify_binding(
-            repo_root,
-            exclusion.source,
-            subject=exclusion.exclusion_id,
-        )
-        for finding in binding_findings:
-            findings.append(
-                MesConsumerFinding(
-                    MesConsumerIssueCode.EXCLUSION_HASH_MISMATCH,
-                    exclusion.exclusion_id,
-                    f"{finding.code.value}: {finding.detail}",
-                )
-            )
-
     roots = inventory_roots if discovery_roots is None else tuple(discovery_roots)
-    discovered, discovery_findings, discovery_enabled = _discover_active_mes_consumers(
-        repo_root, roots
-    )
-    findings.extend(discovery_findings)
-    if discovery_enabled:
-        declared_set = set(source_paths)
-        excluded_set = set(exclusion_paths)
-        for path in sorted(discovered - declared_set - excluded_set):
-            findings.append(
-                MesConsumerFinding(
-                    MesConsumerIssueCode.UNDECLARED_ACTIVE_CONSUMER,
-                    path,
-                    (
-                        "discovered exact MES identifier/import is neither "
-                        "declared nor excluded"
-                    ),
-                )
-            )
-        for path in sorted(declared_set - discovered):
-            findings.append(
-                MesConsumerFinding(
-                    MesConsumerIssueCode.DECLARED_CONSUMER_NOT_DISCOVERED,
-                    path,
-                    "declared source has no exact active MES identifier/import",
-                )
-            )
-
-    for declaration in sorted(declarations, key=lambda item: item.consumer_id):
-        findings.extend(
-            _verify_binding(
-                repo_root,
-                declaration.source,
-                subject=declaration.consumer_id,
-            )
+    findings.extend(
+        _consumer_scan_findings(
+            repo_root,
+            declarations,
+            selected_exclusions,
+            roots,
+            base.registry.successor.successor_id,
         )
-        if declaration.expected_successor_id != base.registry.successor.successor_id:
-            findings.append(
-                MesConsumerFinding(
-                    MesConsumerIssueCode.SUCCESSOR_ID_MISMATCH,
-                    declaration.consumer_id,
-                    (
-                        f"expected {declaration.expected_successor_id}, registry has "
-                        f"{base.registry.successor.successor_id}"
-                    ),
-                )
-            )
-
-        path = _bound_path(repo_root, declaration.source)
-        if path.is_symlink() or not path.is_file():
-            continue
-        try:
-            tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
-        except (OSError, UnicodeDecodeError, SyntaxError) as exc:
-            findings.append(
-                MesConsumerFinding(
-                    MesConsumerIssueCode.CONSUMER_PARSE_ERROR,
-                    declaration.consumer_id,
-                    str(exc),
-                )
-            )
-            continue
-
-        modules = _imported_modules(tree)
-        if not _uses_typed_successor_entrypoint(tree):
-            findings.append(
-                MesConsumerFinding(
-                    MesConsumerIssueCode.SUCCESSOR_POINTER_MISSING,
-                    declaration.consumer_id,
-                    (
-                        "active MES consumer does not call the typed COMMON "
-                        "current_mes_successor_registry entrypoint"
-                    ),
-                )
-            )
-        bypass_modules = {
-            module for module in modules if _is_bypass_module(module)
-        } | _dynamic_bypass_modules(tree)
-        for module in sorted(bypass_modules):
-            findings.append(
-                MesConsumerFinding(
-                    MesConsumerIssueCode.SUCCESSOR_BYPASS,
-                    declaration.consumer_id,
-                    f"direct non-authoritative MES import: {module}",
-                )
-            )
-        for triple_name in sorted(_stale_triples(tree)):
-            findings.append(
-                MesConsumerFinding(
-                    MesConsumerIssueCode.STALE_MES_TRIPLE,
-                    declaration.consumer_id,
-                    triple_name,
-                )
-            )
-
+    )
     return MesConsumerScanReport(base.registry, len(declarations), tuple(findings))
 
 

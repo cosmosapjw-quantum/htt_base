@@ -598,7 +598,11 @@ mutation_execution_matrix:
     test_node_id: tests/contracts/test_mes_successor_registry.py::test_dead_or_bare_registry_call_cannot_clear_stale_literal_blocker
     expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
   - mutation_id: available_mes_successor_self_authority
-    test_node_id: tests/contracts/test_mes_successor_registry.py::test_available_successor_cannot_self_assert_authority_before_pr124[typed-enums]
+    # PR-124 supersession (2026-07-17): the pre-PR124 constructor gate was
+    # replaced by the receipt-bytes verifier; the equivalent self-authority
+    # guard is now the foreign-receipt escalation test (strings never
+    # escalate) plus the fail-closed AVAILABLE shape tests.
+    test_node_id: tests/contracts/test_mes_successor_registry.py::test_foreign_receipt_string_never_carries_authority
     expected_outcome: PASSED_REJECTION_OR_EXPLICIT_DOWNCLAIM
   - mutation_id: diagnostic_witness_seal_drift
     test_node_id: tests/contracts/test_mes_successor_registry.py::test_witness_source_and_seal_hashes_are_checked_separately

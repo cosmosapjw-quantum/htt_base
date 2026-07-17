@@ -1,0 +1,415 @@
+schema: htt.long_horizon.pr124_cas_lineage.v1
+spec_version: 1
+pr_id: PR-124
+title: Four-axis CAS contract + derivation-lineage oracle
+baseline_commit: 79c2cee9bacbd7250d14137ce9ea80d8e55d1033
+reviewed_on: '2026-07-17'
+owner: COMMON
+contributors:
+  - BASS
+implementation_scope:
+  - common
+artifact_mode: symbolic_and_governance_diagnostic
+allowed_use:
+  - theorem_signature_and_evidence_grade_inventory
+  - four_axis_cas_computational_reproducibility_receipt
+  - mes_branch_source_authority_table
+  - d2_dual_track_execution_receipt
+  - later_pr_regression_input
+public_use: false
+claim_tier: conditional
+claim_tier_ceiling: conditional
+claim_level:
+  scheme: roadmap_rescue_v1
+  level: C1
+scientific_status: OPEN
+scientific_effect: none
+transfer_source: none
+sky_support_status: not_applicable_symbolic
+null_mock_status: not_applicable_symbolic
+
+claim_identity:
+  claim_id: C-PR124-CAS-LINEAGE
+  claim_text: >-
+    On the frozen MES geodesic reduction statement only, the four-axis CAS
+    contract (Wolfram+xAct, SymPy, SageMath+Singular, Lean) establishes
+    computational reproducibility of the exact reduced coefficient triples,
+    the hierarchy-preservation threshold, and the re-frozen ceilings; the
+    derivation-lineage oracle separately counts real independent derivation
+    lineages with same-implementation inflation excluded. Engine agreement
+    and derivation independence are different metrics and neither replaces
+    the other. This is domain/frame-conditional derived mechanics only; it
+    validates no observed scientific result and rescues no finding.
+  quantifier: all_registered_cas_checks_and_all_registered_mutations
+  estimand: exact_rational_reduction_and_governance_mechanics
+  target_population: frozen_mes_geodesic_reduction_statement_and_registry_surfaces
+  domain: linearized_almost_EGS_multipole_hierarchy_geodesic_congruence_eps1_zero
+  frame: CMB_frame_covariant_multipole_bounds_SAG_observer_motion_convention
+  perturbative_order: linear_in_kinematic_bounds
+  units: dimensionless_ratios_of_multipole_amplitudes
+  data_release: none
+  sky_support_mask_selection: none
+  statistic_pipeline: exact_symbolic_reduction_no_statistics
+  transfer_source: none
+  nuisance_prior_null_multiplicity: not_applicable_symbolic
+  claim_level_scheme: roadmap_rescue_v1
+  claim_level: C1
+  claim_tier_ceiling: conditional
+
+scope_and_non_goals:
+  production_remediation: forbidden
+  observed_data_analysis: forbidden
+  empirical_input_count: 0
+  remediation_disposition_change: forbidden
+  scientific_status_promotion: forbidden
+  # byte pins (survive commits — the freeze test verifies live hashes, not
+  # a vacuous-after-commit `git diff HEAD`)
+  frozen_modules_must_not_change:
+    htt/tsc/admissibility/three_bound_hierarchy.py: cc3ba841a4b61ac10a1d7a82e56b96391afcd81d8bd169bd8ca33940c7cf671e
+    htt/obsstat/egs3_mes_rederivation.py: 8051e61e01cc7d2a6d321677d9027f6b2aa2ce5fe740abd59ae1754030f4ec6f
+    htt/obsstat/egs3_mes_provenance.py: 03bc934eb75fb77141e311d344e3ce633bd92fe1772f006d76e0435829a9afef
+    htt/obsstat/egs3_mes_branch_registry.py: 9b0817c99944e796b4c980cad43df724d0abde9381c8f542195d249447bfe816
+    htt/obsstat/egs3_mes_geodesic_refreeze.py: a74e92151d9d49e371f2080c799c3512a4a902ad78f43ce94573ddbb1e41be10
+    htt/obsstat/egs3_mesb_web_trace.py: 807ad53952bacc677606223ded4d30acb2f6357c84eebc9432ec279d8881735c
+    docs/research_program/THEOREM_REGISTRY.yaml: 266374abc05b179cf32e12020ced0624643f525cd42f8fcead05c9542c74f315
+  # PR-124 rewires the consumer SOURCES (traversal + labeled legacy channel)
+  # and re-pins their inventory hashes; the consumer SET MEMBERSHIP and the
+  # numeric outputs must not change (byte-identical values verified).
+  mapped_active_mes_consumer_set_membership_must_not_change: docs/research_program/long_horizon_rescue/pr122_active_mes_consumers.yaml
+  pstf_python_d2_closure: remains_xfail_PR-024c_not_this_pr
+
+remediation_state_contract:
+  path: docs/codex_handoff/research_remediation_state.yaml
+  sha256: f16d9754828bb32ae4cef92f585af82ae7fd1caa2687a7b4144bc1e942328dd9
+  finding_count: 102
+  required_scientific_status_counts: {OPEN: 102}
+  rescued_count: 0
+  disposition_changes: forbidden
+
+data_scope:
+  pr3_e2e_download: complete_analysis_deferred_to_pr150
+  pr4_download: not_started
+  pr4_data_work: skip_entirely_by_user_scope
+  pr4_commands_run_required: 0
+  forbidden_actions:
+    - PR4 download or size probe
+    - PR4 path lookup or inspection
+    - PR4 intake, hash, decode, reduction, cache, or analysis
+    - PR4 derived number, table, figure, or comparison
+
+# ---------------------------------------------------------------------------
+# 1. Legacy theorem-registry quarantine + typed successor
+# ---------------------------------------------------------------------------
+theorem_signature_contract:
+  legacy_registry:
+    path: docs/research_program/THEOREM_REGISTRY.yaml
+    sha256: 266374abc05b179cf32e12020ced0624643f525cd42f8fcead05c9542c74f315
+    disposition: byte_stable_reproduction_only
+    frozen_consumers_allowed:
+      - scripts/theorem_registry_v9_lib.py
+      - scripts/build_egs_results_table_v9.py
+      - scripts/build_external_audit_report_v9.py
+      - scripts/build_open_items_ledger.py
+      - tests/contracts/test_theorem_registry_v9.py
+  successor_registry:
+    path: docs/research_program/THEOREM_SIGNATURES_V2.yaml
+    schema: htt.theorem_registry.v2
+    loader: htt/src/common/theorem_signatures.py
+    every_legacy_id_mapped_exactly_once: true
+    legacy_status_must_match: true
+  evidence_grades:
+    - published_proof
+    - independent_derivation
+    - checked_derivation
+    - numerical_test
+    - sanity_anchor
+    - specification
+  counting_rule: >-
+    counts_toward_theorem_count is true only for entries whose signature is
+    CHECKED (typed quantified variables, hypotheses, frame, order, domain)
+    AND whose evidence grade is one of published_proof,
+    independent_derivation, checked_derivation AND whose legacy status is
+    ACTIVE or ACTIVE_CONDITIONAL. sanity_anchor, specification, and
+    numerical_test entries never count toward the theorem count, and
+    re-evaluations of the same expression never add derivation counts.
+  all_parameter_prose_rule: generated_only_from_CHECKED_signatures_else_raise
+  old_overstatement_negative_test: >-
+    the raw legacy entry count (65) used as a theorem count must FAIL the
+    v2 counting rule; the honest count is strictly smaller and excludes
+    SUPERSEDED/RETRACTED/WITHHELD/PLANNED entries, sanity anchors, and
+    specifications.
+
+# ---------------------------------------------------------------------------
+# 2. Four-axis CAS contract (computational reproducibility metric)
+# ---------------------------------------------------------------------------
+cas_contract:
+  contract_id: CAS-PR124-MES-GEODESIC-001
+  contract_path: docs/generated/pr124_cas/CAS_CONTRACT_PR124_MES_GEODESIC.json
+  statement_class: scalar_algebra
+  gate_tool: .agent-harness/scripts/cas_gate.py
+  aggregate_required: CAS_4AXIS_PASS
+  axes_required: [wolfram_xact, sympy, sage_singular, lean]
+  no_majority_vote: true
+  engine_agreement_is_not_derivation_independence: true
+  exact_statement: >-
+    With raw MESa bound terms sigma: [(8/3,L2,d0),(1,L2,d1),(5,L1,d1),
+    (9/7,L3,d1)] and omega: [(9,L1,d1),(3,L1,d2),(6/5,L2,d2)], and the C1/C2
+    reduction factor (1/3)^d per total derivative order d, the reduced
+    coefficient triples over (e1,e2,e3) are exactly sigma=(5/3,3,3/7) and
+    omega=(10/3,2/15,0); the geodesic congruence has no acceleration bound
+    (A^2=0); B_sigma>B_omega iff e1 < e1_crit = (43/25)e2+(9/35)e3; at the
+    registered eps (e1=0, e2=3559629/10^12, e3=6065291/10^12) the ceilings
+    are exactly W2_max=(3/2)B_omega^2=4223652872547/12500000000000000000000000
+    and Sigma2_max=(3/2)B_sigma^2=6479509460609043/24500000000000000000000000,
+    the hierarchy at e1=0 is strict, and at the observed dipole
+    e1=771/625000 the hierarchy fails (full-dipole ceiling inadmissible).
+  expected_exact_values:
+    sigma_triple: ['5/3', '3', '3/7']
+    omega_triple: ['10/3', '2/15', '0']
+    accel_triple: ['0', '0', '0']
+    e1_crit_coefficients: ['43/25', '9/35']
+    eps_registered: {e1: '0', e2: '3559629/1000000000000', e3: '6065291/1000000000000'}
+    e1_observed: '771/625000'
+    B_sigma_exact: '46474041/3500000000000'
+    B_omega_exact: '1186543/2500000000000'
+    W2_max_exact: '4223652872547/12500000000000000000000000'
+    Sigma2_max_exact: '6479509460609043/24500000000000000000000000'
+  axis_scripts:
+    wolfram_xact: wolfram/pr124_mes_geodesic_axis.wls
+    sympy: htt/src/common/pr124_sympy_axis.py
+    sage_singular: sage/pr124_mes_geodesic_axis.sage
+    lean: formal_pr124/Pr124Mes.lean
+  axis_independence_rule: >-
+    each axis implements the C1/C2 reduction and the exact evaluations in
+    its own engine from the contract-registered raw data; no axis consumes
+    another axis's intermediate expressions, generated code, or results
+    before adjudication. Shared inputs are the published raw-bound
+    transcription (the statement under test), which is the contract, not a
+    shared derivation.
+
+# ---------------------------------------------------------------------------
+# 3. Derivation-lineage oracle (derivation independence metric)
+# ---------------------------------------------------------------------------
+lineage_contract:
+  lineage_kinds:
+    - published_paper
+    - external_citing_source
+    - in_repo_reduction
+  independence_rule: >-
+    two lineages are independent only when their derivation artifacts differ
+    in origin (different publication, or an in-repo reduction performed from
+    the raw published bounds rather than copied from the reduced published
+    values). Evaluating one implementation, AST, or generated expression on
+    a second engine NEVER adds a lineage. Numeric spot checks are never
+    proofs and never lineages.
+  inflation_exclusion_key: implementation_fingerprint
+  minimum_lineages_for_verified_branch: 2
+  branch_requirements:
+    MES_G_SIGMA:
+      required_min: 2
+      registered:
+        - lineage_id: mesa_published_eq59
+          kind: published_paper
+          source: arXiv:astro-ph/9501016 (PRD 51, 1525), eq (59)
+        - lineage_id: in_repo_c1c2_reduction_from_eq51
+          kind: in_repo_reduction
+          source: htt/obsstat/egs3_mes_rederivation.py (raw eq 51 -> C1/C2)
+    MES_G_OMEGA:
+      required_min: 2
+      registered:
+        - lineage_id: mesa_published_eq60
+          kind: published_paper
+          source: arXiv:astro-ph/9501016 (PRD 51, 1525), eq (60)
+        - lineage_id: sag1997_published_eq4
+          kind: external_citing_source
+          source: arXiv:astro-ph/9904346 (ApJ 476, 435), eq (4)
+        - lineage_id: in_repo_c1c2_reduction_from_eq52
+          kind: in_repo_reduction
+          source: htt/obsstat/egs3_mes_rederivation.py (raw eq 52 -> C1/C2)
+    MES_G_ACCEL:
+      required_min: 2
+      registered:
+        - lineage_id: mesa_geodesic_assumption
+          kind: published_paper
+          source: arXiv:astro-ph/9501016 (PRD 51, 1525), p.123 geodesic flow
+        - lineage_id: sag1997_geodesic_assumption_set
+          kind: external_citing_source
+          source: arXiv:astro-ph/9904346 (ApJ 476, 435), assumption set (no acceleration bound)
+      note: >-
+        a structural ABSENCE claim has no raw bound to reduce, so only
+        distinct publications count; in-repo restatements re-citing the same
+        origin never add a lineage. SAG 1997 is Stoeger-coauthored
+        (correlated authorship disclosed).
+    MES_NG_OMEGA:
+      required_min: 2
+      registered:
+        - lineage_id: mesb_print_only
+          kind: published_paper
+          source: PRD 51, 5942 (print-only; not accessible)
+      expected_status: UNVERIFIED_PRINT_ONLY_INSUFFICIENT_LINEAGES
+    MES_NG_ACCEL:
+      required_min: 2
+      registered:
+        - lineage_id: mesb_print_only
+          kind: published_paper
+          source: PRD 51, 5942 (print-only; not accessible)
+      expected_status: UNVERIFIED_PRINT_ONLY_INSUFFICIENT_LINEAGES
+
+# ---------------------------------------------------------------------------
+# 4. MES branch source authority
+# ---------------------------------------------------------------------------
+mes_authority_contract:
+  authority_module: htt/src/common/mes_theorem_authority.py
+  branches_required: [MES_G_SIGMA, MES_G_OMEGA, MES_G_ACCEL, MES_NG_OMEGA, MES_NG_ACCEL]
+  per_branch_required_fields:
+    - branch_id
+    - congruence
+    - status
+    - coefficients_exact
+    - sources            # DOI/arXiv or scan authority + page/equation + archived sha256
+    - convention_translation
+    - independent_derivation_count
+    - physical_assumption_uncertainty
+  archived_primary_sources:
+    - path: docs/audits/mes_primary_sources/mesa_astro-ph_9501016_PRD51_1525.txt
+      sha256: d500ffeef60f1f006393b7b2a21823b51bc4c9c9b41b7fb983f0393ce800217e
+    - path: docs/audits/mes_primary_sources/companion_astro-ph_9510126_deltaT.txt
+      sha256: 7ae6cf9288027338829d9964138596c2b909d49471193fa008d1c966eaab9765
+    - path: docs/audits/mes_primary_sources/sag1997_astro-ph_9904346_ApJ476_435.tex
+      sha256: 00bb2c7c485ffb14433a90dae2d5d7709fbecd9c4eef986ec27d72f7dae5370e
+  successor_pointer:
+    registry_module: htt/src/common/mes_successor_registry.py
+    successor_id: mes.typed-successor.pr124
+    authorization_rule: >-
+      the successor pointer becomes AVAILABLE only through a verifier that
+      re-derives authorization from exact receipt bytes (hash-bound to the
+      legacy registry, the CAS adjudication, the zero-stale-triple scan, and
+      the D2 execution receipt). Caller-supplied status strings never
+      authorize. Scientific-authority remains a governance label at
+      conditional C1; it does not rescue findings or release claims.
+  stale_triple_scan:
+    scanner: htt.src.common.mes_successor_registry.scan (PR-122 mechanics)
+    required_stale_triples_in_active_consumers: 0
+
+# ---------------------------------------------------------------------------
+# 5. D2 dual-track authority
+# ---------------------------------------------------------------------------
+d2_authority_contract:
+  requirement: >-
+    the D2 authority row requires a Python-side anchor receipt and a Rust
+    target receipt with separated origin equations and derivation streams
+    (Rust MB-95 CAMB-convention synchronous gauge, Ma-Bertschinger 1995
+    lineage vs Python PSTF 1+3 covariant Ellis-van Elst lineage), each with
+    source/input/output/toolchain hashes and actually collected/executed
+    counts; the Rust target must execute to a NONZERO D_2 in this cycle.
+  rust_target:
+    command: cargo test --release --lib solver::sync_gauge_camb::test_dl_200k -- --exact --nocapture
+    source_path: src/solver/sync_gauge_camb.rs
+    source_sha256: e031d3b20e0e1c521945e939dfdd7850c6c694728d4c9903a598e0a275cbeaf2
+    cargo_manifest_sha256: edefba17d7d7f7565a381bbe65f9de359dce5704d49786669526802c336a58ed
+    transcript_path: docs/audits/pr124_d2_authority/rust_test_dl_200k_20260717.log
+    nonzero_required: true
+  python_anchor:
+    test_path: htt/bass/validation/test_d2_regression_anchor.py
+    test_sha256: a435eebd2344ea2f32b7f0b4e90ed298a2e9555528c7355056bb97e211094d66
+    golden_path: htt/bass/validation/_d2_anchor_golden.json
+    golden_sha256: 4ba806602992b6d9be07586e46f0bd2cd621bdc4ff0389e8ac49a4b02cd0233d
+    bit_identical_required: true
+  documented_anchor_gap: >-
+    the bit-identical production anchor D_2 = 1002.086744 uK^2 is enforced by
+    the bass_rs dump_dl_spectrum_sparse configuration, which is not present
+    as an executable binary in this repository; the executed Rust receipt in
+    this PR uses the in-tree production-path test configuration
+    (test_dl_200k: lmax_g=16, n_k=200) and records its own nonzero D_2. The
+    receipt claims execution of the MB-95 production path, not bit-identical
+    reproduction of the 1002.086744 anchor. Claiming the latter from this
+    receipt is forbidden.
+  pstf_python_closure_status: xfail_open_PR-024c_recorded_not_executed_here
+
+# ---------------------------------------------------------------------------
+# 6. Mutation registry (all preregistered; every mutant must be killed)
+# ---------------------------------------------------------------------------
+mutation_registry:
+  - mutation_id: stale_triple_reintroduction
+    defect: reintroduce_legacy_non_geodesic_triple_as_active_consumer_value
+    kill_rule: static scanner flags the synthetic consumer carrying (3/4, 2, 2/7) as STALE_MES_TRIPLE; clean twin without the literal passes
+  - mutation_id: branch_swap
+    defect: present_geodesic_coefficients_under_the_non_geodesic_branch_or_swap_statuses
+    kill_rule: authority validator rejects any branch whose congruence/status/coefficient binding differs from the registered exact table
+  - mutation_id: source_count_inflation
+    defect: count_the_same_reduction_implementation_twice_under_two_engine_names
+    kill_rule: lineage counter collapses identical implementation_fingerprints; a claimed count exceeding the collapsed count is rejected
+  - mutation_id: zero_d2_receipt
+    defect: accept_a_d2_receipt_with_zero_or_missing_executed_value
+    kill_rule: d2 receipt validator rejects D_2 == 0, missing execution counts, or missing transcript hash binding
+  - mutation_id: sign_flip_reduction
+    defect: reduction_factor_sign_flip_to_minus_one_third_per_order
+    kill_rule: the REAL validator (validate_branch_entry) rejects a branch entry carrying the sign-corrupted omega triple
+  - mutation_id: unit_w2_normalization
+    defect: ceiling_map_uses_one_half_b_squared_instead_of_three_halves_b_squared
+    kill_rule: the REAL validator (validate_ceiling_map, run by the authority verification on the adjudicated values) rejects the (1/2)B^2 ceiling
+  - mutation_id: limit_eps1_domain
+    defect: hierarchy_admissibility_accepts_e1_equal_or_above_e1_crit
+    kill_rule: the REAL validator (validate_hierarchy_strict, run by the authority verification on the contract witnesses) raises at exactly e1 = e1_crit
+  - mutation_id: overstatement_theorem_count
+    defect: count_all_65_legacy_entries_as_proven_theorems
+    kill_rule: v2 counting rule excludes SUPERSEDED/RETRACTED/WITHHELD/PLANNED, sanity anchors, specifications, numerical tests, and unchecked signatures; the mutant count 65 must exceed the honest count and be rejected
+
+# ---------------------------------------------------------------------------
+# 7. Artifacts
+# ---------------------------------------------------------------------------
+artifact_contract:
+  outputs:
+    - docs/generated/pr124_cas/CAS_CONTRACT_PR124_MES_GEODESIC.json
+    - docs/generated/pr124_cas/axis_result_wolfram_xact.json
+    - docs/generated/pr124_cas/axis_result_sympy.json
+    - docs/generated/pr124_cas/axis_result_sage_singular.json
+    - docs/generated/pr124_cas/axis_result_lean.json
+    - docs/generated/pr124_cas_adjudication.json
+    - docs/generated/pr124_theorem_inventory.json
+    - docs/generated/pr124_mes_authority_table.json
+    - docs/generated/pr124_d2_authority_receipt.json
+    - docs/generated/pr124_lineage_receipt.json
+    - docs/generated/pr124_mutation_report.json
+    - docs/generated/pr124_artifact_manifest.json
+  required_metadata:
+    - owner
+    - contributors
+    - implementation_scope
+    - claim_tier
+    - claim_level
+    - artifact_mode
+    - allowed_use
+    - forbidden_use
+    - transfer_source
+    - config_hash
+    - input_hashes
+    - caveats
+    - generating_command
+    - git_commit_or_worktree_state
+  write_policy: validate_all_then_atomic_replace_in_deterministic_path_order
+  check_policy: read_only_nonzero_on_missing_stale_or_invalid
+
+acceptance_and_kill_switches:
+  - all four axis results PASS under one contract hash and the adjudication is CAS_4AXIS_PASS (a single axis blocked or conflicted blocks the branch; three axes never pass)
+  - zero sign/coefficient/domain disagreements between engines
+  - every registered mutation executes and is killed; any survivor blocks its surface
+  - the stale-triple scan over active consumers returns zero findings
+  - the geodesic branches carry at least two real independent derivation lineages; MES_NG branches remain UNVERIFIED_PRINT_ONLY and are never promoted
+  - the Rust D2 target executed nonzero with recorded hashes and counts; the Python anchor suite passed bit-identical
+  - the old overstatement (65-entry theorem count) fails the v2 counting rule
+  - the legacy registry byte-hash is unchanged and frozen modules are byte-identical
+  - all 102 remediation findings remain OPEN; no disposition changes
+  - PR4 commands_run equals zero and no PR4 input or derived artifact exists
+
+forbidden_output_language:
+  - four-axis pass therefore theorem true in nature
+  - MES non-geodesic coefficients verified
+  - D2 bit-identical anchor reproduced by this receipt
+  - engine agreement establishes derivation independence
+  - observed anisotropy constrained
+  - Bianchi geometry detected
+  - Bianchi family identified
+  - remediation finding rescued
+  - finding rescued
+  - validated as native

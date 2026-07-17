@@ -9,6 +9,26 @@ Nonlinear corrections from VN-04.
 import numpy as np
 from htt.core.ssot import C
 
+# PR-124: active MES consumers traverse the typed successor registry.  The
+# omega/accel coefficient triples below are the LEGACY-REPRODUCTION values
+# (non-geodesic, print-only MESb; in-house reconstruction refuted rev-r190),
+# fetched through the labeled legacy channel so historical outputs stay
+# byte-stable.  They are explicitly NON-AUTHORITATIVE: the live authority is
+# the typed successor (common.mes_theorem_authority); flowing the authorized
+# geodesic values into result-producing consumers is a result-regeneration
+# event owned by later PRs.
+from common.mes_successor_registry import (
+    current_mes_successor_registry,
+    legacy_reproduction_coefficients,
+)
+
+_MES_SUCCESSOR = current_mes_successor_registry().successor
+_MES_SUCCESSOR_ID = _MES_SUCCESSOR.successor_id
+_LEGACY_COEFFS = legacy_reproduction_coefficients()
+_SIGMA_C1, _SIGMA_C2, _SIGMA_C3 = (float(c) for c in _LEGACY_COEFFS["sigma"])
+_OMEGA_C1, _OMEGA_C2, _OMEGA_C3 = (float(c) for c in _LEGACY_COEFFS["omega"])
+_ACCEL_C1, _ACCEL_C2, _ACCEL_C3 = (float(c) for c in _LEGACY_COEFFS["accel"])
+
 __all__ = [
     'B_sigma', 'B_omega', 'B_accel',
     'B_sigma_corrected', 'Sig2_max_MES', 'W2_max_MES', 'A2_max_MES',
@@ -49,7 +69,7 @@ def B_sigma(e1, e2=C.eps2, e3=C.eps3):
     ----------
     Theorem 3.1, Eq. (3.7); StoegerME1995 Eq. (3.3).
     """
-    return (5.0/3)*e1 + 3.0*e2 + (3.0/7)*e3
+    return _SIGMA_C1*e1 + _SIGMA_C2*e2 + _SIGMA_C3*e3
 
 def B_omega(e1, e2=C.eps2, e3=C.eps3):
     """MES vorticity bound combination B_ω = (3/4)ε₁ + 2ε₂ + (2/7)ε₃.
@@ -71,7 +91,7 @@ def B_omega(e1, e2=C.eps2, e3=C.eps3):
     ----------
     Theorem 3.2, Eq. (3.12).
     """
-    return (3.0/4)*e1 + 2.0*e2 + (2.0/7)*e3
+    return _OMEGA_C1*e1 + _OMEGA_C2*e2 + _OMEGA_C3*e3
 
 def B_accel(e1, e2=C.eps2, e3=C.eps3):
     """MES acceleration bound combination B_u̇ = (3/4)ε₁ + ε₂ + (3/14)ε₃.
@@ -93,7 +113,7 @@ def B_accel(e1, e2=C.eps2, e3=C.eps3):
     ----------
     Theorem 3.3, Eq. (3.15).
     """
-    return (3.0/4)*e1 + 1.0*e2 + (3.0/14)*e3
+    return _ACCEL_C1*e1 + _ACCEL_C2*e2 + _ACCEL_C3*e3
 
 # ─── Frame-corrected bounds (VT-07) ─────────────────────────
 

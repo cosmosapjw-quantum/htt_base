@@ -120,7 +120,9 @@ def test_payload_maps_public_claims_to_artifacts_tests_caveats_and_owner():
     )
     assert evidence["authority_registry_ref"] == pin.authority_registry_ref
     assert evidence["process_result"] == "PASS"
-    assert evidence["evidence_status"] == "BLOCKED"
+    # PR-124: mechanics evidence is PRESENT; the kill switch is
+    # claim_release_allowed=False, not a BLOCKED evidence status.
+    assert evidence["evidence_status"] == "PRESENT"
     assert evidence["scientific_status"] == "OPEN"
     assert evidence["authority_status"] == "REQUIRES_TRUSTED_REGISTRY_VALIDATION"
     assert evidence["claim_release_allowed"] is False

@@ -7,6 +7,57 @@
 
 ## [Unreleased]
 
+### PR-124 — Four-axis CAS contract + derivation-lineage oracle (rev-r201, 2026-07-17)
+
+Executes roadmap Wave-14 PR-124 (first theory-foundation PR after the
+PR-119..123 governance arc; deps PR-123 complete). **Four-axis CAS
+contract**: `CAS-PR124-MES-GEODESIC-001` over the MES geodesic reduction
+statement (raw MESa eq 51/52 → C1/C2 → sigma `(5/3,3,3/7)`, omega
+`(10/3,2/15,0)`, geodesic A²=0, `e1_crit=(43/25)e2+(9/35)e3`, exact
+ceilings `W2_max=4223652872547/125e23`, `Sigma2_max=6479509460609043/245e23`,
+strict-at-zero/fails-at-observed/equality-at-boundary witnesses) verified by
+four INDEPENDENT engine implementations (Wolfram 15, SymPy 1.14, Sage 10.9
+QQ, Lean 4.31 core `native_decide` in new `formal_pr124/`) — all PASS with
+identical exact rationals; `cas_gate.py adjudicate` → **CAS_4AXIS_PASS**
+bound to one contract hash. **Derivation-lineage oracle** (separate metric):
+fingerprint-collapsed independent-derivation counts (engine re-evaluation
+never adds a lineage); geodesic branches ≥2 lineages; MES_NG branches stay
+UNVERIFIED_PRINT_ONLY. **Typed theorem-signature successor**
+(`THEOREM_SIGNATURES_V2.yaml` + loader): all 65 legacy ids mapped once,
+legacy registry byte-quarantined; **honest theorem count = 12**; sanity
+anchors/specifications/numerical tests/unchecked signatures never count;
+the historical 65-entry quote fails the counting rule (negative test);
+all-parameter prose only from CHECKED signatures. **MES authority + successor
+authorization**: `mes_theorem_authority.py` per-branch source authority
+(arXiv/DOI+equation+archived SHA) + convention translation + uncertainty;
+PR-122 constructor gate replaced by the receipt-bytes verifier; successor
+pointer AVAILABLE + AUTHORIZED_BY_PR124 (conditional C1 governance only);
+**all 22 active MES consumers rewired** through the typed pointer with stale
+non-geodesic literals moved to the labeled `legacy_reproduction_coefficients`
+channel (float-exact, outputs verified bit-identical; consumer scan 0 stale
+triples / 0 bypasses / 0 findings). **D2 dual-track receipt**: Rust MB-95
+`test_dl_200k` executed live (D_2 = 978.6 μK² nonzero, 1/1, hash-bound
+transcript); Python anchor suite bit-identical; `dump_dl_spectrum_sparse`
+1002.086744 anchor recorded as a DOCUMENTED GAP (never claimed by this
+receipt); PSTF closure stays xfail (PR-024c). **Mutations**: 8/8
+preregistered mutants (stale-triple/branch-swap/count-inflation/zero-D2/
+sign-flip/unit-W2/limit-eps1/overstatement) executed and KILLED. **PR-122
+supersession (sanctioned)**: graph-builder + release-binding kill switches
+inverted to clean-scan+receipt-verified; evidence graph rebuilt + trust-root
+pin updated; `claim_release_allowed` stays False. Gates:
+`run_pr124_cas_lineage.py --check`, `test_pr124_cas_lineage.py` (15),
+`test_mes_successor_registry.py` post-PR124 (45). **Adversarial review
+cycle** (3 refute-oriented lanes) closed all findings in-session:
+BRANCHES↔contract exact-value binding, real-validator mutant kills, vacuous
+accel check removed, axis-script byte binding + deep --check re-verification
++ 4/4 Lean computed cross-check, factory-level live receipt verification,
+runner pin-consistency stop, lineage/archived-source byte pins, TOCTOU fix,
+SIG-P3/P11 honesty downgrades, post-PR124 PRESENT-evidence semantics
+propagated through release binding/claim freeze/audit packages (claim
+release stays False throughout). x_C + W2_max production values untouched
+(byte-identical consumer outputs); 102 OPEN / 0 RESCUED; PR4 skipped. See
+docs/PR_DELTAS/pr-124.md.
+
 ### PR-124 preflight — shared-context/CAS harness repair + GitHub-pushable repo (rev-r200, 2026-07-17)
 
 Executes the full repair PDR from the 2026-07-17 final harness audit

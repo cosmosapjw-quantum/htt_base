@@ -1,0 +1,117 @@
+{
+  "branches": {
+    "MES_G_ACCEL": {
+      "coefficients_exact": [
+        "0",
+        "0",
+        "0"
+      ],
+      "congruence": "geodesic",
+      "independent_derivation_count": 2,
+      "lineages": [
+        {
+          "implementation_fingerprint": "arXiv:astro-ph/9501016:p123-geodesic",
+          "kind": "published_paper",
+          "lineage_id": "mesa_geodesic_assumption"
+        },
+        {
+          "implementation_fingerprint": "arXiv:astro-ph/9904346:assumption-set-no-accel-bound",
+          "kind": "external_citing_source",
+          "lineage_id": "sag1997_geodesic_assumption_set"
+        }
+      ],
+      "status": "VERIFIED_STRUCTURAL"
+    },
+    "MES_G_OMEGA": {
+      "coefficients_exact": [
+        "10/3",
+        "2/15",
+        "0"
+      ],
+      "congruence": "geodesic",
+      "independent_derivation_count": 3,
+      "lineages": [
+        {
+          "implementation_fingerprint": "arXiv:astro-ph/9501016:eq60",
+          "kind": "published_paper",
+          "lineage_id": "mesa_published_eq60"
+        },
+        {
+          "implementation_fingerprint": "arXiv:astro-ph/9904346:eq4",
+          "kind": "external_citing_source",
+          "lineage_id": "sag1997_published_eq4"
+        },
+        {
+          "implementation_fingerprint": "htt/obsstat/egs3_mes_rederivation.py::reduce_raw_bound(_RAW_OMEGA_MESA)",
+          "kind": "in_repo_reduction",
+          "lineage_id": "in_repo_c1c2_reduction_from_eq52",
+          "source_path": "htt/obsstat/egs3_mes_rederivation.py",
+          "source_sha256": "8051e61e01cc7d2a6d321677d9027f6b2aa2ce5fe740abd59ae1754030f4ec6f"
+        }
+      ],
+      "status": "VERIFIED"
+    },
+    "MES_G_SIGMA": {
+      "coefficients_exact": [
+        "5/3",
+        "3",
+        "3/7"
+      ],
+      "congruence": "geodesic",
+      "independent_derivation_count": 2,
+      "lineages": [
+        {
+          "implementation_fingerprint": "arXiv:astro-ph/9501016:eq59",
+          "kind": "published_paper",
+          "lineage_id": "mesa_published_eq59"
+        },
+        {
+          "implementation_fingerprint": "htt/obsstat/egs3_mes_rederivation.py::reduce_raw_bound(_RAW_SIGMA)",
+          "kind": "in_repo_reduction",
+          "lineage_id": "in_repo_c1c2_reduction_from_eq51",
+          "source_path": "htt/obsstat/egs3_mes_rederivation.py",
+          "source_sha256": "8051e61e01cc7d2a6d321677d9027f6b2aa2ce5fe740abd59ae1754030f4ec6f"
+        }
+      ],
+      "status": "VERIFIED"
+    },
+    "MES_NG_ACCEL": {
+      "coefficients_exact": [
+        "3/4",
+        "1",
+        "3/14"
+      ],
+      "congruence": "non_geodesic",
+      "independent_derivation_count": 1,
+      "lineages": [
+        {
+          "implementation_fingerprint": "PRD-51-5942:print-only",
+          "kind": "published_paper",
+          "lineage_id": "mesb_print_only"
+        }
+      ],
+      "status": "UNVERIFIED_PRINT_ONLY"
+    },
+    "MES_NG_OMEGA": {
+      "coefficients_exact": [
+        "3/4",
+        "2",
+        "2/7"
+      ],
+      "congruence": "non_geodesic",
+      "independent_derivation_count": 1,
+      "lineages": [
+        {
+          "implementation_fingerprint": "PRD-51-5942:print-only",
+          "kind": "published_paper",
+          "lineage_id": "mesb_print_only"
+        }
+      ],
+      "status": "UNVERIFIED_PRINT_ONLY"
+    }
+  },
+  "independence_rule": "lineages collapse by implementation_fingerprint; evaluating one implementation on a second engine never adds a lineage; numeric spot checks are never proofs",
+  "metric_separation_note": "this receipt reports DERIVATION INDEPENDENCE; the four-axis CAS adjudication reports COMPUTATIONAL REPRODUCIBILITY; neither metric substitutes for the other",
+  "minimum_lineages_for_verified_branch": 2,
+  "schema": "pr124.lineage_receipt.v1"
+}

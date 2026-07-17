@@ -57,12 +57,13 @@
     "tests/contracts/test_pytest_execution_evidence.py::test_fileless_release_pin_object_cannot_hide_under_an_alias",
     "tests/contracts/test_pytest_execution_evidence.py::test_checked_hash_workspace_pyc_is_bypassed_by_isolated_prefix",
     "tests/contracts/test_pytest_execution_evidence.py::test_source_only_launcher_rejects_direct_cli_and_ignores_executable_pth",
-    "tests/contracts/test_mes_successor_registry.py::test_current_successor_is_explicitly_missing_and_pr124_blocked",
-    "tests/contracts/test_mes_successor_registry.py::test_available_successor_cannot_self_assert_authority_before_pr124[typed-enums]",
-    "tests/contracts/test_mes_successor_registry.py::test_available_successor_cannot_self_assert_authority_before_pr124[caller-strings]",
-    "tests/contracts/test_mes_successor_registry.py::test_available_successor_cannot_self_assert_authority_before_pr124[failed-process]",
+    "tests/contracts/test_mes_successor_registry.py::test_current_successor_is_available_and_pr124_authorized",
+    "tests/contracts/test_mes_successor_registry.py::test_available_successor_shape_is_fail_closed[malformed-receipt]",
+    "tests/contracts/test_mes_successor_registry.py::test_available_successor_shape_is_fail_closed[failed-process]",
+    "tests/contracts/test_mes_successor_registry.py::test_available_successor_shape_is_fail_closed[blocked-status]",
+    "tests/contracts/test_mes_successor_registry.py::test_foreign_receipt_string_never_carries_authority",
     "tests/contracts/test_mes_successor_registry.py::test_egs3_pass_binds_source_and_seal_but_has_no_scientific_authority",
-    "tests/contracts/test_mes_successor_registry.py::test_current_registry_validates_seal_and_only_blocks_successor",
+    "tests/contracts/test_mes_successor_registry.py::test_current_registry_validates_clean_under_pr124_authority",
     "tests/contracts/test_mes_successor_registry.py::test_witness_source_and_seal_hashes_are_checked_separately",
     "tests/contracts/test_mes_successor_registry.py::test_hash_bound_but_semantically_invalid_witness_seal_is_blocked[seal-status-fail]",
     "tests/contracts/test_mes_successor_registry.py::test_hash_bound_but_semantically_invalid_witness_seal_is_blocked[seal-required-key-missing]",
@@ -89,7 +90,7 @@
     "tests/contracts/test_mes_successor_registry.py::test_module_alias_call_counts_as_typed_successor_consumption",
     "tests/contracts/test_mes_successor_registry.py::test_dynamic_legacy_import_is_a_bypass",
     "tests/contracts/test_mes_successor_registry.py::test_constant_folded_dynamic_legacy_import_is_a_bypass",
-    "tests/contracts/test_mes_successor_registry.py::test_unregistered_planned_source_presence_is_not_auto_promoted",
+    "tests/contracts/test_mes_successor_registry.py::test_self_asserted_successor_source_is_not_auto_promoted",
     "tests/contracts/test_mes_successor_registry.py::test_inventory_is_exact_hash_pinned_and_matches_ast_discovery",
     "tests/contracts/test_mes_successor_registry.py::test_inventory_declaration_comparison_is_order_independent",
     "tests/contracts/test_mes_successor_registry.py::test_inventory_enumerates_live_figures_without_directory_exclusion",
@@ -138,13 +139,13 @@
     "tests/pr_cards/test_pr_122_claim_addressed_evidence_graph_content_addressed.py::test_failed_or_tampered_pr121_environment_receipt_is_rejected",
     "tests/pr_cards/test_pr_122_claim_addressed_evidence_graph_content_addressed.py::test_pr122_authority_snapshot_is_an_immutable_exact_scope_slice"
   ],
-  "collected_node_ids_hash": "c0461f63466a23a57dc4d46cfa1828b279d97719176d1274c0c1dc4eebcacee9",
-  "content_sha256": "308848a51478c9e0288e45a94e426016352f833edbf0c1056a26c154a43141e4",
+  "collected_node_ids_hash": "e257b7f55d7b622606ad8dc2f1080e8c3cdb7297c0c3baaa00a50d750e3cf9c1",
+  "content_sha256": "1aa0e6d639f5821bd915fbc208ad355e5ef1d1030f7b6a96a203d34fbcb6d23d",
   "counts": {
-    "collected": 132,
-    "executed": 132,
+    "collected": 133,
+    "executed": 133,
     "failed": 0,
-    "passed": 132,
+    "passed": 133,
     "skipped": 0,
     "xfailed": 0,
     "xpassed": 0
@@ -155,7 +156,7 @@
       "loaded_cache_files": [],
       "pycache_prefix_status": "isolated_empty_external"
     },
-    "environment_ref": "30765a2c0c59a0174c23600b546ff77dbe1e497517d7137afadb9d19b7a62d10",
+    "environment_ref": "f29c1f31bb962e849ec1628e10e0da54c75ea2c5eefc9ff5bc3f51cd7e94d70a",
     "excluded_import_origins": [],
     "hidden_controls": {
       "pytest_addopts": null,
@@ -1025,7 +1026,15 @@
         "source": {
           "path": "htt/src/common/mes_successor_registry.py",
           "scope": "repo",
-          "sha256": "ecd7f3999c3edd29b64820629ad9453437a52522694d309a72ea6446f4f2b970"
+          "sha256": "13b844b086f954d841dd6d3e38bbca9ef226ab07dac91f17beb0296c03fae72a"
+        }
+      },
+      {
+        "module": "common.mes_theorem_authority",
+        "source": {
+          "path": "htt/src/common/mes_theorem_authority.py",
+          "scope": "repo",
+          "sha256": "d149d8599eba65dd1af536d30f289466b642e990bd8cee6cc8639566ab787af8"
         }
       },
       {
@@ -1049,7 +1058,7 @@
         "source": {
           "path": "htt/src/common/release_evidence_binding.py",
           "scope": "repo",
-          "sha256": "927bf019090796c4544f7a6c9b47db77b7e5da1b9de127d0de55e38acfd2cffb"
+          "sha256": "a3cbba6f9239d1e13b54b07eebdf468c92648dd1605d252958df977c6fed6367"
         }
       },
       {
@@ -1074,6 +1083,14 @@
           "path": "htt/src/common/sky_support.py",
           "scope": "repo",
           "sha256": "81d136376ac4df5d398e50faaacc67bebdb774132ab6cf101eeccf7f5384c849"
+        }
+      },
+      {
+        "module": "common.theorem_signatures",
+        "source": {
+          "path": "htt/src/common/theorem_signatures.py",
+          "scope": "repo",
+          "sha256": "214edec76e6deb8c2064b7edb5765a683213b552783baebe6be1b902fa0e160e"
         }
       },
       {
@@ -1433,7 +1450,7 @@
         "source": {
           "path": "htt/htt/htt/core/__init__.py",
           "scope": "repo",
-          "sha256": "9cd1d2ba2bfc5083d28fae36d0c35027890c1bd9a52f4ff446bcd26d0c7a1a89"
+          "sha256": "bbbb4f6ad6350316524b3f2b0f85489e9b140fa5e86a34c24ba81de39e0cf0c8"
         }
       },
       {
@@ -1441,7 +1458,7 @@
         "source": {
           "path": "htt/htt/htt/core/bounds.py",
           "scope": "repo",
-          "sha256": "a7344c5d64d8c25b45082163898c0236402feca844ced3b43a6a9f86b8bed569"
+          "sha256": "9ef8a57b61e68ebb8977a5650cf9eb732f3fa1bd0d513bfeabde59062116cdeb"
         }
       },
       {
@@ -1457,7 +1474,7 @@
         "source": {
           "path": "htt/htt/htt/core/departure_posteriors.py",
           "scope": "repo",
-          "sha256": "cfb7705832c4f8dcde9c596f26db1f9ca18896e8c7e9450f4bb9c112a7944a4c"
+          "sha256": "86abda3ab073700cd3f8382617821093c4dad7b04d03ce5bf5cc2bbbd2e8afe9"
         }
       },
       {
@@ -7369,7 +7386,7 @@
         "source": {
           "path": "tests/contracts/test_mes_successor_registry.py",
           "scope": "repo",
-          "sha256": "a6618aa736decfcbe12eff99f2ae5b107ba6f5a77ec157d148af46501cb10f85"
+          "sha256": "e758b41b615cb7eb0380932d9748393877ddb442df577968bd98dd44671435d2"
         }
       },
       {
@@ -7385,7 +7402,7 @@
         "source": {
           "path": "tests/contracts/test_release_evidence_binding.py",
           "scope": "repo",
-          "sha256": "bc5923068c722ac5acf10ffea3ea6e24b664d5fb2bcdaf90e85e098408d476c3"
+          "sha256": "e1b651d0e4105b59007c92b59cdd44e7df396044e52761dd7c09128b4ee5273b"
         }
       },
       {
@@ -8451,9 +8468,9 @@
     "tests/contracts/test_evidence_graph.py::test_zero_collection_skip_and_xfail_are_distinct_non_authority",
     "tests/contracts/test_mes_successor_registry.py::test_ast_discovery_rejects_declared_decoy_with_only_non_mes_import",
     "tests/contracts/test_mes_successor_registry.py::test_ast_discovery_reports_undeclared_exact_mes_consumer",
-    "tests/contracts/test_mes_successor_registry.py::test_available_successor_cannot_self_assert_authority_before_pr124[caller-strings]",
-    "tests/contracts/test_mes_successor_registry.py::test_available_successor_cannot_self_assert_authority_before_pr124[failed-process]",
-    "tests/contracts/test_mes_successor_registry.py::test_available_successor_cannot_self_assert_authority_before_pr124[typed-enums]",
+    "tests/contracts/test_mes_successor_registry.py::test_available_successor_shape_is_fail_closed[blocked-status]",
+    "tests/contracts/test_mes_successor_registry.py::test_available_successor_shape_is_fail_closed[failed-process]",
+    "tests/contracts/test_mes_successor_registry.py::test_available_successor_shape_is_fail_closed[malformed-receipt]",
     "tests/contracts/test_mes_successor_registry.py::test_caller_supplied_registry_is_never_a_release_trust_root",
     "tests/contracts/test_mes_successor_registry.py::test_clean_typed_consumer_has_no_pointer_or_literal_blocker",
     "tests/contracts/test_mes_successor_registry.py::test_constant_folded_dynamic_legacy_import_is_a_bypass",
@@ -8462,8 +8479,8 @@
     "tests/contracts/test_mes_successor_registry.py::test_copied_stale_triple_is_blocked[(3 / 4, 2, 2 / 7)]",
     "tests/contracts/test_mes_successor_registry.py::test_copied_stale_triple_is_blocked[(3. / 4, 2., 2. / 7)]",
     "tests/contracts/test_mes_successor_registry.py::test_copied_stale_triple_is_blocked[(Fraction(3, 4), Fraction(2), Fraction(2, 7))]",
-    "tests/contracts/test_mes_successor_registry.py::test_current_registry_validates_seal_and_only_blocks_successor",
-    "tests/contracts/test_mes_successor_registry.py::test_current_successor_is_explicitly_missing_and_pr124_blocked",
+    "tests/contracts/test_mes_successor_registry.py::test_current_registry_validates_clean_under_pr124_authority",
+    "tests/contracts/test_mes_successor_registry.py::test_current_successor_is_available_and_pr124_authorized",
     "tests/contracts/test_mes_successor_registry.py::test_dead_or_bare_registry_call_cannot_clear_stale_literal_blocker",
     "tests/contracts/test_mes_successor_registry.py::test_dead_pointer_cannot_clear_inline_stale_affine_formula[if-zero]",
     "tests/contracts/test_mes_successor_registry.py::test_dead_pointer_cannot_clear_inline_stale_affine_formula[never-called-function]",
@@ -8474,6 +8491,7 @@
     "tests/contracts/test_mes_successor_registry.py::test_egs3_import_is_process_evidence_bypass_not_authority",
     "tests/contracts/test_mes_successor_registry.py::test_egs3_pass_binds_source_and_seal_but_has_no_scientific_authority",
     "tests/contracts/test_mes_successor_registry.py::test_excluded_consumer_hash_mutation_is_a_distinct_blocker",
+    "tests/contracts/test_mes_successor_registry.py::test_foreign_receipt_string_never_carries_authority",
     "tests/contracts/test_mes_successor_registry.py::test_hash_bound_but_semantically_invalid_witness_seal_is_blocked[seal-branch-status-promoted]",
     "tests/contracts/test_mes_successor_registry.py::test_hash_bound_but_semantically_invalid_witness_seal_is_blocked[seal-required-key-missing]",
     "tests/contracts/test_mes_successor_registry.py::test_hash_bound_but_semantically_invalid_witness_seal_is_blocked[seal-status-fail]",
@@ -8487,9 +8505,9 @@
     "tests/contracts/test_mes_successor_registry.py::test_missing_successor_cannot_spoof_pass_or_authority",
     "tests/contracts/test_mes_successor_registry.py::test_module_alias_call_counts_as_typed_successor_consumption",
     "tests/contracts/test_mes_successor_registry.py::test_repository_inventory_roots_and_exclusions_cannot_be_overridden",
+    "tests/contracts/test_mes_successor_registry.py::test_self_asserted_successor_source_is_not_auto_promoted",
     "tests/contracts/test_mes_successor_registry.py::test_source_binding_rejects_unhashed_available_and_hashed_missing",
     "tests/contracts/test_mes_successor_registry.py::test_successor_id_and_pointer_import_are_independent_gates",
-    "tests/contracts/test_mes_successor_registry.py::test_unregistered_planned_source_presence_is_not_auto_promoted",
     "tests/contracts/test_mes_successor_registry.py::test_witness_source_and_seal_hashes_are_checked_separately",
     "tests/contracts/test_mes_successor_registry.py::test_yaml_active_hash_cannot_be_replaced_by_caller_declaration",
     "tests/contracts/test_mes_successor_registry.py::test_zero_consumer_set_cannot_pass_vacuously",
@@ -8546,7 +8564,7 @@
     "tests/pr_cards/test_pr_122_claim_addressed_evidence_graph_content_addressed.py::test_pr122_authority_snapshot_is_an_immutable_exact_scope_slice",
     "tests/pr_cards/test_pr_122_claim_addressed_evidence_graph_content_addressed.py::test_spec_registers_every_required_false_green_mutation_and_pr4_firewall"
   ],
-  "executed_node_ids_hash": "cfdac6b0a1c03debf94d65cbda7a87b00f69382ce778fe40257b50f39fa55be3",
+  "executed_node_ids_hash": "7a64d1bef3ba97fcb469b592ae8504b47cde3646c832cb03d5b03752717ea333",
   "exit_status": 0,
   "failed_node_ids": [],
   "normalized_invocation_argv": [
@@ -8615,9 +8633,9 @@
     "tests/contracts/test_evidence_graph.py::test_zero_collection_skip_and_xfail_are_distinct_non_authority",
     "tests/contracts/test_mes_successor_registry.py::test_ast_discovery_rejects_declared_decoy_with_only_non_mes_import",
     "tests/contracts/test_mes_successor_registry.py::test_ast_discovery_reports_undeclared_exact_mes_consumer",
-    "tests/contracts/test_mes_successor_registry.py::test_available_successor_cannot_self_assert_authority_before_pr124[caller-strings]",
-    "tests/contracts/test_mes_successor_registry.py::test_available_successor_cannot_self_assert_authority_before_pr124[failed-process]",
-    "tests/contracts/test_mes_successor_registry.py::test_available_successor_cannot_self_assert_authority_before_pr124[typed-enums]",
+    "tests/contracts/test_mes_successor_registry.py::test_available_successor_shape_is_fail_closed[blocked-status]",
+    "tests/contracts/test_mes_successor_registry.py::test_available_successor_shape_is_fail_closed[failed-process]",
+    "tests/contracts/test_mes_successor_registry.py::test_available_successor_shape_is_fail_closed[malformed-receipt]",
     "tests/contracts/test_mes_successor_registry.py::test_caller_supplied_registry_is_never_a_release_trust_root",
     "tests/contracts/test_mes_successor_registry.py::test_clean_typed_consumer_has_no_pointer_or_literal_blocker",
     "tests/contracts/test_mes_successor_registry.py::test_constant_folded_dynamic_legacy_import_is_a_bypass",
@@ -8626,8 +8644,8 @@
     "tests/contracts/test_mes_successor_registry.py::test_copied_stale_triple_is_blocked[(3 / 4, 2, 2 / 7)]",
     "tests/contracts/test_mes_successor_registry.py::test_copied_stale_triple_is_blocked[(3. / 4, 2., 2. / 7)]",
     "tests/contracts/test_mes_successor_registry.py::test_copied_stale_triple_is_blocked[(Fraction(3, 4), Fraction(2), Fraction(2, 7))]",
-    "tests/contracts/test_mes_successor_registry.py::test_current_registry_validates_seal_and_only_blocks_successor",
-    "tests/contracts/test_mes_successor_registry.py::test_current_successor_is_explicitly_missing_and_pr124_blocked",
+    "tests/contracts/test_mes_successor_registry.py::test_current_registry_validates_clean_under_pr124_authority",
+    "tests/contracts/test_mes_successor_registry.py::test_current_successor_is_available_and_pr124_authorized",
     "tests/contracts/test_mes_successor_registry.py::test_dead_or_bare_registry_call_cannot_clear_stale_literal_blocker",
     "tests/contracts/test_mes_successor_registry.py::test_dead_pointer_cannot_clear_inline_stale_affine_formula[if-zero]",
     "tests/contracts/test_mes_successor_registry.py::test_dead_pointer_cannot_clear_inline_stale_affine_formula[never-called-function]",
@@ -8638,6 +8656,7 @@
     "tests/contracts/test_mes_successor_registry.py::test_egs3_import_is_process_evidence_bypass_not_authority",
     "tests/contracts/test_mes_successor_registry.py::test_egs3_pass_binds_source_and_seal_but_has_no_scientific_authority",
     "tests/contracts/test_mes_successor_registry.py::test_excluded_consumer_hash_mutation_is_a_distinct_blocker",
+    "tests/contracts/test_mes_successor_registry.py::test_foreign_receipt_string_never_carries_authority",
     "tests/contracts/test_mes_successor_registry.py::test_hash_bound_but_semantically_invalid_witness_seal_is_blocked[seal-branch-status-promoted]",
     "tests/contracts/test_mes_successor_registry.py::test_hash_bound_but_semantically_invalid_witness_seal_is_blocked[seal-required-key-missing]",
     "tests/contracts/test_mes_successor_registry.py::test_hash_bound_but_semantically_invalid_witness_seal_is_blocked[seal-status-fail]",
@@ -8651,9 +8670,9 @@
     "tests/contracts/test_mes_successor_registry.py::test_missing_successor_cannot_spoof_pass_or_authority",
     "tests/contracts/test_mes_successor_registry.py::test_module_alias_call_counts_as_typed_successor_consumption",
     "tests/contracts/test_mes_successor_registry.py::test_repository_inventory_roots_and_exclusions_cannot_be_overridden",
+    "tests/contracts/test_mes_successor_registry.py::test_self_asserted_successor_source_is_not_auto_promoted",
     "tests/contracts/test_mes_successor_registry.py::test_source_binding_rejects_unhashed_available_and_hashed_missing",
     "tests/contracts/test_mes_successor_registry.py::test_successor_id_and_pointer_import_are_independent_gates",
-    "tests/contracts/test_mes_successor_registry.py::test_unregistered_planned_source_presence_is_not_auto_promoted",
     "tests/contracts/test_mes_successor_registry.py::test_witness_source_and_seal_hashes_are_checked_separately",
     "tests/contracts/test_mes_successor_registry.py::test_yaml_active_hash_cannot_be_replaced_by_caller_declaration",
     "tests/contracts/test_mes_successor_registry.py::test_zero_consumer_set_cannot_pass_vacuously",
@@ -8743,7 +8762,7 @@
     {
       "path": "tests/contracts/test_mes_successor_registry.py",
       "scope": "repo",
-      "sha256": "a6618aa736decfcbe12eff99f2ae5b107ba6f5a77ec157d148af46501cb10f85"
+      "sha256": "e758b41b615cb7eb0380932d9748393877ddb442df577968bd98dd44671435d2"
     },
     {
       "path": "tests/contracts/test_pytest_execution_evidence.py",
@@ -8753,7 +8772,7 @@
     {
       "path": "tests/contracts/test_release_evidence_binding.py",
       "scope": "repo",
-      "sha256": "bc5923068c722ac5acf10ffea3ea6e24b664d5fb2bcdaf90e85e098408d476c3"
+      "sha256": "e1b651d0e4105b59007c92b59cdd44e7df396044e52761dd7c09128b4ee5273b"
     },
     {
       "path": "tests/htt/test_inference_adequacy_gates.py",

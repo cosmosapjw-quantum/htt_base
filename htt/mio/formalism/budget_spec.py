@@ -11,6 +11,14 @@ from common.transfer_registry import (
     validate_transfer_dependent_result,
 )
 
+# PR-124: active MES consumers traverse the typed successor registry
+# (common.mes_theorem_authority is the live authority; legacy values are
+# labeled non-authoritative reproduction, see legacy_reproduction_coefficients).
+from common.mes_successor_registry import current_mes_successor_registry
+
+_MES_SUCCESSOR = current_mes_successor_registry().successor
+_MES_SUCCESSOR_ID = _MES_SUCCESSOR.successor_id
+
 
 DEFAULT_BUDGET_CAVEAT = (
     "BudgetSpec records a MIO diagnostic denominator policy only; it is not "

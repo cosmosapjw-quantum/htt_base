@@ -45,8 +45,11 @@ def test_exact_audit_disclosure_preserves_all_three_axes_and_blocks_release():
         == DEFAULT_RELEASE_EVIDENCE_PIN.authority_registry_ref
     )
     assert disclosure["process_result"] == "PASS"
-    assert disclosure["evidence_status"] == "BLOCKED"
-    assert disclosure["evidence_statuses"] == ["BLOCKED", "PRESENT"]
+    # PR-124: mechanics evidence is PRESENT (governance authority delivered);
+    # the release kill switch is claim_release_allowed=False, not a BLOCKED
+    # evidence status.
+    assert disclosure["evidence_status"] == "PRESENT"
+    assert disclosure["evidence_statuses"] == ["PRESENT"]
     assert disclosure["scientific_status"] == "OPEN"
     assert disclosure["claim_release_allowed"] is False
     assert disclosure["audit_disclosure_allowed"] is True

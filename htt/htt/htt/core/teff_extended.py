@@ -19,6 +19,21 @@ import numpy as np
 from scipy.special import legendre
 from scipy.integrate import solve_ivp
 
+# PR-124: active MES consumers traverse the typed successor registry
+# (common.mes_theorem_authority is the live authority; legacy values are
+# labeled non-authoritative reproduction, see legacy_reproduction_coefficients).
+from common.mes_successor_registry import (
+    current_mes_successor_registry,
+    legacy_reproduction_coefficients,
+)
+
+_MES_SUCCESSOR = current_mes_successor_registry().successor
+_MES_SUCCESSOR_ID = _MES_SUCCESSOR.successor_id
+_MES_LEGACY_COEFFS = legacy_reproduction_coefficients()
+_C_SIG1, _C_SIG2, _C_SIG3 = (float(c) for c in _MES_LEGACY_COEFFS["sigma"])
+_C_OM1, _C_OM2, _C_OM3 = (float(c) for c in _MES_LEGACY_COEFFS["omega"])
+_C_AC1, _C_AC2, _C_AC3 = (float(c) for c in _MES_LEGACY_COEFFS["accel"])
+
 __all__ = ['TeffMomentMap', 'EllMixingMatrix', 'EinsteinTeffODE',
            'NonlinearCorrection', 'DefectPropagation']
 
@@ -43,13 +58,13 @@ def _a2_coefficient_table():
     }
 
 def B_sigma_lin(e1, e2=EPS2, e3=EPS3):
-    return (5./3)*e1 + 3.*e2 + (3./7)*e3
+    return _C_SIG1*e1 + _C_SIG2*e2 + _C_SIG3*e3
 
 def B_omega_lin(e1, e2=EPS2, e3=EPS3):
-    return (3./4)*e1 + 2.*e2 + (2./7)*e3
+    return _C_OM1*e1 + _C_OM2*e2 + _C_OM3*e3
 
 def B_udot_lin(e1, e2=EPS2, e3=EPS3):
-    return (3./4)*e1 + e2 + (3./14)*e3
+    return _C_AC1*e1 + _C_AC2*e2 + _C_AC3*e3
 
 
 # ═══════════════════════════════════════════════════════════

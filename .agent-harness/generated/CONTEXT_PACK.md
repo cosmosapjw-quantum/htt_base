@@ -1,7 +1,7 @@
 # Canonical Shared Context Pack
 
-Context version: `c2dd9da6cb3dcf438d234aa399f87a197d5b02a4eebffd4cf6566e073df76c0e`
-Built at: `2026-07-16T17:15:05+00:00`
+Context version: `403a859b952418c6a73ecf7360b4194a37c27ce1aaaa6b2ecbcadf89d2eaa1c1`
+Built at: `2026-07-17T11:48:39+00:00`
 
 This pack contains only the shared Tier-0 context. Assignment-specific context and sibling results are intentionally excluded.
 
@@ -9,7 +9,7 @@ This pack contains only the shared Tier-0 context. Assignment-specific context a
 
 ## Source: `.agent-harness/context/SHARED_CONTEXT.md`
 
-SHA-256: `1701568302da236cbbe402a6ec9b9f5d61bd7420684ab74ace8473b8234f1330`
+SHA-256: `a049eab9324954f3119bedb0cbaa916f4c211c58d52379e57f3685bffe3791bc`
 
 # Shared Context — long-horizon rescue execution
 
@@ -90,6 +90,12 @@ SHA-256: `1701568302da236cbbe402a6ec9b9f5d61bd7420684ab74ace8473b8234f1330`
 | E-PR123-REVIEW4 | `.agent-harness/runs/pr123-attempt4-closeout-review-20260717/MERGED_RESULTS.json` | registered blind hostile replay | `976605182c888f278dc6d6f02275e1cdb0bfac744433ddcfb5cb598ea07732f1` | C-PR123-MECHANICS |
 | E-PR123-REVIEW5 | `.agent-harness/runs/pr123-attempt5-closeout-review-20260717/MERGED_RESULTS.json` | registered blind hostile replay | `6c6f5f1499400a410ad46cfc00a5900fb09d435b6df5814faffb4be0d84327f2` | C-PR123-MECHANICS |
 | E-PR123-REVIEW6 | `.agent-harness/runs/pr123-attempt6-final-scanner-review-20260717/MERGED_RESULTS.json` | registered bounded hostile replay | `0999233e21828a9cbffa99eda2ea061a3f140f91c5cf0b163b976ec1d61ade99` | C-PR123-MECHANICS |
+| E-PR124-SPEC | `docs/research_program/long_horizon_rescue/pr124_spec.yaml` | reviewed repository edit (contract-first, mutations preregistered) | `3e02502edd0ca152eae3d1971f1ec17a34ce4bf754e4b3c8b45a1565d5207d51` | C-PR124-CAS-LINEAGE |
+| E-PR124-ADJUDICATION | `docs/generated/pr124_cas_adjudication.json` | cas_gate four-axis adjudication | `59ab201c65a55a5e22286be394aa4b4e9caaa9fdbda4ced9eb59a1d98607fcd7` | C-PR124-CAS-LINEAGE |
+| E-PR124-AUTHORITY | `docs/generated/pr124_mes_authority_table.json` | PR-124 runner (receipt bytes = successor authorization) | `81ad8c382fbe481eaf715b971680199fed5142e2498928cff57ae9d847cc20f3` | C-PR124-CAS-LINEAGE |
+| E-PR124-LINEAGE | `docs/generated/pr124_lineage_receipt.json` | PR-124 runner (fingerprint-collapsed lineage oracle) | `7c6ac4bcb612fc1b8240cc22cdf9fe4e579fa94fc33e8bedbd45ef5bf0a10bb5` | C-PR124-CAS-LINEAGE |
+| E-PR124-D2 | `docs/generated/pr124_d2_authority_receipt.json` | PR-124 runner --run-rust (nonzero executed target) | `d0d11f95e006da19f4c56239a273d58e8354757f007fff2e187cba47e1754db3` | C-PR124-CAS-LINEAGE |
+| E-PR124-MUTATIONS | `docs/generated/pr124_mutation_report.json` | PR-124 runner (8/8 mutants killed by real validators) | `28ed5beabeeb644de144f1beba3052d9f3a0673e5666a134fbdf3e264d2b3f67` | C-PR124-CAS-LINEAGE |
 
 ## Known disputes and open questions
 
@@ -144,16 +150,20 @@ meta-finding with new evidence and an explicit reopen condition.
 
 ## Source: `.agent-harness/context/GATE_REGISTRY.json`
 
-SHA-256: `f9b08085938916df5eed592d5b18871dfa7c572b575cff824ee60f21d38baa95`
+SHA-256: `5d42f3e116296516728dfa35f9e3133e524aea9330c8c4c5b85a4eb231bf8284`
 
 {
   "schema_version": 1,
   "gates": [
     {
       "gate_id": "G-PR122-TEST",
-      "spec_refs": ["docs/research_program/long_horizon_rescue/pr122_spec.yaml#mutation_execution_matrix"],
+      "spec_refs": [
+        "docs/research_program/long_horizon_rescue/pr122_spec.yaml#mutation_execution_matrix"
+      ],
       "statement": "Every registered PR-122 mutation maps to an exact executed passing node in the source-only receipt.",
-      "required_evidence": ["E-PR122-TEST"],
+      "required_evidence": [
+        "E-PR122-TEST"
+      ],
       "pass_condition": "132 collected, 132 executed, 132 passed, and 56/56 exact mutation mappings.",
       "fail_condition": "Any missing, non-executed, non-passing, or semantically mismapped node.",
       "owner": "main",
@@ -161,9 +171,14 @@ SHA-256: `f9b08085938916df5eed592d5b18871dfa7c572b575cff824ee60f21d38baa95`
     },
     {
       "gate_id": "G-PR122-FIXED-POINT",
-      "spec_refs": ["docs/research_program/long_horizon_rescue/pr122_spec.yaml#release_policy"],
+      "spec_refs": [
+        "docs/research_program/long_horizon_rescue/pr122_spec.yaml#release_policy"
+      ],
       "statement": "Graph, receipts, closure, manifest, verifier, and literal pin form one exact fixed point.",
-      "required_evidence": ["E-PR122-GRAPH", "E-PR122-RECEIPT"],
+      "required_evidence": [
+        "E-PR122-GRAPH",
+        "E-PR122-RECEIPT"
+      ],
       "pass_condition": "Source-only graph --check and audit-disclosure consumption pass while claim release is false.",
       "fail_condition": "Any stale hash/ref or claim_release_allowed=true.",
       "owner": "main",
@@ -171,9 +186,13 @@ SHA-256: `f9b08085938916df5eed592d5b18871dfa7c572b575cff824ee60f21d38baa95`
     },
     {
       "gate_id": "G-HARNESS-INSTALL",
-      "spec_refs": ["AGENTS.md#mandatory-shared-context-protocol-for-subagent-workflows"],
+      "spec_refs": [
+        "AGENTS.md#mandatory-shared-context-protocol-for-subagent-workflows"
+      ],
       "statement": "The shared-context harness is installed, versioned, and valid before new subagent work.",
-      "required_evidence": ["E-HARNESS-ZIP"],
+      "required_evidence": [
+        "E-HARNESS-ZIP"
+      ],
       "pass_condition": "Context pack builds; validate_harness reports ok; all future assignments are registered with four-field headers.",
       "fail_condition": "Stale context, unregistered assignment, invalid result envelope, or budget violation.",
       "owner": "main",
@@ -181,9 +200,14 @@ SHA-256: `f9b08085938916df5eed592d5b18871dfa7c572b575cff824ee60f21d38baa95`
     },
     {
       "gate_id": "G-PR4-SKIP",
-      "spec_refs": ["docs/research_program/long_horizon_rescue/pr122_spec.yaml#data_scope"],
+      "spec_refs": [
+        "docs/research_program/long_horizon_rescue/pr122_spec.yaml#data_scope"
+      ],
       "statement": "PR4 download, intake, reduction, and analysis remain entirely skipped.",
-      "required_evidence": ["E-PR122-SPEC", "E-PR122-GRAPH"],
+      "required_evidence": [
+        "E-PR122-SPEC",
+        "E-PR122-GRAPH"
+      ],
       "pass_condition": "PR4 commands_run=0 and no PR4-derived artifact or claim.",
       "fail_condition": "Any PR4 data command, derived value, or inferred joint PR3+PR4 result.",
       "owner": "main",
@@ -191,9 +215,13 @@ SHA-256: `f9b08085938916df5eed592d5b18871dfa7c572b575cff824ee60f21d38baa95`
     },
     {
       "gate_id": "G-PR122-FINAL-CONSUMERS",
-      "spec_refs": ["docs/research_program/long_horizon_rescue/pr122_spec.yaml#acceptance"],
+      "spec_refs": [
+        "docs/research_program/long_horizon_rescue/pr122_spec.yaml#acceptance"
+      ],
       "statement": "Harness integration leaves quarantine, freeze, package, and consumer tests current.",
-      "required_evidence": ["E-PR122-GRAPH"],
+      "required_evidence": [
+        "E-PR122-GRAPH"
+      ],
       "pass_condition": "Harness validation, CF4 quarantine, freeze, package, smoke, collection, and PR-122 integration checks pass with only the documented PDF blocker.",
       "fail_condition": "Any unexpected failure, stale artifact, claim drift, or PR4 execution.",
       "owner": "main",
@@ -201,9 +229,14 @@ SHA-256: `f9b08085938916df5eed592d5b18871dfa7c572b575cff824ee60f21d38baa95`
     },
     {
       "gate_id": "G-PR123-SPEC",
-      "spec_refs": ["docs/research_program/long_horizon_rescue/pr123_spec.yaml"],
+      "spec_refs": [
+        "docs/research_program/long_horizon_rescue/pr123_spec.yaml"
+      ],
       "statement": "PR-123 has a reviewed, claim-bounded acceptance and mutation contract before implementation.",
-      "required_evidence": ["E-PR123-CARD", "E-PR123-SPEC"],
+      "required_evidence": [
+        "E-PR123-CARD",
+        "E-PR123-SPEC"
+      ],
       "pass_condition": "Four-role divergence closes scope, lane ownership, properties, mutation IDs, independence fields, and kill switches in a tracked spec.",
       "fail_condition": "Implementation starts before the reviewed spec or absorbs later production-remediation ownership.",
       "owner": "main",
@@ -211,9 +244,15 @@ SHA-256: `f9b08085938916df5eed592d5b18871dfa7c572b575cff824ee60f21d38baa95`
     },
     {
       "gate_id": "G-PR123-ORACLE-INDEPENDENCE",
-      "spec_refs": ["docs/research_program/long_horizon_rescue/pr123_spec.yaml#oracle_lineage_contract"],
+      "spec_refs": [
+        "docs/research_program/long_horizon_rescue/pr123_spec.yaml#oracle_lineage_contract"
+      ],
       "statement": "Every PR-123 reference records algorithm, source, equation, fixture, author, and random-stream lineage.",
-      "required_evidence": ["E-PR123-SPEC", "E-PR123-LINEAGE", "E-PR123-ATTEMPTS"],
+      "required_evidence": [
+        "E-PR123-SPEC",
+        "E-PR123-LINEAGE",
+        "E-PR123-ATTEMPTS"
+      ],
       "pass_condition": "Reference code is smaller than production and shared lineage is explicit; file-path separation alone is insufficient.",
       "fail_condition": "A self-oracle or unrecorded correlated reference is counted as independent.",
       "owner": "main",
@@ -221,9 +260,15 @@ SHA-256: `f9b08085938916df5eed592d5b18871dfa7c572b575cff824ee60f21d38baa95`
     },
     {
       "gate_id": "G-PR123-MUTATIONS",
-      "spec_refs": ["docs/research_program/long_horizon_rescue/pr123_spec.yaml#mutation_registry"],
+      "spec_refs": [
+        "docs/research_program/long_horizon_rescue/pr123_spec.yaml#mutation_registry"
+      ],
       "statement": "All preregistered defect mutations are executed and killed lane by lane.",
-      "required_evidence": ["E-PR123-SPEC", "E-PR123-MUTATIONS", "E-PR123-ATTEMPTS"],
+      "required_evidence": [
+        "E-PR123-SPEC",
+        "E-PR123-MUTATIONS",
+        "E-PR123-ATTEMPTS"
+      ],
       "pass_condition": "The exact mutation matrix has no survivor; any survivor blocks only its lane and remains reported.",
       "fail_condition": "A registered mutation survives, is skipped, or is replaced after results are known.",
       "owner": "main",
@@ -231,13 +276,45 @@ SHA-256: `f9b08085938916df5eed592d5b18871dfa7c572b575cff824ee60f21d38baa95`
     },
     {
       "gate_id": "G-PR123-K6-CONTINUUM",
-      "spec_refs": ["docs/research_program/long_horizon_rescue/pr123_spec.yaml#k6_continuum_contract"],
+      "spec_refs": [
+        "docs/research_program/long_horizon_rescue/pr123_spec.yaml#k6_continuum_contract"
+      ],
       "statement": "The K6 branch is catalog-independent and checks analytic fields, convergence, decomposition, and the sqrt(2) residual lock.",
-      "required_evidence": ["E-PR123-SPEC", "E-PR123-K6", "E-PR123-MANIFEST"],
+      "required_evidence": [
+        "E-PR123-SPEC",
+        "E-PR123-K6",
+        "E-PR123-MANIFEST"
+      ],
       "pass_condition": "At least four grids and two stencil orders pass registered continuum/order/upper-bound properties with zero empirical consumers.",
       "fail_condition": "Any catalog input enters, convergence/order fails, or the analytic residual lock is not reproduced.",
       "owner": "main",
       "status": "pass"
+    },
+    {
+      "gate_id": "G-PR124-CAS-4AXIS",
+      "spec_refs": [
+        "docs/research_program/long_horizon_rescue/pr124_spec.yaml#cas_contract"
+      ],
+      "statement": "The MES geodesic reduction statement is verified by four independent engine implementations under one contract hash.",
+      "required_evidence": [
+        "E-PR124-SPEC",
+        "E-PR124-ADJUDICATION"
+      ],
+      "pass_condition": "cas_gate adjudicate returns CAS_4AXIS_PASS bound to the on-disk contract hash with all four axis envelopes PASS, matching check keysets, and identical computed exact rationals.",
+      "fail_condition": "Any axis blocked/failed/misaligned, a stale contract binding, a missing computed value, or drifted axis-script bytes."
+    },
+    {
+      "gate_id": "G-PR124-LINEAGE-ORACLE",
+      "spec_refs": [
+        "docs/research_program/long_horizon_rescue/pr124_spec.yaml#lineage_contract"
+      ],
+      "statement": "Derivation independence is counted by fingerprint-collapsed lineages, never by engine agreement.",
+      "required_evidence": [
+        "E-PR124-LINEAGE",
+        "E-PR124-AUTHORITY"
+      ],
+      "pass_condition": "Geodesic branches carry >= 2 byte-verified lineages; MES_NG branches stay UNVERIFIED_PRINT_ONLY; claimed counts never exceed collapsed counts.",
+      "fail_condition": "Any same-fingerprint inflation, unresolved in-repo lineage source, or non-geodesic promotion."
     }
   ]
 }

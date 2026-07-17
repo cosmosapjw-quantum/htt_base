@@ -1,0 +1,906 @@
+# PR-124 typed theorem-signature successor registry (v2).
+# Generated once by PR-124 and hand-maintained afterwards; the
+# loader/validator is htt/src/common/theorem_signatures.py.
+schema: htt.theorem_registry.v2
+owner: COMMON
+claim_tier: diagnostic_only
+legacy_registry_path: docs/research_program/THEOREM_REGISTRY.yaml
+legacy_registry_sha256: 266374abc05b179cf32e12020ced0624643f525cd42f8fcead05c9542c74f315
+counting_rule: counts_toward_theorem_count = CHECKED signature AND evidence grade in {published_proof,
+  independent_derivation, checked_derivation} AND legacy status in {ACTIVE, ACTIVE_CONDITIONAL}. sanity
+  anchors, specifications, numerical tests, superseded/retracted/withheld/planned entries, and unchecked
+  signatures never count; engine re-evaluation never adds a derivation.
+caveats:
+- This registry is governance metadata; it validates no theorem by itself.
+- MIGRATION_PENDING entries are excluded from theorem counts and from all-parameter prose generation until
+  fully typed.
+- The legacy registry stays byte-frozen for the v9 report lane; active consumers traverse this successor
+  only.
+entries:
+- id: SIG-P1
+  legacy_id: P1
+  title: Signed comparator identity and Domain-checked semantics
+  legacy_status: ACTIVE_CONDITIONAL
+  sources:
+  - docs/generated/formal_proof_appendix_current.md
+  - old_version/overleaf/appendices/appendix_A_proofs.tex
+  - htt/mio/formalism/physical_pushforward.py
+  evidence_grade: checked_derivation
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-P2
+  legacy_id: P2
+  title: Diagnostic variables Q, F, Pi, G_F, and P_post are distinct
+  legacy_status: ACTIVE_CONDITIONAL
+  sources:
+  - docs/generated/formal_proof_appendix_current.md
+  - docs/ver2_upgrade/x_Q_Pi_F_G_model_independent_framework_upgrade.md
+  - htt/mio/formalism/budget_spec.py
+  - htt/htt/htt/departure/posterior_pushforward.py
+  evidence_grade: checked_derivation
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-P3
+  legacy_id: P3
+  title: Diagonal MES three-bound hierarchy
+  legacy_status: ACTIVE_CONDITIONAL
+  sources:
+  - old_version/overleaf/chapters/ch03_bianchi_bounds.tex
+  - docs/ver2_upgrade/mes_full_covariance_extension_self_contained.md
+  evidence_grade: checked_derivation
+  signature_status: CHECKED
+  signature:
+    quantified_variables:
+    - eps1 > 0
+    - eps2 > 0
+    - eps3 > 0
+    hypotheses:
+    - linearized almost-EGS covariant multipole hierarchy
+    - diagonal (uncorrelated) bound combination
+    - MES reduction assumptions C1 (spatial <= time derivative) and C2 (Theta t_R ~ 3)
+    - admissibility ordering B_sigma > B_omega > B_accel (module raises otherwise)
+    frame: covariant CMB-frame multipole bounds (MES convention)
+    perturbative_order: linear in kinematic quantities
+    domain: strictly positive multipole triples satisfying the hierarchy ordering
+  grade_provenance: branch-split evidence — the sigma leg carries two lineages (MESa published +
+    in-repo reduction), but the omega/accel legs of the registered hierarchy are the MESb print-only
+    non-geodesic triples (UNVERIFIED, 1 lineage); the hierarchy AS A WHOLE is graded
+    checked_derivation (in-repo admissibility check), not independent_derivation
+- id: SIG-P4
+  legacy_id: P4
+  title: Frame-attribution safe-route correction
+  legacy_status: ACTIVE_CONDITIONAL
+  sources:
+  - htt/bass/observational/beta_threshold.py
+  - old_version/overleaf/appendices/appendix_A_proofs.tex
+  evidence_grade: checked_derivation
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-P5
+  legacy_id: P5
+  title: Conditional Bianchi V momentum-response formula
+  legacy_status: ACTIVE_CONDITIONAL
+  sources:
+  - htt/obsstat/egs3_bianchi_v_constraint.py
+  - docs/generated/bianchi_v_constraint_seal.json
+  - old_version/overleaf/appendices/appendix_A_proofs.tex
+  evidence_grade: checked_derivation
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-P6
+  legacy_id: P6
+  title: Flat-FLRW first jet
+  legacy_status: ACTIVE
+  sources:
+  - docs/generated/formal_proof_appendix_current.md
+  - docs/research_program/pr04/PAPER_THEOREM_MAP.md
+  evidence_grade: checked_derivation
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-P7
+  legacy_id: P7
+  title: Non-collinear boost composition and first-jet separation
+  legacy_status: ACTIVE
+  sources:
+  - docs/generated/formal_proof_appendix_current.md
+  - docs/research_program/pr04/PAPER_THEOREM_MAP.md
+  evidence_grade: checked_derivation
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-P8
+  legacy_id: P8
+  title: Response rank and duplicated channels
+  legacy_status: ACTIVE
+  sources:
+  - docs/generated/formal_proof_appendix_current.md
+  - docs/research_program/pr04/PAPER_THEOREM_MAP.md
+  - htt/htt/htt/departure/paper_a_closure.py
+  evidence_grade: checked_derivation
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-P9
+  legacy_id: P9
+  title: Radial-vorticity blindness
+  legacy_status: ACTIVE
+  sources:
+  - docs/generated/formal_proof_appendix_current.md
+  - docs/research_program/pr04/PAPER_THEOREM_MAP.md
+  - htt/obsstat/egs2_transport.py
+  evidence_grade: checked_derivation
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-P10
+  legacy_id: P10
+  title: Single-shell degeneracy and broad-depth rank recovery
+  legacy_status: ACTIVE_CONDITIONAL
+  sources:
+  - docs/research_program/pr04/PAPER_THEOREM_MAP.md
+  - htt/htt/htt/departure/paper_a_closure.py
+  evidence_grade: checked_derivation
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-P11
+  legacy_id: P11
+  title: PSD second-moment cone
+  legacy_status: ACTIVE
+  sources:
+  - docs/generated/formal_proof_appendix_current.md
+  - docs/research_program/pr04/PAPER_THEOREM_MAP.md
+  evidence_grade: checked_derivation
+  signature_status: CHECKED
+  signature:
+    quantified_variables:
+    - graded comparator vectors g = (Sigma2, W2, Omega_tilt, Omega_k) with nonnegative quadratic components
+    hypotheses:
+    - M = diag(g) is positive semidefinite on the genuine second-moment sectors {Sigma2, W2,
+      Omega_tilt}; the signed Delta Omega_k component rides a separate signed carrier (global
+      M >= 0 is NOT asserted)
+    - x_C = tr(C M) is linear in M (bit-identical to the scalar comparator)
+    - admissible set is the PSD moment cone intersected with registered ceilings
+    frame: comparator scalar sector (no sky frame)
+    perturbative_order: exact algebraic (no perturbative expansion)
+    domain: PSD cone with registered ceiling intersections
+  grade_provenance: in-repo convex-geometry derivation with SymPy seal, Wolfram cross-check, and contract
+    tests (htt/obsstat/egs3_psd_cone.py)
+- id: SIG-P12
+  legacy_id: P12
+  title: Scalar tilt trace is not sufficient
+  legacy_status: ACTIVE
+  sources:
+  - docs/generated/formal_proof_appendix_current.md
+  - docs/research_program/pr04/PAPER_THEOREM_MAP.md
+  evidence_grade: checked_derivation
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-P13
+  legacy_id: P13
+  title: Shear memory of anisotropic stress
+  legacy_status: ACTIVE_CONDITIONAL
+  sources:
+  - docs/generated/formal_proof_appendix_current.md
+  - docs/research_program/pr04/PAPER_THEOREM_MAP.md
+  - htt/obsstat/egs3_shear_memory_bias.py
+  evidence_grade: checked_derivation
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-P14
+  legacy_id: P14
+  title: Dust-FLRW oracle
+  legacy_status: ACTIVE
+  sources:
+  - docs/generated/formal_proof_appendix_current.md
+  - docs/research_program/pr04/PAPER_THEOREM_MAP.md
+  evidence_grade: sanity_anchor
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-P15
+  legacy_id: P15
+  title: Quadrupole filling under registered closure
+  legacy_status: ACTIVE_CONDITIONAL
+  sources:
+  - docs/generated/formal_proof_appendix_current.md
+  - docs/research_program/egs2/THEOREM_MAP.md
+  evidence_grade: checked_derivation
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-P16
+  legacy_id: P16
+  title: Single-sky sampling dispersion
+  legacy_status: ACTIVE
+  sources:
+  - docs/generated/formal_proof_appendix_current.md
+  - docs/research_program/egs2/THEOREM_MAP.md
+  evidence_grade: checked_derivation
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-P17
+  legacy_id: P17
+  title: Multi-ell Fisher floor and transfer-profile refinement
+  legacy_status: ACTIVE_CONDITIONAL
+  sources:
+  - docs/research_program/egs2/THEOREM_MAP.md
+  - docs/research_program/egs3/THEOREM_CANDIDATES.md
+  - htt/obsstat/egs2_fisher.py
+  - htt/bass/transfer/shear_quadrupole_seminative.py
+  evidence_grade: checked_derivation
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-P18
+  legacy_id: P18
+  title: Graded rank-2 comparator
+  legacy_status: ACTIVE
+  sources:
+  - docs/research_program/egs3/THEOREM_CANDIDATES.md
+  - htt/obsstat/egs3_graded_comparator.py
+  evidence_grade: checked_derivation
+  signature_status: CHECKED
+  signature:
+    quantified_variables:
+    - graded comparator vectors g = (Sigma2, W2, Omega_tilt, Omega_k)
+    hypotheses:
+    - the registered response map only is used (no transfer/mask extension)
+    - reachable eigen-directions have rank 2
+    - '{W2, Omega_k} is a joint structural null of the registered map'
+    frame: comparator scalar sector (no sky frame)
+    perturbative_order: exact algebraic
+    domain: registered response map on the graded comparator
+  grade_provenance: in-repo rank computation on the registered response map with contract tests (compute_graded_comparator
+    lane)
+- id: SIG-P19
+  legacy_id: P19
+  title: Exceedance and e-value calibration
+  legacy_status: ACTIVE_CONDITIONAL
+  sources:
+  - docs/research_program/egs3/THEOREM_CANDIDATES.md
+  - htt/obsstat/egs3_calibration.py
+  evidence_grade: checked_derivation
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-P20
+  legacy_id: P20
+  title: Rao-Blackwell reachable-sector domination
+  legacy_status: ACTIVE
+  sources:
+  - docs/research_program/egs3/THEOREM_CANDIDATES.md
+  - htt/obsstat/egs3_calibration.py
+  evidence_grade: checked_derivation
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-P21
+  legacy_id: P21
+  title: Volterra depth-memory representation
+  legacy_status: ACTIVE_CONDITIONAL
+  sources:
+  - docs/research_program/egs3/THEOREM_CANDIDATES.md
+  - htt/obsstat/egs3_volterra_memory.py
+  - htt/obsstat/egs3_volterra_hz.py
+  evidence_grade: checked_derivation
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-P22
+  legacy_id: P22
+  title: Transverse reopening of the vorticity sector
+  legacy_status: ACTIVE_CONDITIONAL
+  sources:
+  - docs/research_program/egs3/THEOREM_CANDIDATES.md
+  - htt/obsstat/egs3_vorticity_channels.py
+  evidence_grade: checked_derivation
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-P23
+  legacy_id: P23
+  title: Diagonal covariance compression loses morphology
+  legacy_status: ACTIVE_CONDITIONAL
+  sources:
+  - docs/ver2_upgrade/mes_full_covariance_extension_self_contained.md
+  - docs/ver2_upgrade/lowell_cmb_observables_statistics.md
+  evidence_grade: checked_derivation
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-P24
+  legacy_id: P24
+  title: Full-covariance MES tightening
+  legacy_status: ACTIVE_CONDITIONAL
+  sources:
+  - docs/ver2_upgrade/mes_full_covariance_extension_self_contained.md
+  - htt/bass/atlas/budget_ceiling_optimizer.py
+  evidence_grade: checked_derivation
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-P25
+  legacy_id: P25
+  title: Rank-failure no-result and morphology information gain
+  legacy_status: ACTIVE_CONDITIONAL
+  sources:
+  - docs/ver2_upgrade/mes_full_covariance_extension_self_contained.md
+  - htt/bass/atlas/budget_ceiling_optimizer.py
+  evidence_grade: checked_derivation
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-P26
+  legacy_id: P26
+  title: Partial-identification interval for x_C (one-sided nonnegative cone)
+  legacy_status: SUPERSEDED
+  sources:
+  - docs/ver2_upgrade/x_Q_Pi_F_G_model_independent_framework_upgrade.md
+  - docs/research_program/egs3/THEOREM_CANDIDATES.md
+  - htt/obsstat/egs3_identified_set.py
+  evidence_grade: checked_derivation
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-P27
+  legacy_id: P27
+  title: MES-rank route reconciliation
+  legacy_status: ACTIVE_CONDITIONAL
+  sources:
+  - old_version/overleaf/chapters/ch03_bianchi_bounds.tex
+  - docs/ver2_upgrade/mes_full_covariance_extension_self_contained.md
+  - htt/obsstat/egs3_graded_comparator.py
+  evidence_grade: checked_derivation
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-P28
+  legacy_id: P28
+  title: Posterior prior-exposure under null directions
+  legacy_status: ACTIVE
+  sources:
+  - htt/htt/htt/departure/posterior_pushforward.py
+  - htt/htt/htt/infer/posterior_exceedance.py
+  evidence_grade: checked_derivation
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-P29
+  legacy_id: P29
+  title: Finite-cover e-value combination
+  legacy_status: ACTIVE
+  sources:
+  - htt/obsstat/egs3_calibration.py
+  - docs/research_program/egs3/THEOREM_CANDIDATES.md
+  evidence_grade: checked_derivation
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-P30
+  legacy_id: P30
+  title: Parameter duplication versus observation duplication
+  legacy_status: ACTIVE
+  sources:
+  - htt/htt/htt/departure/paper_a_closure.py
+  - docs/research_program/pr04/PAPER_THEOREM_MAP.md
+  evidence_grade: checked_derivation
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-P31
+  legacy_id: P31
+  title: Identified-set sharpness over PSD and ceiling cones
+  legacy_status: SUPERSEDED
+  sources:
+  - docs/ver2_upgrade/mes_full_covariance_extension_self_contained.md
+  - docs/research_program/pr04/PAPER_THEOREM_MAP.md
+  evidence_grade: checked_derivation
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-P32
+  legacy_id: P32
+  title: Optical ansatz branch identifiability
+  legacy_status: ACTIVE_CONDITIONAL
+  sources:
+  - htt/obsstat/lowell_likelihood_branches.py
+  - docs/ver3/06_OBSERVABLES_AND_STATISTICS_APPENDIX.md
+  evidence_grade: checked_derivation
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-P33
+  legacy_id: P33
+  title: Depth-gap delta-method propagation
+  legacy_status: ACTIVE_CONDITIONAL
+  sources:
+  - docs/ver2_upgrade/x_Q_Pi_F_G_model_independent_framework_upgrade.md
+  - htt/obsstat/egs3_volterra_memory.py
+  evidence_grade: checked_derivation
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-P34
+  legacy_id: P34
+  title: Vector-g response covariance propagation
+  legacy_status: ACTIVE_CONDITIONAL
+  sources:
+  - docs/ver2_upgrade/x_Q_Pi_F_G_model_independent_framework_upgrade.md
+  - htt/mio/formalism/budget_spec.py
+  evidence_grade: checked_derivation
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-P35
+  legacy_id: P35
+  title: Two-stage identified-set coverage with Imbens-Manski endpoint correction
+  legacy_status: SUPERSEDED
+  sources:
+  - htt/obsstat/egs3_identified_set.py
+  - docs/generated/egs3_experiments.json
+  evidence_grade: checked_derivation
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-P36
+  legacy_id: P36
+  title: Joint-feasible-set depth-gap interval propagation ("strict whenever")
+  legacy_status: RETRACTED
+  sources:
+  - htt/obsstat/egs3_gf_interval.py
+  - docs/ver2_upgrade/x_Q_Pi_F_G_model_independent_framework_upgrade.md
+  evidence_grade: specification
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-T1p
+  legacy_id: T1p
+  title: Signed-box two-branch identified interval (curvature signed, two-sided)
+  legacy_status: ACTIVE
+  sources:
+  - htt/obsstat/egs3_coverage_strengthened.py
+  - docs/generated/signed_box_interval_seal.json
+  evidence_grade: checked_derivation
+  signature_status: CHECKED
+  signature:
+    quantified_variables:
+    - U_t in [0, U_t_max]
+    - U_k in [-U_k_max, U_k_max] (signed curvature)
+    hypotheses:
+    - signed-box component model for the comparator budget
+    - two-branch split by curvature sign (open vs all-curvature)
+    - registered box ceilings
+    frame: comparator scalar sector (no sky frame)
+    perturbative_order: exact algebraic
+    domain: registered box bounds; branch intervals [11/100,17/100] and [9/100,17/100]
+  grade_provenance: four-engine exact interval computation (SymPy report gate; Sage exact-QQ polyhedra;
+    Lean core native_decide; Wolfram) in the v7 cycle
+- id: SIG-DL1
+  legacy_id: DL1
+  title: Lower-gap monotonicity of the all-curvature branch (|c_k| U_k)
+  legacy_status: ACTIVE
+  sources:
+  - htt/obsstat/egs3_coverage_strengthened.py
+  - docs/generated/signed_box_interval_seal.json
+  evidence_grade: checked_derivation
+  signature_status: CHECKED
+  signature:
+    quantified_variables:
+    - U_k_max >= 0
+    hypotheses:
+    - all-curvature branch lower endpoint x_lo(U_k_max) = x_lo(0) - |c_k| U_k_max
+    - upper endpoints of the two branches coincide
+    frame: comparator scalar sector (no sky frame)
+    perturbative_order: exact algebraic
+    domain: nonnegative curvature ceilings
+  grade_provenance: exact monotonicity lemma verified on the same four-engine v7 lane as T1p
+- id: SIG-L-T2-EXIST
+  legacy_id: L-T2-EXIST
+  title: Existence-level depth-gap strictness lemma (some endpoint strict iff a shared component conflicts)
+  legacy_status: ACTIVE
+  sources:
+  - htt/obsstat/egs3_gf_interval.py
+  - docs/generated/gf_strictness_exact_seal.json
+  evidence_grade: checked_derivation
+  signature_status: CHECKED
+  signature:
+    quantified_variables:
+    - coefficient sign patterns of the depth-gap quotient
+    hypotheses:
+    - 'existence-level statement only: some endpoint is strict iff a registered sign condition holds'
+    - the retracted per-endpoint iff (T2p) is not implied
+    frame: comparator scalar sector (no sky frame)
+    perturbative_order: exact algebraic
+    domain: registered coefficient domain excluding zero denominators
+  grade_provenance: existence-level strictness lemma extracted from the retracted per-endpoint iff (T2p)
+    by the v9 registry cycle; exact-Fraction verification
+- id: SIG-T2p
+  legacy_id: T2p
+  title: Depth-gap strictness per-endpoint iff via coefficient signs
+  legacy_status: RETRACTED
+  sources:
+  - htt/obsstat/egs3_gf_interval.py
+  - docs/generated/gf_strictness_exact_seal.json
+  evidence_grade: specification
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-T2pp
+  legacy_id: T2pp
+  title: Signed-numerator domain repair of the fixed-pairing quotient interval
+  legacy_status: ACTIVE
+  sources:
+  - htt/obsstat/egs3_gf_interval_v8.py
+  - docs/generated/gf_interval_v8_seal.json
+  evidence_grade: checked_derivation
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-T3-lin
+  legacy_id: T3-lin
+  title: Linearized realization of the identified-interval endpoints
+  legacy_status: ACTIVE_CONDITIONAL
+  sources:
+  - htt/obsstat/egs3_linearized_realization.py
+  - docs/generated/linearized_realization_seal.json
+  evidence_grade: checked_derivation
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-T3-full
+  legacy_id: T3-full
+  title: Exact constraint-surface endpoint witnesses (homogeneous initial-data candidates)
+  legacy_status: ACTIVE_CONDITIONAL
+  sources:
+  - htt/obsstat/egs3_nonlinear_realization.py
+  - docs/generated/nonlinear_realization_seal.json
+  evidence_grade: checked_derivation
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-T3-int
+  legacy_id: T3-int
+  title: Interior x_C-value family (two-segment exact sweep)
+  legacy_status: ACTIVE_CONDITIONAL
+  sources:
+  - htt/obsstat/egs3_interior_family.py
+  - docs/generated/interior_family_seal.json
+  evidence_grade: checked_derivation
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-T4p
+  legacy_id: T4p
+  title: Estimated-covariance residual test is Hotelling T^2 / F
+  legacy_status: ACTIVE_CONDITIONAL
+  sources:
+  - htt/obsstat/egs3_coverage_strengthened.py
+  - docs/generated/coverage_strengthened_seal.json
+  evidence_grade: checked_derivation
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-T5p
+  legacy_id: T5p
+  title: Exact deterministic-width Imbens-Manski endpoint coverage (special model)
+  legacy_status: ACTIVE_CONDITIONAL
+  sources:
+  - htt/obsstat/egs3_coverage_strengthened.py
+  - docs/generated/coverage_strengthened_seal.json
+  evidence_grade: checked_derivation
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-T8p
+  legacy_id: T8p
+  title: Noncentral-chi-square power monotonicity
+  legacy_status: ACTIVE
+  sources:
+  - htt/obsstat/egs3_coverage_strengthened.py
+  - docs/generated/coverage_strengthened_seal.json
+  evidence_grade: checked_derivation
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-T9p
+  legacy_id: T9p
+  title: Multi-component tilt composition
+  legacy_status: ACTIVE
+  sources:
+  - htt/obsstat/egs3_parent_identity.py
+  - docs/generated/multicomponent_tilt_seal.json
+  evidence_grade: checked_derivation
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-MES-PROV
+  legacy_id: MES-PROV
+  title: MES coefficient provenance (sigma rederived bit-exact; omega/accel primary-sourced print-only;
+    SAG1997 discrepancy documented)
+  legacy_status: ACTIVE
+  sources:
+  - htt/obsstat/egs3_mes_rederivation.py
+  - docs/generated/mes_rederivation_seal.json
+  - docs/audits/mes_primary_sources/sag1997_astro-ph_9904346_ApJ476_435.tex
+  evidence_grade: independent_derivation
+  signature_status: CHECKED
+  signature:
+    quantified_variables:
+    - raw MESa bound terms (coefficient, multipole L, derivative order d)
+    hypotheses:
+    - transcription authority of the SHA-archived MESa raw bounds (eq 51/52)
+    - 'C1: a spatial-gradient bound is <= the same-order time-derivative bound'
+    - 'C2: k-th time derivatives reduce by (1/(Theta t_R))^k with Theta t_R ~ 3'
+    frame: covariant CMB-frame multipole bounds (MES convention)
+    perturbative_order: linear in kinematic quantities
+    domain: MESa raw bound term lists as archived
+  grade_provenance: MESa published eq (59) plus the in-repo bit-exact C1/C2 reduction from raw eq (51);
+    sigma triple only (omega/accel are branch-split by MES-BR)
+- id: SIG-U1
+  legacy_id: U1
+  title: Beta-channel toy correspondence (s = tanh beta; pair-tilt map s^2 = t/(2+t))
+  legacy_status: ACTIVE_CONDITIONAL
+  sources:
+  - htt/obsstat/egs3_teff_unification.py
+  - docs/generated/teff_unification_seal.json
+  evidence_grade: checked_derivation
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-U2
+  legacy_id: U2
+  title: Fingerprint envelope ceilings at eps1 (exact rationals)
+  legacy_status: ACTIVE_CONDITIONAL
+  sources:
+  - htt/obsstat/egs3_teff_unification.py
+  - docs/generated/teff_unification_seal.json
+  evidence_grade: checked_derivation
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-U3
+  legacy_id: U3
+  title: Rank-2 response schema correspondence (comparator and Teff lanes)
+  legacy_status: ACTIVE
+  sources:
+  - htt/obsstat/egs3_unification_schema.py
+  - docs/generated/unification_schema_seal.json
+  evidence_grade: checked_derivation
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-U4
+  legacy_id: U4
+  title: Teff fingerprint statistical closure (IM coverage + Hotelling calibration)
+  legacy_status: SUPERSEDED
+  sources:
+  - htt/obsstat/egs3_teff_statistical.py
+  - docs/generated/teff_statistical_seal.json
+  evidence_grade: numerical_test
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-T2G
+  legacy_id: T2G
+  title: General fractional-program interval theorem (product relaxation; per-endpoint diagonal-attainment
+    iff; argmin/argmax corollary)
+  legacy_status: ACTIVE
+  sources:
+  - htt/obsstat/egs3_fractional_program.py
+  - docs/generated/fractional_program_exact_seal.json
+  evidence_grade: checked_derivation
+  signature_status: CHECKED
+  signature:
+    quantified_variables:
+    - s in [0, 1] (fractional-program parameter; N = s, D = 1 + s inside hypotheses)
+    hypotheses:
+    - product relaxation of the fractional program
+    - diagonal-attainment criterion
+    - argmin/argmax intersection corollary for N > 0
+    frame: comparator scalar sector (no sky frame)
+    perturbative_order: exact algebraic
+    domain: S = [0, 1] with strictly positive denominator
+  grade_provenance: Sage exact QQ + PPL polyhedral verification (15/15) plus SymPy exact-Fraction lane
+    (egs3_fractional_program.py)
+- id: SIG-TSUM
+  legacy_id: TSUM
+  title: Two-temperature fingerprint sum bound R3 + R5 >= 2 (exact factorization mu3*mu5 - mu4^2 = s^2
+    (1-s^2)^3)
+  legacy_status: ACTIVE
+  sources:
+  - htt/obsstat/egs3_fingerprint_sum_theorem.py
+  - docs/generated/fingerprint_sum_theorem_seal.json
+  evidence_grade: checked_derivation
+  signature_status: CHECKED
+  signature:
+    quantified_variables:
+    - s in [0, 1] (two-temperature mixing parameter)
+    hypotheses:
+    - fingerprint ratios R3, R5 from the registered two-temperature family
+    - equality holds iff s = 0
+    frame: Teff fingerprint lane (no sky frame)
+    perturbative_order: exact algebraic
+    domain: s in [0, 1]
+  grade_provenance: exact factorization mu3*mu5 - mu4^2 = s^2 (1-s^2)^3 plus AM-GM, SymPy exact with equality
+    case (egs3 v9 cycle)
+- id: SIG-U4-v9
+  legacy_id: U4-v9
+  title: Teff fingerprint statistical closure, v9 rerun (full MC provenance, Wilson CIs, pre-registered
+    acceptance)
+  legacy_status: ACTIVE
+  sources:
+  - htt/obsstat/egs3_teff_statistical_v9.py
+  - docs/generated/teff_statistical_v9_seal.json
+  evidence_grade: numerical_test
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-MES-BR
+  legacy_id: MES-BR
+  title: MES coefficient branch registry (MES-G verified geodesic / MES-NG unverified non-geodesic / ACCEL
+    withheld) + eps1 attribution triple
+  legacy_status: ACTIVE
+  sources:
+  - htt/obsstat/egs3_mes_branch_registry.py
+  - docs/generated/mes_branch_registry_seal.json
+  evidence_grade: checked_derivation
+  signature_status: CHECKED
+  signature:
+    quantified_variables:
+    - branch labels in {MES_G, MES_NG}
+    - coefficient triples per branch
+    - eps1 attribution values
+    hypotheses:
+    - frozen registry values unchanged (byte-identity guard)
+    - ceiling map W2_max = (3/2) B_omega^2 under the registered convention W2 = omega^2/(6 H^2)
+    - branch provenance disclosed per source accessibility
+    frame: covariant CMB-frame multipole bounds (MES convention)
+    perturbative_order: linear in kinematic quantities
+    domain: registered branch table (geodesic verified; non-geodesic print-only)
+  grade_provenance: in-repo branch registry with exact ceiling map and eps1 attribution triple; diagnostic
+    seal (htt/obsstat/egs3_mes_branch_registry.py)
+- id: SIG-BV-DYN
+  legacy_id: BV-DYN
+  title: Tilted-LRS Bianchi V evolution seal (constraint preservation monitored on non-vacuum trajectories;
+    P5 exact-rapidity relation holds dynamically)
+  legacy_status: ACTIVE
+  sources:
+  - htt/obsstat/egs3_bianchi_v_dynamics.py
+  - docs/generated/bianchi_v_dynamics_seal.json
+  evidence_grade: numerical_test
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-K5-CARD-v2
+  legacy_id: K5-CARD-v2
+  title: K5/CF4 identified-interval card v9 (three labeled W^2 ceiling branches x two curvature branches)
+  legacy_status: ACTIVE
+  sources:
+  - scripts/k5_cf4_identified_interval_card_v9.py
+  - docs/generated/k5_cf4_identified_interval_card_v9.json
+  evidence_grade: specification
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-KE-FRAME
+  legacy_id: KE-FRAME
+  title: King-Ellis tilted-congruence frame kinematics + constraint algebra (items 1-7 of the rotating-congruence
+    program)
+  legacy_status: ACTIVE
+  sources:
+  - htt/obsstat/egs3_king_ellis_frame.py
+  - wolfram/ke_rotating_congruence.wls
+  - docs/generated/king_ellis_frame_seal.json
+  - docs/generated/king_ellis_frame_wolfram_seal.json
+  - research_gates/egs3/tests/test_egs3_axis_g_king_ellis_frame.py
+  evidence_grade: checked_derivation
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-KE-OBS
+  legacy_id: KE-OBS
+  title: Exact vorticity classification of group-invariant tilted congruences (corrects the blanket Omega_k=0
+    irrotationality reading)
+  legacy_status: ACTIVE
+  sources:
+  - htt/obsstat/egs3_king_ellis_frame.py
+  - wolfram/ke_rotating_congruence.wls
+  - docs/generated/king_ellis_frame_seal.json
+  evidence_grade: checked_derivation
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-KE-DYN
+  legacy_id: KE-DYN
+  title: Rotating perfect-fluid development at Omega_k>0 + the double Omega_k=0 obstruction (items 8-10)
+  legacy_status: ACTIVE
+  sources:
+  - htt/obsstat/egs3_king_ellis_dynamics.py
+  - wolfram/ke_dynamics.wls
+  - docs/generated/king_ellis_dynamics_seal.json
+  - docs/generated/king_ellis_dynamics_wolfram_seal.json
+  - research_gates/egs3/tests/test_egs3_axis_g_king_ellis_dynamics.py
+  evidence_grade: numerical_test
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-OMK-REOPEN
+  legacy_id: OMK-REOPEN
+  title: Higher-order anisotropic-Omega_k re-opening transfer (curvature-shear slaving) + finite attribution/class-conditional
+    ceilings
+  legacy_status: ACTIVE
+  sources:
+  - htt/obsstat/egs3_omega_k_reopening.py
+  - wolfram/omega_k_reopening.wls
+  - docs/generated/omega_k_reopening_seal.json
+  - docs/generated/omega_k_reopening_wolfram_seal.json
+  - docs/generated/k5_omega_k_ceiling_card.json
+  - research_gates/egs3/tests/test_egs3_axis_g_omega_k_reopening.py
+  evidence_grade: checked_derivation
+  signature_status: MIGRATION_PENDING
+  grade_provenance: provisional grade derived from the legacy registry status/notes; full typed signature
+    migration pending (PR-125+ frame contract)
+- id: SIG-MES-REFREEZE
+  legacy_id: MES-REFREEZE
+  title: MES geodesic derivation + re-freeze of the vorticity-ceiling anchor (W2_max 1.3087e-6 -> 3.3789e-13)
+  legacy_status: ACTIVE
+  sources:
+  - htt/obsstat/egs3_mes_geodesic_refreeze.py
+  - wolfram/mes_geodesic_refreeze.wls
+  - docs/generated/mes_geodesic_refreeze_seal.json
+  - docs/generated/mes_geodesic_refreeze_wolfram_seal.json
+  - docs/audits/mes_primary_sources/PROVENANCE_M4.md
+  - research_gates/egs3/tests/test_egs3_axis_g_mes_refreeze.py
+  evidence_grade: independent_derivation
+  signature_status: CHECKED
+  signature:
+    quantified_variables:
+    - eps1 in [0, e1_crit)
+    - eps2 > 0
+    - eps3 > 0
+    hypotheses:
+    - geodesic congruence u_dot = 0 (MESa p.123)
+    - SAG observer-motion convention eps1 = 0 (the observed dipole is observer motion)
+    - hierarchy preservation B_sigma > B_omega excludes the full-dipole ceiling (e1_crit = (43/25) eps2
+      + (9/35) eps3)
+    frame: covariant CMB-frame multipole bounds, SAG observer-motion convention
+    perturbative_order: linear in kinematic quantities
+    domain: geodesic branch at the registered eps values
+  grade_provenance: MESa raw-bound reduction (in-repo, dual engine) plus SAG 1997 published eq (4) corroboration;
+    owner-signed re-freeze (rev-r187/r188)
+- id: SIG-MES-MESB-TRACE
+  legacy_id: MES-MESB-TRACE
+  title: MESb web-trace + refutation of the in-house non-geodesic bounds; geodesic vorticity anchor re-adopted
+    from three primary sources
+  legacy_status: ACTIVE
+  sources:
+  - htt/obsstat/egs3_mesb_web_trace.py
+  - wolfram/mesb_web_trace.wls
+  - docs/generated/mesb_web_trace_seal.json
+  - docs/generated/mesb_web_trace_wolfram_seal.json
+  - docs/audits/mes_primary_sources/PROVENANCE_M4b.md
+  - research_gates/egs3/tests/test_egs3_axis_g_mesb_web_trace.py
+  evidence_grade: checked_derivation
+  signature_status: CHECKED
+  signature:
+    quantified_variables:
+    - candidate non-geodesic coefficient triples
+    hypotheses:
+    - only accessible, SHA-archived primary sources ground coefficient attributions
+    - the in-house non-geodesic omega/accel reconstruction is refuted (appears in no accessible source;
+      exceeds the companion's faithful cap at eps1 = 0)
+    - the geodesic anchor survives adversarial refutation lanes
+    frame: covariant CMB-frame multipole bounds (MES convention)
+    perturbative_order: linear in kinematic quantities
+    domain: accessible-source claims about the MESb branch
+  grade_provenance: web-trace over SHA-archived accessible primary sources; in-house non-geodesic reconstruction
+    refuted on alpha-independent grounds (rev-r190)

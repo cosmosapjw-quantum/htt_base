@@ -16,6 +16,21 @@ Four-panel figure:
 
 import numpy as np
 import matplotlib
+
+# PR-124: active MES consumers traverse the typed successor registry
+# (common.mes_theorem_authority is the live authority; legacy values are
+# labeled non-authoritative reproduction, see legacy_reproduction_coefficients).
+from common.mes_successor_registry import (
+    current_mes_successor_registry,
+    legacy_reproduction_coefficients,
+)
+
+_MES_SUCCESSOR = current_mes_successor_registry().successor
+_MES_SUCCESSOR_ID = _MES_SUCCESSOR.successor_id
+_MES_LEGACY_COEFFS = legacy_reproduction_coefficients()
+_C_SIG1, _C_SIG2, _C_SIG3 = (float(c) for c in _MES_LEGACY_COEFFS["sigma"])
+_C_OM1, _C_OM2, _C_OM3 = (float(c) for c in _MES_LEGACY_COEFFS["omega"])
+_C_AC1, _C_AC2, _C_AC3 = (float(c) for c in _MES_LEGACY_COEFFS["accel"])
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
@@ -39,10 +54,10 @@ Omega_L = 0.6847
 Omega_k = 0.0007
 
 def B_sigma(e1):
-    return (5.0 / 3.0) * e1 + 3.0 * eps2 + (3.0 / 7.0) * eps3
+    return _C_SIG1 * e1 + _C_SIG2 * eps2 + _C_SIG3 * eps3
 
 def B_accel(e1):
-    return (3.0 / 4.0) * e1 + eps2 + (3.0 / 14.0) * eps3
+    return _C_AC1 * e1 + _C_AC2 * eps2 + _C_AC3 * eps3
 
 def beta_safe(e1):
     return e1 / (1.0 + eta_ud)

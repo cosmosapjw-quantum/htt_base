@@ -3,10 +3,10 @@ owner: COMMON
 claim_tier: diagnostic_only
 allowed_use: release_blocker_inventory_only
 successor_id: mes.typed-successor.pr124
-successor_status: BLOCKED_PENDING_PR124
+successor_status: AUTHORIZED_BY_PR124
 caveats:
   - This inventory does not validate or replace any MES coefficient.
-  - A listed source may remain reproducible, but it cannot authorize an active release until it traverses the PR-124 typed successor.
+  - Every active consumer traverses the PR-124 typed successor; legacy values flow only through the labeled legacy_reproduction_coefficients channel (non-authoritative, byte-stable reproduction).
   - The EGS3 branch seal is diagnostic process evidence only.
 
 active_python_roots:
@@ -19,70 +19,70 @@ active_python_roots:
 active_consumers:
   - consumer_id: bass.atlas.budget_ceiling_optimizer
     path: htt/bass/atlas/budget_ceiling_optimizer.py
-    sha256: af3ea2eb6817ce56cbf1d870de6f53a7814ea949902ba43a1ab0612842967cae
+    sha256: fec33e6fcd768abc809563731ac3828764324a4bd278afb3b5eb0be0ae0c2953
   - consumer_id: bass.forward.namespace
     path: htt/bass/forward/__init__.py
-    sha256: 14cada3214984e2ffea58c9c820b98c16192e5628e30bbffc02c2926c86f867b
+    sha256: 6eb4457c5f352f7303eb99f61e911474e6f87de1de0a243f0812847e180c8633
   - consumer_id: bass.forward.doppler_boost
     path: htt/bass/forward/doppler_boost.py
-    sha256: e2c8dea7f2d57fc72dfcc01c9440a72db20dad1ab436f8dab5dbd82de2333929
+    sha256: 4f03f76158f5456ed25207f88dda8a04bb532a61013f0e469b8c370c49657f04
   - consumer_id: bass.forward.teff_mes_bounds
     path: htt/bass/forward/teff_mes_bounds.py
-    sha256: b56df2da29313c27de19d4b7d751becd4532148b51fd73843434e200a909d4eb
+    sha256: ee891940e2691426b38975dffe5f265174a5317f13f113cf75ae87ca0b2618ee
   - consumer_id: bass.observational.beta_threshold
     path: htt/bass/observational/beta_threshold.py
-    sha256: 20e3a7e656add2337bff88619f2b5244d867f40bd59def553671a83b2f9801a6
+    sha256: faa4e3f7e0184cad556c073654c03a9dee2d4385d2e37772bd3e3e429470b9fa
   - consumer_id: bass.observational.planck_mes_bounds
     path: htt/bass/observational/planck_mes_bounds.py
-    sha256: 5b507fec0ef16a6351938ee638f6a9f247d1a83d1c173ffc5217dc421e7e88a1
+    sha256: e06c1f8659452724054a43a073a969f1c6b17095fb9c0aefb2e6cf5f6491a7e3
   - consumer_id: htt.core.namespace
     path: htt/htt/htt/core/__init__.py
-    sha256: 9cd1d2ba2bfc5083d28fae36d0c35027890c1bd9a52f4ff446bcd26d0c7a1a89
+    sha256: bbbb4f6ad6350316524b3f2b0f85489e9b140fa5e86a34c24ba81de39e0cf0c8
   - consumer_id: htt.core.analysis_extended
     path: htt/htt/htt/core/analysis_extended.py
-    sha256: c23e48691098b6d7618b4d091721196437ec5062b6eb8b40febfca90ff333807
+    sha256: 7946a9359a3459448b1508d95aa7204fdfe36de5598352d9c14605fd5eeadefb
   - consumer_id: htt.core.bounds
     path: htt/htt/htt/core/bounds.py
-    sha256: a7344c5d64d8c25b45082163898c0236402feca844ced3b43a6a9f86b8bed569
+    sha256: 9ef8a57b61e68ebb8977a5650cf9eb732f3fa1bd0d513bfeabde59062116cdeb
   - consumer_id: htt.core.departure_posteriors
     path: htt/htt/htt/core/departure_posteriors.py
-    sha256: cfb7705832c4f8dcde9c596f26db1f9ca18896e8c7e9450f4bb9c112a7944a4c
+    sha256: 86abda3ab073700cd3f8382617821093c4dad7b04d03ce5bf5cc2bbbd2e8afe9
   - consumer_id: htt.core.evidence_models_R03a
     path: htt/htt/htt/core/evidence_models_R03a.py
-    sha256: c52de64b814731cb6ced432a6a089e82aa39db7fca424cb45a6196c29e6ceb30
+    sha256: b83b8fb1ccdf3e68979a77d7aefd44243f0140f98e1c0eb6400e0c6f40ef1f3c
   - consumer_id: htt.core.teff_extended
     path: htt/htt/htt/core/teff_extended.py
-    sha256: 2ab9b79aae458e202accf3740d6b5fe127ea39520c52e78893d27362140d1783
+    sha256: 67ce36f51a4ae2cafac0b4b5cb10bb5105aac6c2fcd60492aaf238e21f5f465b
   - consumer_id: htt.figures.constraint_volume_3d
     path: htt/htt/htt/figures/fig_3D_constraint_volume.py
-    sha256: 9cfb944ab0e04746f9066a6e4146bf2024183afce320734e4854f3c3e887143d
+    sha256: aaaa365750dc107e0c27f34839e4119fa6ac31ea22b18329c076ed9fd9137dca
   - consumer_id: htt.figures.projection_atlas_4d
     path: htt/htt/htt/figures/fig_4D_projection_atlas.py
-    sha256: 183c20564e33d823fe759e194de8434b1f69ba2cf9f7efe104cef2cab74e320a
+    sha256: 87fda67ef4135f962f5d57344bafdcc4e489d6ada0636ebe0957d5e3a99dddc9
   - consumer_id: htt.figures.mes_three_bounds
     path: htt/htt/htt/figures/fig_MES_three_bounds.py
-    sha256: 956dc739d193c85b1ef5cf08bfbd7e66532f28be9375980b6b8319eb3d379ac2
+    sha256: c78c36be6c50aa8d9346d83af5bf02c400c54c2183ce2dd7d3b7256e66b7d494
   - consumer_id: htt.figures.nonlinear_heatmap_vorticity_accel
     path: htt/htt/htt/figures/fig_nonlinear_heatmap_vorticity_accel.py
-    sha256: 1da9be848d8b67af3354cd4b990a866164f19bdf5555d737e5d42c3704567f5b
+    sha256: 4e0158d2a49299b5b1cb1f5837d3b54aefcc0033f44939349a4a49fe0dc0ef18
   - consumer_id: htt.figures.sigma_accel_contour
     path: htt/htt/htt/figures/fig_sigma_accel_contour.py
-    sha256: 60889a484e207cc98186cb19e48edda62a23078ff8e9ef6e418c661e91ca7bbb
+    sha256: 61b245cce5119e9c8b819a680cdd58f7a0e6959e4d5c813937aeed99928ac4a4
   - consumer_id: htt.figures.sigma_omega_contour
     path: htt/htt/htt/figures/fig_sigma_omega_contour.py
-    sha256: 17401d64eda8e810751cc4a8bd9f9fe07be61e5854b26939457a8cf6c3fa71bf
+    sha256: 42e3c5a3dd30d7584c8e00c8b4ddb570239366b6087f0fe8d1fff1f8b4e5974f
   - consumer_id: htt.figures.type_by_type_summary
     path: htt/htt/htt/figures/fig_type_by_type_summary.py
-    sha256: da2855f5f23b5ef7df29ec2ba4984784d442cbf0f7b346477ded979b051e068c
+    sha256: face5b75033a109179cf1f33c257141b40c7ea888dfc603022323007f3972cb5
   - consumer_id: htt.figures.vorticity_hierarchy
     path: htt/htt/htt/figures/fig_vorticity_hierarchy.py
-    sha256: b7fcc52cfffe0433f8056512e1826015afe70b358417801ba2a8bb0f00d30586
+    sha256: 71530d4d92622551105adadd5dd4a968642af6f153533a88620ce9d4b9cfb1b6
   - consumer_id: mio.core.ceiling_families
     path: htt/mio/core/ceiling_families.py
-    sha256: 96a5d6c3504e12d8b79d594ed985f5fef863cd9b27138abbe75a5b60e3bb7b5d
+    sha256: 4e57adcaa6bfef1353ab143c33090984da418df6ff6685f06d023df4285e19f1
   - consumer_id: mio.formalism.budget_spec
     path: htt/mio/formalism/budget_spec.py
-    sha256: e836268d37323288d4b9e6bc3442f8eab2b3928ac6ebc91b7caef46d6210166a
+    sha256: 49b0afc480d4a311eedbae1bfaf6b7b8076a72cc11fc43d069b758b47f1a182f
 
 excluded_consumers:
   - exclusion_id: obsstat.egs3_mes_branch_registry

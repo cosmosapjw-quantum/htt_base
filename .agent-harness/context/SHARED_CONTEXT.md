@@ -77,6 +77,12 @@
 | E-PR123-REVIEW4 | `.agent-harness/runs/pr123-attempt4-closeout-review-20260717/MERGED_RESULTS.json` | registered blind hostile replay | `976605182c888f278dc6d6f02275e1cdb0bfac744433ddcfb5cb598ea07732f1` | C-PR123-MECHANICS |
 | E-PR123-REVIEW5 | `.agent-harness/runs/pr123-attempt5-closeout-review-20260717/MERGED_RESULTS.json` | registered blind hostile replay | `6c6f5f1499400a410ad46cfc00a5900fb09d435b6df5814faffb4be0d84327f2` | C-PR123-MECHANICS |
 | E-PR123-REVIEW6 | `.agent-harness/runs/pr123-attempt6-final-scanner-review-20260717/MERGED_RESULTS.json` | registered bounded hostile replay | `0999233e21828a9cbffa99eda2ea061a3f140f91c5cf0b163b976ec1d61ade99` | C-PR123-MECHANICS |
+| E-PR124-SPEC | `docs/research_program/long_horizon_rescue/pr124_spec.yaml` | reviewed repository edit (contract-first, mutations preregistered) | `3e02502edd0ca152eae3d1971f1ec17a34ce4bf754e4b3c8b45a1565d5207d51` | C-PR124-CAS-LINEAGE |
+| E-PR124-ADJUDICATION | `docs/generated/pr124_cas_adjudication.json` | cas_gate four-axis adjudication | `59ab201c65a55a5e22286be394aa4b4e9caaa9fdbda4ced9eb59a1d98607fcd7` | C-PR124-CAS-LINEAGE |
+| E-PR124-AUTHORITY | `docs/generated/pr124_mes_authority_table.json` | PR-124 runner (receipt bytes = successor authorization) | `81ad8c382fbe481eaf715b971680199fed5142e2498928cff57ae9d847cc20f3` | C-PR124-CAS-LINEAGE |
+| E-PR124-LINEAGE | `docs/generated/pr124_lineage_receipt.json` | PR-124 runner (fingerprint-collapsed lineage oracle) | `7c6ac4bcb612fc1b8240cc22cdf9fe4e579fa94fc33e8bedbd45ef5bf0a10bb5` | C-PR124-CAS-LINEAGE |
+| E-PR124-D2 | `docs/generated/pr124_d2_authority_receipt.json` | PR-124 runner --run-rust (nonzero executed target) | `d0d11f95e006da19f4c56239a273d58e8354757f007fff2e187cba47e1754db3` | C-PR124-CAS-LINEAGE |
+| E-PR124-MUTATIONS | `docs/generated/pr124_mutation_report.json` | PR-124 runner (8/8 mutants killed by real validators) | `28ed5beabeeb644de144f1beba3052d9f3a0673e5666a134fbdf3e264d2b3f67` | C-PR124-CAS-LINEAGE |
 
 ## Known disputes and open questions
 
