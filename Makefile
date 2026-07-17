@@ -104,6 +104,12 @@ v7-sympy-seals:
 v7-seals: egs3-seals v7-sympy-seals egs3-sage egs3-lean v7-wolfram
 
 ## EGS3 v9 successor seals (T2G fractional program + TSUM/U4-v9/MES-BR)
+## LEGACY DIAGNOSTIC RUNNER (PR-124 preflight, 2026-07-17): run_egs3_v9_seals.py
+## is the frozen v9 report-reproduction lane, NOT a four-axis CAS gate — it
+## silently skips unavailable lanes (ImportError pass) and converts Sage/Wolfram
+## blocker exit 2 into aggregate exit 0 by v9-frozen design. The file itself is
+## byte-pinned by the v9 package (do not edit). Four-axis CAS gating lives in
+## .agent-harness/scripts/cas_gate.py (preflight / check-axis / adjudicate).
 ## -> docs/generated/fractional_program_*_seal.json (Sage lane inside).
 v9-seals:
 	$(THREADS) $(PYPATH) $(PY) $(REPO)/scripts/run_egs3_v9_seals.py

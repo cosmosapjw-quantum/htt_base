@@ -216,14 +216,16 @@ Use explicit context tiers rather than relying on hidden parent-thread state:
 
 ### 7. Four-axis CAS cross-validation
 
-For mathematical or physical claims requiring CAS verification, the default independent axes are:
+For mathematical or physical claims requiring CAS verification, the four mandatory, non-collapsible axes are (canonical display order):
 
-1. Wolfram Language + xAct
-2. SageMath + Singular
-3. Lean + mathlib or project proof libraries
-4. SymPy, with high-precision numerical checks where useful
+1. Wolfram Engine + xAct
+2. SymPy, with high-precision numerical checks where useful
+3. SageMath + Singular
+4. Lean + mathlib or project proof libraries
 
-All four axes share the same `CAS_CONTRACT.json`: mathematical statement, conventions, domains, assumptions, branch choices, target canonical form, invariants, test vectors, tolerances, and forbidden shortcuts. Until adjudication, each axis MUST NOT read another axis’s scripts, derivation, or result. Agreement without assumption/branch alignment is not counted as cross-validation.
+All four axes share the same `CAS_CONTRACT.json` (schema v2: identity / semantics / target / per-axis obligations / independence / exceptions): mathematical statement, conventions, domains, assumptions, branch choices, target canonical form, invariants, test vectors, tolerances, and forbidden shortcuts. Until adjudication, each axis MUST NOT read another axis’s scripts, derivation, or result. Agreement without assumption/branch alignment is not counted as cross-validation.
+
+Aggregate adjudication (`.agent-harness/scripts/cas_gate.py adjudicate`) uses exactly five states: `CAS_4AXIS_PASS` (all four PASS under one contract hash), `CAS_PASS_WITH_REGISTERED_EXCEPTION` (exception preregistered before any axis result was read, approved by a non-self approver; never described as a 4-axis pass), `CAS_CONFLICT` (post-normalization disagreement; majority vote forbidden — re-adjudicate with a minimal counterexample), `CAS_BLOCKED` (a required axis missing/blocked/unapproved exception), and `CAS_FAIL` (any valid counterexample or proof failure). Engine non-installation or timeout is a platform/resource blocker, not a computation-class exception. Toolchains run repo-pinned (Lean via `formal/lean-toolchain`). Tool readiness receipts (`cas_gate.py preflight`) are never claim validation. Cost pressure never collapses the four axes into fewer agents — reduce generic mapper/reviewer slots instead (risk-tier budgets: R0 0 / R1 ≤2 / R2 ≤4 / R3 four reserved CAS axis slots).
 
 ### 8. Write ownership
 
