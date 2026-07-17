@@ -319,6 +319,34 @@ def _sidecar_binding(
     return None
 
 
+def _quarantine_inventory_pin(repo_root: Path, relative: str) -> str | None:
+    """Return the canonical PR-120 inventory sha256 for a legacy path.
+
+    Reads ``docs/generated/cf4_p0_quarantine_inventory.json`` and returns the
+    ``legacy_reproduction_only`` entry's ``sha256:``-prefixed digest, or
+    ``None`` when the path is not inventoried (callers then fall through to
+    the fail-closed sidecar/raise path).
+    """
+
+    inventory_path = repo_root / "docs/generated/cf4_p0_quarantine_inventory.json"
+    try:
+        payload = json.loads(inventory_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    if not isinstance(payload, Mapping):
+        return None
+    for row in payload.get("entries", []):
+        if (
+            isinstance(row, Mapping)
+            and row.get("mode") == "legacy_reproduction_only"
+            and row.get("path") == relative
+        ):
+            sha = row.get("sha256")
+            if isinstance(sha, str) and sha:
+                return sha if sha.startswith("sha256:") else f"sha256:{sha}"
+    return None
+
+
 def _git_blob_oid(repo_root: Path, data: bytes) -> str | None:
     if _git_toplevel(repo_root) is None:
         return None
@@ -474,6 +502,25 @@ def verify_package_binary_binding(
                 sha256=actual_sha256,
                 trusted_source=f"git-head-blob:{oid}",
             ).to_dict()
+
+        # PR-124 preflight: the legacy/cf4_p0 tree was untracked (and its
+        # pre-PR-119 snapshots stripped from history), so git can no longer
+        # bind these bytes.  The canonical PR-120 quarantine inventory —
+        # itself config-hash-bound and validated by validate_repository —
+        # is the surviving byte authority.  Fail closed on any mismatch.
+        if is_legacy_source:
+            inventory_pin = _quarantine_inventory_pin(root, relative)
+            if inventory_pin is not None:
+                if inventory_pin != actual_sha256:
+                    raise ValueError(
+                        "legacy package binary does not match its canonical "
+                        f"quarantine inventory pin: {relative}"
+                    )
+                return BinaryBinding(
+                    method="cf4_p0_inventory_sha256",
+                    sha256=actual_sha256,
+                    trusted_source=f"quarantine-inventory:{inventory_pin}",
+                ).to_dict()
 
     sidecar = _sidecar_binding(
         root,

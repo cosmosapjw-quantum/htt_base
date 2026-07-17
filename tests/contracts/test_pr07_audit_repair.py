@@ -65,6 +65,14 @@ def test_paper_a_closure_helpers():
     assert first_jet_counterexample(0.2)["different_first_jet"]
 
 
+@pytest.mark.xfail(
+    reason=(
+        "PR-120 quarantined the CF4-P0 final report (docs/final_report/"
+        "main.tex deleted; legacy copy is public_use=false); red by "
+        "quarantine design until a post-quarantine report exists."
+    ),
+    strict=False,
+)
 def test_report_has_no_forbidden_overclaim_tokens():
     text = REPORT_TEX.read_text(encoding="utf-8")
     for pat in FORBIDDEN_TOKENS:

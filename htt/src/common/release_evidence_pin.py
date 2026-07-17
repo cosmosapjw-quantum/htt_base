@@ -9,18 +9,18 @@ configuration, never scientific evidence or independent authorization.
 
 DEFAULT_RELEASE_EVIDENCE_PIN_FIELDS = {
     "graph_path": "docs/generated/pr122_claim_evidence_graph.json",
-    "graph_file_sha256": "38f4f77ea90cfeae59533fb2cd4545cc214704a667eac14663f6c86fe61e550d",
-    "graph_ref": "d247b6344648bd8b5d6fc7ce8d7e9e0774556af298814ecdd11b227aec47c535",
+    "graph_file_sha256": "c165838b0b7bc3fcab075edb82fe07889145f9b3cda8843efbf60e4bf4beed53",
+    "graph_ref": "91957d10546783d6668c22a9adcd29e2f21e35e0e2f351364002db106fac7b32",
     "receipt_path": "docs/generated/pr122_release_receipt.json",
-    "receipt_file_sha256": "a68dbe2fccd06255def8836f04925978b516f0b0228fc9bf623c49193160ab33",
-    "receipt_id": "944801886c25e0f9d11f93ddfa978c01aa49c0706c33dab44ee44e467926848d",
+    "receipt_file_sha256": "ea331d6a24ac7c651164c3f33bb5e62d33ad3fa867bb083cb1881c17a36bebdf",
+    "receipt_id": "ad8d982be6696a430fcc0b021780a44670d3a8102aff7ddfa59bbf3ca83c91f0",
     "parent_receipt_path": "docs/generated/pr122_parent_receipt.json",
-    "parent_receipt_file_sha256": "91ef021b17cadd26cc8654cb46e791fe09aed7025e48a9c84bb20e3c380c7f7f",
-    "parent_receipt_id": "b80ff061514d47207e15caf8807bd52b03875578b3dcab5f015f085df4d926f0",
+    "parent_receipt_file_sha256": "647baf3321af6cf43f6e9248f096528ba827448f04c20a1a949cd52616d2d2fc",
+    "parent_receipt_id": "8aebd24008f65fbc12f4a485b78d9d0a91eefcc51c7b34d0769766bd4859c53a",
     "closure_path": "docs/generated/pr122_claim_closure_report.json",
-    "closure_file_sha256": "1bf97aa38c132fe360c49bdb61e5ac92681fda851fd13d987139dafdf90305e5",
+    "closure_file_sha256": "ad0b9105053c293d939581de2b477e4079274fbecbaf1c2a07460d5bfd6ed94f",
     "artifact_manifest_path": "docs/generated/pr122_artifact_manifest.json",
-    "artifact_manifest_file_sha256": "a96d714c517c55ab7e9128088cc88913dfdd011012583cac1c2f8a227ebaa10f",
+    "artifact_manifest_file_sha256": "20c3ea6d1c868ffe63089facbe15e76bcfb793db01a5429d817102828a3fd23c",
     "authority_registry_ref": "23802d0d5ea9625098961366f533c04b1b4e81b45ef694cbbc941b8d79e308b9",
 }
 

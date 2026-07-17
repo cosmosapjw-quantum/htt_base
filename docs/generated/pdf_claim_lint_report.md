@@ -8,14 +8,14 @@ sky_support_status: not_applicable_no_current_pdf
 null_mock_status: not_applicable_no_current_pdf
 config_hash: `sha256:480888c416b18eb2f2df60ea5ebc5d24c401e7a308bfe817d4660fc2c9b514e4`
 input_hashes:
-- docs/generated/cf4_p0_quarantine_block.json:sha256:8e1eebac3352df798bd03288b08084a6376164752a691269f3e53c34fcb27ce1
+- docs/generated/cf4_p0_quarantine_block.json:sha256:198a51fcada9dece410b23a22f6e0d5e3499271e978610d9e7684411492b371a
 caveats:
 - No current manuscript PDF exists at the active path, so no PDF prose surface was scanned.
 - The prior PDF and lint report are immutable historical evidence under legacy/cf4_p0 with public_use false.
 - This blocked report is not a passing PDF claim lint and cannot satisfy a publication gate.
 - The canonical CF4 P0 block record is authoritative and authorizes no replacement value.
 generating_command: python scripts/pdf_claim_lint.py
-git_commit_or_worktree_state: 29a807c
+git_commit_or_worktree_state: dd97800
 artifact_path: docs/generated/pdf_claim_lint_report.md
 status: BLOCKED_NO_CURRENT_PDF
 claim_lint_passed: false
@@ -26,7 +26,7 @@ claim_lint_passed: false
 - PDF SHA256: `None`
 - PDF manifest: `docs/generated/manuscript_pdf/htt_base_research_report.manifest.json`
 - Quarantine block: `docs/generated/cf4_p0_quarantine_block.json`
-- Quarantine block SHA256: `sha256:8e1eebac3352df798bd03288b08084a6376164752a691269f3e53c34fcb27ce1`
+- Quarantine block SHA256: `sha256:198a51fcada9dece410b23a22f6e0d5e3499271e978610d9e7684411492b371a`
 - Pages scanned: `0`
 - Failed findings: `0`
 - Warning findings: `0`

@@ -1063,13 +1063,22 @@ def _entry_rows(
             if reviewed_snapshot is not None
             else None
         )
-        binary_binding = verify_package_binary_binding(
-            repo_root,
-            entry.source_path,
-            content_mode=entry.content_mode.value,
-            explicit_manifest_path=reviewed_pin[0] if reviewed_pin else None,
-            explicit_manifest_sha256=reviewed_pin[1] if reviewed_pin else None,
-        )
+        if legacy_pin is not None:
+            # Untracked legacy/cf4_p0 payload: the canonical PR-120 inventory
+            # pin (verified against bytes above) is the byte authority; a
+            # git-HEAD sidecar binding no longer exists for it.
+            binary_binding = {
+                "binding_method": "cf4_p0_inventory_sha256",
+                "trusted_source": f"quarantine-inventory:{legacy_pin}",
+            }
+        else:
+            binary_binding = verify_package_binary_binding(
+                repo_root,
+                entry.source_path,
+                content_mode=entry.content_mode.value,
+                explicit_manifest_path=reviewed_pin[0] if reviewed_pin else None,
+                explicit_manifest_sha256=reviewed_pin[1] if reviewed_pin else None,
+            )
         row = {
             "source_path": entry.source_path.as_posix(),
             "archive_path": entry.archive_path,

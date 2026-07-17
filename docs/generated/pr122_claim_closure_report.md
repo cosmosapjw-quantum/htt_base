@@ -46,7 +46,7 @@ input_hashes:
 - `htt/src/common/release_evidence_binding.py:927bf019090796c4544f7a6c9b47db77b7e5da1b9de127d0de55e38acfd2cffb`
 - `htt/src/common/remediation_state.py:f595cc0b81d33849a69d79691086e431386a1c731658bd7960f11384e6958fcb`
 - `htt/src/common/status_snapshot.py:78464fec0ac90d8e209c91de53ca59ee09d42a2cb73da06843ebd390304637b3`
-- `scripts/build_external_audit_package.py:758b699d46df2290ce094837ad7bd0e28622ae6ea08f39d0657f04400ddeaba4`
+- `scripts/build_external_audit_package.py:9dd8d155b1a09eda7a360179ce76db6ad7e3b43ced8236b03742dbf456309ce9`
 - `scripts/check_publication_claim_freeze.py:57e8bd7febce6ae299f9c395d9afb868ab9a15e514d899e65327cf41b00a7175`
 - `scripts/codex_harness/build_claim_evidence_graph.py:1a64facbb10a6ba999121835d9a8806d58d2056cca7dd16ff500cb491193ba4a`
 - `scripts/codex_harness/run_pr122_source_only.sh:72bed4818b6799cb872f877397877199455888904a777bc4efa13231a59cd982`
@@ -58,13 +58,13 @@ caveats:
 - MES and D2 scientific authority remain blocked pending PR-124.
 - No native solver, family, geometry, posterior, or detection claim is created.
 generating_command: `scripts/codex_harness/run_pr122_source_only.sh scripts/codex_harness/build_claim_evidence_graph.py`
-git_commit_or_worktree_state: `HEAD:72d521828b39c51c48d0111c332ec9ee99dc78d2;bound_input_state_sha256:f4d1b893997fa5d398a02f0719308cfe0c48bbe0baf69c288806e84663b5057c`
+git_commit_or_worktree_state: `HEAD:6af20d747a869990739220f3b534bb8457d134cf;bound_input_state_sha256:582e50615dc1a9cd4c4820cc7396059fd9c4a3984bc594e9f620652235c4ba19`
 
 ## Exact content addresses
 
-- Graph root: `d247b6344648bd8b5d6fc7ce8d7e9e0774556af298814ecdd11b227aec47c535`
-- Release receipt: `944801886c25e0f9d11f93ddfa978c01aa49c0706c33dab44ee44e467926848d`
-- Parent mechanics receipt: `b80ff061514d47207e15caf8807bd52b03875578b3dcab5f015f085df4d926f0`
+- Graph root: `91957d10546783d6668c22a9adcd29e2f21e35e0e2f351364002db106fac7b32`
+- Release receipt: `ad8d982be6696a430fcc0b021780a44670d3a8102aff7ddfa59bbf3ca83c91f0`
+- Parent mechanics receipt: `8aebd24008f65fbc12f4a485b78d9d0a91eefcc51c7b34d0769766bd4859c53a`
 - Authority registry: `23802d0d5ea9625098961366f533c04b1b4e81b45ef694cbbc941b8d79e308b9`
 
 ## Orthogonal closure axes

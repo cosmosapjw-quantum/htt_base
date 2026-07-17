@@ -155,15 +155,6 @@
       "target_ref": "37a355e063bce2e39b95dd2f3b643109cf3aea6e5a35fe3e8d1dcd31a418cbb6"
     },
     {
-      "edge_ref": "58d198e69e186b3f600a5d48c590a322bc08921a6f9f55ac1a087c9f40a34d51",
-      "kind": "generates",
-      "metadata": {
-        "role": "deterministic MES blocker scan"
-      },
-      "source_ref": "558d4bcc3132da96de059e9da6480b3c317fa4a5a2cb3b09d522aaf63f6c684e",
-      "target_ref": "b7d9106409fc8043c0859fa54779372b78e8f0855f9b06a28efd379a95441fc2"
-    },
-    {
       "edge_ref": "5abd84117509c5159f93ad7d16a547e701566ad925a98a3a030a3e8714e53fcc",
       "kind": "uses_input",
       "metadata": {
@@ -234,6 +225,15 @@
       },
       "source_ref": "558d4bcc3132da96de059e9da6480b3c317fa4a5a2cb3b09d522aaf63f6c684e",
       "target_ref": "054eddb04f87c840a7da86e92b9ca0759e710c17ee415a02d65547c944b109f9"
+    },
+    {
+      "edge_ref": "7ef089867c863c2bb0f5933f704a272888259f1e12863dc766733324be137ed8",
+      "kind": "consumed_by",
+      "metadata": {
+        "role": "audit disclosure only"
+      },
+      "source_ref": "22243d0331d417621d8b97bb0c42018f3723604c398cb866105036893d5c1c60",
+      "target_ref": "84b2de51c64ab216ff9646c8422cdb460a39c14223e6e4ec69aaab5dc3e96a89"
     },
     {
       "edge_ref": "7fbea9d0284e9a669198cf4cda62ef7a4fcee2e4b8cf8cab2144a69480c2424c",
@@ -308,15 +308,6 @@
       "target_ref": "dc44fd972525d4c8cbf9d16019a3f606e2db4a28e9205f83aa4d08235cc93179"
     },
     {
-      "edge_ref": "a83be390917fdca11bd6349ec3ea27efdab9c154ce8a0d7611e5e1f3ff8c5c58",
-      "kind": "consumed_by",
-      "metadata": {
-        "role": "audit disclosure only"
-      },
-      "source_ref": "b7d9106409fc8043c0859fa54779372b78e8f0855f9b06a28efd379a95441fc2",
-      "target_ref": "7d5feb17e561721015be5d4a6070b916bf0b18084196511486ebb27babfbe360"
-    },
-    {
       "edge_ref": "a8b3f63ca3d5264abd6e2b4e4d3d9041c2fb692ffd6b2385604f41ce8276679d",
       "kind": "uses_input",
       "metadata": {
@@ -369,6 +360,15 @@
       },
       "source_ref": "b4618df02940e3176a0fde9b93b6e2e7bb2d2f15a5070918dc258e2436622e9d",
       "target_ref": "68402ee91249916054d27d4eeaca94ff50a67be58b7918e7f01340b83511b850"
+    },
+    {
+      "edge_ref": "b8bc1a18ea6e7e178bc361e612092f78189ea1a4c351c40e75d64e3f85e1cad0",
+      "kind": "generates",
+      "metadata": {
+        "role": "deterministic MES blocker scan"
+      },
+      "source_ref": "558d4bcc3132da96de059e9da6480b3c317fa4a5a2cb3b09d522aaf63f6c684e",
+      "target_ref": "22243d0331d417621d8b97bb0c42018f3723604c398cb866105036893d5c1c60"
     },
     {
       "edge_ref": "c3d268e9130dc841cdbb6c958680f2e8f1f8eb35b92cd3499b35a191605f257f",
@@ -461,15 +461,6 @@
       "target_ref": "5399a896ca48c5e08b22d59b13b9c7c9f4197cec81088b79d996fe0671888ffe"
     },
     {
-      "edge_ref": "e50b4eab302384cd31d5bf671d055f998e6f8a84b60a5d1158c03570451b1372",
-      "kind": "consumed_by",
-      "metadata": {
-        "role": "exact blocked release closure"
-      },
-      "source_ref": "b7d9106409fc8043c0859fa54779372b78e8f0855f9b06a28efd379a95441fc2",
-      "target_ref": "44b1536705889fc333098101ba5174ffcf13fb319e61c859995a56d4ee5c125d"
-    },
-    {
       "edge_ref": "e6e7baa5b9118db4aeef62f9150d80200d2dd330819fce0661401c3bfe9b2bf2",
       "kind": "uses_input",
       "metadata": {
@@ -495,6 +486,15 @@
       },
       "source_ref": "558d4bcc3132da96de059e9da6480b3c317fa4a5a2cb3b09d522aaf63f6c684e",
       "target_ref": "44c029712d368adc0c2844f8dbf7b3e85a8b65d7cf529fbaa9512936ea9dcb00"
+    },
+    {
+      "edge_ref": "f6ee97df65d21badbad5abaec6bff38fa7c6bd3a870d39da1e74a402daca4074",
+      "kind": "consumed_by",
+      "metadata": {
+        "role": "exact blocked release closure"
+      },
+      "source_ref": "22243d0331d417621d8b97bb0c42018f3723604c398cb866105036893d5c1c60",
+      "target_ref": "44b1536705889fc333098101ba5174ffcf13fb319e61c859995a56d4ee5c125d"
     },
     {
       "edge_ref": "f9fb80c6b4803b1915d84c0f246299995773240743aa740f368b2cb4cc90bda9",
@@ -524,7 +524,7 @@
       "target_ref": "b24bdb0662971c7c04f4f7a850e9c64e0d7c01c81d4c75540c3e59351ce861fa"
     }
   ],
-  "graph_ref": "d247b6344648bd8b5d6fc7ce8d7e9e0774556af298814ecdd11b227aec47c535",
+  "graph_ref": "91957d10546783d6668c22a9adcd29e2f21e35e0e2f351364002db106fac7b32",
   "nodes": [
     {
       "axes": {
@@ -636,6 +636,22 @@
         "path": "htt/htt/htt/core/departure_posteriors.py"
       },
       "node_ref": "1de25ad670633f7a7e7e7ccff6c153ab48671f3c3ce2d80bb4ff81eee3bbaba5",
+      "test_execution": null
+    },
+    {
+      "axes": {
+        "evidence_status": "PRESENT",
+        "process_result": "PASS",
+        "scientific_status": "OPEN"
+      },
+      "content_sha256": "bd132bcc58800581cc5ee4d1607c65f7a310db8f3f60f4595b0a4b9a3d7c9325",
+      "kind": "artifact",
+      "label": "pr122_mes_successor_scan",
+      "metadata": {
+        "path": "docs/generated/pr122_mes_successor_scan.json",
+        "status": "expected_blocked_pending_PR124"
+      },
+      "node_ref": "22243d0331d417621d8b97bb0c42018f3723604c398cb866105036893d5c1c60",
       "test_execution": null
     },
     {
@@ -1755,21 +1771,6 @@
         "process_result": "PASS",
         "scientific_status": "OPEN"
       },
-      "content_sha256": "758b699d46df2290ce094837ad7bd0e28622ae6ea08f39d0657f04400ddeaba4",
-      "kind": "consumer",
-      "label": "external_audit_package",
-      "metadata": {
-        "path": "scripts/build_external_audit_package.py"
-      },
-      "node_ref": "7d5feb17e561721015be5d4a6070b916bf0b18084196511486ebb27babfbe360",
-      "test_execution": null
-    },
-    {
-      "axes": {
-        "evidence_status": "PRESENT",
-        "process_result": "PASS",
-        "scientific_status": "OPEN"
-      },
       "content_sha256": "9cd1d2ba2bfc5083d28fae36d0c35027890c1bd9a52f4ff446bcd26d0c7a1a89",
       "kind": "input",
       "label": "mes_consumer.htt.core.namespace",
@@ -1778,6 +1779,21 @@
         "path": "htt/htt/htt/core/__init__.py"
       },
       "node_ref": "8267b67d23f13b9608b4dce19d7c0416715ebd793b4ddf40dcd02a3915e3a413",
+      "test_execution": null
+    },
+    {
+      "axes": {
+        "evidence_status": "PRESENT",
+        "process_result": "PASS",
+        "scientific_status": "OPEN"
+      },
+      "content_sha256": "9dd8d155b1a09eda7a360179ce76db6ad7e3b43ced8236b03742dbf456309ce9",
+      "kind": "consumer",
+      "label": "external_audit_package",
+      "metadata": {
+        "path": "scripts/build_external_audit_package.py"
+      },
+      "node_ref": "84b2de51c64ab216ff9646c8422cdb460a39c14223e6e4ec69aaab5dc3e96a89",
       "test_execution": null
     },
     {
@@ -1926,22 +1942,6 @@
         }
       },
       "node_ref": "b4618df02940e3176a0fde9b93b6e2e7bb2d2f15a5070918dc258e2436622e9d",
-      "test_execution": null
-    },
-    {
-      "axes": {
-        "evidence_status": "PRESENT",
-        "process_result": "PASS",
-        "scientific_status": "OPEN"
-      },
-      "content_sha256": "f5ab6a29e322abf8be923eeb93ba43bd260db89b70e256220ebb7051fc46ffd9",
-      "kind": "artifact",
-      "label": "pr122_mes_successor_scan",
-      "metadata": {
-        "path": "docs/generated/pr122_mes_successor_scan.json",
-        "status": "expected_blocked_pending_PR124"
-      },
-      "node_ref": "b7d9106409fc8043c0859fa54779372b78e8f0855f9b06a28efd379a95441fc2",
       "test_execution": null
     },
     {

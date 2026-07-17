@@ -6,9 +6,9 @@ This is a propagation-control artifact. It does not remediate or validate a CF4 
 - Implementation scope: `propagation_quarantine_only`
 - Claim tier: `blocked`
 - Transfer source: `none`
-- Config hash: `1a01950dc81de72811aed5a6df42e79ede1ddc5a1a68c650e062dada00315945`
-- Policy SHA-256: `1a01950dc81de72811aed5a6df42e79ede1ddc5a1a68c650e062dada00315945`
-- Remediation-root SHA-256: `bdb7779955710d3d84b137081748027746ea308fbf89dc0c179dd937f63c6311`
+- Config hash: `bae969fd37a8070bdd7b7508c4471bf7613ed07721ea7eaa2d3aa370b3e49df0`
+- Policy SHA-256: `bae969fd37a8070bdd7b7508c4471bf7613ed07721ea7eaa2d3aa370b3e49df0`
+- Remediation-root SHA-256: `f16d9754828bb32ae4cef92f585af82ae7fd1caa2687a7b4144bc1e942328dd9`
 - Sky support: `not_applicable_to_propagation_quarantine`
 - Null/mock status: `not_applicable_quarantine_is_not_validation`
 - Git/worktree state: `baseline_commit:e6da3670043596efdcd93f9ba5e631e1462146c7; PR-120 worktree hashes are bound per inventory entry`
@@ -148,7 +148,7 @@ This is a propagation-control artifact. It does not remediate or validate a CF4 
 | `htt/obsstat/egs3_teff_unification.py` | `symbolic_teff_consumer` | `active_block_consumer` | `427376670d34482f64e86a1bf0e18eb0f5ec8fe6dca6cf93457f0374f987d35d` | `true` |
 | `htt/obsstat/pv_forward_mocks.py` | `forward_mock_method_consumer` | `active_block_consumer` | `986d3bb0f1d625242ce23cb66ad802e0e98def3c1de0fa7d54dd0095bf39ecdf` | `true` |
 | `htt/src/common/cf4_p0_quarantine.py` | `shared_validator` | `validator_support` | `c52c69b65b07a95a4f0960ff595e554c7195cd46a3b4d18e19d0d6fbf9f68ab5` | `false` |
-| `htt/src/common/package_binary_binding.py` | `binary_release_binding_validator` | `validator_support` | `98b9463b2473a296c3fcda897450aa8ddf8914bca4fd3da6ba2b0964ea33695f` | `false` |
+| `htt/src/common/package_binary_binding.py` | `binary_release_binding_validator` | `validator_support` | `f3c5c5e4e9c41037d86911d16826f42e70d3c23dcd61a275dbbf59407c0469f4` | `false` |
 | `legacy/cf4_p0/cards/bass_extended_joint_forecast.json` | `frozen_numerical_reproduction` | `legacy_reproduction_only` | `d907e149ebbec594b9666c49963d1bfb3a80f713e855b752486db9da797c7732` | `false` |
 | `legacy/cf4_p0/cards/cf4_bulkflow_lcdm_card.json` | `frozen_numerical_reproduction` | `legacy_reproduction_only` | `fa85b3b53609db0f162a1ee6b6a6d85f314cdc43c638cbe117378c18d899f846` | `false` |
 | `legacy/cf4_p0/cards/cf4_bulkflow_likelihood_report.json` | `frozen_numerical_reproduction` | `legacy_reproduction_only` | `183fc58041f04a9c9778a21ef2f81cdc3fbf874a6455c4aa84792b5585728536` | `false` |
@@ -757,7 +757,7 @@ This is a propagation-control artifact. It does not remediate or validate a CF4 
 | `scripts/build_egs_results_table.py` | `legacy_result_table_gateway` | `active_block_consumer` | `9482ab593dc2e538a109ee32565657ec20445e9832650ed73fb35886e28fdcc8` | `true` |
 | `scripts/build_egs_results_table_v8.py` | `legacy_result_table_gateway` | `active_block_consumer` | `fbef5129fbf4992c500f5f9dfda693155d8fe264c37d8e6734a7cd12f2a8b860` | `true` |
 | `scripts/build_egs_results_table_v9.py` | `result_table_builder` | `active_block_consumer` | `58acdd46fe18a2cc39311cf71e64652e76d92212fcc0a496ccf850b14db0cb68` | `true` |
-| `scripts/build_external_audit_package.py` | `package_builder` | `active_block_consumer` | `758b699d46df2290ce094837ad7bd0e28622ae6ea08f39d0657f04400ddeaba4` | `true` |
+| `scripts/build_external_audit_package.py` | `package_builder` | `active_block_consumer` | `9dd8d155b1a09eda7a360179ce76db6ad7e3b43ced8236b03742dbf456309ce9` | `true` |
 | `scripts/build_external_audit_report_v6.py` | `historical_report_gateway` | `active_block_consumer` | `5e0d28ae667a019ff9bfc1f8eb21a237305cefcb830fd73d47f5dfb6e4ccdf85` | `true` |
 | `scripts/build_external_audit_report_v7.py` | `historical_report_gateway` | `active_block_consumer` | `d6b58c2f7499b070e6a95c599a5b4bf007319eeb07560f7bfa88109ac2d23768` | `true` |
 | `scripts/build_external_audit_report_v8.py` | `report_consumer` | `active_block_consumer` | `6c332d24184973c48597e4c9a0666e34d3efc626617047bc95012c54479f3ffa` | `true` |
@@ -823,7 +823,7 @@ This is a propagation-control artifact. It does not remediate or validate a CF4 
 
 ## Input hashes
 
-- `docs/research_program/long_horizon_rescue/cf4_p0_quarantine_policy.yaml:sha256:1a01950dc81de72811aed5a6df42e79ede1ddc5a1a68c650e062dada00315945`
-- `docs/codex_handoff/research_remediation_state.yaml:sha256:bdb7779955710d3d84b137081748027746ea308fbf89dc0c179dd937f63c6311`
+- `docs/research_program/long_horizon_rescue/cf4_p0_quarantine_policy.yaml:sha256:bae969fd37a8070bdd7b7508c4471bf7613ed07721ea7eaa2d3aa370b3e49df0`
+- `docs/codex_handoff/research_remediation_state.yaml:sha256:f16d9754828bb32ae4cef92f585af82ae7fd1caa2687a7b4144bc1e942328dd9`
 
 Generating command: `PYTHONPATH=htt/src venv/bin/python -B scripts/codex_harness/quarantine_cf4_p0_consumers.py --write`

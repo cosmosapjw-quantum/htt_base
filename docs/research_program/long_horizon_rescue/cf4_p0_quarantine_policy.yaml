@@ -11,7 +11,7 @@ transfer_source: none
 root_state:
   canonical_path: docs/codex_handoff/research_remediation_state.yaml
   mirror_path: machine_readable/research_remediation_state.yaml
-  sha256: bdb7779955710d3d84b137081748027746ea308fbf89dc0c179dd937f63c6311
+  sha256: f16d9754828bb32ae4cef92f585af82ae7fd1caa2687a7b4144bc1e942328dd9
   finding_count: 102
   rescued_count: 0
   required_open_findings:
@@ -31,15 +31,26 @@ root_state:
       source_reference: docs/audits/jcap_prd_adversarial_audit_20260714/atomic_finding_ledger.json#N-DATA-CF4-DOWNSTREAM
       source_sha256: 6e88a6f6c4f95e5154c89e939230c94854b11a8430a64c28ccb339d8c4ab6feb
 root_refresh:
-  refresh_id: PR122-BACKLOG-HASH-REFRESH-20260716
-  refreshed_by_pr: PR-122
-  previous_root_sha256: 77d36878315f041c7bb6c273a2d650f7d3fa1c8a8dc635a577527d646fa40109
-  current_root_sha256: bdb7779955710d3d84b137081748027746ea308fbf89dc0c179dd937f63c6311
+  refresh_id: PR124-PREFLIGHT-AMENDMENT-HASH-REFRESH-20260717
+  refreshed_by_pr: PR-124-preflight
+  previous_root_sha256: bdb7779955710d3d84b137081748027746ea308fbf89dc0c179dd937f63c6311
+  current_root_sha256: f16d9754828bb32ae4cef92f585af82ae7fd1caa2687a7b4144bc1e942328dd9
   changed_input: docs/codex_handoff/pr_backlog.yaml
-  rationale: PR-122 expanded only its registered implementation and artifact paths in the canonical DAG backlog.
+  rationale: >
+    Roadmap AMENDMENT_01 (audit ADJ-ROADMAP-001) retitled the pending PR-124
+    card and the sanctioned intake --write resync repaired backlog metadata
+    drift; validate_research_remediation --write then refreshed the derived
+    remediation-state hashes. No finding state changed.
   finding_state_effect: none_all_102_findings_remain_OPEN
   scientific_status_effect: none_zero_RESCUED
   historical_pr120_spec_mutated: false
+  previous_refresh:
+    refresh_id: PR122-BACKLOG-HASH-REFRESH-20260716
+    refreshed_by_pr: PR-122
+    previous_root_sha256: 77d36878315f041c7bb6c273a2d650f7d3fa1c8a8dc635a577527d646fa40109
+    current_root_sha256: bdb7779955710d3d84b137081748027746ea308fbf89dc0c179dd937f63c6311
+    changed_input: docs/codex_handoff/pr_backlog.yaml
+    rationale: PR-122 expanded only its registered implementation and artifact paths in the canonical DAG backlog.
 legacy_output_roots:
   - legacy/cf4_p0
 scan:
