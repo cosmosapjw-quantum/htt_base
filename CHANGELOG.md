@@ -7,6 +7,27 @@
 
 ## [Unreleased]
 
+### PR-126 — One-way FLRW/EGS and counterexample registry (rev-r203, 2026-07-17)
+
+Roadmap Wave-14 PR-126 (deps PR-124/125). `htt/src/common/egs_oneway.py`:
+typed premise DAG separating exact-EGS (radiation isotropy per fundamental
+observer, geodesic congruence, barotropic matter, C^3) from almost-EGS
+(**SPECIFIED_ONLY** — regularity class explicitly UNREGISTERED, no claim);
+content-addressed theorem ids (any premise edit mints a NEW id — post-hoc
+counterexample removal structurally impossible under the old id; exact and
+almost premises can never merge). **Sealed one-way pair**: forward
+`THM-6e52638ddb162c4e` (premise-complete FLRW comparator states have
+x_C = 0 exactly; incomplete premise sets refused with an explicit refuting
+witness; symbolic tie to the sealed c=(1,-1,1,1) combination) + converse
+counterexamples (CE-1 shear/curvature cancellation at beta=0; CE-2 all
+departures nonzero; 64 deterministic cancellation draws) — **x_C = 0 never
+implies the FLRW limit**. Safe generated theorem text + converse-language
+lint. 5/5 mutations killed by real validators (incl. the PR-125 beta-zero
+cross-validator). Gates: `run_pr126_egs_oneway.py --check` byte-stable +
+`test_pr126_egs_oneway.py` (9). Conditional comparator mathematics at
+roadmap_rescue_v1:C2; no FLRW/EGS certificate; 102 OPEN; DAG 73/113, next
+PR-127. See docs/PR_DELTAS/pr-126.md.
+
 ### PR-125 — Canonical frame, order, domain and premise contract (rev-r202, 2026-07-17)
 
 Roadmap Wave-14 PR-125 (deps PR-124). `htt/src/common/frame_contract.py`:

@@ -1,7 +1,7 @@
 # Canonical Shared Context Pack
 
-Context version: `d8e2477df6a78dc3215461577094beac9e7402a463c9866a8e65389e5586e9b3`
-Built at: `2026-07-17T13:44:59+00:00`
+Context version: `4281996df72d226e12ecd13215c690fe20f46ff8224fb80d06429511a743be84`
+Built at: `2026-07-17T14:09:06+00:00`
 
 This pack contains only the shared Tier-0 context. Assignment-specific context and sibling results are intentionally excluded.
 
@@ -9,7 +9,7 @@ This pack contains only the shared Tier-0 context. Assignment-specific context a
 
 ## Source: `.agent-harness/context/SHARED_CONTEXT.md`
 
-SHA-256: `d99fee9ed6c95a78f50bbc35b6372c4c11b2a362b2f6af336f8bb155417454f1`
+SHA-256: `b1331abbd366e87c447778eeb11599d0a27d4ca86c44d1c19b8f5bc678378331`
 
 # Shared Context — long-horizon rescue execution
 
@@ -100,6 +100,10 @@ SHA-256: `d99fee9ed6c95a78f50bbc35b6372c4c11b2a362b2f6af336f8bb155417454f1`
 | E-PR125-GRAPH | `docs/generated/pr125_theorem_frame_graph.json` | PR-125 runner (12 CHECKED bindings) | `25d948ada964ebc9cb2d2589a51fbe015349b23759662ef52c58142c756fb743` | C-PR125-FRAME-CONTRACT |
 | E-PR125-WITNESS | `docs/generated/pr125_kinematic_witness_report.json` | PR-125 runner (exact-Fraction witnesses) | `ed6103238253c834927cfe0572681ada98f3c243667bb871b3362d4039a63a3d` | C-PR125-FRAME-CONTRACT |
 | E-PR125-MUTATIONS | `docs/generated/pr125_mutation_report.json` | PR-125 runner (6/6 killed by real validators) | `53d05eb630da62cbf0a65de9a5660f62ace1554aa6de49b0fb4df9cba9eddb8b` | C-PR125-FRAME-CONTRACT |
+| E-PR126-SPEC | `docs/research_program/long_horizon_rescue/pr126_spec.yaml` | reviewed repository edit (contract-first) | `65ac5e9bb9077bb2977daa59360d163fbcaf7a1b8c423d742947566084e0fe6c` | C-PR126-EGS-ONEWAY |
+| E-PR126-WITNESS | `docs/generated/pr126_oneway_witness_report.json` | PR-126 runner (sealed one-way pair) | `e6e29c0332b3d88819243e0492b7f1410caefbf69eb477be1f44c84672cf3d39` | C-PR126-EGS-ONEWAY |
+| E-PR126-COUNTEREXAMPLES | `docs/generated/pr126_counterexample_registry.json` | PR-126 runner (converse counterexamples) | `ef7fd04fae5e05caba56a8db3c0b7efd24872411898e164603e0a8a147af0bf8` | C-PR126-EGS-ONEWAY |
+| E-PR126-MUTATIONS | `docs/generated/pr126_mutation_report.json` | PR-126 runner (5/5 killed by real validators) | `d0fa7d455dca3b9c1d80604323772a9cb06fe6646c2ac4e8291e203aa1286a19` | C-PR126-EGS-ONEWAY |
 
 ## Known disputes and open questions
 

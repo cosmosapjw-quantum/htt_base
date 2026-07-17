@@ -1,0 +1,44 @@
+{
+  "allowed_use": [
+    "premise_dag_and_oneway_witnesses",
+    "counterexample_registry",
+    "later_pr_regression_input"
+  ],
+  "artifact_mode": "symbolic_governance_diagnostic",
+  "artifacts": {
+    "docs/generated/pr126_counterexample_registry.json": "ef7fd04fae5e05caba56a8db3c0b7efd24872411898e164603e0a8a147af0bf8",
+    "docs/generated/pr126_mutation_report.json": "373c3214cfd27ea5a7e8680155490c056d7715e0b3cf48c52afff512c2c0c200",
+    "docs/generated/pr126_oneway_witness_report.json": "7edc674741720a1ead9499ae2d9ee047e63a977c31a1c8d5f3e1739ae9ad076c",
+    "docs/generated/pr126_premise_dag.json": "3a68d1b85c9fa71972c714a3f62069594cf0dde71e220fc1d915212fba07ac2a"
+  },
+  "caveats": [
+    "Conditional comparator-level mathematics at C2 only.",
+    "One-way: x_C = 0 never establishes FLRW/EGS (sealed registry).",
+    "Almost-EGS is SPECIFIED_ONLY; no quantitative claim exists.",
+    "All 102 remediation findings remain OPEN."
+  ],
+  "claim_level": {
+    "level": "C2",
+    "scheme": "roadmap_rescue_v1"
+  },
+  "claim_tier": "conditional",
+  "config_hash": "435ac627de47c126a7b300e06422b69c847f518c37256e3fb7fa8ef190d87bd4",
+  "forbidden_use": [
+    "x_C = 0 therefore FLRW",
+    "FLRW certificate",
+    "EGS certificate",
+    "converse established",
+    "isotropy proven",
+    "Bianchi geometry detected",
+    "Bianchi family identified",
+    "finding rescued",
+    "validated as native"
+  ],
+  "input_hashes": [
+    "htt/src/common/egs_oneway.py:115200649aaeacec284f4d756ae67c4a4eafe7618ae78260661851840139f62a",
+    "htt/src/common/frame_contract.py:3b2c15b2ec61c5d5cab86125dc4de48155901a9b4dd10ed873830f7de8f48ac0"
+  ],
+  "owner": "COMMON",
+  "schema": "pr126.artifact_manifest.v1",
+  "transfer_source": "none"
+}

@@ -1,0 +1,36 @@
+{
+  "mutations": [
+    {
+      "executed": true,
+      "kill_message": "forward claim under an incomplete premise set (missing ['CMP-P4-delta_omega_k_zero']) is refuted: verified witness with x_C = 1/1000000 != 0 satisfies the reduc",
+      "killed": true,
+      "mutation_id": "incomplete_premise_forward_claim"
+    },
+    {
+      "executed": true,
+      "kill_message": "theorem id 'THM-6e52638ddb162c4e' does not match the content-addressed id 'THM-465ba1aa8efaea31' for this premise set/statement — premise edits mint a NEW theor",
+      "killed": true,
+      "mutation_id": "posthoc_premise_edit_keeps_id"
+    },
+    {
+      "executed": true,
+      "kill_message": "generated theorem text contains forbidden converse/certificate language: '[redacted-mutant-text]'",
+      "killed": true,
+      "mutation_id": "converse_language"
+    },
+    {
+      "executed": true,
+      "kill_message": "beta == 0 does not imply the FLRW/EGS limit: nonzero (sigma2=1/100000000, w2=0, delta_omega_k=0) survives the no-tilt limit",
+      "killed": true,
+      "mutation_id": "beta_zero_egs_shortcut"
+    },
+    {
+      "executed": true,
+      "kill_message": "a claim must cite premises from exactly one registered group (cited groups: ['comparator', 'almost_egs']); exact, almost-EGS (SPECIFIED_ONLY_no_quantitative_reg",
+      "killed": true,
+      "mutation_id": "merged_exact_almost_claim"
+    }
+  ],
+  "schema": "pr126.mutation_report.v1",
+  "surviving_mutation_count": 0
+}
