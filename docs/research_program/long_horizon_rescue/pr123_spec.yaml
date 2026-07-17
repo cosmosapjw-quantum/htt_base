@@ -221,7 +221,10 @@ scope_and_non_goals:
 
 remediation_state_contract:
   path: docs/codex_handoff/research_remediation_state.yaml
-  sha256: bdb7779955710d3d84b137081748027746ea308fbf89dc0c179dd937f63c6311
+  # PR-124 preflight (2026-07-17): advanced with the sanctioned
+  # remediation-root refresh (AMENDMENT_01 backlog resync; no finding
+  # state changed). See cf4_p0_quarantine_policy.yaml root_refresh.
+  sha256: f16d9754828bb32ae4cef92f585af82ae7fd1caa2687a7b4144bc1e942328dd9
   finding_count: 102
   required_scientific_status_counts: {OPEN: 102}
   rescued_count: 0
