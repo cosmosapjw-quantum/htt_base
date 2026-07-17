@@ -4,7 +4,7 @@ owner: OBSSTAT
 implementation_scope: obsstat
 claim_tier: diagnostic_only
 transfer_source: mixed_none_and_external_reference
-config_hash: `sha256:7df4f0c8327792d65a417863627ac6e294acd512e6b34683a8657a27879da503`
+config_hash: `sha256:179931179ee02a14a99fe1a86a4c0b83efb0ba8b09ac7116e40e7f9ebbbcb024`
 caveats:
 - Report-candidate observed-data analysis lane only.
 - No code-internal process or governance figures are included.

@@ -1,0 +1,29 @@
+{
+  "direction_check": "lower endpoint strictly decreasing in kappa (verified; the legacy kappa-direct form is increasing and rejected)",
+  "reciprocal_entry": "1/kappa = 21/4",
+  "reference_bracket": {
+    "a2": "3559629/1000000000000",
+    "a3": "3559629/2000000000000",
+    "f_lo": "620876972264409/37000000000000000000",
+    "kappa": "4/21",
+    "merged": false,
+    "mes_placeholder_provenance": "placeholder_not_merged",
+    "mes_placeholder_upper": "32036661/1000000000000",
+    "sigma_hi_theorem": "74752209/2000000000000",
+    "sigma_lo": "24917403/2000000000000"
+  },
+  "registered_kappa": "4/21",
+  "schema": "pr128.coefficient_authority.v1",
+  "specification_first": {
+    "delta_domain": "the derivative correction delta satisfies |delta| <= R with R = a3/a2 (H3 proxy), REQUIRING R < 1 for the two-sided inversion",
+    "direction": "solving for Sigma INVERTS kappa: Sigma = a2 / (kappa * (1 + delta)). The coefficient therefore enters the bracket RECIPROCALLY (1/kappa = 21/4), and the H3-conditional bracket is a2/(kappa*(1+R)) <= Sigma <= a2/(kappa*(1-R)) for 0 <= R < 1.",
+    "f_lo": "F_lo = Sigma_lo^2 / x_max with Sigma_lo = a2/(kappa*(1+R))",
+    "kappa_exact": "4/21",
+    "kappa_provenance": "ETM ell=2 hierarchy coefficient (registered figure value; the relation direction, not the numeric, is under repair here)",
+    "reciprocal_wrong_legacy": "the shipped egs2_shear_bracket.shear_lower uses Sigma_lo = a2 * kappa / (1+R) — the RECIPROCAL of the proved coefficient (finding N-THEORY-NT2-COEFFICIENT). It remains a true but weak lower bound (understates by (21/4)^2 = 441/16); its labeling as the proved relation was the defect. The legacy module stays byte-frozen as historical reproduction; active consumers must traverse the successor authority.",
+    "relation": "a2 = kappa * Sigma * (1 + delta)",
+    "upper_separation": "the MES placeholder upper (C_up * a2, provenance placeholder) is NEVER merged with the H3-conditional theorem bracket into one proven interval; the authority publishes them as separate labeled objects.",
+    "x_max_exact": "925/100000000",
+    "x_max_provenance": "the S2a combined-comparator F_shear ceiling used by BOTH the legacy bracket (egs2_fisher.X_MAX) and the audit PASS source (wolfram/egs3_bracket_constants.wls xmax); registered here so the before/after table shares one normalization — NOT the x_C interval ceiling 17/100."
+  }
+}

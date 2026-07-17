@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "run_id": "post-pr128-paused-20260718",
+  "work_unit_id": "pr128-nt2-authority",
+  "created_at": "2026-07-17T15:13:40+00:00",
+  "spec_ref": "docs/research_program/long_horizon_rescue/pr128_spec.yaml",
+  "base_ref": "main",
+  "head_ref": "HEAD",
+  "context_version": "5ae7d7f4ee09baae99cc8fef55772aa8771820691a4541095cb75428f3a04b64",
+  "budget": {
+    "max_concurrent": 4,
+    "max_total": 8,
+    "max_total_per_work_unit": 16,
+    "max_depth": 2
+  },
+  "stages": [
+    "context-build",
+    "independent-analysis",
+    "deduplication",
+    "targeted-adjudication",
+    "gate-evaluation",
+    "single-writer-update"
+  ],
+  "status": "initialized"
+}

@@ -7,6 +7,30 @@
 
 ## [Unreleased]
 
+### PR-128 — NT2 coefficient authority and downstream invalidation + checkpoint 075 (rev-r205, 2026-07-18)
+
+Roadmap Wave-14 PR-128 (deps PR-124/125/127).
+`htt/src/common/nt2_bracket_authority.py`: SPECIFICATION-FIRST l=2
+relation `a2 = kappa·Sigma·(1+delta)` (kappa = 4/21 pinned before
+derivation, |delta| <= R < 1 H3 proxy) — the inversion enters the bracket
+**RECIPROCALLY** (1/kappa = 21/4): `a2/(kappa(1+R)) <= Sigma <=
+a2/(kappa(1-R))`. The shipped legacy bracket used the reciprocal-wrong
+kappa-direct form (finding N-THEORY-NT2-COEFFICIENT) — a true but
+441/16-weaker bound mislabeled as the proved relation; the legacy module
+stays byte-frozen, the authority is the successor. Dual-engine agreement
+(SymPy inversion + exact Fractions) on every endpoint + the DIRECTION
+check (lower endpoint strictly decreasing in kappa kills the legacy
+increasing form); 64 seeded admissible draws contained exactly; corrected
+F_lo generated; MES placeholder upper kept a SEPARATE labeled object
+(merged intervals rejected); 6 consumers invalidated by the before/after
+table with regeneration deferred. 6/6 mutations killed. **Checkpoint 075**
+written (75/113 = 66.37%, DAG valid, zero blocked/skipped; per-PR
+adversarial lanes served as the auditor trio). Gates:
+`run_pr128_nt2_authority.py --check` byte-stable +
+`test_pr128_nt2_authority.py` (9). C2 closure/H3-conditional bracket; the
+finding stays OPEN pending adjudication; 102 OPEN; DAG 75/113, next
+PR-129. See docs/PR_DELTAS/pr-128.md.
+
 ### PR-127 — Cancellation-preserving graded/PSD-cone non-identification (rev-r204, 2026-07-17)
 
 Roadmap Wave-14 PR-127 (deps PR-125/126). `htt/src/common/graded_nonid.py`:

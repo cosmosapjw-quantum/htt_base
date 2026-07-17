@@ -1,0 +1,59 @@
+{
+  "after_authority": {
+    "f_lo": "620876972264409/37000000000000000000",
+    "form": "a2 / (kappa * (1 + R)) [registered inversion]",
+    "sigma_hi_theorem": "74752209/2000000000000",
+    "sigma_lo": "24917403/2000000000000"
+  },
+  "before_legacy": {
+    "f_lo_exact": "1407884290849/63738281250000000000",
+    "form": "a2 * kappa / (1 + R) [reciprocal-wrong labeling]",
+    "sigma_lo_exact": "1186543/2625000000000",
+    "sigma_lo_float_display": "4.520163809523809e-07"
+  },
+  "consumers": [
+    {
+      "path": "htt/obsstat/egs2_shear_bracket.py",
+      "role": "reciprocal-wrong legacy producer (byte-frozen historical reproduction)",
+      "status": "INVALIDATED_BY_AUTHORITY_TABLE"
+    },
+    {
+      "path": "htt/obsstat/egs3_psd_cone.py",
+      "role": "cone-shell consumer of the legacy bracket",
+      "status": "INVALIDATED_BY_AUTHORITY_TABLE"
+    },
+    {
+      "path": "scripts/make_egs2_egs3_theorem_figures.py",
+      "role": "frozen-era theorem figure generator",
+      "status": "INVALIDATED_BY_AUTHORITY_TABLE"
+    },
+    {
+      "path": "scripts/run_egs2_experiments.py",
+      "role": "egs2 experiment runner",
+      "status": "INVALIDATED_BY_AUTHORITY_TABLE"
+    },
+    {
+      "path": "research_gates/egs2/tests/test_egs2_fisher_bracket.py",
+      "role": "legacy gate pinning the reciprocal-wrong values",
+      "status": "INVALIDATED_BY_AUTHORITY_TABLE"
+    },
+    {
+      "path": "tests/contracts/test_egs2_extension.py",
+      "role": "legacy contract pin",
+      "status": "INVALIDATED_BY_AUTHORITY_TABLE"
+    }
+  ],
+  "legacy_upper_containment_failure": "claimed upper endpoint 32036661/1000000000000 < theorem upper 74752209/2000000000000: the interval excludes admissible Sigma values under the registered relation",
+  "normalization": {
+    "note": "both before and after rows use the SAME registered F_shear ceiling (the S2a value the legacy bracket and the audit PASS source use); no silent normalization switch",
+    "x_max": "37/4000000"
+  },
+  "policy": "consumers are INVALIDATED by the before/after table (correct vs legacy endpoints, one shared normalization); regeneration of frozen-era results and result-pack flow-through is DEFERRED per the roadmap section-7 Checkpoint-075 note (LONG_HORIZON_RESCUE_PR_ROADMAP_20260714 \"PR-128 can change existing numbers, so do not flow them into the manuscript/result packs yet\"). The legacy gates keep passing against the frozen module by design; the authority is the successor surface. The legacy TWO-SIDED object additionally fails upper-side containment for R > 5/12 under the registered relation (recorded in the table).",
+  "reference_input": {
+    "a2": "3559629/1000000000000",
+    "a3": "3559629/2000000000000"
+  },
+  "schema": "pr128.invalidation_table.v1",
+  "understatement_factor_f_lo_exact": "194481/256",
+  "understatement_factor_sigma_lo_exact": "441/16"
+}

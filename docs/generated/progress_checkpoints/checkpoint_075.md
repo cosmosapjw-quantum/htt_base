@@ -1,4 +1,5 @@
-# Progress scoreboard
+<!-- checkpoint_meta {"completed": 75, "critical_path_percent_complete": 58.93, "dependency_weighted_percent_complete": 63.88, "percent_complete": 66.37, "replan_required": false, "total": 113} -->
+# Progress checkpoint 075
 
 ## Artifact metadata
 
@@ -26,8 +27,6 @@
 - Skipped PRs: none
 - Dormant external PRs: PR-159, PR-160, PR-161, PR-162, PR-163, PR-164, PR-165, PR-166
 - Unblocked next: PR-129, PR-131
-- Checkpoint due: yes; satisfied by docs/generated/progress_checkpoints/checkpoint_075.md
-- Next checkpoint at: 80
 - Replan required: no
 - Replan reason: progress advanced; no replan required
 

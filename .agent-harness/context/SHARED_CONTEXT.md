@@ -95,6 +95,10 @@
 | E-PR127-KERNEL | `docs/generated/pr127_response_kernel.json` | PR-127 runner (two-engine agreement) | `f9d16b3ecf3296344e78cd22457c3ff7ad638b1826c53a01b8d810911c660092` | C-PR127-GRADED-NONID |
 | E-PR127-WITNESSES | `docs/generated/pr127_nonid_witnesses.json` | PR-127 runner (set-valued equivalence witnesses) | `f739d0274aaed85cd1b03ff04c8f5c649a282c98fa3ab9464c6b7ee6da14ec85` | C-PR127-GRADED-NONID |
 | E-PR127-MUTATIONS | `docs/generated/pr127_mutation_report.json` | PR-127 runner (6/6 killed by real validators) | `2973313841bac9e6d7818b5ae8a62469abacf7b0fff4182afa8fddf9c53088b8` | C-PR127-GRADED-NONID |
+| E-PR128-SPEC | `docs/research_program/long_horizon_rescue/pr128_spec.yaml` | reviewed repository edit (specification-first) | `c72846cb27acaa1f7331eb83aa1512f0c29a8e56b16827ae59459f7921ab8475` | C-PR128-NT2-AUTHORITY |
+| E-PR128-AUTHORITY | `docs/generated/pr128_coefficient_authority.json` | PR-128 runner (dual-engine authority) | `0ba98954eb146da2682c54095d630c821d817c5d604f853030f0b8726bf88775` | C-PR128-NT2-AUTHORITY |
+| E-PR128-RANDOMIZED | `docs/generated/pr128_randomized_bracket_report.json` | PR-128 runner (64 contained draws) | `5b7a9467520f723ba7939d69e84e5b8599ffbf984651407810a2a0d1d068dcb2` | C-PR128-NT2-AUTHORITY |
+| E-PR128-INVALIDATION | `docs/generated/pr128_invalidation_table.json` | PR-128 runner (before/after invalidation) | `67f3f08f25463a45001ba037c121943e9ddcc69955cef04999b95b46caf5bdd6` | C-PR128-NT2-AUTHORITY |
 
 ## Known disputes and open questions
 
