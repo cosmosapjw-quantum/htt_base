@@ -85,9 +85,9 @@ completed:
 - PR-136
 - PR-137
 - PR-138
+- PR-139
 blocked: []
 pending:
-- PR-139
 - PR-140
 - PR-141
 - PR-142
@@ -118,6 +118,12 @@ dormant_external:
 - PR-166
 in_progress: null
 execution_resolutions:
+  PR-139:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-139.md
+    resolved_on: '2026-07-18'
+    scientific_status_effect: none
+    scientific_status_after: OPEN
   PR-138:
     resolution: COMPLETED_SUCCESS
     receipt: docs/PR_DELTAS/pr-138.md
@@ -1105,3 +1111,29 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   claimed but never demonstrated) plus a dead n_bins parameter, all
   pre-commit. Model/transfer-conditional predictive-adequacy mechanics
   only; 102 findings OPEN; PR4 skipped.
+  PR-139 builds dependency-aware holdout and train-only refit on a
+  conjugate Gaussian group random-intercept toy. The exchangeable unit is
+  an entire group (rows in a group share the random intercept and are not
+  exchangeable at the row level); every preprocessing step
+  (standardization and feature/axis selection) is re-run on the training
+  partition of each fold only and is behaviorally verified to exclude the
+  held-out rows; the held-out score is the joint log predictive density of
+  the held-out group summed over folds (a dependency-bound ELPD,
+  Vehtari-Gelman-Gabry 2017). The PSIS approximation (Vehtari et al. 2015)
+  is verified against the exact per-fold refit and the two agree within
+  tolerance with every Pareto k below 0.7; if a Pareto k exceeds 0.7 the
+  exact refit is required. Leaky full-data feature selection is
+  DEMONSTRATED to inflate the held-out ELPD by 8.29 nats and a full-data
+  transform provenance is refused. Row-level holdout on the correlated
+  rows is DEMONSTRATED optimistic (a higher per-observation lpd) and a
+  fold that splits a dependency cluster is refused. A single
+  all-encompassing cluster yields LOO_not_identified. A channel ablation
+  or full-versus-fold evidence difference is never labeled a LOO score.
+  Six preregistered mutations killed on production paths. The adversarial
+  lane independently reproduced the closed-form posterior, the group-joint
+  predictive, the PSIS diagnostic against arviz, the leakage gap, and the
+  dependency dose-response (no P0) and fixed two P1 (label-based guards
+  made behavioral, a mislabeled test replaced by the marginal-conditional
+  equivalence cross-check) and a P2 (the too-small-tail PSIS branch now
+  fails toward exact) pre-commit. Dependency-qualified held-out
+  predictive-score mechanics only; 102 findings OPEN; PR4 skipped.

@@ -1,0 +1,42 @@
+{
+  "mutations": [
+    {
+      "kill_message_redacted": "a declared fold splits a dependency cluster — dependent rows may not be used as independent LOO units",
+      "kill_rule": "declaring row-level folds that split a group dependency cluster is rejected by the dependency-respect guard",
+      "killed": true,
+      "mutation_id": "dependent_rows_as_loo_unit"
+    },
+    {
+      "kill_message_redacted": "a preprocessing step used scope 'full_data' — every transform must be re-fit on the training partition only (train_only)",
+      "kill_rule": "a feature-selection provenance computed on the full data is rejected by the train-only guard",
+      "killed": true,
+      "mutation_id": "selection_leakage"
+    },
+    {
+      "kill_message_redacted": "a preprocessing step used scope 'full_data' — every transform must be re-fit on the training partition only (train_only)",
+      "kill_rule": "a standardization provenance computed on the full data is rejected by the train-only guard",
+      "killed": true,
+      "mutation_id": "standardize_leakage"
+    },
+    {
+      "kill_message_redacted": "PSIS Pareto k = 1.400 exceeds 0.7 — the exact refit is required, not the PSIS approximation",
+      "kill_rule": "reporting a PSIS ELPD whose Pareto k exceeds 0.7 without the exact fallback is rejected by the reliability guard",
+      "killed": true,
+      "mutation_id": "psis_used_when_unreliable"
+    },
+    {
+      "kill_message_redacted": "a 'channel_ablation' is not a held-out LOO/ELPD score and may not be labeled one; it is a separate sensitivity",
+      "kill_rule": "labeling a channel-ablation or full-vs-fold evidence difference a LOO/ELPD score is rejected by the score-kind guard",
+      "killed": true,
+      "mutation_id": "ablation_labeled_loo"
+    },
+    {
+      "kill_message_redacted": "LOO_not_identified: the dependency graph has a single cluster spanning every row, so there is no held-out exchangeable unit",
+      "kill_rule": "computing LOO on a dependency graph with no exchangeable unit raises LOO_not_identified",
+      "killed": true,
+      "mutation_id": "loo_on_single_cluster"
+    }
+  ],
+  "schema": "pr139.mutation_report.v1",
+  "surviving_mutation_count": 0
+}

@@ -7,6 +7,39 @@
 
 ## [Unreleased]
 
+### PR-139 — Dependency-aware holdout and train-only refit (rev-r216, 2026-07-18)
+
+Roadmap Wave-17 PR-139 (deps PR-134/138). `htt/src/common/dependency_holdout.py`:
+a closed-form conjugate Gaussian group random-intercept toy exercises a
+CORRECT held-out predictive comparison. The exchangeable unit is an entire
+group (rows share the random intercept `b_g`, not exchangeable at the row
+level); every preprocessing step (standardization + feature/axis selection)
+is re-run on each fold's training partition only and is BEHAVIORALLY verified
+to exclude the held-out rows; the held-out score is the joint log predictive
+density of the held-out group summed over the 20 folds — a dependency-bound
+ELPD (Vehtari-Gelman-Gabry 2017, arXiv:1507.04544; per-obs -1.5909). The PSIS
+approximation (Vehtari et al. 2015, arXiv:1507.02646; gpdfit per
+Zhang-Stephens 2009 / arviz) is verified against the exact per-fold refit
+(max Pareto k 0.4799 < 0.7, agrees within tol); a k > 0.7 or a too-small tail
+forces the exact refit. Leaky full-data feature selection is DEMONSTRATED to
+inflate the held-out ELPD by 8.29 nats; row-level holdout on the correlated
+rows is DEMONSTRATED optimistic (+0.1799 per-obs at tau_b2 = 2) because
+retained group-mates leak the shared intercept; a fold that splits a
+dependency cluster is refused; a single all-encompassing cluster yields
+`LOO_not_identified`; a channel ablation / full-vs-fold evidence difference is
+never labeled a LOO score. 6/6 preregistered mutations killed. The adversarial
+lane independently reproduced the closed-form posterior (1e-16 vs brute force),
+the group-joint predictive (1.5e-14 vs scipy + the independent
+marginal-conditional route), the PSIS diagnostic (~1e-15 vs arviz; flags
+k = 13.3 / 3.4 on heavy tails), the leakage gap (positive across 5 seeds),
+and the dependency dose-response (monotone in tau_b2) — no P0 — and fixed two
+P1 (label-based guards made behavioral; a mislabeled test replaced by the
+marginal-conditional equivalence cross-check) and a P2 (the too-small-tail
+PSIS branch now fails toward exact), all pre-commit. Suite:
+`tests/contracts/test_pr139_holdout.py` (17) + full gate at baseline. DAG
+86/113. C2 dependency-qualified predictive-score mechanics only; no detection;
+102 OPEN / 0 RESCUED; PR4 skipped; next PR-140. See docs/PR_DELTAS/pr-139.md.
+
 ### PR-138 — Lineage-bound posterior draws, SBC and replicated-data PPC (rev-r215, 2026-07-18)
 
 Roadmap Wave-16 PR-138 (deps PR-122/134/137).
