@@ -11,6 +11,23 @@ from typing import Any, Mapping
 
 SAFE_IDENTIFIER_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$")
 RESULT_STATUSES = {"pass", "fail", "inconclusive", "error"}
+RISK_TIERS = {"R0", "R1", "R2", "R3"}
+CAS_AXES = {"wolfram_xact", "sympy", "sage_singular", "lean"}
+RESULT_SIZE_CAP_BYTES = 64 * 1024
+
+
+def historical_run_ids(repo: Path) -> set[str]:
+    """Frozen pre-PR-124 runs that keep validating under schema v1."""
+
+    path = repo / ".agent-harness" / "HISTORICAL_RUNS.json"
+    if not path.is_file():
+        return set()
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return set()
+    runs = payload.get("runs", [])
+    return {run for run in runs if isinstance(run, str)}
 
 
 def root() -> Path:
@@ -78,19 +95,70 @@ def declared_result_path(run_id: str, assignment_id: str) -> str:
     return f".agent-harness/runs/{run_id}/results/{assignment_id}.json"
 
 
+def _validate_hashed_input_list(
+    repo: Path | None,
+    values: object,
+    *,
+    field: str,
+    errors: list[str],
+) -> None:
+    if not isinstance(values, list) or not values:
+        errors.append(f"assignment {field} must be a non-empty list")
+        return
+    for index, item in enumerate(values):
+        if not isinstance(item, Mapping):
+            errors.append(f"assignment {field}[{index}] must be {{path, sha256}}")
+            continue
+        rel = item.get("path")
+        sha = item.get("sha256")
+        if not isinstance(rel, str) or not rel:
+            errors.append(f"assignment {field}[{index}] lacks a path")
+            continue
+        if not isinstance(sha, str) or not re.fullmatch(r"[0-9a-f]{64}", sha):
+            errors.append(f"assignment {field}[{index}] lacks a sha256")
+            continue
+        if repo is not None:
+            path = repo / rel
+            if not path.is_file():
+                errors.append(f"assignment {field}[{index}] path missing: {rel}")
+            elif hashlib.sha256(path.read_bytes()).hexdigest() != sha:
+                errors.append(
+                    f"assignment {field}[{index}] hash mismatch (stale input): {rel}"
+                )
+
+
 def validate_assignment_payload(
     assignment: object,
     *,
     run_id: str,
     context_version: str,
     assignment_id: str | None = None,
+    registry: Mapping[str, Any] | None = None,
+    historical_runs: set[str] | None = None,
+    repo: Path | None = None,
 ) -> list[str]:
+    """Fail-closed assignment validation (audit H3).
+
+    Schema v2 is mandatory for new runs: unknown ``agent_type`` (not in the
+    unique profile registry), empty ``claim_ids`` / ``required_inputs`` /
+    ``allowed_tools`` / ``required_outputs``, a missing ``risk_tier``, an
+    ``independent`` discovery mode without a rationale, or a CAS agent
+    without an axis-bound contract are all registration errors. Runs listed
+    in ``.agent-harness/HISTORICAL_RUNS.json`` keep validating under the
+    frozen v1 rules so pre-PR-124 envelopes stay auditable.
+    """
+
     errors: list[str] = []
     if not isinstance(assignment, Mapping):
         return ["assignment is not a JSON object"]
+    if historical_runs is None:
+        historical_runs = historical_run_ids(repo if repo is not None else root())
+    historical = run_id in historical_runs
+
     actual_id = assignment.get("assignment_id")
-    if assignment.get("schema_version") != 1:
-        errors.append("assignment schema_version must equal 1")
+    expected_schema = 1 if historical else 2
+    if assignment.get("schema_version") != expected_schema:
+        errors.append(f"assignment schema_version must equal {expected_schema}")
     if assignment.get("run_id") != run_id:
         errors.append("assignment run_id does not match ACTIVE_RUN")
     if not is_safe_identifier(actual_id):
@@ -99,9 +167,8 @@ def validate_assignment_payload(
         errors.append("assignment_id does not match the registered filename")
     if assignment.get("context_version") != context_version:
         errors.append("assignment context_version is stale")
-    if not isinstance(assignment.get("agent_type"), str) or not assignment.get(
-        "agent_type"
-    ):
+    agent_type = assignment.get("agent_type")
+    if not isinstance(agent_type, str) or not agent_type:
         errors.append("assignment agent_type must be non-empty")
     claim_ids = assignment.get("claim_ids")
     if not isinstance(claim_ids, list) or any(
@@ -112,7 +179,103 @@ def validate_assignment_payload(
         expected_path = declared_result_path(run_id, str(actual_id))
         if assignment.get("result_path") != expected_path:
             errors.append("assignment result_path is not the canonical unique path")
+    if historical:
+        return errors
+
+    # --- v2 fail-closed additions -------------------------------------
+    if isinstance(claim_ids, list) and not claim_ids:
+        errors.append("assignment claim_ids must not be empty")
+    if registry is None:
+        try:
+            from profile_registry import load_profile_registry
+
+            registry = load_profile_registry(repo if repo is not None else root())
+        except Exception as exc:  # fail closed: no registry, no registration
+            errors.append(f"profile registry unavailable: {exc}")
+            registry = {}
+    if isinstance(agent_type, str) and agent_type and registry is not None:
+        if agent_type not in registry:
+            errors.append(
+                f"assignment agent_type {agent_type!r} is not an installed profile"
+            )
+    if assignment.get("risk_tier") not in RISK_TIERS:
+        errors.append(f"assignment risk_tier must be one of {sorted(RISK_TIERS)}")
+    _validate_hashed_input_list(
+        repo, assignment.get("required_inputs"), field="required_inputs", errors=errors
+    )
+    allowed_tools = assignment.get("allowed_tools")
+    if (
+        not isinstance(allowed_tools, list)
+        or not allowed_tools
+        or any(not isinstance(item, str) or not item for item in allowed_tools)
+    ):
+        errors.append("assignment allowed_tools must be a non-empty string list")
+    required_outputs = assignment.get("required_outputs")
+    if (
+        not isinstance(required_outputs, list)
+        or not required_outputs
+        or any(not isinstance(item, str) or not item for item in required_outputs)
+    ):
+        errors.append("assignment required_outputs must be a non-empty string list")
+    if assignment.get("discovery_mode") == "independent" and not str(
+        assignment.get("independence_rationale") or ""
+    ).strip():
+        errors.append(
+            "discovery_mode=independent requires a non-empty independence_rationale"
+        )
+    if isinstance(agent_type, str) and agent_type.startswith("cas_"):
+        if assignment.get("cas_axis") not in CAS_AXES:
+            errors.append(
+                f"CAS assignment requires cas_axis in {sorted(CAS_AXES)}"
+            )
+        contract = assignment.get("cas_contract")
+        if not isinstance(contract, Mapping):
+            errors.append("CAS assignment requires cas_contract {path, sha256}")
+        else:
+            _validate_hashed_input_list(
+                repo, [contract], field="cas_contract", errors=errors
+            )
     return errors
+
+
+def compute_effective_context_sha256(
+    index: Mapping[str, Any],
+    assignment_bytes: bytes,
+    role_files: list[tuple[str, str]],
+    receipt_fields: Mapping[str, Any],
+) -> str:
+    """Bind every effective launch input into one hash (audit H2).
+
+    Covers the Tier-0 pack semantic fields (never ``built_at``), the sealed
+    assignment bytes (which embed required-input hashes), per-role context
+    file hashes, and the launcher/profile/delivery receipt fields. Any drift
+    in any component blocks launch.
+    """
+
+    digest = hashlib.sha256()
+    semantic = {
+        "context_version": index.get("context_version"),
+        "shared_files": index.get("shared_files"),
+        "file_hashes": index.get("file_hashes"),
+        "max_injected_chars": index.get("max_injected_chars"),
+    }
+    digest.update(json.dumps(semantic, sort_keys=True).encode("utf-8"))
+    digest.update(b"\0")
+    digest.update(assignment_bytes)
+    digest.update(b"\0")
+    for rel, sha in sorted(role_files):
+        digest.update(rel.encode("utf-8"))
+        digest.update(b"\0")
+        digest.update(sha.encode("utf-8"))
+        digest.update(b"\0")
+    receipt_semantic = {
+        "context_delivery_mode": receipt_fields.get("context_delivery_mode"),
+        "requested_profile": receipt_fields.get("requested_profile"),
+        "config_sha256": receipt_fields.get("config_sha256"),
+        "fork_mode": receipt_fields.get("fork_mode"),
+    }
+    digest.update(json.dumps(receipt_semantic, sort_keys=True).encode("utf-8"))
+    return digest.hexdigest()
 
 
 def validate_result_payload(
@@ -121,15 +284,51 @@ def validate_result_payload(
     *,
     run_id: str,
     context_version: str,
+    launch: Mapping[str, Any] | None = None,
+    historical_runs: set[str] | None = None,
+    result_bytes: int | None = None,
 ) -> list[str]:
-    """Validate the evidence-bearing minimum shared by all result roles."""
+    """Validate the evidence-bearing minimum shared by all result roles.
+
+    v2 additions (non-historical runs): the envelope must carry the
+    ``launch_id`` from the launcher-owned receipt when one exists, artifact
+    rows must be typed ``{path, sha256, bytes, producer,
+    command_fingerprint}`` references instead of inlined logs, and routine
+    results above 64 KiB are rejected (audit §7 retention).
+    """
 
     errors: list[str] = []
     if not isinstance(result, Mapping):
         return ["result artifact is not a JSON object"]
+    if historical_runs is None:
+        historical_runs = historical_run_ids(root())
+    historical = run_id in historical_runs
     assignment_id = str(assignment.get("assignment_id", ""))
     if result.get("schema_version") != 1:
         errors.append("result schema_version must equal 1")
+    if not historical:
+        if launch is not None and result.get("launch_id") != launch.get("launch_id"):
+            errors.append("result launch_id does not match the launch receipt")
+        artifacts = result.get("artifacts")
+        if isinstance(artifacts, list):
+            for index, row in enumerate(artifacts):
+                if not isinstance(row, Mapping) or not {
+                    "path",
+                    "sha256",
+                    "bytes",
+                    "producer",
+                    "command_fingerprint",
+                } <= set(row):
+                    errors.append(
+                        f"artifact {index} must be a typed reference "
+                        "{path, sha256, bytes, producer, command_fingerprint}"
+                    )
+        if result_bytes is not None and result_bytes > RESULT_SIZE_CAP_BYTES:
+            errors.append(
+                f"result artifact is {result_bytes} bytes; routine results are "
+                f"capped at {RESULT_SIZE_CAP_BYTES} — store raw output in the "
+                "content-addressed evidence store and reference it"
+            )
     if result.get("run_id") != run_id:
         errors.append("result run_id does not match ACTIVE_RUN")
     if result.get("assignment_id") != assignment_id:

@@ -13,13 +13,21 @@ import pytest
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 REQUIRED_AGENT_NAMES = {
+    "adjudicator",
+    "cas_lean",
+    "cas_sage_singular",
+    "cas_sympy",
+    "cas_wolfram_xact",
     "claim_gate_reviewer",
+    "claim_lane_reviewer",
     "code_cartographer",
+    "context_mapper",
     "convergence_director",
     "docs_citation_auditor",
     "harness_engineer",
     "physics_stat_auditor",
     "regression_tester",
+    "web_crag_researcher",
 }
 REQUIRED_SKILL_NAMES = {
     "htt-dag-orchestrator",
@@ -28,10 +36,13 @@ REQUIRED_SKILL_NAMES = {
 }
 READ_ONLY_AGENT_NAMES = {
     "claim_gate_reviewer",
+    "claim_lane_reviewer",
     "code_cartographer",
     "convergence_director",
     "docs_citation_auditor",
+    "harness_engineer",
     "physics_stat_auditor",
+    "web_crag_researcher",
 }
 REQUIRED_INSTALL_SNIPPETS = {
     "AGENTS.md",
@@ -161,13 +172,19 @@ def test_shared_context_harness_and_stop_hook_fail_closed(tmp_path: Path) -> Non
         encoding="utf-8",
     )
     assignment = {
-        "schema_version": 1,
+        "schema_version": 2,
         "run_id": "test-run",
         "assignment_id": "A-001",
         "agent_type": "context_mapper",
         "context_version": "test-version",
         "independence_mode": "shared-core",
+        "risk_tier": "R1",
         "claim_ids": ["C-001"],
+        "required_inputs": [
+            {"path": ".agent-harness/context/CONTEXT_INDEX.json", "sha256": "0" * 64}
+        ],
+        "allowed_tools": ["read"],
+        "required_outputs": ["result envelope"],
         "result_path": ".agent-harness/runs/test-run/results/A-001.json",
     }
     assignment_path = harness / "runs/test-run/assignments/A-001.json"
@@ -333,9 +350,16 @@ def test_shared_context_result_merge_never_collapses_missing_fingerprints(
 
 def test_custom_agent_configs_are_well_formed_and_named() -> None:
     agent_dir = REPO_ROOT / ".codex" / "agents"
+    # Fail-closed duplicate detection (PR-124 preflight, audit H1): the old
+    # `agents[data["name"]] = data` dict silently let a later file mask an
+    # earlier one with the same internal name, which hid a real
+    # sandbox_mode conflict between harness-engineer.toml and
+    # harness_engineer.toml. Collect rows first, then assert uniqueness.
+    rows: list[tuple[str, str, str]] = []
     agents = {}
     for path in sorted(agent_dir.glob("*.toml")):
         data = tomllib.loads(path.read_text(encoding="utf-8"))
+        rows.append((data["name"], path.name, data["sandbox_mode"]))
         agents[data["name"]] = data
         assert data["description"]
         assert data["sandbox_mode"] in {"read-only", "workspace-write"}
@@ -345,9 +369,49 @@ def test_custom_agent_configs_are_well_formed_and_named() -> None:
             assert isinstance(data["nickname_candidates"], list)
             assert data["nickname_candidates"]
 
+    names = [name for name, _, _ in rows]
+    duplicates = sorted({name for name in names if names.count(name) > 1})
+    assert not duplicates, (
+        "duplicate agent profile names (one file per name is required): "
+        f"{[(n, f, s) for n, f, s in rows if n in duplicates]}"
+    )
+
     assert REQUIRED_AGENT_NAMES <= set(agents)
     for name in READ_ONLY_AGENT_NAMES:
         assert agents[name]["sandbox_mode"] == "read-only"
+
+
+def test_profile_registry_rejects_duplicates_and_matches_disk() -> None:
+    scripts = REPO_ROOT / ".agent-harness/scripts"
+    spec = importlib.util.spec_from_file_location(
+        "shared_context_profile_registry",
+        scripts / "profile_registry.py",
+    )
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+
+    registry = module.load_profile_registry(REPO_ROOT)
+    assert REQUIRED_AGENT_NAMES <= set(registry)
+    toml_files = sorted((REPO_ROOT / ".codex" / "agents").glob("*.toml"))
+    assert len(registry) == len(toml_files)
+
+    # Synthetic duplicate with a sandbox conflict must raise.
+    import tempfile
+
+    with tempfile.TemporaryDirectory() as tmp:
+        agent_dir = Path(tmp) / ".codex" / "agents"
+        agent_dir.mkdir(parents=True)
+        (agent_dir / "a-dup.toml").write_text(
+            'name = "dup_agent"\ndescription = "x"\nsandbox_mode = "workspace-write"\n',
+            encoding="utf-8",
+        )
+        (agent_dir / "dup_agent.toml").write_text(
+            'name = "dup_agent"\ndescription = "x"\nsandbox_mode = "read-only"\n',
+            encoding="utf-8",
+        )
+        with pytest.raises(module.ProfileRegistryError, match="duplicate"):
+            module.load_profile_registry(Path(tmp))
 
 
 def test_gitignore_allows_versioned_codex_assets_and_harness_config() -> None:

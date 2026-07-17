@@ -20,7 +20,10 @@ from _harness import (  # noqa: E402
     validate_result_payload,
 )
 
-MARKER_RE = re.compile(r"HARNESS_RESULT:\s*(\{[^\n]+\})\s*$", re.MULTILINE)
+# Strict last-line rule (audit H6): the envelope must be the FINAL line of
+# the message with no trailing text after it — a MULTILINE search allowed a
+# marker followed by arbitrary prose.
+MARKER_LINE_RE = re.compile(r"^HARNESS_RESULT:\s*(\{.*\})$")
 
 
 def block(reason: str) -> None:
@@ -41,10 +44,12 @@ def main() -> None:
         return
 
     message = str(event.get("last_assistant_message") or "")
-    match = MARKER_RE.search(message)
+    lines = message.rstrip().splitlines()
+    match = MARKER_LINE_RE.fullmatch(lines[-1].strip()) if lines else None
     if not match:
         block(
-            "Before stopping, write the assignment result artifact and finish with exactly one line: "
+            "Before stopping, write the assignment result artifact and finish with exactly one FINAL line "
+            "(no text after it): "
             'HARNESS_RESULT: {"assignment_id":"...","context_version":"...",'
             '"status":"pass|fail|inconclusive|error","result_path":"..."}'
         )
@@ -111,21 +116,103 @@ def main() -> None:
     if result_path.is_absolute():
         block("result_path must be repository-relative.")
         return
+    # Audit H6: check the DECLARED path for symlinks component-by-component
+    # BEFORE resolve() — resolving first loses the link-ness of the declared
+    # path itself.
+    probe = root
+    for part in result_path.parts:
+        probe = probe / part
+        if probe.is_symlink():
+            block(f"result_path traverses a symlink: {probe.relative_to(root)}")
+            return
     resolved = (root / result_path).resolve()
     try:
         resolved.relative_to(root)
     except ValueError:
         block("result_path escapes the repository root.")
         return
-    if not resolved.is_file() or resolved.is_symlink():
+    if not resolved.is_file():
         block(f"Declared result artifact does not exist: {result_path}")
         return
+
+    # Audit H1/H6: bind the stop event to the launcher-owned receipt when
+    # one exists — the envelope must prove launch identity, not just name an
+    # assignment.
+    launch_path = (
+        harness / "runs" / active_run / "launches" / f"{assignment_id}.json"
+    )
+    launch = load_json(launch_path, None) if launch_path.is_file() else None
+    if launch is not None:
+        if str(envelope.get("launch_id", "")) != str(launch.get("launch_id")):
+            block(
+                "HARNESS_RESULT launch_id does not match the launch receipt "
+                f"for {assignment_id!r}."
+            )
+            return
+
     result = load_json(resolved, None)
+
+    # Audit H4 (declared-read gate): when a result declares files_read, any
+    # sibling result read must be explicitly allowed by the assignment or an
+    # adjudication role.
+    if isinstance(result, dict):
+        files_read = result.get("files_read")
+        if isinstance(files_read, list):
+            allowed = set(assignment.get("allowed_sibling_results", []) or [])
+            results_prefix = f".agent-harness/runs/{active_run}/results/"
+            own_result = str(envelope["result_path"])
+            for rel in files_read:
+                rel_text = str(rel)
+                if (
+                    rel_text.startswith(results_prefix)
+                    and rel_text != own_result
+                    and rel_text not in allowed
+                    and assignment.get("independence_mode") != "adjudication"
+                ):
+                    block(
+                        f"Blind-results violation: read sibling result {rel_text!r} "
+                        "without an explicit allowance."
+                    )
+                    return
+
+            # Audit H5 (once-delivery): if the start hook injected the full
+            # pack (truncated=false), re-reading CONTEXT_PACK.md is a
+            # duplicate-delivery violation.
+            pack_rel = ".agent-harness/generated/CONTEXT_PACK.md"
+            if any(str(rel).endswith("CONTEXT_PACK.md") for rel in files_read):
+                deliveries_path = (
+                    harness / "runs" / active_run / "launches" / "deliveries.jsonl"
+                )
+                agent_type = str(result.get("agent_type") or "")
+                delivered_full = False
+                if deliveries_path.is_file():
+                    for line in deliveries_path.read_text(
+                        encoding="utf-8"
+                    ).splitlines():
+                        try:
+                            record = json.loads(line)
+                        except json.JSONDecodeError:
+                            continue
+                        if (
+                            record.get("agent_type") in (agent_type, None)
+                            or not agent_type
+                        ) and record.get("truncated") is False:
+                            delivered_full = True
+                if delivered_full:
+                    block(
+                        "Duplicate-delivery violation: the full context pack "
+                        f"was hook-injected (truncated=false) yet {pack_rel} "
+                        "was re-read. Consume the injected copy only."
+                    )
+                    return
+
     result_errors = validate_result_payload(
         result,
         assignment,
         run_id=active_run,
         context_version=current_version,
+        launch=launch,
+        result_bytes=resolved.stat().st_size,
     )
     if result_errors:
         block("Invalid result artifact: " + "; ".join(result_errors))
