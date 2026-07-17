@@ -29,13 +29,13 @@
       "target_ref": "db554df296adddf721db362c5e7ad457bb6753f6855e64dd1cac38abafe37c44"
     },
     {
-      "edge_ref": "0af37e88cce29d2532bfd8068ed76f5cb9ba5925f569bb770a7a1380050f6a45",
-      "kind": "generates",
+      "edge_ref": "0fb65c455b87ccb5ba45345e0eb80ff3042d2752dbd2d37a093bb68e3971d4db",
+      "kind": "uses_input",
       "metadata": {
-        "role": "deterministic MES blocker scan"
+        "role": "roadmap contract"
       },
-      "source_ref": "558d4bcc3132da96de059e9da6480b3c317fa4a5a2cb3b09d522aaf63f6c684e",
-      "target_ref": "67b64fe04a4a126f13f02af3d3963303a3060e8a9b59fd932138a724ba0b5e19"
+      "source_ref": "f6e415ea0a104927b842873d49060b1b92d2c4ac36899b7731d0b23e939a0671",
+      "target_ref": "f6467b4cd3a627d819776694092cae692207c1a1ce4fe859c862296568e3ccbb"
     },
     {
       "edge_ref": "15d2cd1761b91d4f5312681a4dbbc14a2a8eeeaf8cce52c13358d087c90402e7",
@@ -54,6 +54,15 @@
       },
       "source_ref": "558d4bcc3132da96de059e9da6480b3c317fa4a5a2cb3b09d522aaf63f6c684e",
       "target_ref": "19e07b2900c34a299974043d7370def79554c950de2514fad15d22d00ae55380"
+    },
+    {
+      "edge_ref": "19271254dae84ab883f8aae019c5fbd187c160fdabed2e2cbd72df8d033923e5",
+      "kind": "uses_input",
+      "metadata": {
+        "role": "roadmap D2 contract"
+      },
+      "source_ref": "68402ee91249916054d27d4eeaca94ff50a67be58b7918e7f01340b83511b850",
+      "target_ref": "f6467b4cd3a627d819776694092cae692207c1a1ce4fe859c862296568e3ccbb"
     },
     {
       "edge_ref": "1ad77c3ab1e40a3a386f0edcd15f1b81c432ec0feb09a45b9db656cad404e7f6",
@@ -110,15 +119,6 @@
       "target_ref": "4dce6c0e865e063f476a36f21e4fa63f4e644be4cae1af64b0a0b1e73038ae27"
     },
     {
-      "edge_ref": "300b9a82d73deb0efff04f6eb9615cd4589611cac47e3b8d4bedeba3c53c9f1a",
-      "kind": "uses_input",
-      "metadata": {
-        "role": "roadmap contract"
-      },
-      "source_ref": "f6e415ea0a104927b842873d49060b1b92d2c4ac36899b7731d0b23e939a0671",
-      "target_ref": "57db2ca07b92968963e8d6ad9b640da1833f41cac5e87e4776c87619b5828a52"
-    },
-    {
       "edge_ref": "3354f902b61d061c78ba17cee13391841833995509c0191c7b8a7b03b09e5d4a",
       "kind": "depends_on",
       "metadata": {
@@ -155,6 +155,15 @@
       "target_ref": "37a355e063bce2e39b95dd2f3b643109cf3aea6e5a35fe3e8d1dcd31a418cbb6"
     },
     {
+      "edge_ref": "58d198e69e186b3f600a5d48c590a322bc08921a6f9f55ac1a087c9f40a34d51",
+      "kind": "generates",
+      "metadata": {
+        "role": "deterministic MES blocker scan"
+      },
+      "source_ref": "558d4bcc3132da96de059e9da6480b3c317fa4a5a2cb3b09d522aaf63f6c684e",
+      "target_ref": "b7d9106409fc8043c0859fa54779372b78e8f0855f9b06a28efd379a95441fc2"
+    },
+    {
       "edge_ref": "5abd84117509c5159f93ad7d16a547e701566ad925a98a3a030a3e8714e53fcc",
       "kind": "uses_input",
       "metadata": {
@@ -162,15 +171,6 @@
       },
       "source_ref": "558d4bcc3132da96de059e9da6480b3c317fa4a5a2cb3b09d522aaf63f6c684e",
       "target_ref": "b23e417c690b7b8938eb860fc2269da0ac175cb44b1a14b34058f9098ae4d4a2"
-    },
-    {
-      "edge_ref": "5c79d7ef838d90680b76bd457f309ccc47e66d307458334db42745192f16fe08",
-      "kind": "uses_input",
-      "metadata": {
-        "role": "roadmap D2 contract"
-      },
-      "source_ref": "68402ee91249916054d27d4eeaca94ff50a67be58b7918e7f01340b83511b850",
-      "target_ref": "57db2ca07b92968963e8d6ad9b640da1833f41cac5e87e4776c87619b5828a52"
     },
     {
       "edge_ref": "5cf10e2dcf166f53b4f4bb55ee32da9920860618e31d8b608eb52d748553b0af",
@@ -216,15 +216,6 @@
       },
       "source_ref": "558d4bcc3132da96de059e9da6480b3c317fa4a5a2cb3b09d522aaf63f6c684e",
       "target_ref": "8267b67d23f13b9608b4dce19d7c0416715ebd793b4ddf40dcd02a3915e3a413"
-    },
-    {
-      "edge_ref": "7d46a60e8ae4a9e7106f6e370e619c43b098d8676ca6e05fb325487beca05753",
-      "kind": "consumed_by",
-      "metadata": {
-        "role": "exact blocked release closure"
-      },
-      "source_ref": "67b64fe04a4a126f13f02af3d3963303a3060e8a9b59fd932138a724ba0b5e19",
-      "target_ref": "44b1536705889fc333098101ba5174ffcf13fb319e61c859995a56d4ee5c125d"
     },
     {
       "edge_ref": "7e3fb44b618ee9995d57d89a9fd350ddf8c1d1f2f2180a2dda48ce718f4f2bfe",
@@ -317,6 +308,15 @@
       "target_ref": "dc44fd972525d4c8cbf9d16019a3f606e2db4a28e9205f83aa4d08235cc93179"
     },
     {
+      "edge_ref": "a83be390917fdca11bd6349ec3ea27efdab9c154ce8a0d7611e5e1f3ff8c5c58",
+      "kind": "consumed_by",
+      "metadata": {
+        "role": "audit disclosure only"
+      },
+      "source_ref": "b7d9106409fc8043c0859fa54779372b78e8f0855f9b06a28efd379a95441fc2",
+      "target_ref": "7d5feb17e561721015be5d4a6070b916bf0b18084196511486ebb27babfbe360"
+    },
+    {
       "edge_ref": "a8b3f63ca3d5264abd6e2b4e4d3d9041c2fb692ffd6b2385604f41ce8276679d",
       "kind": "uses_input",
       "metadata": {
@@ -333,15 +333,6 @@
       },
       "source_ref": "68402ee91249916054d27d4eeaca94ff50a67be58b7918e7f01340b83511b850",
       "target_ref": "9da983759570e7cf63e233428c17038861e127a46ff3291c7ea67ef4f255e120"
-    },
-    {
-      "edge_ref": "ac645ad9ce5c43e7afa94a9b8211cc5e5e591dc52846de219e9109d5eab44db8",
-      "kind": "consumed_by",
-      "metadata": {
-        "role": "audit disclosure only"
-      },
-      "source_ref": "67b64fe04a4a126f13f02af3d3963303a3060e8a9b59fd932138a724ba0b5e19",
-      "target_ref": "e429e755244bc75015852c2882b7a2e4bea0eee985f4307c95c204fa7887bbe8"
     },
     {
       "edge_ref": "ad3a3eb68b819368db9d73c7bf7a77387ab4a0e6128afd9a568aedbe9b0a25c3",
@@ -416,6 +407,15 @@
       "target_ref": "4dce6c0e865e063f476a36f21e4fa63f4e644be4cae1af64b0a0b1e73038ae27"
     },
     {
+      "edge_ref": "d2ca3a5cb619f9c65aaecfd7510a7cb00eeedc1020813e2ee10d856f8a836798",
+      "kind": "uses_input",
+      "metadata": {
+        "role": "roadmap contract"
+      },
+      "source_ref": "348967adf4234763e88e9c189b1eb0deb3109902f60583cd3c92255329dc5e0b",
+      "target_ref": "f6467b4cd3a627d819776694092cae692207c1a1ce4fe859c862296568e3ccbb"
+    },
+    {
       "edge_ref": "d51c5dcf4c8ef39bf3ebbea133c46a0e77de3d7dc0415f773eadf17849eb849e",
       "kind": "uses_input",
       "metadata": {
@@ -461,6 +461,15 @@
       "target_ref": "5399a896ca48c5e08b22d59b13b9c7c9f4197cec81088b79d996fe0671888ffe"
     },
     {
+      "edge_ref": "e50b4eab302384cd31d5bf671d055f998e6f8a84b60a5d1158c03570451b1372",
+      "kind": "consumed_by",
+      "metadata": {
+        "role": "exact blocked release closure"
+      },
+      "source_ref": "b7d9106409fc8043c0859fa54779372b78e8f0855f9b06a28efd379a95441fc2",
+      "target_ref": "44b1536705889fc333098101ba5174ffcf13fb319e61c859995a56d4ee5c125d"
+    },
+    {
       "edge_ref": "e6e7baa5b9118db4aeef62f9150d80200d2dd330819fce0661401c3bfe9b2bf2",
       "kind": "uses_input",
       "metadata": {
@@ -486,15 +495,6 @@
       },
       "source_ref": "558d4bcc3132da96de059e9da6480b3c317fa4a5a2cb3b09d522aaf63f6c684e",
       "target_ref": "44c029712d368adc0c2844f8dbf7b3e85a8b65d7cf529fbaa9512936ea9dcb00"
-    },
-    {
-      "edge_ref": "f7976d16feaacdbb7610e9ba7a4374d971f156cac8b3a04b99318d94676141ce",
-      "kind": "uses_input",
-      "metadata": {
-        "role": "roadmap contract"
-      },
-      "source_ref": "348967adf4234763e88e9c189b1eb0deb3109902f60583cd3c92255329dc5e0b",
-      "target_ref": "57db2ca07b92968963e8d6ad9b640da1833f41cac5e87e4776c87619b5828a52"
     },
     {
       "edge_ref": "f9fb80c6b4803b1915d84c0f246299995773240743aa740f368b2cb4cc90bda9",
@@ -524,7 +524,7 @@
       "target_ref": "b24bdb0662971c7c04f4f7a850e9c64e0d7c01c81d4c75540c3e59351ce861fa"
     }
   ],
-  "graph_ref": "86096ceda0436591b4c61b9695ee1172aed2c62a2f4abcbfdca9b04fcea435a3",
+  "graph_ref": "d247b6344648bd8b5d6fc7ce8d7e9e0774556af298814ecdd11b227aec47c535",
   "nodes": [
     {
       "axes": {
@@ -1676,21 +1676,6 @@
         "process_result": "PASS",
         "scientific_status": "OPEN"
       },
-      "content_sha256": "d653d056789ca1362cebf95287f863d68b62f8859e3d91d69ff4b4f3725cf443",
-      "kind": "input",
-      "label": "long_horizon_roadmap",
-      "metadata": {
-        "path": "docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md"
-      },
-      "node_ref": "57db2ca07b92968963e8d6ad9b640da1833f41cac5e87e4776c87619b5828a52",
-      "test_execution": null
-    },
-    {
-      "axes": {
-        "evidence_status": "PRESENT",
-        "process_result": "PASS",
-        "scientific_status": "OPEN"
-      },
       "content_sha256": "956dc739d193c85b1ef5cf08bfbd7e66532f28be9375980b6b8319eb3d379ac2",
       "kind": "input",
       "label": "mes_consumer.htt.figures.mes_three_bounds",
@@ -1715,22 +1700,6 @@
         "path": "htt/bass/forward/doppler_boost.py"
       },
       "node_ref": "5b7a50533b97d3c3ac8c803006878ae63ddc283d66d20a3fb2052a0d13cf9b37",
-      "test_execution": null
-    },
-    {
-      "axes": {
-        "evidence_status": "PRESENT",
-        "process_result": "PASS",
-        "scientific_status": "OPEN"
-      },
-      "content_sha256": "5dc04616e9b435ec1f8e5248e19377bae22fd26ffdc65de705104d0c3d8f8350",
-      "kind": "artifact",
-      "label": "pr122_mes_successor_scan",
-      "metadata": {
-        "path": "docs/generated/pr122_mes_successor_scan.json",
-        "status": "expected_blocked_pending_PR124"
-      },
-      "node_ref": "67b64fe04a4a126f13f02af3d3963303a3060e8a9b59fd932138a724ba0b5e19",
       "test_execution": null
     },
     {
@@ -1778,6 +1747,21 @@
         "path": "htt/htt/htt/figures/fig_sigma_accel_contour.py"
       },
       "node_ref": "6d2e7cc52cceaffa5f1c902fbd06b06102164182e1a4fd0cb163448324f0eaf9",
+      "test_execution": null
+    },
+    {
+      "axes": {
+        "evidence_status": "PRESENT",
+        "process_result": "PASS",
+        "scientific_status": "OPEN"
+      },
+      "content_sha256": "758b699d46df2290ce094837ad7bd0e28622ae6ea08f39d0657f04400ddeaba4",
+      "kind": "consumer",
+      "label": "external_audit_package",
+      "metadata": {
+        "path": "scripts/build_external_audit_package.py"
+      },
+      "node_ref": "7d5feb17e561721015be5d4a6070b916bf0b18084196511486ebb27babfbe360",
       "test_execution": null
     },
     {
@@ -1950,6 +1934,22 @@
         "process_result": "PASS",
         "scientific_status": "OPEN"
       },
+      "content_sha256": "f5ab6a29e322abf8be923eeb93ba43bd260db89b70e256220ebb7051fc46ffd9",
+      "kind": "artifact",
+      "label": "pr122_mes_successor_scan",
+      "metadata": {
+        "path": "docs/generated/pr122_mes_successor_scan.json",
+        "status": "expected_blocked_pending_PR124"
+      },
+      "node_ref": "b7d9106409fc8043c0859fa54779372b78e8f0855f9b06a28efd379a95441fc2",
+      "test_execution": null
+    },
+    {
+      "axes": {
+        "evidence_status": "PRESENT",
+        "process_result": "PASS",
+        "scientific_status": "OPEN"
+      },
       "content_sha256": "da2855f5f23b5ef7df29ec2ba4984784d442cbf0f7b346477ded979b051e068c",
       "kind": "input",
       "label": "mes_consumer.htt.figures.type_by_type_summary",
@@ -2065,21 +2065,6 @@
         "process_result": "PASS",
         "scientific_status": "OPEN"
       },
-      "content_sha256": "e6f2afc165a1153fab025319c3f7f0ac4120c12f63584e43b52cc7aced196b1e",
-      "kind": "consumer",
-      "label": "external_audit_package",
-      "metadata": {
-        "path": "scripts/build_external_audit_package.py"
-      },
-      "node_ref": "e429e755244bc75015852c2882b7a2e4bea0eee985f4307c95c204fa7887bbe8",
-      "test_execution": null
-    },
-    {
-      "axes": {
-        "evidence_status": "PRESENT",
-        "process_result": "PASS",
-        "scientific_status": "OPEN"
-      },
       "content_sha256": "c23e48691098b6d7618b4d091721196437ec5062b6eb8b40febfca90ff333807",
       "kind": "input",
       "label": "mes_consumer.htt.core.analysis_extended",
@@ -2103,6 +2088,21 @@
         "path": "docs/research_program/long_horizon_rescue/pr122_authority_snapshot.yaml"
       },
       "node_ref": "ee353b3dd297231336748d630a8527962068b015473a5bd363f8e89c7612f320",
+      "test_execution": null
+    },
+    {
+      "axes": {
+        "evidence_status": "PRESENT",
+        "process_result": "PASS",
+        "scientific_status": "OPEN"
+      },
+      "content_sha256": "caaab4b7255181e75093a5b662f4febf278330db07dad7cdce65e44c6587b361",
+      "kind": "input",
+      "label": "long_horizon_roadmap",
+      "metadata": {
+        "path": "docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md"
+      },
+      "node_ref": "f6467b4cd3a627d819776694092cae692207c1a1ce4fe859c862296568e3ccbb",
       "test_execution": null
     },
     {

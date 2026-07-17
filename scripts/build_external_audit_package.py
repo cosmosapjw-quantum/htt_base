@@ -14,7 +14,7 @@ from pathlib import Path
 import subprocess
 import sys
 import zipfile
-from typing import Any, Iterable, Sequence
+from typing import Any, Iterable, Mapping, Sequence
 
 
 _SOURCE_ONLY_PREFIX_ENV = "HTT_PR122_SOURCE_ONLY_PREFIX"
@@ -936,6 +936,33 @@ def _tracked_paths(repo_root: Path) -> set[str] | None:
     return set(completed.stdout.splitlines())
 
 
+def _legacy_inventory_pins(repo_root: Path) -> dict[str, str]:
+    """Byte authority for untracked legacy/cf4_p0 payloads.
+
+    PR-124 preflight untracked the bulk ``legacy/`` tree; its immutability
+    authority is the canonical PR-120 quarantine inventory (config-hash-bound,
+    validated by ``validate_repository``), not git tracking. Return
+    ``{path: sha256}`` for every ``legacy_reproduction_only`` entry.
+    """
+
+    inventory_path = repo_root / "docs/generated/cf4_p0_quarantine_inventory.json"
+    try:
+        payload = json.loads(inventory_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+    pins: dict[str, str] = {}
+    for row in payload.get("entries", []):
+        if not isinstance(row, Mapping):
+            continue
+        if row.get("mode") != "legacy_reproduction_only":
+            continue
+        path = row.get("path")
+        sha = row.get("sha256")
+        if isinstance(path, str) and isinstance(sha, str):
+            pins[path] = f"sha256:{sha}" if not sha.startswith("sha256:") else sha
+    return pins
+
+
 def _command_from_args(argv: Sequence[str] | None) -> str:
     args = list(sys.argv[1:] if argv is None else argv)
     args = [arg for arg in args if arg != "--check"]
@@ -988,6 +1015,7 @@ def _entry_rows(
     rows: list[dict[str, Any]] = []
     seen_archive_paths: set[str] = set()
     tracked_paths = _tracked_paths(repo_root)
+    legacy_pins = _legacy_inventory_pins(repo_root)
     missing: list[str] = []
     untracked: list[str] = []
     policy_path = (
@@ -1007,10 +1035,16 @@ def _entry_rows(
             raise ValueError(f"duplicate archive path: {entry.archive_path}")
         seen_archive_paths.add(entry.archive_path)
         source_text = entry.source_path.as_posix()
+        legacy_pin = (
+            legacy_pins.get(source_text)
+            if source_text.startswith("legacy/cf4_p0/")
+            else None
+        )
         if (
             tracked_paths is not None
             and source_text not in tracked_paths
             and source_text not in GENERATED_QUARANTINE_CONTROLS
+            and legacy_pin is None
         ):
             untracked.append(source_text)
             continue
@@ -1019,6 +1053,11 @@ def _entry_rows(
             missing.append(entry.source_path.as_posix())
             continue
         source_bytes = read_regular_bytes(repo_root, entry.source_path)
+        if legacy_pin is not None and _sha256_bytes(source_bytes) != legacy_pin:
+            raise RuntimeError(
+                "legacy CF4 payload does not match its canonical inventory pin: "
+                f"{source_text}"
+            )
         reviewed_pin = (
             reviewed_snapshot.pins.get(entry.source_path.as_posix())
             if reviewed_snapshot is not None

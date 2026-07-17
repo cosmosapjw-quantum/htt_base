@@ -10,7 +10,7 @@ input_hashes:
 - `docs/generated/mes_branch_registry_seal.json:89dc03551342e89b277790fa50707097d314e0bce9c4b04e8260bbcb76930c04`
 - `docs/generated/pr121_hermetic_replay_receipt.json:ddef2122d0730579ebe261e178e0e149d8403bde420bf05c324a1ece2eb202f3`
 - `docs/generated/pr122_test_execution.json:0628a9a23c84c8d26e500c05749c6f3d94c5d19c9f9a7f63b1438405229ea554`
-- `docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md:d653d056789ca1362cebf95287f863d68b62f8859e3d91d69ff4b4f3725cf443`
+- `docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md:caaab4b7255181e75093a5b662f4febf278330db07dad7cdce65e44c6587b361`
 - `docs/research_program/long_horizon_rescue/pr122_active_mes_consumers.yaml:d8a477e1b7a02132b75a61c9ce273bfb0a20c63d4e2d3b971ce364155de13d71`
 - `docs/research_program/long_horizon_rescue/pr122_authority_snapshot.yaml:7841941e66ea1ef2de88855c512ceef8235041066cbe3aa2f36c84d1c07f57cc`
 - `docs/research_program/long_horizon_rescue/pr122_spec.yaml:15ae65cba4e7e5572a827723daca179731ba470da75870f0e1215f43fc6218d9`
@@ -46,7 +46,7 @@ input_hashes:
 - `htt/src/common/release_evidence_binding.py:927bf019090796c4544f7a6c9b47db77b7e5da1b9de127d0de55e38acfd2cffb`
 - `htt/src/common/remediation_state.py:f595cc0b81d33849a69d79691086e431386a1c731658bd7960f11384e6958fcb`
 - `htt/src/common/status_snapshot.py:78464fec0ac90d8e209c91de53ca59ee09d42a2cb73da06843ebd390304637b3`
-- `scripts/build_external_audit_package.py:e6f2afc165a1153fab025319c3f7f0ac4120c12f63584e43b52cc7aced196b1e`
+- `scripts/build_external_audit_package.py:758b699d46df2290ce094837ad7bd0e28622ae6ea08f39d0657f04400ddeaba4`
 - `scripts/check_publication_claim_freeze.py:57e8bd7febce6ae299f9c395d9afb868ab9a15e514d899e65327cf41b00a7175`
 - `scripts/codex_harness/build_claim_evidence_graph.py:1a64facbb10a6ba999121835d9a8806d58d2056cca7dd16ff500cb491193ba4a`
 - `scripts/codex_harness/run_pr122_source_only.sh:72bed4818b6799cb872f877397877199455888904a777bc4efa13231a59cd982`
@@ -58,13 +58,13 @@ caveats:
 - MES and D2 scientific authority remain blocked pending PR-124.
 - No native solver, family, geometry, posterior, or detection claim is created.
 generating_command: `scripts/codex_harness/run_pr122_source_only.sh scripts/codex_harness/build_claim_evidence_graph.py`
-git_commit_or_worktree_state: `HEAD:461fe4ca8f1ca1ebdcf3571ad077aac4b5e25b38;bound_input_state_sha256:91b8ea0711176f43477d270b80b31ccc1dd681a2de5bd0585d82ff695af54718`
+git_commit_or_worktree_state: `HEAD:72d521828b39c51c48d0111c332ec9ee99dc78d2;bound_input_state_sha256:f4d1b893997fa5d398a02f0719308cfe0c48bbe0baf69c288806e84663b5057c`
 
 ## Exact content addresses
 
-- Graph root: `86096ceda0436591b4c61b9695ee1172aed2c62a2f4abcbfdca9b04fcea435a3`
-- Release receipt: `eda4df392574c5e08a54269b3caea4b1c2f03fba358582636fe2907e9f1bc628`
-- Parent mechanics receipt: `756bf6a094aca545c2e31d301d93417c6d6590447e8d03af01926c49491ea1e7`
+- Graph root: `d247b6344648bd8b5d6fc7ce8d7e9e0774556af298814ecdd11b227aec47c535`
+- Release receipt: `944801886c25e0f9d11f93ddfa978c01aa49c0706c33dab44ee44e467926848d`
+- Parent mechanics receipt: `b80ff061514d47207e15caf8807bd52b03875578b3dcab5f015f085df4d926f0`
 - Authority registry: `23802d0d5ea9625098961366f533c04b1b4e81b45ef694cbbc941b8d79e308b9`
 
 ## Orthogonal closure axes

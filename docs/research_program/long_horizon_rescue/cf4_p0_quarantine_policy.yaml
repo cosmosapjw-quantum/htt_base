@@ -133,7 +133,7 @@ stale_signatures:
     context_regex: '(?is)(CF4.{0,420}(?:bulk[ -]?flow|B200|MV|amplitude)|(?:bulk[ -]?flow|B200|MV|amplitude).{0,420}CF4)'
   - id: cf4_mv_analytic_tension
     finding_ids: [C1-K5-MV-F1, N-DATA-CF4-DOWNSTREAM]
-    token_regex: '(?i)(?:4\.4(?:4)?\s*(?:-|--|\u2013|\u2014|to)\s*5\.4(?:0)?|(?:4\.44|5\.37)\s*(?:sigma|\u03c3)?)'
+    token_regex: '(?i)(?:4\.4(?:4)?\s*(?:-|--|\u2013|\u2014|to)\s*5\.4(?:0)?(?![0-9])|(?:4\.44|5\.37)(?![0-9])\s*(?:sigma|\u03c3)?)'
     context_regex: '(?is)(CF4|bulk[ -]?flow|LambdaCDM|sigma_pk_corrected|sigma_full_fiducial_pk)'
   - id: cf4_mv_mock_significance
     finding_ids: [C1-K5-MV-F1, N-DATA-CF4-DOWNSTREAM]

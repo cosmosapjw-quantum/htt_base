@@ -1,6 +1,6 @@
 {
   "active_block_consumer_count": 50,
-  "active_public_binary_count": 135,
+  "active_public_binary_count": 121,
   "caveats": [
     "Quarantine is propagation control, not scientific remediation or validation.",
     "All three findings remain OPEN; zero stale active consumers does not close them.",
@@ -13,8 +13,8 @@
     "scheme": "roadmap_rescue_v1"
   },
   "claim_tier": "blocked",
-  "config_hash": "4c54afee9f3fbdf03b30e111fdf97e1c1fe95638120587a7557a48a11a821fe7",
-  "deterministic_release_output_count": 4,
+  "config_hash": "1a01950dc81de72811aed5a6df42e79ede1ddc5a1a68c650e062dada00315945",
+  "deterministic_release_output_count": 0,
   "entries": [
     {
       "binding_gate": "htt/src/common/package_binary_binding.py:verify_package_binary_binding",
@@ -26,32 +26,6 @@
       "required_markers": [],
       "role": "active_public_binary",
       "trusted_source": "git-head:PRE_MANUSCRIPT_STAGE2B5_v0_9_1.pdf"
-    },
-    {
-      "binding_gate": "htt/src/common/package_binary_binding.py:verify_package_binary_binding",
-      "binding_method": "git_head_exact_bytes",
-      "byte_validation": "dynamic_fail_closed_no_self_reference",
-      "mode": "active_public_binary",
-      "path": "codex_handoff_htt_presolver_v3_skillset_augmented_2026-06-11.zip",
-      "public_use": true,
-      "required_markers": [],
-      "role": "active_public_binary",
-      "trusted_source": "git-head:codex_handoff_htt_presolver_v3_skillset_augmented_2026-06-11.zip"
-    },
-    {
-      "binding_gate": "htt/src/common/package_binary_binding.py:verify_package_binary_binding",
-      "binding_method": "sidecar_artifact_sha256",
-      "byte_validation": "dynamic_fail_closed_no_self_reference",
-      "mode": "active_public_binary",
-      "path": "codex_shared_context_harness_v1.zip",
-      "public_use": true,
-      "required_markers": [],
-      "review_scope": "PR-120-reviewed-active-binary",
-      "reviewed_artifact_sha256": "sha256:1f020bf290476491b07869ed40eb4d05fb99b6f38efe420453a02faf243ff94f",
-      "reviewed_sidecar_path": "codex_shared_context_harness_v1.zip.manifest.json",
-      "reviewed_sidecar_sha256": "sha256:7671e787f23ba9018859133c0f41488ffd89456f0a5696fff705f810eb24e54b",
-      "role": "active_public_binary",
-      "trusted_source": "reviewed-pin:codex_shared_context_harness_v1.zip.manifest.json@sha256:7671e787f23ba9018859133c0f41488ffd89456f0a5696fff705f810eb24e54b"
     },
     {
       "binding_gate": "htt/src/common/package_binary_binding.py:verify_package_binary_binding",
@@ -96,28 +70,6 @@
       "required_markers": [],
       "role": "active_public_binary",
       "trusted_source": "git-head:data/class_massive_neutrino_fixtures/0.24.npz"
-    },
-    {
-      "binding_gate": "htt/src/common/package_binary_binding.py:verify_package_binary_binding",
-      "binding_method": "git_head_exact_bytes",
-      "byte_validation": "dynamic_fail_closed_no_self_reference",
-      "mode": "active_public_binary",
-      "path": "dl_pipeline.zip",
-      "public_use": true,
-      "required_markers": [],
-      "role": "active_public_binary",
-      "trusted_source": "git-head:dl_pipeline.zip"
-    },
-    {
-      "binding_gate": "htt/src/common/package_binary_binding.py:verify_package_binary_binding",
-      "binding_method": "git_head_exact_bytes",
-      "byte_validation": "dynamic_fail_closed_no_self_reference",
-      "mode": "active_public_binary",
-      "path": "docs/Kolb-Turner - The Early Universe.pdf",
-      "public_use": true,
-      "required_markers": [],
-      "role": "active_public_binary",
-      "trusted_source": "git-head:docs/Kolb-Turner - The Early Universe.pdf"
     },
     {
       "binding_gate": "htt/src/common/package_binary_binding.py:verify_package_binary_binding",
@@ -175,17 +127,6 @@
       "trusted_source": "git-head:docs/P5_main.pdf"
     },
     {
-      "binding_gate": "htt/src/common/package_binary_binding.py:verify_package_binary_binding",
-      "binding_method": "git_head_exact_bytes",
-      "byte_validation": "dynamic_fail_closed_no_self_reference",
-      "mode": "active_public_binary",
-      "path": "docs/ellis-relativistic-cosmology.pdf",
-      "public_use": true,
-      "required_markers": [],
-      "role": "active_public_binary",
-      "trusted_source": "git-head:docs/ellis-relativistic-cosmology.pdf"
-    },
-    {
       "mode": "active_block_consumer",
       "path": "docs/generated/egs_results_table_v9.json",
       "public_use": true,
@@ -206,53 +147,6 @@
       "role": "active_result_table",
       "sha256": "2f45159984ce0c0c68e9e76d121142005bb171399fceb13b6f20435406d6633e",
       "size_bytes": 34978
-    },
-    {
-      "builder_path": "scripts/build_external_audit_package.py",
-      "byte_validation": "mandatory_deterministic_builder_check_at_closeout",
-      "check_command": "scripts/codex_harness/run_pr122_source_only.sh scripts/build_external_audit_package.py --check",
-      "digest_exclusion_reason": "archive_embeds_canonical_inventory",
-      "manifest_path": "docs/generated/external_audit_package_manifest.json",
-      "mode": "deterministic_release_output",
-      "path": "docs/generated/external_audit_package.zip",
-      "public_use": true,
-      "required_markers": [],
-      "role": "deterministic_release_output"
-    },
-    {
-      "builder_path": "scripts/build_research_only_audit_package.py",
-      "byte_validation": "mandatory_deterministic_builder_check_at_closeout",
-      "check_command": "venv/bin/python scripts/build_research_only_audit_package.py --check",
-      "digest_exclusion_reason": "archive_embeds_canonical_inventory",
-      "manifest_path": "docs/generated/research_only_external_audit_package_manifest.json",
-      "mode": "deterministic_release_output",
-      "path": "docs/generated/research_only_external_audit_package.zip",
-      "public_use": true,
-      "required_markers": [],
-      "role": "deterministic_release_output"
-    },
-    {
-      "builder_path": "scripts/build_statistical_formalism_audit_package.py",
-      "byte_validation": "mandatory_deterministic_builder_check_at_closeout",
-      "check_command": "venv/bin/python scripts/build_statistical_formalism_audit_package.py --check",
-      "digest_exclusion_reason": "archive_embeds_canonical_inventory",
-      "manifest_path": "docs/generated/statistical_formalism_audit_package_manifest.json",
-      "mode": "deterministic_release_output",
-      "path": "docs/generated/statistical_formalism_audit_package.zip",
-      "public_use": true,
-      "required_markers": [],
-      "role": "deterministic_release_output"
-    },
-    {
-      "binding_gate": "htt/src/common/package_binary_binding.py:verify_package_binary_binding",
-      "binding_method": "git_head_exact_bytes",
-      "byte_validation": "dynamic_fail_closed_no_self_reference",
-      "mode": "active_public_binary",
-      "path": "docs/lecture notes in cosmology.pdf",
-      "public_use": true,
-      "required_markers": [],
-      "role": "active_public_binary",
-      "trusted_source": "git-head:docs/lecture notes in cosmology.pdf"
     },
     {
       "mode": "active_block_consumer",
@@ -297,19 +191,8 @@
         "root_digest_contract"
       ],
       "role": "fixed_pr119_legacy_package_hash_authority",
-      "sha256": "733a428b51112ad4865912393aa2701ddaa8c3c380f419bf6ed4c0281bbef8f5",
-      "size_bytes": 5883
-    },
-    {
-      "binding_gate": "htt/src/common/package_binary_binding.py:verify_package_binary_binding",
-      "binding_method": "git_head_exact_bytes",
-      "byte_validation": "dynamic_fail_closed_no_self_reference",
-      "mode": "active_public_binary",
-      "path": "docs/research_program/pr04/htt_pr04_research_audit_package.zip",
-      "public_use": true,
-      "required_markers": [],
-      "role": "active_public_binary",
-      "trusted_source": "git-head:docs/research_program/pr04/htt_pr04_research_audit_package.zip"
+      "sha256": "4ad69e78c0f9a0340d0e0ccd4cb09c9c0ff144bea49f09603e3145a2d263b952",
+      "size_bytes": 6225
     },
     {
       "binding_gate": "htt/src/common/package_binary_binding.py:verify_package_binary_binding",
@@ -1554,73 +1437,6 @@
       "role": "binary_release_binding_validator",
       "sha256": "98b9463b2473a296c3fcda897450aa8ddf8914bca4fd3da6ba2b0964ea33695f",
       "size_bytes": 18658
-    },
-    {
-      "binding_gate": "htt/src/common/package_binary_binding.py:verify_package_binary_binding",
-      "binding_method": "git_head_exact_bytes",
-      "byte_validation": "dynamic_fail_closed_no_self_reference",
-      "mode": "active_public_binary",
-      "path": "htt_base_delta_patch_20260707.zip",
-      "public_use": true,
-      "required_markers": [],
-      "role": "active_public_binary",
-      "trusted_source": "git-head:htt_base_delta_patch_20260707.zip"
-    },
-    {
-      "builder_path": "scripts/build_research_evaluation_package.py",
-      "byte_validation": "mandatory_deterministic_builder_check_at_closeout",
-      "check_command": "venv/bin/python scripts/build_research_evaluation_package.py --check",
-      "digest_exclusion_reason": "archive_embeds_canonical_inventory",
-      "manifest_path": "htt_base_research_evaluation_package_manifest.json",
-      "mode": "deterministic_release_output",
-      "path": "htt_base_research_evaluation_package.zip",
-      "public_use": true,
-      "required_markers": [],
-      "role": "deterministic_release_output"
-    },
-    {
-      "binding_gate": "htt/src/common/package_binary_binding.py:verify_package_binary_binding",
-      "binding_method": "git_head_exact_bytes",
-      "byte_validation": "dynamic_fail_closed_no_self_reference",
-      "mode": "active_public_binary",
-      "path": "htt_v6_critical_review_bundle.zip",
-      "public_use": true,
-      "required_markers": [],
-      "role": "active_public_binary",
-      "trusted_source": "git-head:htt_v6_critical_review_bundle.zip"
-    },
-    {
-      "binding_gate": "htt/src/common/package_binary_binding.py:verify_package_binary_binding",
-      "binding_method": "git_head_exact_bytes",
-      "byte_validation": "dynamic_fail_closed_no_self_reference",
-      "mode": "active_public_binary",
-      "path": "htt_v6_referee_fortification_package_v2.zip",
-      "public_use": true,
-      "required_markers": [],
-      "role": "active_public_binary",
-      "trusted_source": "git-head:htt_v6_referee_fortification_package_v2.zip"
-    },
-    {
-      "binding_gate": "htt/src/common/package_binary_binding.py:verify_package_binary_binding",
-      "binding_method": "git_head_exact_bytes",
-      "byte_validation": "dynamic_fail_closed_no_self_reference",
-      "mode": "active_public_binary",
-      "path": "htt_v6_referee_package_20260709.zip",
-      "public_use": true,
-      "required_markers": [],
-      "role": "active_public_binary",
-      "trusted_source": "git-head:htt_v6_referee_package_20260709.zip"
-    },
-    {
-      "binding_gate": "htt/src/common/package_binary_binding.py:verify_package_binary_binding",
-      "binding_method": "git_head_exact_bytes",
-      "byte_validation": "dynamic_fail_closed_no_self_reference",
-      "mode": "active_public_binary",
-      "path": "htt_v6_strengthened_publication_bundle.zip",
-      "public_use": true,
-      "required_markers": [],
-      "role": "active_public_binary",
-      "trusted_source": "git-head:htt_v6_strengthened_publication_bundle.zip"
     },
     {
       "mode": "legacy_reproduction_only",
@@ -7059,28 +6875,6 @@
       "size_bytes": 22000
     },
     {
-      "binding_gate": "htt/src/common/package_binary_binding.py:verify_package_binary_binding",
-      "binding_method": "git_head_exact_bytes",
-      "byte_validation": "dynamic_fail_closed_no_self_reference",
-      "mode": "active_public_binary",
-      "path": "physmath-coding-harness-gpt56.zip",
-      "public_use": true,
-      "required_markers": [],
-      "role": "active_public_binary",
-      "trusted_source": "git-head:physmath-coding-harness-gpt56.zip"
-    },
-    {
-      "binding_gate": "htt/src/common/package_binary_binding.py:verify_package_binary_binding",
-      "binding_method": "git_head_exact_bytes",
-      "byte_validation": "dynamic_fail_closed_no_self_reference",
-      "mode": "active_public_binary",
-      "path": "physmath-research-harness-gpt56.zip",
-      "public_use": true,
-      "required_markers": [],
-      "role": "active_public_binary",
-      "trusted_source": "git-head:physmath-research-harness-gpt56.zip"
-    },
-    {
       "mode": "active_block_consumer",
       "path": "scripts/bass_extended_joint_forecast.py",
       "public_use": true,
@@ -7134,8 +6928,8 @@
         "cf4_p0_quarantine"
       ],
       "role": "package_builder",
-      "sha256": "e6f2afc165a1153fab025319c3f7f0ac4120c12f63584e43b52cc7aced196b1e",
-      "size_bytes": 59491
+      "sha256": "758b699d46df2290ce094837ad7bd0e28622ae6ea08f39d0657f04400ddeaba4",
+      "size_bytes": 61069
     },
     {
       "mode": "active_block_consumer",
@@ -7620,12 +7414,12 @@
       "size_bytes": 52658
     }
   ],
-  "entry_count": 799,
+  "entry_count": 781,
   "generating_command": "PYTHONPATH=htt/src venv/bin/python -B scripts/codex_harness/quarantine_cf4_p0_consumers.py --write",
   "git_commit_or_worktree_state": "baseline_commit:e6da3670043596efdcd93f9ba5e631e1462146c7; PR-120 worktree hashes are bound per inventory entry",
   "implementation_scope": "propagation_quarantine_only",
   "input_hashes": [
-    "docs/research_program/long_horizon_rescue/cf4_p0_quarantine_policy.yaml:sha256:4c54afee9f3fbdf03b30e111fdf97e1c1fe95638120587a7557a48a11a821fe7",
+    "docs/research_program/long_horizon_rescue/cf4_p0_quarantine_policy.yaml:sha256:1a01950dc81de72811aed5a6df42e79ede1ddc5a1a68c650e062dada00315945",
     "docs/codex_handoff/research_remediation_state.yaml:sha256:bdb7779955710d3d84b137081748027746ea308fbf89dc0c179dd937f63c6311"
   ],
   "legacy_entry_count": 604,
@@ -7805,7 +7599,7 @@
   "null_mock_status": "not_applicable_quarantine_is_not_validation",
   "owner": "COMMON",
   "policy_path": "docs/research_program/long_horizon_rescue/cf4_p0_quarantine_policy.yaml",
-  "policy_sha256": "4c54afee9f3fbdf03b30e111fdf97e1c1fe95638120587a7557a48a11a821fe7",
+  "policy_sha256": "1a01950dc81de72811aed5a6df42e79ede1ddc5a1a68c650e062dada00315945",
   "remediation_root_sha256": "bdb7779955710d3d84b137081748027746ea308fbf89dc0c179dd937f63c6311",
   "schema": "htt.cf4_p0_quarantine_inventory.v1",
   "sky_support_status": "not_applicable_to_propagation_quarantine",
