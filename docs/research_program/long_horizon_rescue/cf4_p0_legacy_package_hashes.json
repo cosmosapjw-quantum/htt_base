@@ -15,7 +15,8 @@
     "null_mock_status": "not_applicable",
     "caveats": [
       "This ledger authenticates historical bytes only; it does not restore public use or scientific validity.",
-      "The baseline commit is fixed in the contract test and must not be advanced by regeneration."
+      "The baseline commit is fixed in the contract test and must not be advanced by regeneration.",
+      "PR-124 preflight (2026-07-17): legacy/ was untracked and the pre-PR-119 baseline snapshots were stripped from git history for GitHub pushability. This ledger plus the off-repo backup bundle (see docs/git_history/README.md) is now the sole byte authority; the baseline commit id resolves via docs/git_history/commit_map_20260717.tsv."
     ],
     "generating_command": "one-time PR-120 derivation from git show/ls-tree at e6da3670043596efdcd93f9ba5e631e1462146c7; no regeneration authority",
     "git_commit_or_worktree_state": "baseline commit e6da3670043596efdcd93f9ba5e631e1462146c7; ledger introduced in PR-120 worktree"

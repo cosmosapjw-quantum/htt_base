@@ -5,15 +5,22 @@ Adversarial-audit finding (freeze-battery lane, 2026-07-11): the v6 builder's
 re-enumerates the LIVE tree (source index, evidence hashes), so any file
 added by a later cycle makes in-memory regeneration differ from the frozen
 package. That redness says "the live tree moved on", NOT "the frozen package
-changed". The actual freeze guarantee is carried by git: every shipped
-package directory is tracked and must show NO modifications to tracked
-files. This test pins that guarantee directly and documents the expected-red
-status of the v6 --check.
+changed".
+
+Byte authority (PR-124 preflight, 2026-07-17): the fixed-hash ledger
+``docs/research_program/long_horizon_rescue/cf4_p0_legacy_package_hashes.json``
+plus the off-repo backup bundle recorded in ``docs/git_history/README.md``.
+The ``legacy/`` tree was untracked from git and the pre-PR-119 baseline
+snapshots were stripped from history for GitHub pushability, so git is no
+longer an immutability authority for the quarantined packages; this test now
+verifies on-disk bytes against the ledger only. ``EXPECTED_BASELINE_COMMIT``
+is retained as a historical identifier -- it resolves through the committed
+commit map ``docs/git_history/commit_map_20260717.tsv`` and the backup bundle.
 
 (PR-120 moved the value-bearing v6--v9 snapshots under the typed
-``legacy/cf4_p0`` root.  Their bytes remain frozen against an explicit PR-119
-baseline commit and fixed root digests; neither the mutable index nor a
-regenerated quarantine inventory is an immutability authority.)
+``legacy/cf4_p0`` root.  Their bytes remain frozen against the ledger's fixed
+root digests; neither the mutable index nor a regenerated quarantine
+inventory is an immutability authority.)
 """
 import hashlib
 import json
@@ -46,15 +53,6 @@ def _git(*args: str) -> str:
                           text=True, check=True).stdout
 
 
-def _git_bytes(*args: str) -> bytes:
-    return subprocess.run(
-        ["git", *args],
-        cwd=REPO,
-        capture_output=True,
-        check=True,
-    ).stdout
-
-
 def _root_sha256(rows: list[tuple[str, bytes]]) -> str:
     digest = hashlib.sha256()
     for relative, data in sorted(rows):
@@ -76,15 +74,6 @@ def _filesystem_root_rows(root: Path) -> list[tuple[str, bytes]]:
         elif not stat.S_ISDIR(info.st_mode):
             raise AssertionError(f"frozen package contains a special file: {path}")
     return rows
-
-
-def _baseline_root_rows(commit: str, root: str) -> list[tuple[str, bytes]]:
-    names = _git("ls-tree", "-r", "--name-only", commit, "--", root).splitlines()
-    prefix = root.rstrip("/") + "/"
-    return [
-        (name.removeprefix(prefix), _git_bytes("show", f"{commit}:{name}"))
-        for name in names
-    ]
 
 
 class FrozenPackageFreeze(unittest.TestCase):
@@ -132,14 +121,8 @@ class FrozenPackageFreeze(unittest.TestCase):
                 self.assertTrue(legacy.is_dir())
                 self.assertFalse(legacy.is_symlink())
 
-                baseline_rows = _baseline_root_rows(
-                    EXPECTED_BASELINE_COMMIT,
-                    package,
-                )
                 legacy_rows = _filesystem_root_rows(legacy)
-                self.assertEqual(len(baseline_rows), row["file_count"])
                 self.assertEqual(len(legacy_rows), row["file_count"])
-                self.assertEqual(_root_sha256(baseline_rows), row["root_sha256"])
                 self.assertEqual(_root_sha256(legacy_rows), row["root_sha256"])
 
         for row in ledger["root_artifacts"]:
@@ -151,11 +134,6 @@ class FrozenPackageFreeze(unittest.TestCase):
                 self.assertTrue(legacy.is_file())
                 self.assertFalse(legacy.is_symlink())
                 legacy_bytes = legacy.read_bytes()
-                baseline_bytes = _git_bytes(
-                    "show",
-                    f"{EXPECTED_BASELINE_COMMIT}:{artifact}",
-                )
-                self.assertEqual(legacy_bytes, baseline_bytes)
                 self.assertEqual(len(legacy_bytes), row["size_bytes"])
                 self.assertEqual(
                     "sha256:" + hashlib.sha256(legacy_bytes).hexdigest(),
