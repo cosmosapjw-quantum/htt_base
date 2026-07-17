@@ -1,7 +1,7 @@
 # Canonical Shared Context Pack
 
-Context version: `403a859b952418c6a73ecf7360b4194a37c27ce1aaaa6b2ecbcadf89d2eaa1c1`
-Built at: `2026-07-17T11:48:39+00:00`
+Context version: `d8e2477df6a78dc3215461577094beac9e7402a463c9866a8e65389e5586e9b3`
+Built at: `2026-07-17T13:44:59+00:00`
 
 This pack contains only the shared Tier-0 context. Assignment-specific context and sibling results are intentionally excluded.
 
@@ -9,7 +9,7 @@ This pack contains only the shared Tier-0 context. Assignment-specific context a
 
 ## Source: `.agent-harness/context/SHARED_CONTEXT.md`
 
-SHA-256: `a049eab9324954f3119bedb0cbaa916f4c211c58d52379e57f3685bffe3791bc`
+SHA-256: `d99fee9ed6c95a78f50bbc35b6372c4c11b2a362b2f6af336f8bb155417454f1`
 
 # Shared Context — long-horizon rescue execution
 
@@ -96,6 +96,10 @@ SHA-256: `a049eab9324954f3119bedb0cbaa916f4c211c58d52379e57f3685bffe3791bc`
 | E-PR124-LINEAGE | `docs/generated/pr124_lineage_receipt.json` | PR-124 runner (fingerprint-collapsed lineage oracle) | `7c6ac4bcb612fc1b8240cc22cdf9fe4e579fa94fc33e8bedbd45ef5bf0a10bb5` | C-PR124-CAS-LINEAGE |
 | E-PR124-D2 | `docs/generated/pr124_d2_authority_receipt.json` | PR-124 runner --run-rust (nonzero executed target) | `d0d11f95e006da19f4c56239a273d58e8354757f007fff2e187cba47e1754db3` | C-PR124-CAS-LINEAGE |
 | E-PR124-MUTATIONS | `docs/generated/pr124_mutation_report.json` | PR-124 runner (8/8 mutants killed by real validators) | `28ed5beabeeb644de144f1beba3052d9f3a0673e5666a134fbdf3e264d2b3f67` | C-PR124-CAS-LINEAGE |
+| E-PR125-SPEC | `docs/research_program/long_horizon_rescue/pr125_spec.yaml` | reviewed repository edit (contract-first) | `ce27cdc39686e39aaf74d51947e662513c36af8f12cb8d4a6a63c2306a2f9970` | C-PR125-FRAME-CONTRACT |
+| E-PR125-GRAPH | `docs/generated/pr125_theorem_frame_graph.json` | PR-125 runner (12 CHECKED bindings) | `25d948ada964ebc9cb2d2589a51fbe015349b23759662ef52c58142c756fb743` | C-PR125-FRAME-CONTRACT |
+| E-PR125-WITNESS | `docs/generated/pr125_kinematic_witness_report.json` | PR-125 runner (exact-Fraction witnesses) | `ed6103238253c834927cfe0572681ada98f3c243667bb871b3362d4039a63a3d` | C-PR125-FRAME-CONTRACT |
+| E-PR125-MUTATIONS | `docs/generated/pr125_mutation_report.json` | PR-125 runner (6/6 killed by real validators) | `53d05eb630da62cbf0a65de9a5660f62ace1554aa6de49b0fb4df9cba9eddb8b` | C-PR125-FRAME-CONTRACT |
 
 ## Known disputes and open questions
 

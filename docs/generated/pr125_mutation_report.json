@@ -1,0 +1,42 @@
+{
+  "mutations": [
+    {
+      "executed": true,
+      "kill_message": "unknown frame value 'HELIOCENTRIC_UNREGISTERED'; registered: ['NORMAL', 'MATTER', 'ELECTRON', 'CMB', 'LOCAL_OBSERVER', 'FRAME_FREE']",
+      "killed": true,
+      "mutation_id": "unknown_frame_rejected"
+    },
+    {
+      "executed": true,
+      "kill_message": "premise contract fields missing (no silent defaults): ['background_class', 'units', 'harmonic_convention', 'redshift_depth_convention']",
+      "killed": true,
+      "mutation_id": "defaulted_field_rejected"
+    },
+    {
+      "executed": true,
+      "kill_message": "boost pair violates the antisymmetry witness: boost(MATTER->NORMAL).beta = 1/100 but the registered convention requires exactly -1/100",
+      "killed": true,
+      "mutation_id": "sign_flip_tilt_witness"
+    },
+    {
+      "executed": true,
+      "kill_message": "beta == 0 does not imply the FLRW/EGS limit: nonzero (sigma2=1/100000000, w2=0, delta_omega_k=0) survives the no-tilt limit",
+      "killed": true,
+      "mutation_id": "beta_zero_egs_shortcut"
+    },
+    {
+      "executed": true,
+      "kill_message": "scalar alias without a matching frame transform: value is declared in MATTER but requested in NORMAL and the supplied boost maps ELECTRON -> CMB",
+      "killed": true,
+      "mutation_id": "alias_without_transform"
+    },
+    {
+      "executed": true,
+      "kill_message": "CHECKED signatures without a frame binding: ['SIG-P3']",
+      "killed": true,
+      "mutation_id": "unbound_checked_signature"
+    }
+  ],
+  "schema": "pr125.mutation_report.v1",
+  "surviving_mutation_count": 0
+}

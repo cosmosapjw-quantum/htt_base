@@ -7,6 +7,26 @@
 
 ## [Unreleased]
 
+### PR-125 — Canonical frame, order, domain and premise contract (rev-r202, 2026-07-17)
+
+Roadmap Wave-14 PR-125 (deps PR-124). `htt/src/common/frame_contract.py`:
+typed `PremiseContract` over frames (NORMAL/MATTER/ELECTRON/CMB/
+LOCAL_OBSERVER), perturbative order, background class (FLRW flat/curved,
+Bianchi I/V/VII_h/IX, LRS-III, KS), units, harmonic and redshift/depth
+conventions — every field required, unknown values raise, the only default
+lives in the labeled `legacy_reproduction_contract()` reproduction channel.
+Exact-Fraction kinematic witnesses (rapidity round-trip/associativity/
+boost antisymmetry), the scalar-alias firewall (`transform_tilt` refuses
+cross-frame reads without the registered boost), and limit predicates that
+STRUCTURALLY reject the historical `beta=0 ⇒ EGS/FLRW` shortcut
+(`no_tilt_limit` ≠ `flrw_limit`; `require_flrw_limit` raises).
+Theorem-to-frame dependency graph binds all 12 CHECKED signatures to three
+registered contracts (unbound CHECKED fails closed). 6/6 preregistered
+mutations killed. Gates: `run_pr125_frame_contract.py --check` byte-stable
++ `test_pr125_frame_contract.py` (10). Convention contract correctness at
+roadmap_rescue_v1:C1 only; 102 OPEN / 0 RESCUED; PR4 skipped. DAG 72/113,
+next PR-126. See docs/PR_DELTAS/pr-125.md.
+
 ### PR-124 — Four-axis CAS contract + derivation-lineage oracle (rev-r201, 2026-07-17)
 
 Executes roadmap Wave-14 PR-124 (first theory-foundation PR after the
