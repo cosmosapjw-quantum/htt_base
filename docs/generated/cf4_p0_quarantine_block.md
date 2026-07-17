@@ -7,8 +7,8 @@ No CF4 numerical replacement is authorized. This record blocks propagation only.
 - Implementation scope: `propagation_quarantine_only`
 - Claim tier: `blocked`
 - Transfer source: `none`
-- Config hash: `6ac026adc9fc214d5b8f065172b841668011ea7407a1aa1cf97793b3b8223e38`
-- Inventory SHA-256: `36d0068c5cb410b21f50ef52f680f7347d832df080af582ddd66840bfbd1ba8f`
+- Config hash: `a5345bc19bea3b8f6d52d643264badfafd2f622c0c2a9f18d633b336071bfe81`
+- Inventory SHA-256: `d80a78605afb1a25d5eec813006b4b9c811234991cc7a737eed2e85987ce70b3`
 - Remediation-root SHA-256: `f16d9754828bb32ae4cef92f585af82ae7fd1caa2687a7b4144bc1e942328dd9`
 - Sky support: `not_applicable_to_propagation_quarantine`
 - Null/mock status: `not_applicable_quarantine_is_not_validation`
@@ -30,8 +30,8 @@ No CF4 numerical replacement is authorized. This record blocks propagation only.
 
 ## Input hashes
 
-- `docs/research_program/long_horizon_rescue/cf4_p0_quarantine_policy.yaml:sha256:6ac026adc9fc214d5b8f065172b841668011ea7407a1aa1cf97793b3b8223e38`
-- `docs/generated/cf4_p0_quarantine_inventory.json:sha256:36d0068c5cb410b21f50ef52f680f7347d832df080af582ddd66840bfbd1ba8f`
+- `docs/research_program/long_horizon_rescue/cf4_p0_quarantine_policy.yaml:sha256:a5345bc19bea3b8f6d52d643264badfafd2f622c0c2a9f18d633b336071bfe81`
+- `docs/generated/cf4_p0_quarantine_inventory.json:sha256:d80a78605afb1a25d5eec813006b4b9c811234991cc7a737eed2e85987ce70b3`
 - `docs/codex_handoff/research_remediation_state.yaml:sha256:f16d9754828bb32ae4cef92f585af82ae7fd1caa2687a7b4144bc1e942328dd9`
 
 Generating command: `PYTHONPATH=htt/src venv/bin/python -B scripts/codex_harness/quarantine_cf4_p0_consumers.py --write`

@@ -1,7 +1,7 @@
 # Canonical Shared Context Pack
 
-Context version: `ad25d01a0d86cf9e83fa48d39db6155e940b141335aab9eb0a133b4d01ed60c3`
-Built at: `2026-07-17T21:58:09+00:00`
+Context version: `565b35e6feba7a9c941add0964ac43a0ad029920c74727628ac48d667b8ff67b`
+Built at: `2026-07-17T22:36:56+00:00`
 
 This pack contains only the shared Tier-0 context. Assignment-specific context and sibling results are intentionally excluded.
 
@@ -9,7 +9,7 @@ This pack contains only the shared Tier-0 context. Assignment-specific context a
 
 ## Source: `.agent-harness/context/SHARED_CONTEXT.md`
 
-SHA-256: `ccd2a214cab1976657eb040663f959c0632f83b746631109b782575a0ea5ff5e`
+SHA-256: `79f5d26af7799b48ab821fd82bf0e6c4f0aaeacec08734edf2977eff132d603d`
 
 # Shared Context — long-horizon rescue execution
 
@@ -149,6 +149,10 @@ SHA-256: `ccd2a214cab1976657eb040663f959c0632f83b746631109b782575a0ea5ff5e`
 | E-PR137-GRID | `docs/generated/pr137_coverage_grid.json` | PR-137 runner (boundary + midpoint DGP grid) | `25bad919e20f67bf4c11572d11c209d4610c77d068dc990a2a24ce23a5e62d80` | C-PR137-GRID-COVERAGE |
 | E-PR137-BOUNDS | `docs/generated/pr137_family_wise_bounds.json` | PR-137 runner (Bonferroni simultaneous 99% bounds + extension) | `ddeaaa5cb40e43286674221555be2a13e5f9554e25e9c6b25910668efc1be245` | C-PR137-GRID-COVERAGE |
 | E-PR137-FAILURE | `docs/generated/pr137_failure_map.json` | PR-137 runner (adversarial failure map preserved) | `bb42bb08f7dc867e98829c54af226a72c4515acc8ad3eb8e46785394b680c8b7` | C-PR137-GRID-COVERAGE |
+| E-PR138-SPEC | `docs/research_program/long_horizon_rescue/pr138_spec.yaml` | reviewed repository edit (specification-first) | `5c73326743a49c6ce021a28f0336fd0471b5e8b37cc48ae4308a8281249bfee7` | C-PR138-SBC-PPC |
+| E-PR138-SBC | `docs/generated/pr138_sbc_report.json` | PR-138 runner (known-good pass, both known-bad fail) | `be05fba66ee8f7570ddedfc7ebb242ec4b87af93fd4c1978609bc3a39849bee5` | C-PR138-SBC-PPC |
+| E-PR138-PPC | `docs/generated/pr138_ppc_report.json` | PR-138 runner (good adequate + known-bad demonstrated failure) | `f1ea41c2a4bb28045304623b56d8be08e6b9ccf42afcb9c9feb257d4134f1dd2` | C-PR138-SBC-PPC |
+| E-PR138-LINEAGE | `docs/generated/pr138_lineage.json` | PR-138 runner (content-addressed posterior lineage) | `95c75875a2e521160bc15298d5402e12c9988a53185756a026582d79e895cf7d` | C-PR138-SBC-PPC |
 
 ## Known disputes and open questions
 

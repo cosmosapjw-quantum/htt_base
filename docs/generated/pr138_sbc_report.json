@@ -1,0 +1,51 @@
+{
+  "dof": 6,
+  "known_bad": {
+    "1/2": {
+      "chi_square": 392.7413333333334,
+      "uniformity_pvalue": 1.01589641529683e-81,
+      "verdict": "inadequate_sbc_failed"
+    },
+    "2": {
+      "chi_square": 256.8946666666667,
+      "uniformity_pvalue": 1.377888438028214e-52,
+      "verdict": "inadequate_sbc_failed"
+    }
+  },
+  "known_good": {
+    "chi_square": 10.895999999999999,
+    "lineage_verified": "sbclin-3753df4ed1b9e5b8",
+    "rank_histogram_binned": [
+      455,
+      449,
+      375,
+      427,
+      448,
+      412,
+      434
+    ],
+    "uniformity_pvalue": 0.09164435209360146,
+    "verdict": "calibrated"
+  },
+  "module_schema": "pr138.sbc_ppc.v1",
+  "n_bins": 7,
+  "negative_scan": {
+    "targets": {
+      "docs/generated/pr138_captions.json": {
+        "hits": [],
+        "sha256": "8428159e4c12f77b8b304022fff14e71e1347eb88800b0aaaad37297629ef6c4",
+        "source": "fresh_build"
+      },
+      "htt/src/common/sbc_ppc.py": {
+        "hits": [],
+        "sha256": "75d241d62d2c9d0b2e4505077b7643363d29c0dc04dd6b3cbecc8dd1e0c4d425",
+        "source": "disk"
+      }
+    },
+    "total_hits": 0
+  },
+  "pass_pvalue_floor": 0.01,
+  "prohibition_cross_list_covered": 5,
+  "reference": "Talts et al. 2018 (arXiv:1804.06788)",
+  "schema": "pr138.sbc_report.v1"
+}

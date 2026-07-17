@@ -1,4 +1,5 @@
-# Progress scoreboard
+<!-- checkpoint_meta {"completed": 85, "critical_path_percent_complete": 71.43, "dependency_weighted_percent_complete": 77.64, "percent_complete": 75.22, "replan_required": false, "total": 113} -->
+# Progress checkpoint 085
 
 ## Artifact metadata
 
@@ -26,10 +27,29 @@
 - Skipped PRs: none
 - Dormant external PRs: PR-159, PR-160, PR-161, PR-162, PR-163, PR-164, PR-165, PR-166
 - Unblocked next: PR-139
-- Checkpoint due: yes; satisfied by docs/generated/progress_checkpoints/checkpoint_085.md
-- Next checkpoint at: 90
 - Replan required: no
 - Replan reason: progress advanced; no replan required
 
 Progress percentages count DAG bookkeeping only and are not scientific readiness evidence.
 They do not validate native solver behavior, transfer calibration, HTT posterior/evidence, MIO diagnostics, null calibration, morphology compatibility, or Bianchi family identification.
+
+## Checkpoint-085 statistical-framework gate (PR-138)
+
+Per the roadmap Checkpoint-085 instruction, after PR-138:
+
+- **Pseudo-PPC consumers**: 0. PR-138 is the sole posterior-predictive-check
+  surface; the plug-in `residual_check` is a SEPARATE type (`is_ppc=False`) and
+  cannot be labeled a PPC (`require_not_ppc`).
+- **Posterior lineage omission fails**: a PPC/SBC run whose posterior lineage
+  hash does not verify is refused (`verify_lineage` / `verify_sbc_lineage`),
+  and `run_ppc` lineage is MANDATORY (verified against the actual fit model).
+- **Finite-null API controls size at operational N**: the PR-135 exchangeable
+  pooled-rank estimator is super-uniform at the operational N = 39 (seeded
+  type-I simulation, all alphas within the acceptance band).
+- **Remediation state**: 102 findings all OPEN, 0 RESCUED.
+
+**Green statistical-framework tests do NOT promote any observational claim.**
+The SBC pass, the PPC adequacy verdict, the coverage retention, and the
+identified-set classifications are all model/computation-conditional mechanics;
+none is an observation, a detection, a family identification, or a geometry
+claim. Gate verdict: **PASS**.

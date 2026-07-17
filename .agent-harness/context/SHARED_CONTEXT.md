@@ -136,6 +136,10 @@
 | E-PR137-GRID | `docs/generated/pr137_coverage_grid.json` | PR-137 runner (boundary + midpoint DGP grid) | `25bad919e20f67bf4c11572d11c209d4610c77d068dc990a2a24ce23a5e62d80` | C-PR137-GRID-COVERAGE |
 | E-PR137-BOUNDS | `docs/generated/pr137_family_wise_bounds.json` | PR-137 runner (Bonferroni simultaneous 99% bounds + extension) | `ddeaaa5cb40e43286674221555be2a13e5f9554e25e9c6b25910668efc1be245` | C-PR137-GRID-COVERAGE |
 | E-PR137-FAILURE | `docs/generated/pr137_failure_map.json` | PR-137 runner (adversarial failure map preserved) | `bb42bb08f7dc867e98829c54af226a72c4515acc8ad3eb8e46785394b680c8b7` | C-PR137-GRID-COVERAGE |
+| E-PR138-SPEC | `docs/research_program/long_horizon_rescue/pr138_spec.yaml` | reviewed repository edit (specification-first) | `5c73326743a49c6ce021a28f0336fd0471b5e8b37cc48ae4308a8281249bfee7` | C-PR138-SBC-PPC |
+| E-PR138-SBC | `docs/generated/pr138_sbc_report.json` | PR-138 runner (known-good pass, both known-bad fail) | `be05fba66ee8f7570ddedfc7ebb242ec4b87af93fd4c1978609bc3a39849bee5` | C-PR138-SBC-PPC |
+| E-PR138-PPC | `docs/generated/pr138_ppc_report.json` | PR-138 runner (good adequate + known-bad demonstrated failure) | `f1ea41c2a4bb28045304623b56d8be08e6b9ccf42afcb9c9feb257d4134f1dd2` | C-PR138-SBC-PPC |
+| E-PR138-LINEAGE | `docs/generated/pr138_lineage.json` | PR-138 runner (content-addressed posterior lineage) | `95c75875a2e521160bc15298d5402e12c9988a53185756a026582d79e895cf7d` | C-PR138-SBC-PPC |
 
 ## Known disputes and open questions
 

@@ -84,9 +84,9 @@ completed:
 - PR-135
 - PR-136
 - PR-137
+- PR-138
 blocked: []
 pending:
-- PR-138
 - PR-139
 - PR-140
 - PR-141
@@ -118,6 +118,12 @@ dormant_external:
 - PR-166
 in_progress: null
 execution_resolutions:
+  PR-138:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-138.md
+    resolved_on: '2026-07-18'
+    scientific_status_effect: none
+    scientific_status_after: OPEN
   PR-137:
     resolution: COMPLETED_SUCCESS
     receipt: docs/PR_DELTAS/pr-137.md
@@ -1072,3 +1078,30 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   and three P2, all pre-commit. Grid-conditional coverage-calibrated
   partial-identification mechanics only; no detection; 102 findings
   OPEN; PR4 skipped.
+  PR-138 builds the lineage-bound posterior draws, simulation-based
+  calibration, and replicated-data posterior-predictive check on a
+  conjugate Gaussian toy. Posterior draws are content-addressed to the
+  normalized prior, likelihood, data, config, transfer, and sampler
+  diagnostics, and the lineage is MANDATORY and verified on both the SBC
+  and the PPC paths (the SBC computation lineage binds the model and
+  config since SBC has no observed data; the PPC lineage binds the
+  actual fitting model). Simulation-based calibration (Talts et al.)
+  tests rank uniformity of the prior draw among the posterior draws with
+  the ranks binned into seven bins. The known-good exact-conjugate model
+  passes the chi-square test and both known-bad models (deflated and
+  inflated posterior variance) fail and are reported inadequate. The
+  replicated-data PPC computes Bayesian p-values for three frozen
+  content-addressed discrepancies; the known-good model is adequate and
+  a known-bad mis-specified under-dispersed fit is DEMONSTRATED to
+  produce extreme p-values and the inadequate verdict. A caller-supplied
+  prediction or p-value is never a PPC receipt, a discrepancy cannot be
+  swapped after a failure, a PPC on an invalid posterior is refused, and
+  the plug-in residual check stays a separate type. A PPC pass is
+  model-conditional adequacy, never model truth; SBC is computation
+  calibration, not observed-fit validation. Six preregistered mutations
+  killed on production paths. The adversarial lane confirmed the SBC,
+  chi-square, and PPC statistics are exact and fixed two P0 (the lineage
+  claim was false for SBC and opt-in for PPC; the known-bad PPC was
+  claimed but never demonstrated) plus a dead n_bins parameter, all
+  pre-commit. Model/transfer-conditional predictive-adequacy mechanics
+  only; 102 findings OPEN; PR4 skipped.

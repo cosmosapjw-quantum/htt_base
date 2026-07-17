@@ -17,15 +17,15 @@
     {
       "archive_path": "02_CODE_MAP.md",
       "group": "guide",
-      "sha256": "sha256:8e31033d7236e9a34d8aa3a9c0d39a36e08e882f62d5de631fb4e2b412d981bd",
+      "sha256": "sha256:26906a708a447f6a81e8bfa113171e4173e7a6d3ac56d87c09ff416d8f6f023b",
       "size_bytes": 2453,
       "source_path": "virtual:02_CODE_MAP.md"
     },
     {
       "archive_path": "03_ENTRY_POINTS.md",
       "group": "guide",
-      "sha256": "sha256:06c0e1e5241bb0959dd50e0951756e7ea92a7dba3065d5608e21e9b3f4ff4488",
-      "size_bytes": 26884,
+      "sha256": "sha256:2af92f3ced570021d1132f0feb329a1d4960811e40c23dff7d93b52e18ee46fe",
+      "size_bytes": 27024,
       "source_path": "virtual:03_ENTRY_POINTS.md"
     },
     {
@@ -45,8 +45,8 @@
     {
       "archive_path": "code_capability_audit/CLAUDE.md",
       "group": "support",
-      "sha256": "sha256:9bf4740d1037fb41f8e112139a30a6f6bcccfd053dbfe1e5f30d9fe6775a7f29",
-      "size_bytes": 78682,
+      "sha256": "sha256:92159dccd0336649b4a017e2e62a886ff94a2c61766f2483d4b40f618bca08d6",
+      "size_bytes": 79729,
       "source_path": "CLAUDE.md"
     },
     {
@@ -3935,6 +3935,13 @@
       "source_path": "htt/src/common/transfer_registry.py"
     },
     {
+      "archive_path": "code_capability_audit/htt/src/common/weak_id_coverage.py",
+      "group": "library_source",
+      "sha256": "sha256:087118a92cda73acbd2c1c64636b2a9a7828aa792963f244e38c2c84b230ee13",
+      "size_bytes": 16876,
+      "source_path": "htt/src/common/weak_id_coverage.py"
+    },
+    {
       "archive_path": "code_capability_audit/htt/teff/__init__.py",
       "group": "library_source",
       "sha256": "sha256:15f8bc5d16003a2b25af30de54b0b9c99a6ed97178b7ff116da555ae5265a8bb",
@@ -4913,6 +4920,13 @@
       "sha256": "sha256:f5805030835a4e73b867693a18c52bad2787531507352a7f43d0084b99f5493f",
       "size_bytes": 18777,
       "source_path": "scripts/codex_harness/run_pr136_identified_set.py"
+    },
+    {
+      "archive_path": "code_capability_audit/scripts/codex_harness/run_pr137_weak_id_coverage.py",
+      "group": "science_driver",
+      "sha256": "sha256:0cc251d6720b75c37162f40c7b5732dab16848c7cce77518c73d00124fd53acf",
+      "size_bytes": 24891,
+      "source_path": "scripts/codex_harness/run_pr137_weak_id_coverage.py"
     },
     {
       "archive_path": "code_capability_audit/scripts/codex_harness/run_subset.py",
@@ -6735,7 +6749,7 @@
       "source_path": "src/teff/theta4_bridge_v2.rs"
     }
   ],
-  "archive_entry_count": 962,
+  "archive_entry_count": 964,
   "artifact_id": "code_capability_audit_package",
   "artifact_path": "docs/code_capability_audit/htt_base_code_capability_audit_package.zip",
   "caveats": [
@@ -6746,13 +6760,13 @@
     "Inclusion of code does not imply a validated science result; see the result/claim packages for claim tiers."
   ],
   "claim_tier": "diagnostic_only",
-  "code_version": "f030583d+dirty",
-  "config_hash": "sha256:0a0fdc2d0ba6ceba264b64614f400f2befd2b9fef4ec0e15fdf4ef0b3f84c31d",
+  "code_version": "867ec998+dirty",
+  "config_hash": "sha256:c603f608e87ca947abaaf5421b5360bc24a96a81d1d474e0d599d7516ec8cd0f",
   "created_by": "scripts/build_code_capability_audit_package.py",
   "failed_gates": [],
   "family_identification": false,
   "generating_command": "python scripts/build_code_capability_audit_package.py",
-  "git_commit_or_worktree_state": "f030583d+dirty",
+  "git_commit_or_worktree_state": "867ec998+dirty",
   "group_counts": {
     "audit_prompt": 1,
     "config": 1,
@@ -6760,21 +6774,21 @@
     "execution_stack": 18,
     "guide": 4,
     "legacy_tsc": 50,
-    "library_source": 543,
+    "library_source": 544,
     "package_readme": 1,
     "rust_solver_source": 165,
-    "science_driver": 147,
+    "science_driver": 148,
     "support": 9
   },
   "implementation_scope": "common",
   "input_hashes": [
     "virtual:00_README.md:sha256:538dc2b2dc67e18d823a1ced405841a0555cd43707381a2566b0b0dc7ca1e748",
     "virtual:01_ARCHITECTURE_GUIDE.md:sha256:a45976a887afc1ca75512730af173504909d960521f2e58888128af406658a34",
-    "virtual:02_CODE_MAP.md:sha256:8e31033d7236e9a34d8aa3a9c0d39a36e08e882f62d5de631fb4e2b412d981bd",
-    "virtual:03_ENTRY_POINTS.md:sha256:06c0e1e5241bb0959dd50e0951756e7ea92a7dba3065d5608e21e9b3f4ff4488",
+    "virtual:02_CODE_MAP.md:sha256:26906a708a447f6a81e8bfa113171e4173e7a6d3ac56d87c09ff416d8f6f023b",
+    "virtual:03_ENTRY_POINTS.md:sha256:2af92f3ced570021d1132f0feb329a1d4960811e40c23dff7d93b52e18ee46fe",
     "virtual:04_DATA_ACCESS.md:sha256:2a095e23e252521803367973084f72aa5db131e89b4635991a6b32b74d850546",
     "virtual:AUDIT_PROMPT.md:sha256:1808d0e0e7c0c82f3b418524209a3a46d7d5ebdb1d2fe2ba7d0a4e43953fa6ff",
-    "CLAUDE.md:sha256:9bf4740d1037fb41f8e112139a30a6f6bcccfd053dbfe1e5f30d9fe6775a7f29",
+    "CLAUDE.md:sha256:92159dccd0336649b4a017e2e62a886ff94a2c61766f2483d4b40f618bca08d6",
     "Cargo.lock:sha256:f1023b1bf6d0467b292dff07e7912664f26c4b482eb534522b3496012285bb5b",
     "Cargo.toml:sha256:edefba17d7d7f7565a381bbe65f9de359dce5704d49786669526802c336a58ed",
     "README.md:sha256:b283cac6ae933d1552b56af2466bf6e56e52c643f0c0a7adfba19825d3b3a2e6",
@@ -7330,6 +7344,7 @@
     "htt/src/common/theorem_registry.py:sha256:a83a86c952fe2bf4bda78a8fb0868231b6c302a76f3e7a4679b3bdd4fdc2e43d",
     "htt/src/common/theorem_signatures.py:sha256:214edec76e6deb8c2064b7edb5765a683213b552783baebe6be1b902fa0e160e",
     "htt/src/common/transfer_registry.py:sha256:d22beea71bc0e9ffe308c2ae1c9424017c2274aedc7c791d8b432042f5175554",
+    "htt/src/common/weak_id_coverage.py:sha256:087118a92cda73acbd2c1c64636b2a9a7828aa792963f244e38c2c84b230ee13",
     "htt/teff/__init__.py:sha256:15f8bc5d16003a2b25af30de54b0b9c99a6ed97178b7ff116da555ae5265a8bb",
     "htt/teff/representative.py:sha256:1a6c787101b7e9383d9a2c828cf4198952ed10ae7fafe77385d1cf048c507050",
     "htt/teff/rust_twin_parity.py:sha256:97638bd324e4eba7dc75dd5adf3b6c52ea2e333762528226a2733f314c93f3c1",
@@ -7470,6 +7485,7 @@
     "scripts/codex_harness/run_pr134_estimand_registry.py:sha256:01a775f9b70a9c76dc923fabc023487a514c7aec97c98a9292d0108b7b954990",
     "scripts/codex_harness/run_pr135_finite_null_ranking.py:sha256:d0f3364250ec485efbaa44b096987f783958aa45bf6139bcdd092339b9ddee45",
     "scripts/codex_harness/run_pr136_identified_set.py:sha256:f5805030835a4e73b867693a18c52bad2787531507352a7f43d0084b99f5493f",
+    "scripts/codex_harness/run_pr137_weak_id_coverage.py:sha256:0cc251d6720b75c37162f40c7b5732dab16848c7cce77518c73d00124fd53acf",
     "scripts/codex_harness/run_subset.py:sha256:a2d2294aad1cf0493800dd8c94f80f7ff933836d4d9553a0ecaecc0c5568bd46",
     "scripts/codex_harness/sync_pr_dag_mirrors.py:sha256:fc9be87a41895d0bbed50622c4897e7ce167852a8ea71c012e158c062f6fc592",
     "scripts/codex_harness/validate_research_remediation.py:sha256:737979c7e7e45ce065bd8e561f887094d2436dc763c911de5a62ca93c9888201",

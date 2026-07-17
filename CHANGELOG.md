@@ -7,6 +7,32 @@
 
 ## [Unreleased]
 
+### PR-138 — Lineage-bound posterior draws, SBC and replicated-data PPC (rev-r215, 2026-07-18)
+
+Roadmap Wave-16 PR-138 (deps PR-122/134/137).
+`htt/src/common/sbc_ppc.py`: conjugate Gaussian toy with posterior
+draws content-addressed to prior/likelihood/data/config/transfer/
+diagnostics; lineage MANDATORY + verified on BOTH the SBC (computation
+lineage) and PPC (fit-model lineage) paths, recorded in the receipts.
+SBC (Talts et al.) ranks binned into 7 bins (n_bins now load-bearing,
+dof 6): known-good passes rank-uniformity (p~0.09), both known-bad
+(var_scale 1/2, 2) fail (p~1e-127/1e-58). Replicated-data PPC over 3
+frozen content-addressed discrepancies: known-good adequate, and a
+known-bad mis-specified under-dispersed fit (fit_sig2=1/9) DEMONSTRATED
+(shipped) to give extreme p~0 → inadequate_ppc_extreme. Caller
+prediction/p-value never a PPC receipt; discrepancy swap after failure
+refused; PPC on invalid posterior refused; residual_check a separate
+type. 6/6 mutations killed on production paths. Adversarial lane
+confirmed SBC + chi-square + PPC statistics exact and fixed 2 P0
+(lineage claim false-for-SBC/opt-in-for-PPC → mandatory; known-bad PPC
+claimed-not-demonstrated → shipped) + 1 P1 (dead n_bins → load-bearing)
++ 1 P2, all pre-commit. Gates: `run_pr138_sbc_ppc.py --check`
+byte-stable + `test_pr138_sbc_ppc.py` (11). C2 model/transfer-conditional
+predictive adequacy — PPC pass never model truth, SBC is computation
+calibration; 102 OPEN; DAG 85/113, next PR-139 (checkpoint 085 due).
+See docs/PR_DELTAS/pr-138.md.
+
+
 ### PR-137 — Weak-identification boundary and grid-conditional simultaneous coverage (rev-r214, 2026-07-18)
 
 Roadmap Wave-16 PR-137 (deps PR-123/135/136).
