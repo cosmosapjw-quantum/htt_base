@@ -1,0 +1,42 @@
+{
+  "mutations": [
+    {
+      "executed": true,
+      "kill_message": "PSD projection of the signed DeltaOmega_k axis is forbidden: -1/100000000 -> 0 (cancellation witnesses must be preserved)",
+      "killed": true,
+      "mutation_id": "psd_projection_kills_witness"
+    },
+    {
+      "executed": true,
+      "kill_message": "rank-inflation mutant killed: the rescaled duplicate row lies inside the registered row span (agreed rank stays 2)",
+      "killed": true,
+      "mutation_id": "rank_inflation_duplicate_row"
+    },
+    {
+      "executed": true,
+      "kill_message": "claimed kernel basis [('0', '0', '0', '1')] != registered agreed basis [('0', '0', '0', '1'), ('0', '1', '0', '0')]",
+      "killed": true,
+      "mutation_id": "kernel_drop"
+    },
+    {
+      "executed": true,
+      "kill_message": "constraint-free promotion killed: witness without a verified assignment stays algebraic_only",
+      "killed": true,
+      "mutation_id": "constraint_free_promotion"
+    },
+    {
+      "executed": true,
+      "kill_message": "rank/kernel claims require BOTH exact engines; got ['sympy']",
+      "killed": true,
+      "mutation_id": "engine_disagreement"
+    },
+    {
+      "executed": true,
+      "kill_message": "non-identification language violation: '[redacted-mutant-text]'",
+      "killed": true,
+      "mutation_id": "non_identification_as_isotropy"
+    }
+  ],
+  "schema": "pr127.mutation_report.v1",
+  "surviving_mutation_count": 0
+}

@@ -1,0 +1,50 @@
+{
+  "probes": [
+    {
+      "agreed_rank_with_row": 3,
+      "note": "direct W2 observable",
+      "raises_rank": true,
+      "row": [
+        "0",
+        "1",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "agreed_rank_with_row": 3,
+      "note": "direct DeltaOmega_k observable",
+      "raises_rank": true,
+      "row": [
+        "0",
+        "0",
+        "0",
+        "1"
+      ]
+    },
+    {
+      "agreed_rank_with_row": 2,
+      "note": "rescaled duplicate Omega_tilt channel",
+      "raises_rank": false,
+      "row": [
+        "0",
+        "0",
+        "2",
+        "0"
+      ]
+    },
+    {
+      "agreed_rank_with_row": 2,
+      "note": "linear combination of existing rows",
+      "raises_rank": false,
+      "row": [
+        "1",
+        "0",
+        "1",
+        "0"
+      ]
+    }
+  ],
+  "rule": "an added observable row raises the rank iff it lies outside the registered row span (verified exactly on both engines)",
+  "schema": "pr127.rank_api_table.v1"
+}

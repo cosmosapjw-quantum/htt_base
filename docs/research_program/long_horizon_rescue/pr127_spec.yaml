@@ -1,0 +1,156 @@
+schema: htt.long_horizon.pr127_graded_nonid.v1
+spec_version: 1
+pr_id: PR-127
+title: Cancellation-preserving graded/PSD-cone non-identification theorem
+baseline_commit: 6023acecfe7943cc66ceb69df4806b0e84e47b12
+reviewed_on: '2026-07-17'
+owner: COMMON
+contributors:
+  - HTT
+  - BASS
+implementation_scope:
+  - common
+artifact_mode: symbolic_governance_diagnostic
+allowed_use:
+  - declared_response_map_kernel_and_cone
+  - non_identification_witnesses
+  - added_observable_rank_api
+  - later_pr_regression_input
+public_use: false
+claim_tier: conditional
+claim_tier_ceiling: conditional
+claim_level:
+  scheme: roadmap_rescue_v1
+  level: C2
+scientific_status: OPEN
+scientific_effect: none
+transfer_source: none
+
+claim_identity:
+  claim_id: C-PR127-GRADED-NONID
+  claim_text: >-
+    For the DECLARED registered response map only (three channels over the
+    graded comparator g = (Sigma2, W2, Omega_tilt, DeltaOmega_k)): the
+    exact kernel is span{e_W2, e_DeltaOmega_k}, point identification is
+    impossible along the kernel directions inside the ambient carrier
+    S_+^3 x R (constructive set-valued equivalence witnesses), the signed
+    DeltaOmega_k axis is NEVER PSD-projected (cancellation witnesses are
+    preserved), and an added observable raises the rank iff its row lies
+    outside the registered row span. Two independent exact engines (SymPy,
+    SageMath QQ) must agree on rank and kernel. Formal non-identification
+    of the declared response map at C2 — never an isotropy statement, and
+    silent about any other response map, transfer, mask, or window.
+  domain: declared_registered_response_map_only
+  frame: binds_pr125_registered_contracts_frame_free_algebra
+  perturbative_order: exact_algebraic
+  claim_level_scheme: roadmap_rescue_v1
+  claim_level: C2
+
+scope_and_non_goals:
+  non_identification_as_isotropy_proof: forbidden
+  nuisance_class_reduction_after_seeing_results: forbidden
+  psd_projection_of_signed_delta_omega_k: forbidden
+  rank_assumption_from_dimension_count: forbidden
+  transfer_mask_window_rank_claims: forbidden_deferred
+  remediation_disposition_change: forbidden
+
+remediation_state_contract:
+  path: docs/codex_handoff/research_remediation_state.yaml
+  sha256: f16d9754828bb32ae4cef92f585af82ae7fd1caa2687a7b4144bc1e942328dd9
+  finding_count: 102
+  required_scientific_status_counts: {OPEN: 102}
+  rescued_count: 0
+
+data_scope:
+  pr4_data_work: skip_entirely_by_user_scope
+  pr4_commands_run_required: 0
+
+response_map:
+  source: htt/obsstat/egs3_graded_comparator.py::channel_response_design
+  rows:
+    - ['1', '0', '0', '0']
+    - ['0', '0', '1', '0']
+    - ['0', '0', '1', '0']
+  sectors: [Sigma2, W2, Omega_tilt, DeltaOmega_k]
+  expected_rank: 2
+  expected_kernel_basis:
+    - ['0', '1', '0', '0']
+    - ['0', '0', '0', '1']
+  ambient_carrier: diagonal_section_of_S_plus_3_orthant_x_signed_R
+  engines_required: [sympy, sage_qq]
+
+physical_subset:
+  name: A_C_comparator_level
+  constraints:
+    - hamiltonian_parent_identity: '1 = Omega_m + Omega_L + Omega_k + Omega_tilt + Sigma2 - W2 (exact)'
+    - matter_positivity_and_box: '0 <= Omega_m <= 1; |Omega_L| <= 2; |Omega_k_total| <= 1; departures <= 1'
+    - carrier: 'Sigma2, W2, Omega_tilt >= 0; DeltaOmega_k signed'
+  deferred_constraints: >-
+    momentum and Gauss constraint fixtures are NOT implemented at this
+    comparator level; they are owned by the dynamical PRs (PR-131+). The
+    physical label is A_C_comparator_level, never a full physical
+    certificate.
+  pair_rule: >-
+    a witness PAIR is physical only when BOTH states carry verified
+    assignments; the kernel move co-moves the nuisance Omega_L per state
+    (registered nuisance freedom = the non-identification). Any witness
+    without a verified assignment is algebraic_only.
+
+added_observable_rank_api:
+  rule: an added observable row raises the rank iff it lies outside the registered row span (verified exactly on both engines)
+  registered_probes:
+    - {row: ['0', '1', '0', '0'], raises_rank: true, note: direct W2 observable}
+    - {row: ['0', '0', '0', '1'], raises_rank: true, note: direct DeltaOmega_k observable}
+    - {row: ['0', '0', '2', '0'], raises_rank: false, note: rescaled duplicate Omega_tilt channel}
+    - {row: ['1', '0', '1', '0'], raises_rank: false, note: linear combination of existing rows}
+
+mutation_registry:
+  - mutation_id: psd_projection_kills_witness
+    kill_rule: clipping the signed DeltaOmega_k of a registered cancellation witness is rejected by the forbid_psd_projection pairwise guard (a convention guard exercised by mutation and tests; no build path performs projections)
+  - mutation_id: rank_inflation_duplicate_row
+    kill_rule: the rescaled duplicate Omega_tilt row keeps the agreed rank at 2 on both engines (real API answer); the mutant claim of rank 3 is the recorded survival condition
+  - mutation_id: kernel_drop
+    kill_rule: a claimed kernel basis missing e_W2 is killed by the real require_registered_kernel validator (also routed through the kernel receipt build)
+  - mutation_id: constraint_free_promotion
+    kill_rule: labeling a witness physical without a verified constraint assignment is rejected by the A_C validator
+  - mutation_id: engine_disagreement
+    kill_rule: a rank/kernel claim carried by one engine only (or with disagreeing engines) is blocked by the agreement gate
+  - mutation_id: non_identification_as_isotropy
+    kill_rule: claim text reading non-identification as an isotropy proof fails the language lint
+
+artifact_contract:
+  outputs:
+    - docs/generated/pr127_response_kernel.json
+    - docs/generated/pr127_nonid_witnesses.json
+    - docs/generated/pr127_rank_api_table.json
+    - docs/generated/pr127_mutation_report.json
+    - docs/generated/pr127_artifact_manifest.json
+  check_policy: fresh_build_must_equal_disk_bytes
+
+acceptance_and_kill_switches:
+  - both engines agree exactly on rank 2 and the kernel basis
+  - every registered rank probe verifies on both engines
+  - every non-identification witness pair produces identical response outputs and differs inside the carrier
+  - every registered mutation executes and is killed
+  - witnesses without constraint assignments stay algebraic_only
+  - all 102 remediation findings remain OPEN
+
+forbidden_output_language:
+  - non-identification proves isotropy
+  - isotropy established
+  - identification impossible in nature
+  - Bianchi geometry detected
+  - Bianchi family identified
+  - finding rescued
+  - validated as native
+
+deferred_roadmap_deliverables:
+  note: >-
+    the roadmap card additionally lists randomized cone tests,
+    rank-under-mask/window fixtures, empty/unbounded/multi-component
+    identified-set outputs, and momentum/Gauss constraint fixtures. These
+    are DEFERRED with disclosure — mask/window rank claims are
+    forbidden_deferred above, momentum/Gauss fixtures are owned by the
+    dynamical PRs (PR-131+), and identified-set outputs join the estimator
+    PRs (PR-129/130). This deferral is a registered scope record, not a
+    silent cut.

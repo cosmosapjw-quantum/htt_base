@@ -7,6 +7,26 @@
 
 ## [Unreleased]
 
+### PR-127 — Cancellation-preserving graded/PSD-cone non-identification (rev-r204, 2026-07-17)
+
+Roadmap Wave-14 PR-127 (deps PR-125/126). `htt/src/common/graded_nonid.py`:
+for the DECLARED registered response map (3 channels over the graded
+comparator), exact **rank 2** + kernel **span{e_W2, e_DeltaOmega_k}**
+agreed by two independent exact engines (SymPy + SageMath QQ; one-engine
+claims BLOCKED); ambient carrier with the signed DeltaOmega_k axis never
+PSD-projected (clipping rejected — cancellation witnesses preserved);
+constructive set-valued equivalence witnesses (response-indistinguishable
+distinct states along each kernel direction); `A_C` physical-subset gate
+(parent identity + matter positivity verified exactly, else
+`algebraic_only`); added-observable rank API (row raises rank iff outside
+the registered row span — 4 probes verified on both engines). 6/6
+preregistered mutations killed by real validators. Gates:
+`run_pr127_graded_nonid.py --check` byte-stable (both engines re-run live)
++ `test_pr127_graded_nonid.py` (8). Formal non-identification at
+roadmap_rescue_v1:C2 — never an isotropy statement, silent about
+transfer/mask/window; 102 OPEN; DAG 74/113, next PR-128 (checkpoint 075
+after). See docs/PR_DELTAS/pr-127.md.
+
 ### PR-126 — One-way FLRW/EGS and counterexample registry (rev-r203, 2026-07-17)
 
 Roadmap Wave-14 PR-126 (deps PR-124/125). `htt/src/common/egs_oneway.py`:

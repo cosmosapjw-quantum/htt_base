@@ -91,6 +91,10 @@
 | E-PR126-WITNESS | `docs/generated/pr126_oneway_witness_report.json` | PR-126 runner (sealed one-way pair) | `e6e29c0332b3d88819243e0492b7f1410caefbf69eb477be1f44c84672cf3d39` | C-PR126-EGS-ONEWAY |
 | E-PR126-COUNTEREXAMPLES | `docs/generated/pr126_counterexample_registry.json` | PR-126 runner (converse counterexamples) | `ef7fd04fae5e05caba56a8db3c0b7efd24872411898e164603e0a8a147af0bf8` | C-PR126-EGS-ONEWAY |
 | E-PR126-MUTATIONS | `docs/generated/pr126_mutation_report.json` | PR-126 runner (5/5 killed by real validators) | `d0fa7d455dca3b9c1d80604323772a9cb06fe6646c2ac4e8291e203aa1286a19` | C-PR126-EGS-ONEWAY |
+| E-PR127-SPEC | `docs/research_program/long_horizon_rescue/pr127_spec.yaml` | reviewed repository edit (contract-first) | `03531b745869459866e382d82499f0f6f5a4e06c5ec6ebdbfed39c190d9b67b7` | C-PR127-GRADED-NONID |
+| E-PR127-KERNEL | `docs/generated/pr127_response_kernel.json` | PR-127 runner (two-engine agreement) | `f9d16b3ecf3296344e78cd22457c3ff7ad638b1826c53a01b8d810911c660092` | C-PR127-GRADED-NONID |
+| E-PR127-WITNESSES | `docs/generated/pr127_nonid_witnesses.json` | PR-127 runner (set-valued equivalence witnesses) | `f739d0274aaed85cd1b03ff04c8f5c649a282c98fa3ab9464c6b7ee6da14ec85` | C-PR127-GRADED-NONID |
+| E-PR127-MUTATIONS | `docs/generated/pr127_mutation_report.json` | PR-127 runner (6/6 killed by real validators) | `2973313841bac9e6d7818b5ae8a62469abacf7b0fff4182afa8fddf9c53088b8` | C-PR127-GRADED-NONID |
 
 ## Known disputes and open questions
 

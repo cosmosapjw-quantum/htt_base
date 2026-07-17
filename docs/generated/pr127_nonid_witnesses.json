@@ -1,0 +1,78 @@
+{
+  "labels_rule": "physical requires a VERIFIED constraint assignment (parent identity + matter positivity); otherwise algebraic_only",
+  "schema": "pr127.nonid_witnesses.v1",
+  "statement": "point identification along the kernel directions is impossible for the declared response map: the registered witness pairs are response-indistinguishable yet distinct in the carrier",
+  "witnesses": {
+    "WIT-1-w2_direction": {
+      "assignments_per_state": [
+        {
+          "Omega_L": "69999989/100000000",
+          "Omega_k_total": "0",
+          "Omega_m": "3/10"
+        },
+        {
+          "Omega_L": "8749999/12500000",
+          "Omega_k_total": "0",
+          "Omega_m": "3/10"
+        }
+      ],
+      "difference": [
+        "0",
+        "-3/100000000",
+        "0",
+        "0"
+      ],
+      "label": "physical",
+      "nuisance_note": "the kernel move stays inside A_C_comparator_level only by co-moving the nuisance Omega_L (verified per state) — the registered nuisance freedom IS the non-identification",
+      "response_output": [
+        "1/100000000",
+        "1/10000000",
+        "1/10000000"
+      ],
+      "state_a": {
+        "delta_omega_k": "-1/10000000",
+        "omega_tilt": "1/10000000",
+        "sigma2": "1/100000000",
+        "w2": "0"
+      },
+      "state_b": {
+        "delta_omega_k": "-1/10000000",
+        "omega_tilt": "1/10000000",
+        "sigma2": "1/100000000",
+        "w2": "3/100000000"
+      },
+      "x_c_state_a": "1/100000000",
+      "x_c_state_b": "-1/50000000"
+    },
+    "WIT-2-delta_omega_k_direction": {
+      "assignments_per_state": null,
+      "difference": [
+        "0",
+        "0",
+        "0",
+        "-3/50000000"
+      ],
+      "label": "algebraic_only",
+      "nuisance_note": null,
+      "response_output": [
+        "1/50000000",
+        "0",
+        "0"
+      ],
+      "state_a": {
+        "delta_omega_k": "-1/100000000",
+        "omega_tilt": "0",
+        "sigma2": "1/50000000",
+        "w2": "1/100000000"
+      },
+      "state_b": {
+        "delta_omega_k": "1/20000000",
+        "omega_tilt": "0",
+        "sigma2": "1/50000000",
+        "w2": "1/100000000"
+      },
+      "x_c_state_a": "0",
+      "x_c_state_b": "3/50000000"
+    }
+  }
+}
