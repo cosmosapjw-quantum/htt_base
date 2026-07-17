@@ -1,0 +1,42 @@
+{
+  "mutations": [
+    {
+      "kill_message_redacted": "bridge observer_proxy -> physical_tilt refused: no registered source-response equivalence edge with matching evidence (the observer proxy is never auto-identified with the physical tilt)",
+      "kill_rule": "bridging A_v into Omega_tilt with a forged reference against the empty equivalence-edge registry is rejected by bridge(); a directly-reconstructed value carrying an unregistered bridged provenance is caught by require_declared_provenance",
+      "killed": true,
+      "mutation_id": "auto_bridge_av_omega_tilt"
+    },
+    {
+      "kill_message_redacted": "cross-type arithmetic refused: observer_proxy vs physical_tilt — the type firewall blocks implicit coercion (route through a registered typed operation instead)",
+      "kill_rule": "arithmetic between two distinct typed quantities raises in the firewall",
+      "killed": true,
+      "mutation_id": "cross_type_arithmetic"
+    },
+    {
+      "kill_message_redacted": "claimed rung global_dynamics_admissible is above the highest reached rung constraint_admissible — auto-promotion past a gap is refused",
+      "kill_rule": "claiming a rung ABOVE the highest reached (a mid-ladder gap with the top rung present) is rejected by require_rung_not_above",
+      "killed": true,
+      "mutation_id": "rung_auto_promotion"
+    },
+    {
+      "kill_message_redacted": "kinematic_quadrupole declared at O(beta^1) but the symbolic order counting gives O(beta^2)",
+      "kill_rule": "declaring the kinematic quadrupole at O(beta^1) fails the symbolic order-counting check",
+      "killed": true,
+      "mutation_id": "wrong_beta_order"
+    },
+    {
+      "kill_message_redacted": "observed rank is below the analytic rank but the aligned-axis exception is missing — hiding the exception is forbidden",
+      "kill_rule": "a rank-reduced observed response that omits the aligned-axis exception is rejected by the graph validator",
+      "killed": true,
+      "mutation_id": "hidden_aligned_axis_exception"
+    },
+    {
+      "kill_message_redacted": "caption carries forbidden bridge/measurement/detection/suppression language",
+      "kill_rule": "labeling the synthetic deprojection estimator property a shear detection fails the language and claim validators",
+      "killed": true,
+      "mutation_id": "deprojection_as_detection"
+    }
+  ],
+  "schema": "pr133.mutation_report.v1",
+  "surviving_mutation_count": 0
+}

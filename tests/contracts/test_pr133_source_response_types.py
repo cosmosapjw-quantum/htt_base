@@ -1,0 +1,202 @@
+"""PR-133 contract tests: source-response type system."""
+from __future__ import annotations
+
+import json
+import subprocess
+import sys
+from fractions import Fraction
+from pathlib import Path
+
+import pytest
+
+from common.source_response_types import (
+    EXPECTED_RANK,
+    QuantityType,
+    Rung,
+    SourceResponseError,
+    TypedQuantity,
+    analytic_response_rank,
+    bridge,
+    deprojection_estimator_property,
+    deprojected_shear,
+    discrimination_verdict,
+    generate_caption,
+    harmonic_order_counting,
+    label_highest_rung,
+    lint_caption,
+    observed_response,
+    require_beta_order,
+    require_declared_provenance,
+    require_rung_not_above,
+    require_surfaced_exception,
+)
+
+_PR127_KERNEL_EV = "docs/generated/pr127_response_kernel.json"
+_PR127_WITNESS_EV = "docs/generated/pr127_nonid_witnesses.json"
+_DOPPLER_EV = "htt/bass/forward/doppler_boost.py"
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+
+
+def test_type_firewall_blocks_cross_type() -> None:
+    av = TypedQuantity(QuantityType.OBSERVER_PROXY, Fraction(1, 100))
+    ot = TypedQuantity(QuantityType.PHYSICAL_TILT, Fraction(1, 100))
+    (av + TypedQuantity(QuantityType.OBSERVER_PROXY, Fraction(1, 100)))
+    for op in (lambda: av + ot, lambda: av - ot, lambda: av < ot,
+               lambda: av <= ot, lambda: av > ot, lambda: av >= ot):
+        with pytest.raises(SourceResponseError, match="cross-type"):
+            op()
+    # cross-type equality is always False (never a silent match)
+    assert (av == ot) is False
+
+
+def test_non_bridge_guard_and_provenance() -> None:
+    av = TypedQuantity(QuantityType.OBSERVER_PROXY, Fraction(1, 100))
+    with pytest.raises(SourceResponseError, match="bridge.*refused"):
+        bridge(av, QuantityType.PHYSICAL_TILT, "any-ref")
+    with pytest.raises(SourceResponseError, match="bridge.*refused"):
+        bridge(av, QuantityType.PHYSICAL_TILT, None)
+    # direct reconstruction with a forged bridged provenance is caught
+    smuggled = TypedQuantity(QuantityType.PHYSICAL_TILT, av.value,
+                             provenance="bridged:forged")
+    with pytest.raises(SourceResponseError, match="unsanctioned"):
+        require_declared_provenance(smuggled)
+    require_declared_provenance(
+        TypedQuantity(QuantityType.PHYSICAL_TILT, Fraction(1, 100)))
+
+
+def test_harmonic_order_counting() -> None:
+    counting = harmonic_order_counting()
+    assert counting["A_v_order_in_beta"] == 1
+    assert counting["kinematic_quadrupole_order_in_beta"] == 2
+    require_beta_order("A_v", 1)
+    require_beta_order("kinematic_quadrupole", 2)
+    with pytest.raises(SourceResponseError, match="order counting"):
+        require_beta_order("kinematic_quadrupole", 1)
+    with pytest.raises(SourceResponseError, match="order counting"):
+        require_beta_order("A_v", 2)
+
+
+def test_deprojection_estimator_property() -> None:
+    prop = deprojection_estimator_property()
+    assert all(r["sigma_tilde2"] == "0"
+               for r in prop["boost_removed_states"])
+    assert prop["no_oversubtraction_states"]
+    # pure boost removed exactly
+    assert deprojected_shear(Fraction(9, 10 ** 6), Fraction(3, 1000)) == 0
+    # shear-only not over-subtracted
+    assert deprojected_shear(Fraction(1, 100), Fraction(0)) == \
+        Fraction(1, 100)
+
+
+def test_response_ladder_no_auto_promotion() -> None:
+    # a gap in the middle caps the candidate below the gap (pointers
+    # must resolve to real repo files)
+    labelled = label_highest_rung({
+        Rung.ALGEBRAIC_WITNESS: _PR127_KERNEL_EV,
+        Rung.CONSTRAINT_ADMISSIBLE: _PR127_WITNESS_EV,
+        Rung.LOCAL_DYNAMICS_ADMISSIBLE: None,
+        Rung.GLOBAL_DYNAMICS_ADMISSIBLE: _DOPPLER_EV})
+    assert labelled["highest_rung"] == "constraint_admissible"
+    # an unresolvable pointer is a false citation -> raise
+    with pytest.raises(SourceResponseError, match="does not resolve"):
+        label_highest_rung({Rung.ALGEBRAIC_WITNESS: "docs/nope.json"})
+    # claiming the top rung with no base evidence -> raise
+    with pytest.raises(SourceResponseError, match="no rung reached"):
+        label_highest_rung({Rung.GLOBAL_DYNAMICS_ADMISSIBLE: _DOPPLER_EV})
+    # the REAL auto-promotion kill: mid-gap with the top rung present
+    with pytest.raises(SourceResponseError, match="auto-promotion"):
+        require_rung_not_above(
+            {Rung.ALGEBRAIC_WITNESS: _PR127_KERNEL_EV,
+             Rung.CONSTRAINT_ADMISSIBLE: _PR127_WITNESS_EV,
+             Rung.LOCAL_DYNAMICS_ADMISSIBLE: None,
+             Rung.GLOBAL_DYNAMICS_ADMISSIBLE: _DOPPLER_EV},
+            Rung.GLOBAL_DYNAMICS_ADMISSIBLE)
+
+
+def test_response_graph_analytic_vs_observed() -> None:
+    # analytic rank is the PR-127 frozen rank 2 (consistency anchor)
+    assert analytic_response_rank() == EXPECTED_RANK == 2
+    clean = observed_response(None)
+    assert clean["observed_rank"] == 2
+    assert clean["aligned_axis_exception"] is None
+    assert len(clean["analytic_kernel"]) == 2
+    aligned = observed_response(
+        {"collinear_axes": [("Sigma2", "Omega_tilt")]})
+    assert aligned["observed_rank"] == 1
+    assert aligned["aligned_axis_exception"]["colliding_axes"] == \
+        [["Omega_tilt", "Sigma2"]]
+    require_surfaced_exception(aligned)
+    with pytest.raises(SourceResponseError, match="hiding the exception"):
+        require_surfaced_exception({"analytic_rank": 2, "observed_rank": 1,
+                                    "aligned_axis_exception": None})
+
+
+def test_discrimination_verdict() -> None:
+    assert discrimination_verdict(boost_removed=False, local_rank=2,
+                                  global_rank=2, full_rank=2) == \
+        "non_identified"
+    assert discrimination_verdict(boost_removed=True, local_rank=1,
+                                  global_rank=2, full_rank=2) == \
+        "non_identified"
+    assert discrimination_verdict(boost_removed=True, local_rank=2,
+                                  global_rank=1, full_rank=2) == \
+        "non_identified"
+    assert discrimination_verdict(boost_removed=True, local_rank=2,
+                                  global_rank=2, full_rank=2) == \
+        "discriminable_pre_solver"
+
+
+def test_caption_gate() -> None:
+    text = generate_caption()
+    lint_caption(text)
+    for suffix in (" We bridge A_v" + " to Omega_tilt here.",
+                   " This measures the" + " Bianchi family.",
+                   " Shear detected" + " via deprojection.",
+                   " Aligned-axis exception" + " suppressed."):
+        with pytest.raises(SourceResponseError, match="forbidden"):
+            lint_caption(text + suffix)
+
+
+def test_runner_check_mode_is_current() -> None:
+    result = subprocess.run(
+        [sys.executable,
+         str(REPO_ROOT /
+             "scripts/codex_harness/run_pr133_source_response_types.py"),
+         "--check"],
+        cwd=REPO_ROOT, capture_output=True, text=True, check=False,
+    )
+    assert result.returncode == 0, result.stdout + result.stderr
+
+
+def test_artifacts_types_graph_mutations() -> None:
+    types = json.loads(
+        (REPO_ROOT / "docs/generated/pr133_typed_quantities.json")
+        .read_text(encoding="utf-8"))
+    assert len(types["types"]) == 6
+    assert types["registered_equivalence_edges"] == 0
+    names = {t["name"] for t in types["types"]}
+    assert names == {"observer_proxy", "physical_tilt", "vorticity",
+                     "shear", "curvature", "background_geometry"}
+    graph = json.loads(
+        (REPO_ROOT / "docs/generated/pr133_response_graph.json")
+        .read_text(encoding="utf-8"))
+    assert graph["analytic_rank"] == 2
+    assert graph["observed_aligned"]["observed_rank"] == 1
+    assert graph["observed_aligned"]["aligned_axis_exception"]
+    assert len(graph["observed_aligned"]["analytic_kernel"]) == 2
+    assert graph["discrimination_verdicts"]["boost_not_removed"] == \
+        "non_identified"
+    assert graph["response_ladder"]["W2_DeltaOmega_k_joint_null"][
+        "highest_rung"] == "constraint_admissible"
+    assert graph["response_ladder"]["omega_tilt_kinematic_proxy"][
+        "highest_rung"] == "algebraic_witness"
+    report = json.loads(
+        (REPO_ROOT / "docs/generated/pr133_mutation_report.json")
+        .read_text(encoding="utf-8"))
+    assert report["surviving_mutation_count"] == 0
+    assert len(report["mutations"]) == 6
+    manifest = json.loads(
+        (REPO_ROOT / "docs/generated/pr133_artifact_manifest.json")
+        .read_text(encoding="utf-8"))
+    assert all(sha for sha in manifest["artifacts"].values())

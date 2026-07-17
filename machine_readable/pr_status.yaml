@@ -79,9 +79,9 @@ completed:
 - PR-130
 - PR-131
 - PR-132
+- PR-133
 blocked: []
 pending:
-- PR-133
 - PR-134
 - PR-135
 - PR-136
@@ -118,6 +118,12 @@ dormant_external:
 - PR-166
 in_progress: null
 execution_resolutions:
+  PR-133:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-133.md
+    resolved_on: '2026-07-18'
+    scientific_status_effect: none
+    scientific_status_after: OPEN
   PR-132:
     resolution: COMPLETED_SUCCESS
     receipt: docs/PR_DELTAS/pr-132.md
@@ -905,3 +911,35 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   integration pre-commit. Class-conditional asymptotic theorem with
   explicit remainder at fixed q0(w); wide bounds are a success
   condition; 102 findings OPEN; PR4 skipped.
+  PR-133 establishes the source-response type system that closes the
+  theory foundation before checkpoint 080. The linear observer proxy
+  A_v, the physical tilt Omega_tilt, vorticity W2, shear Sigma,
+  curvature Delta_Omega_k, and background geometry are separate typed
+  quantities; cross-type arithmetic and ordering raise, cross-type
+  equality is always False, and the only sanctioned conversion is
+  bridge() across a registered equivalence edge (the registry is EMPTY,
+  so the A_v to Omega_tilt bridge is refused). Because Python cannot
+  forbid direct reconstruction, a bridged value carries a bridged-edge
+  provenance and require_declared_provenance catches any quantity whose
+  provenance names an unregistered bridge. The harmonic boost is
+  order-counted with a PURE-MONOMIAL check (A_v at O(beta), the
+  pure-monopole kinematic quadrupole at O(beta^2), cross-referenced to
+  the e1^2 term in doppler_boost.py), and the deprojection
+  Sigma_tilde^2 = Sigma^2 - alpha Omega_tilt^2 is an algebraically
+  exact-by-construction synthetic estimator property (false-positive
+  removal), never a shear detection. The response graph IMPORTS the
+  PR-127 declared response map, so its analytic rank is the frozen
+  rank 2 with kernel = the W2/Delta_Omega_k two-sector joint null (a
+  rank drift raises) and cannot contradict that non-identification; a
+  window collinearity between the two active axes drops the observed
+  rank to 1 and surfaces the aligned-axis rank-1 exception. Each ladder
+  candidate is labeled with the highest rung whose evidence pointer
+  resolves to a real repo artifact (no auto-promotion; require_rung_
+  not_above rejects a claim past a gap). A non-removed boost or a
+  rank-deficient response yields non_identified. Six preregistered
+  mutations killed on production paths; the adversarial lane caught two
+  P0 (the identity-basis rank-4 contradiction with PR-127 and the
+  direct-reconstruction firewall bypass) plus five P1/P2, all fixed
+  pre-commit. Pre-solver discrimination diagnostic only; no Bianchi
+  family, global tilt, or geometry is measured from any scalar value;
+  102 findings OPEN; PR4 skipped.

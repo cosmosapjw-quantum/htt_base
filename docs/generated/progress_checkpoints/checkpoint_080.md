@@ -1,4 +1,5 @@
-# Progress scoreboard
+<!-- checkpoint_meta {"completed": 80, "critical_path_percent_complete": 64.29, "dependency_weighted_percent_complete": 67.32, "percent_complete": 70.8, "replan_required": false, "total": 113} -->
+# Progress checkpoint 080
 
 ## Artifact metadata
 
@@ -26,10 +27,28 @@
 - Skipped PRs: none
 - Dormant external PRs: PR-159, PR-160, PR-161, PR-162, PR-163, PR-164, PR-165, PR-166
 - Unblocked next: PR-134
-- Checkpoint due: yes; satisfied by docs/generated/progress_checkpoints/checkpoint_080.md
-- Next checkpoint at: 85
 - Replan required: no
 - Replan reason: progress advanced; no replan required
 
 Progress percentages count DAG bookkeeping only and are not scientific readiness evidence.
 They do not validate native solver behavior, transfer calibration, HTT posterior/evidence, MIO diagnostics, null calibration, morphology compatibility, or Bianchi family identification.
+
+## Checkpoint-080 theory-foundation freeze gate (PR-133)
+
+Per the roadmap Checkpoint-080 instruction, the theory foundation is frozen after
+PR-133 and the registries were re-counted:
+
+- **Remediation findings**: 102 total, all `scientific_status: OPEN`
+  (`rebuild_required` 56 / `downclaimed` 43 / `abandoned` 3 by response
+  disposition). Rows with `scientific_status` RESCUED: **0**.
+- **Corrected-superseded findings** (the `downclaimed`/`rebuild_required`
+  dispositions from PR-124..133, e.g. N-THEORY-NTA3-REGRESSION,
+  N-THEORY-NT2-SUFFICIENCY, N-THEORY-OMK-DOMAIN, N-THEORY-OMEGA-SEMANTICS)
+  miscounted as `rescued`: **0** — a corrected supersession is never a rescue.
+- **Theorem registry** (`THEOREM_REGISTRY.yaml`, 65 entries): 33 ACTIVE,
+  26 ACTIVE_CONDITIONAL, 4 SUPERSEDED, 2 RETRACTED. The registry vocabulary
+  has no `rescued` status; the honest theorem count remains 12 (per
+  `THEOREM_SIGNATURES_V2.yaml`).
+
+Data application has NOT begun. Gate verdict: **PASS** (102 OPEN / 0 RESCUED;
+0 corrected-superseded miscounted).

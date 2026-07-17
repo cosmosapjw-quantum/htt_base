@@ -116,6 +116,10 @@
 | E-PR132-CERT | `docs/generated/pr132_trapping_certificate.json` | PR-132 runner (exact interval trapping certificate) | `f360299d78f993da54da6fc053b4a58507db17b2a457869514e9b39f701973b2` | C-PR132-OMK-REMAINDER |
 | E-PR132-BUDGET | `docs/generated/pr132_uncertainty_budget.json` | PR-132 runner (component-separated propagation) | `8f5a9afddbc76c5f4aaddfe455f2bd63a7aa21d6af590ca721a3b48556b7f8c4` | C-PR132-OMK-REMAINDER |
 | E-PR132-BOUNDARY | `docs/generated/pr132_boundary_states.json` | PR-132 runner (boundary states + FD probes in-trap) | `f549166444dd08804bce8547a678276bc9076a8db8ebd727a59f3a4a4d90d720` | C-PR132-OMK-REMAINDER |
+| E-PR133-SPEC | `docs/research_program/long_horizon_rescue/pr133_spec.yaml` | reviewed repository edit (specification-first) | `a75c27d3882cb1d4bc72315125d67b6048106a68a87c162ab1bb04dfc5cbf72d` | C-PR133-SOURCE-RESPONSE-TYPES |
+| E-PR133-TYPES | `docs/generated/pr133_typed_quantities.json` | PR-133 runner (typed firewall + provenance audit) | `95e521c4b738d297bfafcf4f439cac67e855410c1185af1b841ceca3c474cb47` | C-PR133-SOURCE-RESPONSE-TYPES |
+| E-PR133-GRAPH | `docs/generated/pr133_response_graph.json` | PR-133 runner (PR-127-consistent response graph + ladder) | `8420d3cd69bc8a29764b548b23a983d9d59a4a1e22cc6de6bf3eb10fb5155901` | C-PR133-SOURCE-RESPONSE-TYPES |
+| E-PR133-BOOST | `docs/generated/pr133_harmonic_boost.json` | PR-133 runner (pure-monomial order counting) | `28713da790f7cf53e1b0ff6c95e9c94a8f1229737e18e4fe35cbcf386d74bafc` | C-PR133-SOURCE-RESPONSE-TYPES |
 
 ## Known disputes and open questions
 

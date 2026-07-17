@@ -6,7 +6,7 @@ claim_tier: diagnostic_only
 transfer_source: mixed_none_and_external_transfer_conditioned
 sky_support_status: not_directional
 null_mock_status: mixed_diagnostic_and_blocked
-config_hash: `sha256:e5a7396bba036839a2ab85e283b11f41727c67690e39c4d55ded6f3098071361`
+config_hash: `sha256:030ad32243862c22811a47467fef9bbe05f6e71f9b2e04303174f7e136fc1cd7`
 caveats:
 - Existing v6 no-download cards are the only science input.
 - This pack is quarantined internal meta material, not a report figure lane.

@@ -1,0 +1,81 @@
+{
+  "analytic_rank": 2,
+  "basis": "(Sigma^2, W2, Omega_tilt, DeltaOmega_k) graded basis — the PR-127 DECLARED response map, IMPORTED not re-transcribed",
+  "discrimination_verdicts": {
+    "boost_not_removed": "non_identified",
+    "boost_removed_full_rank": "discriminable_pre_solver",
+    "rank_deficient": "non_identified"
+  },
+  "non_bridge_edges": [
+    {
+      "from": "observer_proxy",
+      "status": "refused_without_registered_equivalence_edge",
+      "to": "physical_tilt"
+    }
+  ],
+  "observed_aligned": {
+    "aligned_axis_exception": {
+      "analytic_rank": 2,
+      "colliding_axes": [
+        [
+          "Omega_tilt",
+          "Sigma2"
+        ]
+      ],
+      "kind": "aligned_axis_rank_reduction",
+      "note": "window/mask collinearity dropped the observed rank below the PR-127 analytic rank-2 map; the aligned-axis rank-1 exception is surfaced, not hidden",
+      "observed_rank": 1
+    },
+    "analytic_kernel": [
+      [
+        "0",
+        "0",
+        "0",
+        "1"
+      ],
+      [
+        "0",
+        "1",
+        "0",
+        "0"
+      ]
+    ],
+    "analytic_rank": 2,
+    "observed_rank": 1
+  },
+  "observed_clean": {
+    "aligned_axis_exception": null,
+    "analytic_kernel": [
+      [
+        "0",
+        "0",
+        "0",
+        "1"
+      ],
+      [
+        "0",
+        "1",
+        "0",
+        "0"
+      ]
+    ],
+    "analytic_rank": 2,
+    "observed_rank": 2
+  },
+  "response_ladder": {
+    "W2_DeltaOmega_k_joint_null": {
+      "evidence": {
+        "algebraic_witness": "docs/generated/pr127_response_kernel.json",
+        "constraint_admissible": "docs/generated/pr127_nonid_witnesses.json"
+      },
+      "highest_rung": "constraint_admissible"
+    },
+    "omega_tilt_kinematic_proxy": {
+      "evidence": {
+        "algebraic_witness": "htt/bass/forward/doppler_boost.py"
+      },
+      "highest_rung": "algebraic_witness"
+    }
+  },
+  "schema": "pr133.response_graph.v1"
+}

@@ -7,6 +7,42 @@
 
 ## [Unreleased]
 
+### PR-133 — Source-response type system + checkpoint 080 (rev-r210, 2026-07-18)
+
+Roadmap Wave-15 PR-133 (deps PR-125/127/132; theory-foundation freeze).
+`htt/src/common/source_response_types.py`: six distinct typed
+quantities — A_v (kinematic proxy, O(β), ℓ=1, NOT physical), Ω_tilt
+(physical tilt), W2, Σ, ΔΩ_k, background geometry. Cross-type
+arithmetic/ordering raise, cross-type equality is always False, and the
+only sanctioned conversion is bridge() across a registered equivalence
+edge (registry EMPTY → A_v→Ω_tilt refused); a bridged value carries a
+bridged:<edge> provenance and require_declared_provenance catches
+direct-reconstruction smuggling. Harmonic boost order-counted with a
+PURE-MONOMIAL check (A_v O(β), pure-monopole kinematic quadrupole
+O(β²); doppler_boost.py e1² is this channel, (4/5)e2β is the separate
+pre-existing-quadrupole aberration). Deprojection Σ̃²=Σ²−αΩ_tilt² =
+algebraically exact-by-construction synthetic estimator property
+(false-positive removal), never a detection. Response graph IMPORTS the
+PR-127 declared map → analytic rank = frozen 2 with kernel = the
+W2/ΔΩ_k joint null (rank drift raises; cannot contradict the frozen
+non-identification); a window collinearity between the two active axes
+drops observed rank to 1 and surfaces the aligned-axis rank-1
+exception. Ladder candidates labeled by highest rung whose evidence
+pointer resolves to a real artifact; require_rung_not_above rejects a
+claim past a gap; non-removed boost or rank-deficient response →
+non_identified. 6/6 mutations killed on production paths. Adversarial
+lane caught 2 P0 (identity-basis rank-4 contradiction with PR-127 →
+imported real map; direct-reconstruction firewall bypass → provenance
+system) + 5 P1/P2, all fixed pre-commit. **Checkpoint 080** written
+(80/113 = 70.8%): theory-foundation freeze gate PASS — 102 OPEN / 0
+RESCUED, 0 corrected-superseded miscounted as rescued, theorem registry
+33 ACTIVE/26 ACTIVE_CONDITIONAL/4 SUPERSEDED/2 RETRACTED (honest count
+12); data application NOT begun. Gates:
+`run_pr133_source_response_types.py --check` byte-stable +
+`test_pr133_source_response_types.py` (10). C2 pre-solver
+discrimination — no scalar family/global-tilt/geometry measurement;
+102 OPEN; DAG 80/113, next PR-134. See docs/PR_DELTAS/pr-133.md.
+
 ### PR-132 — Interval remainder certification and uncertainty propagation (rev-r209, 2026-07-18)
 
 Roadmap Wave-15 PR-132 (deps PR-131).
