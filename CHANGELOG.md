@@ -7,6 +7,43 @@
 
 ## [Unreleased]
 
+### PR-124 preflight — shared-context/CAS harness repair + GitHub-pushable repo (rev-r200, 2026-07-17)
+
+Executes the full repair PDR from the 2026-07-17 final harness audit
+(`docs/audits/shared_context_cas_harness_final_audit_20260717/`; verdict
+PRESERVE CORE / REPAIR ENFORCEMENT / REDUCE ORCHESTRATION / NEVER COLLAPSE
+CAS-4) plus the repo-hygiene/pushability track. **Harness (PDR Phases 0–3
+complete)**: idempotent context build + work-unit-cumulative spawn budgets +
+run-summary retention (13 historical runs frozen, future runs untracked);
+fail-closed assignment schema v2 (the audit's negative probe now returns 6
+errors), unique profile registry (3 duplicate tomls deleted; harness_engineer
+sandbox conflict resolved read-only), launcher receipts with
+`effective_context_sha256` + generic_prompted downgrade; hardened stop/start
+hooks (final-line marker, symlink pre-check, launch_id binding, sibling-read
++ duplicate-delivery gates); CAS_CONTRACT v2 + `cas_gate.py` four-axis state
+machine (Wolfram+xAct/SymPy/Sage+Singular/Lean all preflight-PASS;
+`CAS_4AXIS_PASS` requires 4×PASS under one contract hash, no majority vote,
+preregistered non-self-approved exceptions only; `run_egs3_v9_seals.py`
+labeled legacy diagnostic runner); normative dedup + conflicts + cross-run
+FINDING_LEDGER + content-addressed evidence store + exact test receipts. All
+14 audit §10 acceptance tests pass (`test_harness_enforcement.py`).
+**Roadmap**: AMENDMENT_01 (4 targeted edits only, per ADJ-ROADMAP-001) +
+sanctioned intake/mirror/remediation resync; DAG valid (113 PRs).
+**Repo**: ~300MB of archives untracked (bytes on disk; ledger+inventory byte
+authority), settings sanitized, workflows dispatch-gated, then an in-place
+git-filter-repo history rewrite: 839 commits mapped 1:1, pack 2.1GB→~325MB,
+zero >50MB blobs; commit map + strip list committed under
+`docs/git_history/`; sha256-pinned backup bundle + full pre-rewrite `.git`
+on the off-Dropbox NVMe; live-resolved commit pins rebound. **Pre-existing
+rot repaired**: baseline tests/contracts actually had 26 failures (stale
+canonical quarantine artifacts, 4.44σ-vs-4.44e-16 regex false positive,
+PR-122 graph/pin drift, stale figure packs, backlog metadata drift, pr123
+lab staleness); final suite **863 passed / 1 failed (cf4pp network-only) /
+15 xfailed** (quarantine-by-design + sealed-snapshot reds documented as
+strict=False xfails). No scientific state changed: 102 OPEN / 0 RESCUED,
+x_C + W2_max untouched, PR4/NPIPE skip principle unchanged. See
+docs/PR_DELTAS/pr-124-preflight.md.
+
 ### External GPT-5.6 phys-math harnesses mounted — research + coding protocol packages (rev-r199, 2026-07-14)
 
 Owner ask: unzip the two `*gpt56_harness` packages and mount them as additional harnesses on the project. Extracted `physmath-research-harness-gpt56.zip` (59 files, v3.1.0: phase-gated research protocol — research contract → evidence acquisition → claim audit → hypothesis space → adversarial review → validation → decision gate → formalization → closeout; durable `state/` ledgers; quick/ultralight prompts) → `harness/physmath-research-gpt56/` and `physmath-coding-harness-gpt56.zip` (46 files, v3.1.0: AGENTS.md task-contract/validation-ladder/completion-bar protocol for research code) → `harness/physmath-coding-gpt56/` (dedicated subdirs — both packages carry their own Makefile/CHANGELOG/README, so root extraction was forbidden). **Project instantiation (the actual mounting)**: `SCIENTIFIC_CONTRACT.md` filled with the BASS/HTT SSoT anchors (master identity x_C, parent identity c=(1,−1,1,1), W²=ω_abω^ab/(6H²), Π_BASS, T_CMB 2.72548, D_2=1002.086744 μK² bit-identity, W2_max=3.3789e-13, honest claim envelope, banned TCA/UFA/RSA, fail-closed semantics, frozen-surface change control — including the NSC-audit-confirmed unit conventions: CF4 SG columns are cz km/s NOT Mpc; 370 km/s is NONLINEAR σ_v, never "linear"); `VALIDATION_MATRIX.md` mapped to the real gate surface (tests/contracts, egs3/egs2/teff/pr07-gates, D_2 anchor, --check byte-stability, reproduce-v9) with honest statuses — GRF Hermitian-plane row FAIL, unit-provenance + systematics-injection gate classes NOT_RUN, DESI z-quadrature CONCERN, all keyed to the 2026-07-13 NSC audit must-fix list; research `state/RESEARCH_STATE.md` seeded with the program's primary question, promoted/on-hold/rejected hypothesis census (K5 headlines ON_HOLD per NSC P0s) and blockers. `tools/init_workspace.py --project` + `init_harness.py` run; **both validators PASS** (`make validate` / `make harness-check`). The 13 `.agents/skills` (8 research: research-contract, evidence-acquisition, claim-source-audit, hypothesis-space, adversarial-review, physics-math-validation, verification-design, research-closeout; 5 coding: research-code-task, scientific-validation, numerical-validation, independent-diff-review, reproducibility-closeout) mirrored into `.claude/skills/` (gitignored, zero name collisions with the 23 htt-* skills) and confirmed live in the skill registry. CLAUDE.md §2 directory map += `harness/` row. Zips left untracked at root. No research surface touched: cards/ledgers/gates/manuscript unchanged; NSC-audit remediation (REV-R199+ must-fix list) remains pending owner sign-off.
