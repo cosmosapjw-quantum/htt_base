@@ -1,7 +1,7 @@
 # Canonical Shared Context Pack
 
-Context version: `171f491640b11b62f88d3b9239b370429e7a81b648ffdcab1dc5f59bd2bdef28`
-Built at: `2026-07-17T19:12:50+00:00`
+Context version: `5fed311950dde4555421b22a4e0713a94582db12672a07f8379878a6cb1ff0ab`
+Built at: `2026-07-17T19:48:28+00:00`
 
 This pack contains only the shared Tier-0 context. Assignment-specific context and sibling results are intentionally excluded.
 
@@ -9,7 +9,7 @@ This pack contains only the shared Tier-0 context. Assignment-specific context a
 
 ## Source: `.agent-harness/context/SHARED_CONTEXT.md`
 
-SHA-256: `7cc26b5ffe7199d779ee130d985ef41f52af7aee4de51c8ffe6104ea00f9d9be`
+SHA-256: `67947782287327afcc15262c451081b19cbd5316783e8801435e4803142d506d`
 
 # Shared Context — long-horizon rescue execution
 
@@ -133,6 +133,10 @@ SHA-256: `7cc26b5ffe7199d779ee130d985ef41f52af7aee4de51c8ffe6104ea00f9d9be`
 | E-PR133-TYPES | `docs/generated/pr133_typed_quantities.json` | PR-133 runner (typed firewall + provenance audit) | `95e521c4b738d297bfafcf4f439cac67e855410c1185af1b841ceca3c474cb47` | C-PR133-SOURCE-RESPONSE-TYPES |
 | E-PR133-GRAPH | `docs/generated/pr133_response_graph.json` | PR-133 runner (PR-127-consistent response graph + ladder) | `8420d3cd69bc8a29764b548b23a983d9d59a4a1e22cc6de6bf3eb10fb5155901` | C-PR133-SOURCE-RESPONSE-TYPES |
 | E-PR133-BOOST | `docs/generated/pr133_harmonic_boost.json` | PR-133 runner (pure-monomial order counting) | `28713da790f7cf53e1b0ff6c95e9c94a8f1229737e18e4fe35cbcf386d74bafc` | C-PR133-SOURCE-RESPONSE-TYPES |
+| E-PR134-SPEC | `docs/research_program/long_horizon_rescue/pr134_spec.yaml` | reviewed repository edit (specification-first) | `cfe684f08ab5d560b2dd3e62aa123932b61fa09cb4afecf1165cf0eb1f7d5444` | C-PR134-ESTIMAND-REGISTRY |
+| E-PR134-REGISTRY | `docs/generated/pr134_contract_registry.json` | PR-134 runner (five typed representative contracts) | `885a3a972ffed53d40f4ffdcd2b2709bf555037eea3f882e63039b5cf87228c7` | C-PR134-ESTIMAND-REGISTRY |
+| E-PR134-GRAPH | `docs/generated/pr134_dependency_graph.json` | PR-134 runner (named dependence clusters) | `10db8ee186f4dfdddb5609d2ea48476694efb1c857fd0d9a324118705104bda8` | C-PR134-ESTIMAND-REGISTRY |
+| E-PR134-BRANCHES | `docs/generated/pr134_branch_separation.json` | PR-134 runner (template/covariance branch separation) | `ef1d9e07830efeb612d6659287b5967fd697d955b042294ffd9fad215dcc15b8` | C-PR134-ESTIMAND-REGISTRY |
 
 ## Known disputes and open questions
 

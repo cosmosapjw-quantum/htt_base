@@ -1,0 +1,42 @@
+{
+  "mutations": [
+    {
+      "kill_message_redacted": "contract registration missing fields: ['estimand']",
+      "kill_rule": "a contract omitting any required field is rejected by the fail-closed schema validator",
+      "killed": true,
+      "mutation_id": "hidden_default_field"
+    },
+    {
+      "kill_message_redacted": "channel fingerprint chan-98b67372cbe897cd already used by CF4_MV_BULKFLOW — flattening two distinct surveys (CF4_MV_BULKFLOW_CLONE and the former) under one channel is refused",
+      "kill_rule": "registering two distinct analysis ids with identical specification content (same channel fingerprint) is rejected by the channel-flattening guard through the public API",
+      "killed": true,
+      "mutation_id": "flattened_channel_type"
+    },
+    {
+      "kill_message_redacted": "dependence_cluster 'independent' names a flat/independent structure without a justification — independent-rows is never the silent default",
+      "kill_rule": "a dependence_cluster silently set to the flat/independent label without justification is rejected",
+      "killed": true,
+      "mutation_id": "independent_dependency_assumption"
+    },
+    {
+      "kill_message_redacted": "the mean component must be the deterministic_template_mean branch — branch mixing is refused",
+      "kill_rule": "composing a template mean with a covariance factor from a different branch/analysis is rejected by the branch separation validator",
+      "killed": true,
+      "mutation_id": "template_covariance_mix"
+    },
+    {
+      "kill_message_redacted": "analysis CF4_MV_BULKFLOW already registered with a different fingerprint — a field edit needs a NEW analysis_id and multiplicity, not an in-place change",
+      "kill_rule": "editing a registered contract field in place (same analysis_id) is rejected by the immutability guard; a rename-only revision that leaves prior_null_multiplicity unchanged is rejected by the multiplicity guard",
+      "killed": true,
+      "mutation_id": "posthoc_window_edit"
+    },
+    {
+      "kill_message_redacted": "analysis 'GHOST' is not registered",
+      "kill_rule": "an inference request naming an unregistered analysis_id is blocked",
+      "killed": true,
+      "mutation_id": "active_inference_without_registry"
+    }
+  ],
+  "schema": "pr134.mutation_report.v1",
+  "surviving_mutation_count": 0
+}

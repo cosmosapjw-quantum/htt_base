@@ -80,9 +80,9 @@ completed:
 - PR-131
 - PR-132
 - PR-133
+- PR-134
 blocked: []
 pending:
-- PR-134
 - PR-135
 - PR-136
 - PR-137
@@ -118,6 +118,12 @@ dormant_external:
 - PR-166
 in_progress: null
 execution_resolutions:
+  PR-134:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-134.md
+    resolved_on: '2026-07-18'
+    scientific_status_effect: none
+    scientific_status_after: OPEN
   PR-133:
     resolution: COMPLETED_SUCCESS
     receipt: docs/PR_DELTAS/pr-133.md
@@ -943,3 +949,29 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   pre-commit. Pre-solver discrimination diagnostic only; no Bianchi
   family, global tilt, or geometry is measured from any scalar value;
   102 findings OPEN; PR4 skipped.
+  PR-134 builds the estimand / population / dependency / selection /
+  nuisance typed registry that governs analysis specifications before
+  any inference. Each analysis carries a typed contract with every
+  field explicit and fail-closed (target population, observation unit,
+  dependence cluster, selection window, preprocessing, estimand,
+  nuisance family, prior/null/multiplicity, allowed transformations,
+  generative branch); a missing or blank field is rejected so no hidden
+  sample/window/depth convention survives. Five REPRESENTATIVE
+  contracts (CF4 MV bulk flow, K1 CMB isotropy, DESI number-count
+  dipole, ACT DR6 kappa, JWST anchors) are registered from documented
+  metadata as specification records only, with NO PR4 data run and no
+  measurement. Each contract carries a content-addressed estimand
+  fingerprint and a channel fingerprint (over the specification fields
+  minus the id); registering two distinct ids with identical content is
+  refused as channel flattening, an in-place edit is refused, and a
+  rename revision must name its predecessor and bump the look-elsewhere
+  multiplicity. Dependence is a named cluster and the independence guard
+  catches underscore, hyphen, and space separators. The deterministic
+  template-mean and stochastic covariance-factor generative branches
+  are separate and cross-branch or cross-analysis composition is
+  refused. Any active inference must route through the
+  require_registered_for_inference gate. Six preregistered mutations
+  killed on production paths; the adversarial lane confirmed the
+  specification-only data scope and fixed one P0 (separator-evadable
+  independence guard) plus four P1 and two P2. Estimand/analysis
+  specification mechanics only; 102 findings OPEN; PR4 skipped.

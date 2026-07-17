@@ -7,6 +7,34 @@
 
 ## [Unreleased]
 
+### PR-134 — Estimand/population/dependency/selection/nuisance registry (rev-r211, 2026-07-18)
+
+Roadmap Wave-16 PR-134 (deps PR-122/125/133).
+`htt/src/common/estimand_registry.py`: each analysis carries a TYPED
+contract with all 11 fields explicit and fail-closed (target population,
+observation unit, dependence cluster, selection window, preprocessing,
+estimand, nuisance family, prior/null/multiplicity, allowed
+transformations, generative branch) — a missing/blank field rejected,
+no hidden convention survives. Five REPRESENTATIVE contracts
+(CF4/K1/DESI/ACT/JWST) registered from documented metadata,
+**specification-only, NO PR4 data run / no measurement**. Content-
+addressed estimand fingerprint + channel fingerprint (spec fields minus
+id): two distinct ids with identical content refused as channel
+flattening (public API); in-place edit refused; a rename revision must
+name its predecessor + bump the look-elsewhere multiplicity. Dependence
+= named cluster with a separator-robust independence guard (underscore/
+hyphen/space); deterministic template-mean and stochastic covariance-
+factor branches separate (cross-branch/cross-analysis composition
+refused). 6/6 mutations killed on production paths. Adversarial lane
+confirmed the specification-only data scope and fixed 1 P0 (separator-
+evadable independence guard) + 4 P1 (unreachable flattening guard →
+channel fingerprint; unimplemented multiplicity → supersedes lineage;
+5-of-11 lint → comprehensive; inference gate wording) + 2 P2, all
+pre-commit. Gates: `run_pr134_estimand_registry.py --check` byte-stable
++ `test_pr134_estimand_registry.py` (12). C1 specification mechanics —
+no measurement/family/geometry; 102 OPEN; DAG 81/113, next PR-135. See
+docs/PR_DELTAS/pr-134.md.
+
 ### PR-133 — Source-response type system + checkpoint 080 (rev-r210, 2026-07-18)
 
 Roadmap Wave-15 PR-133 (deps PR-125/127/132; theory-foundation freeze).
@@ -16,7 +44,7 @@ quantities — A_v (kinematic proxy, O(β), ℓ=1, NOT physical), Ω_tilt
 arithmetic/ordering raise, cross-type equality is always False, and the
 only sanctioned conversion is bridge() across a registered equivalence
 edge (registry EMPTY → A_v→Ω_tilt refused); a bridged value carries a
-bridged:<edge> provenance and require_declared_provenance catches
+`bridged:edge` provenance and require_declared_provenance catches
 direct-reconstruction smuggling. Harmonic boost order-counted with a
 PURE-MONOMIAL check (A_v O(β), pure-monopole kinematic quadrupole
 O(β²); doppler_boost.py e1² is this channel, (4/5)e2β is the separate
