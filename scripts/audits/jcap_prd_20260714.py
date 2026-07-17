@@ -55,7 +55,10 @@ ATOMIC_LEDGER = AUDIT / "atomic_finding_ledger.json"
 SHORTLIST_FREEZE = AUDIT / "shortlist_freeze.json"
 BASELINE_HEAD = "8af39b36c1d5ed4f9b16f0bc71dbecd8b22548d4"
 PR117_COMMIT = "f96e8d9eed9d318141d9ea77ab3ce47c2acecef3"
-PR118_MANIFEST_SEAL_COMMIT = "294d74ce07de030da2f18720d3d45c8a2fef6e17"
+# PR-124 preflight (2026-07-17): rebased by the history rewrite; the
+# pre-rewrite id 294d74ce07de030da2f18720d3d45c8a2fef6e17 resolves via
+# docs/git_history/commit_map_20260717.tsv.
+PR118_MANIFEST_SEAL_COMMIT = "a1bfa463f11391ca01d8af077b9a3cdfe05a5205"
 PR117_SEALED_RUNNER_SHA256 = (
     "sha256:614630a438c046418703ec07dd91cf2d305b7ce8962b27904960c4d588c3fa0c"
 )

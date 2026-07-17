@@ -9,7 +9,10 @@ import numpy as np
 import pytest
 
 
-_FROZEN_SOURCE_COMMIT = "e6da3670043596efdcd93f9ba5e631e1462146c7"
+# PR-124 preflight (2026-07-17): rebased by the history rewrite; the
+# pre-rewrite id e6da3670043596efdcd93f9ba5e631e1462146c7 resolves via
+# docs/git_history/commit_map_20260717.tsv.
+_FROZEN_SOURCE_COMMIT = "47693b06f06ee61f758371f0dca1dad6a0028191"
 _FROZEN_CONSUMER_PATHS = (
     "htt/htt/htt/core/directional_models.py",
     "htt/htt/htt/core/departure_posteriors.py",
