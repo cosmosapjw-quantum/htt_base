@@ -1,7 +1,7 @@
 # Canonical Shared Context Pack
 
-Context version: `8a8a8477a5b9111e1957ee5d8b49baadfb9802acad4264e32fde5567cbdad7d1`
-Built at: `2026-07-17T20:26:10+00:00`
+Context version: `22068e0a3bf9911078a73d57ed28c107f44f9babe00d8dc9375db0a7bd99c34e`
+Built at: `2026-07-17T21:10:03+00:00`
 
 This pack contains only the shared Tier-0 context. Assignment-specific context and sibling results are intentionally excluded.
 
@@ -9,7 +9,7 @@ This pack contains only the shared Tier-0 context. Assignment-specific context a
 
 ## Source: `.agent-harness/context/SHARED_CONTEXT.md`
 
-SHA-256: `2f474c2fa00508dabcf60d176e42c75a4b49f61179d2f8ee16f8de7acb176443`
+SHA-256: `5a6be254dda96e28ee3c952b6b3f5f535e3d0fc6ad893fc7cb75c183824dcb70`
 
 # Shared Context — long-horizon rescue execution
 
@@ -141,6 +141,10 @@ SHA-256: `2f474c2fa00508dabcf60d176e42c75a4b49f61179d2f8ee16f8de7acb176443`
 | E-PR135-ENUM | `docs/generated/pr135_exact_enumeration.json` | PR-135 runner (real exact enumeration exercising the estimator) | `846d90d73bff86a800f9f5b168f9387167152f263f8ff2c6513d79967fdc7846` | C-PR135-FINITE-NULL-RANK |
 | E-PR135-SIM | `docs/generated/pr135_type_i_simulation.json` | PR-135 runner (super-uniform type-I + b/N negative control) | `8240df0f24dc5d355424ae73cf4d05ebb93ee4d16ae562d8301db3e32f7e6a78` | C-PR135-FINITE-NULL-RANK |
 | E-PR135-SCAN | `docs/generated/pr135_max_scan.json` | PR-135 runner (dependence-preserving scan + split) | `c80ad41f95ecad3ef5231cfd1ad364c5d80f18f4e85d174a561b093fbe814631` | C-PR135-FINITE-NULL-RANK |
+| E-PR136-SPEC | `docs/research_program/long_horizon_rescue/pr136_spec.yaml` | reviewed repository edit (specification-first) | `23b012ed21e0e7bc11f07d707805d36c0dee5226b2fabab00e97a0a8f49fbe88` | C-PR136-IDENTIFIED-SET |
+| E-PR136-SETS | `docs/generated/pr136_identified_sets.json` | PR-136 runner (four fixtures, exact + numeric) | `f0cf8791af0154994881d07b70b30477013b8c4e5005f633f17c47c7e8fffde0` | C-PR136-IDENTIFIED-SET |
+| E-PR136-CROSS | `docs/generated/pr136_cross_engine.json` | PR-136 runner (dual-engine agreement) | `92a0119536c1a327095590c5ac014d95dc5991535a373614ccd8ab80f27317eb` | C-PR136-IDENTIFIED-SET |
+| E-PR136-SUBVECTOR | `docs/generated/pr136_subvector.json` | PR-136 runner (full vs subvector projection) | `e173119339449b1909240a05b83b6fe0c94135f65db033a84af2eb8711875143` | C-PR136-IDENTIFIED-SET |
 
 ## Known disputes and open questions
 

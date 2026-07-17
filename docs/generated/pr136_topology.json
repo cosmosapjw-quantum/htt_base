@@ -1,0 +1,30 @@
+{
+  "fixture_statuses": {
+    "bounded_box": "bounded",
+    "disconnected_sign": "disconnected",
+    "empty_infeasible": "empty",
+    "rank_deficient_unbounded": "unbounded"
+  },
+  "provenance": {
+    "cross_engine_agreement": true,
+    "exact_engine": "exact_fraction",
+    "kernel_source": "htt/src/common/graded_nonid.py (PR-127)",
+    "numeric_engine": "scipy_highs"
+  },
+  "schema": "pr136.topology.v1",
+  "set_valued_fields": [
+    "status",
+    "axis_intervals",
+    "vertices",
+    "recession_rays",
+    "components",
+    "tolerance"
+  ],
+  "status_vocabulary": [
+    "bounded",
+    "empty",
+    "unbounded",
+    "disconnected",
+    "undetermined"
+  ]
+}

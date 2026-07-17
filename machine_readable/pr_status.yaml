@@ -82,9 +82,9 @@ completed:
 - PR-133
 - PR-134
 - PR-135
+- PR-136
 blocked: []
 pending:
-- PR-136
 - PR-137
 - PR-138
 - PR-139
@@ -118,6 +118,12 @@ dormant_external:
 - PR-166
 in_progress: null
 execution_resolutions:
+  PR-136:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-136.md
+    resolved_on: '2026-07-18'
+    scientific_status_effect: none
+    scientific_status_after: OPEN
   PR-135:
     resolution: COMPLETED_SUCCESS
     receipt: docs/PR_DELTAS/pr-135.md
@@ -1006,3 +1012,31 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   tautological enumeration and a powerless type-I control) plus three P1
   and two P2. Matched-null-conditioned global calibration mechanics
   only; no detection; 102 findings OPEN; PR4 skipped.
+  PR-136 builds the generic partial-identification and identified-set
+  engine over the PR-127 graded basis. One API computes the identified
+  set of the parameter vector under equality and inequality constraints
+  and classifies its topology as bounded, empty, unbounded,
+  disconnected, or undetermined. The exact engine computes the TRUE
+  continuous per-axis identified interval by exact-Fraction
+  constraint intersection for axis-separable linear constraints (a
+  multi-axis constraint is refused as out of exact scope rather than
+  silently undersampled), and the scipy HiGHS numeric engine
+  cross-checks it; the two must agree on the status, the unbounded
+  axes, and EVERY bounded axis interval to a tolerance, including a
+  bounded axis inside an overall-unbounded set. The response-rank
+  deficiency case is unbounded along exactly the PR-127 kernel axes
+  W2 and DeltaOmega_k, derived live from graded_nonid.
+  EXPECTED_KERNEL_BASIS so a PR-127 edit cannot silently desync. The
+  full-parameter and subvector identified sets are reported separately
+  as set-valued artifacts, and the disconnected sign fixture has two
+  components of positive width separated by an excluded open gap. An
+  empty set is infeasibility, a broad set is uncertainty, and solver
+  nonconvergence is undetermined; the admissible box is pinned before
+  the fit and a real proposed-shrink guard refuses any tighter bound.
+  Six preregistered mutations killed on production paths; the
+  adversarial lane found the exact engine was a grid undersample and
+  the cross-engine check skipped bounded axes inside unbounded sets
+  (two P0), plus four P1/P2, all fixed by the exact interval-
+  intersection rewrite and the widened cross-engine comparison.
+  Formal identified-region mechanics only; no detection; 102 findings
+  OPEN; PR4 skipped.

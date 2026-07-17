@@ -128,6 +128,10 @@
 | E-PR135-ENUM | `docs/generated/pr135_exact_enumeration.json` | PR-135 runner (real exact enumeration exercising the estimator) | `846d90d73bff86a800f9f5b168f9387167152f263f8ff2c6513d79967fdc7846` | C-PR135-FINITE-NULL-RANK |
 | E-PR135-SIM | `docs/generated/pr135_type_i_simulation.json` | PR-135 runner (super-uniform type-I + b/N negative control) | `8240df0f24dc5d355424ae73cf4d05ebb93ee4d16ae562d8301db3e32f7e6a78` | C-PR135-FINITE-NULL-RANK |
 | E-PR135-SCAN | `docs/generated/pr135_max_scan.json` | PR-135 runner (dependence-preserving scan + split) | `c80ad41f95ecad3ef5231cfd1ad364c5d80f18f4e85d174a561b093fbe814631` | C-PR135-FINITE-NULL-RANK |
+| E-PR136-SPEC | `docs/research_program/long_horizon_rescue/pr136_spec.yaml` | reviewed repository edit (specification-first) | `23b012ed21e0e7bc11f07d707805d36c0dee5226b2fabab00e97a0a8f49fbe88` | C-PR136-IDENTIFIED-SET |
+| E-PR136-SETS | `docs/generated/pr136_identified_sets.json` | PR-136 runner (four fixtures, exact + numeric) | `f0cf8791af0154994881d07b70b30477013b8c4e5005f633f17c47c7e8fffde0` | C-PR136-IDENTIFIED-SET |
+| E-PR136-CROSS | `docs/generated/pr136_cross_engine.json` | PR-136 runner (dual-engine agreement) | `92a0119536c1a327095590c5ac014d95dc5991535a373614ccd8ab80f27317eb` | C-PR136-IDENTIFIED-SET |
+| E-PR136-SUBVECTOR | `docs/generated/pr136_subvector.json` | PR-136 runner (full vs subvector projection) | `e173119339449b1909240a05b83b6fe0c94135f65db033a84af2eb8711875143` | C-PR136-IDENTIFIED-SET |
 
 ## Known disputes and open questions
 

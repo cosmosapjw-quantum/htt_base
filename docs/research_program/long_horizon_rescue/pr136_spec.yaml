@@ -1,0 +1,182 @@
+schema: htt.long_horizon.pr136_identified_set.v1
+spec_version: 1
+pr_id: PR-136
+title: Generic partial-identification and identified-set engine
+baseline_commit: 8237231349ece91a76365e849cf37eba1b5f6837
+reviewed_on: '2026-07-18'
+owner: HTT
+contributors:
+  - OBSSTAT
+  - COMMON
+implementation_scope:
+  - common
+artifact_mode: statistical_governance_diagnostic
+allowed_use:
+  - equality_inequality_identified_set
+  - full_and_subvector_projection
+  - set_topology_classification
+  - cross_engine_boundary_agreement
+public_use: false
+claim_tier: conditional
+claim_tier_ceiling: conditional
+claim_level:
+  scheme: roadmap_rescue_v1
+  level: C2
+scientific_status: OPEN
+scientific_effect: none
+transfer_source: none
+
+claim_identity:
+  claim_id: C-PR136-IDENTIFIED-SET
+  claim_text: >-
+    A single API computes the identified set of a parameter vector under
+    equality and inequality constraints with nuisance projection, and
+    classifies its topology as BOUNDED, EMPTY, UNBOUNDED, or
+    DISCONNECTED — including the response-rank-deficiency case where the
+    PR-127 kernel directions {e_W2, e_DeltaOmega_k} make the set
+    unbounded. The full-parameter identified set and any subvector
+    identified set (projection onto a coordinate subset) are computed
+    and reported SEPARATELY as SET-VALUED artifacts (vertices, rays,
+    interval hull, topology), never a scalar point estimate. Two
+    independent engines — an exact-Fraction polyhedral analysis and a
+    floating-point linear program (scipy) — must AGREE on the set
+    status and the boundary; a disagreement blocks the downstream
+    numerical claim. An EMPTY set is infeasibility, never a detection; a
+    BROAD set is wide uncertainty, never a central estimate; and solver
+    nonconvergence is reported as UNDETERMINED, never as
+    non-identification. The nuisance class and the admissible set are
+    fixed before the fit and are never shrunk to an observed value, and
+    projection and optimization tolerances are carried inside the
+    uncertainty, never hidden. Formal/algorithmic identified-region
+    mechanics only (Chen-Christensen-Tamer methodology) — no detection.
+  domain: axis_separable_linear_and_sign_constrained_partial_identification_only
+  scope_note: >-
+    the exact engine computes the TRUE continuous identified set by
+    exact constraint intersection for AXIS-SEPARABLE linear constraints
+    (each constraint touches one axis) plus the sign/absolute-value
+    disconnection fixture; a multi-axis constraint is refused as
+    out-of-exact-scope rather than silently undersampled. KERNEL_AXES is
+    derived live from the PR-127 EXPECTED_KERNEL_BASIS.
+  frame: binds_pr127_graded_kernel_and_pr134_estimand_registry
+  claim_level_scheme: roadmap_rescue_v1
+  claim_level: C2
+
+scope_and_non_goals:
+  empty_set_as_detection: forbidden
+  broad_set_as_central_estimate: forbidden
+  nonconvergence_as_non_identification: forbidden
+  shrinking_nuisance_or_admissible_set_to_observed_fit: forbidden
+  hiding_projection_or_optimization_tolerance: forbidden
+  scalar_summary_instead_of_set_valued_artifact: forbidden
+  remediation_disposition_change: forbidden
+
+remediation_state_contract:
+  path: docs/codex_handoff/research_remediation_state.yaml
+  sha256: f16d9754828bb32ae4cef92f585af82ae7fd1caa2687a7b4144bc1e942328dd9
+  finding_count: 102
+  required_scientific_status_counts: {OPEN: 102}
+  rescued_count: 0
+
+data_scope:
+  pr4_data_work: skip_entirely_by_user_scope
+  pr4_commands_run_required: 0
+
+engine:
+  module: htt/src/common/identified_set.py
+  parameter_axes: '(Sigma2, W2, Omega_tilt, DeltaOmega_k) — the PR-127 graded basis'
+  exact_engine: exact-Fraction axis-separable interval intersection (TRUE continuous per-axis identified interval; multi-axis constraints refused as out-of-scope)
+  numeric_engine: scipy.optimize.linprog (HiGHS) feasibility + per-axis min/max bounds
+  cross_engine_rule: >-
+    both engines must agree on the set STATUS (bounded/empty/unbounded)
+    and, when bounded, on each axis interval to a declared tolerance; a
+    disagreement raises and blocks the downstream claim.
+  status_vocabulary: [bounded, empty, unbounded, disconnected, undetermined]
+  nonconvergence_rule: >-
+    a solver that fails to converge yields status UNDETERMINED, never
+    non_identification or empty.
+
+fixtures:
+  - name: bounded_box
+    description: a bounded box on all four axes (equality on Sigma2, inequalities boxing the rest)
+    expected_status: bounded
+  - name: empty_infeasible
+    description: contradictory inequalities (x >= 1 and x <= 0) give an empty identified set (infeasibility, not detection)
+    expected_status: empty
+  - name: rank_deficient_unbounded
+    description: no constraint on the PR-127 kernel axes (W2, DeltaOmega_k) leaves the set unbounded along the kernel
+    expected_status: unbounded
+  - name: disconnected_sign
+    description: an absolute-value/sign constraint |Omega_tilt| >= c splits the set into two disjoint components
+    expected_status: disconnected
+
+subvector:
+  rule: >-
+    the subvector identified set is the projection of the full identified
+    set onto the requested axes; it is computed and labeled separately
+    from the full-parameter set and may be bounded even when the full set
+    is unbounded (or vice versa).
+
+topology_and_provenance:
+  set_valued_artifact_fields: [status, axis_intervals, vertices, recession_rays, components, tolerance]
+  provenance_fields: [exact_engine, numeric_engine, cross_engine_agreement, kernel_source]
+
+negative_scan:
+  targets:
+    - htt/src/common/identified_set.py
+    - docs/generated/pr136_captions.json
+  forbidden_patterns:
+    - 'empty set is a detection'
+    - 'broad set as the central estimate'
+    - 'nonconvergence means non-identification'
+    - 'point-identified the shear'
+    - 'shrink the admissible set to the fit'
+  rule: >-
+    active PR-136 surfaces must never read an empty set as a detection, a
+    broad set as a central estimate, nonconvergence as non-identification,
+    or shrink the admissible set to the observed fit.
+
+mutation_registry:
+  - mutation_id: empty_as_detection
+    kill_rule: labeling an empty identified set a detection is rejected by the status-semantics validator
+  - mutation_id: broad_as_central
+    kill_rule: emitting a scalar central estimate for a broad (wide-interval) set is rejected by the set-valued-only guard
+  - mutation_id: nonconvergence_as_nonid
+    kill_rule: mapping a solver nonconvergence to non_identification (instead of undetermined) is rejected by the status vocabulary guard
+  - mutation_id: cross_engine_disagreement
+    kill_rule: a fabricated status disagreement between the exact and numeric engines raises and blocks the claim
+  - mutation_id: scalar_summary_only
+    kill_rule: an artifact carrying only a scalar summary and no set-valued fields is rejected by the artifact schema
+  - mutation_id: admissible_shrink_to_fit
+    kill_rule: shrinking the admissible box to an observed point after seeing it is rejected by the pre-registered admissible-set pin
+
+artifact_contract:
+  outputs:
+    - docs/generated/pr136_identified_sets.json
+    - docs/generated/pr136_cross_engine.json
+    - docs/generated/pr136_subvector.json
+    - docs/generated/pr136_topology.json
+    - docs/generated/pr136_captions.json
+    - docs/generated/pr136_mutation_report.json
+    - docs/generated/pr136_artifact_manifest.json
+  check_policy: fresh_build_must_equal_disk_bytes
+
+acceptance_and_kill_switches:
+  - each fixture (bounded/empty/unbounded/disconnected) is classified correctly by BOTH engines with agreement
+  - the rank-deficient case is unbounded along exactly the PR-127 kernel directions
+  - the full-parameter and subvector identified sets are reported separately as set-valued artifacts
+  - an empty set is labeled infeasibility, a broad set is labeled uncertainty, and nonconvergence is labeled undetermined
+  - a cross-engine status disagreement raises and blocks the claim
+  - every registered mutation executes and is killed
+  - all 102 remediation findings remain OPEN
+
+forbidden_output_language:
+  - empty set is a detection
+  - broad set as the central estimate
+  - nonconvergence means non-identification
+  - point-identified the shear
+  - shear detected
+  - isotropy established
+  - Bianchi geometry detected
+  - Bianchi family identified
+  - finding rescued
+  - validated as native

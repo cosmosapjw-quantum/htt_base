@@ -7,6 +7,34 @@
 
 ## [Unreleased]
 
+### PR-136 — Generic partial-identification and identified-set engine (rev-r213, 2026-07-18)
+
+Roadmap Wave-16 PR-136 (deps PR-127/134).
+`htt/src/common/identified_set.py`: one API computes the identified set
+of (Σ², W², Ω_tilt, ΔΩ_k) under equality/inequality constraints and
+classifies bounded/empty/unbounded/disconnected/undetermined. The exact
+engine computes the TRUE continuous per-axis interval by exact-Fraction
+constraint intersection (axis-separable scope; multi-axis refused as
+out-of-scope, not undersampled); scipy HiGHS cross-checks. Both engines
+must agree on status, unbounded axes, and EVERY bounded axis interval —
+including a bounded axis inside an overall-unbounded set. Rank
+deficiency is unbounded along exactly the PR-127 kernel {W2, ΔΩ_k},
+DERIVED live from graded_nonid.EXPECTED_KERNEL_BASIS (no desync). Full
+vs subvector sets reported separately as set-valued artifacts;
+disconnected sign fixture has two positive-width components + excluded
+gap. Semantics enforced (empty≠detection, broad≠central,
+nonconvergence≠non-identification); admissible box pinned pre-fit with
+a real proposed-shrink guard. 6/6 mutations killed on production paths.
+Adversarial lane found 2 P0 (the exact engine was a grid undersample;
+cross-engine skipped bounded axes inside unbounded sets) + 4 P1/P2 —
+all fixed by the exact interval-intersection rewrite, widened
+cross-engine comparison, live PR-127 kernel binding, nonconvergence→
+undetermined, and interior-width disconnected fixture. Gates:
+`run_pr136_identified_set.py --check` byte-stable +
+`test_pr136_identified_set.py` (16). C2 formal identified region — no
+detection; 102 OPEN; DAG 83/113, next PR-137.
+See docs/PR_DELTAS/pr-136.md.
+
 ### PR-135 — Exchangeable observation-inclusive finite-null global ranking (rev-r212, 2026-07-18)
 
 Roadmap Wave-16 PR-135 (deps PR-123/134).

@@ -1,0 +1,244 @@
+"""PR-136 contract tests: identified-set engine."""
+from __future__ import annotations
+
+import json
+import subprocess
+import sys
+from fractions import Fraction
+from pathlib import Path
+
+import pytest
+
+from common.identified_set import (
+    AXES,
+    KERNEL_AXES,
+    AdmissibleBox,
+    IdentifiedSetError,
+    LinearConstraint,
+    axis_constraint,
+    classify_status_from_solver,
+    disconnected_components,
+    exact_engine,
+    generate_caption,
+    lint_caption,
+    numeric_engine,
+    require_cross_engine_agreement,
+    subvector_projection,
+    validate_set_valued,
+    validate_status_semantics,
+    verify_kernel_binding,
+)
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+
+
+def _bounded():
+    return [axis_constraint("Sigma2", "==", 1)] + \
+        [axis_constraint(a, ">=", -1) for a in AXES[1:]] + \
+        [axis_constraint(a, "<=", 1) for a in AXES[1:]]
+
+
+def _empty():
+    return [axis_constraint("Sigma2", ">=", 1),
+            axis_constraint("Sigma2", "<=", 0)]
+
+
+def _rank_deficient():
+    return [axis_constraint("Sigma2", "==", 0),
+            axis_constraint("Omega_tilt", ">=", -1),
+            axis_constraint("Omega_tilt", "<=", 1)]
+
+
+def test_exact_engine_is_true_continuous_not_grid() -> None:
+    # a non-integer boundary: the exact engine must return the TRUE
+    # continuous interval [-1, 3/2], not a grid undersample
+    cons = [axis_constraint("Sigma2", "==", 1),
+            axis_constraint("W2", ">=", -1),
+            axis_constraint("W2", "<=", Fraction(3, 2))] + \
+        [axis_constraint(a, ">=", -1) for a in ("Omega_tilt",
+                                                "DeltaOmega_k")] + \
+        [axis_constraint(a, "<=", 1) for a in ("Omega_tilt",
+                                               "DeltaOmega_k")]
+    e = exact_engine(cons)
+    n = numeric_engine(cons)
+    assert e["axis_intervals"]["W2"] == ["-1", "3/2"]
+    assert n["axis_intervals"]["W2"] == [-1.0, 1.5]
+    require_cross_engine_agreement(e, n)
+
+
+def test_multi_axis_constraint_refused() -> None:
+    multi = LinearConstraint((Fraction(1), Fraction(1), Fraction(0),
+                              Fraction(0)), "<=", Fraction(1))
+    with pytest.raises(IdentifiedSetError, match="AXIS-SEPARABLE"):
+        exact_engine([axis_constraint("Sigma2", "==", 0), multi])
+
+
+def test_bounded_both_engines_agree() -> None:
+    e = exact_engine(_bounded())
+    n = numeric_engine(_bounded())
+    assert e["status"] == n["status"] == "bounded"
+    require_cross_engine_agreement(e, n)
+    assert e["axis_intervals"]["Sigma2"] == ["1", "1"]
+
+
+def test_empty_both_engines_agree() -> None:
+    e = exact_engine(_empty())
+    n = numeric_engine(_empty())
+    assert e["status"] == n["status"] == "empty"
+    require_cross_engine_agreement(e, n)
+
+
+def test_rank_deficient_unbounded_on_kernel() -> None:
+    e = exact_engine(_rank_deficient())
+    n = numeric_engine(_rank_deficient())
+    assert e["status"] == n["status"] == "unbounded"
+    assert set(e["unbounded_axes"]) == set(KERNEL_AXES)
+    assert set(n["unbounded_axes"]) == set(KERNEL_AXES)
+    require_cross_engine_agreement(e, n)
+
+
+def test_cross_engine_checks_bounded_axis_inside_unbounded_set() -> None:
+    # a bounded Omega_tilt with a non-integer bound INSIDE an
+    # overall-unbounded set must still be cross-checked (the P0 hole)
+    cons = [axis_constraint("Sigma2", "==", 0),
+            axis_constraint("Omega_tilt", ">=", -1),
+            axis_constraint("Omega_tilt", "<=", Fraction(3, 2))]
+    e = exact_engine(cons)
+    n = numeric_engine(cons)
+    assert e["status"] == "unbounded"
+    require_cross_engine_agreement(e, n)
+    # a fabricated exact interval on the bounded axis must be caught even
+    # though the overall status is unbounded
+    e_bad = {"status": "unbounded",
+             "axis_intervals": dict(e["axis_intervals"],
+                                    Omega_tilt=["-1", "99"]),
+             "unbounded_axes": e["unbounded_axes"]}
+    with pytest.raises(IdentifiedSetError, match="boundary disagreement"):
+        require_cross_engine_agreement(e_bad, n)
+
+
+def test_kernel_binding_live() -> None:
+    binding = verify_kernel_binding()
+    assert binding["bound_live"] is True
+    assert set(KERNEL_AXES) == {"W2", "DeltaOmega_k"}
+
+
+def test_disconnected_two_components_with_width() -> None:
+    box = AdmissibleBox(lower={a: Fraction(-3) for a in AXES},
+                        upper={a: Fraction(3) for a in AXES},
+                        pinned_id="pin1")
+    dc = disconnected_components("Omega_tilt", Fraction(1), box)
+    assert dc["status"] == "disconnected"
+    assert {c["component"] for c in dc["components"]} == \
+        {"positive", "negative"}
+    # genuine interior width, not two isolated points
+    pos = next(c for c in dc["components"] if c["component"] == "positive")
+    assert pos["abs_axis_interval"] == ["1", "3"]
+    assert dc["excluded_open_gap"] == ["-1", "1"]
+    # threshold at the box edge (no width) is refused
+    with pytest.raises(IdentifiedSetError, match="strictly inside"):
+        disconnected_components("Omega_tilt", Fraction(3), box)
+
+
+def test_subvector_projection_separate() -> None:
+    e = exact_engine(_rank_deficient())
+    sub_nonkernel = subvector_projection(e, ["Sigma2", "Omega_tilt"])
+    sub_kernel = subvector_projection(e, list(KERNEL_AXES))
+    # the full set is unbounded; the non-kernel subvector is bounded
+    assert sub_nonkernel["status"] == "bounded"
+    assert sub_kernel["status"] == "unbounded"
+
+
+def test_cross_engine_disagreement_blocks() -> None:
+    exact = {"status": "bounded",
+             "axis_intervals": {a: ["0", "1"] for a in AXES},
+             "unbounded_axes": []}
+    numeric = {"status": "unbounded", "axis_intervals": None,
+               "unbounded_axes": list(AXES)}
+    with pytest.raises(IdentifiedSetError, match="STATUS disagreement"):
+        require_cross_engine_agreement(exact, numeric)
+
+
+def test_status_semantics_guards() -> None:
+    validate_status_semantics("bounded", "a wide uncertainty region")
+    with pytest.raises(IdentifiedSetError, match="NEVER a detection"):
+        validate_status_semantics("empty", "this is a detection")
+    with pytest.raises(IdentifiedSetError, match="NEVER a central"):
+        validate_status_semantics("bounded", "the central estimate is x")
+    with pytest.raises(IdentifiedSetError, match="NEVER a"):
+        validate_status_semantics("undetermined", "non-identification")
+
+
+def test_classify_from_solver() -> None:
+    assert classify_status_from_solver(False, True, False) == "undetermined"
+    assert classify_status_from_solver(True, False, False) == "empty"
+    assert classify_status_from_solver(True, True, True) == "unbounded"
+    assert classify_status_from_solver(True, True, False) == "bounded"
+
+
+def test_set_valued_and_admissible_pin() -> None:
+    validate_set_valued({"status": "bounded", "axis_intervals": {}})
+    with pytest.raises(IdentifiedSetError, match="scalar summary"):
+        validate_set_valued({"central_estimate": 0.5})
+    box = AdmissibleBox(lower={a: Fraction(-3) for a in AXES},
+                        upper={a: Fraction(3) for a in AXES},
+                        pinned_id="pin1")
+    # a REAL shrink (tighter than the pin) is refused
+    with pytest.raises(IdentifiedSetError, match="tighter than the pinned"):
+        box.validate_proposed({"Omega_tilt": Fraction(-1, 10)},
+                              {"Omega_tilt": Fraction(1, 10)})
+    with pytest.raises(IdentifiedSetError, match="tighter than the pinned"):
+        box.refuse_shrink_to([Fraction(0)] * len(AXES))
+    # an equal or wider proposal is allowed (not a shrink)
+    box.validate_proposed({}, {"Omega_tilt": Fraction(3)})
+    box.validate_proposed({}, {"Omega_tilt": Fraction(5)})
+
+
+def test_caption_gate() -> None:
+    text = generate_caption({"bounded_box": "bounded"})
+    lint_caption(text)
+    for suffix in (" The empty set is" + " a detection.",
+                   " Report the broad set as" + " the central estimate.",
+                   " Nonconvergence means" + " non-identification.",
+                   " We point-identified" + " the shear."):
+        with pytest.raises(IdentifiedSetError, match="forbidden"):
+            lint_caption(text + suffix)
+
+
+def test_runner_check_mode_is_current() -> None:
+    result = subprocess.run(
+        [sys.executable,
+         str(REPO_ROOT /
+             "scripts/codex_harness/run_pr136_identified_set.py"),
+         "--check"],
+        cwd=REPO_ROOT, capture_output=True, text=True, check=False,
+    )
+    assert result.returncode == 0, result.stdout + result.stderr
+
+
+def test_artifacts_statuses_and_mutations() -> None:
+    sets = json.loads(
+        (REPO_ROOT / "docs/generated/pr136_identified_sets.json")
+        .read_text(encoding="utf-8"))
+    assert sets["statuses"] == {
+        "bounded_box": "bounded", "empty_infeasible": "empty",
+        "rank_deficient_unbounded": "unbounded",
+        "disconnected_sign": "disconnected"}
+    cross = json.loads(
+        (REPO_ROOT / "docs/generated/pr136_cross_engine.json")
+        .read_text(encoding="utf-8"))
+    assert cross["all_agree"] is True
+    sub = json.loads(
+        (REPO_ROOT / "docs/generated/pr136_subvector.json")
+        .read_text(encoding="utf-8"))
+    assert sub["subvector_non_kernel"]["status"] == "bounded"
+    assert sub["subvector_kernel"]["status"] == "unbounded"
+    report = json.loads(
+        (REPO_ROOT / "docs/generated/pr136_mutation_report.json")
+        .read_text(encoding="utf-8"))
+    assert report["surviving_mutation_count"] == 0
+    assert len(report["mutations"]) == 6
+    manifest = json.loads(
+        (REPO_ROOT / "docs/generated/pr136_artifact_manifest.json")
+        .read_text(encoding="utf-8"))
+    assert all(sha for sha in manifest["artifacts"].values())
