@@ -83,9 +83,9 @@ completed:
 - PR-134
 - PR-135
 - PR-136
+- PR-137
 blocked: []
 pending:
-- PR-137
 - PR-138
 - PR-139
 - PR-140
@@ -118,6 +118,12 @@ dormant_external:
 - PR-166
 in_progress: null
 execution_resolutions:
+  PR-137:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-137.md
+    resolved_on: '2026-07-18'
+    scientific_status_effect: none
+    scientific_status_after: OPEN
   PR-136:
     resolution: COMPLETED_SUCCESS
     receipt: docs/PR_DELTAS/pr-136.md
@@ -1039,4 +1045,30 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   (two P0), plus four P1/P2, all fixed by the exact interval-
   intersection rewrite and the widened cross-engine comparison.
   Formal identified-region mechanics only; no detection; 102 findings
+  OPEN; PR4 skipped.
+  PR-137 builds the weak-identification boundary and grid-conditional
+  simultaneous coverage machinery. A pre-registered DGP grid crosses the
+  point-identified, partially-identified, and unidentified regimes via
+  the identified-set half-width w, and the complete frozen Imbens-Manski
+  confidence interval is measured for simultaneous empirical coverage of
+  the true parameter at the LEAST-FAVORABLE boundary position (theta0 at
+  the identified-set edge, not the coverage-easy midpoint). The reported
+  bound is a genuine family-wise SIMULTANEOUS 99 percent lower bound
+  (Bonferroni over all grid points, per-point confidence 0.99889), not a
+  per-point marginal bound. Near-boundary points (family-wise lower
+  bound within 0.01 of the 0.93 retain threshold at 2000 replicates) are
+  extended to 10000 replicates by the pre-registered adaptive rule; the
+  minimum family-wise lower bound is then 0.9402 and all nine points are
+  retained. An adversarial naive c=0 procedure populates the failure map
+  (its below-threshold points preserved, never removed). Two mesh
+  refinements report the worst-case coverage change (0.0006) and the
+  optimizer endpoint error, and the mesh kill condition is enforced in
+  the build. The word uniform (class-wide coverage) is lint-refused
+  without a registered continuity/mesh certificate. Six preregistered
+  mutations killed on production paths. The adversarial lane confirmed
+  the core statistics match Imbens-Manski and Clopper-Pearson exactly
+  and fixed four P1 (family-wise mislabeling now Bonferroni, unenforced
+  mesh kill, strawman binomial mutant, undisclosed midpoint-only DGP)
+  and three P2, all pre-commit. Grid-conditional coverage-calibrated
+  partial-identification mechanics only; no detection; 102 findings
   OPEN; PR4 skipped.

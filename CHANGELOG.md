@@ -7,6 +7,35 @@
 
 ## [Unreleased]
 
+### PR-137 — Weak-identification boundary and grid-conditional simultaneous coverage (rev-r214, 2026-07-18)
+
+Roadmap Wave-16 PR-137 (deps PR-123/135/136).
+`htt/src/common/weak_id_coverage.py`: a pre-registered DGP grid crosses
+point/partial/unidentified regimes via the identified-set half-width w;
+the frozen Imbens-Manski CI (c(w) solves Phi(c+w/s)−Phi(−c)=0.95) is
+measured for simultaneous empirical coverage at the LEAST-FAVORABLE
+boundary theta0. The reported bound is a genuine family-wise
+SIMULTANEOUS 99% lower bound (Bonferroni over all 9 grid points,
+per-point conf 0.99889), not a per-point marginal one; near-boundary
+points are extended to 10000 replicates by the pre-registered adaptive
+rule → min family-wise lower bound 0.9402, all 9 retained. An
+adversarial naive c=0 procedure populates the failure map (below-
+threshold points preserved). Two mesh refinements report worst-case
+coverage change 0.0006 + optimizer endpoint error, and the mesh kill
+condition is enforced in the build. "uniform"/class-wide language
+lint-refused without a continuity/mesh certificate (registry empty;
+lint normalizes hyphen/zero-width). 6/6 mutations killed on production
+paths. Adversarial lane confirmed the core statistics match IM +
+Clopper-Pearson exactly and fixed 4 P1 (family-wise mislabel → Bonferroni,
+unenforced mesh kill, strawman binomial mutant, undisclosed midpoint-only
+DGP → boundary least-favorable) + 3 P2, all pre-commit. Gates:
+`run_pr137_weak_id_coverage.py --check` byte-stable +
+`test_pr137_weak_id_coverage.py` (14). C2 grid-conditional
+coverage-calibrated mechanics — no uniform class-wide claim, no
+detection; 102 OPEN; DAG 84/113, next PR-138.
+See docs/PR_DELTAS/pr-137.md.
+
+
 ### PR-136 — Generic partial-identification and identified-set engine (rev-r213, 2026-07-18)
 
 Roadmap Wave-16 PR-136 (deps PR-127/134).

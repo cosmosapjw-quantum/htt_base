@@ -1,7 +1,7 @@
 # Canonical Shared Context Pack
 
-Context version: `22068e0a3bf9911078a73d57ed28c107f44f9babe00d8dc9375db0a7bd99c34e`
-Built at: `2026-07-17T21:10:03+00:00`
+Context version: `ad25d01a0d86cf9e83fa48d39db6155e940b141335aab9eb0a133b4d01ed60c3`
+Built at: `2026-07-17T21:58:09+00:00`
 
 This pack contains only the shared Tier-0 context. Assignment-specific context and sibling results are intentionally excluded.
 
@@ -9,7 +9,7 @@ This pack contains only the shared Tier-0 context. Assignment-specific context a
 
 ## Source: `.agent-harness/context/SHARED_CONTEXT.md`
 
-SHA-256: `5a6be254dda96e28ee3c952b6b3f5f535e3d0fc6ad893fc7cb75c183824dcb70`
+SHA-256: `ccd2a214cab1976657eb040663f959c0632f83b746631109b782575a0ea5ff5e`
 
 # Shared Context — long-horizon rescue execution
 
@@ -145,6 +145,10 @@ SHA-256: `5a6be254dda96e28ee3c952b6b3f5f535e3d0fc6ad893fc7cb75c183824dcb70`
 | E-PR136-SETS | `docs/generated/pr136_identified_sets.json` | PR-136 runner (four fixtures, exact + numeric) | `f0cf8791af0154994881d07b70b30477013b8c4e5005f633f17c47c7e8fffde0` | C-PR136-IDENTIFIED-SET |
 | E-PR136-CROSS | `docs/generated/pr136_cross_engine.json` | PR-136 runner (dual-engine agreement) | `92a0119536c1a327095590c5ac014d95dc5991535a373614ccd8ab80f27317eb` | C-PR136-IDENTIFIED-SET |
 | E-PR136-SUBVECTOR | `docs/generated/pr136_subvector.json` | PR-136 runner (full vs subvector projection) | `e173119339449b1909240a05b83b6fe0c94135f65db033a84af2eb8711875143` | C-PR136-IDENTIFIED-SET |
+| E-PR137-SPEC | `docs/research_program/long_horizon_rescue/pr137_spec.yaml` | reviewed repository edit (specification-first) | `2cc21ec143f70a2243bbed51a5e996ff3e6d78927f1cc054d8fc9804547e9dc8` | C-PR137-GRID-COVERAGE |
+| E-PR137-GRID | `docs/generated/pr137_coverage_grid.json` | PR-137 runner (boundary + midpoint DGP grid) | `25bad919e20f67bf4c11572d11c209d4610c77d068dc990a2a24ce23a5e62d80` | C-PR137-GRID-COVERAGE |
+| E-PR137-BOUNDS | `docs/generated/pr137_family_wise_bounds.json` | PR-137 runner (Bonferroni simultaneous 99% bounds + extension) | `ddeaaa5cb40e43286674221555be2a13e5f9554e25e9c6b25910668efc1be245` | C-PR137-GRID-COVERAGE |
+| E-PR137-FAILURE | `docs/generated/pr137_failure_map.json` | PR-137 runner (adversarial failure map preserved) | `bb42bb08f7dc867e98829c54af226a72c4515acc8ad3eb8e46785394b680c8b7` | C-PR137-GRID-COVERAGE |
 
 ## Known disputes and open questions
 
