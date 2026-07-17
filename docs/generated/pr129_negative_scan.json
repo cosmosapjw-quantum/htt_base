@@ -1,0 +1,104 @@
+{
+  "allowlisted_lines_total": 3,
+  "forbidden_patterns": [
+    "universal floor",
+    "minimax floor",
+    "cannot do better",
+    "Cramer-Rao floor of sqrt(2/5)",
+    "Cramer-Rao bound of 0.632"
+  ],
+  "rule": "the registered active NTA3 surfaces must not attach universal/minimax/CR language to the estimator-specific sqrt(2/5); explicit negations are admitted only via the hash-pinned allowlist above.",
+  "schema": "pr129.negative_scan.v2",
+  "sentinel_policy": {
+    "allowed_only_in": "htt/src/common/nta3_estimator_registry.py",
+    "block_sha256": "a2e3fde146213154265cb48f92ac9c094417047d803a8a55af145e9a084a0639",
+    "max_blocks": 1
+  },
+  "sentinels": [
+    "PR129-PROHIBITION-REGISTRY-BEGIN",
+    "PR129-PROHIBITION-REGISTRY-END"
+  ],
+  "targets": {
+    "docs/generated/pr129_captions.json": {
+      "allowlisted_lines": 0,
+      "hits": [],
+      "lines_scanned": 7,
+      "sentinel_block_count": 0,
+      "sentinel_block_sha256": null,
+      "sentinel_skipped_lines": 0,
+      "sha256": "daf998f5cde6b1135c701d68709adfb93278b241583e7bbcae1bde961a1965c4",
+      "source": "fresh_build"
+    },
+    "htt/bass/transfer/shear_quadrupole_seminative.py": {
+      "allowlisted_lines": 0,
+      "hits": [],
+      "lines_scanned": 106,
+      "sentinel_block_count": 0,
+      "sentinel_block_sha256": null,
+      "sentinel_skipped_lines": 0,
+      "sha256": "c11f32ec964e635cabfc31b5f97a3c8025a38e3caf5605da74d58ae5d1eec95d",
+      "source": "disk"
+    },
+    "htt/obsstat/egs2_fisher.py": {
+      "allowlisted_lines": 0,
+      "hits": [],
+      "lines_scanned": 114,
+      "sentinel_block_count": 0,
+      "sentinel_block_sha256": null,
+      "sentinel_skipped_lines": 0,
+      "sha256": "eca2f079942485097c4d2ae7390d6675c976f9b592d01241bb9313269c31a431",
+      "source": "disk"
+    },
+    "htt/obsstat/egs3_omega_k_reopening.py": {
+      "allowlisted_lines": 0,
+      "hits": [],
+      "lines_scanned": 589,
+      "sentinel_block_count": 0,
+      "sentinel_block_sha256": null,
+      "sentinel_skipped_lines": 0,
+      "sha256": "e31414269373cf81e445e01d45184f03fb622e443244ceefef5db9d9ee41308a",
+      "source": "disk"
+    },
+    "htt/src/common/nta3_estimator_registry.py": {
+      "allowlisted_lines": 0,
+      "hits": [],
+      "lines_scanned": 313,
+      "sentinel_block_count": 1,
+      "sentinel_block_sha256": "a2e3fde146213154265cb48f92ac9c094417047d803a8a55af145e9a084a0639",
+      "sentinel_skipped_lines": 10,
+      "sha256": "2ecf6475e148ea257de2d4655bff5a9ae9d3008567a1a3afe0408915d4bd4e03",
+      "source": "disk"
+    },
+    "scripts/make_egs_lowell_theorem_figures.py": {
+      "allowlisted_lines": 2,
+      "hits": [],
+      "lines_scanned": 254,
+      "sentinel_block_count": 0,
+      "sentinel_block_sha256": null,
+      "sentinel_skipped_lines": 0,
+      "sha256": "110cc1e3b1e399755d6411fd1da5919de9272f6813346a96fe0f968bbeafb7e6",
+      "source": "disk"
+    },
+    "scripts/prove_egs_lowell_theorems.py": {
+      "allowlisted_lines": 1,
+      "hits": [],
+      "lines_scanned": 284,
+      "sentinel_block_count": 0,
+      "sentinel_block_sha256": null,
+      "sentinel_skipped_lines": 0,
+      "sha256": "33c6d1578cf076269d001a5a7dcb6a413c819f7cdc86972bc34f816c15379efb",
+      "source": "disk"
+    },
+    "tests/bass/test_egs_lowell_theorems.py": {
+      "allowlisted_lines": 0,
+      "hits": [],
+      "lines_scanned": 87,
+      "sentinel_block_count": 0,
+      "sentinel_block_sha256": null,
+      "sentinel_skipped_lines": 0,
+      "sha256": "f633df490797ca126f7c10e9487ba62dbdec518d62a749534a46d5781dc134f4",
+      "source": "disk"
+    }
+  },
+  "total_hits": 0
+}

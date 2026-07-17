@@ -75,9 +75,9 @@ completed:
 - PR-126
 - PR-127
 - PR-128
+- PR-129
 blocked: []
 pending:
-- PR-129
 - PR-130
 - PR-131
 - PR-132
@@ -118,6 +118,12 @@ dormant_external:
 - PR-166
 in_progress: null
 execution_resolutions:
+  PR-129:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-129.md
+    resolved_on: '2026-07-18'
+    scientific_status_effect: none
+    scientific_status_after: OPEN
   PR-128:
     resolution: COMPLETED_SUCCESS
     receipt: docs/PR_DELTAS/pr-128.md
@@ -804,3 +810,19 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   byte-frozen. Six preregistered mutations killed. Closure/H3-conditional
   algebraic bracket at roadmap_rescue_v1 level C2; the finding stays OPEN
   pending adjudication; 102 findings OPEN; PR4 skipped.
+  PR-129 registers the NTA3 sqrt(2/5) dispersion as an estimator- and
+  domain-specific theorem in an OBSSTAT-owned typed registry — the ideal
+  full-sky noiseless Gaussian quadrupole-power estimator with
+  reality-condition dof 2*ell+1 = 5, verified three ways (chi-square
+  closed form, independent term-by-term Gaussian moment derivation, and
+  a seeded PCG64 Monte Carlo that simulates the REGISTERED estimator
+  from Gaussian a_2m draws, deviation 2.5e-3 inside the dual-pinned
+  preregistered tolerance 4e-3 that neither pin can widen alone). The
+  multi-multipole Fisher quantity is a strictly separate registry
+  object; the separation validator rejects Fisher/Cramer-Rao/minimax/
+  universal readings of sqrt(2/5) in either direction; the negative scan
+  covers eight registered active NTA3 surfaces under a hash-pinned
+  sentinel policy and negation allowlist. Six preregistered mutations
+  killed by real validators, including the naive dof-9 complex-component
+  miscount. Corrected supersession of the original universal claim, not
+  a literal rescue; 102 findings OPEN; PR4 skipped.

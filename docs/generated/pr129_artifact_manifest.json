@@ -1,0 +1,47 @@
+{
+  "allowed_use": [
+    "typed_estimator_registry",
+    "analytic_mc_comparison",
+    "universal_floor_negative_scan",
+    "generated_captions"
+  ],
+  "artifact_mode": "statistical_governance_diagnostic",
+  "artifacts": {
+    "docs/generated/pr129_captions.json": "daf998f5cde6b1135c701d68709adfb93278b241583e7bbcae1bde961a1965c4",
+    "docs/generated/pr129_estimator_registry.json": "5bd311f9fedf321e7a2748ee71e967b6566883049a89124126ffe54808ff8761",
+    "docs/generated/pr129_mc_report.json": "75c704e03a38f1f122032bad3bf875580939ba3c7287d5d62bc95bdadc901971",
+    "docs/generated/pr129_mutation_report.json": "3b525dd6f8c420b03bc58c2828a3300fc06cfad2ede2f36584389fd28a5c2eac",
+    "docs/generated/pr129_negative_scan.json": "cd217cb7438ab32a473381a7c179b0f235ffd62f40600d7836830efc792f409e"
+  },
+  "caveats": [
+    "Estimator- and domain-specific supersession at C1 only.",
+    "The original universal reading is NOT rescued.",
+    "The Fisher toy is a distinct registry object, never merged.",
+    "Separation enforcement covers the registered scan targets and generated captions, not repo-global prose.",
+    "All 102 remediation findings remain OPEN."
+  ],
+  "claim_level": {
+    "level": "C1",
+    "scheme": "roadmap_rescue_v1"
+  },
+  "claim_tier": "conditional",
+  "config_hash": "6281aacd49f926ec623947376b97f5ef9add9698903f043c0f22797b4e4f73f8",
+  "forbidden_use": [
+    "universal floor",
+    "minimax floor",
+    "cannot do better",
+    "shear detected",
+    "isotropy established",
+    "Bianchi geometry detected",
+    "Bianchi family identified",
+    "finding rescued",
+    "validated as native"
+  ],
+  "input_hashes": [
+    "htt/src/common/nta3_estimator_registry.py:2ecf6475e148ea257de2d4655bff5a9ae9d3008567a1a3afe0408915d4bd4e03",
+    "htt/obsstat/egs2_fisher.py:eca2f079942485097c4d2ae7390d6675c976f9b592d01241bb9313269c31a431"
+  ],
+  "owner": "OBSSTAT",
+  "schema": "pr129.artifact_manifest.v2",
+  "transfer_source": "none"
+}

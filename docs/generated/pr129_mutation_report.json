@@ -1,0 +1,42 @@
+{
+  "mutations": [
+    {
+      "kill_message_redacted": "caption attaches forbidden universal-floor language: '[REDACTED-PATTERN]'",
+      "kill_rule": "a caption attaching universal/minimax/CR-floor language to sqrt(2/5) fails the real language lint",
+      "killed": true,
+      "mutation_id": "universal_floor_language"
+    },
+    {
+      "kill_message_redacted": "estimator registration missing fields: ['sky', 'noise', 'field']",
+      "kill_rule": "a registry entry missing sky/noise/field/dof fields fails the fail-closed registry validator",
+      "killed": true,
+      "mutation_id": "estimator_unspecified"
+    },
+    {
+      "kill_message_redacted": "registered dof 4 != reality-condition count 2*ell+1 = 5 for ell = 2 (naive complex-component miscounts are rejected here)",
+      "kill_rule": "dof = 4 at ell = 2 fails the structural reality-condition check dof == 2*ell+1",
+      "killed": true,
+      "mutation_id": "wrong_dof"
+    },
+    {
+      "kill_message_redacted": "registered dof 9 != reality-condition count 2*ell+1 = 5 for ell = 2 (naive complex-component miscounts are rejected here)",
+      "kill_rule": "the naive complex-component miscount dof = 9 with dispersion 2/9 at ell = 2 fails the structural check",
+      "killed": true,
+      "mutation_id": "dof_reality_condition_miscount"
+    },
+    {
+      "kill_message_redacted": "all six conflation variants rejected by the separation validator",
+      "kill_rule": "claims citing sqrt(2/5) or 0.632 in a Fisher/Cramer-Rao/minimax/universal role are rejected by the separation validator",
+      "killed": true,
+      "mutation_id": "fisher_conflation"
+    },
+    {
+      "kill_message_redacted": "MC tolerance 0.04 differs from the preregistered module pin 0.004 — post-hoc widening is rejected",
+      "kill_rule": "an MC call with a tolerance different from the module pin is rejected inside run_seeded_mc on the real path",
+      "killed": true,
+      "mutation_id": "posthoc_tolerance_widening"
+    }
+  ],
+  "schema": "pr129.mutation_report.v2",
+  "surviving_mutation_count": 0
+}

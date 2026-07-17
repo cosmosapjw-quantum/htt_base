@@ -100,6 +100,11 @@
 | E-PR128-RANDOMIZED | `docs/generated/pr128_randomized_bracket_report.json` | PR-128 runner (64 contained draws) | `5b7a9467520f723ba7939d69e84e5b8599ffbf984651407810a2a0d1d068dcb2` | C-PR128-NT2-AUTHORITY |
 | E-PR128-INVALIDATION | `docs/generated/pr128_invalidation_table.json` | PR-128 runner (before/after invalidation) | `67f3f08f25463a45001ba037c121943e9ddcc69955cef04999b95b46caf5bdd6` | C-PR128-NT2-AUTHORITY |
 
+| E-PR129-SPEC | `docs/research_program/long_horizon_rescue/pr129_spec.yaml` | reviewed repository edit (specification-first) | `6281aacd49f926ec623947376b97f5ef9add9698903f043c0f22797b4e4f73f8` | C-PR129-NTA3-REGISTRY |
+| E-PR129-REGISTRY | `docs/generated/pr129_estimator_registry.json` | PR-129 runner (three-way exact verification) | `5bd311f9fedf321e7a2748ee71e967b6566883049a89124126ffe54808ff8761` | C-PR129-NTA3-REGISTRY |
+| E-PR129-MC | `docs/generated/pr129_mc_report.json` | PR-129 runner (estimator-level seeded MC) | `75c704e03a38f1f122032bad3bf875580939ba3c7287d5d62bc95bdadc901971` | C-PR129-NTA3-REGISTRY |
+| E-PR129-SCAN | `docs/generated/pr129_negative_scan.json` | PR-129 runner (8-target pinned negative scan) | `cd217cb7438ab32a473381a7c179b0f235ffd62f40600d7836830efc792f409e` | C-PR129-NTA3-REGISTRY |
+
 ## Known disputes and open questions
 
 | Question ID | Question | Required discriminating evidence | Owner |

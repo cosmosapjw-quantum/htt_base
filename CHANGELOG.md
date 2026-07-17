@@ -7,6 +7,36 @@
 
 ## [Unreleased]
 
+### PR-129 — NTA3 estimator/domain registry and universal-floor prohibition (rev-r206, 2026-07-18)
+
+Roadmap Wave-15 PR-129 (deps PR-125/128 context).
+`htt/src/common/nta3_estimator_registry.py`: the sqrt(2/5) fractional
+dispersion registered as an ESTIMATOR- and DOMAIN-SPECIFIC theorem —
+ideal full-sky noiseless Gaussian quadrupole-power estimator `C2_hat =
+(1/5) sum_m |a_2m|^2`, reality-condition dof `2·ell+1 = 5` — verified
+THREE ways (chi-square closed form; independent term-by-term Gaussian
+moment derivation `(2+4·ell)/(2·ell+1)^2`; structural dof check that
+kills the naive dof-9 complex-component miscount its self-consistent
+2/9 would otherwise satisfy). Seeded MC (PCG64/20260718, 200k) now
+simulates the REGISTERED ESTIMATOR from Gaussian a_2m draws under the
+reality condition (adversarial-lane circularity fix): deviation 2.5e-3
+inside the dual-pinned preregistered 4e-3 (spec + module constant;
+neither pin widenable alone). Multi-multipole Fisher quantity = a
+strictly separate registry object; `validate_separation` rejects
+Fisher/CR/minimax/universal readings of sqrt(2/5)/0.632 on normalized
+text in both directions; captions route through validator + paraphrase-
+hardened lint + cross-list consistency gate. Negative scan over EIGHT
+registered active NTA3 surfaces with hash-pinned sentinel policy +
+3-entry negation allowlist (unused entries refuse). 6/6 mutations
+killed by real validators. Adversarial review lane pre-commit: 7 P1 +
+2 P2 all fixed (circular MC, tautological moment check, validator
+gaps/wiring, kill-by-construction tolerance mutant, sentinel hiding,
+scan coverage, glossed alm mapping, divergent lints). Gates:
+`run_pr129_nta3_registry.py --check` byte-stable +
+`test_pr129_nta3_registry.py` (12). C1 corrected supersession — the
+original universal claim is NOT rescued; 102 OPEN; DAG 76/113, next
+PR-130. See docs/PR_DELTAS/pr-129.md.
+
 ### PR-128 — NT2 coefficient authority and downstream invalidation + checkpoint 075 (rev-r205, 2026-07-18)
 
 Roadmap Wave-14 PR-128 (deps PR-124/125/127).
