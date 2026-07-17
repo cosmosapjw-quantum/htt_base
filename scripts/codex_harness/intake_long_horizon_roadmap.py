@@ -28,8 +28,11 @@ MACHINE_BACKLOG_JSON = REPO / "machine_readable/pr_backlog.json"
 EXPECTED_BASELINE_SHA256 = (
     "960bb4ebb6a4a262f2f5e3c5b622881f1736bbb93fd0af707876acefb9a18309"
 )
+# Pin advanced 2026-07-17 by AMENDMENT_01 (four targeted edits; see
+# docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714_AMENDMENT_01_20260717.md
+# — the amendment doc is the explicit reapproval record this pin requires).
 EXPECTED_ROADMAP_SHA256 = (
-    "b64847e8aa0f2165b09662d2862aeea117b5ace2039044feae815e09c28a2f5b"
+    "caaab4b7255181e75093a5b662f4febf278330db07dad7cdce65e44c6587b361"
 )
 FIRST_ID = 119
 LAST_ID = 166

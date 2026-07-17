@@ -2100,13 +2100,10 @@
       "wave": 13,
       "title": "Claim-addressed evidence graph와 content-addressed build DAG",
       "owner": "COMMON",
-      "contributors": [
-        "HTT"
-      ],
+      "contributors": [],
       "adjudicator_role": "internal_non_author_reviewer",
       "implementation_scopes": [
-        "common",
-        "htt"
+        "common"
       ],
       "depends": [
         "PR-119",
@@ -2127,23 +2124,8 @@
       ],
       "files": [
         "htt/src/common",
-        "htt/htt/htt/infer/prior_sweep.py",
         "scripts/codex_harness",
-        "scripts/build_external_audit_package.py",
-        "scripts/check_publication_claim_freeze.py",
         "tests/contracts",
-        "tests/htt/test_inference_adequacy_gates.py",
-        "tests/pr_cards/test_pr_122_claim_addressed_evidence_graph_content_addressed.py",
-        "docs/research_program/long_horizon_rescue/pr122_spec.yaml",
-        "docs/research_program/long_horizon_rescue/pr122_active_mes_consumers.yaml",
-        "docs/generated/pr122_claim_evidence_graph.json",
-        "docs/generated/pr122_claim_closure_report.json",
-        "docs/generated/pr122_claim_closure_report.md",
-        "docs/generated/pr122_release_receipt.json",
-        "docs/generated/pr122_parent_receipt.json",
-        "docs/generated/pr122_artifact_manifest.json",
-        "docs/generated/pr122_mes_successor_scan.json",
-        "docs/generated/pr122_test_execution.json",
         "docs/PR_DELTAS/pr-122.md"
       ],
       "tests": [
@@ -2240,7 +2222,7 @@
     {
       "id": "PR-124",
       "wave": 14,
-      "title": "Dual-engine theorem/convention oracle",
+      "title": "Four-axis CAS contract + derivation-lineage oracle",
       "owner": "COMMON",
       "contributors": [
         "BASS"
@@ -2269,10 +2251,10 @@
       ],
       "tests": [
         "venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml",
-        "to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_124_dual_engine_theorem_convention_oracle.py"
+        "to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_124_four_axis_cas_contract_derivation_lineage_oracle.py"
       ],
       "dod": [
-        "theorem registry가 quantified variables, hypotheses, frame/order/domain과 `published_proof / independent_derivation / checked_derivation / numerical_test / sanity_anchor / specification` 증거등급을 생성하게 한다. symbolic engine과 독립 metric/tetrad 또는 exact-arithmetic engine을 분리한다. MES에는 geodesic/non-geodesic/acceleration branch별 source DOI/arXiv 또는 scan authority, page/equation, convention translation, 실제 독립 derivation 수와 물리 가정 불확실성을 별도 필드로 둔다. legacy registry는 byte-stable reproduction으로 격리하고 active consumer는 typed successor pointer만 사용한다. D2 authority는 Python anchor와 출발식/author가 분리된 nonzero Rust target의 source/input/output/toolchain hash와 실제 collected/executed count를 요구한다. sanity anchor와 같은 식의 재평가는 theorem/independent-derivation count에서 제외한다.",
+        "theorem registry가 quantified variables, hypotheses, frame/order/domain과 `published_proof / independent_derivation / checked_derivation / numerical_test / sanity_anchor / specification` 증거등급을 생성하게 한다. CAS 검증은 dual-engine이 아니라 four-axis CAS contract(Wolfram+xAct, SymPy, SageMath+Singular, Lean; `.agent-harness/templates/CAS_CONTRACT.json` v2와 `.agent-harness/scripts/cas_gate.py` adjudication, AMENDMENT_01)로 실행한다. 네 engine의 agreement와 최소 두 개의 실제 독립 derivation lineage는 서로 다른 지표다 — 전자는 계산 재현성, 후자는 유도 독립성이며 어느 쪽도 다른 쪽을 대체하지 않는다. MES에는 geodesic/non-geodesic/acceleration branch별 source DOI/arXiv 또는 scan authority, page/equation, convention translation, 실제 독립 derivation 수와 물리 가정 불확실성을 별도 필드로 둔다. legacy registry는 byte-stable reproduction으로 격리하고 active consumer는 typed successor pointer만 사용한다. D2 authority는 Python anchor와 출발식/author가 분리된 nonzero Rust target의 source/input/output/toolchain hash와 실제 collected/executed count를 요구한다. sanity anchor와 같은 식의 재평가는 theorem/independent-derivation count에서 제외한다.",
         "theorem inventory, MES source/equation/branch authority와 successor-registry table, convention translation fixtures, sign/unit/limit mutations, stale triple/branch swap/source-count inflation/zero-test mutation, nonzero independent Rust receipt, old overstatement negative test, all-consumer/manuscript reconciliation과 lineage receipt."
       ],
       "kill": "engine 간 sign/coefficient/domain 불일치가 0이어야 하며, MES active consumer의 stale triple이 0이고 D2 target이 실제 nonzero로 독립 실행되어야 한다. 하나라도 실패하면 해당 branch/theorem과 모든 dependent result를 blocked 처리한다.",

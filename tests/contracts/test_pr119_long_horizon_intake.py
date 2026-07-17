@@ -335,7 +335,10 @@ def test_status_axes_require_disjoint_full_coverage_and_terminal_receipts() -> N
         validate_long_horizon_rescue_slice(backlog, info, status=overlapping)
 
     missing = copy.deepcopy(status)
-    missing["pending"].remove("PR-120")
+    # PR-120..123 left `pending` as they completed (PR-124 preflight repair:
+    # pick a card actually still pending instead of the hardcoded PR-120).
+    assert missing["pending"], "status must have at least one pending card"
+    missing["pending"].remove(missing["pending"][0])
     with pytest.raises(ValueError, match="coverage missing"):
         validate_long_horizon_rescue_slice(backlog, info, status=missing)
 

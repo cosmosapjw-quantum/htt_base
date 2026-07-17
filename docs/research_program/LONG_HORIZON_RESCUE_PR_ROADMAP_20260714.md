@@ -197,9 +197,17 @@ edge다. SPEC은 non-author adjudicator가 승인해야 구현 단계가 열린�
 identity diff를 생성하고 `RESCUED`를 거부한다(SPEC 변경 = 새 version/claim ID). SPEC 없이 시작한
 PR, 또는 결과를 본 뒤 SPEC을 고친 PR은 kill switch 대상이다.
 
-**단계별 subagent-driven (각 단계는 typed subagent에 위임).** 각 PR은 단일 monolithic pass가 아니라
-아래 typed 단계로 분해하고 각 단계를 별도 subagent로 실행한다. author subagent와 adjudicator
-subagent는 반드시 다른 principal이다(§4.1의 author≠adjudicator를 subagent 수준까지 확장).
+**단계별 lifecycle checklist (AMENDMENT_01, 2026-07-17).** 각 PR은 단일 monolithic pass가 아니라
+아래 typed 단계로 분해한다. 아래 7단계는 *lifecycle checklist*이며, "7단계 = 7개 별도 subagent"
+의무가 아니다. 실제 agent 수는 위험도별 예산을 따른다 — R0 mechanical: 0(optional) / R1 harness:
+최대 2 targeted / R2 scientific non-CAS: 최대 4(서로 다른 claim/failure class) / R3 CAS mandatory:
+4개 axis slot 예약(optional review와 별도, 비용 압력으로 축소·병합 금지). custom profile 사용은
+launcher receipt(`.agent-harness/scripts/launch_receipt.py`)로 attestation하며, attestation 없는
+agent는 `generic_prompted`로 강등되어 독립 reviewer로 중복 계상되지 않는다. shared context는
+정확히 한 번만 전달한다(hook 주입 또는 file fallback; `.agent-harness/README.md` once-delivery
+규칙). author subagent와 adjudicator subagent는 반드시 다른 principal이다(§4.1의
+author≠adjudicator를 subagent 수준까지 확장). 상세는
+`docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714_AMENDMENT_01_20260717.md`를 따른다.
 
 | 단계 | 위임 subagent(장착된 harness/skill) | 산출 |
 |---|---|---|
@@ -301,11 +309,11 @@ PR-123 완료 후 총 70개 checkpoint를 실행한다. PR count 외에 open P0/
 
 ## 7. Wave 14 — 이론 기반 I: theorem authority와 non-identification
 
-### PR-124 — Dual-engine theorem/convention oracle
+### PR-124 — Four-axis CAS contract + derivation-lineage oracle
 
 - **Owner / dependencies / cost:** `COMMON`; contributor `BASS`; PR-123; medium.
 - **Targets:** `CO-05`, `C8-FRAMEWORK-F3/F4`, `C7-MES-F1--F4`, `N-THEORY-D2-AUTHORITY`, theorem-count와 조건 누락.
-- **실제로 할 것:** theorem registry가 quantified variables, hypotheses, frame/order/domain과 `published_proof / independent_derivation / checked_derivation / numerical_test / sanity_anchor / specification` 증거등급을 생성하게 한다. symbolic engine과 독립 metric/tetrad 또는 exact-arithmetic engine을 분리한다. MES에는 geodesic/non-geodesic/acceleration branch별 source DOI/arXiv 또는 scan authority, page/equation, convention translation, 실제 독립 derivation 수와 물리 가정 불확실성을 별도 필드로 둔다. legacy registry는 byte-stable reproduction으로 격리하고 active consumer는 typed successor pointer만 사용한다. D2 authority는 Python anchor와 출발식/author가 분리된 nonzero Rust target의 source/input/output/toolchain hash와 실제 collected/executed count를 요구한다. sanity anchor와 같은 식의 재평가는 theorem/independent-derivation count에서 제외한다.
+- **실제로 할 것:** theorem registry가 quantified variables, hypotheses, frame/order/domain과 `published_proof / independent_derivation / checked_derivation / numerical_test / sanity_anchor / specification` 증거등급을 생성하게 한다. CAS 검증은 dual-engine이 아니라 four-axis CAS contract(Wolfram+xAct, SymPy, SageMath+Singular, Lean; `.agent-harness/templates/CAS_CONTRACT.json` v2와 `.agent-harness/scripts/cas_gate.py` adjudication, AMENDMENT_01)로 실행한다. 네 engine의 agreement와 최소 두 개의 실제 독립 derivation lineage는 서로 다른 지표다 — 전자는 계산 재현성, 후자는 유도 독립성이며 어느 쪽도 다른 쪽을 대체하지 않는다. MES에는 geodesic/non-geodesic/acceleration branch별 source DOI/arXiv 또는 scan authority, page/equation, convention translation, 실제 독립 derivation 수와 물리 가정 불확실성을 별도 필드로 둔다. legacy registry는 byte-stable reproduction으로 격리하고 active consumer는 typed successor pointer만 사용한다. D2 authority는 Python anchor와 출발식/author가 분리된 nonzero Rust target의 source/input/output/toolchain hash와 실제 collected/executed count를 요구한다. sanity anchor와 같은 식의 재평가는 theorem/independent-derivation count에서 제외한다.
 - **하지 말 것:** 같은 AST나 generated expression을 두 backend에서 평가한 것을 두 derivation으로 세지 않는다. numeric spot check를 proof로 부르지 않는다.
 - **주의·anti-drift:** theorem statement가 바뀌면 모든 consumer hash를 invalidate한다. all-parameter prose는 checked signature에서만 생성한다.
 - **검증·산출물:** theorem inventory, MES source/equation/branch authority와 successor-registry table, convention translation fixtures, sign/unit/limit mutations, stale triple/branch swap/source-count inflation/zero-test mutation, nonzero independent Rust receipt, old overstatement negative test, all-consumer/manuscript reconciliation과 lineage receipt.
@@ -1169,10 +1177,18 @@ PR-119가 active DAG에 들어갈 때 실제 repository path와 CLI가 확정되
 ```bash
 venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
 venv/bin/python -B scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml
-venv/bin/python -B -m pytest --collect-only -q
-venv/bin/python -B -m pytest -m smoke -q
 git diff --check
 ```
+
+테스트 실행 예산(AMENDMENT_01): 매 PR의 고정 의무는 해당 PR의 targeted selector +
+가장 작은 관련 smoke이며, exact test receipt
+(`.agent-harness/scripts/test_receipt.py`; source/selector/environment/seed
+fingerprint가 같고 deterministic pass면 재실행하지 않음)를 재사용한다. full
+`pytest --collect-only -q` + `pytest -m smoke -q` 전량 실행은 (a) five-PR
+checkpoint, (b) packaging/collection에 영향을 주는 변경, (c) release snapshot에서
+한 번 실행한다. **예외: CAS가 필요한 PR(R3)은 언제나 네 axis receipt 전부를
+요구한다** — receipt 재사용은 축이 아니라 동일 fingerprint의 반복 실행에만
+적용된다.
 
 추가로 각 PR은 다음 세 층을 모두 실행한다.
 
@@ -1250,6 +1266,12 @@ git diff --check
 웹 검색은 결론을 좋은 방향으로 조정하는 도구가 아니다. PR-119 intake, 각 data-release PR의 시작, PR-157 독립 adjudication과 PR-159 native intake에서만 목적·질의·선택 기준을 사전 기록한 짧은 CRAG을 허용한다. 방법/claim을 고르는 blind calibration 구간에서는 frozen corpus와 repository evidence만 사용한다.
 
 ## 20. 활성화 순서와 다음 실행 카드
+
+> **HISTORICAL PLAN — frozen 2026-07-17 by AMENDMENT_01.** §20--§21은 PR-119
+> intake 이전의 계획 기록으로 고정한다. 살아있는 진행 상태의 SSoT는
+> `docs/codex_handoff/pr_status.yaml`(mirror `machine_readable/pr_status.yaml`)과
+> 짧은 per-PR delta(`docs/PR_DELTAS/`)다. 이후 progress를 이 장문 문서에 다시
+> 삽입하지 않는다.
 
 이 문서는 active backlog를 수정하지 않는다. 채택 시 첫 실행은 **PR-119 하나만** formal intake하는 것이다. PR-119의 실제 순서는 다음과 같다.
 
