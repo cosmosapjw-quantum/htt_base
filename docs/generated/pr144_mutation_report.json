@@ -1,0 +1,48 @@
+{
+  "mutations": [
+    {
+      "kill_message_redacted": "Vpec is an estimator-dependent peculiar-velocity RECONSTRUCTION and may not be selected as the true flow",
+      "kill_rule": "selecting Vpds/Vpwf/Vpec as the true flow is rejected by the reconstruction guard",
+      "killed": true,
+      "mutation_id": "reconstruction_as_true_flow"
+    },
+    {
+      "kill_message_redacted": "the value 94 (an audit-only sensitivity figure, in the velocity convention) may not be promoted to an observed measurement replacement",
+      "kill_rule": "promoting the audit-only sensitivity value (94) to an observed replacement is rejected",
+      "killed": true,
+      "mutation_id": "audit_value_as_observed"
+    },
+    {
+      "kill_message_redacted": "column 'Vflow_true' is not in the CF4 authority registry — a column may not be used by name without a registered byte range, units, producer, and type",
+      "kill_rule": "using a column absent from the authority registry by name is rejected",
+      "killed": true,
+      "mutation_id": "ambiguous_authority_column"
+    },
+    {
+      "kill_message_redacted": "the table3 and table4 1PGC group-ID sets do not match — the group identity is not authenticated",
+      "kill_rule": "a table3/table4 1PGC set mismatch is rejected by the parity check",
+      "killed": true,
+      "mutation_id": "id_parity_broken"
+    },
+    {
+      "kill_message_redacted": "record count 38052 != pinned 38053",
+      "kill_rule": "a record count that differs from the pinned 38053 is rejected",
+      "killed": true,
+      "mutation_id": "row_count_drift"
+    },
+    {
+      "kill_message_redacted": "SGX is expressed in cz (km/s), not a Mpc length; the cz conversion is required",
+      "kill_rule": "treating SGX/SGY/SGZ as a Mpc length without the cz conversion is rejected",
+      "killed": true,
+      "mutation_id": "cartesian_as_mpc_length"
+    },
+    {
+      "kill_message_redacted": "the manifest is dataset provenance only; the two CF4 P0s (C1-K5-MV-F1, C3-K5-VCORR-ML-F1) stay OPEN and are never resolved by authenticating the data lineage",
+      "kill_rule": "claiming the CF4 P0s resolved by the manifest is rejected by the provenance-only guard",
+      "killed": true,
+      "mutation_id": "cf4_p0_resolution"
+    }
+  ],
+  "schema": "pr144.mutation_report.v1",
+  "surviving_mutation_count": 0
+}

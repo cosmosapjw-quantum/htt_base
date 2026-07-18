@@ -1,0 +1,55 @@
+{
+  "allowed_use": [
+    "cf4_release_identity",
+    "column_authority_and_type_classification",
+    "row_group_id_parity_and_hashing",
+    "selection_completeness_and_duplicate_graph"
+  ],
+  "artifact_mode": "authenticated_dataset_provenance",
+  "artifacts": {
+    "docs/generated/pr144_captions.json": "81fb789b836fe07a396f082e47f212bfb7545c616cd7a5ecaa812201d5ad809b",
+    "docs/generated/pr144_cf4_manifest.json": "00aa196d63baee7a9a30c9098b064ed2fbbf0f354ae1ab5342dd8c21030d61ef",
+    "docs/generated/pr144_column_authority.json": "7d7198488fa52e9e90592f67ae99fddde8922ee5758e0a4bad0c06846cd24916",
+    "docs/generated/pr144_mutation_report.json": "2374b7363fdca440157b3449e2b5423025cbc436675d0bf185213389d2a94c88",
+    "docs/generated/pr144_selection_completeness.json": "2bec7bb2ebde9c8bfb2f8a15c3278ecb54ff44a085aca16b26e3c2558e9d6b4c"
+  },
+  "caveats": [
+    "Dataset / estimand provenance only at C1.",
+    "The raw CF4 tables are read-only external inputs; only the manifest is versioned.",
+    "Peculiar-velocity columns (Vpds/Vpwf/Vpec) are estimator-dependent RECONSTRUCTIONS, never the true flow.",
+    "SGX/SGY/SGZ are in cz (km/s), not Mpc lengths.",
+    "The two CF4 P0s stay OPEN; the manifest supplies their lineage.",
+    "No cosmological measurement, no detection.",
+    "All 102 remediation findings remain OPEN."
+  ],
+  "claim_level": {
+    "level": "C1",
+    "scheme": "roadmap_rescue_v1"
+  },
+  "claim_tier": "conditional",
+  "config_hash": "c73639b8a9f28e8d0dbcf43cbebf538ba80ed968bc6a54a2239adf23b791b81a",
+  "forbidden_use": [
+    "vpec is the true flow",
+    "audit value observed replacement",
+    "cf4 p0 resolved",
+    "reconstruction is the observed velocity",
+    "sgx is a mpc length",
+    "shear detected",
+    "isotropy established",
+    "Bianchi geometry detected",
+    "Bianchi family identified",
+    "finding rescued",
+    "validated as native"
+  ],
+  "input_hashes": [
+    "htt/src/common/cf4_manifest.py:174c0b7253f126fd725e9f81d60059d528c46c058a7cbc21faba11d38738c581"
+  ],
+  "owner": "OBSSTAT",
+  "raw_data_pins": {
+    "readme_sha256": "2cfed1418147d5a626dee1fa37c47252124477c9828490508d9bbe511d34edb4",
+    "table3_sha256": "c2351c52de3e38a7fd80256b6f0818c550dd9f105b91e84fbcc1eb7234160b4d",
+    "table4_sha256": "b6edfec68bdfddeada8f3b8f11938f3bbda98a8e2894ff136a369c2ad6594e94"
+  },
+  "schema": "pr144.artifact_manifest.v1",
+  "transfer_source": "none"
+}

@@ -7,6 +7,33 @@
 
 ## [Unreleased]
 
+### PR-144 — Authenticated CF4 row/group/selection manifest (rev-r221, 2026-07-18)
+
+Roadmap Wave-18 PR-144 (deps PR-120/134/143) — **first PR of the authorized
+data phase** (user lifted the data scope 2026-07-18, keeping PR4 NPIPE excluded).
+`htt/src/common/cf4_manifest.py`: authenticates the real Cosmicflows-4 catalogue
+(Tully et al. 2023, ApJ 944, 94; VizieR J/ApJ/944/94) from the read-only external
+tables (workdir/raw/cf4_full). Every group column of table3.dat (30) and
+table4.dat (22) is bound to its byte range, format, units, and TYPE (identifier /
+position-observable / velocity-observable / frame-derived / cosmology-corrected /
+distance-indicator / uncertainty / reconstruction / cartesian-derived /
+selection-count); 1PGC parity verified (38053 unique groups, 0 duplicates); tables
++ ReadMe content-addressed (file + per-row); per-method completeness recorded (FP
+27602 / TF 10035 dominant); ranges validated vs the ReadMe. Anti-drift: Vpds/Vpwf/
+Vpec are reconstructions never the true flow; the audit 94 km/s is never an
+observed replacement; SGX/SGY/SGZ are cz (km/s) not Mpc; an unregistered column is
+refused; the CF4 P0s are never claimed resolved. 7/7 mutations killed. Multi-lane
+adversarial review (3 refute-lenses + verify): NO P0/P1 — the byte-range
+transcription verified CORRECT against the VizieR ReadMe (values sane, counts
+consistent, parity/completeness genuine, cz caveat confirmed). Fixed 4 P2 (6
+missing e_DM* uncertainty columns added + completeness cross-check; e_DMav/e_DMzp
+retyped UNCERTAINTY; the mislabeled cf4_p0_resolution mutation split into a real
+provenance-only guard + a cartesian_as_mpc_length mutation). Suite:
+`tests/contracts/test_pr144_cf4_manifest.py` (9, data-dependent cases skip if
+absent) + full gate at baseline. DAG 91/113. C1 dataset provenance only; the two
+CF4 P0s stay OPEN; no cosmological measurement, no detection; 102 OPEN / 0 RESCUED;
+PR4 NPIPE excluded; next PR-145. See docs/PR_DELTAS/pr-144.md.
+
 ### PR-143 — Integrated synthetic calibration + hostile statistical adjudication + checkpoint 090 (rev-r220, 2026-07-18)
 
 Roadmap Wave-17 PR-143 (deps PR-135-142; completes Wave 17). `htt/src/common/synthetic_adjudication.py`:

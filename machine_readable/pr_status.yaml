@@ -90,9 +90,9 @@ completed:
 - PR-141
 - PR-142
 - PR-143
+- PR-144
 blocked: []
 pending:
-- PR-144
 - PR-145
 - PR-146
 - PR-147
@@ -118,6 +118,12 @@ dormant_external:
 - PR-166
 in_progress: null
 execution_resolutions:
+  PR-144:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-144.md
+    resolved_on: '2026-07-18'
+    scientific_status_effect: none
+    scientific_status_after: OPEN
   PR-143:
     resolution: COMPLETED_SUCCESS
     receipt: docs/PR_DELTAS/pr-143.md
@@ -1258,3 +1264,23 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   wired live) and three P2 pre-commit. Passing the synthetic challenge is
   method readiness, not observed validity; 102 findings OPEN; PR4 skipped.
   Checkpoint 090 recorded.
+  PR-144 is the first PR of the authorized data phase and builds the
+  authenticated Cosmicflows-4 row/group/selection manifest. The user lifted
+  the data scope on 2026-07-18 (PR3 data and the rest are available;
+  immediately fetchable downloads except PR4 NPIPE are collected; anything
+  truly inaccessible is noted; then the full data analysis proceeds). The
+  real CF4 catalogue (Tully et al. 2023, ApJ 944, 94, VizieR J/ApJ/944/94)
+  lives read-only at workdir/raw/cf4_full and only the manifest is
+  versioned. Every group column of table3.dat (thirty) and table4.dat
+  (twenty-two) is bound to its byte range, format, units, and a type; the
+  1PGC group identity parity is verified over 38053 unique groups with no
+  duplicates; the tables and the ReadMe are content-addressed; the
+  per-method selection completeness and the coordinate ranges are recorded.
+  The peculiar-velocity columns are reconstructions never the true flow,
+  the audit-only sensitivity value (94, velocity units) is never an observed replacement, and the
+  Cartesian columns are cz not Mpc. Seven mutations killed. A multi-lane
+  adversarial review found no P0 or P1 (the byte-range transcription
+  verified correct against the ReadMe) and fixed four P2 (six missing
+  uncertainty columns added, the error-bar columns retyped, and a
+  mislabeled mutation split honestly). Dataset provenance only; the two CF4
+  P0s stay OPEN; 102 findings OPEN; PR4 NPIPE excluded.
