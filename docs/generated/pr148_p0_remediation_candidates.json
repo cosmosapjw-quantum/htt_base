@@ -1,0 +1,21 @@
+{
+  "candidates": [
+    {
+      "closure": "impossible before the PR-157 adjudication",
+      "disposition": "remediation_candidate",
+      "finding_id": "C1-K5-MV-F1",
+      "mechanics": "the depth-resolved growth rate is measured with a MEASURED same-data joint covariance (not assumed diagonal); only 1 of 3 shells constrain fsigma8, so the growth DIFFERENCE across depth is NOT identified and is reported as a bound consistent with zero — there is no depth-dependence detection and no historical tension figure",
+      "status": "OPEN"
+    },
+    {
+      "closure": "impossible before the PR-157 adjudication",
+      "disposition": "remediation_candidate",
+      "finding_id": "C3-K5-VCORR-ML-F1",
+      "mechanics": "the eigen-whitened QML amplitude estimator, the same-data joint covariance and the growth-difference bound are available; the full ML f sigma_8 remediation is a scoped follow-up",
+      "scope_note": "PR-148 implements the depth-resolved fsigma8 amplitude estimator and its same-data joint covariance directly; the broader velocity-correlation ML remediation is scoped through the same joint-covariance machinery",
+      "status": "OPEN"
+    }
+  ],
+  "note": "both CF4 P0s stay OPEN; PR-148 supplies growth-difference bound mechanics, not closure",
+  "schema": "pr148.p0_remediation_candidates.v1"
+}

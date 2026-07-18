@@ -1,0 +1,86 @@
+{
+  "fiducial_fsigma8": 0.429905,
+  "module_schema": "pr148.cf4_growth_covariance.v1",
+  "n_constrained_shells": 1,
+  "negative_scan": {
+    "targets": {
+      "docs/generated/pr148_captions.json": {
+        "hits": [],
+        "sha256": "08dffd3c0f45b049f0622bd7e79053dd54e04a842870dea9efad715e005f33f6",
+        "source": "fresh_build"
+      },
+      "htt/src/common/cf4_growth_covariance.py": {
+        "hits": [],
+        "sha256": "348a51b654cc1fd0f8f7a8b870a2eb7ac07dcea35c6696b4bb397301052deb70",
+        "source": "disk"
+      }
+    },
+    "total_hits": 0
+  },
+  "note": "the growth-rate amplitude is estimated per depth shell by a safeguarded (bracketing root-find) QML fit; the constrained/unconstrained disposition is set from the robust MOCK covariance, not the local Fisher error, which underestimates the flat noise-dominated likelihood",
+  "schema": "pr148.fsigma8_by_depth.v1",
+  "shells": [
+    {
+      "amplitude": 0.806097,
+      "constrained": true,
+      "dist_hi_mpc": 131.2,
+      "dist_lo_mpc": 0.9,
+      "fsigma8": 0.385981,
+      "fsigma8_local_fisher_error": 0.091395,
+      "mock_relative_error": 0.206322,
+      "mock_sigma": 0.088699,
+      "n_groups": 399,
+      "shell": 0
+    },
+    {
+      "amplitude": 1.929601,
+      "constrained": false,
+      "dist_hi_mpc": 283.1,
+      "dist_lo_mpc": 131.2,
+      "fsigma8": 0.597181,
+      "fsigma8_local_fisher_error": 0.392876,
+      "mock_relative_error": 0.79955,
+      "mock_sigma": 0.34373,
+      "n_groups": 398,
+      "shell": 1
+    },
+    {
+      "amplitude": 74.54055,
+      "constrained": false,
+      "dist_hi_mpc": 769.1,
+      "dist_lo_mpc": 283.1,
+      "fsigma8": 3.711666,
+      "fsigma8_local_fisher_error": 0.645284,
+      "mock_relative_error": 1.264528,
+      "mock_sigma": 0.543627,
+      "n_groups": 403,
+      "shell": 2
+    }
+  ],
+  "simultaneous_intervals": {
+    "family_conf": 0.95,
+    "note": "per-shell fsigma8 intervals at a Bonferroni family-wise confidence over the depth grid using the measured covariance diagonal",
+    "per_shell_bonferroni_conf": 0.983333,
+    "shells": [
+      {
+        "fsigma8": 0.385981,
+        "shell": 0,
+        "simultaneous_hi": 0.598325,
+        "simultaneous_lo": 0.173638
+      },
+      {
+        "fsigma8": 0.597181,
+        "shell": 1,
+        "simultaneous_hi": 1.420065,
+        "simultaneous_lo": -0.225702
+      },
+      {
+        "fsigma8": 3.711666,
+        "shell": 2,
+        "simultaneous_hi": 5.013098,
+        "simultaneous_lo": 2.410233
+      }
+    ],
+    "z": 2.39398
+  }
+}

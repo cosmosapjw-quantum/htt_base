@@ -1,0 +1,36 @@
+{
+  "bound_note": "the growth DIFFERENCE across depth is NOT identified (fewer than two shells constrain fsigma8); the empirical p-value is NOT interpretable because it is dominated by an unconstrained deep shell whose fitted amplitude absorbs under-modelled distance-error variance at large distance rather than growth; no depth-dependence measurement is possible and no consistency sigma is emitted, only a bound; NEVER the historical bulk-flow tension figure",
+  "comparator_comparison": {
+    "comparator_fsigma8": 0.43,
+    "constrained_shells": [
+      {
+        "combined_sigma": 0.090926,
+        "comparator_theoretical_sigma": 0.02,
+        "estimator_sigma": 0.088699,
+        "fsigma8": 0.385981,
+        "pull": -0.484116,
+        "shell": 0
+      }
+    ],
+    "note": "the constrained shell fsigma8 is compared to the LambdaCDM comparator with the estimator (mock) and theoretical comparator uncertainties added in quadrature but tracked separately"
+  },
+  "comparator_fsigma8": 0.43,
+  "comparator_theoretical_sigma": 0.02,
+  "depth_dependence_verdict": "non_identified",
+  "difference_deepest_minus_nearest_fsigma8": 3.325685,
+  "difference_sigma_joint_fsigma8": 0.551553,
+  "difference_sigma_naive_independent_fsigma8": 0.550816,
+  "empirical_mock_tail_p_value": 0.004975,
+  "empirical_p_interpretable": false,
+  "estimator_uncertainty_fsigma8": 0.551553,
+  "growth_difference_identified": false,
+  "n_constrained_shells": 1,
+  "schema": "pr148.growth_difference_bound.v1",
+  "shared_data_comparator_would_require_cross_covariance": {
+    "comparator_construction": "same_data_ensemble_average_of_shells",
+    "cross_covariance_is_mandatory_for_shared_data": true,
+    "note": "when the comparator is estimated from the SAME mocks its cross-covariance with the CF4 shell is nonzero; dropping it (as if independent) mis-states the difference variance, so a same-catalogue/same-mock comparator makes the cross-covariance mandatory",
+    "variance_dropping_cross_covariance": 0.055879,
+    "variance_with_cross_covariance": 0.051363
+  }
+}

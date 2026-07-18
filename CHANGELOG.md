@@ -7,6 +7,38 @@
 
 ## [Unreleased]
 
+### PR-148 — Depth-resolved fsigma8 with a same-data joint covariance bound (rev-r225, 2026-07-18)
+
+Roadmap Wave-18 PR-148 (deps PR-139-141, PR-146, PR-147); last Wave-18 PR,
+**checkpoint 095 sealed**. `htt/src/common/cf4_growth_covariance.py`: per
+pre-registered distance shell, fsigma8 is estimated by a SAFEGUARDED eigen-whitened
+QML amplitude fit (bracketing root-find on the monotone whitened score, never a
+chaotic Newton loop) against the fiducial Gorski velocity-correlation template, and
+the SAME-DATA joint covariance of the per-shell fsigma8 (cross-shell terms included,
+one shared correlated field per Cholesky mock split by shell — binds PR-146) is
+MEASURED. Honest outcome: only the NEAREST shell constrains fsigma8 (0.386,
+LambdaCDM-comparator-consistent, pull -0.48) while deeper shells are noise-dominated
+and unconstrained under the robust mock-covariance classification; the joint
+covariance is PSD and nearly diagonal (max off-diag corr ~0.02, near-independent
+probes, reported not assumed); and the growth DIFFERENCE across depth is NOT
+identified (fewer than two shells constrain fsigma8), reported as a bound with the
+empirical mock-tail p-value flagged non-interpretable (dominated by an unconstrained
+deep shell whose amplitude absorbs under-modelled distance-error variance) — NEVER a
+precision tension sigma, NEVER the historical bulk-flow tension figure. Estimator
+uncertainty separated from theoretical comparator uncertainty; a same-data comparator
+shown to require the cross-covariance. 6/6 mutations killed on live guards. Multi-lane
+review (Workflow 3 refute-lenses x find->verify, effort high): NO P0, 2 P1 + 5 P2 all
+CONFIRMED + fixed pre-commit (amplitude fit made a convergent bracketing root-find;
+constrained disposition from the robust mock covariance not the local Fisher error;
+empirical mock-tail p-value gated on identification, not a Gaussian z; comparator
+actually used + genuine shared-data demo; shell-edge stability keeps the full sample;
+dimensionless uncertainty relabelled). Checkpoint 095 freeze gate PASS (102 OPEN / 0
+RESCUED; both CF4 P0s raised only to awaiting-non-author-adjudication). Suite
+test_pr148_growth_covariance.py (11) + full gate baseline. C3 growth-difference bound
+mechanics; both CF4 P0s stay OPEN with remediation-candidate receipts (closure needs
+PR-157); no anomaly/global-tilt/detection; 102 OPEN; DAG 95/113; next PR-149 (Wave 19).
+See docs/PR_DELTAS/pr-148.md.
+
 ### PR-147 — Nuisance-augmented CF4 depth-resolved flow identified sets (rev-r224, 2026-07-18)
 
 Roadmap Wave-18 PR-147 (deps PR-136/137/145/146). `htt/src/common/cf4_identified_set.py`:

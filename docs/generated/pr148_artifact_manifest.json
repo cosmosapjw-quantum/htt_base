@@ -1,0 +1,59 @@
+{
+  "allowed_use": [
+    "depth_resolved_fsigma8_amplitude_estimator",
+    "same_data_joint_covariance_via_mocks",
+    "simultaneous_depth_intervals",
+    "held_out_depth_prediction",
+    "joint_covariance_conditioned_growth_difference_bound"
+  ],
+  "artifact_mode": "growth_difference_bound_mechanics",
+  "artifacts": {
+    "docs/generated/pr148_captions.json": "08dffd3c0f45b049f0622bd7e79053dd54e04a842870dea9efad715e005f33f6",
+    "docs/generated/pr148_fsigma8_by_depth.json": "bcaddbb2764deec4f7dc617cf39abc2729b19dd79ac8eb2d4360989364876901",
+    "docs/generated/pr148_growth_difference_bound.json": "90fbb95e32cb6741708f3df2170588919eafb3e2b2479ac8f7ae93fa887d805c",
+    "docs/generated/pr148_held_out_prediction.json": "4fb4a940e141e56bf5d3aef053e1d974bc25ead6a720d3737a2502caad0e0975",
+    "docs/generated/pr148_joint_covariance.json": "06bb752cdf32201e806ca4c8e1f51ffaeed5d0991e986fe9589c85a0d9758c5c",
+    "docs/generated/pr148_mutation_report.json": "34d30b1fb539fc3be6793a606a3a09e7dc422b1871ac5f725e2ac05e71ba1ebe",
+    "docs/generated/pr148_p0_remediation_candidates.json": "604a47f8e9dfd53929ce55fc05c32a120220ed35f345982b3e5026b905339306",
+    "docs/generated/pr148_shell_stability.json": "e4e718e308896b0e43ddbdd5ca20879bc3dc21a6ff11451e8e66b68850c914d2"
+  },
+  "caveats": [
+    "Growth-difference bound mechanics at C3 only.",
+    "Only the nearest shell constrains fsigma8; the growth difference across depth is NOT identified and is reported as a bound.",
+    "The same-data joint covariance is MEASURED (near-diagonal, PSD), never assumed or set to a favourable correlation endpoint.",
+    "No historical tension figure and no depth-dependence detection.",
+    "The two CF4 P0s stay OPEN with remediation CANDIDATES; closure is impossible before the PR-157 adjudication.",
+    "No global-tilt or anomaly claim; no detection.",
+    "All 102 remediation findings remain OPEN."
+  ],
+  "claim_level": {
+    "level": "C3",
+    "scheme": "roadmap_rescue_v1"
+  },
+  "claim_tier": "conditional",
+  "config_hash": "0357ef51647277052373e1d8f216994a29e4bc1a7c28045b2f52ec0129c37674",
+  "forbidden_use": [
+    "targets the tension sigma",
+    "correlation endpoint chosen",
+    "shell bias hidden",
+    "growth anomaly detected",
+    "global tilt detected",
+    "cf4 p0 closed",
+    "shear detected",
+    "isotropy established",
+    "Bianchi geometry detected",
+    "Bianchi family identified",
+    "finding rescued",
+    "validated as native"
+  ],
+  "input_hashes": [
+    "htt/src/common/cf4_growth_covariance.py:348a51b654cc1fd0f8f7a8b870a2eb7ac07dcea35c6696b4bb397301052deb70",
+    "htt/src/common/cf4_forward_simulator.py:257bdfe14f7d51d6a0c1f954f39c0b36a2b752553f755205412cc145c71d5618"
+  ],
+  "owner": "HTT",
+  "raw_data_pins": {
+    "groups_sha256": "3c0f2e1a5b56b7227abb5e187406810d7eb15e924aac69e9cb0ffc1343a811ad"
+  },
+  "schema": "pr148.artifact_manifest.v1",
+  "transfer_source": "none"
+}

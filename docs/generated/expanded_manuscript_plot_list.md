@@ -6,17 +6,17 @@ claim_tier: diagnostic_only
 transfer_source: mixed_manifest_backed_current_and_conditioned_legacy
 sky_support_status: pending_or_unknown_for_existing_directional_artifacts
 null_mock_status: mixed_current_and_legacy_context
-config_hash: `sha256:29314bef1e8ff002e683b8126cf9e2d49cb829e8d49c81a0589725e0041ed9ca`
+config_hash: `sha256:6ee5f2f7799c92a87ab5fd6c1e263b99ea4192761a5aa760778d2215aa8d9ebd`
 input_hashes:
 - scripts/build_expanded_manuscript_figure_suite.py:sha256:f530556a73b1f17113a6fb4ee539733f1364a26e60ffc20d633d67a7af721106
-- docs/generated/current_manuscript_plot_list.md:sha256:408b7cb2af051432356fc54531d24658a2ec6cb0b4dd495af2f250428a6eca98
+- docs/generated/current_manuscript_plot_list.md:sha256:ae412ecffa2e4cbb26f5190d8371426111bec8c02c72b5496ae4b1469118ddb7
 caveats:
 - The manifest-backed current figure deck remains the conservative core manuscript deck.
 - VER2 pack figures are current-code, manifest-backed diagnostics with explicit claim ceilings.
 - Conditioned legacy figures are appendix-only hypothesis-conditioned diagnostics.
 - No listed figure claims native low-ell solver output or Bianchi family-ID.
 generating_command: `python scripts/build_expanded_manuscript_figure_suite.py`
-git_commit_or_worktree_state: `d400a763+dirty`
+git_commit_or_worktree_state: `8da1d195+dirty`
 
 ## Summary
 

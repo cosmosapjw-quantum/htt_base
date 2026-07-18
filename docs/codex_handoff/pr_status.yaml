@@ -94,9 +94,9 @@ completed:
 - PR-145
 - PR-146
 - PR-147
+- PR-148
 blocked: []
 pending:
-- PR-148
 - PR-149
 - PR-150
 - PR-151
@@ -118,6 +118,12 @@ dormant_external:
 - PR-166
 in_progress: null
 execution_resolutions:
+  PR-148:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-148.md
+    resolved_on: '2026-07-18'
+    scientific_status_effect: none
+    scientific_status_after: OPEN
   PR-147:
     resolution: COMPLETED_SUCCESS
     receipt: docs/PR_DELTAS/pr-147.md
@@ -1383,3 +1389,29 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   only; both CF4 P0s stay OPEN with remediation-candidate receipts; closure is
   impossible before the PR-157 adjudication; 102 findings OPEN; PR4 NPIPE
   excluded.
+  PR-148 estimates the CF4 growth rate fsigma8 per pre-registered distance
+  shell by a safeguarded eigen-whitened QML amplitude fit against the fiducial
+  Gorski velocity-correlation template and measures the SAME-DATA joint
+  covariance of the per-shell fsigma8 from a shared-field Cholesky mock
+  ensemble. The honest outcome is that only the nearest shell constrains
+  fsigma8 (consistent with the LambdaCDM comparator) while the deeper shells
+  are noise-dominated and unconstrained under the robust mock covariance; the
+  joint covariance is positive-definite and nearly diagonal (the depth shells
+  are near-independent probes, reported not assumed); and the growth
+  DIFFERENCE across depth is NOT identified (fewer than two shells constrain
+  fsigma8) and is reported as a bound, never a precision tension sigma and
+  never the historical bulk-flow tension figure. The estimator uncertainty is
+  separated from the theoretical comparator uncertainty and a same-data
+  comparator is shown to require the cross-covariance. Six mutations killed on
+  live guard paths. A multi-lane adversarial review returned no P0 and two P1
+  plus five P2, all fixed pre-commit (the amplitude fit is now a safeguarded
+  bracketing root-find that converges on noise-dominated shells rather than a
+  chaotic Newton iterate; the constrained disposition uses the robust mock
+  covariance not the local Fisher error; the growth difference uses an
+  empirical mock-tail p-value gated on identification rather than a Gaussian
+  z-score; the comparator is actually used and the shared-data demonstration
+  made genuine; the shell-edge stability jitters interior edges keeping the
+  full sample; and the dimensionless uncertainty is relabelled). Growth-
+  difference bound mechanics only; both CF4 P0s stay OPEN with remediation-
+  candidate receipts; closure is impossible before the PR-157 adjudication;
+  102 findings OPEN; PR4 NPIPE excluded. Checkpoint 095 recorded.
