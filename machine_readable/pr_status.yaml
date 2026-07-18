@@ -87,9 +87,9 @@ completed:
 - PR-138
 - PR-139
 - PR-140
+- PR-141
 blocked: []
 pending:
-- PR-141
 - PR-142
 - PR-143
 - PR-144
@@ -118,6 +118,12 @@ dormant_external:
 - PR-166
 in_progress: null
 execution_resolutions:
+  PR-141:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-141.md
+    resolved_on: '2026-07-18'
+    scientific_status_effect: none
+    scientific_status_after: OPEN
   PR-140:
     resolution: COMPLETED_SUCCESS
     receipt: docs/PR_DELTAS/pr-140.md
@@ -1170,3 +1176,28 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   pre-commit. Coherent model-comparison mechanics conditional on the
   registered model and prior only; evidence agreement is not model truth;
   102 findings OPEN; PR4 skipped.
+  PR-141 builds a contamination-aware local/global mixture with mandatory
+  abstention. Four explicit competitors (isotropy, a local kinematic boost
+  dipole, a survey systematic template, and a global anisotropy
+  quadrupole) form a fixed pre-registered model list with exact conjugate-
+  Gaussian evidence. A discrimination candidate is admissible only when a
+  non-null model is decisively favored under a look-elsewhere-adjusted
+  margin AND identified AND posterior-predictive adequate AND predicts
+  held-out data better than the null AND is not prior-sensitive; otherwise
+  the mandatory result is abstain or non_identified. A twelve-cell
+  recovery/confusion/abstention matrix recovers the true branch in the
+  clean identified regimes, abstains non_identified on the collinear
+  local/systematic pair in the confused regime, and abstains everywhere in
+  the weak regime; three further demos exercise the inadequate, prior-
+  sensitive, and two-component superposition gates. Anti-drift is enforced
+  live inside the discrimination path — residuals are never absorbed into
+  the global component, a MIO score is never a likelihood, the
+  deterministic and covariance branches are separate, and the model list
+  is fixed. Six mutations killed. A multi-lane adversarial review found no
+  P0 and fixed two P1 (the identifiability gate required template
+  collinearity and could never fire for the orthogonal local and global
+  templates, now governed by the evidence gap plus a combined-model gate;
+  and four of six guards were not invoked on the production path, now wired
+  live) and two P2 pre-commit. A discrimination candidate is not a
+  detection, a geometry, or a Bianchi family; 102 findings OPEN; PR4
+  skipped.

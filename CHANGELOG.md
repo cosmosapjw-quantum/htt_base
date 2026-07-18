@@ -7,6 +7,39 @@
 
 ## [Unreleased]
 
+### PR-141 — Contamination-aware local/global mixture with mandatory abstention (rev-r218, 2026-07-18)
+
+Roadmap Wave-17 PR-141 (deps PR-133/136-140). `htt/src/common/mixture_competition.py`:
+four EXPLICIT competitors (isotropy, local kinematic boost / dipole, survey
+systematic template, global anisotropy / quadrupole) as a fixed pre-registered
+model list with exact conjugate-Gaussian evidence. A discrimination CANDIDATE
+is admissible only when a non-null model is decisively favored (look-elsewhere
+adjusted margin) AND identified AND adequate (PPC) AND predicts held-out data
+better than the null (LOO gain) AND not prior-sensitive; otherwise the mandatory
+result is abstain / non_identified. A 12-cell recovery/confusion/abstention
+matrix: clean recovers local/sys/global + abstains iso; confused (collinear
+dipole/systematic) abstains non_identified on local/sys + recovers global; weak
+abstains everywhere. Three extra demos exercise the remaining gates: outlier
+contamination -> abstain_inadequate (PPC p~5e-4); marginal signal over a wide
+prior grid -> abstain_prior_sensitive; a genuine local+global superposition ->
+abstain_non_identified (combined model beats the best single model).
+Anti-drift enforced LIVE in discriminate(): no residual absorption into global,
+no MIO-as-likelihood, deterministic vs covariance branch separated, fixed model
+list. 6/6 mutations killed. Multi-lane adversarial review (3 refute-lenses +
+verify): no P0; fixed 2 CONFIRMED P1 — (1) the identifiability gate was
+`(ev_gap < gap) AND collinear`, which could NEVER fire for the orthogonal
+local/global templates (a noise-flipped candidate on superpositions); now
+governed by the EVIDENCE GAP alone + a combined-model gate; (2) 4/6 guards were
+not production-invoked, now wired live into discriminate() — plus 2 P2
+(look-elsewhere penalty for max-of-3; model-list process-rule limit documented),
+all pre-commit. The clean 9-cell matrix is preserved; strong superposition
+reliably abstains (combined gain 14-25). Suite:
+`tests/contracts/test_pr141_mixture.py` (14) + full gate at baseline. DAG 88/113.
+C3 local/global discrimination-candidate mechanics conditional on the registered
+model list only; a candidate is never a detection, geometry, or family; no
+detection; 102 OPEN / 0 RESCUED; PR4 skipped; next PR-142. See
+docs/PR_DELTAS/pr-141.md.
+
 ### PR-140 — Normalized-prior coherent evidence, two independent engines (rev-r217, 2026-07-18)
 
 Roadmap Wave-17 PR-140 (deps PR-122/134/138/139). `htt/src/common/coherent_evidence.py`:

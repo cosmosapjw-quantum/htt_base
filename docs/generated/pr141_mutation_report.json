@@ -1,0 +1,42 @@
+{
+  "mutations": [
+    {
+      "kill_message_redacted": "residuals may not all be absorbed into the global component; every competitor is tested explicitly",
+      "kill_rule": "absorbing all residuals into the global component is rejected by the residual-absorption guard",
+      "killed": true,
+      "mutation_id": "residual_absorption"
+    },
+    {
+      "kill_message_redacted": "a MIO / reporting score is not a likelihood factor",
+      "kill_rule": "using a MIO / reporting score as a likelihood factor is rejected by the likelihood-factor guard",
+      "killed": true,
+      "mutation_id": "mio_score_as_likelihood"
+    },
+    {
+      "kill_message_redacted": "changing the model list after the outcome requires a NEW registered family and an updated look-elsewhere multiplicity",
+      "kill_rule": "changing the model list after the outcome without a new family and multiplicity is rejected",
+      "killed": true,
+      "mutation_id": "posthoc_model_change"
+    },
+    {
+      "kill_message_redacted": "the mandatory result is abstain_non_identified — no discrimination candidate may be asserted",
+      "kill_rule": "asserting a discrimination candidate on an abstaining decision is rejected by require_not_detection",
+      "killed": true,
+      "mutation_id": "detection_when_abstention_required"
+    },
+    {
+      "kill_message_redacted": "the deterministic (profile / fixed-amplitude) branch is not an evidence and may not be used for model comparison; use the covariance (marginalized) evidence branch",
+      "kill_rule": "using the deterministic profile branch for model comparison is rejected by the branch guard",
+      "killed": true,
+      "mutation_id": "deterministic_as_evidence"
+    },
+    {
+      "kill_message_redacted": "the model list is fixed and pre-registered",
+      "kill_rule": "a model list that departs from the fixed pre-registered set before the outcome is rejected",
+      "killed": true,
+      "mutation_id": "unregistered_model_before_outcome"
+    }
+  ],
+  "schema": "pr141.mutation_report.v1",
+  "surviving_mutation_count": 0
+}
