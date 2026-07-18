@@ -1,0 +1,154 @@
+schema: htt.long_horizon.pr149_k1_convention.v1
+spec_version: 1
+pr_id: PR-149
+title: Planck K1 canonical convention mask and transfer path with a BiPoSH structural-zero theorem
+baseline_commit: 5620f3be90da97bdf2ca94e3f75a15b8d27f4f58
+reviewed_on: '2026-07-18'
+owner: OBSSTAT
+contributors:
+  - COMMON
+implementation_scope:
+  - obsstat
+artifact_mode: observable_convention_and_basis_theorem
+allowed_use:
+  - canonical_alm_convention_contract
+  - tt_biposh_odd_L_diagonal_structural_zero_theorem
+  - frozen_mask_procnside_convention
+  - observed_null_path_equality
+  - scan_family_ledger_with_quotient
+public_use: false
+claim_tier: conditional
+claim_tier_ceiling: conditional
+claim_level:
+  scheme: roadmap_rescue_v1
+  level: C2
+scientific_status: OPEN
+scientific_effect: none
+transfer_source: none
+
+claim_identity:
+  claim_id: C-PR149-K1-CONVENTION
+  claim_text: >-
+    A canonical low-multipole Planck K1 convention contract is frozen and
+    content-addressed (coordinate frame, alm indexing/phase/reality, beam and
+    pixel window, downgrade proc-nside, common mask, orientation grid), binding
+    the existing alm-convention validator, and is verified on the REAL Planck
+    PR3 SMICA and Commander maps through one shared observed-and-null pipeline
+    (the same code path processes the data map and a matched Gaussian null, so a
+    convention change cannot hide by moving both together). The mathematical
+    headline is a BASIS THEOREM proved by an INDEPENDENT Wigner-3j oracle: the
+    TT BiPoSH diagonal coefficient A^{LM}_{ll} vanishes identically for every
+    ODD L and arbitrary real temperature alm (a structural zero, machine-
+    precision on random real alm), so the odd-L diagonal carries no trials and
+    is quotiented out of the scan family; the remaining monotone/equivalent
+    orientation scans are quotiented and the effective scan family is frozen in
+    a ledger. The alm reality condition, the map-to-alm-to-map round trip and a
+    rotation round trip are checked against the independent oracle, and a
+    hard-coded or stale Planck axis is never used as a discovery. This is
+    observable feature-extraction and basis-theorem mechanics at C1--C2 only;
+    freezing this mask/proc-nside/convention is the pre-condition for the PR-150
+    raw-deletion swap but PR-149 makes no K1 detection or family claim. The two
+    CF4 P0s are untouched and stay OPEN.
+  domain: planck_lowell_k1_convention
+  frame: binds_pr123_oracle_pr125_frame_pr135_ranking_alm_conventions_biposh_features
+  claim_level_scheme: roadmap_rescue_v1
+  claim_level: C2
+
+scope_and_non_goals:
+  hardcoded_or_stale_axis_as_discovery: forbidden
+  mask_recorded_but_not_applied: forbidden
+  convention_mutation_hidden_by_shared_observed_null: forbidden
+  k1_detection_or_family_claim: forbidden
+  odd_L_diagonal_counted_as_trials: forbidden
+  approve_pr150_raw_deletion_before_convention_frozen: forbidden
+
+data_scope:
+  cf4_data_work: authorized_by_user_2026_07_18
+  pr4_npipe: excluded_by_user_scope
+  raw_data_paths:
+    smica: workdir/raw/planck_data/COM_CMB_IQU-smica_2048_R3.00_full.fits
+    commander: workdir/raw/planck_data/COM_CMB_IQU-commander_2048_R3.00_full.fits
+    mask_int: workdir/raw/planck_data/COM_Mask_CMB-common-Mask-Int_2048_R3.00.fits
+  raw_data_policy: read_only_external_manifest_versioned_only
+
+remediation_state_contract:
+  path: docs/codex_handoff/research_remediation_state.yaml
+  sha256: f16d9754828bb32ae4cef92f585af82ae7fd1caa2687a7b4144bc1e942328dd9
+  finding_count: 102
+  required_scientific_status_counts: {OPEN: 102}
+  rescued_count: 0
+
+model:
+  module: htt/obsstat/k1_convention_contract.py
+  proc_nside: 64
+  lmax: 32
+  structural_zero_l_values: [2, 3, 4, 5]
+  structural_zero_tolerance: 1.0e-10
+  orientation_grid_n: 12
+  null_seed: 20260724
+
+mutation_registry:
+  - mutation_id: stale_axis_discovery
+    kill_rule: using a hard-coded or stale Planck axis as a discovery is rejected
+  - mutation_id: mask_not_applied
+    kill_rule: recording a mask hash without applying it on the map path is rejected
+  - mutation_id: shared_null_hides_mutation
+    kill_rule: a convention mutation that a shared observed/null path would hide is caught by the independent oracle
+  - mutation_id: k1_detection_claim
+    kill_rule: a detection or Bianchi-family claim on the K1 axis is rejected
+  - mutation_id: odd_L_diagonal_trials
+    kill_rule: counting the odd-L BiPoSH diagonal as scan trials is rejected
+  - mutation_id: approve_raw_deletion_unfrozen
+    kill_rule: approving the PR-150 raw deletion before the convention is frozen is rejected
+
+negative_scan:
+  targets:
+    - htt/obsstat/k1_convention_contract.py
+    - docs/generated/pr149_captions.json
+  forbidden_patterns:
+    - 'stale axis is the discovery'
+    - 'mask recorded not applied'
+    - 'shared null hides the mutation'
+    - 'k1 detection'
+    - 'bianchi family from k1'
+    - 'odd L diagonal trials'
+  rule: >-
+    active PR-149 surfaces must never use a stale axis as a discovery, record a
+    mask without applying it, let a shared null hide a mutation, claim a K1
+    detection or family, or count the odd-L diagonal as trials.
+
+artifact_contract:
+  outputs:
+    - docs/generated/pr149_convention_contract.json
+    - docs/generated/pr149_structural_zero_theorem.json
+    - docs/generated/pr149_map_convention_checks.json
+    - docs/generated/pr149_observed_null_path_equality.json
+    - docs/generated/pr149_scan_family_ledger.json
+    - docs/generated/pr149_captions.json
+    - docs/generated/pr149_mutation_report.json
+    - docs/generated/pr149_artifact_manifest.json
+  check_policy: fresh_build_must_equal_disk_bytes
+
+acceptance_and_kill_switches:
+  - the canonical alm convention contract is frozen and content-addressed and binds the alm-convention validator
+  - the TT BiPoSH odd-L diagonal structural zero is proved by an independent Wigner-3j oracle at machine precision for every listed l
+  - the real Planck SMICA and Commander maps are downgraded to the frozen proc-nside and the frozen mask is APPLIED, with alm reality and round-trip checks passing
+  - the observed and null maps traverse one shared pipeline and the paths are structurally equal
+  - the scan-family ledger quotients the odd-L diagonal and the monotone/equivalent orientation scans and freezes the effective family
+  - a hard-coded or stale Planck axis is never used as a discovery
+  - every registered mutation executes and is killed
+  - all 102 remediation findings remain OPEN
+
+forbidden_output_language:
+  - stale axis is the discovery
+  - mask recorded not applied
+  - shared null hides the mutation
+  - k1 detection
+  - bianchi family from k1
+  - odd L diagonal trials
+  - shear detected
+  - isotropy established
+  - Bianchi geometry detected
+  - Bianchi family identified
+  - finding rescued
+  - validated as native

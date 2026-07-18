@@ -1,0 +1,34 @@
+{
+  "lmax": 32,
+  "maps": [
+    {
+      "fsky": 0.781514,
+      "map": "smica",
+      "note": "reality and round trip are INTERNAL pipeline self-consistency (not a convention validation); the map-space vs alm-space rotation cross-check is the genuine, data-dependent convention test and a wrong m-phase mutation is demonstrated to break it (caught, not hidden)",
+      "reality_ok": true,
+      "rotation_crosscheck_ok": true,
+      "rotation_crosscheck_rel_error": 0.000467,
+      "rotation_crosscheck_wrong_phase_rel_error": 1.768273,
+      "round_trip_ok": true,
+      "self_consistency_m0_max_imag": 0.0,
+      "self_consistency_round_trip_rel_error": 0.0,
+      "wrong_phase_mutation_caught": true
+    },
+    {
+      "fsky": 0.781514,
+      "map": "commander",
+      "note": "reality and round trip are INTERNAL pipeline self-consistency (not a convention validation); the map-space vs alm-space rotation cross-check is the genuine, data-dependent convention test and a wrong m-phase mutation is demonstrated to break it (caught, not hidden)",
+      "reality_ok": true,
+      "rotation_crosscheck_ok": true,
+      "rotation_crosscheck_rel_error": 0.000469,
+      "rotation_crosscheck_wrong_phase_rel_error": 1.753078,
+      "round_trip_ok": true,
+      "self_consistency_m0_max_imag": 0.0,
+      "self_consistency_round_trip_rel_error": 0.0,
+      "wrong_phase_mutation_caught": true
+    }
+  ],
+  "note": "the real Planck maps are downgraded to the frozen proc-nside and the frozen mask is APPLIED; reality and round trip are internal self-consistency and the map-space vs alm-space rotation cross-check is the genuine convention test (a wrong-phase mutation is caught)",
+  "proc_nside": 64,
+  "schema": "pr149.map_convention_checks.v1"
+}

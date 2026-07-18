@@ -7,6 +7,34 @@
 
 ## [Unreleased]
 
+### PR-149 — Planck K1 canonical convention, mask, transfer path + BiPoSH structural-zero theorem (rev-r226, 2026-07-18)
+
+Roadmap Wave-19 PR-149 (deps PR-123/125/135/143). `htt/obsstat/k1_convention_contract.py`:
+a canonical low-multipole Planck K1 convention is frozen and content-addressed
+(coordinate frame, alm indexing/phase/reality DERIVED from the imported
+alm-convention validator, proc-nside downgrade, common mask, orientation grid) and
+verified on the real Planck PR3 SMICA/Commander maps. Headline BASIS THEOREM proved
+by an INDEPENDENT sympy Wigner-3j oracle: the TT BiPoSH diagonal A^{LM}_{ll} vanishes
+identically for every ODD L and ANY temperature alm (the l1=l2 exchange symmetry
+A=(-1)^L A, verified on both real and reality-violating complex alm), even L
+generically nonzero → the odd-L diagonal carries no trials, quotiented from the scan
+family (effective 84 even-L orientation terms). Real maps downgraded to proc-nside 64,
+common mask APPLIED (fsky~0.78); reality + round trip are internal self-consistency,
+and a GENUINE map-space vs alm-space rotation cross-check (two independent healpy paths
+agree ~5e-4) is the convention test — a wrong m-phase mutation is DEMONSTRATED to break
+it (~1.8, caught). Even-L feature in microkelvin (observed≠null, data-dependent);
+observed + matched-C_ell null share one pipeline. 6/6 mutations killed on live guards.
+Multi-lane review (Workflow 3 refute-lenses x find->verify, effort high): NO P0, 2 P1 +
+5 P2 all CONFIRMED + fixed pre-commit (tautological path-equality replaced by
+data-dependent microkelvin features + genuine rotation cross-check with a caught
+wrong-phase mutation; self-consistency identities relabelled; theorem restated for any
+alm + re-attributed to exchange symmetry; tolerance/features serialised at scientific
+scale; contract fields bound to the validator). Suite test_pr149_k1_convention.py (8) +
+full gate baseline. C1-C2 observable feature-extraction + basis-theorem mechanics;
+freezing the mask/convention pre-conditions the PR-150 raw-deletion swap; no detection
+or Bianchi-family claim on K1; the two CF4 P0s untouched/OPEN; 102 OPEN; DAG 96/113;
+next PR-150. See docs/PR_DELTAS/pr-149.md.
+
 ### PR-148 — Depth-resolved fsigma8 with a same-data joint covariance bound (rev-r225, 2026-07-18)
 
 Roadmap Wave-18 PR-148 (deps PR-139-141, PR-146, PR-147); last Wave-18 PR,

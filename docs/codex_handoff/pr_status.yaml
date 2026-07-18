@@ -95,9 +95,9 @@ completed:
 - PR-146
 - PR-147
 - PR-148
+- PR-149
 blocked: []
 pending:
-- PR-149
 - PR-150
 - PR-151
 - PR-152
@@ -118,6 +118,12 @@ dormant_external:
 - PR-166
 in_progress: null
 execution_resolutions:
+  PR-149:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-149.md
+    resolved_on: '2026-07-18'
+    scientific_status_effect: none
+    scientific_status_after: OPEN
   PR-148:
     resolution: COMPLETED_SUCCESS
     receipt: docs/PR_DELTAS/pr-148.md
@@ -1415,3 +1421,27 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   difference bound mechanics only; both CF4 P0s stay OPEN with remediation-
   candidate receipts; closure is impossible before the PR-157 adjudication;
   102 findings OPEN; PR4 NPIPE excluded. Checkpoint 095 recorded.
+  PR-149 freezes and content-addresses a canonical low-multipole Planck K1
+  convention (coordinate frame, alm indexing/phase/reality bound to the
+  alm-convention validator, proc-nside downgrade, common mask, orientation
+  grid) and verifies it on the real Planck PR3 SMICA and Commander maps. The
+  mathematical headline is a basis theorem proved by an independent Wigner-3j
+  oracle where the TT BiPoSH diagonal coefficient vanishes identically for every
+  odd L and ANY temperature alm (the l1 equals l2 exchange symmetry, verified
+  on both real and reality-violating complex alm), so the odd-L diagonal
+  carries no trials and is quotiented from the scan family. On the real maps
+  the common mask is applied, the alm reality and round trip are internal
+  self-consistency, and a genuine map-space versus alm-space rotation
+  cross-check is the convention test that a wrong m-phase mutation is
+  demonstrated to break. The even-L feature is data-dependent in microkelvin
+  and the observed and null pipelines share one transform. Six mutations
+  killed on live guard paths. A multi-lane adversarial review returned no P0
+  and two P1 plus five P2, all fixed pre-commit (the theorem restated for any
+  alm and re-attributed to the exchange symmetry; the tautological path
+  equality replaced by a data-dependent feature and a genuine rotation
+  cross-check with a caught wrong-phase mutation; the features scaled to
+  microkelvin so they survive rounding; the contract fields derived from the
+  imported validator). Observable feature-extraction and basis-theorem
+  mechanics only; freezing the mask and convention pre-conditions the PR-150
+  raw-deletion swap; no detection and no Bianchi-family claim on K1; the two
+  CF4 P0s are untouched and stay OPEN; 102 findings OPEN; PR4 NPIPE excluded.
