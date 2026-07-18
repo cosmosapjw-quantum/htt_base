@@ -1,0 +1,189 @@
+schema: htt.long_horizon.pr143_adjudication.v1
+spec_version: 1
+pr_id: PR-143
+title: Integrated synthetic calibration and hostile statistical adjudication
+baseline_commit: f5bda7e621e7387fc8a978e0e97cf5dc2ad36284
+reviewed_on: '2026-07-18'
+owner: COMMON
+contributors:
+  - OBSSTAT
+  - HTT
+  - MIO
+adjudicator: referee.nonauthor
+implementation_scope:
+  - common
+artifact_mode: statistical_governance_diagnostic
+allowed_use:
+  - blind_dgp_challenge
+  - non_author_referee_adjudication
+  - method_ready_block_matrix
+  - generator_analyst_referee_separation_receipt
+public_use: false
+claim_tier: conditional
+claim_tier_ceiling: conditional
+claim_level:
+  scheme: roadmap_rescue_v1
+  level: C3
+scientific_status: OPEN
+scientific_effect: none
+transfer_source: none
+
+claim_identity:
+  claim_id: C-PR143-ADJUDICATION
+  claim_text: >-
+    A BLIND challenge over the integrated statistical foundation. A
+    generator seals a battery of labelled DGPs (known-null, local, global,
+    systematic, weak-ID, dependent-mock, covariance-misspecified); a BLIND
+    analyst (the PR-141 discrimination method) predicts each item from the
+    data and the KNOWN survey geometry WITHOUT seeing the truth; and a
+    NON-AUTHOR referee scores size (false-candidate rate on the null),
+    recovery (correct branch on a clean signal), abstention (the required
+    diagnosis where no single model is admissible), and
+    computational-failure behaviour against PRE-REGISTERED thresholds,
+    producing a method-ready / block matrix. Passing the synthetic
+    challenge is METHOD READINESS, not observed validity; the generator /
+    analyst / referee separation is content-addressed. A method that fails
+    a criterion blocks only the data PRs that depend on it and the failure
+    is never hidden; favourable-case cherry-picking, retuning-then-
+    rescoring under the same challenge id, presenting readiness as observed
+    validity, and a self-adjudicating referee are refused. Pre-data
+    method-calibration mechanics only — no observed-data claim, no
+    detection.
+  domain: synthetic_dgp_battery_toy_only
+  frame: binds_pr135_pr136_pr137_pr138_pr139_pr140_pr141_pr142
+  claim_level_scheme: roadmap_rescue_v1
+  claim_level: C3
+
+scope_and_non_goals:
+  cherry_pick_favorable_dgp: forbidden
+  retune_then_rescore_same_id: forbidden
+  synthetic_pass_as_observed_validity: forbidden
+  hide_a_failed_family: forbidden
+  generator_analyst_merge: forbidden
+  self_adjudicating_referee: forbidden
+  remediation_disposition_change: forbidden
+
+remediation_state_contract:
+  path: docs/codex_handoff/research_remediation_state.yaml
+  sha256: f16d9754828bb32ae4cef92f585af82ae7fd1caa2687a7b4144bc1e942328dd9
+  finding_count: 102
+  required_scientific_status_counts: {OPEN: 102}
+  rescued_count: 0
+
+data_scope:
+  pr4_data_work: skip_entirely_by_user_scope
+  pr4_commands_run_required: 0
+
+challenge:
+  challenge_id: CH-PR143-v1
+  generator_id: generator.dgp
+  analyst_id: analyst.pr141
+  referee_id: referee.nonauthor
+  template_seed: 20260718
+  ensemble_seeds: [101, 102, 103, 104, 105, 106, 107, 108, 109, 110]
+  n_reps: 15
+  n_obs: 60
+  method:
+    sig2: '1'
+    tau2: '4'
+    gain_margin_log_bf: '3'
+    identifiability_gap: '2'
+    collinearity_threshold: '9/10'
+    ppc_reject: '1/100'
+    prior_swing_ceiling: '6'
+    tau2_grid: ['1', '4', '16']
+    held_out_gain_floor: '0'
+    combination_margin: '5'
+    seed: 5
+
+criteria:
+  size_alpha: '1/10'
+  power_min: '3/4'
+  abstain_min: '7/10'
+  rule: >-
+    a size criterion caps the false-candidate rate on the null at
+    size_alpha; a recovery criterion requires the correct branch on a clean
+    signal at power_min; an abstention criterion requires the pre-specified
+    diagnosis at abstain_min; the computational-failure lane requires
+    graceful, safe handling of a degenerate input.
+
+expected_outcome:
+  ready_families: [known_null, local, global, systematic, weak_id, dependent_mock]
+  blocked_families: [covariance_misspecified]
+  computational_failure: ready
+  measured_size_ceiling: '1/10'
+  size_semantics: >-
+    the null false-candidate rate is a MEASURED SIZE over the seed ensemble
+    (a small NON-ZERO value within the pre-registered level alpha), never
+    claimed to be exactly zero; the size criterion caps it at alpha. The
+    covariance-misspecified BLOCK is a DIAGNOSTIC limitation (the linear-
+    Gaussian PPC attributes the abstention to inadequacy only about half the
+    time), not a size failure. Data PRs that require covariance-
+    misspecification DIAGNOSIS from this method are blocked; the size result
+    is recorded, not hidden.
+
+negative_scan:
+  targets:
+    - htt/src/common/synthetic_adjudication.py
+    - docs/generated/pr143_captions.json
+  forbidden_patterns:
+    - 'synthetic pass is observed validity'
+    - 'challenge confirms the data'
+    - 'method readiness is a detection'
+    - 'cherry-picked the favorable dgp'
+    - 'hid the failed family'
+  rule: >-
+    active PR-143 surfaces must never equate synthetic method readiness with
+    observed validity, claim the challenge confirms data, present readiness
+    as a detection, cherry-pick DGPs, or hide a failed family.
+
+mutation_registry:
+  - mutation_id: cherry_pick_favorable
+    kill_rule: scoring a favourable subset instead of the full battery is refused
+  - mutation_id: retune_then_rescore_same_id
+    kill_rule: re-scoring after retuning thresholds under the same challenge id is refused
+  - mutation_id: synthetic_as_observed
+    kill_rule: presenting synthetic readiness as observed validity is refused
+  - mutation_id: hide_failed_family
+    kill_rule: a published matrix that omits or mislabels a failed family is refused
+  - mutation_id: generator_analyst_merge
+    kill_rule: a challenge whose generator equals the analyst is refused
+  - mutation_id: self_adjudicating_referee
+    kill_rule: a referee equal to the generator or analyst is refused
+
+artifact_contract:
+  outputs:
+    - docs/generated/pr143_referee_report.json
+    - docs/generated/pr143_method_ready_matrix.json
+    - docs/generated/pr143_separation_receipt.json
+    - docs/generated/pr143_captions.json
+    - docs/generated/pr143_mutation_report.json
+    - docs/generated/pr143_artifact_manifest.json
+  check_policy: fresh_build_must_equal_disk_bytes
+
+acceptance_and_kill_switches:
+  - the full seven-family battery is scored by a non-author referee against pre-registered thresholds
+  - the method is ready on six families plus the computational-failure lane and blocked on covariance-misspecification
+  - the measured null size over the seed ensemble is within the pre-registered level alpha (reported as a nonzero value, never claimed exactly zero)
+  - the generator, analyst, and referee are distinct and the separation is recorded
+  - the block is recorded in the published matrix, never hidden
+  - every registered mutation executes and is killed
+  - all 102 remediation findings remain OPEN
+
+checkpoint:
+  id: '090'
+  requires_pr143_complete: true
+  record: [method_ready_count, blocked_count, empirical_size, empirical_coverage_note, referee_verdict, open_p0_p1, data_readiness]
+
+forbidden_output_language:
+  - synthetic pass is observed validity
+  - challenge confirms the data
+  - method readiness is a detection
+  - cherry-picked the favorable dgp
+  - hid the failed family
+  - shear detected
+  - isotropy established
+  - Bianchi geometry detected
+  - Bianchi family identified
+  - finding rescued
+  - validated as native

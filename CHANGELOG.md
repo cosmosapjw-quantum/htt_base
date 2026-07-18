@@ -7,6 +7,37 @@
 
 ## [Unreleased]
 
+### PR-143 — Integrated synthetic calibration + hostile statistical adjudication + checkpoint 090 (rev-r220, 2026-07-18)
+
+Roadmap Wave-17 PR-143 (deps PR-135-142; completes Wave 17). `htt/src/common/synthetic_adjudication.py`:
+a generator seals a battery of seven labelled DGPs (known-null, local, global,
+systematic, weak-ID, dependent-mock, covariance-misspecified) with a
+content-address of the realized labels AND data, re-verified at scoring; a BLIND
+analyst (the PR-141 discrimination method) is handed ONLY the blind items (data +
+known survey geometry) and predicts each; a NON-AUTHOR referee scores size,
+recovery, abstention, and computational-failure over a 10-seed ENSEMBLE against
+pre-registered thresholds -> method-ready/block matrix. Honest outcome: ready on 6
+families + computational-failure, BLOCKED on covariance-misspecification (a
+genuine diagnostic limitation, recorded not hidden); the null false-candidate rate
+is a MEASURED size 0.0067 within alpha=0.1 (never claimed zero). 6/6 mutations
+killed, guards live. Multi-lane adversarial review (3 refute-lenses + verify): no
+P0; fixed 3 CONFIRMED P1 — (1) the "sealed truth" was a seed-independent constant
+never re-verified -> now content-addresses labels+data + re-verified (tampering
+detected); (2) the "never falsely discriminates" claim was single-seed
+survivorship (the runner gated on zero false candidates; the method emits a false
+global on pure noise at ~25% of seeds) -> now a 10-seed ensemble reporting the
+measured size, and the caption lint FORBIDS the overclaim; (3) anti-drift guards
+not on the production path -> wired live — plus 3 P2 (blind analyst gets only blind
+items; global recovery aggregates stably; refuse_hidden_failure live), all
+pre-commit; 2 findings refuted. **Checkpoint 090** recorded
+(docs/generated/progress_checkpoints/checkpoint_090.md): 6/7 families +
+comp-failure ready, 1 blocked; measured size 0.0067 <= alpha; non-author referee
+block verdict; 0 open P0/P1; 102 OPEN / 0 RESCUED; PR4 out of scope. Suite:
+`tests/contracts/test_pr143_adjudication.py` (11) + full gate at baseline. DAG
+90/113. C3 pre-data method-calibration mechanics; synthetic readiness is not
+observed validity; no detection; 102 OPEN / 0 RESCUED; PR4 skipped; next PR-144
+(Wave 18). See docs/PR_DELTAS/pr-143.md.
+
 ### PR-142 — MIO joint-measure F/Pi/G_F invariance + matched-null calibration (rev-r219, 2026-07-18)
 
 Roadmap Wave-17 PR-142 (deps PR-134-137/141). `htt/src/common/mio_joint_measure.py`:
