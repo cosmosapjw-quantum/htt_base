@@ -86,9 +86,9 @@ completed:
 - PR-137
 - PR-138
 - PR-139
+- PR-140
 blocked: []
 pending:
-- PR-140
 - PR-141
 - PR-142
 - PR-143
@@ -118,6 +118,12 @@ dormant_external:
 - PR-166
 in_progress: null
 execution_resolutions:
+  PR-140:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-140.md
+    resolved_on: '2026-07-18'
+    scientific_status_effect: none
+    scientific_status_after: OPEN
   PR-139:
     resolution: COMPLETED_SUCCESS
     receipt: docs/PR_DELTAS/pr-139.md
@@ -1137,3 +1143,30 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   equivalence cross-check) and a P2 (the too-small-tail PSIS branch now
   fails toward exact) pre-commit. Dependency-qualified held-out
   predictive-score mechanics only; 102 findings OPEN; PR4 skipped.
+  PR-140 builds normalized-prior coherent evidence with two independent
+  engines on a conjugate Gaussian toy. The evidence Z1 is exact
+  (a multivariate normal marginal) and the log Bayes factor is 1.6125.
+  Thermodynamic integration (path sampling over a power-law power-
+  posterior ladder) and Meng-Wong bridge sampling each draw their own
+  samples with a distinct seed and method and are cross-checked against
+  the exact evidence; both agree to 0.0048 in log-evidence so the verdict
+  is coherent. Independence is a DATA check via a sample digest over the
+  actual draws, not just a label; an under-resolved ladder disagrees and
+  yields the indeterminate verdict. The prior-scale and covariance
+  sensitivity grid swings the log BF by 1.814 within the ceiling of 4 so
+  the production verdict is coherent, and a deliberately wide grid whose
+  swing is 4.43 is DEMONSTRATED to be refused by the live gate. The
+  content-addressed receipt binds the normalized prior, the likelihood
+  hash, the data hash, and both engine configs; a fitted score, an
+  unnormalized prior, and a caller scalar are never a Bayes factor. Six
+  preregistered mutations killed on production paths. A multi-lane
+  adversarial review (three refute-lenses plus verification) found the
+  estimator math correct to machine precision against brute-force
+  quadrature and fixed one P1 (the prior-sensitivity gate was logically
+  inverted and dead on the production path, now live and demonstrated)
+  and three P2 (label-based independence made a sample-digest data check,
+  two forward-defense guards wired live, and the thermodynamic MC
+  standard error disclosed as omitting the small quadrature bias)
+  pre-commit. Coherent model-comparison mechanics conditional on the
+  registered model and prior only; evidence agreement is not model truth;
+  102 findings OPEN; PR4 skipped.

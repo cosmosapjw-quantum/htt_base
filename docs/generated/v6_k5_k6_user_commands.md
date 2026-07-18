@@ -6,7 +6,7 @@ claim_tier: diagnostic_only
 transfer_source: mixed_none_and_external_transfer_conditioned
 sky_support_status: not_directional
 null_mock_status: mixed_diagnostic_and_blocked
-config_hash: `sha256:ee23acbaaddfeebe238a5513244ea9f5c8c2048c1cf7007a66ef2707c32232ec`
+config_hash: `sha256:20e3bb66ab51b336a8a452ac76ab1ca221ef516373cf801f94d6ac52ee377125`
 caveats:
 - Commands only; this generator did not execute K5 or K6.
 - Report stdout tail and the generated JSON path after running.

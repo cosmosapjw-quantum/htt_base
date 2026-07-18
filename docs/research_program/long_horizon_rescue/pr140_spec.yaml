@@ -1,0 +1,215 @@
+schema: htt.long_horizon.pr140_evidence.v1
+spec_version: 1
+pr_id: PR-140
+title: Normalized-prior coherent evidence with two independent engines
+baseline_commit: b2dbe58da3e2ed42fcf592624fe7ed4544a0ba0f
+reviewed_on: '2026-07-18'
+owner: HTT
+contributors:
+  - OBSSTAT
+  - COMMON
+implementation_scope:
+  - common
+artifact_mode: statistical_governance_diagnostic
+allowed_use:
+  - normalized_prior_provenance
+  - two_independent_evidence_engines
+  - analytic_evidence_cross_check
+  - prior_scale_and_covariance_sensitivity_surface
+public_use: false
+claim_tier: conditional
+claim_tier_ceiling: conditional
+claim_level:
+  scheme: roadmap_rescue_v1
+  level: C3
+scientific_status: OPEN
+scientific_effect: none
+transfer_source: none
+
+claim_identity:
+  claim_id: C-PR140-EVIDENCE
+  claim_text: >-
+    The marginal likelihood (evidence) is computed under a NORMALIZED
+    prior whose family and hyperparameters are bound, with the likelihood
+    hash, the data hash, the engine, its config, and its diagnostics, into
+    ONE content-addressed receipt. Two INDEPENDENT engines are used —
+    thermodynamic integration (path sampling over a power-posterior
+    ladder) and bridge sampling (Meng-Wong) — each drawing its OWN samples
+    (distinct seeds and method), never post-processing the same
+    samples/weights. Both are cross-checked against the EXACT conjugate-
+    Gaussian evidence and must agree within a preregistered tolerance. A
+    fitted score, an unnormalized prior, or a caller-supplied scalar is
+    NEVER accepted as a Bayes factor or evidence. The log Bayes factor is
+    evaluated over a preregistered grid of prior scale, covariance scale,
+    and nuisance; if the engines disagree, the MC diagnostics are
+    insufficient, or the prior sensitivity exceeds the preregistered
+    ceiling, the evidence claim is `indeterminate`. Evidence agreement is
+    NOT generative-model correctness, and a prior-dominated result is
+    shown as-is. Coherent model-comparison mechanics conditional on the
+    registered model/prior only — no detection.
+  domain: conjugate_gaussian_evidence_toy_only
+  frame: binds_pr122_receipt_pr134_estimand_pr138_lineage_pr139_holdout
+  claim_level_scheme: roadmap_rescue_v1
+  claim_level: C3
+
+scope_and_non_goals:
+  fitted_score_as_bayes_factor: forbidden
+  unnormalized_prior_as_evidence: forbidden
+  caller_scalar_as_evidence: forbidden
+  two_engines_sharing_samples: forbidden
+  engine_disagreement_ignored: forbidden
+  prior_sensitivity_ignored: forbidden
+  evidence_agreement_as_model_truth: forbidden
+  remediation_disposition_change: forbidden
+
+remediation_state_contract:
+  path: docs/codex_handoff/research_remediation_state.yaml
+  sha256: f16d9754828bb32ae4cef92f585af82ae7fd1caa2687a7b4144bc1e942328dd9
+  finding_count: 102
+  required_scientific_status_counts: {OPEN: 102}
+  rescued_count: 0
+
+data_scope:
+  pr4_data_work: skip_entirely_by_user_scope
+  pr4_commands_run_required: 0
+
+model:
+  module: htt/src/common/coherent_evidence.py
+  family: >-
+    conjugate Gaussian evidence toy: y_i ~ N(mu, sig2) with sig2 known,
+    normalized prior mu ~ N(0, tau2). The evidence Z1 = integral of
+    p(y|mu) p(mu) dmu = N(y; 0, sig2 I + tau2 J) is exact (J = ones outer
+    product); the point-null Z0 = N(y; 0, sig2 I). log BF10 = log Z1 -
+    log Z0 is exact.
+  n_obs: 6
+  sig2: '1'
+  prior_tau2: '4'
+  data_mu: '4/5'
+  data_seed: 1
+
+engines:
+  agreement_tol_log_evidence: '0.05'
+  analytic_tol_log_evidence: '0.05'
+  diagnostic_se_ceiling: '0.05'
+  thermodynamic_integration:
+    method: thermodynamic_integration
+    n_beta: 65
+    beta_power: 4
+    n_samples_per_beta: 8000
+    seed: 101
+    rule: >-
+      log Z1 = integral over beta in [0,1] of E_{p_beta}[log p(y|mu)]
+      dbeta, p_beta(mu) proportional to p(y|mu)^beta p(mu); the ladder is
+      a power-law u^4 grid (denser near beta = 0); the expectation is a
+      Monte-Carlo mean over exact power-posterior draws; the integral is
+      trapezoidal.
+  bridge_sampling:
+    method: bridge_sampling
+    n_posterior: 8000
+    n_proposal: 8000
+    seed: 202
+    max_iter: 200
+    rule: >-
+      the Meng-Wong optimal bridge estimator iterated to convergence,
+      using draws from the exact posterior and from a wider Gaussian
+      proposal; the estimator is a ratio identity, independent of the
+      thermodynamic path.
+  diagnostics:
+    n_bootstrap: 24
+    seed: 303
+    rule: >-
+      each engine reports a bootstrap Monte-Carlo standard error of its
+      log-evidence estimate; a standard error above the ceiling makes the
+      evidence indeterminate.
+
+sensitivity_grid:
+  prior_tau2: ['2', '4', '8']
+  sig2_scale: ['1', '2']
+  log_bf_swing_ceiling: '4'
+  rule: >-
+    the log Bayes factor is evaluated over the preregistered grid of prior
+    scale and covariance scale; if the log BF swing across the grid
+    exceeds the ceiling the result is prior-sensitive and the decisive
+    claim is indeterminate (the swing is reported either way). The gate is
+    asserted on the production verdict (require_within_ceiling); the
+    production grid swings within the ceiling so the verdict is coherent.
+
+prior_sensitive_demo:
+  prior_tau2: ['1/10', '4', '1000']
+  sig2_scale: ['1', '4']
+  rule: >-
+    a deliberately wide prior/covariance grid whose log BF swing EXCEEDS
+    the ceiling is DEMONSTRATED to be refused by the sensitivity gate,
+    yielding the indeterminate verdict on the production path.
+
+known_bad_disagreement:
+  n_beta: 9
+  beta_power: 1
+  n_samples_per_beta: 400
+  rule: >-
+    an under-resolved thermodynamic ladder (9 linear beta points, 400
+    samples) is DEMONSTRATED to disagree with bridge sampling and the
+    analytic evidence beyond tolerance, yielding the indeterminate verdict.
+
+negative_scan:
+  targets:
+    - htt/src/common/coherent_evidence.py
+    - docs/generated/pr140_captions.json
+  forbidden_patterns:
+    - 'fitted score is the bayes factor'
+    - 'unnormalized prior evidence'
+    - 'caller scalar is the evidence'
+    - 'two engines share the same samples'
+    - 'evidence agreement proves the model'
+  rule: >-
+    active PR-140 surfaces must never call a fitted score a Bayes factor,
+    use an unnormalized prior, accept a caller scalar as evidence, share
+    samples across the two engines, or present evidence agreement as model
+    truth.
+
+mutation_registry:
+  - mutation_id: fitted_score_as_bayes_factor
+    kill_rule: a fitted score or max-likelihood ratio offered as a Bayes factor is rejected by the evidence-kind guard
+  - mutation_id: unnormalized_prior
+    kill_rule: an unnormalized prior is rejected by the prior-normalization guard
+  - mutation_id: caller_scalar_as_evidence
+    kill_rule: a caller-supplied scalar offered as a log evidence is rejected by the engine-receipt guard
+  - mutation_id: shared_samples_two_engines
+    kill_rule: two engines with identical sample provenance are rejected by the independence guard
+  - mutation_id: engine_disagreement_ignored
+    kill_rule: reporting a coherent evidence claim when the engines disagree beyond tolerance is rejected by the disagreement policy
+  - mutation_id: prior_sensitivity_ignored
+    kill_rule: reporting a decisive Bayes factor when the prior-sensitivity swing exceeds the ceiling is rejected by the sensitivity gate
+
+artifact_contract:
+  outputs:
+    - docs/generated/pr140_evidence_report.json
+    - docs/generated/pr140_sensitivity_report.json
+    - docs/generated/pr140_receipt.json
+    - docs/generated/pr140_indeterminate_demo.json
+    - docs/generated/pr140_captions.json
+    - docs/generated/pr140_mutation_report.json
+    - docs/generated/pr140_artifact_manifest.json
+  check_policy: fresh_build_must_equal_disk_bytes
+
+acceptance_and_kill_switches:
+  - both engines agree with the exact analytic evidence within tolerance
+  - the two engines have distinct sample provenance and are verified independent
+  - a fitted score, an unnormalized prior, and a caller scalar are all refused
+  - the prior-sensitivity grid is evaluated and the swing is reported
+  - an under-resolved engine is demonstrated to disagree and yield indeterminate
+  - every registered mutation executes and is killed
+  - all 102 remediation findings remain OPEN
+
+forbidden_output_language:
+  - fitted score is the bayes factor
+  - unnormalized prior evidence
+  - caller scalar is the evidence
+  - two engines share the same samples
+  - evidence agreement proves the model
+  - shear detected
+  - isotropy established
+  - Bianchi geometry detected
+  - Bianchi family identified
+  - finding rescued
+  - validated as native

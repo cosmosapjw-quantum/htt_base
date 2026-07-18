@@ -1,0 +1,63 @@
+{
+  "comparison": {
+    "deviation_vs_analytic": {
+      "bridge_sampling": 0.0056093,
+      "thermodynamic_integration": 0.00084433
+    },
+    "diagnostics_ok": true,
+    "engine_gap": 0.00476497,
+    "engines_agree": true,
+    "match_analytic": true,
+    "max_bootstrap_se": 0.00432122,
+    "status": "coherent"
+  },
+  "engines": [
+    {
+      "beta_power": 4.0,
+      "bootstrap_se": 0.00432122,
+      "log_evidence": -8.86933624,
+      "mc_standard_error_note": "the MC standard error omits the deterministic trapezoidal quadrature bias; the coherent verdict is governed by the bootstrap error and the analytic tolerance",
+      "method": "thermodynamic_integration",
+      "n_beta": 65,
+      "n_samples": 8000,
+      "sample_digest": "e23d0da36083d7f8",
+      "sample_provenance": "72872ca1c1e8f1fb",
+      "seed": 101,
+      "standard_error": 0.00391717
+    },
+    {
+      "bootstrap_se": 0.00300947,
+      "iterations": 5,
+      "log_evidence": -8.87410121,
+      "method": "bridge_sampling",
+      "n_posterior": 8000,
+      "n_proposal": 8000,
+      "sample_digest": "50f1886f7572db5f",
+      "sample_provenance": "1fd5cf594fb8f4b0",
+      "seed": 202
+    }
+  ],
+  "exact_log_evidence": -8.86849191,
+  "exact_log_null_evidence": -10.48100717,
+  "final_status": "coherent",
+  "log_bf10": 1.61251526,
+  "module_schema": "pr140.coherent_evidence.v1",
+  "negative_scan": {
+    "targets": {
+      "docs/generated/pr140_captions.json": {
+        "hits": [],
+        "sha256": "f5cf848e9984fa0d61be777c221d16163bf1118b6484ed18e59066980f2abee4",
+        "source": "fresh_build"
+      },
+      "htt/src/common/coherent_evidence.py": {
+        "hits": [],
+        "sha256": "e4bbf3f352f4d00eba5869197c2ea1b4e743b6dec1908d61197c393c05906c94",
+        "source": "disk"
+      }
+    },
+    "total_hits": 0
+  },
+  "prior_sensitive": false,
+  "schema": "pr140.evidence_report.v1",
+  "verdict_note": "both independent engines match the exact evidence within tolerance; a coherent Bayes factor is conditional on the registered model and prior and is not generative-model correctness"
+}

@@ -7,6 +7,38 @@
 
 ## [Unreleased]
 
+### PR-140 — Normalized-prior coherent evidence, two independent engines (rev-r217, 2026-07-18)
+
+Roadmap Wave-17 PR-140 (deps PR-122/134/138/139). `htt/src/common/coherent_evidence.py`:
+a conjugate Gaussian evidence toy (`y_i ~ N(mu, sig2)`, normalized prior
+`mu ~ N(0, tau2)`) with exact evidence `Z1 = N(y; 0, sig2 I + tau2 J)` and
+`log BF10 = 1.6125`. Two INDEPENDENT engines — thermodynamic integration (path
+sampling over a power-law power-posterior beta-ladder) and Meng-Wong bridge
+sampling — each draw their own samples (distinct seed + method) and are
+cross-checked against the exact evidence (engine gap 0.0048, deviation < 0.001)
+→ `coherent`. Independence is a DATA check (each engine records a
+`sample_digest` over its actual draws; matching digests refused even under
+different method labels). An under-resolved ladder disagrees (gap 0.50) →
+`indeterminate`. The prior-scale/covariance sensitivity grid swings the log BF
+by 1.814 (< ceiling 4) → coherent; a wide grid (swing 4.43) is DEMONSTRATED to
+be refused → `indeterminate` (the gate `require_within_ceiling` is asserted on
+the production verdict). A normalized-prior receipt binds the prior, likelihood
+hash, data hash, and engine configs; a fitted score / unnormalized prior /
+caller scalar is never accepted as a Bayes factor. 6/6 preregistered mutations
+killed. Multi-lane adversarial review (three refute-lenses + verification):
+the estimator lens found NO defect (exact evidence matches brute-force
+quadrature to machine precision; the TI path identity and the Meng-Wong bridge
+iteration are correct and unbiased). Fixed one CONFIRMED P1 (the
+prior-sensitivity gate was logically inverted — dead on the production path —
+now live and demonstrated) and three P2 (label-based independence → sample
+digest; two forward-defense guards wired live; the TI MC standard error omits
+the ~1e-3 quadrature bias, disclosed and governed by the bootstrap error and
+analytic tolerance), all pre-commit. Suite:
+`tests/contracts/test_pr140_evidence.py` (12) + full gate at baseline. DAG
+87/113. C3 coherent model-comparison mechanics conditional on the registered
+model/prior only; evidence agreement is not model truth; no detection; 102
+OPEN / 0 RESCUED; PR4 skipped; next PR-141. See docs/PR_DELTAS/pr-140.md.
+
 ### PR-139 — Dependency-aware holdout and train-only refit (rev-r216, 2026-07-18)
 
 Roadmap Wave-17 PR-139 (deps PR-134/138). `htt/src/common/dependency_holdout.py`:

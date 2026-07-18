@@ -1,0 +1,51 @@
+{
+  "allowed_use": [
+    "normalized_prior_provenance",
+    "two_independent_evidence_engines",
+    "analytic_evidence_cross_check",
+    "prior_scale_and_covariance_sensitivity_surface"
+  ],
+  "artifact_mode": "statistical_governance_diagnostic",
+  "artifacts": {
+    "docs/generated/pr140_captions.json": "f5cf848e9984fa0d61be777c221d16163bf1118b6484ed18e59066980f2abee4",
+    "docs/generated/pr140_evidence_report.json": "e831a110b5320e8f3a1afb585f280ab8f974ca4eab4e75398ab7542eeaa48867",
+    "docs/generated/pr140_indeterminate_demo.json": "cdf9313c141d0e2f2fa2ede4f781ac97b770933827dcaf99e8ac11b206038fa2",
+    "docs/generated/pr140_mutation_report.json": "8390a29fe220a0a134fe4467f5e51c8638a1152d1222f4c5ff6c2ede4e771c01",
+    "docs/generated/pr140_prior_sensitive_demo.json": "49d7395965573f8a27fa69bad3cc65db54acdf8064167688b2aabb82ab193f5f",
+    "docs/generated/pr140_receipt.json": "ca89de2b670ef9a0456d9dd095f288db5652b0f1e6f985ae0552d109e8cc8a2d",
+    "docs/generated/pr140_sensitivity_report.json": "a747690d97dea88ec60596edba5ed47ef4473a7a5edea4d02049f7ad8946711b"
+  },
+  "caveats": [
+    "Coherent model-comparison mechanics conditional on the registered model and prior at C3 only.",
+    "Two independent engines (thermodynamic integration and bridge sampling) are cross-checked against the exact analytic evidence.",
+    "Engine agreement is NOT generative-model correctness; a prior-dominated result is shown as-is.",
+    "Engine disagreement, insufficient diagnostics, or a prior swing beyond the ceiling makes the claim indeterminate.",
+    "No detection.",
+    "All 102 remediation findings remain OPEN."
+  ],
+  "claim_level": {
+    "level": "C3",
+    "scheme": "roadmap_rescue_v1"
+  },
+  "claim_tier": "conditional",
+  "config_hash": "db2373c3a0b02114947bd3a56994b21da772c1f5a20021502ad0db669b3f0cd9",
+  "forbidden_use": [
+    "fitted score is the bayes factor",
+    "unnormalized prior evidence",
+    "caller scalar is the evidence",
+    "two engines share the same samples",
+    "evidence agreement proves the model",
+    "shear detected",
+    "isotropy established",
+    "Bianchi geometry detected",
+    "Bianchi family identified",
+    "finding rescued",
+    "validated as native"
+  ],
+  "input_hashes": [
+    "htt/src/common/coherent_evidence.py:e4bbf3f352f4d00eba5869197c2ea1b4e743b6dec1908d61197c393c05906c94"
+  ],
+  "owner": "HTT",
+  "schema": "pr140.artifact_manifest.v1",
+  "transfer_source": "none"
+}

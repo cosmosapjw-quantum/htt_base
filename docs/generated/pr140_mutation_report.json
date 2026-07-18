@@ -1,0 +1,42 @@
+{
+  "mutations": [
+    {
+      "kill_message_redacted": "a 'fitted_score' is not a marginal-likelihood ratio and may not be called a Bayes factor or evidence",
+      "kill_rule": "a fitted score or max-likelihood ratio offered as a Bayes factor is rejected by the evidence-kind guard",
+      "killed": true,
+      "mutation_id": "fitted_score_as_bayes_factor"
+    },
+    {
+      "kill_message_redacted": "the prior is unnormalized — the evidence integral is only defined for a normalized prior density",
+      "kill_rule": "an unnormalized prior is rejected by the prior-normalization guard",
+      "killed": true,
+      "mutation_id": "unnormalized_prior"
+    },
+    {
+      "kill_message_redacted": "a caller-supplied scalar is not an evidence receipt — a receipt binds the normalized prior, likelihood, data, and engine diagnostics",
+      "kill_rule": "a caller-supplied scalar offered as a log evidence is rejected by the engine-receipt guard",
+      "killed": true,
+      "mutation_id": "caller_scalar_as_evidence"
+    },
+    {
+      "kill_message_redacted": "the two evidence engines share the same sample provenance — post-processing one sample set twice is not two engines",
+      "kill_rule": "two engines with identical sample provenance are rejected by the independence guard",
+      "killed": true,
+      "mutation_id": "shared_samples_two_engines"
+    },
+    {
+      "kill_message_redacted": "the evidence is indeterminate (engine disagreement or insufficient diagnostics) and may not be reported as a coherent Bayes factor",
+      "kill_rule": "reporting a coherent evidence claim when the engines disagree beyond tolerance is rejected by the disagreement policy",
+      "killed": true,
+      "mutation_id": "engine_disagreement_ignored"
+    },
+    {
+      "kill_message_redacted": "the log Bayes factor swings 9.000 across the prior/covariance grid (> 4.0) — the result is prior-sensitive and the decisive claim is indeterminate",
+      "kill_rule": "reporting a decisive Bayes factor when the prior-sensitivity swing exceeds the ceiling is rejected by the sensitivity gate",
+      "killed": true,
+      "mutation_id": "prior_sensitivity_ignored"
+    }
+  ],
+  "schema": "pr140.mutation_report.v1",
+  "surviving_mutation_count": 0
+}
