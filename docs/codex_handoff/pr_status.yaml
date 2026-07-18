@@ -92,9 +92,9 @@ completed:
 - PR-143
 - PR-144
 - PR-145
+- PR-146
 blocked: []
 pending:
-- PR-146
 - PR-147
 - PR-148
 - PR-149
@@ -118,6 +118,12 @@ dormant_external:
 - PR-166
 in_progress: null
 execution_resolutions:
+  PR-146:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-146.md
+    resolved_on: '2026-07-18'
+    scientific_status_effect: none
+    scientific_status_after: OPEN
   PR-145:
     resolution: COMPLETED_SUCCESS
     receipt: docs/PR_DELTAS/pr-145.md
@@ -1315,3 +1321,32 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   coordinates) and four P2. Both CF4 P0s stay OPEN with remediation-candidate
   receipts; closure is impossible before the PR-157 adjudication; 102
   findings OPEN; PR4 NPIPE excluded.
+  PR-146 builds the CF4 catalogue forward-mock simulator that de-risks and
+  validates the PR-145 covariance. The primary generator is a Cholesky factor
+  of the full Gorski velocity correlation so a correlated draw carries the
+  large-scale modes, and it reproduces the per-galaxy dispersion and the
+  analytic bulk-flow cosmic-variance covariance within Monte-Carlo tolerance
+  as a propagation self-consistency check. An independent box Gaussian-random-
+  field generator built by a separate FFT path independently confirms the
+  variance normalisation to a few percent, ruling out a shared code bug in the
+  variance scale; its off-diagonal correlation is an order-unity finite-box
+  factor so the box is a diagonal-variance reference only, never used for the
+  covariance or coverage, and the off-diagonal covariance structure stays the
+  fiducial Gorski model, not independently validated. Non-Gaussian distance
+  error, a magnitude-limited selection with an unmodeled Malmquist bias, an
+  unmodeled intra-group dispersion and a nonlinear scatter are layered on as
+  genuine stressors and the estimator is re-fit on every mock. The idealised
+  variant covers at nominal while the noise-only covariance under-covers, and
+  each genuine stressor degrades the radial monopole coverage, which is
+  reported not hidden, with the degradation depth-dependent across shells. An
+  effective-N participation ratio and the covariance uncertainty are reported
+  so same-box regions are never counted as independent. Six mutations killed
+  on live guard paths. A multi-lane adversarial review returned no P0 or P1
+  and seven P2, all fixed pre-commit (the band deficit relabelled to grid
+  resolution, the off-diagonal factor reported as an order-unity value, the
+  Cholesky legs reworded as self-consistency checks, the selection and
+  grouping variants made genuine stressors, the per-depth stressor made real,
+  and the remediation receipt narrowed to the diagonal normalisation).
+  Forward-simulator coverage mechanics only; both CF4 P0s stay OPEN with
+  remediation-candidate receipts; closure is impossible before the PR-157
+  adjudication; 102 findings OPEN; PR4 NPIPE excluded.

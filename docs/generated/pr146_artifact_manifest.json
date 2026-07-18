@@ -1,0 +1,60 @@
+{
+  "allowed_use": [
+    "cholesky_from_gorski_correlated_flow_generator",
+    "independent_box_grf_variance_reference",
+    "non_gaussian_distance_error_selection_grouping_realism",
+    "refit_estimator_per_mock_coverage",
+    "effective_n_and_covariance_uncertainty_audit"
+  ],
+  "artifact_mode": "forward_simulator_coverage_mechanics",
+  "artifacts": {
+    "docs/generated/pr146_captions.json": "5be45a593052cec1cdce1841cde75eaae9b69972926d5a7b16325efa1c631269",
+    "docs/generated/pr146_coverage_report.json": "3d745969775c0e00b0adbd70b1d44fb65d9663924c5f09f1ba78cc7bfd9ab4b5",
+    "docs/generated/pr146_depth_coverage.json": "0de7ba9c425eeee493bbf73735e3a06168b1a02babfa1bdcc74793e00c4c4861",
+    "docs/generated/pr146_effective_n.json": "cae90da26775b780cc8df85a66ba729715a69f5168752b97c32f4134afd78f16",
+    "docs/generated/pr146_generator_verification.json": "d6cbf7cc40f339fcae8a1cf4d16962b04aa4b3727ca4eb170c529ef7f236a4d1",
+    "docs/generated/pr146_independent_reference.json": "4fa960dc4e286551c01a5f22212c4d4047d206e9513c2d22eab668980de33fcc",
+    "docs/generated/pr146_mutation_report.json": "5dc8678a949c1851f2d869edf3a37a3cc70dc3322033e1158cec9b34c29c3dfc",
+    "docs/generated/pr146_p0_remediation_candidates.json": "94301d21f98332981e43862d5cca1e20aa8b5ba9c3a46ab4befd5f81ea0ddb51",
+    "docs/generated/pr146_simulator_card.json": "af879bd6d7c77ca512164365e3ef5de1bc2167c10ea4194b04a4ffd48b729b08"
+  },
+  "caveats": [
+    "Forward-simulator coverage mechanics at C2 only.",
+    "The primary Cholesky generator is validated against the analytic cosmic-variance covariance; an independent FFT box confirms the variance normalisation.",
+    "The box GRF is a diagonal-variance reference only.",
+    "Same-box regions are never counted as independent.",
+    "The two CF4 P0s stay OPEN with remediation CANDIDATES; closure is impossible before the PR-157 adjudication.",
+    "No detection.",
+    "All 102 remediation findings remain OPEN."
+  ],
+  "claim_level": {
+    "level": "C2",
+    "scheme": "roadmap_rescue_v1"
+  },
+  "claim_tier": "conditional",
+  "config_hash": "25e58a34efc62f463c827104b418485a364b3275e8207f7f23ebd402ee8411be",
+  "forbidden_use": [
+    "same-box octants are independent",
+    "wf mean is the ensemble",
+    "k6 rebound to cf4",
+    "rare tail detected",
+    "cf4 p0 closed",
+    "box grf covariance is the coverage",
+    "shear detected",
+    "isotropy established",
+    "Bianchi geometry detected",
+    "Bianchi family identified",
+    "finding rescued",
+    "validated as native"
+  ],
+  "input_hashes": [
+    "htt/src/common/cf4_forward_simulator.py:257bdfe14f7d51d6a0c1f954f39c0b36a2b752553f755205412cc145c71d5618",
+    "htt/src/common/cf4_velocity_estimators.py:4fc9364a4a59c159445d524df5b7a09495059468ed0d7f9ecce2da1ce57a6054"
+  ],
+  "owner": "OBSSTAT",
+  "raw_data_pins": {
+    "groups_sha256": "3c0f2e1a5b56b7227abb5e187406810d7eb15e924aac69e9cb0ffc1343a811ad"
+  },
+  "schema": "pr146.artifact_manifest.v1",
+  "transfer_source": "none"
+}

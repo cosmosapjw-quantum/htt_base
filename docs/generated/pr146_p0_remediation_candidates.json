@@ -1,0 +1,21 @@
+{
+  "candidates": [
+    {
+      "closure": "impossible before the PR-157 adjudication",
+      "disposition": "remediation_candidate",
+      "finding_id": "C1-K5-MV-F1",
+      "mechanics": "a CF4 forward simulator now draws correlated mocks whose covariance is the fiducial Gorski velocity correlation; the primary Cholesky generator reproduces the analytic bulk-flow cosmic-variance covariance (diag ratios [1.05, 0.94, 1.06]) as a propagation self-consistency check (same Gorski C_ab in and out, not an independent covariance validation), and an independent FFT box independently confirms only the per-galaxy variance NORMALISATION (ratio 1.02, ruling out a shared code bug in the variance scale); the off-diagonal covariance structure is the fiducial Gorski model, not independently validated; the idealised coverage holds (min 68 percent 0.65)",
+      "status": "OPEN"
+    },
+    {
+      "closure": "impossible before the PR-157 adjudication",
+      "disposition": "remediation_candidate",
+      "finding_id": "C3-K5-VCORR-ML-F1",
+      "mechanics": "the forward-mock coverage machinery, the independent variance reference, the effective-N audit and the covariance uncertainty are available for the ML branch; the ML f sigma_8 remediation itself is a scoped follow-up",
+      "scope_note": "PR-146 does NOT implement the velocity-correlation ML estimator; it supplies the shared forward-mock simulator (correlated generator + independent reference + realism layers) that the ML branch will use for its coverage",
+      "status": "OPEN"
+    }
+  ],
+  "note": "both CF4 P0s stay OPEN; PR-146 supplies forward-simulator coverage mechanics, not closure",
+  "schema": "pr146.p0_remediation_candidates.v1"
+}

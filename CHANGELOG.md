@@ -7,6 +7,42 @@
 
 ## [Unreleased]
 
+### PR-146 — Correlated-flow, distance-error, selection/grouping CF4 forward mocks (rev-r223, 2026-07-18)
+
+Roadmap Wave-18 PR-146 (deps PR-123/135/137/144/145). `htt/src/common/cf4_forward_simulator.py`:
+a CF4 catalogue forward simulator with two deliberately independent generators.
+The PRIMARY generator is a Cholesky factor L of the full Gorski velocity
+correlation C_ab (imported from PR-145) so a draw v_cv = L z has Cov = C_ab
+exactly (the whole correlated field, super-sample modes included); its per-galaxy
+leg is a draw-mechanics + cross-quadrature check (307 vs sigma_v_1d 308.09) and its
+ensemble bulk-flow leg is a propagation self-consistency check reproducing the
+analytic A^-1 M A^-1 (diag ratios ~0.94-1.06). The INDEPENDENT reference is a box
+Gaussian-random-field built by a separate FFT path (physical coloring
+i(100f)k_j/k^2 sqrt(P(k)), mode-density norm N^3 P/L^3); it reproduces the
+band-limited per-galaxy dispersion at ratio ~1.02 — independently confirming the
+variance NORMALISATION is not a shared code bug — while its off-diagonal
+correlation is an order-unity finite-box factor (~1.5), so the box is a
+diagonal-variance reference ONLY, never used for the covariance/coverage, and the
+off-diagonal covariance stays the fiducial Gorski model (not independently
+validated). Four GENUINE stressors (lognormal distance error, nonlinear scatter,
+mag-limited selection with an unmodeled Malmquist bias, unmodeled intra-group
+dispersion) are layered on and the estimator is re-fit on every mock: the idealised
+variant covers at nominal, the noise-only covariance under-covers, and each
+stressor degrades the radial-monopole coverage (0.26/0.58/0.46), REPORTED not
+hidden. Per-depth coverage is measured under the non-Gaussian stressor so shells
+genuinely differ (depth-dependent monopole degradation, least-favourable disclosed);
+effective-N participation ratio (~82 modes over 800 groups) + covariance uncertainty
+reported so same-box regions are never independent. 6/6 mutations killed on live
+guard paths. Multi-lane adversarial review (Workflow, 3 refute-lenses x find->verify,
+effort high): NO P0/P1 (generator math, box normalisation, effective-N reproduced +
+confirmed) and 7 P2 all fixed pre-commit (band deficit relabelled to grid resolution;
+off-diag factor reported at 32 fields to 1 decimal; Cholesky legs reworded as
+self-consistency checks; selection + grouping made genuine stressors; per-depth
+stressor made real; P0 receipt narrowed to the diagonal normalisation). Suite
+test_pr146_forward_mocks.py (13) + full gate baseline. C2 forward-simulator coverage
+mechanics; both CF4 P0s stay OPEN with remediation-candidate receipts (closure needs
+PR-157); no detection; 102 OPEN; DAG 93/113; next PR-147. See docs/PR_DELTAS/pr-146.md.
+
 ### PR-145 — Radial-monopole and velocity-shape estimator mechanics (rev-r222, 2026-07-18)
 
 Roadmap Wave-18 PR-145 (deps PR-123/134-137/144). `htt/src/common/cf4_velocity_estimators.py`:
