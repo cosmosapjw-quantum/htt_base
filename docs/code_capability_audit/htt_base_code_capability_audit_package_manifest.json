@@ -17,22 +17,22 @@
     {
       "archive_path": "02_CODE_MAP.md",
       "group": "guide",
-      "sha256": "sha256:41a599c699f4b3548b97a421197529750470f37b9222b03b068456a0f795f94e",
+      "sha256": "sha256:f7b4b50ce3db25e56cb59d10054e1a5e7edba159efbdc3601af7999030544487",
       "size_bytes": 2453,
       "source_path": "virtual:02_CODE_MAP.md"
     },
     {
       "archive_path": "03_ENTRY_POINTS.md",
       "group": "guide",
-      "sha256": "sha256:783335462c1ca2a0de495e4b27acbc1b248783747cfd3a86322f6018ea3d7ec6",
-      "size_bytes": 29168,
+      "sha256": "sha256:b55891ba49d16c2fbffc6d0a622e57ae42625ece56188c9dacfdcdeaefff8437",
+      "size_bytes": 29432,
       "source_path": "virtual:03_ENTRY_POINTS.md"
     },
     {
       "archive_path": "04_DATA_ACCESS.md",
       "group": "guide",
-      "sha256": "sha256:2a095e23e252521803367973084f72aa5db131e89b4635991a6b32b74d850546",
-      "size_bytes": 12733,
+      "sha256": "sha256:1be7eccfdc04947c5f4dbcea67cae90c51f189c02f4d0fc4ea74a00582676f2d",
+      "size_bytes": 12709,
       "source_path": "virtual:04_DATA_ACCESS.md"
     },
     {
@@ -45,8 +45,8 @@
     {
       "archive_path": "code_capability_audit/CLAUDE.md",
       "group": "support",
-      "sha256": "sha256:ebb3bc720b530edec4d631ffce85242283c9686d02ac143f047bba6aff81892a",
-      "size_bytes": 104461,
+      "sha256": "sha256:69e2fec09f2865f78e1a1718fdd2292c083b16dce31cee656e4363f5ac94c219",
+      "size_bytes": 106406,
       "source_path": "CLAUDE.md"
     },
     {
@@ -3039,6 +3039,13 @@
       "source_path": "htt/obsstat/__init__.py"
     },
     {
+      "archive_path": "code_capability_audit/htt/obsstat/act_raw_qe_gate.py",
+      "group": "library_source",
+      "sha256": "sha256:f977308cbe2f01ab09d93666bdcf679c88cab81a7867fe22f44cda8ebd20b5cf",
+      "size_bytes": 15282,
+      "source_path": "htt/obsstat/act_raw_qe_gate.py"
+    },
+    {
       "archive_path": "code_capability_audit/htt/obsstat/affine_flow.py",
       "group": "library_source",
       "sha256": "sha256:9aa678871740bf97f3ce7744eb9595edf7853a50ac4d36aea01debe8d7f5c946",
@@ -4663,6 +4670,13 @@
       "source_path": "scripts/act_kappa_isotropy_measure.py"
     },
     {
+      "archive_path": "code_capability_audit/scripts/act_raw_qe_card.py",
+      "group": "science_driver",
+      "sha256": "sha256:8a44aea6a4da607cebe997d9bed43d4c686bec60088ffec03cd8ea771cb7e555",
+      "size_bytes": 6400,
+      "source_path": "scripts/act_raw_qe_card.py"
+    },
+    {
       "archive_path": "code_capability_audit/scripts/audits/jcap_prd_20260714.py",
       "group": "science_driver",
       "sha256": "sha256:1fa8f6d3aa77ae1bafd74958e9f970462e840cf1e265d2968f34e0f8b983ffab",
@@ -5123,6 +5137,13 @@
       "sha256": "sha256:7c55a1327f9ca385d2e4787f48c84ec3d51589ae119a0089cb904f9c2352c5ae",
       "size_bytes": 14933,
       "source_path": "scripts/codex_harness/run_pr151_desi_exact_selection.py"
+    },
+    {
+      "archive_path": "code_capability_audit/scripts/codex_harness/run_pr152_act_raw_qe.py",
+      "group": "science_driver",
+      "sha256": "sha256:b90e7b2f60f4b1adb2d086ba95d1ee9cae05d784bb9937caa6007f9431b26af9",
+      "size_bytes": 13900,
+      "source_path": "scripts/codex_harness/run_pr152_act_raw_qe.py"
     },
     {
       "archive_path": "code_capability_audit/scripts/codex_harness/run_subset.py",
@@ -6952,7 +6973,7 @@
       "source_path": "src/teff/theta4_bridge_v2.rs"
     }
   ],
-  "archive_entry_count": 993,
+  "archive_entry_count": 996,
   "artifact_id": "code_capability_audit_package",
   "artifact_path": "docs/code_capability_audit/htt_base_code_capability_audit_package.zip",
   "caveats": [
@@ -6963,13 +6984,13 @@
     "Inclusion of code does not imply a validated science result; see the result/claim packages for claim tiers."
   ],
   "claim_tier": "diagnostic_only",
-  "code_version": "13deb472+dirty",
-  "config_hash": "sha256:667f58762e7095c3cfeeb14ed86fedc163be8f109494758aaea075b09f6dfbd0",
+  "code_version": "af147f1a+dirty",
+  "config_hash": "sha256:217d7ccc6b90375b6bd07176687de9cd461cc91939a678bd26118fdb77da76b6",
   "created_by": "scripts/build_code_capability_audit_package.py",
   "failed_gates": [],
   "family_identification": false,
   "generating_command": "python scripts/build_code_capability_audit_package.py",
-  "git_commit_or_worktree_state": "13deb472+dirty",
+  "git_commit_or_worktree_state": "af147f1a+dirty",
   "group_counts": {
     "audit_prompt": 1,
     "config": 1,
@@ -6977,21 +6998,21 @@
     "execution_stack": 18,
     "guide": 4,
     "legacy_tsc": 50,
-    "library_source": 558,
+    "library_source": 559,
     "package_readme": 1,
     "rust_solver_source": 165,
-    "science_driver": 163,
+    "science_driver": 165,
     "support": 9
   },
   "implementation_scope": "common",
   "input_hashes": [
     "virtual:00_README.md:sha256:538dc2b2dc67e18d823a1ced405841a0555cd43707381a2566b0b0dc7ca1e748",
     "virtual:01_ARCHITECTURE_GUIDE.md:sha256:a45976a887afc1ca75512730af173504909d960521f2e58888128af406658a34",
-    "virtual:02_CODE_MAP.md:sha256:41a599c699f4b3548b97a421197529750470f37b9222b03b068456a0f795f94e",
-    "virtual:03_ENTRY_POINTS.md:sha256:783335462c1ca2a0de495e4b27acbc1b248783747cfd3a86322f6018ea3d7ec6",
-    "virtual:04_DATA_ACCESS.md:sha256:2a095e23e252521803367973084f72aa5db131e89b4635991a6b32b74d850546",
+    "virtual:02_CODE_MAP.md:sha256:f7b4b50ce3db25e56cb59d10054e1a5e7edba159efbdc3601af7999030544487",
+    "virtual:03_ENTRY_POINTS.md:sha256:b55891ba49d16c2fbffc6d0a622e57ae42625ece56188c9dacfdcdeaefff8437",
+    "virtual:04_DATA_ACCESS.md:sha256:1be7eccfdc04947c5f4dbcea67cae90c51f189c02f4d0fc4ea74a00582676f2d",
     "virtual:AUDIT_PROMPT.md:sha256:1808d0e0e7c0c82f3b418524209a3a46d7d5ebdb1d2fe2ba7d0a4e43953fa6ff",
-    "CLAUDE.md:sha256:ebb3bc720b530edec4d631ffce85242283c9686d02ac143f047bba6aff81892a",
+    "CLAUDE.md:sha256:69e2fec09f2865f78e1a1718fdd2292c083b16dce31cee656e4363f5ac94c219",
     "Cargo.lock:sha256:f1023b1bf6d0467b292dff07e7912664f26c4b482eb534522b3496012285bb5b",
     "Cargo.toml:sha256:edefba17d7d7f7565a381bbe65f9de359dce5704d49786669526802c336a58ed",
     "README.md:sha256:b283cac6ae933d1552b56af2466bf6e56e52c643f0c0a7adfba19825d3b3a2e6",
@@ -7419,6 +7440,7 @@
     "htt/mio/tension/flrw_tension.py:sha256:5454b24dec539b219a9d811353fa4039ad4ff4d291248bd9d9f9573b05de9f02",
     "htt/mio/tension/xc_estimator.py:sha256:ec1b6657826ecf6821b602b9f191c547eb5c5998838743cd62e8f3c47c647747",
     "htt/obsstat/__init__.py:sha256:a4cba90bb959d673f89eb2bc2039561959ea933d0d8a4e966e152db15e95d787",
+    "htt/obsstat/act_raw_qe_gate.py:sha256:f977308cbe2f01ab09d93666bdcf679c88cab81a7867fe22f44cda8ebd20b5cf",
     "htt/obsstat/affine_flow.py:sha256:9aa678871740bf97f3ce7744eb9595edf7853a50ac4d36aea01debe8d7f5c946",
     "htt/obsstat/alm_conventions.py:sha256:fb17ad72ba2c6832069e83ff3026b6bf619085a1b2d1f95495a768ae6553c812",
     "htt/obsstat/biposh_features.py:sha256:90105b0b504900e493698f26d4e06b2d80506038dc334635a6cc052e768fc318",
@@ -7651,6 +7673,7 @@
     "reionization_execution_stack/anisotropic_rt_coding_bundle/reionization_stack/07_NEXT_SESSION_PROMPT.md:sha256:855cda3ffde021b363d4805cf1150b22013a01e0707a139ae0ae67b1f2d87866",
     "reionization_execution_stack/anisotropic_rt_coding_bundle/reionization_stack/README.md:sha256:272cec95f445898237eeb4638394c8d8ff33b5d4f25515e135a9143d48d75d23",
     "scripts/act_kappa_isotropy_measure.py:sha256:4601305c460780a0750b216981c287860b7044a8f6a52e04b0ff1e96fe9d8632",
+    "scripts/act_raw_qe_card.py:sha256:8a44aea6a4da607cebe997d9bed43d4c686bec60088ffec03cd8ea771cb7e555",
     "scripts/audits/jcap_prd_20260714.py:sha256:1fa8f6d3aa77ae1bafd74958e9f970462e840cf1e265d2968f34e0f8b983ffab",
     "scripts/bass_extended_joint_forecast.py:sha256:e5b3bd27a04a2c0d00bb2793c9aafd6f8e0ee4966996a8ec5ee88240caa84038",
     "scripts/bench_camb_vs_bass.py:sha256:e83005d9d9821664f1b422bd0fb92cdb298d0f3585fd62f93048b0a72a6817b2",
@@ -7717,6 +7740,7 @@
     "scripts/codex_harness/run_pr149_k1_convention.py:sha256:3125d711711b492d098bf8c61edc74aa070c0514a0da32d6ad9e6bb3fa10a7bd",
     "scripts/codex_harness/run_pr150_k1_e2e.py:sha256:d513ca569a7feabf86f4948dffc0dbf339f9653d5cd6906f1a9f488d15213371",
     "scripts/codex_harness/run_pr151_desi_exact_selection.py:sha256:7c55a1327f9ca385d2e4787f48c84ec3d51589ae119a0089cb904f9c2352c5ae",
+    "scripts/codex_harness/run_pr152_act_raw_qe.py:sha256:b90e7b2f60f4b1adb2d086ba95d1ee9cae05d784bb9937caa6007f9431b26af9",
     "scripts/codex_harness/run_subset.py:sha256:a2d2294aad1cf0493800dd8c94f80f7ff933836d4d9553a0ecaecc0c5568bd46",
     "scripts/codex_harness/sync_pr_dag_mirrors.py:sha256:fc9be87a41895d0bbed50622c4897e7ce167852a8ea71c012e158c062f6fc592",
     "scripts/codex_harness/validate_research_remediation.py:sha256:737979c7e7e45ce065bd8e561f887094d2436dc763c911de5a62ca93c9888201",

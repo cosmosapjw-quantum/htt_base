@@ -98,9 +98,9 @@ completed:
 - PR-149
 - PR-150
 - PR-151
+- PR-152
 blocked: []
 pending:
-- PR-152
 - PR-153
 - PR-154
 - PR-155
@@ -118,6 +118,12 @@ dormant_external:
 - PR-166
 in_progress: null
 execution_resolutions:
+  PR-152:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-152.md
+    resolved_on: '2026-07-19'
+    scientific_status_effect: none
+    scientific_status_after: OPEN
   PR-151:
     resolution: COMPLETED_SUCCESS
     receipt: docs/PR_DELTAS/pr-151.md
@@ -1510,3 +1516,34 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   clustering-dominated causal claim, no DESI dipole detection, no anisotropy, no
   Bianchi-family claim; the two CF4 P0s are untouched and stay OPEN; 102 findings
   OPEN; PR4 NPIPE excluded.
+  PR-152 is the ACT DR6 raw-QE acquisition gate. An authenticated inventory
+  separates the reconstructed products the release provides (convergence data
+  plus 400 Monte-Carlo sims, the QE normalisation and response, the fiducial N0,
+  the N1 derivatives, the mask and the validated multipole range) from the
+  raw-QE inputs it does not provide (the raw filtered CMB maps and the
+  quadratic-estimator pipeline), so a realisation-dependent N0 cannot be formed.
+  On the release simulations the low-multipole mean field is a leave-one-
+  simulation cross-fit (each sim debiased by the mean of the other sims) so the
+  sims are debiased the same way as the data whose mean field is the mean over
+  all sims. The naive over cross-fit band-power ratio is the exact input-
+  independent quantity (n minus one over n) squared equal to 0.995 rather than a
+  data-dependent bias, and the low-multipole mean field is numerically
+  negligible so the cross-fit is the principled construction not a large
+  correction. The exact finite rank of the band is 117 real harmonic degrees of
+  freedom capped by the sample rank. The cross-fit release-simulation pooled
+  rank of the data band power is 0.364, consistent with the isotropic sim null
+  and matching the historical low-multipole isotropy value. A stochastic
+  injection whose band-power distribution equals the null is unidentifiable and
+  a fixed-template injection is a coherent offset that shifts the rank, both
+  ranked against the same null. Because the raw-QE inputs are absent the raw-QE
+  inference is a no-go ABANDON_CURRENT_DATASET_FOR_NATIVE_LOW_L_SKY_POWER and
+  only the release-simulation diagnostic is closed. Six mutations killed on live
+  guards. A multi-lane adversarial review returned no P0 and three P2 all
+  confirmed and fixed pre-commit (the injection stochastic branch relabelled a
+  same-distribution unidentifiability check ranked against the same null not an
+  additive field, and the self-mean-field ratio disclosed as the exact algebraic
+  constant over a negligible mean field). ACT-release-simulation diagnostic only;
+  no L equal 2 to 10 sky-power limit from absent raw-QE inputs, released
+  convergence plus a signal never called a pre-QE-stage transfer, no convergence
+  detection, no anisotropy, no Bianchi-family claim; the two CF4 P0s are
+  untouched and stay OPEN; 102 findings OPEN; PR4 NPIPE excluded.

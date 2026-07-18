@@ -1,0 +1,42 @@
+{
+  "mutations": [
+    {
+      "kill_message_redacted": "released convergence plus an injected signal may not be called a pre-QE-stage transfer",
+      "kill_rule": "calling released convergence plus an injected signal a pre-QE-stage transfer is rejected",
+      "killed": true,
+      "mutation_id": "released_kappa_called_pre_qe_transfer"
+    },
+    {
+      "kill_message_redacted": "an L=2 to 10 sky-power limit may not be computed from absent raw-QE inputs",
+      "kill_rule": "computing an L=2 to 10 sky-power limit when the raw-QE inputs are absent is rejected",
+      "killed": true,
+      "mutation_id": "sky_power_limit_without_raw_qe"
+    },
+    {
+      "kill_message_redacted": "a naive all-sim self-mean-field without the leave-one-simulation cross-fit is rejected",
+      "kill_rule": "a naive all-sim self-mean-field without the leave-one-simulation cross-fit is rejected",
+      "killed": true,
+      "mutation_id": "naive_self_mean_field"
+    },
+    {
+      "kill_message_redacted": "an ACT convergence detection or anisotropy claim is rejected",
+      "kill_rule": "an ACT convergence detection or anisotropy claim is rejected",
+      "killed": true,
+      "mutation_id": "act_kappa_detection"
+    },
+    {
+      "kill_message_redacted": "a Bianchi-family or geometry claim from the ACT convergence is rejected",
+      "kill_rule": "a Bianchi-family or geometry claim from the ACT convergence is rejected",
+      "killed": true,
+      "mutation_id": "bianchi_family_from_act"
+    },
+    {
+      "kill_message_redacted": "a raw-QE inference without the upstream filtered-map and QE inputs is rejected",
+      "kill_rule": "a raw-QE inference without the upstream filtered-map and QE inputs is rejected",
+      "killed": true,
+      "mutation_id": "raw_qe_inference_without_inputs"
+    }
+  ],
+  "schema": "pr152.mutation_report.v1",
+  "surviving_mutation_count": 0
+}

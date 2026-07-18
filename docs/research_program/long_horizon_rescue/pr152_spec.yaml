@@ -1,0 +1,155 @@
+schema: htt.long_horizon.pr152_act_raw_qe.v1
+spec_version: 1
+pr_id: PR-152
+title: ACT raw-QE acquisition gate and release-simulation cross-fit
+baseline_commit: af147f1a3549c81ccfdef7130698580c028512d3
+reviewed_on: '2026-07-19'
+owner: OBSSTAT
+contributors:
+  - COMMON
+implementation_scope:
+  - obsstat
+artifact_mode: act_release_simulation_crossfit_diagnostic
+allowed_use:
+  - authenticated_act_dr6_lensing_inventory
+  - leave_one_simulation_crossfit_mean_field
+  - exact_finite_rank_of_low_ell_band
+  - stochastic_versus_fixed_template_injection_law
+  - crossfit_release_simulation_pooled_rank
+  - upstream_raw_qe_availability_decision
+public_use: false
+claim_tier: diagnostic
+claim_tier_ceiling: diagnostic_only
+claim_level:
+  scheme: roadmap_rescue_v1
+  level: C3
+scientific_status: OPEN
+scientific_effect: none
+transfer_source: none
+
+claim_identity:
+  claim_id: C-PR152-ACT-RAW-QE
+  claim_text: >-
+    An authenticated ACT DR6 lensing inventory establishes that the release
+    provides the reconstructed convergence (data + 400 Monte-Carlo sims), the QE
+    normalisation/response, the fiducial N0 and the N1 derivatives, the mask and
+    the validated multipole range, but NOT the raw filtered CMB maps or the
+    quadratic-estimator pipeline, so a realisation-dependent N0 (raw-QE) cannot
+    be formed.  On the release simulations the mean field is formed by a
+    LEAVE-ONE-SIMULATION cross-fit (each sim debiased by the mean of the OTHER
+    sims), which removes the self-mean-field bias of the naive all-sim mean
+    field; the exact finite rank of the low-multipole band is reported, the
+    stochastic versus fixed-template injection laws are distinguished, and the
+    cross-fit release-simulation pooled-rank (binding PR-135) is the closed
+    diagnostic.  Because the upstream raw-QE inputs are absent, the raw-QE
+    inference is a no-go
+    (ABANDON_CURRENT_DATASET_FOR_NATIVE_LOW_L_SKY_POWER) and only the
+    release-simulation diagnostic is closed; no L=2..10 sky-power limit is
+    computed from absent raw-QE inputs, and released convergence plus an injected
+    signal is NEVER called a pre-QE transfer.  ACT-release-simulation diagnostic
+    at C3 only; no ACT kappa detection, anisotropy, geometry, or Bianchi-family
+    claim.  The two CF4 P0s are untouched and stay OPEN.
+  domain: act_dr6_lensing_low_ell_crossfit
+  frame: binds_pr135_finite_null_act_dr6_lensing_release
+  claim_level_scheme: roadmap_rescue_v1
+  claim_level: C3
+
+scope_and_non_goals:
+  released_kappa_plus_signal_called_pre_qe_transfer: forbidden
+  sky_power_limit_from_absent_raw_qe_inputs: forbidden
+  naive_self_mean_field_without_crossfit: forbidden
+  act_kappa_detection_or_anisotropy_claim: forbidden
+  bianchi_family_or_geometry_claim: forbidden
+
+data_scope:
+  act_data_work: authorized_by_user_2026_07_18
+  raw_qe_inputs_on_disk: false
+  raw_data_paths:
+    data_kappa_alm: workdir/raw/act_dr6_lensing/dr6_lensing_release/maps/baseline/kappa_alm_data_act_dr6_lensing_v1_baseline.fits
+    sims_dir: /mnt/sn850x2t/htt_base_e2e/act_dr6_lensing_sims
+    n0_curve: workdir/raw/act_dr6_lensing/dr6_lensing_release/maps/baseline/N_L_kk_act_dr6_lensing_v1_baseline.txt
+    kappa_filter: workdir/raw/act_dr6_lensing/dr6_lensing_release/maps/baseline/kappa_filter_act_dr6_lensing_v1_baseline.txt
+    likelihood_dir: workdir/raw/act_dr6_lensing/ACT_dr6_likelihood_v1.2/v1.2
+    act_card: docs/generated/act_raw_qe_card.json
+  official_products_reference: https://act.princeton.edu/act-dr6-data-products
+  raw_data_policy: read_only_external_manifest_versioned_only
+
+remediation_state_contract:
+  path: docs/codex_handoff/research_remediation_state.yaml
+  sha256: f16d9754828bb32ae4cef92f585af82ae7fd1caa2687a7b4144bc1e942328dd9
+  finding_count: 102
+  required_scientific_status_counts: {OPEN: 102}
+  rescued_count: 0
+
+model:
+  module: htt/obsstat/act_raw_qe_gate.py
+  band:
+    ell_min: 2
+    ell_max: 10
+  sims:
+    max_sims: 400
+    seed: 20260726
+
+mutation_registry:
+  - mutation_id: released_kappa_called_pre_qe_transfer
+    kill_rule: calling released convergence plus an injected signal a pre-QE-stage transfer is rejected
+  - mutation_id: sky_power_limit_without_raw_qe
+    kill_rule: computing an L=2 to 10 sky-power limit when the raw-QE inputs are absent is rejected
+  - mutation_id: naive_self_mean_field
+    kill_rule: a naive all-sim self-mean-field without the leave-one-simulation cross-fit is rejected
+  - mutation_id: act_kappa_detection
+    kill_rule: an ACT convergence detection or anisotropy claim is rejected
+  - mutation_id: bianchi_family_from_act
+    kill_rule: a Bianchi-family or geometry claim from the ACT convergence is rejected
+  - mutation_id: raw_qe_inference_without_inputs
+    kill_rule: a raw-QE inference without the upstream filtered-map and QE inputs is rejected
+
+negative_scan:
+  targets:
+    - htt/obsstat/act_raw_qe_gate.py
+    - docs/generated/pr152_captions.json
+  forbidden_patterns:
+    - 'pre-qe transfer'
+    - 'sky-power limit from absent'
+    - 'naive self-mean-field'
+    - 'act kappa detection'
+    - 'bianchi family from act'
+    - 'anisotropy detected'
+  rule: >-
+    active PR-152 surfaces must never call released convergence plus signal a
+    pre-QE transfer, compute a sky-power limit from absent raw-QE inputs, accept a
+    naive self-mean-field, or claim an ACT convergence detection, anisotropy, or
+    Bianchi family.
+
+artifact_contract:
+  outputs:
+    - docs/generated/pr152_inventory.json
+    - docs/generated/pr152_crossfit_mean_field.json
+    - docs/generated/pr152_exact_rank.json
+    - docs/generated/pr152_injection_law.json
+    - docs/generated/pr152_availability_decision.json
+    - docs/generated/pr152_captions.json
+    - docs/generated/pr152_mutation_report.json
+    - docs/generated/pr152_artifact_manifest.json
+  check_policy: fresh_build_must_equal_disk_bytes
+
+acceptance_and_kill_switches:
+  - the authenticated inventory separates the present reconstructed products from the absent raw-QE inputs
+  - the mean field is a leave-one-simulation cross-fit that removes the self-mean-field bias of the naive all-sim mean field
+  - the exact finite rank of the low-multipole band is reported
+  - the stochastic and fixed-template injection laws are distinguished
+  - the upstream raw-QE inputs are absent so the raw-QE inference is abandoned and only the release-simulation diagnostic is closed
+  - every registered mutation executes and is killed
+  - all 102 remediation findings remain OPEN
+
+forbidden_output_language:
+  - pre-qe transfer
+  - sky-power limit from absent
+  - naive self-mean-field
+  - act kappa detection
+  - bianchi family from act
+  - anisotropy detected
+  - Bianchi geometry detected
+  - Bianchi family identified
+  - finding rescued
+  - validated as native

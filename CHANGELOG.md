@@ -7,6 +7,39 @@
 
 ## [Unreleased]
 
+### PR-152 — ACT DR6 raw-QE gate + release-simulation cross-fit (rev-r229, 2026-07-19)
+
+Roadmap Wave-19 PR-152 (deps PR-135/143). `htt/obsstat/act_raw_qe_gate.py` +
+`scripts/act_raw_qe_card.py`: an authenticated ACT DR6 lensing inventory
+separates the reconstructed products the release provides (convergence data + 400
+MC sims, QE normalisation/response, fiducial N0, N1 derivatives, mask, validated
+multipole range) from the raw-QE inputs it does NOT provide (raw filtered CMB
+maps + quadratic-estimator pipeline), so a realisation-dependent N0 cannot be
+formed. Per the KILL rule the raw-QE inference is a no-go
+(ABANDON_CURRENT_DATASET_FOR_NATIVE_LOW_L_SKY_POWER); only the release-simulation
+cross-fit diagnostic is closed. On the release sims the low-multipole mean field
+is a LEAVE-ONE-SIMULATION cross-fit (each sim debiased by the mean of the OTHER
+sims, so the sims are debiased the same way as the data). The naive/cross-fit
+ratio is DISCLOSED as the exact input-independent ((n-1)/n)^2=0.995 sample-size
+scaling (not a data-dependent bias) over a numerically negligible (~1e-17) L=2..10
+mean field, so the cross-fit is the principled construction. Cross-fit
+release-simulation pooled-rank of the data band power = 0.364 (consistent with
+the isotropic sim null, matches the historical low-ell isotropy value); exact
+finite rank 117 (=sum_{2..10}(2l+1)); a stochastic injection whose band-power
+distribution equals the null is unidentifiable (~0.48) vs a fixed-template
+coherent offset (~0.38), both ranked against the same null. 6/6 mutations killed.
+Multi-lane review (Workflow 3 refute-lenses × find→verify, effort high): NO
+P0/P1, 3 P2 all CONFIRMED (0 refuted) + fixed pre-commit (the injection
+stochastic branch relabelled a same-distribution unidentifiability check ranked
+against the same null, not an additive field; the self-mean-field ratio disclosed
+as the exact algebraic constant over a negligible mean field). Suite
+test_pr152_act_raw_qe.py (7) + full gate baseline. C3 ACT-release-simulation
+cross-fit diagnostic; raw-QE inference abandoned; no sky-power limit from absent
+inputs, no pre-QE-stage transfer relabel, no convergence detection, anisotropy,
+geometry, or Bianchi-family claim; both CF4 P0s untouched/OPEN; 102 OPEN; DAG
+99/113; next PR-153 (JWST authenticated row + checkpoint 100). See
+docs/PR_DELTAS/pr-152.md.
+
 ### PR-151 — DESI DR1 BGS exact-selection mock + per-mock refit (rev-r228, 2026-07-19)
 
 Roadmap Wave-19 PR-151 (deps PR-134/135/143). `htt/obsstat/desi_exact_selection_mock.py`

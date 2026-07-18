@@ -1,0 +1,70 @@
+{
+  "availability_decision": {
+    "closed_diagnostic": "release_simulation_crossfit_only",
+    "decision": "ABANDON_CURRENT_DATASET_FOR_NATIVE_LOW_L_SKY_POWER",
+    "note": "with the raw-QE inputs absent the raw-QE inference is a no-go; only the release-simulation cross-fit diagnostic is closed, and no L=2..10 sky-power limit is computed from absent raw-QE inputs",
+    "raw_qe_available": false
+  },
+  "config": {
+    "ell_max": 10,
+    "ell_min": 2,
+    "n_sims": 400,
+    "seed": 20260726
+  },
+  "crossfit_mean_field": {
+    "S_data": 7e-06,
+    "algebraic_bias_ratio_n_minus_1_over_n_squared": 0.995006,
+    "bias_ratio_is_input_independent": true,
+    "crossfit_pooled_rank_p": 0.36409,
+    "crossfit_sim_band_power_mean": 7e-06,
+    "mean_field_band_power": 0.0,
+    "n_sims": 400,
+    "naive_pooled_rank_p": 0.354115,
+    "naive_self_mean_field_deflates_residual": true,
+    "naive_sim_band_power_mean": 7e-06,
+    "note": "the sims are debiased by a leave-one-simulation cross-fit mean field (the same debiasing the data gets from the all-sim mean field); the naive/cross-fit band-power ratio is the EXACT input-independent ((n-1)/n)^2 sample-size scaling, not a data-dependent measured bias, and the low-multipole mean field is numerically negligible so the cross-fit is the principled construction rather than a large correction on this data --- it is reported as the consistent diagnostic",
+    "self_mean_field_bias_ratio_naive_over_crossfit": 0.995006
+  },
+  "exact_rank": {
+    "ell_max": 10,
+    "ell_min": 2,
+    "exact_finite_rank": 117,
+    "n_real_harmonic_dof": 117,
+    "note": "the low-multipole band carries sum(2 ell + 1) real dof, capped by the mean-field-subtracted sample rank n_sims - 1",
+    "rank_limited_by": "modes",
+    "sample_rank": 399
+  },
+  "injection_law": {
+    "fixed_template_mean_pooled_rank_p": 0.383404,
+    "injection_amplitude": 0.1,
+    "laws_distinct": true,
+    "note": "a stochastic injection whose band-power distribution equals the null's is unidentifiable (its pooled rank against the same null stays uniform); a fixed-template injection is a coherent additive offset that shifts the rank; both are ranked against the SAME null so the distinction is identifiability, not a null-set artifact --- this is not an additive stochastic field (which would itself raise the band power)",
+    "sim_band_power_mean": 7e-06,
+    "sim_band_power_std": 2e-06,
+    "stochastic_mean_pooled_rank_p": 0.477762
+  },
+  "inventory": {
+    "absent_raw_qe_inputs": [
+      "raw_filtered_cmb_maps",
+      "quadratic_estimator_pipeline",
+      "realisation_dependent_n0"
+    ],
+    "note": "the release provides the reconstructed convergence, QE normalisation/response, fiducial N0, N1 derivatives, mask and validated multipole range, but not the raw filtered CMB maps or the quadratic-estimator pipeline; the raw-QE stage is not included",
+    "present_products": {
+      "clkk_bandpowers": "sha256head:7660d216c48aa639dd374a6284b927a2821427fca8e98a3a7845da47c16806ae",
+      "kappa_alm_data": "sha256head:5c021b10325413c15aa71cd435dcb50dc9afe572d00b0db73b8698fd5244f7ce",
+      "kappa_filter_response": "sha256head:4b343856e2ba1879e30a4e38352d3fb8bd647ae90ed611c21969958d2e2f4569",
+      "n0_curve": "sha256head:364ef7e651b97ca638cfbb497ac04823c042f382e162c6a4541d89e2ca7595f3",
+      "n1_derivative_kk": "sha256head:4e693bb27aa0bc114d988fda0faa893298c1ea26f80c79f97539cc04991e0732",
+      "n_reconstructed_sims": 400
+    },
+    "raw_qe_inputs_on_disk": false,
+    "reference_url": "https://act.princeton.edu/act-dr6-data-products",
+    "validated_ell_range": [
+      40,
+      763
+    ]
+  },
+  "schema": "htt.act_raw_qe_card.v1",
+  "status": "RELEASE_SIMULATION_CROSSFIT"
+}

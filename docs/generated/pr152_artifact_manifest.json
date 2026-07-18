@@ -1,0 +1,55 @@
+{
+  "allowed_use": [
+    "authenticated_act_dr6_lensing_inventory",
+    "leave_one_simulation_crossfit_mean_field",
+    "exact_finite_rank_of_low_ell_band",
+    "stochastic_versus_fixed_template_injection_law",
+    "crossfit_release_simulation_pooled_rank",
+    "upstream_raw_qe_availability_decision"
+  ],
+  "artifact_mode": "act_release_simulation_crossfit_diagnostic",
+  "artifacts": {
+    "docs/generated/pr152_availability_decision.json": "db68447098be3138126f80b58245992ff1366ad19a5d455d3a6bcc7762d6622e",
+    "docs/generated/pr152_captions.json": "47cf41f929357be1d792181b3d7e08f4f708ef0483f458482601949bc95d0243",
+    "docs/generated/pr152_crossfit_mean_field.json": "6b9713f3b913a0efb190b385d1b6e6c42951d531f8dc5f7cdba5ad2741d05a33",
+    "docs/generated/pr152_exact_rank.json": "9a90f90c351160ef6907a2b54bdf806749647949d40efbf83cdec1b9b7f06a34",
+    "docs/generated/pr152_injection_law.json": "15b65d50b1fdf8dd95ebdf675bdd182aa239cfc8cb1adfcddc7254d894926af9",
+    "docs/generated/pr152_inventory.json": "6e3e44bde231848bd096621d089b7081c59170830aeccf207b32cef6ed113ec3",
+    "docs/generated/pr152_mutation_report.json": "08615ddc1c4ce6adfc42882204a956ad26dd52ca93fdbccbc18b0cb06ea7cc84"
+  },
+  "caveats": [
+    "ACT-release-simulation cross-fit diagnostic at C3 only.",
+    "The raw-QE inputs (raw filtered CMB maps + QE pipeline) are absent, so the raw-QE inference is abandoned (ABANDON_CURRENT_DATASET_FOR_NATIVE_LOW_L_SKY_POWER).",
+    "The mean field is a leave-one-simulation cross-fit; released convergence plus a signal is never called a pre-QE-stage transfer.",
+    "No L=2..10 sky-power limit is computed from absent raw-QE inputs.",
+    "No convergence detection, anisotropy, or Bianchi-family claim; the two CF4 P0s are untouched and stay OPEN.",
+    "All 102 remediation findings remain OPEN."
+  ],
+  "claim_level": {
+    "level": "C3",
+    "scheme": "roadmap_rescue_v1"
+  },
+  "claim_tier": "diagnostic",
+  "config_hash": "6312b73fd7be505eab00806f0b9084626efe2afa02430164b99e36c570c03675",
+  "forbidden_use": [
+    "pre-qe transfer",
+    "sky-power limit from absent",
+    "naive self-mean-field",
+    "act kappa detection",
+    "bianchi family from act",
+    "anisotropy detected",
+    "Bianchi geometry detected",
+    "Bianchi family identified",
+    "finding rescued",
+    "validated as native"
+  ],
+  "input_hashes": [
+    "htt/obsstat/act_raw_qe_gate.py:f977308cbe2f01ab09d93666bdcf679c88cab81a7867fe22f44cda8ebd20b5cf"
+  ],
+  "owner": "OBSSTAT",
+  "raw_data_pins": {
+    "act_raw_qe_card_sha256": "acbeeafea2a2069017e26e88bb13c187263b27cdeefbaedfa66b06c3905fdd45"
+  },
+  "schema": "pr152.artifact_manifest.v1",
+  "transfer_source": "none"
+}

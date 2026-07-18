@@ -1,0 +1,39 @@
+{
+  "absent_raw_qe_inputs": [
+    "raw_filtered_cmb_maps",
+    "quadratic_estimator_pipeline",
+    "realisation_dependent_n0"
+  ],
+  "module_schema": "pr152.act_raw_qe_gate.v1",
+  "negative_scan": {
+    "targets": {
+      "docs/generated/pr152_captions.json": {
+        "hits": [],
+        "sha256": "47cf41f929357be1d792181b3d7e08f4f708ef0483f458482601949bc95d0243",
+        "source": "fresh_build"
+      },
+      "htt/obsstat/act_raw_qe_gate.py": {
+        "hits": [],
+        "sha256": "f977308cbe2f01ab09d93666bdcf679c88cab81a7867fe22f44cda8ebd20b5cf",
+        "source": "disk"
+      }
+    },
+    "total_hits": 0
+  },
+  "note": "the release provides the reconstructed convergence, QE normalisation/response, fiducial N0, N1 derivatives, mask and validated multipole range, but not the raw filtered CMB maps or the quadratic-estimator pipeline; the raw-QE stage is not included",
+  "present_products": {
+    "clkk_bandpowers": "sha256head:7660d216c48aa639dd374a6284b927a2821427fca8e98a3a7845da47c16806ae",
+    "kappa_alm_data": "sha256head:5c021b10325413c15aa71cd435dcb50dc9afe572d00b0db73b8698fd5244f7ce",
+    "kappa_filter_response": "sha256head:4b343856e2ba1879e30a4e38352d3fb8bd647ae90ed611c21969958d2e2f4569",
+    "n0_curve": "sha256head:364ef7e651b97ca638cfbb497ac04823c042f382e162c6a4541d89e2ca7595f3",
+    "n1_derivative_kk": "sha256head:4e693bb27aa0bc114d988fda0faa893298c1ea26f80c79f97539cc04991e0732",
+    "n_reconstructed_sims": 400
+  },
+  "raw_qe_inputs_on_disk": false,
+  "reference_url": "https://act.princeton.edu/act-dr6-data-products",
+  "schema": "pr152.inventory.v1",
+  "validated_ell_range": [
+    40,
+    763
+  ]
+}
