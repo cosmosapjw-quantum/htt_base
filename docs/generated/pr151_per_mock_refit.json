@@ -1,0 +1,27 @@
+{
+  "alpha_and_nuisance_refit_per_mock": true,
+  "caps": {
+    "NGC": {
+      "alpha": 0.287537,
+      "n_data": 4081227
+    },
+    "SGC": {
+      "alpha": 0.278198,
+      "n_data": 1441126
+    }
+  },
+  "note": "alpha and the systematic nuisance amplitude are re-fit on every mock (and on the observed data) by the same estimator; the cap ratio is source-derived from the data counts, never hard-coded",
+  "observed": {
+    "alpha_hat_per_cap": {
+      "NGC": 0.287537,
+      "SGC": 0.278198
+    },
+    "beta_hat": -0.015864,
+    "cleaned_dipole_amplitude": 0.001959,
+    "cleaned_note": "the nuisance-cleaned amplitude removes the l=1 power degenerate with the imaging template and is a disclosed secondary, NOT the headline observable",
+    "dipole_amplitude": 0.009493,
+    "primary_is_raw_dipole": true
+  },
+  "schema": "pr151.per_mock_refit.v1",
+  "source_derived_cap_ratio_ngc_over_sgc": 2.831971
+}

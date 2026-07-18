@@ -1,0 +1,156 @@
+schema: htt.long_horizon.pr151_desi_exact_selection.v1
+spec_version: 1
+pr_id: PR-151
+title: DESI exact-selection mock and per-mock refit
+baseline_commit: 13deb4724191ab5503d93d4d4fbaed036c3bfd45
+reviewed_on: '2026-07-18'
+owner: OBSSTAT
+contributors:
+  - COMMON
+implementation_scope:
+  - obsstat
+artifact_mode: desi_survey_conditional_null_diagnostic
+allowed_use:
+  - exact_selection_mock_from_real_randoms
+  - per_mock_alpha_and_nuisance_refit
+  - two_tier_fast_covariance_and_high_realism_validation
+  - clustering_kinematic_selection_component_confusion_matrix
+  - survey_conditional_null_without_causal_attribution
+public_use: false
+claim_tier: diagnostic
+claim_tier_ceiling: diagnostic_only
+claim_level:
+  scheme: roadmap_rescue_v1
+  level: C3
+scientific_status: OPEN
+scientific_effect: none
+transfer_source: none
+
+claim_identity:
+  claim_id: C-PR151-DESI-EXACT-SELECTION
+  claim_text: >-
+    A DESI DR1 BGS number-count dipole mock that matches the survey selection
+    EXACTLY by drawing from the real random catalogue density per cap (NGC and
+    SGC), modulated by a linear-clustering Gaussian field and optional kinematic
+    and selection-systematic injections, then Poisson-sampled to the data count.
+    On EVERY mock the random-to-data normalisation alpha and a systematic
+    nuisance amplitude are RE-FIT by the same estimator (never fixed). A fast
+    covariance tier over many cheap mocks is validated against a smaller
+    high-realism tier. A clustering / kinematic / selection component confusion
+    matrix injects each component at a known amplitude and reports how the SAME
+    number-count dipole estimator attributes it, DEMONSTRATING the three are
+    confounded. Because the official DESI DR1 validation mocks (1000 EZmocks +
+    25 AbacusSummit) are NOT on disk, causal attribution is ABANDONED per the
+    kill rule and only the DESI-survey-conditional null of the observed dipole
+    is reported. This is a DESI-survey-conditional estimator/null diagnostic at
+    C3 only; no clustering-dominated causal attribution, no anisotropy, geometry,
+    or Bianchi-family claim. The two CF4 P0s are untouched and stay OPEN.
+  domain: desi_dr1_bgs_number_count_dipole
+  frame: binds_pr134_estimand_pr135_finite_null_number_count_dipole
+  claim_level_scheme: roadmap_rescue_v1
+  claim_level: C3
+
+scope_and_non_goals:
+  hard_coded_cap_ratio: forbidden
+  fixed_alpha_mock: forbidden
+  generic_grf_only_causal_attribution: forbidden
+  clustering_dominated_attribution_without_exact_support_mocks: forbidden
+  desi_dipole_detection_or_anisotropy_claim: forbidden
+  bianchi_family_or_geometry_claim: forbidden
+
+data_scope:
+  desi_data_work: authorized_by_user_2026_07_18
+  official_validation_mocks_on_disk: false
+  raw_data_paths:
+    desi_randoms_ngc: workdir/raw/desi/BGS_ANY_NGC_0_clustering.ran.fits
+    desi_randoms_sgc: workdir/raw/desi/BGS_ANY_SGC_0_clustering.ran.fits
+    desi_data_ngc: workdir/raw/desi/BGS_ANY_NGC_clustering.dat.fits
+    desi_data_sgc: workdir/raw/desi/BGS_ANY_SGC_clustering.dat.fits
+  official_mocks_reference: https://data.desi.lbl.gov/doc/releases/dr1/
+  raw_data_policy: read_only_external_manifest_versioned_only
+
+remediation_state_contract:
+  path: docs/codex_handoff/research_remediation_state.yaml
+  sha256: f16d9754828bb32ae4cef92f585af82ae7fd1caa2687a7b4144bc1e942328dd9
+  finding_count: 102
+  required_scientific_status_counts: {OPEN: 102}
+  rescued_count: 0
+
+model:
+  module: htt/obsstat/desi_exact_selection_mock.py
+  mock:
+    nside: 64
+    lmax: 8
+    bias_fiducial: '3/2'
+    fast_tier_mocks: 200
+    high_realism_tier_mocks: 40
+    seed: 20260725
+  confusion:
+    components:
+      - clustering
+      - kinematic
+      - selection
+    injection_amplitude: '1/50'
+
+mutation_registry:
+  - mutation_id: hard_coded_cap_ratio
+    kill_rule: a hard-coded NGC-over-SGC cap ratio is rejected in favour of the source-derived ratio
+  - mutation_id: fixed_alpha_mock
+    kill_rule: a mock whose alpha is fixed rather than re-fit per realisation is rejected
+  - mutation_id: generic_grf_causal_attribution
+    kill_rule: a clustering-dominated causal claim from a generic GRF without exact-support mocks is rejected
+  - mutation_id: attribution_without_official_mocks
+    kill_rule: any causal component attribution without the official DESI validation mocks is rejected
+  - mutation_id: desi_dipole_detection
+    kill_rule: a DESI dipole-detection or anisotropy claim is rejected
+  - mutation_id: bianchi_family_from_desi
+    kill_rule: a Bianchi-family or geometry claim from the DESI dipole is rejected
+
+negative_scan:
+  targets:
+    - htt/obsstat/desi_exact_selection_mock.py
+    - docs/generated/pr151_captions.json
+  forbidden_patterns:
+    - 'hard-coded cap ratio'
+    - 'fixed-alpha mock'
+    - 'clustering-dominated causal attribution'
+    - 'desi dipole detection'
+    - 'bianchi family from desi'
+    - 'anisotropy detected'
+  rule: >-
+    active PR-151 surfaces must never hard-code the cap ratio, fix alpha, claim a
+    clustering-dominated causal attribution without exact-support mocks, or claim
+    a DESI dipole detection, anisotropy, or Bianchi family.
+
+artifact_contract:
+  outputs:
+    - docs/generated/pr151_mock_manifest.json
+    - docs/generated/pr151_per_mock_refit.json
+    - docs/generated/pr151_two_tier_covariance.json
+    - docs/generated/pr151_component_confusion.json
+    - docs/generated/pr151_survey_conditional_null.json
+    - docs/generated/pr151_captions.json
+    - docs/generated/pr151_mutation_report.json
+    - docs/generated/pr151_artifact_manifest.json
+  check_policy: fresh_build_must_equal_disk_bytes
+
+acceptance_and_kill_switches:
+  - the exact-selection mock draws from the real random density per cap and matches the survey selection exactly
+  - alpha and the nuisance amplitude are re-fit on every mock, never fixed
+  - the fast covariance tier is validated against a smaller high-realism tier
+  - the clustering/kinematic/selection component confusion matrix demonstrates the components are confounded
+  - because the official DESI validation mocks are absent, causal attribution is abandoned and only the survey-conditional null is reported
+  - every registered mutation executes and is killed
+  - all 102 remediation findings remain OPEN
+
+forbidden_output_language:
+  - hard-coded cap ratio
+  - fixed-alpha mock
+  - clustering-dominated causal attribution
+  - desi dipole detection
+  - bianchi family from desi
+  - anisotropy detected
+  - Bianchi geometry detected
+  - Bianchi family identified
+  - finding rescued
+  - validated as native

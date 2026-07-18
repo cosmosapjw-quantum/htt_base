@@ -1,0 +1,54 @@
+{
+  "allowed_use": [
+    "exact_selection_mock_from_real_randoms",
+    "per_mock_alpha_and_nuisance_refit",
+    "two_tier_fast_covariance_and_high_realism_validation",
+    "clustering_kinematic_selection_component_confusion_matrix",
+    "survey_conditional_null_without_causal_attribution"
+  ],
+  "artifact_mode": "desi_survey_conditional_null_diagnostic",
+  "artifacts": {
+    "docs/generated/pr151_captions.json": "3d60e441850973462df07ad3ffa7fd606b742cff6661799a0063bd6fc59ca9eb",
+    "docs/generated/pr151_component_confusion.json": "898d50de27bd8bb8f6f6cfe96d15fd167381cd0f5bb955e5d99baecd66a6904d",
+    "docs/generated/pr151_mock_manifest.json": "43e34af708e935839cd489fb37971202c529a356f1376cc86f3e9e6698bc5796",
+    "docs/generated/pr151_mutation_report.json": "fce4aaa424668bdca736c86730d3100fcb8500b63c8e422d0f87d1f3a8ee63fa",
+    "docs/generated/pr151_per_mock_refit.json": "b4928181dcc3e745f7ba9423496a542b87a3b27bf1a14e1c8fc1bc0849d3aaff",
+    "docs/generated/pr151_survey_conditional_null.json": "c734dd8f1e7ab3556dcec9c03dceb11860a902dd59581e7393b183b4c4d2af50",
+    "docs/generated/pr151_two_tier_covariance.json": "c2cee564d72e47bd4c0abbe49bbd1d219ea291fa2c88299703ae08212146c6d7"
+  },
+  "caveats": [
+    "DESI-survey-conditional estimator/null diagnostic at C3 only.",
+    "The official DESI validation mocks (1000 EZmocks + 25 AbacusSummit) are absent, so causal attribution is abandoned per the kill rule.",
+    "alpha and the nuisance amplitude are re-fit on every mock; the cap ratio is source-derived, never hard-coded.",
+    "The clustering/kinematic/selection components are confounded under the number-count dipole estimator.",
+    "No DESI dipole-detection, anisotropy, or Bianchi-family claim; the two CF4 P0s are untouched and stay OPEN.",
+    "All 102 remediation findings remain OPEN."
+  ],
+  "claim_level": {
+    "level": "C3",
+    "scheme": "roadmap_rescue_v1"
+  },
+  "claim_tier": "diagnostic",
+  "config_hash": "3c835d081fc5c7ce0552cd1f91cd5532ac5bdf13d1f5464ad020984c53bc63f7",
+  "forbidden_use": [
+    "hard-coded cap ratio",
+    "fixed-alpha mock",
+    "clustering-dominated causal attribution",
+    "desi dipole detection",
+    "bianchi family from desi",
+    "anisotropy detected",
+    "Bianchi geometry detected",
+    "Bianchi family identified",
+    "finding rescued",
+    "validated as native"
+  ],
+  "input_hashes": [
+    "htt/obsstat/desi_exact_selection_mock.py:83efd4f935ea661b6dfecda9d50c853c4c629f031d891fc7d5849d24e525a86c"
+  ],
+  "owner": "OBSSTAT",
+  "raw_data_pins": {
+    "desi_exact_selection_card_sha256": "435a5f8b12d034bad001fe4ed32a72082ab2c35946c91f78dcc4b625128c8b84"
+  },
+  "schema": "pr151.artifact_manifest.v1",
+  "transfer_source": "none"
+}

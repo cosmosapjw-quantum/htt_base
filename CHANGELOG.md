@@ -7,6 +7,38 @@
 
 ## [Unreleased]
 
+### PR-151 — DESI DR1 BGS exact-selection mock + per-mock refit (rev-r228, 2026-07-19)
+
+Roadmap Wave-19 PR-151 (deps PR-134/135/143). `htt/obsstat/desi_exact_selection_mock.py`
++ `scripts/desi_exact_selection_card.py`: a DESI DR1 BGS number-count dipole mock
+that matches the survey selection EXACTLY by drawing from the real random-catalogue
+density per cap (NGC 4.08M + SGC 1.44M, source-derived cap ratio 2.83, never
+hard-coded). On every mock alpha (random-to-data normalisation, per cap) AND a
+systematic nuisance amplitude beta are re-fit by the same estimator, never fixed.
+The RAW dipole is the primary observable (|D|=0.00949, matching the
+window-corrected value); a nuisance-cleaned dipole (0.00196) is a DISCLOSED
+secondary because the imaging template's l=1 part is degenerate with the dipole.
+A fast covariance tier is compared to a high-realism tier carrying a per-mock
+RANDOM un-modelled l>=2 systematic the estimator does not fit (relative Frobenius
+gap 0.47 -> fast tier under-estimates). A clustering/kinematic/selection component
+confusion matrix at a matched dipole-scale injection shows MATERIAL off-diagonal
+leakage (selection into the dipole channel at 0.68 of the kinematic response) so
+the three are confounded. Because the official DESI validation mocks (1000 EZmocks
++ 25 AbacusSummit) are absent, causal attribution is ABANDONED per the kill rule
+and only the two-sided survey-conditional pooled-rank null is reported (RAW obs in
+the bulk, percentile 0.28, p=0.721, consistent). 6/6 mutations killed. Multi-lane
+review (Workflow 3 refute-lenses × find→verify, effort high): NO P0, 10 findings
+all CONFIRMED (0 refuted) + fixed pre-commit (the collinear vec[2] nuisance
+template that silently deflated the observed dipole replaced by a raw-primary +
+disclosed-cleaned-secondary split + two-sided null; the vacuous two-tier validation
+given a genuine per-mock random un-modelled systematic + Frobenius comparison; the
+tautological confounded flag given a material off-diagonal threshold). Suite
+test_pr151_desi_exact_selection.py (9) + full gate baseline. C3
+DESI-survey-conditional estimator/null diagnostic; attribution abandoned (official
+mocks absent); no clustering-dominated causal claim, no DESI dipole detection,
+anisotropy, geometry, or Bianchi-family claim; both CF4 P0s untouched/OPEN; 102
+OPEN; DAG 98/113; next PR-152 (ACT raw-QE gate). See docs/PR_DELTAS/pr-151.md.
+
 ### PR-150 — K1 exchangeable global scan + real Planck PR3 FFP10 E2E calibration (rev-r227, 2026-07-18)
 
 Roadmap Wave-19 PR-150 (deps PR-135/149). `htt/obsstat/k1_e2e_calibration.py`
