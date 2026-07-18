@@ -7,6 +7,33 @@
 
 ## [Unreleased]
 
+### PR-142 — MIO joint-measure F/Pi/G_F invariance + matched-null calibration (rev-r219, 2026-07-18)
+
+Roadmap Wave-17 PR-142 (deps PR-134-137/141). `htt/src/common/mio_joint_measure.py`:
+a typed MeasureSpec (identity in canonical order, weights, pairing, depth/reference
+policy, declared per-component noise scale) over a departure-component table
+(Sigma^2, W^2, Omega_tilt, DeltaOmega_k) defines three DISTINCT MIO diagnostics —
+F (weighted RMS magnitude), Pi (weighted signed contrast), G_F (SET-VALUED feasible
+range of F). F/Pi/Q never interchangeable; none is a posterior, evidence, HTT
+likelihood, or truth certificate (MIO reports, never infers). Measure-appropriate
+matched-null calibration: Pi vs a symmetric sign-flip null with a TWO-SIDED p; F vs
+a reference-scale null whose noise scale is VALIDATED against the data's robust MAD
+scale, one-sided upper; a sign-flip null for the second-moment F is degenerate and
+refused. Permutation invariance, a pairing counterexample, depth sensitivity, and a
+pairing-respecting bootstrap SE. No-justified-measure -> only family sensitivity, no
+calibrated scalar. 6/6 mutations killed, guards wired live. Multi-lane adversarial
+review (3 refute-lenses + verify): no P0; fixed 2 CONFIRMED P1 — (1) the Pi p was
+one-sided against a symmetric null (a negative contrast mis-reported as p~1) -> now
+two-sided (negative shift p~3e-4); (2) the F reference null spread was a free
+unvalidated null_scale (varying it flipped p from 3e-4 to 1) -> now validated
+against the data's robust scale and a mis-set scale refused — plus 4 P2 (one-sided
+Pi folded in; paired bootstrap now resamples pair clusters; G_F degenerate-point
+flag; 4 guards wired live), all pre-commit. Suite:
+`tests/contracts/test_pr142_mio_measure.py` (13) + full gate at baseline. DAG 89/113.
+C2 calibrated MIO diagnostic mechanics conditional on the registered MeasureSpec
+only; no posterior, no evidence, no detection; 102 OPEN / 0 RESCUED; PR4 skipped;
+next PR-143. See docs/PR_DELTAS/pr-142.md.
+
 ### PR-141 — Contamination-aware local/global mixture with mandatory abstention (rev-r218, 2026-07-18)
 
 Roadmap Wave-17 PR-141 (deps PR-133/136-140). `htt/src/common/mixture_competition.py`:

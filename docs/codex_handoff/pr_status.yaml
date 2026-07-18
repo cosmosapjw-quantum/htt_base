@@ -88,9 +88,9 @@ completed:
 - PR-139
 - PR-140
 - PR-141
+- PR-142
 blocked: []
 pending:
-- PR-142
 - PR-143
 - PR-144
 - PR-145
@@ -118,6 +118,12 @@ dormant_external:
 - PR-166
 in_progress: null
 execution_resolutions:
+  PR-142:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-142.md
+    resolved_on: '2026-07-18'
+    scientific_status_effect: none
+    scientific_status_after: OPEN
   PR-141:
     resolution: COMPLETED_SUCCESS
     receipt: docs/PR_DELTAS/pr-141.md
@@ -1201,3 +1207,26 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   live) and two P2 pre-commit. A discrimination candidate is not a
   detection, a geometry, or a Bianchi family; 102 findings OPEN; PR4
   skipped.
+  PR-142 builds the MIO joint-measure F/Pi/G_F invariance and matched-null
+  calibration. A typed MeasureSpec (identity in canonical component order,
+  weights, pairing, and a depth/reference policy with a declared per-
+  component noise scale) defines three distinct diagnostics over a
+  departure-component table. F is a weighted second-moment magnitude, Pi a
+  weighted signed contrast, and G_F is the set-valued feasible range of F.
+  None of F, Pi, or Q is a posterior, an evidence, an HTT likelihood, or a
+  truth certificate, and they are never substituted for each other; MIO
+  reports and never manufactures inference. Each measure is calibrated
+  against a matched null appropriate to it. Pi is tested against a symmetric
+  sign-flip null with a two-sided p-value, and F against a reference-scale null
+  whose noise scale is validated against the data's robust MAD scale with a
+  one-sided upper tail; a sign-flip null for the second-moment F is
+  degenerate and refused. Permutation invariance, a pairing counterexample,
+  a depth sensitivity, and a pairing-respecting bootstrap uncertainty are
+  reported, and an unjustified measure yields only measure-family
+  sensitivity with no calibrated scalar. Six mutations killed on live
+  guard paths. A multi-lane adversarial review found no P0 and fixed two P1
+  (the Pi p-value was one-sided against a symmetric null so a negative
+  contrast was mis-reported, now two-sided; and the F reference null scale
+  was a free unvalidated hyperparameter, now validated against the data)
+  and four P2 pre-commit. A MIO measure is not a posterior, an evidence, or
+  a detection; 102 findings OPEN; PR4 skipped.

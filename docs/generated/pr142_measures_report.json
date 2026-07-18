@@ -1,0 +1,57 @@
+{
+  "F": {
+    "bootstrap_se": 0.1220923,
+    "depth_sensitivity": {
+      "abs_sensitivity": 0.55752704,
+      "raw": 2.14549727,
+      "reference_subtracted": 1.58797024
+    },
+    "n_null": 3000,
+    "null_mean": 1.99447186,
+    "null_std": 0.1104363,
+    "null_type": "reference_scale",
+    "observed": 2.14549727,
+    "p_value": 0.08397201,
+    "sided": "upper",
+    "spec_fingerprint": "a9368a54f3fd20b4",
+    "status": "calibrated",
+    "value": 2.14549727
+  },
+  "Pi": {
+    "bootstrap_se": 0.31532724,
+    "depth_sensitivity": {
+      "abs_sensitivity": 0.95498082,
+      "raw": 0.95498082,
+      "reference_subtracted": -0.0
+    },
+    "n_null": 3000,
+    "null_mean": 0.00079697,
+    "null_std": 0.34180593,
+    "null_type": "sign_flip",
+    "observed": 0.95498082,
+    "p_value": 0.00466511,
+    "sided": "two_sided",
+    "spec_fingerprint": "a9368a54f3fd20b4",
+    "status": "calibrated",
+    "value": 0.95498082
+  },
+  "module_schema": "pr142.mio_joint_measure.v1",
+  "negative_scan": {
+    "targets": {
+      "docs/generated/pr142_captions.json": {
+        "hits": [],
+        "sha256": "3d678d24ce27ad5448e0cb111d6a159db1fa135f1ab272115e1a1d7888bab833",
+        "source": "fresh_build"
+      },
+      "htt/src/common/mio_joint_measure.py": {
+        "hits": [],
+        "sha256": "51bff91baf6cbcaa2b9273eaf9f438a864e7ead78308eb965413bc2f13d830fc",
+        "source": "disk"
+      }
+    },
+    "total_hits": 0
+  },
+  "note": "F is a weighted second-moment magnitude calibrated against a reference-scale matched null; Pi is a weighted signed contrast calibrated against a sign-flip matched null; neither is a posterior, an evidence, or an HTT likelihood",
+  "schema": "pr142.measures_report.v1",
+  "spec_fingerprint": "a9368a54f3fd20b4"
+}
