@@ -1,0 +1,152 @@
+schema: htt.long_horizon.pr153_jwst_anchor.v1
+spec_version: 1
+pr_id: PR-153
+title: JWST authenticated row, crossmatch and calibration manifest
+baseline_commit: 22323b35051a94335aef2b3372f705fd7f3d1bce
+reviewed_on: '2026-07-19'
+owner: OBSSTAT
+contributors:
+  - COMMON
+implementation_scope:
+  - obsstat
+artifact_mode: jwst_cited_seed_catalogue_linkage_diagnostic
+allowed_use:
+  - row_complete_anchor_manifest
+  - probabilistic_identity_match_not_radius_alone
+  - ambiguity_and_duplicate_policy
+  - independent_row_replay
+  - crossmatch_tolerance_sensitivity
+  - leave_one_match_and_label_substitution_negative_test
+  - authoritative_reproduction_decision
+public_use: false
+claim_tier: exploratory
+claim_tier_ceiling: exploratory
+claim_level:
+  scheme: roadmap_rescue_v1
+  level: C1
+scientific_status: OPEN
+scientific_effect: none
+transfer_source: none
+
+claim_identity:
+  claim_id: C-PR153-JWST-ANCHOR
+  claim_text: >-
+    A row-complete manifest of the cited JWST distance anchors (Freedman et al.
+    2025/2024 CCHP TRGB/JAGB + Riess et al. 2024 SH0ES Cepheids) carrying, per
+    anchor, the source DOI/URL, the seed retrieval hash, the object/host name,
+    the J2000 coordinate evidence, the published distance-modulus precision, the
+    method/calibration group and the deterministic transform. Each anchor is
+    linked to the real CF4 group catalogue by a PROBABILISTIC identity match
+    (positional-uncertainty-weighted, never a coordinate radius alone) with an
+    explicit ambiguity and duplicate policy; the linkage is exercised by an
+    independent row replay, a crossmatch tolerance sensitivity, a leave-one-match
+    report and a label-substitution negative test. Because the authoritative
+    machine-readable data table (Freedman CCHP MRT) is NOT reproducible (HTTP
+    404; only the arXiv abstract pages of the other two sources are fetched), the
+    anchor rows are CITED-SEED, not authoritative-table-reproduced, so per the
+    kill rule the JWST lane stays a cited-seed catalogue-linkage scenario and no
+    CF4-conditioned precision or global-tilt forecast is authorized while
+    N-DATA-CF4-DOWNSTREAM is OPEN. The synthetic 14-anchor fixture is NEVER
+    renamed observed JWST data, and identity is NEVER confirmed from a coordinate
+    radius alone. Catalogue-linkage DIAGNOSTIC at C1 only; no measurement,
+    forecast, detection, or Bianchi-family claim. The two CF4 P0s are untouched.
+  domain: jwst_distance_anchor_cf4_linkage
+  frame: binds_pr122_transfer_pr134_estimand_real_cf4_groups
+  claim_level_scheme: roadmap_rescue_v1
+  claim_level: C1
+
+scope_and_non_goals:
+  identity_from_coordinate_radius_alone: forbidden
+  synthetic_fixture_renamed_observed: forbidden
+  authoritative_reproduction_claimed_without_table: forbidden
+  cf4_conditioned_forecast_while_downstream_open: forbidden
+  jwst_measurement_or_detection_claim: forbidden
+
+data_scope:
+  jwst_data_work: authorized_by_user_2026_07_18
+  authoritative_machine_readable_table_reproduced: false
+  raw_data_paths:
+    seed_csv: dl_pipeline/data/jwst_distances_seed.csv
+    fetch_manifest: workdir/raw/jwst_anchors/jwst_anchors_manifest.json
+    cf4_groups: workdir/obs_bundle/pecvel/cf4_full/cf4_groups.npz
+  sources:
+    - Freedman et al. 2025, ApJ 985, 203 (CCHP JWST TRGB/JAGB, doi 10.3847/1538-4357/adce78)
+    - Riess et al. 2024 (SH0ES JWST Cepheids)
+  raw_data_policy: read_only_external_manifest_versioned_only
+
+remediation_state_contract:
+  path: docs/codex_handoff/research_remediation_state.yaml
+  sha256: f16d9754828bb32ae4cef92f585af82ae7fd1caa2687a7b4144bc1e942328dd9
+  finding_count: 102
+  required_scientific_status_counts: {OPEN: 102}
+  rescued_count: 0
+
+model:
+  module: htt/obsstat/jwst_anchor_manifest.py
+  match:
+    position_sigma_deg: '1/10'
+    ambiguity_ratio_threshold: '1/2'
+    tolerance_grid_deg: ['1/20', '1/10', '1/5', '2/5']
+
+mutation_registry:
+  - mutation_id: identity_from_radius_alone
+    kill_rule: confirming an anchor identity from a coordinate radius alone is rejected
+  - mutation_id: synthetic_renamed_observed
+    kill_rule: renaming the synthetic fixture observed JWST data is rejected
+  - mutation_id: authoritative_reproduction_without_table
+    kill_rule: claiming authoritative-table reproduction without the machine-readable table is rejected
+  - mutation_id: cf4_forecast_while_downstream_open
+    kill_rule: a CF4-conditioned precision forecast while N-DATA-CF4-DOWNSTREAM is OPEN is rejected
+  - mutation_id: jwst_measurement_claim
+    kill_rule: a JWST-level measurement or detection claim is rejected
+  - mutation_id: bianchi_family_from_jwst
+    kill_rule: a Bianchi-family claim from the JWST anchors is rejected
+
+negative_scan:
+  targets:
+    - htt/obsstat/jwst_anchor_manifest.py
+    - docs/generated/pr153_captions.json
+  forbidden_patterns:
+    - 'identity from coordinate radius alone'
+    - 'synthetic fixture renamed observed'
+    - 'authoritative reproduction without'
+    - 'cf4-conditioned forecast'
+    - 'jwst measurement'
+    - 'bianchi family from jwst'
+  rule: >-
+    active PR-153 surfaces must never confirm identity from a coordinate radius
+    alone, rename the synthetic fixture observed, claim authoritative reproduction
+    without the table, run a CF4-conditioned forecast, or claim a JWST measurement
+    or Bianchi family.
+
+artifact_contract:
+  outputs:
+    - docs/generated/pr153_row_manifest.json
+    - docs/generated/pr153_authoritative_decision.json
+    - docs/generated/pr153_crossmatch.json
+    - docs/generated/pr153_sensitivity.json
+    - docs/generated/pr153_negative_tests.json
+    - docs/generated/pr153_captions.json
+    - docs/generated/pr153_mutation_report.json
+    - docs/generated/pr153_artifact_manifest.json
+  check_policy: fresh_build_must_equal_disk_bytes
+
+acceptance_and_kill_switches:
+  - the row-complete manifest carries source DOI, retrieval hash, coordinate evidence, published uncertainty, method/calibration group and deterministic transform per anchor
+  - the identity match is probabilistic with an ambiguity and duplicate policy, never a coordinate radius alone
+  - the linkage is exercised by an independent row replay, a tolerance sensitivity, a leave-one-match report and a label-substitution negative test
+  - the authoritative machine-readable table is not reproducible so the JWST lane stays a cited-seed scenario and no CF4-conditioned forecast is authorized
+  - every registered mutation executes and is killed
+  - all 102 remediation findings remain OPEN
+
+forbidden_output_language:
+  - identity from coordinate radius alone
+  - synthetic fixture renamed observed
+  - authoritative reproduction without
+  - cf4-conditioned forecast
+  - jwst measurement
+  - bianchi family from jwst
+  - Bianchi geometry detected
+  - Bianchi family identified
+  - finding rescued
+  - validated as native

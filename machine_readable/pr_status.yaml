@@ -99,9 +99,9 @@ completed:
 - PR-150
 - PR-151
 - PR-152
+- PR-153
 blocked: []
 pending:
-- PR-153
 - PR-154
 - PR-155
 - PR-156
@@ -118,6 +118,12 @@ dormant_external:
 - PR-166
 in_progress: null
 execution_resolutions:
+  PR-153:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-153.md
+    resolved_on: '2026-07-19'
+    scientific_status_effect: none
+    scientific_status_after: OPEN
   PR-152:
     resolution: COMPLETED_SUCCESS
     receipt: docs/PR_DELTAS/pr-152.md
@@ -1547,3 +1553,35 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   convergence plus a signal never called a pre-QE-stage transfer, no convergence
   detection, no anisotropy, no Bianchi-family claim; the two CF4 P0s are
   untouched and stay OPEN; 102 findings OPEN; PR4 NPIPE excluded.
+  PR-153 builds a row-complete manifest of the 17 cited JWST distance anchors
+  (Freedman CCHP plus Riess SH0ES) each carrying the cited-source citation with
+  the authoritative per-anchor DOI marked unverified, the seed retrieval hash,
+  the J2000 coordinate evidence, the published distance-modulus precision, the
+  method and calibration group and the deterministic transform. Each anchor is
+  linked to the real CF4 group catalogue by a Budavari-Szalay probabilistic
+  match against a local no-match background so a distant group centre gets a low
+  posterior; the result is 10 of 17 POSITIONALLY credible, which is a positional
+  coincidence with a CF4 group centre and NEVER a confirmed physical identity
+  because the seed carries no redshift and the identity is never cross-checked.
+  Two matches are marginal near the threshold and fragile to the background
+  estimate; the credible count flips for six anchors across the tolerance grid.
+  The linkage is exercised by an independent row replay, a credible-count
+  tolerance sensitivity, a leave-one-group report and a derangement label-
+  substitution negative test that breaks all ten credible identities. Because
+  the authoritative machine-readable data table is not reproduced (the CCHP table
+  is a 404 and a fetched product is credited only when the manifest certifies it
+  parses as a data table not merely by a matching label), the anchors are cited-
+  seed and the JWST lane stays a cited-seed catalogue-linkage scenario; no CF4-
+  conditioned precision forecast is authorized. Six mutations killed on live
+  guards. A multi-lane adversarial review returned no P0 and ten findings all
+  confirmed and fixed pre-commit (positional credibility relabelled and never a
+  confirmed identity; the fabricated per-anchor DOIs replaced by cited-source
+  citations with the authoritative DOI marked unverified; the vacuous nearest-
+  neighbour sensitivity replaced by the decision-relevant credible-count
+  sensitivity; the label-only authoritative gate replaced by a content gate; the
+  negative test made a derangement scored on credible identities; the leave-one
+  report made to exercise the interacting duplicate grouping). Catalogue-linkage
+  diagnostic only; identity never confirmed from a coordinate radius alone, the
+  synthetic fixture never renamed observed, no JWST-level measurement, forecast,
+  detection, or Bianchi-family claim; the two CF4 P0s are untouched and stay
+  OPEN; 102 findings OPEN; PR4 NPIPE excluded. Checkpoint 100 recorded.

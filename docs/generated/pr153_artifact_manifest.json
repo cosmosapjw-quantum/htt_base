@@ -1,0 +1,57 @@
+{
+  "allowed_use": [
+    "row_complete_anchor_manifest",
+    "probabilistic_identity_match_not_radius_alone",
+    "ambiguity_and_duplicate_policy",
+    "independent_row_replay",
+    "crossmatch_tolerance_sensitivity",
+    "leave_one_match_and_label_substitution_negative_test",
+    "authoritative_reproduction_decision"
+  ],
+  "artifact_mode": "jwst_cited_seed_catalogue_linkage_diagnostic",
+  "artifacts": {
+    "docs/generated/pr153_authoritative_decision.json": "9c48edec59d58010213e6dfdb3eef64f4d77a5d492cfaa2ab70bf3c2a6a56f67",
+    "docs/generated/pr153_captions.json": "52975df94f34f85a5739299a40adf56f46511d3a354d9974752b9b0eb76d061b",
+    "docs/generated/pr153_crossmatch.json": "6a949c9812aaf0e8d4bda55aefdf000eb42f3d8bae77776019762ae18999c024",
+    "docs/generated/pr153_mutation_report.json": "11701b4daeca2449232366bda0899ac5d737a8600e2d5eab6a0af18a92ee9241",
+    "docs/generated/pr153_negative_tests.json": "10a2e4ad16362e479268db7188a502fff357a0b74d3f0bbc36923e39f248dd66",
+    "docs/generated/pr153_row_manifest.json": "e16c2be734d6ef2574897e47e7215e359d9ed9813a30fed6a71a7a0ea90b6597",
+    "docs/generated/pr153_sensitivity.json": "e1798a49cf2fce45570d1e1d1d551ec705967d8b8bfca17f4a89257f9b8b1508"
+  },
+  "caveats": [
+    "JWST cited-seed catalogue-linkage diagnostic at C1 only.",
+    "The authoritative machine-readable table is not reproducible, so the anchors are cited-seed and the lane stays a cited-seed scenario.",
+    "Identity is probabilistic and uncertainty-weighted, never a coordinate radius alone; the synthetic fixture is never renamed observed data.",
+    "No CF4-conditioned precision forecast is authorized while N-DATA-CF4-DOWNSTREAM is OPEN.",
+    "No JWST-level measurement, forecast, detection, or Bianchi-family claim; the two CF4 P0s are untouched and stay OPEN.",
+    "All 102 remediation findings remain OPEN."
+  ],
+  "claim_level": {
+    "level": "C1",
+    "scheme": "roadmap_rescue_v1"
+  },
+  "claim_tier": "exploratory",
+  "config_hash": "a7de7cb2d69967cec9f456300c50589bafbdac95a72e8d24dee3f63cd290dbb4",
+  "forbidden_use": [
+    "identity from coordinate radius alone",
+    "synthetic fixture renamed observed",
+    "authoritative reproduction without",
+    "cf4-conditioned forecast",
+    "jwst measurement",
+    "bianchi family from jwst",
+    "Bianchi geometry detected",
+    "Bianchi family identified",
+    "finding rescued",
+    "validated as native"
+  ],
+  "input_hashes": [
+    "htt/obsstat/jwst_anchor_manifest.py:dd4bcd79dd1bdbd9b6469406585560fffbe6cf21ceeb56480744814100525111"
+  ],
+  "owner": "OBSSTAT",
+  "raw_data_pins": {
+    "cf4_groups_sha256": "3c0f2e1a5b56b7227abb5e187406810d7eb15e924aac69e9cb0ffc1343a811ad",
+    "seed_csv_sha256": "57ccbf46bedcd85a281807f764585e7a83c304baada29f5d883fb1e09d062207"
+  },
+  "schema": "pr153.artifact_manifest.v1",
+  "transfer_source": "none"
+}

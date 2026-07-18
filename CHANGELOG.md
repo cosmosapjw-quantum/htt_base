@@ -7,6 +7,44 @@
 
 ## [Unreleased]
 
+### PR-153 — JWST authenticated row, crossmatch + manifest (+ checkpoint 100) (rev-r230, 2026-07-19)
+
+Roadmap Wave-19 PR-153 (deps PR-122/134/143). `htt/obsstat/jwst_anchor_manifest.py`:
+a row-complete manifest of the 17 cited JWST distance anchors (Freedman CCHP +
+Riess SH0ES) each carrying the cited-source citation (authoritative per-anchor DOI
+marked UNVERIFIED), the seed retrieval hash, the J2000 coordinate evidence, the
+published distance-modulus precision, the method/calibration group and the
+deterministic transform. Each anchor is linked to the real CF4 group catalogue by
+a Budavari-Szalay PROBABILISTIC match against a local no-match background (not a
+radius alone, not a bare argmin) → 10/17 POSITIONALLY credible, 2 marginal, 2
+ambiguous. Positional credibility is a coincidence with a CF4 group centre and
+NEVER a confirmed physical identity (the seed has no redshift; identity_confirmed
+= False on every match). KILL: the authoritative CCHP machine-readable table is
+not reproduced (404; a fetched product is credited only when the manifest
+certifies it parses as a data table, a content gate not a label match) → cited-
+seed catalogue-linkage scenario; no CF4-conditioned forecast. Exercised by a row
+replay, a credible-count tolerance sensitivity (6/17 flip credibility across the
+grid), a leave-one-group report and a derangement label-substitution negative
+test (10/10 credible identities broken). 6/6 mutations killed. Multi-lane review
+(Workflow 3 refute-lenses × find→verify, effort high): NO P0, 10 findings all
+CONFIRMED/PLAUSIBLE (0 refuted) + fixed pre-commit (positional credibility
+relabelled never a confirmed identity; fabricated per-anchor DOIs replaced by
+cited-source citations with the authoritative DOI marked unverified; the vacuous
+argmin-invariant sensitivity replaced by the decision-relevant credible-count
+sensitivity; the label-only authoritative gate replaced by a content gate; the
+negative test made a derangement scored on credible identities; the leave-one
+report made to exercise the interacting duplicate grouping). **Checkpoint 100
+recorded** (freeze gate PASS 102 OPEN / 0 RESCUED; per-probe available/blocked/
+no-go recorded distinguishing public-inputs-exist from exact-estimator-input-
+exists — Planck K1 E2E available, DESI blocked on validation mocks, ACT no-go for
+raw-QE, JWST blocked on the authoritative table; only Planck K1 had its exact
+input on disk). Suite test_pr153_jwst_anchor.py (7) + full gate baseline. C1
+cited-seed catalogue-linkage diagnostic; identity never from a coordinate radius
+alone, the synthetic fixture never renamed observed, no authoritative-reproduction
+claim, no CF4-conditioned forecast, no JWST-level measurement/detection/Bianchi
+claim; both CF4 P0s untouched/OPEN; 102 OPEN; DAG 100/113; next PR-154 (Wave 20).
+See docs/PR_DELTAS/pr-153.md.
+
 ### PR-152 — ACT DR6 raw-QE gate + release-simulation cross-fit (rev-r229, 2026-07-19)
 
 Roadmap Wave-19 PR-152 (deps PR-135/143). `htt/obsstat/act_raw_qe_gate.py` +

@@ -17,15 +17,15 @@
     {
       "archive_path": "02_CODE_MAP.md",
       "group": "guide",
-      "sha256": "sha256:f7b4b50ce3db25e56cb59d10054e1a5e7edba159efbdc3601af7999030544487",
+      "sha256": "sha256:c7762838c05dcab6d8e88582292888f1898b367c3cae59c54313d104b22109cb",
       "size_bytes": 2453,
       "source_path": "virtual:02_CODE_MAP.md"
     },
     {
       "archive_path": "03_ENTRY_POINTS.md",
       "group": "guide",
-      "sha256": "sha256:b55891ba49d16c2fbffc6d0a622e57ae42625ece56188c9dacfdcdeaefff8437",
-      "size_bytes": 29432,
+      "sha256": "sha256:287e845a779d1af3fe3e8b9c842adebfef521a1c3c359021d6f4d2eb7117df62",
+      "size_bytes": 29581,
       "source_path": "virtual:03_ENTRY_POINTS.md"
     },
     {
@@ -45,8 +45,8 @@
     {
       "archive_path": "code_capability_audit/CLAUDE.md",
       "group": "support",
-      "sha256": "sha256:69e2fec09f2865f78e1a1718fdd2292c083b16dce31cee656e4363f5ac94c219",
-      "size_bytes": 106406,
+      "sha256": "sha256:263369bead61246fee4a9a3ea13d85e168415edb0efca5f42d802abe4c5fecce",
+      "size_bytes": 108936,
       "source_path": "CLAUDE.md"
     },
     {
@@ -3417,6 +3417,13 @@
       "source_path": "htt/obsstat/joint_pv_cmb_forecast.py"
     },
     {
+      "archive_path": "code_capability_audit/htt/obsstat/jwst_anchor_manifest.py",
+      "group": "library_source",
+      "sha256": "sha256:dd4bcd79dd1bdbd9b6469406585560fffbe6cf21ceeb56480744814100525111",
+      "size_bytes": 25393,
+      "source_path": "htt/obsstat/jwst_anchor_manifest.py"
+    },
+    {
       "archive_path": "code_capability_audit/htt/obsstat/k1_convention_contract.py",
       "group": "library_source",
       "sha256": "sha256:a351217e2cf00b27982c9b12997243fe47f91b9e21dfde04d94febaee90b17c7",
@@ -5144,6 +5151,13 @@
       "sha256": "sha256:b90e7b2f60f4b1adb2d086ba95d1ee9cae05d784bb9937caa6007f9431b26af9",
       "size_bytes": 13900,
       "source_path": "scripts/codex_harness/run_pr152_act_raw_qe.py"
+    },
+    {
+      "archive_path": "code_capability_audit/scripts/codex_harness/run_pr153_jwst_anchor.py",
+      "group": "science_driver",
+      "sha256": "sha256:155b11870567cd94e21af0ddcf4a8d7f8a7d26f30ad28c5c35bf13a3d60ca7e3",
+      "size_bytes": 16886,
+      "source_path": "scripts/codex_harness/run_pr153_jwst_anchor.py"
     },
     {
       "archive_path": "code_capability_audit/scripts/codex_harness/run_subset.py",
@@ -6973,7 +6987,7 @@
       "source_path": "src/teff/theta4_bridge_v2.rs"
     }
   ],
-  "archive_entry_count": 996,
+  "archive_entry_count": 998,
   "artifact_id": "code_capability_audit_package",
   "artifact_path": "docs/code_capability_audit/htt_base_code_capability_audit_package.zip",
   "caveats": [
@@ -6984,13 +6998,13 @@
     "Inclusion of code does not imply a validated science result; see the result/claim packages for claim tiers."
   ],
   "claim_tier": "diagnostic_only",
-  "code_version": "af147f1a+dirty",
-  "config_hash": "sha256:217d7ccc6b90375b6bd07176687de9cd461cc91939a678bd26118fdb77da76b6",
+  "code_version": "22323b35+dirty",
+  "config_hash": "sha256:31f5b5af267430cf2995afa56be12abbadea47af13cc49fa9d33352a5f419da8",
   "created_by": "scripts/build_code_capability_audit_package.py",
   "failed_gates": [],
   "family_identification": false,
   "generating_command": "python scripts/build_code_capability_audit_package.py",
-  "git_commit_or_worktree_state": "af147f1a+dirty",
+  "git_commit_or_worktree_state": "22323b35+dirty",
   "group_counts": {
     "audit_prompt": 1,
     "config": 1,
@@ -6998,21 +7012,21 @@
     "execution_stack": 18,
     "guide": 4,
     "legacy_tsc": 50,
-    "library_source": 559,
+    "library_source": 560,
     "package_readme": 1,
     "rust_solver_source": 165,
-    "science_driver": 165,
+    "science_driver": 166,
     "support": 9
   },
   "implementation_scope": "common",
   "input_hashes": [
     "virtual:00_README.md:sha256:538dc2b2dc67e18d823a1ced405841a0555cd43707381a2566b0b0dc7ca1e748",
     "virtual:01_ARCHITECTURE_GUIDE.md:sha256:a45976a887afc1ca75512730af173504909d960521f2e58888128af406658a34",
-    "virtual:02_CODE_MAP.md:sha256:f7b4b50ce3db25e56cb59d10054e1a5e7edba159efbdc3601af7999030544487",
-    "virtual:03_ENTRY_POINTS.md:sha256:b55891ba49d16c2fbffc6d0a622e57ae42625ece56188c9dacfdcdeaefff8437",
+    "virtual:02_CODE_MAP.md:sha256:c7762838c05dcab6d8e88582292888f1898b367c3cae59c54313d104b22109cb",
+    "virtual:03_ENTRY_POINTS.md:sha256:287e845a779d1af3fe3e8b9c842adebfef521a1c3c359021d6f4d2eb7117df62",
     "virtual:04_DATA_ACCESS.md:sha256:1be7eccfdc04947c5f4dbcea67cae90c51f189c02f4d0fc4ea74a00582676f2d",
     "virtual:AUDIT_PROMPT.md:sha256:1808d0e0e7c0c82f3b418524209a3a46d7d5ebdb1d2fe2ba7d0a4e43953fa6ff",
-    "CLAUDE.md:sha256:69e2fec09f2865f78e1a1718fdd2292c083b16dce31cee656e4363f5ac94c219",
+    "CLAUDE.md:sha256:263369bead61246fee4a9a3ea13d85e168415edb0efca5f42d802abe4c5fecce",
     "Cargo.lock:sha256:f1023b1bf6d0467b292dff07e7912664f26c4b482eb534522b3496012285bb5b",
     "Cargo.toml:sha256:edefba17d7d7f7565a381bbe65f9de359dce5704d49786669526802c336a58ed",
     "README.md:sha256:b283cac6ae933d1552b56af2466bf6e56e52c643f0c0a7adfba19825d3b3a2e6",
@@ -7494,6 +7508,7 @@
     "htt/obsstat/egs3_volterra_memory.py:sha256:b71efda1af840f54e44cd27df79a1b172e7906431a2c0732eb4071c0c4d3d563",
     "htt/obsstat/egs3_vorticity_channels.py:sha256:90ee2fef53adf03b77b9a64a4a9710be561b6aff8b90e8e58a394b07eda4a10e",
     "htt/obsstat/joint_pv_cmb_forecast.py:sha256:77d93ec08a7040642da390d04bdf36b637b8d65ed8c0991b3ffa180049052407",
+    "htt/obsstat/jwst_anchor_manifest.py:sha256:dd4bcd79dd1bdbd9b6469406585560fffbe6cf21ceeb56480744814100525111",
     "htt/obsstat/k1_convention_contract.py:sha256:a351217e2cf00b27982c9b12997243fe47f91b9e21dfde04d94febaee90b17c7",
     "htt/obsstat/k1_e2e_calibration.py:sha256:feae722deaa535d86d3f0046a30f5ddc8a8046529c1171265c0b0ea3756d92e2",
     "htt/obsstat/lowell_global_calibration.py:sha256:229a74f035090658f97f2eb1abdb04fc31e467c9abaeb886fba1859f5db2f4c9",
@@ -7741,6 +7756,7 @@
     "scripts/codex_harness/run_pr150_k1_e2e.py:sha256:d513ca569a7feabf86f4948dffc0dbf339f9653d5cd6906f1a9f488d15213371",
     "scripts/codex_harness/run_pr151_desi_exact_selection.py:sha256:7c55a1327f9ca385d2e4787f48c84ec3d51589ae119a0089cb904f9c2352c5ae",
     "scripts/codex_harness/run_pr152_act_raw_qe.py:sha256:b90e7b2f60f4b1adb2d086ba95d1ee9cae05d784bb9937caa6007f9431b26af9",
+    "scripts/codex_harness/run_pr153_jwst_anchor.py:sha256:155b11870567cd94e21af0ddcf4a8d7f8a7d26f30ad28c5c35bf13a3d60ca7e3",
     "scripts/codex_harness/run_subset.py:sha256:a2d2294aad1cf0493800dd8c94f80f7ff933836d4d9553a0ecaecc0c5568bd46",
     "scripts/codex_harness/sync_pr_dag_mirrors.py:sha256:fc9be87a41895d0bbed50622c4897e7ce167852a8ea71c012e158c062f6fc592",
     "scripts/codex_harness/validate_research_remediation.py:sha256:737979c7e7e45ce065bd8e561f887094d2436dc763c911de5a62ca93c9888201",
