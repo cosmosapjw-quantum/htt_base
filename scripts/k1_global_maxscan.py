@@ -585,7 +585,7 @@ def build_e2e_full_report(cmb_mc_dir: Path, noise_mc_dir: Path, method: str = "s
             "global_p": float(res.global_p),
             "observed_max_score": float(res.observed_max_score),
         },
-        "headline": f"K1 global look-elsewhere-corrected low-ell morphology p ({method}) under the PLA-available FFP10 SMICA CMB+noise E2E null ({len(provenance)} usable CMB MC + {n_noise_used} noise MC)",
+        "headline": f"K1 global look-elsewhere-corrected low-ell morphology p ({method}) under the PLA-available FFP10 SMICA CMB+noise E2E null ({len(provenance)} used CMB MC + {n_noise_used} noise MC)",
         "caveats": [
             "null = REAL component-separated CMB MC + REAL instrument-noise MC (PLA-available E2E); carries noise/systematics + the cleaning transfer",
             "CMB set is the PLA-available subset, NOT all 1000: known missing/corrupt realization 00970 (ESA/PLA " + PLA_CONFIRMATION + "); sims paired by parsed MC id so the gap does not misalign the pairing",

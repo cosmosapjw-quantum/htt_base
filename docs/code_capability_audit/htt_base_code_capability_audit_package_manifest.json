@@ -17,15 +17,15 @@
     {
       "archive_path": "02_CODE_MAP.md",
       "group": "guide",
-      "sha256": "sha256:039691b99ab30ac03e9768ce2bed4e1a600843d81f8bd31c23633ea98c71fc33",
+      "sha256": "sha256:37ceb9e06a1b0a4760673430a1cb24b761bd2b223db73732b73225431e99edb0",
       "size_bytes": 2453,
       "source_path": "virtual:02_CODE_MAP.md"
     },
     {
       "archive_path": "03_ENTRY_POINTS.md",
       "group": "guide",
-      "sha256": "sha256:a3f634e0dff0981a20835f9e05ca399416ca061d11ef6815fde84a8ecacab290",
-      "size_bytes": 28602,
+      "sha256": "sha256:6c10cdb8c0de84bad2189099f231bf3c6289eb8442a2238bd16e682646a85224",
+      "size_bytes": 28749,
       "source_path": "virtual:03_ENTRY_POINTS.md"
     },
     {
@@ -45,8 +45,8 @@
     {
       "archive_path": "code_capability_audit/CLAUDE.md",
       "group": "support",
-      "sha256": "sha256:ab1f3c28764c2bf54695be1087c4ad4d69ec38a3223c4603c680be8933eeeee0",
-      "size_bytes": 100298,
+      "sha256": "sha256:e718a16a6653765a953e90cbdd93e6d418c7779fde3c2a83a62d36b2ddfdc54a",
+      "size_bytes": 102402,
       "source_path": "CLAUDE.md"
     },
     {
@@ -3403,6 +3403,13 @@
       "source_path": "htt/obsstat/joint_pv_cmb_forecast.py"
     },
     {
+      "archive_path": "code_capability_audit/htt/obsstat/k1_convention_contract.py",
+      "group": "library_source",
+      "sha256": "sha256:a351217e2cf00b27982c9b12997243fe47f91b9e21dfde04d94febaee90b17c7",
+      "size_bytes": 21132,
+      "source_path": "htt/obsstat/k1_convention_contract.py"
+    },
+    {
       "archive_path": "code_capability_audit/htt/obsstat/lowell_global_calibration.py",
       "group": "library_source",
       "sha256": "sha256:229a74f035090658f97f2eb1abdb04fc31e467c9abaeb886fba1859f5db2f4c9",
@@ -5083,6 +5090,13 @@
       "source_path": "scripts/codex_harness/run_pr148_growth_covariance.py"
     },
     {
+      "archive_path": "code_capability_audit/scripts/codex_harness/run_pr149_k1_convention.py",
+      "group": "science_driver",
+      "sha256": "sha256:3125d711711b492d098bf8c61edc74aa070c0514a0da32d6ad9e6bb3fa10a7bd",
+      "size_bytes": 15611,
+      "source_path": "scripts/codex_harness/run_pr149_k1_convention.py"
+    },
+    {
       "archive_path": "code_capability_audit/scripts/codex_harness/run_subset.py",
       "group": "science_driver",
       "sha256": "sha256:a2d2294aad1cf0493800dd8c94f80f7ff933836d4d9553a0ecaecc0c5568bd46",
@@ -5232,8 +5246,8 @@
     {
       "archive_path": "code_capability_audit/scripts/k1_global_maxscan.py",
       "group": "science_driver",
-      "sha256": "sha256:f9b82106ed019877562393e6d1b053e7a3ffb6de75733bd0d74e9c5663db5116",
-      "size_bytes": 38018,
+      "sha256": "sha256:7a841b24b49e109c715fbdfe636a2d4049209b3795c604bab69c9fc2d79aca0c",
+      "size_bytes": 38016,
       "source_path": "scripts/k1_global_maxscan.py"
     },
     {
@@ -6903,7 +6917,7 @@
       "source_path": "src/teff/theta4_bridge_v2.rs"
     }
   ],
-  "archive_entry_count": 986,
+  "archive_entry_count": 988,
   "artifact_id": "code_capability_audit_package",
   "artifact_path": "docs/code_capability_audit/htt_base_code_capability_audit_package.zip",
   "caveats": [
@@ -6914,13 +6928,13 @@
     "Inclusion of code does not imply a validated science result; see the result/claim packages for claim tiers."
   ],
   "claim_tier": "diagnostic_only",
-  "code_version": "5620f3be+dirty",
-  "config_hash": "sha256:ba42041e35ffea56cddc02dffc11050958fbf9d28b56890834d431448fc22764",
+  "code_version": "be448833+dirty",
+  "config_hash": "sha256:f650e46766093a8abc5c25de187a7c987b7e76786c91d005891465fcc9368332",
   "created_by": "scripts/build_code_capability_audit_package.py",
   "failed_gates": [],
   "family_identification": false,
   "generating_command": "python scripts/build_code_capability_audit_package.py",
-  "git_commit_or_worktree_state": "5620f3be+dirty",
+  "git_commit_or_worktree_state": "be448833+dirty",
   "group_counts": {
     "audit_prompt": 1,
     "config": 1,
@@ -6928,21 +6942,21 @@
     "execution_stack": 18,
     "guide": 4,
     "legacy_tsc": 50,
-    "library_source": 555,
+    "library_source": 556,
     "package_readme": 1,
     "rust_solver_source": 165,
-    "science_driver": 159,
+    "science_driver": 160,
     "support": 9
   },
   "implementation_scope": "common",
   "input_hashes": [
     "virtual:00_README.md:sha256:538dc2b2dc67e18d823a1ced405841a0555cd43707381a2566b0b0dc7ca1e748",
     "virtual:01_ARCHITECTURE_GUIDE.md:sha256:a45976a887afc1ca75512730af173504909d960521f2e58888128af406658a34",
-    "virtual:02_CODE_MAP.md:sha256:039691b99ab30ac03e9768ce2bed4e1a600843d81f8bd31c23633ea98c71fc33",
-    "virtual:03_ENTRY_POINTS.md:sha256:a3f634e0dff0981a20835f9e05ca399416ca061d11ef6815fde84a8ecacab290",
+    "virtual:02_CODE_MAP.md:sha256:37ceb9e06a1b0a4760673430a1cb24b761bd2b223db73732b73225431e99edb0",
+    "virtual:03_ENTRY_POINTS.md:sha256:6c10cdb8c0de84bad2189099f231bf3c6289eb8442a2238bd16e682646a85224",
     "virtual:04_DATA_ACCESS.md:sha256:2a095e23e252521803367973084f72aa5db131e89b4635991a6b32b74d850546",
     "virtual:AUDIT_PROMPT.md:sha256:1808d0e0e7c0c82f3b418524209a3a46d7d5ebdb1d2fe2ba7d0a4e43953fa6ff",
-    "CLAUDE.md:sha256:ab1f3c28764c2bf54695be1087c4ad4d69ec38a3223c4603c680be8933eeeee0",
+    "CLAUDE.md:sha256:e718a16a6653765a953e90cbdd93e6d418c7779fde3c2a83a62d36b2ddfdc54a",
     "Cargo.lock:sha256:f1023b1bf6d0467b292dff07e7912664f26c4b482eb534522b3496012285bb5b",
     "Cargo.toml:sha256:edefba17d7d7f7565a381bbe65f9de359dce5704d49786669526802c336a58ed",
     "README.md:sha256:b283cac6ae933d1552b56af2466bf6e56e52c643f0c0a7adfba19825d3b3a2e6",
@@ -7422,6 +7436,7 @@
     "htt/obsstat/egs3_volterra_memory.py:sha256:b71efda1af840f54e44cd27df79a1b172e7906431a2c0732eb4071c0c4d3d563",
     "htt/obsstat/egs3_vorticity_channels.py:sha256:90ee2fef53adf03b77b9a64a4a9710be561b6aff8b90e8e58a394b07eda4a10e",
     "htt/obsstat/joint_pv_cmb_forecast.py:sha256:77d93ec08a7040642da390d04bdf36b637b8d65ed8c0991b3ffa180049052407",
+    "htt/obsstat/k1_convention_contract.py:sha256:a351217e2cf00b27982c9b12997243fe47f91b9e21dfde04d94febaee90b17c7",
     "htt/obsstat/lowell_global_calibration.py:sha256:229a74f035090658f97f2eb1abdb04fc31e467c9abaeb886fba1859f5db2f4c9",
     "htt/obsstat/lowell_likelihood_branches.py:sha256:130599005fb2b44392c79f44cab8dee979502bd36b700d9a3833ff9adbce50ee",
     "htt/obsstat/lowell_map_features.py:sha256:0d1d80591b1c50b5ac843faaaefc1dbd3ad846e5cb41a518e10fa8ddb2dba08d",
@@ -7662,6 +7677,7 @@
     "scripts/codex_harness/run_pr146_forward_mocks.py:sha256:78567f66a6d73566651f4b6f954e8a4bb20108c406e14f67976c68173e46f4c8",
     "scripts/codex_harness/run_pr147_identified_set.py:sha256:932af85860e95a3c1324d5f9f66931b5b11c5576ba3b1d5a87cba2ddb2a9168e",
     "scripts/codex_harness/run_pr148_growth_covariance.py:sha256:59351040358f72307fab2b5b87567419755925c83c6618826fef132587e57ecf",
+    "scripts/codex_harness/run_pr149_k1_convention.py:sha256:3125d711711b492d098bf8c61edc74aa070c0514a0da32d6ad9e6bb3fa10a7bd",
     "scripts/codex_harness/run_subset.py:sha256:a2d2294aad1cf0493800dd8c94f80f7ff933836d4d9553a0ecaecc0c5568bd46",
     "scripts/codex_harness/sync_pr_dag_mirrors.py:sha256:fc9be87a41895d0bbed50622c4897e7ce167852a8ea71c012e158c062f6fc592",
     "scripts/codex_harness/validate_research_remediation.py:sha256:737979c7e7e45ce065bd8e561f887094d2436dc763c911de5a62ca93c9888201",
@@ -7683,7 +7699,7 @@
     "scripts/k1_biposh_smica.py:sha256:32130585cce32bf83b4df1f798d2f5806ba646e30ae8693a1f4f38d477494802",
     "scripts/k1_e2e_cache_gate.py:sha256:568b5792d13252a883eea66404c0766b0b0a200afb252c9fbbb688a9539d2fa5",
     "scripts/k1_e2e_reduce.py:sha256:45756c6308cccc2de8f50cd9d9100eb0b32e1fd99f1f9be1bcc6e3939738572d",
-    "scripts/k1_global_maxscan.py:sha256:f9b82106ed019877562393e6d1b053e7a3ffb6de75733bd0d74e9c5663db5116",
+    "scripts/k1_global_maxscan.py:sha256:7a841b24b49e109c715fbdfe636a2d4049209b3795c604bab69c9fc2d79aca0c",
     "scripts/k1_npipe_size_probe.py:sha256:3a34891f41aa9aaf4a6d326f92fc0d89ca3c3ca9642d85d5f8f9774e9025430e",
     "scripts/k5_cf4_identified_interval_card.py:sha256:dd0443dd13b71dfc31da1e569324112aa25306041da50b3dc6716a6585e79f1a",
     "scripts/k5_cf4_identified_interval_card_v8.py:sha256:3af183dc48f7ff99690923bfe8b3985dcf4ad23fe6a3155398b9676276ad22c7",

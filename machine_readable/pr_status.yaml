@@ -96,9 +96,9 @@ completed:
 - PR-147
 - PR-148
 - PR-149
+- PR-150
 blocked: []
 pending:
-- PR-150
 - PR-151
 - PR-152
 - PR-153
@@ -118,6 +118,12 @@ dormant_external:
 - PR-166
 in_progress: null
 execution_resolutions:
+  PR-150:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-150.md
+    resolved_on: '2026-07-18'
+    scientific_status_effect: none
+    scientific_status_after: OPEN
   PR-149:
     resolution: COMPLETED_SUCCESS
     receipt: docs/PR_DELTAS/pr-149.md
@@ -1445,3 +1451,28 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   mechanics only; freezing the mask and convention pre-conditions the PR-150
   raw-deletion swap; no detection and no Bianchi-family claim on K1; the two
   CF4 P0s are untouched and stay OPEN; 102 findings OPEN; PR4 NPIPE excluded.
+  PR-150 applies the exchangeable observation-inclusive pooled-rank global-p
+  estimator (binding PR-135) to the real Planck PR3 FFP10 end-to-end SMICA
+  null. The estimator is first checked for conservativeness on a large
+  correlated Gaussian-random-field ensemble with a live anti-conservative
+  b over N minus one negative control that structurally over-rejects below the
+  one over N floor while the shipped one plus b over N plus one form cannot;
+  this is a method self-consistency check and never a Planck falsifier because
+  the correlation is inert to a leave-one-out rank. The heavy end-to-end
+  max-scan card was produced once by the precision path (masked, proc-nside 64,
+  lmax 30) over 300 CMB Monte-Carlo maps drawn from the 999 available each
+  paired with a real noise Monte-Carlo map, through the same frozen
+  mask/proc-nside/statistic pipeline as the observed SMICA map, and read here.
+  The look-elsewhere global p over the six registered statistics lands at
+  eleven over three hundred one on the exchangeable support grid, above the
+  resolution floor, hard-validated on the actual reported value. Six mutations
+  killed on live guards. A multi-lane adversarial review returned no P0 and one
+  P1 plus four P2 all fixed pre-commit (the grid and floor checks made hard
+  raises on the real value not a snapped surrogate; the correlated-GRF framing
+  relabelled a conservativeness self-consistency check with a real negative
+  control; the used-not-usable count corrected; the look-elsewhere over six
+  statistics relabelled with no sky axis grid). E2E-conditional low-multipole
+  morphology diagnostic only; the idealised ensemble is never a Planck
+  calibration; PR4 NPIPE is a non-numeric skip and no PR3-and-PR4 combined
+  result is produced; no detection and no Bianchi-family claim; the two CF4
+  P0s are untouched and stay OPEN; 102 findings OPEN; PR4 NPIPE excluded.

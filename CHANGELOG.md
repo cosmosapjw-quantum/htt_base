@@ -7,6 +7,40 @@
 
 ## [Unreleased]
 
+### PR-150 — K1 exchangeable global scan + real Planck PR3 FFP10 E2E calibration (rev-r227, 2026-07-18)
+
+Roadmap Wave-19 PR-150 (deps PR-135/149). `htt/obsstat/k1_e2e_calibration.py`
+binds the exchangeable observation-inclusive pooled-rank global-p estimator
+(PR-135 `(1+b)/(N+1)`) to the REAL Planck PR3 FFP10 end-to-end SMICA null. The
+estimator is first checked for conservativeness on a large correlated-GRF
+ensemble WITH A LIVE ANTI-CONSERVATIVE `b/(N-1)` NEGATIVE CONTROL that
+structurally over-rejects below the shipped `1/N` floor (where the shipped form
+cannot) — a method self-consistency check, NOT a Planck falsifier (the
+correlation is inert to a leave-one-out rank). The heavy end-to-end max-scan
+card was produced ONCE by `scripts/k1_global_maxscan.py --precision
+--proc-nside 64` (masked, `lmax=30`) over **300 CMB MC drawn from the 999
+available, each paired with a real noise MC**, through the same frozen
+mask/proc-nside/statistic pipeline as the observed SMICA map (PR-149 convention,
+byte-equivalent path), and read here (the ACT pattern; no 600 GB re-read). The
+look-elsewhere global p over the six registered statistics is **`11/301 ≈
+0.0365`** on the exchangeable support grid, above the `1/301` resolution floor,
+HARD-validated on the ACTUAL reported value. PR4/NPIPE is a non-numeric skip
+receipt; no PR3-and-PR4 combined result. 6/6 mutations killed on live guards.
+Precision E2E ran memory-safely with `--jobs 6` (~5.4 GB peak vs a swap-thrashing
+`--jobs 20`), ~19 min. Multi-lane review (Workflow 3 refute-lenses ×
+find→verify, effort high): NO P0, 1 P1 + 4 P2 all CONFIRMED + fixed pre-commit
+(the grid/floor validation made a HARD raise on the real value not a snapped
+surrogate; the "correlated-GRF falsifier" relabelled a conservativeness
+self-consistency check with a real anti-conservative negative control; the
+"usable"→"used" CMB-count corrected; the look-elsewhere-over-six-statistics
+relabelled `look_elsewhere_global_p`/`per_statistic_local_p` with no sky axis
+grid), 1 REFUTED. Suite `test_pr150_k1_e2e.py` (9) + full gate baseline. C2
+E2E-conditional low-multipole morphology diagnostic mechanics; the idealised
+ensemble is never a Planck calibration; `0.0365` is look-elsewhere-corrected, NOT
+a detection/anisotropy/K1-axis/Bianchi-family claim; the two CF4 P0s untouched
+and stay OPEN; 102 OPEN; DAG 97/113; next PR-151 (DESI exact-selection mock). See
+docs/PR_DELTAS/pr-150.md.
+
 ### PR-149 — Planck K1 canonical convention, mask, transfer path + BiPoSH structural-zero theorem (rev-r226, 2026-07-18)
 
 Roadmap Wave-19 PR-149 (deps PR-123/125/135/143). `htt/obsstat/k1_convention_contract.py`:

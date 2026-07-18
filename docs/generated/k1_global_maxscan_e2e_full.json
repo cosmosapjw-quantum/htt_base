@@ -1,0 +1,2496 @@
+{
+  "blocker_closes": "BLOCKED_MISSING_PR4_E2E_ACCESS",
+  "blocker_note": "PLA-available FFP10 SMICA E2E null: real component-separated CMB MC + real instrument-noise MC for this method, paired by parsed MC id (robust to the known missing CMB realization 00970). This is the exit-gate null; once run on the PLA-available ensemble, flip the egs_results_table K1 row measured_partial -> measured through the generator with this provenance",
+  "caveats": [
+    "null = REAL component-separated CMB MC + REAL instrument-noise MC (PLA-available E2E); carries noise/systematics + the cleaning transfer",
+    "CMB set is the PLA-available subset, NOT all 1000: known missing/corrupt realization 00970 (ESA/PLA pending); sims paired by parsed MC id so the gap does not misalign the pairing",
+    "method-matched: built from this method's sims only; compare methods side by side, do not average",
+    "look-elsewhere correction over the six registered statistics; max-scan frozen",
+    "model-independent low-ell descriptor; no Bianchi family, geometry, anisotropy-evidence, or native-solver claim"
+  ],
+  "claim_boundary": "OBSSTAT global look-elsewhere diagnostic under the PLA-available E2E ensemble; this is the exit-gate null, not a family/geometry/native-solver claim",
+  "claim_tier": "diagnostic_only",
+  "config": {
+    "alignment_stats_ell": [
+      2,
+      3
+    ],
+    "directions": [
+      "low",
+      "low",
+      "low",
+      "high",
+      "low",
+      "low"
+    ],
+    "ell_min": 2,
+    "inpaint_iters": 40,
+    "jobs": 6,
+    "lmax": 30,
+    "mask_handling": "diffuse_inpaint_identical_on_obs_and_sims",
+    "masked": true,
+    "method": "smica",
+    "n_sims": 300,
+    "null_model": "ffp10_cmb_plus_noise_e2e_v2_precision",
+    "proc_nside": 64,
+    "seed": 12345,
+    "statistic_set": "v2_precision",
+    "statistics": [
+      "s_one_half",
+      "parity_even_over_odd_ratio",
+      "parity_asymmetry",
+      "planarity_mean",
+      "qo_axis_alignment_deg",
+      "axis_to_cmb_dipole_deg"
+    ]
+  },
+  "config_hash": "sha256:3c6823acbe28e4021582f2b53e077bf7ffe008b363fbe755655511614e508672",
+  "e2e_sims": {
+    "cmb_dir": "workdir/raw/planck_ffp10/smica/cmb_mc",
+    "files": [
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00000_raw.fits",
+        "cmb_hash": "sha256:6f34ed4442b3bef0be983eda1311b04748b8322721eef02e814f54d9dfc1dc46",
+        "cmb_id": 0,
+        "noise_file": "dx12_v3_smica_noise_mc_00000_raw.fits",
+        "noise_hash": "sha256:021f08d989ce0a90c449f7d81a8c130966f424437ffa2e6bd4e320b4576158ad",
+        "noise_id": 0
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00001_raw.fits",
+        "cmb_hash": "sha256:83581b02977d79ada4645dc44f0e929910cf106bc0fbf3010e3062fb7ea6d433",
+        "cmb_id": 1,
+        "noise_file": "dx12_v3_smica_noise_mc_00001_raw.fits",
+        "noise_hash": "sha256:6e7c96e358afab5ebb1d69bf5271a240a9f21eedf79f2f7960d8495dc3f50f41",
+        "noise_id": 1
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00002_raw.fits",
+        "cmb_hash": "sha256:62e015997071828c26b3a93fdabfd79d6d9c8433f01ad06f26cd3b2840807b4a",
+        "cmb_id": 2,
+        "noise_file": "dx12_v3_smica_noise_mc_00002_raw.fits",
+        "noise_hash": "sha256:ef38e3c7d12e7d60c1a99deb04870123fe0a25df66eb1b09ead87d239a9744bd",
+        "noise_id": 2
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00003_raw.fits",
+        "cmb_hash": "sha256:02e3ead52b1ea290e20afa7b1b9150f5dffa8e7ae9caba256c214d070a145aa9",
+        "cmb_id": 3,
+        "noise_file": "dx12_v3_smica_noise_mc_00003_raw.fits",
+        "noise_hash": "sha256:ce2352be4b152a92af9a118dd66fad6740c591485e7d4de2beb4045756a48a03",
+        "noise_id": 3
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00004_raw.fits",
+        "cmb_hash": "sha256:1449d88e612fb26e54616dc4545e8875925c2e8c7976736780947d7f7b168961",
+        "cmb_id": 4,
+        "noise_file": "dx12_v3_smica_noise_mc_00004_raw.fits",
+        "noise_hash": "sha256:53215fbf1d091b68dc778ce945cb49862da6456d14211f830bdfe01cacde15e5",
+        "noise_id": 4
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00005_raw.fits",
+        "cmb_hash": "sha256:bc5fa016a1ccb5765cfdfcb1dd7ed334d04853a5ddebec893d03ff9b4d19debb",
+        "cmb_id": 5,
+        "noise_file": "dx12_v3_smica_noise_mc_00005_raw.fits",
+        "noise_hash": "sha256:36c5143d16c14f80a1e84b9b8ba16622b17683883b0f24b171682d8efd182842",
+        "noise_id": 5
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00006_raw.fits",
+        "cmb_hash": "sha256:a4ae3bc88544de16be1063758b585bd3408f618396de63823ce04529ceb4d4ba",
+        "cmb_id": 6,
+        "noise_file": "dx12_v3_smica_noise_mc_00006_raw.fits",
+        "noise_hash": "sha256:73d66f1636e7edccaf18b22aa25cce8a3ef1bac0e475dca0a26324a95dfc6ee0",
+        "noise_id": 6
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00007_raw.fits",
+        "cmb_hash": "sha256:fda55bbc178b2b0e03d88bbb52ea8bca5f9565025d8ef9c6b4477a7ff3a15f6b",
+        "cmb_id": 7,
+        "noise_file": "dx12_v3_smica_noise_mc_00007_raw.fits",
+        "noise_hash": "sha256:ddbcc97523d9c208c8097965c5852dfce3f2914815bed43fa2ece282ad6d42c9",
+        "noise_id": 7
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00008_raw.fits",
+        "cmb_hash": "sha256:4f829fe5dd19e08fb71f86b5bb9156dd220a639cd7924f624973e9474cc9ec31",
+        "cmb_id": 8,
+        "noise_file": "dx12_v3_smica_noise_mc_00008_raw.fits",
+        "noise_hash": "sha256:8ea54a16e261e609e77f36f3977b9a81c08d1f500b3aaae18c40f4099a4f2026",
+        "noise_id": 8
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00009_raw.fits",
+        "cmb_hash": "sha256:2fd2e81e44f7ae55bac72153769f188be7b0b418016b0db3ffab2460194944e4",
+        "cmb_id": 9,
+        "noise_file": "dx12_v3_smica_noise_mc_00009_raw.fits",
+        "noise_hash": "sha256:fe9a6410a8328c52eae988fbe2106cf8490047c9d01240920300e6fdbef5148c",
+        "noise_id": 9
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00010_raw.fits",
+        "cmb_hash": "sha256:016c488c0cb40a84c6b4f440f7ece9ecf4ac976fa878b924a58a4697ab4a4cba",
+        "cmb_id": 10,
+        "noise_file": "dx12_v3_smica_noise_mc_00010_raw.fits",
+        "noise_hash": "sha256:ad70099d11821f98d6644ce5ae2a4e4cef6650aa5c4ca7353a77a2287470cfc7",
+        "noise_id": 10
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00011_raw.fits",
+        "cmb_hash": "sha256:28c931eb0262f02d7b743733d6db018263c1f3e3a4f81049bc2eb25ee29c6848",
+        "cmb_id": 11,
+        "noise_file": "dx12_v3_smica_noise_mc_00011_raw.fits",
+        "noise_hash": "sha256:0d82e8597827c4df96c79fbc87ff7d09513286d9960cab593687d08e49c9c572",
+        "noise_id": 11
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00012_raw.fits",
+        "cmb_hash": "sha256:a086173887d7966b2d21071f1a0d401772d54a5a335f6dc31a8aee6c48395c73",
+        "cmb_id": 12,
+        "noise_file": "dx12_v3_smica_noise_mc_00012_raw.fits",
+        "noise_hash": "sha256:d3d89970697b6824cccf4d10c4eea7d8ef074ee0e94d769a3b7058411c3689da",
+        "noise_id": 12
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00013_raw.fits",
+        "cmb_hash": "sha256:f7e059a75188077cd2772b5eef146ddcf440b4b791da03e2f3b4fb8cf91c934a",
+        "cmb_id": 13,
+        "noise_file": "dx12_v3_smica_noise_mc_00013_raw.fits",
+        "noise_hash": "sha256:7ad15d20c0ee88e04a0562970d1ca1024c21c9f50b3ebad1283703f931285320",
+        "noise_id": 13
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00014_raw.fits",
+        "cmb_hash": "sha256:f9d4c7aceed9f7b49f486c83f29c0abf0ea834c734ad71f794c82e8ba5c8f1e3",
+        "cmb_id": 14,
+        "noise_file": "dx12_v3_smica_noise_mc_00014_raw.fits",
+        "noise_hash": "sha256:f9be1c1a5385fa2ee3ec2ae42e0cc01f76f42df79dac784e8dcb91f393205545",
+        "noise_id": 14
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00015_raw.fits",
+        "cmb_hash": "sha256:a70f35fb9f2961fcf0efb3e75ecb75bd15378db206f64221362208554384df52",
+        "cmb_id": 15,
+        "noise_file": "dx12_v3_smica_noise_mc_00015_raw.fits",
+        "noise_hash": "sha256:b4d67db153546fa261344fc47e7f42c466ddbe2846d9c476d8496a5d9b70212c",
+        "noise_id": 15
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00016_raw.fits",
+        "cmb_hash": "sha256:9887b996c73ace0b9f19a91e4b73b45c755fe53d7eee0e89f9c5741effb54ecb",
+        "cmb_id": 16,
+        "noise_file": "dx12_v3_smica_noise_mc_00016_raw.fits",
+        "noise_hash": "sha256:98acf90effa4062fe1993bb2717c7ceb0fa5d52c5bd1d804595ce2f5150a586b",
+        "noise_id": 16
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00017_raw.fits",
+        "cmb_hash": "sha256:53673a5634059fe0de04b0489bd9beee3d111588598464a7e1cb9ca590f77cc3",
+        "cmb_id": 17,
+        "noise_file": "dx12_v3_smica_noise_mc_00017_raw.fits",
+        "noise_hash": "sha256:8d8adb58d2e013a2b0e3de12c2d983ad2ab9e1f67c28de721c58d2e17688bee5",
+        "noise_id": 17
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00018_raw.fits",
+        "cmb_hash": "sha256:961c00192e019269327d9eccfdfa3089304971b6d2bf6c5b9612cbfce7accd97",
+        "cmb_id": 18,
+        "noise_file": "dx12_v3_smica_noise_mc_00018_raw.fits",
+        "noise_hash": "sha256:d485d97afe8cfd3410b4ecf744175ff566414d9b969acb227eb61b4bb4226163",
+        "noise_id": 18
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00019_raw.fits",
+        "cmb_hash": "sha256:11e27e7d6e30e146f2ad1fa275706b2fed6e03183b69ef8eb8c4be3b9c7deccc",
+        "cmb_id": 19,
+        "noise_file": "dx12_v3_smica_noise_mc_00019_raw.fits",
+        "noise_hash": "sha256:f559ab5fbb2b6a7180e8ea76b6cb7410177f61b9a00847a8f956b230809a1e7d",
+        "noise_id": 19
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00020_raw.fits",
+        "cmb_hash": "sha256:1ca2401144be94b13181b3672a7545067c3dabdc007c01bbc296a4cef21ec4b9",
+        "cmb_id": 20,
+        "noise_file": "dx12_v3_smica_noise_mc_00020_raw.fits",
+        "noise_hash": "sha256:3f8846518abf40d9c9f0170f10093dac92dc4cd824607a1c4c458db52dc21814",
+        "noise_id": 20
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00021_raw.fits",
+        "cmb_hash": "sha256:602217282ea06595c0ccde2644204a6c8196c2ba89e6e2e04d2ea1ed93e38d1c",
+        "cmb_id": 21,
+        "noise_file": "dx12_v3_smica_noise_mc_00021_raw.fits",
+        "noise_hash": "sha256:21d62404c6fc14545ccf9243c38f0b35db9f22b015b0594ba7c6d3169627e1d6",
+        "noise_id": 21
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00022_raw.fits",
+        "cmb_hash": "sha256:9ac0ec17bb74cc8ff7ddd0cbad70d5ce02bda28f8fbaa88d240bab92b02e7e79",
+        "cmb_id": 22,
+        "noise_file": "dx12_v3_smica_noise_mc_00022_raw.fits",
+        "noise_hash": "sha256:8326ce4720ab6dde689bc90c92285fa0318955790c1f528f21bd460a647aed85",
+        "noise_id": 22
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00023_raw.fits",
+        "cmb_hash": "sha256:e43f057404865abb8d582eb39fdfe15f29b6a6571e55696a20e06d5fc4a344ca",
+        "cmb_id": 23,
+        "noise_file": "dx12_v3_smica_noise_mc_00023_raw.fits",
+        "noise_hash": "sha256:b4762dc9c83613e87e0bfd9977d8054c1f32b800c47c19c9f0d0e0d8f4e01ed9",
+        "noise_id": 23
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00024_raw.fits",
+        "cmb_hash": "sha256:91615cbeb346990b06caf0d3e21e5c22d68f81a8d1b64d53e5efaf29db89c7dd",
+        "cmb_id": 24,
+        "noise_file": "dx12_v3_smica_noise_mc_00024_raw.fits",
+        "noise_hash": "sha256:1c134d03eb9263b82f6de8cf9399d22adf0113f94be85b98d740bf5453cbb7c3",
+        "noise_id": 24
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00025_raw.fits",
+        "cmb_hash": "sha256:709a74ee5b514fdcc43b1798de0ccd39ec4d758f9d1807669087a22e48f6ecea",
+        "cmb_id": 25,
+        "noise_file": "dx12_v3_smica_noise_mc_00025_raw.fits",
+        "noise_hash": "sha256:7ca26040d0decd0f51ee42b5f744f3427ffc16bec0b36522364064168c02195b",
+        "noise_id": 25
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00026_raw.fits",
+        "cmb_hash": "sha256:77a49ea9993293a9811f4f03f8980e623cdea0c5a44f3703656dcd9678c9cdcc",
+        "cmb_id": 26,
+        "noise_file": "dx12_v3_smica_noise_mc_00026_raw.fits",
+        "noise_hash": "sha256:ccb12ad5826b77b0f84eb3e3067ec9b92e429183d1809fbb014fd82dee9dbed8",
+        "noise_id": 26
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00027_raw.fits",
+        "cmb_hash": "sha256:b89f37174df653629943112f896cf004af16bc38b639054e7dd11afbfae0c8b5",
+        "cmb_id": 27,
+        "noise_file": "dx12_v3_smica_noise_mc_00027_raw.fits",
+        "noise_hash": "sha256:bc214c13b525eda06c36b9fc629c38f211a978396586c3076d7ed8eed4f4f180",
+        "noise_id": 27
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00028_raw.fits",
+        "cmb_hash": "sha256:5d9b3b511dca7028020a2154a82f304e3225002a3ed9ed87f8f39e6b188f36cc",
+        "cmb_id": 28,
+        "noise_file": "dx12_v3_smica_noise_mc_00028_raw.fits",
+        "noise_hash": "sha256:b3ba8af07940be9a812c2c3c60517fb60df1eea4c4d2a924e0b1f66a8c7950a2",
+        "noise_id": 28
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00029_raw.fits",
+        "cmb_hash": "sha256:b31435dacfecaa1f8b1fb775e0db0431c869807aeb82d9d2724ad265f1ef05b7",
+        "cmb_id": 29,
+        "noise_file": "dx12_v3_smica_noise_mc_00029_raw.fits",
+        "noise_hash": "sha256:f6a98f553a0aefcbae17470c1bd36a0035f681196312fd4f73fd402081352396",
+        "noise_id": 29
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00030_raw.fits",
+        "cmb_hash": "sha256:814f143e0c8d303346eb977c512f1b9f01d67c31067d2f3e711a92daf8be2cef",
+        "cmb_id": 30,
+        "noise_file": "dx12_v3_smica_noise_mc_00030_raw.fits",
+        "noise_hash": "sha256:7d67950178c7b48b9aa7d4eeaab18aa55ca1140a8a14103ee0f486f456cc51a1",
+        "noise_id": 30
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00031_raw.fits",
+        "cmb_hash": "sha256:54369e4000a7eda197d60f180772348f8528d7f91876c2c177a763664da86c5b",
+        "cmb_id": 31,
+        "noise_file": "dx12_v3_smica_noise_mc_00031_raw.fits",
+        "noise_hash": "sha256:0c4719e2ca6dd154c820ed9ca504d69ebb83e30dcb324f8c4a1f329919c5fe6b",
+        "noise_id": 31
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00032_raw.fits",
+        "cmb_hash": "sha256:c707452691473fdd96fa08ca8f399a236d7df713077d5c5a0951fbdb2a721923",
+        "cmb_id": 32,
+        "noise_file": "dx12_v3_smica_noise_mc_00032_raw.fits",
+        "noise_hash": "sha256:aebbcc950b0338e28caf79f502bb77b5abe18a0df9805891d6c0bdeb22e2321a",
+        "noise_id": 32
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00033_raw.fits",
+        "cmb_hash": "sha256:2eef457d1bcc1540f76a0d1230714144bff9de6d5f186c73a84741b62e704d57",
+        "cmb_id": 33,
+        "noise_file": "dx12_v3_smica_noise_mc_00033_raw.fits",
+        "noise_hash": "sha256:d1da88d9cd949c88eb7d591ffd3144e8606a59a74ebb474419842d8e528d568c",
+        "noise_id": 33
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00034_raw.fits",
+        "cmb_hash": "sha256:d57118ed02c448bc551d12d86ed787a000299f8c9fef6f00ca0bb8267e6476bc",
+        "cmb_id": 34,
+        "noise_file": "dx12_v3_smica_noise_mc_00034_raw.fits",
+        "noise_hash": "sha256:38e107df29cdb6d458f742b2604803534b40eaf9aa717602138f40ef8bbc7f00",
+        "noise_id": 34
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00035_raw.fits",
+        "cmb_hash": "sha256:6f4b625444b7330ea5c2c995b87225a76b75d0da8e36b056b57931721fb7944b",
+        "cmb_id": 35,
+        "noise_file": "dx12_v3_smica_noise_mc_00035_raw.fits",
+        "noise_hash": "sha256:3672c6febf24ddc65ba57f020dfe369dff322cf9ef8b0bb80ee996cbcab517db",
+        "noise_id": 35
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00036_raw.fits",
+        "cmb_hash": "sha256:13e93bcd58f31f1a6268d38cea2562f62596046aed29c9fb5e42fec52b88e86c",
+        "cmb_id": 36,
+        "noise_file": "dx12_v3_smica_noise_mc_00036_raw.fits",
+        "noise_hash": "sha256:546405a438e48a4462e2118963d319c38eac17422896c2517414afd136b6f48c",
+        "noise_id": 36
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00037_raw.fits",
+        "cmb_hash": "sha256:a4803c2b5212f6aa7ac0c991428b38825489ec19c28a569576c83a1771635ce6",
+        "cmb_id": 37,
+        "noise_file": "dx12_v3_smica_noise_mc_00037_raw.fits",
+        "noise_hash": "sha256:04eb44b74e1f3c9b826a7e55ff99068352f36c292cfd72526e159aa5d38969c8",
+        "noise_id": 37
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00038_raw.fits",
+        "cmb_hash": "sha256:52fee635d5005c4de1b75312cb4495e756abd6ede3eb1880c8b2ab10b8b76ed9",
+        "cmb_id": 38,
+        "noise_file": "dx12_v3_smica_noise_mc_00038_raw.fits",
+        "noise_hash": "sha256:a348f048276769eb592a0a640cfbcbb5cbb7e51694ddc8e80836bfdbc629e4d8",
+        "noise_id": 38
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00039_raw.fits",
+        "cmb_hash": "sha256:19d794e56b4b21f8e976ee95b27686a04172658042aec174d864a2cb11a7be65",
+        "cmb_id": 39,
+        "noise_file": "dx12_v3_smica_noise_mc_00039_raw.fits",
+        "noise_hash": "sha256:098a83985afc131bda4e46de1f9608a96d306771b3a4f070c4c26d9e122bfd41",
+        "noise_id": 39
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00040_raw.fits",
+        "cmb_hash": "sha256:6903c8cadae89f044c1a7b7ab07dc7791db8900564684d945206e372dd26dd00",
+        "cmb_id": 40,
+        "noise_file": "dx12_v3_smica_noise_mc_00040_raw.fits",
+        "noise_hash": "sha256:f11872c585979af4048a41133dcc2af96b33fd28c60df693de175615f2e738cc",
+        "noise_id": 40
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00041_raw.fits",
+        "cmb_hash": "sha256:5ba8d1987571a1ad6734f3699f8c69e83d4287dfe9541bc6ffb76f4ad88edc11",
+        "cmb_id": 41,
+        "noise_file": "dx12_v3_smica_noise_mc_00041_raw.fits",
+        "noise_hash": "sha256:c045ad61b49fe20cddd6a896ffe88cd73768fa0fa91f5cbbbb34ec90c4c1e75f",
+        "noise_id": 41
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00042_raw.fits",
+        "cmb_hash": "sha256:c5be9e7958aaf7add24d653ee7ad2867302c704b76a65704785a2af9ea65c1fd",
+        "cmb_id": 42,
+        "noise_file": "dx12_v3_smica_noise_mc_00042_raw.fits",
+        "noise_hash": "sha256:5d696096bd9a012d90696e10b907b6205cd53ec364203ad8dd9c7fb127244258",
+        "noise_id": 42
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00043_raw.fits",
+        "cmb_hash": "sha256:a26972491007c504642e588e84050cf4817b4cf31e8378e88c9a7062d8376b2e",
+        "cmb_id": 43,
+        "noise_file": "dx12_v3_smica_noise_mc_00043_raw.fits",
+        "noise_hash": "sha256:5331f33ac6378540dbb487589a76d980e81c5516b724c5e3465ecd8fa69fabe7",
+        "noise_id": 43
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00044_raw.fits",
+        "cmb_hash": "sha256:d90cd5e3b56f6c52c369a7be53ca1bd8dcc19170d66af59770a9f29653d48217",
+        "cmb_id": 44,
+        "noise_file": "dx12_v3_smica_noise_mc_00044_raw.fits",
+        "noise_hash": "sha256:e287dec40483d2d8cdba35f00d1e38b0cd0c4a385450f5d5ee8ee3c27a84c611",
+        "noise_id": 44
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00045_raw.fits",
+        "cmb_hash": "sha256:fc30984adbb1623cbb5ed4a97270953d7b298def5d5fccca5d52c6b6d91c266c",
+        "cmb_id": 45,
+        "noise_file": "dx12_v3_smica_noise_mc_00045_raw.fits",
+        "noise_hash": "sha256:31737b8c66012fb8b72b023862d2e3782a296ab20b112e75a46bcea10eccd282",
+        "noise_id": 45
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00046_raw.fits",
+        "cmb_hash": "sha256:f88377484ce6d3ec49df2d383b39350f566049cfc0c5f0b492893a526bb2595c",
+        "cmb_id": 46,
+        "noise_file": "dx12_v3_smica_noise_mc_00046_raw.fits",
+        "noise_hash": "sha256:f1b78b4dde7f934aef2b3f978cb1c410d6dbf6a3c47ac049415bb8a42494d6e0",
+        "noise_id": 46
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00047_raw.fits",
+        "cmb_hash": "sha256:3ff8c99be0272db02c3acd87b7f78030c54c97263d2a318fa11dd31052bd6879",
+        "cmb_id": 47,
+        "noise_file": "dx12_v3_smica_noise_mc_00047_raw.fits",
+        "noise_hash": "sha256:fd5d0eb85d65c19998a857a47e33496470ad80274370dfae54f58e5709496655",
+        "noise_id": 47
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00048_raw.fits",
+        "cmb_hash": "sha256:1cbf41e818a3e2fdc7c097a0613a888d86abe086e411b2584506e56100c4a490",
+        "cmb_id": 48,
+        "noise_file": "dx12_v3_smica_noise_mc_00048_raw.fits",
+        "noise_hash": "sha256:ad797cd377f673e330eb0e6cf7966c8949f56e166585013cf2996a74eaa5a43e",
+        "noise_id": 48
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00049_raw.fits",
+        "cmb_hash": "sha256:70accb1f77e45f802ce36ebe4eb3670d1afc30a502dcdf25bf30f5f5282a3c18",
+        "cmb_id": 49,
+        "noise_file": "dx12_v3_smica_noise_mc_00049_raw.fits",
+        "noise_hash": "sha256:92f962492a8cac4830a91976f72686d591b34f3e8e354653483a70fc87a28acc",
+        "noise_id": 49
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00050_raw.fits",
+        "cmb_hash": "sha256:be8b5d4c20e221b9a3448b13b748b63b8a2925cf8a4903373138615bc82ae9ae",
+        "cmb_id": 50,
+        "noise_file": "dx12_v3_smica_noise_mc_00050_raw.fits",
+        "noise_hash": "sha256:26210107201198097b2055a09b7361c9e710eebe785640d52b51418b2a8718bc",
+        "noise_id": 50
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00051_raw.fits",
+        "cmb_hash": "sha256:d0698b23f4dfff9263b43f685d17c9b3f67f5fd0792e9066fbb7ff07ba957de5",
+        "cmb_id": 51,
+        "noise_file": "dx12_v3_smica_noise_mc_00051_raw.fits",
+        "noise_hash": "sha256:336fa4c88e7f56e27c8a53645c2b1719f7b12b61e52a31946bd27321329681c4",
+        "noise_id": 51
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00052_raw.fits",
+        "cmb_hash": "sha256:b2d42a85fa608c9da836b091ae20eb321e8184feeaa630e181a6a2619d74fc1c",
+        "cmb_id": 52,
+        "noise_file": "dx12_v3_smica_noise_mc_00052_raw.fits",
+        "noise_hash": "sha256:6c60a3ed220e77d91bed14d23d0a69b4c7fae1377097f35627478087a1c17370",
+        "noise_id": 52
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00053_raw.fits",
+        "cmb_hash": "sha256:c454253533bdaf38ea9185f1f5ab203078efa69d0e43c35d818d4264d2db80e9",
+        "cmb_id": 53,
+        "noise_file": "dx12_v3_smica_noise_mc_00053_raw.fits",
+        "noise_hash": "sha256:c6852802af8fd28e4e6839b925e151195505c24af034f2ac77ed6d5fe2d1d121",
+        "noise_id": 53
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00054_raw.fits",
+        "cmb_hash": "sha256:3d5d752cc3e0c9b840cf9d513085474b7a7e03ab24ac15cbe35068ad7d40a017",
+        "cmb_id": 54,
+        "noise_file": "dx12_v3_smica_noise_mc_00054_raw.fits",
+        "noise_hash": "sha256:1c494632357bb0904bfa6136b8932a67dfd296efa7777eac484b64fb8b48f5b4",
+        "noise_id": 54
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00055_raw.fits",
+        "cmb_hash": "sha256:a4240f087901fd55bdf14d44e4f775d5b0765128cc32bb76df7753bb1b9f564b",
+        "cmb_id": 55,
+        "noise_file": "dx12_v3_smica_noise_mc_00055_raw.fits",
+        "noise_hash": "sha256:82e68ea1c775c900f7a2804a1f549c5fc30d8f3dfae1dc290c5bf40dd5e55eb0",
+        "noise_id": 55
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00056_raw.fits",
+        "cmb_hash": "sha256:fc8eec159cca12997aa4651046cdc9c5730a618ab8331e947926d9c58c4a756c",
+        "cmb_id": 56,
+        "noise_file": "dx12_v3_smica_noise_mc_00056_raw.fits",
+        "noise_hash": "sha256:2cd8acecf4e0f62c650549907439c2e3db2c7aecfa2f40d0c6b4e4a6837b8b93",
+        "noise_id": 56
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00057_raw.fits",
+        "cmb_hash": "sha256:b7b898d71c582167601daf614a401c8443a686feebf46b628d273a8e0f5a0603",
+        "cmb_id": 57,
+        "noise_file": "dx12_v3_smica_noise_mc_00057_raw.fits",
+        "noise_hash": "sha256:ade12f1ba9ab4986a518799e26b63cdd6d3108bba3b5b599da67ddff0a24f12e",
+        "noise_id": 57
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00058_raw.fits",
+        "cmb_hash": "sha256:971454b9278ef7abdf6adbaff597ebb7e2bc4371b08f653bc3c8b2c00453cc08",
+        "cmb_id": 58,
+        "noise_file": "dx12_v3_smica_noise_mc_00058_raw.fits",
+        "noise_hash": "sha256:de13b261b215d29ff39a13a7e7bebf410a42e5f57c6ddb7aa3d8e3a1b2f760a3",
+        "noise_id": 58
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00059_raw.fits",
+        "cmb_hash": "sha256:47c41e7cbaf72f2758de98a4f091e89334295648eaeb072e7dc25a75d7977d10",
+        "cmb_id": 59,
+        "noise_file": "dx12_v3_smica_noise_mc_00059_raw.fits",
+        "noise_hash": "sha256:4b9b045f27ce57876488d39282536474a1e24f0cbc476e948e9a2f3e1eb3993d",
+        "noise_id": 59
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00060_raw.fits",
+        "cmb_hash": "sha256:607cdad98f9b0865882266b332984f312879312c964178d6944e4b532029be42",
+        "cmb_id": 60,
+        "noise_file": "dx12_v3_smica_noise_mc_00060_raw.fits",
+        "noise_hash": "sha256:22e5dfc27ff6cc469e9a208a697b817c159cb99be804b19c14b067c91a98f009",
+        "noise_id": 60
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00061_raw.fits",
+        "cmb_hash": "sha256:dac07e83dee0d608ce6cbc5dca27b289db395c18a542b228e3204791a7cd0aa3",
+        "cmb_id": 61,
+        "noise_file": "dx12_v3_smica_noise_mc_00061_raw.fits",
+        "noise_hash": "sha256:875000675bb582fff32d0fa913e2cf3272e456cee47afc418609b613b11bb51e",
+        "noise_id": 61
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00062_raw.fits",
+        "cmb_hash": "sha256:c837c9c23af99a849372f611a945ad8659d780485b1a561bade6597885c8c9f5",
+        "cmb_id": 62,
+        "noise_file": "dx12_v3_smica_noise_mc_00062_raw.fits",
+        "noise_hash": "sha256:e75b47e38a5127f4e11e6e6be567ee803713329c77b24996b08213824a8f7e04",
+        "noise_id": 62
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00063_raw.fits",
+        "cmb_hash": "sha256:53179f696a656f60104f2baad8a8d1e52ff4247ae68b8eb4e7ad54cb32a99757",
+        "cmb_id": 63,
+        "noise_file": "dx12_v3_smica_noise_mc_00063_raw.fits",
+        "noise_hash": "sha256:06dec47737fc426eb7ea684e8be4d73e65de673f6096507d6ac1a12748f28d55",
+        "noise_id": 63
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00064_raw.fits",
+        "cmb_hash": "sha256:beaea3ed3a326d0fca666e451d18b25ebe60b8303f00ca5131941cf9fcf42b6e",
+        "cmb_id": 64,
+        "noise_file": "dx12_v3_smica_noise_mc_00064_raw.fits",
+        "noise_hash": "sha256:beef2c5cc3838bcdc7b236fb749407403472739bcae099f9936125f3db999d59",
+        "noise_id": 64
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00065_raw.fits",
+        "cmb_hash": "sha256:5648b8f7d730146b479663901b2b3b198e653eaabc3b6b4952bde49752fbd9a2",
+        "cmb_id": 65,
+        "noise_file": "dx12_v3_smica_noise_mc_00065_raw.fits",
+        "noise_hash": "sha256:5eb3bd010ad2787b19ed453db62f4c57be8699f61117d0f80f5cd9cf6ad9f3f1",
+        "noise_id": 65
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00066_raw.fits",
+        "cmb_hash": "sha256:bc6e88fba1404bd766560bb12382cabd0cc0a37176b3434ed63668c3b2cf2abe",
+        "cmb_id": 66,
+        "noise_file": "dx12_v3_smica_noise_mc_00066_raw.fits",
+        "noise_hash": "sha256:0d6751357f9abf177d480d83feef81fef6374ec974a9b7b2ad2c2f6bd7d8c2b4",
+        "noise_id": 66
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00067_raw.fits",
+        "cmb_hash": "sha256:968d5f9eadbd2a09cfcea4127b9500c24a558c1d35316c87375ae04e7808c64a",
+        "cmb_id": 67,
+        "noise_file": "dx12_v3_smica_noise_mc_00067_raw.fits",
+        "noise_hash": "sha256:cf846e6c21ce5c9a1c635befb068427c33ff03ddde18fcdaf08e1ec6b5f1f76f",
+        "noise_id": 67
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00068_raw.fits",
+        "cmb_hash": "sha256:03812f177ebd9d09c12a79f752f06896a4e30f5b7c06066d02e1344df96126cc",
+        "cmb_id": 68,
+        "noise_file": "dx12_v3_smica_noise_mc_00068_raw.fits",
+        "noise_hash": "sha256:810a640ff7730f8ef474e0c77c5565713beab086c69ff7c79e4652b2e0bdee31",
+        "noise_id": 68
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00069_raw.fits",
+        "cmb_hash": "sha256:c247a1004d106becf0ba0a4f07b213b9a94eba131d3683877943aa11b6c49877",
+        "cmb_id": 69,
+        "noise_file": "dx12_v3_smica_noise_mc_00069_raw.fits",
+        "noise_hash": "sha256:026c2944e26d1208d275601d8ed12571cf107ce38325af9d01d7ea2e82ea658b",
+        "noise_id": 69
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00070_raw.fits",
+        "cmb_hash": "sha256:0766e4590cf0792789f7cb45809147239cfab83119484013feae417e50ee49ab",
+        "cmb_id": 70,
+        "noise_file": "dx12_v3_smica_noise_mc_00070_raw.fits",
+        "noise_hash": "sha256:318b1726c43f3dd533667b2bed896e804e5d6bf24f8384a14ea982c334fdabce",
+        "noise_id": 70
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00071_raw.fits",
+        "cmb_hash": "sha256:a39b9c8fdd38a141b49f1f3a5682b913f715203fb0de0b1a833694915c1303f0",
+        "cmb_id": 71,
+        "noise_file": "dx12_v3_smica_noise_mc_00071_raw.fits",
+        "noise_hash": "sha256:b6fd0a3b3c785d18ef85e6191854020370806ea42aac16d61b6b0e9b243fe00c",
+        "noise_id": 71
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00072_raw.fits",
+        "cmb_hash": "sha256:61974bbcd689764def4d1e8f49c091911ee368b7e7605e45056e7ee2c5d59dd1",
+        "cmb_id": 72,
+        "noise_file": "dx12_v3_smica_noise_mc_00072_raw.fits",
+        "noise_hash": "sha256:eec48976009e9d9677472e96827e76a4aaacfdcfbbc8810351210d98560a1cc3",
+        "noise_id": 72
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00073_raw.fits",
+        "cmb_hash": "sha256:2715c5edf814d35436a2372b4cccfe7c87a3f0284729bf42a0c33579e357d518",
+        "cmb_id": 73,
+        "noise_file": "dx12_v3_smica_noise_mc_00073_raw.fits",
+        "noise_hash": "sha256:fd27cc14e1ab758a3da7ebfa59ed6981685c0c7a49e3d744513dbc22ff9665c4",
+        "noise_id": 73
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00074_raw.fits",
+        "cmb_hash": "sha256:8a9f72f5c27bd6dd67a1f5d83d8a492211a78c3c5e3aa02966d3e2873bbb57c2",
+        "cmb_id": 74,
+        "noise_file": "dx12_v3_smica_noise_mc_00074_raw.fits",
+        "noise_hash": "sha256:d571ac4e3e3860757c7ae149f1a55d5ad579216d4822a44483e1c037a7bc62c8",
+        "noise_id": 74
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00075_raw.fits",
+        "cmb_hash": "sha256:04b79015699e46dcb3f76f895ef8210317b5621e8e6bd80a6f06ef9c4a2e22ed",
+        "cmb_id": 75,
+        "noise_file": "dx12_v3_smica_noise_mc_00075_raw.fits",
+        "noise_hash": "sha256:1d755691a5b60a484e6abec474fc45731fe0313fbe562ed034120ffa66ac28a3",
+        "noise_id": 75
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00076_raw.fits",
+        "cmb_hash": "sha256:c7c83f51524bf670bdeaa7b86c45623190384f115bf081a136e11abb105cbdfd",
+        "cmb_id": 76,
+        "noise_file": "dx12_v3_smica_noise_mc_00076_raw.fits",
+        "noise_hash": "sha256:594db8aea0497d5d6e6d6451734a7cb94fe6b3c7f36a44010a47ac9453d3b747",
+        "noise_id": 76
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00077_raw.fits",
+        "cmb_hash": "sha256:ed0ddc6d977a9ffe70ea78faca66266da4ceddba36c5724bbfd9f989dd7c1ceb",
+        "cmb_id": 77,
+        "noise_file": "dx12_v3_smica_noise_mc_00077_raw.fits",
+        "noise_hash": "sha256:a94fb7bb3871560a851ab41882afbc63fc176f34a35f4b45ee67370b62ee316f",
+        "noise_id": 77
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00078_raw.fits",
+        "cmb_hash": "sha256:44e00f875de62665e612e8c4a44732c195a5a4d69e9e3a27f66db080233e7474",
+        "cmb_id": 78,
+        "noise_file": "dx12_v3_smica_noise_mc_00078_raw.fits",
+        "noise_hash": "sha256:7feab174c5f8b07199365884c80eec80f61bd93a81aebfefdf2d4574b5e1c8b5",
+        "noise_id": 78
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00079_raw.fits",
+        "cmb_hash": "sha256:818c1bdbd568f4ffcc6dfbebf8f5f71faed8dda7b5a5a73bb97b2b9a3d6669c0",
+        "cmb_id": 79,
+        "noise_file": "dx12_v3_smica_noise_mc_00079_raw.fits",
+        "noise_hash": "sha256:8c5cee24f5d281808320c20fcbca72e208a7bb85bc69035acb9f85577d023092",
+        "noise_id": 79
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00080_raw.fits",
+        "cmb_hash": "sha256:cd3ed6b31014be095c5033811b2c446fb1fb08c3cffb01041b70c8733187329f",
+        "cmb_id": 80,
+        "noise_file": "dx12_v3_smica_noise_mc_00080_raw.fits",
+        "noise_hash": "sha256:3a5ec00b2d6a98a6ee27b33cf8c7a5788446d538233e84666b475abb532671c5",
+        "noise_id": 80
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00081_raw.fits",
+        "cmb_hash": "sha256:13c3f153fb80b08d2c4374e6c12f3f884e0fd091851c039e62abca2779e20103",
+        "cmb_id": 81,
+        "noise_file": "dx12_v3_smica_noise_mc_00081_raw.fits",
+        "noise_hash": "sha256:aea5c419cc745e70ec6812d381a429425a7e56611fc97293d4d62fe110c44285",
+        "noise_id": 81
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00082_raw.fits",
+        "cmb_hash": "sha256:d97f039af6f8c5ce260c69abc5b82a5e301993324cf3557c11737ab668735d5c",
+        "cmb_id": 82,
+        "noise_file": "dx12_v3_smica_noise_mc_00082_raw.fits",
+        "noise_hash": "sha256:bf1143e21f57015ffe4e8bbf7ddaa96f4c031a107223267a0a55ee402b426705",
+        "noise_id": 82
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00083_raw.fits",
+        "cmb_hash": "sha256:1d139918e6a77f384f2c36e06244403a1f8cba453796b42e1a670267c6f0682c",
+        "cmb_id": 83,
+        "noise_file": "dx12_v3_smica_noise_mc_00083_raw.fits",
+        "noise_hash": "sha256:e0cb73b4bcc30a90c3eccc2059b921a132b881f556e585c871524a7664d872d6",
+        "noise_id": 83
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00084_raw.fits",
+        "cmb_hash": "sha256:1654220ffac77f875fa4fee74e8fd09048bec7b6928c08e4005e4b4db6328589",
+        "cmb_id": 84,
+        "noise_file": "dx12_v3_smica_noise_mc_00084_raw.fits",
+        "noise_hash": "sha256:f301fcc1c5cf90f27c8729235a5013affde9ad10d814d9685dac2b8a7f479361",
+        "noise_id": 84
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00085_raw.fits",
+        "cmb_hash": "sha256:51da1368a9a0a3933c4754b7c312a0ad24a470b91cd608468980522e0e6292d9",
+        "cmb_id": 85,
+        "noise_file": "dx12_v3_smica_noise_mc_00085_raw.fits",
+        "noise_hash": "sha256:28796982dcb384167558325835c0ff7a2e5343e56ad3a409bfe69149cbb8468a",
+        "noise_id": 85
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00086_raw.fits",
+        "cmb_hash": "sha256:d1c1f1539c0946d4fe80a34590b6e80d6eb1a8c50aaa3aaf62ab9c7b6d2649de",
+        "cmb_id": 86,
+        "noise_file": "dx12_v3_smica_noise_mc_00086_raw.fits",
+        "noise_hash": "sha256:222f9b84ff36d0576181150eb107d8c6d9f0bf219206e802f543a8ad129d60ad",
+        "noise_id": 86
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00087_raw.fits",
+        "cmb_hash": "sha256:8168ec48e320a36fda0f38bece2172f6e8731707f7d4c3793d6dd952ee64f40d",
+        "cmb_id": 87,
+        "noise_file": "dx12_v3_smica_noise_mc_00087_raw.fits",
+        "noise_hash": "sha256:1d99ee773737fdce2fbf791ce815250e7f516f577723e674539891e8c8589da3",
+        "noise_id": 87
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00088_raw.fits",
+        "cmb_hash": "sha256:9d5c4db6a1448ed82a3468c9979831931d3a0eead796c702e43dbe7e6eddfb42",
+        "cmb_id": 88,
+        "noise_file": "dx12_v3_smica_noise_mc_00088_raw.fits",
+        "noise_hash": "sha256:874e6893036d22bdf485496efecac03c777205737aa557f4c43ab464cf62a82e",
+        "noise_id": 88
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00089_raw.fits",
+        "cmb_hash": "sha256:8780403207cdb7f34807586318c74ae5a16b6e0b14371ae652643f06bb6e82e5",
+        "cmb_id": 89,
+        "noise_file": "dx12_v3_smica_noise_mc_00089_raw.fits",
+        "noise_hash": "sha256:9f4632804a2c4588d58dda2e89facda3d7874c1cf6469c686c6eebb3ae6e2169",
+        "noise_id": 89
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00090_raw.fits",
+        "cmb_hash": "sha256:83e7e58812c6f814aacf7f78bede71b72d57292c28cb0a10299bc8e6059b9235",
+        "cmb_id": 90,
+        "noise_file": "dx12_v3_smica_noise_mc_00090_raw.fits",
+        "noise_hash": "sha256:40adc449fa2a5ab9aa814bce127c65c4e3f9560810cf9ec2979177ebc43f561f",
+        "noise_id": 90
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00091_raw.fits",
+        "cmb_hash": "sha256:3f8291c6b81aededd1a7470751a522d928db5517633625c8a98644e369152c09",
+        "cmb_id": 91,
+        "noise_file": "dx12_v3_smica_noise_mc_00091_raw.fits",
+        "noise_hash": "sha256:a4214b75d0e86c19c2ae2f7f949ddfa7960a0c1624aebe0d5a103869ccab7407",
+        "noise_id": 91
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00092_raw.fits",
+        "cmb_hash": "sha256:39af78b5b0e548d5ab4794ce1ae262c905ada7e0c019044b4e1dcd90ccb8dff2",
+        "cmb_id": 92,
+        "noise_file": "dx12_v3_smica_noise_mc_00092_raw.fits",
+        "noise_hash": "sha256:c2b6ff5a8b878a3ddb9e2016a7556ce04a2c22491dc84f9fac4577e3ef789f40",
+        "noise_id": 92
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00093_raw.fits",
+        "cmb_hash": "sha256:2dd704f320458473befda5e163210b6b2f3b86026d8d6944e422eb76e3f665f4",
+        "cmb_id": 93,
+        "noise_file": "dx12_v3_smica_noise_mc_00093_raw.fits",
+        "noise_hash": "sha256:cef9c9c2ab62c115ed27f2266d8171c7ff0c13dfded8f85b18622f175e108239",
+        "noise_id": 93
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00094_raw.fits",
+        "cmb_hash": "sha256:ff9139ab5be465f97b9f021213ec4e674c47561d49aa5ffe80fcb1a0973759c5",
+        "cmb_id": 94,
+        "noise_file": "dx12_v3_smica_noise_mc_00094_raw.fits",
+        "noise_hash": "sha256:da443e7e2b630637f6c1e90070c5aa4e1135f4041a3c71bbf30b745fc0184300",
+        "noise_id": 94
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00095_raw.fits",
+        "cmb_hash": "sha256:00e08fba2b1b49a76362fdf5acbd8c03175eeedb54eb4c618475aa82ed6cca4b",
+        "cmb_id": 95,
+        "noise_file": "dx12_v3_smica_noise_mc_00095_raw.fits",
+        "noise_hash": "sha256:c8fb4de7026f38bc638863eba93bb5a25f651314b3fc4d64f137f891b2e1c46a",
+        "noise_id": 95
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00096_raw.fits",
+        "cmb_hash": "sha256:33332053c6a8fda0cae413dced8464fdfc8b8daa1510e0ac5f0dfa2a152b7da1",
+        "cmb_id": 96,
+        "noise_file": "dx12_v3_smica_noise_mc_00096_raw.fits",
+        "noise_hash": "sha256:b4ccb84baf443e31385269197a4695a0c44c3bb30778d0afd10781e2bb426804",
+        "noise_id": 96
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00097_raw.fits",
+        "cmb_hash": "sha256:9957f2ec849ff457183f663ae6844d45ca60637b3724e5193e2fee53451cca16",
+        "cmb_id": 97,
+        "noise_file": "dx12_v3_smica_noise_mc_00097_raw.fits",
+        "noise_hash": "sha256:5582edf32549d2d2d5d748d4b7bd0b50b7727f52058797910578606083010e79",
+        "noise_id": 97
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00098_raw.fits",
+        "cmb_hash": "sha256:3465eab755664d4ea8da47af2aa5b928a0fdf79716c7b37af8a6b57823d4a32a",
+        "cmb_id": 98,
+        "noise_file": "dx12_v3_smica_noise_mc_00098_raw.fits",
+        "noise_hash": "sha256:fd36dcd5094412aff3a399efd95be6424c62fda04541ea2d91901bf8734f93db",
+        "noise_id": 98
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00099_raw.fits",
+        "cmb_hash": "sha256:3cb1bbc7023244029ee875f1164d303962c859d82ac857c883f75620d7d87884",
+        "cmb_id": 99,
+        "noise_file": "dx12_v3_smica_noise_mc_00099_raw.fits",
+        "noise_hash": "sha256:41bde0e4f0537a998b730337f239db616b57d3f9feb0b32a7bedf6b428e69204",
+        "noise_id": 99
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00100_raw.fits",
+        "cmb_hash": "sha256:4da0728d4b1c602a523aec9de8e492b806a3600659ee8a21237a5055c905b71e",
+        "cmb_id": 100,
+        "noise_file": "dx12_v3_smica_noise_mc_00100_raw.fits",
+        "noise_hash": "sha256:1373ac728fa81bc6198e9629e5bca82df1a3c4119e6e67b7b2ad587e5b252e0d",
+        "noise_id": 100
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00101_raw.fits",
+        "cmb_hash": "sha256:642d1e994ea87679e01027be4da1fe5b4e8ae419522cdba57cfc15ced7e47f32",
+        "cmb_id": 101,
+        "noise_file": "dx12_v3_smica_noise_mc_00101_raw.fits",
+        "noise_hash": "sha256:2063465d277891a1dc6501dfa982ab0e0d8e08762a4ee8fcc030619af792d2c1",
+        "noise_id": 101
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00102_raw.fits",
+        "cmb_hash": "sha256:8d4c22755df13ada2b58989a2ef297998fe2ef7d159613d80ee9b9e7c665d0a6",
+        "cmb_id": 102,
+        "noise_file": "dx12_v3_smica_noise_mc_00102_raw.fits",
+        "noise_hash": "sha256:3102faf2e8fe438100718b45a22deb3c471fcf9da4f1f8cb66a4e7d37ba7314d",
+        "noise_id": 102
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00103_raw.fits",
+        "cmb_hash": "sha256:e3642b51b5feddbc0f161c2651ddef6d3b197667eb5e4284a15e4d0fc96a0f9d",
+        "cmb_id": 103,
+        "noise_file": "dx12_v3_smica_noise_mc_00103_raw.fits",
+        "noise_hash": "sha256:9952c7d32ec1ab61a297c9ad3cd5f79562d720528d848cb2dc8fcb6ff99f00e7",
+        "noise_id": 103
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00104_raw.fits",
+        "cmb_hash": "sha256:093aeebed00e224fe0bfe6fd1b27efa01df6cd50307d985270fa4c78c3967148",
+        "cmb_id": 104,
+        "noise_file": "dx12_v3_smica_noise_mc_00104_raw.fits",
+        "noise_hash": "sha256:623fecda71ca65aac2c7c42972519803195ce37495ec557a82cf34a9876f472c",
+        "noise_id": 104
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00105_raw.fits",
+        "cmb_hash": "sha256:16a6eade66125d4205bf15f7517244b7e225ca85765759114c52e9477cb788d3",
+        "cmb_id": 105,
+        "noise_file": "dx12_v3_smica_noise_mc_00105_raw.fits",
+        "noise_hash": "sha256:c5514edaa249cbbce6dbf9e000c1a3fab05ecf3704e0d12d9c2171dc309842e5",
+        "noise_id": 105
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00106_raw.fits",
+        "cmb_hash": "sha256:b49507cbda639bc5d99100081b2a0a568c1612775af6fcf3483813d36aeb38ad",
+        "cmb_id": 106,
+        "noise_file": "dx12_v3_smica_noise_mc_00106_raw.fits",
+        "noise_hash": "sha256:4d0a7b9f1dae6ad3fc3ec16e3249f3f1f4f4d13fe3dcc93c6afcb4f4476d88a9",
+        "noise_id": 106
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00107_raw.fits",
+        "cmb_hash": "sha256:c1faeb7ecd1e9a7f5366644a3d9ae1c11a8138c3587da96e2ed0e3c41b77473d",
+        "cmb_id": 107,
+        "noise_file": "dx12_v3_smica_noise_mc_00107_raw.fits",
+        "noise_hash": "sha256:a87651337429366ed700e676f3fecf149149b08dc87095eb5fb327fb62268297",
+        "noise_id": 107
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00108_raw.fits",
+        "cmb_hash": "sha256:1dd170bef048872cb036cd96a2119733d774761369100b0a61f69f82dd666197",
+        "cmb_id": 108,
+        "noise_file": "dx12_v3_smica_noise_mc_00108_raw.fits",
+        "noise_hash": "sha256:eadc3485e5733199fbba43302247eaf4180acf92a72a21a0fdd8c9740e7db42b",
+        "noise_id": 108
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00109_raw.fits",
+        "cmb_hash": "sha256:6b55f2a5865a745fc69f0dfb5579510e472d6b99a25a45dda3f1926558ce7efb",
+        "cmb_id": 109,
+        "noise_file": "dx12_v3_smica_noise_mc_00109_raw.fits",
+        "noise_hash": "sha256:c7fbe725115715b6addaba634217094b86e1649a267066ec9c7943b7caf504e1",
+        "noise_id": 109
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00110_raw.fits",
+        "cmb_hash": "sha256:102a48b153861dd2f1fe16ae55951eeee3df557661f20b0d85c170653b7396bf",
+        "cmb_id": 110,
+        "noise_file": "dx12_v3_smica_noise_mc_00110_raw.fits",
+        "noise_hash": "sha256:8a2a939635c3237e7c435953dd761986e88767ddd7d57b661e3fdf01be1acfad",
+        "noise_id": 110
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00111_raw.fits",
+        "cmb_hash": "sha256:915b32c62baeda4210ae7c42f629b25b1e23187188ef81851ac525fc90fcb3f7",
+        "cmb_id": 111,
+        "noise_file": "dx12_v3_smica_noise_mc_00111_raw.fits",
+        "noise_hash": "sha256:2d1ff86a98f3cfd70fa3c30775e771674c00a5093f96db796e6d9053ae2bfa0b",
+        "noise_id": 111
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00112_raw.fits",
+        "cmb_hash": "sha256:70c234dd60d75477c2df8c098b8c74e358d91810d975a52d393ffe5ea1c901c4",
+        "cmb_id": 112,
+        "noise_file": "dx12_v3_smica_noise_mc_00112_raw.fits",
+        "noise_hash": "sha256:381b008703dca136586f00f4568b3b2a232cb826ef4d550fc58b365187cf3633",
+        "noise_id": 112
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00113_raw.fits",
+        "cmb_hash": "sha256:a586a327f33b842739f96c0feb161ef2d680d6b58bfeae20cd9f5a9acbb08480",
+        "cmb_id": 113,
+        "noise_file": "dx12_v3_smica_noise_mc_00113_raw.fits",
+        "noise_hash": "sha256:2a7f41b1adda2ea076be018f0f4d757afa76459b5d4e39232557f9fcaa49f1a2",
+        "noise_id": 113
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00114_raw.fits",
+        "cmb_hash": "sha256:2a6b2242cd2801b3a30ee6544b1df1a2db6e20a423f9aa7a71a93d0666f8dfcf",
+        "cmb_id": 114,
+        "noise_file": "dx12_v3_smica_noise_mc_00114_raw.fits",
+        "noise_hash": "sha256:e9cda919b96fb81b532a2c90c97eac7c9318fcaa0a3889a95e35bf7582243bfc",
+        "noise_id": 114
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00115_raw.fits",
+        "cmb_hash": "sha256:0a5df9dec4c81729f4b0b88b7080e397c280815ef77349b3e1faa5eda945bd47",
+        "cmb_id": 115,
+        "noise_file": "dx12_v3_smica_noise_mc_00115_raw.fits",
+        "noise_hash": "sha256:b32ad468a8a51ad2c28de4b7e23f4869a17946288aaffaafcbfa80f8e699ac6c",
+        "noise_id": 115
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00116_raw.fits",
+        "cmb_hash": "sha256:78fbded83dec40fd89c3eabb29ed539b5fc238900527808864ce493ca69fb3e2",
+        "cmb_id": 116,
+        "noise_file": "dx12_v3_smica_noise_mc_00116_raw.fits",
+        "noise_hash": "sha256:9475519a1f4d491ea5e8dd3c77a21df495b64f5f747f3618074ecd03b0fe71bd",
+        "noise_id": 116
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00117_raw.fits",
+        "cmb_hash": "sha256:c38694dcaf9b745a9c040bb33186a7c8f7d75a7613c96961a6aa435d2a2b5bb0",
+        "cmb_id": 117,
+        "noise_file": "dx12_v3_smica_noise_mc_00117_raw.fits",
+        "noise_hash": "sha256:61fc6e8b8cab462cdf622928e1f0cf008863d4ab3ded65d2371c733c37d929a2",
+        "noise_id": 117
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00118_raw.fits",
+        "cmb_hash": "sha256:af92466caaef334773221dab2d53ad7b3277b070e3bd38b5e3b0d449155b88d3",
+        "cmb_id": 118,
+        "noise_file": "dx12_v3_smica_noise_mc_00118_raw.fits",
+        "noise_hash": "sha256:f05c5fe20835f861e5e777951b57ab47605c359075a120c4a0919d09bb2965de",
+        "noise_id": 118
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00119_raw.fits",
+        "cmb_hash": "sha256:3bb8c28ec23f266fb210fac841f7816e8d40ad1b633f39ce6818b001bca5653a",
+        "cmb_id": 119,
+        "noise_file": "dx12_v3_smica_noise_mc_00119_raw.fits",
+        "noise_hash": "sha256:cbb6042ccf71afacd19f1879af8c17ebfedc86abc422a6d711cddea9bd6dd8cd",
+        "noise_id": 119
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00120_raw.fits",
+        "cmb_hash": "sha256:58a2633d775202c45c0304a4d900db8eed14883d7ea3316922d8aceb72da2fc7",
+        "cmb_id": 120,
+        "noise_file": "dx12_v3_smica_noise_mc_00120_raw.fits",
+        "noise_hash": "sha256:0742b7dc33ac7f3ea0e2bac8367fed1b98a7ee9fd80e9a0415d1e82db5a5e79f",
+        "noise_id": 120
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00121_raw.fits",
+        "cmb_hash": "sha256:f70e9630c12a29102664a60ec1e4338cb3c9972ec4089bc0821f325c87fe972f",
+        "cmb_id": 121,
+        "noise_file": "dx12_v3_smica_noise_mc_00121_raw.fits",
+        "noise_hash": "sha256:07ff0dd9c31ae5dac3a1a52639e54aea4eb34786602a9498ae8ce1ef53c7647d",
+        "noise_id": 121
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00122_raw.fits",
+        "cmb_hash": "sha256:0088f0bbf701b10001fda6a6340570fc3bae860b57b8ae3bddcca97dba1b5ff8",
+        "cmb_id": 122,
+        "noise_file": "dx12_v3_smica_noise_mc_00122_raw.fits",
+        "noise_hash": "sha256:7c6e888c62fa9be3ccbb883bea5f0b0387b4e2a2533bdacf29ac9df3df7d6d9b",
+        "noise_id": 122
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00123_raw.fits",
+        "cmb_hash": "sha256:a790ea940d5e0328fdf86bd99982301086e6f474aaca7caf69eb4c89fb6cce80",
+        "cmb_id": 123,
+        "noise_file": "dx12_v3_smica_noise_mc_00123_raw.fits",
+        "noise_hash": "sha256:d9b49e25042f14344f7792b634bb699085d9e73773a46876af3348661685b33c",
+        "noise_id": 123
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00124_raw.fits",
+        "cmb_hash": "sha256:25ee9afa22f218ef2445ae068edbd8029734adb392db36f6ba1e17ccbc3b088f",
+        "cmb_id": 124,
+        "noise_file": "dx12_v3_smica_noise_mc_00124_raw.fits",
+        "noise_hash": "sha256:67baa31b227076c06cf6299e626a18a7945ee9ebdb907821e0dc973c6f69d33d",
+        "noise_id": 124
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00125_raw.fits",
+        "cmb_hash": "sha256:82159b8fe09c183f1d4208c9fbcc6c4af6c387ac070e81265ad35635205f868a",
+        "cmb_id": 125,
+        "noise_file": "dx12_v3_smica_noise_mc_00125_raw.fits",
+        "noise_hash": "sha256:34824d5ebc6b16ca1bd8219ca687832acd91710dd91de49cd005e9f48fc1b1bb",
+        "noise_id": 125
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00126_raw.fits",
+        "cmb_hash": "sha256:00f3c16744c5ca04f9a285bff7e5d4c60453d2671fefd28370c8b97cf4aaf543",
+        "cmb_id": 126,
+        "noise_file": "dx12_v3_smica_noise_mc_00126_raw.fits",
+        "noise_hash": "sha256:c89b942c10a658715a3f82547a28de7659a4cd868c91b4e0b02204831f04f3e4",
+        "noise_id": 126
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00127_raw.fits",
+        "cmb_hash": "sha256:772a517b8e600db84683edc4eb9623b43dcee25270796236d4e96a2bf3384ae3",
+        "cmb_id": 127,
+        "noise_file": "dx12_v3_smica_noise_mc_00127_raw.fits",
+        "noise_hash": "sha256:ab5bbd57d4d309113e57e327e180a393843e2acdc030b18c1a9a4ea6d1f9ce3b",
+        "noise_id": 127
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00128_raw.fits",
+        "cmb_hash": "sha256:775b894772f5cc38d8061e52a26ef8b53b30418ee8e8ca4d1afde4bfb2690af3",
+        "cmb_id": 128,
+        "noise_file": "dx12_v3_smica_noise_mc_00128_raw.fits",
+        "noise_hash": "sha256:f92da2841797e87f6435a9b2b7a007d00f8c8b145c3fa8aed738e42494d94723",
+        "noise_id": 128
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00129_raw.fits",
+        "cmb_hash": "sha256:bf312363b625ba9c1174732e62a8eae194168f8a60f4a6345ce7e337160b3632",
+        "cmb_id": 129,
+        "noise_file": "dx12_v3_smica_noise_mc_00129_raw.fits",
+        "noise_hash": "sha256:ad8aae0333b1e9ff5e9eaf4c5271af4a1e510e7aa613eaa4e046bbd2d2d7dec8",
+        "noise_id": 129
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00130_raw.fits",
+        "cmb_hash": "sha256:614e4547c6d0e5bb4b06dcae612850ee896d2809c4d93ab44cd423be7cd49c80",
+        "cmb_id": 130,
+        "noise_file": "dx12_v3_smica_noise_mc_00130_raw.fits",
+        "noise_hash": "sha256:1812d3a77212a0551e7139c575ea33c514dc68c83140b3fa8cec2a0b794af93b",
+        "noise_id": 130
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00131_raw.fits",
+        "cmb_hash": "sha256:76b452b58b121c39112c69e07556179048e7cd73fb19ccb1c8e53afae90fee20",
+        "cmb_id": 131,
+        "noise_file": "dx12_v3_smica_noise_mc_00131_raw.fits",
+        "noise_hash": "sha256:6963cc6f743cdd4e3cda817800955d34aeb6b926fb2232d54bd05a88144b900d",
+        "noise_id": 131
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00132_raw.fits",
+        "cmb_hash": "sha256:44c8dc816c5a919f9945987ee09f1670d2cef306d4e40b42b659eaca82a48105",
+        "cmb_id": 132,
+        "noise_file": "dx12_v3_smica_noise_mc_00132_raw.fits",
+        "noise_hash": "sha256:81f4f6eb2337c025ff6bb832ce50fa776c858f76624e2b96783c3a247e5c2a43",
+        "noise_id": 132
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00133_raw.fits",
+        "cmb_hash": "sha256:48b726535651c8bdff8babe4939c3438ed9ec95b6ad511df026c469f2edc7dce",
+        "cmb_id": 133,
+        "noise_file": "dx12_v3_smica_noise_mc_00133_raw.fits",
+        "noise_hash": "sha256:b238c38e46a9f06e871acd038111e2db6502fb33866f40e0b507aa233125a8e4",
+        "noise_id": 133
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00134_raw.fits",
+        "cmb_hash": "sha256:d737ccf07533e51350258eb161e098e7c8d180c4953a30c47e42986645939d0d",
+        "cmb_id": 134,
+        "noise_file": "dx12_v3_smica_noise_mc_00134_raw.fits",
+        "noise_hash": "sha256:bc6145f87e3bf3d9194a2160b5b0dae33e7722e822e1b4a8c76ab84ec3c73a7f",
+        "noise_id": 134
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00135_raw.fits",
+        "cmb_hash": "sha256:bf7d7e823f0dcc45d3ea69cd9b90384ee2dceb53ad0dae31e0970b304557c38b",
+        "cmb_id": 135,
+        "noise_file": "dx12_v3_smica_noise_mc_00135_raw.fits",
+        "noise_hash": "sha256:9362ad75aae6092c92584122e351f03ba51e4b6e6375a0fb54f953a2b013bfa9",
+        "noise_id": 135
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00136_raw.fits",
+        "cmb_hash": "sha256:cf301f6a5e1222e2f3f1bfa953a2eb74e74875f36afbb84d8728f31060ddd142",
+        "cmb_id": 136,
+        "noise_file": "dx12_v3_smica_noise_mc_00136_raw.fits",
+        "noise_hash": "sha256:82844957942620170b578231a9bda709d9081371150844763f4b8745ca161c60",
+        "noise_id": 136
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00137_raw.fits",
+        "cmb_hash": "sha256:42920fb5ade2e95cede562534baac822b7997419c4cd0d14d5ee5427ccf957a4",
+        "cmb_id": 137,
+        "noise_file": "dx12_v3_smica_noise_mc_00137_raw.fits",
+        "noise_hash": "sha256:8680fcc4e9c1ae0409b972b5bce47279a370cfd1bfa2020f76c67a38715623a2",
+        "noise_id": 137
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00138_raw.fits",
+        "cmb_hash": "sha256:b7a92e0a90a79c082b9e0dde46d756784cf9278fa51ac10705359d69927bb186",
+        "cmb_id": 138,
+        "noise_file": "dx12_v3_smica_noise_mc_00138_raw.fits",
+        "noise_hash": "sha256:9b7f9d24dc8f75b421a296161266d853a947b71902391dbea02a987c825a0596",
+        "noise_id": 138
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00139_raw.fits",
+        "cmb_hash": "sha256:fee0b4e754ae635da56a3eaee31fe653cf78485c28cbca495b009629681f9d38",
+        "cmb_id": 139,
+        "noise_file": "dx12_v3_smica_noise_mc_00139_raw.fits",
+        "noise_hash": "sha256:9f30756a987d7f8f3a656d851b293ab2fd0090999b35cfedec5077ee30bad255",
+        "noise_id": 139
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00140_raw.fits",
+        "cmb_hash": "sha256:6833e46c630a6fed607f3247194b5bd0be57627d26f43c1390e7e75e22a72e84",
+        "cmb_id": 140,
+        "noise_file": "dx12_v3_smica_noise_mc_00140_raw.fits",
+        "noise_hash": "sha256:a6b4d9a0933f711b58a60efc6231b015d2adea9958e4f57c8b2ed4a06b09c692",
+        "noise_id": 140
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00141_raw.fits",
+        "cmb_hash": "sha256:fd31cceb0caf5f4f653386727c8b12c05186a93d233bcc4325112c094fa4c93e",
+        "cmb_id": 141,
+        "noise_file": "dx12_v3_smica_noise_mc_00141_raw.fits",
+        "noise_hash": "sha256:34afec05e915d14cb4a92874203f72caf2cbdf0e486c8425e426da35396660e0",
+        "noise_id": 141
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00142_raw.fits",
+        "cmb_hash": "sha256:bbc4de1899d6fefdb0859c6f5c51f22a950a78542604795c54064dc5f3a14a71",
+        "cmb_id": 142,
+        "noise_file": "dx12_v3_smica_noise_mc_00142_raw.fits",
+        "noise_hash": "sha256:60ebadb200d841e32480f449ca7055d1efc2bd82ee747ee5548e2a6ae4ff39c2",
+        "noise_id": 142
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00143_raw.fits",
+        "cmb_hash": "sha256:b702a4b20c3c1bc0454ee99bfe75a5650f3d3ab9137499a14da32cc3720a4f1d",
+        "cmb_id": 143,
+        "noise_file": "dx12_v3_smica_noise_mc_00143_raw.fits",
+        "noise_hash": "sha256:932f18619e14bf6594d3344753b5d05dd577c95b0a71bb674be0f53a8cfc69bf",
+        "noise_id": 143
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00144_raw.fits",
+        "cmb_hash": "sha256:644f84a479da59f6abe59a68c195888bcc82cd1b232cc376a9ac1b070d55fc61",
+        "cmb_id": 144,
+        "noise_file": "dx12_v3_smica_noise_mc_00144_raw.fits",
+        "noise_hash": "sha256:165fa0bdb9d893903cc1c81461a69bc2daff49b375f5f06eea458813d6c47e23",
+        "noise_id": 144
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00145_raw.fits",
+        "cmb_hash": "sha256:fa3b2df80be4888d6c68653ce2b77e48ea5b05b4ace459dc9a5f49f04e6bedc0",
+        "cmb_id": 145,
+        "noise_file": "dx12_v3_smica_noise_mc_00145_raw.fits",
+        "noise_hash": "sha256:018f094fdfa8098fe441a03d46b03e058f82be44f45c3b381a53d7b197b21eee",
+        "noise_id": 145
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00146_raw.fits",
+        "cmb_hash": "sha256:e0f55928454d195a1282320a9556e9fd0bc61def0b8c7b09bf3ecfc0f9ed1b09",
+        "cmb_id": 146,
+        "noise_file": "dx12_v3_smica_noise_mc_00146_raw.fits",
+        "noise_hash": "sha256:767985432f16a67b759918d8610adafe2a2314ee47ceb6d4b905c1a5fb7fdd93",
+        "noise_id": 146
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00147_raw.fits",
+        "cmb_hash": "sha256:6c15d56eea2599cef6c9e8fb205069caba991f1f385967c6636209050f8e370f",
+        "cmb_id": 147,
+        "noise_file": "dx12_v3_smica_noise_mc_00147_raw.fits",
+        "noise_hash": "sha256:ac61b45ebb01b6b7217fc590c75dbd8177b1e05bdb6fde90176fb3d290bd4775",
+        "noise_id": 147
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00148_raw.fits",
+        "cmb_hash": "sha256:e98b84a9a3e9d1410b3b5679ebb455bcce016ea87320184b6a8f461b1a19e9ba",
+        "cmb_id": 148,
+        "noise_file": "dx12_v3_smica_noise_mc_00148_raw.fits",
+        "noise_hash": "sha256:d4ed57433e7506793b7c55c19c636099979d5a200d86dc18933dc091db69da46",
+        "noise_id": 148
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00149_raw.fits",
+        "cmb_hash": "sha256:1ef55b54cc6d1733ba40070cad7148186ed3ff6c130a5583dddb357992a928fb",
+        "cmb_id": 149,
+        "noise_file": "dx12_v3_smica_noise_mc_00149_raw.fits",
+        "noise_hash": "sha256:faa064e6b50a455e968690a47a8ccef54ea6b2aa2bc1b28301c2b9d2d591c77b",
+        "noise_id": 149
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00150_raw.fits",
+        "cmb_hash": "sha256:9d29a29d2339222ffa064aca37c80023a38a53c948ab697a11d3e81e00cf7b12",
+        "cmb_id": 150,
+        "noise_file": "dx12_v3_smica_noise_mc_00150_raw.fits",
+        "noise_hash": "sha256:d60d4a8903763c1bccaa3d76646c3692440042a0e59c394b612201ffd5cd3f80",
+        "noise_id": 150
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00151_raw.fits",
+        "cmb_hash": "sha256:a9b0866068d995c2a9c0caa686c83443f2555a4695e047b6157bf2234d6d1a3e",
+        "cmb_id": 151,
+        "noise_file": "dx12_v3_smica_noise_mc_00151_raw.fits",
+        "noise_hash": "sha256:8418644a83d7343ac90b5ce6b5210c0099f60b032b80d70ddb97d879cea85484",
+        "noise_id": 151
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00152_raw.fits",
+        "cmb_hash": "sha256:622a43171837f38a83516212c2efa174662f1f07d1ebec688877aef4b6588510",
+        "cmb_id": 152,
+        "noise_file": "dx12_v3_smica_noise_mc_00152_raw.fits",
+        "noise_hash": "sha256:7a5741c6828f4c3a2cf502ad4f6fadc11ac8389730f35bc6ff938913cbe86ed9",
+        "noise_id": 152
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00153_raw.fits",
+        "cmb_hash": "sha256:7837c193a239d93217bba74ee2fe4c3754926fb5fb92a459e612f04b251a89fe",
+        "cmb_id": 153,
+        "noise_file": "dx12_v3_smica_noise_mc_00153_raw.fits",
+        "noise_hash": "sha256:2b803ec9a3ed25583f4ba754b292c0a482911bf72ca77ce2b3d1e7c69a019a07",
+        "noise_id": 153
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00154_raw.fits",
+        "cmb_hash": "sha256:6ca9066d206a0e467131c37ee56cf75db88ca7a6dc67293652cd4824fb30ac8a",
+        "cmb_id": 154,
+        "noise_file": "dx12_v3_smica_noise_mc_00154_raw.fits",
+        "noise_hash": "sha256:6edc9a63cb077d999be19645ae5ba1179b4f11f2484a6fdf151c40c0c696aaa4",
+        "noise_id": 154
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00155_raw.fits",
+        "cmb_hash": "sha256:3451d13c2c87b25335ccba94b92875b0edcc91979f7e4f4d89c2690667875a8f",
+        "cmb_id": 155,
+        "noise_file": "dx12_v3_smica_noise_mc_00155_raw.fits",
+        "noise_hash": "sha256:ae4e147553687957ce0350dad34479dff46c760182dec9640851d9d6e80c18b2",
+        "noise_id": 155
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00156_raw.fits",
+        "cmb_hash": "sha256:c0a15eacd5b16bc950dcb7df1ecd4413f88fa070721016718df2cf5f22ccb62b",
+        "cmb_id": 156,
+        "noise_file": "dx12_v3_smica_noise_mc_00156_raw.fits",
+        "noise_hash": "sha256:d82ccb1ec24dd71fc4d8079ffc33f558d8435f5f3a1dffe39ff4566875f6d817",
+        "noise_id": 156
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00157_raw.fits",
+        "cmb_hash": "sha256:0a653159db83937b9dd0294ebfa82128ae0ef39a7fd979d2929df260438a6aee",
+        "cmb_id": 157,
+        "noise_file": "dx12_v3_smica_noise_mc_00157_raw.fits",
+        "noise_hash": "sha256:a73b8525154a264b769f004d15f42f80072617cb64443cf14bd358678ca506a4",
+        "noise_id": 157
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00158_raw.fits",
+        "cmb_hash": "sha256:00f8b0fabb8ca154cc9008d87ce598eee3b26e9182486247e6776674bee81086",
+        "cmb_id": 158,
+        "noise_file": "dx12_v3_smica_noise_mc_00158_raw.fits",
+        "noise_hash": "sha256:cd94aefab1286b2b3583f8813f480437e2888f44f216c4e72d2d54006cea97ad",
+        "noise_id": 158
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00159_raw.fits",
+        "cmb_hash": "sha256:1d5d19665aa55da8c882fcf247890b7e3d9f216a6d9d5f9bc3e847f10790f102",
+        "cmb_id": 159,
+        "noise_file": "dx12_v3_smica_noise_mc_00159_raw.fits",
+        "noise_hash": "sha256:a20fd646afefe69edcd71f1ec5542370406867e6ddf9993e29a4636d758840c8",
+        "noise_id": 159
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00160_raw.fits",
+        "cmb_hash": "sha256:6023ef34a82c91a5139cb868b482937129127427cd8ba626aaa7a721edbc5f68",
+        "cmb_id": 160,
+        "noise_file": "dx12_v3_smica_noise_mc_00160_raw.fits",
+        "noise_hash": "sha256:3239c6a2cf64bf39d536bd6cadeaf3707348dc7a3d56dd07f9669848ebd70ea0",
+        "noise_id": 160
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00161_raw.fits",
+        "cmb_hash": "sha256:7a104a7d7411be3a6ec002cf2dd060c1e9af6f1f0957a5714d8821a9c24db2a9",
+        "cmb_id": 161,
+        "noise_file": "dx12_v3_smica_noise_mc_00161_raw.fits",
+        "noise_hash": "sha256:b22a2f5d5e2dd1f4ffcbc5cf7891677aee34b20350bb90aa8310cbd919629ea2",
+        "noise_id": 161
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00162_raw.fits",
+        "cmb_hash": "sha256:9c0226915f66baa05f2bd3eea6e7ffc156959f4d3d44a4f9e4afdf4935c25842",
+        "cmb_id": 162,
+        "noise_file": "dx12_v3_smica_noise_mc_00162_raw.fits",
+        "noise_hash": "sha256:dab4d5f469252a855898c0122da76bd065862f770624ffcefcc8f2272b7004e9",
+        "noise_id": 162
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00163_raw.fits",
+        "cmb_hash": "sha256:809f86b8a4c13233b1d73d82b5341096319c275fe09909c0cd7ccfb751518547",
+        "cmb_id": 163,
+        "noise_file": "dx12_v3_smica_noise_mc_00163_raw.fits",
+        "noise_hash": "sha256:6b8fe919576c9933d1ec28a64f8f7d5ecfc695457c55fbb4ed74b4276967b66c",
+        "noise_id": 163
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00164_raw.fits",
+        "cmb_hash": "sha256:efea8ebd56ae532a5c66fc7279687d10deb910ba3b7b9af18ab5cb498f8967e9",
+        "cmb_id": 164,
+        "noise_file": "dx12_v3_smica_noise_mc_00164_raw.fits",
+        "noise_hash": "sha256:404aff24b32e60b43ff8cb319da02df0ba356d9d2d290827068672eb880719cf",
+        "noise_id": 164
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00165_raw.fits",
+        "cmb_hash": "sha256:23f1035e8cebee09c26f94e0600208b0d7dfc21010eeb4ba7d9c03e7f3f9a210",
+        "cmb_id": 165,
+        "noise_file": "dx12_v3_smica_noise_mc_00165_raw.fits",
+        "noise_hash": "sha256:dca2e925dd9836d069c6db6b8807a8a48634f30b3a80719504af7a46cacd5a9b",
+        "noise_id": 165
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00166_raw.fits",
+        "cmb_hash": "sha256:7d1f5846b9465abefa8327afc4606f97c95fe6b08099a6352f5a168110cd1a94",
+        "cmb_id": 166,
+        "noise_file": "dx12_v3_smica_noise_mc_00166_raw.fits",
+        "noise_hash": "sha256:44e955621808cee4a0c570bbdb8c77d3cfa80d456569ac7510873d782e48f2c1",
+        "noise_id": 166
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00167_raw.fits",
+        "cmb_hash": "sha256:fd6c8f247f3614f498a726fbc95a7f1c31b9403eb3875538a98768066a3889bf",
+        "cmb_id": 167,
+        "noise_file": "dx12_v3_smica_noise_mc_00167_raw.fits",
+        "noise_hash": "sha256:7dee0c93c7ba41052e4f702e6bec231814dc01bfb0a709cf649a8750adc658d7",
+        "noise_id": 167
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00168_raw.fits",
+        "cmb_hash": "sha256:4f4c4711cd60fb190bff5c501942c6943f013e5a238326a18041e3a532f1b089",
+        "cmb_id": 168,
+        "noise_file": "dx12_v3_smica_noise_mc_00168_raw.fits",
+        "noise_hash": "sha256:f82e55dbe7aa757d0bcaa0733aa96facb295555b9b93c273a3c32e343c6c003b",
+        "noise_id": 168
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00169_raw.fits",
+        "cmb_hash": "sha256:f1bd8c83854bee66690247b85f6dd1d70fff38f908fb14ab098b487bf53eecf8",
+        "cmb_id": 169,
+        "noise_file": "dx12_v3_smica_noise_mc_00169_raw.fits",
+        "noise_hash": "sha256:e78a23f207f2a4e40a310217f172a93c0dc8fb8435f6bcc1072ec88ed977808d",
+        "noise_id": 169
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00170_raw.fits",
+        "cmb_hash": "sha256:baa6d1c875bac06d63f373094c3708a9c0424a31694cbcd6c9b46c5cdbab1875",
+        "cmb_id": 170,
+        "noise_file": "dx12_v3_smica_noise_mc_00170_raw.fits",
+        "noise_hash": "sha256:0388a05a42924c0d0884a643e2bb31d824b5d6f6ec02a0dadcf17e0b3a766c6f",
+        "noise_id": 170
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00171_raw.fits",
+        "cmb_hash": "sha256:7a8ff43cb196b56f6395163c0a206812865c1a36b24ca60111179c51ef0ee5e8",
+        "cmb_id": 171,
+        "noise_file": "dx12_v3_smica_noise_mc_00171_raw.fits",
+        "noise_hash": "sha256:2ea62a4aa03dd751b09846a3c861ecbc35d7d067bb6173b6f332ffd7ae5c76fd",
+        "noise_id": 171
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00172_raw.fits",
+        "cmb_hash": "sha256:8a6c9782072540fa260d229939261ed9c877abf2ec439de24bba4ed63c4389a6",
+        "cmb_id": 172,
+        "noise_file": "dx12_v3_smica_noise_mc_00172_raw.fits",
+        "noise_hash": "sha256:0b6cf6e2dedbafb5b636dd6dfe5a931da46dc6aab648f33c48fee561c29e63a3",
+        "noise_id": 172
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00173_raw.fits",
+        "cmb_hash": "sha256:d5334207faca96f2cc6026c4d8f096ce72aa0ebdc70e4a233cca8e5050ff93ba",
+        "cmb_id": 173,
+        "noise_file": "dx12_v3_smica_noise_mc_00173_raw.fits",
+        "noise_hash": "sha256:79b2c0a1d026400031ae21936ae95db078d8e6a0cbd057ebf0af4f4623edf0ff",
+        "noise_id": 173
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00174_raw.fits",
+        "cmb_hash": "sha256:0953cd42771a45f40b18d9ce109204dbd7aa258a242bfac95206b1493dd392de",
+        "cmb_id": 174,
+        "noise_file": "dx12_v3_smica_noise_mc_00174_raw.fits",
+        "noise_hash": "sha256:c6326250ae2b5d2e2fffb5f217403cd795411b56fd96f2e9b7b8836799d900b8",
+        "noise_id": 174
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00175_raw.fits",
+        "cmb_hash": "sha256:2633b0fc33ddd98ba76ea1301b6130202c159d03c33e55237dbdc7f9b29f41f7",
+        "cmb_id": 175,
+        "noise_file": "dx12_v3_smica_noise_mc_00175_raw.fits",
+        "noise_hash": "sha256:84211e4bbfc03cfdac7a8bb5d82804dfabc2be7e787ae276eed67116ec4eed75",
+        "noise_id": 175
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00176_raw.fits",
+        "cmb_hash": "sha256:b8726175928c89f678fc78c9350ad81ecf93af03b652080c955c360c19366057",
+        "cmb_id": 176,
+        "noise_file": "dx12_v3_smica_noise_mc_00176_raw.fits",
+        "noise_hash": "sha256:27f46626fdc526109f880a360a3b5784b5cd4b1cc2d5bf6327523ecbd104d654",
+        "noise_id": 176
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00177_raw.fits",
+        "cmb_hash": "sha256:40b57fb0facc556d4a99c85bcb4ca8fa2f6068e0705bc32a9be5e78d51ddff74",
+        "cmb_id": 177,
+        "noise_file": "dx12_v3_smica_noise_mc_00177_raw.fits",
+        "noise_hash": "sha256:383cefdc68c426beed3ea4b1f0b891e2733abca13ccf820bbf847c2e6b12d5a9",
+        "noise_id": 177
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00178_raw.fits",
+        "cmb_hash": "sha256:7f22b477e2ccb4bd5f169356ec115abc96a32794086e69696bf0b6ed596a43e4",
+        "cmb_id": 178,
+        "noise_file": "dx12_v3_smica_noise_mc_00178_raw.fits",
+        "noise_hash": "sha256:a12fbd8f915fcd3692c91e9bc472eb5569e05f1a29a08a011c3b91aad15808e5",
+        "noise_id": 178
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00179_raw.fits",
+        "cmb_hash": "sha256:8799c711e987dca9f26627fa6c2ed33bc8390743fa354bc62dbdd47347565c01",
+        "cmb_id": 179,
+        "noise_file": "dx12_v3_smica_noise_mc_00179_raw.fits",
+        "noise_hash": "sha256:94451f2bcca545847d0fecd3737d8dd46864a8155f85130034b12166baba337a",
+        "noise_id": 179
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00180_raw.fits",
+        "cmb_hash": "sha256:e72225c1914219ca20f7bc035f5766d9110ac55b623221feb83c3ef4b19ae6c1",
+        "cmb_id": 180,
+        "noise_file": "dx12_v3_smica_noise_mc_00180_raw.fits",
+        "noise_hash": "sha256:d2ea54cef4d571135b5ed0fc8af64fffe53a16c8a103b8e7615b5f81f3199841",
+        "noise_id": 180
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00181_raw.fits",
+        "cmb_hash": "sha256:6298de7ae75e0dd16abf38de8b02177fbec9e144295b3697b4703134d16a899b",
+        "cmb_id": 181,
+        "noise_file": "dx12_v3_smica_noise_mc_00181_raw.fits",
+        "noise_hash": "sha256:01cfec90eb9fe50f9d7b2012532e2a6673b98a1c0e6373c73bfaabe0e43b7858",
+        "noise_id": 181
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00182_raw.fits",
+        "cmb_hash": "sha256:eceefcb5716e0cf8de4751f7de2131f55ab6c488bf90e2df0ac44bf9ea3bfd88",
+        "cmb_id": 182,
+        "noise_file": "dx12_v3_smica_noise_mc_00182_raw.fits",
+        "noise_hash": "sha256:c5f94c9c1fbf5c8232391d8dac0ba6c3687193b54b49b5660168c1ea782823d0",
+        "noise_id": 182
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00183_raw.fits",
+        "cmb_hash": "sha256:daea12f1e9c097d4e73ee10e3b2933300f25a82b61353eb91b86d54962f3e0d4",
+        "cmb_id": 183,
+        "noise_file": "dx12_v3_smica_noise_mc_00183_raw.fits",
+        "noise_hash": "sha256:93cfbd8eeec0d702f61deb221277472190e7df9c12ddace0a8f08e484a2a993a",
+        "noise_id": 183
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00184_raw.fits",
+        "cmb_hash": "sha256:1c93355784d8e946082974c2b0f86dbbe513f13c08eeb2d09bd0ff49ee73d21e",
+        "cmb_id": 184,
+        "noise_file": "dx12_v3_smica_noise_mc_00184_raw.fits",
+        "noise_hash": "sha256:1941b2aa52a7f51a3ed8341067da6948fe383d46c74e934a193de35abf1dfd09",
+        "noise_id": 184
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00185_raw.fits",
+        "cmb_hash": "sha256:d57341591a862759ecc265ce88ffdf947851ec2df04fe350f42848f5dcc83bba",
+        "cmb_id": 185,
+        "noise_file": "dx12_v3_smica_noise_mc_00185_raw.fits",
+        "noise_hash": "sha256:40732d521837eda73fe1c207d770ed77408e869aee9fdee18ef81499f5af9f14",
+        "noise_id": 185
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00186_raw.fits",
+        "cmb_hash": "sha256:ba0f1f95593c7a5ccbfcbe974b34f36f0a66550dfb45d1139851f841c67f841d",
+        "cmb_id": 186,
+        "noise_file": "dx12_v3_smica_noise_mc_00186_raw.fits",
+        "noise_hash": "sha256:cc71eb405789c140f64b10e762c26e60ce6beadf47ed2a1026b3ad5826d7eba6",
+        "noise_id": 186
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00187_raw.fits",
+        "cmb_hash": "sha256:d9e04efe177957e31fd165023ce7cfb479d8b7328c592da028116436b0fef816",
+        "cmb_id": 187,
+        "noise_file": "dx12_v3_smica_noise_mc_00187_raw.fits",
+        "noise_hash": "sha256:c5bd0af2d8d874150b1a76631eab5f1c89c8d420619a5a5c29b8e46cad1d1c88",
+        "noise_id": 187
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00188_raw.fits",
+        "cmb_hash": "sha256:5afe0b0d08b690af0e0eab35a65248c71a6d910d094f7e018e9b7689941b5cb9",
+        "cmb_id": 188,
+        "noise_file": "dx12_v3_smica_noise_mc_00188_raw.fits",
+        "noise_hash": "sha256:972f72dae04cfa9ea5f33b2ce473ed48c63a3b36cafb9a83918d96542608d6ae",
+        "noise_id": 188
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00189_raw.fits",
+        "cmb_hash": "sha256:0cd2c8c5b0ca9156ac8c5530dbbcfe74190a1b586eaab7badaf3e6044a196a2f",
+        "cmb_id": 189,
+        "noise_file": "dx12_v3_smica_noise_mc_00189_raw.fits",
+        "noise_hash": "sha256:2bc3633f58798916898e516b5d25a48c738f085ffdfe68e450c254f04287d858",
+        "noise_id": 189
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00190_raw.fits",
+        "cmb_hash": "sha256:638cfd01bc90da1cf4fff40f8c39031af509c5b61ddde72912543748b4941b49",
+        "cmb_id": 190,
+        "noise_file": "dx12_v3_smica_noise_mc_00190_raw.fits",
+        "noise_hash": "sha256:86767e8c156e17f073bd96941b2b6050e6e0533928a94b7522fd708a7814052d",
+        "noise_id": 190
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00191_raw.fits",
+        "cmb_hash": "sha256:679e5582a45265e739e188fe9181253a8d0927aa9a3e89566554a1404ca794be",
+        "cmb_id": 191,
+        "noise_file": "dx12_v3_smica_noise_mc_00191_raw.fits",
+        "noise_hash": "sha256:64fbfabd1010f0eeee14c3259179d8b80a875410e0698be2d0a63997f5af22b6",
+        "noise_id": 191
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00192_raw.fits",
+        "cmb_hash": "sha256:98bebab1f4ce088361f74220140f4a7b0ba3450ca05f5e317684c3b683f2130b",
+        "cmb_id": 192,
+        "noise_file": "dx12_v3_smica_noise_mc_00192_raw.fits",
+        "noise_hash": "sha256:c156f2d0b35881ab0dc80f496a7b3b120df1dafb859c808156c8af98ecacc2ee",
+        "noise_id": 192
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00193_raw.fits",
+        "cmb_hash": "sha256:e4dabc2b1e7671b780ddec827dba0eb17dc6d318d9c204aeee0971b207771a77",
+        "cmb_id": 193,
+        "noise_file": "dx12_v3_smica_noise_mc_00193_raw.fits",
+        "noise_hash": "sha256:da443ab710adb6a1b4b1c64f169012c9156a238c25d60192d853f5f7ffe97c39",
+        "noise_id": 193
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00194_raw.fits",
+        "cmb_hash": "sha256:c2500556a3ac20c7ce0612780c3d4ea9edf2932de163d8313b57c5b8c1ca8358",
+        "cmb_id": 194,
+        "noise_file": "dx12_v3_smica_noise_mc_00194_raw.fits",
+        "noise_hash": "sha256:dc6794f403515b1d883684194e53dc26bf18dfda26e9074213018ca4d245e865",
+        "noise_id": 194
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00195_raw.fits",
+        "cmb_hash": "sha256:7afb1a506824d2e78ed0952af86f47aa835290aabb294f1b97bd46cb52c4e0bb",
+        "cmb_id": 195,
+        "noise_file": "dx12_v3_smica_noise_mc_00195_raw.fits",
+        "noise_hash": "sha256:38210e2b8e6a40712b9e4f7cc593933d9587bc5cbce25ac671b53c675a537f38",
+        "noise_id": 195
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00196_raw.fits",
+        "cmb_hash": "sha256:7b82925f4a19789f2babf72292fd7b182eeb772ab7d4db2f64a4a5a07b7c18cd",
+        "cmb_id": 196,
+        "noise_file": "dx12_v3_smica_noise_mc_00196_raw.fits",
+        "noise_hash": "sha256:761adbbd1edca01970fde65a3ca9180e2c6484fad26545ac9275c2851992c00b",
+        "noise_id": 196
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00197_raw.fits",
+        "cmb_hash": "sha256:c90d551bf70f1b6220ab1df18e430c149771e4ed406f324d49f9762a31e8b1f8",
+        "cmb_id": 197,
+        "noise_file": "dx12_v3_smica_noise_mc_00197_raw.fits",
+        "noise_hash": "sha256:891cbdcae8f1d38f879147afde2d52224a109e0d5c6da6418fff77c19249b8f2",
+        "noise_id": 197
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00198_raw.fits",
+        "cmb_hash": "sha256:0d24fda6d1e60c7d04a04eb30b204486fafbc4036b9cd6d746dcea6902432b55",
+        "cmb_id": 198,
+        "noise_file": "dx12_v3_smica_noise_mc_00198_raw.fits",
+        "noise_hash": "sha256:1b8813e1e942e8a45a7e807973a40a598863a08208ae9cb696557b8c61c46942",
+        "noise_id": 198
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00199_raw.fits",
+        "cmb_hash": "sha256:31ce217f7dba50143673321d6719a4db56aacc5065a900ff5c8ba559ff11659a",
+        "cmb_id": 199,
+        "noise_file": "dx12_v3_smica_noise_mc_00199_raw.fits",
+        "noise_hash": "sha256:746edc15198da7379264442341308fac187da94996b7d06199e66fb2b7bc2905",
+        "noise_id": 199
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00200_raw.fits",
+        "cmb_hash": "sha256:a09b53888327f62448f08f526154938b327f2a085bc488ca347b71e89badb66d",
+        "cmb_id": 200,
+        "noise_file": "dx12_v3_smica_noise_mc_00200_raw.fits",
+        "noise_hash": "sha256:a3b43d09d9105fee4e943ee9e5cf3363e93bf964b573f0cd44856b19c9679431",
+        "noise_id": 200
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00201_raw.fits",
+        "cmb_hash": "sha256:d7d89ad1f50465e1fbe977393986bf10f8de660299a9c4543a4c4554d1de6db2",
+        "cmb_id": 201,
+        "noise_file": "dx12_v3_smica_noise_mc_00201_raw.fits",
+        "noise_hash": "sha256:de010f2c3305885b228ebb00d2a7e1f15dbc8d2cc3ea5ceea68ca926e52eae80",
+        "noise_id": 201
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00202_raw.fits",
+        "cmb_hash": "sha256:1a991d2c7bb70c8a2cd3ad228f0674c00afbf7b24d160e4cd46ddc49b071eb47",
+        "cmb_id": 202,
+        "noise_file": "dx12_v3_smica_noise_mc_00202_raw.fits",
+        "noise_hash": "sha256:1f962d3255a34a24f816bcf8cfd7e0e69f5c0f76b2ec26256fa5b5760b1ca6e5",
+        "noise_id": 202
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00203_raw.fits",
+        "cmb_hash": "sha256:e12cf429bfb5d72a21d1e1072ac5ab380d51076f25bdfe93b075ea076c0445a0",
+        "cmb_id": 203,
+        "noise_file": "dx12_v3_smica_noise_mc_00203_raw.fits",
+        "noise_hash": "sha256:1ee608e9b694e7a92981899f7db997fefe128a9147759056caac6335d521f2df",
+        "noise_id": 203
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00204_raw.fits",
+        "cmb_hash": "sha256:7f13095a215a0d0b94547f3b94f61889984d1fab3723a1064d38d4df5dc29ddb",
+        "cmb_id": 204,
+        "noise_file": "dx12_v3_smica_noise_mc_00204_raw.fits",
+        "noise_hash": "sha256:476c3f962b1d7f5bce4d9ff89c6eb1d76672567e5c365ad74528f65819f1371a",
+        "noise_id": 204
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00205_raw.fits",
+        "cmb_hash": "sha256:29e78704d04f06480c9bcfbed05d32e5a56fdb0ce0c8f3dede3b74f6d1a54f1a",
+        "cmb_id": 205,
+        "noise_file": "dx12_v3_smica_noise_mc_00205_raw.fits",
+        "noise_hash": "sha256:20a22658991bb659c6aa31faff660e318000d13266eb2d0be7b397951744978b",
+        "noise_id": 205
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00206_raw.fits",
+        "cmb_hash": "sha256:b661d7829ec4dc76245e3c1098ba85ae34c1112c5af1f954c2eabe1f7114dad9",
+        "cmb_id": 206,
+        "noise_file": "dx12_v3_smica_noise_mc_00206_raw.fits",
+        "noise_hash": "sha256:56dbc2516acb61334664afb9ee2b07058cf94ad876405f41e4c89698e816f307",
+        "noise_id": 206
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00207_raw.fits",
+        "cmb_hash": "sha256:6b06c130a98f761cd6f7538af0955c21767dc261b1059d56222e4cdb16c9b0b2",
+        "cmb_id": 207,
+        "noise_file": "dx12_v3_smica_noise_mc_00207_raw.fits",
+        "noise_hash": "sha256:5d5ac70caa31e9d36f642a2056f1e51b59209794e7398419d50bcc1f5e15a65d",
+        "noise_id": 207
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00208_raw.fits",
+        "cmb_hash": "sha256:cc66b1c4a4d69747142a712c5dd6761dc3237ed23b0909f1115f58b638393917",
+        "cmb_id": 208,
+        "noise_file": "dx12_v3_smica_noise_mc_00208_raw.fits",
+        "noise_hash": "sha256:56a981d1cb2ddeeadd9a703dbb9a750d24b826eb0d349f01fa47b2d5078cc6ae",
+        "noise_id": 208
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00209_raw.fits",
+        "cmb_hash": "sha256:f901144ad8ce5fe35d4df218b62e8de78d60d4aef29e323f2ea0c9fc2bc8aabb",
+        "cmb_id": 209,
+        "noise_file": "dx12_v3_smica_noise_mc_00209_raw.fits",
+        "noise_hash": "sha256:1680b2cc70410caf794719fb7e8945c4f030628242915436f06376265f69acd6",
+        "noise_id": 209
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00210_raw.fits",
+        "cmb_hash": "sha256:5b67eff48761f099067004452d5334e540315631b50306534ab3e27345db89d4",
+        "cmb_id": 210,
+        "noise_file": "dx12_v3_smica_noise_mc_00210_raw.fits",
+        "noise_hash": "sha256:4cf14df45c301f7b76c514875042c7c5d18150fbb8490603cde9924e824f7f78",
+        "noise_id": 210
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00211_raw.fits",
+        "cmb_hash": "sha256:c37c6011571a76e1fb2ff03652f08a262b18c8a8cd01b0a1ee65a09f97f65a38",
+        "cmb_id": 211,
+        "noise_file": "dx12_v3_smica_noise_mc_00211_raw.fits",
+        "noise_hash": "sha256:2b004945492172994b7f4f5e5baf49f33940dc3d24a81d3e783c6a81cde1c1aa",
+        "noise_id": 211
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00212_raw.fits",
+        "cmb_hash": "sha256:294d4b0f47224ad9abff7d41d9e407bc29d0c4e43950a731f956f15168850caa",
+        "cmb_id": 212,
+        "noise_file": "dx12_v3_smica_noise_mc_00212_raw.fits",
+        "noise_hash": "sha256:cf989460ad281cddc62beaa98e4091aad6ccd52fcb5795ddf7ac382a07b0cf6a",
+        "noise_id": 212
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00213_raw.fits",
+        "cmb_hash": "sha256:cda34c314893262f81216eb21b70798bfda6ddf7fc2f32c762b9c23c13709ffc",
+        "cmb_id": 213,
+        "noise_file": "dx12_v3_smica_noise_mc_00213_raw.fits",
+        "noise_hash": "sha256:e0899c7c26de397f9d5a5b325c036ba9f9c7b67b558ba1ef0b650e61ef6d1a2a",
+        "noise_id": 213
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00214_raw.fits",
+        "cmb_hash": "sha256:373d464067b53075f27198816f277a268269bbbb1c7c771f94a795f91074ef4f",
+        "cmb_id": 214,
+        "noise_file": "dx12_v3_smica_noise_mc_00214_raw.fits",
+        "noise_hash": "sha256:334f1e613700ce8a5db23a11dc67f58e10742c70d2c903bd3eac30c821b9cd52",
+        "noise_id": 214
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00215_raw.fits",
+        "cmb_hash": "sha256:a48c50bd53465fd814ba214964697b5d6884faef19a063fcf4774efd4c3f201c",
+        "cmb_id": 215,
+        "noise_file": "dx12_v3_smica_noise_mc_00215_raw.fits",
+        "noise_hash": "sha256:68a13812c32b6f150c124911800c9f2d0f0aa28aa4c789e801ed3c2031cae746",
+        "noise_id": 215
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00216_raw.fits",
+        "cmb_hash": "sha256:245af1259df1e802cfa3eddec0a06e287e153a876eda37b772435514b091229c",
+        "cmb_id": 216,
+        "noise_file": "dx12_v3_smica_noise_mc_00216_raw.fits",
+        "noise_hash": "sha256:fde5ee082eae809ca601b815279f14a801144b8ad7efbb75f9ec879bce62051c",
+        "noise_id": 216
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00217_raw.fits",
+        "cmb_hash": "sha256:104547832ba6a88cd01b0653852a10b84a020a3ff8f980a4972d7a03d8a07ddb",
+        "cmb_id": 217,
+        "noise_file": "dx12_v3_smica_noise_mc_00217_raw.fits",
+        "noise_hash": "sha256:ec931a01e0948deacc41209db6a13ac766cc41e305bcf8c33bffa1486e318970",
+        "noise_id": 217
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00218_raw.fits",
+        "cmb_hash": "sha256:951e1b7b57e280b152f0706a28d5ba476966fd39590d7d838fa9b96c82378268",
+        "cmb_id": 218,
+        "noise_file": "dx12_v3_smica_noise_mc_00218_raw.fits",
+        "noise_hash": "sha256:19d0d0a07e0ffffb93314f3738748192c5f2df8ba743b564175b5ede53eb0539",
+        "noise_id": 218
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00219_raw.fits",
+        "cmb_hash": "sha256:0ff7b29cd278bc29c5af8c980e423a4fb3a8bbbdbf5d1b63ea29f23c8e7a6872",
+        "cmb_id": 219,
+        "noise_file": "dx12_v3_smica_noise_mc_00219_raw.fits",
+        "noise_hash": "sha256:7d8425b08f3e351bb67a5725639e52b41025d8a728cda28ab0a204f608d1084c",
+        "noise_id": 219
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00220_raw.fits",
+        "cmb_hash": "sha256:a9d3776ff9d9cbedee0b8757301a4f1d11ae5260bdf42ce255c9faee5b795280",
+        "cmb_id": 220,
+        "noise_file": "dx12_v3_smica_noise_mc_00220_raw.fits",
+        "noise_hash": "sha256:f1a7fc8e5ee861f4f6d017b345740e534aef289ce153bbd559abad4a6754ea61",
+        "noise_id": 220
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00221_raw.fits",
+        "cmb_hash": "sha256:15d6e56b56ddfc6cbf64cab0a63bf261632cb64c190c4a72cf3150c2ad730766",
+        "cmb_id": 221,
+        "noise_file": "dx12_v3_smica_noise_mc_00221_raw.fits",
+        "noise_hash": "sha256:02a6c9c130727d9f5fec09cf02cbaf4607b886c5d5985494e166a930a4373702",
+        "noise_id": 221
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00222_raw.fits",
+        "cmb_hash": "sha256:ad23cf0a1cfe716fd398fe35e5da32828e96ba49bd827222b32b9a26eff92b46",
+        "cmb_id": 222,
+        "noise_file": "dx12_v3_smica_noise_mc_00222_raw.fits",
+        "noise_hash": "sha256:606c8c5e85207f0d09fa17cca367cb3e8f309c9a03e11506bfff6ac7e31d3c8d",
+        "noise_id": 222
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00223_raw.fits",
+        "cmb_hash": "sha256:cd78266d6368346a29da80823e67b1aecb84a1d65ad36fe4d092b9a799e6d940",
+        "cmb_id": 223,
+        "noise_file": "dx12_v3_smica_noise_mc_00223_raw.fits",
+        "noise_hash": "sha256:1aba03f6ba476f42da4e16cdd4c22f516fc97899965cba77e5dffe1d102c0b03",
+        "noise_id": 223
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00224_raw.fits",
+        "cmb_hash": "sha256:57ce11cabb244dbc1414d35f1ce733be6a4a561c79ed3c7805bf1d9fe55a15b4",
+        "cmb_id": 224,
+        "noise_file": "dx12_v3_smica_noise_mc_00224_raw.fits",
+        "noise_hash": "sha256:c4e53d0c5edc32f9b9aa1007b699dd4f7131f9c82182761eda3e111341b329ab",
+        "noise_id": 224
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00225_raw.fits",
+        "cmb_hash": "sha256:d9805992c0b6f7777d353600ffea06fbb7c4112fd31d2148285ab9ff6c36efb3",
+        "cmb_id": 225,
+        "noise_file": "dx12_v3_smica_noise_mc_00225_raw.fits",
+        "noise_hash": "sha256:6e7291004b08c729a3e54cd57e8849e9dc1e90ec262b0056db5a150d7168b3f7",
+        "noise_id": 225
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00226_raw.fits",
+        "cmb_hash": "sha256:1978792843b7776d59c9c2c15199875f5e4969945b9bacd7ce40a0039c4f74f2",
+        "cmb_id": 226,
+        "noise_file": "dx12_v3_smica_noise_mc_00226_raw.fits",
+        "noise_hash": "sha256:8db8c35cfa38f71bbbe11ecdfd9c479e0253f78a099f7c311fad841c4dbd3660",
+        "noise_id": 226
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00227_raw.fits",
+        "cmb_hash": "sha256:289bb2cb6f3fe1e331226c7e5c59d1fabdc7a55e81e068a653889caf560634c5",
+        "cmb_id": 227,
+        "noise_file": "dx12_v3_smica_noise_mc_00227_raw.fits",
+        "noise_hash": "sha256:a9ab8ba719af1155b9d75200fbdade6f96784adb0b493d09e40bf5cd07b8e2d5",
+        "noise_id": 227
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00228_raw.fits",
+        "cmb_hash": "sha256:3e06891c726e09d2e72db5a72a6a6954fe22d0fc39112ef6b7664a0faee123ce",
+        "cmb_id": 228,
+        "noise_file": "dx12_v3_smica_noise_mc_00228_raw.fits",
+        "noise_hash": "sha256:817c5e745e0f752b0fe788fc0b599077d3696d9a923a1fd1ab8e78425c445fa0",
+        "noise_id": 228
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00229_raw.fits",
+        "cmb_hash": "sha256:50df2c982355f6b1058bb065d389a783e23ada7410cc4a4d1b479491f1627953",
+        "cmb_id": 229,
+        "noise_file": "dx12_v3_smica_noise_mc_00229_raw.fits",
+        "noise_hash": "sha256:e39897ffc8287cbbcf45ab3e18b1707ebd5123d1a90cbc61dce297a5ea753d5a",
+        "noise_id": 229
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00230_raw.fits",
+        "cmb_hash": "sha256:fe3918132e6d5ffeb553d93ab96e1393c47930904039469bf9319fb6d706cf48",
+        "cmb_id": 230,
+        "noise_file": "dx12_v3_smica_noise_mc_00230_raw.fits",
+        "noise_hash": "sha256:ec5647a016acab3a7006619183f135db02e2a29fbe06d108e9899b61cc91aa0f",
+        "noise_id": 230
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00231_raw.fits",
+        "cmb_hash": "sha256:f826af576ccc7f3d4140aba0a74e0bd4e912b8e5c879249141a3687e49e2ed80",
+        "cmb_id": 231,
+        "noise_file": "dx12_v3_smica_noise_mc_00231_raw.fits",
+        "noise_hash": "sha256:fa8c8c556ebb2981f571298afd3eba7176609b14e5426f32b424c87dc6002ca1",
+        "noise_id": 231
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00232_raw.fits",
+        "cmb_hash": "sha256:160a9445b628117213e94cbfa4e85d8e3bbcba8f7d9ef2ff7784f8f6867cc903",
+        "cmb_id": 232,
+        "noise_file": "dx12_v3_smica_noise_mc_00232_raw.fits",
+        "noise_hash": "sha256:278669b76c1deb22fe9486b9b490eb4fc1fb19dd900e11cbe9455962bc9b2385",
+        "noise_id": 232
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00233_raw.fits",
+        "cmb_hash": "sha256:efa9b5d0f36826d0c26b11bcfcc47cb9589c6819bc849b5c9a1d161dd92ec14f",
+        "cmb_id": 233,
+        "noise_file": "dx12_v3_smica_noise_mc_00233_raw.fits",
+        "noise_hash": "sha256:c63d6638ba7f4c286bf4ff290f2d61c56415968389b6355c176014c24e193e39",
+        "noise_id": 233
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00234_raw.fits",
+        "cmb_hash": "sha256:2c3bd5c01073bdf4f7ac01923bd04e3c6c729b5e802b0b31eebba4b36ddd795a",
+        "cmb_id": 234,
+        "noise_file": "dx12_v3_smica_noise_mc_00234_raw.fits",
+        "noise_hash": "sha256:17c680d93da39a9fa8d4f0bc471f6ed28b98e70c6f1e41430a2f1086d4ea1717",
+        "noise_id": 234
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00235_raw.fits",
+        "cmb_hash": "sha256:c5c55104f562d031faed2d7346fce41c1fb13041c0b6fed37c6d3513ed97c90f",
+        "cmb_id": 235,
+        "noise_file": "dx12_v3_smica_noise_mc_00235_raw.fits",
+        "noise_hash": "sha256:d0fc8e117f6f834b9b2303967015146c7259da71eaba253bcea28f6472f6cd18",
+        "noise_id": 235
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00236_raw.fits",
+        "cmb_hash": "sha256:e08be70be9e500546df5bd2dd5e058006bf70ee45c8dfc9664dba21d0f461849",
+        "cmb_id": 236,
+        "noise_file": "dx12_v3_smica_noise_mc_00236_raw.fits",
+        "noise_hash": "sha256:f75119ff1f828513aec6062e670bd4f6bf957157e4fe94f9ea3d64859e37542d",
+        "noise_id": 236
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00237_raw.fits",
+        "cmb_hash": "sha256:dc3a89395c3b49f40182b21a70db760aeb3a550059a6ba8c01e516e7210984d0",
+        "cmb_id": 237,
+        "noise_file": "dx12_v3_smica_noise_mc_00237_raw.fits",
+        "noise_hash": "sha256:b2d3bcc057c2c458f2c610369f0d66d1f8889b61172864755b1dd2957623fe49",
+        "noise_id": 237
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00238_raw.fits",
+        "cmb_hash": "sha256:a20f55c120eebebee912cb6f8333e79d7f3b27e186522bbfe4f54f3c5414d8ab",
+        "cmb_id": 238,
+        "noise_file": "dx12_v3_smica_noise_mc_00238_raw.fits",
+        "noise_hash": "sha256:bc5763a3dcd820b3b377c445c4fe60b8950ef55947d1256b573bcbb5cec07d3e",
+        "noise_id": 238
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00239_raw.fits",
+        "cmb_hash": "sha256:3def8aeb943cc286d47975cb84ca579b113ecc64a6952116a1f71b0ccbf4b43b",
+        "cmb_id": 239,
+        "noise_file": "dx12_v3_smica_noise_mc_00239_raw.fits",
+        "noise_hash": "sha256:5da3df0fccaa4e7197d07152734bde8a0e1b0efbbf17e5715f7f78eacd890773",
+        "noise_id": 239
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00240_raw.fits",
+        "cmb_hash": "sha256:0f1ffe36d2503f518800167c4cc8925bfad67f636f616630703edf7bd2e34b23",
+        "cmb_id": 240,
+        "noise_file": "dx12_v3_smica_noise_mc_00240_raw.fits",
+        "noise_hash": "sha256:01591e7c07c1feee60a0df6b2f261b3afe5d7d818c69a9288f3d8562bde457f8",
+        "noise_id": 240
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00241_raw.fits",
+        "cmb_hash": "sha256:0b1e5515c0463158cee1667a1bea45954afef0839a1afd9dd2edd43ccf93786f",
+        "cmb_id": 241,
+        "noise_file": "dx12_v3_smica_noise_mc_00241_raw.fits",
+        "noise_hash": "sha256:ffb9c4466f692d6f4bef8b1ee93523232dcafd5d996232b83cd3862665bcedb7",
+        "noise_id": 241
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00242_raw.fits",
+        "cmb_hash": "sha256:2d589fece01ddf9953e70d9dfb77cb9039984439324bb0d15d461d0f597e4768",
+        "cmb_id": 242,
+        "noise_file": "dx12_v3_smica_noise_mc_00242_raw.fits",
+        "noise_hash": "sha256:407f94008e740d1a7f17c07330ad1793e64e407b8cfa01d0f635672976a02e50",
+        "noise_id": 242
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00243_raw.fits",
+        "cmb_hash": "sha256:99b0d5528e7b8f96e703abb00df1ea0449324f1f0645a98b6df07da3869fd3e1",
+        "cmb_id": 243,
+        "noise_file": "dx12_v3_smica_noise_mc_00243_raw.fits",
+        "noise_hash": "sha256:46a2238c9bcd0bb069fa9428b270e5398ca0006644d5bbb47bcab451f39b72b6",
+        "noise_id": 243
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00244_raw.fits",
+        "cmb_hash": "sha256:d29886ec9f84f85c0e799d8776635e9be1730747d5c79579518c492cd433d71e",
+        "cmb_id": 244,
+        "noise_file": "dx12_v3_smica_noise_mc_00244_raw.fits",
+        "noise_hash": "sha256:5f545d99128f4b3fc3b6347f90b1ee53f144fe0b459f83fa8fcbff9b77abe77d",
+        "noise_id": 244
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00245_raw.fits",
+        "cmb_hash": "sha256:2e6c5fc1ef18e339c6f1c7e08b516edf6cd2120d776e044ee8690993ca378e41",
+        "cmb_id": 245,
+        "noise_file": "dx12_v3_smica_noise_mc_00245_raw.fits",
+        "noise_hash": "sha256:27d567f57d9d6f4753ac9a5450cd6aa214f3e0efa4015bd96e44a95bb370e80b",
+        "noise_id": 245
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00246_raw.fits",
+        "cmb_hash": "sha256:7f5ef8c74e1dc5739fd9a28fec5c59da069620bdd04274d6fe9e45fe80498777",
+        "cmb_id": 246,
+        "noise_file": "dx12_v3_smica_noise_mc_00246_raw.fits",
+        "noise_hash": "sha256:da9b446df682e1f96c99c7bacefe51b300b21bd51b32e1d0b731cbdcfbe48551",
+        "noise_id": 246
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00247_raw.fits",
+        "cmb_hash": "sha256:4fa9c8d0c42d9901b5eb445569294ac364f0c3bfa6c86975ee1460016c5efeff",
+        "cmb_id": 247,
+        "noise_file": "dx12_v3_smica_noise_mc_00247_raw.fits",
+        "noise_hash": "sha256:0264195a9665b4edb12abefc821a36c5753e36db87ac211bf73e54cd4406858b",
+        "noise_id": 247
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00248_raw.fits",
+        "cmb_hash": "sha256:f6c0e8133bb4d062c9909e5c5c74dde4184cc2f789c19be4d514a4ff89733f46",
+        "cmb_id": 248,
+        "noise_file": "dx12_v3_smica_noise_mc_00248_raw.fits",
+        "noise_hash": "sha256:5fd2da53a3b0c6e07573f3d7c0c4c790bbe65c993a6e5acd8e072ca58ccc5405",
+        "noise_id": 248
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00249_raw.fits",
+        "cmb_hash": "sha256:39f3ebd4488d316331008ff1bdae19208225583cd39e7fa8a3c3abad9c4ca160",
+        "cmb_id": 249,
+        "noise_file": "dx12_v3_smica_noise_mc_00249_raw.fits",
+        "noise_hash": "sha256:2be946dc03666797448098db1fd1329ebafaf55a1678a025a7073d59d021e380",
+        "noise_id": 249
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00250_raw.fits",
+        "cmb_hash": "sha256:401b3622919fec7fd0fcdccb7c3e6678cbbd2e6274c333588566583865979bb2",
+        "cmb_id": 250,
+        "noise_file": "dx12_v3_smica_noise_mc_00250_raw.fits",
+        "noise_hash": "sha256:1f44db85ad001b06fef7e8ccc7797f98434b3f7fe39357757667dc7134110541",
+        "noise_id": 250
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00251_raw.fits",
+        "cmb_hash": "sha256:f6b80bc936a0d8d45f98b2efc24445f726cf3387d042c11272f28cc267961a6e",
+        "cmb_id": 251,
+        "noise_file": "dx12_v3_smica_noise_mc_00251_raw.fits",
+        "noise_hash": "sha256:b0e6cc78cd7f13649a909983b9a1369072215e248202643edca6b55b4e9c3bbc",
+        "noise_id": 251
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00252_raw.fits",
+        "cmb_hash": "sha256:a595d00ebe186344550f6dda35440f63fcb085141053fef7f79d4471616514b8",
+        "cmb_id": 252,
+        "noise_file": "dx12_v3_smica_noise_mc_00252_raw.fits",
+        "noise_hash": "sha256:79f77ac4f08b4fc71a9a1d252afe1784c3332b1c4d12a993ae3ad95f5ff0be6f",
+        "noise_id": 252
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00253_raw.fits",
+        "cmb_hash": "sha256:3d195549f44795f1de56e54ac8f5454ce9bb9c0d8b5242ac04a1a325213e95eb",
+        "cmb_id": 253,
+        "noise_file": "dx12_v3_smica_noise_mc_00253_raw.fits",
+        "noise_hash": "sha256:800eba7afa54f3cfec2e8bb2bb221eef05a3b47c788393f541c2349145e5cb99",
+        "noise_id": 253
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00254_raw.fits",
+        "cmb_hash": "sha256:78ac6b5699aa72811ec0b5aebfb4be8cee690159798c65fa9bcc8409349ca338",
+        "cmb_id": 254,
+        "noise_file": "dx12_v3_smica_noise_mc_00254_raw.fits",
+        "noise_hash": "sha256:3e6816bf2ce265e11fb05fc3501f10f429bf45c1406f13215b0b186d53961a1f",
+        "noise_id": 254
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00255_raw.fits",
+        "cmb_hash": "sha256:fae7529b20bf7f185ed589057b333415fb0c2b982ad3f108ae3e2be6c3d14329",
+        "cmb_id": 255,
+        "noise_file": "dx12_v3_smica_noise_mc_00255_raw.fits",
+        "noise_hash": "sha256:614221cafb2af2d2ea4b15b7315b08e3cd59220311f1e44734f11c660147b7b5",
+        "noise_id": 255
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00256_raw.fits",
+        "cmb_hash": "sha256:d0eed68ae3cb992e4f584bd33de457a16cfcafde2d3282fc8206335e5d3708f7",
+        "cmb_id": 256,
+        "noise_file": "dx12_v3_smica_noise_mc_00256_raw.fits",
+        "noise_hash": "sha256:40a265617e452dc18d38b8b09076422bd979d7be7cd889fc9a2a32481a0c0101",
+        "noise_id": 256
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00257_raw.fits",
+        "cmb_hash": "sha256:2cd9b0c2281248a800746c3f89b14656a4021ad23ab296b80f4767e870209051",
+        "cmb_id": 257,
+        "noise_file": "dx12_v3_smica_noise_mc_00257_raw.fits",
+        "noise_hash": "sha256:d29425ee44db11be769c6f7f1650f40d3b9f235aa3c6a6cf05b359e57345f2b7",
+        "noise_id": 257
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00258_raw.fits",
+        "cmb_hash": "sha256:018b83ecbb423478f0be5e242da29368f20efa86cdaddc03f03148a2408b164d",
+        "cmb_id": 258,
+        "noise_file": "dx12_v3_smica_noise_mc_00258_raw.fits",
+        "noise_hash": "sha256:33c0388678b4e06b2f57186a55c3542bf2be2a0b1d5414acea7a8359e4c87558",
+        "noise_id": 258
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00259_raw.fits",
+        "cmb_hash": "sha256:4a67b5abf41de4e43716e50139697277f63848668cfa6d2dd2f5ca62f843dc33",
+        "cmb_id": 259,
+        "noise_file": "dx12_v3_smica_noise_mc_00259_raw.fits",
+        "noise_hash": "sha256:7171b3427336f96958602dbb2ff0fd5b4b3a0c0403b82f9e5029d95d88523eeb",
+        "noise_id": 259
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00260_raw.fits",
+        "cmb_hash": "sha256:edc9f2e1b1af697bd7ae3f753f7b9079c295460c0d0bbcd6d32d768c412d2261",
+        "cmb_id": 260,
+        "noise_file": "dx12_v3_smica_noise_mc_00260_raw.fits",
+        "noise_hash": "sha256:e2d8b93a2227b57b15fab01e2a82f115ca49e1e37d1454a8a1fb559d97b9fa8d",
+        "noise_id": 260
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00261_raw.fits",
+        "cmb_hash": "sha256:fd77f7f2a64ff7f4d0039729b7a8e78febbab17eace8b8af9454a79b60783f23",
+        "cmb_id": 261,
+        "noise_file": "dx12_v3_smica_noise_mc_00261_raw.fits",
+        "noise_hash": "sha256:5594e1bfba881cf29e2fe3b35ecbbd2c684832ef0bbed8379ac8454e699411d3",
+        "noise_id": 261
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00262_raw.fits",
+        "cmb_hash": "sha256:b1d1fe307e76e90eca75e2ed87311795c8d334b6246ee23709a002b5318575f9",
+        "cmb_id": 262,
+        "noise_file": "dx12_v3_smica_noise_mc_00262_raw.fits",
+        "noise_hash": "sha256:cf7cc6e89effa279d177bd6c8d8705e0cdad7b78bef092888a3d91d3d2bb984e",
+        "noise_id": 262
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00263_raw.fits",
+        "cmb_hash": "sha256:27dffe78a546a94b747dcb5f332f3c58351f62b2e0f68cf153c87666cfe57ace",
+        "cmb_id": 263,
+        "noise_file": "dx12_v3_smica_noise_mc_00263_raw.fits",
+        "noise_hash": "sha256:e99e7fed9ebd962bd45ef9fc56bfdaead12f7fbbd7e93e82c4d5c2f4a7fd2050",
+        "noise_id": 263
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00264_raw.fits",
+        "cmb_hash": "sha256:5082b9b300c3d4986042112fbd4a3dcd05609416ba25786ef8fb84ab97ca3c60",
+        "cmb_id": 264,
+        "noise_file": "dx12_v3_smica_noise_mc_00264_raw.fits",
+        "noise_hash": "sha256:050c84e2a5c6dc00cc9cb8ef9e3bdf149dd8b30ea2ce361bfc4e154dc0218cbe",
+        "noise_id": 264
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00265_raw.fits",
+        "cmb_hash": "sha256:1efbebe55a84ffe63d2830b0d6b09e152c816020569671a80a30bdfc8898045c",
+        "cmb_id": 265,
+        "noise_file": "dx12_v3_smica_noise_mc_00265_raw.fits",
+        "noise_hash": "sha256:144f19f09193bef609f39ffdd3e1ce64e20d49be36faa6e5c074f681ec5fe123",
+        "noise_id": 265
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00266_raw.fits",
+        "cmb_hash": "sha256:20007856b90a015b9ea68f0ffd0cd4beaa4466c68128fafea566e81ddd72c58c",
+        "cmb_id": 266,
+        "noise_file": "dx12_v3_smica_noise_mc_00266_raw.fits",
+        "noise_hash": "sha256:fd69357a7328cbbbd5601aca8c0f127414ca87884269a0852ec808e7d62e5492",
+        "noise_id": 266
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00267_raw.fits",
+        "cmb_hash": "sha256:c9585097e3854d34b02711ce54509eede5df38faf5c412b9a58dc8c55c8d3bcd",
+        "cmb_id": 267,
+        "noise_file": "dx12_v3_smica_noise_mc_00267_raw.fits",
+        "noise_hash": "sha256:0ce99dcc36eac2df8ac0a901ff7fa1208ffd308ffa6fd66ecc4c329a468480fb",
+        "noise_id": 267
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00268_raw.fits",
+        "cmb_hash": "sha256:99e3f0800a05e014bae1a374620a7d9f85529a254cb2efafacb22afc7ab0d829",
+        "cmb_id": 268,
+        "noise_file": "dx12_v3_smica_noise_mc_00268_raw.fits",
+        "noise_hash": "sha256:6a4839a2b85965c9ed31a452589ec54c8957bb1e3d369df9ef11e12b11714d5d",
+        "noise_id": 268
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00269_raw.fits",
+        "cmb_hash": "sha256:f9187961e5f06a197b4a766752d0c0558e70860ad0b06a55a5c35ac863de5349",
+        "cmb_id": 269,
+        "noise_file": "dx12_v3_smica_noise_mc_00269_raw.fits",
+        "noise_hash": "sha256:4f1f7c8f390bcde3bc22f3b24629b44c5fd59b65319c95f0c0fe6eabbdce8743",
+        "noise_id": 269
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00270_raw.fits",
+        "cmb_hash": "sha256:91b83c9f5eec727328e694eccc32e344175a87647ebf17588588c67ff2708871",
+        "cmb_id": 270,
+        "noise_file": "dx12_v3_smica_noise_mc_00270_raw.fits",
+        "noise_hash": "sha256:be72b4d419e70c4a35167c7600b206241baa277b9a67ad631c960bf6aa1bea6a",
+        "noise_id": 270
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00271_raw.fits",
+        "cmb_hash": "sha256:d2b6b812001e81cbe69c57d4874c33648e79400452806d6a10809c8877ba76a1",
+        "cmb_id": 271,
+        "noise_file": "dx12_v3_smica_noise_mc_00271_raw.fits",
+        "noise_hash": "sha256:1628b2ffae4996e71d323dcc737da99d6e778a5581c84507757ecde850fa44b3",
+        "noise_id": 271
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00272_raw.fits",
+        "cmb_hash": "sha256:6b0991582884e2fd07b6fa87a898a82d604b444afa1be85b8255d70e206754f3",
+        "cmb_id": 272,
+        "noise_file": "dx12_v3_smica_noise_mc_00272_raw.fits",
+        "noise_hash": "sha256:44916761140802e540e8ffe364527c2d889913c4f99cd24cb9e3696db01ab726",
+        "noise_id": 272
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00273_raw.fits",
+        "cmb_hash": "sha256:09a3090770c5922aca3f5a21eb250c848d65dcf2d09a871968d7cc3bb0bec142",
+        "cmb_id": 273,
+        "noise_file": "dx12_v3_smica_noise_mc_00273_raw.fits",
+        "noise_hash": "sha256:d580c823dba0f2e0ee6f3a565bfe57c486acef4d7e01e8994465319fcdcb7d95",
+        "noise_id": 273
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00274_raw.fits",
+        "cmb_hash": "sha256:92a781dbf90670b04a0a6e975e4b17221a618dffbfe3262a897c6c7394a2c43c",
+        "cmb_id": 274,
+        "noise_file": "dx12_v3_smica_noise_mc_00274_raw.fits",
+        "noise_hash": "sha256:336522aa1bbdfff45d68a831ee7e50d700d8ecdd77986664f226c512bb53d3ad",
+        "noise_id": 274
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00275_raw.fits",
+        "cmb_hash": "sha256:a7343a693a244bb743de9fae607eb4769eff6bef4a6a45e9bcbf07853dc3b073",
+        "cmb_id": 275,
+        "noise_file": "dx12_v3_smica_noise_mc_00275_raw.fits",
+        "noise_hash": "sha256:d562e083a689bb4e087402deda7721d9c6b230be7b98723f2d6d2cea18e384ee",
+        "noise_id": 275
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00276_raw.fits",
+        "cmb_hash": "sha256:fde648929359867a5d84b18f449174a9818b62840ab5c30769d238a883ba2daa",
+        "cmb_id": 276,
+        "noise_file": "dx12_v3_smica_noise_mc_00276_raw.fits",
+        "noise_hash": "sha256:c3c97365ba4250f90f49b66c2f6122e7e368b267009f288528142fda2802617d",
+        "noise_id": 276
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00277_raw.fits",
+        "cmb_hash": "sha256:d2dac79eafff3c955e7a32ad8d8bad6503dd06b35db2ecb10fdde28d45cdd2bc",
+        "cmb_id": 277,
+        "noise_file": "dx12_v3_smica_noise_mc_00277_raw.fits",
+        "noise_hash": "sha256:42d9d1e6ccf67352c10da9381dd9e669a92b7d3c9621c6f0e408be0f74c4e8db",
+        "noise_id": 277
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00278_raw.fits",
+        "cmb_hash": "sha256:b51067a10835e70a1dd449f5215bb71e3646a6ac20331b49787e80efbfac51ff",
+        "cmb_id": 278,
+        "noise_file": "dx12_v3_smica_noise_mc_00278_raw.fits",
+        "noise_hash": "sha256:4de054b5135ec5b8653d4cb0cdd18e9e0a53f0667d9c6612817ba7a2ea0288d6",
+        "noise_id": 278
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00279_raw.fits",
+        "cmb_hash": "sha256:8add3137d669e9f819df9606e8ac778e82b56ec673310336278bad1d7af7911d",
+        "cmb_id": 279,
+        "noise_file": "dx12_v3_smica_noise_mc_00279_raw.fits",
+        "noise_hash": "sha256:7d1ee0273fa1203efd993232f40c1fff3cfe997eb9e7e4f82a527dfd8c5bafeb",
+        "noise_id": 279
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00280_raw.fits",
+        "cmb_hash": "sha256:2ac7d90aa9de3ec9a4538340083483ab6d495448f605d2107951dcc3df48e30b",
+        "cmb_id": 280,
+        "noise_file": "dx12_v3_smica_noise_mc_00280_raw.fits",
+        "noise_hash": "sha256:d0fdb8dc52100710988b4729d7c1cfcb86788809dbfe2c7c1d3850f5d2825ac0",
+        "noise_id": 280
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00281_raw.fits",
+        "cmb_hash": "sha256:554c36de326a0e4fadded37a5dfceb7010164e08e1ac4698ce33e42ca92750fa",
+        "cmb_id": 281,
+        "noise_file": "dx12_v3_smica_noise_mc_00281_raw.fits",
+        "noise_hash": "sha256:f3f0e9949cc039c40207d4f4e98847476aca25d865cc3cf8ae3908abdc6604cc",
+        "noise_id": 281
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00282_raw.fits",
+        "cmb_hash": "sha256:a9ff459bbe3b799f90ff8b1fe88ee7a14acb12da1b2491631315b953dadff5a4",
+        "cmb_id": 282,
+        "noise_file": "dx12_v3_smica_noise_mc_00282_raw.fits",
+        "noise_hash": "sha256:f312ffc7ce96a366180f70bc488097649b0c6eb2051b10850a6fd05e602f8a13",
+        "noise_id": 282
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00283_raw.fits",
+        "cmb_hash": "sha256:552b6ab6b0500ea49f7b0707cac9758cfb133c07cbabd29e9114e5b94884b9f0",
+        "cmb_id": 283,
+        "noise_file": "dx12_v3_smica_noise_mc_00283_raw.fits",
+        "noise_hash": "sha256:ce92b4e8b0ee6386631758dfdc5d0b781ce7808abb32a3beb47189310c3e9c30",
+        "noise_id": 283
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00284_raw.fits",
+        "cmb_hash": "sha256:860c996b0d9d77fb332c6a711199a554586833df5cfbefacb8b8db02477d4b9d",
+        "cmb_id": 284,
+        "noise_file": "dx12_v3_smica_noise_mc_00284_raw.fits",
+        "noise_hash": "sha256:95094175d72160452dcf927e204d5e6d6d5b9052788810a7c8aa6701aff72299",
+        "noise_id": 284
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00285_raw.fits",
+        "cmb_hash": "sha256:f4831bc169721bee3df4337ab3cec6c2ae2c7543b8eb119586b512dba2b8211d",
+        "cmb_id": 285,
+        "noise_file": "dx12_v3_smica_noise_mc_00285_raw.fits",
+        "noise_hash": "sha256:a6e73d25fcee0d27eb48127424afeb476253a38e65191c761b91aa41d70d0551",
+        "noise_id": 285
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00286_raw.fits",
+        "cmb_hash": "sha256:b909cb040ab354db1e5e8d2803052208ec02fcaeca366c50d9b069299bdf117d",
+        "cmb_id": 286,
+        "noise_file": "dx12_v3_smica_noise_mc_00286_raw.fits",
+        "noise_hash": "sha256:a80eaead943a75fd90f2ee962232ea2a7e97105f7df863af67b3b4d101880370",
+        "noise_id": 286
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00287_raw.fits",
+        "cmb_hash": "sha256:8ea8bb92a78d1e7d02e6419181483c8c512c8c71da00500d24ec2f9cf9f122f6",
+        "cmb_id": 287,
+        "noise_file": "dx12_v3_smica_noise_mc_00287_raw.fits",
+        "noise_hash": "sha256:492ecee5e60f73aa38ed1e10f8ec62f39d06700739036c20813b45cb329c37bf",
+        "noise_id": 287
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00288_raw.fits",
+        "cmb_hash": "sha256:318f809b751791844e467a2db81ff80425a4c4ba6ca3c336f99dde77c6db9a90",
+        "cmb_id": 288,
+        "noise_file": "dx12_v3_smica_noise_mc_00288_raw.fits",
+        "noise_hash": "sha256:bcc2bbf8424bd2c33a464eb95784fbb6cbccd842d837731e8beb34eb0ed2210e",
+        "noise_id": 288
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00289_raw.fits",
+        "cmb_hash": "sha256:0640f692b840b6bfc0887507b92d729ee286c460223a23f66459eb548f321bee",
+        "cmb_id": 289,
+        "noise_file": "dx12_v3_smica_noise_mc_00289_raw.fits",
+        "noise_hash": "sha256:0e960e0a87e4d1ad6c3750ae030c0d8a7a1bbf01d8a2b33a648193a49b4c89d1",
+        "noise_id": 289
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00290_raw.fits",
+        "cmb_hash": "sha256:235c093dcd20e1fff6ead85dc8556fb7e83a25ac129f75932c3a30222fc8ba94",
+        "cmb_id": 290,
+        "noise_file": "dx12_v3_smica_noise_mc_00290_raw.fits",
+        "noise_hash": "sha256:09bd44af410a13cadac570f1bc4d2f0cdb2f4cb45971a1109db537739bcb9b14",
+        "noise_id": 290
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00291_raw.fits",
+        "cmb_hash": "sha256:77dd0b5c8f39a1d2aaa74e607176d1dac5ee19c4d308802d6968a19b8a9a8302",
+        "cmb_id": 291,
+        "noise_file": "dx12_v3_smica_noise_mc_00291_raw.fits",
+        "noise_hash": "sha256:696d2aa463e3ee88756b0a32e08ce5a5285b03c30b5ad25cd322c0b4d24d8cca",
+        "noise_id": 291
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00292_raw.fits",
+        "cmb_hash": "sha256:0d57d4c0d0b8a4aec685786750563ac8b2551b7c3db43b148ff83555c882908e",
+        "cmb_id": 292,
+        "noise_file": "dx12_v3_smica_noise_mc_00292_raw.fits",
+        "noise_hash": "sha256:471a866a07cfa94a4336e3d466967b45f6a88e9fb4c733a6e4a139500e6bb106",
+        "noise_id": 292
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00293_raw.fits",
+        "cmb_hash": "sha256:9b9856df8a9125ca64be22b5aef17667762347ad7997ac46b2a0af468902fb32",
+        "cmb_id": 293,
+        "noise_file": "dx12_v3_smica_noise_mc_00293_raw.fits",
+        "noise_hash": "sha256:a6ce9aa703b4dd0f758f5cd18c91c8fe539b8dbfa1274ee151118f701241951e",
+        "noise_id": 293
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00294_raw.fits",
+        "cmb_hash": "sha256:cbcb117050a68aeccc01679d9faeabfc5770e33bbc3a52f14588b649944ecd85",
+        "cmb_id": 294,
+        "noise_file": "dx12_v3_smica_noise_mc_00294_raw.fits",
+        "noise_hash": "sha256:1329d916b39923e04f42614e8f6626dfc9321386b573f4963711ec94646cd4b4",
+        "noise_id": 294
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00295_raw.fits",
+        "cmb_hash": "sha256:3ab64118785a00d0e78790c08a41ddb6f14179936195d4d21f11179bb563b587",
+        "cmb_id": 295,
+        "noise_file": "dx12_v3_smica_noise_mc_00295_raw.fits",
+        "noise_hash": "sha256:2acb242f554530cddf5a07c65af31c5653cf9155d26952b5c9c6e262c3bf09ef",
+        "noise_id": 295
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00296_raw.fits",
+        "cmb_hash": "sha256:c9feee0910b6c991e5f3eb4bfbd1d2e42db863e2364ff7d7ee9500c42c5cea23",
+        "cmb_id": 296,
+        "noise_file": "dx12_v3_smica_noise_mc_00296_raw.fits",
+        "noise_hash": "sha256:4113df91788f1abc532c8010f121826067be4beffbb25398775beb33dee7fb10",
+        "noise_id": 296
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00297_raw.fits",
+        "cmb_hash": "sha256:3c666bb73f10d7032b289092c51ffd91fa96bf0cefe4bce24c71749601e26782",
+        "cmb_id": 297,
+        "noise_file": "dx12_v3_smica_noise_mc_00297_raw.fits",
+        "noise_hash": "sha256:d17f04a4a429030b993c20006a46ef59ed4f45a3c529a71c230f77592e579a63",
+        "noise_id": 297
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00298_raw.fits",
+        "cmb_hash": "sha256:de4e4ac1ccda5e9f272413a3f4767c62cc48a0fbbecb1bcbf9fafbbf5c477f39",
+        "cmb_id": 298,
+        "noise_file": "dx12_v3_smica_noise_mc_00298_raw.fits",
+        "noise_hash": "sha256:6b67045b82fa593630b6b45847a27690e71030d75b44ab0f101a8aef14a246d6",
+        "noise_id": 298
+      },
+      {
+        "cmb_file": "dx12_v3_smica_cmb_mc_00299_raw.fits",
+        "cmb_hash": "sha256:79c0897b9f35125ec463afc06640adf8a50fc9f84dbfb471469b0ad74655db30",
+        "cmb_id": 299,
+        "noise_file": "dx12_v3_smica_noise_mc_00299_raw.fits",
+        "noise_hash": "sha256:767dbbe1bf90e916c8a2007644a32b68445d4b53c3ee24a0a0e25acce407968d",
+        "noise_id": 299
+      }
+    ],
+    "known_missing_cmb_ids": [
+      970
+    ],
+    "max_requested": 300,
+    "n_cmb_used": 300,
+    "n_noise_used": 300,
+    "noise_dir": "workdir/raw/planck_ffp10/smica/noise_mc",
+    "nominal_cmb": 1000,
+    "nominal_noise": 300,
+    "observed_cmb_id_gaps": [],
+    "pairing": "cmb_mc[id] + noise_mc[id mod n_noise]  (id-parsed, gap-robust)",
+    "pla_confirmation": "pending"
+  },
+  "family_identification": false,
+  "headline": "K1 global look-elsewhere-corrected low-ell morphology p (smica) under the PLA-available FFP10 SMICA CMB+noise E2E null (300 used CMB MC + 300 noise MC)",
+  "map": {
+    "input_hash": "sha256:60952c645eb33d151905ddf5837477e15ca02a3261feca4ceca3c3feece4f9ac",
+    "path": "COM_CMB_IQU-smica_2048_R3.00_full.fits"
+  },
+  "method": "smica",
+  "native_solver_result": false,
+  "owner": "OBSSTAT",
+  "result": {
+    "global_p": 0.036544850498338874,
+    "local_p": {
+      "axis_to_cmb_dipole_deg": 0.9102990033222591,
+      "parity_asymmetry": 0.04983388704318937,
+      "parity_even_over_odd_ratio": 0.04983388704318937,
+      "planarity_mean": 0.10963455149501661,
+      "qo_axis_alignment_deg": 0.009966777408637873,
+      "s_one_half": 0.013289036544850499
+    },
+    "observed_max_score": 4.608497976080766
+  },
+  "schema": "htt.k1.global_maxscan_e2e_full.v1",
+  "statistics": [
+    "s_one_half",
+    "parity_even_over_odd_ratio",
+    "parity_asymmetry",
+    "planarity_mean",
+    "qo_axis_alignment_deg",
+    "axis_to_cmb_dipole_deg"
+  ],
+  "transfer_source": "ffp10_component_separation"
+}

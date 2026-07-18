@@ -1,0 +1,156 @@
+schema: htt.long_horizon.pr150_k1_e2e.v1
+spec_version: 1
+pr_id: PR-150
+title: K1 exchangeable global scan and Planck PR3 FFP10 E2E calibration
+baseline_commit: be4488332f514fddcfbb42d4b246bd61dc3ebdf1
+reviewed_on: '2026-07-18'
+owner: OBSSTAT
+contributors:
+  - COMMON
+implementation_scope:
+  - obsstat
+artifact_mode: e2e_conditional_morphology_diagnostic
+allowed_use:
+  - idealised_grf_pooled_rank_super_uniformity
+  - pr3_ffp10_e2e_input_manifest
+  - exchangeable_pooled_rank_global_p_from_e2e_null
+  - fixed_versus_reestimated_axis_multiplicity
+  - non_numeric_pr4_skip_receipt
+public_use: false
+claim_tier: conditional
+claim_tier_ceiling: conditional
+claim_level:
+  scheme: roadmap_rescue_v1
+  level: C2
+scientific_status: OPEN
+scientific_effect: none
+transfer_source: none
+
+claim_identity:
+  claim_id: C-PR150-K1-E2E
+  claim_text: >-
+    The exchangeable observation-inclusive pooled-rank global p-value estimator
+    (binding PR-135) is first checked for conservativeness on a large correlated
+    Gaussian-random-field ensemble with a live anti-conservative negative
+    control (a method self-consistency check — the correlation is inert to a
+    leave-one-out rank statistic, so this is NOT a Planck falsifier), then
+    applied to the real Planck PR3 FFP10 end-to-end SMICA null (300 CMB
+    Monte-Carlo maps drawn from the 999 available, each paired with a real noise
+    Monte-Carlo map) through the SAME frozen mask/proc-nside/
+    statistic/max-scan pipeline as the observed SMICA map (PR-149 convention),
+    with the observed and null maps traversing a byte-equivalent path. The
+    per-statistic local p-values and the look-elsewhere global p (max-scan over
+    the six registered statistics — no sky axis grid) are reported separately.
+    This is a PR3/FFP10-E2E-conditional low-multipole morphology DIAGNOSTIC at
+    C2 only; the idealised GRF super-uniformity is NEVER promoted to a Planck
+    systematics calibration, and no real-sky p-value is emitted without the
+    E2E ensemble. PR4/NPIPE is fully out of scope — the only permitted PR4
+    output is a NON-NUMERIC skip receipt, and no PR3+PR4 joint result is
+    produced. No family, axis detection or joint C3 claim. The two CF4 P0s are
+    untouched and stay OPEN.
+  domain: planck_lowell_k1_e2e_calibration
+  frame: binds_pr135_finite_null_pr149_convention_lowell_global_calibration
+  claim_level_scheme: roadmap_rescue_v1
+  claim_level: C2
+
+scope_and_non_goals:
+  idealised_grf_promoted_to_planck_calibration: forbidden
+  real_sky_p_without_e2e_ensemble: forbidden
+  pr4_npipe_numeric_output: forbidden
+  pr3_plus_pr4_joint_result: forbidden
+  k1_axis_detection_or_family_claim: forbidden
+  observed_null_path_not_byte_equivalent: forbidden
+
+data_scope:
+  cf4_data_work: authorized_by_user_2026_07_18
+  pr4_npipe: excluded_by_user_scope
+  raw_data_paths:
+    cmb_mc_dir: workdir/raw/planck_ffp10/smica/cmb_mc
+    noise_mc_dir: workdir/raw/planck_ffp10/smica/noise_mc
+    e2e_card: docs/generated/k1_global_maxscan_e2e_full.json
+  raw_data_policy: read_only_external_manifest_versioned_only
+
+remediation_state_contract:
+  path: docs/codex_handoff/research_remediation_state.yaml
+  sha256: f16d9754828bb32ae4cef92f585af82ae7fd1caa2687a7b4144bc1e942328dd9
+  finding_count: 102
+  required_scientific_status_counts: {OPEN: 102}
+  rescued_count: 0
+
+model:
+  module: htt/obsstat/k1_e2e_calibration.py
+  idealised:
+    n_statistics: 8
+    correlation_rho: '35/100'
+    n_realizations: 400
+    seed: 20260724
+    super_uniform_band: '3/100'
+  e2e:
+    method: smica
+    ensemble: ffp10
+    max_sims: 300
+    sample_hash_count: 4
+
+mutation_registry:
+  - mutation_id: idealised_promoted_to_planck
+    kill_rule: promoting the idealised GRF super-uniformity to a Planck systematics calibration is rejected
+  - mutation_id: real_sky_p_without_e2e
+    kill_rule: emitting a real-sky p-value without the E2E ensemble is rejected
+  - mutation_id: pr4_numeric_output
+    kill_rule: any PR4 NPIPE numeric output is rejected
+  - mutation_id: pr3_pr4_joint
+    kill_rule: a PR3-and-PR4 combined result is rejected
+  - mutation_id: k1_axis_detection
+    kill_rule: a K1 directional detection or Bianchi-family claim is rejected
+  - mutation_id: non_super_uniform_accepted
+    kill_rule: accepting a non-super-uniform pooled rank on correlated GRF is rejected
+
+negative_scan:
+  targets:
+    - htt/obsstat/k1_e2e_calibration.py
+    - docs/generated/pr150_captions.json
+  forbidden_patterns:
+    - 'idealised promoted to planck'
+    - 'real sky p without e2e'
+    - 'pr4 numeric result'
+    - 'pr3 plus pr4 joint'
+    - 'k1 axis detection'
+    - 'bianchi family from k1'
+  rule: >-
+    active PR-150 surfaces must never promote the idealised GRF, emit a real-sky
+    p without the E2E ensemble, produce a PR4 numeric result, produce a PR3+PR4
+    joint result, or claim a K1 axis detection or family.
+
+artifact_contract:
+  outputs:
+    - docs/generated/pr150_idealised_super_uniformity.json
+    - docs/generated/pr150_e2e_input_manifest.json
+    - docs/generated/pr150_e2e_pooled_rank.json
+    - docs/generated/pr150_pr4_skip_receipt.json
+    - docs/generated/pr150_captions.json
+    - docs/generated/pr150_mutation_report.json
+    - docs/generated/pr150_artifact_manifest.json
+  check_policy: fresh_build_must_equal_disk_bytes
+
+acceptance_and_kill_switches:
+  - the exchangeable pooled-rank global-p is super-uniform on the large correlated GRF ensemble
+  - the PR3 FFP10 E2E input manifest records the 999 CMB and 300 noise Monte-Carlo maps with sample hashes and byte-equivalent observed/null path
+  - the exchangeable pooled-rank global-p is computed from the E2E null with fixed-axis and re-estimated-axis multiplicity separated
+  - the idealised GRF super-uniformity is never promoted to a Planck systematics calibration
+  - PR4 NPIPE produces only a non-numeric skip receipt and no PR3+PR4 joint result
+  - every registered mutation executes and is killed
+  - all 102 remediation findings remain OPEN
+
+forbidden_output_language:
+  - idealised promoted to planck
+  - real sky p without e2e
+  - pr4 numeric result
+  - pr3 plus pr4 joint
+  - k1 axis detection
+  - bianchi family from k1
+  - shear detected
+  - isotropy established
+  - Bianchi geometry detected
+  - Bianchi family identified
+  - finding rescued
+  - validated as native
