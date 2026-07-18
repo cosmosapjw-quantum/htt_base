@@ -1,0 +1,42 @@
+{
+  "mutations": [
+    {
+      "kill_message_redacted": "a favourable identified-set endpoint may not be taken as a point estimate; the set is reported whole",
+      "kill_rule": "taking a favourable identified-set endpoint as a point estimate is rejected",
+      "killed": true,
+      "mutation_id": "favourable_endpoint_point_estimate"
+    },
+    {
+      "kill_message_redacted": "a set that contains zero does not prove isotropy",
+      "kill_rule": "reading a set that contains zero as proof of isotropy is rejected",
+      "killed": true,
+      "mutation_id": "set_contains_zero_isotropy"
+    },
+    {
+      "kill_message_redacted": "the frozen nuisance box may not be edited after the observed result",
+      "kill_rule": "editing the frozen nuisance box after the observed result is rejected",
+      "killed": true,
+      "mutation_id": "nuisance_tuned_to_result"
+    },
+    {
+      "kill_message_redacted": "a wide identified set may not be read as an anomaly or global tilt",
+      "kill_rule": "emitting an anomaly or global-tilt claim from a wide identified set is rejected",
+      "killed": true,
+      "mutation_id": "anomaly_claim"
+    },
+    {
+      "kill_message_redacted": "a CF4 P0 may not be closed before the PR-157 adjudication",
+      "kill_rule": "a premature CF4 P0 closure before the PR-157 adjudication is rejected",
+      "killed": true,
+      "mutation_id": "cf4_p0_closure"
+    },
+    {
+      "kill_message_redacted": "a bounded status was reported while a plausible nuisance makes the set effectively unbounded",
+      "kill_rule": "reporting a bounded status when a plausible nuisance makes the set unbounded is rejected",
+      "killed": true,
+      "mutation_id": "hidden_unbounded"
+    }
+  ],
+  "schema": "pr147.mutation_report.v1",
+  "surviving_mutation_count": 0
+}

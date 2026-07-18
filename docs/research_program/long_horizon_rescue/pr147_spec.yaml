@@ -1,0 +1,194 @@
+schema: htt.long_horizon.pr147_identified_set.v1
+spec_version: 1
+pr_id: PR-147
+title: Nuisance-augmented CF4 depth-resolved flow identified sets
+baseline_commit: d400a763689a7e743aabd2b72d866fb93f48ca3c
+reviewed_on: '2026-07-18'
+owner: HTT
+contributors:
+  - COMMON
+  - OBSSTAT
+implementation_scope:
+  - common
+artifact_mode: identified_region_coverage_mechanics
+allowed_use:
+  - frozen_nuisance_box_identified_set
+  - depth_resolved_flow_amplitude_apex_topology
+  - grid_conditional_simultaneous_coverage
+  - independent_endpoint_solver_cross_check
+  - gls_versus_mv_common_window_difference
+public_use: false
+claim_tier: conditional
+claim_tier_ceiling: conditional
+claim_level:
+  scheme: roadmap_rescue_v1
+  level: C3
+scientific_status: OPEN
+scientific_effect: none
+transfer_source: none
+
+claim_identity:
+  claim_id: C-PR147-IDENTIFIED-SET
+  claim_text: >-
+    A frozen nuisance box (distance-scale calibration, reconstruction /
+    velocity-observable choice, nonlinear-velocity dispersion) over the
+    flow-plus-monopole estimand (the ell=0 monopole is ALWAYS fit so a radial
+    calibration nuisance cannot alias into the ell=1 bulk flow), content-
+    addressed by a committed box hash before the observed result, is swept and
+    the depth-resolved CF4 bulk-flow vector is returned as an IDENTIFIED SET per
+    distance shell — its amplitude interval and apex cone — classified bounded
+    / empty / unbounded / undetermined (binding the PR-136 set-status
+    vocabulary). The honest outcome is that the identified set is BOUNDED at
+    every depth shell but its width and apex cone GROW with depth (a near-point
+    nearby shell widening to a several-hundred-km/s far shell), so no favourable
+    endpoint is ever taken as a point estimate and the set containing zero is
+    never read as isotropy. A mis-specification diagnostic separately shows that
+    omitting the monopole while sweeping the calibration manufactures an
+    artificial direction-undetermined / effectively-unbounded topology — which
+    is why the monopole is always fit — and a plausible-unbounded scenario
+    shows an unbounded distance-scale calibration does drive an unbounded
+    status. The identified-set endpoints use a CONTINUOUS optimiser as the
+    authority with a GRID vertex enumeration cross-check enforced as a kill
+    switch, the mesh sensitivity and depth / window sensitivity are reported,
+    the GENUINE simultaneous coverage of the set (a single injected realisation
+    scored jointly across the shells) is measured under Imbens-Manski widening
+    with a Bonferroni family-wise note (binding PR-137), and the GLS-versus-
+    OLS estimator difference under a common injected field is predicted. This
+    is identified-region coverage mechanics at C3 only; the two CF4 P0s stay
+    OPEN with remediation-CANDIDATE receipts, closure impossible before the
+    PR-157 adjudication. No anomaly or global-tilt claim is produced.
+  domain: cf4_group_peculiar_velocity_identified_sets
+  frame: binds_pr136_identified_set_pr137_coverage_pr145_estimators_pr146_simulator
+  claim_level_scheme: roadmap_rescue_v1
+  claim_level: C3
+
+scope_and_non_goals:
+  favourable_endpoint_as_point_estimate: forbidden
+  set_contains_zero_implies_isotropy: forbidden
+  nuisance_bounds_tuned_to_observed_result: forbidden
+  anomaly_or_global_tilt_claim: forbidden
+  cf4_p0_closure_before_pr157: forbidden
+  hide_set_topology_change_or_optimizer_uncertainty: forbidden
+
+data_scope:
+  cf4_data_work: authorized_by_user_2026_07_18
+  pr4_npipe: excluded_by_user_scope
+  raw_data_paths:
+    groups: workdir/obs_bundle/pecvel/cf4_full/cf4_groups.npz
+    variants: workdir/obs_bundle/pecvel/cf4_full/cf4_pv_variants.npz
+  raw_data_policy: read_only_external_manifest_versioned_only
+
+remediation_state_contract:
+  path: docs/codex_handoff/research_remediation_state.yaml
+  sha256: f16d9754828bb32ae4cef92f585af82ae7fd1caa2687a7b4144bc1e942328dd9
+  finding_count: 102
+  required_scientific_status_counts: {OPEN: 102}
+  rescued_count: 0
+
+model:
+  module: htt/src/common/cf4_identified_set.py
+  H0_kms_mpc: '373/5'
+  n_shells: 3
+  nuisance_box:
+    observable: [primary, Vpec, Vpwf]
+    calibration_fraction: [-0.05, 0.0, 0.05]
+    sigma_nl_kms: [150, 250, 350]
+    monopole: [true]
+  nuisance_box_sha256: d2f8fc87ff3a775e21a0f63792117643812ec1ccfff7c167497aaa1ce5f2224f
+  frozen_note: >-
+    the nuisance box is frozen and content-addressed by nuisance_box_sha256
+    before the observed result; the monopole is ALWAYS fit (a distance-scale
+    calibration is a radial ell=0 mode and must not alias into the ell=1 flow),
+    and Vpds is excluded as noise-dominated (rev-r196) and documented, not
+    silently dropped.
+  apex_nonidentified_deg: 90
+  effectively_unbounded_amplitude_kms: 2000
+
+coverage:
+  n_inject: 600
+  seed: 20260722
+  subsample: 1500
+  family_conf: 0.95
+  rule: >-
+    the identified set is measured for GENUINE simultaneous coverage of a
+    single injected realisation scored jointly across the depth shells with a
+    Bonferroni per-shell confidence; every shell that undershoots the raw
+    per-shell target is reported, never hidden, and the amplitude Rice-bias
+    non-Gaussianity at noise-dominated depth is disclosed.
+
+mesh_sensitivity:
+  refine_points: 5
+  max_endpoint_shift_kms: 50
+  rule: >-
+    the continuous-nuisance mesh is refined and the identified-set amplitude
+    endpoints must not move more than the reported tolerance, else the mesh is
+    declared insufficient.
+
+mutation_registry:
+  - mutation_id: favourable_endpoint_point_estimate
+    kill_rule: taking a favourable identified-set endpoint as a point estimate is rejected
+  - mutation_id: set_contains_zero_isotropy
+    kill_rule: reading a set that contains zero as proof of isotropy is rejected
+  - mutation_id: nuisance_tuned_to_result
+    kill_rule: editing the frozen nuisance box after the observed result is rejected
+  - mutation_id: anomaly_claim
+    kill_rule: emitting an anomaly or global-tilt claim from a wide identified set is rejected
+  - mutation_id: cf4_p0_closure
+    kill_rule: a premature CF4 P0 closure before the PR-157 adjudication is rejected
+  - mutation_id: hidden_unbounded
+    kill_rule: reporting a bounded status when a plausible nuisance makes the set unbounded is rejected
+
+negative_scan:
+  targets:
+    - htt/src/common/cf4_identified_set.py
+    - docs/generated/pr147_captions.json
+  forbidden_patterns:
+    - 'favourable endpoint is the estimate'
+    - 'set contains zero so isotropy'
+    - 'nuisance tuned to the result'
+    - 'anomaly detected'
+    - 'global tilt detected'
+    - 'cf4 p0 closed'
+  rule: >-
+    active PR-147 surfaces must never take a favourable endpoint as the
+    estimate, read zero-containment as isotropy, tune the nuisance box, claim
+    an anomaly or global tilt, or close a CF4 P0.
+
+artifact_contract:
+  outputs:
+    - docs/generated/pr147_identified_set.json
+    - docs/generated/pr147_coverage.json
+    - docs/generated/pr147_mesh_sensitivity.json
+    - docs/generated/pr147_gls_mv_difference.json
+    - docs/generated/pr147_comparability_table.json
+    - docs/generated/pr147_p0_remediation_candidates.json
+    - docs/generated/pr147_captions.json
+    - docs/generated/pr147_mutation_report.json
+    - docs/generated/pr147_artifact_manifest.json
+  check_policy: fresh_build_must_equal_disk_bytes
+
+acceptance_and_kill_switches:
+  - the nuisance box matches its committed content address before the observed result
+  - the depth-resolved flow identified set over the flow-plus-monopole estimand is computed and classified; the honest outcome is bounded at every shell but widening with depth
+  - the continuous optimiser is the authority and the grid vertex enumeration is enforced as a kill switch (grid inside continuous)
+  - the mesh sensitivity checks the continuous-optimiser restart stability and reports the grid-minus-continuous gap
+  - the genuine simultaneous coverage (one shared realisation scored jointly across shells) is measured with Imbens-Manski widening; every shell undershooting the raw Bonferroni target is reported and the Rice-bias shortfall disclosed
+  - the GLS-versus-OLS weighting difference under a common injected field is predicted (NOT the minimum-variance ideal-window estimator)
+  - a mis-specification diagnostic shows omitting the monopole manufactures an artificial unbounded topology, and a plausible-unbounded calibration prior yields an unbounded status
+  - the two CF4 P0s stay OPEN with remediation-candidate receipts (no closure before PR-157)
+  - every registered mutation executes and is killed
+  - all 102 remediation findings remain OPEN
+
+forbidden_output_language:
+  - favourable endpoint is the estimate
+  - set contains zero so isotropy
+  - nuisance tuned to the result
+  - anomaly detected
+  - global tilt detected
+  - cf4 p0 closed
+  - shear detected
+  - isotropy established
+  - Bianchi geometry detected
+  - Bianchi family identified
+  - finding rescued
+  - validated as native

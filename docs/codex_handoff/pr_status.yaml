@@ -93,9 +93,9 @@ completed:
 - PR-144
 - PR-145
 - PR-146
+- PR-147
 blocked: []
 pending:
-- PR-147
 - PR-148
 - PR-149
 - PR-150
@@ -118,6 +118,12 @@ dormant_external:
 - PR-166
 in_progress: null
 execution_resolutions:
+  PR-147:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-147.md
+    resolved_on: '2026-07-18'
+    scientific_status_effect: none
+    scientific_status_after: OPEN
   PR-146:
     resolution: COMPLETED_SUCCESS
     receipt: docs/PR_DELTAS/pr-146.md
@@ -1350,3 +1356,30 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   Forward-simulator coverage mechanics only; both CF4 P0s stay OPEN with
   remediation-candidate receipts; closure is impossible before the PR-157
   adjudication; 102 findings OPEN; PR4 NPIPE excluded.
+  PR-147 returns the depth-resolved CF4 bulk flow as an IDENTIFIED SET over a
+  frozen content-addressed nuisance box (distance-scale calibration,
+  reconstruction observable, nonlinear dispersion) on the flow-plus-monopole
+  estimand, classified with the PR-136 set-status vocabulary. The honest
+  outcome is that the set is bounded at every depth shell but its amplitude
+  interval and apex cone widen with depth, so no favourable endpoint is a
+  point estimate and a set containing zero is not read as isotropy. The
+  continuous optimiser is the authority with the grid vertex enumeration
+  enforced as a kill switch; the mesh check probes the continuous restart
+  stability and reports the grid-minus-continuous gap; the genuine
+  simultaneous coverage scores one shared injected realisation jointly across
+  the shells with Imbens-Manski widening (binding PR-137) and discloses the
+  amplitude Rice-bias undershoot at noise-dominated depth. A mis-specification
+  diagnostic shows that omitting the monopole while sweeping the calibration
+  manufactures an artificial direction-undetermined and effectively-unbounded
+  topology, which is why the monopole is always fit, and a plausible-unbounded
+  calibration prior yields an unbounded status. Six mutations killed on live
+  guard paths. A multi-lane adversarial review returned no P0 and two P1 plus
+  six P2, all fixed pre-commit (the monopole is now always fit so the
+  headline topology is bounded-widening rather than a mis-specification
+  artifact, the coverage is genuine simultaneous rather than a min of
+  marginals, the box is content-addressed, the cross-engine check is a kill
+  switch, the estimator difference is relabelled GLS-versus-OLS, and the mesh
+  check probes the continuous authority). Identified-region coverage mechanics
+  only; both CF4 P0s stay OPEN with remediation-candidate receipts; closure is
+  impossible before the PR-157 adjudication; 102 findings OPEN; PR4 NPIPE
+  excluded.

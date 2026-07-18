@@ -7,6 +7,35 @@
 
 ## [Unreleased]
 
+### PR-147 — Nuisance-augmented CF4 depth-resolved flow identified sets (rev-r224, 2026-07-18)
+
+Roadmap Wave-18 PR-147 (deps PR-136/137/145/146). `htt/src/common/cf4_identified_set.py`:
+a frozen, content-addressed nuisance box (distance-scale calibration, reconstruction
+observable primary/Vpec/Vpwf, nonlinear dispersion) over the flow-plus-monopole
+estimand (the ell=0 monopole ALWAYS fit so a radial calibration cannot alias into
+the ell=1 flow) is swept and the depth-resolved CF4 bulk flow is returned as an
+IDENTIFIED SET per shell — amplitude interval + apex cone — classified
+bounded/empty/unbounded/undetermined (binds PR-136 SetStatus). Honest outcome: the
+set is BOUNDED at every shell but widens with depth ([116,345]/[270,564]/[286,826]
+km/s, cones 10/17/7deg), so no favourable endpoint is a point estimate and a
+set containing zero is not isotropy. CONTINUOUS optimiser is the authority with the
+GRID enumeration a kill switch; mesh check probes continuous restart stability +
+reports grid-minus-continuous gap; genuine simultaneous coverage (one shared
+realisation scored jointly across shells, Imbens-Manski widened, binds PR-137) 0.913
+with the per-shell Rice-bias undershoot at depth disclosed; GLS-vs-OLS weighting
+difference predicted (NOT the MV ideal-window). A mis-specification diagnostic shows
+omitting the monopole manufactures the artificial unbounded topology; a
+plausible-unbounded calibration prior yields unbounded. 6/6 mutations killed on live
+guards. Multi-lane review (Workflow 3 refute-lenses x find->verify, effort high): NO
+P0, 2 P1 + 6 P2 all CONFIRMED + fixed pre-commit (monopole always fit so the headline
+is bounded-widening not a mis-spec artifact; coverage genuine-simultaneous not
+min-of-marginals; box content-addressed; cross-engine kill switch; estimator
+relabelled GLS-vs-OLS; mesh probes the continuous authority). Suite
+test_pr147_identified_set.py (12) + full gate baseline. C3 identified-region coverage
+mechanics; both CF4 P0s stay OPEN with remediation-candidate receipts (closure needs
+PR-157); no anomaly/global-tilt/detection; 102 OPEN; DAG 94/113; next PR-148
+(checkpoint 095). See docs/PR_DELTAS/pr-147.md.
+
 ### PR-146 — Correlated-flow, distance-error, selection/grouping CF4 forward mocks (rev-r223, 2026-07-18)
 
 Roadmap Wave-18 PR-146 (deps PR-123/135/137/144/145). `htt/src/common/cf4_forward_simulator.py`:

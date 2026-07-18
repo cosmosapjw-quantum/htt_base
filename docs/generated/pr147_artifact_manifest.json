@@ -1,0 +1,60 @@
+{
+  "allowed_use": [
+    "frozen_nuisance_box_identified_set",
+    "depth_resolved_flow_amplitude_apex_topology",
+    "grid_conditional_simultaneous_coverage",
+    "independent_endpoint_solver_cross_check",
+    "gls_versus_mv_common_window_difference"
+  ],
+  "artifact_mode": "identified_region_coverage_mechanics",
+  "artifacts": {
+    "docs/generated/pr147_captions.json": "66b94bdf66f6a27ee2f5c4e6d23e1d10c613ae5ea14785948ff8e9e57e65b764",
+    "docs/generated/pr147_comparability_table.json": "6ff7f65a3086910d879fc87c972a0e19348aa4dd4b5624d1ef5e4ac5ea8210a3",
+    "docs/generated/pr147_coverage.json": "04afbab6a4d11f404f701c0f2128254d030cd013d611013c86c7adc350ed1b20",
+    "docs/generated/pr147_gls_mv_difference.json": "5a2329354b844cfc3add5a59956b211c1e61708479fc2e14cbc70a287805207d",
+    "docs/generated/pr147_identified_set.json": "bcd16a64aa126c1faa0ffb2bedc6b7da813d83f86fe897d47fba6f3b2483b6fa",
+    "docs/generated/pr147_mesh_sensitivity.json": "00b585e21d21938fb62f8545ed3dc43c3495fdb6bf7be8b23a7a839cf62b8e41",
+    "docs/generated/pr147_mutation_report.json": "2aac7b290782109272ac41bfbdf314e757a724cc1d9a781c011568114df65936",
+    "docs/generated/pr147_p0_remediation_candidates.json": "bb8e4d2f042d2e9f9c0dae3fa2101a78cce870ff003ee32a10d0f81f50a18b0e"
+  },
+  "caveats": [
+    "Identified-region coverage mechanics at C3 only.",
+    "The identified set is bounded but wide and grows with depth; no favourable endpoint is a point estimate.",
+    "A set that contains zero is never read as isotropy.",
+    "The nuisance box is frozen and content-addressed by the spec before the observed result.",
+    "The two CF4 P0s stay OPEN with remediation CANDIDATES; closure is impossible before the PR-157 adjudication.",
+    "No anomaly or global-tilt claim.",
+    "All 102 remediation findings remain OPEN."
+  ],
+  "claim_level": {
+    "level": "C3",
+    "scheme": "roadmap_rescue_v1"
+  },
+  "claim_tier": "conditional",
+  "config_hash": "c449ab53086382148651df1550df2236e8a9df8f71b96ef478474a8ff4af0442",
+  "forbidden_use": [
+    "favourable endpoint is the estimate",
+    "set contains zero so isotropy",
+    "nuisance tuned to the result",
+    "anomaly detected",
+    "global tilt detected",
+    "cf4 p0 closed",
+    "shear detected",
+    "isotropy established",
+    "Bianchi geometry detected",
+    "Bianchi family identified",
+    "finding rescued",
+    "validated as native"
+  ],
+  "input_hashes": [
+    "htt/src/common/cf4_identified_set.py:53d5bed9de17349ece78c52c373e0b4ff9503d7491d9d9c39b93e3ede6015575",
+    "htt/src/common/cf4_velocity_estimators.py:4fc9364a4a59c159445d524df5b7a09495059468ed0d7f9ecce2da1ce57a6054"
+  ],
+  "owner": "HTT",
+  "raw_data_pins": {
+    "groups_sha256": "3c0f2e1a5b56b7227abb5e187406810d7eb15e924aac69e9cb0ffc1343a811ad",
+    "variants_sha256": "e3dfd734c133858892436a139eb0bd0ed916e3283db54d83dd7c0146d451d87b"
+  },
+  "schema": "pr147.artifact_manifest.v1",
+  "transfer_source": "none"
+}

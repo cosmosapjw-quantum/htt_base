@@ -1,0 +1,144 @@
+{
+  "misspecification_diagnostic": {
+    "note": "omitting the monopole while sweeping the radial calibration aliases the ell=0 systematic into the ell=1 flow, manufacturing an artificial direction-undetermined and effectively-unbounded topology; this is a mis-specification (the monopole is always fit in the frozen box), reported as a diagnostic, not as the identified set",
+    "scenario": "monopole_omitted_while_sweeping_calibration",
+    "shells": [
+      {
+        "amplitude_interval_kms": [
+          121.825759,
+          342.965998
+        ],
+        "apex_cone_deg": 27.438119,
+        "shell": 0,
+        "status": "bounded"
+      },
+      {
+        "amplitude_interval_kms": [
+          396.014592,
+          982.695154
+        ],
+        "apex_cone_deg": 120.610787,
+        "shell": 1,
+        "status": "undetermined"
+      },
+      {
+        "amplitude_interval_kms": [
+          516.470582,
+          4759.277852
+        ],
+        "apex_cone_deg": 9.125624,
+        "shell": 2,
+        "status": "unbounded"
+      }
+    ]
+  },
+  "module_schema": "pr147.cf4_identified_set.v1",
+  "n_shells": 3,
+  "negative_scan": {
+    "targets": {
+      "docs/generated/pr147_captions.json": {
+        "hits": [],
+        "sha256": "66b94bdf66f6a27ee2f5c4e6d23e1d10c613ae5ea14785948ff8e9e57e65b764",
+        "source": "fresh_build"
+      },
+      "htt/src/common/cf4_identified_set.py": {
+        "hits": [],
+        "sha256": "53d5bed9de17349ece78c52c373e0b4ff9503d7491d9d9c39b93e3ede6015575",
+        "source": "disk"
+      }
+    },
+    "total_hits": 0
+  },
+  "note": "the identified set is bounded at every depth shell over the flow-plus-monopole estimand but its width and apex cone grow with depth; the reported interval is the continuous-optimiser authority (grid cross-checked as a kill switch); no favourable endpoint is a point estimate and a set containing zero is not read as isotropy",
+  "nuisance_box_sha256": "d2f8fc87ff3a775e21a0f63792117643812ec1ccfff7c167497aaa1ce5f2224f",
+  "plausible_unbounded_scenario": {
+    "far_shell_amplitude_hi_kms": 3844.628334,
+    "note": "if the distance-scale calibration prior were unbounded (even with the monopole fit), the far-shell amplitude grows past the effectively-unbounded threshold; the status is reported as unbounded, not forced to bounded",
+    "scenario": "unbounded_distance_scale_calibration_prior",
+    "status": "unbounded"
+  },
+  "schema": "pr147.identified_set.v1",
+  "shells": [
+    {
+      "amplitude_interval_kms": [
+        116.20982,
+        344.896777
+      ],
+      "apex_cone_deg": 10.019404,
+      "contains_zero": false,
+      "continuous_amplitude_interval_kms": [
+        116.20982,
+        344.896777
+      ],
+      "cross_engine": {
+        "grid_inside_continuous": true,
+        "grid_lower_minus_continuous_lower": 0.0,
+        "grid_upper_minus_continuous_upper": 0.0,
+        "upper_endpoint_agrees": true
+      },
+      "dist_hi_mpc": 138.0,
+      "dist_lo_mpc": 0.1,
+      "grid_amplitude_interval_kms": [
+        116.20982,
+        344.896777
+      ],
+      "n_groups": 12667,
+      "shell": 0,
+      "status": "bounded"
+    },
+    {
+      "amplitude_interval_kms": [
+        269.665439,
+        564.488795
+      ],
+      "apex_cone_deg": 16.525077,
+      "contains_zero": false,
+      "continuous_amplitude_interval_kms": [
+        269.665439,
+        564.488795
+      ],
+      "cross_engine": {
+        "grid_inside_continuous": true,
+        "grid_lower_minus_continuous_lower": 0.0,
+        "grid_upper_minus_continuous_upper": 0.0,
+        "upper_endpoint_agrees": true
+      },
+      "dist_hi_mpc": 288.4,
+      "dist_lo_mpc": 138.0,
+      "grid_amplitude_interval_kms": [
+        269.665439,
+        564.488795
+      ],
+      "n_groups": 12666,
+      "shell": 1,
+      "status": "bounded"
+    },
+    {
+      "amplitude_interval_kms": [
+        285.893898,
+        826.331979
+      ],
+      "apex_cone_deg": 7.305529,
+      "contains_zero": false,
+      "continuous_amplitude_interval_kms": [
+        285.893898,
+        826.331979
+      ],
+      "cross_engine": {
+        "grid_inside_continuous": true,
+        "grid_lower_minus_continuous_lower": 0.0,
+        "grid_upper_minus_continuous_upper": -0.0,
+        "upper_endpoint_agrees": true
+      },
+      "dist_hi_mpc": 772.7,
+      "dist_lo_mpc": 288.4,
+      "grid_amplitude_interval_kms": [
+        285.893898,
+        826.331979
+      ],
+      "n_groups": 12720,
+      "shell": 2,
+      "status": "bounded"
+    }
+  ]
+}
