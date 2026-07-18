@@ -7,6 +7,38 @@
 
 ## [Unreleased]
 
+### PR-145 — Radial-monopole and velocity-shape estimator mechanics (rev-r222, 2026-07-18)
+
+Roadmap Wave-18 PR-145 (deps PR-123/134-137/144). `htt/src/common/cf4_velocity_estimators.py`:
+from the authenticated CF4 raw distance observable (v = V3k - H0*Dist, CMB frame)
+one estimand registry computes the bulk-flow 3-vector + a flow-plus-radial-monopole
+constrained estimator, each with a FULL covariance = measurement noise + linear
+cosmic variance (A^-1 M A^-1, M from the Gorski radial/transverse velocity
+correlation of the fiducial velocity power spectrum, sigma_v_1d verified). The
+cosmic-variance term dominates, so the honest full-covariance significance (~1
+sigma) is far below the noise-only formal figure (~8 sigma) — the deflation IS the
+P0's remediation. Estimators compared as VECTORS under the full covariance
+(Mahalanobis), never scalar amplitude. Per the owner's direction the corrected
+significance is REPORTED (upper bound, since linear CV is a variance lower bound);
+amplitude ~320 km/s is a different estimator/sample from the quarantined headline,
+no quarantined token emitted. Injections recover flow+monopole at 68/95 per-comp
+under the full covariance while noise-only UNDER-covers (~0.35) — propagation
+self-consistency + full-vs-noise-only discrimination, NOT a physical-model
+validation. Eight-region partition on the REAL supergalactic SGX/SGY/SGZ. 6/6
+mutations killed, guards live. Both CF4 P0s stay OPEN with remediation-CANDIDATE
+receipts (closure needs PR-157). Multi-lane review (3 refute-lenses + verify):
+covariance-correctness lens found NO P0/P1 (C_ab correctly normalized, propagation
+correct, deflation physical); fixed 1 P1 (partition labeled supergalactic but used
+equatorial positions, 91.9% mis-regioned -> now real SGX/SGY/SGZ) + 4 P2 (coverage
+over-claimed model validation -> propagation+discrimination framing with noise-only
+under-coverage asserted; min_count now fail-closed; guards wired live; C3 candidate
+honestly scopes out the un-implemented ML branch); a 5th P2 (quarantine DAG-png pin
+"unused") is the expected post-commit binding state, self-resolving in convergence.
+Suite: `tests/contracts/test_pr145_velocity_estimators.py` (11) + full gate at
+baseline. DAG 92/113. C2 observable-estimator mechanics; both CF4 P0s stay OPEN; no
+detection; 102 OPEN / 0 RESCUED; PR4 NPIPE excluded; next PR-146. See
+docs/PR_DELTAS/pr-145.md.
+
 ### PR-144 — Authenticated CF4 row/group/selection manifest (rev-r221, 2026-07-18)
 
 Roadmap Wave-18 PR-144 (deps PR-120/134/143) — **first PR of the authorized

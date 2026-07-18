@@ -91,9 +91,9 @@ completed:
 - PR-142
 - PR-143
 - PR-144
+- PR-145
 blocked: []
 pending:
-- PR-145
 - PR-146
 - PR-147
 - PR-148
@@ -118,6 +118,12 @@ dormant_external:
 - PR-166
 in_progress: null
 execution_resolutions:
+  PR-145:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-145.md
+    resolved_on: '2026-07-18'
+    scientific_status_effect: none
+    scientific_status_after: OPEN
   PR-144:
     resolution: COMPLETED_SUCCESS
     receipt: docs/PR_DELTAS/pr-144.md
@@ -1284,3 +1290,28 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
   uncertainty columns added, the error-bar columns retyped, and a
   mislabeled mutation split honestly). Dataset provenance only; the two CF4
   P0s stay OPEN; 102 findings OPEN; PR4 NPIPE excluded.
+  PR-145 builds the CF4 radial-monopole and velocity-shape estimator
+  mechanics, the core of the two CF4 P0 remediations. From the authenticated
+  raw distance observable one estimand registry computes the bulk-flow
+  three-vector and a flow-plus-radial-monopole constrained estimator, each
+  with a full covariance that adds the linear-theory cosmic-variance
+  covariance (the Gorski radial and transverse velocity correlation from the
+  fiducial velocity power spectrum, with the one-dimensional dispersion
+  verified) to the measurement-noise covariance. The cosmic-variance term
+  dominates the tiny noise term, so the honest full-covariance significance
+  near one sigma is far below the noise-only formal figure near eight sigma,
+  and that deflation is the remediation of the formal-error over-claim.
+  Estimators are compared as vectors under the full covariance by a
+  Mahalanobis distance, never a scalar amplitude overlap. Per the owner
+  direction the corrected significance is reported as an upper bound because
+  the linear cosmic-variance covariance is a lower bound on the total
+  variance. Injections recover the flow and monopole at the nominal
+  sixty-eight and ninety-five percent per component under the full covariance
+  while the noise-only covariance under-covers, and an eight-region partition
+  on the real supergalactic Cartesian coordinates checks leverage. Six
+  mutations killed on live guard paths. A multi-lane review found the
+  cosmic-variance covariance correct with no P0 or P1 on the crux and fixed
+  one P1 (the partition had used equatorial rather than supergalactic
+  coordinates) and four P2. Both CF4 P0s stay OPEN with remediation-candidate
+  receipts; closure is impossible before the PR-157 adjudication; 102
+  findings OPEN; PR4 NPIPE excluded.

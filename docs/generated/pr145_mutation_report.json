@@ -1,0 +1,42 @@
+{
+  "mutations": [
+    {
+      "kill_message_redacted": "the constrained-estimator median is not the truth",
+      "kill_rule": "declaring the constrained-estimator median the truth is rejected",
+      "killed": true,
+      "mutation_id": "constrained_median_as_truth"
+    },
+    {
+      "kill_message_redacted": "the measurement-noise-only (formal) significance may not be reported as the result; the full covariance is required",
+      "kill_rule": "reporting the measurement-noise-only significance as the result is rejected by the full-covariance guard",
+      "killed": true,
+      "mutation_id": "noise_only_significance"
+    },
+    {
+      "kill_message_redacted": "estimators are compared as vectors under the full covariance, not by a scalar amplitude overlap",
+      "kill_rule": "comparing estimators by scalar amplitude overlap alone is rejected by the vector-covariance guard",
+      "killed": true,
+      "mutation_id": "scalar_amplitude_overlap"
+    },
+    {
+      "kill_message_redacted": "a CF4 P0 may not be closed before the PR-157 adjudication; PR-145 emits a remediation CANDIDATE only",
+      "kill_rule": "a premature CF4 P0 closure claim before the PR-157 adjudication is rejected",
+      "killed": true,
+      "mutation_id": "cf4_p0_closure"
+    },
+    {
+      "kill_message_redacted": "rank-deficient design (rank 1 < 3) — no point estimate is emitted",
+      "kill_rule": "emitting a point estimate under a rank-deficient design is rejected",
+      "killed": true,
+      "mutation_id": "rank_deficient_point_estimate"
+    },
+    {
+      "kill_message_redacted": "the supergalactic partition is an eight-region partition, never loosely an octant subset",
+      "kill_rule": "labelling the eight-region partition an octant subset is rejected",
+      "killed": true,
+      "mutation_id": "octant_relabel"
+    }
+  ],
+  "schema": "pr145.mutation_report.v1",
+  "surviving_mutation_count": 0
+}

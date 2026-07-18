@@ -1,0 +1,21 @@
+{
+  "candidates": [
+    {
+      "closure": "impossible before the PR-157 adjudication",
+      "disposition": "remediation_candidate",
+      "finding_id": "C1-K5-MV-F1",
+      "mechanics": "the bulk-flow estimator now carries a FULL covariance (measurement noise + linear cosmic variance); the full-covariance significance (0.96) is far below the noise-only formal figure (8.21), which was the over-claim, and injections recover the flow with nominal coverage",
+      "status": "OPEN"
+    },
+    {
+      "closure": "impossible before the PR-157 adjudication",
+      "disposition": "remediation_candidate",
+      "finding_id": "C3-K5-VCORR-ML-F1",
+      "mechanics": "the shared cosmic-variance covariance machinery and the vector-under-full-covariance discipline are available; the ML f sigma_8 remediation itself is a scoped follow-up within the estimator registry",
+      "scope_note": "PR-145 does NOT implement the velocity-correlation ML (f sigma_8) estimator; it supplies the SHARED covariance machinery (the Gorski radial/transverse correlation from the fiducial velocity power spectrum) and the full-covariance vector discipline that the ML branch will use",
+      "status": "OPEN"
+    }
+  ],
+  "note": "both CF4 P0s stay OPEN; PR-145 supplies remediation CANDIDATES with corrected covariance mechanics, not closure",
+  "schema": "pr145.p0_remediation_candidates.v1"
+}
