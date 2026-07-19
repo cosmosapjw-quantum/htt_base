@@ -1,0 +1,19 @@
+PR-170 normalized equation record; this file is not a copy of the paper.
+Source: Thomas Buchert, arXiv:gr-qc/9906015v2, DOI 10.1023/A:1001800617177.
+Raw source archive SHA-256: 0a1246749d82cea73f45d0d8538746fd4661eeede2abd8bf7243f4594514a273
+
+Equation (3): sigma_ab is the trace-free part of the expansion tensor.
+Equation after (4e): sigma_sq := (1/2) sigma^i_j sigma^j_i.
+Equation (9a): <Psi>_D := V_D^(-1) integral_D Psi dV.
+Equation (9d): <theta>_D = 3 dot(a_D)/a_D.
+Equation (10c):
+  Q_D^B := (2/3) <(theta-<theta>_D)^2>_D - 2 <sigma_sq>_D.
+
+Repository notation fixed for PR-170:
+  H_D := <theta>_D/3.
+  Sigma2_D_rms := <sigma_ab sigma^ab>_D/(6 H_D^2)
+                = <sigma_sq>_D/(3 H_D^2), for H_D != 0.
+  Omega_Q_D^B := -Q_D^B/(6 H_D^2), for H_D != 0.
+
+Scope: irrotational geodesic dust, flow-orthogonal proper-time foliation,
+compact comoving averaging domain, and one common time slice.

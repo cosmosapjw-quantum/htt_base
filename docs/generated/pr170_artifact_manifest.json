@@ -1,0 +1,172 @@
+{
+  "artifacts": [
+    {
+      "path": "docs/generated/pr170_active_consumer_inventory.json",
+      "sha256": "1c084eafc3ac719b652d8a9485677206da332a5bd1b497c078a21537df77007e"
+    },
+    {
+      "path": "docs/generated/pr170_candidate_branch_supersession.json",
+      "sha256": "5d270118f433cca7247576b63235f1c6d6037741c2477a10852058f0d85115c6"
+    },
+    {
+      "path": "docs/generated/pr170_exact_identity.json",
+      "sha256": "3dd6b753e05fd2748347d34a3f0f9f7b766d62986d45c9301dcbd7619c3148d7"
+    },
+    {
+      "path": "docs/generated/pr170_mutation_report.json",
+      "sha256": "dc7c7379eeacdd2908765a15371b9ba90583ca66e84de9ed174a1ed481c40ac4"
+    },
+    {
+      "path": "docs/generated/pr170_physical_admissibility.json",
+      "sha256": "86cc6eccf6924336f67abe07b47878d35a73fad92e22e802d1cd1aa5db1840c5"
+    },
+    {
+      "path": "docs/generated/pr170_result_card.json",
+      "sha256": "a9fb45047a96664cb8ce6cf811274f66e9a75c48119216abef67f5fc0a54d175"
+    },
+    {
+      "path": "docs/generated/pr170_source_provenance_receipt.json",
+      "sha256": "d617a697740558015c8b083b68263374defe0eb7890541a9cf18436ea6876234"
+    },
+    {
+      "path": "docs/generated/pr170_two_patch_witness.json",
+      "sha256": "8c9d82657bc1c666b58000eabe0f48dd3a487bd95b7d14d661fc87ae52ec0876"
+    },
+    {
+      "path": "docs/generated/pr170_type_closure.json",
+      "sha256": "aaa4888a8a3599f37200880243a6363346f0a3f4933ca816fa9e9707c682bf1f"
+    }
+  ],
+  "claim_id": "C-PR170-BUCHERT-SCALAR-BRIDGE",
+  "evidence_type": "artifact_manifest_and_claim_ledger",
+  "inputs": [
+    {
+      "path": "docs/research_program/long_horizon_rescue/pr170_spec.yaml",
+      "sha256": "0079dab825dbd1732a655e07f183599227c37961689f3ab79446cd17d65ef127"
+    },
+    {
+      "path": "docs/research_program/long_horizon_rescue/pr170_spec_erratum.yaml",
+      "sha256": "2a4360afd59da60be86201b5a153ef1409c897e4258c639ced1ee0772cc2ad14"
+    },
+    {
+      "path": "docs/research_program/long_horizon_rescue/pr170_primary_source_provenance.yaml",
+      "sha256": "ab14a88fc03f436ef32d269f5790806aac4ff45c6f56256f44e66d13f34dccc5"
+    },
+    {
+      "path": "docs/generated/pr170_cas/CAS_CONTRACT_PR170_BUCHERT_TWO_PATCH.json",
+      "sha256": "e79d4a42214ad275a9d6c44076bd2f3b6c4a8e8dc749984c95b58f3cb43e0598"
+    },
+    {
+      "path": "docs/generated/pr170_cas/preaxis_authorization.json",
+      "sha256": "a4156b42c764007aa7d3fcc6e7dddb4c34bdf62d464314c0a93cd4c9394d2bfd"
+    },
+    {
+      "path": "docs/generated/pr170_cas_collection_receipt.json",
+      "sha256": "98496de326531fc75c1b90a10f9a6441f932844a6dbee3e5af9df67be02dff38"
+    },
+    {
+      "path": "docs/codex_handoff/pr_backlog.yaml",
+      "sha256": "256cf1406cddf271d8b197dbf39e1ae1486b18f22c30e4551de40b55e2cc502d"
+    },
+    {
+      "path": "machine_readable/pr_backlog.yaml",
+      "sha256": "256cf1406cddf271d8b197dbf39e1ae1486b18f22c30e4551de40b55e2cc502d"
+    },
+    {
+      "path": "tests/pr_cards/test_pr_170_buchert_covariant_home_two_patch_cancellation_ob.py",
+      "sha256": "f6db428ffa513fe12ddd75e724dc4105e152e8b0e66b6926acc84413efb2dfb6"
+    },
+    {
+      "path": "docs/generated/pr170_cas/remediation_wolfram_attempt_1_failure.json",
+      "sha256": "9627921bf6d8b3fbf3b3000d4f58d5b5ab1805d28028c47981b94067d7623fdb"
+    },
+    {
+      "path": "docs/generated/pr170_cas/remediation_wolfram_attempt_2_failure.json",
+      "sha256": "f087524ffc411aacb4b354f2228d8a6fae721141a295a7fa2a8146f0cf4b386b"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr170_axis.py",
+      "sha256": "aa0d5b8b7b3fcb0bccfb99fc996269f061d9086b252a9a1a84b78477951e9bbc"
+    },
+    {
+      "path": "scripts/codex_harness/collect_pr170_cas_receipts.py",
+      "sha256": "3f8834644c5dfcd20f61d4e938db2ca56c7a185e9756d442df4c38f7a8a90222"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr170_buchert_two_patch.py",
+      "sha256": "ed876998a047ee3abe1e0ab1989d0e8fa5a56516e39d11e6b2652c656662aa07"
+    }
+  ],
+  "metadata": {
+    "artifact_mode": "cas_blocked_content_addressed_artifact_manifest",
+    "caveats": [
+      "The remediation-generation Wolfram+xAct axis produced no result and exited 255 twice.",
+      "Three passing axes are not a majority-vote substitute for the required four-axis seal.",
+      "The externally attributed scalar identity and two-patch fixture remain registered targets, not PR-170 results.",
+      "Type coverage is a source-provenance audit only: one external type-V construction, one internal definitional type-I row, and nine unresolved types.",
+      "NO_CURRENTLY_AUTHENTICATED_X_C_WIDE_BUCHERT_HOME is an epistemic evidence status, not an ontological nonexistence theorem.",
+      "No observation, theorem, physical witness, family identification, or native-transfer validation follows."
+    ],
+    "claim_level": {
+      "level": "C2",
+      "scheme": "roadmap_rescue_v1"
+    },
+    "claim_tier": "conditional",
+    "config_hash": "0079dab825dbd1732a655e07f183599227c37961689f3ab79446cd17d65ef127",
+    "covariance_status": "not_applicable_exact_theory",
+    "generating_command": "venv/bin/python -B scripts/codex_harness/run_pr170_buchert_two_patch.py --write",
+    "git_commit": "43ea72444bf6c7eda2a931b784eb67fd336ab16d",
+    "implementation_scope": [
+      "common"
+    ],
+    "input_hashes": [
+      {
+        "path": "docs/research_program/long_horizon_rescue/pr170_spec_erratum.yaml",
+        "sha256": "2a4360afd59da60be86201b5a153ef1409c897e4258c639ced1ee0772cc2ad14"
+      },
+      {
+        "path": "docs/research_program/long_horizon_rescue/pr170_primary_source_provenance.yaml",
+        "sha256": "ab14a88fc03f436ef32d269f5790806aac4ff45c6f56256f44e66d13f34dccc5"
+      },
+      {
+        "path": "docs/generated/pr170_cas/CAS_CONTRACT_PR170_BUCHERT_TWO_PATCH.json",
+        "sha256": "e79d4a42214ad275a9d6c44076bd2f3b6c4a8e8dc749984c95b58f3cb43e0598"
+      },
+      {
+        "path": "docs/generated/pr170_cas/preaxis_authorization.json",
+        "sha256": "a4156b42c764007aa7d3fcc6e7dddb4c34bdf62d464314c0a93cd4c9394d2bfd"
+      },
+      {
+        "path": "docs/generated/pr170_cas_collection_receipt.json",
+        "sha256": "98496de326531fc75c1b90a10f9a6441f932844a6dbee3e5af9df67be02dff38"
+      }
+    ],
+    "mask_status": "not_applicable_exact_theory",
+    "null_mock_status": "not_applicable_exact_theory",
+    "owner": "COMMON",
+    "public_use": false,
+    "runtime_environment": {
+      "platform": "linux",
+      "python": "3.12.3"
+    },
+    "sky_support_status": "not_applicable_exact_theory",
+    "transfer_source": "none",
+    "worktree_state": "pr170_uncommitted_generation_worktree"
+  },
+  "schema": "htt.pr170.artifact_manifest.v2",
+  "scientific_state": {
+    "cas_aggregate": "CAS_BLOCKED",
+    "external_type_curvature_closure": "1_of_11",
+    "family_identification": false,
+    "internal_definitional_exact_type_closure": "1_of_11",
+    "native_transfer_validation": false,
+    "new_theorem": false,
+    "provenance_status": "PASS_FOR_SCALAR_IDENTITIES_PARTIAL_FOR_TYPE_CURVATURE",
+    "public_use": false,
+    "scalar_result": "WITHHELD",
+    "witness_status": "WITHHELD_CAS_BLOCKED",
+    "x_C_Buchert_home_status": "NO_CURRENTLY_AUTHENTICATED_X_C_WIDE_BUCHERT_HOME"
+  },
+  "scientific_status": "NO_SCALAR_RESULT_CAS_BLOCKED",
+  "status": "NO_SCALAR_RESULT_CAS_BLOCKED"
+}

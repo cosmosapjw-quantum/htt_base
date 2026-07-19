@@ -1,0 +1,214 @@
+{
+  "schema_version": 1,
+  "run_id": "pr170-closeout-review-20260719",
+  "assignment_id": "A-PR170-CLOSE-HARNESS",
+  "context_version": "7ff6f0128a070aa8e10df694de068a28dd3a07e7915ebd16e438d83b4c801b24",
+  "agent_type": "harness_engineer",
+  "independence_mode": "blind-results",
+  "status": "fail",
+  "result_path": ".agent-harness/runs/pr170-closeout-review-20260719/results/A-PR170-CLOSE-HARNESS.json",
+  "claim_results": [
+    {
+      "claim_id": "C-PR170-HARNESS-CLOSEOUT",
+      "verdict": "fail",
+      "summary": "PR-170's checked-in artifacts replay deterministically, but the closeout harness is not fail-closed: forged or stale CAS summary state, post-hoc assignment drift, and deletion of contract provenance bindings can survive the current validators."
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "F-PR170-CLOSE-H-001",
+      "claim_id": "C-PR170-HARNESS-CLOSEOUT",
+      "severity": "P1",
+      "disposition": "must_fix_before_closeout",
+      "verdict": "fail",
+      "title": "The result generator trusts two self-declared CAS summary fields and still emits a PASS result when its own mutation gate fails",
+      "summary": "build() checks only aggregate_state == CAS_4AXIS_PASS and evidence_valid is true. It does not reconstruct or check the collection, require its contract hash to equal the current contract, require all four named axis statuses to be PASS, or require mutation_report.all_detected before hard-coding process_gate_status=PASS. An in-memory collection with a zero contract hash and all four axis statuses set to FAIL was accepted; build() returned a result card marked PASS while M016 was false and mutation_report.all_detected was false.",
+      "impact": "A forged, stale, or mixed-generation collection can be promoted into a manifest-backed concrete result pack. This defeats the four-axis gate and can turn invalid evidence into an apparently release-ready PASS artifact.",
+      "evidence_fingerprint": "0f71ea4a9421fe83f73da00a7884e1732e0a0303bbc17ca54240162977c60187",
+      "evidence_refs": [
+        "scripts/codex_harness/run_pr170_buchert_two_patch.py:101-109",
+        "scripts/codex_harness/run_pr170_buchert_two_patch.py:209-228",
+        "scripts/codex_harness/run_pr170_buchert_two_patch.py:241-276"
+      ],
+      "reproduction": {
+        "command": "venv/bin/python -c '<import run_pr170_buchert_two_patch; replace only CAS_COLLECTION load with aggregate_state=CAS_4AXIS_PASS, evidence_valid=true, contract_sha256=00...00, and all four axis_statuses=FAIL; call build()>'",
+        "observed": {
+          "build_returned": true,
+          "cas_aggregate": "CAS_4AXIS_PASS",
+          "process_gate_status": "PASS",
+          "mutation_all_detected": false,
+          "M016_CONTRACT_HASH_DRIFT_detected": false,
+          "M017_MISSING_OR_DUPLICATE_AXIS_PASS_detected": true
+        },
+        "expected": "Generation aborts before returning any PASS artifact when the current contract/auth/axis evidence does not reconstruct exactly or any registered mutation check is false."
+      },
+      "remediation": "Have the generator consume a strict, hash-pinned collector replay for the registered run and compare the full rendered collection/bundle with disk. Require current contract and authorization hashes, the exact four-axis keyset with every status PASS, evidence_valid=true, no errors, and all registered mutation gates true before constructing any PASS result. Add the adversarial receipt shown above as a regression test."
+    },
+    {
+      "finding_id": "F-PR170-CLOSE-H-002",
+      "claim_id": "C-PR170-HARNESS-CLOSEOUT",
+      "severity": "P1",
+      "disposition": "must_fix_before_closeout",
+      "verdict": "fail",
+      "title": "The collector does not bind assignments to the pre-axis authorization root or the current context version",
+      "summary": "The collector verifies an assignment's recomputable self-hash and matches outer context to assignment context, but build() validates only authorization.axes_authorized and authorization.run_dir. It never checks the authorization's contract binding, runner binding, or assignment hash map against the actual assignment files, and it never compares assignment context_version with the canonical current context. Rewriting one assignment and its outer result to a post-hoc context and recomputing the self-hash still produced evidence_valid=true and CAS_4AXIS_PASS with no errors.",
+      "impact": "A result can be re-associated after execution with a different assignment/context while retaining a four-axis PASS. The preregistered pre-axis root therefore does not provide the claimed assignment and independence provenance at collection time.",
+      "evidence_fingerprint": "e35c836a0819ef92cae75be40876644b6b46027b21c51beb1d3a99eb6bb4b69d",
+      "evidence_refs": [
+        "scripts/codex_harness/collect_pr170_cas_receipts.py:57-104",
+        "scripts/codex_harness/collect_pr170_cas_receipts.py:145-180"
+      ],
+      "reproduction": {
+        "command": "venv/bin/python -c '<monkeypatch collector._load so A-PR170-CAS-SYMPY assignment and outer result both use context_version=posthoc-context and recompute only the assignment self-hash; call build(Path(.agent-harness/runs/pr170-cas-20260719))>'",
+        "observed": {
+          "aggregate_state": "CAS_4AXIS_PASS",
+          "evidence_valid": true,
+          "errors": []
+        },
+        "expected": "EVIDENCE_INVALID because the assignment bytes/hash and context no longer match the pre-axis authorization and canonical context."
+      },
+      "remediation": "Validate the complete authorization schema and exact contract/run/runner/assignment map. Require sha256(actual assignment file) to equal authorization.assignments[assignment_id], bind the nested result to that assignment hash, and require the authorized/current context version. Add post-hoc assignment, context, required-input, and claim-id drift mutations."
+    },
+    {
+      "finding_id": "F-PR170-CLOSE-H-003",
+      "claim_id": "C-PR170-HARNESS-CLOSEOUT",
+      "severity": "P1",
+      "disposition": "must_fix_before_closeout",
+      "verdict": "fail",
+      "title": "The axis contract validator accepts a contract with all provenance/source bindings and tool commands deleted",
+      "summary": "_validate_contract() checks hashes only for rows that happen to exist and checks no exact path inventory or non-empty command/required_tool fields. The assigned pytest has the same vacuous loop. Clearing identity.source_input_hashes, clearing every axis sources list, and blanking every command and required_tool returned validator_errors=[].",
+      "impact": "A stripped contract can be reauthorized and executed by the runner's hard-coded commands while its receipts claim no content-addressed scientific inputs or axis sources. This violates the prerequisite that provenance, conventions, sources, and engine obligations be frozen before any axis runs.",
+      "evidence_fingerprint": "425689c0267992390419b878a25fd27213d547fa1c4afac2e86a0b40f61aaf7b",
+      "evidence_refs": [
+        "docs/generated/pr170_cas/CAS_CONTRACT_PR170_BUCHERT_TWO_PATCH.json:2-35",
+        "docs/generated/pr170_cas/CAS_CONTRACT_PR170_BUCHERT_TWO_PATCH.json:48-67",
+        "scripts/codex_harness/run_pr170_axis.py:86-112",
+        "tests/pr_cards/test_pr_170_buchert_covariant_home_two_patch_cancellation_ob.py:110-120"
+      ],
+      "reproduction": {
+        "command": "venv/bin/python -c '<load assigned contract; set source_input_hashes=[]; set every axes[*].sources=[] and blank command/required_tool; print run_pr170_axis._validate_contract(mutant)>'",
+        "observed": {
+          "source_inputs": 0,
+          "axis_sources": {
+            "wolfram_xact": 0,
+            "sympy": 0,
+            "sage_singular": 0,
+            "lean": 0
+          },
+          "validator_errors": []
+        },
+        "expected": "The validator rejects any missing or extra registered input/source path and any missing command/tool obligation."
+      },
+      "remediation": "Freeze and validate exact source-input and per-axis source path sets with non-empty SHA-256 values; validate non-empty required_tool and a normalized command contract; compare executed command/cwd/tool evidence with that contract. Add deletion, duplication, substitution, blank-command, and blank-tool mutations. If the authorized axis-runner bytes change, issue a new authorization and run four fresh blind axes rather than reusing the current PASS envelopes."
+    },
+    {
+      "finding_id": "F-PR170-CLOSE-H-004",
+      "claim_id": "C-PR170-HARNESS-CLOSEOUT",
+      "severity": "P2",
+      "disposition": "must_fix_before_closeout",
+      "verdict": "fail",
+      "title": "The reported 20/20 mutation result is self-attestation rather than executed mutation resistance",
+      "summary": "The generator constructs detected booleans from current-state assertions; M006 and M007 are literal True, and several others merely inspect the current output/spec. The only test loads pr170_mutation_report.json and trusts registered_count, detected_count, and all_detected. No test injects those registered defects into the production guard and proves rejection.",
+      "impact": "The mutation report can claim complete resistance while a real mutation survives, as demonstrated by M016 being false without blocking result generation and M017 checking only axis keys rather than four PASS values.",
+      "evidence_fingerprint": "5b064190b3f5c6e030f81018089a4ebe51566cdc3ea64d9eafcf5a08949c67b0",
+      "evidence_refs": [
+        "scripts/codex_harness/run_pr170_buchert_two_patch.py:193-222",
+        "tests/pr_cards/test_pr_170_buchert_covariant_home_two_patch_cancellation_ob.py:185-189"
+      ],
+      "remediation": "Map every registered mutation to an independently executed pytest node or mutation harness that changes the relevant input/receipt and observes a fail-closed rejection. Remove literal-True detections, require exact node/outcome evidence in the report, and make all_detected a prerequisite for process_gate_status=PASS."
+    }
+  ],
+  "review_axes": {
+    "correctness": "FAIL: stale/forged CAS state can be promoted.",
+    "regressions": "FAIL: post-hoc assignment/context mutation is not detected.",
+    "test_adequacy": "FAIL: provenance-deletion and real mutation-injection cases are absent.",
+    "scientific_claim_hygiene": "PASS_FOR_CURRENT_BYTES_ONLY: assigned tests confirm the current result card remains algebraic_only, NO_BUCHERT_HOME, not a new theorem, not family identification, and not native-transfer validation; harness failures prevent closeout promotion.",
+    "maintainability": "FAIL: trust is duplicated across self-declared collection fields and self-attested mutation booleans instead of one strict verifier."
+  },
+  "evidence_read": [
+    {
+      "path": "docs/generated/pr170_cas/CAS_CONTRACT_PR170_BUCHERT_TWO_PATCH.json",
+      "sha256": "27724c3d560bcc8ec6637be5f659cc4fab9a908f4753fbb1f176f1e98f842f2d"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr170_axis.py",
+      "sha256": "e8efea1dea7ceec6ffeefd384a921b91e329427e31a03cad14d0119c03aecb8a"
+    },
+    {
+      "path": "scripts/codex_harness/collect_pr170_cas_receipts.py",
+      "sha256": "0084f111c4d3a6669f52bfd5f43a9ade49061e2fc839d6da0831bc3737f2b4d2"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr170_buchert_two_patch.py",
+      "sha256": "206780deabf8ef3fc28a0702ff7f67b0a3c5cd49a71900e5db85d281ce0aa3ba"
+    },
+    {
+      "path": "tests/pr_cards/test_pr_170_buchert_covariant_home_two_patch_cancellation_ob.py",
+      "sha256": "2e33ae6d8a1ea54df48ee8f508308038c5ac1918f7142044f5dfd493e9bf6a59"
+    }
+  ],
+  "commands_run": [
+    {
+      "command": "venv/bin/python -m pytest -q tests/pr_cards/test_pr_170_buchert_covariant_home_two_patch_cancellation_ob.py",
+      "exit_code": 0,
+      "result": "20 passed in 0.16s"
+    },
+    {
+      "command": "venv/bin/python -B scripts/codex_harness/collect_pr170_cas_receipts.py --run-dir .agent-harness/runs/pr170-cas-20260719 --check",
+      "exit_code": 0,
+      "result": "ok=true; mismatches=[]; aggregate_state=CAS_4AXIS_PASS"
+    },
+    {
+      "command": "venv/bin/python -B scripts/codex_harness/run_pr170_buchert_two_patch.py --check",
+      "exit_code": 0,
+      "result": "ok=true; mismatches=[]"
+    },
+    {
+      "command": "venv/bin/python -c '<contract provenance/source/command deletion mutation against run_pr170_axis._validate_contract>'",
+      "exit_code": 0,
+      "result": "validator_errors=[]"
+    },
+    {
+      "command": "venv/bin/python -c '<forged CAS collection mutation against run_pr170_buchert_two_patch.build>'",
+      "exit_code": 0,
+      "result": "build returned process_gate_status=PASS despite contract drift, four FAIL statuses, and all_detected=false"
+    },
+    {
+      "command": "venv/bin/python -c '<post-hoc assignment/context mutation against collect_pr170_cas_receipts.build>'",
+      "exit_code": 0,
+      "result": "evidence_valid=true; aggregate_state=CAS_4AXIS_PASS; errors=[]"
+    }
+  ],
+  "tool_versions": {
+    "python": "3.12.3",
+    "pytest": "9.0.3"
+  },
+  "assumptions": [
+    "The registered contract hash and five assignment input hashes are authoritative for this review; all matched before inspection.",
+    "The review tests harness behavior only and does not reinterpret the four blind CAS derivations or inspect sibling scientific verdicts.",
+    "A content-addressed PASS is valid only if the collector can reconstruct it from the exact authorized assignments, current contract, current context, and four exact PASS receipts."
+  ],
+  "proposed_changes": [
+    "Centralize strict collection verification and require the generator to consume its exact reconstructed output, not self-declared summary fields.",
+    "Bind every assignment/result to the pre-axis authorization assignment hash and canonical context version.",
+    "Enforce exact non-vacuous contract source/input/command/tool inventories.",
+    "Replace self-attested mutation booleans with executed negative tests and gate PASS on their exact outcomes."
+  ],
+  "tests_to_run": [
+    "Retain the current 20-node assigned suite and add forged aggregate, contract-hash drift, non-PASS axis status, and stale collection tests.",
+    "Add authorization assignment-hash, context-version, required-input, claim-id, and command-evidence drift tests.",
+    "Add exact-inventory deletion/duplication/substitution tests for every contract input and axis source plus blank command/tool tests.",
+    "After remediation, rerun collector --check, generator --check, the targeted PR-170 suite, related PR-167/168/169 lifecycle tests, and smoke tests."
+  ],
+  "risks_and_kill_switches": [
+    "Keep PR-170 in progress and do not promote its current checked-in PASS artifacts while these findings remain unresolved.",
+    "Do not patch generated PASS JSON by hand; regenerate it only after a strict collector replay.",
+    "Any contract/source/fixture/semantic change requires a new contract hash and four fresh blind axes. Changing the authorization-pinned axis runner likewise requires a new authorization and fresh receipts.",
+    "The scientific ceiling remains externally attributed conditional scalar algebra plus algebraic_only non-identification with NO_BUCHERT_HOME."
+  ],
+  "artifacts_status_updates_needed": [
+    "No DAG, PR status, manuscript, result pack, manifest, or shared context update is authorized from this reviewer assignment.",
+    "After fixes, create a new hash-bound closeout replay result and have the main writer adjudicate each finding before marking PR-170 complete."
+  ],
+  "errors": []
+}

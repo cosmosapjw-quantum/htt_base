@@ -59,6 +59,12 @@ GUARDRAIL_MARKERS = (
     "실패",
     "차단",
 )
+YAML_GUARDRAIL_SECTION_KEYS = frozenset(
+    {
+        "forbidden_output_language",
+        "preregistered_falsifiers",
+    }
+)
 
 SOURCE_OBSERVABLE_CONFLATION_PATTERN = re.compile(
     r"\b(?:source\s+(?:is\s+)?adequate|adequate\s+source|source\s+adequacy)"
@@ -208,7 +214,7 @@ def scan_text(text: str, *, path: Path = Path("<text>")) -> tuple[ClaimLanguageI
             match = rule.pattern.search(line)
             if match is None:
                 continue
-            if _is_guardrail_context(lines, index - 1):
+            if _is_guardrail_context(lines, index - 1, path=path):
                 continue
             if _match_is_in_forbidden_markdown_column(
                 lines,
@@ -252,10 +258,10 @@ def _scan_source_observable_windows(
         candidate_lines.append((index, stripped))
 
     for offset, (line_number, first) in enumerate(candidate_lines[:-1]):
-        if _is_guardrail_context(lines, line_number - 1):
+        if _is_guardrail_context(lines, line_number - 1, path=path):
             continue
         second_number, second = candidate_lines[offset + 1]
-        if _is_guardrail_context(lines, second_number - 1):
+        if _is_guardrail_context(lines, second_number - 1, path=path):
             continue
         window = f"{first} {second}"
         if SOURCE_OBSERVABLE_CONFLATION_PATTERN.search(window):
@@ -355,7 +361,16 @@ def _is_archival_path(path: Path) -> bool:
     return bool(parts & ARCHIVAL_DOC_PARTS)
 
 
-def _is_guardrail_context(lines: Sequence[str], zero_based_index: int) -> bool:
+def _is_guardrail_context(
+    lines: Sequence[str],
+    zero_based_index: int,
+    *,
+    path: Path,
+) -> bool:
+    if path.suffix.lower() in {".yaml", ".yml"} and _is_yaml_guardrail_section(
+        lines, zero_based_index
+    ):
+        return True
     current = lines[zero_based_index].strip()
     if current.startswith("|") and current.endswith("|"):
         # Nearby table headers such as ``Forbidden reading`` describe a column,
@@ -367,6 +382,41 @@ def _is_guardrail_context(lines: Sequence[str], zero_based_index: int) -> bool:
     stop = min(len(lines), zero_based_index + 2)
     window = " ".join(lines[start:stop]).lower()
     return any(marker in window for marker in GUARDRAIL_MARKERS)
+
+
+def _is_yaml_guardrail_section(
+    lines: Sequence[str], zero_based_index: int
+) -> bool:
+    """Return true for values nested under an explicit YAML guardrail key.
+
+    The claim scanner is intentionally line based so it can report stable source
+    locations.  This small indentation walk supplies the one piece of YAML
+    structure it needs: negative examples in the two registered guardrail
+    sections are evidence *about* forbidden claims, not production claims.  An
+    exact key allow-list prevents a nearby or similarly named positive claim
+    field from inheriting the exemption.
+    """
+
+    current_line = lines[zero_based_index]
+    if not current_line.strip() or current_line.lstrip().startswith("#"):
+        return False
+    current_indent = len(current_line) - len(current_line.lstrip(" "))
+
+    for candidate in reversed(lines[:zero_based_index]):
+        stripped = candidate.strip()
+        if not stripped or stripped.startswith("#"):
+            continue
+        indent = len(candidate) - len(candidate.lstrip(" "))
+        if indent >= current_indent:
+            continue
+        key_match = re.fullmatch(r"([A-Za-z0-9_-]+)\s*:\s*(?:#.*)?", stripped)
+        if key_match is None:
+            current_indent = indent
+            continue
+        if key_match.group(1) in YAML_GUARDRAIL_SECTION_KEYS:
+            return True
+        current_indent = indent
+    return False
 
 
 def _match_is_in_forbidden_markdown_column(

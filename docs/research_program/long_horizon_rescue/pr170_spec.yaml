@@ -1,0 +1,167 @@
+schema: htt.long_horizon.pr170_buchert_two_patch.v1
+spec_version: 1
+pr_id: PR-170
+title: Buchert scalar bridge and two-patch non-identification audit
+baseline_commit: 43ea72444bf6c7eda2a931b784eb67fd336ab16d
+reviewed_on: '2026-07-20'
+owner: COMMON
+contributors: [BASS]
+implementation_scope: [common]
+artifact_mode: externally_attributed_conditional_identity_and_algebraic_witness
+public_use: false
+claim_tier: conditional
+claim_tier_ceiling: conditional
+claim_level: {scheme: roadmap_rescue_v1, level: C2}
+scientific_status: OPEN
+transfer_source: none
+
+claim_identity:
+  claim_id: C-PR170-BUCHERT-SCALAR-BRIDGE
+  claim_text: >-
+    In Buchert's irrotational-dust scalar averaging convention, on one compact
+    comoving domain with H_D nonzero, Omega_Q_D_B equals the domain-rms
+    normalized shear only when the expansion variance vanishes. The exact
+    two-patch partition formula admits algebraic cancellation of positive
+    inter-patch expansion variance against positive local shear, so Q_D_B=0
+    does not algebraically identify local isotropy. These are externally
+    attributed, assumption-explicit scalar results, not a new theorem and not
+    a construction of a matched Bianchi spacetime.
+  novelty: project_convention_audit_and_conditional_application_not_new_theorem
+  domain: >-
+    general relativity; pressureless irrotational geodesic dust;
+    flow-orthogonal proper-time foliation; one compact comoving domain;
+    same time slice and normalization throughout
+
+frozen_conventions:
+  metric_signature: '(-,+,+,+)'
+  units: c_equals_1
+  shear_scalar: sigma_sq=(1/2)*sigma_ab*sigma^ab
+  average: '<Psi>_D=V_D^(-1)*integral_D(Psi dV)'
+  H_D: '<theta>_D/3'
+  Q_D_B: '(2/3)*Var_D(theta)-2*<sigma_sq>_D'
+  Omega_Q_D_B: '-Q_D_B/(6*H_D^2)'
+  Sigma2_D_rms: '<sigma_ab sigma^ab>_D/(6*H_D^2)=<sigma_sq>_D/(3*H_D^2)'
+  denominator_guard: H_D_ne_0
+  constant_expansion_premise: Var_D(theta)=0
+  barrow_tsagas_symbol: Q_D_BT
+  barrow_tsagas_definition: '(2/3)*Var_D(theta)-2*Var_D(sigma_magnitude)'
+  forbidden_symbol_conflation: Q_D_BT_equals_Q_D_B
+
+two_patch_contract:
+  volume_weights: lambda_in_open_interval_0_1_and_lambda_2_equals_1_minus_lambda
+  patchwise_constant_expansion: theta_i=3*H_i
+  mean_H: H_D=lambda*H_1+(1-lambda)*H_2
+  expansion_variance: 9*lambda*(1-lambda)*(H_1-H_2)^2
+  mean_shear_sq: lambda*sigma_sq_1+(1-lambda)*sigma_sq_2
+  partition_identity: >-
+    Q_D_B=lambda*Q_1_B+(1-lambda)*Q_2_B+
+    6*lambda*(1-lambda)*(H_1-H_2)^2
+  patch_Q_under_internal_constancy: Q_i_B=-2*sigma_sq_i
+  cancellation_condition: Var_D(theta)=3*mean_shear_sq
+  interpretation: algebraic_non_identification_only
+
+registered_fixtures:
+  equal_expansion:
+    inputs: {lambda: 1/2, H_1: 2, H_2: 2, sigma_sq_1: 3, sigma_sq_2: 3}
+    expected: {H_D: 2, Var_theta: 0, Q_D_B: -6, Omega_Q_D_B: 1/4, Sigma2_D_rms: 1/4}
+  cancellation:
+    inputs: {lambda: 1/2, H_1: 3, H_2: 1, sigma_sq_1: 3, sigma_sq_2: 3}
+    expected: {H_D: 2, Var_theta: 9, Q_D_B: 0, Omega_Q_D_B: 0, Sigma2_D_rms: 1/4, bridge_residual: -1/4}
+  zero_shear_unequal_expansion:
+    inputs: {lambda: 1/2, H_1: 3, H_2: 1, sigma_sq_1: 0, sigma_sq_2: 0}
+    expected: {Q_D_B: 6, Omega_Q_D_B: -1/4, Sigma2_D_rms: 0}
+  curvature_source_negative_control:
+    three_S_diag: [1, -1, 0]
+    sigma_diag: [1, -1, 0]
+    expected_contraction: 2
+    role: tensor_algebra_control_not_a_VII_h_solution
+
+type_registry:
+  canonical_types: [I, II, III, IV, V, VI_0, VI_h, VII_0, VII_h, VIII, IX]
+  scalar_identity_scope: type_independent_when_frozen_Buchert_assumptions_hold
+  externally_closed_curvature_types: [I, V]
+  unresolved_external_curvature_types: [II, III, IV, VI_0, VI_h, VII_0, VII_h, VIII, IX]
+  type_V: registered_diagonal_construction_has_isotropic_three_curvature
+  type_VII_h: generic_three_S_ab_sigma_ab_contraction_unresolved
+  universal_type_closure: false
+  consequence: no_universal_Bianchi_or_x_C_Buchert_home
+
+physical_promotion_gate:
+  required_same_state_receipts:
+    - exact_external_type_and_convention_map
+    - one_common_spacetime_flow_and_foliation
+    - disjoint_comoving_domains_and_evolving_weights
+    - hamiltonian_constraint
+    - momentum_or_gauss_constraint
+    - dust_conservation_and_matter_positivity
+    - Buchert_integrability_for_patches_and_union
+    - junction_or_matching_conditions
+    - curvature_tracefree_contraction
+    - dynamical_existence_over_an_interval
+  current_status: MISSING
+  exact_algebra_pass_label: algebraic_only
+  all_receipts_pass_label: physically_admissible_conditional_witness
+  rule: CAS agreement cannot synthesize a physical receipt
+
+preregistered_falsifiers:
+  exact:
+    - any required four-axis identity or fixture fails
+    - patch exchange changes an invariant
+    - H_D=0 is silently normalized
+    - Q_D_B and Q_D_BT are conflated
+    - the curvature-source negative control contracts to zero
+  provenance:
+    - a raw-source hash or equation locator is absent or mismatched
+    - any unresolved type is represented as externally closed
+    - generic VII_h inherits the type-V isotropic-curvature row
+  physical:
+    - any same-state physical receipt is missing or fails
+    - independently chosen patch scalars are called a matched spacetime
+  claim:
+    - an externally owned identity is described as a new theorem
+    - a scalar result is promoted to family identification or native-transfer validation
+
+cas_contract:
+  schema: htt.cas_contract.v2
+  required_axes: [wolfram_xact, sympy, sage_singular, lean]
+  result_blinding: required_until_adjudication
+  missing_axis_outcome: CAS_BLOCKED
+  exceptions: none
+  aggregate_states: [CAS_4AXIS_PASS, CAS_PASS_WITH_REGISTERED_EXCEPTION, CAS_CONFLICT, CAS_BLOCKED, CAS_FAIL]
+  important_separation: >-
+    The axes verify frozen scalar algebra for eleven typed rows; the external
+    type-curvature coverage gate is adjudicated separately and is currently
+    incomplete. Eleven repeated scalar rows are not eleven physical Bianchi
+    solutions.
+
+terminal_routing:
+  - when: CAS_BLOCKED or CAS_CONFLICT
+    process_gate_status: BLOCKED
+    scientific_result: none
+  - when: CAS_FAIL or invalid_contract or provenance_failure
+    process_gate_status: FAIL
+    scientific_result: none
+  - when: CAS_4AXIS_PASS and universal_type_closure_is_false
+    process_gate_status: PASS
+    scientific_result: externally_attributed_conditional_identity_plus_algebraic_only_witness
+    x_C_Buchert_home_status: NO_CURRENTLY_AUTHENTICATED_X_C_WIDE_BUCHERT_HOME
+  - when: CAS_4AXIS_PASS and all_type_and_physical_receipts_pass
+    process_gate_status: PASS
+    scientific_result: physically_admissible_conditional_witness
+    x_C_Buchert_home_status: shear_sector_only_not_x_C_as_a_whole
+
+forbidden_output_language:
+  - new Buchert theorem
+  - x_C has a covariant Buchert home
+  - universal two-patch obstruction
+  - Bianchi geometry detected
+  - Bianchi family identified
+  - validated as native
+
+acceptance:
+  - conventions, domain, identities, fixtures, and falsifiers are frozen before axes
+  - raw arXiv source archives are content-addressed and equation records are hash-bound
+  - four blind axes use one schema-v2 contract and eleven canonical type labels
+  - exact algebra and external type-curvature closure are adjudicated separately
+  - physical witness promotion fails closed on missing same-state receipts
+  - generated result artifacts and manifest reproduce byte-for-byte in check mode

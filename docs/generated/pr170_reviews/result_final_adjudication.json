@@ -1,0 +1,299 @@
+{
+  "schema_version": 1,
+  "run_id": "pr170-final-adjudication-20260719",
+  "assignment_id": "A-PR170-FINAL-ADJUDICATION",
+  "context_version": "35952947012fdda9529177348d30148e8bf449c0fa9ae0ade24bd80dff7a9589",
+  "independence_mode": "adjudication",
+  "status": "fail",
+  "result_path": ".agent-harness/runs/pr170-final-adjudication-20260719/results/A-PR170-FINAL-ADJUDICATION.json",
+  "summary": "The remediation-generation pack correctly terminates at CAS_BLOCKED: two Wolfram attempts exited 255 without a payload, three passing axes are not counted by majority vote, the four-axis scalar seal is false, identity_result and two_patch_measurement are null, and public_use is false. The prior collector, authorization-binding, exact-contract-inventory, Barrow--Tsagas moment-domain, supersession-binding, field-local qualifier, claim-ledger, and epistemic-status findings are remediated. Final closeout still fails with one P1 and one P2: the CAS-blocked mutation gate does not execute claim-surface mutations and permits a C2-to-C3 promotion while reporting all_detected=true, and the governing spec still classifies type I as externally closed although the module and result pack correctly classify it as internal definitional exactness.",
+  "claim_results": [
+    {
+      "claim_id": "C-PR170-BUCHERT-SCALAR-BRIDGE",
+      "verdict": "fail",
+      "scientific_disposition": "SOURCE_PROVENANCE_AUDIT_ONLY_CAS_BLOCKED",
+      "claim_tier_recommendation": "Retain C2 as a ceiling, public_use=false, identity and measurement withheld, no physical witness, no x_C-wide Buchert-home claim, no geometry or family identification, and no native-transfer validation.",
+      "reason": "The scientific terminal route is safe, but the governing spec and its claim-mutation closeout evidence are not yet internally closed."
+    }
+  ],
+  "cas_adjudication": {
+    "reported_wolfram_status": "FAIL",
+    "effective_wolfram_status": "BLOCKED_PLATFORM_OR_LICENSE",
+    "attempt_exits": [
+      255,
+      255
+    ],
+    "attempt_dispositions": [
+      "preserved_execution_failure_before_same_assignment_retry",
+      "terminal_platform_or_license_blocker_after_same_assignment_retry"
+    ],
+    "other_axis_statuses": {
+      "sympy": "PASS",
+      "sage_singular": "PASS",
+      "lean": "PASS"
+    },
+    "aggregate_state": "CAS_BLOCKED",
+    "majority_vote_used": false,
+    "eleven_scalar_rows_verified": false,
+    "identity_result_emitted": false,
+    "two_patch_measurement_emitted": false,
+    "physical_witness_emitted": false,
+    "public_use": false,
+    "interpretation": "Exit 255 with no parseable Wolfram payload is a platform-or-license blocker under the registered collector rule, not a mathematical counterexample and not a three-axis pass."
+  },
+  "prior_finding_adjudication": [
+    {
+      "finding_id": "F-PR170-CLAIM-SCANNER-EVIDENCE",
+      "original_severity": "P1",
+      "disposition": "partially_remediated_open",
+      "detail": "A content-addressed inventory and richer rows now exist, but the blocked-route rows are live assertions rather than executed claim mutations and omit the C2 ceiling. This is consolidated into F-PR170-FINAL-CLAIM-MUTATION."
+    },
+    {
+      "finding_id": "F-PR170-SUPERSESSION-SOURCE-BINDING",
+      "original_severity": "P2",
+      "disposition": "remediated",
+      "detail": "The producer now binds canonical and mirrored backlog bytes plus semantic card hashes; the manifest binds both backlog inputs and the targeted test replays them."
+    },
+    {
+      "finding_id": "F-PR170-FIELD-LOCAL-QUALIFIER-LOSS",
+      "original_severity": "P2",
+      "disposition": "remediated_by_terminal_route",
+      "detail": "The result is now explicitly cas_blocked_source_provenance_result with conditional internal-audit use only; no scalar result or algebraic witness is emitted."
+    },
+    {
+      "finding_id": "F-PR170-CLAIM-LEDGER-IDENTITY",
+      "original_severity": "P2",
+      "disposition": "remediated",
+      "detail": "The result card and manifest carry the stable claim_id, evidence_type, scientific/process status, claim tier, and separate blocked scientific state."
+    },
+    {
+      "finding_id": "F-PR170-CLOSE-H-001",
+      "original_severity": "P1",
+      "disposition": "remediated",
+      "detail": "The generator reconstructs the collector output, requires exact equality with disk, binds the current contract and authorization, rejects collection errors, and enforces the exact CAS_BLOCKED status shape. The forged-collection regression passes."
+    },
+    {
+      "finding_id": "F-PR170-CLOSE-H-002",
+      "original_severity": "P1",
+      "disposition": "remediated",
+      "detail": "The collector now binds exact assignment-file hashes and assignment context to the pre-axis authorization and rejects post-hoc assignment/context rewriting."
+    },
+    {
+      "finding_id": "F-PR170-CLOSE-H-003",
+      "original_severity": "P1",
+      "disposition": "remediated",
+      "detail": "The collector validates exact non-vacuous source-input and per-axis source inventories plus frozen commands and required tools; deletion and substitution mutations are rejected."
+    },
+    {
+      "finding_id": "F-PR170-CLOSE-H-004",
+      "original_severity": "P2",
+      "disposition": "partially_remediated_open",
+      "detail": "The CAS_4AXIS_PASS branch has live claim mutations, but the active CAS_BLOCKED branch emits only six current-state assertions. The surviving closeout defect is consolidated into F-PR170-FINAL-CLAIM-MUTATION."
+    },
+    {
+      "finding_id": "F-PR170-PHYS-001",
+      "original_severity": "P2",
+      "disposition": "partially_remediated_open",
+      "detail": "The module and result artifacts correctly split external type V from internal definitional type I, but pr170_spec.yaml still lists externally_closed_curvature_types as [I, V]. This remains F-PR170-FINAL-TYPE-I-SPEC."
+    },
+    {
+      "finding_id": "F-PR170-PHYS-002",
+      "original_severity": "P2",
+      "disposition": "remediated",
+      "detail": "barrow_tsagas_residual_q now rejects negative implied shear variance and negative mean shear; the hostile impossible-moment test passes."
+    },
+    {
+      "finding_id": "F-PR170-PHYS-003",
+      "original_severity": "P2",
+      "disposition": "remediated",
+      "detail": "The result and manifest use NO_CURRENTLY_AUTHENTICATED_X_C_WIDE_BUCHERT_HOME and explicitly define it as epistemic rather than an existence theorem."
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "F-PR170-FINAL-CLAIM-MUTATION",
+      "antecedent_finding_ids": [
+        "F-PR170-CLAIM-SCANNER-EVIDENCE",
+        "F-PR170-CLOSE-H-004"
+      ],
+      "claim_id": "C-PR170-BUCHERT-SCALAR-BRIDGE",
+      "severity": "P1",
+      "verdict": "fail",
+      "disposition": "must_fix_before_closeout",
+      "title": "The CAS-blocked mutation gate can certify a claim-tier promotion",
+      "evidence_fingerprint": "f2f097921e97c3435e16d57e10b28030b7faaf7c8d7361f9a8a5daf00824d175",
+      "evidence": [
+        {
+          "path": "scripts/codex_harness/run_pr170_buchert_two_patch.py",
+          "lines": "489-528",
+          "detail": "The blocked branch registers six current-state booleans and labels them live_blocked_route_assertion; it does not run the claim-surface mutant validator used by the four-axis-pass branch."
+        },
+        {
+          "path": "docs/generated/pr170_mutation_report.json",
+          "lines": "60-142",
+          "detail": "All six rows cite one assertion node and contain no mutated_path, expected_violation, observed violation set, or claim-tier mutation."
+        },
+        {
+          "path": "tests/pr_cards/test_pr_170_buchert_covariant_home_two_patch_cancellation_ob.py",
+          "lines": "212-258",
+          "detail": "The blocked-result test checks core withholding flags and the mutation tests trust the six detected booleans; no blocked-route C2 mutation is injected."
+        }
+      ],
+      "hostile_reproduction": {
+        "mutation": "Monkeypatch _metadata so every generated claim_level.level is C3, then call build() without writing files.",
+        "observed": {
+          "build_returned": true,
+          "process_gate_status": "BLOCKED",
+          "result_claim_level": "C3",
+          "mutation_all_detected": true
+        },
+        "expected": "The claim-surface validator or an executed mutation gate rejects any level above the registered C2 ceiling."
+      },
+      "impact": "A generator regression can promote the manifest-backed claim tier above the governing ceiling while check-mode reproducibility and the blocked-route mutation receipt remain green. Null scalar fields reduce scientific impact but do not make claim-tier drift acceptable.",
+      "required_fix": "Apply a blocked-route claim-surface validator before rendering; execute and record mutations for claim_id, C2 ceiling, public_use, source-provenance-only artifact mode, evidence/status typing, no-home semantics, forbidden uses, null scalar fields, and no family/native promotion. Require every mutant to produce its exact expected violation and add a regression for the C2-to-C3 case.",
+      "kill_switch": "Do not mark PR-170 complete or describe the blocked-route mutation evidence as claim-closeout complete."
+    },
+    {
+      "finding_id": "F-PR170-FINAL-TYPE-I-SPEC",
+      "antecedent_finding_ids": [
+        "F-PR170-PHYS-001"
+      ],
+      "claim_id": "C-PR170-BUCHERT-SCALAR-BRIDGE",
+      "severity": "P2",
+      "verdict": "fail",
+      "disposition": "must_fix_before_closeout",
+      "title": "The governing spec still overstates type-I external provenance",
+      "evidence_fingerprint": "9d580e57c313c9ab7d1921681f5b8053ebe2191503e3fee85b0a4d350676c1d1",
+      "evidence": [
+        {
+          "path": "docs/research_program/long_horizon_rescue/pr170_spec.yaml",
+          "lines": "79-87",
+          "detail": "externally_closed_curvature_types remains [I, V]."
+        },
+        {
+          "path": "htt/src/common/buchert_two_patch.py",
+          "lines": "31-45,203-227",
+          "detail": "The remediated registry correctly marks I as INTERNAL_EXACT_DEFINITIONAL and only V as PASS external."
+        },
+        {
+          "path": "docs/generated/pr170_result_card.json",
+          "lines": "27-32,92-94",
+          "detail": "The blocked result correctly reports one external type-V construction plus one internal definitional type-I row."
+        }
+      ],
+      "hostile_reproduction": {
+        "spec_externally_closed_curvature_types": [
+          "I",
+          "V"
+        ],
+        "module_externally_authenticated_types": [
+          "V"
+        ],
+        "module_internal_exact_types": [
+          "I"
+        ],
+        "consistent": false
+      },
+      "impact": "The authoritative spec contradicts the safe generated pack and preserves the exact unsupported adjective identified by the prior physics reviewer. A later consumer can follow the spec instead of the module/result distinction.",
+      "required_fix": "Split the spec registry into externally authenticated [V], internal definitional exact [I], and the nine unresolved types; add an exact spec-to-module-to-result consistency test. Because the spec is contract-hash input, do not reuse old axis receipts after changing it; follow the registered fresh-contract/authorization route or an explicitly preregistered non-reuse terminal erratum route.",
+      "kill_switch": "Do not report type I as externally authenticated and do not close PR-170 while the governing spec retains [I, V] in the external list."
+    }
+  ],
+  "verification": {
+    "context_version_matches_index": true,
+    "required_input_count": 15,
+    "required_input_hashes_matched": 15,
+    "required_input_hash_mismatches": [],
+    "targeted_pytest": {
+      "command": "venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_170_buchert_covariant_home_two_patch_cancellation_ob.py",
+      "exit_code": 0,
+      "result": "26 passed in 0.15s"
+    },
+    "collector_check": {
+      "command": "venv/bin/python -B scripts/codex_harness/collect_pr170_cas_receipts.py --run-dir .agent-harness/runs/pr170-cas-remediation-20260719 --check",
+      "exit_code": 0,
+      "result": "ok=true; mismatches=[]; aggregate_state=CAS_BLOCKED"
+    },
+    "generator_check": {
+      "command": "venv/bin/python -B scripts/codex_harness/run_pr170_buchert_two_patch.py --check",
+      "exit_code": 0,
+      "result": "ok=true; mismatches=[]"
+    }
+  },
+  "commands_run": [
+    {
+      "command": "venv/bin/python -c '<compare assignment context with CONTEXT_INDEX and SHA-256 every required input>'",
+      "exit_code": 0,
+      "result": "context_match=true; 15/15 required hashes matched"
+    },
+    {
+      "command": "venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_170_buchert_covariant_home_two_patch_cancellation_ob.py",
+      "exit_code": 0,
+      "result": "26 passed in 0.15s"
+    },
+    {
+      "command": "venv/bin/python -B scripts/codex_harness/collect_pr170_cas_receipts.py --run-dir .agent-harness/runs/pr170-cas-remediation-20260719 --check",
+      "exit_code": 0,
+      "result": "CAS_BLOCKED; no mismatches"
+    },
+    {
+      "command": "venv/bin/python -B scripts/codex_harness/run_pr170_buchert_two_patch.py --check",
+      "exit_code": 0,
+      "result": "no mismatches"
+    },
+    {
+      "command": "venv/bin/python -B -c '<replay two Wolfram failures, collection routing, and result withholding>'",
+      "exit_code": 0,
+      "result": "exit=[255,255]; reported=FAIL; effective=BLOCKED_PLATFORM_OR_LICENSE; aggregate=CAS_BLOCKED; scalar rows unverified; identity/measurement null; public_use=false"
+    },
+    {
+      "command": "venv/bin/python -B -c '<monkeypatch blocked-output metadata claim level to C3 and call build()>'",
+      "exit_code": 0,
+      "result": "build_returned=true; process=BLOCKED; result_claim_level=C3; mutation_all_detected=true"
+    },
+    {
+      "command": "venv/bin/python -B -c '<compare spec external type list with module external/internal closure summary>'",
+      "exit_code": 0,
+      "result": "spec external=[I,V]; module external=[V]; module internal=[I]; consistent=false"
+    }
+  ],
+  "tool_versions": {
+    "python": "3.12.3",
+    "pytest": "9.0.3",
+    "ripgrep": "14.1.0"
+  },
+  "closeout_disposition": {
+    "decision": "FAIL_NOT_READY",
+    "remaining_severity_counts": {
+      "P0": 0,
+      "P1": 1,
+      "P2": 1
+    },
+    "safe_terminal_state": "CAS_BLOCKED_SOURCE_PROVENANCE_AUDIT_ONLY",
+    "pr_status_recommendation": "Keep PR-170 non-terminal. Preserve the current CAS_BLOCKED, null-result, public-use-false artifacts while remediating the two findings, then run a fresh hash-bound adjudication.",
+    "forbidden_promotions": [
+      "CAS_4AXIS_PASS",
+      "scalar identity result",
+      "two-patch scientific measurement",
+      "physical witness",
+      "x_C-wide Buchert home",
+      "Bianchi geometry or family identification",
+      "native-transfer validation"
+    ]
+  },
+  "assumptions": [
+    "Only the canonical context pack, the registered assignment, its fifteen required inputs, and its three explicitly allowed prior reviewer results were inspected as adjudication evidence.",
+    "The raw source archives and unassigned CAS-axis files were not independently reopened; collector and generator checks consumed their registered bindings internally.",
+    "The Wolfram exit-255 classification follows the registered remediation collector rule and the assignment's platform-blocked terminal instruction; it is not treated as a mathematical FAIL or PASS.",
+    "No broad repository discovery, web research, shared-file edit, status update, or production mutation was performed."
+  ],
+  "independence_attestation": {
+    "allowed_sibling_results_read": true,
+    "unlisted_sibling_results_read": false,
+    "repo_wide_discovery_performed": false,
+    "shared_files_edited": false,
+    "only_declared_result_path_written": true,
+    "required_input_hashes_verified": true
+  },
+  "errors": []
+}

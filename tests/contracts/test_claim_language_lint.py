@@ -124,6 +124,33 @@ MIO certificates are not truth certificates.
     assert scan_text(text, path=Path("guardrail.md")) == ()
 
 
+def test_yaml_registered_guardrail_sections_are_allowed() -> None:
+    text = """
+preregistered_falsifiers:
+  claim:
+    - a scalar result is promoted to family identification
+forbidden_output_language:
+  - Bianchi geometry detected
+  - Bianchi family identified
+"""
+
+    assert scan_text(text, path=Path("spec.yaml")) == ()
+
+
+def test_yaml_guardrail_exemption_does_not_leak_to_positive_claims() -> None:
+    text = """
+forbidden_output_language:
+  - Bianchi geometry detected
+result:
+  claim_text: Bianchi family identified in this artifact.
+"""
+
+    issues = scan_text(text, path=Path("result.yaml"))
+
+    assert [issue.rule_id for issue in issues] == ["geometry_detected"]
+    assert issues[0].line == 5
+
+
 def test_safe_downclaim_language_passes() -> None:
     safe = """
 This is a scalar departure diagnostic.

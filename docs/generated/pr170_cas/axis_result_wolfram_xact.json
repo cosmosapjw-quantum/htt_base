@@ -1,0 +1,69 @@
+{
+  "axis": "wolfram_xact",
+  "checks": null,
+  "commands": [
+    {
+      "cmd": "wolframscript -file /home/cosmosapjw/Dropbox/bianchi/htt_base/wolfram/pr170_buchert_two_patch_axis.wls",
+      "cwd": ".",
+      "exit": 255
+    }
+  ],
+  "completed_at": "2026-07-19T21:58:26+00:00",
+  "computed": null,
+  "contract_id": "CAS-PR170-BUCHERT-TWO-PATCH-002",
+  "contract_sha256": "e79d4a42214ad275a9d6c44076bd2f3b6c4a8e8dc749984c95b58f3cb43e0598",
+  "counterexample": {
+    "failures": [
+      "axis emitted no parseable JSON payload"
+    ]
+  },
+  "domain_assumption_diff": [],
+  "evidence_class": "exact",
+  "fixture_matches": null,
+  "preaxis_authorization_sha256": "a4156b42c764007aa7d3fcc6e7dddb4c34bdf62d464314c0a93cd4c9394d2bfd",
+  "schema_version": 1,
+  "sibling_results_read": [],
+  "source_output_hashes": [
+    {
+      "path": "wolfram/pr170_buchert_two_patch_axis.wls",
+      "sha256": "7034bb330420c802367274d49ab78e46ad73c2f6c1bb1aac97580b9f7a73c2a0"
+    }
+  ],
+  "status": "FAIL",
+  "tool_versions": {
+    "reported": "unavailable",
+    "singular": null,
+    "xact_loaded": null
+  },
+  "transcript_tail": "",
+  "verified_input_hashes": [
+    {
+      "path": "docs/research_program/long_horizon_rescue/pr170_spec.yaml",
+      "sha256": "0079dab825dbd1732a655e07f183599227c37961689f3ab79446cd17d65ef127"
+    },
+    {
+      "path": "docs/research_program/long_horizon_rescue/pr170_primary_source_provenance.yaml",
+      "sha256": "ab14a88fc03f436ef32d269f5790806aac4ff45c6f56256f44e66d13f34dccc5"
+    },
+    {
+      "path": "docs/audits/pr170_primary_sources/buchert_2000_equations.txt",
+      "sha256": "8f58dbabe516025ce5a2b15c6491bc5715705660cc9e929ed98e93922d9d330d"
+    },
+    {
+      "path": "docs/audits/pr170_primary_sources/wiegand_buchert_2010_equations.txt",
+      "sha256": "42014efa797b3b8544ea9782b241faed257c8fb7cb640651501f34787c66dc72"
+    },
+    {
+      "path": "docs/audits/pr170_primary_sources/barrow_tsagas_2007_equations.txt",
+      "sha256": "7be79e77b446a1fb3da386fc937a04394f0243ae7ba69b4edf6029bc5e2e0b78"
+    },
+    {
+      "path": "docs/audits/pr170_primary_sources/akarsu_2023_type_v_record.txt",
+      "sha256": "dd44ca61d7fb39b32913ccb8110069fa6d468ba7a31bcfc5c30d2af02ac4a7bd"
+    },
+    {
+      "path": "htt/src/common/buchert_two_patch.py",
+      "sha256": "ed6778e8985d79cc430503faa6d9b534253b382aab2a57dea6d00e4e201d96a2"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+PR-170 normalized equation record; this file is not a copy of the paper.
+Source: Alexander Wiegand and Thomas Buchert, arXiv:1002.3912v2,
+DOI 10.1103/PhysRevD.82.023523.
+Raw source archive SHA-256: 18f574840d90c1f99bab207614a16729217288584f4b9a88e525b212901f61ff
+
+Equation (8) uses Buchert's total kinematical backreaction convention.
+Equation (18), normalized to repository notation:
+  Q_D^B = sum_i lambda_i Q_i^B
+          + 3 sum_(i != j) lambda_i lambda_j (H_i-H_j)^2.
+Equation (20):
+  H_D = sum_i lambda_i H_i.
+
+For two patches with lambda_1=lambda and lambda_2=1-lambda:
+  Q_D^B = lambda Q_1^B + (1-lambda) Q_2^B
+          + 6 lambda(1-lambda)(H_1-H_2)^2.
+If theta is constant inside each patch, Q_i^B=-2 sigma_sq_i.
+
+Scope: a disjoint exhaustive volume partition on the same foliation. The
+algebra does not by itself prove junction conditions or an Einstein-dust
+solution for independently selected patch scalars.

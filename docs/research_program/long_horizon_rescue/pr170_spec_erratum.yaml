@@ -1,0 +1,28 @@
+schema: htt.pr170.spec_erratum.v1
+pr_id: PR-170
+claim_id: C-PR170-BUCHERT-SCALAR-BRIDGE
+status: POST_REGISTRATION_DOWNCLAIM_ERRATUM
+frozen_spec:
+  path: docs/research_program/long_horizon_rescue/pr170_spec.yaml
+  sha256: 0079dab825dbd1732a655e07f183599227c37961689f3ab79446cd17d65ef127
+affected_field: type_registry.externally_closed_curvature_types
+frozen_value: [I, V]
+corrected_interpretation:
+  externally_authenticated_types: [V]
+  internal_definitional_exact_types: [I]
+  unresolved_external_types: [II, III, IV, VI_0, VI_h, VII_0, VII_h, VIII, IX]
+rationale: >-
+  The frozen field incorrectly grouped a definitionally flat internal type-I
+  registry row with the one externally authenticated registered type-V
+  construction. The provenance table contains no external type-I claim and
+  locator. This erratum is a strict downclaim and changes no scalar identity,
+  fixture, CAS target, or physical-promotion gate.
+consumer_rule: >-
+  Every PR-170 result or report consumer must apply this erratum. The frozen
+  [I,V] field is historical preregistration evidence and is not an allowed
+  current external-provenance claim.
+claim_effect:
+  external_type_curvature_closure: 1_of_11
+  internal_definitional_exact_type_closure: 1_of_11
+  universal_external_closure: false
+  public_use: false

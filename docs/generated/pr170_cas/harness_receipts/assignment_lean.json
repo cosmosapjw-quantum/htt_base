@@ -1,0 +1,50 @@
+{
+  "agent_type": "cas_lean",
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "lake"
+  ],
+  "assignment_id": "A-PR170-CAS-LEAN",
+  "assignment_sha256": "ae79e2f83d49e8b97adf188cefd932348a5becde33d3c7af060e3a3c5b75c497",
+  "cas_axis": "lean",
+  "cas_contract": {
+    "path": "docs/generated/pr170_cas/CAS_CONTRACT_PR170_BUCHERT_TWO_PATCH.json",
+    "sha256": "e79d4a42214ad275a9d6c44076bd2f3b6c4a8e8dc749984c95b58f3cb43e0598"
+  },
+  "claim_ids": [
+    "C-PR170-BUCHERT-SCALAR-BRIDGE"
+  ],
+  "context_version": "8a30a5268d3df92cbed9465adb881d07ea86682a1f5af8a3c2668db1a4163e9e",
+  "delegable_claim_ids": [],
+  "depth": 1,
+  "discovery_mode": "targeted",
+  "fork_justification": null,
+  "fork_mode": "none",
+  "independence_mode": "blind-results",
+  "independence_rationale": null,
+  "may_spawn": false,
+  "parent_assignment_id": null,
+  "required_inputs": [
+    {
+      "path": "docs/generated/pr170_cas/CAS_CONTRACT_PR170_BUCHERT_TWO_PATCH.json",
+      "sha256": "e79d4a42214ad275a9d6c44076bd2f3b6c4a8e8dc749984c95b58f3cb43e0598"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr170_axis.py",
+      "sha256": "aa0d5b8b7b3fcb0bccfb99fc996269f061d9086b252a9a1a84b78477951e9bbc"
+    },
+    {
+      "path": "formal_pr170/Pr170BuchertTwoPatch.lean",
+      "sha256": "b12f07638f9c303cd4668dbaf543ddd47e1fc993be4538e1fd3efd5ff43c58e0"
+    }
+  ],
+  "required_outputs": [
+    ".agent-harness/runs/pr170-cas-remediation-20260719/results/A-PR170-CAS-LEAN.json"
+  ],
+  "result_path": ".agent-harness/runs/pr170-cas-remediation-20260719/results/A-PR170-CAS-LEAN.json",
+  "risk_tier": "R3",
+  "run_id": "pr170-cas-remediation-20260719",
+  "schema_version": 2,
+  "status": "registered",
+  "task": "Independently execute only the lean PR-170 remediation-generation scalar CAS axis using the sealed wrapper. Validate contract generation 2, authorization, assignment, and input hashes; do not inspect sibling results; edit no shared files; return only the declared result envelope."
+}

@@ -1,7 +1,7 @@
 # Canonical Shared Context Pack
 
-Context version: `a587b27b6c83be38ea384a56ddf9c01efb9eaa2599f085540e250c5edffb3b2d`
-Built at: `2026-07-19T20:51:19+00:00`
+Context version: `013ac9b6ac863280f7b9917f7471122598f00f7d2a10e1a9f63f0cb303513d22`
+Built at: `2026-07-19T22:24:05+00:00`
 
 This pack contains only the shared Tier-0 context. Assignment-specific context and sibling results are intentionally excluded.
 
@@ -9,9 +9,9 @@ This pack contains only the shared Tier-0 context. Assignment-specific context a
 
 ## Source: `.agent-harness/context/SHARED_CONTEXT.md`
 
-SHA-256: `4c8d1a3b0b2ad6cb310424707259c7a254e62778ef9c0903581f2aaa6feebd61`
+SHA-256: `57cd6d5a1a4874dbc1c9e8afe7386bb328921f317c77c27cd09055e38a08715f`
 
-# Shared Context — PR-151 background acquisition and PR-170 Buchert/two-patch audit
+# Shared Context — PR-151 background acquisition and PR-171 class-conditional ODE audit
 
 ## Project objective
 
@@ -23,18 +23,20 @@ SHA-256: `4c8d1a3b0b2ad6cb310424707259c7a254e62778ef9c0903581f2aaa6feebd61`
   foreground/background status-model transaction, is completed after a fresh
   post-remediation adversarial replay. `PR-168` completed its preregistered
   failed-contract branch. `PR-169` completed with an exact `algebraic_only`
-  comparator result. `PR-170` is the sole foreground card.
+  comparator result. `PR-170` completed with a reproducible
+  `CAS_BLOCKED` source-provenance audit and withheld scalar targets.
+  `PR-171` is the sole foreground card.
 - Current background card: `PR-151`, authenticated DESI DR1 acquisition of
   1000 EZmocks plus 25 AbacusSummit mocks on NVMe.
 - Governing roadmap:
   `docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md`.
 - Base revision at context refresh:
-  `5b3c96175c226764b3fb7ed9e181e3f3330e1830` on
+  `43ea72444bf6c7eda2a931b784eb67fd336ab16d` on
   `research/pr04-multicomponent`.
 
 ## Current DAG and execution state
 
-- Registered DAG: 130 cards through PR-183; 103 completed, PR-170 foreground,
+- Registered DAG: 130 cards through PR-183; 104 completed, PR-171 foreground,
   PR-151 is the sole background acquisition, PR-155--158 remain
   gated on PR-151, and PR-159--166 plus PR-183 are dormant pending authenticated
   native delivery. The dedicated PR-167 transaction preserved semantic hashes
@@ -65,16 +67,17 @@ SHA-256: `4c8d1a3b0b2ad6cb310424707259c7a254e62778ef9c0903581f2aaa6feebd61`
 - The legacy all-in-one tmux wrapper was stopped at an aria-resumable `.part`
   checkpoint without deleting payloads. Session `htt_pr151_desi_20260719` now
   runs `--phase acquire`; pane/lock owner PID was `16695` at the latest probe.
-  The 2026-07-19 20:48 UTC fast probe found 80/1000 exact EZmock records,
-  0/25 Abacus records, 33 partial files totalling about 8.73 GiB, a fresh
-  growing log, and about 821.71 GiB free. Host-level process inspection confirmed
-  session `htt_pr151_desi_20260719`, pane/lock owner PID `16695`, and the
-  expected `--phase acquire` command. The writer lock itself remains held; PID
-  discovery from the fast probe may report no matches inside its sandbox PID
-  namespace and is therefore combined with lock evidence as the effective
-  writer state. The same final probe directly observed runner PID `16709` and
-  the current aria child PID `1250117`. The older batch manifest still reported 30
-  authenticated EZmocks until the current batch checkpoint is committed.
+  Host-level process inspection and the 2026-07-19 22:21 UTC fast probe
+  confirmed session `htt_pr151_desi_20260719`, pane/lock owner PID `16695`,
+  runner PID `16709`, aria child PID `1528176`, and the expected
+  `--phase acquire` command. It found 90/1000 authenticated EZmocks, 0/25
+  Abacus records, 10/15 audit members, 36 growing `.part` files totalling
+  10,417,091,200 bytes, a 3.8-second-old log, and 819.61 GiB free. Both part
+  count and bytes increased from the 21:52 UTC probe, so acquisition is active.
+  The older batch manifest still reports 30 authenticated EZmocks and the
+  intentional phase-migration `KeyboardInterrupt` until the current batch
+  checkpoint is committed; that stale manifest state is not a restart signal
+  while the lock, runner, aria child, log, and partials are live.
 - PR-151 partial mocks are never used for final ranks or significance. Terminal
   status requires exact 1000/25 records, observed authentication, the 15-case
   random audit, final full rehash, and producer/runner write/check.
@@ -346,7 +349,7 @@ SHA-256: `4c8d1a3b0b2ad6cb310424707259c7a254e62778ef9c0903581f2aaa6feebd61`
   28 targeted, 79 related EGS, 14 PR-167/168, and 6 smoke tests. The hash-bound
   adjudication is `docs/generated/pr169_closeout_review_receipt.json`.
 
-## PR-170 foreground contract boundary
+## PR-170 completed CAS-blocked provenance result
 
 - PR-170 must first authenticate the external Buchert, Wiegand--Buchert, and
   Barrow--Tsagas provenance anchors and freeze conventions, averaging domain,
@@ -370,6 +373,87 @@ SHA-256: `4c8d1a3b0b2ad6cb310424707259c7a254e62778ef9c0903581f2aaa6feebd61`
   and witness, not a new theorem, observational result, family identification,
   or native-transfer validation. If any registered type or provenance bridge
   fails exact closure, the terminal result retains `x_C` without a Buchert home.
+- Primary-source authentication now binds the four arXiv v2 source archives by
+  SHA-256 plus normalized equation records. The total Buchert `Q_D_B` and the
+  Barrow--Tsagas residual `Q_D_BT` are distinct typed symbols.
+- The frozen scalar target is
+  `Omega_Q_D_B=Sigma2_D_rms-Var_D(theta)/(9 H_D^2)`. Therefore
+  `Omega_Q_D_B=Sigma2_D_rms` requires `Var_D(theta)=0`; it is not true on the
+  nontrivial two-patch cancellation fixture.
+- The exact cancellation fixture uses `lambda=1/2`, `H_1=3`, `H_2=1`, and
+  `sigma_sq_1=sigma_sq_2=3`, giving `H_D=2`, `Var(theta)=9`, `Q_D_B=0`,
+  `Omega_Q_D_B=0`, and `Sigma2_D_rms=1/4`. This is an algebraic
+  candidate non-identification example only; it is not emitted as a PR-170
+  result because the required four-axis seal is blocked.
+- Eleven canonical type labels receive the same type-independent scalar CAS
+  row. External curvature closure is authenticated only for one registered
+  type-V construction. Type I is definitionally flat in the internal exact
+  registry but is not counted as externally authenticated; nine rows,
+  including generic VII_h, remain unresolved. Thus four-axis scalar agreement
+  cannot establish an eleven-type physical bridge or a Buchert home for x_C.
+- The frozen contract is
+  `docs/generated/pr170_cas/CAS_CONTRACT_PR170_BUCHERT_TWO_PATCH.json`.
+  Four fresh blind axes must be registered only after this context rebuild;
+  their receipts must bind the pre-axis authorization root.
+- The first four receipts passed the scalar obligations, but independent
+  closeout review invalidated that authorization generation: the runner's
+  contract validator allowed vacuous source/tool inventories and the collector
+  did not rebind assignments to the authorization root. The result generator
+  also trusted forgeable collection summary fields. Those receipts are not
+  reusable for closeout.
+- Remediation generation 2 strengthens non-vacuous contract validation,
+  authorization/assignment/context binding, full collector replay, executed
+  claim mutations, active-consumer inventory, Barrow--Tsagas physical moment
+  guards, and local claim qualifiers. Because the spec, provenance, module,
+  runner, and contract changed, four fresh blind axes are mandatory before any
+  replacement result pack may be generated.
+- In remediation generation 2, SymPy, SageMath+Singular, and Lean+mathlib pass
+  all 15 obligations. Wolfram+xAct produces no payload and exits 255 on two
+  same-assignment attempts; both failure-result SHA-256 values are preserved.
+  A sandboxed standalone Wolfram version probe has the same exit. The strict
+  adjudication is therefore `CAS_BLOCKED`, not `CAS_FAIL` and not a majority
+  pass. The scalar identity and two-patch measurement are withheld.
+- The terminal reproducible result is a source-provenance audit only: 1/11
+  externally authenticated type closure, one internally exact definitional
+  type, nine unresolved types, and all same-state physical receipts missing.
+  `docs/generated/pr170_result_card.json` has process status `BLOCKED`, null
+  identity/measurement fields, and public use false. The status token is
+  narrowed to
+  `NO_CURRENTLY_AUTHENTICATED_X_C_WIDE_BUCHERT_HOME`, explicitly an epistemic
+  evidence status rather than an existence theorem.
+- Three independent closeout reviewers and the final adjudicator preserve their
+  original FAIL and `FAIL_NOT_READY` envelopes under
+  `docs/generated/pr170_reviews/`. The main writer subsequently fixed every
+  concrete finding, including live blocked-route claim mutations and the
+  type-I provenance erratum, without relabeling those frozen verdicts. The
+  closeout evidence is `docs/generated/pr170_closeout_review_receipt.json`;
+  28 targeted and 118 related tests pass.
+
+## PR-171 foreground contract boundary
+
+- PR-171 is authorized by the explicit approved sequence despite its
+  `hypothesis_only` scientific artifact mode. It remains conditional/C2,
+  internal, and `public_use=false`.
+- Before any result is viewed, freeze the exact dynamical class, time variable,
+  equation-of-state and closure domain, 3/4 background relaxation ODE, 2x2
+  linearized subsystem, stability target, suppression functional, and a
+  physically admissible persistent-tilt falsifier. No numerical suppression
+  value, including `1e-6`, may be fixed as a conclusion.
+- The Coley--Hervik--Lim mechanism must be externally attributed. Khronon or
+  non-comoving dark-sector dressing is a loophole/counterexample lane, not an
+  assumed closure or a new theorem.
+- Wolfram+xAct, SymPy with high-precision checks, SageMath+Singular, and
+  Lean+mathlib must run blind under one schema-v2 contract. A missing engine is
+  `CAS_BLOCKED`; disagreement is `CAS_CONFLICT` or `CAS_FAIL`, never
+  majority voting.
+- A stability statement may be only class-conditional. A physically admissible
+  persistent-tilt counterexample retires the proposed no-go claim. Missing
+  physical admissibility or source-space closure may terminate as
+  `algebraic_only`, `non_informative`, or a registered blocked/failure
+  result rather than being promoted.
+- PR-151 must be probed at start and end. If it becomes terminal-ready, finish
+  the atomic PR-171 result, review, and commit before starting any new advocate
+  card; then finalize PR-151 and return to PR-155--158.
 
 ## Ownership and claim boundaries
 
@@ -414,6 +498,15 @@ SHA-256: `4c8d1a3b0b2ad6cb310424707259c7a254e62778ef9c0903581f2aaa6feebd61`
 | E-PR169-MANIFEST | `docs/generated/pr169_artifact_manifest.json` | hash-bound inputs and result artifacts |
 | E-PR169-REVIEWS | `docs/generated/pr169_reviews/` | preserved independent FAIL assignments and result envelopes |
 | E-PR169-CLOSEOUT | `docs/generated/pr169_closeout_review_receipt.json` | main-writer remediation adjudication and verification record |
+| E-PR170-SPEC | `docs/research_program/long_horizon_rescue/pr170_spec.yaml` | frozen conventions, domain, fixtures, falsifiers, and terminal routing |
+| E-PR170-PROVENANCE | `docs/research_program/long_horizon_rescue/pr170_primary_source_provenance.yaml` | source archives, equation locators, symbol crosswalk, and partial type closure |
+| E-PR170-CONTRACT | `docs/generated/pr170_cas/CAS_CONTRACT_PR170_BUCHERT_TWO_PATCH.json` | frozen four-axis scalar obligations and eleven type labels |
+| E-PR170-CAS | `docs/generated/pr170_cas_collection_receipt.json` | generation-2 four-axis scalar adjudication after authorization hardening |
+| E-PR170-ERRATUM | `docs/research_program/long_horizon_rescue/pr170_spec_erratum.yaml` | non-reuse correction separating external V from internal-definitional I |
+| E-PR170-RESULT | `docs/generated/pr170_result_card.json` | CAS-blocked source-provenance audit with scalar targets withheld |
+| E-PR170-MANIFEST | `docs/generated/pr170_artifact_manifest.json` | hash-bound blocked-result pack |
+| E-PR170-REVIEWS | `docs/generated/pr170_reviews/` | preserved FAIL and FAIL_NOT_READY review envelopes |
+| E-PR170-CLOSEOUT | `docs/generated/pr170_closeout_review_receipt.json` | post-review remediation and terminal blocked adjudication |
 | E-REPLAN | `docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md` | PR-154 and advocate card intent |
 
 ## Open questions and kill switches
