@@ -1,4 +1,4 @@
-# Shared Context — PR-151 background acquisition and PR-167 foreground intake
+# Shared Context — PR-151 background acquisition and PR-168 failed-contract closeout
 
 ## Project objective
 
@@ -8,19 +8,19 @@
   scientific outputs; diagnostic preflight alone is not.
 - `PR-167`, the dedicated advocate-track intake and parallel
   foreground/background status-model transaction, is completed after a fresh
-  post-remediation adversarial replay. There is no foreground card in the
-  atomic handoff gap; PR-168 is the next selected card.
+  post-remediation adversarial replay. `PR-168` completed its preregistered
+  fail branch; there is no foreground card at this atomic commit boundary.
 - Current background card: `PR-151`, authenticated DESI DR1 acquisition of
   1000 EZmocks plus 25 AbacusSummit mocks on NVMe.
 - Governing roadmap:
   `docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md`.
 - Base revision at context refresh:
-  `fe7abb6aa01fdfaf0440956bd8727ddc9e1be8e7` on
+  `00fbadda3283c06aad33c1494a3d0781d5a53442` on
   `research/pr04-multicomponent`.
 
 ## Current DAG and execution state
 
-- Registered DAG: 130 cards through PR-183; 101 completed, no foreground PR,
+- Registered DAG: 130 cards through PR-183; 102 completed, no foreground PR,
   PR-151 is the sole background acquisition, PR-155--158 remain
   gated on PR-151, and PR-159--166 plus PR-183 are dormant pending authenticated
   native delivery. The dedicated PR-167 transaction preserved semantic hashes
@@ -51,15 +51,15 @@
 - The legacy all-in-one tmux wrapper was stopped at an aria-resumable `.part`
   checkpoint without deleting payloads. Session `htt_pr151_desi_20260719` now
   runs `--phase acquire`; pane/lock owner PID was `16695` at the latest probe.
-  The 2026-07-19 16:50 UTC fast probe found 60/1000 exact EZmock records,
-  0/25 Abacus records, five active partial files in the new batch totalling
-  about 0.87 GiB, a fresh growing log, and about 832 GiB free. Host-level tmux inspection confirmed
+  The 2026-07-19 19:14 UTC fast probe found 70/1000 exact EZmock records,
+  0/25 Abacus records, 32 partial files totalling about 7.87 GiB, a fresh
+  growing log, and about 823.9 GiB free. Host-level tmux inspection confirmed
   session `htt_pr151_desi_20260719`, pane/lock owner PID `16695`, and the
   expected `--phase acquire` command. The writer lock itself remains held; PID
   discovery from the fast probe may report no matches inside its sandbox PID
   namespace and is therefore combined with lock evidence as the effective
   writer state. The same final probe directly observed runner PID `16709` and
-  the current aria child PID `659928`. The older batch manifest still reported 30
+  the current aria child PID `970357`. The older batch manifest still reported 30
   authenticated EZmocks until the current batch checkpoint is committed.
 - PR-151 partial mocks are never used for final ranks or significance. Terminal
   status requires exact 1000/25 records, observed authentication, the 15-case
@@ -203,6 +203,52 @@
   `.agent-harness/runs/pr167-final-replay2-20260719/results/A-PR167-FINAL-REPLAY2.json`
   passed with no unresolved P0/P1/P2 and no claim promotion.
 
+## PR-168 completed failed-contract result
+
+- PR-168 is a COMMON-owned, BASS-contributed code-integrity and conditional
+  exact-mechanics card. It cannot create an observational, transfer, geometry,
+  family-identification, or cosmological claim.
+- Before any CAS result was produced, the dedicated spec, active-consumer
+  inventory, four axis sources, and schema-v2 CAS contract were frozen. The
+  contract is
+  `docs/generated/pr168_cas/CAS_CONTRACT_PR168_ACCEL_KINEMATIC_SOURCE_BASIS.json`
+  with SHA-256
+  `d2821237e8c7cf3fc97b27dea5062cc943482d217bbc53f45157848b111a542d`
+  (contract version 2). Version 1 was invalidated in full after its first blind
+  wave exposed a Sage exit-propagation defect and a Lean proof-script compile
+  error; no version-1 PASS result is reusable.
+- The candidate identity is restricted to the linearized homogeneous
+  long-wavelength (`k_eff = 0`) thermodynamic-temperature response: the
+  acceleration and kinematic drives occupy the same ell=1 source-vector basis,
+  with no independent ell>=2 source at that order. Streaming, finite-k,
+  polarization, frequency distortions, and higher-order boost terms are
+  excluded and remain falsifiers outside this domain.
+- Wolfram+xAct, SymPy, SageMath+Singular, and Lean+mathlib must run blind under
+  one contract hash. Any missing engine is `CAS_BLOCKED`; disagreement is never
+  resolved by majority vote.
+- The pre-result active-consumer inventory hash is
+  `9c4a07d7f6c31d9b2368c4fbdae4df65c3cc9963fb287d16816a31efd255d86a`.
+  It separates the unsupported in-house MES triple from historical TSC/obsstat
+  reproduction and physically distinct BASS acceleration surfaces.
+- The contract-v2 blind rerun returned exception-free computational
+  `CAS_4AXIS_PASS` on all four required axes. Independent hostile review then
+  found that the contract itself was scientifically invalid: with
+  `S_A=(A G/3) delta_(ell,1)`, the registered fixture gives `S_A/A=5`, not the
+  registered normalized target `G=15`; the negative controls also lacked
+  contract-level equations and sign conventions.
+- The final post-CAS adjudication is therefore `CAS_FAIL`, while the original
+  engine agreement is preserved as superseded computational evidence. A fresh
+  attempt requires a repaired contract hash and four new blind axes; no current
+  PASS envelope is reusable.
+- Every path in the pre-axis active-consumer inventory is byte-identical to its
+  frozen hash. `B_accel`, `A2_max_MES`, active consumers, manuscript, and legacy
+  figure generators remain unchanged. The provisional typed-status source,
+  success-only stale/mutation artifacts, and PR-168 two-bound figure are absent.
+- The final result is the reproducible internal failure outcome
+  `CAS_FAIL_CONTRACT_INVALID_PRODUCTION_UNCHANGED`, with a withheld theorem
+  signature, full manifest, production-integrity receipt, and hash-bound
+  physics/code/claim FAIL reviews. It is not a derivation or physical result.
+
 ## Ownership and claim boundaries
 
 - HTT owns the PR-154 hierarchical model, predictive checks, and scenario
@@ -232,6 +278,13 @@
 | E-PR154-MANIFEST | `docs/generated/pr154_artifact_manifest.json` | concrete result and provenance summary |
 | E-PR154-CAL | `docs/generated/pr154_sbc_ppc.json` | frozen SBC/PPC gate outputs |
 | E-PR154-COV | `docs/generated/pr154_covariance_envelope.json` | PSD non-identification result |
+| E-PR168-CONTRACT | `docs/generated/pr168_cas/CAS_CONTRACT_PR168_ACCEL_KINEMATIC_SOURCE_BASIS.json` | frozen conditional exact identity and falsifiers |
+| E-PR168-CAS-RECEIPTS | `docs/generated/pr168_cas/harness_receipts/` | durable blind-axis assignments and outer envelopes |
+| E-PR168-ORIG-ADJ | `docs/generated/pr168_cas_adjudication.json` | preserved computational four-axis agreement only |
+| E-PR168-FINAL-ADJ | `docs/generated/pr168_contract_failure_adjudication.json` | scientific-contract CAS_FAIL and supersession of provisional authorization |
+| E-PR168-REVIEWS | `docs/generated/pr168_reviews/` | durable physics, code, and claim FAIL assignments/results |
+| E-PR168-RESULT | `docs/generated/pr168_result_card.json` | failed-contract result and unchanged-production disposition |
+| E-PR168-MANIFEST | `docs/generated/pr168_artifact_manifest.json` | hash-bound failure closeout artifact set |
 | E-REPLAN | `docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md` | PR-154 and advocate card intent |
 
 ## Open questions and kill switches
@@ -245,3 +298,6 @@
   unstable. Do not replace failed observed analysis with a synthetic success.
 - Advocate mathematical claims later require the repo-mandated four-axis CAS
   state. Missing engines yield `CAS_BLOCKED`, never an inferred pass.
+- A four-engine agreement under an underdefined or internally inconsistent
+  contract is not sufficient. Post-CAS scientific-contract review is required;
+  contract repair changes the hash and requires four fresh blind axes.

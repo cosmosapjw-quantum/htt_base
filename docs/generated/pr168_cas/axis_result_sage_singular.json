@@ -1,0 +1,130 @@
+{
+  "axis": "sage_singular",
+  "checks": {
+    "combined_source_invariance": true,
+    "direct_support_only_ell1": true,
+    "normalized_thermodynamic_basis": true,
+    "operator_change_negative_control_distinct": true,
+    "rank_one_minor_vanishes": true,
+    "second_order_quadrupole_negative_control": true,
+    "source_column_collinearity": true,
+    "streaming_negative_control_nonzero": true
+  },
+  "commands": [
+    {
+      "cmd": "sage /home/cosmosapjw/Dropbox/bianchi/htt_base/sage/pr168_accel_kinematic_axis.sage",
+      "cwd": ".",
+      "exit": 0
+    }
+  ],
+  "completed_at": "2026-07-19T18:21:39+00:00",
+  "computed": {
+    "acceleration_source_test": [
+      "0",
+      "30",
+      "0",
+      "0",
+      "0"
+    ],
+    "combined_source_test": [
+      "0",
+      "75",
+      "0",
+      "0",
+      "0"
+    ],
+    "direct_ell_ge_2_projection": "0",
+    "kinematic_source_test": [
+      "0",
+      "45",
+      "0",
+      "0",
+      "0"
+    ],
+    "normalized_basis_test": [
+      "0",
+      "15",
+      "0",
+      "0",
+      "0"
+    ],
+    "operator_change_responses": [
+      "2/3",
+      "1/3"
+    ],
+    "rank_upper_bound": "1",
+    "second_order_quadrupole_coefficient": "2/3",
+    "streaming_ell2_negative_control": "60"
+  },
+  "contract_id": "CAS-PR168-ACCEL-KINEMATIC-SOURCE-BASIS-001",
+  "contract_sha256": "d2821237e8c7cf3fc97b27dea5062cc943482d217bbc53f45157848b111a542d",
+  "counterexample": null,
+  "domain_assumption_diff": [],
+  "evidence_class": "exact",
+  "redistributed_fixture_matches": true,
+  "schema_version": 1,
+  "sibling_results_read": [],
+  "source_output_hashes": [
+    {
+      "path": "sage/pr168_accel_kinematic_axis.sage",
+      "sha256": "042e0c8a9ce64ab1a1f068b8269aaa91f4e0b42f854d1532babcac61206d7039"
+    }
+  ],
+  "status": "PASS",
+  "tool_versions": {
+    "reported": "SageMath version 10.9, Release Date: 2026-05-04",
+    "singular": "44100",
+    "xact_loaded": null
+  },
+  "transcript_tail": "{\"all_pass\": true, \"checks\": {\"combined_source_invariance\": true, \"direct_support_only_ell1\": true, \"normalized_thermodynamic_basis\": true, \"operator_change_negative_control_distinct\": true, \"rank_one_minor_vanishes\": true, \"second_order_quadrupole_negative_control\": true, \"source_column_collinearity\": true, \"streaming_negative_control_nonzero\": true}, \"computed\": {\"acceleration_source_test\": [\"0\", \"30\", \"0\", \"0\", \"0\"], \"combined_source_test\": [\"0\", \"75\", \"0\", \"0\", \"0\"], \"direct_ell_ge_2_projection\": \"0\", \"kinematic_source_test\": [\"0\", \"45\", \"0\", \"0\", \"0\"], \"normalized_basis_test\": [\"0\", \"15\", \"0\", \"0\", \"0\"], \"operator_change_responses\": [\"2/3\", \"1/3\"], \"rank_upper_bound\": \"1\", \"second_order_quadrupole_coefficient\": \"2/3\", \"streaming_ell2_negative_control\": \"60\"}, \"engine\": \"sage_singular\", \"engine_version\": \"SageMath version 10.9, Release Date: 2026-05-04\", \"redistributed_fixture_matches\": true, \"singular_version\": \"44100\"}\n/home/cosmosapjw/Dropbox/bianchi/htt_base/sage/pr168_accel_kinematic_axis.sage.py:86: DeprecationWarning: Use sage.version.version instead.\nSee https://github.com/sagemath/sage/issues/39015 for details.\n  \"engine_version\": version(),\n",
+  "verified_input_hashes": [
+    {
+      "path": "docs/research_program/long_horizon_rescue/pr168_spec.yaml",
+      "sha256": "447766f48ab3c28fd0cb942a49224d4fc9bb4d6a305e02f912826ab3c49fcad2"
+    },
+    {
+      "path": "docs/research_program/long_horizon_rescue/pr168_active_b_accel_consumers.yaml",
+      "sha256": "9c4a07d7f6c31d9b2368c4fbdae4df65c3cc9963fb287d16816a31efd255d86a"
+    },
+    {
+      "path": "htt/bass/transport/dipole_driven_hierarchy.py",
+      "sha256": "12515c70420e002eec388efc4787eee2f27305991740c8764fa494d41b14f02e"
+    },
+    {
+      "path": "docs/audits/mes_primary_sources/mesa_astro-ph_9501016_PRD51_1525.txt",
+      "sha256": "d500ffeef60f1f006393b7b2a21823b51bc4c9c9b41b7fb983f0393ce800217e"
+    },
+    {
+      "path": "docs/audits/mes_primary_sources/PROVENANCE_M4b.md",
+      "sha256": "19779be175d8f05873ead2896be3789dadf2c6df99d7acb62d2fa560f246f7be"
+    },
+    {
+      "path": "htt/htt/htt/core/bounds.py",
+      "sha256": "9ef8a57b61e68ebb8977a5650cf9eb732f3fa1bd0d513bfeabde59062116cdeb"
+    },
+    {
+      "path": "htt/src/common/mes_theorem_authority.py",
+      "sha256": "d149d8599eba65dd1af536d30f289466b642e990bd8cee6cc8639566ab787af8"
+    },
+    {
+      "path": "htt/obsstat/egs3_mes_geodesic_refreeze.py",
+      "sha256": "a74e92151d9d49e371f2080c799c3512a4a902ad78f43ce94573ddbb1e41be10"
+    },
+    {
+      "path": "htt/tsc/admissibility/three_bound_hierarchy.py",
+      "sha256": "cc3ba841a4b61ac10a1d7a82e56b96391afcd81d8bd169bd8ca33940c7cf671e"
+    },
+    {
+      "path": "docs/generated/pr124_cas/CAS_CONTRACT_PR124_MES_GEODESIC.json",
+      "sha256": "d5769f5fe06c886f4408593b7c5e756a338e18cbf7eb4726f42b03aff757c73f"
+    },
+    {
+      "path": "docs/generated/pr124_cas_adjudication.json",
+      "sha256": "59ab201c65a55a5e22286be394aa4b4e9caaa9fdbda4ced9eb59a1d98607fcd7"
+    },
+    {
+      "path": "docs/generated/pr124_mes_authority_table.json",
+      "sha256": "81ad8c382fbe481eaf715b971680199fed5142e2498928cff57ae9d847cc20f3"
+    }
+  ]
+}

@@ -1951,3 +1951,46 @@ status artifacts remain diagnostic-only, `production_validated=false`, and the
 PR3-complete/PR4-skip constraint reduces PR-150 to a PR3-conditional
 `roadmap_rescue_v1:C2` ceiling
 without generating data output.
+
+## PR-168 — failed acceleration source-basis contract audit (2026-07-19)
+
+Change classification: exact-mechanics contract evidence, four-axis CAS
+provenance, fail-branch harness, internal result artifacts, and DAG/status
+metadata. Affected owners: COMMON, BASS, HTT, and harness. No observed data,
+transfer function, likelihood, posterior, MIO certificate, or production
+physics implementation changed.
+
+| Command | CWD | Result | Notes |
+| --- | --- | --- | --- |
+| Four recorded axis commands in `docs/generated/pr168_cas/axis_result_*.json` | repo root / `formal_pr168` | PASS computationally | Wolfram+xAct, SymPy, Sage+Singular, and Lean all agreed under one contract hash; this evidence is superseded for production use. |
+| `venv/bin/python -B .agent-harness/scripts/cas_gate.py adjudicate ... --out /tmp/pr168_adjudication_replay.json` | repo root | PASS computationally | Reproduced original `CAS_4AXIS_PASS`, four PASS axes, zero missing/errors/exceptions. |
+| `venv/bin/python -B scripts/codex_harness/run_pr168_mes_four_acceleration_honesty.py validate-evidence` | repo root | PASS | Preserved immutable engine evidence; exact normalization counterexample present; production hashes unchanged. |
+| same runner `write-closeout` then `check` | repo root | PASS | Final post-CAS state `CAS_FAIL`; no production authorization. |
+| targeted PR-168 test | repo root | PASS | 8 passed in 0.14 s; durable axis/review receipt copies included. |
+| PR-168 plus claim/DAG/MES/delta contracts | repo root | PASS | Final replay: 115 passed in 17.12 s. |
+| `venv/bin/python -B -m pytest -p no:cacheprovider -m smoke -q` with touched PYTHONPATH | repo root | PASS | 6 passed, 9,086 deselected in 5.66 s. |
+| `sync_pr_dag_mirrors.py --check` | repo root | initial FAIL | Docs backlog JSON drift detected; repaired with `--write`, final mirror check PASS. |
+| strict `validate_pr_dag.py ... --json` | repo root | initial FAIL, final PASS | Unqualified `C1` fixed to `roadmap_rescue_v1:C1`; final 130 cards / 352 edges. |
+| scoped claim-language and forbidden-claim scans | repo root | PASS | Zero issues and zero forbidden patterns. |
+| repo-wide no-mock leakage checker | repo root | FAIL, PRE-EXISTING | Historical `calibration_factor` and mock-marker inventory; scoped PR-168 search found zero matches. |
+| `git diff --check` | repo root | PASS | No whitespace errors before status/context closeout. |
+
+Numerical/scientific impact: the registered definition gives `S_A/A=5` for
+`A=6`, `G=15`, while the contract target is 15. This exact factor-of-three
+counterexample and underdefined negative controls invalidate the scientific
+contract despite four-engine fixture agreement. The final result is
+`CAS_FAIL_CONTRACT_INVALID_PRODUCTION_UNCHANGED`; it is a reproducible internal
+failure result, not a checked theorem or physical derivation.
+
+Artifact/claim-tier impact: the result card and theorem signature are internal
+`roadmap_rescue_v1:C1` / exploratory, `public_use=false`; the theorem is
+`WITHHELD_CONTRACT_INVALID`. The provisional collection receipt remains
+immutable but is explicitly superseded by the post-CAS failure adjudication.
+Every inventoried production consumer matches its pre-axis SHA-256. There is no
+PR-168 figure and no pass-only acceleration-status source in the final pack.
+
+Hostile review: physics, code, and supplemental claim reviewers all returned
+FAIL envelopes. The fail-branch closeout binds those immutable receipts and
+addresses their provenance/harness findings without repairing the frozen
+contract after results. A later attempt must register a new contract hash and
+rerun all four blind axes; the current PASS envelopes are not reusable.

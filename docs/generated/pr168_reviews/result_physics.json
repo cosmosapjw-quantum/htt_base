@@ -1,0 +1,227 @@
+{
+  "schema_version": 1,
+  "run_id": "pr168-closeout-review-20260719",
+  "assignment_id": "A-PR168-CLOSEOUT-PHYS",
+  "context_version": "409a69f706abd92a5d860a66c537761d2c405853e0776af1a2b5eac410cf6824",
+  "independence_mode": "shared-core",
+  "claim_ids": [
+    "C-PR168-ACCEL-KINEMATIC-SOURCE-BASIS"
+  ],
+  "agent_type": "physics_stat_auditor",
+  "status": "fail",
+  "result_path": ".agent-harness/runs/pr168-closeout-review-20260719/results/A-PR168-CLOSEOUT-PHYS.json",
+  "verdict": {
+    "closeout": "FAIL_PENDING_CONTRACT_REPAIR_AND_FRESH_4AXIS_RERUN",
+    "primary_identity": "The rank-one source-column, redistribution, and direct ell=1-support algebra is correct under the explicitly imposed definitions.",
+    "cas_provenance": "The assigned adjudication is hash-bound to the assigned contract and reports four PASS axes with no exception, missing axis, or adjudication error.",
+    "cas_statement_adequacy": "Fail: one required normalization is ambiguous/inconsistent and the three required negative controls lack contract-level defining equations, so cross-engine agreement cannot establish the exact obligations as worded.",
+    "typed_acceleration_split": "Pass: the result card preserves exact geodesic four-acceleration zero while leaving the active non-geodesic numerical ceiling unavailable and null, and it forbids promotion to a universal non-geodesic A2=0 claim.",
+    "scientific_interpretation": "The allowed statement is safe only as conditional projected-source algebra. It is not an independent physical derivation, total-response equivalence, observational degeneracy, or geometry/family claim."
+  },
+  "steelman": "On its strongest defensible reading, the contract deliberately fixes signed aligned scalar coefficients, one thermodynamic ell=1 basis, k_eff=0, first order, and an unchanged evolution operator. Under those assumptions S_A and S_D are manifestly collinear, redistribution leaves their sum invariant, and direct ell>=2 support vanishes. The exclusions and physical-bridge qualification correctly prevent promotion to finite-k, spectral, total-transfer, non-geodesic-MES, observational, or family-identification claims.",
+  "assumptions_and_conventions": {
+    "metric_signature": "(-,+,+,+)",
+    "photon_decomposition": "p^a = E(u^a+e^a)",
+    "frame": "fixed u^a frame; one aligned scalar ell-amplitude convention",
+    "spectral_mode": "thermodynamic temperature G(E)=-E df0/dE",
+    "order_and_limit": "first order, homogeneous direct source, k_eff=0",
+    "operator": "identical damping, collision terms, initial data, other sources, and evolution operator during amplitude redistribution",
+    "domain": "exact rational fixture with ell=0..4; stated support result for ell_max>=2",
+    "excluded_branches": [
+      "finite-k streaming and total-transfer equivalence",
+      "changed operator or damping",
+      "polarization, collision anisotropy, independent shear, and higher-multipole initial data",
+      "non-thermodynamic spectral distortions",
+      "second and higher order terms",
+      "general m-resolved or three-direction alignment"
+    ]
+  },
+  "equation_definition_audit": [
+    {
+      "item": "source-column collinearity and rank",
+      "status": "pass",
+      "assessment": "Both defined columns are scalar multiples of delta_{ell,1}; every 2x2 minor vanishes. At the nonzero fixture the rank is one; generally the recorded upper bound rank<=1 is correct."
+    },
+    {
+      "item": "redistribution identity",
+      "status": "pass",
+      "assessment": "S_A(a+Delta,g)+S_D(d-Delta,g)=((a+d)g/3)delta_{ell,1}=S_A(a,g)+S_D(d,g) over the stated exact-rational domain."
+    },
+    {
+      "item": "direct multipole support",
+      "status": "pass",
+      "assessment": "The registered direct sources vanish for ell!=1 by definition. This says nothing about evolved finite-k multipoles, which the exclusions correctly preserve."
+    },
+    {
+      "item": "normalized thermodynamic basis",
+      "status": "fail",
+      "assessment": "The contract says normalization is by amplitude and defines S_A=(ag/3)delta and S_D=(dg/3)delta, so S_A/a=S_D/d=(g/3)delta. The expected normalized vector g delta instead equals 3S_A/a=3S_D/d. The factor-of-three normalization operator is never defined."
+    },
+    {
+      "item": "negative controls",
+      "status": "fail",
+      "assessment": "The contract registers the values 60, [2/3,1/3], and 2/3 but does not define the finite-k streaming map, changed-operator response map, or P2 normalization/equation from which those values and signs must follow. Names, parameters, and expected outputs are not a mathematical statement."
+    }
+  ],
+  "dimensional_sign_limit_checks": {
+    "dimensions": "The spec assumes a and d share one conformal-rate normalization, so the two source columns are dimensionally comparable. The rational fixture is an algebraic normalization test, not a dimensional physical calibration.",
+    "signs": "The exact-rational domain can absorb an overall sign into signed coefficients a and d, but the documents call them amplitudes and never define a physical sign map. Therefore the pass establishes basis collinearity, not equality of physical sign conventions. The finite-k/operator-control signs are not auditable without their missing equations.",
+    "zero_limits": "For g=0 or a=d=0 the sources vanish and rank can drop to zero, consistent with rank_upper_bound=1. Normalized-column statements correctly require nonzero a and d, once the normalization operator is repaired.",
+    "flrw_geodesic_limit": "Exact geodesic four-acceleration zero is preserved separately. No universal numerical non-geodesic ceiling is supplied.",
+    "finite_k_and_higher_order": "Explicitly excluded from the equivalence class; nonzero controls may delimit the claim only after their operators are defined in the shared contract."
+  },
+  "findings": [
+    {
+      "finding_id": "F-PR168-PHYS-001",
+      "claim_id": "C-PR168-ACCEL-KINEMATIC-SOURCE-BASIS",
+      "severity": "P1",
+      "category": "normalization_definition",
+      "verdict": "fail",
+      "summary": "The required normalized-basis statement has an unresolved factor-of-three ambiguity.",
+      "evidence": [
+        {
+          "path": "docs/generated/pr168_cas/CAS_CONTRACT_PR168_ACCEL_KINEMATIC_SOURCE_BASIS.json",
+          "sha256": "d2821237e8c7cf3fc97b27dea5062cc943482d217bbc53f45157848b111a542d",
+          "lines": "146,152,164,174-182,207-213",
+          "detail": "The contract says normalization by amplitude, defines S=(amplitude*g/3)delta, yet claims and expects normalized basis g delta."
+        },
+        {
+          "path": "docs/research_program/long_horizon_rescue/pr168_spec.yaml",
+          "sha256": "447766f48ab3c28fd0cb942a49224d4fc9bb4d6a305e02f912826ab3c49fcad2",
+          "lines": "82-105,107-125",
+          "detail": "normalized_thermodynamic_basis is decisive and the fixture expects 15 for a=6, g=15 while S_A=30."
+        },
+        {
+          "path": "docs/generated/pr168_theorem_signature.json",
+          "sha256": "9207cee7482c2465bda1b8f35da0b930ce4cac962c9e1cec5a2e8b01a47a359a",
+          "lines": "50-64,89-95,107",
+          "detail": "The ambiguity propagates into the checked theorem signature."
+        }
+      ],
+      "reproducible_command": "python -c \"from fractions import Fraction as F; a=F(6); g=F(15); s=a*g/F(3); print({'S_A': str(s), 'S_A_over_a': str(s/a), 'three_S_A_over_a': str(F(3)*s/a)})\"",
+      "observed_output": "{'S_A': '30', 'S_A_over_a': '5', 'three_S_A_over_a': '15'}",
+      "required_fix": "Define the normalization operator explicitly. Either state N_A:=3S_A/a and N_D:=3S_D/d (coefficient-normalized columns), or change the amplitude-normalized target to (g/3)delta. Update the exact statement, theorem signature, and exact check semantics. Because this changes the contract semantics/hash, invalidate the current adjudication and run a fresh blind four-axis wave."
+    },
+    {
+      "finding_id": "F-PR168-PHYS-002",
+      "claim_id": "C-PR168-ACCEL-KINEMATIC-SOURCE-BASIS",
+      "severity": "P1",
+      "category": "negative_control_underdefinition",
+      "verdict": "fail",
+      "summary": "The three required exact negative controls have expected values but no contract-level equations or normalization/sign definitions.",
+      "evidence": [
+        {
+          "path": "docs/generated/pr168_cas/CAS_CONTRACT_PR168_ACCEL_KINEMATIC_SOURCE_BASIS.json",
+          "sha256": "d2821237e8c7cf3fc97b27dea5062cc943482d217bbc53f45157848b111a542d",
+          "lines": "148-152,163-182,184-220",
+          "detail": "The shared statement only names the controls and lists outputs; it never defines the maps that produce 60, [2/3,1/3], or 2/3."
+        },
+        {
+          "path": "docs/research_program/long_horizon_rescue/pr168_spec.yaml",
+          "sha256": "447766f48ab3c28fd0cb942a49224d4fc9bb4d6a305e02f912826ab3c49fcad2",
+          "lines": "72-105,107-125",
+          "detail": "All three controls are mandatory exact keys, but the fixture provides only parameters and expected outputs."
+        },
+        {
+          "path": "docs/generated/pr168_cas_adjudication.json",
+          "sha256": "fc338cb4b5764ced55106c14c9693de88db961ba9fb212957deb89f38e3fa82d",
+          "lines": "3-16",
+          "detail": "Four PASS statuses establish agreement under the hash, but agreement cannot supply definitions absent from the shared contract."
+        }
+      ],
+      "required_fix": "Freeze exact equations for the streaming ell1-to-ell2 map including sign and harmonic normalization, the changed-operator response functional, and the angular-square/P2 convention. Require each axis to derive the values from those equations rather than compare hard-coded targets. A semantics/hash repair requires a fresh blind four-axis run and adjudication. Alternatively remove these controls from exact obligations and downgrade them to explicitly non-decisive implementation examples."
+    },
+    {
+      "finding_id": "F-PR168-PHYS-003",
+      "claim_id": "C-PR168-ACCEL-KINEMATIC-SOURCE-BASIS",
+      "severity": "P2",
+      "category": "theorem_signature_quantification",
+      "verdict": "fail",
+      "summary": "The checked theorem signature is not closed: its target identity quantifies Delta and its controls depend on gamma, damping_increment, streaming_21, and mu, but quantified_variables lists only A, D, G, and ell_max.",
+      "evidence": [
+        {
+          "path": "docs/generated/pr168_theorem_signature.json",
+          "sha256": "9207cee7482c2465bda1b8f35da0b930ce4cac962c9e1cec5a2e8b01a47a359a",
+          "lines": "6-10,22-31,60-65,96-107",
+          "detail": "Domain and target mention additional variables omitted by quantified_variables."
+        }
+      ],
+      "required_fix": "List Delta as a signed exact-rational redistribution coefficient and explicitly quantify every variable used by the negative-control statements, with branch/domain restrictions. If the controls are fixture-only, label their variables as fixed fixture parameters instead of theorem quantifiers."
+    },
+    {
+      "finding_id": "F-PR168-PHYS-004",
+      "claim_id": "C-PR168-ACCEL-KINEMATIC-SOURCE-BASIS",
+      "severity": "P2",
+      "category": "claim_tier_alignment",
+      "verdict": "needs_claim_gate_adjudication",
+      "summary": "The authoritative spec records claim_tier exploratory while the result card records conditional_exact_mechanics and the theorem signature says checked_derivation despite explicitly not being an independent derivation.",
+      "evidence": [
+        {
+          "path": "docs/research_program/long_horizon_rescue/pr168_spec.yaml",
+          "sha256": "447766f48ab3c28fd0cb942a49224d4fc9bb4d6a305e02f912826ab3c49fcad2",
+          "lines": "8-12,17-24,57-70",
+          "detail": "The spec tier is exploratory and the bridge is conditional projection, not independent derivation."
+        },
+        {
+          "path": "docs/generated/pr168_result_card.json",
+          "sha256": "d03a0350c42f055820f490a4c9b613303971091326ec8f7ab79f6bd0d77476ce",
+          "lines": "19-25,84-96",
+          "detail": "The result card uses conditional_exact_mechanics."
+        },
+        {
+          "path": "docs/generated/pr168_theorem_signature.json",
+          "sha256": "9207cee7482c2465bda1b8f35da0b930ce4cac962c9e1cec5a2e8b01a47a359a",
+          "lines": "2-12,104-108",
+          "detail": "The signature correctly denies independent derivation but labels its evidence grade checked_derivation."
+        }
+      ],
+      "required_fix": "Use one explicitly authorized tier across spec and generated artifacts. Prefer wording such as checked conditional projected-source algebra; reserve checked_derivation for a separately evidenced physical derivation, or document the schema meaning and post-pass promotion rule in the governing spec."
+    }
+  ],
+  "claim_tier_recommendation": {
+    "maximum": "C1 internal conditional projected-source algebra",
+    "preferred_label": "checked conditional projection algebra",
+    "public_use": false,
+    "forbidden": [
+      "independent covariant non-geodesic derivation",
+      "finite-k or full-transfer equivalence",
+      "unrestricted spectral degeneracy",
+      "observational evidence or detection",
+      "cosmological anisotropy or Bianchi family identification",
+      "universal non-geodesic A2=0"
+    ]
+  },
+  "fatal_blockers": [
+    "F-PR168-PHYS-001",
+    "F-PR168-PHYS-002"
+  ],
+  "safe_claims": [
+    "Under the frozen definitions S_A and S_D are collinear direct ell=1 source columns.",
+    "Redistributing a signed scalar coefficient between those two identically normalized columns leaves their combined direct source unchanged.",
+    "The defined first-order k_eff=0 direct sources have zero ell>=2 components.",
+    "Exact geodesic four-acceleration zero is distinct from an unavailable non-geodesic numerical ceiling.",
+    "None of these statements establishes total-response, observational, transfer, geometry, family, evidence, posterior, or detection claims."
+  ],
+  "required_tests_or_artifacts": [
+    "A repaired schema-v2 CAS contract that defines the normalization operator and every negative-control equation/sign convention.",
+    "Four fresh blind axis result envelopes under the repaired contract hash, followed by fresh adjudication; no reuse of this contract's PASS statuses.",
+    "A theorem signature with closed quantification and an evidence-grade label aligned to the conditional physical bridge.",
+    "A claim-gate decision that reconciles exploratory in the spec with conditional_exact_mechanics in the result card."
+  ],
+  "audit_scope": {
+    "required_inputs_hash_verified": true,
+    "sibling_results_accessed": false,
+    "production_files_read": false,
+    "production_files_modified": false,
+    "raw_axis_envelopes_replayed": false,
+    "limitation": "The assignment did not authorize raw axis result files or source scripts, so this audit verifies the assigned contract/adjudication/result semantics rather than replaying each CAS engine."
+  },
+  "tools": {
+    "shell": "bash",
+    "python": "3.12.3",
+    "commands": [
+      "sha256sum docs/generated/pr168_cas/CAS_CONTRACT_PR168_ACCEL_KINEMATIC_SOURCE_BASIS.json docs/generated/pr168_cas_adjudication.json docs/generated/pr168_result_card.json docs/generated/pr168_theorem_signature.json docs/research_program/long_horizon_rescue/pr168_spec.yaml",
+      "python -c \"from fractions import Fraction as F; a=F(6); g=F(15); s=a*g/F(3); print({'S_A': str(s), 'S_A_over_a': str(s/a), 'three_S_A_over_a': str(F(3)*s/a)})\""
+    ]
+  }
+}

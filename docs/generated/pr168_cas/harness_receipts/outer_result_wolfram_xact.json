@@ -1,0 +1,170 @@
+{
+  "assignment_id": "A-PR168-CAS-WOLFRAM",
+  "assumptions": [
+    "metric signature (-,+,+,+) and p^a = E(u^a+e^a)",
+    "fixed u^a frame with one aligned scalar ell-amplitude convention",
+    "first order in acceleration and kinematic amplitudes",
+    "homogeneous long-wavelength direct source with k_eff=0",
+    "thermodynamic temperature mode G(E)=-E d f0/dE",
+    "identical fixed evolution operator, damping, initial data, collision terms, and all other sources while amplitude is redistributed",
+    "ell_max=4 in the exact fixture and ell_max>=2 in the stated support result",
+    "nonzero amplitudes only where normalization by amplitude is used"
+  ],
+  "claim_ids": [
+    "C-PR168-ACCEL-KINEMATIC-SOURCE-BASIS"
+  ],
+  "commands_run": [
+    {
+      "cmd": "wolframscript -file /home/cosmosapjw/Dropbox/bianchi/htt_base/wolfram/pr168_accel_kinematic_axis.wls",
+      "cwd": ".",
+      "exit": 0
+    }
+  ],
+  "context_version": "80d52ec5e65e6d06d6f0c71e1fefde284be8a4690caad43a2afc78ba8cb2ee25",
+  "evidence_refs": [
+    "docs/generated/pr168_cas/CAS_CONTRACT_PR168_ACCEL_KINEMATIC_SOURCE_BASIS.json",
+    "wolfram/pr168_accel_kinematic_axis.wls"
+  ],
+  "independence_mode": "blind-results",
+  "payload": {
+    "cas_axis_result": {
+      "axis": "wolfram_xact",
+      "checks": {
+        "combined_source_invariance": true,
+        "direct_support_only_ell1": true,
+        "normalized_thermodynamic_basis": true,
+        "operator_change_negative_control_distinct": true,
+        "rank_one_minor_vanishes": true,
+        "second_order_quadrupole_negative_control": true,
+        "source_column_collinearity": true,
+        "streaming_negative_control_nonzero": true
+      },
+      "commands": [
+        {
+          "cmd": "wolframscript -file /home/cosmosapjw/Dropbox/bianchi/htt_base/wolfram/pr168_accel_kinematic_axis.wls",
+          "cwd": ".",
+          "exit": 0
+        }
+      ],
+      "completed_at": "2026-07-19T18:21:26+00:00",
+      "computed": {
+        "acceleration_source_test": [
+          "0",
+          "30",
+          "0",
+          "0",
+          "0"
+        ],
+        "combined_source_test": [
+          "0",
+          "75",
+          "0",
+          "0",
+          "0"
+        ],
+        "direct_ell_ge_2_projection": "0",
+        "kinematic_source_test": [
+          "0",
+          "45",
+          "0",
+          "0",
+          "0"
+        ],
+        "normalized_basis_test": [
+          "0",
+          "15",
+          "0",
+          "0",
+          "0"
+        ],
+        "operator_change_responses": [
+          "2/3",
+          "1/3"
+        ],
+        "rank_upper_bound": "1",
+        "second_order_quadrupole_coefficient": "2/3",
+        "streaming_ell2_negative_control": "60"
+      },
+      "contract_id": "CAS-PR168-ACCEL-KINEMATIC-SOURCE-BASIS-001",
+      "contract_sha256": "d2821237e8c7cf3fc97b27dea5062cc943482d217bbc53f45157848b111a542d",
+      "counterexample": null,
+      "domain_assumption_diff": [],
+      "evidence_class": "exact",
+      "redistributed_fixture_matches": true,
+      "schema_version": 1,
+      "sibling_results_read": [],
+      "source_output_hashes": [
+        {
+          "path": "wolfram/pr168_accel_kinematic_axis.wls",
+          "sha256": "a99c548d354595eaf7e419798a026545e11d678b9ffd7c335c410cc8387ecffd"
+        }
+      ],
+      "status": "PASS",
+      "tool_versions": {
+        "reported": "15.",
+        "singular": null,
+        "xact_loaded": true
+      },
+      "transcript_tail": "------------------------------------------------------------\nPackage xAct`xPerm`  version 1.2.4, {2025, 12, 29}\nCopyRight (C) 2003-2026, Jose M. Martin-Garcia, under the General Public License.\nConnecting to external linux executable...\nConnection established.\n------------------------------------------------------------\nPackage xAct`xTensor` version 1.3.0, {2025, 12, 29}\nCopyRight (C) 2002-2026, Jose M. Martin-Garcia, under the General Public License.\n------------------------------------------------------------\nThese packages come with ABSOLUTELY NO WARRANTY; for details type Disclaimer[]. This is free software, and you are welcome to redistribute it under certain conditions. See the General Public License for details.\n------------------------------------------------------------\n{\"engine\":\"wolfram_xact\",\"engine_version\":\"15.\",\"xact_loaded\":true,\"checks\":{\"source_column_collinearity\":true,\"combined_source_invariance\":true,\"direct_support_only_ell1\":true,\"normalized_thermodynamic_basis\":true,\"rank_one_minor_vanishes\":true,\"streaming_negative_control_nonzero\":true,\"operator_change_negative_control_distinct\":true,\"second_order_quadrupole_negative_control\":true},\"computed\":{\"acceleration_source_test\":[\"0\",\"30\",\"0\",\"0\",\"0\"],\"kinematic_source_test\":[\"0\",\"45\",\"0\",\"0\",\"0\"],\"combined_source_test\":[\"0\",\"75\",\"0\",\"0\",\"0\"],\"normalized_basis_test\":[\"0\",\"15\",\"0\",\"0\",\"0\"],\"rank_upper_bound\":\"1\",\"direct_ell_ge_2_projection\":\"0\",\"streaming_ell2_negative_control\":\"60\",\"operator_change_responses\":[\"2\\/3\",\"1\\/3\"],\"second_order_quadrupole_coefficient\":\"2\\/3\"},\"redistributed_fixture_matches\":true,\"all_pass\":true}\n",
+      "verified_input_hashes": [
+        {
+          "path": "docs/research_program/long_horizon_rescue/pr168_spec.yaml",
+          "sha256": "447766f48ab3c28fd0cb942a49224d4fc9bb4d6a305e02f912826ab3c49fcad2"
+        },
+        {
+          "path": "docs/research_program/long_horizon_rescue/pr168_active_b_accel_consumers.yaml",
+          "sha256": "9c4a07d7f6c31d9b2368c4fbdae4df65c3cc9963fb287d16816a31efd255d86a"
+        },
+        {
+          "path": "htt/bass/transport/dipole_driven_hierarchy.py",
+          "sha256": "12515c70420e002eec388efc4787eee2f27305991740c8764fa494d41b14f02e"
+        },
+        {
+          "path": "docs/audits/mes_primary_sources/mesa_astro-ph_9501016_PRD51_1525.txt",
+          "sha256": "d500ffeef60f1f006393b7b2a21823b51bc4c9c9b41b7fb983f0393ce800217e"
+        },
+        {
+          "path": "docs/audits/mes_primary_sources/PROVENANCE_M4b.md",
+          "sha256": "19779be175d8f05873ead2896be3789dadf2c6df99d7acb62d2fa560f246f7be"
+        },
+        {
+          "path": "htt/htt/htt/core/bounds.py",
+          "sha256": "9ef8a57b61e68ebb8977a5650cf9eb732f3fa1bd0d513bfeabde59062116cdeb"
+        },
+        {
+          "path": "htt/src/common/mes_theorem_authority.py",
+          "sha256": "d149d8599eba65dd1af536d30f289466b642e990bd8cee6cc8639566ab787af8"
+        },
+        {
+          "path": "htt/obsstat/egs3_mes_geodesic_refreeze.py",
+          "sha256": "a74e92151d9d49e371f2080c799c3512a4a902ad78f43ce94573ddbb1e41be10"
+        },
+        {
+          "path": "htt/tsc/admissibility/three_bound_hierarchy.py",
+          "sha256": "cc3ba841a4b61ac10a1d7a82e56b96391afcd81d8bd169bd8ca33940c7cf671e"
+        },
+        {
+          "path": "docs/generated/pr124_cas/CAS_CONTRACT_PR124_MES_GEODESIC.json",
+          "sha256": "d5769f5fe06c886f4408593b7c5e756a338e18cbf7eb4726f42b03aff757c73f"
+        },
+        {
+          "path": "docs/generated/pr124_cas_adjudication.json",
+          "sha256": "59ab201c65a55a5e22286be394aa4b4e9caaa9fdbda4ced9eb59a1d98607fcd7"
+        },
+        {
+          "path": "docs/generated/pr124_mes_authority_table.json",
+          "sha256": "81ad8c382fbe481eaf715b971680199fed5142e2498928cff57ae9d847cc20f3"
+        }
+      ]
+    }
+  },
+  "result_path": ".agent-harness/runs/pr168-cas-v2-20260719/results/A-PR168-CAS-WOLFRAM.json",
+  "run_id": "pr168-cas-v2-20260719",
+  "schema_version": 1,
+  "status": "pass",
+  "tool_versions": {
+    "reported": "15.",
+    "singular": null,
+    "xact_loaded": true
+  }
+}

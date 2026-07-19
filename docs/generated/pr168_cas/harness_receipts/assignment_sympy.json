@@ -1,0 +1,59 @@
+{
+  "schema_version": 2,
+  "run_id": "pr168-cas-v2-20260719",
+  "assignment_id": "A-PR168-CAS-SYMPY",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "cas_sympy",
+  "context_version": "80d52ec5e65e6d06d6f0c71e1fefde284be8a4690caad43a2afc78ba8cb2ee25",
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R3",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-PR168-ACCEL-KINEMATIC-SOURCE-BASIS"
+  ],
+  "task": "Execute only contract-v2 PR-168 SymPy axis. Main process owns this axis. Do not inspect sibling results before all four close.",
+  "required_inputs": [
+    {
+      "path": "docs/research_program/long_horizon_rescue/pr168_spec.yaml",
+      "sha256": "447766f48ab3c28fd0cb942a49224d4fc9bb4d6a305e02f912826ab3c49fcad2"
+    },
+    {
+      "path": "docs/generated/pr168_cas/CAS_CONTRACT_PR168_ACCEL_KINEMATIC_SOURCE_BASIS.json",
+      "sha256": "d2821237e8c7cf3fc97b27dea5062cc943482d217bbc53f45157848b111a542d"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr168_axis.py",
+      "sha256": "d2b795a7f326c8b6322f840ba466e246e0f16728d506d9c13ca4d14bd1fe780a"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr168_mes_four_acceleration_honesty.py",
+      "sha256": "a500a4c6948d01177cee221c8b4996c46dd938419dd6e6caf2779a6cc6709e05"
+    },
+    {
+      "path": "htt/src/common/pr168_sympy_axis.py",
+      "sha256": "74f981df9c71cbb5e1dc44e75751680c58fa24c9472afe55985d7679d948114d"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "venv/bin/python",
+    "sha256sum"
+  ],
+  "required_outputs": [
+    ".agent-harness/runs/pr168-cas-v2-20260719/results/A-PR168-CAS-SYMPY.json"
+  ],
+  "result_path": ".agent-harness/runs/pr168-cas-v2-20260719/results/A-PR168-CAS-SYMPY.json",
+  "status": "registered",
+  "cas_axis": "sympy",
+  "cas_contract": {
+    "path": "docs/generated/pr168_cas/CAS_CONTRACT_PR168_ACCEL_KINEMATIC_SOURCE_BASIS.json",
+    "sha256": "d2821237e8c7cf3fc97b27dea5062cc943482d217bbc53f45157848b111a542d"
+  },
+  "assignment_sha256": "167df92cd253f04df977153ddfe1e4dd8dd22d5731f95fcad9bf65a8a80e5e06"
+}

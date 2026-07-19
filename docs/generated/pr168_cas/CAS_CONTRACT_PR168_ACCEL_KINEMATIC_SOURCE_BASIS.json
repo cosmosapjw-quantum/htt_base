@@ -1,0 +1,230 @@
+{
+  "axes": {
+    "lean": {
+      "applicability": "required",
+      "obligation": "machine-check the general exact identities and independently emit the registered rational fixture using repo-pinned Lean 4 plus mathlib",
+      "sources": [
+        {
+          "path": "formal_pr168/Pr168AccelKinematic/Basic.lean",
+          "sha256": "8875fdeead14333765bd9dc767bd17c7ae2a664ea853d7c24893344acfbf60ff"
+        },
+        {
+          "path": "formal_pr168/Pr168AccelKinematic.lean",
+          "sha256": "933f5ddc2ecf3a2004588ee962da977698b08c19d79ffb2e440124b9de8bba81"
+        },
+        {
+          "path": "formal_pr168/lakefile.toml",
+          "sha256": "0c13c02ac3ad5068718018d9698c094f9fcc66618c19c330ce218ec807fc7025"
+        },
+        {
+          "path": "formal_pr168/lake-manifest.json",
+          "sha256": "387e0c3732dc93c4b22ae46299b0d59759231ab0c8ed3f9d28f48956e541c7cf"
+        },
+        {
+          "path": "formal_pr168/lean-toolchain",
+          "sha256": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee"
+        }
+      ]
+    },
+    "sage_singular": {
+      "applicability": "required",
+      "obligation": "independently compute the exact polynomial and rational identities and use Singular for the registered rank-one minor reduction",
+      "sources": [
+        {
+          "path": "sage/pr168_accel_kinematic_axis.sage",
+          "sha256": "042e0c8a9ce64ab1a1f068b8269aaa91f4e0b42f854d1532babcac61206d7039"
+        }
+      ]
+    },
+    "sympy": {
+      "applicability": "required",
+      "obligation": "independently compute the exact symbolic source columns, minors, redistribution identity, and rational negative controls",
+      "sources": [
+        {
+          "path": "htt/src/common/pr168_sympy_axis.py",
+          "sha256": "74f981df9c71cbb5e1dc44e75751680c58fa24c9472afe55985d7679d948114d"
+        }
+      ]
+    },
+    "wolfram_xact": {
+      "applicability": "required",
+      "obligation": "independently compute the exact algebra in Wolfram Engine after loading xAct and emit the registered rational fixture",
+      "sources": [
+        {
+          "path": "wolfram/pr168_accel_kinematic_axis.wls",
+          "sha256": "a99c548d354595eaf7e419798a026545e11d678b9ffd7c335c410cc8387ecffd"
+        }
+      ]
+    }
+  },
+  "exceptions_adjudication": {
+    "aggregate_status_rule": "CAS_4AXIS_PASS | CAS_PASS_WITH_REGISTERED_EXCEPTION | CAS_CONFLICT | CAS_BLOCKED | CAS_FAIL",
+    "invalidation_triggers": [
+      "contract_hash_change",
+      "axis_source_hash_change",
+      "source_input_hash_change",
+      "assumption_or_branch_change"
+    ],
+    "preregistered_exceptions": []
+  },
+  "identity": {
+    "adjudicator": "main-writer after four blind result envelopes exist",
+    "claim_ceiling": "conditional_C1_exact_mechanics",
+    "claim_ids": [
+      "C-PR168-ACCEL-KINEMATIC-SOURCE-BASIS"
+    ],
+    "contract_id": "CAS-PR168-ACCEL-KINEMATIC-SOURCE-BASIS-001",
+    "contract_version": 2,
+    "source_input_hashes": [
+      {
+        "path": "docs/research_program/long_horizon_rescue/pr168_spec.yaml",
+        "sha256": "447766f48ab3c28fd0cb942a49224d4fc9bb4d6a305e02f912826ab3c49fcad2"
+      },
+      {
+        "path": "docs/research_program/long_horizon_rescue/pr168_active_b_accel_consumers.yaml",
+        "sha256": "9c4a07d7f6c31d9b2368c4fbdae4df65c3cc9963fb287d16816a31efd255d86a"
+      },
+      {
+        "path": "htt/bass/transport/dipole_driven_hierarchy.py",
+        "sha256": "12515c70420e002eec388efc4787eee2f27305991740c8764fa494d41b14f02e"
+      },
+      {
+        "path": "docs/audits/mes_primary_sources/mesa_astro-ph_9501016_PRD51_1525.txt",
+        "sha256": "d500ffeef60f1f006393b7b2a21823b51bc4c9c9b41b7fb983f0393ce800217e"
+      },
+      {
+        "path": "docs/audits/mes_primary_sources/PROVENANCE_M4b.md",
+        "sha256": "19779be175d8f05873ead2896be3789dadf2c6df99d7acb62d2fa560f246f7be"
+      },
+      {
+        "path": "htt/htt/htt/core/bounds.py",
+        "sha256": "9ef8a57b61e68ebb8977a5650cf9eb732f3fa1bd0d513bfeabde59062116cdeb"
+      },
+      {
+        "path": "htt/src/common/mes_theorem_authority.py",
+        "sha256": "d149d8599eba65dd1af536d30f289466b642e990bd8cee6cc8639566ab787af8"
+      },
+      {
+        "path": "htt/obsstat/egs3_mes_geodesic_refreeze.py",
+        "sha256": "a74e92151d9d49e371f2080c799c3512a4a902ad78f43ce94573ddbb1e41be10"
+      },
+      {
+        "path": "htt/tsc/admissibility/three_bound_hierarchy.py",
+        "sha256": "cc3ba841a4b61ac10a1d7a82e56b96391afcd81d8bd169bd8ca33940c7cf671e"
+      },
+      {
+        "path": "docs/generated/pr124_cas/CAS_CONTRACT_PR124_MES_GEODESIC.json",
+        "sha256": "d5769f5fe06c886f4408593b7c5e756a338e18cbf7eb4726f42b03aff757c73f"
+      },
+      {
+        "path": "docs/generated/pr124_cas_adjudication.json",
+        "sha256": "59ab201c65a55a5e22286be394aa4b4e9caaa9fdbda4ced9eb59a1d98607fcd7"
+      },
+      {
+        "path": "docs/generated/pr124_mes_authority_table.json",
+        "sha256": "81ad8c382fbe481eaf715b971680199fed5142e2498928cff57ae9d847cc20f3"
+      }
+    ],
+    "statement_class": "scalar_algebra"
+  },
+  "independence": {
+    "correlation_disclosure": "The four axis sources were prepared in one main-writer session; engine execution, result ownership, and result visibility are nevertheless separated by registered blind-results assignments. This is engine cross-checking, not independent physical derivation provenance.",
+    "mode": "blind-results",
+    "result_visibility": "No axis may read any sibling result before all four assignments close and the main writer begins adjudication.",
+    "script_result_ownership": "per-axis registered assignment"
+  },
+  "schema_version": 2,
+  "semantics": {
+    "assumptions": [
+      "metric signature (-,+,+,+) and p^a = E(u^a+e^a)",
+      "fixed u^a frame with one aligned scalar ell-amplitude convention",
+      "first order in acceleration and kinematic amplitudes",
+      "homogeneous long-wavelength direct source with k_eff=0",
+      "thermodynamic temperature mode G(E)=-E d f0/dE",
+      "identical fixed evolution operator, damping, initial data, collision terms, and all other sources while amplitude is redistributed",
+      "ell_max=4 in the exact fixture and ell_max>=2 in the stated support result",
+      "nonzero amplitudes only where normalization by amplitude is used"
+    ],
+    "branches": [
+      "fixed-operator aligned-scalar direct-source branch only",
+      "operator-changing, finite-k, and higher-order branches are negative controls rather than members of the equivalence class"
+    ],
+    "exact_statement": "For S_A(a,g)_ell=(a g/3) delta_{ell,1} and S_D(d,g)_ell=(d g/3) delta_{ell,1} over exact rationals, every 2x2 minor of [S_A,S_D] vanishes, S_A(a+Delta,g)+S_D(d-Delta,g)=S_A(a,g)+S_D(d,g), both nonzero-amplitude normalized columns equal g delta_{ell,1}, and their direct first-order support vanishes for ell!=1. At the registered fixture a=6,d=9,g=15,Delta=3, the vectors are (0,30,0,0,0), (0,45,0,0,0), and (0,75,0,0,0). The separately registered finite-k streaming, changed-operator, and second-order angular-square controls are nonzero/distinct, delimiting rather than extending the identity.",
+    "exclusions": [
+      "no unrestricted frequency-spectrum or bandpass equivalence",
+      "no finite-k free streaming or total transfer-function equivalence",
+      "no operator or damping changes between the compared mechanisms",
+      "no independent shear, polarization, collision-anisotropy, or higher-multipole initial-data claim",
+      "no second-order boost or acceleration-product equivalence",
+      "no general m-resolved or three-direction alignment theorem",
+      "no observational, family-identification, native-transfer, posterior, evidence, or detection statement",
+      "no covariant derivation of a non-geodesic MES acceleration ceiling"
+    ],
+    "symbol_type_domain_map": {
+      "a,d,Delta,g,gamma,damping_increment,streaming_21": "exact rationals, with nonzero a and d for normalized-column statements",
+      "ell": "ordered scalar multipole index 0 through 4 in the fixture",
+      "S_A,S_D": "five-component exact rational source columns",
+      "mu": "exact rational indeterminate for the P2 decomposition negative control"
+    }
+  },
+  "target": {
+    "approximation_order": "exact within the explicitly first-order registered domain",
+    "canonical_form": "ordered five-component rational vectors, exact rank/minor statements, and exact rational negative-control outputs",
+    "equivalence_relation": "exact rational equality under identical frozen assumptions",
+    "exact_test_obligations": [
+      "source_column_collinearity",
+      "combined_source_invariance",
+      "direct_support_only_ell1",
+      "normalized_thermodynamic_basis",
+      "rank_one_minor_vanishes",
+      "streaming_negative_control_nonzero",
+      "operator_change_negative_control_distinct",
+      "second_order_quadrupole_negative_control"
+    ],
+    "expected_exact_values": {
+      "acceleration_source_test": [
+        "0",
+        "30",
+        "0",
+        "0",
+        "0"
+      ],
+      "combined_source_test": [
+        "0",
+        "75",
+        "0",
+        "0",
+        "0"
+      ],
+      "direct_ell_ge_2_projection": "0",
+      "kinematic_source_test": [
+        "0",
+        "45",
+        "0",
+        "0",
+        "0"
+      ],
+      "normalized_basis_test": [
+        "0",
+        "15",
+        "0",
+        "0",
+        "0"
+      ],
+      "operator_change_responses": [
+        "2/3",
+        "1/3"
+      ],
+      "rank_upper_bound": "1",
+      "second_order_quadrupole_coefficient": "2/3",
+      "streaming_ell2_negative_control": "60"
+    },
+    "forbidden_shortcuts": [
+      "Do not infer the physical projection definitions from cross-engine agreement; their bridge and limitations remain disclosed separately.",
+      "Do not import or inspect a sibling axis result before adjudication.",
+      "Do not replace exact rational equality with numerical tolerance.",
+      "Do not ignore any negative control or any required exact key.",
+      "Do not use a missing engine or post-hoc exception to authorize production changes."
+    ]
+  }
+}

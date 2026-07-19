@@ -1,0 +1,77 @@
+{
+  "schema_version": 2,
+  "run_id": "pr168-cas-v2-20260719",
+  "assignment_id": "A-PR168-CAS-LEAN",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "cas_lean",
+  "context_version": "80d52ec5e65e6d06d6f0c71e1fefde284be8a4690caad43a2afc78ba8cb2ee25",
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R3",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-PR168-ACCEL-KINEMATIC-SOURCE-BASIS"
+  ],
+  "task": "Execute only contract-v2 PR-168 Lean+mathlib axis. This is a full rerun after v1 invalidation. Do not inspect sibling results or edit shared files.",
+  "required_inputs": [
+    {
+      "path": "docs/research_program/long_horizon_rescue/pr168_spec.yaml",
+      "sha256": "447766f48ab3c28fd0cb942a49224d4fc9bb4d6a305e02f912826ab3c49fcad2"
+    },
+    {
+      "path": "docs/generated/pr168_cas/CAS_CONTRACT_PR168_ACCEL_KINEMATIC_SOURCE_BASIS.json",
+      "sha256": "d2821237e8c7cf3fc97b27dea5062cc943482d217bbc53f45157848b111a542d"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr168_axis.py",
+      "sha256": "d2b795a7f326c8b6322f840ba466e246e0f16728d506d9c13ca4d14bd1fe780a"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr168_mes_four_acceleration_honesty.py",
+      "sha256": "a500a4c6948d01177cee221c8b4996c46dd938419dd6e6caf2779a6cc6709e05"
+    },
+    {
+      "path": "formal_pr168/Pr168AccelKinematic/Basic.lean",
+      "sha256": "8875fdeead14333765bd9dc767bd17c7ae2a664ea853d7c24893344acfbf60ff"
+    },
+    {
+      "path": "formal_pr168/Pr168AccelKinematic.lean",
+      "sha256": "933f5ddc2ecf3a2004588ee962da977698b08c19d79ffb2e440124b9de8bba81"
+    },
+    {
+      "path": "formal_pr168/lakefile.toml",
+      "sha256": "0c13c02ac3ad5068718018d9698c094f9fcc66618c19c330ce218ec807fc7025"
+    },
+    {
+      "path": "formal_pr168/lake-manifest.json",
+      "sha256": "387e0c3732dc93c4b22ae46299b0d59759231ab0c8ed3f9d28f48956e541c7cf"
+    },
+    {
+      "path": "formal_pr168/lean-toolchain",
+      "sha256": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "lake",
+    "lean",
+    "venv/bin/python",
+    "sha256sum"
+  ],
+  "required_outputs": [
+    ".agent-harness/runs/pr168-cas-v2-20260719/results/A-PR168-CAS-LEAN.json"
+  ],
+  "result_path": ".agent-harness/runs/pr168-cas-v2-20260719/results/A-PR168-CAS-LEAN.json",
+  "status": "registered",
+  "cas_axis": "lean",
+  "cas_contract": {
+    "path": "docs/generated/pr168_cas/CAS_CONTRACT_PR168_ACCEL_KINEMATIC_SOURCE_BASIS.json",
+    "sha256": "d2821237e8c7cf3fc97b27dea5062cc943482d217bbc53f45157848b111a542d"
+  },
+  "assignment_sha256": "9476316ed3e00c42fb15bfe8002421d22fc387b29de4d1e47b3ede2adcc58e6e"
+}

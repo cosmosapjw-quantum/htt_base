@@ -1,0 +1,182 @@
+{
+  "schema_version": 1,
+  "run_id": "pr168-closeout-review-20260719",
+  "assignment_id": "A-PR168-CLOSEOUT-CLAIM-SUPPLEMENT",
+  "agent_type": "claim_gate_reviewer",
+  "context_version": "409a69f706abd92a5d860a66c537761d2c405853e0776af1a2b5eac410cf6824",
+  "independence_mode": "shared-core",
+  "result_path": ".agent-harness/runs/pr168-closeout-review-20260719/results/A-PR168-CLOSEOUT-CLAIM-SUPPLEMENT.json",
+  "status": "fail",
+  "summary": "The PR-168 exact-mechanics claim boundary passes direct supplemental review: result-card and theorem values agree, negative controls delimit the identity, the rendered figure has only shear and vorticity curves, its bytes match the sidecar, and restricted claim lint is clean. Closeout provenance does not pass. The generated theorem signature lacks the repository-mandated standalone artifact metadata, and the PR delta's Verification section contains no exact commands or pass/fail/skip outcomes. A lower-severity figure-label issue leaves the geodesic domain of the vorticity curve implicit rather than visible in the legend or explicit in the sidecar caveats.",
+  "evidence_read": [
+    {
+      "path": "docs/generated/pr168_result_card.json",
+      "sha256": "d03a0350c42f055820f490a4c9b613303971091326ec8f7ab79f6bd0d77476ce",
+      "use": "Typed acceleration availability, exact result, negative controls, owner/scope metadata, and forbidden claim ceiling."
+    },
+    {
+      "path": "docs/generated/pr168_theorem_signature.json",
+      "sha256": "9207cee7482c2465bda1b8f35da0b930ce4cac962c9e1cec5a2e8b01a47a359a",
+      "use": "Quantified exact identity, hypotheses, falsifiers, forbidden promotions, evidence binding, and standalone metadata audit."
+    },
+    {
+      "path": "figures/pr168/fig_MES_two_supported_bounds.png",
+      "sha256": "5ee0255fa1f9810ec75c85e5c13f627ca8f16a3dbd4248c03dd16603854e6a40",
+      "use": "Original-resolution visual inspection of plotted curves, legend, axes, and scenario annotations."
+    },
+    {
+      "path": "figures/pr168/fig_MES_two_supported_bounds.png.manifest.json",
+      "sha256": "eefcfd994250be3c1116c3b880024f8911055680a8b1f34f571b7562ab705c1b",
+      "use": "Figure configuration, output hash, inputs, owner/scope/claim metadata, caveats, command, runtime, and pending-review state."
+    },
+    {
+      "path": "docs/PR_DELTAS/pr-168.md",
+      "sha256": "a1a0c4aad68fd777c1c3f8342624ec711f110419c2393873aaa3056896cb8f01",
+      "use": "PR claim summary, API/figure outcome, mutation assertions, verification record, artifacts, and terminal claim ceiling."
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "F-PR168-THEOREM-METADATA-INCOMPLETE",
+      "claim_id": "C-PR168-ACCEL-KINEMATIC-SOURCE-BASIS",
+      "verdict": "FAIL",
+      "severity": "P1",
+      "evidence_fingerprint": "7d6e8d5cdc40dc942b156a509235986c8e500a77e7068b991f59a96ccac6cc3c",
+      "title": "The generated theorem signature is not standalone provenance-complete",
+      "symptom": "docs/generated/pr168_theorem_signature.json is a generated, manifest-bound claim artifact, but it carries none of owner, implementation_scope, claim_tier, transfer_source, config_hash, input_hashes, sky_support_mask_status, covariance_null_mock_status, caveats, generating_command, or git_commit_or_worktree_state. It also lacks artifact_mode, public_use, and typed allowed_uses/forbidden_uses. evidence_hashes and forbidden_promotions provide useful content but do not supply the missing ownership, lane, generation, and environment fields.",
+      "source": "The theorem-signature schema records the mathematical statement and CAS evidence but does not implement the repository's minimum per-artifact metadata contract.",
+      "consequence": "A copied or separately consumed theorem signature cannot be routed to COMMON, constrained to conditional_exact_mechanics/internal use, tied to a generating command/worktree, or automatically quarantined from observational/transfer/family promotion without relying on an external wrapper. That violates the rule that every result artifact carry its own claim and provenance lane.",
+      "remediation": "Extend htt.pr168.theorem_signature.v1 or version it to include the full minimum metadata block. Populate owner=COMMON, the exact implementation scope, claim tier/level, artifact mode/public-use and allowed/forbidden-use fields, transfer/config/input hashes, not-applicable sky/null fields, caveats, generating command, runtime, and Git state; then regenerate and rebind every parent hash.",
+      "evidence_refs": [
+        ".agent-harness/generated/CONTEXT_PACK.md:270-272",
+        "docs/generated/pr168_theorem_signature.json:1-21",
+        "docs/generated/pr168_theorem_signature.json:41-58",
+        "docs/generated/pr168_theorem_signature.json:104-109"
+      ],
+      "reproducible_check": "Compare the theorem-signature top-level keys with the eleven minimum metadata keys; all eleven are absent, while the result card and figure sidecar have zero missing minimum keys."
+    },
+    {
+      "finding_id": "F-PR168-DELTA-VERIFICATION-NON-EVIDENTIARY",
+      "claim_id": "C-PR168-ACCEL-KINEMATIC-SOURCE-BASIS",
+      "verdict": "FAIL",
+      "severity": "P1",
+      "evidence_fingerprint": "c78da61e2d1a78312b1657ac145b966f5be944b547e2c9c6f8b8d72904d3b736",
+      "title": "The PR delta does not record the exact verification bundle or outcomes",
+      "symptom": "The Verification section says that targeted, DAG/mirror, smoke, claim-language, manuscript-build, scientific-code-validation, and independent-review checks are or will be recorded, but it provides no executable command, collected/executed/passed counts, pass/fail status, skips, failures, artifact hashes, or review-envelope paths.",
+      "source": "The delta uses a prose coverage promise in place of the evidence record required by the per-PR loop.",
+      "consequence": "An external reviewer cannot reproduce the claimed closeout, distinguish already-passing gates from future work, or verify that optional skips and failures were not hidden. The delta therefore cannot support a terminal PR-168 status even though the scoped claim content is correctly downclaimed.",
+      "remediation": "Replace the Verification paragraph with the exact command list and outcomes for the governing targeted suite, DAG/mirror validation, smoke, claim lint, manuscript build, scientific-code validation, mutation closeout, and each independent review. Include counts, skipped/failed reasons, artifact/result paths plus hashes, and the final worktree/commit binding. Do not use future tense for completed evidence.",
+      "evidence_refs": [
+        "docs/PR_DELTAS/pr-168.md:64-78",
+        "docs/PR_DELTAS/pr-168.md:80-85",
+        "docs/PR_DELTAS/pr-168.md:87-100",
+        "AGENTS.md:Required per-PR loop step 5"
+      ],
+      "reproducible_check": "A targeted search of the delta for python, pytest, make, PASS, FAIL, SKIP, passed, collected, and command returns no lines."
+    },
+    {
+      "finding_id": "F-PR168-FIGURE-GEODESIC-LABEL",
+      "claim_id": "C-PR168-ACCEL-KINEMATIC-SOURCE-BASIS",
+      "verdict": "FAIL",
+      "severity": "P2",
+      "evidence_fingerprint": "bca579c34a286c1994c534f89a77d86e34c8b7e0b327b7b0cd2888f665862a3a",
+      "title": "The two-bound figure leaves the vorticity curve's geodesic domain implicit",
+      "symptom": "The rendered legend labels the orange curve only as B_omega (vorticity). The sidecar says that registered shear/vorticity consumer semantics are preserved and that no non-geodesic acceleration ceiling is plotted, but it never explicitly says that B_omega is the geodesic vorticity combination. The image itself has no geodesic or unavailable-acceleration annotation.",
+      "source": "The generator removed the acceleration curve but retained a shortened legacy legend and a generic sidecar caveat.",
+      "consequence": "When the PNG is viewed apart from its manuscript paragraph, the vorticity line can be mistaken for an unrestricted MES vorticity bound. public_use=false limits exposure, but the figure is still less self-contained than the PR-168 domain split requires.",
+      "remediation": "Label the legend B_omega (vorticity, geodesic) and add an explicit sidecar caveat that the non-geodesic vorticity/acceleration ceiling is unavailable and no acceleration curve exists. Keep public_use=false and rebind the image and sidecar hashes.",
+      "evidence_refs": [
+        "figures/pr168/fig_MES_two_supported_bounds.png:visual legend and axes",
+        "figures/pr168/fig_MES_two_supported_bounds.png.manifest.json:4-7",
+        "figures/pr168/fig_MES_two_supported_bounds.png.manifest.json:14-24",
+        "docs/PR_DELTAS/pr-168.md:43-55"
+      ]
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "C-PR168-ACCEL-KINEMATIC-SOURCE-BASIS",
+      "verdict": "FAIL_CLOSEOUT_PROVENANCE",
+      "scientific_claim_boundary": "PASS",
+      "provenance_completeness": "FAIL",
+      "figure_content": "PASS_WITH_P2_LABEL_REMEDIATION",
+      "reason": "The exact result is consistently restricted to aligned-scalar, thermodynamic-temperature, first-order, homogeneous k_eff=0, fixed-operator mechanics. The result card and theorem exact-result objects match, their forbidden-promotion lists match, and finite-k/operator/second-order negative controls are nonzero. The active non-geodesic ceiling is typed unavailable with numeric=null and numeric_allowed=false. The image contains only two curves and matches its sidecar hash. Closeout nevertheless fails on missing theorem-signature metadata and a non-evidentiary delta verification record.",
+      "positive_evidence_refs": [
+        "docs/generated/pr168_result_card.json:2-25",
+        "docs/generated/pr168_result_card.json:31-96",
+        "docs/generated/pr168_theorem_signature.json:2-20",
+        "docs/generated/pr168_theorem_signature.json:22-64",
+        "docs/generated/pr168_theorem_signature.json:66-108",
+        "figures/pr168/fig_MES_two_supported_bounds.png:original-resolution visual inspection",
+        "figures/pr168/fig_MES_two_supported_bounds.png.manifest.json:3-54",
+        "docs/PR_DELTAS/pr-168.md:3-50",
+        "docs/PR_DELTAS/pr-168.md:102-104"
+      ],
+      "kill_switch": "Any remediation that changes the exact result, treats CAS agreement as an independent covariant derivation, adds a third acceleration curve, substitutes geodesic zero for a universal non-geodesic ceiling, or promotes the identity to finite-k, full-transfer, observational, geometry, or family equivalence is a hard fail."
+    }
+  ],
+  "commands_run": [
+    {
+      "command": "sha256sum over all five registered supplement inputs",
+      "outcome": "PASS; all hashes exactly match the assignment."
+    },
+    {
+      "command": "python scripts/check_claim_language.py --dry-run --format json over the four textual supplement inputs",
+      "outcome": "PASS; issue_count=0 and missing_paths=[]."
+    },
+    {
+      "command": "diff the sorted result-card exact_result against theorem-signature result and result-card caveats against theorem forbidden_promotions",
+      "outcome": "PASS; both pairs are identical."
+    },
+    {
+      "command": "compare the sidecar output_hashes entry with the PNG SHA-256",
+      "outcome": "PASS; exact match 5ee0255fa1f9810ec75c85e5c13f627ca8f16a3dbd4248c03dd16603854e6a40."
+    },
+    {
+      "command": "canonical Python JSON SHA-256 check for the sidecar config object",
+      "outcome": "PASS; exact match 135c248b339f61eb27f29ebb6e7805ab00d9485fc0354e30fd30ae42ca47ffb9."
+    },
+    {
+      "command": "original-resolution visual inspection of figures/pr168/fig_MES_two_supported_bounds.png",
+      "outcome": "Two plotted curves only: B_sigma shear and B_omega vorticity; no acceleration curve. P2 geodesic-label omission recorded."
+    },
+    {
+      "command": "compare required artifact metadata keys across result card, theorem signature, and figure sidecar",
+      "outcome": "Result card missing=0; figure sidecar missing=0; theorem signature missing all eleven minimum keys."
+    },
+    {
+      "command": "search docs/PR_DELTAS/pr-168.md for executable commands and explicit PASS/FAIL/SKIP or collected/passed receipts",
+      "outcome": "FAIL; no matching verification record."
+    }
+  ],
+  "tool_versions": {
+    "python": "3.12.3",
+    "ripgrep": "14.1.0",
+    "imagemagick": "6.9.12-98 Q16",
+    "jq": "1.7",
+    "sha256sum": "GNU coreutils 9.4"
+  },
+  "proposed_changes": [
+    "Regenerate the theorem signature with full standalone claim/provenance metadata and rebind all dependent hashes.",
+    "Replace the PR delta's Verification promise with exact commands, outcomes, counts, skips/failures, evidence paths, and hashes.",
+    "Qualify the figure's vorticity legend as geodesic and make the sidecar caveat explicit before regenerating/rebinding the image pair."
+  ],
+  "tests_to_run": [
+    "Rerun the exact PR-168 closeout writer/checker after metadata and figure regeneration.",
+    "Rerun restricted claim-language lint over the result card, theorem signature, figure sidecar, PR delta, and manuscript surfaces.",
+    "Recheck theorem/result exact-object equality, forbidden-promotion equality, sidecar config hash, PNG output hash, and visual two-curve/geodesic labeling.",
+    "Run the exact targeted, DAG/mirror, smoke, manuscript-build, scientific-code-validation, mutation, and independent-review commands recorded in the revised delta."
+  ],
+  "risks_and_kill_switches": [
+    "Hash rebinding must be atomic; mixed old/new result, theorem, image, sidecar, manifest, or delta generations block closeout.",
+    "Metadata remediation must not elevate public_use, claim tier, evidence grade, derivation independence, or scientific ownership.",
+    "The historical fig_MES_three_bounds generator name must continue producing exactly two supported curves; any numerical acceleration curve is forbidden.",
+    "The PR delta must distinguish performed passing checks from pending or skipped checks and must not infer validation from mere tool readiness."
+  ],
+  "artifacts_status_updates_needed": [
+    "Keep affected_owner_review pending and PR-168 non-terminal while P1 findings remain.",
+    "After patching, generate a fresh hash-bound review replay; do not overwrite this failing evidence envelope.",
+    "Only a fresh passing supplement may support resolving affected_owner_review and transitioning PR-168 status."
+  ],
+  "errors": []
+}
