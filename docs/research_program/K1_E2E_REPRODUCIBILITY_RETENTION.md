@@ -1,32 +1,33 @@
 # K1 E2E — disk-swap procedure + minimal reproducibility retention (PR3 / PR4)
 
-- **Status:** operational policy for the K1 E2E lane (roadmap PR-149/PR-150).
-- **Owner:** `OBSSTAT`. **Claim tier:** `diagnostic_only`.
-- **Binding constraint:** the 1.8 TB NVMe cannot hold PR3 (FFP10, ~1 TB) and PR4 (NPIPE)
-  simultaneously, so the data acquisition is a SERIAL swap, and PR3 raw must be reduced to a
-  faithful cache BEFORE deletion or the 1 TB download is lost.
+- **Status:** operational retention policy for the PR-150 conditional result and future PR4 swap.
+- **Owner:** `OBSSTAT`. **Claim tier:** `conditional` for the measurement; input-retention metadata is provenance-only.
+- **Binding constraint:** the 1.8 TB NVMe currently holds 731 GB of PR3 FFP10 raw inputs and
+  cannot safely reserve an unmeasured PR4/NPIPE payload at the same time, so acquisition is a
+  SERIAL swap and PR3 raw must be reduced to a faithful cache before any later deletion.
 
 ## Why this exists
 
 The K1 morphology estimator downgrades every raw Nside=2048 IQU map to the analysis
 resolution (NSIDE ≤ 64) as its FIRST step (`k1_global_maxscan._load_sim_map` → `ud_grade`),
-so the raw ~1 TB carries nothing the low-ℓ analysis uses beyond that downgraded content.
-Deleting PR3 to make room for PR4 is therefore safe **only after** the ensemble is reduced to a
-compact, estimator- and mask-agnostic cache and that cache is proven to reproduce the from-raw
-estimator bit-for-bit.
+so the raw 731 GB carries nothing the registered low-ℓ analysis uses beyond that downgraded content.
+Deleting PR3 to make room for PR4 is therefore eligible for consideration **only after** the ensemble is reduced to a
+compact registered-estimator cache and that cache is proven to reproduce the direct raw-to-NSIDE64
+input arrays and full precision result bit-for-bit. Even then, deletion remains forbidden until a
+separate authenticated PR4 replacement-ready receipt exists and the user explicitly starts the swap.
 
 ## Retention tiers (what is left after PR3 analysis)
 
 | Tier | What | Size | Where | Purpose |
 |---|---|---|---|---|
-| **Tier-1 receipt** | per-realization 6-statistic matrix + config/cache hashes + ALL raw input sha256 | KB | `docs/generated/k1_e2e_reduced_manifest_<ensemble>_<method>.json` (committed) | re-derive the K1 E2E global-p for the CURRENT statistic set forever, no maps |
-| **Tier-2 cache** | PRE-MASK downgraded I-map (NSIDE=128, float64) + a_lm (ℓ≤64) per realization | ~1–2 GB | `/mnt/sn850x2t/htt_base_e2e/k1_e2e_reduced/k1_<ensemble>_reduced_<method>.npz` (NVMe, kept) | recompute NEW statistics / re-mask under a revised convention (PR-135/149/150) with NO re-download |
+| **Tier-1 receipt** | exact 999×6 paired precision matrix, observed six-vector, max scores/ranks, config/cache hashes, pairing table, and all 1299 raw SHA256 values | ~MB | `docs/generated/k1_e2e_reduced_manifest_<ensemble>_<method>.json` plus cache-gate receipt | re-derive and audit the registered PR-150 result without raw maps |
+| **Tier-2 cache** | direct PRE-MASK NSIDE=64 float64 I-map + ℓ≤8 a_lm per realization, replay NPZ files, observed/map compact arrays | ~1 GB | `/mnt/sn850x2t/htt_base_e2e/k1_e2e_reduced_pr150/` (NVMe, kept) | rerun the actual PR-150 precision estimator without the 731 GB raw ensemble |
+| **Independent copy** | byte-identical combined Tier-2 archive | 489 MiB | a different filesystem under `workdir/compact_products/planck_pr3_pr150/` | survive loss or replacement of the data NVMe |
 
-Tier-2 is estimator- and mask-agnostic because it is stored PRE-mask at NSIDE=128 float64, and
-`ud_grade(2048→128)→proc` is bit-identical to `ud_grade(2048→proc)` for any proc ∈ {16,32,64,128}
-(associative power-of-two averaging). The one thing that would force a re-download is a convention
-(PR-149) demanding proc_nside > 128 — so **freeze the mask/resolution convention (PR-149) before
-deleting PR3 raw.**
+Tier-2 is deliberately narrower and stronger: it stores the exact direct raw→NSIDE64 float64
+pre-mask transform used by PR-150.  It makes no unverified claim that a staged NSIDE128 downgrade is
+bit-identical.  A future analysis needing NSIDE>64 is outside this retention contract and must use
+the still-retained raw maps or build a separately gated higher-resolution cache before deletion.
 
 ## The mandatory swap procedure
 
@@ -35,23 +36,35 @@ deleting PR3 raw.**
 venv/bin/python scripts/k1_e2e_reduce.py \
     --cmb-mc-dir   workdir/raw/planck_ffp10/smica/cmb_mc \
     --noise-mc-dir workdir/raw/planck_ffp10/smica/noise_mc \
-    --method smica --ensemble ffp10
+    --method smica --ensemble ffp10 --reduce-nside 64 --lmax 8 \
+    --max-sims 1000 --require-pr150-inventory \
+    --cache-dir /mnt/sn850x2t/htt_base_e2e/k1_e2e_reduced_pr150 \
+    --backup-dir workdir/compact_products/planck_pr3_pr150
 
-# 2. FAITHFUL-CACHE GATE (fail-closed): cache must reproduce the from-raw statistics
-#    bit-exactly AND all sampled raw hashes must match the manifest.
+# 2. Rerun PR-150 from the per-realization replay directories, retaining the 999x6 matrix.
+venv/bin/python scripts/k1_global_maxscan.py --precision --proc-nside 64 --lmax 30 \
+    --cmb-mc-dir /mnt/sn850x2t/htt_base_e2e/k1_e2e_reduced_pr150/k1_ffp10_smica_replay/cmb_mc \
+    --noise-mc-dir /mnt/sn850x2t/htt_base_e2e/k1_e2e_reduced_pr150/k1_ffp10_smica_replay/noise_mc \
+    --max-sims 1000 --jobs 20
+
+# The ell<=8 alm stored by the reducer is an auxiliary convenience only; the
+# authoritative NSIDE64 maps replay the registered ell_max=30 calculation.
+
+# 3. FAITHFUL-CACHE GATE: all 1299 raw hashes/maps + compact replay + backup + result.
 venv/bin/python scripts/k1_e2e_cache_gate.py \
     --manifest docs/generated/k1_e2e_reduced_manifest_ffp10_smica.json \
     --cmb-mc-dir   workdir/raw/planck_ffp10/smica/cmb_mc \
-    --noise-mc-dir workdir/raw/planck_ffp10/smica/noise_mc --all
-#    -> requires safe_to_delete_raw: true (exit 0). If exit 1: DO NOT DELETE.
+    --noise-mc-dir workdir/raw/planck_ffp10/smica/noise_mc --all --tol 0 \
+    --result-artifact docs/generated/k1_global_maxscan_e2e_full.json
+#    -> cache_reproducibility_green may be true; safe_to_delete_raw remains false now.
 
-# 3. only now delete PR3 raw FITS (keep the Tier-2 cache + Tier-1 receipt)
-#    rm -rf workdir/raw/planck_ffp10/smica/{cmb_mc,noise_mc}
+# 4. KEEP all PR3 raw FITS until PR4 access, exact subset, size, and checksums are verified.
+#    No deletion command belongs in this phase.
 
-# 4. measure PR4/NPIPE volume, then download the K1-usable subset into the freed space
+# 5. measure PR4/NPIPE volume and create an authenticated PR4_REPLACEMENT_READY receipt.
 venv/bin/python scripts/k1_npipe_size_probe.py --du-listing npipe_listing.txt \
     --pr3-dir /mnt/sn850x2t/htt_base_e2e/workdir/raw/planck_ffp10
-# 5. reduce NPIPE the same way (--ensemble npipe), gate, delete NPIPE raw.
+# 6. only a later explicit migration command may consume both green receipts and delete PR3 raw.
 ```
 
 ## PR4 / NPIPE is REQUIRED, not optional
@@ -72,9 +85,12 @@ from the measured size.
 
 ## Discipline
 
-- The reduced cache and its receipt are `diagnostic_only`; no family/geometry/native-solver claim.
-- The gate is fail-closed: a single realization failing statistic-reproduction OR hash-match blocks
-  deletion. Never delete raw on a red gate.
-- Freeze the PR-149 mask/convention before deleting raw (the only re-download trigger).
+- The reduced cache is an input-retention artifact; the PR-150 measurement remains conditional.
+- The gate is fail-closed: all 999+300 maps, observed map, common mask, independent copy, 999×6
+  result matrix, and exact rank products must agree. Sampling can never authorize deletion.
+- The reduced manifest's embedded gate flag is its immutable pre-gate creation state; the
+  content-addressed `k1_e2e_cache_gate_ffp10_smica.json` receipt is the authoritative verdict.
+- A green cache gate alone does not authorize deletion. PR4 must first have an authenticated
+  `PR4_REPLACEMENT_READY` receipt; the current external-access blocker keeps raw PR3 retained.
 - Both ensembles' Tier-1 receipts are committed; the Tier-2 caches stay on the NVMe as the minimal
   reproducibility retention artifacts (they are the "leave minimal reproducibility data" mandate).

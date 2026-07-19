@@ -1,34 +1,90 @@
 {
   "allowed_use": [
-    "idealised_grf_pooled_rank_super_uniformity",
-    "pr3_ffp10_e2e_input_manifest",
-    "exchangeable_pooled_rank_global_p_from_e2e_null",
-    "fixed_versus_reestimated_axis_multiplicity",
-    "non_numeric_pr4_skip_receipt"
+    "idealised_grf_preflight_only",
+    "pr3_ffp10_999_cmb_300_noise_input_manifest",
+    "finite_ensemble_global_p_with_noise_reuse_sensitivity",
+    "per_statistic_local_p_and_six_statistic_look_elsewhere_result",
+    "pr3_compact_analysis_input_retention_receipt",
+    "non_numeric_pr4_external_blocker_receipt"
   ],
-  "artifact_mode": "e2e_conditional_morphology_diagnostic",
+  "artifact_metadata": {
+    "caveats": [
+      "The point rank is conditional on the PR3/FFP10 ensemble and frozen low-ell pipeline.",
+      "Noise reuse prevents an iid exact-rank theorem; cycle and noise-cluster sensitivities accompany the point estimate.",
+      "The idealised GRF check is preflight only.",
+      "PR4/NPIPE matched simulations remain externally blocked, so no PR4 or joint number is emitted.",
+      "The raw PR3 ensemble is retained until an authenticated PR4 replacement-ready receipt independently opens the deletion gate.",
+      "CMB 00818 lacks 1,218 bytes of trailing FITS block padding; its data HDU is readable, its full-file SHA-256 matches the registered manifest, and its direct NSIDE64 array exactly matches the compact cache.",
+      "No detection, preferred axis, geometry, or Bianchi-family claim is supported."
+    ],
+    "claim_tier": "conditional",
+    "config_hash": "sha256:5bb47f585c3055a0c1725a040bd5a33a36fd1f3bc95b23c8544a6c5f511426c4",
+    "covariance_status": "empirical_999_CMB_null_with_300_reused_noise_realizations",
+    "generating_command": "venv/bin/python scripts/codex_harness/run_pr150_k1_e2e.py --write",
+    "git_commit": "be4488332f514fddcfbb42d4b246bd61dc3ebdf1",
+    "implementation_scope": [
+      "obsstat"
+    ],
+    "input_hashes": [
+      {
+        "path": "docs/generated/k1_global_maxscan_e2e_full.json",
+        "sha256": "sha256:72c2e93d693629bd2291339bb9a895b96ec3b978d3459002d03916f5b91baf0b"
+      },
+      {
+        "path": "docs/generated/k1_e2e_reduced_manifest_ffp10_smica.json",
+        "sha256": "sha256:f4d0c434842755373d11a0f7305d14b58c641147f397f54b5cd27e20948f6bfa"
+      },
+      {
+        "path": "docs/generated/k1_e2e_cache_gate_ffp10_smica.json",
+        "sha256": "sha256:19f1c769db46ddb37cbc59e06ac5b66b9c34f2d5ad3c04a6f7f3dc2d50d586a2"
+      },
+      {
+        "path": "htt/obsstat/k1_e2e_calibration.py",
+        "sha256": "sha256:38d691e58300de81a9868ff47204ad2cdba331045fa37f20d6c794025e5ae858"
+      },
+      {
+        "path": "scripts/k1_global_maxscan.py",
+        "sha256": "sha256:b19527a9b5f59aee66084476a85098ea8a6b4bb31c5e05fba27983a3c557d9c7"
+      },
+      {
+        "path": "scripts/k1_e2e_cache_gate.py",
+        "sha256": "sha256:3b1fed6156e57d013c4b9be8bf8d3637ee5495a9e48d7210fe80d05c83cabd8a"
+      }
+    ],
+    "mask_status": "same frozen common mask on observed and all 999 null maps",
+    "null_mock_status": "999 usable FFP10 CMB simulations; 300 noise simulations reused by parsed-ID modulo pairing",
+    "owner": "OBSSTAT",
+    "sky_support_status": "Planck_PR3_SMICA_common_mask_registered_proc_nside64_support",
+    "transfer_source": "ffp10_component_separation",
+    "worktree_state": "dirty_amendment_precommit"
+  },
+  "artifact_mode": "planck_pr3_ffp10_e2e_conditional_scientific_result",
   "artifacts": {
-    "docs/generated/pr150_captions.json": "37f23d45b9c11232cb20f4f4e8ea50a0473fc07dc2316cd62737000d27c387a0",
-    "docs/generated/pr150_e2e_input_manifest.json": "2faaf02cb873fca4a405e1ebdf28d966e98bafba23a876d8f5cd56ae05045a51",
-    "docs/generated/pr150_e2e_pooled_rank.json": "c1f928ed9753f45d2b72081b4413103e519271a8afe6e306706f8dc962d00071",
-    "docs/generated/pr150_idealised_super_uniformity.json": "7aa309469c378d61a1504d72b84884c49f4e6247b722268232f27be9dc56a0b6",
-    "docs/generated/pr150_mutation_report.json": "cf02c99505a36ee88555c22ba5c8932ba98b9536b323d6221982e8ac3081c7ad",
-    "docs/generated/pr150_pr4_skip_receipt.json": "676a06106e88338da1431a61af4f48e7978e408be0f16a27b70e8464cb1dcdbf"
+    "docs/generated/pr150_captions.json": "afaa971a7297621971b827266188e7b9ba90679cc618a5dcfa665590a8fcaa9b",
+    "docs/generated/pr150_compact_retention_receipt.json": "919fafa0519f4011bead89d377f79c127f4518d61ad84488b5554e8bdc1cf872",
+    "docs/generated/pr150_e2e_input_manifest.json": "690668c721711152f61f9f0d81b37eeecbce2551593aa37a46c7929e07d39e73",
+    "docs/generated/pr150_e2e_pooled_rank.json": "1a27ea8b73d828cf2efd5c0fb669a057679e12ed382ceb8155319c9152491dda",
+    "docs/generated/pr150_idealised_super_uniformity.json": "47577cd709d6159a823b60b2b4a4c02d2c4f48cc7ba5eeaa56ecba179aee0a22",
+    "docs/generated/pr150_mutation_report.json": "62a68b7cea20c4b65a168739cb467c9eeabdd5bdb2a37659f40c0f74df72030e",
+    "docs/generated/pr150_pr4_skip_receipt.json": "cf10eb2de116b026472aac21cb09a1983a0c7faebe0bee12e1e5ad3acf481941"
   },
   "caveats": [
-    "PR3/FFP10-E2E-conditional morphology diagnostic at C2 only.",
-    "The idealised GRF super-uniformity is a method-calibration falsifier, NEVER promoted to a Planck systematics calibration.",
+    "PR3/FFP10-E2E-conditional morphology result at C2.",
+    "The idealised GRF super-uniformity is a method-calibration preflight, NEVER promoted to a Planck systematics calibration.",
     "No real-sky p-value without the E2E ensemble.",
-    "PR4/NPIPE is a non-numeric skip receipt; no PR3+PR4 joint result.",
+    "The 300 noise maps are reused across 999 independent CMB maps; cycle splits and a noise-cluster bootstrap accompany the point rank.",
+    "PR4/NPIPE records a public observed map but externally blocked simulation access; no PR3+PR4 joint result.",
     "No detection or Bianchi-family claim; the two CF4 P0s are untouched and stay OPEN.",
-    "All 102 remediation findings remain OPEN."
+    "All 102 remediation findings remain OPEN.",
+    "The raw PR3 ensemble remains retained until an authenticated PR4 replacement-ready receipt opens the deletion gate.",
+    "CMB 00818 triggers an Astropy warning for 1,218 missing trailing FITS-padding bytes; its registered full-file hash and direct NSIDE64 map replay both pass exactly."
   ],
   "claim_level": {
     "level": "C2",
     "scheme": "roadmap_rescue_v1"
   },
   "claim_tier": "conditional",
-  "config_hash": "08846e1eb09d2f9429dab1cc6b37a2dad3665a4af145b2f8a9f65ccfb079e3a5",
+  "config_hash": "5bb47f585c3055a0c1725a040bd5a33a36fd1f3bc95b23c8544a6c5f511426c4",
   "forbidden_use": [
     "idealised promoted to planck",
     "real sky p without e2e",
@@ -44,12 +100,17 @@
     "validated as native"
   ],
   "input_hashes": [
-    "htt/obsstat/k1_e2e_calibration.py:feae722deaa535d86d3f0046a30f5ddc8a8046529c1171265c0b0ea3756d92e2"
+    "htt/obsstat/k1_e2e_calibration.py:38d691e58300de81a9868ff47204ad2cdba331045fa37f20d6c794025e5ae858",
+    "scripts/k1_global_maxscan.py:b19527a9b5f59aee66084476a85098ea8a6b4bb31c5e05fba27983a3c557d9c7",
+    "scripts/k1_e2e_cache_gate.py:3b1fed6156e57d013c4b9be8bf8d3637ee5495a9e48d7210fe80d05c83cabd8a"
   ],
   "owner": "OBSSTAT",
   "raw_data_pins": {
-    "e2e_card_sha256": "67ac72b175093599497a2c597bb6d7f9da9125850e36a1cb4b153d07b460e9cd"
+    "cache_gate_sha256": "19f1c769db46ddb37cbc59e06ac5b66b9c34f2d5ad3c04a6f7f3dc2d50d586a2",
+    "compact_cache_sha256": "sha256:86b792c821b3e641c76c83d96523148c65e9d30a439d7c850acc808c1bc5fadb",
+    "e2e_card_sha256": "72c2e93d693629bd2291339bb9a895b96ec3b978d3459002d03916f5b91baf0b",
+    "reduced_manifest_sha256": "f4d0c434842755373d11a0f7305d14b58c641147f397f54b5cd27e20948f6bfa"
   },
   "schema": "pr150.artifact_manifest.v1",
-  "transfer_source": "none"
+  "transfer_source": "ffp10_component_separation"
 }

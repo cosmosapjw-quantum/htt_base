@@ -33,9 +33,10 @@ SEPARATE artifact so the canonical GRF result is untouched:
     PLA-available ensemble of REAL component-separated CMB MC + REAL instrument-noise
     MC, paired BY PARSED MC id (noise[cmb_id mod n_noise]) so the known missing CMB
     realization 00970 (999 usable of a nominal 1000) does not misalign the pairing;
-    carries signal + noise/systematics + the cleaning transfer. This is the null whose
-    exit gate flips K1 measured_partial -> measured and closes
-    BLOCKED_MISSING_PR4_E2E_ACCESS. Writes docs/generated/k1_global_maxscan_e2e_full.json.
+    carries signal + noise/systematics + the cleaning transfer. This adjudicates the
+    legacy compatibility blocker for the PR3 exit gate; it does not imply that the
+    separately tracked PR4/NPIPE simulations are available. Writes
+    docs/generated/k1_global_maxscan_e2e_full.json.
   * Route 4 noise-only (lighter, ~40 GB) -- ``--noise-mc-dir <noise>`` alone: a
     local LambdaCDM signal added to each real noise MC. An UPGRADE of, not a
     replacement for, the full null (no residual foregrounds/systematics, no matched
@@ -106,7 +107,7 @@ DEFAULT_MAX_FULL_SIMS = 300   # Planck-2018 anomaly standard; raise to 1000 with
 FFP10_SMICA_NOMINAL_CMB = 1000
 FFP10_SMICA_NOMINAL_NOISE = 300
 KNOWN_MISSING_FFP10_SMICA_CMB = (970,)
-PLA_CONFIRMATION = "pending"   # set to "confirmed_absent" once ESA/PLA confirms 00970
+PLA_CONFIRMATION = "officially_confirmed_by_planck_helpdesk"
 # max-scan tail direction per statistic: anomaly "lower"->minimise, "upper"->maximise.
 _DIR = {"lower": "low", "upper": "high"}
 
@@ -557,12 +558,70 @@ def build_e2e_full_report(cmb_mc_dir: Path, noise_mc_dir: Path, method: str = "s
     observed_gaps = (sorted(set(range(present_ids[0], present_ids[-1] + 1)) - set(present_ids))
                      if present_ids else [])
     n_noise_used = len({p["noise_id"] for p in provenance})
+    sim_scores = np.asarray(res.simulation_max_scores, dtype=float)
+    exceeds = sim_scores >= float(res.observed_max_score)
+    score_rows = [
+        {"cmb_id": int(meta["cmb_id"]), "noise_id": int(meta["noise_id"]),
+         "max_score": float(score), "exceeds_observed": bool(flag)}
+        for meta, score, flag in zip(provenance, sim_scores, exceeds)
+    ]
+    statistic_rows = [
+        {"cmb_id": int(meta["cmb_id"]), "noise_id": int(meta["noise_id"]),
+         "statistics": {key: float(value) for key, value in zip(keys, row)}}
+        for meta, row in zip(provenance, e2e_null)
+    ]
+    # The 300 noise realizations are reused cyclically across the 999 independent
+    # CMB realizations.  The full empirical rank is the primary point estimate,
+    # while cycle splits and a noise-cluster bootstrap expose sensitivity to the
+    # resulting within-noise dependence.  This avoids calling the 999 rows iid.
+    cycle_rows = []
+    for cycle in sorted({row["cmb_id"] // n_noise_used for row in score_rows}):
+        flags = [row["exceeds_observed"] for row in score_rows
+                 if row["cmb_id"] // n_noise_used == cycle]
+        cycle_rows.append({
+            "cycle": int(cycle), "n_cmb": len(flags),
+            "exceedance_count": int(sum(flags)),
+            "pooled_rank_p": float((1 + sum(flags)) / (len(flags) + 1)),
+        })
+    clusters = {
+        noise_id: [row["exceeds_observed"] for row in score_rows
+                   if row["noise_id"] == noise_id]
+        for noise_id in sorted({row["noise_id"] for row in score_rows})
+    }
+    rng = np.random.default_rng(20260719)
+    cluster_ids = np.asarray(sorted(clusters), dtype=int)
+    boot = np.empty(20000, dtype=float)
+    for i in range(boot.size):
+        chosen = rng.choice(cluster_ids, size=cluster_ids.size, replace=True)
+        b = sum(sum(clusters[int(noise_id)]) for noise_id in chosen)
+        n = sum(len(clusters[int(noise_id)]) for noise_id in chosen)
+        boot[i] = (1.0 + b) / (n + 1.0)
+    reuse_sensitivity = {
+        "noise_assignment": "noise_id = cmb_id mod 300",
+        "unique_noise_realizations": n_noise_used,
+        "cmb_realizations": len(provenance),
+        "noise_cluster_sizes": sorted({len(rows) for rows in clusters.values()}),
+        "exact_iid_or_exchangeability_claimed": False,
+        "cycle_split_pooled_ranks": cycle_rows,
+        "cycle_p_range": [min(row["pooled_rank_p"] for row in cycle_rows),
+                          max(row["pooled_rank_p"] for row in cycle_rows)],
+        "noise_cluster_bootstrap": {
+            "seed": 20260719, "replicates": int(boot.size),
+            "median_p": float(np.median(boot)),
+            "percentile_95_interval": [float(np.quantile(boot, 0.025)),
+                                       float(np.quantile(boot, 0.975))],
+        },
+        "interpretation": "full 999-CMB empirical rank with dependence sensitivity; not an iid exact-rank theorem",
+    }
     return {
         "schema": "htt.k1.global_maxscan_e2e_full.v1",
         "owner": "OBSSTAT",
-        "claim_tier": "diagnostic_only",
+        "claim_tier": "conditional",
+        "artifact_mode": "planck_pr3_ffp10_e2e_conditional_scientific_result",
         "blocker_closes": "BLOCKED_MISSING_PR4_E2E_ACCESS",
-        "blocker_note": "PLA-available FFP10 SMICA E2E null: real component-separated CMB MC + real instrument-noise MC for this method, paired by parsed MC id (robust to the known missing CMB realization 00970). This is the exit-gate null; once run on the PLA-available ensemble, flip the egs_results_table K1 row measured_partial -> measured through the generator with this provenance",
+        "blocker_label_is_legacy_compatibility": True,
+        "remaining_pr4_blocker": "matched NPIPE simulations await authorized NERSC planck2020 access",
+        "blocker_note": "The legacy blocker label is adjudicated for the PR3 K1 exit gate by the PLA-available FFP10 SMICA E2E null. It does not assert that PR4/NPIPE data are available: matched PR4 simulations remain externally blocked.",
         "transfer_source": "ffp10_component_separation",
         "family_identification": False,
         "native_solver_result": False,
@@ -575,6 +634,8 @@ def build_e2e_full_report(cmb_mc_dir: Path, noise_mc_dir: Path, method: str = "s
                      "known_missing_cmb_ids": list(KNOWN_MISSING_FFP10_SMICA_CMB),
                      "observed_cmb_id_gaps": observed_gaps,
                      "pla_confirmation": PLA_CONFIRMATION,
+                     "exclusion_status": PLA_CONFIRMATION,
+                     "replacement_available": False,
                      "pairing": "cmb_mc[id] + noise_mc[id mod n_noise]  (id-parsed, gap-robust)",
                      "files": provenance},
         "statistics": keys,
@@ -584,6 +645,11 @@ def build_e2e_full_report(cmb_mc_dir: Path, noise_mc_dir: Path, method: str = "s
             "local_p": {k: float(p) for k, p in zip(keys, res.local_p)},
             "global_p": float(res.global_p),
             "observed_max_score": float(res.observed_max_score),
+            "observed_statistics": {key: float(value)
+                                    for key, value in zip(keys, observed)},
+            "simulation_statistics": statistic_rows,
+            "simulation_max_scores": score_rows,
+            "noise_reuse_sensitivity": reuse_sensitivity,
         },
         "headline": f"K1 global look-elsewhere-corrected low-ell morphology p ({method}) under the PLA-available FFP10 SMICA CMB+noise E2E null ({len(provenance)} used CMB MC + {n_noise_used} noise MC)",
         "caveats": [
@@ -591,9 +657,10 @@ def build_e2e_full_report(cmb_mc_dir: Path, noise_mc_dir: Path, method: str = "s
             "CMB set is the PLA-available subset, NOT all 1000: known missing/corrupt realization 00970 (ESA/PLA " + PLA_CONFIRMATION + "); sims paired by parsed MC id so the gap does not misalign the pairing",
             "method-matched: built from this method's sims only; compare methods side by side, do not average",
             "look-elsewhere correction over the six registered statistics; max-scan frozen",
+            "the 300 noise realizations are reused cyclically across 999 CMB realizations; cycle splits and a noise-cluster bootstrap quantify this dependence",
             "model-independent low-ell descriptor; no Bianchi family, geometry, anisotropy-evidence, or native-solver claim",
         ],
-        "claim_boundary": "OBSSTAT global look-elsewhere diagnostic under the PLA-available E2E ensemble; this is the exit-gate null, not a family/geometry/native-solver claim",
+        "claim_boundary": "OBSSTAT conditional scientific result: a reproducible global pooled-rank measurement under the PLA-available PR3 FFP10 E2E ensemble; it is not a detection or a family/geometry/native-solver claim",
     }
 
 
@@ -621,7 +688,7 @@ def main(argv: list[str] | None = None) -> int:
                              "mask (re-registered; observed taken from the full-res map)")
     parser.add_argument("--proc-nside", type=int, default=DEFAULT_PROC_NSIDE,
                         help=f"processing NSIDE for --precision (default {DEFAULT_PROC_NSIDE}; "
-                             "64 is the ell<=8 ceiling, higher only helps with --lmax)")
+                             "the registered PR-150 run uses NSIDE64 with --lmax 30)")
     parser.add_argument("--lmax", type=int, default=DEFAULT_LMAX,
                         help=f"max multipole for the ell-summed stats under --precision "
                              f"(default {DEFAULT_LMAX}; Q-O alignment stays ell=2,3)")

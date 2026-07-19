@@ -82,11 +82,15 @@ def test_falsifier_kills_a_non_super_uniform_method() -> None:
 
 
 # --------------------------------------------------------------------------
-# non-numeric PR4/NPIPE skip receipt
+# non-numeric PR4/NPIPE external-blocker receipt
 # --------------------------------------------------------------------------
 def test_pr4_skip_receipt_is_non_numeric() -> None:
     r = pr4_npipe_skip_receipt()
-    assert r["pr4_npipe_status"] == "SKIPPED_BY_USER_SCOPE"
+    assert r["pr4_npipe_status"] == "EXTERNALLY_BLOCKED_MISSING_SIMULATION_ACCESS"
+    assert r["observed_map_status"] == "public_in_PLA"
+    assert r["observed_map_id"] == "COM_CMB_IQU-sevem_2048_R4.00.fits"
+    assert r["simulation_status"] == "not_ingested_in_PLA"
+    assert r["analysis_status"] == "externally_blocked"
     assert r["numeric_outputs"] == "none"
     assert r["pr3_plus_pr4_joint_result"] == "not_produced"
 
@@ -117,16 +121,17 @@ def test_caption_lint_blocks_a_detection_phrase() -> None:
 
 
 # --------------------------------------------------------------------------
-# E2E card -> exchangeable pooled rank (data-gated)
+# E2E card -> finite-ensemble pooled rank (data-gated)
 # --------------------------------------------------------------------------
 @needs_card
 def test_pooled_rank_from_real_e2e_card() -> None:
     pr = pooled_rank_from_e2e_card(CARD)
     n = pr["simulation_count"]
-    assert n == 300
-    # the global p is the exchangeable (1+b)/(N+1) pooled rank: on the support
-    # grid, at or above the resolution floor, never zero
-    assert pr["on_exchangeable_support_grid"]
+    assert n == 999
+    # The global p uses (1+b)/(N+1) arithmetic on its finite-rank support
+    # grid. Noise reuse is disclosed separately, so grid membership alone is
+    # not promoted to an iid/exchangeability theorem.
+    assert pr["on_finite_rank_support_grid"]
     assert pr["resolution_floor"] == pytest.approx(1.0 / (n + 1))
     assert pr["e2e_global_pooled_rank_p"] >= pr["resolution_floor"]
     # the reported p lands exactly on a (1+b)/(N+1) grid node
@@ -139,6 +144,12 @@ def test_pooled_rank_from_real_e2e_card() -> None:
     assert pr["per_statistic_local_p"]     # per-statistic local p-values present
     # the look-elsewhere global p equals the pooled rank (over the 6 statistics)
     assert pr["look_elsewhere_global_p"] == pr["e2e_global_pooled_rank_p"]
+    assert pr["unique_noise_realization_count"] == 300
+    assert pr["noise_realizations_reused"]
+    assert not pr["exact_iid_or_exchangeability_claimed"]
+    sensitivity = pr["noise_reuse_sensitivity"]
+    assert sensitivity["noise_cluster_bootstrap"]["replicates"] == 20000
+    assert len(sensitivity["cycle_split_pooled_ranks"]) == 4
 
 
 def test_pooled_rank_rejects_off_grid_and_sub_floor_cards(tmp_path) -> None:
@@ -173,15 +184,51 @@ def test_built_artifacts_are_current_and_honest() -> None:
     assert man["noise_mc_count"] == 300
     assert len(man["sample_sha256"]) == 4
     assert man["observed_null_byte_equivalent_path"]
-    # the pooled-rank artifact reports the 300 sims that produced the p
+    # the pooled-rank artifact reports all 999 usable CMB sims
     pr = json.loads((GEN / "pr150_e2e_pooled_rank.json")
                     .read_text(encoding="utf-8"))
-    assert pr["simulation_count"] == 300
-    # the caption names the 300 used and the 999/300 available (honest count)
+    assert pr["simulation_count"] == 999
+    retention = json.loads((GEN / "pr150_compact_retention_receipt.json")
+                           .read_text(encoding="utf-8"))
+    assert retention["cache_reproducibility_green"]
+    assert retention["reduced_manifest_creation_time_gate_flag"] is False
+    assert "separate content-addressed cache-gate" in \
+        retention["gate_status_authority"]
+    assert retention["full_raw_to_compact_map_replay_count"] == 1299
+    assert retention["full_999_by_6_result_replay_exact"]
+    assert retention["raw_sources_present"]
+    assert not retention["raw_deletion_executed"]
+    assert not retention["pr4_replacement_ready"]
+    assert not retention["safe_to_delete_raw"]
+    assert retention["compact_cache"]["sha256"] == \
+        retention["independent_backup"]["sha256"]
+    assert retention["independent_backup"]["distinct_filesystem_device"]
+    # the caption names the 999 CMB and 300 unique-noise contract
     cap = json.loads((GEN / "pr150_captions.json")
                      .read_text(encoding="utf-8"))["captions"]["summary"]
-    assert "300 CMB" in cap and "999 CMB" in cap
+    assert "999 usable CMB" in cap and "300 unique noise" in cap
     lint_caption(cap)
+    required_metadata = {
+        "owner", "implementation_scope", "claim_tier", "transfer_source",
+        "config_hash", "input_hashes", "sky_support_status", "mask_status",
+        "covariance_status", "null_mock_status", "caveats",
+        "generating_command", "git_commit", "worktree_state",
+    }
+    for name in (
+            "pr150_idealised_super_uniformity.json",
+            "pr150_e2e_input_manifest.json",
+            "pr150_e2e_pooled_rank.json",
+            "pr150_compact_retention_receipt.json",
+            "pr150_pr4_skip_receipt.json",
+            "pr150_captions.json",
+            "pr150_mutation_report.json",
+            "pr150_artifact_manifest.json"):
+        payload = json.loads((GEN / name).read_text(encoding="utf-8"))
+        metadata = payload["artifact_metadata"]
+        assert required_metadata <= set(metadata), name
+        assert metadata["claim_tier"] == "conditional"
+        assert metadata["config_hash"].startswith("sha256:")
+        assert metadata["input_hashes"]
 
 
 @needs_card
@@ -198,7 +245,12 @@ def test_runner_check_mode_is_current_and_mutations_killed() -> None:
     manifest = json.loads((GEN / "pr150_artifact_manifest.json")
                           .read_text(encoding="utf-8"))
     assert manifest["raw_data_pins"]["e2e_card_sha256"]
-    # the PR4 skip receipt is a non-numeric artifact on disk
+    assert manifest["raw_data_pins"]["reduced_manifest_sha256"]
+    assert manifest["raw_data_pins"]["cache_gate_sha256"]
+    assert manifest["raw_data_pins"]["compact_cache_sha256"].startswith(
+        "sha256:")
+    # the PR4 external-blocker receipt is a non-numeric artifact on disk
     pr4 = json.loads((GEN / "pr150_pr4_skip_receipt.json")
                      .read_text(encoding="utf-8"))
     assert pr4["numeric_outputs"] == "none"
+    assert pr4["analysis_status"] == "externally_blocked"

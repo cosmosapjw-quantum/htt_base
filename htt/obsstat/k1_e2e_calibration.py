@@ -10,8 +10,8 @@ max-scan pipeline as the observed map (PR-149 convention).  The heavy E2E
 max-scan card is produced once by ``scripts/k1_global_maxscan.py --precision``
 and read here (the ACT pattern); this module never re-runs the 600 GB read.
 
-PR3/FFP10-E2E-conditional low-multipole morphology DIAGNOSTIC at
-``roadmap_rescue_v1:C2`` only.  The idealised GRF super-uniformity is NEVER
+PR3/FFP10-E2E-conditional low-multipole morphology result at
+``roadmap_rescue_v1:C2``.  The idealised GRF super-uniformity is NEVER
 promoted to a Planck systematics calibration; no real-sky p-value is emitted
 without the E2E ensemble.  PR4/NPIPE is fully out of scope — the only permitted
 PR4 output is a NON-NUMERIC skip receipt, and no PR3+PR4 joint result is
@@ -143,7 +143,14 @@ def e2e_input_manifest(cmb_dir: Path, noise_dir: Path, *,
     # a deterministic, evenly-spaced sample of sha256s (not the whole ensemble)
     step = max(1, len(cmb) // sample_hash_count)
     sample = [cmb[i] for i in range(0, len(cmb), step)][:sample_hash_count]
-    return {"cmb_mc_count": len(cmb), "noise_mc_count": len(noise),
+    return {"access_status": "available",
+            "nominal_cmb_count": 1000,
+            "usable_cmb_count": len(cmb),
+            "cmb_mc_count": len(cmb), "noise_mc_count": len(noise),
+            "excluded_ids": ["00970"],
+            "exclusion_status": "officially_confirmed_by_planck_helpdesk",
+            "replacement_available": False,
+            "analysis_status": "ready",
             "cmb_mc_dir": str(cmb_dir), "noise_mc_dir": str(noise_dir),
             "sample_sha256": {p.name: _sha256_file(p) for p in sample},
             "observed_null_byte_equivalent_path": True,
@@ -154,12 +161,12 @@ def e2e_input_manifest(cmb_dir: Path, noise_dir: Path, *,
 
 
 # --------------------------------------------------------------------------
-# exchangeable pooled-rank global-p from the E2E max-scan card
+# finite-ensemble pooled-rank global-p from the E2E max-scan card
 # --------------------------------------------------------------------------
 def pooled_rank_from_e2e_card(card_path: Path) -> dict:
     """Read the heavy E2E max-scan card (produced once by
     ``k1_global_maxscan.py --precision``) and express its global p-value as the
-    exchangeable observation-inclusive pooled rank (PR-135).  The card's
+    finite-ensemble observation-inclusive pooled rank (PR-135 arithmetic).  The card's
     ``global_p`` is HARD-VALIDATED against the actual reported value (not a
     grid-snapped surrogate): it must lie on the ``(1+b)/(N+1)`` support grid, at
     or above the resolution floor, and never be zero, else this raises.  The
@@ -186,15 +193,16 @@ def pooled_rank_from_e2e_card(card_path: Path) -> dict:
     global_p = float(global_p)
     # HARD-validate the ACTUAL global_p (PR-135 discipline), not a snapped
     # surrogate: it must be on the (1+b)/(N+1) grid and at/above the floor, else
-    # the card carries a value the exchangeable estimator can never produce.
+    # the card carries a value the registered finite-rank arithmetic cannot
+    # produce. Grid membership alone is not an exchangeability claim.
     floor = float(resolution_floor(n_sim))
     on_grid = any(abs(global_p - float(Fraction(k, n_sim + 1))) < 1e-9
                   for k in range(1, n_sim + 2))
     if not on_grid:
         raise K1E2EError(
             f"the E2E card global_p {global_p:.6g} is not on the (1+b)/(N+1) "
-            f"support grid for N={n_sim} — it is not a valid exchangeable "
-            "pooled rank")
+            f"support grid for N={n_sim} — it is not a valid finite-ensemble "
+            "pooled-rank value")
     if global_p < floor:
         raise K1E2EError(
             f"the E2E card global_p {global_p:.6g} is below the resolution "
@@ -205,38 +213,64 @@ def pooled_rank_from_e2e_card(card_path: Path) -> dict:
     validate_reported_p(Fraction(round(global_p * (n_sim + 1)), n_sim + 1),
                         n_sim)
     local_p = result.get("local_p", card.get("local_p"))
+    n_noise = int(e2e.get("n_noise_used") or n_sim)
+    reuse = result.get("noise_reuse_sensitivity")
+    noise_reused = n_noise < n_sim
+    if noise_reused and not reuse:
+        raise K1E2EError(
+            "the E2E card reuses noise realizations but lacks the registered "
+            "cycle and noise-cluster sensitivity")
     return {"e2e_global_pooled_rank_p": global_p,
             "simulation_count": n_sim, "resolution_floor": floor,
+            "on_finite_rank_support_grid": bool(on_grid),
+            # Compatibility alias for the pre-amendment consumer. This names
+            # only the arithmetic grid, not an exchangeability theorem.
             "on_exchangeable_support_grid": bool(on_grid),
             "observed_max_scan_score": result.get(
                 "observed_max_score", card.get("observed_max_score")),
             "per_statistic_local_p": local_p,
             "look_elsewhere_global_p": global_p,
-            "note": "the E2E global p-value is the exchangeable observation-"
-                    "inclusive pooled rank (1+b)/(N+1) over the FFP10 null, "
+            "unique_noise_realization_count": n_noise,
+            "noise_realizations_reused": noise_reused,
+            "exact_iid_or_exchangeability_claimed": False if noise_reused else True,
+            "noise_reuse_sensitivity": reuse,
+            "inference_mode": ("empirical_finite_ensemble_rank_with_noise_cluster_sensitivity"
+                               if noise_reused else "finite_exchangeable_rank"),
+            "note": "the E2E global p-value is the observation-inclusive "
+                    "finite-ensemble rank (1+b)/(N+1) over the FFP10 null, "
                     "HARD-validated on the support grid and at or above the "
                     "resolution floor; the per-statistic local p-values and the "
                     "look-elsewhere global p (max-scan over the six registered "
-                    "statistics — no sky axis grid) are reported separately; "
-                    "this is an E2E-conditional morphology diagnostic, not a "
-                    "detection"}
+                    "statistics — no sky axis grid) are reported separately. "
+                    "Because 300 noise maps are reused across 999 CMB maps, the "
+                    "rank is an empirical point estimate with cycle-split and "
+                    "noise-cluster-bootstrap sensitivity, not an iid exact-rank "
+                    "theorem; it is not a detection."}
 
 
 # --------------------------------------------------------------------------
 # non-numeric PR4/NPIPE skip receipt
 # --------------------------------------------------------------------------
 def pr4_npipe_skip_receipt() -> dict:
-    """The ONLY permitted PR4/NPIPE output: a non-numeric skip receipt.  No
-    NPIPE download, size probe, intake, reduction, cache, p-value, method
-    comparison or PR3+PR4 joint result is produced."""
-    return {"pr4_npipe_status": "SKIPPED_BY_USER_SCOPE",
+    """Non-numeric PR4/NPIPE readiness receipt.
+
+    The observed SEVEM map is public, but the matched simulation ensemble is
+    not ingested in PLA and requires PI/proxy/Globus access to NERSC.
+    """
+    return {"observed_map_status": "public_in_PLA",
+            "observed_map_id": "COM_CMB_IQU-sevem_2048_R4.00.fits",
+            "simulation_status": "not_ingested_in_PLA",
+            "nersc_path": "/global/cfs/cdirs/cmb/data/planck2020",
+            "noise_fix_exists": True,
+            "access_status": "awaiting_cmb_PI_or_PI_proxy_or_Globus_share",
+            "analysis_status": "externally_blocked",
+            "pr4_npipe_status": "EXTERNALLY_BLOCKED_MISSING_SIMULATION_ACCESS",
             "numeric_outputs": "none",
             "pr3_plus_pr4_joint_result": "not_produced",
-            "note": "PR4/NPIPE is out of user scope; no download, size probe, "
-                    "intake, reduction, cache, p-value, method comparison or "
-                    "PR3+PR4 joint result is produced — only this non-numeric "
-                    "receipt; the PR4 systematics-sensitivity question stays "
-                    "BLOCKED and undetermined"}
+            "note": "the observed SEVEM R4 map is public in PLA, but the matched "
+                    "simulation ensemble is not ingested there; numerical PR4 "
+                    "analysis awaits authorized access to the NERSC planck2020 "
+                    "tree (including the existing noise fix)."}
 
 
 # --------------------------------------------------------------------------
@@ -303,18 +337,26 @@ def lint_caption(text: str) -> None:
 
 
 def generate_caption(idealised: dict, manifest: dict, e2e: dict) -> str:
+    sensitivity = e2e.get("noise_reuse_sensitivity") or {}
+    bootstrap = sensitivity.get("noise_cluster_bootstrap") or {}
+    interval = bootstrap.get("percentile_95_interval", [float("nan"), float("nan")])
+    cycle_range = sensitivity.get("cycle_p_range", [float("nan"), float("nan")])
     return (
-        f"K1 exchangeable pooled-rank global scan: conservative on the "
+        f"K1 finite-ensemble pooled-rank global scan: conservative on the "
         f"correlated-GRF self-consistency check with a live anti-conservative "
         f"negative control (max exceedance "
         f"{idealised['max_exceedance_above_uniform']:.2f}), then applied to the "
         f"real Planck PR3 FFP10 end-to-end SMICA null "
-        f"({e2e['simulation_count']} CMB Monte-Carlo maps each paired with a "
-        f"real noise Monte-Carlo map, drawn from the {manifest['cmb_mc_count']} "
-        f"CMB and {manifest['noise_mc_count']} noise maps available) giving an "
+        f"({e2e['simulation_count']} usable CMB Monte-Carlo maps; excluded ID "
+        f"00970; {manifest['noise_mc_count']} unique noise maps reused by "
+        f"parsed-ID modulo pairing) giving an "
         f"E2E-conditional pooled-rank global p of "
-        f"{e2e['e2e_global_pooled_rank_p']:.3f} on the exchangeable support "
-        f"grid. PR3/FFP10-E2E-conditional morphology diagnostic only; the "
-        f"idealised GRF is never a Planck calibration; PR4/NPIPE is a "
-        f"non-numeric skip; no detection or Bianchi-family claim; the two CF4 "
+        f"{e2e['e2e_global_pooled_rank_p']:.3f} on the finite-rank support "
+        f"grid (noise-cluster bootstrap 95% interval "
+        f"[{interval[0]:.3f}, {interval[1]:.3f}]; cycle-split p range "
+        f"[{cycle_range[0]:.3f}, {cycle_range[1]:.3f}]). This is a concrete "
+        f"PR3/FFP10-E2E-conditional morphology result; the idealised GRF is "
+        f"preflight only, and noise reuse prevents an iid exact-rank claim. "
+        f"PR4/NPIPE remains externally blocked at simulation access; no "
+        f"detection or Bianchi-family claim; the two CF4 "
         f"P0s stay OPEN.")

@@ -122,9 +122,12 @@ def test_full_e2e_report_runs_and_is_exit_gate_labelled(tmp_path):
     # claim discipline
     assert rep["family_identification"] is False
     assert rep["native_solver_result"] is False
-    assert rep["claim_tier"] == "diagnostic_only"
+    assert rep["claim_tier"] == "conditional"
     # this is the EXIT-GATE null (real CMB + real noise), not measured_partial
     assert rep["blocker_closes"] == "BLOCKED_MISSING_PR4_E2E_ACCESS"
+    assert rep["blocker_label_is_legacy_compatibility"] is True
+    assert rep["result"]["noise_reuse_sensitivity"][
+        "exact_iid_or_exchangeability_claimed"] is False
     assert rep["config"]["null_model"] == "ffp10_cmb_plus_noise_e2e"
     # valid look-elsewhere global p
     gp = rep["result"]["global_p"]
@@ -188,9 +191,10 @@ def test_full_e2e_records_missing_and_pla_status(monkeypatch, tmp_path):
     assert e["nominal_cmb"] == 1000 and e["nominal_noise"] == 300
     assert e["known_missing_cmb_ids"] == [970]
     assert e["observed_cmb_id_gaps"] == [3]         # detected the in-range gap
-    assert e["pla_confirmation"] in ("pending", "confirmed_absent")
-    assert "usable CMB MC" in rep["headline"]
-    assert "4 usable CMB MC" in rep["headline"]     # reports the actual usable count
+    assert e["pla_confirmation"] == "officially_confirmed_by_planck_helpdesk"
+    assert e["replacement_available"] is False
+    assert "used CMB MC" in rep["headline"]
+    assert "4 used CMB MC" in rep["headline"]       # reports the actual used count
 
 
 # --------------------------------------------------------------------------- #

@@ -50,75 +50,46 @@
     "transfer_source": "ffp10_component_separation",
     "worktree_state": "dirty_amendment_precommit"
   },
-  "e2e_global_pooled_rank_p": 0.039,
-  "exact_iid_or_exchangeability_claimed": false,
-  "inference_mode": "empirical_finite_ensemble_rank_with_noise_cluster_sensitivity",
-  "look_elsewhere_global_p": 0.039,
-  "noise_realizations_reused": true,
-  "noise_reuse_sensitivity": {
-    "cmb_realizations": 999,
-    "cycle_p_range": [
-      0.03322259136212625,
-      0.04983388704318937
-    ],
-    "cycle_split_pooled_ranks": [
-      {
-        "cycle": 0,
-        "exceedance_count": 9,
-        "n_cmb": 300,
-        "pooled_rank_p": 0.03322259136212625
-      },
-      {
-        "cycle": 1,
-        "exceedance_count": 12,
-        "n_cmb": 300,
-        "pooled_rank_p": 0.04318936877076412
-      },
-      {
-        "cycle": 2,
-        "exceedance_count": 14,
-        "n_cmb": 300,
-        "pooled_rank_p": 0.04983388704318937
-      },
-      {
-        "cycle": 3,
-        "exceedance_count": 3,
-        "n_cmb": 99,
-        "pooled_rank_p": 0.04
-      }
-    ],
-    "exact_iid_or_exchangeability_claimed": false,
-    "interpretation": "full 999-CMB empirical rank with dependence sensitivity; not an iid exact-rank theorem",
-    "noise_assignment": "noise_id = cmb_id mod 300",
-    "noise_cluster_bootstrap": {
-      "median_p": 0.03884462151394422,
-      "percentile_95_interval": [
-        0.026262626262626262,
-        0.05321285140562249
-      ],
-      "replicates": 20000,
-      "seed": 20260719
-    },
-    "noise_cluster_sizes": [
-      3,
-      4
-    ],
-    "unique_noise_realizations": 300
+  "cache_reproducibility_green": true,
+  "compact_cache": {
+    "path": "/mnt/sn850x2t/htt_base_e2e/k1_e2e_reduced_pr150/k1_ffp10_reduced_smica.npz",
+    "reduce_nside": 64,
+    "sha256": "sha256:86b792c821b3e641c76c83d96523148c65e9d30a439d7c850acc808c1bc5fadb",
+    "size_bytes": 512054072
   },
-  "note": "the E2E global p-value is the observation-inclusive finite-ensemble rank (1+b)/(N+1) over the FFP10 null, HARD-validated on the support grid and at or above the resolution floor; the per-statistic local p-values and the look-elsewhere global p (max-scan over the six registered statistics — no sky axis grid) are reported separately. Because 300 noise maps are reused across 999 CMB maps, the rank is an empirical point estimate with cycle-split and noise-cluster-bootstrap sensitivity, not an iid exact-rank theorem; it is not a detection.",
-  "observed_max_scan_score": 4.710530701645918,
-  "on_exchangeable_support_grid": true,
-  "on_finite_rank_support_grid": true,
-  "per_statistic_local_p": {
-    "axis_to_cmb_dipole_deg": 0.905,
-    "parity_asymmetry": 0.066,
-    "parity_even_over_odd_ratio": 0.066,
-    "planarity_mean": 0.096,
-    "qo_axis_alignment_deg": 0.019,
-    "s_one_half": 0.009
+  "explicit_storage_swap_authorization_provided": false,
+  "full_999_by_6_result_replay_exact": true,
+  "full_raw_inventory_hashes": {
+    "cmb": 999,
+    "noise": 300
   },
-  "resolution_floor": 0.001,
-  "schema": "pr150.e2e_pooled_rank.v1",
-  "simulation_count": 999,
-  "unique_noise_realization_count": 300
+  "full_raw_to_compact_map_replay_count": 1299,
+  "future_deletion_conditions": [
+    "compact cache and independent backup remain hash-authenticated",
+    "a versioned PR4 replacement-ready receipt is present and every local replacement path, size, full SHA-256, ID, exclusion, and canonical inventory hash is independently verified",
+    "the deletion gate is rerun and reports mechanically_deletion_eligible=true",
+    "a separate later workflow receives explicit human authorization for the PR3-to-PR4 storage swap; this validator never reports permission or deletes data"
+  ],
+  "gate_status_authority": "the separate content-addressed cache-gate receipt is authoritative; the reduced-manifest flag records its pre-gate creation state",
+  "independent_backup": {
+    "distinct_filesystem_device": true,
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/compact_products/planck_pr3_pr150/k1_ffp10_reduced_smica.npz",
+    "sha256": "sha256:86b792c821b3e641c76c83d96523148c65e9d30a439d7c850acc808c1bc5fadb",
+    "size_bytes": 512054072
+  },
+  "mechanically_deletion_eligible": false,
+  "pr4_replacement_ready": false,
+  "raw_deletion_executed": false,
+  "raw_sources_present": true,
+  "reduced_manifest_creation_time_gate_flag": false,
+  "retention_decision": "RETAIN_RAW_PR3: compact reproduction may be green, but deletion is gated on an authenticated PR4 replacement-ready receipt",
+  "safe_to_delete_raw": false,
+  "schema": "pr150.compact_retention_receipt.v1",
+  "source_receipts": {
+    "cache_gate": "docs/generated/k1_e2e_cache_gate_ffp10_smica.json",
+    "cache_gate_sha256": "sha256:19f1c769db46ddb37cbc59e06ac5b66b9c34f2d5ad3c04a6f7f3dc2d50d586a2",
+    "reduced_manifest": "docs/generated/k1_e2e_reduced_manifest_ffp10_smica.json",
+    "reduced_manifest_sha256": "sha256:f4d0c434842755373d11a0f7305d14b58c641147f397f54b5cd27e20948f6bfa"
+  },
+  "status": "COMPACT_REPRODUCIBILITY_GREEN_RAW_RETAINED"
 }

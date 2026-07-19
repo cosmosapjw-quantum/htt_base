@@ -1,53 +1,43 @@
 schema: htt.long_horizon.pr150_k1_e2e.v1
-spec_version: 1
+spec_version: 3
 pr_id: PR-150
-title: K1 exchangeable global scan and Planck PR3 FFP10 E2E calibration
+title: Planck PR3 999-CMB FFP10 E2E global morphology result
 baseline_commit: be4488332f514fddcfbb42d4b246bd61dc3ebdf1
-reviewed_on: '2026-07-18'
+reviewed_on: '2026-07-19'
 owner: OBSSTAT
-contributors:
-  - COMMON
-implementation_scope:
-  - obsstat
-artifact_mode: e2e_conditional_morphology_diagnostic
+contributors: [COMMON]
+implementation_scope: [obsstat]
+artifact_mode: planck_pr3_ffp10_e2e_conditional_scientific_result
 allowed_use:
-  - idealised_grf_pooled_rank_super_uniformity
-  - pr3_ffp10_e2e_input_manifest
-  - exchangeable_pooled_rank_global_p_from_e2e_null
-  - fixed_versus_reestimated_axis_multiplicity
-  - non_numeric_pr4_skip_receipt
+  - idealised_grf_preflight_only
+  - pr3_ffp10_999_cmb_300_noise_input_manifest
+  - finite_ensemble_global_p_with_noise_reuse_sensitivity
+  - per_statistic_local_p_and_six_statistic_look_elsewhere_result
+  - pr3_compact_analysis_input_retention_receipt
+  - non_numeric_pr4_external_blocker_receipt
 public_use: false
 claim_tier: conditional
 claim_tier_ceiling: conditional
-claim_level:
-  scheme: roadmap_rescue_v1
-  level: C2
+claim_level: {scheme: roadmap_rescue_v1, level: C2}
 scientific_status: OPEN
 scientific_effect: none
-transfer_source: none
+transfer_source: ffp10_component_separation
 
 claim_identity:
   claim_id: C-PR150-K1-E2E
   claim_text: >-
-    The exchangeable observation-inclusive pooled-rank global p-value estimator
-    (binding PR-135) is first checked for conservativeness on a large correlated
-    Gaussian-random-field ensemble with a live anti-conservative negative
-    control (a method self-consistency check — the correlation is inert to a
-    leave-one-out rank statistic, so this is NOT a Planck falsifier), then
-    applied to the real Planck PR3 FFP10 end-to-end SMICA null (300 CMB
-    Monte-Carlo maps drawn from the 999 available, each paired with a real noise
-    Monte-Carlo map) through the SAME frozen mask/proc-nside/
-    statistic/max-scan pipeline as the observed SMICA map (PR-149 convention),
-    with the observed and null maps traversing a byte-equivalent path. The
-    per-statistic local p-values and the look-elsewhere global p (max-scan over
-    the six registered statistics — no sky axis grid) are reported separately.
-    This is a PR3/FFP10-E2E-conditional low-multipole morphology DIAGNOSTIC at
-    C2 only; the idealised GRF super-uniformity is NEVER promoted to a Planck
-    systematics calibration, and no real-sky p-value is emitted without the
-    E2E ensemble. PR4/NPIPE is fully out of scope — the only permitted PR4
-    output is a NON-NUMERIC skip receipt, and no PR3+PR4 joint result is
-    produced. No family, axis detection or joint C3 claim. The two CF4 P0s are
-    untouched and stay OPEN.
+    The frozen PR-149 low-ell pipeline is applied byte-equivalently to the
+    observed Planck PR3 SMICA map and all 999 usable FFP10 CMB Monte-Carlo maps.
+    Realizations use 300 instrument-noise maps paired by parsed CMB ID modulo
+    300; CMB ID 00970 is excluded with Planck-helpdesk confirmation and no
+    replacement. The lane reports the six registered local p-values and their
+    max-scan look-elsewhere finite-ensemble global rank. Because noise maps are
+    reused, the point rank is accompanied by cycle-split ranks and a
+    noise-cluster bootstrap and is not called an iid exact-rank theorem. The
+    idealised GRF check is preflight only. PR4 records the public SEVEM map and
+    the externally blocked matched-simulation access, with no numeric output.
+    This is a PR3/FFP10-E2E-conditional morphology result, not a detection,
+    preferred axis, family, geometry, or native-solver result.
   domain: planck_lowell_k1_e2e_calibration
   frame: binds_pr135_finite_null_pr149_convention_lowell_global_calibration
   claim_level_scheme: roadmap_rescue_v1
@@ -59,15 +49,33 @@ scope_and_non_goals:
   pr4_npipe_numeric_output: forbidden
   pr3_plus_pr4_joint_result: forbidden
   k1_axis_detection_or_family_claim: forbidden
-  observed_null_path_not_byte_equivalent: forbidden
+  iid_exact_rank_claim_under_noise_reuse: forbidden
 
 data_scope:
   cf4_data_work: authorized_by_user_2026_07_18
-  pr4_npipe: excluded_by_user_scope
   raw_data_paths:
     cmb_mc_dir: workdir/raw/planck_ffp10/smica/cmb_mc
     noise_mc_dir: workdir/raw/planck_ffp10/smica/noise_mc
     e2e_card: docs/generated/k1_global_maxscan_e2e_full.json
+    reduced_manifest: docs/generated/k1_e2e_reduced_manifest_ffp10_smica.json
+    cache_gate: docs/generated/k1_e2e_cache_gate_ffp10_smica.json
+  pr3_ffp10_smica:
+    access_status: available
+    nominal_cmb_count: 1000
+    usable_cmb_count: 999
+    excluded_ids: ['00970']
+    exclusion_status: officially_confirmed_by_planck_helpdesk
+    replacement_available: false
+    noise_mc_count: 300
+    analysis_status: ready
+  pr4_npipe_sevem:
+    observed_map_status: public_in_PLA
+    observed_map_id: COM_CMB_IQU-sevem_2048_R4.00.fits
+    simulation_status: not_ingested_in_PLA
+    nersc_path: /global/cfs/cdirs/cmb/data/planck2020
+    noise_fix_exists: true
+    access_status: awaiting_cmb_PI_or_PI_proxy_or_Globus_share
+    analysis_status: externally_blocked
   raw_data_policy: read_only_external_manifest_versioned_only
 
 remediation_state_contract:
@@ -88,7 +96,9 @@ model:
   e2e:
     method: smica
     ensemble: ffp10
-    max_sims: 300
+    max_sims: 1000
+    unique_noise_sims: 300
+    noise_reuse_sensitivity: [cycle_split, noise_cluster_bootstrap]
     sample_hash_count: 4
 
 mutation_registry:
@@ -116,16 +126,14 @@ negative_scan:
     - 'pr3 plus pr4 joint'
     - 'k1 axis detection'
     - 'bianchi family from k1'
-  rule: >-
-    active PR-150 surfaces must never promote the idealised GRF, emit a real-sky
-    p without the E2E ensemble, produce a PR4 numeric result, produce a PR3+PR4
-    joint result, or claim a K1 axis detection or family.
+  rule: active PR-150 surfaces must preserve the registered claim boundaries
 
 artifact_contract:
   outputs:
     - docs/generated/pr150_idealised_super_uniformity.json
     - docs/generated/pr150_e2e_input_manifest.json
     - docs/generated/pr150_e2e_pooled_rank.json
+    - docs/generated/pr150_compact_retention_receipt.json
     - docs/generated/pr150_pr4_skip_receipt.json
     - docs/generated/pr150_captions.json
     - docs/generated/pr150_mutation_report.json
@@ -133,11 +141,13 @@ artifact_contract:
   check_policy: fresh_build_must_equal_disk_bytes
 
 acceptance_and_kill_switches:
-  - the exchangeable pooled-rank global-p is super-uniform on the large correlated GRF ensemble
-  - the PR3 FFP10 E2E input manifest records the 999 CMB and 300 noise Monte-Carlo maps with sample hashes and byte-equivalent observed/null path
-  - the exchangeable pooled-rank global-p is computed from the E2E null with fixed-axis and re-estimated-axis multiplicity separated
-  - the idealised GRF super-uniformity is never promoted to a Planck systematics calibration
-  - PR4 NPIPE produces only a non-numeric skip receipt and no PR3+PR4 joint result
+  - the PR3 input manifest records exactly 999 usable CMB and 300 unique noise maps with excluded ID 00970
+  - the six-statistic global p uses all 999 CMB maps and reports noise-reuse sensitivity
+  - the compact NSIDE64 analysis input is authenticated on two distinct devices and exactly replays all 1299 raw maps plus the retained 999x6 statistic matrix
+  - raw PR3 deletion remains forbidden until a versioned PR4 replacement-ready receipt lists the exact observed, simulation, exclusion, and noise-fix inventory and the gate independently rechecks every local size and full SHA-256
+  - mechanical replacement readiness never deletes data; an explicit later storage-swap authorization remains a separate human action
+  - the idealised GRF check remains preflight and is not promoted to a Planck calibration
+  - PR4 records the public map plus externally blocked simulation access and emits no number
   - every registered mutation executes and is killed
   - all 102 remediation findings remain OPEN
 
