@@ -1,0 +1,20 @@
+# Source-reported aggregate JWST/HST distance-indicator comparisons.
+# These rows are not host-level measurements and must not be pooled as if
+# independent: the samples overlap and share the NGC 4258 anchor.
+#
+# li2024_jwst_trgb_hst_cepheid: Li et al., arXiv:2408.00065,
+# sample631.tex Table tab:Variants baseline row (smoothing 0.05 mag, colour
+# range 1.30--1.75). The paper analyses 8 hosts of 10 SNe Ia and reports the
+# weighted mean delta_mu(TRGB-Cepheid) = 0.007 +/- 0.037 mag.
+# Archive sha256: 9059a78903a175eb8e627fe640d833b0a2e1d82a3c116b156c12aa4125ca9ab5
+# Member sha256:  b1d963289a15180f35184f8df670cddd4e67c8cdbd797fcd1bc0353c13eb7ed1
+#
+# li2025_complete_trgb_hst_cepheid: Li et al., arXiv:2504.08921,
+# main.tex comparison paragraph associated with Figure fig:TRGB_diffs. The
+# paper compiles 35 SN-Ia TRGB calibrators and reports its largest matched
+# TRGB--HST-Cepheid comparison, N=20 objects, as -0.003 +/- 0.021 (stat) mag.
+# Archive sha256: 421ad092e8c6942c26faed575ca5d710d871598e446e6f00f821a229b3bb81cd
+# Member sha256:  b5998590af12d0286ca9167b8dd2854f10cca173e8e11a2fa17465922b680017
+dataset,source_arxiv,source_locator,parent_sample_description,parent_sn_calibrator_count,parent_count_unit,paired_object_count,paired_count_unit,paired_sample_definition,method_a,method_b,mean_delta_mag,stat_standard_error_mag,delta_definition
+li2024_jwst_trgb_hst_cepheid,2408.00065,tab:Variants baseline,"8 hosts of 10 SNe Ia",10,SN,8,host,"eight SN-host galaxies with both JWST TRGB and HST Cepheid distances",JWST_TRGB,HST_Cepheid,0.007,0.037,method_a_minus_method_b_mag
+li2025_complete_trgb_hst_cepheid,2504.08921,main.tex Figure fig:TRGB_diffs comparison,"complete HST+JWST TRGB sample of 35 SNe Ia",35,SN,20,object,"twenty matched SN-host objects with compiled TRGB and HST Cepheid distances",HST_plus_JWST_TRGB,HST_Cepheid,-0.003,0.021,method_a_minus_method_b_mag

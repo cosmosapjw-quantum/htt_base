@@ -1,29 +1,25 @@
-schema: htt.long_horizon.pr153_jwst_anchor.v1
-spec_version: 1
+schema: htt.long_horizon.pr153_jwst_anchor.v2
+spec_version: 4
 pr_id: PR-153
-title: JWST authenticated row, crossmatch and calibration manifest
+title: JWST published-table distance consistency and expanded anchor linkage
 baseline_commit: 22323b35051a94335aef2b3372f705fd7f3d1bce
 reviewed_on: '2026-07-19'
 owner: OBSSTAT
-contributors:
-  - COMMON
-implementation_scope:
-  - obsstat
-artifact_mode: jwst_cited_seed_catalogue_linkage_diagnostic
+contributors: [COMMON]
+implementation_scope: [obsstat]
+artifact_mode: jwst_published_table_conditional_result_and_catalogue_linkage
 allowed_use:
+  - cchp_trgb_jagb_host_level_offset_measurement
+  - shoes_jwst_hst_host_level_offset_measurement
+  - registered_distance_scale_shift_comparison
+  - expanded_published_aggregate_replay
   - row_complete_anchor_manifest
   - probabilistic_identity_match_not_radius_alone
-  - ambiguity_and_duplicate_policy
-  - independent_row_replay
-  - crossmatch_tolerance_sensitivity
-  - leave_one_match_and_label_substitution_negative_test
-  - authoritative_reproduction_decision
+  - crossmatch_and_leave_one_host_sensitivity
 public_use: false
-claim_tier: exploratory
-claim_tier_ceiling: exploratory
-claim_level:
-  scheme: roadmap_rescue_v1
-  level: C1
+claim_tier: conditional
+claim_tier_ceiling: conditional
+claim_level: {scheme: roadmap_rescue_v1, level: C2}
 scientific_status: OPEN
 scientific_effect: none
 transfer_source: none
@@ -31,48 +27,94 @@ transfer_source: none
 claim_identity:
   claim_id: C-PR153-JWST-ANCHOR
   claim_text: >-
-    A row-complete manifest of the cited JWST distance anchors (Freedman et al.
-    2025/2024 CCHP TRGB/JAGB + Riess et al. 2024 SH0ES Cepheids) carrying, per
-    anchor, the source DOI/URL, the seed retrieval hash, the object/host name,
-    the J2000 coordinate evidence, the published distance-modulus precision, the
-    method/calibration group and the deterministic transform. Each anchor is
-    linked to the real CF4 group catalogue by a PROBABILISTIC identity match
-    (positional-uncertainty-weighted, never a coordinate radius alone) with an
-    explicit ambiguity and duplicate policy; the linkage is exercised by an
-    independent row replay, a crossmatch tolerance sensitivity, a leave-one-match
-    report and a label-substitution negative test. Because the authoritative
-    machine-readable data table (Freedman CCHP MRT) is NOT reproducible (HTTP
-    404; only the arXiv abstract pages of the other two sources are fetched), the
-    anchor rows are CITED-SEED, not authoritative-table-reproduced, so per the
-    kill rule the JWST lane stays a cited-seed catalogue-linkage scenario and no
-    CF4-conditioned precision or global-tilt forecast is authorized while
-    N-DATA-CF4-DOWNSTREAM is OPEN. The synthetic 14-anchor fixture is NEVER
-    renamed observed JWST data, and identity is NEVER confirmed from a coordinate
-    radius alone. Catalogue-linkage DIAGNOSTIC at C1 only; no measurement,
-    forecast, detection, or Bianchi-family claim. The two CF4 P0s are untouched.
-  domain: jwst_distance_anchor_cf4_linkage
-  frame: binds_pr122_transfer_pr134_estimand_real_cf4_groups
+    Content-verified author-submitted arXiv LaTeX tables provide seven unique
+    CCHP hosts with paired JAGB/TRGB moduli and thirteen SH0ES hosts with paired
+    JWST/HST Cepheid moduli. The lane reports host-level mean offsets, Student-t
+    intervals, sign tests, leave-one-host sensitivity and a preregistered
+    5*log10(73/67.5) magnitude-shift comparison. Two additional sources expand
+    coverage through their published aggregate results: 8 paired hosts in the
+    Li et al. 2024 JWST-TRGB/HST-Cepheid comparison and 20 paired objects within
+    the complete 35-SN TRGB compilation in Li et al. 2025. These aggregates are
+    replayed with normal-reference statistics and are not represented as new
+    host-level fits or pooled across overlapping samples. Host is the sampling unit for
+    the primary sampling unit; its Student-t interval is conditional on treating
+    host deltas as independent and excludes shared-anchor/common-systematic
+    uncertainty. Inverse-variance pooling is sensitivity-only because the compact
+    source tables do not publish the full shared-anchor covariance. A separate
+    row-complete coordinate manifest remains linked to
+    CF4 through a probabilistic positional match with ambiguity, duplicate,
+    replay and label-substitution checks. This is a published-table-conditional
+    distance-method consistency result at C2; it is not an H0 fit, a
+    CF4-conditioned precision forecast, a detection, or a Bianchi-family claim.
+  domain: jwst_host_distance_method_consistency
+  frame: published_table_paired_host_comparison_plus_supporting_cf4_linkage
   claim_level_scheme: roadmap_rescue_v1
-  claim_level: C1
+  claim_level: C2
 
 scope_and_non_goals:
   identity_from_coordinate_radius_alone: forbidden
   synthetic_fixture_renamed_observed: forbidden
-  authoritative_reproduction_claimed_without_table: forbidden
+  source_result_without_verified_tables: forbidden
   cf4_conditioned_forecast_while_downstream_open: forbidden
-  jwst_measurement_or_detection_claim: forbidden
+  h0_or_cosmological_inference_from_host_offsets: forbidden
 
 data_scope:
   jwst_data_work: authorized_by_user_2026_07_18
-  authoritative_machine_readable_table_reproduced: false
+  author_source_tables_reproduced: true
   raw_data_paths:
     seed_csv: dl_pipeline/data/jwst_distances_seed.csv
+    comparison_csv: dl_pipeline/data/jwst_host_distance_comparisons.csv
+    aggregate_csv: dl_pipeline/data/jwst_published_aggregate_comparisons.csv
     fetch_manifest: workdir/raw/jwst_anchors/jwst_anchors_manifest.json
     cf4_groups: workdir/obs_bundle/pecvel/cf4_full/cf4_groups.npz
   sources:
-    - Freedman et al. 2025, ApJ 985, 203 (CCHP JWST TRGB/JAGB, doi 10.3847/1538-4357/adce78)
-    - Riess et al. 2024 (SH0ES JWST Cepheids)
+    - Freedman et al. 2025, ApJ 985, 203, arXiv:2408.06153v3, Table tab:distances
+    - Riess et al. 2025, arXiv:2509.01667v1, Table tab:moduli
+    - Li et al. 2024, arXiv:2408.00065, Table tab:Variants baseline
+    - Li et al. 2025, arXiv:2504.08921, largest matched TRGB-Cepheid comparison
   raw_data_policy: read_only_external_manifest_versioned_only
+
+source_table_contract:
+  cchp_freedman2025_source_table:
+    arxiv: '2408.06153'
+    member: Ho2024.tex
+    cell_marker_count: 7
+  shoes_riess2025_source_table:
+    arxiv: '2509.01667'
+    member: main.tex
+    cell_marker_count: 13
+  jwst_trgb_li2024_source_table:
+    arxiv: '2408.00065'
+    member: sample631.tex
+    cell_marker_count: 2
+  complete_hst_jwst_trgb_li2025_source_table:
+    arxiv: '2504.08921'
+    member: main.tex
+    cell_marker_count: 3
+
+transcription_contract:
+  cchp_trgb_jagb:
+    source_label: cchp_freedman2025_source_table
+    row_count: 7
+    sampling_unit: unique_host
+  shoes_jwst_hst:
+    source_label: shoes_riess2025_source_table
+    row_count: 13
+    sampling_unit: unique_host
+  li2024_jwst_trgb_hst_cepheid:
+    source_label: jwst_trgb_li2024_source_table
+    row_count: 1
+    parent_count: 10
+    parent_count_unit: SN
+    paired_count: 8
+    paired_count_unit: host
+  li2025_complete_trgb_hst_cepheid:
+    source_label: complete_hst_jwst_trgb_li2025_source_table
+    row_count: 1
+    parent_count: 35
+    parent_count_unit: SN
+    paired_count: 20
+    paired_count_unit: object
 
 remediation_state_contract:
   path: docs/codex_handoff/research_remediation_state.yaml
@@ -83,6 +125,14 @@ remediation_state_contract:
 
 model:
   module: htt/obsstat/jwst_anchor_manifest.py
+  distance_module: htt/obsstat/jwst_distance_consistency.py
+  distance_tables:
+    cchp_unique_hosts: 7
+    shoes_unique_hosts: 13
+    li2024_paired_hosts: 8
+    li2025_parent_sn_calibrators: 35
+    li2025_paired_objects: 20
+    registered_shift_formula: 5*log10(73.0/67.5)
   match:
     position_sigma_deg: '1/10'
     ambiguity_ratio_threshold: '1/2'
@@ -94,35 +144,38 @@ mutation_registry:
   - mutation_id: synthetic_renamed_observed
     kill_rule: renaming the synthetic fixture observed JWST data is rejected
   - mutation_id: authoritative_reproduction_without_table
-    kill_rule: claiming authoritative-table reproduction without the machine-readable table is rejected
+    kill_rule: claiming a source-table result without verified table content is rejected
   - mutation_id: cf4_forecast_while_downstream_open
     kill_rule: a CF4-conditioned precision forecast while N-DATA-CF4-DOWNSTREAM is OPEN is rejected
   - mutation_id: jwst_measurement_claim
-    kill_rule: a JWST-level measurement or detection claim is rejected
+    kill_rule: an H0 fit or cosmological inference from the compact host offsets is rejected
   - mutation_id: bianchi_family_from_jwst
     kill_rule: a Bianchi-family claim from the JWST anchors is rejected
 
 negative_scan:
   targets:
     - htt/obsstat/jwst_anchor_manifest.py
+    - htt/obsstat/jwst_distance_consistency.py
     - docs/generated/pr153_captions.json
+    - docs/PR_DELTAS/pr-153.md
   forbidden_patterns:
     - 'identity from coordinate radius alone'
     - 'synthetic fixture renamed observed'
-    - 'authoritative reproduction without'
+    - 'source result without verified tables'
     - 'cf4-conditioned forecast'
-    - 'jwst measurement'
+    - 'h0 inferred from host offsets'
     - 'bianchi family from jwst'
   rule: >-
     active PR-153 surfaces must never confirm identity from a coordinate radius
-    alone, rename the synthetic fixture observed, claim authoritative reproduction
-    without the table, run a CF4-conditioned forecast, or claim a JWST measurement
-    or Bianchi family.
+    alone, rename the synthetic fixture observed, emit a result without verified
+    source tables, run a CF4-conditioned forecast, infer H0 from the compact host
+    offsets, or claim a Bianchi family.
 
 artifact_contract:
   outputs:
     - docs/generated/pr153_row_manifest.json
     - docs/generated/pr153_authoritative_decision.json
+    - docs/generated/pr153_distance_consistency.json
     - docs/generated/pr153_crossmatch.json
     - docs/generated/pr153_sensitivity.json
     - docs/generated/pr153_negative_tests.json
@@ -132,19 +185,24 @@ artifact_contract:
   check_policy: fresh_build_must_equal_disk_bytes
 
 acceptance_and_kill_switches:
-  - the row-complete manifest carries source DOI, retrieval hash, coordinate evidence, published uncertainty, method/calibration group and deterministic transform per anchor
-  - the identity match is probabilistic with an ambiguity and duplicate policy, never a coordinate radius alone
-  - the linkage is exercised by an independent row replay, a tolerance sensitivity, a leave-one-match report and a label-substitution negative test
-  - the authoritative machine-readable table is not reproducible so the JWST lane stays a cited-seed scenario and no CF4-conditioned forecast is authorized
+  - all four registered author-source members, exact numerical cell markers, CSV bytes and exact-cell receipts are verified before a numerical result is emitted
+  - the CCHP and SH0ES host offsets carry intervals, p-values and leave-one-host sensitivity
+  - inverse-variance pooling is explicitly sensitivity-only because shared-anchor covariance is unavailable
+  - expanded source-reported aggregates are replayed but not treated as host-level refits or pooled
+  - host/SN/object count units are explicit and checked against the registered per-source contract
+  - every finite probability remains nonzero after serialization
+  - every generated artifact carries the full provenance covariance null generation and worktree metadata contract
+  - the identity match remains probabilistic with ambiguity and duplicate policies
+  - no H0 fit or CF4-conditioned forecast is authorized
   - every registered mutation executes and is killed
   - all 102 remediation findings remain OPEN
 
 forbidden_output_language:
   - identity from coordinate radius alone
   - synthetic fixture renamed observed
-  - authoritative reproduction without
+  - source result without verified tables
   - cf4-conditioned forecast
-  - jwst measurement
+  - h0 inferred from host offsets
   - bianchi family from jwst
   - Bianchi geometry detected
   - Bianchi family identified

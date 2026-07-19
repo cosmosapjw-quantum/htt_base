@@ -1,4 +1,4 @@
-"""PR-153: JWST authenticated-row, cross-match and calibration manifest.
+"""PR-153: JWST source-table results plus anchor-linkage manifest.
 
 A row-complete manifest of the cited JWST distance anchors (Freedman et al.
 2025/2024 CCHP TRGB/JAGB + Riess et al. 2024 SH0ES Cepheids), each carrying the
@@ -11,15 +11,12 @@ ambiguity and duplicate policy, and the linkage is exercised by an independent
 row replay, a cross-match tolerance sensitivity, a leave-one-match report and a
 label-substitution negative test.
 
-Because the authoritative machine-readable data table (Freedman CCHP MRT) is NOT
-reproducible (HTTP 404; only arXiv abstract pages of the other sources fetched),
-the anchor rows are CITED-SEED, not authoritative-table-reproduced, so per the
-kill rule the JWST lane stays a cited-seed catalogue-linkage scenario and no
-CF4-conditioned precision forecast is authorized while N-DATA-CF4-DOWNSTREAM is OPEN.  The
-synthetic 14-anchor fixture is NEVER renamed observed JWST data, and identity is
-NEVER confirmed from a coordinate radius alone.  Catalogue-linkage DIAGNOSTIC at
-``roadmap_rescue_v1:C1`` only; no measurement, forecast, detection, or
-Bianchi-family claim; the two CF4 P0s are untouched.
+The publisher MRT link is unavailable, but the author-submitted arXiv source
+archives contain the actual LaTeX tables and are content-verified and hashed by
+``dl_pipeline``.  Their host-distance values support a conditional paired
+method-consistency result.  The coordinate seed remains a separate supporting
+catalogue-linkage product: identity is never confirmed from radius alone and no
+CF4-conditioned precision or geometry inference is authorized.
 """
 from __future__ import annotations
 
@@ -27,7 +24,7 @@ import math
 
 import numpy as np
 
-SCHEMA_VERSION = "pr153.jwst_anchor_manifest.v1"
+SCHEMA_VERSION = "pr153.jwst_anchor_manifest.v3"
 
 
 class JWSTAnchorError(ValueError):
@@ -37,53 +34,141 @@ class JWSTAnchorError(ValueError):
 # --------------------------------------------------------------------------
 # authoritative-reproduction decision
 # --------------------------------------------------------------------------
+_REQUIRED_SOURCE_TABLES = {
+    "cchp_freedman2025_source_table": ("2408.06153", "Ho2024.tex"),
+    "shoes_riess2025_source_table": ("2509.01667", "main.tex"),
+    "jwst_trgb_li2024_source_table": ("2408.00065", "sample631.tex"),
+    "complete_hst_jwst_trgb_li2025_source_table": ("2504.08921", "main.tex"),
+}
+_REQUIRED_TRANSCRIPTIONS = {
+    "cchp_trgb_jagb": ("cchp_freedman2025_source_table", 7),
+    "shoes_jwst_hst": ("shoes_riess2025_source_table", 13),
+    "li2024_jwst_trgb_hst_cepheid":
+        ("jwst_trgb_li2024_source_table", 1),
+    "li2025_complete_trgb_hst_cepheid":
+        ("complete_hst_jwst_trgb_li2025_source_table", 1),
+}
+
+
+def _full_sha256(value: object) -> bool:
+    if not isinstance(value, str) or not value.startswith("sha256:"):
+        return False
+    digest = value.removeprefix("sha256:")
+    return len(digest) == 64 and all(c in "0123456789abcdef" for c in digest)
+
+
 def authoritative_reproduction_decision(fetch_manifest: dict) -> dict:
-    """Decide the authentication level.  The authoritative machine-readable DATA
-    table is reproduced only if it is among the fetched products AND is a data
-    table (not an abstract page).  When the CCHP MRT is in the ``missing`` list
-    (HTTP 404) and only arXiv abstract pages are fetched, the anchors are
-    CITED-SEED, not authoritative-table-reproduced."""
+    """Decide whether both registered author-source analysis tables exist.
+
+    Abstract HTML never qualifies.  A table qualifies only when the acquisition
+    manifest records a verified LaTeX member and marks it as ingested by the
+    committed source-checked transcription.
+    """
+    violations = []
+    if fetch_manifest.get("schema") != "htt.jwst_source_table_acquisition.v4":
+        violations.append("manifest_schema")
     missing = [m.get("label") for m in fetch_manifest.get("missing", [])]
+    if missing:
+        violations.append("missing_sources")
     fetched_rows = list(fetch_manifest.get("fetched", []))
     fetched = [f.get("label") for f in fetched_rows]
-    # the CCHP machine-readable table is the authoritative DATA table.  A label
-    # match is NOT enough: a 200-OK HTML paywall/landing page would carry the
-    # label yet be no data table, so reproduction requires the fetch manifest to
-    # CERTIFY the fetched CCHP product parses as a machine-readable table
-    # (``content_verified_data_table``) --- absent that flag it is NOT reproduced.
-    cchp = [f for f in fetched_rows
-            if "cchp" in str(f.get("label", "")).lower()
-            or "freedman" in str(f.get("label", "")).lower()]
-    content_verified = any(bool(f.get("content_verified_data_table"))
-                           for f in cchp)
-    reproduced = bool(content_verified and not missing)
+    by_label = {str(row.get("label")): row for row in fetched_rows}
+    if len(by_label) != len(fetched_rows):
+        violations.append("duplicate_source_label")
+    source_ok = {}
+    for label, (arxiv, member) in _REQUIRED_SOURCE_TABLES.items():
+        row = by_label.get(label) or {}
+        verification = row.get("verification") or {}
+        ok = bool(
+            row.get("arxiv") == arxiv
+            and row.get("path") == f"arxiv_{arxiv}.src.tar.gz"
+            and row.get("content_verified_data_table") is True
+            and row.get("analysis_table_ingested") is True
+            and _full_sha256(row.get("sha256"))
+            and verification.get("ok") is True
+            and verification.get("member") == member
+            and not verification.get("missing_markers")
+            and not verification.get("missing_cell_markers")
+            and verification.get("cell_markers_verified") is True
+            and _full_sha256(verification.get("member_sha256"))
+            and _full_sha256(verification.get("cell_receipt_sha256"))
+        )
+        source_ok[label] = ok
+        if not ok:
+            violations.append(f"source:{label}")
+    cchp_verified = source_ok["cchp_freedman2025_source_table"]
+    shoes_verified = source_ok["shoes_riess2025_source_table"]
+    li2024_verified = source_ok["jwst_trgb_li2024_source_table"]
+    li2025_verified = source_ok[
+        "complete_hst_jwst_trgb_li2025_source_table"]
+
+    receipt_rows = fetch_manifest.get("transcription_receipts")
+    if not isinstance(receipt_rows, list):
+        receipt_rows = []
+    receipts = {str(row.get("dataset")): row for row in receipt_rows}
+    if len(receipts) != len(receipt_rows):
+        violations.append("duplicate_transcription_dataset")
+    for dataset, (source_label, count) in _REQUIRED_TRANSCRIPTIONS.items():
+        row = receipts.get(dataset) or {}
+        ok = bool(
+            row.get("source_label") == source_label
+            and row.get("registered_row_count") == count
+            and row.get("observed_row_count") == count
+            and row.get("verified") is True
+            and _full_sha256(row.get("source_archive_sha256"))
+            and _full_sha256(row.get("source_member_sha256"))
+            and _full_sha256(row.get("source_cell_receipt_sha256"))
+            and _full_sha256(row.get("transcription_csv_sha256"))
+            and _full_sha256(row.get("exact_cells_sha256"))
+            and isinstance(row.get("exact_cells"), list)
+            and len(row["exact_cells"]) == count
+        )
+        if not ok:
+            violations.append(f"transcription:{dataset}")
+    comparison_csv = fetch_manifest.get("source_checked_comparison_csv")
+    comparison_hash = fetch_manifest.get("source_checked_comparison_csv_sha256")
+    aggregate_csv = fetch_manifest.get("source_checked_aggregate_csv")
+    aggregate_hash = fetch_manifest.get("source_checked_aggregate_csv_sha256")
+    if not (_full_sha256(comparison_hash) and _full_sha256(aggregate_hash)):
+        violations.append("transcription_csv_hash")
+    reproduced = bool(not violations and cchp_verified and shoes_verified
+                      and li2024_verified
+                      and li2025_verified and comparison_csv and comparison_hash
+                      and aggregate_csv and aggregate_hash)
     return {
         "authoritative_table_reproduced": reproduced,
-        "authentication_level": ("AUTHORITATIVE_TABLE_REPRODUCED" if reproduced
-                                 else "CITED_SEED_NOT_AUTHORITATIVE_TABLE_REPRODUCED"),
-        "jwst_lane_status": ("authenticated_row" if reproduced
-                             else "cited_seed_catalogue_linkage_scenario"),
-        "cchp_table_content_verified": content_verified,
+        "source_tables_reproduced": reproduced,
+        "authentication_level": ("AUTHOR_SOURCE_TABLES_REPRODUCED" if reproduced
+                                 else "SOURCE_TABLES_INCOMPLETE"),
+        "jwst_lane_status": ("published_table_conditional_result" if reproduced
+                             else "source_table_blocked"),
+        "cchp_table_content_verified": cchp_verified,
+        "shoes_table_content_verified": shoes_verified,
+        "li2024_expansion_content_verified": li2024_verified,
+        "li2025_expansion_content_verified": li2025_verified,
+        "source_checked_comparison_csv": comparison_csv,
+        "source_checked_comparison_csv_sha256": comparison_hash,
+        "source_checked_aggregate_csv": aggregate_csv,
+        "source_checked_aggregate_csv_sha256": aggregate_hash,
         "missing_authoritative_tables": missing,
+        "verification_violations": violations,
         "fetched_products": fetched,
         "cf4_conditioned_forecast_authorized": False,
-        "note": "the authoritative machine-readable data table (CCHP MRT) is not "
-                "reproduced (404 missing; a fetched product is credited only when "
-                "the manifest certifies it parses as a data table, not merely by "
-                "a matching label), so the anchors are cited-seed and the JWST "
-                "lane stays a cited-seed catalogue-linkage scenario; no "
-                "CF4-conditioned precision forecast is authorized while "
-                "N-DATA-CF4-DOWNSTREAM is OPEN"}
+        "note": ("all four registered author-submitted LaTeX sources and both hashed "
+                 "source-checked transcriptions are present" if reproduced else
+                 "one or more registered source tables are incomplete; no numerical "
+                 "distance result may be emitted"),
+        "claim_boundary": "host-distance method consistency only; no H0 fit or CF4-conditioned inference"}
 
 
 # --------------------------------------------------------------------------
 # row-complete anchor manifest
 # --------------------------------------------------------------------------
 # The seed cites its sources at the source-year granularity; the per-anchor
-# authoritative DOI is NOT verified here (the authoritative machine-readable
-# table is not reproduced --- the kill), so the manifest records the cited-source
-# citation and marks the authoritative DOI unverified rather than stamping a
-# specific (possibly wrong) DOI.
+# authoritative DOI is NOT verified for this separate coordinate-seed lane.
+# The four author-source distance tables used by the numerical result are
+# reproduced independently; that does not promote the seed's per-anchor
+# coordinate/identity provenance.
 _SOURCE_CITATION = {
     "Freedman2025": "Freedman et al. 2025, ApJ 985, 203 "
                     "(CCHP JWST TRGB/JAGB, doi 10.3847/1538-4357/adce78)",
@@ -101,8 +186,9 @@ def build_row_manifest(seed_rows: list, *, seed_sha256: str,
     evidence, the published distance-modulus precision (the ORIGINAL
     uncertainty), the method/calibration group, and the deterministic transform
     (identity --- the seed carries the published precision, NOT a re-derived
-    distance).  The authoritative per-anchor DOI is marked UNVERIFIED because the
-    authoritative machine-readable table is not reproduced (the kill)."""
+    distance).  The authoritative per-anchor DOI remains UNVERIFIED only for
+    this coordinate-seed linkage product; the distance-result source tables are
+    governed by a separate content-addressed receipt."""
     rows = []
     for r in seed_rows:
         source = str(r["source"])
@@ -126,8 +212,8 @@ def build_row_manifest(seed_rows: list, *, seed_sha256: str,
             "rows": rows,
             "note": "row-complete cited-seed manifest; each anchor carries the "
                     "cited-source citation (the authoritative per-anchor DOI is "
-                    "UNVERIFIED because the authoritative table is not "
-                    "reproduced), the seed retrieval hash, the J2000 coordinate "
+                    "UNVERIFIED in the separate coordinate-seed lane), the seed "
+                    "retrieval hash, the J2000 coordinate "
                     "evidence, the published distance-modulus precision (the "
                     "original uncertainty), the method/calibration group and the "
                     "deterministic transform (identity, precision only)"}
@@ -303,7 +389,7 @@ def leave_one_match_report(anchors: list, cf4_ra, cf4_dec, cf4_pgc, *,
     full_pgc = {m["anchor"]: m["cf4_pgc"] for m in full["matches"]}
     full_dups = {k: set(v) for k, v in full["duplicate_cf4_groups"].items()}
     per_anchor_stable = True
-    dup_changed = 0
+    changed_subsets = []
     for drop in range(len(anchors)):
         subset = [a for i, a in enumerate(anchors) if i != drop]
         cm = crossmatch_all(subset, cf4_ra, cf4_dec, cf4_pgc,
@@ -313,15 +399,23 @@ def leave_one_match_report(anchors: list, cf4_ra, cf4_dec, cf4_pgc, *,
             if full_pgc[m["anchor"]] != m["cf4_pgc"]:
                 per_anchor_stable = False
         sub_dups = {k: set(v) for k, v in cm["duplicate_cf4_groups"].items()}
-        # a duplicate group loses a member when its dropped anchor belonged to it
-        expected = {k: (v - {anchors[drop]["object_host_name"]})
-                    for k, v in full_dups.items()}
-        expected = {k: v for k, v in expected.items() if len(v) > 1}
-        if sub_dups != expected:
-            dup_changed += 1
+        if sub_dups != full_dups:
+            changed_subsets.append({
+                "dropped_anchor": anchors[drop]["object_host_name"],
+                "duplicate_groups_before": {
+                    str(k): sorted(v) for k, v in full_dups.items()},
+                "duplicate_groups_after": {
+                    str(k): sorted(v) for k, v in sub_dups.items()},
+            })
+    duplicate_status = "evaluated" if full_dups else "not_applicable_no_duplicates"
     return {"n_anchors": len(anchors),
             "per_anchor_best_match_stable": bool(per_anchor_stable),
-            "n_duplicate_grouping_changed_under_leave_one_out": dup_changed,
+            "duplicate_leave_one_status": duplicate_status,
+            "full_duplicate_groups": {
+                str(k): sorted(v) for k, v in full_dups.items()},
+            "n_duplicate_grouping_changed_under_leave_one_out":
+                len(changed_subsets),
+            "duplicate_grouping_changed_subsets": changed_subsets,
             "note": "the per-anchor best match is independent by construction "
                     "(stable, a structural check); the duplicate-group "
                     "resolution DOES interact, so leave-one-out changes the "
@@ -408,9 +502,11 @@ def refuse_cf4_forecast_downstream_open(claim: str) -> None:
 
 
 def refuse_jwst_measurement(claim: str) -> None:
-    if claim in ("jwst_measurement", "jwst_detection"):
+    """Legacy guard retained for callers; published table consistency is allowed."""
+    if claim in ("jwst_detection", "h0_fit_from_host_offsets",
+                 "cosmological_inference_from_host_offsets"):
         raise JWSTAnchorError(
-            "a JWST-level measurement or detection claim is rejected")
+            "a detection or cosmological inference from the host offsets is rejected")
 
 
 def refuse_bianchi_from_jwst(claim: str) -> None:
@@ -428,7 +524,7 @@ _FORBIDDEN = tuple(
         ("synthetic fixture ", "renamed observed"),
         ("authoritative reproduction ", "without"),
         ("cf4-conditioned ", "forecast"),
-        ("jwst ", "measurement"),
+        ("jwst ", "detection"),
         ("bianchi family ", "from jwst"),
     ))
 
@@ -441,9 +537,24 @@ def lint_caption(text: str) -> None:
 
 
 def generate_caption(manifest: dict, decision: dict, crossmatch: dict,
-                     negatives: dict) -> str:
+                     negatives: dict, distance_result: dict | None = None) -> str:
+    result_text = ""
+    if distance_result is not None:
+        c = distance_result["cchp_trgb_minus_jagb_consistency"]["primary_host_level"]
+        s = distance_result["shoes_jwst_minus_hst_consistency"]["primary_host_level"]
+        shift = distance_result["shoes_jwst_minus_hst_consistency"]["registered_shift_comparison"]
+        result_text = (
+            f" Published-table results: CCHP JAGB-TRGB mean offset "
+            f"{c['mean_delta_mag']:.3f} +/- {c['standard_error_mag']:.3f} mag "
+            f"over 7 unique hosts (two-sided p={c['two_sided_p_for_zero_mean']:.3f}); "
+            f"SH0ES JWST-HST mean offset {s['mean_delta_mag']:.3f} +/- "
+            f"{s['standard_error_mag']:.3f} mag over 13 hosts "
+            f"(two-sided p={s['two_sided_p_for_zero_mean']:.3f}). The registered "
+            f"+{shift['comparison_shift_mag']:.3f}-mag displacement is inconsistent "
+            f"with the host-level mean (one-sided p="
+            f"{shift['one_sided_p_mean_at_least_comparison']:.3g}).")
     return (
-        f"JWST distance-anchor cited-seed manifest: {manifest['n_anchors']} "
+        f"JWST source-table and distance-anchor manifest: {manifest['n_anchors']} "
         f"row-complete anchors (Freedman CCHP + Riess SH0ES) each carrying the "
         f"cited-source citation (authoritative DOI unverified), seed retrieval "
         f"hash, J2000 coordinate evidence, published distance-modulus precision, "
@@ -456,8 +567,7 @@ def generate_caption(manifest: dict, decision: dict, crossmatch: dict,
         f"replay, a credible-count tolerance sensitivity, a leave-one-group "
         f"report and a derangement label-substitution negative test "
         f"({negatives['n_credible_identity_broken_by_substitution']} credible "
-        f"identities broken). The authoritative machine-readable table is not "
-        f"reproduced, so the lane stays a {decision['jwst_lane_status']} and no "
-        f"CF4-conditioned precision forecast is authorized. Catalogue-linkage "
-        f"diagnostic only; no measurement, forecast, detection, or "
-        f"Bianchi-family claim; the two CF4 P0s stay OPEN.")
+        f"identities broken). The content-verified author-source tables set the "
+        f"lane to {decision['jwst_lane_status']}.{result_text} No H0 fit, "
+        f"CF4-conditioned precision forecast, detection, or Bianchi-family "
+        f"claim; the two CF4 P0s stay OPEN.")

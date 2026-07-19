@@ -1,31 +1,156 @@
 {
-  "authentication_level": "CITED_SEED_NOT_AUTHORITATIVE_TABLE_REPRODUCED",
-  "authoritative_table_reproduced": false,
-  "cchp_table_content_verified": false,
+  "artifact_metadata": {
+    "caveats": [
+      "Host-level Student-t intervals condition on independent host deltas and exclude shared-anchor/common-systematic covariance.",
+      "Published aggregates are source-reported statistical-SE replays; overlapping samples are not combined.",
+      "The coordinate-seed CF4 linkage remains positional-only and does not confirm physical identity.",
+      "No H0 fit, CF4-conditioned precision forecast, detection, geometry, or Bianchi-family claim is authorized."
+    ],
+    "claim_tier": "conditional",
+    "config_hash": "sha256:7a9b97195a89bcfa2e3f707c9efc516059196c6edad8b6141d6273d9b7a657ca",
+    "covariance_status": "shared_anchor_covariance_unavailable",
+    "generating_command": "venv/bin/python scripts/codex_harness/run_pr153_jwst_anchor.py --write",
+    "git_commit": "22323b35051a94335aef2b3372f705fd7f3d1bce",
+    "implementation_scope": [
+      "obsstat"
+    ],
+    "input_hashes": [
+      {
+        "path": "dl_pipeline/data/jwst_distances_seed.csv",
+        "sha256": "sha256:57ccbf46bedcd85a281807f764585e7a83c304baada29f5d883fb1e09d062207"
+      },
+      {
+        "path": "dl_pipeline/data/jwst_host_distance_comparisons.csv",
+        "sha256": "sha256:afe386474bfb67bf87f4cebb6721eb10a707c401bd8cda7cf52f8dc04fbcf248"
+      },
+      {
+        "path": "dl_pipeline/data/jwst_published_aggregate_comparisons.csv",
+        "sha256": "sha256:f21585e51e6b37ff8410a8f8dd88314aaa52125a9fe6d3c10adfa67c93182f92"
+      },
+      {
+        "path": "workdir/raw/jwst_anchors/jwst_anchors_manifest.json",
+        "sha256": "sha256:37e828156d1b4408cc99e1121cd88eacfa3e08cbbd7fc5fcab25be18187b500f"
+      },
+      {
+        "path": "workdir/obs_bundle/pecvel/cf4_full/cf4_groups.npz",
+        "sha256": "sha256:3c0f2e1a5b56b7227abb5e187406810d7eb15e924aac69e9cb0ffc1343a811ad"
+      },
+      {
+        "path": "htt/obsstat/jwst_anchor_manifest.py",
+        "sha256": "sha256:6d073ed39b12107317b28c4be0ac1ddbad18b446e2c251a7880b1331845d799a"
+      },
+      {
+        "path": "htt/obsstat/jwst_distance_consistency.py",
+        "sha256": "sha256:e819c1fc7c4047639b60b39726c610722c22e414405eed02842540fe5a82c938"
+      },
+      {
+        "path": "dl_pipeline/scripts/download_jwst_anchors.py",
+        "sha256": "sha256:7c6fdc4a0020e75ffca05f0504f3691ed23170d81bc1c561d34ffca57544a1f6"
+      },
+      {
+        "path": "scripts/codex_harness/run_pr153_jwst_anchor.py",
+        "sha256": "sha256:a305bcf1ad4c4630fa5962ad1abcf6f961f6ae84d3995c869f3a93be46dbea88"
+      },
+      {
+        "path": "workdir/raw/jwst_anchors/arxiv_2408.06153.src.tar.gz",
+        "sha256": "sha256:0a08d9398350e38c485960272f6c03b15ac3ddf09a3196cbe03d88a824247182"
+      },
+      {
+        "path": "archive-member:arxiv_2408.06153.src.tar.gz:Ho2024.tex",
+        "sha256": "sha256:680063a9d66429aca79faecb965e95a1df8943858d3b935ba757e51d020327c2"
+      },
+      {
+        "path": "workdir/raw/jwst_anchors/arxiv_2509.01667.src.tar.gz",
+        "sha256": "sha256:fefae8d124cb178c22cc90a3984cc1838d999b8b17d7d2e019170dd9c740e33e"
+      },
+      {
+        "path": "archive-member:arxiv_2509.01667.src.tar.gz:main.tex",
+        "sha256": "sha256:8effae414f274a706c5a8accf06d013d2bb1d090b37b95483297cf5d7ded5d90"
+      },
+      {
+        "path": "workdir/raw/jwst_anchors/arxiv_2408.00065.src.tar.gz",
+        "sha256": "sha256:9059a78903a175eb8e627fe640d833b0a2e1d82a3c116b156c12aa4125ca9ab5"
+      },
+      {
+        "path": "archive-member:arxiv_2408.00065.src.tar.gz:sample631.tex",
+        "sha256": "sha256:b1d963289a15180f35184f8df670cddd4e67c8cdbd797fcd1bc0353c13eb7ed1"
+      },
+      {
+        "path": "workdir/raw/jwst_anchors/arxiv_2504.08921.src.tar.gz",
+        "sha256": "sha256:421ad092e8c6942c26faed575ca5d710d871598e446e6f00f821a229b3bb81cd"
+      },
+      {
+        "path": "archive-member:arxiv_2504.08921.src.tar.gz:main.tex",
+        "sha256": "sha256:b5998590af12d0286ca9167b8dd2854f10cca173e8e11a2fa17465922b680017"
+      },
+      {
+        "path": "workdir/raw/jwst_anchors/arxiv_2401.04773.src.tar.gz",
+        "sha256": "sha256:f2c4475639d2646c6c5ddb8e4dec7cab863a432f8cc7dbdb7c7ff0bf42ef001c"
+      },
+      {
+        "path": "archive-member:arxiv_2401.04773.src.tar.gz:cycle1_resultsv2.tex",
+        "sha256": "sha256:1dce4af3566d7291328250fd4fcf1ef7a7240a0c8ad3ab0a81abaabefdfbd659"
+      }
+    ],
+    "mask_status": "not_applicable_non_sky_map_distance_table_result",
+    "null_mock_status": "not_applicable_published_table_and_source_reported_aggregate",
+    "owner": "OBSSTAT",
+    "runtime_environment": {
+      "numpy": "2.5.0",
+      "python": "3.12.3"
+    },
+    "sky_support_status": "published_host_tables_plus_separate_positional_cf4_linkage",
+    "transfer_source": "none",
+    "worktree_state": "dirty_amend_in_place_from_baseline"
+  },
+  "authentication_level": "AUTHOR_SOURCE_TABLES_REPRODUCED",
+  "authoritative_table_reproduced": true,
+  "cchp_table_content_verified": true,
   "cf4_conditioned_forecast_authorized": false,
+  "claim_boundary": "host-distance method consistency only; no H0 fit or CF4-conditioned inference",
   "fetched_products": [
-    "shoes_riess_jwst_cepheids",
-    "trgb_sbf_blakeslee2025"
+    "cchp_freedman2025_source_table",
+    "shoes_riess2025_source_table",
+    "jwst_trgb_li2024_source_table",
+    "complete_hst_jwst_trgb_li2025_source_table",
+    "shoes_riess2024_source_table"
   ],
-  "jwst_lane_status": "cited_seed_catalogue_linkage_scenario",
-  "missing_authoritative_tables": [
-    "cchp_freedman2025_t2"
-  ],
+  "jwst_lane_status": "published_table_conditional_result",
+  "li2024_expansion_content_verified": true,
+  "li2025_expansion_content_verified": true,
+  "missing_authoritative_tables": [],
   "negative_scan": {
     "targets": {
+      "docs/PR_DELTAS/pr-153.md": {
+        "hits": [],
+        "sha256": "ae3d378b1823ed98e4c6819ef2e37a3d14b36ec714e1bf62b16dee7f58e9b8f0",
+        "source": "disk"
+      },
       "docs/generated/pr153_captions.json": {
         "hits": [],
-        "sha256": "52975df94f34f85a5739299a40adf56f46511d3a354d9974752b9b0eb76d061b",
+        "sha256": "68b7757b8fc1f0aab85ec1f7ee6065dcba4b97c24531f5c154aec2e7888c6fc9",
         "source": "fresh_build"
       },
       "htt/obsstat/jwst_anchor_manifest.py": {
         "hits": [],
-        "sha256": "dd4bcd79dd1bdbd9b6469406585560fffbe6cf21ceeb56480744814100525111",
+        "sha256": "6d073ed39b12107317b28c4be0ac1ddbad18b446e2c251a7880b1331845d799a",
+        "source": "disk"
+      },
+      "htt/obsstat/jwst_distance_consistency.py": {
+        "hits": [],
+        "sha256": "e819c1fc7c4047639b60b39726c610722c22e414405eed02842540fe5a82c938",
         "source": "disk"
       }
     },
     "total_hits": 0
   },
-  "note": "the authoritative machine-readable data table (CCHP MRT) is not reproduced (404 missing; a fetched product is credited only when the manifest certifies it parses as a data table, not merely by a matching label), so the anchors are cited-seed and the JWST lane stays a cited-seed catalogue-linkage scenario; no CF4-conditioned precision forecast is authorized while N-DATA-CF4-DOWNSTREAM is OPEN",
-  "schema": "pr153.authoritative_decision.v1"
+  "note": "all four registered author-submitted LaTeX sources and both hashed source-checked transcriptions are present",
+  "schema": "pr153.authoritative_decision.v1",
+  "shoes_table_content_verified": true,
+  "source_checked_aggregate_csv": "dl_pipeline/data/jwst_published_aggregate_comparisons.csv",
+  "source_checked_aggregate_csv_sha256": "sha256:f21585e51e6b37ff8410a8f8dd88314aaa52125a9fe6d3c10adfa67c93182f92",
+  "source_checked_comparison_csv": "dl_pipeline/data/jwst_host_distance_comparisons.csv",
+  "source_checked_comparison_csv_sha256": "sha256:afe386474bfb67bf87f4cebb6721eb10a707c401bd8cda7cf52f8dc04fbcf248",
+  "source_tables_reproduced": true,
+  "verification_violations": []
 }
