@@ -900,10 +900,9 @@ def test_cli_external_card_stays_unavailable_without_trusted_verifier(
     backlog = tmp_path / "backlog.yaml"
     status = tmp_path / "status.yaml"
     event_id = "AUTHENTICATED_NATIVE_DELIVERY"
-    _write_yaml(
-        backlog,
-        _typed_backlog(_typed_card("PR-159", external_event=event_id)),
-    )
+    external_card = _typed_card("PR-159", external_event=event_id)
+    external_card["activation_state"] = "DORMANT_EXTERNAL"
+    _write_yaml(backlog, _typed_backlog(external_card))
     status_payload = {
         "completed": [],
         "blocked": [],
@@ -921,6 +920,8 @@ def test_cli_external_card_stays_unavailable_without_trusted_verifier(
 
     status_payload["dormant_external"] = []
     status_payload["pending"] = ["PR-159"]
+    external_card["activation_state"] = "PENDING"
+    _write_yaml(backlog, _typed_backlog(external_card))
     status_payload["external_events"] = {event_id: {"verified": True}}
     _write_yaml(status, status_payload)
     unauthenticated = _run(str(PROGRESS), str(backlog), str(status), "--json")

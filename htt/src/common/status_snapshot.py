@@ -46,6 +46,15 @@ _OWNER_SCOPE = {
     Owner.TSC_LEGACY: ImplementationScope.TSC_LEGACY,
 }
 
+_TERMINAL_EXECUTION_RESOLUTIONS = frozenset(
+    {
+        "COMPLETED_SUCCESS",
+        "COMPLETED_FAILED_WITH_RECEIPT",
+        "BLOCKED_WITH_RECEIPT",
+        "ABANDONED_WITH_RECEIPT",
+    }
+)
+
 
 @dataclass(frozen=True)
 class StatusBundle:
@@ -118,7 +127,8 @@ def build_status_bundle(
     pending = _status_set(status.get("pending"))
     dormant_external = _status_set(status.get("dormant_external"))
     in_progress = _status_set(status.get("in_progress"))
-    execution_resolutions = _execution_resolutions(status.get("execution_resolutions"))
+    background_in_progress = _status_set(status.get("background_in_progress"))
+    execution_resolutions = validate_status_contract(cards=prs, status=status)
     source = source_commit or _current_source_commit()
     command = generating_command or (
         "python -m common.status_snapshot --write docs/generated/status_snapshot.json"
@@ -138,6 +148,7 @@ def build_status_bundle(
             pending=pending,
             dormant_external=dormant_external,
             in_progress=in_progress,
+            background_in_progress=background_in_progress,
         )
         promotion = _promotion_profile(
             pr_id=pr_id,
@@ -234,6 +245,7 @@ def build_status_bundle(
             "blocked_prs": state_counts["blocked"],
             "skipped_prs": state_counts["skipped"],
             "in_progress_prs": state_counts["in_progress"],
+            "background_in_progress_prs": state_counts["background_in_progress"],
             "pending_prs": state_counts["pending"],
             "dormant_external_prs": state_counts["dormant_external"],
             "execution_resolution_prs": sorted(execution_resolutions),
@@ -251,6 +263,7 @@ def build_status_bundle(
         "blocked_prs": state_counts["blocked"],
         "skipped_prs": state_counts["skipped"],
         "in_progress_prs": state_counts["in_progress"],
+        "background_in_progress_prs": state_counts["background_in_progress"],
         "pending_prs": state_counts["pending"],
         "dormant_external_prs": state_counts["dormant_external"],
         "execution_resolution_count": len(execution_resolutions),
@@ -319,6 +332,7 @@ def render_status_matrix(bundle: StatusBundle) -> str:
                 f"| Blocked PRs | {metadata['blocked_prs']} |",
                 f"| Skipped PRs | {metadata.get('skipped_prs', 0)} |",
                 f"| In progress | {metadata['in_progress_prs']} |",
+                f"| Background in progress | {metadata.get('background_in_progress_prs', 0)} |",
                 f"| Pending PRs | {metadata['pending_prs']} |",
                 f"| Dormant external PRs | {metadata.get('dormant_external_prs', 0)} |",
                 "",
@@ -540,6 +554,10 @@ def validate_status_matrix_matches_snapshot(
         "In progress": int(metadata["in_progress_prs"]),
         "Pending PRs": int(metadata["pending_prs"]),
     }
+    if "background_in_progress_prs" in metadata:
+        expected["Background in progress"] = int(
+            metadata["background_in_progress_prs"]
+        )
     if "skipped_prs" in metadata:
         expected["Skipped PRs"] = int(metadata["skipped_prs"])
     if "dormant_external_prs" in metadata:
@@ -862,6 +880,241 @@ def _execution_resolutions(value: object) -> Mapping[str, object]:
     return value
 
 
+def validate_status_contract(
+    *,
+    cards: Sequence[Mapping[str, object]],
+    status: Mapping[str, object],
+) -> Mapping[str, object]:
+    """Validate the typed orchestration surface shared by writers/readers.
+
+    This deliberately validates process receipts without interpreting them as
+    scientific evidence.  Intake refresh and generated status consumers call
+    the same function so a malformed state cannot be accepted on one path and
+    rejected on another.
+    """
+
+    return _validate_status_partition(
+        status=status,
+        cards=cards,
+        completed=_status_set(status.get("completed")),
+        blocked=_status_set(status.get("blocked")),
+        skipped=_status_set(status.get("skipped")),
+        pending=_status_set(status.get("pending")),
+        dormant_external=_status_set(status.get("dormant_external")),
+        in_progress=_status_set(status.get("in_progress")),
+        background_in_progress=_status_set(status.get("background_in_progress")),
+    )
+
+
+def _validate_status_partition(
+    *,
+    status: Mapping[str, object],
+    cards: Sequence[Mapping[str, object]],
+    completed: set[str],
+    blocked: set[str],
+    skipped: set[str],
+    pending: set[str],
+    dormant_external: set[str],
+    in_progress: set[str],
+    background_in_progress: set[str],
+) -> Mapping[str, object]:
+    """Reject ambiguous foreground/background orchestration state."""
+
+    raw_foreground = status.get("in_progress")
+    if raw_foreground is not None and not isinstance(raw_foreground, str):
+        raise ValueError("status in_progress must be a scalar PR id or null")
+    raw_background = status.get("background_in_progress")
+    if raw_background is not None:
+        if not isinstance(raw_background, list) or not all(
+            isinstance(pr_id, str) and pr_id for pr_id in raw_background
+        ):
+            raise ValueError("status background_in_progress must be a PR-id list")
+        if len(raw_background) != len(set(raw_background)):
+            raise ValueError("status background_in_progress contains duplicate PR ids")
+
+    states = {
+        "completed": completed,
+        "blocked": blocked,
+        "skipped": skipped,
+        "pending": pending,
+        "dormant_external": dormant_external,
+        "in_progress": in_progress,
+        "background_in_progress": background_in_progress,
+    }
+    membership: dict[str, list[str]] = {}
+    for state, pr_ids in states.items():
+        for pr_id in pr_ids:
+            membership.setdefault(pr_id, []).append(state)
+    overlap = {
+        pr_id: state_names
+        for pr_id, state_names in membership.items()
+        if len(state_names) > 1
+    }
+    if overlap:
+        raise ValueError(f"status orchestration states overlap: {overlap}")
+
+    card_map = {
+        _required_str(card, "id"): card
+        for card in cards
+    }
+    unknown = sorted(set(membership) - set(card_map))
+    if unknown:
+        raise ValueError(f"status contains unknown PR ids: {unknown}")
+    strict_rescue = "PR-119" in card_map
+    if strict_rescue:
+        for field in (
+            "completed",
+            "blocked",
+            "skipped",
+            "pending",
+            "dormant_external",
+            "background_in_progress",
+        ):
+            raw = status.get(field, []) or []
+            if not isinstance(raw, list) or not all(
+                isinstance(pr_id, str) and pr_id for pr_id in raw
+            ):
+                raise ValueError(f"status {field} must be a PR-id list")
+            if len(raw) != len(set(raw)):
+                raise ValueError(f"status {field} contains duplicate PR ids")
+        managed = {
+            pr_id
+            for pr_id in card_map
+            if pr_id.startswith("PR-")
+            and pr_id[3:].isdigit()
+            and int(pr_id[3:]) >= 119
+        }
+        missing = sorted(managed - set(membership))
+        if missing:
+            raise ValueError(
+                f"status orchestration coverage missing PR-119+ ids: {missing}"
+            )
+
+        expected_dormant = {
+            pr_id
+            for pr_id, card in card_map.items()
+            if card.get("activation_state") in {"DORMANT_EXTERNAL", "NEEDS_NATIVE"}
+        }
+        if dormant_external != expected_dormant:
+            raise ValueError(
+                "dormant_external must match typed activation_state: "
+                f"missing={sorted(expected_dormant - dormant_external)}, "
+                f"unexpected={sorted(dormant_external - expected_dormant)}"
+            )
+
+    raw_lanes = status.get("execution_lane", {}) or {}
+    if not isinstance(raw_lanes, Mapping) or not all(
+        isinstance(pr_id, str)
+        and lane in {"defensible", "hypothesis_only", "needs_native"}
+        for pr_id, lane in raw_lanes.items()
+    ):
+        raise ValueError("status execution_lane must contain only typed lane values")
+    expected_lanes = {
+        pr_id: card["execution_lane"]
+        for pr_id, card in card_map.items()
+        if "execution_lane" in card
+    }
+    if dict(raw_lanes) != expected_lanes:
+        raise ValueError("status execution_lane must exactly match typed card lanes")
+
+    raw_contracts = status.get("background_execution_contracts", {}) or {}
+    if not isinstance(raw_contracts, Mapping):
+        raise ValueError("status background_execution_contracts must be a mapping")
+    if set(raw_contracts) != background_in_progress:
+        raise ValueError(
+            "background_execution_contracts must exactly cover background_in_progress"
+        )
+    expected_contract = {
+        "kind": "acquisition",
+        "allowed_phase": "acquire",
+        "partial_scientific_use": "forbidden",
+    }
+    malformed = sorted(
+        pr_id
+        for pr_id, contract in raw_contracts.items()
+        if contract != expected_contract
+    )
+    if malformed:
+        raise ValueError(f"background acquisition contract is malformed: {malformed}")
+    if strict_rescue and background_in_progress - {"PR-151"}:
+        raise ValueError("only PR-151 is authorized for rescue background acquisition")
+
+    active = in_progress | background_in_progress
+    unauthorized = []
+    for pr_id in active:
+        card = card_map[pr_id]
+        lane = card.get("execution_lane", "defensible")
+        authorization = card.get("execution_authorization", "DAG_SCHEDULABLE")
+        if lane != "defensible" or authorization in {
+            "REGISTERED_NOT_SCHEDULED",
+            "NATIVE_BLOCKED",
+        }:
+            unauthorized.append(pr_id)
+    if unauthorized:
+        raise ValueError(
+            f"active PRs are not execution-authorized: {sorted(unauthorized)}"
+        )
+    if strict_rescue:
+        dependency_blocked = sorted(
+            pr_id
+            for pr_id in active
+            if any(str(dep) not in completed for dep in card_map[pr_id].get("depends", []))
+        )
+        if dependency_blocked:
+            raise ValueError(
+                f"active PRs have incomplete direct dependencies: {dependency_blocked}"
+            )
+
+    resolutions = _execution_resolutions(status.get("execution_resolutions"))
+    unknown_resolutions = sorted(set(resolutions) - set(card_map))
+    if unknown_resolutions:
+        raise ValueError(
+            f"execution_resolutions contain unknown PR ids: {unknown_resolutions}"
+        )
+    terminal = completed | blocked | skipped
+    for pr_id, record in resolutions.items():
+        if pr_id not in terminal:
+            raise ValueError(f"non-terminal PR has execution resolution: {pr_id}")
+        if not isinstance(record, Mapping):
+            raise ValueError(f"execution resolution for {pr_id} must be a mapping")
+        resolution = record.get("resolution")
+        if resolution not in _TERMINAL_EXECUTION_RESOLUTIONS:
+            raise ValueError(f"invalid execution resolution for {pr_id}: {resolution!r}")
+        receipt = record.get("receipt")
+        if not isinstance(receipt, str) or not receipt.strip():
+            raise ValueError(f"execution resolution for {pr_id} lacks a valid receipt")
+        if pr_id in completed and resolution != "COMPLETED_SUCCESS":
+            raise ValueError(
+                f"completed PR {pr_id} must have COMPLETED_SUCCESS resolution"
+            )
+        if pr_id in blocked and resolution not in {
+            "COMPLETED_FAILED_WITH_RECEIPT",
+            "BLOCKED_WITH_RECEIPT",
+        }:
+            raise ValueError(
+                f"blocked PR {pr_id} must have a documented negative resolution"
+            )
+        if pr_id in skipped and resolution != "ABANDONED_WITH_RECEIPT":
+            raise ValueError(
+                f"skipped PR {pr_id} must have ABANDONED_WITH_RECEIPT resolution"
+            )
+    if strict_rescue:
+        managed_terminal = {
+            pr_id
+            for pr_id in terminal
+            if pr_id.startswith("PR-")
+            and pr_id[3:].isdigit()
+            and int(pr_id[3:]) >= 119
+        }
+        missing_resolutions = sorted(managed_terminal - set(resolutions))
+        if missing_resolutions:
+            raise ValueError(
+                "terminal PR-119+ cards require execution resolution receipts: "
+                f"{missing_resolutions}"
+            )
+    return resolutions
+
+
 def _state_for_pr(
     *,
     pr_id: str,
@@ -871,6 +1124,7 @@ def _state_for_pr(
     pending: set[str],
     dormant_external: set[str],
     in_progress: set[str],
+    background_in_progress: set[str],
 ) -> str:
     if pr_id in completed:
         return "completed"
@@ -880,6 +1134,8 @@ def _state_for_pr(
         return "skipped"
     if pr_id in in_progress:
         return "in_progress"
+    if pr_id in background_in_progress:
+        return "background_in_progress"
     if pr_id in dormant_external:
         return "dormant_external"
     if pr_id in pending:

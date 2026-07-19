@@ -135,6 +135,28 @@ def test_recorded_interrupt_during_visible_restart_is_not_integrity_failure(
     })
     payload = pr151_progress.build_progress(target, tmp_path / "absent.log")
     assert payload["next_action"] == "continue_acquire_after_restart"
+    assert payload["activity"]["effective_writer_state"] == "running"
+
+
+def test_held_writer_lock_survives_pid_namespace_visibility_gap(
+        tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    target = tmp_path / "target"
+    target.mkdir()
+    _write(target / "desi_dr1_mock_acquisition_manifest.json", {
+        "schema": "htt.desi_dr1_mock_acquisition.v2",
+        "status": "incomplete",
+        "failure": {"type": "KeyboardInterrupt", "message": ""},
+    })
+    monkeypatch.setattr(pr151_progress, "_lock_state", lambda _: {
+        "state": "held", "lock_path": str(target / ".pr151_phase.lock"),
+        "owner": {"pid": 123, "phase": "acquire"}, "owner_error": None,
+    })
+    monkeypatch.setattr(pr151_progress, "_process_visibility", lambda _: {
+        "state": "not_running", "matching_pids": []
+    })
+    payload = pr151_progress.build_progress(target, tmp_path / "absent.log")
+    assert payload["activity"]["effective_writer_state"] == "running"
+    assert payload["next_action"] == "continue_acquire_after_restart"
 
 
 def test_phase_is_mandatory_and_legacy_positional_target_is_rejected() -> None:

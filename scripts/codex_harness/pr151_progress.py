@@ -409,6 +409,9 @@ def build_progress(target: Path, log: Path = DEFAULT_LOG,
     manifest = _manifest_state(target)
     lock = _lock_state(target)
     process = _process_visibility(target)
+    effective_writer_running = (
+        lock["state"] == "held" or process["state"] == "running"
+    )
     ready = _acquisition_ready(observed, manifest, errors)
     finalization = _finalization_state(target, manifest)
     terminal = bool(ready and finalization.get("valid"))
@@ -446,7 +449,7 @@ def build_progress(target: Path, log: Path = DEFAULT_LOG,
         next_action = "ready_for_finalize"
     elif comparison and comparison["stalled_candidate"]:
         next_action = "inspect_process_tree"
-    elif manifest.get("failure") and process["state"] == "running":
+    elif manifest.get("failure") and effective_writer_running:
         next_action = "continue_acquire_after_restart"
     elif manifest.get("failure"):
         next_action = "resolve_recorded_failure"
@@ -471,6 +474,9 @@ def build_progress(target: Path, log: Path = DEFAULT_LOG,
         },
         "activity": {
             "writer_lock": lock, "process_visibility": process,
+            "effective_writer_state": (
+                "running" if effective_writer_running else "not_running"
+            ),
             "sample_id": hashlib.sha256(sample_material).hexdigest(),
             "comparison": comparison,
             "stalled_rule": "two probes >=900 s apart with zero part and log growth",

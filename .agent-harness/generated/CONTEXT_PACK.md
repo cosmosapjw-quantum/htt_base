@@ -1,7 +1,7 @@
 # Canonical Shared Context Pack
 
-Context version: `5cfba14785aea15484d71835f3306b270b56d9c0d9e0fcc56c5c6a441859e4c8`
-Built at: `2026-07-19T15:11:14+00:00`
+Context version: `b6f72350fe8f2159032c1d8e60608391b68a8c901e6a3f2b6ddc91bc93682e03`
+Built at: `2026-07-19T17:07:58+00:00`
 
 This pack contains only the shared Tier-0 context. Assignment-specific context and sibling results are intentionally excluded.
 
@@ -9,9 +9,9 @@ This pack contains only the shared Tier-0 context. Assignment-specific context a
 
 ## Source: `.agent-harness/context/SHARED_CONTEXT.md`
 
-SHA-256: `0a16103624c56c86d2b40bff99be04d599745711605e2c609c6b09094b1c2ba3`
+SHA-256: `6dd1df71931de23daa7778202c3ac7f1f265a4b46dcbea3573b0b18b6df3736e`
 
-# Shared Context — PR-151 background acquisition and PR-154 foreground analysis
+# Shared Context — PR-151 background acquisition and PR-167 foreground intake
 
 ## Project objective
 
@@ -19,22 +19,25 @@ SHA-256: `0a16103624c56c86d2b40bff99be04d599745711605e2c609c6b09094b1c2ba3`
   manifest-backed pre-native-solver observatory. Reproducible null,
   upper-limit, conditional, and non-identification results are valid terminal
   scientific outputs; diagnostic preflight alone is not.
-- Current foreground card: `PR-154` is completed after independent numerical,
-  harness, and claim-gate closeout; PR-167 advocate intake is next because
-  PR-151 remains non-terminal.
+- `PR-167`, the dedicated advocate-track intake and parallel
+  foreground/background status-model transaction, is completed after a fresh
+  post-remediation adversarial replay. There is no foreground card in the
+  atomic handoff gap; PR-168 is the next selected card.
 - Current background card: `PR-151`, authenticated DESI DR1 acquisition of
   1000 EZmocks plus 25 AbacusSummit mocks on NVMe.
 - Governing roadmap:
   `docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md`.
 - Base revision at context refresh:
-  `21ceaee68bfbdc53ec97d174449e1ef794c32a9f` on
+  `fe7abb6aa01fdfaf0440956bd8727ddc9e1be8e7` on
   `research/pr04-multicomponent`.
 
 ## Current DAG and execution state
 
-- Registered DAG: 113 cards through PR-166; 100 completed, PR-151 in progress,
-  PR-155--158 gated on PR-151, and PR-159--166 dormant pending authenticated
-  native delivery. PR-167--183 are not active until their dedicated intake.
+- Registered DAG: 130 cards through PR-183; 101 completed, no foreground PR,
+  PR-151 is the sole background acquisition, PR-155--158 remain
+  gated on PR-151, and PR-159--166 plus PR-183 are dormant pending authenticated
+  native delivery. The dedicated PR-167 transaction preserved semantic hashes
+  for all 113 pre-intake cards and registered the 17-card advocate suffix.
 - The approved replan runs PR-154 first. If PR-151 is still incomplete after
   PR-154, PR-167 formally registers PR-167--183 and the foreground sequence is
   PR-168, PR-169, PR-170, PR-171.
@@ -61,9 +64,15 @@ SHA-256: `0a16103624c56c86d2b40bff99be04d599745711605e2c609c6b09094b1c2ba3`
 - The legacy all-in-one tmux wrapper was stopped at an aria-resumable `.part`
   checkpoint without deleting payloads. Session `htt_pr151_desi_20260719` now
   runs `--phase acquire`; pane/lock owner PID was `16695` at the latest probe.
-  The 2026-07-19 15:08 UTC fast probe found 40/1000 exact EZmock records,
-  0/25 Abacus records, active aria PID 56676, growing partial bytes, a fresh
-  log, and about 825 GiB free. The older batch manifest still reported 30
+  The 2026-07-19 16:50 UTC fast probe found 60/1000 exact EZmock records,
+  0/25 Abacus records, five active partial files in the new batch totalling
+  about 0.87 GiB, a fresh growing log, and about 832 GiB free. Host-level tmux inspection confirmed
+  session `htt_pr151_desi_20260719`, pane/lock owner PID `16695`, and the
+  expected `--phase acquire` command. The writer lock itself remains held; PID
+  discovery from the fast probe may report no matches inside its sandbox PID
+  namespace and is therefore combined with lock evidence as the effective
+  writer state. The same final probe directly observed runner PID `16709` and
+  the current aria child PID `659928`. The older batch manifest still reported 30
   authenticated EZmocks until the current batch checkpoint is committed.
 - PR-151 partial mocks are never used for final ranks or significance. Terminal
   status requires exact 1000/25 records, observed authentication, the 15-case
@@ -140,6 +149,72 @@ SHA-256: `0a16103624c56c86d2b40bff99be04d599745711605e2c609c6b09094b1c2ba3`
   The numerical reviewer independently replayed the source rows, PSD extrema,
   all 2,430 CF4 classifications, an adaptive Student-t integral, and both
   96/128 and 128/160 quadrature comparisons.
+
+## PR-167 intake contract
+
+- PR-167 must use a dedicated transaction. The earlier long-horizon intake
+  script remains fail-closed against PR-167--183 and must not be weakened or
+  used to bypass its ownership boundary.
+- Immediately before intake, preserve the semantic hashes and logical status
+  of every existing PR-000--166 card in a receipt. Intake is refused if the
+  receipt is absent, incomplete, or no longer matches the preserved cards.
+- The status interface separates one `in_progress` foreground PR from a list
+  of `background_in_progress` acquisition PRs. PR-151 migrates to the latter
+  without changing its logical execution state.
+- Advocate cards carry typed activation and execution-lane metadata. Only
+  `defensible` items enter ordinary `unblocked_next`; unblocked
+  `hypothesis_only` items are reported separately, and `needs_native` remains
+  dormant until an authenticated native activation gate is met.
+- PR-151 monitoring remains read-only and fast. It reports authenticated
+  EZmock/Abacus records, random-audit membership, partial-file count/bytes,
+  log age, last records and failures, disk headroom, process/lock evidence,
+  and terminal eligibility without payload rehashing.
+- Claim ceilings are fixed at intake: PR-173 may be numerically unresolved at
+  the current Monte Carlo budget; PR-177 is an ACT release-simulation-
+  conditional modulation candidate; PR-180 tests consistency with a pure
+  boost; PR-176 is structurally distinct from monopole leakage; and PR-179 is
+  a selection/systematics-conditional catalogue result.
+- PR-171 is scheduler-eligible only because the explicit approved execution
+  sequence names it; its scientific artifact mode remains `hypothesis_only`
+  and `public_use=false`. PR-174, PR-175, and PR-182 are
+  `REGISTERED_NOT_SCHEDULED`. PR-183 is `NATIVE_BLOCKED`.
+- Exact-math cards PR-168--171 carry blind four-axis CAS contracts. PR-175 and
+  PR-182 carry the same contract in case a later, separate authorization ever
+  permits execution; registration alone is not authorization.
+
+## PR-167 implemented state and closeout
+
+- The dedicated transaction has materialized 130 cards and 352 edges while
+  preserving the exact 113-card PR-000--166 semantic/status prefix. Canonical
+  and machine mirrors are byte-identical and all materialized files are mode
+  `0644`; the old PR-119--166 intake script remains byte-identical.
+- The transaction now validates before writing, binds exact receipt bytes,
+  publishes through a durable allowlisted journal with backups and fsyncs, and
+  deterministically rolls forward an all-new generation or restores any mixed
+  generation. Validators reject an outstanding journal.
+- The PR-167 manifest reconstructs the immutable post-intake status snapshot
+  from the hash-pinned baseline plus the intake transaction. It does not bind
+  itself to mutable live PR status, so later foreground transitions cannot
+  invalidate or rewrite intake provenance.
+- Status consumers reject unknown or overlapping active IDs, terminal residue,
+  unauthorized lanes, incomplete active dependencies, background contract
+  drift, typed activation drift, and hypothesis/native cards in the ordinary
+  queue. The PR-151 fast probe treats a held writer lock as effective running
+  evidence even when process enumeration is namespace-limited.
+- First closeout findings concerning exact receipt coverage, transaction
+  recovery, write-before-check behavior, package imports, frozen PR-119--166
+  activation, file modes, byte provenance, active-state authorization, unknown
+  IDs, the stale 65-card phrase, and dual/two-engine prose are patched.
+- Post-fix verification records 113 tests in the registered six-file
+  targeted suite, six smoke tests,
+  strict 130-card/352-edge DAG validity, byte-identical mirrors, package import
+  success, and zero targeted claim-language issues. A fresh hash-bound final
+  replay, not any stale pre-fix envelope, governs PR-167 closeout. The first
+  fresh replay found and caused remediation of shared typed-status validation
+  for intake refresh, native dormancy, lane projection, and execution receipts;
+  its FAIL envelope remains immutable evidence. The second fresh replay at
+  `.agent-harness/runs/pr167-final-replay2-20260719/results/A-PR167-FINAL-REPLAY2.json`
+  passed with no unresolved P0/P1/P2 and no claim promotion.
 
 ## Ownership and claim boundaries
 

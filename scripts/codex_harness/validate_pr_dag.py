@@ -13,13 +13,19 @@ from typing import Any
 
 import yaml
 
+if __package__:  # Package import used by pytest and library callers.
+    from .pr167_intake_contract import validate_pre_intake_receipt
+else:  # Direct script execution places this directory on sys.path.
+    from pr167_intake_contract import validate_pre_intake_receipt
+
 
 RESCUE_FIRST_PR = 119
 RESCUE_LAST_PR = 166
 ADVOCATE_FIRST_PR = 167
 ADVOCATE_LAST_PR = 183
 RESCUE_CARD_COUNT = RESCUE_LAST_PR - RESCUE_FIRST_PR + 1
-RESCUE_TOTAL_CARD_COUNT = 113
+RESCUE_PRE_ADVOCATE_CARD_COUNT = 113
+RESCUE_WITH_ADVOCATE_CARD_COUNT = 130
 RESCUE_REQUIRED_FIELDS = {
     "id",
     "wave",
@@ -69,6 +75,66 @@ RESCUE_EXECUTION_RESOLUTIONS = {
     "BLOCKED_WITH_RECEIPT",
     "ABANDONED_WITH_RECEIPT",
 }
+ADVOCATE_EXECUTION_LANES = {"defensible", "hypothesis_only", "needs_native"}
+ADVOCATE_ACTIVATION_STATES = {"PENDING", "NEEDS_NATIVE"}
+TYPED_DORMANT_ACTIVATION_STATES = {"DORMANT_EXTERNAL", "NEEDS_NATIVE"}
+BACKGROUND_EXECUTION_CONTRACTS = {
+    "PR-151": {
+        "kind": "acquisition",
+        "allowed_phase": "acquire",
+        "partial_scientific_use": "forbidden",
+    }
+}
+ADVOCATE_REQUIRED_FIELDS = RESCUE_REQUIRED_FIELDS | {
+    "execution_lane",
+    "scientific_artifact_mode",
+    "execution_authorization",
+    "public_use",
+    "spec_first_required",
+}
+ADVOCATE_CARD_CONTRACTS = {
+    "PR-167": (["PR-119", "PR-154"], "defensible", "PENDING"),
+    "PR-168": (["PR-124", "PR-167"], "defensible", "PENDING"),
+    "PR-169": (["PR-126", "PR-127", "PR-167"], "defensible", "PENDING"),
+    "PR-170": (["PR-124", "PR-126", "PR-167"], "defensible", "PENDING"),
+    "PR-171": (["PR-125", "PR-167"], "defensible", "PENDING"),
+    "PR-172": (["PR-123", "PR-167"], "defensible", "PENDING"),
+    "PR-173": (["PR-135", "PR-167"], "defensible", "PENDING"),
+    "PR-174": (["PR-167"], "hypothesis_only", "PENDING"),
+    "PR-175": (["PR-124", "PR-167", "PR-174"], "hypothesis_only", "PENDING"),
+    "PR-176": (["PR-133", "PR-144", "PR-146", "PR-148", "PR-167", "PR-173"], "defensible", "PENDING"),
+    "PR-177": (["PR-152", "PR-167", "PR-173"], "defensible", "PENDING"),
+    "PR-178": (["PR-151", "PR-155", "PR-156", "PR-157", "PR-158", "PR-167"], "defensible", "PENDING"),
+    "PR-179": (["PR-134", "PR-135", "PR-139", "PR-144", "PR-167", "PR-173"], "defensible", "PENDING"),
+    "PR-180": (["PR-134", "PR-149", "PR-150", "PR-167", "PR-172", "PR-173"], "defensible", "PENDING"),
+    "PR-181": (["PR-140", "PR-141", "PR-143", "PR-155", "PR-167", "PR-173"], "defensible", "PENDING"),
+    "PR-182": (["PR-167"], "hypothesis_only", "PENDING"),
+    "PR-183": (["PR-159", "PR-160", "PR-161", "PR-167"], "needs_native", "NEEDS_NATIVE"),
+}
+ADVOCATE_HYPOTHESIS_ONLY_ARTIFACTS = {
+    "PR-171",
+    "PR-174",
+    "PR-175",
+    "PR-182",
+    "PR-183",
+}
+ADVOCATE_REGISTERED_NOT_SCHEDULED = {"PR-174", "PR-175", "PR-182"}
+ADVOCATE_EXPLICIT_APPROVED_SEQUENCE = {"PR-168", "PR-169", "PR-170", "PR-171"}
+ADVOCATE_TITLE_OVERRIDES = {
+    "PR-174": "SW-only real-space anisotropic ray-integration mechanics (hypothesis_only)",
+    "PR-175": "Cross-engine Bianchi invariant mechanics from structure constants (hypothesis_only)",
+    "PR-177": "ACT DR6 in-band kappa off-diagonal modulation diagnostic (release-simulation-conditional)",
+    "PR-182": "Solver-free parity theorem and handedness reference-signal registry (hypothesis_only)",
+    "PR-183": "Native-dependent low-ell T/E coherence hypothesis-test interface",
+}
+ADVOCATE_RECEIPT = (
+    Path(__file__).resolve().parents[2]
+    / "docs/generated/pr167_pre_intake_semantic_receipt.json"
+)
+ADVOCATE_TRANSACTION_JOURNAL = (
+    Path(__file__).resolve().parents[2]
+    / ".agent-harness/generated/pr167_intake_write_journal.json"
+)
 RESCUE_SEMANTIC_CLAIM_FIELDS = (
     "title",
     "targets",
@@ -295,6 +361,7 @@ def _validate_rescue_status(status: dict[str, Any], info: DagInfo) -> None:
         "skipped",
         "pending",
         "dormant_external",
+        "background_in_progress",
     )
     states: dict[str, list[str]] = {}
     for field in list_fields:
@@ -326,18 +393,56 @@ def _validate_rescue_status(status: dict[str, Any], info: DagInfo) -> None:
     if missing:
         raise ValueError(f"status orchestration coverage missing PR ids: {missing}")
 
-    dormant_expected = set(_pr_range(159, 166))
+    cards = {card["id"]: card for card in info.prs}
+    dormant_expected = {
+        pr_id
+        for pr_id, card in cards.items()
+        if card.get("activation_state") in TYPED_DORMANT_ACTIVATION_STATES
+    }
     dormant_actual = set(states["dormant_external"])
-    if not dormant_actual <= dormant_expected:
+    if dormant_actual != dormant_expected:
         raise ValueError(
-            "only PR-159..PR-166 may be dormant_external: "
-            f"{sorted(dormant_actual - dormant_expected)}"
+            "dormant_external must be derived from typed activation_state; "
+            f"missing={sorted(dormant_expected - dormant_actual)}, "
+            f"unexpected={sorted(dormant_actual - dormant_expected)}"
         )
+
+    lane_status = status.get("execution_lane", {}) or {}
+    if not isinstance(lane_status, dict) or not all(
+        isinstance(pr_id, str) and isinstance(lane, str)
+        for pr_id, lane in lane_status.items()
+    ):
+        raise ValueError("status execution_lane must be a PR-id to lane mapping")
+    card_lanes = {
+        pr_id: str(card["execution_lane"])
+        for pr_id, card in cards.items()
+        if "execution_lane" in card
+    }
+    if lane_status != card_lanes:
+        raise ValueError("status execution_lane must exactly match typed advocate card lanes")
+    invalid_lanes = sorted(set(lane_status.values()) - ADVOCATE_EXECUTION_LANES)
+    if invalid_lanes:
+        raise ValueError(f"status execution_lane contains invalid lanes: {invalid_lanes}")
+    background_contracts = status.get("background_execution_contracts", {}) or {}
+    expected_background_contracts = (
+        BACKGROUND_EXECUTION_CONTRACTS
+        if states["background_in_progress"] == ["PR-151"]
+        else {}
+    )
+    if background_contracts != expected_background_contracts:
+        raise ValueError(
+            "status background_execution_contracts must retain the exact PR-151 "
+            "acquire-only authorization"
+        )
+    if states["background_in_progress"] not in ([], ["PR-151"]):
+        raise ValueError("only PR-151 may be a background acquisition")
 
     resolutions = status.get("execution_resolutions", {}) or {}
     if not isinstance(resolutions, dict):
         raise ValueError("status execution_resolutions must be a mapping")
-    rescue_ids = set(_pr_range(RESCUE_FIRST_PR, RESCUE_LAST_PR))
+    rescue_ids = {
+        pr_id for pr_id in info.ids if int(pr_id[-3:]) >= RESCUE_FIRST_PR
+    }
     terminal = set(states["completed"]) | set(states["blocked"]) | set(states["skipped"])
     expected_resolutions_by_bucket = {
         **{pr_id: {"COMPLETED_SUCCESS"} for pr_id in states["completed"]},
@@ -393,13 +498,41 @@ def validate_long_horizon_rescue_slice(
             "strict rescue slice must contain exactly PR-119..PR-166; "
             f"missing={sorted(expected_ids - actual_rescue_ids)}"
         )
-    leaked_advocate = sorted(actual_ids & advocate_ids)
-    if leaked_advocate:
-        raise ValueError(f"PR-167 owns advocate intake; premature cards: {leaked_advocate}")
-    if len(info.ids) != RESCUE_TOTAL_CARD_COUNT:
+    actual_advocate_ids = actual_ids & advocate_ids
+    if actual_advocate_ids and actual_advocate_ids != advocate_ids:
         raise ValueError(
-            f"strict rescue slice expects {RESCUE_TOTAL_CARD_COUNT} total cards, "
-            f"found {len(info.ids)}"
+            "PR-167 advocate intake must be atomic; "
+            f"missing={sorted(advocate_ids - actual_advocate_ids)}"
+        )
+    expected_total = (
+        RESCUE_WITH_ADVOCATE_CARD_COUNT
+        if actual_advocate_ids
+        else RESCUE_PRE_ADVOCATE_CARD_COUNT
+    )
+    if len(info.ids) != expected_total:
+        raise ValueError(
+            f"strict rescue slice expects {expected_total} total cards, found {len(info.ids)}"
+        )
+
+    if actual_advocate_ids:
+        if ADVOCATE_TRANSACTION_JOURNAL.exists():
+            raise ValueError(
+                "PR-167 advocate intake has an uncommitted write journal"
+            )
+        if not ADVOCATE_RECEIPT.is_file():
+            raise ValueError("PR-167 advocate intake requires its pre-intake semantic receipt")
+        try:
+            receipt = json.loads(ADVOCATE_RECEIPT.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError) as exc:
+            raise ValueError(f"PR-167 semantic receipt is unreadable: {exc}") from exc
+        validate_pre_intake_receipt(
+            receipt,
+            backlog=data,
+            status=status,
+            expected_baseline_commit="fe7abb6aa01fdfaf0440956bd8727ddc9e1be8e7",
+            expected_backlog_sha256="9693706872a5e13514c0eb3e4ca9dab9a281359edac4cda9877d26dae8c68f07",
+            expected_status_sha256="fcd81fc2d904ff8ed360f1055688bb122b4006ea1ca0e570c0b39cf6486f8759",
+            expected_roadmap_sha256="caaab4b7255181e75093a5b662f4febf278330db07dad7cdce65e44c6587b361",
         )
 
     cards = {card["id"]: card for card in info.prs}
@@ -446,10 +579,12 @@ def validate_long_horizon_rescue_slice(
             raise ValueError(f"{pr_id} has invalid versioned claim level: {claim_level}")
         if card.get("scientific_status_on_intake") != "OPEN":
             raise ValueError(f"{pr_id} scientific status must remain OPEN on intake")
-        expected_activation = "DORMANT_EXTERNAL" if int(pr_id[-3:]) >= 159 else "PENDING"
+        expected_activation = (
+            "DORMANT_EXTERNAL" if int(pr_id[-3:]) >= 159 else "PENDING"
+        )
         if card.get("activation_state") != expected_activation:
             raise ValueError(
-                f"{pr_id} activation_state must be {expected_activation}, "
+                f"{pr_id} activation_state must remain {expected_activation}, "
                 f"found {card.get('activation_state')!r}"
             )
         for field in RESCUE_SEMANTIC_CLAIM_FIELDS:
@@ -517,6 +652,121 @@ def validate_long_horizon_rescue_slice(
         "level": "C2",
     }:
         raise ValueError("PR-150 cannot retain the original joint PR3+PR4 C3 ceiling")
+
+    if actual_advocate_ids:
+        for pr_id in _pr_range(ADVOCATE_FIRST_PR, ADVOCATE_LAST_PR):
+            card = cards[pr_id]
+            missing_fields = sorted(ADVOCATE_REQUIRED_FIELDS - set(card))
+            if missing_fields:
+                raise ValueError(f"{pr_id} missing advocate-card fields: {missing_fields}")
+            expected_depends, expected_lane, expected_activation = ADVOCATE_CARD_CONTRACTS[pr_id]
+            if card.get("depends") != expected_depends:
+                raise ValueError(
+                    f"{pr_id} dependencies drifted: {card.get('depends')!r} != {expected_depends!r}"
+                )
+            contracts = card.get("dependency_contracts")
+            if not isinstance(contracts, list) or [
+                contract.get("upstream_id") for contract in contracts if isinstance(contract, dict)
+            ] != expected_depends:
+                raise ValueError(f"{pr_id} typed dependency projection drifted")
+            expected_modes = [
+                "requires_terminal_receipt" if pr_id == "PR-178" and dep == "PR-151" else "requires_success"
+                for dep in expected_depends
+            ]
+            actual_modes = [
+                contract.get("mode") for contract in contracts if isinstance(contract, dict)
+            ]
+            if actual_modes != expected_modes:
+                raise ValueError(f"{pr_id} typed dependency modes drifted")
+            if card.get("execution_lane") != expected_lane:
+                raise ValueError(f"{pr_id} execution_lane must be {expected_lane}")
+            if card.get("activation_state") != expected_activation:
+                raise ValueError(f"{pr_id} activation_state must be {expected_activation}")
+            expected_artifact_mode = (
+                "hypothesis_only"
+                if pr_id in ADVOCATE_HYPOTHESIS_ONLY_ARTIFACTS
+                else "standard_internal"
+            )
+            if card.get("scientific_artifact_mode") != expected_artifact_mode:
+                raise ValueError(
+                    f"{pr_id} scientific_artifact_mode must be {expected_artifact_mode}"
+                )
+            if pr_id in ADVOCATE_REGISTERED_NOT_SCHEDULED:
+                expected_authorization = "REGISTERED_NOT_SCHEDULED"
+            elif pr_id == "PR-183":
+                expected_authorization = "NATIVE_BLOCKED"
+            elif pr_id in ADVOCATE_EXPLICIT_APPROVED_SEQUENCE:
+                expected_authorization = "EXPLICIT_APPROVED_SEQUENCE"
+            else:
+                expected_authorization = "DAG_SCHEDULABLE"
+            if card.get("execution_authorization") != expected_authorization:
+                raise ValueError(
+                    f"{pr_id} execution_authorization must be {expected_authorization}"
+                )
+            if pr_id in ADVOCATE_TITLE_OVERRIDES and card.get("title") != ADVOCATE_TITLE_OVERRIDES[pr_id]:
+                raise ValueError(f"{pr_id} claim-safe title override drifted")
+            if card.get("public_use") is not False or card.get("spec_first_required") is not True:
+                raise ValueError(f"{pr_id} must remain spec-first and public_use=false on intake")
+            if expected_lane not in ADVOCATE_EXECUTION_LANES:
+                raise ValueError(f"{pr_id} has unknown execution lane")
+            if expected_activation not in ADVOCATE_ACTIVATION_STATES:
+                raise ValueError(f"{pr_id} has unknown activation state")
+            for field in RESCUE_SEMANTIC_CLAIM_FIELDS:
+                for prose in _iter_strings(card.get(field)):
+                    match = BARE_ACTIVE_CLAIM_LEVEL_RE.search(prose)
+                    if match:
+                        raise ValueError(
+                            f"{pr_id} {field} contains unqualified roadmap claim level {match.group(0)!r}"
+                        )
+
+        for pr_id in ("PR-168", "PR-169", "PR-170", "PR-171", "PR-175", "PR-182"):
+            cas = cards[pr_id].get("cas_contract")
+            if cas != {
+                "schema": "htt.cas_contract.v2",
+                "required_axes": [
+                    "wolfram_xact",
+                    "sympy_high_precision",
+                    "sage_singular",
+                    "lean_mathlib",
+                ],
+                "missing_axis_outcome": "CAS_BLOCKED",
+                "result_blinding": "required_until_adjudication",
+            }:
+                raise ValueError(f"{pr_id} must preregister the blind four-axis CAS contract")
+            theory_prose = " ".join(_iter_strings(cards[pr_id])).lower()
+            if any(
+                weak in theory_prose
+                for weak in ("dual-engine", "two-engine", "two engine", "두 engine")
+            ):
+                raise ValueError(
+                    f"{pr_id} exact-math acceptance prose collapses the four-axis contract"
+                )
+
+        if "every canonical PR-000--166 card (expected count 113)" not in " ".join(
+            _iter_strings(cards["PR-167"])
+        ):
+            raise ValueError("PR-167 must preserve the exact 113-card pre-intake prefix")
+
+        required_claim_phrases = {
+            "PR-173": "numerically unresolved at the current Monte Carlo budget",
+            "PR-176": "structurally distinct from monopole leakage",
+            "PR-177": "ACT-release-simulation-conditional modulation candidate or null",
+            "PR-179": "Selection/systematics-conditional raw-catalogue directional statistic",
+            "PR-180": "consistency result",
+        }
+        for pr_id, phrase in required_claim_phrases.items():
+            if phrase.lower() not in " ".join(_iter_strings(cards[pr_id])).lower():
+                raise ValueError(f"{pr_id} is missing its required downclaim phrase: {phrase}")
+
+        external = cards["PR-183"].get("external_dependency_contracts")
+        if external != [
+            {
+                "upstream_id": "AUTHENTICATED_NATIVE_DELIVERY",
+                "mode": "requires_authenticated_external_receipt",
+                "scope": "native_low_ell_delivery",
+            }
+        ]:
+            raise ValueError("PR-183 must retain the typed authenticated native-delivery gate")
 
     if status is not None:
         _validate_rescue_status(status, info)

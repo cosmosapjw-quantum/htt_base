@@ -15,7 +15,10 @@ from typing import Any
 
 import yaml
 
-from validate_pr_dag import DagInfo, load_yaml, validate_backlog
+if __package__:
+    from .validate_pr_dag import DagInfo, load_yaml, validate_backlog
+else:
+    from validate_pr_dag import DagInfo, load_yaml, validate_backlog
 
 _REPO_ROOT = Path(__file__).resolve().parents[2]
 _HTT_SRC = _REPO_ROOT / "htt" / "src"
@@ -42,6 +45,7 @@ _TERMINAL_EXECUTION_RESOLUTIONS = frozenset(
         "ABANDONED_WITH_RECEIPT",
     }
 )
+_BACKGROUND_ACQUISITION_ALLOWLIST = frozenset({"PR-151"})
 _DEPENDENCY_MODES = frozenset(
     {
         "requires_success",
@@ -425,6 +429,7 @@ def validate_status(
     skipped_list = _as_id_list(status, "skipped")
     pending_list = _as_id_list(status, "pending")
     dormant_list = _as_id_list(status, "dormant_external")
+    background_list = _as_id_list(status, "background_in_progress")
     idset = set(info.ids)
 
     unknown_completed = sorted(set(completed_list) - idset)
@@ -447,11 +452,18 @@ def validate_status(
     if unknown_dormant:
         raise ValueError(f"unknown dormant_external PR ids: {unknown_dormant}")
 
+    unknown_background = sorted(set(background_list) - idset)
+    if unknown_background:
+        raise ValueError(
+            f"unknown background_in_progress PR ids: {unknown_background}"
+        )
+
     completed = set(completed_list)
     blocked = set(blocked_list)
     skipped = set(skipped_list)
     pending = set(pending_list)
     dormant = set(dormant_list)
+    background = set(background_list)
     overlap = sorted(completed & blocked)
     if overlap:
         raise ValueError(f"PR ids cannot be both completed and blocked: {overlap}")
@@ -482,6 +494,7 @@ def validate_status(
         "skipped": skipped,
         "pending": pending,
         "dormant_external": dormant,
+        "background_in_progress": background,
     }
     membership: dict[str, list[str]] = {}
     for state_name, values in state_sets.items():
@@ -501,6 +514,37 @@ def validate_status(
         raise ValueError(
             f"status orchestration coverage missing PR-119+ ids: {missing_managed}"
         )
+
+    cards = {card["id"]: card for card in info.prs}
+    dormant_expected = {
+        pr_id
+        for pr_id, card in cards.items()
+        if card.get("activation_state") in {"DORMANT_EXTERNAL", "NEEDS_NATIVE"}
+    }
+    if dormant != dormant_expected:
+        raise ValueError(
+            "dormant_external must follow typed activation_state: "
+            f"missing={sorted(dormant_expected - dormant)}, "
+            f"unexpected={sorted(dormant - dormant_expected)}"
+        )
+
+    lanes = status.get("execution_lane", {}) or {}
+    if not isinstance(lanes, dict) or not all(
+        isinstance(pr_id, str) and lane in {
+            "defensible",
+            "hypothesis_only",
+            "needs_native",
+        }
+        for pr_id, lane in lanes.items()
+    ):
+        raise ValueError("status execution_lane must contain only typed lane values")
+    card_lanes = {
+        pr_id: card["execution_lane"]
+        for pr_id, card in cards.items()
+        if "execution_lane" in card
+    }
+    if lanes != card_lanes:
+        raise ValueError("status execution_lane must exactly match advocate card lanes")
 
     resolutions = status.get("execution_resolutions", {}) or {}
     if not isinstance(resolutions, dict):
@@ -550,6 +594,72 @@ def validate_status(
         raise ValueError("status external_events must be a mapping")
     if not all(isinstance(event_id, str) for event_id in external_events):
         raise ValueError("status external_events keys must be strings")
+
+    background_contracts = status.get("background_execution_contracts", {}) or {}
+    if not isinstance(background_contracts, dict):
+        raise ValueError("status background_execution_contracts must be a mapping")
+    if set(background_contracts) != background:
+        raise ValueError(
+            "background_execution_contracts must exactly cover background_in_progress"
+        )
+    expected_background_contract = {
+        "kind": "acquisition",
+        "allowed_phase": "acquire",
+        "partial_scientific_use": "forbidden",
+    }
+    malformed_background = sorted(
+        pr_id
+        for pr_id, contract in background_contracts.items()
+        if contract != expected_background_contract
+    )
+    if malformed_background:
+        raise ValueError(
+            "background acquisition contract is malformed: "
+            f"{malformed_background}"
+        )
+    unauthorized_background = sorted(
+        background - _BACKGROUND_ACQUISITION_ALLOWLIST
+    )
+    if unauthorized_background:
+        raise ValueError(
+            "background_in_progress lacks PR-167 acquisition authorization: "
+            f"{unauthorized_background}"
+        )
+
+    active_ids = ([in_progress] if in_progress is not None else []) + sorted(background)
+    unauthorized_active: list[str] = []
+    for pr_id in active_ids:
+        card = cards[pr_id]
+        lane = card.get("execution_lane", "defensible")
+        authorization = card.get("execution_authorization", "DAG_SCHEDULABLE")
+        if lane != "defensible" or authorization in {
+            "REGISTERED_NOT_SCHEDULED",
+            "NATIVE_BLOCKED",
+        }:
+            unauthorized_active.append(
+                f"{pr_id}(lane={lane},authorization={authorization})"
+            )
+    if unauthorized_active:
+        raise ValueError(
+            "active PRs must be defensible and execution-authorized: "
+            + ", ".join(unauthorized_active)
+        )
+    dependency_blocked_active = [
+        pr_id
+        for pr_id in active_ids
+        if not _card_dependencies_satisfied(
+            info,
+            pr_id,
+            completed,
+            status,
+            verification_context=verification_context,
+        )
+    ]
+    if dependency_blocked_active:
+        raise ValueError(
+            "active PRs have incomplete dependency contracts: "
+            f"{dependency_blocked_active}"
+        )
 
     incomplete_dependencies = [
         f"{contract['upstream_id']}->{pr_id}"
@@ -726,14 +836,19 @@ def build_report(
     status = status or {}
     dormant = set(_as_id_list(status, "dormant_external"))
     pending = set(_as_id_list(status, "pending"))
+    background = set(_as_id_list(status, "background_in_progress"))
     in_progress = status.get("in_progress")
-    unblocked = [
+    lanes = status.get("execution_lane", {}) or {}
+    if not isinstance(lanes, dict):
+        raise ValueError("status execution_lane must be a mapping")
+    unblocked_candidates = [
         pr_id
         for pr_id in info.order
         if pr_id not in completed
         and pr_id not in blocked
         and pr_id not in skipped
         and pr_id not in dormant
+        and pr_id not in background
         and pr_id != in_progress
         and _card_dependencies_satisfied(
             info,
@@ -742,6 +857,16 @@ def build_report(
             status,
             verification_context=verification_context,
         )
+    ]
+    unblocked = [
+        pr_id
+        for pr_id in unblocked_candidates
+        if lanes.get(pr_id, "defensible") == "defensible"
+    ]
+    hypothesis_only_unblocked = [
+        pr_id
+        for pr_id in unblocked_candidates
+        if lanes.get(pr_id) == "hypothesis_only"
     ]
     critical_path = longest_critical_path(info)
     critical_done = sum(1 for pr_id in critical_path if pr_id in completed)
@@ -763,6 +888,12 @@ def build_report(
         "pending_count": len(pending),
         "dormant_external": [pr_id for pr_id in info.order if pr_id in dormant],
         "dormant_external_count": len(dormant),
+        "in_progress": in_progress,
+        "background_in_progress": [
+            pr_id for pr_id in info.order if pr_id in background
+        ],
+        "background_in_progress_count": len(background),
+        "execution_lane": dict(lanes),
         "execution_resolved_count": len(status.get("execution_resolutions", {}) or {}),
         "percent_complete": round(100 * len(completed) / len(info.ids), 2) if info.ids else 0.0,
         "dependency_weighted_percent_complete": dependency_weighted_percent(info, completed),
@@ -773,6 +904,7 @@ def build_report(
         if critical_path
         else 0.0,
         "unblocked_next": unblocked[:10],
+        "hypothesis_only_unblocked": hypothesis_only_unblocked[:10],
         "current_checkpoint_at": len(completed) if checkpoint_due else None,
         "next_checkpoint_at": next_checkpoint,
         "checkpoint_due": checkpoint_due,
@@ -901,7 +1033,10 @@ def _checkpoint_markdown(report: dict[str, Any], state: dict[str, Any]) -> str:
     blocked = ", ".join(report["blocked"]) or "none"
     skipped = ", ".join(report["skipped"]) or "none"
     dormant = ", ".join(report["dormant_external"]) or "none"
+    foreground = report.get("in_progress") or "none"
+    background = ", ".join(report.get("background_in_progress", [])) or "none"
     unblocked_next = ", ".join(report["unblocked_next"]) or "none"
+    hypothesis_only = ", ".join(report.get("hypothesis_only_unblocked", [])) or "none"
     critical_path = " -> ".join(report["critical_path"]) or "none"
     replan_text = "yes" if state["replan_required"] else "no"
     lines = [
@@ -920,7 +1055,10 @@ def _checkpoint_markdown(report: dict[str, Any], state: dict[str, Any]) -> str:
         f"- Blocked PRs: {blocked}",
         f"- Skipped PRs: {skipped}",
         f"- Dormant external PRs: {dormant}",
+        f"- Foreground in progress: {foreground}",
+        f"- Background in progress: {background}",
         f"- Unblocked next: {unblocked_next}",
+        f"- Hypothesis-only unblocked (not auto-scheduled): {hypothesis_only}",
         f"- Replan required: {replan_text}",
         f"- Replan reason: {state['replan_reason']}",
         "",
@@ -944,7 +1082,10 @@ def _scoreboard_markdown(report: dict[str, Any]) -> str:
     blocked = ", ".join(report["blocked"]) or "none"
     skipped = ", ".join(report["skipped"]) or "none"
     dormant = ", ".join(report["dormant_external"]) or "none"
+    foreground = report.get("in_progress") or "none"
+    background = ", ".join(report.get("background_in_progress", [])) or "none"
     unblocked_next = ", ".join(report["unblocked_next"]) or "none"
+    hypothesis_only = ", ".join(report.get("hypothesis_only_unblocked", [])) or "none"
     critical_path = " -> ".join(report["critical_path"]) or "none"
     if report["checkpoint_due"] and report.get("checkpoint_artifact"):
         checkpoint_due = f"yes; satisfied by {report['checkpoint_artifact']}"
@@ -968,7 +1109,10 @@ def _scoreboard_markdown(report: dict[str, Any]) -> str:
         f"- Blocked PRs: {blocked}",
         f"- Skipped PRs: {skipped}",
         f"- Dormant external PRs: {dormant}",
+        f"- Foreground in progress: {foreground}",
+        f"- Background in progress: {background}",
         f"- Unblocked next: {unblocked_next}",
+        f"- Hypothesis-only unblocked (not auto-scheduled): {hypothesis_only}",
         f"- Checkpoint due: {checkpoint_due}",
         f"- Next checkpoint at: {report['next_checkpoint_at']}",
         f"- Replan required: {replan_required}",
@@ -1082,6 +1226,10 @@ def main(argv: list[str] | None = None) -> int:
             f"({report['critical_path_percent_complete']}%)",
         )
         print("Unblocked next:", ", ".join(report["unblocked_next"]) or "none")
+        print(
+            "Hypothesis-only unblocked:",
+            ", ".join(report.get("hypothesis_only_unblocked", [])) or "none",
+        )
         print("Skipped:", ", ".join(report["skipped"]) or "none")
         print("Checkpoint due:", report["checkpoint_due"])
         if checkpoint_path is not None:

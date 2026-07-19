@@ -6,6 +6,7 @@ import sys
 from pathlib import Path
 
 import yaml
+import pytest
 
 from common.status_snapshot import (
     build_status_bundle,
@@ -208,6 +209,155 @@ def test_status_bundle_preserves_orthogonal_orchestration_states(
     ):
         assert required_metadata in matrix
     validate_status_matrix_matches_snapshot(matrix, bundle.status_snapshot_payload())
+
+
+def test_status_bundle_tracks_background_work_and_rejects_overlap(
+    tmp_path: Path,
+) -> None:
+    backlog_path, status_path = _write_fixture(tmp_path)
+    status = yaml.safe_load(status_path.read_text(encoding="utf-8"))
+    status["background_in_progress"] = ["PR-099"]
+    status["background_execution_contracts"] = {
+        "PR-099": {
+            "kind": "acquisition",
+            "allowed_phase": "acquire",
+            "partial_scientific_use": "forbidden",
+        }
+    }
+    status_path.write_text(yaml.safe_dump(status), encoding="utf-8")
+
+    bundle = build_status_bundle(
+        backlog_path=backlog_path,
+        status_path=status_path,
+        source_commit="abc123",
+    )
+    states = {
+        row["artifact_id"]: row["orchestration_state"] for row in bundle.status_rows
+    }
+    assert states["codex_dag.PR-099"] == "background_in_progress"
+    assert bundle.metadata["background_in_progress_prs"] == 1
+    assert "| Background in progress | 1 |" in render_status_matrix(bundle)
+
+    status["completed"].append("PR-099")
+    status_path.write_text(yaml.safe_dump(status), encoding="utf-8")
+    with pytest.raises(ValueError, match="orchestration states overlap"):
+        build_status_bundle(
+            backlog_path=backlog_path,
+            status_path=status_path,
+            source_commit="abc123",
+        )
+
+
+def test_status_bundle_rejects_duplicate_background_entries(tmp_path: Path) -> None:
+    backlog_path, status_path = _write_fixture(tmp_path)
+    status = yaml.safe_load(status_path.read_text(encoding="utf-8"))
+    status["background_in_progress"] = ["PR-099", "PR-099"]
+    status["background_execution_contracts"] = {
+        "PR-099": {
+            "kind": "acquisition",
+            "allowed_phase": "acquire",
+            "partial_scientific_use": "forbidden",
+        }
+    }
+    status_path.write_text(yaml.safe_dump(status), encoding="utf-8")
+
+    with pytest.raises(ValueError, match="duplicate PR ids"):
+        build_status_bundle(
+            backlog_path=backlog_path,
+            status_path=status_path,
+            source_commit="abc123",
+        )
+
+
+@pytest.mark.parametrize("field", ["in_progress", "background_in_progress"])
+def test_status_bundle_rejects_unknown_active_ids(
+    tmp_path: Path, field: str
+) -> None:
+    backlog_path, status_path = _write_fixture(tmp_path)
+    status = yaml.safe_load(status_path.read_text(encoding="utf-8"))
+    if field == "in_progress":
+        status["in_progress"] = "PR-999"
+    else:
+        status["background_in_progress"] = ["PR-999"]
+        status["background_execution_contracts"] = {
+            "PR-999": {
+                "kind": "acquisition",
+                "allowed_phase": "acquire",
+                "partial_scientific_use": "forbidden",
+            }
+        }
+    status_path.write_text(yaml.safe_dump(status), encoding="utf-8")
+
+    with pytest.raises(ValueError, match="unknown PR ids"):
+        build_status_bundle(
+            backlog_path=backlog_path,
+            status_path=status_path,
+            source_commit="abc123",
+        )
+
+
+def _write_rescue_fixture(tmp_path: Path) -> tuple[Path, Path]:
+    backlog_path = tmp_path / "pr_backlog.yaml"
+    status_path = tmp_path / "pr_status.yaml"
+    backlog_path.write_bytes(
+        (REPO_ROOT / "docs/codex_handoff/pr_backlog.yaml").read_bytes()
+    )
+    status_path.write_bytes(
+        (REPO_ROOT / "docs/codex_handoff/pr_status.yaml").read_bytes()
+    )
+    return backlog_path, status_path
+
+
+def test_status_bundle_rejects_execution_lane_projection_drift(
+    tmp_path: Path,
+) -> None:
+    backlog_path, status_path = _write_rescue_fixture(tmp_path)
+    status = yaml.safe_load(status_path.read_text(encoding="utf-8"))
+    status["execution_lane"]["PR-171"] = "hypothesis_only"
+    status_path.write_text(yaml.safe_dump(status), encoding="utf-8")
+
+    with pytest.raises(ValueError, match="exactly match typed card lanes"):
+        build_status_bundle(
+            backlog_path=backlog_path,
+            status_path=status_path,
+            source_commit="abc123",
+        )
+
+
+def test_status_bundle_rejects_native_activation_dormancy_drift(
+    tmp_path: Path,
+) -> None:
+    backlog_path, status_path = _write_rescue_fixture(tmp_path)
+    backlog = yaml.safe_load(backlog_path.read_text(encoding="utf-8"))
+    pr183 = next(card for card in backlog["prs"] if card["id"] == "PR-183")
+    pr183["activation_state"] = "PENDING"
+    backlog_path.write_text(yaml.safe_dump(backlog), encoding="utf-8")
+
+    with pytest.raises(ValueError, match="match typed activation_state"):
+        build_status_bundle(
+            backlog_path=backlog_path,
+            status_path=status_path,
+            source_commit="abc123",
+        )
+
+
+def test_status_bundle_rejects_unknown_malformed_execution_resolution(
+    tmp_path: Path,
+) -> None:
+    backlog_path, status_path = _write_rescue_fixture(tmp_path)
+    status = yaml.safe_load(status_path.read_text(encoding="utf-8"))
+    status["execution_resolutions"]["PR-999"] = {
+        "resolution": "NOT_A_RESOLUTION",
+        "receipt": None,
+    }
+    status_path.write_text(yaml.safe_dump(status), encoding="utf-8")
+
+    with pytest.raises(ValueError, match="unknown PR ids"):
+        build_status_bundle(
+            backlog_path=backlog_path,
+            status_path=status_path,
+            source_commit="abc123",
+        )
 
 
 def test_status_bundle_uses_gate_outputs_for_artifact_promotion_axes(
