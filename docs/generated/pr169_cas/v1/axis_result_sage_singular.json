@@ -1,0 +1,93 @@
+{
+  "axis": "sage_singular",
+  "checks": {
+    "full_ceiling_attained": true,
+    "full_ceiling_upper_bound_certificate": true,
+    "missing_physical_receipt_blocks_promotion": true,
+    "nilsson_symbol_type_distinct": true,
+    "sign_mutation_detected": true,
+    "signed_projection_mutation_detected": false,
+    "slice_ceiling_attained": true,
+    "slice_ceiling_upper_bound_certificate": true,
+    "uncapped_family_exact": true
+  },
+  "commands": [
+    {
+      "cmd": "sage /home/cosmosapjw/Dropbox/bianchi/htt_base/sage/pr169_unsigned_leakage_axis.sage",
+      "cwd": ".",
+      "exit": 1
+    }
+  ],
+  "completed_at": "2026-07-19T19:50:25+00:00",
+  "computed": {
+    "fixture_B": "3/10",
+    "full_ceiling_coefficient": "4",
+    "full_fixture_M_unsigned": "6/5",
+    "full_fixture_x_C": "0",
+    "physical_bundle": "MISSING",
+    "projected_full_M_unsigned": "6/5",
+    "projected_full_x_C": "0",
+    "sign_mutant_slice_x_C": "3/5",
+    "slice_ceiling_coefficient": "2",
+    "slice_fixture_M_unsigned": "3/5",
+    "slice_fixture_x_C": "0",
+    "symbol_bridge": "REJECTED_TYPED_MISMATCH",
+    "uncapped_family_M_over_a": "2",
+    "uncapped_family_x_C": "0"
+  },
+  "contract_id": "CAS-PR169-UNSIGNED-LEAKAGE-001",
+  "contract_sha256": "b4b2cf6a247209ff22406b7c1f493387934b9e4d2b2824b396a8f3fbc23c2781",
+  "counterexample": {
+    "failures": [
+      "axis command returned nonzero",
+      "one or more registered exact checks failed",
+      "axis canonical values differ from contract",
+      "registered fixture receipt is false",
+      "axis all_pass is not true"
+    ]
+  },
+  "domain_assumption_diff": [],
+  "evidence_class": "exact",
+  "fixture_matches": false,
+  "schema_version": 1,
+  "sibling_results_read": [],
+  "source_output_hashes": [
+    {
+      "path": "sage/pr169_unsigned_leakage_axis.sage",
+      "sha256": "1b6c5229360c9e6b09f07be402610810db9e48f1276d256ff234524b4b8c72e1"
+    }
+  ],
+  "status": "FAIL",
+  "tool_versions": {
+    "reported": "SageMath version 10.9, Release Date: 2026-05-04",
+    "singular": "44100",
+    "xact_loaded": null
+  },
+  "transcript_tail": "{\"all_pass\": false, \"checks\": {\"full_ceiling_attained\": true, \"full_ceiling_upper_bound_certificate\": true, \"missing_physical_receipt_blocks_promotion\": true, \"nilsson_symbol_type_distinct\": true, \"sign_mutation_detected\": true, \"signed_projection_mutation_detected\": false, \"slice_ceiling_attained\": true, \"slice_ceiling_upper_bound_certificate\": true, \"uncapped_family_exact\": true}, \"computed\": {\"fixture_B\": \"3/10\", \"full_ceiling_coefficient\": \"4\", \"full_fixture_M_unsigned\": \"6/5\", \"full_fixture_x_C\": \"0\", \"physical_bundle\": \"MISSING\", \"projected_full_M_unsigned\": \"6/5\", \"projected_full_x_C\": \"0\", \"sign_mutant_slice_x_C\": \"3/5\", \"slice_ceiling_coefficient\": \"2\", \"slice_fixture_M_unsigned\": \"3/5\", \"slice_fixture_x_C\": \"0\", \"symbol_bridge\": \"REJECTED_TYPED_MISMATCH\", \"uncapped_family_M_over_a\": \"2\", \"uncapped_family_x_C\": \"0\"}, \"engine\": \"sage_singular\", \"engine_version\": \"SageMath version 10.9, Release Date: 2026-05-04\", \"fixture_matches\": false, \"singular_version\": \"44100\"}\n/home/cosmosapjw/Dropbox/bianchi/htt_base/sage/pr169_unsigned_leakage_axis.sage.py:74: DeprecationWarning: Use sage.version.version instead.\nSee https://github.com/sagemath/sage/issues/39015 for details.\n  \"engine_version\": version(),\nTraceback (most recent call last):\n  File \"/home/cosmosapjw/Dropbox/bianchi/htt_base/sage/pr169_unsigned_leakage_axis.sage.py\", line 83, in <module>\n    raise RuntimeError(\"one or more exact PR-169 Sage/Singular checks failed\")\nRuntimeError: one or more exact PR-169 Sage/Singular checks failed\n",
+  "verified_input_hashes": [
+    {
+      "path": "docs/research_program/long_horizon_rescue/pr169_spec.yaml",
+      "sha256": "966fedf2f0bd3831bc1065d0d0da1a73033638d0a98affa7f83d5f1bdc4f52e1"
+    },
+    {
+      "path": "docs/research_program/long_horizon_rescue/pr169_primary_source_provenance.yaml",
+      "sha256": "978437e011346c396a2ad3b4f924f91d1c21afa89529576377c0f6f86530f668"
+    },
+    {
+      "path": "docs/research_program/long_horizon_rescue/pr127_spec.yaml",
+      "sha256": "d6ae08f5cf6fe23de25f3204baa5b628346a71a846a0b9fff0880ab3771506c9"
+    },
+    {
+      "path": "htt/src/common/egs_oneway.py",
+      "sha256": "db8f631df75833cfbbfc27cd7253f5f25b960666485907457186f023d0556554"
+    },
+    {
+      "path": "htt/src/common/graded_nonid.py",
+      "sha256": "ad1731dd2eccdd7a9f555c5d38726e5ac70e66148dbb7a23a788d9e4f8e2302b"
+    },
+    {
+      "path": "htt/src/common/unsigned_isotropy_leakage.py",
+      "sha256": "6705520dca8880e1ed49dc516d24d99e8c21968969e3de8a7120012731d6363a"
+    }
+  ]
+}

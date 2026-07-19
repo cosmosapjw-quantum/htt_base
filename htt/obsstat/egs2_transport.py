@@ -9,10 +9,10 @@ depth gap G_F(z). Steady Pi -> sigma relaxes to a constant -> flat G_F;
 depth-growing Pi(z) -> growing sigma -> depth-dependent G_F. This upgrades NT-B3's
 "attribution" to a *mechanism*.
 
-NT2-B3 (joint blind sector no-go). The vorticity term W^2_std in x_C is
-unconstrained by BOTH observational channels the program uses, simultaneously:
-(i) CMB temperature multipoles (to EGS order) do not bound the curl/magnetic-Weyl
-sector (H3/Weyl loophole) -> sensitivity 0; (ii) radial peculiar-velocity data
+NT2-B3 (registered-map joint blind sector). The vorticity term V^2_std (legacy
+label W^2_std) in x_C has zero support in BOTH declared leading-order channels:
+(i) the registered CMB-temperature response column is zero at this order; this
+is not a Weyl-curvature statement or an all-order transfer theorem; (ii) radial peculiar-velocity data
 carry no vorticity, since n^a Omega_ab n^b = 0 exactly for any antisymmetric Omega
 (PAPER-A A-radial-novortex). The union closes both channels: no estimator on
 CMB-temperature + radial velocities alone can constrain the comparator's vorticity.
@@ -80,8 +80,9 @@ def sourced_depth_transport(z_grid=None, H: float = 1.0, sigma0: float = 1e-3,
 
 
 def cmb_temperature_vorticity_sensitivity(W2: float) -> float:
-    """NT2-B3 (i): CMB temperature multipoles do not source on the curl/
-    magnetic-Weyl sector at EGS order (Weyl loophole) -> sensitivity 0."""
+    """NT2-B3 (i): declared leading-order CMB-temperature vorticity
+    support is zero. This registered response-map value is not a Weyl or
+    all-order transfer claim."""
     return 0.0
 
 

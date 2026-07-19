@@ -1,0 +1,1736 @@
+{
+  "allowed_use": "internal exact comparator algebra and claim-firewall evidence",
+  "artifact_mode": "exact_comparator_result",
+  "caveats": [
+    "The result is exact only on the declared PR-126/127 comparator carrier.",
+    "No Einstein-matter solution or physical admissibility is established.",
+    "The historical W2 label denotes normalized vorticity, not Nilsson normalized Weyl curvature.",
+    "The artifact is internal and non-public before native-solver validation."
+  ],
+  "claim_level": {
+    "level": "C2",
+    "scheme": "roadmap_rescue_v1"
+  },
+  "claim_tier": "conditional",
+  "config_hash": "966fedf2f0bd3831bc1065d0d0da1a73033638d0a98affa7f83d5f1bdc4f52e1",
+  "covariance_status": "not_applicable_exact_theory",
+  "excluded_as_non_active": [
+    "docs/audits/**",
+    "docs/PR_DELTAS/**",
+    "docs/harness append-only validation history",
+    "legacy/**",
+    "build caches and bytecode"
+  ],
+  "forbidden_use": [
+    "physical cosmological witness without complete admissibility receipts",
+    "FLRW or isotropy certificate",
+    "Bianchi family identification",
+    "native-transfer validation"
+  ],
+  "generating_command": "venv/bin/python -B scripts/codex_harness/run_pr169_unsigned_leakage.py --write",
+  "git_commit": "5b3c96175c226764b3fb7ed9e181e3f3330e1830",
+  "implementation_scope": "common",
+  "input_hashes": {
+    "docs/codex_handoff/pr_backlog.yaml": "256cf1406cddf271d8b197dbf39e1ae1486b18f22c30e4551de40b55e2cc502d",
+    "docs/generated/egs_results_table_v9.json": "05c50f0c69848581bf61f248e67b42d0f076380427cf108821acf4cb23a7b7c3",
+    "docs/generated/egs_results_table_v9.md": "86788e59f23582e15a3a9bce3f0e78dbdc5f3f7ada057bffd770416236360385",
+    "docs/generated/pr167_artifact_manifest.json": "9000d47f1682ea3464c306457cd8018bfb82f3d26f7e37977612a08caeed8323",
+    "docs/generated/pr169_cas/CAS_CONTRACT_PR169_UNSIGNED_LEAKAGE.json": "b4b2cf6a247209ff22406b7c1f493387934b9e4d2b2824b396a8f3fbc23c2781",
+    "docs/generated/pr169_cas/CAS_CONTRACT_PR169_UNSIGNED_LEAKAGE_V2.json": "963e19b76eec31c74c27c0b014a80484f798528ab5c7cf5dab067f50916b5aad",
+    "docs/generated/pr169_cas/adjudication_v1.json": "df036c64f2090531a75192897759b7a7f72d15d493b9464b50132afe8ef96e18",
+    "docs/generated/pr169_cas/adjudication_v2.json": "24b167dfae835c735aec98164db1f6b69aaae075326a99f04920ab349ace94a3",
+    "docs/generated/pr169_cas/v1/axis_result_lean.json": "f905fef98a3a3a2ef19bce8f756b13210103f59d8ccb58334b6f5c37f3e89457",
+    "docs/generated/pr169_cas/v1/axis_result_sage_singular.json": "11939012fdb1c4e8c3d83b594ad4f95543591676a8db7f15a7b7f6fba54dd3d5",
+    "docs/generated/pr169_cas/v1/axis_result_sympy.json": "c6e8e3a308d4505ca0cc60f38c0a562059173b218cb80ffbfb7c799f15c5f9c5",
+    "docs/generated/pr169_cas/v1/axis_result_wolfram_xact.json": "6eda64f55af5cee3e0f3a9af0a91cbff4f9504ca1186ff0edd1f759d83e7b237",
+    "docs/generated/pr169_cas/v2/axis_result_lean.json": "18e8c1fbee7126a8c63c175713f7b7efe070487b1ea24f6a076e7b99742388fd",
+    "docs/generated/pr169_cas/v2/axis_result_sage_singular.json": "6353c2461066d9648789fbec0bb3e036d41640266c28481063b80f092a6b5835",
+    "docs/generated/pr169_cas/v2/axis_result_sympy.json": "fc82049ef8097e79fdbaa0885e4c9484418876db04b30f6019eeaf4d2249f9b1",
+    "docs/generated/pr169_cas/v2/axis_result_wolfram_xact.json": "4ab78081f77a334359cc6f39d24faef48c3cef7f98a882842a60b09fa3c1a977",
+    "docs/generated/pr169_cas_collection_receipt.json": "ad533e3bbce7f28b278ddcbb96c84cde97be5adc0a20a994f31478494f45e6e4",
+    "docs/research_program/long_horizon_rescue/pr127_spec.yaml": "d6ae08f5cf6fe23de25f3204baa5b628346a71a846a0b9fff0880ab3771506c9",
+    "docs/research_program/long_horizon_rescue/pr169_primary_source_provenance.yaml": "978437e011346c396a2ad3b4f924f91d1c21afa89529576377c0f6f86530f668",
+    "docs/research_program/long_horizon_rescue/pr169_spec.yaml": "966fedf2f0bd3831bc1065d0d0da1a73033638d0a98affa7f83d5f1bdc4f52e1",
+    "htt/obsstat/egs2_transport.py": "fc0ba413406b92f96beecac24068807ca5ea28d642b5253ad83014b71af55e03",
+    "htt/obsstat/egs3_graded_comparator.py": "3332c3af4469929a403077b909fb54f1ad169433cb991cccc705367768c7d6b7",
+    "htt/obsstat/egs3_unification_schema.py": "9f2e48e53dc7d924e91a99873f506208f992261d4c82f71102e457ea15650f8e",
+    "htt/obsstat/egs3_vorticity_channels.py": "ff49878519796dc0922af86c27b2e5c681358fe3f1ed79ad12e6f0e3fe649d8a",
+    "htt/src/common/egs_oneway.py": "db8f631df75833cfbbfc27cd7253f5f25b960666485907457186f023d0556554",
+    "htt/src/common/graded_nonid.py": "ad1731dd2eccdd7a9f555c5d38726e5ac70e66148dbb7a23a788d9e4f8e2302b",
+    "htt/src/common/unsigned_isotropy_leakage.py": "6705520dca8880e1ed49dc516d24d99e8c21968969e3de8a7120012731d6363a",
+    "scripts/build_egs_results_table_v9.py": "8e993bb2ae564b19b1a105c23f1ba2953a25fcb5f7143f5d8a95b48df634d6ba",
+    "scripts/codex_harness/run_pr169_unsigned_leakage.py": "a21a7d3dd657f238acd2eaef1b1e6e3c9e336b414523026234bdf6d9fca9f23a"
+  },
+  "inventory": [
+    {
+      "path": "docs/codex_handoff/pr_backlog.yaml",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 12,
+      "sha256": "256cf1406cddf271d8b197dbf39e1ae1486b18f22c30e4551de40b55e2cc502d"
+    },
+    {
+      "path": "docs/generated/egs_results_table_v9.json",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 28,
+      "sha256": "05c50f0c69848581bf61f248e67b42d0f076380427cf108821acf4cb23a7b7c3"
+    },
+    {
+      "path": "docs/generated/egs_results_table_v9.md",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 27,
+      "sha256": "86788e59f23582e15a3a9bce3f0e78dbdc5f3f7ada057bffd770416236360385"
+    },
+    {
+      "path": "docs/manuscript/appendices.tex",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 4,
+      "sha256": "a3fbca8c34de378e3e938fd7d0cbe4fd7f53fe839efe02ee9257ff794df58283"
+    },
+    {
+      "path": "docs/manuscript/ch01_introduction.tex",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 8,
+      "sha256": "91e4348c2e2e6579507694474ea8ba179ad24bc6c5f39e29047848b587511045"
+    },
+    {
+      "path": "docs/manuscript/ch03_framework.tex",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 56,
+      "sha256": "04c308743d4f001fbd4a9473fa6084cb529d797d5e3ceea4ea4662b2f384613e"
+    },
+    {
+      "path": "docs/manuscript/ch04_bianchi_bounds.tex",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 59,
+      "sha256": "4b22fb9e11646d701f300a66d0922f04cdb6318432c6bf828bd9c286eea4682f"
+    },
+    {
+      "path": "docs/manuscript/ch05_teff_corrections.tex",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 41,
+      "sha256": "f31c4d7fceb59a36be0843366e8e25abae8c9ed277180d355945b4c9a73b7812"
+    },
+    {
+      "path": "docs/manuscript/ch06_pipeline.tex",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 6,
+      "sha256": "de3e2315bad2b1820d283e0b3ed83f6dc73f3b6d63ffb94162e27f9ffe86a4fd"
+    },
+    {
+      "path": "docs/manuscript/ch07_results.tex",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 18,
+      "sha256": "91df3641cb5fda647407a4b7bbcfd806037ffdebd6624e3832682b138060c5cc"
+    },
+    {
+      "path": "docs/manuscript/ch08_robustness.tex",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 1,
+      "sha256": "89edc4f3e598d5286a17390bfa2b6850b2de68edd9075e05a62843fba3b66374"
+    },
+    {
+      "path": "docs/manuscript/ch09_discussion.tex",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 21,
+      "sha256": "4e8f50a76019dc5f95f0f7c2d2842aeb2dd50318817bf5ae7b8040f4bd83d2d9"
+    },
+    {
+      "path": "docs/manuscript/ch10_future.tex",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 5,
+      "sha256": "5c9142072e3e3df6ff315f8e13c15b9681298ffb7ff14192d152a3bd3673af8b"
+    },
+    {
+      "path": "docs/manuscript/generated/conditioned_legacy_figure_gallery.tex",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 3,
+      "sha256": "2879666e9509b559584d2fe4cfe87faca194d9697d281b12d7229ec79d5a4ec3"
+    },
+    {
+      "path": "docs/manuscript/generated/current_figures_results.tex",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 2,
+      "sha256": "fcca5f8d502b884d26c1f9f3fd6914e42f088b7f73aeff5025960b397dc7334e"
+    },
+    {
+      "path": "docs/manuscript/generated/formalism_methods_claim_ladder.tex",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 3,
+      "sha256": "3f090efe397324a1a2ca5fc91856140b4a5b4e6cbe3a1390aad4dc0fe55de135"
+    },
+    {
+      "path": "docs/manuscript/main.tex",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 1,
+      "sha256": "28900b55a7069222b41e944a1366d3db05cb944aeb1c5484a135d157d659dbae"
+    },
+    {
+      "path": "docs/research_program/long_horizon_rescue/pr169_spec.yaml",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 34,
+      "sha256": "966fedf2f0bd3831bc1065d0d0da1a73033638d0a98affa7f83d5f1bdc4f52e1"
+    },
+    {
+      "path": "htt/bass/atlas/budget_ceiling_optimizer.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 2,
+      "sha256": "fec33e6fcd768abc809563731ac3828764324a4bd278afb3b5eb0be0ae0c2953"
+    },
+    {
+      "path": "htt/bass/background/__init__.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 16,
+      "sha256": "c360e22ac39303931fe4caa3e73543376cf847b0c42953f7d271ff3f803ed458"
+    },
+    {
+      "path": "htt/bass/background/bianchi_types.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 4,
+      "sha256": "1fb4fac22c38a688609e0eb7658bcf4a2c383862bf74256b2d377b23fdbee420"
+    },
+    {
+      "path": "htt/bass/background/codazzi_tilt_rhs.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 7,
+      "sha256": "8bb444ff48877db24926db33a701761f1cd224c53b11a5e525b2fb42f61614cb"
+    },
+    {
+      "path": "htt/bass/background/constraints.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 8,
+      "sha256": "ce19bbb2ded3e9a3bf66e512c79f509ccf7a3ead949dccd5f01d1ccd0f764db2"
+    },
+    {
+      "path": "htt/bass/background/covariant_validation.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 7,
+      "sha256": "d20c541648cb4d2f5c79b404c1b5418766760afc9e7f5f66b65bf0066ddda394"
+    },
+    {
+      "path": "htt/bass/background/einstein_bianchi.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 5,
+      "sha256": "514bef0e5111c0cb6458cb221645973c939d86fec5cb5cdc67342ceafb673540"
+    },
+    {
+      "path": "htt/bass/background/evolution.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 10,
+      "sha256": "954e2c549c90fe6537855b3c9a14a9c3fe23ebd0fab0ffa23a97fe4e6c59dab1"
+    },
+    {
+      "path": "htt/bass/background/nonperturbative_tilt.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 10,
+      "sha256": "56797f3f9826c925ba9a841dd76453b07551a4a8ed393ab2833c8ebc9d3dfcec"
+    },
+    {
+      "path": "htt/bass/background/test_bianchi_types.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 6,
+      "sha256": "4d894b949f7d3a446d4c10704dd2475da68ffc1e48c1a1af106fe7d14cf0a081"
+    },
+    {
+      "path": "htt/bass/background/test_codazzi_tilt_rhs.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 3,
+      "sha256": "e717f142a7a1e9955892159a255fac0e277e6300f991050e4a1282bd87af64f2"
+    },
+    {
+      "path": "htt/bass/background/test_covariant_validation.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 1,
+      "sha256": "5511d191bef1e52dbf8ababaf1d4f23d750d3884b274e6c490ff8ef493e71e1a"
+    },
+    {
+      "path": "htt/bass/background/test_nonperturbative_tilt.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 4,
+      "sha256": "788d3bab8e3607153647a8c64e1983479cc2dae299bbcaa1d585d676c5b2bb03"
+    },
+    {
+      "path": "htt/bass/background/test_tetrad_state.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 3,
+      "sha256": "dc1acf72c6108aaa10420b40d513af4a497863b4ec72a586d5d3303d14b7c888"
+    },
+    {
+      "path": "htt/bass/background/test_ver2_constraints_rhs_weyl_skeleton.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 10,
+      "sha256": "8106f1c12386f38197bbd3605650692ba2f6897f50cbeeabc56c5016acffafbb"
+    },
+    {
+      "path": "htt/bass/background/test_ver2_ic_evolution.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 2,
+      "sha256": "da71e8e6c1d468e383a298a6030d29681784cb37417cb39163c31c79c4d2bef5"
+    },
+    {
+      "path": "htt/bass/background/weyl.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 17,
+      "sha256": "b0de7df40e4d5b1796f25b3db9bb8d9e5d4386d7fb5a042c3d33833cc5d0eb7d"
+    },
+    {
+      "path": "htt/bass/closure/quadrupole_tca.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 2,
+      "sha256": "805509cbd551cc73fb888f6e42787f93841ab2af5d0ad306ecea5707be6da2f7"
+    },
+    {
+      "path": "htt/bass/closure/test_quadrupole_tca.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 4,
+      "sha256": "296f962d1e60696091c74c8f42f230e0594cd0a1074dd3a8dd2c0f0123c01832"
+    },
+    {
+      "path": "htt/bass/collision/test_thomson_rate_floor.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 1,
+      "sha256": "9f6485e5ee83cbfe2f201e3dfda4ed3f6c194a8d4d6559574ce43df90eeafb50"
+    },
+    {
+      "path": "htt/bass/forward/doppler_boost.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 2,
+      "sha256": "4f03f76158f5456ed25207f88dda8a04bb532a61013f0e469b8c370c49657f04"
+    },
+    {
+      "path": "htt/bass/forward/teff_mes_bounds.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 1,
+      "sha256": "ee891940e2691426b38975dffe5f265174a5317f13f113cf75ae87ca0b2618ee"
+    },
+    {
+      "path": "htt/bass/forward/test_teff_mes_bounds.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 1,
+      "sha256": "5d0f166ee66f76d4e7e8b75af9fdef1e1e863a1228e4a28e1099eee1c7ea87a8"
+    },
+    {
+      "path": "htt/bass/forward/test_ver2_solver_output.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 4,
+      "sha256": "169c1c0ac1a11b8ace69d09cc82bb22d570c4e1a5c1593b8d826508c1cc55bae"
+    },
+    {
+      "path": "htt/bass/forward/ver2_solver_output.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 8,
+      "sha256": "5bf359701f145395564e21600b3f22650515fdd43e41d185cf431a17d82d9d41"
+    },
+    {
+      "path": "htt/bass/geometry/egs_rigidity.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 5,
+      "sha256": "65ed1bbc7bd1813755c21fb84e8f7decaa9988e52e81607e8c82286e5651c5b0"
+    },
+    {
+      "path": "htt/bass/hierarchy/__init__.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 6,
+      "sha256": "331a9e08a8b21674120ef550cfe51b862c47188d64ef0c2d3d7d331fd26a27c1"
+    },
+    {
+      "path": "htt/bass/hierarchy/contractions.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 4,
+      "sha256": "89026ff9263c933d10cc9a54403852ac6202dfb3096c4a240304c86e439b9738"
+    },
+    {
+      "path": "htt/bass/hierarchy/frame_contracts.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 8,
+      "sha256": "06fc21afc0febed2539bffb74f6b08bb8c9358f64f320a3d89cc2e6cfa91d796"
+    },
+    {
+      "path": "htt/bass/hierarchy/hierarchy_rhs.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 25,
+      "sha256": "380bdd49af1dff77fe257254a5a57d6f94ecddfde20fd6ed27b1d5c856142184"
+    },
+    {
+      "path": "htt/bass/hierarchy/packed_operators.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 4,
+      "sha256": "9fe1156705b21c6c4c2b8e769d5424d95b89249b08739384cc671cb38449f4b2"
+    },
+    {
+      "path": "htt/bass/hierarchy/terms.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 8,
+      "sha256": "fa37d98c619a2c2067fd56bd96b050224d9555ada66980ee40c78505077955ed"
+    },
+    {
+      "path": "htt/bass/hierarchy/test_contractions.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 5,
+      "sha256": "bf4dacd928f9c1c0ecc62f3f2e2e79d5c5972b129b15da97317f0aea7da32be3"
+    },
+    {
+      "path": "htt/bass/hierarchy/test_fb33_einstein_tilt.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 3,
+      "sha256": "acb89c18724a6c8f09df6bebb63ff480e60c157711b95586eb1fcb8b0bc4df8a"
+    },
+    {
+      "path": "htt/bass/hierarchy/test_fb34_vorticity_feedback.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 22,
+      "sha256": "15ee3d817a14ddf4730b7ceb9a3582bbfc30833c4a258dbd297121d948f03324"
+    },
+    {
+      "path": "htt/bass/hierarchy/test_fb36_tilted_regression.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 26,
+      "sha256": "afcaca8bd7c357dfc6dd30fa111645ead74e4bc32edc4bb52d9892ed8aeca732"
+    },
+    {
+      "path": "htt/bass/hierarchy/test_hierarchy_rhs.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 5,
+      "sha256": "cf8cc67af761e217e15e183d9e5c7a123595d425d2d6fe7cc0bb432879c9df5e"
+    },
+    {
+      "path": "htt/bass/hierarchy/test_hierarchy_rhs_fb24.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 4,
+      "sha256": "2b959ed625a842abcbc7e04b9df88c9858c9fc8538c61cf96cc3d43971a9a01f"
+    },
+    {
+      "path": "htt/bass/hierarchy/test_integrator.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 1,
+      "sha256": "3b1f85e0bf1635da4ad08e0b364560a9b7a74d9a93a05ac44c742779fd2b6a0e"
+    },
+    {
+      "path": "htt/bass/hierarchy/test_mode_mixing_blocks.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 1,
+      "sha256": "c30e4fd1570a40b805d50ac9242d12c0cd2491ebead7666d802c30e5563ba3de"
+    },
+    {
+      "path": "htt/bass/hierarchy/test_nabla_dispatch.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 4,
+      "sha256": "b431956d1c981b142e67914e0a7fe2f5a8ff7bbdec408e1bddd07bc901d7122f"
+    },
+    {
+      "path": "htt/bass/hierarchy/test_packed_operators.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 4,
+      "sha256": "7bbac696bd0f6541ff6a2667ec93ff7d0ff95be19bcdc453c7aeb98b97efc67e"
+    },
+    {
+      "path": "htt/bass/hierarchy/test_pstf_tensor.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 3,
+      "sha256": "e3b8406fbed2eaee819d306c1f7fdd41ee34a663ba9b89ee3e82d553551df140"
+    },
+    {
+      "path": "htt/bass/hierarchy/test_seed_factory.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 1,
+      "sha256": "4c456e8eb29e2523a3b4a62839941fa793f3f1849308891740c4c6d010b40bff"
+    },
+    {
+      "path": "htt/bass/hierarchy/test_terms.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 7,
+      "sha256": "979ea70326eb9298b4c64b5f9d1cb28bbba2b236962d1630537091f2f404a2d9"
+    },
+    {
+      "path": "htt/bass/hierarchy/test_tilt_kinematics.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 42,
+      "sha256": "6ff0f811c075fddd0ca13db28ffd92f68587ac2b04cb10607e334daa22d383de"
+    },
+    {
+      "path": "htt/bass/hierarchy/tilt_kinematics.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 16,
+      "sha256": "0ae6ac829db6ff97098d9fbaceaeb3f03f1377ab7c87da860bc36a073fe38d03"
+    },
+    {
+      "path": "htt/bass/hierarchy/ver2_native_integrator.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 32,
+      "sha256": "403ba6f74b1570835ebe8658c831995c3edcf9671d659ad11b6bafa16b2bac3d"
+    },
+    {
+      "path": "htt/bass/hierarchy/ver3_layout_protocol.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 3,
+      "sha256": "e33ec236d3d224830423fd953415ae7937b21b8b01e177574041375ec9e255ef"
+    },
+    {
+      "path": "htt/bass/integration/test_full_bianchi_coverage.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 6,
+      "sha256": "8e85e306d98c1da1f844690690766ed1b60aa6333deae35a04404a884ca5e012"
+    },
+    {
+      "path": "htt/bass/integration/test_lowell_bianchi.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 2,
+      "sha256": "5e1d570e3939707062fef5f0f41309dc69565adaf4fad6f40edfa403553ad564"
+    },
+    {
+      "path": "htt/bass/likelihood/planck2018_flrw_match.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 2,
+      "sha256": "33ff0ff825c131e3edc1b71d329887ef0117b09b7292d527170e1119d915fa31"
+    },
+    {
+      "path": "htt/bass/los/families/residual_report.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 2,
+      "sha256": "37a3ca7cea051df85d716ff131b48d95cb4b8ec957218fb20541ccfc62148a1b"
+    },
+    {
+      "path": "htt/bass/los/families/test_type_ix.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 9,
+      "sha256": "3560d996c27a7ae7f71814edef41319a8a661c6545d4fca277fa1fd99e6fc86e"
+    },
+    {
+      "path": "htt/bass/los/families/type_ix.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 2,
+      "sha256": "5a59f11078e695d9f450b70e5275f4dba165d4deb8346bcc0d6b87293849ddd0"
+    },
+    {
+      "path": "htt/bass/los/family_backend_protocol.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 1,
+      "sha256": "cee6d54657cbfefbe480d0218d22ff932fc04c45ded6ac3fa31c56a97ebfe55f"
+    },
+    {
+      "path": "htt/bass/los/family_propagators/test_propagators.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 1,
+      "sha256": "c68b9fbf42029637d05f0c87f4e14df2a2b525b1f715696ff38a3dfba8327fca"
+    },
+    {
+      "path": "htt/bass/los/test_ver2_source_propagator.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 6,
+      "sha256": "c5e6a15a07c29a3ce62d340924785eca310e2734ad9df5417712fee5851f28a0"
+    },
+    {
+      "path": "htt/bass/los/test_ver3_family_backend_protocol.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 2,
+      "sha256": "a4b2ed68c718c17db4bc289deac8fc585e282eaec3894393b99c4aa7bb135809"
+    },
+    {
+      "path": "htt/bass/los/ver2_source_propagator.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 7,
+      "sha256": "67da4d59e3b937ed874ca72e66a13864fc8e0b690d7e3253a57e5229d6c71ad9"
+    },
+    {
+      "path": "htt/bass/observational/covariance_sparse.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 9,
+      "sha256": "21e7047c169cd60326f5026e2e4880696e63a40ab4e476ecc8481a1a7ea8421b"
+    },
+    {
+      "path": "htt/bass/observational/departure_report_plumbing.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 1,
+      "sha256": "23a360c845d20bce1212cf023c25803b20b50076f68ff949755d06e19bd87cc8"
+    },
+    {
+      "path": "htt/bass/observational/planck_mes_bounds.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 2,
+      "sha256": "e06c1f8659452724054a43a073a969f1c6b17095fb9c0aefb2e6cf5f6491a7e3"
+    },
+    {
+      "path": "htt/bass/observational/test_ver2_observable_atlas.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 2,
+      "sha256": "5d55a5706acdd1ba6c724d76010d703abd925e71b30bf87d668ec8f9740108a6"
+    },
+    {
+      "path": "htt/bass/observer/congruence_ssot.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 3,
+      "sha256": "6796bd6769bea4d7de5b388f2d834da0f4c7ed689ce6ce7d36336b3e9b02d523"
+    },
+    {
+      "path": "htt/bass/perturbation/harmonic_modes.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 3,
+      "sha256": "8929ae815b2ad8e363abcf7953951649e589f526a151f5195014f5525b12facd"
+    },
+    {
+      "path": "htt/bass/perturbation/k_type_regression.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 2,
+      "sha256": "0167b04c1626350592bcaaac7f2dc17ec4e0a4db204582cd97580ee3726a56b3"
+    },
+    {
+      "path": "htt/bass/perturbation/test_fb51_harmonic_modes_skeleton.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 2,
+      "sha256": "f6cd678e0662663309e8af422242aba0bbe8f3e16c0cbce06900d8b590db2443"
+    },
+    {
+      "path": "htt/bass/perturbation/test_fb52_full_nabla_operator_skeleton.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 2,
+      "sha256": "1c7ace5f7ecbeaad341c2ee56c73ebb22226b42c86fb08c78ec14d672090f4cf"
+    },
+    {
+      "path": "htt/bass/runtime/test_optimization_fairness.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 1,
+      "sha256": "60709fa32c60351f0c4b1d1d98b5e39fd6aeb1b4ffb6e91662c79458a1f3be3a"
+    },
+    {
+      "path": "htt/bass/runtime/ver2_execution.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 3,
+      "sha256": "312dde7dc753fdd44623a9c9b6cdf633654d7a82f8e69032880ef6fe296c23e3"
+    },
+    {
+      "path": "htt/bass/spectrum/flrw_pipeline.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 2,
+      "sha256": "35f7a54b72abd60bb78fd3e99890c3912b6fbce6b504d0d62414bbe4b8ba261d"
+    },
+    {
+      "path": "htt/bass/spectrum/lowell_los.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 8,
+      "sha256": "d704226156c658063a036c26620e4e2ca61c4e55eeb238595d8e9dd98f05ecb7"
+    },
+    {
+      "path": "htt/bass/spectrum/test_fb71_lowell_los_skeleton.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 4,
+      "sha256": "3f72133cb2d287b5b3a4c117bddf572d0e8824a358dbffa7fee11899b6d97ad4"
+    },
+    {
+      "path": "htt/bass/spectrum/test_fb72_off_diagonal_covariance_skeleton.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 5,
+      "sha256": "96bdbb2f8c43926b0e8a197644660202332466a752d1fc522f2fab8bfaa924fd"
+    },
+    {
+      "path": "htt/bass/test_ver3_contracts.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 2,
+      "sha256": "77c0b0ef159ff6b0f197409fd0280a032254da9d5e6d372fd7780483fb25a36a"
+    },
+    {
+      "path": "htt/bass/transport/test_exact_transport.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 2,
+      "sha256": "37efa67b3ef0fe0c5df4da070d28a85cc1b8c44130b3b8a0421636da19db9195"
+    },
+    {
+      "path": "htt/bass/transport/test_implicit_hierarchy.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 4,
+      "sha256": "cca1337e1053bf3acb4b15060738121b35e43e93f782ab3102bb40b7c2121daf"
+    },
+    {
+      "path": "htt/bass/transport/test_shear_sources.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 8,
+      "sha256": "45c944f44ebb200068e132e87c7827737fc2ff90f93a66359b56e48ef1370b70"
+    },
+    {
+      "path": "htt/bass/validation/comparator_policy.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 37,
+      "sha256": "1941438513247b0f5a3b2de046e14a3f36b8dc0da377ab1d8838b40f17bbb714"
+    },
+    {
+      "path": "htt/bass/validation/test_comparator_policy.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 22,
+      "sha256": "a70a619452ceae790d6adf98c72fbba03856e902b68013955e096f2662028855"
+    },
+    {
+      "path": "htt/bass/ver3_contracts.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 20,
+      "sha256": "4010a41a12f991fefd66a43326136c5e2b310edfdb6a807d4f697dba2fb7c6f7"
+    },
+    {
+      "path": "htt/htt/htt/core/analysis_extended.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 2,
+      "sha256": "7946a9359a3459448b1508d95aa7204fdfe36de5598352d9c14605fd5eeadefb"
+    },
+    {
+      "path": "htt/htt/htt/core/bounds.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 10,
+      "sha256": "9ef8a57b61e68ebb8977a5650cf9eb732f3fa1bd0d513bfeabde59062116cdeb"
+    },
+    {
+      "path": "htt/htt/htt/core/catalog_likelihood.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 15,
+      "sha256": "5ac62281ad7e14f7e97cdf90409788041dff9f1895695b8734f31597d92afa7e"
+    },
+    {
+      "path": "htt/htt/htt/core/departure_posteriors.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 18,
+      "sha256": "86abda3ab073700cd3f8382617821093c4dad7b04d03ce5bf5cc2bbbd2e8afe9"
+    },
+    {
+      "path": "htt/htt/htt/core/evidence_models_R03a.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 25,
+      "sha256": "b83b8fb1ccdf3e68979a77d7aefd44243f0140f98e1c0eb6400e0c6f40ef1f3c"
+    },
+    {
+      "path": "htt/htt/htt/core/geometry_discrimination.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 12,
+      "sha256": "b89d941a79c24654761cbd67d325145fa71a9a817352ea4ac4cc0a9ca93581bd"
+    },
+    {
+      "path": "htt/htt/htt/core/source_discrimination.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 1,
+      "sha256": "9e31392c433228a9468430721710f2ace9873d6b6c185319fb543379bbe6e34e"
+    },
+    {
+      "path": "htt/htt/htt/core/ssot.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 5,
+      "sha256": "c6fec039e6e1711a6385e3764a8f9708ee862d2e2cd60da9b8cd4f412e002abb"
+    },
+    {
+      "path": "htt/htt/htt/core/teff_extended.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 6,
+      "sha256": "67ce36f51a4ae2cafac0b4b5cb10bb5105aac6c2fcd60492aaf238e21f5f465b"
+    },
+    {
+      "path": "htt/htt/htt/core/tilted_flrw.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 4,
+      "sha256": "6607e0e15a7424bc275ee30100fa94f437d2f7be05dabb6d4ee122e5c6896c5f"
+    },
+    {
+      "path": "htt/htt/htt/departure/paper_a_closure.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 2,
+      "sha256": "c4ea51a0944b8b63a2729f2d4c9bc474adec7a08ef03ef34738ee1e3073441f0"
+    },
+    {
+      "path": "htt/htt/htt/departure/posterior_pushforward.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 10,
+      "sha256": "e2385b5ad836957a61f78cdf26eb6c9f7991549188bd4ce951b83141fd2f5a5b"
+    },
+    {
+      "path": "htt/htt/htt/figures/fig_4D_projection_atlas.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 22,
+      "sha256": "87fda67ef4135f962f5d57344bafdcc4e489d6ada0636ebe0957d5e3a99dddc9"
+    },
+    {
+      "path": "htt/htt/htt/figures/fig_MES_three_bounds.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 1,
+      "sha256": "c78c36be6c50aa8d9346d83af5bf02c400c54c2183ce2dd7d3b7256e66b7d494"
+    },
+    {
+      "path": "htt/htt/htt/figures/fig_experiment_timeline.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 1,
+      "sha256": "074b409ade01cb1ab5a58467657e8b16c0fc7984925a284aa01e15e699a09d3b"
+    },
+    {
+      "path": "htt/htt/htt/figures/fig_nonlinear_heatmap_vorticity_accel.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 11,
+      "sha256": "4e0158d2a49299b5b1cb1f5837d3b54aefcc0033f44939349a4a49fe0dc0ef18"
+    },
+    {
+      "path": "htt/htt/htt/figures/fig_rho_sweep.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 9,
+      "sha256": "de3279e4283afcc800eb2cdc7c1a76980bbee13cc201e7f06877251c91e34b5a"
+    },
+    {
+      "path": "htt/htt/htt/figures/fig_sigma_accel_contour.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 4,
+      "sha256": "61b245cce5119e9c8b819a680cdd58f7a0e6959e4d5c813937aeed99928ac4a4"
+    },
+    {
+      "path": "htt/htt/htt/figures/fig_sigma_omega_contour.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 6,
+      "sha256": "42e3c5a3dd30d7584c8e00c8b4ddb570239366b6087f0fe8d1fff1f8b4e5974f"
+    },
+    {
+      "path": "htt/htt/htt/figures/fig_tilted_dictionary.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 17,
+      "sha256": "0781e4c7c4e35a159a755344fa4d50dc6d10bcaccd782558173a6f163d7daac0"
+    },
+    {
+      "path": "htt/htt/htt/figures/fig_vorticity_hierarchy.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 6,
+      "sha256": "71530d4d92622551105adadd5dd4a968642af6f153533a88620ce9d4b9cfb1b6"
+    },
+    {
+      "path": "htt/htt/htt/infer/dipole_vector_likelihood.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 3,
+      "sha256": "a55f87c76b0c56f8106a8b148c3213c4d4ab7c44ae645f28b0d5aae01874e71f"
+    },
+    {
+      "path": "htt/htt/htt/infer/latent_axis.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 3,
+      "sha256": "5bb4c9bb2970ce56790e2ecdac379ce79f16c1a27a4093385bf61fa50de7a359"
+    },
+    {
+      "path": "htt/htt/htt/infer/ver2_directional_shell.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 1,
+      "sha256": "dc8499605e00b8adaf67ce3ab4dadbcbb4c977702dbe52653b9447fc9717d189"
+    },
+    {
+      "path": "htt/htt/tests/test_PR13AJ_gate.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 1,
+      "sha256": "b3f8b7af1ccc24a9bb0c6878a47428d2dd606676e993b38e626e20fa4915edda"
+    },
+    {
+      "path": "htt/htt/tests/test_bounds_and_tilted_flrw_anchors.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 7,
+      "sha256": "21cad6bb6c940aa5135439825e461504708e02fc75c9a0124ad6623221fa71ee"
+    },
+    {
+      "path": "htt/htt/tests/test_evidence_models_R03a_anchors.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 1,
+      "sha256": "84b7df0ba0fab50d62167bf503c8c9e56fa2ff18d944f1f65c47dae0217c877b"
+    },
+    {
+      "path": "htt/htt/tests/test_legacy_core.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 3,
+      "sha256": "1c43d438368f767771470f8cf246fa90e04c979d4b2f4e920a3483e474fe9039"
+    },
+    {
+      "path": "htt/htt/tests/test_ver2_directional_shell.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 1,
+      "sha256": "4613fb7c2ba7935fd256a6a55bd4495cf88e4d4aed41e975ee3cbf9701ca87d8"
+    },
+    {
+      "path": "htt/mio/__init__.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 1,
+      "sha256": "9a1e9c3f8df743487587277d612cb5bf1bb0205f4dcea4366d7087613bb169e5"
+    },
+    {
+      "path": "htt/mio/core/ceiling_families.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 3,
+      "sha256": "4e57adcaa6bfef1353ab143c33090984da418df6ff6685f06d023df4285e19f1"
+    },
+    {
+      "path": "htt/mio/formalism/component_breakdown.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 11,
+      "sha256": "9653e5b3dc63ebe740a78f7517e0df9f079b9a9bfd7a683c44f681ca2a06178b"
+    },
+    {
+      "path": "htt/mio/formalism/departure_bundle.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 9,
+      "sha256": "f04d692646c0d2232373701fb29088d60bb2549106232ff05d2dff644291b80d"
+    },
+    {
+      "path": "htt/mio/formalism/dynamic_budget.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 2,
+      "sha256": "11132baea55ce3d879a03ded84a11cce42252a893f51bcf2d5a346c82ea168e4"
+    },
+    {
+      "path": "htt/mio/formalism/filling_fraction.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 11,
+      "sha256": "69cb198e205690816295e0e13b77cb6e673a88f000e9d7632c6650d08cbdbb70"
+    },
+    {
+      "path": "htt/mio/formalism/isotropy_gap.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 14,
+      "sha256": "389c6b772284b42172d07db559af629c36a3cf26df9d8248fc5b54a47ac666ab"
+    },
+    {
+      "path": "htt/mio/formalism/normalized_score.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 14,
+      "sha256": "5e44adfd1dbfdfa572e610e726fb78cae6a5996e82f52c910274608f3d66ec9b"
+    },
+    {
+      "path": "htt/mio/formalism/physical_pushforward.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 5,
+      "sha256": "5f2c4aa7b28dbe7f904b3d0fe9e194e16174ae679d87180629f425aac29b3d62"
+    },
+    {
+      "path": "htt/mio/reports/departure_report.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 6,
+      "sha256": "2e28a9523f06d4c05966d2819e3823eeb8f4449c5e4934509bee8fdffcbe982a"
+    },
+    {
+      "path": "htt/mio/tension/__init__.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 1,
+      "sha256": "b55dcc439b9fd53dedfbb71209734710566153c6f892d3fb0a707dd1e75e5e45"
+    },
+    {
+      "path": "htt/mio/tension/xc_estimator.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 27,
+      "sha256": "ec1b6657826ecf6821b602b9f191c547eb5c5998838743cd62e8f3c47c647747"
+    },
+    {
+      "path": "htt/mio/tests/test_htt_cross_check.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 4,
+      "sha256": "711b422ee09f55f7b7d1ca12c122d6e632b2a6548a169b042ac773801df8e6f7"
+    },
+    {
+      "path": "htt/mio/tests/test_sigma_cone_provenance.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 1,
+      "sha256": "d211afeb257025f8348d84dd96652989a5b843970869cdd99c8ab037878e2fed"
+    },
+    {
+      "path": "htt/mio/tests/test_tension.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 8,
+      "sha256": "c46add9cc3c6fe002cdbf65c7ac4db91f0ad87bc1bf616064444ce5dd4039933"
+    },
+    {
+      "path": "htt/obsstat/affine_flow.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 23,
+      "sha256": "9aa678871740bf97f3ce7744eb9595edf7853a50ac4d36aea01debe8d7f5c946"
+    },
+    {
+      "path": "htt/obsstat/constrained_realizations.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 5,
+      "sha256": "ede4360de2afc5b7087242fcbc2334e4c167045df9f42b0f587a4b8481d8e15b"
+    },
+    {
+      "path": "htt/obsstat/egs2_transport.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 18,
+      "sha256": "fc0ba413406b92f96beecac24068807ca5ea28d642b5253ad83014b71af55e03"
+    },
+    {
+      "path": "htt/obsstat/egs3_coverage_strengthened.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 3,
+      "sha256": "4b6a4b9815e16b3247728375900b1007ac3be48dd699c06c3f8807c6a3ddc3e4"
+    },
+    {
+      "path": "htt/obsstat/egs3_fractional_program.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 3,
+      "sha256": "d72012aa5ed574964b1d10a1419e4f993447bffef30a23c38af7b3764ad31048"
+    },
+    {
+      "path": "htt/obsstat/egs3_gf_interval.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 3,
+      "sha256": "8be1af1ce848847378d4710ab4c398fc0c6917e637a9c37656e2ab94a68614f2"
+    },
+    {
+      "path": "htt/obsstat/egs3_graded_comparator.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 40,
+      "sha256": "3332c3af4469929a403077b909fb54f1ad169433cb991cccc705367768c7d6b7"
+    },
+    {
+      "path": "htt/obsstat/egs3_identified_set.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 13,
+      "sha256": "309d7d577c6dd686313c815f28b8c12b6f688ca5753815237c5c54d643538a6b"
+    },
+    {
+      "path": "htt/obsstat/egs3_interior_family.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 55,
+      "sha256": "cb1f6c46a2f1069223edc282d2a5e4af85f929a63d3edbdb1ad2ca12d3583f78"
+    },
+    {
+      "path": "htt/obsstat/egs3_kinematic_deprojection.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 2,
+      "sha256": "1194c8ef71c4ede2300d6be08a604d3f2a1343bed5ced276cd42d09f6c8ff716"
+    },
+    {
+      "path": "htt/obsstat/egs3_king_ellis_dynamics.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 38,
+      "sha256": "b433f46819ba96f7411dabd5a4a9405f55c0c3c9ea660d510a458269a87b8ed7"
+    },
+    {
+      "path": "htt/obsstat/egs3_king_ellis_frame.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 19,
+      "sha256": "608b4cf9eb44f685774a768e026b7be378992a3664dab7ffdff6cf120f15b236"
+    },
+    {
+      "path": "htt/obsstat/egs3_linearized_realization.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 57,
+      "sha256": "91c85e49074a2ed5df879df492bf04c8865e47363afefdd4c5f239d84c005cf5"
+    },
+    {
+      "path": "htt/obsstat/egs3_measured_response.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 6,
+      "sha256": "b33d5239883d27807ffea01854d054d5ae8de67a65047cd13e2e6122d46b3514"
+    },
+    {
+      "path": "htt/obsstat/egs3_mes_branch_registry.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 6,
+      "sha256": "9b0817c99944e796b4c980cad43df724d0abde9381c8f542195d249447bfe816"
+    },
+    {
+      "path": "htt/obsstat/egs3_mes_geodesic_refreeze.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 11,
+      "sha256": "a74e92151d9d49e371f2080c799c3512a4a902ad78f43ce94573ddbb1e41be10"
+    },
+    {
+      "path": "htt/obsstat/egs3_mes_provenance.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 1,
+      "sha256": "03bc934eb75fb77141e311d344e3ce633bd92fe1772f006d76e0435829a9afef"
+    },
+    {
+      "path": "htt/obsstat/egs3_mes_rederivation.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 4,
+      "sha256": "8051e61e01cc7d2a6d321677d9027f6b2aa2ce5fe740abd59ae1754030f4ec6f"
+    },
+    {
+      "path": "htt/obsstat/egs3_mesb_web_trace.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 5,
+      "sha256": "807ad53952bacc677606223ded4d30acb2f6357c84eebc9432ec279d8881735c"
+    },
+    {
+      "path": "htt/obsstat/egs3_nonlinear_realization.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 20,
+      "sha256": "adf839ec1000bb7dd27beec144fac6e3e4aec34d53e217096dd4c9f4eae44795"
+    },
+    {
+      "path": "htt/obsstat/egs3_parent_identity.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 32,
+      "sha256": "8c1a35ad3a2e166a27d8b540223d427f02f40c18f604afccbda7c6581a7a6862"
+    },
+    {
+      "path": "htt/obsstat/egs3_psd_cone.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 21,
+      "sha256": "f1a104ae940eaefafdcfe0daadbb749ef61814f8804e2d0ef37f7c4cea0a5ba6"
+    },
+    {
+      "path": "htt/obsstat/egs3_shear_memory_bias.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 4,
+      "sha256": "4a6d24ba6b01c35e1f840054e284e70fdc976909e4e81f704eec34b5f014ce38"
+    },
+    {
+      "path": "htt/obsstat/egs3_unification_schema.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 6,
+      "sha256": "9f2e48e53dc7d924e91a99873f506208f992261d4c82f71102e457ea15650f8e"
+    },
+    {
+      "path": "htt/obsstat/egs3_vorticity_channels.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 9,
+      "sha256": "ff49878519796dc0922af86c27b2e5c681358fe3f1ed79ad12e6f0e3fe649d8a"
+    },
+    {
+      "path": "htt/obsstat/jwst_anchor_manifest.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 1,
+      "sha256": "6d073ed39b12107317b28c4be0ac1ddbad18b446e2c251a7880b1331845d799a"
+    },
+    {
+      "path": "htt/obsstat/velocity_field_curl.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 7,
+      "sha256": "f6aa025e5ed0f7a7b5c47eee2b333f4af26c2d5203cb4b99c9139d5acf978c65"
+    },
+    {
+      "path": "htt/scripts/ver2_bass_validation.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 2,
+      "sha256": "a47e6e4e27369da81c8aa5cb877f6a198031c72e2878c25de0f68781fd669ad6"
+    },
+    {
+      "path": "htt/src/common/cf4_identified_set.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 4,
+      "sha256": "53d5bed9de17349ece78c52c373e0b4ff9503d7491d9d9c39b93e3ede6015575"
+    },
+    {
+      "path": "htt/src/common/contracts.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 2,
+      "sha256": "c71818ba3108a922d2bfbcf4c8dd2b65ea16efc5d43561c2792c8fbc52fd0181"
+    },
+    {
+      "path": "htt/src/common/dependency_holdout.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 4,
+      "sha256": "fba95dc2dd118f21f28a4371a35636de9862f0c243792daebb01087e81cbaf73"
+    },
+    {
+      "path": "htt/src/common/egs_oneway.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 44,
+      "sha256": "db8f631df75833cfbbfc27cd7253f5f25b960666485907457186f023d0556554"
+    },
+    {
+      "path": "htt/src/common/frame_contract.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 12,
+      "sha256": "3b2c15b2ec61c5d5cab86125dc4de48155901a9b4dd10ed873830f7de8f48ac0"
+    },
+    {
+      "path": "htt/src/common/graded_nonid.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 10,
+      "sha256": "ad1731dd2eccdd7a9f555c5d38726e5ac70e66148dbb7a23a788d9e4f8e2302b"
+    },
+    {
+      "path": "htt/src/common/identified_set.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 3,
+      "sha256": "6028105d386be1a143bccbb8f2aa8743464f3240b44680980e6fe1ea6d4685a8"
+    },
+    {
+      "path": "htt/src/common/k6_continuum_oracle.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 1,
+      "sha256": "d7f2e23de8adc15c80abbe066fe3d5b0f07a0b7e3960ea9f816afe5087e2c14d"
+    },
+    {
+      "path": "htt/src/common/mes_successor_registry.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 4,
+      "sha256": "13b844b086f954d841dd6d3e38bbca9ef226ab07dac91f17beb0296c03fae72a"
+    },
+    {
+      "path": "htt/src/common/mes_theorem_authority.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 3,
+      "sha256": "d149d8599eba65dd1af536d30f289466b642e990bd8cee6cc8639566ab787af8"
+    },
+    {
+      "path": "htt/src/common/mio_joint_measure.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 2,
+      "sha256": "51bff91baf6cbcaa2b9273eaf9f438a864e7ead78308eb965413bc2f13d830fc"
+    },
+    {
+      "path": "htt/src/common/mock_calibration.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 9,
+      "sha256": "8427d7f82ba4ecc950e1a6095f372787f01b8fb9ec17f5767e9a679a95118904"
+    },
+    {
+      "path": "htt/src/common/nt2_bracket_authority.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 1,
+      "sha256": "4512a97c3624282199ee1f5802f3da5e405ab8d59bb82edb2213226d479cf1cb"
+    },
+    {
+      "path": "htt/src/common/omk_near_flrw_expansion.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 1,
+      "sha256": "ef6f8857c8126b0d5d4126d96799b1daecd1d522301de3916766fa867c7d0406"
+    },
+    {
+      "path": "htt/src/common/pr124_sympy_axis.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 3,
+      "sha256": "30ed396dc3ac85658a9a6527aad070b49bc15ed45fbcba8a296b68f6de9bb52b"
+    },
+    {
+      "path": "htt/src/common/pr169_sympy_axis.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 13,
+      "sha256": "eb22b4dbc5d50876308d70f32fde92373430df0756d95e8f3057654ecd4d94c7"
+    },
+    {
+      "path": "htt/src/common/source_response_types.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 10,
+      "sha256": "fe3f3a18ea6de28e9b0af9620ffed1c7668e33f90b1d148c48b9781547f10794"
+    },
+    {
+      "path": "htt/src/common/status_snapshot.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 5,
+      "sha256": "d9ecec87b61ac3aa428c05ad1ff8f3a77b7091aa2ba106af299f49695c7ab2d4"
+    },
+    {
+      "path": "htt/src/common/theorem_registry.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 1,
+      "sha256": "a83a86c952fe2bf4bda78a8fb0868231b6c302a76f3e7a4679b3bdd4fdc2e43d"
+    },
+    {
+      "path": "htt/src/common/unsigned_isotropy_leakage.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 18,
+      "sha256": "6705520dca8880e1ed49dc516d24d99e8c21968969e3de8a7120012731d6363a"
+    },
+    {
+      "path": "htt/tsc/admissibility/three_bound_hierarchy.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 2,
+      "sha256": "cc3ba841a4b61ac10a1d7a82e56b96391afcd81d8bd169bd8ca33940c7cf671e"
+    },
+    {
+      "path": "htt/tsc/charts/test_inverse_T_to_F_mc.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 1,
+      "sha256": "08a77907098a12268ac200c8baa2f561d11ce58815f37d369893a0b2fe843466"
+    },
+    {
+      "path": "htt/workspace/contracts/preliminary_results.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 2,
+      "sha256": "08e46f6501f81e71b7f48b97e74ec35ea435132f13b363613270bbcd0d334bef"
+    },
+    {
+      "path": "scripts/audit_manuscript_figures.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 4,
+      "sha256": "6f1282a4aba669d145750064a8d333f8e808807e228340903b9e085bfcb2b2d2"
+    },
+    {
+      "path": "scripts/audits/jcap_prd_20260714.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 3,
+      "sha256": "1fa8f6d3aa77ae1bafd74958e9f970462e840cf1e265d2968f34e0f8b983ffab"
+    },
+    {
+      "path": "scripts/build_code_capability_audit_package.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 1,
+      "sha256": "b98089c9c64a723efb0b371d066b38fefd4d0e56c09a05ff30048971d881e2b1"
+    },
+    {
+      "path": "scripts/build_egs_results_table_v9.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 13,
+      "sha256": "8e993bb2ae564b19b1a105c23f1ba2953a25fcb5f7143f5d8a95b48df634d6ba"
+    },
+    {
+      "path": "scripts/build_external_audit_report_v5.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 77,
+      "sha256": "de6cccac6728e12e69a9a4d2c8c9728f31ceab8b94856024bdeeb5d8ac531bf7"
+    },
+    {
+      "path": "scripts/build_external_audit_report_v8.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 140,
+      "sha256": "6c332d24184973c48597e4c9a0666e34d3efc626617047bc95012c54479f3ffa"
+    },
+    {
+      "path": "scripts/build_external_audit_report_v9.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 154,
+      "sha256": "f6e5f91b45a4324d2810601704927fb20b7bca42d878b8106e0197211e27d5ca"
+    },
+    {
+      "path": "scripts/build_final_report_audit_package.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 3,
+      "sha256": "7d45af1f20a25a339fa5bc16134f69b3f4d055e0d68e1f69c6f70d213eb236aa"
+    },
+    {
+      "path": "scripts/build_open_items_ledger.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 7,
+      "sha256": "e42806dc52a0dd96519dce6bdfae2ecb4436aaec3809c7887f80fdeeb3948e86"
+    },
+    {
+      "path": "scripts/build_pr04_research_audit_package.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 5,
+      "sha256": "0abc123ec9d3b385977798cf81f8aeb7a5d58b969dcfdad4df7f7afec3e1ce73"
+    },
+    {
+      "path": "scripts/build_research_evaluation_package.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 11,
+      "sha256": "2f6a00db8152343674d381ff9a25e8a81706feefebd14d492877e327f3c426b1"
+    },
+    {
+      "path": "scripts/build_research_only_audit_package.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 4,
+      "sha256": "e69372e11ed623a58ab69ff4bc43147a6a2c3d2aaf51a9e347c1dba22e357fb4"
+    },
+    {
+      "path": "scripts/build_statistical_formalism_audit_package.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 15,
+      "sha256": "91e0057cf2c7ed157735204f40eaead6d8385f7c6d27ca8b1a46b7064450e012"
+    },
+    {
+      "path": "scripts/build_v6_no_download_research_cards.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 11,
+      "sha256": "fade339fe0999e18305e89f6566a2aad09766825e92f431b702b998689f705dd"
+    },
+    {
+      "path": "scripts/build_v7_paper_a_revision_packet.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 2,
+      "sha256": "e39680eab602ce4bcbf588a250c902527ba52d2285dce3d9735af475eec90a12"
+    },
+    {
+      "path": "scripts/cf4pp_vorticity_posterior.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 19,
+      "sha256": "5a9f62f46d80b5bfc54b175b193d7ee655a5486842d121ed7f335c0c3975c729"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr123_oracle_lab.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 1,
+      "sha256": "51e5785ee448d8ea6c75882803d476883d192c38cb46d52ebf52fee4d38e1ea2"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr125_frame_contract.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 5,
+      "sha256": "82c340965a5dd2ca2b38c0d9fd774cdf1fece9e347195abe30051e4fb21914b3"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr126_egs_oneway.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 12,
+      "sha256": "9655b984b19124789fdcd3dacdadd7fa4ee505b97babb3d30d8ee15fed19efcf"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr127_graded_nonid.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 14,
+      "sha256": "03ff36c0773282ad4607517c63c6d4d0285f348feafd23b756d95f42b116ac4d"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr133_source_response_types.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 1,
+      "sha256": "a042daf3baf946ac73bd14e285c45c54fb6fd5f8057e7a9036e14c1ae7479f4d"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr136_identified_set.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 1,
+      "sha256": "f5805030835a4e73b867693a18c52bad2787531507352a7f43d0084b99f5493f"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr137_weak_id_coverage.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 6,
+      "sha256": "0cc251d6720b75c37162f40c7b5732dab16848c7cce77518c73d00124fd53acf"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr169_unsigned_leakage.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 45,
+      "sha256": "a21a7d3dd657f238acd2eaef1b1e6e3c9e336b414523026234bdf6d9fca9f23a"
+    },
+    {
+      "path": "scripts/codex_harness/test_codex_assets.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 6,
+      "sha256": "dcadfc2ad999ac3f51a432a868bc0b3b57993b995a91a3009085ae627c55bd86"
+    },
+    {
+      "path": "scripts/codex_harness/test_harness_enforcement.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 2,
+      "sha256": "0b6b364312234f8e96d939c74eb2add2ab70696716d6daa9510e4210110ae5c1"
+    },
+    {
+      "path": "scripts/codex_harness/validate_research_remediation.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 2,
+      "sha256": "737979c7e7e45ce065bd8e561f887094d2436dc763c911de5a62ca93c9888201"
+    },
+    {
+      "path": "scripts/cove_verify_pr07.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 7,
+      "sha256": "b1feaea3228f8484d8138ce56b6d82fc5bd16c770917d2b9647586d9d51f50ac"
+    },
+    {
+      "path": "scripts/generate_manuscript_status_snippets.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 2,
+      "sha256": "a399290d792138c0c41a8cbc22ceb2d2d5038547bcc2fd14f852cba706b68faf"
+    },
+    {
+      "path": "scripts/generate_revision_experiment_assets.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 3,
+      "sha256": "51f8b0540d19eb6e3908446162178b0c27d0858f3a6ecdab3b21dc729432bb24"
+    },
+    {
+      "path": "scripts/generate_revision_research_program.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 3,
+      "sha256": "e807607b5007072c241c39acc947ed5deee58c91014a550990b87d3482fba6e4"
+    },
+    {
+      "path": "scripts/generate_semantic_firewall_fuzz_report.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 8,
+      "sha256": "1052b702291afa19b8254c44eb73e98b2b7b68ddadceaca09b55d3344c01f355"
+    },
+    {
+      "path": "scripts/generate_theorem_extension_assets.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 2,
+      "sha256": "8832af75b29bc8f9a5a0b0ea4ba8a49ad743610d75ffa0f9a558d09798095be4"
+    },
+    {
+      "path": "scripts/generate_transfer_sensitivity_report.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 1,
+      "sha256": "5dedf6db87a5bb3e0e95c418f4e7e4bd37c9b02cfec2f589c20b9487b4867d87"
+    },
+    {
+      "path": "scripts/k1_e2e_reduce.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 4,
+      "sha256": "9da1a6ecb7676f531532dfca4e5f4af15665b3fb20947f83b7967752d1ed6db4"
+    },
+    {
+      "path": "scripts/k6_cf4_curl_posterior.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 24,
+      "sha256": "bc945c5d33918a57633d9a3845eaa380f172290a0c560742c46ac8a33b3c7e33"
+    },
+    {
+      "path": "scripts/make_cf4_affine_flow.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 14,
+      "sha256": "1b7b7be644890339c4421beb6e9794ecb5f6c83a65609c5beb1ed2a4165a1845"
+    },
+    {
+      "path": "scripts/make_cf4_bulkflow_apex_depth.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 2,
+      "sha256": "1f73afdfca50c2732a3d4a5b20e371e06c619962884fce11cccc0462cfbc4fc7"
+    },
+    {
+      "path": "scripts/make_current_manuscript_figures.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 22,
+      "sha256": "488c28de4b195ca033c85afadb02b52e4fd233244c063cdb66fdc5c385927fda"
+    },
+    {
+      "path": "scripts/make_egs2_egs3_theorem_figures.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 21,
+      "sha256": "9fdfa73f4f7852c1be37834978020b22ef218da8c50b24a959487bc1c0ceb548"
+    },
+    {
+      "path": "scripts/make_egs_lowell_theorem_figures.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 1,
+      "sha256": "110cc1e3b1e399755d6411fd1da5919de9272f6813346a96fe0f968bbeafb7e6"
+    },
+    {
+      "path": "scripts/make_lowell_morphology_real_map.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 1,
+      "sha256": "283867d15c70a3e365740baf0ed39f92c589816e6189575b4e3f2d5dc218759a"
+    },
+    {
+      "path": "scripts/make_obsdata_r195_r198_figures.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 1,
+      "sha256": "83b4c74d2fe453b25aa7ab9aab807901a4458b13a7ac3dd2bfeeb82623d07e97"
+    },
+    {
+      "path": "scripts/make_observed_data_manuscript_figures.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 1,
+      "sha256": "f64c6903aa2e59bf11dff076470c2b3ddf93441fca15241800dda0fe012935a6"
+    },
+    {
+      "path": "scripts/make_physics_gallery.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 14,
+      "sha256": "88fb9d6b1152ca8dc47636cb77bb40c1a5d1175bbe31500d14936f5aaf1cdddb"
+    },
+    {
+      "path": "scripts/make_pr04_paper_figures.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 1,
+      "sha256": "ed5c6227814e6a645bddedfe6d19c26534431cd0cb3540a57d47ab2391e32426"
+    },
+    {
+      "path": "scripts/make_report_data_analysis_figures.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 28,
+      "sha256": "6dad3adadc9d1bb298e38ead2ec6a468455679b2009444f5b71728cab30d4acd"
+    },
+    {
+      "path": "scripts/make_third_wave_figures.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 8,
+      "sha256": "a69e3e4617bbd3e2a269135f30811e597518f096aeb4065ccc3b0e3e916d5679"
+    },
+    {
+      "path": "scripts/make_v6_no_download_figures.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 2,
+      "sha256": "6d31a1bd981b23cb4c323d99b9ca4540cda86b410146c5356f3b921950ad1df4"
+    },
+    {
+      "path": "scripts/run_egs2_experiments.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 4,
+      "sha256": "a84b60c5f7673c64e4e582003ea68285a0ad5894d22aec4d4d9ca3c0d0f31226"
+    },
+    {
+      "path": "scripts/run_egs3_experiments.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 35,
+      "sha256": "6134ccc100ad5b202f8c47bb07c0314497ba7efff538dc1426b98093dd144f51"
+    },
+    {
+      "path": "scripts/run_pr07_experiments.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 4,
+      "sha256": "07885b16e48cd5c2d9b08fd7013c12b275b8b8b271ceda197a99b2a40920bace"
+    },
+    {
+      "path": "scripts/v5_round15_p1_monopole_frame_diagnostic.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 1,
+      "sha256": "1c5bb7fc55d243666b1b0abf7cbe6e9e40617820439613b4bed43228766a4983"
+    },
+    {
+      "path": "scripts/ver2_artifact_export.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 5,
+      "sha256": "acc3a02c4509c06374b0d3b62741b8ca34d12ca0e81c3c1af94308df79fb7969"
+    },
+    {
+      "path": "scripts/verify_formalism_figure_labels.py",
+      "scope": "active_code_or_current_claim_surface",
+      "semantic_token_count": 7,
+      "sha256": "e2234ee9e6148e568ad4ba723495fe8aba816d6aff1defc146313dad8251a87d"
+    }
+  ],
+  "inventory_file_count": 250,
+  "mask_status": "not_applicable_exact_theory",
+  "null_mock_status": "not_applicable_exact_theory",
+  "owner": "COMMON",
+  "pass": true,
+  "public_use": false,
+  "risk_finding_count": 16,
+  "risk_findings": [
+    {
+      "classification": "registered_claim_firewall",
+      "disposition": "allowed_guard_surface",
+      "file_sha256": "966fedf2f0bd3831bc1065d0d0da1a73033638d0a98affa7f83d5f1bdc4f52e1",
+      "finding_kind": "signed_scalar_isotropy_promotion",
+      "line": 198,
+      "path": "docs/research_program/long_horizon_rescue/pr169_spec.yaml",
+      "text_sha256": "2829220e2f06e0f59197721ce4eb21987e664814830c8bf28b5f98eda62a9f18"
+    },
+    {
+      "classification": "registered_claim_firewall",
+      "disposition": "allowed_guard_surface",
+      "file_sha256": "966fedf2f0bd3831bc1065d0d0da1a73033638d0a98affa7f83d5f1bdc4f52e1",
+      "finding_kind": "signed_scalar_isotropy_promotion",
+      "line": 199,
+      "path": "docs/research_program/long_horizon_rescue/pr169_spec.yaml",
+      "text_sha256": "d59471a1d6966b4eee4f45316be6b90621bd52cfbf745519f24c53e89c370e94"
+    },
+    {
+      "classification": "registered_claim_firewall",
+      "disposition": "allowed_guard_surface",
+      "file_sha256": "966fedf2f0bd3831bc1065d0d0da1a73033638d0a98affa7f83d5f1bdc4f52e1",
+      "finding_kind": "signed_scalar_isotropy_promotion",
+      "line": 214,
+      "path": "docs/research_program/long_horizon_rescue/pr169_spec.yaml",
+      "text_sha256": "1a7e881556f35f02910155fc9748235f5dcca5a21808f1e97a21dbee2c2bea43"
+    },
+    {
+      "classification": "registered_claim_firewall",
+      "disposition": "allowed_guard_surface",
+      "file_sha256": "966fedf2f0bd3831bc1065d0d0da1a73033638d0a98affa7f83d5f1bdc4f52e1",
+      "finding_kind": "signed_scalar_isotropy_promotion",
+      "line": 215,
+      "path": "docs/research_program/long_horizon_rescue/pr169_spec.yaml",
+      "text_sha256": "176ec2b372ef8c5044f1e98cf2d930d5810c06674afc324854da21311d8ce668"
+    },
+    {
+      "classification": "explicit_refutation",
+      "disposition": "allowed_claim_firewall",
+      "file_sha256": "3332c3af4469929a403077b909fb54f1ad169433cb991cccc705367768c7d6b7",
+      "finding_kind": "order_independent_vorticity",
+      "line": 154,
+      "path": "htt/obsstat/egs3_graded_comparator.py",
+      "text_sha256": "2b776a483cec4cbab5579ecc76d32cd2b6786a9766356a3be33a09868f6485d2"
+    },
+    {
+      "classification": "explicit_refutation",
+      "disposition": "allowed_claim_firewall",
+      "file_sha256": "f1a104ae940eaefafdcfe0daadbb749ef61814f8804e2d0ef37f7c4cea0a5ba6",
+      "finding_kind": "order_independent_vorticity",
+      "line": 179,
+      "path": "htt/obsstat/egs3_psd_cone.py",
+      "text_sha256": "8d230c7d8e0f427ffe67bf384fd822446f600065ddfec8565b01bd4dd55b38cc"
+    },
+    {
+      "classification": "registered_claim_firewall",
+      "disposition": "allowed_guard_surface",
+      "file_sha256": "db8f631df75833cfbbfc27cd7253f5f25b960666485907457186f023d0556554",
+      "finding_kind": "signed_scalar_isotropy_promotion",
+      "line": 15,
+      "path": "htt/src/common/egs_oneway.py",
+      "text_sha256": "5824e703a882a73d372eede354e024efac259cb35b46430da2298bcaeb8f2d23"
+    },
+    {
+      "classification": "guard_or_mutation_fixture",
+      "disposition": "allowed_test_surface",
+      "file_sha256": "a21a7d3dd657f238acd2eaef1b1e6e3c9e336b414523026234bdf6d9fca9f23a",
+      "finding_kind": "order_independent_vorticity",
+      "line": 88,
+      "path": "scripts/codex_harness/run_pr169_unsigned_leakage.py",
+      "text_sha256": "c446444d74d98db2d7c4c5226c6d7af97958a53f66c759a77853bf0a28509011"
+    },
+    {
+      "classification": "guard_or_mutation_fixture",
+      "disposition": "allowed_test_surface",
+      "file_sha256": "a21a7d3dd657f238acd2eaef1b1e6e3c9e336b414523026234bdf6d9fca9f23a",
+      "finding_kind": "signed_scalar_isotropy_promotion",
+      "line": 483,
+      "path": "scripts/codex_harness/run_pr169_unsigned_leakage.py",
+      "text_sha256": "b1a4896874c73c77b7af2ecb99afd9c20a0b41b07a9c49017309bf06d5517822"
+    },
+    {
+      "classification": "guard_or_mutation_fixture",
+      "disposition": "allowed_test_surface",
+      "file_sha256": "a21a7d3dd657f238acd2eaef1b1e6e3c9e336b414523026234bdf6d9fca9f23a",
+      "finding_kind": "signed_scalar_isotropy_promotion",
+      "line": 486,
+      "path": "scripts/codex_harness/run_pr169_unsigned_leakage.py",
+      "text_sha256": "7da0abb016bee1fbbb4bd51c4cfd516b22f712ea7aa71f609e2e89a56be2f0cf"
+    },
+    {
+      "classification": "guard_or_mutation_fixture",
+      "disposition": "allowed_test_surface",
+      "file_sha256": "a21a7d3dd657f238acd2eaef1b1e6e3c9e336b414523026234bdf6d9fca9f23a",
+      "finding_kind": "nilsson_symbol_conflation",
+      "line": 488,
+      "path": "scripts/codex_harness/run_pr169_unsigned_leakage.py",
+      "text_sha256": "b723c9780bca4176b9810a807e344cf4b71e49c5af35660b21eb09def84e3818"
+    },
+    {
+      "classification": "guard_or_mutation_fixture",
+      "disposition": "allowed_test_surface",
+      "file_sha256": "a21a7d3dd657f238acd2eaef1b1e6e3c9e336b414523026234bdf6d9fca9f23a",
+      "finding_kind": "nilsson_symbol_conflation",
+      "line": 489,
+      "path": "scripts/codex_harness/run_pr169_unsigned_leakage.py",
+      "text_sha256": "4208ea26b0cadff7ddee9cc6203d96193cd68271b9b1ea4fd7e4babe38921f60"
+    },
+    {
+      "classification": "guard_or_mutation_fixture",
+      "disposition": "allowed_test_surface",
+      "file_sha256": "a21a7d3dd657f238acd2eaef1b1e6e3c9e336b414523026234bdf6d9fca9f23a",
+      "finding_kind": "signed_scalar_global_promotion",
+      "line": 492,
+      "path": "scripts/codex_harness/run_pr169_unsigned_leakage.py",
+      "text_sha256": "a710dc383f48b74fa14a437391dea535d9cf789bbfbf44a31780eff83c691f00"
+    },
+    {
+      "classification": "guard_or_mutation_fixture",
+      "disposition": "allowed_test_surface",
+      "file_sha256": "a21a7d3dd657f238acd2eaef1b1e6e3c9e336b414523026234bdf6d9fca9f23a",
+      "finding_kind": "signed_scalar_global_promotion",
+      "line": 496,
+      "path": "scripts/codex_harness/run_pr169_unsigned_leakage.py",
+      "text_sha256": "b81a217147b5ce807ed1a82df3714678ecde42edc205b4670192515833e811a8"
+    },
+    {
+      "classification": "guard_or_mutation_fixture",
+      "disposition": "allowed_test_surface",
+      "file_sha256": "a21a7d3dd657f238acd2eaef1b1e6e3c9e336b414523026234bdf6d9fca9f23a",
+      "finding_kind": "tilt_only_flrw_promotion",
+      "line": 500,
+      "path": "scripts/codex_harness/run_pr169_unsigned_leakage.py",
+      "text_sha256": "dbb406bfe166d80f2c2a955a54be5f9f6b5b661986ca343f6244b28f14359ee7"
+    },
+    {
+      "classification": "guard_or_mutation_fixture",
+      "disposition": "allowed_test_surface",
+      "file_sha256": "a21a7d3dd657f238acd2eaef1b1e6e3c9e336b414523026234bdf6d9fca9f23a",
+      "finding_kind": "signed_scalar_isotropy_promotion",
+      "line": 504,
+      "path": "scripts/codex_harness/run_pr169_unsigned_leakage.py",
+      "text_sha256": "886870b51792d805e400d2fc47204e9910499df09d59af745dfa2dee0f7380cc"
+    }
+  ],
+  "runtime_environment": {
+    "exact_scalar": "fractions.Fraction and four independent CAS axes",
+    "python": "3.12.3"
+  },
+  "scan_scope": [
+    "htt/**/*.py",
+    "scripts/**/*.py",
+    "docs/manuscript/**/*.tex",
+    "canonical backlog and PR-169 spec",
+    "current egs_results_table_v9 JSON and Markdown"
+  ],
+  "schema": "htt.pr169.all_consumer_scan.v1",
+  "sky_support_status": "not_applicable_exact_theory",
+  "transfer_source": "none",
+  "unresolved_active_claim_count": 0,
+  "unresolved_active_claims": [],
+  "worktree_state": "5b3c96175c226764b3fb7ed9e181e3f3330e1830+PR-169-worktree"
+}

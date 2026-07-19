@@ -5383,13 +5383,11 @@
       "title": "MES four-acceleration honesty theorem + `bounds.py` 결함 수정",
       "owner": "COMMON",
       "contributors": [
-        "BASS",
-        "HTT"
+        "BASS"
       ],
       "adjudicator_role": "independent_non_author_reviewer",
       "implementation_scopes": [
-        "common",
-        "htt"
+        "common"
       ],
       "depends": [
         "PR-124",
@@ -5410,26 +5408,20 @@
       ],
       "files": [
         "htt/src/common",
-        "htt/htt/htt/core",
-        "htt/htt/htt/figures",
-        "htt/bass/transport",
-        "formal_pr168",
-        "sage",
-        "wolfram",
         "scripts/codex_harness",
         "tests/contracts",
         "docs/PR_DELTAS/pr-168.md"
       ],
       "tests": [
         "venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice",
-        "venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_168_mes_four_acceleration_honesty.py"
+        "to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_168_mes_four_acceleration_honesty_theorem_bounds_py.py"
       ],
       "dod": [
-        "subagent(1 spec → 3 `research-code-task` 로 symbolic kernel + bounds.py 수정 → 4 `physics-math-validation`(sign/limit) → 6 `independent-diff-review` → 7 closeout). O(beta), aligned-scalar, fixed-operator, thermodynamic-temperature source contract에서 four-acceleration과 kinematic drive의 ell=1 source-basis collinearity를 blind four-axis CAS으로 봉인. 이 제한된 항등식이 확인되면 `bounds.py`의 non-geodesic `B_accel`을 삭제하고 all-consumer regeneration + stale scan.",
+        "subagent(1 spec → 3 `research-code-task` 로 symbolic kernel + bounds.py 수정 → 4 `physics-math-validation`(sign/limit) → 6 `independent-diff-review` → 7 closeout). O(beta) four-acceleration T-multipole kernel을 유도하고 kinematic-dipole kernel과의 spectral degeneracy를 blind four-axis CAS으로 봉인. 확인되면 `bounds.py`의 non-geodesic `B_accel`을 삭제하고 all-consumer regeneration + stale scan.",
         "blind four-axis CAS kernel seal, bounds.py before/after + consumer scan, manuscript reconciliation.",
-        "B_accel deletion is permitted only after blind four-axis agreement and a passing post-CAS scientific-contract review of the registered source-basis identity; this is not an unrestricted frequency- or full-transfer theorem."
+        "B_accel deletion is permitted only after blind four-axis agreement on the registered spectral-degeneracy identity; otherwise production code is unchanged."
       ],
-      "kill": "If the identity fails CAS adjudication or the registered statement fails post-CAS scientific-contract review, record CAS_FAIL/CAS_BLOCKED as the reproducible roadmap_rescue_v1:C1 result and leave B_accel and every production consumer unchanged.",
+      "kill": "If the registered spectral-degeneracy identity does not reach CAS_4AXIS_PASS, B_accel and all production consumers remain unchanged.",
       "cost": "low",
       "level": "L1",
       "scope": "pre-solver",

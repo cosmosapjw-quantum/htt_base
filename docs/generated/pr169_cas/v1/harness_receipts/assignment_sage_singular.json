@@ -1,0 +1,55 @@
+{
+  "schema_version": 2,
+  "run_id": "pr169-cas-20260719",
+  "assignment_id": "A-PR169-CAS-SAGE",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "cas_sage_singular",
+  "context_version": "07a5e8cd8026d64adaa037e2c0f4986c3e38711ed8aa177ecf7c1d70c9eebd89",
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R3",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-PR169-UNSIGNED-LEAKAGE-AND-WITNESS-STATUS"
+  ],
+  "task": "Execute only the registered sage_singular PR-169 axis with scripts/codex_harness/run_pr169_axis.py --axis sage_singular --run-dir .agent-harness/runs/pr169-cas-20260719. Validate the assignment and contract hashes first. Do not inspect sibling results or edit shared production files; the runner may write only this assignment's declared result envelope and engine-local ignored build/cache files. Report the exact axis status and end with HARNESS_RESULT.",
+  "required_inputs": [
+    {
+      "path": "docs/generated/pr169_cas/CAS_CONTRACT_PR169_UNSIGNED_LEAKAGE.json",
+      "sha256": "b4b2cf6a247209ff22406b7c1f493387934b9e4d2b2824b396a8f3fbc23c2781"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr169_axis.py",
+      "sha256": "a5bea3ae3beac4d201068b879993ae82e10414dd09b712766e54421898af7ec5"
+    },
+    {
+      "path": "sage/pr169_unsigned_leakage_axis.sage",
+      "sha256": "1b6c5229360c9e6b09f07be402610810db9e48f1276d256ff234524b4b8c72e1"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "venv/bin/python",
+    "wolframscript",
+    "sage",
+    "lake",
+    "sha256sum",
+    "git-read-only"
+  ],
+  "required_outputs": [
+    ".agent-harness/runs/pr169-cas-20260719/results/A-PR169-CAS-SAGE.json"
+  ],
+  "result_path": ".agent-harness/runs/pr169-cas-20260719/results/A-PR169-CAS-SAGE.json",
+  "status": "registered",
+  "cas_axis": "sage_singular",
+  "cas_contract": {
+    "path": "docs/generated/pr169_cas/CAS_CONTRACT_PR169_UNSIGNED_LEAKAGE.json",
+    "sha256": "b4b2cf6a247209ff22406b7c1f493387934b9e4d2b2824b396a8f3fbc23c2781"
+  },
+  "assignment_sha256": "998cea56850e36a490d202b1aa4944f067d54129290bd261f1bcefeedb27adcf"
+}

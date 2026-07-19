@@ -144,8 +144,9 @@ def axis_a() -> dict:
     # The two null sectors are NOT the same KIND of null. Record the genuine-zero
     # check (the response column norm of each null sector at leading order) so the
     # rank-2 count is not over-read as a uniform "joint null" (audit FM2 / external
-    # review): W2 is a genuine, order-independent structural null; Omega_k is a
-    # leading-order no-channel that re-opens beyond leading order.
+    # review): W2 is a structural zero column only in this registered response
+    # map; Omega_k is a leading-order no-channel that re-opens beyond leading
+    # order. No all-order or Weyl claim is made for the W2 column.
     design = channel_response_design()
     col_norms = {s: float(n) for s, n in zip(
         ("Sigma2", "W2", "Omega_tilt", "Omega_k"), np.linalg.norm(design, axis=0))}

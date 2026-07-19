@@ -304,6 +304,23 @@ _CF4_P0_INHERITED_ROWS = {
 def _apply_overlay(rows: list[dict]) -> list[dict]:
     out = []
     for row in rows:
+        if row["theorem_id"] == "EGS3-A1":
+            row = dict(row)
+            row["statement"] = (
+                "Graded-comparator identifiability within the registered "
+                "leading-channel response map: from {low-l CMB-T, radial "
+                "velocity} the reachable subspace of g has rank 2."
+            )
+            row["key_result"] = (
+                "rank 2; reachable ['Sigma2', 'Omega_tilt']; V2/W2 is a "
+                "structural zero column only in the registered response map "
+                "and may re-open under transverse velocities or a separately "
+                "derived full vorticity transfer; Omega_k is a leading-order "
+                "no-channel that re-opens beyond leading order"
+            )
+            row["status"] = "proven_gate"
+            out.append(row)
+            continue
         if row["theorem_id"] == "EGS3-D2":
             out.append(
                 _r(
@@ -377,6 +394,7 @@ def _payload() -> dict:
     config = {
         "schema": "htt.egs.results_table.v9",
         "supersession_overlay": sorted(_SUPERSESSION_OVERLAY),
+        "claim_scope_overlay": ["EGS3-A1"],
         "cf4_quarantined_rows": sorted(_CF4_P0_INHERITED_ROWS),
         "v9_row_ids": [row["theorem_id"] for row in _v9_rows()],
     }
@@ -390,8 +408,7 @@ def _payload() -> dict:
                                   "+ egs_results_table_v8.json (v8, "
                                   "hash-frozen); rows inherited with a "
                                   "supersession overlay on EGS3-E1/E2/E4/G2 "
-                                  "(registry-retracted or superseded content "
-                                  "must not print as live; REV-R179)",
+                                  "and a PR-169 claim-scope overlay on EGS3-A1",
         "claim_tier": base["claim_tier"],
         "transfer_source": "mixed_none_registered_external_and_proxy_by_row",
         "config_hash": "sha256:" + hashlib.sha256(

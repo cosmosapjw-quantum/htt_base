@@ -6,7 +6,7 @@
     "gr_boltzmann": "GR / covariant-Boltzmann theory axis",
     "math_stat": "mathematics / statistics theory axis"
   },
-  "based_on_frozen_tables": "egs_results_table.json (v7, byte-frozen) + egs_results_table_v8.json (v8, hash-frozen); rows inherited with a supersession overlay on EGS3-E1/E2/E4/G2 (registry-retracted or superseded content must not print as live; REV-R179)",
+  "based_on_frozen_tables": "egs_results_table.json (v7, byte-frozen) + egs_results_table_v8.json (v8, hash-frozen); rows inherited with a supersession overlay on EGS3-E1/E2/E4/G2 and a PR-169 claim-scope overlay on EGS3-A1",
   "blockers_open": [
     "BLOCKED_MISSING_PR4_E2E_ACCESS (E2E-systematics null only; look-elsewhere discharged)",
     "CF4 P0 findings C1-K5-MV-F1, C3-K5-VCORR-ML-F1, and N-DATA-CF4-DOWNSTREAM remain OPEN; replacement_value=null and scientific_effect=none",
@@ -20,14 +20,14 @@
   ],
   "claim_boundary": "conditional theorems + synthetic mechanics + real-data measurements on owned inputs; no detection, family/geometry, or native-solver result. Measured rows are model-independent descriptors; K6 is an honest structural no-go; K1 is a partial (look-elsewhere) discharge under an idealised null.",
   "claim_tier": "program_theorem_and_synthetic_mechanics",
-  "config_hash": "sha256:31951f0ea9091d1d2abbe89b43b84af291355d3d9faa72d403f0adf8dec1f4e5",
+  "config_hash": "sha256:f9ba838c52ed087f4e5b7563b341a1ca963b64806edc22dad6ced950fdd6d317",
   "family_identification": false,
   "generating_command": "python scripts/build_egs_results_table_v9.py",
   "git_commit_or_worktree_state": "content-addressed-inputs",
   "implementation_scope": "common",
   "input_hashes": [
     "legacy/cf4_p0/tables/egs_results_table_v8.json:sha256:a50de53b7e314d3cef50e1db68b5d58e7a7d2205fbc83b2e1144361a8d88b5d7",
-    "scripts/build_egs_results_table_v9.py:sha256:58acdd46fe18a2cc39311cf71e64652e76d92212fcc0a496ccf850b14db0cb68"
+    "scripts/build_egs_results_table_v9.py:sha256:8e993bb2ae564b19b1a105c23f1ba2953a25fcb5f7143f5d8a95b48df634d6ba"
   ],
   "native_solver_result": false,
   "null_mock_status": "mixed_by_row",
@@ -60,8 +60,8 @@
     {
       "axis": "math_stat",
       "evidence": "egs3-gates A1; fig_egs3_a1_graded_rank",
-      "key_result": "rank 2; reachable ['Sigma2', 'Omega_tilt']; null = structural {W2} (order-independent: radial n.Omega.n=0 + CMB curl/Weyl-blind) + leading-order no-channel {Omega_k} (re-opens beyond leading order)",
-      "statement": "Graded-comparator identifiability (within the registered leading-channel response map): from {low-l CMB-T, radial velocity} the reachable subspace of g is rank 2",
+      "key_result": "rank 2; reachable ['Sigma2', 'Omega_tilt']; V2/W2 is a structural zero column only in the registered response map and may re-open under transverse velocities or a separately derived full vorticity transfer; Omega_k is a leading-order no-channel that re-opens beyond leading order",
+      "statement": "Graded-comparator identifiability within the registered leading-channel response map: from {low-l CMB-T, radial velocity} the reachable subspace of g has rank 2.",
       "status": "proven_gate",
       "theorem_id": "EGS3-A1"
     },

@@ -1,0 +1,113 @@
+{
+  "schema": "htt.pr169.closeout_review_receipt.v1",
+  "pr_id": "PR-169",
+  "owner": "COMMON",
+  "implementation_scope": "common_harness_and_claim_firewall",
+  "claim_tier": "conditional",
+  "transfer_source": "none",
+  "config_hash": "966fedf2f0bd3831bc1065d0d0da1a73033638d0a98affa7f83d5f1bdc4f52e1",
+  "input_hashes": {
+    "docs/generated/pr169_reviews/result_harness_code.json": "482b585c7272ec52d94df927b9c2d1dbc813a0c204162cf08f4b83ffa2497806",
+    "docs/generated/pr169_reviews/result_science_claim.json": "75871de567a9a70a4b4ff5f7418f4c37982605a0959e5a54bdc1aaa960215949"
+  },
+  "sky_support_status": "not_applicable_exact_theory",
+  "mask_status": "not_applicable_exact_theory",
+  "covariance_status": "not_applicable_exact_theory",
+  "null_mock_status": "not_applicable_exact_theory",
+  "caveats": [
+    "This receipt adjudicates remediation of review findings; it is not a new independent review envelope.",
+    "The terminal result remains algebraic_only because every physical-promotion receipt is missing."
+  ],
+  "generating_command": "main-writer evidence adjudication followed by registered check and pytest commands listed in verification",
+  "git_commit": "5b3c96175c226764b3fb7ed9e181e3f3330e1830",
+  "worktree_state": "5b3c96175c226764b3fb7ed9e181e3f3330e1830+PR-169-worktree",
+  "adjudicator": "main_writer",
+  "adjudicated_on": "2026-07-19",
+  "review_inputs": {
+    "docs/generated/pr169_reviews/assignment_harness_code.json": "cc5603c9b84b4aabcee7acb59e6c6a561c3ee984bbd1577681ea4ee1565cf47b",
+    "docs/generated/pr169_reviews/assignment_science_claim.json": "46dc302ee00b12cd157a77d81832cb6f3bfcbd363043363269a11624bf38c9b8",
+    "docs/generated/pr169_reviews/result_harness_code.json": "482b585c7272ec52d94df927b9c2d1dbc813a0c204162cf08f4b83ffa2497806",
+    "docs/generated/pr169_reviews/result_science_claim.json": "75871de567a9a70a4b4ff5f7418f4c37982605a0959e5a54bdc1aaa960215949"
+  },
+  "review_verdicts_preserved": {
+    "science_claim": "fail",
+    "harness_code": "FAIL_P1"
+  },
+  "finding_resolutions": [
+    {
+      "finding_id": "PR169-FINAL-SCIENCE-P1-001",
+      "status": "remediated",
+      "resolution": "The manuscript now states that vanishing displacement removes only tilt and that FLRW recovery still requires the full EGS premises and closure of the remaining sectors.",
+      "evidence": "docs/manuscript/ch01_introduction.tex"
+    },
+    {
+      "finding_id": "PR169-FINAL-SCIENCE-P1-002",
+      "status": "remediated",
+      "resolution": "The manuscript describes x_C only as a signed comparator on registered homogeneous sectors, explicitly denies an unsigned bound, and the scanner now rejects both promotion phrasings.",
+      "evidence": "scripts/codex_harness/run_pr169_unsigned_leakage.py"
+    },
+    {
+      "finding_id": "PR169-FINAL-SCIENCE-P2-001",
+      "status": "remediated",
+      "resolution": "A closed classification-disposition schema now rejects missing, unknown, and incompatible values before the frozen CAS-bound consumer guard is called.",
+      "evidence": "tests/pr_cards/test_pr_169_unsigned_isotropy_leakage_ceiling_m_max_nilsson_.py"
+    },
+    {
+      "finding_id": "PR169-HC-P1-001",
+      "status": "remediated",
+      "resolution": "Refutation scope is match-local; reversed and natural-language Nilsson conflations, global-promotion wording, tilt-only FLRW wording, and backlog-locality mutations are registered and killed.",
+      "evidence": "docs/generated/pr169_mutation_report.json"
+    },
+    {
+      "finding_id": "PR169-HC-P1-002",
+      "status": "remediated",
+      "resolution": "CAS aggregation now requires a valid assignment self-hash, required inputs, canonical outer envelope, exact nested obligation set, computed PASS values, source/input hashes, and aligned statuses and commands.",
+      "evidence": "scripts/codex_harness/collect_pr169_cas_receipts.py"
+    },
+    {
+      "finding_id": "PR169-HC-P1-003",
+      "status": "remediated",
+      "resolution": "The complete v1 text source bundle is preserved under an immutable source_snapshot; collection records each current-or-snapshot input resolution, while v2 forbids snapshot fallback.",
+      "evidence": "docs/generated/pr169_cas_collection_receipt.json"
+    }
+  ],
+  "remediated_surface_hashes": {
+    "scripts/codex_harness/collect_pr169_cas_receipts.py": "305904405cd9535d9703696a93672999cf6a62aacd145cb8d2a880cf498c6284",
+    "scripts/codex_harness/run_pr169_unsigned_leakage.py": "a21a7d3dd657f238acd2eaef1b1e6e3c9e336b414523026234bdf6d9fca9f23a",
+    "tests/pr_cards/test_pr_169_unsigned_isotropy_leakage_ceiling_m_max_nilsson_.py": "52bf3a464641c8d7c252aa4be89eccfba43b9b3c75f18b0853b4ef98bc597300",
+    "docs/manuscript/ch01_introduction.tex": "91e4348c2e2e6579507694474ea8ba179ad24bc6c5f39e29047848b587511045",
+    "docs/generated/pr169_cas_collection_receipt.json": "ad533e3bbce7f28b278ddcbb96c84cde97be5adc0a20a994f31478494f45e6e4",
+    "docs/generated/pr169_all_consumer_scan.json": "fa1b11e86b6dfcc36f45c1110793ad942bc992ada97ca0cddff7e60061b26ceb",
+    "docs/generated/pr169_mutation_report.json": "826907b7343054265cc977b46318c00afa1ac6dc0125967b524b86c6a1d53f9d",
+    "docs/generated/pr169_result_card.json": "4549e4168d99ed459b98ec1df42288061b5e496001364bf34982c13136c714a5",
+    "docs/generated/pr169_artifact_manifest.json": "3cfcea1eed3c6c9f3fb6ffffe2e72ce40c62cb2e7682d787f153540dd774bf4b"
+  },
+  "historical_source_replay": {
+    "policy": "v1_only_snapshot_fallback",
+    "wolfram_sha256": "f45ebf93e4e745633965ecb37880239b03d705bafd0fd9458e4486392b5a4695",
+    "sympy_sha256": "32c9078a07943a012342b10359614bcb2d8b6f24b3c57ecf890e08eaca143738",
+    "sage_sha256": "1b6c5229360c9e6b09f07be402610810db9e48f1276d256ff234524b4b8c72e1",
+    "lean_executable_sha256": "442892c650f622b5025d21a376cf47950732820a2ca022bc529bf816fe8890aa"
+  },
+  "verification": {
+    "pr169_targeted_pytest": "28 passed",
+    "related_egs_regression": "79 passed",
+    "pr167_pr168_regression": "14 passed",
+    "smoke": "6 passed, 9114 deselected",
+    "cas_v1_replay": "CAS_FAIL",
+    "cas_v2_replay": "CAS_4AXIS_PASS",
+    "claim_language": "0 issues",
+    "consumer_unresolved": 0,
+    "mutation_survivors": 0
+  },
+  "fresh_post_fix_reviewer": false,
+  "fresh_post_fix_reviewer_note": "The PR-169 cumulative subagent budget was exhausted before remediation. Original independent FAIL envelopes are preserved; the main writer resolved every concrete finding and replayed the registered deterministic gates without opening an unregistered reviewer assignment.",
+  "terminal_adjudication": {
+    "process_gate_status": "PASS",
+    "scientific_result": "algebraic_only",
+    "physical_promotion": false,
+    "public_use": false,
+    "family_identification": false,
+    "native_solver_validation": false
+  }
+}

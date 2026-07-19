@@ -43,7 +43,8 @@ the departure from FLRW, and what does it constrain?}
 
 This report is a claim-tiered framework paper, not a native-solver
 detection paper.  It introduces a signed comparator coordinate for
-FLRW departure, separates MIO diagnostics from HTT likelihoods,
+registered homogeneous-sector contributions, separates MIO diagnostics
+from HTT likelihoods,
 and uses current matter-dipole inputs only as a transfer-conditional
 and dipole-conditional demonstration layer.  Because almost-isotropic
 CMB temperature fields do not by themselves close every matter-sector
@@ -52,17 +53,17 @@ designed to state what current data can quantify, what remains
 conditional, and what future tomographic or native-morphology
 information would be needed to promote a claim.
 
-To answer this question, we need a framework that quantifies
-FLRW departure in a covariant, assumption-explicit manner.
+To answer this question, we need a framework that records which
+assumption-dependent EGS and matter-sector conditions remain open.
 The Maartens--Ellis--Stoeger (MES) kinematic bound
 hierarchy~\cite{MES1995a,StoegerME1995} provides the
 algebraic foundation: upper bounds on the shear, vorticity,
 and four-acceleration relative to the expansion rate, derived
 from the observed CMB multipoles.  We extend this hierarchy
-into a four-dimensional constraint space through a single
+into a four-dimensional comparator space through a single
 algebraic identity---the \emph{master departure identity}---that
-connects all kinematic sources of anisotropy into a scalar
-measure of FLRW departure.
+records four signed kinematic sectors in one scalar coordinate.
+This coordinate does not bound the unsigned component size.
 
 
 % ============================================================
@@ -79,7 +80,10 @@ the vorticity parameter, $\Otilt$ the tilt contribution
 geometry frame), and $\Okaniso$ the anisotropic curvature
 contribution.  Each term is a dimensionless ratio,
 normalised by the expansion rate $\Theta$, so that
-$x_C = 0$ recovers exact FLRW symmetry.
+exact FLRW symmetry implies $x_C = 0$.  The converse is false:
+because $x_C$ is a signed comparator projection, zero or small
+$x_C$ can coexist with non-zero typed components and does not
+establish exact or almost-FLRW symmetry.
 
 The identity is exact within the Bianchi symmetry class for a
 chosen perfect-fluid equation of state.  It is not ``model
@@ -300,8 +304,9 @@ The framework is subject to three structural limitations
 that we state explicitly.
 
 First, the Bianchi symmetry class assumes spatial
-homogeneity.  The departure parameter $x_C$ constrains the
-global anisotropy but cannot address spatially
+homogeneity.  The signed comparator $x_C$ organises global
+homogeneous sectors but does not bound their unsigned anisotropy;
+it also cannot address spatially
 inhomogeneous backreaction.  The connection to the Buchert
 spatial-averaging framework is discussed in
 Chapter~\ref{ch:future}
@@ -352,10 +357,12 @@ displaced from the CMB rest frame by more than the
 $\Lambda$CDM kinematic prediction.  The departure framework
 quantifies this displacement through the tilt parameter
 $\Otilt$, which measures the energy flux carried by the
-relative motion of matter and radiation.  The EGS theorem
-guarantees that if this displacement vanishes, the FLRW
-model is recovered; the departure framework tracks what
-happens when it does not.
+relative motion of matter and radiation.  Vanishing displacement
+removes only this tilt contribution.  Recovering FLRW still
+requires the full EGS premises together with closure of the
+remaining shear, vorticity, curvature, and matter-sector
+conditions; the departure framework tracks which conditions
+remain open.
 
 
 % ============================================================

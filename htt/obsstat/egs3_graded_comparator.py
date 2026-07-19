@@ -3,7 +3,8 @@
 Framework upgrade. The report's signed scalar comparator
 ``x_C = Sigma^2 - W^2 + Omega_tilt + Omega_k`` contracts four physically
 distinct invariants into one number, so a large shear and a large vorticity can
-cancel (`Sigma^2 - W^2 ~ 0`) and read as near-FLRW. We promote the primary
+cancel (`Sigma^2 - W^2 ~ 0`) while the scalar is small. No FLRW or almost-EGS
+inference follows. We promote the primary
 object to the GRADED COMPARATOR VECTOR
 
     g = (Sigma^2, W^2, Omega_tilt, Omega_k) in R^4 ,   x_C = <c, g>,  c=(+1,-1,+1,+1),
@@ -14,16 +15,18 @@ A1 theorem (within the registered leading-channel response map). From the two
 channels the program actually uses --- low-l CMB temperature and radial peculiar
 velocity --- the data-identifiable subspace of g is exactly RANK 2: Sigma^2 (via
 the CMB quadrupole, NT-A1) and Omega_tilt (via the CMB/velocity dipole). The
-vorticity W^2 and the anisotropic-curvature Omega_k both have a zero response
+vorticity V^2 (legacy repository label W^2) and the anisotropic-curvature
+Omega_k both have a zero response
 column and so the rank count is 2 --- but they are NOT the same KIND of null
 (the rank count alone cannot distinguish a genuine null from a Sigma^2-collinear
 degeneracy; see `NULL_SECTOR_KIND` / `describe_null_sectors`):
-  * W^2 is a GENUINE, order-INDEPENDENT structural null: CMB temperature is blind
-    to the curl/magnetic-Weyl sector at EGS order (Nilsson-Uggla-Wainwright-Lim
-    Weyl loophole), and radial peculiar velocities carry no vorticity,
-    n^a Omega_ab n^b = 0 exactly (PAPER-A A-radial-novortex). It re-opens only via
-    a DIFFERENT observable (transverse velocities, CMB B-modes), not by going to
-    higher order; and its column is a GENUINE zero, not Sigma^2-collinear.
+  * V^2/W^2 is a structural null of the DECLARED leading-order response map:
+    the registered CMB-temperature support column is zero at this order, and
+    radial peculiar velocities carry no vorticity because
+    n^a Omega_ab n^b = 0 exactly (PAPER-A A-radial-novortex). Transverse
+    velocities re-open the radial projection. No all-order CMB-temperature or
+    magnetic-Weyl equivalence is asserted; a full vorticity-specific transfer
+    must be recalculated separately.
   * Omega_k is a LEADING-EGS-ORDER no-channel: no registered low-l channel sources
     the anisotropic spatial-curvature scalar at leading order. This is
     truncation-dependent and RE-OPENS beyond leading order (higher-order ISW,
@@ -48,7 +51,8 @@ COMPARATOR_SIGNS = np.array([+1.0, -1.0, +1.0, +1.0])   # c: x_C = c . g
 
 # Channel-observable rows; columns are (Sigma2, W2, Omega_tilt, Omega_k).
 # 1 = the channel observable responds to that sector at leading EGS order; 0 =
-# structurally blind (Weyl loophole / radial no-go / no low-l curvature source).
+# zero in the declared response map (radial no-go / registered leading-order
+# CMB-temperature support / no low-l curvature source).
 CHANNELS = ("cmb_quadrupole", "cmb_dipole", "radial_velocity_dipole")
 _RESPONSE_SUPPORT = {
     "cmb_quadrupole":        (1.0, 0.0, 0.0, 0.0),   # shear sources C2 (NT-A1)
@@ -61,11 +65,11 @@ _RESPONSE_SUPPORT = {
 # ALONE cannot characterise them -- a leading-order zero column is indistinguishable
 # by rank from a genuine null or a Sigma2-collinear degeneracy. This annotation
 # records which holds:
-#   * W2  -- a GENUINE, order-INDEPENDENT structural null. Radial peculiar velocities
-#            satisfy n.Omega.n == 0 exactly (PAPER-A radial no-go) AND CMB temperature
-#            is curl/magnetic-Weyl-blind at EGS order. It does NOT re-open by going to
-#            higher order; only a DIFFERENT observable (transverse velocities, CMB
-#            B-modes) re-opens it.
+#   * W2  -- a structural null of THIS registered leading-order map. Radial
+#            peculiar velocities satisfy n.Omega.n == 0 exactly; the declared
+#            CMB-temperature column is zero at this order. No all-order or
+#            magnetic-Weyl claim is made. Transverse velocities re-open the
+#            radial projection; a full transfer requires separate calculation.
 #   * Omega_k -- a LEADING-EGS-ORDER no-channel. No registered low-l channel sources
 #            the anisotropic spatial-curvature scalar AT LEADING ORDER; this is
 #            truncation-dependent and RE-OPENS beyond leading order (higher-order ISW,
@@ -73,9 +77,10 @@ _RESPONSE_SUPPORT = {
 NULL_SECTOR_KIND = {
     "W2": {
         "kind": "structural_null",
-        "order_dependence": "order_independent",
-        "reason": "radial n.Omega.n=0 (PAPER-A no-go) + CMB curl/Weyl-blind at EGS order",
-        "reopens_via": ("transverse_peculiar_velocity", "cmb_b_modes"),
+        "scope": "registered_leading_egs_response_map_only",
+        "order_dependence": "not_claimed_beyond_registered_map",
+        "reason": "radial n.Omega.n=0 exactly + registered leading-order CMB-temperature response column zero",
+        "reopens_via": ("transverse_peculiar_velocity", "full_vorticity_specific_transfer"),
     },
     "Omega_k": {
         "kind": "no_channel_leading_order",
@@ -143,12 +148,14 @@ def identifiable_rank(design: np.ndarray | None = None, *, tol: float = 1e-12) -
 def describe_null_sectors(null_sectors: tuple[str, ...] | None = None) -> dict:
     """Per-sector null KIND for the identifiability null (audit FM2).
 
-    Distinguishes the genuine, order-independent structural null (W2) from the
-    leading-EGS-order no-channel (Omega_k). The two are NOT the same null even
-    though both produce a zero response column and the same rank-2 count: W2 is
-    re-opened only by a different observable (transverse velocities / B-modes),
-    while Omega_k re-opens within the same channels beyond leading EGS order
-    (higher-order ISW, lensing, the native low-l transfer). Returns the
+    Distinguishes the structural zero column for V2/W2 in the registered
+    leading-order response map from the leading-EGS-order no-channel
+    (Omega_k). The two are NOT the same null even though both produce a zero
+    response column and the same rank-2 count. No order-independent or Weyl
+    statement is inferred for V2/W2: transverse velocities or a separately
+    derived full vorticity transfer can re-open it. Omega_k instead re-opens
+    within the same channels beyond leading EGS order (higher-order ISW,
+    lensing, the native low-l transfer). Returns the
     `NULL_SECTOR_KIND` record for each null sector that carries one."""
     if null_sectors is None:
         null_sectors = identifiable_rank().null_sectors

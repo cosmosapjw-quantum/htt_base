@@ -1,0 +1,51 @@
+{
+  "schema_version": 2,
+  "run_id": "pr169-cas-v2-20260719",
+  "assignment_id": "A-PR169-CAS-V2-SAGE",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "cas_sage_singular",
+  "context_version": "46dae5f7e021ff69ba2a288bd2d3f9b6e7fcfca6043d25c3ca88fa61b4643f8d",
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R3",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "PR169-EXACT-UNSIGNED-CEILING"
+  ],
+  "task": "Independently execute only the SageMath+Singular PR-169 version-2 CAS axis with the sealed wrapper. Validate assignment and contract hashes, do not inspect sibling results, edit no shared files, and return the declared result envelope.",
+  "required_inputs": [
+    {
+      "path": "docs/generated/pr169_cas/CAS_CONTRACT_PR169_UNSIGNED_LEAKAGE_V2.json",
+      "sha256": "963e19b76eec31c74c27c0b014a80484f798528ab5c7cf5dab067f50916b5aad"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr169_axis_v2.py",
+      "sha256": "2a14bd1be98f50960ef1bbb1318736e907e69dc2956c9b876837a16880ee79e6"
+    },
+    {
+      "path": "sage/pr169_unsigned_leakage_axis.sage",
+      "sha256": "3417b99472a79d22ed1f9e65e796d6db72c270b3932e3b8397f444475955cfe9"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "sage",
+    "python3"
+  ],
+  "required_outputs": [
+    ".agent-harness/runs/pr169-cas-v2-20260719/results/A-PR169-CAS-V2-SAGE.json"
+  ],
+  "result_path": ".agent-harness/runs/pr169-cas-v2-20260719/results/A-PR169-CAS-V2-SAGE.json",
+  "status": "registered",
+  "cas_axis": "sage_singular",
+  "cas_contract": {
+    "path": "docs/generated/pr169_cas/CAS_CONTRACT_PR169_UNSIGNED_LEAKAGE_V2.json",
+    "sha256": "963e19b76eec31c74c27c0b014a80484f798528ab5c7cf5dab067f50916b5aad"
+  },
+  "assignment_sha256": "2b81cef1d47ecd664228f6504f1ded761f377c5537e235aca80d96bd8ca3c1a1"
+}

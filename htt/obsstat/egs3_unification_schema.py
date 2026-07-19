@@ -11,11 +11,12 @@ refining the existing one.
 Instance 1 -- comparator lane (imported read-only from
 ``egs3_graded_comparator``): A = channel_response_design() (3 channels x 4
 sectors, exact {0,1} support), S = identity on the channel outputs. Exact rank
-2; null basis = {e_W2, e_Omega_k}; the null KINDS differ (W2 = genuine
-order-independent structural null; Omega_k = leading-order no-channel that
-re-opens at higher order within the same channels -- NULL_SECTOR_KIND is
-carried, not flattened). Re-opening = transverse peculiar velocities / CMB
-B-modes (W2), higher-order transfer (Omega_k).
+2; null basis = {e_W2, e_Omega_k}; the null KINDS differ (W2 is structural
+only within the registered leading-order map; Omega_k is a leading-order
+no-channel that re-opens at higher order within the same channels --
+NULL_SECTOR_KIND is carried, not flattened). Re-opening = transverse peculiar
+velocities or a separately derived full vorticity transfer (W2), and
+higher-order transfer (Omega_k).
 
 Instance 2 -- Teff lane (imported read-only from ``htt.teff.representative``):
 perturbation directions = {(n,k) insertion amplitude, two-temperature mixing

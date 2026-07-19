@@ -1,8 +1,10 @@
 """EGS3 B3: vorticity re-opening complement (closes the NT2-B3 'to close').
 
-NT2-B3 proved the vorticity term is a JOINT blind sector of {CMB-temperature,
-radial peculiar velocity}: radial projection n^a Omega_ab n^b = 0 exactly, and
-CMB-T is blind to the curl/Weyl sector at EGS order. The natural next question
+NT2-B3 registered the vorticity term as a joint zero column of the declared
+leading-order {CMB-temperature, radial peculiar velocity} map. The radial
+projection n^a Omega_ab n^b = 0 is exact; the CMB-temperature zero is explicitly
+restricted to the registered response map and is not a Weyl or all-order claim.
+The natural next question
 ('to close') is WHICH additional channel re-opens it. This module answers it
 constructively:
 
@@ -10,12 +12,10 @@ constructively:
     transverse direction m perpendicular to the line of sight n, the response
     n^a Omega_ab m^b = (omega x n) . m is generically NONZERO -- the transverse
     velocity channel carries vorticity that the radial channel cannot.
-  * CMB POLARIZATION B-modes couple to the magnetic Weyl tensor, re-opening the
-    sector the temperature channel misses (registered here as a named channel;
-    the quantitative transfer is the B1 semi-native calculator's remit).
-
-So the no-go is exactly two channels wide, and these are the two that break it.
-Algebraic check only; diagnostic-only; no detection.
+The implemented result establishes only the transverse-vorticity reopening.
+A CMB or magnetic-Weyl bridge requires a separately derived vorticity-specific
+transfer and is not supplied here. Algebraic check only; diagnostic-only; no
+detection.
 """
 from __future__ import annotations
 

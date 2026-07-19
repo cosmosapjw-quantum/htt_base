@@ -1,0 +1,20 @@
+name = "pr169unsignedleakage"
+version = "0.1.0"
+defaultTargets = ["pr169unsignedleakage"]
+
+[leanOptions]
+relaxedAutoImplicit = false
+weak.linter.mathlibStandardSet = true
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.31.0"
+
+[[lean_lib]]
+name = "Pr169UnsignedLeakage"
+
+[[lean_exe]]
+name = "pr169unsignedleakage"
+root = "Pr169UnsignedLeakage"
+

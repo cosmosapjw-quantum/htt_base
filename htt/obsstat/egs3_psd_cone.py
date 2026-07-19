@@ -176,9 +176,10 @@ class EigenIdentifiability:
     null_residual: float          # ||(I-P_R) M restricted to recovered|| -> 0
     reachable_recovers_sectors: bool
     # NULL-KIND annotation (2026-07 review P2): the two nulls are NOT the same
-    # kind -- W2 is a genuine order-independent structural null; Omega_k is a
-    # leading-EGS-order no-channel that re-opens beyond leading order within
-    # the same channels (see egs3_graded_comparator.NULL_SECTOR_KIND).
+    # kind -- W2 is a structural zero column only in the registered response
+    # map; no order-independent claim is made. Omega_k is a leading-EGS-order
+    # no-channel that re-opens beyond leading order within the same channels
+    # (see egs3_graded_comparator.NULL_SECTOR_KIND).
     null_sector_kinds: tuple[str, ...] = ()
 
 

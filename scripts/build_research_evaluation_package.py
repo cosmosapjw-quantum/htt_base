@@ -638,9 +638,10 @@ theorems applying GR + the covariant Boltzmann hierarchy directly to these varia
 
 - **Identifiability / rank:** within the registered leading-channel response map the
   comparator is rank-2 -- `Sigma^2` (CMB quadrupole) and `Omega_tilt` (dipole/bulk flow)
-  are reachable. The two null sectors are NOT the same kind: `W^2` is a genuine,
-  order-independent structural null (radial `n.Omega.n=0` + CMB curl/Weyl-blindness; its
-  response column is a genuine zero, not `Sigma^2`-collinear), while `Omega_k` is a
+  are reachable. The two null sectors are NOT the same kind: `W^2` is structural
+  only inside the registered leading-order map (radial `n.Omega.n=0` exactly plus
+  a declared zero CMB-temperature column, without a Weyl or all-order claim),
+  while `Omega_k` is a
   leading-EGS-order no-channel that re-opens beyond leading order. Is the response-map /
   null-space argument correct and complete? Is the genuine-zero-vs-degeneracy distinction sound?
 - **PSD-cone redesign:** the comparator as a PSD matrix `M>=0` with `x_C = tr(C M)`

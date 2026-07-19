@@ -1,0 +1,172 @@
+{
+  "schema_version": 2,
+  "run_id": "pr169-final-review-20260719",
+  "assignment_id": "A-PR169-FINAL-SCIENCE-CLAIM",
+  "claim_id": "C-PR169-FINAL-SCIENCE-CLAIM",
+  "context_version": "e46ebeb1ff40ca67ccecbbfdbca01e229b1619356d600a2528e9f892648d1dae",
+  "independence_mode": "blind-results",
+  "status": "fail",
+  "result_path": ".agent-harness/runs/pr169-final-review-20260719/results/A-PR169-FINAL-SCIENCE-CLAIM.json",
+  "summary": "The exact comparator algebra, typed Nilsson-variable separation, physical-receipt kill switch, v1/v2 receipt lineage, table overlay, and immutable-card supersession are internally sound on the assigned evidence. Integrated closeout nevertheless fails because two active manuscript claims contradict the registered claim ceiling and were missed by the consumer gate. PR-169's own precedence therefore requires process FAIL and scientific result none until those consumer findings are remediated. No P0, two P1, and one P2 findings are reported.",
+  "recommended_terminal_route": {
+    "process_gate_status": "FAIL",
+    "scientific_result": "none",
+    "public_use": false,
+    "reason": "consumer_gate_fail under docs/research_program/long_horizon_rescue/pr169_spec.yaml:185-187"
+  },
+  "steelman_for_acceptance": {
+    "statement": "The strongest acceptance case is that the rational bounds are elementary and exactly attained, all four v2 axes are receipt-bound to one new contract hash with no v1 reuse, the Nilsson Weyl variable and repository vorticity variable are explicitly distinct, every physical-promotion receipt is MISSING, the candidate branch is superseded without rewriting the intake card, and all result artifacts remain internal/public_use=false.",
+    "disposition": "Accepted for the exact-math and algebraic-only subclaims, but insufficient for integrated acceptance because the current active-consumer gate is false-negative."
+  },
+  "claim_results": [
+    {
+      "subclaim": "M_max(B)=4B on the capped carrier",
+      "verdict": "pass",
+      "basis": "Coordinate caps give M_unsigned <= 4B; (B,B,B,-B) satisfies x_C=0 and attains 4B. Fraction replay at B=3/10 returned 6/5."
+    },
+    {
+      "subclaim": "M_slice_max(B)=2B on the shear-vorticity slice",
+      "verdict": "pass",
+      "basis": "On Omega_tilt=DeltaOmega_k=0, x_C=0 forces Sigma2=V2, so M_unsigned=2 Sigma2 <= 2B; (B,B,0,0) attains 2B."
+    },
+    {
+      "subclaim": "x_C=0 supplies no B-independent unsigned bound",
+      "verdict": "pass",
+      "basis": "For every rational a>0, (a,a,0,0) has x_C=0 and M_unsigned=2a; replay included a=1234567/89."
+    },
+    {
+      "subclaim": "Nilsson W_N2 is not repository V2",
+      "verdict": "pass_with_source_scope_caveat",
+      "basis": "The hash-pinned provenance defines W_N2 from electric/magnetic Weyl tensors over H^4 and V2 from vorticity over H^2. The typed bridge rejects substitution without an exact-model derivation. The assigned evidence includes a main-writer PDF replay but no independent PDF transcription."
+    },
+    {
+      "subclaim": "Physical promotion is unavailable",
+      "verdict": "pass",
+      "basis": "All eight typed same-state physical receipts are MISSING; constructive_promotion_allowed=false. CAS agreement cannot supply the missing Einstein-matter premises."
+    },
+    {
+      "subclaim": "v1/v2 CAS lineage is non-reusing and hash-consistent",
+      "verdict": "pass_at_receipt_level",
+      "basis": "The assigned collection receipt records v1 CAS_FAIL, v2 CAS_4AXIS_PASS, distinct contract/assignment/normalized/outer hashes, and no cross-version reuse. All assigned PR-169 artifacts bind the same receipt hashes. Axis files and contracts were not assignment inputs, so this verdict does not independently re-audit their internal semantics."
+    },
+    {
+      "subclaim": "Current integrated terminal route is algebraic_only",
+      "verdict": "fail",
+      "basis": "The exact-math plus missing-physical-receipt branch would route to algebraic_only, but the active manuscript contains unresolved claim drift. The specification gives consumer_gate_fail higher precedence and routes it to process FAIL/scientific result none."
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "PR169-FINAL-SCIENCE-P1-001",
+      "severity": "P1",
+      "title": "The manuscript falsely makes vanishing matter-radiation displacement sufficient for FLRW",
+      "claim_id": "C-PR169-FINAL-SCIENCE-CLAIM",
+      "evidence": [
+        {
+          "path": "docs/manuscript/ch01_introduction.tex",
+          "lines": "341-360",
+          "detail": "After stating the EGS hypotheses, lines 359-360 say that if the matter-radiation displacement vanishes, the FLRW model is recovered."
+        },
+        {
+          "path": "docs/research_program/long_horizon_rescue/pr169_primary_source_provenance.yaml",
+          "lines": "26-31",
+          "detail": "The registered source model class is non-tilted Bianchi VII_0 dust, demonstrating that non-tilt is not itself an FLRW condition; the source's almost-isotropic result retains nonzero normalized Weyl curvature."
+        }
+      ],
+      "analysis": "Vanishing relative displacement removes only the tilt sector. FLRW recovery additionally requires the full EGS hypotheses and the other shear/curvature/vorticity and matter assumptions. The sentence is an active scientific sufficiency claim, not a harmless shorthand, and conflicts with the source-provenance lesson central to PR-169.",
+      "required_fix": "Replace the sentence with language that vanishing displacement removes the tilt contribution only; state that FLRW recovery requires the full EGS assumptions and vanishing/closed remaining departure sectors. Re-run the active-consumer gate and regenerate the result card."
+    },
+    {
+      "finding_id": "PR169-FINAL-SCIENCE-P1-002",
+      "severity": "P1",
+      "title": "The consumer gate misses manuscript language that promotes x_C into a global-anisotropy measure",
+      "claim_id": "C-PR169-FINAL-SCIENCE-CLAIM",
+      "evidence": [
+        {
+          "path": "docs/manuscript/ch01_introduction.tex",
+          "lines": "63-65",
+          "detail": "The introduction calls x_C a scalar measure of FLRW departure."
+        },
+        {
+          "path": "docs/manuscript/ch01_introduction.tex",
+          "lines": "302-307",
+          "detail": "The limitations section says x_C constrains global anisotropy."
+        },
+        {
+          "path": "docs/research_program/long_horizon_rescue/pr169_spec.yaml",
+          "lines": "70-75",
+          "detail": "The uncapped exact family proves that x_C=0 supplies no B-independent unsigned-size bound."
+        },
+        {
+          "path": "docs/generated/pr169_exact_ceiling.json",
+          "lines": "27-31",
+          "detail": "The generated exact result records the 4B/2B ceilings and unbounded cancellation family."
+        },
+        {
+          "path": "docs/generated/pr169_all_consumer_scan.json",
+          "lines": "90-94,1566-1570,1670-1671",
+          "detail": "The scan inventories this manuscript as an active current-claim surface yet reports pass=true and zero unresolved active claims."
+        },
+        {
+          "path": "docs/generated/pr169_result_card.json",
+          "lines": "16-19,85-90",
+          "detail": "The false-negative consumer summary is propagated into a PASS/algebraic_only terminal route."
+        }
+      ],
+      "analysis": "The manuscript correctly calls x_C a signed comparator at lines 82-85, but the two stronger descriptions remain incompatible with the exact cancellation result: x_C constrains only its signed comparator coordinate, not the unsigned magnitude of global anisotropy. Because the scan explicitly treats the file as active, this is a current false-negative, not an excluded historical mention. Under the registered precedence, consumer_gate_fail blocks the present algebraic_only acceptance.",
+      "required_fix": "Replace both phrases with 'signed comparator coordinate on the declared carrier' and explicitly state that it does not bound the unsigned component size. Update the scanner so these promotion phrasings are classified, then regenerate the scan/result card and replay the terminal route."
+    },
+    {
+      "finding_id": "PR169-FINAL-SCIENCE-P2-001",
+      "severity": "P2",
+      "title": "The consumer guard silently accepts missing or unknown classifications",
+      "claim_id": "C-PR169-FINAL-SCIENCE-CLAIM",
+      "evidence": [
+        {
+          "path": "htt/src/common/unsigned_isotropy_leakage.py",
+          "lines": "378-390",
+          "detail": "require_no_unresolved_consumer_hits rejects only two exact classification strings and does not validate that classification/disposition are present or from a closed vocabulary."
+        },
+        {
+          "command": "venv/bin/python -B -c <targeted consumer-guard replay>",
+          "detail": "A record with no classification and a record with classification=active_promotion were both ACCEPTED; active_claim/unresolved was REJECTED."
+        }
+      ],
+      "analysis": "A classification typo or schema drift can bypass the claim firewall, which is contrary to the fail-closed contract. This weakness is separate from the semantic false-negative above, but it makes future scan regressions harder to contain.",
+      "required_fix": "Require classification and disposition keys, validate both against closed enums, and reject missing/unknown values. Add mutations for absent classification, unknown classification, absent disposition, and unknown disposition."
+    }
+  ],
+  "severity_counts": {
+    "P0": 0,
+    "P1": 2,
+    "P2": 1
+  },
+  "verified_pass_surfaces": [
+    "All 11 declared assignment-input SHA-256 values match.",
+    "The assignment context version matches CONTEXT_INDEX and all four shared-context source hashes match.",
+    "Exact 4B, 2B, and uncapped-family identities replay with fractions.Fraction; the sign and signed-projection negative controls fail as registered.",
+    "The cross-symbol bridge rejects W_N2 to V2 when no exact-model derivation hash is supplied.",
+    "The physical bundle contains exactly eight required MISSING receipts and no received/duplicate/mixed-coherence receipts.",
+    "The v1/v2 collection receipt has distinct contract and result lineages, v1 all-FAIL, v2 all-PASS, and no cross-version hash reuse.",
+    "The v9 EGS table scopes V2/W2 to a structural zero column only in the registered response map and carries family_identification=false/native_solver_result=false; no Nilsson-Weyl substitution was found in the assigned table.",
+    "The supersession receipt says card_rewritten=false, intake_transaction_preserved=true, and kill_switch_activated=true with consistent backlog hashes."
+  ],
+  "assumptions_and_limits": [
+    "Review was strictly limited to the context pack, assignment JSON, declared inputs, and repository skill instructions; no sibling or prior closeout result was read.",
+    "The primary PDF and the underlying CAS contracts/axis files were not declared inputs. Source-fact and CAS-lineage conclusions are therefore limited to the hash-pinned provenance and collection receipts supplied by the assignment.",
+    "No claim of physical admissibility, observational validation, native transfer, geometry, or Bianchi-family identification is made."
+  ],
+  "commands_and_tools": {
+    "tools": {
+      "python": "3.12.3",
+      "ripgrep": "14.1.0"
+    },
+    "replays": [
+      "SHA-256 validation of all declared inputs and shared-context files",
+      "exact Fraction replay of fixtures, negative controls, uncapped family, physical bundle, and terminal routing",
+      "cross-artifact hash/link consistency replay for v1/v2 CAS lineages",
+      "targeted active-language search over the assigned v9 table and chapter 1",
+      "targeted malformed-classification replay of require_no_unresolved_consumer_hits"
+    ]
+  }
+}

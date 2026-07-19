@@ -1,0 +1,123 @@
+{
+  "assignment_id": "A-PR169-CAS-LEAN",
+  "assumptions": [
+    "B, Sigma2, V2, Omega_tilt, DeltaOmega_k are exact rationals",
+    "B>0",
+    "0<=Sigma2<=B, 0<=V2<=B, 0<=Omega_tilt<=B, and abs(DeltaOmega_k)<=B",
+    "x_C=Sigma2-V2+Omega_tilt+DeltaOmega_k",
+    "M_unsigned=Sigma2+V2+Omega_tilt+abs(DeltaOmega_k)",
+    "W_N2 is a typed normalized Weyl-curvature symbol distinct from repository normalized vorticity V2",
+    "the PR-127 A_C comparator-level parent identity is not a full physical-admissibility receipt"
+  ],
+  "claim_ids": [
+    "C-PR169-UNSIGNED-LEAKAGE-AND-WITNESS-STATUS"
+  ],
+  "commands_run": [
+    {
+      "cmd": "lake build",
+      "cwd": "formal_pr169",
+      "exit": 1
+    }
+  ],
+  "context_version": "07a5e8cd8026d64adaa037e2c0f4986c3e38711ed8aa177ecf7c1d70c9eebd89",
+  "evidence_refs": [
+    "docs/generated/pr169_cas/CAS_CONTRACT_PR169_UNSIGNED_LEAKAGE.json",
+    "formal_pr169/Pr169UnsignedLeakage/Basic.lean",
+    "formal_pr169/Pr169UnsignedLeakage.lean",
+    "formal_pr169/lakefile.toml",
+    "formal_pr169/lake-manifest.json",
+    "formal_pr169/lean-toolchain"
+  ],
+  "independence_mode": "blind-results",
+  "payload": {
+    "cas_axis_result": {
+      "axis": "lean",
+      "checks": null,
+      "commands": [
+        {
+          "cmd": "lake build",
+          "cwd": "formal_pr169",
+          "exit": 1
+        }
+      ],
+      "completed_at": "2026-07-19T19:49:32+00:00",
+      "computed": null,
+      "contract_id": "CAS-PR169-UNSIGNED-LEAKAGE-001",
+      "contract_sha256": "b4b2cf6a247209ff22406b7c1f493387934b9e4d2b2824b396a8f3fbc23c2781",
+      "counterexample": {
+        "failures": [
+          "axis emitted no parseable JSON payload"
+        ]
+      },
+      "domain_assumption_diff": [],
+      "evidence_class": "exact",
+      "fixture_matches": null,
+      "schema_version": 1,
+      "sibling_results_read": [],
+      "source_output_hashes": [
+        {
+          "path": "formal_pr169/Pr169UnsignedLeakage/Basic.lean",
+          "sha256": "78f51ccdc142c891ca4eb11709ae2a2a723ac76389b62832350c671ba34146a0"
+        },
+        {
+          "path": "formal_pr169/Pr169UnsignedLeakage.lean",
+          "sha256": "442892c650f622b5025d21a376cf47950732820a2ca022bc529bf816fe8890aa"
+        },
+        {
+          "path": "formal_pr169/lakefile.toml",
+          "sha256": "448bfc2f42755447540d70157aa07f777976afa4f9fc96f681da962a28086cd3"
+        },
+        {
+          "path": "formal_pr169/lake-manifest.json",
+          "sha256": "1bdad18f89c7799baa02ff9a176e9abf32a56a109c757491768d7084b69951c0"
+        },
+        {
+          "path": "formal_pr169/lean-toolchain",
+          "sha256": "1550dc85bb00026cc586c6390f0af6d6b84c0aef210f4b8b44efdc6812ef6256"
+        }
+      ],
+      "status": "FAIL",
+      "tool_versions": {
+        "reported": "unavailable",
+        "singular": null,
+        "xact_loaded": null
+      },
+      "transcript_tail": "\u26a0 [17100/17104] Built Pr169UnsignedLeakage.Basic (3.5s)\nwarning: Pr169UnsignedLeakage/Basic.lean:27:5: Variable name `hs0` is not explicitly referenced.\n\nThe binding can be removed (if unused) or named `_` (if used implicitly).\n\nNote: This linter can be disabled with `set_option linter.unusedVariables false`\nwarning: Pr169UnsignedLeakage/Basic.lean:27:24: Variable name `hv0` is not explicitly referenced.\n\nThe binding can be removed (if unused) or named `_` (if used implicitly).\n\nNote: This linter can be disabled with `set_option linter.unusedVariables false`\nwarning: Pr169UnsignedLeakage/Basic.lean:27:39: Variable name `ht0` is not explicitly referenced.\n\nThe binding can be removed (if unused) or named `_` (if used implicitly).\n\nNote: This linter can be disabled with `set_option linter.unusedVariables false`\nwarning: Pr169UnsignedLeakage/Basic.lean:46:23: Variable name `hs0` is not explicitly referenced.\n\nThe binding can be removed (if unused) or named `_` (if used implicitly).\n\nNote: This linter can be disabled with `set_option linter.unusedVariables false`\nwarning: Pr169UnsignedLeakage/Basic.lean:46:42: Variable name `hv0` is not explicitly referenced.\n\nThe binding can be removed (if unused) or named `_` (if used implicitly).\n\nNote: This linter can be disabled with `set_option linter.unusedVariables false`\nwarning: Pr169UnsignedLeakage/Basic.lean:47:37: Variable name `hx` is not explicitly referenced.\n\nThe binding can be removed (if unused) or named `_` (if used implicitly).\n\nNote: This linter can be disabled with `set_option linter.unusedVariables false`\nwarning: Pr169UnsignedLeakage/Basic.lean:56:39: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice\n\nNote: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`\nwarning: Pr169UnsignedLeakage/Basic.lean:61:39: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice\n\nNote: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`\n\u2714 [17101/17104] Built Pr169UnsignedLeakage.Basic:c.o (110ms)\n\u2716 [17102/17104] Building Pr169UnsignedLeakage (3.2s)\ntrace: .> LEAN_PATH=/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/Cli/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/batteries/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/Qq/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/aesop/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/proofwidgets/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/importGraph/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/plausible/.lake/build/lib/lean:/home/cosmosapjw/lean_oracles/viii_oracle/.lake/packages/mathlib/.lake/build/lib/lean:/home/cosmosapjw/Dropbox/bianchi/htt_base/formal_pr169/.lake/build/lib/lean /home/cosmosapjw/.elan/toolchains/leanprover--lean4---v4.31.0/bin/lean /home/cosmosapjw/Dropbox/bianchi/htt_base/formal_pr169/Pr169UnsignedLeakage.lean -o /home/cosmosapjw/Dropbox/bianchi/htt_base/formal_pr169/.lake/build/lib/lean/Pr169UnsignedLeakage.olean -i /home/cosmosapjw/Dropbox/bianchi/htt_base/formal_pr169/.lake/build/lib/lean/Pr169UnsignedLeakage.ilean -c /home/cosmosapjw/Dropbox/bianchi/htt_base/formal_pr169/.lake/build/ir/Pr169UnsignedLeakage.c --setup /home/cosmosapjw/Dropbox/bianchi/htt_base/formal_pr169/.lake/build/ir/Pr169UnsignedLeakage.setup.json --json\nerror: Pr169UnsignedLeakage.lean:32:6: failed to synthesize instance of type class\n  Decidable \u00acphysicalPromotion missingBundle\n\nHint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.\nerror: Lean exited with code 1\nSome required targets logged failures:\n- Pr169UnsignedLeakage\nerror: build failed\n",
+      "verified_input_hashes": [
+        {
+          "path": "docs/research_program/long_horizon_rescue/pr169_spec.yaml",
+          "sha256": "966fedf2f0bd3831bc1065d0d0da1a73033638d0a98affa7f83d5f1bdc4f52e1"
+        },
+        {
+          "path": "docs/research_program/long_horizon_rescue/pr169_primary_source_provenance.yaml",
+          "sha256": "978437e011346c396a2ad3b4f924f91d1c21afa89529576377c0f6f86530f668"
+        },
+        {
+          "path": "docs/research_program/long_horizon_rescue/pr127_spec.yaml",
+          "sha256": "d6ae08f5cf6fe23de25f3204baa5b628346a71a846a0b9fff0880ab3771506c9"
+        },
+        {
+          "path": "htt/src/common/egs_oneway.py",
+          "sha256": "db8f631df75833cfbbfc27cd7253f5f25b960666485907457186f023d0556554"
+        },
+        {
+          "path": "htt/src/common/graded_nonid.py",
+          "sha256": "ad1731dd2eccdd7a9f555c5d38726e5ac70e66148dbb7a23a788d9e4f8e2302b"
+        },
+        {
+          "path": "htt/src/common/unsigned_isotropy_leakage.py",
+          "sha256": "6705520dca8880e1ed49dc516d24d99e8c21968969e3de8a7120012731d6363a"
+        }
+      ]
+    }
+  },
+  "result_path": ".agent-harness/runs/pr169-cas-20260719/results/A-PR169-CAS-LEAN.json",
+  "run_id": "pr169-cas-20260719",
+  "schema_version": 2,
+  "status": "fail",
+  "tool_versions": {
+    "reported": "unavailable",
+    "singular": null,
+    "xact_loaded": null
+  }
+}

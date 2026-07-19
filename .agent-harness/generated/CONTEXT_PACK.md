@@ -1,7 +1,7 @@
 # Canonical Shared Context Pack
 
-Context version: `af3ddd73dfb959994d43a990e12d5e6096f652ff4c564fb61c0dd650af258f0b`
-Built at: `2026-07-19T19:20:34+00:00`
+Context version: `a587b27b6c83be38ea384a56ddf9c01efb9eaa2599f085540e250c5edffb3b2d`
+Built at: `2026-07-19T20:51:19+00:00`
 
 This pack contains only the shared Tier-0 context. Assignment-specific context and sibling results are intentionally excluded.
 
@@ -9,9 +9,9 @@ This pack contains only the shared Tier-0 context. Assignment-specific context a
 
 ## Source: `.agent-harness/context/SHARED_CONTEXT.md`
 
-SHA-256: `38831670580d2c5a01ac8cf288d1d882d9e147914000ec32ae7b7f21201d500a`
+SHA-256: `4c8d1a3b0b2ad6cb310424707259c7a254e62778ef9c0903581f2aaa6feebd61`
 
-# Shared Context — PR-151 background acquisition and PR-168 failed-contract closeout
+# Shared Context — PR-151 background acquisition and PR-170 Buchert/two-patch audit
 
 ## Project objective
 
@@ -22,18 +22,19 @@ SHA-256: `38831670580d2c5a01ac8cf288d1d882d9e147914000ec32ae7b7f21201d500a`
 - `PR-167`, the dedicated advocate-track intake and parallel
   foreground/background status-model transaction, is completed after a fresh
   post-remediation adversarial replay. `PR-168` completed its preregistered
-  fail branch; there is no foreground card at this atomic commit boundary.
+  failed-contract branch. `PR-169` completed with an exact `algebraic_only`
+  comparator result. `PR-170` is the sole foreground card.
 - Current background card: `PR-151`, authenticated DESI DR1 acquisition of
   1000 EZmocks plus 25 AbacusSummit mocks on NVMe.
 - Governing roadmap:
   `docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md`.
 - Base revision at context refresh:
-  `00fbadda3283c06aad33c1494a3d0781d5a53442` on
+  `5b3c96175c226764b3fb7ed9e181e3f3330e1830` on
   `research/pr04-multicomponent`.
 
 ## Current DAG and execution state
 
-- Registered DAG: 130 cards through PR-183; 102 completed, no foreground PR,
+- Registered DAG: 130 cards through PR-183; 103 completed, PR-170 foreground,
   PR-151 is the sole background acquisition, PR-155--158 remain
   gated on PR-151, and PR-159--166 plus PR-183 are dormant pending authenticated
   native delivery. The dedicated PR-167 transaction preserved semantic hashes
@@ -64,15 +65,15 @@ SHA-256: `38831670580d2c5a01ac8cf288d1d882d9e147914000ec32ae7b7f21201d500a`
 - The legacy all-in-one tmux wrapper was stopped at an aria-resumable `.part`
   checkpoint without deleting payloads. Session `htt_pr151_desi_20260719` now
   runs `--phase acquire`; pane/lock owner PID was `16695` at the latest probe.
-  The 2026-07-19 19:14 UTC fast probe found 70/1000 exact EZmock records,
-  0/25 Abacus records, 32 partial files totalling about 7.87 GiB, a fresh
-  growing log, and about 823.9 GiB free. Host-level tmux inspection confirmed
+  The 2026-07-19 20:48 UTC fast probe found 80/1000 exact EZmock records,
+  0/25 Abacus records, 33 partial files totalling about 8.73 GiB, a fresh
+  growing log, and about 821.71 GiB free. Host-level process inspection confirmed
   session `htt_pr151_desi_20260719`, pane/lock owner PID `16695`, and the
   expected `--phase acquire` command. The writer lock itself remains held; PID
   discovery from the fast probe may report no matches inside its sandbox PID
   namespace and is therefore combined with lock evidence as the effective
   writer state. The same final probe directly observed runner PID `16709` and
-  the current aria child PID `970357`. The older batch manifest still reported 30
+  the current aria child PID `1250117`. The older batch manifest still reported 30
   authenticated EZmocks until the current batch checkpoint is committed.
 - PR-151 partial mocks are never used for final ranks or significance. Terminal
   status requires exact 1000/25 records, observed authentication, the 15-case
@@ -262,6 +263,114 @@ SHA-256: `38831670580d2c5a01ac8cf288d1d882d9e147914000ec32ae7b7f21201d500a`
   signature, full manifest, production-integrity receipt, and hash-bound
   physics/code/claim FAIL reviews. It is not a derivation or physical result.
 
+## PR-169 foreground contract boundary
+
+- PR-169 audits the unsigned size hidden by the PR-126/127 signed comparator
+  cancellation. It must distinguish the repository variable
+  `V2 = omega_ab omega^ab/(6 H^2)` (historically named `W2` in the comparator)
+  from the Nilsson et al. variable `W_N2`, which denotes normalized Weyl
+  curvature. A map `W_N2 -> V2` is forbidden unless an exact-model derivation
+  proves it; symbol-name resemblance is not evidence.
+- The algebraic witness family may test
+  `x_C = Sigma2 - V2 + Omega_tilt + DeltaOmega_k` at
+  `(Sigma2,V2,Omega_tilt,DeltaOmega_k)=(a,a,0,0)`, `a>0`, and the registered
+  unsigned carrier `M_unsigned = Sigma2 + V2 + Omega_tilt +
+  abs(DeltaOmega_k)`. This can establish exact cancellation with
+  `M_unsigned=2a` only on the comparator carrier.
+- Constructive or physically admissible promotion additionally requires an
+  exact-model provenance map plus Hamiltonian, momentum/Gauss,
+  vorticity/tilt-compatibility, matter-positivity, and domain gates. The
+  PR-127 parent identity and comparator-level positivity are necessary but not
+  sufficient. Missing full receipts force the terminal label
+  `algebraic_only`; CAS agreement cannot supply missing physical premises.
+- Nilsson et al. study non-tilted Bianchi VII0 dust models and define their
+  `W_N2` from electric and magnetic Weyl tensors. Their asymptotically small
+  shear with nonzero Weyl curvature is not, by itself, a repository
+  shear-vorticity cancellation witness. This primary-source mismatch is a
+  preregistered promotion falsifier, not a post-result caveat.
+- Before implementation, PR-169 must freeze conventions, domain, exact target,
+  negative controls, source provenance, and promotion falsifiers in a
+  schema-v2 CAS contract. Four blind axes are required; a missing engine is
+  `CAS_BLOCKED`, disagreement is not resolved by voting, and a computational
+  algebraic PASS remains `algebraic_only` unless all physical gates pass.
+- The blind preimplementation physics, harness, and claim reviews found the
+  algebraic `4B`/`2B` ceilings sound but blocked constructive promotion. Their
+  findings are remediated in spec version 2 by an exact ordered-rational
+  domain, an uncapped `a`-family obligation, eight typed same-state physical
+  receipts, total terminal routing, and a hash-bound candidate-branch
+  supersession receipt. The immutable PR-167 intake card is not rewritten;
+  its proposed constructive branch is subject to its registered
+  `algebraic_only` kill switch.
+- Primary-source authentication binds arXiv v1 PDF SHA-256
+  `f4f62fd488424b3396f5dbcaf0cc80554be626b560d139331b896fef2d13d4ce`.
+  The provenance record SHA-256 is
+  `978437e011346c396a2ad3b4f924f91d1c21afa89529576377c0f6f86530f668`.
+- The immutable first schema-v2 contract is
+  `docs/generated/pr169_cas/CAS_CONTRACT_PR169_UNSIGNED_LEAKAGE.json`,
+  SHA-256
+  `b4b2cf6a247209ff22406b7c1f493387934b9e4d2b2824b396a8f3fbc23c2781`.
+  Its first blind four-axis run failed: Wolfram+xAct, SymPy, and
+  SageMath+Singular independently exposed the same projection-fixture
+  substitution defect, while Lean exposed a missing executable-level
+  decidability instance. These failures remain evidence and no result from
+  that wave is reusable as a PASS.
+- Contract version 2 repairs only those registered harness defects, records
+  the exact invalidation reason, requires four fresh blind axes, and retains
+  the same scientific semantics, domain, expected values, promotion gates,
+  and no-exception policy. Its path is
+  `docs/generated/pr169_cas/CAS_CONTRACT_PR169_UNSIGNED_LEAKAGE_V2.json`,
+  SHA-256
+  `963e19b76eec31c74c27c0b014a80484f798528ab5c7cf5dab067f50916b5aad`.
+  A completely fresh version-2 blind run now passes all nine obligations on
+  Wolfram+xAct, SymPy, SageMath+Singular, and Lean+mathlib under that single
+  hash. Durable versioned receipts preserve the version-1 `CAS_FAIL` and the
+  version-2 `CAS_4AXIS_PASS`; no result was reused across versions.
+- The exact registered result is `M_max(B)=4B` on the full capped carrier,
+  `M_slice_max(B)=2B` on the shear-vorticity slice, and the uncapped rational
+  family `(a,a,0,0)` with `x_C=0`, `M_unsigned=2a`. This is comparator algebra,
+  not an Einstein-matter solution.
+- All eight physical-promotion receipts are missing. Nilsson's normalized
+  Weyl variable has no exact bridge to the repository vorticity variable.
+  Therefore the preregistered terminal route is `algebraic_only`, public use is
+  false, and the immutable PR-167 constructive candidate is superseded through
+  its own kill switch rather than rewritten.
+- The active-consumer scan inventories 250 code/current-claim files, finds zero
+  unresolved active promotion claims, and all 18 registered mutations are
+  detected. The current v9 table now scopes V2/W2 to a zero column in the
+  registered response map and makes no order-independent or Weyl claim.
+- Final hostile review found manuscript overclaim, match-window refutation
+  leakage, trust-on-status CAS aggregation, and overwritten v1 source paths.
+  The original FAIL envelopes remain immutable. The main-writer closeout
+  corrected every concrete finding, added closed claim classification and CAS
+  envelope schemas, preserved the complete v1 source snapshot, and replayed
+  28 targeted, 79 related EGS, 14 PR-167/168, and 6 smoke tests. The hash-bound
+  adjudication is `docs/generated/pr169_closeout_review_receipt.json`.
+
+## PR-170 foreground contract boundary
+
+- PR-170 must first authenticate the external Buchert, Wiegand--Buchert, and
+  Barrow--Tsagas provenance anchors and freeze conventions, averaging domain,
+  spatially constant-expansion assumptions, exact target identities, and
+  falsifiers before any engine sees a result.
+- The proposed `Omega_Q^(D)=-Q_D/(6H^2)=Sigma2_std` bridge is a candidate
+  externally attributed conditional identity. Its normalization and domain
+  must be derived from the cited definitions; four-engine agreement cannot
+  repair an incorrect or underdefined contract.
+- The two-patch construction must distinguish a valid algebraic cancellation
+  from a physically admissible averaged-domain witness. Patch weights,
+  expansion variance, shear terms, matching assumptions, constraints, and
+  curvature conventions remain explicit promotion gates.
+- Type V versus VII_h curvature handling is not interchangeable: any
+  trace-free `^3S_ab` correction and the isotropic three-curvature case must be
+  typed and verified rather than inferred by label.
+- Wolfram+xAct, SymPy, SageMath+Singular, and Lean+mathlib remain four blind,
+  non-collapsible axes under one schema-v2 contract. A missing engine is
+  `CAS_BLOCKED`; disagreement is `CAS_CONFLICT` or `CAS_FAIL`, never voting.
+- Even a successful result is an externally attributed conditional identity
+  and witness, not a new theorem, observational result, family identification,
+  or native-transfer validation. If any registered type or provenance bridge
+  fails exact closure, the terminal result retains `x_C` without a Buchert home.
+
 ## Ownership and claim boundaries
 
 - HTT owns the PR-154 hierarchical model, predictive checks, and scenario
@@ -298,6 +407,13 @@ SHA-256: `38831670580d2c5a01ac8cf288d1d882d9e147914000ec32ae7b7f21201d500a`
 | E-PR168-REVIEWS | `docs/generated/pr168_reviews/` | durable physics, code, and claim FAIL assignments/results |
 | E-PR168-RESULT | `docs/generated/pr168_result_card.json` | failed-contract result and unchanged-production disposition |
 | E-PR168-MANIFEST | `docs/generated/pr168_artifact_manifest.json` | hash-bound failure closeout artifact set |
+| E-PR169-CONTRACT-V1 | `docs/generated/pr169_cas/CAS_CONTRACT_PR169_UNSIGNED_LEAKAGE.json` | immutable first contract and failed blind-wave authority |
+| E-PR169-CONTRACT-V2 | `docs/generated/pr169_cas/CAS_CONTRACT_PR169_UNSIGNED_LEAKAGE_V2.json` | repaired contract requiring four fresh blind axes |
+| E-PR169-CAS | `docs/generated/pr169_cas_collection_receipt.json` | preserved v1 failure and fresh v2 four-axis agreement |
+| E-PR169-RESULT | `docs/generated/pr169_result_card.json` | exact comparator result and algebraic-only terminal route |
+| E-PR169-MANIFEST | `docs/generated/pr169_artifact_manifest.json` | hash-bound inputs and result artifacts |
+| E-PR169-REVIEWS | `docs/generated/pr169_reviews/` | preserved independent FAIL assignments and result envelopes |
+| E-PR169-CLOSEOUT | `docs/generated/pr169_closeout_review_receipt.json` | main-writer remediation adjudication and verification record |
 | E-REPLAN | `docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md` | PR-154 and advocate card intent |
 
 ## Open questions and kill switches

@@ -11,7 +11,7 @@ The sealed pair (never separated):
 - FORWARD (one-way): every premise-complete FLRW-limit comparator state
   (beta = sigma2 = w2 = omega_tilt = delta_omega_k = 0) has
   ``x_C = sigma2 - w2 + omega_tilt + delta_omega_k = 0`` exactly.
-- CONVERSE COUNTEREXAMPLES: constructive states with ``x_C = 0`` and
+- CONVERSE COUNTEREXAMPLES: constructed algebraic comparator states with ``x_C = 0`` and
   nonzero departures — ``x_C = 0`` NEVER implies the FLRW limit.
 
 Almost-EGS is SPECIFIED_ONLY: no quantitative regularity or remainder is
@@ -274,7 +274,8 @@ def check_forward(states: Sequence[ComparatorState],
 
 def validate_counterexample(state: ComparatorState) -> dict:
     """A registered converse counterexample must have x_C = 0 AND fail the
-    FLRW limit (nonzero departures) — the cancellation is the point."""
+    comparator FLRW-limit predicate (nonzero departures) — the cancellation
+    is the point; this is not a physical-spacetime classifier."""
     if state.x_c() != 0:
         raise EgsOnewayError(
             f"counterexample must cancel exactly (x_C = {state.x_c()})"
@@ -286,6 +287,7 @@ def validate_counterexample(state: ComparatorState) -> dict:
     return {
         "x_c": "0",
         "flrw_limit": False,
+        "predicate_scope": "comparator_flrw_limit_only",
         "nonzero_components": sorted(
             name for name in ("beta", "sigma2", "w2", "omega_tilt",
                               "delta_omega_k")
@@ -296,8 +298,9 @@ def validate_counterexample(state: ComparatorState) -> dict:
 
 def seeded_cancellation_states(seeds: int) -> list[ComparatorState]:
     """Deterministic seeded cancellation family: x_C = 0 by construction,
-    generically non-FLRW. No wall-clock, no global RNG — a fixed integer
-    recurrence generates the rationals."""
+    generically failing the comparator FLRW-limit predicate. No physical
+    spacetime classification follows. No wall-clock, no global RNG — a fixed
+    integer recurrence generates the rationals."""
     states = []
     value = 987654321
     for index in range(seeds):
@@ -326,6 +329,8 @@ _FORBIDDEN_TEXT = (
     "hence the FLRW", "hence FLRW", "establishes isotropy",
     "establishes the FLRW", "Bianchi geometry detected",
     "Bianchi family identified", "finding rescued", "validated as native",
+    "recovers exact FLRW", "near-FLRW", "near FLRW", "almost-FLRW",
+    "almost FLRW", "evidence for FLRW", "supports FLRW", "indicates FLRW",
 )
 
 

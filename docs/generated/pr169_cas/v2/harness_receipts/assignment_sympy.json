@@ -1,0 +1,50 @@
+{
+  "schema_version": 2,
+  "run_id": "pr169-cas-v2-20260719",
+  "assignment_id": "A-PR169-CAS-V2-SYMPY",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "cas_sympy",
+  "context_version": "46dae5f7e021ff69ba2a288bd2d3f9b6e7fcfca6043d25c3ca88fa61b4643f8d",
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R3",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "PR169-EXACT-UNSIGNED-CEILING"
+  ],
+  "task": "Independently execute only the SymPy PR-169 version-2 CAS axis with the sealed wrapper. Validate assignment and contract hashes, do not inspect sibling results, edit no shared files, and return the declared result envelope.",
+  "required_inputs": [
+    {
+      "path": "docs/generated/pr169_cas/CAS_CONTRACT_PR169_UNSIGNED_LEAKAGE_V2.json",
+      "sha256": "963e19b76eec31c74c27c0b014a80484f798528ab5c7cf5dab067f50916b5aad"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr169_axis_v2.py",
+      "sha256": "2a14bd1be98f50960ef1bbb1318736e907e69dc2956c9b876837a16880ee79e6"
+    },
+    {
+      "path": "htt/src/common/pr169_sympy_axis.py",
+      "sha256": "eb22b4dbc5d50876308d70f32fde92373430df0756d95e8f3057654ecd4d94c7"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "venv/bin/python"
+  ],
+  "required_outputs": [
+    ".agent-harness/runs/pr169-cas-v2-20260719/results/A-PR169-CAS-V2-SYMPY.json"
+  ],
+  "result_path": ".agent-harness/runs/pr169-cas-v2-20260719/results/A-PR169-CAS-V2-SYMPY.json",
+  "status": "registered",
+  "cas_axis": "sympy",
+  "cas_contract": {
+    "path": "docs/generated/pr169_cas/CAS_CONTRACT_PR169_UNSIGNED_LEAKAGE_V2.json",
+    "sha256": "963e19b76eec31c74c27c0b014a80484f798528ab5c7cf5dab067f50916b5aad"
+  },
+  "assignment_sha256": "a65f6dc32511f72ae56ad54beb75277db0e71572207abefb4c17f0656b4823ab"
+}

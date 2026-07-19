@@ -1,0 +1,63 @@
+{
+  "schema_version": 2,
+  "run_id": "pr169-final-review-20260719",
+  "assignment_id": "A-PR169-FINAL-HARNESS-CODE",
+  "parent_assignment_id": null,
+  "depth": 1,
+  "agent_type": "harness_engineer",
+  "context_version": "e46ebeb1ff40ca67ccecbbfdbca01e229b1619356d600a2528e9f892648d1dae",
+  "independence_mode": "blind-results",
+  "discovery_mode": "targeted",
+  "independence_rationale": null,
+  "risk_tier": "R2",
+  "fork_mode": "none",
+  "fork_justification": null,
+  "may_spawn": false,
+  "delegable_claim_ids": [],
+  "claim_ids": [
+    "C-PR169-FINAL-HARNESS-CODE"
+  ],
+  "task": "Fresh post-remediation integrated hostile review of PR-169 code, CAS evidence lineage, and reproducibility. Replay collector check, result write/check, targeted tests, artifact/input hashes, blind assignment envelopes, scanner mutations, PR-167 intake idempotence, DAG/mirrors, and failure precedence. Report exact P0/P1/P2 findings. Do not inspect any prior closeout or sibling results and edit no shared files; write only the declared envelope.",
+  "required_inputs": [
+    {
+      "path": "scripts/codex_harness/collect_pr169_cas_receipts.py",
+      "sha256": "ddd154e5724871604ae435a73a95f17ebb38f7c0214fc2e25bf83a0a662e7118"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr169_unsigned_leakage.py",
+      "sha256": "b406205509226685648ac56e9e6ff331ea5135f08b49290ee526d4e562f66431"
+    },
+    {
+      "path": "tests/pr_cards/test_pr_169_unsigned_isotropy_leakage_ceiling_m_max_nilsson_.py",
+      "sha256": "09b9cabd659cadea5308ee786f997d47d75937ad8819c6d0a7507b9d1befd447"
+    },
+    {
+      "path": "docs/generated/pr169_cas_collection_receipt.json",
+      "sha256": "d839a3afde42bf9a617566001e29adddb95c7c4d827ff3fb628f89d9a21df16a"
+    },
+    {
+      "path": "docs/generated/pr169_artifact_manifest.json",
+      "sha256": "faf9ee802802e07649d29850a4aa5e1c5312e2c5584e818bb3bcd4a69e41f334"
+    },
+    {
+      "path": "docs/codex_handoff/pr_backlog.yaml",
+      "sha256": "256cf1406cddf271d8b197dbf39e1ae1486b18f22c30e4551de40b55e2cc502d"
+    },
+    {
+      "path": "docs/generated/pr167_artifact_manifest.json",
+      "sha256": "9000d47f1682ea3464c306457cd8018bfb82f3d26f7e37977612a08caeed8323"
+    }
+  ],
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "venv/bin/python",
+    "pytest",
+    "git"
+  ],
+  "required_outputs": [
+    ".agent-harness/runs/pr169-final-review-20260719/results/A-PR169-FINAL-HARNESS-CODE.json"
+  ],
+  "result_path": ".agent-harness/runs/pr169-final-review-20260719/results/A-PR169-FINAL-HARNESS-CODE.json",
+  "status": "registered",
+  "assignment_sha256": "3d4fbd0dc1e7c82870427b187cd58b6c9f18e03cfa50075c1489fd5d2b8926b3"
+}
