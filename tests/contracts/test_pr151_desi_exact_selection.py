@@ -1,14 +1,14 @@
-"""PR-151 contract tests: DESI DR1 BGS exact-selection mock + per-mock refit.
+"""PR-151 contracts for the DESI DR1 official-mock-conditioned result.
 
 The estimator mechanics (exact-selection draw, per-mock alpha/nuisance refit,
-two-tier covariance, component confusion), the guards, the manifest kill
-disposition and captions run everywhere on a small synthetic exact-selection
-footprint; the tests that read the built artifacts skip when the heavy
-real-DESI card is absent.
+two-tier covariance, component confusion), guards, the absence kill switch,
+and captions run everywhere on a small synthetic footprint. Result-pack checks
+skip until the authenticated 1000-EZmock plus 25-Abacus card exists.
 """
 from __future__ import annotations
 
 import json
+import runpy
 import subprocess
 import sys
 import warnings
@@ -26,6 +26,7 @@ from obsstat.desi_exact_selection_mock import (
     component_confusion_matrix,
     exact_selection_mock,
     generate_caption,
+    generate_official_caption,
     lint_caption,
     official_mock_manifest,
     per_mock_refit,
@@ -41,7 +42,7 @@ from obsstat.desi_exact_selection_mock import (
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 GEN = REPO_ROOT / "docs/generated"
-CARD = GEN / "desi_exact_selection_card.json"
+CARD = GEN / "desi_official_mock_card.json"
 needs_card = pytest.mark.skipif(
     not CARD.is_file(), reason="real DESI exact-selection card absent")
 
@@ -177,6 +178,29 @@ def test_caption_lint_blocks_a_detection_phrase() -> None:
         lint_caption("this is a DESI dipole detection of anisotropy")
 
 
+def test_official_caption_reports_finite_ranks_and_replication() -> None:
+    card = {
+        "ezmock": {"rank": {"right_tail_p": 0.25,
+                              "central_two_sided_p": 0.5}},
+        "abacus_validation": {"rank": {"right_tail_p": 0.4}},
+        "random_replication_sensitivity": {"n_audited": 15},
+    }
+    caption = generate_official_caption(card)
+    lint_caption(caption)
+    assert "1000 public EZmock" in caption
+    assert "Twenty-five AbacusSummit" in caption
+    assert "15 preregistered mocks" in caption
+
+
+def test_official_result_renderer_preserves_binary64_precision() -> None:
+    namespace = runpy.run_path(
+        str(REPO_ROOT / "scripts/codex_harness/"
+            "run_pr151_desi_exact_selection.py"))
+    value = 0.12345678901234566
+    rendered = namespace["_render"]({"value": value})
+    assert json.loads(rendered)["value"] == value
+
+
 # --------------------------------------------------------------------------
 # built artifacts from the real DESI card (data-gated)
 # --------------------------------------------------------------------------
@@ -189,18 +213,34 @@ def test_runner_check_and_real_artifacts() -> None:
     assert result.returncode == 0, result.stdout + result.stderr
     refit = json.loads((GEN / "pr151_per_mock_refit.json")
                        .read_text(encoding="utf-8"))
-    # the cap ratio is a source-derived float (NGC/SGC), never hard-coded
     assert refit["alpha_and_nuisance_refit_per_mock"]
-    assert refit["source_derived_cap_ratio_ngc_over_sgc"] > 1.0
+    assert refit["mock_specific_random_window_per_realization"]
+    assert refit["realization_counts"] == {"abacus": 25, "ezmock": 1000}
     conf = json.loads((GEN / "pr151_component_confusion.json")
                       .read_text(encoding="utf-8"))
-    assert conf["components_confounded"]
+    assert not conf["causal_attribution_identified"]
+    assert not conf["official_mock_result_is_abandoned"]
     null = json.loads((GEN / "pr151_survey_conditional_null.json")
                       .read_text(encoding="utf-8"))
-    assert null["causal_attribution"] == "abandoned_official_mocks_absent"
+    assert null["causal_attribution"] == "not_identified"
+    assert null["ezmock_finite_rank"]["n_mock"] == 1000
+    assert null["abacus_validation_finite_rank"]["n_mock"] == 25
+    assert null["random_replication_sensitivity"]["n_audited"] == 15
     man = json.loads((GEN / "pr151_mock_manifest.json")
                      .read_text(encoding="utf-8"))
-    assert man["causal_attribution_abandoned"]
+    assert not man["official_mocks_abandoned"]
+    assert man["acquisition_status"] == "complete"
+    assert man["availability_status"] == "public_obtainable_and_acquired"
+    for name in (
+            "pr151_mock_manifest.json", "pr151_per_mock_refit.json",
+            "pr151_two_tier_covariance.json", "pr151_component_confusion.json",
+            "pr151_survey_conditional_null.json", "pr151_captions.json",
+            "pr151_mutation_report.json", "pr151_artifact_manifest.json"):
+        payload = json.loads((GEN / name).read_text(encoding="utf-8"))
+        assert payload["config_hash"].startswith("sha256:")
+        assert payload["input_hashes"]
+        assert payload["mask_status"]
+        assert payload["covariance_status"]
     report = json.loads((GEN / "pr151_mutation_report.json")
                         .read_text(encoding="utf-8"))
     assert report["surviving_mutation_count"] == 0

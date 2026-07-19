@@ -17,10 +17,14 @@
 #   PLANCK_NSIDE_OUT=N       NSIDE for Planck map/mask downgrade (default 16)
 #   FULL_RES_MAPS=1          also dump NSIDE=2048 Planck map/mask NPZs
 #   DESI_MODE=minimal|extended  DESI column set (default: extended)
+#   DESI_MOCKS_DIR=/path        large-volume DESI mock root
+#   DESI_MOCK_JOBS=N            parallel mock downloads (default: 3)
+#   APPROVE_DOWNLOADS=1         authorize approval-gated external stages
 #
 # Stages run by --all (in order):
 #   env, planck_pr3, bicep_keck, planck_lensing, act_dr4, act_dr6,
-#   spt3g_y1, desi_y1, cf4, camb_refs, scalars, package
+#   spt3g_y1, desi_y1, desi_dr1_mocks, jwst_anchors, cf4, camb_refs,
+#   scalars, package
 # ============================================================================
 set -euo pipefail
 
@@ -54,8 +58,11 @@ FLAGS=()
 [[ "${SKIP_LARGE_MAPS:-0}" == "1" ]]  && FLAGS+=(--skip-large-maps)
 [[ "${BUNDLE_ZIP:-0}" == "1" ]]       && FLAGS+=(--bundle-zip)
 [[ "${FULL_RES_MAPS:-0}" == "1" ]]    && FLAGS+=(--full-res-maps)
+[[ "${APPROVE_DOWNLOADS:-0}" == "1" ]] && FLAGS+=(--approve-downloads)
 [[ -n "${PLANCK_NSIDE_OUT:-}" ]]      && FLAGS+=(--planck-nside-out "$PLANCK_NSIDE_OUT")
 [[ -n "${DESI_MODE:-}" ]]             && FLAGS+=(--desi-mode "$DESI_MODE")
+[[ -n "${DESI_MOCKS_DIR:-}" ]]        && FLAGS+=(--desi-mocks-dir "$DESI_MOCKS_DIR")
+[[ -n "${DESI_MOCK_JOBS:-}" ]]        && FLAGS+=(--desi-mock-jobs "$DESI_MOCK_JOBS")
 [[ -n "${SCALARS_ROOT:-}" ]]          && FLAGS+=(--scalars-root "$SCALARS_ROOT")
 
 mkdir -p "$WORKDIR"

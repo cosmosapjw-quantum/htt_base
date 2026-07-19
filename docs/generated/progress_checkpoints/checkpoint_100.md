@@ -35,6 +35,12 @@ They do not validate native solver behavior, transfer calibration, HTT posterior
 
 ## Checkpoint 100 — Wave 19 data-availability gate (roadmap requirement)
 
+> **Superseded by the 2026-07-19 in-place amendment.** PR-151 was reopened
+> because its official 1000 EZmock + 25 Abacus acquisition is still running.
+> Current DAG bookkeeping is 99/113 completed with PR-151 in progress. The
+> corrected data-lane states below replace the original availability verdict;
+> the metadata above remains the historical checkpoint-generation receipt.
+
 Freeze gate: `research_remediation_state.yaml` = **102 OPEN / 0 RESCUED**, 0
 `downclaimed`/`rebuild_required` findings miscounted as rescued; the two CF4 P0s
 (`C1-K5-MV-F1`, `C3-K5-VCORR-ML-F1`) stay OPEN. DAG bookkeeping only — this
@@ -46,16 +52,15 @@ from *the exact input the current estimator needs exists*:
 
 | Probe | Public inputs exist | Exact estimator input exists | Status | PR |
 |-------|---------------------|------------------------------|--------|-----|
-| **Planck K1 E2E** | yes (PR3 FFP10 SMICA: 999 CMB + 300 noise MC) | **yes** — full E2E max-scan ran (masked, proc-nside 64) | **available** (E2E-conditional morphology diagnostic; look-elsewhere p = 11/301) | PR-150 |
-| **DESI exact support** | yes (DR1 BGS randoms + data, real selection) | **partial** — real randoms give the exact selection, but the official validation mocks (1000 EZmocks + 25 AbacusSummit) are **absent** | **blocked** — causal attribution abandoned; only the survey-conditional null closes | PR-151 |
-| **ACT upstream QE** | yes (DR6 lensing release: reconstructed κ + 400 sims + N0/N1 + mask + response) | **no** — the raw filtered CMB maps + QE pipeline (needed for a realisation-dependent N0) are **absent** | **no-go** for raw-QE inference (`ABANDON_CURRENT_DATASET_FOR_NATIVE_LOW_L_SKY_POWER`); only the release-simulation cross-fit diagnostic closes | PR-152 |
-| **JWST row authority** | yes (cited seed: Freedman CCHP + Riess SH0ES anchors, real DOIs) | **no** — the authoritative machine-readable data table (CCHP MRT) is **not reproduced** (HTTP 404; only arXiv abstract pages fetched) | **blocked** — cited-seed catalogue-linkage scenario only; positional credibility ≠ confirmed identity; no CF4-conditioned forecast | PR-153 |
+| **Planck K1 E2E** | yes (PR3 FFP10 SMICA: 999 CMB + 300 noise MC) | **yes** — all 999 CMB maps ran; exact NSIDE64 compact replay covers all 1299 maps | **available** — PR3/FFP10-conditional max-scan `39/1000 = 0.039`; raw 731 GB retained pending PR4 replacement-ready gate | PR-150 |
+| **DESI official mocks** | yes — DR1 publishes 1000 EZmocks + 25 AbacusSummit | **partial** — resumable authenticated tmux/aria acquisition is running; one random NGC+SGC pair per mock is required, all 18 indices are not | **in progress**, not abandoned; final official-mock rank is withheld until exactly 1025 authenticated records exist | PR-151 |
+| **ACT upstream QE** | yes — reconstructed κ + 400 sims + N0/N1/mask/response, public four-split CMB maps, and open QE software | **release-simulation input yes; raw-QE execution no** | release-simulation cross-fit is a concrete conditional result; realization-dependent N0 is a separate reproducible large rerun, not a permanent no-go | PR-152 |
+| **JWST row authority** | yes — verified author-source archives and source-checked tables | **yes for expanded published-table comparisons** | concrete CCHP and SH0ES host-level consistency results built; CF4-conditioned forecast remains separately gated | PR-153 |
 
-Key discipline: in every probe *public inputs existing* did NOT imply *the exact
-estimator input existed*. Planck K1 is the only probe whose exact input was on
-disk (full E2E). DESI has the exact selection but not the validation mocks; ACT
-has reconstructed products but not the raw-QE stage; JWST has cited anchors but
-not the authoritative machine-readable table. All four remain diagnostic-only;
-no detection, geometry, or Bianchi-family claim; both CF4 P0s OPEN (closure needs
-the PR-157 adjudication). Checkpoint 100 verdict: **PASS** (freeze gate green,
-data-availability recorded honestly).
+Key discipline: preflight is separated from result production. PR-150, PR-152,
+and PR-153 now report reproducible conditional measurements; a null,
+consistency result, or upper-tail rank is still a scientific result without
+being a detection. PR-151 remains open until the official mocks finish. None of
+these author lanes identifies a geometry or Bianchi family, and both CF4 P0s
+remain OPEN pending PR-157 non-author adjudication. The original Checkpoint-100
+availability verdict is therefore **withdrawn and superseded**.

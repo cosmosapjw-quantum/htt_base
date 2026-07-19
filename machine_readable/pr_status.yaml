@@ -1,4 +1,4 @@
-generated_on: '2026-07-17'
+generated_on: '2026-07-19'
 completed:
 - PR-000
 - PR-001
@@ -97,7 +97,6 @@ completed:
 - PR-148
 - PR-149
 - PR-150
-- PR-151
 - PR-152
 - PR-153
 blocked: []
@@ -116,7 +115,7 @@ dormant_external:
 - PR-164
 - PR-165
 - PR-166
-in_progress: null
+in_progress: PR-151
 execution_resolutions:
   PR-153:
     resolution: COMPLETED_SUCCESS
@@ -130,16 +129,10 @@ execution_resolutions:
     resolved_on: '2026-07-19'
     scientific_status_effect: none
     scientific_status_after: OPEN
-  PR-151:
-    resolution: COMPLETED_SUCCESS
-    receipt: docs/PR_DELTAS/pr-151.md
-    resolved_on: '2026-07-19'
-    scientific_status_effect: none
-    scientific_status_after: OPEN
   PR-150:
     resolution: COMPLETED_SUCCESS
     receipt: docs/PR_DELTAS/pr-150.md
-    resolved_on: '2026-07-18'
+    resolved_on: '2026-07-19'
     scientific_status_effect: none
     scientific_status_after: OPEN
   PR-149:
@@ -328,6 +321,50 @@ execution_resolutions:
     resolved_on: '2026-07-15'
     scientific_status_effect: none
     scientific_status_after: OPEN
+wave19_amendment:
+  effective_on: '2026-07-19'
+  authority: docs/generated/wave19_data_readiness.json
+  supersedes_historical_notes_for_prs:
+  - PR-150
+  - PR-151
+  - PR-152
+  - PR-153
+  PR-150:
+    execution_state: completed_concrete_result
+    result: 'Planck PR3 FFP10 SMICA max-scan finite rank 39/1000 = 0.039'
+    inputs: 999 usable CMB plus 300 noise; CMB 00970 officially excluded
+    compact_gate: full 1299 raw-to-NSIDE64 replay green
+    storage: raw 731 GB retained; safe_to_delete_raw is false until an authenticated
+      PR4 replacement-ready receipt independently rehashes every typed inventory
+      file and explicit storage-swap authorization is later given
+    PR4_state: observed SEVEM map public; matched simulations externally blocked
+  PR-151:
+    execution_state: official_mock_acquisition_in_progress
+    source_state: public DESI DR1 1000 EZmocks plus 25 AbacusSummit BGS mocks
+    acquisition: resumable tmux plus aria2 on NVMe; abandoned status withdrawn
+    random_policy: one NGC and SGC random pair per mock; random index 1 for a
+      preregistered 10 EZmock plus 5 Abacus sensitivity audit
+    full_18_random_sets: not required for the frozen low-ell estimand because
+      they are integration replications, not independent cosmological mocks
+    completion_rule: no terminal scientific result until all 1025 mock records
+      pass checksums, compact-random authentication, and final rehash
+  PR-152:
+    execution_state: completed_concrete_result
+    result: 'ACT DR6 release-simulation conditional rank 146/401 = 0.3640897755610973'
+    inputs: reconstructed kappa observation plus exactly 400 release simulations
+    boundary: exploratory L=2..10 result outside the release spectrum-validation
+      range L=40..763; no raw-QE sky-power limit
+    raw_qe_stage: public four-split maps and open QE software make a rerun
+      feasible, but exact filtering/RDN0 execution is not local and remains a
+      separate configuration-locked reconstruction; future readiness requires
+      full local file rehashes and a cross-bound execution log, not digest syntax
+  PR-153:
+    execution_state: completed_concrete_result
+    result: expanded published-table conditional JWST anchor comparisons
+    samples: 7 CCHP host-level and 13 SH0ES host-level anchors plus published
+      Li et al. aggregate expansions
+    boundary: source-table consistency measurements only; no H0 fit and no CF4
+      conditioned claim
 external_events: {}
 notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable install
   and import discovery when python points to an active virtual environment. PR-003

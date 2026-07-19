@@ -13,6 +13,8 @@
       "act_dr6_lensing",
       "spt3g_y1",
       "desi_y1",
+      "desi_dr1_mocks",
+      "jwst_anchors",
       "cf4",
       "cf4_full",
       "camb_refs",
@@ -231,6 +233,36 @@
       "BGS_ANY_NGC_0_clustering.ran.fits",
       "BGS_ANY_SGC_0_clustering.ran.fits"
     ]
+  },
+  "desi_dr1_mocks": {
+    "_doc": "DESI DR1 public BGS_BRIGHT-21.5 validation mocks: 1000 EZmock FFA plus 25 AbacusSummit FFA. Retain ~128 GB of clustering data; stream one authenticated random NGC+SGC pair per mock (~1.1 TB network), reduce it to an NSIDE64 window, then delete the raw random pair. A second pair is reduced for 10 EZmock plus 5 Abacus sensitivity realizations. Retaining all 18 pairs per mock (~19 TB) is unnecessary for the frozen low-ell estimator.",
+    "project_page": "https://data.desi.lbl.gov/doc/releases/dr1/",
+    "base": "https://data.desi.lbl.gov/public/dr1/survey/catalogs/dr1/mocks",
+    "retained_size_estimate_GB": 129.0,
+    "network_transfer_estimate_GB": 1210.0,
+    "peak_transient_batch_estimate_GB": 12.0,
+    "method": "scripts/download_desi_dr1_mocks.py",
+    "approval_required": true,
+    "products": {
+      "ezmock": 1000,
+      "abacussummit": 25,
+      "sample": "BGS_BRIGHT-21.5",
+      "flavour": "FFA",
+      "retained_data_files_per_realization": 2,
+      "primary_random_index": 0,
+      "random_replication_audit": "index 1 for first 10 EZmock and first 5 Abacus"
+    },
+    "storage_policy": "retain NGC/SGC clustering data, official SHA256 receipts, and a mock-specific NSIDE64 random-0 window; delete each raw mock random only after authenticated compact reduction; retain compact random-1 windows for the preregistered sensitivity subset"
+  },
+  "jwst_anchors": {
+    "_doc": "Table-bearing arXiv e-print archives for CCHP and SH0ES JWST host-distance comparisons; verifies LaTeX table markers instead of accepting abstract HTML.",
+    "method": "scripts/download_jwst_anchors.py",
+    "size_estimate_GB": 0.06,
+    "products": {
+      "source_archives": 5,
+      "analysis_tables": 2,
+      "committed_transcription": "dl_pipeline/data/jwst_host_distance_comparisons.csv"
+    }
   },
   "cf4": {
     "_doc": "CF4++ peculiar-velocity grid. fetch.py will try the canonical CF4++ NPZ URL by default; CF4_GRID_URL still overrides it when needed.",

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-fetch.py ??Unified data download & extraction orchestrator
+fetch.py - unified data download and extraction orchestrator
 ==========================================================
 
 Single entry point for every external download required by the BASS
@@ -19,7 +19,8 @@ Usage
 
 Stage IDs (run in this order with --all):
     env, planck_pr3, bicep_keck, planck_lensing, act_dr4, act_dr6,
-    spt3g_y1, desi_y1, cf4, camb_refs, scalars, package
+    spt3g_y1, desi_y1, desi_dr1_mocks, jwst_anchors, cf4, camb_refs,
+    scalars, package
 """
 from __future__ import annotations
 
@@ -102,7 +103,7 @@ class Logger:
 
 def download(url: str, dst: Path, log: Logger, force: bool = False,
              optional: bool = False) -> bool:
-    """Download url ??dst. Skip if dst exists and force is False.
+    """Download URL to dst. Skip if dst exists and force is False.
     Returns True on success (or skip), False on optional failure."""
     if os.environ.get("DL_PIPELINE_NO_DOWNLOAD") == "1":
         raise RuntimeError("DL_PIPELINE_NO_DOWNLOAD=1 refuses network downloads")
@@ -113,7 +114,7 @@ def download(url: str, dst: Path, log: Logger, force: bool = False,
 
     dst.parent.mkdir(parents=True, exist_ok=True)
     log(f"  [download] {url}")
-    log(f"             ??{dst}")
+    log(f"             -> {dst}")
 
     # Prefer curl if available (better progress, retries)
     if shutil.which("curl"):
@@ -178,7 +179,7 @@ def run_shell(cmd: list[str], log: Logger, check: bool = True) -> int:
 def stage_env(root: Path, sources: dict, log: Logger, **opts):
     """Install Python dependencies into the active venv.
 
-    Refuses to run outside a venv ??the pipeline is now local-dev only and must
+    Refuses to run outside a venv; the pipeline is local-dev only and must
     never pollute the system site-packages. Invoke via run_all.sh (which picks
     the repo-local venv) or activate the venv manually before running fetch.py.
     """
@@ -572,6 +573,29 @@ def stage_desi_y1(root: Path, sources: dict, log: Logger, **opts):
                 "--mode", desi_mode], log, check=False)
 
 
+def stage_desi_dr1_mocks(root: Path, sources: dict, log: Logger, **opts):
+    """Acquire public DESI mocks plus bounded mock-specific random windows."""
+    if not opts.get("approve_downloads"):
+        log("  [approval-required] DESI DR1 mocks require --approve-downloads.")
+        log("  [note] about 128 GB of clustering data are retained; one random "
+            "NGC+SGC pair per mock is streamed (~1.1 TB network total), reduced "
+            "to NSIDE64, authenticated, and then removed. All 18 pairs (~19 TB) "
+            "are not retained.")
+        return
+    target = opts.get("desi_mocks_dir") or str(root / "raw" / "desi_dr1_mocks")
+    args = ["--target", str(target),
+            "--aria-jobs", str(opts.get("desi_mock_jobs", 3)),
+            "--batch-size", str(opts.get("desi_mock_batch_size", 10))]
+    run_python(SCRIPTS_DIR / "download_desi_dr1_mocks.py", args, log, check=True)
+
+
+def stage_jwst_anchors(root: Path, sources: dict, log: Logger, **opts):
+    """Acquire and content-verify the table-bearing JWST e-print sources."""
+    raw = root / "raw" / "jwst_anchors"
+    run_python(SCRIPTS_DIR / "download_jwst_anchors.py",
+               ["--raw-dir", str(raw)], log, check=True)
+
+
 def stage_cf4(root: Path, sources: dict, log: Logger, **opts):
     s = sources["cf4"]
     cf4_dir = root / "raw" / "cf4"
@@ -639,7 +663,7 @@ def stage_camb_refs(root: Path, sources: dict, log: Logger, **opts):
     try:
         import camb  # noqa: F401
     except ImportError:
-        log("  [info] CAMB not installed ??running pip install camb==1.6.6")
+        log("  [info] CAMB not installed; running pip install camb==1.6.6")
         run_shell([sys.executable, "-m", "pip", "install", "camb==1.6.6"],
                   log, check=False)
     run_python(SCRIPTS_DIR / "generate_camb_lensing_refs.py",
@@ -768,6 +792,8 @@ STAGES = {
     "act_dr6_lensing": stage_act_dr6_lensing,
     "spt3g_y1":       stage_spt3g_y1,
     "desi_y1":        stage_desi_y1,
+    "desi_dr1_mocks": stage_desi_dr1_mocks,
+    "jwst_anchors":   stage_jwst_anchors,
     "cf4":            stage_cf4,
     "camb_refs":      stage_camb_refs,
     "scalars":        stage_scalars,
@@ -815,7 +841,7 @@ def main():
                          "the unpacked obs_bundle/ tree directly)")
     ap.add_argument("--planck-nside-out", type=int, default=16,
                     help="Target NSIDE for Planck map/mask downgrade (default 16, "
-                         "the canonical low-??pixel-likelihood resolution).")
+                         "the canonical low-ell pixel-likelihood resolution).")
     ap.add_argument("--full-res-maps", action="store_true",
                     help="Also dump full-resolution (NSIDE=2048) Planck map/mask "
                          "NPZs alongside the downgraded ones (~200 MB per map).")
@@ -832,8 +858,13 @@ def main():
                          "the NVMe is present, else "
                          "<root>/downloads/act_dr6_lensing_sims)")
     ap.add_argument("--desi-mode", choices=["minimal", "extended"], default="extended",
-                    help="DESI column set ??extended (default) keeps all weights + "
+                    help="DESI column set: extended (default) keeps all weights + "
                          "targetid/ntile/photsys; minimal strips to ra/dec/z/weight/n_hat.")
+    ap.add_argument("--desi-mocks-dir", default=None,
+                    help="storage root for the public DESI DR1 EZmock/Abacus "
+                         "clustering catalogs (recommended: a large NVMe)")
+    ap.add_argument("--desi-mock-jobs", type=int, default=3,
+                    help="server-friendly authenticated DESI mock downloads (default 3)")
     ap.add_argument("--approve-downloads", action="store_true",
                     help="allow newly added approval-gated external download stages")
     ap.add_argument("--download-inventory", default=None,
@@ -871,8 +902,8 @@ def main():
     log_path = root / "logs" / f"fetch_{time.strftime('%Y%m%d_%H%M%S')}.log"
     log = Logger(log_path)
     log("=" * 70)
-    log(f"BASS data pipeline ??root={root}")
-    log(f"plan: {' ??'.join(plan)}")
+    log(f"BASS data pipeline; root={root}")
+    log(f"plan: {' -> '.join(plan)}")
     log(f"options: force={args.force}  skip_heavy={args.skip_heavy}  "
         f"skip_large_maps={args.skip_large_maps}  dry_run={args.dry_run}")
     log("=" * 70)
@@ -911,6 +942,8 @@ def main():
                 full_res_maps=args.full_res_maps,
                 desi_mode=args.desi_mode,
                 desi_randoms=args.desi_randoms,
+                desi_mocks_dir=args.desi_mocks_dir,
+                desi_mock_jobs=args.desi_mock_jobs,
                 act_sims=args.act_sims,
                 act_sims_dir=args.act_sims_dir,
                 approve_downloads=args.approve_downloads,

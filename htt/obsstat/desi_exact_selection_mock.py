@@ -11,12 +11,11 @@ kinematic / selection component confusion matrix injects each component at a
 known amplitude and reports how the SAME estimator attributes it, demonstrating
 the three are confounded.
 
-Because the official DESI DR1 validation mocks (1000 EZmocks + 25 AbacusSummit)
-are NOT on disk, causal attribution is ABANDONED per the kill rule and only the
-DESI-survey-conditional null of the observed dipole is reported.  DESI-survey-
-conditional estimator/null DIAGNOSTIC at ``roadmap_rescue_v1:C3`` only: no
-clustering-dominated causal claim, no DESI dipole-detection, anisotropy,
-geometry, or Bianchi-family claim; the two CF4 P0s are untouched.
+The public DESI DR1 validation mocks (1000 EZmocks + 25 AbacusSummit) can now be
+ingested for an official-mock-conditioned finite-rank result.  Their presence
+calibrates consistency/tension; it does not by itself identify a causal
+clustering/kinematic/selection decomposition.  No anisotropy, geometry, or
+Bianchi-family claim follows from this estimator.
 """
 from __future__ import annotations
 
@@ -400,3 +399,24 @@ def generate_caption(manifest: dict, confusion: dict, null: dict) -> str:
         f"(p={null['survey_conditional_pooled_rank_p']:.3f}). DESI-survey-"
         f"conditional estimator/null diagnostic only; no dipole detection, no "
         f"anisotropy, no Bianchi-family claim; the two CF4 P0s stay OPEN.")
+
+
+def generate_official_caption(card: dict) -> str:
+    """Caption for the concrete public-mock-conditioned result lane."""
+    rank = card["ezmock"]["rank"]
+    validation = card["abacus_validation"]["rank"]
+    audit = card["random_replication_sensitivity"]
+    return (
+        "DESI DR1 BGS_BRIGHT-21.5 weighted number-count dipole over "
+        "0.1 <= z <= 0.4, calibrated against 1000 public EZmock FFA "
+        "realizations with mock-specific authenticated random-index-0 NGC/SGC "
+        "windows and per-realization alpha/nuisance refits. The "
+        f"observation-inclusive right-tail rank is p={rank['right_tail_p']:.4f} "
+        f"and the central two-sided rank is p={rank['central_two_sided_p']:.4f}. "
+        f"Twenty-five AbacusSummit FFA mocks are reported separately "
+        f"(right-tail p={validation['right_tail_p']:.4f}) and are not pooled. "
+        f"Random-index replication sensitivity is measured on "
+        f"{audit['n_audited']} preregistered mocks. This is an official-mock-"
+        "conditioned consistency/tension measurement; it does not identify a "
+        "causal component, anisotropic geometry, or a Bianchi family."
+    )

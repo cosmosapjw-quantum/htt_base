@@ -1,4 +1,6 @@
 {
+  "allowed_use": "estimator_preflight_only",
+  "artifact_mode": "superseded_synthetic_exact_selection_preflight",
   "caps": {
     "NGC": {
       "alpha": 0.287537,
@@ -9,6 +11,7 @@
       "n_data": 1441126
     }
   },
+  "claim_tier": "diagnostic_only",
   "component_confusion": {
     "components_confounded": true,
     "injection_amplitude": 0.02,
@@ -285,5 +288,7 @@
     "note": "the high-realism tier carries a per-mock RANDOM un-modelled l>=2 imaging systematic the estimator does not fit; the trace ratio and relative Frobenius gap quantify how much the fast tier under-estimates the covariance when that systematic is present (near 1 / near 0 means usable)",
     "relative_frobenius_gap": 0.472552,
     "trace_ratio_fast_over_hi": 0.943448
-  }
+  },
+  "status": "SUPERSEDED_PREFLIGHT_ONLY",
+  "superseded_by": "DESI DR1 1000 EZmock plus 25 Abacus official-mock acquisition and finite-rank card"
 }
