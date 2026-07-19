@@ -1,4 +1,6 @@
 {
+  "S_data": 7.361955604817849e-06,
+  "algebraic_bias_ratio_n_minus_1_over_n_squared": 0.9950062500000001,
   "artifact_metadata": {
     "caveats": [
       "The result is conditional on exchangeability of the released ACT reconstruction data and 400 released simulations.",
@@ -48,12 +50,17 @@
     "transfer_source": "none",
     "worktree_state": "dirty"
   },
-  "fixed_template_mean_pooled_rank_p": 0.3834538653366584,
-  "injection_amplitude": 0.1,
-  "laws_distinct": true,
-  "note": "a stochastic injection whose band-power distribution equals the null's is unidentifiable (its pooled rank against the same null stays uniform); a fixed-template injection is a coherent additive offset that shifts the rank; both are ranked against the SAME null so the distinction is identifiability, not a null-set artifact --- this is not an additive stochastic field (which would itself raise the band power)",
-  "schema": "pr152.injection_law.v1",
-  "sim_band_power_mean": 7.015043760098176e-06,
-  "sim_band_power_std": 1.7285555661843159e-06,
-  "stochastic_mean_pooled_rank_p": 0.4778366583541147
+  "bias_ratio_is_input_independent": true,
+  "crossfit_pooled_rank_p": 0.3640897755610973,
+  "crossfit_sim_band_power_mean": 7.015085436169572e-06,
+  "joint_exchangeability_exact": false,
+  "mean_field_band_power": 1.2288872487654994e-17,
+  "n_sims": 400,
+  "naive_pooled_rank_p": 0.3541147132169576,
+  "naive_self_mean_field_deflates_residual": true,
+  "naive_sim_band_power_mean": 6.980053853272701e-06,
+  "note": "legacy simulation-only LOO sensitivity: data use the all-simulation mean while each simulation uses the other simulations, so the transform is not jointly permutation-equivariant. The naive/cross-fit band-power ratio is the EXACT input-independent ((n-1)/n)^2 sample-size scaling, not a data-dependent measured bias, and the low-multipole mean field is numerically negligible so the cross-fit is the principled construction rather than a large correction on this data --- it is reported as a secondary sensitivity",
+  "schema": "pr152.legacy_mean_field_sensitivity.v1",
+  "self_mean_field_bias_ratio_naive_over_crossfit": 0.9950062500000002,
+  "simulation_over_data_residual_variance_ratio": 1.0000062500390627
 }

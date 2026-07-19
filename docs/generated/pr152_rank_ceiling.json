@@ -48,12 +48,13 @@
     "transfer_source": "none",
     "worktree_state": "dirty"
   },
-  "fixed_template_mean_pooled_rank_p": 0.3834538653366584,
-  "injection_amplitude": 0.1,
-  "laws_distinct": true,
-  "note": "a stochastic injection whose band-power distribution equals the null's is unidentifiable (its pooled rank against the same null stays uniform); a fixed-template injection is a coherent additive offset that shifts the rank; both are ranked against the SAME null so the distinction is identifiability, not a null-set artifact --- this is not an additive stochastic field (which would itself raise the band power)",
-  "schema": "pr152.injection_law.v1",
-  "sim_band_power_mean": 7.015043760098176e-06,
-  "sim_band_power_std": 1.7285555661843159e-06,
-  "stochastic_mean_pooled_rank_p": 0.4778366583541147
+  "ell_max": 10,
+  "ell_min": 2,
+  "finite_rank_ceiling": 117,
+  "n_real_harmonic_dof": 117,
+  "note": "exact algebraic ceiling: the low-multipole band carries sum(2 ell + 1) real dof, capped by the mean-field-subtracted sample rank n_sims - 1; the realized numerical covariance rank was not measured",
+  "rank_limited_by": "modes",
+  "realized_numerical_rank_measured": false,
+  "sample_rank": 399,
+  "schema": "pr152.rank_ceiling.v1"
 }
