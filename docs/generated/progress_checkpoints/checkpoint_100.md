@@ -64,3 +64,33 @@ being a detection. PR-151 remains open until the official mocks finish. None of
 these author lanes identifies a geometry or Bianchi family, and both CF4 P0s
 remain OPEN pending PR-157 non-author adjudication. The original Checkpoint-100
 availability verdict is therefore **withdrawn and superseded**.
+
+## Checkpoint 100 — PR-154 completion and advocate-switch amendment
+
+Recorded on 2026-07-19 after PR-154 closeout. The checkpoint generator correctly
+refused to overwrite this immutable historical artifact; this in-place
+amendment plus the regenerated `progress_scoreboard.md` is the current receipt.
+
+- DAG bookkeeping: **100/113 = 88.50%** complete; dependency-weighted
+  **93.12%**; critical path **50/56 = 89.29%**.
+- PR-154 completed successfully with a concrete conditional C2 result:
+  CCHP and SH0ES both terminate as `TOTAL_UNCERTAINTY_NOT_IDENTIFIED` after
+  passing Gaussian/Student-t numerical, SBC/PPC, prior, and holdout gates.
+- The exact full method-level PSD mean-SE ranges are `[0, 0.10471429] mag`
+  (CCHP) and `[0, 0.12538462] mag` (SH0ES). Independence remains a sensitivity,
+  not a total covariance estimate.
+- The separate 2,430-cell CF4 scenario pack has zero independently verified
+  observed identities and zero material-gain classifications. It cannot be
+  promoted to an observed host, H0, cosmological, or geometry result.
+- Three blind closeout assignments independently passed numerical/statistical,
+  harness/reproducibility, and claim/ownership review under context version
+  `8e8b36ee2ff5994c80f9f4f9de74d5dcfd750f5f63e5c0707c7c9c0e312d81a9`.
+- PR-151 is still acquisition-only and non-terminal: the 15:08 UTC fast probe
+  found 40 exact EZmock records, zero Abacus records, 10/15 random-audit
+  members, a fresh growing log and `.part` set, and 825.31 GiB free. No second
+  downloader or finalizer was started.
+- PR-155--158 remain gated by PR-151 terminal completion. Per the approved
+  replan, the next foreground transaction is PR-167 advocate intake; this is a
+  scheduling change only and does not rescue any scientific finding.
+- Remediation remains **102 OPEN / 0 RESCUED**, including both CF4 P0s. Planck
+  PR3 raw data remain retained and no PR4 data command ran.

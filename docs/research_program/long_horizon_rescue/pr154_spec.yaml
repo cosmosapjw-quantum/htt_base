@@ -1,0 +1,302 @@
+schema: htt.long_horizon.pr154_jwst_hierarchy.v1
+spec_version: 1
+pr_id: PR-154
+title: JWST host-level hierarchy and covariance-identification envelope
+baseline_commit: 21ceaee68bfbdc53ec97d174449e1ef794c32a9f
+reviewed_on: '2026-07-19'
+owner: HTT
+contributors: [OBSSTAT, COMMON]
+implementation_scope: [htt, common]
+artifact_mode: observed_host_level_plus_separate_forecast_scenario
+allowed_use: source_family_conditional_host_offset_and_covariance_sensitivity_only
+public_use: false
+claim_tier: conditional
+claim_tier_ceiling: conditional
+claim_level_ceiling: {scheme: roadmap_rescue_v1, level: C3}
+terminal_claim_level_if_total_uncertainty_not_identified:
+  scheme: roadmap_rescue_v1
+  level: C2
+scientific_status: OPEN
+scientific_effect: none
+transfer_source: none
+
+claims:
+  - claim_id: C-PR154-OBSERVED
+    text: >-
+      Separate CCHP and SH0ES authenticated host-table contrasts yield
+      source-family-conditional hierarchical method-offset measurements under
+      explicitly registered likelihood, prior, and covariance assumptions.
+  - claim_id: C-PR154-COVARIANCE
+    text: >-
+      Fixed marginal variances plus PSD alone identify an uncertainty set, not
+      a unique total uncertainty. Exact reduced-contrast bounds and structured
+      PSD slices quantify that non-identification reproducibly.
+  - claim_id: C-PR154-CF4-SCENARIO
+    text: >-
+      Nonzero CF4 overlap remains a positional, hypothetical forecast because
+      no assigned row has independently verified physical identity and
+      redshift evidence.
+
+data_contract:
+  source_table:
+    path: dl_pipeline/data/jwst_host_distance_comparisons.csv
+    sha256: afe386474bfb67bf87f4cebb6721eb10a707c401bd8cda7cf52f8dc04fbcf248
+  pr153_authoritative_decision:
+    path: docs/generated/pr153_authoritative_decision.json
+    sha256: 6025569ddbfb6e6c471f7f78b841f1ef676a6bd864b0216237e7e1b1c89f6455
+  pr153_distance_result:
+    path: docs/generated/pr153_distance_consistency.json
+    sha256: 6726d3f1dc684f1603161d1c56006e0f293390cbac0ed6a224c73ab8f721d1d8
+  pr153_crossmatch:
+    path: docs/generated/pr153_crossmatch.json
+    sha256: 02b8c8827ed36bf5f71ffd141b902efae930e17b92f5f276da08fb2b213690bd
+  expected_source_families:
+    cchp_trgb_jagb:
+      n_hosts: 7
+      method_a: JAGB
+      method_b: TRGB
+      signed_contrast: JAGB_minus_TRGB_mag
+    shoes_jwst_hst:
+      n_hosts: 13
+      method_a: JWST
+      method_b: HST
+      signed_contrast: JWST_minus_HST_mag
+  pooling_across_families: forbidden
+  aggregate_rows_as_host_rows: forbidden
+  coordinate_seed_as_distance_group_authority: forbidden
+  cf4_independently_verified_overlap_count: 0
+
+identifiability_contract:
+  latent_pair_equation: >-
+    y_hm - 30 = mu_h + s_m*delta/2 + s_m*u_h/2 + epsilon_hm,
+    with s_A=+1 and s_B=-1.
+  collapsed_equation: d_h = y_hA-y_hB = delta + u_h + e_h
+  equivalence_gate_tolerance_mag: 0.0001
+  group_zero_points: >-
+    The authenticated table has one method label per side and no independent
+    multi-level calibration-group design. A separate group-zero-point
+    posterior is therefore not identified and must emit
+    GROUP_ZERO_POINT_NOT_IDENTIFIED rather than backfill coordinate labels.
+  latent_host_output_use: nuisance_only
+  latent_host_posterior_summary:
+    covariance_role: independence_sensitivity_only
+    draws: 20000
+    seed: 20260722
+    interval: equal_tail_95pct
+
+model:
+  observed_estimand: source-family-conditional mean signed method offset
+  between_host_effect: {distribution: Normal, mean: 0, sd_parameter: tau_host}
+  priors:
+    delta: {distribution: Normal, mean_mag: 0.0, sd_mag: 0.30}
+    tau_host: {distribution: HalfNormal, scale_mag: 0.10}
+  prior_sensitivity:
+    delta_sd_mag: [0.15, 0.30, 0.60]
+    tau_halfnormal_scale_mag: [0.05, 0.10, 0.20]
+  prior_sensitive_if:
+    interval_width_fraction_change_gt: 0.25
+    endpoint_movement_mag_gt: 0.02
+  likelihoods:
+    primary: gaussian_multivariate
+    sensitivity: [student_t_nu4, student_t_nu8]
+    student_t_variance_match: scale_matrix_equals_nu_minus_2_over_nu_times_covariance
+    student_t_semantics: >-
+      The host effect remains u_h~Normal(0,tau_host^2). Only the multivariate
+      measurement residual is Student-t; its Gamma precision mixture is
+      convolved with the independent Normal host effect.
+  deterministic_integration:
+    gaussian_tau_grid: {minimum_mag: 0.0, maximum_mag: 0.50, points: 1001}
+    gaussian_validation_tau_grid: {minimum_mag: 0.0, maximum_mag: 0.75, points: 1501}
+    student_t_tau_grid: {minimum_mag: 0.0, maximum_mag: 0.50, points: 501}
+    student_t_delta_grid: {minimum_mag: -0.60, maximum_mag: 0.60, points: 2401}
+    student_t_validation_tau_grid: {minimum_mag: 0.0, maximum_mag: 0.75, points: 751}
+    student_t_validation_delta_grid: {minimum_mag: -0.90, maximum_mag: 0.90, points: 3601}
+    student_t_gamma_precision_quadrature_points: 96
+    student_t_validation_gamma_precision_quadrature_points: 128
+    posterior_edge_mass_max: 1.0e-8
+    normalization_relative_tolerance: 1.0e-8
+    seed: 20260719
+
+covariance_contract:
+  full_method_level_set: >-
+    U={D R D: R PSD, diag(R)=1}; D contains the published per-method
+    marginal standard deviations. Every candidate preserves the reported
+    marginal variances exactly.
+  contrast_covariance: V=L Sigma L^T
+  independence_role: sensitivity_only
+  full_method_level_exact_mean_se_bound:
+    minimum: max(0, 2*max(k_i)-sum(k_i))
+    independence: sqrt(sum(k_i^2))
+    maximum: sum(k_i)
+    k_i: reported_method_sigma_i_divided_by_n
+  reduced_fixed_diagonal_exact_bound:
+    target: standard_error_of_unweighted_mean
+    minimum: max(0, 2*max(l_h)-sum(l_h))
+    independence: sqrt(sum(l_h^2))
+    maximum: sum(l_h)
+    l_h: independence_approximation_contrast_sigma_h_divided_by_n
+  structured_slices:
+    formula: Sigma(q,B)=D*((1-q)*I+q*B)*D
+    q_grid: [0.0, 0.25, 0.50, 0.75, 1.0]
+    B_grid: [global_all_cell_factor, method_block_factor,
+             authenticated_group_block_factor]
+    group_block_expected_status: NOT_SEPARATELY_IDENTIFIED_SAME_AS_METHOD_BLOCK
+  numerical_gates:
+    psd_eigenvalue_tolerance: -1.0e-10
+    diagonal_absolute_tolerance_mag2: 1.0e-12
+    symmetry_absolute_tolerance_mag2: 1.0e-12
+  classifications:
+    covariance_stable:
+      max_endpoint_movement_mag: 0.02
+      max_width_ratio_to_independence: 1.25
+    covariance_conditional: finite_reproducible_envelope_but_stability_threshold_fails
+    total_uncertainty_not_identified: fixed_diagonal_psd_set_does_not_select_one_interval
+
+robustness_and_holdout:
+  leave_host_out:
+    unit: complete_paired_host
+    refit: exact_train_only
+    unstable_absolute_median_shift_mag: 0.03
+    unstable_standardized_shift_in_full_sd: 0.5
+  leave_group_out:
+    unit: complete_authenticated_method_by_group_level
+    rank_loss_is_not_identified: true
+    unstable_absolute_median_shift_mag: 0.05
+  outlier_sensitive_if:
+    gaussian_vs_t_endpoint_movement_mag_gt: 0.02
+    gaussian_vs_t_width_fraction_change_gt: 0.25
+
+calibration_gates:
+  lineage_sources:
+    - {path: docs/research_program/long_horizon_rescue/pr138_spec.yaml,
+       sha256: 5c73326743a49c6ce021a28f0336fd0471b5e8b37cc48ae4308a8281249bfee7}
+    - {path: docs/research_program/long_horizon_rescue/pr139_spec.yaml,
+       sha256: e26ca2d687804ee6374f310ec1160e202e08edbdfd6e63757c1bf4a700726437}
+  sbc:
+    bit_generator: PCG64
+    seed: 20260720
+    n_simulations: 3000
+    posterior_draws_per_simulation: 20
+    rank_bins: 7
+    chi_square_pvalue_floor: 0.01
+    known_bad_variance_scales: [0.5, 2.0]
+    meaning: computation_calibration_only
+  ppc:
+    seed: 20260721
+    posterior_predictive_draws: 5000
+    frozen_discrepancies: [sample_variance, sample_max, sample_range]
+    extreme_bounds: [0.005, 0.995]
+    meaning: conditional_predictive_adequacy_only
+  failed_gate_action: MODEL_INADEQUATE
+  threshold_tuning_after_result: forbidden
+
+cf4_scenario_contract:
+  observed_nonzero_overlap_allowed: false
+  scenario_only: true
+  verified_overlap_fraction: [0.0, 0.5, 1.0]
+  identity_error_rate: [0.0, 0.1, 0.25]
+  auxiliary_reliability: [0.5, 0.8, 1.0]
+  nuisance_slope_mag: [-0.05, -0.02, 0.0, 0.02, 0.05]
+  correlated_fraction_q: [0.0, 0.5, 0.9]
+  likelihood_nu: [4, 8, infinity]
+  replicates_per_cell: 5000
+  seed: 20260719
+  coverage_acceptance: [0.93, 0.97]
+  unsafe_absolute_bias_mag: 0.01
+  material_width_gain_fraction: 0.10
+  material_rmse_gain_fraction: 0.10
+  classification_mc_guard_sigma: 2.0
+  auxiliary_covariate_generation: iid_standard_normal_not_recentered
+  interval_evaluation: >-
+    Deterministic first-half Monte Carlo interval calibration followed by
+    independent second-half coverage, bias, and RMSE evaluation.
+  identity_error_generation: independent_Bernoulli_per_replicate_and_claimed_host
+  forbidden_interpretation: [physical_identity, H0, cosmology, anisotropy,
+                             geometry, Bianchi_family]
+
+pr151_background_preflight:
+  phase_cli: [acquire, finalize, all, progress]
+  phase_required: true
+  background_phase: acquire
+  single_target_writer_lock: required
+  acquire_tracked_writes: forbidden
+  finalize_requires_exact_counts: {ezmock: 1000, abacus: 25}
+  finalize_requires_observed_authenticated: true
+  finalize_requires_random_index_1_audit: {ezmock: 10, abacus: 5}
+  finalize_requires_full_rehash: true
+  fast_progress_payload_hashing: forbidden
+  stall_rule: two_probes_900_seconds_apart_with_zero_log_and_part_growth
+
+remediation_state_contract:
+  path: docs/codex_handoff/research_remediation_state.yaml
+  sha256: f16d9754828bb32ae4cef92f585af82ae7fd1caa2687a7b4144bc1e942328dd9
+  finding_count: 102
+  required_scientific_status_counts: {OPEN: 102}
+  rescued_count: 0
+
+data_scope:
+  pr4_data_work: skip_entirely_by_user_scope
+  pr4_commands_run_required: 0
+  planck_pr3_raw_deletion: forbidden_without_pr4_replacement_ready_and_human_authorization
+
+artifact_contract:
+  owner_by_output:
+    default: HTT
+    docs/generated/pr154_mutation_report.json: COMMON
+    docs/generated/pr154_artifact_manifest.json: COMMON
+  common_owned_outputs_scientific_owner: HTT
+  outputs:
+    - docs/generated/pr154_cchp_observed.json
+    - docs/generated/pr154_shoes_observed.json
+    - docs/generated/pr154_covariance_envelope.json
+    - docs/generated/pr154_robustness_holdout.json
+    - docs/generated/pr154_sbc_ppc.json
+    - docs/generated/pr154_cf4_scenarios.json
+    - docs/generated/pr154_captions.json
+    - docs/generated/pr154_mutation_report.json
+    - docs/generated/pr154_artifact_manifest.json
+  check_policy: fresh_build_must_equal_disk_bytes
+  required_metadata:
+    - owner
+    - implementation_scope
+    - claim_tier
+    - claim_level
+    - artifact_mode
+    - allowed_use
+    - forbidden_use
+    - transfer_source
+    - config_hash
+    - input_hashes
+    - sky_support_status
+    - mask_status
+    - covariance_status
+    - null_mock_status
+    - caveats
+    - generating_command
+    - runtime_environment
+    - git_commit
+    - worktree_state
+
+acceptance_and_kill_switches:
+  - CCHP and SH0ES signs and source rows are separate and exact-hash bound
+  - latent and collapsed Gaussian diagonal fixtures agree within 0.0001 mag
+  - group zero point decomposition reports not identified, never a fabricated posterior
+  - exact fixed-diagonal PSD mean-SE bounds reproduce analytic extrema
+  - independence is sensitivity-only and one total interval is not claimed
+  - Gaussian and variance-matched Student-t results are reported separately
+  - leave-host and group-rank gates execute without threshold changes
+  - SBC/PPC execute under the frozen registry or emit MODEL_INADEQUATE
+  - every nonzero CF4-overlap row is scenario-only
+  - all mutations execute and are killed
+  - all 102 findings and both CF4 P0s remain OPEN
+
+forbidden_output_language:
+  - methods are equal
+  - independence gives total uncertainty
+  - CF4 host identity confirmed
+  - H0 inferred from host offsets
+  - cosmological anisotropy detected
+  - Bianchi geometry detected
+  - Bianchi family identified
+  - finding rescued
+  - validated as native

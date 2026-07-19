@@ -1,0 +1,419 @@
+{
+  "artifact_metadata": {
+    "allowed_use": "source_family_conditional_host_offset_and_covariance_sensitivity_only",
+    "artifact_mode": "observed_host_level_plus_separate_forecast_scenario",
+    "caveats": [
+      "CCHP and SH0ES are fitted separately and are never pooled.",
+      "The full shared calibration covariance is unavailable; diagonal independence is sensitivity-only.",
+      "Calibration-group zero points are not identified by the authenticated table design.",
+      "CF4 positional linkage has zero independently verified observed host identities and remains scenario-only.",
+      "No H0, cosmological, geometry, family-identification, or native-transfer conclusion is authorized."
+    ],
+    "claim_level": {
+      "level": "C2",
+      "scheme": "roadmap_rescue_v1"
+    },
+    "claim_tier": "conditional",
+    "config_hash": "sha256:79537ed7c1d9c75efe35112f07b904bbf90259fcffe67f53b6ad4e91323f2efc",
+    "covariance_status": "fixed_marginal_variance_PSD_envelope; total covariance not identified",
+    "forbidden_use": [
+      "methods are equal",
+      "independence gives total uncertainty",
+      "CF4 host identity confirmed",
+      "H0 inferred from host offsets",
+      "cosmological anisotropy detected",
+      "Bianchi geometry detected",
+      "Bianchi family identified",
+      "finding rescued",
+      "validated as native"
+    ],
+    "generating_command": "venv/bin/python -B scripts/codex_harness/run_pr154_jwst_host_hierarchy.py --write",
+    "git_commit": "21ceaee68bfbdc53ec97d174449e1ef794c32a9f",
+    "implementation_scope": [
+      "htt",
+      "common"
+    ],
+    "input_hashes": [
+      {
+        "path": "dl_pipeline/data/jwst_host_distance_comparisons.csv",
+        "sha256": "sha256:afe386474bfb67bf87f4cebb6721eb10a707c401bd8cda7cf52f8dc04fbcf248"
+      },
+      {
+        "path": "docs/generated/pr153_authoritative_decision.json",
+        "sha256": "sha256:6025569ddbfb6e6c471f7f78b841f1ef676a6bd864b0216237e7e1b1c89f6455"
+      },
+      {
+        "path": "docs/generated/pr153_distance_consistency.json",
+        "sha256": "sha256:6726d3f1dc684f1603161d1c56006e0f293390cbac0ed6a224c73ab8f721d1d8"
+      },
+      {
+        "path": "docs/generated/pr153_crossmatch.json",
+        "sha256": "sha256:02b8c8827ed36bf5f71ffd141b902efae930e17b92f5f276da08fb2b213690bd"
+      },
+      {
+        "path": "docs/research_program/long_horizon_rescue/pr138_spec.yaml",
+        "sha256": "sha256:5c73326743a49c6ce021a28f0336fd0471b5e8b37cc48ae4308a8281249bfee7"
+      },
+      {
+        "path": "docs/research_program/long_horizon_rescue/pr139_spec.yaml",
+        "sha256": "sha256:e26ca2d687804ee6374f310ec1160e202e08edbdfd6e63757c1bf4a700726437"
+      },
+      {
+        "path": "docs/codex_handoff/research_remediation_state.yaml",
+        "sha256": "sha256:f16d9754828bb32ae4cef92f585af82ae7fd1caa2687a7b4144bc1e942328dd9"
+      },
+      {
+        "path": "htt/htt/htt/infer/jwst_host_hierarchy.py",
+        "sha256": "sha256:ce54b5cfb2fa683e2a2a78f62aa03bcae990ea973ee16f763eef2c23113430df"
+      },
+      {
+        "path": "scripts/codex_harness/run_pr154_jwst_host_hierarchy.py",
+        "sha256": "sha256:0c28a02daeb2e2c3ea83fbe1d2e928005f467fad7df6ebc7fef8e48f3f966a79"
+      }
+    ],
+    "mask_status": "not_applicable_to_host_distance_table_analysis",
+    "null_mock_status": "registered_SBC_and_posterior_predictive_simulations; no_matched_survey_null_mock_claim; CF4_product_is_scenario_only",
+    "owner": "HTT",
+    "runtime_environment": {
+      "numpy": "2.5.0",
+      "python": "3.12.3"
+    },
+    "sky_support_status": "authenticated_published_host_tables; CF4 nonzero overlap is scenario_only",
+    "transfer_source": "none",
+    "worktree_state": "dirty_amend_in_place_from_baseline"
+  },
+  "contrast": "JWST_minus_HST_mag",
+  "dataset": "shoes_jwst_hst",
+  "group_zero_point_reason": "one method level per side; no authenticated independent multi-level calibration-group design",
+  "group_zero_point_status": "GROUP_ZERO_POINT_NOT_IDENTIFIED",
+  "hosts": [
+    "NGC3147",
+    "NGC2525",
+    "NGC5861",
+    "NGC3370",
+    "NGC5643",
+    "NGC7250",
+    "NGC4536",
+    "NGC3972",
+    "NGC4424",
+    "NGC4639",
+    "M101",
+    "NGC2442",
+    "NGC1365"
+  ],
+  "independence_sensitivity": {
+    "gaussian": {
+      "delta_equal_tail_95pct_mag": [
+        -0.0870926585399681,
+        0.008886673539437102
+      ],
+      "delta_posterior_mean_mag": -0.039186614930511926,
+      "delta_posterior_median_mag": -0.039214440242356506,
+      "delta_posterior_sd_mag": 0.024419036087225655,
+      "delta_prior_sd_mag": 0.3,
+      "likelihood": "gaussian_multivariate",
+      "numerical_diagnostics": {
+        "internal_normalization_residual": 2.220446049250313e-16,
+        "log_normalizer": 12.118694267357398,
+        "normalization_relative_error": 3.1974423109204e-14,
+        "posterior_upper_tau_edge_mass": 5.778202315530812e-16,
+        "tau_grid_maximum_mag": 0.5,
+        "tau_grid_points": 1001,
+        "validation_log_normalizer": 12.11869426735743,
+        "validation_tau_grid_maximum_mag": 0.75,
+        "validation_tau_grid_points": 1501
+      },
+      "numerical_status": "PASS",
+      "tau_host_equal_tail_95pct_mag": [
+        0.0007862075030004769,
+        0.08101236234359455
+      ],
+      "tau_host_posterior_median_mag": 0.02220785551124483,
+      "tau_prior_scale_mag": 0.1
+    },
+    "primary_total_uncertainty": false,
+    "student_t": {
+      "4": {
+        "delta_equal_tail_95pct_mag": [
+          -0.08088613197192733,
+          0.002600097236704371
+        ],
+        "delta_posterior_mean_mag": -0.03906717256244587,
+        "delta_posterior_median_mag": -0.03937556114062487,
+        "delta_posterior_sd_mag": 0.020976827724992222,
+        "delta_prior_sd_mag": 0.3,
+        "likelihood": "student_t_measurement_nu4_normal_host_convolution",
+        "model_semantics": "u_h~Normal(0,tau_host^2); measurement residual is a variance-matched multivariate Student-t integrated over its Gamma precision mixture",
+        "nu": 4,
+        "numerical_diagnostics": {
+          "delta_grid": {
+            "maximum_mag": 0.6,
+            "minimum_mag": -0.6,
+            "points": 2401
+          },
+          "domain_relative_error": 3.1974423109204e-14,
+          "internal_normalization_residual": 7.771561172376096e-16,
+          "log_normalizer": 12.162481024827123,
+          "normalization_relative_error": 3.83852949418633e-11,
+          "posterior_union_edge_mass": 1.1490661597354577e-15,
+          "quadrature_points": 96,
+          "quadrature_relative_error": 3.83852949418633e-11,
+          "refined_quadrature_log_normalizer": 12.162481024865508,
+          "tau_grid": {
+            "maximum_mag": 0.5,
+            "minimum_mag": 0.0,
+            "points": 501
+          },
+          "validation_delta_grid": {
+            "maximum_mag": 0.9,
+            "minimum_mag": -0.9,
+            "points": 3601
+          },
+          "validation_log_normalizer": 12.16248102486554,
+          "validation_quadrature_points": 128,
+          "validation_tau_grid": {
+            "maximum_mag": 0.75,
+            "minimum_mag": 0.0,
+            "points": 751
+          }
+        },
+        "numerical_status": "PASS",
+        "posterior_edge_mass": 1.1490661597354577e-15,
+        "tau_host_equal_tail_95pct_mag": [
+          0.0008389121206617484,
+          0.0873684647658541
+        ],
+        "tau_host_posterior_median_mag": 0.027230464982986292,
+        "tau_prior_scale_mag": 0.1
+      },
+      "8": {
+        "delta_equal_tail_95pct_mag": [
+          -0.08246967857264012,
+          0.003929563684778091
+        ],
+        "delta_posterior_mean_mag": -0.03915303028086634,
+        "delta_posterior_median_mag": -0.03944756456565458,
+        "delta_posterior_sd_mag": 0.021762499171185945,
+        "delta_prior_sd_mag": 0.3,
+        "likelihood": "student_t_measurement_nu8_normal_host_convolution",
+        "model_semantics": "u_h~Normal(0,tau_host^2); measurement residual is a variance-matched multivariate Student-t integrated over its Gamma precision mixture",
+        "nu": 8,
+        "numerical_diagnostics": {
+          "delta_grid": {
+            "maximum_mag": 0.6,
+            "minimum_mag": -0.6,
+            "points": 2401
+          },
+          "domain_relative_error": 2.6645352591003404e-14,
+          "internal_normalization_residual": 4.440892098500626e-16,
+          "log_normalizer": 12.27294656327424,
+          "normalization_relative_error": 2.6645352591003404e-14,
+          "posterior_union_edge_mass": 1.0019759192557112e-15,
+          "quadrature_points": 96,
+          "quadrature_relative_error": 1.7763568394002489e-15,
+          "refined_quadrature_log_normalizer": 12.272946563274242,
+          "tau_grid": {
+            "maximum_mag": 0.5,
+            "minimum_mag": 0.0,
+            "points": 501
+          },
+          "validation_delta_grid": {
+            "maximum_mag": 0.9,
+            "minimum_mag": -0.9,
+            "points": 3601
+          },
+          "validation_log_normalizer": 12.27294656327427,
+          "validation_quadrature_points": 128,
+          "validation_tau_grid": {
+            "maximum_mag": 0.75,
+            "minimum_mag": 0.0,
+            "points": 751
+          }
+        },
+        "numerical_status": "PASS",
+        "posterior_edge_mass": 1.0019759192557112e-15,
+        "tau_host_equal_tail_95pct_mag": [
+          0.0006578639962120062,
+          0.08242175190453942
+        ],
+        "tau_host_posterior_median_mag": 0.02404765031512741,
+        "tau_prior_scale_mag": 0.1
+      }
+    }
+  },
+  "latent_host_distance_moduli": {
+    "covariance_role": "independence_sensitivity_only",
+    "draws": 20000,
+    "rows": [
+      {
+        "equal_tail_95pct_distance_modulus_mag": [
+          32.86120981922062,
+          33.0531175731114
+        ],
+        "host": "NGC3147",
+        "posterior_mean_distance_modulus_mag": 32.956604737018445,
+        "posterior_mean_host_contrast_mag": -0.04510375394450567,
+        "posterior_median_distance_modulus_mag": 32.9562520738898
+      },
+      {
+        "equal_tail_95pct_distance_modulus_mag": [
+          31.913583070353532,
+          32.031727223084225
+        ],
+        "host": "NGC2525",
+        "posterior_mean_distance_modulus_mag": 31.972008101304557,
+        "posterior_mean_host_contrast_mag": -0.0475698917153933,
+        "posterior_median_distance_modulus_mag": 31.971788235292493
+      },
+      {
+        "equal_tail_95pct_distance_modulus_mag": [
+          32.07144201977352,
+          32.21748973377333
+        ],
+        "host": "NGC5861",
+        "posterior_mean_distance_modulus_mag": 32.144037879504936,
+        "posterior_mean_host_contrast_mag": -0.04609047207563582,
+        "posterior_median_distance_modulus_mag": 32.1441167199268
+      },
+      {
+        "equal_tail_95pct_distance_modulus_mag": [
+          32.17677071149373,
+          32.28813190355595
+        ],
+        "host": "NGC3370",
+        "posterior_mean_distance_modulus_mag": 32.23222057813872,
+        "posterior_mean_host_contrast_mag": -0.034562535099312154,
+        "posterior_median_distance_modulus_mag": 32.232292274907785
+      },
+      {
+        "equal_tail_95pct_distance_modulus_mag": [
+          30.468438370947425,
+          30.558791108803266
+        ],
+        "host": "NGC5643",
+        "posterior_mean_distance_modulus_mag": 30.51307377344919,
+        "posterior_mean_host_contrast_mag": -0.04278308552563686,
+        "posterior_median_distance_modulus_mag": 30.512838121441412
+      },
+      {
+        "equal_tail_95pct_distance_modulus_mag": [
+          31.431321723296797,
+          31.620394005825112
+        ],
+        "host": "NGC7250",
+        "posterior_mean_distance_modulus_mag": 31.525836793558987,
+        "posterior_mean_host_contrast_mag": -0.04505136127932674,
+        "posterior_median_distance_modulus_mag": 31.52545219047471
+      },
+      {
+        "equal_tail_95pct_distance_modulus_mag": [
+          30.86022974824591,
+          30.972673894500506
+        ],
+        "host": "NGC4536",
+        "posterior_mean_distance_modulus_mag": 30.917180098861152,
+        "posterior_mean_host_contrast_mag": -0.025211049166700902,
+        "posterior_median_distance_modulus_mag": 30.917231209492428
+      },
+      {
+        "equal_tail_95pct_distance_modulus_mag": [
+          31.62372079660295,
+          31.774818297593903
+        ],
+        "host": "NGC3972",
+        "posterior_mean_distance_modulus_mag": 31.700495933336345,
+        "posterior_mean_host_contrast_mag": -0.0300866999436811,
+        "posterior_median_distance_modulus_mag": 31.701105174547706
+      },
+      {
+        "equal_tail_95pct_distance_modulus_mag": [
+          30.76933409166656,
+          31.129845691340485
+        ],
+        "host": "NGC4424",
+        "posterior_mean_distance_modulus_mag": 30.9489154567608,
+        "posterior_mean_host_contrast_mag": -0.031516531229270825,
+        "posterior_median_distance_modulus_mag": 30.9484316893327
+      },
+      {
+        "equal_tail_95pct_distance_modulus_mag": [
+          31.71882880561537,
+          31.89522258819838
+        ],
+        "host": "NGC4639",
+        "posterior_mean_distance_modulus_mag": 31.80744954083223,
+        "posterior_mean_host_contrast_mag": -0.03794020006151321,
+        "posterior_median_distance_modulus_mag": 31.80713500214154
+      },
+      {
+        "equal_tail_95pct_distance_modulus_mag": [
+          29.111885092755962,
+          29.19712463583281
+        ],
+        "host": "M101",
+        "posterior_mean_distance_modulus_mag": 29.153979458703343,
+        "posterior_mean_host_contrast_mag": -0.04320374401342507,
+        "posterior_median_distance_modulus_mag": 29.15378418851155
+      },
+      {
+        "equal_tail_95pct_distance_modulus_mag": [
+          31.396416713497075,
+          31.514739795026273
+        ],
+        "host": "NGC2442",
+        "posterior_mean_distance_modulus_mag": 31.455732937616116,
+        "posterior_mean_host_contrast_mag": -0.03647349491722599,
+        "posterior_median_distance_modulus_mag": 31.45579748997266
+      },
+      {
+        "equal_tail_95pct_distance_modulus_mag": [
+          31.28153029817852,
+          31.393900749643343
+        ],
+        "host": "NGC1365",
+        "posterior_mean_distance_modulus_mag": 31.337281064636937,
+        "posterior_mean_host_contrast_mag": -0.04457642016191505,
+        "posterior_median_distance_modulus_mag": 31.337074006638176
+      }
+    ],
+    "seed": 20260722,
+    "status": "NUISANCE_POSTERIOR_SENSITIVITY_ONLY"
+  },
+  "latent_pair_collapse_check": {
+    "absolute_difference_mag": 7.126244039312724e-15,
+    "collapsed_gls_delta_mag": -0.039650749396516,
+    "latent_gls_delta_mag": -0.039650749396523126,
+    "status": "PASS"
+  },
+  "n_hosts": 13,
+  "numerical_components": {
+    "gaussian": "PASS",
+    "structured_covariance_scan": "PASS",
+    "student_t_nu4": "PASS",
+    "student_t_nu8": "PASS"
+  },
+  "numerical_status": "PASS",
+  "observed_host_deltas_mag": [
+    -0.14999999999999858,
+    -0.09999999999999787,
+    -0.10000000000000142,
+    -0.00999999999999801,
+    -0.060000000000002274,
+    -0.15000000000000213,
+    0.05000000000000071,
+    0.05999999999999872,
+    0.1999999999999993,
+    -0.030000000000001137,
+    -0.060000000000002274,
+    -0.019999999999999574,
+    -0.07000000000000028
+  ],
+  "schema": "htt.pr154.observed_family_result.v1",
+  "terminal_classification": "TOTAL_UNCERTAINTY_NOT_IDENTIFIED",
+  "terminal_reason": "fixed-diagonal PSD covariance admits a zero lower SE bound and a maximum more than 1.25 times the independence sensitivity",
+  "unweighted_replay": {
+    "between_host_se_mag": 0.026518944886058767,
+    "mean_delta_mag": -0.03384615384615422,
+    "sample_sd_mag": 0.09561541555788843
+  }
+}
