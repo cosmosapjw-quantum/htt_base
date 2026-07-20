@@ -78,13 +78,20 @@ This is the same defect class as the historical v6 report builder
 ("builder re-enumerates live tree", rev-r179 audit).
 
 History: the artifact was regenerated once post-PR-169, by PR-170 (`c936fabd`),
-absorbing PR-170's new files — establishing the regenerate-on-in-scope-change
-convention. PR-171, 172, 173, 176, 177, 179 added eight in-scope runners
-(`run_pr170_axis.py` … `run_pr179_directional_cosmography.py` are absent from
-the pinned 251-file inventory) without regenerating, so the gate has been red
-at every HEAD since PR-171 landed. The scan's scientific content is unaffected:
-the pinned scan still reports `pass: true` (0 unresolved active claims) for the
-tree it saw.
+absorbing PR-170's new claim-surface producer and refreshing the three pinned
+hashes in `pr169_closeout_review_receipt.json` with a dated caveat —
+establishing the regenerate-on-in-scope-change convention. Later wave PRs did
+not repeat it: the scan inventory records only files carrying risk-pattern
+matches, and three such files added by PR-172/PR-179
+(`htt/src/common/metamorphic_symmetry.py`,
+`htt/obsstat/directional_cosmography.py`,
+`scripts/codex_harness/run_pr179_directional_cosmography.py`) drifted the
+artifact (inventory 251 → 254), so the gate has been red at every HEAD since
+PR-172 landed. (An earlier draft of this finding attributed the drift to eight
+absent runners; those runners are absent because they carry no risk-pattern
+match — the load-bearing drift is the three files above.) The scan's scientific
+content is unaffected: both the pinned and the refreshed scan report
+`pass: true` (0 unresolved active claims).
 
 Disposition:
 

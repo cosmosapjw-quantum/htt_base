@@ -1,0 +1,25 @@
+{
+ "findings": [
+  {
+   "evidence": "htt/src/common/pr174_sw_ray_tracer.py:324 (probe_dirs = np.vstack([dirs[::64], np.eye(3)])) with direction_grid at lines 196-208 building cos_t = np.repeat(nodes, n_phi) and phis = np.tile(phi, n_costheta), so index%64==0 always has phi=0. Verified by run: max |y| over the 32 grid probes = 0.0. Mitigated by the diagonal per-axis ODE (no component mixing in the batch update) and by the full-sky 2048-ray quadrupole check, hence P2 not P1.",
+   "id": "PR174-PM-1",
+   "severity": "P2",
+   "summary": "Ray-level probe subset dirs[::64] lies entirely in the y=0 (phi=0) plane, so the 'every sampled ray' check covers only x-z-plane rays plus the three coordinate axes; the y-component never appears in a mixed-direction probe."
+  },
+  {
+   "evidence": "htt/src/common/pr174_sw_ray_tracer.py:385-388: the map is exactly even under n -> -n for ANY per-axis coefficient (E depends on q only through |q|, coefficient is direction-independent), so odd-ell power is roundoff regardless of coefficient bugs; a00 is identically zero because temperature_map (lines 298-304) normalizes by the mean computed with the SAME quadrature weights used in project_alm (verified: a00 ~ 5.3e-16 for the exact closed-form map, card value 7.2e-16). These guards only fire via the map_mutation injection hook that exists solely for the mutation battery (line 311).",
+   "id": "PR174-PM-2",
+   "severity": "P2",
+   "summary": "Two of the five preregistered checks (odd_ell_parity, monopole_dipole_residual) are structurally incapable of failing on the production path for any tracer defect, so the card's 5-check battery overstates independent verification power; only ray_level, convergence_order, and quadrupole_match discriminate real errors."
+  },
+  {
+   "evidence": "htt/src/common/pr174_sw_ray_tracer.py:439-443 (_trace_broken_prediction adds 1.0e-6 to delta_beta[2] in the a20 term only) vs lines 433-436 (_perturbed_prediction scales a20 by 1.01); both registered against the same quadrupole_match guard (lines 464-470). Breaking sum B_i != 0 for real would require the deviatoric correction a20 proportional to (delta_beta_z - tau/3), which no mutant probes; config.validate at line 77 is untested by any mutant.",
+   "id": "PR174-PM-3",
+   "severity": "P2",
+   "summary": "MUT-174-TRACE does not actually exercise the trace-condition algebra: it adds 1e-6 to delta_beta_z inside a20 only, which is the same prediction-side a20-perturbation channel as MUT-174-COEFF; the deviatoric projection and the config trace gate are never mutated, so the battery has two redundant mutants and zero coverage of the real sum(B_i)=0 pathway."
+  }
+ ],
+ "lane": "physics/mathematics",
+ "notes": "Physics/math lens verified independently: (1) closed-form conserved-momentum solution correct (p_i conserved in diagonal Bianchi I, E = sqrt(sum (p_i/a_i)^2)); (2) transport ODE dq_i/ds = -(2/3 + B_i e^s) q_i is exactly d(ln a_i)/ds for a_i=(t/t0)^(2/3)exp(B_i t/t0); (3) all real-SH normalizations including l=4 match standard tables (independently checked entry by entry; orthonormality gate present); (4) quadrupole prediction a20=-2*sqrt(pi/5)*dbeta_z, a22=-2*sqrt(pi/15)*(dbeta_x-dbeta_y) re-derived and confirmed including the trace condition; (5) map definition (1/E)/<1/E>-1 agrees with the prediction at O(beta); the measured 2.0587e-7 quadrupole residual was reproduced with the EXACT closed-form map (no integrator), proving it is pure O(dbeta^2) linearization error, so the 5e-6 tolerance is neither vacuous (kills 1% mutants) nor unreachable (25x above the quadratic floor); (6) ray tolerance 1e-10 vs measured 1.56e-11 and order 3.99 in [3.7,4.3] both meaningful; (7) no Boltzmann/transfer/observable claim leaks past hypothesis_only framing - interpretation strings, firewall, and terminals are consistent. Baseline commit ef73e389 exists; float trace sum -1.06e-22 within guard. Card numbers (a20, a22, ladder errors) reproduce. Only P2 findings; result terminal SW_ONLY_MECHANICS_CONSISTENT_WITH_CLOSED_FORM is arithmetically supported.",
+ "verdict": "PASS"
+}

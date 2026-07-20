@@ -1,0 +1,19 @@
+{
+ "findings": [
+  {
+   "evidence": "scripts/codex_harness/run_pr174_sw_ray_tracer.py:73 (roots = (REPO/'htt', REPO/'scripts')) vs docs/research_program/long_horizon_rescue/pr174_spec.yaml:150-153 ('scans every non-test production module for imports of this module; either hit is a hard failure'). Non-test production python outside the roots exists: dl_pipeline/scripts/fetch.py et al., top-level src/, formal_pr1xx/. Mitigation check: independent repo-wide grep for 'pr174_sw_ray_tracer' found only the runner and the test file, so the current SW_ONLY_MECHANICS_CONSISTENT_WITH_CLOSED_FORM terminal is factually unaffected; the defect is enforcement scope, fixable by extending scan roots without touching the frozen spec.",
+   "id": "PR174-CLAIM-P1-001",
+   "severity": "P1",
+   "summary": "Firewall production-consumer scan covers only htt/ and scripts/ while the frozen spec promises a scan of every non-test production module; the kill rule ('any production consumer is a hard failure') is therefore enforced by a guard weaker than its registered label, and the card's firewall.pass=true asserts a repo-wide property that was not verified repo-wide."
+  },
+  {
+   "evidence": "docs/generated/pr169_closeout_review_receipt.json:21 ('at PR-174 close the PR-169 scanner, result-card inventory count, manifest, and the three corresponding hashes below were deterministically refreshed'); git status shows this receipt modified-uncommitted alongside untracked PR-174 artifacts; docs/codex_handoff/pr_status.yaml:134 'in_progress: PR-174'; ls docs/PR_DELTAS/pr-174.md -> No such file.",
+   "id": "PR174-CLAIM-P2-001",
+   "severity": "P2",
+   "summary": "The tracked PR-169 closeout receipt now carries an anticipatory caveat stating the scanner artifacts were refreshed 'at PR-174 close', but PR-174 is not closed (status in_progress, docs/PR_DELTAS/pr-174.md absent, all PR-174 artifacts untracked); the record is honest only if these edits land atomically in the close commit."
+  }
+ ],
+ "lane": "claim-language/governance",
+ "notes": "Everything else under this lens is clean. check_claim_language.py --dry-run --format json: issue_count 0 on pr174_spec.yaml + pr174_result_card.json + pr174_mutation_report.json, and 0 on the module/runner/test as well. Ceilings (hypothesis_only, public_use=false, roadmap_rescue_v1:C1) are carried on the spec (lines 10-15), both card metadata blocks, the module and runner docstrings, and are asserted by tests (test file lines 70-82). No file states a likelihood/family/geometry/transfer/Boltzmann/observable/detection/anisotropy/isotropy claim; the background is consistently labeled a prescribed kinematic stand-in, never an Einstein/dynamical Bianchi I solution (spec lines 61-64, module lines 13-15). The mismatch terminal is UNATTRIBUTED everywhere; no artifact selects the physically correct side (spec 128-130, card forbidden_claims_reaffirmed, mechanics interpretation). The scheduling-authorization record is honest and execution-scoped: cross-verified against the COMMITTED lines 149-152 of docs/audits/post_checkpoint100_wave_review_signoff_20260720.md (the working-tree diff to that file touches only the PR-169 scan-history hunk), and the spec record explicitly says it covers this execution only. The v1->v2 log-time amendment is genuinely pre-result: v1 preserved at commit 9d3c907a (19:46:24), amendment 208dddcb (19:47:31), generated artifacts mtime 20:03:33, defect disclosed in the frozen spec's pre_result_amendment block with tolerances unchanged. Card metadata git_commit=spec baseline is disclosed via git_commit_semantics. docs/PR_DELTAS/pr-174.md (listed in the backlog card's files) does not exist yet - expected to be authored at close; verify it exists and carries the ceilings before the close commit.",
+ "verdict": "FAIL"
+}

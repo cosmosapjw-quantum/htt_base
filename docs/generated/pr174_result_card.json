@@ -1,0 +1,124 @@
+{
+ "firewall": {
+  "consumer_scan_excluded_parts": [
+   ".git",
+   ".lake",
+   ".venv",
+   "__pycache__",
+   "legacy",
+   "node_modules",
+   "tests",
+   "venv",
+   "workdir"
+  ],
+  "consumer_scan_scope": "repository_wide_minus_excluded_parts",
+  "forbidden_import_hits": [],
+  "pass": true,
+  "production_consumers": []
+ },
+ "forbidden_claims_reaffirmed": [
+  "no likelihood, family, or geometry claim",
+  "no native/external transfer or Boltzmann-solution claim",
+  "no observable prediction, detection, anisotropy, or isotropy claim",
+  "no mixing with the FLRW LoS Bessel path",
+  "an analytic mismatch never selects the physically correct side",
+  "no promotion beyond roadmap_rescue_v1:C1 hypothesis_only"
+ ],
+ "mechanics": {
+  "check_semantics": {
+   "discriminating_checks": [
+    "ray_level",
+    "convergence_order",
+    "quadrupole_match"
+   ],
+   "note": "The map is exactly even under point reflection and is mean-normalized on the same quadrature for ANY per-axis transport coefficient, so the two structural guards can fail on the production path only through injected map defects; independent discrimination of tracer errors is carried by the three discriminating checks.",
+   "structural_consistency_guards": [
+    "odd_ell_parity",
+    "monopole_dipole_residual"
+   ]
+  },
+  "checks": {
+   "convergence_order": true,
+   "monopole_dipole_residual": true,
+   "odd_ell_parity": true,
+   "quadrupole_match": true,
+   "ray_level": true
+  },
+  "config_hash": "d2d6045aae1d02ee74148c3ec14ff8722e4a59928abe2724d26d78c095c9fe47",
+  "convergence_ladder_relative_errors": [
+   3.958935081973857e-09,
+   2.4929491360072215e-10,
+   1.56398982653289e-11
+  ],
+  "interpretation": "SW-only internal forward mechanics on a prescribed kinematic background; hypothesis_only, ceiling roadmap_rescue_v1:C1; a mismatch terminal never selects which side is physically correct; no likelihood, transfer, observable, family, or geometry content.",
+  "max_quadrupole_relative_error": 2.058640662257468e-07,
+  "max_ray_relative_energy_error": 1.5642762314333488e-11,
+  "measured_convergence_order": 3.9891870577322126,
+  "monopole_dipole_residual_relative_power": 4.74340330149844e-20,
+  "odd_ell_relative_power": 1.9156647532811512e-22,
+  "predicted_quadrupole": {
+   "a20": 2.375618382185043e-06,
+   "a21": 0.0,
+   "a22": -2.2859398540772625e-06,
+   "a2m1": 0.0,
+   "a2m2": 0.0
+  },
+  "ray_probe_count": 37,
+  "recovered_alm": {
+   "a00": 7.179520082354414e-16,
+   "a10": 0.0,
+   "a11": -8.746317453509534e-18,
+   "a1m1": 5.743974865377775e-18,
+   "a20": 2.3756183628580055e-06,
+   "a21": 1.5251142543946448e-24,
+   "a22": -2.2859403431317224e-06,
+   "a2m1": -1.4895713374490069e-24,
+   "a2m2": 3.628193096567729e-18,
+   "a30": 0.0,
+   "a31": 3.084923157186633e-17,
+   "a32": 0.0,
+   "a33": 5.08388482981644e-18,
+   "a3m1": -4.425107292888167e-18,
+   "a3m2": -9.752087836959401e-25,
+   "a3m3": 3.123393352703931e-17,
+   "a40": 2.3634056524384495e-12,
+   "a41": -9.758146288711498e-25,
+   "a42": -2.5427401562453996e-12,
+   "a43": -3.5405592039257034e-24,
+   "a44": 1.8691880557122683e-12,
+   "a4m1": 2.5792848592595873e-24,
+   "a4m2": -2.777802037152843e-17,
+   "a4m3": 2.3072856191393824e-24,
+   "a4m4": 2.5430440630419393e-17
+  },
+  "schema": "htt.pr174.mechanics_result.v1",
+  "terminal": "SW_ONLY_MECHANICS_CONSISTENT_WITH_CLOSED_FORM"
+ },
+ "metadata": {
+  "claim_level": {
+   "level": "C1",
+   "scheme": "roadmap_rescue_v1"
+  },
+  "claim_tier": "exploratory",
+  "config_hash": "d2d6045aae1d02ee74148c3ec14ff8722e4a59928abe2724d26d78c095c9fe47",
+  "generating_command": "env PYTHONHASHSEED=0 venv/bin/python -B scripts/codex_harness/run_pr174_sw_ray_tracer.py --write",
+  "git_commit": "ef73e389b89f8ca83674ca6c7ba9c5e58ea2f909",
+  "git_commit_semantics": "baseline commit pinned by the frozen spec at generation time; kept byte-stable by construction so --check stays commit-independent",
+  "implementation_scope": [
+   "common"
+  ],
+  "owner": "COMMON",
+  "public_use": false,
+  "runtime_identity": {
+   "numpy": "2.5.0",
+   "platform": "linux",
+   "python": "3.12.3"
+  },
+  "runtime_identity_semantics": "artifact float bytes depend on this runtime (numpy leggauss nodes and float arithmetic); a runtime change is expected to fail --check visibly and requires a disclosed regeneration",
+  "scientific_artifact_mode": "hypothesis_only",
+  "spec_sha256": "0d4a9b1241d5dfc28d3918de1a15ce77d22bc7ea6059fa1ff9c2c6bd677c53e2",
+  "transfer_source": "none"
+ },
+ "pr_id": "PR-174",
+ "schema": "htt.pr174.result_card.v1"
+}

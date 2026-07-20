@@ -1,0 +1,72 @@
+{
+ "battery": {
+  "all_killed": true,
+  "config_hash": "d2d6045aae1d02ee74148c3ec14ff8722e4a59928abe2724d26d78c095c9fe47",
+  "mutations": {
+   "MUT-174-COEFF": {
+    "guard_check_failed": true,
+    "killed": true,
+    "registered_guard": "quadrupole_match",
+    "terminal": "BLOCKED_ANALYTIC_MISMATCH_UNATTRIBUTED"
+   },
+   "MUT-174-EULER": {
+    "guard_check_failed": true,
+    "killed": true,
+    "registered_guard": "convergence_order",
+    "terminal": "BLOCKED_ANALYTIC_MISMATCH_UNATTRIBUTED"
+   },
+   "MUT-174-ISO": {
+    "guard_check_failed": true,
+    "killed": true,
+    "registered_guard": "ray_level",
+    "terminal": "BLOCKED_ANALYTIC_MISMATCH_UNATTRIBUTED"
+   },
+   "MUT-174-PARITY": {
+    "guard_check_failed": true,
+    "killed": true,
+    "registered_guard": "odd_ell_parity",
+    "terminal": "BLOCKED_ANALYTIC_MISMATCH_UNATTRIBUTED"
+   },
+   "MUT-174-SIGN": {
+    "guard_check_failed": true,
+    "killed": true,
+    "registered_guard": "ray_level",
+    "terminal": "BLOCKED_ANALYTIC_MISMATCH_UNATTRIBUTED"
+   },
+   "MUT-174-TRACE": {
+    "guard_check_failed": true,
+    "killed": true,
+    "registered_guard": "quadrupole_match",
+    "terminal": "BLOCKED_ANALYTIC_MISMATCH_UNATTRIBUTED"
+   }
+  },
+  "schema": "htt.pr174.mutation_report.v1"
+ },
+ "metadata": {
+  "claim_level": {
+   "level": "C1",
+   "scheme": "roadmap_rescue_v1"
+  },
+  "claim_tier": "exploratory",
+  "config_hash": "d2d6045aae1d02ee74148c3ec14ff8722e4a59928abe2724d26d78c095c9fe47",
+  "generating_command": "env PYTHONHASHSEED=0 venv/bin/python -B scripts/codex_harness/run_pr174_sw_ray_tracer.py --write",
+  "git_commit": "ef73e389b89f8ca83674ca6c7ba9c5e58ea2f909",
+  "git_commit_semantics": "baseline commit pinned by the frozen spec at generation time; kept byte-stable by construction so --check stays commit-independent",
+  "implementation_scope": [
+   "common"
+  ],
+  "owner": "COMMON",
+  "public_use": false,
+  "runtime_identity": {
+   "numpy": "2.5.0",
+   "platform": "linux",
+   "python": "3.12.3"
+  },
+  "runtime_identity_semantics": "artifact float bytes depend on this runtime (numpy leggauss nodes and float arithmetic); a runtime change is expected to fail --check visibly and requires a disclosed regeneration",
+  "scientific_artifact_mode": "hypothesis_only",
+  "spec_sha256": "0d4a9b1241d5dfc28d3918de1a15ce77d22bc7ea6059fa1ff9c2c6bd677c53e2",
+  "transfer_source": "none"
+ },
+ "pr_id": "PR-174",
+ "schema": "htt.pr174.mutation_report_card.v1"
+}
