@@ -64,12 +64,21 @@ background_model:
     solution; no dynamical or cosmological claim attaches to it.
 
 tracer:
-  id: rk4_physical_momentum_transport_v1
-  state: physical momentum components q_i(t) = p_i / a_i(t)
-  ode: dq_i/dt = -H_i(t) * q_i(t), H_i = d(ln a_i)/dt (no sum)
-  integrator: classical fixed-step RK4, backward from t_obs to t_emit
-  steps_primary: 512
-  steps_convergence: [128, 256, 512]
+  id: rk4_physical_momentum_transport_v2
+  state: physical momentum components q_i expressed in s = ln(t/t0)
+  ode: dq_i/ds = -(t * H_i(t)) * q_i = -((2/3) + B_i * t/t0) * q_i (no sum)
+  integrator: classical fixed-step RK4 in s, backward from s_obs=0 to
+    s_emit=ln(t_emit_over_t0)
+  steps_primary: 1024
+  steps_convergence: [256, 512, 1024]
+  pre_result_amendment: >-
+    v1 prescribed uniform steps in coordinate time t; the coefficient
+    H_i ~ (2/3)/t makes uniform-t RK4 under-resolved near t_emit
+    (step/t ~ 2 at 512 steps), so the preregistered 1e-10 ray tolerance
+    is unreachable by construction. Amended 2026-07-20 BEFORE any result
+    generation to the mathematically identical system in s = ln(t/t0)
+    with bounded coefficients and 1024 primary steps. No result computed
+    under v1; tolerances unchanged.
   initial_condition: q_i(t_obs) = n_i (unit observed direction), E_obs = 1
   recovered_energy: E(t) = sqrt(sum_i q_i(t)^2)
   independence: >-
