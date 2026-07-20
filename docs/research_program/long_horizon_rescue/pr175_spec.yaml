@@ -1,0 +1,164 @@
+schema: htt.pr175.spec.v1
+pr_id: PR-175
+title: Cross-engine Bianchi invariant mechanics from structure constants (hypothesis_only)
+frozen_before_result: true
+owner: COMMON
+contributors:
+- BASS
+implementation_scope:
+- common
+claim_tier: exploratory
+claim_level:
+  scheme: roadmap_rescue_v1
+  level: C2
+scientific_artifact_mode: hypothesis_only
+public_use: false
+transfer_source: none
+baseline_commit: 6d193862e176a3bea5c7b7630e38d4ba3af12442
+
+scheduling_authorization:
+  execution_authorization_at_intake: REGISTERED_NOT_SCHEDULED
+  scheduled_by: owner_explicit_selection
+  scheduled_on: '2026-07-21'
+  authorization_record: >-
+    The owner directed the continuation sequence "F1 fix -> next
+    hypothesis-only card -> PR-172/PR-180" on 2026-07-21. The owner's
+    message wrote "PR-174"; PR-174 was already closed on 2026-07-20, and
+    PR-175 is the unique hypothesis-only card its success unlocked, so
+    this execution proceeds on PR-175 with that interpretation recorded
+    here. This record covers this execution only; auto-scheduling rules
+    (D-ADVOCATE-ORDER) are unchanged.
+
+claim:
+  statement: >-
+    For eleven canonical rational Bianchi representatives (types I, II,
+    III=VI_{-1}, IV, V, VI_0, VI_h at h=-1/4, VII_0, VII_h at h=1/4,
+    VIII, IX; unit left-invariant metric), the spatial Ricci scalar
+    computed from the structure constants by TWO INDEPENDENT engines —
+    an exact symbolic Koszul frame-connection chain and a numerical
+    coordinate-realization chain using complex-step first derivatives —
+    agrees engine-to-engine and with the EXTERNAL published anchor
+    formula R* = -(1/2)(n1^2+n2^2+n3^2) + (n1 n2 + n2 n3 + n3 n1)
+    - 6 a^2 (Ellis-MacCallum 1969 lineage, Wainwright-Ellis
+    presentation; identifier transcribed from the public record, not
+    verified against print), under one blind four-axis CAS contract.
+  allowed_scientific_results:
+  - INVARIANT_ORACLE_CAS_4AXIS_PASS_ANCHOR_CONSISTENT
+  - INVARIANT_ORACLE_CAS_BLOCKED
+  - INVARIANT_ORACLE_BLOCKED_ENGINE_OR_ANCHOR_MISMATCH
+  blocked_status: BLOCKED_FAMILY_ADJUDICATION_DETECTED
+  interpretation: >-
+    Ceiling roadmap_rescue_v1:C2 cross-engine geometry MECHANICS in
+    hypothesis_only mode. Invariant values never rank types, never match
+    an atlas entry, and never identify a family; the eleven-type table
+    is a canonical-representative fixture, not a measurement target. The
+    roadmap-noted tautology (a contracted-Bianchi self-check) is NOT
+    used as a falsifier; the load-bearing falsifiers are cross-engine
+    agreement and the external anchor formula.
+
+canonical_representatives:
+  convention: >-
+    Ellis-MacCallum n_ab = diag(n1,n2,n3) + a-vector a_b = (a,0,0);
+    class B constraint n1 = 0 and (for VI_h/VII_h) a^2 = |h| * |n2 n3|
+    with the sign of h from the type; unit orthonormal frame metric.
+  table:
+    I:     {n: [0, 0, 0],  a: 0}
+    II:    {n: [1, 0, 0],  a: 0}
+    VI_0:  {n: [1, -1, 0], a: 0}
+    VII_0: {n: [1, 1, 0],  a: 0}
+    VIII:  {n: [1, 1, -1], a: 0}
+    IX:    {n: [1, 1, 1],  a: 0}
+    V:     {n: [0, 0, 0],  a: 1}
+    IV:    {n: [0, 0, 1],  a: 1}
+    III:   {n: [0, 1, -1], a: 1}
+    VI_h:  {n: [0, 1, -1], a: 1/2, h: -1/4}
+    VII_h: {n: [0, 1, 1],  a: 1/2, h: 1/4}
+
+anchor:
+  formula: R* = -(1/2)(n1^2+n2^2+n3^2) + (n1 n2 + n2 n3 + n3 n1) - 6 a^2
+  lineage: Ellis & MacCallum 1969 (Comm. Math. Phys. 12, 108) /
+    Wainwright & Ellis 1997 presentation; transcribed identifiers, not
+    verified against print
+  expected_values:
+    I: '0'
+    II: '-1/2'
+    VI_0: '-2'
+    VII_0: '0'
+    VIII: '-5/2'
+    IX: '3/2'
+    V: '-6'
+    IV: '-13/2'
+    III: '-8'
+    VI_h: '-7/2'
+    VII_h: '-3/2'
+  textbook_sanity_points: >-
+    IX with n=(1,1,1) is the round S^3 with R* = 3/2; V with a=1 is unit
+    hyperbolic H^3 with R* = -6. These two independent textbook values
+    ground the anchor formula's normalization.
+
+engines:
+  engine_a:
+    id: symbolic_koszul_frame_v1
+    lineage: exact sympy chain — structure constants -> orthonormal-frame
+      connection (Koszul/Cartan) -> Riemann -> Ricci -> scalar, exact
+      rationals
+  engine_b:
+    id: coordinate_complex_step_v1
+    lineage: >-
+      independent numerical chain — canonical coordinates of the second
+      kind (frame from ad-matrix exponentials), metric components at a
+      generic point, Christoffel symbols via COMPLEX-STEP first
+      derivatives (exact to machine precision), curvature via central
+      differences of Christoffels (disclosed second-derivative step),
+      Ricci scalar at the point.
+    preregistered_point: [0.3, -0.7, 0.51]
+    preregistered_steps: {complex_step: 1.0e-200, central_difference: 1.0e-5}
+    tolerance_abs: 1.0e-6
+  independence: >-
+    Engine A never evaluates coordinates or numerics; Engine B never
+    uses the frame-connection algebra of Engine A (it differentiates a
+    coordinate metric built from group-theoretic frame matrices). The
+    anchor formula is external to both.
+
+cas_contract:
+  schema: htt.cas_contract.v2
+  contract_path: docs/generated/pr175_cas/CAS_CONTRACT_PR175_INVARIANT.json
+  required_axes: [wolfram_xact, sympy_high_precision, sage_singular, lean_mathlib]
+  axis_vocabulary_mapping: {wolfram_xact: wolfram_xact,
+    sympy_high_precision: sympy, sage_singular: sage_singular,
+    lean_mathlib: lean (core lane, formal_pr124 convention)}
+  obligations:
+  - eleven_type_ricci_scalar_matches_anchor
+  - class_b_vector_constraint_a_dot_n_zero
+  - vi_vii_h_relation_consistent
+  - engine_a_symbolic_chain_reproduced (sympy/sage/wolfram axes)
+  - anchor_value_arithmetic_verified (lean axis, closed rationals)
+  missing_axis_outcome: CAS_BLOCKED
+  result_blinding: required_until_adjudication
+
+kill_conditions:
+- any cross-engine disagreement beyond the preregistered tolerance
+- any anchor-formula mismatch on any of the eleven types
+- any CAS axis FAIL (-> CAS_FAIL) or missing axis (-> CAS_BLOCKED)
+- any atlas rank, nearest-entry match, or family label from invariants
+- any production or manuscript consumer
+
+forbidden_claims:
+- Bianchi family identification, ranking, or atlas matching
+- geometry measurement or observational claim of any kind
+- native-solver or transfer validation claim
+- promotion beyond roadmap_rescue_v1:C2 hypothesis_only
+
+required_metadata:
+- owner
+- implementation_scope
+- claim_tier
+- claim_level
+- scientific_artifact_mode
+- public_use
+- transfer_source
+- config_hash
+- spec_sha256
+- contract_sha256
+- generating_command
+- git_commit
