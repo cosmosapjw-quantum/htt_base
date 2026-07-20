@@ -26,6 +26,16 @@ prospective_review:
   - A-PR179-STAT
   - A-PR179-CLAIM
   observed_directional_values_seen_before_freeze: false
+  preflight_amendment:
+    observed_directional_values_seen: false
+    reason: >-
+      The first support-only preflight found 98.45 percent overall support but
+      showed that the proposed every-populated-cell-by-six-family 80 percent
+      rule is structurally impossible for sparse CAL/SBF/SN cells.  Before any
+      coefficient or score was evaluated, null-stratum families were therefore
+      frozen to FP, TF, and OTHER, with OTHER pooling CAL/SN/SBF/MIXED_OTHER.
+      The hard 80 percent gate applies to each broad family in aggregate;
+      every fine cell/family support fraction remains disclosed descriptively.
   adjudication: >-
     Use the statistics review's group-level domain, response-rank gates,
     position-preserving matched null, and finite-rank routing.  Use the mapper
@@ -252,7 +262,15 @@ crossfit:
 matched_null:
   family: position_preserving_crossfit_restricted_residual_permutation
   sky_rotation: forbidden
-  stratum: fold_x_HEALPix_Nside1_NESTED_x_method_family_x_redshift_bin
+  stratum: fold_x_HEALPix_Nside1_NESTED_x_broad_method_family_x_redshift_bin
+  broad_method_family:
+    FP: FP
+    TF: TF
+    OTHER:
+    - CAL
+    - SN
+    - SBF
+    - MIXED_OTHER
   redshift_bin_edges:
   - 0.01
   - 0.025
@@ -266,11 +284,12 @@ matched_null:
     velocities, errors, methods, selection covariates, and folds never move.
   minimum_stratum_groups: 8
   minimum_overall_supported_fraction: 0.90
-  minimum_cell_method_supported_fraction: 0.80
+  minimum_broad_method_supported_fraction: 0.80
   diagnostics: >-
-    Record within-stratum residual location and scale dispersion and the
-    unsupported support map.  Failure of the registered support thresholds
-    makes the null NOT_CERTIFIABLE; it is not repaired after results.
+    Record every fine sky-cell/original-method support fraction as well as the
+    broad-family aggregate and unsupported support map.  Failure of the
+    registered overall or broad-family thresholds makes the null
+    NOT_CERTIFIABLE; it is not repaired after results.
   same_pipeline: >-
     Every null uses the identical selected rows, folds, transforms, target
     columns, score, and conservative upper-tail comparison.
