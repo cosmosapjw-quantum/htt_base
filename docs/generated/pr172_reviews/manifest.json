@@ -1,0 +1,119 @@
+{
+  "caveats": [
+    "The physics/statistics FAIL verdict is preserved and supplies the formal B-projector falsifier.",
+    "The first final code and claim FAIL verdicts are preserved; their concrete false-green and provenance findings require a separate remediation replay.",
+    "Fresh remediation code and claim PASS envelopes close those concrete findings without relabeling earlier reviews or changing the blocked scientific terminal.",
+    "Copying an envelope does not relabel its status or create independent scientific evidence."
+  ],
+  "claim_id": "C-PR172-METAMORPHIC-CONSISTENCY",
+  "claim_level": {
+    "level": "C1",
+    "scheme": "roadmap_rescue_v1"
+  },
+  "claim_tier": "exploratory",
+  "config_hash": "abc98477291041c55aa47932f6e8fe80f6704a419724f72a6e468c7cc9df7835",
+  "contributors": [
+    "OBSSTAT"
+  ],
+  "copy_mode": "byte_for_byte",
+  "covariance_status": "not_applicable_review_evidence",
+  "generating_command": "venv/bin/python -B scripts/codex_harness/archive_pr172_reviews.py --write",
+  "git_commit": "b8a857742bd6c2d727ea2009f6e8a341a031b120",
+  "implementation_scope": "common",
+  "input_hashes": {
+    ".agent-harness/runs/pr172-final-review-20260720/results/A-PR172-FINAL-CLAIM.json": "213d9f42d7edbf9c389d432f15da2c47a17e3637151f4571852ccc1d2b22cbb7",
+    ".agent-harness/runs/pr172-final-review-20260720/results/A-PR172-FINAL-CODE.json": "f64637dbf0b973940f91982230a3a1e6c4c02e8c92d0b91dfd68ccee4ed251a0",
+    ".agent-harness/runs/pr172-final-review-20260720/results/A-PR172-FINAL-SCIENCE.json": "06f11421df6a3aaacfae452be09ae20ee7f710414ef27ed9bd52a5bdf058d23c",
+    ".agent-harness/runs/pr172-intake-20260720/results/A-PR172-CLAIM.json": "3f5bb0584188e8243e1200eb0da259e803bce39f90d5a705932c055f1f8c92b1",
+    ".agent-harness/runs/pr172-intake-20260720/results/A-PR172-HARNESS.json": "0eb81450f26f7c7bced5287af5599d73866a51ef24c5c9c71cd228b22ab5c3c8",
+    ".agent-harness/runs/pr172-intake-20260720/results/A-PR172-PHYSSTAT.json": "08a7f56d49afb0ee6eae5da695ceca3904a4d839da5e4489f2c282b6e8a46040",
+    ".agent-harness/runs/pr172-remediation-review2-20260720/results/A-PR172-REMED2-CLAIM.json": "e7eb29c8fb54e3384765b92f8181b91f2d41c9e9b20fe175d9f5f8189b70989d",
+    ".agent-harness/runs/pr172-remediation-review2-20260720/results/A-PR172-REMED2-CODE3.json": "5684410d6607f128ae6bc97a38ff724bdc102ff98df88e08ba34f73469ca8cdb"
+  },
+  "mask_status": "not_applicable_review_evidence",
+  "null_mock_status": "not_applicable_review_evidence",
+  "owner": "COMMON",
+  "pr_id": "PR-172",
+  "public_use": false,
+  "review_count": 8,
+  "reviews": [
+    {
+      "assignment_id": "A-PR172-CLAIM",
+      "bytes": 21840,
+      "destination_path": "docs/generated/pr172_reviews/claim_gate.json",
+      "role": "claim_gate",
+      "sha256": "3f5bb0584188e8243e1200eb0da259e803bce39f90d5a705932c055f1f8c92b1",
+      "source_path": ".agent-harness/runs/pr172-intake-20260720/results/A-PR172-CLAIM.json",
+      "status": "pass"
+    },
+    {
+      "assignment_id": "A-PR172-HARNESS",
+      "bytes": 21774,
+      "destination_path": "docs/generated/pr172_reviews/harness.json",
+      "role": "harness",
+      "sha256": "0eb81450f26f7c7bced5287af5599d73866a51ef24c5c9c71cd228b22ab5c3c8",
+      "source_path": ".agent-harness/runs/pr172-intake-20260720/results/A-PR172-HARNESS.json",
+      "status": "pass"
+    },
+    {
+      "assignment_id": "A-PR172-PHYSSTAT",
+      "bytes": 20372,
+      "destination_path": "docs/generated/pr172_reviews/physics_statistics.json",
+      "role": "physics_statistics",
+      "sha256": "08a7f56d49afb0ee6eae5da695ceca3904a4d839da5e4489f2c282b6e8a46040",
+      "source_path": ".agent-harness/runs/pr172-intake-20260720/results/A-PR172-PHYSSTAT.json",
+      "status": "fail"
+    },
+    {
+      "assignment_id": "A-PR172-FINAL-CODE",
+      "bytes": 10225,
+      "destination_path": "docs/generated/pr172_reviews/final_code.json",
+      "role": "final_code",
+      "sha256": "f64637dbf0b973940f91982230a3a1e6c4c02e8c92d0b91dfd68ccee4ed251a0",
+      "source_path": ".agent-harness/runs/pr172-final-review-20260720/results/A-PR172-FINAL-CODE.json",
+      "status": "fail"
+    },
+    {
+      "assignment_id": "A-PR172-FINAL-SCIENCE",
+      "bytes": 5572,
+      "destination_path": "docs/generated/pr172_reviews/final_science.json",
+      "role": "final_science",
+      "sha256": "06f11421df6a3aaacfae452be09ae20ee7f710414ef27ed9bd52a5bdf058d23c",
+      "source_path": ".agent-harness/runs/pr172-final-review-20260720/results/A-PR172-FINAL-SCIENCE.json",
+      "status": "pass"
+    },
+    {
+      "assignment_id": "A-PR172-FINAL-CLAIM",
+      "bytes": 8395,
+      "destination_path": "docs/generated/pr172_reviews/final_claim.json",
+      "role": "final_claim",
+      "sha256": "213d9f42d7edbf9c389d432f15da2c47a17e3637151f4571852ccc1d2b22cbb7",
+      "source_path": ".agent-harness/runs/pr172-final-review-20260720/results/A-PR172-FINAL-CLAIM.json",
+      "status": "fail"
+    },
+    {
+      "assignment_id": "A-PR172-REMED2-CODE3",
+      "bytes": 5254,
+      "destination_path": "docs/generated/pr172_reviews/remediation_code.json",
+      "role": "remediation_code",
+      "sha256": "5684410d6607f128ae6bc97a38ff724bdc102ff98df88e08ba34f73469ca8cdb",
+      "source_path": ".agent-harness/runs/pr172-remediation-review2-20260720/results/A-PR172-REMED2-CODE3.json",
+      "status": "pass"
+    },
+    {
+      "assignment_id": "A-PR172-REMED2-CLAIM",
+      "bytes": 11001,
+      "destination_path": "docs/generated/pr172_reviews/remediation_claim.json",
+      "role": "remediation_claim",
+      "sha256": "e7eb29c8fb54e3384765b92f8181b91f2d41c9e9b20fe175d9f5f8189b70989d",
+      "source_path": ".agent-harness/runs/pr172-remediation-review2-20260720/results/A-PR172-REMED2-CLAIM.json",
+      "status": "pass"
+    }
+  ],
+  "schema": "htt.pr172.review_archive.v1",
+  "scientific_artifact_mode": "standard_internal",
+  "scientific_status": "OPEN",
+  "sky_support_status": "not_applicable_review_evidence",
+  "transfer_source": "none",
+  "worktree_state": "b8a857742bd6c2d727ea2009f6e8a341a031b120+PR-172-worktree"
+}

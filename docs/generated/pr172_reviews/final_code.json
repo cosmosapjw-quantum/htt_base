@@ -1,0 +1,158 @@
+{
+  "schema_version": 1,
+  "run_id": "pr172-final-review-20260720",
+  "assignment_id": "A-PR172-FINAL-CODE",
+  "context_version": "00f8e95c4f8e35908162b807879be7bd7fc83dc26d53275e7d0f3f1856b59a44",
+  "agent_type": "harness_engineer",
+  "independence_mode": "blind-results",
+  "result_path": ".agent-harness/runs/pr172-final-review-20260720/results/A-PR172-FINAL-CODE.json",
+  "status": "fail",
+  "started_at": "2026-07-20T01:01:00+00:00",
+  "completed_at": "2026-07-20T01:08:30+00:00",
+  "tool_versions": {
+    "python": "3.12.3",
+    "numpy": "2.5.0",
+    "scipy": "1.18.0",
+    "pyyaml": "6.0.3",
+    "pytest": "9.0.3"
+  },
+  "commands": [
+    {
+      "command": "venv/bin/python -B scripts/codex_harness/run_pr172_metamorphic_battery.py --check",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "return_code": 0,
+      "wall_seconds": 8.46,
+      "result": "ok=true, mismatches=[], terminal=BLOCKED_METAMORPHIC_RELATION_VIOLATION"
+    },
+    {
+      "command": "venv/bin/python -m pytest -q tests/pr_cards/test_pr_172_physics_invariant_symmetry_transform_metamorphic.py",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "return_code": 0,
+      "wall_seconds": 9.84,
+      "result": "10 passed"
+    },
+    {
+      "command": "venv/bin/python -c <independent direct production-surface primitive replay>",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "return_code": 0,
+      "wall_seconds": 3.0,
+      "result": "All eight relation metric vectors matched the tracked result exactly; max_metric_delta=0.0. The axisymmetric output SHA-256 independently matched cdd949c49260b328d919b1ab2ff5437365d4f2d1283d3a6c3efc12ce1893d89a and max_abs=0.006921858926603516. Recorded mutation arithmetic also replayed with max_mutation_delta=0.0."
+    },
+    {
+      "command": "venv/bin/python -c <reseal a promoted threshold/config/adapter/terminal forgery and call validate_battery>",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "return_code": 0,
+      "wall_seconds": 1.3,
+      "result": "Changed MR172-B-AXISYM-DOC-008 threshold 0.0->1.0, passed false->true, b_projector adapter status to PASS_REGISTERED_RELATIONS, terminal to PASS_METAMORPHIC_SELF_CONSISTENCY_C1, and config_hash to 64 zeros; after resealing semantic_digest, validate_battery returned []."
+    }
+  ],
+  "artifacts": [],
+  "claim_results": [
+    {
+      "claim_id": "C-PR172-METAMORPHIC-CONSISTENCY",
+      "verdict": "fail",
+      "statement": "The tracked primitive result is reproducible and correctly blocked, but PR-172 is not closeout-ready because its advertised verifier accepts a complete frozen-contract false green and its mutation/provenance evidence does not satisfy the registered fail-closed contract."
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "F-PR172-FINAL-CODE-001",
+      "claim_id": "C-PR172-METAMORPHIC-CONSISTENCY",
+      "verdict": "fail",
+      "severity": "high",
+      "statement": "validate_battery does not bind relation metric identifiers, comparisons, or thresholds to pr172_spec.yaml and does not recompute adapter_status or verify config_hash. A resealed report that relaxes the frozen exact-zero axisymmetric threshold to 1.0, promotes the B adapter and terminal to PASS, and replaces config_hash with zeros is accepted with no validation errors. This is a machine-reproducible false-green path and violates the registered requirement that relation, adapter, and terminal state be recomputed under the frozen primitives/contract.",
+      "assumptions_used": [
+        "validate_battery is an advertised acceptance verifier because the runner and tests invoke it and the spec explicitly requires fail-closed recomputation.",
+        "A verifier must reject a self-consistent report whose thresholds or config identity differ from the frozen spec, even when current tracked outputs are byte-current."
+      ],
+      "evidence_refs": [
+        "docs/research_program/long_horizon_rescue/pr172_spec.yaml:231",
+        "docs/research_program/long_horizon_rescue/pr172_spec.yaml:240",
+        "htt/src/common/metamorphic_symmetry.py:560",
+        "htt/src/common/metamorphic_symmetry.py:647",
+        "tests/pr_cards/test_pr_172_physics_invariant_symmetry_transform_metamorphic.py:130"
+      ],
+      "evidence_fingerprint": "sha256:19f7c72472d91e0b6eae6668f6a2bffb586b37c9c86cbb899b6180a5a8008c04",
+      "counterevidence_refs": [
+        "The canonical --check replay returns the correct blocked result and the current generated files are byte-current.",
+        "The existing forgery test catches changing only passed and terminal while leaving the frozen zero threshold unchanged."
+      ],
+      "reproduction": [
+        "Load the tracked result and spec.",
+        "Set relations[-1].metrics[0].threshold=1.0, relations[-1].passed=true, adapter_status.b_projector=PASS_REGISTERED_RELATIONS, terminal=PASS_METAMORPHIC_SELF_CONSISTENCY_C1, and config_hash to 64 zeros.",
+        "Recompute semantic_digest with the production helper.",
+        "Call validate_battery(forged, spec, Path('.')); observed result is an empty error list."
+      ],
+      "confidence": 1.0,
+      "unresolved": [
+        "Bind every relation to the frozen adapter, metric IDs, comparisons, and thresholds; verify config_hash; recompute adapter_status and terminal; add a full-promotion regression test matching this reproduction."
+      ]
+    },
+    {
+      "finding_id": "F-PR172-FINAL-CODE-002",
+      "claim_id": "C-PR172-METAMORPHIC-CONSISTENCY",
+      "verdict": "fail",
+      "severity": "high",
+      "statement": "The mutation report does not demonstrate seven executed mutants. execution_count is a literal emitted by _mutation, executed_count merely sums those literals, and MU172-B-OFFSUPPORT assigns activation_delta=witness_value=0.5 without executing a mutated kernel or rerunning MR172-B-SUPPORT-006. The current arithmetic is reproducible, but zero survivors is not execution evidence and could authorize a future false PASS once the clean B relation is repaired.",
+      "assumptions_used": [
+        "The frozen mutation contract's phrases each mutant must change intended surface and exact execution count require an actually invoked mutant surface, not a preregistered positive constant.",
+        "A zero-survivor gate used by terminal routing must be independently derived from mutation executions."
+      ],
+      "evidence_refs": [
+        "docs/research_program/long_horizon_rescue/pr172_spec.yaml:195",
+        "htt/src/common/metamorphic_symmetry.py:399",
+        "htt/src/common/metamorphic_symmetry.py:409",
+        "htt/src/common/metamorphic_symmetry.py:464",
+        "scripts/codex_harness/run_pr172_metamorphic_battery.py:157",
+        "tests/pr_cards/test_pr_172_physics_invariant_symmetry_transform_metamorphic.py:118"
+      ],
+      "evidence_fingerprint": "sha256:bec6366cb29dd5e1ba7a7b39404d2c376a6800d335793880c2eebf00cc9fdaba",
+      "counterevidence_refs": [
+        "The six other mutation formulas compute nonzero witnesses tied to their intended defect models.",
+        "All recorded mutation values independently replay exactly, and the present terminal remains blocked by a clean relation failure regardless of mutation status."
+      ],
+      "reproduction": [
+        "Inspect _mutation: execution_count is always set to 1.",
+        "Inspect _mutations: MU172-B-OFFSUPPORT is represented solely by offsupport_witness=0.5 and offsupport_activation=0.5.",
+        "Inspect build_outputs: executed_count is sum(row['execution_count']), so it cannot distinguish execution from construction of seven rows."
+      ],
+      "confidence": 0.99,
+      "unresolved": [
+        "Implement each mutant as an isolated callable or injected dependency and drive it through the same registered relation evaluator; preserve mutated primitive receipts and derive execution counts from observed invocations."
+      ]
+    },
+    {
+      "finding_id": "F-PR172-FINAL-CODE-003",
+      "claim_id": "C-PR172-METAMORPHIC-CONSISTENCY",
+      "verdict": "fail",
+      "severity": "medium",
+      "statement": "The result card and artifact manifest do not hash-bind the evaluator module or generator runner. input_hashes binds the spec, two production surfaces, and two upstream deltas, while git_commit is the pre-PR baseline and worktree_state is only a descriptive '+PR-172-worktree' string. Therefore the standalone result pack cannot identify the exact code that computed its primitive metrics, mutation rows, semantic replay, or routing.",
+      "assumptions_used": [
+        "Generated scientific-validation artifacts must bind the code that transforms source inputs into reported primitives, especially when the code is not present in the recorded baseline commit.",
+        "A human-readable dirty-worktree label is not a content identity."
+      ],
+      "evidence_refs": [
+        "scripts/codex_harness/run_pr172_metamorphic_battery.py:75",
+        "scripts/codex_harness/run_pr172_metamorphic_battery.py:126",
+        "scripts/codex_harness/run_pr172_metamorphic_battery.py:133",
+        "docs/generated/pr172_artifact_manifest.json:60",
+        "docs/generated/pr172_artifact_manifest.json:63",
+        "docs/generated/pr172_artifact_manifest.json:82"
+      ],
+      "evidence_fingerprint": "sha256:1ad596cef6f8575c7733c632c2fff314efb8344a8a8bb021e9e68509a9384f3e",
+      "counterevidence_refs": [
+        "The registered final-review assignment independently pins metamorphic_symmetry.py and the runner by SHA-256.",
+        "Fresh-process replay is deterministic in the current checkout and the tracked pack is byte-current."
+      ],
+      "reproduction": [
+        "Inspect manifest.input_hashes: neither htt/src/common/metamorphic_symmetry.py nor scripts/codex_harness/run_pr172_metamorphic_battery.py is present.",
+        "Inspect manifest.git_commit/worktree_state: the commit is b8a857742bd6c2d727ea2009f6e8a341a031b120 and the worktree suffix carries no hash."
+      ],
+      "confidence": 1.0,
+      "unresolved": [
+        "Add evaluator and runner SHA-256 values to input_hashes/source bindings and record an actual Git HEAD plus dirty diff/content receipt; regenerate and replay the pack."
+      ]
+    }
+  ],
+  "errors": []
+}

@@ -135,6 +135,8 @@ def test_hypothesis_only_cards_are_reported_but_not_auto_scheduled(
         pr_id = f"PR-{number}"
         if pr_id in status["completed"]:
             status["completed"].remove(pr_id)
+        if pr_id in status["blocked"]:
+            status["blocked"].remove(pr_id)
         status["execution_resolutions"].pop(pr_id, None)
         if pr_id not in status["pending"]:
             status["pending"].append(pr_id)
@@ -205,6 +207,9 @@ def test_hypothesis_only_or_nonacquisition_card_cannot_run_in_background(
         }
         if pr_id in status["pending"]:
             status["pending"].remove(pr_id)
+        if pr_id in status["blocked"]:
+            status["blocked"].remove(pr_id)
+        status["execution_resolutions"].pop(pr_id, None)
         status["pending"].append("PR-151")
         path = tmp_path / f"{pr_id}.yaml"
         _write_yaml(path, status)

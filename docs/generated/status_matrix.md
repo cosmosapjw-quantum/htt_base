@@ -7,13 +7,14 @@ Manual status counts are prohibited; use `docs/generated/status_snapshot.json` a
 
 | Metric | Value |
 | --- | ---: |
-| Total PRs | 113 |
-| Completed PRs | 100 |
-| Blocked PRs | 0 |
+| Total PRs | 130 |
+| Completed PRs | 105 |
+| Blocked PRs | 1 |
 | Skipped PRs | 0 |
-| In progress | 0 |
-| Pending PRs | 5 |
-| Dormant external PRs | 8 |
+| In progress | 1 |
+| Background in progress | 1 |
+| Pending PRs | 13 |
+| Dormant external PRs | 9 |
 
 | Metadata | Value |
 | --- | --- |
@@ -21,50 +22,55 @@ Manual status counts are prohibited; use `docs/generated/status_snapshot.json` a
 | Implementation scope | `common` |
 | Claim tier | `diagnostic_only` |
 | Transfer source | `none` |
-| Config hash | `e7a05a08103808420fd2e583d7dd4efcf67bee416e3bf5d8ebff4c4014d6e689` |
-| Input hashes | `docs/codex_handoff/pr_backlog.yaml:9693706872a5e13514c0eb3e4ca9dab9a281359edac4cda9877d26dae8c68f07`<br>`docs/codex_handoff/pr_status.yaml:a6a7f7b977a7a5731237ce98ac50dce3f308f646bb8c83c0da78e61ea9a9d21c`<br>`docs/codex_handoff/artifact_gate_outputs.yaml:66fe6f798fe4e02b7240e7916dced3ab3116b68081775fe96e79c81490674836` |
+| Config hash | `9c84c576199ebdb9ee7040f6f9e9b657fb1e9373f81ba93a5fa9eca04e483d5d` |
+| Input hashes | `docs/codex_handoff/pr_backlog.yaml:256cf1406cddf271d8b197dbf39e1ae1486b18f22c30e4551de40b55e2cc502d`<br>`docs/codex_handoff/pr_status.yaml:71f2a6ad168d8e9208fae3a5be614c085f02a21a7c128b2f9fd1c15d01c09194`<br>`docs/codex_handoff/artifact_gate_outputs.yaml:66fe6f798fe4e02b7240e7916dced3ab3116b68081775fe96e79c81490674836` |
 | Sky support status | `not_directional` |
 | Null/mock status | `not_statistical` |
 | Caveats | DAG completion is project bookkeeping only and is not scientific readiness.<br>Rows never promote external-transfer outputs to native solver validation.<br>DAG completion, artifact readiness, allowed use, and production validation are separate axes.<br>production_validated remains false unless an explicit artifact gate output says otherwise.<br>Execution resolutions are process receipts only and never promote scientific status or claim tier. |
 | Generating command | `python -m common.status_snapshot --write docs/generated/status_snapshot.json` |
-| Source commit | `22323b35+dirty` |
+| Source commit | `b8a85774+dirty` |
 | Worktree state | `dirty` |
 
 | Owner | Rows |
 | --- | ---: |
-| `BASS` | 7 |
-| `COMMON` | 53 |
-| `HTT` | 22 |
+| `BASS` | 8 |
+| `COMMON` | 62 |
+| `HTT` | 23 |
 | `MIO` | 12 |
-| `OBSSTAT` | 19 |
+| `OBSSTAT` | 25 |
 
 | State | Rows |
 | --- | ---: |
-| `completed` | 100 |
-| `dormant_external` | 8 |
-| `pending` | 5 |
+| `background_in_progress` | 1 |
+| `blocked` | 1 |
+| `completed` | 105 |
+| `dormant_external` | 9 |
+| `in_progress` | 1 |
+| `pending` | 13 |
 
 | Claim Tier | Rows |
 | --- | ---: |
+| `blocked` | 1 |
 | `conditional` | 5 |
-| `diagnostic_only` | 108 |
+| `diagnostic_only` | 124 |
 
 | Artifact Readiness | Rows |
 | --- | ---: |
-| `generated` | 94 |
-| `missing` | 13 |
+| `blocked` | 1 |
+| `generated` | 99 |
+| `missing` | 24 |
 | `validation_candidate` | 6 |
 
 | Allowed Use | Rows |
 | --- | ---: |
-| `external_audit` | 98 |
-| `internal_only` | 13 |
+| `external_audit` | 103 |
+| `internal_only` | 25 |
 | `paper_appendix` | 2 |
 
 | Artifact Mode | Rows |
 | --- | ---: |
 | `external_audit_conditioned` | 7 |
-| `governance_diagnostic` | 104 |
+| `governance_diagnostic` | 121 |
 | `paper_appendix_conditioned` | 2 |
 
 This matrix is a diagnostic-only DAG rendering. It does not certify solver validation, posterior evidence, native transfer validation, or family-ID evidence.

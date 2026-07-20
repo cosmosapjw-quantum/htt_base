@@ -1,4 +1,4 @@
-# Shared Context — PR-151 background acquisition and PR-172 metamorphic battery
+# Shared Context — PR-151 background acquisition and PR-173 MC-rank certifier
 
 ## Project objective
 
@@ -13,19 +13,21 @@
   comparator result. `PR-170` completed with a reproducible
   `CAS_BLOCKED` source-provenance audit and withheld scalar targets.
   `PR-171` completed with a class-conditional counterexample result that
-  retires its blanket no-go. `PR-172` is the sole foreground card.
+  retires its blanket no-go. `PR-172` closed with reproducible blocked evidence;
+  `PR-173` is the sole foreground card.
 - Current background card: `PR-151`, authenticated DESI DR1 acquisition of
   1000 EZmocks plus 25 AbacusSummit mocks on NVMe.
 - Governing roadmap:
   `docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md`.
 - Base revision at context refresh:
-  `c936fabd1527bb8c38cb13b98fc1ee608d0c5738` on
+  `b8a857742bd6c2d727ea2009f6e8a341a031b120` on
   `research/pr04-multicomponent`.
 
 ## Current DAG and execution state
 
-- Registered DAG: 130 cards through PR-183; 105 completed, PR-172 foreground,
-  PR-151 is the sole background acquisition, PR-155--158 remain
+- Registered DAG: 130 cards through PR-183; 105 completed, PR-172 blocked with
+  receipt, PR-173 foreground, PR-151 is the sole background acquisition,
+  PR-155--158 remain
   gated on PR-151, and PR-159--166 plus PR-183 are dormant pending authenticated
   native delivery. The dedicated PR-167 transaction preserved semantic hashes
   for all 113 pre-intake cards and registered the 17-card advocate suffix.
@@ -58,10 +60,12 @@
   Host-level process inspection and the 2026-07-20 00:34 UTC fast probe
   confirmed session `htt_pr151_desi_20260719`, pane/lock owner PID `16695`,
   runner PID `16709`, aria child PID `2252558`, and the expected
-  `--phase acquire` command. It found 110/1000 authenticated EZmocks, 0/25
-  Abacus records, 10/15 audit members, 17 fresh `.part` files totalling
-  4,383,143,616 bytes, an 8.2-second-old log, and 823.04 GiB free. The live
-  writer plus growth since the 00:18 UTC probe show that acquisition is active.
+  `--phase acquire` command. The PR-172 end probe at `2026-07-20T01:40:50Z`
+  found the lock still held, 120/1000 authenticated EZmocks, 0/25 Abacus
+  records, 10/15 audit members, eight current `.part` files totalling
+  1,902,606,400 bytes, a 20.0-second-old log, and 824.38 GiB free.
+  Authenticated records increased from 110 at the earlier probe; the smaller
+  partial set reflects completed batches and does not meet the stall rule.
   The older batch manifest still reports 30 authenticated EZmocks and the
   intentional phase-migration `KeyboardInterrupt` until the current batch
   checkpoint is committed; that stale manifest state is not a restart signal
@@ -478,14 +482,35 @@
   numerical suppression ceiling remain unidentified. The complete result is
   internal, `hypothesis_only`, and `public_use=false`.
 
-## PR-172 foreground boundary
+## PR-172 closed boundary and PR-173 foreground
 
-- PR-172 is the next defensible lane: a metamorphic symmetry
-  self-consistency battery. Passing it is software/model self-consistency and
-  never physical validation, observational support, or family identification.
-- PR-151 must be probed at PR-172 start and end. If it becomes terminal-ready,
-  finish the atomic PR-172 result, review, and commit before starting PR-173;
-  then finalize PR-151 and return to PR-155--158.
+- PR-172 has frozen eight transform relations and seven explicit mutants in
+  `pr172_spec.yaml`. Its formal replay is a terminal blocked result, not a
+  false green: all four CF4 relations pass, the three coded B-index relations
+  pass, and the documented unconditional axisymmetric-zero callable invariant
+  fails with registered max-absolute output `0.006921858926603516` instead of
+  exact zero. The B projector is therefore blocked while the CF4 estimator
+  retains its per-adapter C1 self-consistency pass.
+- The B result is a callable contract/implementation disagreement. Physical
+  spin-harmonic parity is underdefined and was not tested. No matched-null,
+  covariance, observational, transfer, geometry, or family claim follows.
+- PR-172 closed with reproducible terminal evidence under
+  `COMPLETED_FAILED_WITH_RECEIPT`; its `requires_success` edge to PR-180 is not
+  satisfied. PR-173 is the next executable defensible card.
+- The first final code and claim reviews remain preserved as FAIL. They found
+  a resealed threshold/config/adapter false-green path, literal rather than
+  callable mutation evidence, missing evaluator/runner hashes, and one
+  forbidden output phrase. The main writer hardened primitive-to-terminal
+  recomputation against the frozen metric contract, executes all seven
+  mutants through isolated callables with primitive receipts, binds evaluator
+  and runner bytes plus a worktree content receipt, separates covariance/null
+  metadata, and removed the phrase. Fresh independent code and claim
+  remediation reviews both pass; the earlier FAIL envelopes remain preserved.
+- PR-173 must certify finite-ensemble ranks and MC standard errors without
+  repeated full-byte hashing, using existing authenticated input hashes.
+- PR-151 must be probed at PR-173 start and end. If it becomes terminal-ready,
+  finish the atomic PR-173 result, review, and commit before starting another
+  advocate card; then finalize PR-151 and return to PR-155--158.
 
 ## Ownership and claim boundaries
 
@@ -539,6 +564,10 @@
 | E-PR170-MANIFEST | `docs/generated/pr170_artifact_manifest.json` | hash-bound blocked-result pack |
 | E-PR170-REVIEWS | `docs/generated/pr170_reviews/` | preserved FAIL and FAIL_NOT_READY review envelopes |
 | E-PR170-CLOSEOUT | `docs/generated/pr170_closeout_review_receipt.json` | post-review remediation and terminal blocked adjudication |
+| E-PR172-SPEC | `docs/research_program/long_horizon_rescue/pr172_spec.yaml` | frozen transform, mutation, convention, and terminal contract |
+| E-PR172-RESULT | `docs/generated/pr172_metamorphic_result.json` | split CF4 pass and B-projector blocked primitive evidence |
+| E-PR172-CARD | `docs/generated/pr172_result_card.json` | documented-contract falsification and unsatisfied success edge |
+| E-PR172-MANIFEST | `docs/generated/pr172_artifact_manifest.json` | content-addressed result-pack provenance |
 | E-REPLAN | `docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md` | PR-154 and advocate card intent |
 
 ## Open questions and kill switches

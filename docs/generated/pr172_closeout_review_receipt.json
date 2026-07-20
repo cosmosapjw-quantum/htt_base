@@ -1,0 +1,81 @@
+{
+  "caveats": [
+    "The closeout validates a reproducible blocked result; it does not turn PR-172 into a successful dependency.",
+    "Earlier FAIL reviews remain immutable evidence and are not relabeled by later remediation passes.",
+    "Physical spin-harmonic parity remains underdefined and untested."
+  ],
+  "claim_id": "C-PR172-METAMORPHIC-CONSISTENCY",
+  "claim_level": {
+    "level": "C1",
+    "scheme": "roadmap_rescue_v1"
+  },
+  "claim_tier": "exploratory",
+  "config_hash": "abc98477291041c55aa47932f6e8fe80f6704a419724f72a6e468c7cc9df7835",
+  "contributors": [
+    "OBSSTAT"
+  ],
+  "covariance_status": "mechanics_only_not_covariance_validation",
+  "errors": [],
+  "forbidden_output_hits": [],
+  "generating_command": "venv/bin/python -B scripts/codex_harness/verify_pr172_closeout.py --write",
+  "git_commit": "b8a857742bd6c2d727ea2009f6e8a341a031b120",
+  "implementation_scope": "common",
+  "input_hashes": {
+    "docs/generated/pr172_artifact_manifest.json": "48089c94d23bb3457b8a26be57acc76d4e3dc6afcf82873a99cd318891fb8b6f",
+    "docs/generated/pr172_metamorphic_result.json": "da128b4a8a71fe7517fb4fd31b485f2f9161234a24e60b245685644bbf878ba2",
+    "docs/generated/pr172_mutation_report.json": "e7b6a684ba46188a0d46e2fbda81bd6c1858faa6d6edcb7fdc724747409c7201",
+    "docs/generated/pr172_replay_receipt.json": "2c71f0b2249f257a8d5927d700f8535835352c3f323e10205822faca4f36c5a2",
+    "docs/generated/pr172_result_card.json": "9856349d1a05ee66eef85c14a96db3d3c665e900f53cb8218ff3e961ab5438e3",
+    "docs/generated/pr172_reviews/final_claim.json": "213d9f42d7edbf9c389d432f15da2c47a17e3637151f4571852ccc1d2b22cbb7",
+    "docs/generated/pr172_reviews/final_code.json": "f64637dbf0b973940f91982230a3a1e6c4c02e8c92d0b91dfd68ccee4ed251a0",
+    "docs/generated/pr172_reviews/manifest.json": "d509405172644afd542cfff1e7bdff4872645823a2b500468fc7dbc5e6e37f24",
+    "docs/generated/pr172_reviews/remediation_claim.json": "e7eb29c8fb54e3384765b92f8181b91f2d41c9e9b20fe175d9f5f8189b70989d",
+    "docs/generated/pr172_reviews/remediation_code.json": "5684410d6607f128ae6bc97a38ff724bdc102ff98df88e08ba34f73469ca8cdb",
+    "docs/research_program/long_horizon_rescue/pr172_spec.yaml": "abc98477291041c55aa47932f6e8fe80f6704a419724f72a6e468c7cc9df7835",
+    "htt/src/common/metamorphic_symmetry.py": "16f0ab529363fbeac265ae6e3fa998a7c0ae9f6a013bc66040dc156160ec277f",
+    "scripts/codex_harness/run_pr172_metamorphic_battery.py": "57f5fc2855b3ddf0f921989d099a0a8a12f6a6dc1557f439590f4cc7a6656848",
+    "scripts/codex_harness/verify_pr172_closeout.py": "a296cf945ee47e640e5f67f926a54acb6374cdc3ed8990d7e03b772f4ef53bd7"
+  },
+  "mask_status": "not_applicable_synthetic_fixture",
+  "null_mock_status": "not_run_not_applicable",
+  "owner": "COMMON",
+  "pr_id": "PR-172",
+  "preserved_failed_reviews": [
+    "physics_statistics",
+    "final_code",
+    "final_claim"
+  ],
+  "process_execution_status": "PASS",
+  "public_use": false,
+  "remediated_finding_ids": [
+    "F-PR172-FINAL-CODE-001",
+    "F-PR172-FINAL-CODE-002",
+    "F-PR172-FINAL-CODE-003",
+    "F-PR172-FINAL-CLAIM-001",
+    "F-PR172-FINAL-CLAIM-002"
+  ],
+  "remediation_reviews": [
+    "remediation_code",
+    "remediation_claim"
+  ],
+  "review_status_history": {
+    "claim_gate": "pass",
+    "final_claim": "fail",
+    "final_code": "fail",
+    "final_science": "pass",
+    "harness": "pass",
+    "physics_statistics": "fail",
+    "remediation_claim": "pass",
+    "remediation_code": "pass"
+  },
+  "schema": "htt.pr172.closeout_review.v1",
+  "scientific_artifact_mode": "standard_internal",
+  "scientific_status": "OPEN",
+  "scientific_terminal": "BLOCKED_METAMORPHIC_RELATION_VIOLATION",
+  "sky_support_status": "synthetic_fixture_not_observed_sky",
+  "success_dependency_satisfied": false,
+  "terminal_ready": true,
+  "transfer_source": "none",
+  "worktree_content_receipt": "5c10e3fbe14699dd22c4360c39463f13dfe7cb10a25a57082f8d47d4ab8bd50b",
+  "worktree_state": "b8a857742bd6c2d727ea2009f6e8a341a031b120+content-sha256:5c10e3fbe14699dd22c4360c39463f13dfe7cb10a25a57082f8d47d4ab8bd50b"
+}
