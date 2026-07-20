@@ -18,7 +18,8 @@
     "This receipt adjudicates remediation of review findings; it is not a new independent review envelope.",
     "The terminal result remains algebraic_only because every physical-promotion receipt is missing.",
     "PR-170 added one claim-surface producer to the repository-wide consumer inventory; the PR-169 scanner, result-card inventory count, manifest, and the three corresponding hashes below were deterministically refreshed without changing the PR-169 scientific result.",
-    "PR-172 and PR-179 added three claim-surface producers to the repository-wide consumer inventory (metamorphic_symmetry.py, directional_cosmography.py, run_pr179_directional_cosmography.py); on 2026-07-20, during the PR-174 execution, the PR-169 scanner, result-card inventory count, manifest, and the three corresponding hashes below were deterministically refreshed without changing the PR-169 scientific result."
+    "PR-172 and PR-179 added three claim-surface producers to the repository-wide consumer inventory (metamorphic_symmetry.py, directional_cosmography.py, run_pr179_directional_cosmography.py); on 2026-07-20, during the PR-174 execution, the PR-169 scanner, result-card inventory count, manifest, and the three corresponding hashes below were deterministically refreshed without changing the PR-169 scientific result.",
+    "F1 structural fix (2026-07-21): the all-consumer scan is now a LIVING report regenerated on every write and gated semantically on check (pass/unresolved==0), so it is no longer byte-pinned here; the result-card and manifest pins were refreshed accordingly. This supersedes the regenerate-on-in-scope-change convention."
   ],
   "generating_command": "main-writer evidence adjudication followed by registered check and pytest commands listed in verification",
   "git_commit": "5b3c96175c226764b3fb7ed9e181e3f3330e1830",
@@ -75,14 +76,13 @@
   ],
   "remediated_surface_hashes": {
     "scripts/codex_harness/collect_pr169_cas_receipts.py": "305904405cd9535d9703696a93672999cf6a62aacd145cb8d2a880cf498c6284",
-    "scripts/codex_harness/run_pr169_unsigned_leakage.py": "a21a7d3dd657f238acd2eaef1b1e6e3c9e336b414523026234bdf6d9fca9f23a",
+    "scripts/codex_harness/run_pr169_unsigned_leakage.py": "b730299c4b9275f8c446d4a719de342fbe7c19a61b65cff54f133e6c90329376",
     "tests/pr_cards/test_pr_169_unsigned_isotropy_leakage_ceiling_m_max_nilsson_.py": "52bf3a464641c8d7c252aa4be89eccfba43b9b3c75f18b0853b4ef98bc597300",
     "docs/manuscript/ch01_introduction.tex": "91e4348c2e2e6579507694474ea8ba179ad24bc6c5f39e29047848b587511045",
     "docs/generated/pr169_cas_collection_receipt.json": "ad533e3bbce7f28b278ddcbb96c84cde97be5adc0a20a994f31478494f45e6e4",
-    "docs/generated/pr169_all_consumer_scan.json": "f78ca2666e45d5f90f7c9b09de0856817a96df5c1812d2b20b8b4a1e3ee63342",
-    "docs/generated/pr169_mutation_report.json": "826907b7343054265cc977b46318c00afa1ac6dc0125967b524b86c6a1d53f9d",
-    "docs/generated/pr169_result_card.json": "289d2afe0c4191d1b760d933e726b5d32b0fb83fd52aee69bab3c0f58bb23ef0",
-    "docs/generated/pr169_artifact_manifest.json": "9594392dff5b3ef40f3adddad0bc77ad78a5cef21f6bab49c485a2b39a7fcf78"
+    "docs/generated/pr169_mutation_report.json": "3f43d6a6b563eb013d50dc2bc8c2eee452ec684d5097e93fc49fd598f236238b",
+    "docs/generated/pr169_result_card.json": "0bee4a567fd4400f8496bd7e990c1bf5dcd5b97e9d2437b4ae38db69bd4292a7",
+    "docs/generated/pr169_artifact_manifest.json": "27485655b32e03bd1b593859b64d4942a62031166954988703ea5cfbf722ea5b"
   },
   "historical_source_replay": {
     "policy": "v1_only_snapshot_fallback",

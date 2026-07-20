@@ -193,10 +193,37 @@ def _render(payload: dict[str, Any]) -> bytes:
     ).encode("utf-8")
 
 
-def _publish(path: Path, payload: dict[str, Any], *, write: bool) -> None:
+def _publish(
+    path: Path, payload: dict[str, Any], *, write: bool, living: bool = False
+) -> None:
+    """Publish an artifact.
+
+    Byte-stable artifacts (default) must be byte-identical under --check.
+    A LIVING report (the repository-wide consumer scan) is regenerated on
+    every --write and, under --check, is verified SEMANTICALLY instead of
+    byte-wise: the stored report must parse and pass, and the freshly
+    recomputed payload must pass — inventory drift from unrelated tree
+    growth is by design and no longer fails the gate (F1 structural fix,
+    2026-07-21; supersedes the regenerate-on-in-scope-change convention).
+    """
     content = _render(payload)
     target = REPO / path
     if not write:
+        if living:
+            if not target.is_file():
+                raise ValueError(f"living report missing under --check: {path}")
+            stored = json.loads(target.read_text(encoding="utf-8"))
+            if stored.get("pass") is not True:
+                raise ValueError(
+                    f"living report stored gate failed under --check: {path}"
+                )
+            if payload.get("pass") is not True or payload.get(
+                "unresolved_active_claim_count"
+            ):
+                raise ValueError(
+                    f"living report recomputed gate failed under --check: {path}"
+                )
+            return
         if not target.is_file() or target.read_bytes() != content:
             raise ValueError(f"artifact differs under --check: {path}")
         return
@@ -737,10 +764,13 @@ def build(*, write: bool) -> dict[str, Any]:
         "nilsson_bridge_status": symbol_bridge["status"],
         "consumer_gate": {
             "pass": consumers["pass"],
-            "inventory_file_count": consumers["inventory_file_count"],
             "unresolved_active_claim_count": consumers[
                 "unresolved_active_claim_count"
             ],
+            "inventory_semantics": (
+                "inventory lives in the regenerated consumer-scan living "
+                "report; the card pins only the semantic gate (F1 fix)"
+            ),
         },
         "mutation_gate": mutations["pass"],
         "scientific_interpretation": (
@@ -764,11 +794,12 @@ def build(*, write: bool) -> dict[str, Any]:
         if missing:
             raise ValueError(f"artifact metadata incomplete: {missing}")
     for key, payload in payloads.items():
-        _publish(OUTPUTS[key], payload, write=write)
+        _publish(OUTPUTS[key], payload, write=write, living=(key == "consumers"))
 
     artifact_hashes = {
         OUTPUTS[key].as_posix(): hashlib.sha256(_render(payload)).hexdigest()
         for key, payload in payloads.items()
+        if key != "consumers"
     }
     manifest = {
         "schema": "htt.pr169.artifact_manifest.v1",
@@ -778,6 +809,17 @@ def build(*, write: bool) -> dict[str, Any]:
         "cas_aggregate": "CAS_4AXIS_PASS",
         "physical_bundle_status": "MISSING",
         "artifact_hashes": artifact_hashes,
+        "living_reports": {
+            OUTPUTS["consumers"].as_posix(): {
+                "policy": "regenerated_on_write_semantic_gate_on_check",
+                "gate": "pass == true and unresolved_active_claim_count == 0",
+                "rationale": (
+                    "repository-wide consumer scan enumerates the live tree; "
+                    "byte-pinning it made the gate red under unrelated tree "
+                    "growth (wave-review finding F1); decoupled 2026-07-21"
+                ),
+            }
+        },
         "check_command": (
             "venv/bin/python -B scripts/codex_harness/"
             "run_pr169_unsigned_leakage.py --check"
