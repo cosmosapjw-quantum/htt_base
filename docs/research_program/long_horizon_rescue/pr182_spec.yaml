@@ -1,0 +1,159 @@
+schema: htt.pr182.spec.v1
+pr_id: PR-182
+title: Solver-free parity theorem and handedness reference-signal registry (hypothesis_only)
+frozen_before_result: true
+owner: COMMON
+contributors:
+- BASS
+- OBSSTAT
+implementation_scope:
+- common
+claim_tier: exploratory
+claim_level:
+  scheme: roadmap_rescue_v1
+  level: C1
+scientific_artifact_mode: hypothesis_only
+public_use: false
+transfer_source: none
+baseline_commit: a1c20dad0ab8b97bde1d55b6aeb6d89b6ce75bea
+
+scheduling_authorization:
+  execution_authorization_at_intake: REGISTERED_NOT_SCHEDULED
+  scheduled_by: owner_explicit_selection
+  scheduled_on: '2026-07-20'
+  authorization_record: >-
+    The owner explicitly selected "PR-174 then PR-182" from the
+    hypothesis-only lane in this session's plan-approval question set.
+    This record covers this execution only; auto-scheduling rules
+    (D-ADVOCATE-ORDER) are unchanged.
+
+claim:
+  statement: >-
+    Four exact solver-free parity identities are registered and verified
+    under one blind four-axis CAS contract: (I1) reflection parity on the
+    (E,B) doublet is an involution whose mirror-fixed axisymmetric sector
+    has exactly zero B; (I2) reflection flips TB and EB and preserves
+    TT/EE/BB/TE; (I3) the Bianchi VII_h structure tensor changes sign as
+    a density under an improper transform with the vector constraint
+    preserved (handedness is orientation-odd at the structure-constant
+    level); (I4) the boost kernel sqrt(1-beta^2)/(1-beta*mu) has, through
+    O(beta^3), coefficients polynomial in mu only (axisymmetric about the
+    boost axis, hence by I1/I2 no parity-odd boost signal). A handedness
+    reference-signal registry entry sign(EB/TB) = sign(x_h) is registered
+    ONLY as a future native-atlas test vector.
+  allowed_scientific_results:
+  - PARITY_IDENTITIES_CAS_4AXIS_PASS_REGISTRY_REGISTERED
+  - PARITY_IDENTITIES_CAS_BLOCKED_REGISTRY_REGISTERED
+  - PARITY_IDENTITIES_CAS_FAIL_REGISTRY_WITHHELD
+  blocked_status: BLOCKED_DATA_ADJUDICATION_DETECTED
+  interpretation: >-
+    Ceiling roadmap_rescue_v1:C1 theorem/registry mechanics in
+    hypothesis_only mode. The parity split (axisymmetric -> E only;
+    helical -> parity-odd TB/EB) is CONFIRMATORY of Pontzen & Challinor
+    2007 (Phys. Rev. D 96, 023532 lineage per roadmap); the only new
+    sliver is the registered binding of the CMB parity sign to a local
+    velocity-curl handedness AS A FUTURE-NATIVE REFERENCE. No present
+    data sign comparison may rank, identify, or adjudicate a family; a
+    registry-level falsifier (helical VII_h sign mismatch with local
+    handedness) is executable only on an authenticated native atlas
+    (PR-161..165), never on shipped data here.
+
+cas_contract:
+  schema: htt.cas_contract.v2
+  contract_path: docs/generated/pr182_cas/CAS_CONTRACT_PR182_PARITY.json
+  required_axes: [wolfram_xact, sympy_high_precision, sage_singular, lean_mathlib]
+  axis_implementations:
+    wolfram_xact: wolfram/pr182_parity_axis.wls
+    sympy_high_precision: htt/src/common/pr182_sympy_axis.py
+    sage_singular: sage/pr182_parity_axis.sage
+    lean_mathlib: formal_pr182 (Lean 4 core lane, repo-pinned toolchain,
+      native_decide; same core-lane convention as formal_pr124)
+  missing_axis_outcome: CAS_BLOCKED
+  result_blinding: required_until_adjudication
+  blinding_mechanics: >-
+    Each axis computes independently from the contract with
+    sibling_results_read = []; the contract hash is frozen before any
+    sealed envelope is generated; every envelope embeds the contract
+    hash; adjudication runs only over complete envelopes via
+    .agent-harness/scripts/cas_gate.py adjudicate (no majority vote,
+    three axes can never pass).
+  development_disclosure: >-
+    Axis scripts were smoke-tested during implementation before this
+    spec freeze; sealed envelopes are generated only AFTER the contract
+    freeze and are bound to its hash. No smoke output is reused as a
+    sealed result.
+
+exact_obligations:
+- parity_involution_exact
+- axisymmetric_source_forces_B_zero
+- reflection_flips_TB_EB_fixture
+- reflection_preserves_TT_EE_BB_TE_fixture
+- vii_h_improper_transform_flips_n_sign
+- vii_h_vector_constraint_holds_both_orientations
+- boost_kernel_mu_only_coefficients_exact
+
+expected_exact_values:
+  fixed_space_dim: '1'
+  fixture_TB_flip: 3/7->-3/7
+  fixture_EB_flip: -2/5->2/5
+  n_prime_diagonal: '[0, -1, -1]'
+  boost_coefficient_lists:
+    '0': "['1']"
+    '1': "['0', '1']"
+    '2': "['-1/2', '0', '1']"
+    '3': "['0', '-1/2', '0', '1']"
+
+registry:
+  schema: htt.pr182.handedness_reference_registry.v1
+  entries:
+  - family_label: bianchi_VII_h_helical
+    reference_relation: sign(EB/TB) = sign(x_h)
+    status: FUTURE_NATIVE_ATLAS_TEST_VECTOR
+    adjudication: FORBIDDEN_PRE_NATIVE
+    falsifier_semantics: >-
+      On an authenticated native atlas ONLY: a helical VII_h sign
+      mismatch with the local velocity-curl handedness refutes the
+      helical hypothesis at registry level; a match is corroboration
+      only, never identification.
+  - family_label: axisymmetric_classes_I_V_VII0_III_IX
+    reference_relation: B == 0 (parity theorem, I1)
+    status: FUTURE_NATIVE_ATLAS_TEST_VECTOR
+    adjudication: FORBIDDEN_PRE_NATIVE
+  - family_label: pure_boost
+    reference_relation: parity-odd TB/EB identically zero (I4 with I1/I2)
+    status: FUTURE_NATIVE_ATLAS_TEST_VECTOR
+    adjudication: FORBIDDEN_PRE_NATIVE
+  data_input_paths: none — the registry module has NO data-ingestion API
+  guard: >-
+    A guard test asserts the registry module ingests no catalogue/map
+    data (no file/array data parameters, no observational imports) and
+    that any attempt to route data through the registry raises; a
+    detected data-family-adjudication path blocks the card
+    (BLOCKED_DATA_ADJUDICATION_DETECTED).
+
+kill_conditions:
+- any shipped-data family label, family rank, or handedness conclusion
+- any production or manuscript consumer of the registry
+- any pre-native data sign comparison
+- any relabeling of CAS_BLOCKED/CAS_FAIL as a pass
+
+forbidden_claims:
+- present-data family identification, ranking, or handedness conclusion
+- detection/anisotropy/isotropy/geometry claim
+- native-solver or transfer validation claim
+- promotion beyond roadmap_rescue_v1:C1 hypothesis_only
+- describing a registered-exception pass as a 4-axis pass
+
+required_metadata:
+- owner
+- implementation_scope
+- claim_tier
+- claim_level
+- scientific_artifact_mode
+- public_use
+- transfer_source
+- config_hash
+- spec_sha256
+- contract_sha256
+- generating_command
+- git_commit

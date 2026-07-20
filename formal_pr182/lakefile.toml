@@ -1,0 +1,12 @@
+name = "pr182parity"
+defaultTargets = ["pr182parity"]
+
+# PR-182 four-axis CAS gate: Lean axis. Pure Lean 4 core lane (no mathlib),
+# same repo-pinned toolchain as formal/ (formal/lean-toolchain).
+
+[[lean_lib]]
+name = "Pr182Parity"
+
+[[lean_exe]]
+name = "pr182parity"
+root = "Pr182Parity"
