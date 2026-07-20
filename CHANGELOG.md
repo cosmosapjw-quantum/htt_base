@@ -7,6 +7,162 @@
 
 ## [Unreleased]
 
+### PR-176 — Tsagas div-v/q-dipole cross-falsifier, conservative divergence-lane close (rev-r241, 2026-07-20)
+
+Advocate-wave card (dep PR-173). `htt/obsstat/cf4_affine_divergence.py` +
+`scripts/codex_harness/run_pr176_affine_divergence.py`: raw-CF4 affine divergence
+estimand with a frozen falsifier contract. Terminal
+**NON_INFORMATIVE_Q_RESPONSE_UNAVAILABLE** — the affine coefficients are candidate
+diagnostics only; no q or significance result exists. The SEPARATE frozen-covariance
+self-consistency validation axis FAILED honestly (100 Mpc Syy−Szz coverage 0.9424,
+Wilson interval [0.9356, 0.9485] excludes 0.95) and is bookkept as a failed axis on
+a COMPLETED_SUCCESS mechanics card; the failed axis cannot substitute for the
+registered q-response terminal. PR-148 same-data covariance import forbidden; legacy
+beta closure unused; production `tilted_flrw.py` untouched. 21 mutations killed.
+Review lane: first final code/stats/claim FAIL → remediation → adjudicator PASS
+(receipt hashes pinned in pr_status.yaml, verified). Suite
+test_pr_176_tsagas_div_v_q_dipole_cross_falsifier_ad_hoc_clo.py. No divergence
+measurement/detection/anisotropy/Bianchi claim; both CF4 P0s untouched/OPEN;
+102 OPEN; DAG 109/130 completed at close. See docs/PR_DELTAS/pr-176.md.
+
+### PR-179 — Reconstruction-independent directional cosmography, raw CF4 H-only conditional close (rev-r240, 2026-07-20)
+
+Advocate-wave card (dep PR-173; 3 commits: freeze directional estimand / amend
+preflight null support / close). `htt/obsstat/directional_cosmography.py` +
+`htt/obsstat/catalogs/cf4_raw.py`: directional cosmographic expansion on the raw
+CF4 catalogue with NO reconstruction input, constructed around (never through)
+the OPEN CF4 P0 `C1-K5-MV`; CF4-P0 quarantined payloads denied at the
+value-access boundary. Terminal **H_ONLY_SELECTION_SYSTEMATICS_CONDITIONAL**: the
+q block fails every fold's preregistered cubic falsifier (canonical correlation
+with the selection template 0.980–0.982 > 0.95 ceiling) so ALL q-level results
+are withheld as null; only the H-only directional statistic survives, exact rank
+2/20000 = 1.0e-4, explicitly conditional on unresolved selection systematics —
+not a detection. 21 mutations killed; 27 tests
+(test_pr_179_reconstruction_independent_directional_cosmograp.py). Review lane:
+code FAIL(10) / stats FAIL_NOT_READY(3) / claim INCONCLUSIVE → remediation →
+final adjudication PASS (receipt pinned). No anisotropy/geometry/family claim;
+both CF4 P0s untouched/OPEN. See docs/PR_DELTAS/pr-179.md.
+
+### PR-177 — ACT DR6 strict-in-band kappa off-diagonal modulation, conditional null (rev-r239, 2026-07-20)
+
+Advocate-wave card (dep PR-173). `htt/obsstat/act_inband_modulation.py`: ACT DR6
+lensing off-diagonal modulation diagnostic restricted to the release-validated
+band L=41..762 (frozen decision D-PR177-STRICT-SUPPORT; no out-of-band leakage).
+Terminal **NO_RESOLVED_COUPLING_AT_CURRENT_MC_RESOLUTION**: controlled rank
+102/401 with an MC-resolution guard interval [0.169, 0.339] wholly above 0.05 →
+a conditional null limited by the 400-sim ensemble resolution, not a coupling
+bound. 30 mutations killed; 15 tests; final verifier reconstructs both
+input-hash maps independently. Release-simulation-conditional; no modulation
+detection/anisotropy/family claim. See docs/PR_DELTAS/pr-177.md.
+
+### PR-173 — Monte-Carlo finite-ensemble error-budget certification (rev-r238, 2026-07-20)
+
+Advocate-wave card (dep PR-167). `htt/obsstat/finite_ensemble.py`: per-lane
+finite-ensemble resolution limits certified for the wave's MC-rank lanes.
+Terminal **PASS_REPRODUCIBLE_FINITE_ENSEMBLE_AUDIT_WITH_BLOCKED_LANES**:
+0 resolved / 1 unresolved / 5 not-certifiable / 1 not-evaluated lanes recorded
+honestly (blocked lanes stay blocked; no lane promoted by the audit). 12+6
+coordinated mutations killed. Review lane: intake FAIL_NOT_READY + 3 first-final
+ERROR + code FAIL (1 P1 + 1 P2) all remediated with envelopes retained.
+Suite test_pr_173_monte_carlo_finite_ensemble_error_budget_certifi.py.
+See docs/PR_DELTAS/pr-173.md.
+
+### PR-172 — Physics-invariant symmetry metamorphic battery: B-projector contract BLOCKED (rev-r237, 2026-07-20)
+
+Advocate-wave card (deps PR-123/167). `htt/src/common/metamorphic_symmetry.py` +
+`scripts/codex_harness/run_pr172_metamorphic_battery.py`: metamorphic
+symmetry-transform battery over callable physics invariants. HONEST FAILURE
+terminal **BLOCKED_METAMORPHIC_RELATION_VIOLATION** →
+`COMPLETED_FAILED_WITH_RECEIPT`: the B-mode projector violates its documented
+axisymmetric exact-zero invariant (max |Delta_B| = 0.006921858 vs documented 0),
+scoped as a callable documentation/implementation disagreement, NOT a
+physical-parity violation. `success_dependency_satisfied: false` — the PR-180
+`requires_success` edge is left unsatisfied (PR-180 locked) pending disposition.
+7 mutants killed, 0 survivors. Production `htt/bass/los/b_mode_projector.py`
+untouched. Suite test_pr_172_physics_invariant_symmetry_transform_metamorphic.py.
+See docs/PR_DELTAS/pr-172.md.
+
+### PR-171 — Blanket tilt no-go retired by class-conditional counterexample (rev-r236, 2026-07-20)
+
+Advocate-wave card (dep PR-167; hypothesis_only, public_use=false). Khronon-type
+non-comoving dark-sector shear-leakage lane. Terminal
+**CLASS_CONDITIONAL_NO_GO_RETIRED_BY_COUNTEREXAMPLE**: a registered
+class-conditional counterexample retires the earlier blanket tilt no-go within
+its stated class only. Three generations enforced honestly: gen1
+PROCESS_EVIDENCE_INVALID → gen2 CAS_FAIL → gen3 CAS_4AXIS_PASS (no reuse across
+generations). Erratum: the registered exponent is gamma=5/4; the prose gamma=7/6
+demoted to an unregistered example. 12 tests
+(test_pr_171_khronon_non_comoving_dark_sector_shear_leakage_n.py). No
+generic-instability theorem, no anisotropy/family claim.
+See docs/PR_DELTAS/pr-171.md.
+
+### PR-170 — Buchert covariant-home two-patch provenance audit, CAS-blocked (rev-r235, 2026-07-20)
+
+Advocate-wave card (dep PR-167). Terminal
+**source_provenance_audit_only_cas_blocked**: the Buchert two-patch cancellation
+identity chain is provenance-audited only; Wolfram engine exited 255 twice →
+four-axis CAS gate records `CAS_BLOCKED` (no 3-axis promotion, no majority vote;
+`eleven_scalar_rows_verified=false`), so the identity/two-patch scalar claims are
+withheld, with blocked-axis receipts retained. 3 reviewer lanes
+(FAIL/FAIL_NOT_READY) remediated. 28 tests
+(test_pr_170_buchert_covariant_home_two_patch_cancellation_ob.py).
+See docs/PR_DELTAS/pr-170.md.
+
+### PR-169 — Unsigned comparator leakage ceiling certified ALGEBRAIC_ONLY (rev-r234, 2026-07-20)
+
+Advocate-wave card (dep PR-167). `scripts/codex_harness/run_pr169_unsigned_leakage.py`:
+the unsigned-comparator leakage ceiling `M_max(B) = 4B` is certified
+**ALGEBRAIC_ONLY**; the Nilsson `W_N2` ≠ repo `V2` bridge is REJECTED, and all
+8/8 physical-promotion receipts are MISSING → physical promotion refused via the
+PR-167 kill switch. v1 CAS_FAIL superseded by v2 CAS_4AXIS_PASS with no result
+reuse. `htt/src/common/egs_oneway.py` firewall HARDENED (exact comparator
+identity preserved; `predicate_scope=comparator_flrw_limit_only`; `_FORBIDDEN_TEXT`
+expanded with near-FLRW/almost-FLRW/evidence-for-FLRW variants). Disclosed
+cross-PR provenance regeneration (egs_results_table_v9, pr126/pr127/pr167
+manifests). 28 tests, 0 mutation survivors. 2 final reviews FAIL remediated.
+Post-close note: the all-consumer scan artifact regenerates on in-scope tree
+change (see docs/audits/post_checkpoint100_wave_review_signoff_20260720.md, F1).
+See docs/PR_DELTAS/pr-169.md.
+
+### PR-168 — MES four-acceleration contract audit: honest CAS failure (rev-r233, 2026-07-20)
+
+Advocate-wave card (dep PR-167). `htt/src/common/pr168_sympy_axis.py`: the
+proposed MES four-acceleration contract FAILS its own audit — terminal
+**CAS_FAIL_CONTRACT_INVALID_PRODUCTION_UNCHANGED** (factor-of-3 defect); the
+physics/code/claim reviews all FAIL and the card is downclosed rather than
+edited-after-review; P1 findings F-PR168-PHYS-001/002 registered. Production
+`B_accel` / `htt/htt/htt/core/bounds.py` byte-identical; the CF4-P0 public-use
+firewall stays controlling. 8 tests
+(test_pr_168_mes_four_acceleration_honesty.py). Scientific status effect: none;
+everything stays OPEN. See docs/PR_DELTAS/pr-168.md.
+
+### PR-167 — Advocate execution-lane intake PR-167..183 (rev-r232, 2026-07-20)
+
+Governance card (C1 diagnostic). Atomic intake of the advocate execution lanes:
+DAG expanded 113 → 130 cards / 352 edges with typed lanes
+(defensible / hypothesis_only / needs_native per D-ADVOCATE-ORDER) and per-lane
+claim ceilings (D-ADVOCATE-CLAIM-CEILING); hypothesis_only cards are
+REGISTERED_NOT_SCHEDULED and never auto-scheduled; needs_native cards dormant.
+Prior-owner surface PR-119–166 byte-identical (content hash pinned). First
+closeout surfaced 7 transaction + 3 harness + 2 prose defects, second replay 2
+fail-open paths — all remediated with failed envelopes retained.
+`htt/src/common/status_snapshot.py`; suites test_pr167_advocate_intake.py,
+test_pr167_transaction_safety.py, test_pr_167_advocate_intake_parallel_state.py.
+DAG bookkeeping only — not scientific readiness. See docs/PR_DELTAS/pr-167.md.
+
+### PR-154 — JWST hierarchical covariance forecast: non-identification result (rev-r231, 2026-07-20)
+
+Roadmap Wave-20 PR-154 (deps PR-134/143/153). `htt/htt/htt/infer/jwst_host_hierarchy.py`
+(1292 lines): hierarchical host-level covariance forecast over the authenticated
+JWST anchor manifest. Terminal **TOTAL_UNCERTAINTY_NOT_IDENTIFIED** for BOTH
+calibration families plus **GROUP_ZERO_POINT_NOT_IDENTIFIED**; a 2,430-cell CF4
+scenario grid shows 0 cells of material information gain — the honest outcome is
+a non-identification certificate, not a forecast headline. SBC (3000) and PPC
+(5000) pass; closeout survived 3 independent review assignments. 9 artifacts;
+suites test_pr154_jwst_host_hierarchy_runner.py +
+test_pr_154_jwst_hierarchical_covariance_forecast.py. No H0/distance/anisotropy
+claim; both CF4 P0s untouched/OPEN. See docs/PR_DELTAS/pr-154.md.
+
 ### PR-153 — JWST authenticated row, crossmatch + manifest (+ checkpoint 100) (rev-r230, 2026-07-19)
 
 Roadmap Wave-19 PR-153 (deps PR-122/134/143). `htt/obsstat/jwst_anchor_manifest.py`:
