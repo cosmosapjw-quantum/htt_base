@@ -110,6 +110,7 @@ completed:
 - PR-179
 - PR-176
 - PR-174
+- PR-182
 blocked:
 - PR-172
 pending:
@@ -131,7 +132,7 @@ dormant_external:
 - PR-165
 - PR-166
 - PR-183
-in_progress: PR-182
+in_progress: null
 background_in_progress:
 - PR-151
 background_execution_contracts:
@@ -158,6 +159,24 @@ execution_lane:
   PR-182: hypothesis_only
   PR-183: needs_native
 execution_resolutions:
+  PR-182:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-182.md
+    review_archive_receipt: docs/generated/pr182_reviews/manifest.json
+    review_archive_receipt_sha256: d08d68a9e4e2d7f617a1c14b989c519aafadd2534fcaa244c5023f16198a4540
+    final_adjudication_receipt: docs/generated/pr182_reviews/final_adjudication.json
+    final_adjudication_receipt_sha256: db2e856ca388ac107887eea7c6dbd6b28ff90a22f4c96c0c762645abcb033eb2
+    cas_adjudication_receipt: docs/generated/pr182_cas_adjudication.json
+    cas_adjudication_receipt_sha256: 7bd4c20f2cd0a094491b82df7e381c17cc1fbd8111dab4c978cbc9c6bba343c8
+    cas_aggregate_status: CAS_4AXIS_PASS
+    cas_contract_id: CAS-PR182-PARITY-002
+    resolved_on: '2026-07-21'
+    scheduling_authorization: owner_explicit_selection_20260720_this_execution_only
+    scientific_status_effect: parity_identities_cas_verified_roadmap_handedness_ratio_relation_refuted_at_registry_level
+    scientific_status_after: PARITY_IDENTITIES_CAS_4AXIS_PASS_REGISTRY_REGISTERED
+    scientific_artifact_mode: hypothesis_only
+    public_use: false
+    success_dependency_satisfied: true
   PR-174:
     resolution: COMPLETED_SUCCESS
     receipt: docs/PR_DELTAS/pr-174.md

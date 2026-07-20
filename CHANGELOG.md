@@ -7,6 +7,36 @@
 
 ## [Unreleased]
 
+### PR-182 — Solver-free parity theorem + handedness registry; roadmap ratio relation refuted (rev-r243, 2026-07-21)
+
+Hypothesis-only advocate card (dep PR-167; `public_use: false`, ceiling
+roadmap_rescue_v1:C1; owner-scheduled execution). Four exact solver-free
+parity identities sealed under a blind four-axis CAS contract
+(`CAS-PR182-PARITY-002`) and adjudicated **CAS_4AXIS_PASS** by the harness
+cas_gate (SymPy / Sage+Singular / Wolfram+xAct with enforced load receipt /
+Lean 4 core native_decide; expected exact values enforced per axis; v1 run
+superseded by v2 after review-driven hash-changing harness repairs, v1
+evidence retained, no result reuse). **Headline = a registered negative
+result: the roadmap's own reference relation sign(EB/TB)=sign(x_h) is
+REFUTED by the card's verified identities** — I2 proves orientation reversal
+flips TB and EB together (the ratio is parity-EVEN, handedness-blind) and I3
+shows the conventional x_h is orientation-even; the registry records
+ROADMAP_REFERENCE_RELATION_REFUTED_BY_I2_I3 plus a signed-component
+replacement candidate (sign(TB)/sign(EB) vs a registered signed handedness
+template) as the future-native test vector. B==0 entry restricted to
+mirror-symmetric axisymmetric configurations (I/V/IX + registered
+axis-aligned III/VII_0 subsets; generic spirals excluded). Attribution
+CONFIRMATORY of Pontzen & Challinor 2007, MNRAS 380, 1387 (erratum fixed a
+wrong journal identifier). Registry has no data-ingestion API; data-like
+arguments raise; repo-wide (py/tex/rs) consumer scan = 0. Review lane
+(3 refute lenses + verification, archived docs/generated/pr182_reviews/):
+0 P0, 5 P1 + ~10 P2, 22 CONFIRMED / 2 REFUTED, all remediated pre-commit via
+spec erratum E1–E8 + contract v2. 14 gates
+(test_pr_182_solver_free_parity_theorem_and_handedness_refere.py). No
+present-data family/handedness adjudication, no detection/anisotropy/
+geometry/native/transfer claim; both CF4 P0s untouched/OPEN; 102 OPEN.
+111th completion; next checkpoint at 115. See docs/PR_DELTAS/pr-182.md.
+
 ### PR-174 — SW-only real-space anisotropic ray-integration mechanics (rev-r242, 2026-07-20)
 
 Hypothesis-only advocate card (dep PR-167; `public_use: false`, ceiling
