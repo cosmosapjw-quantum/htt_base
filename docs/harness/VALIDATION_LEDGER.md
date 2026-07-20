@@ -2,6 +2,34 @@
 
 Record commands actually run. Never mark skipped checks as passed.
 
+## PR-179 - raw-CF4 H-only directional catalogue result
+
+Date: 2026-07-20
+
+Changed surfaces: authenticated raw CF4 adapter, directional catalogue
+estimator and matched null, deterministic producer/verifier, ten-file result
+pack, review archive, PR delta, status mirrors, progress checkpoint, and handoff
+state. No PR4 payload and no partial DESI mock entered the analysis.
+
+| Command or check | Result | Notes |
+|---|---:|---|
+| producer `--preflight` | PASS | Frozen spec/card/source/config authority; numerical evaluator not imported. |
+| low-priority producer `--write` | PASS | Complete 19,999-draw H-only generation, 10 files. |
+| producer `--check` | PASS | 10/10 byte-current; read-only. |
+| PR-179 targeted pytest | PASS | 27 passed in 70.03s; final adjudicator independently repeated 27/27 in 69.13s. |
+| Final hash-pinned adjudication | PASS | Recomputed null hash/count, `2/20000` rank, CP interval, grid guard, H map, nine member hashes, and generation root. Envelope `adc273a1...e618c562`. |
+| CF4/PR-144/PR-173 regression | FAIL (retained) | 87 passed, 6 failed; all six share the pre-existing stale reviewed pin for `fig_current_dag_progress.png`. |
+| `venv/bin/python -m pytest -m smoke -q` | PASS | 6 passed, 9,223 deselected. |
+| claim-language dry run | PASS | Zero issues across spec, source, and all ten artifacts. |
+| strict DAG and exact mirror checks | PASS | 130 cards; post-transition status synchronized; 108/130 complete. |
+| SSOT/status regression, first invocation | FAIL (retained) | Mistyped the PR-167 test filename; pytest returned code 4 and ran zero tests. |
+| Corrected status/DAG/PR-167 regression | PASS | 98 passed in 17.91s using the discovered canonical test paths. |
+| PR-151 closing fast probe | ACTIVE/NONTERMINAL | 150 EZmocks, zero Abacus, 10/15 audits, positive partial/log growth, 815.38 GiB free; no restart. |
+
+Scientific impact: one selection/systematics-conditional H-only raw-catalogue
+result with q withheld. No cosmological, transfer, native, geometry, family, or
+HTT-inference claim is validated.
+
 ## PR-122 - Claim-addressed evidence graph and content-addressed build DAG
 
 Date: 2026-07-16

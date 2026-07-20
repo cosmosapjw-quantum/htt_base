@@ -2,6 +2,35 @@
 
 Update every five PRs with percent complete and blockers.
 
+## PR-179 planned execution-sequence checkpoint
+
+Date: 2026-07-20
+
+- Active DAG: 108/130 complete = 83.08%.
+- Dependency-weighted completion: 90.04%.
+- Critical-path proxy: 50/56 = 89.29%.
+- Foreground: PR-176. Background: PR-151 acquisition. Terminal failed with
+  receipt: PR-172. Pending: 10. Dormant external/native: 9.
+- Artifact:
+  `docs/generated/progress_checkpoints/checkpoint_110_execution_sequence.md`.
+  Its `110` label follows the agreed execution sequence; it explicitly records
+  the real count 108 and does not replace the canonical 110-completion gate.
+- Concrete results in the slice: PR-173 finite-ensemble blocked/resolution
+  routing; PR-177 ACT release-simulation-conditional null; PR-179 raw-CF4
+  H-only selection/systematics-conditional result. PR-172 failed its registered
+  contract, so PR-180 was not executed through its required-success edge.
+- PR-179 targeted validation passed 27 tests, exact 10-file replay, smoke 6,
+  and final independent numerical/manifest adjudication. A 93-test broader
+  regression passed 87 and retained six pre-existing progress-figure binary-pin
+  failures.
+- Claim drift: none. q is withheld; no physical H/q field, cosmological
+  anisotropy, geometry, family, transfer/native, or HTT-inference promotion is
+  authorized.
+- PR-151 end probe: 150/1000 EZmocks, 0/25 Abacus, 10/15 audit members,
+  28 growing partials / 7,803,000,192 bytes, fresh log, 815.38 GiB free.
+- Next action: execute PR-176 atomically while probing PR-151. If PR-151 becomes
+  terminal, finish PR-176 before switching to PR-151 finalize and PR-155--158.
+
 ## PR-122 progress (not a five-PR checkpoint)
 
 Date: 2026-07-16

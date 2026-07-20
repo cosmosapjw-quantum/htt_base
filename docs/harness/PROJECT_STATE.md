@@ -1,5 +1,38 @@
 # Project State
 
+## 2026-07-20 - PR-179 conditional raw-CF4 closeout
+
+This section supersedes the older active-DAG positions below; older sections
+remain historical records.
+
+- Active DAG: 130 cards, 108 completed, PR-172 terminal failed-with-receipt,
+  10 pending, and 9 dormant external/native. Count completion is 83.08%,
+  dependency-weighted completion 90.04%, and critical-path proxy 89.29%.
+  These are bookkeeping metrics only.
+- PR-179 closes at `H_ONLY_SELECTION_SYSTEMATICS_CONDITIONAL` on 35,549
+  supported raw CF4 groups. The supporting H-only matched-null rank is
+  `2/20000`; q fails the frozen response/cubic-overlap gate and is withheld.
+  This is a selection/systematics-conditional catalogue result, not a physical
+  directional Hubble field or cosmological anisotropy result.
+- The initial PR-179 code/statistics FAIL and claim-scope INCONCLUSIVE reviews
+  remain preserved. A complete-pack final adjudication passed after the
+  nuisance, response, deletion, transaction, provenance, and claim-scope
+  findings were corrected and the 19,999-draw pack regenerated.
+- PR-151 remains the sole background acquisition and is non-terminal: 150
+  EZmocks, zero Abacus, 10/15 audit members, a fresh growing log, and 815.38
+  GiB free at the closing probe. Partial mocks remain forbidden for science.
+- PR-176 is the sole foreground card. It is limited to conservative
+  dependence-bound channel falsifiers until PR-155 supplies the joint
+  covariance; unidentified covariance may terminate as `non_informative`.
+- PR-180 remains locked by PR-172's failed required-success edge. PR-178 waits
+  for terminal PR-151 and PR-155--158. PR-174/175/182 remain hypothesis-only;
+  PR-181 remains covariance-deferred; PR-183 remains native-dependent.
+- `checkpoint_110_execution_sequence.md` records the user-planned sequence
+  boundary honestly at 108/130. The canonical count checkpoint remains due at
+  exactly 110 completed cards.
+- Planck PR3 raw data remain retained pending PR4 receipt preparation. PR4
+  simulation access remains external and no PR4 data analysis was inferred.
+
 ## 2026-07-16 - PR-122 content-addressed evidence closeout
 
 This section supersedes the PR-119 active-DAG position below; older sections

@@ -2,6 +2,29 @@
 
 Open blockers, owner, required resolution, and PR dependency impact.
 
+## 2026-07-20 - post-PR-179 active blockers
+
+- PR-151 is non-terminal at 150/1000 EZmocks, 0/25 Abacus, and 10/15 audit
+  members. PR-155--158 and PR-178 cannot use partial support; they require the
+  1025-mock terminal receipt, observed authentication, 15 audits, full rehash,
+  and producer/runner checks.
+- PR-172 terminated failed-with-receipt. Its required-success edge remains
+  unsatisfied, so PR-180 is locked; self-consistency cannot be relabeled
+  physics validation or bypassed.
+- PR-176 may run before PR-155 only with conservative dependence bounds and
+  channel-specific falsifiers. If joint covariance remains unidentified, its
+  valid terminal is `non_informative`, not an independence-based joint claim.
+- PR4/NPIPE simulations remain externally unavailable pending a CMB PI, proxy,
+  or Globus share. The retained Planck PR3 raw ensemble is not authorization to
+  infer a PR4 or combined result.
+- PR-159--166 and PR-183 remain dormant until an independently authenticated
+  native low-ell delivery satisfies the typed activation contract.
+- PR-174, PR-175, and PR-182 are hypothesis-only and must not enter ordinary
+  auto-scheduling. PR-181 remains deferred on PR-155/PR-143 covariance work.
+- The reviewed binary pin for `fig_current_dag_progress.png` remains stale and
+  causes six known CF4 quarantine regressions. PR-179 neither changes nor
+  suppresses this pre-existing blocker.
+
 ## 2026-07-16 - PR-122 residual authority blockers
 
 - The 102-row remediation root remains entirely `OPEN`; content-addressed

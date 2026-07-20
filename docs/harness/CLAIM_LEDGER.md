@@ -2,6 +2,15 @@
 
 Each claim needs owner, status, evidence, transfer source, claim tier, and caveats.
 
+## PR-179 - raw-CF4 H-only catalogue result
+
+| Claim | Owner | Status | Evidence | Transfer source | Claim tier | Caveats |
+|---|---|---|---|---|---|---|
+| The authenticated CF4 table3/table4 join and frozen support produce a reproducible H-only catalogue-fit result. | OBSSTAT | CONDITIONAL | `docs/generated/pr179_artifact_manifest.json`; exact producer `--check`; final adjudication | none | `roadmap_rescue_v1:C3`, internal | Conditional on reported marginal errors, method/selection metadata, sky/depth support, and restricted-residual exchangeability. |
+| The subordinate H-only comparison has one exceedance in 19,999 nulls and exact plus-one rank `2/20000`. | OBSSTAT | CONDITIONAL | `docs/generated/pr179_null_calibration.json`; independent finite-rank replay | none | `roadmap_rescue_v1:C3`, internal | Supporting catalogue evidence only; not a cosmological p-value, confidence limit, detection, or isotropy/anisotropy claim. |
+| q is identifiable in the registered raw-CF4 design. | OBSSTAT | FALSIFIED_FOR_REGISTERED_DESIGN | `docs/generated/pr179_response_identifiability.json`; five-fold cubic-overlap gate | none | conditional | q fails all five folds and every q coefficient, axis, envelope, and rank is withheld. |
+| The result measures a physical directional Hubble/deceleration field or establishes cosmological anisotropy, geometry, family, transfer, native-solver behavior, or HTT evidence. | OBSSTAT | FORBIDDEN / NOT_EVALUATED | explicit result-card forbidden uses and claim scan | none | blocked | No such inference is supported; `H_cat` is a phenomenological catalogue coefficient only. |
+
 ## PR-122 - Content-addressed evidence mechanics
 
 | Claim | Owner | Status | Evidence | Transfer source | Claim tier | Caveats |

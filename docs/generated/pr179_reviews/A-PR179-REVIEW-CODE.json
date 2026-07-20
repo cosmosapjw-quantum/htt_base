@@ -1,0 +1,238 @@
+{
+  "schema_version": 2,
+  "run_id": "pr179-intake-20260720",
+  "assignment_id": "A-PR179-REVIEW-CODE",
+  "context_version": "e0c724f6cb8b7c5b676a3f46f445a863e8999e70106d16739e401c9ebf97e65c",
+  "independence_mode": "blind-results",
+  "claim_ids": [
+    "PR179-CODE-REVIEW"
+  ],
+  "status": "fail",
+  "verdict": "FAIL",
+  "summary": "The registered 19-test surface passes, but the implemented pack is not ready for closeout. Seven P1 defects can change or falsely authorize the scientific terminal: the nuisance design does not implement the frozen estimand, deletion failures are silently omitted, H identifiability is incorrectly coupled to q degeneracy, the registered cubic-correlation gate is absent, H-only terminal routing contradicts the frozen gate order, the runner does not bind the full spec to the executed configuration, and generation publication is not transactional. Three P2 provenance/test defects remain as well.",
+  "severity_summary": {
+    "P0": 0,
+    "P1": 7,
+    "P2": 3,
+    "P3": 0
+  },
+  "evidence_read": [
+    {
+      "path": "docs/research_program/long_horizon_rescue/pr179_spec.yaml",
+      "sha256": "ee92d8fb2862718b7d565d23c691dfe65aa730429588f825964ceaf8aa684106"
+    },
+    {
+      "path": "htt/obsstat/catalogs/cf4_raw.py",
+      "sha256": "e06f76f3dd81890020635846246dd4b56a20bcd190a451a21ff7822fefbcd9d5"
+    },
+    {
+      "path": "htt/obsstat/directional_cosmography.py",
+      "sha256": "6e2301532d77c4515a45ff7fcf1244ac1ad8939c84b061ed6ba520805c0af8de"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr179_directional_cosmography.py",
+      "sha256": "2c7fb27d9cdd5936ccb70d469613e437cbd9e2a6f73164700eb3835f7b16ceab"
+    },
+    {
+      "path": "tests/obsstat/test_cf4_raw_catalog.py",
+      "sha256": "605519e474b6c4c86e937a03ca48c8827e56ead3f65bf1a84586c76ade99b1dc"
+    },
+    {
+      "path": "tests/pr_cards/test_pr_179_reconstruction_independent_directional_cosmograp.py",
+      "sha256": "d3c6a02f4862f24c67dc7ce4c8ad9da4e40e547dbd82867d1958bee011914e7c"
+    },
+    {
+      "path": "docs/generated/pr179_artifact_manifest.json",
+      "sha256": "142ff0b3375cc06b08f1fb644912d2258ee2c2e2910cc87f3627971cf0553041"
+    },
+    {
+      "path": "docs/generated/pr179_mutation_report.json",
+      "sha256": "971830be8d9a00cc05bfb31f969d2a9199ccee88917b12cf19223ac3c14de17b"
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "PR179-CODE-001",
+      "severity": "P1",
+      "title": "The fitted nuisance is log(total sigma), not the frozen centered log(e_DMzp)",
+      "claim_id": "PR179-CODE-REVIEW",
+      "evidence": [
+        "docs/research_program/long_horizon_rescue/pr179_spec.yaml:232-239 freezes centered_log_e_DMzp as the nuisance.",
+        "htt/obsstat/directional_cosmography.py:392-417 computes both log_error and train_log from data.sigma, which includes the velocity and systematic floors, and labels that column centered_log_e_DMzp.",
+        "htt/obsstat/directional_cosmography.py:110-126 does not retain e_DMzp in PreparedDirectionalCatalogue, so the frozen nuisance cannot be reconstructed downstream."
+      ],
+      "impact": "This changes the reduced and full design matrices, every observed/null score, response gate, coefficient, stability comparison, finite rank, and terminal while the artifacts claim the frozen estimand.",
+      "required_fix": "Retain the selected raw e_DMzp array, use log(e_DMzp) for this nuisance, bind its bytes into the design receipt, regenerate the full pack, and add a test that independently distinguishes e_DMzp from the floor-inflated sigma."
+    },
+    {
+      "finding_id": "PR179-CODE-002",
+      "severity": "P1",
+      "title": "Deletion rank or fit failures are silently skipped and can produce a stability false green",
+      "claim_id": "PR179-CODE-REVIEW",
+      "evidence": [
+        "docs/research_program/long_horizon_rescue/pr179_spec.yaml:331-344 requires all named deletion/depth summaries and routes a deletion-induced response-rank failure to NON_INFORMATIVE_SELECTION_SYSTEMATICS_DOMINATED.",
+        "htt/obsstat/directional_cosmography.py:680-700 catches DirectionalCosmographyError for every leave-family, leave-cell, and depth-half case and continues without recording a failed case.",
+        "htt/obsstat/directional_cosmography.py:781-865 initializes the maximum discrepancy at zero and gates only cases that survived construction; it never recomputes the prospective rank/condition/information gates on deletions.",
+        "Executable probe monkeypatched every deletion fit to raise and _deletion_operators returned an empty case list rather than a failed stability result."
+      ],
+      "impact": "A required sensitivity case can become rank deficient or otherwise non-identifiable and disappear from the report; an empty or incomplete deletion set can still pass the terminal gate.",
+      "required_fix": "Enumerate and receipt every expected present-family, Nside1-cell, and both depth-half case. Treat inability to fit or failure of the selected response gates as an explicit stability failure, not a skip; assert coverage before terminal routing and add rank-failure mutations."
+    },
+    {
+      "finding_id": "PR179-CODE-003",
+      "severity": "P1",
+      "title": "H identifiability incorrectly depends on the joint H/q condition number",
+      "claim_id": "PR179-CODE-REVIEW",
+      "evidence": [
+        "docs/research_program/long_horizon_rescue/pr179_spec.yaml:309-312 separates H failure from q failure and requires H-only routing when H passes but q fails.",
+        "htt/obsstat/directional_cosmography.py:543-560 computes one condition number from [h_res,q_cond] and uses it in both h_pass and q_pass."
+      ],
+      "impact": "A nearly singular q block can make the combined condition number fail and incorrectly mark H as unidentifiable even when the three H columns independently have full rank and sufficient information, suppressing the preregistered H-only branch.",
+      "required_fix": "Compute and report an H-block condition number for h_pass and a separate conditional q/joint condition for q_pass. Add a synthetic test with an identifiable H block and deliberately degenerate q block that must route H_ONLY."
+    },
+    {
+      "finding_id": "PR179-CODE-004",
+      "severity": "P1",
+      "title": "The frozen directional-cubic canonical-correlation gate is not implemented",
+      "claim_id": "PR179-CODE-REVIEW",
+      "evidence": [
+        "docs/research_program/long_horizon_rescue/pr179_spec.yaml:305-308 freezes both minimum retained information and max_canonical_correlation=0.95 for the z_squared_times_n stress.",
+        "htt/obsstat/directional_cosmography.py:533-560 computes retained_information_q_directional_cubic but only computes/enforces the H/q canonical correlation; no q/cubic stress correlation is computed or compared with 0.95.",
+        "htt/obsstat/directional_cosmography.py:76-85 has no separately bound cubic-correlation threshold."
+      ],
+      "impact": "The q branch may pass although it violates one of the two prospectively frozen cubic-overlap falsifiers.",
+      "required_fix": "Compute the registered canonical correlation for q versus the residualized directional-cubic block, expose it per fold, enforce its threshold in q_pass, bind the threshold from the spec, and add a near-collinear cubic mutation."
+    },
+    {
+      "finding_id": "PR179-CODE-005",
+      "severity": "P1",
+      "title": "H-only terminal routing contradicts the frozen terminal order",
+      "claim_id": "PR179-CODE-REVIEW",
+      "evidence": [
+        "docs/research_program/long_horizon_rescue/pr179_spec.yaml:346-356 routes Q_RESPONSE_FAILURE_WITH_H_PASS to H_ONLY_SELECTION_SYSTEMATICS_CONDITIONAL before stability/MC terminals.",
+        "htt/obsstat/directional_cosmography.py:920-948 merely prefixes later stability/MC terminal language for H_ONLY and never emits H_ONLY_SELECTION_SYSTEMATICS_CONDITIONAL.",
+        "scripts/codex_harness/run_pr179_directional_cosmography.py:227-237 excludes the frozen H-only terminal from its allowed set, so a spec-conforming result would be rejected.",
+        "Executable probe with branch=H_ONLY, support/stability passing, and guard_interval=[0.10,0.20] returned MATCHED_NULL_CONTAINS_DIRECTIONAL_STATISTIC."
+      ],
+      "impact": "The result card can carry a terminal not authorized for the q-failed branch, and the verifier enforces the implementation's divergent vocabulary rather than the frozen specification.",
+      "required_fix": "Implement the exact frozen H-only terminal route and retain any H-only rank/stability information as subordinate diagnostics, or prospectively version and re-review the spec before any alternative routing. Add a total terminal truth-table test."
+    },
+    {
+      "finding_id": "PR179-HARNESS-006",
+      "severity": "P1",
+      "title": "The runner hashes the spec but does not bind the executed configuration to it",
+      "claim_id": "PR179-CODE-REVIEW",
+      "evidence": [
+        "scripts/codex_harness/run_pr179_directional_cosmography.py:92-150 validates only a small subset of scientific fields (notably null_draws and tie_policy).",
+        "scripts/codex_harness/run_pr179_directional_cosmography.py:314-325 constructs DirectionalCosmographyConfig from independent code defaults rather than from the frozen spec.",
+        "scripts/codex_harness/run_pr179_directional_cosmography.py:357-370 copies the spec into the estimand artifact while the analysis may have executed different defaults.",
+        "docs/generated/pr179_artifact_manifest.json:57 and 93 record independent config/spec hashes but no equality/crosswalk receipt."
+      ],
+      "impact": "A drift in cuts, floors, nsides, support thresholds, response thresholds, seed, alpha, or other duplicated fields can be re-written into a byte-consistent green pack whose displayed estimand comes from the spec but whose numbers come from different code defaults.",
+      "required_fix": "Construct the production config from a strict schema-validated spec projection or compare every duplicated field and semantic constant exactly before numerical import. Emit the crosswalk in the manifest and add one mutation per scientific config family."
+    },
+    {
+      "finding_id": "PR179-HARNESS-007",
+      "severity": "P1",
+      "title": "The claimed generation transaction is only a sequence of per-file replaces",
+      "claim_id": "PR179-CODE-REVIEW",
+      "evidence": [
+        "scripts/codex_harness/run_pr179_directional_cosmography.py:2-7 claims --write atomically publishes one generation.",
+        "scripts/codex_harness/run_pr179_directional_cosmography.py:437-448 fsyncs staged files and then replaces nine live paths one by one, without a lock, journal, generation-directory pointer, rollback/recovery, or destination-directory fsync."
+      ],
+      "impact": "Interruption or concurrent execution can leave a mixed old/new tracked pack; direct artifact consumers can observe that mixed generation before a later --check detects it, and rename durability is not established.",
+      "required_fix": "Use a repository-standard locked durable journal with deterministic recovery, or publish a complete immutable generation directory and atomically switch one pointer/manifest. Fsync the relevant directories and add interruption/concurrency recovery tests."
+    },
+    {
+      "finding_id": "PR179-TEST-008",
+      "severity": "P2",
+      "title": "Column-firewall mutations do not exercise actual production data access",
+      "claim_id": "PR179-CODE-REVIEW",
+      "evidence": [
+        "htt/obsstat/catalogs/cf4_raw.py:81-91 parses any registered label and performs no PR-179 denylist check at the access point.",
+        "htt/obsstat/catalogs/cf4_raw.py:234-281 uses direct t3/t4 label calls; require_pr179_columns validates only the separate primary_columns argument.",
+        "scripts/codex_harness/run_pr179_directional_cosmography.py:217-226 trusts booleans emitted by the same candidate analysis.",
+        "scripts/codex_harness/run_pr179_directional_cosmography.py:272-288 mutates the nominal allowlist or a reported boolean, but never substitutes a forbidden label into a real target/feature/fit/selection/weight/null access path.",
+        "docs/generated/pr179_mutation_report.json:62-152 therefore records 18 kills without a production-path forbidden-column mutation."
+      ],
+      "impact": "A future accidental t3('Vpec')/t3('Hi') style production edit can still emit firewall=false and pass the present mutation family; candidate self-attestation is mistaken for independent enforcement.",
+      "required_fix": "Enforce the denylist at every PR-179 column access or use a capability-limited parsed view, independently inventory runtime/AST accesses, and mutate actual production call sites. Validate expected exception and semantic reason rather than counting any Exception as a kill."
+    },
+    {
+      "finding_id": "PR179-ARTIFACT-009",
+      "severity": "P2",
+      "title": "The required unsupported-support map is absent",
+      "claim_id": "PR179-CODE-REVIEW",
+      "evidence": [
+        "docs/research_program/long_horizon_rescue/pr179_spec.yaml:288-292 requires every fine support fraction plus an unsupported support map.",
+        "htt/obsstat/directional_cosmography.py:251-300 emits aggregate counts, cell-method summaries, and broad-method summaries but no mapping from unsupported stratum tuple to count/rows/hash."
+      ],
+      "impact": "Reviewers cannot audit which frozen fold/sky/broad-family/depth strata were removed from inference, despite the pack claiming the preregistered support diagnostics.",
+      "required_fix": "Emit a deterministically sorted unsupported-stratum map with the full typed stratum tuple, counts, and stable group-ID hash; bind it into the design/manifest and test reconstruction."
+    },
+    {
+      "finding_id": "PR179-PROVENANCE-010",
+      "severity": "P2",
+      "title": "Git/worktree and generating-command provenance are hard-coded assertions",
+      "claim_id": "PR179-CODE-REVIEW",
+      "evidence": [
+        "scripts/codex_harness/run_pr179_directional_cosmography.py:198-206 writes a constant command and 'prospective spec commit 652f7c52; PR-179 implementation worktree generation' instead of measuring the producing HEAD and dirty/content state.",
+        "docs/generated/pr179_artifact_manifest.json:62-63 repeats those constants."
+      ],
+      "impact": "The required git_commit_or_worktree_state field cannot distinguish producing revisions or unbound dirty changes, and the command string is not an execution receipt.",
+      "required_fix": "Capture exact HEAD, dirty status, relevant-content hashes, argv/environment, and producer timestamp/receipt at execution; fail closed or disclose untracked/dirty state precisely."
+    }
+  ],
+  "commands": [
+    {
+      "command": "sha256sum <all eight registered required inputs>",
+      "result": "PASS; every hash matched the assignment"
+    },
+    {
+      "command": "PYTHONPATH=htt:htt/src OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 venv/bin/python -m pytest -q tests/obsstat/test_cf4_raw_catalog.py tests/pr_cards/test_pr_179_reconstruction_independent_directional_cosmograp.py",
+      "result": "PASS; 19 passed in 62.13s"
+    },
+    {
+      "command": "Targeted _terminal probe for H_ONLY with passing support/stability and guard_interval=[0.10,0.20]",
+      "result": "FAIL contract; implementation returned MATCHED_NULL_CONTAINS_DIRECTIONAL_STATISTIC instead of the frozen H-only terminal"
+    },
+    {
+      "command": "Targeted _deletion_operators probe with every deletion subset raising DirectionalCosmographyError",
+      "result": "FAIL contract; returned [] and did not record a stability failure"
+    }
+  ],
+  "tool_versions": {
+    "python": "3.12.3",
+    "numpy": "2.5.0",
+    "scipy": "1.18.0",
+    "healpy": "1.19.0",
+    "source": "docs/generated/pr179_artifact_manifest.json:83-88"
+  },
+  "proposed_changes": [
+    "Correct the frozen nuisance and regenerate every numerical artifact.",
+    "Make response and deletion gates total and fail closed, including the H-only and cubic-stress cases.",
+    "Bind the full spec projection to executed code configuration and actual column accesses.",
+    "Replace sequential publication with a durable recoverable transaction.",
+    "Add independent mutation coverage for each reported falsifier and exact support/provenance reconstruction."
+  ],
+  "tests_to_run": [
+    "The two registered targeted files after remediation.",
+    "Synthetic nuisance test that holds sigma fixed while changing e_DMzp and the converse.",
+    "Synthetic H-identifiable/q-degenerate and q/cubic-near-collinear response tests.",
+    "Complete deletion coverage tests with rank, condition, and information failures for every case family.",
+    "Total terminal truth-table and actual production-access denylist mutations.",
+    "Interrupted/concurrent write recovery tests, followed by a fresh full --write/--check replay under the recorded runtime."
+  ],
+  "risks_and_kill_switches": [
+    "Do not reuse the current finite rank, coefficients, stability terminal, manifest, or mutation PASS after correcting the nuisance or any response/stability gate; those changes affect the estimand and require complete regeneration.",
+    "Do not mark PR-179 complete while any expected deletion case is missing or any spec-to-config field lacks an exact crosswalk.",
+    "Do not reinterpret an H-only or selection/systematics-conditional branch as cosmological evidence."
+  ],
+  "artifacts_status_updates_needed": [
+    "Preserve this FAIL envelope immutably.",
+    "After remediation, regenerate all nine PR-179 outputs and create a new hash-bound independent code review; do not relabel this verdict.",
+    "Keep PR-179 foreground/in-progress and withhold closeout/status promotion until the P1 findings and regenerated evidence pass."
+  ],
+  "production_edits_made": false,
+  "result_path": ".agent-harness/runs/pr179-intake-20260720/results/A-PR179-REVIEW-CODE.json"
+}

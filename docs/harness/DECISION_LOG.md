@@ -2,6 +2,33 @@
 
 Record accepted, rejected, and deferred design decisions.
 
+## 2026-07-20 - PR-179 raw-CF4 conditional boundary
+
+- Accepted: the prospectively frozen raw-CF4 estimand terminates literally as
+  `H_ONLY_SELECTION_SYSTEMATICS_CONDITIONAL`; its exact H-only matched-null
+  rank is subordinate supporting evidence and cannot rename the terminal.
+- Accepted: q fails the five-fold directional-cubic response gate and every q
+  coefficient, axis, envelope, and rank is withheld rather than repaired.
+- Accepted: `H_cat` is a catalogue-fit label. The result remains conditional on
+  selection, method mix, reported marginal errors, sky/depth support, and
+  restricted-residual exchangeability; depth reversal is a material caveat.
+- Accepted: raw value access is an executable capability boundary, not a prose
+  allowlist. CF4 reconstruction, cosmology-corrected, Cartesian, distance, and
+  P0 values never enter the production object.
+- Accepted: multi-file scientific packs use measured execution provenance and
+  lock/journal/recovery/fsync/manifest-last publication. A passing pack must
+  replay byte-for-byte and preserve earlier failed/inconclusive reviews.
+- Accepted: the user-planned checkpoint-110 sequence is recorded separately at
+  the honest 108/130 completed count. It does not override the canonical
+  five-completion checkpoint due at 110 completed cards.
+- Rejected: interpreting `2/20000`, the H amplitude/axis, or response-design
+  diagnostics as a cosmological p-value, directional Hubble measurement,
+  peculiar-flow attribution, isotropy/anisotropy result, HTT evidence,
+  geometry/family result, or transfer/native validation.
+- Deferred: PR-180 until PR-172 success (currently unsatisfied), PR-178 until
+  terminal PR-151 plus PR-155--158, PR-181 until covariance closure, and all
+  typed native-dependent work until authenticated external delivery.
+
 ## 2026-07-16 - PR-122 evidence-authority boundary
 
 - Accepted: process result, evidence availability/integrity, and scientific

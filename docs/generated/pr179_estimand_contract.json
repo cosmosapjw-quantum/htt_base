@@ -1,0 +1,315 @@
+{
+  "analysis_id": "CF4_RAW_DIRECTIONAL_COSMOGRAPHY_V1",
+  "claim": {
+    "allowed_terminal_results": [
+      "MATCHED_NULL_CONTAINS_DIRECTIONAL_STATISTIC",
+      "CATALOGUE_SELECTION_SYSTEMATICS_CONDITIONAL_DIRECTIONAL_RESIDUAL",
+      "NUMERICALLY_UNRESOLVED_AT_FROZEN_MC_BUDGET",
+      "H_ONLY_SELECTION_SYSTEMATICS_CONDITIONAL",
+      "NON_INFORMATIVE_RESPONSE_OVERLAP",
+      "NON_INFORMATIVE_SELECTION_SYSTEMATICS_DOMINATED",
+      "DESCRIPTIVE_ONLY_NULL_NOT_CERTIFIABLE",
+      "ABSTAIN_COLUMN_FIREWALL_BREACH"
+    ],
+    "coefficient_definition": "H_cat(n_hat) and q_cat(n_hat) are phenomenological coefficients of the frozen truncated CF4 catalogue fit.  They are not measurements of a directional Hubble constant or cosmological deceleration field.",
+    "interpretation": "Every branch is conditional on the authenticated catalogue, available method metadata, reported marginal errors, fixed sky/depth support, and the registered residual-exchangeability null.  No branch establishes or excludes cosmological anisotropy, isotropy, a peculiar-flow cause, a geometry, a family, a transfer function, or a native-solver result.",
+    "mandatory_core": "Selection/systematics-conditional raw-catalogue directional statistic with a matched null; not cosmological anisotropy."
+  },
+  "config_crosswalk": {
+    "alpha": {
+      "source": "finite_rank.alpha",
+      "value": 0.05
+    },
+    "c_km_s": {
+      "source": "domain.c_km_s",
+      "value": 299792.458
+    },
+    "confidence_level": {
+      "source": "finite_rank.uncertainty[two-sided_95_percent]",
+      "value": 0.95
+    },
+    "fold_nside": {
+      "source": "crossfit.cluster[HEALPix_Nside2]",
+      "value": 2
+    },
+    "folds": {
+      "source": "crossfit.folds",
+      "value": 5
+    },
+    "max_condition_number": {
+      "source": "response_identifiability.max_condition_number",
+      "value": 10000.0
+    },
+    "max_hq_canonical_correlation": {
+      "source": "response_identifiability.max_H_q_canonical_correlation",
+      "value": 0.95
+    },
+    "minimum_broad_method_supported_fraction": {
+      "source": "matched_null.minimum_broad_method_supported_fraction",
+      "value": 0.8
+    },
+    "minimum_information_h": {
+      "source": "response_identifiability.minimum_retained_information_H",
+      "value": 0.1
+    },
+    "minimum_information_q": {
+      "source": "response_identifiability.minimum_retained_information_q",
+      "value": 0.1
+    },
+    "minimum_information_q_cubic": {
+      "source": "response_identifiability.directional_cubic_q_stress.minimum_retained_information",
+      "value": 0.05
+    },
+    "minimum_overall_supported_fraction": {
+      "source": "matched_null.minimum_overall_supported_fraction",
+      "value": 0.9
+    },
+    "minimum_stratum_groups": {
+      "source": "matched_null.minimum_stratum_groups",
+      "value": 8
+    },
+    "null_batch_size": {
+      "source": "runner_execution_contract.null_batch_size",
+      "value": 64
+    },
+    "null_draws": {
+      "source": "finite_rank.null_draws",
+      "value": 19999
+    },
+    "peculiar_velocity_floor_km_s": {
+      "source": "domain.peculiar_velocity_floor_km_s",
+      "value": 300.0
+    },
+    "redshift_bin_edges": {
+      "source": "matched_null.redshift_bin_edges",
+      "value": [
+        0.01,
+        0.025,
+        0.05,
+        0.075,
+        0.1
+      ]
+    },
+    "seed_entropy": {
+      "source": "finite_rank.seed_sequence_entropy",
+      "value": [
+        20260720,
+        179
+      ]
+    },
+    "selection_nside": {
+      "source": "catalogue_fit.nuisance[train_only_Nside4_by_depth_selection_density]",
+      "value": 4
+    },
+    "stratum_nside": {
+      "source": "matched_null.stratum[HEALPix_Nside1]",
+      "value": 1
+    },
+    "systematic_floor_mag": {
+      "source": "domain.systematic_floor_mag",
+      "value": 0.05
+    },
+    "z_max": {
+      "source": "domain.z_max_inclusive",
+      "value": 0.1
+    },
+    "z_min": {
+      "source": "domain.z_min_inclusive",
+      "value": 0.01
+    }
+  },
+  "config_projection": {
+    "alpha": 0.05,
+    "c_km_s": 299792.458,
+    "confidence_level": 0.95,
+    "fold_nside": 2,
+    "folds": 5,
+    "max_condition_number": 10000.0,
+    "max_hq_canonical_correlation": 0.95,
+    "minimum_broad_method_supported_fraction": 0.8,
+    "minimum_information_h": 0.1,
+    "minimum_information_q": 0.1,
+    "minimum_information_q_cubic": 0.05,
+    "minimum_overall_supported_fraction": 0.9,
+    "minimum_stratum_groups": 8,
+    "null_batch_size": 64,
+    "null_draws": 19999,
+    "peculiar_velocity_floor_km_s": 300.0,
+    "redshift_bin_edges": [
+      0.01,
+      0.025,
+      0.05,
+      0.075,
+      0.1
+    ],
+    "seed_entropy": [
+      20260720,
+      179
+    ],
+    "selection_nside": 4,
+    "stratum_nside": 1,
+    "systematic_floor_mag": 0.05,
+    "z_max": 0.1,
+    "z_min": 0.01
+  },
+  "finite_rank": {
+    "alpha": 0.05,
+    "gaussian_sigma_forbidden": true,
+    "null_draws": 19999,
+    "rank": "(1+count(T_null>=T_observed))/(19999+1)",
+    "resolution": "1/20000",
+    "rng": "numpy_PCG64DXSM",
+    "seed_sequence_entropy": [
+      20260720,
+      179
+    ],
+    "tail": "upper",
+    "tie_policy": "conservative_greater_equal",
+    "uncertainty": "Two-sided 95 percent Clopper-Pearson interval for b/19999, transformed to plus-one-rank support.  The PR-173 rank certificate expands it by one finite grid spacing before deciding against the frozen alpha boundary."
+  },
+  "hard_forbidden_values": [
+    "fV3k",
+    "Hi",
+    "logHi",
+    "Vpds",
+    "Vpwf",
+    "Vpec",
+    "Dist",
+    "SGX",
+    "SGY",
+    "SGZ",
+    "any_legacy_or_active_CF4_P0_payload"
+  ],
+  "matched_null": {
+    "broad_method_family": {
+      "FP": "FP",
+      "OTHER": [
+        "CAL",
+        "SN",
+        "SBF",
+        "MIXED_OTHER"
+      ],
+      "TF": "TF"
+    },
+    "construction": "Fit the reduced model out of fold, studentize held-out residuals by the frozen row sigma, permute only within exact supported strata, and rebuild y_null=mu_reduced_oof+sigma*permuted_studentized_residual.  Positions, velocities, errors, methods, selection covariates, and folds never move.",
+    "diagnostics": "Record every fine sky-cell/original-method support fraction as well as the broad-family aggregate and unsupported support map.  Failure of the registered overall or broad-family thresholds makes the null NOT_CERTIFIABLE; it is not repaired after results.",
+    "family": "position_preserving_crossfit_restricted_residual_permutation",
+    "minimum_broad_method_supported_fraction": 0.8,
+    "minimum_overall_supported_fraction": 0.9,
+    "minimum_stratum_groups": 8,
+    "redshift_bin_edges": [
+      0.01,
+      0.025,
+      0.05,
+      0.075,
+      0.1
+    ],
+    "same_pipeline": "Every null uses the identical selected rows, folds, transforms, target columns, score, and conservative upper-tail comparison.",
+    "sky_rotation": "forbidden",
+    "stratum": "fold_x_HEALPix_Nside1_NESTED_x_broad_method_family_x_redshift_bin"
+  },
+  "metadata": {
+    "caveats": [
+      "H_cat and q_cat are catalogue-fit coefficient labels, not physical cosmological fields.",
+      "Result is conditional on available selection/method metadata and within-stratum residual exchangeability.",
+      "Raw distance-modulus calibration, method mix, missingness, and sky-selection leakage remain possible.",
+      "No reconstruction, CF4 P0 estimator, cosmology-corrected column, transfer, geometry, or family claim."
+    ],
+    "claim_level": {
+      "level": "C3",
+      "scheme": "roadmap_rescue_v1"
+    },
+    "claim_tier": "conditional",
+    "code_hashes": {
+      "estimator": "e99821a4be4e9dab2ee81131601ab935c246b607f8a7f34b357c93ad4ccc35e9",
+      "finite_ensemble": "318cc402a183a0ae8c1f0ece323b8341366e713482e9743c139a5e213c9abd13",
+      "finite_null_rank": "cd3413b96d4c734f3b3d148274c6fe486b6f5c4db46f9e29a89bbf2677aabf14",
+      "raw_adapter": "4ecc2270f48d8f773ac2919107e52386cf4b71ddfd780094f015ceb8d1b56a48",
+      "runner": "de568c978d1ef000b441212f9ef95daac2ef54305bd68faefe48e14706034bf4"
+    },
+    "config_hash": "4dbbb83d5e8559ad2b4851265363aae419e3529dba5a23cb58949d327212bd89",
+    "contributors": [
+      "HTT"
+    ],
+    "covariance_status": "reported marginal DMzp errors plus frozen velocity/systematic floors; unreported cross-method covariance not authenticated",
+    "execution_environment": {
+      "MKL_NUM_THREADS": "1",
+      "MPLCONFIGDIR": "/tmp/htt-mpl",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "PYTHONHASHSEED": "0",
+      "PYTHONPATH": "htt:htt/src"
+    },
+    "execution_receipt_core_sha256": "b3cb675212ed41234ad171b0d8968a597d94b3dbccb66de3e840fc9f224d1489",
+    "generating_command": [
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/venv/bin/python",
+      "scripts/codex_harness/run_pr179_directional_cosmography.py",
+      "--write"
+    ],
+    "git_commit_or_worktree_state": {
+      "git_head": "652f7c52ba9ee747409d532c708499ecd38825f3",
+      "git_status_porcelain_relevant": [
+        " M htt/obsstat/__init__.py",
+        " M htt/obsstat/catalogs/__init__.py",
+        "?? htt/obsstat/catalogs/cf4_raw.py",
+        "?? htt/obsstat/directional_cosmography.py",
+        "?? scripts/codex_harness/run_pr179_directional_cosmography.py",
+        "?? tests/obsstat/test_cf4_raw_catalog.py",
+        "?? tests/pr_cards/test_pr_179_reconstruction_independent_directional_cosmograp.py"
+      ],
+      "prospective_spec_commit": "652f7c52",
+      "relevant_content_root": "30c5a77371733e93759e3c4475adbb7361a10f4337b536ba14e7533483248523",
+      "relevant_worktree_dirty": true
+    },
+    "implementation_scope": [
+      "obsstat"
+    ],
+    "input_hashes": {
+      "docs/PR_DELTAS/pr-134.md": "2961abe53ae8be53b22cbb4ca5fb770379d7cead1593bb9e26347e3cf6d99537",
+      "docs/PR_DELTAS/pr-135.md": "1dde8ec4040bf595db330218d6dd667255733b3811f753639e85074a95869ce7",
+      "docs/PR_DELTAS/pr-139.md": "eb22a4d92247fbc925648b8458e1dc550449ac8e421851284ae6769242893f69",
+      "docs/PR_DELTAS/pr-144.md": "d0fef0be0b4806e8c2b40bb20c725eeb7b3bd1cf2b9bf7f65758104303dbf761",
+      "docs/PR_DELTAS/pr-167.md": "d4a550b2ac79140cf3edaf0738b672f7d12cd73917c1c1b8015635a7b03e0211",
+      "docs/PR_DELTAS/pr-173.md": "0d351acfdafed1a1385d42c5b69ba03a6bf994ade1247485fc3d57c17db46008",
+      "docs/generated/pr144_cf4_manifest.json": "00aa196d63baee7a9a30c9098b064ed2fbbf0f354ae1ab5342dd8c21030d61ef",
+      "workdir/raw/cf4_full/ReadMe": "2cfed1418147d5a626dee1fa37c47252124477c9828490508d9bbe511d34edb4",
+      "workdir/raw/cf4_full/table3.dat": "c2351c52de3e38a7fd80256b6f0818c550dd9f105b91e84fbcc1eb7234160b4d",
+      "workdir/raw/cf4_full/table4.dat": "b6edfec68bdfddeada8f3b8f11938f3bbda98a8e2894ff136a369c2ad6594e94"
+    },
+    "mask_status": "no external sky mask; observed catalogue footprint held fixed",
+    "null_mock_status": "position-preserving finite matched-null permutations",
+    "owner": "OBSSTAT",
+    "public_use": false,
+    "runtime_versions": {
+      "healpy": "1.19.0",
+      "numpy": "2.5.0",
+      "platform": "Linux-6.17.0-35-generic-x86_64-with-glibc2.39",
+      "python": "3.12.3",
+      "scipy": "1.18.0"
+    },
+    "scientific_artifact_mode": "standard_internal",
+    "selection_status": "broad-method/depth/sky/fold matched residual-permutation support",
+    "sky_support_status": "frozen J2000 catalogue support; no sky rotation",
+    "spec_sha256": "ee92d8fb2862718b7d565d23c691dfe65aa730429588f825964ceaf8aa684106",
+    "transfer_source": "none"
+  },
+  "observation_unit": "unique CF4 group 1PGC",
+  "pr179_card_semantic_sha256": "b8f56c1b4ad902f1678946a6248daf996b9ba000ed85137fc81c27f57bcdddb4",
+  "primary_columns": {
+    "table3": [
+      "1PGC",
+      "Vcmb",
+      "RAdeg",
+      "DEdeg"
+    ],
+    "table4": [
+      "1PGC",
+      "DMzp",
+      "e_DMzp"
+    ]
+  },
+  "relation": "y = a0 + b0*z + kappa*z^2 + Z*gamma + h_a dot n + b_q*z*(r_b dot n) + epsilon.",
+  "response": "y=DMzp-25-5*log10(c*z)",
+  "schema": "htt.pr179.estimand_contract.v1",
+  "spec_sha256": "ee92d8fb2862718b7d565d23c691dfe65aa730429588f825964ceaf8aa684106"
+}

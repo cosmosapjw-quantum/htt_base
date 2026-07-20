@@ -16,6 +16,15 @@ from .cf4 import (
     build_cf4_catalog_from_mapping,
     load_cf4_catalog_npz,
 )
+from .cf4_raw import (
+    CF4_PR179_DENYLIST,
+    CF4_PR179_PRIMARY_COLUMNS,
+    Cf4RawGroupCatalog,
+    Cf4RawInputError,
+    load_authenticated_cf4_raw_groups,
+    require_pr179_columns,
+    require_pr179_value_access,
+)
 from .redshift_selection import (
     RedshiftSelectionCorrectionSpec,
     apply_redshift_selection_correction,
@@ -29,7 +38,7 @@ from .spectroscopic_dipole import (
     first_moment,
 )
 
-for _submodule in ("cf4", "redshift_selection", "spectroscopic_dipole"):
+for _submodule in ("cf4", "cf4_raw", "redshift_selection", "spectroscopic_dipole"):
     _loaded = _sys.modules.get(f"{__name__}.{_submodule}")
     if _loaded is not None:
         for _alias in _PACKAGE_ALIASES:
@@ -38,6 +47,10 @@ for _submodule in ("cf4", "redshift_selection", "spectroscopic_dipole"):
 __all__ = [
     "Cf4Catalog",
     "Cf4CatalogMetadata",
+    "Cf4RawGroupCatalog",
+    "Cf4RawInputError",
+    "CF4_PR179_DENYLIST",
+    "CF4_PR179_PRIMARY_COLUMNS",
     "RedshiftSelectionCorrectionSpec",
     "SpectroscopicCatalog",
     "SpectroscopicCatalogMetadata",
@@ -48,4 +61,7 @@ __all__ = [
     "estimate_data_random_dipole",
     "first_moment",
     "load_cf4_catalog_npz",
+    "load_authenticated_cf4_raw_groups",
+    "require_pr179_columns",
+    "require_pr179_value_access",
 ]

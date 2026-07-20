@@ -60,6 +60,15 @@ from .catalogs.cf4 import (
     build_cf4_catalog_from_mapping,
     load_cf4_catalog_npz,
 )
+from .catalogs.cf4_raw import (
+    CF4_PR179_DENYLIST,
+    CF4_PR179_PRIMARY_COLUMNS,
+    Cf4RawGroupCatalog,
+    Cf4RawInputError,
+    load_authenticated_cf4_raw_groups,
+    require_pr179_columns,
+    require_pr179_value_access,
+)
 from .catalogs.redshift_selection import (
     RedshiftSelectionCorrectionSpec,
     apply_redshift_selection_correction,
@@ -78,6 +87,7 @@ for _submodule in (
     "biposh_features",
     "catalogs",
     "catalogs.cf4",
+    "catalogs.cf4_raw",
     "catalogs.redshift_selection",
     "catalogs.spectroscopic_dipole",
     "morphology",
@@ -97,6 +107,10 @@ __all__ = [
     "BiPoSHFeatureSummary",
     "Cf4Catalog",
     "Cf4CatalogMetadata",
+    "Cf4RawGroupCatalog",
+    "Cf4RawInputError",
+    "CF4_PR179_DENYLIST",
+    "CF4_PR179_PRIMARY_COLUMNS",
     "CovarianceAssumption",
     "DiagnosticMorphologyAxis",
     "LowEllNullCalibration",
@@ -128,10 +142,13 @@ __all__ = [
     "estimate_data_random_dipole",
     "first_moment",
     "load_cf4_catalog_npz",
+    "load_authenticated_cf4_raw_groups",
     "obsstat_manifest",
     "summarize_morphology_axes",
     "summarize_lowell_scalars",
     "validate_alm_convention_metadata",
     "validate_alm_feature_conventions",
     "validate_null_feature_payload",
+    "require_pr179_columns",
+    "require_pr179_value_access",
 ]

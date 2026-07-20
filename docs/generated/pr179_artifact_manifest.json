@@ -1,0 +1,135 @@
+{
+  "artifacts": {
+    "pr179_directional_cosmography_result.json": {
+      "sha256": "ce5be0e3efb1e42e50226b6d71a14bea586da7d3420da532149f5c8907f2f3b8",
+      "size_bytes": 10603
+    },
+    "pr179_estimand_contract.json": {
+      "sha256": "de0636142560911a87de9808c06806a3d9dc4ea058e17c67633d318cab214917",
+      "size_bytes": 12044
+    },
+    "pr179_execution_receipt.json": {
+      "sha256": "fcf868001117e3a749bfde7b3dddbd2ff7ab7b4c15ddcaad54992743c3e1eacf",
+      "size_bytes": 7400
+    },
+    "pr179_mutation_report.json": {
+      "sha256": "31428923f5220d565a37652f4bd0e59b6ae91c3f32205d5e2603ee60d1ae28c5",
+      "size_bytes": 10930
+    },
+    "pr179_null_calibration.json": {
+      "sha256": "764cec0e479b0a1a1bed1b431dff1338dade1c091c7a7012aa68800a886ce9c3",
+      "size_bytes": 529243
+    },
+    "pr179_raw_catalogue_receipt.json": {
+      "sha256": "9cddb9f5be5031d8aa6bce299e77b2c115bec712395123a24c3656b9ca537079",
+      "size_bytes": 52709
+    },
+    "pr179_raw_systematics.json": {
+      "sha256": "2547d9e4811f9e5601fc774b6bff2d93e42e6c847abb8e06a7c7a8a3a53beb48",
+      "size_bytes": 62025
+    },
+    "pr179_response_identifiability.json": {
+      "sha256": "363102f174aa4bc7b5fc0d7a9b18de075c1ce4d85de31f71313d9942c02cc4c1",
+      "size_bytes": 7593
+    },
+    "pr179_result_card.json": {
+      "sha256": "416aae16015c0712b988d76a095ad5d3535e8e4ca2bd382c7830853f27a065ae",
+      "size_bytes": 7117
+    }
+  },
+  "candidate_cannot_authorize_itself": true,
+  "generation_root": "b8f6f219f9ee3115754be0ac7522dc3c40bc6e7db5adff9c9d330c3c26ebef25",
+  "metadata": {
+    "caveats": [
+      "H_cat and q_cat are catalogue-fit coefficient labels, not physical cosmological fields.",
+      "Result is conditional on available selection/method metadata and within-stratum residual exchangeability.",
+      "Raw distance-modulus calibration, method mix, missingness, and sky-selection leakage remain possible.",
+      "No reconstruction, CF4 P0 estimator, cosmology-corrected column, transfer, geometry, or family claim."
+    ],
+    "claim_level": {
+      "level": "C3",
+      "scheme": "roadmap_rescue_v1"
+    },
+    "claim_tier": "conditional",
+    "code_hashes": {
+      "estimator": "e99821a4be4e9dab2ee81131601ab935c246b607f8a7f34b357c93ad4ccc35e9",
+      "finite_ensemble": "318cc402a183a0ae8c1f0ece323b8341366e713482e9743c139a5e213c9abd13",
+      "finite_null_rank": "cd3413b96d4c734f3b3d148274c6fe486b6f5c4db46f9e29a89bbf2677aabf14",
+      "raw_adapter": "4ecc2270f48d8f773ac2919107e52386cf4b71ddfd780094f015ceb8d1b56a48",
+      "runner": "de568c978d1ef000b441212f9ef95daac2ef54305bd68faefe48e14706034bf4"
+    },
+    "config_hash": "4dbbb83d5e8559ad2b4851265363aae419e3529dba5a23cb58949d327212bd89",
+    "contributors": [
+      "HTT"
+    ],
+    "covariance_status": "reported marginal DMzp errors plus frozen velocity/systematic floors; unreported cross-method covariance not authenticated",
+    "execution_environment": {
+      "MKL_NUM_THREADS": "1",
+      "MPLCONFIGDIR": "/tmp/htt-mpl",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "PYTHONHASHSEED": "0",
+      "PYTHONPATH": "htt:htt/src"
+    },
+    "execution_receipt_core_sha256": "b3cb675212ed41234ad171b0d8968a597d94b3dbccb66de3e840fc9f224d1489",
+    "generating_command": [
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/venv/bin/python",
+      "scripts/codex_harness/run_pr179_directional_cosmography.py",
+      "--write"
+    ],
+    "git_commit_or_worktree_state": {
+      "git_head": "652f7c52ba9ee747409d532c708499ecd38825f3",
+      "git_status_porcelain_relevant": [
+        " M htt/obsstat/__init__.py",
+        " M htt/obsstat/catalogs/__init__.py",
+        "?? htt/obsstat/catalogs/cf4_raw.py",
+        "?? htt/obsstat/directional_cosmography.py",
+        "?? scripts/codex_harness/run_pr179_directional_cosmography.py",
+        "?? tests/obsstat/test_cf4_raw_catalog.py",
+        "?? tests/pr_cards/test_pr_179_reconstruction_independent_directional_cosmograp.py"
+      ],
+      "prospective_spec_commit": "652f7c52",
+      "relevant_content_root": "30c5a77371733e93759e3c4475adbb7361a10f4337b536ba14e7533483248523",
+      "relevant_worktree_dirty": true
+    },
+    "implementation_scope": [
+      "obsstat"
+    ],
+    "input_hashes": {
+      "docs/PR_DELTAS/pr-134.md": "2961abe53ae8be53b22cbb4ca5fb770379d7cead1593bb9e26347e3cf6d99537",
+      "docs/PR_DELTAS/pr-135.md": "1dde8ec4040bf595db330218d6dd667255733b3811f753639e85074a95869ce7",
+      "docs/PR_DELTAS/pr-139.md": "eb22a4d92247fbc925648b8458e1dc550449ac8e421851284ae6769242893f69",
+      "docs/PR_DELTAS/pr-144.md": "d0fef0be0b4806e8c2b40bb20c725eeb7b3bd1cf2b9bf7f65758104303dbf761",
+      "docs/PR_DELTAS/pr-167.md": "d4a550b2ac79140cf3edaf0738b672f7d12cd73917c1c1b8015635a7b03e0211",
+      "docs/PR_DELTAS/pr-173.md": "0d351acfdafed1a1385d42c5b69ba03a6bf994ade1247485fc3d57c17db46008",
+      "docs/generated/pr144_cf4_manifest.json": "00aa196d63baee7a9a30c9098b064ed2fbbf0f354ae1ab5342dd8c21030d61ef",
+      "workdir/raw/cf4_full/ReadMe": "2cfed1418147d5a626dee1fa37c47252124477c9828490508d9bbe511d34edb4",
+      "workdir/raw/cf4_full/table3.dat": "c2351c52de3e38a7fd80256b6f0818c550dd9f105b91e84fbcc1eb7234160b4d",
+      "workdir/raw/cf4_full/table4.dat": "b6edfec68bdfddeada8f3b8f11938f3bbda98a8e2894ff136a369c2ad6594e94"
+    },
+    "mask_status": "no external sky mask; observed catalogue footprint held fixed",
+    "null_mock_status": "position-preserving finite matched-null permutations",
+    "owner": "OBSSTAT",
+    "public_use": false,
+    "runtime_versions": {
+      "healpy": "1.19.0",
+      "numpy": "2.5.0",
+      "platform": "Linux-6.17.0-35-generic-x86_64-with-glibc2.39",
+      "python": "3.12.3",
+      "scipy": "1.18.0"
+    },
+    "scientific_artifact_mode": "standard_internal",
+    "selection_status": "broad-method/depth/sky/fold matched residual-permutation support",
+    "sky_support_status": "frozen J2000 catalogue support; no sky rotation",
+    "spec_sha256": "ee92d8fb2862718b7d565d23c691dfe65aa730429588f825964ceaf8aa684106",
+    "transfer_source": "none"
+  },
+  "schema": "htt.pr179.artifact_manifest.v1",
+  "source_edges": {
+    "execution_receipt_core": "b3cb675212ed41234ad171b0d8968a597d94b3dbccb66de3e840fc9f224d1489",
+    "null_scores": "1ddad7a5f9e3fc8a222100b0ed58c45a44fcc97c76c9bcb90dc6f13ae94fb371",
+    "pr179_card": "b8f56c1b4ad902f1678946a6248daf996b9ba000ed85137fc81c27f57bcdddb4",
+    "raw_design": "9fb823c05281d7362c4f48e1f4680e5b390fdb0db1c408d3ed6bde6acc774ee7",
+    "spec": "ee92d8fb2862718b7d565d23c691dfe65aa730429588f825964ceaf8aa684106"
+  }
+}
