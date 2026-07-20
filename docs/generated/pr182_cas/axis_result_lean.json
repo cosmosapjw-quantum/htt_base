@@ -1,0 +1,55 @@
+{
+ "axis": "lean",
+ "checks": {
+  "axisymmetric_source_forces_B_zero": true,
+  "boost_kernel_mu_only_coefficients_exact": true,
+  "parity_involution_exact": true,
+  "reflection_flips_TB_EB_fixture": true,
+  "reflection_preserves_TT_EE_BB_TE_fixture": true,
+  "vii_h_improper_transform_flips_n_sign": true,
+  "vii_h_vector_constraint_holds_both_orientations": true
+ },
+ "commands": [
+  {
+   "cmd": "lake exe pr182parity",
+   "cwd": "formal_pr182",
+   "exit": 0
+  }
+ ],
+ "completed_at": "2026-07-20T15:04:09+00:00",
+ "computed": {
+  "boost_order_0": "['1']",
+  "boost_order_1": "['0', '1']",
+  "boost_order_2": "['-1/2', '0', '1']",
+  "boost_order_3": "['0', '-1/2', '0', '1']",
+  "fixed_space_dim": "1",
+  "fixture_EB_flip": "-2/5->2/5",
+  "fixture_TB_flip": "3/7->-3/7",
+  "n_prime_diagonal": "[0, -1, -1]"
+ },
+ "contract_id": "CAS-PR182-PARITY-002",
+ "contract_sha256": "1faa0621f0e0edd77454c594f1f3d489f6220885a35776ecf20fabd8ca4f95f8",
+ "evidence_class": "exact",
+ "schema_version": 1,
+ "sibling_results_read": [],
+ "source_output_hashes": [
+  {
+   "path": "formal_pr182/Pr182Parity/Basic.lean",
+   "sha256": "6706a88334c8aee3e5197337c4f2e87f5f1b5a349edfcb3ce8b911c6f5bddea1"
+  },
+  {
+   "path": "formal_pr182/Pr182Parity.lean",
+   "sha256": "a1528b36b2264b8e5e6fc0221d63b4679b94084ceb4f064a4eb3d985bf445916"
+  },
+  {
+   "path": "formal_pr182/lakefile.toml",
+   "sha256": "9985467b638f297a5d25084b8b8f70770808df496a871543ad085cfb5efc0837"
+  },
+  {
+   "path": "formal_pr182/lean-toolchain",
+   "sha256": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee"
+  }
+ ],
+ "status": "PASS",
+ "transcript_tail": "{\"engine\":\"lean\",\"engine_version\":\"lean4:v4.31.0-core\",\"checks\":{\"parity_involution_exact\":true,\"axisymmetric_source_forces_B_zero\":true,\"reflection_flips_TB_EB_fixture\":true,\"reflection_preserves_TT_EE_BB_TE_fixture\":true,\"vii_h_improper_transform_flips_n_sign\":true,\"vii_h_vector_constraint_holds_both_orientations\":true,\"boost_kernel_mu_only_coefficients_exact\":true},\"computed\":{\"fixed_space_dim\":\"1\",\"fixture_TB_flip\":\"3/7->-3/7\",\"fixture_EB_flip\":\"-2/5->2/5\",\"n_prime_diagonal\":\"[0, -1, -1]\",\"boost_order_0\":\"['1']\",\"boost_order_1\":\"['0', '1']\",\"boost_order_2\":\"['-1/2', '0', '1']\",\"boost_order_3\":\"['0', '-1/2', '0', '1']\"},\"all_pass\":true}\n"
+}

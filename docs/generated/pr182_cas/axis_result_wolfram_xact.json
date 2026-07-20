@@ -1,0 +1,43 @@
+{
+ "axis": "wolfram_xact",
+ "checks": {
+  "axisymmetric_source_forces_B_zero": true,
+  "boost_kernel_mu_only_coefficients_exact": true,
+  "parity_involution_exact": true,
+  "reflection_flips_TB_EB_fixture": true,
+  "reflection_preserves_TT_EE_BB_TE_fixture": true,
+  "vii_h_improper_transform_flips_n_sign": true,
+  "vii_h_vector_constraint_holds_both_orientations": true
+ },
+ "commands": [
+  {
+   "cmd": "wolframscript -file wolfram/pr182_parity_axis.wls",
+   "cwd": ".",
+   "exit": 0
+  }
+ ],
+ "completed_at": "2026-07-20T15:04:09+00:00",
+ "computed": {
+  "boost_order_0": "['1']",
+  "boost_order_1": "['0', '1']",
+  "boost_order_2": "['-1/2', '0', '1']",
+  "boost_order_3": "['0', '-1/2', '0', '1']",
+  "fixed_space_dim": "1",
+  "fixture_EB_flip": "-2/5->2/5",
+  "fixture_TB_flip": "3/7->-3/7",
+  "n_prime_diagonal": "[0, -1, -1]"
+ },
+ "contract_id": "CAS-PR182-PARITY-002",
+ "contract_sha256": "1faa0621f0e0edd77454c594f1f3d489f6220885a35776ecf20fabd8ca4f95f8",
+ "evidence_class": "exact",
+ "schema_version": 1,
+ "sibling_results_read": [],
+ "source_output_hashes": [
+  {
+   "path": "wolfram/pr182_parity_axis.wls",
+   "sha256": "8978c2dc01a1579fe90140ca7e70fb1d6f446a23f0a42a32b649e9d3eab25632"
+  }
+ ],
+ "status": "PASS",
+ "transcript_tail": "-----------------------------------------------------\nPackage xAct`xTensor` version 1.3.0, {2025, 12, 29}\nCopyRight (C) 2002-2026, Jose M. Martin-Garcia, under the General Public License.\n------------------------------------------------------------\nThese packages come with ABSOLUTELY NO WARRANTY; for details type Disclaimer[]. This is free software, and you are welcome to redistribute it under certain conditions. See the General Public License for details.\n------------------------------------------------------------\nPR182_CHECKS {\"parity_involution_exact\" -> True, \"axisymmetric_source_forces_B_zero\" -> True, \"reflection_flips_TB_EB_fixture\" -> True, \"reflection_preserves_TT_EE_BB_TE_fixture\" -> True, \"vii_h_improper_transform_flips_n_sign\" -> True, \"vii_h_vector_constraint_holds_both_orientations\" -> True, \"boost_kernel_mu_only_coefficients_exact\" -> True}\nPR182_COMPUTED {\"fixed_space_dim\" -> \"1\", \"fixture_TB_flip\" -> \"3/7->-3/7\", \"fixture_EB_flip\" -> \"-2/5->2/5\", \"n_prime_diagonal\" -> \"[0, -1, -1]\", \"boost_order_0\" -> \"['1']\", \"boost_order_1\" -> \"['0', '1']\", \"boost_order_2\" -> \"['-1/2', '0', '1']\", \"boost_order_3\" -> \"['0', '-1/2', '0', '1']\"}\nPR182_XACT True\nPR182_ALL_PASS True\n"
+}

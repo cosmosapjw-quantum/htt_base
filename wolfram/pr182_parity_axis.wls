@@ -2,7 +2,8 @@
 (* Independent implementation; loads xAct as the axis-identity receipt.  *)
 
 Needs["xAct`xTensor`"];
-xactLoaded = True;
+xactLoaded = Length[Names["xAct`xTensor`*"]] > 0;
+If[!xactLoaded, Print["PR182_XACT False"]; Exit[3]];
 
 checks = <||>;
 computed = <||>;
@@ -46,7 +47,9 @@ checks["vii_h_improper_transform_flips_n_sign"] = (nPrime === -n);
 checks["vii_h_vector_constraint_holds_both_orientations"] =
   (a . n === {{0, 0, 0}} && a . nPrime === {{0, 0, 0}});
 computed["n_prime_diagonal"] =
-  ToString[{nPrime[[1, 1]], nPrime[[2, 2]], nPrime[[3, 3]]}, InputForm];
+  "[" <> StringRiffle[
+    ToString[#, InputForm] & /@ {nPrime[[1, 1]], nPrime[[2, 2]], nPrime[[3, 3]]},
+    ", "] <> "]";
 
 (* I4 boost kernel Sqrt[1-b^2]/(1-b*mu) to O(b^3): mu-only coefficients *)
 kernel = Normal[Series[Sqrt[1 - b^2]/(1 - b*mu), {b, 0, 3}]];
@@ -63,7 +66,13 @@ Do[
     ToString[Map[ToString[#, InputForm] &, got], InputForm],
   {order, 0, 3}];
 checks["boost_kernel_mu_only_coefficients_exact"] = allOK;
-computed["boost_coefficient_lists_flat"] = ToString[Normal[lists], InputForm];
+Do[
+  poly = Expand[Coefficient[kernel, b, order]];
+  expect = expected[order];
+  got = Table[Coefficient[poly, mu, k], {k, 0, Length[expect] - 1}];
+  computed["boost_order_" <> ToString[order]] =
+    "['" <> StringRiffle[ToString[#, InputForm] & /@ got, "', '"] <> "']",
+  {order, 0, 3}];
 
 allPass = And @@ Values[checks];
 Print["PR182_CHECKS " <> ToString[Normal[checks], InputForm]];

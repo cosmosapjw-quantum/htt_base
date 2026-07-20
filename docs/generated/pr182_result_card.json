@@ -1,0 +1,105 @@
+{
+ "cas": {
+  "adjudication_path": "docs/generated/pr182_cas_adjudication.json",
+  "adjudication_sha256": "7bd4c20f2cd0a094491b82df7e381c17cc1fbd8111dab4c978cbc9c6bba343c8",
+  "aggregate_status": "CAS_4AXIS_PASS",
+  "axis_envelopes": {
+   "lean": {
+    "path": "docs/generated/pr182_cas/axis_result_lean.json",
+    "sha256": "3b38a9e5e096181e11b9ced14aed1b0af36e18da76d03c0e81f8ce4d40bd1da5",
+    "status": "PASS"
+   },
+   "sage_singular": {
+    "path": "docs/generated/pr182_cas/axis_result_sage_singular.json",
+    "sha256": "f9f74f937732aadfe3f68faaee8bd271478ead8cd6648f0f09d99b7c015a69dc",
+    "status": "PASS"
+   },
+   "sympy": {
+    "path": "docs/generated/pr182_cas/axis_result_sympy.json",
+    "sha256": "910a80e4164369d7287c4cc6b7964a25ae56a82019e28f922110688b45ea28f4",
+    "status": "PASS"
+   },
+   "wolfram_xact": {
+    "path": "docs/generated/pr182_cas/axis_result_wolfram_xact.json",
+    "sha256": "f6353adb9b8531c2ed7bd0860d61d0a3dfd03a9c093f2bdd6f35023697406a5b",
+    "status": "PASS"
+   }
+  },
+  "axis_statuses": {
+   "lean": "PASS",
+   "sage_singular": "PASS",
+   "sympy": "PASS",
+   "wolfram_xact": "PASS"
+  },
+  "blinding": "sibling_results_read == [] on every envelope; contract hash frozen before sealed envelope generation",
+  "contract_id": "CAS-PR182-PARITY-002",
+  "contract_path": "docs/generated/pr182_cas/CAS_CONTRACT_PR182_PARITY_V2.json",
+  "contract_sha256": "1faa0621f0e0edd77454c594f1f3d489f6220885a35776ecf20fabd8ca4f95f8"
+ },
+ "forbidden_claims_reaffirmed": [
+  "no present-data family identification, ranking, or handedness conclusion",
+  "no detection/anisotropy/isotropy/geometry claim",
+  "no native-solver or transfer validation claim",
+  "no promotion beyond roadmap_rescue_v1:C1 hypothesis_only",
+  "a registered-exception pass is never described as a 4-axis pass"
+ ],
+ "metadata": {
+  "claim_level": {
+   "level": "C1",
+   "scheme": "roadmap_rescue_v1"
+  },
+  "claim_tier": "exploratory",
+  "config_hash": "1faa0621f0e0edd77454c594f1f3d489f6220885a35776ecf20fabd8ca4f95f8",
+  "contract_sha256": "1faa0621f0e0edd77454c594f1f3d489f6220885a35776ecf20fabd8ca4f95f8",
+  "generating_command": "env PYTHONHASHSEED=0 venv/bin/python -B scripts/codex_harness/run_pr182_parity_registry.py --write",
+  "git_commit": "a1c20dad0ab8b97bde1d55b6aeb6d89b6ce75bea",
+  "git_commit_semantics": "baseline commit pinned by the frozen spec at generation time; byte-stable so --check stays commit-independent",
+  "implementation_scope": [
+   "common"
+  ],
+  "owner": "COMMON",
+  "public_use": false,
+  "scientific_artifact_mode": "hypothesis_only",
+  "spec_sha256": "2dba71691a8fe9629ea7f76fa0c74f23aacb9316a42a9021883c05be30c00a1c",
+  "transfer_source": "none"
+ },
+ "pr_id": "PR-182",
+ "registry": {
+  "adjudication_policy": "FORBIDDEN_PRE_NATIVE",
+  "attribution": "The axisymmetric-to-E-only / helical-to-parity-odd split is CONFIRMATORY of Pontzen & Challinor 2007, MNRAS 380, 1387 (arXiv:0706.2075; identifier transcribed from the public record, not verified against print). The card's registered outcome is the REFUTATION of the roadmap's sign(EB/TB)=sign(x_h) relation plus a signed-component replacement candidate; neither is a family identification.",
+  "data_ingestion_api": "none",
+  "entries": [
+   {
+    "adjudication": "FORBIDDEN_PRE_NATIVE",
+    "falsifier_semantics": "REFUTED at registry level by the card's own CAS-verified identities: I2 proves an orientation reversal flips TB and EB TOGETHER, so the ratio EB/TB is parity-EVEN and carries no handedness information, and I3 shows the structure-tensor orientation flip maps the VII_h representative to its mirror while the conventional h (hence any x_h built from it) is orientation-even. The roadmap-registered relation therefore cannot bind as a handedness discriminant on ANY data, native or otherwise. Retained as a registered negative result.",
+    "family_label": "bianchi_VII_h_helical_roadmap_relation",
+    "reference_relation": "sign(EB/TB) = sign(x_h) [roadmap #pr-182]",
+    "status": "ROADMAP_REFERENCE_RELATION_REFUTED_BY_I2_I3"
+   },
+   {
+    "adjudication": "FORBIDDEN_PRE_NATIVE",
+    "falsifier_semantics": "Replacement candidate for the refuted ratio relation: the individual parity-odd cross-correlations DO flip sign under orientation reversal (I2), so a signed TB (or EB) template convention can carry handedness on an authenticated native atlas ONLY. A mismatch refutes the helical hypothesis at registry level; a match is corroboration only, never identification. The template-sign convention itself must be registered before any native evaluation.",
+    "family_label": "bianchi_VII_h_helical_signed_component_candidate",
+    "reference_relation": "sign(TB) (equivalently sign(EB)) against a REGISTERED signed handedness template convention",
+    "status": "FUTURE_NATIVE_ATLAS_TEST_VECTOR"
+   },
+   {
+    "adjudication": "FORBIDDEN_PRE_NATIVE",
+    "falsifier_semantics": "Valid ONLY for mirror-symmetric axisymmetric configurations (the m=0 sector fixed by the reflection): honest scope is Bianchi I/V/IX and the registered axis-aligned mode subsets of III/VII_0 per the FB-2.2/FB-2.3 envelope. Generic VII_0 (and III) spiral configurations are NOT mirror-symmetric and are excluded; per-family axisymmetry is a geometric premise verified by no CAS axis here. Never evaluated on shipped data by this module.",
+    "family_label": "mirror_symmetric_axisymmetric_configurations",
+    "reference_relation": "B == 0 (parity identity I1)",
+    "status": "FUTURE_NATIVE_ATLAS_TEST_VECTOR"
+   },
+   {
+    "adjudication": "FORBIDDEN_PRE_NATIVE",
+    "falsifier_semantics": "Scope: the registered chain covers the temperature Doppler kernel (axisymmetric mu-only structure to O(beta^3)); spin-2 aberration of polarization is NOT covered by the registered identities. Never evaluated on shipped data by this module.",
+    "family_label": "pure_boost",
+    "reference_relation": "parity-odd TB/EB zero for the temperature Doppler kernel chain (I4 with I1/I2)",
+    "status": "FUTURE_NATIVE_ATLAS_TEST_VECTOR"
+   }
+  ],
+  "schema": "htt.pr182.handedness_reference_registry.v1"
+ },
+ "schema": "htt.pr182.result_card.v1",
+ "terminal": "PARITY_IDENTITIES_CAS_4AXIS_PASS_REGISTRY_REGISTERED"
+}

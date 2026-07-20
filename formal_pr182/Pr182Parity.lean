@@ -4,6 +4,17 @@ open Pr182Parity
 
 private def jsonBool (value : Bool) : String := if value then "true" else "false"
 
+private def ratStr (q : Rat) : String :=
+  if q.den = 1 then toString q.num
+  else toString q.num ++ "/" ++ toString q.den
+
+private def ratList (values : List Rat) : String :=
+  "['" ++ String.intercalate "', '" (values.map ratStr) ++ "']"
+
+private def fixedSpaceDim : Nat :=
+  ([((1 : Rat), (0 : Rat)), ((0 : Rat), (1 : Rat))].filter
+    (fun v => app2 parityEB v = v)).length
+
 def main : IO Unit := do
   let checks : List (String × Bool) := [
     ("parity_involution_exact", decide (mul2 parityEB parityEB = id2)),
@@ -33,11 +44,17 @@ def main : IO Unit := do
   let checkBody := String.intercalate "," (checks.map (fun p =>
     "\"" ++ p.1 ++ "\":" ++ jsonBool p.2))
   let computed := String.intercalate "," [
-    "\"fixed_space_dim\":\"1\"",
-    "\"fixture_TB_flip\":\"3/7->-3/7\"",
-    "\"fixture_EB_flip\":\"-2/5->2/5\"",
-    "\"n_prime_diagonal\":\"[0, -1, -1]\"",
-    "\"boost_coefficient_lists\":\"{'0': ['1'], '1': ['0', '1'], '2': ['-1/2', '0', '1'], '3': ['0', '-1/2', '0', '1']}\""
+    "\"fixed_space_dim\":\"" ++ toString fixedSpaceDim ++ "\"",
+    "\"fixture_TB_flip\":\"" ++ ratStr (entry fixture 0 2) ++ "->"
+      ++ ratStr (entry reflectedFixture 0 2) ++ "\"",
+    "\"fixture_EB_flip\":\"" ++ ratStr (entry fixture 1 2) ++ "->"
+      ++ ratStr (entry reflectedFixture 1 2) ++ "\"",
+    "\"n_prime_diagonal\":\"[" ++ String.intercalate ", "
+      ((List.range 3).map (fun i => ratStr (entry nPrime i i))) ++ "]\"",
+    "\"boost_order_0\":\"" ++ ratList (kernelOrder 0) ++ "\"",
+    "\"boost_order_1\":\"" ++ ratList (kernelOrder 1) ++ "\"",
+    "\"boost_order_2\":\"" ++ ratList (kernelOrder 2) ++ "\"",
+    "\"boost_order_3\":\"" ++ ratList (kernelOrder 3) ++ "\""
   ]
   IO.println ("{\"engine\":\"lean\",\"engine_version\":\"lean4:v4.31.0-core\""
     ++ ",\"checks\":{" ++ checkBody ++ "},\"computed\":{" ++ computed

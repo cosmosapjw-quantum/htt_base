@@ -108,7 +108,7 @@ def check_boost_kernel() -> dict:
         2: [sp.Rational(-1, 2), sp.Integer(0), sp.Integer(1)],
         3: [sp.Integer(0), sp.Rational(-1, 2), sp.Integer(0), sp.Integer(1)],
     }
-    coefficient_lists = {}
+    rows: dict[str, object] = {}
     all_ok = True
     for order, expect in expected.items():
         poly = sp.expand(series.coeff(beta, order))
@@ -119,11 +119,9 @@ def check_boost_kernel() -> dict:
             poly - sum(c * mu**k for k, c in enumerate(expect))
         ) != 0:
             all_ok = False
-        coefficient_lists[str(order)] = str([str(value) for value in got])
-    return {
-        "boost_kernel_mu_only_coefficients_exact": bool(all_ok),
-        "boost_coefficient_lists": coefficient_lists,
-    }
+        rows[f"boost_order_{order}"] = str([str(value) for value in got])
+    rows["boost_kernel_mu_only_coefficients_exact"] = bool(all_ok)
+    return rows
 
 
 def run_axis() -> dict:

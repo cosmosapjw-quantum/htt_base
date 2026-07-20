@@ -64,7 +64,6 @@ expected = {
     2: [QQ(-1) / 2, QQ(0), QQ(1)],
     3: [QQ(0), QQ(-1) / 2, QQ(0), QQ(1)],
 }
-lists = {}
 all_ok = True
 for order, expect in expected.items():
     raw = kernel.padded_list(4)[order]
@@ -72,9 +71,8 @@ for order, expect in expected.items():
     got = [poly[k] for k in range(len(expect))]
     if got != expect or poly.degree() >= len(expect):
         all_ok = False
-    lists[str(order)] = str([str(v) for v in got])
+    computed["boost_order_" + str(order)] = str([str(v) for v in got])
 results["boost_kernel_mu_only_coefficients_exact"] = bool(all_ok)
-computed["boost_coefficient_lists"] = lists
 
 # Singular presence receipt (axis is sage_singular)
 singular_version = singular.eval('system("version");')

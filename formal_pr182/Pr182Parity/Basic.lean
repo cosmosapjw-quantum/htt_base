@@ -58,7 +58,9 @@ def neg3 (m : Mat3) : Mat3 := scale3 (-1) m
 /-- Reflection diag(1, 1, -1) on the (T, E, B) triple. -/
 def reflectTEB : Mat3 := ((1, 0, 0), (0, 1, 0), (0, 0, -1))
 
-/-- Rational correlation fixture: TT=1, TE=1/4, TB=3/7, EE=2/3, EB=-2/5, BB=1/9. -/
+/-- Rational ALGEBRAIC fixture (TT=1, TE=1/4, TB=3/7, EE=2/3, EB=-2/5,
+    BB=1/9). Not a realizable (PSD) correlation structure — |TB| exceeds
+    sqrt(TT*BB) — and used ONLY to exercise the linear reflection identity. -/
 def fixture : Mat3 :=
   ((1, 1/4, 3/7), (1/4, 2/3, -2/5), (3/7, -2/5, 1/9))
 
