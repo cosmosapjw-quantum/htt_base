@@ -1,0 +1,199 @@
+{
+  "schema_version": 2,
+  "run_id": "pr176-final-review-20260720",
+  "assignment_id": "A-PR176-FINAL-CLAIM",
+  "context_version": "e0c724f6cb8b7c5b676a3f46f445a863e8999e70106d16739e401c9ebf97e65c",
+  "independence_mode": "blind-results",
+  "claim_ids": [
+    "C-PR176-FINAL-CLAIM"
+  ],
+  "status": "fail",
+  "verdict": "FAIL",
+  "completed_at_utc": "2026-07-20T07:39:45Z",
+  "result_path": ".agent-harness/runs/pr176-final-review-20260720/results/A-PR176-FINAL-CLAIM.json",
+  "scope": "Claim-tier, provenance, ownership, manifest metadata, raw-reconstruction firewall, terminal-success semantics, forbidden language, source edges, and candidate-self-authorization review of the six registered inputs only.",
+  "input_validation": {
+    "context_version_matches_pack_index_assignment": true,
+    "required_input_hashes_match_assignment": true,
+    "sibling_results_read": false,
+    "production_files_edited": false
+  },
+  "summary": {
+    "p0": 0,
+    "p1": 2,
+    "p2": 1,
+    "p3": 0,
+    "closeout_ready": false,
+    "reason": "The result promotes rejected divergence outputs to a concrete measurement, the canonical result card does not report the controlling terminal gate, and the manifest's candidate-self-authorization claim is not independently evidenced in the assigned closeout bundle."
+  },
+  "findings": [
+    {
+      "finding_id": "F-PR176-FINAL-CLAIM-001",
+      "claim_id": "C-PR176-FINAL-CLAIM",
+      "severity": "P1",
+      "title": "A failed divergence response is still published and interpreted as a concrete measurement",
+      "verdict": "fail",
+      "evidence": [
+        {
+          "path": "docs/research_program/long_horizon_rescue/pr176_spec.yaml",
+          "lines": "244-255",
+          "detail": "The frozen route maps any registered-radius rank/theta-information failure to NON_INFORMATIVE_DIVERGENCE_RESPONSE before later q gates."
+        },
+        {
+          "path": "docs/generated/pr176_cross_falsifier_result.json",
+          "lines": "2-27",
+          "detail": "divergence_channel_measured is false, but three theta estimate/SD pairs are emitted under divergence_measurements and the interpretation calls them a concrete raw-CF4 divergence-channel measurement."
+        },
+        {
+          "path": "docs/generated/pr176_cross_falsifier_result.json",
+          "lines": "100-105",
+          "detail": "The same artifact marks the result reproducible and dependency-satisfying while terminating because one or more divergence response/injection gates failed."
+        }
+      ],
+      "assumptions": [
+        "The frozen terminal order is authoritative.",
+        "A field explicitly marked not measured cannot be promoted to an accepted measurement without a per-radius acceptance distinction."
+      ],
+      "consequence": "A downstream consumer can ingest the theta values as accepted observational measurements even though the artifact's own controlling status rejects the divergence channel. This defeats the non-informative firewall and inflates a C3 conditional internal outcome.",
+      "required_fix": "For NON_INFORMATIVE_DIVERGENCE_RESPONSE, null or quarantine the theta outputs as non-authoritative candidate diagnostics and replace the interpretation with an explicit no-accepted-measurement statement. If only some radii fail, carry an authoritative per-radius accepted/withheld status and call only accepted rows measurements; the aggregate must remain non-informative. Regenerate and rebind the result card and manifest."
+    },
+    {
+      "finding_id": "F-PR176-FINAL-CLAIM-002",
+      "claim_id": "C-PR176-FINAL-CLAIM",
+      "severity": "P1",
+      "title": "The terminal provenance and success semantics conflate an identifiability result with a validation failure",
+      "verdict": "fail",
+      "evidence": [
+        {
+          "path": "docs/research_program/long_horizon_rescue/pr176_spec.yaml",
+          "lines": "50-55",
+          "detail": "NON_INFORMATIVE is a successful reproducible result only when a registered authority or identifiability gate requires it."
+        },
+        {
+          "path": "docs/research_program/long_horizon_rescue/pr176_spec.yaml",
+          "lines": "244-264",
+          "detail": "The frozen ordered router distinguishes divergence rank/information failure from unavailable signed q responses, and expects the q-response route pre-PR155 only after the divergence gate passes."
+        },
+        {
+          "path": "docs/generated/pr176_cross_falsifier_result.json",
+          "lines": "100-105",
+          "detail": "success_dependency_satisfied is true, but terminal_reason only says a response/injection gate failed; it does not identify whether this is a registered identifiability outcome or a failed validation injection."
+        },
+        {
+          "path": "docs/generated/pr176_result_card.json",
+          "lines": "13-13, 83-86",
+          "detail": "The canonical card status is NON_INFORMATIVE_DIVERGENCE_RESPONSE, while its mandatory claim language attributes the non-informative result to unavailable q responses, a later non-controlling gate."
+        }
+      ],
+      "assumptions": [
+        "A failed deterministic or covariance validation injection is process/validation failure, not scientific non-identification.",
+        "A dependency-satisfying terminal must name the exact frozen gate that authorizes success."
+      ],
+      "consequence": "The bundle can close successfully even if the actual blocker was a failed validation injection, and its public-facing internal card hides the earliest controlling failure behind the already-known q-response absence.",
+      "required_fix": "Emit exact failed gate IDs and primitives. Set success_dependency_satisfied=true only when the earliest failure is a frozen rank/theta-information identifiability gate; set it false for any deterministic/covariance injection validation failure. Make mandatory_claim_language report the controlling divergence terminal first, with q-response absence only as a secondary blocked gate."
+    },
+    {
+      "finding_id": "F-PR176-FINAL-CLAIM-003",
+      "claim_id": "C-PR176-FINAL-CLAIM",
+      "severity": "P2",
+      "title": "candidate_cannot_authorize_itself is an unevidenced candidate assertion in the assigned bundle",
+      "verdict": "fail",
+      "evidence": [
+        {
+          "path": "docs/generated/pr176_artifact_manifest.json",
+          "lines": "2-37",
+          "detail": "The generated candidate manifest hashes its own generated artifacts and then sets candidate_cannot_authorize_itself=true."
+        },
+        {
+          "path": "docs/generated/pr176_artifact_manifest.json",
+          "lines": "108-113",
+          "detail": "The top-level source edges are opaque content hashes only; none names an independent verifier identity, external authorization receipt, or mutation verdict that derives the boolean."
+        },
+        {
+          "path": "docs/generated/pr176_source_authority.json",
+          "lines": "20-21, 91-103",
+          "detail": "authority_ok=true and raw_reconstruction_values_used=[] are assertions in another artifact produced by the same candidate generation."
+        }
+      ],
+      "assumptions": [
+        "Content-addressing a candidate pack provides integrity but does not by itself provide independent authorization.",
+        "The assignment's six-file evidence boundary is the closeout evidence available to this reviewer."
+      ],
+      "consequence": "A coherently resealed generation can repeat the authorization and raw-firewall assertions without the final manifest showing which non-candidate authority recomputed and rejected forged values.",
+      "required_fix": "Replace the bare boolean with a hash-bound reference to an independent verifier/adjudication receipt rooted outside the candidate generation, including verifier identity and bytes, the frozen authority root, exact recomputation command, and a mutation proving that resealed authority_ok/raw-use/source-edge drift is rejected. Until then mark the check pending or unverified."
+    }
+  ],
+  "passing_checks": [
+    {
+      "check": "registered_hash_binding",
+      "status": "pass",
+      "detail": "All six required-input SHA-256 values exactly match the assignment. The manifest hashes for the three assigned generated children also match their files."
+    },
+    {
+      "check": "claim_tier_owner_and_metadata_surface",
+      "status": "pass",
+      "detail": "The reviewed generated artifacts consistently carry OBSSTAT ownership, obsstat implementation scope, conditional C3, standard_internal, public_use=false, transfer_source=none, config/input hashes, sky/mask/covariance/null status, caveats, command, and Git/content state."
+    },
+    {
+      "check": "forbidden_claim_scan",
+      "status": "pass",
+      "detail": "No positive detection, significance, acceleration, global-tilt, cosmological-anisotropy, geometry, family-identification, or transfer-validation claim appears; occurrences are null fields, forbidden-use lists, or explicit negations."
+    },
+    {
+      "check": "raw_reconstruction_claim_surface",
+      "status": "pass_with_provenance_caveat",
+      "detail": "The reviewed result surfaces do not name Vpds, Vpwf, or Vpec as inputs or truth, and source_authority records raw_reconstruction_values_used=[]; computational enforcement is not independently demonstrated by the six assigned files, as captured in finding 003."
+    },
+    {
+      "check": "primary_formula_scope",
+      "status": "pass",
+      "detail": "The primary-source record authenticates formula/convention provenance only, requires separate signed CF4-window response bridges, and explicitly disclaims physical applicability, acceleration, cosmology, geometry, family, and transfer conclusions."
+    },
+    {
+      "check": "source_edge_cross_file_consistency",
+      "status": "pass_with_independence_caveat",
+      "detail": "The spec, compact-CF4, PR-card semantic, and relevant-content hashes are internally consistent across the assigned spec, source-authority record, metadata, and manifest. Independent authorization of those edges is not demonstrated in the assigned bundle."
+    }
+  ],
+  "claim_audit": {
+    "upgraded_claims": [],
+    "downgraded_claims": [
+      {
+        "from": "concrete raw-CF4 divergence-channel measurement",
+        "to": "reproducible NON_INFORMATIVE_DIVERGENCE_RESPONSE with theta candidates withheld or explicitly non-authoritative",
+        "reason": "divergence_channel_measured=false and the controlling response/injection gate failed"
+      }
+    ],
+    "forbidden_drift_detected": false,
+    "ledger_updates_needed": [
+      "Bind the terminal to exact failed gate IDs and distinguish scientific identifiability from validation failure.",
+      "Align result-card mandatory language and allowed use with NON_INFORMATIVE_DIVERGENCE_RESPONSE.",
+      "Add an independently rooted candidate-self-authorization receipt before closeout."
+    ]
+  },
+  "tools": [
+    {
+      "name": "ripgrep",
+      "version": "14.1.0",
+      "use": "Targeted forbidden-language and semantic-field scan over registered inputs."
+    },
+    {
+      "name": "sha256sum",
+      "version": "GNU coreutils 9.4",
+      "use": "Required-input and manifest-child hash verification."
+    },
+    {
+      "name": "sed/nl",
+      "version": "system",
+      "use": "Bounded read-only inspection with exact line references."
+    }
+  ],
+  "reproducible_commands": [
+    "sha256sum docs/research_program/long_horizon_rescue/pr176_spec.yaml docs/audits/pr176_primary_sources/tsagas_divergence_record.md docs/generated/pr176_source_authority.json docs/generated/pr176_cross_falsifier_result.json docs/generated/pr176_result_card.json docs/generated/pr176_artifact_manifest.json",
+    "rg -n -i 'detect|signific|accelerat|global[- _]tilt|cosmological|anisotrop|bianchi|family|geometry|native|external transfer|transfer valid|Vpds|Vpwf|Vpec|leakage.immune|physical covariance|candidate_cannot_authorize|source_edges|success_dependency|scientific_result|divergence_channel_measured|divergence_measurements|interpretation|mandatory_claim_language|terminal' docs/audits/pr176_primary_sources/tsagas_divergence_record.md docs/generated/pr176_source_authority.json docs/generated/pr176_cross_falsifier_result.json docs/generated/pr176_result_card.json docs/generated/pr176_artifact_manifest.json"
+  ],
+  "remaining_risks": [
+    "The assignment did not authorize inspection of production code, the execution receipt, mutation report, or sibling reviews; no claim is made here about their correctness.",
+    "The raw-reconstruction firewall is verified only on the assigned claim surface, not by an independent data-lineage replay."
+  ]
+}

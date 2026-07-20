@@ -1,0 +1,352 @@
+{
+  "schema_version": 2,
+  "run_id": "pr176-intake-20260720",
+  "assignment_id": "A-PR176-MAP",
+  "agent_type": "code_cartographer",
+  "context_version": "e0c724f6cb8b7c5b676a3f46f445a863e8999e70106d16739e401c9ebf97e65c",
+  "independence_mode": "shared-core",
+  "status": "pass",
+  "summary": "C-PR176-SURFACE is mapped without computing or inspecting an observed PR-176 result. The existing catalogue-row path derives a CMB-frame line-of-sight peculiar velocity from authenticated row quantities and fits only a three-component rigid translation plus an optional constant radial intercept. The existing divergence function instead differentiates a reconstructed three-dimensional WF velocity grid. They are different estimands and neither currently supplies the required raw-catalogue affine velocity-gradient trace, response-rank audit, q-dipole joint/dependence contract, or explicit measured-divergence Tsagas mapping.",
+  "claim_results": [
+    {
+      "claim_id": "C-PR176-SURFACE",
+      "verdict": "PASS_SURFACE_MAPPED_NO_OBSERVED_RESULT",
+      "evidence_fingerprint": "sha256:a047b87efe81ad02007fd8b5f49a7400acaa49c665baac8352e72c6e35e4ec0b",
+      "statement": "A minimal, owner-correct PR-176 implementation requires a preregistered catalogue-row radial affine-gradient estimator and a separate explicit theta-to-Delta_q conditional map. Reconstructed WF divergence may be retained only as a reconstruction-conditional sensitivity channel and must never be substituted for the catalogue-row estimator.",
+      "assumptions": [
+        "No sibling result was read.",
+        "Only the shared context pack, the registered assignment, and the assignment's required input paths were inspected.",
+        "No PR-176 observed output, q-dipole value, preferred axis, depth scale, or coherence result was computed or viewed.",
+        "The proposed affine model is an implementation plan, not an accepted scientific specification; sign, frame, depth/window, and q-channel details must be frozen in pr176_spec.yaml before result computation."
+      ]
+    }
+  ],
+  "evidence_read": [
+    {
+      "path": ".agent-harness/generated/CONTEXT_PACK.md",
+      "sha256_or_version": "context_version:e0c724f6cb8b7c5b676a3f46f445a863e8999e70106d16739e401c9ebf97e65c",
+      "use": "Tier-0 DAG, ownership, claim, PR-151, PR-173, and frozen-decision boundaries."
+    },
+    {
+      "path": ".agent-harness/runs/pr176-intake-20260720/assignments/A-PR176-MAP.json",
+      "sha256_or_version": "assignment_sha256:9449ae8118776c4251e6a8d1feab0de43c09385878262d40ff3b6aa098e77c13",
+      "use": "Bounded claim, inputs, independence mode, write ownership, and result path."
+    },
+    {
+      "path": "docs/codex_handoff/pr_backlog.yaml",
+      "sha256_or_version": "256cf1406cddf271d8b197dbf39e1ae1486b18f22c30e4551de40b55e2cc502d",
+      "lines": "4822-4890; 2293-2354; 2928-3060",
+      "use": "PR-176 dependencies, scope, required non-informative routing, conservative dependence bound, pre-PR-155 kill switch, PR-133 response-rank boundary, and PR-144/145 column and estimator contracts."
+    },
+    {
+      "path": "docs/PR_DELTAS/pr-144.md",
+      "sha256_or_version": "d0fef0be0b4806e8c2b40bb20c725eeb7b3bd1cf2b9bf7f65758104303dbf761",
+      "lines": "13-37; 62-70",
+      "use": "Authenticated CF4 group-column types, row/group hashes, reconstruction-column prohibition, SG coordinate-unit caveat, and reusable authority artifacts."
+    },
+    {
+      "path": "docs/PR_DELTAS/pr-146.md",
+      "sha256_or_version": "01515d9782b4894770bbddf3c3baf6c8b241afe4f5024c13e8213caac6dbaba6",
+      "lines": "11-56; 95-109",
+      "use": "Correlated radial-flow injection mechanics, distance/selection/grouping stressors, effective-N, coverage, and the explicit limit that the off-diagonal Gorski covariance is not independently validated."
+    },
+    {
+      "path": "docs/PR_DELTAS/pr-148.md",
+      "sha256_or_version": "260096e77dffc909c2726087c65d9dc3790bb35df6f795d470d759f0a089cd1f",
+      "lines": "10-35; 37-56; 66-74",
+      "use": "Same-catalogue mock covariance pattern, SPD gate, robust non-identification routing, and warning that one estimand's near-diagonal shell covariance cannot be assumed for a new channel."
+    },
+    {
+      "path": "docs/PR_DELTAS/pr-173.md",
+      "sha256_or_version": "0d351acfdafed1a1385d42c5b69ba03a6bf994ade1247485fc3d57c17db46008",
+      "lines": "16-49; 51-77; 102-113; 141-150",
+      "use": "Orthogonal availability, lineage, and numerical-resolution routing; frozen-source reconstruction; finite-support honesty; no certification from missing or invalid lineage."
+    },
+    {
+      "path": "htt/src/common/cf4_velocity_estimators.py",
+      "sha256_or_version": "4fc9364a4a59c159445d524df5b7a09495059468ed0d7f9ecce2da1ce57a6054",
+      "lines": "41-79; 96-166; 284-315; 318-375; 418-435",
+      "use": "Current CMB-frame row-derived velocity, H0 convention, design matrix, covariance propagation, injections, rank guard, and SG-coordinate handling."
+    },
+    {
+      "path": "htt/obsstat/velocity_field_curl.py",
+      "sha256_or_version": "f6aa025e5ed0f7a7b5c47eee2b333f4af26c2d5203cb4b99c9139d5acf978c65",
+      "lines": "1-22; 29-40; 47-71",
+      "use": "WF reconstruction scope and the central-difference divergence signature."
+    },
+    {
+      "path": "htt/htt/htt/core/tilted_flrw.py",
+      "sha256_or_version": "6607e0e15a7424bc275ee30100fa94f437d2f7be05dabb6d4ee122e5c6896c5f",
+      "lines": "35-43; 105-172; 376-398",
+      "use": "Geometry-frame H0, implicit theta/H closure in Delta_q, inheritance by Delta_q_three_term, and circular/self-oracle risk from beta_from_colin."
+    }
+  ],
+  "authenticated_catalogue_surface": {
+    "allowed_row_inputs_with_required_typing": [
+      {
+        "consumer_name": "RAdeg, DEdeg",
+        "authority_type": "position-observable",
+        "role": "radial unit vector n in the declared equatorial frame"
+      },
+      {
+        "consumer_name": "Dist",
+        "authority_type": "distance-derived observable whose exact PR-144 producer/unit binding must be replayed",
+        "role": "radial position d n and the distance-proportional divergence response"
+      },
+      {
+        "consumer_name": "e_DMzp",
+        "authority_type": "uncertainty",
+        "role": "distance-error contribution; it also implies an errors-in-variables risk because Dist enters both response and derived velocity"
+      },
+      {
+        "consumer_name": "V3k",
+        "authority_type": "frame-derived, not a raw velocity observable",
+        "role": "current CMB/3K-frame velocity leg in v_radial = V3k - H0*Dist"
+      },
+      {
+        "consumer_name": "1PGC and selection/group fields",
+        "authority_type": "identifier and selection-count",
+        "role": "row uniqueness, group parity, selection, completeness, and grouped-resampling lineage"
+      }
+    ],
+    "allowed_only_with_explicit_transform": [
+      {
+        "consumer_name": "Vh, Vls, Vcmb, fV3k",
+        "constraint": "Vh is the velocity-observable and the others are frame/cosmology-derived; changing from the current V3k convention is a new, hash-bound frame transform, not a column-name swap."
+      }
+    ],
+    "forbidden_as_observed_flow": [
+      "Vpds",
+      "Vpwf",
+      "Vpec"
+    ],
+    "forbidden_as_metric_positions": [
+      "SGX",
+      "SGY",
+      "SGZ"
+    ],
+    "naming_rule": "Call the proposed primary channel a catalogue-row radial-velocity-gradient estimator. Do not call every input raw: V3k and v_radial are derived, and WF/reconstruction columns are a separate transfer/reconstruction lane."
+  },
+  "existing_symbols_and_exact_gaps": [
+    {
+      "path": "htt/src/common/cf4_velocity_estimators.py",
+      "symbols": [
+        "Cf4Sample",
+        "load_sample",
+        "_design_flow",
+        "_wls",
+        "cosmic_variance_M",
+        "estimate",
+        "coverage_injection"
+      ],
+      "reusable": "Cf4Sample row geometry, current v_radial derivation, rank rejection, arbitrary-design cosmic-variance propagation, and injection conventions are useful mechanics.",
+      "gaps": [
+        "_design_flow has only n_x,n_y,n_z and optional constant 1; it has no distance-proportional isotropic expansion or trace-free velocity-gradient basis.",
+        "Cf4Sample does not retain distance_mpc explicitly; pos_hmpc and SGX/Y/Z must not be silently treated as the Mpc coordinate required by theta in km/s/Mpc.",
+        "The current constant radial monopole coefficient has units km/s and is not theta. For an isotropic affine field, the theta response is d/3 and has coefficient units km/s/Mpc.",
+        "Dist determines both v_radial and the theta response, so ordinary fixed-design WLS does not by itself handle distance-error/errors-in-variables bias.",
+        "There is no q-dipole covariance, conservative PSD dependence-set evaluator, response-overlap report, axis/window registry, or PR-173 resolution envelope."
+      ]
+    },
+    {
+      "path": "htt/obsstat/velocity_field_curl.py",
+      "symbols": [
+        "divergence"
+      ],
+      "reusable": "A reconstruction-conditional sensitivity computes pointwise central-difference div(v) from a full 3-D vector grid.",
+      "gaps": [
+        "The input is a WF/reconstructed 3-D vector field, not catalogue rows of radial velocities.",
+        "The function emits only an array: no source/frame/coordinate metadata, mask/window, boundary-order receipt, uncertainty, covariance, rank, or manifest.",
+        "The surrounding module states that the WF potential-flow prior suppresses curl and that its constrained-realization covariance is unavailable; a WF divergence cannot authenticate a raw-catalogue gradient."
+      ]
+    },
+    {
+      "path": "htt/htt/htt/core/tilted_flrw.py",
+      "symbols": [
+        "Delta_q",
+        "Delta_q_three_term",
+        "beta_from_colin"
+      ],
+      "reusable": "The dimensional lambda_H=c/H0 factor and the explicit geometry-frame convention can be retained after the physical contract is frozen.",
+      "gaps": [
+        "Delta_q(beta,d) silently substitutes theta/H = beta*lambda_H/d and therefore cannot consume a measured divergence channel.",
+        "Algebraically undoing only that substitution gives the candidate explicit form Delta_q = (theta/H)*(lambda_H/d)^2/9, but its sign, averaging window, axis/dipole interpretation, and validity domain still require a frozen physics/spec authority before use.",
+        "Delta_q_three_term calls the implicit-closure function and would remain an active inherited closure if only a new helper were added.",
+        "beta_from_colin derives beta from q_d; feeding that beta back into Delta_q would be a circular self-oracle, not a cross-falsifier.",
+        "The module defaults to geometry-frame H0 approximately 67.36, while the CF4 row estimator defaults to H0=74.6 for V3k-H0*Dist. The cross-channel contract must make this mismatch explicit and cannot choose H0 after seeing coherence."
+      ]
+    }
+  ],
+  "raw_radial_gradient_vs_wf_divergence": {
+    "catalogue_row_estimand": {
+      "input": "authenticated group rows: n_i, d_i, and derived line-of-sight v_i with declared frame and distance likelihood",
+      "minimal_affine_model": "v_i = n_i dot B + M0 + d_i*(theta/3 + n_i^T E n_i) + epsilon_i, where E is symmetric trace-free",
+      "identifiable_content": "radial data can constrain the symmetric velocity-gradient response under the survey window; n^T Omega n is identically zero, so the antisymmetric/curl part is not identifiable from radial velocities alone",
+      "separation": "B is a rigid-translation dipole, M0 is a constant radial intercept, theta is a distance-proportional trace, and E is a five-component trace-free shear nuisance. They must remain separate columns and separate reported channels.",
+      "required_rank_gate": "Evaluate analytic and observed-window rank, conditioning, leverage, and response overlap before a point estimate. Narrow depth support can make M0 and d*theta/3 nearly collinear; incomplete sky can mix B, theta, and E."
+    },
+    "wf_estimand": {
+      "input": "a full reconstructed 3-D velocity grid v_mean, optionally with reconstruction-model sensitivity",
+      "operation": "finite-difference trace of the grid gradient",
+      "claim_lane": "external/WF-reconstruction-conditional sensitivity only",
+      "prohibition": "Do not substitute this array for the catalogue-row theta estimate, use it as an oracle for injections, or describe it as observed raw divergence."
+    }
+  },
+  "reusable_upstream_authorities": [
+    {
+      "upstream": "PR-144",
+      "reuse": "Pin exact release/table/row/group identities, column classes, units, transforms, selection/completeness, and source hashes through the pr144 manifest/column-authority artifacts.",
+      "boundary": "Reconstruction columns are never truth; SG Cartesian columns are cz in km/s rather than Mpc; any absent authority is refused."
+    },
+    {
+      "upstream": "PR-146",
+      "reuse": "Extend channel-wise injections using one correlated radial field plus distance-error, nonlinear-scatter, Malmquist-selection, and grouping stressors; retain effective-N and MC-covariance reporting.",
+      "boundary": "Its Cholesky ensemble validates propagation under the same fiducial Gorski covariance, not the physical correctness of that covariance. The box reference validates diagonal normalization only, not off-diagonal structure."
+    },
+    {
+      "upstream": "PR-148",
+      "reuse": "Use its one-field-across-all-subsamples pattern, positive-definite gate, robust covariance classification, and non-identification sentinel when constructing any same-catalogue theta-shell covariance.",
+      "boundary": "PR-148's measured near-diagonal fsigma8 shell covariance is estimand-specific and cannot be copied or assumed for theta versus q-dipole."
+    },
+    {
+      "upstream": "PR-173",
+      "reuse": "Route availability, replicate/dependence lineage, and numerical resolution on separate axes; reconstruct candidate reports from frozen source authorities; attach finite-support guards only after certified lineage.",
+      "boundary": "A successful PR-173 dependency does not certify PR-176 mocks or covariance. Missing or invalid joint/dependence lineage yields null numerical status, not a small error bar."
+    },
+    {
+      "upstream": "PR-133",
+      "reuse": "Keep local observer boost, global tilt, physical Omega_tilt, and response types separate; inspect analytic and observed-window rank independently.",
+      "boundary": "No automatic A_v-to-Omega_tilt bridge, no scalar global-tilt measurement, and rank deficiency terminates as non-identified. The assignment did not include the PR-133 delta or concrete artifact paths, so the main specification must bind those exact authorities before implementation."
+    }
+  ],
+  "proposed_changes_main_writer_only": {
+    "preregister_first": [
+      {
+        "path": "docs/research_program/long_horizon_rescue/pr176_spec.yaml",
+        "content": "Freeze row authorities, frames, H0 roles, velocity/distance likelihood, affine parameterization, theta sign and units, spatial/depth windows, q-dipole source and axis, no-retuning rule, response-rank thresholds, injection matrix, conservative dependence set, terminal truth table, claim ceiling, and mutations before any observed evaluation."
+      }
+    ],
+    "production": [
+      {
+        "path": "htt/obsstat/cf4_radial_velocity_gradient.py",
+        "content": "Single owner-correct implementation of the catalogue-row affine design, rank/conditioning/overlap report, theta estimate/covariance, frame and source declarations, channel-wise injection summaries, and conservative dependence-bound terminal router. Reuse PR-145/146 mechanics by pinned interface; do not copy them into a second implementation."
+      },
+      {
+        "path": "htt/htt/htt/core/tilted_flrw.py",
+        "content": "Add an explicit measured-divergence conditional API only after physics/spec review; remove scientific use of the silent beta-to-theta closure, inventory/update Delta_q_three_term and active consumers, and quarantine any compatibility wrapper as legacy/ad-hoc with an explicit opt-in label.",
+        "scope_issue": "This path is named in the PR-176 target but omitted from the card's files and implementation_scopes. Amend the spec/card surface or choose a separately authorized contributor change before editing; do not silently cross the declared OBSSTAT-only surface."
+      },
+      {
+        "path": "htt/obsstat/velocity_field_curl.py",
+        "content": "Prefer no change. If a WF comparison is emitted, add only typed reconstruction metadata and uncertainty/window receipts; do not route it through the catalogue-row result or use it as an oracle."
+      },
+      {
+        "path": "scripts/codex_harness/run_pr176_tsagas_divergence_cross_falsifier.py",
+        "content": "Deterministic write/check runner that reconstructs frozen inputs, executes all injections/mutations, validates terminal routing, and emits metadata-complete artifacts."
+      }
+    ],
+    "avoid_unless_required": [
+      {
+        "path": "htt/src/common/cf4_velocity_estimators.py",
+        "reason": "The card is OBSSTAT-scoped. Import its stable sample/covariance mechanics rather than widening COMMON ownership; if an explicit distance field or public covariance interface is unavoidable, preregister that cross-owner surface and regression-test PR-145/146."
+      },
+      {
+        "path": "htt/src/obsstat",
+        "reason": "Do not create a duplicate implementation. Add only the repository's normal package/export facade if packaging inspection shows it is required."
+      }
+    ]
+  },
+  "tests_to_run": [
+    {
+      "path": "tests/obsstat/test_cf4_radial_velocity_gradient.py",
+      "required_cases": [
+        "exact affine synthetic recovery for B, M0, theta, and five trace-free shear components under a full-rank window",
+        "pure rigid translation and pure constant radial intercept do not become theta",
+        "pure theta and trace-free shear injections remain distinct under registered windows",
+        "narrow-depth, incomplete-sky, ill-conditioned, and rank-deficient designs emit no point result",
+        "radial data refuse antisymmetric/curl identification",
+        "distance-error, Malmquist, grouping, nonlinear-scatter, and correlated-flow channel injections report coverage/bias/effective-N without hiding failures",
+        "Vpds/Vpwf/Vpec truth substitution and SGX/Y/Z-as-Mpc mutations are killed",
+        "frame/H0 mismatch, post-result axis/depth retuning, and missing transfer/source declarations fail closed",
+        "WF-grid divergence cannot satisfy catalogue-row authority",
+        "missing, non-PSD, or unregistered joint covariance routes to NON_INFORMATIVE; conservative bound is evaluated over the complete preregistered dependence set"
+      ]
+    },
+    {
+      "path": "tests/pr_cards/test_pr_176_tsagas_div_v_q_dipole_cross_falsifier_ad_hoc_clo.py",
+      "required_cases": [
+        "backlog/spec/dependency and exact artifact bindings",
+        "explicit theta-to-Delta_q map agrees with the old expression only when the old closure identity is deliberately supplied as a test fixture",
+        "beta_from_colin cannot be reused as an independent q-channel oracle",
+        "Delta_q_three_term cannot silently retain the ad-hoc closure",
+        "PR-173 availability/lineage/resolution axes and terminal truth table",
+        "all metadata, manifest, worktree, input/config hashes, and mutation receipts"
+      ]
+    },
+    {
+      "command": "venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice",
+      "purpose": "Registered PR-card DAG/status gate."
+    },
+    {
+      "command": "PYTHONPATH=htt venv/bin/python -B scripts/codex_harness/run_pr176_tsagas_divergence_cross_falsifier.py --check",
+      "purpose": "Frozen-source reconstruction and byte-current artifact check after implementation."
+    },
+    {
+      "command": "venv/bin/python -B -m pytest -p no:cacheprovider -q tests/obsstat/test_cf4_radial_velocity_gradient.py tests/pr_cards/test_pr_176_tsagas_div_v_q_dipole_cross_falsifier_ad_hoc_clo.py",
+      "purpose": "Targeted estimator and PR-card suite after implementation."
+    }
+  ],
+  "risks_and_kill_switches": [
+    "No observed result may be computed before the q-dipole source, fixed axis/window/depth, theta sign/frame, H0 roles, and conservative dependence set are frozen.",
+    "Before PR-155, only channel-wise falsifiers stable under the entire registered conservative dependence bound are permitted. Missing or invalid joint covariance otherwise terminates as NON_INFORMATIVE.",
+    "If the observed-window response is rank-deficient, ill-conditioned beyond the frozen threshold, or near-rigid translation/narrow-depth makes theta inseparable from B or M0, emit no point estimate and route to NON_INFORMATIVE or non-identified.",
+    "Do not infer curl/vorticity from catalogue radial velocities; the antisymmetric gradient is in the radial null space.",
+    "Do not use reconstructed WF divergence as raw evidence, truth, an injection oracle, or an independent validation channel.",
+    "Do not reuse beta_from_colin and q_d on both sides of the cross-check; that is a circular self-oracle.",
+    "Do not silently combine CF4 H0=74.6 with geometry-frame H0 approximately 67.36. Freeze and propagate the frame/H0 convention and its effect on both v_radial and lambda_H.",
+    "Do not copy PR-148's near-diagonal covariance or PR-146's fiducial Gorski off-diagonal model into a claim of independently identified joint covariance.",
+    "Do not tune lambda, depth shell, or q axis after viewing coherence. A change is a new preregistered analysis.",
+    "No output is a global-tilt measurement, geometry/family identification, native-transfer result, or immunity-to-monopole-leakage claim. Structural distinction is the ceiling."
+  ],
+  "artifacts_and_status_updates_needed": {
+    "artifacts": [
+      "docs/generated/pr176_source_authority_and_frame_declaration.json",
+      "docs/generated/pr176_response_rank_report.json",
+      "docs/generated/pr176_channel_injection_report.json",
+      "docs/generated/pr176_dependence_bound_report.json",
+      "docs/generated/pr176_result_card.json",
+      "docs/generated/pr176_mutation_report.json",
+      "docs/generated/pr176_artifact_manifest.json"
+    ],
+    "artifact_requirements": "Every artifact carries owner, implementation scope, claim tier, artifact mode, allowed/forbidden uses, transfer or reconstruction source, config/input hashes, row/window/frame/sky/mask status, covariance/null/lineage status, caveats, generating command, runtime, Git state, and worktree content receipt.",
+    "delta": "docs/PR_DELTAS/pr-176.md",
+    "status": "Update canonical and mirror status only after the deterministic runner, targeted/regression tests, claim checks, independent review, and manifest verification pass. NON_INFORMATIVE is an allowed scientific terminal; it is not an implementation failure."
+  },
+  "read_only_commands_run": [
+    "sed -n '1,929p' .agent-harness/generated/CONTEXT_PACK.md (executed in complete non-overlapping chunks)",
+    "sed -n '1,260p' .agent-harness/runs/pr176-intake-20260720/assignments/A-PR176-MAP.json",
+    "sha256sum docs/codex_handoff/pr_backlog.yaml docs/PR_DELTAS/pr-144.md docs/PR_DELTAS/pr-146.md docs/PR_DELTAS/pr-148.md docs/PR_DELTAS/pr-173.md htt/obsstat/velocity_field_curl.py htt/src/common/cf4_velocity_estimators.py htt/htt/htt/core/tilted_flrw.py",
+    "rg -n -C 20 'PR-176|pr176' docs/codex_handoff/pr_backlog.yaml",
+    "sed -n '4822,4915p' docs/codex_handoff/pr_backlog.yaml",
+    "sed -n '2293,2368p' docs/codex_handoff/pr_backlog.yaml",
+    "sed -n '2928,3072p' docs/codex_handoff/pr_backlog.yaml",
+    "nl -ba docs/PR_DELTAS/pr-144.md docs/PR_DELTAS/pr-146.md docs/PR_DELTAS/pr-148.md docs/PR_DELTAS/pr-173.md (each file read separately)",
+    "nl -ba htt/obsstat/velocity_field_curl.py",
+    "nl -ba htt/src/common/cf4_velocity_estimators.py",
+    "nl -ba htt/htt/htt/core/tilted_flrw.py",
+    "rg -n 'def (load_sample|_design_flow|cosmic_variance_M|estimate|divergence|Delta_q)|H0_CF4|_H0 =|Vpds|Vpwf|Vpec|SGX|NON_INFORMATIVE|joint covariance|conservative dependence' <registered inputs>",
+    "git status --short",
+    "git rev-parse HEAD",
+    "rg --version",
+    "venv/bin/python --version"
+  ],
+  "tool_versions": {
+    "ripgrep": "14.1.0",
+    "python": "3.12.3",
+    "git_head_at_mapping": "e5dabc2a8021152a0529d25c0f0864ae70e3b749"
+  },
+  "write_scope": {
+    "production_or_shared_files_edited": false,
+    "result_path_only": ".agent-harness/runs/pr176-intake-20260720/results/A-PR176-MAP.json"
+  }
+}

@@ -2,6 +2,31 @@
 
 Record accepted, rejected, and deferred design decisions.
 
+## 2026-07-20 - PR-176 conservative non-identification boundary
+
+- Accepted: the scientific terminal follows only the frozen response/rank
+  router and is `NON_INFORMATIVE_Q_RESPONSE_UNAVAILABLE`; the failed covariance
+  self-consistency axis is reported separately and cannot silently replace it.
+- Accepted: all raw affine coefficients remain candidate diagnostics because
+  the frozen covariance battery fails. Null and non-identification are valid
+  reproducible closeouts and satisfy the card dependency without fabricating a
+  positive measurement.
+- Accepted: the physical STF diagonal basis uses explicit trace-free tensor
+  differences. The semantic erratum corrects this basis without changing
+  radii, frame, seeds, thresholds, response authorities, or covariance
+  authority.
+- Accepted: candidate packs cannot authorize their own scientific closeout.
+  The external adjudication receipt is bound by exact path, hash, manifest,
+  and generation root; any candidate-byte change requires fresh adjudication.
+- Rejected: independence-based joint likelihoods, PR-148 covariance reuse,
+  inferred q response, post-result reseeding/rethresholding, theta apex,
+  leakage immunity, and promotion to acceleration, tilt, anisotropy,
+  geometry/family, transfer/native, or public claims.
+- Deferred: PR-151 finalize and PR-155--158 until all 1,025 mocks, observed
+  authentication, 15 audits, full rehash, and producer/runner receipts are
+  terminal. PR-178 follows those cards; PR-180 remains locked by PR-172;
+  PR-181 remains covariance-deferred; hypothesis/native lanes remain closed.
+
 ## 2026-07-20 - PR-179 raw-CF4 conditional boundary
 
 - Accepted: the prospectively frozen raw-CF4 estimand terminates literally as

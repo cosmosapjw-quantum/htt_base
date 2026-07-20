@@ -1,0 +1,238 @@
+{
+  "schema_version": 1,
+  "run_id": "pr176-final-review-20260720",
+  "assignment_id": "A-PR176-FINAL-STAT",
+  "assignment_sha256": "c72237661a34f1cd6084620c43a3c6029ab862ac4799d26ead36d1a1858c0305",
+  "context_version": "e0c724f6cb8b7c5b676a3f46f445a863e8999e70106d16739e401c9ebf97e65c",
+  "independence_mode": "blind-results",
+  "claim_ids": [
+    "C-PR176-FINAL-STAT"
+  ],
+  "status": "fail",
+  "verdict": "FAIL_CLOSEOUT_REMEDIATION_REQUIRED",
+  "summary": "The observed theta point estimates, simultaneous intervals, failed frozen coverage gate, and null q outputs are numerically and interpretively reported without rethresholding or detection language. Closeout nevertheless fails on two concrete defects: the terminal state is not the one authorized by the frozen routing table, and the two diagonal trace-free shear coefficients are mislabeled relative to the implemented design basis.",
+  "scope_and_independence": {
+    "production_edits": false,
+    "sibling_results_read": false,
+    "repo_discovery": "targeted_only",
+    "files_read_after_bootstrap": [
+      "docs/research_program/long_horizon_rescue/pr176_spec.yaml",
+      "docs/audits/pr176_primary_sources/tsagas_divergence_record.md",
+      "htt/obsstat/cf4_affine_divergence.py",
+      "docs/generated/pr176_divergence_measurement.json",
+      "docs/generated/pr176_injection_validation.json",
+      "docs/generated/pr176_dependence_bound.json",
+      "docs/generated/pr176_cross_falsifier_result.json"
+    ],
+    "skill_applied": ".agents/skills/htt-physics-math-audit/SKILL.md"
+  },
+  "input_integrity": {
+    "context_version_matches_live_index": true,
+    "all_required_input_hashes_match_assignment": true,
+    "required_inputs": [
+      {
+        "path": "docs/research_program/long_horizon_rescue/pr176_spec.yaml",
+        "sha256": "d92d31f6adf8a879e62f47f82fefa47b2aa79f504fd0ce71b2fefce1cbb6c945"
+      },
+      {
+        "path": "docs/audits/pr176_primary_sources/tsagas_divergence_record.md",
+        "sha256": "f342c76a151aed0669efe43a53fdd5d093f8bc98444bfcd9b8134c77abccc95f"
+      },
+      {
+        "path": "htt/obsstat/cf4_affine_divergence.py",
+        "sha256": "b736790d1d1f27c8fd33244bfa33bfebd8bd420066454f9db0eae6c8f4465eec"
+      },
+      {
+        "path": "docs/generated/pr176_divergence_measurement.json",
+        "sha256": "dba7a974be1f45d0ff3946edf0cd9ce11567f652f543fe199555a4f837d94176"
+      },
+      {
+        "path": "docs/generated/pr176_injection_validation.json",
+        "sha256": "8c7935b60b57b053e79d10ca43a4b9846c1d83ae0766ccfbdc09a85a02888908"
+      },
+      {
+        "path": "docs/generated/pr176_dependence_bound.json",
+        "sha256": "c9a9deec21035cc9abdb3fe460374daa93d958d0c2cea61348d82a06431b1ef0"
+      },
+      {
+        "path": "docs/generated/pr176_cross_falsifier_result.json",
+        "sha256": "23d2cf1904c50d9a7287fdaa3f762c01d0a3084053c19c527e7f4a6095089906"
+      }
+    ]
+  },
+  "assumptions_and_conventions": [
+    "Catalogue velocities are v_radial = V3k - H0*Dist in the published CF4 CMB frame, with fixed H0 = 74.6 km s^-1 Mpc^-1 and physical Dist in Mpc.",
+    "The fixed 3000-row PCG64 subsample and cumulative physical-radius balls R = 75, 100, 125 Mpc define the analysis windows; lambda = 2R is a sensitivity convention, not a single-mode identification.",
+    "The affine model is a window-level radial regression, not an exact GR or light-cone divergence field.",
+    "The GLS covariance is treated as known for conditional propagation: PR-146 Gorski radial covariance plus registered per-group noise. It is not independently validated physical covariance and supplies no matched divergence-q covariance.",
+    "The reported coefficient covariance assumes the fitted linear-Gaussian GLS model and fixed design/covariance; H0 uncertainty, window selection uncertainty, and model misspecification are outside the marginal standard deviations.",
+    "Theta is a scalar with units km s^-1 Mpc^-1 and no apex. Formula response coefficients have reciprocal units Mpc s km^-1, so their product with theta is dimensionless, but both signed CF4-window q bridges remain unauthenticated.",
+    "No local/global tilt, acceleration, cosmological anisotropy, geometry, family, or transfer conclusion is authorized."
+  ],
+  "equations": [
+    {
+      "id": "E1_AFFINE_GLS",
+      "statement": "y = X beta + epsilon; beta_hat = (X^T C^-1 X)^-1 X^T C^-1 y; Cov(beta_hat | X,C) = (X^T C^-1 X)^-1.",
+      "audit": "The whitening implementation is algebraically equivalent to GLS, and the reported covariance is correctly scoped as model-conditional."
+    },
+    {
+      "id": "E2_TRACE",
+      "statement": "u_i(x) = B_i + (theta/3 delta_ij + S_ij)x_j implies n_i u_i = B dot n + (D/3) theta + D n_i S_ij n_j, with tr(S)=0.",
+      "audit": "The D/3 theta design column has the correct normalization and units for an affine trace."
+    },
+    {
+      "id": "E3_H0_ALIAS",
+      "statement": "Replacing H0 by H0 + delta_H changes y by -delta_H D; since X_theta = D/3, theta_hat(H0+delta_H) = theta_hat(H0) - 3 delta_H exactly.",
+      "audit": "The deterministic alias fixture and fixed-H0 policy are correct."
+    },
+    {
+      "id": "E4_SIMULTANEOUS_INTERVALS",
+      "statement": "For m=3 radii, I_i = theta_hat_i +/- z_(1-alpha/(2m))*se_i, with alpha=0.05 and z=2.3939797998185104. Interval arithmetic I_i-I_j gives a dependence-robust contrast interval whenever all marginal intervals cover simultaneously.",
+      "audit": "Independent recomputation exactly reproduces all three intervals and the reported adjacent-radius contrast bounds; no nested-radius independence is used."
+    },
+    {
+      "id": "E5_FORMULA_ONLY_RESPONSE",
+      "statement": "lambda_H=c/H0; R1=(2/3)*(1+(lambda_H/lambda)^2/6)/H0; R2=(lambda_H/lambda)^2/(9H0).",
+      "audit": "The recorded coefficients are dimensionally consistent formula projections only. Because the signed CF4-window bridges are unauthenticated, q estimates and intervals correctly remain null."
+    },
+    {
+      "id": "E6_STF_BASIS",
+      "statement": "a D(nx^2-nz^2)+b D(ny^2-nz^2) = D n^T diag(a,b,-a-b)n. Therefore a=Sxx and b=Syy, while Sxx-Szz=2a+b and Syy-Szz=a+2b.",
+      "audit": "This proves the implemented diagonal STF columns do not have the names assigned in the spec and output."
+    }
+  ],
+  "independent_numerical_checks": {
+    "theta_estimate_over_marginal_sd": {
+      "75_Mpc": 0.8581630347147376,
+      "100_Mpc": 1.2176623393088404,
+      "125_Mpc": 1.2922571464895023
+    },
+    "bonferroni_95_percent_theta_intervals": {
+      "75_Mpc": [
+        -12.991310311101996,
+        27.509529586749572
+      ],
+      "100_Mpc": [
+        -7.4647956566003195,
+        22.919128091213867
+      ],
+      "125_Mpc": [
+        -5.560634331547645,
+        18.605241215584236
+      ]
+    },
+    "all_simultaneous_theta_intervals_contain_zero": true,
+    "coverage_gate": {
+      "nominal_probability": 0.95,
+      "draws_per_component": 5000,
+      "accepted_success_count_range_from_frozen_Wilson_rule": [
+        4720,
+        4780
+      ],
+      "failed_components": [
+        {
+          "radius_mpc": 100,
+          "component": "Sxy",
+          "successes": 4787,
+          "coverage": 0.9574,
+          "wilson_95": [
+            0.9514422309563567,
+            0.9626554753043052
+          ]
+        },
+        {
+          "radius_mpc": 125,
+          "component": "Syz",
+          "successes": 4784,
+          "coverage": 0.9568,
+          "wilson_95": [
+            0.9508052913566617,
+            0.9620933361463341
+          ]
+        }
+      ],
+      "theta_components_pass_at_all_radii": true,
+      "one_component_acceptance_probability_if_true_coverage_is_0_95": 0.9523021500171788,
+      "illustrative_probability_any_of_30_independent_components_fails": 0.769196205130755,
+      "interpretation": "The last probability is an independence illustration only; actual component indicators are correlated. It shows why this frozen coefficient-space gate miss must remain a prospective process/calibration miss, not be promoted to evidence that the physical covariance or theta response is false. No reseeding, threshold change, or post-result multiplicity repair is permitted."
+    }
+  },
+  "findings": [
+    {
+      "finding_id": "PR176-STAT-001",
+      "severity": "P1",
+      "title": "The emitted terminal state is outside the frozen routing rule for the observed gate state",
+      "claim_id": "C-PR176-FINAL-STAT",
+      "verdict": "fail",
+      "evidence": [
+        "docs/research_program/long_horizon_rescue/pr176_spec.yaml:244-264 routes NON_INFORMATIVE_DIVERGENCE_RESPONSE only when a registered radius fails rank, condition, or theta-information gates and prospectively expects NON_INFORMATIVE_Q_RESPONSE_UNAVAILABLE before PR-155.",
+        "docs/generated/pr176_divergence_measurement.json:2 reports all_divergence_response_gates_pass=true; all ranks are 10/10, standardized conditions are 1.87-1.93, and theta retained information is 0.683-0.709.",
+        "docs/generated/pr176_injection_validation.json:2 reports all_injection_gates_pass=false solely through Sxy at 100 Mpc and Syz at 125 Mpc; all deterministic injections and all theta coverage components pass.",
+        "docs/generated/pr176_dependence_bound.json records both signed q bridges unavailable and no matched divergence-q covariance.",
+        "docs/generated/pr176_cross_falsifier_result.json:2,27,104-105 simultaneously sets divergence_channel_measured=false, calls the output a concrete raw-CF4 measurement, and emits NON_INFORMATIVE_DIVERGENCE_RESPONSE for a broadened response/injection condition not present in the frozen truth table."
+      ],
+      "impact": "The result remains conservative and no q/significance claim leaks, but it misidentifies the first failed scientific gate. A nuisance-component coefficient-space Monte Carlo miss is converted into divergence-response unavailability even though the prospectively registered rank/information response gates pass. This obscures the actual non-identification cause and silently changes the frozen terminal semantics after observing results.",
+      "required_fix": "Do not rerun, reseed, relax, or rethreshold the failed coverage gate. Preserve it verbatim as a failed prospective injection/calibration gate, but route the scientific terminal according to the frozen table: NON_INFORMATIVE_Q_RESPONSE_UNAVAILABLE, because the divergence rank/information gates pass and both signed q bridges are unavailable. Replace the contradictory single boolean with typed fields that distinguish raw coefficients computed, divergence rank/information gate pass, injection gate fail, and q scientific eligibility. If injection failure is intended to own a terminal in future work, preregister a distinct terminal rule before any new result is viewed."
+    },
+    {
+      "finding_id": "PR176-STAT-002",
+      "severity": "P2",
+      "title": "Diagonal trace-free shear coefficients are mislabeled relative to the implemented basis",
+      "claim_id": "C-PR176-FINAL-STAT",
+      "verdict": "fail",
+      "evidence": [
+        "docs/research_program/long_horizon_rescue/pr176_spec.yaml:149-159 and htt/obsstat/cf4_affine_divergence.py:49-50,157-158 pair names Sxx_minus_Szz and Syy_minus_Szz with columns D(nx^2-nz^2) and D(ny^2-nz^2).",
+        "Direct expansion gives D[a nx^2+b ny^2-(a+b)nz^2], so the fitted coefficients are Sxx=a and Syy=b under Szz=-a-b. The named contrasts are instead 2a+b and a+2b."
+      ],
+      "impact": "The diagonal-shear nuisance span is unchanged and the theta estimate, rank, residuals, and terminal non-identification are invariant under the corresponding invertible two-parameter reparameterization. However, every reported diagonal shear estimate and injection truth is attached to the wrong physical component name, so those nuisance outputs are not scientifically interpretable as written.",
+      "required_fix": "Either rename the two coefficients everywhere to Sxx and Syy with Szz=-Sxx-Syy, or implement the literal contrast basis: D(2nx^2-ny^2-nz^2)/3 for Sxx-Szz and D(-nx^2+2ny^2-nz^2)/3 for Syy-Szz, then regenerate the affected coefficient and injection artifacts. Add a deterministic arbitrary-STF tensor fixture that verifies reported parameters against physical matrix entries rather than only fitting design-generated coefficient vectors."
+    }
+  ],
+  "validated_non_findings": [
+    "The three theta point estimates are reported with marginal standard deviations and conservative simultaneous intervals; all intervals contain zero and no significance or detection field is populated.",
+    "The failed covariance self-consistency gate is exposed exactly, including seeds, draw counts, component rates, and Wilson intervals; there is no post-result threshold relaxation or reseeding in the assigned evidence.",
+    "The artifacts explicitly state that coefficient-space injections do not validate the Gorski covariance, the physical velocity model, or cosmology.",
+    "The fixed-H0 alias, scalar-without-apex rule, no-axis-scan policy, and distinction from translation/constant radial monopole are correctly stated without claiming leakage immunity.",
+    "Both q point estimates and q intervals remain null; formula coefficients are marked non-scientific, PR-148 covariance is not reused, and cross-channel dependence is not assumed.",
+    "No acceleration, global tilt, cosmological anisotropy, Bianchi geometry/family, or native-transfer claim appears in the assigned result slice."
+  ],
+  "claim_tier_recommendation": {
+    "maximum": "C3 conditional, standard_internal, public_use=false",
+    "current_safe_statement": "Fixed-H0, fixed-window raw-CF4 affine-trace coefficients were numerically computed under a model-conditional GLS covariance. The prospectively frozen coefficient-space injection gate failed, and no authenticated signed q response exists; therefore no q-channel, acceleration, significance, tilt, anisotropy, geometry, family, or transfer conclusion is available.",
+    "closeout_allowed": false,
+    "reason": "Terminal routing and diagonal-STF labeling must be corrected without changing the observed numbers or frozen thresholds."
+  },
+  "fatal_blockers": [
+    "PR176-STAT-001 blocks final closeout because the machine-readable terminal does not follow the frozen gate order for the observed state."
+  ],
+  "required_tests_or_artifacts": [
+    "A frozen-truth-table regression showing: source authority pass + divergence rank/information pass + injection fail + q response unavailable preserves the injection failure and emits the prospectively authorized q-response-unavailable terminal, unless a separately preregistered injection terminal exists.",
+    "A semantic consistency test forbidding divergence_channel_measured=false alongside prose asserting a concrete measured divergence unless typed raw-computation versus inferential-eligibility fields explain the distinction.",
+    "An arbitrary symmetric trace-free tensor fixture checking the physical diagonal entries and the exact meanings of the two reported diagonal shear parameters.",
+    "A regenerated hash-bound result pack and fresh independent statistics/claim review; do not relabel this FAIL envelope."
+  ],
+  "tools": {
+    "python": "3.12.3",
+    "numpy": "2.5.0",
+    "scipy": "1.18.0",
+    "shell": "bash"
+  },
+  "commands_run": [
+    {
+      "command": "sha256sum docs/research_program/long_horizon_rescue/pr176_spec.yaml docs/audits/pr176_primary_sources/tsagas_divergence_record.md htt/obsstat/cf4_affine_divergence.py docs/generated/pr176_divergence_measurement.json docs/generated/pr176_injection_validation.json docs/generated/pr176_dependence_bound.json docs/generated/pr176_cross_falsifier_result.json",
+      "outcome": "pass; all hashes matched the assignment"
+    },
+    {
+      "command": "jq . <each of the four assigned docs/generated/pr176_*.json evidence files>",
+      "outcome": "pass; parsed and inspected"
+    },
+    {
+      "command": "venv/bin/python -c <SciPy independent Bonferroni interval, z-score, Wilson acceptance-count, and Binomial acceptance-probability recomputation>",
+      "outcome": "pass; reproduced z=2.3939797998185104, all intervals, accepted counts 4720..4780, and component acceptance probability 0.9523021500171788"
+    },
+    {
+      "command": "rg -n <targeted equation, gate, coverage, and terminal patterns> <assigned evidence files>",
+      "outcome": "pass; exact evidence locations recorded"
+    }
+  ]
+}

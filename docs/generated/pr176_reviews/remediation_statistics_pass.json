@@ -1,0 +1,255 @@
+{
+  "schema_version": 1,
+  "run_id": "pr176-final-review-20260720",
+  "assignment_id": "A-PR176-REVIEW2-STAT",
+  "assignment_sha256": "a3b134c9aca388b8b6a5ee2571933f2d406da5147500202e919757fd973f2416",
+  "context_version": "e0c724f6cb8b7c5b676a3f46f445a863e8999e70106d16739e401c9ebf97e65c",
+  "independence_mode": "adjudication",
+  "claim_ids": [
+    "C-PR176-REVIEW2-STAT"
+  ],
+  "status": "pass",
+  "verdict": "PASS_REMEDIATION_CLOSED",
+  "summary": "Both findings in the preserved first statistics review are closed on the hash-bound remediation evidence. The implemented diagonal STF columns now represent the named contrasts exactly and span the same nuisance subspace, leaving theta and its simultaneous intervals invariant to floating-point roundoff. The original seeds, draw count, acceptance thresholds, and failed prospective covariance-self-consistency state are retained on a separate validation axis. The scientific terminal now follows the frozen routing table to NON_INFORMATIVE_Q_RESPONSE_UNAVAILABLE, while all coefficients remain typed candidate diagnostics and all q, significance, family, and transfer outputs remain null.",
+  "scope_and_independence": {
+    "production_edits": false,
+    "result_envelope_only_write": true,
+    "sibling_results_read": [
+      ".agent-harness/runs/pr176-final-review-20260720/results/A-PR176-FINAL-STAT.json"
+    ],
+    "other_sibling_results_read": false,
+    "repo_discovery": "targeted_only",
+    "files_read_after_bootstrap": [
+      ".agent-harness/runs/pr176-final-review-20260720/results/A-PR176-FINAL-STAT.json",
+      "docs/research_program/long_horizon_rescue/pr176_spec.yaml",
+      "docs/research_program/long_horizon_rescue/pr176_spec_erratum.yaml",
+      "docs/audits/pr176_primary_sources/tsagas_divergence_record.md",
+      "htt/obsstat/cf4_affine_divergence.py",
+      "docs/generated/pr176_divergence_measurement.json",
+      "docs/generated/pr176_injection_validation.json",
+      "docs/generated/pr176_dependence_bound.json",
+      "docs/generated/pr176_cross_falsifier_result.json"
+    ],
+    "skills_applied": [
+      "htt-physmath-audit",
+      "htt-physics-math-audit",
+      "htt-statistical-hardening",
+      "htt-scientific-code-validation",
+      "htt-claim-firewall",
+      "htt-claim-provenance-ledger"
+    ]
+  },
+  "input_integrity": {
+    "context_version_matches_assignment": true,
+    "all_required_input_hashes_match_assignment": true,
+    "required_inputs": [
+      {
+        "path": ".agent-harness/runs/pr176-final-review-20260720/results/A-PR176-FINAL-STAT.json",
+        "sha256": "ad21543dd16a7537b07090b21c2701451d631c2552d34c297144e9b32dbe87cc"
+      },
+      {
+        "path": "docs/research_program/long_horizon_rescue/pr176_spec.yaml",
+        "sha256": "d92d31f6adf8a879e62f47f82fefa47b2aa79f504fd0ce71b2fefce1cbb6c945"
+      },
+      {
+        "path": "docs/research_program/long_horizon_rescue/pr176_spec_erratum.yaml",
+        "sha256": "1793516af0032e2e2b341ef37ff4cb59c49f2b7871e664e2d12154c1bb3cfd92"
+      },
+      {
+        "path": "docs/audits/pr176_primary_sources/tsagas_divergence_record.md",
+        "sha256": "f342c76a151aed0669efe43a53fdd5d093f8bc98444bfcd9b8134c77abccc95f"
+      },
+      {
+        "path": "htt/obsstat/cf4_affine_divergence.py",
+        "sha256": "dac27ef6651134360001e9048c73c74db3557d4782c40e959a366e683b3719f9"
+      },
+      {
+        "path": "docs/generated/pr176_divergence_measurement.json",
+        "sha256": "5ce23ff4df7061bf71192449c851f2d3e6a8a225283bdd240c1be40711ffd2b5"
+      },
+      {
+        "path": "docs/generated/pr176_injection_validation.json",
+        "sha256": "a3f5840df4e793168b8a3511bae6219855bc1d734b3b12b66c4cfeef56f5dd5c"
+      },
+      {
+        "path": "docs/generated/pr176_dependence_bound.json",
+        "sha256": "b14012f78b4dd442da8cf68eaeda8e5c45f7d45f6c820a0ead3f2e87d372ea29"
+      },
+      {
+        "path": "docs/generated/pr176_cross_falsifier_result.json",
+        "sha256": "03db1115e56223fda92b5ca6116dcce410405af2d9626caf4d98975d1ed444c6"
+      }
+    ],
+    "cross_artifact_bindings": {
+      "common_code_sha256": "dac27ef6651134360001e9048c73c74db3557d4782c40e959a366e683b3719f9",
+      "common_config_sha256": "3ecc7f775cfd646ad286987fd4988bcbfb5c0f513ae96f422e73e719b974b606",
+      "common_erratum_sha256": "1793516af0032e2e2b341ef37ff4cb59c49f2b7871e664e2d12154c1bb3cfd92",
+      "consistent": true
+    }
+  },
+  "assumptions_and_conventions": [
+    "The original frozen spec remains authoritative except for the additive hash-bound erratum that corrects the algebraic basis and terminal interpretation without changing observed-data thresholds, seeds, radii, frame, response authority, or covariance authority.",
+    "For d1=Sxx-Szz and d2=Syy-Szz with tr(S)=0, Sxx=(2*d1-d2)/3, Syy=(-d1+2*d2)/3, and Szz=-(d1+d2)/3.",
+    "Theta is the scalar affine trace coefficient in km s^-1 Mpc^-1, has no apex, and is exactly aliased with the fixed H0 convention by theta_hat(H0+delta_H)=theta_hat(H0)-3*delta_H.",
+    "The PR-146 within-divergence covariance is a model-conditional propagation covariance. The coefficient-space injection is a self-consistency check, not independent validation of physical covariance or cosmology.",
+    "Formula response coefficients are convention-audit candidates only; neither separately signed CF4-window q bridge nor a matched divergence-q covariance is authenticated.",
+    "No acceleration, global tilt, cosmological anisotropy, geometry, Bianchi family, or transfer conclusion is authorized."
+  ],
+  "prior_finding_adjudication": [
+    {
+      "finding_id": "PR176-STAT-001",
+      "original_severity": "P1",
+      "closure": "closed",
+      "evidence": [
+        "docs/research_program/long_horizon_rescue/pr176_spec.yaml:244-264 freezes source, divergence rank/information, signed-q response, dependence, and falsifier routing, with NON_INFORMATIVE_Q_RESPONSE_UNAVAILABLE as the expected pre-PR155 route.",
+        "docs/research_program/long_horizon_rescue/pr176_spec_erratum.yaml:39-53 keeps the covariance self-consistency miss on a separate validation axis and restores the frozen q-response-unavailable terminal.",
+        "docs/generated/pr176_divergence_measurement.json:2 records all divergence response gates passing; docs/generated/pr176_injection_validation.json:2 records the covariance self-consistency gate failing.",
+        "docs/generated/pr176_cross_falsifier_result.json:27-28 and 111-113 distinguish accepted measurement false, rank/information pass true, the q-response-unavailable terminal, and the preserved failed validation axis."
+      ],
+      "adjudication": "The earlier broadened divergence-response terminal and contradictory boolean have been replaced by typed orthogonal state. With rank/information passing and both q bridges unavailable, the emitted terminal now exactly matches the frozen first failing scientific gate. No reseed, threshold relaxation, or post-result terminal invention is present."
+    },
+    {
+      "finding_id": "PR176-STAT-002",
+      "original_severity": "P2",
+      "closure": "closed",
+      "evidence": [
+        "docs/research_program/long_horizon_rescue/pr176_spec_erratum.yaml:24-38 states the literal contrast mapping and the unchanged-nuisance-span invariant.",
+        "htt/obsstat/cf4_affine_divergence.py:160-161 implements Dist*(2*nx^2-ny^2-nz^2)/3 and Dist*(-nx^2+2*ny^2-nz^2)/3 under the names Sxx_minus_Szz and Syy_minus_Szz.",
+        "docs/generated/pr176_divergence_measurement.json reports regenerated named contrast coefficients while retaining the previous theta simultaneous intervals to at most 8.704148513061227e-14 absolute difference.",
+        "Independent 1000-direction arbitrary-STF scratch evaluation reproduced n_i S_ij n_j from the implemented five STF columns with maximum absolute error 8.526512829121202e-14 and reproduced the old diagonal nuisance span with maximum absolute error 9.237055564881302e-14."
+      ],
+      "adjudication": "The coefficient labels now agree with their physical matrix contrasts. The old and new diagonal columns are related by the invertible map d1=2*a+b, d2=a+2*b, so the nuisance projection, theta coefficient/covariance, rank, retained theta information, and residual fit are invariant up to floating-point roundoff. The concrete scientific labeling defect is removed."
+    }
+  ],
+  "remediation_checks": {
+    "corrected_stf_parameterization": {
+      "pass": true,
+      "matrix_mapping": {
+        "Sxx": "(2*d1-d2)/3",
+        "Syy": "(-d1+2*d2)/3",
+        "Szz": "-(d1+d2)/3"
+      },
+      "independent_arbitrary_stf_max_abs_error": 8.526512829121202e-14,
+      "old_new_diagonal_span_max_abs_error": 9.237055564881302e-14
+    },
+    "theta_invariance": {
+      "pass": true,
+      "maximum_absolute_difference_from_preserved_first_review_intervals": 8.704148513061227e-14,
+      "current_theta_centers_by_radius_mpc": {
+        "75": 7.259109637823702,
+        "100": 7.727166217306756,
+        "125": 6.522303442018318
+      },
+      "bonferroni_critical_z": 2.3939797998185104,
+      "reconstructed_interval_max_abs_error": 0.0
+    },
+    "frozen_terminal_routing": {
+      "pass": true,
+      "divergence_rank_information_gate_pass": true,
+      "covariance_self_consistency_gate_pass": false,
+      "signed_q_response_bridges_available": false,
+      "terminal": "NON_INFORMATIVE_Q_RESPONSE_UNAVAILABLE",
+      "validation_axis": "FROZEN_COVARIANCE_SELF_CONSISTENCY_GATE_FAILED"
+    },
+    "coverage_gate_preservation": {
+      "pass": true,
+      "seeds_by_radius_mpc": {
+        "75": 176000,
+        "100": 176001,
+        "125": 176002
+      },
+      "draws_per_radius": 5000,
+      "accepted_marginal_coverage_interval": [
+        0.93,
+        0.97
+      ],
+      "wilson_interval_must_contain_nominal": true,
+      "current_failed_components": [
+        {
+          "radius_mpc": 100,
+          "component": "Syy_minus_Szz",
+          "successes": 4712,
+          "coverage": 0.9424,
+          "wilson_95": [
+            0.9355960101702596,
+            0.948524727148754
+          ]
+        }
+      ],
+      "interpretation": "The preserved quantity is the prospective failed gate under unchanged seeds, draw count, and thresholds. The exact failed component identity changed from the first artifact because the erroneous diagonal coordinate system and its Cholesky-generated coefficient draws were legitimately regenerated; the preserved first FAIL envelope retains the old Sxy/Syz receipt. This is disclosed parameterization remediation, not reseeding or threshold tuning."
+    },
+    "candidate_only_coefficient_language": {
+      "pass": true,
+      "raw_coefficients_computed": true,
+      "accepted_measurement": false,
+      "coefficient_status": "COMPUTED_CANDIDATE_DIAGNOSTICS_COVARIANCE_SELF_CONSISTENCY_GATE_FAILED",
+      "physical_interpretation": "catalogue_window_affine_trace_candidate_only"
+    },
+    "q_response_non_identification": {
+      "pass": true,
+      "q_point_estimates_all_null": true,
+      "q_intervals_all_null": true,
+      "both_signed_bridges_unauthenticated_and_null": true,
+      "cross_channel_interval_null": true,
+      "significance_null": true,
+      "family_identification_null": true,
+      "native_transfer_validation_null": true
+    },
+    "dependence_claims": {
+      "pass": true,
+      "within_divergence_method": "Bonferroni_marginal_intervals_plus_interval_arithmetic",
+      "within_divergence_intervals_match_measurement_exactly": true,
+      "nested_radius_independence_assumed": false,
+      "matched_divergence_q_covariance_available": false,
+      "pr148_covariance_reused": false,
+      "future_cross_channel_bound_only": "abs(cov_xy)<=sqrt(var_x*var_y) with Bonferroni across six preregistered contrasts"
+    },
+    "claim_ceiling": {
+      "pass": true,
+      "maximum": "C3 conditional, standard_internal, public_use=false",
+      "forbidden_promotion_detected": false
+    }
+  },
+  "new_findings": [],
+  "fatal_blockers": [],
+  "residual_risks": [
+    "The frozen coefficient-space covariance self-consistency gate remains failed; the raw affine coefficients are candidate diagnostics and not an accepted covariance-validated physical divergence measurement.",
+    "Neither signed q-response bridge nor matched divergence-q dependence is authenticated, so the q channel remains non-identified by construction.",
+    "The assigned evidence supports the current STF mapping directly and the reviewer independently exercised an arbitrary physical STF tensor. This bounded review does not make a separate repository-wide regression-coverage claim beyond the provided source and generated injection artifacts."
+  ],
+  "claim_tier_recommendation": {
+    "maximum": "C3 conditional, standard_internal, public_use=false",
+    "current_safe_statement": "Under fixed H0 and fixed CF4 catalogue windows, raw affine-trace coefficients were reproducibly computed as candidate diagnostics. The frozen coefficient-space covariance self-consistency gate failed, both signed q-response bridges and matched cross-channel covariance remain unavailable, and the registered terminal is NON_INFORMATIVE_Q_RESPONSE_UNAVAILABLE. No q, acceleration, significance, tilt, anisotropy, geometry, family, or transfer conclusion is available.",
+    "statistics_physics_closeout_allowed": true,
+    "reason": "Every preserved first-review finding is concretely remediated without changing the scientific claim ceiling or hiding the failed validation axis."
+  },
+  "tools": {
+    "python": "3.12.3",
+    "numpy": "2.5.0",
+    "scipy": "1.18.0",
+    "pyyaml": "6.0.3",
+    "shell": "bash"
+  },
+  "commands_run": [
+    {
+      "command": "sha256sum <the nine assignment-required inputs>",
+      "outcome": "pass; every hash matched the registered assignment"
+    },
+    {
+      "command": "sed -n <complete ranges> <context pack, assignment, and each required input>",
+      "outcome": "pass; only the registered first statistics result was read among sibling results"
+    },
+    {
+      "command": "venv/bin/python -c <JSON/YAML reconstruction of theta intervals, coverage state, q nulls, routing, and arbitrary-STF matrix identity>",
+      "outcome": "pass; interval drift <=8.704148513061227e-14, physical-STF error <=8.526512829121202e-14, unchanged seeds/draws/thresholds, failed validation axis retained, terminal and all q nulls correct"
+    },
+    {
+      "command": "venv/bin/python -c <cross-artifact binding, Bonferroni, dependence, candidate-status, and forbidden-output checks>",
+      "outcome": "pass; four artifacts share code/config/erratum bindings, intervals reconstruct exactly, no independence is asserted, and all forbidden scientific outputs are null"
+    },
+    {
+      "command": "rg -n <targeted remediation keys> <assignment-required inputs>",
+      "outcome": "pass; exact evidence locations recorded without broad repository discovery"
+    }
+  ]
+}

@@ -2,6 +2,33 @@
 
 Update every five PRs with percent complete and blockers.
 
+## PR-176 closeout (not a five-PR checkpoint)
+
+Date: 2026-07-20
+
+- Active DAG: 109/130 complete = 83.85%; dependency-weighted completion
+  90.25%; critical-path proxy 50/56 = 89.29%.
+- Foreground: none. Background: PR-151 acquisition. Terminal failed with
+  receipt: PR-172. Pending: 10. Dormant external/native: 9.
+- PR-176 result: `NON_INFORMATIVE_Q_RESPONSE_UNAVAILABLE`, with raw affine
+  coefficients retained only as candidates and the separate frozen covariance
+  self-consistency validation axis failed.
+- Exact nine-file replay, 18 targeted tests, 53 adjacent regression tests,
+  smoke 6, 21/21 mutation kills, publication recovery, and independent final
+  adjudication pass. Three first-review FAILs remain preserved alongside three
+  remediation PASSes.
+- Claim drift: none. No accepted divergence measurement, q estimate,
+  significance, acceleration, anisotropy, geometry, family, transfer/native,
+  or public-use claim is authorized.
+- PR-151 close probe: 160/1000 EZmocks, 0/25 Abacus, 10/15 audit members,
+  40 growing partials / 11,443,806,784 bytes, fresh log, 810.65 GiB free.
+- No canonical checkpoint is due at 109; the next is 110. There is no ordinary
+  unblocked defensible card. PR-174 and PR-182 are separately reported as
+  unblocked hypothesis-only and must not be auto-scheduled.
+- Next action: continue read-only PR-151 monitoring. On terminal eligibility,
+  run finalize and then PR-155--158. Until then, do not start hypothesis-only,
+  PR-180, PR-181, PR-183, or partial-mock science.
+
 ## PR-179 planned execution-sequence checkpoint
 
 Date: 2026-07-20

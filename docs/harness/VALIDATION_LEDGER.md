@@ -2,6 +2,37 @@
 
 Record commands actually run. Never mark skipped checks as passed.
 
+## PR-176 - conservative affine-divergence / q non-identification
+
+Date: 2026-07-20
+
+Changed surfaces: physical affine estimator, frozen spec plus semantic
+erratum, deterministic producer/verifier, recoverable nine-file result pack,
+tests, byte-preserved review archive, PR delta, status mirrors, and handoff
+state. No PR4 payload and no partial DESI mock entered the analysis.
+
+| Command or check | Result | Notes |
+|---|---:|---|
+| producer `--preflight` | PASS | Source/spec/config authority authenticated before numerical evaluation. |
+| producer `--write` and exact `--check` | PASS | 9/9 byte-current; generation root `b917b933...c9860d`. |
+| PR-176 targeted pytest | PASS | 18 passed; final adjudicator independently repeated 18/18. |
+| PR-145/146/148 plus PR-176 regression | PASS | 53 passed in 43.58s. |
+| deterministic injection and covariance battery | MIXED / retained | Exact injections pass; unchanged 100 Mpc `Syy_minus_Szz` coverage gate fails. |
+| mutation battery | PASS | 21/21 killed, including coordinated numerical reseals. |
+| publication recovery | PASS | 18 replacement fault points recover; post-install cleanup fault rolls forward. |
+| final hash-pinned adjudication | PASS | Exact replay, algebra, coverage, mutation, publication, and claim boundary checked; envelope `12582506...33fb42a`. |
+| review archive `--write` / `--check` | PASS | 12 envelopes byte-preserved, including initial FAILs and superseded ERROR. |
+| PR-176/status/DAG/PR-167 regression | PASS | 116 passed in 20.60s after final status transition. |
+| `venv/bin/python -m pytest -m smoke -q` | PASS | 6 passed, 9,241 deselected. |
+| claim-language dry run | PASS | Zero issues across implementation, spec, result pack, delta, and handoff surfaces. |
+| strict DAG and exact mirror checks | PASS | 130 cards; post-transition status synchronized; 109/130 complete. |
+| PR-151 closing fast probe | ACTIVE/NONTERMINAL | 160 EZmocks, zero Abacus, 10/15 audits, 40 partials / 11,443,806,784 bytes with positive partial/log growth, 810.65 GiB free; no restart. |
+
+Scientific impact: a reproducible internal q-response authority
+non-identification with a separately retained failed covariance
+self-consistency axis. No accepted divergence measurement, q/significance,
+acceleration, anisotropy, geometry, family, or transfer claim is validated.
+
 ## PR-179 - raw-CF4 H-only directional catalogue result
 
 Date: 2026-07-20

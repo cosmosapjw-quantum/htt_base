@@ -1,5 +1,41 @@
 # Project State
 
+## 2026-07-20 - PR-176 conservative divergence closeout
+
+This section supersedes the older active-DAG positions below; older sections
+remain historical records.
+
+- Active DAG: 130 cards, 109 completed, PR-172 terminal
+  failed-with-receipt, 10 pending, and 9 dormant external/native. Count
+  completion is 83.85%, dependency-weighted completion 90.25%, and the
+  critical-path proxy remains 50/56 = 89.29%. These are bookkeeping metrics.
+- PR-176 closes at `NON_INFORMATIVE_Q_RESPONSE_UNAVAILABLE`. Its three
+  fixed-window affine fits are identifiable internally, but the signed
+  CF4-window q-response bridges and matched divergence/q covariance are not
+  authenticated. q estimates, intervals, significance, and a joint
+  cross-channel falsifier remain null.
+- The affine coefficients are candidate diagnostics only. The separately
+  retained validation axis is
+  `FROZEN_COVARIANCE_SELF_CONSISTENCY_GATE_FAILED`; the unchanged 100 Mpc
+  `Syy_minus_Szz` coverage gate misses nominal 0.95. No seed or threshold was
+  changed after this result.
+- The three initial final-review FAILs are preserved. After correction, code,
+  statistics, and claim re-reviews pass, and an external adjudicator authorizes
+  only generation root `b917b933...c9860d` at internal conditional C3.
+- PR-151 remains the sole background acquisition and is non-terminal: 160
+  EZmocks, zero Abacus, 10/15 audit members, growing partial bytes, a fresh
+  log, and 810.65 GiB free at the closing PR-176 probe. Partial mocks remain
+  forbidden for science; finalize and PR-155--158 were not started.
+- No foreground defensible card is currently schedulable. PR-180 is locked by
+  PR-172's failed required-success edge; PR-178 waits for terminal PR-151 and
+  PR-155--158; PR-181 remains covariance-deferred; PR-174/175/182 remain
+  hypothesis-only; PR-183 remains native-dependent.
+- The canonical count checkpoint remains due at exactly 110 completed cards.
+  The user-planned checkpoint-110 sequence artifact remains an honest
+  historical 108-card boundary and is not rewritten.
+- Planck PR3 raw data remain retained pending PR4 receipt preparation. PR4
+  simulation access remains external and no PR4 data analysis was inferred.
+
 ## 2026-07-20 - PR-179 conditional raw-CF4 closeout
 
 This section supersedes the older active-DAG positions below; older sections

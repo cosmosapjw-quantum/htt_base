@@ -1,0 +1,216 @@
+{
+  "schema_version": 2,
+  "run_id": "pr176-final-review-20260720",
+  "assignment_id": "A-PR176-FINAL-CODE",
+  "context_version": "e0c724f6cb8b7c5b676a3f46f445a863e8999e70106d16739e401c9ebf97e65c",
+  "independence_mode": "blind-results",
+  "claim_ids": [
+    "C-PR176-FINAL-CODE"
+  ],
+  "status": "fail",
+  "verdict": "FAIL_MUST_FIX",
+  "summary": "The assigned bytes are current and the implemented GLS solve is numerically stable, but PR-176 is not ready to close. The frozen terminal truth table is not implemented faithfully, the diagonal STF coefficients are algebraically mislabeled, the semantic mutation gate accepts load-bearing numerical reseals, the advertised atomic writer can leave a mixed generation, and the registered exact-injection tolerance is not load-bearing.",
+  "input_validation": {
+    "context_version_matches": true,
+    "assignment_registered": true,
+    "all_required_input_hashes_match": true,
+    "sibling_results_read": [],
+    "production_files_edited": []
+  },
+  "evidence_read": [
+    {
+      "path": "docs/research_program/long_horizon_rescue/pr176_spec.yaml",
+      "sha256": "d92d31f6adf8a879e62f47f82fefa47b2aa79f504fd0ce71b2fefce1cbb6c945"
+    },
+    {
+      "path": "htt/obsstat/cf4_affine_divergence.py",
+      "sha256": "b736790d1d1f27c8fd33244bfa33bfebd8bd420066454f9db0eae6c8f4465eec"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr176_affine_divergence.py",
+      "sha256": "516912d1557b46ed26f1efdb3aa72d4620edac3de84fd0340258f047a916db34"
+    },
+    {
+      "path": "tests/obsstat/test_cf4_affine_divergence.py",
+      "sha256": "e93be834f95ad88566601deeaadbb7624d08521cb29134a8c113b6e40d0e35d8"
+    },
+    {
+      "path": "tests/pr_cards/test_pr_176_tsagas_div_v_q_dipole_cross_falsifier_ad_hoc_clo.py",
+      "sha256": "76706f392a94aa21ce7b034ca920556285f38a6ccd8510a2826be8f174525111"
+    },
+    {
+      "path": "docs/generated/pr176_artifact_manifest.json",
+      "sha256": "4775a9fc44d7f00be65498f65c3a86679f41c1470661d6230c7945d393b45148"
+    }
+  ],
+  "tool_versions": {
+    "python": "3.12.3",
+    "numpy": "2.5.0",
+    "scipy": "1.18.0",
+    "pytest": "invoked through venv/bin/python -m pytest"
+  },
+  "findings": [
+    {
+      "finding_id": "F-PR176-FINAL-CODE-001",
+      "claim_id": "C-PR176-FINAL-CODE",
+      "severity": "P1",
+      "category": "frozen-terminal-routing",
+      "title": "A covariance-injection excursion is incorrectly relabeled as a failed divergence response",
+      "evidence": [
+        "pr176_spec.yaml:244-264 routes NON_INFORMATIVE_DIVERGENCE_RESPONSE only when a registered radius fails rank, conditioning, or theta-information and records NON_INFORMATIVE_Q_RESPONSE_UNAVAILABLE as the expected pre-PR155 route.",
+        "run_pr176_affine_divergence.py:490-507 instead defines divergence_ok as response_gates AND injection_gates, then sets both the terminal and divergence_channel_measured from that merged boolean.",
+        "test_pr_176_tsagas_div_v_q_dipole_cross_falsifier_ad_hoc_clo.py:96-131 establishes that all three rank/response gates pass and that only two coefficient-space coverage receipts fail; lines 151-165 nevertheless lock the divergence-response terminal.",
+        "Independent in-memory replay returned response=true, injections=false, terminal=NON_INFORMATIVE_DIVERGENCE_RESPONSE, divergence_channel_measured=false, three non-null theta rows, and an interpretation claiming a concrete divergence measurement."
+      ],
+      "reproducible_command": "env PYTHONHASHSEED=0 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONPATH=htt:htt/src venv/bin/python -c '<import runner; call _build_payloads; print response, injection, terminal, measured, theta count>'",
+      "consequence": "The authoritative terminal and measured/not-measured flag contradict the frozen truth table and the payload's own primitives. This is not merely conservative wording: it records the wrong failure class and can misroute downstream status consumers.",
+      "required_change": "Compute divergence response eligibility solely from the frozen rank, condition, singular-ratio, and theta-information primitives. Preserve injection validation as a separate axis. Route from the frozen ordered rules; if an injection failure is intended to create a new terminal, record that as an explicit post-result contract dispute rather than silently changing the frozen condition. Regenerate the result pack and add a truth-table test that reconstructs the terminal from primitives."
+    },
+    {
+      "finding_id": "F-PR176-FINAL-CODE-002",
+      "claim_id": "C-PR176-FINAL-CODE",
+      "severity": "P1",
+      "category": "mutation-gate-false-green",
+      "title": "The semantic validator and mutation report do not protect numerical result primitives",
+      "evidence": [
+        "run_pr176_affine_divergence.py:325-357 validates claim flags and q/dependence fields but does not reconstruct theta estimates, uncertainties, response flags, injection flags, intervals, or terminal consistency from frozen inputs.",
+        "run_pr176_affine_divergence.py:360-408 runs only 16 hand-selected metadata/claim mutations and then reports all_killed.",
+        "An in-memory adversarial replay changed the first theta estimate to 1e99, changed all_divergence_response_gates_pass to false, and changed all_injection_gates_pass to true in three separate candidates; all three candidates survived _validate_core.",
+        "The read-only byte checker correctly rejected a one-byte stale artifact in a temporary generation, but it recomputes from the same live evaluator and therefore does not cure a regenerated implementation defect."
+      ],
+      "reproducible_command": "env PYTHONHASHSEED=0 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONPATH=htt:htt/src venv/bin/python -c '<build core payloads; mutate theta/response/injection fields; call _validate_core>'",
+      "observed_result": {
+        "theta_numeric_reseal": "SURVIVED",
+        "response_gate_reseal": "SURVIVED",
+        "injection_gate_reseal": "SURVIVED"
+      },
+      "consequence": "The green 16/16 mutation receipt is not evidence that the numerical pack is fail-closed. A wrong evaluator or coordinated regeneration can remain byte-current and self-consistent, as the STF-label defect in this review demonstrates.",
+      "required_change": "Add independent reconstruction or exact pinned fixtures for theta, covariance, diagnostics, interval and terminal primitives; execute numerical and coordinated mutations; make the validator derive terminal state from primitive receipts; and bind the accepted evaluator/runner generation in an external closeout receipt rather than relying on a live self-derived content root."
+    },
+    {
+      "finding_id": "F-PR176-FINAL-CODE-003",
+      "claim_id": "C-PR176-FINAL-CODE",
+      "severity": "P2",
+      "category": "affine-algebra",
+      "title": "The diagonal STF design columns do not represent the coefficient names emitted by the artifacts",
+      "evidence": [
+        "pr176_spec.yaml:145-164 and cf4_affine_divergence.py:45-53 label the two diagonal coefficients Sxx_minus_Szz and Syy_minus_Szz.",
+        "cf4_affine_divergence.py:151-162 uses d*(nx^2-nz^2) and d*(ny^2-nz^2). Under trace-free Szz=-Sxx-Syy these columns multiply Sxx and Syy, not Sxx-Szz and Syy-Szz.",
+        "Independent physical-matrix fixture S=diag(2,-1,-1) has declared differences (3,0), while fitting the implemented columns returns (2,-1).",
+        "cf4_affine_divergence.py:319-327 and test_cf4_affine_divergence.py:23-55 generate responses as the same design matrix times the purported truth, so both injections are self-oracles for this basis-label error."
+      ],
+      "reproducible_command": "PYTHONPATH=htt:htt/src venv/bin/python -c '<construct S=diag(2,-1,-1); form d*n^T*S*n; fit build_affine_design[:,5:]; compare with (Sxx-Szz,Syy-Szz)>'",
+      "consequence": "Two reported shear coefficients, their covariance entries, and the meanings of the shear injection truths are wrong. The theta column and the span of the nuisance shear subspace are unchanged, so this finding does not by itself invalidate the independently recomputed theta estimates.",
+      "required_change": "Honor the frozen difference parameterization by using the transformed diagonal columns d*(2nx^2-ny^2-nz^2)/3 and d*(-nx^2+2ny^2-nz^2)/3, or formally supersede the names with Sxx and Syy. Add a test that starts from an explicit symmetric trace-free 3x3 matrix rather than design@truth, then regenerate all affected artifacts."
+    },
+    {
+      "finding_id": "F-PR176-FINAL-CODE-004",
+      "claim_id": "C-PR176-FINAL-CODE",
+      "severity": "P2",
+      "category": "generation-atomicity",
+      "title": "The claimed atomic generation is a sequence of destructive per-file replacements",
+      "evidence": [
+        "run_pr176_affine_divergence.py:602-616 writes a stage directory and then calls os.replace once per artifact, with no journal, rollback, generation-directory pointer swap, file fsync, or directory fsync.",
+        "A temporary fault-injection replay raised on the second os.replace and left a.json from the new generation while b.json and manifest.json remained from the old generation."
+      ],
+      "reproducible_command": "PYTHONPATH=htt:htt/src venv/bin/python -c '<redirect GENERATED to TemporaryDirectory; stub three payloads; inject OSError on second os.replace; inspect generations>'",
+      "observed_result": {
+        "a.json": "new",
+        "b.json": "old",
+        "manifest.json": "old"
+      },
+      "consequence": "A crash, ENOSPC, or I/O error can corrupt the tracked result pack into a mixed generation. Manifest-last lets a disciplined verifier detect the damage, but it is not atomicity and direct readers can observe inconsistent payloads.",
+      "required_change": "Use a durable journal/backups with deterministic recovery or publish a complete immutable generation directory through one atomic pointer/rename. Fsync staged files and the containing directory, and make check/read paths honor the same commit marker or lock. Add an injected-mid-publish recovery test."
+    },
+    {
+      "finding_id": "F-PR176-FINAL-CODE-005",
+      "claim_id": "C-PR176-FINAL-CODE",
+      "severity": "P2",
+      "category": "spec-crosswalk",
+      "title": "The registered deterministic-exact tolerance is not a runtime input and is applied inconsistently",
+      "evidence": [
+        "pr176_spec.yaml:182-192 registers tolerance_relative=1e-9 for all seven deterministic exact cases.",
+        "run_pr176_affine_divergence.py:142-183 omits that tolerance from _config_projection, so the test claiming every runtime parameter is crosswalked cannot make it load-bearing.",
+        "cf4_affine_divergence.py:319-369 hard-codes 1e-9 for design@truth cases, 1e-10 and 1e-9 for rotation, and an absolute 1e-8 threshold for the H0 alias.",
+        "test_pr_176_tsagas_div_v_q_dipole_cross_falsifier_ad_hoc_clo.py:210-218 checks only selected projected values and never resolves each crosswalk path or the deterministic tolerance."
+      ],
+      "consequence": "The H0 alias gate is ten times looser than the single frozen tolerance and the producer can change these gate constants without changing the frozen spec. Current alias errors are far below either threshold, so the current numerical pass is unchanged, but the contract enforcement is false-green.",
+      "required_change": "Project the registered tolerance into the evaluator, define the registered relative error metric for rotation and H0 alias explicitly, remove hard-coded gate constants, and test that mutating the spec tolerance changes or rejects the runtime configuration exactly."
+    }
+  ],
+  "verified_passes": [
+    "All six required assignment inputs matched their registered SHA-256 values before and after review.",
+    "Targeted suite: 15 passed in 2.67 seconds.",
+    "Runner --preflight passed with 16 authenticated authorities and did not import the numerical evaluator.",
+    "Runner --check passed for all nine artifacts at generation root 470c79d62dd66a345abe591d71d00e743dd935185002d92546a982712a9a63d5.",
+    "A one-byte mutation in a temporary generated measurement was rejected as stale or incomplete.",
+    "Independent GLS replay found positive covariance minimum eigenvalues near 62984.89, standardized design condition numbers 1.868 to 1.932, theta retained information 0.6833 to 0.7087, coefficient agreement with whitened least squares within 8.1e-12, covariance agreement within 2.34e-11, and normal-inverse residual below 5.3e-15.",
+    "Bonferroni marginal interval construction and interval-arithmetic contrasts are conservative and do not assume nested-radius independence.",
+    "No q point estimate, significance, family identification, or transfer-validation value is emitted by the assigned pack."
+  ],
+  "commands_run": [
+    {
+      "command": "sha256sum <six required inputs>",
+      "exit_code": 0,
+      "result": "all matched assignment hashes before and after review"
+    },
+    {
+      "command": "env PYTHONHASHSEED=0 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONPATH=htt:htt/src venv/bin/python -m pytest -q tests/obsstat/test_cf4_affine_divergence.py tests/pr_cards/test_pr_176_tsagas_div_v_q_dipole_cross_falsifier_ad_hoc_clo.py",
+      "exit_code": 0,
+      "result": "15 passed in 2.67s"
+    },
+    {
+      "command": "env PYTHONHASHSEED=0 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONPATH=htt:htt/src venv/bin/python -B scripts/codex_harness/run_pr176_affine_divergence.py --preflight",
+      "exit_code": 0,
+      "result": "ok; evaluator unimported; 16 authorities"
+    },
+    {
+      "command": "env PYTHONHASHSEED=0 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONPATH=htt:htt/src venv/bin/python -B scripts/codex_harness/run_pr176_affine_divergence.py --check",
+      "exit_code": 0,
+      "result": "9 artifacts byte-current"
+    },
+    {
+      "command": "independent numerical scratch: whitened least-squares, covariance inverse, conditioning, and explicit STF matrix fixture",
+      "exit_code": 0,
+      "result": "GLS numerically reproduced; STF naming mismatch reproduced"
+    },
+    {
+      "command": "temporary semantic-mutation, stale-byte, and interrupted-publish fault injections",
+      "exit_code": 0,
+      "result": "three semantic numerical reseals survived; stale byte rejected; interrupted publish left mixed generation"
+    }
+  ],
+  "proposed_changes": [
+    "Repair terminal routing and add primitive-derived truth-table validation.",
+    "Correct the diagonal STF basis/labels and add a physical-matrix oracle.",
+    "Expand mutation coverage to numerical primitives and externally bind the accepted evaluator generation.",
+    "Replace per-file publication with a recoverable durable generation transaction.",
+    "Make every registered numerical tolerance load-bearing from the frozen spec."
+  ],
+  "tests_to_run_after_remediation": [
+    "The two assigned targeted test files, updated to expect primitive-derived routing and an explicit STF-matrix oracle.",
+    "Runner --preflight and --check under the recorded deterministic thread environment.",
+    "New terminal truth-table mutations covering response=true/injection=false/q-response=false and every ordered branch.",
+    "New numerical reseal mutations for theta, covariance, diagnostics, intervals, injection flags, and terminal consistency.",
+    "New injected-crash tests at every publish replacement plus deterministic recovery replay.",
+    "Independent GLS replay confirming theta invariance after the equivalent STF basis transformation."
+  ],
+  "risks_and_kill_switches": [
+    "Do not mark PR-176 complete or use its current terminal in downstream status until F-001 and F-002 are closed by a fresh independent review.",
+    "Do not describe the current 16/16 mutation report as numerical validation.",
+    "Do not change the frozen coverage thresholds after seeing the two excursions; preserve them and resolve only the routing semantics.",
+    "Do not promote the formula-only q response coefficients; both signed CF4-window response bridges and the joint covariance remain unavailable.",
+    "Preserve public_use=false and the C3 conditional ceiling during remediation."
+  ],
+  "artifacts_status_updates_needed": [
+    "Regenerate all nine PR-176 artifacts after code and tests are corrected.",
+    "Preserve this FAIL envelope as immutable review evidence; do not relabel it after remediation.",
+    "Record the superseding generation root and a fresh final code-review result before any PR status transition.",
+    "Keep PR-176 status non-terminal/in-review until the fresh code and claim adjudication passes."
+  ],
+  "assumptions": [
+    "The frozen PR-176 specification and registered assignment hashes are authoritative for this review.",
+    "The diagonal shear tensor is symmetric and trace-free as stated by the estimand relation.",
+    "No sibling result or unassigned repository evidence was used."
+  ]
+}

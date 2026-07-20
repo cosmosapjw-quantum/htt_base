@@ -1,0 +1,59 @@
+schema: htt.pr176.spec_erratum.v1
+pr_id: PR-176
+parent_spec:
+  path: docs/research_program/long_horizon_rescue/pr176_spec.yaml
+  sha256: d92d31f6adf8a879e62f47f82fefa47b2aa79f504fd0ce71b2fefce1cbb6c945
+issued_at_utc: '2026-07-20T07:48:00Z'
+reason: independent_post_generation_algebra_and_routing_review
+review_findings:
+- PR176-STAT-001
+- PR176-STAT-002
+- F-PR176-FINAL-CODE-001
+- F-PR176-FINAL-CODE-003
+
+result_integrity:
+  observed_theta_values_used_to_change_thresholds: false
+  seeds_changed: false
+  thresholds_changed: false
+  radius_or_frame_changed: false
+  q_response_authority_changed: false
+  covariance_authority_changed: false
+  frozen_coverage_failures_preserved: true
+
+corrections:
+  diagonal_stf_basis:
+    coefficient_names:
+    - Sxx_minus_Szz
+    - Syy_minus_Szz
+    corrected_design_columns:
+    - Dist*(2*nx^2-ny^2-nz^2)/3
+    - Dist*(-nx^2+2*ny^2-nz^2)/3
+    tensor_mapping: >-
+      For d1=Sxx-Szz and d2=Syy-Szz, trace freedom gives
+      Sxx=(2*d1-d2)/3, Syy=(-d1+2*d2)/3, and
+      Szz=-(d1+d2)/3. The corrected columns implement this literal mapping.
+    invariance: >-
+      The two-dimensional diagonal STF nuisance span is unchanged, so theta,
+      its covariance, rank, retained information, and residual fit are
+      invariant up to floating-point roundoff. Reported nuisance coordinates
+      and their injection truths are regenerated.
+  terminal_routing:
+    correction: >-
+      The frozen covariance self-consistency miss is a separate validation
+      axis and must not be merged into the registered divergence
+      rank/condition/information gate. With all divergence identifiability
+      gates passing and both signed q-response bridges unavailable, the
+      registered scientific terminal is
+      NON_INFORMATIVE_Q_RESPONSE_UNAVAILABLE.
+    validation_axis: FROZEN_COVARIANCE_SELF_CONSISTENCY_GATE_FAILED
+    accepted_measurement_policy: >-
+      Raw affine coefficients remain computed candidate diagnostics, but are
+      not labeled an accepted covariance-validated divergence measurement.
+      The failed coverage receipts remain byte-visible and are not reseeded,
+      rethresholded, or promoted to physical-covariance evidence.
+
+scope:
+  claim_tier: conditional
+  scientific_artifact_mode: standard_internal
+  public_use: false
+  forbidden_promotions_unchanged: true

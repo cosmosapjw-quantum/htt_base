@@ -1,0 +1,327 @@
+{
+  "schema_version": 2,
+  "run_id": "pr176-intake-20260720",
+  "assignment_id": "A-PR176-STAT",
+  "context_version": "e0c724f6cb8b7c5b676a3f46f445a863e8999e70106d16739e401c9ebf97e65c",
+  "independence_mode": "blind-results",
+  "claim_ids": [
+    "C-PR176-STAT"
+  ],
+  "status": "pass",
+  "verdict": "PASS_PROSPECTIVE_CONTRACT_ONLY",
+  "scientific_result_status": "NOT_RUN_NO_PR176_OBSERVED_OUTPUT_INSPECTED",
+  "summary": "A signed raw-radial-velocity divergence coefficient is identifiable only conditionally on an externally frozen Hubble calibration, a full-rank distance/sky window, and successful leakage/coverage injections. The primary Tsagas relation maps scalar divergence to a scalar local deceleration correction; it does not supply a bulk-flow apex or a q-dipole response. Therefore a q-dipole comparison requires a separately authenticated response operator and a valid same-realization cross-channel covariance. Missing either, or a near-rigid-translation/rank failure, forces NON_INFORMATIVE.",
+  "governing_contract": {
+    "owner": "OBSSTAT",
+    "contributors": [
+      "BASS",
+      "HTT"
+    ],
+    "claim_level_ceiling": "roadmap_rescue_v1:C3_conditional",
+    "artifact_mode": "standard_internal",
+    "public_use": false,
+    "allowed_use": "prospective channel-wise kinematic falsifier design",
+    "forbidden_uses": [
+      "detection",
+      "global acceleration inference",
+      "Bianchi geometry or family identification",
+      "bulk-flow apex inference from scalar divergence",
+      "joint evidence or significance without a valid cross-channel covariance",
+      "replacement of divergence by bulk-flow speed without labeling an approximation"
+    ]
+  },
+  "assumptions_and_conventions": {
+    "metric_signature": "(-,+,+,+)",
+    "regime": "linear, non-relativistic peculiar velocity on sub-Hubble, approximately flat, pressureless almost-FLRW scales; no nonlinear or native-solver claim",
+    "frames": {
+      "reference": "CMB/Hubble frame",
+      "peculiar_velocity": "radial peculiar velocity relative to the CMB/Hubble frame",
+      "source_quantity": "tilde_vartheta = tilde_D_a tilde_v^a in the tilted frame; the low-z Euclidean radial estimator is a declared linear kinematic proxy, not an exact light-cone GR observable",
+      "hard_gate": "CMB, heliocentric, Local Group, reconstruction, and geometry-frame quantities may not be mixed"
+    },
+    "units": {
+      "radial_velocity": "km/s",
+      "distance": "physical Mpc, never Mpc/h in the derivative design",
+      "theta": "km/s/Mpc",
+      "H_ref": "km/s/Mpc",
+      "lambda_H": "physical Mpc",
+      "Delta_q": "dimensionless",
+      "c": "299792.458 km/s"
+    },
+    "hubble_calibration": {
+      "primary": "H_ref = 74.6 km/s/Mpc, matching the authenticated CF4 raw-velocity definition already used by cf4_velocity_estimators.py",
+      "lambda_H": "c/H_ref",
+      "rule": "H_ref is externally fixed for this estimand and is not fitted from the same radial-distance data",
+      "exact_degeneracy": "because y_i = V3k_i - H_ref r_i and the divergence design column is g_i=r_i/3, H_ref -> H_ref+delta_H implies theta_hat -> theta_hat-3 delta_H (for fixed distances/window). Jointly fitting H_ref and theta from these data is rank-deficient.",
+      "consequence": "any alternative H_ref is a separately labeled sensitivity estimand requiring complete recomputation; mixing the CF4 74.6 velocity construction with the 67.36 default in tilted_flrw.py invalidates the cross-channel result"
+    },
+    "scales": {
+      "window": "observer-centred spherical physical-distance cuts",
+      "primary_radius_Mpc": 100.0,
+      "primary_lambda_Mpc": 200.0,
+      "sensitivity_radii_Mpc": [
+        75.0,
+        125.0
+      ],
+      "sensitivity_lambdas_Mpc": [
+        150.0,
+        250.0
+      ],
+      "scale_convention": "lambda=2R is the physical diameter of the drifting domain; all three scales and their order are frozen before output",
+      "anti_drift": "no scale, shell edge, axis, or sign may be chosen after inspecting coherence"
+    }
+  },
+  "primary_source_verification": {
+    "sources": [
+      {
+        "url": "https://arxiv.org/abs/2105.09267",
+        "version": "v2, 2021-09-23",
+        "title": "The deceleration parameter in tilted Friedmann universes: Newtonian vs relativistic treatment",
+        "verified_points": [
+          "u_a is the CMB/Hubble frame and tilde_u_a the tilted/peculiar-motion frame",
+          "tilde_Theta = Theta + tilde_vartheta and tilde_H = H + tilde_vartheta/3 at linear order",
+          "tilde_q = q + (1/3)(1+Omega/2)(tilde_vartheta_prime/dot_H) is the general linear frame relation",
+          "the sub-horizon correction has the sign of tilde_vartheta: expanding flow raises tilde_q and contracting flow lowers it"
+        ]
+      },
+      {
+        "url": "https://arxiv.org/abs/2103.15884",
+        "version": "primary author paper; version of record DOI 10.1140/epjc/s10052-021-09515-9",
+        "title": "The peculiar Jeans length",
+        "verified_points": [
+          "Eq. 13: tilde_q_(n) = q + (1/9)(lambda_H/lambda_n)^2 tilde_vartheta_(n)/H on sub-horizon scales",
+          "Eq. 14-15: the critical scale uses absolute divergence only for the magnitude threshold; the signed q correction remains signed",
+          "Eq. 21 is explicitly an approximation because surveys provide mean speed rather than divergence: tilde_vartheta approximately +/-sqrt(3)<tilde_v>/lambda",
+          "the paper explicitly says divergence is difficult to extract because higher moments of the noisy velocity field have systematic uncertainty"
+        ]
+      }
+    ],
+    "auditor_conclusion": "The exact theoretical carrier is signed divergence, not speed or rapidity. The repository Delta_q(beta,d) substitutes the extra closure |theta|/H=beta lambda_H/d, discards the contraction/expansion sign, and is not the exact Tsagas equation. The primary speed substitution is itself approximate and convention-dependent (including a sqrt(3) factor in the cited primary treatment).",
+    "retrieved_at": "2026-07-20"
+  },
+  "equations": {
+    "kinematic_decomposition": "v(x)=B+[(theta/3)I+S+Omega]x+O(|x|^2), with tr(S)=0 and Omega antisymmetric",
+    "radial_model": "y_i=n_i.B+(r_i/3)theta+r_i n_i^T S n_i+M+A_sel(i)gamma+epsilon_i",
+    "radial_rotation_no_go": "n_i^T Omega (r_i n_i)=0, so central radial velocities do not identify the antisymmetric/curl part of a first-order affine field",
+    "tsagas_scalar_map": "Delta_q_theta(lambda)=(1/9)[c/(H_ref lambda)]^2(theta/H_ref)",
+    "source_domain": "the map is a conditional sub-horizon almost-FLRW scalar relation; it is not a q-dipole or apex map",
+    "h0_degeneracy": "delta theta_hat=-3 delta H_ref",
+    "dimension_checks": [
+      "g_i=r_i/3 has Mpc and theta has km/s/Mpc, so g_i theta is km/s",
+      "theta/H_ref and c/(H_ref lambda) are dimensionless",
+      "Delta_q_theta is dimensionless"
+    ]
+  },
+  "estimator": {
+    "inputs": "authenticated raw CF4 distance/redshift/group rows only; reconstruction columns Vpds/Vpwf/Vpec and the WF 3-D mean field are forbidden as truth inputs",
+    "response": "g_i=r_i/3",
+    "nuisance_design_Z": [
+      "three rigid-translation columns n_ix,n_iy,n_iz",
+      "one constant radial-monopole column",
+      "five trace-free affine-shear columns r_i(n_x^2-n_z^2), r_i(n_y^2-n_z^2), 2r_i n_x n_y, 2r_i n_x n_z, 2r_i n_y n_z",
+      "prospectively frozen PR-144 method/calibration and angular-selection templates"
+    ],
+    "covariance": "C=C_measurement+C_correlated_flow, using the full model-conditional covariance and forward-mock coverage; diagonal/noise-only covariance cannot authorize a result",
+    "formula": "P_Z=Z(Z^T C^-1 Z)^-1 Z^T C^-1; g_perp=(I-P_Z)g; theta_hat=(g_perp^T C^-1 y)/(g_perp^T C^-1 g); Var(theta_hat)=1/(g_perp^T C^-1 g) when C and distances are fixed",
+    "distance_error_policy": "catalogue distances enter both y and g, so uncertainty and bias must be calibrated with the PR-146 lognormal distance, nonlinear scatter, Malmquist selection, grouping, and correlated-flow forward mocks; naive fixed-design standard errors alone are insufficient",
+    "identifiability_gates": [
+      "H_ref is fixed externally and byte-recorded",
+      "rank([Z,g]) equals its column count under relative SVD tolerance 1e-10",
+      "whitened smallest/largest singular-value ratio is at least 1e-8",
+      "residual information fraction (g_perp^T C^-1 g_perp)/(g^T C^-1 g) is at least 0.05",
+      "all preregistered windows pass independently; no borrowing from a passing scale"
+    ],
+    "structural_distinctions": {
+      "bulk_translation": "angular dipole n.B, independent of r in the affine model",
+      "radial_monopole": "constant M in km/s",
+      "divergence": "radial slope r theta/3",
+      "thin_shell_failure": "if r is effectively constant, r/3 is collinear with M and theta is not identified",
+      "selection_warning": "partial sky and depth-dependent selection can couple all three columns; structural distinction is not immunity"
+    }
+  },
+  "scalar_apex_firewall": {
+    "finding": "theta is a scalar trace of the velocity gradient and has no apex or sky axis",
+    "consequence": "a nonzero bulk-flow dipole can coexist with theta=0 (rigid translation), and Eq. 13 cannot align or compare theta to a q-dipole vector",
+    "required_extra_authority": "two preregistered q-summary response bridges R_lh_qs1(lambda,mask,frame) and R_lh_qs2(lambda,mask,frame), each derived by signed injections through the actual q likelihood and including the observer/window geometry and a defined scalar contrast",
+    "explicit_bridge": {
+      "s1": "E[q_s1 | theta]=R_lh_qs1(lambda,mask,frame) Delta_q_theta(lambda)",
+      "s2": "E[q_s2 | theta]=R_lh_qs2(lambda,mask,frame) Delta_q_theta(lambda)",
+      "rules": [
+        "R_lh_qs1 and R_lh_qs2 are separate calibrated response objects; neither may be silently set to one or copied from the other",
+        "the bridges map the signed scalar Delta_q_theta into prospectively defined scalar q summaries only; they do not create an apex",
+        "a missing or failed bridge makes only that summary branch unavailable, but any requested joint s1/s2 verdict remains NON_INFORMATIVE"
+      ]
+    },
+    "kill": "if the q product is only a vector dipole/apex and no scalar-theta-to-q response is authenticated, terminate NON_INFORMATIVE_Q_RESPONSE_UNAVAILABLE"
+  },
+  "injection_and_uncertainty_design": {
+    "replicates": 5000,
+    "seed_rule": "PCG64 seed 176000 plus the frozen scenario index; common random numbers across paired full/noise-only evaluations, independent streams across scenario families",
+    "scenarios": [
+      "pure signed dilation theta in {-6,-3,0,3,6} km/s/Mpc",
+      "pure rigid translations of 100, 300, and 600 km/s in frozen Cartesian directions",
+      "near-rigid mixtures with |theta|R/|B| in {0,0.01,0.05,0.1}",
+      "constant radial monopole only",
+      "trace-free shear only",
+      "combined B+theta+M+S",
+      "lognormal distance-modulus error, nonlinear scatter, magnitude-limited/Malmquist selection, intra-group dispersion, and correlated-flow mocks inherited from PR-146",
+      "north/south, zone-of-avoidance, and method-composition selection perturbations frozen from PR-144",
+      "H_ref perturbation verifying theta_hat(H+delta_H)=theta_hat(H)-3delta_H",
+      "q-channel signed Delta_q injections through the actual q likelihood to estimate R_q and its mask/frame dependence"
+    ],
+    "pass_gates": [
+      "absolute mean bias below 0.1 reported standard deviations in every primary scenario",
+      "95 percent interval coverage point estimate between 0.93 and 0.97 and Wilson interval contains 0.95",
+      "pure translation, monopole, and shear each have theta false-positive rate at most 0.06 at nominal alpha=0.05",
+      "q response slope is within [0.9,1.1], response intercept magnitude below 0.1 q-channel standard deviations, and both signs are recovered",
+      "full covariance covers while any failure under realistic stressors is reported and blocks the affected window"
+    ],
+    "near_rigid_kill": "if the residual-information gate fails, translation-only leakage exceeds 0.1 sigma, or the 5 percent false-positive gate fails, the divergence channel is NON_INFORMATIVE_NEAR_RIGID_OR_SELECTION_LEAKAGE"
+  },
+  "dependence_bound": {
+    "matched_contrast": "For j in {s1,s2}, D_(lambda,j)=q_hat_(lambda,j)-R_lh_qj(lambda) K_lambda theta_hat_lambda, where K_lambda=(1/9)[c/(H_ref lambda)]^2/H_ref",
+    "unknown_cross_covariance": "For marginal standard errors s_qj and s_theta, Cauchy-Schwarz gives sd(D_(lambda,j))<=s_qj+|R_lh_qj K_lambda|s_theta. The least-favourable two-sided interval is D_(lambda,j) +/- z_(1-alpha/(2m))[s_qj+|R_lh_qj K_lambda|s_theta], with m=6 frozen scale-summary contrasts (3 scales times s1/s2) and Bonferroni family control valid under arbitrary dependence.",
+    "vector_generalization": "for every preregistered scalar contrast a, the variance bound is [sqrt(a^T V_q a)+sqrt(a^T R_q K V_theta K^T R_q^T a)]^2; optimizing the contrast after outputs is forbidden",
+    "allowed_pre_PR155_use": "report channel-wise estimates, injections, and whether the least-favourable bound excludes zero; no joint likelihood, Bayes factor, combined sigma, apex agreement, or confirmation claim",
+    "terminal_rule": "even if the least-favourable diagnostic excludes zero, absent or invalid same-realization cross-channel covariance forces overall NON_INFORMATIVE_CROSS_CHANNEL_COVARIANCE_UNIDENTIFIED",
+    "valid_joint_covariance_requirement": "same realization IDs, same mask/window/frame/H_ref, full block covariance positive semidefinite, effective-rank and Monte Carlo error receipts, and independent mutation tests for shuffled or duplicated lineage"
+  },
+  "falsifiers": [
+    {
+      "id": "F-H0",
+      "condition": "H_ref is estimated from the same radial data, differs across channels, or is not hash-pinned",
+      "outcome": "NON_INFORMATIVE_H0_DEGENERACY"
+    },
+    {
+      "id": "F-RANK",
+      "condition": "rank, condition, or residual-information gate fails, including thin-shell monopole collinearity",
+      "outcome": "NON_INFORMATIVE_DIVERGENCE_NOT_IDENTIFIED"
+    },
+    {
+      "id": "F-RIGID",
+      "condition": "pure or near-rigid translation produces material theta or excess false positives",
+      "outcome": "NON_INFORMATIVE_NEAR_RIGID_TRANSLATION"
+    },
+    {
+      "id": "F-SELECTION",
+      "condition": "selection, calibration, Malmquist, grouping, or distance-error injections fail coverage/bias gates",
+      "outcome": "NON_INFORMATIVE_SELECTION_OR_MONOPOLE_LEAKAGE"
+    },
+    {
+      "id": "F-FRAME-UNIT",
+      "condition": "Mpc/h enters the physical derivative without conversion or radial velocities/positions use mismatched frames",
+      "outcome": "INVALID_FRAME_OR_UNIT_CONTRACT"
+    },
+    {
+      "id": "F-QRESP",
+      "condition": "no authenticated scalar q response exists, only a q-dipole/apex is available, or signed q injections fail",
+      "outcome": "NON_INFORMATIVE_Q_RESPONSE_UNAVAILABLE"
+    },
+    {
+      "id": "F-CROSSCOV",
+      "condition": "joint covariance is unavailable, non-PSD, mismatched in realization lineage, or Monte Carlo unresolved",
+      "outcome": "NON_INFORMATIVE_CROSS_CHANNEL_COVARIANCE_UNIDENTIFIED"
+    },
+    {
+      "id": "F-SOURCE-DOMAIN",
+      "condition": "the linear sub-horizon almost-FLRW equation is applied outside its registered domain or described as an exact observational transfer",
+      "outcome": "INVALID_THEORY_PROMOTION"
+    }
+  ],
+  "terminal_decision_tree": [
+    "1. If H_ref/frame/unit/source-domain authority fails: NON_INFORMATIVE_H0_FRAME_OR_DOMAIN.",
+    "2. Else if divergence rank/information or injection coverage fails: NON_INFORMATIVE_DIVERGENCE_CHANNEL.",
+    "3. Else report theta_hat and conditional Delta_q_theta separately at all frozen scales.",
+    "4. If authenticated signed q response R_q is unavailable or fails injection: NON_INFORMATIVE_Q_RESPONSE_UNAVAILABLE.",
+    "5. Else compute the preregistered least-favourable dependence interval. If the valid same-realization joint covariance is absent or invalid: terminal NON_INFORMATIVE_CROSS_CHANNEL_COVARIANCE_UNIDENTIFIED, regardless of the marginal pattern.",
+    "6. Only with valid R_q and joint covariance: if the prospectively corrected discrepancy excludes zero, emit CONDITIONAL_CROSS_CHANNEL_FALSIFIER; otherwise emit NOT_FALSIFIED_AT_CURRENT_RESOLUTION. Neither branch is confirmation, detection, global acceleration, or geometry/family evidence."
+  ],
+  "numerical_scratch_receipt": {
+    "tool": "Python with NumPy 2.4.2",
+    "seed": 176,
+    "fixture": "1200 random sky directions, radii uniform on 75..125 Mpc, nuisance basis B+constant-monopole+five STF shear columns",
+    "results": {
+      "theta_from_pure_rigid_translation": "3.285e-14 km/s/Mpc",
+      "recovered_theta_from_combined_injection": "-2.400000000000 km/s/Mpc for truth -2.4",
+      "thin_shell_residual_information_norm_ratio": "4.899e-16",
+      "full_design_rank": "10/10",
+      "thin_shell_design_rank": "9/10"
+    },
+    "interpretation": "The algebraic fixture confirms structural separation when radial leverage exists and exact monopole/divergence non-identification on a thin shell. It is a design proof only, not observational validation."
+  },
+  "evidence": [
+    {
+      "path": "docs/codex_handoff/pr_backlog.yaml",
+      "sha256": "256cf1406cddf271d8b197dbf39e1ae1486b18f22c30e4551de40b55e2cc502d",
+      "lines": "4822-4883",
+      "supports": "PR-176 dependencies, structural-distinction requirement, conservative-dependence rule, and NON_INFORMATIVE kill switches"
+    },
+    {
+      "path": "htt/src/common/cf4_velocity_estimators.py",
+      "sha256": "4fc9364a4a59c159445d524df5b7a09495059468ed0d7f9ecce2da1ce57a6054",
+      "lines": "41-79,96-111",
+      "supports": "H0_CF4=74.6, CMB-frame raw radial velocity y=V3k-H0 Dist, Mpc/h position hazard, bulk plus constant-monopole design, rank fail-closed precedent"
+    },
+    {
+      "path": "htt/htt/htt/core/tilted_flrw.py",
+      "sha256": "6607e0e15a7424bc275ee30100fa94f437d2f7be05dabb6d4ee122e5c6896c5f",
+      "lines": "105-128",
+      "supports": "current beta-speed closure and loss of signed measured divergence"
+    },
+    {
+      "path": "htt/obsstat/velocity_field_curl.py",
+      "sha256": "f6aa025e5ed0f7a7b5c47eee2b333f4af26c2d5203cb4b99c9139d5acf978c65",
+      "lines": "11-22,37-40",
+      "supports": "existing grid divergence units and reconstruction/covariance limitations; not selected as the raw-data estimator"
+    },
+    {
+      "path": "docs/PR_DELTAS/pr-146.md",
+      "sha256": "01515d9782b4894770bbddf3c3baf6c8b241afe4f5024c13e8213caac6dbaba6",
+      "lines": "30-56",
+      "supports": "off-diagonal covariance remains model-conditional and realistic distance/selection/grouping stressors materially degrade coverage"
+    },
+    {
+      "path": "docs/PR_DELTAS/pr-148.md",
+      "sha256": "260096e77dffc909c2726087c65d9dc3790bb35df6f795d470d759f0a089cd1f",
+      "lines": "10-35",
+      "supports": "same-data cross-shell covariance precedent and fail-closed non-identification when depth channels do not constrain"
+    },
+    {
+      "path": "docs/PR_DELTAS/pr-144.md",
+      "sha256": "d0fef0be0b4806e8c2b40bb20c725eeb7b3bd1cf2b9bf7f65758104303dbf761",
+      "supports": "raw CF4 authority, method/selection metadata, and ban on treating reconstruction columns as truth"
+    },
+    {
+      "path": "docs/PR_DELTAS/pr-133.md",
+      "sha256": "6774cbcbf912ed3298ed5de69abc49387bc2cef691243e38f64b5c94a07a72a3",
+      "supports": "response-rank and local-boost/physical-tilt type firewalls"
+    }
+  ],
+  "tools_and_commands": {
+    "tools": [
+      "shell read/hash inspection",
+      "primary-source web search/open",
+      "Python/NumPy numerical scratch"
+    ],
+    "commands": [
+      "sha256sum on every registered input",
+      "targeted line-numbered reads of the registered backlog, PR deltas, and three code inputs",
+      "web verification of arXiv:2105.09267v2 and arXiv:2103.15884 / DOI 10.1140/epjc/s10052-021-09515-9",
+      "deterministic affine-flow residualization fixture with NumPy 2.4.2"
+    ],
+    "network_note": "The browser-backed primary-source route succeeded. A direct shell curl of the arXiv TeX source was unavailable due sandbox DNS and the escalation was rejected for account usage limits; no workaround or unregistered source was used."
+  },
+  "write_scope": {
+    "result_path": ".agent-harness/runs/pr176-intake-20260720/results/A-PR176-STAT.json",
+    "production_files_edited": [],
+    "shared_files_edited": [],
+    "sibling_results_read": []
+  },
+  "remaining_risks": [
+    "The frozen numerical scale/window choices still require the main writer to verify adequate authenticated CF4 support without looking at PR-176 outputs.",
+    "The raw radial estimator is exactly conditional on H_ref; no internal statistic can remove that degeneracy.",
+    "The Tsagas scalar map does not by itself define the q-dipole response or its apex.",
+    "PR-146 off-diagonal correlated-flow covariance is model-conditional rather than independently physically validated.",
+    "No observed PR-176 rank, theta, Delta_q, q response, or cross-channel verdict has been computed in this assignment."
+  ]
+}

@@ -2,6 +2,15 @@
 
 Each claim needs owner, status, evidence, transfer source, claim tier, and caveats.
 
+## PR-176 - affine-divergence / q cross-falsifier
+
+| Claim | Owner | Status | Evidence | Transfer source | Claim tier | Caveats |
+|---|---|---|---|---|---|---|
+| The frozen raw-CF4 affine design produces reproducible candidate coefficients at 75, 100, and 125 Mpc. | OBSSTAT | CONDITIONAL_CANDIDATE | `docs/generated/pr176_divergence_measurement.json`; exact producer replay; final adjudication | none | `roadmap_rescue_v1:C3`, internal | Candidate diagnostics only. The fixed-window trace is H0-aliased, scalar without an apex, and not an accepted covariance-validated physical divergence measurement. |
+| The divergence-to-q channel is identified well enough for a q result or joint falsifier. | OBSSTAT | NON_IDENTIFIED | `docs/generated/pr176_cross_falsifier_result.json`; `docs/generated/pr176_dependence_bound.json` | none | conditional | Both signed q-response bridges and matched cross-channel covariance are unavailable; q estimates, intervals, significance, and joint result stay null. |
+| The frozen coefficient-covariance self-consistency battery passes. | OBSSTAT | FALSIFIED_FOR_REGISTERED_BATTERY | `docs/generated/pr176_injection_validation.json` | none | conditional | Exact deterministic injections pass, but the unchanged 100 Mpc `Syy_minus_Szz` Wilson interval excludes nominal 0.95. This is not physical-covariance validation or disproof. |
+| PR-176 measures acceleration/global tilt/cosmological anisotropy or establishes geometry, family, transfer, native-solver behavior, or leakage immunity. | OBSSTAT | FORBIDDEN / NOT_EVALUATED | result-card forbidden uses; claim scan; final adjudication | none | blocked | No such inference is supported. Structural distinction among affine channels is not immunity. |
+
 ## PR-179 - raw-CF4 H-only catalogue result
 
 | Claim | Owner | Status | Evidence | Transfer source | Claim tier | Caveats |

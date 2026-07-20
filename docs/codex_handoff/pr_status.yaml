@@ -108,6 +108,7 @@ completed:
 - PR-173
 - PR-177
 - PR-179
+- PR-176
 blocked:
 - PR-172
 pending:
@@ -131,7 +132,7 @@ dormant_external:
 - PR-165
 - PR-166
 - PR-183
-in_progress: PR-176
+in_progress: null
 background_in_progress:
 - PR-151
 background_execution_contracts:
@@ -158,6 +159,19 @@ execution_lane:
   PR-182: hypothesis_only
   PR-183: needs_native
 execution_resolutions:
+  PR-176:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-176.md
+    external_authorization_receipt: docs/generated/pr176_reviews/manifest.json
+    external_authorization_receipt_sha256: 3ca45d7ae2c6995d27208f1d175f89aa6a9792c1f7d7c36a2b9bad4228d93016
+    final_adjudication_receipt: docs/generated/pr176_reviews/final_adjudication.json
+    final_adjudication_receipt_sha256: 125825068a8e4af7f35b9094a9695ebf2c2b987196568caeeaf024e5733fb42a
+    authorized_generation_root: b917b933229c8786550c69d1466f8d57ccf87990c4fcf243740374efe3c9860d
+    resolved_on: '2026-07-20'
+    scientific_status_effect: raw_affine_candidates_with_failed_covariance_self_consistency_and_q_response_nonidentification
+    scientific_status_after: NON_INFORMATIVE_Q_RESPONSE_UNAVAILABLE
+    validation_axis: FROZEN_COVARIANCE_SELF_CONSISTENCY_GATE_FAILED
+    success_dependency_satisfied: true
   PR-179:
     resolution: COMPLETED_SUCCESS
     receipt: docs/PR_DELTAS/pr-179.md

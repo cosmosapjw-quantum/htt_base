@@ -1,0 +1,120 @@
+{
+  "schema_version": 1,
+  "run_id": "pr176-intake-20260720",
+  "assignment_id": "A-PR176-CLAIM2",
+  "context_version": "e0c724f6cb8b7c5b676a3f46f445a863e8999e70106d16739e401c9ebf97e65c",
+  "agent_type": "claim_gate_reviewer",
+  "independence_mode": "blind-results",
+  "status": "pass",
+  "result_path": ".agent-harness/runs/pr176-intake-20260720/results/A-PR176-CLAIM2.json",
+  "summary": "Prospective claim ceiling defined: PR-176 may emit only a roadmap_rescue_v1:C3 conditional, standard_internal, public_use=false statement that theta=div(v) is an estimand structurally distinct from the bulk-flow dipole and radial-monopole estimator, while explicitly not immune to shared leakage. This is not an implementation or scientific-result verdict.",
+  "claim_results": [
+    {
+      "claim_id": "C-PR176-CLAIM",
+      "verdict": "PASS_PROSPECTIVE_CLAIM_CEILING_DEFINED",
+      "claim_ceiling": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C3",
+        "tier": "conditional",
+        "artifact_mode": "standard_internal",
+        "public_use": false,
+        "scientific_status": "OPEN",
+        "allowed_statement": "Under the preregistered frame, transfer declaration, channel-wise injection, and conservative dependence contract, the measured theta=div(v) channel is structurally distinct from the bulk-flow dipole and radial-monopole estimators; it is not immune to shared leakage. Any retained output is an internal conditional cross-channel falsifier only.",
+        "pre_pr155_limit": "Before PR-155, even an informative output is limited to a channel-wise falsifier with a conservative dependence bound; it is not a joint detection or physical attribution."
+      },
+      "forbidden_language_or_inference": [
+        "Do not turn scalar theta or div(v) into an apex, preferred axis, or directional localization claim.",
+        "Do not call the result a detection, signal discovery, null validation, significance claim, or leakage immunity result.",
+        "Do not infer global tilt, cosmological anisotropy, physical acceleration, or a local-versus-global mechanism from this cross-channel relation.",
+        "Do not claim Bianchi geometry, morphology-family identification, or any Bianchi family ranking.",
+        "Do not call any external or AniCLASS transfer a native solver result, native-transfer validation, or authenticated native delivery.",
+        "Do not merge div(v) with the bulk-flow dipole or reduce the test to two remeasurements of one dipole estimand.",
+        "Do not tune lambda or an axis after inspecting coherence; that requires a new preregistered analysis."
+      ],
+      "terminal_routing": {
+        "conditional_falsifier_eligible_only_if": [
+          "theta=div(v), the bulk-flow dipole, and the radial-monopole estimator remain separately identified estimands",
+          "a preregistered channel-wise injection demonstrates an informative q-response rather than merely substituting the ad-hoc closure",
+          "frame and transfer source are declared",
+          "the registered dependence treatment is valid and the channel is not near-rigid translation"
+        ],
+        "mandatory_NON_INFORMATIVE_if_any": [
+          "the preregistered q-response is absent, invalid, or not demonstrated by channel-wise injection",
+          "matched/joint covariance is unavailable, invalid, or remains unidentified",
+          "the channel is near-rigid translation",
+          "the estimands cannot be kept distinct or the dependence bound is invalid"
+        ],
+        "NON_INFORMATIVE_meaning": "A valid terminal scientific result under this card; it must not be rewritten as evidence for or against a physical signal, global tilt, geometry, family, or native transfer."
+      },
+      "required_metadata": [
+        "owner=OBSSTAT and contributors=BASS,HTT",
+        "implementation_scope=obsstat",
+        "claim scheme, level, and tier: roadmap_rescue_v1:C3 conditional",
+        "scientific_artifact_mode=standard_internal and public_use=false",
+        "separate estimand identifiers and definitions for theta=div(v), bulk-flow dipole, and radial-monopole estimator",
+        "frame declaration and transfer source/status",
+        "q-response definition plus channel-wise injection configuration and outcome",
+        "conservative dependence-bound definition/status and matched/joint covariance availability/validity",
+        "sky support and mask status for every directional quantity",
+        "covariance and null-mock status, including absent or uncertified states",
+        "config hash and complete input hash list",
+        "terminal route and machine-readable reason codes",
+        "caveats, including structural-distinct-not-immune and no scalar-theta apex",
+        "generating command",
+        "git commit or exact worktree state"
+      ],
+      "evidence": [
+        {
+          "path": "docs/codex_handoff/pr_backlog.yaml",
+          "sha256": "256cf1406cddf271d8b197dbf39e1ae1486b18f22c30e4551de40b55e2cc502d",
+          "lines": "4822-4895",
+          "supports": "PR-176 ownership, dependencies, estimand separation, structural-distinct-not-immune wording, injection/dependence/frame requirements, NON_INFORMATIVE kill routes, C3 ceiling, internal/public-use status, and anti-drift rule."
+        },
+        {
+          "path": "AGENTS.md",
+          "sha256": "c7f8fc783e638375cb0dc79fbde074b2b9a91461070427d17bf2fc43682fab1a",
+          "lines": "11-17,42-79",
+          "supports": "Pre-native solver boundary, transfer-conditional language, OBSSTAT ownership limit, family-identification firewall, forbidden native/geometry language, and mandatory artifact metadata."
+        },
+        {
+          "path": "docs/PR_DELTAS/pr-167.md",
+          "sha256": "d4a550b2ac79140cf3edaf0738b672f7d12cd73917c1c1b8015635a7b03e0211",
+          "lines": "94-108",
+          "supports": "PR-173 dependency wording, PR-176 structural distinction and non_informative terminal, and the ban on family or transfer validation."
+        },
+        {
+          "path": "docs/PR_DELTAS/pr-173.md",
+          "sha256": "0d351acfdafed1a1385d42c5b69ba03a6bf994ade1247485fc3d57c17db46008",
+          "lines": "3-6,16-25,32-34,102-113",
+          "supports": "Internal/public-use precedent, orthogonal availability-lineage-resolution routing, and the rule that dependency success does not validate covariance, signal, anisotropy, geometry, native solver, or family."
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "F-PR176-CLAIM-CEILING",
+      "claim_id": "C-PR176-CLAIM",
+      "verdict": "PASS_PROSPECTIVE_CEILING_DEFINED",
+      "evidence_fingerprint": "sha256:0dd063c6c45c7d201111f140883549364bd7d78515d779352f22a6e9a499226a",
+      "summary": "The allowed claim is structural distinction without immunity, conditional and internal at C3; absent q-response or matched/joint covariance, invalid dependence, or near-rigid translation forces NON_INFORMATIVE."
+    }
+  ],
+  "assumptions": [
+    "This is a prospective claim-gate review of the registered card, not evidence that PR-176 has been implemented or that any terminal output has been measured.",
+    "No sibling result was consulted and no production, specification, status, gate, or shared-context file was edited.",
+    "Repository-local registered evidence only was used; no external factual claim required web verification."
+  ],
+  "commands_run": [
+    "sha256sum AGENTS.md docs/codex_handoff/pr_backlog.yaml docs/PR_DELTAS/pr-167.md docs/PR_DELTAS/pr-173.md",
+    "targeted line reads of the four registered inputs",
+    "printf of the four registered hashes plus claim ID piped to sha256sum for the evidence fingerprint"
+  ],
+  "tool_information": {
+    "review_method": "repository-local targeted text audit",
+    "shell": "bash",
+    "hash_tool": "sha256sum",
+    "version_note": "tool versions were not separately probed because no numerical or external-tool claim was evaluated"
+  },
+  "errors": []
+}
