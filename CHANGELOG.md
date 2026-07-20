@@ -7,6 +7,34 @@
 
 ## [Unreleased]
 
+### PR-174 — SW-only real-space anisotropic ray-integration mechanics (rev-r242, 2026-07-20)
+
+Hypothesis-only advocate card (dep PR-167; `public_use: false`, ceiling
+roadmap_rescue_v1:C1; owner explicitly scheduled this execution — the
+REGISTERED_NOT_SCHEDULED lane rule is unchanged). Spec-first
+(`pr174_spec.yaml`, one disclosed pre-result amendment uniform-t → log-time
+RK4). `htt/src/common/pr174_sw_ray_tracer.py` +
+`scripts/codex_harness/run_pr174_sw_ray_tracer.py`: batched RK4 transport of
+physical photon momentum on a PRESCRIBED kinematic diagonal Bianchi I
+background (analytic stand-in, NOT an Einstein solution) vs the independent
+conserved-momentum closed form and the closed-form linear parity/shear
+quadrupole prediction. Terminal
+**SW_ONLY_MECHANICS_CONSISTENT_WITH_CLOSED_FORM**: max ray error 1.56e-11
+(tol 1e-10), RK4 order 3.99 ([3.7,4.3]), quadrupole mismatch 2.06e-7
+(tol 5e-6; pure O(dbeta^2) linearization residual), structural parity guards
+at roundoff. 6/6 mutations killed on registered guards. No-likelihood
+firewall: AST import scan + whitelist + repo-wide zero-production-consumer
+scan, evasive-import negative tests; FLRW LoS Bessel path unmixed. Review
+lane (3 refute lenses + per-finding verification, archived
+`docs/generated/pr174_reviews/`): 0 P0, 2 P1 + 7 P2 all CONFIRMED, all
+remediated pre-commit. Cross-PR maintenance: PR-169 consumer-scan artifacts
+refreshed per the PR-170 convention (F1 of the wave sign-off; scientific
+result unchanged). 16 gates
+(test_pr_174_sw_only_real_space_anisotropic_ray_integration_m.py). No
+likelihood/transfer/observable/detection/family/geometry claim; both CF4 P0s
+untouched/OPEN; 102 OPEN. **110th completed card → checkpoint 110 due.**
+See docs/PR_DELTAS/pr-174.md.
+
 ### PR-176 — Tsagas div-v/q-dipole cross-falsifier, conservative divergence-lane close (rev-r241, 2026-07-20)
 
 Advocate-wave card (dep PR-173). `htt/obsstat/cf4_affine_divergence.py` +

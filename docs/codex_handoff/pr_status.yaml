@@ -109,6 +109,7 @@ completed:
 - PR-177
 - PR-179
 - PR-176
+- PR-174
 blocked:
 - PR-172
 pending:
@@ -131,7 +132,7 @@ dormant_external:
 - PR-165
 - PR-166
 - PR-183
-in_progress: PR-174
+in_progress: null
 background_in_progress:
 - PR-151
 background_execution_contracts:
@@ -158,6 +159,20 @@ execution_lane:
   PR-182: hypothesis_only
   PR-183: needs_native
 execution_resolutions:
+  PR-174:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-174.md
+    review_archive_receipt: docs/generated/pr174_reviews/manifest.json
+    review_archive_receipt_sha256: 942d2e551a04dd46ed756755e0fd736e7b73be118e1de90d7d015f5f6465d1b1
+    final_adjudication_receipt: docs/generated/pr174_reviews/final_adjudication.json
+    final_adjudication_receipt_sha256: c8dea4632ab8878fe1cbf662a2c7d2a8fffea2eb973128908627d16f470e3350
+    resolved_on: '2026-07-20'
+    scheduling_authorization: owner_explicit_selection_20260720_this_execution_only
+    scientific_status_effect: hypothesis_only_sw_mechanics_closed_form_consistency
+    scientific_status_after: SW_ONLY_MECHANICS_CONSISTENT_WITH_CLOSED_FORM
+    scientific_artifact_mode: hypothesis_only
+    public_use: false
+    success_dependency_satisfied: true
   PR-176:
     resolution: COMPLETED_SUCCESS
     receipt: docs/PR_DELTAS/pr-176.md
