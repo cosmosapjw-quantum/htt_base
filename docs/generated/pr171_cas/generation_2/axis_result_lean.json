@@ -1,0 +1,98 @@
+{
+  "axis": "lean",
+  "checks": null,
+  "commands": [
+    {
+      "cmd": "lake build",
+      "cwd": "formal_pr171",
+      "exit": 1
+    }
+  ],
+  "completed_at": "2026-07-19T23:57:01+00:00",
+  "computed": null,
+  "contract_id": "CAS-PR171-CLASS-CONDITIONAL-TILT-002",
+  "contract_sha256": "2cc9a1fff3adfa1660f3da22ce4d217f062b000830f316f459e501aa1772199b",
+  "counterexample": {
+    "failures": [
+      "axis emitted no parseable JSON payload"
+    ]
+  },
+  "domain_assumption_diff": [],
+  "evidence_class": "exact",
+  "fixture_matches": null,
+  "preaxis_authorization_sha256": "27feb8271fe36277aa0cf81477fb8737f8ba296db2a844cccf1afc7ac90a4fdd",
+  "precision_digits": null,
+  "schema_version": 1,
+  "sibling_results_read": [],
+  "source_output_hashes": [
+    {
+      "path": "formal_pr171/Pr171TiltRelaxation/Basic.lean",
+      "sha256": "63653f474e534d57032f39c7e7ec2afccd5f360724ba4428fface5673164ea95"
+    },
+    {
+      "path": "formal_pr171/Pr171TiltRelaxation.lean",
+      "sha256": "56966b71bcdea2cd16eccc6537ec6e1cfffa979f9003de5505ba8a6ab4cd6f4a"
+    },
+    {
+      "path": "formal_pr171/lakefile.toml",
+      "sha256": "9b01a5309156c81199204b8661b932119642e56c6ede2c9eade7843fe305e72b"
+    },
+    {
+      "path": "formal_pr171/lake-manifest.json",
+      "sha256": "cdb757e1ce3c8a1f247748d47c6b0e009b2824842cbcc5057badda8b820c5fa8"
+    },
+    {
+      "path": "formal_pr171/lean-toolchain",
+      "sha256": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee"
+    }
+  ],
+  "status": "FAIL",
+  "tool_versions": {
+    "reported": "unavailable",
+    "singular": null,
+    "xact_loaded": null
+  },
+  "transcript_tail": "ient.ContinuousMapGeneratedBy:c.o (441ms)\n\u2714 [16969/17104] Built Mathlib.Topology.Convenient.Category:c.o (396ms)\n\u2714 [16970/17104] Built Mathlib.Topology.DerivedSet:c.o (364ms)\n\u2714 [16971/17104] Built Mathlib.Topology.EMetricSpace.Weak:c.o (301ms)\n\u2714 [16972/17104] Built Mathlib.Topology.Germ:c.o (316ms)\n\u2714 [16973/17104] Built Mathlib.Topology.Hom.Open:c.o (315ms)\n\u2714 [16974/17104] Built Mathlib.Topology.Instances.CantorSet:c.o (178ms)\n\u2714 [16975/17104] Built Mathlib.Topology.Filter:c.o (482ms)\n\u2714 [16976/17104] Built Mathlib.Topology.Homotopy.HSpaces:c.o (480ms)\n\u2714 [16977/17104] Built Mathlib.Topology.Instances.ZMod:c.o (279ms)\n\u2714 [16978/17104] Built Mathlib.Topology.IsClosedRestrict:c.o (275ms)\n\u2714 [16979/17104] Built Mathlib.Topology.Maps.Proper.UniversallyClosed:c.o (232ms)\n\u2714 [16980/17104] Built Mathlib.Topology.Sets.VietorisTopology:c.o (181ms)\n\u2714 [16981/17104] Built Mathlib.Topology.Homotopy.LocallyContractible:c.o (551ms)\n\u2714 [16982/17104] Built Mathlib.Topology.Instances.ENNReal.ENatENNReal:c.o (373ms)\n\u2714 [16983/17104] Built Mathlib.Topology.Instances.PNat:c.o (428ms)\n\u2714 [16984/17104] Built Mathlib.Topology.List:c.o (348ms)\n\u2714 [16985/17104] Built Mathlib.Topology.LocallyFinsupp.Pushforward:c.o (317ms)\n\u2714 [16986/17104] Built Mathlib.Topology.MetricSpace.BundledFun:c.o (231ms)\n\u2714 [16987/17104] Built Mathlib.Topology.MetricSpace.CoveringNumbers:c.o (194ms)\n\u2714 [16988/17104] Built Mathlib.Topology.MetricSpace.ShrinkingLemma:c.o (220ms)\n\u2714 [16989/17104] Built Mathlib.Topology.Homotopy.HomotopyGroup:c.o (659ms)\n\u2714 [16990/17104] Built Mathlib.Topology.MetricSpace.GromovHausdorffRealized:c.o (291ms)\n\u2714 [16991/17104] Built Mathlib.Topology.MetricSpace.Kuratowski:c.o (344ms)\n\u2714 [16992/17104] Built Mathlib.Topology.MetricSpace.HausdorffAlexandroff:c.o (289ms)\n\u2714 [16993/17104] Built Mathlib.Topology.MetricSpace.HolderNorm:c.o (315ms)\n\u2714 [16994/17104] Built Mathlib.Topology.MetricSpace.Snowflaking:c.o (345ms)\n\u2714 [16995/17104] Built Mathlib.Topology.MetricSpace.Ultra.Pi:c.o (346ms)\n\u2714 [16996/17104] Built Mathlib.Topology.Metrizable.ContinuousMap:c.o (211ms)\n\u2714 [16997/17104] Built Mathlib.Topology.Instances.RatLemmas:c.o (555ms)\n\u2714 [16998/17104] Built Mathlib.Topology.MetricSpace.HausdorffDimension:c.o (378ms)\n\u2714 [16999/17104] Built Mathlib.Topology.MetricSpace.Infsep:c.o (360ms)\n\u2714 [17000/17104] Built Mathlib.Topology.MetricSpace.Ultra.TotallySeparated:c.o (386ms)\n\u2714 [17001/17104] Built Mathlib.Topology.Order.LowerUpperTopology:c.o (195ms)\n\u2714 [17002/17104] Built Mathlib.Topology.Order.UpperLowerSetTopology:c.o (238ms)\n\u2714 [17003/17104] Built Mathlib.Topology.Order.ScottTopology:c.o (197ms)\n\u2714 [17004/17104] Built Mathlib.Topology.OmegaCompletePartialOrder:c.o (156ms)\n\u2714 [17005/17104] Built Mathlib.Topology.NatEmbedding:c.o (358ms)\n\u2714 [17006/17104] Built Mathlib.Topology.Specialization:c.o (333ms)\n\u2714 [17007/17104] Built Mathlib.Topology.Order.Category.AlexDisc:c.o (349ms)\n\u2714 [17008/17104] Built Mathlib.Topology.Order.Completion:c.o (348ms)\n\u2714 [17009/17104] Built Mathlib.Topology.Order.Hom.Basic:c.o (296ms)\n\u2714 [17010/17104] Built Mathlib.Topology.Order.Hom.Esakia:c.o (285ms)\n\u2714 [17011/17104] Built Mathlib.Topology.Order.NhdsSet:c.o (239ms)\n\u2714 [17012/17104] Built Mathlib.Topology.Separation.AlexandrovDiscrete:c.o (207ms)\n\u2714 [17013/17104] Built Mathlib.Topology.Separation.LinearUpperLowerSetTopology:c.o (197ms)\n\u2714 [17014/17104] Built Mathlib.Topology.Order.Category.FrameAdjunction:c.o (437ms)\n\u2714 [17015/17104] Built Mathlib.Topology.Order.Filter:c.o (314ms)\n\u2714 [17016/17104] Built Mathlib.Topology.Order.HullKernel:c.o (342ms)\n\u2714 [17017/17104] Built Mathlib.Topology.PreorderRestrict:c.o (296ms)\n\u2714 [17018/17104] Built Mathlib.Topology.Order.LawsonTopology:c.o (369ms)\n\u2714 [17019/17104] Built Mathlib.Topology.Order.PartialSups:c.o (338ms)\n\u2714 [17020/17104] Built Mathlib.Topology.Order.Priestley:c.o (338ms)\n\u2714 [17021/17104] Built Mathlib.Topology.Partial:c.o (337ms)\n\u2714 [17022/17104] Built Mathlib.Topology.Semicontinuous:c.o (323ms)\n\u2714 [17023/17104] Built Mathlib.Topology.Separation.DisjointCover:c.o (323ms)\n\u2714 [17024/17104] Built Mathlib.Topology.Separation.Lemmas:c.o (323ms)\n\u2714 [17025/17104] Built Mathlib.Topology.Separation.NotNormal:c.o (293ms)\n\u2714 [17026/17104] Built Mathlib.Topology.Separation.PerfectlyNormal:c.o (251ms)\n\u2714 [17027/17104] Built Mathlib.Topology.Sets.Order:c.o (209ms)\n\u2714 [17028/17104] Built Mathlib.Topology.Sheaves.PUnit:c.o (250ms)\n\u2714 [17029/17104] Built Mathlib.Topology.Sheaves.Skyscraper:c.o (205ms)\n\u2714 [17030/17104] Built Mathlib.Topology.Sheaves.Alexandrov:c.o (188ms)\n\u2714 [17031/17104] Built Mathlib.Topology.Sheaves.EtaleSpace:c.o (171ms)\n\u2714 [17032/17104] Built Mathlib.Topology.Sheaves.MayerVietoris:c.o (172ms)\n\u2714 [17033/17104] Built Mathlib.Topology.Sheaves.Over:c.o (171ms)\n\u2714 [17034/17104] Built Mathlib.Tactic.DeriveTraversable:c.o (5.6s)\n\u2714 [17035/17104] Built Mathlib.Topology.Sheaves.LocallySurjective:c.o (253ms)\n\u2714 [17036/17104] Built Mathlib.Topology.Sheaves.Points:c.o (269ms)\n\u2714 [17037/17104] Built Mathlib.Topology.Sheaves.SheafCondition.EqualizerProducts:c.o (198ms)\n\u2714 [17038/17104] Built Mathlib.Topology.Sheaves.Sheafify:c.o (197ms)\n\u2714 [17039/17104] Built Mathlib.Topology.Sion:c.o (197ms)\n\u2714 [17040/17104] Built Mathlib.Topology.SmallInductiveDimension:c.o (170ms)\n\u2714 [17041/17104] Built Mathlib.Topology.Spectral.ConstructibleTopology:c.o (170ms)\n\u2714 [17042/17104] Built Mathlib.Topology.UniformSpace.AbsoluteValue:c.o (170ms)\n\u2714 [17043/17104] Built Mathlib.Topology.Subpath:c.o (255ms)\n\u2714 [17044/17104] Built Mathlib.Topology.UniformSpace.CompareReals:c.o (285ms)\n\u2714 [17045/17104] Built Mathlib.Topology.UniformSpace.Dini:c.o (256ms)\n\u2714 [17046/17104] Built Mathlib.Topology.UniformSpace.OfCompactT2:c.o (255ms)\n\u2714 [17047/17104] Built Mathlib.Topology.UniformSpace.Path:c.o (235ms)\n\u2714 [17048/17104] Built Mathlib.Topology.UniformSpace.ProdApproximation:c.o (212ms)\n\u2714 [17049/17104] Built Mathlib.Topology.UniformSpace.Ultra.Basic:c.o (199ms)\n\u2714 [17050/17104] Built Mathlib.Topology.UniformSpace.Ultra.Completion:c.o (183ms)\n\u2714 [17051/17104] Built Mathlib.Topology.UniformSpace.Uniformizable:c.o (183ms)\n\u2714 [17052/17104] Built Mathlib.Topology.UniformSpace.Closeds:c.o (208ms)\n\u2714 [17053/17104] Built Mathlib.Topology.UniformSpace.Ultra.Constructions:c.o (281ms)\n\u2714 [17054/17104] Built Mathlib.Util.Simp:c.o (192ms)\n\u2714 [17055/17104] Built Mathlib.RepresentationTheory.Induced:c.o (239ms)\n\u2714 [17056/17104] Built Mathlib.Topology.Sheaves.Abelian:c.o (293ms)\n\u2714 [17057/17104] Built Mathlib.Topology.VectorBundle.ContinuousAlternatingMap:c.o (227ms)\n\u2714 [17058/17104] Built Mathlib.Util.AssertNoSorry:c.o (380ms)\n\u2714 [17059/17104] Built Mathlib.Util.GetAllModules:c.o (334ms)\n\u2714 [17060/17104] Built Mathlib.Util.LongNames:c.o (372ms)\n\u2714 [17061/17104] Built Mathlib.Util.SleepHeartbeats:c.o (239ms)\n\u2714 [17062/17104] Built Mathlib.RepresentationTheory.Homological.GroupHomology.LowDegree:c.o (267ms)\n\u2714 [17063/17104] Built Mathlib.RepresentationTheory.Homological.GroupCohomology.LowDegree:c.o (448ms)\n\u2714 [17064/17104] Built Mathlib.Util.FormatTable:c.o (559ms)\n\u2714 [17065/17104] Built Mathlib.Tactic.ITauto:c.o (6.0s)\n\u2714 [17066/17104] Built Mathlib.Util.Export:c.o (1.9s)\n\u2714 [17067/17104] Built Mathlib.Topology.MetricSpace.Closeds (2.4s)\n\u2714 [17068/17104] Built Mathlib.Topology.MetricSpace.Closeds:c.o (98ms)\n\u2714 [17069/17104] Built Mathlib.RepresentationTheory.Homological.GroupHomology.Shapiro (2.9s)\n\u2714 [17070/17104] Built Mathlib.RepresentationTheory.Homological.GroupHomology.Shapiro:c.o (100ms)\n\u2714 [17071/17104] Built Mathlib.RepresentationTheory.Homological.GroupCohomology.Shapiro (3.1s)\n\u2714 [17072/17104] Built Mathlib.Topology.Sheaves.AddCommGrpCat (3.1s)\n\u2714 [17073/17104] Built Mathlib.RepresentationTheory.Homological.GroupCohomology.Shapiro:c.o (116ms)\n\u2714 [17074/17104] Built Mathlib.Topology.Sheaves.AddCommGrpCat:c.o (108ms)\n\u2714 [17075/17104] Built Mathlib.RepresentationTheory.Homological.GroupCohomology.FiniteCyclic (4.0s)\n\u2714 [17076/17104] Built Mathlib.RepresentationTheory.Homological.GroupCohomology.FiniteCyclic:c.o (110ms)\n\u2714 [17077/17104] Built Mathlib.RepresentationTheory.Homological.GroupHomology.FiniteCyclic (4.7s)\n\u2714 [17078/17104] Built Mathlib.RepresentationTheory.Homological.GroupHomology.FiniteCyclic:c.o (100ms)\n\u2714 [17079/17104] Built Mathlib.RepresentationTheory.Homological.GroupCohomology.Hilbert90 (2.4s)\n\u2714 [17080/17104] Built Mathlib.RepresentationTheory.Homological.GroupCohomology.Hilbert90:c.o (88ms)\n\u2714 [17081/17104] Built Mathlib.RepresentationTheory.FiniteIndex (7.4s)\n\u2714 [17082/17104] Built Mathlib.Topology.MetricSpace.GromovHausdorff (5.1s)\n\u2714 [17083/17104] Built Mathlib.RepresentationTheory.FiniteIndex:c.o (89ms)\n\u2714 [17084/17104] Built Mathlib.Topology.MetricSpace.GromovHausdorff:c.o (144ms)\n\u2714 [17085/17104] Built Mathlib.Topology.Sheaves.Flasque (5.7s)\n\u2714 [17086/17104] Built Mathlib.Topology.Sheaves.Flasque:c.o (93ms)\n\u2714 [17087/17104] Built Mathlib.RepresentationTheory.Homological.GroupCohomology.Functoriality (10s)\n\u2714 [17088/17104] Built Mathlib.RepresentationTheory.Homological.GroupCohomology.Functoriality:c.o (85ms)\n\u2714 [17089/17104] Built Mathlib.RepresentationTheory.Homological.GroupCohomology.LongExactSequence (2.4s)\n\u2714 [17090/17104] Built Mathlib.RepresentationTheory.Homological.GroupCohomology.LongExactSequence:c.o (84ms)\n\u2714 [17091/17104] Built Mathlib.RepresentationTheory.Homological.GroupHomology.Functoriality (14s)\n\u2714 [17092/17104] Built Mathlib.RepresentationTheory.Homological.GroupHomology.Functoriality:c.o (81ms)\n\u2714 [17093/17104] Built Mathlib.Tactic.Widget.StringDiagram:c.o (18s)\n\u2714 [17094/17104] Built Mathlib.RepresentationTheory.Homological.GroupHomology.LongExactSequence (2.1s)\n\u2714 [17095/17104] Built Mathlib.RepresentationTheory.Homological.GroupHomology.LongExactSequence:c.o (86ms)\n\u2714 [17096/17104] Built Mathlib.RepresentationTheory.Homological.TateCohomology.Basic (2.9s)\n\u2714 [17097/17104] Built Mathlib.RepresentationTheory.Homological.TateCohomology.Basic:c.o (106ms)\n\u2714 [17098/17104] Built Mathlib (2.5s)\n\u2716 [17099/17104] Building Pr171TiltRelaxation.Basic (3.8s)\ntrace: .> LEAN_PATH=/home/cosmosapjw/Dropbox/bianchi/htt_base/formal_pr171/.lake/packages/Cli/.lake/build/lib/lean:/home/cosmosapjw/Dropbox/bianchi/htt_base/formal_pr171/.lake/packages/batteries/.lake/build/lib/lean:/home/cosmosapjw/Dropbox/bianchi/htt_base/formal_pr171/.lake/packages/Qq/.lake/build/lib/lean:/home/cosmosapjw/Dropbox/bianchi/htt_base/formal_pr171/.lake/packages/aesop/.lake/build/lib/lean:/home/cosmosapjw/Dropbox/bianchi/htt_base/formal_pr171/.lake/packages/proofwidgets/.lake/build/lib/lean:/home/cosmosapjw/Dropbox/bianchi/htt_base/formal_pr171/.lake/packages/importGraph/.lake/build/lib/lean:/home/cosmosapjw/Dropbox/bianchi/htt_base/formal_pr171/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/home/cosmosapjw/Dropbox/bianchi/htt_base/formal_pr171/.lake/packages/plausible/.lake/build/lib/lean:/home/cosmosapjw/Dropbox/bianchi/htt_base/formal_pr171/.lake/packages/mathlib/.lake/build/lib/lean:/home/cosmosapjw/Dropbox/bianchi/htt_base/formal_pr171/.lake/build/lib/lean /home/cosmosapjw/.elan/toolchains/leanprover--lean4---v4.31.0/bin/lean /home/cosmosapjw/Dropbox/bianchi/htt_base/formal_pr171/Pr171TiltRelaxation/Basic.lean -o /home/cosmosapjw/Dropbox/bianchi/htt_base/formal_pr171/.lake/build/lib/lean/Pr171TiltRelaxation/Basic.olean -i /home/cosmosapjw/Dropbox/bianchi/htt_base/formal_pr171/.lake/build/lib/lean/Pr171TiltRelaxation/Basic.ilean -c /home/cosmosapjw/Dropbox/bianchi/htt_base/formal_pr171/.lake/build/ir/Pr171TiltRelaxation/Basic.c --setup /home/cosmosapjw/Dropbox/bianchi/htt_base/formal_pr171/.lake/build/ir/Pr171TiltRelaxation/Basic.setup.json --json\nwarning: Pr171TiltRelaxation/Basic.lean:1:1: * '-/':\nCopyright too short!\n\n\nNote: This linter can be disabled with `set_option linter.style.header false`\nerror: Pr171TiltRelaxation/Basic.lean:21:56: unsolved goals\na x y r : \u211a\n\u22a2 r ^ 2 + (a + x + y + 1) * r + (a * (1 + y) + x) = r ^ 2 + (a + x + y + 1) * r + a * (1 + y) + x\nerror: Lean exited with code 1\n\u2714 [17103/17104] Built Mathlib:c.o (16s)\nSome required targets logged failures:\n- Pr171TiltRelaxation.Basic\nerror: build failed\n",
+  "verified_input_hashes": [
+    {
+      "path": "docs/research_program/long_horizon_rescue/pr171_spec.yaml",
+      "sha256": "1c7796456f0ec71b729b8df7f1dd966974710eaed8c5c9ed0ab408bef08010e4"
+    },
+    {
+      "path": "docs/research_program/long_horizon_rescue/pr171_primary_source_provenance.yaml",
+      "sha256": "a504c840c45e0a28695543b39a84a23a365ab8e646b624fa50578900532b1e92"
+    },
+    {
+      "path": "docs/research_program/long_horizon_rescue/pr125_spec.yaml",
+      "sha256": "ce27cdc39686e39aaf74d51947e662513c36af8f12cb8d4a6a63c2306a2f9970"
+    },
+    {
+      "path": "docs/audits/pr171_primary_sources/noncomoving_1903_11009_equations.txt",
+      "sha256": "eeefe9eaff71d9b812765fb78eaa9a5eaaeea1f84aa1a3ba55a1bba518c27a1f"
+    },
+    {
+      "path": "docs/audits/pr171_primary_sources/hervik_lim_0512070_equations.txt",
+      "sha256": "3882a7904c8698bfdc5ee9414f417968895d162553ef7e59735bab3a01cedbfc"
+    },
+    {
+      "path": "docs/audits/pr171_primary_sources/coley_hervik_lim_0605128_record.txt",
+      "sha256": "52e3cc6eb13260c7ab0de957a3160117d5dc9792f71de2d09aaca383ee88c3e8"
+    },
+    {
+      "path": "docs/audits/pr171_primary_sources/velocity_interaction_2012_12204_record.txt",
+      "sha256": "9ae409fa60c45425ea2afe962f3388226aaddbbf5e92d153bac54af459bacdb6"
+    },
+    {
+      "path": "docs/audits/pr171_primary_sources/khronon_2404_06584_record.txt",
+      "sha256": "34c909d760e014eeb7c6552b4a1321b01f80fd4d855121acfdafe72b75a6885f"
+    },
+    {
+      "path": "htt/src/common/tilt_relaxation.py",
+      "sha256": "efb34cf9662ac5abd1e1bfbadd18736cc83b92f2e1b1e52e6310bf498d8050ca"
+    },
+    {
+      "path": "docs/generated/pr171_source_verification.json",
+      "sha256": "7973f37376c6aa1b5206d7cd64ac3ccca98fb7272909811a0cbbdaee2b6741c3"
+    }
+  ]
+}

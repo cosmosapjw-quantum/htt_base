@@ -1,0 +1,182 @@
+schema: htt.long_horizon.pr171_tilt_relaxation.v1
+spec_version: 1
+pr_id: PR-171
+title: Class-conditional tilt relaxation and persistent-tilt counterexample audit
+baseline_commit: c936fabd1527bb8c38cb13b98fc1ee608d0c5738
+reviewed_on: '2026-07-20'
+owner: COMMON
+contributors: [BASS]
+implementation_scope: [common]
+artifact_mode: hypothesis_only_class_conditional_mechanics_and_source_counterexample
+execution_authorization: EXPLICIT_APPROVED_SEQUENCE
+public_use: false
+claim_tier: conditional
+claim_tier_ceiling: conditional
+claim_level: {scheme: roadmap_rescue_v1, level: C2}
+scientific_status: OPEN
+transfer_source: none
+
+claim_identity:
+  claim_id: C-PR171-CLASS-CONDITIONAL-STABILITY
+  claim_text: >-
+    The flat-RW, homogeneous, non-interacting perfect-fluid velocity equation
+    has a class-conditional relaxation branch for constant w<1/3. That branch
+    is not a generic-fluid no-go: a published, physically admissible tilted
+    Bianchi-VIII gamma-law class with gamma=7/6 (w=1/6) and no interaction
+    tends generically to extreme tilt. The proposed generic no-go is therefore
+    retired. A generic two-variable shear/tilt closure is not stable from
+    w<1/3 and non-negative phenomenological damping alone, and no numerical
+    suppression ceiling is identified without a duration, initial data,
+    coupling closure, and observable map.
+  novelty: source_authenticated_scope_discrimination_not_new_theorem
+
+authority_resolution:
+  current_execution_authority: this_spec_and_canonical_pr_card
+  historical_roadmap_candidate: docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md
+  stale_literal: Pi_X_over_momentum_source_less_than_1e-6_to_1e-7
+  disposition: >-
+    Unvalidated candidate wording only. It is not an expected answer,
+    acceptance threshold, test oracle, or allowed output default.
+  output_value_frozen_in_advance: false
+
+frozen_conventions:
+  metric_signature: '(-,+,+,+)'
+  frame: normal_congruence_for_tilt_reading
+  perturbative_order_rw: exact_homogeneous_speed_equation
+  perturbative_order_matrix: linearized_phenomenological_subsystem
+  time_rw: N=ln(a), future_expansion_has_dN_positive
+  time_bianchi_viii: source_expansion_normalized_tau
+  equation_of_state: p=w*rho_and_gamma=1+w
+  velocity_domain: abs(v)<1
+  rw_domain: flat_RW_homogeneous_non_interacting_perfect_fluid_constant_w_minus1_lt_w_lt_1over3
+  damping_ratio: g=Gamma/H_nonnegative_on_expanding_branch
+  khronon_status: UNINSTANTIATED_LOOPHOLE
+
+registered_mechanics:
+  rw_exact_ode: dv_dN=((1-v^2)*(3*w-1)/(1-w*v^2))*v
+  rw_denominator_guard: 1-w*v^2_positive_on_frozen_domain
+  rw_relaxation_sign: v_times_dv_dN_negative_for_nonzero_v
+  rw_implicit_invariant: abs(v)/(1-v^2)^((1-w)/2)=C*exp((3*w-1)*N)
+  rw_small_tilt: v_proportional_to_a_power_(3w-1)
+  phenomenological_linear_damping:
+    alpha: 1-3*w+g
+    equation: v_prime=-alpha*v
+    interpretation: registered_small_tilt_model_not_universal_interacting_fluid_equation
+  two_by_two_subsystem:
+    state: [v_X, v_c]
+    closure: >-
+      near-FLRW aligned small tilts with no persistent source and a stipulated
+      momentum-conserving drag D>=0; this is not derived from the phrase
+      Q^mu proportional to relative velocity
+    definitions: [a=1-3*w_X, x=D/(H*(1+w_X)*rho_X), y=D/(H*rho_c)]
+    matrix: [[-a-x, x], [y, -1-y]]
+    assumptions: [a_positive, x_nonnegative, y_nonnegative]
+    characteristic_polynomial: r^2+(a+x+y+1)*r+(a*(1+y)+x)
+    hurwitz_condition: trace_negative_and_determinant_positive
+    result_scope: local_linear_comoving_fixed_point_stability_only
+  generic_shear_tilt_negative_control:
+    matrix: [[-alpha, kappa], [lambda, -beta]]
+    determinant: alpha*beta-kappa*lambda
+    non_identification: w_and_nonnegative_drag_do_not_supply_a_generic_shear_closure
+
+registered_fixtures:
+  stable_matrix:
+    inputs: {a: 1/4, x: 1/2, y: 1/3}
+    expected: {trace: -25/12, determinant: 5/6, characteristic: r^2+25*r/12+5/6, stable: true}
+  persistent_matrix:
+    inputs: {alpha: 1, beta: 1, kappa: 1, lambda: 1}
+    expected: {trace: -2, determinant: 0, eigenvalues: ['0', '-2'], persistent_vector: [1, 1]}
+    role: algebraic_nondecay_negative_control_not_physical_cosmology
+  source_counterexample:
+    model: tilted_Bianchi_VIII_gamma_law_perfect_fluid
+    gamma: 5/4
+    w: 1/4
+    Gamma: 0
+    admissibility:
+      rho: positive_source_domain
+      sound_speed_squared: 1/4
+      weak_energy_condition: satisfied
+      dominant_energy_condition: satisfied
+      velocity_domain: source_V_less_than_1_at_finite_time
+    source_result: generic_late_time_extreme_tilt_for_1_less_than_gamma_less_than_2
+    consequence: blanket_no_go_retired
+
+suppression_functional:
+  symbol: S_v
+  definition: abs(v(N_f))/abs(v(N_i))
+  evaluation_rule_rw_linear: exp(-(1-3*w+g)*(N_f-N_i))
+  required_inputs: [w, g, N_i, N_f, nonzero_initial_tilt]
+  denominator_guard: abs(v(N_i))_positive
+  current_inputs_status: NOT_IDENTIFIED_FOR_GENERIC_DARK_SECTOR
+  numerical_result: null
+  terminal_label_when_inputs_missing: SUPPRESSION_CEILING_NOT_IDENTIFIED
+
+external_counterexample_gate:
+  source_result_is_not_cas_target: true
+  exact_mapping_checks: [gamma_equals_1_plus_w, w_less_than_1over3, Gamma_nonnegative]
+  physical_admissibility_basis: authenticated_primary_source_plus_gamma_law_energy_conditions
+  no_go_disposition_if_pass: RETIRED_BY_PUBLISHED_COUNTEREXAMPLE
+
+source_space_closure:
+  flat_rw_branch: authenticated_for_declared_noninteracting_class
+  generic_two_by_two_dark_sector: NOT_ESTABLISHED
+  khronon_shear_leakage_bridge: NOT_ESTABLISHED
+  universal_non_comoving_dark_sector: NOT_ESTABLISHED
+
+preregistered_falsifiers:
+  - any required exact CAS obligation fails
+  - any required CAS axis is absent or platform blocked
+  - the flat-RW equation is used outside its source domain
+  - the matrix is called stable when alpha*beta-kappa*lambda is nonpositive
+  - a physically admissible persistent-tilt counterexample is retained while the no-go survives
+  - a numerical suppression value is emitted without every registered input and guard
+  - khronon linear scalar-fluid correspondence is used as nonlinear shear closure
+  - local linear stability is promoted to global nonlinear relaxation
+
+cas_contract:
+  schema: htt.cas_contract.v2
+  required_axes: [wolfram_xact, sympy, sage_singular, lean]
+  result_blinding: required_until_adjudication
+  missing_axis_outcome: CAS_BLOCKED
+  exceptions: none
+  aggregate_states: [CAS_4AXIS_PASS, CAS_PASS_WITH_REGISTERED_EXCEPTION, CAS_CONFLICT, CAS_BLOCKED, CAS_FAIL]
+
+terminal_routing:
+  - when: invalid_contract_or_provenance
+    process_gate_status: FAIL
+    scientific_result: none
+  - when: CAS_BLOCKED
+    process_gate_status: BLOCKED
+    scientific_result: source_provenance_audit_only
+  - when: CAS_CONFLICT
+    process_gate_status: BLOCKED
+    scientific_result: conflict_receipt_only
+  - when: CAS_FAIL
+    process_gate_status: FAIL
+    scientific_result: failed_registered_exact_target
+  - when: CAS_4AXIS_PASS_and_published_counterexample_gate_pass
+    process_gate_status: PASS
+    scientific_result: CLASS_CONDITIONAL_NO_GO_RETIRED_BY_COUNTEREXAMPLE
+  - when: CAS_4AXIS_PASS_and_source_closure_missing
+    process_gate_status: PASS
+    scientific_result: algebraic_only_or_non_informative
+  - when: all_exact_source_closure_and_physical_gates_pass
+    process_gate_status: PASS
+    scientific_result: CLASS_CONDITIONAL_STABILITY
+
+forbidden_output_language:
+  - generic fluid cannot source persistent tilt
+  - universal no-go theorem
+  - proof of isotropy or FLRW
+  - universal suppression ceiling
+  - Bianchi geometry detected
+  - Bianchi family identified
+  - external transfer validated as native
+
+acceptance:
+  - spec, sources, equations, domain, target, fixtures, and falsifiers are frozen before axes
+  - raw source archives and normalized records are hash-bound
+  - four blind axes use one schema-v2 contract with no exception
+  - source theorem authentication is separate from CAS algebra
+  - the published persistent-tilt counterexample retires the blanket no-go
+  - generated result artifacts reproduce byte-for-byte in check mode

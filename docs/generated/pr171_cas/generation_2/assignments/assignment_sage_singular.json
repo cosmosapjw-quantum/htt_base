@@ -1,0 +1,67 @@
+{
+  "agent_type": "cas_sage_singular",
+  "allowed_sibling_results": [],
+  "allowed_tools": [
+    "sage_singular",
+    "venv/bin/python"
+  ],
+  "assignment_id": "A-PR171-CAS2-SAGE",
+  "assignment_sha256": "6eefc92ac8e24dbb48a8240cd201e791a4b9aa11c5f575338ebf928bd198d513",
+  "cas_axis": "sage_singular",
+  "cas_contract": {
+    "path": "docs/generated/pr171_cas/CAS_CONTRACT_PR171_CLASS_CONDITIONAL_TILT_V2.json",
+    "sha256": "2cc9a1fff3adfa1660f3da22ce4d217f062b000830f316f459e501aa1772199b"
+  },
+  "claim_ids": [
+    "C-PR171-CLASS-CONDITIONAL-STABILITY"
+  ],
+  "context_version": "d3210d1fec6319af75c363389a8d9a69e0aed16ee9a91b0e3f904dae58fa9d9e",
+  "delegable_claim_ids": [],
+  "depth": 1,
+  "discovery_mode": "targeted",
+  "fork_justification": null,
+  "fork_mode": "none",
+  "independence_mode": "blind-results",
+  "independence_rationale": null,
+  "may_spawn": false,
+  "parent_assignment_id": null,
+  "required_inputs": [
+    {
+      "path": "docs/research_program/long_horizon_rescue/pr171_spec.yaml",
+      "sha256": "1c7796456f0ec71b729b8df7f1dd966974710eaed8c5c9ed0ab408bef08010e4"
+    },
+    {
+      "path": "docs/research_program/long_horizon_rescue/pr171_primary_source_provenance.yaml",
+      "sha256": "a504c840c45e0a28695543b39a84a23a365ab8e646b624fa50578900532b1e92"
+    },
+    {
+      "path": "docs/generated/pr171_source_verification.json",
+      "sha256": "7973f37376c6aa1b5206d7cd64ac3ccca98fb7272909811a0cbbdaee2b6741c3"
+    },
+    {
+      "path": "docs/generated/pr171_cas/CAS_CONTRACT_PR171_CLASS_CONDITIONAL_TILT_V2.json",
+      "sha256": "2cc9a1fff3adfa1660f3da22ce4d217f062b000830f316f459e501aa1772199b"
+    },
+    {
+      "path": "scripts/codex_harness/pr171_cas_support.py",
+      "sha256": "a3f4560a9bd5c78ede79f5d5b0442f93b3929e391880026af52179a69adf067f"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr171_axis.py",
+      "sha256": "e9614ea9d0f3922a51025a64edc3b8e0850ec47961f912391a6b3969f7396c56"
+    },
+    {
+      "path": "sage/pr171_tilt_relaxation_axis.sage",
+      "sha256": "909552b8e4dc62415b80852c7a3af9f92f5480b279ca5f087f96bb5091c3632f"
+    }
+  ],
+  "required_outputs": [
+    ".agent-harness/runs/pr171-cas-g2-20260720/results/A-PR171-CAS2-SAGE.json"
+  ],
+  "result_path": ".agent-harness/runs/pr171-cas-g2-20260720/results/A-PR171-CAS2-SAGE.json",
+  "risk_tier": "R3",
+  "run_id": "pr171-cas-g2-20260720",
+  "schema_version": 2,
+  "status": "registered",
+  "task": "Execute only the fresh generation-2 sage_singular PR-171 axis under contract v2. Generation-1 results are forbidden inputs. Do not inspect sibling results. Use the registered runner and write only the unique envelope."
+}

@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "run_id": "pr171-intake-20260719",
+  "assignment_id": "A-PR171-PHYSICS",
+  "context_version": "4fd1c2f89a31378f619bec829ff70e20102d9a63a2468052f6ac3b4048f461df",
+  "agent_type": "physics_stat_auditor",
+  "independence_mode": "blind-results",
+  "status": "fail",
+  "result_path": ".agent-harness/runs/pr171-intake-20260719/results/A-PR171-PHYSICS.json",
+  "summary": "The blanket PR-171 no-go is false on its stated Gamma >= 0 domain and underdetermined away from that boundary. A narrower near-FLRW, first-order, source-free drag stability lemma is defensible, but it is not a shear-leakage ceiling or isotropy theorem.",
+  "findings": [
+    {
+      "finding_id": "F-PR171-PHYSICS-001",
+      "claim_id": "C-PR171-CLASS-CONDITIONAL-STABILITY",
+      "verdict": "FAIL_AS_STATED__PHYSICALLY_ADMISSIBLE_PERSISTENT_TILT_RETIRES_BLANKET_NO_GO",
+      "severity": "fatal",
+      "evidence_fingerprint": "sha256:54fcf6c04847f4bf9f39a6731f6a04feb41db647d077b9a945222f68f1f8e665",
+      "statement": "The stated domain includes Gamma=0. Hervik and Lim's full tilted Bianchi VIII gamma-law solutions generically approach extreme tilt for 1 < gamma < 2. Choosing gamma=5/4 gives w=1/4 < 1/3 with rho>0, p=rho/4, c_s^2=1/4, positive enthalpy, causal sound speed, and the null/dominant energy conditions, while |v| tends to 1. This is a physically admissible persistent-tilt falsifier at an allowed boundary and retires the universal no-go. Coley-Hervik-Lim also explicitly show that late-time tilt behavior below the radiation value is Bianchi-class dependent, so their work cannot be cited as a generic decay theorem. For Gamma>0, Q^mu proportional to relative velocity does not specify the force projector, normalization, energy-transfer component, equation-of-state closure, sound speed, frame, or Bianchi geometry, so the remaining assertion is underdetermined rather than proved.",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml:4516 (PR-171 card; Gamma >= 0; class-conditional gate; persistent counterexample retires no-go)",
+        "docs/research/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md:894 (raw no-go scope and CHL attribution)",
+        "https://arxiv.org/abs/gr-qc/0512070 (Hervik and Lim, Late-time behaviour of vortic Bianchi VIII; abstract and asymptotic state analysis)",
+        "https://arxiv.org/abs/gr-qc/0605128 (Coley, Hervik, and Lim, Fluid observers and tilting cosmology; abstract and class-specific late-time cases)",
+        "https://arxiv.org/abs/1007.1034 (Simpson, Scattering of Dark Matter and Dark Energy; Eqs. 1-2 are perturbative velocity-divergence drag with Q^0=0, not a homogeneous anisotropic background closure)",
+        "https://arxiv.org/abs/1903.11009 (Cembranos, Maroto, and Villarrubia-Rojo, Non-comoving Cosmology; first-order momentum cancellation and second-order anisotropic/Bianchi requirement)"
+      ],
+      "required_disposition": "Do not freeze a conclusion number or advertise a generic fluid no-go. Record the Gamma=0 Bianchi VIII fixture as a preregistered kill test. Any strict Gamma>0 claim must be a separately specified domain with a complete covariant interaction and geometry closure; it cannot exclude this falsifier post hoc."
+    },
+    {
+      "finding_id": "F-PR171-PHYSICS-002",
+      "claim_id": "C-PR171-CLASS-CONDITIONAL-STABILITY",
+      "verdict": "PASS_ONLY_AS_NARROW_LOCAL_RELAXATION_LEMMA__SHEAR_CEILING_NOT_ESTABLISHED",
+      "severity": "scope-limiting",
+      "evidence_fingerprint": "sha256:1f30faabf6135a26d2207b2aea9f98109ef4f22f182dcc28f150b655343a7637",
+      "statement": "A defensible surrogate uses N=ln a, an expanding near-FLRW normal frame n^a, dust c plus a constant barotropic X fluid with h_X=(1+w_X)rho_X>0, a=1-3w_X>0, aligned nonrelativistic tilts, no persistent forcing, and a pure linear momentum force f_X=-D(v_X-v_c), f_c=-f_X with D>=0. The 4-state equations are rho_X'=-3(1+w_X)rho_X, rho_c'=-3rho_c, v_X'=-(1-3w_X)v_X-x(v_X-v_c), v_c'=-v_c+y(v_X-v_c), where x=D/(H h_X)>=0, y=D/(H rho_c)>=0, and h_X x=rho_c y. Equivalently r'= -3w_X r with r=rho_X/rho_c gives a 3-state system. The frozen velocity matrix A=[[-a-x,x],[y,-1-y]] has tr A=-(a+x+y+1)<0, det A=a(1+y)+x>0, and characteristic polynomial lambda^2+(a+x+y+1)lambda+a(1+y)+x, so both eigenvalues are negative. In fact its infinity-norm logarithmic measure is max(-a,-1), giving uniform contraction if a(N) is bounded positive and x,y remain nonnegative. For a general barotrope the threshold is c_a^2=dp/d rho<1/3, not merely w<1/3. This result is conditional on the specified frame/closure; exact RW use also requires h_X v_X+rho_c v_c=0. A 2x2 first-order velocity system cannot establish shear leakage: tilted-perfect-fluid anisotropic stress is pi_ab=sum_i h_i v_{i<a}v_{i b>}+O(v^4), hence quadratic around zero tilt. A Bianchi-I-like fourth variable would obey Sigma'=-(3+H'/H)Sigma+(8 pi G/H^2)pi_parallel only after geometry, normalization, Einstein constraints, H(N), and curvature terms are frozen. The preregistered unforced suppression functional may be S_v=||[1,-1]Phi(N_f,N_i)||, while a zero-initial-state forced anisotropic-stress functional must be quadratic, G_u_to_Pi^(2)=sup_{u!=0} ||Pi[z(u)]||_infinity/||u||_2^2. Pi/source is amplitude- and dimension-dependent and is not a linear gain. Freeze interval, norm, source, initial data, coupling history, background, frame, geometry, and admissibility before evaluation; freeze no numerical conclusion.",
+      "evidence_refs": [
+        "docs/specs/pr125_tilt_relativistic_extension.md (NORMAL/MATTER frame and beta conventions; beta=0 is no-tilt, not FLRW)",
+        "docs/pr_deltas/PR-125.md (convention mechanics are not physical validation)",
+        "https://arxiv.org/abs/2211.08093 (Krishnan, Mondol, and Sheikh-Jabbari, A Tilt Instability in Cosmological Principle; stress tensor Eq. 3 and tilt evolution Eqs. 5, 8 show O(beta^2) anisotropic stress and geometry-dependent tilt coefficient)",
+        "https://arxiv.org/abs/1903.11009 (second-order non-comoving anisotropy requires a Bianchi background)",
+        "symbolic audit: tr(A), det(A), characteristic polynomial, and discriminant checked with SymPy 1.14.0"
+      ],
+      "safe_claim": "Within the frozen near-FLRW two-fluid drag model, positive-enthalpy constant-barotropic X with c_a^2=w_X<1/3 and nonnegative momentum-conserving drag has a locally linearly stable comoving fixed point. This C2 hypothesis-only statement is not an isotropy proof, a generic no-go, a persistent-shear bound, or a Bianchi-family claim.",
+      "required_tests": [
+        "Symbolically verify trace, determinant, characteristic polynomial, momentum-conservation identity, and the c_a^2 generalization.",
+        "Numerically integrate time-varying admissible x(N), y(N) cases and compare against the infinity-norm contraction bound.",
+        "Run the preregistered gamma=5/4 Bianchi VIII, Gamma=0 kill fixture; any persistent or extreme tilt returns FAIL.",
+        "Test a separately specified strict-positive-drag covariant model only after its projector, Q^0, EOS/sound speed, geometry, constraints, source space, and norms are frozen.",
+        "Treat missing required CAS axes as CAS_BLOCKED; do not convert this hand derivation into a four-axis pass."
+      ]
+    }
+  ],
+  "assumptions": [
+    "Metric signature (-,+,+,+); c=1; 8 pi G is retained in the schematic shear equation.",
+    "n^a is the homogeneous normal/geometric congruence and u_i^a=n^a+v_i^a+O(v_i^2); frame labels are not interchangeable.",
+    "The stability lemma is first order in aligned tilt about v_X=v_c=0, with H>0, rho_i>0, h_X>0, D>=0, and no external persistent source.",
+    "The drag law is a stipulated closure, not derived from the phrase Q^mu proportional to relative velocity.",
+    "Shear and anisotropic-stress statements require at least second order in tilt and a named Bianchi geometry."
+  ],
+  "tool_versions": {
+    "python": "3.12.3",
+    "sympy": "1.14.0",
+    "web_access_date": "2026-07-20"
+  },
+  "commands_run": [
+    "rg -n 'PR-171|Khronon|non-comoving|Gamma' docs/codex_handoff/pr_backlog.yaml docs/research/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md",
+    "venv/bin/python -c <SymPy construction of A, trace, determinant, characteristic polynomial, discriminant, and eigenvalues>",
+    "python3 .agent-harness/scripts/validate_harness.py --run-id pr171-intake-20260719"
+  ],
+  "reproducible_commands": [
+    "venv/bin/python -c \"import sympy as s; a,x,y,L=s.symbols('a x y L', positive=True); A=s.Matrix([[-a-x,x],[y,-1-y]]); print(s.factor(s.trace(A))); print(s.factor(A.det())); print(s.factor(A.charpoly(L).as_expr()))\"",
+    "python3 .agent-harness/scripts/validate_harness.py --run-id pr171-intake-20260719"
+  ],
+  "errors": []
+}

@@ -1,0 +1,147 @@
+{
+  "agent_type": "cas_wolfram_xact",
+  "assignment_id": "A-PR171-CAS2-WOLFRAM",
+  "assumptions": [
+    "flat RW source branch: constant -1<w<1/3, homogeneous non-interacting perfect fluid, N=ln(a), abs(v)<1",
+    "drag lemma: a=1-3w_X>0, x>=0, y>=0, aligned first-order tilts, no persistent source, stipulated momentum-conserving closure",
+    "counterexample mapping: gamma=1+w=5/4, w=1/4, Gamma=0, positive gamma-law density in the primary-source Bianchi-VIII class",
+    "the external late-time extreme-tilt theorem is authenticated by provenance and is not synthesized by CAS"
+  ],
+  "commands_run": [
+    {
+      "cmd": "wolframscript -file /home/cosmosapjw/Dropbox/bianchi/htt_base/wolfram/pr171_tilt_relaxation_axis.wls",
+      "cwd": ".",
+      "exit": 0
+    }
+  ],
+  "context_version": "d3210d1fec6319af75c363389a8d9a69e0aed16ee9a91b0e3f904dae58fa9d9e",
+  "findings": [
+    {
+      "claim_id": "C-PR171-CLASS-CONDITIONAL-STABILITY",
+      "evidence_fingerprint": "2cc9a1fff3adfa1660f3da22ce4d217f062b000830f316f459e501aa1772199b:27feb8271fe36277aa0cf81477fb8737f8ba296db2a844cccf1afc7ac90a4fdd:wolfram_xact",
+      "finding_id": "F-PR171-CAS-WOLFRAM-XACT",
+      "verdict": "PASS"
+    }
+  ],
+  "independence_mode": "blind-results",
+  "payload": {
+    "cas_axis_result": {
+      "axis": "wolfram_xact",
+      "checks": {
+        "counterexample_domain_mapping": true,
+        "counterexample_energy_conditions": true,
+        "drag_characteristic_exact": true,
+        "drag_determinant_exact": true,
+        "drag_hurwitz_positive_domain": true,
+        "drag_trace_exact": true,
+        "generic_persistent_matrix_fixture": true,
+        "high_precision_drag_replay": true,
+        "rw_implicit_invariant_derivative": true,
+        "rw_linearization_exact": true,
+        "rw_relaxation_sign_fixture": true,
+        "rw_rhs_source_equation_exact": true,
+        "stable_drag_fixture": true,
+        "suppression_input_guard": true,
+        "w_one_third_boundary_control": true
+      },
+      "commands": [
+        {
+          "cmd": "wolframscript -file /home/cosmosapjw/Dropbox/bianchi/htt_base/wolfram/pr171_tilt_relaxation_axis.wls",
+          "cwd": ".",
+          "exit": 0
+        }
+      ],
+      "completed_at": "2026-07-19T23:33:15+00:00",
+      "computed": {
+        "counterexample_Gamma": "0",
+        "counterexample_disposition": "RETIRED_BY_PUBLISHED_COUNTEREXAMPLE",
+        "counterexample_gamma": "5/4",
+        "counterexample_w": "1/4",
+        "khronon_bridge": "UNINSTANTIATED_LOOPHOLE",
+        "persistent_determinant": "0",
+        "persistent_eigenvalues": "-2,0",
+        "persistent_trace": "-2",
+        "rw_invariant_log_derivative": "3*w-1",
+        "rw_linear_coefficient_at_w_1over4": "-1/4",
+        "stable_characteristic": "r^2+25/12*r+5/6",
+        "stable_determinant": "5/6",
+        "stable_trace": "-25/12",
+        "suppression_status": "SUPPRESSION_CEILING_NOT_IDENTIFIED"
+      },
+      "contract_id": "CAS-PR171-CLASS-CONDITIONAL-TILT-002",
+      "contract_sha256": "2cc9a1fff3adfa1660f3da22ce4d217f062b000830f316f459e501aa1772199b",
+      "counterexample": null,
+      "domain_assumption_diff": [],
+      "evidence_class": "exact",
+      "fixture_matches": true,
+      "preaxis_authorization_sha256": "27feb8271fe36277aa0cf81477fb8737f8ba296db2a844cccf1afc7ac90a4fdd",
+      "precision_digits": 80,
+      "schema_version": 1,
+      "sibling_results_read": [],
+      "source_output_hashes": [
+        {
+          "path": "wolfram/pr171_tilt_relaxation_axis.wls",
+          "sha256": "2c60adb65575d05f5bac53fd9bdd7f0b5776754268bbe8c2470b98b5471229e8"
+        }
+      ],
+      "status": "PASS",
+      "tool_versions": {
+        "reported": "15.",
+        "singular": null,
+        "xact_loaded": true
+      },
+      "transcript_tail": "------------------------------------------------------------\nPackage xAct`xPerm`  version 1.2.4, {2025, 12, 29}\nCopyRight (C) 2003-2026, Jose M. Martin-Garcia, under the General Public License.\nConnecting to external linux executable...\nConnection established.\n------------------------------------------------------------\nPackage xAct`xTensor` version 1.3.0, {2025, 12, 29}\nCopyRight (C) 2002-2026, Jose M. Martin-Garcia, under the General Public License.\n------------------------------------------------------------\nThese packages come with ABSOLUTELY NO WARRANTY; for details type Disclaimer[]. This is free software, and you are welcome to redistribute it under certain conditions. See the General Public License for details.\n------------------------------------------------------------\n{\"engine\":\"wolfram_xact\",\"engine_version\":\"15.\",\"xact_loaded\":true,\"precision_digits\":80,\"checks\":{\"rw_rhs_source_equation_exact\":true,\"rw_implicit_invariant_derivative\":true,\"rw_relaxation_sign_fixture\":true,\"rw_linearization_exact\":true,\"w_one_third_boundary_control\":true,\"drag_trace_exact\":true,\"drag_determinant_exact\":true,\"drag_characteristic_exact\":true,\"drag_hurwitz_positive_domain\":true,\"stable_drag_fixture\":true,\"generic_persistent_matrix_fixture\":true,\"counterexample_domain_mapping\":true,\"counterexample_energy_conditions\":true,\"suppression_input_guard\":true,\"high_precision_drag_replay\":true},\"computed\":{\"counterexample_gamma\":\"5\\/4\",\"counterexample_w\":\"1\\/4\",\"counterexample_Gamma\":\"0\",\"counterexample_disposition\":\"RETIRED_BY_PUBLISHED_COUNTEREXAMPLE\",\"rw_linear_coefficient_at_w_1over4\":\"-1\\/4\",\"rw_invariant_log_derivative\":\"3*w-1\",\"stable_trace\":\"-25\\/12\",\"stable_determinant\":\"5\\/6\",\"stable_characteristic\":\"r^2+25\\/12*r+5\\/6\",\"persistent_trace\":\"-2\",\"persistent_determinant\":\"0\",\"persistent_eigenvalues\":\"-2,0\",\"suppression_status\":\"SUPPRESSION_CEILING_NOT_IDENTIFIED\",\"khronon_bridge\":\"UNINSTANTIATED_LOOPHOLE\"},\"fixture_matches\":true,\"all_pass\":true}\n",
+      "verified_input_hashes": [
+        {
+          "path": "docs/research_program/long_horizon_rescue/pr171_spec.yaml",
+          "sha256": "1c7796456f0ec71b729b8df7f1dd966974710eaed8c5c9ed0ab408bef08010e4"
+        },
+        {
+          "path": "docs/research_program/long_horizon_rescue/pr171_primary_source_provenance.yaml",
+          "sha256": "a504c840c45e0a28695543b39a84a23a365ab8e646b624fa50578900532b1e92"
+        },
+        {
+          "path": "docs/research_program/long_horizon_rescue/pr125_spec.yaml",
+          "sha256": "ce27cdc39686e39aaf74d51947e662513c36af8f12cb8d4a6a63c2306a2f9970"
+        },
+        {
+          "path": "docs/audits/pr171_primary_sources/noncomoving_1903_11009_equations.txt",
+          "sha256": "eeefe9eaff71d9b812765fb78eaa9a5eaaeea1f84aa1a3ba55a1bba518c27a1f"
+        },
+        {
+          "path": "docs/audits/pr171_primary_sources/hervik_lim_0512070_equations.txt",
+          "sha256": "3882a7904c8698bfdc5ee9414f417968895d162553ef7e59735bab3a01cedbfc"
+        },
+        {
+          "path": "docs/audits/pr171_primary_sources/coley_hervik_lim_0605128_record.txt",
+          "sha256": "52e3cc6eb13260c7ab0de957a3160117d5dc9792f71de2d09aaca383ee88c3e8"
+        },
+        {
+          "path": "docs/audits/pr171_primary_sources/velocity_interaction_2012_12204_record.txt",
+          "sha256": "9ae409fa60c45425ea2afe962f3388226aaddbbf5e92d153bac54af459bacdb6"
+        },
+        {
+          "path": "docs/audits/pr171_primary_sources/khronon_2404_06584_record.txt",
+          "sha256": "34c909d760e014eeb7c6552b4a1321b01f80fd4d855121acfdafe72b75a6885f"
+        },
+        {
+          "path": "htt/src/common/tilt_relaxation.py",
+          "sha256": "efb34cf9662ac5abd1e1bfbadd18736cc83b92f2e1b1e52e6310bf498d8050ca"
+        },
+        {
+          "path": "docs/generated/pr171_source_verification.json",
+          "sha256": "7973f37376c6aa1b5206d7cd64ac3ccca98fb7272909811a0cbbdaee2b6741c3"
+        }
+      ]
+    }
+  },
+  "result_path": ".agent-harness/runs/pr171-cas-g2-20260720/results/A-PR171-CAS2-WOLFRAM.json",
+  "run_id": "pr171-cas-g2-20260720",
+  "schema_version": 1,
+  "status": "pass",
+  "tool_versions": {
+    "reported": "15.",
+    "singular": null,
+    "xact_loaded": true
+  }
+}

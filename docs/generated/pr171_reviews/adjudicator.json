@@ -1,0 +1,208 @@
+{
+  "schema_version": 1,
+  "run_id": "pr171-cas-g3-20260720",
+  "assignment_id": "A-PR171-ADJUDICATOR",
+  "agent_type": "adjudicator",
+  "context_version": "721a8336533d0dc43e06e715785b6eac6dc2f4269c1df5d7c915e50a4dea071f",
+  "independence_mode": "adjudication",
+  "status": "fail",
+  "result_path": ".agent-harness/runs/pr171-cas-g3-20260720/results/A-PR171-ADJUDICATOR.json",
+  "assumptions": [
+    "Only the assignment-authorized inputs and the four explicitly allowed generation-3 sibling results were used as evidence.",
+    "CAS_4AXIS_PASS classifies the frozen exact obligations only; it does not prove the external Bianchi-VIII asymptotic theorem or physical source-space closure.",
+    "The source-verification receipt authenticates source and normalized-record bytes; source-level physical statements remain externally attributed.",
+    "No hash-bound post-registration interpretation erratum is present in the authorized evidence set."
+  ],
+  "commands_run": [
+    {
+      "cmd": "rg -n '^' <assignment-authorized inputs and four allowed sibling results>",
+      "cwd": ".",
+      "exit": 0
+    },
+    {
+      "cmd": "venv/bin/python -c '<independent hash, keyset, value, authorization, and generation-reuse reconstruction over authorized inputs>'",
+      "cwd": ".",
+      "exit": 0
+    },
+    {
+      "cmd": "venv/bin/python -c '<exact Fraction checks for gamma=7/6 and gamma=5/4 mappings and energy-condition inequalities>'",
+      "cwd": ".",
+      "exit": 0
+    }
+  ],
+  "tool_versions": {
+    "adjudicator_python": "3.12.3",
+    "wolfram_xact_reported": "Wolfram Engine 15.; xAct/xTensor loaded",
+    "sympy_reported": "1.14.0",
+    "sage_singular_reported": "SageMath 10.9; Singular 44100",
+    "lean_mathlib_reported": "Lean 4.31.0; mathlib 4.31.0"
+  },
+  "findings": [
+    {
+      "finding_id": "F-PR171-ADJ-G3-AGGREGATE",
+      "claim_id": "C-PR171-CLASS-CONDITIONAL-STABILITY",
+      "evidence_fingerprint": "20d933e8dbda27c2788d1ce8b113bc7dee85e0d203a7620a0f26b549436ee502:aggregate",
+      "verdict": "PASS",
+      "summary": "Generation 3 independently reconstructs to exception-free CAS_4AXIS_PASS for the exact v3 contract obligations.",
+      "evidence_refs": [
+        "docs/generated/pr171_cas/CAS_CONTRACT_PR171_CLASS_CONDITIONAL_TILT_V3.json",
+        "docs/generated/pr171_cas/preaxis_authorization_v3.json",
+        "docs/generated/pr171_cas/generation_3/adjudication.json",
+        "docs/generated/pr171_cas_collection_receipt.json",
+        ".agent-harness/runs/pr171-cas-g3-20260720/results/A-PR171-CAS3-WOLFRAM.json",
+        ".agent-harness/runs/pr171-cas-g3-20260720/results/A-PR171-CAS3-SYMPY.json",
+        ".agent-harness/runs/pr171-cas-g3-20260720/results/A-PR171-CAS3-SAGE.json",
+        ".agent-harness/runs/pr171-cas-g3-20260720/results/A-PR171-CAS3-LEAN.json"
+      ]
+    },
+    {
+      "finding_id": "F-PR171-ADJ-GENERATION-NONREUSE",
+      "claim_id": "C-PR171-CLASS-CONDITIONAL-STABILITY",
+      "evidence_fingerprint": "20d933e8dbda27c2788d1ce8b113bc7dee85e0d203a7620a0f26b549436ee502:nonreuse",
+      "verdict": "PASS",
+      "summary": "Generation-3 contract, assignment, outer-result, and normalized-result hashes are fresh and disjoint from generations 1 and 2; no majority vote or exception was used.",
+      "evidence_refs": [
+        "docs/generated/pr171_cas/generation_1/adjudication.json",
+        "docs/generated/pr171_cas/generation_2/adjudication.json",
+        "docs/generated/pr171_cas/generation_3/adjudication.json",
+        "docs/generated/pr171_cas/preaxis_authorization_v3.json"
+      ]
+    },
+    {
+      "finding_id": "F-PR171-ADJ-FIXTURE-LABEL-DRIFT",
+      "claim_id": "C-PR171-CLASS-CONDITIONAL-STABILITY",
+      "evidence_fingerprint": "20d933e8dbda27c2788d1ce8b113bc7dee85e0d203a7620a0f26b549436ee502:fixture-label-drift",
+      "verdict": "FAIL_NOT_READY",
+      "severity": "P1",
+      "summary": "The frozen claim_identity names gamma=7/6, w=1/6, while the registered source fixture, v3 contract, shared context, and all four generation-3 axes seal gamma=5/4, w=1/4. The source theorem recorded for 1<gamma<2 makes both points logically admissible, so the exact target is not false or ambiguous; nevertheless the current PR-level claim package is not terminal-ready because it does not distinguish the alternate source point from the CAS-sealed fixture.",
+      "required_fix": "Add a hash-bound, post-registration interpretation erratum that leaves every v3 exact target and input byte unchanged, labels gamma=7/6 solely as an unregistered alternate point in the externally attributed source interval, identifies gamma=5/4 as the only CAS-sealed fixture, and forbids any statement that generation 3 checked gamma=7/6. If the spec, contract, axis sources, assumptions, or expected values change, invalidate generation 3 and require four fresh blind axes.",
+      "evidence_refs": [
+        "docs/research_program/long_horizon_rescue/pr171_spec.yaml:21",
+        "docs/research_program/long_horizon_rescue/pr171_spec.yaml:90",
+        "docs/generated/pr171_cas/CAS_CONTRACT_PR171_CLASS_CONDITIONAL_TILT_V3.json:153",
+        "docs/generated/pr171_cas/CAS_CONTRACT_PR171_CLASS_CONDITIONAL_TILT_V3.json:202",
+        "docs/research_program/long_horizon_rescue/pr171_primary_source_provenance.yaml:59"
+      ]
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "C-PR171-CLASS-CONDITIONAL-STABILITY",
+      "verdict": "FAIL_NOT_READY",
+      "exact_cas_aggregate": "CAS_4AXIS_PASS",
+      "current_terminal_scientific_result": null,
+      "current_process_disposition": "BLOCK_TERMINAL_PR171_RESULT_PENDING_INTERPRETATION_ERRATUM",
+      "post_erratum_terminal_route": "CLASS_CONDITIONAL_NO_GO_RETIRED_BY_COUNTEREXAMPLE",
+      "claim_tier_ceiling": "C2_CONDITIONAL_HYPOTHESIS_ONLY_PUBLIC_FALSE"
+    }
+  ],
+  "errors": [],
+  "payload": {
+    "aggregate_reconstruction": {
+      "reconstructed_status": "CAS_4AXIS_PASS",
+      "published_status": "CAS_4AXIS_PASS",
+      "contract_sha256": "0f4c234c04237461d28e1bba4da98dad88601642844e2f84b4b44dbb7bf7a8c4",
+      "authorization_sha256": "c87dffe5eaa6d7a69e07a0f01379e2498bb92fcc2555a246b0377f98ecfb04b6",
+      "collection_sha256": "bb94a80f2ac0e2e15deb727035db711384a412a66fdfd149e55ed435371cfbc1",
+      "generation_3_adjudication_byte_identical_to_collection": true,
+      "authorization_records_all_four_results_absent": true,
+      "registered_exception_used": false,
+      "majority_vote_used": false,
+      "axis_receipts": {
+        "wolfram_xact": {
+          "assignment_sha256": "71e2af9ce7057cc2fb50f80c5f36890665951e8d615abc5ad5b63e32daabbe77",
+          "outer_result_sha256": "ab4d8ce9aed7b84bc96df107708a1d4a1343b1d5ce34b19b5d78f80fde4b62d3",
+          "normalized_result_sha256": "22813745221221f968ce7bf5eaf967a6edc2d5adbd5e15bc60408e47b3ad30db"
+        },
+        "sympy": {
+          "assignment_sha256": "fed8f84c9c2644d2e4e6815c010b2a83a9097e327b51e0903ac891ff83f89343",
+          "outer_result_sha256": "622aaca97ff58cb086127613b5c9715c3f7b30ce3fd016616ae7f752e863ed5d",
+          "normalized_result_sha256": "98b8fe07cc61d15001449ed53b002f174081bccb461580a8b08f6c9379e88075"
+        },
+        "sage_singular": {
+          "assignment_sha256": "00f124aa29bc82b7ddd9e99ceaf3380e9af88406f8a246f7bb421085845ce52a",
+          "outer_result_sha256": "65a22dd3b15ed31cbe764e652bc58c665527b4d9e38142cde32344d017764a60",
+          "normalized_result_sha256": "4522e0798cc974b5a1aaaf2766be88570350a52d41e1b52928a354bea079f2f1"
+        },
+        "lean": {
+          "assignment_sha256": "c80fc8307ae89b59f085133e48921103ef08b17d2377cc74679a26e9e720ea40",
+          "outer_result_sha256": "1de85289ed880d9c42c36af07554ab50c7277b3e88bc5773aa32a5a7311c2a71",
+          "normalized_result_sha256": "c3ca6ef9bb5ca832344d48a976dedf8f4bcb74e903e15e18d70c4550d7ec9da8"
+        }
+      },
+      "verified_for_each_axis": [
+        "outer bytes match the collection receipt",
+        "normalized payload hash matches the collection receipt",
+        "contract, authorization, context, source-input, and axis-source hashes match",
+        "the exact 15-obligation keyset is present and every obligation is true",
+        "computed exact values equal the contract target",
+        "commands exit zero, domain-assumption diffs are empty, and sibling_results_read is empty"
+      ]
+    },
+    "previous_generation_nonreuse": {
+      "generation_1_status": "PROCESS_EVIDENCE_INVALID",
+      "generation_1_contract_sha256": "202994729d9af0b90b3f08750b027c73cd411f6807582dfc385d8a9329e29734",
+      "generation_2_status": "CAS_FAIL",
+      "generation_2_contract_sha256": "2cc9a1fff3adfa1660f3da22ce4d217f062b000830f316f459e501aa1772199b",
+      "generation_3_contract_sha256": "0f4c234c04237461d28e1bba4da98dad88601642844e2f84b4b44dbb7bf7a8c4",
+      "all_contract_hashes_distinct": true,
+      "all_generations_declare_cross_generation_result_reuse_false": true,
+      "generation_3_outer_or_normalized_hash_overlap_with_prior_generations": false
+    },
+    "scientific_separation": {
+      "exact_algebra_established_under_frozen_assumptions": [
+        "For the authenticated restricted flat-RW ODE, the registered logarithmic invariant differentiates to 3*w-1, nonzero tilt relaxes for constant -1<w<1/3, the w=1/3 boundary coefficient is zero, and the w=1/4 linear coefficient is -1/4.",
+        "For the stipulated near-FLRW two-fluid drag matrix, trace=-(a+x+y+1), determinant=a*(1+y)+x, and a>0, x>=0, y>=0 imply local linear Hurwitz stability; the registered fixture has trace -25/12 and determinant 5/6.",
+        "The generic matrix [[-1,1],[1,-1]] has eigenvalues -2 and 0 with persistent vector [1,1]; this is an algebraic nondecay control, not a physical cosmology.",
+        "The registered source point maps gamma=5/4 to w=1/4<1/3 with Gamma=0 and satisfies the encoded gamma-law energy-condition inequalities.",
+        "The numerical suppression ceiling remains unidentified because duration, initial data, coupling closure, and observable map are absent."
+      ],
+      "source_authenticated_not_cas_derived": [
+        "Five raw arXiv archives and their normalized records are byte-authenticated by the source-verification receipt.",
+        "The restricted flat-RW velocity equation is externally attributed to the authenticated source record.",
+        "The generic late-time extreme-tilt statement for the tilted Bianchi-VIII gamma-law class with 1<gamma<2 is externally attributed to the authenticated Hervik-Lim record; CAS checks only the registered domain mapping and does not prove that asymptotic theorem.",
+        "Because both 7/6 and 5/4 lie in 1<gamma<2 and map to w<1/3 with Gamma=0, the label mismatch does not make the counterexample conclusion logically false."
+      ],
+      "unresolved_physical_claims": [
+        "generic interacting or non-comoving dark-sector closure",
+        "nonlinear shear/tilt closure and global stability",
+        "khronon-to-shear-leakage bridge",
+        "universal comoving relaxation or no-go theorem",
+        "numerical suppression ceiling and observable mapping",
+        "observational, transfer, posterior, detection, geometry, or Bianchi-family claims"
+      ]
+    },
+    "claim_alignment_adjudication": {
+      "issue_class": "post_registration_fixture_label_drift",
+      "logical_falsity": false,
+      "v3_exact_target_ambiguous": false,
+      "v3_cas_sealed_fixture": {
+        "gamma": "5/4",
+        "w": "1/4",
+        "Gamma": "0"
+      },
+      "unregistered_alternate_source_point_in_claim_identity": {
+        "gamma": "7/6",
+        "w": "1/6"
+      },
+      "interpretation_erratum_sufficient_without_fresh_axes": true,
+      "erratum_conditions": [
+        "The erratum is additive, hash-bound, and does not edit or reinterpret any v3 exact target, assumption, expected value, source-input byte, or axis source.",
+        "It labels 7/6 as an unregistered alternate point covered only by the externally attributed 1<gamma<2 source interval.",
+        "It identifies 5/4 as the sole generation-3 CAS-sealed fixture and forbids saying that generation 3 checked 7/6.",
+        "Any edit to a contract-bound input or attempt to make 7/6 part of the exact target invalidates generation 3 and requires four fresh blind axes."
+      ]
+    },
+    "allowed_terminal_wording_after_erratum": "Under the frozen flat-RW, homogeneous, non-interacting perfect-fluid assumptions, the registered velocity equation relaxes for constant w<1/3. This is class-conditional: the source-authenticated tilted Bianchi-VIII gamma-law result includes the registered gamma=5/4, w=1/4, Gamma=0 point and tends generically to extreme tilt, so the blanket generic no-go is retired. The near-FLRW two-fluid result is only a stipulated local linear stability lemma. No generic dark-sector or nonlinear shear closure and no numerical suppression ceiling are identified. This is an internal C2 conditional, hypothesis-only result with public_use=false.",
+    "forbidden_terminal_wording": [
+      "generation 3 CAS-verified the gamma=7/6 fixture",
+      "generic fluid cannot source persistent tilt",
+      "universal no-go theorem",
+      "global nonlinear stability",
+      "universal suppression ceiling",
+      "proof of isotropy or FLRW",
+      "Bianchi geometry detected or family identified"
+    ],
+    "current_closeout_disposition": "FAIL_NOT_READY_PENDING_HASH_BOUND_INTERPRETATION_ERRATUM"
+  }
+}

@@ -1,0 +1,45 @@
+schema: htt.pr171.spec_interpretation_erratum.v1
+pr_id: PR-171
+claim_id: C-PR171-CLASS-CONDITIONAL-STABILITY
+status: POST_REGISTRATION_ADDITIVE_INTERPRETATION_ERRATUM
+frozen_spec:
+  path: docs/research_program/long_horizon_rescue/pr171_spec.yaml
+  sha256: 1c7796456f0ec71b729b8df7f1dd966974710eaed8c5c9ed0ab408bef08010e4
+frozen_contract:
+  path: docs/generated/pr171_cas/CAS_CONTRACT_PR171_CLASS_CONDITIONAL_TILT_V3.json
+  sha256: 0f4c234c04237461d28e1bba4da98dad88601642844e2f84b4b44dbb7bf7a8c4
+adjudicator:
+  path: docs/generated/pr171_reviews/adjudicator.json
+  sha256: 266fe21ecfbbe7da5cd75b8f535d914a8c1e3dba19466a9afac6be0422479af6
+issue: >-
+  The frozen claim_identity prose names gamma=7/6 and w=1/6, while the sole
+  registered and four-axis-sealed fixture is gamma=5/4, w=1/4, Gamma=0.
+interpretation:
+  unregistered_source_only_alternate:
+    gamma: 7/6
+    w: 1/6
+    status: covered_by_externally_attributed_1_less_than_gamma_less_than_2_interval_only
+    cas_sealed: false
+  sole_generation_3_cas_sealed_fixture:
+    gamma: 5/4
+    w: 1/4
+    Gamma: 0
+    cas_sealed: true
+scientific_effect: >-
+  No exact target, source theorem interval, or terminal conclusion changes.
+  Both points lie in the authenticated source interval, but only 5/4 is an
+  exact generation-3 fixture. The blanket generic no-go remains retired by
+  the externally attributed source counterexample class.
+fresh_axes_required: false
+fresh_axes_required_if:
+  - any contract-bound byte, assumption, expected value, or axis source changes
+  - gamma=7/6 is promoted to a generation-3 exact or CAS-sealed fixture
+  - any output says generation 3 checked gamma=7/6
+consumer_rule: >-
+  Every PR-171 result, delta, status, report, or manuscript consumer must apply
+  this erratum and identify gamma=5/4 as the sole CAS-sealed fixture.
+forbidden_wording:
+  - generation 3 CAS-verified gamma=7/6
+  - gamma=7/6 is the registered PR-171 fixture
+  - both source points were four-axis checked
+public_use: false

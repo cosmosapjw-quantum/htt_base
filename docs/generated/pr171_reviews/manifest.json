@@ -1,0 +1,72 @@
+{
+  "caveats": [
+    "Archived verdicts retain their original status; copying does not relabel them as passes.",
+    "Tracked destination hashes are sufficient for clean-checkout replay; ignored source paths are checked additionally when present."
+  ],
+  "claim_level": {
+    "level": "C2",
+    "scheme": "roadmap_rescue_v1"
+  },
+  "claim_tier": "conditional",
+  "config_hash": "1c7796456f0ec71b729b8df7f1dd966974710eaed8c5c9ed0ab408bef08010e4",
+  "copy_mode": "byte_for_byte",
+  "covariance_status": "not_applicable_review_evidence",
+  "generating_command": "venv/bin/python -B scripts/codex_harness/archive_pr171_reviews.py --write",
+  "git_commit": "c936fabd1527bb8c38cb13b98fc1ee608d0c5738",
+  "implementation_scope": "common",
+  "input_hashes": {
+    ".agent-harness/runs/pr171-cas-g3-20260720/results/A-PR171-ADJUDICATOR.json": "266fe21ecfbbe7da5cd75b8f535d914a8c1e3dba19466a9afac6be0422479af6",
+    ".agent-harness/runs/pr171-intake-20260719/results/A-PR171-CLAIM.json": "4e9ef78b5531294b43a0f5010cb19dbea53b4fd7fe675e1a723ce44e6a8a2c03",
+    ".agent-harness/runs/pr171-intake-20260719/results/A-PR171-HARNESS.json": "596d724603fd39ac29cdb1d6c73c7b92228707626b5c21bbfb8e45bc6c37bcf8",
+    ".agent-harness/runs/pr171-intake-20260719/results/A-PR171-PHYSICS.json": "c6eee7294186ff7963a190efd390ef67d863ada1030a9f0dff8f7a0347339869"
+  },
+  "mask_status": "not_applicable_review_evidence",
+  "null_mock_status": "not_applicable_review_evidence",
+  "owner": "COMMON",
+  "pr_id": "PR-171",
+  "public_use": false,
+  "review_count": 4,
+  "reviews": [
+    {
+      "assignment_id": "A-PR171-CLAIM",
+      "bytes": 30103,
+      "destination_path": "docs/generated/pr171_reviews/claim_gate.json",
+      "role": "claim_gate",
+      "sha256": "4e9ef78b5531294b43a0f5010cb19dbea53b4fd7fe675e1a723ce44e6a8a2c03",
+      "source_path": ".agent-harness/runs/pr171-intake-20260719/results/A-PR171-CLAIM.json",
+      "status": "fail"
+    },
+    {
+      "assignment_id": "A-PR171-HARNESS",
+      "bytes": 34903,
+      "destination_path": "docs/generated/pr171_reviews/harness.json",
+      "role": "harness",
+      "sha256": "596d724603fd39ac29cdb1d6c73c7b92228707626b5c21bbfb8e45bc6c37bcf8",
+      "source_path": ".agent-harness/runs/pr171-intake-20260719/results/A-PR171-HARNESS.json",
+      "status": "pass"
+    },
+    {
+      "assignment_id": "A-PR171-PHYSICS",
+      "bytes": 8765,
+      "destination_path": "docs/generated/pr171_reviews/physics_statistics.json",
+      "role": "physics_statistics",
+      "sha256": "c6eee7294186ff7963a190efd390ef67d863ada1030a9f0dff8f7a0347339869",
+      "source_path": ".agent-harness/runs/pr171-intake-20260719/results/A-PR171-PHYSICS.json",
+      "status": "fail"
+    },
+    {
+      "assignment_id": "A-PR171-ADJUDICATOR",
+      "bytes": 13397,
+      "destination_path": "docs/generated/pr171_reviews/adjudicator.json",
+      "role": "adjudicator",
+      "sha256": "266fe21ecfbbe7da5cd75b8f535d914a8c1e3dba19466a9afac6be0422479af6",
+      "source_path": ".agent-harness/runs/pr171-cas-g3-20260720/results/A-PR171-ADJUDICATOR.json",
+      "status": "fail"
+    }
+  ],
+  "schema": "htt.pr171.review_archive.v1",
+  "scientific_artifact_mode": "hypothesis_only",
+  "sky_support_status": "not_applicable_review_evidence",
+  "transfer_source": "none",
+  "worktree_state": "c936fabd1527bb8c38cb13b98fc1ee608d0c5738+PR-171-worktree"
+}

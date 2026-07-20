@@ -1,0 +1,63 @@
+{
+  "adjudicator_sha256": "266fe21ecfbbe7da5cd75b8f535d914a8c1e3dba19466a9afac6be0422479af6",
+  "blanket_no_go_status": "RETIRED_BY_AUTHENTICATED_EXTERNAL_SOURCE",
+  "bound_inputs_unchanged": true,
+  "caveats": [
+    "5/4 is the sole CAS-sealed fixture",
+    "7/6 is source-only and unsealed",
+    "no universal or observational claim"
+  ],
+  "claim_id": "C-PR171-CLASS-CONDITIONAL-STABILITY",
+  "claim_level": {
+    "level": "C2",
+    "scheme": "roadmap_rescue_v1"
+  },
+  "claim_tier": "conditional",
+  "collection_sha256": "bb94a80f2ac0e2e15deb727035db711384a412a66fdfd149e55ed435371cfbc1",
+  "config_hash": "1c7796456f0ec71b729b8df7f1dd966974710eaed8c5c9ed0ab408bef08010e4",
+  "contract_sha256": "0f4c234c04237461d28e1bba4da98dad88601642844e2f84b4b44dbb7bf7a8c4",
+  "covariance_status": "not_applicable",
+  "erratum_path": "docs/research_program/long_horizon_rescue/pr171_spec_erratum.yaml",
+  "erratum_sha256": "ba847efc81c3324bfa7b150b05841dab0f7c052426f8929406a3053f19f90a51",
+  "errors": [],
+  "exact_cas_status": "CAS_4AXIS_PASS",
+  "generating_command": "venv/bin/python -B scripts/codex_harness/verify_pr171_postcas_closeout.py --write",
+  "git_commit": "c936fabd1527bb8c38cb13b98fc1ee608d0c5738",
+  "implementation_scope": "common",
+  "input_hashes": {
+    "docs/generated/pr171_cas/CAS_CONTRACT_PR171_CLASS_CONDITIONAL_TILT_V3.json": "0f4c234c04237461d28e1bba4da98dad88601642844e2f84b4b44dbb7bf7a8c4",
+    "docs/generated/pr171_cas_collection_receipt.json": "bb94a80f2ac0e2e15deb727035db711384a412a66fdfd149e55ed435371cfbc1",
+    "docs/generated/pr171_result_card.json": "204aa4365ec1ff55741d7a4140d1ca9d4a8e31fe3593493e6557fe99889639ca",
+    "docs/generated/pr171_reviews/adjudicator.json": "266fe21ecfbbe7da5cd75b8f535d914a8c1e3dba19466a9afac6be0422479af6",
+    "docs/generated/pr171_reviews/manifest.json": "7c45fe4335314e30b716db3a6458ef9687d00e38a661895ba4c3533f0df41300",
+    "docs/research_program/long_horizon_rescue/pr171_spec_erratum.yaml": "ba847efc81c3324bfa7b150b05841dab0f7c052426f8929406a3053f19f90a51"
+  },
+  "mask_status": "not_applicable_exact_mechanics",
+  "null_mock_status": "not_applicable",
+  "owner": "COMMON",
+  "pr_id": "PR-171",
+  "public_use": false,
+  "schema": "htt.pr171.postcas_contract_review.v1",
+  "scientific_artifact_mode": "hypothesis_only",
+  "scientific_result": "CLASS_CONDITIONAL_NO_GO_RETIRED_BY_COUNTEREXAMPLE",
+  "sky_support_status": "not_applicable_exact_mechanics",
+  "sole_cas_sealed_fixture": {
+    "Gamma": "0",
+    "gamma": "5/4",
+    "w": "1/4"
+  },
+  "suppression_status": "SUPPRESSION_CEILING_NOT_IDENTIFIED",
+  "terminal_ready": true,
+  "transfer_source": "none",
+  "unregistered_source_only_alternate": {
+    "gamma": "7/6",
+    "w": "1/6"
+  },
+  "unresolved": [
+    "generic dark-sector closure",
+    "nonlinear shear closure",
+    "khronon shear-leakage bridge",
+    "numerical suppression ceiling"
+  ],
+  "worktree_state": "c936fabd1527bb8c38cb13b98fc1ee608d0c5738+PR-171-worktree"
+}

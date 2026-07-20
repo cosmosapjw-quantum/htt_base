@@ -129,6 +129,15 @@ def test_hypothesis_only_cards_are_reported_but_not_auto_scheduled(
     tmp_path: Path,
 ) -> None:
     status = _yaml(STATUS)
+    # Reconstruct the transaction's own post-PR-167 baseline instead of
+    # inheriting whichever later advocate card is currently foreground.
+    for number in range(168, 183):
+        pr_id = f"PR-{number}"
+        if pr_id in status["completed"]:
+            status["completed"].remove(pr_id)
+        status["execution_resolutions"].pop(pr_id, None)
+        if pr_id not in status["pending"]:
+            status["pending"].append(pr_id)
     if "PR-167" not in status["completed"]:
         status["completed"].append("PR-167")
     status["in_progress"] = None
@@ -184,6 +193,8 @@ def test_hypothesis_only_or_nonacquisition_card_cannot_run_in_background(
 ) -> None:
     for pr_id in ("PR-174", "PR-172"):
         status = _yaml(STATUS)
+        if status["in_progress"] == pr_id:
+            status["in_progress"] = None
         status["background_in_progress"] = [pr_id]
         status["background_execution_contracts"] = {
             pr_id: {
@@ -192,7 +203,8 @@ def test_hypothesis_only_or_nonacquisition_card_cannot_run_in_background(
                 "partial_scientific_use": "forbidden",
             }
         }
-        status["pending"].remove(pr_id)
+        if pr_id in status["pending"]:
+            status["pending"].remove(pr_id)
         status["pending"].append("PR-151")
         path = tmp_path / f"{pr_id}.yaml"
         _write_yaml(path, status)

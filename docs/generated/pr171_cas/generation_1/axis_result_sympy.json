@@ -1,0 +1,82 @@
+{
+  "axis": "sympy",
+  "checks": null,
+  "commands": [
+    {
+      "cmd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/venv/bin/python -B /home/cosmosapjw/Dropbox/bianchi/htt_base/htt/src/common/pr171_sympy_axis.py",
+      "cwd": ".",
+      "exit": 1
+    }
+  ],
+  "completed_at": "2026-07-19T22:57:25+00:00",
+  "computed": null,
+  "contract_id": "CAS-PR171-CLASS-CONDITIONAL-TILT-001",
+  "contract_sha256": "202994729d9af0b90b3f08750b027c73cd411f6807582dfc385d8a9329e29734",
+  "counterexample": {
+    "failures": [
+      "axis emitted no parseable JSON payload"
+    ]
+  },
+  "domain_assumption_diff": [],
+  "evidence_class": "exact",
+  "fixture_matches": null,
+  "preaxis_authorization_sha256": "67f28118898a83d8f1ed569727c610637473cdb2e9492681e7ca1d285f0f6020",
+  "precision_digits": null,
+  "schema_version": 1,
+  "sibling_results_read": [],
+  "source_output_hashes": [
+    {
+      "path": "htt/src/common/pr171_sympy_axis.py",
+      "sha256": "e3ab46c9b7600b83a12a41001f0b73b9e5763188db2fa811481428657ac550cd"
+    }
+  ],
+  "status": "FAIL",
+  "tool_versions": {
+    "reported": "unavailable",
+    "singular": null,
+    "xact_loaded": null
+  },
+  "transcript_tail": "Traceback (most recent call last):\n  File \"/home/cosmosapjw/Dropbox/bianchi/htt_base/htt/src/common/pr171_sympy_axis.py\", line 78, in <module>\n    raise SystemExit(main())\n                     ^^^^^^\n  File \"/home/cosmosapjw/Dropbox/bianchi/htt_base/htt/src/common/pr171_sympy_axis.py\", line 73, in main\n    print(json.dumps(payload, sort_keys=True))\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/json/__init__.py\", line 238, in dumps\n    **kw).encode(obj)\n          ^^^^^^^^^^^\n  File \"/usr/lib/python3.12/json/encoder.py\", line 200, in encode\n    chunks = self.iterencode(o, _one_shot=True)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/json/encoder.py\", line 258, in iterencode\n    return _iterencode(o, 0)\n           ^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/json/encoder.py\", line 180, in default\n    raise TypeError(f'Object of type {o.__class__.__name__} '\nTypeError: Object of type BooleanTrue is not JSON serializable\n",
+  "verified_input_hashes": [
+    {
+      "path": "docs/research_program/long_horizon_rescue/pr171_spec.yaml",
+      "sha256": "1c7796456f0ec71b729b8df7f1dd966974710eaed8c5c9ed0ab408bef08010e4"
+    },
+    {
+      "path": "docs/research_program/long_horizon_rescue/pr171_primary_source_provenance.yaml",
+      "sha256": "a504c840c45e0a28695543b39a84a23a365ab8e646b624fa50578900532b1e92"
+    },
+    {
+      "path": "docs/research_program/long_horizon_rescue/pr125_spec.yaml",
+      "sha256": "ce27cdc39686e39aaf74d51947e662513c36af8f12cb8d4a6a63c2306a2f9970"
+    },
+    {
+      "path": "docs/audits/pr171_primary_sources/noncomoving_1903_11009_equations.txt",
+      "sha256": "eeefe9eaff71d9b812765fb78eaa9a5eaaeea1f84aa1a3ba55a1bba518c27a1f"
+    },
+    {
+      "path": "docs/audits/pr171_primary_sources/hervik_lim_0512070_equations.txt",
+      "sha256": "3882a7904c8698bfdc5ee9414f417968895d162553ef7e59735bab3a01cedbfc"
+    },
+    {
+      "path": "docs/audits/pr171_primary_sources/coley_hervik_lim_0605128_record.txt",
+      "sha256": "52e3cc6eb13260c7ab0de957a3160117d5dc9792f71de2d09aaca383ee88c3e8"
+    },
+    {
+      "path": "docs/audits/pr171_primary_sources/velocity_interaction_2012_12204_record.txt",
+      "sha256": "9ae409fa60c45425ea2afe962f3388226aaddbbf5e92d153bac54af459bacdb6"
+    },
+    {
+      "path": "docs/audits/pr171_primary_sources/khronon_2404_06584_record.txt",
+      "sha256": "34c909d760e014eeb7c6552b4a1321b01f80fd4d855121acfdafe72b75a6885f"
+    },
+    {
+      "path": "htt/src/common/tilt_relaxation.py",
+      "sha256": "efb34cf9662ac5abd1e1bfbadd18736cc83b92f2e1b1e52e6310bf498d8050ca"
+    },
+    {
+      "path": "docs/generated/pr171_source_verification.json",
+      "sha256": "7973f37376c6aa1b5206d7cd64ac3ccca98fb7272909811a0cbbdaee2b6741c3"
+    }
+  ]
+}

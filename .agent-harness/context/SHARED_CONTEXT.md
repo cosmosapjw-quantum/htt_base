@@ -1,4 +1,4 @@
-# Shared Context — PR-151 background acquisition and PR-171 class-conditional ODE audit
+# Shared Context — PR-151 background acquisition and PR-172 metamorphic battery
 
 ## Project objective
 
@@ -12,18 +12,19 @@
   failed-contract branch. `PR-169` completed with an exact `algebraic_only`
   comparator result. `PR-170` completed with a reproducible
   `CAS_BLOCKED` source-provenance audit and withheld scalar targets.
-  `PR-171` is the sole foreground card.
+  `PR-171` completed with a class-conditional counterexample result that
+  retires its blanket no-go. `PR-172` is the sole foreground card.
 - Current background card: `PR-151`, authenticated DESI DR1 acquisition of
   1000 EZmocks plus 25 AbacusSummit mocks on NVMe.
 - Governing roadmap:
   `docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md`.
 - Base revision at context refresh:
-  `43ea72444bf6c7eda2a931b784eb67fd336ab16d` on
+  `c936fabd1527bb8c38cb13b98fc1ee608d0c5738` on
   `research/pr04-multicomponent`.
 
 ## Current DAG and execution state
 
-- Registered DAG: 130 cards through PR-183; 104 completed, PR-171 foreground,
+- Registered DAG: 130 cards through PR-183; 105 completed, PR-172 foreground,
   PR-151 is the sole background acquisition, PR-155--158 remain
   gated on PR-151, and PR-159--166 plus PR-183 are dormant pending authenticated
   native delivery. The dedicated PR-167 transaction preserved semantic hashes
@@ -54,13 +55,13 @@
 - The legacy all-in-one tmux wrapper was stopped at an aria-resumable `.part`
   checkpoint without deleting payloads. Session `htt_pr151_desi_20260719` now
   runs `--phase acquire`; pane/lock owner PID was `16695` at the latest probe.
-  Host-level process inspection and the 2026-07-19 22:21 UTC fast probe
+  Host-level process inspection and the 2026-07-20 00:34 UTC fast probe
   confirmed session `htt_pr151_desi_20260719`, pane/lock owner PID `16695`,
-  runner PID `16709`, aria child PID `1528176`, and the expected
-  `--phase acquire` command. It found 90/1000 authenticated EZmocks, 0/25
-  Abacus records, 10/15 audit members, 36 growing `.part` files totalling
-  10,417,091,200 bytes, a 3.8-second-old log, and 819.61 GiB free. Both part
-  count and bytes increased from the 21:52 UTC probe, so acquisition is active.
+  runner PID `16709`, aria child PID `2252558`, and the expected
+  `--phase acquire` command. It found 110/1000 authenticated EZmocks, 0/25
+  Abacus records, 10/15 audit members, 17 fresh `.part` files totalling
+  4,383,143,616 bytes, an 8.2-second-old log, and 823.04 GiB free. The live
+  writer plus growth since the 00:18 UTC probe show that acquisition is active.
   The older batch manifest still reports 30 authenticated EZmocks and the
   intentional phase-migration `KeyboardInterrupt` until the current batch
   checkpoint is committed; that stale manifest state is not a restart signal
@@ -416,7 +417,7 @@
   closeout evidence is `docs/generated/pr170_closeout_review_receipt.json`;
   28 targeted and 118 related tests pass.
 
-## PR-171 foreground contract boundary
+## PR-171 completed result boundary
 
 - PR-171 is authorized by the explicit approved sequence despite its
   `hypothesis_only` scientific artifact mode. It remains conditional/C2,
@@ -438,9 +439,53 @@
   physical admissibility or source-space closure may terminate as
   `algebraic_only`, `non_informative`, or a registered blocked/failure
   result rather than being promoted.
-- PR-151 must be probed at start and end. If it becomes terminal-ready, finish
-  the atomic PR-171 result, review, and commit before starting any new advocate
-  card; then finalize PR-151 and return to PR-155--158.
+- PR-151 was probed at PR-171 start and end and remained non-terminal. No
+  partial mock entered PR-171.
+- The pre-axis spec is now frozen at
+  `docs/research_program/long_horizon_rescue/pr171_spec.yaml`. It supersedes
+  the roadmap's unvalidated `10^-6..10^-7` candidate as an expected answer or
+  threshold; the suppression value remains null unless all frozen inputs exist.
+- Five raw arXiv archives and normalized records are authenticated by
+  `docs/generated/pr171_source_verification.json`. The restricted flat-RW
+  non-interacting equation relaxes for constant `w<1/3`, but Hervik--Lim's
+  tilted Bianchi-VIII `gamma=5/4`, `w=1/4`, `Gamma=0` source class tends
+  generically to extreme tilt and therefore retires the blanket no-go.
+- The exact CAS target is limited to the RW identity, a stipulated near-FLRW
+  two-fluid drag matrix with local linear stability, a generic persistent-mode
+  negative control, and the counterexample's exact domain mapping. CAS does
+  not prove the external asymptotic theorem, nonlinear shear closure, or a
+  numerical suppression ceiling.
+- CAS generation 1 is permanently preserved as
+  `PROCESS_EVIDENCE_INVALID`: Wolfram+xAct passed, SymPy and Sage exposed
+  serialization/substitution harness defects, and the Lean timeout path
+  exposed a bytes-serialization defect before writing an envelope. None of
+  those receipts may be reused. Contract v2 contains the repairs and requires
+  four fresh blind axes.
+- CAS generation 2 is also preserved as `CAS_FAIL`: Wolfram+xAct passed while
+  SymPy, Sage, and Lean exposed three remaining representation/proof-script
+  defects. Contract v3 fixed those defects without changing the mathematical
+  statement.
+- Four fresh blind generation-3 axes passed all 15 frozen obligations, yielding
+  `CAS_4AXIS_PASS` without exception, majority vote, or prior-generation reuse.
+  The independent adjudicator found that old prose named `gamma=7/6` while the
+  registered fixture was `gamma=5/4`; the additive hash-bound erratum makes
+  only `5/4` CAS-sealed and leaves `7/6` source-only. Any exact promotion of the
+  latter requires four fresh axes.
+- The terminal result is
+  `CLASS_CONDITIONAL_NO_GO_RETIRED_BY_COUNTEREXAMPLE`. Restricted RW
+  relaxation and the stipulated drag-matrix stability are exact
+  class-conditional results. Generic closure, khronon shear leakage, and a
+  numerical suppression ceiling remain unidentified. The complete result is
+  internal, `hypothesis_only`, and `public_use=false`.
+
+## PR-172 foreground boundary
+
+- PR-172 is the next defensible lane: a metamorphic symmetry
+  self-consistency battery. Passing it is software/model self-consistency and
+  never physical validation, observational support, or family identification.
+- PR-151 must be probed at PR-172 start and end. If it becomes terminal-ready,
+  finish the atomic PR-172 result, review, and commit before starting PR-173;
+  then finalize PR-151 and return to PR-155--158.
 
 ## Ownership and claim boundaries
 
