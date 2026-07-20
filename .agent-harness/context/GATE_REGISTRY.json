@@ -161,6 +161,37 @@
       ],
       "pass_condition": "Geodesic branches carry >= 2 byte-verified lineages; MES_NG branches stay UNVERIFIED_PRINT_ONLY; claimed counts never exceed collapsed counts.",
       "fail_condition": "Any same-fingerprint inflation, unresolved in-repo lineage source, or non-geodesic promotion."
+    },
+    {
+      "gate_id": "G-PR173-ORTHOGONAL-STATUS",
+      "spec_refs": [
+        "docs/research_program/long_horizon_rescue/pr173_spec.yaml#orthogonal_status_axes"
+      ],
+      "statement": "Only complete authenticated input with certified replicate lineage may receive a numerical-resolution status.",
+      "required_evidence": [
+        "E-PR173-RESULT",
+        "E-PR173-MANIFEST"
+      ],
+      "pass_condition": "All seven targets route to 0 resolved, 1 unresolved, 5 not-certifiable, and 1 not-evaluated with null numerical fields outside certified lineage.",
+      "fail_condition": "Any unavailable, partial, missing-lineage, or invalid-dependence target receives a numerical status.",
+      "owner": "main",
+      "status": "pass"
+    },
+    {
+      "gate_id": "G-PR173-FROZEN-RECONSTRUCTION",
+      "spec_refs": [
+        "docs/research_program/long_horizon_rescue/pr173_spec.yaml#source_authorities",
+        "docs/research_program/long_horizon_rescue/pr173_spec.yaml#falsifiers"
+      ],
+      "statement": "Candidate reports are checked against frozen-source reconstruction rather than self-resealed uncertainty or provenance fields.",
+      "required_evidence": [
+        "E-PR173-RESULT",
+        "E-PR173-REVIEWS"
+      ],
+      "pass_condition": "All 18 mutations are killed, including six coordinated uncertainty, receipt, replay, config, local-input, and target-source drifts.",
+      "fail_condition": "Any resealed candidate can change a registered target, uncertainty primitive, receipt, or frozen hash without rejection.",
+      "owner": "main",
+      "status": "pass"
     }
   ]
 }

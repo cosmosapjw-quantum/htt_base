@@ -482,7 +482,7 @@
   numerical suppression ceiling remain unidentified. The complete result is
   internal, `hypothesis_only`, and `public_use=false`.
 
-## PR-172 closed boundary and PR-173 foreground
+## PR-172/173 closed boundaries and PR-177 foreground
 
 - PR-172 has frozen eight transform relations and seven explicit mutants in
   `pr172_spec.yaml`. Its formal replay is a terminal blocked result, not a
@@ -496,7 +496,7 @@
   covariance, observational, transfer, geometry, or family claim follows.
 - PR-172 closed with reproducible terminal evidence under
   `COMPLETED_FAILED_WITH_RECEIPT`; its `requires_success` edge to PR-180 is not
-  satisfied. PR-173 is the next executable defensible card.
+  satisfied. PR-180 therefore remains pending and cannot execute.
 - The first final code and claim reviews remain preserved as FAIL. They found
   a resealed threshold/config/adapter false-green path, literal rather than
   callable mutation evidence, missing evaluator/runner hashes, and one
@@ -506,11 +506,24 @@
   and runner bytes plus a worktree content receipt, separates covariance/null
   metadata, and removed the phrase. Fresh independent code and claim
   remediation reviews both pass; the earlier FAIL envelopes remain preserved.
-- PR-173 must certify finite-ensemble ranks and MC standard errors without
-  repeated full-byte hashing, using existing authenticated input hashes.
-- PR-151 must be probed at PR-173 start and end. If it becomes terminal-ready,
-  finish the atomic PR-173 result, review, and commit before starting another
-  advocate card; then finalize PR-151 and return to PR-155--158.
+- PR-173 closes successfully as finite-ensemble honesty infrastructure with a
+  concrete `0 resolved / 1 numerically unresolved / 5 not certifiable / 1 not
+  evaluated` result. The Planck `39/1000` rank's dependence-aware 95% interval
+  crosses the frozen 0.05 boundary. ACT's exact conditional `146/401` identity
+  is retained but its coupled cross-fit does not certify an iid MC error.
+- Availability, replicate lineage, and numerical resolution are orthogonal.
+  Missing or partial input and missing/invalid lineage receive null numerical
+  status; neither is mislabeled as a small MC budget. No partial PR-151 mock is
+  consumed.
+- The first fresh final code review exposed coordinated uncertainty/provenance
+  false greens. Authoritative frozen-source reconstruction plus six new
+  mutations closes them; fresh code and claim remediation reviews pass while
+  the original FAIL and three stale-input ERROR envelopes remain preserved.
+- PR-151 remained non-terminal at the PR-173 end probe: 120/1000 EZmocks,
+  0/25 Abacus, 10/15 audits, active `.part` and log growth, and 816.21 GiB free.
+  PR-177 is the next executable defensible card under the low-priority NVMe
+  policy. If PR-151 becomes terminal-ready, finish the atomic current card,
+  then finalize PR-151 and return to PR-155--158 before opening another card.
 
 ## Ownership and claim boundaries
 
@@ -568,6 +581,10 @@
 | E-PR172-RESULT | `docs/generated/pr172_metamorphic_result.json` | split CF4 pass and B-projector blocked primitive evidence |
 | E-PR172-CARD | `docs/generated/pr172_result_card.json` | documented-contract falsification and unsatisfied success edge |
 | E-PR172-MANIFEST | `docs/generated/pr172_artifact_manifest.json` | content-addressed result-pack provenance |
+| E-PR173-SPEC | `docs/research_program/long_horizon_rescue/pr173_spec.yaml` | frozen availability, lineage, boundary, and uncertainty contracts |
+| E-PR173-RESULT | `docs/generated/pr173_error_budget_report.json` | concrete 0/1/5/1 finite-ensemble audit result |
+| E-PR173-MANIFEST | `docs/generated/pr173_artifact_manifest.json` | source-bound result-pack provenance |
+| E-PR173-REVIEWS | `docs/generated/pr173_reviews/` | preserved intake, stale, final, and remediation verdicts |
 | E-REPLAN | `docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md` | PR-154 and advocate card intent |
 
 ## Open questions and kill switches

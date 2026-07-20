@@ -1,7 +1,7 @@
 # Canonical Shared Context Pack
 
-Context version: `ec507202691ac86585716022f11e3865cab0caa8c9681cc9bfec7638351b80df`
-Built at: `2026-07-20T01:41:25+00:00`
+Context version: `32aed5ce4daf59ec2f3617ec3badc56e76baa61b484d012b2cafb20fc3c4ea4e`
+Built at: `2026-07-20T02:46:18+00:00`
 
 This pack contains only the shared Tier-0 context. Assignment-specific context and sibling results are intentionally excluded.
 
@@ -9,7 +9,7 @@ This pack contains only the shared Tier-0 context. Assignment-specific context a
 
 ## Source: `.agent-harness/context/SHARED_CONTEXT.md`
 
-SHA-256: `d6c68495541a9de628e1ceae076f55f6c972b4fa78f61bd5c07b3dd6ef35012a`
+SHA-256: `7b104c99514d8f29db8a8e36ec70f34cf5984cada1b3b6622176445665f36c96`
 
 # Shared Context — PR-151 background acquisition and PR-173 MC-rank certifier
 
@@ -495,7 +495,7 @@ SHA-256: `d6c68495541a9de628e1ceae076f55f6c972b4fa78f61bd5c07b3dd6ef35012a`
   numerical suppression ceiling remain unidentified. The complete result is
   internal, `hypothesis_only`, and `public_use=false`.
 
-## PR-172 closed boundary and PR-173 foreground
+## PR-172/173 closed boundaries and PR-177 foreground
 
 - PR-172 has frozen eight transform relations and seven explicit mutants in
   `pr172_spec.yaml`. Its formal replay is a terminal blocked result, not a
@@ -509,7 +509,7 @@ SHA-256: `d6c68495541a9de628e1ceae076f55f6c972b4fa78f61bd5c07b3dd6ef35012a`
   covariance, observational, transfer, geometry, or family claim follows.
 - PR-172 closed with reproducible terminal evidence under
   `COMPLETED_FAILED_WITH_RECEIPT`; its `requires_success` edge to PR-180 is not
-  satisfied. PR-173 is the next executable defensible card.
+  satisfied. PR-180 therefore remains pending and cannot execute.
 - The first final code and claim reviews remain preserved as FAIL. They found
   a resealed threshold/config/adapter false-green path, literal rather than
   callable mutation evidence, missing evaluator/runner hashes, and one
@@ -519,11 +519,24 @@ SHA-256: `d6c68495541a9de628e1ceae076f55f6c972b4fa78f61bd5c07b3dd6ef35012a`
   and runner bytes plus a worktree content receipt, separates covariance/null
   metadata, and removed the phrase. Fresh independent code and claim
   remediation reviews both pass; the earlier FAIL envelopes remain preserved.
-- PR-173 must certify finite-ensemble ranks and MC standard errors without
-  repeated full-byte hashing, using existing authenticated input hashes.
-- PR-151 must be probed at PR-173 start and end. If it becomes terminal-ready,
-  finish the atomic PR-173 result, review, and commit before starting another
-  advocate card; then finalize PR-151 and return to PR-155--158.
+- PR-173 closes successfully as finite-ensemble honesty infrastructure with a
+  concrete `0 resolved / 1 numerically unresolved / 5 not certifiable / 1 not
+  evaluated` result. The Planck `39/1000` rank's dependence-aware 95% interval
+  crosses the frozen 0.05 boundary. ACT's exact conditional `146/401` identity
+  is retained but its coupled cross-fit does not certify an iid MC error.
+- Availability, replicate lineage, and numerical resolution are orthogonal.
+  Missing or partial input and missing/invalid lineage receive null numerical
+  status; neither is mislabeled as a small MC budget. No partial PR-151 mock is
+  consumed.
+- The first fresh final code review exposed coordinated uncertainty/provenance
+  false greens. Authoritative frozen-source reconstruction plus six new
+  mutations closes them; fresh code and claim remediation reviews pass while
+  the original FAIL and three stale-input ERROR envelopes remain preserved.
+- PR-151 remained non-terminal at the PR-173 end probe: 120/1000 EZmocks,
+  0/25 Abacus, 10/15 audits, active `.part` and log growth, and 816.21 GiB free.
+  PR-177 is the next executable defensible card under the low-priority NVMe
+  policy. If PR-151 becomes terminal-ready, finish the atomic current card,
+  then finalize PR-151 and return to PR-155--158 before opening another card.
 
 ## Ownership and claim boundaries
 
@@ -581,6 +594,10 @@ SHA-256: `d6c68495541a9de628e1ceae076f55f6c972b4fa78f61bd5c07b3dd6ef35012a`
 | E-PR172-RESULT | `docs/generated/pr172_metamorphic_result.json` | split CF4 pass and B-projector blocked primitive evidence |
 | E-PR172-CARD | `docs/generated/pr172_result_card.json` | documented-contract falsification and unsatisfied success edge |
 | E-PR172-MANIFEST | `docs/generated/pr172_artifact_manifest.json` | content-addressed result-pack provenance |
+| E-PR173-SPEC | `docs/research_program/long_horizon_rescue/pr173_spec.yaml` | frozen availability, lineage, boundary, and uncertainty contracts |
+| E-PR173-RESULT | `docs/generated/pr173_error_budget_report.json` | concrete 0/1/5/1 finite-ensemble audit result |
+| E-PR173-MANIFEST | `docs/generated/pr173_artifact_manifest.json` | source-bound result-pack provenance |
+| E-PR173-REVIEWS | `docs/generated/pr173_reviews/` | preserved intake, stale, final, and remediation verdicts |
 | E-REPLAN | `docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md` | PR-154 and advocate card intent |
 
 ## Open questions and kill switches
@@ -623,7 +640,7 @@ but its result must map them back to this table.
 
 ## Source: `.agent-harness/context/FROZEN_DECISIONS.md`
 
-SHA-256: `434a49176ce2afe84c07a61302563321d0d16169e0300e3ee87cb010a5bb5b72`
+SHA-256: `89f3348c05303dbafbc22e66d699d02b1e2a84f768ca17cf5f2c06a12910e656`
 
 # Frozen Decisions and Rejected Alternatives
 
@@ -642,6 +659,8 @@ SHA-256: `434a49176ce2afe84c07a61302563321d0d16169e0300e3ee87cb010a5bb5b72`
 | D-PR154-CF4-MATCHED | Require matched baseline coverage, width, and RMSE plus MC guards before any CF4 material-gain scenario | Earlier width-only classification produced false gains, including a zero-slope cell and worse RMSE | PR-154 | New prospective scenario specification with independent calibration data |
 | D-ADVOCATE-ORDER | If PR-151 remains incomplete, run PR-167 then PR-168--171 and only the selected defensible queue | Explicit user-approved replan; hypothesis-only and native-dependent lanes remain quarantined | PR-167--183 scheduling | New explicit replan or terminal PR-151 switchback |
 | D-ADVOCATE-CLAIM-CEILING | Treat PR-174/175/182 as internal hypothesis-only and PR-183 as native-dependent | Pre-native family/geometry claims remain forbidden | Advocate intake | Native atlas and registered external gates, or explicit scope change that preserves claim firewall |
+| D-PR173-ORTHOGONAL | Keep input availability, replicate lineage, and numerical resolution on separate axes | Missing lineage is not evidence that the MC budget is small; partial input cannot produce a final rank | PR-173 and all downstream finite-ensemble consumers | A versioned schema migration with equivalent fail-closed null routing |
+| D-PR173-RECONSTRUCTION | Validate reports against freshly reconstructed frozen-source targets and metadata, not self-consistent resealed fields | Independent review reproduced coordinated uncertainty and provenance false greens in the first validator | PR-173 result consumers | A stronger externally rooted verifier with the same or stricter mutation coverage |
 
 Agents must not silently reopen a frozen decision. A proposed reversal is a
 meta-finding with new evidence and an explicit reopen condition.
@@ -650,7 +669,7 @@ meta-finding with new evidence and an explicit reopen condition.
 
 ## Source: `.agent-harness/context/GATE_REGISTRY.json`
 
-SHA-256: `5d42f3e116296516728dfa35f9e3133e524aea9330c8c4c5b85a4eb231bf8284`
+SHA-256: `1fc520c7e323926c4228d67a28d116f24698ab4c5367ba7e4b0f765dafd0fc6d`
 
 {
   "schema_version": 1,
@@ -815,6 +834,37 @@ SHA-256: `5d42f3e116296516728dfa35f9e3133e524aea9330c8c4c5b85a4eb231bf8284`
       ],
       "pass_condition": "Geodesic branches carry >= 2 byte-verified lineages; MES_NG branches stay UNVERIFIED_PRINT_ONLY; claimed counts never exceed collapsed counts.",
       "fail_condition": "Any same-fingerprint inflation, unresolved in-repo lineage source, or non-geodesic promotion."
+    },
+    {
+      "gate_id": "G-PR173-ORTHOGONAL-STATUS",
+      "spec_refs": [
+        "docs/research_program/long_horizon_rescue/pr173_spec.yaml#orthogonal_status_axes"
+      ],
+      "statement": "Only complete authenticated input with certified replicate lineage may receive a numerical-resolution status.",
+      "required_evidence": [
+        "E-PR173-RESULT",
+        "E-PR173-MANIFEST"
+      ],
+      "pass_condition": "All seven targets route to 0 resolved, 1 unresolved, 5 not-certifiable, and 1 not-evaluated with null numerical fields outside certified lineage.",
+      "fail_condition": "Any unavailable, partial, missing-lineage, or invalid-dependence target receives a numerical status.",
+      "owner": "main",
+      "status": "pass"
+    },
+    {
+      "gate_id": "G-PR173-FROZEN-RECONSTRUCTION",
+      "spec_refs": [
+        "docs/research_program/long_horizon_rescue/pr173_spec.yaml#source_authorities",
+        "docs/research_program/long_horizon_rescue/pr173_spec.yaml#falsifiers"
+      ],
+      "statement": "Candidate reports are checked against frozen-source reconstruction rather than self-resealed uncertainty or provenance fields.",
+      "required_evidence": [
+        "E-PR173-RESULT",
+        "E-PR173-REVIEWS"
+      ],
+      "pass_condition": "All 18 mutations are killed, including six coordinated uncertainty, receipt, replay, config, local-input, and target-source drifts.",
+      "fail_condition": "Any resealed candidate can change a registered target, uncertainty primitive, receipt, or frozen hash without rejection.",
+      "owner": "main",
+      "status": "pass"
     }
   ]
 }

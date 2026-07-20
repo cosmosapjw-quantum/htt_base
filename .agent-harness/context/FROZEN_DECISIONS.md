@@ -15,6 +15,8 @@
 | D-PR154-CF4-MATCHED | Require matched baseline coverage, width, and RMSE plus MC guards before any CF4 material-gain scenario | Earlier width-only classification produced false gains, including a zero-slope cell and worse RMSE | PR-154 | New prospective scenario specification with independent calibration data |
 | D-ADVOCATE-ORDER | If PR-151 remains incomplete, run PR-167 then PR-168--171 and only the selected defensible queue | Explicit user-approved replan; hypothesis-only and native-dependent lanes remain quarantined | PR-167--183 scheduling | New explicit replan or terminal PR-151 switchback |
 | D-ADVOCATE-CLAIM-CEILING | Treat PR-174/175/182 as internal hypothesis-only and PR-183 as native-dependent | Pre-native family/geometry claims remain forbidden | Advocate intake | Native atlas and registered external gates, or explicit scope change that preserves claim firewall |
+| D-PR173-ORTHOGONAL | Keep input availability, replicate lineage, and numerical resolution on separate axes | Missing lineage is not evidence that the MC budget is small; partial input cannot produce a final rank | PR-173 and all downstream finite-ensemble consumers | A versioned schema migration with equivalent fail-closed null routing |
+| D-PR173-RECONSTRUCTION | Validate reports against freshly reconstructed frozen-source targets and metadata, not self-consistent resealed fields | Independent review reproduced coordinated uncertainty and provenance false greens in the first validator | PR-173 result consumers | A stronger externally rooted verifier with the same or stricter mutation coverage |
 
 Agents must not silently reopen a frozen decision. A proposed reversal is a
 meta-finding with new evidence and an explicit reopen condition.

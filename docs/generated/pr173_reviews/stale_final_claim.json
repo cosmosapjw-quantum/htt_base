@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "run_id": "pr173-final-review-20260720",
+  "assignment_id": "A-PR173-FINAL-CLAIM",
+  "context_version": "ec507202691ac86585716022f11e3865cab0caa8c9681cc9bfec7638351b80df",
+  "agent_type": "claim_gate_reviewer",
+  "independence_mode": "blind-results",
+  "status": "error",
+  "result_path": ".agent-harness/runs/pr173-final-review-20260720/results/A-PR173-FINAL-CLAIM.json",
+  "error_code": "stale_input_context",
+  "summary": "Substantive review stopped because three required inputs changed after assignment registration; no claim verdict from this stale evidence set is reusable.",
+  "claim_findings": [],
+  "allowed_language": [],
+  "findings": [],
+  "claim_results": [],
+  "errors": [
+    "stale_input_context: docs/generated/pr173_error_budget_report.json expected b2980d93ca6b7fbd2970feb28ce8db7d58183d449053f4045ff446f22fb2a724 but observed d6b390563090687f7d89506a7a60b94a24bdc5dce89490f0bc40a50afedd0f67",
+    "stale_input_context: docs/generated/pr173_result_card.json expected 07b002ee5fdbcd1b59e0a116d5e6d46c35cfe409bb4d72d573015594cf43154e but observed 0bfa6a27b87fcf73a1c6120f44c7b8a3b3fb188484741767db82174f23baba4a",
+    "stale_input_context: docs/generated/pr173_artifact_manifest.json expected 36138c4ffef0ce9694a90fb12d14abce58f43e4f5ffec7eb996050b4366b6290 but observed b53464a6fd408db591dee6c5d3f49c392e0292df136e78e0083ea0c1d84b7de5"
+  ],
+  "stale_input_context": {
+    "mismatch_count": 3,
+    "matched_required_input_count": 4,
+    "mismatches": [
+      {
+        "path": "docs/generated/pr173_error_budget_report.json",
+        "expected_sha256": "b2980d93ca6b7fbd2970feb28ce8db7d58183d449053f4045ff446f22fb2a724",
+        "actual_sha256": "d6b390563090687f7d89506a7a60b94a24bdc5dce89490f0bc40a50afedd0f67"
+      },
+      {
+        "path": "docs/generated/pr173_result_card.json",
+        "expected_sha256": "07b002ee5fdbcd1b59e0a116d5e6d46c35cfe409bb4d72d573015594cf43154e",
+        "actual_sha256": "0bfa6a27b87fcf73a1c6120f44c7b8a3b3fb188484741767db82174f23baba4a"
+      },
+      {
+        "path": "docs/generated/pr173_artifact_manifest.json",
+        "expected_sha256": "36138c4ffef0ce9694a90fb12d14abce58f43e4f5ffec7eb996050b4366b6290",
+        "actual_sha256": "b53464a6fd408db591dee6c5d3f49c392e0292df136e78e0083ea0c1d84b7de5"
+      }
+    ],
+    "disposition": "rerun_under_fresh_assignment_and_context_pins"
+  },
+  "artifacts": []
+}

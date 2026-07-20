@@ -1,0 +1,481 @@
+{
+  "schema_version": 1,
+  "run_id": "pr173-intake-20260720",
+  "assignment_id": "A-PR173-HARNESS",
+  "context_version": "ec507202691ac86585716022f11e3865cab0caa8c9681cc9bfec7638351b80df",
+  "independence_mode": "blind-results",
+  "agent_type": "harness_engineer",
+  "status": "pass",
+  "claim_ids": [
+    "C-PR173-MC-CERTIFIER"
+  ],
+  "summary": "Preimplementation harness audit complete. A fail-closed PR-173 certifier is viable if the frozen spec separates rank resolution from estimator-unit MC uncertainty, uses dependence-aware uncertainty methods, verifies each small source artifact against an external pinned root while inheriting raw-input hashes without reopening payloads, and keeps process success distinct from the two numerical-resolution outcomes. No production or shared file was edited.",
+  "findings": [
+    {
+      "finding_id": "H-PR173-001",
+      "evidence_fingerprint": "55e1eaf3b1a659085accf317f6fb20a0b15a87f740ce121b2bb7cb029444c031",
+      "claim_id": "C-PR173-MC-CERTIFIER",
+      "severity": "blocking_before_spec_freeze",
+      "verdict": "A unit-safe registered decision contract is required; dimensionless rank resolution cannot be directly combined with dimensional RMSE or band-power uncertainty.",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml:4669-4675",
+        "docs/generated/pr152_crossfit_mean_field.json:68-69",
+        "docs/generated/pr152_crossfit_mean_field.json:471-474"
+      ]
+    },
+    {
+      "finding_id": "H-PR173-002",
+      "evidence_fingerprint": "7d0aac668fc5fb3693f607f0dcf513fca64489ee2599cc36bb8fa58e82ab49d2",
+      "claim_id": "C-PR173-MC-CERTIFIER",
+      "severity": "blocking_before_implementation",
+      "verdict": "Uncertainty dispatch must be estimator- and dependence-specific; the PR-150 noise-reuse fixture forbids iid binomial treatment.",
+      "evidence_refs": [
+        "docs/generated/pr150_e2e_pooled_rank.json:53-57",
+        "docs/generated/pr150_e2e_pooled_rank.json:90-106",
+        "docs/generated/pr152_crossfit_mean_field.json:57-69"
+      ]
+    },
+    {
+      "finding_id": "H-PR173-003",
+      "evidence_fingerprint": "e719afe48c81277ae8fc59a4801d37b9e3320839e22fc1a2e6b01e795de25f52",
+      "claim_id": "C-PR173-MC-CERTIFIER",
+      "severity": "high",
+      "verdict": "Hash reuse requires an externally frozen source root; inherited raw-input hashes may be reused only after that small source artifact verifies.",
+      "evidence_refs": [
+        "docs/generated/pr150_e2e_pooled_rank.json:20-51",
+        "docs/generated/pr152_crossfit_mean_field.json:22-54"
+      ]
+    },
+    {
+      "finding_id": "H-PR173-004",
+      "evidence_fingerprint": "bd61459178cff1aab2f257aa3c52918cdc54a3d98df0cdae6fb7ef6f0b7e79ac",
+      "claim_id": "C-PR173-MC-CERTIFIER",
+      "severity": "high",
+      "verdict": "Finite-rank certificates must be count-native and preserve p=(1+b)/(N+1); ranked rows, clusters, and bootstrap replicates are distinct roles.",
+      "evidence_refs": [
+        "docs/PR_DELTAS/pr-135.md:10-45",
+        "htt/src/common/finite_null_ranking.py:46-111",
+        "docs/generated/pr150_e2e_pooled_rank.json:120-123",
+        "docs/generated/pr152_crossfit_mean_field.json:471-473"
+      ]
+    },
+    {
+      "finding_id": "H-PR173-005",
+      "evidence_fingerprint": "1cb1639908777b9deb58809f8fb69f9264db7d6e13e3c390d4433940e015d4fc",
+      "claim_id": "C-PR173-MC-CERTIFIER",
+      "severity": "high",
+      "verdict": "Process success and numerical resolution are orthogonal; unresolved is a valid certificate outcome, while integrity/method failures emit no numerical label.",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml:4670-4680",
+        "docs/codex_handoff/pr_backlog.yaml:4838-4851",
+        "docs/codex_handoff/pr_backlog.yaml:4907-4914",
+        "docs/codex_handoff/pr_backlog.yaml:5044-5057",
+        "docs/codex_handoff/pr_backlog.yaml:5114-5127"
+      ]
+    },
+    {
+      "finding_id": "H-PR173-006",
+      "evidence_fingerprint": "ed7501e8b5184e788061443fe8241d74bdac104ec7c7cab26584d35a9b1d9bd1",
+      "claim_id": "C-PR173-MC-CERTIFIER",
+      "severity": "medium",
+      "verdict": "Numerical certification must inherit upstream claim and validation boundaries; the ACT fixture remains exploratory outside its released validation range.",
+      "evidence_refs": [
+        "docs/generated/pr152_crossfit_mean_field.json:57-67",
+        "docs/generated/pr152_crossfit_mean_field.json:474"
+      ]
+    },
+    {
+      "finding_id": "H-PR173-007",
+      "evidence_fingerprint": "062d7a77ead50246fd08f220461cc12efecb2acb75dbfd5e47ed1490975605ae",
+      "claim_id": "C-PR173-MC-CERTIFIER",
+      "severity": "medium",
+      "verdict": "Boundary-safe intervals and strict numeric parsing are required; plug-in zero SE, NaN, infinity, boolean counts, empty vectors, and nonpositive N must fail closed.",
+      "evidence_refs": [
+        "htt/src/common/finite_null_ranking.py:46-111",
+        "htt/src/common/finite_null_ranking.py:353-410"
+      ]
+    }
+  ],
+  "result_envelope": {
+    "assignment_outcome": "PASS_PREIMPLEMENTATION_AUDIT",
+    "implementation_readiness": "READY_ONLY_AFTER_REQUIRED_GATES_ARE_FROZEN",
+    "claim_id": "C-PR173-MC-CERTIFIER",
+    "claim_verdict": "A closed, typed design can satisfy the PR-173 card, but a generic scalar rule such as estimate versus max(MC_SE, 1/(N+1)) is invalid. The spec must freeze estimator kind, dependence model, decision boundary, uncertainty method, confidence level, and unit-safe status rule before implementation.",
+    "claim_ceiling": "roadmap_rescue_v1:C1 exploratory numerical-honesty infrastructure",
+    "scientific_promotion": false,
+    "production_files_changed": false,
+    "sibling_results_read": false
+  },
+  "steelman_design": {
+    "architecture": [
+      "Use a small OBSSTAT certifier with closed adapters for pinned upstream summary schemas rather than rescanning raw simulations.",
+      "Read and hash each small source JSON in one pass against a root hash frozen outside that source. Once the root matches, copy its ordered inherited input-hash ledger verbatim and never open those inherited payload paths.",
+      "Normalize every finite rank to integer fields rank_numerator, exceedance_count, n_null, and denominator=n_null+1. Derive the displayed float only from those integers.",
+      "Dispatch MC uncertainty by estimator_kind and dependence_kind. Finite rank or tail proportion, continuous mean, RMSE, quantile/tail, and cluster-dependent summaries require distinct registered methods.",
+      "Evaluate a preregistered decision contract. RESOLVED_WITHIN_REGISTERED_MC_CONTRACT means the entire certified uncertainty set lies on one side of the registered boundary in compatible units. Any overlap yields NUMERICALLY_UNRESOLVED_AT_CURRENT_MC_BUDGET.",
+      "Treat the two numerical labels as successful certificate outcomes. Hash/schema/method/dependence failures produce no numerical label and fail or block the process envelope.",
+      "Publish a deterministic write/check result pack whose config hash covers adapter version, source roots, estimator/dependence kinds, boundary, direction, confidence level, uncertainty algorithm, resampling seed, and rank tie policy."
+    ],
+    "minimum_certificate_fields": {
+      "identity": [
+        "schema",
+        "certificate_id",
+        "metric_id",
+        "owner",
+        "claim_tier",
+        "artifact_mode"
+      ],
+      "source_binding": [
+        "source_path",
+        "source_sha256",
+        "source_schema",
+        "adapter_version",
+        "inherited_input_hashes",
+        "hash_reuse_policy"
+      ],
+      "ensemble_contract": [
+        "estimator_kind",
+        "dependence_kind",
+        "ranked_unit_count",
+        "independent_or_cluster_unit_count",
+        "exchangeability_status",
+        "resampling_replicates_and_seed_when_applicable"
+      ],
+      "numerics": [
+        "headline_value_and_units",
+        "mc_standard_error_or_interval_with_method",
+        "rank_numerator_and_denominator_when_applicable",
+        "finite_rank_resolution_as_exact_rational",
+        "registered_boundary_direction_and_units",
+        "resolution_status"
+      ],
+      "provenance_and_caveats": [
+        "config_hash",
+        "source_root_hashes",
+        "sky_mask_covariance_null_status",
+        "validation_boundary",
+        "allowed_uses",
+        "forbidden_uses",
+        "generating_command",
+        "runtime_environment",
+        "git_or_worktree_state"
+      ]
+    },
+    "unit_safe_status_rules": [
+      "For a rank or tail-probability decision against alpha, compare a registered probability-scale interval and the discrete rank cell to alpha; do not rely on a plug-in SE alone at b=0 or b=N.",
+      "For a continuous metric such as band power or RMSE, compare an estimator-unit interval to an estimator-unit boundary. Report 1/(N+1) separately as probability-rank resolution; never add or maximize it with a dimensional SE unless a registered map to probability units exists.",
+      "If no decision boundary was frozen, emit a valid certificate with numerical decision status withheld or unresolved; do not invent a conventional threshold after seeing the value."
+    ]
+  },
+  "source_fixture_audit": [
+    {
+      "source": "docs/generated/pr150_e2e_pooled_rank.json",
+      "registered_sha256": "1a27ea8b73d828cf2efd5c0fb669a057679e12ed382ceb8155319c9152491dda",
+      "observations": {
+        "n_null": 999,
+        "rank_numerator": 39,
+        "exceedance_count_derived_from_grid": 38,
+        "rank_denominator": 1000,
+        "finite_rank_resolution": "1/1000",
+        "reported_rank": 0.039,
+        "iid_or_exact_exchangeability_claimed": false,
+        "unique_noise_clusters": 300,
+        "cluster_bootstrap_replicates": 20000,
+        "cluster_bootstrap_95_interval": [
+          0.026262626262626262,
+          0.05321285140562249
+        ]
+      },
+      "required_route": "DEPENDENCE_AWARE_EXISTING_CLUSTER_SENSITIVITY",
+      "forbidden_route": "Do not use 999 as iid binomial units, 300 as the rank denominator, or 20000 bootstrap replicates as either rank or independent scientific units."
+    },
+    {
+      "source": "docs/generated/pr152_crossfit_mean_field.json",
+      "registered_sha256": "ce6b04b813b4fb0d7c13149069c679ecbd3d67e3995a861cbaedf4cc444b88f0",
+      "observations": {
+        "n_null": 400,
+        "n_exchangeable_units": 401,
+        "upper_exceedance_count": 145,
+        "rank_numerator": 146,
+        "rank_denominator": 401,
+        "finite_rank_resolution": "1/401",
+        "reported_rank": 0.3640897755610973,
+        "band_power_draw_count": 400,
+        "band_power_mean_recomputed": 7.015043760098177e-06,
+        "band_power_sample_mean_mc_se": 8.64277783092158e-08,
+        "inside_release_validated_range": false
+      },
+      "required_route": "EXCHANGEABILITY_CONDITIONAL_RANK_PLUS_ESTIMATOR_SPECIFIC_CONTINUOUS_MC_UNCERTAINTY",
+      "forbidden_route": "Do not use 401 as n_null, erase the outside-validation boundary, or turn numerical resolution into ACT validation."
+    }
+  ],
+  "harness_findings": [
+    {
+      "finding_id": "H-PR173-001",
+      "claim_id": "C-PR173-MC-CERTIFIER",
+      "severity": "blocking_before_spec_freeze",
+      "verdict": "The card's overlap language is not executable until each metric has a preregistered boundary, direction, units, estimator kind, and confidence rule. Rank resolution is dimensionless; RMSE and band-power uncertainty are dimensional. A generic max or sum is a unit error.",
+      "evidence": [
+        "docs/codex_handoff/pr_backlog.yaml:4669-4675",
+        "docs/generated/pr152_crossfit_mean_field.json:68-69",
+        "docs/generated/pr152_crossfit_mean_field.json:471-474"
+      ],
+      "required_action": "Freeze a typed decision contract per metric and an explicit not-applicable/withheld route when no probability-rank channel or boundary exists."
+    },
+    {
+      "finding_id": "H-PR173-002",
+      "claim_id": "C-PR173-MC-CERTIFIER",
+      "severity": "blocking_before_implementation",
+      "verdict": "MC uncertainty cannot use one formula across the target set. The PR-150 rank explicitly disclaims iid/exact exchangeability because 999 CMB rows reuse 300 noise maps; its 20000 bootstrap resamples are computation, not independent ensemble size. PR-152 supplies 400 exchangeable release simulations and a continuous band-power vector, so it supports a different route.",
+      "evidence": [
+        "docs/generated/pr150_e2e_pooled_rank.json:53-57",
+        "docs/generated/pr150_e2e_pooled_rank.json:90-106",
+        "docs/generated/pr152_crossfit_mean_field.json:57-69",
+        "docs/generated/pr152_crossfit_mean_field.json:471-474"
+      ],
+      "required_action": "Use closed estimator_kind and dependence_kind dispatch. Reject iid/binomial certification when the source disclaims it, unless an independently registered dependence-aware uncertainty record is present."
+    },
+    {
+      "finding_id": "H-PR173-003",
+      "claim_id": "C-PR173-MC-CERTIFIER",
+      "severity": "high",
+      "verdict": "Hash reuse is safe only through an external trust root. A hash declared by the same mutable source is not authentication. The certifier should hash each small source JSON once, compare to a spec-pinned root, then inherit its ordered input_hashes without reading those raw paths.",
+      "evidence": [
+        "docs/generated/pr150_e2e_pooled_rank.json:20-51",
+        "docs/generated/pr152_crossfit_mean_field.json:22-54",
+        ".agent-harness/runs/pr173-intake-20260720/assignments/A-PR173-HARNESS.json required_inputs"
+      ],
+      "required_action": "Pin source path, source SHA-256, source schema, and adapter version in the frozen PR-173 config/spec; include the source root and inherited ledger in the output manifest; reject conflicts, omissions, malformed digests, or runtime self-resealing."
+    },
+    {
+      "finding_id": "H-PR173-004",
+      "claim_id": "C-PR173-MC-CERTIFIER",
+      "severity": "high",
+      "verdict": "Finite-rank values must be count-native. PR-135 fixes p=(1+b)/(N+1), conservative ties, and floor 1/(N+1). PR-152 has direct b=145 and N=400; PR-150 has N=999 and a grid value 39/1000 but no top-level b. Float-first reconstruction or confusing N with N+1, unique clusters, or bootstrap replicates creates false precision.",
+      "evidence": [
+        "docs/PR_DELTAS/pr-135.md:10-45",
+        "htt/src/common/finite_null_ranking.py:46-111",
+        "docs/generated/pr150_e2e_pooled_rank.json:120-123",
+        "docs/generated/pr152_crossfit_mean_field.json:58-61",
+        "docs/generated/pr152_crossfit_mean_field.json:471-473"
+      ],
+      "required_action": "Require integer numerator/count/denominator in new certificates. For the legacy PR-150 adapter, reconstruct the unique nearest numerator only under a strict on-grid check bound to the pinned source root; do not generalize float tolerance as authority."
+    },
+    {
+      "finding_id": "H-PR173-005",
+      "claim_id": "C-PR173-MC-CERTIFIER",
+      "severity": "high",
+      "verdict": "Process status and numerical resolution status must remain orthogonal. NUMERICALLY_UNRESOLVED_AT_CURRENT_MC_BUDGET is an allowed terminal scientific/numerical outcome, while hash mismatch, schema drift, unsupported uncertainty, or missing dependence evidence is a process failure and must not be relabeled unresolved.",
+      "evidence": [
+        "docs/codex_handoff/pr_backlog.yaml:4670-4680",
+        "docs/codex_handoff/pr_backlog.yaml:4838-4851",
+        "docs/codex_handoff/pr_backlog.yaml:4907-4914",
+        "docs/codex_handoff/pr_backlog.yaml:5044-5057",
+        "docs/codex_handoff/pr_backlog.yaml:5114-5127"
+      ],
+      "required_action": "Let PR-173 complete when the infrastructure and required certificates execute correctly even if one or all numerical outcomes are unresolved. Downstream requires_success edges mean the certifier is available, not that every metric is resolved; consumers must inspect the certificate status."
+    },
+    {
+      "finding_id": "H-PR173-006",
+      "claim_id": "C-PR173-MC-CERTIFIER",
+      "severity": "medium",
+      "verdict": "Numerical certification must preserve upstream validation boundaries and caveats. The ACT source is explicitly outside the released spectrum validation range. A resolved MC contract cannot promote it to validated data or physics.",
+      "evidence": [
+        "docs/generated/pr152_crossfit_mean_field.json:57-67",
+        "docs/generated/pr152_crossfit_mean_field.json:474",
+        "docs/codex_handoff/pr_backlog.yaml:4670-4689"
+      ],
+      "required_action": "Copy claim tier, validation boundary, transfer/null/covariance status, caveats, and forbidden uses into every certificate and lint against physical validation language."
+    },
+    {
+      "finding_id": "H-PR173-007",
+      "claim_id": "C-PR173-MC-CERTIFIER",
+      "severity": "medium",
+      "verdict": "A plug-in MC SE is unsafe at tail boundaries and JSON numeric parsing must be fail-closed. b=0 can produce a misleading zero plug-in SE even though finite resolution is poorest; NaN, infinity, booleans-as-counts, empty vectors, and nonpositive N must be rejected before status evaluation.",
+      "evidence": [
+        "htt/src/common/finite_null_ranking.py:46-111",
+        "htt/src/common/finite_null_ranking.py:353-410"
+      ],
+      "required_action": "Require finite numeric payloads and positive integer counts, and use a registered interval with boundary-safe behavior for finite proportions in addition to any displayed standard error."
+    }
+  ],
+  "test_matrix": [
+    {
+      "mutation_id": "M-PR173-SOURCE-BYTE-DRIFT",
+      "fixture": "Flip one byte in a temporary copy of a pinned source JSON while keeping the frozen expected root hash.",
+      "production_path": "source loader -> root verifier -> adapter",
+      "expected": "Reject SOURCE_HASH_MISMATCH before parsing or status emission."
+    },
+    {
+      "mutation_id": "M-PR173-SELF-RESEAL",
+      "fixture": "Mutate a source and a runtime-supplied/self-declared hash together while the frozen spec/config hash remains unchanged.",
+      "production_path": "runner config binding -> source verifier",
+      "expected": "Reject because the expected root must come from the frozen external config, not the mutable source or caller."
+    },
+    {
+      "mutation_id": "M-PR173-INHERITED-LEDGER-DRIFT",
+      "fixture": "Delete one inherited hash, inject a duplicate path with a conflicting digest, and provide a malformed digest in separate cases.",
+      "production_path": "source adapter -> inherited provenance normalizer -> manifest",
+      "expected": "Reject each case; never silently deduplicate or omit provenance."
+    },
+    {
+      "mutation_id": "M-PR173-NO-RAW-REHASH",
+      "fixture": "Use a root-authenticated source whose inherited raw paths are unavailable and instrument file opens.",
+      "production_path": "source loader -> hash reuse -> certificate writer",
+      "expected": "Pass while opening only the small source artifact; any attempt to open inherited payload paths kills the mutation."
+    },
+    {
+      "mutation_id": "M-PR173-RANK-DENOMINATOR",
+      "fixture": "Replace 1/(N+1) and (1+b)/(N+1) with 1/N or b/N for the PR-152 fixture.",
+      "production_path": "finite-rank normalizer -> resolution gate",
+      "expected": "Reject; require numerator 146, denominator 401, floor 1/401, and no zero p-value."
+    },
+    {
+      "mutation_id": "M-PR173-UNIT-COUNT-CONFUSION",
+      "fixture": "Use PR-152 n_exchangeable_units=401 as n_null, or PR-150 unique_noise=300/bootstrap_replicates=20000 as rank N.",
+      "production_path": "schema adapter -> ensemble contract -> rank normalizer",
+      "expected": "Reject count-role mismatch. Ranked rows, independent clusters, and resampling replicates are distinct typed integers."
+    },
+    {
+      "mutation_id": "M-PR173-COUNT-P-INCONSISTENCY",
+      "fixture": "Change PR-152 upper_exceedance_count from 145 to 144 without changing its rank p, and move a legacy PR-150 p off its 1/1000 grid.",
+      "production_path": "schema adapter -> count-native consistency check",
+      "expected": "Reject before computing MC uncertainty."
+    },
+    {
+      "mutation_id": "M-PR173-IID-PROMOTION",
+      "fixture": "Route PR-150 through iid binomial SE using N=999 despite exact_iid_or_exchangeability_claimed=false and noise reuse.",
+      "production_path": "dependence dispatcher -> uncertainty engine",
+      "expected": "Reject UNSUPPORTED_DEPENDENCE_METHOD; require the registered cluster-aware sensitivity or withhold certification."
+    },
+    {
+      "mutation_id": "M-PR173-BOOTSTRAP-REPLICATE-INFLATION",
+      "fixture": "Use 20000 PR-150 bootstrap replicates as independent sample size or finite-rank denominator.",
+      "production_path": "ensemble role validator",
+      "expected": "Reject; replicates only describe computation of the cluster sensitivity interval."
+    },
+    {
+      "mutation_id": "M-PR173-CONTINUOUS-SE",
+      "fixture": "For the 400 ACT band powers, divide sample SD by N instead of sqrt(N), use the wrong vector length, or use ddof=0 when the frozen method says sample SD.",
+      "production_path": "continuous-mean uncertainty adapter",
+      "expected": "Reject against independently recomputed mean 7.015043760098177e-06 and MC SE 8.64277783092158e-08."
+    },
+    {
+      "mutation_id": "M-PR173-BOUNDARY-ZERO-SE",
+      "fixture": "Provide b=0 or b=N and let plug-in SE=0 imply resolved.",
+      "production_path": "finite-proportion interval -> decision gate",
+      "expected": "Reject or emit NUMERICALLY_UNRESOLVED_AT_CURRENT_MC_BUDGET using the registered boundary-safe interval and finite floor."
+    },
+    {
+      "mutation_id": "M-PR173-UNIT-MIX",
+      "fixture": "Compare or combine a band-power/RMSE standard error directly with dimensionless 1/(N+1).",
+      "production_path": "typed decision contract",
+      "expected": "Reject UNIT_MISMATCH; rank resolution remains a separate probability-scale field unless a frozen transform exists."
+    },
+    {
+      "mutation_id": "M-PR173-STATUS-FALSE-GREEN",
+      "fixture": "Force RESOLVED when the certified interval/grid overlaps the registered boundary, and separately convert an input hash error to NUMERICALLY_UNRESOLVED.",
+      "production_path": "primitive recomputation -> terminal status router",
+      "expected": "Kill both: overlap must be NUMERICALLY_UNRESOLVED, while integrity errors must fail/block with no numerical status."
+    },
+    {
+      "mutation_id": "M-PR173-THRESHOLD-CONFIG-DRIFT",
+      "fixture": "Change boundary, direction, confidence level, seed, tie policy, or uncertainty algorithm without changing the certificate config hash.",
+      "production_path": "config canonicalizer -> deterministic runner check",
+      "expected": "Reject stale CONFIG_HASH and require a new versioned analysis."
+    },
+    {
+      "mutation_id": "M-PR173-NONFINITE-AND-TYPE",
+      "fixture": "Inject NaN, infinity, boolean counts, N<=0, empty draws, or inconsistent units.",
+      "production_path": "strict JSON/schema validator",
+      "expected": "Reject before arithmetic or artifact emission."
+    },
+    {
+      "mutation_id": "M-PR173-CLAIM-PROMOTION",
+      "fixture": "Drop the ACT outside-validation boundary or relabel either numerical status as physical validation/signal/noise.",
+      "production_path": "metadata inheritance -> claim-language lint",
+      "expected": "Reject; numerical resolution never raises the upstream scientific claim tier."
+    },
+    {
+      "mutation_id": "M-PR173-DOWNSTREAM-DEPENDENCY-COLLAPSE",
+      "fixture": "Treat completed PR-173 as proof every metric resolved, or block PR-173 merely because a valid certificate is numerically unresolved.",
+      "production_path": "PR status writer -> downstream consumer gate",
+      "expected": "Reject both. PR success certifies infrastructure execution; each downstream consumer must inspect its metric certificate."
+    }
+  ],
+  "status_integration": {
+    "process_states": [
+      "PASS_CERTIFICATES_EMITTED",
+      "BLOCKED_OR_FAILED_NO_NUMERICAL_LABEL"
+    ],
+    "certificate_states": [
+      "RESOLVED_WITHIN_REGISTERED_MC_CONTRACT",
+      "NUMERICALLY_UNRESOLVED_AT_CURRENT_MC_BUDGET"
+    ],
+    "routing": [
+      "Mark PR-173 completed only after deterministic write/check, mutation kills, status/DAG validation, and independent review.",
+      "A valid unresolved certificate is terminal and does not make the infrastructure PR fail.",
+      "A source-integrity, schema, unsupported-method, or missing-dependence failure emits no certificate status and blocks/fails closeout.",
+      "Downstream requires_success consumers are unblocked by a successful certifier PR but must explicitly reject or downroute unresolved certificates according to their own kill switches."
+    ]
+  },
+  "assumptions": [
+    "This is a preimplementation audit; no PR-173 spec, implementation, test file, result pack, or status mutation was included in the assignment evidence slice.",
+    "The required-input hashes and live context version were verified before substantive work.",
+    "The no-repeated-full-byte-hashing requirement is interpreted as no reopening/re-hashing inherited raw ensemble payloads; hashing the 5.3 KiB and 14.1 KiB source summary artifacts once per run is the external-root verification step.",
+    "No decision threshold was inferred from the observed source values. Any threshold, including 0.05, must be frozen by the main writer before resolution status is computed."
+  ],
+  "evidence": [
+    {
+      "path": ".agent-harness/generated/CONTEXT_PACK.md",
+      "sha256": "73cd724a2292a2501c6a3fe5991f6198a46166119d904b6b78bdb27c5e0ccc62",
+      "use": "Tier-0 context, PR-173 boundary, ownership, and PR-151 switchback rule"
+    },
+    {
+      "path": "docs/codex_handoff/pr_backlog.yaml",
+      "sha256": "256cf1406cddf271d8b197dbf39e1ae1486b18f22c30e4551de40b55e2cc502d",
+      "use": "PR-173 DoD, kill switch, claim ceiling, and downstream dependencies"
+    },
+    {
+      "path": "docs/PR_DELTAS/pr-135.md",
+      "sha256": "1dde8ec4040bf595db330218d6dd667255733b3811f753639e85074a95869ce7",
+      "use": "Upstream finite-rank semantics and existing mutation lessons"
+    },
+    {
+      "path": "htt/src/common/finite_null_ranking.py",
+      "sha256": "cd3413b96d4c734f3b3d148274c6fe486b6f5c4db46f9e29a89bbf2677aabf14",
+      "use": "Exact rank, floor, tie, sigma, split, and validation behavior"
+    },
+    {
+      "path": "docs/generated/pr150_e2e_pooled_rank.json",
+      "sha256": "1a27ea8b73d828cf2efd5c0fb669a057679e12ed382ceb8155319c9152491dda",
+      "use": "Dependent Planck finite-rank fixture and cluster sensitivity"
+    },
+    {
+      "path": "docs/generated/pr152_crossfit_mean_field.json",
+      "sha256": "ce6b04b813b4fb0d7c13149069c679ecbd3d67e3995a861cbaedf4cc444b88f0",
+      "use": "Exchangeability-conditional ACT rank and continuous band-power fixture"
+    }
+  ],
+  "tool_versions": {
+    "python": "3.12.3",
+    "shell": "bash",
+    "analysis_mode": "read-only targeted evidence; no pytest suite existed in the assigned slice"
+  },
+  "commands_run": [
+    "sed -n '1,840p' .agent-harness/generated/CONTEXT_PACK.md (in bounded chunks)",
+    "sed -n '1,260p' .agent-harness/runs/pr173-intake-20260720/assignments/A-PR173-HARNESS.json",
+    "sed -n '1,220p' .agent-harness/context/CONTEXT_INDEX.json",
+    "python -c <verify required-input SHA-256 values>",
+    "sed/rg targeted reads of the five assignment evidence files",
+    "python -c <recompute PR-150/PR-152 count, rank, floor, hash-ledger, mean, and MC-SE invariants>",
+    "python .agent-harness/scripts/validate_harness.py"
+  ],
+  "validation": {
+    "context_version_match": true,
+    "required_input_hashes_match": true,
+    "assignment_scope_respected": true,
+    "result_path_unique": true,
+    "result_envelope_validation": "PASS_validate_harness_ok"
+  }
+}

@@ -1,0 +1,238 @@
+schema: htt.pr173.spec.v1
+pr_id: PR-173
+title: Monte Carlo finite-ensemble error-budget certifier
+frozen_before_result: true
+owner: OBSSTAT
+contributors:
+- COMMON
+implementation_scope:
+- obsstat
+claim_tier: exploratory
+claim_level:
+  scheme: roadmap_rescue_v1
+  level: C1
+scientific_artifact_mode: standard_internal
+public_use: false
+transfer_source: none
+baseline_commit: 9ce5c878ef785def0a684f9addcc764b5cedd3e2
+
+claim:
+  statement: >-
+    A stochastic headline is numerically resolved only when its registered
+    Monte Carlo uncertainty and any discrete finite-rank resolution do not
+    overlap the registered null or finite-support boundary.
+  allowed_statuses:
+  - RESOLVED_WITHIN_REGISTERED_MC_CONTRACT
+  - NUMERICALLY_UNRESOLVED_AT_CURRENT_MC_BUDGET
+  interpretation: >-
+    These statuses describe numerical resolution under an authenticated,
+    lineage-certified ensemble contract. They are null when input or lineage
+    gates fail. They are not signal, noise, adequacy, physical validation,
+    detection, or model-identification labels.
+
+orthogonal_status_axes:
+  input_availability_status:
+  - AVAILABLE_AUTHENTICATED_COMPLETE
+  - NOT_EVALUATED_INPUT_UNAVAILABLE
+  - NOT_EVALUATED_PARTIAL_INPUT_FORBIDDEN
+  replicate_lineage_status:
+  - CERTIFIED
+  - NOT_CERTIFIABLE_MISSING_REPLICATE_LINEAGE
+  - NOT_CERTIFIABLE_INVALID_DEPENDENCE_METHOD
+  numerical_resolution_status:
+  - RESOLVED_WITHIN_REGISTERED_MC_CONTRACT
+  - NUMERICALLY_UNRESOLVED_AT_CURRENT_MC_BUDGET
+  routing: >-
+    Numerical resolution is populated only when input availability is
+    AVAILABLE_AUTHENTICATED_COMPLETE and replicate lineage is CERTIFIED.
+    Available inputs with insufficient lineage receive a typed
+    NOT_CERTIFIABLE lineage status. Unavailable or forbidden-partial inputs
+    leave lineage unevaluated. In both cases numerical fields and
+    numerical_resolution_status are null.
+
+conventions:
+  rank:
+    estimator: (1 + b) / (N + 1)
+    exceedance_count: 'b = number of null scores greater than or equal to the observation score'
+    tie_policy: conservative_ge
+    discrete_resolution: 1 / (N + 1)
+    integer_contract: 'N >= 1 and 0 <= b <= N are integers'
+    gaussian_sigma_policy: forbidden_at_or_below_resolution
+    resolution_test: >-
+      Expand the registered dependence-aware confidence interval by one
+      discrete grid spacing f=1/(N+1). The rank decision is resolved only when
+      this entire guard interval lies strictly on one preregistered side of
+      the probability boundary; touching the boundary is unresolved.
+  scalar:
+    overlap_test: >-
+      A scalar decision is resolved only when its registered estimator-unit
+      confidence interval lies strictly on one preregistered side of the
+      same-unit boundary. A dimensionless rank floor is never combined with a
+      dimensional standard error.
+  missing_lineage: >-
+    Missing replicate, seed, batch, cluster, or terminal-input lineage routes
+    to a NOT_EVALUATED or NOT_CERTIFIABLE axis with null numerical status; a
+    scientific or mock dispersion may not be silently relabeled Monte Carlo
+    standard error.
+  hashes: >-
+    Reuse upstream manifest-declared input hashes. Small primary derived JSON
+    metadata is byte-checked once against those hashes. PR-173 must not rehash
+    raw Planck, ACT, CF4, DESI, or other payload bytes, and must not repeat-hash
+    the Planck support array used for deterministic output replay.
+
+registered_uncertainty_methods:
+  iid_rank_delete_one_jackknife:
+    inputs: [N, b]
+    formula: sqrt(b * (N-b) * (N-1)) / N^2
+    boundary_guard: discrete_resolution_remains_load_bearing_when_standard_error_is_zero
+  clustered_rank_bootstrap:
+    inputs: [clustered_binary_exceedance_rows]
+    seed: 20260719
+    replicates: 20000
+    resampling_unit: whole_cluster
+    output: sample_standard_deviation_of_plus_one_rank
+  batch_means:
+    minimum_batches: 2
+    equal_batch_sizes_required: true
+    output: sample_standard_deviation_of_batch_means_divided_by_sqrt_batch_count
+  delete_one_jackknife:
+    minimum_replicates: 2
+    output: sqrt((m-1)/m * sum((theta_i-mean(theta))^2))
+  seed_sem:
+    minimum_independent_seeds: 2
+    output: sample_standard_deviation_of_seed_estimates_divided_by_sqrt_seed_count
+  upstream_estimator_matched_bootstrap:
+    requirement: >-
+      The upstream artifact must name the estimand, resampling unit, sample
+      count, and bootstrap standard error. Otherwise the field is unavailable.
+
+source_authorities:
+  planck_pr150_e2e_rank:
+    artifact: docs/generated/pr150_e2e_pooled_rank.json
+    authority: docs/generated/pr150_artifact_manifest.json
+    declared_sha256: 1a27ea8b73d828cf2efd5c0fb669a057679e12ed382ceb8155319c9152491dda
+    support_artifact: docs/generated/k1_global_maxscan_e2e_full.json
+    support_declared_sha256: 72c2e93d693629bd2291339bb9a895b96ec3b978d3459002d03916f5b91baf0b
+    dependence: clustered_noise_reuse
+  act_pr152_release_rank_and_bandpower:
+    artifact: docs/generated/pr152_crossfit_mean_field.json
+    authority: docs/generated/pr152_artifact_manifest.json
+    declared_sha256: ce6b04b813b4fb0d7c13149069c679ecbd3d67e3995a861cbaedf4cc444b88f0
+    dependence: jointly_exchangeable_crossfit_with_coupled_scores
+  mio_pr142_pi_tail:
+    artifact: docs/generated/pr142_measures_report.json
+    authority: docs/generated/pr142_artifact_manifest.json
+    declared_sha256: 77802d8ebd54c349cd7e823e5182537f87a3829aac981cdf70084320b0f64378
+    dependence: upstream_sign_flip_null_and_estimator_matched_bootstrap
+  cf4_pr117_injection_rmse:
+    artifact: docs/audits/jcap_prd_adversarial_audit_20260714/diagnostic_results.json
+    authority: docs/audits/jcap_prd_adversarial_audit_20260714/MANIFEST.json
+    declared_sha256: 4c87f984f69783ecc6759fbc32f26ff4b64a6af8e35a75672622f006a45bd248
+    dependence: aggregate_only_audit_lane
+  cf4_pr148_fsigma8:
+    artifact: docs/generated/pr148_fsigma8_by_depth.json
+    authority: docs/generated/pr148_artifact_manifest.json
+    declared_sha256: bcaddbb2764deec4f7dc617cf39abc2729b19dd79ac8eb2d4360989364876901
+    dependence: mock_dispersion_present_mc_error_budget_absent
+  desi_pr151_mock_rank:
+    artifact: null
+    authority: docs/codex_handoff/pr_status.yaml
+    state_at_freeze: background_acquisition_non_terminal
+    partial_scientific_use: forbidden
+
+registered_targets:
+- target_id: PR173-PLANCK-RANK
+  source: planck_pr150_e2e_rank
+  quantity: look_elsewhere_global_pooled_rank
+  required_method: clustered_rank_bootstrap
+  decision:
+    boundary: 0.05
+    direction: below
+    confidence_level: 0.95
+- target_id: PR173-ACT-RANK
+  source: act_pr152_release_rank_and_bandpower
+  quantity: release_simulation_conditional_pooled_rank
+  required_method: full_crossfit_delete_independent_unit_recomputation
+  decision:
+    boundary: 0.05
+    direction: above
+    confidence_level: 0.95
+- target_id: PR173-ACT-BANDPOWER-MEAN
+  source: act_pr152_release_rank_and_bandpower
+  quantity: observed_minus_simulation_mean_band_power
+  required_method: authenticated_independent_release_unit_or_seed_sem
+  decision:
+    boundary: 0.0
+    direction: away_from
+    confidence_level: 0.95
+- target_id: PR173-MIO-PI
+  source: mio_pr142_pi_tail
+  quantity: Pi_signed_contrast_and_two_sided_rank
+  required_method: authenticated_sign_flip_and_bootstrap_replicate_lineage
+  decision:
+    rank_boundary: 0.05
+    rank_direction: below
+    scalar_boundary: 0.0
+    scalar_direction: away_from
+    confidence_level: 0.95
+- target_id: PR173-CF4-INJECTION-RMSE
+  source: cf4_pr117_injection_rmse
+  quantity: constrained_minus_standard_on_model_injection_RMSE
+  required_method: delete_one_jackknife
+  decision:
+    boundary_kms: 0.0
+    direction: below
+    confidence_level: 0.95
+- target_id: PR173-CF4-FSIGMA8
+  source: cf4_pr148_fsigma8
+  quantity: depth_shell_fsigma8_mock_calibration
+  required_method: delete_one_jackknife
+  decision:
+    status: withheld_until_mock_replicate_estimand_is_recovered
+- target_id: PR173-DESI-RANK
+  source: desi_pr151_mock_rank
+  quantity: official_mock_calibrated_rank
+  required_method: clustered_rank_bootstrap
+  decision:
+    boundary: 0.05
+    direction: below
+    confidence_level: 0.95
+
+falsifiers:
+- id: F-PR173-SUBRESOLUTION-PROMOTION
+  condition: a rank at or inside its finite support radius is labeled resolved
+- id: F-PR173-MISSING-LINEAGE-PROMOTION
+  condition: an aggregate-only or non-terminal source receives any numerical status
+- id: F-PR173-DISPERSION-AS-MCSE
+  condition: scientific/mock dispersion is silently used as Monte Carlo standard error
+- id: F-PR173-IID-FOR-CLUSTERED
+  condition: an iid rank standard error is used for a declared clustered ensemble
+- id: F-PR173-PARTIAL-DESI
+  condition: any partial PR-151 mock enters a PR-173 numerical result
+- id: F-PR173-SIGMA-EXTRAPOLATION
+  condition: a Gaussian-equivalent sigma is emitted at or below the finite-rank floor
+- id: F-PR173-RAW-REHASH
+  condition: PR-173 hashes a raw data payload instead of citing upstream hash authority
+
+terminal:
+  success: >-
+    Every registered target has typed availability; every available target has
+    typed lineage; every lineage-certified target has exactly one typed
+    numerical-resolution status; available calculations reproduce from
+    metadata/derived arrays; unavailable or insufficient-lineage lanes have
+    null numerical status.
+  kill: >-
+    Any estimate whose registered confidence or finite-rank guard interval
+    touches its registered boundary must be labeled
+    NUMERICALLY_UNRESOLVED_AT_CURRENT_MC_BUDGET. Missing lineage is not a
+    budget result and must be NOT_CERTIFIABLE with null numerical status.
+
+forbidden_claims:
+- physical validation
+- signal or noise classification
+- detection or evidence for anisotropy
+- Bianchi family or geometry identification
+- native or external transfer validation
+- iid exact-rank language for the Planck noise-reuse ensemble
+- raw-QE reproduction for ACT
+- calibrated DESI rank before the PR-151 terminal receipt

@@ -1,0 +1,300 @@
+{
+  "schema_version": 1,
+  "run_id": "pr173-intake-20260720",
+  "assignment_id": "A-PR173-STAT",
+  "context_version": "ec507202691ac86585716022f11e3865cab0caa8c9681cc9bfec7638351b80df",
+  "agent_type": "physics_stat_auditor",
+  "independence_mode": "blind-results",
+  "result_path": ".agent-harness/runs/pr173-intake-20260720/results/A-PR173-STAT.json",
+  "status": "pass",
+  "summary": "A fail-closed PR-173 contract is statistically sound only if it keeps exact finite-rank validity, Monte Carlo uncertainty, physical or sampling uncertainty, and lineage/process status on separate axes. The authoritative PR card correctly says that an unresolved numerical result is not estimator noise. The older roadmap wording that equates MC overlap with noise must be explicitly superseded. On the authorized current artifacts, PR-150 is dependence-aware and numerically unresolved for a preregistered alpha=0.05 decision; PR-152 has a valid conditional exchangeable rank but lacks a dependence-appropriate MC-SE receipt; PR-148 lacks the mock lineage needed to estimate MC error at all.",
+  "claim_results": [
+    {
+      "claim_id": "C-PR173-MC-CERTIFIER",
+      "verdict": "PASS_CONTRACT_DERIVED_WITH_REQUIRED_SPEC_REMEDIATIONS",
+      "rationale": "The certifier can be implemented at C1 as numerical-honesty infrastructure after (i) the obsolete estimator-noise language is removed, (ii) a preregistered decision boundary or numerical tolerance is required per headline, (iii) dependence-specific MC-SE is selected from verified lineage, and (iv) missing lineage is represented as a process blocker rather than silently treated as IID or merely as a small MC budget."
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "F-PR173-STAT-001",
+      "claim_id": "C-PR173-MC-CERTIFIER",
+      "severity": "P1",
+      "verdict": "SPEC_REMEDIATION_REQUIRED",
+      "evidence_fingerprint": "sha256:2c4858ac6480dbedd063b8e823a09d0cc03bf0993e6c706298287c2a1dec9523",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml:4639",
+        "docs/codex_handoff/pr_backlog.yaml:4665",
+        "docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md:920",
+        "docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md:924"
+      ],
+      "steelman": "The roadmap's word 'noise' was evidently intended to stop sub-resolution or MC-unstable headlines from being promoted as signals.",
+      "objection": "MC uncertainty measures numerical variability from a finite stochastic computation; it is not estimator noise, measurement noise, a null truth statement, or physical validation. For a p-value there is no null value of p=0 to overlap. The later authoritative backlog already corrects this by requiring NUMERICALLY_UNRESOLVED_AT_CURRENT_MC_BUDGET and explicitly saying this is not estimator noise.",
+      "required_fix": "The PR-173 spec and mutations must make the backlog language authoritative, ban output labels such as signal or estimator_noise, and treat the roadmap sentence as superseded historical intent."
+    },
+    {
+      "finding_id": "F-PR173-STAT-002",
+      "claim_id": "C-PR173-MC-CERTIFIER",
+      "severity": "P1",
+      "verdict": "TWO_AXIS_ROUTING_REQUIRED",
+      "evidence_fingerprint": "sha256:e624069d8379ff2ba2f10b958ab6e432d4b25ee5e8b5b804ccacc7569ec6c465",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml:4665",
+        "docs/codex_handoff/pr_backlog.yaml:4668",
+        "htt/src/common/finite_null_ranking.py:pooled_rank_p",
+        "htt/src/common/finite_null_ranking.py:require_rowwise_reduction"
+      ],
+      "steelman": "A two-value numerical output is simple and fail-closed for artifacts whose stochastic lineage and uncertainty estimator are valid.",
+      "objection": "Missing lineage is not evidence that the current MC budget is too small. Without the stochastic unit, ordering, cluster graph, seed independence, or refit path, no valid MC-SE estimator can be selected. Collapsing that state into a budget-only label implies that adding draws is the remedy when the actual remedy is provenance recovery.",
+      "required_fix": "Use an orthogonal certification_state with at least CERTIFIED, BLOCKED_MISSING_LINEAGE, and BLOCKED_INVALID_RANK_CONTRACT. Only CERTIFIED artifacts receive one of the two backlog numerical states. If schema compatibility forces a numerical fallback, emit NUMERICALLY_UNRESOLVED_AT_CURRENT_MC_BUDGET with reason_code=MISSING_LINEAGE_NOT_A_BUDGET_RESULT and prohibit interpreting more draws as sufficient remediation."
+    },
+    {
+      "finding_id": "F-PR173-STAT-003",
+      "claim_id": "C-PR173-MC-CERTIFIER",
+      "severity": "P1",
+      "verdict": "NUMERICALLY_UNRESOLVED_AT_CURRENT_MC_BUDGET",
+      "evidence_fingerprint": "sha256:4ce6df6b775aa61845cc05290f051442b533399eebe3679d265646225310cc67",
+      "evidence_refs": [
+        "docs/generated/pr150_e2e_pooled_rank.json:/e2e_global_pooled_rank_p",
+        "docs/generated/pr150_e2e_pooled_rank.json:/resolution_floor",
+        "docs/generated/pr150_e2e_pooled_rank.json:/noise_reuse_sensitivity/noise_cluster_bootstrap/percentile_95_interval",
+        "docs/generated/pr150_e2e_pooled_rank.json:/exact_iid_or_exchangeability_claimed"
+      ],
+      "steelman": "PR-150 is unusually explicit about its dependence: p=39/1000, floor=1/1000, 300 noise realizations reused across 999 CMB realizations, no IID or exact-exchangeability claim, four cycle sensitivities, and a 20,000-replicate noise-cluster bootstrap with a recorded seed.",
+      "objection": "For a preregistered alpha=0.05 decision, the dependence-aware 95 percent bootstrap interval [0.0262626263, 0.0532128514] crosses alpha. Even the counterfactual IID plug-in calculation gives SE=0.00604604 and an approximate 95 percent interval [0.02714999, 0.05085001], also crossing alpha. Therefore the 0.039 point rank cannot receive a resolved below-alpha numerical label. The cluster interval is an uncertainty interval, not a physical noise estimate or an IID exact-rank theorem.",
+      "required_fix": "Bind the cluster definition and bootstrap or delete-cluster algorithm in the PR-173 receipt. If alpha=0.05 is the registered boundary, emit the unresolved numerical state. If no boundary is preregistered, do not emit a resolved decision at all."
+    },
+    {
+      "finding_id": "F-PR173-STAT-004",
+      "claim_id": "C-PR173-MC-CERTIFIER",
+      "severity": "P1",
+      "verdict": "CERTIFICATION_INCOMPLETE_DEPENDENCE_APPROPRIATE_MCSE_MISSING",
+      "evidence_fingerprint": "sha256:c0bc535a6cd84888417af56b7d58145c7bc0884ff9bc7e168cd2fe1ce4ca9c10",
+      "evidence_refs": [
+        "docs/generated/pr152_crossfit_mean_field.json:/observation_inclusive_crossfit_pooled_rank_p",
+        "docs/generated/pr152_crossfit_mean_field.json:/support_resolution",
+        "docs/generated/pr152_crossfit_mean_field.json:/permutation_equivariant_transform",
+        "docs/generated/pr152_crossfit_mean_field.json:/artifact_metadata/covariance_status"
+      ],
+      "steelman": "PR-152 reports p=146/401, floor=1/401, zero ties, identical observation-inclusive leave-one-unit-out scoring, and a permutation-equivariant transform. Joint exchangeability is sufficient for the conditional exact finite-rank calibration even though the transformed scores are coupled.",
+      "objection": "Exchangeability is not IID lineage for MC-SE. The cross-fit mean field couples all 401 scores, and the artifact has no full delete-unit recomputation jackknife, independent-seed replication, or documented independent simulation-stream receipt. Treating the 400 scores as IID Bernoulli indicators is therefore only a sensitivity calculation, not certification. Under that counterfactual, b=145 gives SE=0.02397617 and approximate 95 percent interval [0.31709736, 0.41108220], far above alpha=0.05, but this cannot authorize the resolved state from current evidence.",
+      "required_fix": "Either authenticate independent simulation-unit lineage that makes the IID calculation applicable, or delete one independent unit or cluster at a time and recompute the entire cross-fit transform and rank. Until then, use certification_state=BLOCKED_INVALID_OR_MISSING_MCSE_METHOD; the compatibility numerical fallback is unresolved."
+    },
+    {
+      "finding_id": "F-PR173-STAT-005",
+      "claim_id": "C-PR173-MC-CERTIFIER",
+      "severity": "P1",
+      "verdict": "BLOCKED_MISSING_MC_LINEAGE",
+      "evidence_fingerprint": "sha256:3d5a8886a3f2d9b5663f342f086cb86a03a81f72d5ce431ebf4b8537c3ac0b97",
+      "evidence_refs": [
+        "docs/generated/pr148_fsigma8_by_depth.json:/shells",
+        "docs/generated/pr148_fsigma8_by_depth.json:/simultaneous_intervals",
+        "docs/generated/pr148_fsigma8_by_depth.json:/note"
+      ],
+      "steelman": "PR-148 correctly prefers robust mock covariance over a misleading local Fisher error and separately reports constrained versus unconstrained shells.",
+      "objection": "The artifact does not report the number of mocks, mock IDs, random streams or seeds, dependence or cluster units, estimator rerun lineage, or an MC-SE for fsigma8, mock_sigma, or the interval endpoints. The per-shell n_groups values are observational group counts, not mock counts. mock_sigma is estimated sampling dispersion, not the Monte Carlo standard error of that dispersion or of the headline.",
+      "required_fix": "Do not inherit constrained=true as a PR-173 numerical-resolution pass. Recover the mock manifest and full-pipeline resampling unit first. Until provenance is recovered, emit BLOCKED_MISSING_LINEAGE; if constrained to the two numerical enum values, use the unresolved fallback with a mandatory missing-lineage reason."
+    }
+  ],
+  "statistical_derivation": {
+    "rank_contract": {
+      "definition": "For N null units scored identically to the observation, b = sum_i I(S_i >= S_obs) under the frozen conservative tie policy and p_N = (1+b)/(N+1).",
+      "finite_support": "p_N lies on {1/(N+1), 2/(N+1), ..., 1}; delta_N=1/(N+1) is both the minimum reportable p and the grid spacing. A p of zero or a p below delta_N is invalid.",
+      "exactness_scope": "Conditional finite-rank super-uniformity requires joint exchangeability of the observation and null units plus identical scoring, maximization, selection, refitting, mask, scan range, and tie policy. Conservative ties remain super-uniform but need not give a uniform no-tie rank grid.",
+      "within_row_dependence": "A correlated scan must be reduced to one score per full row before ranking. Flattening scan points changes N, breaks the matched dependence structure, and is invalid.",
+      "sigma_guard": "At p_N <= delta_N, Gaussian-equivalent sigma is forbidden because the ensemble only establishes a significance ceiling. More generally, no sigma may imply a p below the finite support or below the certified tail-probability interval.",
+      "tail_interval": "For documented IID null indicators, b is Binomial(N,q) conditional on the frozen observation. Report an exact binomial interval for the infinite-null exceedance probability q separately from the observed exact-discrete rank p_N. Do not call that interval uncertainty of a deterministic already-realized rank without naming its target. Boundary counts b=0 or b=N must use the exact interval; a zero plug-in SE is not resolution.",
+      "iid_mcse": "With q_hat=b/N and 0<b<N, SE_IID(p_N)=sqrt(N*q_hat*(1-q_hat))/(N+1). This is conditional Monte Carlo error of the smoothed finite estimator, not physical or sampling noise."
+    },
+    "dependence_contract": {
+      "IID": "Allowed only when generator, stochastic unit, RNG stream, and absence of reuse or coupling are evidenced. Use exact binomial tail intervals for ranks and ordinary sample or full-pipeline jackknife SE for smooth scalar headlines.",
+      "ORDERED_DEPENDENT": "For a stationary ordered chain or stream with meaningful order, partition the original order into preregistered contiguous batches. For a batch-level headline H_j, SE_BM=sqrt(sum_j(H_j-H_bar)^2/[a(a-1)]), where a is the number of complete batches. Batch size, discarded remainder, minimum batch count, and at least one block-size sensitivity must be frozen. Reordering or shuffling before batching is forbidden.",
+      "CLUSTERED_OR_REUSED": "Use independent lineage clusters, not rows, as the resampling units. A delete-cluster jackknife must recompute the complete estimator, selection, fit, and rank for each omitted cluster. With G clusters and leave-cluster estimates H_(-g), SE_JK=sqrt((G-1)/G * sum_g(H_(-g)-mean(H_(-g)))^2). Unequal clusters and small G require a preregistered cluster method or an unresolved result.",
+      "EXCHANGEABLE_CROSSFIT": "Joint exchangeability can validate the finite rank while leaving score-level dependence. The MC-SE must delete an independent generation unit or cluster and recompute every coupled cross-fit score. A jackknife over frozen scalar scores is not equivalent.",
+      "MISSING_LINEAGE": "No IID, batch, cluster, or seed estimator is authorized. This is a certification blocker, not evidence of zero MC error and not necessarily evidence that a larger budget is sufficient."
+    },
+    "seed_contract": {
+      "definition": "For R independently generated and fully rerun seed-level headlines H_r, seed_SD is the sample standard deviation and seed_SEM=seed_SD/sqrt(R) only when the shipped estimand is the mean across those R seed-level headlines.",
+      "single_run_guard": "For a single shipped seed, seed_SEM is unavailable, not zero. The run-to-run instability is represented by seed_SD from independent replicas, not by the SEM of an average that was not shipped.",
+      "independence_guard": "Repeated seeds must bind RNG algorithm and version, seed or stream identifiers, generator config, input hashes, and absence of shared stochastic assets. Relabeling or offsetting reused streams does not create independence.",
+      "combination_guard": "Do not add within-seed MC-SE and between-seed SEM in quadrature unless a preregistered hierarchical variance decomposition proves that they are distinct components. A direct SEM across fully independent complete runs already contains their run-to-run variability."
+    },
+    "decision_contract": {
+      "preconditions": [
+        "Existing authenticated input hashes are referenced; large inputs are not repeatedly byte-hashed.",
+        "The headline estimand, stochastic unit, dependence label, seed or stream lineage, selection/refit path, and configuration fingerprint are complete.",
+        "For ranks, b, N, exact p fraction, delta_N, ties, scoring/maximization identity, and exchangeability scope are recorded.",
+        "The confidence level and a numerical boundary are frozen before evaluation: alpha for a p decision, a null value for an effect, or an explicit accuracy tolerance for a purely numerical headline.",
+        "The dependence-appropriate MC interval or guard band is available and all registered sensitivity checks pass."
+      ],
+      "resolved_rule": "RESOLVED_WITHIN_REGISTERED_MC_CONTRACT is allowed only when certification_state=CERTIFIED, the certified MC interval and finite-resolution cell lie strictly on one side of every registered numerical boundary, delta_N meets the registered rank-resolution budget, and no required seed or dependence sensitivity changes the disposition.",
+      "unresolved_rule": "NUMERICALLY_UNRESOLVED_AT_CURRENT_MC_BUDGET is required when a valid certified MC interval or finite-resolution cell touches or crosses a registered numerical boundary, when requested p or sigma lies below the finite rank support, or when the preregistered numerical precision budget is not met.",
+      "blocked_rule": "When lineage, the stochastic unit, the rank contract, or the full recomputation path is missing or invalid, certification_state is blocked and numerical_state is null. A compatibility fallback may use the unresolved enum only with a reason code that explicitly says the failure is provenance or contract, not budget.",
+      "claim_boundary": "Both numerical states are C1 computation labels only. Neither establishes signal, noise, estimator validity, matched-null adequacy, covariance validity, physical correctness, observational validation, isotropy, anisotropy, geometry, or Bianchi-family identity."
+    },
+    "required_output_fields": [
+      "headline_id",
+      "source_artifact_path",
+      "source_artifact_sha256",
+      "estimand",
+      "stochastic_unit",
+      "lineage_status",
+      "dependence_label",
+      "n_units",
+      "n_independent_units",
+      "rng_or_seed_lineage",
+      "full_pipeline_recomputed",
+      "estimate",
+      "registered_boundary",
+      "confidence_level",
+      "mcse_method",
+      "mc_se",
+      "mc_interval",
+      "seed_sd",
+      "seed_sem",
+      "rank_exceedance_b",
+      "rank_n_null",
+      "rank_p_exact_fraction",
+      "rank_resolution_floor",
+      "tie_policy",
+      "tie_count",
+      "certification_state",
+      "numerical_state",
+      "reason_codes",
+      "owner",
+      "claim_tier",
+      "artifact_mode",
+      "allowed_uses",
+      "forbidden_uses",
+      "transfer_source",
+      "null_status",
+      "covariance_status",
+      "caveats",
+      "generating_command",
+      "git_or_worktree_state"
+    ]
+  },
+  "current_artifact_classifications": [
+    {
+      "artifact": "docs/generated/pr150_e2e_pooled_rank.json",
+      "dependence_label": "CLUSTERED_NOISE_REUSE",
+      "rank": "39/1000",
+      "resolution": "1/1000",
+      "certification_state": "DEPENDENCE_AWARE_INTERVAL_PRESENT_BUT_METHOD_RECEIPT_TO_BIND",
+      "numerical_state_if_alpha_0_05_is_registered": "NUMERICALLY_UNRESOLVED_AT_CURRENT_MC_BUDGET",
+      "reason_codes": [
+        "CLUSTER_BOOTSTRAP_INTERVAL_CROSSES_ALPHA",
+        "NO_IID_OR_EXACT_EXCHANGEABILITY_CLAIM"
+      ]
+    },
+    {
+      "artifact": "docs/generated/pr152_crossfit_mean_field.json",
+      "dependence_label": "JOINTLY_EXCHANGEABLE_CROSSFIT_WITH_COUPLED_SCORES",
+      "rank": "146/401",
+      "resolution": "1/401",
+      "certification_state": "BLOCKED_DEPENDENCE_APPROPRIATE_MCSE_MISSING",
+      "numerical_state": null,
+      "compatibility_fallback": "NUMERICALLY_UNRESOLVED_AT_CURRENT_MC_BUDGET",
+      "iid_sensitivity_only": {
+        "mc_se": 0.023976165240685052,
+        "normal_95_interval": [
+          0.31709735520197346,
+          0.4110821959202211
+        ],
+        "disposition_if_iid_lineage_and_alpha_0_05_were_registered": "RESOLVED_ABOVE_ALPHA_CONDITIONAL_ONLY"
+      },
+      "reason_codes": [
+        "EXCHANGEABILITY_IS_NOT_IID_MCSE_LINEAGE",
+        "FULL_CROSSFIT_DELETE_UNIT_RECOMPUTATION_ABSENT"
+      ]
+    },
+    {
+      "artifact": "docs/generated/pr148_fsigma8_by_depth.json",
+      "dependence_label": "MISSING_LINEAGE",
+      "certification_state": "BLOCKED_MISSING_MC_LINEAGE",
+      "numerical_state": null,
+      "compatibility_fallback": "NUMERICALLY_UNRESOLVED_AT_CURRENT_MC_BUDGET",
+      "reason_codes": [
+        "MOCK_COUNT_ABSENT",
+        "MOCK_IDS_AND_SEEDS_ABSENT",
+        "RESAMPLING_UNIT_ABSENT",
+        "MOCK_SIGMA_IS_NOT_MC_SE",
+        "N_GROUPS_IS_NOT_N_MOCKS"
+      ]
+    }
+  ],
+  "falsifiers": [
+    "Accept p=0, p<1/(N+1), b/N, or a Gaussian sigma at or beyond the finite-rank floor.",
+    "Use strict greater-than ties, observation-only selection, a different null reducer, or flattened correlated scan points without minting a new calibration.",
+    "Claim exact exchangeable rank validity merely because a float lies on the support grid.",
+    "Use IID binomial MC-SE for reused, clustered, cross-fit-coupled, ordered-dependent, or unknown-lineage units.",
+    "Compute batch means after shuffling or without frozen block size, minimum batch count, remainder policy, and block-size sensitivity.",
+    "Jackknife frozen final scalars instead of deleting the independent unit or cluster and recomputing selection, refits, cross-fitting, maximization, and ranking.",
+    "Treat R=1 seed SEM as zero, treat correlated or reused streams as independent seeds, or use SEM of a multi-seed mean for a single-seed shipped result.",
+    "Quadrature-add within-seed and between-seed uncertainty without a registered non-overlapping variance decomposition.",
+    "Let b=0 or b=N yield a zero plug-in SE and a resolved sub-resolution conclusion instead of an exact boundary interval.",
+    "Emit RESOLVED when the MC interval or discrete-resolution cell touches a registered boundary, or when no boundary or accuracy tolerance was preregistered.",
+    "Emit a resolved numerical state when lineage or the full recomputation path is missing.",
+    "Call MC overlap estimator noise, physical noise, a signal, validation, detection, or a statement about isotropy, geometry, or family identity.",
+    "Conflate mock sampling dispersion, posterior or covariance uncertainty, local Fisher error, and Monte Carlo error of their numerical estimates.",
+    "Tune alpha, null, tolerance, batch size, seed set, mask, scan range, tie policy, or resampling unit after seeing the disposition."
+  ],
+  "assumptions": [
+    "No sibling result was read; the analysis used only the context index or pack, registered assignment, skill instructions, harness result validator, and seven assignment-authorized evidence inputs.",
+    "alpha=0.05 is used only as an explicitly labeled conditional sensitivity because no per-headline decision threshold is registered in the three authorized artifacts.",
+    "The PR-150 bootstrap interval is accepted as dependence-aware sensitivity evidence but is not converted to an MC-SE because a percentile interval does not uniquely determine an SE.",
+    "The PR-152 IID MC-SE and normal interval are counterfactual diagnostics only; they do not assert IID lineage or authorize a current resolved result.",
+    "No web lookup was used because this blind assignment is governed by the frozen repository corpus and does not require a current external API or release fact."
+  ],
+  "evidence_inputs": [
+    {
+      "path": ".agent-harness/generated/CONTEXT_PACK.md",
+      "sha256": "73cd724a2292a2501c6a3fe5991f6198a46166119d904b6b78bdb27c5e0ccc62"
+    },
+    {
+      "path": "docs/codex_handoff/pr_backlog.yaml",
+      "sha256": "256cf1406cddf271d8b197dbf39e1ae1486b18f22c30e4551de40b55e2cc502d"
+    },
+    {
+      "path": "docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md",
+      "sha256": "caaab4b7255181e75093a5b662f4febf278330db07dad7cdce65e44c6587b361"
+    },
+    {
+      "path": "htt/src/common/finite_null_ranking.py",
+      "sha256": "cd3413b96d4c734f3b3d148274c6fe486b6f5c4db46f9e29a89bbf2677aabf14"
+    },
+    {
+      "path": "docs/generated/pr150_e2e_pooled_rank.json",
+      "sha256": "1a27ea8b73d828cf2efd5c0fb669a057679e12ed382ceb8155319c9152491dda"
+    },
+    {
+      "path": "docs/generated/pr152_crossfit_mean_field.json",
+      "sha256": "ce6b04b813b4fb0d7c13149069c679ecbd3d67e3995a861cbaedf4cc444b88f0"
+    },
+    {
+      "path": "docs/generated/pr148_fsigma8_by_depth.json",
+      "sha256": "bcaddbb2764deec4f7dc617cf39abc2729b19dd79ac8eb2d4360989364876901"
+    }
+  ],
+  "tool_versions": {
+    "python": "3.12.3",
+    "shell": "bash",
+    "inspection_tools": [
+      "rg",
+      "sed",
+      "python"
+    ]
+  },
+  "commands_run": [
+    "sed -n 1,960p .agent-harness/generated/CONTEXT_PACK.md in sequential chunks",
+    "sed -n 1,260p .agent-harness/runs/pr173-intake-20260720/assignments/A-PR173-STAT.json",
+    "sed -n 1,220p .agent-harness/context/CONTEXT_INDEX.json",
+    "python -c compute SHA-256 for all seven required_inputs and compare with the assignment",
+    "rg and sed targeted PR-173 clauses in docs/codex_handoff/pr_backlog.yaml and docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md",
+    "sed -n 1,640p htt/src/common/finite_null_ranking.py in sequential chunks",
+    "sed and rg targeted inspection of docs/generated/pr150_e2e_pooled_rank.json, docs/generated/pr152_crossfit_mean_field.json, and docs/generated/pr148_fsigma8_by_depth.json",
+    "python -c derive b, finite rank, IID sensitivity MC-SE, and normal 95 percent sensitivity intervals for PR-150 and PR-152",
+    "python .agent-harness/scripts/validate_harness.py"
+  ],
+  "errors": []
+}

@@ -1,0 +1,218 @@
+{
+  "schema_version": 1,
+  "run_id": "pr173-final-review-20260720",
+  "assignment_id": "A-PR173-REMED-CLAIM",
+  "context_version": "ec507202691ac86585716022f11e3865cab0caa8c9681cc9bfec7638351b80df",
+  "independence_mode": "adjudication",
+  "status": "pass",
+  "completed_at_utc": "2026-07-20T02:40:55.620063+00:00",
+  "result_path": ".agent-harness/runs/pr173-final-review-20260720/results/A-PR173-REMED-CLAIM.json",
+  "summary": "PASS: the remediation replaces self-resealed uncertainty and provenance acceptance with frozen-source reconstruction, kills the reported coordinated forgeries, and leaves the registered 0/1/5/1 scientific result, Planck/ACT boundaries, process/science split, C1 ceiling, and downstream language unchanged. No unresolved claim-stability P0/P1/P2 finding remains.",
+  "claim_results": [
+    {
+      "claim_id": "C-PR173-MC-CERTIFIER",
+      "verdict": "pass",
+      "finding_ids": [],
+      "assumptions": [
+        "The hash-matched frozen PR-173 specification is authoritative for target identity, status routing, and claim ceiling.",
+        "The named failed code review is the pre-remediation comparison authority; it records the same 0 resolved, 1 unresolved, 5 not-certifiable, and 1 not-evaluated result and states that the then-current generated Planck values were not alleged numerically wrong.",
+        "This assignment reviews claim and result stability only; it does not promote process reproducibility into scientific validation."
+      ]
+    }
+  ],
+  "claim_remediation_findings": [
+    {
+      "source_finding_id": "F-PR173-FINAL2-CODE-001",
+      "claim_id": "C-PR173-MC-CERTIFIER",
+      "disposition": "remediated_within_claim_review_scope",
+      "finding": "Planck certificate, uncertainty receipt, and replay fields are now part of the complete authoritative target reconstructed from the frozen sources. validate_report compares the candidate target payload to that reconstruction, and the producer refuses an unmatched upstream replay. Coordinated certificate interval/mc_se forgery, receipt mc_se drift, and replay matched=false are executable killed mutations.",
+      "evidence": [
+        {
+          "path": "scripts/codex_harness/run_pr173_finite_ensemble.py",
+          "sha256": "15a45d5fa1ec0ae2eca7575c35fc091b8ed713400756bba7e477009ee662ef6a",
+          "locator": "lines 235-299, 511-594, 871-883",
+          "observation": "The target is freshly rebuilt; reproduction failure raises; full target equality rejects coordinated uncertainty drift; the three reported false-green classes are registered mutations."
+        },
+        {
+          "path": "tests/pr_cards/test_pr_173_monte_carlo_finite_ensemble_error_budget_certifi.py",
+          "sha256": "dfbaa446a807649e06c090041c421773981ad91aca0231919a511cf19fff2be8",
+          "locator": "lines 194-236",
+          "observation": "The targeted test reseals coordinated Planck uncertainty, receipt, and replay mutations and requires validate_report to reject each."
+        }
+      ]
+    },
+    {
+      "source_finding_id": "F-PR173-FINAL2-CODE-002",
+      "claim_id": "C-PR173-MC-CERTIFIER",
+      "disposition": "remediated_within_claim_review_scope",
+      "finding": "Frozen metadata, target identity, and source receipts are independently reconstructed and compared exactly. Coordinated config-hash, local-input-hash, and target-source drift are executable killed mutations, so provenance resealing no longer promotes a candidate report.",
+      "evidence": [
+        {
+          "path": "scripts/codex_harness/run_pr173_finite_ensemble.py",
+          "sha256": "15a45d5fa1ec0ae2eca7575c35fc091b8ed713400756bba7e477009ee662ef6a",
+          "locator": "lines 163-215, 553-652, 885-897",
+          "observation": "Every metadata field, full target payload, and source receipt list is checked against reconstructed authority; all three coordinated provenance/identity drifts are registered mutations."
+        },
+        {
+          "path": "docs/generated/pr173_artifact_manifest.json",
+          "sha256": "d9368e5c464200f49e4fe0f5e0461891e1dab4f6fd357766a2074d115d6c4117",
+          "locator": "config_hash, input_hashes, source_authority_receipts",
+          "observation": "The current result pack exposes the frozen specification, implementation, upstream-input, and authority bindings used by reconstruction."
+        }
+      ]
+    }
+  ],
+  "result_stability": {
+    "stable": true,
+    "baseline_from_named_failed_review": {
+      "resolved_count": 0,
+      "unresolved_count": 1,
+      "not_certifiable_count": 5,
+      "not_evaluated_count": 1
+    },
+    "current_result": {
+      "resolved_count": 0,
+      "unresolved_count": 1,
+      "not_certifiable_count": 5,
+      "not_evaluated_count": 1,
+      "scientific_result": "0_RESOLVED_1_NUMERICALLY_UNRESOLVED_5_NOT_CERTIFIABLE_1_NOT_EVALUATED"
+    },
+    "planck_boundary": {
+      "stable": true,
+      "rank_fraction": "39/1000",
+      "decision_boundary": 0.05,
+      "numerical_resolution_status": "NUMERICALLY_UNRESOLVED_AT_CURRENT_MC_BUDGET",
+      "claim_boundary": "PR3_FFP10_E2E_conditional_numerical_resolution_only"
+    },
+    "act_boundary": {
+      "stable": true,
+      "rank_fraction": "146/401",
+      "rank_lineage_status": "NOT_CERTIFIABLE_INVALID_DEPENDENCE_METHOD",
+      "bandpower_lineage_status": "NOT_CERTIFIABLE_INVALID_DEPENDENCE_METHOD",
+      "numerical_resolution_status": null,
+      "claim_boundary": "ACT_release_simulation_conditional_not_raw_QE"
+    },
+    "process_science_split": {
+      "stable": true,
+      "process_execution_status": "PASS_REPRODUCIBLE_TERMINAL_EVIDENCE",
+      "success_dependency_satisfied": true,
+      "scientific_status": "OPEN",
+      "claim_level": "C1",
+      "public_use": false,
+      "interpretation": "Process success records a reproducible typed audit; it does not convert unresolved, not-certifiable, or not-evaluated lanes into scientific validation."
+    },
+    "downstream_language": {
+      "stable_and_claim_safe": true,
+      "allowed_use": [
+        "finite_ensemble_numerical_resolution_reporting",
+        "downstream_MC_budget_gate"
+      ],
+      "forbidden_use": [
+        "physical_signal_or_noise_classification",
+        "null_model_validation",
+        "family_or_geometry_identification",
+        "native_transfer_validation",
+        "partial_DESI_mock_calibration"
+      ],
+      "exact_banned_output_phrase_matches": 0
+    }
+  },
+  "claim_audit": [
+    {
+      "claim": "PR-173 supplies a finite-ensemble numerical-resolution audit under authenticated source and lineage contracts.",
+      "owner": "OBSSTAT",
+      "status": "CONDITIONAL",
+      "evidence": "artifact plus targeted test and deterministic reconstruction check",
+      "transfer_source": "none",
+      "claim_tier": "C1",
+      "risk": "Process PASS could be overread as physical validation if caveats or public_use=false are removed.",
+      "required_fix": null
+    },
+    {
+      "claim": "The Planck 39/1000 rank is numerically unresolved at the registered 0.05 boundary.",
+      "owner": "OBSSTAT",
+      "status": "CONDITIONAL",
+      "evidence": "PR3/FFP10 E2E finite-ensemble reconstruction",
+      "transfer_source": "none",
+      "claim_tier": "C1",
+      "risk": "Must remain PR3/FFP10 E2E conditional and must not become signal or anisotropy evidence.",
+      "required_fix": null
+    },
+    {
+      "claim": "ACT rows retain only release-simulation-conditional identities and no PR-173 numerical status.",
+      "owner": "OBSSTAT",
+      "status": "DIAGNOSTIC_ONLY",
+      "evidence": "authenticated release artifact with invalid dependence method for the requested MC decision",
+      "transfer_source": "none",
+      "claim_tier": "C1",
+      "risk": "Must not be described as raw-QE reproduction or a certified MC error budget.",
+      "required_fix": null
+    }
+  ],
+  "upgraded_claims": [],
+  "downgraded_claims": [],
+  "forbidden_drift_detected": [],
+  "proposed_changes": [],
+  "tests_to_run": [
+    "PYTHONPATH=htt venv/bin/python -m pytest -q tests/pr_cards/test_pr_173_monte_carlo_finite_ensemble_error_budget_certifi.py",
+    "PYTHONPATH=htt venv/bin/python -B scripts/codex_harness/run_pr173_finite_ensemble.py --check",
+    "Exact banned-language rg over the three registered generated artifacts"
+  ],
+  "risks_and_kill_switches": [
+    "Any mismatch against authoritative target, metadata, or receipt reconstruction blocks acceptance even when the candidate semantic digest is resealed.",
+    "Any Planck promotion across the 0.05 boundary, ACT numerical status without valid dependence lineage, partial DESI use, public-use promotion, or physical/family/native-transfer language blocks the claim.",
+    "A future change to the optional authoritative-value performance hook remains trustworthy only when the values are freshly reconstructed from the frozen sources, as build_outputs currently does."
+  ],
+  "artifacts_status_updates_needed": [],
+  "test_receipt": {
+    "overall": "pass",
+    "commands": [
+      {
+        "command": "PYTHONPATH=htt venv/bin/python -m pytest -q tests/pr_cards/test_pr_173_monte_carlo_finite_ensemble_error_budget_certifi.py",
+        "exit_code": 0,
+        "result": "11 passed in 0.73s"
+      },
+      {
+        "command": "PYTHONPATH=htt venv/bin/python -B scripts/codex_harness/run_pr173_finite_ensemble.py --check",
+        "exit_code": 0,
+        "result": "ok=true; mismatches=[]; 0 resolved, 1 unresolved, 5 not-certifiable, 1 not-evaluated"
+      },
+      {
+        "command": "rg exact forbidden claim phrases over docs/generated/pr173_error_budget_report.json docs/generated/pr173_result_card.json docs/generated/pr173_artifact_manifest.json",
+        "exit_code": 1,
+        "result": "No exact banned output phrase matched; rg exit 1 denotes no matches."
+      }
+    ],
+    "tool_versions": {
+      "python": "3.12.3",
+      "numpy": "2.5.0",
+      "pytest": "9.0.3"
+    }
+  },
+  "input_verification": {
+    "all_required_inputs_match": true,
+    "context_version_matches_live_index": true,
+    "required_input_hashes": {
+      ".agent-harness/generated/CONTEXT_PACK.md": "73cd724a2292a2501c6a3fe5991f6198a46166119d904b6b78bdb27c5e0ccc62",
+      ".agent-harness/runs/pr173-final-review-20260720/results/A-PR173-FINAL2-CODE.json": "cbb3f8ea5644571b5e81bab99d22d3bc047ebf28a53b5c4295d624a494f86a3d",
+      "docs/research_program/long_horizon_rescue/pr173_spec.yaml": "2a0b9b0ae9b6a5127c2f32ed68c29963fa38d46c3e3a73bfc7e4a25842fa91a9",
+      "scripts/codex_harness/run_pr173_finite_ensemble.py": "15a45d5fa1ec0ae2eca7575c35fc091b8ed713400756bba7e477009ee662ef6a",
+      "docs/generated/pr173_error_budget_report.json": "bb8200b1c633a189a5bec6fcb7bde548b762d650d3ce0c420c630e89b92a779e",
+      "docs/generated/pr173_result_card.json": "a1dd8f9b84eeafba0161713b95e39300fbbf70f08fadec9d28d8c2aead329a09",
+      "docs/generated/pr173_artifact_manifest.json": "d9368e5c464200f49e4fe0f5e0461891e1dab4f6fd357766a2074d115d6c4117",
+      "tests/pr_cards/test_pr_173_monte_carlo_finite_ensemble_error_budget_certifi.py": "dfbaa446a807649e06c090041c421773981ad91aca0231919a511cf19fff2be8"
+    }
+  },
+  "scope_receipt": {
+    "production_or_shared_files_edited": false,
+    "only_registered_result_path_written": true,
+    "unlisted_sibling_results_inspected": false,
+    "subagents_spawned": false
+  },
+  "result_envelope": {
+    "claim_id": "C-PR173-MC-CERTIFIER",
+    "verdict": "pass",
+    "unresolved_p0_p1_p2": [],
+    "ready_for_main_adjudication": true
+  }
+}
