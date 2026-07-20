@@ -1,0 +1,413 @@
+{
+  "schema_version": 1,
+  "run_id": "pr177-intake-20260720",
+  "assignment_id": "A-PR177-REMED-CLAIM",
+  "agent_type": "claim_gate_reviewer",
+  "context_version": "32aed5ce4daf59ec2f3617ec3badc56e76baa61b484d012b2cafb20fc3c4ea4e",
+  "independence_mode": "adjudication",
+  "claim_ids": [
+    "C-PR177-INBAND-MODULATION"
+  ],
+  "status": "pass",
+  "verdict": "PASS_STRICT_SUPPORT_REMEDIATED_AND_CONDITIONAL_CLAIM_FIREWALL_PRESERVED",
+  "summary": "The registered remediation closes the prior P1 strict-support provenance failure. Every current artifact with a non-null scientific_result--the modulation result, mask control, MC-resolution report, result card, and artifact manifest--contains the same exact frozen support object: 40 < L < 763, integer L=41..762, count 722, endpoints excluded, Equatorial. The producer applies a generic fail-closed result_support_errors check to every non-null result, the result pack is rejected on any mismatch, and the support-loss/drift mutations for mask, MC, and manifest are all killed within a 23/23 mutation report. The deep replay remains process/provenance evidence with scientific_result=null and NOT_EVALUATED_PROVENANCE_REPLAY_ONLY. The closed terminal remains an internal, public_use=false, transfer_source=none, ACT-release-simulation-conditional C3 result with exactly-400, mask-control, finite-resolution, and no-physical-interpretation caveats. No affirmative raw-QE/RDN0, detection, isotropy, physical or causal attribution, transfer/native, geometry, or family promotion was found. This PASS closes artifact-scope remediation only and does not upgrade the scientific claim.",
+  "claim_findings": [
+    {
+      "finding_id": "F-PR177-REMED-CLAIM-001",
+      "claim_id": "C-PR177-INBAND-MODULATION",
+      "prior_finding_id": "F-PR177-FINAL-CLAIM-001",
+      "prior_severity": "P1",
+      "verdict": "pass",
+      "disposition": "remediated",
+      "title": "Strict support is now self-contained and fail-closed across every result-bearing artifact",
+      "statement": "The prior immutable FAIL identified missing support metadata in pr177_mask_control.json, pr177_mc_resolution.json, and pr177_artifact_manifest.json. Current hash-bound artifacts add the exact canonical analysis_support object to those three files, retain it in the modulation result and result card, and couple all five to a generic non-null-scientific-result validator. The generic validator is invoked after manifest construction, so the manifest cannot bypass the check. Three executed mutations demonstrate absence and drift rejection on the previously defective surfaces; the direct regression test enumerates all five result-bearing artifacts. No unresolved P0, P1, or P2 claim finding remains in this assignment slice.",
+      "evidence_fingerprint": "pr177-remediation-exact-support-five-artifacts-generic-validator-three-mutations-20260720",
+      "evidence_refs": [
+        ".agent-harness/runs/pr177-intake-20260720/results/A-PR177-FINAL-CLAIM.json:12-42 (preserved prior FAIL and its three required remediation actions)",
+        "docs/research_program/long_horizon_rescue/pr177_spec.yaml:19-23 (canonical strict expression and exact integer support)",
+        "scripts/codex_harness/run_pr177_act_dr6_inband_modulation.py:60-67 (single canonical EXPECTED_SUPPORT object)",
+        "scripts/codex_harness/run_pr177_act_dr6_inband_modulation.py:432-488 (result, mask, MC, and card receive feature-card analysis_support)",
+        "scripts/codex_harness/run_pr177_act_dr6_inband_modulation.py:524-536 (generic non-null scientific-result strict-support validator)",
+        "scripts/codex_harness/run_pr177_act_dr6_inband_modulation.py:636-667 (mask, MC, and manifest support-loss/drift mutations execute through the validator)",
+        "scripts/codex_harness/run_pr177_act_dr6_inband_modulation.py:704-735 (manifest support insertion followed by whole-output fail-closed validation)",
+        "tests/pr_cards/test_pr_177_act_dr6_in_band_kappa_off_diagonal_modulation_di.py:226-246 (all-five support regression and deep-replay non-promotion regression)",
+        "docs/generated/pr177_act_modulation_result.json:2-9 and 1392-1396 (exact support beside closed terminal)",
+        "docs/generated/pr177_mask_control.json:2-9 and 1385-1389 (exact support beside closed terminal)",
+        "docs/generated/pr177_mc_resolution.json:2-9 and 3741-3745 (exact support beside closed terminal)",
+        "docs/generated/pr177_result_card.json:2-9 and 93-98 (exact support and human-readable strict support beside closed terminal)",
+        "docs/generated/pr177_artifact_manifest.json:7-14 and 83-97 (exact support, closed terminal, and transfer_source=none)",
+        "docs/generated/pr177_mutation_report.json:150-170 and 175-195 (three strict-support mutations killed; 23/23; zero survivors)"
+      ],
+      "assumptions": [
+        "A result-bearing artifact is any registered PR-177 artifact whose top-level scientific_result is non-null.",
+        "The exact support object is reconstructed from the frozen spec rather than inferred from artifact config hashes.",
+        "The machine enum is claim-safe only when consumed with the support, selected-baseline-plus-400 scope, conditional tier, mask/null/covariance status, caveats, and public_use=false metadata carried by the same artifact."
+      ],
+      "reproduction_commands": [
+        "venv/bin/python -m pytest -q tests/pr_cards/test_pr_177_act_dr6_in_band_kappa_off_diagonal_modulation_di.py::test_every_result_bearing_artifact_has_exact_strict_support tests/pr_cards/test_pr_177_act_dr6_in_band_kappa_off_diagonal_modulation_di.py::test_deep_replay_pins_all_raw_features_without_raw_rehash",
+        "python -c '<reconstruct EXPECTED_SUPPORT from pr177_spec.yaml; compare every non-null scientific_result artifact; verify required metadata, mutations, and manifest bindings>'",
+        "python -c '<assert conditional C3 internal metadata, anti-promotion booleans, exact forbidden-use registry, negative caveats, and deep-replay process-only status>'"
+      ],
+      "required_remediation": []
+    }
+  ],
+  "support_evidence": {
+    "expected_support": {
+      "inequality": "40 < L < 763",
+      "integer_min": 41,
+      "integer_max": 762,
+      "integer_count": 722,
+      "endpoints_40_and_763_included": false,
+      "coordinate_frame": "Equatorial"
+    },
+    "expected_support_source": "docs/research_program/long_horizon_rescue/pr177_spec.yaml:19-23,95-103",
+    "result_bearing_artifacts": [
+      {
+        "path": "docs/generated/pr177_act_modulation_result.json",
+        "sha256": "7d9a6243bc1e7ef9278a668f4052109072919e8e2ab0a8e6365a90877356c507",
+        "scientific_result": "NO_RESOLVED_COUPLING_AT_CURRENT_MC_RESOLUTION",
+        "scientific_status": "CLOSED",
+        "analysis_support_exact": true
+      },
+      {
+        "path": "docs/generated/pr177_mask_control.json",
+        "sha256": "8171ee44981368a56bc8a68db42a9cecbc5f3e412cc24ada2ace8b9aae80e882",
+        "scientific_result": "NO_RESOLVED_COUPLING_AT_CURRENT_MC_RESOLUTION",
+        "scientific_status": "CLOSED",
+        "analysis_support_exact": true
+      },
+      {
+        "path": "docs/generated/pr177_mc_resolution.json",
+        "sha256": "bf85ce41d651804439de39eea6301b21afe0cb2a58520b3cf603d5dc582c6936",
+        "scientific_result": "NO_RESOLVED_COUPLING_AT_CURRENT_MC_RESOLUTION",
+        "scientific_status": "CLOSED",
+        "analysis_support_exact": true
+      },
+      {
+        "path": "docs/generated/pr177_result_card.json",
+        "sha256": "d378e0148f44dafa9695100f907ef873798641592997fb5730b936efa73b1d56",
+        "scientific_result": "NO_RESOLVED_COUPLING_AT_CURRENT_MC_RESOLUTION",
+        "scientific_status": "CLOSED",
+        "analysis_support_exact": true
+      },
+      {
+        "path": "docs/generated/pr177_artifact_manifest.json",
+        "sha256": "cdf148050d8c2d6e652589deebf0b8a529a4cdbfcdb5872ab30f558f086c77aa",
+        "scientific_result": "NO_RESOLVED_COUPLING_AT_CURRENT_MC_RESOLUTION",
+        "scientific_status": "CLOSED",
+        "analysis_support_exact": true
+      }
+    ],
+    "non_result_artifacts": [
+      {
+        "path": "docs/generated/pr177_deep_replay_receipt.json",
+        "scientific_result": null,
+        "analysis_support_exact": true
+      },
+      {
+        "path": "docs/generated/pr177_mutation_report.json",
+        "scientific_result": null,
+        "analysis_support_required": false
+      }
+    ],
+    "validator": {
+      "path": "scripts/codex_harness/run_pr177_act_dr6_inband_modulation.py",
+      "function": "result_support_errors",
+      "scope": "all outputs whose scientific_result is non-null, including the manifest after manifest construction",
+      "fail_closed": true,
+      "evidence_refs": [
+        "scripts/codex_harness/run_pr177_act_dr6_inband_modulation.py:524-536",
+        "scripts/codex_harness/run_pr177_act_dr6_inband_modulation.py:704-735"
+      ]
+    },
+    "mutation_evidence": {
+      "registered": 23,
+      "executed": 23,
+      "killed": 23,
+      "survivors": [],
+      "support_mutations": [
+        {
+          "mutation_id": "drop_mask_analysis_support",
+          "executed": true,
+          "killed": true,
+          "first_error": "mask result artifact strict support mismatch"
+        },
+        {
+          "mutation_id": "drift_mc_analysis_support",
+          "executed": true,
+          "killed": true,
+          "first_error": "mc result artifact strict support mismatch"
+        },
+        {
+          "mutation_id": "drop_manifest_analysis_support",
+          "executed": true,
+          "killed": true,
+          "first_error": "manifest result artifact strict support mismatch"
+        }
+      ]
+    },
+    "manifest_bindings": {
+      "deep_replay_sha256_matches": true,
+      "deep_replay_semantic_digest_matches": true,
+      "listed_result_sha256_matches": true,
+      "listed_mask_sha256_matches": true,
+      "listed_mc_sha256_matches": true,
+      "listed_result_card_sha256_matches": true,
+      "listed_mutation_report_sha256_matches": true
+    },
+    "verdict": "pass"
+  },
+  "claim_scan_evidence": {
+    "claim_lane": {
+      "owner": "OBSSTAT",
+      "claim_tier": "conditional",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C3"
+      },
+      "scientific_artifact_mode": "standard_internal",
+      "public_use": false,
+      "transfer_source": "none",
+      "all_result_bearing_artifacts_match": true
+    },
+    "terminal": {
+      "scientific_result": "NO_RESOLVED_COUPLING_AT_CURRENT_MC_RESOLUTION",
+      "allowed_by_frozen_spec": true,
+      "reason": "controlled_rank_resolved_above_alpha",
+      "selected_release_scope": "ACT DR6 baseline released reconstructed-kappa map plus exactly 400 corresponding released reconstructed simulations",
+      "strict_support": "40 < L < 763, integer 41..762",
+      "interpretation": "finite-release-rank numerical resolution only; no physical interpretation evaluated"
+    },
+    "deep_replay": {
+      "process_execution_status": "PASS_AUTHORITATIVE_401_UNIT_FEATURE_REPLAY",
+      "feature_units_replayed": 401,
+      "raw_units_opened": 401,
+      "raw_payloads_hashed": 0,
+      "feature_mismatch_count": 0,
+      "features_match_raw_authority": true,
+      "scientific_result": null,
+      "scientific_status": "NOT_EVALUATED_PROVENANCE_REPLAY_ONLY",
+      "interpretation": "derived_feature_provenance_replay_not_physical_validation",
+      "process_science_separation_passed": true,
+      "evidence_refs": [
+        "docs/generated/pr177_deep_replay_receipt.json:760-762",
+        "docs/generated/pr177_deep_replay_receipt.json:774-776",
+        "docs/generated/pr177_deep_replay_receipt.json:798-805",
+        "docs/generated/pr177_deep_replay_receipt.json:847-852"
+      ]
+    },
+    "anti_promotion_checks": [
+      {
+        "axis": "raw_QE_or_RDN0",
+        "verdict": "pass",
+        "evidence": "Result raw_qe_reproduced=false, result-card raw_qe_reproduction=false, manifest raw_qe_reproduced=false, and all prose occurrences are explicit negations or forbidden-use labels."
+      },
+      {
+        "axis": "detection_or_isotropy",
+        "verdict": "pass",
+        "evidence": "Result-card detection_claim=false; no affirmative isotropy statement exists; caveats explicitly deny detection and physical-anisotropy interpretation."
+      },
+      {
+        "axis": "physical_or_causal_attribution",
+        "verdict": "pass",
+        "evidence": "Result and MC physical_interpretation=not_evaluated; mask control_scope ends in no_causal_attribution and candidate_survives_registered_mask_control=false."
+      },
+      {
+        "axis": "transfer_or_native",
+        "verdict": "pass",
+        "evidence": "Every reviewed artifact has transfer_source=none; transfer/native strings occur only in explicit caveats and the manifest forbidden-use registry."
+      },
+      {
+        "axis": "geometry_or_family",
+        "verdict": "pass",
+        "evidence": "Result-card family_identification=false; geometry/family strings occur only in explicit negations and forbidden-use labels."
+      },
+      {
+        "axis": "process_implies_science",
+        "verdict": "pass",
+        "evidence": "Deep replay and mutation report have null scientific_result; manifest explicitly forbids process PASS implying scientific validation."
+      }
+    ],
+    "forbidden_language_scan": {
+      "affirmative_forbidden_claims": [],
+      "expected_negative_or_registry_occurrences_only": true,
+      "manifest_forbidden_use_exactly_matches_spec": true
+    },
+    "required_metadata": {
+      "source": "docs/research_program/long_horizon_rescue/pr177_spec.yaml:276-294",
+      "missing_by_artifact": {
+        "pr177_deep_replay_receipt.json": [],
+        "pr177_act_modulation_result.json": [],
+        "pr177_mask_control.json": [],
+        "pr177_mc_resolution.json": [],
+        "pr177_result_card.json": [],
+        "pr177_artifact_manifest.json": [],
+        "pr177_mutation_report.json": []
+      }
+    },
+    "verdict": "pass"
+  },
+  "claim_audit": [
+    {
+      "claim": "C-PR177-INBAND-MODULATION",
+      "owner": "OBSSTAT",
+      "status": "CONDITIONAL",
+      "evidence": "artifact plus frozen spec plus finite-release simulation comparison",
+      "claim_tier": "C3",
+      "transfer_source": "none",
+      "risk": "The machine enum is unsafe as unqualified standalone prose and must remain coupled to strict support, selected baseline plus exactly 400 release simulations, mask/MC status, caveats, and public_use=false.",
+      "required_fix": null
+    }
+  ],
+  "upgraded_claims": [],
+  "downgraded_claims": [],
+  "forbidden_drift_detected": [],
+  "ledger_updates_needed": [],
+  "prior_fail_adjudication": {
+    "path": ".agent-harness/runs/pr177-intake-20260720/results/A-PR177-FINAL-CLAIM.json",
+    "sha256": "57931fba9dc82cfd065776e12b5947e98c1ccd9bfddea111c5d4ff289135323f",
+    "preserved_immutable": true,
+    "prior_verdict": "FAIL_STRICT_SUPPORT_NOT_SELF_CONTAINED_IN_ALL_RESULT_BEARING_ARTIFACTS",
+    "remediation_actions": [
+      {
+        "action": "Regenerate mask, MC, and manifest with exact strict-support metadata",
+        "status": "closed"
+      },
+      {
+        "action": "Add fail-closed validation and mutation coverage for non-null result artifacts",
+        "status": "closed"
+      },
+      {
+        "action": "Run a fresh hash-bound claim review without overwriting the FAIL",
+        "status": "closed_by_this_envelope"
+      }
+    ]
+  },
+  "bootstrap_validation": {
+    "spawn_context_version_matches_context_pack": true,
+    "spawn_context_version_matches_assignment": true,
+    "assignment_sha256_expected": "cd680b81717016df807b048145d000117c816a1c9a18217c540c8e6f7f12e863",
+    "assignment_sha256_recomputed": "cd680b81717016df807b048145d000117c816a1c9a18217c540c8e6f7f12e863",
+    "assignment_sha256_matches": true,
+    "required_input_hashes_match": true
+  },
+  "evidence_read": [
+    {
+      "path": "docs/research_program/long_horizon_rescue/pr177_spec.yaml",
+      "sha256": "b420ddaf0b3a9d924f6eeac027e3e017141d034dcfd14d329d07c9de643e4728"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr177_act_dr6_inband_modulation.py",
+      "sha256": "24e79c5976a3343e787814a00fd080263b7c3e8dfe12f1d3992e2e4478425d96"
+    },
+    {
+      "path": "tests/pr_cards/test_pr_177_act_dr6_in_band_kappa_off_diagonal_modulation_di.py",
+      "sha256": "dc3d78da40fb96140a81f6184131bed0e58e3b4e7956d15a78cf65d3256483e2"
+    },
+    {
+      "path": "docs/generated/pr177_deep_replay_receipt.json",
+      "sha256": "c7f1e15d9119821ba72ecef5f1e822e90192abe97c2f8ff9fff9c3421ef0a7ba"
+    },
+    {
+      "path": "docs/generated/pr177_act_modulation_result.json",
+      "sha256": "7d9a6243bc1e7ef9278a668f4052109072919e8e2ab0a8e6365a90877356c507"
+    },
+    {
+      "path": "docs/generated/pr177_mask_control.json",
+      "sha256": "8171ee44981368a56bc8a68db42a9cecbc5f3e412cc24ada2ace8b9aae80e882"
+    },
+    {
+      "path": "docs/generated/pr177_mc_resolution.json",
+      "sha256": "bf85ce41d651804439de39eea6301b21afe0cb2a58520b3cf603d5dc582c6936"
+    },
+    {
+      "path": "docs/generated/pr177_result_card.json",
+      "sha256": "d378e0148f44dafa9695100f907ef873798641592997fb5730b936efa73b1d56"
+    },
+    {
+      "path": "docs/generated/pr177_artifact_manifest.json",
+      "sha256": "cdf148050d8c2d6e652589deebf0b8a529a4cdbfcdb5872ab30f558f086c77aa"
+    },
+    {
+      "path": "docs/generated/pr177_mutation_report.json",
+      "sha256": "b6be7c1a26a01e00e98a9c645dfd05c73bf1b396d7b07e00dadbc47f8dee7df7"
+    },
+    {
+      "path": ".agent-harness/runs/pr177-intake-20260720/results/A-PR177-FINAL-CLAIM.json",
+      "sha256": "57931fba9dc82cfd065776e12b5947e98c1ccd9bfddea111c5d4ff289135323f",
+      "role": "allowed prior FAIL used only to define remediation scope"
+    }
+  ],
+  "tests": [
+    {
+      "command": "pytest -q tests/pr_cards/test_pr_177_act_dr6_in_band_kappa_off_diagonal_modulation_di.py::test_every_result_bearing_artifact_has_exact_strict_support tests/pr_cards/test_pr_177_act_dr6_in_band_kappa_off_diagonal_modulation_di.py::test_deep_replay_pins_all_raw_features_without_raw_rehash",
+      "outcome": "environment_error",
+      "detail": "The system pytest executable is absent: /bin/bash: pytest: command not found."
+    },
+    {
+      "command": "venv/bin/python -m pytest -q tests/pr_cards/test_pr_177_act_dr6_in_band_kappa_off_diagonal_modulation_di.py::test_every_result_bearing_artifact_has_exact_strict_support tests/pr_cards/test_pr_177_act_dr6_in_band_kappa_off_diagonal_modulation_di.py::test_deep_replay_pins_all_raw_features_without_raw_rehash",
+      "outcome": "pass",
+      "detail": "2 passed in 0.68s"
+    },
+    {
+      "command": "python bounded support/provenance audit over the seven registered JSON inputs",
+      "outcome": "pass",
+      "detail": "Five non-null result artifacts had exact support; all required metadata was present; three support mutations were killed; 23/23 total mutations passed with no survivors; deep replay and manifest hashes/digests matched."
+    },
+    {
+      "command": "python bounded claim-firewall audit over the seven registered JSON inputs",
+      "outcome": "pass",
+      "detail": "conditional C3 internal lane, anti-promotion flags, negative forbidden-claim caveats, exact manifest forbidden-use registry, and deep-replay process-only separation all passed."
+    }
+  ],
+  "skill_outputs": {
+    "skills_used": [
+      "htt-claim-firewall",
+      "htt-claim-provenance-ledger"
+    ],
+    "evidence_read": "The frozen PR-177 spec, registered producer and test, seven registered generated artifacts, and only the allowed prior claim FAIL.",
+    "proposed_changes": [],
+    "tests_to_run": [
+      "Completed the two registered bounded pytest nodes through venv/bin/python.",
+      "Completed direct hash, exact-support, metadata, manifest-binding, mutation, and forbidden-promotion audits."
+    ],
+    "risks_and_kill_switches": [
+      "Any missing or drifted exact support on a non-null result artifact reopens the P1 and blocks claim closeout.",
+      "Any use of the terminal enum without strict support, selected baseline plus exactly 400 release simulations, finite-resolution qualifiers, mask/null/covariance status, caveats, and public_use=false is not approved human-facing language.",
+      "Any affirmative raw-QE/RDN0, detection, isotropy, causal or physical attribution, transfer/native, geometry, or family statement blocks the result.",
+      "Any promotion of deep replay from process/provenance evidence to scientific validation blocks the result."
+    ],
+    "artifacts_status_updates_needed": [
+      "Preserve A-PR177-FINAL-CLAIM.json as immutable prior FAIL evidence.",
+      "The main adjudicator may consume this fresh hash-bound PASS for the claim-remediation gate; it must not be treated as a scientific claim upgrade."
+    ]
+  },
+  "tools": {
+    "python": "3.12.3",
+    "ripgrep": "14.1.0",
+    "methods": [
+      "SHA-256 verification of every registered input and the allowed prior FAIL",
+      "canonical assignment-hash reconstruction",
+      "spec-derived exact-support comparison across every non-null result artifact",
+      "generic validator and mutation-path inspection",
+      "manifest byte-hash and deep-replay semantic binding verification",
+      "recursive string and structural anti-promotion audit",
+      "two bounded pytest regressions"
+    ]
+  },
+  "independence_attestation": {
+    "sibling_results_read": [
+      ".agent-harness/runs/pr177-intake-20260720/results/A-PR177-FINAL-CLAIM.json"
+    ],
+    "unlisted_sibling_results_read": false,
+    "production_or_shared_files_edited": false,
+    "only_registered_result_path_written": true
+  },
+  "result_envelope": {
+    "assignment_id": "A-PR177-REMED-CLAIM",
+    "context_version": "32aed5ce4daf59ec2f3617ec3badc56e76baa61b484d012b2cafb20fc3c4ea4e",
+    "status": "pass",
+    "result_path": ".agent-harness/runs/pr177-intake-20260720/results/A-PR177-REMED-CLAIM.json"
+  },
+  "result_path": ".agent-harness/runs/pr177-intake-20260720/results/A-PR177-REMED-CLAIM.json"
+}

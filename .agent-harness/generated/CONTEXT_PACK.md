@@ -1,7 +1,7 @@
 # Canonical Shared Context Pack
 
-Context version: `32aed5ce4daf59ec2f3617ec3badc56e76baa61b484d012b2cafb20fc3c4ea4e`
-Built at: `2026-07-20T02:46:18+00:00`
+Context version: `e0c724f6cb8b7c5b676a3f46f445a863e8999e70106d16739e401c9ebf97e65c`
+Built at: `2026-07-20T05:06:31+00:00`
 
 This pack contains only the shared Tier-0 context. Assignment-specific context and sibling results are intentionally excluded.
 
@@ -9,7 +9,7 @@ This pack contains only the shared Tier-0 context. Assignment-specific context a
 
 ## Source: `.agent-harness/context/SHARED_CONTEXT.md`
 
-SHA-256: `7b104c99514d8f29db8a8e36ec70f34cf5984cada1b3b6622176445665f36c96`
+SHA-256: `b74e0fb231be81f0f50e9a74e282682dc59d8efd318cd39152353137eb4bc64d`
 
 # Shared Context — PR-151 background acquisition and PR-173 MC-rank certifier
 
@@ -495,7 +495,7 @@ SHA-256: `7b104c99514d8f29db8a8e36ec70f34cf5984cada1b3b6622176445665f36c96`
   numerical suppression ceiling remain unidentified. The complete result is
   internal, `hypothesis_only`, and `public_use=false`.
 
-## PR-172/173 closed boundaries and PR-177 foreground
+## PR-172/173/177 closed boundaries and PR-179 foreground
 
 - PR-172 has frozen eight transform relations and seven explicit mutants in
   `pr172_spec.yaml`. Its formal replay is a terminal blocked result, not a
@@ -534,9 +534,30 @@ SHA-256: `7b104c99514d8f29db8a8e36ec70f34cf5984cada1b3b6622176445665f36c96`
   the original FAIL and three stale-input ERROR envelopes remain preserved.
 - PR-151 remained non-terminal at the PR-173 end probe: 120/1000 EZmocks,
   0/25 Abacus, 10/15 audits, active `.part` and log growth, and 816.21 GiB free.
-  PR-177 is the next executable defensible card under the low-priority NVMe
-  policy. If PR-151 becomes terminal-ready, finish the atomic current card,
-  then finalize PR-151 and return to PR-155--158 before opening another card.
+- PR-177 then completed one prospectively frozen ACT DR6 baseline
+  release-simulation-conditional estimand over strict integer support 41..762.
+  Controlled, raw, and mask-change ranks are respectively `102/401`, `99/401`,
+  and `398/401`; all delete-simulation guard intervals lie wholly above 0.05.
+  The terminal is therefore
+  `NO_RESOLVED_COUPLING_AT_CURRENT_MC_RESOLUTION`, not raw-QE reproduction,
+  detection, sky-isotropy validation, physical attribution, or a family claim.
+- The PR-177 heavy lane used one low-priority sequential reader. A second
+  complete 401-unit raw-feature replay matched every cached/tracked feature and
+  performed zero raw-payload hashes. The final verifier independently binds
+  the frozen PR-152 card, ordered raw-record root, complete feature/deep input
+  maps, cache/runtime identity, resource receipts, exact support, and 400
+  delete-simulation lineage. All 30 registered consistency mutations are
+  killed.
+- Every intermediate review verdict is preserved. The final independent code
+  and claim reviews pass after earlier FAILs exposed cache/resource/runtime,
+  strict-support, mutable-authority, replay-completeness, input-map, and stale
+  delta defects. No earlier verdict is relabeled.
+- The `2026-07-20T04:34:04Z` PR-151 probe remained non-terminal with 140/1000
+  EZmock records, 0/25 Abacus, 10/15 audits, fresh log/part growth, and 821.85
+  GiB free. PR-179 is the next foreground defensible card; PR-180 remains
+  locked by PR-172's failed `requires_success` edge. If PR-151 becomes
+  terminal-ready, finish PR-179 atomically, then finalize PR-151 and run
+  PR-155--158 before opening another advocate card.
 
 ## Ownership and claim boundaries
 
@@ -561,6 +582,10 @@ SHA-256: `7b104c99514d8f29db8a8e36ec70f34cf5984cada1b3b6622176445665f36c96`
 | E-PR151-SPEC | `docs/research_program/long_horizon_rescue/pr151_spec.yaml` | exact DESI support and terminal conditions |
 | E-PR151-REVIEW | `.agent-harness/runs/wave19-concrete-results-amend-20260719/results/A-W19-DESI-ARIA.json` | acquisition safety findings |
 | E-PR152-DELTA | `docs/PR_DELTAS/pr-152.md` | ACT release-simulation result and raw-QE boundary |
+| E-PR177-SPEC | `docs/research_program/long_horizon_rescue/pr177_spec.yaml` | Frozen ACT strict-band estimand and falsifiers |
+| E-PR177-RESULT | `docs/generated/pr177_act_modulation_result.json` | Exact ranks, resolution guards, and conditional terminal |
+| E-PR177-REPLAY | `docs/generated/pr177_deep_replay_receipt.json` | Complete raw-feature provenance replay without raw hashing |
+| E-PR177-REVIEWS | `docs/generated/pr177_reviews/manifest.json` | Preserved independent review history and final PASS verdicts |
 | E-PR153-DELTA | `docs/PR_DELTAS/pr-153.md` | authenticated JWST rows and observed consistency |
 | E-PR153-MANIFEST | `docs/generated/pr153_artifact_manifest.json` | source hashes and result provenance |
 | E-PR154-SPEC | `docs/research_program/long_horizon_rescue/pr154_spec.yaml` | frozen model, thresholds, and claim ceiling |
@@ -640,7 +665,7 @@ but its result must map them back to this table.
 
 ## Source: `.agent-harness/context/FROZEN_DECISIONS.md`
 
-SHA-256: `89f3348c05303dbafbc22e66d699d02b1e2a84f768ca17cf5f2c06a12910e656`
+SHA-256: `59b28e22613b2a8b1e1b04a679b9c822aa9d7d74ad15aea06c16537a7e0e8fd6`
 
 # Frozen Decisions and Rejected Alternatives
 
@@ -661,6 +686,8 @@ SHA-256: `89f3348c05303dbafbc22e66d699d02b1e2a84f768ca17cf5f2c06a12910e656`
 | D-ADVOCATE-CLAIM-CEILING | Treat PR-174/175/182 as internal hypothesis-only and PR-183 as native-dependent | Pre-native family/geometry claims remain forbidden | Advocate intake | Native atlas and registered external gates, or explicit scope change that preserves claim firewall |
 | D-PR173-ORTHOGONAL | Keep input availability, replicate lineage, and numerical resolution on separate axes | Missing lineage is not evidence that the MC budget is small; partial input cannot produce a final rank | PR-173 and all downstream finite-ensemble consumers | A versioned schema migration with equivalent fail-closed null routing |
 | D-PR173-RECONSTRUCTION | Validate reports against freshly reconstructed frozen-source targets and metadata, not self-consistent resealed fields | Independent review reproduced coordinated uncertainty and provenance false greens in the first validator | PR-173 result consumers | A stronger externally rooted verifier with the same or stricter mutation coverage |
+| D-PR177-STRICT-SUPPORT | Interpret the canonical `40<L<763` support literally as integer multipoles 41..762 and use one frozen five-component score | The user-authorized plan and canonical backlog override an inclusive intake paraphrase; endpoint or scan drift changes the estimand | PR-177 and direct consumers | A separately preregistered estimand with its own null calibration and claim lane |
+| D-PR177-AUTHORITY-REPLAY | Bind result eligibility to frozen PR-152 pins, complete feature/deep input maps, and a separate 401-unit raw-feature replay | Self-consistent card/cache or provenance resealing is not independent source authority; final reviews required complete-map reconstruction | PR-177 result consumers | A stronger external source-attestation mechanism preserving all current falsifiers |
 
 Agents must not silently reopen a frozen decision. A proposed reversal is a
 meta-finding with new evidence and an explicit reopen condition.
@@ -669,7 +696,7 @@ meta-finding with new evidence and an explicit reopen condition.
 
 ## Source: `.agent-harness/context/GATE_REGISTRY.json`
 
-SHA-256: `1fc520c7e323926c4228d67a28d116f24698ab4c5367ba7e4b0f765dafd0fc6d`
+SHA-256: `5c9b9b1d4add25c962485e7a069185aa60c8d806e21810a4ecdca7088f6498f4`
 
 {
   "schema_version": 1,
@@ -863,6 +890,38 @@ SHA-256: `1fc520c7e323926c4228d67a28d116f24698ab4c5367ba7e4b0f765dafd0fc6d`
       ],
       "pass_condition": "All 18 mutations are killed, including six coordinated uncertainty, receipt, replay, config, local-input, and target-source drifts.",
       "fail_condition": "Any resealed candidate can change a registered target, uncertainty primitive, receipt, or frozen hash without rejection.",
+      "owner": "main",
+      "status": "pass"
+    },
+    {
+      "gate_id": "G-PR177-STRICT-INBAND-TERMINAL",
+      "spec_refs": [
+        "docs/research_program/long_horizon_rescue/pr177_spec.yaml#estimator",
+        "docs/research_program/long_horizon_rescue/pr177_spec.yaml#terminal_routing"
+      ],
+      "statement": "The ACT baseline observation and exactly 400 released reconstructions use one identical strict-41..762 feature and score pipeline with complete finite-ensemble routing.",
+      "required_evidence": [
+        "E-PR177-RESULT",
+        "E-PR177-REVIEWS"
+      ],
+      "pass_condition": "All three exact ranks, 400 delete-simulation recomputations, support/mask/covariance gates, and terminal truth-table checks pass without a scan or physical promotion.",
+      "fail_condition": "Endpoint, unit, pipeline, score, deletion-lineage, mask-control, or terminal routing drift; or any raw-QE/detection/physical attribution claim.",
+      "owner": "main",
+      "status": "pass"
+    },
+    {
+      "gate_id": "G-PR177-FROZEN-AUTHORITY-REPLAY",
+      "spec_refs": [
+        "docs/research_program/long_horizon_rescue/pr177_spec.yaml#source_authorities",
+        "docs/research_program/long_horizon_rescue/pr177_spec.yaml#resource_policy"
+      ],
+      "statement": "The result pack is rooted to frozen PR-152 source pins, exact complete provenance maps, and an independently recorded 401-unit raw-feature replay.",
+      "required_evidence": [
+        "E-PR177-REPLAY",
+        "E-PR177-REVIEWS"
+      ],
+      "pass_condition": "The replay reports exact PASS/completeness/integrity, all 401 features match, raw hashes remain zero, resource/runtime receipts validate, and all 30 registered consistency mutations are killed.",
+      "fail_condition": "Mutable source authority, failed/incomplete/unsigned replay, contradictory feature/deep input map, stale resource/runtime identity, or any surviving registered mutation.",
       "owner": "main",
       "status": "pass"
     }

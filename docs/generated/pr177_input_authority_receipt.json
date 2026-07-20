@@ -1,0 +1,97 @@
+{
+  "analysis_support": {
+    "coordinate_frame": "Equatorial",
+    "endpoints_40_and_763_included": false,
+    "inequality": "40 < L < 763",
+    "integer_count": 722,
+    "integer_max": 762,
+    "integer_min": 41
+  },
+  "caveats": [
+    "The ranks are conditional on the selected ACT DR6 baseline released reconstruction and exactly 400 released reconstructions.",
+    "Joint exchangeability is an explicit conditional assumption, not release validation.",
+    "The registered M_K-squared control is bounded and cannot rule out all mask, filter, reconstruction, foreground, or noise effects.",
+    "This is not raw-QE reproduction, a detection, cosmological-anisotropy attribution, transfer validation, geometry identification, or family identification.",
+    "Numerical-resolution intervals describe the finite release-rank functional, not physical uncertainty or external coverage."
+  ],
+  "claim_level": {
+    "level": "C3",
+    "scheme": "roadmap_rescue_v1"
+  },
+  "claim_tier": "conditional",
+  "config_hash": "b420ddaf0b3a9d924f6eeac027e3e017141d034dcfd14d329d07c9de643e4728",
+  "covariance_status": "observation_inclusive_5d_leave_one_out_empirical_covariance_exactly_400_release_simulations",
+  "feature_card_sha256": "d73d6fd71dde644f50a00732b00129ee91b4bdcaa82d688a1ddb58fb3b41f832",
+  "generating_command": "env OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 MPLCONFIGDIR=/tmp/mpl-pr177 PYTHONPATH=htt venv/bin/python -B scripts/codex_harness/run_pr177_act_dr6_inband_modulation.py --write",
+  "git_commit": "76675be04bafdd79b3487e9be81a03557de42ea5",
+  "implementation_scope": [
+    "obsstat"
+  ],
+  "input_hashes": {
+    "docs/generated/pr177_act_inband_feature_card.json": "d73d6fd71dde644f50a00732b00129ee91b4bdcaa82d688a1ddb58fb3b41f832",
+    "docs/generated/pr177_deep_replay_receipt.json": "c7f1e15d9119821ba72ecef5f1e822e90192abe97c2f8ff9fff9c3421ef0a7ba",
+    "docs/research_program/long_horizon_rescue/pr177_spec.yaml": "b420ddaf0b3a9d924f6eeac027e3e017141d034dcfd14d329d07c9de643e4728",
+    "htt/obsstat/act_inband_modulation.py": "9e230713ffd7998ce0b4974e73223eb7b25eda3a18b26877cd3daed049b877b6",
+    "scripts/act_inband_modulation_card.py": "6af042319fc2f98be0f71b008c39c2e4f910be14f52e17dfc545d3ed5ede6749",
+    "scripts/codex_harness/run_pr177_act_dr6_inband_modulation.py": "230ab63fe30bdce7ee516e8ac76c3c80425897a7e153dad710e7d7f705202ab7"
+  },
+  "mask_design": {
+    "controlled_design_condition_number": 8.143549140387146,
+    "core_fraction": 0.21343382199605307,
+    "core_pixel_count": 2685619,
+    "mask_squared_mean": 0.9999090437041177,
+    "mask_squared_norm": 1.6908307247956305,
+    "mask_threshold": 0.99,
+    "nside": 1024,
+    "ordering": "RING",
+    "raw_design_condition_number": 8.121881472033245,
+    "real_y2_order": [
+      "Y20",
+      "Y21c",
+      "Y21s",
+      "Y22c",
+      "Y22s"
+    ]
+  },
+  "mask_status": "authenticated_release_mask_with_MK_squared_registered_nuisance_control",
+  "null_mock_status": "exactly_400_authenticated_release_reconstructed_simulations_conditional_exchangeability",
+  "owner": "OBSSTAT",
+  "process_execution_status": "PASS",
+  "public_use": false,
+  "raw_payload_rehashed_by_pr177": false,
+  "runtime_environment": {
+    "harmonic_backend": "healpy.sphtfunc.alm2map(libsharp)",
+    "healpy": "1.19.0",
+    "numpy": "2.5.0",
+    "platform": "Linux-6.17.0-35-generic-x86_64-with-glibc2.39",
+    "python": "3.12.3",
+    "thread_environment": {
+      "MKL_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1"
+    }
+  },
+  "schema": "htt.pr177.input_authority_receipt.v1",
+  "scientific_artifact_mode": "standard_internal",
+  "scientific_result": null,
+  "semantic_digest": "6bdd187c8407d56283e1d8135ddfd106150b6512c0525c821b060825c249fd04",
+  "sky_support_status": "released_baseline_reconstructed_kappa_equatorial_MK_ge_0p99_core_not_independently_reprocessed",
+  "source_authentication": {
+    "embedded_ordered_manifest_sha256": "dbb4b1f17f6d90b7c1bd87567585598c2b57802ee27d5dfa67f29944ea5552ce",
+    "mask_and_filter_stat_checks_performed": 2,
+    "raw_payload_bytes": 64147279680,
+    "raw_payload_count": 401,
+    "raw_payload_hashing_performed_by_pr177": false,
+    "raw_payload_stat_checks_performed": 401,
+    "raw_records_only_sha256": "63b65bfd0ef6593cbf6cfa11602f0e09a589932bfc907aeb31ecbc09a2142968",
+    "small_authority_hashes": {
+      "docs/generated/act_raw_qe_card.json": "e94c1554ca25657b43049f70a27156d3fe1c64cfdeac1d4d28a7f67912514a60",
+      "docs/generated/pr152_artifact_manifest.json": "6826b5814d7f6bb56c52514e6b8a58bec3d758db846269233135b63a59d344c4",
+      "workdir/raw/act_dr6_lensing/act_dr6_lensing_acquisition_manifest.json": "9df02e4763eff004bc082ddaac800681f849cb06b7c1ae83e8f36bdf6eb47ccf",
+      "workdir/raw/act_dr6_lensing/dr6_lensing_release/README": "d2c045774925802c4cb5ef401e06a297823eb6e0b591799d635a42d2b3f9bdea"
+    }
+  },
+  "transfer_source": "none",
+  "worktree_content_receipt": "49705d78fb7846d20bf04c1ab256ec8ebc0ba88b40ed4bac4009d92d4bc3f797",
+  "worktree_state": "76675be04bafdd79b3487e9be81a03557de42ea5+content-sha256:49705d78fb7846d20bf04c1ab256ec8ebc0ba88b40ed4bac4009d92d4bc3f797"
+}

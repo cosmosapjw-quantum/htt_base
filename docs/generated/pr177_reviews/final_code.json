@@ -1,0 +1,215 @@
+{
+  "schema_version": 2,
+  "run_id": "pr177-intake-20260720",
+  "assignment_id": "A-PR177-FINAL-CODE",
+  "context_version": "32aed5ce4daf59ec2f3617ec3badc56e76baa61b484d012b2cafb20fc3c4ea4e",
+  "independence_mode": "blind-results",
+  "claim_ids": [
+    "C-PR177-INBAND-MODULATION"
+  ],
+  "status": "fail",
+  "verdict": "FAIL_MUST_FIX",
+  "summary": "Nominal tests and byte-reproduction pass, but two P1 false-green paths remain: the final validator trusts an unrecomputed caller-selected cache identity and self-sealed card/cache pair, and extraction resumes reuse a stale one-shot resource receipt while the final validator trusts its derived eligible boolean. The current PR-177 scientific terminal is therefore not closeout-ready.",
+  "evidence_read": [
+    {
+      "path": "docs/research_program/long_horizon_rescue/pr177_spec.yaml",
+      "sha256": "8f4ce639023ff2053f324d5678758ec00babe1ddcd21aaf175ee4e40ad44c598"
+    },
+    {
+      "path": "htt/obsstat/act_inband_modulation.py",
+      "sha256": "9e230713ffd7998ce0b4974e73223eb7b25eda3a18b26877cd3daed049b877b6"
+    },
+    {
+      "path": "scripts/act_inband_modulation_card.py",
+      "sha256": "d31fb186e758d51ba9c8541784f91713a6664ebac7d8f8f282ec4bd972c1af4d"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr177_act_dr6_inband_modulation.py",
+      "sha256": "5956c48f7a66f986486346b93171175d4945a94c7b07848a4b175b41cb6f9d73"
+    },
+    {
+      "path": "tests/pr_cards/test_pr_177_act_dr6_in_band_kappa_off_diagonal_modulation_di.py",
+      "sha256": "73233af8ae4e1d9d458059144419e3cee07ae737ff381e68de835eb74aec18eb"
+    },
+    {
+      "path": "docs/generated/pr177_act_inband_feature_card.json",
+      "sha256": "ba9e35fec0d631bb9779ec6f447193201bf0a8b1f555c861645fad5ba34cbb59"
+    },
+    {
+      "path": "docs/generated/pr177_act_modulation_result.json",
+      "sha256": "baf073794b4faf21b341205a587a514f1603ff333eb2943d7b19ea8be2cf4eba"
+    },
+    {
+      "path": "docs/generated/pr177_artifact_manifest.json",
+      "sha256": "e43bb27caa6236ac3641b36ee25d7d82dccdf9d16c0163e382bb129060d58204"
+    }
+  ],
+  "tool_versions": {
+    "python": "3.12.3",
+    "numpy": "2.5.0",
+    "healpy": "1.19.0",
+    "pytest": "invoked through venv/bin/python -m pytest"
+  },
+  "code_findings": [
+    {
+      "finding_id": "F-PR177-FINAL-CODE-001",
+      "claim_id": "C-PR177-INBAND-MODULATION",
+      "severity": "P1",
+      "disposition": "must_fix",
+      "title": "Final validation trusts an unrecomputed cache identity and a self-sealed card/cache pair",
+      "evidence": [
+        {
+          "path": "scripts/act_inband_modulation_card.py",
+          "lines": "291-305",
+          "observation": "The producer defines the content identity and cache_key from config, module, producer, raw-record root, mask, support, nside, threshold, and worker count."
+        },
+        {
+          "path": "scripts/codex_harness/run_pr177_act_dr6_inband_modulation.py",
+          "lines": "95-97,101-210",
+          "observation": "The final validator uses card.cache_identity.cache_key only as a path selector. It never reconstructs the identity, verifies cache_key equals canonical_sha256(identity without cache_key), or validates cache schema/key/unit/source/pipeline fields with the producer's _valid_unit_cache contract."
+        },
+        {
+          "path": "scripts/codex_harness/run_pr177_act_dr6_inband_modulation.py",
+          "lines": "203-209,382-411",
+          "observation": "The validator checks only self-authored cache/card semantic digests and feature equality. The mutation report mutates the card alone and contains no coordinated cache/card or cache-identity mutation."
+        }
+      ],
+      "reproduced_behavior": [
+        "Resealed mutations of cache_identity.raw_records_only_sha256, module_hash, integer_support, and nside were each accepted with validate_feature_card returning an empty error list.",
+        "A coordinated mutation of the observed q_raw primitive and mask_change in both the card and returned cache, with both semantic digests resealed, was accepted with an empty error list."
+      ],
+      "impact": "The registered --check and 14/14 mutation report can remain green for a cache whose claimed source root, implementation, support, or numerical feature no longer matches the frozen extraction identity. Because the terminal result is regenerated from those accepted primitives, this is a scientific-result false green, not metadata-only drift.",
+      "proposed_change": "Reconstruct the complete cache identity from the frozen spec, current local hashes, authenticated PR-152 raw-record root, and mask identity; verify its canonical cache_key; validate every unit through a shared strict cache-envelope validator covering schema, key, unit id/kind, exact source record, pipeline receipt, finite positive mean variance, design receipts, and raw-rehash flag. Add a separately bound extraction-root receipt or a bounded authoritative primitive replay sufficient to reject coordinated card/cache feature edits without violating the no-routine-raw-open policy.",
+      "tests_to_add": [
+        "Reject resealed drift in every cache-identity field and cache_key.",
+        "Reject cache payload schema/key/unit/source/pipeline drift even when card and cache digests are resealed.",
+        "Reject a coordinated card/cache feature mutation or explicitly route the result to BLOCKED_NO_SCIENTIFIC_RESULT when no authoritative primitive replay is available."
+      ],
+      "kill_switch": "Do not close PR-177 or consume its scientific terminal until a fresh independent review demonstrates these mutations are killed."
+    },
+    {
+      "finding_id": "F-PR177-FINAL-CODE-002",
+      "claim_id": "C-PR177-INBAND-MODULATION",
+      "severity": "P1",
+      "disposition": "must_fix",
+      "title": "Extraction resume bypasses the live DESI, disk, priority, and thread resource gate",
+      "evidence": [
+        {
+          "path": "docs/research_program/long_horizon_rescue/pr177_spec.yaml",
+          "lines": "229-240",
+          "observation": "The frozen contract requires nice 15, idle ionice, one-thread caps, at least 300 GiB free, fresh DESI, stop-ACT-on-collision, and sequential cache extraction."
+        },
+        {
+          "path": "scripts/act_inband_modulation_card.py",
+          "lines": "372-386",
+          "observation": "If extraction_resource_receipt.json already exists, extract() checks only schema and cache_key. It does not validate the receipt digest and does not call _resource_receipt again before resuming raw reads."
+        },
+        {
+          "path": "scripts/codex_harness/run_pr177_act_dr6_inband_modulation.py",
+          "lines": "168-170,382-411",
+          "observation": "Final validation trusts receipt.eligible instead of validating the nested receipt digest and deriving eligibility from its primitives. The sole resource mutation flips eligible false, so coordinated primitive inconsistency is untested."
+        }
+      ],
+      "reproduced_behavior": [
+        "A resealed feature card reporting DESI stopped, 0 GiB free, stale log, nice 0, non-idle ionice, and eight-thread settings was accepted when the stale nested eligible field remained true.",
+        "The nested extraction receipt semantic digest was deliberately stale in that probe and was still accepted."
+      ],
+      "impact": "A resumed heavy extraction can run while DESI is stale/stopped, disk is below the frozen gate, or process priority/thread caps are wrong; the final pack can still report compliant extraction. This violates the explicit stop-ACT-preserve-DESI and resource falsifiers.",
+      "proposed_change": "Take and append a fresh resource receipt at every extraction invocation and before each resumed batch, derive eligibility from exact primitives, validate semantic digests, and fail before opening the next raw alm if any live gate fails. Add a single-writer lock so two one-worker processes cannot create parallel raw readers.",
+      "tests_to_add": [
+        "Resume with an existing valid old receipt but a failing fresh probe and assert zero raw opens.",
+        "Reject each independently resealed resource primitive drift and a stale nested digest.",
+        "Reject a second concurrent extractor for the same cache key."
+      ],
+      "kill_switch": "No heavy resume is authorized from the current one-shot receipt logic."
+    },
+    {
+      "finding_id": "F-PR177-FINAL-CODE-003",
+      "claim_id": "C-PR177-INBAND-MODULATION",
+      "severity": "P2",
+      "disposition": "follow_up",
+      "title": "Cached numerical features are not bound to their extraction runtime",
+      "evidence": [
+        {
+          "path": "scripts/act_inband_modulation_card.py",
+          "lines": "291-305,557-559",
+          "observation": "The cache identity omits Python, NumPy, healpy/libsharp, and platform versions, while the feature card records only the environment of the current aggregate/check process and omits healpy."
+        },
+        {
+          "path": "scripts/codex_harness/run_pr177_act_dr6_inband_modulation.py",
+          "lines": "242",
+          "observation": "Result metadata similarly reports current Python/NumPy rather than the heavy extractor environment that produced reused unit caches."
+        }
+      ],
+      "impact": "A cache created under a different synthesis stack is silently reused and attributed to the later aggregation environment, weakening bit-level reproducibility and numerical provenance.",
+      "proposed_change": "Record Python, NumPy, healpy, libsharp/backend, platform, and relevant thread/runtime versions in the extraction receipt and cache identity; validate them or explicitly preserve the original extractor environment on reuse.",
+      "tests_to_add": [
+        "Reject or explicitly version cache reuse after a mocked healpy/runtime identity change."
+      ],
+      "kill_switch": "Do not describe the current runtime_environment field as extraction-runtime provenance."
+    }
+  ],
+  "test_findings": {
+    "nominal_commands": [
+      {
+        "command": "PYTHONPATH=htt OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 venv/bin/python -m pytest -q tests/pr_cards/test_pr_177_act_dr6_in_band_kappa_off_diagonal_modulation_di.py",
+        "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+        "return_code": 0,
+        "duration_seconds": 30.35,
+        "result": "10 passed"
+      },
+      {
+        "command": "PYTHONPATH=htt PYTHONHASHSEED=0 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 venv/bin/python -B scripts/codex_harness/run_pr177_act_dr6_inband_modulation.py --check",
+        "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+        "return_code": 0,
+        "duration_seconds": 13.45,
+        "result": "ok=true, delete_replicates=400, mutation_survivors=[]; controlled 102/401, raw 99/401, mask-change 398/401; nominal terminal NO_RESOLVED_COUPLING_AT_CURRENT_MC_RESOLUTION"
+      }
+    ],
+    "adversarial_probes": [
+      {
+        "probe_id": "ADV-PR177-CACHE-IDENTITY",
+        "method": "Deep-copy the real feature card, mutate one cache_identity field at a time, reseal the outer semantic digest, and call validate_feature_card against the frozen spec.",
+        "result": "FAIL: raw root, module hash, support, and nside mutations were all accepted."
+      },
+      {
+        "probe_id": "ADV-PR177-COORDINATED-FEATURE",
+        "method": "Mutate observed q_raw and recompute mask_change in both the card and cache object, reseal both digests, monkeypatch only the cache loader to return that cache, and call validate_feature_card.",
+        "result": "FAIL: coordinated numerical primitive mutation was accepted."
+      },
+      {
+        "probe_id": "ADV-PR177-RESOURCE-PRIMITIVES",
+        "method": "Mutate the embedded receipt to DESI stopped, zero free space, stale log, nice 0, non-idle ionice, and eight-thread values; keep eligible true, leave its nested digest stale, reseal the outer card, and call validate_feature_card.",
+        "result": "FAIL: inconsistent and digest-stale resource receipt was accepted."
+      }
+    ],
+    "broader_checks_skipped": [
+      "Full raw-alm re-extraction was not run because the assignment requested bounded review and the frozen routine-check policy avoids reopening the 64.15 GB raw ensemble.",
+      "Repository-wide smoke/collection was not run because the targeted lane and exact runner check were the smallest assignment-relevant gates."
+    ]
+  },
+  "risks_and_kill_switches": [
+    "Nominal green tests do not supersede the reproduced false-green probes.",
+    "Keep public_use=false and do not mark the PR-177 terminal accepted until both P1 findings are remediated and independently replayed.",
+    "Preserve the no-routine-raw-open policy only if a separate source-authority-rooted cache validation path prevents coordinated primitive drift.",
+    "On any resource collision or stale DESI state, stop ACT and preserve DESI exactly as the frozen spec requires."
+  ],
+  "artifacts_status_updates_needed": [
+    "After remediation, regenerate the feature card, result pack, mutation report, and artifact manifest under new hashes.",
+    "Record this FAIL envelope immutably; do not overwrite it with a later PASS.",
+    "Do not mark PR-177 complete from the current artifacts."
+  ],
+  "result_envelope": {
+    "status": "fail",
+    "verdict": "FAIL_MUST_FIX",
+    "unresolved_findings": {
+      "P0": 0,
+      "P1": 2,
+      "P2": 1
+    },
+    "nominal_tests_passed": true,
+    "scientific_terminal_accepted": false,
+    "production_files_edited": false,
+    "sibling_results_inspected": false
+  }
+}

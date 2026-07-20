@@ -1,0 +1,297 @@
+{
+  "schema_version": 2,
+  "run_id": "pr177-final-remediation2-20260720",
+  "assignment_id": "A-PR177-FINAL2-CODE",
+  "context_version": "32aed5ce4daf59ec2f3617ec3badc56e76baa61b484d012b2cafb20fc3c4ea4e",
+  "independence_mode": "adjudication",
+  "claim_ids": [
+    "C-PR177-INBAND-MODULATION"
+  ],
+  "status": "fail",
+  "verdict": "FAIL_PROVENANCE_BINDING_INCOMPLETE",
+  "summary": "The second remediation closes the prior frozen-source substitution, deep-replay FAIL/zero-stat/missing-digest, recorded-command, cache/resource/runtime/support, and coordinated-feature counterexamples. The exact 15-test lane passes, the sanitized recorded command returns ok=true, all 28 tracked mutations are killed, and nominal outputs are byte-current. One fresh P2 scientific-artifact provenance false green remains: coordinated resealing of the frozen PR-152 card hash and raw-root entries in both the feature card and deep-replay input_hashes is accepted with no validator errors. The independently reconstructed source authority and cache identity remain correct, so this review found no scientific-data substitution or claim promotion, but the mandatory input-hash provenance list is not fail-closed and PR-177 is not closeout-ready.",
+  "contract_validation": {
+    "spawn_header_matches_assignment": true,
+    "context_pack_version_matches_spawn_and_assignment": true,
+    "context_version": "32aed5ce4daf59ec2f3617ec3badc56e76baa61b484d012b2cafb20fc3c4ea4e",
+    "assignment_sha256_declared": "a2159898d38714c2666c5c67145983acf5949bddf1843091ab8516f904ff52aa",
+    "assignment_sha256_valid": true,
+    "required_input_hashes_valid": true,
+    "required_input_count": 12,
+    "allowed_prior_result_read": ".agent-harness/runs/pr177-intake-20260720/results/A-PR177-REMED-CODE.json",
+    "unlisted_sibling_results_read": false,
+    "production_or_shared_files_edited": false,
+    "declared_result_path_only": true
+  },
+  "evidence_read": [
+    {
+      "path": "docs/research_program/long_horizon_rescue/pr177_spec.yaml",
+      "sha256": "b420ddaf0b3a9d924f6eeac027e3e017141d034dcfd14d329d07c9de643e4728"
+    },
+    {
+      "path": "htt/obsstat/act_inband_modulation.py",
+      "sha256": "9e230713ffd7998ce0b4974e73223eb7b25eda3a18b26877cd3daed049b877b6"
+    },
+    {
+      "path": "scripts/act_inband_modulation_card.py",
+      "sha256": "6af042319fc2f98be0f71b008c39c2e4f910be14f52e17dfc545d3ed5ede6749"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr177_act_dr6_inband_modulation.py",
+      "sha256": "256bab970234349f643c63e02127e3089d9ec85db05d1aca63d05589e8fc9847"
+    },
+    {
+      "path": "tests/pr_cards/test_pr_177_act_dr6_in_band_kappa_off_diagonal_modulation_di.py",
+      "sha256": "e1cfd67c09d355b6ac55dcc28d351f0ec8811470a25caf5ea29692182f35a549"
+    },
+    {
+      "path": "docs/generated/pr177_act_inband_feature_card.json",
+      "sha256": "d73d6fd71dde644f50a00732b00129ee91b4bdcaa82d688a1ddb58fb3b41f832"
+    },
+    {
+      "path": "docs/generated/pr177_deep_replay_receipt.json",
+      "sha256": "c7f1e15d9119821ba72ecef5f1e822e90192abe97c2f8ff9fff9c3421ef0a7ba"
+    },
+    {
+      "path": "docs/generated/pr177_act_modulation_result.json",
+      "sha256": "92ff09ccd2611d1abadf68d57027905bc542187892bf8bdc190dbc373bc04a19"
+    },
+    {
+      "path": "docs/generated/pr177_mask_control.json",
+      "sha256": "e88db7850ecda2fa4a1a748a18f6f59d912e047cb4d44b3401f282dd4eb2d183"
+    },
+    {
+      "path": "docs/generated/pr177_mc_resolution.json",
+      "sha256": "728af1d738943ebf26bf2f6bd101176cceed945f492560bd2a8380db7bf60777"
+    },
+    {
+      "path": "docs/generated/pr177_mutation_report.json",
+      "sha256": "d9ae651602bdba24be8e44e389dcc44cfdee5dc3edf3d27eb0d3d1b469ca9d85"
+    },
+    {
+      "path": "docs/generated/pr177_artifact_manifest.json",
+      "sha256": "6be1cf5f1e2157f809ba4caed24b307615dd0e29912b873512f7ba4ed70e4b34"
+    },
+    {
+      "path": ".agent-harness/runs/pr177-intake-20260720/results/A-PR177-REMED-CODE.json",
+      "use": "allowed prior FAIL used only to identify and reproduce its exact remediation obligations"
+    }
+  ],
+  "final_code_findings": [
+    {
+      "finding_id": "F-PR177-FINAL2-CODE-001",
+      "parent_finding_id": "F-PR177-REMED-CODE-001",
+      "claim_id": "C-PR177-INBAND-MODULATION",
+      "severity": "P2",
+      "disposition": "must_fix_before_closeout",
+      "title": "Duplicated frozen-authority input hashes remain coordinated-resealable",
+      "evidence": [
+        {
+          "path": "docs/research_program/long_horizon_rescue/pr177_spec.yaml",
+          "lines": "52-61, 278-296",
+          "observation": "The spec freezes the PR-152 release-card SHA-256 and raw-record-only root and requires every artifact to carry an input-hash list."
+        },
+        {
+          "path": "scripts/codex_harness/run_pr177_act_dr6_inband_modulation.py",
+          "lines": "100-160",
+          "observation": "source_authority_errors and _expected_units_from_pr152 now correctly bind the reconstructed source bundle to the frozen small-authority hashes, embedded-manifest pin, and raw-record root."
+        },
+        {
+          "path": "scripts/codex_harness/run_pr177_act_dr6_inband_modulation.py",
+          "lines": "180-249",
+          "observation": "_deep_replay_errors validates the feature-card entry in the replay input_hashes, plus separate cache/raw-root fields, but does not compare the replay's duplicated frozen PR-152 card or embedded raw-root input_hash entries to the spec/card authority."
+        },
+        {
+          "path": "scripts/codex_harness/run_pr177_act_dr6_inband_modulation.py",
+          "lines": "251-305",
+          "observation": "validate_feature_card compares only the three local spec/module/producer entries in card.input_hashes. The frozen PR-152 card, embedded manifest, embedded raw root, acquisition, README, mask, filter, and observed-record entries are not checked as input_hash metadata."
+        }
+      ],
+      "reproduced_behavior": {
+        "method": "In memory only, change feature_card.input_hashes[docs/generated/act_raw_qe_card.json] to 64 zeros and feature_card.input_hashes[embedded:pr177_raw_records_only_root] to 64 threes; reseal the feature card. Apply the same two changes to the deep-replay input_hashes, update its feature-card byte/digest bindings, and reseal the replay. Leave input_authentication, the actual frozen source reconstruction, cache identity, unit caches, and numerical features unchanged.",
+        "validator_errors": [],
+        "accepted": true,
+        "bounded_interpretation": "provenance-metadata false green only; no source bytes, source authority reconstruction, cache identity, numerical feature, result, or claim tier was changed"
+      },
+      "impact": "A candidate feature/replay pair can declare input hashes that contradict the frozen PR-152 card and raw-root authority while passing final validation. The actual source and numerical result remain independently bound, so this is not evidence of scientific-data substitution, but it violates the required artifact provenance contract and leaves the prior review's explicit matching-input-hash remediation incomplete.",
+      "required_change": "Construct one exact expected frozen-authority input_hash mapping from the spec and authenticated source receipt. Require the feature card to contain the exact mapping, require the deep replay to carry the same frozen entries plus its exact feature-card binding, and add coordinated feature/deep provenance-entry mutations to the tracked report. Keep the independent source_authority_errors gate unchanged.",
+      "tests_to_add": [
+        "Reject a resealed feature card whose PR-152 card input_hash differs while input_authentication remains correct.",
+        "Reject a resealed feature/deep pair whose embedded raw-root input_hash differs while the separate cache/raw-root fields remain correct.",
+        "Register both coordinated provenance-entry probes in the generated mutation report."
+      ],
+      "kill_switch": "Do not mark PR-177 closeout-ready until a fresh registered review rejects coordinated frozen-authority input-hash drift."
+    }
+  ],
+  "counterexample_replay": {
+    "prior_residuals": [
+      {
+        "counterexample": "coordinated changed PR-152 card/source record and canonical raw-record-root reseal",
+        "forged_raw_root": "82e557e18a29f0b23031fae14d099360b480023d60fb289b8a73ac8535b1e11d",
+        "rejected": true,
+        "errors": [
+          "frozen small-authority hash set mismatch",
+          "frozen embedded manifest pin mismatch",
+          "frozen raw-record root mismatch"
+        ]
+      },
+      {
+        "counterexample": "deep replay process_execution_status=FAIL with outer receipt resealed",
+        "rejected": true,
+        "first_error": "deep replay process status mismatch"
+      },
+      {
+        "counterexample": "deep replay raw_payload_stat_checks=0 with outer receipt resealed",
+        "rejected": true,
+        "first_error": "deep replay raw stat-check count mismatch"
+      },
+      {
+        "counterexample": "nested deep-replay resource semantic_digest deleted with outer receipt resealed",
+        "rejected": true,
+        "first_error": "deep replay resource receipt 0: persisted resource receipt digest missing or invalid"
+      },
+      {
+        "counterexample": "recorded generating command executed from a sanitized inherited environment after replacing --write with --check",
+        "rejected_or_passed_as_expected": true,
+        "return_code": 0,
+        "result": "ok=true; delete_replicates=400; mutation_survivors=[]"
+      }
+    ],
+    "earlier_controls": [
+      {
+        "control": "coordinated feature-card and unit-cache feature reseal",
+        "rejected": true,
+        "errors": [
+          "deep replay feature-card hash mismatch",
+          "deep replay feature-card semantic digest mismatch",
+          "deep replay feature-card input binding mismatch"
+        ]
+      },
+      {
+        "control": "resealed low-disk resource receipt",
+        "rejected": true,
+        "errors": [
+          "free space is below 300 GiB",
+          "free-space flag drift"
+        ]
+      },
+      {
+        "control": "result strict-support integer_min drift from 41 to 40",
+        "rejected": true,
+        "first_error": "result result artifact strict support mismatch"
+      },
+      {
+        "control": "cache/resource/runtime/source/support/coordinated-feature tracked mutation matrix",
+        "registered": 28,
+        "executed": 28,
+        "killed": 28,
+        "survivors": []
+      }
+    ],
+    "fresh_residual": {
+      "counterexample": "coordinated feature/deep frozen-authority input_hash provenance reseal",
+      "accepted": true,
+      "validator_errors": [],
+      "finding_id": "F-PR177-FINAL2-CODE-001"
+    }
+  },
+  "test_evidence": {
+    "commands": [
+      {
+        "command": "required-input SHA-256 and context-header validation using the assignment's 12 sealed inputs",
+        "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+        "return_code": 0,
+        "result": "12/12 required input hashes match; context header matches 32aed5ce4daf59ec2f3617ec3badc56e76baa61b484d012b2cafb20fc3c4ea4e"
+      },
+      {
+        "command": "PYTHONPATH=htt OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 venv/bin/python -m pytest -q tests/pr_cards/test_pr_177_act_dr6_in_band_kappa_off_diagonal_modulation_di.py",
+        "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+        "return_code": 0,
+        "duration_seconds": 31.87,
+        "result": "15 passed"
+      },
+      {
+        "command": "bounded in-memory prior-counterexample and earlier-control replay",
+        "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+        "return_code": 0,
+        "duration_seconds": 2.5,
+        "result": "all four prior validator false greens are rejected; coordinated feature, low-disk, and support probes are rejected; one coordinated input_hash provenance false green remains"
+      },
+      {
+        "command": "env OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 MPLCONFIGDIR=/tmp/mpl-pr177 PYTHONPATH=htt venv/bin/python -B scripts/codex_harness/run_pr177_act_dr6_inband_modulation.py --check",
+        "execution_environment": "sanitized inherited environment containing only PATH and PYTHONHASHSEED before the recorded env prefix",
+        "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+        "return_code": 0,
+        "result": "ok=true; scientific_result=NO_RESOLVED_COUPLING_AT_CURRENT_MC_RESOLUTION; delete_replicates=400; mutation_survivors=[]"
+      },
+      {
+        "command": "semantic-digest and registered-mutation summary over the seven assignment-listed PR-177 JSON artifacts",
+        "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+        "return_code": 0,
+        "result": "7/7 semantic digests match; registered=28; executed=28; killed=28; survivors=[]"
+      }
+    ],
+    "nominal_byte_reproducibility": {
+      "passed": true,
+      "evidence": "The sanitized recorded --check command regenerated the nominal payloads in memory and found no stale tracked output bytes.",
+      "recorded_command_is_self_contained_on_reviewed_host": true
+    },
+    "authoritative_raw_deep_replay_rerun": false,
+    "authoritative_raw_deep_replay_rerun_reason": "The assignment is a bounded final review and the existing 64.15 GB replay receipt is sealed at c7f1e15d9119821ba72ecef5f1e822e90192abe97c2f8ff9fff9c3421ef0a7ba. This review exercised receipt validation without reopening or rehashing raw alms.",
+    "broader_repository_checks_skipped": "Repository-wide collection and smoke were outside the registered targeted final assignment."
+  },
+  "final_review_axes": {
+    "correctness": "The exact source substitution and replay completeness counterexamples are closed; the nominal statistical result rebuilds byte-exactly. One duplicated provenance mapping remains unchecked.",
+    "regressions": "The exact 15-test PR-177 lane passes and all seven listed artifacts retain valid semantic digests.",
+    "test_adequacy": "The 28 tracked mutations have no survivors, but they test source-authority objects rather than coordinated drift of duplicated frozen-authority entries in feature/deep input_hashes; two targeted mutations are still needed.",
+    "scientific_claim_hygiene": "The reviewed result stays conditional C3, public_use=false, transfer_source=none, and NO_RESOLVED_COUPLING_AT_CURRENT_MC_RESOLUTION. No raw-QE, detection, transfer, geometry, or family promotion was found.",
+    "maintainability": "Authority provenance is duplicated across source authentication, cache identity, feature input_hashes, and deep input_hashes. A single exact expected mapping should be constructed and reused to avoid future drift."
+  },
+  "artifact_observations": {
+    "feature_units": 401,
+    "deep_replay_raw_units_opened_in_existing_receipt": 401,
+    "deep_replay_raw_payloads_hashed_in_existing_receipt": 0,
+    "review_raw_payloads_opened": 0,
+    "full_ranks": {
+      "controlled": "102/401",
+      "raw": "99/401",
+      "mask_change": "398/401"
+    },
+    "all_rank_relations": "RESOLVED_ABOVE_ALPHA",
+    "nominal_scientific_result": "NO_RESOLVED_COUPLING_AT_CURRENT_MC_RESOLUTION",
+    "scientific_terminal_accepted_for_pr_closeout_by_this_review": false
+  },
+  "risks_and_kill_switches": [
+    "Preserve public_use=false and the conditional C3 claim ceiling.",
+    "Do not infer scientific-data substitution from the residual finding; the actual frozen source/root reconstruction rejected that counterexample.",
+    "Do not describe the feature/deep input_hash provenance lists as fail-closed until exact frozen mappings are validated.",
+    "Preserve the earlier FAIL envelopes and this fresh FAIL envelope as immutable evidence; a later PASS requires a new registered independent replay.",
+    "Do not mark PR-177 complete while F-PR177-FINAL2-CODE-001 remains unresolved."
+  ],
+  "artifacts_status_updates_needed": [
+    "Patch exact frozen-authority input_hash validation in the feature-card and deep-replay paths.",
+    "Add and regenerate coordinated provenance-entry mutations and affected result artifacts under new hashes.",
+    "Run a fresh registered code-remediation review without overwriting this FAIL envelope."
+  ],
+  "result_envelope": {
+    "status": "fail",
+    "verdict": "FAIL_PROVENANCE_BINDING_INCOMPLETE",
+    "unresolved_findings": {
+      "P0": 0,
+      "P1": 0,
+      "P2": 1
+    },
+    "prior_counterexamples_closed": true,
+    "nominal_tests_passed": true,
+    "nominal_byte_reproducibility_passed": true,
+    "tracked_mutations_passed": true,
+    "fresh_provenance_false_green_reproduced": true,
+    "scientific_data_substitution_reproduced": false,
+    "claim_promotion_reproduced": false,
+    "scientific_terminal_accepted": false,
+    "production_files_edited": false,
+    "sibling_results_inspected": true,
+    "sibling_results_inspected_count": 1,
+    "sibling_scope_compliant": true
+  }
+}

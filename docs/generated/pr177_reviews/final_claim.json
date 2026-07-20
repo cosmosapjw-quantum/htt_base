@@ -1,0 +1,161 @@
+{
+  "schema_version": 1,
+  "run_id": "pr177-intake-20260720",
+  "assignment_id": "A-PR177-FINAL-CLAIM",
+  "agent_type": "claim_gate_reviewer",
+  "context_version": "32aed5ce4daf59ec2f3617ec3badc56e76baa61b484d012b2cafb20fc3c4ea4e",
+  "independence_mode": "blind-results",
+  "claim_ids": [
+    "C-PR177-INBAND-MODULATION"
+  ],
+  "status": "fail",
+  "verdict": "FAIL_STRICT_SUPPORT_NOT_SELF_CONTAINED_IN_ALL_RESULT_BEARING_ARTIFACTS",
+  "summary": "Process/science separation, the internal conditional claim lane, exact baseline-plus-400 caveats, finite-ensemble terminal routing, and forbidden-promotion firewalls pass. One P1 remains: pr177_mask_control.json, pr177_mc_resolution.json, and pr177_artifact_manifest.json each emit the closed NO_RESOLVED_COUPLING_AT_CURRENT_MC_RESOLUTION scientific result but omit the strict 40 < L < 763 (integer 41..762) analysis support. A config hash supplies provenance but is not a self-contained claim boundary.",
+  "claim_findings": [
+    {
+      "finding_id": "F-PR177-FINAL-CLAIM-001",
+      "claim_id": "C-PR177-INBAND-MODULATION",
+      "severity": "P1",
+      "verdict": "fail",
+      "title": "Three result-bearing artifacts omit the preregistered strict multipole support",
+      "statement": "The frozen claim is defined only on strict 40 < L < 763, equivalently integer L=41..762. The main modulation result, input-authority receipt, and result card carry that support explicitly. The mask-control result, MC-resolution result, and artifact manifest instead carry scientific_result=NO_RESOLVED_COUPLING_AT_CURRENT_MC_RESOLUTION and scientific_status=CLOSED without an analysis_support or support field. Their shared config_hash is auditable provenance, but a consumer can extract the scientific result without learning the estimator domain. This leaves a concrete route to overgeneralizing an in-band conditional null to other multipoles.",
+      "evidence_fingerprint": "2fcce630f393c0e07213104c6d24928932fb3264c84ed5f22cfc2c0b4890405f",
+      "evidence_refs": [
+        "docs/research_program/long_horizon_rescue/pr177_spec.yaml:31-50 (claim is exact-baseline, exactly-400, strict-support conditional)",
+        "docs/research_program/long_horizon_rescue/pr177_spec.yaml:208-225 (strict support is a terminal-eligibility premise and defines the no-resolved route)",
+        "docs/research_program/long_horizon_rescue/pr177_spec.yaml:242-263 (F-PR177-SUPPORT and F-PR177-OVERCLAIM)",
+        "docs/generated/pr177_act_modulation_result.json:2-8 and 1382-1387 (support is explicit beside the scientific result)",
+        "docs/generated/pr177_result_card.json:75-81 (the result card carries strict 40 < L < 763)",
+        "docs/generated/pr177_input_authority_receipt.json:2-8 (input authority carries the strict support)",
+        "docs/generated/pr177_mask_control.json:1367-1372 (closed scientific result; no top-level analysis_support or support key)",
+        "docs/generated/pr177_mc_resolution.json:3723-3728 (closed scientific result; no top-level analysis_support or support key)",
+        "docs/generated/pr177_artifact_manifest.json:65-75 (closed scientific result and transfer metadata; no top-level analysis_support or support key)"
+      ],
+      "assumptions": [
+        "Every result-bearing artifact that can expose a scientific_result must state the estimator domain needed to interpret that result.",
+        "A SHA-256 config binding is necessary provenance but does not replace readable scope metadata in the artifact that emits the claim."
+      ],
+      "reproduction_command": "python -c \"import json; from pathlib import Path; ps=['docs/generated/pr177_act_modulation_result.json','docs/generated/pr177_mask_control.json','docs/generated/pr177_mc_resolution.json','docs/generated/pr177_result_card.json','docs/generated/pr177_artifact_manifest.json','docs/generated/pr177_input_authority_receipt.json']; [print(p, bool({'analysis_support','support'} & set(json.loads(Path(p).read_text()))), json.loads(Path(p).read_text()).get('scientific_result')) for p in ps]\"",
+      "required_remediation": [
+        "Regenerate pr177_mask_control.json, pr177_mc_resolution.json, and pr177_artifact_manifest.json with a canonical analysis_support object or equivalent support field containing inequality=40 < L < 763, integer_min=41, integer_max=762, integer_count=722, and endpoints_40_and_763_included=false.",
+        "Add a fail-closed validator and mutation that reject any PR-177 result-bearing artifact or manifest whose scientific_result is non-null but whose exact strict support is absent or drifted.",
+        "Run a fresh hash-bound claim review after regeneration; do not overwrite this FAIL envelope."
+      ]
+    }
+  ],
+  "passed_checks": [
+    {
+      "axis": "process_science_separation",
+      "verdict": "pass",
+      "evidence": "All six generated artifacts keep process_execution_status separate from scientific_result; the input-authority receipt has scientific_result=null, and result-bearing artifacts use a separately preregistered terminal. See pr177_input_authority_receipt.json:58-67, pr177_act_modulation_result.json:1300-1305 and 1382-1387, and pr177_result_card.json:36-37 and 75-81."
+    },
+    {
+      "axis": "claim_lane_and_public_scope",
+      "verdict": "pass",
+      "evidence": "Every generated artifact has claim_tier=conditional, claim_level=C3, scientific_artifact_mode=standard_internal, public_use=false, and transfer_source=none; all required metadata listed by the spec is present."
+    },
+    {
+      "axis": "exact_baseline_plus_400_scope",
+      "verdict": "pass",
+      "evidence": "All six generated artifacts repeat the caveat that ranks are conditional on the selected ACT DR6 baseline released reconstruction and exactly 400 released reconstructions; null_mock_status also states exactly_400 and conditional_exchangeability. See each artifact's caveats plus pr177_result_card.json:32-37 and 68-81."
+    },
+    {
+      "axis": "terminal_routing",
+      "verdict": "pass",
+      "evidence": "The controlled rank is 102/401 with guard [0.16944885802620666, 0.3392793215249155], raw is 99/401 with guard [0.1922761398164394, 0.30148944621847334], and mask change is 398/401 with guard [0.9815548130650192, 1.0]. All are RESOLVED_ABOVE_ALPHA, the candidate-survival flag is false, and reason=controlled_rank_resolved_above_alpha, matching the frozen no-resolved route. See pr177_result_card.json:39-69 and pr177_mask_control.json:2."
+    },
+    {
+      "axis": "forbidden_promotion",
+      "verdict": "pass",
+      "evidence": "A recursive review of every string-valued field found no affirmative raw-QE/RDN0, detection, statistical-isotropy, cosmological/primordial-anisotropy, causal-mask, transfer/native, geometry, or family claim. Occurrences are confined to negated caveats, forbidden-use lists, source filenames, and false/null metadata. The main result also sets physical_interpretation=not_evaluated and raw_qe_reproduced=false."
+    }
+  ],
+  "headline_qualification": {
+    "verdict": "safe_only_as_scoped_internal_enum",
+    "assessment": "NO_RESOLVED_COUPLING_AT_CURRENT_MC_RESOLUTION is consistent with the frozen terminal and the observed guard intervals when it is co-rendered with the exact ACT baseline, 400-release-simulation, strict-band, mask-control, and no-physical-interpretation qualifiers. It is not safe as standalone prose such as 'ACT found no coupling' and must not be used without those qualifiers. The missing strict-support metadata identified above prevents a full pass for three artifacts."
+  },
+  "allowed_language": {
+    "standalone_sentence": "Within the ACT DR6 baseline released reconstructed-kappa map and exactly 400 corresponding released reconstructed simulations, on strict integer multipoles 41 <= L <= 762, the prospectively frozen five-component quadrupolar fractional-variance diagnostic showed no resolved upper-tail departure at the current finite-ensemble rank resolution.",
+    "required_followup_sentence": "This is an internal release-simulation-conditional C3 result; joint exchangeability is assumed, the registered mask control is bounded, and no raw-QE, detection, isotropy, physical-anisotropy, transfer, native-solver, geometry, or family interpretation was evaluated.",
+    "machine_enum_policy": "The enum NO_RESOLVED_COUPLING_AT_CURRENT_MC_RESOLUTION may remain the preregistered machine terminal only when consumers also render the exact strict support, baseline-plus-400 scope, conditional tier, mask/null/covariance status, caveats, and public_use=false.",
+    "forbidden_short_forms": [
+      "ACT found no coupling",
+      "the ACT sky is isotropic",
+      "ACT rules out quadrupolar modulation",
+      "mask leakage is ruled out",
+      "the result validates the reconstruction or transfer function",
+      "the result constrains Bianchi geometry or family"
+    ]
+  },
+  "evidence_read": [
+    {
+      "path": "docs/research_program/long_horizon_rescue/pr177_spec.yaml",
+      "sha256": "8f4ce639023ff2053f324d5678758ec00babe1ddcd21aaf175ee4e40ad44c598"
+    },
+    {
+      "path": "docs/generated/pr177_act_modulation_result.json",
+      "sha256": "baf073794b4faf21b341205a587a514f1603ff333eb2943d7b19ea8be2cf4eba"
+    },
+    {
+      "path": "docs/generated/pr177_mask_control.json",
+      "sha256": "404bb4a77ea0a04c2fac6b3731fb571ab97d26b146d8a9b73c789f8a01c7f594"
+    },
+    {
+      "path": "docs/generated/pr177_mc_resolution.json",
+      "sha256": "8a89b9ebb406ca8c627b93dcaa6c59353476fb36fed0566bcf3646338848c868"
+    },
+    {
+      "path": "docs/generated/pr177_result_card.json",
+      "sha256": "1c5e07b89220b71f29117ce6880a035233b9fb5ce9487a8c1f5c4c28cd4c2414"
+    },
+    {
+      "path": "docs/generated/pr177_artifact_manifest.json",
+      "sha256": "e43bb27caa6236ac3641b36ee25d7d82dccdf9d16c0163e382bb129060d58204"
+    },
+    {
+      "path": "docs/generated/pr177_input_authority_receipt.json",
+      "sha256": "4df4e7be9d5c244a063f39c4a420eb2621fc1c36db8ad08c90e4f2e5da70825f"
+    }
+  ],
+  "skill_outputs": {
+    "skills_used": [
+      "htt-claim-lane-auditor",
+      "htt-claim-firewall"
+    ],
+    "proposed_changes": [
+      "Main writer adds exact strict-support metadata to the three named generated artifacts and regenerates their hashes and manifest.",
+      "Main writer adds a validator/mutation requiring exact support on every result-bearing PR-177 artifact."
+    ],
+    "tests_to_run": [
+      "Re-run the PR-177 writer/check workflow after remediation.",
+      "Run the top-level support audit in F-PR177-FINAL-CLAIM-001 and require true for every artifact with non-null scientific_result.",
+      "Repeat the recursive banned-language and complete required-metadata audits, then obtain a fresh independent claim-gate envelope."
+    ],
+    "risks_and_kill_switches": [
+      "Any absent or drifted 40 < L < 763 support on a result-bearing artifact blocks claim closeout.",
+      "Any standalone use of the enum without baseline-plus-400 and finite-resolution qualifiers is not approved human-facing language.",
+      "Any affirmative raw-QE, detection, isotropy, physical anisotropy, causal mask, transfer/native, geometry, or family statement blocks the result."
+    ],
+    "artifacts_status_updates_needed": [
+      "Do not mark the final claim gate passed or reuse this FAIL envelope after edits.",
+      "Preserve this result immutably and register a fresh post-remediation assignment/envelope."
+    ]
+  },
+  "tools": {
+    "python": "3.12.3",
+    "ripgrep": "14.1.0",
+    "methods": [
+      "SHA-256 verification of every required input",
+      "complete recursive string/boolean leaf audit of the three large JSON artifacts",
+      "top-level required-metadata and strict-support matrix over all six generated artifacts",
+      "targeted forbidden-language scan",
+      "terminal-rank and guard-interval cross-check"
+    ]
+  },
+  "independence_attestation": {
+    "sibling_results_read": false,
+    "production_or_shared_files_edited": false,
+    "only_registered_result_path_written": true
+  },
+  "result_path": ".agent-harness/runs/pr177-intake-20260720/results/A-PR177-FINAL-CLAIM.json"
+}

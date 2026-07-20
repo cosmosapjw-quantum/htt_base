@@ -482,7 +482,7 @@
   numerical suppression ceiling remain unidentified. The complete result is
   internal, `hypothesis_only`, and `public_use=false`.
 
-## PR-172/173 closed boundaries and PR-177 foreground
+## PR-172/173/177 closed boundaries and PR-179 foreground
 
 - PR-172 has frozen eight transform relations and seven explicit mutants in
   `pr172_spec.yaml`. Its formal replay is a terminal blocked result, not a
@@ -521,9 +521,30 @@
   the original FAIL and three stale-input ERROR envelopes remain preserved.
 - PR-151 remained non-terminal at the PR-173 end probe: 120/1000 EZmocks,
   0/25 Abacus, 10/15 audits, active `.part` and log growth, and 816.21 GiB free.
-  PR-177 is the next executable defensible card under the low-priority NVMe
-  policy. If PR-151 becomes terminal-ready, finish the atomic current card,
-  then finalize PR-151 and return to PR-155--158 before opening another card.
+- PR-177 then completed one prospectively frozen ACT DR6 baseline
+  release-simulation-conditional estimand over strict integer support 41..762.
+  Controlled, raw, and mask-change ranks are respectively `102/401`, `99/401`,
+  and `398/401`; all delete-simulation guard intervals lie wholly above 0.05.
+  The terminal is therefore
+  `NO_RESOLVED_COUPLING_AT_CURRENT_MC_RESOLUTION`, not raw-QE reproduction,
+  detection, sky-isotropy validation, physical attribution, or a family claim.
+- The PR-177 heavy lane used one low-priority sequential reader. A second
+  complete 401-unit raw-feature replay matched every cached/tracked feature and
+  performed zero raw-payload hashes. The final verifier independently binds
+  the frozen PR-152 card, ordered raw-record root, complete feature/deep input
+  maps, cache/runtime identity, resource receipts, exact support, and 400
+  delete-simulation lineage. All 30 registered consistency mutations are
+  killed.
+- Every intermediate review verdict is preserved. The final independent code
+  and claim reviews pass after earlier FAILs exposed cache/resource/runtime,
+  strict-support, mutable-authority, replay-completeness, input-map, and stale
+  delta defects. No earlier verdict is relabeled.
+- The `2026-07-20T04:34:04Z` PR-151 probe remained non-terminal with 140/1000
+  EZmock records, 0/25 Abacus, 10/15 audits, fresh log/part growth, and 821.85
+  GiB free. PR-179 is the next foreground defensible card; PR-180 remains
+  locked by PR-172's failed `requires_success` edge. If PR-151 becomes
+  terminal-ready, finish PR-179 atomically, then finalize PR-151 and run
+  PR-155--158 before opening another advocate card.
 
 ## Ownership and claim boundaries
 
@@ -548,6 +569,10 @@
 | E-PR151-SPEC | `docs/research_program/long_horizon_rescue/pr151_spec.yaml` | exact DESI support and terminal conditions |
 | E-PR151-REVIEW | `.agent-harness/runs/wave19-concrete-results-amend-20260719/results/A-W19-DESI-ARIA.json` | acquisition safety findings |
 | E-PR152-DELTA | `docs/PR_DELTAS/pr-152.md` | ACT release-simulation result and raw-QE boundary |
+| E-PR177-SPEC | `docs/research_program/long_horizon_rescue/pr177_spec.yaml` | Frozen ACT strict-band estimand and falsifiers |
+| E-PR177-RESULT | `docs/generated/pr177_act_modulation_result.json` | Exact ranks, resolution guards, and conditional terminal |
+| E-PR177-REPLAY | `docs/generated/pr177_deep_replay_receipt.json` | Complete raw-feature provenance replay without raw hashing |
+| E-PR177-REVIEWS | `docs/generated/pr177_reviews/manifest.json` | Preserved independent review history and final PASS verdicts |
 | E-PR153-DELTA | `docs/PR_DELTAS/pr-153.md` | authenticated JWST rows and observed consistency |
 | E-PR153-MANIFEST | `docs/generated/pr153_artifact_manifest.json` | source hashes and result provenance |
 | E-PR154-SPEC | `docs/research_program/long_horizon_rescue/pr154_spec.yaml` | frozen model, thresholds, and claim ceiling |

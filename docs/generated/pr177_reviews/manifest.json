@@ -1,0 +1,176 @@
+{
+  "caveats": [
+    "The intake claim FAIL is preserved and supplied the exact-support and product-scope preregistration requirements.",
+    "The first final code FAIL is preserved; it exposed cache-identity, resource-receipt, and runtime-provenance false-green paths.",
+    "The first final claim FAIL is preserved; it exposed omitted strict support on result-bearing artifacts.",
+    "The final science PASS applies only to the ACT release-simulation-conditional estimand and does not validate a physical interpretation.",
+    "The first remediation code FAIL is preserved; it exposed mutable PR-152 authority reconstruction, incomplete replay-status checks, and an incomplete recorded command.",
+    "The second code and claim FAILs are preserved; they exposed contradictory resealed PR-152 entries in feature/deep input-hash metadata and stale delta counts.",
+    "The final independent code and claim reviews pass only after exact complete authority-map reconstruction kills those residual consistency cases.",
+    "No archived verdict is relabeled by the main writer.",
+    "Copying a review does not create independent scientific evidence."
+  ],
+  "claim_id": "C-PR177-INBAND-MODULATION",
+  "claim_level": {
+    "level": "C3",
+    "scheme": "roadmap_rescue_v1"
+  },
+  "claim_tier": "conditional",
+  "config_hash": "b420ddaf0b3a9d924f6eeac027e3e017141d034dcfd14d329d07c9de643e4728",
+  "contributors": [],
+  "copy_mode": "byte_for_byte",
+  "covariance_status": "not_applicable_review_evidence",
+  "generating_command": "venv/bin/python -B scripts/codex_harness/archive_pr177_reviews.py --write",
+  "git_commit": "76675be04bafdd79b3487e9be81a03557de42ea5",
+  "implementation_scope": "obsstat",
+  "input_hashes": {
+    ".agent-harness/runs/pr177-final-remediation2-20260720/results/A-PR177-FINAL2-CLAIM.json": "f5cc3dbc3db76aa139f9f5de1b247a0c79408436d5ead27fdeece49657d8b36d",
+    ".agent-harness/runs/pr177-final-remediation2-20260720/results/A-PR177-FINAL2-CODE.json": "1cf8ec93060ac3be66106558884b4fff1b61d0230f954c7bc4370c9725602a78",
+    ".agent-harness/runs/pr177-final-remediation2-20260720/results/A-PR177-FINAL3-CLAIM.json": "33aab9727ccaaee962f3688f9ccdfa1a58adfe874f996bba041d82bc178ae230",
+    ".agent-harness/runs/pr177-final-remediation2-20260720/results/A-PR177-FINAL3-CODE.json": "4a2e97778d16ecd6a4814d8dbb5b3a089187dadc6db2f74356eb9fbf9967a333",
+    ".agent-harness/runs/pr177-intake-20260720/results/A-PR177-CLAIM.json": "5f661590a149ffa841618e57b13e899560221d075e1a04e54f6a3a56079c43d4",
+    ".agent-harness/runs/pr177-intake-20260720/results/A-PR177-FINAL-CLAIM.json": "57931fba9dc82cfd065776e12b5947e98c1ccd9bfddea111c5d4ff289135323f",
+    ".agent-harness/runs/pr177-intake-20260720/results/A-PR177-FINAL-CODE.json": "af9c5f680c1434a40ae1bf7627795134f4da0db2f6ce21a3dd69ba07a51b8ed0",
+    ".agent-harness/runs/pr177-intake-20260720/results/A-PR177-FINAL-SCIENCE.json": "ebe0884144ef274150bd632230f31c531675172b205a5d53ff98f047ae3f920b",
+    ".agent-harness/runs/pr177-intake-20260720/results/A-PR177-HARNESS.json": "9cda572218c42c97c762877dc6619c0bbf63d1c1f3b5eac5dc52441a03e8747b",
+    ".agent-harness/runs/pr177-intake-20260720/results/A-PR177-REMED-CLAIM.json": "b773abf6ddf502789f5608e51fd464d267cc648a798a7a732489407a2107ad9f",
+    ".agent-harness/runs/pr177-intake-20260720/results/A-PR177-REMED-CODE.json": "d3684b59f5cb2d595482e4c691c210a7f4589b95ec213c099b46ae5524c32b20",
+    ".agent-harness/runs/pr177-intake-20260720/results/A-PR177-STAT.json": "53a9199b5381c3abc95967272d68e760e9c8f49a6693028aaf58257b29c3588d"
+  },
+  "mask_status": "not_applicable_review_evidence",
+  "null_mock_status": "not_applicable_review_evidence",
+  "owner": "OBSSTAT",
+  "pr_id": "PR-177",
+  "public_use": false,
+  "review_count": 12,
+  "review_statuses": {
+    "final_claim": "fail",
+    "final_claim_pass": "pass",
+    "final_code": "fail",
+    "final_code_pass": "pass",
+    "final_science": "pass",
+    "first_remediation_claim_pass": "pass",
+    "first_remediation_code_fail": "fail",
+    "intake_claim": "fail",
+    "intake_harness": "pass",
+    "intake_statistics": "pass",
+    "second_final_claim_fail": "fail",
+    "second_final_code_fail": "fail"
+  },
+  "reviews": [
+    {
+      "assignment_id": "A-PR177-CLAIM",
+      "bytes": 24715,
+      "destination_path": "docs/generated/pr177_reviews/intake_claim.json",
+      "role": "intake_claim",
+      "sha256": "5f661590a149ffa841618e57b13e899560221d075e1a04e54f6a3a56079c43d4",
+      "source_path": ".agent-harness/runs/pr177-intake-20260720/results/A-PR177-CLAIM.json",
+      "status": "fail"
+    },
+    {
+      "assignment_id": "A-PR177-HARNESS",
+      "bytes": 27385,
+      "destination_path": "docs/generated/pr177_reviews/intake_harness.json",
+      "role": "intake_harness",
+      "sha256": "9cda572218c42c97c762877dc6619c0bbf63d1c1f3b5eac5dc52441a03e8747b",
+      "source_path": ".agent-harness/runs/pr177-intake-20260720/results/A-PR177-HARNESS.json",
+      "status": "pass"
+    },
+    {
+      "assignment_id": "A-PR177-STAT",
+      "bytes": 23392,
+      "destination_path": "docs/generated/pr177_reviews/intake_statistics.json",
+      "role": "intake_statistics",
+      "sha256": "53a9199b5381c3abc95967272d68e760e9c8f49a6693028aaf58257b29c3588d",
+      "source_path": ".agent-harness/runs/pr177-intake-20260720/results/A-PR177-STAT.json",
+      "status": "pass"
+    },
+    {
+      "assignment_id": "A-PR177-FINAL-CODE",
+      "bytes": 13606,
+      "destination_path": "docs/generated/pr177_reviews/final_code.json",
+      "role": "final_code",
+      "sha256": "af9c5f680c1434a40ae1bf7627795134f4da0db2f6ce21a3dd69ba07a51b8ed0",
+      "source_path": ".agent-harness/runs/pr177-intake-20260720/results/A-PR177-FINAL-CODE.json",
+      "status": "fail"
+    },
+    {
+      "assignment_id": "A-PR177-FINAL-SCIENCE",
+      "bytes": 12167,
+      "destination_path": "docs/generated/pr177_reviews/final_science.json",
+      "role": "final_science",
+      "sha256": "ebe0884144ef274150bd632230f31c531675172b205a5d53ff98f047ae3f920b",
+      "source_path": ".agent-harness/runs/pr177-intake-20260720/results/A-PR177-FINAL-SCIENCE.json",
+      "status": "pass"
+    },
+    {
+      "assignment_id": "A-PR177-FINAL-CLAIM",
+      "bytes": 12108,
+      "destination_path": "docs/generated/pr177_reviews/final_claim.json",
+      "role": "final_claim",
+      "sha256": "57931fba9dc82cfd065776e12b5947e98c1ccd9bfddea111c5d4ff289135323f",
+      "source_path": ".agent-harness/runs/pr177-intake-20260720/results/A-PR177-FINAL-CLAIM.json",
+      "status": "fail"
+    },
+    {
+      "assignment_id": "A-PR177-REMED-CODE",
+      "bytes": 22883,
+      "destination_path": "docs/generated/pr177_reviews/first_remediation_code_fail.json",
+      "role": "first_remediation_code_fail",
+      "sha256": "d3684b59f5cb2d595482e4c691c210a7f4589b95ec213c099b46ae5524c32b20",
+      "source_path": ".agent-harness/runs/pr177-intake-20260720/results/A-PR177-REMED-CODE.json",
+      "status": "fail"
+    },
+    {
+      "assignment_id": "A-PR177-REMED-CLAIM",
+      "bytes": 22081,
+      "destination_path": "docs/generated/pr177_reviews/first_remediation_claim_pass.json",
+      "role": "first_remediation_claim_pass",
+      "sha256": "b773abf6ddf502789f5608e51fd464d267cc648a798a7a732489407a2107ad9f",
+      "source_path": ".agent-harness/runs/pr177-intake-20260720/results/A-PR177-REMED-CLAIM.json",
+      "status": "pass"
+    },
+    {
+      "assignment_id": "A-PR177-FINAL2-CODE",
+      "bytes": 16976,
+      "destination_path": "docs/generated/pr177_reviews/second_final_code_fail.json",
+      "role": "second_final_code_fail",
+      "sha256": "1cf8ec93060ac3be66106558884b4fff1b61d0230f954c7bc4370c9725602a78",
+      "source_path": ".agent-harness/runs/pr177-final-remediation2-20260720/results/A-PR177-FINAL2-CODE.json",
+      "status": "fail"
+    },
+    {
+      "assignment_id": "A-PR177-FINAL2-CLAIM",
+      "bytes": 23448,
+      "destination_path": "docs/generated/pr177_reviews/second_final_claim_fail.json",
+      "role": "second_final_claim_fail",
+      "sha256": "f5cc3dbc3db76aa139f9f5de1b247a0c79408436d5ead27fdeece49657d8b36d",
+      "source_path": ".agent-harness/runs/pr177-final-remediation2-20260720/results/A-PR177-FINAL2-CLAIM.json",
+      "status": "fail"
+    },
+    {
+      "assignment_id": "A-PR177-FINAL3-CODE",
+      "bytes": 13098,
+      "destination_path": "docs/generated/pr177_reviews/final_code_pass.json",
+      "role": "final_code_pass",
+      "sha256": "4a2e97778d16ecd6a4814d8dbb5b3a089187dadc6db2f74356eb9fbf9967a333",
+      "source_path": ".agent-harness/runs/pr177-final-remediation2-20260720/results/A-PR177-FINAL3-CODE.json",
+      "status": "pass"
+    },
+    {
+      "assignment_id": "A-PR177-FINAL3-CLAIM",
+      "bytes": 11355,
+      "destination_path": "docs/generated/pr177_reviews/final_claim_pass.json",
+      "role": "final_claim_pass",
+      "sha256": "33aab9727ccaaee962f3688f9ccdfa1a58adfe874f996bba041d82bc178ae230",
+      "source_path": ".agent-harness/runs/pr177-final-remediation2-20260720/results/A-PR177-FINAL3-CLAIM.json",
+      "status": "pass"
+    }
+  ],
+  "schema": "htt.pr177.review_archive.v1",
+  "scientific_artifact_mode": "standard_internal",
+  "scientific_status": "CLOSED",
+  "sky_support_status": "not_applicable_review_evidence",
+  "transfer_source": "none",
+  "worktree_state": "76675be04bafdd79b3487e9be81a03557de42ea5+PR-177-worktree"
+}

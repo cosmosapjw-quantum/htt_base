@@ -106,6 +106,7 @@ completed:
 - PR-170
 - PR-171
 - PR-173
+- PR-177
 blocked:
 - PR-172
 pending:
@@ -117,7 +118,6 @@ pending:
 - PR-175
 - PR-176
 - PR-178
-- PR-179
 - PR-180
 - PR-181
 - PR-182
@@ -131,7 +131,7 @@ dormant_external:
 - PR-165
 - PR-166
 - PR-183
-in_progress: PR-177
+in_progress: PR-179
 background_in_progress:
 - PR-151
 background_execution_contracts:
@@ -158,6 +158,13 @@ execution_lane:
   PR-182: hypothesis_only
   PR-183: needs_native
 execution_resolutions:
+  PR-177:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-177.md
+    resolved_on: '2026-07-20'
+    scientific_status_effect: act_release_simulation_conditional_no_resolved_coupling_at_current_mc_resolution
+    scientific_status_after: NO_RESOLVED_COUPLING_AT_CURRENT_MC_RESOLUTION
+    success_dependency_satisfied: true
   PR-173:
     resolution: COMPLETED_SUCCESS
     receipt: docs/PR_DELTAS/pr-173.md

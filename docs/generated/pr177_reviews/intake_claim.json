@@ -1,0 +1,335 @@
+{
+  "schema_version": 1,
+  "run_id": "pr177-intake-20260720",
+  "assignment_id": "A-PR177-CLAIM",
+  "context_version": "32aed5ce4daf59ec2f3617ec3badc56e76baa61b484d012b2cafb20fc3c4ea4e",
+  "status": "fail",
+  "agent_type": "claim_gate_reviewer",
+  "independence_mode": "blind-results",
+  "result_path": ".agent-harness/runs/pr177-intake-20260720/results/A-PR177-CLAIM.json",
+  "claim_findings": {
+    "claim_id": "C-PR177-INBAND-MODULATION",
+    "gate_verdict": "BLOCK_PREIMPLEMENTATION_UNTIL_SCOPE_LINEAGE_AND_MASK_CONTROL_CONTRACTS_ARE_FROZEN",
+    "finding_ids": [
+      "F-PR177-CLAIM-001",
+      "F-PR177-CLAIM-002",
+      "F-PR177-CLAIM-003",
+      "F-PR177-CLAIM-004",
+      "F-PR177-CLAIM-005"
+    ],
+    "current_strongest_safe_status": "SPECIFIED_AND_OPEN_NO_SCIENTIFIC_RESULT",
+    "future_claim_ceiling_after_all_gates": "CONDITIONAL_INTERNAL_C3_ACT_RELEASE_SIMULATION_CONDITIONAL_CANDIDATE_OR_NO_RESOLVED_COUPLING",
+    "public_use": false
+  },
+  "allowed_language": {
+    "current_preimplementation": "PR-177 specifies an internal OBSSTAT diagnostic on a selected, hash-pinned ACT DR6 released reconstructed-kappa product and its corresponding released reconstructions. No PR-177 scientific result exists yet; scientific status remains OPEN.",
+    "scope_prefix_after_endpoint_fix": "For the selected, hash-pinned ACT DR6 reconstructed-kappa variant and its exactly 400 corresponding released reconstructions, evaluated with one preregistered identical observed/simulation pipeline on the exact frozen integer support 40 <= L <= 763,",
+    "candidate_branch": "the preregistered off-diagonal statistic is not reproduced by the preregistered mask-leakage control and satisfies the preregistered release-ensemble decision rule. We therefore retain ACT_RELEASE_SIMULATION_CONDITIONAL_MODULATION_CANDIDATE: a modulation candidate conditional on this exact released reconstruction, variant, mask/filter treatment, statistic, and 400-member release-simulation ensemble. This is not a detection or a physical attribution.",
+    "no_resolved_coupling_branch": "the preregistered release-ensemble comparison reports NO_RESOLVED_COUPLING_AT_CURRENT_MC_RESOLUTION. This means only that coupling is not resolved by this exact statistic and finite release ensemble; it does not establish zero coupling, statistical isotropy, or absence of a sky signal.",
+    "mc_unresolved_branch": "the preregistered decision boundary is not resolved by the current 400-member release-reconstruction ensemble, so the scientific result is NUMERICALLY_UNRESOLVED_AT_CURRENT_MC_BUDGET and neither a modulation candidate nor a null conclusion is retained.",
+    "lineage_not_certifiable_branch": "PR-177-specific replicate lineage or dependence evidence is not sufficient to authorize a numerical-resolution label. The comparison may be reported descriptively against the exact 400 released reconstructions, but the candidate/null/MC-resolution branch is NOT_CERTIFIABLE and remains blocked.",
+    "mask_control_reproduces_branch": "The preregistered mask-control construction reproduces the coupling, so the modulation-candidate branch is blocked. This is compatibility with that mask-control construction, not proof that the mask causally generated the observed statistic.",
+    "mask_control_does_not_reproduce_branch": "The coupling is not reproduced by the specified mask-control construction. This does not rule out all mask, filtering, reconstruction, foreground, or noise effects and does not validate a transfer function.",
+    "process_science_split": "The PR-177 pipeline may pass its reproducibility, identical-path, hash, metadata, and mutation gates while the scientific branch is NO_RESOLVED_COUPLING_AT_CURRENT_MC_RESOLUTION, NUMERICALLY_UNRESOLVED_AT_CURRENT_MC_BUDGET, NOT_CERTIFIABLE, or blocked by the mask control. Process PASS is not scientific validation and does not rescue or promote any physical claim.",
+    "required_qualifiers": [
+      "selected and hash-pinned reconstructed-kappa variant",
+      "exactly 400 corresponding released reconstructions",
+      "identical observed and release-simulation pipeline",
+      "exact prospectively frozen integer multipole support",
+      "conditional on the exact release ensemble and its documented dependence assumptions",
+      "internal and public_use=false",
+      "OBSSTAT-owned feature diagnostic",
+      "transfer_source=none"
+    ]
+  },
+  "result_envelope": {
+    "role_verdict": "FAIL_PREIMPLEMENTATION_REMEDIATION_REQUIRED",
+    "implementation_ready": false,
+    "science_claim_authorized": false,
+    "remediation_summary": "Resolve inclusive-versus-strict multipole endpoints explicitly, freeze one exact product variant and input set, add a PR-177-specific replicate-lineage/dependence gate before MC-resolution language, and define a mask-control claim that can block a candidate without making causal or transfer claims.",
+    "permitted_terminal_science_tokens_after_remediation": [
+      "ACT_RELEASE_SIMULATION_CONDITIONAL_MODULATION_CANDIDATE",
+      "NO_RESOLVED_COUPLING_AT_CURRENT_MC_RESOLUTION",
+      "NUMERICALLY_UNRESOLVED_AT_CURRENT_MC_BUDGET",
+      "NOT_CERTIFIABLE"
+    ]
+  },
+  "findings": [
+    {
+      "finding_id": "F-PR177-CLAIM-001",
+      "claim_id": "C-PR177-INBAND-MODULATION",
+      "severity": "P1",
+      "verdict": "BLOCK_EXACT_SUPPORT_AMBIGUOUS",
+      "statement": "The registered card repeatedly uses strict 40<L<763, while the assignment requests inclusive 40<=L<=763 and the upstream manifest stores [40,763]. For integer multipoles these are different supports. A result must not silently switch endpoints or describe either one as the validated band until a prospective PR-177 spec makes the exact integer set authoritative.",
+      "evidence": [
+        {
+          "path": "docs/codex_handoff/pr_backlog.yaml",
+          "sha256": "256cf1406cddf271d8b197dbf39e1ae1486b18f22c30e4551de40b55e2cc502d",
+          "locator": "lines 4916, 4928-4950",
+          "observation": "Target, DoD, kill switch, and claim impact use strict 40<L<763."
+        },
+        {
+          "path": "docs/generated/pr152_artifact_manifest.json",
+          "sha256": "6826b5814d7f6bb56c52514e6b8a58bec3d758db846269233135b63a59d344c4",
+          "locator": "lines 91-94",
+          "observation": "The upstream release_validated_ell_range is represented as [40,763], without endpoint-semantics text."
+        },
+        {
+          "path": ".agent-harness/runs/pr177-intake-20260720/assignments/A-PR177-CLAIM.json",
+          "sha256": "assignment_sha256:4342a2c4fc3d2c20dc12f13a0ef2fe184166406ceb6d7c77d254274859c183cd",
+          "locator": "task",
+          "observation": "The bounded audit task requests language for 40<=L<=763."
+        }
+      ],
+      "assumptions": [
+        "L is an integer multipole index.",
+        "No unlisted source may silently resolve the endpoint convention in this blind assignment."
+      ],
+      "required_fix": "Freeze the exact integer multipole set prospectively. If inclusive 40<=L<=763 is intended, record an explicit versioned supersession or correction of every strict 40<L<763 card phrase before implementation; otherwise use the strict support consistently and amend the assignment-facing language.",
+      "kill_switch": "Any endpoint drift, out-of-band mode, or post-result support change blocks every candidate/null headline.",
+      "evidence_fingerprint": "sha256:be7742a5d909ab12ef103f0bf42c015c8419ce61c160168a01d585685647a2fd"
+    },
+    {
+      "finding_id": "F-PR177-CLAIM-002",
+      "claim_id": "C-PR177-INBAND-MODULATION",
+      "severity": "P1",
+      "verdict": "BLOCK_RELEASE_WIDE_SCOPE_DRIFT",
+      "statement": "The release README defines multiple map variants and 400 simulations for each variant, but the PR card does not identify the exact variant, map, mask, filter, simulation ordering, or hashes. The strongest future claim is conditional on one exact selected product and its corresponding 400 reconstructions, never on ACT DR6 as a release-wide validation.",
+      "evidence": [
+        {
+          "path": "workdir/raw/act_dr6_lensing/dr6_lensing_release/README",
+          "sha256": "d2c045774925802c4cb5ef401e06a297823eb6e0b591799d635a42d2b3f9bdea",
+          "locator": "lines 31-96, 131-153",
+          "observation": "The release contains multiple variants, per-variant maps/masks/filters/simulations, and 400 simulations for each variant; their stated applications are limited."
+        },
+        {
+          "path": "docs/codex_handoff/pr_backlog.yaml",
+          "sha256": "256cf1406cddf271d8b197dbf39e1ae1486b18f22c30e4551de40b55e2cc502d",
+          "locator": "lines 4928-4936",
+          "observation": "The card requires exactly 400 simulations and identical pipelines but does not name a variant or exact input identity."
+        }
+      ],
+      "assumptions": [
+        "No product variant may inherit evidence from another variant merely because both are in the same release.",
+        "The README recommendation of baseline is not itself authorization to choose baseline after inspecting results."
+      ],
+      "required_fix": "Before results, freeze one exact variant and hash-pin the observed alm, ordered 400 simulation alms, mask, filter, estimator configuration, scan/trials definition, and any control inputs. Phrase every result as conditional on that exact product bundle.",
+      "kill_switch": "A missing product identity, mixed variants, reordered or replaced simulations, or any release-wide wording blocks scientific output.",
+      "evidence_fingerprint": "sha256:36c7f8f80cebc8584037f91d8c9dfc06613f0cc35866278d4a078c991b1ca2a4"
+    },
+    {
+      "finding_id": "F-PR177-CLAIM-003",
+      "claim_id": "C-PR177-INBAND-MODULATION",
+      "severity": "P1",
+      "verdict": "BLOCK_MC_RESOLUTION_LANGUAGE_WITHOUT_PR177_LINEAGE_CERTIFICATION",
+      "statement": "PR-173 explicitly marks PR173-ACT-RANK not certifiable and says numerical-resolution status is not a physical validation label. PR-152 describes the 400-member covariance as conditional on exchangeability. Therefore PR-177 may use NUMERICALLY_UNRESOLVED_AT_CURRENT_MC_BUDGET or NO_RESOLVED_COUPLING_AT_CURRENT_MC_RESOLUTION only after a PR-177-specific lineage/dependence gate authorizes that numerical interpretation; otherwise the branch is NOT_CERTIFIABLE, not MC-unresolved.",
+      "evidence": [
+        {
+          "path": "docs/generated/pr173_result_card.json",
+          "sha256": "a1dd8f9b84eeafba0161713b95e39300fbbf70f08fadec9d28d8c2aead329a09",
+          "locator": "lines 3-4, 39-40, 52-66",
+          "observation": "Numerical resolution is separated from physical validation; PR173-ACT-RANK is not certifiable although PR-173 process evidence passes."
+        },
+        {
+          "path": "docs/generated/pr152_artifact_manifest.json",
+          "sha256": "6826b5814d7f6bb56c52514e6b8a58bec3d758db846269233135b63a59d344c4",
+          "locator": "line 42",
+          "observation": "Covariance status is empirical_400_release_simulations_conditional_exchangeability."
+        }
+      ],
+      "assumptions": [
+        "A new PR-177 statistic does not automatically inherit certified iid or dependence properties from the existence of 400 files.",
+        "An exact empirical rank against 400 reconstruction files is not by itself an iid Monte Carlo standard error or confidence statement."
+      ],
+      "required_fix": "Specify the PR-177 replicate unit, simulation lineage, dependence/exchangeability assumptions, exact empirical decision rule, discrete support, and the condition that routes missing or invalid lineage to NOT_CERTIFIABLE with null numerical-resolution fields.",
+      "kill_switch": "Missing/invalid lineage, unregistered dependence, or a decision boundary finer than authorized finite-ensemble resolution blocks candidate and resolved-null language.",
+      "evidence_fingerprint": "sha256:4b122603c634030d1525f86ffdd1fb6fda88aa81198d983a48871c4b479c3079"
+    },
+    {
+      "finding_id": "F-PR177-CLAIM-004",
+      "claim_id": "C-PR177-INBAND-MODULATION",
+      "severity": "P1",
+      "verdict": "MASK_CONTROL_MAY_BLOCK_BUT_CANNOT_CAUSALLY_CLEAR_OR_ATTRIBUTE",
+      "statement": "The ACT mask was applied before the quadratic reconstruction, and the README says harmonic deconvolution is not straightforward and leaves a residual transfer in its cross-correlation use case. A PR-177 mask control can show that its specified control reproduces or does not reproduce the statistic; it cannot prove causal mask origin, rule out all mask/QE/filter leakage, or validate a transfer function.",
+      "evidence": [
+        {
+          "path": "workdir/raw/act_dr6_lensing/dr6_lensing_release/README",
+          "sha256": "d2c045774925802c4cb5ef401e06a297823eb6e0b591799d635a42d2b3f9bdea",
+          "locator": "lines 156-189",
+          "observation": "The mask precedes the quadratic estimator; harmonic treatment is not straightforward; the recommended cross-correlation procedure is approximate and has residual transfer."
+        },
+        {
+          "path": "docs/generated/pr152_artifact_manifest.json",
+          "sha256": "6826b5814d7f6bb56c52514e6b8a58bec3d758db846269233135b63a59d344c4",
+          "locator": "lines 83-84, 101-102",
+          "observation": "Raw-QE mask is not local, sky support was not independently reprocessed, and transfer_source is none."
+        },
+        {
+          "path": "docs/codex_handoff/pr_backlog.yaml",
+          "sha256": "256cf1406cddf271d8b197dbf39e1ae1486b18f22c30e4551de40b55e2cc502d",
+          "locator": "lines 4934-4936",
+          "observation": "The card correctly blocks a candidate when mask leakage reproduces the coupling."
+        }
+      ],
+      "assumptions": [
+        "The README's cross-correlation mask prescription is not automatically a validated oracle for an off-diagonal reconstructed-kappa statistic.",
+        "No local raw-QE rerun exists to isolate pre-QE mask effects."
+      ],
+      "required_fix": "Freeze a PR-177-specific mask-control construction, its negative and positive controls, matched observed/simulation treatment, and branch language limited to reproduced/not-reproduced by this control. Keep transfer_source=none.",
+      "kill_switch": "If the control reproduces the coupling, differs across observed/simulation paths, or cannot represent the registered leakage mechanism, block the modulation-candidate branch; never convert the outcome into causal mask attribution or transfer validation.",
+      "evidence_fingerprint": "sha256:1e2276442f482cef60d6e8b2758ab918c00139c1817d072d12c5c0b984f8f028"
+    },
+    {
+      "finding_id": "F-PR177-CLAIM-005",
+      "claim_id": "C-PR177-INBAND-MODULATION",
+      "severity": "P0",
+      "verdict": "ENFORCE_PROCESS_SCIENCE_SPLIT_AND_NONPROMOTION_BANS",
+      "statement": "PR-152 did not execute the configuration-locked raw-QE/RDN0 reconstruction, and its released-kappa result forbids detection, anisotropy, geometry, family, transfer, and native promotion. PR-177 is currently SPECIFIED/OPEN, conditional C3, internal, and public_use=false. A green pipeline may establish only reproducible process evidence plus one preregistered conditional terminal token; it cannot establish raw-QE reproduction, a sky detection, release-wide validation, cosmological anisotropy, transfer calibration, native-solver evidence, geometry, or family identification.",
+      "evidence": [
+        {
+          "path": "docs/PR_DELTAS/pr-152.md",
+          "sha256": "24c91381966ba41d81dac7066ae338faff9616989d67c7df419c472ef474e828",
+          "locator": "lines 29-42, 88-92",
+          "observation": "The analysed product is released reconstructed kappa; raw-QE rerun is absent; detection, anisotropy, geometry, family, and transfer promotion are disallowed."
+        },
+        {
+          "path": "docs/generated/pr152_artifact_manifest.json",
+          "sha256": "6826b5814d7f6bb56c52514e6b8a58bec3d758db846269233135b63a59d344c4",
+          "locator": "lines 30-32, 40-49, 101-102",
+          "observation": "Manifest claim tier is conditional, raw-QE is absent, forbidden uses include detection/family/native language, sky support is not independently reprocessed, and transfer_source is none."
+        },
+        {
+          "path": "docs/codex_handoff/pr_backlog.yaml",
+          "sha256": "256cf1406cddf271d8b197dbf39e1ae1486b18f22c30e4551de40b55e2cc502d",
+          "locator": "lines 4930-4958",
+          "observation": "The three proposed result branches are conditional; candidate is blocked by unresolved MC or incomplete controls; claim ceiling is conditional C3; public use is false; scientific status is OPEN."
+        }
+      ],
+      "assumptions": [
+        "OBSSTAT owns feature extraction and this diagnostic, not physical model inference or certificates.",
+        "Passing code, mutation, hash, or manifest checks is process evidence and cannot promote the scientific axis."
+      ],
+      "required_fix": "Encode orthogonal process_execution_status and scientific_result/scientific_status fields. Make all production outputs reject the banned promotion phrases and require owner=OBSSTAT, claim_tier=conditional, claim_level=C3, public_use=false, transfer_source=none, exact input/config hashes, sky/mask status, covariance/null status, caveats, generation command, and worktree state.",
+      "kill_switch": "Any raw-QE, detection, release-wide validation, cosmological anisotropy, transfer/native, geometry, family, or process-equals-science wording is a hard claim-gate failure.",
+      "evidence_fingerprint": "sha256:bc4ed80b288e5dcd2170b45f3007785f69f1d859d18dedbdde72746243a92a58"
+    }
+  ],
+  "claim_results": [
+    {
+      "claim_id": "C-PR177-INBAND-MODULATION",
+      "verdict": "FAIL_PREIMPLEMENTATION_CLAIM_CONTRACT_NOT_YET_CLOSED",
+      "owner": "obsstat",
+      "status": "SPECIFIED",
+      "scientific_status": "OPEN",
+      "evidence_type": "none",
+      "transfer_source": "none",
+      "claim_tier": "C3",
+      "claim_tier_label": "conditional",
+      "artifact_mode": "standard_internal",
+      "public_use": false,
+      "text": "Prospective ACT-release-simulation-conditional off-diagonal reconstructed-kappa modulation candidate, no-resolved-coupling result, or unresolved/not-certifiable terminal status on one exact preregistered in-band product bundle.",
+      "caveats": [
+        "No result exists before the estimator, endpoints, variant, scan, mask control, lineage/dependence, and decision rule are frozen.",
+        "Exactly 400 released reconstructions do not by themselves establish iid Monte Carlo error.",
+        "A mask-control pass is not a proof that all mask/reconstruction leakage is absent.",
+        "Released reconstructed kappa is not a locally reproduced raw-QE/RDN0 pipeline.",
+        "No detection, release-wide validation, cosmological anisotropy, transfer, native-solver, geometry, or family claim is permitted."
+      ]
+    }
+  ],
+  "forbidden_language_and_promotions": [
+    "raw-QE reproduction or RDN0 validation",
+    "ACT sky modulation detected",
+    "convergence or anisotropy detected",
+    "ACT DR6 release-wide validation",
+    "statistical isotropy proved or violated",
+    "cosmological or primordial anisotropy",
+    "mask leakage caused the signal",
+    "mask leakage ruled out",
+    "transfer function measured, calibrated, or validated by PR-177",
+    "native solver or native BASS result",
+    "Bianchi geometry detected",
+    "Bianchi family identified",
+    "process PASS implies scientific validation"
+  ],
+  "evidence_read": [
+    {
+      "path": ".agent-harness/generated/CONTEXT_PACK.md",
+      "sha256": "ae0fe330f64535a4d6f757b4a3fa3f47f63e703db401417d39811bffd847f7f2",
+      "purpose": "Tier-0 state, PR-177 foreground boundary, ownership, and nonpromotion rules"
+    },
+    {
+      "path": "docs/codex_handoff/pr_backlog.yaml",
+      "sha256": "256cf1406cddf271d8b197dbf39e1ae1486b18f22c30e4551de40b55e2cc502d",
+      "purpose": "PR-177 authoritative intake card"
+    },
+    {
+      "path": "docs/PR_DELTAS/pr-152.md",
+      "sha256": "24c91381966ba41d81dac7066ae338faff9616989d67c7df419c472ef474e828",
+      "purpose": "Upstream released-kappa result and absent raw-QE boundary"
+    },
+    {
+      "path": "docs/generated/pr152_artifact_manifest.json",
+      "sha256": "6826b5814d7f6bb56c52514e6b8a58bec3d758db846269233135b63a59d344c4",
+      "purpose": "Upstream range, mask, null, sky, transfer, and forbidden-use metadata"
+    },
+    {
+      "path": "docs/generated/pr173_result_card.json",
+      "sha256": "a1dd8f9b84eeafba0161713b95e39300fbbf70f08fadec9d28d8c2aead329a09",
+      "purpose": "Finite-ensemble status separation and ACT-rank not-certifiable state"
+    },
+    {
+      "path": "workdir/raw/act_dr6_lensing/dr6_lensing_release/README",
+      "sha256": "d2c045774925802c4cb5ef401e06a297823eb6e0b591799d635a42d2b3f9bdea",
+      "purpose": "Local release product, simulation, mask, filter, and limitation documentation"
+    }
+  ],
+  "proposed_changes": [
+    "Create the PR-177 spec before implementation and explicitly freeze inclusive 40<=L<=763 only through a versioned resolution of the current strict-inequality drift.",
+    "Freeze exact variant and byte identities for observed alm, ordered 400 reconstructed simulation alms, mask, filter, estimator, scan/trials, controls, configuration, and producer.",
+    "Add orthogonal availability, replicate-lineage/dependence, numerical-resolution, mask-control, process, and scientific-result fields with total fail-closed routing.",
+    "Encode the allowed language branches and hard-ban every raw-QE, detection, release-wide, anisotropy, transfer/native, geometry, family, and process-promotion phrase.",
+    "Require complete artifact metadata and preserve public_use=false with scientific status OPEN unless a preregistered branch is actually executed."
+  ],
+  "tests_to_run": [
+    "venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice",
+    "venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_177_act_dr6_in_band_kappa_off_diagonal_modulation_di.py",
+    "Add and execute claim mutations for strict/inclusive endpoint drift, out-of-band modes, wrong variant, 399/401 simulations, reordered/replaced simulations, observed/simulation path mismatch, forged lineage, iid-MC promotion, mask-control bypass, mask-causal wording, raw-QE wording, detection wording, release-wide wording, transfer/native wording, family wording, and process-PASS scientific promotion.",
+    "Run the repository claim-language checker on every PR-177 result card, manifest, caption, PR delta, and report consumer before closeout."
+  ],
+  "risks_and_kill_switches": [
+    "Endpoint ambiguity is a hard stop because discrete 40<L<763 and 40<=L<=763 differ.",
+    "Missing exact product/variant identity blocks any ACT-release-level statement.",
+    "Missing PR-177 lineage/dependence certification routes to NOT_CERTIFIABLE, not numerical unresolved/resolved language.",
+    "Mask-control reproduction blocks the candidate; non-reproduction does not rule out all mask/QE/filter effects.",
+    "Unresolved MC decision blocks candidate/null promotion.",
+    "Any process/science axis collapse or banned promotion is a hard closeout failure."
+  ],
+  "artifacts_status_updates_needed": [
+    "Prospective pr177_spec with endpoint, variant, estimator, scan, mask-control, lineage/dependence, decision, metadata, language, and mutation contracts",
+    "PR-177 result card with separate process_execution_status, scientific_result, scientific_status, and public_use",
+    "PR-177 artifact manifest with owner, implementation_scope, claim tier/level, transfer_source=none, exact hashes, sky/mask, covariance/null, caveats, commands, runtime, git, and worktree state",
+    "PR-177 claim-language mutation report and captions",
+    "PR delta and DAG status only after the governing gates and independent closeout review pass"
+  ],
+  "verification": {
+    "required_input_hashes": "6_of_6_match",
+    "context_version_matches_current_index": true,
+    "sibling_results_read": false,
+    "external_web_used": false,
+    "tool_versions": {
+      "python": "3.12.3",
+      "ripgrep": "14.1.0",
+      "sed": "GNU sed 4.9"
+    },
+    "reproducible_evidence_commands": [
+      "sed -n '4896,4958p' docs/codex_handoff/pr_backlog.yaml",
+      "sed -n '1,300p' docs/PR_DELTAS/pr-152.md",
+      "sed -n '1,360p' docs/generated/pr152_artifact_manifest.json",
+      "sed -n '1,300p' docs/generated/pr173_result_card.json",
+      "sed -n '1,260p' workdir/raw/act_dr6_lensing/dr6_lensing_release/README"
+    ]
+  },
+  "artifacts": [],
+  "errors": []
+}

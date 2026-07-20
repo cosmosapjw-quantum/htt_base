@@ -1,0 +1,305 @@
+schema: htt.pr177.spec.v1
+pr_id: PR-177
+title: ACT DR6 strict-in-band quadrupolar variance-modulation diagnostic
+frozen_before_result: true
+owner: OBSSTAT
+contributors: []
+implementation_scope:
+- obsstat
+claim_tier: conditional
+claim_level:
+  scheme: roadmap_rescue_v1
+  level: C3
+scientific_artifact_mode: standard_internal
+public_use: false
+transfer_source: none
+baseline_commit: 76675be04bafdd79b3487e9be81a03557de42ea5
+
+adjudication:
+  integer_support_conflict: >-
+    The canonical backlog and the user-authorized execution plan both use the
+    strict expression 40 < L < 763.  The intake assignments used an inclusive
+    paraphrase.  The canonical strict expression wins before any PR-177 score
+    is evaluated, so the exact integer support is 41 through 762 inclusive.
+  intake_findings:
+  - PR177-HARNESS-001
+  - F-PR177-CLAIM-001
+  - F-PR177-STAT-CONTRACT
+  selected_support: strict_40_lt_L_lt_763
+
+claim:
+  statement: >-
+    One prospectively frozen five-component quadrupolar fractional-variance
+    feature of the ACT DR6 baseline released reconstructed-kappa map is
+    compared with exactly 400 corresponding released reconstructed
+    simulations on the strict integer support 41 <= L <= 762.  The only
+    scientific terminals are a release-simulation-conditional modulation
+    candidate, no resolved coupling at current MC resolution, or a numerically
+    unresolved result, after the registered mask control and finite-ensemble
+    guard.
+  allowed_scientific_results:
+  - ACT_RELEASE_SIMULATION_CONDITIONAL_MODULATION_CANDIDATE
+  - NO_RESOLVED_COUPLING_AT_CURRENT_MC_RESOLUTION
+  - NUMERICALLY_UNRESOLVED_AT_CURRENT_MC_BUDGET
+  blocked_status: BLOCKED_NO_SCIENTIFIC_RESULT
+  interpretation: >-
+    The result is conditional on this exact released baseline reconstruction,
+    mask, estimator, and 400-member release ensemble.  It is neither raw-QE
+    reproduction nor a detection, physical attribution, transfer validation,
+    statistical-isotropy proof, cosmological-anisotropy result, geometry
+    result, or family identification.
+
+source_authorities:
+  pr152_artifact_manifest:
+    path: docs/generated/pr152_artifact_manifest.json
+    sha256: 6826b5814d7f6bb56c52514e6b8a58bec3d758db846269233135b63a59d344c4
+  pr152_release_card:
+    path: docs/generated/act_raw_qe_card.json
+    sha256: e94c1554ca25657b43049f70a27156d3fe1c64cfdeac1d4d28a7f67912514a60
+    embedded_ordered_manifest_sha256: dbb4b1f17f6d90b7c1bd87567585598c2b57802ee27d5dfa67f29944ea5552ce
+    raw_records_only_sha256: 63b65bfd0ef6593cbf6cfa11602f0e09a589932bfc907aeb31ecbc09a2142968
+    raw_records_digest_definition: >-
+      SHA-256 of compact sorted-key JSON containing only data_alm and
+      ordered_simulation_alms from the authenticated PR-152 release card.
+    reuse_boundary: >-
+      Reuse only the authenticated data and ordered-simulation path, size, and
+      SHA-256 records.  Do not reuse PR-152's L=2..10 configuration or cache.
+  acquisition_manifest:
+    path: workdir/raw/act_dr6_lensing/act_dr6_lensing_acquisition_manifest.json
+    sha256: 9df02e4763eff004bc082ddaac800681f849cb06b7c1ae83e8f36bdf6eb47ccf
+  release_readme:
+    path: workdir/raw/act_dr6_lensing/dr6_lensing_release/README
+    sha256: d2c045774925802c4cb5ef401e06a297823eb6e0b591799d635a42d2b3f9bdea
+
+selected_release_bundle:
+  variant: baseline
+  coordinate_frame: Equatorial
+  observed_alm:
+    path: workdir/raw/act_dr6_lensing/dr6_lensing_release/maps/baseline/kappa_alm_data_act_dr6_lensing_v1_baseline.fits
+    size_bytes: 96079680
+    sha256: caf923c0c4ef74f8e498309a948f7291ed62c5e4071756d98caaf82c58498797
+  simulations:
+    count: 400
+    ordered_ids: '0001..0400 exactly once'
+    path_pattern: /mnt/sn850x2t/htt_base_e2e/act_dr6_lensing_sims/kappa_alm_sim_act_dr6_lensing_v1_baseline_{id}.fits
+    raw_records_authority: source_authorities.pr152_release_card
+  mask:
+    path: workdir/raw/act_dr6_lensing/dr6_lensing_release/maps/baseline/mask_act_dr6_lensing_v1_healpix_nside_4096_baseline.fits
+    size_bytes: 1610619840
+    sha256: 2bca9299511222433b5db2f3bae29bbe042ba2e9a23578d603c26ad992f6f18a
+  release_filter_context:
+    path: workdir/raw/act_dr6_lensing/dr6_lensing_release/maps/baseline/kappa_filter_act_dr6_lensing_v1_baseline.txt
+    size_bytes: 34912
+    sha256: 4b343856e2ba1879e30a4e38352d3fb8bd647ae90ed611c21969958d2e2f4569
+    applied_by_pr177: false
+    role: provenance_only_already_embodied_in_released_kappa
+
+estimator:
+  id: quadrupolar_fractional_variance_real_y2_v1
+  total_exchangeable_units: 401
+  analysis_multipoles:
+    strict_lower_bound: 40
+    strict_upper_bound: 763
+    integer_min: 41
+    integer_max: 762
+    integer_count: 722
+    endpoints_40_and_763_included: false
+    hard_zero_outside: true
+  pixelization:
+    nside: 1024
+    ordering: RING
+    synthesis_lmax: 762
+    smoothing: none
+    mask_downgrade: area_average_power_0
+    mask_threshold: 0.99
+    pre_result_mask_receipt:
+      core_pixels: 2685619
+      core_fraction: 0.21343382199605307
+      mask_squared_standard_deviation: 0.0010317582034060542
+      normalized_control_design_condition_number: 8.143549140386748
+  real_y2_order:
+  - Y20
+  - sqrt2_minus1_pow1_ReY21
+  - sqrt2_minus1_pow1_ImY21
+  - sqrt2_minus1_pow2_ReY22
+  - sqrt2_minus1_pow2_ImY22
+  real_y2_cartesian:
+  - sqrt(5/(16*pi))*(3*z^2-1)
+  - sqrt(15/(4*pi))*x*z
+  - sqrt(15/(4*pi))*y*z
+  - sqrt(15/(16*pi))*(x^2-y^2)
+  - sqrt(15/(4*pi))*x*y
+  band_field: >-
+    x_u(n)=sum_{L=41}^{762} sum_M a^(u)_{LM} Y_{LM}(n), with all
+    other multipoles exactly zero.
+  variance_field: v_u(p)=x_u(p)^2
+  raw_fit: >-
+    On release-mask core pixels, equal-area least squares fits v_u to an
+    intercept plus the five centered, unit-norm real-Y2 columns.
+  controlled_fit: >-
+    On the identical pixels, equal-area least squares additionally includes
+    the centered, unit-norm nuisance s(p)=M_K(p)^2-mean_core(M_K^2).
+  fractional_vectors: >-
+    q_raw and q_controlled are the five physical-basis coefficients divided by
+    positive finite mean_core(v_u).
+  mask_change: D_u=||q_raw[u]-q_controlled[u]||_2^2
+  scan_policy: one_global_5d_score_no_orientation_component_band_mask_or_variant_scan
+
+scoring:
+  reference: observation_inclusive_leave_one_out
+  for_each_unit: other_400_units
+  covariance_denominator: 399
+  dimension: 5
+  hartlap_factor_full: 393/399
+  covariance_gate:
+    finite: true
+    symmetric: true
+    positive_definite: true
+    maximum_condition_number: 1.0e8
+    adaptive_regularization_forbidden: true
+  score: >-
+    T_u=h*(q_u-qbar_-u)^T C_-u^{-1}(q_u-qbar_-u), computed separately
+    for q_raw and q_controlled.  Every unit uses the same callable and logic.
+  permutation_equivariance_required: true
+
+rank_and_resolution:
+  tail: upper
+  tie_policy: conservative_greater_equal
+  full_rank: (1+b)/401
+  full_finite_resolution: 1/401
+  alpha: 0.05
+  delete_units: 400_release_simulation_identities
+  observed_unit_deleted: false
+  delete_replicates: 400
+  delete_rank: (1+b_minus_k)/400
+  delete_recomputation: >-
+    Unit-local q features are deletion-invariant sufficient statistics.  For
+    every deleted simulation, recompute all remaining observation-inclusive
+    leave-one-out centers, covariances, scores, and ranks from those primitive
+    features.  Reusing full-sample ensemble transforms or deleting only an
+    exceedance indicator is forbidden.
+  jackknife_standard_error: sqrt((399/400)*sum_k((p_minus_k-mean_delete_p)^2))
+  interval:
+    confidence_level: 0.95
+    distribution: student_t
+    degrees_of_freedom: 399
+    critical_value: 1.965927295920882
+    formula: clip_0_1(full_p_plus_or_minus_critical_value_times_jackknife_SE)
+  guard: expand_interval_by_1_over_401_and_clip_0_1
+  gaussian_sigma_forbidden: true
+  iid_binomial_interval_forbidden: true
+  lineage_status_on_complete_recomputation: CERTIFIED_FOR_PR177_RANK_FUNCTIONAL
+  interpretation: numerical_resolution_only_not_physical_uncertainty_or_coverage_validation
+
+mask_control:
+  primary_feature: q_controlled
+  comparison_feature: q_raw
+  nuisance: release_mask_squared_on_same_core
+  veto_score: D_u
+  candidate_requirements:
+  - controlled_guard_upper_strictly_below_alpha
+  - raw_guard_upper_strictly_below_alpha
+  - mask_change_guard_lower_strictly_above_alpha
+  scope_limit: >-
+    This registered nuisance regression and release-simulation comparison can
+    reproduce or fail to reproduce the feature under this control.  It cannot
+    prove causal mask origin, rule out all mask/filter/QE effects, or validate
+    a transfer function.
+
+terminal_routing:
+  eligibility: >-
+    Exact source identities, count, strict support, identical pipeline,
+    complete mask/covariance/null metadata, complete 400-delete lineage, and
+    finite design/covariance gates must all pass.  Integrity failure is
+    BLOCKED_NO_SCIENTIFIC_RESULT.
+  ACT_RELEASE_SIMULATION_CONDITIONAL_MODULATION_CANDIDATE: >-
+    controlled and raw guard upper endpoints are below 0.05 and the mask-change
+    guard lower endpoint is above 0.05.
+  NO_RESOLVED_COUPLING_AT_CURRENT_MC_RESOLUTION: >-
+    controlled guard lower endpoint is above 0.05; or controlled is resolved
+    below while raw or mask-change is resolved in the registered
+    non-candidate direction, with an explicit mask-control reason.
+  NUMERICALLY_UNRESOLVED_AT_CURRENT_MC_BUDGET: >-
+    An otherwise eligible controlled/raw/mask-change guard needed for routing
+    touches or crosses 0.05.
+
+resource_policy:
+  raw_workers: 1
+  sequential_reader: true
+  required_nice: 15
+  required_ionice_class: idle
+  thread_caps:
+    OMP_NUM_THREADS: 1
+    OPENBLAS_NUM_THREADS: 1
+    MKL_NUM_THREADS: 1
+  minimum_free_gib_to_start: 300
+  desi_fresh_required: true
+  collision_rule: stop_ACT_preserve_DESI
+  raw_payload_rehash_by_pr177: false
+  extraction_cache: content_addressed_atomic_per_unit
+  routine_check_opens_raw_alms: false
+  authoritative_feature_replay:
+    required_before_result_pack: true
+    raw_units_opened_sequentially: 401
+    raw_payload_rehash: false
+    purpose: reject_coordinated_feature_card_and_cache_drift
+  cache_runtime_identity:
+  - python
+  - numpy
+  - healpy
+  - harmonic_backend
+  - platform
+  - thread_environment
+
+falsifiers:
+- id: F-PR177-SUPPORT
+  condition: any mode outside 41..762 or endpoint/config drift
+- id: F-PR177-IDENTITY
+  condition: non-baseline, missing, duplicate, reordered, resized, or unauthenticated source unit
+- id: F-PR177-ASYMMETRY
+  condition: observed and simulation feature/scoring paths differ
+- id: F-PR177-MASK
+  condition: mask identity/control changes or candidate fails the frozen control
+- id: F-PR177-COVARIANCE
+  condition: design or covariance gate fails or is adaptively repaired
+- id: F-PR177-LINEAGE
+  condition: fewer than 400 full delete-simulation ensemble recomputations
+- id: F-PR177-BOUNDARY
+  condition: required guard touches or crosses alpha but a resolved terminal is emitted
+- id: F-PR177-SCAN
+  condition: post-result band, orientation, component, mask, or variant selection
+- id: F-PR177-RESOURCE
+  condition: parallel raw readers, disk gate failure, stale DESI log, or ACT kept over DESI on collision
+- id: F-PR177-OVERCLAIM
+  condition: raw-QE, detection, isotropy, cosmological anisotropy, transfer/native, geometry, or family promotion
+
+required_metadata:
+- owner
+- implementation_scope
+- claim_tier
+- claim_level
+- scientific_artifact_mode
+- public_use
+- transfer_source
+- config_hash
+- input_hashes
+- sky_support_status
+- mask_status
+- covariance_status
+- null_mock_status
+- caveats
+- generating_command
+- git_commit
+- worktree_state
+
+forbidden_claims:
+- raw-QE reproduction or RDN0 validation
+- ACT or sky detection
+- statistical isotropy proved or violated
+- cosmological or primordial anisotropy
+- causal mask attribution or mask leakage ruled out
+- transfer function measured calibrated or validated
+- native solver or native BASS result
+- affirmative geometry-identification promotion
+- affirmative family-identification promotion
+- process PASS implies scientific validation

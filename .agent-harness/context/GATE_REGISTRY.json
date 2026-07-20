@@ -192,6 +192,38 @@
       "fail_condition": "Any resealed candidate can change a registered target, uncertainty primitive, receipt, or frozen hash without rejection.",
       "owner": "main",
       "status": "pass"
+    },
+    {
+      "gate_id": "G-PR177-STRICT-INBAND-TERMINAL",
+      "spec_refs": [
+        "docs/research_program/long_horizon_rescue/pr177_spec.yaml#estimator",
+        "docs/research_program/long_horizon_rescue/pr177_spec.yaml#terminal_routing"
+      ],
+      "statement": "The ACT baseline observation and exactly 400 released reconstructions use one identical strict-41..762 feature and score pipeline with complete finite-ensemble routing.",
+      "required_evidence": [
+        "E-PR177-RESULT",
+        "E-PR177-REVIEWS"
+      ],
+      "pass_condition": "All three exact ranks, 400 delete-simulation recomputations, support/mask/covariance gates, and terminal truth-table checks pass without a scan or physical promotion.",
+      "fail_condition": "Endpoint, unit, pipeline, score, deletion-lineage, mask-control, or terminal routing drift; or any raw-QE/detection/physical attribution claim.",
+      "owner": "main",
+      "status": "pass"
+    },
+    {
+      "gate_id": "G-PR177-FROZEN-AUTHORITY-REPLAY",
+      "spec_refs": [
+        "docs/research_program/long_horizon_rescue/pr177_spec.yaml#source_authorities",
+        "docs/research_program/long_horizon_rescue/pr177_spec.yaml#resource_policy"
+      ],
+      "statement": "The result pack is rooted to frozen PR-152 source pins, exact complete provenance maps, and an independently recorded 401-unit raw-feature replay.",
+      "required_evidence": [
+        "E-PR177-REPLAY",
+        "E-PR177-REVIEWS"
+      ],
+      "pass_condition": "The replay reports exact PASS/completeness/integrity, all 401 features match, raw hashes remain zero, resource/runtime receipts validate, and all 30 registered consistency mutations are killed.",
+      "fail_condition": "Mutable source authority, failed/incomplete/unsigned replay, contradictory feature/deep input map, stale resource/runtime identity, or any surviving registered mutation.",
+      "owner": "main",
+      "status": "pass"
     }
   ]
 }

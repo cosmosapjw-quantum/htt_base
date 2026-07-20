@@ -1,0 +1,258 @@
+{
+  "schema_version": 2,
+  "run_id": "pr177-final-remediation2-20260720",
+  "assignment_id": "A-PR177-FINAL3-CODE",
+  "agent_type": "harness_engineer",
+  "context_version": "32aed5ce4daf59ec2f3617ec3badc56e76baa61b484d012b2cafb20fc3c4ea4e",
+  "independence_mode": "adjudication",
+  "claim_ids": [
+    "C-PR177-INBAND-MODULATION"
+  ],
+  "status": "pass",
+  "verdict": "PASS_SCIENTIFIC_REPRODUCIBILITY_CLOSEOUT_READY",
+  "summary": "The final bounded reproducibility adjudication passes with no unresolved P0, P1, or P2 code finding. The live feature card exactly equals the 13-entry input-hash map reconstructed from the frozen PR-152 authority, and the deep-replay receipt exactly equals that map plus its feature-card binding. Independent feature-map drift, independent replay-map drift, and the prior coordinated feature/replay PR-152-card plus raw-root reseal are all rejected. The complete source, 401-cache, deep-replay completeness, numerical-runtime, resource, strict-support, and finite-ensemble contracts remain green. The byte-current runner passes, all 30 registered mutations are executed and killed with no survivor, and the exact targeted lane passes 15 tests. This adjudication does not promote the internal ACT release-simulation-conditional C3 null result beyond its frozen claim ceiling.",
+  "contract_validation": {
+    "spawn_header_matches_assignment": true,
+    "context_pack_version_matches_spawn_and_assignment": true,
+    "context_version": "32aed5ce4daf59ec2f3617ec3badc56e76baa61b484d012b2cafb20fc3c4ea4e",
+    "assignment_sha256_declared": "c8f0e7c175fcc577098b70193233e02272573ab9db7034349a54d88014436bfa",
+    "assignment_registration_status": "registered",
+    "required_input_hashes_valid": true,
+    "required_input_count": 13,
+    "allowed_prior_results_read": [
+      ".agent-harness/runs/pr177-final-remediation2-20260720/results/A-PR177-FINAL2-CODE.json",
+      ".agent-harness/runs/pr177-final-remediation2-20260720/results/A-PR177-FINAL2-CLAIM.json"
+    ],
+    "unlisted_sibling_results_read": false,
+    "production_or_shared_files_edited": false,
+    "declared_result_path_only": true
+  },
+  "evidence_read": [
+    {
+      "path": "docs/research_program/long_horizon_rescue/pr177_spec.yaml",
+      "sha256": "b420ddaf0b3a9d924f6eeac027e3e017141d034dcfd14d329d07c9de643e4728"
+    },
+    {
+      "path": "htt/obsstat/act_inband_modulation.py",
+      "sha256": "9e230713ffd7998ce0b4974e73223eb7b25eda3a18b26877cd3daed049b877b6"
+    },
+    {
+      "path": "scripts/act_inband_modulation_card.py",
+      "sha256": "6af042319fc2f98be0f71b008c39c2e4f910be14f52e17dfc545d3ed5ede6749"
+    },
+    {
+      "path": "scripts/codex_harness/run_pr177_act_dr6_inband_modulation.py",
+      "sha256": "230ab63fe30bdce7ee516e8ac76c3c80425897a7e153dad710e7d7f705202ab7"
+    },
+    {
+      "path": "tests/pr_cards/test_pr_177_act_dr6_in_band_kappa_off_diagonal_modulation_di.py",
+      "sha256": "01b8179f43438312d7ba016e553c5a8fa8539ed93ab2252f68a72aa8f65be80a"
+    },
+    {
+      "path": "docs/PR_DELTAS/pr-177.md",
+      "sha256": "ed2730a63cbe4ac245a06589b4bc04613cf6471c92b8662e0dad707c81c5d5f0"
+    },
+    {
+      "path": "docs/generated/pr177_act_inband_feature_card.json",
+      "sha256": "d73d6fd71dde644f50a00732b00129ee91b4bdcaa82d688a1ddb58fb3b41f832"
+    },
+    {
+      "path": "docs/generated/pr177_deep_replay_receipt.json",
+      "sha256": "c7f1e15d9119821ba72ecef5f1e822e90192abe97c2f8ff9fff9c3421ef0a7ba"
+    },
+    {
+      "path": "docs/generated/pr177_act_modulation_result.json",
+      "sha256": "5c0a1ab89eb6887b13f71a5171b5b0ab23f4c1ede19a11af16fe4d546d802a61"
+    },
+    {
+      "path": "docs/generated/pr177_mask_control.json",
+      "sha256": "c1575df48c04295a8ec5208ef15d09e9e04dbd62e77a60c8e81841560d74f2e3"
+    },
+    {
+      "path": "docs/generated/pr177_mc_resolution.json",
+      "sha256": "9cea8cab00ae59b2f56c09a146bb943199f37a742d65efd1a879ed7ed36163f7"
+    },
+    {
+      "path": "docs/generated/pr177_mutation_report.json",
+      "sha256": "6b3cbc8d30a0d87ef3e6b7785a84f96151da8da421422ae7bb15bb751cf2f5e9"
+    },
+    {
+      "path": "docs/generated/pr177_artifact_manifest.json",
+      "sha256": "8c02f7cfbc5fdd1be427c3e2dcb96397b34c0a62a46dea073d6526ecab0bdc5d"
+    }
+  ],
+  "final_code_findings": [],
+  "prior_finding_adjudication": [
+    {
+      "finding_id": "F-PR177-FINAL2-CODE-001",
+      "disposition": "closed",
+      "evidence": "validate_feature_card now constructs and requires exact equality with the frozen reconstructed feature input-hash map; the prior coordinated feature/deep PR-152-card and embedded raw-root reseal returns feature-card complete input-hash map differs from frozen reconstruction."
+    },
+    {
+      "finding_id": "F-PR177-FINAL2-CLAIM-001",
+      "disposition": "closed",
+      "evidence": "The feature map is exact at 13 entries, the replay map is exact at 14 entries, independent contradictory entries are killed by registered mutations, and the coordinated contradiction is rejected by the frozen reconstruction rather than by mutual self-consistency."
+    },
+    {
+      "finding_id": "F-PR177-FINAL2-CLAIM-002",
+      "disposition": "closed",
+      "evidence": "docs/PR_DELTAS/pr-177.md now reports 30 registered mutations and 15 targeted tests, matching the sealed mutation receipt and fresh test run."
+    }
+  ],
+  "provenance_consistency_evidence": {
+    "frozen_source_reconstruction": {
+      "source_authority_errors": [],
+      "raw_records_only_sha256": "63b65bfd0ef6593cbf6cfa11602f0e09a589932bfc907aeb31ecbc09a2142968",
+      "raw_authority_units": 401,
+      "raw_payload_hashes_performed_by_review": 0,
+      "feature_input_hash_map_entries": 13,
+      "feature_input_hash_map_exact": true,
+      "feature_input_hash_map_missing": [],
+      "feature_input_hash_map_extra": [],
+      "deep_replay_input_hash_map_entries": 14,
+      "deep_replay_input_hash_map_exact": true,
+      "nominal_feature_validator_errors": []
+    },
+    "contradiction_replays": [
+      {
+        "case": "resealed feature card changes docs/generated/act_raw_qe_card.json input hash to 64 zeroes",
+        "rejected": true,
+        "first_error": "feature-card complete input-hash map differs from frozen reconstruction",
+        "registered_mutation": "change_feature_pr152_input_hash"
+      },
+      {
+        "case": "resealed deep replay changes docs/generated/act_raw_qe_card.json input hash to 64 zeroes",
+        "rejected": true,
+        "first_error": "deep replay complete input binding mismatch",
+        "registered_mutation": "deep_replay_changed_pr152_input_hash"
+      },
+      {
+        "case": "coordinated reseal changes the PR-152-card hash and embedded raw-root alias in feature and replay maps and updates their mutual byte/digest bindings",
+        "rejected": true,
+        "first_error": "feature-card complete input-hash map differs from frozen reconstruction",
+        "bounded_interpretation": "The independently reconstructed frozen authority defeats coordination; no source byte, cache feature, numerical result, or claim metadata was changed in this replay."
+      }
+    ],
+    "closed_contracts": {
+      "complete_source_authority": true,
+      "all_401_unit_cache_envelopes_and_source_rows": true,
+      "cache_identity_and_numerical_runtime": true,
+      "deep_replay_process_status_and_completeness": true,
+      "deep_replay_nested_resource_digests": true,
+      "fresh_resource_primitives_and_single_writer_policy": true,
+      "exact_strict_support_on_all_result_artifacts": true,
+      "complete_delete_simulation_lineage": true,
+      "semantic_digests_on_all_seven_assignment_listed_json_artifacts": true
+    },
+    "deep_replay_receipt": {
+      "process_execution_status": "PASS_AUTHORITATIVE_401_UNIT_FEATURE_REPLAY",
+      "raw_units_opened_in_sealed_replay": 401,
+      "raw_payload_stat_checks": 401,
+      "raw_payloads_hashed": 0,
+      "feature_units_replayed": 401,
+      "feature_mismatch_count": 0,
+      "resource_receipt_count": 1
+    },
+    "mutation_receipt": {
+      "registered_count": 30,
+      "executed_count": 30,
+      "killed_count": 30,
+      "survivors": [],
+      "process_execution_status": "PASS"
+    },
+    "evidence_refs": [
+      "scripts/codex_harness/run_pr177_act_dr6_inband_modulation.py:100-160",
+      "scripts/codex_harness/run_pr177_act_dr6_inband_modulation.py:180-249",
+      "scripts/codex_harness/run_pr177_act_dr6_inband_modulation.py:252-433",
+      "scripts/codex_harness/run_pr177_act_dr6_inband_modulation.py:647-870",
+      "tests/pr_cards/test_pr_177_act_dr6_in_band_kappa_off_diagonal_modulation_di.py:171",
+      "tests/pr_cards/test_pr_177_act_dr6_in_band_kappa_off_diagonal_modulation_di.py:272",
+      "tests/pr_cards/test_pr_177_act_dr6_in_band_kappa_off_diagonal_modulation_di.py:300",
+      "docs/generated/pr177_act_inband_feature_card.json:824",
+      "docs/generated/pr177_deep_replay_receipt.json:782",
+      "docs/generated/pr177_mutation_report.json:16",
+      "docs/PR_DELTAS/pr-177.md:75",
+      "docs/PR_DELTAS/pr-177.md:129"
+    ]
+  },
+  "test_evidence": {
+    "commands": [
+      {
+        "command": "required-input SHA-256 replay over the assignment's 13 declared inputs",
+        "return_code": 0,
+        "result": "13/13 hashes match exactly"
+      },
+      {
+        "command": "OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 MPLCONFIGDIR=/tmp/mpl-pr177 PYTHONPATH=htt venv/bin/python -m pytest -q tests/pr_cards/test_pr_177_act_dr6_in_band_kappa_off_diagonal_modulation_di.py",
+        "return_code": 0,
+        "duration_seconds": 31.57,
+        "result": "15 passed"
+      },
+      {
+        "command": "OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 MPLCONFIGDIR=/tmp/mpl-pr177 PYTHONPATH=htt venv/bin/python -B scripts/codex_harness/run_pr177_act_dr6_inband_modulation.py --check",
+        "return_code": 0,
+        "duration_seconds": 16.14,
+        "result": "ok=true; scientific_result=NO_RESOLVED_COUPLING_AT_CURRENT_MC_RESOLUTION; delete_replicates=400; mutation_survivors=[]"
+      },
+      {
+        "command": "bounded in-memory frozen-map reconstruction and independent/coordinated contradiction replay using validate_feature_card",
+        "return_code": 0,
+        "duration_seconds": 2.6,
+        "result": "nominal errors=[]; feature map exact; replay map exact; all three contradiction cases rejected"
+      }
+    ],
+    "recorded_command_sanitized_environment_check": {
+      "passed": true,
+      "evidence": "The final targeted test executes the artifact generating command with --write replaced by --check and an inherited environment restricted to PATH and PYTHONHASHSEED; it returned ok=true."
+    },
+    "nominal_byte_reproducibility": {
+      "passed": true,
+      "evidence": "The standalone runner regenerated all nominal outputs in memory and found no stale tracked artifact bytes."
+    },
+    "numerical_summary": {
+      "scientific_result": "NO_RESOLVED_COUPLING_AT_CURRENT_MC_RESOLUTION",
+      "controlled_rank": "102/401",
+      "raw_rank": "99/401",
+      "mask_change_rank": "398/401",
+      "controlled_relation": "RESOLVED_ABOVE_ALPHA",
+      "raw_relation": "RESOLVED_ABOVE_ALPHA",
+      "mask_change_relation": "RESOLVED_ABOVE_ALPHA",
+      "delete_replicates": 400,
+      "lineage_status": "CERTIFIED_FOR_PR177_RANK_FUNCTIONAL"
+    },
+    "tool_versions": {
+      "python": "3.12.3",
+      "pytest": "9.0.3",
+      "numpy": "2.5.0",
+      "healpy": "1.19.0",
+      "pyyaml": "6.0.3"
+    },
+    "authoritative_raw_deep_replay_rerun": false,
+    "authoritative_raw_deep_replay_rerun_reason": "This bounded final adjudication verifies the sealed 401-unit replay receipt and final validator without reopening the 64.15 GB raw ALM bundle. The sealed replay reports 401 sequential raw opens, zero raw hashes, and zero feature mismatches."
+  },
+  "scientific_boundary": {
+    "claim_tier": "conditional",
+    "claim_level": {
+      "scheme": "roadmap_rescue_v1",
+      "level": "C3"
+    },
+    "public_use": false,
+    "transfer_source": "none",
+    "scientific_artifact_mode": "standard_internal",
+    "accepted_terminal": "NO_RESOLVED_COUPLING_AT_CURRENT_MC_RESOLUTION",
+    "interpretation": "ACT release-simulation-conditional finite-ensemble result only; not raw-QE reproduction, detection, physical attribution, transfer validation, geometry identification, or family identification."
+  },
+  "assumptions": [
+    "The frozen PR-177 specification and its byte-pinned PR-152 authorities govern this bounded review.",
+    "The existing deep-replay receipt is accepted only through the current fail-closed validator; process PASS is not physical validation.",
+    "No broader repository, security, PR-151 acquisition, or claim-release work is authorized by this assignment."
+  ],
+  "result_envelope": {
+    "claim_id": "C-PR177-INBAND-MODULATION",
+    "status": "pass",
+    "verdict": "PASS_SCIENTIFIC_REPRODUCIBILITY_CLOSEOUT_READY",
+    "unresolved_findings": [],
+    "closeout_ready_within_assignment_scope": true,
+    "result_path": ".agent-harness/runs/pr177-final-remediation2-20260720/results/A-PR177-FINAL3-CODE.json"
+  }
+}

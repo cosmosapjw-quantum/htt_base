@@ -1,0 +1,174 @@
+{
+  "schema_version": 2,
+  "run_id": "pr177-intake-20260720",
+  "assignment_id": "A-PR177-FINAL-SCIENCE",
+  "context_version": "32aed5ce4daf59ec2f3617ec3badc56e76baa61b484d012b2cafb20fc3c4ea4e",
+  "independence_mode": "blind-results",
+  "status": "pass",
+  "claim_ids": [
+    "C-PR177-INBAND-MODULATION"
+  ],
+  "evidence_fingerprint": "7cd7c17ab05502d72979dd835d692f8c74454f98da9c6cdf8623b55902ee5fce",
+  "result_verdict": {
+    "verdict": "PASS",
+    "terminal_result_supported": true,
+    "terminal_result": "NO_RESOLVED_COUPLING_AT_CURRENT_MC_RESOLUTION",
+    "scientific_status": "CLOSED",
+    "claim_ceiling": "Internal C3 ACT baseline-release/400-release-simulation-conditional rank result only; no raw-QE reproduction, detection, physical attribution, isotropy, transfer, geometry, or family conclusion.",
+    "unresolved_p0_p1_p2": []
+  },
+  "scientific_findings": [
+    {
+      "finding_id": "PR177-FINAL-SCIENCE-SUPPORT-BASIS",
+      "claim_id": "C-PR177-INBAND-MODULATION",
+      "verdict": "PASS",
+      "severity": "none",
+      "summary": "The frozen support and real-Y2 normalization are correct.",
+      "details": [
+        "strict_integer_support returns exactly 41 through 762 inclusive: 722 integer multipoles, with 40 and 763 excluded; the feature-card cache records the same complete ordered support",
+        "strict_band_alm zero-initializes the compact alm and copies only target ell >= 41 through lmax 762",
+        "the five Cartesian real-Y2 columns match the stated Condon-Shortley combinations; independent Gauss-Legendre/azimuth quadrature gave maximum Gram-minus-identity error 1.9984014443252818e-15, maximum integral mean 7.591149930874508e-15, and maximum complex-to-real basis error 1.6653345369377348e-16"
+      ],
+      "evidence": [
+        "docs/research_program/long_horizon_rescue/pr177_spec.yaml:95-145",
+        "htt/obsstat/act_inband_modulation.py:64-104",
+        "htt/obsstat/act_inband_modulation.py:234-284",
+        "docs/generated/pr177_act_inband_feature_card.json#/analysis_support",
+        "docs/generated/pr177_act_inband_feature_card.json#/cache_identity/integer_support"
+      ]
+    },
+    {
+      "finding_id": "PR177-FINAL-SCIENCE-ESTIMATOR-SCORE",
+      "claim_id": "C-PR177-INBAND-MODULATION",
+      "verdict": "PASS",
+      "severity": "none",
+      "summary": "The fractional-variance fit, bounded mask nuisance, exchangeable LOO score, and Hartlap factor implement the frozen estimator.",
+      "details": [
+        "centering the variance and normalized design columns is algebraically equivalent to fitting an intercept; solving the joint mask-plus-Y2 Gram system and dividing the Y2 coefficients by their original norms and positive mean variance returns the physical fractional-basis coefficients",
+        "all 401 units have finite 5-vectors, positive mean core variance, exact observed-plus-sim-0001..sim-0400 ordering, and mask_change exactly equal to squared norm(q_raw-q_controlled)",
+        "the mask control is limited to centered M_K squared on the identical M_K >= 0.99 core; its design condition number is 8.143549140387146 and it is correctly not described as a causal or exhaustive systematics control",
+        "for 400 reference units and dimension 5, the unbiased sample covariance denominator is 399 and the Hartlap factor is (400-5-2)/(400-1)=393/399=0.9849624060150376",
+        "independent direct delete-one mean/covariance calculations matched every raw and controlled full-sample score to at most 5.417888360170764e-14; five random permutations matched after reindexing to 1.0302869668521453e-13"
+      ],
+      "evidence": [
+        "docs/research_program/long_horizon_rescue/pr177_spec.yaml:134-164",
+        "htt/obsstat/act_inband_modulation.py:196-232",
+        "htt/obsstat/act_inband_modulation.py:286-336",
+        "docs/generated/pr177_act_inband_feature_card.json#/mask_design",
+        "docs/generated/pr177_act_inband_feature_card.json#/units",
+        "docs/generated/pr177_act_modulation_result.json#/full_statistics"
+      ]
+    },
+    {
+      "finding_id": "PR177-FINAL-SCIENCE-RANK-RESOLUTION",
+      "claim_id": "C-PR177-INBAND-MODULATION",
+      "verdict": "PASS",
+      "severity": "none",
+      "summary": "The reported ranks and the complete 400-way delete-simulation numerical-resolution guard reproduce exactly from the pinned unit features.",
+      "details": [
+        "raw: 98 null exceedances, conservative rank 99/401=0.24688279301745636, guard [0.1922761398164394,0.30148944621847334]",
+        "controlled: 101 null exceedances, conservative rank 102/401=0.2543640897755611, guard [0.16944885802620666,0.3392793215249155]",
+        "mask change: 397 null exceedances, conservative rank 398/401=0.9925187032418953, guard [0.9815548130650192,1.0]",
+        "an independent feature-level replay removed each of sim-0001 through sim-0400, recomputed all remaining LOO transforms and ranks, and matched all 1200 reported delete ranks exactly",
+        "the independently recomputed jackknife means, extrema, standard errors, t_399 intervals, 1/401-expanded guards, and all three RESOLVED_ABOVE_ALPHA relations match every reported field exactly",
+        "this supplies the full-crossfit delete-independent-unit recomputation that PR-173 identified as required; no observed-unit deletion, iid-binomial interval, Gaussian sigma, or full-sample transform reuse is reported"
+      ],
+      "evidence": [
+        "docs/research_program/long_horizon_rescue/pr177_spec.yaml:166-192",
+        "htt/obsstat/act_inband_modulation.py:338-452",
+        "htt/obsstat/act_inband_modulation.py:454-499",
+        "docs/generated/pr177_act_modulation_result.json#/full_statistics",
+        "docs/generated/pr177_act_modulation_result.json#/resolution_certificates",
+        "docs/generated/pr177_mc_resolution.json#/delete_replicates",
+        "docs/generated/pr177_mc_resolution.json#/replicate_lineage",
+        "docs/generated/pr173_error_budget_report.json#/targets/1/certificate/required_method"
+      ]
+    },
+    {
+      "finding_id": "PR177-FINAL-SCIENCE-TERMINAL-CLAIM",
+      "claim_id": "C-PR177-INBAND-MODULATION",
+      "verdict": "PASS",
+      "severity": "none",
+      "summary": "The closed truth table selects the reported no-resolved terminal, and the artifacts preserve its conditional claim lane.",
+      "details": [
+        "an exhaustive independent replay of 54 eligibility/relation combinations found zero mismatches with terminal_result",
+        "the actual controlled guard lower endpoint 0.16944885802620666 is strictly above alpha=0.05, so the first resolved no-candidate branch applies regardless of the raw and mask-change directions",
+        "all three result artifacts agree on NO_RESOLVED_COUPLING_AT_CURRENT_MC_RESOLUTION and carry conditional C3, standard_internal, public_use=false, transfer_source=none, physical_interpretation=not_evaluated, and raw_qe_reproduced=false metadata",
+        "the minimal defensible reading is absence of a resolved high-tail value for this one frozen five-dimensional feature relative to these 400 released baseline reconstructions; it is not evidence of physical absence, isotropy, release validation, or causal mask attribution"
+      ],
+      "evidence": [
+        "docs/research_program/long_horizon_rescue/pr177_spec.yaml:194-229",
+        "docs/research_program/long_horizon_rescue/pr177_spec.yaml:270-293",
+        "htt/obsstat/act_inband_modulation.py:501-556",
+        "docs/generated/pr177_act_modulation_result.json#/scientific_result",
+        "docs/generated/pr177_act_modulation_result.json#/reason",
+        "docs/generated/pr177_mask_control.json#/scientific_result",
+        "docs/generated/pr177_mc_resolution.json#/scientific_result"
+      ]
+    }
+  ],
+  "assumptions_used": [
+    "The seven assignment inputs are the authorized evidence slice; all seven on-disk SHA-256 values matched the registered hashes.",
+    "The observed released reconstruction and 400 corresponding released reconstructions are jointly exchangeable only for this conditional empirical-rank functional; this assumption is not independently validated here.",
+    "Authenticated raw-source hashes are inherited from PR-152 and the acquisition manifest. PR-177 intentionally performs path/size checks rather than rehashing the approximately 64 GB raw payload.",
+    "The unit-local q vectors are deletion-invariant sufficient statistics for the specified finite-ensemble recomputation; the audit independently recomputed ensemble-dependent transforms from those pinned vectors.",
+    "The Student-t jackknife interval is interpreted only as the preregistered numerical-resolution guard, not as physical uncertainty or validated external coverage."
+  ],
+  "residual_risks": [
+    {
+      "risk": "Joint exchangeability of the released data and simulation reconstructions is a conditional premise, not an externally validated property.",
+      "disposition": "Accepted at the C3 internal conditional ceiling; blocks detection, physical p-value, and coverage claims."
+    },
+    {
+      "risk": "The single M_K-squared nuisance cannot exhaust mask, filter, foreground, reconstruction, or noise systematics.",
+      "disposition": "Explicitly bounded in the spec and artifacts; blocks causal mask attribution and systematics-exclusion claims."
+    },
+    {
+      "risk": "Raw alm-to-feature extraction was not independently rerun in this assignment and raw payloads were not rehashed.",
+      "disposition": "Accepted only because the assignment pins the complete feature card and inherited authentication; no raw-QE or independent-release-validation claim is made."
+    },
+    {
+      "risk": "Hartlap/Wishart and delete-jackknife coverage assumptions are not promoted to physical inference.",
+      "disposition": "The Hartlap factor is common to all units and therefore does not change within-ensemble ranks; all guarded ranks are far above 0.05, and the intervals remain numerical-resolution-only."
+    }
+  ],
+  "validation": {
+    "input_hashes_verified": true,
+    "semantic_digests_verified": {
+      "feature_card": true,
+      "result": true,
+      "mask_control": true,
+      "mc_resolution": true
+    },
+    "cross_artifact_consistency": true,
+    "independent_numeric_replay": {
+      "python": "3.12.3",
+      "numpy": "2.4.2",
+      "producer_numpy": "2.5.0",
+      "full_score_max_abs_difference": 5.417888360170764e-14,
+      "permutation_max_abs_difference": 1.0302869668521453e-13,
+      "delete_rank_max_abs_difference": 0.0,
+      "certificate_numeric_max_abs_difference": 0.0,
+      "terminal_truth_table_cases": 54,
+      "terminal_truth_table_mismatches": 0
+    },
+    "reproduction_recipe": [
+      "Load q_raw, q_controlled, and mask_change from the 401 ordered feature-card units.",
+      "For each unit i, form the other-unit mean and unbiased covariance, apply h=(N_ref-5-2)/(N_ref-1), solve the five-dimensional quadratic form, and rank unit 0 against units 1..N-1 with conservative greater-equal ties and the self count.",
+      "For each simulation k=1..400, remove k, recompute every remaining mean/covariance/score/rank from the retained primitive vectors, then apply sqrt((399/400)*sum((p_k-mean(p))^2)), t_399=1.965927295920882, and the 1/401 finite-grid expansion.",
+      "Enumerate eligibility false/true and all 3^3 controlled/raw/mask relations against the frozen terminal table."
+    ],
+    "commands_run": [
+      "python -c <registered SHA-256 verification for all seven required inputs>",
+      "python -c <independent direct and vectorized estimator/rank/delete-jackknife replay from pinned feature primitives>",
+      "rg -n <targeted evidence locators> <required inputs only>"
+    ],
+    "pytest": "not run: the assignment restricted evidence reads to the seven required inputs; the independent numerical replay exercised the assigned scientific contracts directly"
+  },
+  "result_envelope": {
+    "assignment_id": "A-PR177-FINAL-SCIENCE",
+    "context_version": "32aed5ce4daf59ec2f3617ec3badc56e76baa61b484d012b2cafb20fc3c4ea4e",
+    "status": "pass",
+    "result_path": ".agent-harness/runs/pr177-intake-20260720/results/A-PR177-FINAL-SCIENCE.json"
+  }
+}
