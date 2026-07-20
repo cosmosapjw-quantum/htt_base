@@ -1,0 +1,185 @@
+schema: htt.pr174.spec.v1
+pr_id: PR-174
+title: SW-only real-space anisotropic ray-integration mechanics (hypothesis_only)
+frozen_before_result: true
+owner: COMMON
+contributors:
+- BASS
+implementation_scope:
+- common
+claim_tier: exploratory
+claim_level:
+  scheme: roadmap_rescue_v1
+  level: C1
+scientific_artifact_mode: hypothesis_only
+public_use: false
+transfer_source: none
+baseline_commit: ef73e389b89f8ca83674ca6c7ba9c5e58ea2f909
+
+scheduling_authorization:
+  execution_authorization_at_intake: REGISTERED_NOT_SCHEDULED
+  scheduled_by: owner_explicit_selection
+  scheduled_on: '2026-07-20'
+  authorization_record: >-
+    The owner explicitly selected "PR-174 then PR-182" from the
+    hypothesis-only lane in this session's plan-approval question set
+    (recorded in the session plan and in the wave review sign-off
+    docs/audits/post_checkpoint100_wave_review_signoff_20260720.md).
+    Auto-scheduling rules (D-ADVOCATE-ORDER) are unchanged: this record
+    covers this execution only and does not reclassify the lane.
+
+claim:
+  statement: >-
+    In the Sachs-Wolfe-only approximation on a PRESCRIBED kinematic
+    diagonal Bianchi I background (an explicit differentiable scale-factor
+    triple, NOT an Einstein-equation solution), a numerical RK4 null-ray
+    energy-transport integration reproduces the independent closed-form
+    conserved-momentum solution ray by ray, and the full-sky temperature
+    pattern it induces reproduces the closed-form parity/shear quadrupole
+    prediction, within preregistered tolerances.
+  allowed_scientific_results:
+  - SW_ONLY_MECHANICS_CONSISTENT_WITH_CLOSED_FORM
+  - BLOCKED_ANALYTIC_MISMATCH_UNATTRIBUTED
+  blocked_status: BLOCKED_NO_SCIENTIFIC_RESULT
+  interpretation: >-
+    This is internal SW-only forward MECHANICS at ceiling
+    roadmap_rescue_v1:C1 in hypothesis_only mode. It is not a native or
+    external transfer, not a Boltzmann solution, not a likelihood, not an
+    observable prediction, and it registers no production consumer. An
+    analytic mismatch blocks the mechanics WITHOUT selecting which side
+    (tracer or analytic fixture) is physically correct.
+
+background_model:
+  metric: ds^2 = -dt^2 + sum_i a_i(t)^2 (dx^i)^2 (diagonal Bianchi I)
+  scale_factors: a_i(t) = (t/t0)^(2/3) * exp(beta_i(t))
+  beta_law: beta_i(t) = B_i * (t/t0)
+  B_vector: [2.0e-6, -0.5e-6, -1.5e-6]
+  trace_condition: sum_i B_i = 0 (exact in rationals of the listed decimals)
+  time_span:
+    t_emit_over_t0: 1.0e-3
+    t_obs_over_t0: 1.0
+  status: >-
+    Prescribed kinematic background for mechanics testing only. The
+    beta law is an analytic stand-in, not a Bianchi I dynamical shear
+    solution; no dynamical or cosmological claim attaches to it.
+
+tracer:
+  id: rk4_physical_momentum_transport_v1
+  state: physical momentum components q_i(t) = p_i / a_i(t)
+  ode: dq_i/dt = -H_i(t) * q_i(t), H_i = d(ln a_i)/dt (no sum)
+  integrator: classical fixed-step RK4, backward from t_obs to t_emit
+  steps_primary: 512
+  steps_convergence: [128, 256, 512]
+  initial_condition: q_i(t_obs) = n_i (unit observed direction), E_obs = 1
+  recovered_energy: E(t) = sqrt(sum_i q_i(t)^2)
+  independence: >-
+    The tracer never uses the conserved covariant momentum p_i = const;
+    it integrates the transport ODE numerically. The closed-form oracle
+    never integrates; it evaluates p_i conservation exactly.
+
+analytic_fixture:
+  id: conserved_momentum_closed_form_v1
+  ray_energy: E_emit(n) = sqrt(sum_i n_i^2 * (a_i(t_obs)/a_i(t_emit))^2)
+  temperature_map: DeltaT/T(n) = mean_inverse_redshift_normalized(E_obs/E_emit(n)) - 1
+  linear_quadrupole_prediction:
+    delta_beta_i: beta_i(t_obs) - beta_i(t_emit)
+    pattern: DeltaT/T ~= -sum_i (n_i^2 - 1/3) * delta_beta_i + O(beta^2)
+    real_harmonic_coefficients:
+      a20: -2*sqrt(pi/5) * delta_beta_z
+      a22: -2*sqrt(pi/15) * (delta_beta_x - delta_beta_y)
+      a21: 0.0
+      a2m1: 0.0
+      a2m2: 0.0
+  parity_prediction: >-
+    DeltaT/T(n) = DeltaT/T(-n) exactly (the pattern is even under point
+    reflection), so every odd-ell multipole vanishes identically.
+
+direction_grid:
+  type: gauss_legendre_costheta_times_uniform_phi
+  n_costheta: 32
+  n_phi: 64
+  projection: real spherical harmonics ell <= 4, explicit closed-form
+    polynomials (no external special-function library)
+
+preregistered_tolerances:
+  ray_level_relative_energy_error_max: 1.0e-10
+  rk4_convergence_order_window: [3.7, 4.3]
+  quadrupole_relative_match_max: 5.0e-6
+  odd_ell_relative_power_max: 1.0e-12
+  monopole_dipole_residual_relative_max: 1.0e-12
+  tolerance_change_policy: any change is a new spec version and voids results
+
+falsifier_routing:
+  SW_ONLY_MECHANICS_CONSISTENT_WITH_CLOSED_FORM: >-
+    ALL of: every sampled ray satisfies the ray-level tolerance at
+    steps_primary; the measured RK4 convergence order lies in the window;
+    recovered a2m match the linear prediction within the quadrupole
+    tolerance; odd-ell and residual monopole/dipole power satisfy the
+    parity tolerances.
+  BLOCKED_ANALYTIC_MISMATCH_UNATTRIBUTED: >-
+    ANY preregistered check fails. The terminal never states whether the
+    tracer or the analytic fixture is physically correct.
+  BLOCKED_NO_SCIENTIFIC_RESULT: integrity failure (spec hash mismatch,
+    firewall violation, grid/config drift).
+
+no_likelihood_firewall:
+  forbidden_import_substrings:
+  - likelihood
+  - posterior
+  - bayes
+  - emcee
+  - cobaya
+  - camb
+  - classy
+  - healpy
+  - bessel
+  - bass.los
+  - bass.spectrum
+  allowed_imports: [math, json, hashlib, dataclasses, typing, numpy, pathlib]
+  production_consumer_count_required: 0
+  flrw_los_bessel_mixing: forbidden
+  enforcement: >-
+    A guard test scans the module source for forbidden import substrings
+    and scans every non-test production module for imports of this module;
+    either hit is a hard failure of the card.
+
+mutation_battery:
+- id: MUT-174-ISO
+  mutation: replace anisotropic H_i by the isotropic mean H in the tracer
+  must_be_killed_by: ray-level tolerance check
+- id: MUT-174-SIGN
+  mutation: flip the sign of the transport ODE right-hand side
+  must_be_killed_by: ray-level tolerance check
+- id: MUT-174-EULER
+  mutation: downgrade RK4 to forward Euler
+  must_be_killed_by: convergence-order window check
+- id: MUT-174-PARITY
+  mutation: inject a dipole term into the temperature map
+  must_be_killed_by: odd-ell parity check
+- id: MUT-174-COEFF
+  mutation: perturb the closed-form a20 coefficient by 1 percent
+  must_be_killed_by: quadrupole match check
+- id: MUT-174-TRACE
+  mutation: break the sum_i B_i = 0 trace condition in the prediction path
+  must_be_killed_by: quadrupole match check
+
+forbidden_claims:
+- likelihood, family, or geometry claim of any kind
+- native/external transfer or Boltzmann-solution claim
+- observable prediction, detection, anisotropy, or isotropy claim
+- mixing with, or validation of, the FLRW LoS Bessel path
+- selecting the physically correct side after an analytic mismatch
+- promotion beyond roadmap_rescue_v1:C1 hypothesis_only
+
+required_metadata:
+- owner
+- implementation_scope
+- claim_tier
+- claim_level
+- scientific_artifact_mode
+- public_use
+- transfer_source
+- config_hash
+- spec_sha256
+- generating_command
+- git_commit
