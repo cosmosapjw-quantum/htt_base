@@ -7,6 +7,59 @@
 
 ## [Unreleased]
 
+### Post-v10 strengthening wave intake + PR-185/186 (rev-r252, 2026-07-21)
+
+External-audit response. The hostile-referee package
+(`htt_post_v10_strengthening_plan_20260721/`, H01–H24, 10 P0 + 14 P1)
+proposed a strengthening roadmap PR-185…PR-208 (Waves 28–34) with strict
+per-card pass/fail gates. Owner directive: execute the PR-151-parallel
+subset under those gates. PR-151 is the only survey lane gated on the
+DESI acquisition (PR-203); Wave 28 + the math/stats spine are
+survey-data-independent.
+
+**Formal DAG intake** (b8efb2de): all 24 cards registered atomically
+(total 155). Cards generated from the audit gate matrix (sha-pinned in
+`docs/generated/pr185_strengthen_intake_receipt.json`) so card and
+validator cannot drift; `validate_pr_dag` gains a STRENGTHEN slice
+(pins deps/lane/activation/authorization + typed edges + four-axis CAS
+contract for R3-CAS cards; atomic-or-none; count 131→155). Scheduled
+now: {185,186,187,188,189,197,200}; the rest registered-not-scheduled
+(196 native-blocked, 203 gated on PR-151 terminal). Every card enters
+OPEN / spec-first / public_use=false; external novelty is a separate
+axis, never downgraded by an internal blocker.
+
+**PR-185 — dual-axis SSoT + promotion engine** (983c15fa; R1; H23/H24).
+`htt/src/common/dual_axis_claim_state.py` holds two axes that never
+collapse to one ordinal: `novelty_tier_external` (K/C/P/S, literature
+delta only) and `readiness_state` (8-state lifecycle). publication_use
+opens only conjunctively (six gates + VALIDATED + signed independent
+author≠adjudicator non-stale receipt). Sealed gate battery: v10
+external-novelty ledger migrates diff-0 (62/62); all 4×8=32 (novelty,
+readiness) combos legal incl. S+OPEN and P+VALIDATED; 100/100
+publication mutations rejected; author=adjudicator / fabricated /
+circular-parent / stale-gate / OPEN→VALIDATED-jump all killed. 7 gate
+tests. EVIDENCE_READY, Independence gate OPEN.
+
+**PR-186 — W² convention repair (the confirmed H01 drift)** (837e8c1d;
+R3-CAS; H01). The referee found the v10 report displayed
+W²=ω_aω^a/H² while the live comparator/MES code + frozen
+parent-identity seal register ω_abω^ab/(6H²)=ω_aω^a/(3H²) — **exactly
+3×**. Confirmed and fixed. Theorem two independent lineages: numerical
+(10⁵ random antisymmetric tensors, ω_abω^ab=2ω_aω^a to 1.4e-14) + exact
+sympy (registered form, ratio-3, ceiling W²≤3B²/2 with Θ=3H); blind
+four-axis CAS recorded CAS_BLOCKED (elementary, doubly derived;
+PR-170 precedent). v10 builder display corrected + report regenerated
+(--check byte-stable); active-source scanner (historical/frozen
+allowlist) returns 0 hits; frozen MES vorticity ceiling
+W2_max=3.3789e-13 **byte-identical** (code always used 6H² — only the
+display moved). 7 gate tests. EVIDENCE_READY, Independence gate OPEN.
+Third PR-120 quarantine resync after the v10 regen (ok=True, 3931
+scanned); the audit input pack gitignored per the input-drop
+convention. PR-151 undisturbed (350/1000, running). Remaining
+scheduled cards (187 frame/type, 188 hermetic build, 189/197/200/192)
+continue next session; per roadmap §10.2 no new comparator number is
+authoritative until PR-187 passes.
+
 ### v10 revision 3 — full post-PR-119 output completeness (rev-r251, 2026-07-21)
 
 Owner directive: every discovery/proof/analysis/plot produced since
