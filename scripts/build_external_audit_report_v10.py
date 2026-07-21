@@ -62,6 +62,7 @@ REQUIRED_ARTIFACTS = [
     "docs/generated/pr131_coefficients.json",
     "docs/generated/pr175_result_card.json",
     "docs/generated/v10_report_figure_manifest.json",
+    "docs/generated/report_data_analysis_figure_pack.json",
     "docs/audits/v10_web_crag_20260721/tier_evidence.json",
 ]
 
@@ -96,8 +97,17 @@ CARRIED_FIGURES = [
     ("figures/current", "fig_egs3_u1_beta_channel"),
     ("figures/current", "fig_egs3_u2_fingerprint_ceilings"),
     ("figures/current", "fig_egs3_e_im_coverage"),
+    ("figures/current", "fig_egs3_e_refutability_power"),
+    ("figures/current", "fig_egs3_f_shear_memory_bias"),
+    ("figures/current", "fig_egs3_d_joint_forecast"),
+    ("figures/current", "fig_egs3_u4v9_teff_im_coverage"),
     ("figures/validation", "flrw_lowell_dell_camb_bass_lmax30"),
 ]
+
+# The v9-era current-data quicklook pack: 20 sidecar-manifested
+# data-analysis figures, carried with their pack captions (the pack
+# JSON is the caption authority; captions verified token-clean).
+DATA_PACK_JSON = "docs/generated/report_data_analysis_figure_pack.json"
 
 
 def _load(rel: str) -> dict:
@@ -524,6 +534,10 @@ Under exchangeability the rank of $S_0$ among the $N{+}1$ values is
 uniform on $\{1,\dots,N{+}1\}$ up to ties, and ties only increase $p$.
 Then $\mathbb P(p \le k/(N{+}1)) = k/(N{+}1)$ for integer $k$, giving
 validity on the discrete support; $p \ge 1/(N+1)$ by construction.
+Super-uniformity is verified by exact enumeration with the actual
+estimator, and a deliberately anti-conservative $b/N$ negative
+control over-rejects (2.2\% at a sub-resolution level where the
+correct estimator rejects nothing), demonstrating the gate is live.
 \end{proof}
 
 \begin{corollary}[Look-elsewhere pooling \tier{P}]
@@ -686,6 +700,42 @@ Integrating-factor identity; the memory kernel makes any depth
 contrast dependent on the full source history between bins.
 \end{proof}
 
+\begin{proposition}[Refutability power \tier{K}]
+\label{prop:power}
+For the registered fingerprint statistics with estimated covariance,
+the power of the level-$\alpha$ test against a fixed alternative is
+the noncentral-$\chi^2$ (respectively noncentral-$F$) exceedance at
+noncentrality $\lambda = \Delta^{\mathsf T}\Sigma^{-1}\Delta$, so the
+refutable region of alternative space is characterized exactly before
+any data are taken.
+\end{proposition}
+\begin{proof}
+Under a Gaussian sampling model the quadratic statistic at a shifted
+mean is distributed as noncentral $\chi^2$ with the displayed
+noncentrality; with estimated covariance the Hotelling correction
+maps it to noncentral $F$. Power is the upper-tail probability at the
+level-$\alpha$ critical value; monotonicity in $\lambda$ makes the
+refutable region a superlevel set. (Carried figure
+\code{fig\_egs3\_e\_refutability\_power}.)
+\end{proof}
+
+\begin{proposition}[Shear-memory sensitivity \tier{K}]
+\label{prop:shearmem}
+When the registered covariance response retains a nonzero off-diagonal
+coefficient between the shear history and trace-free anisotropic
+stress, omitting that coefficient loses identified sensitivity to the
+stress history; the correct conclusion of a zero or unregistered
+coefficient is loss of sensitivity, never a zero-stress conclusion.
+\end{proposition}
+\begin{proof}
+The off-diagonal response is the derivative of the shear observable
+with respect to the stress amplitude; setting it to zero removes the
+stress direction from the row space, so by the null-space clause of
+Theorem~\ref{thm:idset} that direction becomes unidentified rather
+than measured-zero. (Carried figure
+\code{fig\_egs3\_f\_shear\_memory\_bias}.)
+\end{proof}
+
 \subsection{Partial identification and coverage}
 
 \begin{proposition}[Interval coverage at the least favorable point
@@ -707,8 +757,11 @@ The IM interval widens the naive union of one-sided intervals by the
 factor solving $\Phi(C + \Delta/\hat\sigma) - \Phi(-C) = 1-\alpha$,
 which is exactly the least-favorable-endpoint condition. Family-wise
 validity over a finite grid follows from the union bound; exactness
-of the per-point statement is Clopper--Pearson. Mesh refinement bounds
-the grid-conditional gap.
+of the per-point statement is Clopper--Pearson. On the registered
+nine-point grid the certified simultaneous lower bound is $99\%$
+(per-point $0.99889$), the minimum measured coverage at the extended
+near-boundary points is $0.9402$, and two-mesh refinement changes the
+worst case by $0.0006$, bounding the grid-conditional gap.
 \end{proof}
 
 \subsection{Dependence-aware validation and model comparison}
@@ -749,7 +802,12 @@ d\beta$ follows by differentiating $\log Z_\beta$; the
 Meng--Wong bridge identity \cite{MengWong1996} is an importance-sampling equality valid
 for any bridge function with overlapping support. Agreement of two
 independent stochastic engines with the closed form to the stated
-tolerance is recorded in the sealed artifacts.
+tolerance is recorded in the sealed artifacts: exact
+$\log\mathrm{BF}_{10} = 1.6125$ on the registered system, engine gap
+$0.0048$, per-engine deviation below $10^{-3}$; an under-resolved
+temperature ladder is demonstrated to disagree (gap $0.50$) and is
+classified indeterminate, and a wide prior-sensitivity sweep
+(swing $4.43$ above the ceiling $4$) is demonstrated refused.
 \end{proof}
 
 \begin{proposition}[Abstention-gated source discrimination \tier{P}]
@@ -777,7 +835,14 @@ difference), so gate (ii) forces abstention; for superpositions the
 combined model's evidence exceeds the best single model by the
 positive gap of the omitted component, again forcing abstention; for
 the null the measured size over seeds bounds the false-candidate
-rate. The battery and its referee scoring are sealed as artifacts.
+rate. On the twelve-cell synthetic matrix the protocol recovers the
+planted local, systematic, and global sources in the clean cells,
+abstains as non-identified on the collinear local/systematic cells
+and on strong superpositions (combined-model gain 14--25), and
+abstains as inadequate on the outlier cell (posterior predictive
+$p \sim 5\times10^{-4}$) and as prior-sensitive on the marginal
+wide-prior cell. The battery and its referee scoring are sealed as
+artifacts.
 \end{proof}
 
 \subsection{Calibration of the diagnostic measures \tier{P}}
@@ -1042,7 +1107,12 @@ For the anisotropic-model polarization hierarchy of
 \cite{PontzenChallinor2007}: (i) the $m=0$ sector admits a parity
 involution under which mirror-fixed configurations have exactly zero
 $B$-mode; (ii) the reflection $\mathrm{diag}(1,1,-1)$ flips the sign
-of the $TB$ and $EB$ cross-spectra; (iii) consequently the ratio
+of the $TB$ and $EB$ cross-spectra; (iii) the type-VII$_h$
+structure-tensor orientation reverses sign under the same reflection,
+so the mirror pair is realized inside the classification; (iv) the
+boost kernel $\sqrt{1-\beta^2}/(1-\beta\mu)$ has $\mu$-only
+coefficients, so boosting cannot manufacture a handedness signal;
+(v) consequently the ratio
 $EB/TB$ is parity-\emph{even} and cannot encode spatial handedness;
 any handedness test must use signed components against a registered
 signed template. All four underlying identities are verified exactly
@@ -1202,6 +1272,33 @@ equivalent to Definition~\ref{def:g}; its value is that null sectors
 appear as unreachable eigendirections of the response map.
 \end{proof}
 
+\begin{proposition}[Tilt relaxation is class-conditional
+\tier{K}/\tier{C}; exploratory tier]
+\label{prop:tilt}
+(i) For the flat-RW, non-interacting, constant-equation-of-state tilt
+equation the tilt relaxes on the restricted $w < 1/3$ branch.
+(ii) The registered near-FLRW two-fluid drag matrix has exact trace
+$-25/12$ and determinant $5/6$, so that frozen local linear class is
+stable, while a generic two-component negative control has determinant
+zero and retains a persistent mode. (iii) No blanket tilt-decay law
+holds: the published tilted Bianchi~VIII asymptotics
+\cite{ColeyHervik2005} contain, at the registered admissible fixture
+$\gamma = 5/4$ ($w = 1/4$, no interaction), solutions with generic
+extreme-tilt behaviour. A generic suppression ceiling is therefore not
+identified.
+\end{proposition}
+\begin{proof}
+(i) is the standard relaxation analysis of the published tilt
+equation on its restricted branch. (ii) is exact linear algebra on
+the registered drag matrix, verified blind by four independent
+computer-algebra engines under a sealed contract (the negative
+control's zero determinant exhibits the persistent mode explicitly).
+(iii) is source evidence: the externally published extreme-tilt
+asymptotics interval contains the registered fixture, which retires
+any blanket decay claim on that domain; it is not an instability
+theorem, and the nonlinear/dark-sector closures remain open.
+\end{proof}
+
 \subsection{Auxiliary exact results}
 
 \begin{proposition}[Premise-complete axisymmetric $B$-projector zero
@@ -1216,8 +1313,9 @@ output confined to the corresponding $m$ channel.
 Selection rules: an axisymmetric parity-even source couples only to
 $m = 0$ parity-even multipoles, which the $B$ projector annihilates;
 a premise-violating $B_{2,\pm2}$ input lies in the projector's range
-and appears only in its own $m$ channel. Both directions are verified
-bit-exactly on the registered fixtures.
+and appears only in its own $m$ channel (registered fixture value
+$0.006921858926603516$, bit-exact, confined to the $m = -2$ channel).
+Both directions are verified bit-exactly on the registered fixtures.
 \end{proof}
 
 \begin{proposition}[Unsigned comparator leakage bound \tier{K}]
@@ -1410,8 +1508,9 @@ versus a noise-only formal @CF4_NOISE_SIG@$\sigma$ --- the deflation,
 not the formal number, is the scientific content, and it parallels the
 simulation-based uncertainty-underestimation finding of
 \cite{Whitford2023} while being derived analytically. Injection tests
-cover at nominal rates with the full covariance and under-cover
-severely without it. The published minimum-variance amplitude
+cover at nominal rates with the full covariance (68\%/95\% bands)
+while noise-only covariance under-covers at ${\sim}0.35$ empirical
+coverage. The published minimum-variance amplitude
 \cite{Watkins2023} is reproduced by the programme's implementation of
 that estimator at the few-percent level with apex agreement to
 $8.5^\circ$ at the inner depth; its amplitude significance is
@@ -1433,7 +1532,14 @@ cannot alias into the flow):
 \end{center}
 
 Every shell is bounded; the widening with depth is the honest
-identification statement. A set containing a given value is never a
+identification statement. A mis-specification diagnostic shows that
+OMITTING the monopole manufactures an artificial unbounded set
+topology, and a plausible unbounded calibration prior indeed yields
+an unbounded classification --- so the bounded-widening result is not
+an artifact of the box construction. Genuine simultaneous coverage
+(one shared realization scored jointly across shells,
+Imbens--Manski-widened) is $0.913$ with the per-shell Rice-bias
+undershoot at depth disclosed. A set containing a given value is never a
 point estimate, and no tension statement is made from these sets.
 No published peculiar-velocity analysis known to us reports
 nuisance-robust identified sets (Section~\ref{sec:tiers});
@@ -1457,8 +1563,13 @@ FFT-based reference generator confirming the variance normalization)
 measures coverage degradation under four genuine stressors (lognormal
 distance errors, nonlinear scatter, magnitude-limited selection with
 unmodeled Malmquist bias, unmodeled intra-group dispersion); the
-degraded coverages are reported, not hidden, and calibrate how far
-idealized error bars can be trusted.
+idealized configuration covers at nominal, the noise-only
+configuration under-covers, and the stressors degrade the
+radial-monopole coverage to $0.26/0.58/0.46$ --- reported, not
+hidden, calibrating how far idealized error bars can be trusted. The
+effective mode count (${\sim}82$ modes for 800 groups) is carried so
+same-box regions are never treated as independent, and the covariance
+itself carries its estimation uncertainty.
 
 \paragraph{Reconstruction-method dependence (design lane).}
 Comparing reconstruction treatments on identical catalogue support is
@@ -1480,7 +1591,10 @@ directional relation). The cubic-falsifier canonical correlation
 between the $q$-block and the selection response is
 @Q_CC_LO@--@Q_CC_HI@ $> 0.95$ in every fold, so \emph{all} $q$-level
 results are withheld. The $H$-block passes identifiability in all
-folds and its exact rank under the matched exchangeable null is
+folds; the measured catalogue log-distance dipole has amplitude
+$0.0223$ with positive axis at J2000
+$(\alpha, \delta) = (186.1^\circ, -69.6^\circ)$, and its exact rank
+under the matched exchangeable null is
 @H_RANK_FRAC@ (scaled estimate @H_RANK_EST@, guard interval
 [@H_GUARD_LO@, @H_GUARD_HI@]) --- \emph{conditional on unresolved
 selection systematics}, and therefore not a detection. This
@@ -1512,11 +1626,19 @@ amplitude is clustering-consistent ($p = $ @DESI_P15@ at bias 1.5,
 robust across bias 1.2--2.0) \tier{C}: at BGS depths the count dipole
 is clustering-dominated and the kinematic component is sub-dominant.
 An exact-selection mock machinery (drawing from the real per-cap
-random density, refitting the dipole and a nuisance amplitude per
-mock) is sealed \tier{P}; the survey-conditional pooled-rank
-consistency holds (observed amplitude in the bulk of the conditional
-null), while \emph{causal attribution is deferred} to the official
-validation-mock ensemble per Section~\ref{sec:completeness}.
+random density with the source-derived cap ratio 2.83, refitting the
+dipole and a nuisance amplitude per mock) is sealed \tier{P}: the
+raw dipole is the primary observable with a disclosed
+nuisance-cleaned secondary ($1.96\times10^{-3}$; the imaging
+template's $\ell = 1$ part is degenerate with the dipole), the fast
+covariance tier under-estimates the high-realism tier by a relative
+Frobenius gap of $0.47$, and matched-scale injections show material
+selection-to-dipole leakage ($0.68$ of the kinematic response) ---
+the quantitative reason causal attribution needs the official mocks.
+The survey-conditional pooled-rank consistency holds (observed
+amplitude in the bulk of the conditional null), while \emph{causal
+attribution is deferred} to the official validation-mock ensemble
+per Section~\ref{sec:completeness}.
 Figure: \code{fig\_v10\_desi\_dipole}.
 
 \subsection{ACT DR6 lensing convergence (external lane)}
@@ -1527,13 +1649,16 @@ mean-field-debiased band statistic is consistent with the isotropic
 simulation null ($p = $ @ACT_P@) and yields a 95\% upper limit on
 excess band power of @ACT_UL@ (@ACT_UL_RATIO@ of the simulation
 median) \tier{C}; the strict-in-band ($41 \le L \le 762$) modulation
-rank is @ACT_INBAND_RANK@, unresolved from the null at current
-Monte-Carlo resolution \tier{C}. The raw-quadratic-estimator inputs
+rank is @ACT_INBAND_RANK@ (controlled variant; raw $99/401$,
+mask-change sensitivity $398/401$), unresolved from the null at
+current Monte-Carlo resolution \tier{C}. The raw-quadratic-estimator inputs
 (filtered CMB maps and pipeline) are not part of the public release,
 so a from-scratch re-estimation is recorded as unavailable rather
 than approximated \tier{C}; the release-simulation leave-one-out
 cross-fit mean field at low $L$ (with its exact $((n{-}1)/n)^2$
-scaling disclosed) is the principled construction used \tier{P}.
+scaling disclosed) is the principled construction used, and the
+cross-fit release-simulation pooled rank is $0.364$, matching the
+historical low-$L$ isotropy of the release \tier{P}.
 Figure: \code{fig\_v10\_act\_kappa}.
 
 \subsection{JWST distance anchors (forecast lane) \tier{C}}
@@ -1566,6 +1691,20 @@ how far current data plus exact ceilings actually constrain the
 departure functional, which is the honest current answer to ``what is
 measured so far.''
 Figure: \code{fig\_v10\_comparator\_region}.
+
+\subsection{Joint peculiar-velocity/CMB degeneracy forecast \tier{K}}
+\label{sec:jointforecast}
+
+A solver-free coupled Fisher forecast over $(\Sigma^2, \OmT)$
+combines the correlated peculiar-velocity covariance (Woodbury-form
+full covariance reproducing the registered CF4 flow uncertainty) with
+the low-multipole CMB channel: either channel alone leaves a
+degenerate direction, and the joint information matrix breaks it ---
+a standard-methodology forecast quantifying what the two lanes can
+jointly identify, with no anisotropic-transfer input (the
+theory-side CMB likelihood for anisotropic backgrounds is registered
+as unavailable rather than approximated). Carried figure
+\code{fig\_egs3\_d\_joint\_forecast}.
 
 \subsection{Synthetic calibration of the discrimination method
 \tier{K}}
@@ -1676,14 +1815,26 @@ statistical-isotropy measurement on the real maps
 \end{figure}
 \begin{figure}[p]\centering
 \includegraphics[width=0.48\textwidth]{fig_egs3_e_im_coverage.png}
-\includegraphics[width=0.48\textwidth]{flrw_lowell_dell_camb_bass_lmax30.png}
-\caption{Carried set IV. Imbens--Manski coverage certificate
+\includegraphics[width=0.48\textwidth]{flrw_lowell_dell_camb_bass_lmax30.png}\\
+\includegraphics[width=0.48\textwidth]{fig_egs3_e_refutability_power.png}
+\includegraphics[width=0.48\textwidth]{fig_egs3_u4v9_teff_im_coverage.png}
+\caption{Carried set IV. Top: Imbens--Manski coverage certificate
 (Proposition~\ref{prop:im}); CAMB cross-check of the low-$\ell$
 spectrum lane supporting the transfer-floor cross-check
-(Proposition~\ref{prop:seminative}).}
+(Proposition~\ref{prop:seminative}). Bottom: noncentral-$\chi^2$
+refutability power (Proposition~\ref{prop:power}); estimated-covariance
+fingerprint coverage rerun (Proposition~\ref{prop:im}).}
+\end{figure}
+\begin{figure}[p]\centering
+\includegraphics[width=0.48\textwidth]{fig_egs3_f_shear_memory_bias.png}
+\includegraphics[width=0.48\textwidth]{fig_egs3_d_joint_forecast.png}
+\caption{Carried set V. Shear-memory sensitivity
+(Proposition~\ref{prop:shearmem}); solver-free joint
+peculiar-velocity/CMB Fisher forecast
+(Section~\ref{sec:jointforecast}).}
 \end{figure}
 \clearpage
-"""
+""" + _data_pack_section()
 
 
 def _tex_escape(text: str) -> str:
@@ -1694,6 +1845,33 @@ def _tex_escape(text: str) -> str:
         .replace("%", r"\%")
         .replace("#", r"\#")
         .replace("^", r"\^{}")
+    )
+
+
+def _data_pack_section() -> str:
+    pack = _load(DATA_PACK_JSON)
+    blocks = []
+    for entry in pack["figures"]:
+        name = Path(entry["artifact_path"]).name
+        cap = _tex_escape(entry["caption"])
+        blocks.append(
+            "\\begin{figure}[p]\\centering\n"
+            f"\\includegraphics[width=0.86\\textwidth]{{{name}}}\n"
+            f"\\caption{{{cap}}}\n"
+            "\\end{figure}"
+        )
+    grouped = []
+    for i in range(0, len(blocks), 2):
+        grouped.append("\n".join(blocks[i:i + 2]))
+    body = "\n\\clearpage\n".join(grouped)
+    return (
+        "\n\\subsection{Carried current-data quicklook}\n\n"
+        "The full current-data quicklook generated during the data phase "
+        "(catalogue, map, and release-product diagnostics for the Planck, "
+        "CF4, DESI, and ACT lanes), carried with its original captions; "
+        "each figure is sidecar-manifested and token-audited. These are "
+        "data and release-property renderings, not claims.\n\n"
+        + body + "\n\\clearpage\n"
     )
 
 
@@ -1879,6 +2057,9 @@ A\&A 464, 399 (2007).
 Econometrica 72, 1845 (2004).
 \bibitem{PhipsonSmyth2010} B. Phipson and G.~K. Smyth,
 Stat. Appl. Genet. Mol. Biol. 9, 39 (2010).
+\bibitem{ColeyHervik2005} A.~A. Coley and S. Hervik,
+Class. Quantum Grav. 22, 579 (2005), and the tilted Bianchi
+dynamical-systems literature cited therein.
 \bibitem{Nilsson1999} U.~S. Nilsson, C. Uggla, J. Wainwright, and
 W.~C. Lim (Hsu), Astrophys. J. Lett. 522, L1 (1999)
 (astro-ph/9904252).
@@ -1978,6 +2159,9 @@ def build_manifest(tex: str) -> str:
     for src_dir, stem in CARRIED_FIGURES:
         p = ROOT / src_dir / f"{stem}.png"
         figs[f"{stem}.png"] = hashlib.sha256(p.read_bytes()).hexdigest()
+    for entry in _load(DATA_PACK_JSON)["figures"]:
+        p = ROOT / entry["artifact_path"]
+        figs[p.name] = hashlib.sha256(p.read_bytes()).hexdigest()
     payload = {
         "schema": "htt.external_audit_report.v10.manifest",
         "version": "v10",
@@ -2016,6 +2200,9 @@ def do_write() -> int:
     for src_dir, stem in CARRIED_FIGURES:
         shutil.copy2(ROOT / src_dir / f"{stem}.png",
                      figdest / f"{stem}.png")
+    for entry in _load(DATA_PACK_JSON)["figures"]:
+        rel = entry["artifact_path"]
+        shutil.copy2(ROOT / rel, figdest / Path(rel).name)
     for name, content in text_artifacts().items():
         (OUT / name).write_text(content)
     cmd = ["pdflatex", "-interaction=nonstopmode", "-halt-on-error",
@@ -2059,6 +2246,12 @@ def do_check() -> int:
         if not dst.exists() or src.read_bytes() != dst.read_bytes():
             ok = False
             print(f"carried figure differs: {stem}")
+    for entry in _load(DATA_PACK_JSON)["figures"]:
+        src = ROOT / entry["artifact_path"]
+        dst = OUT / FIG_DEST_NAME / Path(entry["artifact_path"]).name
+        if not dst.exists() or src.read_bytes() != dst.read_bytes():
+            ok = False
+            print(f"pack figure differs: {entry['artifact_path']}")
     print(json.dumps({"mode": "check", "ok": ok}, sort_keys=True))
     return 0 if ok else 1
 
