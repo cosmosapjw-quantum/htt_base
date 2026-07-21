@@ -1,0 +1,64 @@
+{
+ "forbidden_claims_reaffirmed": [
+  "legacy artifacts are immutable evidence, never production imports",
+  "a legacy number is never copied into a new receipt",
+  "MUTATION-class objects are negative controls, not conclusions"
+ ],
+ "metadata": {
+  "claim_level": {
+   "level": "C1",
+   "scheme": "roadmap_rescue_v1"
+  },
+  "generating_command": "env PYTHONHASHSEED=0 venv/bin/python -B scripts/codex_harness/run_pr209_inventory.py --write",
+  "independence_gate": "OPEN",
+  "ledger_sha256": "f1ba5b2cfece3e08f76acd6accd0a2abefcc443001bc4eefbb6e9be8e9daf2ee",
+  "owner": "COMMON",
+  "public_use": false,
+  "readiness_state": "EVIDENCE_READY",
+  "spec_sha256": "2ccde7f2ac9f98a322a9417245969b224dd3914756e0d11c11bbb49701846db9"
+ },
+ "pr_id": "PR-209",
+ "result": {
+  "archives": [
+   {
+    "bad_crc": null,
+    "members": 308,
+    "path": "legacy_sources/archives/bianchi_defect_framework_github_20260320.zip",
+    "present": true
+   },
+   {
+    "bad_crc": null,
+    "members": 111,
+    "path": "legacy_sources/archives/HTT_20260314.zip",
+    "present": true
+   },
+   {
+    "bad_crc": null,
+    "members": 79,
+    "path": "legacy_sources/archives/bianchi_defect_overleaf_20260314.zip",
+    "present": true
+   }
+  ],
+  "archives_crc_ok": true,
+  "direct_legacy_import_hits": [],
+  "disposition_classes": [
+   "KEEP",
+   "MUTATION",
+   "REBUILD",
+   "RETIRE"
+  ],
+  "disposition_counts": {
+   "KEEP": 5,
+   "MUTATION": 5,
+   "REBUILD": 4,
+   "RETIRE": 2
+  },
+  "drop_present": true,
+  "independent_recompute_agrees": true,
+  "inventory_all_match": true,
+  "n_objects": 16,
+  "no_direct_import": true
+ },
+ "schema": "htt.pr209.result_card.v1",
+ "terminal": "LEGACY_INVENTORY_HASH_BOUND_ZERO_DIRECT_IMPORT"
+}
