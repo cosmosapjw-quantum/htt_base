@@ -7,6 +7,30 @@
 
 ## [Unreleased]
 
+### v10 revision 3 — full post-PR-119 output completeness (rev-r251, 2026-07-21)
+
+Owner directive: every discovery/proof/analysis/plot produced since
+PR-119 included, under the scientific-output-only standard (report now
+**48 pp**). Added propositions with proofs: tilt class-conditionality
+(restricted flat-RW relaxation; exact drag-class stability trace
+−25/12 / det 5/6; published Bianchi VIII extreme-tilt counterexample
+at γ=5/4 retiring any blanket tilt-decay law — Coley-Hervik cited,
+exploratory tier); noncentral-χ² refutability power; shear-memory
+sensitivity; joint PV/CMB Fisher degeneracy-break forecast. Figures:
+the full 20-figure current-data quicklook pack carried with original
+captions (token-audited) + 4 more theorem figures → package now
+carries 48 figures total. Numeric completeness pass: PR-179 measured
+H-dipole (0.0223, RA 186.1° Dec −69.6°); ACT cross-fit pooled rank
+0.364 + in-band variants (99/401 raw, 398/401 mask-change); DESI
+cleaned secondary 1.96e-3 + Frobenius 0.47 + selection leakage 0.68;
+CF4 stressor coverages 0.26/0.58/0.46 + simultaneous coverage 0.913 +
+misspec diagnostic; IM grid (0.99889/0.9402/0.0006); evidence
+(logBF 1.6125, gap 0.0048); rank negative control 2.2%; twelve-cell
+discrimination matrix; parity identities (iv)–(v); B-projector
+fixture value. Tier ledger 62 entries (+G-TILT K+C, T-POWER,
+T-SHEARMEM, D-JOINT-FORECAST). Third PR-120 resync (3919 scanned,
+ok=True). All gates green; tree clean at 5900c470.
+
 ### v10 revision 2 — external-novelty tiers + carried completeness set (rev-r250, 2026-07-21)
 
 Owner-directed revision of the v10 report (now 34 pp). (1) Tier ledger
