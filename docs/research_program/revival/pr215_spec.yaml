@@ -1,0 +1,21 @@
+schema: htt.revival.spec.v1
+pr_id: PR-215
+track: I
+disposition: LITERAL_RESCUE
+cross_references: [PR-189]
+title: General joint feasible-set support theorem
+roadmap_anchor: htt_legacy_revival_round2_20260721/docs/03_ROUND2_DUAL_TRACK_PR_ROADMAP_20260721.md
+claim_identity: >
+  On a coupled (Sigma2,W2,Omega_tilt,DeltaOmega_k) feasible manifold the joint
+  x_C interval is strictly narrower than the marginal product box; the product
+  box is a factorized corollary (PR-189, CAS_5AXIS_PASS).
+decisive_falsifier: a marginal box interval is reported sharp on a coupled manifold.
+pass_gates:
+  P1: spec frozen before result read
+  P2: exact Fraction affine range + numpy grid agree; PR-189 five-axis CAS cross-referenced
+  P3: joint subset of product and strictly narrower; coupling nulls the t-dependence
+  P4: card --check byte-stable
+  P5: no marginal endpoint reported as the joint sup
+readiness_state: EVIDENCE_READY
+independence_gate: OPEN
+public_use: false
