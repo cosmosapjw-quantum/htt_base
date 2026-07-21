@@ -1,0 +1,22 @@
+{
+ "blocked_gates": [
+  "PR-191-dependent Gauss-convention binding (needs the rotating-congruence canonical curvature object)",
+  "non-LRS normal-hyperbolicity / center-manifold classification",
+  "five-axis blind CAS on the all-order recurrence (deferred until scheduled)",
+  "interval/SOS remainder-tube certification (dense scan is preflight only)"
+ ],
+ "note": "Reference asset omk_invariant_manifold.py run as a preflight; kappa=-2/(3w+5) and c2 exact-match the registered formulas and the c3 recurrence equation is derived. This is preflight evidence only; no claim, no DAG completion, public_use=false.",
+ "pr_id": "PR-192",
+ "preflight_core_verified": {
+  "c2": "-2*(9*w**2 + 18*w + 13)/((3*w + 5)**2*(9*w + 7))",
+  "c2_matches_registered_formula": true,
+  "dense_scan_finite": true,
+  "dense_scan_residual_over_K3": 0.5370381216355014,
+  "kappa": "-2/(3*w + 5)",
+  "kappa_matches_registered_formula": true,
+  "third_order_equation_present": true
+ },
+ "reason": "PR-192 depends on PR-191 (rotating-congruence Gauss canonicalization), which is registered-not-scheduled; the card cannot close until PR-191 is scheduled and completed.",
+ "schema": "htt.pr192.preflight.v1",
+ "status": "PREFLIGHT_ONLY_REGISTERED_NOT_SCHEDULED"
+}
