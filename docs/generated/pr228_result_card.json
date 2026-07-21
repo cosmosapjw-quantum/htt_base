@@ -1,0 +1,39 @@
+{
+ "forbidden_claims_reaffirmed": [
+  "no open P0 remains in a result section; registered downstream blocks are not P0",
+  "no Track-II native-solver claim enters v11-I",
+  "VALIDATED is deferred while the DESI lane and Independence gate stay open; no meta-dev narrative in the report"
+ ],
+ "metadata": {
+  "claim_level": {
+   "level": "C1",
+   "scheme": "roadmap_rescue_v1"
+  },
+  "generating_command": "env PYTHONHASHSEED=0 venv/bin/python -B scripts/codex_harness/run_pr228_v11i.py --write",
+  "independence_gate": "OPEN",
+  "owner": "COMMON",
+  "public_use": false,
+  "readiness_state": "EVIDENCE_READY",
+  "report": "docs/generated/revival_v11i_report.md",
+  "report_sha256": "bf7d1545700fb51d3c1417f85c9153fa915ad213fa67757c90bc64218c436c06",
+  "spec_sha256": "52ca6c866c1ae56080711bf0eddf578b6e28a0545d8035f025b713c05c68af5e"
+ },
+ "pr_id": "PR-228",
+ "result": {
+  "cas_propositions": [
+   "PR-222",
+   "PR-223"
+  ],
+  "n_propositions": 19,
+  "no_open_p0": true,
+  "open_items": [
+   "DESI official-mock data-lane closure is blocked on the PR-151 acquisition terminal receipt (1000 EZmock + 25 AbacusSummit); no partial mock is used.",
+   "The Independence gate (non-author, clean-machine reproduction and adjudication) is OPEN for every proposition; author-side reproduction is verified.",
+   "Track-II native Bianchi Boltzmann solver propositions (PR-229..242) are out of scope for v11-I and blocked until an authenticated native SolverDeliveryReceipt is supplied."
+  ],
+  "open_p0": [],
+  "track_ii_claims_present": false
+ },
+ "schema": "htt.pr228.result_card.v1",
+ "terminal": "TRACK_I_V11I_REPORT_EVIDENCE_READY_VALIDATED_DEFERRED"
+}
