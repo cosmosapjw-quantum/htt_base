@@ -1,0 +1,135 @@
+{
+ "forbidden_claims_reaffirmed": [
+  "author-side byte-stability is verified; the non-author Independence gate stays OPEN",
+  "the Independence gate is never fake-passed",
+  "results are regenerated from runners, not from an author cache"
+ ],
+ "metadata": {
+  "claim_level": {
+   "level": "C1",
+   "scheme": "roadmap_rescue_v1"
+  },
+  "generating_command": "env PYTHONHASHSEED=0 venv/bin/python -B scripts/codex_harness/run_pr227_reproduce.py --write",
+  "independence_gate": "OPEN",
+  "independence_note": "non-author clean-machine reproduction deferred to capacity; never fake-passed",
+  "owner": "COMMON",
+  "public_use": false,
+  "readiness_state": "EVIDENCE_READY",
+  "spec_sha256": "39e175ad8d153b8ca03015ea06fe7f41d17c074a766af5fe52a92a2cc5aeedff"
+ },
+ "pr_id": "PR-227",
+ "result": {
+  "environment_recipe": {
+   "cas_engines": [
+    "wolfram_xact",
+    "sympy",
+    "sage_singular",
+    "lean",
+    "rocq"
+   ],
+   "data_root_env": "HTT_DATA_ROOT",
+   "default_data_root": "/mnt/sn850x2t/htt_base_e2e",
+   "note": "legacy drop is gitignored; sha-pinned by the PR-209 inventory receipt",
+   "python": "3.12"
+  },
+  "reproduction": {
+   "all_byte_stable": true,
+   "author_reproduction": "VERIFIED",
+   "n_cards": 18,
+   "per_card": {
+    "PR-209": {
+     "byte_stable": true,
+     "exit": 0,
+     "runner": "run_pr209_inventory.py"
+    },
+    "PR-210": {
+     "byte_stable": true,
+     "exit": 0,
+     "runner": "run_pr210_bundle.py"
+    },
+    "PR-211": {
+     "byte_stable": true,
+     "exit": 0,
+     "runner": "run_pr211_convention.py"
+    },
+    "PR-212": {
+     "byte_stable": true,
+     "exit": 0,
+     "runner": "run_pr212_frame_functor.py"
+    },
+    "PR-213": {
+     "byte_stable": true,
+     "exit": 0,
+     "runner": "run_pr213_claim_state.py"
+    },
+    "PR-214": {
+     "byte_stable": true,
+     "exit": 0,
+     "runner": "run_pr214_mutation_lab.py"
+    },
+    "PR-215": {
+     "byte_stable": true,
+     "exit": 0,
+     "runner": "run_pr215_joint.py"
+    },
+    "PR-216": {
+     "byte_stable": true,
+     "exit": 0,
+     "runner": "run_pr216_ladder.py"
+    },
+    "PR-217": {
+     "byte_stable": true,
+     "exit": 0,
+     "runner": "run_pr217_mes.py"
+    },
+    "PR-218": {
+     "byte_stable": true,
+     "exit": 0,
+     "runner": "run_pr218_surrogate.py"
+    },
+    "PR-219": {
+     "byte_stable": true,
+     "exit": 0,
+     "runner": "run_pr219_quotient.py"
+    },
+    "PR-220": {
+     "byte_stable": true,
+     "exit": 0,
+     "runner": "run_pr220_evidence.py"
+    },
+    "PR-221": {
+     "byte_stable": true,
+     "exit": 0,
+     "runner": "run_pr221_dipole.py"
+    },
+    "PR-222": {
+     "byte_stable": true,
+     "exit": 0,
+     "runner": "run_pr222_bridge.py"
+    },
+    "PR-223": {
+     "byte_stable": true,
+     "exit": 0,
+     "runner": "run_pr223_multifluid.py"
+    },
+    "PR-224": {
+     "byte_stable": true,
+     "exit": 0,
+     "runner": "run_pr224_falsifier.py"
+    },
+    "PR-225": {
+     "byte_stable": true,
+     "exit": 0,
+     "runner": "run_pr225_estcov.py"
+    },
+    "PR-226": {
+     "byte_stable": true,
+     "exit": 0,
+     "runner": "run_pr226_datalane.py"
+    }
+   }
+  }
+ },
+ "schema": "htt.pr227.result_card.v1",
+ "terminal": "TRACK_I_AUTHOR_REPRODUCTION_VERIFIED_INDEPENDENCE_OPEN"
+}

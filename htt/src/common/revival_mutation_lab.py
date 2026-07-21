@@ -31,7 +31,9 @@ BIANCHI_LEGACY_MUTATED = {**BIANCHI_CLASS_A_B, "VI0": "B", "VIIh": "A"}
 RETIRED_CLAIM_PATTERNS = {
     "old_large_bayes_factor": r"26\.4",
     "old_universal_teff": r"1\.478|0\.742|universal ratios",
-    "old_bulk_equals_tilt": r"directly comparable to the CF4 bulk|CF4[^\n]{0,40}tilt",
+    # the RETIRED claim is the direct point-substitution bulk==tilt, not the
+    # (correct) multi-window CF4-to-tilt forward-operator bridge of PR-222.
+    "old_bulk_equals_tilt": r"directly comparable to the CF4 bulk|bulk amplitude (?:is|equals) the (?:homogeneous )?tilt|CF4 bulk[ -]?flow (?:is|=) (?:the )?tilt",
     "old_h0_percentage": r"48%\s*Hubble|Hubble correction of 48",
 }
 
