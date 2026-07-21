@@ -7,6 +7,34 @@
 
 ## [Unreleased]
 
+### v10 revision 2 — external-novelty tiers + carried completeness set (rev-r250, 2026-07-21)
+
+Owner-directed revision of the v10 report (now 34 pp). (1) Tier ledger
+schema v2: K/C/P/S is a PURE external-literature novelty adjudication
+(internal validation staging no longer drives it) — every K cites or
+states textbook-level, every C names the exact study/quantity
+cross-checked, every P/S states the delta over the closest literature.
+**Five S entries** with deltas: MES geodesic reduction + ε₁
+admissibility theorem (6.59-OOM vorticity-ceiling tightening vs the
+MES/SAG-era published limits); exact curvature-shear slaving
+κ=−1/(2+q) + certified remainder (vs qualitative KS/BIII
+center-manifold literature); KE dynamical double obstruction at flat
+anisotropic curvature (vs King-Ellis 1973 constraint-level); the
+identified-set framework + first nuisance-box CF4 application (vs the
+point-estimate bulk-flow literature); zero-parameter low-ℓ
+boost-residual test + real-sky p=0.854 (vs the high-ℓ
+amplitude-fitting paradigm). New CRAG: converse-EGS failure is
+PUBLISHED (Nilsson-Uggla-Wainwright-Hsu 1999, astro-ph/9904252) →
+retagged K+C. (2) Completeness set carried from earlier package
+versions: 5 restated propositions with proofs (exact boost channel
+s=tanh β + fingerprints, fingerprint-to-ceiling map, semi-native
+transfer floor + CAMB cross-check, exact endpoint attainability,
+PSD-cone representation) + **14 carried figures** (sidecar-manifested
+lanes only; quarantined CF4 legacy lane untouched) + 8 bibliography
+additions. Contract gates now ENFORCE S-delta and K-citation
+completeness. Second PR-120 inventory/consumer resync after the
+carried-figure additions (ok=True 0 issues). Tree clean at 34ce40e2.
+
 ### v10 external report + even-L BiPoSH analysis + PR-120 pin repair (rev-r247..r249, 2026-07-21)
 
 Owner-directed regeneration of the external-submission report as the
