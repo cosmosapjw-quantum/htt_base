@@ -22,10 +22,10 @@ else:  # Direct script execution places this directory on sys.path.
 RESCUE_FIRST_PR = 119
 RESCUE_LAST_PR = 166
 ADVOCATE_FIRST_PR = 167
-ADVOCATE_LAST_PR = 183
+ADVOCATE_LAST_PR = 184
 RESCUE_CARD_COUNT = RESCUE_LAST_PR - RESCUE_FIRST_PR + 1
 RESCUE_PRE_ADVOCATE_CARD_COUNT = 113
-RESCUE_WITH_ADVOCATE_CARD_COUNT = 130
+RESCUE_WITH_ADVOCATE_CARD_COUNT = 131
 RESCUE_REQUIRED_FIELDS = {
     "id",
     "wave",
@@ -106,10 +106,11 @@ ADVOCATE_CARD_CONTRACTS = {
     "PR-177": (["PR-152", "PR-167", "PR-173"], "defensible", "PENDING"),
     "PR-178": (["PR-151", "PR-155", "PR-156", "PR-157", "PR-158", "PR-167"], "defensible", "PENDING"),
     "PR-179": (["PR-134", "PR-135", "PR-139", "PR-144", "PR-167", "PR-173"], "defensible", "PENDING"),
-    "PR-180": (["PR-134", "PR-149", "PR-150", "PR-167", "PR-172", "PR-173"], "defensible", "PENDING"),
+    "PR-180": (["PR-134", "PR-149", "PR-150", "PR-167", "PR-172", "PR-173", "PR-184"], "defensible", "PENDING"),
     "PR-181": (["PR-140", "PR-141", "PR-143", "PR-155", "PR-167", "PR-173"], "defensible", "PENDING"),
     "PR-182": (["PR-167"], "hypothesis_only", "PENDING"),
     "PR-183": (["PR-159", "PR-160", "PR-161", "PR-167"], "needs_native", "NEEDS_NATIVE"),
+    "PR-184": (["PR-172"], "defensible", "PENDING"),
 }
 ADVOCATE_HYPOTHESIS_ONLY_ARTIFACTS = {
     "PR-171",
@@ -669,8 +670,18 @@ def validate_long_horizon_rescue_slice(
                 contract.get("upstream_id") for contract in contracts if isinstance(contract, dict)
             ] != expected_depends:
                 raise ValueError(f"{pr_id} typed dependency projection drifted")
+            terminal_receipt_edges = {
+                ("PR-178", "PR-151"),
+                # PR-184 replan (2026-07-21): the failed PR-172 edge is
+                # consumed as a terminal receipt; success flows through
+                # the PR-184 remediation card instead.
+                ("PR-180", "PR-172"),
+                ("PR-184", "PR-172"),
+            }
             expected_modes = [
-                "requires_terminal_receipt" if pr_id == "PR-178" and dep == "PR-151" else "requires_success"
+                "requires_terminal_receipt"
+                if (pr_id, dep) in terminal_receipt_edges
+                else "requires_success"
                 for dep in expected_depends
             ]
             actual_modes = [
