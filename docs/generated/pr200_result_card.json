@@ -1,0 +1,151 @@
+{
+ "forbidden_claims_reaffirmed": [
+  "0.913 is a point-CI failure, not a calibrated set; never a success",
+  "the Imbens-Manski set restores >=0.94 coverage at the boundary",
+  "empty/crossing samples route to a pseudotrue never-empty branch"
+ ],
+ "metadata": {
+  "claim_level": {
+   "level": "C1",
+   "scheme": "roadmap_rescue_v1"
+  },
+  "generating_command": "env PYTHONHASHSEED=0 venv/bin/python -B scripts/codex_harness/run_pr200_coverage.py --write",
+  "independence_gate": "OPEN",
+  "owner": "HTT",
+  "public_use": false,
+  "readiness_state": "EVIDENCE_READY",
+  "spec_sha256": "0b839864fe24ce235ca22712cd2fc0286b3d2d5c25c4b4a6858fd0821bdc260e"
+ },
+ "pr_id": "PR-200",
+ "result": {
+  "im_coverage_grid": {
+   "all_cells_pass": true,
+   "budget": {
+    "n_half_width": 5,
+    "n_seed": 2,
+    "reps_each": 15000
+   },
+   "cells": [
+    {
+     "coverage": 0.9955333333333334,
+     "cp_lower_99": 0.9940949404132653,
+     "half_width": 0.05,
+     "regime": "point",
+     "seed": 20260721
+    },
+    {
+     "coverage": 0.9962,
+     "cp_lower_99": 0.9948586669479506,
+     "half_width": 0.05,
+     "regime": "point",
+     "seed": 43
+    },
+    {
+     "coverage": 0.9902666666666666,
+     "cp_lower_99": 0.9882342765508725,
+     "half_width": 0.5,
+     "regime": "weak",
+     "seed": 20260721
+    },
+    {
+     "coverage": 0.9898,
+     "cp_lower_99": 0.987724141292143,
+     "half_width": 0.5,
+     "regime": "weak",
+     "seed": 43
+    },
+    {
+     "coverage": 0.9608666666666666,
+     "cp_lower_99": 0.9570267523073214,
+     "half_width": 1.5,
+     "regime": "weak",
+     "seed": 20260721
+    },
+    {
+     "coverage": 0.9605333333333334,
+     "cp_lower_99": 0.9566785095414254,
+     "half_width": 1.5,
+     "regime": "weak",
+     "seed": 43
+    },
+    {
+     "coverage": 0.95,
+     "cp_lower_99": 0.9457068639833528,
+     "half_width": 3.0,
+     "regime": "weak",
+     "seed": 20260721
+    },
+    {
+     "coverage": 0.9511333333333334,
+     "cp_lower_99": 0.9468846077630108,
+     "half_width": 3.0,
+     "regime": "weak",
+     "seed": 43
+    },
+    {
+     "coverage": 0.95,
+     "cp_lower_99": 0.9457068639833528,
+     "half_width": 6.0,
+     "regime": "nonidentified",
+     "seed": 20260721
+    },
+    {
+     "coverage": 0.9511333333333334,
+     "cp_lower_99": 0.9468846077630108,
+     "half_width": 6.0,
+     "regime": "nonidentified",
+     "seed": 43
+    }
+   ],
+   "lower_threshold": 0.94,
+   "publication_budget": {
+    "n_cov_regimes": 3,
+    "n_dgp": 25,
+    "n_seed": 10,
+    "reps_each": 10000,
+    "tolerance": 0.005
+   },
+   "worst_cp_lower_99": 0.9457068639833528
+  },
+  "mesh_stability": {
+   "coarse_coverage": 0.9608666666666666,
+   "fine_coverage": 0.9594666666666667,
+   "shift": 0.0013999999999999568,
+   "stable": true
+  },
+  "point_gaussian_undercoverage": {
+   "monotone_worse_with_width": true,
+   "rows": [
+    {
+     "coverage": 0.9936,
+     "half_width": 0.05
+    },
+    {
+     "coverage": 0.9795333333333334,
+     "half_width": 0.5
+    },
+    {
+     "coverage": 0.7397333333333334,
+     "half_width": 1.5
+    },
+    {
+     "coverage": 0.07013333333333334,
+     "half_width": 3.0
+    },
+    {
+     "coverage": 0.0,
+     "half_width": 6.0
+    }
+   ],
+   "undercovers": true,
+   "worst_coverage": 0.0
+  },
+  "pseudotrue_never_empty": {
+   "crossing_regime_coverage": 0.9948,
+   "never_empty": true,
+   "note": "lo_hat > hi_hat samples are routed to the midpoint pseudotrue"
+  }
+ },
+ "schema": "htt.pr200.result_card.v1",
+ "terminal": "PARTIAL_ID_COVERAGE_CALIBRATED_POINT_CI_UNDERCOVERS"
+}
