@@ -193,7 +193,11 @@ REVIVAL_DEPENDS = {
     "PR-220": ["PR-214", "PR-219"], "PR-221": ["PR-213", "PR-219", "PR-220"],
     "PR-222": ["PR-210", "PR-212", "PR-219"], "PR-223": ["PR-210", "PR-212"],
     "PR-224": ["PR-212", "PR-222"], "PR-225": ["PR-215", "PR-219", "PR-220"],
-    "PR-226": ["PR-151", "PR-221", "PR-222", "PR-224", "PR-225"],
+    # PR-226 deps follow the roadmap DAG (12_TRACK_DAG.json); the DESI
+    # official-mock lane's wait on PR-151 is a card-internal scientific blocker
+    # (run_pr226 refuses any DESI number until PR-151 is terminal), not a
+    # structural DAG edge -- so PR-226's other three lanes can close.
+    "PR-226": ["PR-221", "PR-222", "PR-224", "PR-225"],
     "PR-227": ["PR-209", "PR-214", "PR-226"], "PR-228": ["PR-227"],
     "PR-229": ["PR-214", "PR-218", "PR-223"], "PR-230": ["PR-229"],
     "PR-231": ["PR-229", "PR-230"], "PR-232": ["PR-230", "PR-231"],
@@ -205,7 +209,9 @@ REVIVAL_DEPENDS = {
     "PR-243": ["PR-228", "PR-242"], "PR-244": ["PR-243"], "PR-245": ["PR-244"],
     "PR-246": ["PR-245"],
 }
-REVIVAL_TERMINAL_RECEIPT_EDGES = {("PR-226", "PR-151")}
+# PR-226's DESI wait on PR-151 is a card-internal scientific blocker, not a
+# structural DAG edge (see REVIVAL_DEPENDS["PR-226"]); no terminal-receipt edges.
+REVIVAL_TERMINAL_RECEIPT_EDGES: set[tuple[str, str]] = set()
 REVIVAL_CAS_CARDS = {"PR-222", "PR-223"}
 
 
