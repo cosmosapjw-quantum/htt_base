@@ -1,0 +1,39 @@
+{
+ "forbidden_claims_reaffirmed": [
+  "frame/epoch-mixed components are never combined without a validated bridge",
+  "DeltaOmega_k is a signed carrier, never forced to a PSD magnitude here",
+  "the scalar comparator is one projection of a typed bundle, not the bundle itself"
+ ],
+ "metadata": {
+  "claim_level": {
+   "level": "C1",
+   "scheme": "roadmap_rescue_v1"
+  },
+  "generating_command": "env PYTHONHASHSEED=0 venv/bin/python -B scripts/codex_harness/run_pr210_bundle.py --write",
+  "independence_gate": "OPEN",
+  "owner": "COMMON",
+  "public_use": false,
+  "readiness_state": "EVIDENCE_READY",
+  "spec_sha256": "1d78be2360f1bb4d5bf0327dc01393fd32e6eb2c26586bab63dee849e784d49e"
+ },
+ "pr_id": "PR-210",
+ "result": {
+  "defect_identity_seal": {
+   "derived": "Ot + S2 - W2 + dOk",
+   "seal_pass": true,
+   "target": "Ot + S2 - W2 + dOk"
+  },
+  "typed_gates": {
+   "certified_bridge_combine_ok": true,
+   "epoch_mix_rejected": true,
+   "frame_mix_rejected": true,
+   "negative_magnitude_rejected": true,
+   "unbridged_frame_combine_rejected": true,
+   "uncertified_bridge_rejected": true,
+   "xC": 0.022000000000000002,
+   "xC_matches_0p022": true
+  }
+ },
+ "schema": "htt.pr210.result_card.v1",
+ "terminal": "TYPED_DEFECT_BUNDLE_CONSTITUTION_CERTIFIED"
+}
