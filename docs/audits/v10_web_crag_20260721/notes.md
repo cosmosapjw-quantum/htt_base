@@ -203,3 +203,31 @@ bibliography renders these as standard citations. Primary-source PDFs for
 MES/SAG/MESa lineage were already SHA-archived in-repo
 (docs/audits/mes_primary_sources/, docs/audits/...) during earlier cycles
 and are reused as the authority for those items.
+
+## v2 re-adjudication (2026-07-21, owner-directed)
+
+Owner directive: the tier is an EXTERNAL-NOVELTY adjudication only —
+internal diagnostic-only gates must not drive it. Ledger rewritten to
+schema v2: every K carries a citation or explicit textbook-level note;
+every C names the exact study and quantity cross-checked; every P/S
+states the delta over the named closest literature. Scope/conditionality
+stays in each result's claim boundary, separate from the tier.
+
+Additional CRAG (3 queries, inline):
+- Converse failure of EGS is PUBLISHED: Nilsson, Uggla, Wainwright & Hsu
+  1999, "An almost isotropic cosmic microwave temperature does not imply
+  an almost isotropic universe" (astro-ph/9904252) -> G-EGS converse
+  retagged K+C (was framed as program-novel).
+- KS/Bianchi-III center-manifold literature is qualitative (Collins-
+  Ellis 1979; Hewitt-Wainwright 1992; Wainwright-Ellis 1997 book): no
+  published exact slaving coefficient kappa = -1/(2+q) or certified
+  remainder found -> G-OMK tagged S with stated delta.
+- Tilted-model literature (King-Ellis 1973; Coley-Hervik line): no
+  published dynamical double obstruction at flat anisotropic curvature
+  found -> G-KE tagged S with stated delta.
+
+S set (v2): G-MES-REFREEZE, G-OMK, G-KE, T-IDSET (+CF4 application),
+D-K1-BOOST. Each S entry's adjudication text carries the base
+literature and the delta; data-side S items remain
+conditionality-labelled in their result sections (the tier asserts
+novelty + completeness, never a detection).

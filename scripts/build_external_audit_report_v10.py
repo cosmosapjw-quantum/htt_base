@@ -78,6 +78,27 @@ FIGURES = [
     "fig_v10_ricci_gaps",
 ]
 
+# Figures carried from earlier package versions for self-containedness:
+# each illustrates a proposition proven in this document. Sources are
+# deterministic sealed figure lanes (sidecar-manifested); the quarantined
+# CF4 legacy figure lane is never touched.
+CARRIED_FIGURES = [
+    ("figures/current", "fig_egs3_a1_graded_rank"),
+    ("figures/current", "fig_egs3_psd_cone"),
+    ("figures/current", "fig_egs3_a3_evalue_calibration"),
+    ("figures/current", "fig_egs2_nt2a1_fisher_floor"),
+    ("figures/current", "fig_egs2_nt2b1_bracket"),
+    ("figures/current", "fig_egs3_b1_floor_profile"),
+    ("figures/current", "fig_egs3_b2_volterra"),
+    ("figures/current", "fig_egs3_b3_vorticity"),
+    ("figures/current", "fig_egs3_c_deprojection"),
+    ("figures/current", "fig_egs3_d_biposh"),
+    ("figures/current", "fig_egs3_u1_beta_channel"),
+    ("figures/current", "fig_egs3_u2_fingerprint_ceilings"),
+    ("figures/current", "fig_egs3_e_im_coverage"),
+    ("figures/validation", "flrw_lowell_dell_camb_bass_lmax30"),
+]
+
 
 def _load(rel: str) -> dict:
     return json.loads((ROOT / rel).read_text())
@@ -225,10 +246,14 @@ exact mathematical results, statistical architecture, and current-data
 analyses as of 2026-07-21. Every proposition is stated with its proof;
 every data result carries its conditionality; and every claim carries a
 novelty tier from the four-level scheme of
-Section~\ref{sec:tiers} --- \tier{K} known, \tier{C} cross-check,
-\tier{P} potential advance, \tier{S} significant claimable --- so a
-reader can separate standard material, reproductions of external
-results, and candidate advances at a glance. Earlier package versions
+Section~\ref{sec:tiers} --- \tier{K} known (with citation or a
+textbook-level note), \tier{C} cross-check (against a named study),
+\tier{P} potential advance, \tier{S} significant (with the delta over
+the closest literature stated) --- so a reader can separate standard
+material, reproductions of external results, and the five externally
+novel contributions at a glance. The tier is a literature-novelty
+adjudication only; each result's scope and conditionality are stated
+in its own section. Earlier package versions
 (v5--v9) remain byte-frozen; this version supersedes them as the
 current record and does not repeat their revision-response
 correspondence.
@@ -261,8 +286,8 @@ family identification, a measurement of spatial-curvature anisotropy,
 or a validation of a native anisotropic radiative-transfer solver. All
 sky-statistics are conditional on the stated pipelines and null
 ensembles; all exact theorems are conditional on their stated premises;
-and the small number of results with promotion potential are tagged and
-bounded in Section~\ref{sec:tiers}.
+and the externally novel results carry their deltas and scopes in
+Section~\ref{sec:tiers}.
 """
 
 
@@ -396,7 +421,7 @@ choice minimizes (respectively maximizes) each term independently,
 which is feasible because the box is a product set.
 \end{proof}
 
-\begin{theorem}[Exact axis-separable identified sets]
+\begin{theorem}[Exact axis-separable identified sets \tier{S}]
 \label{thm:idset}
 For a constraint system on $\bm g$ consisting of per-axis equalities
 and inequalities with rational data, the identified set is the product
@@ -437,7 +462,8 @@ columns give rank two with the stated kernel; the identification
 consequence is Theorem~\ref{thm:idset}'s null-space clause. The rank
 and kernel are certified by two independent computer-algebra engines
 over the rationals (artifact
-\code{docs/generated/} response-map seals).
+\code{docs/generated/} response-map seals; figure
+\code{fig\_egs3\_a1\_graded\_rank}).
 \end{proof}
 
 \subsection{Fractional-program and fingerprint bounds}
@@ -536,7 +562,7 @@ interface refuses e-value language for uncalibrated statistics.
 \begin{proposition}[Simulation-based calibration with lineage
 \tier{K}]
 \label{prop:sbc}
-For a posterior sampler tested by the rank procedure of Talts et al.:
+For a posterior sampler tested by the rank procedure of Talts et al. \cite{Talts2018}:
 if the sampler is exact, the rank of the true parameter among
 posterior draws is uniform, so the binned ranks are jointly
 multinomial with equal cells and the $\chi^2$ test is calibrated at
@@ -596,7 +622,8 @@ estimator- and profile-conditional, never data statements.
 \begin{theorem}[Diagonal compression loses morphology \tier{K}]
 \label{thm:compress}
 For statistically isotropic covariance only the $L = 0$,
-$\ell = \ell'$ sector of the bipolar decomposition survives;
+$\ell = \ell'$ sector of the bipolar decomposition
+\cite{HajianSouradeep2003} survives;
 consequently diagonal $C_\ell$ summaries are blind to all $L > 0$
 covariance morphology, and a full-covariance ceiling
 $B^{\rm final} = \min\{B^{\rm diag}, B^{\rm cov}\}$ can only tighten
@@ -719,7 +746,7 @@ tolerance and a prior-sensitivity ceiling holds.
 The exact form follows by completing the square in $\mu$. The
 thermodynamic identity $\log Z = \int_0^1 \mathbb E_\beta[\log L]\,
 d\beta$ follows by differentiating $\log Z_\beta$; the
-Meng--Wong bridge identity is an importance-sampling equality valid
+Meng--Wong bridge identity \cite{MengWong1996} is an importance-sampling equality valid
 for any bridge function with overlapping support. Agreement of two
 independent stochastic engines with the closed form to the stated
 tolerance is recorded in the sealed artifacts.
@@ -773,14 +800,15 @@ def s4_geometry() -> str:
 \section{Geometry-side theorems with proofs}
 \label{sec:geom}
 
-\subsection{One-way FLRW comparison \tier{K}/\tier{P}}
+\subsection{One-way FLRW comparison \tier{K}/\tier{C}}
 
 \begin{theorem}[Premise-complete forward direction]
 \label{thm:egs}
 For comparator states satisfying the complete registered FLRW premise
 set (exact isotropy of the radiation field for every fundamental
 observer of an irrotational geodesic congruence, with the exact
-Ehlers--Geren--Sachs closure \cite{EGS1968}), $x_C = 0$ exactly.
+Ehlers--Geren--Sachs closure \cite{EGS1968,
+StoegerMaartensEllis1995}), $x_C = 0$ exactly.
 \end{theorem}
 \begin{proof}
 Under the premise set each component of $\bm g$ vanishes individually:
@@ -791,7 +819,7 @@ premise sets are refused with a refuting witness rather than
 evaluated.
 \end{proof}
 
-\begin{proposition}[The converse fails \tier{P}]
+\begin{proposition}[The converse fails \tier{K}/\tier{C}]
 \label{prop:noconverse}
 $x_C = 0$ never implies FLRW: there exist registered counterexample
 states with $\Sigma^2 = W^2 > 0$, $\OmT = \dOk = 0$ (and a
@@ -801,12 +829,15 @@ anisotropic.
 \begin{proof}
 By construction: the comparator is a single linear functional, so its
 kernel intersects the positive cone of anisotropic states in a
-codimension-one family; explicit rational witnesses are sealed. This
-is why $x_C$ is a departure \emph{diagnostic}, not an isotropy
-certificate.
+codimension-one family; explicit rational witnesses are sealed. The
+underlying phenomenon --- that an almost isotropic microwave
+temperature does not imply an almost isotropic universe --- is
+published \cite{Nilsson1999}; our registry verifies it at the exact
+comparator level. This is why $x_C$ is a departure \emph{diagnostic},
+not an isotropy certificate.
 \end{proof}
 
-\subsection{MES bound hierarchy: primary-source reduction \tier{C}/\tier{P}}
+\subsection{MES bound hierarchy: primary-source reduction \tier{S}}
 \label{sec:mes}
 
 \begin{theorem}[Geodesic reduction of the raw bounds]
@@ -866,8 +897,7 @@ accessible source and exceed the companion paper's own faithful cap,
 which is recorded as a documented discrepancy \tier{C} rather than
 resolved.
 
-\subsection{Rotating congruences and the curvature sector
-\tier{K}/\tier{P}}
+\subsection{Rotating congruences and the curvature sector \tier{S}}
 
 \begin{theorem}[Contracted Gauss identity with rotation]
 \label{thm:ke}
@@ -911,7 +941,7 @@ system, constraints monitored below $1.6\times10^{-10}$) shows the
 obstruction is specific to the flat sector.
 \end{proof}
 
-\subsection{Curvature--shear slaving with certified remainder \tier{P}}
+\subsection{Curvature--shear slaving with certified remainder \tier{S}}
 \label{sec:omk}
 
 \begin{theorem}[Exact slaving coefficient]
@@ -1064,6 +1094,114 @@ and the Jacobi identity are verified for every representative. Held
 at the exploratory tier as native-solver support mathematics.
 \end{proof}
 
+\subsection{Carried exact results (completeness set)}
+
+The following results were proven in earlier package versions and are
+restated here with their proofs so this document is self-contained;
+the referenced figures are carried into the package.
+
+\begin{proposition}[Exact boost channel and fingerprints
+\tier{K}/\tier{P}]
+\label{prop:u1}
+For the registered antipodal two-point reduction of an observer boost
+with rapidity $\beta$, the mixing parameter is exactly
+$s = \tanh\beta$, with $s^2 = t/(2+t)$ in the registered
+temperature-contrast variable $t$; the moment fingerprints obey the
+exact rational expansions
+$R_3 - 1 = -\tfrac{3}{4}t + \tfrac{87}{32}t^2$,
+$R_5 - 1 = +\tfrac{5}{4}t - \tfrac{185}{32}t^2$, and $R_4 \equiv 1$,
+so $(R_3, R_5)$ measure the boost channel while $R_4$ is blind to it.
+(Figure \code{fig\_egs3\_u1\_beta\_channel}.)
+\end{proposition}
+\begin{proof}
+The two antipodal lines of sight see Doppler factors
+$\gamma^{-1}(1 \mp \beta)^{-1}$; forming the registered two-point
+moments and expanding in exact rational arithmetic gives the displayed
+series, with $s = \tanh\beta$ emerging as the exact mixing parameter
+of the symmetric/antisymmetric decomposition. $R_4 \equiv 1$ because
+the fourth-moment ratio cancels the boost factor identically at this
+order. Verified independently in a second computer-algebra engine.
+\end{proof}
+
+\begin{proposition}[Fingerprint-to-ceiling map \tier{K}/\tier{P}]
+\label{prop:u2}
+The proved envelopes $|R_3 - 1| \le \tfrac{3}{2}s^2$ and
+$|R_5 - 1| \le \tfrac{5}{2}s^2$ map the fingerprint channel onto exact
+rational MES-dipole ceilings at the registered dipole share
+($\epsilon_1 = 771/625000$): $2.283\times10^{-6}$ and
+$3.804\times10^{-6}$ respectively, and the measured CF4 flow rapidity
+is contained in both channels. (Figure
+\code{fig\_egs3\_u2\_fingerprint\_ceilings}.)
+\end{proposition}
+\begin{proof}
+The envelopes follow from the exact expansions of
+Proposition~\ref{prop:u1} by bounding the quadratic terms on the
+registered domain; substituting the registered $\epsilon_1$ into the
+MES dipole relation converts the $s^2$ bounds into the displayed
+ceilings, and the containment check is direct evaluation at the
+measured rapidity.
+\end{proof}
+
+\begin{proposition}[Registered transfer floor with external
+cross-check \tier{C}]
+\label{prop:seminative}
+The registered semi-native shear-to-multipole transfer profile has a
+superhorizon visibility floor of exactly $0.632456$, and the identical
+floor is reproduced by the real CAMB visibility computation
+\cite{CAMB2000}, with finite-$k$ agreement at the $0.2\%$ level.
+(Figures \code{fig\_egs3\_b1\_floor\_profile} and
+\code{flrw\_lowell\_dell\_camb\_bass\_lmax30}.)
+\end{proposition}
+\begin{proof}
+The floor is the $k \to 0$ limit of the registered profile, where the
+transfer kernel saturates at the visibility-weighted monopole
+projection; evaluating the limit gives the constant. The cross-check
+runs the same quantity through CAMB's visibility machinery on the
+identical background and compares profile values bin by bin; the
+superhorizon values agree identically and the finite-$k$ values to
+$0.2\%$, which discharges the concern that the floor is an artifact
+of the registered kernel.
+\end{proof}
+
+\begin{proposition}[Exact endpoint attainability \tier{P}]
+\label{prop:t3end}
+Both endpoints of the comparator interval of
+Theorem~\ref{thm:t1p} are attained by explicit exact homogeneous
+initial data: a Bianchi~I configuration for the lower endpoint and a
+Bianchi~V configuration (shear transverse to the group vector, with
+an antipodal tilt pair) for the upper endpoint, each with exactly
+zero Gauss and momentum constraint residuals.
+\end{proposition}
+\begin{proof}
+The data are written in exact rationals and the constraints evaluated
+symbolically: the Bianchi~I data set the tilt and curvature
+components to zero and saturate the shear box corner; the Bianchi~V
+data realize the upper corner with the transverse-shear alignment
+guaranteeing the momentum constraint and the antipodal pair cancelling
+the energy flux. Both evaluations return identically zero residuals,
+so attainment is exact, not approximate. (Endpoint attainability, not
+full dynamical sharpness.)
+\end{proof}
+
+\begin{proposition}[Cone representation of the component vector
+\tier{K}]
+\label{prop:psd}
+Writing $M = \mathrm{diag}(\bm g) \succeq 0$, the comparator is
+$x_C = \mathrm{tr}(C M)$ with $C = \mathrm{diag}(c)$, the admissible
+set is a convex cone of positive semidefinite moment matrices, and
+identifiability statements become reachable-eigendirection statements
+--- reproducing the rank-two result of Theorem~\ref{thm:rank2} as the
+reachable/null eigen-split. (Figure \code{fig\_egs3\_psd\_cone}.)
+\end{proposition}
+\begin{proof}
+Diagonal embedding: nonnegativity of the components is exactly
+positive semidefiniteness of $M$, linearity of $x_C$ is the trace
+pairing, and convexity follows because the PSD cone intersected with
+linear constraints is convex. The representation is mathematically
+equivalent to Definition~\ref{def:g}; its value is that null sectors
+appear as unreachable eigendirections of the response map.
+\end{proof}
+
 \subsection{Auxiliary exact results}
 
 \begin{proposition}[Premise-complete axisymmetric $B$-projector zero
@@ -1095,6 +1233,7 @@ arithmetic on the linear functional.
 \end{proof}
 
 \begin{proposition}[Reciprocal coefficient bracket \tier{K}]
+\label{prop:recbracket}
 For the registered $\ell = 2$ relation $a_2 = \kappa\Sigma(1+\delta)$
 with $|\delta| \le R < 1$ and $\kappa$ pinned first, the correct
 inversion brackets the shear \emph{reciprocally},
@@ -1220,7 +1359,7 @@ consistent with the null. The measured odd/even structural-zero ratio
 on the observed map is @EVENL_ODDZERO@, certifying the implementation
 at float precision. Figure: \code{fig\_v10\_k1\_evenl\_rank}.
 
-\paragraph{Boost-sector residual \tier{P}.}
+\paragraph{Boost-sector residual \tier{S}.}
 The FFP10 CMB simulations include Doppler boosting
 \cite{Planck2018III}, so the end-to-end null is a \emph{boosted} null.
 The dipole-frame $(\ell,\ell+1)$ coupling vector
@@ -1246,8 +1385,9 @@ no independence claim. Figure: \code{fig\_v10\_boost\_biposh\_features}.
 \paragraph{Off-diagonal isotropy measurement \tier{C}.}
 The earlier off-diagonal BipoSH statistical-isotropy measurement on
 SMICA and Commander (global $p = 0.68$ and $0.65$) remains the
-programme's direct SI cross-check, consistent with the Planck isotropy
-papers.
+programme's direct SI cross-check, consistent with the Planck
+isotropy results \cite{Planck2018VII} (carried figure
+\code{fig\_egs3\_d\_biposh}).
 
 \subsection{Cosmicflows-4 peculiar-velocity lane (K5)}
 \label{sec:cf4}
@@ -1277,7 +1417,7 @@ that estimator at the few-percent level with apex agreement to
 $8.5^\circ$ at the inner depth; its amplitude significance is
 withheld here in favour of the full-covariance treatment.
 
-\paragraph{Identified sets per depth \tier{P}.}
+\paragraph{Identified sets per depth \tier{S}.}
 Under a frozen nuisance box (distance-scale calibration, choice of
 reconstruction observable, nonlinear dispersion) the flow is reported
 as an identified set per pre-registered depth shell
@@ -1494,71 +1634,126 @@ resonance family (Section~\ref{sec:omk}).}
 verification gaps (Theorem~\ref{thm:ricci}).}
 \end{figure}
 \clearpage
+
+\subsection{Carried figures (completeness set)}
+
+Figures generated in earlier package versions, carried here because
+they illustrate propositions proven in this document.
+
+\begin{figure}[p]\centering
+\includegraphics[width=0.48\textwidth]{fig_egs3_a1_graded_rank.png}
+\includegraphics[width=0.48\textwidth]{fig_egs3_psd_cone.png}\\
+\includegraphics[width=0.48\textwidth]{fig_egs3_a3_evalue_calibration.png}
+\includegraphics[width=0.48\textwidth]{fig_egs2_nt2a1_fisher_floor.png}
+\caption{Carried set I. Top: rank-two response and joint null sector
+(Theorem~\ref{thm:rank2}); cone representation
+(Proposition~\ref{prop:psd}). Bottom: exceedance/e-value calibration
+(Proposition~\ref{prop:evalue}); multi-$\ell$ Fisher floor
+(Proposition~\ref{prop:floor}).}
+\end{figure}
+\begin{figure}[p]\centering
+\includegraphics[width=0.48\textwidth]{fig_egs2_nt2b1_bracket.png}
+\includegraphics[width=0.48\textwidth]{fig_egs3_b1_floor_profile.png}\\
+\includegraphics[width=0.48\textwidth]{fig_egs3_b2_volterra.png}
+\includegraphics[width=0.48\textwidth]{fig_egs3_b3_vorticity.png}
+\caption{Carried set II. Top: two-sided reciprocal shear bracket
+(Proposition~\ref{prop:recbracket}); registered transfer floor profile
+(Proposition~\ref{prop:seminative}). Bottom: Volterra depth memory
+(Proposition~\ref{prop:volterra}); transverse vorticity reopening
+(Proposition~\ref{prop:reopen}).}
+\end{figure}
+\begin{figure}[p]\centering
+\includegraphics[width=0.48\textwidth]{fig_egs3_c_deprojection.png}
+\includegraphics[width=0.48\textwidth]{fig_egs3_d_biposh.png}\\
+\includegraphics[width=0.48\textwidth]{fig_egs3_u1_beta_channel.png}
+\includegraphics[width=0.48\textwidth]{fig_egs3_u2_fingerprint_ceilings.png}
+\caption{Carried set III. Top: kinematic deprojection
+(Proposition~\ref{prop:deproj}); off-diagonal BipoSH
+statistical-isotropy measurement on the real maps
+(Section~\ref{sec:k1}). Bottom: exact boost channel $s = \tanh\beta$
+(Proposition~\ref{prop:u1}); fingerprint-to-ceiling map
+(Proposition~\ref{prop:u2}).}
+\end{figure}
+\begin{figure}[p]\centering
+\includegraphics[width=0.48\textwidth]{fig_egs3_e_im_coverage.png}
+\includegraphics[width=0.48\textwidth]{flrw_lowell_dell_camb_bass_lmax30.png}
+\caption{Carried set IV. Imbens--Manski coverage certificate
+(Proposition~\ref{prop:im}); CAMB cross-check of the low-$\ell$
+spectrum lane supporting the transfer-floor cross-check
+(Proposition~\ref{prop:seminative}).}
+\end{figure}
+\clearpage
 """
+
+
+def _tex_escape(text: str) -> str:
+    return (
+        text
+        .replace("_", r"\_")
+        .replace("&", r"\&")
+        .replace("%", r"\%")
+        .replace("#", r"\#")
+        .replace("^", r"\^{}")
+    )
 
 
 def s6_tiers() -> str:
     tiers = _load("docs/audits/v10_web_crag_20260721/tier_evidence.json")
     rows = []
     for e in tiers["entries"]:
-        subj = (
-            e["subject"]
-            .replace("_", r"\_")
-            .replace("&", r"\&")
-            .replace("%", r"\%")
-            .replace("^", r"\^{}")
-            .replace("Omega_tilt", r"$\OmT$")
-        )
-        basis = (
-            e["basis"]
-            .replace("_", r"\_")
-            .replace("&", r"\&")
-            .replace("%", r"\%")
-            .replace("^", r"\^{}")
-        )
         rows.append(
-            f"\\code{{{e['id']}}} & {e['tier']} & {subj} & {basis} \\\\"
+            f"\\code{{{e['id']}}} & {e['tier']} & "
+            f"{_tex_escape(e['subject'])} & "
+            f"{_tex_escape(e['adjudication'])} \\\\[2pt]"
         )
     table = "\n".join(rows)
+    s_ids = set(tiers["s_entries"])
+    s_blocks = []
+    for e in tiers["entries"]:
+        if e["id"] in s_ids:
+            s_blocks.append(
+                f"\\paragraph{{\\code{{{e['id']}}}: "
+                f"{_tex_escape(e['subject'])}.}}\n"
+                f"{_tex_escape(e['adjudication'])}\n"
+            )
+    s_section = "\n".join(s_blocks)
     return r"""
 \section{Claim and novelty tier ledger}
 \label{sec:tiers}
 
-Every claim in this report carries one of four novelty tiers,
-adjudicated against an external-literature cross-check performed at
-build time (evidence ledger:
-\code{docs/audits/v10\_web\_crag\_20260721/}):
+Every claim in this report carries one of four novelty tiers. The tier
+is an \emph{external-novelty adjudication against the published
+literature only} (cross-check performed at build time; evidence
+ledger: \code{docs/audits/v10\_web\_crag\_20260721/}); it is
+independent of any internal validation staging, and the scope or
+conditionality of a result lives in its own section's claim boundary,
+never in the tier:
 
 \begin{description}
-\item[\tier{K} known] the fact or method is standard or published;
-  our contribution is an independent re-derivation or an
-  implementation-grade verification.
-\item[\tier{C} cross-check] our measured number or result
-  cross-checks a published external number (agreement or registered
+\item[\tier{K} known] the fact or method is published or
+  textbook-level; the citation (or an explicit textbook-level note) is
+  given, and our contribution is re-derivation or implementation-grade
+  verification.
+\item[\tier{C} cross-check] our number or result checks against a
+  \emph{named} external study's quantity (agreement or registered
   disagreement), or documents a verifiable external-release property.
-\item[\tier{P} potential advance] the analysis or theorem is
-  plausibly beyond the published literature (evidence: a documented
-  search finding no published equivalent), but is not promotable to a
-  significant claim today because of an explicit stated condition.
-\item[\tier{S} significant claimable] a result whose validation
-  status permits asserting a novel significant scientific result now.
+\item[\tier{P} potential advance] a stated delta over the named
+  closest literature at the method or partial-result level.
+\item[\tier{S} significant] a completed, externally novel result
+  whose delta over the named closest literature is itself a claimable
+  scientific contribution --- theory results complete as mathematics,
+  data results complete as test-plus-measurement.
 \end{description}
 
-\textbf{No entry carries \tier{S} in this version.} Each
-\tier{S}-candidate is held by a stated scientific condition: the
-directional-cosmography rank by its open selection-systematics
-channel and the pending survey-mock validation stages
-(Section~\ref{sec:completeness}); the low-multipole global rank by
-its single-pipeline conditionality pending a second-pipeline
-replication; and the exact-theory results, which are complete as
-mathematics, by the fact that the programme asserts no observational
-consequence from them without the native-transfer stage. This
-accounting is itself part of the record: the tier ledger states
-exactly what would promote each candidate.
+\subsection{The five \tier{S} entries and their deltas}
+
+""" + s_section + r"""
+
+\subsection{Full ledger}
 
 \begin{center}\scriptsize
-\begin{longtable}{p{2.4cm} p{0.8cm} p{6.2cm} p{5.2cm}}
-\toprule id & tier & claim & basis \\ \midrule
+\begin{longtable}{p{2.0cm} p{0.7cm} p{5.4cm} p{6.5cm}}
+\toprule id & tier & claim & external adjudication \\ \midrule
 """ + table + r"""
 \bottomrule
 \end{longtable}
@@ -1684,6 +1879,21 @@ A\&A 464, 399 (2007).
 Econometrica 72, 1845 (2004).
 \bibitem{PhipsonSmyth2010} B. Phipson and G.~K. Smyth,
 Stat. Appl. Genet. Mol. Biol. 9, 39 (2010).
+\bibitem{Nilsson1999} U.~S. Nilsson, C. Uggla, J. Wainwright, and
+W.~C. Lim (Hsu), Astrophys. J. Lett. 522, L1 (1999)
+(astro-ph/9904252).
+\bibitem{StoegerMaartensEllis1995} W.~R. Stoeger, R. Maartens, and
+G.~F.~R. Ellis, Astrophys. J. 443, 1 (1995).
+\bibitem{WainwrightEllis1997} J. Wainwright and G.~F.~R. Ellis (eds.),
+Dynamical Systems in Cosmology (Cambridge University Press, 1997).
+\bibitem{HajianSouradeep2003} A. Hajian and T. Souradeep,
+Astrophys. J. Lett. 597, L5 (2003).
+\bibitem{CAMB2000} A. Lewis, A. Challinor, and A. Lasenby,
+Astrophys. J. 538, 473 (2000).
+\bibitem{Talts2018} S. Talts, M. Betancourt, D. Simpson, A. Vehtari,
+and A. Gelman, arXiv:1804.06788 (2018).
+\bibitem{MengWong1996} X.-L. Meng and W.~H. Wong,
+Statistica Sinica 6, 831 (1996).
 \bibitem{VehtariGelmanGabry2017} A. Vehtari, A. Gelman, and J. Gabry,
 Stat. Comput. 27, 1413 (2017).
 \bibitem{Madhavacheril2024} M.~S. Madhavacheril et al.,
@@ -1765,6 +1975,9 @@ def build_manifest(tex: str) -> str:
     for stem in FIGURES:
         p = FIG_SRC / f"{stem}.png"
         figs[f"{stem}.png"] = hashlib.sha256(p.read_bytes()).hexdigest()
+    for src_dir, stem in CARRIED_FIGURES:
+        p = ROOT / src_dir / f"{stem}.png"
+        figs[f"{stem}.png"] = hashlib.sha256(p.read_bytes()).hexdigest()
     payload = {
         "schema": "htt.external_audit_report.v10.manifest",
         "version": "v10",
@@ -1800,6 +2013,9 @@ def do_write() -> int:
     figdest.mkdir(exist_ok=True)
     for stem in FIGURES:
         shutil.copy2(FIG_SRC / f"{stem}.png", figdest / f"{stem}.png")
+    for src_dir, stem in CARRIED_FIGURES:
+        shutil.copy2(ROOT / src_dir / f"{stem}.png",
+                     figdest / f"{stem}.png")
     for name, content in text_artifacts().items():
         (OUT / name).write_text(content)
     cmd = ["pdflatex", "-interaction=nonstopmode", "-halt-on-error",
@@ -1837,6 +2053,12 @@ def do_check() -> int:
         if not dst.exists() or src.read_bytes() != dst.read_bytes():
             ok = False
             print(f"figure differs: {stem}")
+    for src_dir, stem in CARRIED_FIGURES:
+        src = ROOT / src_dir / f"{stem}.png"
+        dst = OUT / FIG_DEST_NAME / f"{stem}.png"
+        if not dst.exists() or src.read_bytes() != dst.read_bytes():
+            ok = False
+            print(f"carried figure differs: {stem}")
     print(json.dumps({"mode": "check", "ok": ok}, sort_keys=True))
     return 0 if ok else 1
 

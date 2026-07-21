@@ -33,10 +33,14 @@ exact mathematical results, statistical architecture, and current-data
 analyses as of 2026-07-21. Every proposition is stated with its proof;
 every data result carries its conditionality; and every claim carries a
 novelty tier from the four-level scheme of
-Section~\ref{sec:tiers} --- \tier{K} known, \tier{C} cross-check,
-\tier{P} potential advance, \tier{S} significant claimable --- so a
-reader can separate standard material, reproductions of external
-results, and candidate advances at a glance. Earlier package versions
+Section~\ref{sec:tiers} --- \tier{K} known (with citation or a
+textbook-level note), \tier{C} cross-check (against a named study),
+\tier{P} potential advance, \tier{S} significant (with the delta over
+the closest literature stated) --- so a reader can separate standard
+material, reproductions of external results, and the five externally
+novel contributions at a glance. The tier is a literature-novelty
+adjudication only; each result's scope and conditionality are stated
+in its own section. Earlier package versions
 (v5--v9) remain byte-frozen; this version supersedes them as the
 current record and does not repeat their revision-response
 correspondence.
@@ -69,8 +73,8 @@ family identification, a measurement of spatial-curvature anisotropy,
 or a validation of a native anisotropic radiative-transfer solver. All
 sky-statistics are conditional on the stated pipelines and null
 ensembles; all exact theorems are conditional on their stated premises;
-and the small number of results with promotion potential are tagged and
-bounded in Section~\ref{sec:tiers}.
+and the externally novel results carry their deltas and scopes in
+Section~\ref{sec:tiers}.
 
 \section{Conventions and the measured object}
 \label{sec:conv}
@@ -196,7 +200,7 @@ choice minimizes (respectively maximizes) each term independently,
 which is feasible because the box is a product set.
 \end{proof}
 
-\begin{theorem}[Exact axis-separable identified sets]
+\begin{theorem}[Exact axis-separable identified sets \tier{S}]
 \label{thm:idset}
 For a constraint system on $\bm g$ consisting of per-axis equalities
 and inequalities with rational data, the identified set is the product
@@ -237,7 +241,8 @@ columns give rank two with the stated kernel; the identification
 consequence is Theorem~\ref{thm:idset}'s null-space clause. The rank
 and kernel are certified by two independent computer-algebra engines
 over the rationals (artifact
-\code{docs/generated/} response-map seals).
+\code{docs/generated/} response-map seals; figure
+\code{fig\_egs3\_a1\_graded\_rank}).
 \end{proof}
 
 \subsection{Fractional-program and fingerprint bounds}
@@ -336,7 +341,7 @@ interface refuses e-value language for uncalibrated statistics.
 \begin{proposition}[Simulation-based calibration with lineage
 \tier{K}]
 \label{prop:sbc}
-For a posterior sampler tested by the rank procedure of Talts et al.:
+For a posterior sampler tested by the rank procedure of Talts et al. \cite{Talts2018}:
 if the sampler is exact, the rank of the true parameter among
 posterior draws is uniform, so the binned ranks are jointly
 multinomial with equal cells and the $\chi^2$ test is calibrated at
@@ -396,7 +401,8 @@ estimator- and profile-conditional, never data statements.
 \begin{theorem}[Diagonal compression loses morphology \tier{K}]
 \label{thm:compress}
 For statistically isotropic covariance only the $L = 0$,
-$\ell = \ell'$ sector of the bipolar decomposition survives;
+$\ell = \ell'$ sector of the bipolar decomposition
+\cite{HajianSouradeep2003} survives;
 consequently diagonal $C_\ell$ summaries are blind to all $L > 0$
 covariance morphology, and a full-covariance ceiling
 $B^{\rm final} = \min\{B^{\rm diag}, B^{\rm cov}\}$ can only tighten
@@ -519,7 +525,7 @@ tolerance and a prior-sensitivity ceiling holds.
 The exact form follows by completing the square in $\mu$. The
 thermodynamic identity $\log Z = \int_0^1 \mathbb E_\beta[\log L]\,
 d\beta$ follows by differentiating $\log Z_\beta$; the
-Meng--Wong bridge identity is an importance-sampling equality valid
+Meng--Wong bridge identity \cite{MengWong1996} is an importance-sampling equality valid
 for any bridge function with overlapping support. Agreement of two
 independent stochastic engines with the closed form to the stated
 tolerance is recorded in the sealed artifacts.
@@ -569,14 +575,15 @@ refused at the interface.
 \section{Geometry-side theorems with proofs}
 \label{sec:geom}
 
-\subsection{One-way FLRW comparison \tier{K}/\tier{P}}
+\subsection{One-way FLRW comparison \tier{K}/\tier{C}}
 
 \begin{theorem}[Premise-complete forward direction]
 \label{thm:egs}
 For comparator states satisfying the complete registered FLRW premise
 set (exact isotropy of the radiation field for every fundamental
 observer of an irrotational geodesic congruence, with the exact
-Ehlers--Geren--Sachs closure \cite{EGS1968}), $x_C = 0$ exactly.
+Ehlers--Geren--Sachs closure \cite{EGS1968,
+StoegerMaartensEllis1995}), $x_C = 0$ exactly.
 \end{theorem}
 \begin{proof}
 Under the premise set each component of $\bm g$ vanishes individually:
@@ -587,7 +594,7 @@ premise sets are refused with a refuting witness rather than
 evaluated.
 \end{proof}
 
-\begin{proposition}[The converse fails \tier{P}]
+\begin{proposition}[The converse fails \tier{K}/\tier{C}]
 \label{prop:noconverse}
 $x_C = 0$ never implies FLRW: there exist registered counterexample
 states with $\Sigma^2 = W^2 > 0$, $\OmT = \dOk = 0$ (and a
@@ -597,12 +604,15 @@ anisotropic.
 \begin{proof}
 By construction: the comparator is a single linear functional, so its
 kernel intersects the positive cone of anisotropic states in a
-codimension-one family; explicit rational witnesses are sealed. This
-is why $x_C$ is a departure \emph{diagnostic}, not an isotropy
-certificate.
+codimension-one family; explicit rational witnesses are sealed. The
+underlying phenomenon --- that an almost isotropic microwave
+temperature does not imply an almost isotropic universe --- is
+published \cite{Nilsson1999}; our registry verifies it at the exact
+comparator level. This is why $x_C$ is a departure \emph{diagnostic},
+not an isotropy certificate.
 \end{proof}
 
-\subsection{MES bound hierarchy: primary-source reduction \tier{C}/\tier{P}}
+\subsection{MES bound hierarchy: primary-source reduction \tier{S}}
 \label{sec:mes}
 
 \begin{theorem}[Geodesic reduction of the raw bounds]
@@ -662,8 +672,7 @@ accessible source and exceed the companion paper's own faithful cap,
 which is recorded as a documented discrepancy \tier{C} rather than
 resolved.
 
-\subsection{Rotating congruences and the curvature sector
-\tier{K}/\tier{P}}
+\subsection{Rotating congruences and the curvature sector \tier{S}}
 
 \begin{theorem}[Contracted Gauss identity with rotation]
 \label{thm:ke}
@@ -707,7 +716,7 @@ system, constraints monitored below $1.6\times10^{-10}$) shows the
 obstruction is specific to the flat sector.
 \end{proof}
 
-\subsection{Curvature--shear slaving with certified remainder \tier{P}}
+\subsection{Curvature--shear slaving with certified remainder \tier{S}}
 \label{sec:omk}
 
 \begin{theorem}[Exact slaving coefficient]
@@ -865,6 +874,114 @@ and the Jacobi identity are verified for every representative. Held
 at the exploratory tier as native-solver support mathematics.
 \end{proof}
 
+\subsection{Carried exact results (completeness set)}
+
+The following results were proven in earlier package versions and are
+restated here with their proofs so this document is self-contained;
+the referenced figures are carried into the package.
+
+\begin{proposition}[Exact boost channel and fingerprints
+\tier{K}/\tier{P}]
+\label{prop:u1}
+For the registered antipodal two-point reduction of an observer boost
+with rapidity $\beta$, the mixing parameter is exactly
+$s = \tanh\beta$, with $s^2 = t/(2+t)$ in the registered
+temperature-contrast variable $t$; the moment fingerprints obey the
+exact rational expansions
+$R_3 - 1 = -\tfrac{3}{4}t + \tfrac{87}{32}t^2$,
+$R_5 - 1 = +\tfrac{5}{4}t - \tfrac{185}{32}t^2$, and $R_4 \equiv 1$,
+so $(R_3, R_5)$ measure the boost channel while $R_4$ is blind to it.
+(Figure \code{fig\_egs3\_u1\_beta\_channel}.)
+\end{proposition}
+\begin{proof}
+The two antipodal lines of sight see Doppler factors
+$\gamma^{-1}(1 \mp \beta)^{-1}$; forming the registered two-point
+moments and expanding in exact rational arithmetic gives the displayed
+series, with $s = \tanh\beta$ emerging as the exact mixing parameter
+of the symmetric/antisymmetric decomposition. $R_4 \equiv 1$ because
+the fourth-moment ratio cancels the boost factor identically at this
+order. Verified independently in a second computer-algebra engine.
+\end{proof}
+
+\begin{proposition}[Fingerprint-to-ceiling map \tier{K}/\tier{P}]
+\label{prop:u2}
+The proved envelopes $|R_3 - 1| \le \tfrac{3}{2}s^2$ and
+$|R_5 - 1| \le \tfrac{5}{2}s^2$ map the fingerprint channel onto exact
+rational MES-dipole ceilings at the registered dipole share
+($\epsilon_1 = 771/625000$): $2.283\times10^{-6}$ and
+$3.804\times10^{-6}$ respectively, and the measured CF4 flow rapidity
+is contained in both channels. (Figure
+\code{fig\_egs3\_u2\_fingerprint\_ceilings}.)
+\end{proposition}
+\begin{proof}
+The envelopes follow from the exact expansions of
+Proposition~\ref{prop:u1} by bounding the quadratic terms on the
+registered domain; substituting the registered $\epsilon_1$ into the
+MES dipole relation converts the $s^2$ bounds into the displayed
+ceilings, and the containment check is direct evaluation at the
+measured rapidity.
+\end{proof}
+
+\begin{proposition}[Registered transfer floor with external
+cross-check \tier{C}]
+\label{prop:seminative}
+The registered semi-native shear-to-multipole transfer profile has a
+superhorizon visibility floor of exactly $0.632456$, and the identical
+floor is reproduced by the real CAMB visibility computation
+\cite{CAMB2000}, with finite-$k$ agreement at the $0.2\%$ level.
+(Figures \code{fig\_egs3\_b1\_floor\_profile} and
+\code{flrw\_lowell\_dell\_camb\_bass\_lmax30}.)
+\end{proposition}
+\begin{proof}
+The floor is the $k \to 0$ limit of the registered profile, where the
+transfer kernel saturates at the visibility-weighted monopole
+projection; evaluating the limit gives the constant. The cross-check
+runs the same quantity through CAMB's visibility machinery on the
+identical background and compares profile values bin by bin; the
+superhorizon values agree identically and the finite-$k$ values to
+$0.2\%$, which discharges the concern that the floor is an artifact
+of the registered kernel.
+\end{proof}
+
+\begin{proposition}[Exact endpoint attainability \tier{P}]
+\label{prop:t3end}
+Both endpoints of the comparator interval of
+Theorem~\ref{thm:t1p} are attained by explicit exact homogeneous
+initial data: a Bianchi~I configuration for the lower endpoint and a
+Bianchi~V configuration (shear transverse to the group vector, with
+an antipodal tilt pair) for the upper endpoint, each with exactly
+zero Gauss and momentum constraint residuals.
+\end{proposition}
+\begin{proof}
+The data are written in exact rationals and the constraints evaluated
+symbolically: the Bianchi~I data set the tilt and curvature
+components to zero and saturate the shear box corner; the Bianchi~V
+data realize the upper corner with the transverse-shear alignment
+guaranteeing the momentum constraint and the antipodal pair cancelling
+the energy flux. Both evaluations return identically zero residuals,
+so attainment is exact, not approximate. (Endpoint attainability, not
+full dynamical sharpness.)
+\end{proof}
+
+\begin{proposition}[Cone representation of the component vector
+\tier{K}]
+\label{prop:psd}
+Writing $M = \mathrm{diag}(\bm g) \succeq 0$, the comparator is
+$x_C = \mathrm{tr}(C M)$ with $C = \mathrm{diag}(c)$, the admissible
+set is a convex cone of positive semidefinite moment matrices, and
+identifiability statements become reachable-eigendirection statements
+--- reproducing the rank-two result of Theorem~\ref{thm:rank2} as the
+reachable/null eigen-split. (Figure \code{fig\_egs3\_psd\_cone}.)
+\end{proposition}
+\begin{proof}
+Diagonal embedding: nonnegativity of the components is exactly
+positive semidefiniteness of $M$, linearity of $x_C$ is the trace
+pairing, and convexity follows because the PSD cone intersected with
+linear constraints is convex. The representation is mathematically
+equivalent to Definition~\ref{def:g}; its value is that null sectors
+appear as unreachable eigendirections of the response map.
+\end{proof}
+
 \subsection{Auxiliary exact results}
 
 \begin{proposition}[Premise-complete axisymmetric $B$-projector zero
@@ -896,6 +1013,7 @@ arithmetic on the linear functional.
 \end{proof}
 
 \begin{proposition}[Reciprocal coefficient bracket \tier{K}]
+\label{prop:recbracket}
 For the registered $\ell = 2$ relation $a_2 = \kappa\Sigma(1+\delta)$
 with $|\delta| \le R < 1$ and $\kappa$ pinned first, the correct
 inversion brackets the shear \emph{reciprocally},
@@ -1022,7 +1140,7 @@ consistent with the null. The measured odd/even structural-zero ratio
 on the observed map is 7.3e-32, certifying the implementation
 at float precision. Figure: \code{fig\_v10\_k1\_evenl\_rank}.
 
-\paragraph{Boost-sector residual \tier{P}.}
+\paragraph{Boost-sector residual \tier{S}.}
 The FFP10 CMB simulations include Doppler boosting
 \cite{Planck2018III}, so the end-to-end null is a \emph{boosted} null.
 The dipole-frame $(\ell,\ell+1)$ coupling vector
@@ -1048,8 +1166,9 @@ no independence claim. Figure: \code{fig\_v10\_boost\_biposh\_features}.
 \paragraph{Off-diagonal isotropy measurement \tier{C}.}
 The earlier off-diagonal BipoSH statistical-isotropy measurement on
 SMICA and Commander (global $p = 0.68$ and $0.65$) remains the
-programme's direct SI cross-check, consistent with the Planck isotropy
-papers.
+programme's direct SI cross-check, consistent with the Planck
+isotropy results \cite{Planck2018VII} (carried figure
+\code{fig\_egs3\_d\_biposh}).
 
 \subsection{Cosmicflows-4 peculiar-velocity lane (K5)}
 \label{sec:cf4}
@@ -1079,7 +1198,7 @@ that estimator at the few-percent level with apex agreement to
 $8.5^\circ$ at the inner depth; its amplitude significance is
 withheld here in favour of the full-covariance treatment.
 
-\paragraph{Identified sets per depth \tier{P}.}
+\paragraph{Identified sets per depth \tier{S}.}
 Under a frozen nuisance box (distance-scale calibration, choice of
 reconstruction observable, nonlinear dispersion) the flow is reported
 as an identified set per pre-registered depth shell
@@ -1299,99 +1418,163 @@ verification gaps (Theorem~\ref{thm:ricci}).}
 \end{figure}
 \clearpage
 
+\subsection{Carried figures (completeness set)}
+
+Figures generated in earlier package versions, carried here because
+they illustrate propositions proven in this document.
+
+\begin{figure}[p]\centering
+\includegraphics[width=0.48\textwidth]{fig_egs3_a1_graded_rank.png}
+\includegraphics[width=0.48\textwidth]{fig_egs3_psd_cone.png}\\
+\includegraphics[width=0.48\textwidth]{fig_egs3_a3_evalue_calibration.png}
+\includegraphics[width=0.48\textwidth]{fig_egs2_nt2a1_fisher_floor.png}
+\caption{Carried set I. Top: rank-two response and joint null sector
+(Theorem~\ref{thm:rank2}); cone representation
+(Proposition~\ref{prop:psd}). Bottom: exceedance/e-value calibration
+(Proposition~\ref{prop:evalue}); multi-$\ell$ Fisher floor
+(Proposition~\ref{prop:floor}).}
+\end{figure}
+\begin{figure}[p]\centering
+\includegraphics[width=0.48\textwidth]{fig_egs2_nt2b1_bracket.png}
+\includegraphics[width=0.48\textwidth]{fig_egs3_b1_floor_profile.png}\\
+\includegraphics[width=0.48\textwidth]{fig_egs3_b2_volterra.png}
+\includegraphics[width=0.48\textwidth]{fig_egs3_b3_vorticity.png}
+\caption{Carried set II. Top: two-sided reciprocal shear bracket
+(Proposition~\ref{prop:recbracket}); registered transfer floor profile
+(Proposition~\ref{prop:seminative}). Bottom: Volterra depth memory
+(Proposition~\ref{prop:volterra}); transverse vorticity reopening
+(Proposition~\ref{prop:reopen}).}
+\end{figure}
+\begin{figure}[p]\centering
+\includegraphics[width=0.48\textwidth]{fig_egs3_c_deprojection.png}
+\includegraphics[width=0.48\textwidth]{fig_egs3_d_biposh.png}\\
+\includegraphics[width=0.48\textwidth]{fig_egs3_u1_beta_channel.png}
+\includegraphics[width=0.48\textwidth]{fig_egs3_u2_fingerprint_ceilings.png}
+\caption{Carried set III. Top: kinematic deprojection
+(Proposition~\ref{prop:deproj}); off-diagonal BipoSH
+statistical-isotropy measurement on the real maps
+(Section~\ref{sec:k1}). Bottom: exact boost channel $s = \tanh\beta$
+(Proposition~\ref{prop:u1}); fingerprint-to-ceiling map
+(Proposition~\ref{prop:u2}).}
+\end{figure}
+\begin{figure}[p]\centering
+\includegraphics[width=0.48\textwidth]{fig_egs3_e_im_coverage.png}
+\includegraphics[width=0.48\textwidth]{flrw_lowell_dell_camb_bass_lmax30.png}
+\caption{Carried set IV. Imbens--Manski coverage certificate
+(Proposition~\ref{prop:im}); CAMB cross-check of the low-$\ell$
+spectrum lane supporting the transfer-floor cross-check
+(Proposition~\ref{prop:seminative}).}
+\end{figure}
+\clearpage
+
 \section{Claim and novelty tier ledger}
 \label{sec:tiers}
 
-Every claim in this report carries one of four novelty tiers,
-adjudicated against an external-literature cross-check performed at
-build time (evidence ledger:
-\code{docs/audits/v10\_web\_crag\_20260721/}):
+Every claim in this report carries one of four novelty tiers. The tier
+is an \emph{external-novelty adjudication against the published
+literature only} (cross-check performed at build time; evidence
+ledger: \code{docs/audits/v10\_web\_crag\_20260721/}); it is
+independent of any internal validation staging, and the scope or
+conditionality of a result lives in its own section's claim boundary,
+never in the tier:
 
 \begin{description}
-\item[\tier{K} known] the fact or method is standard or published;
-  our contribution is an independent re-derivation or an
-  implementation-grade verification.
-\item[\tier{C} cross-check] our measured number or result
-  cross-checks a published external number (agreement or registered
+\item[\tier{K} known] the fact or method is published or
+  textbook-level; the citation (or an explicit textbook-level note) is
+  given, and our contribution is re-derivation or implementation-grade
+  verification.
+\item[\tier{C} cross-check] our number or result checks against a
+  \emph{named} external study's quantity (agreement or registered
   disagreement), or documents a verifiable external-release property.
-\item[\tier{P} potential advance] the analysis or theorem is
-  plausibly beyond the published literature (evidence: a documented
-  search finding no published equivalent), but is not promotable to a
-  significant claim today because of an explicit stated condition.
-\item[\tier{S} significant claimable] a result whose validation
-  status permits asserting a novel significant scientific result now.
+\item[\tier{P} potential advance] a stated delta over the named
+  closest literature at the method or partial-result level.
+\item[\tier{S} significant] a completed, externally novel result
+  whose delta over the named closest literature is itself a claimable
+  scientific contribution --- theory results complete as mathematics,
+  data results complete as test-plus-measurement.
 \end{description}
 
-\textbf{No entry carries \tier{S} in this version.} Each
-\tier{S}-candidate is held by a stated scientific condition: the
-directional-cosmography rank by its open selection-systematics
-channel and the pending survey-mock validation stages
-(Section~\ref{sec:completeness}); the low-multipole global rank by
-its single-pipeline conditionality pending a second-pipeline
-replication; and the exact-theory results, which are complete as
-mathematics, by the fact that the programme asserts no observational
-consequence from them without the native-transfer stage. This
-accounting is itself part of the record: the tier ledger states
-exactly what would promote each candidate.
+\subsection{The five \tier{S} entries and their deltas}
+
+\paragraph{\code{T-IDSET}: identified-set (partial-identification) framework for FLRW-departure components, with the CF4 bulk-flow application.}
+Delta: partial identification is established econometrics (Imbens \& Manski 2004; Manski) but a documented search found NO published identified-set treatment in peculiar-velocity or CMB-anisotropy inference; the entire bulk-flow literature (Watkins et al. 2023; Whitford et al. 2023) reports point estimates with errors. Contribution: exact interval-intersection engine with bounded/empty/unbounded/disconnected classification + the first nuisance-box identified sets for a real catalogue (CF4 per-depth bounded-widening result, monopole-protected estimand).
+
+\paragraph{\code{G-MES-REFREEZE}: geodesic-branch reduction of the MES bounds with the epsilon\_1 admissibility theorem and the re-derived vorticity ceiling.}
+Base: Maartens, Ellis \& Stoeger 1995 (PRD 51, 1525 + companion) and Stoeger, Araujo \& Gebbie 1997 give the raw multipole bounds and the geodesic omega coefficients; the era's quoted ceilings are of order W\_0 < 1e-3..1e-4. Delta: (i) the closure reduction of the raw inequalities executed as exact rational algebra with bit-identical two-engine agreement; (ii) the explicit epsilon\_1 admissibility threshold epsilon\_1\^{}crit = (43/25)eps2 + (9/35)eps3 governing which attribution branch is admissible (absent from the primary sources); (iii) the resulting exact vorticity ceiling W\^{}2\_max = 3.3789e-13 under the SAG attribution — 6.59 orders tighter than the registered legacy value and far below the era's published order-of-magnitude limits; (iv) a three-branch registry propagating every attribution consistently. No later published tightening of this line was found.
+
+\paragraph{\code{G-KE}: rotating-congruence programme: contracted Gauss identity with vorticity, tilt vorticity classification, and the dynamical double obstruction at flat anisotropic curvature.}
+Base: King \& Ellis 1973 classify tilted homogeneous cosmologies at the kinematic/constraint level; the tilted dynamical-systems literature (Coley-Hervik line; Hewitt et al.) studies late-time behavior. Delta: (i) the exact O(v\^{}2) vorticity content of oblique type-I tilt in omega\_ab omega\^{}ab (correcting the naive 'type I is irrotational' reading); (ii) the DOUBLE obstruction at DeltaOmega\_k = 0 — single stream killed by G\_ti = 0 for every homogeneous type-I metric in the class AND the antipodal pair killed dynamically by Killing+Euler direction conservation along the entire development — upgrading the exclusion from constraint-level to dynamical within the group-invariant perfect-fluid class; (iii) an explicit rotating type-V development with monitored constraints showing the obstruction is specific to the flat sector. No published equivalent of (ii) was found.
+
+\paragraph{\code{G-OMK}: exact curvature-shear slaving with resonance family and computer-certified remainder.}
+Base: center-manifold/isotropization analyses of LRS Bianchi III / Kantowski-Sachs models are standard (Collins \& Ellis 1979; Hewitt \& Wainwright 1992; Wainwright \& Ellis 1997), qualitative in character. Delta: the exact closed-form slaving coefficient Sigma = kappa K with kappa = -1/(2+q) (kappa(w) = -2/(5+3w), c\_2(w) exact rational), the exact resonance family w\_n = -(2n+3)/(6n-3), and a UNIFORM computer-certified forward-invariant remainder enclosure |Sigma - (kappa K + c\_2 K\^{}2)| <= |K|\^{}3 on a registered compact domain (exact-rational branch-and-bound, not sampling). A documented search found no published exact slaving coefficient or certified remainder for this class; the resulting finite anisotropic-curvature ceilings are new.
+
+\paragraph{\code{D-K1-BOOST}: zero-parameter boost-BiPoSH residual test on the real sky: p = 0.854 inside the boosted end-to-end null.}
+Base: Planck 2013 XXVII detect and FIT the boost amplitude from high-ell (500 < l < 2000) aberration/modulation couplings; Bayesian local-motion estimates from Planck 2018 maps follow the same amplitude-estimation paradigm. Delta: this is a ZERO-PARAMETER residual consistency test at low multipoles (l = 2..10) — the template is derived from the exact pixel-space boost operator at the known solar velocity (nothing fitted), subtracted identically from data and from boost-carrying FFP10 end-to-end simulations, and the residual excitation is ranked exactly. Result: the observed low-ell dipole-coupling sector shows no residual beyond the known boost (p = 0.854). A documented search found no published low-ell zero-parameter boost-residual test conditioned on boosted end-to-end simulations; the test and its real-sky result are jointly the contribution.
+
+
+\subsection{Full ledger}
 
 \begin{center}\scriptsize
-\begin{longtable}{p{2.4cm} p{0.8cm} p{6.2cm} p{5.2cm}}
-\toprule id & tier & claim & basis \\ \midrule
-\code{CONV-FRAME} & K & 1+3 covariant frame decomposition and premise contract & standard covariant formalism (Ellis-van Elst); fail-closed contract is implementation \\
-\code{CONV-TYPES} & P & typed source-response quantity system A\_v/Omega\_tilt/W2/Sigma2/DeltaOmega\_k & no published typed-quantity firewall for anisotropy diagnostics found \\
-\code{CONV-ESTREG} & K & estimand/population/dependency/selection registry & pre-registration practice standard; registry is implementation \\
-\code{T-COMP} & K & signed comparator x\_C = c\^{}T g algebra and domain semantics & linear-functional algebra; program-specific convention \\
-\code{T-T1P} & K & T1' signed-box two-branch identified interval & convex interval analysis \\
-\code{T-T2G} & K & T2G general fractional-program interval theorem & fractional programming; exact-arithmetic certificates are implementation \\
-\code{T-TSUM} & K & TSUM fingerprint sum bound R3+R5>=2 & AM-GM with exact equality case \\
-\code{T-RANK2} & P & graded rank-2 comparator non-identification with {W2, DeltaOmega\_k} kernel & no published identifiability/rank certificate for Bianchi-departure component vectors found \\
-\code{T-IDSET} & P & exact identified-set engine with bounded/empty/unbounded/disconnected classification & CRAG A11: no published identified-set machinery in PV/CMB anisotropy context \\
-\code{T-IMCOV} & K+P & least-favorable-boundary simultaneous Imbens-Manski coverage & IM intervals known; simultaneous grid-conditional certificate in this context not found \\
-\code{T-RANKX} & K+P & exchangeable observation-inclusive finite-null global ranking (1+b)/(N+1) with floor gates & Phipson-Smyth exact-discrete known; pooled look-elsewhere composition with hard floor validation not found for low-ell CMB \\
-\code{T-SBCPPC} & K & lineage-bound SBC + replicated-data PPC & Talts et al. 2018; Gelman et al. PPC \\
-\code{T-HOLDOUT} & K & dependency-aware group-level ELPD + PSIS verification & Vehtari-Gelman-Gabry 2017; Vehtari et al. 2015 \\
-\code{T-EVID} & K & normalized-prior evidence, TI + bridge two-engine agreement & thermodynamic integration and Meng-Wong bridge standard \\
-\code{T-MIX} & P & contamination-aware local/global mixture with mandatory abstention gates & abstention-gated discrimination protocol with identifiability/PPC/prior-sensitivity gates not found in the anisotropy literature \\
-\code{T-MEAS} & P & F/Pi/G\_F measure distinctness and matched-null calibration & program-specific calibrated diagnostic semantics \\
-\code{T-ADJUD} & K & synthetic DGP battery with blind analyst and measured size 0.0067 & simulation-based calibration practice; measured-size result is internal \\
-\code{G-MES-REFREEZE} & C+P & MES geodesic vorticity ceiling re-derivation, W2\_max = 3.3789e-13 (6.59-OOM tightening) & primary-source cross-check (MESa eq 51/52 + SAG 1997); explicit geodesic-branch reduction and epsilon\_1 admissibility theorem not in accessible literature \\
-\code{G-MESB-TRACE} & C & MESb non-geodesic coefficient trace: registered (3/4,2,2/7)/(3/4,1,3/14) in no accessible source; companion cap max(eps2,eps3) & documented discrepancy against accessible primary sources \\
-\code{G-KE} & K+P & King-Ellis rotating-congruence program: contracted Gauss identity, tilt vorticity classification, DeltaOmega\_k=0 double obstruction (dynamical) & King \& Ellis 1973 base known; the dynamical upgrade of the lower-endpoint W2 withdrawal within the group-invariant perfect-fluid class not found \\
-\code{G-OMK} & K+P & Omega\_k slaving theorem Sigma = kappa K, kappa = -1/(2+q) exact; near-FLRW kappa(w), c2(w); resonance family w\_n & center-manifold tilt dynamics known (Collins-Ellis; Hewitt-Wainwright); exact slaving coefficients with certified interval remainder not found \\
-\code{G-OMK-REM} & P & interval-arithmetic certified remainder tube |Sigma - (kappa K + c2 K\^{}2)| <= |K|\^{}3 on omk\_domain\_v1 & branch-and-bound exact-rational forward-invariance certificate; no cosmology equivalent found \\
-\code{G-EGS} & K+P & one-way EGS/FLRW theorem + counterexample registry (x\_C = 0 never implies FLRW) & EGS theorem known; the sealed converse-refusal counterexample registry is program-specific \\
-\code{G-NT2} & K & NT2 reciprocal coefficient bracket and tail convergence separation & elementary algebra/series bounds \\
-\code{G-NTA3} & K & sqrt(2/5) estimator-specific dispersion, dof 2l+1 & chi-square moment identity \\
-\code{G-ODDL} & K & odd-L diagonal BiPoSH structural zero A\^{}{LM}\_{ll} = 0 for odd L & CRAG A4: known exchange symmetry (Book-Kamionkowski-Souradeep 2012); independently re-proven by sympy Wigner-3j oracle \\
-\code{G-RICCI11} & K+C & 11-type exact spatial Ricci scalar identity, Koszul engine == Ellis-MacCallum anchor & Ellis-MacCallum 1969 canonical tables known; dual-engine gap 8.2e-10 is implementation cross-check \\
-\code{G-PARITY} & K & four exact parity identities; EB/TB ratio parity-even; signed-component template requirement & Pontzen-Challinor 2007 confirmatory; parity-evenness elementary once stated; internal corrective record \\
-\code{G-BPROJ} & K & premise-complete axisymmetric B-projector invariant: sigma\_20-only + zero B-tower implies exact zero & elementary selection-rule algebra; premise-conditional statement \\
-\code{G-M4B} & K & unsigned comparator leakage certificate M\_max(B) = 4B, algebraic-only & elementary bound; algebraic-only status part of the statement \\
-\code{G-SWRAY} & K & SW-only photon-momentum transport closed form on prescribed Bianchi I kinematics + linear parity/shear quadrupole oracle & conserved-momentum closed form standard; numerical mechanics verification \\
-\code{D-CF4-MANIFEST} & C & row-complete authenticated CF4 column manifest, 38053 groups, typed columns & byte-authenticated against the published VizieR J/ApJ/944/94 tables \\
-\code{D-CF4-MV} & C & CF4 minimum-variance bulk-flow reproduction: amplitude within a few percent of the published value, apex within 8.5 deg at the inner depth (amplitude headline withheld in favour of the full-covariance treatment) & reproduces Watkins et al. 2023 419 +/- 36 \\
-\code{D-CF4-DEFL} & C+P & full-covariance significance deflation: ~1 sigma honest (cosmic-variance dominated) vs ~8 sigma noise-only formal & parallels Whitford et al. 2023 uncertainty-underestimation finding; analytic estimator-matched full-cov treatment as primary not found published \\
-\code{D-CF4-FWD} & K+C & Cholesky full-C\_ab forward simulator + independent FFT reference; stressor-resolved coverage degradation & GRF mock methodology standard; two-generator normalization cross-check internal \\
-\code{D-CF4-IDSET} & P & nuisance-box identified sets per depth shell: bounded at every shell, widening with depth; monopole-protected flow estimand & CRAG A11: no published partial-identification treatment of bulk-flow nuisances \\
-\code{D-CF4-GROWTH} & C & depth-resolved fsigma8: nearest shell 0.386 (pull -0.48 vs comparator), deeper shells unconstrained; joint same-data covariance measured & consistent with CF4 pairwise fsigma8 0.36-0.38 (Courtois et al. 2023) \\
-\code{D-CF4-VCORR} & C & field-level ML growth-rate lane agrees with the published CF4 pairwise range; numeric headline pending independent covariance validation & agrees with CF4 literature 0.36-0.38 and Planck-side 0.44 \\
-\code{D-CF4-RECON} & C & reconstruction-method dependence retained as a systematics design axis; numeric instantiation withheld pending independent validation & design lane against external reconstructions (Carrick, CORAS, Lilow-Veena-Nusser) \\
-\code{D-CF4-MOCKSIG} & C & linear GRF + super-sample mock null reproduces the analytic linear significance; the reduction to literature values is the un-modelled nonlinear residual & consistent with Whitford et al. 2023 nonlinear underestimation mechanism \\
-\code{D-CF4-CURL} & C & WF mean-field curl/div = 0.009 on the real 3-D CF4++ field: potential-flow no-go confirmed & linear-theory potential-flow expectation verified on data \\
-\code{D-K1-CONV} & K & canonical K1 convention: frame/alm/mask/proc-nside contract verified on real SMICA/Commander with rotation cross-check & implementation-grade convention verification \\
-\code{D-K1-GLOBALP} & C+P & look-elsewhere global p = 39/1000 = 0.039 over six registered statistics under the SMICA-processed FFP10 E2E null (noise-reuse sensitivity 0.033-0.039) & consistent with Planck 2018 VII 2-3 sigma anomaly band; exchangeable pooled-rank estimator composition not found published \\
-\code{D-K1-BOOST} & P & zero-parameter boost-BiPoSH residual: observed L=1 dipole-frame excitation rank p = 0.854 inside the boosted FFP10 null & CRAG A2/A3: literature fits boost amplitude at high ell; zero-parameter low-ell residual consistency test on boost-carrying E2E sims not found \\
-\code{D-K1-EVENL} & C & even-L diagonal BiPoSH exchangeable ranks under the same E2E null (v10 new analysis B1) & diagnostic consistency analysis; odd-L quotient uses the known structural zero \\
-\code{D-K1-BIPOSH-SI} & C & off-diagonal BipoSH SI measurement on SMICA/Commander, global p = 0.68/0.65 & consistent with Planck SI findings \\
-\code{D-DESI-DIPOLE} & C & DESI DR1 BGS window-corrected number-count dipole D = 9.49e-3, clustering-dominated, ~LCDM-consistent (p = 0.90) & adds a BGS low-z data point; consistent-null direction against clustering mocks \\
-\code{D-DESI-EXACTSEL} & P & exact-selection per-mock refit machinery on real random density; official-mock significance deferred & survey-conditional per-mock alpha+beta refit design; result deferred pending complete official mock ensemble (data-availability condition) \\
-\code{D-ACT-ISO} & C & ACT DR6 low-L mean-field-debiased kappa isotropy p = 0.35 + 95\% UL on excess L=2..10 band power < 3.28e-6 (0.47x null) & consistent with release isotropy expectations; leave-one-sim cross-fit mean field at low L method-level \\
-\code{D-ACT-RAWQE} & C & raw-QE inputs not publicly available in DR6 release: RDN0 unformable; release-sim cross-fit pooled rank 0.364 & documents a verifiable release property \\
-\code{D-ACT-INBAND} & C & strict-in-band kappa modulation: no resolved coupling at current MC resolution (rank 102/401, band L = 41..762) & consistency diagnostic on the public release \\
-\code{D-JWST} & C & 17-anchor JWST distance manifest + probabilistic CF4 crossmatch (10 credible); hierarchical covariance forecast: total uncertainty not identified & non-identification certificate against cited JWST anchor set; positional credibility never identity \\
-\code{D-PR176} & K & Tsagas div-v/q cross-falsifier: q response unavailable (non-informative); frozen-covariance self-consistency axis failed honestly (coverage 0.9424) & internal falsifier mechanics; dual-axis bookkeeping \\
-\code{D-PR179} & C+P & raw-CF4 reconstruction-independent directional cosmography: H-only exact rank 2/20000 CONDITIONAL on selection systematics; all q results withheld by cubic falsifier (corr 0.98) & CRAG A10: lands on the same systematics interpretation as the 2025 forward-model reanalysis of CF4 H0-anisotropy claims; reconstruction-independent falsifier-gated estimand not found published; promotion held by open selection channel (data-availability condition) \\
-\code{D-COMPARATOR-REGION} & P & combined identified region for g and x\_C interval from measured Omega\_tilt + MES/OMK ceilings (v10 new analysis B2) & first assembled identified-region rendering of the four-component comparator under measured+ceiling inputs; diagnostic only \\
+\begin{longtable}{p{2.0cm} p{0.7cm} p{5.4cm} p{6.5cm}}
+\toprule id & tier & claim & external adjudication \\ \midrule
+\code{CONV-FRAME} & K & 1+3 covariant frame decomposition and premise contract & Textbook-level covariant cosmology (Ellis \& van Elst 1999 lectures); the fail-closed contract is implementation. \\[2pt]
+\code{CONV-TYPES} & P & typed source-response quantity system A\_v/Omega\_tilt/W2/Sigma2/DeltaOmega\_k & Delta: the anisotropy literature routinely mixes kinematic-dipole proxies and physical tilt across boost orders (the historical source of dipole-to-tilt overclaims); no published type-level firewall with registered bridge maps was found. \\[2pt]
+\code{CONV-ESTREG} & K & estimand/population/dependency/selection registry & Pre-registration practice is standard in modern statistics; the typed fail-closed registry is implementation. \\[2pt]
+\code{T-COMP} & K & signed comparator x\_C = c\^{}T g algebra and domain semantics & Textbook-level linear-functional algebra; the specific convention is programme-defined. \\[2pt]
+\code{T-T1P} & K & signed-box identified interval for the comparator & Textbook-level convex/interval analysis (linear functional on a box attains extrema at sign-matched vertices). \\[2pt]
+\code{T-T2G} & K & general fractional-program interval theorem with strictness iff & Textbook-level fractional programming (monotone affine-over-affine ratio); the exact-arithmetic certificates are implementation. \\[2pt]
+\code{T-TSUM} & K & fingerprint sum bound R3+R5 >= 2 & Textbook-level AM-GM with an exact moment-determinant equality case. \\[2pt]
+\code{T-RANK2} & P & rank-two comparator response with {W2, DeltaOmega\_k} joint null sector & Delta: published CMB/PV anisotropy analyses constrain component amplitudes but do not publish an identifiability/rank certificate for a joint departure vector; the explicit two-engine rank-and-kernel certificate and its identified-set consequence were not found in the literature. \\[2pt]
+\code{T-IDSET} & S & identified-set (partial-identification) framework for FLRW-departure components, with the CF4 bulk-flow application & Delta: partial identification is established econometrics (Imbens \& Manski 2004; Manski) but a documented search found NO published identified-set treatment in peculiar-velocity or CMB-anisotropy inference; the entire bulk-flow literature (Watkins et al. 2023; Whitford et al. 2023) reports point estimates with errors. Contribution: exact interval-intersection engine with bounded/empty/unbounded/disconnected classification + the first nuisance-box identified sets for a real catalogue (CF4 per-depth bounded-widening result, monopole-protected estimand). \\[2pt]
+\code{T-IMCOV} & K+P & least-favorable-boundary simultaneous Imbens-Manski coverage certificate & K: the interval construction is Imbens \& Manski 2004. P delta: a grid-conditional simultaneous (family-wise) coverage certificate at least-favorable boundary points with mesh-refinement stability was not found in any astrophysical application. \\[2pt]
+\code{T-RANKX} & K & observation-inclusive exact rank (1+b)/(N+1) with floor gates & Known: Phipson \& Smyth 2010 (permutation p-values are never zero); Monte-Carlo rank tests are standard. The floor/support hard validation is implementation. \\[2pt]
+\code{T-SBCPPC} & K & simulation-based calibration + posterior predictive checks with lineage binding & Known: Talts et al. 2018 (SBC); Gelman et al. (PPC). Content-address lineage binding is implementation. \\[2pt]
+\code{T-HOLDOUT} & K & dependency-aware group-level ELPD with PSIS verification & Known: Vehtari, Gelman \& Gabry 2017 (ELPD/LOO); Vehtari et al. 2015 (PSIS). The group-leakage demonstration instantiates their guidance. \\[2pt]
+\code{T-EVID} & K & normalized-prior evidence with thermodynamic-integration and bridge-sampling agreement & Known: thermodynamic integration (Gelman \& Meng 1998 line) and Meng \& Wong 1996 bridge sampling; conjugate closed form is textbook. \\[2pt]
+\code{T-MIX} & P & contamination-aware local/global source discrimination with mandatory abstention gates & Delta: published anomaly analyses compare models by evidence or p-values (e.g. Planck 2018 VII) without a pre-registered abstention protocol; the identifiability-gap gate against a combined superposition model plus PPC/held-out/prior-sensitivity admissibility, with a measured null false-candidate rate, was not found. Synthetic-battery-only so far, hence P not S. \\[2pt]
+\code{T-MEAS} & P & F/Pi/G\_F diagnostic-measure distinctness with matched-null calibration & Delta: the requirement that each scalar diagnostic carry its own matched null (with degenerate nulls refused at the interface) formalizes what anomaly papers do case-by-case; no published systematic treatment found. Programme-specific semantics. \\[2pt]
+\code{T-ADJUD} & K & blind synthetic battery with measured discrimination size & Known practice: simulation-based method calibration (SBC-style, injection-recovery in cosmology); the measured-size number is internal validation. \\[2pt]
+\code{G-EGS-FWD} & K & premise-complete FLRW forward direction (isotropic radiation for all observers implies x\_C = 0) & Known: Ehlers, Geren \& Sachs 1968; almost-EGS extensions by Stoeger, Maartens \& Ellis 1995. \\[2pt]
+\code{G-EGS-CONV} & K+C & failure of the converse (comparator zero / near-isotropic temperature does not imply near-FLRW) & K: the non-implication is published — Nilsson, Uggla, Wainwright \& Hsu 1999 ('An almost isotropic cosmic microwave temperature does not imply an almost isotropic universe'). C: our exact rational counterexample registry independently verifies the same phenomenon at the comparator level. \\[2pt]
+\code{G-MES-REFREEZE} & S & geodesic-branch reduction of the MES bounds with the epsilon\_1 admissibility theorem and the re-derived vorticity ceiling & Base: Maartens, Ellis \& Stoeger 1995 (PRD 51, 1525 + companion) and Stoeger, Araujo \& Gebbie 1997 give the raw multipole bounds and the geodesic omega coefficients; the era's quoted ceilings are of order W\_0 < 1e-3..1e-4. Delta: (i) the closure reduction of the raw inequalities executed as exact rational algebra with bit-identical two-engine agreement; (ii) the explicit epsilon\_1 admissibility threshold epsilon\_1\^{}crit = (43/25)eps2 + (9/35)eps3 governing which attribution branch is admissible (absent from the primary sources); (iii) the resulting exact vorticity ceiling W\^{}2\_max = 3.3789e-13 under the SAG attribution — 6.59 orders tighter than the registered legacy value and far below the era's published order-of-magnitude limits; (iv) a three-branch registry propagating every attribution consistently. No later published tightening of this line was found. \\[2pt]
+\code{G-MESB-TRACE} & C & documented discrepancy of the registered non-geodesic coefficients against the accessible primary sources & Cross-check against Maartens-Ellis-Stoeger 1995a eq. 60 and the astro-ph/9510126 companion: the registered non-geodesic omega/acceleration triples appear in no accessible source and the companion's own faithful cap max(eps2, eps3) excludes the registered omega ceiling reading; recorded as a documented discrepancy, not resolved. \\[2pt]
+\code{G-KE} & S & rotating-congruence programme: contracted Gauss identity with vorticity, tilt vorticity classification, and the dynamical double obstruction at flat anisotropic curvature & Base: King \& Ellis 1973 classify tilted homogeneous cosmologies at the kinematic/constraint level; the tilted dynamical-systems literature (Coley-Hervik line; Hewitt et al.) studies late-time behavior. Delta: (i) the exact O(v\^{}2) vorticity content of oblique type-I tilt in omega\_ab omega\^{}ab (correcting the naive 'type I is irrotational' reading); (ii) the DOUBLE obstruction at DeltaOmega\_k = 0 — single stream killed by G\_ti = 0 for every homogeneous type-I metric in the class AND the antipodal pair killed dynamically by Killing+Euler direction conservation along the entire development — upgrading the exclusion from constraint-level to dynamical within the group-invariant perfect-fluid class; (iii) an explicit rotating type-V development with monitored constraints showing the obstruction is specific to the flat sector. No published equivalent of (ii) was found. \\[2pt]
+\code{G-OMK} & S & exact curvature-shear slaving with resonance family and computer-certified remainder & Base: center-manifold/isotropization analyses of LRS Bianchi III / Kantowski-Sachs models are standard (Collins \& Ellis 1979; Hewitt \& Wainwright 1992; Wainwright \& Ellis 1997), qualitative in character. Delta: the exact closed-form slaving coefficient Sigma = kappa K with kappa = -1/(2+q) (kappa(w) = -2/(5+3w), c\_2(w) exact rational), the exact resonance family w\_n = -(2n+3)/(6n-3), and a UNIFORM computer-certified forward-invariant remainder enclosure |Sigma - (kappa K + c\_2 K\^{}2)| <= |K|\^{}3 on a registered compact domain (exact-rational branch-and-bound, not sampling). A documented search found no published exact slaving coefficient or certified remainder for this class; the resulting finite anisotropic-curvature ceilings are new. \\[2pt]
+\code{G-NT2} & K & reciprocal coefficient bracket and tail convergence/sufficiency separation & Textbook-level algebra and series bounds; the sufficiency clause is definitional. \\[2pt]
+\code{G-NTA3} & K & sqrt(2/5) single-multipole dispersion at l = 2 with 2l+1 real degrees of freedom & Textbook-level chi-square moment identity (cosmic-variance formula). \\[2pt]
+\code{G-ODDL} & K & odd-L diagonal BiPoSH structural zero A\^{}{LM}\_{ll} = 0 & Known: the exchange symmetry A\^{}{LM}\_{l1l2} = (-1)\^{}{l1+l2-L} A\^{}{LM}\_{l2l1} and the vanishing of odd-parity BiPoSH at l = l' are published (Book, Kamionkowski \& Souradeep 2012; earlier BiPoSH formalism of Hajian \& Souradeep). Our sympy Wigner-3j re-proof and the 7e-32 on-data certification are verification. \\[2pt]
+\code{G-RICCI11} & K & eleven-type exact spatial Ricci-scalar identity (Koszul chain equals the canonical anchor) & Known: the canonical structure constants and curvature formula are Ellis \& MacCallum 1969 (textbook material in Wainwright \& Ellis 1997); our exact-rational verification across the eleven canonical representatives with an independent coordinate engine is implementation-grade. Exploratory tier as native-solver support. \\[2pt]
+\code{G-PARITY} & K & parity identities of the anisotropic-model polarization hierarchy; EB/TB ratio parity-even & Known: the parity structure of Bianchi-model polarization (TB/EB sign behavior under reflection) is contained in Pontzen \& Challinor 2007; the parity-evenness of the EB/TB ratio is an elementary corollary. Four-engine exact verification is implementation. Exploratory tier. \\[2pt]
+\code{G-BPROJ} & K & premise-complete axisymmetric B-projector zero & Textbook-level selection-rule algebra (axisymmetric parity-even sources produce no B modes; cf. the E/B decomposition literature). \\[2pt]
+\code{G-M4B} & K & unsigned comparator leakage bound M\_max(B) = 4B & Textbook-level triangle-inequality bound; algebraic-only status is part of the statement. \\[2pt]
+\code{G-SWRAY} & K & Sachs-Wolfe-only transport closed form on Bianchi I with the linear shear-quadrupole oracle & Textbook-level: conserved comoving momenta in diagonal Bianchi I and the linear Sachs-Wolfe shear integral are standard; numerical order-verification is implementation. Exploratory tier. \\[2pt]
+\code{G-U1U2} & K+P & exact two-point boost-channel reduction s = tanh(beta) and fingerprint-to-ceiling map & K: the special-relativistic kinematics is textbook. P delta: the exact rational fingerprint expansion (R3, R5 in the mixing parameter) and its proved envelopes mapping directly onto MES-dipole ceilings unify the observer-boost channel with the bound hierarchy in closed form; no published equivalent map found. \\[2pt]
+\code{G-SEMINATIVE} & C & registered shear-to-multipole transfer floor with CAMB cross-check & Cross-check against CAMB 1.6.6 (Lewis, Challinor \& Lasenby 2000 line): the registered profile's superhorizon visibility floor 0.632456 is reproduced identically by the real CAMB visibility computation, finite-k agreement to 0.2\%. \\[2pt]
+\code{G-T3END} & P & exact endpoint attainability of the comparator interval by homogeneous initial data & Delta: explicit exact Bianchi I (lower) and Bianchi V with transverse shear + antipodal tilt (upper) data realizing both interval endpoints with exactly-zero Gauss and momentum constraint residuals; the anisotropy literature bounds such configurations but does not exhibit exact endpoint-attaining data for a registered departure functional. \\[2pt]
+\code{D-CF4-MANIFEST} & C & row-complete authenticated CF4 column manifest & Cross-check against the published Cosmicflows-4 catalogue (Tully et al. 2023, ApJ 944, 94; VizieR J/ApJ/944/94): byte-level authentication of all group columns, 38053-group parity. \\[2pt]
+\code{D-CF4-MV} & C & minimum-variance bulk-flow reproduction & Cross-check against Watkins et al. 2023 (MNRAS 524, 1885): amplitude within a few percent of their 419 +/- 36 km/s at R = 200 h\^{}-1 Mpc and apex within 8.5 deg at the inner depth; amplitude headline deferred to the full-covariance treatment. \\[2pt]
+\code{D-CF4-DEFL} & C+P & analytic full-covariance significance deflation of the CF4 flow & C: the conclusion (bulk-flow uncertainties are underestimated, tension overstated) cross-checks Whitford, Howlett \& Davis 2023, who reach it via simulations. P delta: our deflation is derived analytically from the estimator-matched linear cosmic-variance covariance (Gorski 1988 correlation tensor) and applied as the PRIMARY treatment (0.96 sigma honest vs 8.2 sigma noise-only), which no published CF4 analysis does. \\[2pt]
+\code{D-CF4-FWD} & K+C & full-covariance forward simulator with stressor-resolved coverage & K: GRF mock methodology is standard. C: the two-generator variance normalization cross-check (Cholesky vs independent FFT) and the analytic sigma\_v recovery validate against the Gorski 1988 closed form. \\[2pt]
+\code{D-CF4-GROWTH} & C & depth-resolved fsigma8 with same-data joint covariance & Cross-check against Courtois et al. 2023 (A\&A 670, L15): nearest-shell 0.386 +/- 0.089 agrees with their CF4 pairwise fsigma8 = 0.38 +/- 0.04 (ungrouped) / 0.36 +/- 0.05 (grouped); deeper shells honestly unconstrained. \\[2pt]
+\code{D-CF4-VCORR} & C & field-level ML growth-rate lane & Cross-check against the same Courtois et al. 2023 pairwise values: the field-level maximum-likelihood lane agrees with the published CF4 range; numeric headline pending an independent covariance validation. \\[2pt]
+\code{D-CF4-RECON} & C & reconstruction-method dependence design axis & Cross-check design against the external reconstructions it compares (Carrick et al. 2015 2M++; CORAS; Lilow et al. 2024 2MRS neural reconstruction); numeric instantiation withheld pending independent validation. \\[2pt]
+\code{D-CF4-MOCKSIG} & C & linear-mock reproduction of the analytic flow significance & Cross-check against Whitford et al. 2023's mechanism: the linear GRF + super-sample mock reproduces the analytic linear significance, so the reduction to the literature's 2-3 sigma is attributable to the un-modelled nonlinear residual they quantify with COLA simulations. \\[2pt]
+\code{D-CF4-CURL} & C & potential-flow check on the reconstructed 3-D field & Cross-check against linear theory: Wiener-filtered curl/divergence = 0.009 on the real field confirms the standard potential-flow expectation for linear velocity fields. \\[2pt]
+\code{D-K1-CONV} & K & canonical low-multipole convention contract on SMICA/Commander & Implementation-grade verification of standard healpy/harmonic conventions; the rotation cross-check is a self-test. \\[2pt]
+\code{D-K1-GLOBALP} & C+P & look-elsewhere global rank p = 0.039 over six registered low-multipole statistics & C: consistent with Planck 2018 VII, whose look-elsewhere treatment also counts Monte-Carlo simulations with equal-or-larger deviations and lands the anomalies at 2-3 sigma; and with the individual-feature levels reviewed by Schwarz et al. 2016 (alignment ~4.9\%, low correlation ~0.1\%). P delta: the observation-inclusive pooled max-scan EXACT rank over a pre-registered statistic set, run under a component-separation-processed end-to-end (boost-carrying) ensemble with hard support/floor validation, is a cleaner single-number global calibration than the per-feature counting in the literature. \\[2pt]
+\code{D-K1-BOOST} & S & zero-parameter boost-BiPoSH residual test on the real sky: p = 0.854 inside the boosted end-to-end null & Base: Planck 2013 XXVII detect and FIT the boost amplitude from high-ell (500 < l < 2000) aberration/modulation couplings; Bayesian local-motion estimates from Planck 2018 maps follow the same amplitude-estimation paradigm. Delta: this is a ZERO-PARAMETER residual consistency test at low multipoles (l = 2..10) — the template is derived from the exact pixel-space boost operator at the known solar velocity (nothing fitted), subtracted identically from data and from boost-carrying FFP10 end-to-end simulations, and the residual excitation is ranked exactly. Result: the observed low-ell dipole-coupling sector shows no residual beyond the known boost (p = 0.854). A documented search found no published low-ell zero-parameter boost-residual test conditioned on boosted end-to-end simulations; the test and its real-sky result are jointly the contribution. \\[2pt]
+\code{D-K1-EVENL} & C & even-L diagonal BiPoSH invariant-power ranks under the end-to-end null & Cross-check against the Planck statistical-isotropy programme (Planck 2018 VII; BiPoSH analyses of the Souradeep line): pooled p = 0.195 is consistent with their null findings for L = 2, 4 couplings; method assembled from known parts. \\[2pt]
+\code{D-K1-BIPOSH-SI} & C & off-diagonal BipoSH statistical-isotropy measurement on SMICA/Commander & Cross-check against Planck 2018 VII isotropy results: global p = 0.68 / 0.65 consistent with statistical isotropy, matching the Planck conclusion on the same maps. \\[2pt]
+\code{D-DESI-DIPOLE} & C & DESI DR1 BGS window-corrected number-count dipole, clustering-consistent & Cross-check within the LSS-dipole literature: at BGS depths the count dipole D = 9.49e-3 is clustering-dominated and consistent with LCDM clustering mocks (p = 0.90), complementing the high-z QSO dipole line (Secrest et al.; DESI QSO analyses) where the kinematic component dominates instead. \\[2pt]
+\code{D-DESI-EXACTSEL} & P & exact-selection per-mock refit dipole machinery & Delta over published count-dipole analyses (which fix the selection function or use approximate windows): the null is drawn from the survey's REAL per-cap random density and every mock refits both the dipole and a nuisance amplitude; official-mock causal attribution deferred (acquisition in progress). \\[2pt]
+\code{D-ACT-ISO} & C & ACT DR6 low-L convergence isotropy consistency + 95\% upper limit & Cross-check against the release's own characterization (Madhavacheril et al. 2024; Qu et al. 2024): mean-field-debiased low-L band consistent with the isotropic simulation ensemble (p = 0.35); the 3.28e-6 band-power UL is a new number derived from released products. \\[2pt]
+\code{D-ACT-RAWQE} & C & raw-QE input availability result for DR6 & Documents a verifiable property of the public ACT DR6 lensing release (raw filtered maps and QE pipeline not included; RDN0 unformable), cross-checked against the release contents. \\[2pt]
+\code{D-ACT-INBAND} & C & strict-in-band convergence modulation rank & Cross-check against the release simulation ensemble (Qu et al. 2024 validation range 41..762): rank 102/401, unresolved from the null at current Monte-Carlo resolution. \\[2pt]
+\code{D-JWST} & C & JWST anchor manifest, probabilistic CF4 crossmatch, and hierarchical non-identification certificate & Cross-check against the published JWST distance-anchor programmes (Freedman et al. CCHP; Riess et al. SH0ES): 10/17 anchors positionally credible against CF4 groups (Budavari-Szalay likelihood); the hierarchical forecast finds the anchor-set covariance structure cannot identify total uncertainty — an honest certificate about the published set's information content. \\[2pt]
+\code{D-PR176} & K & divergence/q cross-falsifier mechanics with honest failed self-consistency axis & Internal method validation (falsifier terminated non-informative; coverage axis failed honestly); Tsagas's proposal motivates the design. \\[2pt]
+\code{D-PR179} & C+P & raw-catalogue reconstruction-independent directional cosmography with falsifier-gated withholding & C: our selection-systematics conditionality independently lands on the same interpretation as the 2025 forward-modelling reanalysis (arXiv:2509.14997) of the claimed CF4 zeropoint-dipole H0 anisotropy (Boubel et al. line, 3.9 sigma claim) — the live external controversy this lane adjudicates. P delta: the pre-registered cubic-falsifier gate that WITHHOLDS the entire q block (canonical correlation 0.98 > 0.95 in every fold) and reports only the identifiable H block with an exact matched-null rank is a stricter protocol than either side of the published exchange; final attribution awaits the survey-mock stages. \\[2pt]
+\code{D-COMPARATOR-REGION} & P & assembled identified region for the four-component departure vector and x\_C & Delta: published anisotropy constraints bound single components (e.g. Saadeh et al. 2016 sigma/H limits); no published assembly of measured-plus-ceiling intervals into an identified region for a joint FLRW-departure functional was found. Diagnostic rendering; all branches contain zero as they must while two components are ceiling-only. \\[2pt]
+\code{D-ADJUD-SIZE} & K & measured discrimination size 0.0067 on the blind synthetic battery & Standard injection-recovery calibration practice; internal validation number. \\[2pt]
 \bottomrule
 \end{longtable}
 \end{center}
@@ -1523,6 +1706,21 @@ A\&A 464, 399 (2007).
 Econometrica 72, 1845 (2004).
 \bibitem{PhipsonSmyth2010} B. Phipson and G.~K. Smyth,
 Stat. Appl. Genet. Mol. Biol. 9, 39 (2010).
+\bibitem{Nilsson1999} U.~S. Nilsson, C. Uggla, J. Wainwright, and
+W.~C. Lim (Hsu), Astrophys. J. Lett. 522, L1 (1999)
+(astro-ph/9904252).
+\bibitem{StoegerMaartensEllis1995} W.~R. Stoeger, R. Maartens, and
+G.~F.~R. Ellis, Astrophys. J. 443, 1 (1995).
+\bibitem{WainwrightEllis1997} J. Wainwright and G.~F.~R. Ellis (eds.),
+Dynamical Systems in Cosmology (Cambridge University Press, 1997).
+\bibitem{HajianSouradeep2003} A. Hajian and T. Souradeep,
+Astrophys. J. Lett. 597, L5 (2003).
+\bibitem{CAMB2000} A. Lewis, A. Challinor, and A. Lasenby,
+Astrophys. J. 538, 473 (2000).
+\bibitem{Talts2018} S. Talts, M. Betancourt, D. Simpson, A. Vehtari,
+and A. Gelman, arXiv:1804.06788 (2018).
+\bibitem{MengWong1996} X.-L. Meng and W.~H. Wong,
+Statistica Sinica 6, 831 (1996).
 \bibitem{VehtariGelmanGabry2017} A. Vehtari, A. Gelman, and J. Gabry,
 Stat. Comput. 27, 1413 (2017).
 \bibitem{Madhavacheril2024} M.~S. Madhavacheril et al.,

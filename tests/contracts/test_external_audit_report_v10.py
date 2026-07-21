@@ -46,11 +46,37 @@ def test_data_completeness_statement_present() -> None:
         in tex
 
 
-def test_tier_ledger_present_with_empty_s_tier() -> None:
+def test_tier_ledger_external_novelty_with_s_deltas() -> None:
     tex = _tex()
     for tag in ("tier{K}", "tier{C}", "tier{P}", "tier{S}"):
         assert tag in tex
-    assert "No entry carries \\tier{S}" in tex
+    assert "external-novelty adjudication" in tex
+    ledger = json.loads(
+        (REPO / "docs/audits/v10_web_crag_20260721/tier_evidence.json")
+        .read_text()
+    )
+    s_ids = ledger["s_entries"]
+    assert len(s_ids) >= 1
+    by_id = {e["id"]: e for e in ledger["entries"]}
+    for sid in s_ids:
+        entry = by_id[sid]
+        assert entry["tier"] == "S", sid
+        # every S entry must state a delta over named literature
+        assert "Delta" in entry["adjudication"] or "delta" in (
+            entry["adjudication"]
+        ), sid
+        assert entry["citations"], sid
+        assert sid in tex  # rendered in the S section
+    # every K entry carries a citation or an explicit textbook-level note
+    for e in ledger["entries"]:
+        if e["tier"] == "K":
+            assert e["citations"] or "textbook" in e["adjudication"].lower() \
+                or "known" in e["adjudication"].lower() \
+                or "implementation" in e["adjudication"].lower() \
+                or "standard" in e["adjudication"].lower(), e["id"]
+        if e["tier"] == "C":
+            assert e["citations"] or "release" in e["adjudication"].lower() \
+                or "cross-check" in e["adjudication"].lower(), e["id"]
 
 
 def test_no_meta_dev_vocabulary() -> None:
