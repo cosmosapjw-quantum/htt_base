@@ -168,6 +168,64 @@ STRENGTHEN_SCHEDULED = {
     pr for pr, contract in STRENGTHEN_CARD_CONTRACTS.items()
     if contract[3] == "DAG_SCHEDULABLE"
 }
+# --- Legacy-revival round-2 dual-track wave (PR-209..246) ------------------
+# Formal intake of htt_legacy_revival_round2_20260721 (round-2 sits on the
+# round-1 strengthening package = prior_round1/ = PR-185..208). Track I
+# (PR-209..228) is solver-independent and DAG_SCHEDULABLE this session; Track II
+# (PR-229..242) and Integration (PR-243..246) are native-blocked (NEEDS_NATIVE,
+# solver_gate_required) and REGISTERED_NOT_SCHEDULED. The track boundary is
+# one-directional: no Track-I card may depend on a Track-II/Integration card.
+REVIVAL_FIRST_PR = 209
+REVIVAL_LAST_PR = 246
+REVIVAL_CARD_COUNT = REVIVAL_LAST_PR - REVIVAL_FIRST_PR + 1
+REVIVAL_TRACK_I = {f"PR-{n}" for n in range(209, 229)}
+REVIVAL_TRACK_II = {f"PR-{n}" for n in range(229, 243)}
+REVIVAL_INTEGRATION = {f"PR-{n}" for n in range(243, 247)}
+# Pinned dependency edges (the load-bearing DAG structure); lane/activation/
+# authorization/solver_gate are derived from track so card and validator cannot
+# drift. PR-226 binds PR-151's acquisition terminal receipt (DESI mock lane).
+REVIVAL_DEPENDS = {
+    "PR-209": [], "PR-210": ["PR-209"], "PR-211": ["PR-210"],
+    "PR-212": ["PR-210", "PR-211"], "PR-213": ["PR-209"],
+    "PR-214": ["PR-209", "PR-211", "PR-213"], "PR-215": ["PR-210", "PR-211", "PR-212"],
+    "PR-216": ["PR-212", "PR-215"], "PR-217": ["PR-211", "PR-212", "PR-214"],
+    "PR-218": ["PR-209", "PR-210", "PR-214"], "PR-219": ["PR-210", "PR-212", "PR-215"],
+    "PR-220": ["PR-214", "PR-219"], "PR-221": ["PR-213", "PR-219", "PR-220"],
+    "PR-222": ["PR-210", "PR-212", "PR-219"], "PR-223": ["PR-210", "PR-212"],
+    "PR-224": ["PR-212", "PR-222"], "PR-225": ["PR-215", "PR-219", "PR-220"],
+    "PR-226": ["PR-151", "PR-221", "PR-222", "PR-224", "PR-225"],
+    "PR-227": ["PR-209", "PR-214", "PR-226"], "PR-228": ["PR-227"],
+    "PR-229": ["PR-214", "PR-218", "PR-223"], "PR-230": ["PR-229"],
+    "PR-231": ["PR-229", "PR-230"], "PR-232": ["PR-230", "PR-231"],
+    "PR-233": ["PR-232"], "PR-234": ["PR-233"], "PR-235": ["PR-231", "PR-233", "PR-223"],
+    "PR-236": ["PR-232", "PR-234", "PR-235"], "PR-237": ["PR-231", "PR-234", "PR-236"],
+    "PR-238": ["PR-236", "PR-237", "PR-219"], "PR-239": ["PR-218", "PR-236"],
+    "PR-240": ["PR-222", "PR-226", "PR-235", "PR-236"],
+    "PR-241": ["PR-234", "PR-237", "PR-238", "PR-240"], "PR-242": ["PR-239", "PR-241"],
+    "PR-243": ["PR-228", "PR-242"], "PR-244": ["PR-243"], "PR-245": ["PR-244"],
+    "PR-246": ["PR-245"],
+}
+REVIVAL_TERMINAL_RECEIPT_EDGES = {("PR-226", "PR-151")}
+REVIVAL_CAS_CARDS = {"PR-222", "PR-223"}
+
+
+def _revival_track(pr_id: str) -> str:
+    n = int(pr_id.split("-")[1])
+    if pr_id in REVIVAL_TRACK_I or 209 <= n <= 228:
+        return "I"
+    if 229 <= n <= 242:
+        return "II"
+    return "INTEGRATION"
+
+
+def _revival_expected(pr_id: str) -> tuple[str, str, str, str, bool]:
+    """(execution_lane, activation_state, execution_authorization, track, solver_gate)."""
+    track = _revival_track(pr_id)
+    if track == "I":
+        return ("defensible", "PENDING", "DAG_SCHEDULABLE", track, False)
+    return ("needs_native", "NEEDS_NATIVE", "NATIVE_BLOCKED", track, True)
+
+
 ADVOCATE_TITLE_OVERRIDES = {
     "PR-174": "SW-only real-space anisotropic ray-integration mechanics (hypothesis_only)",
     "PR-175": "Cross-engine Bianchi invariant mechanics from structure constants (hypothesis_only)",
@@ -563,6 +621,17 @@ def validate_long_horizon_rescue_slice(
             "post-v10 strengthening intake must be atomic; "
             f"missing={sorted(strengthen_ids - actual_strengthen_ids)}"
         )
+    revival_ids = set(_pr_range(REVIVAL_FIRST_PR, REVIVAL_LAST_PR))
+    actual_revival_ids = actual_ids & revival_ids
+    if actual_revival_ids and not actual_strengthen_ids:
+        raise ValueError(
+            "legacy-revival wave (PR-209+) requires the strengthening slice to be present"
+        )
+    if actual_revival_ids and actual_revival_ids != revival_ids:
+        raise ValueError(
+            "legacy-revival round-2 intake must be atomic; "
+            f"missing={sorted(revival_ids - actual_revival_ids)}"
+        )
     expected_total = (
         RESCUE_WITH_ADVOCATE_CARD_COUNT
         if actual_advocate_ids
@@ -570,6 +639,8 @@ def validate_long_horizon_rescue_slice(
     )
     if actual_strengthen_ids:
         expected_total += STRENGTHEN_CARD_COUNT
+    if actual_revival_ids:
+        expected_total += REVIVAL_CARD_COUNT
     if len(info.ids) != expected_total:
         raise ValueError(
             f"strict rescue slice expects {expected_total} total cards, found {len(info.ids)}"
@@ -842,8 +913,78 @@ def validate_long_horizon_rescue_slice(
     if actual_strengthen_ids:
         _validate_strengthen_slice(cards)
 
+    if actual_revival_ids:
+        _validate_revival_slice(cards)
+
     if status is not None:
         _validate_rescue_status(status, info)
+
+
+def _validate_revival_slice(cards: dict[str, Any]) -> None:
+    """Validate the atomic legacy-revival round-2 intake (PR-209..246).
+
+    Track I (PR-209..228) is solver-independent and DAG_SCHEDULABLE; Track II
+    (PR-229..242) and Integration (PR-243..246) are native-blocked. Dependency
+    edges are pinned from REVIVAL_DEPENDS; lane/activation/authorization/
+    solver_gate are derived from the track so card and validator cannot drift.
+    The track boundary is enforced one-directional: no Track-I card may depend
+    on a Track-II/Integration card.
+    """
+    for pr_id in _pr_range(REVIVAL_FIRST_PR, REVIVAL_LAST_PR):
+        card = cards[pr_id]
+        missing_fields = sorted((ADVOCATE_REQUIRED_FIELDS | {"track", "solver_gate_required"}) - set(card))
+        if missing_fields:
+            raise ValueError(f"{pr_id} missing revival-card fields: {missing_fields}")
+        expected_depends = REVIVAL_DEPENDS[pr_id]
+        if card.get("depends") != expected_depends:
+            raise ValueError(
+                f"{pr_id} dependencies drifted: {card.get('depends')!r} != {expected_depends!r}"
+            )
+        contracts = card.get("dependency_contracts")
+        if not isinstance(contracts, list) or [
+            contract.get("upstream_id") for contract in contracts if isinstance(contract, dict)
+        ] != expected_depends:
+            raise ValueError(f"{pr_id} typed dependency projection drifted")
+        expected_modes = [
+            "requires_terminal_receipt" if (pr_id, dep) in REVIVAL_TERMINAL_RECEIPT_EDGES
+            else "requires_success"
+            for dep in expected_depends
+        ]
+        actual_modes = [c.get("mode") for c in contracts if isinstance(c, dict)]
+        if actual_modes != expected_modes:
+            raise ValueError(f"{pr_id} typed dependency modes drifted")
+        lane, activation, authz, track, gate = _revival_expected(pr_id)
+        if card.get("track") != track:
+            raise ValueError(f"{pr_id} track must be {track}")
+        if card.get("execution_lane") != lane:
+            raise ValueError(f"{pr_id} execution_lane must be {lane}")
+        if card.get("activation_state") != activation:
+            raise ValueError(f"{pr_id} activation_state must be {activation}")
+        if card.get("execution_authorization") != authz:
+            raise ValueError(f"{pr_id} execution_authorization must be {authz}")
+        if card.get("solver_gate_required") is not gate:
+            raise ValueError(f"{pr_id} solver_gate_required must be {gate}")
+        if card.get("scientific_status_on_intake") != "OPEN":
+            raise ValueError(f"{pr_id} scientific status must remain OPEN on intake")
+        if card.get("scientific_artifact_mode") != "standard_internal":
+            raise ValueError(f"{pr_id} scientific_artifact_mode must be standard_internal")
+        if card.get("public_use") is not False or card.get("spec_first_required") is not True:
+            raise ValueError(f"{pr_id} must remain spec-first and public_use=false on intake")
+        # one-directional track boundary: Track-I never depends on Track-II/Integration
+        if track == "I":
+            for dep in expected_depends:
+                if dep in REVIVAL_TRACK_II or dep in REVIVAL_INTEGRATION:
+                    raise ValueError(
+                        f"{pr_id} (Track I) has an illegal dependency on native card {dep}"
+                    )
+        # CAS cards carry the five-axis v3 contract
+        if pr_id in REVIVAL_CAS_CARDS:
+            cas = card.get("cas_contract") or {}
+            if cas.get("required_axes") != [
+                "wolfram_xact", "sympy_high_precision", "sage_singular",
+                "lean_mathlib", "rocq_stdlib",
+            ]:
+                raise ValueError(f"{pr_id} must carry the five-axis CAS v3 contract")
 
 
 def _validate_strengthen_slice(cards: dict[str, Any]) -> None:

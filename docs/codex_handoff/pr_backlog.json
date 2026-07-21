@@ -157,7 +157,45 @@
       "PR-205",
       "PR-206",
       "PR-207",
-      "PR-208"
+      "PR-208",
+      "PR-209",
+      "PR-210",
+      "PR-211",
+      "PR-213",
+      "PR-212",
+      "PR-214",
+      "PR-223",
+      "PR-215",
+      "PR-219",
+      "PR-216",
+      "PR-217",
+      "PR-218",
+      "PR-220",
+      "PR-222",
+      "PR-221",
+      "PR-225",
+      "PR-224",
+      "PR-226",
+      "PR-227",
+      "PR-228",
+      "PR-229",
+      "PR-230",
+      "PR-231",
+      "PR-232",
+      "PR-233",
+      "PR-234",
+      "PR-235",
+      "PR-236",
+      "PR-237",
+      "PR-238",
+      "PR-239",
+      "PR-240",
+      "PR-241",
+      "PR-242",
+      "PR-243",
+      "PR-244",
+      "PR-245",
+      "PR-246"
     ],
     "checkpoint_every_completed_prs": 5,
     "no_native_lowell_solver_implementation": true,
@@ -8771,6 +8809,2999 @@
       "public_use": false,
       "spec_first_required": true,
       "scientific_status_on_intake": "OPEN"
+    },
+    {
+      "id": "PR-209",
+      "wave": 35,
+      "title": "Round-2 intake, immutable legacy inventory and disposition graph",
+      "owner": "COMMON",
+      "contributors": [
+        "BASS",
+        "HTT",
+        "MIO"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [],
+      "dependency_contracts": [],
+      "targets": [
+        "Make every legacy artifact an immutable, hash-bound research object and adjudicate each symbol as KEEP/REBUILD/MUTATION/RETIRE via an archive CRC/hash inventory, curated extraction, disposition DAG and no-direct-import scanner."
+      ],
+      "files": [
+        "common",
+        "scripts/codex_harness",
+        "tests/pr_cards",
+        "docs/PR_DELTAS/pr-209.md"
+      ],
+      "tests": [
+        "venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice",
+        "to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_209_revival.py"
+      ],
+      "dod": [
+        "The decisive falsifier is killed and at least two independent implementations/oracles agree within tolerance.",
+        "Author-side gates (mechanics/identification/calibration/provenance) reach EVIDENCE_READY; the Independence gate (non-author derivation lineage plus preserved dissent) stays explicitly OPEN until adjudication capacity returns; publication_use stays false."
+      ],
+      "kill": "A deleted or altered legacy archive member, hash or disposition still leaves the verifier green.",
+      "cost": "medium",
+      "level": "L2",
+      "scope": "pre-solver",
+      "risk": "R1",
+      "claim_tier_ceiling": "exploratory",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C1"
+      },
+      "claim_impact": "Make every legacy artifact an immutable, hash-bound research object and adjudicate each symbol as KEEP/REBUILD/MUTATION/RETIRE via an archive CRC/hash inventory, curated extraction, disposition DAG and no-direct-import scanner. (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).",
+      "forbidden": [
+        "Do not weaken scope wording only, or copy a legacy number into a new receipt.",
+        "Do not change domain/nuisance/threshold after seeing the result to obtain a favorable outcome.",
+        "No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate pass."
+      ],
+      "anti_drift": [
+        "external novelty tier and internal readiness are independent axes; neither auto-changes the other.",
+        "legacy sources are imported only as clean-room successor or mutation fixture, never on a production path.",
+        "no Track-I card consumes native-solver output; the track boundary is one-directional."
+      ],
+      "roadmap_anchor": "htt_legacy_revival_round2_20260721/docs/03_ROUND2_DUAL_TRACK_PR_ROADMAP_20260721.md",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "standard_internal",
+      "execution_authorization": "DAG_SCHEDULABLE",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "I",
+      "solver_gate_required": false
+    },
+    {
+      "id": "PR-210",
+      "wave": 35,
+      "title": "BASS-HTT-MIO constitution and typed DefectBundle",
+      "owner": "COMMON",
+      "contributors": [
+        "BASS",
+        "HTT",
+        "MIO"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-209"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-209",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Re-found the tri-stack integration ambition as a typed composition of DefectBundle, SourceState, BridgeReceipt and identified object; frame/epoch-mixed components without a bridge are rejected."
+      ],
+      "files": [
+        "common",
+        "scripts/codex_harness",
+        "tests/pr_cards",
+        "docs/PR_DELTAS/pr-210.md"
+      ],
+      "tests": [
+        "venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice",
+        "to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_210_revival.py"
+      ],
+      "dod": [
+        "The decisive falsifier is killed and at least two independent implementations/oracles agree within tolerance.",
+        "Author-side gates (mechanics/identification/calibration/provenance) reach EVIDENCE_READY; the Independence gate (non-author derivation lineage plus preserved dissent) stays explicitly OPEN until adjudication capacity returns; publication_use stays false."
+      ],
+      "kill": "Components from different frames/epochs are summed without a bridge and the bundle validator allows it.",
+      "cost": "medium",
+      "level": "L2",
+      "scope": "pre-solver",
+      "risk": "R2",
+      "claim_tier_ceiling": "exploratory",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C1"
+      },
+      "claim_impact": "Re-found the tri-stack integration ambition as a typed composition of DefectBundle, SourceState, BridgeReceipt and identified object; frame/epoch-mixed components without a bridge are rejected. (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).",
+      "forbidden": [
+        "Do not weaken scope wording only, or copy a legacy number into a new receipt.",
+        "Do not change domain/nuisance/threshold after seeing the result to obtain a favorable outcome.",
+        "No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate pass."
+      ],
+      "anti_drift": [
+        "external novelty tier and internal readiness are independent axes; neither auto-changes the other.",
+        "legacy sources are imported only as clean-room successor or mutation fixture, never on a production path.",
+        "no Track-I card consumes native-solver output; the track boundary is one-directional."
+      ],
+      "roadmap_anchor": "htt_legacy_revival_round2_20260721/docs/03_ROUND2_DUAL_TRACK_PR_ROADMAP_20260721.md",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "standard_internal",
+      "execution_authorization": "DAG_SCHEDULABLE",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "I",
+      "solver_gate_required": false
+    },
+    {
+      "id": "PR-211",
+      "wave": 35,
+      "title": "Constraint-natural conventions and signed curvature split",
+      "owner": "COMMON",
+      "contributors": [
+        "BASS",
+        "HTT",
+        "MIO"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-210"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-210",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "State W2 convention uniqueness (omega_ab omega^ab/(6H^2)=omega_a omega^a/(3H^2)) and the signed DeltaOmega_k vs tensor 3-Ricci PSTF split as a formal theorem; RESCUE cross-references the frozen PR-186/PR-127/PR-187 evidence and adds only the clean-room patched htt/ssot.py successor + legacy-source convention scan."
+      ],
+      "files": [
+        "common",
+        "scripts/codex_harness",
+        "tests/pr_cards",
+        "docs/PR_DELTAS/pr-211.md"
+      ],
+      "tests": [
+        "venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice",
+        "to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_211_revival.py"
+      ],
+      "dod": [
+        "The decisive falsifier is killed and at least two independent implementations/oracles agree within tolerance.",
+        "Author-side gates (mechanics/identification/calibration/provenance) reach EVIDENCE_READY; the Independence gate (non-author derivation lineage plus preserved dissent) stays explicitly OPEN until adjudication capacity returns; publication_use stays false."
+      ],
+      "kill": "The omega-vector form differs from the tensor form by a factor of three, or DeltaOmega_k is forced to a PSD magnitude, and the gate still passes.",
+      "cost": "medium",
+      "level": "L2",
+      "scope": "pre-solver",
+      "risk": "R3-CAS-XREF",
+      "claim_tier_ceiling": "exploratory",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C1"
+      },
+      "claim_impact": "State W2 convention uniqueness (omega_ab omega^ab/(6H^2)=omega_a omega^a/(3H^2)) and the signed DeltaOmega_k vs tensor 3-Ricci PSTF split as a formal theorem; RESCUE cross-references the frozen PR-186/PR-127/PR-187 evidence and adds only the clean-room patched htt/ssot.py successor + legacy-source convention scan. (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).",
+      "forbidden": [
+        "Do not weaken scope wording only, or copy a legacy number into a new receipt.",
+        "Do not change domain/nuisance/threshold after seeing the result to obtain a favorable outcome.",
+        "No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate pass."
+      ],
+      "anti_drift": [
+        "external novelty tier and internal readiness are independent axes; neither auto-changes the other.",
+        "legacy sources are imported only as clean-room successor or mutation fixture, never on a production path.",
+        "no Track-I card consumes native-solver output; the track boundary is one-directional."
+      ],
+      "roadmap_anchor": "htt_legacy_revival_round2_20260721/docs/03_ROUND2_DUAL_TRACK_PR_ROADMAP_20260721.md",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "standard_internal",
+      "execution_authorization": "DAG_SCHEDULABLE",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "I",
+      "solver_gate_required": false
+    },
+    {
+      "id": "PR-212",
+      "wave": 35,
+      "title": "Congruence-indexed frame and rest-space curvature type system",
+      "owner": "COMMON",
+      "contributors": [
+        "BASS",
+        "HTT",
+        "MIO"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-210",
+        "PR-211"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-210",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-211",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Treat normal/matter/observer/electron frame components and vortical rest-bundle curvature as explicit functors; RESCUE cross-references PR-187/PR-125/KE-FRAME and adds the frame-indexed registry over the DefectBundle with a Frobenius/Gauss-contraction gate."
+      ],
+      "files": [
+        "common",
+        "scripts/codex_harness",
+        "tests/pr_cards",
+        "docs/PR_DELTAS/pr-212.md"
+      ],
+      "tests": [
+        "venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice",
+        "to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_212_revival.py"
+      ],
+      "dod": [
+        "The decisive falsifier is killed and at least two independent implementations/oracles agree within tolerance.",
+        "Author-side gates (mechanics/identification/calibration/provenance) reach EVIDENCE_READY; the Independence gate (non-author derivation lineage plus preserved dissent) stays explicitly OPEN until adjudication capacity returns; publication_use stays false."
+      ],
+      "kill": "A vortical congruence's orthogonal-hypersurface curvature, or n-frame shear assembled with u-frame W2 without a bridge, passes.",
+      "cost": "medium",
+      "level": "L2",
+      "scope": "pre-solver",
+      "risk": "R2",
+      "claim_tier_ceiling": "exploratory",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C1"
+      },
+      "claim_impact": "Treat normal/matter/observer/electron frame components and vortical rest-bundle curvature as explicit functors; RESCUE cross-references PR-187/PR-125/KE-FRAME and adds the frame-indexed registry over the DefectBundle with a Frobenius/Gauss-contraction gate. (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).",
+      "forbidden": [
+        "Do not weaken scope wording only, or copy a legacy number into a new receipt.",
+        "Do not change domain/nuisance/threshold after seeing the result to obtain a favorable outcome.",
+        "No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate pass."
+      ],
+      "anti_drift": [
+        "external novelty tier and internal readiness are independent axes; neither auto-changes the other.",
+        "legacy sources are imported only as clean-room successor or mutation fixture, never on a production path.",
+        "no Track-I card consumes native-solver output; the track boundary is one-directional."
+      ],
+      "roadmap_anchor": "htt_legacy_revival_round2_20260721/docs/03_ROUND2_DUAL_TRACK_PR_ROADMAP_20260721.md",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "standard_internal",
+      "execution_authorization": "DAG_SCHEDULABLE",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "I",
+      "solver_gate_required": false
+    },
+    {
+      "id": "PR-213",
+      "wave": 35,
+      "title": "External novelty x internal readiness x promotion state machine",
+      "owner": "COMMON",
+      "contributors": [
+        "BASS",
+        "HTT",
+        "MIO"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-209"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-209",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Allow novelty S with readiness OPEN while opening public_use only through proof-carrying external adjudication; RESCUE cross-references PR-185 and adds the revival_core/claim_state.py + patched mio/status_schema.py successor."
+      ],
+      "files": [
+        "common",
+        "scripts/codex_harness",
+        "tests/pr_cards",
+        "docs/PR_DELTAS/pr-213.md"
+      ],
+      "tests": [
+        "venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice",
+        "to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_213_revival.py"
+      ],
+      "dod": [
+        "The decisive falsifier is killed and at least two independent implementations/oracles agree within tolerance.",
+        "Author-side gates (mechanics/identification/calibration/provenance) reach EVIDENCE_READY; the Independence gate (non-author derivation lineage plus preserved dissent) stays explicitly OPEN until adjudication capacity returns; publication_use stays false."
+      ],
+      "kill": "public_use becomes true on high novelty alone.",
+      "cost": "medium",
+      "level": "L2",
+      "scope": "pre-solver",
+      "risk": "R2",
+      "claim_tier_ceiling": "exploratory",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C1"
+      },
+      "claim_impact": "Allow novelty S with readiness OPEN while opening public_use only through proof-carrying external adjudication; RESCUE cross-references PR-185 and adds the revival_core/claim_state.py + patched mio/status_schema.py successor. (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).",
+      "forbidden": [
+        "Do not weaken scope wording only, or copy a legacy number into a new receipt.",
+        "Do not change domain/nuisance/threshold after seeing the result to obtain a favorable outcome.",
+        "No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate pass."
+      ],
+      "anti_drift": [
+        "external novelty tier and internal readiness are independent axes; neither auto-changes the other.",
+        "legacy sources are imported only as clean-room successor or mutation fixture, never on a production path.",
+        "no Track-I card consumes native-solver output; the track boundary is one-directional."
+      ],
+      "roadmap_anchor": "htt_legacy_revival_round2_20260721/docs/03_ROUND2_DUAL_TRACK_PR_ROADMAP_20260721.md",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "standard_internal",
+      "execution_authorization": "DAG_SCHEDULABLE",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "I",
+      "solver_gate_required": false
+    },
+    {
+      "id": "PR-214",
+      "wave": 35,
+      "title": "Hermetic legacy mutation laboratory and clean-room replay",
+      "owner": "COMMON",
+      "contributors": [
+        "BASS",
+        "HTT",
+        "MIO"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-209",
+        "PR-211",
+        "PR-213"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-209",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-211",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-213",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Turn every historically wrong result into a mutation corpus that attacks all future implementations, with known-bad fixtures, clean-CWD replay, no direct legacy import and a mutation kill matrix."
+      ],
+      "files": [
+        "common",
+        "scripts/codex_harness",
+        "tests/pr_cards",
+        "docs/PR_DELTAS/pr-214.md"
+      ],
+      "tests": [
+        "venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice",
+        "to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_214_revival.py"
+      ],
+      "dod": [
+        "The decisive falsifier is killed and at least two independent implementations/oracles agree within tolerance.",
+        "Author-side gates (mechanics/identification/calibration/provenance) reach EVIDENCE_READY; the Independence gate (non-author derivation lineage plus preserved dissent) stays explicitly OPEN until adjudication capacity returns; publication_use stays false."
+      ],
+      "kill": "Any of factor-three, VI0/VIIh class swap, inactive-Occam, or local=global bridge survives the corpus.",
+      "cost": "medium",
+      "level": "L2",
+      "scope": "pre-solver",
+      "risk": "R2",
+      "claim_tier_ceiling": "exploratory",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C1"
+      },
+      "claim_impact": "Turn every historically wrong result into a mutation corpus that attacks all future implementations, with known-bad fixtures, clean-CWD replay, no direct legacy import and a mutation kill matrix. (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).",
+      "forbidden": [
+        "Do not weaken scope wording only, or copy a legacy number into a new receipt.",
+        "Do not change domain/nuisance/threshold after seeing the result to obtain a favorable outcome.",
+        "No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate pass."
+      ],
+      "anti_drift": [
+        "external novelty tier and internal readiness are independent axes; neither auto-changes the other.",
+        "legacy sources are imported only as clean-room successor or mutation fixture, never on a production path.",
+        "no Track-I card consumes native-solver output; the track boundary is one-directional."
+      ],
+      "roadmap_anchor": "htt_legacy_revival_round2_20260721/docs/03_ROUND2_DUAL_TRACK_PR_ROADMAP_20260721.md",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "standard_internal",
+      "execution_authorization": "DAG_SCHEDULABLE",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "I",
+      "solver_gate_required": false
+    },
+    {
+      "id": "PR-215",
+      "wave": 36,
+      "title": "General joint feasible-set support theorem",
+      "owner": "COMMON",
+      "contributors": [
+        "BASS",
+        "HTT",
+        "MIO"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-210",
+        "PR-211",
+        "PR-212"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-210",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-211",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-212",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Compute the full comparator interval as the support image of an arbitrary common feasible set and demote the product box to a corollary; RESCUE cross-references PR-189 and adds the continuous coupled (Sigma2,W2,Omega_tilt,DeltaOmega_k) manifold fixture + revival_core/comparator.py."
+      ],
+      "files": [
+        "common",
+        "scripts/codex_harness",
+        "tests/pr_cards",
+        "docs/PR_DELTAS/pr-215.md"
+      ],
+      "tests": [
+        "venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice",
+        "to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_215_revival.py"
+      ],
+      "dod": [
+        "The decisive falsifier is killed and at least two independent implementations/oracles agree within tolerance.",
+        "Author-side gates (mechanics/identification/calibration/provenance) reach EVIDENCE_READY; the Independence gate (non-author derivation lineage plus preserved dissent) stays explicitly OPEN until adjudication capacity returns; publication_use stays false."
+      ],
+      "kill": "A marginal product-box interval is reported sharp on a coupled feasible manifold.",
+      "cost": "high",
+      "level": "L2",
+      "scope": "pre-solver",
+      "risk": "R3-XREF",
+      "claim_tier_ceiling": "exploratory",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C1"
+      },
+      "claim_impact": "Compute the full comparator interval as the support image of an arbitrary common feasible set and demote the product box to a corollary; RESCUE cross-references PR-189 and adds the continuous coupled (Sigma2,W2,Omega_tilt,DeltaOmega_k) manifold fixture + revival_core/comparator.py. (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).",
+      "forbidden": [
+        "Do not weaken scope wording only, or copy a legacy number into a new receipt.",
+        "Do not change domain/nuisance/threshold after seeing the result to obtain a favorable outcome.",
+        "No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate pass."
+      ],
+      "anti_drift": [
+        "external novelty tier and internal readiness are independent axes; neither auto-changes the other.",
+        "legacy sources are imported only as clean-room successor or mutation fixture, never on a production path.",
+        "no Track-I card consumes native-solver output; the track boundary is one-directional."
+      ],
+      "roadmap_anchor": "htt_legacy_revival_round2_20260721/docs/03_ROUND2_DUAL_TRACK_PR_ROADMAP_20260721.md",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "standard_internal",
+      "execution_authorization": "DAG_SCHEDULABLE",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "I",
+      "solver_gate_required": false
+    },
+    {
+      "id": "PR-216",
+      "wave": 36,
+      "title": "Physical sharpness ladder: algebraic to constraint to local to global",
+      "owner": "COMMON",
+      "contributors": [
+        "BASS",
+        "HTT",
+        "MIO"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-212",
+        "PR-215"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-212",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-215",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Open a staged programme proving endpoint attainability from algebraic PSD witness through constraint residual and local development to the global Einstein-matter stage, with the global stage BLOCKED-with-obligation (needs native solver)."
+      ],
+      "files": [
+        "common",
+        "scripts/codex_harness",
+        "tests/pr_cards",
+        "docs/PR_DELTAS/pr-216.md"
+      ],
+      "tests": [
+        "venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice",
+        "to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_216_revival.py"
+      ],
+      "dod": [
+        "The decisive falsifier is killed and at least two independent implementations/oracles agree within tolerance.",
+        "Author-side gates (mechanics/identification/calibration/provenance) reach EVIDENCE_READY; the Independence gate (non-author derivation lineage plus preserved dissent) stays explicitly OPEN until adjudication capacity returns; publication_use stays false."
+      ],
+      "kill": "An algebraic PSD witness alone auto-promotes global-dynamics sharpness.",
+      "cost": "high",
+      "level": "L2",
+      "scope": "pre-solver",
+      "risk": "R2",
+      "claim_tier_ceiling": "exploratory",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C1"
+      },
+      "claim_impact": "Open a staged programme proving endpoint attainability from algebraic PSD witness through constraint residual and local development to the global Einstein-matter stage, with the global stage BLOCKED-with-obligation (needs native solver). (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).",
+      "forbidden": [
+        "Do not weaken scope wording only, or copy a legacy number into a new receipt.",
+        "Do not change domain/nuisance/threshold after seeing the result to obtain a favorable outcome.",
+        "No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate pass."
+      ],
+      "anti_drift": [
+        "external novelty tier and internal readiness are independent axes; neither auto-changes the other.",
+        "legacy sources are imported only as clean-room successor or mutation fixture, never on a production path.",
+        "no Track-I card consumes native-solver output; the track boundary is one-directional."
+      ],
+      "roadmap_anchor": "htt_legacy_revival_round2_20260721/docs/03_ROUND2_DUAL_TRACK_PR_ROADMAP_20260721.md",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "standard_internal",
+      "execution_authorization": "DAG_SCHEDULABLE",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "I",
+      "solver_gate_required": false
+    },
+    {
+      "id": "PR-217",
+      "wave": 36,
+      "title": "MES primary-source branch reconstruction and attribution surface",
+      "owner": "COMMON",
+      "contributors": [
+        "BASS",
+        "HTT",
+        "MIO"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-211",
+        "PR-212",
+        "PR-214"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-211",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-212",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-214",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Complete MES as a source-exact geodesic/non-geodesic/acceleration branch hierarchy with an intrinsic-dipole attribution surface; reproduces the frozen W2_max 3.3789e-13 (intrinsic eps1=0) to 2.8173e-05 (full-dipole) attribution WITHOUT re-freezing any anchor, cross-referencing MES-BR."
+      ],
+      "files": [
+        "common",
+        "scripts/codex_harness",
+        "tests/pr_cards",
+        "docs/PR_DELTAS/pr-217.md"
+      ],
+      "tests": [
+        "venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice",
+        "to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_217_revival.py"
+      ],
+      "dod": [
+        "The decisive falsifier is killed and at least two independent implementations/oracles agree within tolerance.",
+        "Author-side gates (mechanics/identification/calibration/provenance) reach EVIDENCE_READY; the Independence gate (non-author derivation lineage plus preserved dissent) stays explicitly OPEN until adjudication capacity returns; publication_use stays false."
+      ],
+      "kill": "A coefficient without a source equation enters a live ceiling, or eps1=0 is presented as a uniqueness theorem.",
+      "cost": "high",
+      "level": "L2",
+      "scope": "pre-solver",
+      "risk": "R2",
+      "claim_tier_ceiling": "exploratory",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C1"
+      },
+      "claim_impact": "Complete MES as a source-exact geodesic/non-geodesic/acceleration branch hierarchy with an intrinsic-dipole attribution surface; reproduces the frozen W2_max 3.3789e-13 (intrinsic eps1=0) to 2.8173e-05 (full-dipole) attribution WITHOUT re-freezing any anchor, cross-referencing MES-BR. (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).",
+      "forbidden": [
+        "Do not weaken scope wording only, or copy a legacy number into a new receipt.",
+        "Do not change domain/nuisance/threshold after seeing the result to obtain a favorable outcome.",
+        "No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate pass."
+      ],
+      "anti_drift": [
+        "external novelty tier and internal readiness are independent axes; neither auto-changes the other.",
+        "legacy sources are imported only as clean-room successor or mutation fixture, never on a production path.",
+        "no Track-I card consumes native-solver output; the track boundary is one-directional."
+      ],
+      "roadmap_anchor": "htt_legacy_revival_round2_20260721/docs/03_ROUND2_DUAL_TRACK_PR_ROADMAP_20260721.md",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "standard_internal",
+      "execution_authorization": "DAG_SCHEDULABLE",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "I",
+      "solver_gate_required": false
+    },
+    {
+      "id": "PR-218",
+      "wave": 36,
+      "title": "Teff/BASS-lite certified surrogate programme",
+      "owner": "COMMON",
+      "contributors": [
+        "BASS",
+        "HTT",
+        "MIO"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-209",
+        "PR-210",
+        "PR-214"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-209",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-210",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-214",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Give Teff a solver-independent certified-surrogate contract and synthetic methodology (nested splits, domain error envelope, the old 10^14 mismatch challenge fixture); a surrogate without a native release+validation hash cannot authorize inference."
+      ],
+      "files": [
+        "common",
+        "scripts/codex_harness",
+        "tests/pr_cards",
+        "docs/PR_DELTAS/pr-218.md"
+      ],
+      "tests": [
+        "venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice",
+        "to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_218_revival.py"
+      ],
+      "dod": [
+        "The decisive falsifier is killed and at least two independent implementations/oracles agree within tolerance.",
+        "Author-side gates (mechanics/identification/calibration/provenance) reach EVIDENCE_READY; the Independence gate (non-author derivation lineage plus preserved dissent) stays explicitly OPEN until adjudication capacity returns; publication_use stays false."
+      ],
+      "kill": "Training and calibration points overlap, or out-of-domain output passes as inference.",
+      "cost": "medium",
+      "level": "L2",
+      "scope": "pre-solver",
+      "risk": "R2",
+      "claim_tier_ceiling": "exploratory",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C1"
+      },
+      "claim_impact": "Give Teff a solver-independent certified-surrogate contract and synthetic methodology (nested splits, domain error envelope, the old 10^14 mismatch challenge fixture); a surrogate without a native release+validation hash cannot authorize inference. (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).",
+      "forbidden": [
+        "Do not weaken scope wording only, or copy a legacy number into a new receipt.",
+        "Do not change domain/nuisance/threshold after seeing the result to obtain a favorable outcome.",
+        "No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate pass."
+      ],
+      "anti_drift": [
+        "external novelty tier and internal readiness are independent axes; neither auto-changes the other.",
+        "legacy sources are imported only as clean-room successor or mutation fixture, never on a production path.",
+        "no Track-I card consumes native-solver output; the track boundary is one-directional."
+      ],
+      "roadmap_anchor": "htt_legacy_revival_round2_20260721/docs/03_ROUND2_DUAL_TRACK_PR_ROADMAP_20260721.md",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "standard_internal",
+      "execution_authorization": "DAG_SCHEDULABLE",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "I",
+      "solver_gate_required": false
+    },
+    {
+      "id": "PR-219",
+      "wave": 36,
+      "title": "Pre-solver response quotient and non-identification atlas",
+      "owner": "COMMON",
+      "contributors": [
+        "BASS",
+        "HTT",
+        "MIO"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-210",
+        "PR-212",
+        "PR-215"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-210",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-212",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-215",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Classify family labels exactly as the quotient of a declared surrogate response and compute reopening-observable requirements via a response-class API, rank lattice and null/prior-exposure report."
+      ],
+      "files": [
+        "common",
+        "scripts/codex_harness",
+        "tests/pr_cards",
+        "docs/PR_DELTAS/pr-219.md"
+      ],
+      "tests": [
+        "venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice",
+        "to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_219_revival.py"
+      ],
+      "dod": [
+        "The decisive falsifier is killed and at least two independent implementations/oracles agree within tolerance.",
+        "Author-side gates (mechanics/identification/calibration/provenance) reach EVIDENCE_READY; the Independence gate (non-author derivation lineage plus preserved dissent) stays explicitly OPEN until adjudication capacity returns; publication_use stays false."
+      ],
+      "kill": "A zero column is used as a physical no-go, or equivalent families are ranked as separate evidence rows.",
+      "cost": "medium",
+      "level": "L2",
+      "scope": "pre-solver",
+      "risk": "R2",
+      "claim_tier_ceiling": "exploratory",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C1"
+      },
+      "claim_impact": "Classify family labels exactly as the quotient of a declared surrogate response and compute reopening-observable requirements via a response-class API, rank lattice and null/prior-exposure report. (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).",
+      "forbidden": [
+        "Do not weaken scope wording only, or copy a legacy number into a new receipt.",
+        "Do not change domain/nuisance/threshold after seeing the result to obtain a favorable outcome.",
+        "No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate pass."
+      ],
+      "anti_drift": [
+        "external novelty tier and internal readiness are independent axes; neither auto-changes the other.",
+        "legacy sources are imported only as clean-room successor or mutation fixture, never on a production path.",
+        "no Track-I card consumes native-solver output; the track boundary is one-directional."
+      ],
+      "roadmap_anchor": "htt_legacy_revival_round2_20260721/docs/03_ROUND2_DUAL_TRACK_PR_ROADMAP_20260721.md",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "standard_internal",
+      "execution_authorization": "DAG_SCHEDULABLE",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "I",
+      "solver_gate_required": false
+    },
+    {
+      "id": "PR-220",
+      "wave": 36,
+      "title": "Legacy evidence as adversarial benchmark and coherent evidence invariance",
+      "owner": "COMMON",
+      "contributors": [
+        "BASS",
+        "HTT",
+        "MIO"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-214",
+        "PR-219"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-214",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-219",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Use the old lnB pipeline as a negative control that enforces inactive-normalized-prior invariance and source/model equivalence with analytic evidence fixtures and two independent engines."
+      ],
+      "files": [
+        "common",
+        "scripts/codex_harness",
+        "tests/pr_cards",
+        "docs/PR_DELTAS/pr-220.md"
+      ],
+      "tests": [
+        "venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice",
+        "to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_220_revival.py"
+      ],
+      "dod": [
+        "The decisive falsifier is killed and at least two independent implementations/oracles agree within tolerance.",
+        "Author-side gates (mechanics/identification/calibration/provenance) reach EVIDENCE_READY; the Independence gate (non-author derivation lineage plus preserved dissent) stays explicitly OPEN until adjudication capacity returns; publication_use stays false."
+      ],
+      "kill": "An inactive normalized parameter changes log-evidence beyond tolerance, or a duplicate response manufactures a geometry preference.",
+      "cost": "medium",
+      "level": "L2",
+      "scope": "pre-solver",
+      "risk": "R2",
+      "claim_tier_ceiling": "exploratory",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C1"
+      },
+      "claim_impact": "Use the old lnB pipeline as a negative control that enforces inactive-normalized-prior invariance and source/model equivalence with analytic evidence fixtures and two independent engines. (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).",
+      "forbidden": [
+        "Do not weaken scope wording only, or copy a legacy number into a new receipt.",
+        "Do not change domain/nuisance/threshold after seeing the result to obtain a favorable outcome.",
+        "No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate pass."
+      ],
+      "anti_drift": [
+        "external novelty tier and internal readiness are independent axes; neither auto-changes the other.",
+        "legacy sources are imported only as clean-room successor or mutation fixture, never on a production path.",
+        "no Track-I card consumes native-solver output; the track boundary is one-directional."
+      ],
+      "roadmap_anchor": "htt_legacy_revival_round2_20260721/docs/03_ROUND2_DUAL_TRACK_PR_ROADMAP_20260721.md",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "standard_internal",
+      "execution_authorization": "DAG_SCHEDULABLE",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "I",
+      "solver_gate_required": false
+    },
+    {
+      "id": "PR-221",
+      "wave": 37,
+      "title": "Cross-survey latent cosmic-dipole source discrimination",
+      "owner": "COMMON",
+      "contributors": [
+        "BASS",
+        "HTT",
+        "MIO"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-213",
+        "PR-219",
+        "PR-220"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-213",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-219",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-220",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Directly identify cosmic-dipole origin across kinematic, LSS, survey-systematic, shared-global and superposition competitors with a survey response matrix, hierarchical covariance, held-out prediction and a mandatory-abstention battery."
+      ],
+      "files": [
+        "common",
+        "scripts/codex_harness",
+        "tests/pr_cards",
+        "docs/PR_DELTAS/pr-221.md"
+      ],
+      "tests": [
+        "venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice",
+        "to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_221_revival.py"
+      ],
+      "dod": [
+        "The decisive falsifier is killed and at least two independent implementations/oracles agree within tolerance.",
+        "Author-side gates (mechanics/identification/calibration/provenance) reach EVIDENCE_READY; the Independence gate (non-author derivation lineage plus preserved dissent) stays explicitly OPEN until adjudication capacity returns; publication_use stays false."
+      ],
+      "kill": "A confusable/misspecified source selects the global source without mandatory abstention.",
+      "cost": "high",
+      "level": "L2",
+      "scope": "pre-solver",
+      "risk": "R2",
+      "claim_tier_ceiling": "exploratory",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C1"
+      },
+      "claim_impact": "Directly identify cosmic-dipole origin across kinematic, LSS, survey-systematic, shared-global and superposition competitors with a survey response matrix, hierarchical covariance, held-out prediction and a mandatory-abstention battery. (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).",
+      "forbidden": [
+        "Do not weaken scope wording only, or copy a legacy number into a new receipt.",
+        "Do not change domain/nuisance/threshold after seeing the result to obtain a favorable outcome.",
+        "No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate pass."
+      ],
+      "anti_drift": [
+        "external novelty tier and internal readiness are independent axes; neither auto-changes the other.",
+        "legacy sources are imported only as clean-room successor or mutation fixture, never on a production path.",
+        "no Track-I card consumes native-solver output; the track boundary is one-directional."
+      ],
+      "roadmap_anchor": "htt_legacy_revival_round2_20260721/docs/03_ROUND2_DUAL_TRACK_PR_ROADMAP_20260721.md",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "standard_internal",
+      "execution_authorization": "DAG_SCHEDULABLE",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "I",
+      "solver_gate_required": false
+    },
+    {
+      "id": "PR-222",
+      "wave": 37,
+      "title": "Finite-window stochastic bulk-flow to homogeneous-tilt bridge",
+      "owner": "COMMON",
+      "contributors": [
+        "BASS",
+        "HTT",
+        "MIO"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-210",
+        "PR-212",
+        "PR-219"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-210",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-212",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-219",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Prove the CF4-to-homogeneous-tilt relation as a multi-window stochastic forward operator (single-window rank 1, multi-window rank 3) with LSS covariance and calibration/selection nuisance, not a point substitution."
+      ],
+      "files": [
+        "common",
+        "scripts/codex_harness",
+        "tests/pr_cards",
+        "docs/PR_DELTAS/pr-222.md"
+      ],
+      "tests": [
+        "venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice",
+        "to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_222_revival.py"
+      ],
+      "dod": [
+        "The decisive falsifier is killed and at least two independent implementations/oracles agree within tolerance.",
+        "Author-side gates (mechanics/identification/calibration/provenance) reach EVIDENCE_READY; the Independence gate (non-author derivation lineage plus preserved dissent) stays explicitly OPEN until adjudication capacity returns; publication_use stays false."
+      ],
+      "kill": "A single bulk amplitude point-identifies the 3-D homogeneous tilt.",
+      "cost": "high",
+      "level": "L2",
+      "scope": "pre-solver",
+      "risk": "R3-CAS",
+      "claim_tier_ceiling": "exploratory",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C1"
+      },
+      "claim_impact": "Prove the CF4-to-homogeneous-tilt relation as a multi-window stochastic forward operator (single-window rank 1, multi-window rank 3) with LSS covariance and calibration/selection nuisance, not a point substitution. (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).",
+      "forbidden": [
+        "Do not weaken scope wording only, or copy a legacy number into a new receipt.",
+        "Do not change domain/nuisance/threshold after seeing the result to obtain a favorable outcome.",
+        "No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate pass."
+      ],
+      "anti_drift": [
+        "external novelty tier and internal readiness are independent axes; neither auto-changes the other.",
+        "legacy sources are imported only as clean-room successor or mutation fixture, never on a production path.",
+        "no Track-I card consumes native-solver output; the track boundary is one-directional."
+      ],
+      "roadmap_anchor": "htt_legacy_revival_round2_20260721/docs/03_ROUND2_DUAL_TRACK_PR_ROADMAP_20260721.md",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "standard_internal",
+      "execution_authorization": "DAG_SCHEDULABLE",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "I",
+      "solver_gate_required": false,
+      "cas_contract": {
+        "schema": "htt.cas_contract.v3",
+        "required_axes": [
+          "wolfram_xact",
+          "sympy_high_precision",
+          "sage_singular",
+          "lean_mathlib",
+          "rocq_stdlib"
+        ],
+        "missing_axis_outcome": "CAS_BLOCKED",
+        "result_blinding": "required_until_adjudication"
+      }
+    },
+    {
+      "id": "PR-223",
+      "wave": 37,
+      "title": "Species-resolved multi-fluid moment and frame atlas",
+      "owner": "COMMON",
+      "contributors": [
+        "BASS",
+        "HTT",
+        "MIO"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-210",
+        "PR-212"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-210",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-212",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Extend the single-beta programme to a species-resolved moment hierarchy with an antipodal/multi-stream moment cone and flux-cancellation theorem, plus a solver-handoff schema."
+      ],
+      "files": [
+        "common",
+        "scripts/codex_harness",
+        "tests/pr_cards",
+        "docs/PR_DELTAS/pr-223.md"
+      ],
+      "tests": [
+        "venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice",
+        "to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_223_revival.py"
+      ],
+      "dod": [
+        "The decisive falsifier is killed and at least two independent implementations/oracles agree within tolerance.",
+        "Author-side gates (mechanics/identification/calibration/provenance) reach EVIDENCE_READY; the Independence gate (non-author derivation lineage plus preserved dissent) stays explicitly OPEN until adjudication capacity returns; publication_use stays false."
+      ],
+      "kill": "Zero net flux is treated as zero tilt energy or zero anisotropic stress.",
+      "cost": "medium",
+      "level": "L2",
+      "scope": "pre-solver",
+      "risk": "R3-CAS",
+      "claim_tier_ceiling": "exploratory",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C1"
+      },
+      "claim_impact": "Extend the single-beta programme to a species-resolved moment hierarchy with an antipodal/multi-stream moment cone and flux-cancellation theorem, plus a solver-handoff schema. (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).",
+      "forbidden": [
+        "Do not weaken scope wording only, or copy a legacy number into a new receipt.",
+        "Do not change domain/nuisance/threshold after seeing the result to obtain a favorable outcome.",
+        "No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate pass."
+      ],
+      "anti_drift": [
+        "external novelty tier and internal readiness are independent axes; neither auto-changes the other.",
+        "legacy sources are imported only as clean-room successor or mutation fixture, never on a production path.",
+        "no Track-I card consumes native-solver output; the track boundary is one-directional."
+      ],
+      "roadmap_anchor": "htt_legacy_revival_round2_20260721/docs/03_ROUND2_DUAL_TRACK_PR_ROADMAP_20260721.md",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "standard_internal",
+      "execution_authorization": "DAG_SCHEDULABLE",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "I",
+      "solver_gate_required": false,
+      "cas_contract": {
+        "schema": "htt.cas_contract.v3",
+        "required_axes": [
+          "wolfram_xact",
+          "sympy_high_precision",
+          "sage_singular",
+          "lean_mathlib",
+          "rocq_stdlib"
+        ],
+        "missing_axis_outcome": "CAS_BLOCKED",
+        "result_blinding": "required_until_adjudication"
+      }
+    },
+    {
+      "id": "PR-224",
+      "wave": 37,
+      "title": "Directional x depth x host-property falsifier programme",
+      "owner": "COMMON",
+      "contributors": [
+        "BASS",
+        "HTT",
+        "MIO"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-212",
+        "PR-222"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-212",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-222",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Strengthen the old Tsagas/H0 programme with velocity first-jet (divergence/shear/curl) modes, host covariates and preregistered competing depth scalings instead of retiring it."
+      ],
+      "files": [
+        "common",
+        "scripts/codex_harness",
+        "tests/pr_cards",
+        "docs/PR_DELTAS/pr-224.md"
+      ],
+      "tests": [
+        "venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice",
+        "to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_224_revival.py"
+      ],
+      "dod": [
+        "The decisive falsifier is killed and at least two independent implementations/oracles agree within tolerance.",
+        "Author-side gates (mechanics/identification/calibration/provenance) reach EVIDENCE_READY; the Independence gate (non-author derivation lineage plus preserved dissent) stays explicitly OPEN until adjudication capacity returns; publication_use stays false."
+      ],
+      "kill": "A bulk amplitude is directly substituted for divergence, or an H0 percentage is reported without depth scaling.",
+      "cost": "medium",
+      "level": "L2",
+      "scope": "pre-solver",
+      "risk": "R2",
+      "claim_tier_ceiling": "exploratory",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C1"
+      },
+      "claim_impact": "Strengthen the old Tsagas/H0 programme with velocity first-jet (divergence/shear/curl) modes, host covariates and preregistered competing depth scalings instead of retiring it. (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).",
+      "forbidden": [
+        "Do not weaken scope wording only, or copy a legacy number into a new receipt.",
+        "Do not change domain/nuisance/threshold after seeing the result to obtain a favorable outcome.",
+        "No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate pass."
+      ],
+      "anti_drift": [
+        "external novelty tier and internal readiness are independent axes; neither auto-changes the other.",
+        "legacy sources are imported only as clean-room successor or mutation fixture, never on a production path.",
+        "no Track-I card consumes native-solver output; the track boundary is one-directional."
+      ],
+      "roadmap_anchor": "htt_legacy_revival_round2_20260721/docs/03_ROUND2_DUAL_TRACK_PR_ROADMAP_20260721.md",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "standard_internal",
+      "execution_authorization": "DAG_SCHEDULABLE",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "I",
+      "solver_gate_required": false
+    },
+    {
+      "id": "PR-225",
+      "wave": 37,
+      "title": "Estimated-covariance partial identification and anytime evidence",
+      "owner": "COMMON",
+      "contributors": [
+        "BASS",
+        "HTT",
+        "MIO"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-215",
+        "PR-219",
+        "PR-220"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-215",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-219",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-220",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Complete a calibrated inference layer handling finite covariance, weak ID, nonlinear endpoints and staged data with Hotelling/t likelihood, bootstrap endpoints, cluster rank, e-value merge and DGP-grid coverage."
+      ],
+      "files": [
+        "common",
+        "scripts/codex_harness",
+        "tests/pr_cards",
+        "docs/PR_DELTAS/pr-225.md"
+      ],
+      "tests": [
+        "venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice",
+        "to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_225_revival.py"
+      ],
+      "dod": [
+        "The decisive falsifier is killed and at least two independent implementations/oracles agree within tolerance.",
+        "Author-side gates (mechanics/identification/calibration/provenance) reach EVIDENCE_READY; the Independence gate (non-author derivation lineage plus preserved dissent) stays explicitly OPEN until adjudication capacity returns; publication_use stays false."
+      ],
+      "kill": "The nominal 95% coverage lower bound falls below the gate, or a reused cluster is marked iid exact.",
+      "cost": "high",
+      "level": "L2",
+      "scope": "pre-solver",
+      "risk": "R2",
+      "claim_tier_ceiling": "exploratory",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C1"
+      },
+      "claim_impact": "Complete a calibrated inference layer handling finite covariance, weak ID, nonlinear endpoints and staged data with Hotelling/t likelihood, bootstrap endpoints, cluster rank, e-value merge and DGP-grid coverage. (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).",
+      "forbidden": [
+        "Do not weaken scope wording only, or copy a legacy number into a new receipt.",
+        "Do not change domain/nuisance/threshold after seeing the result to obtain a favorable outcome.",
+        "No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate pass."
+      ],
+      "anti_drift": [
+        "external novelty tier and internal readiness are independent axes; neither auto-changes the other.",
+        "legacy sources are imported only as clean-room successor or mutation fixture, never on a production path.",
+        "no Track-I card consumes native-solver output; the track boundary is one-directional."
+      ],
+      "roadmap_anchor": "htt_legacy_revival_round2_20260721/docs/03_ROUND2_DUAL_TRACK_PR_ROADMAP_20260721.md",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "standard_internal",
+      "execution_authorization": "DAG_SCHEDULABLE",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "I",
+      "solver_gate_required": false
+    },
+    {
+      "id": "PR-226",
+      "wave": 37,
+      "title": "Track-I data-lane closure and independent calibration",
+      "owner": "COMMON",
+      "contributors": [
+        "BASS",
+        "HTT",
+        "MIO"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-151",
+        "PR-221",
+        "PR-222",
+        "PR-224",
+        "PR-225"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-151",
+          "mode": "requires_terminal_receipt"
+        },
+        {
+          "upstream_id": "PR-221",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-222",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-224",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-225",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Close Planck/CF4/ACT solver-independent results each under a complete null/covariance/selection contract; the DESI official-mock lane is BLOCKED-with-receipt on the PR-151 acquisition terminal receipt and never uses partial mocks."
+      ],
+      "files": [
+        "common",
+        "scripts/codex_harness",
+        "tests/pr_cards",
+        "docs/PR_DELTAS/pr-226.md"
+      ],
+      "tests": [
+        "venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice",
+        "to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_226_revival.py"
+      ],
+      "dod": [
+        "The decisive falsifier is killed and at least two independent implementations/oracles agree within tolerance.",
+        "Author-side gates (mechanics/identification/calibration/provenance) reach EVIDENCE_READY; the Independence gate (non-author derivation lineage plus preserved dissent) stays explicitly OPEN until adjudication capacity returns; publication_use stays false."
+      ],
+      "kill": "Partial mocks, unmatched masks, undercoverage or an unavailable raw stage enter a headline inference.",
+      "cost": "high",
+      "level": "L2",
+      "scope": "pre-solver",
+      "risk": "R2",
+      "claim_tier_ceiling": "exploratory",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C1"
+      },
+      "claim_impact": "Close Planck/CF4/ACT solver-independent results each under a complete null/covariance/selection contract; the DESI official-mock lane is BLOCKED-with-receipt on the PR-151 acquisition terminal receipt and never uses partial mocks. (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).",
+      "forbidden": [
+        "Do not weaken scope wording only, or copy a legacy number into a new receipt.",
+        "Do not change domain/nuisance/threshold after seeing the result to obtain a favorable outcome.",
+        "No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate pass."
+      ],
+      "anti_drift": [
+        "external novelty tier and internal readiness are independent axes; neither auto-changes the other.",
+        "legacy sources are imported only as clean-room successor or mutation fixture, never on a production path.",
+        "no Track-I card consumes native-solver output; the track boundary is one-directional."
+      ],
+      "roadmap_anchor": "htt_legacy_revival_round2_20260721/docs/03_ROUND2_DUAL_TRACK_PR_ROADMAP_20260721.md",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "standard_internal",
+      "execution_authorization": "DAG_SCHEDULABLE",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "I",
+      "solver_gate_required": false
+    },
+    {
+      "id": "PR-227",
+      "wave": 38,
+      "title": "Independent reproduction, source audit and publication-grade capsule",
+      "owner": "COMMON",
+      "contributors": [
+        "BASS",
+        "HTT",
+        "MIO"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-209",
+        "PR-214",
+        "PR-226"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-209",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-214",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-226",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Make all of Track I reproducible by a clean machine and non-author analyst down to source equations with a container lock, data recipes, source scans and a reproduce-track-I target; the Independence (non-author) gate stays OPEN until adjudication capacity returns."
+      ],
+      "files": [
+        "common",
+        "scripts/codex_harness",
+        "tests/pr_cards",
+        "docs/PR_DELTAS/pr-227.md"
+      ],
+      "tests": [
+        "venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice",
+        "to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_227_revival.py"
+      ],
+      "dod": [
+        "The decisive falsifier is killed and at least two independent implementations/oracles agree within tolerance.",
+        "Author-side gates (mechanics/identification/calibration/provenance) reach EVIDENCE_READY; the Independence gate (non-author derivation lineage plus preserved dissent) stays explicitly OPEN until adjudication capacity returns; publication_use stays false."
+      ],
+      "kill": "Results cannot be generated without an author cache or untracked file, or an independent analyst fails tolerance.",
+      "cost": "medium",
+      "level": "L2",
+      "scope": "pre-solver",
+      "risk": "R2",
+      "claim_tier_ceiling": "exploratory",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C1"
+      },
+      "claim_impact": "Make all of Track I reproducible by a clean machine and non-author analyst down to source equations with a container lock, data recipes, source scans and a reproduce-track-I target; the Independence (non-author) gate stays OPEN until adjudication capacity returns. (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).",
+      "forbidden": [
+        "Do not weaken scope wording only, or copy a legacy number into a new receipt.",
+        "Do not change domain/nuisance/threshold after seeing the result to obtain a favorable outcome.",
+        "No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate pass."
+      ],
+      "anti_drift": [
+        "external novelty tier and internal readiness are independent axes; neither auto-changes the other.",
+        "legacy sources are imported only as clean-room successor or mutation fixture, never on a production path.",
+        "no Track-I card consumes native-solver output; the track boundary is one-directional."
+      ],
+      "roadmap_anchor": "htt_legacy_revival_round2_20260721/docs/03_ROUND2_DUAL_TRACK_PR_ROADMAP_20260721.md",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "standard_internal",
+      "execution_authorization": "DAG_SCHEDULABLE",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "I",
+      "solver_gate_required": false
+    },
+    {
+      "id": "PR-228",
+      "wave": 38,
+      "title": "Track-I adjudication checkpoint and v11-I comprehensive report",
+      "owner": "COMMON",
+      "contributors": [
+        "BASS",
+        "HTT",
+        "MIO"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-227"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-227",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Close the solver-independent programme as one internal research release (v11-I) with a hostile re-review, claim delta, failures and reproducibility package, separating publication candidates; VALIDATED is deferred while the DESI lane and Independence gate stay open."
+      ],
+      "files": [
+        "common",
+        "scripts/codex_harness",
+        "tests/pr_cards",
+        "docs/PR_DELTAS/pr-228.md"
+      ],
+      "tests": [
+        "venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice",
+        "to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_228_revival.py"
+      ],
+      "dod": [
+        "The decisive falsifier is killed and at least two independent implementations/oracles agree within tolerance.",
+        "Author-side gates (mechanics/identification/calibration/provenance) reach EVIDENCE_READY; the Independence gate (non-author derivation lineage plus preserved dissent) stays explicitly OPEN until adjudication capacity returns; publication_use stays false."
+      ],
+      "kill": "An open P0 remains in the result section, or a Track-II claim is included in v11-I.",
+      "cost": "medium",
+      "level": "L2",
+      "scope": "pre-solver",
+      "risk": "R2",
+      "claim_tier_ceiling": "exploratory",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C1"
+      },
+      "claim_impact": "Close the solver-independent programme as one internal research release (v11-I) with a hostile re-review, claim delta, failures and reproducibility package, separating publication candidates; VALIDATED is deferred while the DESI lane and Independence gate stay open. (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).",
+      "forbidden": [
+        "Do not weaken scope wording only, or copy a legacy number into a new receipt.",
+        "Do not change domain/nuisance/threshold after seeing the result to obtain a favorable outcome.",
+        "No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate pass."
+      ],
+      "anti_drift": [
+        "external novelty tier and internal readiness are independent axes; neither auto-changes the other.",
+        "legacy sources are imported only as clean-room successor or mutation fixture, never on a production path.",
+        "no Track-I card consumes native-solver output; the track boundary is one-directional."
+      ],
+      "roadmap_anchor": "htt_legacy_revival_round2_20260721/docs/03_ROUND2_DUAL_TRACK_PR_ROADMAP_20260721.md",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "standard_internal",
+      "execution_authorization": "DAG_SCHEDULABLE",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "I",
+      "solver_gate_required": false
+    },
+    {
+      "id": "PR-229",
+      "wave": 38,
+      "title": "Native Bianchi Boltzmann solver delivery and authenticity gate",
+      "owner": "COMMON",
+      "contributors": [
+        "BASS",
+        "HTT",
+        "MIO"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-214",
+        "PR-218",
+        "PR-223"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-214",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-218",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-223",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Gate a real native Bianchi Boltzmann solver delivery (source commit, environment, benchmarks, independent oracle) via a content-addressed SolverDeliveryReceipt; the synthetic interface fixture is intentionally exit-3 under --require-native."
+      ],
+      "files": [
+        "common",
+        "scripts/codex_harness",
+        "tests/pr_cards",
+        "docs/PR_DELTAS/pr-229.md"
+      ],
+      "tests": [
+        "venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice",
+        "to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_229_revival.py"
+      ],
+      "dod": [
+        "The decisive falsifier is killed and at least two independent implementations/oracles agree within tolerance.",
+        "Track-II scientific commands remain exit-3 BLOCKED_NATIVE_REQUIRED until a real native delivery replaces the synthetic fixture."
+      ],
+      "kill": "Any scientific command runs without a real native SolverDeliveryReceipt.",
+      "cost": "high",
+      "level": "L2",
+      "scope": "native",
+      "risk": "R-NATIVE",
+      "claim_tier_ceiling": "exploratory",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C1"
+      },
+      "claim_impact": "Gate a real native Bianchi Boltzmann solver delivery (source commit, environment, benchmarks, independent oracle) via a content-addressed SolverDeliveryReceipt; the synthetic interface fixture is intentionally exit-3 under --require-native. (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).",
+      "forbidden": [
+        "Do not weaken scope wording only, or copy a legacy number into a new receipt.",
+        "Do not change domain/nuisance/threshold after seeing the result to obtain a favorable outcome.",
+        "No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate pass."
+      ],
+      "anti_drift": [
+        "external novelty tier and internal readiness are independent axes; neither auto-changes the other.",
+        "legacy sources are imported only as clean-room successor or mutation fixture, never on a production path.",
+        "no Track-I card consumes native-solver output; the track boundary is one-directional."
+      ],
+      "roadmap_anchor": "htt_legacy_revival_round2_20260721/docs/03_ROUND2_DUAL_TRACK_PR_ROADMAP_20260721.md",
+      "activation_state": "NEEDS_NATIVE",
+      "execution_lane": "needs_native",
+      "scientific_artifact_mode": "standard_internal",
+      "execution_authorization": "NATIVE_BLOCKED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "II",
+      "solver_gate_required": true
+    },
+    {
+      "id": "PR-230",
+      "wave": 38,
+      "title": "FLRW null, Bianchi-I and analytic ray benchmark suite",
+      "owner": "COMMON",
+      "contributors": [
+        "BASS",
+        "HTT",
+        "MIO"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-229"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-229",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Native FLRW exact null + Bianchi-I analytic temperature/ray benchmarks."
+      ],
+      "files": [
+        "common",
+        "scripts/codex_harness",
+        "tests/pr_cards",
+        "docs/PR_DELTAS/pr-230.md"
+      ],
+      "tests": [
+        "venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice",
+        "to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_230_revival.py"
+      ],
+      "dod": [
+        "The decisive falsifier is killed and at least two independent implementations/oracles agree within tolerance.",
+        "Track-II scientific commands remain exit-3 BLOCKED_NATIVE_REQUIRED until a real native delivery replaces the synthetic fixture."
+      ],
+      "kill": "Any scientific command runs without a real native SolverDeliveryReceipt.",
+      "cost": "high",
+      "level": "L2",
+      "scope": "native",
+      "risk": "R-NATIVE",
+      "claim_tier_ceiling": "exploratory",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C1"
+      },
+      "claim_impact": "Native FLRW exact null + Bianchi-I analytic temperature/ray benchmarks. (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).",
+      "forbidden": [
+        "Do not weaken scope wording only, or copy a legacy number into a new receipt.",
+        "Do not change domain/nuisance/threshold after seeing the result to obtain a favorable outcome.",
+        "No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate pass."
+      ],
+      "anti_drift": [
+        "external novelty tier and internal readiness are independent axes; neither auto-changes the other.",
+        "legacy sources are imported only as clean-room successor or mutation fixture, never on a production path.",
+        "no Track-I card consumes native-solver output; the track boundary is one-directional."
+      ],
+      "roadmap_anchor": "htt_legacy_revival_round2_20260721/docs/03_ROUND2_DUAL_TRACK_PR_ROADMAP_20260721.md",
+      "activation_state": "NEEDS_NATIVE",
+      "execution_lane": "needs_native",
+      "scientific_artifact_mode": "standard_internal",
+      "execution_authorization": "NATIVE_BLOCKED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "II",
+      "solver_gate_required": true
+    },
+    {
+      "id": "PR-231",
+      "wave": 38,
+      "title": "Exact Bianchi family background and constraint atlas",
+      "owner": "COMMON",
+      "contributors": [
+        "BASS",
+        "HTT",
+        "MIO"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-229",
+        "PR-230"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-229",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-230",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Native exact Bianchi family backgrounds and constraint atlas across all types."
+      ],
+      "files": [
+        "common",
+        "scripts/codex_harness",
+        "tests/pr_cards",
+        "docs/PR_DELTAS/pr-231.md"
+      ],
+      "tests": [
+        "venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice",
+        "to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_231_revival.py"
+      ],
+      "dod": [
+        "The decisive falsifier is killed and at least two independent implementations/oracles agree within tolerance.",
+        "Track-II scientific commands remain exit-3 BLOCKED_NATIVE_REQUIRED until a real native delivery replaces the synthetic fixture."
+      ],
+      "kill": "Any scientific command runs without a real native SolverDeliveryReceipt.",
+      "cost": "high",
+      "level": "L2",
+      "scope": "native",
+      "risk": "R-NATIVE",
+      "claim_tier_ceiling": "exploratory",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C1"
+      },
+      "claim_impact": "Native exact Bianchi family backgrounds and constraint atlas across all types. (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).",
+      "forbidden": [
+        "Do not weaken scope wording only, or copy a legacy number into a new receipt.",
+        "Do not change domain/nuisance/threshold after seeing the result to obtain a favorable outcome.",
+        "No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate pass."
+      ],
+      "anti_drift": [
+        "external novelty tier and internal readiness are independent axes; neither auto-changes the other.",
+        "legacy sources are imported only as clean-room successor or mutation fixture, never on a production path.",
+        "no Track-I card consumes native-solver output; the track boundary is one-directional."
+      ],
+      "roadmap_anchor": "htt_legacy_revival_round2_20260721/docs/03_ROUND2_DUAL_TRACK_PR_ROADMAP_20260721.md",
+      "activation_state": "NEEDS_NATIVE",
+      "execution_lane": "needs_native",
+      "scientific_artifact_mode": "standard_internal",
+      "execution_authorization": "NATIVE_BLOCKED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "II",
+      "solver_gate_required": true
+    },
+    {
+      "id": "PR-232",
+      "wave": 38,
+      "title": "Photon geodesic and temperature hierarchy",
+      "owner": "COMMON",
+      "contributors": [
+        "BASS",
+        "HTT",
+        "MIO"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-230",
+        "PR-231"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-230",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-231",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Native photon geodesic transport and temperature multipole hierarchy."
+      ],
+      "files": [
+        "common",
+        "scripts/codex_harness",
+        "tests/pr_cards",
+        "docs/PR_DELTAS/pr-232.md"
+      ],
+      "tests": [
+        "venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice",
+        "to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_232_revival.py"
+      ],
+      "dod": [
+        "The decisive falsifier is killed and at least two independent implementations/oracles agree within tolerance.",
+        "Track-II scientific commands remain exit-3 BLOCKED_NATIVE_REQUIRED until a real native delivery replaces the synthetic fixture."
+      ],
+      "kill": "Any scientific command runs without a real native SolverDeliveryReceipt.",
+      "cost": "high",
+      "level": "L2",
+      "scope": "native",
+      "risk": "R-NATIVE",
+      "claim_tier_ceiling": "exploratory",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C1"
+      },
+      "claim_impact": "Native photon geodesic transport and temperature multipole hierarchy. (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).",
+      "forbidden": [
+        "Do not weaken scope wording only, or copy a legacy number into a new receipt.",
+        "Do not change domain/nuisance/threshold after seeing the result to obtain a favorable outcome.",
+        "No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate pass."
+      ],
+      "anti_drift": [
+        "external novelty tier and internal readiness are independent axes; neither auto-changes the other.",
+        "legacy sources are imported only as clean-room successor or mutation fixture, never on a production path.",
+        "no Track-I card consumes native-solver output; the track boundary is one-directional."
+      ],
+      "roadmap_anchor": "htt_legacy_revival_round2_20260721/docs/03_ROUND2_DUAL_TRACK_PR_ROADMAP_20260721.md",
+      "activation_state": "NEEDS_NATIVE",
+      "execution_lane": "needs_native",
+      "scientific_artifact_mode": "standard_internal",
+      "execution_authorization": "NATIVE_BLOCKED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "II",
+      "solver_gate_required": true
+    },
+    {
+      "id": "PR-233",
+      "wave": 39,
+      "title": "Thomson collision, recombination and reionization physics",
+      "owner": "COMMON",
+      "contributors": [
+        "BASS",
+        "HTT",
+        "MIO"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-232"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-232",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Native Thomson collision term with recombination/reionization visibility."
+      ],
+      "files": [
+        "common",
+        "scripts/codex_harness",
+        "tests/pr_cards",
+        "docs/PR_DELTAS/pr-233.md"
+      ],
+      "tests": [
+        "venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice",
+        "to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_233_revival.py"
+      ],
+      "dod": [
+        "The decisive falsifier is killed and at least two independent implementations/oracles agree within tolerance.",
+        "Track-II scientific commands remain exit-3 BLOCKED_NATIVE_REQUIRED until a real native delivery replaces the synthetic fixture."
+      ],
+      "kill": "Any scientific command runs without a real native SolverDeliveryReceipt.",
+      "cost": "high",
+      "level": "L2",
+      "scope": "native",
+      "risk": "R-NATIVE",
+      "claim_tier_ceiling": "exploratory",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C1"
+      },
+      "claim_impact": "Native Thomson collision term with recombination/reionization visibility. (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).",
+      "forbidden": [
+        "Do not weaken scope wording only, or copy a legacy number into a new receipt.",
+        "Do not change domain/nuisance/threshold after seeing the result to obtain a favorable outcome.",
+        "No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate pass."
+      ],
+      "anti_drift": [
+        "external novelty tier and internal readiness are independent axes; neither auto-changes the other.",
+        "legacy sources are imported only as clean-room successor or mutation fixture, never on a production path.",
+        "no Track-I card consumes native-solver output; the track boundary is one-directional."
+      ],
+      "roadmap_anchor": "htt_legacy_revival_round2_20260721/docs/03_ROUND2_DUAL_TRACK_PR_ROADMAP_20260721.md",
+      "activation_state": "NEEDS_NATIVE",
+      "execution_lane": "needs_native",
+      "scientific_artifact_mode": "standard_internal",
+      "execution_authorization": "NATIVE_BLOCKED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "II",
+      "solver_gate_required": true
+    },
+    {
+      "id": "PR-234",
+      "wave": 39,
+      "title": "Temperature-polarization E/B hierarchy and parity oracle",
+      "owner": "COMMON",
+      "contributors": [
+        "BASS",
+        "HTT",
+        "MIO"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-233"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-233",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Native T/E/B polarization hierarchy and parity/handedness oracle."
+      ],
+      "files": [
+        "common",
+        "scripts/codex_harness",
+        "tests/pr_cards",
+        "docs/PR_DELTAS/pr-234.md"
+      ],
+      "tests": [
+        "venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice",
+        "to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_234_revival.py"
+      ],
+      "dod": [
+        "The decisive falsifier is killed and at least two independent implementations/oracles agree within tolerance.",
+        "Track-II scientific commands remain exit-3 BLOCKED_NATIVE_REQUIRED until a real native delivery replaces the synthetic fixture."
+      ],
+      "kill": "Any scientific command runs without a real native SolverDeliveryReceipt.",
+      "cost": "high",
+      "level": "L2",
+      "scope": "native",
+      "risk": "R-NATIVE",
+      "claim_tier_ceiling": "exploratory",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C1"
+      },
+      "claim_impact": "Native T/E/B polarization hierarchy and parity/handedness oracle. (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).",
+      "forbidden": [
+        "Do not weaken scope wording only, or copy a legacy number into a new receipt.",
+        "Do not change domain/nuisance/threshold after seeing the result to obtain a favorable outcome.",
+        "No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate pass."
+      ],
+      "anti_drift": [
+        "external novelty tier and internal readiness are independent axes; neither auto-changes the other.",
+        "legacy sources are imported only as clean-room successor or mutation fixture, never on a production path.",
+        "no Track-I card consumes native-solver output; the track boundary is one-directional."
+      ],
+      "roadmap_anchor": "htt_legacy_revival_round2_20260721/docs/03_ROUND2_DUAL_TRACK_PR_ROADMAP_20260721.md",
+      "activation_state": "NEEDS_NATIVE",
+      "execution_lane": "needs_native",
+      "scientific_artifact_mode": "standard_internal",
+      "execution_authorization": "NATIVE_BLOCKED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "II",
+      "solver_gate_required": true
+    },
+    {
+      "id": "PR-235",
+      "wave": 39,
+      "title": "Tilted and multi-fluid species dynamics",
+      "owner": "COMMON",
+      "contributors": [
+        "BASS",
+        "HTT",
+        "MIO"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-231",
+        "PR-233",
+        "PR-223"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-231",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-233",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-223",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Native tilted, multi-fluid species dynamics with conservation."
+      ],
+      "files": [
+        "common",
+        "scripts/codex_harness",
+        "tests/pr_cards",
+        "docs/PR_DELTAS/pr-235.md"
+      ],
+      "tests": [
+        "venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice",
+        "to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_235_revival.py"
+      ],
+      "dod": [
+        "The decisive falsifier is killed and at least two independent implementations/oracles agree within tolerance.",
+        "Track-II scientific commands remain exit-3 BLOCKED_NATIVE_REQUIRED until a real native delivery replaces the synthetic fixture."
+      ],
+      "kill": "Any scientific command runs without a real native SolverDeliveryReceipt.",
+      "cost": "high",
+      "level": "L2",
+      "scope": "native",
+      "risk": "R-NATIVE",
+      "claim_tier_ceiling": "exploratory",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C1"
+      },
+      "claim_impact": "Native tilted, multi-fluid species dynamics with conservation. (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).",
+      "forbidden": [
+        "Do not weaken scope wording only, or copy a legacy number into a new receipt.",
+        "Do not change domain/nuisance/threshold after seeing the result to obtain a favorable outcome.",
+        "No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate pass."
+      ],
+      "anti_drift": [
+        "external novelty tier and internal readiness are independent axes; neither auto-changes the other.",
+        "legacy sources are imported only as clean-room successor or mutation fixture, never on a production path.",
+        "no Track-I card consumes native-solver output; the track boundary is one-directional."
+      ],
+      "roadmap_anchor": "htt_legacy_revival_round2_20260721/docs/03_ROUND2_DUAL_TRACK_PR_ROADMAP_20260721.md",
+      "activation_state": "NEEDS_NATIVE",
+      "execution_lane": "needs_native",
+      "scientific_artifact_mode": "standard_internal",
+      "execution_authorization": "NATIVE_BLOCKED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "II",
+      "solver_gate_required": true
+    },
+    {
+      "id": "PR-236",
+      "wave": 39,
+      "title": "Native observable response Jacobian and numerical error model",
+      "owner": "COMMON",
+      "contributors": [
+        "BASS",
+        "HTT",
+        "MIO"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-232",
+        "PR-234",
+        "PR-235"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-232",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-234",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-235",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Native observable response Jacobian with a validated numerical error model."
+      ],
+      "files": [
+        "common",
+        "scripts/codex_harness",
+        "tests/pr_cards",
+        "docs/PR_DELTAS/pr-236.md"
+      ],
+      "tests": [
+        "venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice",
+        "to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_236_revival.py"
+      ],
+      "dod": [
+        "The decisive falsifier is killed and at least two independent implementations/oracles agree within tolerance.",
+        "Track-II scientific commands remain exit-3 BLOCKED_NATIVE_REQUIRED until a real native delivery replaces the synthetic fixture."
+      ],
+      "kill": "Any scientific command runs without a real native SolverDeliveryReceipt.",
+      "cost": "high",
+      "level": "L2",
+      "scope": "native",
+      "risk": "R-NATIVE",
+      "claim_tier_ceiling": "exploratory",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C1"
+      },
+      "claim_impact": "Native observable response Jacobian with a validated numerical error model. (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).",
+      "forbidden": [
+        "Do not weaken scope wording only, or copy a legacy number into a new receipt.",
+        "Do not change domain/nuisance/threshold after seeing the result to obtain a favorable outcome.",
+        "No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate pass."
+      ],
+      "anti_drift": [
+        "external novelty tier and internal readiness are independent axes; neither auto-changes the other.",
+        "legacy sources are imported only as clean-room successor or mutation fixture, never on a production path.",
+        "no Track-I card consumes native-solver output; the track boundary is one-directional."
+      ],
+      "roadmap_anchor": "htt_legacy_revival_round2_20260721/docs/03_ROUND2_DUAL_TRACK_PR_ROADMAP_20260721.md",
+      "activation_state": "NEEDS_NATIVE",
+      "execution_lane": "needs_native",
+      "scientific_artifact_mode": "standard_internal",
+      "execution_authorization": "NATIVE_BLOCKED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "II",
+      "solver_gate_required": true
+    },
+    {
+      "id": "PR-237",
+      "wave": 39,
+      "title": "Native morphology atlas across Bianchi families",
+      "owner": "COMMON",
+      "contributors": [
+        "BASS",
+        "HTT",
+        "MIO"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-231",
+        "PR-234",
+        "PR-236"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-231",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-234",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-236",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Native CMB morphology atlas across Bianchi families."
+      ],
+      "files": [
+        "common",
+        "scripts/codex_harness",
+        "tests/pr_cards",
+        "docs/PR_DELTAS/pr-237.md"
+      ],
+      "tests": [
+        "venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice",
+        "to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_237_revival.py"
+      ],
+      "dod": [
+        "The decisive falsifier is killed and at least two independent implementations/oracles agree within tolerance.",
+        "Track-II scientific commands remain exit-3 BLOCKED_NATIVE_REQUIRED until a real native delivery replaces the synthetic fixture."
+      ],
+      "kill": "Any scientific command runs without a real native SolverDeliveryReceipt.",
+      "cost": "high",
+      "level": "L2",
+      "scope": "native",
+      "risk": "R-NATIVE",
+      "claim_tier_ceiling": "exploratory",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C1"
+      },
+      "claim_impact": "Native CMB morphology atlas across Bianchi families. (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).",
+      "forbidden": [
+        "Do not weaken scope wording only, or copy a legacy number into a new receipt.",
+        "Do not change domain/nuisance/threshold after seeing the result to obtain a favorable outcome.",
+        "No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate pass."
+      ],
+      "anti_drift": [
+        "external novelty tier and internal readiness are independent axes; neither auto-changes the other.",
+        "legacy sources are imported only as clean-room successor or mutation fixture, never on a production path.",
+        "no Track-I card consumes native-solver output; the track boundary is one-directional."
+      ],
+      "roadmap_anchor": "htt_legacy_revival_round2_20260721/docs/03_ROUND2_DUAL_TRACK_PR_ROADMAP_20260721.md",
+      "activation_state": "NEEDS_NATIVE",
+      "execution_lane": "needs_native",
+      "scientific_artifact_mode": "standard_internal",
+      "execution_authorization": "NATIVE_BLOCKED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "II",
+      "solver_gate_required": true
+    },
+    {
+      "id": "PR-238",
+      "wave": 39,
+      "title": "Native response quotient and family-identifiability lattice",
+      "owner": "COMMON",
+      "contributors": [
+        "BASS",
+        "HTT",
+        "MIO"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-236",
+        "PR-237",
+        "PR-219"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-236",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-237",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-219",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Native response quotient and family-identifiability lattice."
+      ],
+      "files": [
+        "common",
+        "scripts/codex_harness",
+        "tests/pr_cards",
+        "docs/PR_DELTAS/pr-238.md"
+      ],
+      "tests": [
+        "venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice",
+        "to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_238_revival.py"
+      ],
+      "dod": [
+        "The decisive falsifier is killed and at least two independent implementations/oracles agree within tolerance.",
+        "Track-II scientific commands remain exit-3 BLOCKED_NATIVE_REQUIRED until a real native delivery replaces the synthetic fixture."
+      ],
+      "kill": "Any scientific command runs without a real native SolverDeliveryReceipt.",
+      "cost": "high",
+      "level": "L2",
+      "scope": "native",
+      "risk": "R-NATIVE",
+      "claim_tier_ceiling": "exploratory",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C1"
+      },
+      "claim_impact": "Native response quotient and family-identifiability lattice. (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).",
+      "forbidden": [
+        "Do not weaken scope wording only, or copy a legacy number into a new receipt.",
+        "Do not change domain/nuisance/threshold after seeing the result to obtain a favorable outcome.",
+        "No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate pass."
+      ],
+      "anti_drift": [
+        "external novelty tier and internal readiness are independent axes; neither auto-changes the other.",
+        "legacy sources are imported only as clean-room successor or mutation fixture, never on a production path.",
+        "no Track-I card consumes native-solver output; the track boundary is one-directional."
+      ],
+      "roadmap_anchor": "htt_legacy_revival_round2_20260721/docs/03_ROUND2_DUAL_TRACK_PR_ROADMAP_20260721.md",
+      "activation_state": "NEEDS_NATIVE",
+      "execution_lane": "needs_native",
+      "scientific_artifact_mode": "standard_internal",
+      "execution_authorization": "NATIVE_BLOCKED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "II",
+      "solver_gate_required": true
+    },
+    {
+      "id": "PR-239",
+      "wave": 40,
+      "title": "Native calibration of Teff and legacy BASS surrogates",
+      "owner": "COMMON",
+      "contributors": [
+        "BASS",
+        "HTT",
+        "MIO"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-218",
+        "PR-236"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-218",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-236",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Native calibration certifying the Teff/BASS-lite surrogate remainder."
+      ],
+      "files": [
+        "common",
+        "scripts/codex_harness",
+        "tests/pr_cards",
+        "docs/PR_DELTAS/pr-239.md"
+      ],
+      "tests": [
+        "venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice",
+        "to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_239_revival.py"
+      ],
+      "dod": [
+        "The decisive falsifier is killed and at least two independent implementations/oracles agree within tolerance.",
+        "Track-II scientific commands remain exit-3 BLOCKED_NATIVE_REQUIRED until a real native delivery replaces the synthetic fixture."
+      ],
+      "kill": "Any scientific command runs without a real native SolverDeliveryReceipt.",
+      "cost": "high",
+      "level": "L2",
+      "scope": "native",
+      "risk": "R-NATIVE",
+      "claim_tier_ceiling": "exploratory",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C1"
+      },
+      "claim_impact": "Native calibration certifying the Teff/BASS-lite surrogate remainder. (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).",
+      "forbidden": [
+        "Do not weaken scope wording only, or copy a legacy number into a new receipt.",
+        "Do not change domain/nuisance/threshold after seeing the result to obtain a favorable outcome.",
+        "No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate pass."
+      ],
+      "anti_drift": [
+        "external novelty tier and internal readiness are independent axes; neither auto-changes the other.",
+        "legacy sources are imported only as clean-room successor or mutation fixture, never on a production path.",
+        "no Track-I card consumes native-solver output; the track boundary is one-directional."
+      ],
+      "roadmap_anchor": "htt_legacy_revival_round2_20260721/docs/03_ROUND2_DUAL_TRACK_PR_ROADMAP_20260721.md",
+      "activation_state": "NEEDS_NATIVE",
+      "execution_lane": "needs_native",
+      "scientific_artifact_mode": "standard_internal",
+      "execution_authorization": "NATIVE_BLOCKED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "II",
+      "solver_gate_required": true
+    },
+    {
+      "id": "PR-240",
+      "wave": 40,
+      "title": "Common latent cosmology multi-probe forward model",
+      "owner": "COMMON",
+      "contributors": [
+        "BASS",
+        "HTT",
+        "MIO"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-222",
+        "PR-226",
+        "PR-235",
+        "PR-236"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-222",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-226",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-235",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-236",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Native common-latent-cosmology multi-probe forward model."
+      ],
+      "files": [
+        "common",
+        "scripts/codex_harness",
+        "tests/pr_cards",
+        "docs/PR_DELTAS/pr-240.md"
+      ],
+      "tests": [
+        "venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice",
+        "to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_240_revival.py"
+      ],
+      "dod": [
+        "The decisive falsifier is killed and at least two independent implementations/oracles agree within tolerance.",
+        "Track-II scientific commands remain exit-3 BLOCKED_NATIVE_REQUIRED until a real native delivery replaces the synthetic fixture."
+      ],
+      "kill": "Any scientific command runs without a real native SolverDeliveryReceipt.",
+      "cost": "high",
+      "level": "L2",
+      "scope": "native",
+      "risk": "R-NATIVE",
+      "claim_tier_ceiling": "exploratory",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C1"
+      },
+      "claim_impact": "Native common-latent-cosmology multi-probe forward model. (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).",
+      "forbidden": [
+        "Do not weaken scope wording only, or copy a legacy number into a new receipt.",
+        "Do not change domain/nuisance/threshold after seeing the result to obtain a favorable outcome.",
+        "No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate pass."
+      ],
+      "anti_drift": [
+        "external novelty tier and internal readiness are independent axes; neither auto-changes the other.",
+        "legacy sources are imported only as clean-room successor or mutation fixture, never on a production path.",
+        "no Track-I card consumes native-solver output; the track boundary is one-directional."
+      ],
+      "roadmap_anchor": "htt_legacy_revival_round2_20260721/docs/03_ROUND2_DUAL_TRACK_PR_ROADMAP_20260721.md",
+      "activation_state": "NEEDS_NATIVE",
+      "execution_lane": "needs_native",
+      "scientific_artifact_mode": "standard_internal",
+      "execution_authorization": "NATIVE_BLOCKED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "II",
+      "solver_gate_required": true
+    },
+    {
+      "id": "PR-241",
+      "wave": 40,
+      "title": "Planck temperature/polarization native likelihood and null validation",
+      "owner": "COMMON",
+      "contributors": [
+        "BASS",
+        "HTT",
+        "MIO"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-234",
+        "PR-237",
+        "PR-238",
+        "PR-240"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-234",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-237",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-238",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-240",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Native Planck T/P likelihood and null validation."
+      ],
+      "files": [
+        "common",
+        "scripts/codex_harness",
+        "tests/pr_cards",
+        "docs/PR_DELTAS/pr-241.md"
+      ],
+      "tests": [
+        "venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice",
+        "to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_241_revival.py"
+      ],
+      "dod": [
+        "The decisive falsifier is killed and at least two independent implementations/oracles agree within tolerance.",
+        "Track-II scientific commands remain exit-3 BLOCKED_NATIVE_REQUIRED until a real native delivery replaces the synthetic fixture."
+      ],
+      "kill": "Any scientific command runs without a real native SolverDeliveryReceipt.",
+      "cost": "high",
+      "level": "L2",
+      "scope": "native",
+      "risk": "R-NATIVE",
+      "claim_tier_ceiling": "exploratory",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C1"
+      },
+      "claim_impact": "Native Planck T/P likelihood and null validation. (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).",
+      "forbidden": [
+        "Do not weaken scope wording only, or copy a legacy number into a new receipt.",
+        "Do not change domain/nuisance/threshold after seeing the result to obtain a favorable outcome.",
+        "No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate pass."
+      ],
+      "anti_drift": [
+        "external novelty tier and internal readiness are independent axes; neither auto-changes the other.",
+        "legacy sources are imported only as clean-room successor or mutation fixture, never on a production path.",
+        "no Track-I card consumes native-solver output; the track boundary is one-directional."
+      ],
+      "roadmap_anchor": "htt_legacy_revival_round2_20260721/docs/03_ROUND2_DUAL_TRACK_PR_ROADMAP_20260721.md",
+      "activation_state": "NEEDS_NATIVE",
+      "execution_lane": "needs_native",
+      "scientific_artifact_mode": "standard_internal",
+      "execution_authorization": "NATIVE_BLOCKED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "II",
+      "solver_gate_required": true
+    },
+    {
+      "id": "PR-242",
+      "wave": 40,
+      "title": "Track-II external solver adjudication and v11-II report",
+      "owner": "COMMON",
+      "contributors": [
+        "BASS",
+        "HTT",
+        "MIO"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-239",
+        "PR-241"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-239",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-241",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "External native-solver adjudication and the v11-II report."
+      ],
+      "files": [
+        "common",
+        "scripts/codex_harness",
+        "tests/pr_cards",
+        "docs/PR_DELTAS/pr-242.md"
+      ],
+      "tests": [
+        "venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice",
+        "to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_242_revival.py"
+      ],
+      "dod": [
+        "The decisive falsifier is killed and at least two independent implementations/oracles agree within tolerance.",
+        "Track-II scientific commands remain exit-3 BLOCKED_NATIVE_REQUIRED until a real native delivery replaces the synthetic fixture."
+      ],
+      "kill": "Any scientific command runs without a real native SolverDeliveryReceipt.",
+      "cost": "high",
+      "level": "L2",
+      "scope": "native",
+      "risk": "R-NATIVE",
+      "claim_tier_ceiling": "exploratory",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C1"
+      },
+      "claim_impact": "External native-solver adjudication and the v11-II report. (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).",
+      "forbidden": [
+        "Do not weaken scope wording only, or copy a legacy number into a new receipt.",
+        "Do not change domain/nuisance/threshold after seeing the result to obtain a favorable outcome.",
+        "No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate pass."
+      ],
+      "anti_drift": [
+        "external novelty tier and internal readiness are independent axes; neither auto-changes the other.",
+        "legacy sources are imported only as clean-room successor or mutation fixture, never on a production path.",
+        "no Track-I card consumes native-solver output; the track boundary is one-directional."
+      ],
+      "roadmap_anchor": "htt_legacy_revival_round2_20260721/docs/03_ROUND2_DUAL_TRACK_PR_ROADMAP_20260721.md",
+      "activation_state": "NEEDS_NATIVE",
+      "execution_lane": "needs_native",
+      "scientific_artifact_mode": "standard_internal",
+      "execution_authorization": "NATIVE_BLOCKED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "II",
+      "solver_gate_required": true
+    },
+    {
+      "id": "PR-243",
+      "wave": 40,
+      "title": "Cross-track common-model comparator and source-discrimination synthesis",
+      "owner": "COMMON",
+      "contributors": [
+        "BASS",
+        "HTT",
+        "MIO"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-228",
+        "PR-242"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-228",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-242",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Integration: cross-track common-model comparator and source-discrimination synthesis (requires PR-228 and PR-242 receipts)."
+      ],
+      "files": [
+        "common",
+        "scripts/codex_harness",
+        "tests/pr_cards",
+        "docs/PR_DELTAS/pr-243.md"
+      ],
+      "tests": [
+        "venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice",
+        "to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_243_revival.py"
+      ],
+      "dod": [
+        "The decisive falsifier is killed and at least two independent implementations/oracles agree within tolerance.",
+        "Track-II scientific commands remain exit-3 BLOCKED_NATIVE_REQUIRED until a real native delivery replaces the synthetic fixture."
+      ],
+      "kill": "Any scientific command runs without a real native SolverDeliveryReceipt.",
+      "cost": "high",
+      "level": "L2",
+      "scope": "native",
+      "risk": "R-NATIVE",
+      "claim_tier_ceiling": "exploratory",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C1"
+      },
+      "claim_impact": "Integration: cross-track common-model comparator and source-discrimination synthesis (requires PR-228 and PR-242 receipts). (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).",
+      "forbidden": [
+        "Do not weaken scope wording only, or copy a legacy number into a new receipt.",
+        "Do not change domain/nuisance/threshold after seeing the result to obtain a favorable outcome.",
+        "No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate pass."
+      ],
+      "anti_drift": [
+        "external novelty tier and internal readiness are independent axes; neither auto-changes the other.",
+        "legacy sources are imported only as clean-room successor or mutation fixture, never on a production path.",
+        "no Track-I card consumes native-solver output; the track boundary is one-directional."
+      ],
+      "roadmap_anchor": "htt_legacy_revival_round2_20260721/docs/03_ROUND2_DUAL_TRACK_PR_ROADMAP_20260721.md",
+      "activation_state": "NEEDS_NATIVE",
+      "execution_lane": "needs_native",
+      "scientific_artifact_mode": "standard_internal",
+      "execution_authorization": "NATIVE_BLOCKED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "INTEGRATION",
+      "solver_gate_required": true
+    },
+    {
+      "id": "PR-244",
+      "wave": 40,
+      "title": "Hostile external replication and red-team challenge",
+      "owner": "COMMON",
+      "contributors": [
+        "BASS",
+        "HTT",
+        "MIO"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-243"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-243",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Integration: hostile external replication and red-team challenge."
+      ],
+      "files": [
+        "common",
+        "scripts/codex_harness",
+        "tests/pr_cards",
+        "docs/PR_DELTAS/pr-244.md"
+      ],
+      "tests": [
+        "venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice",
+        "to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_244_revival.py"
+      ],
+      "dod": [
+        "The decisive falsifier is killed and at least two independent implementations/oracles agree within tolerance.",
+        "Track-II scientific commands remain exit-3 BLOCKED_NATIVE_REQUIRED until a real native delivery replaces the synthetic fixture."
+      ],
+      "kill": "Any scientific command runs without a real native SolverDeliveryReceipt.",
+      "cost": "high",
+      "level": "L2",
+      "scope": "native",
+      "risk": "R-NATIVE",
+      "claim_tier_ceiling": "exploratory",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C1"
+      },
+      "claim_impact": "Integration: hostile external replication and red-team challenge. (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).",
+      "forbidden": [
+        "Do not weaken scope wording only, or copy a legacy number into a new receipt.",
+        "Do not change domain/nuisance/threshold after seeing the result to obtain a favorable outcome.",
+        "No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate pass."
+      ],
+      "anti_drift": [
+        "external novelty tier and internal readiness are independent axes; neither auto-changes the other.",
+        "legacy sources are imported only as clean-room successor or mutation fixture, never on a production path.",
+        "no Track-I card consumes native-solver output; the track boundary is one-directional."
+      ],
+      "roadmap_anchor": "htt_legacy_revival_round2_20260721/docs/03_ROUND2_DUAL_TRACK_PR_ROADMAP_20260721.md",
+      "activation_state": "NEEDS_NATIVE",
+      "execution_lane": "needs_native",
+      "scientific_artifact_mode": "standard_internal",
+      "execution_authorization": "NATIVE_BLOCKED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "INTEGRATION",
+      "solver_gate_required": true
+    },
+    {
+      "id": "PR-245",
+      "wave": 41,
+      "title": "Publication suite: methods/data, solver/theory, joint cosmology",
+      "owner": "COMMON",
+      "contributors": [
+        "BASS",
+        "HTT",
+        "MIO"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-244"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-244",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Integration: publication suite across methods/data, solver/theory and joint cosmology."
+      ],
+      "files": [
+        "common",
+        "scripts/codex_harness",
+        "tests/pr_cards",
+        "docs/PR_DELTAS/pr-245.md"
+      ],
+      "tests": [
+        "venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice",
+        "to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_245_revival.py"
+      ],
+      "dod": [
+        "The decisive falsifier is killed and at least two independent implementations/oracles agree within tolerance.",
+        "Track-II scientific commands remain exit-3 BLOCKED_NATIVE_REQUIRED until a real native delivery replaces the synthetic fixture."
+      ],
+      "kill": "Any scientific command runs without a real native SolverDeliveryReceipt.",
+      "cost": "high",
+      "level": "L2",
+      "scope": "native",
+      "risk": "R-NATIVE",
+      "claim_tier_ceiling": "exploratory",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C1"
+      },
+      "claim_impact": "Integration: publication suite across methods/data, solver/theory and joint cosmology. (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).",
+      "forbidden": [
+        "Do not weaken scope wording only, or copy a legacy number into a new receipt.",
+        "Do not change domain/nuisance/threshold after seeing the result to obtain a favorable outcome.",
+        "No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate pass."
+      ],
+      "anti_drift": [
+        "external novelty tier and internal readiness are independent axes; neither auto-changes the other.",
+        "legacy sources are imported only as clean-room successor or mutation fixture, never on a production path.",
+        "no Track-I card consumes native-solver output; the track boundary is one-directional."
+      ],
+      "roadmap_anchor": "htt_legacy_revival_round2_20260721/docs/03_ROUND2_DUAL_TRACK_PR_ROADMAP_20260721.md",
+      "activation_state": "NEEDS_NATIVE",
+      "execution_lane": "needs_native",
+      "scientific_artifact_mode": "standard_internal",
+      "execution_authorization": "NATIVE_BLOCKED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "INTEGRATION",
+      "solver_gate_required": true
+    },
+    {
+      "id": "PR-246",
+      "wave": 41,
+      "title": "Final programme synthesis and long-horizon release",
+      "owner": "COMMON",
+      "contributors": [
+        "BASS",
+        "HTT",
+        "MIO"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-245"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-245",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Integration: final programme synthesis and long-horizon release."
+      ],
+      "files": [
+        "common",
+        "scripts/codex_harness",
+        "tests/pr_cards",
+        "docs/PR_DELTAS/pr-246.md"
+      ],
+      "tests": [
+        "venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice",
+        "to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_246_revival.py"
+      ],
+      "dod": [
+        "The decisive falsifier is killed and at least two independent implementations/oracles agree within tolerance.",
+        "Track-II scientific commands remain exit-3 BLOCKED_NATIVE_REQUIRED until a real native delivery replaces the synthetic fixture."
+      ],
+      "kill": "Any scientific command runs without a real native SolverDeliveryReceipt.",
+      "cost": "high",
+      "level": "L2",
+      "scope": "native",
+      "risk": "R-NATIVE",
+      "claim_tier_ceiling": "exploratory",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C1"
+      },
+      "claim_impact": "Integration: final programme synthesis and long-horizon release. (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).",
+      "forbidden": [
+        "Do not weaken scope wording only, or copy a legacy number into a new receipt.",
+        "Do not change domain/nuisance/threshold after seeing the result to obtain a favorable outcome.",
+        "No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate pass."
+      ],
+      "anti_drift": [
+        "external novelty tier and internal readiness are independent axes; neither auto-changes the other.",
+        "legacy sources are imported only as clean-room successor or mutation fixture, never on a production path.",
+        "no Track-I card consumes native-solver output; the track boundary is one-directional."
+      ],
+      "roadmap_anchor": "htt_legacy_revival_round2_20260721/docs/03_ROUND2_DUAL_TRACK_PR_ROADMAP_20260721.md",
+      "activation_state": "NEEDS_NATIVE",
+      "execution_lane": "needs_native",
+      "scientific_artifact_mode": "standard_internal",
+      "execution_authorization": "NATIVE_BLOCKED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "INTEGRATION",
+      "solver_gate_required": true
     }
   ]
 }
