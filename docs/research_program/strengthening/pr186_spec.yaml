@@ -1,0 +1,53 @@
+schema: htt.strengthen_spec.v1
+pr_id: PR-186
+title: W2 convention theorem, active-source regression repair, all-consumer refreeze
+baseline_commit: b8efb2de24a1c1ce2ad61e6150532ef2f8179d00
+frozen_before_result: true
+owner: COMMON
+targets_audit_criticisms: [H01]
+risk_tier: R3-CAS
+claim_ceiling: {scheme: roadmap_rescue_v1, level: C1}
+public_use: false
+
+strengthened_claim: >
+  W^2 := omega_ab omega^ab/(6 H^2) = omega_a omega^a/(3 H^2), using the exact
+  spatial identity omega_ab omega^ab = 2 omega_a omega^a; with Theta = 3H,
+  sqrt(omega_ab omega^ab)/Theta <= B implies W^2 <= 3 B^2/2. This is the single
+  active meaning of W^2 in the parent identity, MES ceilings, comparator, and
+  every figure. The v5/v10 report DISPLAY omega_a omega^a/H^2 was exactly 3x the
+  registered value and is corrected; the live code always used (6 H^2), so no
+  numeric anchor moves.
+
+decisive_falsifier: >
+  Fails if any independent derivation disagrees on the factor 3 or sign, or if
+  any active (non-historical-allowlist) source retains omega_a omega^a/H^2, or if
+  a frozen numeric anchor (W2_max, MES ceiling) changes.
+
+interfaces:
+  module: htt/src/common/w2_convention.py
+  runner: scripts/codex_harness/run_pr186_w2_convention.py
+  card_out: docs/generated/pr186_result_card.json
+  defect_site: scripts/build_external_audit_report_v10.py (W^2 display)
+  authority: htt/obsstat/egs3_parent_identity.py (w2_convention_table)
+
+pass_gate_conjunctive:
+  - two independent derivation lineages agree (numerical random-tensor identity
+    to < 1e-12 AND exact symbolic sympy: registered form, ratio 3, ceiling
+    3 B^2/2). Blind four-axis CAS is a deferred follow-up (CAS_BLOCKED legitimate,
+    PR-170 precedent).
+  - active-source bad-pattern scan returns 0 hits; historical/frozen occurrences
+    (v5-v9 builders+packages, CHANGELOG, correction authority) are allowlisted.
+  - the v10 report display is corrected and its --check is byte-stable.
+  - the frozen MES vorticity ceiling W2_max stays byte-identical (3.3789e-13).
+  - pre/post delta table explains the 3x display change and the invariant anchors.
+
+fail_kill_gate:
+  - any active figure/source keeps the old convention.
+  - MES 3/2 rule disagrees with the displayed definition.
+  - any frozen numeric anchor changes.
+
+independence_gate_status_on_close: OPEN
+readiness_target_on_close: EVIDENCE_READY
+kill_switch: >
+  Frozen W2_max / MES numeric anchors byte-identical; only the DISPLAY and
+  inheriting consumers change; historical v5-v9 packages never edited.

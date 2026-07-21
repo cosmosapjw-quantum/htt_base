@@ -332,7 +332,7 @@ The public mathematical object is
       = \left(\Sigma^2,\, W^2,\, \OmT,\, \dOk\right),
 \qquad
 \Sigma^2 = \frac{\sigma_{ab}\sigma^{ab}}{6H^2},\quad
-W^2 = \frac{\omega_a \omega^a}{H^2},
+W^2 = \frac{\omega_{ab}\omega^{ab}}{6H^2} = \frac{\omega_a\omega^a}{3H^2},
 \end{equation}
 with $\OmT$ the dimensionless tilt contribution of a declared
 matter-frame velocity model and $\dOk$ the anisotropic-curvature
