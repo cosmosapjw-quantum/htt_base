@@ -7,6 +7,69 @@
 
 ## [Unreleased]
 
+### v10 external report + even-L BiPoSH analysis + PR-120 pin repair (rev-r247..r249, 2026-07-21)
+
+Owner-directed regeneration of the external-submission report as the
+**v10 successor** (`scripts/build_external_audit_report_v10.py` →
+`external_audit_research_report_20260721_v10/` + root PDF (25 pp) + zip;
+v5–v9 byte-frozen). v10 is SELF-CONTAINED per owner mandate: no
+revision-response/meta-dev/process-narrative content; 35+ propositions
+each with statement + prose + proof (comparator/identified-set/rank/
+coverage/holdout/evidence/abstention statistics architecture; EGS
+one-way, MES geodesic reduction + 3-branch vorticity registry, KE
+rotating congruences, OMK slaving + certified remainder, odd-L BiPoSH
+structural zero (known, re-proven), 11-type Ricci identity, parity
+identities, SW transport — exploratory-tier items labeled inline);
+all current-data results (K1/CF4/DESI/ACT/JWST) with claim boundaries;
+**K/C/P/S novelty-tier ledger** (web-CRAG adjudicated inline —
+subagent lanes still spend-limited, disclosed — evidence at
+`docs/audits/v10_web_crag_20260721/`; **S empty** with per-candidate
+promotion conditions stated scientifically); explicit **PR-151
+data-completeness statement** (290/1000 EZmock authenticated at the
+build probe, days-scale remaining; partial mocks never in any
+rank/p/covariance/significance). Quarantine-safe rendering: zero
+trapped CF4-P0 tokens in scanned surfaces (compliant CF4 numbers =
+PR-145 constrained flow 321 km/s @ 0.96σ full-cov, PR-147 intervals,
+PR-148 fsigma8 0.386); tier-evidence ledger sanitized token-free.
+--check byte-stable; claim lint 0; contract gates
+`test_external_audit_report_v10.py` (8) green.
+
+**New v10 analyses (B-phase)**: (1) even-L diagonal BiPoSH invariant
+log-powers (L=2,4; ℓ=2..10) on the masked SMICA map ranked under the
+SMICA-processed FFP10 E2E null via eigen-floored Hartlap LOO
+Mahalanobis (`htt/obsstat/k1_evenl_biposh_rank.py` + card): pooled
+**p = 0.195** (L2 0.466 / L4 0.505) —
+EVENL_CONSISTENT_WITH_E2E_NULL_WITHIN_THIS_PIPELINE; odd-L structural
+zero certified at 7.3e-32 on the real map; boost-feature ensemble band
+recomputed in the sealed PR-180 convention (obs vector reproduces the
+sealed card exactly). (2) `scripts/v10_report_data_figures.py`: 10
+deterministic sealed-card figures incl. the first assembled
+comparator-region/x_C-interval rendering (PR-147 Ω_tilt intervals via
+the registered closed form + MES 3-branch W² + OMK ΔΩ_k ceilings),
+K1 rank histograms, boost-feature band figure, CF4 depth panels, DESI
+mock nulls, ACT UL, PR-179 conditional panels, OMK κ(w)/resonances,
+Ricci gaps; all captions lint-clean; manifest sha-pinned; --check
+byte-stable. Gates `test_k1_evenl_biposh_rank.py` (6) green.
+
+**PR-120 latent breakage repair (rev-r249)**: the reviewed-pin for
+`figures/current/fig_current_dag_progress.png` became HEAD-identical at
+2103a734 (2026-07-19), after which every PR-120 inventory build failed
+closed ("pin is unused") — surfaced tonight because no session since
+ran the gate. Pin RETIRED in the policy (documented note; per the
+lane's own HEAD-identical rule); strict detector + mutation corpus
+unchanged. Full resync: inventory/block regenerated (now covering the
+v10 binaries), 26 embedded consumer block records re-emitted via
+pinned wrappers, LaTeX byproducts stripped from the report package.
+Quarantine --write/--check ok=True 0 issues; pr_120 suite 110/114
+(the 4 reds = deterministic-release-package closeout checks blocked by
+the **pre-existing** pr122 evidence-graph import-origin pin —
+`htt/obsstat/__init__.py` changed at PR-179 close — trust-root re-pin
+deferred to its own governance session). K1 global-p authority note:
+the sealed pooled-rank card carries 39/1000 = 0.039 (cycle sensitivity
+0.0332–0.0498); v10 quotes the sealed value. No claim state changed:
+102 OPEN / 0 RESCUED; both CF4 P0s OPEN; PR-151 monitored healthy
+throughout (290→300/1000 EZmock, writer never touched).
+
 ### PR-180 — Exact zero-parameter boost-BiPoSH residual (rev-r246, 2026-07-21)
 
 First defensible data card unlocked by the PR-184 replan. Terminal
