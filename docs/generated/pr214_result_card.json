@@ -1,0 +1,43 @@
+{
+ "forbidden_claims_reaffirmed": [
+  "wrong historical results are preserved as executable negative controls",
+  "no retired legacy number is copied into an active revival module",
+  "a mutation that survives blocks scientific promotion"
+ ],
+ "metadata": {
+  "claim_level": {
+   "level": "C1",
+   "scheme": "roadmap_rescue_v1"
+  },
+  "generating_command": "env PYTHONHASHSEED=0 venv/bin/python -B scripts/codex_harness/run_pr214_mutation_lab.py --write",
+  "independence_gate": "OPEN",
+  "owner": "COMMON",
+  "public_use": false,
+  "readiness_state": "EVIDENCE_READY",
+  "spec_sha256": "490f42027a75cd2cf978709407526f5dea367fbf74b6e88d9bdfae4cab7a470b"
+ },
+ "pr_id": "PR-214",
+ "result": {
+  "active_surface_clean": true,
+  "active_surface_retired_number_hits": [],
+  "all_mutations_killed": true,
+  "direct_legacy_import_hits": [],
+  "legacy_negative_controls": {
+   "available": true,
+   "present": {
+    "old_bulk_equals_tilt": true,
+    "old_h0_percentage": false,
+    "old_large_bayes_factor": true,
+    "old_universal_teff": true
+   }
+  },
+  "mutation_kill_matrix": {
+   "bianchi_vi0_viih_class_swap": true,
+   "factor_three_w2": true,
+   "inactive_parameter_occam": true,
+   "local_equals_global_bridge": true
+  }
+ },
+ "schema": "htt.pr214.result_card.v1",
+ "terminal": "LEGACY_MUTATION_CORPUS_ALL_KILLED_ACTIVE_SURFACE_CLEAN"
+}
