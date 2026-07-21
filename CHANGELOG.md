@@ -46,9 +46,20 @@ W²=ω_aω^a/H² while the live comparator/MES code + frozen
 parent-identity seal register ω_abω^ab/(6H²)=ω_aω^a/(3H²) — **exactly
 3×**. Confirmed and fixed. Theorem two independent lineages: numerical
 (10⁵ random antisymmetric tensors, ω_abω^ab=2ω_aω^a to 1.4e-14) + exact
-sympy (registered form, ratio-3, ceiling W²≤3B²/2 with Θ=3H); blind
-four-axis CAS recorded CAS_BLOCKED (elementary, doubly derived;
-PR-170 precedent). v10 builder display corrected + report regenerated
+sympy (registered form, ratio-3, ceiling W²≤3B²/2 with Θ=3H).
+**CAS follow-up (same session): the CAS policy was repaired
+(ADJ-CAS-ROCQ-AXIS-001) to add Rocq (Coq 9.0) as a second
+kernel-independent proof-assistant lineage alongside Lean — the genuine
+H19 answer, not multiple CAS backends re-evaluating one expression —
+making `cas_gate.py` a contract-driven multi-axis gate (CAS_{N}AXIS_PASS,
+no majority vote, backward-compatible: 4-axis contracts still pass, 29
+harness/lineage tests green). The W² identity was verified across all
+five axes (Wolfram+xAct / SymPy / Sage+Singular symbolic-universal +
+Lean native_decide exact-rational witnesses + Rocq universal Ring proof
+over ℤ) under one contract hash → CAS_5AXIS_PASS; the eight strengthening
+R3-CAS cards (186/187/189/190/191/192/193/194) upgraded to the five-axis
+v3 contract. The earlier CAS_BLOCKED was a shortcut, not a real block.**
+v10 builder display corrected + report regenerated
 (--check byte-stable); active-source scanner (historical/frozen
 allowlist) returns 0 hits; frozen MES vorticity ceiling
 W2_max=3.3789e-13 **byte-identical** (code always used 6H² — only the
