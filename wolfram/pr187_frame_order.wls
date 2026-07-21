@@ -1,0 +1,10 @@
+Needs["xAct`xTensor`"]; Print["XACT_LOAD_OK"];
+o2 = Exponent[Normal[Series[Sinh[b]^2, {b, 0, 8}]], b, Min];
+o4 = Exponent[Normal[Series[Sinh[b]^4, {b, 0, 8}]], b, Min];
+rt = Simplify[b + (-b)];
+Print["sinh2_leading_order=", o2];
+Print["sinh4_leading_order=", o4];
+Print["order_mismatch_4_ne_2=", o4 != o2];
+Print["rapidity_roundtrip=", rt];
+If[o2 === 2 && o4 === 4 && o4 != o2 && rt === 0, Print["PR187_WOLFRAM_PASS"], Print["PR187_WOLFRAM_FAIL"]];
+Exit[0];
