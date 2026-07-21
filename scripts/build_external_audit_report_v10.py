@@ -1810,6 +1810,9 @@ def do_write() -> int:
             tail = proc.stdout[-3000:]
             print(tail)
             return 1
+    for suffix in (".aux", ".log", ".out", ".toc"):
+        for p in OUT.glob(f"*{suffix}"):
+            p.unlink()
     zip_path = ROOT / ZIP_NAME
     with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zf:
         for p in sorted(OUT.rglob("*")):

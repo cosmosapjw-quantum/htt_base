@@ -225,11 +225,15 @@ inventory:
       sidecar_sha256: sha256:7671e787f23ba9018859133c0f41488ffd89456f0a5696fff705f810eb24e54b
       artifact_sha256: sha256:1f020bf290476491b07869ed40eb4d05fb99b6f38efe420453a02faf243ff94f
       review_scope: PR-120-reviewed-active-binary
-    figures/current/fig_current_dag_progress.png:
-      sidecar_path: figures/current/fig_current_dag_progress.binding.json
-      sidecar_sha256: sha256:3b1ccf92f173297ac25bbcc557bd122d346368a30551c15f9cebe6e7bc18c844
-      artifact_sha256: sha256:8f9fa2879bd773d8e87dea887a036fee6adb5a39ea195808c90f6e79b004042b
-      review_scope: PR-120-reviewed-active-binary
+    # RETIRED PIN (2026-07-21): figures/current/fig_current_dag_progress.png
+    # became HEAD-identical to its reviewed bytes
+    # (sha256:8f9fa2879bd773d8e87dea887a036fee6adb5a39ea195808c90f6e79b004042b)
+    # at the 2103a734 commit, and per this lane's own rule HEAD-identical
+    # binaries need no entry; the retained pin made every subsequent
+    # inventory build fail closed ("pin is unused"). The entry is removed
+    # rather than special-cased in code so the strict unused-pin detector
+    # keeps its mutation-corpus semantics. Binding authority for the file
+    # is git-head exact bytes; the sidecar remains on disk as history.
   # These four self-containing release archives embed the canonical inventory,
   # so their own digest cannot enter it without an impossible hash fixed point.
   # They remain exact-path enumerated and are accepted only with their pinned
