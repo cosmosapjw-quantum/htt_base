@@ -121,6 +121,53 @@ ADVOCATE_HYPOTHESIS_ONLY_ARTIFACTS = {
 }
 ADVOCATE_REGISTERED_NOT_SCHEDULED = {"PR-174", "PR-175", "PR-182"}
 ADVOCATE_EXPLICIT_APPROVED_SEQUENCE = {"PR-168", "PR-169", "PR-170", "PR-171"}
+
+# --- Post-v10 strengthening wave (PR-185..208, Waves 28..34) ---------------
+# Formal intake of the external-audit strengthening roadmap
+# (htt_post_v10_strengthening_plan_20260721). Registered atomically; the
+# scheduled subset (execution_authorization DAG_SCHEDULABLE) is this
+# session's owner-approved parallel-to-PR-151 scope, the rest are
+# REGISTERED_NOT_SCHEDULED / NATIVE_BLOCKED with typed dependency edges.
+STRENGTHEN_FIRST_PR = 185
+STRENGTHEN_LAST_PR = 208
+STRENGTHEN_CARD_COUNT = STRENGTHEN_LAST_PR - STRENGTHEN_FIRST_PR + 1
+# (depends, execution_lane, activation_state, execution_authorization)
+STRENGTHEN_CARD_CONTRACTS = {
+    "PR-185": (["PR-184"], "defensible", "PENDING", "DAG_SCHEDULABLE"),
+    "PR-186": (["PR-185"], "defensible", "PENDING", "DAG_SCHEDULABLE"),
+    "PR-187": (["PR-186"], "defensible", "PENDING", "DAG_SCHEDULABLE"),
+    "PR-188": (["PR-185", "PR-186", "PR-187"], "defensible", "PENDING", "DAG_SCHEDULABLE"),
+    "PR-189": (["PR-187", "PR-188"], "defensible", "PENDING", "DAG_SCHEDULABLE"),
+    "PR-190": (["PR-187", "PR-189"], "defensible", "PENDING", "REGISTERED_NOT_SCHEDULED"),
+    "PR-191": (["PR-187", "PR-190"], "defensible", "PENDING", "REGISTERED_NOT_SCHEDULED"),
+    "PR-192": (["PR-187", "PR-191"], "defensible", "PENDING", "REGISTERED_NOT_SCHEDULED"),
+    "PR-193": (["PR-186", "PR-187", "PR-191"], "defensible", "PENDING", "REGISTERED_NOT_SCHEDULED"),
+    "PR-194": (["PR-187", "PR-193"], "defensible", "PENDING", "REGISTERED_NOT_SCHEDULED"),
+    "PR-195": (["PR-187", "PR-194"], "defensible", "PENDING", "REGISTERED_NOT_SCHEDULED"),
+    "PR-196": (["PR-159", "PR-160", "PR-161", "PR-187", "PR-194", "PR-195"], "needs_native", "NEEDS_NATIVE", "NATIVE_BLOCKED"),
+    "PR-197": (["PR-188"], "defensible", "PENDING", "DAG_SCHEDULABLE"),
+    "PR-198": (["PR-197", "PR-194"], "defensible", "PENDING", "REGISTERED_NOT_SCHEDULED"),
+    "PR-199": (["PR-194", "PR-197", "PR-198"], "defensible", "PENDING", "REGISTERED_NOT_SCHEDULED"),
+    "PR-200": (["PR-189", "PR-197"], "defensible", "PENDING", "DAG_SCHEDULABLE"),
+    "PR-201": (["PR-144", "PR-145", "PR-146", "PR-147", "PR-195", "PR-200"], "defensible", "PENDING", "REGISTERED_NOT_SCHEDULED"),
+    "PR-202": (["PR-149", "PR-150", "PR-197", "PR-198", "PR-199"], "defensible", "PENDING", "REGISTERED_NOT_SCHEDULED"),
+    "PR-203": (["PR-151", "PR-197", "PR-200"], "defensible", "PENDING", "REGISTERED_NOT_SCHEDULED"),
+    "PR-204": (["PR-152", "PR-177", "PR-197", "PR-200"], "defensible", "PENDING", "REGISTERED_NOT_SCHEDULED"),
+    "PR-205": (["PR-189", "PR-190", "PR-193", "PR-195", "PR-196", "PR-200", "PR-201", "PR-202", "PR-203", "PR-204"], "defensible", "PENDING", "REGISTERED_NOT_SCHEDULED"),
+    "PR-206": (["PR-196", "PR-201", "PR-202", "PR-203", "PR-204", "PR-205", "PR-181"], "defensible", "PENDING", "REGISTERED_NOT_SCHEDULED"),
+    "PR-207": (["PR-186", "PR-189", "PR-191", "PR-192", "PR-193", "PR-199", "PR-200", "PR-205", "PR-206"], "defensible", "PENDING", "REGISTERED_NOT_SCHEDULED"),
+    "PR-208": (["PR-157", "PR-158", "PR-207"], "defensible", "PENDING", "REGISTERED_NOT_SCHEDULED"),
+}
+# Non-success typed edges inside the strengthening slice.
+STRENGTHEN_TERMINAL_RECEIPT_EDGES = {("PR-203", "PR-151")}
+STRENGTHEN_ADJUDICATED_EDGES = {("PR-208", "PR-157"), ("PR-208", "PR-158")}
+STRENGTHEN_CAS_CARDS = {
+    "PR-186", "PR-187", "PR-189", "PR-190", "PR-191", "PR-192", "PR-193", "PR-194",
+}
+STRENGTHEN_SCHEDULED = {
+    pr for pr, contract in STRENGTHEN_CARD_CONTRACTS.items()
+    if contract[3] == "DAG_SCHEDULABLE"
+}
 ADVOCATE_TITLE_OVERRIDES = {
     "PR-174": "SW-only real-space anisotropic ray-integration mechanics (hypothesis_only)",
     "PR-175": "Cross-engine Bianchi invariant mechanics from structure constants (hypothesis_only)",
@@ -505,11 +552,24 @@ def validate_long_horizon_rescue_slice(
             "PR-167 advocate intake must be atomic; "
             f"missing={sorted(advocate_ids - actual_advocate_ids)}"
         )
+    strengthen_ids = set(_pr_range(STRENGTHEN_FIRST_PR, STRENGTHEN_LAST_PR))
+    actual_strengthen_ids = actual_ids & strengthen_ids
+    if actual_strengthen_ids and not actual_advocate_ids:
+        raise ValueError(
+            "strengthening wave (PR-185+) requires the advocate slice to be present"
+        )
+    if actual_strengthen_ids and actual_strengthen_ids != strengthen_ids:
+        raise ValueError(
+            "post-v10 strengthening intake must be atomic; "
+            f"missing={sorted(strengthen_ids - actual_strengthen_ids)}"
+        )
     expected_total = (
         RESCUE_WITH_ADVOCATE_CARD_COUNT
         if actual_advocate_ids
         else RESCUE_PRE_ADVOCATE_CARD_COUNT
     )
+    if actual_strengthen_ids:
+        expected_total += STRENGTHEN_CARD_COUNT
     if len(info.ids) != expected_total:
         raise ValueError(
             f"strict rescue slice expects {expected_total} total cards, found {len(info.ids)}"
@@ -779,8 +839,100 @@ def validate_long_horizon_rescue_slice(
         ]:
             raise ValueError("PR-183 must retain the typed authenticated native-delivery gate")
 
+    if actual_strengthen_ids:
+        _validate_strengthen_slice(cards)
+
     if status is not None:
         _validate_rescue_status(status, info)
+
+
+def _validate_strengthen_slice(cards: dict[str, Any]) -> None:
+    """Validate the atomic post-v10 strengthening intake (PR-185..208).
+
+    External novelty and internal readiness are independent axes: every card
+    enters OPEN / spec-first / public_use=false with an exploratory internal
+    ceiling, regardless of its external novelty. Typed dependency edges,
+    lanes, activation and authorization are pinned from
+    STRENGTHEN_CARD_CONTRACTS so card and validator cannot drift.
+    """
+
+    for pr_id in _pr_range(STRENGTHEN_FIRST_PR, STRENGTHEN_LAST_PR):
+        card = cards[pr_id]
+        missing_fields = sorted(ADVOCATE_REQUIRED_FIELDS - set(card))
+        if missing_fields:
+            raise ValueError(f"{pr_id} missing strengthen-card fields: {missing_fields}")
+        expected_depends, expected_lane, expected_activation, expected_authz = (
+            STRENGTHEN_CARD_CONTRACTS[pr_id]
+        )
+        if card.get("depends") != expected_depends:
+            raise ValueError(
+                f"{pr_id} dependencies drifted: {card.get('depends')!r} != {expected_depends!r}"
+            )
+        contracts = card.get("dependency_contracts")
+        if not isinstance(contracts, list) or [
+            contract.get("upstream_id") for contract in contracts if isinstance(contract, dict)
+        ] != expected_depends:
+            raise ValueError(f"{pr_id} typed dependency projection drifted")
+        expected_modes = []
+        for dep in expected_depends:
+            if (pr_id, dep) in STRENGTHEN_TERMINAL_RECEIPT_EDGES:
+                expected_modes.append("requires_terminal_receipt")
+            elif (pr_id, dep) in STRENGTHEN_ADJUDICATED_EDGES:
+                expected_modes.append("requires_adjudicated_claim_set")
+            else:
+                expected_modes.append("requires_success")
+        actual_modes = [
+            contract.get("mode") for contract in contracts if isinstance(contract, dict)
+        ]
+        if actual_modes != expected_modes:
+            raise ValueError(f"{pr_id} typed dependency modes drifted")
+        if card.get("execution_lane") != expected_lane:
+            raise ValueError(f"{pr_id} execution_lane must be {expected_lane}")
+        if card.get("activation_state") != expected_activation:
+            raise ValueError(f"{pr_id} activation_state must be {expected_activation}")
+        if card.get("execution_authorization") != expected_authz:
+            raise ValueError(f"{pr_id} execution_authorization must be {expected_authz}")
+        if card.get("scientific_status_on_intake") != "OPEN":
+            raise ValueError(f"{pr_id} scientific status must remain OPEN on intake")
+        if card.get("scientific_artifact_mode") != "standard_internal":
+            raise ValueError(f"{pr_id} scientific_artifact_mode must be standard_internal")
+        if card.get("public_use") is not False or card.get("spec_first_required") is not True:
+            raise ValueError(f"{pr_id} must remain spec-first and public_use=false on intake")
+        if card.get("claim_tier_ceiling") != "exploratory":
+            raise ValueError(f"{pr_id} intake ceiling must be exploratory (readiness axis)")
+        claim_level = card.get("claim_level")
+        if claim_level != {"scheme": "roadmap_rescue_v1", "level": "C1"}:
+            raise ValueError(f"{pr_id} intake claim level must be roadmap_rescue_v1:C1")
+        owner = card.get("owner")
+        if owner in RESCUE_FORBIDDEN_OWNERS or owner not in RESCUE_ACTIVE_OWNERS:
+            raise ValueError(f"{pr_id} has forbidden or unknown active owner: {owner!r}")
+        for field in RESCUE_SEMANTIC_CLAIM_FIELDS:
+            for prose in _iter_strings(card.get(field)):
+                match = BARE_ACTIVE_CLAIM_LEVEL_RE.search(prose)
+                if match:
+                    raise ValueError(
+                        f"{pr_id} {field} contains unqualified roadmap claim level "
+                        f"{match.group(0)!r}"
+                    )
+        if pr_id in STRENGTHEN_CAS_CARDS:
+            cas = card.get("cas_contract")
+            if cas != {
+                "schema": "htt.cas_contract.v2",
+                "required_axes": [
+                    "wolfram_xact",
+                    "sympy_high_precision",
+                    "sage_singular",
+                    "lean_mathlib",
+                ],
+                "missing_axis_outcome": "CAS_BLOCKED",
+                "result_blinding": "required_until_adjudication",
+            }:
+                raise ValueError(f"{pr_id} must preregister the blind four-axis CAS contract")
+            theory_prose = " ".join(_iter_strings(card)).lower()
+            if any(weak in theory_prose for weak in ("dual-engine", "two-engine", "two engine")):
+                raise ValueError(
+                    f"{pr_id} exact-math acceptance prose collapses the four-axis contract"
+                )
 
 
 def render_mermaid(info: DagInfo) -> str:

@@ -133,6 +133,30 @@ policy:
   - PR-181
   - PR-182
   - PR-183
+  - PR-185
+  - PR-186
+  - PR-187
+  - PR-188
+  - PR-189
+  - PR-190
+  - PR-191
+  - PR-192
+  - PR-193
+  - PR-194
+  - PR-195
+  - PR-196
+  - PR-197
+  - PR-198
+  - PR-199
+  - PR-200
+  - PR-201
+  - PR-202
+  - PR-203
+  - PR-204
+  - PR-205
+  - PR-206
+  - PR-207
+  - PR-208
   checkpoint_every_completed_prs: 5
   no_native_lowell_solver_implementation: true
   family_identification_claims_blocked_until_native_morphology_atlas: true
@@ -5423,6 +5447,1685 @@ prs:
   execution_lane: defensible
   scientific_artifact_mode: standard_internal
   execution_authorization: DAG_SCHEDULABLE
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+- id: PR-185
+  wave: 28
+  title: External novelty × internal readiness dual-axis SSoT와 promotion engine
+  owner: COMMON
+  contributors:
+  - BASS
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes:
+  - common
+  depends:
+  - PR-184
+  dependency_contracts:
+  - upstream_id: PR-184
+    mode: requires_success
+  targets:
+  - 'Strengthen against audit criticisms H23, H24: 외부 novelty tier(K/C/P/S)는 오직 문헌 대비 delta를 표현하고 internal
+    readiness와 독립이다. publication_use와 authoritative promotion은 mechanics·identification·calibration·provenance·independence·claim
+    gates의 conjunctive 결과로만 열린다.'
+  files:
+  - common
+  - scripts/codex_harness
+  - tests/pr_cards
+  - docs/PR_DELTAS/pr-185.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status
+    docs/codex_handoff/pr_status.yaml --strict-rescue-slice
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_185_strengthen.py
+  dod:
+  - S novelty/OPEN readiness 상태가 schema에서 불가능하거나, 반대로 OPEN artifact가 novelty S라는 이유만으로 public-use로 승격되면
+    실패.
+  - Author-side gates (mechanics/identification/calibration/provenance) reach EVIDENCE_READY; the Independence
+    gate (non-author derivation lineage plus preserved dissent) stays explicitly OPEN until adjudication
+    capacity returns; publication_use stays false.
+  kill: novelty와 readiness가 단일 ordinal enum으로 합쳐짐.
+  cost: low--medium
+  level: L2
+  scope: pre-solver
+  risk: R1
+  claim_tier_ceiling: exploratory
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C1
+  claim_impact: 외부 novelty와 내부 성숙도를 혼동하지 않는 연구-programme governance theorem/implementation. (external
+    novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).
+  forbidden:
+  - internal blocker 때문에 external novelty를 낮추지 않는다.
+  - external novelty가 높다는 이유로 readiness를 올리지 않는다.
+  - No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate
+    pass.
+  anti_drift:
+  - external novelty tier and internal readiness are independent axes; neither auto-changes the other.
+  - no new comparator number is authoritative until PR-186 (W2 convention) and PR-187 (frame/type) pass.
+  roadmap_anchor: htt_post_v10_strengthening_plan_20260721/03_POST_V10_STRENGTHENING_PR_ROADMAP_20260721.md
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: standard_internal
+  execution_authorization: DAG_SCHEDULABLE
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+- id: PR-186
+  wave: 28
+  title: W² convention theorem, active-source regression repair와 전 consumer 재동결
+  owner: COMMON
+  contributors:
+  - BASS
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes:
+  - common
+  depends:
+  - PR-185
+  dependency_contracts:
+  - upstream_id: PR-185
+    mode: requires_success
+  targets:
+  - 'Strengthen against audit criticisms H01: W²:=ω_abω^ab/(6H²)=ω_aω^a/(3H²), Θ=3H에서 sqrt(ω_abω^ab)/Θ≤B이면
+    W²≤3B²/2. 이 convention이 parent identity, MES, comparator, figures의 유일 active 의미다.'
+  files:
+  - common
+  - scripts/codex_harness
+  - tests/pr_cards
+  - docs/PR_DELTAS/pr-186.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status
+    docs/codex_handoff/pr_status.yaml --strict-rescue-slice
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_186_strengthen.py
+  dod:
+  - 독립 derivation 하나라도 factor 3 또는 sign에서 불일치하거나 active consumer에 ω_aω^a/H²가 남으면 실패.
+  - Author-side gates (mechanics/identification/calibration/provenance) reach EVIDENCE_READY; the Independence
+    gate (non-author derivation lineage plus preserved dissent) stays explicitly OPEN until adjudication
+    capacity returns; publication_use stays false.
+  kill: 어떤 active figure도 old convention 사용.
+  cost: medium
+  level: L2
+  scope: pre-solver
+  risk: R3-CAS
+  claim_tier_ceiling: exploratory
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C1
+  claim_impact: parent constraint에서 유일하게 고정된 frame-consistent vorticity normalization과 exact ceiling conversion.
+    (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).
+  forbidden:
+  - 수치만 1/3로 나누고 source theorem을 고치지 않는다.
+  - historical artifact를 삭제해 재현성을 깨지 않는다.
+  - No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate
+    pass.
+  anti_drift:
+  - external novelty tier and internal readiness are independent axes; neither auto-changes the other.
+  - no new comparator number is authoritative until PR-186 (W2 convention) and PR-187 (frame/type) pass.
+  roadmap_anchor: htt_post_v10_strengthening_plan_20260721/03_POST_V10_STRENGTHENING_PR_ROADMAP_20260721.md
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: standard_internal
+  execution_authorization: DAG_SCHEDULABLE
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+  cas_contract:
+    schema: htt.cas_contract.v2
+    required_axes:
+    - wolfram_xact
+    - sympy_high_precision
+    - sage_singular
+    - lean_mathlib
+    missing_axis_outcome: CAS_BLOCKED
+    result_blinding: required_until_adjudication
+- id: PR-187
+  wave: 28
+  title: Frame-indexed component algebra, signed-curvature carrier와 perturbative-order type system
+  owner: COMMON
+  contributors:
+  - BASS
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes:
+  - common
+  depends:
+  - PR-186
+  dependency_contracts:
+  - upstream_id: PR-186
+    mode: requires_success
+  targets:
+  - 'Strengthen against audit criticisms H02, H03, H09, H10: g는 g[n], g[u], g[obs]처럼 congruence/frame을
+    타입으로 가지며 ΔΩ_k∈R, Σ²/W²/Ω_tilt≥0이다. cross-frame arithmetic은 증명·등록된 bridge만 허용한다.'
+  files:
+  - common
+  - scripts/codex_harness
+  - tests/pr_cards
+  - docs/PR_DELTAS/pr-187.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status
+    docs/codex_handoff/pr_status.yaml --strict-rescue-slice
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_187_strengthen.py
+  dod:
+  - unregistered cast로 n-frame curvature와 u-frame vorticity가 같은 comparator에 들어가거나 signed curvature가 PSD
+    projection으로 잘리면 실패.
+  - Author-side gates (mechanics/identification/calibration/provenance) reach EVIDENCE_READY; the Independence
+    gate (non-author derivation lineage plus preserved dissent) stays explicitly OPEN until adjudication
+    capacity returns; publication_use stays false.
+  kill: implicit cast 또는 default frame 존재.
+  cost: medium--high
+  level: L2
+  scope: pre-solver
+  risk: R3-CAS
+  claim_tier_ceiling: exploratory
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C1
+  claim_impact: 여러 congruence와 signed curvature를 동시에 수용하는 더 넓은 comparator algebra. (external novelty axis
+    only; roadmap_rescue_v1:C1 internal ceiling on intake).
+  forbidden:
+  - signed ΔΩ_k를 nonnegative magnitude로 이름만 바꾸지 않는다.
+  - frame 차이를 prose caveat로만 남기지 않는다.
+  - No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate
+    pass.
+  anti_drift:
+  - external novelty tier and internal readiness are independent axes; neither auto-changes the other.
+  - no new comparator number is authoritative until PR-186 (W2 convention) and PR-187 (frame/type) pass.
+  roadmap_anchor: htt_post_v10_strengthening_plan_20260721/03_POST_V10_STRENGTHENING_PR_ROADMAP_20260721.md
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: standard_internal
+  execution_authorization: DAG_SCHEDULABLE
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+  cas_contract:
+    schema: htt.cas_contract.v2
+    required_axes:
+    - wolfram_xact
+    - sympy_high_precision
+    - sage_singular
+    - lean_mathlib
+    missing_axis_outcome: CAS_BLOCKED
+    result_blinding: required_until_adjudication
+- id: PR-188
+  wave: 28
+  title: Hermetic v10 successor build, load-bearing mutation firewall와 clean-data recipe
+  owner: COMMON
+  contributors:
+  - BASS
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes:
+  - common
+  depends:
+  - PR-185
+  - PR-186
+  - PR-187
+  dependency_contracts:
+  - upstream_id: PR-185
+    mode: requires_success
+  - upstream_id: PR-186
+    mode: requires_success
+  - upstream_id: PR-187
+    mode: requires_success
+  targets:
+  - 'Strengthen against audit criticisms H19, H20, H23: clean checkout와 documented external data cache만으로
+    theorem seals, cards, figures, report를 한 명령으로 재생성하며, report claim은 load-bearing source mutation에 반응해야
+    한다.'
+  files:
+  - common
+  - scripts/codex_harness
+  - tests/pr_cards
+  - docs/PR_DELTAS/pr-188.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status
+    docs/codex_handoff/pr_status.yaml --strict-rescue-slice
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_188_strengthen.py
+  dod:
+  - absolute private path, untracked file, stale card, zero-collected test 또는 non-load-bearing source를
+    제거해도 report가 green이면 실패.
+  - Author-side gates (mechanics/identification/calibration/provenance) reach EVIDENCE_READY; the Independence
+    gate (non-author derivation lineage plus preserved dissent) stays explicitly OPEN until adjudication
+    capacity returns; publication_use stays false.
+  kill: private absolute path가 active module에 남음.
+  cost: medium--high
+  level: L2
+  scope: pre-solver
+  risk: R2
+  claim_tier_ceiling: exploratory
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C1
+  claim_impact: 프로젝트 전체의 hermetic, content-addressed, claim-load-bearing 재현성. (external novelty axis only;
+    roadmap_rescue_v1:C1 internal ceiling on intake).
+  forbidden:
+  - 큰 raw data를 ZIP에 무조건 복제하지 않는다.
+  - local cache 존재를 reproducibility로 간주하지 않는다.
+  - No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate
+    pass.
+  anti_drift:
+  - external novelty tier and internal readiness are independent axes; neither auto-changes the other.
+  - no new comparator number is authoritative until PR-186 (W2 convention) and PR-187 (frame/type) pass.
+  roadmap_anchor: htt_post_v10_strengthening_plan_20260721/03_POST_V10_STRENGTHENING_PR_ROADMAP_20260721.md
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: standard_internal
+  execution_authorization: DAG_SCHEDULABLE
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+- id: PR-189
+  wave: 29
+  title: General joint feasible-set support theorem와 certified comparator optimizer
+  owner: HTT
+  contributors:
+  - OBSSTAT
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes:
+  - htt
+  depends:
+  - PR-187
+  - PR-188
+  dependency_contracts:
+  - upstream_id: PR-187
+    mode: requires_success
+  - upstream_id: PR-188
+    mode: requires_success
+  targets:
+  - 'Strengthen against audit criticisms H05, H06: compact joint feasible set F(physics,data,nuisance)에서
+    I_C=[inf_F cᵀg,sup_F cᵀg]가 exact identified set이다. product-box formula는 F가 factorize할 때의 corollary다.'
+  files:
+  - htt
+  - scripts/codex_harness
+  - tests/pr_cards
+  - docs/PR_DELTAS/pr-189.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status
+    docs/codex_handoff/pr_status.yaml --strict-rescue-slice
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_189_strengthen.py
+  dod:
+  - certified optimizer와 독립 solver가 endpoint/status에서 불일치하거나 product endpoint가 joint constraints를 위반하는데도
+    sharp로 보고되면 실패.
+  - Author-side gates (mechanics/identification/calibration/provenance) reach EVIDENCE_READY; the Independence
+    gate (non-author derivation lineage plus preserved dissent) stays explicitly OPEN until adjudication
+    capacity returns; publication_use stays false.
+  kill: feasible set topology 오분류.
+  cost: high
+  level: L2
+  scope: pre-solver
+  risk: R3-CAS
+  claim_tier_ceiling: exploratory
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C1
+  claim_impact: axis-separable를 넘어 coupled Einstein/data/nuisance constraints에 대한 exact comparator identified
+    set. (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).
+  forbidden:
+  - marginal ranges를 독립 최적화해 joint set이라 부르지 않는다.
+  - optimizer convergence를 proof certificate로 대체하지 않는다.
+  - No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate
+    pass.
+  anti_drift:
+  - external novelty tier and internal readiness are independent axes; neither auto-changes the other.
+  - no new comparator number is authoritative until PR-186 (W2 convention) and PR-187 (frame/type) pass.
+  roadmap_anchor: htt_post_v10_strengthening_plan_20260721/03_POST_V10_STRENGTHENING_PR_ROADMAP_20260721.md
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: standard_internal
+  execution_authorization: DAG_SCHEDULABLE
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+  cas_contract:
+    schema: htt.cas_contract.v2
+    required_axes:
+    - wolfram_xact
+    - sympy_high_precision
+    - sage_singular
+    - lean_mathlib
+    missing_axis_outcome: CAS_BLOCKED
+    result_blinding: required_until_adjudication
+- id: PR-190
+  wave: 29
+  title: Comparator endpoint의 full physical attainability와 dynamical sharpness programme
+  owner: BASS
+  contributors:
+  - COMMON
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes:
+  - common
+  depends:
+  - PR-187
+  - PR-189
+  dependency_contracts:
+  - upstream_id: PR-187
+    mode: requires_success
+  - upstream_id: PR-189
+    mode: requires_success
+  targets:
+  - 'Strengthen against audit criticisms H04, H05: lower/upper endpoint와 모든 interior comparator 값이 동일
+    frame/convention의 Einstein–matter solution class에서 실현된다. algebraic sharpness가 아니라 solution-space sharpness를
+    목표로 한다.'
+  files:
+  - common
+  - scripts/codex_harness
+  - tests/pr_cards
+  - docs/PR_DELTAS/pr-190.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status
+    docs/codex_handoff/pr_status.yaml --strict-rescue-slice
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_190_strengthen.py
+  dod:
+  - 어느 endpoint도 Gauss/momentum/Jacobi/matter conservation/evolution 중 하나를 만족하지 못하거나 sign-corner가 최적화와
+    다르면 full sharpness 실패.
+  - Author-side gates (mechanics/identification/calibration/provenance) reach EVIDENCE_READY; the Independence
+    gate (non-author derivation lineage plus preserved dissent) stays explicitly OPEN until adjudication
+    capacity returns; publication_use stays false.
+  kill: 하나라도 frame mismatch.
+  cost: high
+  level: L2
+  scope: pre-solver
+  risk: R3-CAS+ODE
+  claim_tier_ceiling: exploratory
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C1
+  claim_impact: 등록 solution class에서 full comparator interval의 dynamical sharpness. (external novelty axis
+    only; roadmap_rescue_v1:C1 internal ceiling on intake).
+  forbidden:
+  - constraint witness를 cosmological solution이라고 부르지 않는다.
+  - withdrawn W² endpoint를 shear endpoint로 바꿔치기하지 않는다.
+  - No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate
+    pass.
+  anti_drift:
+  - external novelty tier and internal readiness are independent axes; neither auto-changes the other.
+  - no new comparator number is authoritative until PR-186 (W2 convention) and PR-187 (frame/type) pass.
+  roadmap_anchor: htt_post_v10_strengthening_plan_20260721/03_POST_V10_STRENGTHENING_PR_ROADMAP_20260721.md
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: standard_internal
+  execution_authorization: REGISTERED_NOT_SCHEDULED
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+  cas_contract:
+    schema: htt.cas_contract.v2
+    required_axes:
+    - wolfram_xact
+    - sympy_high_precision
+    - sage_singular
+    - lean_mathlib
+    missing_axis_outcome: CAS_BLOCKED
+    result_blinding: required_until_adjudication
+- id: PR-191
+  wave: 29
+  title: Rotating-congruence Gauss object의 canonicalization과 KE obstruction의 maximal-class theorem
+  owner: BASS
+  contributors:
+  - COMMON
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes:
+  - common
+  depends:
+  - PR-187
+  - PR-190
+  dependency_contracts:
+  - upstream_id: PR-187
+    mode: requires_success
+  - upstream_id: PR-190
+    mode: requires_success
+  targets:
+  - 'Strengthen against audit criticisms H03, H17: vortical congruence의 nonintegrable rest bundle에는 명시된
+    Gauss curvature object를 사용하며 slice curvature와 구분한다. flat type-I obstruction과 curved rotating existence의
+    maximal valid homogeneous class를 분류한다.'
+  files:
+  - common
+  - scripts/codex_harness
+  - tests/pr_cards
+  - docs/PR_DELTAS/pr-191.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status
+    docs/codex_handoff/pr_status.yaml --strict-rescue-slice
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_191_strengthen.py
+  dod:
+  - 두 독립 exterior/tensor derivation이 ω² sign/order에서 다르거나 claimed obstruction class 안의 counterexample가
+    존재하면 실패.
+  - Author-side gates (mechanics/identification/calibration/provenance) reach EVIDENCE_READY; the Independence
+    gate (non-author derivation lineage plus preserved dissent) stays explicitly OPEN until adjudication
+    capacity returns; publication_use stays false.
+  kill: convention-dependent quantity를 invariant로 서술.
+  cost: high
+  level: L2
+  scope: pre-solver
+  risk: R3-CAS
+  claim_tier_ceiling: exploratory
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C1
+  claim_impact: rotating homogeneous congruence의 canonical Gauss algebra와 flat/curved sector의 maximal
+    obstruction/existence classification. (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling
+    on intake).
+  forbidden:
+  - '''orthogonal metric''이라는 말을 ω≠0에서 사용하지 않는다.'
+  - finite random-state residual을 general proof로 세지 않는다.
+  - No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate
+    pass.
+  anti_drift:
+  - external novelty tier and internal readiness are independent axes; neither auto-changes the other.
+  - no new comparator number is authoritative until PR-186 (W2 convention) and PR-187 (frame/type) pass.
+  roadmap_anchor: htt_post_v10_strengthening_plan_20260721/03_POST_V10_STRENGTHENING_PR_ROADMAP_20260721.md
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: standard_internal
+  execution_authorization: REGISTERED_NOT_SCHEDULED
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+  cas_contract:
+    schema: htt.cas_contract.v2
+    required_axes:
+    - wolfram_xact
+    - sympy_high_precision
+    - sage_singular
+    - lean_mathlib
+    missing_axis_outcome: CAS_BLOCKED
+    result_blinding: required_until_adjudication
+- id: PR-192
+  wave: 29
+  title: OMK all-order invariant-manifold recurrence, resonance와 validated non-LRS extension
+  owner: BASS
+  contributors:
+  - COMMON
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes:
+  - common
+  depends:
+  - PR-187
+  - PR-191
+  dependency_contracts:
+  - upstream_id: PR-187
+    mode: requires_success
+  - upstream_id: PR-191
+    mode: requires_success
+  targets:
+  - 'Strengthen against audit criticisms H18, H19: Σ(K,w)=Σ_{n≥1}c_n(w)K^n의 homological recurrence, resonance
+    set, finite-order remainder enclosure와 LRS 밖 perturbation stability를 증명한다.'
+  files:
+  - common
+  - scripts/codex_harness
+  - tests/pr_cards
+  - docs/PR_DELTAS/pr-192.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status
+    docs/codex_handoff/pr_status.yaml --strict-rescue-slice
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_192_strengthen.py
+  dod:
+  - registered domain에서 tube escape, recurrence denominator 누락, non-LRS perturbation이 slaved manifold를
+    파괴하면 해당 extension 실패.
+  - Author-side gates (mechanics/identification/calibration/provenance) reach EVIDENCE_READY; the Independence
+    gate (non-author derivation lineage plus preserved dissent) stays explicitly OPEN until adjudication
+    capacity returns; publication_use stays false.
+  kill: coefficient/denominator disagreement.
+  cost: high
+  level: L2
+  scope: pre-solver
+  risk: R3-CAS+validated numerics
+  claim_tier_ceiling: exploratory
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C1
+  claim_impact: LRS와 검증된 인접 비-LRS class에서 exact invariant-manifold coefficients와 rigorous finite-domain
+    error control. (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).
+  forbidden:
+  - Σ=κK exact라고 쓰면서 c2≠0를 함께 두지 않는다.
+  - dense scan을 uniform proof로 부르지 않는다.
+  - No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate
+    pass.
+  anti_drift:
+  - external novelty tier and internal readiness are independent axes; neither auto-changes the other.
+  - no new comparator number is authoritative until PR-186 (W2 convention) and PR-187 (frame/type) pass.
+  roadmap_anchor: htt_post_v10_strengthening_plan_20260721/03_POST_V10_STRENGTHENING_PR_ROADMAP_20260721.md
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: standard_internal
+  execution_authorization: REGISTERED_NOT_SCHEDULED
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+  cas_contract:
+    schema: htt.cas_contract.v2
+    required_axes:
+    - wolfram_xact
+    - sympy_high_precision
+    - sage_singular
+    - lean_mathlib
+    missing_axis_outcome: CAS_BLOCKED
+    result_blinding: required_until_adjudication
+- id: PR-193
+  wave: 30
+  title: MES full covariant hierarchy 재유도, intrinsic-dipole surface와 non-geodesic branch closure
+  owner: COMMON
+  contributors:
+  - BASS
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes:
+  - common
+  depends:
+  - PR-186
+  - PR-187
+  - PR-191
+  dependency_contracts:
+  - upstream_id: PR-186
+    mode: requires_success
+  - upstream_id: PR-187
+    mode: requires_success
+  - upstream_id: PR-191
+    mode: requires_success
+  targets:
+  - 'Strengthen against audit criticisms H16, H19: MES raw inequalities에서 geodesic/non-geodesic coefficient
+    surfaces를 독립 재유도하고 ε1,intrinsic를 자유 parameter로 둔 Σ²/W²/A² ceiling surface를 제공한다.'
+  files:
+  - common
+  - scripts/codex_harness
+  - tests/pr_cards
+  - docs/PR_DELTAS/pr-193.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status
+    docs/codex_handoff/pr_status.yaml --strict-rescue-slice
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_193_strengthen.py
+  dod:
+  - primary source/erratum과 coefficient가 불일치하거나 hierarchy ordering이 물리적 필요조건으로 유도되지 않으면 해당 admissibility
+    claim 실패.
+  - Author-side gates (mechanics/identification/calibration/provenance) reach EVIDENCE_READY; the Independence
+    gate (non-author derivation lineage plus preserved dissent) stays explicitly OPEN until adjudication
+    capacity returns; publication_use stays false.
+  kill: OCR/transcription unresolved.
+  cost: high/external-source
+  level: L2
+  scope: pre-solver
+  risk: R3-CAS+source audit
+  claim_tier_ceiling: exploratory
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C1
+  claim_impact: observer-motion attribution을 포함한 full MES hierarchy의 provenance-complete covariant reconstruction과
+    현대 ceiling surface. (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).
+  forbidden:
+  - print-only coefficient를 registry가 frozen이라는 이유로 물리 anchor로 사용하지 않는다.
+  - ε1=0를 hierarchy만으로 unique라고 주장하지 않는다.
+  - No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate
+    pass.
+  anti_drift:
+  - external novelty tier and internal readiness are independent axes; neither auto-changes the other.
+  - no new comparator number is authoritative until PR-186 (W2 convention) and PR-187 (frame/type) pass.
+  roadmap_anchor: htt_post_v10_strengthening_plan_20260721/03_POST_V10_STRENGTHENING_PR_ROADMAP_20260721.md
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: standard_internal
+  execution_authorization: REGISTERED_NOT_SCHEDULED
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+  cas_contract:
+    schema: htt.cas_contract.v2
+    required_axes:
+    - wolfram_xact
+    - sympy_high_precision
+    - sage_singular
+    - lean_mathlib
+    missing_axis_outcome: CAS_BLOCKED
+    result_blinding: required_until_adjudication
+- id: PR-194
+  wave: 30
+  title: Exact observer-boost / matter-tilt / fingerprint bridge와 order-correct deprojection
+  owner: BASS
+  contributors:
+  - COMMON
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes:
+  - common
+  depends:
+  - PR-187
+  - PR-193
+  dependency_contracts:
+  - upstream_id: PR-187
+    mode: requires_success
+  - upstream_id: PR-193
+    mode: requires_success
+  targets:
+  - 'Strengthen against audit criticisms H09, H10: Lorentz boost의 harmonic kernel, tilted stress-energy,
+    antipodal moment fingerprints를 동일 rapidity·density convention에서 exact하게 연결하되 서로 다른 physical types는
+    bridge ID로만 이동한다.'
+  files:
+  - common
+  - scripts/codex_harness
+  - tests/pr_cards
+  - docs/PR_DELTAS/pr-194.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status
+    docs/codex_handoff/pr_status.yaml --strict-rescue-slice
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_194_strengthen.py
+  dod:
+  - single/pair normalization에서 energy density 또는 moment map이 일치하지 않거나 deprojection residual이 O(β²)로 남으면
+    실패.
+  - Author-side gates (mechanics/identification/calibration/provenance) reach EVIDENCE_READY; the Independence
+    gate (non-author derivation lineage plus preserved dissent) stays explicitly OPEN until adjudication
+    capacity returns; publication_use stays false.
+  kill: density normalization implicit.
+  cost: medium--high
+  level: L2
+  scope: pre-solver
+  risk: R3-CAS
+  claim_tier_ceiling: exploratory
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C1
+  claim_impact: observer boost와 matter tilt를 혼동하지 않으면서 양쪽을 exact하게 연결하는 all-branch response calculus.
+    (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).
+  forbidden:
+  - observer β와 homogeneous matter β를 by-fiat 동일시하지 않는다.
+  - Ω_tilt²로 O(β²)를 제거하지 않는다.
+  - No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate
+    pass.
+  anti_drift:
+  - external novelty tier and internal readiness are independent axes; neither auto-changes the other.
+  - no new comparator number is authoritative until PR-186 (W2 convention) and PR-187 (frame/type) pass.
+  roadmap_anchor: htt_post_v10_strengthening_plan_20260721/03_POST_V10_STRENGTHENING_PR_ROADMAP_20260721.md
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: standard_internal
+  execution_authorization: REGISTERED_NOT_SCHEDULED
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+  cas_contract:
+    schema: htt.cas_contract.v2
+    required_axes:
+    - wolfram_xact
+    - sympy_high_precision
+    - sage_singular
+    - lean_mathlib
+    missing_axis_outcome: CAS_BLOCKED
+    result_blinding: required_until_adjudication
+- id: PR-195
+  wave: 30
+  title: Finite-volume bulk flow에서 homogeneous tilt로의 stochastic bridge theorem
+  owner: HTT
+  contributors:
+  - OBSSTAT
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes:
+  - htt
+  depends:
+  - PR-187
+  - PR-194
+  dependency_contracts:
+  - upstream_id: PR-187
+    mode: requires_success
+  - upstream_id: PR-194
+    mode: requires_success
+  targets:
+  - 'Strengthen against audit criticisms H06, H07: windowed bulk-flow vector B_W는 homogeneous mode v_0와
+    finite-k residual의 합이며 Ω_tilt(v_0)로의 bridge는 window, power spectrum, gauge/frame, remainder를 포함한다.'
+  files:
+  - htt
+  - scripts/codex_harness
+  - tests/pr_cards
+  - docs/PR_DELTAS/pr-195.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status
+    docs/codex_handoff/pr_status.yaml --strict-rescue-slice
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_195_strengthen.py
+  dod:
+  - registered windows에서 bridge bias/coverage가 tolerance를 넘거나 finite-k residual이 v0보다 지배적이면 direct homogeneous-tilt
+    inference 실패.
+  - Author-side gates (mechanics/identification/calibration/provenance) reach EVIDENCE_READY; the Independence
+    gate (non-author derivation lineage plus preserved dissent) stays explicitly OPEN until adjudication
+    capacity returns; publication_use stays false.
+  kill: finite-k residual 미모델링.
+  cost: high
+  level: L2
+  scope: pre-solver
+  risk: R2 theory+simulation
+  claim_tier_ceiling: exploratory
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C1
+  claim_impact: finite-volume peculiar-velocity observations에서 homogeneous matter tilt를 오차 제어와 함께 추론하는
+    물리적 bridge. (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).
+  forbidden:
+  - B/c를 바로 homogeneous β로 대입하지 않는다.
+  - bridge failure를 Ω_tilt=0로 해석하지 않는다.
+  - No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate
+    pass.
+  anti_drift:
+  - external novelty tier and internal readiness are independent axes; neither auto-changes the other.
+  - no new comparator number is authoritative until PR-186 (W2 convention) and PR-187 (frame/type) pass.
+  roadmap_anchor: htt_post_v10_strengthening_plan_20260721/03_POST_V10_STRENGTHENING_PR_ROADMAP_20260721.md
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: standard_internal
+  execution_authorization: REGISTERED_NOT_SCHEDULED
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+- id: PR-196
+  wave: 30
+  title: Native/semi-native physical response Jacobian과 robust identifiability-rank theorem
+  owner: BASS
+  contributors:
+  - COMMON
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes:
+  - common
+  depends:
+  - PR-159
+  - PR-160
+  - PR-161
+  - PR-187
+  - PR-194
+  - PR-195
+  dependency_contracts:
+  - upstream_id: PR-159
+    mode: requires_success
+  - upstream_id: PR-160
+    mode: requires_success
+  - upstream_id: PR-161
+    mode: requires_success
+  - upstream_id: PR-187
+    mode: requires_success
+  - upstream_id: PR-194
+    mode: requires_success
+  - upstream_id: PR-195
+    mode: requires_success
+  targets:
+  - 'Strengthen against audit criticisms H08, H22: 실제 CMB T/E/B, PV radial/transverse, lensing observables의
+    expectation derivative R_{αj}=∂E[Tα]/∂g_j를 native or independently validated transfer에서 계산하고 nuisance/mask/window
+    후 rank interval을 증명한다.'
+  files:
+  - common
+  - scripts/codex_harness
+  - tests/pr_cards
+  - docs/PR_DELTAS/pr-196.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status
+    docs/codex_handoff/pr_status.yaml --strict-rescue-slice
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_196_strengthen.py
+  dod:
+  - native conformance 실패, finite-difference/adjoint Jacobian 불일치, plausible nuisance에서 rank가 사라지면 physical
+    rank claim 실패.
+  - Author-side gates (mechanics/identification/calibration/provenance) reach EVIDENCE_READY; the Independence
+    gate (non-author derivation lineage plus preserved dissent) stays explicitly OPEN until adjudication
+    capacity returns; publication_use stays false.
+  kill: native asset 불명확.
+  cost: high/blocked-until-native
+  level: L2
+  scope: pre-solver
+  risk: R3+external
+  claim_tier_ceiling: exploratory
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C1
+  claim_impact: 실제 transfer와 survey operators 아래에서 comparator component의 물리적 identifiability 차원. (external
+    novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).
+  forbidden:
+  - registered zero column을 native result라고 재포장하지 않는다.
+  - external transfer를 native로 rename하지 않는다.
+  - No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate
+    pass.
+  anti_drift:
+  - external novelty tier and internal readiness are independent axes; neither auto-changes the other.
+  - no new comparator number is authoritative until PR-186 (W2 convention) and PR-187 (frame/type) pass.
+  roadmap_anchor: htt_post_v10_strengthening_plan_20260721/03_POST_V10_STRENGTHENING_PR_ROADMAP_20260721.md
+  activation_state: NEEDS_NATIVE
+  execution_lane: needs_native
+  scientific_artifact_mode: standard_internal
+  execution_authorization: NATIVE_BLOCKED
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+- id: PR-197
+  wave: 31
+  title: Cluster-exchangeable/split finite-null rank theorem와 symmetric scorer
+  owner: OBSSTAT
+  contributors:
+  - HTT
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes:
+  - obsstat
+  depends:
+  - PR-188
+  dependency_contracts:
+  - upstream_id: PR-188
+    mode: requires_success
+  targets:
+  - 'Strengthen against audit criticisms H11: score fitting은 independent training ensemble에서 고정하고 observation과
+    calibration units는 동일 algorithm을 거친다. reuse clusters는 independent cluster unit 또는 valid clustered
+    randomization으로 처리한다.'
+  files:
+  - obsstat
+  - scripts/codex_harness
+  - tests/pr_cards
+  - docs/PR_DELTAS/pr-197.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status
+    docs/codex_handoff/pr_status.yaml --strict-rescue-slice
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_197_strengthen.py
+  dod:
+  - exact small-N enumeration 또는 null DGP에서 super-uniformity가 깨지면 finite-sample exact claim 실패.
+  - Author-side gates (mechanics/identification/calibration/provenance) reach EVIDENCE_READY; the Independence
+    gate (non-author derivation lineage plus preserved dissent) stays explicitly OPEN until adjudication
+    capacity returns; publication_use stays false.
+  kill: score fit에 observation leakage.
+  cost: medium--high
+  level: L2
+  scope: pre-solver
+  risk: R2 statistics
+  claim_tier_ceiling: exploratory
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C1
+  claim_impact: noise-reuse와 fitted scorer를 포함해도 finite-sample validity를 갖는 low-ell global rank. (external
+    novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).
+  forbidden:
+  - 모든 correlated rows를 N independent로 세지 않는다.
+  - p grid 아래 tail extrapolation을 exact p로 부르지 않는다.
+  - No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate
+    pass.
+  anti_drift:
+  - external novelty tier and internal readiness are independent axes; neither auto-changes the other.
+  - no new comparator number is authoritative until PR-186 (W2 convention) and PR-187 (frame/type) pass.
+  roadmap_anchor: htt_post_v10_strengthening_plan_20260721/03_POST_V10_STRENGTHENING_PR_ROADMAP_20260721.md
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: standard_internal
+  execution_authorization: DAG_SCHEDULABLE
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+- id: PR-198
+  wave: 31
+  title: Even-L BiPoSH cross-fit, covariance uncertainty와 map-product replication
+  owner: OBSSTAT
+  contributors:
+  - HTT
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes:
+  - obsstat
+  depends:
+  - PR-197
+  - PR-194
+  dependency_contracts:
+  - upstream_id: PR-197
+    mode: requires_success
+  - upstream_id: PR-194
+    mode: requires_success
+  targets:
+  - 'Strengthen against audit criticisms H13, H21: feature transform, covariance regularization, scorer를
+    training set에서 고정하고 independent calibration maps와 observed maps를 동일하게 rank한다. SMICA/Commander 또는 NPIPE
+    products를 반복한다.'
+  files:
+  - obsstat
+  - scripts/codex_harness
+  - tests/pr_cards
+  - docs/PR_DELTAS/pr-198.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status
+    docs/codex_handoff/pr_status.yaml --strict-rescue-slice
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_198_strengthen.py
+  dod:
+  - floor/transform/map product에 따라 p가 preregistered robustness 범위를 벗어나거나 null size가 실패하면 morphology claim
+    실패.
+  - Author-side gates (mechanics/identification/calibration/provenance) reach EVIDENCE_READY; the Independence
+    gate (non-author derivation lineage plus preserved dissent) stays explicitly OPEN until adjudication
+    capacity returns; publication_use stays false.
+  kill: map-product sign reversal unexplained.
+  cost: high
+  level: L2
+  scope: pre-solver
+  risk: R2 statistics+data
+  claim_tier_ceiling: exploratory
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C1
+  claim_impact: map-product와 covariance uncertainty에 강건한 low-ell even-L covariance-morphology result.
+    (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).
+  forbidden:
+  - observation에 full covariance, simulations에 LOO covariance를 다르게 쓰지 않는다.
+  - floor를 observed score에 맞춰 조정하지 않는다.
+  - No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate
+    pass.
+  anti_drift:
+  - external novelty tier and internal readiness are independent axes; neither auto-changes the other.
+  - no new comparator number is authoritative until PR-186 (W2 convention) and PR-187 (frame/type) pass.
+  roadmap_anchor: htt_post_v10_strengthening_plan_20260721/03_POST_V10_STRENGTHENING_PR_ROADMAP_20260721.md
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: standard_internal
+  execution_authorization: REGISTERED_NOT_SCHEDULED
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+- id: PR-199
+  wave: 31
+  title: 'Load-bearing zero-parameter boost residual: paired E2E difference test'
+  owner: OBSSTAT
+  contributors:
+  - HTT
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes:
+  - obsstat
+  depends:
+  - PR-194
+  - PR-197
+  - PR-198
+  dependency_contracts:
+  - upstream_id: PR-194
+    mode: requires_success
+  - upstream_id: PR-197
+    mode: requires_success
+  - upstream_id: PR-198
+    mode: requires_success
+  targets:
+  - 'Strengthen against audit criticisms H12: known β/direction exact operator가 paired boosted-minus-unboosted
+    E2E feature difference의 mean을 예측하며 residual은 template에 실제로 의존한다.'
+  files:
+  - obsstat
+  - scripts/codex_harness
+  - tests/pr_cards
+  - docs/PR_DELTAS/pr-199.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status
+    docs/codex_handoff/pr_status.yaml --strict-rescue-slice
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_199_strengthen.py
+  dod:
+  - template=0/rotated/sign-flipped/half-amplitude mutations이 statistic을 바꾸지 않거나 injected amplitude recovery가
+    실패하면 zero-parameter residual claim 실패.
+  - Author-side gates (mechanics/identification/calibration/provenance) reach EVIDENCE_READY; the Independence
+    gate (non-author derivation lineage plus preserved dissent) stays explicitly OPEN until adjudication
+    capacity returns; publication_use stays false.
+  kill: template mutation non-load-bearing.
+  cost: high
+  level: L2
+  scope: pre-solver
+  risk: R2 data+simulation
+  claim_tier_ceiling: exploratory
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C1
+  claim_impact: known solar boost의 exact zero-parameter low-ell response를 실제로 검정하는 load-bearing E2E residual
+    measurement. (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).
+  forbidden:
+  - 동일 상수를 data/null 모두에서 빼고 centred score를 residual이라고 부르지 않는다.
+  - boosted null과 pure-boost confirmation을 혼동하지 않는다.
+  - No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate
+    pass.
+  anti_drift:
+  - external novelty tier and internal readiness are independent axes; neither auto-changes the other.
+  - no new comparator number is authoritative until PR-186 (W2 convention) and PR-187 (frame/type) pass.
+  roadmap_anchor: htt_post_v10_strengthening_plan_20260721/03_POST_V10_STRENGTHENING_PR_ROADMAP_20260721.md
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: standard_internal
+  execution_authorization: REGISTERED_NOT_SCHEDULED
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+- id: PR-200
+  wave: 31
+  title: Estimated-covariance·nonlinear endpoint partial-ID confidence set와 continuum coverage
+  owner: HTT
+  contributors:
+  - OBSSTAT
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes:
+  - htt
+  depends:
+  - PR-189
+  - PR-197
+  dependency_contracts:
+  - upstream_id: PR-189
+    mode: requires_success
+  - upstream_id: PR-197
+    mode: requires_success
+  targets:
+  - 'Strengthen against audit criticisms H14: estimated covariance, active constraints, vector-to-amplitude
+    nonlinearity, nuisance optimization을 포함한 identified set confidence region이 point/weak/nonidentified
+    regimes 전체에서 simultaneous 95% coverage를 가진다.'
+  files:
+  - htt
+  - scripts/codex_harness
+  - tests/pr_cards
+  - docs/PR_DELTAS/pr-200.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status
+    docs/codex_handoff/pr_status.yaml --strict-rescue-slice
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_200_strengthen.py
+  dod:
+  - pre-registered DGP/mesh cell에서 99% CP lower coverage <0.94 또는 optimizer error가 endpoint uncertainty의
+    10%를 넘으면 실패.
+  - Author-side gates (mechanics/identification/calibration/provenance) reach EVIDENCE_READY; the Independence
+    gate (non-author derivation lineage plus preserved dissent) stays explicitly OPEN until adjudication
+    capacity returns; publication_use stays false.
+  kill: 한 cell undercoverage.
+  cost: high
+  level: L2
+  scope: pre-solver
+  risk: R2 statistics
+  claim_tier_ceiling: exploratory
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C1
+  claim_impact: 복잡한 cosmological nuisance와 estimated covariance에서도 simultaneous coverage가 검증된 partial-identification
+    inference. (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).
+  forbidden:
+  - 0.913를 calibrated success로 표시하지 않는다.
+  - Gaussian endpoint formula를 nonlinear amplitude에 그대로 쓰지 않는다.
+  - No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate
+    pass.
+  anti_drift:
+  - external novelty tier and internal readiness are independent axes; neither auto-changes the other.
+  - no new comparator number is authoritative until PR-186 (W2 convention) and PR-187 (frame/type) pass.
+  roadmap_anchor: htt_post_v10_strengthening_plan_20260721/03_POST_V10_STRENGTHENING_PR_ROADMAP_20260721.md
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: standard_internal
+  execution_authorization: DAG_SCHEDULABLE
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+- id: PR-201
+  wave: 32
+  title: CF4 structural identified set, pipeline robustness set와 full E2E vector coverage
+  owner: HTT
+  contributors:
+  - OBSSTAT
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes:
+  - htt
+  depends:
+  - PR-144
+  - PR-145
+  - PR-146
+  - PR-147
+  - PR-195
+  - PR-200
+  dependency_contracts:
+  - upstream_id: PR-144
+    mode: requires_success
+  - upstream_id: PR-145
+    mode: requires_success
+  - upstream_id: PR-146
+    mode: requires_success
+  - upstream_id: PR-147
+    mode: requires_success
+  - upstream_id: PR-195
+    mode: requires_success
+  - upstream_id: PR-200
+    mode: requires_success
+  targets:
+  - 'Strengthen against audit criticisms H14, H15, H07: 하나의 raw survey-window bulk-flow estimand에 대한 structural
+    identified set I_B와 reconstruction/pipeline choices의 robustness set R_B를 분리하며, bridge를 통해 homogeneous
+    tilt set을 별도 산출한다.'
+  files:
+  - htt
+  - scripts/codex_harness
+  - tests/pr_cards
+  - docs/PR_DELTAS/pr-201.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status
+    docs/codex_handoff/pr_status.yaml --strict-rescue-slice
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_201_strengthen.py
+  dod:
+  - Vpec/Vpwf branches가 동일 estimand가 아님에도 structural nuisance로 들어가거나 vector simultaneous coverage가 실패하면
+    CF4 identified-set claim 실패.
+  - Author-side gates (mechanics/identification/calibration/provenance) reach EVIDENCE_READY; the Independence
+    gate (non-author derivation lineage plus preserved dissent) stays explicitly OPEN until adjudication
+    capacity returns; publication_use stays false.
+  kill: structural/pipeline branch 혼합.
+  cost: high
+  level: L2
+  scope: pre-solver
+  risk: R2 data+simulation
+  claim_tier_ceiling: exploratory
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C1
+  claim_impact: 실제 CF4 catalogue에서 estimand-preserving structural partial identification과 pipeline robustness를
+    동시에 분리한 강건한 set-valued result. (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling
+    on intake).
+  forbidden:
+  - favourable endpoint를 point estimate로 사용하지 않는다.
+  - pipeline spread를 statistical confidence로 부르지 않는다.
+  - No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate
+    pass.
+  anti_drift:
+  - external novelty tier and internal readiness are independent axes; neither auto-changes the other.
+  - no new comparator number is authoritative until PR-186 (W2 convention) and PR-187 (frame/type) pass.
+  roadmap_anchor: htt_post_v10_strengthening_plan_20260721/03_POST_V10_STRENGTHENING_PR_ROADMAP_20260721.md
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: standard_internal
+  execution_authorization: REGISTERED_NOT_SCHEDULED
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+- id: PR-202
+  wave: 32
+  title: Planck multi-pipeline E2E replication, noise-cluster closure와 low-ell anomaly decomposition
+  owner: OBSSTAT
+  contributors:
+  - HTT
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes:
+  - obsstat
+  depends:
+  - PR-149
+  - PR-150
+  - PR-197
+  - PR-198
+  - PR-199
+  dependency_contracts:
+  - upstream_id: PR-149
+    mode: requires_success
+  - upstream_id: PR-150
+    mode: requires_success
+  - upstream_id: PR-197
+    mode: requires_success
+  - upstream_id: PR-198
+    mode: requires_success
+  - upstream_id: PR-199
+    mode: requires_success
+  targets:
+  - 'Strengthen against audit criticisms H11, H13, H21: SMICA 결과를 independent component-separation/matched
+    E2E ensemble에서 복제하고 scalar, BiPoSH, boost sectors의 shared/noise/systematic covariance를 분해한다.'
+  files:
+  - obsstat
+  - scripts/codex_harness
+  - tests/pr_cards
+  - docs/PR_DELTAS/pr-202.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status
+    docs/codex_handoff/pr_status.yaml --strict-rescue-slice
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_202_strengthen.py
+  dod:
+  - map product 또는 independent simulation release에서 registered terminal이 사전 robustness criterion을 위반하면
+    single-pipeline cosmological interpretation 실패.
+  - Author-side gates (mechanics/identification/calibration/provenance) reach EVIDENCE_READY; the Independence
+    gate (non-author derivation lineage plus preserved dissent) stays explicitly OPEN until adjudication
+    capacity returns; publication_use stays false.
+  kill: matched ensemble 부재.
+  cost: high/data
+  level: L2
+  scope: pre-solver
+  risk: R2 data
+  claim_tier_ceiling: exploratory
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C1
+  claim_impact: component-separation와 E2E release에 강건한 Planck low-ell departure-diagnostic result. (external
+    novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).
+  forbidden:
+  - SMICA-only p를 Planck 전체 결과로 일반화하지 않는다.
+  - NPIPE가 없으면 synthetic substitute로 동일 claim을 유지하지 않는다.
+  - No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate
+    pass.
+  anti_drift:
+  - external novelty tier and internal readiness are independent axes; neither auto-changes the other.
+  - no new comparator number is authoritative until PR-186 (W2 convention) and PR-187 (frame/type) pass.
+  roadmap_anchor: htt_post_v10_strengthening_plan_20260721/03_POST_V10_STRENGTHENING_PR_ROADMAP_20260721.md
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: standard_internal
+  execution_authorization: REGISTERED_NOT_SCHEDULED
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+- id: PR-203
+  wave: 32
+  title: DESI DR1 complete official-mock exact-selection causal decomposition
+  owner: OBSSTAT
+  contributors:
+  - HTT
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes:
+  - obsstat
+  depends:
+  - PR-151
+  - PR-197
+  - PR-200
+  dependency_contracts:
+  - upstream_id: PR-151
+    mode: requires_terminal_receipt
+  - upstream_id: PR-197
+    mode: requires_success
+  - upstream_id: PR-200
+    mode: requires_success
+  targets:
+  - 'Strengthen against audit criticisms H21: 1000 EZmocks와 25 AbacusSummit validation mocks 전부에서 data와
+    동일 selection/window/nuisance refit을 수행하여 clustering, kinematic, imaging/fiber systematics contributions를
+    분해한다.'
+  files:
+  - obsstat
+  - scripts/codex_harness
+  - tests/pr_cards
+  - docs/PR_DELTAS/pr-203.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status
+    docs/codex_handoff/pr_status.yaml --strict-rescue-slice
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_203_strengthen.py
+  dod:
+  - official mocks에서 estimator bias/FPR/selection leakage가 사전 기준을 넘거나 fast/high-realism tiers가 불일치하면 causal
+    attribution 실패.
+  - Author-side gates (mechanics/identification/calibration/provenance) reach EVIDENCE_READY; the Independence
+    gate (non-author derivation lineage plus preserved dissent) stays explicitly OPEN until adjudication
+    capacity returns; publication_use stays false.
+  kill: mock completion 미달.
+  cost: high/data
+  level: L2
+  scope: pre-solver
+  risk: R2 data
+  claim_tier_ceiling: exploratory
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C1
+  claim_impact: DESI DR1 BGS count dipole의 official-mock-calibrated clustering/kinematic/systematic decomposition.
+    (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).
+  forbidden:
+  - partial mock ensemble로 final p/covariance를 만들지 않는다.
+  - in-house GRF를 official causal validation으로 대체하지 않는다.
+  - No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate
+    pass.
+  anti_drift:
+  - external novelty tier and internal readiness are independent axes; neither auto-changes the other.
+  - no new comparator number is authoritative until PR-186 (W2 convention) and PR-187 (frame/type) pass.
+  roadmap_anchor: htt_post_v10_strengthening_plan_20260721/03_POST_V10_STRENGTHENING_PR_ROADMAP_20260721.md
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: standard_internal
+  execution_authorization: REGISTERED_NOT_SCHEDULED
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+- id: PR-204
+  wave: 32
+  title: ACT DR6 validated-band/raw-QE anisotropic modulation closure
+  owner: OBSSTAT
+  contributors:
+  - HTT
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes:
+  - obsstat
+  depends:
+  - PR-152
+  - PR-177
+  - PR-197
+  - PR-200
+  dependency_contracts:
+  - upstream_id: PR-152
+    mode: requires_success
+  - upstream_id: PR-177
+    mode: requires_success
+  - upstream_id: PR-197
+    mode: requires_success
+  - upstream_id: PR-200
+    mode: requires_success
+  targets:
+  - 'Strengthen against audit criticisms H21: ACT inference는 validated 40<L<763 band 또는 exact configuration-locked
+    QE reconstruction에서만 수행하며 release simulations와 identical mean-field/response/noise treatment를 사용한다.'
+  files:
+  - obsstat
+  - scripts/codex_harness
+  - tests/pr_cards
+  - docs/PR_DELTAS/pr-204.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status
+    docs/codex_handoff/pr_status.yaml --strict-rescue-slice
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_204_strengthen.py
+  dod:
+  - in-band injections에서 response/coverage 실패, mask-change sensitivity가 signal과 동급, raw-QE reproduction
+    불일치 시 anisotropic modulation claim 실패.
+  - Author-side gates (mechanics/identification/calibration/provenance) reach EVIDENCE_READY; the Independence
+    gate (non-author derivation lineage plus preserved dissent) stays explicitly OPEN until adjudication
+    capacity returns; publication_use stays false.
+  kill: validated band 밖 extrapolation.
+  cost: high/data+compute
+  level: L2
+  scope: pre-solver
+  risk: R2 data
+  claim_tier_ceiling: exploratory
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C1
+  claim_impact: ACT DR6 validated response 영역에서 simulation-calibrated anisotropic lensing modulation constraint.
+    (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).
+  forbidden:
+  - L=2..10 release product를 validated sky-power measurement로 사용하지 않는다.
+  - public map에 post-hoc signal을 더한 것을 pre-QE injection이라 부르지 않는다.
+  - No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate
+    pass.
+  anti_drift:
+  - external novelty tier and internal readiness are independent axes; neither auto-changes the other.
+  - no new comparator number is authoritative until PR-186 (W2 convention) and PR-187 (frame/type) pass.
+  roadmap_anchor: htt_post_v10_strengthening_plan_20260721/03_POST_V10_STRENGTHENING_PR_ROADMAP_20260721.md
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: standard_internal
+  execution_authorization: REGISTERED_NOT_SCHEDULED
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+- id: PR-205
+  wave: 33
+  title: Common-model full four-component comparator joint identified region
+  owner: HTT
+  contributors:
+  - OBSSTAT
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes:
+  - htt
+  depends:
+  - PR-189
+  - PR-190
+  - PR-193
+  - PR-195
+  - PR-196
+  - PR-200
+  - PR-201
+  - PR-202
+  - PR-203
+  - PR-204
+  dependency_contracts:
+  - upstream_id: PR-189
+    mode: requires_success
+  - upstream_id: PR-190
+    mode: requires_success
+  - upstream_id: PR-193
+    mode: requires_success
+  - upstream_id: PR-195
+    mode: requires_success
+  - upstream_id: PR-196
+    mode: requires_success
+  - upstream_id: PR-200
+    mode: requires_success
+  - upstream_id: PR-201
+    mode: requires_success
+  - upstream_id: PR-202
+    mode: requires_success
+  - upstream_id: PR-203
+    mode: requires_success
+  - upstream_id: PR-204
+    mode: requires_success
+  targets:
+  - 'Strengthen against audit criticisms H05, H06, H07, H08: 동일 epoch/frame/matter model과 native response
+    아래에서 CMB/PV/DESI/ACT data restrictions, MES/GR dynamics, shared nuisances를 동시에 만족하는 F_joint 위의 x_C
+    image를 full comparator identified region으로 정의한다.'
+  files:
+  - htt
+  - scripts/codex_harness
+  - tests/pr_cards
+  - docs/PR_DELTAS/pr-205.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status
+    docs/codex_handoff/pr_status.yaml --strict-rescue-slice
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_205_strengthen.py
+  dod:
+  - F_joint가 empty, branches가 premise-incompatible, bridge uncertainty가 unbounded, 또는 marginal Cartesian
+    result와 동일하다는 이유 외에 joint certificate가 없으면 full-region claim 실패.
+  - Author-side gates (mechanics/identification/calibration/provenance) reach EVIDENCE_READY; the Independence
+    gate (non-author derivation lineage plus preserved dissent) stays explicitly OPEN until adjudication
+    capacity returns; publication_use stays false.
+  kill: cross-model premise mix.
+  cost: high
+  level: L2
+  scope: pre-solver
+  risk: R3+multi-probe
+  claim_tier_ceiling: exploratory
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C1
+  claim_impact: measured data와 exact/validated physical restrictions를 공통 cosmological model 안에서 결합한 full
+    four-component comparator identified region. (external novelty axis only; roadmap_rescue_v1:C1 internal
+    ceiling on intake).
+  forbidden:
+  - 서로 다른 model-class marginal ceilings를 단순 합산하지 않는다.
+  - missing component를 0으로 채우지 않는다.
+  - No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate
+    pass.
+  anti_drift:
+  - external novelty tier and internal readiness are independent axes; neither auto-changes the other.
+  - no new comparator number is authoritative until PR-186 (W2 convention) and PR-187 (frame/type) pass.
+  roadmap_anchor: htt_post_v10_strengthening_plan_20260721/03_POST_V10_STRENGTHENING_PR_ROADMAP_20260721.md
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: standard_internal
+  execution_authorization: REGISTERED_NOT_SCHEDULED
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+- id: PR-206
+  wave: 33
+  title: Multi-probe systematics-as-hypotheses와 local/global/geometry discrimination
+  owner: HTT
+  contributors:
+  - OBSSTAT
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes:
+  - htt
+  depends:
+  - PR-196
+  - PR-201
+  - PR-202
+  - PR-203
+  - PR-204
+  - PR-205
+  - PR-181
+  dependency_contracts:
+  - upstream_id: PR-196
+    mode: requires_success
+  - upstream_id: PR-201
+    mode: requires_success
+  - upstream_id: PR-202
+    mode: requires_success
+  - upstream_id: PR-203
+    mode: requires_success
+  - upstream_id: PR-204
+    mode: requires_success
+  - upstream_id: PR-205
+    mode: requires_success
+  - upstream_id: PR-181
+    mode: requires_success
+  targets:
+  - 'Strengthen against audit criticisms H21, H22, H24: isotropic, observer boost, local velocity mode,
+    survey systematics, homogeneous anisotropy, allowed Bianchi response classes를 normalized generative
+    models로 두고 joint evidence/held-out predictive/identified-set gates로 판별한다.'
+  files:
+  - htt
+  - scripts/codex_harness
+  - tests/pr_cards
+  - docs/PR_DELTAS/pr-206.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status
+    docs/codex_handoff/pr_status.yaml --strict-rescue-slice
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_206_strengthen.py
+  dod:
+  - systematic or combined model이 signal model을 matched FPR에서 재현하거나 held-out gain/identification이 없으면
+    stronger source claim 실패.
+  - Author-side gates (mechanics/identification/calibration/provenance) reach EVIDENCE_READY; the Independence
+    gate (non-author derivation lineage plus preserved dissent) stays explicitly OPEN until adjudication
+    capacity returns; publication_use stays false.
+  kill: systematics specificity 실패.
+  cost: high
+  level: L2
+  scope: pre-solver
+  risk: R2 model comparison
+  claim_tier_ceiling: exploratory
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C1
+  claim_impact: 여러 관측 probe가 지지하는 local/global/systematic/anisotropic source의 calibrated set-valued discrimination.
+    (external novelty axis only; roadmap_rescue_v1:C1 internal ceiling on intake).
+  forbidden:
+  - dependent Bayes factors/p-values를 곱하지 않는다.
+  - abstention을 실패로 숨기거나 single best family를 강제하지 않는다.
+  - No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate
+    pass.
+  anti_drift:
+  - external novelty tier and internal readiness are independent axes; neither auto-changes the other.
+  - no new comparator number is authoritative until PR-186 (W2 convention) and PR-187 (frame/type) pass.
+  roadmap_anchor: htt_post_v10_strengthening_plan_20260721/03_POST_V10_STRENGTHENING_PR_ROADMAP_20260721.md
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: standard_internal
+  execution_authorization: REGISTERED_NOT_SCHEDULED
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+- id: PR-207
+  wave: 33
+  title: Independent external reproduction, blind hostile challenge와 novelty tribunal
+  owner: COMMON
+  contributors:
+  - BASS
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes:
+  - common
+  depends:
+  - PR-186
+  - PR-189
+  - PR-191
+  - PR-192
+  - PR-193
+  - PR-199
+  - PR-200
+  - PR-205
+  - PR-206
+  dependency_contracts:
+  - upstream_id: PR-186
+    mode: requires_success
+  - upstream_id: PR-189
+    mode: requires_success
+  - upstream_id: PR-191
+    mode: requires_success
+  - upstream_id: PR-192
+    mode: requires_success
+  - upstream_id: PR-193
+    mode: requires_success
+  - upstream_id: PR-199
+    mode: requires_success
+  - upstream_id: PR-200
+    mode: requires_success
+  - upstream_id: PR-205
+    mode: requires_success
+  - upstream_id: PR-206
+    mode: requires_success
+  targets:
+  - 'Strengthen against audit criticisms H19, H23, H24: 각 flagship theorem/data claim은 repository author와
+    다른 principal의 independent derivation/implementation과 sealed hostile challenge를 통과하며 external novelty
+    tier는 독립 문헌 tribunal이 갱신한다.'
+  files:
+  - common
+  - scripts/codex_harness
+  - tests/pr_cards
+  - docs/PR_DELTAS/pr-207.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status
+    docs/codex_handoff/pr_status.yaml --strict-rescue-slice
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_207_strengthen.py
+  dod:
+  - 독립 implementation이 sign/coefficient/endpoint/result를 재현하지 못하거나 closest prior art가 delta를 소거하면 해당 claim의
+    readiness/novelty 판정 실패.
+  - Author-side gates (mechanics/identification/calibration/provenance) reach EVIDENCE_READY; the Independence
+    gate (non-author derivation lineage plus preserved dissent) stays explicitly OPEN until adjudication
+    capacity returns; publication_use stays false.
+  kill: self-review 또는 shared codebase only.
+  cost: high/external
+  level: L2
+  scope: pre-solver
+  risk: R3 external
+  claim_tier_ceiling: exploratory
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C1
+  claim_impact: 독립 재현과 문헌 심사를 모두 통과한 scientific readiness 및 external novelty 판정. (external novelty axis
+    only; roadmap_rescue_v1:C1 internal ceiling on intake).
+  forbidden:
+  - internal agents를 external replication으로 센다.
+  - novelty tribunal이 readiness를 바꾸거나 readiness panel이 novelty를 바꾸게 하지 않는다.
+  - No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate
+    pass.
+  anti_drift:
+  - external novelty tier and internal readiness are independent axes; neither auto-changes the other.
+  - no new comparator number is authoritative until PR-186 (W2 convention) and PR-187 (frame/type) pass.
+  roadmap_anchor: htt_post_v10_strengthening_plan_20260721/03_POST_V10_STRENGTHENING_PR_ROADMAP_20260721.md
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: standard_internal
+  execution_authorization: REGISTERED_NOT_SCHEDULED
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+- id: PR-208
+  wave: 34
+  title: Full-program promotion, v11 synthesis report와 publication suite
+  owner: COMMON
+  contributors:
+  - BASS
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes:
+  - common
+  depends:
+  - PR-157
+  - PR-158
+  - PR-207
+  dependency_contracts:
+  - upstream_id: PR-157
+    mode: requires_adjudicated_claim_set
+  - upstream_id: PR-158
+    mode: requires_adjudicated_claim_set
+  - upstream_id: PR-207
+    mode: requires_success
+  targets:
+  - 'Strengthen against audit criticisms H20, H23, H24: 프로젝트의 주장 범위는 유지한다. 다만 각 결과를 맞는 논문 형식으로 분리하고 마지막
+    synthesis가 모든 paper의 bridge를 다시 결합한다. publication-use는 PR-185 promotion engine과 PR-207 external gate가
+    승인한 claim만 허용한다.'
+  files:
+  - common
+  - scripts/codex_harness
+  - tests/pr_cards
+  - docs/PR_DELTAS/pr-208.md
+  tests:
+  - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status
+    docs/codex_handoff/pr_status.yaml --strict-rescue-slice
+  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_208_strengthen.py
+  dod:
+  - 어떤 manuscript도 source readiness보다 강한 문장을 포함하거나 full synthesis가 common-model gate 없이 marginal results를
+    결합하면 release 실패.
+  - Author-side gates (mechanics/identification/calibration/provenance) reach EVIDENCE_READY; the Independence
+    gate (non-author derivation lineage plus preserved dissent) stays explicitly OPEN until adjudication
+    capacity returns; publication_use stays false.
+  kill: open/block result가 publication-use로 유입.
+  cost: high
+  level: L2
+  scope: pre-solver
+  risk: R2 release
+  claim_tier_ceiling: exploratory
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C1
+  claim_impact: 축소되지 않은 전체 HTT/BASS research programme의 독립 검증된 수학·물리·통계·데이터 synthesis. (external novelty
+    axis only; roadmap_rescue_v1:C1 internal ceiling on intake).
+  forbidden:
+  - scope를 줄여 문제를 숨기지 않는다.
+  - 한 논문에 모든 미성숙 결과를 headline으로 넣지 않는다.
+  - manual number/figure를 삽입하지 않는다.
+  - No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate
+    pass.
+  anti_drift:
+  - external novelty tier and internal readiness are independent axes; neither auto-changes the other.
+  - no new comparator number is authoritative until PR-186 (W2 convention) and PR-187 (frame/type) pass.
+  roadmap_anchor: htt_post_v10_strengthening_plan_20260721/03_POST_V10_STRENGTHENING_PR_ROADMAP_20260721.md
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: standard_internal
+  execution_authorization: REGISTERED_NOT_SCHEDULED
   public_use: false
   spec_first_required: true
   scientific_status_on_intake: OPEN

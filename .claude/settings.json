@@ -25,7 +25,9 @@
       "Bash(venv/bin/python scripts/make_physics_gallery.py --only 02_flrw_geometry)",
       "Bash(PYTHONPATH=. ../venv/bin/python -c \"import numpy, scipy; print\\(numpy.__version__, scipy.__version__\\)\")",
       "Bash(PYTHONPATH=. ../venv/bin/python -m pytest bass/ tsc/ -q --co)",
-      "Bash(python3 -c ' *)"
+      "Bash(python3 -c ' *)",
+      "Bash(venv/bin/python -B scripts/codex_harness/pr151_progress.py --compact)",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\('writer', d['activity']['effective_writer_state'], '| ez', d['observed_support']['ezmock']['declared_authenticated'], '/1000 | terminal', d['terminal']['pr151_terminal'], '| free', round\\(d['disk']['free_gib']\\), 'GiB'\\)\")"
     ]
   },
   "hooks": {
