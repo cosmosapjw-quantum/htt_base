@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""PR-182 sealed four-axis CAS runs.
+"""PR-175 sealed four-axis CAS runs.
 
 Executes each axis command fresh (blind: no axis reads a sibling result),
 parses its emitted checks/computed, and seals an envelope bound to the
@@ -19,28 +19,28 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[2]
-CONTRACT = REPO / "docs/generated/pr182_cas/CAS_CONTRACT_PR182_PARITY_V2.json"
-OUT_DIR = REPO / "docs/generated/pr182_cas"
+CONTRACT = REPO / "docs/generated/pr175_cas/CAS_CONTRACT_PR175_INVARIANT_V2.json"
+OUT_DIR = REPO / "docs/generated/pr175_cas"
 
 AXES = {
     "sympy": {
-        "cmd": ["venv/bin/python", "-B", "htt/src/common/pr182_sympy_axis.py"],
+        "cmd": ["venv/bin/python", "-B", "htt/src/common/pr175_sympy_axis.py"],
         "cwd": ".",
         "timeout": 600,
     },
     "sage_singular": {
-        "cmd": ["sage", "sage/pr182_parity_axis.sage"],
+        "cmd": ["sage", "sage/pr175_invariant_axis.sage"],
         "cwd": ".",
         "timeout": 900,
     },
     "wolfram_xact": {
-        "cmd": ["wolframscript", "-file", "wolfram/pr182_parity_axis.wls"],
+        "cmd": ["wolframscript", "-file", "wolfram/pr175_invariant_axis.wls"],
         "cwd": ".",
         "timeout": 900,
     },
     "lean": {
-        "cmd": ["lake", "exe", "pr182parity"],
-        "cwd": "formal_pr182",
+        "cmd": ["lake", "exe", "pr175invariant"],
+        "cwd": "formal_pr175",
         "timeout": 900,
     },
 }
@@ -57,18 +57,18 @@ def _contract() -> tuple[dict, str]:
 def _parse_axis_json(axis: str, stdout: str) -> dict:
     if axis == "wolfram_xact":
         checks_line = next(
-            line for line in stdout.splitlines() if line.startswith("PR182_CHECKS ")
+            line for line in stdout.splitlines() if line.startswith("PR175_CHECKS ")
         )
         computed_line = next(
-            line for line in stdout.splitlines() if line.startswith("PR182_COMPUTED ")
+            line for line in stdout.splitlines() if line.startswith("PR175_COMPUTED ")
         )
         pairs = re.findall(r'"([A-Za-z_0-9]+)" -> (True|False)', checks_line)
         checks = {key: value == "True" for key, value in pairs}
         computed = dict(
             re.findall(r'"([A-Za-z_0-9]+)" -> "([^"]*)"', computed_line)
         )
-        all_pass = "PR182_ALL_PASS True" in stdout
-        xact = "PR182_XACT True" in stdout
+        all_pass = "PR175_ALL_PASS True" in stdout
+        xact = "PR175_XACT True" in stdout
         return {
             "checks": checks,
             "computed": computed,
@@ -80,14 +80,17 @@ def _parse_axis_json(axis: str, stdout: str) -> dict:
 
 # Shared computed keys every axis must agree on with the contract.
 EXPECTED_VALUE_KEYS = (
-    "fixed_space_dim",
-    "fixture_TB_flip",
-    "fixture_EB_flip",
-    "n_prime_diagonal",
-    "boost_order_0",
-    "boost_order_1",
-    "boost_order_2",
-    "boost_order_3",
+    "R_I",
+    "R_II",
+    "R_VI_0",
+    "R_VII_0",
+    "R_VIII",
+    "R_IX",
+    "R_V",
+    "R_IV",
+    "R_III",
+    "R_VI_h",
+    "R_VII_h",
 )
 
 

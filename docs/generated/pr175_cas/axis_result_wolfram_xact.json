@@ -1,0 +1,42 @@
+{
+ "axis": "wolfram_xact",
+ "checks": {
+  "class_b_vector_constraint_a_dot_n_zero": true,
+  "eleven_type_ricci_scalar_matches_anchor": true,
+  "vi_vii_h_relation_consistent": true
+ },
+ "commands": [
+  {
+   "cmd": "wolframscript -file wolfram/pr175_invariant_axis.wls",
+   "cwd": ".",
+   "exit": 0
+  }
+ ],
+ "completed_at": "2026-07-21T00:46:41+00:00",
+ "computed": {
+  "R_I": "0",
+  "R_II": "-1/2",
+  "R_III": "-8",
+  "R_IV": "-13/2",
+  "R_IX": "3/2",
+  "R_V": "-6",
+  "R_VIII": "-5/2",
+  "R_VII_0": "0",
+  "R_VII_h": "-3/2",
+  "R_VI_0": "-2",
+  "R_VI_h": "-7/2"
+ },
+ "contract_id": "CAS-PR175-INVARIANT-002",
+ "contract_sha256": "0437f90a79bf7914067b6859f3f0962f1e25a5d88f2b3f2a533bbc540ae01894",
+ "evidence_class": "exact",
+ "schema_version": 1,
+ "sibling_results_read": [],
+ "source_output_hashes": [
+  {
+   "path": "wolfram/pr175_invariant_axis.wls",
+   "sha256": "ca4ca4b4e0809fb8eaaaeb2a94c508bdeb0e26d5b860adf4b367e99d83a7baac"
+  }
+ ],
+ "status": "PASS",
+ "transcript_tail": "------------------------------------------------------------\nPackage xAct`xPerm`  version 1.2.4, {2025, 12, 29}\nCopyRight (C) 2003-2026, Jose M. Martin-Garcia, under the General Public License.\nConnecting to external linux executable...\nConnection established.\n------------------------------------------------------------\nPackage xAct`xTensor` version 1.3.0, {2025, 12, 29}\nCopyRight (C) 2002-2026, Jose M. Martin-Garcia, under the General Public License.\n------------------------------------------------------------\nThese packages come with ABSOLUTELY NO WARRANTY; for details type Disclaimer[]. This is free software, and you are welcome to redistribute it under certain conditions. See the General Public License for details.\n------------------------------------------------------------\nPR175_CHECKS {\"eleven_type_ricci_scalar_matches_anchor\" -> True, \"class_b_vector_constraint_a_dot_n_zero\" -> True, \"vi_vii_h_relation_consistent\" -> True}\nPR175_COMPUTED {\"R_I\" -> \"0\", \"R_II\" -> \"-1/2\", \"R_VI_0\" -> \"-2\", \"R_VII_0\" -> \"0\", \"R_VIII\" -> \"-5/2\", \"R_IX\" -> \"3/2\", \"R_V\" -> \"-6\", \"R_IV\" -> \"-13/2\", \"R_III\" -> \"-8\", \"R_VI_h\" -> \"-7/2\", \"R_VII_h\" -> \"-3/2\"}\nPR175_XACT True\nPR175_ALL_PASS True\n"
+}

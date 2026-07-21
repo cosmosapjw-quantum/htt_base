@@ -1,0 +1,105 @@
+{
+  "axes": {
+    "lean": {
+      "applicability": "required",
+      "obligation": "machine-check the closed rational anchor-formula values, class-B constraint, and h-relations by native_decide (core lane); the symbolic chains live on the other axes; class-B/h-relations bound to the reps table (closed rational arithmetic only, disclosed depth asymmetry)",
+      "sources": [
+        {
+          "path": "formal_pr175/Pr175Invariant/Basic.lean",
+          "sha256": "49fa9c68e6ad2df34190fbae9657ef31ee545b4c88d4050048ef9a6c023eb709"
+        },
+        {
+          "path": "formal_pr175/Pr175Invariant.lean",
+          "sha256": "e921b8cc8cdcab61f3d9fddf6bd95923b08192140c02ebac017b5757345db6db"
+        },
+        {
+          "path": "formal_pr175/lakefile.toml",
+          "sha256": "7e8b030fc4fdc70e491f8e0b984b06efebf91e44220a0805c6b30581934b366c"
+        },
+        {
+          "path": "formal_pr175/lean-toolchain",
+          "sha256": "efac0b94923b2d8b6840cd35be9177ad0fc5ab2332f4f4311c98712cee92fdee"
+        }
+      ]
+    },
+    "sage_singular": {
+      "applicability": "required",
+      "obligation": "independently re-implement the Koszul chain over QQ and verify the same obligations with a Singular presence receipt; class-B obligation derived from constructed structure constants with Jacobi identity",
+      "sources": [
+        {
+          "path": "sage/pr175_invariant_axis.sage",
+          "sha256": "1ba1fac779bc775a56ef98080680e6dbaa74e1fefa2b5a72529c6da7c6bd0260"
+        }
+      ]
+    },
+    "sympy": {
+      "applicability": "required",
+      "obligation": "run the exact Koszul frame chain for all eleven representatives and verify anchor equality + class-B + h-relations over exact rationals; class-B obligation derived from constructed structure constants with Jacobi identity",
+      "sources": [
+        {
+          "path": "htt/src/common/pr175_sympy_axis.py",
+          "sha256": "0be2282b40c9c1dea56a356f4cf82b915b10b233e8743711928e3a5018f4e0d5"
+        },
+        {
+          "path": "htt/src/common/pr175_invariant_oracle.py",
+          "sha256": "687bae27e0c3e3eef569b066b3e0be1482fd261730fd9836cc4a51e79db0fcc5"
+        }
+      ]
+    },
+    "wolfram_xact": {
+      "applicability": "required",
+      "obligation": "load xAct (enforced receipt) and independently re-implement the exact Koszul chain, verifying the same obligations; class-B obligation derived from constructed structure constants with Jacobi identity",
+      "sources": [
+        {
+          "path": "wolfram/pr175_invariant_axis.wls",
+          "sha256": "ca4ca4b4e0809fb8eaaaeb2a94c508bdeb0e26d5b860adf4b367e99d83a7baac"
+        }
+      ]
+    }
+  },
+  "exceptions_adjudication": {
+    "aggregate_status_rule": "CAS_4AXIS_PASS requires four validated PASS envelopes under this contract hash; missing/blocked axis -> CAS_BLOCKED; any FAIL -> CAS_FAIL; no majority vote",
+    "preregistered_exceptions": []
+  },
+  "identity": {
+    "contract_id": "CAS-PR175-INVARIANT-002",
+    "pr_id": "PR-175",
+    "source_input_hashes": [
+      {
+        "path": "docs/research_program/long_horizon_rescue/pr175_spec.yaml",
+        "sha256": "4e3b580f316a5799c765b0a8fa261877bc457f2f9a94083c1f9fd31b8ed8699e"
+      },
+      {
+        "path": "docs/research_program/long_horizon_rescue/pr175_spec_erratum.yaml",
+        "sha256": "bf0d530f37581cc221c23ba13d0b854cef4617df09fea67166365516cf748c50"
+      }
+    ],
+    "supersedes": {
+      "contract_id": "CAS-PR175-INVARIANT-001",
+      "evidence_retained": "docs/generated/pr175_cas/v1/",
+      "reuse": "no result reuse; fresh four-axis rerun after review-driven hash-changing axis repairs (erratum E2/E3/E5)"
+    }
+  },
+  "result_blinding": "required_until_adjudication",
+  "schema": "htt.cas_contract.v2",
+  "target": {
+    "exact_test_obligations": [
+      "eleven_type_ricci_scalar_matches_anchor",
+      "class_b_vector_constraint_a_dot_n_zero",
+      "vi_vii_h_relation_consistent"
+    ],
+    "expected_exact_values": {
+      "R_I": "0",
+      "R_II": "-1/2",
+      "R_III": "-8",
+      "R_IV": "-13/2",
+      "R_IX": "3/2",
+      "R_V": "-6",
+      "R_VIII": "-5/2",
+      "R_VII_0": "0",
+      "R_VII_h": "-3/2",
+      "R_VI_0": "-2",
+      "R_VI_h": "-7/2"
+    }
+  }
+}

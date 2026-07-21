@@ -1,0 +1,43 @@
+{
+ "findings": [
+  {
+   "evidence": "docs/research_program/LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md:948 ('11 Bianchi type\uc758 curvature/shear invariant\ub97c ... external Buchert anchor\uc640 \uc77c\uce58\uc2dc\ud0a8\ub2e4') vs docs/research_program/long_horizon_rescue/pr175_spec.yaml:33-44,77-81 (Ricci scalar only, Ellis-MacCallum/Wainwright-Ellis anchor, 'Buchert' absent from the entire spec). The operative backlog DoD (docs/codex_handoff/pr_backlog.yaml:4783-4787) is generic enough to be satisfied, so this is a disclosure gap, not a DoD breach; the roadmap's tautology NOTE on the same line IS honored at spec lines 55-57.",
+   "id": "PR175-GOV-01",
+   "severity": "P2",
+   "summary": "Undisclosed deviation from the roadmap SPEC: roadmap PR-175 pins 'curvature/shear invariant' agreement against an 'external Buchert anchor', but the executed spec computes only the spatial Ricci scalar against the Ellis-MacCallum anchor formula, with no interpretation/deviation record (unlike the carefully recorded PR-174->PR-175 naming interpretation)."
+  },
+  {
+   "evidence": "docs/research_program/long_horizon_rescue/pr175_spec.yaml:142 ('any CAS axis FAIL (-> CAS_FAIL)') vs allowed_scientific_results at lines 45-48 which contain no FAIL terminal; scripts/codex_harness/run_pr175_invariant_card.py:31-34 (TERMINALS maps only CAS_4AXIS_PASS and CAS_BLOCKED) and lines 50-52 (any other aggregate, including CAS_FAIL, falls through to the ENGINE_OR_ANCHOR_MISMATCH terminal even when the cause is e.g. an obligation-keyset error, not a mismatch). Backlog kill wording at docs/codex_handoff/pr_backlog.yaml:4788-4789 demands CAS_CONFLICT/CAS_FAIL. Latent only \u2014 fail-closed, no PASS path is affected, and the actual run was CAS_4AXIS_PASS.",
+   "id": "PR175-GOV-02",
+   "severity": "P2",
+   "summary": "CAS_FAIL is named as a kill outcome in the spec but is unrepresentable in the allowed terminal vocabulary; the card runner would surface an axis FAIL under the mislabeled terminal INVARIANT_ORACLE_BLOCKED_ENGINE_OR_ANCHOR_MISMATCH, softening a kill ('FAIL'/backlog 'CAS_CONFLICT or CAS_FAIL') into 'BLOCKED' language."
+  },
+  {
+   "evidence": "formal_pr175/Pr175Invariant/Basic.lean:19-38 (computed values ARE the anchor formula; 'The symbolic Koszul chains live on the other axes' header) and docs/generated/pr175_cas/CAS_CONTRACT_PR175_INVARIANT.json:5 (lean obligation text discloses this), but scripts/codex_harness/run_pr175_cas_axes.py:144-151 enforces the identical three-key obligation set for every axis PASS, and the spec's own obligations list (pr175_spec.yaml:130-135) names five obligations (incl. axis-scoped 'engine_a_symbolic_chain_reproduced' / 'anchor_value_arithmetic_verified') while the frozen contract registers only three exact_test_obligations (contract lines 77-82) \u2014 the axis-differentiating pair exists only as prose.",
+   "id": "PR175-GOV-03",
+   "severity": "P2",
+   "summary": "Obligation-name overloading across axes: the Lean axis reports PASS on 'eleven_type_ricci_scalar_matches_anchor' while verifying strictly weaker content (anchor-formula arithmetic vs pinned values, no Koszul chain), so the uniform per-axis checks dict makes four PASSes under one key look evidentially equivalent when they are not; disclosed only in contract/lean prose, not in the envelope structure."
+  },
+  {
+   "evidence": "htt/src/common/pr175_sympy_axis.py:39-43 (C computed and never used; 'class_b_ok = class_b_ok and (n1 == 0 or name in ())'); same table-level check in sage/pr175_invariant_axis.sage:63, wolfram/pr175_invariant_axis.wls:49-50, formal_pr175/Pr175Invariant/Basic.lean:41. anti_drift clause at docs/codex_handoff/pr_backlog.yaml:4795-4796. The load-bearing anchor-match obligation is genuinely independent on sympy/sage/wolfram, so the card's headline is unaffected.",
+   "id": "PR175-GOV-04",
+   "severity": "P2",
+   "summary": "The 'class_b_vector_constraint_a_dot_n_zero' obligation is checked as a fixture-table property (n1==0 when a!=0) on all four axes rather than from constructed structure constants; the sympy axis contains dead code (unused C = structure_constants(name); vacuous 'or name in ()') implying a stronger intended a_b n^{ba}=0 check that was never written \u2014 brushing against the anti_drift 'prohibit tautological self-checks' clause, though the check is mathematically equivalent for diagonal n with a along e1."
+  },
+  {
+   "evidence": "docs/research_program/long_horizon_rescue/pr175_spec.yaml:22,24 ('scheduled_on: 2026-07-21', 'directed ... on 2026-07-21') vs docs/generated/pr175_cas_adjudication.json:15 ('adjudicated_at: 2026-07-20T15:37:10+00:00'). One added sentence pinning the local-time convention (or an ISO timestamp for the directive) closes it.",
+   "id": "PR175-GOV-05",
+   "severity": "P2",
+   "summary": "Authorization/adjudication ordering is timezone-ambiguous: the spec records the owner directive as 2026-07-21 (no timezone) while the CAS adjudication is stamped 2026-07-20T15:37:10+00:00 \u2014 on a UTC reading the preregistered contract was adjudicated before the recorded authorization date; consistent only under a KST reading (00:37 on 07-21), which the record does not pin."
+  },
+  {
+   "evidence": "scripts/codex_harness/run_pr175_cas_axes.py:128,176 (literal 'sibling_results_read': [] in both envelope constructors) vs the guard at lines 209-210; spec requires result_blinding: required_until_adjudication (pr175_spec.yaml:137, contract line 74).",
+   "id": "PR175-GOV-06",
+   "severity": "P2",
+   "summary": "Blinding is self-attested: the axis runner hardcodes sibling_results_read=[] into every envelope it writes, so the --check guard 'blinding violated' can never fire against runner-produced envelopes; blinding rests on the (plausible) fresh-subprocess construction, not on any observable receipt."
+  }
+ ],
+ "lane": "claim-language/governance",
+ "notes": "Genuine refutation attempt; no P0/P1 found. Positive verifications: (1) claim-language checker on spec+card returned issue_count=0, no missing paths; (2) every atlas/rank/family occurrence across module, axis scripts, Lean files, runners, spec, and card is negation-only, with zero production consumers enforced by test_no_family_ranking_language_or_consumer and no invariant-to-label inverse map anywhere; (3) hypothesis_only/public_use=false/roadmap_rescue_v1:C2 carried consistently on spec (lines 13-15), card metadata, and module docstring (pr175_invariant_oracle.py:3); (4) the PR-174->PR-175 interpretation record is honest and verifiably correct \u2014 PR-174 resolved COMPLETED_SUCCESS 2026-07-20 (pr_status.yaml:179-186) and PR-175 is the unique backlog card depending on PR-174 (pr_backlog.yaml:4764), record scoped to this execution only; (5) the Ellis & MacCallum 1969 Comm. Math. Phys. 12, 108 identifier is plausible/correct and hedged as transcribed-not-verified at all three surfaces (spec claim, spec anchor block, card anchor_lineage); (6) the roadmap-noted contracted-Bianchi tautology is explicitly named as NOT used (spec:55-57) and the contract's obligations contain no such self-check; (7) card terminal derives from adjudication bytes + live oracle (never hand-set), contract/adjudication/envelope hashes all bind, and the mutation tests (perturbed IX representative, wrong 3a^2 anchor) genuinely kill. All six findings are P2 hygiene/disclosure items; none creates a path to an overclaim, a family identification, or a dishonest PASS. docs/PR_DELTAS/pr-175.md (listed in the backlog files block) does not exist yet \u2014 expected pre-commit, flagged for the closing checklist.",
+ "verdict": "PASS"
+}
