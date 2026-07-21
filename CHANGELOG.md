@@ -7,6 +7,60 @@
 
 ## [Unreleased]
 
+### PR-180 — Exact zero-parameter boost-BiPoSH residual (rev-r246, 2026-07-21)
+
+First defensible data card unlocked by the PR-184 replan. Terminal
+**CONSISTENT_WITH_PURE_BOOST_WITHIN_THIS_PIPELINE**: observed SMICA
+dipole-frame L=1 boost-BiPoSH feature ranks p=0.854 (853/999, floor 1/1000)
+inside the BOOSTED FFP10 null — load-bearing spec fact: FFP10 CMB MC include
+Doppler boosting (Planck 2018 III), so identical-treatment template
+subtraction + sim-mean centring (no double subtraction). Zero-parameter
+EXACT pixel-space boost operator (consistent LOS aberration + Doppler
+pairing, no coupling-formula transcription); two-point Richardson template
+at h=20β (linearity 1.9932; the uniform-β first run failed the gate at 1.34
+from the numeric floor, repaired pre-seal, recorded). Ensemble boost-content
+measurement non-informative at 128-sim MC power (reported, not gated).
+7 gates; inline verification disclosed (spend limit; PR-132 precedent).
+Never a boost confirmation/independence/detection claim. 114/131.
+See docs/PR_DELTAS/pr-180.md.
+
+### PR-184 + REPLAN — B-projector contract remediation; PR-180 rerouted (rev-r245, 2026-07-21)
+
+Owner-directed replan per the checkpoint-110 agenda: PR-184 registered
+(131 cards; validator intake constants extended with the typed
+terminal-receipt edge set) and PR-180's failed requires_success PR-172 edge
+rerouted to requires_terminal_receipt PR-172 + requires_success PR-184.
+PR-184 adjudicates the PR-172 disagreement by derivation on the REAL
+unedited adapter: unconditional-callable reading stays FALSIFIED (PR-172
+fixture bit-exact, 0.006921858926603516, confined to the m=−2 channel of
+its premise-violating B_{2,−2} input); premise-complete reading (σ₂₀-only
+AND zero parity-odd B-tower) returns exactly 0.0. Fail-closed premise
+checker; frozen adapter byte-equal to the PR-172 pin (gate-enforced);
+PR-172's terminal never relabeled. **F1 structural fix also landed** (commit
+6d193862): the PR-169 consumer scan is now a LIVING report (semantic gate on
+check; benign tree drift no longer reds the gate, an injected unresolved
+claim still kills it) — the regeneration ritual is retired. 113/131.
+See docs/PR_DELTAS/pr-184.md.
+
+### PR-175 — Cross-engine Bianchi invariant oracle (rev-r244, 2026-07-21)
+
+Hypothesis-only card (owner-scheduled; C2). Eleven canonical rational
+Bianchi representatives: exact Koszul frame engine == external
+Ellis-MacCallum anchor formula EXACTLY on all 11 types (I 0; II −1/2;
+VI₀ −2; VII₀ 0; VIII −5/2; IX 3/2; V −6; IV −13/2; III −8; VI_h −7/2;
+VII_h −3/2; textbook sanity: IX round S³, V unit H³); independent
+coordinate/complex-step engine agrees to max 8.2157e-10. Four-axis
+**CAS_4AXIS_PASS** under CAS-PR175-INVARIANT-002 (v2 after review-driven
+repairs: class-B + Jacobi obligations DERIVED from constructed structure
+constants; lean h-relations table-bound; runner environment robustness also
+applied to the PR-182 runner; v1 retained, no reuse). Review: 3 refute
+lanes complete (0 P0 / 1 P1 / 14 P2, all remediated inline); the
+per-finding verification stage was cut by an external API spend limit —
+disclosed in the archive manifest, erratum E1–E10, and status receipt.
+Disclosed roadmap scope narrowing (Ricci scalar only; shear invariants +
+Buchert anchor open). Never ranks/identifies a family. 112/131.
+See docs/PR_DELTAS/pr-175.md.
+
 ### PR-182 — Solver-free parity theorem + handedness registry; roadmap ratio relation refuted (rev-r243, 2026-07-21)
 
 Hypothesis-only advocate card (dep PR-167; `public_use: false`, ceiling
