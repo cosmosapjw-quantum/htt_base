@@ -1,0 +1,96 @@
+schema: htt.pr184.spec.v1
+pr_id: PR-184
+title: B-projector axisymmetric-contract remediation (PR-172 follow-up)
+frozen_before_result: true
+owner: COMMON
+contributors:
+- BASS
+implementation_scope:
+- common
+claim_tier: exploratory
+claim_level:
+  scheme: roadmap_rescue_v1
+  level: C1
+scientific_artifact_mode: standard_internal
+public_use: false
+transfer_source: none
+baseline_commit: 9894896f910b2b66ac7d728e81ea7e00d55d6512
+
+scheduling_authorization: >-
+  Owner directive 2026-07-21 (KST): "PR-172/PR-180을 이어서 수행" —
+  authorizes the checkpoint-110 maintainer-recommended derivation-first
+  remediation and the PR-180 reroute registered in the REPLAN commit
+  9894896f.
+
+claim:
+  statement: >-
+    The PR-172 documented-vs-implemented disagreement on the B-projector
+    axisymmetric-zero invariant is adjudicated by derivation: the
+    documented invariant is CORRECT under its premise-complete reading
+    (axisymmetric CONFIGURATION: sigma_{2,0}-only shear AND identically
+    zero parity-odd photon B-tower history, the dynamically consistent
+    state), and FALSE under the unconditional-callable reading that
+    PR-172's frozen relation encoded and correctly falsified. The
+    remediation registers the premise-complete contract plus a
+    premise-checker, without editing the frozen production adapter or
+    any PR-172 receipt.
+  allowed_scientific_results:
+  - PREMISE_COMPLETE_CONTRACT_REGISTERED_IMPLEMENTATION_UPHELD
+  - BLOCKED_DERIVATION_INCONSISTENT
+  interpretation: >-
+    C1 callable-contract mechanics. PR-172's terminal
+    (COMPLETED_FAILED_WITH_RECEIPT, falsifying the unconditional
+    reading) is never relabeled; the full spin-harmonic parity action
+    stays UNDERDEFINED_NOT_TESTED; nothing here is a physical-parity,
+    observational, or Bianchi-family statement.
+
+derivation:
+  reading_a_unconditional: >-
+    "For any inputs with sigma axisymmetric, the callable returns zero"
+    — FALSE: the callable consumes photon_B_tower_history as an
+    independent argument; a nonzero B_{2,-2} history (m=-2, outside the
+    axisymmetric m=0 sector) propagates to a nonzero output confined to
+    the m=-2 channel. PR-172's registered fixture demonstrates this with
+    max|Delta_B| = 0.006921858926603516.
+  reading_b_premise_complete: >-
+    "For the dynamically consistent axisymmetric configuration —
+    sigma_{2,0}-only AND B-tower history identically zero (axisymmetric
+    sigma with sigma_{2,+/-1} = 0 cannot generate a B-tower from zero
+    initial data, per the module's own EB-mixing note) — the callable
+    returns exactly zero" — TRUE: verified on the real unedited
+    projector (exact 0.0).
+  sector_correspondence: >-
+    Corroborated by the PR-182 CAS-verified identity I1 (mirror-fixed
+    axisymmetric m=0 sector has exactly zero B); a nonzero B_{2,-2}
+    history lies outside that sector. Cited as corroboration only, not a
+    DAG dependency.
+  registered_witnesses:
+    consistent_configuration_output_max_abs: 0.0
+    pr172_fixture_output_max_abs: 0.006921858926603516
+    pr172_fixture_output_support: m_index_0_only (m = -2 channel)
+
+frozen_surfaces:
+- htt/bass/los/b_mode_projector.py (production adapter; PR-172-pinned;
+  documented-not-edited per the v7 T2-prime precedent — the corrected
+  contract lives in this card's module)
+- every PR-172 receipt and artifact
+
+kill_conditions:
+- any edit to the frozen production adapter or a PR-172 receipt
+- failure to reproduce exact zero on the consistent configuration
+- failure to reproduce the PR-172 fixture value bit-exactly
+- any relabeling of PR-172's falsification or terminal
+- any physical-parity or observational claim
+
+required_metadata:
+- owner
+- implementation_scope
+- claim_tier
+- claim_level
+- scientific_artifact_mode
+- public_use
+- transfer_source
+- config_hash
+- spec_sha256
+- generating_command
+- git_commit

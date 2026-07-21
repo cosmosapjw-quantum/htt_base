@@ -1,0 +1,60 @@
+{
+ "adjudication": {
+  "checks": {
+   "consistent_configuration_exact_zero": true,
+   "pr172_fixture_confined_to_m_minus_2_channel": true,
+   "pr172_fixture_reproduced_bit_exact": true,
+   "premise_checker_rejects_pr172_fixture": true
+  },
+  "contract": {
+   "conclusion": "Delta_ell^B == 0 exactly at every (ell, m)",
+   "corroboration": "PR-182 CAS-verified identity I1: the mirror-fixed axisymmetric m=0 sector has exactly zero B; a B_{2,-2} history is outside that sector (corroboration only, not a dependency)",
+   "id": "b_projector_axisymmetric_zero_premise_complete_v1",
+   "pr172_disposition": "PR-172 remains COMPLETED_FAILED_WITH_RECEIPT; it correctly falsified the unconditional reading of the documented invariant",
+   "premise": "axisymmetric CONFIGURATION: sigma_2M history has only the M=0 component nonzero AND the photon B-tower history is identically zero (the dynamically consistent state: axisymmetric shear with sigma_{2,+/-1}=0 cannot generate a B-tower from zero initial data)",
+   "unconditional_reading": "FALSE and stays falsified by PR-172: the callable consumes the B-tower history as an independent argument, so a premise-violating nonzero B_{2,-2} history yields a nonzero output confined to the m=-2 channel"
+  },
+  "frozen_surfaces_untouched": [
+   "htt/bass/los/b_mode_projector.py",
+   "docs/generated/pr172_* (all PR-172 receipts)"
+  ],
+  "interpretation": "Callable-contract mechanics only; PR-172's falsification of the unconditional reading stands; the full spin-harmonic parity action stays UNDERDEFINED_NOT_TESTED; no physical-parity, observational, or Bianchi-family statement.",
+  "schema": "htt.pr184.adjudication.v1",
+  "terminal": "PREMISE_COMPLETE_CONTRACT_REGISTERED_IMPLEMENTATION_UPHELD",
+  "witnesses": {
+   "consistent_configuration_output_max_abs": 0.0,
+   "pr172_fixture_output_max_abs": 0.006921858926603516,
+   "pr172_fixture_output_support_m_indices": [
+    0
+   ]
+  }
+ },
+ "forbidden_claims_reaffirmed": [
+  "PR-172's falsification and terminal are never relabeled",
+  "no physical-parity or observational statement",
+  "full spin-harmonic parity action stays UNDERDEFINED_NOT_TESTED",
+  "no Bianchi-family or geometry content"
+ ],
+ "metadata": {
+  "claim_level": {
+   "level": "C1",
+   "scheme": "roadmap_rescue_v1"
+  },
+  "claim_tier": "exploratory",
+  "config_hash": "4f0268892e59c0145e59e822fb9d6d1828fbb375f8a3d67d5fbb170cae6dacdf",
+  "frozen_adapter_sha256": "4f0268892e59c0145e59e822fb9d6d1828fbb375f8a3d67d5fbb170cae6dacdf",
+  "generating_command": "env PYTHONHASHSEED=0 venv/bin/python -B scripts/codex_harness/run_pr184_axisym_contract.py --write",
+  "git_commit": "9894896f910b2b66ac7d728e81ea7e00d55d6512",
+  "implementation_scope": [
+   "common"
+  ],
+  "owner": "COMMON",
+  "public_use": false,
+  "scientific_artifact_mode": "standard_internal",
+  "spec_sha256": "5e55151735fbc5fffde3e21e66c7e46fb49f68011f11d78693a8b80de6d7ee90",
+  "transfer_source": "none"
+ },
+ "pr_id": "PR-184",
+ "schema": "htt.pr184.result_card.v1",
+ "terminal": "PREMISE_COMPLETE_CONTRACT_REGISTERED_IMPLEMENTATION_UPHELD"
+}
