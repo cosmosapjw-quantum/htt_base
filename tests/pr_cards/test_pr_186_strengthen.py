@@ -34,7 +34,27 @@ def test_spec_bound_and_terminal() -> None:
     ).hexdigest()
     assert card["metadata"]["public_use"] is False
     assert card["metadata"]["independence_gate"] == "OPEN"
-    assert card["terminal"] == "W2_CONVENTION_REPAIRED_ACTIVE_SOURCES_CLEAN"
+    assert card["terminal"] == "W2_CONVENTION_REPAIRED_CAS_5AXIS_PASS_SOURCES_CLEAN"
+
+
+def test_five_axis_cas_pass_contract_bound() -> None:
+    cas = _card()["cas_status"]
+    assert cas["aggregate"] == "CAS_5AXIS_PASS"
+    assert cas["contract_hash_matches_adjudication"] is True
+    assert set(cas["axis_statuses"]) == {
+        "wolfram_xact", "sympy", "sage_singular", "lean", "rocq"
+    }
+    assert all(v == "PASS" for v in cas["axis_statuses"].values())
+    # Lean and Rocq are the two kernel-independent proof-assistant lineages
+    assert cas["kernel_independent_lineages"] == ["lean", "rocq"]
+    # the sealed adjudication agrees
+    adj = json.loads(
+        (REPO / "docs/generated/pr186_cas/adjudication.json").read_text()
+    )
+    assert adj["aggregate_status"] == "CAS_5AXIS_PASS"
+    assert adj["required_axes"] == [
+        "wolfram_xact", "sympy", "sage_singular", "lean", "rocq"
+    ]
 
 
 def test_tensor_vector_identity() -> None:

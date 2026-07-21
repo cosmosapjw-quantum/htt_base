@@ -5,12 +5,29 @@
   "n_hits": 0
  },
  "cas_status": {
-  "aggregate": "CAS_BLOCKED",
-  "lean_mathlib": "NOT_RUN_THIS_SESSION",
-  "note": "elementary exact tensor/vector identity carried by two independent derivation lineages (numerical to 1.4e-14 + exact sympy); the blind four-axis CAS envelope is a deferred follow-up (PR-170 CAS_BLOCKED precedent).",
-  "sage_singular": "NOT_RUN_THIS_SESSION",
-  "sympy_high_precision": "PASS",
-  "wolfram_xact": "NOT_RUN_THIS_SESSION"
+  "aggregate": "CAS_5AXIS_PASS",
+  "axis_statuses": {
+   "lean": "PASS",
+   "rocq": "PASS",
+   "sage_singular": "PASS",
+   "sympy": "PASS",
+   "wolfram_xact": "PASS"
+  },
+  "contract": "docs/generated/pr186_cas/CAS_CONTRACT_PR186_W2.json",
+  "contract_hash_matches_adjudication": true,
+  "contract_sha256": "6055483fc879866f718d82d162abd66767a1e9778d19585aec033896fc43936c",
+  "kernel_independent_lineages": [
+   "lean",
+   "rocq"
+  ],
+  "note": "five-axis blind CAS under one contract hash: Wolfram+xAct, SymPy, Sage+Singular (symbolic universal), Lean (kernel-checked exact-rational witnesses, native_decide), and Rocq/Coq (universal Ring proof, kernel-independent from Lean). No majority vote; all five required axes PASS.",
+  "required_axes": [
+   "wolfram_xact",
+   "sympy",
+   "sage_singular",
+   "lean",
+   "rocq"
+  ]
  },
  "derivation_lineages": {
   "numerical_random_tensor": {
@@ -60,5 +77,5 @@
  },
  "registered_convention": "W^2 := omega_ab omega^ab/(6 H^2) = omega_a omega^a/(3 H^2)",
  "schema": "htt.pr186.result_card.v1",
- "terminal": "W2_CONVENTION_REPAIRED_ACTIVE_SOURCES_CLEAN"
+ "terminal": "W2_CONVENTION_REPAIRED_CAS_5AXIS_PASS_SOURCES_CLEAN"
 }

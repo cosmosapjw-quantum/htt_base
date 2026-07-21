@@ -22,10 +22,36 @@ from common.w2_convention import (  # noqa: E402
 SPEC = REPO / "docs/research_program/strengthening/pr186_spec.yaml"
 CARD = REPO / "docs/generated/pr186_result_card.json"
 REFREEZE_SEAL = REPO / "docs/generated/mes_geodesic_refreeze_seal.json"
+CAS_CONTRACT = REPO / "docs/generated/pr186_cas/CAS_CONTRACT_PR186_W2.json"
+CAS_ADJUDICATION = REPO / "docs/generated/pr186_cas/adjudication.json"
 
 
 def _sha(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _cas_status() -> dict:
+    """Read the sealed five-axis CAS adjudication (contract-bound)."""
+    adj = json.loads(CAS_ADJUDICATION.read_text())
+    contract_sha = _sha(CAS_CONTRACT)
+    return {
+        "contract": "docs/generated/pr186_cas/CAS_CONTRACT_PR186_W2.json",
+        "contract_sha256": contract_sha,
+        "contract_hash_matches_adjudication": (
+            adj.get("contract_sha256") == contract_sha
+        ),
+        "aggregate": adj["aggregate_status"],
+        "required_axes": adj.get("required_axes"),
+        "axis_statuses": adj["axis_statuses"],
+        "kernel_independent_lineages": ["lean", "rocq"],
+        "note": (
+            "five-axis blind CAS under one contract hash: Wolfram+xAct, "
+            "SymPy, Sage+Singular (symbolic universal), Lean (kernel-checked "
+            "exact-rational witnesses, native_decide), and Rocq/Coq "
+            "(universal Ring proof, kernel-independent from Lean). No "
+            "majority vote; all five required axes PASS."
+        ),
+    }
 
 
 def build_payload() -> dict:
@@ -42,9 +68,14 @@ def build_payload() -> dict:
         and symbolic["tensor_vector_forms_equal"]
         and symbolic["wrong_over_right_ratio"] == "3"
     )
+    cas = _cas_status()
+    cas_pass = (
+        cas["aggregate"] == "CAS_5AXIS_PASS"
+        and cas["contract_hash_matches_adjudication"]
+    )
     terminal = (
-        "W2_CONVENTION_REPAIRED_ACTIVE_SOURCES_CLEAN"
-        if (two_lineages_agree and scan["clean"])
+        "W2_CONVENTION_REPAIRED_CAS_5AXIS_PASS_SOURCES_CLEAN"
+        if (two_lineages_agree and scan["clean"] and cas_pass)
         else "BLOCKED_CONVENTION_DRIFT_REMAINS"
     )
 
@@ -71,19 +102,7 @@ def build_payload() -> dict:
             "symbolic_sympy": symbolic,
             "two_independent_lineages_agree": two_lineages_agree,
         },
-        "cas_status": {
-            "sympy_high_precision": "PASS",
-            "wolfram_xact": "NOT_RUN_THIS_SESSION",
-            "sage_singular": "NOT_RUN_THIS_SESSION",
-            "lean_mathlib": "NOT_RUN_THIS_SESSION",
-            "aggregate": "CAS_BLOCKED",
-            "note": (
-                "elementary exact tensor/vector identity carried by two "
-                "independent derivation lineages (numerical to 1.4e-14 + exact "
-                "sympy); the blind four-axis CAS envelope is a deferred "
-                "follow-up (PR-170 CAS_BLOCKED precedent)."
-            ),
-        },
+        "cas_status": _cas_status(),
         "active_source_scan": scan,
         "pre_post_delta": {
             "display_v5_v10_before": "W^2 = omega_a omega^a / H^2",

@@ -36,7 +36,29 @@ from pathlib import Path
 
 from _harness import dump_json, load_json, root
 
-AXES = ("wolfram_xact", "sympy", "sage_singular", "lean")
+# Canonical four computer-algebra axes, plus Rocq (Coq) as a second,
+# kernel-independent proof-assistant lineage running in parallel with Lean
+# (policy repair 2026-07-21, ADJ-CAS-ROCQ-AXIS-001). Two proof assistants
+# with genuinely different kernels answer the H19 "independent derivation
+# lineage" requirement that multiple CAS backends re-evaluating one
+# expression cannot. The required-axis set for a given theorem is declared
+# in its contract; a contract may require the canonical four or the
+# five-axis (Lean + Rocq) set.
+CANONICAL_AXES = ("wolfram_xact", "sympy", "sage_singular", "lean")
+ALL_KNOWN_AXES = CANONICAL_AXES + ("rocq",)
+AXES = ALL_KNOWN_AXES  # recognized axis vocabulary
+# Contract axis-name aliases -> internal probe/axis names.
+CONTRACT_AXIS_ALIASES = {
+    "wolfram_xact": "wolfram_xact",
+    "sympy": "sympy",
+    "sympy_high_precision": "sympy",
+    "sage_singular": "sage_singular",
+    "lean": "lean",
+    "lean_mathlib": "lean",
+    "rocq": "rocq",
+    "rocq_stdlib": "rocq",
+    "coq": "rocq",
+}
 AXIS_STATUSES = {
     "PASS",
     "FAIL",
@@ -131,12 +153,54 @@ def _probe_lean(repo: Path) -> dict:
     }
 
 
+def _probe_rocq(repo: Path) -> dict:
+    # Rocq (Coq) proof assistant; a repo-pinned formal_rocq/rocq-toolchain
+    # is used when present, else the host rocq/coqc is probed for readiness.
+    toolchain_file = repo / "formal_rocq" / "rocq-toolchain"
+    pinned = toolchain_file.read_text(encoding="utf-8").strip() if toolchain_file.is_file() else None
+    binary = "rocq" if _run(["rocq", "--version"], timeout=60)[0] != 127 else "coqc"
+    version_cmd = ["rocq", "--version"] if binary == "rocq" else ["coqc", "--version"]
+    exit_code, out = _run(version_cmd, timeout=120)
+    ready = exit_code == 0 and ("Rocq" in out or "Coq" in out)
+    receipt = {
+        "status": "PASS" if ready else (
+            "BLOCKED_PLATFORM_OR_LICENSE" if exit_code in (127, 124)
+            else "BLOCKED_PACKAGE_UNAVAILABLE"
+        ),
+        "commands": [{"cmd": f"{binary} --version", "exit": exit_code}],
+        "transcript_tail": out[-800:],
+    }
+    if pinned:
+        receipt["pinned_toolchain"] = pinned
+    return receipt
+
+
 PROBES = {
     "wolfram_xact": _probe_wolfram,
     "sympy": _probe_sympy,
     "sage_singular": _probe_sage_singular,
     "lean": _probe_lean,
+    "rocq": _probe_rocq,
 }
+
+
+def _required_axes(contract: dict) -> list[str]:
+    """The axes a contract mandates, normalized to internal names.
+
+    Defaults to the canonical four for backward compatibility with
+    contracts that predate the Rocq axis.
+    """
+    declared = contract.get("required_axes")
+    if not declared:
+        return list(CANONICAL_AXES)
+    normalized: list[str] = []
+    for name in declared:
+        internal = CONTRACT_AXIS_ALIASES.get(str(name))
+        if internal is None:
+            raise ValueError(f"contract requires unknown axis {name!r}")
+        if internal not in normalized:
+            normalized.append(internal)
+    return normalized
 
 
 def cmd_preflight(args) -> int:
@@ -258,8 +322,18 @@ def cmd_adjudicate(args) -> int:
     exceptions, exception_errors = _validate_exceptions(contract, results)
     errors.extend(exception_errors)
 
+    try:
+        required = _required_axes(contract)
+    except ValueError as exc:
+        errors.append(str(exc))
+        required = list(CANONICAL_AXES)
+    required_set = set(required)
+
     statuses = {axis: res.get("status") for axis, res in results.items()}
-    missing = [axis for axis in AXES if axis not in results]
+    missing = [axis for axis in required if axis not in results]
+    # A label from the required-axis count; canonical four -> CAS_4AXIS_PASS,
+    # Lean+Rocq five-axis -> CAS_5AXIS_PASS, etc. Never a majority vote.
+    pass_label = f"CAS_{len(required)}AXIS_PASS"
 
     if any(status == "FAIL" for status in statuses.values()):
         aggregate = "CAS_FAIL"
@@ -278,7 +352,7 @@ def cmd_adjudicate(args) -> int:
             for axis, s in statuses.items()
             if s in {"MISALIGNED_ASSUMPTIONS", "INCONCLUSIVE"}
         }
-        unresolved = (set(AXES) - passing - excepted) | set(missing)
+        unresolved = (required_set - passing - excepted) | set(missing)
         if conflicted:
             aggregate = "CAS_CONFLICT"
         elif unresolved:
@@ -286,27 +360,30 @@ def cmd_adjudicate(args) -> int:
         elif excepted:
             aggregate = "CAS_PASS_WITH_REGISTERED_EXCEPTION"
         else:
-            aggregate = "CAS_4AXIS_PASS"
+            aggregate = pass_label
 
     adjudication = {
-        "schema_version": 1,
+        "schema_version": 2,
         "contract_id": contract.get("identity", {}).get("contract_id"),
         "contract_sha256": contract_sha,
         "aggregate_status": aggregate,
+        "required_axes": required,
         "axis_statuses": statuses,
         "missing_axes": missing,
         "exceptions_applied": sorted(exceptions),
         "errors": errors,
         "adjudicated_at": _utc_now(),
         "note": (
-            "CAS_4AXIS_PASS requires all four axes PASS under one contract "
-            "hash; majority vote is structurally forbidden."
+            f"{pass_label} requires all {len(required)} contract-required axes "
+            "PASS under one contract hash; majority vote is structurally "
+            "forbidden. Lean and Rocq are kernel-independent proof lineages."
         ),
     }
     if args.out:
         dump_json(repo / args.out, adjudication)
     print(json.dumps(adjudication, indent=2, ensure_ascii=False))
-    return 0 if aggregate in {"CAS_4AXIS_PASS", "CAS_PASS_WITH_REGISTERED_EXCEPTION"} else 2
+    passed = aggregate == pass_label or aggregate == "CAS_PASS_WITH_REGISTERED_EXCEPTION"
+    return 0 if passed else 2
 
 
 def main() -> None:

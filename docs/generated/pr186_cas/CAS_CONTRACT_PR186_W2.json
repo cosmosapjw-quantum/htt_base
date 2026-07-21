@@ -1,0 +1,29 @@
+{
+ "schema": "htt.cas_contract.v3",
+ "identity": {
+  "contract_id": "CAS-PR186-W2-CONVENTION-001",
+  "title": "Vorticity normalization: omega_ab omega^ab = 2 omega_a omega^a and the W^2 convention",
+  "pr": "PR-186"
+ },
+ "required_axes": ["wolfram_xact", "sympy", "sage_singular", "lean", "rocq"],
+ "missing_axis_outcome": "CAS_BLOCKED",
+ "result_blinding": "required_until_adjudication",
+ "theorem": {
+  "setup": "A is the general spatial antisymmetric 3x3 vorticity tensor with independent entries a=A_12, b=A_13, c=A_23 in an orthonormal frame; the dual vector is w_i = (1/2) eps_ijk A_jk.",
+  "claims": [
+   "tensor_norm A_ij A_ij = 2 (a^2 + b^2 + c^2)",
+   "dual vector w = (c, -b, a), so w_i w_i = a^2 + b^2 + c^2",
+   "therefore A_ij A_ij = 2 w_i w_i (exact identity, any a,b,c)",
+   "W^2_registered := A_ij A_ij/(6 H^2) = w_i w_i/(3 H^2)",
+   "the v5/v10 display w_i w_i/H^2 = 3 * W^2_registered",
+   "with Theta = 3H, sqrt(A_ij A_ij)/Theta <= B implies W^2_registered <= (3/2) B^2"
+  ]
+ },
+ "expected_exact_values": {
+  "tensor_norm_over_vector_norm": "2",
+  "W2_registered_form": "wa2/(3*H^2)  where wa2 = w_i w_i",
+  "wrong_display_over_registered_ratio": "3",
+  "ceiling_W2max_over_Bsq": "3/2"
+ },
+ "notes": "Lean and Rocq are kernel-independent proof-assistant lineages; they machine-check the algebraic core 2*(a^2+b^2+c^2) equals the antisymmetric contraction after the dual-vector substitution, and the factor-3 / three-halves consequences. No majority vote; all five required axes must PASS under this contract hash."
+}

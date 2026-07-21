@@ -916,22 +916,26 @@ def _validate_strengthen_slice(cards: dict[str, Any]) -> None:
                     )
         if pr_id in STRENGTHEN_CAS_CARDS:
             cas = card.get("cas_contract")
+            # v3 (policy repair ADJ-CAS-ROCQ-AXIS-001): Rocq (Coq) joins Lean as
+            # a second kernel-independent proof-assistant lineage -> a five-axis
+            # blind CAS contract.
             if cas != {
-                "schema": "htt.cas_contract.v2",
+                "schema": "htt.cas_contract.v3",
                 "required_axes": [
                     "wolfram_xact",
                     "sympy_high_precision",
                     "sage_singular",
                     "lean_mathlib",
+                    "rocq_stdlib",
                 ],
                 "missing_axis_outcome": "CAS_BLOCKED",
                 "result_blinding": "required_until_adjudication",
             }:
-                raise ValueError(f"{pr_id} must preregister the blind four-axis CAS contract")
+                raise ValueError(f"{pr_id} must preregister the blind five-axis CAS contract")
             theory_prose = " ".join(_iter_strings(card)).lower()
             if any(weak in theory_prose for weak in ("dual-engine", "two-engine", "two engine")):
                 raise ValueError(
-                    f"{pr_id} exact-math acceptance prose collapses the four-axis contract"
+                    f"{pr_id} exact-math acceptance prose collapses the multi-axis contract"
                 )
 
 
