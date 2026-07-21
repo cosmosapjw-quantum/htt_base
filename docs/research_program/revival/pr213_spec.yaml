@@ -1,0 +1,21 @@
+schema: htt.revival.spec.v1
+pr_id: PR-213
+track: I
+disposition: LITERAL_RESCUE
+cross_references: [PR-185]
+title: External novelty x internal readiness x promotion state machine
+roadmap_anchor: htt_legacy_revival_round2_20260721/docs/03_ROUND2_DUAL_TRACK_PR_ROADMAP_20260721.md
+claim_identity: >
+  Novelty (K/C/P/S) and readiness (8-state) are independent axes; public_use
+  opens only through VALIDATED readiness AND a signed external adjudication
+  receipt with author != adjudicator. Clean-room legacy status_schema successor.
+decisive_falsifier: public_use becomes true on high novelty alone.
+pass_gates:
+  P1: spec frozen before result read
+  P2: successor validate + PR-185 full engine cross-referenced (independent lineage)
+  P3: S-alone / no-receipt / author=adjudicator / unsigned each rejected; legal path accepted
+  P4: card --check byte-stable
+  P5: forward-only readiness ladder (no backward from VALIDATED)
+readiness_state: EVIDENCE_READY
+independence_gate: OPEN
+public_use: false
