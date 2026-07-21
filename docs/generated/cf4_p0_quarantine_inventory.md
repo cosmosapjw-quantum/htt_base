@@ -12,9 +12,9 @@ This is a propagation-control artifact. It does not remediate or validate a CF4 
 - Sky support: `not_applicable_to_propagation_quarantine`
 - Null/mock status: `not_applicable_quarantine_is_not_validation`
 - Git/worktree state: `baseline_commit:e6da3670043596efdcd93f9ba5e631e1462146c7; PR-120 worktree hashes are bound per inventory entry`
-- Entries: `818`
+- Entries: `842`
 - Legacy-only entries: `604`
-- Dynamically bound active/public binaries: `158`
+- Dynamically bound active/public binaries: `182`
 - Deterministic release outputs: `0`
 - Producer/consumer lineage edges: `8`
 
@@ -41,6 +41,26 @@ This is a propagation-control artifact. It does not remediate or validate a CF4 
 | `external_audit_research_report_20260707_v5/external_audit_research_report_v5.pdf` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
 | `external_audit_research_report_20260721_v10.zip` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
 | `external_audit_research_report_20260721_v10/external_audit_research_report_v10.pdf` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
+| `external_audit_research_report_20260721_v10/report_figures/fig_data_act_dr6_lensing_noise_systematics.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
+| `external_audit_research_report_20260721_v10/report_figures/fig_data_cf4_affine_gradient_spectrum.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
+| `external_audit_research_report_20260721_v10/report_figures/fig_data_cf4_catalog_sky_velocity.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
+| `external_audit_research_report_20260721_v10/report_figures/fig_data_cf4_depth_apex_phase_portrait.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
+| `external_audit_research_report_20260721_v10/report_figures/fig_data_cf4_depth_velocity_profile.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
+| `external_audit_research_report_20260721_v10/report_figures/fig_data_cf4_radial_delta_stability.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
+| `external_audit_research_report_20260721_v10/report_figures/fig_data_cf4_radial_velocity_sign_transition.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
+| `external_audit_research_report_20260721_v10/report_figures/fig_data_cf4_shell_apex_separation_matrix.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
+| `external_audit_research_report_20260721_v10/report_figures/fig_data_compact_cmb_high_ell_products.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
+| `external_audit_research_report_20260721_v10/report_figures/fig_data_compact_lensing_bandpower_covariance.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
+| `external_audit_research_report_20260721_v10/report_figures/fig_data_desi_bgs_cf4_targets.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
+| `external_audit_research_report_20260721_v10/report_figures/fig_data_desi_ngc_sgc_asymmetry_surface.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
+| `external_audit_research_report_20260721_v10/report_figures/fig_data_desi_redshift_jackknife_ridge.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
+| `external_audit_research_report_20260721_v10/report_figures/fig_data_desi_tracer_handoff_continuity.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
+| `external_audit_research_report_20260721_v10/report_figures/fig_data_k1_lowell_tensor_conditioning.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
+| `external_audit_research_report_20260721_v10/report_figures/fig_data_k1_maxscan_waterfall.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
+| `external_audit_research_report_20260721_v10/report_figures/fig_data_k1_scalar_biposh_map_stability.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
+| `external_audit_research_report_20260721_v10/report_figures/fig_data_k6_cf4_wf_curl_shear_diagnostic.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
+| `external_audit_research_report_20260721_v10/report_figures/fig_data_planck_smica_masked_temperature.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
+| `external_audit_research_report_20260721_v10/report_figures/fig_data_planck_tt_binned_residual.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
 | `external_audit_research_report_20260721_v10/report_figures/fig_egs2_nt2a1_fisher_floor.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
 | `external_audit_research_report_20260721_v10/report_figures/fig_egs2_nt2b1_bracket.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
 | `external_audit_research_report_20260721_v10/report_figures/fig_egs3_a1_graded_rank.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
@@ -50,10 +70,14 @@ This is a propagation-control artifact. It does not remediate or validate a CF4 
 | `external_audit_research_report_20260721_v10/report_figures/fig_egs3_b3_vorticity.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
 | `external_audit_research_report_20260721_v10/report_figures/fig_egs3_c_deprojection.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
 | `external_audit_research_report_20260721_v10/report_figures/fig_egs3_d_biposh.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
+| `external_audit_research_report_20260721_v10/report_figures/fig_egs3_d_joint_forecast.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
 | `external_audit_research_report_20260721_v10/report_figures/fig_egs3_e_im_coverage.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
+| `external_audit_research_report_20260721_v10/report_figures/fig_egs3_e_refutability_power.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
+| `external_audit_research_report_20260721_v10/report_figures/fig_egs3_f_shear_memory_bias.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
 | `external_audit_research_report_20260721_v10/report_figures/fig_egs3_psd_cone.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
 | `external_audit_research_report_20260721_v10/report_figures/fig_egs3_u1_beta_channel.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
 | `external_audit_research_report_20260721_v10/report_figures/fig_egs3_u2_fingerprint_ceilings.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
+| `external_audit_research_report_20260721_v10/report_figures/fig_egs3_u4v9_teff_im_coverage.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
 | `external_audit_research_report_20260721_v10/report_figures/fig_v10_act_kappa.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
 | `external_audit_research_report_20260721_v10/report_figures/fig_v10_boost_biposh_features.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
 | `external_audit_research_report_20260721_v10/report_figures/fig_v10_cf4_depth.png` | `active_public_binary` | `active_public_binary` | `dynamic:git_head_exact_bytes` | `true` |
