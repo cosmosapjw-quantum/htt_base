@@ -1,0 +1,88 @@
+{
+ "forbidden_claims_reaffirmed": [
+  "the product box is a corollary, not the identified set, on a coupled F",
+  "a product endpoint is never reported sharp when the joint set is narrower",
+  "the certified exact optimizer is the authority; HiGHS is a cross-check"
+ ],
+ "metadata": {
+  "claim_level": {
+   "level": "C1",
+   "scheme": "roadmap_rescue_v1"
+  },
+  "generating_command": "env PYTHONHASHSEED=0 venv/bin/python -B scripts/codex_harness/run_pr189_joint.py --write",
+  "independence_gate": "OPEN",
+  "owner": "HTT",
+  "public_use": false,
+  "readiness_state": "EVIDENCE_READY",
+  "spec_sha256": "922e688f58df291ea7a6bc170c0511ba0798173bb688c4c988c7a5be90bc9626"
+ },
+ "pr_id": "PR-189",
+ "result": {
+  "cas_status": {
+   "aggregate": "CAS_5AXIS_PASS",
+   "axis_statuses": {
+    "lean": "PASS",
+    "rocq": "PASS",
+    "sage_singular": "PASS",
+    "sympy": "PASS",
+    "wolfram_xact": "PASS"
+   },
+   "contract": "docs/generated/pr189_cas/CAS_CONTRACT_PR189_JOINT.json",
+   "contract_hash_matches_adjudication": true,
+   "contract_sha256": "65d9e28d406e8ce8ff778cd76417a4889fb84f416070962b8aa363199004e8ee",
+   "kernel_independent_lineages": [
+    "lean",
+    "rocq"
+   ],
+   "required_axes": [
+    "wolfram_xact",
+    "sympy",
+    "sage_singular",
+    "lean",
+    "rocq"
+   ]
+  },
+  "coupled_fixture": {
+   "highs_cross_check_agrees": true,
+   "highs_interval": [
+    0.0,
+    1.0
+   ],
+   "joint_equals_product": false,
+   "joint_interval": [
+    "0",
+    "1"
+   ],
+   "joint_subset_of_product": true,
+   "n_vertices": 7,
+   "product_interval": [
+    "0",
+    "2"
+   ],
+   "strict_narrower": true
+  },
+  "empty_system_classified": true,
+  "factorized_fixture": {
+   "highs_cross_check_agrees": true,
+   "highs_interval": [
+    0.0,
+    2.0
+   ],
+   "joint_equals_product": true,
+   "joint_interval": [
+    "0",
+    "2"
+   ],
+   "joint_subset_of_product": true,
+   "n_vertices": 4,
+   "product_interval": [
+    "0",
+    "2"
+   ],
+   "strict_narrower": false
+  },
+  "random_witnesses_inside_certified_interval": true
+ },
+ "schema": "htt.pr189.result_card.v1",
+ "terminal": "JOINT_IDENTIFIED_SET_CERTIFIED_CAS_5AXIS_PASS"
+}
