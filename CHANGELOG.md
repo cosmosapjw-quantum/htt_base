@@ -7,6 +7,56 @@
 
 ## [Unreleased]
 
+### Strengthening Wave 28 complete + math/stats spine + CAS Rocq axis (rev-r253, 2026-07-21)
+
+Continued the post-v10 strengthening push: **all 7 PR-151-parallel
+scheduled cards now COMPLETED_SUCCESS** (DAG 121/155). Each reaches
+EVIDENCE_READY with the six-gate Independence gate explicitly OPEN
+(non-author adjudication / external replication spend-limited);
+publication_use false throughout.
+
+**CAS policy repair (ADJ-CAS-ROCQ-AXIS-001).** After the owner flagged
+PR-186's CAS_BLOCKED as a shortcut (only sympy was run), `cas_gate.py`
+was repaired: **Rocq (Coq 9.0) joins Lean as a second
+kernel-independent proof-assistant lineage** — the genuine H19 answer —
+and the gate became contract-driven (required_axes from the contract,
+CAS_{N}AXIS_PASS, no majority vote, backward-compatible: 4-axis
+contracts still pass, 29 harness/lineage tests green). The eight
+strengthening R3-CAS cards carry the five-axis v3 contract.
+
+**Wave 28 (control plane / convention / reproducibility).** PR-185
+dual-axis SSoT; **PR-186 W² fix re-run to CAS_5AXIS_PASS** (Wolfram+xAct
+/ SymPy / Sage+Singular / Lean / Rocq); **PR-187 frame/type algebra**
+(frame-tagged components, S+³×R signed carrier, boost-order type system
+refusing the Ω_tilt² O(β⁴) subtraction vs the O(β²) quadrupole, explicit
+pair density; round-trip residual 0; 50/50 mutations rejected;
+CAS_5AXIS_PASS); **PR-188 hermetic reproduce** (data-free artifact set
+byte-stable + private-path-free; 16/16 load-bearing source mutations
+flip the target --check; checksum data-root recipe BLOCKs on missing
+data; the two sealed /mnt-hard-coding data modules surfaced as a
+migration backlog, not edited) + **CP-188** checkpoint.
+
+**Math/stats spine.** **PR-189 joint feasible-set support theorem**
+(I_C exact interval; coupled fixture joint [0,1] STRICTLY inside product
+[0,2] via exact-rational vertex enumeration == HiGHS; factorized
+joint=product; empty classified; CAS_5AXIS_PASS with Lean+Rocq on the
+strict containment); **PR-197 cluster-exchangeable rank** (H11: exact
+small-N enumeration + cluster-safe split; naive reused-cluster label
+refused); **PR-200 partial-ID coverage** (H14: the honest 0.913 is a
+point-CI failure — the Imbens-Manski set restores ≥0.94 boundary
+coverage across regimes; the midpoint Gaussian CI undercovers to 0.0).
+
+**PR-192 preflight only** (registered-not-scheduled): OMK all-order
+recurrence core verified (κ=-2/(3w+5), c2 exact-match, c3 recurrence);
+the PR-191-Gauss binding, non-LRS classification, five-axis CAS, and
+remainder certification stay BLOCKED until PR-191 is scheduled.
+
+Roadmap §10.2 satisfied: PR-186 (W²) + PR-187 (frame/type) passed, so
+comparator numbers may now be re-authorized. PR-151 monitored
+throughout (probes before/after each card; 360/1000 EZmock, running,
+undisturbed). No claim state changed: 102 OPEN / 0 RESCUED; both CF4
+P0s OPEN.
+
 ### Post-v10 strengthening wave intake + PR-185/186 (rev-r252, 2026-07-21)
 
 External-audit response. The hostile-referee package
