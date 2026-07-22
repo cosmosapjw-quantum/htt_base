@@ -13,7 +13,9 @@ if str(HARNESS_SCRIPTS) not in sys.path:
     sys.path.insert(0, str(HARNESS_SCRIPTS))
 
 from _harness import (  # noqa: E402
+    ActiveRunError,
     RESULT_STATUSES,
+    active_run_id,
     declared_result_path,
     is_safe_identifier,
     validate_assignment_payload,
@@ -34,10 +36,14 @@ def main() -> None:
     event = read_stdin_json()
     root = repo_root()
     harness = root / ".agent-harness"
-    active_path = harness / "ACTIVE_RUN"
 
     # Outside an explicitly active harness run, do not impose the result envelope.
-    if not active_path.exists() or not active_path.read_text(encoding="utf-8").strip():
+    try:
+        active_run = active_run_id(root, required=False)
+    except ActiveRunError as exc:
+        block(f"Invalid active-run state: {exc.error_code}: {exc.message}")
+        return
+    if active_run is None:
         return
 
     if bool(event.get("stop_hook_active")):
@@ -85,7 +91,6 @@ def main() -> None:
         )
         return
 
-    active_run = active_path.read_text(encoding="utf-8").strip()
     assignment_id = str(envelope["assignment_id"])
     if not is_safe_identifier(active_run) or not is_safe_identifier(assignment_id):
         block("Active run or assignment_id is unsafe.")

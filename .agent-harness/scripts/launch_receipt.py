@@ -18,7 +18,7 @@ import json
 import sys
 
 from _harness import (
-    active_run_id,
+    cli_active_run_id,
     compute_effective_context_sha256,
     dump_json,
     is_safe_identifier,
@@ -49,7 +49,8 @@ def _role_file_hashes(repo, index, agent_type: str) -> list[tuple[str, str]]:
 def cmd_create(args) -> int:
     repo = root()
     harness = repo / ".agent-harness"
-    run_id = active_run_id(repo)
+    run_id = cli_active_run_id(repo)
+    assert run_id is not None
     if not is_safe_identifier(args.assignment_id):
         raise SystemExit("assignment-id must be a safe identifier")
     assignment_path = (
@@ -96,7 +97,8 @@ def cmd_create(args) -> int:
 def cmd_verify(args) -> int:
     repo = root()
     harness = repo / ".agent-harness"
-    run_id = active_run_id(repo)
+    run_id = cli_active_run_id(repo)
+    assert run_id is not None
     path = _receipt_path(harness, run_id, args.assignment_id)
     if not path.is_file():
         print(

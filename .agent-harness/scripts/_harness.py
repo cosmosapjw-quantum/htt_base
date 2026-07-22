@@ -14,6 +14,26 @@ RESULT_STATUSES = {"pass", "fail", "inconclusive", "error"}
 RISK_TIERS = {"R0", "R1", "R2", "R3"}
 CAS_AXES = {"wolfram_xact", "sympy", "sage_singular", "lean"}
 RESULT_SIZE_CAP_BYTES = 64 * 1024
+ACTIVE_RUN_RELATIVE_PATH = Path(".agent-harness/runtime/ACTIVE_RUN")
+LEGACY_ACTIVE_RUN_RELATIVE_PATH = Path(".agent-harness/ACTIVE_RUN")
+
+
+class ActiveRunError(RuntimeError):
+    """Structured failure while resolving local run state."""
+
+    def __init__(
+        self,
+        error_code: str,
+        message: str,
+        **details: str,
+    ) -> None:
+        super().__init__(f"{error_code}: {message}")
+        self.error_code = error_code
+        self.message = message
+        self.details = details
+
+    def as_dict(self) -> dict[str, str]:
+        return {"code": self.error_code, "message": self.message, **self.details}
 
 
 def historical_run_ids(repo: Path) -> set[str]:
@@ -75,16 +95,167 @@ def hash_files(repo: Path, files: list[str]) -> tuple[str, list[tuple[str, str]]
     return digest.hexdigest(), entries
 
 
-def active_run_id(repo: Path) -> str:
-    path = repo / ".agent-harness" / "ACTIVE_RUN"
-    if not path.exists():
-        raise SystemExit("No active run. Use init_run.py first.")
-    run_id = path.read_text(encoding="utf-8").strip()
-    if not run_id:
-        raise SystemExit("ACTIVE_RUN is empty.")
+def active_run_pointer_paths(repo: Path) -> tuple[Path, Path]:
+    """Return the local runtime pointer and the pre-MA-01 compatibility path."""
+
+    return (
+        repo / ACTIVE_RUN_RELATIVE_PATH,
+        repo / LEGACY_ACTIVE_RUN_RELATIVE_PATH,
+    )
+
+
+def _relative_pointer(repo: Path, path: Path) -> str:
+    return path.relative_to(repo).as_posix()
+
+
+def _read_active_run_pointer(repo: Path, path: Path) -> str:
+    pointer = _relative_pointer(repo, path)
+    if path.is_symlink() or not path.is_file():
+        raise ActiveRunError(
+            "INVALID_ACTIVE_RUN_POINTER",
+            "The active-run pointer must be a readable regular file containing a safe identifier.",
+            pointer=pointer,
+        )
+    try:
+        run_id = path.read_text(encoding="utf-8").strip()
+    except (OSError, UnicodeError) as exc:
+        raise ActiveRunError(
+            "INVALID_ACTIVE_RUN_POINTER",
+            f"Cannot read the active-run pointer: {exc}",
+            pointer=pointer,
+        ) from exc
     if not is_safe_identifier(run_id):
-        raise SystemExit(f"ACTIVE_RUN contains an unsafe run identifier: {run_id!r}")
+        raise ActiveRunError(
+            "INVALID_ACTIVE_RUN_POINTER",
+            "The active-run pointer is empty or contains an unsafe identifier.",
+            pointer=pointer,
+        )
     return run_id
+
+
+def active_run_id(
+    repo: Path,
+    *,
+    required: bool = True,
+) -> str | None:
+    """Resolve active local run state without mistaking a dangling pointer for none.
+
+    The runtime pointer is deliberately untracked.  The legacy root pointer is
+    read only as an upgrade bridge; a clean clone contains neither.  Invalid or
+    conflicting state is always an explicit error, including when ``required``
+    is false.
+    """
+
+    candidates = [path for path in active_run_pointer_paths(repo) if path.exists()]
+    if not candidates:
+        if required:
+            raise ActiveRunError(
+                "NO_ACTIVE_RUN",
+                "No active run. Use init_run.py first.",
+            )
+        return None
+
+    values = [(path, _read_active_run_pointer(repo, path)) for path in candidates]
+
+    distinct = {value for _, value in values}
+    if len(distinct) != 1:
+        detail = ", ".join(
+            f"{_relative_pointer(repo, path)}={value!r}" for path, value in values
+        )
+        raise ActiveRunError(
+            "CONFLICTING_ACTIVE_RUN_POINTERS",
+            f"Runtime and legacy active-run pointers disagree: {detail}",
+        )
+
+    run_id = values[0][1]
+    run_dir = repo / ".agent-harness" / "runs" / run_id
+    plan_path = run_dir / "RUN_PLAN.json"
+    pointer = _relative_pointer(repo, values[0][0])
+    plan = None
+    if (
+        not run_dir.is_symlink()
+        and run_dir.is_dir()
+        and not plan_path.is_symlink()
+        and plan_path.is_file()
+    ):
+        try:
+            plan = load_json(plan_path)
+        except (OSError, json.JSONDecodeError):
+            pass
+    if not isinstance(plan, Mapping) or plan.get("run_id") != run_id:
+        raise ActiveRunError(
+            "DANGLING_ACTIVE_RUN",
+            "The active-run pointer has no valid matching RUN_PLAN.json target.",
+            pointer=pointer,
+            run_id=run_id,
+        )
+    return run_id
+
+
+def cli_active_run_id(
+    repo: Path,
+    *,
+    required: bool = True,
+) -> str | None:
+    """Resolve active state for a CLI without leaking a Python traceback."""
+
+    try:
+        return active_run_id(repo, required=required)
+    except ActiveRunError as exc:
+        raise SystemExit(str(exc)) from None
+
+
+def write_active_run_id(repo: Path, run_id: str) -> Path:
+    """Atomically publish a local-only active-run pointer."""
+
+    if not is_safe_identifier(run_id):
+        raise ActiveRunError(
+            "INVALID_ACTIVE_RUN_POINTER",
+            f"Refusing to write an unsafe active-run identifier: {run_id!r}",
+            run_id=run_id,
+        )
+    path = repo / ACTIVE_RUN_RELATIVE_PATH
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_name(path.name + ".tmp")
+    temporary.write_text(run_id + "\n", encoding="utf-8")
+    temporary.replace(path)
+    return path
+
+
+def clear_active_run_pointers(
+    repo: Path,
+    *,
+    expected_run_id: str | None = None,
+) -> list[str]:
+    """Remove only local pointer files; run directories and evidence remain."""
+
+    targets: list[tuple[Path, str]] = []
+    for path in active_run_pointer_paths(repo):
+        if not path.exists():
+            continue
+        pointer = _relative_pointer(repo, path)
+        if expected_run_id is not None:
+            actual = _read_active_run_pointer(repo, path)
+            if actual != expected_run_id:
+                raise ActiveRunError(
+                    "CONFLICTING_ACTIVE_RUN_POINTERS",
+                    "The active-run pointer changed while the run was closing.",
+                    pointer=pointer,
+                    run_id=actual,
+                )
+        elif path.is_symlink() or not path.is_file():
+            raise ActiveRunError(
+                "INVALID_ACTIVE_RUN_POINTER",
+                "Refusing to remove a non-regular active-run pointer.",
+                pointer=pointer,
+            )
+        targets.append((path, pointer))
+
+    cleared: list[str] = []
+    for path, pointer in targets:
+        path.unlink()
+        cleared.append(pointer)
+    return cleared
 
 
 def is_safe_identifier(value: object) -> bool:

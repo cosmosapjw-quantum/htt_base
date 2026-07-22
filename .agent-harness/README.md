@@ -28,6 +28,9 @@ This harness does not make separate subagents share a hidden model state or free
 - The spawn budget is cumulative per `work_unit_id` (normally the PR id),
   not per run — creating a new run does not reset it.
 - Run directories are not committed; see `runs/RETENTION.md`.
+- The active-run pointer lives at ignored local path
+  `.agent-harness/runtime/ACTIVE_RUN`; a clean clone intentionally has no
+  active run.
 
 ## Start a run
 
@@ -82,8 +85,14 @@ Execute only the registered assignment. The SubagentStart hook injects the canon
 ```bash
 python3 .agent-harness/scripts/merge_results.py
 python3 .agent-harness/scripts/validate_harness.py
-python3 .agent-harness/scripts/run_summary.py --run-id <RUN_ID>
+python3 .agent-harness/scripts/close_run.py --run-id <RUN_ID>
 ```
+
+Normal close validates the run, writes `RUN_SUMMARY.json`, and clears only
+the local pointer. It never deletes the run directory. If a pointer is
+invalid or dangling, inspect it first; explicit recovery is
+`python3 .agent-harness/scripts/close_run.py --abandon`, which also leaves all
+run data untouched.
 
 The adjudicator should consume `MERGED_RESULTS.json` plus only the disputed
 evidence needed for a targeted decision. Opposite verdicts on the same

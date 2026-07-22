@@ -166,7 +166,10 @@ def test_shared_context_harness_and_stop_hook_fail_closed(tmp_path: Path) -> Non
 
     harness = tmp_path / ".agent-harness"
     (harness / "context").mkdir(parents=True)
-    (harness / "ACTIVE_RUN").write_text("test-run\n", encoding="utf-8")
+    (harness / "runtime").mkdir(parents=True)
+    (harness / "runtime" / "ACTIVE_RUN").write_text(
+        "test-run\n", encoding="utf-8"
+    )
     (harness / "context/CONTEXT_INDEX.json").write_text(
         json.dumps({"context_version": "test-version"}) + "\n",
         encoding="utf-8",
@@ -189,6 +192,9 @@ def test_shared_context_harness_and_stop_hook_fail_closed(tmp_path: Path) -> Non
     }
     assignment_path = harness / "runs/test-run/assignments/A-001.json"
     assignment_path.parent.mkdir(parents=True)
+    (harness / "runs/test-run/RUN_PLAN.json").write_text(
+        json.dumps({"run_id": "test-run"}) + "\n", encoding="utf-8"
+    )
     assignment_path.write_text(json.dumps(assignment) + "\n", encoding="utf-8")
     blocked = subprocess.run(
         [sys.executable, str(REPO_ROOT / ".codex/hooks/subagent_stop_validate.py")],
@@ -414,13 +420,15 @@ def test_profile_registry_rejects_duplicates_and_matches_disk() -> None:
             module.load_profile_registry(Path(tmp))
 
 
-def test_gitignore_allows_versioned_codex_assets_and_harness_config() -> None:
+def test_gitignore_separates_versioned_codex_assets_from_runtime_state() -> None:
     checks = [
         (["git", "check-ignore", "-q", ".codex/agents/code-cartographer.toml"], 1),
         (["git", "check-ignore", "-q", ".codex/rules/default.rules"], 1),
         (["git", "check-ignore", "-q", ".codex/config.toml"], 1),
         (["git", "check-ignore", "-q", ".codex/hooks.json"], 1),
         (["git", "check-ignore", "-q", ".codex/hooks/session_start_context.py"], 1),
+        (["git", "check-ignore", "-q", ".agent-harness/runtime/ACTIVE_RUN"], 0),
+        (["git", "check-ignore", "-q", ".agent-harness/ACTIVE_RUN"], 0),
     ]
     for command, expected_returncode in checks:
         completed = subprocess.run(
@@ -435,6 +443,15 @@ def test_gitignore_allows_versioned_codex_assets_and_harness_config() -> None:
             completed.stdout,
             completed.stderr,
         )
+
+    tracked_pointer = subprocess.run(
+        ["git", "ls-files", "--error-unmatch", ".agent-harness/ACTIVE_RUN"],
+        cwd=REPO_ROOT,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    assert tracked_pointer.returncode == 1, tracked_pointer.stdout
 
 
 def test_execpolicy_rules_load_and_match_pr_card_commands() -> None:
@@ -619,6 +636,7 @@ def test_installer_copies_repo_scoped_assets_with_project_harness_config(
     assert not (target / "docs/codex_handoff/PR_DELTAS").exists()
     assert not (target / "docs/codex_handoff/generated").exists()
     assert not (target / ".agent-harness/ACTIVE_RUN").exists()
+    assert not (target / ".agent-harness/runtime/ACTIVE_RUN").exists()
     assert not (target / ".agent-harness/runs").exists()
 
     installed_skills = subprocess.run(
