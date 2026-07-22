@@ -17,6 +17,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+import pytest
+
 REPO_ROOT = Path(__file__).resolve().parents[2]
 SCRIPTS = REPO_ROOT / ".agent-harness" / "scripts"
 HOOKS = REPO_ROOT / ".codex" / "hooks"
@@ -83,6 +85,17 @@ def _init_tmp_repo(
     (repo / ".agent-harness" / "context" / "CONTEXT_INDEX.json").write_text(
         json.dumps(index, indent=2) + "\n", encoding="utf-8"
     )
+    (repo / ".agent-harness" / "context" / "CLAIM_REGISTRY.jsonl").write_text(
+        json.dumps(
+            {
+                "claim_id": "C-001",
+                "statement": "Disposable harness test claim.",
+                "status": "test_only",
+            }
+        )
+        + "\n",
+        encoding="utf-8",
+    )
     (repo / ".agent-harness" / "generated" / "CONTEXT_PACK.md").write_text(
         "# Canonical Shared Context Pack\ncontent\n", encoding="utf-8"
     )
@@ -99,7 +112,7 @@ def _init_tmp_repo(
         "schema_version": 1,
         "run_id": "run-1",
         "work_unit_id": "PR-TEST",
-        "context_version": CONTEXT_VERSION,
+        "context_version": context_version,
         "budget": {
             "max_concurrent": 4,
             "max_total": 8,
@@ -194,7 +207,12 @@ def test_clean_clone_init_validate_close_and_dangling_recovery(
     assert not active_pointer.exists()
 
 
-def _register_assignment(repo: Path, assignment_id: str = "A-001") -> Path:
+def _register_assignment(
+    repo: Path,
+    assignment_id: str = "A-001",
+    *,
+    live_input: bool = False,
+) -> Path:
     completed = _run(
         [
             sys.executable,
@@ -204,7 +222,7 @@ def _register_assignment(repo: Path, assignment_id: str = "A-001") -> Path:
             "--task", "bounded test task",
             "--risk-tier", "R1",
             "--claim-id", "C-001",
-            "--required-input", "input.txt",
+            "--live-input" if live_input else "--required-input", "input.txt",
             "--allowed-tool", "read",
             "--required-output", "result envelope",
         ],
@@ -261,7 +279,7 @@ def test_stale_effective_context_blocks_launch(tmp_path: Path) -> None:
     assignment_path.write_text(original, encoding="utf-8")
     assert _verify(repo).returncode == 0
 
-    # (b) required input bytes drift after sealing
+    # (b) explicitly exact input bytes drift after sealing
     (repo / "input.txt").write_text("input-v2 DRIFTED\n", encoding="utf-8")
     assert _verify(repo).returncode == 2
     (repo / "input.txt").write_text("input-v1\n", encoding="utf-8")
@@ -354,24 +372,107 @@ def test_profile_receipt_mismatch_fails_and_absence_downgrades_to_generic(
 
 
 def _write_result(repo: Path, assignment_id: str, extra: dict) -> Path:
+    assignment_path = (
+        repo
+        / ".agent-harness"
+        / "runs"
+        / "run-1"
+        / "assignments"
+        / f"{assignment_id}.json"
+    )
+    assignment = json.loads(assignment_path.read_text(encoding="utf-8"))
+    launch_path = (
+        repo
+        / ".agent-harness"
+        / "runs"
+        / "run-1"
+        / "launches"
+        / f"{assignment_id}.json"
+    )
+    launch = (
+        json.loads(launch_path.read_text(encoding="utf-8"))
+        if launch_path.is_file()
+        else None
+    )
     result = {
-        "schema_version": 1,
+        "schema_version": 2,
         "run_id": "run-1",
         "assignment_id": assignment_id,
-        "context_version": CONTEXT_VERSION,
+        "context_version": assignment["context_version"],
         "agent_type": "context_mapper",
+        "independence_mode": "shared-core",
         "status": "pass",
+        "result_path": f".agent-harness/runs/run-1/results/{assignment_id}.json",
+        "assignment_sha256": assignment["assignment_sha256"],
+        "launch_id": launch.get("launch_id") if launch else None,
+        "launch_evidence": "self_declared" if launch else "unverified",
+        "execution_evidence": "self_declared",
+        "files_read": ["input.txt"],
+        "files_read_evidence": "self_declared",
+        "started_at": "2026-07-23T00:00:00+00:00",
+        "completed_at": "2026-07-23T00:00:01+00:00",
+        "tool_versions": {"python": sys.version.split()[0]},
+        "commands": [],
+        "artifacts": [],
         "findings": [
             {
                 "finding_id": "F-001",
                 "claim_id": "C-001",
                 "verdict": "pass",
-                "evidence_fingerprint": "sha256:" + "1" * 64,
+                "severity": "low",
+                "statement": "Disposable harness finding.",
+                "assumptions_used": [],
+                "evidence_refs": ["input.txt"],
+                "evidence_fingerprint": "fixture:input.txt@v1",
+                "counterevidence_refs": [],
+                "reproduction": [],
+                "confidence": 1.0,
+                "unresolved": [],
             }
         ],
+        "claim_results": [],
         "errors": [],
     }
     result.update(extra)
+    for finding in result.get("findings", []):
+        if not isinstance(finding, dict):
+            continue
+        finding.setdefault("severity", "high")
+        finding.setdefault("statement", "Disposable harness finding.")
+        finding.setdefault("assumptions_used", [])
+        finding.setdefault("evidence_refs", ["input.txt"])
+        finding.setdefault("counterevidence_refs", [])
+        finding.setdefault("reproduction", [])
+        finding.setdefault("confidence", 1.0)
+        finding.setdefault("unresolved", [])
+    if "status" not in extra and any(
+        isinstance(finding, dict) and finding.get("verdict") == "fail"
+        for finding in result.get("findings", [])
+    ):
+        result["status"] = "fail"
+    if "claim_results" not in extra:
+        finding_ids = [
+            finding["finding_id"]
+            for finding in result.get("findings", [])
+            if isinstance(finding, dict) and finding.get("claim_id") == "C-001"
+        ]
+        result["claim_results"] = [
+            {
+                "claim_id": "C-001",
+                "outcome": (
+                    "findings_present" if finding_ids else "examined_no_findings"
+                ),
+                "finding_ids": finding_ids,
+                "summary": "Disposable terminal claim disposition.",
+                **(
+                    {}
+                    if finding_ids
+                    else {
+                        "evidence_refs": ["input.txt"],
+                    }
+                ),
+            }
+        ]
     path = (
         repo / ".agent-harness" / "runs" / "run-1" / "results" / f"{assignment_id}.json"
     )
@@ -388,6 +489,49 @@ def _stop_hook(repo: Path, envelope: dict, trailing: str = ""):
             {"last_assistant_message": f"work done\n{marker}{trailing}"}
         ),
     )
+
+
+def _result_envelope(
+    assignment_id: str = "A-001",
+    status: str = "pass",
+    context_version: str = CONTEXT_VERSION,
+) -> dict:
+    return {
+        "assignment_id": assignment_id,
+        "context_version": context_version,
+        "status": status,
+        "result_path": (
+            f".agent-harness/runs/run-1/results/{assignment_id}.json"
+        ),
+    }
+
+
+def _reseal_assignment(path: Path, mutate) -> dict:
+    assignment = json.loads(path.read_text(encoding="utf-8"))
+    mutate(assignment)
+    assignment.pop("assignment_sha256", None)
+    assignment["assignment_sha256"] = hashlib.sha256(
+        json.dumps(assignment, sort_keys=True, ensure_ascii=False).encode("utf-8")
+    ).hexdigest()
+    path.write_text(json.dumps(assignment) + "\n", encoding="utf-8")
+    return assignment
+
+
+def _run_result_consumer(repo: Path, consumer: str, envelope: dict):
+    if consumer == "stop_hook":
+        completed = _stop_hook(repo, envelope)
+        return completed, completed.stdout + completed.stderr
+    if consumer == "merge":
+        completed = _harness_cli(repo, "merge_results.py")
+        merged = (
+            repo / ".agent-harness" / "runs" / "run-1" / "MERGED_RESULTS.json"
+        )
+        output = completed.stdout + completed.stderr
+        if merged.is_file():
+            output += merged.read_text(encoding="utf-8")
+        return completed, output
+    completed = _harness_cli(repo, "validate_harness.py")
+    return completed, completed.stdout + completed.stderr
 
 
 # --- 4 -----------------------------------------------------------------
@@ -407,7 +551,13 @@ def test_blind_assignment_sibling_read_and_undeclared_scan_blocked(
     completed = _stop_hook(repo, envelope)
     payload = json.loads(completed.stdout)
     assert payload["decision"] == "block"
-    assert "Blind-results violation" in payload["reason"]
+    assert "blind-results violation" in payload["reason"]
+
+    _write_result(repo, "A-001", {"files_read": ["input.txt", f"./{sibling}"]})
+    completed = _stop_hook(repo, envelope)
+    payload = json.loads(completed.stdout)
+    assert payload["decision"] == "block"
+    assert "not canonical repository-relative" in payload["reason"]
 
     # The same read is accepted once explicitly allowed by the assignment.
     assignment_path = (
@@ -415,7 +565,12 @@ def test_blind_assignment_sibling_read_and_undeclared_scan_blocked(
     )
     assignment = json.loads(assignment_path.read_text(encoding="utf-8"))
     assignment["allowed_sibling_results"] = [sibling]
+    assignment.pop("assignment_sha256")
+    assignment["assignment_sha256"] = hashlib.sha256(
+        json.dumps(assignment, sort_keys=True, ensure_ascii=False).encode("utf-8")
+    ).hexdigest()
     assignment_path.write_text(json.dumps(assignment) + "\n", encoding="utf-8")
+    _write_result(repo, "A-001", {"files_read": ["input.txt", sibling]})
     completed = _stop_hook(repo, envelope)
     assert completed.stdout.strip() == "", completed.stdout
 
@@ -452,7 +607,7 @@ def test_hook_injected_context_reread_is_duplicate_delivery(tmp_path: Path) -> N
     completed = _stop_hook(repo, envelope)
     payload = json.loads(completed.stdout)
     assert payload["decision"] == "block"
-    assert "Duplicate-delivery violation" in payload["reason"]
+    assert "duplicate-delivery violation" in payload["reason"]
 
 
 # --- 6 -----------------------------------------------------------------
@@ -492,7 +647,7 @@ def test_dedup_same_tuple_different_refs_merges_and_unions_refs(
     repo = _init_tmp_repo(tmp_path)
     for aid in ("A-001", "A-002"):
         _register_assignment(repo, aid)
-    fingerprint = "sha256:" + "2" * 64
+    fingerprint = "doi:10.0000/example#disposable-finding"
     for aid, refs in (("A-001", ["ref/a.py:1"]), ("A-002", ["ref/b.py:9"])):
         _write_result(
             repo,
@@ -503,6 +658,11 @@ def test_dedup_same_tuple_different_refs_merges_and_unions_refs(
                         "finding_id": f"F-{aid}",
                         "claim_id": "C-001",
                         "verdict": "fail",
+                        "statement": (
+                            "The disposable finding is present."
+                            if aid == "A-001"
+                            else "This is a paraphrase of the disposable finding."
+                        ),
                         "evidence_fingerprint": fingerprint,
                         "evidence_refs": refs,
                     }
@@ -522,6 +682,33 @@ def test_dedup_same_tuple_different_refs_merges_and_unions_refs(
     assert row["evidence_refs"] == ["ref/a.py:1", "ref/b.py:9"]
     assert row["duplicate_count"] == 2
 
+    # A different scoped identity preserves a distinct proposition and avoids
+    # a false conflict even when its verdict differs.
+    _write_result(
+        repo,
+        "A-002",
+        {
+            "findings": [
+                {
+                    "finding_id": "F-DISTINCT",
+                    "claim_id": "C-001",
+                    "verdict": "pass",
+                    "statement": "A distinct finding about the same source.",
+                    "evidence_fingerprint": "doi:10.0000/example#other-finding",
+                    "evidence_refs": ["ref/b.py:9"],
+                }
+            ]
+        },
+    )
+    completed = _run([sys.executable, _script("merge_results.py")], cwd=repo)
+    assert completed.returncode == 0, completed.stdout + completed.stderr
+    merged = json.loads(
+        (
+            repo / ".agent-harness" / "runs" / "run-1" / "MERGED_RESULTS.json"
+        ).read_text(encoding="utf-8")
+    )
+    assert merged["unique_finding_count"] == 2
+
     # Opposite verdicts on the same evidence auto-conflict (no majority).
     _write_result(
         repo,
@@ -532,6 +719,7 @@ def test_dedup_same_tuple_different_refs_merges_and_unions_refs(
                     "finding_id": "F-OPP",
                     "claim_id": "C-001",
                     "verdict": "pass",
+                    "statement": "The disposable claim does not fail.",
                     "evidence_fingerprint": fingerprint,
                 }
             ]
@@ -545,6 +733,72 @@ def test_dedup_same_tuple_different_refs_merges_and_unions_refs(
         ).read_text(encoding="utf-8")
     )
     assert merged["conflicts"], "opposite verdicts must populate conflicts"
+    assert len(merged["conflicts"][0]["statements"]) == 2
+
+
+def test_finding_ledger_does_not_treat_paraphrase_as_new_work(
+    tmp_path: Path,
+) -> None:
+    repo = _init_tmp_repo(tmp_path)
+    _register_assignment(repo)
+    fingerprint = "doi:10.0000/example#bound-x"
+    _write_result(
+        repo,
+        "A-001",
+        {
+            "findings": [
+                {
+                    "finding_id": "F-ORIGINAL",
+                    "claim_id": "C-001",
+                    "verdict": "fail",
+                    "statement": "The estimator violates bound X.",
+                    "evidence_fingerprint": fingerprint,
+                }
+            ]
+        },
+    )
+    completed = _run([sys.executable, _script("merge_results.py")], cwd=repo)
+    assert completed.returncode == 0, completed.stdout + completed.stderr
+    merged_rel = ".agent-harness/runs/run-1/MERGED_RESULTS.json"
+    completed = _run(
+        [
+            sys.executable,
+            _script("finding_ledger.py"),
+            "record",
+            "--merged",
+            merged_rel,
+            "--resolution-commit",
+            "a" * 40,
+        ],
+        cwd=repo,
+    )
+    assert completed.returncode == 0, completed.stdout + completed.stderr
+
+    result_path = repo / ".agent-harness" / "runs" / "run-1" / "results" / "A-001.json"
+    result = json.loads(result_path.read_text(encoding="utf-8"))
+    result["findings"][0]["statement"] = "Bound X is broken by the estimator."
+    result_path.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
+    completed = _run([sys.executable, _script("merge_results.py")], cwd=repo)
+    assert completed.returncode == 0, completed.stdout + completed.stderr
+    merged = json.loads((repo / merged_rel).read_text(encoding="utf-8"))
+    assert merged["findings"][0]["previously_resolved"]["resolution_commit"] == "a" * 40
+
+    completed = _run(
+        [
+            sys.executable,
+            _script("finding_ledger.py"),
+            "record",
+            "--merged",
+            merged_rel,
+            "--resolution-commit",
+            "b" * 40,
+        ],
+        cwd=repo,
+    )
+    assert completed.returncode == 0, completed.stdout + completed.stderr
+    assert "recorded 0 resolved findings" in completed.stdout
+    ledger = repo / ".agent-harness" / "ledger" / "FINDING_LEDGER.jsonl"
+    assert len(ledger.read_text(encoding="utf-8").splitlines()) == 1
 
 
 # --- 8 -----------------------------------------------------------------
@@ -861,3 +1115,496 @@ def test_context_rebuild_same_content_leaves_tracked_files_unchanged() -> None:
         if not line.startswith("??")
     ]
     assert dirty == [], f"context rebuild dirtied builder-owned files: {dirty}"
+
+
+# --- MA-03 strict result-validation kernel ----------------------------
+@pytest.mark.parametrize(
+    ("mutation", "needle"),
+    [
+        ("unsealed_change", "assignment_sha256 does not match"),
+        ("unknown_claim", "claim_id is not registered"),
+        ("foreign_run_claim", "claim_id is not registered"),
+        ("duplicate_claim", "claim_ids must be unique"),
+    ],
+)
+def test_ma03_assignment_seal_and_claim_registration_fail_closed(
+    tmp_path: Path,
+    mutation: str,
+    needle: str,
+) -> None:
+    repo = _init_tmp_repo(tmp_path)
+    assignment_path = _register_assignment(repo)
+    if mutation == "unsealed_change":
+        assignment = json.loads(assignment_path.read_text(encoding="utf-8"))
+        assignment["task"] = "changed after registration"
+        assignment_path.write_text(json.dumps(assignment) + "\n", encoding="utf-8")
+    elif mutation == "unknown_claim":
+        _reseal_assignment(
+            assignment_path,
+            lambda assignment: assignment.update(claim_ids=["C-UNKNOWN"]),
+        )
+    elif mutation == "foreign_run_claim":
+        _reseal_assignment(
+            assignment_path,
+            lambda assignment: assignment.update(claim_ids=["RUN-other-run-AUDIT"]),
+        )
+    else:
+        _reseal_assignment(
+            assignment_path,
+            lambda assignment: assignment.update(claim_ids=["C-001", "C-001"]),
+        )
+
+    completed = _harness_cli(repo, "validate_harness.py")
+    assert completed.returncode == 1
+    assert needle in completed.stdout + completed.stderr
+
+
+def test_ma03_result_remains_bound_to_the_original_assignment(tmp_path: Path) -> None:
+    empty_context_sha = hashlib.sha256(b"").hexdigest()
+    repo = _init_tmp_repo(tmp_path, context_version=empty_context_sha)
+    assignment_path = _register_assignment(repo)
+    _write_result(repo, "A-001", {})
+    _reseal_assignment(
+        assignment_path,
+        lambda assignment: assignment.update(task="changed after result"),
+    )
+
+    completed = _harness_cli(repo, "validate_harness.py")
+    assert completed.returncode == 1
+    assert "result assignment_sha256 does not match" in completed.stdout
+
+
+def test_ma03_assignment_inputs_must_stay_canonical_and_repo_relative(
+    tmp_path: Path,
+) -> None:
+    repo = _init_tmp_repo(tmp_path)
+    outside = tmp_path / "outside.txt"
+    outside.write_text("must not be registered\n", encoding="utf-8")
+    completed = _run(
+        [
+            sys.executable,
+            _script("new_assignment.py"),
+            "--assignment-id",
+            "A-ESCAPE",
+            "--agent-type",
+            "context_mapper",
+            "--task",
+            "bounded test task",
+            "--risk-tier",
+            "R1",
+            "--claim-id",
+            "C-001",
+            "--required-input",
+            "../outside.txt",
+            "--allowed-tool",
+            "read",
+            "--required-output",
+            "result envelope",
+        ],
+        cwd=repo,
+    )
+    assert completed.returncode != 0
+    assert "path must be canonical and repository-relative" in (
+        completed.stdout + completed.stderr
+    )
+
+
+def test_ma03_live_input_explicitly_downgrades_exact_replay(
+    tmp_path: Path,
+) -> None:
+    empty_context_sha = hashlib.sha256(b"").hexdigest()
+    repo = _init_tmp_repo(tmp_path, context_version=empty_context_sha)
+    assignment_path = _register_assignment(repo, live_input=True)
+    assignment = json.loads(assignment_path.read_text(encoding="utf-8"))
+    assert assignment["required_inputs"] == [{"path": "input.txt"}]
+
+    (repo / "input.txt").write_text("scientifically equivalent revision\n")
+    completed = _harness_cli(repo, "validate_harness.py")
+    assert completed.returncode == 0
+    assert "hash mismatch" not in completed.stdout + completed.stderr
+
+
+def test_ma03_run_local_question_does_not_inflate_claim_registry(
+    tmp_path: Path,
+) -> None:
+    repo = _init_tmp_repo(tmp_path)
+    completed = _run(
+        [
+            sys.executable,
+            _script("new_assignment.py"),
+            "--assignment-id",
+            "A-RUN-LOCAL",
+            "--agent-type",
+            "context_mapper",
+            "--task",
+            "bounded process review",
+            "--risk-tier",
+            "R1",
+            "--claim-id",
+            "RUN-run-1-MA03-EXACTNESS",
+            "--required-input",
+            "input.txt",
+            "--allowed-tool",
+            "read",
+            "--required-output",
+            "result envelope",
+        ],
+        cwd=repo,
+    )
+    assert completed.returncode == 0, completed.stdout + completed.stderr
+    registry = (
+        repo / ".agent-harness" / "context" / "CLAIM_REGISTRY.jsonl"
+    ).read_text(encoding="utf-8")
+    assert "RUN-run-1-MA03-EXACTNESS" not in registry
+
+
+def test_ma03_run_local_question_cannot_enter_cross_run_ledger(
+    tmp_path: Path,
+) -> None:
+    repo = _init_tmp_repo(tmp_path)
+    merged = repo / "run-local-merged.json"
+    merged.write_text(
+        json.dumps(
+            {
+                "findings": [
+                    {
+                        "claim_id": "RUN-run-1-MA03-EXACTNESS",
+                        "evidence_fingerprint": "scope:ma03-exactness",
+                        "verdict": "fail",
+                        "statement": "Run-local process finding.",
+                    }
+                ]
+            }
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    completed = _harness_cli(
+        repo,
+        "finding_ledger.py",
+        "record",
+        "--merged",
+        merged.name,
+        "--resolution-commit",
+        "deadbeef",
+    )
+    assert completed.returncode != 0
+    assert "cannot enter the cross-run finding ledger" in (
+        completed.stdout + completed.stderr
+    )
+    ledger = repo / ".agent-harness" / "ledger" / "FINDING_LEDGER.jsonl"
+    assert not ledger.exists() or "RUN-" not in ledger.read_text(encoding="utf-8")
+
+
+@pytest.mark.parametrize("consumer", ["stop_hook", "merge", "standalone"])
+def test_ma03_all_result_consumers_share_strict_rejection(
+    tmp_path: Path,
+    consumer: str,
+) -> None:
+    repo = _init_tmp_repo(tmp_path)
+    _register_assignment(repo)
+    _write_result(repo, "A-001", {"claim_results": []})
+
+    completed, output = _run_result_consumer(repo, consumer, _result_envelope())
+    if consumer == "stop_hook":
+        assert json.loads(completed.stdout)["decision"] == "block"
+    elif consumer == "merge":
+        assert completed.returncode != 0
+    else:
+        assert completed.returncode == 1
+
+    assert "claim_results must cover every assigned claim exactly once" in output
+
+
+@pytest.mark.parametrize("consumer", ["stop_hook", "merge", "standalone"])
+def test_ma03_all_result_consumers_reject_missing_finding_severity(
+    tmp_path: Path,
+    consumer: str,
+) -> None:
+    repo = _init_tmp_repo(tmp_path)
+    _register_assignment(repo)
+    result_path = _write_result(repo, "A-001", {})
+    result = json.loads(result_path.read_text(encoding="utf-8"))
+    result["findings"][0].pop("severity")
+    result_path.write_text(json.dumps(result) + "\n", encoding="utf-8")
+
+    completed, output = _run_result_consumer(repo, consumer, _result_envelope())
+    if consumer == "stop_hook":
+        assert json.loads(completed.stdout)["decision"] == "block"
+    else:
+        assert completed.returncode != 0
+    assert "severity must be one of" in output
+
+
+@pytest.mark.parametrize("consumer", ["stop_hook", "merge", "standalone"])
+def test_ma03_artifacts_cannot_bypass_blind_sibling_isolation(
+    tmp_path: Path,
+    consumer: str,
+) -> None:
+    repo = _init_tmp_repo(tmp_path)
+    _register_assignment(repo, "A-001")
+    _register_assignment(repo, "A-002")
+    sibling = _write_result(repo, "A-002", {})
+    sibling_ref = sibling.relative_to(repo).as_posix()
+    artifact = {
+        "path": sibling_ref,
+        "sha256": hashlib.sha256(sibling.read_bytes()).hexdigest(),
+        "bytes": sibling.stat().st_size,
+        "producer": "test",
+        "command_fingerprint": "sha256:" + "6" * 64,
+    }
+    _write_result(repo, "A-001", {"artifacts": [artifact]})
+
+    completed, output = _run_result_consumer(repo, consumer, _result_envelope())
+    if consumer == "stop_hook":
+        assert json.loads(completed.stdout)["decision"] == "block"
+    else:
+        assert completed.returncode != 0
+    assert "blind-results violation: unallowed sibling result" in output
+
+
+@pytest.mark.parametrize(
+    ("mutation", "needle"),
+    [
+        ("empty_claim_results", "cover every assigned claim exactly once"),
+        ("pass_with_errors", "pass result must not contain reported errors"),
+        ("pass_with_fail_finding", "pass result must not contain a fail finding"),
+        ("pass_with_inconclusive", "pass result must contain only pass findings"),
+        ("fail_without_fail_finding", "fail result must contain at least one"),
+        ("missing_fingerprint", "requires a bounded stable evidence_fingerprint"),
+        ("invalid_fingerprint", "requires a bounded stable evidence_fingerprint"),
+        ("unbound_no_findings", "evidence_refs must not be empty"),
+    ],
+)
+def test_ma03_incomplete_or_ambiguous_results_fail_closed(
+    tmp_path: Path,
+    mutation: str,
+    needle: str,
+) -> None:
+    repo = _init_tmp_repo(tmp_path)
+    _register_assignment(repo)
+    result_path = _write_result(repo, "A-001", {})
+    result = json.loads(result_path.read_text(encoding="utf-8"))
+    if mutation == "empty_claim_results":
+        result["claim_results"] = []
+    elif mutation == "pass_with_errors":
+        result["errors"] = ["self-reported execution error"]
+    elif mutation == "pass_with_fail_finding":
+        result["findings"][0]["verdict"] = "fail"
+    elif mutation == "pass_with_inconclusive":
+        result["findings"][0]["verdict"] = "inconclusive"
+    elif mutation == "fail_without_fail_finding":
+        result["status"] = "fail"
+    elif mutation == "unbound_no_findings":
+        result["findings"] = []
+        result["claim_results"] = [
+            {
+                "claim_id": "C-001",
+                "outcome": "examined_no_findings",
+                "finding_ids": [],
+                "summary": "Unbound no-findings assertion.",
+                "evidence_refs": [],
+            }
+        ]
+    elif mutation == "missing_fingerprint":
+        result["findings"][0].pop("evidence_fingerprint")
+    else:
+        result["findings"][0]["evidence_fingerprint"] = "invalid\nidentity"
+    result_path.write_text(json.dumps(result) + "\n", encoding="utf-8")
+
+    completed = _harness_cli(repo, "validate_harness.py")
+    assert completed.returncode == 1
+    assert needle in completed.stdout + completed.stderr
+
+
+def test_ma03_typed_no_findings_is_a_complete_positive_result(tmp_path: Path) -> None:
+    empty_context_sha = hashlib.sha256(b"").hexdigest()
+    repo = _init_tmp_repo(tmp_path, context_version=empty_context_sha)
+    _register_assignment(repo)
+    result_path = _write_result(repo, "A-001", {"findings": []})
+    result = json.loads(result_path.read_text(encoding="utf-8"))
+    assert result["claim_results"] == [
+        {
+            "claim_id": "C-001",
+            "outcome": "examined_no_findings",
+            "finding_ids": [],
+            "summary": "Disposable terminal claim disposition.",
+            "evidence_refs": ["input.txt"],
+        }
+    ]
+    assert (
+        _stop_hook(
+            repo, _result_envelope(context_version=empty_context_sha)
+        ).stdout.strip()
+        == ""
+    )
+    assert _harness_cli(repo, "validate_harness.py").returncode == 0
+    assert _harness_cli(repo, "merge_results.py").returncode == 0
+    merged = json.loads(
+        (
+            repo / ".agent-harness" / "runs" / "run-1" / "MERGED_RESULTS.json"
+        ).read_text(encoding="utf-8")
+    )
+    assert merged["process_status"] == "STRUCTURALLY_VALID"
+    assert merged["claim_gate_status"] == "NOT_EVALUATED"
+
+
+@pytest.mark.parametrize(
+    ("mutation", "needle"),
+    [
+        ("hash", "sha256 does not match artifact bytes"),
+        ("size", "bytes does not match artifact size"),
+        ("command", "command_fingerprint must be a bounded stable identity"),
+        ("escape", "must stay inside the repository"),
+    ],
+)
+def test_ma03_artifact_references_are_content_verified(
+    tmp_path: Path,
+    mutation: str,
+    needle: str,
+) -> None:
+    repo = _init_tmp_repo(tmp_path)
+    _register_assignment(repo)
+    artifact = repo / "artifact.bin"
+    artifact.write_bytes(b"verified artifact\n")
+    reference = {
+        "path": "artifact.bin",
+        "sha256": hashlib.sha256(artifact.read_bytes()).hexdigest(),
+        "bytes": artifact.stat().st_size,
+        "producer": "test",
+    }
+    if mutation == "hash":
+        reference["sha256"] = "0" * 64
+    elif mutation == "size":
+        reference["bytes"] += 1
+    elif mutation == "command":
+        reference["command_fingerprint"] = "invalid\nidentity"
+    else:
+        reference["path"] = "../outside.bin"
+    _write_result(repo, "A-001", {"artifacts": [reference]})
+
+    completed = _harness_cli(repo, "validate_harness.py")
+    assert completed.returncode == 1
+    assert needle in completed.stdout + completed.stderr
+
+
+def test_ma03_artifact_command_identity_is_optional(tmp_path: Path) -> None:
+    empty_context_sha = hashlib.sha256(b"").hexdigest()
+    repo = _init_tmp_repo(tmp_path, context_version=empty_context_sha)
+    _register_assignment(repo)
+    artifact = repo / "artifact.bin"
+    artifact.write_bytes(b"verified artifact\n")
+    reference = {
+        "path": "artifact.bin",
+        "sha256": hashlib.sha256(artifact.read_bytes()).hexdigest(),
+        "bytes": artifact.stat().st_size,
+        "producer": "test",
+    }
+    _write_result(repo, "A-001", {"artifacts": [reference]})
+
+    completed = _harness_cli(repo, "validate_harness.py")
+    assert completed.returncode == 0, completed.stdout + completed.stderr
+
+
+def test_ma03_evidence_store_rejects_a_poisoned_existing_blob(tmp_path: Path) -> None:
+    repo = _init_tmp_repo(tmp_path)
+    source = repo / "raw.log"
+    source.write_bytes(b"expected raw evidence\n")
+    digest = hashlib.sha256(source.read_bytes()).hexdigest()
+    blob = repo / ".agent-harness" / "evidence" / "sha256" / digest[:2] / digest
+    blob.parent.mkdir(parents=True)
+    blob.write_bytes(b"poisoned bytes\n")
+
+    completed = _harness_cli(
+        repo,
+        "evidence_store.py",
+        "put",
+        source.name,
+        "--producer",
+        "test",
+    )
+    assert completed.returncode != 0
+    assert "content-addressed evidence blob is poisoned" in (
+        completed.stdout + completed.stderr
+    )
+
+
+def test_ma03_launch_evidence_cannot_self_promote_to_platform_authentication(
+    tmp_path: Path,
+) -> None:
+    repo = _init_tmp_repo(tmp_path)
+    _register_assignment(repo)
+    receipt = _create_receipt(repo)
+    assert receipt["evidence_origin"] == "self_declared"
+    _write_result(repo, "A-001", {})
+    envelope = {**_result_envelope(), "launch_id": receipt["launch_id"]}
+    assert _stop_hook(repo, envelope).stdout.strip() == ""
+
+    receipt_path = (
+        repo / ".agent-harness" / "runs" / "run-1" / "launches" / "A-001.json"
+    )
+    receipt["evidence_origin"] = "platform_authenticated"
+    receipt_path.write_text(json.dumps(receipt) + "\n", encoding="utf-8")
+    completed = _stop_hook(repo, envelope)
+    payload = json.loads(completed.stdout)
+    assert payload["decision"] == "block"
+    assert "platform-owned verifier" in payload["reason"]
+
+
+@pytest.mark.parametrize(
+    ("mutation", "needle"),
+    [
+        ("profile", "does not match assigned agent_type"),
+        ("fork", "fork_mode does not match"),
+        ("sandbox", "sandbox does not match installed profile"),
+        ("delivery", "context_delivery_mode is invalid"),
+        ("attested_type", "attested must be boolean"),
+    ],
+)
+def test_ma03_launch_receipt_binds_assignment_execution_fields(
+    tmp_path: Path,
+    mutation: str,
+    needle: str,
+) -> None:
+    repo = _init_tmp_repo(tmp_path)
+    _register_assignment(repo)
+    receipt = _create_receipt(repo)
+    _write_result(repo, "A-001", {})
+    if mutation == "profile":
+        receipt["requested_profile"] = "cas_sympy"
+        receipt["actual_profile"] = "cas_sympy"
+    elif mutation == "fork":
+        receipt["fork_mode"] = "all"
+    elif mutation == "sandbox":
+        receipt["sandbox"] = "read-only"
+    elif mutation == "delivery":
+        receipt["context_delivery_mode"] = "side_channel"
+    else:
+        receipt["attested"] = "yes"
+    receipt_path = (
+        repo / ".agent-harness" / "runs" / "run-1" / "launches" / "A-001.json"
+    )
+    receipt_path.write_text(json.dumps(receipt) + "\n", encoding="utf-8")
+
+    envelope = {**_result_envelope(), "launch_id": receipt["launch_id"]}
+    completed = _stop_hook(repo, envelope)
+    payload = json.loads(completed.stdout)
+    assert payload["decision"] == "block"
+    assert needle in payload["reason"]
+
+
+def test_ma03_historical_merge_is_read_only(tmp_path: Path) -> None:
+    repo = _init_tmp_repo(tmp_path)
+    historical = repo / ".agent-harness" / "HISTORICAL_RUNS.json"
+    historical.write_text(
+        json.dumps({"schema_version": 1, "runs": ["run-1"]}) + "\n",
+        encoding="utf-8",
+    )
+    merged = repo / ".agent-harness" / "runs" / "run-1" / "MERGED_RESULTS.json"
+    sentinel = b'{"historical":"frozen"}\n'
+    merged.write_bytes(sentinel)
+
+    completed = _harness_cli(repo, "merge_results.py")
+    assert completed.returncode != 0
+    assert "read-only" in completed.stdout + completed.stderr
+    assert merged.read_bytes() == sentinel
