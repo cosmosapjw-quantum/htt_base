@@ -6,10 +6,11 @@ end-to-end simulation work. They do not create inference evidence.
 """
 from __future__ import annotations
 
-from dataclasses import dataclass
-from enum import StrEnum
 import re
+from dataclasses import dataclass
 from typing import Any, Mapping
+
+from common.enum_compat import StrEnum
 
 
 class DataRole(StrEnum):

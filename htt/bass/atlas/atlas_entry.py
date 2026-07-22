@@ -12,10 +12,14 @@ import hashlib
 import json
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass, field
-from enum import StrEnum
 from typing import Any
 
-from common.transfer_registry import TransferFunctionSpec, TransferRegistry, TransferSource
+from common.enum_compat import StrEnum
+from common.transfer_registry import (
+    TransferFunctionSpec,
+    TransferRegistry,
+    TransferSource,
+)
 
 from ..transfer.native_schema import NativeLowEllSchema, default_native_lowell_schema
 from ..transfer.registry import default_external_transfer_registry

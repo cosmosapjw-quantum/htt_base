@@ -2,6 +2,70 @@
 
 Record commands actually run. Never mark skipped checks as passed.
 
+## Substantive cycle 01 - EGS3 identified-set endpoint integrity
+
+Date: 2026-07-22
+
+Changed surfaces: the OBSSTAT EGS3 identified-set implementation, adversarial
+contract tests, a standalone read-only numerical validator plus its contracts,
+three directly dependent generated artifact families, and this ledger entry.
+The registered response design, comparator, low-ell statistic set, research
+DAG/status, claim tier, native-solver state, and observational gates were not
+changed.
+
+| Command or check | Result | Notes |
+|---|---:|---|
+| First three hash-pinned hostile reviews and follow-up probes | FAIL, RETAINED | The first review reproduced an excluded population point, units-dependent structural rank, non-finite public inputs converted to statuses, unvalidated bounded-LS results, and stale direct provenance. The second found a scaled near-boundary population false inclusion, a valid rank-2 box rejected by an over-strict projected-gradient check, and a nominal-success but non-sharp rank-3 SLSQP endpoint. The third found cancellation after a `1e8` coordinate translation: `38/200` metamorphic cases failed and one endpoint was wrong by about `0.05`; a subsequent continuous-face probe at `1e11` exposed a `7.62e-4` endpoint error. All failed envelopes and summaries remain under the ignored local harness run directories. |
+| Fourth hash-pinned hostile review | FAIL, CLOSED | The numerical reviewer showed that a valid `ceiling_U` placed between the binary64 upper endpoint and its 100-digit continuous-real reference could return `feasible` instead of `ceiling_unfit`. The provenance reviewer showed that metadata-only refresh had overwritten the frozen EGS3 experiment payload's historical generation hashes with current-code hashes while the advertised full-generation check was stale. The public ceiling comparison now raises `EndpointOptimizationError` inside a 64-epsilon band scaled by the uncancelled endpoint objective terms, with ordinary and large-cancellation below/inside/above regressions. The artifact now preserves its historical config and 19 source hashes under `scientific_payload_lineage`, labels top-level hashes as current compatibility/metadata inputs only, advertises the metadata-only command, and rejects missing or payload-drifted lineage. Both failed envelopes remain in final-review run 4. |
+| Fifth hash-pinned hostile closure review | PASS | Two independent closure-only reviewers checked the nine sealed inputs in `egs3-endpoint-final-review-5-20260722`; all before/after hashes matched and both result envelopes passed harness validation. The numerical reviewer reran all `63` endpoint/validator contracts, the frozen `300 + 500 + 200 + 200` validation cases, and ordinary plus large-cancellation ceiling probes; thresholds inside the arithmetic ambiguity band failed closed while below/above probes retained the intended statuses. The provenance reviewer independently matched the frozen scientific payload to HEAD after metadata removal, verified the exact historical config and 19-hash lineage, resolved all 19 current compatibility hashes to current files, killed missing/drifted-lineage mutations, and kept the absent legacy publication inputs classified separately as `BLOCKED_NOT_CURRENT`. This ledger row was added after normal run closure; no scientific implementation or generated artifact was changed by recording it. |
+| Focused endpoint, provenance, and validator contracts | PASS | Final current-code replay: `63 passed in 8.15s`. The endpoint contracts include every retained reviewer counterexample, exact-boundary and population controls, large translations, extreme combined column scale/translation, ceiling ambiguity including cancelled objectives, analytic empty/feasible rank-2 boxes, public-input rejection, infinite bounds, and explicit higher-rank box-active refusal. The artifact contracts bind historical versus current provenance lanes and kill missing/drifted lineage. Validator contracts cover the full frozen run, no-write behavior, helper independence, and dedicated mutations of the oracle, reparameterization, translation, and translated-geometry paths. |
+| EGS3 research-gate, PSD-cone, and direct-v7 consumer regression | PASS, BOUNDED | Final combined invocation: `119 passed, 1 deselected, 1 warning in 14.15s`. The deselected test requires four absent external v6 publication ZIPs; the warning is the pre-existing pytest return-value warning in the martingale witness. No missing external input is counted as a pass. |
+| `python -B scripts/validate_egs3_endpoint_integrity.py` | PASS | The committed read-only validator binds module SHA `9350f79...` and validator SHA `3acdbd1...`. Original-coordinate eigen/angle oracle: seed `20260722`, `300` cases (`273` box-active), maximum error `1.776e-15` at tolerance `2e-10`. Column reparameterization: seed `20260723`, `500` cases (`166` population, `334` positive-radius), scales `1e-12` through `1e12`, maximum difference `2.220e-15` at tolerance `2e-10`. Equal-translation/full-box surface: seed `20260724`, `200` cases, maximum error `2.776e-17` with minimum strict feasibility margin `0.09169`. Exact-Fraction-recentered arbitrary translated geometry: seed `20260725`, `200` cases (`189` box-active), maximum error `2.384e-7`, at most `5` objective-arithmetic ULP, tolerance `2e-6`. Its JSON stdout makes no physical, observational, novelty, or publication claim. |
+| Registered rank-2 deterministic feasibility and endpoint certificates | PASS | The bounded-LS and SLSQP scientific paths were removed. Box feasibility is the minimum of the unconstrained centre and analytic scalar minima on all finite faces; sharp endpoints enumerate ellipsoid support points, face intersections, and clipped corners. Least-squares anchors remain split from local corrections, physical bounds are converted to centre-relative canonical deltas, and candidate ranking never returns to the large absolute origin. Bound violations inside the scale-aware ambiguity band fail with a typed numerical error; stage-2 feasibility between the exact level and its roundoff allowance also fails closed. Final analytic roots may use the documented arithmetic allowance during certification rather than being misclassified as scientific emptiness. |
+| Translation and combined scale/translation hostile sweeps | PASS WITH RESIDUAL PRECISION RISK | The two formerly failing translation families now pass. An additional seed-`20260728` sweep combined positive column scales `1e-12` through `1e12` with dyadic coordinate translations `2^17` through `2^40`: all `300/300` cases completed with no false status or exception and `268` were box-active. Maximum absolute difference was `4.883e-4`, exactly one output-arithmetic ULP at that large objective scale; p95/p99 arithmetic error was `1/3.01` ULP. One frozen case has upper-endpoint error `1.341e-7` (`72` output ULP) while passing the committed `2e-7` regression and `2e-6` translated-oracle tolerances. A 100-digit decomposition attributes about `26` ULP to materialising `A/scale` and the dominant remainder to centre-relative bound conversion; face selection/root arithmetic and final `math.fsum` are sound. Exact-Fraction bound arithmetic reduces it to about `20` ULP but would add exact arithmetic without eliminating the normalisation floor, so it is recorded rather than introduced as an unrequired pre-seal mechanism. |
+| Higher-dimensional endpoint scope | PASS, RESTRICTED | Box-inactive support points remain closed-form and are cross-checked against `reachable_endpoints_closed_form`. Any box-active endpoint above rank two raises `NotImplementedError`; no generic local-optimizer candidate can become a claimed sharp interval. |
+| Direct artifact generators and freshness checks | PASS | `run_egs3_experiments.py --metadata-only --check`, `run_v7_fortification_witnesses.py --check`, and `build_v7_paper_a_revision_packet.py --check` all return zero and report current outputs. Their JSON SHA-256 values are respectively `1061c5c3...`, `2b589641...`, and `8a2ce045...`; all three record final module SHA `9350f79...` in their current-code lane, and the paper packet records the current fortification hash. |
+| Frozen-v7 payload comparison and lineage | PASS | The EGS3 experiment scientific payload is value-equivalent to HEAD after metadata removal. Its immutable lineage receipt exactly preserves HEAD config hash `2f04f8fe...`, all 19 historical source hashes, scientific payload hash `42cd3b4a...`, and the historical full-generation command; it explicitly states that those historical bytes are required for replay. Current hashes are separately labelled metadata-refresh/current-compatibility inputs, and the top-level generating command is the passing metadata-only lane. Full scientific regeneration was deliberately not used because the PSD-cone signoff and redesign ticket require the v7 `axis_psd` payload to remain frozen; corrected PSD values live in the v8 successor. The fortification witness changed only provenance and four population endpoint scalars, while the paper packet changed provenance only and its TeX skeleton remains byte-identical. |
+| Active root research-evaluation package | BLOCKED, NOT CURRENT | `build_research_evaluation_package.py --check` exits 1 before comparison because three authenticated off-repo legacy inputs are absent: `legacy/cf4_p0/packages/final_report/main.tex`, `main.pdf`, and its companion manifest. The tracked active-public manifest has 16 accumulated live-source drifts, including this module and `egs3_experiments.json`, and the deterministic root ZIP is absent. A surgical hash edit is invalid because the generated manifest must also match the copy embedded in that ZIP. The four absent v6 publication ZIPs are separate prerequisites of the adjacent v7 external-audit synthesis test, not direct inputs to this root builder. This is a publication-chain blocker, not evidence against the endpoint calculations. |
+| Python package smoke | PASS | Current isolated editable environment: `25 passed in 39.92s`; the earlier `pip check` reported no broken requirements. This is package integrity, not scientific validation. |
+| Repository/harness CI contract files | PASS | Current rerun: `65 passed, 3 skipped in 18.89s`; the skips require the unavailable Codex CLI and are not counted as passes. |
+| Strict DAG and exact mirror checks | PASS | `OK: 131 PRs, DAG valid`; PR-DAG, status, and remediation mirrors synchronized. This bounded correction is not a new research-DAG claim card. |
+| Compile/import, Ruff, whitespace, and scoped claim scans | PASS, SCOPED | Touched Python compiles and imports; Ruff and `git diff --check` pass. Explicit forbidden-claim and unmarked-strong-claim scans over the changed production/validator/test/direct-artifact surfaces report no findings, and the scoped mock/fake-result search has zero matches. The whole-ledger status scan still reports four older lines outside this entry, so it is not presented as a repository-wide pass. |
+| Broader selected v7/freeze contract invocation | FAIL, PRE-EXISTING/ENVIRONMENTAL | The diagnostic run produced `129 passed, 12 failed, 2 skipped`. Failures require absent root `venv/bin/python`, four missing publication ZIPs, missing legacy quarantine directories, or the pinned PR-122 interpreter; the v7 seal checker also reflects NumPy `2.5.1` versus sealed `2.5.0` and unrelated floating/runtime drift. None names or consumes this endpoint/artifact diff, so those seals and frozen packages were not regenerated. |
+| Repo-wide no-mock leakage checker | FAIL, PRE-EXISTING | Historical `calibration_factor` and mock-result markers remain across archives, legacy scripts, and tests. The scoped changed-surface scan is clean; the noisy global result is not presented as a pass. |
+
+Numerical/scientific impact: this is a diagnostic-only numerical-correctness
+repair. Population mode uses the unique normalized full-rank least-squares
+point and makes scale-invariant box decisions. The registered rank-2
+positive-radius feasibility decision and endpoints now have deterministic
+analytic certificates. Invalid or numerically ambiguous inputs raise
+typed/input errors, and an unsupported box-active higher-rank problem raises
+`NotImplementedError`, rather than becoming `empty`, `feasible`, or
+`ceiling_unfit` through a local optimiser.
+
+Artifact/claim-tier impact: direct content-addressed provenance is current and
+the frozen experiment's historical payload lineage is separated from its
+current-code compatibility edges. The four fortification endpoint bytes now
+reflect the analytic population route. No observational, detection, geometry,
+family-identification, native-solver, efficiency, release, or novelty claim is
+added or promoted.
+
+Remaining risk and blocker: higher-dimensional box-active sharpness is outside
+the implemented domain until a KKT/dual-gap or independent exact certificate is
+added. The accepted binary64 endpoint contract is absolute-error based; it does
+not promise a fixed output-ULP bound under simultaneously extreme scaling and
+translation, as the recorded 72-ULP/`1.341e-7` case demonstrates. The active
+ceiling status now fails closed when a requested threshold is inside the
+64-epsilon band scaled by its uncancelled objective arithmetic; this is a typed
+numerical no-result rather than a scientific status. The active root
+research-evaluation package cannot
+be refreshed without its three
+authenticated off-repo legacy inputs, and the adjacent v7 synthesis cannot be
+completed without its four v6 ZIPs. The branch must not be described as
+package-current or publication-ready until those external package steps
+succeed. Other broad v7 runtime seals retain unrelated pre-existing environment
+drift and were not regenerated.
+
 ## MA-02 - required baseline CI
 
 Date: 2026-07-22
