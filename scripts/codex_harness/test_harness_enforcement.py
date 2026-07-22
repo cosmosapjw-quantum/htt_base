@@ -25,9 +25,15 @@ HOOKS = REPO_ROOT / ".codex" / "hooks"
 CONTEXT_VERSION = "test-context-version"
 
 
-def _run(cmd: list[str], cwd: Path, input_text: str | None = None):
+def _run(
+    cmd: list[str],
+    cwd: Path,
+    input_text: str | None = None,
+    env: dict[str, str] | None = None,
+):
     return subprocess.run(
-        cmd, cwd=cwd, input=input_text, text=True, capture_output=True, check=False
+        cmd, cwd=cwd, input=input_text, env=env,
+        text=True, capture_output=True, check=False,
     )
 
 
@@ -880,6 +886,117 @@ def _axis_result(
     return path
 
 
+def _fake_cas_probe_env(repo: Path) -> dict[str, str]:
+    """Make parent-owned engine probes pass without installing CAS engines."""
+
+    fake_bin = repo / "fake-cas-bin"
+    fake_bin.mkdir()
+    scripts = {
+        "wolframscript": "#!/bin/sh\nprintf 'Wolfram fake\\nXACT_LOAD_OK\\n'\n",
+        "sage": "#!/bin/sh\nprintf 'SageMath fake with Singular\\n'\n",
+        "lean": "#!/bin/sh\nprintf 'Lean fake\\n'\n",
+    }
+    for name, source in scripts.items():
+        path = fake_bin / name
+        path.write_text(source, encoding="utf-8")
+        path.chmod(0o755)
+
+    (repo / "formal").mkdir()
+    (repo / "formal" / "lean-toolchain").write_text(
+        "leanprover/lean4:test\n", encoding="utf-8"
+    )
+    (repo / "sympy.py").write_text(
+        """__version__ = "test"
+class Expr:
+    def __pow__(self, other): return self
+    def __sub__(self, other): return self
+    def __rsub__(self, other): return self
+    def __add__(self, other): return self
+    def __mul__(self, other): return self
+    def __eq__(self, other): return True
+def symbols(name): return Expr()
+def factor(value): return Expr()
+""",
+        encoding="utf-8",
+    )
+    return dict(os.environ, PATH=f"{fake_bin}:{os.environ.get('PATH', '')}")
+
+
+def _write_runner_case(
+    repo: Path, mode: str = "pass",
+) -> tuple[Path, Path, dict[str, str]]:
+    """Create one tiny observed-process CAS case without a real CAS engine."""
+
+    contract_path = _write_contract(repo)
+    contract = json.loads(contract_path.read_text(encoding="utf-8"))
+    contract["target"]["exact_test_obligations"] = ["identity"]
+    contract["target"]["expected_exact_values"] = {"value": "2"}
+    contract_path.write_text(
+        json.dumps(contract, indent=2) + "\n", encoding="utf-8"
+    )
+
+    axis_program = repo / "tiny_axis.py"
+    axis_program.write_text(
+        """import json
+import sys
+import time
+
+mode = sys.argv[2]
+payload = {
+    "checks": {"identity": True},
+    "domain_assumption_diff": [],
+    "computed": {"value": "2"},
+    "counterexample": None,
+    # These child-authored authority claims must be ignored by the runner.
+    "axis": "wolfram_xact",
+    "status": "FAIL",
+    "commands": [{"cmd": "fabricated", "exit": 0}],
+}
+if mode == "timeout":
+    time.sleep(2)
+elif mode == "missing_obligation":
+    payload["checks"] = {}
+elif mode == "false_check":
+    payload["checks"]["identity"] = False
+elif mode == "expected_mismatch":
+    payload["computed"]["value"] = "3"
+elif mode == "missing_counterexample":
+    payload.pop("counterexample")
+elif mode == "missing_computed":
+    payload.pop("computed")
+print(json.dumps(payload))
+if mode == "nonzero":
+    raise SystemExit(7)
+""",
+        encoding="utf-8",
+    )
+    axes = ("wolfram_xact", "sympy", "sage_singular", "lean")
+    duplicate_argv = [sys.executable, axis_program.name, "shared", "pass"]
+    run_spec = {
+        "schema_version": 1,
+        "axes": {
+            axis: {
+                "argv": duplicate_argv if mode == "duplicate_argv" else [
+                    str(repo / "missing-axis-binary")
+                    if axis == "sympy" and mode == "missing_binary"
+                    else sys.executable,
+                    axis_program.name,
+                    axis,
+                    mode if axis == "sympy" else "pass",
+                ],
+                "cwd": ".",
+                "timeout_seconds": 1 if axis == "sympy" and mode == "timeout" else 10,
+            }
+            for axis in axes
+        },
+    }
+    run_spec_path = repo / "CAS-RUN.json"
+    run_spec_path.write_text(
+        json.dumps(run_spec, indent=2) + "\n", encoding="utf-8"
+    )
+    return contract_path, run_spec_path, _fake_cas_probe_env(repo)
+
+
 # --- 9 -----------------------------------------------------------------
 def test_cas_contract_change_invalidates_all_axis_receipts(tmp_path: Path) -> None:
     repo = _init_tmp_repo(tmp_path)
@@ -913,12 +1030,30 @@ def test_cas_contract_change_invalidates_all_axis_receipts(tmp_path: Path) -> No
 
 
 # --- 10 ----------------------------------------------------------------
-def test_cas_aggregate_requires_all_four_axes(tmp_path: Path) -> None:
+def test_cas_serialized_pass_envelopes_are_not_promotion_evidence(
+    tmp_path: Path,
+) -> None:
     repo = _init_tmp_repo(tmp_path)
     contract = _write_contract(repo)
     sha = _sha256(contract)
     axes = ("wolfram_xact", "sympy", "sage_singular", "lean")
     results = [_axis_result(repo, axis, sha) for axis in axes]
+
+    # Even plausible runner-looking fields remain self-authored once loaded
+    # from disk.  Only the process-owning run-adjudicate path has authority.
+    for result in results:
+        envelope = json.loads(result.read_text(encoding="utf-8"))
+        envelope.update(
+            {
+                "evidence_origin": "runner_observed_local_subprocess",
+                "claim_promotion_cas_eligible": True,
+                "execution_evidence": {
+                    "exit_code": 0,
+                    "timed_out": False,
+                },
+            }
+        )
+        result.write_text(json.dumps(envelope, indent=2) + "\n", encoding="utf-8")
 
     completed = _run(
         [
@@ -927,12 +1062,33 @@ def test_cas_aggregate_requires_all_four_axes(tmp_path: Path) -> None:
         ],
         cwd=repo,
     )
-    assert completed.returncode == 0
-    assert json.loads(completed.stdout)["aggregate_status"] == "CAS_4AXIS_PASS"
+    assert completed.returncode == 2
+    payload = json.loads(completed.stdout)
+    assert payload["aggregate_status"] == "CAS_BLOCKED"
+    assert payload["claim_promotion_cas_eligible"] is False
+    assert "UNVERIFIED_EXECUTION" in json.dumps(payload)
+
+    # Compatibility mode reports the frozen label separately, but remains
+    # blocked and cannot satisfy the claim-promotion CAS component.
+    completed = _run(
+        [
+            sys.executable, _script("cas_gate.py"), "adjudicate",
+            "--historical-replay",
+            "--contract", contract.name, "--results", *(r.name for r in results),
+        ],
+        cwd=repo,
+    )
+    assert completed.returncode == 2
+    payload = json.loads(completed.stdout)
+    assert payload["aggregate_status"] == "CAS_BLOCKED"
+    assert payload["historical_aggregate_status"] == "CAS_4AXIS_PASS"
+    assert payload["claim_promotion_cas_eligible"] is False
+    assert payload["claim_promotion_cas_requirement"] == "NOT_SATISFIED"
 
     completed = _run(
         [
             sys.executable, _script("cas_gate.py"), "adjudicate",
+            "--historical-replay",
             "--contract", contract.name,
             "--results", *(r.name for r in results[:3]),
         ],
@@ -942,6 +1098,108 @@ def test_cas_aggregate_requires_all_four_axes(tmp_path: Path) -> None:
     payload = json.loads(completed.stdout)
     assert payload["aggregate_status"] == "CAS_BLOCKED"
     assert payload["missing_axes"] == ["lean"]
+
+
+def test_cas_run_adjudicate_satisfies_only_the_cas_execution_component(
+    tmp_path: Path,
+) -> None:
+    repo = _init_tmp_repo(tmp_path)
+    contract, run_spec, env = _write_runner_case(repo)
+    completed = _run(
+        [
+            sys.executable, _script("cas_gate.py"), "run-adjudicate",
+            "--contract", contract.name,
+            "--run-spec", run_spec.name,
+        ],
+        cwd=repo,
+        env=env,
+    )
+    assert completed.returncode == 0, completed.stdout + completed.stderr
+    payload = json.loads(completed.stdout)
+    assert payload["aggregate_status"] == "CAS_4AXIS_PASS"
+    assert set(payload["axis_statuses"].values()) == {"PASS"}
+    assert payload["claim_promotion_cas_eligible"] is True
+    assert payload["claim_promotion_cas_requirement"] == "SATISFIED"
+    assert payload["evidence_origin"] == "runner_observed_local_subprocess"
+    assert all(
+        row["preflight_probe"]["status"] == "PASS"
+        for row in payload["execution_evidence"].values()
+    )
+    assert len({
+        tuple(row["argv"])
+        for row in payload["execution_evidence"].values()
+    }) == 4
+
+    observed = payload["execution_evidence"]["sympy"]
+    assert observed["argv"] == [sys.executable, "tiny_axis.py", "sympy", "pass"]
+    assert observed["exit_code"] == 0
+    assert observed["timed_out"] is False
+    assert observed["payload"]["checks"] == {"identity": True}
+    assert "status" not in observed["payload"]
+    assert "commands" not in observed["payload"]
+    assert "identity" in observed["stdout_tail"]
+
+
+@pytest.mark.parametrize(
+    "mode",
+    [
+        "nonzero",
+        "timeout",
+        "missing_binary",
+        "duplicate_argv",
+        "missing_obligation",
+        "false_check",
+        "expected_mismatch",
+        "missing_counterexample",
+        "missing_computed",
+    ],
+)
+def test_cas_run_adjudicate_rejects_unobserved_or_failed_work(
+    tmp_path: Path, mode: str,
+) -> None:
+    repo = _init_tmp_repo(tmp_path)
+    contract, run_spec, env = _write_runner_case(repo, mode)
+    completed = _run(
+        [
+            sys.executable, _script("cas_gate.py"), "run-adjudicate",
+            "--contract", contract.name,
+            "--run-spec", run_spec.name,
+        ],
+        cwd=repo,
+        env=env,
+    )
+    assert completed.returncode == 2
+    payload = json.loads(completed.stdout)
+    assert payload["aggregate_status"] != "CAS_4AXIS_PASS"
+    assert payload["claim_promotion_cas_eligible"] is False
+    assert payload["claim_promotion_cas_requirement"] == "NOT_SATISFIED"
+    if mode in {"missing_counterexample", "missing_computed"}:
+        missing = mode.removeprefix("missing_")
+        assert missing not in payload["execution_evidence"]["sympy"]["payload"]
+        assert "missing required keys" in json.dumps(payload)
+    if mode == "duplicate_argv":
+        assert "reuse the same full argv" in json.dumps(payload)
+
+
+def test_cas_run_adjudicate_rejects_reduced_axis_contract(tmp_path: Path) -> None:
+    repo = _init_tmp_repo(tmp_path)
+    contract_path, run_spec, env = _write_runner_case(repo)
+    contract = json.loads(contract_path.read_text(encoding="utf-8"))
+    contract["required_axes"] = ["sympy"]
+    contract_path.write_text(json.dumps(contract, indent=2) + "\n", encoding="utf-8")
+    completed = _run(
+        [
+            sys.executable, _script("cas_gate.py"), "run-adjudicate",
+            "--contract", contract_path.name, "--run-spec", run_spec.name,
+        ],
+        cwd=repo,
+        env=env,
+    )
+    payload = json.loads(completed.stdout)
+    assert completed.returncode == 2
+    assert payload["aggregate_status"] == "CAS_BLOCKED"
+    assert payload["claim_promotion_cas_eligible"] is False
+    assert "reduced axis sets" in json.dumps(payload)
 
 
 # --- 11 ----------------------------------------------------------------
@@ -968,6 +1226,7 @@ def test_cas_exception_must_be_preregistered_and_not_self_approved(
         return _run(
             [
                 sys.executable, _script("cas_gate.py"), "adjudicate",
+                "--historical-replay",
                 "--contract", contract_path.name,
                 "--results", *(r.name for r in results),
             ],
@@ -1002,7 +1261,11 @@ def test_cas_exception_must_be_preregistered_and_not_self_approved(
                  registered_at="2026-07-17T00:00:00+00:00")
     completed = adjudicate(valid)
     payload = json.loads(completed.stdout)
-    assert payload["aggregate_status"] == "CAS_PASS_WITH_REGISTERED_EXCEPTION"
+    assert completed.returncode == 2
+    assert payload["aggregate_status"] == "CAS_BLOCKED"
+    assert payload["historical_aggregate_status"] == (
+        "CAS_PASS_WITH_REGISTERED_EXCEPTION"
+    )
 
 
 # --- 12 ----------------------------------------------------------------
