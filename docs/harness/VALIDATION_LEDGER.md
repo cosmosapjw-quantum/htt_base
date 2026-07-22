@@ -28,7 +28,7 @@ these exact contexts on a real run.
 | Ruff check/format and `git diff --check` | PASS | New Python contract file is formatted; Ruff reports `All checks passed`; no whitespace errors. |
 | repo-wide no-mock leakage checker | FAIL, PRE-EXISTING | Existing historical `calibration_factor` and mock-marker inventory remains. A scoped scan of the new workflow and contract-test implementation surfaces returned zero matches. |
 | `cargo +1.94.1 check --locked --lib` | NOT RUN LOCALLY | Cargo/rustc are absent in the Work container. The workflow provisions repository-receipt-known Rust 1.94.1 and exposes this as the separate `Rust compile` job; the first GitHub-hosted result is required before merge. This check does not link/load the cdylib or run Rust/scientific tests. |
-| GitHub workflow ingestion and three hosted jobs | PENDING | Must be observed on the Draft PR. No local YAML parser or contract test is represented as proof that Actions is enabled or that branch protection is configured. |
+| GitHub workflow ingestion and three hosted jobs | PASS | Draft PR #3, GitHub Actions run #1 (run id `29901981235`) on commit `0406ad802c3a0292e4fdbd5bf3639be8918ba0e1`: `Repository contracts`, `Python package smoke`, and `Rust compile` all completed successfully. This establishes workflow ingestion and the exact hosted check names, but does not establish branch protection. |
 
 Numerical/scientific impact: none. The Python package suite checks packaging,
 imports, and deterministic payload construction; Rust is compile-only. No
@@ -39,9 +39,9 @@ Artifact/claim-tier impact: none. CI success is repository-integrity smoke
 evidence only. It must not be cited as native-solver, numerical-correctness,
 novelty, publication-readiness, or scientific-claim evidence.
 
-Remaining risks and kill-switches: the first hosted run must establish actual
-workflow ingestion, dependency availability, cold Rust cost, and exact check
-contexts. Any failing job is fixed in MA-02 rather than made non-blocking.
+Remaining risks and kill-switches: the first hosted run established workflow
+ingestion, dependency availability, and the exact check contexts. Any failing
+job is fixed in MA-02 rather than made non-blocking.
 Branch protection, a full Python/Rust/wheel matrix, Rust tests/link-load,
 actionlint, caching, and general workflow-schema validation remain out of
 scope. After MA-02, the two-governance-PR limit requires a substantive
