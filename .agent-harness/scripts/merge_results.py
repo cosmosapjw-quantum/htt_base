@@ -21,7 +21,7 @@ import json
 from collections import defaultdict
 
 from _harness import (
-    active_run_id,
+    cli_active_run_id,
     dump_json,
     load_json,
     root,
@@ -74,7 +74,8 @@ def load_finding_ledger(repo) -> dict[tuple, str]:
 
 def main() -> None:
     repo = root()
-    run_id = active_run_id(repo)
+    run_id = cli_active_run_id(repo)
+    assert run_id is not None
     run_dir = repo / ".agent-harness" / "runs" / run_id
     plan = load_json(run_dir / "RUN_PLAN.json")
     context_version = str(plan.get("context_version", ""))

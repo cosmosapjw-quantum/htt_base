@@ -59,23 +59,26 @@ if [ -e "$VENDOR_DST" ] && ! diff -qr "$VENDOR_SRC" "$VENDOR_DST" >/dev/null; th
   echo "Refusing to overwrite a divergent physmath vendor snapshot: $VENDOR_DST" >&2
   exit 1
 fi
-if [ -s "$REPO/.agent-harness/ACTIVE_RUN" ]; then
-  echo "Refusing to replace shared context while an agent-harness run is active: $REPO/.agent-harness/ACTIVE_RUN" >&2
-  exit 1
-fi
+for active_pointer in \
+  "$REPO/.agent-harness/runtime/ACTIVE_RUN" \
+  "$REPO/.agent-harness/ACTIVE_RUN"
+do
+  if [ -e "$active_pointer" ]; then
+    echo "Refusing to replace shared context while an agent-harness run is active: $active_pointer" >&2
+    exit 1
+  fi
+done
 
 # Merge-only assets are preflighted before the first destination write.  An
 # existing repository policy or intentional Codex setting must be merged by a
 # human; the installer never guesses which side owns a conflicting value.
 assert_merge_safe_file "$PKG/AGENTS.md" "$REPO/AGENTS.md" "AGENTS.md"
 assert_merge_safe_file "$PKG/AGENTS.md.fragment" "$REPO/AGENTS.md.fragment" "AGENTS.md.fragment"
-assert_merge_safe_file "$PKG/agent.md" "$REPO/agent.md" "agent.md"
 assert_merge_safe_tree "$PKG/.codex" "$REPO/.codex" ".codex"
 
 mkdir -p "$REPO/.agents" "$REPO/.codex" "$REPO/docs/codex_handoff" "$REPO/scripts/codex_harness" "$REPO/docs/harness" "$REPO/harness_templates/vendor/physmath-gpt56"
 copy_merge_only_file "$PKG/AGENTS.md" "$REPO/AGENTS.md"
 copy_merge_only_file "$PKG/AGENTS.md.fragment" "$REPO/AGENTS.md.fragment"
-copy_merge_only_file "$PKG/agent.md" "$REPO/agent.md"
 cp -R "$PKG/.agents/"* "$REPO/.agents/"
 copy_merge_only_tree "$PKG/.codex" "$REPO/.codex"
 mkdir -p "$REPO/.agent-harness/scripts"

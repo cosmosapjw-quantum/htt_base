@@ -2,8 +2,10 @@
 from __future__ import annotations
 
 import json
+from pathlib import Path
 
 from _harness import (
+    ActiveRunError,
     active_run_id,
     hash_files,
     load_json,
@@ -13,14 +15,14 @@ from _harness import (
 )
 
 
-def main() -> None:
-    repo = root()
+def validate_repo(repo: Path) -> dict:
     harness = repo / ".agent-harness"
     index_path = harness / "context" / "CONTEXT_INDEX.json"
     index = load_json(index_path)
     files = list(index.get("shared_files", []))
     actual, entries = hash_files(repo, files)
     errors: list[str] = []
+    state_errors: list[dict[str, str]] = []
 
     if actual != index.get("context_version"):
         errors.append("Context files changed after the pack was built.")
@@ -29,9 +31,10 @@ def main() -> None:
 
     active = None
     try:
-        active = active_run_id(repo)
-    except SystemExit:
-        pass
+        active = active_run_id(repo, required=False)
+    except ActiveRunError as exc:
+        state_errors.append(exc.as_dict())
+        errors.append(f"{exc.error_code}: {exc.message}")
     if active:
         run_dir = harness / "runs" / active
         plan = load_json(run_dir / "RUN_PLAN.json")
@@ -81,14 +84,23 @@ def main() -> None:
             )
             errors.extend(f"{path.name}: {item}" for item in result_errors)
 
+    payload = {
+        "ok": not errors,
+        "context_version": actual,
+        "active_run": active,
+    }
     if errors:
-        print(json.dumps({"ok": False, "errors": errors}, indent=2))
+        payload["errors"] = errors
+    if state_errors:
+        payload["state_errors"] = state_errors
+    return payload
+
+
+def main() -> None:
+    payload = validate_repo(root())
+    print(json.dumps(payload, indent=2))
+    if not payload["ok"]:
         raise SystemExit(1)
-    print(
-        json.dumps(
-            {"ok": True, "context_version": actual, "active_run": active}, indent=2
-        )
-    )
 
 
 if __name__ == "__main__":

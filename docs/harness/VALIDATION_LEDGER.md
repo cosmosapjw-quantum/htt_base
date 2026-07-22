@@ -2,6 +2,41 @@
 
 Record commands actually run. Never mark skipped checks as passed.
 
+## MA-01 - clean-clone harness lifecycle
+
+Date: 2026-07-22
+
+Changed surfaces: removed the tracked active-run pointer; added one shared
+runtime-state resolver, explicit init/validate/close behavior, Codex hook and
+installer integration, lifecycle regressions, and concise retention/usage
+documentation. No research DAG card, status mirror, claim registry,
+scientific code, result artifact, or historical run payload changed.
+
+| Command or check | Result | Notes |
+|---|---:|---|
+| `python3 .agent-harness/scripts/validate_harness.py` | PASS | A fresh local clone of committed MA-01 reports `ok=true`, current context hash, and `active_run=null`, with no pointer files and a clean worktree. |
+| MA-01 lifecycle plus Codex-asset pytest files | PASS | Final rerun: `27 passed, 3 skipped in 14.18s`; skips require the unavailable Codex CLI and are not counted as passes. Covers clean state, init, overwrite refusal, validate, normal close, summary retention, dangling failure without traceback, explicit abandon, hooks, and ignored/untracked pointer state. |
+| empty-target `scripts/install_codex_handoff.sh` before fix | FAIL, CLOSED | Exposed a pre-existing reference to absent, intentionally excluded `agent.md`; removed the two dead preflight/copy lines. |
+| empty-target installer rerun plus installed harness validation | PASS | Installed all repo-scoped assets, rebuilt context, validated the 131-card DAG and both vendor harnesses, and left both legacy/runtime active pointers absent. |
+| Python compile plus `bash -n scripts/install_codex_handoff.sh` | PASS | All changed Python entry points, hooks, and tests compile; installer shell syntax is valid. |
+| Ruff static check over changed Python surfaces | PASS | `All checks passed`. |
+| Ruff format check over changed Python surfaces | FAIL, RETAINED | The repository has pre-existing formatter deltas in eight touched legacy files; no bulk formatting rewrite was mixed into MA-01. The new `close_run.py` was formatted separately. |
+| strict DAG validator | PASS | `OK: 131 PRs, DAG valid`; MA-01 was not added to the research DAG. |
+| repo-wide no-mock leakage checker | FAIL, PRE-EXISTING | Existing historical `calibration_factor` and mock-marker inventory; the scoped MA-01 changed-file search returned zero matches. |
+| `git diff --check`, ignore rules, and tracked-pointer probe | PASS | No whitespace errors; runtime and legacy pointer paths are ignored; `.agent-harness/ACTIVE_RUN` is absent from the staged index. |
+
+Numerical/scientific impact: none. This change controls local harness runtime
+state only and does not evaluate, promote, demote, or modify a scientific
+claim, computation, transfer source, novelty tier, or research result.
+
+Artifact/claim-tier impact: none. Historical runs remain read-only and normal
+or abandoned close never deletes a run directory. `RUN_SUMMARY.json` remains
+the existing local retention artifact for future ignored runs.
+
+Remaining risks: three Codex-CLI-dependent tests could not run in this Work
+environment; required GitHub CI and branch protection remain MA-02 work; the
+repo-wide no-mock checker remains too noisy to serve as a clean global gate.
+
 ## PR-176 - conservative affine-divergence / q non-identification
 
 Date: 2026-07-20

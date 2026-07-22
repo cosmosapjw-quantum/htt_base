@@ -1,21 +1,21 @@
 """PR-124 preflight acceptance tests (audit §10 items 1-14).
 
-Each test maps 1:1 to a numbered acceptance criterion in
+The numbered tests map 1:1 to acceptance criteria in
 docs/audits/shared_context_cas_harness_final_audit_20260717/
 FINAL_AUDIT_AND_REPAIR_RECOMMENDATION.md §10. Tests run the real harness
 scripts and hooks as subprocesses against a disposable git repo under
 tmp_path (the scripts resolve their data root via `git rev-parse
 --show-toplevel`), so enforcement is exercised end-to-end, not via mocks.
+MA-01 adds one end-to-end lifecycle regression ahead of those frozen checks.
 """
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 import subprocess
 import sys
 from pathlib import Path
-
-import pytest
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 SCRIPTS = REPO_ROOT / ".agent-harness" / "scripts"
@@ -33,7 +33,16 @@ def _script(name: str) -> str:
     return str(SCRIPTS / name)
 
 
-def _init_tmp_repo(tmp_path: Path) -> Path:
+def _harness_cli(repo: Path, name: str, *args: str):
+    return _run([sys.executable, _script(name), *args], cwd=repo)
+
+
+def _init_tmp_repo(
+    tmp_path: Path,
+    *,
+    active: bool = True,
+    context_version: str = CONTEXT_VERSION,
+) -> Path:
     repo = tmp_path / "repo"
     (repo / ".agent-harness" / "context" / "roles").mkdir(parents=True)
     (repo / ".agent-harness" / "generated").mkdir(parents=True)
@@ -63,7 +72,7 @@ def _init_tmp_repo(tmp_path: Path) -> Path:
     (repo / "input.txt").write_text("input-v1\n", encoding="utf-8")
     index = {
         "schema_version": 1,
-        "context_version": CONTEXT_VERSION,
+        "context_version": context_version,
         "max_injected_chars": 24000,
         "shared_files": [],
         "file_hashes": {},
@@ -77,7 +86,12 @@ def _init_tmp_repo(tmp_path: Path) -> Path:
     (repo / ".agent-harness" / "generated" / "CONTEXT_PACK.md").write_text(
         "# Canonical Shared Context Pack\ncontent\n", encoding="utf-8"
     )
-    (repo / ".agent-harness" / "ACTIVE_RUN").write_text("run-1\n", encoding="utf-8")
+    if not active:
+        return repo
+
+    active_pointer = repo / ".agent-harness" / "runtime" / "ACTIVE_RUN"
+    active_pointer.parent.mkdir(parents=True)
+    active_pointer.write_text("run-1\n", encoding="utf-8")
     run_dir = repo / ".agent-harness" / "runs" / "run-1"
     for sub in ("assignments", "results", "launches"):
         (run_dir / sub).mkdir(parents=True)
@@ -97,6 +111,87 @@ def _init_tmp_repo(tmp_path: Path) -> Path:
         json.dumps(plan, indent=2) + "\n", encoding="utf-8"
     )
     return repo
+
+
+def test_clean_clone_init_validate_close_and_dangling_recovery(
+    tmp_path: Path,
+) -> None:
+    empty_context_sha = hashlib.sha256(b"").hexdigest()
+    repo = _init_tmp_repo(
+        tmp_path,
+        active=False,
+        context_version=empty_context_sha,
+    )
+
+    validated = _harness_cli(repo, "validate_harness.py")
+    assert validated.returncode == 0, validated.stdout + validated.stderr
+    assert json.loads(validated.stdout)["active_run"] is None
+
+    initialized = _harness_cli(
+        repo,
+        "init_run.py",
+        "--run-id",
+        "ma01-lifecycle",
+        "--work-unit",
+        "MA-01",
+    )
+    assert initialized.returncode == 0, initialized.stdout + initialized.stderr
+    active_pointer = repo / ".agent-harness" / "runtime" / "ACTIVE_RUN"
+    assert active_pointer.read_text(encoding="utf-8") == "ma01-lifecycle\n"
+
+    refused_overwrite = _harness_cli(
+        repo,
+        "init_run.py",
+        "--run-id",
+        "ma01-overwrite",
+        "--work-unit",
+        "MA-01",
+    )
+    assert refused_overwrite.returncode != 0
+    assert "Active run already exists" in refused_overwrite.stderr
+    assert not (repo / ".agent-harness" / "runs" / "ma01-overwrite").exists()
+
+    active_validation = _harness_cli(repo, "validate_harness.py")
+    assert active_validation.returncode == 0
+    assert json.loads(active_validation.stdout)["active_run"] == "ma01-lifecycle"
+
+    closed = _harness_cli(
+        repo,
+        "close_run.py",
+        "--run-id",
+        "ma01-lifecycle",
+    )
+    assert closed.returncode == 0, closed.stdout + closed.stderr
+    close_payload = json.loads(closed.stdout)
+    assert close_payload["closed_run"] == "ma01-lifecycle"
+    assert close_payload["run_directory_deleted"] is False
+    assert not active_pointer.exists()
+    assert (repo / ".agent-harness/runs/ma01-lifecycle/RUN_SUMMARY.json").is_file()
+
+    post_close = _harness_cli(repo, "validate_harness.py")
+    assert post_close.returncode == 0
+    assert json.loads(post_close.stdout)["active_run"] is None
+
+    active_pointer.write_text("missing-run\n", encoding="utf-8")
+    dangling = _harness_cli(repo, "validate_harness.py")
+    assert dangling.returncode == 1
+    dangling_payload = json.loads(dangling.stdout)
+    assert dangling_payload["state_errors"] == [
+        {
+            "code": "DANGLING_ACTIVE_RUN",
+            "message": "The active-run pointer has no valid matching RUN_PLAN.json target.",
+            "pointer": ".agent-harness/runtime/ACTIVE_RUN",
+            "run_id": "missing-run",
+        }
+    ]
+    assert "Traceback" not in dangling.stdout + dangling.stderr
+
+    abandoned = _harness_cli(repo, "close_run.py", "--abandon")
+    assert abandoned.returncode == 0, abandoned.stdout + abandoned.stderr
+    abandon_payload = json.loads(abandoned.stdout)
+    assert abandon_payload["abandoned"] is True
+    assert abandon_payload["run_directory_deleted"] is False
+    assert not active_pointer.exists()
 
 
 def _register_assignment(repo: Path, assignment_id: str = "A-001") -> Path:

@@ -3,10 +3,17 @@ from __future__ import annotations
 
 import hashlib
 import json
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
 from _common import emit_additional_context, load_json, read_stdin_json, repo_root
+
+HARNESS_SCRIPTS = Path(__file__).resolve().parents[2] / ".agent-harness" / "scripts"
+if str(HARNESS_SCRIPTS) not in sys.path:
+    sys.path.insert(0, str(HARNESS_SCRIPTS))
+
+from _harness import ActiveRunError, active_run_id  # noqa: E402
 
 
 def read_bounded(path: Path, max_chars: int) -> tuple[str, bool]:
@@ -59,7 +66,6 @@ def main() -> None:
     harness = root / ".agent-harness"
     index_path = harness / "context" / "CONTEXT_INDEX.json"
     pack_path = harness / "generated" / "CONTEXT_PACK.md"
-    active_path = harness / "ACTIVE_RUN"
     index = load_json(index_path, {}) or {}
 
     if not index or not pack_path.exists():
@@ -74,7 +80,17 @@ def main() -> None:
 
     max_chars = int(index.get("max_injected_chars", 24000))
     version = str(index.get("context_version", "UNBUILT"))
-    active_run = active_path.read_text(encoding="utf-8").strip() if active_path.exists() else "none"
+    try:
+        active_run = active_run_id(root, required=False) or "none"
+    except ActiveRunError as exc:
+        emit_additional_context(
+            "SubagentStart",
+            "CONTEXT CONTRACT VIOLATION: active-run state is invalid: "
+            f"{exc.error_code}: {exc.message} Do not perform substantive work; "
+            "ask the parent to validate or explicitly abandon the local pointer.",
+            warning="Subagent started with invalid active-run state",
+        )
+        return
     pack_text, pack_truncated = read_bounded(pack_path, max_chars)
     pieces = [pack_text]
     used = len(pack_text)

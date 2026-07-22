@@ -17,7 +17,7 @@ import hashlib
 import json
 
 from _harness import (
-    active_run_id,
+    cli_active_run_id,
     dump_json,
     is_safe_identifier,
     load_json,
@@ -103,7 +103,8 @@ def main() -> None:
 
     repo = root()
     harness = repo / ".agent-harness"
-    run_id = active_run_id(repo)
+    run_id = cli_active_run_id(repo)
+    assert run_id is not None
     run_dir = harness / "runs" / run_id
     plan = load_json(run_dir / "RUN_PLAN.json")
     index = load_json(harness / "context" / "CONTEXT_INDEX.json")
