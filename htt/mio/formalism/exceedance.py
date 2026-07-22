@@ -1,21 +1,20 @@
 """MIO Pi exceedance-curve contract with explicit threshold policy."""
 from __future__ import annotations
 
-from bisect import bisect_right
-from collections.abc import Mapping, Sequence
-from dataclasses import dataclass, field
-from enum import StrEnum
 import hashlib
 import json
 import math
+from bisect import bisect_right
+from collections.abc import Mapping, Sequence
+from dataclasses import dataclass, field
 from typing import Any
 
+from common.enum_compat import StrEnum
 from common.transfer_registry import validate_transfer_dependent_result
 
 from .budget_spec import BudgetUse
 from .filling_fraction import CertifiedFillingFraction
 from .normalized_score import NormalizedScore
-
 
 DEFAULT_PI_CAVEAT = (
     "Pi is a MIO diagnostic exceedance curve over recorded diagnostic samples "

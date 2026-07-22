@@ -6,21 +6,20 @@ does not consume MIO certificates or MIO report cards.
 """
 from __future__ import annotations
 
-from collections.abc import Mapping, Sequence
-from dataclasses import asdict, dataclass, field
-from enum import StrEnum
 import hashlib
 import json
 import math
+from collections.abc import Mapping, Sequence
+from dataclasses import asdict, dataclass, field
 from typing import Any
 
 from common.contracts import ArtifactManifest, ClaimTier, ImplementationScope, Owner
+from common.enum_compat import StrEnum
 from common.transfer_registry import (
     TransferSource,
     validate_transfer_dependent_result,
 )
 from workspace.contracts.htt_posterior import reject_mio_likelihood_inputs
-
 
 SCHEMA_VERSION = "htt.departure.posterior_pushforward.v1"
 _CREATED_BY = "htt.departure.posterior_pushforward.build_posterior_pushforward_report"

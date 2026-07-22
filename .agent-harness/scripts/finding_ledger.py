@@ -2,10 +2,12 @@
 """Cross-run finding ledger (audit H7).
 
 Records resolved findings as `{claim_id, evidence_fingerprint, verdict,
-resolution_commit, recorded_at}` JSON lines in the tracked
+statement, resolution_commit, recorded_at}` JSON lines in the tracked
 `.agent-harness/ledger/FINDING_LEDGER.jsonl`, so an already-fixed attack is
 not re-raised under a new run name. `merge_results.py` consults this ledger
-and annotates matching findings `previously_resolved`.
+and annotates matching findings `previously_resolved`. The statement is kept
+for explanation but is not part of cross-run identity: paraphrasing must not
+create a fresh ledger item.
 """
 from __future__ import annotations
 
@@ -44,13 +46,39 @@ def cmd_record(args) -> int:
             ["git", "rev-parse", "HEAD"], cwd=repo, text=True
         ).strip()
     merged = load_json(repo / args.merged)
+    findings = merged.get("findings", [])
+    run_local = [
+        str(finding.get("claim_id", ""))
+        for finding in findings
+        if isinstance(finding, dict)
+        and str(finding.get("claim_id", "")).startswith("RUN-")
+    ]
+    if run_local:
+        raise SystemExit(
+            "RUN-* process questions are run-local and cannot enter the "
+            f"cross-run finding ledger: {sorted(set(run_local))}"
+        )
+    if any(
+        not str(finding.get("evidence_fingerprint", ""))
+        or not str(finding.get("statement", "")).strip()
+        for finding in findings
+        if isinstance(finding, dict)
+    ):
+        raise SystemExit(
+            "cross-run findings require a stable evidence identity and "
+            "non-empty statement"
+        )
     existing = {
-        (r.get("claim_id"), r.get("evidence_fingerprint"), r.get("verdict"))
+        (
+            r.get("claim_id"),
+            r.get("evidence_fingerprint"),
+            r.get("verdict"),
+        )
         for r in _rows(repo)
     }
     added = 0
     with _ledger_path(repo).open("a", encoding="utf-8") as handle:
-        for finding in merged.get("findings", []):
+        for finding in findings:
             key = (
                 str(finding.get("claim_id", "")),
                 str(finding.get("evidence_fingerprint", "")),
@@ -64,6 +92,7 @@ def cmd_record(args) -> int:
                         "claim_id": key[0],
                         "evidence_fingerprint": key[1],
                         "verdict": key[2],
+                        "statement": str(finding.get("statement", "")).strip(),
                         "resolution_commit": commit,
                         "recorded_at": utc_now(),
                     },
@@ -84,6 +113,10 @@ def cmd_check(args) -> int:
             row.get("claim_id") == args.claim
             and row.get("evidence_fingerprint") == args.fingerprint
             and (args.verdict is None or row.get("verdict") == args.verdict)
+            and (
+                args.statement is None
+                or str(row.get("statement", "")).strip() == args.statement.strip()
+            )
         ):
             print(json.dumps(row, ensure_ascii=False))
             return 0
@@ -105,6 +138,7 @@ def main() -> None:
     check.add_argument("--claim", required=True)
     check.add_argument("--fingerprint", required=True)
     check.add_argument("--verdict", default=None)
+    check.add_argument("--statement", default=None)
 
     args = parser.parse_args()
     raise SystemExit(cmd_record(args) if args.command == "record" else cmd_check(args))

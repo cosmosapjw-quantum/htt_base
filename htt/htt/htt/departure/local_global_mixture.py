@@ -8,22 +8,22 @@ noncanonical diagnostic fit scores after the gates pass.
 """
 from __future__ import annotations
 
-from collections.abc import Mapping, Sequence
-from dataclasses import asdict, dataclass
-from enum import StrEnum
 import hashlib
 import json
 import math
+from collections.abc import Mapping, Sequence
+from dataclasses import asdict, dataclass
 from typing import Any
 
 import numpy as np
-
 from common.contracts import (
     ArtifactManifest,
     ClaimTier,
     ImplementationScope,
     Owner,
 )
+from common.enum_compat import StrEnum
+
 from htt.departure.response_overlap import (
     ResponseOverlapAudit,
     require_rank_audit_for_model_run,

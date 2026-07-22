@@ -2,13 +2,13 @@
 """Register a sealed, fail-closed assignment (schema v2, audit H3/H7).
 
 One command produces a complete assignment: bounded claim IDs, risk tier,
-hash-sealed required inputs, allowed tools, required outputs, and — for CAS
-agents — the axis binding and contract hash. Registration is refused if any
-of these is empty or unknown; the pre-PR-124 validator accepted an unknown
-``agent_type`` with empty lists (confirmed negative probe), which is the
-defect this closes. The spawn budget counts cumulatively across every run
-sharing the plan's ``work_unit_id``, so opening a fresh run no longer resets
-the budget.
+same-run byte-sealed required inputs, allowed tools, required outputs, and —
+for CAS agents — the axis binding and exact contract hash. ``--live-input``
+is an explicit escape hatch for evolving local material and carries no exact
+replay claim. External research provenance belongs in resolvable evidence
+references, not in a fabricated local-file digest. Registration is refused if
+any required collection is empty or unknown. The spawn budget counts
+cumulatively across every run sharing the plan's ``work_unit_id``.
 """
 from __future__ import annotations
 
@@ -17,7 +17,8 @@ import hashlib
 import json
 
 from _harness import (
-    active_run_id,
+    assignment_sha256,
+    cli_active_run_id,
     dump_json,
     is_safe_identifier,
     load_json,
@@ -31,6 +32,13 @@ def _hashed_ref(repo, rel: str) -> dict:
     if not path.is_file():
         raise SystemExit(f"required input does not exist: {rel}")
     return {"path": rel, "sha256": hashlib.sha256(path.read_bytes()).hexdigest()}
+
+
+def _path_ref(repo, rel: str) -> dict:
+    path = repo / rel
+    if not path.is_file():
+        raise SystemExit(f"required input does not exist: {rel}")
+    return {"path": rel}
 
 
 def _work_unit_assignment_count(harness, work_unit_id) -> int:
@@ -75,7 +83,13 @@ def main() -> None:
         "--required-input",
         action="append",
         default=[],
-        help="repo-relative path; hashed and sealed into the assignment",
+        help="repo-relative same-run input; current bytes are sealed",
+    )
+    parser.add_argument(
+        "--live-input",
+        action="append",
+        default=[],
+        help="repo-relative evolving input; path only and no exact-replay claim",
     )
     parser.add_argument("--allowed-tool", action="append", default=[])
     parser.add_argument("--required-output", action="append", default=[])
@@ -103,7 +117,8 @@ def main() -> None:
 
     repo = root()
     harness = repo / ".agent-harness"
-    run_id = active_run_id(repo)
+    run_id = cli_active_run_id(repo)
+    assert run_id is not None
     run_dir = harness / "runs" / run_id
     plan = load_json(run_dir / "RUN_PLAN.json")
     index = load_json(harness / "context" / "CONTEXT_INDEX.json")
@@ -160,7 +175,10 @@ def main() -> None:
             "may_spawn": args.may_spawn,
             "claim_ids": args.claim_id,
             "task": args.task,
-            "required_inputs": [_hashed_ref(repo, rel) for rel in args.required_input],
+            "required_inputs": [
+                *[_hashed_ref(repo, rel) for rel in args.required_input],
+                *[_path_ref(repo, rel) for rel in args.live_input],
+            ],
             "allowed_tools": args.allowed_tool,
             "required_outputs": args.required_output,
             "allowed_sibling_results": args.allowed_sibling_result,
@@ -172,6 +190,8 @@ def main() -> None:
         value["cas_axis"] = args.cas_axis
     if args.cas_contract:
         value["cas_contract"] = _hashed_ref(repo, args.cas_contract)
+
+    value["assignment_sha256"] = assignment_sha256(value)
 
     errors = validate_assignment_payload(
         value,
@@ -185,8 +205,6 @@ def main() -> None:
             "assignment registration REFUSED (fail-closed):\n- " + "\n- ".join(errors)
         )
 
-    sealed = json.dumps(value, sort_keys=True, ensure_ascii=False).encode("utf-8")
-    value["assignment_sha256"] = hashlib.sha256(sealed).hexdigest()
     dump_json(out, value)
     print(out.relative_to(repo))
     print(

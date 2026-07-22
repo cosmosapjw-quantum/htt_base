@@ -6,8 +6,9 @@ transfer functions or synthesize future native solver outputs.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from enum import StrEnum
 from typing import Iterable, Mapping, Sequence
+
+from common.enum_compat import StrEnum
 
 
 class TransferSource(StrEnum):

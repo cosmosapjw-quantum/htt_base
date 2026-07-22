@@ -13,10 +13,12 @@ envelopes are summarised, not versioned.
 2. **Future runs are NOT committed by default.** `.gitignore` excludes
    `.agent-harness/runs/` going forward (tracked historical files are
    unaffected by ignore rules).
-3. After a run closes, generate its summary:
-   `python3 .agent-harness/scripts/run_summary.py --run-id <RUN_ID>`.
-   The summary records `{path, sha256, bytes}` for every result plus the
-   merged output — that is the durable record.
+3. Close a run with
+   `python3 .agent-harness/scripts/close_run.py --run-id <RUN_ID>`.
+   Normal close first validates the run, then generates `RUN_SUMMARY.json`
+   with `{path, sha256, bytes}` for every result plus the merged output, and
+   finally clears the ignored local active-run pointer. It never deletes the
+   run directory.
 4. **Load-bearing artifacts are promoted individually**: claim-load-bearing
    CAS scripts/engine outputs, compiled proof receipts, decisive
    counterexamples, and final adjudications. Promote with

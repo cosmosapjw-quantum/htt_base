@@ -1,16 +1,16 @@
 """MIO Q normalized-score contract with explicit numerator and denominator policy."""
 from __future__ import annotations
 
-from collections.abc import Mapping, Sequence
-from dataclasses import dataclass, field
-from enum import StrEnum
 import hashlib
 import json
 import math
+from collections.abc import Mapping, Sequence
+from dataclasses import dataclass, field
+
+from common.enum_compat import StrEnum
 
 from .budget_spec import BudgetSpec, BudgetUse
 from .departure_bundle import DepartureBundle
-
 
 DEFAULT_Q_CAVEAT = (
     "Q is a MIO policy-normalized diagnostic score over x_C and an explicit "

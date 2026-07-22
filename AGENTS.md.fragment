@@ -44,18 +44,18 @@ Use explicit context tiers rather than relying on hidden parent-thread state:
 ### 5. Evidence and result contract
 
 - Findings are keyed by stable `claim_id`; prose similarity is not a distinct finding.
-- Every substantive verdict MUST include exact evidence references, assumptions used, tool/version information, and a reproducible command or proof artifact when applicable.
+- Every substantive verdict MUST include specific, resolvable evidence references, assumptions used, relevant tool/version information, and a reproducible procedure or proof artifact when applicable. Exact byte hashes are conditional on the boundary above, not universal scientific requirements.
 - Each subagent writes only to its unique result path declared in the assignment. It must not edit shared context, specs, gates, or another agent’s result.
 - Before stopping, every subagent MUST write a result envelope and end its final message with one line of the form:
   `HARNESS_RESULT: {"assignment_id":"...","context_version":"...","status":"pass|fail|inconclusive|error","result_path":"..."}`
-- The main agent deduplicates by `(claim_id, evidence_fingerprint, verdict)` before adjudication.
+- The main agent deduplicates by `(claim_id, evidence_fingerprint, verdict)`. The fingerprint must scope the finding/proposition rather than merely name a whole source; statement prose is not identity. Conflicts and cross-run resolution use the same scoped identity so paraphrasing cannot evade adjudication or inflate the ledger.
 
 ### 6. Spec and gate authority
 
 - The current specification and gate registry are authoritative for scope, pass/fail criteria, and required evidence.
-- Agents may challenge a gate, but must record that as a separate meta-finding; they may not silently redefine success criteria.
+- Agents may challenge a gate, but must record the objection in the current result or review; they may not silently redefine success criteria. Do not create a permanent meta-claim or new gate unless a downstream decision actually consumes it.
 - Implementation may begin only after the relevant assignment identifies its governing spec clauses and gates.
-- Final acceptance requires machine-readable gate results plus a human-readable adjudication note.
+- Final acceptance of a predeclared gate or claim-promotion decision requires machine-readable gate results plus a human-readable adjudication note. Exploratory work may end with code, data, diagnostics, or a negative result without manufacturing a new gate; it simply cannot promote a claim until the relevant existing acceptance path is used.
 
 ### 7. Four-axis CAS cross-validation
 

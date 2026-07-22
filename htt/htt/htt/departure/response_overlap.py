@@ -1,28 +1,26 @@
 """Response-overlap and rank audit for local/global HTT discrimination."""
 from __future__ import annotations
 
-from collections.abc import Mapping, Sequence
-from dataclasses import asdict, dataclass, field
-from enum import StrEnum
 import hashlib
 import json
 import math
+from collections.abc import Mapping, Sequence
+from dataclasses import asdict, dataclass, field
 from types import MappingProxyType
 from typing import Any
 
 import numpy as np
-
 from common.contracts import (
     ArtifactManifest,
     ClaimTier,
     ImplementationScope,
     Owner,
 )
+from common.enum_compat import StrEnum
 from common.transfer_registry import (
     TransferSource,
     validate_transfer_dependent_result,
 )
-
 
 SCHEMA_VERSION = "htt.response_overlap_audit.v1"
 DEFAULT_CAVEAT = (

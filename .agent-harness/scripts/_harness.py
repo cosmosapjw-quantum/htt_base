@@ -10,10 +10,30 @@ from typing import Any, Mapping
 
 
 SAFE_IDENTIFIER_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$")
-RESULT_STATUSES = {"pass", "fail", "inconclusive", "error"}
+SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
+EVIDENCE_IDENTITY_RE = re.compile(r"[^\x00-\x1f\x7f]{1,512}")
 RISK_TIERS = {"R0", "R1", "R2", "R3"}
 CAS_AXES = {"wolfram_xact", "sympy", "sage_singular", "lean"}
-RESULT_SIZE_CAP_BYTES = 64 * 1024
+ACTIVE_RUN_RELATIVE_PATH = Path(".agent-harness/runtime/ACTIVE_RUN")
+LEGACY_ACTIVE_RUN_RELATIVE_PATH = Path(".agent-harness/ACTIVE_RUN")
+
+
+class ActiveRunError(RuntimeError):
+    """Structured failure while resolving local run state."""
+
+    def __init__(
+        self,
+        error_code: str,
+        message: str,
+        **details: str,
+    ) -> None:
+        super().__init__(f"{error_code}: {message}")
+        self.error_code = error_code
+        self.message = message
+        self.details = details
+
+    def as_dict(self) -> dict[str, str]:
+        return {"code": self.error_code, "message": self.message, **self.details}
 
 
 def historical_run_ids(repo: Path) -> set[str]:
@@ -75,53 +95,303 @@ def hash_files(repo: Path, files: list[str]) -> tuple[str, list[tuple[str, str]]
     return digest.hexdigest(), entries
 
 
-def active_run_id(repo: Path) -> str:
-    path = repo / ".agent-harness" / "ACTIVE_RUN"
-    if not path.exists():
-        raise SystemExit("No active run. Use init_run.py first.")
-    run_id = path.read_text(encoding="utf-8").strip()
-    if not run_id:
-        raise SystemExit("ACTIVE_RUN is empty.")
+def active_run_pointer_paths(repo: Path) -> tuple[Path, Path]:
+    """Return the local runtime pointer and the pre-MA-01 compatibility path."""
+
+    return (
+        repo / ACTIVE_RUN_RELATIVE_PATH,
+        repo / LEGACY_ACTIVE_RUN_RELATIVE_PATH,
+    )
+
+
+def _relative_pointer(repo: Path, path: Path) -> str:
+    return path.relative_to(repo).as_posix()
+
+
+def _read_active_run_pointer(repo: Path, path: Path) -> str:
+    pointer = _relative_pointer(repo, path)
+    if path.is_symlink() or not path.is_file():
+        raise ActiveRunError(
+            "INVALID_ACTIVE_RUN_POINTER",
+            "The active-run pointer must be a readable regular file containing a safe identifier.",
+            pointer=pointer,
+        )
+    try:
+        run_id = path.read_text(encoding="utf-8").strip()
+    except (OSError, UnicodeError) as exc:
+        raise ActiveRunError(
+            "INVALID_ACTIVE_RUN_POINTER",
+            f"Cannot read the active-run pointer: {exc}",
+            pointer=pointer,
+        ) from exc
     if not is_safe_identifier(run_id):
-        raise SystemExit(f"ACTIVE_RUN contains an unsafe run identifier: {run_id!r}")
+        raise ActiveRunError(
+            "INVALID_ACTIVE_RUN_POINTER",
+            "The active-run pointer is empty or contains an unsafe identifier.",
+            pointer=pointer,
+        )
     return run_id
+
+
+def active_run_id(
+    repo: Path,
+    *,
+    required: bool = True,
+) -> str | None:
+    """Resolve active local run state without mistaking a dangling pointer for none.
+
+    The runtime pointer is deliberately untracked.  The legacy root pointer is
+    read only as an upgrade bridge; a clean clone contains neither.  Invalid or
+    conflicting state is always an explicit error, including when ``required``
+    is false.
+    """
+
+    candidates = [path for path in active_run_pointer_paths(repo) if path.exists()]
+    if not candidates:
+        if required:
+            raise ActiveRunError(
+                "NO_ACTIVE_RUN",
+                "No active run. Use init_run.py first.",
+            )
+        return None
+
+    values = [(path, _read_active_run_pointer(repo, path)) for path in candidates]
+
+    distinct = {value for _, value in values}
+    if len(distinct) != 1:
+        detail = ", ".join(
+            f"{_relative_pointer(repo, path)}={value!r}" for path, value in values
+        )
+        raise ActiveRunError(
+            "CONFLICTING_ACTIVE_RUN_POINTERS",
+            f"Runtime and legacy active-run pointers disagree: {detail}",
+        )
+
+    run_id = values[0][1]
+    run_dir = repo / ".agent-harness" / "runs" / run_id
+    plan_path = run_dir / "RUN_PLAN.json"
+    pointer = _relative_pointer(repo, values[0][0])
+    plan = None
+    if (
+        not run_dir.is_symlink()
+        and run_dir.is_dir()
+        and not plan_path.is_symlink()
+        and plan_path.is_file()
+    ):
+        try:
+            plan = load_json(plan_path)
+        except (OSError, json.JSONDecodeError):
+            pass
+    if not isinstance(plan, Mapping) or plan.get("run_id") != run_id:
+        raise ActiveRunError(
+            "DANGLING_ACTIVE_RUN",
+            "The active-run pointer has no valid matching RUN_PLAN.json target.",
+            pointer=pointer,
+            run_id=run_id,
+        )
+    return run_id
+
+
+def cli_active_run_id(
+    repo: Path,
+    *,
+    required: bool = True,
+) -> str | None:
+    """Resolve active state for a CLI without leaking a Python traceback."""
+
+    try:
+        return active_run_id(repo, required=required)
+    except ActiveRunError as exc:
+        raise SystemExit(str(exc)) from None
+
+
+def write_active_run_id(repo: Path, run_id: str) -> Path:
+    """Atomically publish a local-only active-run pointer."""
+
+    if not is_safe_identifier(run_id):
+        raise ActiveRunError(
+            "INVALID_ACTIVE_RUN_POINTER",
+            f"Refusing to write an unsafe active-run identifier: {run_id!r}",
+            run_id=run_id,
+        )
+    path = repo / ACTIVE_RUN_RELATIVE_PATH
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_name(path.name + ".tmp")
+    temporary.write_text(run_id + "\n", encoding="utf-8")
+    temporary.replace(path)
+    return path
+
+
+def clear_active_run_pointers(
+    repo: Path,
+    *,
+    expected_run_id: str | None = None,
+) -> list[str]:
+    """Remove only local pointer files; run directories and evidence remain."""
+
+    targets: list[tuple[Path, str]] = []
+    for path in active_run_pointer_paths(repo):
+        if not path.exists():
+            continue
+        pointer = _relative_pointer(repo, path)
+        if expected_run_id is not None:
+            actual = _read_active_run_pointer(repo, path)
+            if actual != expected_run_id:
+                raise ActiveRunError(
+                    "CONFLICTING_ACTIVE_RUN_POINTERS",
+                    "The active-run pointer changed while the run was closing.",
+                    pointer=pointer,
+                    run_id=actual,
+                )
+        elif path.is_symlink() or not path.is_file():
+            raise ActiveRunError(
+                "INVALID_ACTIVE_RUN_POINTER",
+                "Refusing to remove a non-regular active-run pointer.",
+                pointer=pointer,
+            )
+        targets.append((path, pointer))
+
+    cleared: list[str] = []
+    for path, pointer in targets:
+        path.unlink()
+        cleared.append(pointer)
+    return cleared
 
 
 def is_safe_identifier(value: object) -> bool:
     return isinstance(value, str) and SAFE_IDENTIFIER_RE.fullmatch(value) is not None
 
 
+def is_evidence_identity(value: object) -> bool:
+    """Accept a bounded stable identity without pretending it is authenticated.
+
+    A cryptographic digest is one valid identity when exact bytes matter, but a
+    DOI, dataset release, source path/revision, or review-scope label is also a
+    legitimate research identity.  This field is self-declared unless another
+    validator explicitly binds it to bytes.
+    """
+
+    return (
+        isinstance(value, str)
+        and value == value.strip()
+        and EVIDENCE_IDENTITY_RE.fullmatch(value) is not None
+    )
+
+
+def is_run_local_claim_id(value: object, run_id: str) -> bool:
+    """Return whether a non-persistent process question is bound to this run."""
+
+    return is_safe_identifier(value) and str(value).startswith(f"RUN-{run_id}-")
+
+
 def declared_result_path(run_id: str, assignment_id: str) -> str:
     return f".agent-harness/runs/{run_id}/results/{assignment_id}.json"
 
 
-def _validate_hashed_input_list(
+def assignment_sha256(assignment: Mapping[str, Any]) -> str:
+    """Return the canonical registration seal, excluding the seal field itself."""
+
+    payload = dict(assignment)
+    payload.pop("assignment_sha256", None)
+    encoded = json.dumps(
+        payload, sort_keys=True, ensure_ascii=False
+    ).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()
+
+
+def _registered_claim_ids(repo: Path) -> tuple[set[str], list[str]]:
+    """Load claim identities only; stored scientific/gate status is not authority."""
+
+    path = repo / ".agent-harness" / "context" / "CLAIM_REGISTRY.jsonl"
+    if not path.is_file() or path.is_symlink():
+        return set(), ["canonical claim registry is missing or not a regular file"]
+    claims: set[str] = set()
+    errors: list[str] = []
+    for line_number, raw in enumerate(
+        path.read_text(encoding="utf-8").splitlines(), start=1
+    ):
+        if not raw.strip():
+            continue
+        try:
+            row = json.loads(raw)
+        except json.JSONDecodeError as exc:
+            errors.append(f"claim registry line {line_number} is invalid JSON: {exc}")
+            continue
+        claim_id = row.get("claim_id") if isinstance(row, Mapping) else None
+        if not is_safe_identifier(claim_id):
+            errors.append(
+                f"claim registry line {line_number} has a missing or unsafe claim_id"
+            )
+            continue
+        claim_text = str(claim_id)
+        if claim_text in claims:
+            errors.append(f"claim registry has duplicate claim_id: {claim_text}")
+        claims.add(claim_text)
+    if not claims:
+        errors.append("canonical claim registry contains no claim identities")
+    return claims, errors
+
+
+def _validate_input_list(
     repo: Path | None,
     values: object,
     *,
     field: str,
     errors: list[str],
+    require_hash: bool = False,
 ) -> None:
     if not isinstance(values, list) or not values:
         errors.append(f"assignment {field} must be a non-empty list")
         return
     for index, item in enumerate(values):
         if not isinstance(item, Mapping):
-            errors.append(f"assignment {field}[{index}] must be {{path, sha256}}")
+            errors.append(
+                f"assignment {field}[{index}] must contain a path and may "
+                "contain sha256"
+            )
             continue
         rel = item.get("path")
+        has_sha = "sha256" in item
         sha = item.get("sha256")
         if not isinstance(rel, str) or not rel:
             errors.append(f"assignment {field}[{index}] lacks a path")
             continue
-        if not isinstance(sha, str) or not re.fullmatch(r"[0-9a-f]{64}", sha):
-            errors.append(f"assignment {field}[{index}] lacks a sha256")
+        rel_path = Path(rel)
+        if (
+            rel_path.is_absolute()
+            or ".." in rel_path.parts
+            or "\\" in rel
+            or rel_path.as_posix() != rel
+        ):
+            errors.append(
+                f"assignment {field}[{index}] path must be canonical and "
+                f"repository-relative: {rel}"
+            )
+            continue
+        if require_hash and not has_sha:
+            errors.append(f"assignment {field}[{index}] requires a sha256")
+            continue
+        if has_sha and (
+            not isinstance(sha, str) or SHA256_RE.fullmatch(sha) is None
+        ):
+            errors.append(f"assignment {field}[{index}] has an invalid sha256")
             continue
         if repo is not None:
-            path = repo / rel
-            if not path.is_file():
+            path = repo / rel_path
+            probe = repo
+            traverses_symlink = False
+            for part in rel_path.parts:
+                probe = probe / part
+                if probe.is_symlink():
+                    traverses_symlink = True
+                    break
+            if traverses_symlink:
+                errors.append(
+                    f"assignment {field}[{index}] path traverses a symlink: {rel}"
+                )
+            elif not path.is_file():
                 errors.append(f"assignment {field}[{index}] path missing: {rel}")
-            elif hashlib.sha256(path.read_bytes()).hexdigest() != sha:
+            elif has_sha and hashlib.sha256(path.read_bytes()).hexdigest() != sha:
                 errors.append(
                     f"assignment {field}[{index}] hash mismatch (stale input): {rel}"
                 )
@@ -172,9 +442,11 @@ def validate_assignment_payload(
         errors.append("assignment agent_type must be non-empty")
     claim_ids = assignment.get("claim_ids")
     if not isinstance(claim_ids, list) or any(
-        not isinstance(item, str) or not item for item in claim_ids
+        not is_safe_identifier(item) for item in claim_ids
     ):
-        errors.append("assignment claim_ids must be a list of non-empty strings")
+        errors.append("assignment claim_ids must be a list of safe identifiers")
+    elif len(set(claim_ids)) != len(claim_ids):
+        errors.append("assignment claim_ids must be unique")
     if is_safe_identifier(actual_id):
         expected_path = declared_result_path(run_id, str(actual_id))
         if assignment.get("result_path") != expected_path:
@@ -185,6 +457,24 @@ def validate_assignment_payload(
     # --- v2 fail-closed additions -------------------------------------
     if isinstance(claim_ids, list) and not claim_ids:
         errors.append("assignment claim_ids must not be empty")
+    seal = assignment.get("assignment_sha256")
+    if not isinstance(seal, str) or SHA256_RE.fullmatch(seal) is None:
+        errors.append("assignment assignment_sha256 must be a lowercase SHA-256")
+    elif seal != assignment_sha256(assignment):
+        errors.append("assignment_sha256 does not match the sealed assignment payload")
+    if repo is None:
+        errors.append("strict assignment validation requires the repository root")
+    else:
+        registered_claims, claim_registry_errors = _registered_claim_ids(repo)
+        errors.extend(claim_registry_errors)
+        if isinstance(claim_ids, list):
+            for claim_id in claim_ids:
+                if (
+                    isinstance(claim_id, str)
+                    and claim_id not in registered_claims
+                    and not is_run_local_claim_id(claim_id, run_id)
+                ):
+                    errors.append(f"assignment claim_id is not registered: {claim_id}")
     if registry is None:
         try:
             from profile_registry import load_profile_registry
@@ -200,7 +490,7 @@ def validate_assignment_payload(
             )
     if assignment.get("risk_tier") not in RISK_TIERS:
         errors.append(f"assignment risk_tier must be one of {sorted(RISK_TIERS)}")
-    _validate_hashed_input_list(
+    _validate_input_list(
         repo, assignment.get("required_inputs"), field="required_inputs", errors=errors
     )
     allowed_tools = assignment.get("allowed_tools")
@@ -232,8 +522,12 @@ def validate_assignment_payload(
         if not isinstance(contract, Mapping):
             errors.append("CAS assignment requires cas_contract {path, sha256}")
         else:
-            _validate_hashed_input_list(
-                repo, [contract], field="cas_contract", errors=errors
+            _validate_input_list(
+                repo,
+                [contract],
+                field="cas_contract",
+                errors=errors,
+                require_hash=True,
             )
     return errors
 
@@ -271,134 +565,31 @@ def compute_effective_context_sha256(
     receipt_semantic = {
         "context_delivery_mode": receipt_fields.get("context_delivery_mode"),
         "requested_profile": receipt_fields.get("requested_profile"),
+        "actual_profile": receipt_fields.get("actual_profile"),
         "config_sha256": receipt_fields.get("config_sha256"),
+        "model": receipt_fields.get("model"),
+        "sandbox": receipt_fields.get("sandbox"),
         "fork_mode": receipt_fields.get("fork_mode"),
+        "attested": receipt_fields.get("attested"),
+        "evidence_origin": receipt_fields.get("evidence_origin"),
     }
     digest.update(json.dumps(receipt_semantic, sort_keys=True).encode("utf-8"))
     return digest.hexdigest()
 
 
-def validate_result_payload(
-    result: object,
-    assignment: Mapping[str, Any],
-    *,
-    run_id: str,
-    context_version: str,
-    launch: Mapping[str, Any] | None = None,
-    historical_runs: set[str] | None = None,
-    result_bytes: int | None = None,
-) -> list[str]:
-    """Validate the evidence-bearing minimum shared by all result roles.
-
-    v2 additions (non-historical runs): the envelope must carry the
-    ``launch_id`` from the launcher-owned receipt when one exists, artifact
-    rows must be typed ``{path, sha256, bytes, producer,
-    command_fingerprint}`` references instead of inlined logs, and routine
-    results above 64 KiB are rejected (audit §7 retention).
-    """
-
-    errors: list[str] = []
-    if not isinstance(result, Mapping):
-        return ["result artifact is not a JSON object"]
-    if historical_runs is None:
-        historical_runs = historical_run_ids(root())
-    historical = run_id in historical_runs
-    assignment_id = str(assignment.get("assignment_id", ""))
-    if result.get("schema_version") != 1:
-        errors.append("result schema_version must equal 1")
-    if not historical:
-        if launch is not None and result.get("launch_id") != launch.get("launch_id"):
-            errors.append("result launch_id does not match the launch receipt")
-        artifacts = result.get("artifacts")
-        if isinstance(artifacts, list):
-            for index, row in enumerate(artifacts):
-                if not isinstance(row, Mapping) or not {
-                    "path",
-                    "sha256",
-                    "bytes",
-                    "producer",
-                    "command_fingerprint",
-                } <= set(row):
-                    errors.append(
-                        f"artifact {index} must be a typed reference "
-                        "{path, sha256, bytes, producer, command_fingerprint}"
-                    )
-        if result_bytes is not None and result_bytes > RESULT_SIZE_CAP_BYTES:
-            errors.append(
-                f"result artifact is {result_bytes} bytes; routine results are "
-                f"capped at {RESULT_SIZE_CAP_BYTES} — store raw output in the "
-                "content-addressed evidence store and reference it"
-            )
-    if result.get("run_id") != run_id:
-        errors.append("result run_id does not match ACTIVE_RUN")
-    if result.get("assignment_id") != assignment_id:
-        errors.append("result assignment_id does not match its registration")
-    if result.get("context_version") != context_version:
-        errors.append("result context_version is stale")
-    status = result.get("status")
-    if status not in RESULT_STATUSES:
-        errors.append("result status is invalid")
-    if "agent_type" in result and result.get("agent_type") != assignment.get(
-        "agent_type"
-    ):
-        errors.append("result agent_type does not match its registration")
-    if "independence_mode" in result and result.get(
-        "independence_mode"
-    ) != assignment.get("independence_mode"):
-        errors.append("result independence_mode does not match its registration")
-    expected_path = declared_result_path(run_id, assignment_id)
-    if "result_path" in result and result.get("result_path") != expected_path:
-        errors.append("result_path inside the result does not match its registration")
-
-    findings = result.get("findings")
-    claim_results = result.get("claim_results")
-    reported_errors = result.get("errors")
-    if not any(
-        isinstance(value, list) for value in (findings, claim_results, reported_errors)
-    ):
-        errors.append("result has no findings, claim_results, or errors list")
-
-    claim_ids = set(assignment.get("claim_ids", []))
-    seen_finding_ids: set[str] = set()
-    if isinstance(findings, list):
-        for index, finding in enumerate(findings):
-            if not isinstance(finding, Mapping):
-                errors.append(f"finding {index} is not an object")
-                continue
-            finding_id = finding.get("finding_id")
-            if not is_safe_identifier(finding_id):
-                errors.append(f"finding {index} has a missing or unsafe finding_id")
-            elif str(finding_id) in seen_finding_ids:
-                errors.append(f"duplicate finding_id in result: {finding_id}")
-            else:
-                seen_finding_ids.add(str(finding_id))
-            if assignment.get("independence_mode") != "adjudication":
-                if finding.get("claim_id") not in claim_ids:
-                    errors.append(f"finding {finding_id!r} has an undeclared claim_id")
-                if not isinstance(finding.get("verdict"), str) or not finding.get(
-                    "verdict"
-                ):
-                    errors.append(f"finding {finding_id!r} lacks a verdict")
-                if not isinstance(
-                    finding.get("evidence_fingerprint"), str
-                ) or not finding.get("evidence_fingerprint"):
-                    errors.append(f"finding {finding_id!r} lacks evidence_fingerprint")
-    elif findings is not None:
-        errors.append("result findings must be a list")
-
-    if isinstance(claim_results, list):
-        for index, claim_result in enumerate(claim_results):
-            if not isinstance(claim_result, Mapping):
-                errors.append(f"claim_result {index} is not an object")
-                continue
-            if claim_result.get("claim_id") not in claim_ids:
-                errors.append(f"claim_result {index} has an undeclared claim_id")
-            if not isinstance(claim_result.get("verdict"), str) or not claim_result.get(
-                "verdict"
-            ):
-                errors.append(f"claim_result {index} lacks a verdict")
-    elif claim_results is not None:
-        errors.append("result claim_results must be a list")
-    if reported_errors is not None and not isinstance(reported_errors, list):
-        errors.append("result errors must be a list when present")
-    return errors
+def role_file_hashes(
+    repo: Path, index: Mapping[str, Any], agent_type: str
+) -> list[tuple[str, str]]:
+    rows: list[tuple[str, str]] = []
+    role_files = index.get("role_files", {})
+    if not isinstance(role_files, Mapping):
+        return rows
+    for rel in role_files.get(agent_type, []):
+        path = repo / str(rel)
+        digest = (
+            hashlib.sha256(path.read_bytes()).hexdigest()
+            if path.is_file() and not path.is_symlink()
+            else "MISSING"
+        )
+        rows.append((str(rel), digest))
+    return rows

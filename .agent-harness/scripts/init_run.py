@@ -2,10 +2,18 @@
 from __future__ import annotations
 
 import argparse
-import shutil
 from datetime import datetime, timezone
 
-from _harness import dump_json, is_safe_identifier, load_json, root, utc_now
+from _harness import (
+    ActiveRunError,
+    cli_active_run_id,
+    dump_json,
+    is_safe_identifier,
+    load_json,
+    root,
+    utc_now,
+    write_active_run_id,
+)
 
 
 def main() -> None:
@@ -29,6 +37,11 @@ def main() -> None:
 
     repo = root()
     harness = repo / ".agent-harness"
+    active = cli_active_run_id(repo, required=False)
+    if active is not None:
+        raise SystemExit(
+            f"Active run already exists: {active}. Close it with close_run.py first."
+        )
     run_id = args.run_id or datetime.now(timezone.utc).strftime("run-%Y%m%dT%H%M%SZ")
     if not is_safe_identifier(run_id):
         raise SystemExit("run-id must be a safe 1-128 character identifier")
@@ -56,7 +69,10 @@ def main() -> None:
     for name in ["assignments", "results", "raw_logs", "artifacts"]:
         (run_dir / name).mkdir(parents=True, exist_ok=True)
     dump_json(run_dir / "RUN_PLAN.json", template)
-    (harness / "ACTIVE_RUN").write_text(run_id + "\n", encoding="utf-8")
+    try:
+        write_active_run_id(repo, run_id)
+    except ActiveRunError as exc:
+        raise SystemExit(str(exc)) from None
     print(run_id)
 
 

@@ -52,6 +52,9 @@ _METADATA_KEYS = frozenset({
     "transfer_source",
     "config_hash",
     "input_hashes",
+    "input_hashes_role",
+    "current_compatibility_input_hashes",
+    "scientific_payload_lineage",
     "sky_support_status",
     "null_mock_status",
     "caveats",
@@ -79,11 +82,14 @@ def _input_hashes() -> list[str]:
     return records
 
 
-def _with_artifact_metadata(source: dict) -> dict:
+def _with_artifact_metadata(source: dict, *, metadata_only: bool) -> dict:
     """Attach content-addressed metadata without re-running any experiment.
 
     This is deliberately usable on an existing payload so a provenance-only
-    refresh does not change or recompute the stored scientific numbers.
+    refresh does not change or recompute the stored scientific numbers.  A
+    metadata-only refresh must already carry the immutable source hashes that
+    produced its frozen payload; current compatibility hashes are recorded in
+    a separate lane and never replace that historical lineage.
     """
     payload = copy.deepcopy(source)
     d1 = payload["experiments"]["axis_d"]["D1_feasible_pv_covariance"]
@@ -96,16 +102,59 @@ def _with_artifact_metadata(source: dict) -> dict:
     scientific_payload = {
         key: value for key, value in payload.items() if key not in _METADATA_KEYS
     }
+    scientific_payload_hash = _stable_hash(scientific_payload)
+    if metadata_only:
+        lineage = payload.get("scientific_payload_lineage")
+        if not isinstance(lineage, dict):
+            raise ValueError(
+                "metadata-only refresh requires explicit scientific_payload_lineage")
+        required_lineage = {
+            "status",
+            "config_hash",
+            "scientific_payload_hash",
+            "input_hashes",
+            "generating_command",
+            "replay_status",
+        }
+        if not required_lineage <= lineage.keys():
+            missing = sorted(required_lineage - lineage.keys())
+            raise ValueError(
+                f"scientific_payload_lineage is missing required fields: {missing}")
+        if lineage["scientific_payload_hash"] != scientific_payload_hash:
+            raise ValueError(
+                "frozen scientific payload no longer matches its lineage receipt")
+        lineage = copy.deepcopy(lineage)
+        generating_command = (
+            "python scripts/run_egs3_experiments.py --metadata-only")
+    else:
+        payload_config_hash = _stable_hash({
+            "metadata_schema": "htt.minimum_artifact_metadata.v1",
+            "scientific_payload_hash": scientific_payload_hash,
+            "input_hashes": inputs,
+        })
+        lineage = {
+            "status": "current_full_generation",
+            "config_hash": payload_config_hash,
+            "scientific_payload_hash": scientific_payload_hash,
+            "input_hashes": inputs,
+            "generating_command": "python scripts/run_egs3_experiments.py",
+            "replay_status": "reproducible_in_current_worktree",
+        }
+        generating_command = "python scripts/run_egs3_experiments.py"
     payload.update({
         "owner": "OBSSTAT",
         "implementation_scope": "obsstat",
         "transfer_source": "mixed_none_and_analytic_transfer_stand_ins",
         "config_hash": _stable_hash({
-            "metadata_schema": "htt.minimum_artifact_metadata.v1",
-            "scientific_payload_hash": _stable_hash(scientific_payload),
-            "input_hashes": inputs,
+            "metadata_schema": "htt.minimum_artifact_metadata.v2",
+            "scientific_payload_lineage": lineage,
+            "current_compatibility_input_hashes": inputs,
         }),
         "input_hashes": inputs,
+        "input_hashes_role": (
+            "metadata_refresh_and_current_compatibility_only"),
+        "current_compatibility_input_hashes": inputs,
+        "scientific_payload_lineage": lineage,
         "sky_support_status": "synthetic_or_not_applicable_no_observed_sky_claim",
         "null_mock_status": "fixed_seed_synthetic_and_idealized_nulls_no_e2e_validation",
         "caveats": [
@@ -113,8 +162,9 @@ def _with_artifact_metadata(source: dict) -> dict:
             "Axis D1 is a synthetic method witness with no observational interpretation or public-result use.",
             "Analytic and semi-native transfer stand-ins are not native low-ell solver outputs.",
             "No detection, geometry, family-identification, or posterior claim is authorized.",
+            "Top-level input_hashes describe metadata refresh and current-code compatibility, not generation of the frozen scientific payload; see scientific_payload_lineage.",
         ],
-        "generating_command": "python scripts/run_egs3_experiments.py",
+        "generating_command": generating_command,
         "metadata_refresh_command": "python scripts/run_egs3_experiments.py --metadata-only",
         "git_commit": "content-addressed",
         "git_commit_or_worktree_state": "content-addressed",
@@ -289,21 +339,26 @@ def axis_d() -> dict:
     from htt.obsstat.lowell_map_features import _packed_index
     rng = np.random.default_rng(20260702)
     pos = rng.normal(size=(600, 3)) * 50.0
-    r = np.linalg.norm(pos, axis=1); nh = pos / r[:, None]
+    r = np.linalg.norm(pos, axis=1)
+    nh = pos / r[:, None]
     modes = pv.velocity_field_modes(pos, sigma_shear_kms_per_mpc=0.3)
     U, Lam = modes["U"][:, 3:], modes["Lambda"][3:]
     sig2 = (rng.uniform(50.0, 150.0, 600)) ** 2
     v = nh @ np.array([200.0, -90.0, 60.0]) + rng.normal(size=600) * np.sqrt(sig2)
     fit = pv.pv_tilt_gls(nh, v, sig2, U, Lam)
     # Woodbury vs dense witness on a small block
-    d0 = rng.uniform(1, 4, 40); U0 = rng.normal(size=(40, 8)); l0 = rng.uniform(.5, 2, 8)
-    C0 = np.diag(d0) + U0 @ np.diag(l0) @ U0.T; b0 = rng.normal(size=(40, 2))
+    d0 = rng.uniform(1, 4, 40)
+    U0 = rng.normal(size=(40, 8))
+    l0 = rng.uniform(.5, 2, 8)
+    C0 = np.diag(d0) + U0 @ np.diag(l0) @ U0.T
+    b0 = rng.normal(size=(40, 2))
     woodbury_ok = bool(np.allclose(pv.woodbury_solve(d0, U0, l0, b0), np.linalg.solve(C0, b0), atol=1e-9))
     # Synthetic subset-error sensitivity vs selected fraction.
     order = np.argsort(r)
     gain_curve = {}
     for frac in (0.02, 0.05, 0.10, 0.15):
-        mask = np.zeros(600, bool); mask[order[:int(frac * 600)]] = True
+        mask = np.zeros(600, bool)
+        mask[order[:int(frac * 600)]] = True
         gain_curve[f"{frac:.2f}"] = jf.synthetic_error_shrink_sensitivity(
             nh, v, sig2, mask, error_scale=1/3, U=U, Lambda=Lam
         )["information_multiplier"]
@@ -315,17 +370,18 @@ def axis_d() -> dict:
     def packed(seed):
         rr = np.random.default_rng(seed)
         a = rr.normal(size=(lmax + 1) * (lmax + 2) // 2) + 1j * rr.normal(size=(lmax + 1) * (lmax + 2) // 2)
-        for l in range(lmax + 1):
-            a[_packed_index(lmax, l, 0)] = a[_packed_index(lmax, l, 0)].real
+        for ell in range(lmax + 1):
+            a[_packed_index(lmax, ell, 0)] = a[_packed_index(lmax, ell, 0)].real
         return a
     iso, ab = [], []
     for s in range(30):
         a = packed(1000 + s)
         iso.append(bs.compute_biposh_from_alm(a, lmax, L_values=(1, 2)).power_by_L[1])
         aa = a.copy()
-        for l in range(2, lmax):
-            for m in range(0, l + 1):
-                aa[_packed_index(lmax, l + 1, m)] += 0.3 * a[_packed_index(lmax, l, m)]
+        for ell in range(2, lmax):
+            for m in range(0, ell + 1):
+                aa[_packed_index(lmax, ell + 1, m)] += 0.3 * a[
+                    _packed_index(lmax, ell, m)]
         ab.append(bs.compute_biposh_from_alm(aa, lmax, L_values=(1, 2)).power_by_L[1])
     cmb_fail_closed = False
     try:
@@ -393,7 +449,8 @@ def axis_e() -> dict:
     estimated_cov_tau = two_stage_tau(
         10, 2, alpha1=0.05, alpha2=0.05,
         threshold_policy="estimated_covariance_f", n_sim=300)
-    upper_open = toy["upper"].copy(); upper_open[1] = np.inf
+    upper_open = toy["upper"].copy()
+    upper_open[1] = np.inf
     unbounded = identified_set_report(y, toy["R"], toy["c"], toy["lower"],
                                       upper_open, alpha2=1.0)
     A = toy["R"][:, [0, 2]]
@@ -565,7 +622,7 @@ def main(argv: list[str] | None = None) -> int:
         payload = json.loads(OUT.read_text(encoding="utf-8"))
     else:
         payload = build_payload()
-    payload = _with_artifact_metadata(payload)
+    payload = _with_artifact_metadata(payload, metadata_only=args.metadata_only)
     text = json.dumps(payload, indent=2, default=float) + "\n"
     if args.check:
         if not OUT.is_file():

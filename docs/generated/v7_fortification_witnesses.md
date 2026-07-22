@@ -3,7 +3,7 @@
 owner: OBSSTAT
 implementation_scope: obsstat
 claim_tier: diagnostic_only
-config_hash: `sha256:5dfa0816bff10b74c722de50c9b5969e9c5f93d92a67ce54306dc38d87648be8`
+config_hash: `sha256:61d03ef09c890823134a7493ca483e3b892dda9ac0ed73cb40077fb412d0ce84`
 generating_command: `venv/bin/python scripts/run_v7_fortification_witnesses.py`
 
 | Witness | Verdict | Claim |

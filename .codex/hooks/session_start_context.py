@@ -1,14 +1,22 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+
 from _common import emit_additional_context, load_json, repo_root
+
+HARNESS_SCRIPTS = Path(__file__).resolve().parents[2] / ".agent-harness" / "scripts"
+if str(HARNESS_SCRIPTS) not in sys.path:
+    sys.path.insert(0, str(HARNESS_SCRIPTS))
+
+from _harness import ActiveRunError, active_run_id  # noqa: E402
 
 
 def main() -> None:
     root = repo_root()
     harness = root / ".agent-harness"
     index_path = harness / "context" / "CONTEXT_INDEX.json"
-    active_path = harness / "ACTIVE_RUN"
     index = load_json(index_path, {}) or {}
 
     if not index_path.exists():
@@ -21,7 +29,18 @@ def main() -> None:
         return
 
     version = index.get("context_version", "UNBUILT")
-    active_run = active_path.read_text(encoding="utf-8").strip() if active_path.exists() else "none"
+    try:
+        active_run = active_run_id(root, required=False) or "none"
+    except ActiveRunError as exc:
+        emit_additional_context(
+            "SessionStart",
+            "Shared-context harness state is invalid: "
+            f"{exc.error_code}: {exc.message} Run "
+            "`python3 .agent-harness/scripts/close_run.py --abandon` only after "
+            "confirming that the local pointer should be cleared.",
+            warning="Invalid shared-context harness state",
+        )
+        return
     text = f"""[SHARED-CONTEXT HARNESS]
 Repository root: {root}
 Context version: {version}

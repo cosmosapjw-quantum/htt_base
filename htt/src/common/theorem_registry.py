@@ -4,9 +4,9 @@ from __future__ import annotations
 
 from collections.abc import Iterable, Sequence
 from dataclasses import dataclass, field
-from enum import StrEnum
 from typing import Any
 
+from common.enum_compat import StrEnum
 
 DEFAULT_THEOREM_CAVEAT = (
     "Theorem entries are synthetic/manufactured verification obligations only; "

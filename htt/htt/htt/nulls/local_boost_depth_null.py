@@ -1,17 +1,15 @@
 """Depth-resolved local-boost null banks for HTT local/global gates."""
 from __future__ import annotations
 
-from collections.abc import Mapping, Sequence
-from dataclasses import asdict, dataclass, field
-from enum import StrEnum
 import hashlib
 import json
 import math
 import re
+from collections.abc import Mapping, Sequence
+from dataclasses import asdict, dataclass, field
 from typing import Any
 
 import numpy as np
-
 from common.contracts import (
     ArtifactManifest,
     ClaimTier,
@@ -19,8 +17,9 @@ from common.contracts import (
     Owner,
     normalize_claim_tier,
 )
-from htt.departure.response_overlap import ResponseOverlapAudit
+from common.enum_compat import StrEnum
 
+from htt.departure.response_overlap import ResponseOverlapAudit
 
 SCHEMA_VERSION = "htt.local_boost_depth_null.v1"
 DEFAULT_CAVEATS = (

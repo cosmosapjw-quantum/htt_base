@@ -28,6 +28,9 @@ This harness does not make separate subagents share a hidden model state or free
 - The spawn budget is cumulative per `work_unit_id` (normally the PR id),
   not per run — creating a new run does not reset it.
 - Run directories are not committed; see `runs/RETENTION.md`.
+- The active-run pointer lives at ignored local path
+  `.agent-harness/runtime/ACTIVE_RUN`; a clean clone intentionally has no
+  active run.
 
 ## Start a run
 
@@ -62,9 +65,89 @@ python3 .agent-harness/scripts/validate_harness.py
 Registration is fail-closed (audit H3): empty `claim_ids`,
 `required_inputs`, `allowed_tools`, or `required_outputs`, an unknown
 `agent_type`, or a CAS agent without `--cas-axis`/`--cas-contract` is
-rejected before the assignment file is written.
+rejected before the assignment file is written. New assignments are sealed
+with `assignment_sha256`. Long-lived claim IDs must already exist in the
+canonical `context/CLAIM_REGISTRY.jsonl`; `RUN-*` IDs are reserved for
+run-local review questions, must begin `RUN-<run_id>-`, and cannot be used to
+promote a scientific claim or enter the cross-run finding ledger.
+Only claim identity is consumed from the registry; a stored claim, novelty,
+or gate status is never treated as current scientific authority. The seal is
+an automatically generated same-run drift checksum, not a signature,
+scientific provenance grade, or publication requirement. `--required-input`
+pins the local bytes used by the current assignment; this is an internal run
+binding, not a demand that the upstream research archive expose matching
+bytes. `--live-input` explicitly records path-only evolving material with no
+exact-replay claim. External literature/data/software provenance belongs in
+resolvable evidence references. CAS contracts remain exactly pinned.
 
 Paste the header printed by `new_assignment.py` at the start of the subagent spawn prompt. The assignment JSON supplies the unique result path.
+
+## Strict result contract (MA-03)
+
+New runs use `templates/RESULT_ENVELOPE.json` schema v2. Every assigned claim
+must have exactly one typed terminal disposition:
+
+- `findings_present` names one or more finding IDs;
+- `examined_no_findings` explicitly records a completed review with no
+  finding and requires nonempty evidence references; or
+- `not_examined` is allowed only for an `inconclusive` or `error` result.
+
+The validator binds the registered assignment, canonical result path, launch
+receipt when present, role and independence mode, declared reads, timestamps,
+tools, commands, artifacts, findings, and reported errors. Artifact references
+are accepted only after path confinement, blind-sibling authorization,
+byte-count, and SHA-256 checks. That hash protects the bytes of a referenced
+local artifact; it does not establish scientific validity. Finding severity
+is one of `low`, `medium`, `high`, or `critical`. Each substantive finding
+needs a bounded, self-declared stable evidence identity scoped to that finding
+or proposition; it may be a digest, DOI/release plus section or observable,
+source revision plus test, or a finding-specific review-scope label.
+`examined_no_findings` and artifact command identities do not require a
+fingerprint. These identities are deduplication aids, not authenticated
+provenance. Results must echo the automatically generated assignment seal so
+a later assignment rewrite cannot validate an earlier verdict. Routine result
+JSON is capped at 64 KiB, with larger raw evidence stored once through
+`evidence_store.py` and referenced by its typed descriptor.
+
+### Exactness boundary and anti-inflation rule
+
+Source identity, scientific reproducibility, and exact replay are different
+claims. Literature, public datasets, and external software normally need a
+resolvable DOI/URL/product release/version plus methods, assumptions, and
+tolerances sufficient for an independent scientific rerun. Exact byte hashes
+are required only for internal assignment/context bindings, CAS contracts,
+content-addressed blobs, explicitly frozen inputs, and local artifacts whose
+byte identity is itself material. They are not universal upstream provenance
+requirements. Hash completeness, gate count, ledger rows, or generated
+Markdown/JSON volume are never research progress metrics.
+
+Do not create a permanent claim row, gate, receipt, or policy file solely to
+make a run structurally pass. Use a `RUN-*` question for bounded process work,
+reuse this kernel, and downgrade provenance honestly when exact upstream bytes
+are unavailable. After two consecutive assurance-only PRs, the next PR must
+deliver a named downstream scientific capability, data execution/integration,
+experiment, or interpretable result. Another harness repair counts only when a
+reproduced high-severity defect directly blocks that named task.
+
+`SubagentStop`, `merge_results.py`, and `validate_harness.py` all call the same
+file-level kernel in `scripts/strict_result_validation.py`. The repository has
+no separate production "agent result replay" consumer: replaying a serialized
+stop-hook event exercises the same hook and kernel. The hermetic
+research-receipt replay utilities under
+`scripts/codex_harness/` are a different evidence domain and are intentionally
+not coupled to this result contract.
+
+Current launch receipts and the agent-declared read/execution lists are
+`self_declared`, not platform-authenticated. The legacy-looking `--attested`
+flag means only that the caller asserts the requested local profile was loaded;
+it does not create platform provenance. Missing receipts are recorded as
+`unverified`, and a JSON field that promotes itself to
+`platform_authenticated` is rejected until a platform-owned verifier exists.
+Local receipt validation still binds the assigned/requested/actual profile,
+installed config and sandbox, fork mode, and context-delivery mode.
+Pre-MA-03 runs listed in `HISTORICAL_RUNS.json` are read-only schema-v1
+inputs: validation does not rewrite or silently upgrade them, and result merge
+refuses to regenerate their stored aggregate.
 
 ## Spawn prompt template
 
@@ -82,15 +165,31 @@ Execute only the registered assignment. The SubagentStart hook injects the canon
 ```bash
 python3 .agent-harness/scripts/merge_results.py
 python3 .agent-harness/scripts/validate_harness.py
-python3 .agent-harness/scripts/run_summary.py --run-id <RUN_ID>
+python3 .agent-harness/scripts/close_run.py --run-id <RUN_ID>
 ```
 
+Normal close validates the run, writes `RUN_SUMMARY.json`, and clears only
+the local pointer. It never deletes the run directory. If a pointer is
+invalid or dangling, inspect it first; explicit recovery is
+`python3 .agent-harness/scripts/close_run.py --abandon`, which also leaves all
+run data untouched.
+
 The adjudicator should consume `MERGED_RESULTS.json` plus only the disputed
-evidence needed for a targeted decision. Opposite verdicts on the same
-`(claim_id, evidence_fingerprint)` are emitted as a `conflicts` object and
-fail the merge — no majority vote. Resolved findings are recorded in
-`.agent-harness/ledger/FINDING_LEDGER.jsonl` so later runs do not re-raise
-them.
+evidence needed for a targeted decision. `evidence_fingerprint` is a bounded,
+stable identity for the scoped finding/proposition (for example a DOI or
+dataset release plus a relevant section, observable, or test), not a demand
+for an upstream SHA and not merely a whole-source label. Opposite verdicts on
+the same `(claim_id, evidence_fingerprint)` are emitted as a `conflicts` object
+and fail the merge even when their prose differs — no majority vote. Statement
+text is explanatory prose, not identity, so paraphrases of the same scoped
+finding deduplicate and cannot create new resolved-ledger items. Different
+sub-findings from one source use different scoped identities rather than a new
+schema field. Resolved findings are recorded in
+`.agent-harness/ledger/FINDING_LEDGER.jsonl` so later runs do not re-raise them.
+
+`MERGED_RESULTS.json.process_status` reports only envelope/merge integrity.
+Its `claim_gate_status` is always `NOT_EVALUATED`; a zero merge exit code is
+never a novelty, scientific-validity, or claim-acceptance decision.
 
 ## Four-axis CAS gate
 

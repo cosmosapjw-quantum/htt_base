@@ -2,6 +2,207 @@
 
 Record commands actually run. Never mark skipped checks as passed.
 
+## MA-03 - unified strict harness-result validation
+
+Date: 2026-07-23
+
+Change classification: COMMON harness contracts, result/assignment/launch
+validation, local evidence retention, hooks, tests, and harness documentation.
+Affected owner: harness only. No numerical method, physical model, inference,
+transfer function, observed or synthetic dataset, generated scientific result,
+claim verdict, novelty tier, or research-DAG/status entry changed.
+
+| Command or check | Result | Notes |
+|---|---:|---|
+| `env PYTHONPATH=/tmp/htt-base-testdeps python -B -m pytest -p no:cacheprovider scripts/codex_harness/test_harness_enforcement.py scripts/codex_harness/test_codex_assets.py tests/contracts/test_harness_runner.py -q` | PASS | Final replay after the research-exactness correction: `76 passed, 3 skipped in 8.46s`. The skips require an unavailable Codex CLI and are not counted as passes. The MA-03 families exercise assignment/result seals, registered versus run-bound `RUN-*` identities and ledger exclusion, exact default versus explicit live inputs, canonical paths, exact per-claim coverage, evidence-referenced no-findings, status coherence, finding severity, stable non-SHA finding identities, optional command identities, paraphrase-safe dedup/conflicts and ledger reuse, artifact hash/size/path checks, poisoned evidence blobs, blind-sibling isolation, launch evidence classes, all three result consumers, and historical merge refusal. |
+| same bounded files with `pytest --collect-only -q` | PASS | `79 tests collected`; import/collection smoke is explicit and separate from execution. |
+| touched Python `py_compile` invocation | PASS | The common harness module, dedicated strict-result module, five CLIs, stop hook, and two test files compile. |
+| `python3 .agent-harness/scripts/validate_harness.py` | PASS | Clean worktree state reports the current context hash and `active_run=null`; abandoned review pointers were cleared without deleting their ignored run evidence. |
+| `python3 scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml` and progress report | PASS | `131 PRs, DAG valid`; `114/131 = 87.02%`, dependency weighted `91.13%`, no unblocked next card. MA-03 remains Issue #1 work and was not inserted into the research DAG. |
+| independent implementation and exactness reviews | FAIL, CLOSED | The first registered schema-v2 review found that `finding.severity` was not enforced and that an artifact path could read an unallowed sibling result; both now share cross-consumer regressions. The post-feedback reviews then found over-relaxed result/assignment binding, conflict laundering through missing identities, broad-label collapse, mutable default inputs, `RUN-*` leakage into the cross-run ledger, and statement-based conflict/ledger evasion. The final design restores automatic exact same-run binding, requires non-SHA scoped identities for substantive findings, uses one proposition identity consistently across dedup/conflict/ledger operations, binds `RUN-*` to the run, and keeps live-input/no-findings/command relaxations explicit. Two earlier review attempts were blocked by a platform prompt classifier before producing a result and are not represented as review evidence. |
+| repo-wide `check_no_mock_results.py` | FAIL, PRE-EXISTING | Historical `calibration_factor` and mock-result markers remain across archives, legacy scripts, tests, and generated figures. This global noise is not relabeled as a pass. |
+| scoped mock/fake-result `rg` over every MA-03 changed implementation/test surface | PASS BY ABSENCE | `rg` returned 1 with no matches. No demo/smoke result was promoted into the strict result or validation ledger. |
+| full `tests/contracts -q` attempt | NOT RUN TO COMPLETION, ENVIRONMENTAL | Collection stopped with 13 dependency/import errors: the local `.venv` interpreter is broken and the fallback environment lacks project paths plus optional `astropy`, `healpy`, and `sympy`. The directly affected contract file and both harness/Codex test files passed in the bounded suite; the broad collection failure is not hidden. |
+| `git diff --check` | PASS | No whitespace errors after documentation and review closure. |
+
+Numerical/scientific impact: none. `MERGED_RESULTS.json.process_status` reports
+only structural envelope/merge integrity and `claim_gate_status` is explicitly
+`NOT_EVALUATED`. Stored claim-registry status is not consumed as current gate
+authority. The PR does not assess or change novelty, scientific validity, or
+research output.
+
+Artifact/claim-tier impact: the schema-v2 result template and harness README
+are updated; no scientific result pack or generated context artifact changed.
+Pre-MA-03 schema-v1 runs remain validation inputs only, and merge refuses to
+rewrite their stored aggregate. The PR-121 research-receipt replay domain is
+deliberately not coupled to the agent-result kernel because no separate
+production agent-result replay consumer exists.
+
+Research-exactness correction: `--required-input` retains automatic exact-byte
+binding inside one assignment, while `--live-input` explicitly downgrades
+evolving local material to path-only with no exact-replay claim. This internal
+seal is not imposed on upstream papers, datasets, or software releases. CAS
+contracts, content-addressed evidence, and referenced local artifact bytes
+remain exact. Run-bound `RUN-*` review questions avoid permanent claim rows and
+are rejected by the cross-run ledger. Substantive findings require a stable
+self-declared evidence identity, but it need not be SHA-shaped; no-findings and
+command identities remain optional. Existing `AGENTS.md` and harness guidance
+separate source identity, scientific reproducibility, and exact replay and
+activate the two-governance-PR stop rule without adding a new policy artifact.
+
+Remaining risks and kill-switches: assignment SHA-256 is a deterministic drift
+checksum, not a signature or scientific provenance grade. Explicit live inputs
+do not promise exact replay. Launch, execution, and read evidence remains
+`self_declared` (or `unverified` when absent) until a platform-owned verifier
+exists; a payload cannot promote itself to authenticated evidence. Any strict
+kernel error blocks stop-hook completion, standalone validation, and merge.
+The full optional-dependency contract suite still requires a repaired project
+environment; its environmental collection failure is not waived by this PR.
+
+## Substantive cycle 01 - EGS3 identified-set endpoint integrity
+
+Date: 2026-07-22
+
+Changed surfaces: the OBSSTAT EGS3 identified-set implementation, adversarial
+contract tests, a standalone read-only numerical validator plus its contracts,
+three directly dependent generated artifact families, and this ledger entry.
+The registered response design, comparator, low-ell statistic set, research
+DAG/status, claim tier, native-solver state, and observational gates were not
+changed.
+
+| Command or check | Result | Notes |
+|---|---:|---|
+| First three hash-pinned hostile reviews and follow-up probes | FAIL, RETAINED | The first review reproduced an excluded population point, units-dependent structural rank, non-finite public inputs converted to statuses, unvalidated bounded-LS results, and stale direct provenance. The second found a scaled near-boundary population false inclusion, a valid rank-2 box rejected by an over-strict projected-gradient check, and a nominal-success but non-sharp rank-3 SLSQP endpoint. The third found cancellation after a `1e8` coordinate translation: `38/200` metamorphic cases failed and one endpoint was wrong by about `0.05`; a subsequent continuous-face probe at `1e11` exposed a `7.62e-4` endpoint error. All failed envelopes and summaries remain under the ignored local harness run directories. |
+| Fourth hash-pinned hostile review | FAIL, CLOSED | The numerical reviewer showed that a valid `ceiling_U` placed between the binary64 upper endpoint and its 100-digit continuous-real reference could return `feasible` instead of `ceiling_unfit`. The provenance reviewer showed that metadata-only refresh had overwritten the frozen EGS3 experiment payload's historical generation hashes with current-code hashes while the advertised full-generation check was stale. The public ceiling comparison now raises `EndpointOptimizationError` inside a 64-epsilon band scaled by the uncancelled endpoint objective terms, with ordinary and large-cancellation below/inside/above regressions. The artifact now preserves its historical config and 19 source hashes under `scientific_payload_lineage`, labels top-level hashes as current compatibility/metadata inputs only, advertises the metadata-only command, and rejects missing or payload-drifted lineage. Both failed envelopes remain in final-review run 4. |
+| Fifth hash-pinned hostile closure review | PASS | Two independent closure-only reviewers checked the nine sealed inputs in `egs3-endpoint-final-review-5-20260722`; all before/after hashes matched and both result envelopes passed harness validation. The numerical reviewer reran all `63` endpoint/validator contracts, the frozen `300 + 500 + 200 + 200` validation cases, and ordinary plus large-cancellation ceiling probes; thresholds inside the arithmetic ambiguity band failed closed while below/above probes retained the intended statuses. The provenance reviewer independently matched the frozen scientific payload to HEAD after metadata removal, verified the exact historical config and 19-hash lineage, resolved all 19 current compatibility hashes to current files, killed missing/drifted-lineage mutations, and kept the absent legacy publication inputs classified separately as `BLOCKED_NOT_CURRENT`. This ledger row was added after normal run closure; no scientific implementation or generated artifact was changed by recording it. |
+| Focused endpoint, provenance, and validator contracts | PASS | Final current-code replay: `63 passed in 8.15s`. The endpoint contracts include every retained reviewer counterexample, exact-boundary and population controls, large translations, extreme combined column scale/translation, ceiling ambiguity including cancelled objectives, analytic empty/feasible rank-2 boxes, public-input rejection, infinite bounds, and explicit higher-rank box-active refusal. The artifact contracts bind historical versus current provenance lanes and kill missing/drifted lineage. Validator contracts cover the full frozen run, no-write behavior, helper independence, and dedicated mutations of the oracle, reparameterization, translation, and translated-geometry paths. |
+| EGS3 research-gate, PSD-cone, and direct-v7 consumer regression | PASS, BOUNDED | Final combined invocation: `119 passed, 1 deselected, 1 warning in 14.15s`. The deselected test requires four absent external v6 publication ZIPs; the warning is the pre-existing pytest return-value warning in the martingale witness. No missing external input is counted as a pass. |
+| `python -B scripts/validate_egs3_endpoint_integrity.py` | PASS | The committed read-only validator binds module SHA `9350f79...` and validator SHA `3acdbd1...`. Original-coordinate eigen/angle oracle: seed `20260722`, `300` cases (`273` box-active), maximum error `1.776e-15` at tolerance `2e-10`. Column reparameterization: seed `20260723`, `500` cases (`166` population, `334` positive-radius), scales `1e-12` through `1e12`, maximum difference `2.220e-15` at tolerance `2e-10`. Equal-translation/full-box surface: seed `20260724`, `200` cases, maximum error `2.776e-17` with minimum strict feasibility margin `0.09169`. Exact-Fraction-recentered arbitrary translated geometry: seed `20260725`, `200` cases (`189` box-active), maximum error `2.384e-7`, at most `5` objective-arithmetic ULP, tolerance `2e-6`. Its JSON stdout makes no physical, observational, novelty, or publication claim. |
+| Registered rank-2 deterministic feasibility and endpoint certificates | PASS | The bounded-LS and SLSQP scientific paths were removed. Box feasibility is the minimum of the unconstrained centre and analytic scalar minima on all finite faces; sharp endpoints enumerate ellipsoid support points, face intersections, and clipped corners. Least-squares anchors remain split from local corrections, physical bounds are converted to centre-relative canonical deltas, and candidate ranking never returns to the large absolute origin. Bound violations inside the scale-aware ambiguity band fail with a typed numerical error; stage-2 feasibility between the exact level and its roundoff allowance also fails closed. Final analytic roots may use the documented arithmetic allowance during certification rather than being misclassified as scientific emptiness. |
+| Translation and combined scale/translation hostile sweeps | PASS WITH RESIDUAL PRECISION RISK | The two formerly failing translation families now pass. An additional seed-`20260728` sweep combined positive column scales `1e-12` through `1e12` with dyadic coordinate translations `2^17` through `2^40`: all `300/300` cases completed with no false status or exception and `268` were box-active. Maximum absolute difference was `4.883e-4`, exactly one output-arithmetic ULP at that large objective scale; p95/p99 arithmetic error was `1/3.01` ULP. One frozen case has upper-endpoint error `1.341e-7` (`72` output ULP) while passing the committed `2e-7` regression and `2e-6` translated-oracle tolerances. A 100-digit decomposition attributes about `26` ULP to materialising `A/scale` and the dominant remainder to centre-relative bound conversion; face selection/root arithmetic and final `math.fsum` are sound. Exact-Fraction bound arithmetic reduces it to about `20` ULP but would add exact arithmetic without eliminating the normalisation floor, so it is recorded rather than introduced as an unrequired pre-seal mechanism. |
+| Higher-dimensional endpoint scope | PASS, RESTRICTED | Box-inactive support points remain closed-form and are cross-checked against `reachable_endpoints_closed_form`. Any box-active endpoint above rank two raises `NotImplementedError`; no generic local-optimizer candidate can become a claimed sharp interval. |
+| Direct artifact generators and freshness checks | PASS | `run_egs3_experiments.py --metadata-only --check`, `run_v7_fortification_witnesses.py --check`, and `build_v7_paper_a_revision_packet.py --check` all return zero and report current outputs. Their JSON SHA-256 values are respectively `1061c5c3...`, `2b589641...`, and `8a2ce045...`; all three record final module SHA `9350f79...` in their current-code lane, and the paper packet records the current fortification hash. |
+| Frozen-v7 payload comparison and lineage | PASS | The EGS3 experiment scientific payload is value-equivalent to HEAD after metadata removal. Its immutable lineage receipt exactly preserves HEAD config hash `2f04f8fe...`, all 19 historical source hashes, scientific payload hash `42cd3b4a...`, and the historical full-generation command; it explicitly states that those historical bytes are required for replay. Current hashes are separately labelled metadata-refresh/current-compatibility inputs, and the top-level generating command is the passing metadata-only lane. Full scientific regeneration was deliberately not used because the PSD-cone signoff and redesign ticket require the v7 `axis_psd` payload to remain frozen; corrected PSD values live in the v8 successor. The fortification witness changed only provenance and four population endpoint scalars, while the paper packet changed provenance only and its TeX skeleton remains byte-identical. |
+| Active root research-evaluation package | BLOCKED, NOT CURRENT | `build_research_evaluation_package.py --check` exits 1 before comparison because three authenticated off-repo legacy inputs are absent: `legacy/cf4_p0/packages/final_report/main.tex`, `main.pdf`, and its companion manifest. The tracked active-public manifest has 16 accumulated live-source drifts, including this module and `egs3_experiments.json`, and the deterministic root ZIP is absent. A surgical hash edit is invalid because the generated manifest must also match the copy embedded in that ZIP. The four absent v6 publication ZIPs are separate prerequisites of the adjacent v7 external-audit synthesis test, not direct inputs to this root builder. This is a publication-chain blocker, not evidence against the endpoint calculations. |
+| Python package smoke | PASS | Current isolated editable environment: `25 passed in 39.92s`; the earlier `pip check` reported no broken requirements. This is package integrity, not scientific validation. |
+| Repository/harness CI contract files | PASS | Current rerun: `65 passed, 3 skipped in 18.89s`; the skips require the unavailable Codex CLI and are not counted as passes. |
+| Strict DAG and exact mirror checks | PASS | `OK: 131 PRs, DAG valid`; PR-DAG, status, and remediation mirrors synchronized. This bounded correction is not a new research-DAG claim card. |
+| Compile/import, Ruff, whitespace, and scoped claim scans | PASS, SCOPED | Touched Python compiles and imports; Ruff and `git diff --check` pass. Explicit forbidden-claim and unmarked-strong-claim scans over the changed production/validator/test/direct-artifact surfaces report no findings, and the scoped mock/fake-result search has zero matches. The whole-ledger status scan still reports four older lines outside this entry, so it is not presented as a repository-wide pass. |
+| Broader selected v7/freeze contract invocation | FAIL, PRE-EXISTING/ENVIRONMENTAL | The diagnostic run produced `129 passed, 12 failed, 2 skipped`. Failures require absent root `venv/bin/python`, four missing publication ZIPs, missing legacy quarantine directories, or the pinned PR-122 interpreter; the v7 seal checker also reflects NumPy `2.5.1` versus sealed `2.5.0` and unrelated floating/runtime drift. None names or consumes this endpoint/artifact diff, so those seals and frozen packages were not regenerated. |
+| Repo-wide no-mock leakage checker | FAIL, PRE-EXISTING | Historical `calibration_factor` and mock-result markers remain across archives, legacy scripts, and tests. The scoped changed-surface scan is clean; the noisy global result is not presented as a pass. |
+
+Numerical/scientific impact: this is a diagnostic-only numerical-correctness
+repair. Population mode uses the unique normalized full-rank least-squares
+point and makes scale-invariant box decisions. The registered rank-2
+positive-radius feasibility decision and endpoints now have deterministic
+analytic certificates. Invalid or numerically ambiguous inputs raise
+typed/input errors, and an unsupported box-active higher-rank problem raises
+`NotImplementedError`, rather than becoming `empty`, `feasible`, or
+`ceiling_unfit` through a local optimiser.
+
+Artifact/claim-tier impact: direct content-addressed provenance is current and
+the frozen experiment's historical payload lineage is separated from its
+current-code compatibility edges. The four fortification endpoint bytes now
+reflect the analytic population route. No observational, detection, geometry,
+family-identification, native-solver, efficiency, release, or novelty claim is
+added or promoted.
+
+Remaining risk and blocker: higher-dimensional box-active sharpness is outside
+the implemented domain until a KKT/dual-gap or independent exact certificate is
+added. The accepted binary64 endpoint contract is absolute-error based; it does
+not promise a fixed output-ULP bound under simultaneously extreme scaling and
+translation, as the recorded 72-ULP/`1.341e-7` case demonstrates. The active
+ceiling status now fails closed when a requested threshold is inside the
+64-epsilon band scaled by its uncancelled objective arithmetic; this is a typed
+numerical no-result rather than a scientific status. The active root
+research-evaluation package cannot
+be refreshed without its three
+authenticated off-repo legacy inputs, and the adjacent v7 synthesis cannot be
+completed without its four v6 ZIPs. The branch must not be described as
+package-current or publication-ready until those external package steps
+succeed. Other broad v7 runtime seals retain unrelated pre-existing environment
+drift and were not regenerated.
+
+## MA-02 - required baseline CI
+
+Date: 2026-07-22
+
+Changed surfaces: added one repository-integrity GitHub Actions workflow, one
+test-local workflow contract with bounded mutation families, and this ledger
+entry. The existing PR04/PR07 science-specific workflows, research DAG and
+status mirrors, claim/gate registries, scientific code, generated results, and
+historical harness payloads were not changed.
+
+Stable candidate check names are `Repository contracts`, `Python package
+smoke`, and `Rust compile`. The workflow runs on every pull request and on
+pushes to the default branch without path filters. Workflow permissions are
+read-only. Branch protection is deliberately not enabled until GitHub reports
+these exact contexts on a real run.
+
+| Command or check | Result | Notes |
+|---|---:|---|
+| workflow contract plus harness/Codex-asset pytest files | PASS | Final local rerun: `65 passed, 3 skipped in 14.88s`; skips require the unavailable Codex CLI and are not counted as passes. The 38 workflow-contract cases cover trigger reachability, path-filter insertion, exact job identity, permission/conditional/matrix/shell drift, missing capabilities, late clean-clone validation, metadata-only Rust substitution, echoed commands, disabled fail-fast behavior, and masked failures. |
+| strict DAG validator and exact mirror check | PASS | `OK: 131 PRs, DAG valid`; PR-DAG, status, and remediation mirrors synchronized. MA-02 was not added to the research DAG. |
+| temporary-venv editable install, compile, and import probe | PASS | Python 3.12 installed `setuptools`, `wheel`, `packaging`, and `./htt[dev]`; compile completed and the installed `bass/common/htt/mio/obsstat/tsc/tsc_legacy` probe printed `IMPORT_OK` without a workflow-level `PYTHONPATH`. |
+| package subset, first local invocation | FAIL, CLOSED | `24 passed, 1 failed`; the source/test failure was not reproduced. The local `uv venv` lacked the `pip` module required by the package test's deliberate `python -m pip wheel` subprocess. GitHub `setup-python` provides pip. |
+| package subset after installing pip in the temporary venv | PASS | `25 passed in 34.32s`, including temporary-CWD imports, deterministic wheel payloads, compatibility metadata, alias identity, and packaged-resource consumers. This is package integrity smoke, not scientific validation. |
+| Ruff check/format and `git diff --check` | PASS | New Python contract file is formatted; Ruff reports `All checks passed`; no whitespace errors. |
+| repo-wide no-mock leakage checker | FAIL, PRE-EXISTING | Existing historical `calibration_factor` and mock-marker inventory remains. A scoped scan of the new workflow and contract-test implementation surfaces returned zero matches. |
+| `cargo +1.94.1 check --locked --lib` | NOT RUN LOCALLY | Cargo/rustc are absent in the Work container. The workflow provisions repository-receipt-known Rust 1.94.1 and exposes this as the separate `Rust compile` job; the first GitHub-hosted result is required before merge. This check does not link/load the cdylib or run Rust/scientific tests. |
+| GitHub workflow ingestion and three hosted jobs | PASS | Draft PR #3, GitHub Actions run #1 (run id `29901981235`) on commit `0406ad802c3a0292e4fdbd5bf3639be8918ba0e1`: `Repository contracts`, `Python package smoke`, and `Rust compile` all completed successfully. This establishes workflow ingestion and the exact hosted check names, but does not establish branch protection. |
+
+Numerical/scientific impact: none. The Python package suite checks packaging,
+imports, and deterministic payload construction; Rust is compile-only. No
+scientific result, parameter, efficiency claim, novelty tier, transfer source,
+claim verdict, or release state is evaluated or changed.
+
+Artifact/claim-tier impact: none. CI success is repository-integrity smoke
+evidence only. It must not be cited as native-solver, numerical-correctness,
+novelty, publication-readiness, or scientific-claim evidence.
+
+Remaining risks and kill-switches: the first hosted run established workflow
+ingestion, dependency availability, and the exact check contexts. Any failing
+job is fixed in MA-02 rather than made non-blocking.
+Branch protection, a full Python/Rust/wheel matrix, Rust tests/link-load,
+actionlint, caching, and general workflow-schema validation remain out of
+scope. After MA-02, the two-governance-PR limit requires a substantive
+development interval before another governance-only PR.
+
+## MA-01 - clean-clone harness lifecycle
+
+Date: 2026-07-22
+
+Changed surfaces: removed the tracked active-run pointer; added one shared
+runtime-state resolver, explicit init/validate/close behavior, Codex hook and
+installer integration, lifecycle regressions, and concise retention/usage
+documentation. No research DAG card, status mirror, claim registry,
+scientific code, result artifact, or historical run payload changed.
+
+| Command or check | Result | Notes |
+|---|---:|---|
+| `python3 .agent-harness/scripts/validate_harness.py` | PASS | A fresh local clone of committed MA-01 reports `ok=true`, current context hash, and `active_run=null`, with no pointer files and a clean worktree. |
+| MA-01 lifecycle plus Codex-asset pytest files | PASS | Final rerun: `27 passed, 3 skipped in 14.18s`; skips require the unavailable Codex CLI and are not counted as passes. Covers clean state, init, overwrite refusal, validate, normal close, summary retention, dangling failure without traceback, explicit abandon, hooks, and ignored/untracked pointer state. |
+| empty-target `scripts/install_codex_handoff.sh` before fix | FAIL, CLOSED | Exposed a pre-existing reference to absent, intentionally excluded `agent.md`; removed the two dead preflight/copy lines. |
+| empty-target installer rerun plus installed harness validation | PASS | Installed all repo-scoped assets, rebuilt context, validated the 131-card DAG and both vendor harnesses, and left both legacy/runtime active pointers absent. |
+| Python compile plus `bash -n scripts/install_codex_handoff.sh` | PASS | All changed Python entry points, hooks, and tests compile; installer shell syntax is valid. |
+| Ruff static check over changed Python surfaces | PASS | `All checks passed`. |
+| Ruff format check over changed Python surfaces | FAIL, RETAINED | The repository has pre-existing formatter deltas in eight touched legacy files; no bulk formatting rewrite was mixed into MA-01. The new `close_run.py` was formatted separately. |
+| strict DAG validator | PASS | `OK: 131 PRs, DAG valid`; MA-01 was not added to the research DAG. |
+| repo-wide no-mock leakage checker | FAIL, PRE-EXISTING | Existing historical `calibration_factor` and mock-marker inventory; the scoped MA-01 changed-file search returned zero matches. |
+| `git diff --check`, ignore rules, and tracked-pointer probe | PASS | No whitespace errors; runtime and legacy pointer paths are ignored; `.agent-harness/ACTIVE_RUN` is absent from the staged index. |
+
+Numerical/scientific impact: none. This change controls local harness runtime
+state only and does not evaluate, promote, demote, or modify a scientific
+claim, computation, transfer source, novelty tier, or research result.
+
+Artifact/claim-tier impact: none. Historical runs remain read-only and normal
+or abandoned close never deletes a run directory. `RUN_SUMMARY.json` remains
+the existing local retention artifact for future ignored runs.
+
+Remaining risks: three Codex-CLI-dependent tests could not run in this Work
+environment; required GitHub CI and branch protection remain MA-02 work; the
+repo-wide no-mock checker remains too noisy to serve as a clean global gate.
+
 ## PR-176 - conservative affine-divergence / q non-identification
 
 Date: 2026-07-20
