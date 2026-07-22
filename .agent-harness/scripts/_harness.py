@@ -11,7 +11,7 @@ from typing import Any, Mapping
 
 SAFE_IDENTIFIER_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$")
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
-EVIDENCE_FINGERPRINT_RE = re.compile(r"^sha256:[0-9a-f]{64}$")
+EVIDENCE_IDENTITY_RE = re.compile(r"[^\x00-\x1f\x7f]{1,512}")
 RISK_TIERS = {"R0", "R1", "R2", "R3"}
 CAS_AXES = {"wolfram_xact", "sympy", "sage_singular", "lean"}
 ACTIVE_RUN_RELATIVE_PATH = Path(".agent-harness/runtime/ACTIVE_RUN")
@@ -262,6 +262,28 @@ def is_safe_identifier(value: object) -> bool:
     return isinstance(value, str) and SAFE_IDENTIFIER_RE.fullmatch(value) is not None
 
 
+def is_evidence_identity(value: object) -> bool:
+    """Accept a bounded stable identity without pretending it is authenticated.
+
+    A cryptographic digest is one valid identity when exact bytes matter, but a
+    DOI, dataset release, source path/revision, or review-scope label is also a
+    legitimate research identity.  This field is self-declared unless another
+    validator explicitly binds it to bytes.
+    """
+
+    return (
+        isinstance(value, str)
+        and value == value.strip()
+        and EVIDENCE_IDENTITY_RE.fullmatch(value) is not None
+    )
+
+
+def is_run_local_claim_id(value: object, run_id: str) -> bool:
+    """Return whether a non-persistent process question is bound to this run."""
+
+    return is_safe_identifier(value) and str(value).startswith(f"RUN-{run_id}-")
+
+
 def declared_result_path(run_id: str, assignment_id: str) -> str:
     return f".agent-harness/runs/{run_id}/results/{assignment_id}.json"
 
@@ -310,21 +332,26 @@ def _registered_claim_ids(repo: Path) -> tuple[set[str], list[str]]:
     return claims, errors
 
 
-def _validate_hashed_input_list(
+def _validate_input_list(
     repo: Path | None,
     values: object,
     *,
     field: str,
     errors: list[str],
+    require_hash: bool = False,
 ) -> None:
     if not isinstance(values, list) or not values:
         errors.append(f"assignment {field} must be a non-empty list")
         return
     for index, item in enumerate(values):
         if not isinstance(item, Mapping):
-            errors.append(f"assignment {field}[{index}] must be {{path, sha256}}")
+            errors.append(
+                f"assignment {field}[{index}] must contain a path and may "
+                "contain sha256"
+            )
             continue
         rel = item.get("path")
+        has_sha = "sha256" in item
         sha = item.get("sha256")
         if not isinstance(rel, str) or not rel:
             errors.append(f"assignment {field}[{index}] lacks a path")
@@ -341,8 +368,13 @@ def _validate_hashed_input_list(
                 f"repository-relative: {rel}"
             )
             continue
-        if not isinstance(sha, str) or not re.fullmatch(r"[0-9a-f]{64}", sha):
-            errors.append(f"assignment {field}[{index}] lacks a sha256")
+        if require_hash and not has_sha:
+            errors.append(f"assignment {field}[{index}] requires a sha256")
+            continue
+        if has_sha and (
+            not isinstance(sha, str) or SHA256_RE.fullmatch(sha) is None
+        ):
+            errors.append(f"assignment {field}[{index}] has an invalid sha256")
             continue
         if repo is not None:
             path = repo / rel_path
@@ -359,7 +391,7 @@ def _validate_hashed_input_list(
                 )
             elif not path.is_file():
                 errors.append(f"assignment {field}[{index}] path missing: {rel}")
-            elif hashlib.sha256(path.read_bytes()).hexdigest() != sha:
+            elif has_sha and hashlib.sha256(path.read_bytes()).hexdigest() != sha:
                 errors.append(
                     f"assignment {field}[{index}] hash mismatch (stale input): {rel}"
                 )
@@ -437,7 +469,11 @@ def validate_assignment_payload(
         errors.extend(claim_registry_errors)
         if isinstance(claim_ids, list):
             for claim_id in claim_ids:
-                if isinstance(claim_id, str) and claim_id not in registered_claims:
+                if (
+                    isinstance(claim_id, str)
+                    and claim_id not in registered_claims
+                    and not is_run_local_claim_id(claim_id, run_id)
+                ):
                     errors.append(f"assignment claim_id is not registered: {claim_id}")
     if registry is None:
         try:
@@ -454,7 +490,7 @@ def validate_assignment_payload(
             )
     if assignment.get("risk_tier") not in RISK_TIERS:
         errors.append(f"assignment risk_tier must be one of {sorted(RISK_TIERS)}")
-    _validate_hashed_input_list(
+    _validate_input_list(
         repo, assignment.get("required_inputs"), field="required_inputs", errors=errors
     )
     allowed_tools = assignment.get("allowed_tools")
@@ -486,8 +522,12 @@ def validate_assignment_payload(
         if not isinstance(contract, Mapping):
             errors.append("CAS assignment requires cas_contract {path, sha256}")
         else:
-            _validate_hashed_input_list(
-                repo, [contract], field="cas_contract", errors=errors
+            _validate_input_list(
+                repo,
+                [contract],
+                field="cas_contract",
+                errors=errors,
+                require_hash=True,
             )
     return errors
 

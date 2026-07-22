@@ -66,11 +66,19 @@ Registration is fail-closed (audit H3): empty `claim_ids`,
 `required_inputs`, `allowed_tools`, or `required_outputs`, an unknown
 `agent_type`, or a CAS agent without `--cas-axis`/`--cas-contract` is
 rejected before the assignment file is written. New assignments are sealed
-with `assignment_sha256`, and every assigned claim ID must already exist in
-the canonical `context/CLAIM_REGISTRY.jsonl`. Only claim identity is consumed
-from that registry; a stored claim, novelty, or gate status is never treated
-as current scientific authority. The seal is a deterministic drift checksum,
-not a signature or proof of who wrote the assignment.
+with `assignment_sha256`. Long-lived claim IDs must already exist in the
+canonical `context/CLAIM_REGISTRY.jsonl`; `RUN-*` IDs are reserved for
+run-local review questions, must begin `RUN-<run_id>-`, and cannot be used to
+promote a scientific claim or enter the cross-run finding ledger.
+Only claim identity is consumed from the registry; a stored claim, novelty,
+or gate status is never treated as current scientific authority. The seal is
+an automatically generated same-run drift checksum, not a signature,
+scientific provenance grade, or publication requirement. `--required-input`
+pins the local bytes used by the current assignment; this is an internal run
+binding, not a demand that the upstream research archive expose matching
+bytes. `--live-input` explicitly records path-only evolving material with no
+exact-replay claim. External literature/data/software provenance belongs in
+resolvable evidence references. CAS contracts remain exactly pinned.
 
 Paste the header printed by `new_assignment.py` at the start of the subagent spawn prompt. The assignment JSON supplies the unique result path.
 
@@ -81,19 +89,45 @@ must have exactly one typed terminal disposition:
 
 - `findings_present` names one or more finding IDs;
 - `examined_no_findings` explicitly records a completed review with no
-  finding and requires nonempty evidence references plus an exact evidence
-  fingerprint; or
+  finding and requires nonempty evidence references; or
 - `not_examined` is allowed only for an `inconclusive` or `error` result.
 
-The envelope also binds the assignment seal, canonical result path, launch
+The validator binds the registered assignment, canonical result path, launch
 receipt when present, role and independence mode, declared reads, timestamps,
 tools, commands, artifacts, findings, and reported errors. Artifact references
 are accepted only after path confinement, blind-sibling authorization,
-byte-count, and SHA-256 checks. Finding severity is one of `low`, `medium`,
-`high`, or `critical`; finding and command fingerprints use the exact
-`sha256:<64 lowercase hex>` form. Routine result JSON is capped at 64 KiB,
-with larger raw evidence stored once through `evidence_store.py` and
-referenced by its typed descriptor.
+byte-count, and SHA-256 checks. That hash protects the bytes of a referenced
+local artifact; it does not establish scientific validity. Finding severity
+is one of `low`, `medium`, `high`, or `critical`. Each substantive finding
+needs a bounded, self-declared stable evidence identity scoped to that finding
+or proposition; it may be a digest, DOI/release plus section or observable,
+source revision plus test, or a finding-specific review-scope label.
+`examined_no_findings` and artifact command identities do not require a
+fingerprint. These identities are deduplication aids, not authenticated
+provenance. Results must echo the automatically generated assignment seal so
+a later assignment rewrite cannot validate an earlier verdict. Routine result
+JSON is capped at 64 KiB, with larger raw evidence stored once through
+`evidence_store.py` and referenced by its typed descriptor.
+
+### Exactness boundary and anti-inflation rule
+
+Source identity, scientific reproducibility, and exact replay are different
+claims. Literature, public datasets, and external software normally need a
+resolvable DOI/URL/product release/version plus methods, assumptions, and
+tolerances sufficient for an independent scientific rerun. Exact byte hashes
+are required only for internal assignment/context bindings, CAS contracts,
+content-addressed blobs, explicitly frozen inputs, and local artifacts whose
+byte identity is itself material. They are not universal upstream provenance
+requirements. Hash completeness, gate count, ledger rows, or generated
+Markdown/JSON volume are never research progress metrics.
+
+Do not create a permanent claim row, gate, receipt, or policy file solely to
+make a run structurally pass. Use a `RUN-*` question for bounded process work,
+reuse this kernel, and downgrade provenance honestly when exact upstream bytes
+are unavailable. After two consecutive assurance-only PRs, the next PR must
+deliver a named downstream scientific capability, data execution/integration,
+experiment, or interpretable result. Another harness repair counts only when a
+reproduced high-severity defect directly blocks that named task.
 
 `SubagentStop`, `merge_results.py`, and `validate_harness.py` all call the same
 file-level kernel in `scripts/strict_result_validation.py`. The repository has
@@ -141,11 +175,17 @@ invalid or dangling, inspect it first; explicit recovery is
 run data untouched.
 
 The adjudicator should consume `MERGED_RESULTS.json` plus only the disputed
-evidence needed for a targeted decision. Opposite verdicts on the same
-`(claim_id, evidence_fingerprint)` are emitted as a `conflicts` object and
-fail the merge — no majority vote. Resolved findings are recorded in
-`.agent-harness/ledger/FINDING_LEDGER.jsonl` so later runs do not re-raise
-them.
+evidence needed for a targeted decision. `evidence_fingerprint` is a bounded,
+stable identity for the scoped finding/proposition (for example a DOI or
+dataset release plus a relevant section, observable, or test), not a demand
+for an upstream SHA and not merely a whole-source label. Opposite verdicts on
+the same `(claim_id, evidence_fingerprint)` are emitted as a `conflicts` object
+and fail the merge even when their prose differs — no majority vote. Statement
+text is explanatory prose, not identity, so paraphrases of the same scoped
+finding deduplicate and cannot create new resolved-ledger items. Different
+sub-findings from one source use different scoped identities rather than a new
+schema field. Resolved findings are recorded in
+`.agent-harness/ledger/FINDING_LEDGER.jsonl` so later runs do not re-raise them.
 
 `MERGED_RESULTS.json.process_status` reports only envelope/merge integrity.
 Its `claim_gate_status` is always `NOT_EVALUATED`; a zero merge exit code is

@@ -207,7 +207,12 @@ def test_clean_clone_init_validate_close_and_dangling_recovery(
     assert not active_pointer.exists()
 
 
-def _register_assignment(repo: Path, assignment_id: str = "A-001") -> Path:
+def _register_assignment(
+    repo: Path,
+    assignment_id: str = "A-001",
+    *,
+    live_input: bool = False,
+) -> Path:
     completed = _run(
         [
             sys.executable,
@@ -217,7 +222,7 @@ def _register_assignment(repo: Path, assignment_id: str = "A-001") -> Path:
             "--task", "bounded test task",
             "--risk-tier", "R1",
             "--claim-id", "C-001",
-            "--required-input", "input.txt",
+            "--live-input" if live_input else "--required-input", "input.txt",
             "--allowed-tool", "read",
             "--required-output", "result envelope",
         ],
@@ -274,7 +279,7 @@ def test_stale_effective_context_blocks_launch(tmp_path: Path) -> None:
     assignment_path.write_text(original, encoding="utf-8")
     assert _verify(repo).returncode == 0
 
-    # (b) required input bytes drift after sealing
+    # (b) explicitly exact input bytes drift after sealing
     (repo / "input.txt").write_text("input-v2 DRIFTED\n", encoding="utf-8")
     assert _verify(repo).returncode == 2
     (repo / "input.txt").write_text("input-v1\n", encoding="utf-8")
@@ -418,7 +423,7 @@ def _write_result(repo: Path, assignment_id: str, extra: dict) -> Path:
                 "statement": "Disposable harness finding.",
                 "assumptions_used": [],
                 "evidence_refs": ["input.txt"],
-                "evidence_fingerprint": "sha256:" + "1" * 64,
+                "evidence_fingerprint": "fixture:input.txt@v1",
                 "counterevidence_refs": [],
                 "reproduction": [],
                 "confidence": 1.0,
@@ -464,7 +469,6 @@ def _write_result(repo: Path, assignment_id: str, extra: dict) -> Path:
                     if finding_ids
                     else {
                         "evidence_refs": ["input.txt"],
-                        "evidence_fingerprint": "sha256:" + "5" * 64,
                     }
                 ),
             }
@@ -643,7 +647,7 @@ def test_dedup_same_tuple_different_refs_merges_and_unions_refs(
     repo = _init_tmp_repo(tmp_path)
     for aid in ("A-001", "A-002"):
         _register_assignment(repo, aid)
-    fingerprint = "sha256:" + "2" * 64
+    fingerprint = "doi:10.0000/example#disposable-finding"
     for aid, refs in (("A-001", ["ref/a.py:1"]), ("A-002", ["ref/b.py:9"])):
         _write_result(
             repo,
@@ -654,6 +658,11 @@ def test_dedup_same_tuple_different_refs_merges_and_unions_refs(
                         "finding_id": f"F-{aid}",
                         "claim_id": "C-001",
                         "verdict": "fail",
+                        "statement": (
+                            "The disposable finding is present."
+                            if aid == "A-001"
+                            else "This is a paraphrase of the disposable finding."
+                        ),
                         "evidence_fingerprint": fingerprint,
                         "evidence_refs": refs,
                     }
@@ -673,6 +682,33 @@ def test_dedup_same_tuple_different_refs_merges_and_unions_refs(
     assert row["evidence_refs"] == ["ref/a.py:1", "ref/b.py:9"]
     assert row["duplicate_count"] == 2
 
+    # A different scoped identity preserves a distinct proposition and avoids
+    # a false conflict even when its verdict differs.
+    _write_result(
+        repo,
+        "A-002",
+        {
+            "findings": [
+                {
+                    "finding_id": "F-DISTINCT",
+                    "claim_id": "C-001",
+                    "verdict": "pass",
+                    "statement": "A distinct finding about the same source.",
+                    "evidence_fingerprint": "doi:10.0000/example#other-finding",
+                    "evidence_refs": ["ref/b.py:9"],
+                }
+            ]
+        },
+    )
+    completed = _run([sys.executable, _script("merge_results.py")], cwd=repo)
+    assert completed.returncode == 0, completed.stdout + completed.stderr
+    merged = json.loads(
+        (
+            repo / ".agent-harness" / "runs" / "run-1" / "MERGED_RESULTS.json"
+        ).read_text(encoding="utf-8")
+    )
+    assert merged["unique_finding_count"] == 2
+
     # Opposite verdicts on the same evidence auto-conflict (no majority).
     _write_result(
         repo,
@@ -683,6 +719,7 @@ def test_dedup_same_tuple_different_refs_merges_and_unions_refs(
                     "finding_id": "F-OPP",
                     "claim_id": "C-001",
                     "verdict": "pass",
+                    "statement": "The disposable claim does not fail.",
                     "evidence_fingerprint": fingerprint,
                 }
             ]
@@ -696,6 +733,72 @@ def test_dedup_same_tuple_different_refs_merges_and_unions_refs(
         ).read_text(encoding="utf-8")
     )
     assert merged["conflicts"], "opposite verdicts must populate conflicts"
+    assert len(merged["conflicts"][0]["statements"]) == 2
+
+
+def test_finding_ledger_does_not_treat_paraphrase_as_new_work(
+    tmp_path: Path,
+) -> None:
+    repo = _init_tmp_repo(tmp_path)
+    _register_assignment(repo)
+    fingerprint = "doi:10.0000/example#bound-x"
+    _write_result(
+        repo,
+        "A-001",
+        {
+            "findings": [
+                {
+                    "finding_id": "F-ORIGINAL",
+                    "claim_id": "C-001",
+                    "verdict": "fail",
+                    "statement": "The estimator violates bound X.",
+                    "evidence_fingerprint": fingerprint,
+                }
+            ]
+        },
+    )
+    completed = _run([sys.executable, _script("merge_results.py")], cwd=repo)
+    assert completed.returncode == 0, completed.stdout + completed.stderr
+    merged_rel = ".agent-harness/runs/run-1/MERGED_RESULTS.json"
+    completed = _run(
+        [
+            sys.executable,
+            _script("finding_ledger.py"),
+            "record",
+            "--merged",
+            merged_rel,
+            "--resolution-commit",
+            "a" * 40,
+        ],
+        cwd=repo,
+    )
+    assert completed.returncode == 0, completed.stdout + completed.stderr
+
+    result_path = repo / ".agent-harness" / "runs" / "run-1" / "results" / "A-001.json"
+    result = json.loads(result_path.read_text(encoding="utf-8"))
+    result["findings"][0]["statement"] = "Bound X is broken by the estimator."
+    result_path.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
+    completed = _run([sys.executable, _script("merge_results.py")], cwd=repo)
+    assert completed.returncode == 0, completed.stdout + completed.stderr
+    merged = json.loads((repo / merged_rel).read_text(encoding="utf-8"))
+    assert merged["findings"][0]["previously_resolved"]["resolution_commit"] == "a" * 40
+
+    completed = _run(
+        [
+            sys.executable,
+            _script("finding_ledger.py"),
+            "record",
+            "--merged",
+            merged_rel,
+            "--resolution-commit",
+            "b" * 40,
+        ],
+        cwd=repo,
+    )
+    assert completed.returncode == 0, completed.stdout + completed.stderr
+    assert "recorded 0 resolved findings" in completed.stdout
+    ledger = repo / ".agent-harness" / "ledger" / "FINDING_LEDGER.jsonl"
+    assert len(ledger.read_text(encoding="utf-8").splitlines()) == 1
 
 
 # --- 8 -----------------------------------------------------------------
@@ -1020,6 +1123,7 @@ def test_context_rebuild_same_content_leaves_tracked_files_unchanged() -> None:
     [
         ("unsealed_change", "assignment_sha256 does not match"),
         ("unknown_claim", "claim_id is not registered"),
+        ("foreign_run_claim", "claim_id is not registered"),
         ("duplicate_claim", "claim_ids must be unique"),
     ],
 )
@@ -1039,6 +1143,11 @@ def test_ma03_assignment_seal_and_claim_registration_fail_closed(
             assignment_path,
             lambda assignment: assignment.update(claim_ids=["C-UNKNOWN"]),
         )
+    elif mutation == "foreign_run_claim":
+        _reseal_assignment(
+            assignment_path,
+            lambda assignment: assignment.update(claim_ids=["RUN-other-run-AUDIT"]),
+        )
     else:
         _reseal_assignment(
             assignment_path,
@@ -1048,6 +1157,21 @@ def test_ma03_assignment_seal_and_claim_registration_fail_closed(
     completed = _harness_cli(repo, "validate_harness.py")
     assert completed.returncode == 1
     assert needle in completed.stdout + completed.stderr
+
+
+def test_ma03_result_remains_bound_to_the_original_assignment(tmp_path: Path) -> None:
+    empty_context_sha = hashlib.sha256(b"").hexdigest()
+    repo = _init_tmp_repo(tmp_path, context_version=empty_context_sha)
+    assignment_path = _register_assignment(repo)
+    _write_result(repo, "A-001", {})
+    _reseal_assignment(
+        assignment_path,
+        lambda assignment: assignment.update(task="changed after result"),
+    )
+
+    completed = _harness_cli(repo, "validate_harness.py")
+    assert completed.returncode == 1
+    assert "result assignment_sha256 does not match" in completed.stdout
 
 
 def test_ma03_assignment_inputs_must_stay_canonical_and_repo_relative(
@@ -1083,6 +1207,93 @@ def test_ma03_assignment_inputs_must_stay_canonical_and_repo_relative(
     assert "path must be canonical and repository-relative" in (
         completed.stdout + completed.stderr
     )
+
+
+def test_ma03_live_input_explicitly_downgrades_exact_replay(
+    tmp_path: Path,
+) -> None:
+    empty_context_sha = hashlib.sha256(b"").hexdigest()
+    repo = _init_tmp_repo(tmp_path, context_version=empty_context_sha)
+    assignment_path = _register_assignment(repo, live_input=True)
+    assignment = json.loads(assignment_path.read_text(encoding="utf-8"))
+    assert assignment["required_inputs"] == [{"path": "input.txt"}]
+
+    (repo / "input.txt").write_text("scientifically equivalent revision\n")
+    completed = _harness_cli(repo, "validate_harness.py")
+    assert completed.returncode == 0
+    assert "hash mismatch" not in completed.stdout + completed.stderr
+
+
+def test_ma03_run_local_question_does_not_inflate_claim_registry(
+    tmp_path: Path,
+) -> None:
+    repo = _init_tmp_repo(tmp_path)
+    completed = _run(
+        [
+            sys.executable,
+            _script("new_assignment.py"),
+            "--assignment-id",
+            "A-RUN-LOCAL",
+            "--agent-type",
+            "context_mapper",
+            "--task",
+            "bounded process review",
+            "--risk-tier",
+            "R1",
+            "--claim-id",
+            "RUN-run-1-MA03-EXACTNESS",
+            "--required-input",
+            "input.txt",
+            "--allowed-tool",
+            "read",
+            "--required-output",
+            "result envelope",
+        ],
+        cwd=repo,
+    )
+    assert completed.returncode == 0, completed.stdout + completed.stderr
+    registry = (
+        repo / ".agent-harness" / "context" / "CLAIM_REGISTRY.jsonl"
+    ).read_text(encoding="utf-8")
+    assert "RUN-run-1-MA03-EXACTNESS" not in registry
+
+
+def test_ma03_run_local_question_cannot_enter_cross_run_ledger(
+    tmp_path: Path,
+) -> None:
+    repo = _init_tmp_repo(tmp_path)
+    merged = repo / "run-local-merged.json"
+    merged.write_text(
+        json.dumps(
+            {
+                "findings": [
+                    {
+                        "claim_id": "RUN-run-1-MA03-EXACTNESS",
+                        "evidence_fingerprint": "scope:ma03-exactness",
+                        "verdict": "fail",
+                        "statement": "Run-local process finding.",
+                    }
+                ]
+            }
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    completed = _harness_cli(
+        repo,
+        "finding_ledger.py",
+        "record",
+        "--merged",
+        merged.name,
+        "--resolution-commit",
+        "deadbeef",
+    )
+    assert completed.returncode != 0
+    assert "cannot enter the cross-run finding ledger" in (
+        completed.stdout + completed.stderr
+    )
+    ledger = repo / ".agent-harness" / "ledger" / "FINDING_LEDGER.jsonl"
+    assert not ledger.exists() or "RUN-" not in ledger.read_text(encoding="utf-8")
 
 
 @pytest.mark.parametrize("consumer", ["stop_hook", "merge", "standalone"])
@@ -1160,8 +1371,9 @@ def test_ma03_artifacts_cannot_bypass_blind_sibling_isolation(
         ("pass_with_fail_finding", "pass result must not contain a fail finding"),
         ("pass_with_inconclusive", "pass result must contain only pass findings"),
         ("fail_without_fail_finding", "fail result must contain at least one"),
-        ("free_form_fingerprint", "evidence_fingerprint must be sha256"),
-        ("unbound_no_findings", "examined_no_findings requires evidence_fingerprint"),
+        ("missing_fingerprint", "requires a bounded stable evidence_fingerprint"),
+        ("invalid_fingerprint", "requires a bounded stable evidence_fingerprint"),
+        ("unbound_no_findings", "evidence_refs must not be empty"),
     ],
 )
 def test_ma03_incomplete_or_ambiguous_results_fail_closed(
@@ -1191,11 +1403,13 @@ def test_ma03_incomplete_or_ambiguous_results_fail_closed(
                 "outcome": "examined_no_findings",
                 "finding_ids": [],
                 "summary": "Unbound no-findings assertion.",
-                "evidence_refs": ["input.txt"],
+                "evidence_refs": [],
             }
         ]
+    elif mutation == "missing_fingerprint":
+        result["findings"][0].pop("evidence_fingerprint")
     else:
-        result["findings"][0]["evidence_fingerprint"] = "looks-the-same"
+        result["findings"][0]["evidence_fingerprint"] = "invalid\nidentity"
     result_path.write_text(json.dumps(result) + "\n", encoding="utf-8")
 
     completed = _harness_cli(repo, "validate_harness.py")
@@ -1216,7 +1430,6 @@ def test_ma03_typed_no_findings_is_a_complete_positive_result(tmp_path: Path) ->
             "finding_ids": [],
             "summary": "Disposable terminal claim disposition.",
             "evidence_refs": ["input.txt"],
-            "evidence_fingerprint": "sha256:" + "5" * 64,
         }
     ]
     assert (
@@ -1241,7 +1454,7 @@ def test_ma03_typed_no_findings_is_a_complete_positive_result(tmp_path: Path) ->
     [
         ("hash", "sha256 does not match artifact bytes"),
         ("size", "bytes does not match artifact size"),
-        ("command", "command_fingerprint must be sha256"),
+        ("command", "command_fingerprint must be a bounded stable identity"),
         ("escape", "must stay inside the repository"),
     ],
 )
@@ -1259,14 +1472,13 @@ def test_ma03_artifact_references_are_content_verified(
         "sha256": hashlib.sha256(artifact.read_bytes()).hexdigest(),
         "bytes": artifact.stat().st_size,
         "producer": "test",
-        "command_fingerprint": "sha256:" + "3" * 64,
     }
     if mutation == "hash":
         reference["sha256"] = "0" * 64
     elif mutation == "size":
         reference["bytes"] += 1
     elif mutation == "command":
-        reference["command_fingerprint"] = "manual-command-label"
+        reference["command_fingerprint"] = "invalid\nidentity"
     else:
         reference["path"] = "../outside.bin"
     _write_result(repo, "A-001", {"artifacts": [reference]})
@@ -1274,6 +1486,24 @@ def test_ma03_artifact_references_are_content_verified(
     completed = _harness_cli(repo, "validate_harness.py")
     assert completed.returncode == 1
     assert needle in completed.stdout + completed.stderr
+
+
+def test_ma03_artifact_command_identity_is_optional(tmp_path: Path) -> None:
+    empty_context_sha = hashlib.sha256(b"").hexdigest()
+    repo = _init_tmp_repo(tmp_path, context_version=empty_context_sha)
+    _register_assignment(repo)
+    artifact = repo / "artifact.bin"
+    artifact.write_bytes(b"verified artifact\n")
+    reference = {
+        "path": "artifact.bin",
+        "sha256": hashlib.sha256(artifact.read_bytes()).hexdigest(),
+        "bytes": artifact.stat().st_size,
+        "producer": "test",
+    }
+    _write_result(repo, "A-001", {"artifacts": [reference]})
+
+    completed = _harness_cli(repo, "validate_harness.py")
+    assert completed.returncode == 0, completed.stdout + completed.stderr
 
 
 def test_ma03_evidence_store_rejects_a_poisoned_existing_blob(tmp_path: Path) -> None:
@@ -1292,8 +1522,6 @@ def test_ma03_evidence_store_rejects_a_poisoned_existing_blob(tmp_path: Path) ->
         source.name,
         "--producer",
         "test",
-        "--command-fingerprint",
-        "sha256:" + "4" * 64,
     )
     assert completed.returncode != 0
     assert "content-addressed evidence blob is poisoned" in (

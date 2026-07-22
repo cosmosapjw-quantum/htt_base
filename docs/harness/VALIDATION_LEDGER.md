@@ -14,12 +14,12 @@ claim verdict, novelty tier, or research-DAG/status entry changed.
 
 | Command or check | Result | Notes |
 |---|---:|---|
-| `env PYTHONPATH=/tmp/htt-base-testdeps python -B -m pytest -p no:cacheprovider scripts/codex_harness/test_harness_enforcement.py scripts/codex_harness/test_codex_assets.py tests/contracts/test_harness_runner.py -q` | PASS | Final replay: `68 passed, 3 skipped in 7.45s`. The skips require an unavailable Codex CLI and are not counted as passes. The MA-03 families exercise assignment seals/claim registration, canonical paths, exact per-claim coverage, evidence-bound no-findings, status coherence, finding severity, exact fingerprints, artifact hash/size/path checks, poisoned evidence blobs, blind-sibling isolation through both reads and artifacts, launch binding/evidence classes, all three result consumers, and historical merge refusal. |
-| same bounded files with `pytest --collect-only -q` | PASS | `71 tests collected in 0.10s`; import/collection smoke is explicit and separate from execution. |
+| `env PYTHONPATH=/tmp/htt-base-testdeps python -B -m pytest -p no:cacheprovider scripts/codex_harness/test_harness_enforcement.py scripts/codex_harness/test_codex_assets.py tests/contracts/test_harness_runner.py -q` | PASS | Final replay after the research-exactness correction: `76 passed, 3 skipped in 8.46s`. The skips require an unavailable Codex CLI and are not counted as passes. The MA-03 families exercise assignment/result seals, registered versus run-bound `RUN-*` identities and ledger exclusion, exact default versus explicit live inputs, canonical paths, exact per-claim coverage, evidence-referenced no-findings, status coherence, finding severity, stable non-SHA finding identities, optional command identities, paraphrase-safe dedup/conflicts and ledger reuse, artifact hash/size/path checks, poisoned evidence blobs, blind-sibling isolation, launch evidence classes, all three result consumers, and historical merge refusal. |
+| same bounded files with `pytest --collect-only -q` | PASS | `79 tests collected`; import/collection smoke is explicit and separate from execution. |
 | touched Python `py_compile` invocation | PASS | The common harness module, dedicated strict-result module, five CLIs, stop hook, and two test files compile. |
 | `python3 .agent-harness/scripts/validate_harness.py` | PASS | Clean worktree state reports the current context hash and `active_run=null`; abandoned review pointers were cleared without deleting their ignored run evidence. |
 | `python3 scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml` and progress report | PASS | `131 PRs, DAG valid`; `114/131 = 87.02%`, dependency weighted `91.13%`, no unblocked next card. MA-03 remains Issue #1 work and was not inserted into the research DAG. |
-| final independent five-dimension code review | FAIL, CLOSED | The registered schema-v2 review found that `finding.severity` was not enforced and that an artifact path could read an unallowed sibling result while omitting it from `files_read`. The common kernel now enforces the closed severity enum and applies one sibling authorization predicate before opening either path class. Both findings have stop-hook, merge, and standalone rejection regressions. Two earlier review attempts were blocked by a platform prompt classifier before producing a result; their ignored run directories were retained and not represented as review evidence. |
+| independent implementation and exactness reviews | FAIL, CLOSED | The first registered schema-v2 review found that `finding.severity` was not enforced and that an artifact path could read an unallowed sibling result; both now share cross-consumer regressions. The post-feedback reviews then found over-relaxed result/assignment binding, conflict laundering through missing identities, broad-label collapse, mutable default inputs, `RUN-*` leakage into the cross-run ledger, and statement-based conflict/ledger evasion. The final design restores automatic exact same-run binding, requires non-SHA scoped identities for substantive findings, uses one proposition identity consistently across dedup/conflict/ledger operations, binds `RUN-*` to the run, and keeps live-input/no-findings/command relaxations explicit. Two earlier review attempts were blocked by a platform prompt classifier before producing a result and are not represented as review evidence. |
 | repo-wide `check_no_mock_results.py` | FAIL, PRE-EXISTING | Historical `calibration_factor` and mock-result markers remain across archives, legacy scripts, tests, and generated figures. This global noise is not relabeled as a pass. |
 | scoped mock/fake-result `rg` over every MA-03 changed implementation/test surface | PASS BY ABSENCE | `rg` returned 1 with no matches. No demo/smoke result was promoted into the strict result or validation ledger. |
 | full `tests/contracts -q` attempt | NOT RUN TO COMPLETION, ENVIRONMENTAL | Collection stopped with 13 dependency/import errors: the local `.venv` interpreter is broken and the fallback environment lacks project paths plus optional `astropy`, `healpy`, and `sympy`. The directly affected contract file and both harness/Codex test files passed in the bounded suite; the broad collection failure is not hidden. |
@@ -38,8 +38,21 @@ rewrite their stored aggregate. The PR-121 research-receipt replay domain is
 deliberately not coupled to the agent-result kernel because no separate
 production agent-result replay consumer exists.
 
+Research-exactness correction: `--required-input` retains automatic exact-byte
+binding inside one assignment, while `--live-input` explicitly downgrades
+evolving local material to path-only with no exact-replay claim. This internal
+seal is not imposed on upstream papers, datasets, or software releases. CAS
+contracts, content-addressed evidence, and referenced local artifact bytes
+remain exact. Run-bound `RUN-*` review questions avoid permanent claim rows and
+are rejected by the cross-run ledger. Substantive findings require a stable
+self-declared evidence identity, but it need not be SHA-shaped; no-findings and
+command identities remain optional. Existing `AGENTS.md` and harness guidance
+separate source identity, scientific reproducibility, and exact replay and
+activate the two-governance-PR stop rule without adding a new policy artifact.
+
 Remaining risks and kill-switches: assignment SHA-256 is a deterministic drift
-checksum, not a signature. Launch, execution, and read evidence remains
+checksum, not a signature or scientific provenance grade. Explicit live inputs
+do not promise exact replay. Launch, execution, and read evidence remains
 `self_declared` (or `unverified` when absent) until a platform-owned verifier
 exists; a payload cannot promote itself to authenticated evidence. Any strict
 kernel error blocks stop-hook completion, standalone validation, and merge.

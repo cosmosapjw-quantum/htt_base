@@ -8,11 +8,11 @@ from pathlib import Path
 from typing import Any, Mapping
 
 from _harness import (
-    EVIDENCE_FINGERPRINT_RE,
     SHA256_RE,
     compute_effective_context_sha256,
     declared_result_path,
     historical_run_ids,
+    is_evidence_identity,
     is_safe_identifier,
     load_json,
     role_file_hashes,
@@ -125,12 +125,10 @@ def _validate_artifacts(
             "sha256",
             "bytes",
             "producer",
-            "command_fingerprint",
         }
         if not required <= set(row):
             errors.append(
-                f"{field} must contain path, sha256, bytes, producer, "
-                "and command_fingerprint"
+                f"{field} must contain path, sha256, bytes, and producer"
             )
             continue
         rel = row.get("path")
@@ -160,12 +158,10 @@ def _validate_artifacts(
         if not isinstance(row.get("producer"), str) or not row.get("producer"):
             errors.append(f"{field} producer must be non-empty")
         fingerprint = row.get("command_fingerprint")
-        if (
-            not isinstance(fingerprint, str)
-            or EVIDENCE_FINGERPRINT_RE.fullmatch(fingerprint) is None
-        ):
+        if fingerprint is not None and not is_evidence_identity(fingerprint):
             errors.append(
-                f"{field} command_fingerprint must be sha256:<64 lowercase hex>"
+                f"{field} command_fingerprint must be a bounded stable identity "
+                "without control characters"
             )
         if path is not None:
             data = path.read_bytes()
@@ -472,13 +468,10 @@ def validate_result_payload(
                 f"{sorted(FINDING_SEVERITIES)}"
             )
         fingerprint = finding.get("evidence_fingerprint")
-        if (
-            not isinstance(fingerprint, str)
-            or EVIDENCE_FINGERPRINT_RE.fullmatch(fingerprint) is None
-        ):
+        if not is_evidence_identity(fingerprint):
             errors.append(
-                f"finding {finding_text!r} evidence_fingerprint must be "
-                "sha256:<64 lowercase hex>"
+                f"finding {finding_text!r} requires a bounded stable "
+                "evidence_fingerprint without control characters"
             )
         if not isinstance(finding.get("statement"), str) or not finding.get(
             "statement"
@@ -548,13 +541,10 @@ def validate_result_payload(
                 allow_empty=False,
             )
             fingerprint = claim_result.get("evidence_fingerprint")
-            if (
-                not isinstance(fingerprint, str)
-                or EVIDENCE_FINGERPRINT_RE.fullmatch(fingerprint) is None
-            ):
+            if fingerprint is not None and not is_evidence_identity(fingerprint):
                 errors.append(
-                    f"claim_result {claim_text!r} examined_no_findings requires "
-                    "evidence_fingerprint sha256:<64 lowercase hex>"
+                    f"claim_result {claim_text!r} evidence_fingerprint must be a "
+                    "bounded stable identity without control characters"
                 )
         if outcome == "not_examined" and status not in {"inconclusive", "error"}:
             errors.append(

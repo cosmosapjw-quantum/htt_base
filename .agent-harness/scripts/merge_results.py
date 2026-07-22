@@ -3,13 +3,13 @@
 
 PR-124 preflight (audit H6/H7):
 
-- The dedup key is the NORMATIVE `(claim_id, evidence_fingerprint, verdict)`
-  from AGENTS.md §5 — `evidence_refs` no longer participates, so the same
-  finding cited through different refs merges into one row whose
-  `evidence_refs` is the sorted union.
-- Opposite verdicts on the same `(claim_id, evidence_fingerprint)` are
-  emitted as a `conflicts` object and fail the merge (exit nonzero); there
-  is no majority-vote path.
+- The dedup key is `(claim_id, evidence_fingerprint, verdict)`;
+  `evidence_refs` is the sorted union. Statement text is explanatory prose,
+  not identity.
+- `evidence_fingerprint` identifies the scoped finding/proposition, not merely
+  a source. Opposite verdicts on the same `(claim_id, evidence_fingerprint)`
+  are emitted as a `conflicts` object and fail the merge (exit nonzero); a
+  paraphrase cannot launder a conflict and there is no majority-vote path.
 - Findings already resolved in the cross-run ledger
   (`.agent-harness/ledger/FINDING_LEDGER.jsonl`) are annotated
   `previously_resolved` with their resolution commit instead of being
@@ -46,8 +46,18 @@ def canonical_key(finding: dict) -> tuple:
     )
 
 
+def ledger_key(finding: dict) -> tuple:
+    """Return the cross-run identity; prose is deliberately not identity."""
+
+    return (
+        str(finding.get("claim_id", "")),
+        str(finding.get("evidence_fingerprint", "")),
+        str(finding.get("verdict", "")),
+    )
+
+
 def load_finding_ledger(repo) -> dict[tuple, str]:
-    """Return {(claim_id, fingerprint, verdict): resolution_commit}."""
+    """Return resolved finding keys mapped to resolution commits."""
 
     path = repo / ".agent-harness" / "ledger" / "FINDING_LEDGER.jsonl"
     resolved: dict[tuple, str] = {}
@@ -64,9 +74,12 @@ def load_finding_ledger(repo) -> dict[tuple, str]:
         commit = row.get("resolution_commit")
         if not commit:
             continue
+        claim_id = str(row.get("claim_id", ""))
+        if claim_id.startswith("RUN-"):
+            continue
         resolved[
             (
-                str(row.get("claim_id", "")),
+                claim_id,
                 str(row.get("evidence_fingerprint", "")),
                 str(row.get("verdict", "")),
             )
@@ -213,7 +226,7 @@ def main() -> None:
             }
         )
         representative["duplicate_count"] = len(items)
-        resolution = ledger.get(key)
+        resolution = ledger.get(ledger_key(representative))
         if resolution is not None:
             representative["previously_resolved"] = {
                 "resolution_commit": resolution,
@@ -222,7 +235,9 @@ def main() -> None:
             }
         merged.append(representative)
 
-    # Opposite verdicts on identical evidence auto-conflict (no majority).
+    # Opposite verdicts on the same scoped evidence/proposition auto-conflict.
+    # Statement text is explanatory prose, not a conflict identity: otherwise
+    # semantically opposite paraphrases could evade adjudication.
     verdict_groups: dict[tuple, set[str]] = defaultdict(set)
     conflict_members: dict[tuple, list[dict]] = defaultdict(list)
     for result in results:
@@ -230,19 +245,29 @@ def main() -> None:
             fingerprint = str(finding.get("evidence_fingerprint", ""))
             if not fingerprint:
                 continue
-            pair = (str(finding.get("claim_id", "")), fingerprint)
+            pair = (
+                str(finding.get("claim_id", "")),
+                fingerprint,
+            )
             verdict_groups[pair].add(str(finding.get("verdict", "")))
             conflict_members[pair].append(
                 {
                     "assignment_id": result.get("assignment_id"),
                     "finding_id": finding.get("finding_id"),
                     "verdict": finding.get("verdict"),
+                    "statement": finding.get("statement"),
                 }
             )
     conflicts = [
         {
             "claim_id": pair[0],
             "evidence_fingerprint": pair[1],
+            "statements": sorted(
+                {
+                    str(member.get("statement", "")).strip()
+                    for member in conflict_members[pair]
+                }
+            ),
             "verdicts": sorted(verdicts),
             "members": conflict_members[pair],
         }

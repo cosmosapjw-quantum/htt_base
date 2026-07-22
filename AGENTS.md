@@ -21,7 +21,7 @@ Work in the DAG defined by `docs/codex_handoff/pr_backlog.yaml` or `machine_read
 For every PR in the DAG:
 
 1. **Start with evidence-gathering.** Read the PR card, dependencies, touched files, relevant tests, and prior PR deltas. Perform web search or documentation verification when the PR depends on external APIs, package behavior, or current tool semantics. If web is unavailable, record that explicitly in the PR delta and use repository-local evidence only.
-2. **Diverge with distinct roles.** Spawn or simulate at least four non-overlapping roles before implementation: code mapper, harness engineer, physics/statistics auditor, and claim-gate reviewer. Each role must steelman its own approach before objecting to alternatives.
+2. **Diverge in proportion to risk.** Use only the distinct roles needed to expose a real failure class. The four-role mapper/harness/physics/claim set is reserved for R3 work, claim promotion, or an explicitly scoped harness audit; routine substantive PRs may use the main implementer plus one independent reviewer. Do not spawn differently named agents to repeat the same evidence.
 3. **Prune and choose.** Use metacognitive self-ask, step-back, and adversarial review to select a patch that moves the project materially forward. Avoid tiny gate-only patches unless the PR is explicitly a gate/harness PR.
 4. **Implement meaningful increments.** Do not get trapped in local minima. Prefer coherent code+tests+docs units over cosmetic edits. Large physics/statistics migrations are allowed when split into staged, testable PRs.
 5. **Test.** Run the PR card’s tests and the smallest relevant smoke suite. Record commands, pass/fail, skipped optional dependencies, and failures.
@@ -62,21 +62,13 @@ Forbidden in production outputs before native solver validation:
 
 ## Minimum artifact metadata
 
-Every generated artifact, report, figure, table, or result card must carry:
+Metadata is proportional to what an artifact is used to claim.
 
-- owner,
-- implementation scope,
-- claim tier,
-- transfer source,
-- config hash,
-- input hash list,
-- sky support / mask status when directional,
-- covariance/null mock status when statistical,
-- caveats,
-- generating command,
-- git commit or worktree state.
+- Exploratory figures, internal reports, literature notes, and evolving diagnostics need an owner, scope, resolvable source/release/version identities, relevant assumptions, caveats, and enough method/configuration detail for scientific interpretation. They must be labelled non-claim-bearing when they are not acceptance evidence.
+- Claim-bearing frozen numerical artifacts additionally need the applicable claim tier, transfer source, exact local config/input identities when available, sky/mask status when directional, covariance/null status when statistical, generating procedure, and git commit or worktree state.
+- A separate manifest is required only when a downstream consumer, frozen release, or publication build reads it. Do not manufacture one for a disposable exploratory artifact.
 
-No figure without manifest. No manuscript number without generated source. No evidence without matched null and prior/PPC/LOOCV status.
+No manuscript number without generated source. Null, prior, PPC, or LOOCV evidence is required only when the statistical claim actually depends on it.
 
 ## Repository role map
 
@@ -141,7 +133,16 @@ Skill activation rules:
 - MIO certificates are diagnostic reports, not posteriors or truth certificates.
 - HTT owns model-dependent inference. MIO owns family-independent diagnostics. BASS/native solver owns transfer/atlas outputs when available. `common` owns semantic firewalls and manifests.
 - Teff/TSC materials are legacy/scope-audit material only unless a PR explicitly edits legacy reproduction tests. Do not introduce Teff as an active science owner in the new local/global framework.
-- Every result artifact needs: `owner`, `scope`, `claim_tier`, `transfer_source`, `config_hash`, `input_hashes`, `sky_support_status`, `null_mock_status`, and caveats.
+- Claim-bearing frozen numerical artifacts need `owner`, `scope`, `claim_tier`, `transfer_source`, applicable config/input identities, `sky_support_status`, `null_mock_status`, and caveats. Exploratory figures, internal reports, literature notes, and evolving research inputs may instead use resolvable source/release/version identities; exact byte hashes are optional unless byte-identical replay is material.
+
+## Research progress and exactness boundary
+
+- Distinguish **source identity** (what paper, release, code version, or dataset product was used), **scientific reproducibility** (whether the result or conclusion recurs within declared tolerances or distributional criteria), and **exact replay** (whether identical bytes and environment reproduce identical output). They are not interchangeable evidence grades.
+- SHA-256 is a hard requirement only for internal assignment/context drift seals, CAS contracts, content-addressed evidence, explicitly frozen inputs, and local artifacts whose exact bytes matter. DOI/arXiv identifiers, dataset/product releases, code versions or commits, access dates, methods, assumptions, seeds, and tolerances are valid research provenance when exact upstream bytes are unavailable or scientifically irrelevant.
+- A hash-complete run does not pass validity or novelty, and a scientifically reproducible result is not rejected merely because an upstream archive cannot be reconstructed byte-for-byte. Record the limitation and lower exact-replay provenance instead.
+- `RUN-*` identifiers are bounded process questions. They do not enter the permanent scientific claim registry and cannot promote novelty, readiness, or release state.
+- Do not add a mandatory field, ledger row, gate, receipt, or permanent Markdown/JSON artifact without a consuming decision and a reproduced failure it prevents. Gate count, hash completeness, PR count, and document volume are not research-progress metrics.
+- After two consecutive assurance-only PRs, stop governance expansion. The next PR must deliver a named downstream scientific capability, data execution/integration, experiment, or interpretable result. Another harness/correctness repair counts only when a reproduced high-severity defect directly blocks that named task.
 
 ## Progress discipline
 
@@ -201,18 +202,18 @@ Use explicit context tiers rather than relying on hidden parent-thread state:
 ### 5. Evidence and result contract
 
 - Findings are keyed by stable `claim_id`; prose similarity is not a distinct finding.
-- Every substantive verdict MUST include exact evidence references, assumptions used, tool/version information, and a reproducible command or proof artifact when applicable.
+- Every substantive verdict MUST include specific, resolvable evidence references, assumptions used, relevant tool/version information, and a reproducible procedure or proof artifact when applicable. Exact byte hashes are conditional on the boundary above, not universal scientific requirements.
 - Each subagent writes only to its unique result path declared in the assignment. It must not edit shared context, specs, gates, or another agent’s result.
 - Before stopping, every subagent MUST write a result envelope and end its final message with one line of the form:
   `HARNESS_RESULT: {"assignment_id":"...","context_version":"...","status":"pass|fail|inconclusive|error","result_path":"..."}`
-- The main agent deduplicates by `(claim_id, evidence_fingerprint, verdict)` before adjudication.
+- The main agent deduplicates by `(claim_id, evidence_fingerprint, verdict)`. The fingerprint must scope the finding/proposition rather than merely name a whole source; statement prose is not identity. Conflicts and cross-run resolution use the same scoped identity so paraphrasing cannot evade adjudication or inflate the ledger.
 
 ### 6. Spec and gate authority
 
 - The current specification and gate registry are authoritative for scope, pass/fail criteria, and required evidence.
-- Agents may challenge a gate, but must record that as a separate meta-finding; they may not silently redefine success criteria.
+- Agents may challenge a gate, but must record the objection in the current result or review; they may not silently redefine success criteria. Do not create a permanent meta-claim or new gate unless a downstream decision actually consumes it.
 - Implementation may begin only after the relevant assignment identifies its governing spec clauses and gates.
-- Final acceptance requires machine-readable gate results plus a human-readable adjudication note.
+- Final acceptance of a predeclared gate or claim-promotion decision requires machine-readable gate results plus a human-readable adjudication note. Exploratory work may end with code, data, diagnostics, or a negative result without manufacturing a new gate; it simply cannot promote a claim until the relevant existing acceptance path is used.
 
 ### 7. Four-axis CAS cross-validation
 
