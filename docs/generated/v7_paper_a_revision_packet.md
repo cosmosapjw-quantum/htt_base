@@ -3,7 +3,7 @@
 owner: COMMON
 implementation_scope: common
 claim_tier: diagnostic_only
-config_hash: `sha256:b6b9405cfe99ea5c37fe1882706509a26c9e5e70aa3029252bbb3ee52da86680`
+config_hash: `sha256:64320c383acd2c78122a30b176e214a3554127c73e9b7f76ec707e2a4444a0fb`
 generating_command: `venv/bin/python scripts/build_v7_paper_a_revision_packet.py`
 
 ## Replacement Rules
