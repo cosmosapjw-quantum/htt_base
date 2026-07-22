@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/htt/pole_bundle.schema.json",
+  "title": "Redshift/Depth Low-ell Pole Bundle",
+  "type": "object",
+  "required": ["schema", "object_type", "pole_definition", "orientation", "ells", "redshift_bins", "poles", "covariance_status", "provenance"],
+  "properties": {
+    "schema": {"const": "htt.lowell_pole_bundle.v1"},
+    "object_type": {"enum": ["ShellSourcePole", "CumulativeObserverPole", "RemoteDipolePole", "RemoteQuadrupolePole"]},
+    "pole_definition": {"type": "string"},
+    "orientation": {"enum": ["oriented", "unoriented"]},
+    "ells": {"type": "array", "items": {"type": "integer", "minimum": 1}},
+    "redshift_bins": {"type": "array", "items": {"type": "array", "minItems": 2, "maxItems": 2}},
+    "poles": {"type": "array"},
+    "eigen_gaps": {"type": "array"},
+    "covariance_status": {"type": "string"},
+    "mask_status": {"type": ["string", "null"]},
+    "source_decomposition": {"type": "array", "items": {"type": "string"}},
+    "provenance": {"type": "object"},
+    "claim_boundary": {"type": "string"}
+  }
+}

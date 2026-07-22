@@ -1,0 +1,55 @@
+{
+  "id": 279,
+  "wave": 40,
+  "track": "II",
+  "title": "Teff/reduced surrogate certification against native solver",
+  "deps": [
+    274,
+    275,
+    278
+  ],
+  "cost": "high",
+  "risk": "high",
+  "hostile": [
+    "H3-02",
+    "H3-07",
+    "H3-15"
+  ],
+  "target": "legacy reduced model을 native-error-certified emulator/preconditioner로 전환한다.",
+  "falsifier": "declared domain에서 surrogate error bound가 깨지거나 out-of-domain query가 accepted다.",
+  "work": "training/validation split, componentwise error envelope, morphology loss and fail-closed domain API를 구현한다.",
+  "assets": [
+    "context/round2/experiments/teff_surrogate_certification.py",
+    "configs/external_ecosystem_ledger.json"
+  ],
+  "specific_pass": [
+    "independent native holdout에서 declared norm error가 bound 이내다.",
+    "out-of-domain and resonance cases가 explicit rejection된다."
+  ],
+  "specific_fail": [
+    "old universal ratios를 native truth로 고정하면 FAIL.",
+    "same native runs를 training and validation에 재사용하면 FAIL."
+  ],
+  "max_claim": "Teff/reduced model이 certified native surrogate로 부활했다.",
+  "status": "PROPOSED_ONLY_NOT_IN_ACTIVE_DAG",
+  "native_solver_required": true,
+  "pass_gates": [
+    "SPEC가 claim identity, estimand/domain, frame/order/units, input/output schema, success criteria와 decisive falsifier를 결과 열람 전에 고정한다.",
+    "최소 두 개의 독립 구현, analytic limit 또는 genuinely independent external oracle이 declared tolerance 안에서 일치한다.",
+    "관련 hostile mutation과 negative control이 전부 nonzero exit, BLOCKED 또는 expected abstention으로 kill된다.",
+    "seeded repeat, clean temporary directory와 detached local-repo overlay 실행이 byte-identical 또는 declared tolerance 안에서 재현된다.",
+    "모든 input/config/environment/output가 content hash를 갖고 downstream consumer의 stale path scan이 0 hit다.",
+    "author와 다른 adjudicator가 code, scientific semantics, pass/fail gate를 서명한다.",
+    "independent native holdout에서 declared norm error가 bound 이내다.",
+    "out-of-domain and resonance cases가 explicit rejection된다."
+  ],
+  "fail_gates": [
+    "decisive falsifier가 한 번이라도 살아남으면 promotion을 금지하고 failure receipt를 남긴다.",
+    "provenance, frame/type, covariance/null, nuisance/prior 또는 independent adjudication 중 하나라도 없으면 PASS를 반환하지 않는다.",
+    "문구 완화, scope 축소, disclaimer 추가만으로 defect를 닫으면 PR을 reject한다.",
+    "optional dependency missing, solver unavailable 또는 data absent를 toy fallback으로 대체하면 PR을 BLOCKED 처리한다.",
+    "old universal ratios를 native truth로 고정하면 FAIL.",
+    "same native runs를 training and validation에 재사용하면 FAIL.",
+    "native solver receipt missing -> exit 3"
+  ]
+}

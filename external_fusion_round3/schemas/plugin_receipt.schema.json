@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/htt/plugin_receipt.schema.json",
+  "title": "HTT External Plugin Receipt",
+  "type": "object",
+  "required": ["schema", "plugin", "version_or_commit", "track", "available", "capabilities", "license", "environment_hash", "command"],
+  "properties": {
+    "schema": {"const": "htt.plugin_receipt.v1"},
+    "plugin": {"type": "string", "minLength": 1},
+    "version_or_commit": {"type": "string", "minLength": 1},
+    "track": {"enum": ["I", "II"]},
+    "available": {"type": "boolean"},
+    "capabilities": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "license": {"type": "string", "minLength": 1},
+    "environment_hash": {"type": "string", "minLength": 16},
+    "command": {"type": "string", "minLength": 1},
+    "input_hashes": {"type": "array", "items": {"type": "object", "required": ["path", "sha256"]}},
+    "blocked_reason": {"type": ["string", "null"]}
+  },
+  "allOf": [
+    {"if": {"properties": {"available": {"const": false}}}, "then": {"required": ["blocked_reason"]}}
+  ]
+}
