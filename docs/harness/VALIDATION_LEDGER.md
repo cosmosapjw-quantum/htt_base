@@ -2,6 +2,51 @@
 
 Record commands actually run. Never mark skipped checks as passed.
 
+## MA-02 - required baseline CI
+
+Date: 2026-07-22
+
+Changed surfaces: added one repository-integrity GitHub Actions workflow, one
+test-local workflow contract with bounded mutation families, and this ledger
+entry. The existing PR04/PR07 science-specific workflows, research DAG and
+status mirrors, claim/gate registries, scientific code, generated results, and
+historical harness payloads were not changed.
+
+Stable candidate check names are `Repository contracts`, `Python package
+smoke`, and `Rust compile`. The workflow runs on every pull request and on
+pushes to the default branch without path filters. Workflow permissions are
+read-only. Branch protection is deliberately not enabled until GitHub reports
+these exact contexts on a real run.
+
+| Command or check | Result | Notes |
+|---|---:|---|
+| workflow contract plus harness/Codex-asset pytest files | PASS | Final local rerun: `65 passed, 3 skipped in 14.88s`; skips require the unavailable Codex CLI and are not counted as passes. The 38 workflow-contract cases cover trigger reachability, path-filter insertion, exact job identity, permission/conditional/matrix/shell drift, missing capabilities, late clean-clone validation, metadata-only Rust substitution, echoed commands, disabled fail-fast behavior, and masked failures. |
+| strict DAG validator and exact mirror check | PASS | `OK: 131 PRs, DAG valid`; PR-DAG, status, and remediation mirrors synchronized. MA-02 was not added to the research DAG. |
+| temporary-venv editable install, compile, and import probe | PASS | Python 3.12 installed `setuptools`, `wheel`, `packaging`, and `./htt[dev]`; compile completed and the installed `bass/common/htt/mio/obsstat/tsc/tsc_legacy` probe printed `IMPORT_OK` without a workflow-level `PYTHONPATH`. |
+| package subset, first local invocation | FAIL, CLOSED | `24 passed, 1 failed`; the source/test failure was not reproduced. The local `uv venv` lacked the `pip` module required by the package test's deliberate `python -m pip wheel` subprocess. GitHub `setup-python` provides pip. |
+| package subset after installing pip in the temporary venv | PASS | `25 passed in 34.32s`, including temporary-CWD imports, deterministic wheel payloads, compatibility metadata, alias identity, and packaged-resource consumers. This is package integrity smoke, not scientific validation. |
+| Ruff check/format and `git diff --check` | PASS | New Python contract file is formatted; Ruff reports `All checks passed`; no whitespace errors. |
+| repo-wide no-mock leakage checker | FAIL, PRE-EXISTING | Existing historical `calibration_factor` and mock-marker inventory remains. A scoped scan of the new workflow and contract-test implementation surfaces returned zero matches. |
+| `cargo +1.94.1 check --locked --lib` | NOT RUN LOCALLY | Cargo/rustc are absent in the Work container. The workflow provisions repository-receipt-known Rust 1.94.1 and exposes this as the separate `Rust compile` job; the first GitHub-hosted result is required before merge. This check does not link/load the cdylib or run Rust/scientific tests. |
+| GitHub workflow ingestion and three hosted jobs | PENDING | Must be observed on the Draft PR. No local YAML parser or contract test is represented as proof that Actions is enabled or that branch protection is configured. |
+
+Numerical/scientific impact: none. The Python package suite checks packaging,
+imports, and deterministic payload construction; Rust is compile-only. No
+scientific result, parameter, efficiency claim, novelty tier, transfer source,
+claim verdict, or release state is evaluated or changed.
+
+Artifact/claim-tier impact: none. CI success is repository-integrity smoke
+evidence only. It must not be cited as native-solver, numerical-correctness,
+novelty, publication-readiness, or scientific-claim evidence.
+
+Remaining risks and kill-switches: the first hosted run must establish actual
+workflow ingestion, dependency availability, cold Rust cost, and exact check
+contexts. Any failing job is fixed in MA-02 rather than made non-blocking.
+Branch protection, a full Python/Rust/wheel matrix, Rust tests/link-load,
+actionlint, caching, and general workflow-schema validation remain out of
+scope. After MA-02, the two-governance-PR limit requires a substantive
+development interval before another governance-only PR.
+
 ## MA-01 - clean-clone harness lifecycle
 
 Date: 2026-07-22
