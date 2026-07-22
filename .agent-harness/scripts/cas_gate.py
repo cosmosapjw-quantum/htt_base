@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Four-axis CAS gate: preflight, axis-result checking, adjudication.
+"""CAS gate: preflight, stored-result inspection, and observed execution.
 
 Canonical axes (display order): Wolfram Engine+xAct, SymPy,
 SageMath+Singular, Lean. The four axes are mandatory and non-collapsible
@@ -11,14 +11,20 @@ SageMath+Singular, Lean. The four axes are mandatory and non-collapsible
   validation.
 - `check-axis` — validate one axis result envelope against a contract
   (hash binding, status vocabulary, typed output hashes).
-- `adjudicate` — aggregate state machine. `CAS_4AXIS_PASS` requires all
-  four axes PASS under one contract hash; a missing/blocked required axis
-  is `CAS_BLOCKED` (three axes can never pass); any valid counterexample or
-  proof failure is `CAS_FAIL`; post-normalization disagreement is
-  `CAS_CONFLICT` — there is deliberately no majority-vote code path.
-  Exceptions count only when preregistered before the earliest axis
-  completion and approved by someone other than the excepted axis's agent
-  (`CAS_PASS_WITH_REGISTERED_EXCEPTION`, never described as "4-axis pass").
+- `adjudicate` — inspect serialized axis-result envelopes. Stored envelopes
+  are not execution authority and therefore cannot satisfy the CAS component
+  of claim promotion. `--historical-replay` reports a frozen computed label
+  only as `historical_aggregate_status`; the primary status remains blocked.
+- `run-adjudicate` — execute every contract-required axis in one parent
+  process and adjudicate only what that parent observed: argv, exit/timeout,
+  and a JSON payload whose checks exactly cover the contract obligations.
+  This is the only claim-promotion-eligible CAS path.
+
+The aggregate state machine has no majority-vote path. A missing/blocked
+required axis is `CAS_BLOCKED`; a counterexample or failed obligation is
+`CAS_FAIL`; an assumption mismatch or inconclusive result is `CAS_CONFLICT`.
+Registered exceptions may produce `CAS_PASS_WITH_REGISTERED_EXCEPTION`, but
+that status never satisfies the claim-promotion CAS component.
 
 Note: `scripts/run_egs3_v9_seals.py` is a legacy diagnostic runner for the
 frozen v9 report lane and is NOT a four-axis CAS gate — it silently skips
@@ -200,7 +206,15 @@ def _required_axes(contract: dict) -> list[str]:
             raise ValueError(f"contract requires unknown axis {name!r}")
         if internal not in normalized:
             normalized.append(internal)
-    return normalized
+    normalized_set = set(normalized)
+    if normalized_set == set(CANONICAL_AXES):
+        return list(CANONICAL_AXES)
+    if normalized_set == set(ALL_KNOWN_AXES):
+        return list(ALL_KNOWN_AXES)
+    raise ValueError(
+        "contract required_axes must resolve to the canonical four axes or "
+        "the canonical four plus Rocq; reduced axis sets cannot mint a pass"
+    )
 
 
 def cmd_preflight(args) -> int:
@@ -259,7 +273,17 @@ def cmd_check_axis(args) -> int:
     if errors:
         print(json.dumps({"ok": False, "errors": errors}, indent=2))
         return 2
-    print(json.dumps({"ok": True, "axis": result["axis"], "status": result["status"]}))
+    print(
+        json.dumps(
+            {
+                "ok": True,
+                "axis": result["axis"],
+                "status": result["status"],
+                "verification_state": "STORED_ENVELOPE_ONLY",
+                "claim_promotion_cas_eligible": False,
+            }
+        )
+    )
     return 0
 
 
@@ -304,29 +328,27 @@ def _validate_exceptions(
     return valid, errors
 
 
-def cmd_adjudicate(args) -> int:
-    repo = root()
-    contract, contract_sha = _load_contract(repo, args.contract)
+def _aggregate_results(
+    contract: dict,
+    contract_sha: str,
+    results: dict[str, dict],
+    initial_errors: list[str] | None = None,
+    required_axes: list[str] | None = None,
+) -> tuple[dict, str]:
+    """Apply the shared no-majority-vote aggregate state machine."""
 
-    results: dict[str, dict] = {}
-    errors: list[str] = []
-    for rel in args.results:
-        result = load_json(repo / rel)
-        axis_errors = _check_axis_result(result, contract_sha)
-        axis = str(result.get("axis"))
-        if axis in results:
-            errors.append(f"duplicate axis result for {axis}")
-        results[axis] = result
-        errors.extend(f"{rel}: {item}" for item in axis_errors)
-
+    errors = list(initial_errors or [])
     exceptions, exception_errors = _validate_exceptions(contract, results)
     errors.extend(exception_errors)
 
-    try:
-        required = _required_axes(contract)
-    except ValueError as exc:
-        errors.append(str(exc))
-        required = list(CANONICAL_AXES)
+    if required_axes is None:
+        try:
+            required = _required_axes(contract)
+        except ValueError as exc:
+            errors.append(str(exc))
+            required = list(CANONICAL_AXES)
+    else:
+        required = list(required_axes)
     required_set = set(required)
 
     statuses = {axis: res.get("status") for axis, res in results.items()}
@@ -362,6 +384,11 @@ def cmd_adjudicate(args) -> int:
         else:
             aggregate = pass_label
 
+    lineage_note = (
+        " Lean and Rocq are kernel-independent proof lineages."
+        if "rocq" in required
+        else ""
+    )
     adjudication = {
         "schema_version": 2,
         "contract_id": contract.get("identity", {}).get("contract_id"),
@@ -376,14 +403,454 @@ def cmd_adjudicate(args) -> int:
         "note": (
             f"{pass_label} requires all {len(required)} contract-required axes "
             "PASS under one contract hash; majority vote is structurally "
-            "forbidden. Lean and Rocq are kernel-independent proof lineages."
+            f"forbidden.{lineage_note}"
         ),
     }
-    if args.out:
-        dump_json(repo / args.out, adjudication)
+    return adjudication, pass_label
+
+
+def _emit_adjudication(repo: Path, out: str | None, adjudication: dict) -> None:
+    if out:
+        dump_json(repo / out, adjudication)
     print(json.dumps(adjudication, indent=2, ensure_ascii=False))
-    passed = aggregate == pass_label or aggregate == "CAS_PASS_WITH_REGISTERED_EXCEPTION"
-    return 0 if passed else 2
+
+
+def cmd_adjudicate(args) -> int:
+    """Inspect stored envelopes without treating their fields as execution facts."""
+
+    repo = root()
+    contract, contract_sha = _load_contract(repo, args.contract)
+
+    results: dict[str, dict] = {}
+    errors: list[str] = []
+    for rel in args.results:
+        result = load_json(repo / rel)
+        axis_errors = _check_axis_result(result, contract_sha)
+        axis = str(result.get("axis"))
+        if axis in results:
+            errors.append(f"duplicate axis result for {axis}")
+        results[axis] = result
+        errors.extend(f"{rel}: {item}" for item in axis_errors)
+
+    adjudication, _ = _aggregate_results(
+        contract, contract_sha, results, errors
+    )
+    replay_status = adjudication["aggregate_status"]
+    adjudication.update(
+        {
+            "evidence_origin": "stored_axis_result_envelopes",
+            "claim_promotion_cas_eligible": False,
+            "claim_promotion_cas_requirement": "NOT_SATISFIED",
+            "historical_aggregate_status": replay_status,
+            "aggregate_status": "CAS_BLOCKED",
+        }
+    )
+    adjudication["errors"].append(
+        "UNVERIFIED_EXECUTION: serialized axis results are diagnostic "
+        "inputs, not parent-observed process execution"
+    )
+    if args.historical_replay:
+        adjudication["verification_state"] = "HISTORICAL_REPLAY"
+        adjudication["note"] += (
+            " Historical replay reports the frozen computed label only in "
+            "historical_aggregate_status; it remains blocked because it is "
+            "not runner-observed execution."
+        )
+    else:
+        adjudication["verification_state"] = "UNVERIFIED_EXECUTION"
+        adjudication["note"] += (
+            " This stored-result assessment is non-authoritative. Use "
+            "run-adjudicate for the CAS component of claim promotion."
+        )
+
+    adjudication["note"] += (
+        " CAS eligibility is one evidence component only; it does not establish "
+        "scientific validity, novelty, or overall claim readiness."
+    )
+    _emit_adjudication(repo, args.out, adjudication)
+    return 2
+
+
+def _repo_directory(repo: Path, value: object, field: str) -> tuple[Path | None, str | None]:
+    if not isinstance(value, str) or not value:
+        return None, f"{field} must be a non-empty repo-relative directory"
+    relative = Path(value)
+    if relative.is_absolute():
+        return None, f"{field} must be repo-relative"
+    resolved = (repo / relative).resolve()
+    try:
+        resolved.relative_to(repo)
+    except ValueError:
+        return None, f"{field} escapes the repository"
+    if not resolved.is_dir():
+        return None, f"{field} does not name a directory: {value!r}"
+    return resolved, None
+
+
+def _validate_run_spec(
+    repo: Path, run_spec: object, required: list[str]
+) -> tuple[dict[str, dict], list[str]]:
+    errors: list[str] = []
+    configs: dict[str, dict] = {}
+    if not isinstance(run_spec, dict):
+        return configs, ["run spec must be a JSON object"]
+    schema_version = run_spec.get("schema_version")
+    if type(schema_version) is not int or schema_version != 1:
+        errors.append("run spec schema_version must be 1")
+    axes = run_spec.get("axes")
+    if not isinstance(axes, dict):
+        return configs, errors + ["run spec axes must be an object"]
+
+    actual_axes = set(axes)
+    required_axes = set(required)
+    if actual_axes != required_axes:
+        missing = sorted(required_axes - actual_axes)
+        extra = sorted(actual_axes - required_axes)
+        if missing:
+            errors.append(f"run spec is missing required axes: {missing}")
+        if extra:
+            errors.append(f"run spec contains non-required axes: {extra}")
+
+    for axis in required:
+        raw = axes.get(axis)
+        if not isinstance(raw, dict):
+            errors.append(f"run spec axis {axis} must be an object")
+            continue
+        argv = raw.get("argv")
+        if (
+            not isinstance(argv, list)
+            or not argv
+            or not all(isinstance(item, str) for item in argv)
+            or not argv[0]
+        ):
+            errors.append(f"run spec axis {axis} argv must be a non-empty string array")
+            continue
+        if "shell" in raw:
+            errors.append(
+                f"run spec axis {axis} must not select a shell; argv is executed directly"
+            )
+            continue
+        timeout = raw.get("timeout_seconds")
+        if type(timeout) is not int or timeout <= 0:
+            errors.append(
+                f"run spec axis {axis} timeout_seconds must be a positive integer"
+            )
+            continue
+        cwd, cwd_error = _repo_directory(repo, raw.get("cwd"), f"axes.{axis}.cwd")
+        if cwd_error:
+            errors.append(cwd_error)
+            continue
+        configs[axis] = {
+            "argv": list(argv),
+            "cwd": cwd,
+            "cwd_label": str(raw["cwd"]),
+            "timeout_seconds": timeout,
+        }
+    argv_owners: dict[tuple[str, ...], str] = {}
+    for axis, config in configs.items():
+        argv_key = tuple(config["argv"])
+        owner = argv_owners.get(argv_key)
+        if owner is not None:
+            errors.append(
+                f"run spec axes {owner} and {axis} reuse the same full argv; "
+                "each axis must invoke an independently identified command"
+            )
+        else:
+            argv_owners[argv_key] = axis
+    return configs, errors
+
+
+def _contract_obligations(contract: dict) -> tuple[list[str], list[str]]:
+    obligations = contract.get("target", {}).get("exact_test_obligations")
+    if not isinstance(obligations, list):
+        return [], ["contract target.exact_test_obligations must be an array"]
+    if not obligations:
+        return [], [
+            "contract must register at least one exact_test_obligation before "
+            "runner-observed execution can promote a claim"
+        ]
+    if not all(isinstance(item, str) and item for item in obligations):
+        return [], ["contract exact_test_obligations must be non-empty strings"]
+    if len(set(obligations)) != len(obligations):
+        return [], ["contract exact_test_obligations must be unique"]
+    return obligations, []
+
+
+def _coerce_process_text(value: object) -> str:
+    if value is None:
+        return ""
+    if isinstance(value, bytes):
+        return value.decode("utf-8", errors="replace")
+    return str(value)
+
+
+def _bounded_probe_result(probe: dict) -> dict:
+    commands: list[dict] = []
+    raw_commands = probe.get("commands")
+    if isinstance(raw_commands, list):
+        for raw in raw_commands[:4]:
+            if isinstance(raw, dict):
+                commands.append(
+                    {
+                        "cmd": str(raw.get("cmd", ""))[:500],
+                        "exit": raw.get("exit"),
+                    }
+                )
+    bounded = {
+        "status": probe.get("status"),
+        "commands": commands,
+        "transcript_tail": str(probe.get("transcript_tail", ""))[-800:],
+    }
+    if "pinned_toolchain" in probe:
+        bounded["pinned_toolchain"] = str(probe["pinned_toolchain"])[:200]
+    return bounded
+
+
+def _probe_blocked_evidence(axis: str, config: dict, probe: dict) -> dict:
+    probe_status = probe.get("status")
+    status = (
+        probe_status
+        if probe_status in BLOCKED_STATUSES
+        else "BLOCKED_PACKAGE_UNAVAILABLE"
+    )
+    completed_at = _utc_now()
+    return {
+        "evidence_origin": "runner_observed_local_subprocess",
+        "axis": axis,
+        "argv": config["argv"],
+        "cwd": config["cwd_label"],
+        "timeout_seconds": config["timeout_seconds"],
+        "completed_at": completed_at,
+        "solver_executed": False,
+        "preflight_probe": probe,
+        "derived_status": status,
+        "errors": [f"parent-owned preflight probe did not PASS: {probe_status!r}"],
+    }
+
+
+def _derive_payload_status(
+    contract: dict,
+    obligations: list[str],
+    payload: object,
+    exit_code: int,
+) -> tuple[str, list[str]]:
+    if not isinstance(payload, dict):
+        return "INCONCLUSIVE", ["child stdout JSON must be an object"]
+
+    errors: list[str] = []
+    target = contract.get("target", {})
+    required_payload_keys = {"checks", "domain_assumption_diff", "counterexample"}
+    if "expected_exact_values" in target:
+        required_payload_keys.add("computed")
+    missing_payload_keys = sorted(required_payload_keys - set(payload))
+    structural_error = bool(missing_payload_keys)
+    if missing_payload_keys:
+        errors.append(f"child payload is missing required keys: {missing_payload_keys}")
+
+    checks = payload.get("checks")
+    if not isinstance(checks, dict):
+        errors.append("child payload checks must be an object")
+        structural_error = True
+    else:
+        expected_keys = set(obligations)
+        actual_keys = set(checks)
+        if actual_keys != expected_keys:
+            missing = sorted(expected_keys - actual_keys)
+            extra = sorted(actual_keys - expected_keys)
+            errors.append(
+                "child checks must exactly match contract obligations "
+                f"(missing={missing}, extra={extra})"
+            )
+            structural_error = True
+        if any(type(value) is not bool for value in checks.values()):
+            errors.append("every child check value must be a JSON boolean")
+            structural_error = True
+
+    assumption_diff = payload.get("domain_assumption_diff")
+    if not isinstance(assumption_diff, list):
+        errors.append("child payload domain_assumption_diff must be an array")
+        structural_error = True
+
+    if structural_error:
+        return "INCONCLUSIVE", errors
+    if assumption_diff:
+        errors.append("child reported a non-empty domain_assumption_diff")
+        return "MISALIGNED_ASSUMPTIONS", errors
+
+    failed_obligations = sorted(key for key, value in checks.items() if not value)
+    if failed_obligations:
+        errors.append(f"failed contract obligations: {failed_obligations}")
+
+    expected_mismatch = False
+    if "expected_exact_values" in target:
+        expected_mismatch = payload.get("computed") != target["expected_exact_values"]
+        if expected_mismatch:
+            errors.append("child computed values do not match contract expected_exact_values")
+
+    counterexample = payload.get("counterexample")
+    if counterexample is not None:
+        errors.append("child reported a counterexample")
+
+    if failed_obligations or expected_mismatch or counterexample is not None:
+        return "FAIL", errors
+    if exit_code != 0:
+        errors.append(f"child exited {exit_code} without a validated failure payload")
+        return "INCONCLUSIVE", errors
+    return "PASS", errors
+
+
+def _execute_axis(
+    contract: dict,
+    obligations: list[str],
+    axis: str,
+    config: dict,
+    preflight_probe: dict,
+) -> dict:
+    started_at = _utc_now()
+    stdout = ""
+    stderr = ""
+    exit_code: int | None = None
+    timed_out = False
+    launch_error: str | None = None
+    try:
+        completed = subprocess.run(
+            config["argv"],
+            cwd=config["cwd"],
+            capture_output=True,
+            text=True,
+            timeout=config["timeout_seconds"],
+            check=False,
+            shell=False,
+        )
+        exit_code = completed.returncode
+        stdout = completed.stdout
+        stderr = completed.stderr
+    except subprocess.TimeoutExpired as exc:
+        timed_out = True
+        stdout = _coerce_process_text(exc.stdout)
+        stderr = _coerce_process_text(exc.stderr)
+    except OSError as exc:
+        launch_error = str(exc)
+    completed_at = _utc_now()
+
+    payload: object = None
+    validation_errors: list[str] = []
+    if launch_error is not None:
+        status = "BLOCKED_PACKAGE_UNAVAILABLE"
+        validation_errors.append(f"process launch failed: {launch_error}")
+    elif timed_out:
+        status = "BLOCKED_RESOURCE_LIMIT"
+        validation_errors.append("child process exceeded timeout_seconds")
+    else:
+        try:
+            payload = json.loads(stdout)
+        except json.JSONDecodeError as exc:
+            status = "INCONCLUSIVE"
+            validation_errors.append(f"child stdout is not one JSON document: {exc}")
+        else:
+            status, validation_errors = _derive_payload_status(
+                contract, obligations, payload, int(exit_code)
+            )
+
+    selected_payload = (
+        {
+            key: payload[key]
+            for key in (
+                "checks",
+                "domain_assumption_diff",
+                "computed",
+                "counterexample",
+            )
+            if key in payload
+        }
+        if isinstance(payload, dict)
+        else None
+    )
+    evidence = {
+        "evidence_origin": "runner_observed_local_subprocess",
+        "axis": axis,
+        "argv": config["argv"],
+        "cwd": config["cwd_label"],
+        "timeout_seconds": config["timeout_seconds"],
+        "solver_executed": True,
+        "preflight_probe": preflight_probe,
+        "started_at": started_at,
+        "completed_at": completed_at,
+        "exit_code": exit_code,
+        "timed_out": timed_out,
+        "stdout_tail": stdout[-2000:],
+        "stderr_tail": stderr[-2000:],
+        "derived_status": status,
+        "errors": validation_errors,
+    }
+    if selected_payload is not None:
+        evidence["payload"] = selected_payload
+    return evidence
+
+
+def cmd_run_adjudicate(args) -> int:
+    """Run all required axes and adjudicate only parent-observed evidence."""
+
+    repo = root()
+    contract, contract_sha = _load_contract(repo, args.contract)
+    setup_errors: list[str] = []
+    try:
+        required = _required_axes(contract)
+    except ValueError as exc:
+        required = list(CANONICAL_AXES)
+        setup_errors.append(str(exc))
+    obligations, obligation_errors = _contract_obligations(contract)
+    setup_errors.extend(obligation_errors)
+    run_spec = load_json(repo / args.run_spec)
+    configs, spec_errors = _validate_run_spec(repo, run_spec, required)
+    setup_errors.extend(spec_errors)
+
+    execution_evidence: dict[str, dict] = {}
+    results: dict[str, dict] = {}
+    if not setup_errors:
+        for axis in required:
+            preflight_probe = _bounded_probe_result(PROBES[axis](repo))
+            if preflight_probe["status"] == "PASS":
+                evidence = _execute_axis(
+                    contract,
+                    obligations,
+                    axis,
+                    configs[axis],
+                    preflight_probe,
+                )
+            else:
+                evidence = _probe_blocked_evidence(
+                    axis, configs[axis], preflight_probe
+                )
+            execution_evidence[axis] = evidence
+            results[axis] = {
+                "axis": axis,
+                "status": evidence["derived_status"],
+                "completed_at": evidence["completed_at"],
+            }
+
+    adjudication, pass_label = _aggregate_results(
+        contract, contract_sha, results, setup_errors, required_axes=required
+    )
+    eligible = adjudication["aggregate_status"] == pass_label
+    adjudication.update(
+        {
+            "verification_state": "RUNNER_OBSERVED_EXECUTION",
+            "evidence_origin": "runner_observed_local_subprocess",
+            "execution_evidence": execution_evidence,
+            "claim_promotion_cas_eligible": eligible,
+            "claim_promotion_cas_requirement": (
+                "SATISFIED" if eligible else "NOT_SATISFIED"
+            ),
+        }
+    )
+    adjudication["note"] += (
+        " Runner observation establishes only the CAS evidence component; "
+        "it does not establish scientific validity, novelty, or overall "
+        "claim readiness. Local observation is not a security attestation."
+    )
+    _emit_adjudication(repo, args.out, adjudication)
+    return 0 if eligible else 2
 
 
 def main() -> None:
@@ -403,13 +870,25 @@ def main() -> None:
     adjudicate.add_argument("--contract", required=True)
     adjudicate.add_argument("--results", nargs="+", required=True)
     adjudicate.add_argument("--out", default=None)
+    adjudicate.add_argument(
+        "--historical-replay",
+        action="store_true",
+        help="report the frozen computed label while keeping primary status blocked",
+    )
+
+    run_adjudicate = sub.add_parser("run-adjudicate")
+    run_adjudicate.add_argument("--contract", required=True)
+    run_adjudicate.add_argument("--run-spec", required=True)
+    run_adjudicate.add_argument("--out", default=None)
 
     args = parser.parse_args()
     if args.command == "preflight":
         sys.exit(cmd_preflight(args))
     if args.command == "check-axis":
         sys.exit(cmd_check_axis(args))
-    sys.exit(cmd_adjudicate(args))
+    if args.command == "adjudicate":
+        sys.exit(cmd_adjudicate(args))
+    sys.exit(cmd_run_adjudicate(args))
 
 
 if __name__ == "__main__":
