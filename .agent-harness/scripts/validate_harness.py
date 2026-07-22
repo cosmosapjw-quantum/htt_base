@@ -11,8 +11,8 @@ from _harness import (
     load_json,
     root,
     validate_assignment_payload,
-    validate_result_payload,
 )
+from strict_result_validation import load_and_validate_registered_result_file
 
 
 def validate_repo(repo: Path) -> dict:
@@ -44,9 +44,18 @@ def validate_repo(repo: Path) -> dict:
         if len(assignments) > int(plan["budget"]["max_total"]):
             errors.append("Assignment count exceeds run max_total.")
         ids: set[str] = set()
-        assignment_by_id: dict[str, dict] = {}
         for path in assignments:
-            value = load_json(path)
+            if path.is_symlink() or not path.is_file():
+                errors.append(f"{path.name}: assignment is not a regular file")
+                continue
+            try:
+                value = load_json(path)
+            except (OSError, json.JSONDecodeError) as exc:
+                errors.append(f"{path.name}: invalid assignment JSON: {exc}")
+                continue
+            if not isinstance(value, dict):
+                errors.append(f"{path.name}: assignment is not a JSON object")
+                continue
             aid = value.get("assignment_id")
             if aid in ids:
                 errors.append(f"Duplicate assignment_id: {aid}")
@@ -56,33 +65,18 @@ def validate_repo(repo: Path) -> dict:
                 run_id=active,
                 context_version=str(index.get("context_version", "")),
                 assignment_id=path.stem,
+                repo=repo,
             )
             errors.extend(f"{path.name}: {item}" for item in assignment_errors)
-            if isinstance(aid, str):
-                assignment_by_id[aid] = value
 
         for path in sorted((run_dir / "results").glob("*.json")):
-            try:
-                value = load_json(path)
-            except (OSError, json.JSONDecodeError) as exc:
-                errors.append(f"Invalid result JSON {path.name}: {exc}")
-                continue
-            aid = value.get("assignment_id") if isinstance(value, dict) else None
-            assignment = assignment_by_id.get(str(aid))
-            if assignment is None:
-                errors.append(f"Unregistered result: {path.name}")
-                continue
-            expected = str(assignment.get("result_path", ""))
-            if path.relative_to(repo).as_posix() != expected or path.is_symlink():
-                errors.append(f"Result path does not match registration: {path.name}")
-                continue
-            result_errors = validate_result_payload(
-                value,
-                assignment,
+            validation = load_and_validate_registered_result_file(
+                repo,
+                path,
                 run_id=active,
                 context_version=str(index.get("context_version", "")),
             )
-            errors.extend(f"{path.name}: {item}" for item in result_errors)
+            errors.extend(f"{path.name}: {item}" for item in validation.errors)
 
     payload = {
         "ok": not errors,

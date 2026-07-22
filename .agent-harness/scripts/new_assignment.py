@@ -17,6 +17,7 @@ import hashlib
 import json
 
 from _harness import (
+    assignment_sha256,
     cli_active_run_id,
     dump_json,
     is_safe_identifier,
@@ -174,6 +175,8 @@ def main() -> None:
     if args.cas_contract:
         value["cas_contract"] = _hashed_ref(repo, args.cas_contract)
 
+    value["assignment_sha256"] = assignment_sha256(value)
+
     errors = validate_assignment_payload(
         value,
         run_id=run_id,
@@ -186,8 +189,6 @@ def main() -> None:
             "assignment registration REFUSED (fail-closed):\n- " + "\n- ".join(errors)
         )
 
-    sealed = json.dumps(value, sort_keys=True, ensure_ascii=False).encode("utf-8")
-    value["assignment_sha256"] = hashlib.sha256(sealed).hexdigest()
     dump_json(out, value)
     print(out.relative_to(repo))
     print(

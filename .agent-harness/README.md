@@ -65,9 +65,55 @@ python3 .agent-harness/scripts/validate_harness.py
 Registration is fail-closed (audit H3): empty `claim_ids`,
 `required_inputs`, `allowed_tools`, or `required_outputs`, an unknown
 `agent_type`, or a CAS agent without `--cas-axis`/`--cas-contract` is
-rejected before the assignment file is written.
+rejected before the assignment file is written. New assignments are sealed
+with `assignment_sha256`, and every assigned claim ID must already exist in
+the canonical `context/CLAIM_REGISTRY.jsonl`. Only claim identity is consumed
+from that registry; a stored claim, novelty, or gate status is never treated
+as current scientific authority. The seal is a deterministic drift checksum,
+not a signature or proof of who wrote the assignment.
 
 Paste the header printed by `new_assignment.py` at the start of the subagent spawn prompt. The assignment JSON supplies the unique result path.
+
+## Strict result contract (MA-03)
+
+New runs use `templates/RESULT_ENVELOPE.json` schema v2. Every assigned claim
+must have exactly one typed terminal disposition:
+
+- `findings_present` names one or more finding IDs;
+- `examined_no_findings` explicitly records a completed review with no
+  finding and requires nonempty evidence references plus an exact evidence
+  fingerprint; or
+- `not_examined` is allowed only for an `inconclusive` or `error` result.
+
+The envelope also binds the assignment seal, canonical result path, launch
+receipt when present, role and independence mode, declared reads, timestamps,
+tools, commands, artifacts, findings, and reported errors. Artifact references
+are accepted only after path confinement, blind-sibling authorization,
+byte-count, and SHA-256 checks. Finding severity is one of `low`, `medium`,
+`high`, or `critical`; finding and command fingerprints use the exact
+`sha256:<64 lowercase hex>` form. Routine result JSON is capped at 64 KiB,
+with larger raw evidence stored once through `evidence_store.py` and
+referenced by its typed descriptor.
+
+`SubagentStop`, `merge_results.py`, and `validate_harness.py` all call the same
+file-level kernel in `scripts/strict_result_validation.py`. The repository has
+no separate production "agent result replay" consumer: replaying a serialized
+stop-hook event exercises the same hook and kernel. The hermetic
+research-receipt replay utilities under
+`scripts/codex_harness/` are a different evidence domain and are intentionally
+not coupled to this result contract.
+
+Current launch receipts and the agent-declared read/execution lists are
+`self_declared`, not platform-authenticated. The legacy-looking `--attested`
+flag means only that the caller asserts the requested local profile was loaded;
+it does not create platform provenance. Missing receipts are recorded as
+`unverified`, and a JSON field that promotes itself to
+`platform_authenticated` is rejected until a platform-owned verifier exists.
+Local receipt validation still binds the assigned/requested/actual profile,
+installed config and sandbox, fork mode, and context-delivery mode.
+Pre-MA-03 runs listed in `HISTORICAL_RUNS.json` are read-only schema-v1
+inputs: validation does not rewrite or silently upgrade them, and result merge
+refuses to regenerate their stored aggregate.
 
 ## Spawn prompt template
 
@@ -100,6 +146,10 @@ evidence needed for a targeted decision. Opposite verdicts on the same
 fail the merge — no majority vote. Resolved findings are recorded in
 `.agent-harness/ledger/FINDING_LEDGER.jsonl` so later runs do not re-raise
 them.
+
+`MERGED_RESULTS.json.process_status` reports only envelope/merge integrity.
+Its `claim_gate_status` is always `NOT_EVALUATED`; a zero merge exit code is
+never a novelty, scientific-validity, or claim-acceptance decision.
 
 ## Four-axis CAS gate
 

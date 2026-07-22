@@ -22,13 +22,15 @@ from collections import defaultdict
 
 from _harness import (
     cli_active_run_id,
+    declared_result_path,
     dump_json,
+    historical_run_ids,
     load_json,
     root,
     utc_now,
     validate_assignment_payload,
-    validate_result_payload,
 )
+from strict_result_validation import load_and_validate_registered_result_file
 
 
 def canonical_key(finding: dict) -> tuple:
@@ -76,50 +78,99 @@ def main() -> None:
     repo = root()
     run_id = cli_active_run_id(repo)
     assert run_id is not None
+    if run_id in historical_run_ids(repo):
+        raise SystemExit(
+            "historical schema-v1 runs are read-only; merge replay must not rewrite them"
+        )
     run_dir = repo / ".agent-harness" / "runs" / run_id
     plan = load_json(run_dir / "RUN_PLAN.json")
-    context_version = str(plan.get("context_version", ""))
-    assignments = {
-        path.stem: load_json(path)
-        for path in sorted((run_dir / "assignments").glob("*.json"))
-    }
+    index = load_json(repo / ".agent-harness" / "context" / "CONTEXT_INDEX.json")
+    context_version = str(index.get("context_version", ""))
     results = []
     errors = []
-    for path in sorted((run_dir / "results").glob("*.json")):
-        try:
-            value = load_json(path)
-        except (OSError, json.JSONDecodeError) as exc:
-            errors.append({"path": str(path.relative_to(repo)), "error": str(exc)})
-            continue
-        assignment_id = value.get("assignment_id") if isinstance(value, dict) else None
-        assignment = assignments.get(str(assignment_id))
-        if assignment is None:
+    assignments = {}
+    for path in sorted((run_dir / "assignments").glob("*.json")):
+        relative = str(path.relative_to(repo))
+        if path.is_symlink() or not path.is_file():
             errors.append(
-                {"path": str(path.relative_to(repo)), "error": "unregistered result"}
+                {"path": relative, "error": "assignment is not a regular file"}
             )
             continue
-        validation_errors = validate_assignment_payload(
+        try:
+            assignment = load_json(path)
+        except (OSError, json.JSONDecodeError) as exc:
+            errors.append({"path": relative, "error": f"invalid assignment JSON: {exc}"})
+            continue
+        if not isinstance(assignment, dict):
+            errors.append(
+                {"path": relative, "error": "assignment is not a JSON object"}
+            )
+            continue
+        assignment_errors = validate_assignment_payload(
             assignment,
             run_id=run_id,
             context_version=context_version,
-            assignment_id=str(assignment_id),
-        ) + validate_result_payload(
-            value,
-            assignment,
+            assignment_id=path.stem,
+            repo=repo,
+        )
+        errors.extend(
+            {"path": relative, "error": error} for error in assignment_errors
+        )
+        assignments[path.stem] = assignment
+    valid_assignment_ids: set[str] = set()
+    result_dispositions = []
+    if plan.get("context_version") != context_version:
+        errors.append(
+            {
+                "path": str((run_dir / "RUN_PLAN.json").relative_to(repo)),
+                "error": "active run context_version is stale",
+            }
+        )
+    for path in sorted((run_dir / "results").glob("*.json")):
+        validation = load_and_validate_registered_result_file(
+            repo,
+            path,
             run_id=run_id,
             context_version=context_version,
         )
-        if validation_errors:
+        if validation.errors:
             errors.append(
                 {
                     "path": str(path.relative_to(repo)),
-                    "error": "; ".join(validation_errors),
+                    "error": "; ".join(validation.errors),
                 }
             )
             continue
+        value = validation.result
+        assignment = validation.assignment
+        assert value is not None and assignment is not None
+        assignment_id = str(assignment.get("assignment_id"))
+        valid_assignment_ids.add(assignment_id)
+        result_dispositions.append(
+            {
+                "assignment_id": assignment_id,
+                "status": value.get("status"),
+                "claim_results": value.get("claim_results", []),
+                "reported_errors": value.get("errors", []),
+                "launch_evidence": validation.launch_evidence,
+                "files_read_evidence": value.get("files_read_evidence"),
+                "execution_evidence": value.get("execution_evidence"),
+            }
+        )
         if assignment.get("independence_mode") == "adjudication":
             continue
         results.append(value)
+
+    for assignment_id in assignments:
+        if assignment_id not in valid_assignment_ids:
+            expected = repo / declared_result_path(run_id, assignment_id)
+            if not expected.is_file():
+                errors.append(
+                    {
+                        "path": str(expected.relative_to(repo)),
+                        "error": "registered assignment has no result",
+                    }
+                )
 
     groups: dict[tuple, list[dict]] = defaultdict(list)
     for result in results:
@@ -153,6 +204,14 @@ def main() -> None:
         representative["supporting_agent_types"] = [
             item["agent_type"] for item in items
         ]
+        representative["supporting_evidence_origins"] = sorted(
+            {
+                str(result.get("launch_evidence", "unverified"))
+                for result in results
+                if result.get("assignment_id")
+                in {item["assignment_id"] for item in items}
+            }
+        )
         representative["duplicate_count"] = len(items)
         resolution = ledger.get(key)
         if resolution is not None:
@@ -195,9 +254,18 @@ def main() -> None:
         "schema_version": 1,
         "run_id": run_id,
         "generated_at": utc_now(),
+        "process_status": (
+            "INVALID_ENVELOPES"
+            if errors
+            else "CONFLICTS_REQUIRE_ADJUDICATION"
+            if conflicts
+            else "STRUCTURALLY_VALID"
+        ),
+        "claim_gate_status": "NOT_EVALUATED",
         "result_count": len(results),
         "raw_finding_count": sum(len(result.get("findings", [])) for result in results),
         "unique_finding_count": len(merged),
+        "result_dispositions": result_dispositions,
         "findings": merged,
         "conflicts": conflicts,
         "errors": errors,

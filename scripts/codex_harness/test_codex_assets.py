@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import importlib.util
 import json
 import shutil
@@ -167,6 +168,12 @@ def test_shared_context_harness_and_stop_hook_fail_closed(tmp_path: Path) -> Non
     harness = tmp_path / ".agent-harness"
     (harness / "context").mkdir(parents=True)
     (harness / "runtime").mkdir(parents=True)
+    (tmp_path / ".codex" / "agents").mkdir(parents=True)
+    (tmp_path / ".codex" / "agents" / "context_mapper.toml").write_text(
+        'name = "context_mapper"\ndescription = "test profile"\n'
+        'sandbox_mode = "read-only"\n',
+        encoding="utf-8",
+    )
     (harness / "runtime" / "ACTIVE_RUN").write_text(
         "test-run\n", encoding="utf-8"
     )
@@ -174,6 +181,11 @@ def test_shared_context_harness_and_stop_hook_fail_closed(tmp_path: Path) -> Non
         json.dumps({"context_version": "test-version"}) + "\n",
         encoding="utf-8",
     )
+    (harness / "context/CLAIM_REGISTRY.jsonl").write_text(
+        json.dumps({"claim_id": "C-001", "statement": "Test claim."}) + "\n",
+        encoding="utf-8",
+    )
+    context_index = harness / "context/CONTEXT_INDEX.json"
     assignment = {
         "schema_version": 2,
         "run_id": "test-run",
@@ -181,15 +193,24 @@ def test_shared_context_harness_and_stop_hook_fail_closed(tmp_path: Path) -> Non
         "agent_type": "context_mapper",
         "context_version": "test-version",
         "independence_mode": "shared-core",
+        "discovery_mode": "targeted",
+        "independence_rationale": None,
         "risk_tier": "R1",
         "claim_ids": ["C-001"],
         "required_inputs": [
-            {"path": ".agent-harness/context/CONTEXT_INDEX.json", "sha256": "0" * 64}
+            {
+                "path": ".agent-harness/context/CONTEXT_INDEX.json",
+                "sha256": hashlib.sha256(context_index.read_bytes()).hexdigest(),
+            }
         ],
         "allowed_tools": ["read"],
         "required_outputs": ["result envelope"],
+        "allowed_sibling_results": [],
         "result_path": ".agent-harness/runs/test-run/results/A-001.json",
     }
+    assignment["assignment_sha256"] = hashlib.sha256(
+        json.dumps(assignment, sort_keys=True, ensure_ascii=False).encode("utf-8")
+    ).hexdigest()
     assignment_path = harness / "runs/test-run/assignments/A-001.json"
     assignment_path.parent.mkdir(parents=True)
     (harness / "runs/test-run/RUN_PLAN.json").write_text(
@@ -211,18 +232,49 @@ def test_shared_context_harness_and_stop_hook_fail_closed(tmp_path: Path) -> Non
     result = harness / "runs/test-run/results/A-001.json"
     result.parent.mkdir(parents=True)
     result_payload = {
-        "schema_version": 1,
+        "schema_version": 2,
         "run_id": "test-run",
         "assignment_id": "A-001",
         "context_version": "test-version",
         "agent_type": "context_mapper",
+        "independence_mode": "shared-core",
         "status": "pass",
+        "result_path": ".agent-harness/runs/test-run/results/A-001.json",
+        "assignment_sha256": assignment["assignment_sha256"],
+        "launch_id": None,
+        "launch_evidence": "unverified",
+        "execution_evidence": "self_declared",
+        "files_read": [".agent-harness/context/CONTEXT_INDEX.json"],
+        "files_read_evidence": "self_declared",
+        "started_at": "2026-07-23T00:00:00+00:00",
+        "completed_at": "2026-07-23T00:00:01+00:00",
+        "tool_versions": {"python": sys.version.split()[0]},
+        "commands": [],
+        "artifacts": [],
         "findings": [
             {
                 "finding_id": "F-001",
                 "claim_id": "C-001",
                 "verdict": "pass",
+                "severity": "low",
+                "statement": "Test finding.",
+                "assumptions_used": [],
+                "evidence_refs": [
+                    ".agent-harness/context/CONTEXT_INDEX.json"
+                ],
                 "evidence_fingerprint": "sha256:" + "1" * 64,
+                "counterevidence_refs": [],
+                "reproduction": [],
+                "confidence": 1.0,
+                "unresolved": [],
+            }
+        ],
+        "claim_results": [
+            {
+                "claim_id": "C-001",
+                "outcome": "findings_present",
+                "finding_ids": ["F-001"],
+                "summary": "Test claim disposition.",
             }
         ],
         "errors": [],

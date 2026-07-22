@@ -15,13 +15,19 @@ import json
 import shutil
 from pathlib import Path
 
-from _harness import root
+from _harness import EVIDENCE_FINGERPRINT_RE, root
 
 
 def store_bytes(repo: Path, source: Path) -> tuple[str, Path, bool]:
     digest = hashlib.sha256(source.read_bytes()).hexdigest()
     blob = repo / ".agent-harness" / "evidence" / "sha256" / digest[:2] / digest
     created = False
+    if blob.exists() and (
+        not blob.is_file()
+        or blob.is_symlink()
+        or hashlib.sha256(blob.read_bytes()).hexdigest() != digest
+    ):
+        raise RuntimeError(f"content-addressed evidence blob is poisoned: {blob}")
     if not blob.is_file():
         blob.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(source, blob)
@@ -35,14 +41,19 @@ def main() -> None:
     put = sub.add_parser("put")
     put.add_argument("path")
     put.add_argument("--producer", default="unknown")
-    put.add_argument("--command-fingerprint", default="")
+    put.add_argument("--command-fingerprint", required=True)
     args = parser.parse_args()
 
     repo = root()
     source = Path(args.path)
     if not source.is_file():
         raise SystemExit(f"no such file: {source}")
-    digest, blob, created = store_bytes(repo, source)
+    if EVIDENCE_FINGERPRINT_RE.fullmatch(args.command_fingerprint) is None:
+        raise SystemExit("--command-fingerprint must be sha256:<64 lowercase hex>")
+    try:
+        digest, blob, created = store_bytes(repo, source)
+    except RuntimeError as exc:
+        raise SystemExit(str(exc)) from exc
     print(
         json.dumps(
             {
