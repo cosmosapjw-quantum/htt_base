@@ -1,20 +1,20 @@
 """MIO denominator-policy contracts for pre-solver x/Q/Pi/F/G formalism."""
 from __future__ import annotations
 
+import math
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass, field
-from enum import StrEnum
-import math
 
-from common.transfer_registry import (
-    TransferSource,
-    validate_transfer_dependent_result,
-)
+from common.enum_compat import StrEnum
 
 # PR-124: active MES consumers traverse the typed successor registry
 # (common.mes_theorem_authority is the live authority; legacy values are
 # labeled non-authoritative reproduction, see legacy_reproduction_coefficients).
 from common.mes_successor_registry import current_mes_successor_registry
+from common.transfer_registry import (
+    TransferSource,
+    validate_transfer_dependent_result,
+)
 
 _MES_SUCCESSOR = current_mes_successor_registry().successor
 _MES_SUCCESSOR_ID = _MES_SUCCESSOR.successor_id

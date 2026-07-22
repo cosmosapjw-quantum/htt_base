@@ -8,21 +8,20 @@ posterior axes by construction.
 """
 from __future__ import annotations
 
-from collections.abc import Mapping, Sequence
-from dataclasses import dataclass
-from enum import StrEnum
 import hashlib
 import json
+from collections.abc import Mapping, Sequence
+from dataclasses import dataclass
 from typing import Any
 
 import numpy as np
-
 from common.contracts import (
     DirectionalSummary,
     PreferredAxis,
     SkySelectionConfig,
     SkySupport,
 )
+from common.enum_compat import StrEnum
 from common.healpix_selection import (
     build_angular_completeness,
     build_zoa_mask,

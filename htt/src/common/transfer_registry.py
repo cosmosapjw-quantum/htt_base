@@ -6,18 +6,9 @@ transfer functions or synthesize future native solver outputs.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from enum import Enum
 from typing import Iterable, Mapping, Sequence
 
-try:  # Python 3.11+
-    from enum import StrEnum
-except ImportError:  # pragma: no cover - exercised by the Python 3.10 CI lane
-
-    class StrEnum(str, Enum):
-        """Minimal stdlib-compatible fallback for the declared Python 3.10 floor."""
-
-        def __str__(self) -> str:
-            return str(self.value)
+from common.enum_compat import StrEnum
 
 
 class TransferSource(StrEnum):

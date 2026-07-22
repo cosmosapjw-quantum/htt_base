@@ -1,12 +1,11 @@
 """Manifest-backed MIO report cards for x/Q/Pi/F/G diagnostics."""
 from __future__ import annotations
 
-from collections.abc import Mapping, Sequence
-from dataclasses import asdict, dataclass, field
-from enum import StrEnum
 import hashlib
 import json
 import math
+from collections.abc import Mapping, Sequence
+from dataclasses import asdict, dataclass, field
 from typing import Any
 
 from common.contracts import (
@@ -15,7 +14,7 @@ from common.contracts import (
     ImplementationScope,
     Owner,
 )
-
+from common.enum_compat import StrEnum
 
 SCHEMA_VERSION = "mio.departure_report.v1"
 SCORE_ORDER = ("x_C", "Q", "Pi", "F", "G_F")
