@@ -21,8 +21,8 @@ env:
   OMP_NUM_THREADS: "1"
   MKL_NUM_THREADS: "1"
   NUMEXPR_NUM_THREADS: "1"
-  # PR07-005: PYTHONPATH spans repo root, repo/htt and repo/htt/htt.
-  PYTHONPATH: ${{ github.workspace }}:${{ github.workspace }}/htt:${{ github.workspace }}/htt/htt
+  # PR07-005: include every source root used by the uninstalled gate imports.
+  PYTHONPATH: ${{ github.workspace }}:${{ github.workspace }}/htt:${{ github.workspace }}/htt/htt:${{ github.workspace }}/htt/src
 
 jobs:
   portable-gates:
