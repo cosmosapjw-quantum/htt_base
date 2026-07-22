@@ -393,7 +393,8 @@ def _computed_mismatches(computed: dict, expected: dict) -> dict:
 def _adjudicate(contract_rel: str, axis_rel: dict[str, str]) -> dict:
     cas_gate = REPO / ".agent-harness/scripts/cas_gate.py"
     cmd = [str(REPO / "venv/bin/python"), str(cas_gate), "adjudicate",
-           "--contract", contract_rel, "--results", *axis_rel.values()]
+           "--historical-replay", "--contract", contract_rel,
+           "--results", *axis_rel.values()]
     completed = subprocess.run(cmd, capture_output=True, text=True,
                                cwd=REPO, check=False)
     if not completed.stdout.strip():
@@ -884,7 +885,22 @@ def build(write: bool, run_rust: bool) -> int:
                     return 2
             _write_if_changed(rel, envelope, wrote)
         adjudication = _adjudicate(CAS_CONTRACT_PATH, axis_rel)
-        _write_if_changed(CAS_ADJUDICATION_PATH, adjudication, wrote)
+        # The frozen v1 adjudication remains a reproducibility artifact.  A
+        # stored-envelope replay may check its historical verdict, but must
+        # not mint or overwrite a claim-promotion-shaped CAS pass.
+        if (
+            adjudication.get("gate_exit_code") != 2
+            or adjudication.get("verification_state") != "HISTORICAL_REPLAY"
+            or adjudication.get("aggregate_status") != "CAS_BLOCKED"
+            or adjudication.get("historical_aggregate_status")
+            != "CAS_4AXIS_PASS"
+            or adjudication.get("claim_promotion_cas_requirement")
+            != "NOT_SATISFIED"
+        ):
+            problems.append(
+                "stored-envelope replay did not reproduce the historical "
+                "CAS_4AXIS_PASS as a non-promotable diagnostic"
+            )
     for axis, rel in axis_rel.items():
         target = REPO / rel
         if not target.is_file():
