@@ -8,7 +8,7 @@ from pathlib import Path
 
 import yaml
 
-from common.metamorphic_symmetry import (
+from htt.metamorphic_symmetry import (
     MUTATION_IDS,
     RELATION_IDS,
     semantic_digest,
@@ -240,7 +240,7 @@ def test_result_card_and_manifest_preserve_blocked_success_edge() -> None:
     assert result["covariance_status"] == "mechanics_only_not_covariance_validation"
     assert result["null_mock_status"] == "not_run_not_applicable"
     for required in (
-        "htt/src/common/metamorphic_symmetry.py",
+        "htt/htt/metamorphic_symmetry.py",
         "scripts/codex_harness/run_pr172_metamorphic_battery.py",
     ):
         assert required in result["input_hashes"]
