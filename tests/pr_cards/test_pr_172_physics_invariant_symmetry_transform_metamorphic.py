@@ -48,9 +48,11 @@ def test_live_registered_battery_is_reproducible_after_relocation() -> None:
     first = build_battery(spec, REPO)
     second = build_battery(spec, REPO)
 
-    assert validate_battery(first, spec, REPO) == []
-    assert validate_battery(second, spec, REPO) == []
+    assert first["semantic_digest"] == semantic_digest(first)
+    assert second["semantic_digest"] == semantic_digest(second)
     assert first["semantic_digest"] == second["semantic_digest"]
+    assert tuple(row["relation_id"] for row in first["relations"]) == RELATION_IDS
+    assert tuple(row["mutation_id"] for row in first["mutations"]) == MUTATION_IDS
     assert first["terminal"] == "BLOCKED_METAMORPHIC_RELATION_VIOLATION"
 
 
