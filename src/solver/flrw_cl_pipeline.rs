@@ -977,20 +977,27 @@ mod benchmark_cl {
 
         let result = compute_flrw_cl_track_a(&params, &config).unwrap();
 
-        // Output D_ℓ to file
-        let mut f = std::fs::File::create("/home/claude/bass_dl_output.csv").unwrap();
+        // Exercise the CSV output without depending on a developer home path.
+        let output_path = std::env::temp_dir().join(format!(
+            "bass_dl_output_{}.csv",
+            std::process::id()
+        ));
+        let mut f = std::fs::File::create(&output_path).unwrap();
         writeln!(f, "ell,dl_muK2").unwrap();
         for ell in 2..=config.ell_max {
             if ell < result.dl_muK2.len() {
                 writeln!(f, "{},{:.6e}", ell, result.dl_muK2[ell]).unwrap();
             }
         }
+        f.flush().unwrap();
 
         eprintln!("=== BASS_RS C_ℓ ===");
         eprintln!("Fast: D_2={:.1} μK², wall={:.0} ms, eta0={:.0}", 
             result.dl_muK2[2], result.wall_ms, result.eta_0);
-        eprintln!("File: /home/claude/bass_dl_output.csv");
+        eprintln!("File: {}", output_path.display());
         eprintln!("{}", profiler::report());
+        drop(f);
+        std::fs::remove_file(output_path).unwrap();
         assert!(result.dl_muK2[2] > 10.0 && result.dl_muK2[2] < 100000.0);
     }
 }
