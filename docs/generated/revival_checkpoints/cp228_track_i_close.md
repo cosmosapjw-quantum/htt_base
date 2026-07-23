@@ -6,8 +6,10 @@ at every commit; PR-151 acquisition untouched (read-only probes only).
 
 - Foundation (209,210,211,213,212,214), theorems/atlas (223,215,219,216,217,218,220),
   data-method (222,221,225,224), closure (226,227,228).
-- Two five-axis CAS_5AXIS_PASS theorems: PR-222 (bulk->tilt rank 3) + PR-223
-  (multi-fluid moment cone). Four LITERAL_RESCUE cross-refs (211/212/213/215) to
+- Two pre-MA04 author-side historical CAS_5AXIS_PASS labels: PR-222
+  (bulk->tilt rank 3) + PR-223 (multi-fluid moment cone). They are not current
+  live CAS attestations; parent-observed run-adjudicate remains required. Four
+  LITERAL_RESCUE cross-refs (211/212/213/215) to
   the frozen PR-185/186/187/189 evidence; frozen anchors byte-identical.
 - PR-226 partial (planck_k1/cf4/act closed, DESI blocked on PR-151 terminal).
 - PR-227 author-side reproduction VERIFIED (18 cards byte-stable), Independence OPEN.
