@@ -16,8 +16,9 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPO / "htt" / "src"))
+sys.path.insert(0, str(REPO / "htt"))
 
-from common.pr184_axisym_contract import run_adjudication  # noqa: E402
+from bass.pr184_axisym_contract import run_adjudication  # noqa: E402
 
 SPEC = REPO / "docs/research_program/long_horizon_rescue/pr184_spec.yaml"
 CARD = REPO / "docs/generated/pr184_result_card.json"
