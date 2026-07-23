@@ -524,7 +524,7 @@ def test_backend_reduced_joint_affine_operator_matches_layout_builder() -> None:
     np.testing.assert_allclose(owned.bias, direct.bias)
 
 
-def test_family_conditioned_kernel_law_varies_with_family_branch() -> None:
+def test_family_conditioned_kernel_varies_transport_but_not_scalar_source() -> None:
     truncation = {"ell_max": 2, "mode_labels": ("m0", "m+2", "m-2")}
     backend_open = build_backend(get_family_spec("VI_h", h=-0.25), truncation=truncation)
     backend_deep = build_backend(get_family_spec("VI_h", h=-2.0), truncation=truncation)
@@ -550,7 +550,7 @@ def test_family_conditioned_kernel_law_varies_with_family_branch() -> None:
         np.asarray(ops_open.A_mix.toarray(), dtype=np.float64),
         np.asarray(ops_deep.A_mix.toarray(), dtype=np.float64),
     )
-    assert not np.allclose(
+    np.testing.assert_allclose(
         np.asarray(list(backend_open.evaluate_reduced_source_blocks(bg).values()), dtype=np.float64),
         np.asarray(list(backend_deep.evaluate_reduced_source_blocks(bg).values()), dtype=np.float64),
     )
