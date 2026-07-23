@@ -11,7 +11,7 @@ axes are expressed in the input coordinate frame.
 """
 from __future__ import annotations
 
-from collections.abc import Mapping
+from collections.abc import Iterable, Mapping
 from dataclasses import dataclass
 from enum import Enum
 from functools import lru_cache
@@ -28,6 +28,7 @@ __all__ = [
     "PoleStatus",
     "angular_momentum_power_tensor",
     "estimate_lowell_pole",
+    "mean_squared_multipole_alignment",
 ]
 
 
@@ -214,6 +215,46 @@ def estimate_lowell_pole(
         selection_gap=gap,
         gap_tolerance=tolerance,
     )
+
+
+def mean_squared_multipole_alignment(
+    *,
+    estimates: Iterable[LowEllPoleEstimate],
+) -> float | None:
+    """Return the mean squared alignment across distinct multipole axes.
+
+    The score is the mean of |p_i dot p_j| squared over all unordered pairs,
+    so it is invariant to axis signs and a common rotation. Estimates must
+    use one pole definition, distinct ell values, and a common coordinate
+    frame. Return None if any requested pole is undetermined rather than
+    silently selecting an identified subset. This is a descriptive geometric
+    statistic, not a null calibration or significance estimate.
+    """
+
+    estimates_i = tuple(estimates)
+    if len(estimates_i) < 2:
+        raise ValueError("alignment requires at least two pole estimates")
+    if not all(isinstance(item, LowEllPoleEstimate) for item in estimates_i):
+        raise TypeError("estimates must contain only LowEllPoleEstimate values")
+    if len({item.definition for item in estimates_i}) != 1:
+        raise ValueError("alignment estimates must use the same pole definition")
+    ells = tuple(item.ell for item in estimates_i)
+    if len(set(ells)) != len(ells):
+        raise ValueError("alignment estimates must have distinct ell values")
+
+    axes: list[AntipodalAxis] = []
+    for estimate in estimates_i:
+        if estimate.axis is None:
+            return None
+        axes.append(estimate.axis)
+
+    pair_count = len(axes) * (len(axes) - 1) // 2
+    pair_sum = math.fsum(
+        left.abs_dot(right) ** 2
+        for index, left in enumerate(axes[:-1])
+        for right in axes[index + 1 :]
+    )
+    return float(pair_sum / pair_count)
 
 
 def _validate_ell(ell: int) -> int:

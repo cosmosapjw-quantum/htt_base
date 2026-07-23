@@ -18,6 +18,7 @@ from obsstat.lowell_poles import (
     PoleStatus,
     angular_momentum_power_tensor,
     estimate_lowell_pole,
+    mean_squared_multipole_alignment,
 )
 
 
@@ -97,6 +98,129 @@ def _rotation_3d(alpha: float, beta: float, gamma: float) -> np.ndarray:
         [[cosine, 0.0, sine], [0.0, 1.0, 0.0], [-sine, 0.0, cosine]]
     )
     return rotate_z(alpha) @ rotate_y @ rotate_z(gamma)
+
+
+def _pole_estimate(
+    ell: int,
+    axis: AntipodalAxis | None,
+    *,
+    definition: PoleDefinition = PoleDefinition.MAX_ANGULAR_MOMENTUM,
+) -> LowEllPoleEstimate:
+    if axis is None:
+        return LowEllPoleEstimate(
+            ell=ell,
+            definition=definition,
+            status=PoleStatus.UNDETERMINED,
+            axis=None,
+            eigenvalues=(0.2, 0.4, 0.4),
+            selection_gap=0.0,
+            gap_tolerance=MIN_NUMERICAL_GAP_TOLERANCE,
+        )
+    selection_gap = {
+        PoleDefinition.MAX_ANGULAR_MOMENTUM: 0.3,
+        PoleDefinition.MIN_ANGULAR_MOMENTUM: 0.2,
+        PoleDefinition.ANISOTROPY_TENSOR: 1.0 / 30.0,
+    }[definition]
+    return LowEllPoleEstimate(
+        ell=ell,
+        definition=definition,
+        status=PoleStatus.IDENTIFIED,
+        axis=axis,
+        eigenvalues=(0.1, 0.3, 0.6),
+        selection_gap=selection_gap,
+        gap_tolerance=MIN_NUMERICAL_GAP_TOLERANCE,
+    )
+
+
+def test_mean_squared_multipole_alignment_matches_analytic_axes() -> None:
+    x_axis = AntipodalAxis((1.0, 0.0, 0.0))
+    y_axis = AntipodalAxis((0.0, 1.0, 0.0))
+    z_axis = AntipodalAxis((0.0, 0.0, 1.0))
+    sixty_deg = AntipodalAxis((0.5, math.sqrt(3.0) / 2.0, 0.0))
+
+    assert mean_squared_multipole_alignment(
+        estimates=(
+            _pole_estimate(2, x_axis),
+            _pole_estimate(3, AntipodalAxis((-1.0, 0.0, 0.0))),
+            _pole_estimate(4, AntipodalAxis((2.0, 0.0, 0.0))),
+        )
+    ) == pytest.approx(1.0)
+    assert mean_squared_multipole_alignment(
+        estimates=(_pole_estimate(2, x_axis), _pole_estimate(3, sixty_deg))
+    ) == pytest.approx(0.25)
+    assert mean_squared_multipole_alignment(
+        estimates=(
+            _pole_estimate(2, x_axis),
+            _pole_estimate(3, y_axis),
+            _pole_estimate(4, z_axis),
+        )
+    ) == pytest.approx(0.0)
+
+
+def test_multipole_alignment_is_rotation_sign_and_order_invariant() -> None:
+    estimates = (
+        _pole_estimate(2, AntipodalAxis((1.0, 0.0, 0.0))),
+        _pole_estimate(
+            3, AntipodalAxis((0.5, math.sqrt(3.0) / 2.0, 0.0))
+        ),
+        _pole_estimate(4, AntipodalAxis((0.0, 0.0, 1.0))),
+        _pole_estimate(5, AntipodalAxis((0.0, 1.0, 0.0))),
+    )
+    baseline = mean_squared_multipole_alignment(estimates=estimates)
+    assert baseline == pytest.approx(1.0 / 6.0)
+
+    rotation = _rotation_3d(0.31, -0.47, 0.83)
+    permutation = (estimates[2], estimates[0], estimates[3], estimates[1])
+    transformed: list[LowEllPoleEstimate] = []
+    for estimate, sign in zip(permutation, (-1.0, 1.0, -1.0, 1.0)):
+        assert estimate.axis is not None
+        rotated = sign * rotation @ np.asarray(estimate.axis.representative)
+        transformed.append(
+            _pole_estimate(
+                estimate.ell,
+                AntipodalAxis(tuple(float(value) for value in rotated)),
+            )
+        )
+    assert mean_squared_multipole_alignment(
+        estimates=transformed
+    ) == pytest.approx(baseline, abs=2.0e-15)
+
+
+def test_multipole_alignment_propagates_undetermined_poles() -> None:
+    assert mean_squared_multipole_alignment(
+        estimates=(
+            _pole_estimate(2, AntipodalAxis((1.0, 0.0, 0.0))),
+            _pole_estimate(3, AntipodalAxis((0.0, 1.0, 0.0))),
+            _pole_estimate(4, None),
+        )
+    ) is None
+
+
+def test_multipole_alignment_rejects_ambiguous_requests_before_abstaining() -> None:
+    first = _pole_estimate(2, AntipodalAxis((1.0, 0.0, 0.0)))
+    undetermined = _pole_estimate(2, None)
+    mixed = _pole_estimate(
+        3,
+        AntipodalAxis((0.0, 1.0, 0.0)),
+        definition=PoleDefinition.MIN_ANGULAR_MOMENTUM,
+    )
+
+    with pytest.raises(ValueError, match="at least two"):
+        mean_squared_multipole_alignment(estimates=())
+    with pytest.raises(ValueError, match="at least two"):
+        mean_squared_multipole_alignment(estimates=(first,))
+    with pytest.raises(ValueError, match="at least two"):
+        mean_squared_multipole_alignment(estimates=(undetermined,))
+    with pytest.raises(TypeError, match="LowEllPoleEstimate"):
+        mean_squared_multipole_alignment(
+            estimates=(first, object())  # type: ignore[arg-type]
+        )
+    with pytest.raises(ValueError, match="same pole definition"):
+        mean_squared_multipole_alignment(estimates=(first, mixed))
+    with pytest.raises(ValueError, match="same pole definition"):
+        mean_squared_multipole_alignment(estimates=(undetermined, mixed))
+    with pytest.raises(ValueError, match="distinct ell"):
+        mean_squared_multipole_alignment(estimates=(first, undetermined))
 
 
 def test_antipodal_axis_makes_sign_invariance_explicit() -> None:
@@ -459,10 +583,13 @@ def test_obsstat_import_aliases_share_the_lowell_pole_types() -> None:
     env.pop("PYTHONPATH", None)
     snippets = [
         """
+import obsstat
 import obsstat.lowell_poles as top_level
 import htt.obsstat.lowell_poles as htt_level
 assert top_level is htt_level
+assert obsstat.mean_squared_multipole_alignment is top_level.mean_squared_multipole_alignment
 assert top_level.AntipodalAxis is htt_level.AntipodalAxis
+assert top_level.mean_squared_multipole_alignment is htt_level.mean_squared_multipole_alignment
 """,
         """
 import htt.obsstat.lowell_poles as htt_level
