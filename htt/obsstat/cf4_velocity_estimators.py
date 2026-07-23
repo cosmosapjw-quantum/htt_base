@@ -23,15 +23,11 @@ nuisance/model is chosen to match a prior headline.
 """
 from __future__ import annotations
 
-import sys
 from dataclasses import dataclass
 
 import numpy as np
 
-# the shared fiducial peculiar-velocity power spectrum + Gorski correlation
-sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve()
-                       .parents[3] / "htt"))
-from obsstat.velocity_power import (  # noqa: E402
+from .velocity_power import (
     fiducial,
     velocity_correlation_functions,
 )
