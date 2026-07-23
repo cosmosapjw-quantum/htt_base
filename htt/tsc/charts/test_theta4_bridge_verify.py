@@ -15,6 +15,7 @@ import json
 import numpy as np
 import pytest
 
+import tsc.charts.theta4_bridge_verify as bridge_verify
 from tsc.charts.theta4_bridge_verify import (
     BridgeCoefficientReport,
     THETA4_A2_COEFFS_EXACT,
@@ -79,6 +80,20 @@ class TestGauntIntegrals:
 # ---------------------------------------------------------------------------
 
 class TestExpansionNumerical:
+    def test_configured_quadrature_order_is_forwarded(self, monkeypatch):
+        seen = []
+        original = bridge_verify.gaunt_P_ell_int
+
+        def recording_gaunt(j, k, N=256):
+            seen.append(N)
+            return original(j, k, N=N)
+
+        monkeypatch.setattr(bridge_verify, "gaunt_P_ell_int", recording_gaunt)
+        reports = verify_theta4_a2_coefficients(audit_htt=False, N_quad=17)
+
+        assert all(report.passed for report in reports.values())
+        assert seen and set(seen) == {17}
+
     def test_four_audited_coefficients_recovered(self):
         coeffs = theta4_a2_expansion_numerical()
         for monomial, exact in THETA4_A2_COEFFS_EXACT.items():
