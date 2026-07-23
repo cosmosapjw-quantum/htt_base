@@ -50,9 +50,28 @@ ALLOWED_EDGES = frozenset(
     }
 )
 
-# Filled from the current integration branch after the first scanner run.
-BASELINE_VIOLATIONS: frozenset[tuple[str, str]] = frozenset()
-BASELINE_NONTRIVIAL_SCCS: tuple[frozenset[str], ...] = ()
+# Measured on integration commit aed5a07e12c0c9e20ae0c521d030ce9298701b38.
+# These are debt ceilings, not allowed design directions.  Removing an edge or
+# splitting the SCC is valid and must not require a baseline rewrite.
+BASELINE_VIOLATIONS: frozenset[tuple[str, str]] = frozenset(
+    {
+        ("bass", "htt"),
+        ("bass", "mio"),
+        ("bass", "tsc"),
+        ("common", "bass"),
+        ("common", "obsstat"),
+        ("htt", "tsc"),
+        ("mio", "htt"),
+        ("mio", "tsc"),
+        ("obsstat", "bass"),
+        ("obsstat", "htt"),
+        ("tsc", "bass"),
+        ("tsc", "htt"),
+    }
+)
+BASELINE_NONTRIVIAL_SCCS: tuple[frozenset[str], ...] = (
+    frozenset({"bass", "common", "htt", "mio", "obsstat", "tsc"}),
+)
 
 _EXCLUDED_PARTS = frozenset(
     {
