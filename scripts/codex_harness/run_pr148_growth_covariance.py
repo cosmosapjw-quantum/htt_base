@@ -28,7 +28,7 @@ warnings.filterwarnings("ignore")
 
 import yaml  # noqa: E402
 
-from common.cf4_growth_covariance import (  # noqa: E402
+from obsstat.cf4_growth_covariance import (  # noqa: E402
     GrowthCovarianceError,
     SCHEMA_VERSION,
     classify_constrained,
@@ -344,8 +344,8 @@ def build(write: bool) -> int:
         "config_hash": _sha(SPEC_PATH),
         "raw_data_pins": {"groups_sha256": _sha(_groups(spec))},
         "input_hashes": [f"{rel}:{_sha(REPO / rel)}" for rel in
-                         ("htt/src/common/cf4_growth_covariance.py",
-                          "htt/src/common/cf4_forward_simulator.py")],
+                         ("htt/obsstat/cf4_growth_covariance.py",
+                          "htt/obsstat/cf4_forward_simulator.py")],
         "caveats": [
             "Growth-difference bound mechanics at C3 only.",
             "Only the nearest shell constrains fsigma8; the growth difference "
@@ -377,7 +377,7 @@ def build(write: bool) -> int:
                 print(json.dumps({"ok": False,
                                   "reason": f"forbidden phrase in {rel}"}))
                 return 2
-    module_text = (REPO / "htt/src/common/cf4_growth_covariance.py") \
+    module_text = (REPO / "htt/obsstat/cf4_growth_covariance.py") \
         .read_text(encoding="utf-8").lower()
     for phrase in spec["forbidden_output_language"]:
         if phrase.lower() in module_text:
