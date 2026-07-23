@@ -8,6 +8,14 @@ import re
 import subprocess
 from pathlib import Path
 
+import pytest
+
+from scripts.build_external_audit_report_v10 import (
+    NOVELTY_UNKNOWN,
+    s1_scope,
+    s6_tiers,
+)
+
 REPO = Path(__file__).resolve().parents[2]
 OUT = REPO / "external_audit_research_report_20260721_v10"
 TEX = OUT / "external_audit_research_report_v10.tex"
@@ -56,7 +64,11 @@ def test_tier_ledger_external_novelty_with_s_deltas() -> None:
         .read_text()
     )
     s_ids = ledger["s_entries"]
-    assert len(s_ids) >= 1
+    actual_s_ids = [
+        entry["id"] for entry in ledger["entries"] if entry["tier"] == "S"
+    ]
+    assert len(s_ids) == len(set(s_ids))
+    assert set(s_ids) == set(actual_s_ids)
     by_id = {e["id"]: e for e in ledger["entries"]}
     for sid in s_ids:
         entry = by_id[sid]
@@ -77,6 +89,38 @@ def test_tier_ledger_external_novelty_with_s_deltas() -> None:
         if e["tier"] == "C":
             assert e["citations"] or "release" in e["adjudication"].lower() \
                 or "cross-check" in e["adjudication"].lower(), e["id"]
+
+
+@pytest.mark.parametrize("mutation", ("relabel_s", "replace_s"))
+def test_zero_s_novelty_unknown_is_a_valid_rendering(mutation: str) -> None:
+    ledger = json.loads(
+        (REPO / "docs/audits/v10_web_crag_20260721/tier_evidence.json")
+        .read_text()
+    )
+    if mutation == "relabel_s":
+        for entry in ledger["entries"]:
+            if entry["tier"] == "S":
+                entry["tier"] = NOVELTY_UNKNOWN
+    else:
+        ledger["entries"] = [
+            entry for entry in ledger["entries"] if entry["tier"] != "S"
+        ]
+        ledger["entries"].append(
+            {
+                "id": "NOVELTY-UNKNOWN-CONTROL",
+                "tier": NOVELTY_UNKNOWN,
+                "subject": "no highest-tier adjudication",
+                "adjudication": "novelty remains unknown",
+                "citations": [],
+            }
+        )
+    ledger["s_entries"] = []
+
+    rendered = s1_scope(ledger) + s6_tiers(ledger)
+    assert r"NOVELTY\_UNKNOWN" in rendered
+    assert r"\subsection{No \tier{S} entries}" in rendered
+    assert "The five \\tier{S} entries" not in rendered
+    assert "the five externally\nnovel contributions" not in rendered
 
 
 def test_no_meta_dev_vocabulary() -> None:
