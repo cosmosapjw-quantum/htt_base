@@ -89,6 +89,7 @@ def test_rank_one_covariance_preserves_cross_shell_constraints() -> None:
         (np.array([[1.0, 0.0, 0.0], [0.0, 1.0, 0.0]]), "square"),
         (np.array([[1.0, 0.2], [0.1, 1.0]]), "symmetric"),
         (np.array([[1.0, 2.0], [2.0, 1.0]]), "positive semidefinite"),
+        (np.array([[1.0, 1.0j], [-1.0j, 1.0]]), "real"),
         (np.array([[1.0, np.nan], [np.nan, 1.0]]), "finite"),
     ],
 )
