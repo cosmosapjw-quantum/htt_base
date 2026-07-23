@@ -27,7 +27,7 @@ sys.path.insert(0, str(REPO / "htt"))
 
 import yaml  # noqa: E402
 
-from common.cf4_velocity_estimators import (  # noqa: E402
+from obsstat.cf4_velocity_estimators import (  # noqa: E402
     SCHEMA_VERSION,
     VelocityEstimatorError,
     compare_vectors,
@@ -265,7 +265,7 @@ def run_mutations(spec: dict) -> dict:
 
     def mutant_rank_deficient_point_estimate() -> None:
         import numpy as np
-        from common.cf4_velocity_estimators import Cf4Sample, estimate
+        from obsstat.cf4_velocity_estimators import Cf4Sample, estimate
         # a single-direction sample has a rank-deficient flow design
         n = np.tile(np.array([0.0, 0.0, 1.0]), (5, 1))
         s = Cf4Sample(n=n, v=np.ones(5), w=np.ones(5), sig_v=np.ones(5),
@@ -361,7 +361,7 @@ def build(write: bool) -> int:
         "config_hash": _sha(SPEC_PATH),
         "raw_data_pins": {"groups_sha256": _sha(_groups_path(spec))},
         "input_hashes": [f"{rel}:{_sha(REPO / rel)}" for rel in
-                         ("htt/src/common/cf4_velocity_estimators.py",)],
+                         ("htt/obsstat/cf4_velocity_estimators.py",)],
         "caveats": [
             "Observable-estimator mechanics at C2 only.",
             "The bulk-flow significance is reported under the FULL "
@@ -393,7 +393,7 @@ def build(write: bool) -> int:
                 print(json.dumps({"ok": False,
                                   "reason": f"forbidden phrase in {rel}"}))
                 return 2
-    module_text = (REPO / "htt/src/common/cf4_velocity_estimators.py") \
+    module_text = (REPO / "htt/obsstat/cf4_velocity_estimators.py") \
         .read_text(encoding="utf-8").lower()
     for phrase in spec["forbidden_output_language"]:
         if phrase.lower() in module_text:
