@@ -21,16 +21,25 @@ This harness does not make separate subagents share a hidden model state or free
 
 - New generic assignments default to `fork_turns=none`; forking the full
   parent history requires an explicit, recorded justification.
-- Context is delivered exactly once: the `SubagentStart` hook injects the
-  pack (`context_delivery_mode=hook_injected`). Agents must NOT re-read
-  `CONTEXT_PACK.md` unless the injection reported `truncated`, in which case
-  a single file fallback is performed and recorded.
+- Context is delivered exactly once: the `SubagentStart` hook injects a
+  validated, bounded view (`context_delivery_mode=hook_injected`). Pack drift,
+  a missing active run, or total-budget overflow blocks the spawn; there is no
+  full-pack fallback.
 - The spawn budget is cumulative per `work_unit_id` (normally the PR id),
   not per run — creating a new run does not reset it.
 - Run directories are not committed; see `runs/RETENTION.md`.
 - The active-run pointer lives at ignored local path
   `.agent-harness/runtime/ACTIVE_RUN`; a clean clone intentionally has no
   active run.
+
+## Authority and context scope
+
+`AGENTS.md` is durable policy. `CONTEXT_INDEX.json` is the sole persistent
+harness context configuration; its `shared_files` are the only inputs that
+rotate the global context version and enter the generated view. Files under
+`reference_only_files` matter only when a task explicitly names them.
+`SHARED_CONTEXT.md` is a historical pointer, not a default conventions source.
+Use the governing spec or scientific contract for the current work unit.
 
 ## Start a run
 
@@ -48,7 +57,7 @@ python3 .agent-harness/scripts/new_assignment.py \
   --independence-mode blind-results \
   --risk-tier R3 \
   --claim-id C-001 \
-  --required-input .agent-harness/context/SHARED_CONTEXT.md \
+  --required-input docs/specs/current.md \
   --allowed-tool wolframscript \
   --required-output 'axis result envelope (templates/CAS_AXIS_RESULT.json)' \
   --cas-axis wolfram_xact \
@@ -157,7 +166,7 @@ ASSIGNMENT_ID=<assignment-id>
 CONTEXT_VERSION=<sha256>
 INDEPENDENCE_MODE=shared-core|blind-results|adjudication
 
-Execute only the registered assignment. The SubagentStart hook injects the canonical pack once — do not re-read CONTEXT_PACK.md unless the injection says it was truncated. Load the assignment file before analysis. Do not inspect sibling results unless the assignment permits it. Write the declared result artifact and end with HARNESS_RESULT.
+Execute only the registered assignment. The SubagentStart hook injects one validated bounded view; do not re-read CONTEXT_PACK.md. If the hook reports a context violation, stop instead of using a file fallback. Load the assignment before analysis, respect sibling-result isolation, write the declared result, and end with HARNESS_RESULT.
 ```
 
 ## Finish

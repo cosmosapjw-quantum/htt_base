@@ -10,7 +10,13 @@ HARNESS_SCRIPTS = Path(__file__).resolve().parents[2] / ".agent-harness" / "scri
 if str(HARNESS_SCRIPTS) not in sys.path:
     sys.path.insert(0, str(HARNESS_SCRIPTS))
 
-from _harness import ActiveRunError, active_run_id  # noqa: E402
+from _harness import (  # noqa: E402
+    ActiveRunError,
+    active_run_id,
+    format_live_context,
+    load_validated_context_pack,
+    resolve_live_context,
+)
 
 
 def main() -> None:
@@ -41,13 +47,37 @@ def main() -> None:
             warning="Invalid shared-context harness state",
         )
         return
+    try:
+        live_state = resolve_live_context(root, index)
+        run_state = live_state.get("run")
+        if (
+            active_run != "none"
+            and (
+                not isinstance(run_state, dict)
+                or run_state.get("context_version") != str(version)
+            )
+        ):
+            raise ValueError(
+                "Active RUN_PLAN context_version does not match CONTEXT_INDEX.json."
+            )
+        load_validated_context_pack(root, index)
+        live_context = format_live_context(live_state)
+    except (ActiveRunError, OSError, UnicodeError, ValueError) as exc:
+        emit_additional_context(
+            "SessionStart",
+            f"Shared-context harness cannot resolve live context: {exc}",
+            warning="Invalid live context state",
+        )
+        return
     text = f"""[SHARED-CONTEXT HARNESS]
 Repository root: {root}
 Context version: {version}
 Active run: {active_run}
+{live_context}
 Before spawning agents, run `python3 .agent-harness/scripts/build_context_pack.py` and register each assignment with `new_assignment.py`.
 The main agent must include RUN_ID, ASSIGNMENT_ID, CONTEXT_VERSION, and INDEPENDENCE_MODE in every spawn prompt.
-AGENTS.md policy and .agent-harness files are authoritative; hidden parent-thread context is not a substitute for the context contract.
+`AGENTS.md` is durable policy; `CONTEXT_INDEX.json` is the sole persistent harness context configuration, and `CONTEXT_PACK.md` is its generated delivery view. Run assignments and results are run-scoped evidence, not global authority.
+The live identities above are operational freshness seals only, not scientific provenance or novelty evidence.
 """
     emit_additional_context("SessionStart", text)
 
