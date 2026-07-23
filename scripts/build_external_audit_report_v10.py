@@ -108,10 +108,41 @@ CARRIED_FIGURES = [
 # data-analysis figures, carried with their pack captions (the pack
 # JSON is the caption authority; captions verified token-clean).
 DATA_PACK_JSON = "docs/generated/report_data_analysis_figure_pack.json"
+TIER_LEDGER_JSON = "docs/audits/v10_web_crag_20260721/tier_evidence.json"
+NOVELTY_UNKNOWN = "NOVELTY_UNKNOWN"
 
 
 def _load(rel: str) -> dict:
     return json.loads((ROOT / rel).read_text())
+
+
+def _tier_projection(
+    tiers: dict | None = None,
+) -> tuple[dict, int, bool]:
+    """Validate the legacy display projection without requiring an S result."""
+
+    ledger = tiers if tiers is not None else _load(TIER_LEDGER_JSON)
+    entries = ledger.get("entries")
+    declared_s = ledger.get("s_entries")
+    if not isinstance(entries, list) or not isinstance(declared_s, list):
+        raise ValueError("tier ledger requires entries and s_entries lists")
+    if len(declared_s) != len(set(declared_s)):
+        raise ValueError("tier ledger s_entries contains duplicates")
+
+    actual_s = [
+        str(entry.get("id"))
+        for entry in entries
+        if isinstance(entry, dict) and entry.get("tier") == "S"
+    ]
+    if set(declared_s) != set(actual_s):
+        raise ValueError(
+            "tier ledger s_entries must match entries whose tier is exactly S"
+        )
+    has_unknown = any(
+        isinstance(entry, dict) and entry.get("tier") == NOVELTY_UNKNOWN
+        for entry in entries
+    )
+    return ledger, len(actual_s), has_unknown
 
 
 def _values() -> dict[str, str]:
@@ -247,7 +278,18 @@ Exact Theorems, Statistical Architecture, and Current-Data Results\\
 """
 
 
-def s1_scope() -> str:
+def s1_scope(tiers: dict | None = None) -> str:
+    _, s_count, _ = _tier_projection(tiers)
+    if s_count == 5:
+        s_summary = "the five externally\nnovel contributions"
+    elif s_count == 0:
+        s_summary = (
+            "no \\tier{S} entry; the highest-tier outcome remains\n"
+            f"\\code{{{_tex_escape(NOVELTY_UNKNOWN)}}}"
+        )
+    else:
+        noun = "contribution" if s_count == 1 else "contributions"
+        s_summary = f"the {s_count} externally novel {noun}"
     return r"""
 \section{Scope, claim discipline, and data completeness}
 
@@ -260,8 +302,7 @@ Section~\ref{sec:tiers} --- \tier{K} known (with citation or a
 textbook-level note), \tier{C} cross-check (against a named study),
 \tier{P} potential advance, \tier{S} significant (with the delta over
 the closest literature stated) --- so a reader can separate standard
-material, reproductions of external results, and the five externally
-novel contributions at a glance. The tier is a literature-novelty
+material, reproductions of external results, and """ + s_summary + r""" at a glance. The tier is a literature-novelty
 adjudication only; each result's scope and conditionality are stated
 in its own section. Earlier package versions
 (v5--v9) remain byte-frozen; this version supersedes them as the
@@ -1875,12 +1916,12 @@ def _data_pack_section() -> str:
     )
 
 
-def s6_tiers() -> str:
-    tiers = _load("docs/audits/v10_web_crag_20260721/tier_evidence.json")
+def s6_tiers(tiers: dict | None = None) -> str:
+    tiers, s_count, has_unknown = _tier_projection(tiers)
     rows = []
     for e in tiers["entries"]:
         rows.append(
-            f"\\code{{{e['id']}}} & {e['tier']} & "
+            f"\\code{{{e['id']}}} & {_tex_escape(str(e['tier']))} & "
             f"{_tex_escape(e['subject'])} & "
             f"{_tex_escape(e['adjudication'])} \\\\[2pt]"
         )
@@ -1894,7 +1935,27 @@ def s6_tiers() -> str:
                 f"{_tex_escape(e['subject'])}.}}\n"
                 f"{_tex_escape(e['adjudication'])}\n"
             )
+
+    if s_count == 5:
+        s_heading = r"The five \tier{S} entries and their deltas"
+    elif s_count:
+        noun = "entry" if s_count == 1 else "entries"
+        s_heading = rf"The {s_count} \tier{{S}} {noun} and their deltas"
+    else:
+        s_heading = r"No \tier{S} entries"
+        s_blocks = [
+            f"\\code{{{_tex_escape(NOVELTY_UNKNOWN)}}}: no highest-tier "
+            "novelty result is recorded. This is a valid outcome and does "
+            "not block report rendering.\n"
+        ]
     s_section = "\n".join(s_blocks)
+    unknown_item = ""
+    if has_unknown:
+        unknown_item = (
+            f"\\item[\\code{{{_tex_escape(NOVELTY_UNKNOWN)}}}] no "
+            "external-novelty tier is assigned; this valid absence does "
+            "not imply K, C, P, or S.\n"
+        )
     return r"""
 \section{Claim and novelty tier ledger}
 \label{sec:tiers}
@@ -1921,9 +1982,9 @@ never in the tier:
   whose delta over the named closest literature is itself a claimable
   scientific contribution --- theory results complete as mathematics,
   data results complete as test-plus-measurement.
-\end{description}
+""" + unknown_item + r"""\end{description}
 
-\subsection{The five \tier{S} entries and their deltas}
+\subsection{""" + s_heading + r"""}
 
 """ + s_section + r"""
 
@@ -2091,16 +2152,17 @@ from Tully--Fisher or supernova distances,'' MNRAS 546, staf2048
 """
 
 
-def build_tex() -> str:
+def build_tex(tiers: dict | None = None) -> str:
     v = _values()
+    tier_ledger = tiers if tiers is not None else _load(TIER_LEDGER_JSON)
     body = (
         PREAMBLE
-        + s1_scope()
+        + s1_scope(tier_ledger)
         + s2_conventions()
         + s3_stats()
         + s4_geometry()
         + s5_data()
-        + s6_tiers()
+        + s6_tiers(tier_ledger)
         + s7_pending()
         + s8_repro()
     )
