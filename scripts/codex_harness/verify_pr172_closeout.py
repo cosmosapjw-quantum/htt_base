@@ -140,7 +140,7 @@ def build() -> dict[str, Any]:
         Path("docs/generated/pr172_reviews/final_claim.json"),
         Path("docs/generated/pr172_reviews/remediation_code.json"),
         Path("docs/generated/pr172_reviews/remediation_claim.json"),
-        Path("htt/src/common/metamorphic_symmetry.py"),
+        Path("htt/htt/metamorphic_symmetry.py"),
         Path("scripts/codex_harness/run_pr172_metamorphic_battery.py"),
         SCRIPT,
     )
