@@ -24,7 +24,8 @@ def draw_correlated_real_shell_alms(
     """Draw seeded shell-correlated coefficients satisfying map reality.
 
     If C is shell_covariance, every m mode obeys
-    E[a_lm(i) conjugate(a_lm(j))] = C[i, j].  For m > 0 the real and
+    E[a_lm(i) conjugate(a_lm(j))] = C[i, j] up to floating-point roundoff
+    and removal of eigenmodes at numerical zero.  For m > 0 the real and
     imaginary parts each have covariance C / 2; the negative-m coefficients
     are then fixed by a_l,-m = (-1)^m conjugate(a_lm).
 
@@ -75,7 +76,15 @@ def _validate_ell(ell: int) -> int:
 def _validated_psd_factor(
     shell_covariance: np.ndarray,
 ) -> tuple[np.ndarray, np.ndarray]:
-    covariance = np.asarray(shell_covariance, dtype=float)
+    raw_covariance = np.asarray(shell_covariance)
+    if np.iscomplexobj(raw_covariance):
+        if np.any(raw_covariance.imag != 0.0):
+            raise ValueError("shell_covariance must be real")
+        raw_covariance = raw_covariance.real
+    try:
+        covariance = np.asarray(raw_covariance, dtype=float)
+    except (TypeError, ValueError) as exc:
+        raise ValueError("shell_covariance must be a real numeric matrix") from exc
     if (
         covariance.ndim != 2
         or covariance.shape[0] == 0
