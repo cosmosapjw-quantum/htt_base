@@ -7,6 +7,7 @@ on:
     paths:
       - 'htt/**'
       - 'tests/obsstat/test_lowell_poles.py'
+      - 'tests/obsstat/test_shell_alms.py'
       - 'research_gates/pr04/**'
       - '.github/workflows/pr04-theory-gates.yml'
   workflow_dispatch:
@@ -63,5 +64,5 @@ jobs:
       - name: Run existing fast regression tier
         working-directory: htt
         run: pytest -m 'smoke or fast or ci' -q
-      - name: Run PR-251 low-ell pole covariance and identifiability tests
-        run: pytest tests/obsstat/test_lowell_poles.py -q
+      - name: Run PR-251 and PR-252 low-ell science tests
+        run: pytest tests/obsstat/test_lowell_poles.py tests/obsstat/test_shell_alms.py -q
