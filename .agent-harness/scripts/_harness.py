@@ -630,6 +630,87 @@ def assignment_sha256(assignment: Mapping[str, Any]) -> str:
     return hashlib.sha256(encoded).hexdigest()
 
 
+def _validate_claim_references(
+    repo: Path,
+    row: Mapping[str, Any],
+    *,
+    line_number: int,
+    errors: list[str],
+) -> None:
+    """Validate live spec paths and PR-scoped evidence labels, not stored status."""
+
+    spec_refs = row.get("spec_refs")
+    evidence_refs = row.get("evidence_refs")
+    if spec_refs is None and evidence_refs is None and "evidence_ids" not in row:
+        return
+
+    if "evidence_ids" in row:
+        errors.append(
+            f"claim registry line {line_number} uses duplicate evidence_ids; "
+            "evidence_refs is the canonical base field"
+        )
+
+    spec_prs: set[str] = set()
+    if (
+        not isinstance(spec_refs, list)
+        or not spec_refs
+        or any(not isinstance(ref, str) or not ref for ref in spec_refs)
+        or len(spec_refs) != len(set(spec_refs))
+    ):
+        errors.append(
+            f"claim registry line {line_number} spec_refs must be a non-empty "
+            "list of unique strings"
+        )
+    else:
+        for index, ref in enumerate(spec_refs):
+            rel = ref.split("#", 1)[0]
+            try:
+                confined_repo_file(
+                    repo,
+                    rel,
+                    label=f"claim registry line {line_number} spec_refs[{index}]",
+                )
+            except ValueError as exc:
+                errors.append(str(exc))
+            match = re.fullmatch(
+                r"docs/research_program/long_horizon_rescue/pr([0-9]+)_spec[.]yaml",
+                rel,
+            )
+            if match is not None:
+                spec_prs.add(match.group(1))
+
+    evidence_prs: set[str] = set()
+    if (
+        not isinstance(evidence_refs, list)
+        or not evidence_refs
+        or any(not is_evidence_identity(ref) for ref in evidence_refs)
+        or len(evidence_refs) != len(set(evidence_refs))
+    ):
+        errors.append(
+            f"claim registry line {line_number} evidence_refs must be a non-empty "
+            "list of unique evidence identities"
+        )
+    else:
+        for ref in evidence_refs:
+            match = re.fullmatch(r"E-PR([0-9]+)(?:-.+)", ref)
+            if match is not None:
+                evidence_prs.add(match.group(1))
+
+    if spec_prs and not evidence_prs:
+        expected = ", ".join(f"E-PR{number}-*" for number in sorted(spec_prs))
+        errors.append(
+            f"claim registry line {line_number} has no PR-scoped evidence "
+            f"reference; expected one of {expected}"
+        )
+    foreign_prs = evidence_prs - spec_prs
+    if spec_prs and foreign_prs:
+        foreign = ", ".join(f"E-PR{number}-*" for number in sorted(foreign_prs))
+        errors.append(
+            f"claim registry line {line_number} has evidence references without "
+            f"matching PR-scoped specs: {foreign}"
+        )
+
+
 def _registered_claim_ids(repo: Path) -> tuple[set[str], list[str]]:
     """Load claim identities only; stored scientific/gate status is not authority."""
 
@@ -661,6 +742,32 @@ def _registered_claim_ids(repo: Path) -> tuple[set[str], list[str]]:
     if not claims:
         errors.append("canonical claim registry contains no claim identities")
     return claims, errors
+
+
+def validate_claim_registry(repo: Path) -> list[str]:
+    """Return current referential errors; stored claim/gate status is ignored."""
+
+    _, errors = _registered_claim_ids(repo)
+    path = repo / ".agent-harness" / "context" / "CLAIM_REGISTRY.jsonl"
+    if not path.is_file() or path.is_symlink():
+        return errors
+    for line_number, raw in enumerate(
+        path.read_text(encoding="utf-8").splitlines(), start=1
+    ):
+        if not raw.strip():
+            continue
+        try:
+            row = json.loads(raw)
+        except json.JSONDecodeError:
+            continue
+        if isinstance(row, Mapping) and is_safe_identifier(row.get("claim_id")):
+            _validate_claim_references(
+                repo,
+                row,
+                line_number=line_number,
+                errors=errors,
+            )
+    return errors
 
 
 def _validate_input_list(

@@ -2397,3 +2397,72 @@ def test_ma03_historical_merge_is_read_only(tmp_path: Path) -> None:
     assert completed.returncode != 0
     assert "read-only" in completed.stdout + completed.stderr
     assert merged.read_bytes() == sentinel
+
+
+@pytest.mark.parametrize(
+    ("mutation", "needle"),
+    [
+        (
+            "copied_evidence",
+            "has evidence references without matching PR-scoped specs",
+        ),
+        (
+            "mixed_evidence",
+            "has evidence references without matching PR-scoped specs",
+        ),
+        (
+            "unscoped_evidence",
+            "has no PR-scoped evidence reference",
+        ),
+        (
+            "duplicate_alias",
+            "uses duplicate evidence_ids",
+        ),
+    ],
+)
+def test_ma06_claim_reference_integrity_ignores_stored_status(
+    tmp_path: Path,
+    mutation: str,
+    needle: str,
+) -> None:
+    repo = _init_tmp_repo(tmp_path, active=False)
+    spec_rel = "docs/research_program/long_horizon_rescue/pr129_spec.yaml"
+    spec = repo / spec_rel
+    spec.parent.mkdir(parents=True)
+    spec.write_text("claim: C-PR129-TEST\n", encoding="utf-8")
+    registry = repo / ".agent-harness/context/CLAIM_REGISTRY.jsonl"
+    row = {
+        "claim_id": "C-PR129-TEST",
+        "spec_refs": [spec_rel],
+        "evidence_refs": ["E-PR129-SPEC"],
+        "status": "pass",
+    }
+
+    def write_row() -> None:
+        registry.write_text(json.dumps(row) + "\n", encoding="utf-8")
+
+    write_row()
+    declared_pass = _harness_cli(repo, "validate_harness.py")
+    assert declared_pass.returncode == 0, declared_pass.stdout + declared_pass.stderr
+
+    row["status"] = "stored_nonpass"
+    write_row()
+    declared_nonpass = _harness_cli(repo, "validate_harness.py")
+    assert declared_nonpass.returncode == 0, (
+        declared_nonpass.stdout + declared_nonpass.stderr
+    )
+
+    row["status"] = "pass"
+    if mutation == "copied_evidence":
+        row["evidence_refs"] = ["E-PR128-SPEC"]
+    elif mutation == "mixed_evidence":
+        row["evidence_refs"] = ["E-PR129-SPEC", "E-PR128-AUTHORITY"]
+    elif mutation == "unscoped_evidence":
+        row["evidence_refs"] = ["doi:10.0000/example"]
+    else:
+        row["evidence_ids"] = list(row["evidence_refs"])
+    write_row()
+
+    invalid = _harness_cli(repo, "validate_harness.py")
+    assert invalid.returncode != 0
+    assert needle in invalid.stdout + invalid.stderr
