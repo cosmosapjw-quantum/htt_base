@@ -2,6 +2,8 @@
 
 Solver-independent FLRW-departure programme. Each proposition below is a self-contained scientific result with its statement and verified terminal. Five-axis CAS = Wolfram+xAct / SymPy / Sage+Singular / Lean / Rocq.
 
+Authority note: this report preserves pre-MA04 author-side historical aggregate labels; `CAS_5AXIS_PASS` is not a current live CAS attestation. Current CAS authority requires parent-observed `run-adjudicate`, and same-lineage literature review is not independent novelty adjudication.
+
 ## Propositions
 
 ### PR-209
