@@ -242,6 +242,20 @@ def test_clean_clone_init_validate_close_and_dangling_recovery(
     assert abandon_payload["run_directory_deleted"] is False
     assert not active_pointer.exists()
 
+    active_pointer.symlink_to("missing-pointer-target")
+    invalid_symlink = _harness_cli(repo, "validate_harness.py")
+    assert invalid_symlink.returncode == 1
+    invalid_payload = json.loads(invalid_symlink.stdout)
+    assert invalid_payload["state_errors"][0]["code"] == (
+        "INVALID_ACTIVE_RUN_POINTER"
+    )
+    refused_symlink_abandon = _harness_cli(repo, "close_run.py", "--abandon")
+    assert refused_symlink_abandon.returncode == 1
+    assert json.loads(refused_symlink_abandon.stdout)["error"]["code"] == (
+        "INVALID_ACTIVE_RUN_POINTER"
+    )
+    active_pointer.unlink()
+
 
 def test_context_view_and_index_hashes_must_match_builder_output(
     tmp_path: Path,
