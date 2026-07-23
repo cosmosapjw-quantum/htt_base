@@ -19,12 +19,12 @@ import numpy as np
 from scipy.linalg import solve_triangular
 from scipy.stats import norm
 
-from common.cf4_forward_simulator import (
+from .cf4_forward_simulator import (
     SimMeta,
     load_sample_and_meta,
     subsample_with_meta,
 )
-from common.cf4_velocity_estimators import (
+from .cf4_velocity_estimators import (
     Cf4Sample,
     _cv_correlation_matrix,
 )
