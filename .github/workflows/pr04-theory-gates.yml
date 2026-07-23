@@ -59,8 +59,8 @@ jobs:
         env:
           PYTHONPATH: ${{ github.workspace }}:${{ github.workspace }}/htt
         run: python -m unittest discover -s research_gates/pr04/tests -p 'test_pr04_*.py' -v
-      - name: Verify forbidden legacy dependencies
-        run: python research_gates/pr04/tools/verify_forbidden_dependencies.py --repo .
+      - name: Verify current architecture boundaries
+        run: python scripts/architecture/check_import_boundaries.py --repo .
       - name: Run existing fast regression tier
         working-directory: htt
         run: pytest -m 'smoke or fast or ci' -q
