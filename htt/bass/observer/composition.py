@@ -94,8 +94,9 @@ def compose_tilts(
 ) -> np.ndarray:
     """Diagnostic-only FB-8.4 composition-order surface.
 
-    This helper is reserved for the non-commutation audit and must never
-    be routed into the production path. The pinned SSOT order is
+    This helper is reserved for the non-commutation audit.
+    It must never be routed into the production path.
+    The pinned SSOT order is
     ``(cosmo-tilt -> observer-boost)``, and the diagnostic quantity is
     the naive vector sum
     ``tanh(eta_cosmo) * v_hat_cosmo + tanh(eta_obs) * v_hat_obs``.

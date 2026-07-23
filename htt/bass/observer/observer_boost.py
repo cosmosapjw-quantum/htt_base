@@ -26,9 +26,8 @@ class ObserverBoost:
     """Observer-frame rapidity carrier.
 
     This type is reserved for the observer peculiar boost that acts
-    *after* the cosmological-frame FB-7 outputs are computed. It must
-    not subclass, alias, or silently coerce the cosmological tilt
-    surface.
+    *after* the cosmological-frame FB-7 outputs are computed.
+    It must not subclass, alias, or silently coerce the cosmological tilt surface.
 
     References
     ----------
