@@ -91,7 +91,9 @@ def test_tier_ledger_external_novelty_with_s_deltas() -> None:
                 or "cross-check" in e["adjudication"].lower(), e["id"]
 
 
-@pytest.mark.parametrize("mutation", ("relabel_s", "replace_s"))
+@pytest.mark.parametrize(
+    "mutation", ("relabel_s", "replace_s", "zero_s_known_only")
+)
 def test_zero_s_novelty_unknown_is_a_valid_rendering(mutation: str) -> None:
     ledger = json.loads(
         (REPO / "docs/audits/v10_web_crag_20260721/tier_evidence.json")
@@ -105,19 +107,27 @@ def test_zero_s_novelty_unknown_is_a_valid_rendering(mutation: str) -> None:
         ledger["entries"] = [
             entry for entry in ledger["entries"] if entry["tier"] != "S"
         ]
-        ledger["entries"].append(
-            {
-                "id": "NOVELTY-UNKNOWN-CONTROL",
-                "tier": NOVELTY_UNKNOWN,
-                "subject": "no highest-tier adjudication",
-                "adjudication": "novelty remains unknown",
-                "citations": [],
-            }
-        )
+        if mutation == "replace_s":
+            ledger["entries"].append(
+                {
+                    "id": "NOVELTY-UNKNOWN-CONTROL",
+                    "tier": NOVELTY_UNKNOWN,
+                    "subject": "no highest-tier adjudication",
+                    "adjudication": "novelty remains unknown",
+                    "citations": [],
+                }
+            )
     ledger["s_entries"] = []
 
     rendered = s1_scope(ledger) + s6_tiers(ledger)
-    assert r"NOVELTY\_UNKNOWN" in rendered
+    if mutation == "zero_s_known_only":
+        assert r"NOVELTY\_UNKNOWN" not in rendered
+        assert "Every claim in this report carries one of four novelty tiers" \
+            in rendered
+    else:
+        assert r"NOVELTY\_UNKNOWN" in rendered
+        assert "Classified claims in this report carry one of four novelty tiers" \
+            in rendered
     assert r"\subsection{No \tier{S} entries}" in rendered
     assert "The five \\tier{S} entries" not in rendered
     assert "the five externally\nnovel contributions" not in rendered
