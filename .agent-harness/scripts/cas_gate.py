@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""CAS gate: preflight, stored-result inspection, and observed execution.
+"""Risk-scaled CAS gate: preflight, stored-result inspection, and execution.
 
 Canonical axes (display order): Wolfram Engine+xAct, SymPy,
-SageMath+Singular, Lean. The four axes are mandatory and non-collapsible
-(audit §5, decision ADJ-CAS-FOUR-AXIS-001):
+SageMath+Singular, Lean. Contracts select 0/1/2/4 axes for R0/R1/R2/R3
+claims respectively. Rocq remains an explicit ``required_axes`` opt-in:
 
 - `preflight`  — repo-pinned per-axis tool probes → receipts under
   `.agent-harness/receipts/cas_preflight/`. A missing engine yields a
@@ -42,17 +42,12 @@ from pathlib import Path
 
 from _harness import dump_json, load_json, root
 
-# Canonical four computer-algebra axes, plus Rocq (Coq) as a second,
-# kernel-independent proof-assistant lineage running in parallel with Lean
-# (policy repair 2026-07-21, ADJ-CAS-ROCQ-AXIS-001). Two proof assistants
-# with genuinely different kernels answer the H19 "independent derivation
-# lineage" requirement that multiple CAS backends re-evaluating one
-# expression cannot. The required-axis set for a given theorem is declared
-# in its contract; a contract may require the canonical four or the
-# five-axis (Lean + Rocq) set.
+# Canonical computer-algebra axes, plus Rocq (Coq) as an opt-in,
+# kernel-independent proof-assistant lineage running in parallel with Lean.
 CANONICAL_AXES = ("wolfram_xact", "sympy", "sage_singular", "lean")
 ALL_KNOWN_AXES = CANONICAL_AXES + ("rocq",)
 AXES = ALL_KNOWN_AXES  # recognized axis vocabulary
+RISK_AXIS_COUNTS = {"R0": 0, "R1": 1, "R2": 2, "R3": 4}
 # Contract axis-name aliases -> internal probe/axis names.
 CONTRACT_AXIS_ALIASES = {
     "wolfram_xact": "wolfram_xact",
@@ -193,28 +188,74 @@ PROBES = {
 def _required_axes(contract: dict) -> list[str]:
     """The axes a contract mandates, normalized to internal names.
 
-    Defaults to the canonical four for backward compatibility with
-    contracts that predate the Rocq axis.
+    Legacy contracts without a risk tier retain their explicit canonical
+    four/five-axis behavior. New reduced-axis contracts must declare the
+    risk tier that justifies their 0/1/2-axis selection.
     """
-    declared = contract.get("required_axes")
-    if not declared:
-        return list(CANONICAL_AXES)
+    if "required_axes" not in contract:
+        declared = list(CANONICAL_AXES)
+    else:
+        declared = contract["required_axes"]
+    if not isinstance(declared, list):
+        raise ValueError("contract required_axes must be an array")
     normalized: list[str] = []
     for name in declared:
         internal = CONTRACT_AXIS_ALIASES.get(str(name))
         if internal is None:
             raise ValueError(f"contract requires unknown axis {name!r}")
-        if internal not in normalized:
-            normalized.append(internal)
-    normalized_set = set(normalized)
-    if normalized_set == set(CANONICAL_AXES):
-        return list(CANONICAL_AXES)
-    if normalized_set == set(ALL_KNOWN_AXES):
-        return list(ALL_KNOWN_AXES)
-    raise ValueError(
-        "contract required_axes must resolve to the canonical four axes or "
-        "the canonical four plus Rocq; reduced axis sets cannot mint a pass"
-    )
+        if internal in normalized:
+            raise ValueError(f"contract repeats required axis {internal!r}")
+        normalized.append(internal)
+
+    risk_tier = contract.get("risk_tier")
+    if risk_tier is None:
+        normalized_set = set(normalized)
+        if normalized_set == set(CANONICAL_AXES):
+            return list(CANONICAL_AXES)
+        if normalized_set == set(ALL_KNOWN_AXES):
+            return list(ALL_KNOWN_AXES)
+        raise ValueError(
+            "reduced-axis contracts must declare risk_tier R0, R1, or R2"
+        )
+    if risk_tier not in RISK_AXIS_COUNTS:
+        raise ValueError(
+            f"contract risk_tier must be one of {list(RISK_AXIS_COUNTS)}"
+        )
+
+    expected = RISK_AXIS_COUNTS[risk_tier]
+    if risk_tier == "R3":
+        normalized_set = set(normalized)
+        if normalized_set == set(CANONICAL_AXES):
+            return list(CANONICAL_AXES)
+        if normalized_set == set(ALL_KNOWN_AXES):
+            return list(ALL_KNOWN_AXES)
+        raise ValueError(
+            "R3 contracts require the canonical four axes; Rocq may be added "
+            "only by naming it explicitly in required_axes"
+        )
+    if len(normalized) != expected:
+        raise ValueError(
+            f"{risk_tier} contracts require exactly {expected} CAS axes"
+        )
+    return normalized
+
+
+def _risk_tier(contract: dict) -> str:
+    """Return the declared tier, treating frozen legacy contracts as R3."""
+
+    tier = contract.get("risk_tier", "R3")
+    return tier if tier in RISK_AXIS_COUNTS else "R3"
+
+
+def _pass_status(contract: dict, required: list[str]) -> str:
+    """Use bounded states for reduced tiers, not new axis-count authority labels."""
+
+    tier = _risk_tier(contract)
+    if tier == "R0":
+        return "NOT_APPLICABLE"
+    if tier in {"R1", "R2"}:
+        return "PASS"
+    return "CAS_5AXIS_PASS" if "rocq" in required else "CAS_4AXIS_PASS"
 
 
 def cmd_preflight(args) -> int:
@@ -353,9 +394,7 @@ def _aggregate_results(
 
     statuses = {axis: res.get("status") for axis, res in results.items()}
     missing = [axis for axis in required if axis not in results]
-    # A label from the required-axis count; canonical four -> CAS_4AXIS_PASS,
-    # Lean+Rocq five-axis -> CAS_5AXIS_PASS, etc. Never a majority vote.
-    pass_label = f"CAS_{len(required)}AXIS_PASS"
+    pass_label = _pass_status(contract, required)
 
     if any(status == "FAIL" for status in statuses.values()):
         aggregate = "CAS_FAIL"
@@ -394,6 +433,7 @@ def _aggregate_results(
         "contract_id": contract.get("identity", {}).get("contract_id"),
         "contract_sha256": contract_sha,
         "aggregate_status": aggregate,
+        "risk_tier": _risk_tier(contract),
         "required_axes": required,
         "axis_statuses": statuses,
         "missing_axes": missing,
@@ -402,8 +442,8 @@ def _aggregate_results(
         "adjudicated_at": _utc_now(),
         "note": (
             f"{pass_label} requires all {len(required)} contract-required axes "
-            "PASS under one contract hash; majority vote is structurally "
-            f"forbidden.{lineage_note}"
+            "to satisfy the risk-scaled contract under one contract hash; "
+            f"majority vote is structurally forbidden.{lineage_note}"
         ),
     }
     return adjudication, pass_label
@@ -799,8 +839,10 @@ def cmd_run_adjudicate(args) -> int:
     except ValueError as exc:
         required = list(CANONICAL_AXES)
         setup_errors.append(str(exc))
-    obligations, obligation_errors = _contract_obligations(contract)
-    setup_errors.extend(obligation_errors)
+    obligations: list[str] = []
+    if required:
+        obligations, obligation_errors = _contract_obligations(contract)
+        setup_errors.extend(obligation_errors)
     run_spec = load_json(repo / args.run_spec)
     configs, spec_errors = _validate_run_spec(repo, run_spec, required)
     setup_errors.extend(spec_errors)
@@ -832,25 +874,36 @@ def cmd_run_adjudicate(args) -> int:
     adjudication, pass_label = _aggregate_results(
         contract, contract_sha, results, setup_errors, required_axes=required
     )
-    eligible = adjudication["aggregate_status"] == pass_label
+    successful = adjudication["aggregate_status"] == pass_label
+    eligible = successful and _risk_tier(contract) != "R0"
+    requirement = (
+        "NOT_REQUIRED"
+        if _risk_tier(contract) == "R0" and successful
+        else "SATISFIED" if eligible
+        else "NOT_SATISFIED"
+    )
     adjudication.update(
         {
             "verification_state": "RUNNER_OBSERVED_EXECUTION",
             "evidence_origin": "runner_observed_local_subprocess",
             "execution_evidence": execution_evidence,
             "claim_promotion_cas_eligible": eligible,
-            "claim_promotion_cas_requirement": (
-                "SATISFIED" if eligible else "NOT_SATISFIED"
-            ),
+            "claim_promotion_cas_requirement": requirement,
         }
     )
-    adjudication["note"] += (
-        " Runner observation establishes only the CAS evidence component; "
-        "it does not establish scientific validity, novelty, or overall "
-        "claim readiness. Local observation is not a security attestation."
-    )
+    if _risk_tier(contract) == "R0" and successful:
+        adjudication["note"] += (
+            " Runner observation confirms that this contract declares no CAS "
+            "requirement; it does not create CAS evidence."
+        )
+    else:
+        adjudication["note"] += (
+            " Runner observation establishes only the CAS evidence component; "
+            "it does not establish scientific validity, novelty, or overall "
+            "claim readiness. Local observation is not a security attestation."
+        )
     _emit_adjudication(repo, args.out, adjudication)
-    return 0 if eligible else 2
+    return 0 if successful else 2
 
 
 def main() -> None:

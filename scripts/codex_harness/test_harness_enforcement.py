@@ -1425,12 +1425,20 @@ def factor(value): return Expr()
 
 
 def _write_runner_case(
-    repo: Path, mode: str = "pass",
+    repo: Path,
+    mode: str = "pass",
+    *,
+    risk_tier: str = "R3",
+    required_axes: tuple[str, ...] = (
+        "wolfram_xact", "sympy", "sage_singular", "lean",
+    ),
 ) -> tuple[Path, Path, dict[str, str]]:
     """Create one tiny observed-process CAS case without a real CAS engine."""
 
     contract_path = _write_contract(repo)
     contract = json.loads(contract_path.read_text(encoding="utf-8"))
+    contract["risk_tier"] = risk_tier
+    contract["required_axes"] = list(required_axes)
     contract["target"]["exact_test_obligations"] = ["identity"]
     contract["target"]["expected_exact_values"] = {"value": "2"}
     contract_path.write_text(
@@ -1472,7 +1480,6 @@ if mode == "nonzero":
 """,
         encoding="utf-8",
     )
-    axes = ("wolfram_xact", "sympy", "sage_singular", "lean")
     duplicate_argv = [sys.executable, axis_program.name, "shared", "pass"]
     run_spec = {
         "schema_version": 1,
@@ -1489,7 +1496,7 @@ if mode == "nonzero":
                 "cwd": ".",
                 "timeout_seconds": 1 if axis == "sympy" and mode == "timeout" else 10,
             }
-            for axis in axes
+            for axis in required_axes
         },
     }
     run_spec_path = repo / "CAS-RUN.json"
@@ -1683,12 +1690,39 @@ def test_cas_run_adjudicate_rejects_unobserved_or_failed_work(
         assert "reuse the same full argv" in json.dumps(payload)
 
 
-def test_cas_run_adjudicate_rejects_reduced_axis_contract(tmp_path: Path) -> None:
+@pytest.mark.parametrize(
+    (
+        "risk_tier",
+        "required_axes",
+        "expected_status",
+        "expected_requirement",
+        "expected_eligible",
+    ),
+    [
+        ("R0", (), "NOT_APPLICABLE", "NOT_REQUIRED", False),
+        ("R1", ("sympy",), "PASS", "SATISFIED", True),
+        ("R2", ("sympy", "lean"), "PASS", "SATISFIED", True),
+        (
+            "R3",
+            ("wolfram_xact", "sympy", "sage_singular", "lean"),
+            "CAS_4AXIS_PASS",
+            "SATISFIED",
+            True,
+        ),
+    ],
+)
+def test_cas_run_adjudicate_scales_axes_by_risk_tier(
+    tmp_path: Path,
+    risk_tier: str,
+    required_axes: tuple[str, ...],
+    expected_status: str,
+    expected_requirement: str,
+    expected_eligible: bool,
+) -> None:
     repo = _init_tmp_repo(tmp_path)
-    contract_path, run_spec, env = _write_runner_case(repo)
-    contract = json.loads(contract_path.read_text(encoding="utf-8"))
-    contract["required_axes"] = ["sympy"]
-    contract_path.write_text(json.dumps(contract, indent=2) + "\n", encoding="utf-8")
+    contract_path, run_spec, env = _write_runner_case(
+        repo, risk_tier=risk_tier, required_axes=required_axes
+    )
     completed = _run(
         [
             sys.executable, _script("cas_gate.py"), "run-adjudicate",
@@ -1698,10 +1732,17 @@ def test_cas_run_adjudicate_rejects_reduced_axis_contract(tmp_path: Path) -> Non
         env=env,
     )
     payload = json.loads(completed.stdout)
-    assert completed.returncode == 2
-    assert payload["aggregate_status"] == "CAS_BLOCKED"
-    assert payload["claim_promotion_cas_eligible"] is False
-    assert "reduced axis sets" in json.dumps(payload)
+    assert completed.returncode == 0, completed.stdout + completed.stderr
+    assert payload["risk_tier"] == risk_tier
+    assert payload["required_axes"] == list(required_axes)
+    assert set(payload["execution_evidence"]) == set(required_axes)
+    assert payload["aggregate_status"] == expected_status
+    assert payload["aggregate_status"] not in {
+        "CAS_1AXIS_PASS", "CAS_2AXIS_PASS", "CAS_3AXIS_PASS",
+    }
+    assert payload["claim_promotion_cas_eligible"] is expected_eligible
+    assert payload["claim_promotion_cas_requirement"] == expected_requirement
+    assert "rocq" not in payload["required_axes"]
 
 
 # --- 11 ----------------------------------------------------------------
