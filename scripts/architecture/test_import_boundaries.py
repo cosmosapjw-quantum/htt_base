@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from check_import_boundaries import assess_edges, check_repository
+from check_import_boundaries import PACKAGE_ROOTS, assess_edges, check_repository
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -18,6 +18,23 @@ def test_current_repository_import_boundaries() -> None:
         indent=2,
         sort_keys=True,
     )
+
+
+def test_ast_scanner_rejects_new_forbidden_import(tmp_path: Path) -> None:
+    for relative_roots in PACKAGE_ROOTS.values():
+        for relative_root in relative_roots:
+            (tmp_path / relative_root).mkdir(parents=True, exist_ok=True)
+
+    probe = tmp_path / "htt/src/common/new_reverse_edge.py"
+    probe.write_text("import htt\n", encoding="utf-8")
+
+    result = check_repository(tmp_path)
+    assert result["status"] == "FAIL"
+    assert {
+        "kind": "new_forbidden_edge",
+        "source": "common",
+        "target": "htt",
+    } in result["findings"]
 
 
 @pytest.mark.parametrize(
