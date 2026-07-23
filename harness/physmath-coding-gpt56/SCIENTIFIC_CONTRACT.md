@@ -1,7 +1,9 @@
 # SCIENTIFIC_CONTRACT.md — BASS/HTT (htt_base) instantiation
 
-_Mounted 2026-07-14 onto the BASS/HTT Bianchi anisotropy program. SSoT authority:
-`/CLAUDE.md` §1/§5 + `docs/SSOT_POLICY.md`; on conflict those win._
+_Mounted 2026-07-14 onto the BASS/HTT Bianchi anisotropy program. Scientific
+authority belongs to the owning code, tests, this contract, and
+`docs/SSOT_POLICY.md`. `AGENTS.md` governs agent operation; `CLAUDE.md` is
+a non-authoritative compatibility index._
 
 ## Scientific objective
 
@@ -83,4 +85,4 @@ results. BANNED constructs: TCA pre-phase, FLRW UFA, photon RSA (approximation-f
 Approval required: any SSoT numerical value, convention, baseline, tolerance; anything touching
 frozen surfaces; claim-tier promotions (CLAIM_LEDGER + gate bundle); NSC-audit P0 remediation
 (REV-R199+ scope). Additive commits only on `research/pr04-multicomponent`; never stage
-`project/` or `CLAUDE.md`.
+`project/`.

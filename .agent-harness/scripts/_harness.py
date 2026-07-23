@@ -61,6 +61,9 @@ def root() -> Path:
             return Path(text).resolve()
     except (subprocess.CalledProcessError, FileNotFoundError):
         pass
+    cwd = Path.cwd().resolve()
+    if (cwd / ".agent-harness").is_dir():
+        return cwd
     here = Path(__file__).resolve()
     return here.parents[2]
 
@@ -80,11 +83,34 @@ def utc_now() -> str:
     return datetime.now(timezone.utc).isoformat(timespec="seconds")
 
 
+def confined_repo_file(repo: Path, rel: str, *, label: str) -> Path:
+    """Resolve a canonical repository-relative regular file without symlink escape."""
+
+    if not isinstance(rel, str) or not rel:
+        raise ValueError(f"{label} must be a non-empty repository-relative path.")
+    rel_path = Path(rel)
+    if (
+        rel_path.is_absolute()
+        or ".." in rel_path.parts
+        or "\\" in rel
+        or rel_path.as_posix() != rel
+    ):
+        raise ValueError(f"{label} must be canonical and repository-relative: {rel}")
+    probe = repo
+    for part in rel_path.parts:
+        probe = probe / part
+        if probe.is_symlink():
+            raise ValueError(f"{label} traverses a symlink: {rel}")
+    if not probe.is_file():
+        raise ValueError(f"{label} is missing or not a regular file: {rel}")
+    return probe
+
+
 def hash_files(repo: Path, files: list[str]) -> tuple[str, list[tuple[str, str]]]:
     digest = hashlib.sha256()
     entries: list[tuple[str, str]] = []
     for rel in files:
-        path = repo / rel
+        path = confined_repo_file(repo, rel, label="Shared context source")
         data = path.read_bytes()
         file_hash = hashlib.sha256(data).hexdigest()
         entries.append((rel, file_hash))
@@ -93,6 +119,108 @@ def hash_files(repo: Path, files: list[str]) -> tuple[str, list[tuple[str, str]]
         digest.update(data)
         digest.update(b"\0")
     return digest.hexdigest(), entries
+
+
+def context_entries(
+    repo: Path,
+    index: Mapping[str, Any],
+) -> tuple[str, list[tuple[str, str]], list[tuple[str, str]]]:
+    """Resolve the injected Tier-0 sources named by the context index."""
+
+    files = index.get("shared_files")
+    pack_files = index.get("pack_files")
+    if (
+        not isinstance(files, list)
+        or not files
+        or any(not isinstance(rel, str) for rel in files)
+        or len(files) != len(set(files))
+    ):
+        raise ValueError("shared_files must be a non-empty list of unique paths.")
+    if (
+        not isinstance(pack_files, list)
+        or not pack_files
+        or any(not isinstance(rel, str) for rel in pack_files)
+        or len(pack_files) != len(set(pack_files))
+        or pack_files != files
+    ):
+        raise ValueError(
+            "pack_files must exactly equal shared_files; non-injected references "
+            "must not rotate the global context version."
+        )
+    reference_files = index.get("reference_only_files", [])
+    if (
+        not isinstance(reference_files, list)
+        or any(not isinstance(rel, str) for rel in reference_files)
+        or len(reference_files) != len(set(reference_files))
+    ):
+        raise ValueError("reference_only_files must be a list of unique paths.")
+    overlap = sorted(set(files) & set(reference_files))
+    if overlap:
+        raise ValueError(
+            "shared_files and reference_only_files must be disjoint: "
+            + ", ".join(overlap)
+        )
+    version, entries = hash_files(repo, files)
+    hashes = dict(entries)
+    return version, entries, [(rel, hashes[rel]) for rel in pack_files]
+
+
+def render_context_pack(
+    version: str,
+    built_at: str,
+    entries: list[tuple[str, str]],
+    repo: Path,
+) -> str:
+    chunks = [
+        "# Generated Shared Context View",
+        "",
+        f"Context version: `{version}`",
+        f"Built at: `{built_at}`",
+        "",
+        (
+            "This compact view is generated from the machine context index. "
+            "Live HEAD, DAG, status, and active-run context is computed by the "
+            "hooks at use time. Reference-only files are read only when an "
+            "assignment names them."
+        ),
+    ]
+    for rel, sha in entries:
+        text = confined_repo_file(
+            repo, rel, label="Context pack source"
+        ).read_text(encoding="utf-8")
+        chunks.extend(
+            [
+                "",
+                f"---\n\n## Source: `{rel}`\n\nSHA-256: `{sha}`\n",
+                text.rstrip(),
+            ]
+        )
+    return "\n".join(chunks).rstrip() + "\n"
+
+
+def load_validated_context_pack(repo: Path, index: Mapping[str, Any]) -> str:
+    """Return the generated view only when index, sources, and rendered bytes agree."""
+
+    actual, entries, pack_entries = context_entries(repo, index)
+    if index.get("context_version") != actual:
+        raise ValueError("Context sources changed after the generated view was built.")
+    if index.get("file_hashes") != dict(entries):
+        raise ValueError("CONTEXT_INDEX.json file_hashes do not match shared files.")
+    expected = render_context_pack(
+        actual,
+        str(index.get("built_at", "")),
+        pack_entries,
+        repo,
+    )
+    pack_path = confined_repo_file(
+        repo,
+        ".agent-harness/generated/CONTEXT_PACK.md",
+        label="Generated context view",
+    )
+    actual_text = pack_path.read_text(encoding="utf-8")
+    if actual_text != expected:
+        raise ValueError("Generated CONTEXT_PACK.md does not match the context index.")
+    return actual_text
 
 
 def active_run_pointer_paths(repo: Path) -> tuple[Path, Path]:
@@ -190,6 +318,209 @@ def active_run_id(
             run_id=run_id,
         )
     return run_id
+
+
+def _git_head_state(repo: Path) -> tuple[str, str]:
+    """Distinguish a genuine unborn branch from an unreadable Git state."""
+
+    def run(*args: str) -> subprocess.CompletedProcess[str]:
+        try:
+            return subprocess.run(
+                ["git", *args],
+                cwd=repo,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+        except FileNotFoundError as exc:
+            raise ValueError("Git is unavailable; live HEAD cannot be resolved.") from exc
+
+    head_result = run("rev-parse", "--verify", "HEAD^{commit}")
+    head = head_result.stdout.strip()
+    if head_result.returncode == 0:
+        if re.fullmatch(r"[0-9a-f]{40,64}", head) is None:
+            raise ValueError("Git returned a malformed HEAD identity.")
+        branch_result = run("symbolic-ref", "--quiet", "--short", "HEAD")
+        if branch_result.returncode == 0 and branch_result.stdout.strip():
+            return head, branch_result.stdout.strip()
+        if branch_result.returncode == 1:
+            return head, "detached"
+        detail = branch_result.stderr.strip() or "symbolic-ref failed"
+        raise ValueError(f"Git branch state cannot be resolved: {detail}")
+
+    symbolic = run("symbolic-ref", "--quiet", "HEAD")
+    full_ref = symbolic.stdout.strip()
+    if (
+        symbolic.returncode == 0
+        and full_ref.startswith("refs/heads/")
+        and full_ref != "refs/heads/"
+    ):
+        shown = run("show-ref", "--verify", "--quiet", full_ref)
+        if shown.returncode == 1:
+            return "UNBORN", full_ref.removeprefix("refs/heads/")
+        detail = (
+            head_result.stderr.strip()
+            or shown.stderr.strip()
+            or "symbolic HEAD does not resolve to a commit"
+        )
+        raise ValueError(f"Git HEAD cannot be resolved: {detail}")
+    detail = head_result.stderr.strip() or symbolic.stderr.strip() or "rev-parse failed"
+    raise ValueError(f"Git HEAD cannot be resolved: {detail}")
+
+
+def _yaml_scalar(text: str, key: str) -> str | None:
+    match = re.search(rf"(?m)^{re.escape(key)}:\s*(.*?)\s*$", text)
+    if match is None:
+        return None
+    value = match.group(1).strip().strip("'\"")
+    return None if value in {"", "null", "~"} else value
+
+
+def _yaml_top_level_list_count(text: str, key: str) -> int:
+    lines = text.splitlines()
+    start = next(
+        (index for index, line in enumerate(lines) if line.startswith(f"{key}:")),
+        None,
+    )
+    if start is None:
+        return 0
+    inline = lines[start].split(":", 1)[1].strip()
+    if inline in {"[]", "null", "~"}:
+        return 0
+    count = 0
+    for line in lines[start + 1 :]:
+        if line and not line[0].isspace() and not line.startswith("- "):
+            break
+        if line.startswith("- "):
+            count += 1
+    return count
+
+
+def _yaml_pr_mapping_count(text: str) -> int:
+    lines = text.splitlines()
+    start = next(
+        (index for index, line in enumerate(lines) if line == "prs:"),
+        None,
+    )
+    if start is None:
+        return 0
+    count = 0
+    for line in lines[start + 1 :]:
+        if re.match(r"^  PR-[^:]+:", line) or re.match(r"^- id:\s*PR-", line):
+            count += 1
+            continue
+        if line and not line[0].isspace():
+            break
+    return count
+
+
+def resolve_live_context(repo: Path, index: Mapping[str, Any]) -> dict[str, Any]:
+    """Resolve transient operational context without creating another state file.
+
+    The byte identities below are internal spawn-context drift seals only.
+    They are not scientific provenance and must not be copied into claim,
+    novelty, or research-artifact gates.
+    """
+
+    sources = index.get("live_sources")
+    if not isinstance(sources, Mapping):
+        raise ValueError("CONTEXT_INDEX.json must define live_sources.")
+    dag_rel = sources.get("dag")
+    status_rel = sources.get("status")
+    if not isinstance(dag_rel, str) or not isinstance(status_rel, str):
+        raise ValueError("live_sources must name string dag and status paths.")
+
+    source_bytes: dict[str, bytes] = {}
+    for label, rel in (("dag", dag_rel), ("status", status_rel)):
+        path = confined_repo_file(repo, rel, label=f"Live {label} source")
+        source_bytes[label] = path.read_bytes()
+
+    dag_text = source_bytes["dag"].decode("utf-8")
+    status_text = source_bytes["status"].decode("utf-8")
+    head, branch = _git_head_state(repo)
+
+    run_id = active_run_id(repo, required=False)
+    run_summary = None
+    if run_id is not None:
+        plan = load_json(
+            repo / ".agent-harness" / "runs" / run_id / "RUN_PLAN.json"
+        )
+        run_summary = {
+            key: plan.get(key)
+            for key in (
+                "run_id",
+                "work_unit_id",
+                "spec_ref",
+                "base_ref",
+                "head_ref",
+                "context_version",
+                "status",
+            )
+        }
+
+    identity_payload = {
+        "context_version": index.get("context_version"),
+        "head": head,
+        "dag_sha256": hashlib.sha256(source_bytes["dag"]).hexdigest(),
+        "status_sha256": hashlib.sha256(source_bytes["status"]).hexdigest(),
+        "run": run_summary,
+    }
+    live_context_id = hashlib.sha256(
+        json.dumps(
+            identity_payload,
+            sort_keys=True,
+            separators=(",", ":"),
+            ensure_ascii=False,
+        ).encode("utf-8")
+    ).hexdigest()
+    return {
+        **identity_payload,
+        "live_context_id": live_context_id,
+        "branch": branch,
+        "dag": {
+            "path": dag_rel,
+            "generated_on": _yaml_scalar(dag_text, "generated_on"),
+            "scope": _yaml_scalar(dag_text, "scope"),
+            "pr_count": _yaml_pr_mapping_count(dag_text),
+        },
+        "status": {
+            "path": status_rel,
+            "generated_on": _yaml_scalar(status_text, "generated_on"),
+            "completed": _yaml_top_level_list_count(status_text, "completed"),
+            "blocked": _yaml_top_level_list_count(status_text, "blocked"),
+            "pending": _yaml_top_level_list_count(status_text, "pending"),
+            "in_progress": _yaml_scalar(status_text, "in_progress"),
+        },
+    }
+
+
+def format_live_context(state: Mapping[str, Any]) -> str:
+    dag = state["dag"]
+    status = state["status"]
+    run = state.get("run")
+    run_text = "none"
+    if isinstance(run, Mapping):
+        run_text = (
+            f"{run.get('run_id')} (status={run.get('status') or 'unspecified'}, "
+            f"work_unit={run.get('work_unit_id')}, spec={run.get('spec_ref')})"
+        )
+    return "\n".join(
+        [
+            f"Live context ID: {str(state['live_context_id'])[:12]}",
+            f"HEAD: {str(state['head'])[:12]} ({state['branch']})",
+            (
+                f"DAG: {dag['path']} (generated={dag.get('generated_on')}, "
+                f"prs={dag.get('pr_count')})"
+            ),
+            (
+                f"Status: {status['path']} (generated={status.get('generated_on')}, "
+                f"completed={status.get('completed')}, blocked={status.get('blocked')}, "
+                f"pending={status.get('pending')}, "
+                f"in_progress={status.get('in_progress') or 'none'})"
+            ),
+            f"Active run summary: {run_text}",
+        ]
+    )
 
 
 def cli_active_run_id(
@@ -550,6 +881,8 @@ def compute_effective_context_sha256(
     semantic = {
         "context_version": index.get("context_version"),
         "shared_files": index.get("shared_files"),
+        "pack_files": index.get("pack_files"),
+        "live_sources": index.get("live_sources"),
         "file_hashes": index.get("file_hashes"),
         "max_injected_chars": index.get("max_injected_chars"),
     }

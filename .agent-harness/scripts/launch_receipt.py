@@ -43,6 +43,10 @@ def cmd_create(args) -> int:
     assert run_id is not None
     if not is_safe_identifier(args.assignment_id):
         raise SystemExit("assignment-id must be a safe identifier")
+    if args.delivery_mode != "hook_injected":
+        raise SystemExit(
+            "file fallback is disabled; context must be delivered by the validated hook"
+        )
     assignment_path = (
         harness / "runs" / run_id / "assignments" / f"{args.assignment_id}.json"
     )
@@ -167,7 +171,7 @@ def main() -> None:
     create.add_argument("--fork-mode", choices=["none", "all"], default="none")
     create.add_argument(
         "--delivery-mode",
-        choices=["hook_injected", "file_fallback"],
+        choices=["hook_injected"],
         default="hook_injected",
     )
     create.add_argument("--attested", action="store_true")

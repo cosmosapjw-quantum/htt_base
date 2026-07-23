@@ -137,6 +137,71 @@ def test_shared_context_packet_is_merged_and_versioned() -> None:
     assert fragment
     assert agents_text.endswith(fragment)
     assert agents_text.count(fragment) == 1
+    assert "fragment has no independent authority" in fragment
+    assert "canonical `docs/codex_handoff/pr_status.yaml`" in agents_text
+    assert (
+        "`docs/codex_handoff/pr_backlog.yaml` or "
+        "`machine_readable/pr_backlog.yaml`"
+    ) not in agents_text
+
+    compatibility = (REPO_ROOT / "CLAUDE.md").read_text(encoding="utf-8")
+    assert len(compatibility) < 8192
+    assert "SSoT Master" not in compatibility
+    assert "Update this file at the end of every session" not in compatibility
+    for pointer in (
+        "AGENTS.md",
+        ".agent-harness/context/CONTEXT_INDEX.json",
+        ".agent-harness/generated/CONTEXT_PACK.md",
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml",
+    ):
+        assert pointer in compatibility
+    assert "TCA pre-phase" in compatibility
+    section5 = compatibility.split(
+        "## 5. Physics-parameter compatibility anchors", 1
+    )[1].split("## 6. Compatibility prohibitions", 1)[0]
+    for anchor in (
+        "ln B(FLRW_tilt)=+26.40",
+        "β=1.360e-3",
+        "F_Bayes=0.093±0.025",
+        "D_2=1002.086744",
+    ):
+        assert anchor in section5
+
+    index = json.loads(
+        (REPO_ROOT / ".agent-harness/context/CONTEXT_INDEX.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    assert index["shared_files"] == index["pack_files"] == [
+        ".agent-harness/context/SYMBOLS.md",
+        ".agent-harness/context/FROZEN_DECISIONS.md",
+    ]
+    assert not set(index["shared_files"]) & set(index["reference_only_files"])
+
+    historical = (
+        REPO_ROOT / ".agent-harness/context/SHARED_CONTEXT.md"
+    ).read_text(encoding="utf-8")
+    assert len(historical) < 1024
+    assert "no longer carries global scientific or execution authority" in historical
+    readme = (REPO_ROOT / ".agent-harness/README.md").read_text(encoding="utf-8")
+    contract_template = (
+        REPO_ROOT / ".agent-harness/templates/CAS_CONTRACT.json"
+    ).read_text(encoding="utf-8")
+    assert "--required-input .agent-harness/context/SHARED_CONTEXT.md" not in readme
+    assert ".agent-harness/context/SHARED_CONTEXT.md" not in contract_template
+    assert "REPLACE_WITH_GOVERNING_SPEC_PATH" in contract_template
+
+    scientific_contract = (
+        REPO_ROOT / "harness/physmath-coding-gpt56/SCIENTIFIC_CONTRACT.md"
+    ).read_text(encoding="utf-8")
+    research_state = (
+        REPO_ROOT / "harness/physmath-research-gpt56/state/RESEARCH_STATE.md"
+    ).read_text(encoding="utf-8")
+    assert "SSoT authority:" not in scientific_contract
+    assert "on conflict those win" not in scientific_contract
+    assert "non-authoritative compatibility index" in scientific_contract
+    assert "execution status: docs/codex_handoff/pr_status.yaml" in research_state
 
     config = tomllib.loads(
         (REPO_ROOT / ".codex/config.toml").read_text(encoding="utf-8")
@@ -655,6 +720,15 @@ def test_installer_copies_repo_scoped_assets_with_project_harness_config(
             "Codex CLI executable not installed; cannot validate installed rules"
         )
     target = tmp_path / "installed"
+    target.mkdir(parents=True)
+    initialized = subprocess.run(
+        ["git", "init", "-q"],
+        cwd=target,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    assert initialized.returncode == 0, initialized.stdout + initialized.stderr
     completed = subprocess.run(
         ["bash", "scripts/install_codex_handoff.sh", str(target)],
         cwd=REPO_ROOT,
@@ -684,6 +758,23 @@ def test_installer_copies_repo_scoped_assets_with_project_harness_config(
         "harness_templates/vendor/physmath-gpt56/3.1.0/research/manifest.json",
     ]:
         assert (target / path).exists(), path
+    assert (
+        target / "docs/codex_handoff/pr_backlog.yaml"
+    ).read_bytes() == (
+        REPO_ROOT / "docs/codex_handoff/pr_backlog.yaml"
+    ).read_bytes()
+    for name in (
+        "pr_backlog.yaml",
+        "pr_backlog.json",
+        "pr_status.yaml",
+        "authorized_principals.yaml",
+        "research_remediation_state.yaml",
+    ):
+        canonical = target / "docs/codex_handoff" / name
+        mirror = target / "machine_readable" / name
+        assert canonical.is_file(), name
+        assert mirror.is_file(), name
+        assert mirror.read_bytes() == canonical.read_bytes(), name
     assert not (target / "docs/codex_handoff/codex_handoff").exists()
     assert not (target / "docs/codex_handoff/PR_DELTAS").exists()
     assert not (target / "docs/codex_handoff/generated").exists()

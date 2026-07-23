@@ -1,29 +1,20 @@
 #!/usr/bin/env python3
-"""Build the Tier-0 shared context pack.
+"""Build the bounded Tier-0 shared-context delivery view.
 
-Write-if-content-changed (audit H7): when the hashed shared files are
-unchanged, neither CONTEXT_INDEX.json nor CONTEXT_PACK.md is rewritten, so
-repeated builds produce zero tracked-file churn and `built_at` only advances
-when the content version actually changes.
+Write-if-content-changed (audit H7): when the injected Tier-0 sources are
+unchanged, neither CONTEXT_INDEX.json nor CONTEXT_PACK.md is rewritten.
+Reference-only assignment inputs do not rotate the global context version.
 """
 from __future__ import annotations
 
-from _harness import dump_json, hash_files, load_json, root, utc_now
-
-
-def render_pack(version: str, built_at: str, entries, repo) -> str:
-    chunks = [
-        "# Canonical Shared Context Pack",
-        "",
-        f"Context version: `{version}`",
-        f"Built at: `{built_at}`",
-        "",
-        "This pack contains only the shared Tier-0 context. Assignment-specific context and sibling results are intentionally excluded.",
-    ]
-    for rel, sha in entries:
-        text = (repo / rel).read_text(encoding="utf-8")
-        chunks.extend(["", f"---\n\n## Source: `{rel}`\n\nSHA-256: `{sha}`\n", text.rstrip()])
-    return "\n".join(chunks).rstrip() + "\n"
+from _harness import (
+    context_entries,
+    dump_json,
+    load_json,
+    render_context_pack,
+    root,
+    utc_now,
+)
 
 
 def main() -> None:
@@ -31,23 +22,26 @@ def main() -> None:
     harness = repo / ".agent-harness"
     index_path = harness / "context" / "CONTEXT_INDEX.json"
     index = load_json(index_path)
-    files = list(index.get("shared_files", []))
-    if not files:
-        raise SystemExit("CONTEXT_INDEX.json has no shared_files.")
+    try:
+        version, entries, pack_entries = context_entries(repo, index)
+    except (OSError, UnicodeError, ValueError) as exc:
+        raise SystemExit(f"Cannot build context view: {exc}") from None
 
-    missing = [rel for rel in files if not (repo / rel).is_file()]
-    if missing:
-        raise SystemExit("Missing shared context files:\n" + "\n".join(missing))
-
-    version, entries = hash_files(repo, files)
     out = harness / "generated" / "CONTEXT_PACK.md"
+    if out.is_symlink():
+        raise SystemExit("Refusing to replace a symlinked generated context view.")
 
+    expected = render_context_pack(
+        version,
+        str(index.get("built_at", "")),
+        pack_entries,
+        repo,
+    )
     unchanged = (
         index.get("context_version") == version
-        and index.get("file_hashes") == {rel: sha for rel, sha in entries}
+        and index.get("file_hashes") == dict(entries)
         and out.is_file()
-        and out.read_text(encoding="utf-8")
-        == render_pack(version, str(index.get("built_at", "")), entries, repo)
+        and out.read_text(encoding="utf-8") == expected
     )
     if unchanged:
         print(f"Unchanged {out.relative_to(repo)} (no files rewritten)")
@@ -56,12 +50,18 @@ def main() -> None:
 
     index["context_version"] = version
     index["built_at"] = utc_now()
-    index["file_hashes"] = {rel: sha for rel, sha in entries}
+    index["file_hashes"] = dict(entries)
     dump_json(index_path, index)
 
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(
-        render_pack(version, index["built_at"], entries, repo), encoding="utf-8"
+        render_context_pack(
+            version,
+            index["built_at"],
+            pack_entries,
+            repo,
+        ),
+        encoding="utf-8",
     )
     print(f"Built {out.relative_to(repo)}")
     print(f"context_version={version}")

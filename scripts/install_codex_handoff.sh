@@ -76,7 +76,7 @@ assert_merge_safe_file "$PKG/AGENTS.md" "$REPO/AGENTS.md" "AGENTS.md"
 assert_merge_safe_file "$PKG/AGENTS.md.fragment" "$REPO/AGENTS.md.fragment" "AGENTS.md.fragment"
 assert_merge_safe_tree "$PKG/.codex" "$REPO/.codex" ".codex"
 
-mkdir -p "$REPO/.agents" "$REPO/.codex" "$REPO/docs/codex_handoff" "$REPO/scripts/codex_harness" "$REPO/docs/harness" "$REPO/harness_templates/vendor/physmath-gpt56"
+mkdir -p "$REPO/.agents" "$REPO/.codex" "$REPO/docs/codex_handoff" "$REPO/machine_readable" "$REPO/scripts/codex_harness" "$REPO/docs/harness" "$REPO/harness_templates/vendor/physmath-gpt56"
 copy_merge_only_file "$PKG/AGENTS.md" "$REPO/AGENTS.md"
 copy_merge_only_file "$PKG/AGENTS.md.fragment" "$REPO/AGENTS.md.fragment"
 cp -R "$PKG/.agents/"* "$REPO/.agents/"
@@ -87,8 +87,10 @@ cp -R "$PKG/.agent-harness/context" "$REPO/.agent-harness/"
 cp -R "$PKG/.agent-harness/templates" "$REPO/.agent-harness/"
 cp "$PKG/.agent-harness/scripts/"*.py "$REPO/.agent-harness/scripts/"
 cp -R "$PKG/docs/codex_handoff/"* "$REPO/docs/codex_handoff/"
-cp -R "$PKG/machine_readable/"* "$REPO/docs/codex_handoff/"
+# docs/codex_handoff is canonical. machine_readable is a synchronized
+# compatibility mirror and must never overwrite the canonical install source.
 cp -R "$PKG/scripts/codex_harness/"* "$REPO/scripts/codex_harness/"
+python "$REPO/scripts/codex_harness/sync_pr_dag_mirrors.py" --write
 cp -R "$PKG/harness_templates/docs/harness/"* "$REPO/docs/harness/"
 if [ ! -e "$VENDOR_DST" ]; then
   cp -R "$VENDOR_SRC" "$VENDOR_DST"
