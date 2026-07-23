@@ -32,6 +32,7 @@ from .lowell_poles import (
     PoleStatus,
     angular_momentum_power_tensor,
     estimate_lowell_pole,
+    mean_squared_multipole_alignment,
 )
 from .morphology import (
     DiagnosticMorphologyAxis,
@@ -157,6 +158,7 @@ __all__ = [
     "fit_template_diagnostic",
     "estimate_data_random_dipole",
     "estimate_lowell_pole",
+    "mean_squared_multipole_alignment",
     "first_moment",
     "load_cf4_catalog_npz",
     "load_authenticated_cf4_raw_groups",
