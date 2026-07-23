@@ -29,8 +29,10 @@ jobs:
     name: Portable numerical + claim gates
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-python@v6
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: '3.12'
           cache: pip
@@ -50,18 +52,29 @@ jobs:
           python scripts/cove_verify_pr07.py
       - name: PR07 audit-repair contract gates
         run: python -m pytest tests/contracts/test_pr07_audit_repair.py -q
-      - name: Publish gate JSON + checksums
-        if: always()
+      - name: Publish current portable gate JSON checksums
         run: |
           mkdir -p artifacts/pr07
-          (cd docs/generated && sha256sum pr07_*.json > "${GITHUB_WORKSPACE}/artifacts/pr07/pr07_checksums.sha256") || true
-      - uses: actions/upload-artifact@v4
-        if: always()
+          sha256sum \
+            docs/generated/pr07_paper_a.json \
+            docs/generated/pr07_paper_b.json \
+            docs/generated/pr07_k1_global_synthetic.json \
+            docs/generated/pr07_k5_hierarchical_synthetic.json \
+            docs/generated/pr07_k6_affine_ensemble_synthetic.json \
+            docs/generated/pr07_cove_report.json \
+            > artifacts/pr07/pr07_checksums.sha256
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: pr07-gate-artifacts
+          if-no-files-found: error
           path: |
-            docs/generated/pr07_*.json
-            artifacts/pr07/**
+            docs/generated/pr07_paper_a.json
+            docs/generated/pr07_paper_b.json
+            docs/generated/pr07_k1_global_synthetic.json
+            docs/generated/pr07_k5_hierarchical_synthetic.json
+            docs/generated/pr07_k6_affine_ensemble_synthetic.json
+            docs/generated/pr07_cove_report.json
+            artifacts/pr07/pr07_checksums.sha256
 
   # The Wolfram/xAct symbolic gate is a LOCAL/manual check: it requires the
   # Wolfram Engine and xAct, which are not provisioned in portable CI. Run
