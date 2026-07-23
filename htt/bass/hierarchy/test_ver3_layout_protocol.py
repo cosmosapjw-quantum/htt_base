@@ -271,6 +271,26 @@ def test_mass_matrix_tracks_branch_and_sector_weights() -> None:
     assert orth_diag[baryon_idx] != orth_diag[i_idx]
 
 
+def test_mass_matrix_cache_tracks_mutated_branch_on_same_background() -> None:
+    backend = _backend()
+    truncation = {"ell_max": 2, "mode_labels": ("m0",)}
+    layout = build_hierarchy_layout(backend, truncation)
+    bg = {"branch": "orthogonal"}
+
+    orth_diag = np.asarray(
+        assemble_mass_matrix(bg, backend, truncation).diagonal(),
+        dtype=np.float64,
+    )
+    bg["branch"] = "tilted"
+    tilt_diag = np.asarray(
+        assemble_mass_matrix(bg, backend, truncation).diagonal(),
+        dtype=np.float64,
+    )
+
+    i_idx = flatten(layout, "m0", "ph_I", 2, 0)
+    assert tilt_diag[i_idx] > orth_diag[i_idx]
+
+
 def test_explicit_and_implicit_blocks_match_layout_shape_and_are_sparse() -> None:
     backend = _backend()
     truncation = {"ell_max": 3, "mode_labels": ("m0",)}

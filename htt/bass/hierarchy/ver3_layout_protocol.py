@@ -639,8 +639,10 @@ def _operator_scales(
         else tuple(round(float(value), 18) for value in local_drag_slip_by_mu)
     )
     transport_key = tuple(round(float(value), 18) for value in transport_by_mu)
+    branch_key = str(bg.get("branch", "orthogonal")).strip().lower()
     key = id(bg) ^ id(backend) ^ hash(
         (
+            branch_key,
             baryon_loading_key,
             local_drag_owner,
             mass_key,
