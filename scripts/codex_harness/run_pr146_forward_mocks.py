@@ -31,7 +31,7 @@ warnings.filterwarnings("ignore")
 
 import yaml  # noqa: E402
 
-from common.cf4_forward_simulator import (  # noqa: E402
+from obsstat.cf4_forward_simulator import (  # noqa: E402
     BoxGrfConfig,
     ForwardSimulatorError,
     RealismConfig,
@@ -491,8 +491,8 @@ def build(write: bool) -> int:
         "config_hash": _sha(SPEC_PATH),
         "raw_data_pins": {"groups_sha256": _sha(_groups_path(spec))},
         "input_hashes": [f"{rel}:{_sha(REPO / rel)}" for rel in
-                         ("htt/src/common/cf4_forward_simulator.py",
-                          "htt/src/common/cf4_velocity_estimators.py")],
+                         ("htt/obsstat/cf4_forward_simulator.py",
+                          "htt/obsstat/cf4_velocity_estimators.py")],
         "caveats": [
             "Forward-simulator coverage mechanics at C2 only.",
             "The primary Cholesky generator is validated against the analytic "
@@ -524,7 +524,7 @@ def build(write: bool) -> int:
                 print(json.dumps({"ok": False,
                                   "reason": f"forbidden phrase in {rel}"}))
                 return 2
-    module_text = (REPO / "htt/src/common/cf4_forward_simulator.py") \
+    module_text = (REPO / "htt/obsstat/cf4_forward_simulator.py") \
         .read_text(encoding="utf-8").lower()
     for phrase in spec["forbidden_output_language"]:
         if phrase.lower() in module_text:

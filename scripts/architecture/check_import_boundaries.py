@@ -50,7 +50,7 @@ ALLOWED_EDGES = frozenset(
     }
 )
 
-# Measured on integration commit aed5a07e12c0c9e20ae0c521d030ce9298701b38.
+# Ratcheted after the MA-09 common ownership migration.
 # These are debt ceilings, not allowed design directions.  Removing an edge or
 # splitting the SCC is valid without a same-change baseline edit.  After an
 # intentional reduction merges, ratchet these constants to that lower graph so
@@ -60,8 +60,6 @@ BASELINE_VIOLATIONS: frozenset[tuple[str, str]] = frozenset(
         ("bass", "htt"),
         ("bass", "mio"),
         ("bass", "tsc"),
-        ("common", "bass"),
-        ("common", "obsstat"),
         ("htt", "tsc"),
         ("mio", "htt"),
         ("mio", "tsc"),
@@ -72,7 +70,7 @@ BASELINE_VIOLATIONS: frozenset[tuple[str, str]] = frozenset(
     }
 )
 BASELINE_NONTRIVIAL_SCCS: tuple[frozenset[str], ...] = (
-    frozenset({"bass", "common", "htt", "mio", "obsstat", "tsc"}),
+    frozenset({"bass", "htt", "mio", "obsstat", "tsc"}),
 )
 
 _EXCLUDED_PARTS = frozenset(

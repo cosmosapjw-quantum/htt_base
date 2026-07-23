@@ -12,7 +12,7 @@ import pytest
 
 warnings.filterwarnings("ignore")
 
-from common.cf4_growth_covariance import (
+from obsstat.cf4_growth_covariance import (
     GrowthCovarianceError,
     amplitude_mle,
     classify_constrained,

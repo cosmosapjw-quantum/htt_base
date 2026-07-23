@@ -9,7 +9,7 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from common.cf4_velocity_estimators import (
+from obsstat.cf4_velocity_estimators import (
     Cf4Sample,
     VelocityEstimatorError,
     _chi2_sf,

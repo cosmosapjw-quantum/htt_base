@@ -42,21 +42,19 @@ numerical branch is not rebound to the CF4 catalogue authority.
 """
 from __future__ import annotations
 
-import sys
 from dataclasses import dataclass
 from pathlib import Path
 
 import numpy as np
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "htt"))
-from obsstat.velocity_power import (  # noqa: E402
+from .velocity_power import (  # noqa: E402
     _trapz,
     fiducial,
     velocity_correlation_functions,
 )
 
 # PR-145 registered objects — imported, never re-transcribed (Wave-15 lesson 10)
-from common.cf4_velocity_estimators import (  # noqa: E402
+from .cf4_velocity_estimators import (  # noqa: E402
     Cf4Sample,
     H0_CF4,
     SIGMA_NL,
@@ -305,7 +303,7 @@ def verify_independent_reference(sample: Cf4Sample, cfg: BoxGrfConfig, *,
     # the band-limited deficit, split into its two physical pieces (variance):
     # the genuine super-sample power below the box fundamental, and the
     # (dominant) sub-grid power above the grid Nyquist.
-    from obsstat.velocity_power import KMAX_S, KMIN_S
+    from .velocity_power import KMAX_S, KMIN_S
     super_sample_var_frac = band_limited_sigma_v(KMIN_S, kfund) ** 2 / full ** 2
     sub_grid_var_frac = band_limited_sigma_v(knyq, KMAX_S) ** 2 / full ** 2
     # off-diagonal correlation: box vs analytic — an order-unity finite-box

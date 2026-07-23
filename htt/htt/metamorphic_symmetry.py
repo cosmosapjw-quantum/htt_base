@@ -16,7 +16,7 @@ from typing import Any, Callable, Mapping
 
 import numpy as np
 
-from common.cf4_velocity_estimators import Cf4Sample, estimate
+from obsstat.cf4_velocity_estimators import Cf4Sample, estimate
 from bass.los.b_mode_projector import (
     project_B_mode_transfer,
     spin2_parity_odd_combination,
@@ -44,8 +44,15 @@ MUTATION_IDS = (
     "MU172-B-M0-PLUS",
 )
 SPEC_PATH = Path("docs/research_program/long_horizon_rescue/pr172_spec.yaml")
-EVALUATOR_PATH = Path("htt/src/common/metamorphic_symmetry.py")
+EVALUATOR_PATH = Path("htt/htt/metamorphic_symmetry.py")
 RUNNER_PATH = Path("scripts/codex_harness/run_pr172_metamorphic_battery.py")
+
+
+def _live_source_path(path: Path) -> Path:
+    """Resolve the one implementation relocated after the frozen PR-172 spec."""
+    if path == Path("htt/src/common/cf4_velocity_estimators.py"):
+        return Path("htt/obsstat/cf4_velocity_estimators.py")
+    return path
 
 
 class MetamorphicContractError(ValueError):
@@ -73,7 +80,7 @@ def expected_input_hashes(spec: Mapping[str, Any], repo: Path) -> dict[str, str]
         SPEC_PATH,
         EVALUATOR_PATH,
         RUNNER_PATH,
-        Path(spec["source_bindings"]["cf4_estimator"]["path"]),
+        _live_source_path(Path(spec["source_bindings"]["cf4_estimator"]["path"])),
         Path(spec["source_bindings"]["b_projector"]["path"]),
         Path(spec["source_bindings"]["upstream_pr123"]["path"]),
         Path(spec["source_bindings"]["upstream_pr167"]["path"]),
@@ -252,10 +259,11 @@ def _source_bindings(spec: Mapping[str, Any], repo: Path) -> dict[str, Any]:
     bindings: dict[str, Any] = {}
     for key in ("cf4_estimator", "b_projector"):
         frozen = spec["source_bindings"][key]
-        path = repo / frozen["path"]
+        relative = _live_source_path(Path(frozen["path"]))
+        path = repo / relative
         actual = sha256_file(path)
         bindings[key] = {
-            "path": frozen["path"],
+            "path": str(relative),
             "expected_sha256": frozen["sha256"],
             "actual_sha256": actual,
             "matched": actual == frozen["sha256"],
@@ -942,7 +950,7 @@ def validate_battery(report: Mapping[str, Any], spec: Mapping[str, Any], repo: P
         for key in ("cf4_estimator", "b_projector"):
             frozen = spec["source_bindings"][key]
             row = bindings.get(key, {})
-            actual = sha256_file(repo / frozen["path"])
+            actual = sha256_file(repo / _live_source_path(Path(frozen["path"])))
             if row.get("actual_sha256") != actual or row.get("expected_sha256") != frozen["sha256"] or row.get("matched") is not True:
                 errors.append(f"{key}: source binding mismatch")
     if report.get("semantic_digest") != semantic_digest(report):

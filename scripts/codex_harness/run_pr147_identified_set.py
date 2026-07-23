@@ -29,7 +29,7 @@ warnings.filterwarnings("ignore")
 
 import yaml  # noqa: E402
 
-from common.cf4_identified_set import (  # noqa: E402
+from obsstat.cf4_identified_set import (  # noqa: E402
     SCHEMA_VERSION,
     IdentifiedSetError,
     comparability_table,
@@ -379,8 +379,8 @@ def build(write: bool) -> int:
         "raw_data_pins": {"groups_sha256": _sha(groups),
                           "variants_sha256": _sha(variants)},
         "input_hashes": [f"{rel}:{_sha(REPO / rel)}" for rel in
-                         ("htt/src/common/cf4_identified_set.py",
-                          "htt/src/common/cf4_velocity_estimators.py")],
+                         ("htt/obsstat/cf4_identified_set.py",
+                          "htt/obsstat/cf4_velocity_estimators.py")],
         "caveats": [
             "Identified-region coverage mechanics at C3 only.",
             "The identified set is bounded but wide and grows with depth; no "
@@ -412,7 +412,7 @@ def build(write: bool) -> int:
                 print(json.dumps({"ok": False,
                                   "reason": f"forbidden phrase in {rel}"}))
                 return 2
-    module_text = (REPO / "htt/src/common/cf4_identified_set.py") \
+    module_text = (REPO / "htt/obsstat/cf4_identified_set.py") \
         .read_text(encoding="utf-8").lower()
     for phrase in spec["forbidden_output_language"]:
         if phrase.lower() in module_text:

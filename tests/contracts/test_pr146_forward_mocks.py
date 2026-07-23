@@ -12,7 +12,7 @@ import pytest
 
 warnings.filterwarnings("ignore")
 
-from common.cf4_forward_simulator import (
+from obsstat.cf4_forward_simulator import (
     BoxGrfConfig,
     ForwardSimulatorError,
     RealismConfig,
@@ -119,7 +119,7 @@ def test_independent_box_reference() -> None:
 @needs_data
 def test_subsample_binds_pr145() -> None:
     # subsample_with_meta reproduces the PR-145 subsample index draw exactly
-    from common.cf4_velocity_estimators import subsample as pr145_subsample
+    from obsstat.cf4_velocity_estimators import subsample as pr145_subsample
     full, meta = load_sample_and_meta(GROUPS)
     sub, sub_meta = subsample_with_meta(full, meta, 800, 20260719)
     ref = pr145_subsample(full, 800, 20260719)

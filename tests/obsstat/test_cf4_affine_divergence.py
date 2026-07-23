@@ -4,8 +4,8 @@ import math
 
 import numpy as np
 
-from common.cf4_forward_simulator import SimMeta
-from common.cf4_velocity_estimators import Cf4Sample
+from obsstat.cf4_forward_simulator import SimMeta
+from obsstat.cf4_velocity_estimators import Cf4Sample
 from obsstat.cf4_affine_divergence import (
     AffineDivergenceConfig,
     COEFFICIENT_NAMES,

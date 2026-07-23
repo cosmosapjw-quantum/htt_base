@@ -24,22 +24,20 @@ the PR-157 adjudication.  No global-tilt or anomaly claim is produced.
 """
 from __future__ import annotations
 
-import sys
 from dataclasses import dataclass
 from pathlib import Path
 
 import numpy as np
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "htt"))
-from obsstat.velocity_power import fiducial  # noqa: E402
+from .velocity_power import fiducial  # noqa: E402
 
 # bind upstream registered objects (import, do not restate)
-from common.cf4_forward_simulator import (  # noqa: E402
+from .cf4_forward_simulator import (  # noqa: E402
     build_cholesky_generator,
     draw_correlated_field,
     load_sample_and_meta,
 )
-from common.cf4_velocity_estimators import (  # noqa: E402
+from .cf4_velocity_estimators import (  # noqa: E402
     Cf4Sample,
     _cv_correlation_matrix,
 )

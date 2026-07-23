@@ -15,15 +15,8 @@ statement.
 from __future__ import annotations
 
 import json
-import sys
-from pathlib import Path
 
 import numpy as np
-
-_REPO = Path(__file__).resolve().parents[3]
-for entry in (str(_REPO / "htt"), str(_REPO / "htt" / "src")):
-    if entry not in sys.path:
-        sys.path.insert(0, entry)
 
 from bass.los.b_mode_projector import project_B_mode_transfer  # noqa: E402
 

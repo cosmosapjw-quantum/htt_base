@@ -31,15 +31,13 @@ from __future__ import annotations
 
 import hashlib
 import json
-import sys
 from dataclasses import dataclass
 from pathlib import Path
 
 import numpy as np
 from scipy.optimize import minimize
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "htt"))
-from obsstat.velocity_power import fiducial  # noqa: E402
+from .velocity_power import fiducial  # noqa: E402
 
 # bind upstream registered objects (Wave-15 lesson 10 — import, do not restate)
 from common.identified_set import (  # noqa: E402
