@@ -169,7 +169,7 @@ def theta4_a2_numerical(A: float, Q: float, *, N: int = 256) -> float:
     return (5.0 / 2.0) * integral
 
 
-def theta4_a2_expansion_numerical() -> dict[tuple[int, int], float]:
+def theta4_a2_expansion_numerical(*, N: int = 256) -> dict[tuple[int, int], float]:
     """Extract each ``a_2`` expansion coefficient by Gauss-Legendre.
 
     Uses the ``Θ^4`` multinomial expansion
@@ -197,7 +197,7 @@ def theta4_a2_expansion_numerical() -> dict[tuple[int, int], float]:
                 continue
             i = 4 - j - k                      # exponent on the constant 1
             multinom = comb(4, i) * comb(j + k, j)
-            gaunt = gaunt_P_ell_int(j, k)
+            gaunt = gaunt_P_ell_int(j, k, N=N)
             coeff = (5.0 / 2.0) * multinom * gaunt
             if abs(coeff) < 1e-12:
                 coeff = 0.0
@@ -294,7 +294,7 @@ def verify_theta4_a2_coefficients(
     dict
         ``{(m, n): BridgeCoefficientReport}`` for the four audited monomials.
     """
-    numerical = theta4_a2_expansion_numerical()
+    numerical = theta4_a2_expansion_numerical(N=N_quad)
     reports: dict[tuple[int, int], BridgeCoefficientReport] = {}
     for monomial, exact in THETA4_A2_COEFFS_EXACT.items():
         num = numerical.get(monomial, 0.0)
