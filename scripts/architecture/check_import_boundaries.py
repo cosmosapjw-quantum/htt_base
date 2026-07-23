@@ -52,7 +52,9 @@ ALLOWED_EDGES = frozenset(
 
 # Measured on integration commit aed5a07e12c0c9e20ae0c521d030ce9298701b38.
 # These are debt ceilings, not allowed design directions.  Removing an edge or
-# splitting the SCC is valid and must not require a baseline rewrite.
+# splitting the SCC is valid without a same-change baseline edit.  After an
+# intentional reduction merges, ratchet these constants to that lower graph so
+# the improvement cannot regress; no separate ledger is needed.
 BASELINE_VIOLATIONS: frozenset[tuple[str, str]] = frozenset(
     {
         ("bass", "htt"),
