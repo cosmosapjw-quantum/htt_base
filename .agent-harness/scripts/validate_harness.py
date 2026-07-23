@@ -7,10 +7,13 @@ from pathlib import Path
 from _harness import (
     ActiveRunError,
     active_run_id,
-    hash_files,
+    context_entries,
     load_json,
+    load_validated_context_pack,
+    resolve_live_context,
     root,
     validate_assignment_payload,
+    validate_claim_registry,
 )
 from strict_result_validation import load_and_validate_registered_result_file
 
@@ -19,22 +22,54 @@ def validate_repo(repo: Path) -> dict:
     harness = repo / ".agent-harness"
     index_path = harness / "context" / "CONTEXT_INDEX.json"
     index = load_json(index_path)
-    files = list(index.get("shared_files", []))
-    actual, entries = hash_files(repo, files)
     errors: list[str] = []
+    errors.extend(validate_claim_registry(repo))
     state_errors: list[dict[str, str]] = []
+    actual = ""
+    entries: list[tuple[str, str]] = []
 
-    if actual != index.get("context_version"):
-        errors.append("Context files changed after the pack was built.")
-    if not (harness / "generated" / "CONTEXT_PACK.md").is_file():
-        errors.append("Generated CONTEXT_PACK.md is missing.")
+    try:
+        max_chars = int(index.get("max_injected_chars", 0))
+    except (TypeError, ValueError):
+        max_chars = None
+        errors.append("max_injected_chars must be an integer in the 8-12 KiB budget.")
+    if max_chars is not None and not 8192 <= max_chars <= 12288:
+        errors.append("max_injected_chars must stay within the 8-12 KiB budget.")
+
+    context_shape_ok = True
+    try:
+        actual, entries, _ = context_entries(repo, index)
+    except (OSError, UnicodeError, ValueError) as exc:
+        context_shape_ok = False
+        errors.append(f"Context index or Tier-0 sources are invalid: {exc}")
+    if context_shape_ok:
+        if actual != index.get("context_version"):
+            errors.append("Context files changed after the pack was built.")
+        if index.get("file_hashes") != dict(entries):
+            errors.append("CONTEXT_INDEX.json file_hashes do not match shared files.")
+        try:
+            load_validated_context_pack(repo, index)
+        except (OSError, UnicodeError, ValueError) as exc:
+            errors.append(f"Generated context view is invalid: {exc}")
 
     active = None
+    live_context = None
     try:
         active = active_run_id(repo, required=False)
     except ActiveRunError as exc:
         state_errors.append(exc.as_dict())
         errors.append(f"{exc.error_code}: {exc.message}")
+    if not state_errors:
+        try:
+            live_context = resolve_live_context(repo, index)
+        except (
+            ActiveRunError,
+            OSError,
+            UnicodeDecodeError,
+            ValueError,
+            json.JSONDecodeError,
+        ) as exc:
+            errors.append(f"Live context could not be resolved: {exc}")
     if active:
         run_dir = harness / "runs" / active
         plan = load_json(run_dir / "RUN_PLAN.json")
@@ -83,6 +118,8 @@ def validate_repo(repo: Path) -> dict:
         "context_version": actual,
         "active_run": active,
     }
+    if live_context is not None:
+        payload["live_context"] = live_context
     if errors:
         payload["errors"] = errors
     if state_errors:

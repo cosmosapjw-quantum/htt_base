@@ -1,0 +1,210 @@
+{
+  "pair_count": 34,
+  "pairs": [
+    {
+      "advocate": "Package-count가 아니라 scientific leverage gate를 도입한다. rank gain, source-confusion reduction, calibrated abstention, model-inadequacy discovery 또는 computational accessibility 중 하나가 없으면 plugin을 archive한다.",
+      "id": "H3-01",
+      "text": "외부 패키지 수가 늘어도 기존 계산을 wrapper로 재현할 뿐이면 과학적 독창성은 0이다. package count가 evidence count로 오인될 위험이 크다.",
+      "title": "Dependency theatre"
+    },
+    {
+      "advocate": "oracle lineage graph를 만들고 equation/data/author lineage가 겹치는 엔진은 correlated oracle로 처리한다. 독립성은 코드 이름이 아니라 derivation과 input graph로 정량화한다.",
+      "id": "H3-02",
+      "text": "CAMB, CLASS, CCL, emulators와 여러 map package가 같은 perturbation equations, cosmological priors와 upstream data를 공유하므로 코드 간 agreement를 독립 검증으로 셀 수 없다.",
+      "title": "False independence of external codes"
+    },
+    {
+      "advocate": "PR intake마다 exact release/commit, license, wheel/container digest와 official example hash를 고정하고 API drift mutation을 CI에 넣는다.",
+      "id": "H3-03",
+      "text": "빠르게 변하는 JAX·S2·SBI 생태계를 pin하지 않으면 결과와 gradient가 재현되지 않으며, 라이선스 조건을 놓치면 공개 패키지 자체가 불가능하다.",
+      "title": "Version, license and API drift"
+    },
+    {
+      "advocate": "optional plugin은 explicit BLOCKED_PLUGIN_MISSING만 반환한다. toy core는 별도 reference-DGP type이며 external_result flag를 절대 받을 수 없다.",
+      "id": "H3-04",
+      "text": "optional package import 실패 때 toy fallback을 조용히 사용하면 production 결과가 외부 oracle을 거친 것처럼 보이는 false green이 된다.",
+      "title": "Fail-open optional dependencies"
+    },
+    {
+      "advocate": "모든 package/statistic 후보를 predeclared spike family로 등록하고 evaluation holdout과 anytime-valid e-value를 사용해 도구 탐색 자체의 multiplicity를 제어한다.",
+      "id": "H3-05",
+      "text": "수십 개 statistic·simulator·inference engine 중 잘 작동하는 것만 고르면 package selection 자체가 look-elsewhere effect다.",
+      "title": "Tool-selection multiplicity"
+    },
+    {
+      "advocate": "reference DGP는 gate mechanics에만 사용하고 CAMB/CLASS/GLASS와 native solver로 단계별로 교체한다. binning instability 같은 실패를 expected blocker로 만들어 물리 kernel 없이는 promotion하지 못하게 한다.",
+      "id": "H3-06",
+      "text": "dependency-free shell mock은 software test에는 유용하지만 실제 SW/ISW/Doppler, reionization, selection physics를 포함하지 않으므로 cosmological conclusion을 지지할 수 없다.",
+      "title": "Toy DGP masquerading as cosmology"
+    },
+    {
+      "advocate": "Track I은 FLRW/source-systematics discrimination을 완결하고, global anisotropic transfer는 Track II native solver에서만 연다. 두 track 결과를 common latent cosmology에서 합쳐 원래 범위를 유지한다.",
+      "id": "H3-07",
+      "text": "CAMB·CLASS·nanoCMB는 FLRW perturbation theory를 전제로 하므로 global anisotropic geometry 또는 Bianchi tilt를 검증하는 oracle이 아니다.",
+      "title": "Shared FLRW assumption"
+    },
+    {
+      "advocate": "GLASS를 low-cost shell generator로 쓰되 PM/N-body and WebSky/HalfDome subset으로 response envelope를 검증한다. disagreement는 simulator-form nuisance로 identified set에 넣는다.",
+      "id": "H3-08",
+      "text": "GLASS의 빠른 shell mock은 저차 통계와 비선형 velocity·rare structure를 충분히 재현하지 않을 수 있어 local-structure dipole와 kSZ small-scale coupling을 과소모델링할 수 있다.",
+      "title": "GLASS/lognormal limitations"
+    },
+    {
+      "advocate": "PoleBundle을 shell-source, cumulative-observer, remote-dipole, remote-quadrupole 네 타입으로 분리하고 arithmetic/likelihood bridge를 typed receipt로만 허용한다.",
+      "id": "H3-09",
+      "text": "우리는 한 위치에서 하나의 CMB sky만 본다. shell contribution, cumulative line-of-sight pole, remote dipole field, remote quadrupole field를 구분하지 않으면 서로 다른 object를 같은 pole(z)로 부르게 된다.",
+      "title": "The phrase redshift-dependent CMB pole is ill-defined"
+    },
+    {
+      "advocate": "pole-definition family를 동시에 계산하고 definition-stable identified axis 또는 set-valued pole region을 보고한다. 한 definition의 유리한 결과만 선택할 수 없게 한다.",
+      "id": "H3-10",
+      "text": "maximum angular-momentum axis, minimum axis, multipole vectors와 area normals는 동일하지 않다. 결과가 pole definition 선택에 따라 바뀔 수 있다.",
+      "title": "Pole definition non-uniqueness"
+    },
+    {
+      "advocate": "power-tensor eigen-gap을 axis identifiability statistic으로 사용하고 gap이 작으면 방향 대신 full tensor/axis cone 또는 UNDETERMINED를 반환한다.",
+      "id": "H3-11",
+      "text": "low power 또는 nearly degenerate power tensor에서는 작은 noise·mask 변화가 pole을 큰 각도로 회전시킨다. pole direction이 식별되지 않았는데 finite cone을 보고할 수 있다.",
+      "title": "Eigenvalue degeneracy instability"
+    },
+    {
+      "advocate": "mask/inpainting/foreground/component-separation을 nuisance family로 사전 등록하고 map-product union 위의 pole region과 source rank를 계산한다.",
+      "id": "H3-12",
+      "text": "Planck mask, inpainting, monopole/dipole removal, foreground complexity와 component separation이 low-ell poles를 회전시킬 수 있다.",
+      "title": "Mask and foreground rotation"
+    },
+    {
+      "advocate": "Planck map 간 일치를 pipeline robustness로만 보고하고 independent simulation/data replication과 구분한다. common-sky covariance를 명시한다.",
+      "id": "H3-13",
+      "text": "SMICA, Commander, NILC, SEVEM 일치는 독립 확인이 아니라 같은 sky의 pipeline sensitivity다. 이를 replicate count로 세면 과신한다.",
+      "title": "Planck component maps are not independent skies"
+    },
+    {
+      "advocate": "repo의 exact pixel-space boost operator, analytic first-order kernel, independent map remapping을 3-way cross-check하고 amplitude/direction mutation이 statistic을 바꾸는 load-bearing test를 요구한다.",
+      "id": "H3-14",
+      "text": "local Doppler modulation, thermodynamic temperature, aberration direction remapping과 beam/pixel effects를 동일 order와 convention으로 처리하지 않으면 local-boost signature가 잘못된다.",
+      "title": "Boost operator order and convention risk"
+    },
+    {
+      "advocate": "Track-I global source family를 여러 redshift profile, multipole morphology와 superposition으로 넓히고, Track-II native Bianchi template에 대한 worst-case transfer test를 사전 설계한다.",
+      "id": "H3-15",
+      "text": "간단한 fixed-axis injection을 global tilt로 부르면 실제 Bianchi/multi-fluid transfer보다 구분하기 쉬운 대안을 만들어 method performance를 부풀린다.",
+      "title": "Phenomenological global tilt strawman"
+    },
+    {
+      "advocate": "CAMB, CLASS와 readable nanoCMB의 line-of-sight kernels로 shell convention을 교차검증하고, shell-refinement convergence와 source-term conservation identity를 gate로 둔다.",
+      "id": "H3-16",
+      "text": "SW/early-ISW/late-ISW/Doppler를 redshift shell에 분배하는 방식과 cumulative convention이 pole trajectory를 바꿀 수 있다.",
+      "title": "Arbitrary shell decomposition"
+    },
+    {
+      "advocate": "full cross-shell covariance, KL/effective mode count와 principal components를 사용한다. bin 수가 아니라 nonzero remote-field eigenmodes를 정보량으로 센다.",
+      "id": "H3-17",
+      "text": "redshift bins의 remote fields와 cumulative poles는 같은 primordial modes를 공유한다. 독립 bin으로 취급하면 유효 정보량을 과대평가한다.",
+      "title": "Shells are correlated and cosmic-variance limited"
+    },
+    {
+      "advocate": "optical-depth bias를 amplitude nuisance로 분리하고 pole-only, amplitude+pole, external baryon-prior branches를 따로 보고한다. global-axis claim은 amplitude calibration에 의존하지 않는 signed/cross-bin statistic으로 검증한다.",
+      "id": "H3-18",
+      "text": "remote dipole reconstruction amplitude는 galaxy-electron cross-correlation과 optical-depth bias에 강하게 의존한다. pole와 amplitude를 cosmological velocity로 직접 읽을 수 없다.",
+      "title": "kSZ optical-depth bias"
+    },
+    {
+      "advocate": "현재 pSZ 저 S/N을 null로 숨기지 않고 remote-quadrupole identified region에 통합한다. low S/N에서도 local-only model의 특정 coherent pattern을 배제할 수 있는지 power analysis를 한다.",
+      "id": "H3-19",
+      "text": "현재 Planck/ACT/unWISE/CIB remote-quadrupole constraints는 O(1) S/N 수준이므로, 강한 global-tilt 판정을 낼 정보가 없다.",
+      "title": "pSZ is currently low signal-to-noise"
+    },
+    {
+      "advocate": "frequency maps, component-separated maps, foreground injections와 estimator mean-field cross-fit을 모두 사용하는 adversarial remote-field pipeline을 만든다.",
+      "id": "H3-20",
+      "text": "tSZ, CIB, Galactic foreground, mask mean field와 estimator monopole가 remote-field pole을 만들 수 있다.",
+      "title": "kSZ/pSZ foreground and mean-field bias"
+    },
+    {
+      "advocate": "published summary reproduction, public-map reimplementation, author-code acquisition을 세 단계로 등록한다. map이 없으면 summary-level likelihood만 사용하고 exact-map claim을 차단한다.",
+      "id": "H3-21",
+      "text": "논문 결과만 있고 full reconstruction maps/code가 공개되지 않으면 exact data comparison은 재현 불가능할 수 있다.",
+      "title": "Published remote-field products may be unavailable"
+    },
+    {
+      "advocate": "single labels 대신 source superposition model과 set-valued mixture weights를 기본으로 두고, combined model이 우세하면 mandatory abstention을 반환한다.",
+      "id": "H3-22",
+      "text": "local boost, local structure, calibration and global mode가 동시에 존재할 수 있는데 single-class classifier는 가장 가까운 잘못된 source를 강제한다.",
+      "title": "Source superposition defeats single-label classification"
+    },
+    {
+      "advocate": "unknown-source contamination branch와 posterior predictive/model criticism을 넣어 model list 밖의 data에는 confident classification이 아니라 inadequate status를 낸다.",
+      "id": "H3-23",
+      "text": "source library에 실제 mechanism이 없으면 evidence와 neural classifier 모두 confidence를 내면서 틀릴 수 있다.",
+      "title": "Model-list misspecification"
+    },
+    {
+      "advocate": "SBI posterior를 weak identified region과 비교해 contraction을 data/model/prior contribution으로 분해하고 null-direction KL 및 simulator-shift coverage를 공개한다.",
+      "id": "H3-24",
+      "text": "neural SBI는 simulator와 training prior가 null direction을 닫아 좁은 posterior를 만들 수 있으며, identification이 아니라 model restriction을 학습할 수 있다.",
+      "title": "SBI overconfidence"
+    },
+    {
+      "advocate": "nuisance set은 external validation과 pre-registration으로만 줄이며 interval width 자체를 design objective로 사용해 어떤 추가 observable이 실제 leverage를 주는지 최적화한다.",
+      "id": "H3-25",
+      "text": "identified interval이 [0,1]에 가깝다면 정직하지만 과학적 leverage가 없다. favourable nuisance bounds를 골라 interval을 줄일 위험이 있다.",
+      "title": "Partial identification can be vacuous"
+    },
+    {
+      "advocate": "confidence sequences/e-values와 frozen search families를 도입해 package·statistic·depth 확장을 optional-stopping-safe하게 만든다.",
+      "id": "H3-26",
+      "text": "새 package, statistic, depth bin을 결과를 보며 추가하면 fixed-analysis p-value와 coverage가 무효가 된다.",
+      "title": "Adaptive scan multiplicity"
+    },
+    {
+      "advocate": "box size/resolution/long-mode injection grid를 predeclare하고 observer ensemble을 사용한다. long-mode missingness는 explicit response-null로 판정한다.",
+      "id": "H3-27",
+      "text": "CONCEPT/JaxPM/PySCo의 box size, resolution, force solver와 missing long modes가 bulk-flow/tilt identifiability를 바꾼다.",
+      "title": "Local LSS simulator mismatch"
+    },
+    {
+      "advocate": "independent initial conditions, different force solvers and analytic linear theory를 함께 사용하고 cross-code discrepancy envelope를 model-form uncertainty로 보존한다.",
+      "id": "H3-28",
+      "text": "두 N-body code가 같은 initial conditions와 approximations를 사용하면 agreement가 common bias를 숨길 수 있다.",
+      "title": "Cross-code agreement is not truth"
+    },
+    {
+      "advocate": "download, cached, extracted, generated and summary bytes를 분리한 storage receipt와 100 GB hard gate를 만든다. raw deletion은 replacement-ready hash receipt 이후에만 허용한다.",
+      "id": "H3-29",
+      "text": "100 GB ceiling 안에서도 partial downloads, cached files, generated maps와 summaries가 뒤섞이면 실제 input lineage와 재현성이 무너진다.",
+      "title": "Storage and provenance creep"
+    },
+    {
+      "advocate": "Track-I artifact schema에 native capability bit를 물리적으로 넣지 못하게 하고, Track-II consumer는 real SolverDeliveryReceipt 없이는 exit 3으로 막는다.",
+      "id": "H3-30",
+      "text": "phenomenological coherent source 또는 FLRW remote field가 native Bianchi transfer인 것처럼 family/geometry claim에 소비될 위험이 있다.",
+      "title": "Track-I/Track-II leakage"
+    },
+    {
+      "advocate": "solver handshake에 tetrad/frame, harmonic phase, spin convention, time/redshift, units와 FLRW/analytic limits를 포함한 semantic conformance suite를 둔다.",
+      "id": "H3-31",
+      "text": "Bianchi solver가 다른 tetrad, harmonic phase, epoch, polarization convention을 쓰면 adapter가 수치적으로 작동해도 물리적으로 틀릴 수 있다.",
+      "title": "Native solver adapter mismatch"
+    },
+    {
+      "advocate": "Planck statistics, redshift bins와 source hypotheses를 observed map을 열기 전에 freeze하고 global max-statistic/held-out replication을 적용한다.",
+      "id": "H3-32",
+      "text": "Planck pole, redshift bins, tracer와 source statistics를 사후 선택하면 local/global distinction이 새로운 anomaly catalogue가 된다.",
+      "title": "Actual-data anomaly mining"
+    },
+    {
+      "advocate": "axis, oriented vector, parity/handedness object를 서로 다른 type으로 구분한다. unoriented alignment에는 |dot|, signed dipole에는 signed dot을 사용한다.",
+      "id": "H3-33",
+      "text": "pole은 p와 -p가 같은 축이다. signed dipole, handedness와 unoriented quadrupole axis를 같은 alignment statistic에 넣으면 의미가 사라진다.",
+      "title": "Unoriented-axis ambiguity"
+    },
+    {
+      "advocate": "benchmark를 끝점으로 두지 않고 optimal survey/statistic design, finite-window no-go/identification theorem과 public-data remote-field application까지 연결한다.",
+      "id": "H3-34",
+      "text": "새 benchmark만 제시하고 실제 cosmological design 또는 data conclusion을 못 내면 methodology contribution이 niche software exercise로 평가될 수 있다.",
+      "title": "Benchmark novelty may be dismissed"
+    }
+  ],
+  "schema": "htt.hostile_advocate_matrix.external_fusion_round3.v1"
+}

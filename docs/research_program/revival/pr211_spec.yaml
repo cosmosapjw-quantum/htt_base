@@ -1,0 +1,25 @@
+schema: htt.revival.spec.v1
+pr_id: PR-211
+track: I
+disposition: LITERAL_RESCUE
+cross_references: [PR-186, PR-127, PR-187]
+title: Constraint-natural conventions and signed curvature split
+roadmap_anchor: htt_legacy_revival_round2_20260721/docs/03_ROUND2_DUAL_TRACK_PR_ROADMAP_20260721.md
+claim_identity: >
+  W2 := omega_ab omega^ab/(6H^2) = omega_a omega^a/(3H^2) (PR-186, unchanged);
+  DeltaOmega_k is a signed scalar carrier distinct from the nonnegative tensor
+  3-Ricci PSTF magnitude. This card is the clean-room legacy successor + a
+  cross-reference guard, not a re-derivation.
+estimand: dual-convention identity + signed/PSD split + frozen-anchor invariance
+decisive_falsifier: >
+  The omega-vector form differs from the tensor form by a factor of three, or
+  DeltaOmega_k is forced to a PSD magnitude, and the gate still passes.
+pass_gates:
+  P1: spec frozen before result read
+  P2: sympy dual seal + code successor agree; PR-186 five-axis CAS cross-referenced (independent lineage)
+  P3: retired /H^2 form flagged 3x; PSD-forcing of DeltaOmega_k detected
+  P4: card --check byte-stable
+  P5: frozen PR-186 W2_max byte-identical (no re-freeze)
+readiness_state: EVIDENCE_READY
+independence_gate: OPEN
+public_use: false

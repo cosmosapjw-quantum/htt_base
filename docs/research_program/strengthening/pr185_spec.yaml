@@ -1,0 +1,83 @@
+schema: htt.strengthen_spec.v1
+pr_id: PR-185
+title: External novelty x internal readiness dual-axis SSoT and promotion engine
+baseline_commit: b8efb2de24a1c1ce2ad61e6150532ef2f8179d00
+frozen_before_result: true
+owner: COMMON
+targets_audit_criticisms: [H23, H24]
+risk_tier: R1
+claim_ceiling: {scheme: roadmap_rescue_v1, level: C1}
+public_use: false
+
+strengthened_claim: >
+  The external novelty tier (K/C/P/S) expresses ONLY the delta against the
+  published literature and is independent of internal readiness. publication_use
+  and authoritative promotion open only as the conjunctive result of the
+  mechanics, identification, calibration, provenance, independence, and claim
+  gates. A high external novelty with an OPEN internal readiness is a first-class
+  legal state and is never downgraded; a high novelty never lifts readiness.
+
+decisive_falsifier: >
+  Fails if the schema makes an S-novelty / OPEN-readiness state impossible, or if
+  an OPEN artifact is promoted to public use merely because its novelty is S, or
+  if novelty and readiness collapse into a single ordinal enum.
+
+interfaces:
+  module: htt/src/common/dual_axis_claim_state.py
+  runner: scripts/codex_harness/run_pr185_dual_axis.py
+  ledger_out: docs/generated/dual_axis_claim_ledger.json
+  schema_ref: htt_post_v10_strengthening_plan_20260721/schemas/claim_state.schema.json
+
+readiness_states: [OPEN, IN_REMEDIATION, EVIDENCE_READY, ADJUDICATION_PENDING,
+                   VALIDATED, BLOCKED, FALSIFIED, ABANDONED]
+novelty_tiers: [K, C, P, S]
+gates: [mechanics, identification, calibration, provenance, independence, claim]
+
+promotion_rules:
+  - readiness advances only through the registered transition graph
+    (OPEN -> IN_REMEDIATION -> EVIDENCE_READY -> ADJUDICATION_PENDING -> VALIDATED)
+    with the terminal branches BLOCKED / FALSIFIED / ABANDONED reachable from any
+    non-terminal state.
+  - EVIDENCE_READY requires mechanics/identification/calibration/provenance in
+    {pass, not_applicable}; the independence and claim gates may still be OPEN.
+  - ADJUDICATION_PENDING requires an independent adjudication receipt to be
+    requested (present-but-unsigned allowed).
+  - VALIDATED requires all six gates in {pass, not_applicable} AND at least one
+    independent=true adjudication receipt whose adjudicator_principal differs
+    from every author_principal (author != adjudicator).
+  - publication_use=true requires readiness=VALIDATED plus the VALIDATED gate set.
+  - internal claim_level/tier may improve only after a readiness gate is passed;
+    external novelty_tier is never rewritten from readiness.
+
+migration:
+  source: docs/audits/v10_web_crag_20260721/tier_evidence.json
+  policy: >
+    Each v10 tier-ledger entry maps losslessly to a dual-axis claim: novelty_tier
+    = the K/C/P/S head (K+C -> the strongest external head with both recorded in
+    novelty_basis), novelty_basis carries the adjudication text + citations, and
+    readiness_state = EVIDENCE_READY with the independence gate OPEN (spend-limited
+    adjudication) and publication_use=false. Zero ID loss, zero novelty-delta loss.
+
+pass_gate_conjunctive:
+  - v10 ledger 100% parse; every entry id and its novelty head/basis preserved
+    (migration diff 0 on id + novelty + basis).
+  - all legal (novelty, readiness) combinations accepted by property tests,
+    including S+OPEN and P+VALIDATED.
+  - 100 publication_use=true mutations each rejected when any gate is not pass or
+    any independent receipt is missing.
+  - author=adjudicator, fabricated (unsigned) receipt, circular promotion parent,
+    and stale gate receipt are each killed.
+  - novelty and readiness never collapse to one ordinal (dedicated guard test).
+
+fail_kill_gate:
+  - novelty and readiness merged into a single ordinal enum.
+  - publication builder bypasses the source gate ceiling.
+  - any novelty basis lost in migration.
+
+independence_gate_status_on_close: OPEN
+readiness_target_on_close: EVIDENCE_READY
+notes: >
+  Independent reviewer confirmation of migration diff 0 is the Independence gate;
+  it stays OPEN this session (adjudication capacity spend-limited). The card
+  reaches EVIDENCE_READY with mechanics/identification/calibration/provenance
+  passing; publication_use stays false.

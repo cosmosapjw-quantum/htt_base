@@ -1,0 +1,51 @@
+{
+ "forbidden_claims_reaffirmed": [
+  "a confusable/misspecified source triggers mandatory abstention, never a global selection",
+  "discrimination is diagnostic mechanics on synthetic surveys, not a cosmic-dipole detection",
+  "the competitor list is fixed and pre-registered"
+ ],
+ "metadata": {
+  "claim_level": {
+   "level": "C1",
+   "scheme": "roadmap_rescue_v1"
+  },
+  "cross_references": [
+   "PR-141"
+  ],
+  "generating_command": "env PYTHONHASHSEED=0 venv/bin/python -B scripts/codex_harness/run_pr221_dipole.py --write",
+  "independence_gate": "OPEN",
+  "owner": "COMMON",
+  "public_use": false,
+  "readiness_state": "EVIDENCE_READY",
+  "spec_sha256": "0e0f8770504f52917dd8204108019a6f018dde7c6b50df8a5e2c39e1a522307a"
+ },
+ "pr_id": "PR-221",
+ "result": {
+  "gate_pass": true,
+  "overall_correct_rate": 0.90225,
+  "scenario_results": {
+   "confusable_weak": {
+    "abstain_rate": 1.0,
+    "correct_rate": 1.0
+   },
+   "global": {
+    "abstain_rate": 0.11375,
+    "correct_rate": 0.835
+   },
+   "kin": {
+    "abstain_rate": 0.09125,
+    "correct_rate": 0.8325
+   },
+   "superposition": {
+    "abstain_rate": 0.01125,
+    "correct_rate": 0.985
+   },
+   "systematic": {
+    "abstain_rate": 0.105,
+    "correct_rate": 0.85875
+   }
+  }
+ },
+ "schema": "htt.pr221.result_card.v1",
+ "terminal": "DIPOLE_SOURCE_DISCRIMINATION_WITH_MANDATORY_ABSTENTION"
+}

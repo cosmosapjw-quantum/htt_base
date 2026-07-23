@@ -1,0 +1,98 @@
+{
+ "forbidden_claims_reaffirmed": [
+  "partial DESI mocks never enter any rank/p/covariance/significance or headline",
+  "each closed lane carries its own null/covariance/selection receipt",
+  "the DESI official-mock closure waits for the PR-151 acquisition terminal receipt"
+ ],
+ "metadata": {
+  "claim_level": {
+   "level": "C1",
+   "scheme": "roadmap_rescue_v1"
+  },
+  "cross_references": [
+   "PR-144",
+   "PR-145",
+   "PR-146",
+   "PR-147",
+   "PR-148",
+   "PR-149",
+   "PR-150",
+   "PR-152",
+   "PR-177"
+  ],
+  "desi_official_mock_lane": "BLOCKED_ON_PR151_TERMINAL",
+  "generating_command": "env PYTHONHASHSEED=0 venv/bin/python -B scripts/codex_harness/run_pr226_datalane.py --write",
+  "independence_gate": "OPEN",
+  "owner": "COMMON",
+  "public_use": false,
+  "readiness_state": "EVIDENCE_READY",
+  "spec_sha256": "c1edc569d0faab42ca8f55792bf75c2060fc710816d9449254869a015d3aceae"
+ },
+ "pr_id": "PR-226",
+ "result": {
+  "blocked_lanes": [
+   "desi"
+  ],
+  "closed_lanes": [
+   "planck_k1",
+   "cf4",
+   "act"
+  ],
+  "desi_blocked_on_pr151": true,
+  "headline_discipline_ok": true,
+  "lanes": {
+   "act": {
+    "contract": "null + covariance + selection",
+    "receipt_cards": [
+     "act_kappa_card.json",
+     "act_raw_qe_card.json"
+    ],
+    "receipts_present": [
+     "act_kappa_card.json",
+     "act_raw_qe_card.json"
+    ],
+    "status": "CLOSED_WITH_EXISTING_RECEIPT"
+   },
+   "cf4": {
+    "contract": "null + covariance + selection",
+    "receipt_cards": [
+     "cf4_mv_bulkflow_card.json",
+     "cf4_bulkflow_lcdm_card.json",
+     "cf4_mock_significance_card.json"
+    ],
+    "receipts_present": [
+     "cf4_mv_bulkflow_card.json",
+     "cf4_bulkflow_lcdm_card.json",
+     "cf4_mock_significance_card.json"
+    ],
+    "status": "CLOSED_WITH_EXISTING_RECEIPT"
+   },
+   "desi": {
+    "contract": "official 1000 EZmock + 25 AbacusSummit covariance (PR-151 terminal)",
+    "diagnostic_present": true,
+    "diagnostic_receipt": "desi_exact_selection_card.json",
+    "official_mock_closure": "BLOCKED_ON_PR151_TERMINAL",
+    "partial_mocks_used_in_headline": false,
+    "status": "BLOCKED_ON_PR151_TERMINAL"
+   },
+   "planck_k1": {
+    "contract": "null + covariance + selection",
+    "receipt_cards": [
+     "k1_e2e_reduced_manifest_ffp10_smica.json",
+     "k1_global_maxscan_e2e_full.json",
+     "k1_biposh_smica.json",
+     "k1_evenl_biposh_rank_card.json"
+    ],
+    "receipts_present": [
+     "k1_e2e_reduced_manifest_ffp10_smica.json",
+     "k1_global_maxscan_e2e_full.json",
+     "k1_biposh_smica.json",
+     "k1_evenl_biposh_rank_card.json"
+    ],
+    "status": "CLOSED_WITH_EXISTING_RECEIPT"
+   }
+  }
+ },
+ "schema": "htt.pr226.result_card.v1",
+ "terminal": "DATA_LANE_CLOSURE_PARTIAL_THREE_LANES_CLOSED_DESI_BLOCKED_ON_PR151"
+}

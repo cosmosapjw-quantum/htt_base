@@ -1,0 +1,23 @@
+schema: htt.revival.spec.v1
+pr_id: PR-210
+track: I
+title: BASS-HTT-MIO constitution and typed DefectBundle
+roadmap_anchor: htt_legacy_revival_round2_20260721/docs/03_ROUND2_DUAL_TRACK_PR_ROADMAP_20260721.md
+claim_identity: >
+  The tri-stack integration ambition is a typed composition of a frame/epoch
+  indexed ComponentState (x_C = Sigma2 - W2 + Omega_tilt + DeltaOmega_k),
+  SourceState, admissible class and BridgeReceipts; not a bare scalar.
+estimand: comparator value + typed-composition admissibility
+frame_order_domain: frame in {normal,matter,observer,electron,cmb}; one epoch coordinate; DeltaOmega_k signed
+decisive_falsifier: >
+  Components from different frames or epochs are combined without a validated
+  BridgeReceipt and the bundle validator allows it.
+pass_gates:
+  P1: spec frozen before result read
+  P2: sympy defect-identity seal derives x_C = Sigma2 - W2 + Omega_tilt + DeltaOmega_k from the parent identity, matching the code comparator
+  P3: frame-mix, epoch-mix, negative magnitude, unbridged combine and uncertified-bridge combine each raise
+  P4: card --check byte-stable
+  P5: no legacy module imported
+readiness_state: EVIDENCE_READY
+independence_gate: OPEN
+public_use: false

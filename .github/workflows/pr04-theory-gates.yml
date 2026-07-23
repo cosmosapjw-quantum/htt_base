@@ -6,6 +6,8 @@ on:
   pull_request:
     paths:
       - 'htt/**'
+      - 'tests/obsstat/test_lowell_poles.py'
+      - 'tests/obsstat/test_shell_alms.py'
       - 'research_gates/pr04/**'
       - '.github/workflows/pr04-theory-gates.yml'
   workflow_dispatch:
@@ -37,8 +39,10 @@ jobs:
           - python-version: '3.13'
             experimental: true
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-python@v6
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: ${{ matrix.python-version }}
           cache: pip
@@ -57,8 +61,10 @@ jobs:
         env:
           PYTHONPATH: ${{ github.workspace }}:${{ github.workspace }}/htt
         run: python -m unittest discover -s research_gates/pr04/tests -p 'test_pr04_*.py' -v
-      - name: Verify forbidden legacy dependencies
-        run: python research_gates/pr04/tools/verify_forbidden_dependencies.py --repo .
+      - name: Verify current architecture boundaries
+        run: python scripts/architecture/check_import_boundaries.py --repo .
       - name: Run existing fast regression tier
         working-directory: htt
         run: pytest -m 'smoke or fast or ci' -q
+      - name: Run PR-251 and PR-252 low-ell science tests
+        run: pytest tests/obsstat/test_lowell_poles.py tests/obsstat/test_shell_alms.py -q

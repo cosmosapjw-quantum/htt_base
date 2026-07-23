@@ -1,0 +1,18 @@
+{
+ "schema": "htt.cas_contract.v3",
+ "identity": {"contract_id": "CAS-PR222-BULK-BRIDGE-001", "title": "Multi-window bulk-flow bridge has rank 3 (identifies homogeneous tilt); a single window has rank 1", "pr": "PR-222"},
+ "required_axes": ["wolfram_xact", "sympy", "sage_singular", "lean", "rocq"],
+ "missing_axis_outcome": "CAS_BLOCKED",
+ "result_blinding": "required_until_adjudication",
+ "theorem": {
+  "fixture": "window operator 10W with integer rows r1=(10,1,0), r2=(2,8,1), r3=(0,2,7), r4=(6,3,2).",
+  "claims": [
+   "multi-window Gram G = (10W)^T (10W) = [[140,44,14],[44,78,28],[14,28,54]]",
+   "det(G) = 394584 != 0 -> rank(10W) = 3: the 3-component homogeneous tilt is identified",
+   "a single window (row r1) gives an outer-product Gram of rank 1: it identifies only one mode",
+   "hence a single bulk-flow amplitude cannot point-identify the 3-D homogeneous tilt; a multi-window field bridge can"
+  ]
+ },
+ "expected_exact_values": {"det_G": "394584", "multi_rank": "3", "single_rank": "1"},
+ "notes": "Wolfram/SymPy/Sage compute exact matrix rank + Gram det over QQ; Lean and Rocq (independent kernels) verify the integer determinant 394584 != 0 and the single-window outer-product rank 1. No majority vote; all five axes PASS."
+}

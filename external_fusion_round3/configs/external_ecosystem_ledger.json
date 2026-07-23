@@ -1,0 +1,46 @@
+{
+  "schema": "htt.external_ecosystem_ledger.v1",
+  "generated_on": "2026-07-22",
+  "status": "PLANNING_ONLY_VERSION_PIN_AT_PR_INTAKE",
+  "hard_storage_limit_gib": 100,
+  "policy": {
+    "core_dependency_rule": "Core reference tests require only NumPy and SciPy.",
+    "optional_plugin_rule": "Missing plugins return an explicit blocked receipt; no toy fallback may be stamped as an external result.",
+    "version_rule": "Resolve and pin an exact release or commit independently for each PR before scientific execution.",
+    "three_day_spike_success": [
+      "RANK_GAIN",
+      "COVERAGE_GAIN",
+      "SOURCE_DISCRIMINATION",
+      "MODEL_INADEQUACY_DISCOVERY",
+      "CERTIFIED_ABSTENTION",
+      "COMPUTATIONAL_ACCESSIBILITY_GAIN"
+    ]
+  },
+  "entries": [
+    {"name":"CAMB","track":"I","kind":"forward_solver","import":"camb","official":"https://github.com/cmbant/CAMB","role":"FLRW CMB and source transfer oracle","license":"LICENSE file at pinned release","storage_gib":"<1","required_prs":[253]},
+    {"name":"CLASS","track":"I","kind":"forward_solver","import":"classy","official":"https://github.com/lesgourg/class_public","role":"Independent FLRW perturbation/transfer oracle","license":"GPL-3.0","storage_gib":"<1","required_prs":[253]},
+    {"name":"GLASS","track":"I","kind":"lightcone_simulator","import":"glass","official":"https://github.com/glass-dev/glass","role":"Correlated full-sky LSS lightcone and shell mocks","license":"MIT","storage_gib":"generated 1-30","required_prs":[254,269,271]},
+    {"name":"healpy","track":"I","kind":"spherical_map","import":"healpy","official":"https://github.com/healpy/healpy","role":"HEALPix maps, alm conversion and Planck quicklook","license":"GPL-2.0","storage_gib":"<1 plus maps","required_prs":[251,258]},
+    {"name":"NaMaster","track":"I","kind":"masked_sky_estimator","import":"pymaster","official":"https://github.com/LSSTDESC/NaMaster","role":"Mask-aware spin-0/spin-2 pseudo-Cl and purification baseline","license":"BSD-3-Clause","storage_gib":"<1","required_prs":[254,267]},
+    {"name":"S2FFT","track":"I","kind":"differentiable_harmonics","import":"s2fft","official":"https://github.com/astro-informatics/s2fft","role":"Differentiable spin spherical/Wigner transforms","license":"MIT","storage_gib":"<2","required_prs":[263,267,268]},
+    {"name":"S2WAV","track":"I","kind":"directional_wavelet","import":"s2wav","official":"https://github.com/astro-informatics/s2wav","role":"Directional spherical wavelet morphology","license":"MIT","storage_gib":"<2","required_prs":[267,268]},
+    {"name":"PySM3","track":"I","kind":"foreground_simulator","import":"pysm3","official":"https://github.com/galsci/pysm","role":"Frequency-dependent Galactic foreground simulations","license":"BSD-3-Clause","storage_gib":"1-15 selected products","required_prs":[254,258,267]},
+    {"name":"lenspyx","track":"I","kind":"cmb_simulator","import":"lenspyx","official":"https://github.com/carronj/lenspyx","role":"Curved-sky lensed-CMB mock baseline","license":"LICENSE at pinned release","storage_gib":"generated 1-20","required_prs":[254,267]},
+    {"name":"SACC","track":"I","kind":"summary_exchange","import":"sacc","official":"https://github.com/LSSTDESC/sacc","role":"Summary statistics and covariance exchange","license":"BSD-3-Clause","storage_gib":"<1","required_prs":[249]},
+    {"name":"Firecrown","track":"I","kind":"likelihood_framework","import":"firecrown","official":"https://github.com/LSSTDESC/firecrown","role":"External cosmology-likelihood consumer of SACC products","license":"BSD-3-Clause","storage_gib":"<1","required_prs":[249,272]},
+    {"name":"sbi","track":"I","kind":"simulation_based_inference","import":"sbi","official":"https://github.com/sbi-dev/sbi","role":"SNPE/SNLE/SNRE posterior baselines","license":"AGPL-3.0","storage_gib":"models 1-20","required_prs":[266,272]},
+    {"name":"sbibm","track":"I","kind":"benchmark","import":"sbibm","official":"https://github.com/sbi-benchmark/sbibm","role":"Public benchmark task format","license":"MIT","storage_gib":"<5","required_prs":[266]},
+    {"name":"NumPyro","track":"I","kind":"bayesian_inference","import":"numpyro","official":"https://github.com/pyro-ppl/numpyro","role":"Independent HMC/NUTS baseline","license":"Apache-2.0","storage_gib":"<2","required_prs":[272]},
+    {"name":"Cobaya","track":"I","kind":"cosmology_inference","import":"cobaya","official":"https://github.com/CobayaSampler/cobaya","role":"Independent cosmology MCMC/nested-sampling baseline","license":"LGPL-3.0","storage_gib":"<2","required_prs":[272]},
+    {"name":"CVXPY","track":"I","kind":"convex_optimization","import":"cvxpy","official":"https://github.com/cvxpy/cvxpy","role":"Identified-set and optimal-design reference solver","license":"Apache-2.0","storage_gib":"<2","required_prs":[265,268]},
+    {"name":"CVXPYlayers","track":"I","kind":"differentiable_optimization","import":"cvxpylayers","official":"https://github.com/cvxgrp/cvxpylayers","role":"Differentiable robust set/design layer","license":"Apache-2.0","storage_gib":"<2","required_prs":[268,272]},
+    {"name":"CCL","track":"I","kind":"lss_theory","import":"pyccl","official":"https://github.com/LSSTDESC/CCL","role":"LSS background, growth and angular spectra cross-check","license":"BSD-3-Clause","storage_gib":"<2","required_prs":[254,271]},
+    {"name":"COFFE","track":"I","kind":"relativistic_lss","import":"coffe","official":"https://github.com/JCGoran/coffe","role":"Relativistic/wide-angle galaxy-correlation templates","license":"LICENSE at pinned release","storage_gib":"<2","required_prs":[271]},
+    {"name":"pycorr","track":"I","kind":"survey_estimator","import":"pycorr","official":"https://github.com/cosmodesi/pycorr","role":"Window/random-aware correlation estimators","license":"BSD-3-Clause","storage_gib":"<2","required_prs":[271]},
+    {"name":"pypower","track":"I","kind":"survey_estimator","import":"pypower","official":"https://github.com/cosmodesi/pypower","role":"Window-aware power multipoles and wide angles","license":"BSD-3-Clause","storage_gib":"<2","required_prs":[271]},
+    {"name":"CONCEPT","track":"I","kind":"nbody","import":null,"official":"https://github.com/jmd-dk/concept","role":"Independent local PM/P3M velocity mocks","license":"GPL-3.0","storage_gib":"generated summaries <30","required_prs":[269,270]},
+    {"name":"JaxPM","track":"I","kind":"differentiable_nbody","import":"jaxpm","official":"https://github.com/DifferentiableUniverseInitiative/JaxPM","role":"Differentiable PM velocity mock cross-check","license":"BSD-3-Clause","storage_gib":"generated summaries <30","required_prs":[269,270]},
+    {"name":"Snakemake","track":"I","kind":"workflow","import":"snakemake","official":"https://github.com/snakemake/snakemake","role":"Hermetic content-addressed workflow","license":"MIT","storage_gib":"<1","required_prs":[249]},
+    {"name":"native_bianchi_boltzmann","track":"II","kind":"native_solver","import":null,"official":"project-private delivery receipt","role":"Shell-resolved anisotropic T/E/B and remote-field transfer","license":"must be declared in SolverDeliveryReceipt","storage_gib":"declared per run <100","required_prs":[274,275,276,277,278,279,280,281,282]}
+  ]
+}

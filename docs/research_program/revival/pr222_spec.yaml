@@ -1,0 +1,21 @@
+schema: htt.revival.spec.v1
+pr_id: PR-222
+track: I
+title: Finite-window stochastic bulk-flow to homogeneous-tilt bridge
+cross_references: [PR-145, PR-146]
+cas_contract: docs/generated/pr222_cas/CAS_CONTRACT_PR222_BRIDGE.json
+roadmap_anchor: htt_legacy_revival_round2_20260721/docs/03_ROUND2_DUAL_TRACK_PR_ROADMAP_20260721.md
+claim_identity: >
+  CF4-to-homogeneous-tilt is a multi-window stochastic forward operator (rank 3)
+  not a point substitution; a single window is rank 1 and cannot point-identify
+  the 3-D tilt.
+decisive_falsifier: a single bulk amplitude point-identifies the 3-D homogeneous tilt.
+pass_gates:
+  P1: spec frozen before result read
+  P2: five-axis CAS = CAS_5AXIS_PASS (multi-window Gram det 394584 != 0 -> rank 3)
+  P3: multi-window rank 3, single-window rank 1, GLS recovery bias < 0.03
+  P4: card --check byte-stable
+  P5: no point-identification from one window
+readiness_state: EVIDENCE_READY
+independence_gate: OPEN
+public_use: false

@@ -1,0 +1,749 @@
+{
+  "adaptive_scan_evalue_demo.py": {
+    "exit_code": 0,
+    "payload": {
+      "beta": 0.05,
+      "crossing_rate": 0.008766666666666667,
+      "nrep": 30000,
+      "status": "PASS",
+      "steps": 80,
+      "ville_bound": 0.05
+    }
+  },
+  "binning_stability_demo.py": {
+    "exit_code": 0,
+    "payload": {
+      "n_seeds": 40,
+      "note": "reference-DGP gate only; physical shell kernels require CAMB/CLASS validation",
+      "relative_rms_shift_median": 0.8533076529479066,
+      "relative_rms_shift_q95": 6.376774273771195,
+      "status": "EXPECTED_BLOCK_PHYSICAL_KERNEL_REQUIRED"
+    }
+  },
+  "coherent_fraction_demo.py": {
+    "exit_code": 0,
+    "payload": {
+      "cases": {
+        "0.48": {
+          "interval": [
+            0.0,
+            0.15515
+          ],
+          "status": "FEASIBLE"
+        },
+        "0.6": {
+          "interval": [
+            0.0,
+            0.36205000000000004
+          ],
+          "status": "FEASIBLE"
+        },
+        "0.75": {
+          "interval": [
+            0.33335000000000004,
+            0.62065
+          ],
+          "status": "FEASIBLE"
+        },
+        "0.9": {
+          "interval": [
+            0.6905,
+            0.8793000000000001
+          ],
+          "status": "FEASIBLE"
+        }
+      },
+      "status": "PASS"
+    }
+  },
+  "local_boost_global_tilt_benchmark.py": {
+    "exit_code": 0,
+    "payload": {
+      "accuracy": 0.71,
+      "classifier": {
+        "centroids": {
+          "global_coherent": [
+            0.8362202856592461,
+            8.388517736412728,
+            24.48970033357246,
+            14.91670197975893,
+            0.7078252098618364,
+            44.22683971434833,
+            62.45821406939424,
+            39.676297648728095,
+            0.6925378446315685,
+            46.15359311524789,
+            65.04560940905368,
+            37.21238269149933
+          ],
+          "local_boost": [
+            0.7249467447701103,
+            53.230718475718426,
+            55.11816710246835,
+            4.6911156849200095,
+            0.6893513431706267,
+            52.74183899410095,
+            58.536555897664755,
+            37.808799919928205,
+            0.6843320303256769,
+            47.01551183625294,
+            59.48789130867078,
+            38.18855473805753
+          ],
+          "local_structure": [
+            0.7334755632269041,
+            33.20609465252287,
+            45.870616278493436,
+            24.916687022046982,
+            0.6936712273779493,
+            48.37053042899382,
+            57.46837245464999,
+            39.17525921381351,
+            0.6917123274194205,
+            48.024403801177115,
+            61.291188299513465,
+            37.923962362968325
+          ],
+          "mixture": [
+            0.7840432290652597,
+            27.965357594218347,
+            33.23731429989453,
+            3.6087182555835655,
+            0.7075387968023599,
+            49.10603966646461,
+            60.026778668666985,
+            33.58507190673929,
+            0.6961193767746845,
+            45.78903101744763,
+            63.88198758050417,
+            37.62559665814648
+          ]
+        },
+        "classes": [
+          "global_coherent",
+          "local_boost",
+          "local_structure",
+          "mixture"
+        ],
+        "feature_names": [
+          "ell1_remote_coherence",
+          "ell1_endpoint_remote_angle_deg",
+          "ell1_injected_remote_angle_deg",
+          "ell1_cumulative_drift_deg",
+          "ell2_remote_coherence",
+          "ell2_endpoint_remote_angle_deg",
+          "ell2_injected_remote_angle_deg",
+          "ell2_cumulative_drift_deg",
+          "ell3_remote_coherence",
+          "ell3_endpoint_remote_angle_deg",
+          "ell3_injected_remote_angle_deg",
+          "ell3_cumulative_drift_deg"
+        ],
+        "precision": [
+          [
+            147.18078112832558,
+            0.2344169161071755,
+            0.05463470710195792,
+            0.1715047397765351,
+            5.283447663578247,
+            0.018701136450754642,
+            0.020326392208952524,
+            -0.0023213828228614286,
+            13.42290482439328,
+            -0.044807906126984064,
+            -0.04933439127777707,
+            -0.016383193305553198
+          ],
+          [
+            0.23441691610717488,
+            0.004050894177617592,
+            -0.0029286562010956145,
+            -4.8643075783829904e-05,
+            0.05372951024579174,
+            -0.00011548732087403097,
+            -0.00017188068107717362,
+            0.0003163557426446656,
+            0.0013531019622820065,
+            0.0003473124673624035,
+            0.0001248245735486908,
+            -0.0004121416822460626
+          ],
+          [
+            0.054634707101958814,
+            -0.0029286562010956124,
+            0.004438000866319387,
+            0.00018614798813055959,
+            -0.07097405801831697,
+            0.00014321936470282663,
+            0.0003748503896192469,
+            -0.00038004692054242103,
+            0.056589832314366706,
+            -0.00043845473571103106,
+            -0.000179555366691113,
+            0.0005561783786687634
+          ],
+          [
+            0.17150473977653471,
+            -4.864307578382942e-05,
+            0.00018614798813055872,
+            0.006849869843296641,
+            0.03458726584126609,
+            0.0002612482598076591,
+            -0.00020069967340381238,
+            -9.570616649936884e-05,
+            0.04375317302840193,
+            0.00018747117211445437,
+            5.2014461509139424e-05,
+            0.00012947131160946786
+          ],
+          [
+            5.283447663578321,
+            0.053729510245791694,
+            -0.07097405801831655,
+            0.03458726584126596,
+            143.398124181709,
+            0.14436431716676126,
+            -0.011115619496940827,
+            0.030117883562357433,
+            -4.6790941538170765,
+            -0.05326961505681941,
+            -0.0908616423639163,
+            0.013454024445821786
+          ],
+          [
+            0.018701136450754812,
+            -0.00011548732087403088,
+            0.00014321936470282706,
+            0.0002612482598076592,
+            0.14436431716676124,
+            0.0018727671088296202,
+            0.00020696080371258643,
+            -0.0005922108636315326,
+            -0.017345057625999895,
+            1.2791105772468881e-05,
+            6.102642638649083e-05,
+            -0.00015880106888618959
+          ],
+          [
+            0.02032639220895211,
+            -0.00017188068107717395,
+            0.00037485038961924646,
+            -0.00020069967340381278,
+            -0.011115619496940279,
+            0.00020696080371258703,
+            0.0024034493587005113,
+            -7.047361100873666e-05,
+            0.07524903906867761,
+            1.2978824045477024e-05,
+            0.0003027466990446442,
+            0.00017899517570783228
+          ],
+          [
+            -0.0023213828228613683,
+            0.00031635574264466564,
+            -0.0003800469205424209,
+            -9.570616649936878e-05,
+            0.030117883562357402,
+            -0.0005922108636315326,
+            -7.047361100873676e-05,
+            0.0025394355562200475,
+            0.02579855845319925,
+            -0.0001421556520047353,
+            4.5883790857444685e-05,
+            3.8552440368148684e-05
+          ],
+          [
+            13.422904824393328,
+            0.0013531019622822478,
+            0.05658983231436676,
+            0.043753173028401995,
+            -4.6790941538169335,
+            -0.017345057625999773,
+            0.07524903906867773,
+            0.02579855845319928,
+            129.95304733963823,
+            0.055002030280387984,
+            -0.0791421875392637,
+            0.06816474796116226
+          ],
+          [
+            -0.044807906126985396,
+            0.00034731246736240134,
+            -0.0004384547357110316,
+            0.0001874711721144527,
+            -0.05326961505681907,
+            1.279110577246921e-05,
+            1.2978824045477056e-05,
+            -0.0001421556520047353,
+            0.055002030280388074,
+            0.0018500017373766437,
+            0.00015490437008249054,
+            -0.0009455157841686602
+          ],
+          [
+            -0.04933439127777784,
+            0.00012482457354868933,
+            -0.00017955536669111332,
+            5.201446150913868e-05,
+            -0.09086164236391607,
+            6.102642638649108e-05,
+            0.0003027466990446445,
+            4.588379085744484e-05,
+            -0.07914218753926319,
+            0.00015490437008249062,
+            0.0028855608563355083,
+            -2.9205977499092665e-05
+          ],
+          [
+            -0.016383193305553715,
+            -0.0004121416822460624,
+            0.0005561783786687617,
+            0.0001294713116094679,
+            0.01345402444582453,
+            -0.00015880106888618687,
+            0.00017899517570783139,
+            3.855244036814929e-05,
+            0.06816474796116116,
+            -0.0009455157841686616,
+            -2.9205977499094115e-05,
+            0.0027145340142061066
+          ]
+        ]
+      },
+      "confusion": {
+        "global_coherent": {
+          "global_coherent": 41,
+          "local_boost": 1,
+          "local_structure": 6,
+          "mixture": 2
+        },
+        "local_boost": {
+          "global_coherent": 0,
+          "local_boost": 40,
+          "local_structure": 0,
+          "mixture": 10
+        },
+        "local_structure": {
+          "global_coherent": 12,
+          "local_boost": 2,
+          "local_structure": 33,
+          "mixture": 3
+        },
+        "mixture": {
+          "global_coherent": 4,
+          "local_boost": 18,
+          "local_structure": 0,
+          "mixture": 28
+        }
+      },
+      "n_test": 200,
+      "status": "PASS"
+    }
+  },
+  "lowell_shell_poles_demo.py": {
+    "exit_code": 0,
+    "payload": {
+      "grid": [
+        0.02,
+        0.08,
+        0.2,
+        0.45,
+        0.8,
+        1.3,
+        2.0
+      ],
+      "models": {
+        "global_coherent": {
+          "ell1_cumulative_drift_deg": 11.44696666281565,
+          "ell1_endpoint_remote_angle_deg": 11.254744605909808,
+          "ell1_injected_remote_angle_deg": 20.371757952530725,
+          "ell1_remote_coherence": 0.9042493239035275,
+          "ell2_cumulative_drift_deg": 85.45236487282922,
+          "ell2_endpoint_remote_angle_deg": 84.21850137722082,
+          "ell2_injected_remote_angle_deg": 68.40386250404286,
+          "ell2_remote_coherence": 0.7441832445545609,
+          "ell3_cumulative_drift_deg": 6.07891440822402,
+          "ell3_endpoint_remote_angle_deg": 22.18067477036428,
+          "ell3_injected_remote_angle_deg": 56.894030237086696,
+          "ell3_remote_coherence": 0.770518331656164
+        },
+        "isotropic": {
+          "ell1_cumulative_drift_deg": 26.041231987672333,
+          "ell1_endpoint_remote_angle_deg": 70.98511666836629,
+          "ell1_injected_remote_angle_deg": 60.02968137845984,
+          "ell1_remote_coherence": 0.723247763515289,
+          "ell2_cumulative_drift_deg": 24.518772238506006,
+          "ell2_endpoint_remote_angle_deg": 23.720353890911916,
+          "ell2_injected_remote_angle_deg": 83.21126896366785,
+          "ell2_remote_coherence": 0.7271883000955226,
+          "ell3_cumulative_drift_deg": 32.29691612603453,
+          "ell3_endpoint_remote_angle_deg": 35.34191621690754,
+          "ell3_injected_remote_angle_deg": 66.40790064350938,
+          "ell3_remote_coherence": 0.6180826368114829
+        },
+        "local_boost": {
+          "ell1_cumulative_drift_deg": 4.443022145636491,
+          "ell1_endpoint_remote_angle_deg": 61.3601964403502,
+          "ell1_injected_remote_angle_deg": 60.02968137845984,
+          "ell1_remote_coherence": 0.723247763515289,
+          "ell2_cumulative_drift_deg": 78.41403303675638,
+          "ell2_endpoint_remote_angle_deg": 83.59822609136195,
+          "ell2_injected_remote_angle_deg": 83.21126896366785,
+          "ell2_remote_coherence": 0.7271883000955226,
+          "ell3_cumulative_drift_deg": 19.411654056372395,
+          "ell3_endpoint_remote_angle_deg": 37.065981161406874,
+          "ell3_injected_remote_angle_deg": 66.40790064350938,
+          "ell3_remote_coherence": 0.6180826368114829
+        },
+        "local_structure": {
+          "ell1_cumulative_drift_deg": 16.178628675191824,
+          "ell1_endpoint_remote_angle_deg": 67.3495485315582,
+          "ell1_injected_remote_angle_deg": 59.05536856038751,
+          "ell1_remote_coherence": 0.6751965971315708,
+          "ell2_cumulative_drift_deg": 75.30465960001878,
+          "ell2_endpoint_remote_angle_deg": 85.87929729639309,
+          "ell2_injected_remote_angle_deg": 77.0683246932385,
+          "ell2_remote_coherence": 0.6448591463102163,
+          "ell3_cumulative_drift_deg": 7.184420379323356,
+          "ell3_endpoint_remote_angle_deg": 34.89468854027936,
+          "ell3_injected_remote_angle_deg": 65.87713733572663,
+          "ell3_remote_coherence": 0.6434784931223625
+        },
+        "mixture": {
+          "ell1_cumulative_drift_deg": 3.6426928991186727,
+          "ell1_endpoint_remote_angle_deg": 23.313892562653425,
+          "ell1_injected_remote_angle_deg": 27.291517341184697,
+          "ell1_remote_coherence": 0.8513231892071819,
+          "ell2_cumulative_drift_deg": 79.17060219784213,
+          "ell2_endpoint_remote_angle_deg": 89.41899248462774,
+          "ell2_injected_remote_angle_deg": 69.3688001214972,
+          "ell2_remote_coherence": 0.7494708435765378,
+          "ell3_cumulative_drift_deg": 18.455921698620855,
+          "ell3_endpoint_remote_angle_deg": 24.630531228634855,
+          "ell3_injected_remote_angle_deg": 56.58701166439876,
+          "ell3_remote_coherence": 0.7513400456133025
+        }
+      },
+      "status": "PASS"
+    }
+  },
+  "plugin_probe.py": {
+    "exit_code": 0,
+    "payload": {
+      "note": "missing optional plugins are not core failures",
+      "plugins": [
+        {
+          "available": false,
+          "error": "ModuleNotFoundError(\"No module named 'camb'\")",
+          "import_name": "camb",
+          "name": "CAMB",
+          "required_for_core": false,
+          "role": "FLRW CMB/source transfer oracle",
+          "track": "I",
+          "version": null
+        },
+        {
+          "available": false,
+          "error": "ModuleNotFoundError(\"No module named 'classy'\")",
+          "import_name": "classy",
+          "name": "CLASS",
+          "required_for_core": false,
+          "role": "independent FLRW transfer oracle",
+          "track": "I",
+          "version": null
+        },
+        {
+          "available": false,
+          "error": "ModuleNotFoundError(\"No module named 'glass'\")",
+          "import_name": "glass",
+          "name": "GLASS",
+          "required_for_core": false,
+          "role": "full-sky lightcone and shell mocks",
+          "track": "I",
+          "version": null
+        },
+        {
+          "available": false,
+          "error": "ModuleNotFoundError(\"No module named 'healpy'\")",
+          "import_name": "healpy",
+          "name": "healpy",
+          "required_for_core": false,
+          "role": "HEALPix maps and real-data pole extraction",
+          "track": "I",
+          "version": null
+        },
+        {
+          "available": false,
+          "error": "ModuleNotFoundError(\"No module named 'pymaster'\")",
+          "import_name": "pymaster",
+          "name": "NaMaster",
+          "required_for_core": false,
+          "role": "masked spin-0/spin-2 pseudo-Cl baseline",
+          "track": "I",
+          "version": null
+        },
+        {
+          "available": false,
+          "error": "ModuleNotFoundError(\"No module named 's2fft'\")",
+          "import_name": "s2fft",
+          "name": "S2FFT",
+          "required_for_core": false,
+          "role": "differentiable spherical transforms",
+          "track": "I",
+          "version": null
+        },
+        {
+          "available": false,
+          "error": "ModuleNotFoundError(\"No module named 's2wav'\")",
+          "import_name": "s2wav",
+          "name": "S2WAV",
+          "required_for_core": false,
+          "role": "directional spherical wavelets",
+          "track": "I",
+          "version": null
+        },
+        {
+          "available": false,
+          "error": "ModuleNotFoundError(\"No module named 'pysm3'\")",
+          "import_name": "pysm3",
+          "name": "PySM3",
+          "required_for_core": false,
+          "role": "foreground simulations",
+          "track": "I",
+          "version": null
+        },
+        {
+          "available": false,
+          "error": "ModuleNotFoundError(\"No module named 'lenspyx'\")",
+          "import_name": "lenspyx",
+          "name": "lenspyx",
+          "required_for_core": false,
+          "role": "lensed CMB simulation",
+          "track": "I",
+          "version": null
+        },
+        {
+          "available": false,
+          "error": "ModuleNotFoundError(\"No module named 'sbi'\")",
+          "import_name": "sbi",
+          "name": "sbi",
+          "required_for_core": false,
+          "role": "simulation-based posterior baselines",
+          "track": "I",
+          "version": null
+        },
+        {
+          "available": false,
+          "error": "ModuleNotFoundError(\"No module named 'sbibm'\")",
+          "import_name": "sbibm",
+          "name": "sbibm",
+          "required_for_core": false,
+          "role": "benchmark task framework",
+          "track": "I",
+          "version": null
+        },
+        {
+          "available": false,
+          "error": "ModuleNotFoundError(\"No module named 'numpyro'\")",
+          "import_name": "numpyro",
+          "name": "NumPyro",
+          "required_for_core": false,
+          "role": "independent Bayesian baseline",
+          "track": "I",
+          "version": null
+        },
+        {
+          "available": false,
+          "error": "ModuleNotFoundError(\"No module named 'cvxpy'\")",
+          "import_name": "cvxpy",
+          "name": "CVXPY",
+          "required_for_core": false,
+          "role": "identified-set and design optimization",
+          "track": "I",
+          "version": null
+        },
+        {
+          "available": false,
+          "error": "ModuleNotFoundError(\"No module named 'cvxpylayers'\")",
+          "import_name": "cvxpylayers",
+          "name": "CVXPYlayers",
+          "required_for_core": false,
+          "role": "differentiable optimization",
+          "track": "I",
+          "version": null
+        },
+        {
+          "available": false,
+          "error": "ModuleNotFoundError(\"No module named 'pyccl'\")",
+          "import_name": "pyccl",
+          "name": "CCL",
+          "required_for_core": false,
+          "role": "LSS theory and tracer cross-spectra",
+          "track": "I",
+          "version": null
+        },
+        {
+          "available": false,
+          "error": "ModuleNotFoundError(\"No module named 'pycorr'\")",
+          "import_name": "pycorr",
+          "name": "pycorr",
+          "required_for_core": false,
+          "role": "survey correlation estimators",
+          "track": "I",
+          "version": null
+        },
+        {
+          "available": false,
+          "error": "ModuleNotFoundError(\"No module named 'pypower'\")",
+          "import_name": "pypower",
+          "name": "pypower",
+          "required_for_core": false,
+          "role": "window-aware survey power spectra",
+          "track": "I",
+          "version": null
+        },
+        {
+          "available": false,
+          "error": "ModuleNotFoundError(\"No module named 'sacc'\")",
+          "import_name": "sacc",
+          "name": "SACC",
+          "required_for_core": false,
+          "role": "summary/covariance exchange",
+          "track": "I",
+          "version": null
+        },
+        {
+          "available": false,
+          "error": "ModuleNotFoundError(\"No module named 'firecrown'\")",
+          "import_name": "firecrown",
+          "name": "Firecrown",
+          "required_for_core": false,
+          "role": "external cosmology likelihood framework",
+          "track": "I",
+          "version": null
+        },
+        {
+          "available": false,
+          "error": "ModuleNotFoundError(\"No module named 'cobaya'\")",
+          "import_name": "cobaya",
+          "name": "Cobaya",
+          "required_for_core": false,
+          "role": "independent cosmology inference engine",
+          "track": "I",
+          "version": null
+        },
+        {
+          "available": false,
+          "error": "ModuleNotFoundError(\"No module named 'coffe'\")",
+          "import_name": "coffe",
+          "name": "COFFE",
+          "required_for_core": false,
+          "role": "relativistic and wide-angle LSS templates",
+          "track": "I",
+          "version": null
+        },
+        {
+          "available": false,
+          "error": "ModuleNotFoundError(\"No module named 'Corrfunc'\")",
+          "import_name": "Corrfunc",
+          "name": "Corrfunc",
+          "required_for_core": false,
+          "role": "fast pair counts",
+          "track": "I",
+          "version": null
+        },
+        {
+          "available": false,
+          "error": "ModuleNotFoundError(\"No module named 'jaxpm'\")",
+          "import_name": "jaxpm",
+          "name": "JaxPM",
+          "required_for_core": false,
+          "role": "differentiable particle-mesh mocks",
+          "track": "I",
+          "version": null
+        },
+        {
+          "available": false,
+          "error": "ModuleNotFoundError(\"No module named 'snakemake'\")",
+          "import_name": "snakemake",
+          "name": "Snakemake",
+          "required_for_core": false,
+          "role": "content-addressed workflow",
+          "track": "I",
+          "version": null
+        }
+      ],
+      "status": "PASS"
+    }
+  },
+  "pole_response_rank_demo.py": {
+    "exit_code": 0,
+    "payload": {
+      "columns": [
+        "local_boost",
+        "global_coherent",
+        "local_structure"
+      ],
+      "rank_at_relative_1e-6": 3,
+      "response_shape": [
+        12,
+        3
+      ],
+      "singular_values": [
+        49.954441590687075,
+        33.66255498439151,
+        8.456001138158927
+      ],
+      "status": "PASS"
+    }
+  },
+  "remote_fields_demo.py": {
+    "exit_code": 0,
+    "payload": {
+      "models": {
+        "global_coherent": {
+          "dipole_mean_coherence": 0.8178972581408978,
+          "dipole_quadrupole_mean_axis_angle_deg": 51.49832510596371,
+          "quadrupole_mean_coherence": 0.6620785272427311
+        },
+        "isotropic": {
+          "dipole_mean_coherence": 0.7226173154392951,
+          "dipole_quadrupole_mean_axis_angle_deg": 37.93082374086792,
+          "quadrupole_mean_coherence": 0.6483097949820068
+        },
+        "local_structure": {
+          "dipole_mean_coherence": 0.683988096891015,
+          "dipole_quadrupole_mean_axis_angle_deg": 44.22560615344002,
+          "quadrupole_mean_coherence": 0.6573770606340649
+        },
+        "mixture": {
+          "dipole_mean_coherence": 0.8224766476708568,
+          "dipole_quadrupole_mean_axis_angle_deg": 66.5831400279017,
+          "quadrupole_mean_coherence": 0.6582305479185641
+        }
+      },
+      "status": "PASS"
+    }
+  },
+  "rotation_covariance_test.py": {
+    "exit_code": 0,
+    "payload": {
+      "n_cases": 100,
+      "status": "PASS",
+      "worst_1_minus_absdot": 2.220446049250313e-16
+    }
+  },
+  "shell_kernel_conservation_demo.py": {
+    "exit_code": 0,
+    "payload": {
+      "coarse_fine_total_relative_difference": 0.0,
+      "coarse_shells": 8,
+      "fine_shell_sum_relative_error": 2.5514533079165225e-08,
+      "fine_shells": 16,
+      "purpose": "reference conservation gate, not physical CMB transfer",
+      "status": "PASS",
+      "total_imag": 0.5505215482877298,
+      "total_real": 1.795685953601629
+    }
+  }
+}

@@ -1,0 +1,70 @@
+{
+ "forbidden_claims_reaffirmed": [
+  "the frozen W2_max 3.3789222980376e-13 is the intrinsic-zero endpoint, never recomputed or re-frozen",
+  "epsilon1=0 is a source-backed branch choice, not a uniqueness theorem",
+  "a coefficient with no accessible source equation is never a live ceiling"
+ ],
+ "metadata": {
+  "claim_level": {
+   "level": "C1",
+   "scheme": "roadmap_rescue_v1"
+  },
+  "cross_references": [
+   "PR-186",
+   "MES-BR"
+  ],
+  "generating_command": "env PYTHONHASHSEED=0 venv/bin/python -B scripts/codex_harness/run_pr217_mes.py --write",
+  "independence_gate": "OPEN",
+  "owner": "COMMON",
+  "public_use": false,
+  "readiness_state": "EVIDENCE_READY",
+  "spec_sha256": "4ea7544bc61db35468b78e46310265751d68822e32a1b7e9968fa9c34feedb96"
+ },
+ "pr_id": "PR-217",
+ "result": {
+  "attribution_surface": {
+   "W2_full_dipole_attribution": 2.817283702815889e-05,
+   "W2_intrinsic_zero": 3.3789222980376e-13,
+   "attribution_ratio_full_over_zero": 83378173.69911413,
+   "endpoint_matches_frozen_anchor": true,
+   "epsilon1_crit": 6.662561879999999e-06,
+   "frozen_anchor": 3.3789222980376e-13,
+   "full_dipole_admissible": false,
+   "monotone_increasing": true,
+   "zero_admissible": true
+  },
+  "branches": {
+   "geodesic_sag": {
+    "acceleration": null,
+    "branch_id": "MES_GEODESIC_SAG",
+    "omega": [
+     3.3333333333333335,
+     0.13333333333333333,
+     0.0
+    ],
+    "sigma": [
+     1.6666666666666667,
+     3.0,
+     0.42857142857142855
+    ],
+    "source_status": "accessible_primary_source_reduction"
+   },
+   "non_geodesic_unsourced": {
+    "branch_id": "MES_NONGEODESIC_UNSOURCED",
+    "omega": [
+     0.75,
+     2.0,
+     0.2857142857142857
+    ],
+    "source_status": "no_accessible_source"
+   }
+  },
+  "epsilon1_zero_is_branch_choice_not_uniqueness": true,
+  "frozen_anchor_consistent": true,
+  "geodesic_is_live_ceiling": true,
+  "nongeodesic_unsourced_is_live_ceiling": false,
+  "pr186_frozen_W2_max": 3.3789222980376e-13
+ },
+ "schema": "htt.pr217.result_card.v1",
+ "terminal": "MES_ATTRIBUTION_SURFACE_FROZEN_ANCHORED_HIERARCHY_EXCLUDES_FULL_DIPOLE"
+}

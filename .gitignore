@@ -186,6 +186,18 @@ hyperfine-*.md
 # artifact. See docs/PR_DELTAS/ for the durable record.
 /pr07_repair_execution_pack/
 /pr07_research_repair_execution_pack.zip
+# Post-v10 strengthening audit package (input drop, 2026-07-21): the roadmap +
+# gate matrix are the authoritative source for the PR-185..208 intake; their
+# sha256 is pinned in docs/generated/pr185_strengthen_intake_receipt.json. The
+# pack itself is not a source artifact.
+/htt_post_v10_strengthening_plan_20260721/
+/htt_post_v10_strengthening_plan_20260721.zip
+# Legacy-revival round-2 input drop (PR-209..246 intake). The immutable legacy
+# archives + monograph/context PDFs are hashed in place and sha-pinned by the
+# PR-209 inventory receipt; the raw drop itself is not a source artifact. Its
+# prior_round1/ subtree is the PR-185..208 package already ported in-repo.
+/htt_legacy_revival_round2_20260721/
+/htt_legacy_revival_round2_20260721.zip
 # EGS-extension + publishable-next audit drops (input): durable work ported into
 # docs/research_program/egs2/ + htt/obsstat; the raw drops are not source artifacts.
 /audit_files.zip
@@ -258,6 +270,13 @@ workdir/raw/
 # Lean 4 mathlib lane (formal_mathlib/) build output (~7 GB mathlib cache)
 /formal_mathlib/.lake/
 /formal_pr124/.lake/
+/formal_pr186/.lake/
+# Rocq (Coq) compiled artifacts — .v sources are tracked, build outputs are not.
+formal_rocq/*.vo
+formal_rocq/*.vok
+formal_rocq/*.vos
+formal_rocq/*.glob
+formal_rocq/.*.aux
 /sage/*.sage.py
 
 # ─────────────────────────────────────────────────────────────────────
@@ -320,3 +339,15 @@ workdir/raw/
 /htt_v6_referee_fortification_package_v2.zip
 /htt_v6_referee_package_20260709.zip
 /htt_v6_strengthened_publication_bundle.zip
+/formal_pr187/.lake/
+/formal_pr189/.lake/
+/formal_pr223/.lake/
+formal_rocq/pr223_multifluid.vo
+formal_rocq/pr223_multifluid.vok
+formal_rocq/pr223_multifluid.vos
+formal_rocq/pr223_multifluid.glob
+/formal_pr222/.lake/
+formal_rocq/pr222_bridge.vo
+formal_rocq/pr222_bridge.vok
+formal_rocq/pr222_bridge.vos
+formal_rocq/pr222_bridge.glob

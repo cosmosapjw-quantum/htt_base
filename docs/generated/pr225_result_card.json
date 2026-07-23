@@ -1,0 +1,59 @@
+{
+ "forbidden_claims_reaffirmed": [
+  "the Hartlap-uncorrected precision matrix inflates chi^2; corrected calibrates it",
+  "a merged e-value has mean <= 1 and obeys Ville's inequality under optional stopping",
+  "partial-ID coverage/cluster rank cross-reference PR-200/PR-197"
+ ],
+ "metadata": {
+  "claim_level": {
+   "level": "C1",
+   "scheme": "roadmap_rescue_v1"
+  },
+  "cross_references": [
+   "PR-200",
+   "PR-197"
+  ],
+  "generating_command": "env PYTHONHASHSEED=0 venv/bin/python -B scripts/codex_harness/run_pr225_estcov.py --write",
+  "independence_gate": "OPEN",
+  "owner": "COMMON",
+  "public_use": false,
+  "readiness_state": "EVIDENCE_READY",
+  "spec_sha256": "d9a915c300d0a5d1e3e4a81018fe6abbf6c52a3b7945ff944eefd0fd437a4e8a"
+ },
+ "pr_id": "PR-225",
+ "result": {
+  "anytime_evalue": {
+   "markov_bounds": {
+    "10": 0.1,
+    "2": 0.5,
+    "5": 0.2
+   },
+   "merged_mean": 1.0003809410231823,
+   "merged_mean_le_one": true,
+   "tail_probs": {
+    "10": 0.0,
+    "2": 0.00084,
+    "5": 0.0
+   },
+   "tails_within_markov": true,
+   "ville_bound": 0.05,
+   "ville_crossing_at_20": 0.0212,
+   "ville_holds": true
+  },
+  "crossref": {
+   "pr197_terminal": "CLUSTER_EXACT_RANK_VERIFIED_NAIVE_LABEL_REFUSED",
+   "pr200_terminal": "PARTIAL_ID_COVERAGE_CALIBRATED_POINT_CI_UNDERCOVERS"
+  },
+  "hartlap_stress": {
+   "Nsim": 90,
+   "corrected_calibrated": true,
+   "corrected_mean_over_m": 1.0082938549051463,
+   "hartlap_factor": 0.8539325842696629,
+   "m": 12,
+   "raw_inflated": true,
+   "raw_mean_over_m": 1.1807651721915529
+  }
+ },
+ "schema": "htt.pr225.result_card.v1",
+ "terminal": "ESTCOV_PARTIAL_ID_ANYTIME_EVALUE_CALIBRATED"
+}

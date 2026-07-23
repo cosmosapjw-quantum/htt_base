@@ -24,6 +24,17 @@ from .biposh_features import (
     SparseBiPoSHCoefficient,
     build_biposh_feature_payload,
 )
+from .lowell_poles import (
+    AntipodalAxis,
+    LowEllPoleEstimate,
+    MIN_NUMERICAL_GAP_TOLERANCE,
+    PoleDefinition,
+    PoleStatus,
+    angular_momentum_power_tensor,
+    estimate_lowell_pole,
+    mean_squared_multipole_alignment,
+)
+from .shell_alms import draw_correlated_real_shell_alms
 from .morphology import (
     DiagnosticMorphologyAxis,
     MorphologyAxisSummary,
@@ -90,10 +101,12 @@ for _submodule in (
     "catalogs.cf4_raw",
     "catalogs.redshift_selection",
     "catalogs.spectroscopic_dipole",
+    "lowell_poles",
     "morphology",
     "null_ensembles",
     "observable_vector",
     "scalar_lowell",
+    "shell_alms",
     "template_fit",
 ):
     _loaded = _sys.modules.get(f"{__name__}.{_submodule}")
@@ -103,6 +116,7 @@ for _submodule in (
 
 __all__ = [
     "AlmConvention",
+    "AntipodalAxis",
     "BiPoSHConventionMetadata",
     "BiPoSHFeatureSummary",
     "Cf4Catalog",
@@ -114,14 +128,18 @@ __all__ = [
     "CovarianceAssumption",
     "DiagnosticMorphologyAxis",
     "LowEllNullCalibration",
+    "LowEllPoleEstimate",
     "LowEllScalarSummary",
     "LookElsewhereBookkeeping",
+    "MIN_NUMERICAL_GAP_TOLERANCE",
     "MorphologyAxisSummary",
     "MorphologyNullCalibration",
     "NullCalibratedFeature",
     "NullEnsembleSpec",
     "ObservableVector",
     "OrientationScanMetadata",
+    "PoleDefinition",
+    "PoleStatus",
     "RedshiftSelectionCorrectionSpec",
     "SparseBiPoSHCoefficient",
     "SpectroscopicCatalog",
@@ -129,6 +147,7 @@ __all__ = [
     "SpectroscopicDipoleFeature",
     "TemplateFitDiagnostic",
     "apply_redshift_selection_correction",
+    "angular_momentum_power_tensor",
     "build_alm_feature",
     "build_biposh_feature_payload",
     "build_cf4_catalog_from_mapping",
@@ -140,6 +159,9 @@ __all__ = [
     "canonical_temperature_alm_convention",
     "fit_template_diagnostic",
     "estimate_data_random_dipole",
+    "draw_correlated_real_shell_alms",
+    "estimate_lowell_pole",
+    "mean_squared_multipole_alignment",
     "first_moment",
     "load_cf4_catalog_npz",
     "load_authenticated_cf4_raw_groups",

@@ -1,0 +1,81 @@
+{
+ "active_source_scan": {
+  "active_bad_pattern_hits": [],
+  "clean": true,
+  "n_hits": 0
+ },
+ "cas_status": {
+  "aggregate": "CAS_5AXIS_PASS",
+  "axis_statuses": {
+   "lean": "PASS",
+   "rocq": "PASS",
+   "sage_singular": "PASS",
+   "sympy": "PASS",
+   "wolfram_xact": "PASS"
+  },
+  "contract": "docs/generated/pr186_cas/CAS_CONTRACT_PR186_W2.json",
+  "contract_hash_matches_adjudication": true,
+  "contract_sha256": "6055483fc879866f718d82d162abd66767a1e9778d19585aec033896fc43936c",
+  "kernel_independent_lineages": [
+   "lean",
+   "rocq"
+  ],
+  "note": "five-axis blind CAS under one contract hash: Wolfram+xAct, SymPy, Sage+Singular (symbolic universal), Lean (kernel-checked exact-rational witnesses, native_decide), and Rocq/Coq (universal Ring proof, kernel-independent from Lean). No majority vote; all five required axes PASS.",
+  "required_axes": [
+   "wolfram_xact",
+   "sympy",
+   "sage_singular",
+   "lean",
+   "rocq"
+  ]
+ },
+ "derivation_lineages": {
+  "numerical_random_tensor": {
+   "identity": "omega_ab omega^ab == 2 omega_a omega^a",
+   "lineage": "numerical_random_antisymmetric_tensor",
+   "max_abs_error": 1.4210854715202004e-14,
+   "n_samples": 100000,
+   "ok": true
+  },
+  "symbolic_sympy": {
+   "W2_registered": "wa2/(3*H**2)",
+   "W2_vector_form": "wa2/(3*H**2)",
+   "ceiling_W2_max": "3*B**2/2",
+   "ceiling_is_three_halves_Bsq": true,
+   "lineage": "symbolic_sympy",
+   "ok": true,
+   "tensor_vector_forms_equal": true,
+   "wrong_over_right_ratio": "3"
+  },
+  "two_independent_lineages_agree": true
+ },
+ "forbidden_claims_reaffirmed": [
+  "only the display and inheriting consumers changed; no numeric anchor moved",
+  "historical v5-v9 packages stay byte-frozen (allowlisted, not edited)",
+  "no physical or observational claim; convention consistency only"
+ ],
+ "metadata": {
+  "claim_level": {
+   "level": "C1",
+   "scheme": "roadmap_rescue_v1"
+  },
+  "generating_command": "env PYTHONHASHSEED=0 venv/bin/python -B scripts/codex_harness/run_pr186_w2_convention.py --write",
+  "independence_gate": "OPEN",
+  "owner": "COMMON",
+  "public_use": false,
+  "readiness_state": "EVIDENCE_READY",
+  "spec_sha256": "21c95db9fb2fd6099e02f94e0363a6c6057081674ac9116ce6d12b60c743b480"
+ },
+ "pr_id": "PR-186",
+ "pre_post_delta": {
+  "display_after": "W^2 = omega_ab omega^ab/(6 H^2) = omega_a omega^a/(3 H^2)",
+  "display_ratio_before_over_after": "3",
+  "display_v5_v10_before": "W^2 = omega_a omega^a / H^2",
+  "explanation": "the v5/v10 DISPLAY was exactly 3x the registered value; the live comparator/MES code always used (6 H^2), so every numeric anchor is byte-identical -- only the report display changed.",
+  "frozen_anchor_byte_identical": true,
+  "frozen_mes_vorticity_ceiling_W2_max": 3.3789222980376e-13
+ },
+ "registered_convention": "W^2 := omega_ab omega^ab/(6 H^2) = omega_a omega^a/(3 H^2)",
+ "schema": "htt.pr186.result_card.v1",
+ "terminal": "W2_CONVENTION_REPAIRED_CAS_5AXIS_PASS_SOURCES_CLEAN"
+}

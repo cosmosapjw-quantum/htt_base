@@ -22,12 +22,18 @@ import pytest
 REPO_ROOT = Path(__file__).resolve().parents[2]
 SCRIPTS = REPO_ROOT / ".agent-harness" / "scripts"
 HOOKS = REPO_ROOT / ".codex" / "hooks"
-CONTEXT_VERSION = "test-context-version"
+CONTEXT_VERSION = "eba53795cd367e488ba1e3a0377ecf379358af2dbaad44bbdde0472548ed2e30"
 
 
-def _run(cmd: list[str], cwd: Path, input_text: str | None = None):
+def _run(
+    cmd: list[str],
+    cwd: Path,
+    input_text: str | None = None,
+    env: dict[str, str] | None = None,
+):
     return subprocess.run(
-        cmd, cwd=cwd, input=input_text, text=True, capture_output=True, check=False
+        cmd, cwd=cwd, input=input_text, env=env,
+        text=True, capture_output=True, check=False,
     )
 
 
@@ -50,6 +56,7 @@ def _init_tmp_repo(
     (repo / ".agent-harness" / "generated").mkdir(parents=True)
     (repo / ".agent-harness" / "templates").mkdir(parents=True)
     (repo / ".codex" / "agents").mkdir(parents=True)
+    (repo / "docs" / "codex_handoff").mkdir(parents=True)
     assert _run(["git", "init", "-q"], cwd=repo).returncode == 0
 
     for template in (REPO_ROOT / ".agent-harness" / "templates").glob("*.json"):
@@ -72,12 +79,22 @@ def _init_tmp_repo(
         "# role\n", encoding="utf-8"
     )
     (repo / "input.txt").write_text("input-v1\n", encoding="utf-8")
+    use_built_context = context_version == CONTEXT_VERSION
+    if use_built_context:
+        (repo / "shared.md").write_text(
+            "# compact shared context\n", encoding="utf-8"
+        )
     index = {
         "schema_version": 1,
         "context_version": context_version,
-        "max_injected_chars": 24000,
-        "shared_files": [],
+        "max_injected_chars": 12000,
+        "shared_files": ["shared.md"] if use_built_context else [],
+        "pack_files": ["shared.md"] if use_built_context else [],
         "file_hashes": {},
+        "live_sources": {
+            "dag": "docs/codex_handoff/pr_backlog.yaml",
+            "status": "docs/codex_handoff/pr_status.yaml",
+        },
         "role_files": {
             "context_mapper": [".agent-harness/context/roles/context_mapper.md"]
         },
@@ -99,6 +116,26 @@ def _init_tmp_repo(
     (repo / ".agent-harness" / "generated" / "CONTEXT_PACK.md").write_text(
         "# Canonical Shared Context Pack\ncontent\n", encoding="utf-8"
     )
+    (repo / "docs" / "codex_handoff" / "pr_backlog.yaml").write_text(
+        "generated_on: '2026-07-23'\n"
+        "scope: test\n"
+        "prs:\n"
+        "  PR-TEST:\n"
+        "    title: test\n",
+        encoding="utf-8",
+    )
+    (repo / "docs" / "codex_handoff" / "pr_status.yaml").write_text(
+        "generated_on: '2026-07-23'\n"
+        "completed:\n"
+        "- PR-TEST\n"
+        "blocked: []\n"
+        "pending: []\n"
+        "in_progress: null\n",
+        encoding="utf-8",
+    )
+    if use_built_context:
+        built = _harness_cli(repo, "build_context_pack.py")
+        assert built.returncode == 0, built.stdout + built.stderr
     if not active:
         return repo
 
@@ -113,6 +150,7 @@ def _init_tmp_repo(
         "run_id": "run-1",
         "work_unit_id": "PR-TEST",
         "context_version": context_version,
+        "status": "active",
         "budget": {
             "max_concurrent": 4,
             "max_total": 8,
@@ -129,11 +167,9 @@ def _init_tmp_repo(
 def test_clean_clone_init_validate_close_and_dangling_recovery(
     tmp_path: Path,
 ) -> None:
-    empty_context_sha = hashlib.sha256(b"").hexdigest()
     repo = _init_tmp_repo(
         tmp_path,
         active=False,
-        context_version=empty_context_sha,
     )
 
     validated = _harness_cli(repo, "validate_harness.py")
@@ -206,6 +242,81 @@ def test_clean_clone_init_validate_close_and_dangling_recovery(
     assert abandon_payload["run_directory_deleted"] is False
     assert not active_pointer.exists()
 
+    active_pointer.symlink_to("missing-pointer-target")
+    invalid_symlink = _harness_cli(repo, "validate_harness.py")
+    assert invalid_symlink.returncode == 1
+    invalid_payload = json.loads(invalid_symlink.stdout)
+    assert invalid_payload["state_errors"][0]["code"] == (
+        "INVALID_ACTIVE_RUN_POINTER"
+    )
+    refused_symlink_abandon = _harness_cli(repo, "close_run.py", "--abandon")
+    assert refused_symlink_abandon.returncode == 1
+    assert json.loads(refused_symlink_abandon.stdout)["error"]["code"] == (
+        "INVALID_ACTIVE_RUN_POINTER"
+    )
+    active_pointer.unlink()
+
+
+def test_context_view_and_index_hashes_must_match_builder_output(
+    tmp_path: Path,
+) -> None:
+    repo = _init_tmp_repo(tmp_path, active=False)
+    shared = repo / "shared.md"
+    shared.write_text("# compact shared context\n", encoding="utf-8")
+    index_path = repo / ".agent-harness/context/CONTEXT_INDEX.json"
+    index = json.loads(index_path.read_text(encoding="utf-8"))
+    index["shared_files"] = ["shared.md"]
+    index["pack_files"] = ["shared.md"]
+    index_path.write_text(json.dumps(index, indent=2) + "\n", encoding="utf-8")
+
+    built = _harness_cli(repo, "build_context_pack.py")
+    assert built.returncode == 0, built.stdout + built.stderr
+    assert _harness_cli(repo, "validate_harness.py").returncode == 0
+
+    pack = repo / ".agent-harness/generated/CONTEXT_PACK.md"
+    pack.write_text(pack.read_text(encoding="utf-8") + "tampered\n", encoding="utf-8")
+    tampered = _harness_cli(repo, "validate_harness.py")
+    assert tampered.returncode == 1
+    assert "does not match the context index" in tampered.stdout
+
+    assert _harness_cli(repo, "build_context_pack.py").returncode == 0
+    index = json.loads(index_path.read_text(encoding="utf-8"))
+    index["file_hashes"]["shared.md"] = "0" * 64
+    index_path.write_text(json.dumps(index, indent=2) + "\n", encoding="utf-8")
+    stale_hashes = _harness_cli(repo, "validate_harness.py")
+    assert stale_hashes.returncode == 1
+    assert "file_hashes do not match" in stale_hashes.stdout
+
+
+@pytest.mark.parametrize(
+    ("mode", "needle"),
+    [
+        ("pack_subset", "pack_files must exactly equal shared_files"),
+        ("reference_overlap", "must be disjoint"),
+    ],
+)
+def test_context_configuration_rejects_ambiguous_authority_sets(
+    tmp_path: Path,
+    mode: str,
+    needle: str,
+) -> None:
+    repo = _init_tmp_repo(tmp_path, active=False)
+    index_path = repo / ".agent-harness/context/CONTEXT_INDEX.json"
+    index = json.loads(index_path.read_text(encoding="utf-8"))
+    if mode == "pack_subset":
+        (repo / "extra-shared.md").write_text("not injected\n", encoding="utf-8")
+        index["shared_files"] = ["shared.md", "extra-shared.md"]
+        index["pack_files"] = ["shared.md"]
+    else:
+        index["reference_only_files"] = ["shared.md"]
+    index_path.write_text(json.dumps(index, indent=2) + "\n", encoding="utf-8")
+
+    for script in ("build_context_pack.py", "validate_harness.py"):
+        completed = _harness_cli(repo, script)
+        assert completed.returncode != 0
+        assert needle in completed.stdout + completed.stderr
+        assert "Traceback" not in completed.stdout + completed.stderr
+
 
 def _register_assignment(
     repo: Path,
@@ -263,6 +374,41 @@ def _verify(repo: Path, assignment_id: str = "A-001"):
     )
 
 
+def test_file_fallback_receipts_are_neither_created_nor_verified(
+    tmp_path: Path,
+) -> None:
+    repo = _init_tmp_repo(tmp_path)
+    _register_assignment(repo)
+    rejected = _run(
+        [
+            sys.executable,
+            _script("launch_receipt.py"),
+            "create",
+            "--assignment-id",
+            "A-001",
+            "--requested-profile",
+            "context_mapper",
+            "--delivery-mode",
+            "file_fallback",
+            "--attested",
+        ],
+        cwd=repo,
+    )
+    assert rejected.returncode != 0
+    assert "hook_injected" in rejected.stdout + rejected.stderr
+    receipt_path = (
+        repo / ".agent-harness/runs/run-1/launches/A-001.json"
+    )
+    assert not receipt_path.exists()
+
+    receipt = _create_receipt(repo)
+    receipt["context_delivery_mode"] = "file_fallback"
+    receipt_path.write_text(json.dumps(receipt) + "\n", encoding="utf-8")
+    verified = _verify(repo)
+    assert verified.returncode == 2
+    assert "must be hook_injected" in verified.stdout + verified.stderr
+
+
 # --- 1 -----------------------------------------------------------------
 def test_stale_effective_context_blocks_launch(tmp_path: Path) -> None:
     repo = _init_tmp_repo(tmp_path)
@@ -295,7 +441,7 @@ def test_stale_effective_context_blocks_launch(tmp_path: Path) -> None:
     # (d) injection config changes
     index_path = repo / ".agent-harness" / "context" / "CONTEXT_INDEX.json"
     index = json.loads(index_path.read_text(encoding="utf-8"))
-    index["max_injected_chars"] = 12000
+    index["max_injected_chars"] = 9000
     index_path.write_text(json.dumps(index, indent=2) + "\n", encoding="utf-8")
     assert _verify(repo).returncode == 2
 
@@ -610,6 +756,368 @@ def test_hook_injected_context_reread_is_duplicate_delivery(tmp_path: Path) -> N
     assert "duplicate-delivery violation" in payload["reason"]
 
 
+def test_context_pack_reread_is_blocked_even_without_delivery_log(
+    tmp_path: Path,
+) -> None:
+    repo = _init_tmp_repo(tmp_path)
+    _register_assignment(repo)
+    _subagent_context(repo)
+    deliveries = (
+        repo / ".agent-harness/runs/run-1/launches/deliveries.jsonl"
+    )
+    deliveries.unlink()
+
+    _write_result(
+        repo,
+        "A-001",
+        {"files_read": [".agent-harness/generated/CONTEXT_PACK.md"]},
+    )
+    completed = _stop_hook(repo, _result_envelope())
+    payload = json.loads(completed.stdout)
+    assert payload["decision"] == "block"
+    assert "duplicate-delivery violation" in payload["reason"]
+
+
+def _subagent_context(repo: Path, agent_type: str = "context_mapper") -> str:
+    started = _run(
+        [sys.executable, str(HOOKS / "subagent_start_context.py")],
+        cwd=repo,
+        input_text=json.dumps({"agent_type": agent_type}),
+    )
+    assert started.returncode == 0, started.stdout + started.stderr
+    return json.loads(started.stdout)["hookSpecificOutput"]["additionalContext"]
+
+
+def _rebuild_test_context(repo: Path, text: str) -> str:
+    (repo / "shared.md").write_text(text, encoding="utf-8")
+    built = _harness_cli(repo, "build_context_pack.py")
+    assert built.returncode == 0, built.stdout + built.stderr
+    index = json.loads(
+        (repo / ".agent-harness/context/CONTEXT_INDEX.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    plan_path = repo / ".agent-harness/runs/run-1/RUN_PLAN.json"
+    if plan_path.is_file():
+        plan = json.loads(plan_path.read_text(encoding="utf-8"))
+        plan["context_version"] = index["context_version"]
+        plan_path.write_text(json.dumps(plan, indent=2) + "\n", encoding="utf-8")
+    return str(index["context_version"])
+
+
+def _live_context_id(context: str) -> str:
+    return next(
+        line.split(":", 1)[1].strip()
+        for line in context.splitlines()
+        if line.startswith("Live context ID:")
+    )
+
+
+def test_subagent_context_budget_reserves_role_before_generated_view(
+    tmp_path: Path,
+) -> None:
+    repo = _init_tmp_repo(tmp_path)
+    _register_assignment(repo)
+    role = repo / ".agent-harness/context/roles/context_mapper.md"
+    role.write_text("ROLE_SENTINEL\n" + ("r" * 2000), encoding="utf-8")
+    _rebuild_test_context(repo, "PACK_SENTINEL\n" + ("p" * 4000))
+
+    context = _subagent_context(repo)
+    assert len(context) <= 12000
+    assert context.index("ROLE_SENTINEL") < context.index("PACK_SENTINEL")
+    assert "assignments/<ASSIGNMENT_ID>.json" in context
+    assert "file fallback" not in context
+
+    deliveries = repo / ".agent-harness/runs/run-1/launches/deliveries.jsonl"
+    record = json.loads(deliveries.read_text(encoding="utf-8").splitlines()[0])
+    assert record["injected_chars"] == len(context)
+    assert record["truncated"] is False
+
+
+def test_subagent_context_refuses_oversize_view_without_fallback(
+    tmp_path: Path,
+) -> None:
+    repo = _init_tmp_repo(tmp_path)
+    _register_assignment(repo)
+    _rebuild_test_context(repo, "PACK_SENTINEL\n" + ("p" * 30000))
+
+    context = _subagent_context(repo)
+    assert len(context) <= 12000
+    assert "CONTEXT CONTRACT VIOLATION" in context
+    assert "Do not read CONTEXT_PACK.md as a fallback" in context
+    deliveries = repo / ".agent-harness/runs/run-1/launches/deliveries.jsonl"
+    assert not deliveries.exists()
+
+
+@pytest.mark.parametrize("mode", ["tampered", "symlink"])
+def test_subagent_rejects_unvalidated_generated_view(
+    tmp_path: Path,
+    mode: str,
+) -> None:
+    repo = _init_tmp_repo(tmp_path)
+    _register_assignment(repo)
+    pack = repo / ".agent-harness/generated/CONTEXT_PACK.md"
+    if mode == "tampered":
+        pack.write_text("ARBITRARY_TAMPERED_VIEW\n", encoding="utf-8")
+    else:
+        pack.unlink()
+        try:
+            pack.symlink_to(repo / "shared.md")
+        except OSError as exc:
+            pytest.skip(f"symlinks unavailable: {exc}")
+
+    context = _subagent_context(repo)
+    assert "CONTEXT CONTRACT VIOLATION" in context
+    assert "generated context" in context.lower()
+    assert not (repo / ".agent-harness/runs/run-1/launches/deliveries.jsonl").exists()
+
+
+def test_subagent_requires_registered_active_run(tmp_path: Path) -> None:
+    repo = _init_tmp_repo(tmp_path, active=False)
+    context = _subagent_context(repo)
+    assert "CONTEXT CONTRACT VIOLATION" in context
+    assert "NO_ACTIVE_RUN" in context
+    assert not (repo / ".agent-harness/runs").exists()
+
+
+def test_subagent_rejects_stale_active_run_context_version(
+    tmp_path: Path,
+) -> None:
+    repo = _init_tmp_repo(tmp_path)
+    _register_assignment(repo)
+    (repo / "shared.md").write_text(
+        "# compact shared context changed after run start\n", encoding="utf-8"
+    )
+    rebuilt = _harness_cli(repo, "build_context_pack.py")
+    assert rebuilt.returncode == 0, rebuilt.stdout + rebuilt.stderr
+
+    context = _subagent_context(repo)
+    assert "CONTEXT CONTRACT VIOLATION" in context
+    assert "RUN_PLAN context_version does not match" in context
+    assert not (
+        repo / ".agent-harness/runs/run-1/launches/deliveries.jsonl"
+    ).exists()
+
+
+def test_invalid_context_budget_is_structured_not_traceback(tmp_path: Path) -> None:
+    repo = _init_tmp_repo(tmp_path)
+    index_path = repo / ".agent-harness/context/CONTEXT_INDEX.json"
+    index = json.loads(index_path.read_text(encoding="utf-8"))
+    index["max_injected_chars"] = "twelve-thousand"
+    index_path.write_text(json.dumps(index, indent=2) + "\n", encoding="utf-8")
+
+    started = _run(
+        [sys.executable, str(HOOKS / "subagent_start_context.py")],
+        cwd=repo,
+        input_text=json.dumps({"agent_type": "context_mapper"}),
+    )
+    assert started.returncode == 0
+    assert "Invalid subagent context budget" in started.stdout
+    assert "Traceback" not in started.stdout + started.stderr
+
+    validated = _harness_cli(repo, "validate_harness.py")
+    assert validated.returncode == 1
+    assert "must be an integer" in validated.stdout
+    assert "Traceback" not in validated.stdout + validated.stderr
+
+
+def test_live_context_binding_is_transient_and_scoped(tmp_path: Path) -> None:
+    repo = _init_tmp_repo(tmp_path)
+    _register_assignment(repo)
+    assert _run(["git", "add", "."], cwd=repo).returncode == 0
+    committed = _run(
+        [
+            "git",
+            "-c",
+            "user.name=Harness Test",
+            "-c",
+            "user.email=harness@example.invalid",
+            "commit",
+            "-qm",
+            "baseline",
+        ],
+        cwd=repo,
+    )
+    assert committed.returncode == 0, committed.stdout + committed.stderr
+
+    baseline = _live_context_id(_subagent_context(repo))
+    (repo / "research-note.txt").write_text("uncommitted research work\n")
+    assert _live_context_id(_subagent_context(repo)) == baseline
+
+    (repo / ".agent-harness/runs/run-1/assignments/A-EXTRA.json").write_text(
+        "{}\n", encoding="utf-8"
+    )
+    (repo / ".agent-harness/runs/run-1/results/A-EXTRA.json").write_text(
+        "{}\n", encoding="utf-8"
+    )
+    assert _live_context_id(_subagent_context(repo)) == baseline
+
+    dag = repo / "docs/codex_handoff/pr_backlog.yaml"
+    dag_before = dag.read_text(encoding="utf-8")
+    dag.write_text(dag_before.replace("title: test", "title: revised"), encoding="utf-8")
+    assert _live_context_id(_subagent_context(repo)) != baseline
+    dag.write_text(dag_before, encoding="utf-8")
+
+    status = repo / "docs/codex_handoff/pr_status.yaml"
+    status_before = status.read_text(encoding="utf-8")
+    status.write_text(status_before + "notes: revised\n", encoding="utf-8")
+    assert _live_context_id(_subagent_context(repo)) != baseline
+    status.write_text(status_before, encoding="utf-8")
+
+    plan = repo / ".agent-harness/runs/run-1/RUN_PLAN.json"
+    plan_before = plan.read_text(encoding="utf-8")
+    plan_payload = json.loads(plan_before)
+    plan_payload["spec_ref"] = "REVISED_SPEC.md"
+    plan.write_text(json.dumps(plan_payload) + "\n", encoding="utf-8")
+    assert _live_context_id(_subagent_context(repo)) != baseline
+    plan.write_text(plan_before, encoding="utf-8")
+
+    plan_payload = json.loads(plan_before)
+    plan_payload["status"] = "closed"
+    plan.write_text(json.dumps(plan_payload) + "\n", encoding="utf-8")
+    assert _live_context_id(_subagent_context(repo)) != baseline
+    plan.write_text(plan_before, encoding="utf-8")
+
+    assert _run(["git", "add", "research-note.txt"], cwd=repo).returncode == 0
+    committed = _run(
+        [
+            "git",
+            "-c",
+            "user.name=Harness Test",
+            "-c",
+            "user.email=harness@example.invalid",
+            "commit",
+            "-qm",
+            "advance head",
+        ],
+        cwd=repo,
+    )
+    assert committed.returncode == 0, committed.stdout + committed.stderr
+    assert _live_context_id(_subagent_context(repo)) != baseline
+
+
+@pytest.mark.parametrize("source", ["/etc/passwd", "../outside.yaml"])
+def test_live_sources_must_be_repository_relative(
+    tmp_path: Path,
+    source: str,
+) -> None:
+    repo = _init_tmp_repo(tmp_path, active=False)
+    (repo.parent / "outside.yaml").write_text("prs: {}\n", encoding="utf-8")
+    index_path = repo / ".agent-harness/context/CONTEXT_INDEX.json"
+    index = json.loads(index_path.read_text(encoding="utf-8"))
+    index["live_sources"]["dag"] = source
+    index_path.write_text(json.dumps(index, indent=2) + "\n", encoding="utf-8")
+
+    validated = _harness_cli(repo, "validate_harness.py")
+    assert validated.returncode == 1
+    assert "canonical and repository-relative" in validated.stdout
+    assert "Traceback" not in validated.stdout + validated.stderr
+
+
+def test_live_sources_reject_parent_symlink_escape(tmp_path: Path) -> None:
+    repo = _init_tmp_repo(tmp_path, active=False)
+    outside = repo.parent / "outside"
+    outside.mkdir()
+    (outside / "dag.yaml").write_text("prs: {}\n", encoding="utf-8")
+    link = repo / "live-link"
+    try:
+        link.symlink_to(outside, target_is_directory=True)
+    except OSError as exc:
+        pytest.skip(f"symlinks unavailable: {exc}")
+
+    index_path = repo / ".agent-harness/context/CONTEXT_INDEX.json"
+    index = json.loads(index_path.read_text(encoding="utf-8"))
+    index["live_sources"]["dag"] = "live-link/dag.yaml"
+    index_path.write_text(json.dumps(index, indent=2) + "\n", encoding="utf-8")
+    validated = _harness_cli(repo, "validate_harness.py")
+    assert validated.returncode == 1
+    assert "traverses a symlink" in validated.stdout
+
+
+def test_live_head_distinguishes_unborn_from_invalid_git_state(
+    tmp_path: Path,
+) -> None:
+    repo = _init_tmp_repo(tmp_path, active=False)
+    unborn = _harness_cli(repo, "validate_harness.py")
+    assert unborn.returncode == 0, unborn.stdout + unborn.stderr
+    assert json.loads(unborn.stdout)["live_context"]["head"] == "UNBORN"
+
+    (repo / ".git/HEAD").write_text("not-a-valid-head\n", encoding="utf-8")
+    invalid = _harness_cli(repo, "validate_harness.py")
+    assert invalid.returncode == 1
+    assert "Git HEAD cannot be resolved" in invalid.stdout
+    assert "Traceback" not in invalid.stdout + invalid.stderr
+
+
+@pytest.mark.parametrize("kind", ["dangling", "non_commit"])
+def test_live_head_rejects_dangling_or_non_commit_objects(
+    tmp_path: Path,
+    kind: str,
+) -> None:
+    repo = _init_tmp_repo(tmp_path, active=False)
+    assert _run(["git", "add", "."], cwd=repo).returncode == 0
+    committed = _run(
+        [
+            "git",
+            "-c",
+            "user.name=Harness Test",
+            "-c",
+            "user.email=harness@example.invalid",
+            "commit",
+            "-qm",
+            "baseline",
+        ],
+        cwd=repo,
+    )
+    assert committed.returncode == 0, committed.stdout + committed.stderr
+
+    if kind == "dangling":
+        symbolic = _run(["git", "symbolic-ref", "HEAD"], cwd=repo)
+        assert symbolic.returncode == 0
+        ref_path = repo / ".git" / symbolic.stdout.strip()
+        ref_path.parent.mkdir(parents=True, exist_ok=True)
+        ref_path.write_text(("1" * 40) + "\n", encoding="utf-8")
+    else:
+        blob = _run(
+            ["git", "hash-object", "-w", "--stdin"],
+            cwd=repo,
+            input_text="not a commit\n",
+        )
+        assert blob.returncode == 0, blob.stdout + blob.stderr
+        (repo / ".git/HEAD").write_text(
+            blob.stdout.strip() + "\n", encoding="utf-8"
+        )
+
+    invalid = _harness_cli(repo, "validate_harness.py")
+    assert invalid.returncode == 1
+    assert "Git HEAD cannot be resolved" in invalid.stdout
+    assert "Traceback" not in invalid.stdout + invalid.stderr
+
+
+def test_reference_only_change_does_not_rotate_global_context(
+    tmp_path: Path,
+) -> None:
+    repo = _init_tmp_repo(tmp_path)
+    reference = repo / "reference-only.md"
+    reference.write_text("reference v1\n", encoding="utf-8")
+    index_path = repo / ".agent-harness/context/CONTEXT_INDEX.json"
+    index = json.loads(index_path.read_text(encoding="utf-8"))
+    index["reference_only_files"] = ["reference-only.md"]
+    index_path.write_text(json.dumps(index, indent=2) + "\n", encoding="utf-8")
+
+    _register_assignment(repo)
+    _create_receipt(repo)
+    assert _verify(repo).returncode == 0
+    before = json.loads(index_path.read_text(encoding="utf-8"))["context_version"]
+
+    reference.write_text("reference v2\n", encoding="utf-8")
+    assert _verify(repo).returncode == 0
+    validated = _harness_cli(repo, "validate_harness.py")
+    assert validated.returncode == 0, validated.stdout + validated.stderr
+    after = json.loads(index_path.read_text(encoding="utf-8"))["context_version"]
+    assert after == before
+
+
 # --- 6 -----------------------------------------------------------------
 def test_empty_tier1_assignment_registration_fails(tmp_path: Path) -> None:
     repo = _init_tmp_repo(tmp_path)
@@ -880,6 +1388,117 @@ def _axis_result(
     return path
 
 
+def _fake_cas_probe_env(repo: Path) -> dict[str, str]:
+    """Make parent-owned engine probes pass without installing CAS engines."""
+
+    fake_bin = repo / "fake-cas-bin"
+    fake_bin.mkdir()
+    scripts = {
+        "wolframscript": "#!/bin/sh\nprintf 'Wolfram fake\\nXACT_LOAD_OK\\n'\n",
+        "sage": "#!/bin/sh\nprintf 'SageMath fake with Singular\\n'\n",
+        "lean": "#!/bin/sh\nprintf 'Lean fake\\n'\n",
+    }
+    for name, source in scripts.items():
+        path = fake_bin / name
+        path.write_text(source, encoding="utf-8")
+        path.chmod(0o755)
+
+    (repo / "formal").mkdir()
+    (repo / "formal" / "lean-toolchain").write_text(
+        "leanprover/lean4:test\n", encoding="utf-8"
+    )
+    (repo / "sympy.py").write_text(
+        """__version__ = "test"
+class Expr:
+    def __pow__(self, other): return self
+    def __sub__(self, other): return self
+    def __rsub__(self, other): return self
+    def __add__(self, other): return self
+    def __mul__(self, other): return self
+    def __eq__(self, other): return True
+def symbols(name): return Expr()
+def factor(value): return Expr()
+""",
+        encoding="utf-8",
+    )
+    return dict(os.environ, PATH=f"{fake_bin}:{os.environ.get('PATH', '')}")
+
+
+def _write_runner_case(
+    repo: Path, mode: str = "pass",
+) -> tuple[Path, Path, dict[str, str]]:
+    """Create one tiny observed-process CAS case without a real CAS engine."""
+
+    contract_path = _write_contract(repo)
+    contract = json.loads(contract_path.read_text(encoding="utf-8"))
+    contract["target"]["exact_test_obligations"] = ["identity"]
+    contract["target"]["expected_exact_values"] = {"value": "2"}
+    contract_path.write_text(
+        json.dumps(contract, indent=2) + "\n", encoding="utf-8"
+    )
+
+    axis_program = repo / "tiny_axis.py"
+    axis_program.write_text(
+        """import json
+import sys
+import time
+
+mode = sys.argv[2]
+payload = {
+    "checks": {"identity": True},
+    "domain_assumption_diff": [],
+    "computed": {"value": "2"},
+    "counterexample": None,
+    # These child-authored authority claims must be ignored by the runner.
+    "axis": "wolfram_xact",
+    "status": "FAIL",
+    "commands": [{"cmd": "fabricated", "exit": 0}],
+}
+if mode == "timeout":
+    time.sleep(2)
+elif mode == "missing_obligation":
+    payload["checks"] = {}
+elif mode == "false_check":
+    payload["checks"]["identity"] = False
+elif mode == "expected_mismatch":
+    payload["computed"]["value"] = "3"
+elif mode == "missing_counterexample":
+    payload.pop("counterexample")
+elif mode == "missing_computed":
+    payload.pop("computed")
+print(json.dumps(payload))
+if mode == "nonzero":
+    raise SystemExit(7)
+""",
+        encoding="utf-8",
+    )
+    axes = ("wolfram_xact", "sympy", "sage_singular", "lean")
+    duplicate_argv = [sys.executable, axis_program.name, "shared", "pass"]
+    run_spec = {
+        "schema_version": 1,
+        "axes": {
+            axis: {
+                "argv": duplicate_argv if mode == "duplicate_argv" else [
+                    str(repo / "missing-axis-binary")
+                    if axis == "sympy" and mode == "missing_binary"
+                    else sys.executable,
+                    axis_program.name,
+                    axis,
+                    mode if axis == "sympy" else "pass",
+                ],
+                "cwd": ".",
+                "timeout_seconds": 1 if axis == "sympy" and mode == "timeout" else 10,
+            }
+            for axis in axes
+        },
+    }
+    run_spec_path = repo / "CAS-RUN.json"
+    run_spec_path.write_text(
+        json.dumps(run_spec, indent=2) + "\n", encoding="utf-8"
+    )
+    return contract_path, run_spec_path, _fake_cas_probe_env(repo)
+
+
 # --- 9 -----------------------------------------------------------------
 def test_cas_contract_change_invalidates_all_axis_receipts(tmp_path: Path) -> None:
     repo = _init_tmp_repo(tmp_path)
@@ -913,12 +1532,30 @@ def test_cas_contract_change_invalidates_all_axis_receipts(tmp_path: Path) -> No
 
 
 # --- 10 ----------------------------------------------------------------
-def test_cas_aggregate_requires_all_four_axes(tmp_path: Path) -> None:
+def test_cas_serialized_pass_envelopes_are_not_promotion_evidence(
+    tmp_path: Path,
+) -> None:
     repo = _init_tmp_repo(tmp_path)
     contract = _write_contract(repo)
     sha = _sha256(contract)
     axes = ("wolfram_xact", "sympy", "sage_singular", "lean")
     results = [_axis_result(repo, axis, sha) for axis in axes]
+
+    # Even plausible runner-looking fields remain self-authored once loaded
+    # from disk.  Only the process-owning run-adjudicate path has authority.
+    for result in results:
+        envelope = json.loads(result.read_text(encoding="utf-8"))
+        envelope.update(
+            {
+                "evidence_origin": "runner_observed_local_subprocess",
+                "claim_promotion_cas_eligible": True,
+                "execution_evidence": {
+                    "exit_code": 0,
+                    "timed_out": False,
+                },
+            }
+        )
+        result.write_text(json.dumps(envelope, indent=2) + "\n", encoding="utf-8")
 
     completed = _run(
         [
@@ -927,12 +1564,33 @@ def test_cas_aggregate_requires_all_four_axes(tmp_path: Path) -> None:
         ],
         cwd=repo,
     )
-    assert completed.returncode == 0
-    assert json.loads(completed.stdout)["aggregate_status"] == "CAS_4AXIS_PASS"
+    assert completed.returncode == 2
+    payload = json.loads(completed.stdout)
+    assert payload["aggregate_status"] == "CAS_BLOCKED"
+    assert payload["claim_promotion_cas_eligible"] is False
+    assert "UNVERIFIED_EXECUTION" in json.dumps(payload)
+
+    # Compatibility mode reports the frozen label separately, but remains
+    # blocked and cannot satisfy the claim-promotion CAS component.
+    completed = _run(
+        [
+            sys.executable, _script("cas_gate.py"), "adjudicate",
+            "--historical-replay",
+            "--contract", contract.name, "--results", *(r.name for r in results),
+        ],
+        cwd=repo,
+    )
+    assert completed.returncode == 2
+    payload = json.loads(completed.stdout)
+    assert payload["aggregate_status"] == "CAS_BLOCKED"
+    assert payload["historical_aggregate_status"] == "CAS_4AXIS_PASS"
+    assert payload["claim_promotion_cas_eligible"] is False
+    assert payload["claim_promotion_cas_requirement"] == "NOT_SATISFIED"
 
     completed = _run(
         [
             sys.executable, _script("cas_gate.py"), "adjudicate",
+            "--historical-replay",
             "--contract", contract.name,
             "--results", *(r.name for r in results[:3]),
         ],
@@ -942,6 +1600,108 @@ def test_cas_aggregate_requires_all_four_axes(tmp_path: Path) -> None:
     payload = json.loads(completed.stdout)
     assert payload["aggregate_status"] == "CAS_BLOCKED"
     assert payload["missing_axes"] == ["lean"]
+
+
+def test_cas_run_adjudicate_satisfies_only_the_cas_execution_component(
+    tmp_path: Path,
+) -> None:
+    repo = _init_tmp_repo(tmp_path)
+    contract, run_spec, env = _write_runner_case(repo)
+    completed = _run(
+        [
+            sys.executable, _script("cas_gate.py"), "run-adjudicate",
+            "--contract", contract.name,
+            "--run-spec", run_spec.name,
+        ],
+        cwd=repo,
+        env=env,
+    )
+    assert completed.returncode == 0, completed.stdout + completed.stderr
+    payload = json.loads(completed.stdout)
+    assert payload["aggregate_status"] == "CAS_4AXIS_PASS"
+    assert set(payload["axis_statuses"].values()) == {"PASS"}
+    assert payload["claim_promotion_cas_eligible"] is True
+    assert payload["claim_promotion_cas_requirement"] == "SATISFIED"
+    assert payload["evidence_origin"] == "runner_observed_local_subprocess"
+    assert all(
+        row["preflight_probe"]["status"] == "PASS"
+        for row in payload["execution_evidence"].values()
+    )
+    assert len({
+        tuple(row["argv"])
+        for row in payload["execution_evidence"].values()
+    }) == 4
+
+    observed = payload["execution_evidence"]["sympy"]
+    assert observed["argv"] == [sys.executable, "tiny_axis.py", "sympy", "pass"]
+    assert observed["exit_code"] == 0
+    assert observed["timed_out"] is False
+    assert observed["payload"]["checks"] == {"identity": True}
+    assert "status" not in observed["payload"]
+    assert "commands" not in observed["payload"]
+    assert "identity" in observed["stdout_tail"]
+
+
+@pytest.mark.parametrize(
+    "mode",
+    [
+        "nonzero",
+        "timeout",
+        "missing_binary",
+        "duplicate_argv",
+        "missing_obligation",
+        "false_check",
+        "expected_mismatch",
+        "missing_counterexample",
+        "missing_computed",
+    ],
+)
+def test_cas_run_adjudicate_rejects_unobserved_or_failed_work(
+    tmp_path: Path, mode: str,
+) -> None:
+    repo = _init_tmp_repo(tmp_path)
+    contract, run_spec, env = _write_runner_case(repo, mode)
+    completed = _run(
+        [
+            sys.executable, _script("cas_gate.py"), "run-adjudicate",
+            "--contract", contract.name,
+            "--run-spec", run_spec.name,
+        ],
+        cwd=repo,
+        env=env,
+    )
+    assert completed.returncode == 2
+    payload = json.loads(completed.stdout)
+    assert payload["aggregate_status"] != "CAS_4AXIS_PASS"
+    assert payload["claim_promotion_cas_eligible"] is False
+    assert payload["claim_promotion_cas_requirement"] == "NOT_SATISFIED"
+    if mode in {"missing_counterexample", "missing_computed"}:
+        missing = mode.removeprefix("missing_")
+        assert missing not in payload["execution_evidence"]["sympy"]["payload"]
+        assert "missing required keys" in json.dumps(payload)
+    if mode == "duplicate_argv":
+        assert "reuse the same full argv" in json.dumps(payload)
+
+
+def test_cas_run_adjudicate_rejects_reduced_axis_contract(tmp_path: Path) -> None:
+    repo = _init_tmp_repo(tmp_path)
+    contract_path, run_spec, env = _write_runner_case(repo)
+    contract = json.loads(contract_path.read_text(encoding="utf-8"))
+    contract["required_axes"] = ["sympy"]
+    contract_path.write_text(json.dumps(contract, indent=2) + "\n", encoding="utf-8")
+    completed = _run(
+        [
+            sys.executable, _script("cas_gate.py"), "run-adjudicate",
+            "--contract", contract_path.name, "--run-spec", run_spec.name,
+        ],
+        cwd=repo,
+        env=env,
+    )
+    payload = json.loads(completed.stdout)
+    assert completed.returncode == 2
+    assert payload["aggregate_status"] == "CAS_BLOCKED"
+    assert payload["claim_promotion_cas_eligible"] is False
+    assert "reduced axis sets" in json.dumps(payload)
 
 
 # --- 11 ----------------------------------------------------------------
@@ -968,6 +1728,7 @@ def test_cas_exception_must_be_preregistered_and_not_self_approved(
         return _run(
             [
                 sys.executable, _script("cas_gate.py"), "adjudicate",
+                "--historical-replay",
                 "--contract", contract_path.name,
                 "--results", *(r.name for r in results),
             ],
@@ -1002,7 +1763,11 @@ def test_cas_exception_must_be_preregistered_and_not_self_approved(
                  registered_at="2026-07-17T00:00:00+00:00")
     completed = adjudicate(valid)
     payload = json.loads(completed.stdout)
-    assert payload["aggregate_status"] == "CAS_PASS_WITH_REGISTERED_EXCEPTION"
+    assert completed.returncode == 2
+    assert payload["aggregate_status"] == "CAS_BLOCKED"
+    assert payload["historical_aggregate_status"] == (
+        "CAS_PASS_WITH_REGISTERED_EXCEPTION"
+    )
 
 
 # --- 12 ----------------------------------------------------------------
@@ -1117,6 +1882,48 @@ def test_context_rebuild_same_content_leaves_tracked_files_unchanged() -> None:
     assert dirty == [], f"context rebuild dirtied builder-owned files: {dirty}"
 
 
+def test_repository_role_profiles_fit_total_context_budget(
+    tmp_path: Path,
+) -> None:
+    production_index = json.loads(
+        (
+            REPO_ROOT / ".agent-harness/context/CONTEXT_INDEX.json"
+        ).read_text(encoding="utf-8")
+    )
+    repo = _init_tmp_repo(tmp_path)
+    index_path = repo / ".agent-harness/context/CONTEXT_INDEX.json"
+    index = json.loads(index_path.read_text(encoding="utf-8"))
+    for field in ("shared_files", "pack_files", "reference_only_files", "role_files"):
+        index[field] = production_index[field]
+    index["max_injected_chars"] = production_index["max_injected_chars"]
+    index_path.write_text(json.dumps(index, indent=2) + "\n", encoding="utf-8")
+
+    source_paths = set(index["shared_files"])
+    for role_files in index["role_files"].values():
+        source_paths.update(role_files)
+    for rel in sorted(source_paths):
+        target = repo / rel
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes((REPO_ROOT / rel).read_bytes())
+
+    built = _harness_cli(repo, "build_context_pack.py")
+    assert built.returncode == 0, built.stdout + built.stderr
+    built_index = json.loads(index_path.read_text(encoding="utf-8"))
+    plan_path = repo / ".agent-harness/runs/run-1/RUN_PLAN.json"
+    plan = json.loads(plan_path.read_text(encoding="utf-8"))
+    plan["context_version"] = built_index["context_version"]
+    plan_path.write_text(json.dumps(plan, indent=2) + "\n", encoding="utf-8")
+
+    budget = int(built_index["max_injected_chars"])
+    for agent_type, role_files in built_index["role_files"].items():
+        context = _subagent_context(repo, agent_type)
+        assert "CONTEXT CONTRACT VIOLATION" not in context, agent_type
+        assert len(context) <= budget, agent_type
+        shared_position = context.index("## Generated shared context view")
+        for role_file in role_files:
+            assert context.index(f"## Role context: {role_file}") < shared_position
+
+
 # --- MA-03 strict result-validation kernel ----------------------------
 @pytest.mark.parametrize(
     ("mutation", "needle"),
@@ -1160,8 +1967,7 @@ def test_ma03_assignment_seal_and_claim_registration_fail_closed(
 
 
 def test_ma03_result_remains_bound_to_the_original_assignment(tmp_path: Path) -> None:
-    empty_context_sha = hashlib.sha256(b"").hexdigest()
-    repo = _init_tmp_repo(tmp_path, context_version=empty_context_sha)
+    repo = _init_tmp_repo(tmp_path)
     assignment_path = _register_assignment(repo)
     _write_result(repo, "A-001", {})
     _reseal_assignment(
@@ -1212,8 +2018,7 @@ def test_ma03_assignment_inputs_must_stay_canonical_and_repo_relative(
 def test_ma03_live_input_explicitly_downgrades_exact_replay(
     tmp_path: Path,
 ) -> None:
-    empty_context_sha = hashlib.sha256(b"").hexdigest()
-    repo = _init_tmp_repo(tmp_path, context_version=empty_context_sha)
+    repo = _init_tmp_repo(tmp_path)
     assignment_path = _register_assignment(repo, live_input=True)
     assignment = json.loads(assignment_path.read_text(encoding="utf-8"))
     assert assignment["required_inputs"] == [{"path": "input.txt"}]
@@ -1418,8 +2223,7 @@ def test_ma03_incomplete_or_ambiguous_results_fail_closed(
 
 
 def test_ma03_typed_no_findings_is_a_complete_positive_result(tmp_path: Path) -> None:
-    empty_context_sha = hashlib.sha256(b"").hexdigest()
-    repo = _init_tmp_repo(tmp_path, context_version=empty_context_sha)
+    repo = _init_tmp_repo(tmp_path)
     _register_assignment(repo)
     result_path = _write_result(repo, "A-001", {"findings": []})
     result = json.loads(result_path.read_text(encoding="utf-8"))
@@ -1434,7 +2238,7 @@ def test_ma03_typed_no_findings_is_a_complete_positive_result(tmp_path: Path) ->
     ]
     assert (
         _stop_hook(
-            repo, _result_envelope(context_version=empty_context_sha)
+            repo, _result_envelope(context_version=CONTEXT_VERSION)
         ).stdout.strip()
         == ""
     )
@@ -1489,8 +2293,7 @@ def test_ma03_artifact_references_are_content_verified(
 
 
 def test_ma03_artifact_command_identity_is_optional(tmp_path: Path) -> None:
-    empty_context_sha = hashlib.sha256(b"").hexdigest()
-    repo = _init_tmp_repo(tmp_path, context_version=empty_context_sha)
+    repo = _init_tmp_repo(tmp_path)
     _register_assignment(repo)
     artifact = repo / "artifact.bin"
     artifact.write_bytes(b"verified artifact\n")
@@ -1557,7 +2360,7 @@ def test_ma03_launch_evidence_cannot_self_promote_to_platform_authentication(
         ("profile", "does not match assigned agent_type"),
         ("fork", "fork_mode does not match"),
         ("sandbox", "sandbox does not match installed profile"),
-        ("delivery", "context_delivery_mode is invalid"),
+        ("delivery", "context_delivery_mode must be hook_injected"),
         ("attested_type", "attested must be boolean"),
     ],
 )
@@ -1608,3 +2411,72 @@ def test_ma03_historical_merge_is_read_only(tmp_path: Path) -> None:
     assert completed.returncode != 0
     assert "read-only" in completed.stdout + completed.stderr
     assert merged.read_bytes() == sentinel
+
+
+@pytest.mark.parametrize(
+    ("mutation", "needle"),
+    [
+        (
+            "copied_evidence",
+            "has evidence references without matching PR-scoped specs",
+        ),
+        (
+            "mixed_evidence",
+            "has evidence references without matching PR-scoped specs",
+        ),
+        (
+            "unscoped_evidence",
+            "has no PR-scoped evidence reference",
+        ),
+        (
+            "duplicate_alias",
+            "uses duplicate evidence_ids",
+        ),
+    ],
+)
+def test_ma06_claim_reference_integrity_ignores_stored_status(
+    tmp_path: Path,
+    mutation: str,
+    needle: str,
+) -> None:
+    repo = _init_tmp_repo(tmp_path, active=False)
+    spec_rel = "docs/research_program/long_horizon_rescue/pr129_spec.yaml"
+    spec = repo / spec_rel
+    spec.parent.mkdir(parents=True)
+    spec.write_text("claim: C-PR129-TEST\n", encoding="utf-8")
+    registry = repo / ".agent-harness/context/CLAIM_REGISTRY.jsonl"
+    row = {
+        "claim_id": "C-PR129-TEST",
+        "spec_refs": [spec_rel],
+        "evidence_refs": ["E-PR129-SPEC"],
+        "status": "pass",
+    }
+
+    def write_row() -> None:
+        registry.write_text(json.dumps(row) + "\n", encoding="utf-8")
+
+    write_row()
+    declared_pass = _harness_cli(repo, "validate_harness.py")
+    assert declared_pass.returncode == 0, declared_pass.stdout + declared_pass.stderr
+
+    row["status"] = "stored_nonpass"
+    write_row()
+    declared_nonpass = _harness_cli(repo, "validate_harness.py")
+    assert declared_nonpass.returncode == 0, (
+        declared_nonpass.stdout + declared_nonpass.stderr
+    )
+
+    row["status"] = "pass"
+    if mutation == "copied_evidence":
+        row["evidence_refs"] = ["E-PR128-SPEC"]
+    elif mutation == "mixed_evidence":
+        row["evidence_refs"] = ["E-PR129-SPEC", "E-PR128-AUTHORITY"]
+    elif mutation == "unscoped_evidence":
+        row["evidence_refs"] = ["doi:10.0000/example"]
+    else:
+        row["evidence_ids"] = list(row["evidence_refs"])
+    write_row()
+
+    invalid = _harness_cli(repo, "validate_harness.py")
+    assert invalid.returncode != 0
+    assert needle in invalid.stdout + invalid.stderr

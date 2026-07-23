@@ -329,6 +329,12 @@ def test_repo_root_import_surface_without_pythonpath() -> None:
 import importlib
 for name in [
     "htt",
+    "htt.metamorphic_symmetry",
+    "obsstat.cf4_velocity_estimators",
+    "obsstat.cf4_forward_simulator",
+    "obsstat.cf4_identified_set",
+    "obsstat.cf4_growth_covariance",
+    "bass.pr184_axisym_contract",
     "htt.infer",
     "htt.infer.loocv",
     "htt.infer.finite_mock",
@@ -417,6 +423,12 @@ def test_temp_cwd_import_surface_without_pythonpath() -> None:
 import importlib
 for name in [
     "htt",
+    "htt.metamorphic_symmetry",
+    "obsstat.cf4_velocity_estimators",
+    "obsstat.cf4_forward_simulator",
+    "obsstat.cf4_identified_set",
+    "obsstat.cf4_growth_covariance",
+    "bass.pr184_axisym_contract",
     "htt.core",
     "htt.departure",
     "htt.departure.local_global_mixture",

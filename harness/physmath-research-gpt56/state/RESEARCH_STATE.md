@@ -2,7 +2,7 @@
 
 PROJECT: BASS/HTT Bianchi Anisotropy Program (htt_base)
 VERSION: 0.1 (harness mounted 2026-07-14; program at rev-r198 + NSC audit)
-CURRENT_PHASE: post-audit remediation decision (external phase state: CLAUDE.md §3)
+CURRENT_PHASE: post-audit remediation decision (execution status: docs/codex_handoff/pr_status.yaml)
 LAST_UPDATED: 2026-07-14
 
 ## Primary question

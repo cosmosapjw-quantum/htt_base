@@ -4,7 +4,7 @@
 
 Upgrade `htt_base` before the external native low-ell Bianchi solver arrives. The active goal is not to fake a solver or force Bianchi family identification. The goal is to turn the current repository into a claim-tiered, manifest-backed, transfer-provenance-aware, MIO/HTT-separated observatory and inference framework that can later consume native solver outputs cleanly.
 
-Work in the DAG defined by `docs/codex_handoff/pr_backlog.yaml` or `machine_readable/pr_backlog.yaml`. Never skip dependency gates to chase figures or headline results.
+Work in the canonical DAG defined by `docs/codex_handoff/pr_backlog.yaml`; `machine_readable/pr_backlog.yaml` is a synchronized compatibility mirror. Never skip dependency gates to chase figures or headline results.
 
 ## Non-negotiable scientific boundaries
 
@@ -27,7 +27,7 @@ For every PR in the DAG:
 5. **Test.** Run the PR card’s tests and the smallest relevant smoke suite. Record commands, pass/fail, skipped optional dependencies, and failures.
 6. **Self-review.** Use `/review` or spawn reviewer subagents for correctness, regression, tests, claim hygiene, and maintainability. Patch real findings before commit.
 7. **Commit.** Commit only after tests and self-review. Commit message format: `<PR-ID>: <imperative summary>`.
-8. **Update status.** Mark the PR in `docs/codex_handoff/pr_status.yaml` or `machine_readable/pr_status.yaml`, update PR_DELTA, and update progress every five completed PRs.
+8. **Update status.** Mark the PR in canonical `docs/codex_handoff/pr_status.yaml`, synchronize the `machine_readable/` compatibility mirror, update PR_DELTA, and update progress every five completed PRs.
 9. **Close subagents.** After each PR and after each five-PR checkpoint, explicitly close/stop completed subagent threads to avoid thread-limit accumulation.
 
 ## Five-PR checkpoint rule
@@ -156,9 +156,11 @@ Every five completed PRs, run the DAG/progress harness and record:
 
 If progress percentage does not advance after five PRs, perform step-back/adversarial self-ask and replan the DAG instead of making cosmetic claim gates.
 
+<!-- Distribution note: AGENTS.md.fragment is a merge-only compatibility suffix. This merged AGENTS.md copy is authoritative; the fragment has no independent authority. -->
+
 ## Mandatory shared-context protocol for subagent workflows
 
-This repository uses spec-driven development and evidence-bearing subagent audits. `AGENTS.md` contains durable policy only. Volatile project state, PR state, evidence, assignments, and results live under `.agent-harness/`.
+This repository uses spec-driven development and evidence-bearing subagent audits. `AGENTS.md` is the durable operating policy and `.agent-harness/context/CONTEXT_INDEX.json` is the sole persistent harness context configuration. `CONTEXT_PACK.md` is a generated delivery view; assignments and results are evidence scoped to one run, not global authority.
 
 ### 1. Canonical context and compulsory bootstrap
 
@@ -166,10 +168,9 @@ This repository uses spec-driven development and evidence-bearing subagent audit
   `python3 .agent-harness/scripts/build_context_pack.py`
 - Every spawned subagent MUST receive a spawn header containing all four fields:
   `RUN_ID`, `ASSIGNMENT_ID`, `CONTEXT_VERSION`, and `INDEPENDENCE_MODE`.
-- Every subagent MUST load, in this order:
-  1. `.agent-harness/generated/CONTEXT_PACK.md`
-  2. `.agent-harness/runs/<RUN_ID>/assignments/<ASSIGNMENT_ID>.json`
-  3. only the role-specific and evidence files named by that assignment.
+- The `SubagentStart` hook MUST reserve the total 8–12 KiB injection budget in this order: bootstrap contract, configured role context, then the generated shared view.
+- Every subagent MUST then read `.agent-harness/runs/<RUN_ID>/assignments/<ASSIGNMENT_ID>.json` before targeted evidence files. It MUST NOT reread the generated shared view.
+- Hooks compute current HEAD, canonical `docs/codex_handoff/` DAG/status, and the stable active-run summary at use time. These identities enforce operational context freshness only; they are not scientific provenance, validity, or novelty evidence.
 - The `SubagentStart` hook injects the shared context contract automatically. A subagent MUST NOT begin repo-wide exploration before validating that its assignment context version matches the current context index.
 - If the spawn header or assignment file is missing, stale, or inconsistent, the subagent MUST stop substantive work and report the contract violation.
 
@@ -177,7 +178,7 @@ This repository uses spec-driven development and evidence-bearing subagent audit
 
 Use explicit context tiers rather than relying on hidden parent-thread state:
 
-- Tier 0 — shared core: specification pointer, conventions, symbol table, frozen decisions, changed-surface map, gate definitions, claim/evidence indices, tool availability, and non-goals. All subagents receive this tier.
+- Tier 0 — compact injected core: live HEAD/DAG/status/run summary from the hooks plus the symbol table and frozen decisions in the generated view. Detailed gate, claim, and historical context files are reference-only and are read only when the assignment names them.
 - Tier 1 — assignment slice: claim IDs, files, symbols, tests, datasets, allowed tools, and expected output schema for one bounded task.
 - Tier 2 — sibling results: withheld by default. An agent may read sibling results only when its assignment has `independence_mode = "adjudication"` or explicitly lists those result paths.
 

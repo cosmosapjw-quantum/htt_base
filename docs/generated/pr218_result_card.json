@@ -1,0 +1,40 @@
+{
+ "forbidden_claims_reaffirmed": [
+  "with no native solver the surrogate authorizes NO inference",
+  "out-of-domain output is rejected, never passed as inference",
+  "training and calibration points never overlap"
+ ],
+ "metadata": {
+  "claim_level": {
+   "level": "C1",
+   "scheme": "roadmap_rescue_v1"
+  },
+  "generating_command": "env PYTHONHASHSEED=0 venv/bin/python -B scripts/codex_harness/run_pr218_surrogate.py --write",
+  "independence_gate": "OPEN",
+  "owner": "COMMON",
+  "public_use": false,
+  "readiness_state": "EVIDENCE_READY",
+  "spec_sha256": "ce014ba69f1319cf1927ee3eea0ad53ee57206657977b2ed0b3361acd3739925"
+ },
+ "pr_id": "PR-218",
+ "result": {
+  "certificate": {
+   "authorizes_inference": false,
+   "certified_envelope": 1.748821997631851e-06,
+   "domain_abs_max": [
+    0.02,
+    0.02,
+    0.01
+   ],
+   "held_out_envelope_holds": true,
+   "nested_split_disjoint": true,
+   "out_of_domain_error": 9.514283998283911e-05,
+   "out_of_domain_rejected": true,
+   "test_max_error": 1.5454001956706032e-06,
+   "test_violations": 0
+  },
+  "overlapping_split_flagged": true
+ },
+ "schema": "htt.pr218.result_card.v1",
+ "terminal": "TEFF_SURROGATE_CERTIFIED_METHODOLOGY_INFERENCE_WITHHELD_NO_NATIVE"
+}

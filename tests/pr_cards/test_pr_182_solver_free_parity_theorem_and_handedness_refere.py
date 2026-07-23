@@ -130,6 +130,7 @@ def test_three_axes_can_never_pass(tmp_path: Path) -> None:
     code, payload = _cas_gate(
         [
             "adjudicate",
+            "--historical-replay",
             "--contract",
             "docs/generated/pr182_cas/CAS_CONTRACT_PR182_PARITY_V2.json",
             "--results",
@@ -139,8 +140,10 @@ def test_three_axes_can_never_pass(tmp_path: Path) -> None:
         "adj3.json",
     )
     assert payload["aggregate_status"] == "CAS_BLOCKED"
+    assert payload["historical_aggregate_status"] == "CAS_BLOCKED"
+    assert payload["claim_promotion_cas_eligible"] is False
     assert "lean" in payload["missing_axes"]
-    assert code != 0 or payload["aggregate_status"] != "CAS_4AXIS_PASS"
+    assert code != 0
 
 
 def test_committed_adjudication_is_reproducible(tmp_path: Path) -> None:
@@ -148,9 +151,10 @@ def test_committed_adjudication_is_reproducible(tmp_path: Path) -> None:
     results = [
         f"docs/generated/pr182_cas/axis_result_{axis}.json" for axis in AXES
     ]
-    _, payload = _cas_gate(
+    code, payload = _cas_gate(
         [
             "adjudicate",
+            "--historical-replay",
             "--contract",
             "docs/generated/pr182_cas/CAS_CONTRACT_PR182_PARITY_V2.json",
             "--results",
@@ -160,7 +164,10 @@ def test_committed_adjudication_is_reproducible(tmp_path: Path) -> None:
         "adj4.json",
     )
     committed = json.loads(ADJUDICATION.read_text())
-    assert payload["aggregate_status"] == committed["aggregate_status"]
+    assert code != 0
+    assert payload["aggregate_status"] == "CAS_BLOCKED"
+    assert payload["historical_aggregate_status"] == committed["aggregate_status"]
+    assert payload["claim_promotion_cas_eligible"] is False
     assert payload["axis_statuses"] == committed["axis_statuses"]
     assert payload["contract_sha256"] == committed["contract_sha256"]
 

@@ -224,11 +224,10 @@ def validate_launch_payload(
         errors.append(f"requested profile {requested!r} != actual {actual!r}")
     if launch.get("fork_mode") != assignment.get("fork_mode"):
         errors.append("launch fork_mode does not match the sealed assignment")
-    if launch.get("context_delivery_mode") not in {
-        "hook_injected",
-        "file_fallback",
-    }:
-        errors.append("launch context_delivery_mode is invalid")
+    if launch.get("context_delivery_mode") != "hook_injected":
+        errors.append(
+            "launch context_delivery_mode must be hook_injected; file fallback is disabled"
+        )
 
     try:
         from profile_registry import ProfileRegistryError, load_profile_registry
@@ -300,30 +299,10 @@ def _validate_declared_reads(
             )
 
     if any(rel.endswith("CONTEXT_PACK.md") for rel in files_read):
-        deliveries = (
-            repo
-            / ".agent-harness"
-            / "runs"
-            / run_id
-            / "launches"
-            / "deliveries.jsonl"
+        errors.append(
+            "self-declared duplicate-delivery violation: the validated generated "
+            "context is hook-injected and CONTEXT_PACK.md must not be re-read"
         )
-        agent_type = str(result.get("agent_type") or "")
-        if deliveries.is_file() and not deliveries.is_symlink():
-            for line in deliveries.read_text(encoding="utf-8").splitlines():
-                try:
-                    record = json.loads(line)
-                except json.JSONDecodeError:
-                    continue
-                if (
-                    (record.get("agent_type") in (agent_type, None) or not agent_type)
-                    and record.get("truncated") is False
-                ):
-                    errors.append(
-                        "self-declared duplicate-delivery violation: full context "
-                        "was hook-injected but CONTEXT_PACK.md was re-read"
-                    )
-                    break
 
 
 def validate_result_payload(

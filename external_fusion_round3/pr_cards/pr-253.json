@@ -1,0 +1,57 @@
+{
+  "id": 253,
+  "wave": 36,
+  "track": "I",
+  "title": "CAMB, CLASS and nanoCMB shell-transfer cross-check",
+  "deps": [
+    248,
+    250,
+    252
+  ],
+  "cost": "high",
+  "risk": "high",
+  "hostile": [
+    "H3-06",
+    "H3-07",
+    "H3-16"
+  ],
+  "target": "SW, Doppler, early/late ISW와 source-window contributions의 redshift kernels를 세 independent implementations로 계산한다.",
+  "falsifier": "shell refinement 또는 code cross-check에서 total low-ell transfer가 보존되지 않는다.",
+  "work": "CAMB source windows, CLASS transfer output and readable nanoCMB line-of-sight adapter를 구현하고 shell sum identity를 검증한다.",
+  "assets": [
+    "src/htt_ext/plugins/camb_adapter.py",
+    "src/htt_ext/plugins/class_adapter.py",
+    "experiments/binning_stability_demo.py",
+    "experiments/shell_kernel_conservation_demo.py",
+    "src/htt_ext/lowell/transfer.py"
+  ],
+  "specific_pass": [
+    "total Cl/alm transfer가 CAMB-CLASS 사이 preregistered tolerance 내 일치한다.",
+    "두 shell refinement에서 cumulative pole and power shift가 declared tolerance 아래다."
+  ],
+  "specific_fail": [
+    "reference DGP의 unstable binning을 물리 result로 사용하면 FAIL.",
+    "FLRW transfer agreement를 anisotropic solver validation으로 승격하면 FAIL."
+  ],
+  "max_claim": "FLRW low-ell source terms의 shell-resolved transfer가 code-cross-checked됐다.",
+  "status": "PROPOSED_ONLY_NOT_IN_ACTIVE_DAG",
+  "native_solver_required": false,
+  "pass_gates": [
+    "SPEC가 claim identity, estimand/domain, frame/order/units, input/output schema, success criteria와 decisive falsifier를 결과 열람 전에 고정한다.",
+    "최소 두 개의 독립 구현, analytic limit 또는 genuinely independent external oracle이 declared tolerance 안에서 일치한다.",
+    "관련 hostile mutation과 negative control이 전부 nonzero exit, BLOCKED 또는 expected abstention으로 kill된다.",
+    "seeded repeat, clean temporary directory와 detached local-repo overlay 실행이 byte-identical 또는 declared tolerance 안에서 재현된다.",
+    "모든 input/config/environment/output가 content hash를 갖고 downstream consumer의 stale path scan이 0 hit다.",
+    "author와 다른 adjudicator가 code, scientific semantics, pass/fail gate를 서명한다.",
+    "total Cl/alm transfer가 CAMB-CLASS 사이 preregistered tolerance 내 일치한다.",
+    "두 shell refinement에서 cumulative pole and power shift가 declared tolerance 아래다."
+  ],
+  "fail_gates": [
+    "decisive falsifier가 한 번이라도 살아남으면 promotion을 금지하고 failure receipt를 남긴다.",
+    "provenance, frame/type, covariance/null, nuisance/prior 또는 independent adjudication 중 하나라도 없으면 PASS를 반환하지 않는다.",
+    "문구 완화, scope 축소, disclaimer 추가만으로 defect를 닫으면 PR을 reject한다.",
+    "optional dependency missing, solver unavailable 또는 data absent를 toy fallback으로 대체하면 PR을 BLOCKED 처리한다.",
+    "reference DGP의 unstable binning을 물리 result로 사용하면 FAIL.",
+    "FLRW transfer agreement를 anisotropic solver validation으로 승격하면 FAIL."
+  ]
+}

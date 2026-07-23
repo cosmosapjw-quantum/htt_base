@@ -7,6 +7,135 @@
 
 ## [Unreleased]
 
+### Literature-grounded claim-adjudication harness + external report v11 (rev-r255, 2026-07-22)
+
+Owner-directed: build a rolling judgment harness that decides which blocked claim gates / provenance can be UNLOCKED against the actual literature on four axes (scientific significance / novelty / completeness / verification), run it over all work so far (not waiting for every PR), then generate report v11 by the same process as v10. **Adjudication harness** (`htt/src/common/claim_adjudication_harness.py` + `run_claim_adjudication.py`): 28 claim families (theory/method/data/process) each scored on the four axes + a blocker classification; unlock is DERIVED from completeness+verification+provenance+structural blocker (significance/novelty rank the queue, never gate it — a bug the workflow surfaced and which was fixed). The **web-CRAG adjudication Workflow** (56 agents: per-family literature verification by `web-crag-researcher` + adversarial refutation, ~5.6M tokens) produced `docs/generated/claim_adjudication/literature_verdicts.json`; the harness renders the unlock ledger. **Result**: **20 PROMOTABLE** (complete+verified+cited-correct author-side → one non-author Independence adjudication from VALIDATED, ranked T-OMK[P] → C-tier XC/MES/EGS/DISCRIM/K1/CF4 → K-tier); **3 GENUINELY_INCOMPLETE** (M-ESTCOV/M-PARTIALID completeness=partial, T-KE unverified); **3 native-blocked** (D-TEFF/II-NATIVE/T-SHARP); **1 DESI-data-blocked** (D-DESI); **1 process** (M-DUALAXIS). Novelty tiers **K=17/C=9/P=2, S=0** (hostile referee — the programme is faithful cross-checks/textbook results with exact machine-verified certificates). **Two provenance gates resolved**: T-EGS registry author typo Hsu→Lim (Nilsson-Uggla-Wainwright-Lim 1999 ApJL 522,L1); D-CF4 "miscited" false-flag dismissed by adversarial verify (references.bib correct). The **Independence gate is never fake-passed**; web-CRAG resolves provenance+novelty only, not non-author reproduction / DESI data / native solver. Incremental + re-runnable; 5 harness tests. **Report v11** (`scripts/build_external_audit_report_v11.py` → `external_audit_research_report_20260722_v11/` + root PDF 6pp + zip; v5–v10 byte-frozen): self-contained scientific record superseding v10, covering the strengthening wave + revival Track-I — W² convention + joint feasible-set + multi-fluid moment cone + bulk-flow bridge (two CAS_5AXIS_PASS), rank-2 non-id + staged sharpness, MES attribution (frozen W2_max=3.3789222980376e-13 unchanged), partial-ID/IM coverage + cluster rank + anytime e-value + estimated-cov calibration + source discrimination, K1 global p=0.039 + even-L BiPoSH, ACT UL, CF4 cosmic-variance deflation (qualitative, quarantine-safe), DESI survey-conditional null + PR-151 data-completeness statement, and a **25-family K/C/P/S novelty ledger grounded in the external-literature pass**. `--check` byte-stable, no meta-dev content, quarantine-safe (0 CF4-P0 trap tokens), 4 contract-gate tests. No prior claim state changed; PR-151 untouched (read-only probes). Commits 6fc37b67 (harness), c8fbc4f1 (ledger), 3e14029f (v11).
+
+### Legacy Revival Round-2 — Track-I executed end-to-end (PR-209..228, 20/20) (rev-r254, 2026-07-22)
+
+Owner-directed: salvage the still-live legacy research (pre-BASS `bianchi_defect`/`HTT`/`MIO` GitHub+Overleaf archives + 2026-03-14 monograph) via the incoming `htt_legacy_revival_round2_20260721/` package (gitignored input drop; round-2 sits on round-1 = the PR-185..208 strengthening package). **Formal DAG intake** of the dual-track roadmap **PR-209..246** (38 cards, total **155→193**): `validate_pr_dag` gained a **REVIVAL slice** (pinned deps from `12_TRACK_DAG.json`, typed dependency modes, one-directional **track boundary** — no Track-I card depends on a Track-II/Integration card, `PR-226→PR-151` terminal-receipt edge, five-axis CAS on PR-222/223; atomic-or-none). **Track I = PR-209..228** (solver-independent, DAG_SCHEDULABLE) executed fully; **Track II = PR-229..242** (native Bianchi Boltzmann solver) + **Integration = PR-243..246** registered **native-blocked** (NEEDS_NATIVE, `solver_gate_required`, exit-3 gate wired). Every Track-I card reached **COMPLETED_SUCCESS / EVIDENCE_READY / Independence gate OPEN / public_use=false**; DAG valid at 193 throughout; mirrors synced at every commit; **PR-151 acquisition untouched** (read-only probes T0–T5, batch0004→0039/1000, writer running, ≥786 GiB free).
+
+- **Foundation** (209 legacy inventory hash-bound + no-direct-import scan / 210 typed DefectBundle + defect-identity seal / **211 RESCUE→186** W² successor + signed curvature / **212 RESCUE→187** frame functor + Frobenius gate / **213 RESCUE→185** dual-axis successor / 214 hermetic mutation lab: factor-3, VI₀/VII_h swap, inactive-Occam, local=global all killed) → CP-214.
+- **Theorems/atlas** (**223** multi-fluid moment cone `zero-flux ≠ zero-tilt-energy`, antipodal 3Π=diag(4,−2,−2) — **CAS_5AXIS_PASS**; **215 RESCUE→189** coupled joint x_C=[0.08,0.10] ⊊ box [0.04,0.14]; 219 response quotient rank-lattice [2,3,4] extends PR-127; 216 sharpness ladder algebraic→constraint→local→**global BLOCKED**; **217** MES attribution surface — intrinsic-zero endpoint = **frozen W2_max 3.3789222980376e-13 byte-identical** (no re-freeze), full-dipole excluded by hierarchy; 218 Teff certified surrogate — `authorize_inference=False` no native; 220 inactive-prior invariance + legacy lnB negative control).
+- **Data-method** (**222** bulk→tilt bridge multi-window Gram det=394584≠0 → rank 3 vs single rank 1 — **CAS_5AXIS_PASS**; 221 cross-survey dipole discrimination 0.9022, confusable abstains 100%; 225 Hartlap + anytime e-value/Ville; 224 directional×depth×host falsifier).
+- **Closure** (**226 PARTIAL** — planck_k1/cf4/act closed on existing receipts, **DESI official-mock lane BLOCKED_ON_PR151_TERMINAL**, no partial mock in any headline; **227** author-side reproduction VERIFIED — all 18 cards byte-stable, Independence OPEN; **228** v11-I report — 19 propositions with statement+verified terminal, no open P0, no Track-II claim, scientific-results-only meta-dev-gate-tested, VALIDATED deferred) → CP-228.
+
+Two genuine **CAS_5AXIS_PASS** (222/223: Wolfram+xAct/SymPy/Sage+Singular/Lean `native_decide`/Rocq `lia`, Lean+Rocq = two kernel-independent lineages). Four **LITERAL_RESCUE** cross-refs (211/212/213/215) reuse the frozen PR-185/186/187/189 evidence with **frozen anchors byte-identical** — no re-derivation. PR-214 active-surface scan tightened to a living check (bulk=tilt *refutation* not a false hit). Full revival test sweep **98 passed**. 0 direct legacy imports on production roots; legacy imported only as clean-room successor or mutation fixture. No prior claim state changed (102 OPEN / 0 RESCUED; both CF4 P0s OPEN). NEXT: Track II/Integration stay native-blocked until an authenticated native SolverDeliveryReceipt lands; PR-151 monitor → terminal → DESI lane close (PR-226) → PR-227/228 VALIDATED.
+
+### Strengthening Wave 28 complete + math/stats spine + CAS Rocq axis (rev-r253, 2026-07-21)
+
+Continued the post-v10 strengthening push: **all 7 PR-151-parallel
+scheduled cards now COMPLETED_SUCCESS** (DAG 121/155). Each reaches
+EVIDENCE_READY with the six-gate Independence gate explicitly OPEN
+(non-author adjudication / external replication spend-limited);
+publication_use false throughout.
+
+**CAS policy repair (ADJ-CAS-ROCQ-AXIS-001).** After the owner flagged
+PR-186's CAS_BLOCKED as a shortcut (only sympy was run), `cas_gate.py`
+was repaired: **Rocq (Coq 9.0) joins Lean as a second
+kernel-independent proof-assistant lineage** — the genuine H19 answer —
+and the gate became contract-driven (required_axes from the contract,
+CAS_{N}AXIS_PASS, no majority vote, backward-compatible: 4-axis
+contracts still pass, 29 harness/lineage tests green). The eight
+strengthening R3-CAS cards carry the five-axis v3 contract.
+
+**Wave 28 (control plane / convention / reproducibility).** PR-185
+dual-axis SSoT; **PR-186 W² fix re-run to CAS_5AXIS_PASS** (Wolfram+xAct
+/ SymPy / Sage+Singular / Lean / Rocq); **PR-187 frame/type algebra**
+(frame-tagged components, S+³×R signed carrier, boost-order type system
+refusing the Ω_tilt² O(β⁴) subtraction vs the O(β²) quadrupole, explicit
+pair density; round-trip residual 0; 50/50 mutations rejected;
+CAS_5AXIS_PASS); **PR-188 hermetic reproduce** (data-free artifact set
+byte-stable + private-path-free; 16/16 load-bearing source mutations
+flip the target --check; checksum data-root recipe BLOCKs on missing
+data; the two sealed /mnt-hard-coding data modules surfaced as a
+migration backlog, not edited) + **CP-188** checkpoint.
+
+**Math/stats spine.** **PR-189 joint feasible-set support theorem**
+(I_C exact interval; coupled fixture joint [0,1] STRICTLY inside product
+[0,2] via exact-rational vertex enumeration == HiGHS; factorized
+joint=product; empty classified; CAS_5AXIS_PASS with Lean+Rocq on the
+strict containment); **PR-197 cluster-exchangeable rank** (H11: exact
+small-N enumeration + cluster-safe split; naive reused-cluster label
+refused); **PR-200 partial-ID coverage** (H14: the honest 0.913 is a
+point-CI failure — the Imbens-Manski set restores ≥0.94 boundary
+coverage across regimes; the midpoint Gaussian CI undercovers to 0.0).
+
+**PR-192 preflight only** (registered-not-scheduled): OMK all-order
+recurrence core verified (κ=-2/(3w+5), c2 exact-match, c3 recurrence);
+the PR-191-Gauss binding, non-LRS classification, five-axis CAS, and
+remainder certification stay BLOCKED until PR-191 is scheduled.
+
+Roadmap §10.2 satisfied: PR-186 (W²) + PR-187 (frame/type) passed, so
+comparator numbers may now be re-authorized. PR-151 monitored
+throughout (probes before/after each card; 360/1000 EZmock, running,
+undisturbed). No claim state changed: 102 OPEN / 0 RESCUED; both CF4
+P0s OPEN.
+
+### Post-v10 strengthening wave intake + PR-185/186 (rev-r252, 2026-07-21)
+
+External-audit response. The hostile-referee package
+(`htt_post_v10_strengthening_plan_20260721/`, H01–H24, 10 P0 + 14 P1)
+proposed a strengthening roadmap PR-185…PR-208 (Waves 28–34) with strict
+per-card pass/fail gates. Owner directive: execute the PR-151-parallel
+subset under those gates. PR-151 is the only survey lane gated on the
+DESI acquisition (PR-203); Wave 28 + the math/stats spine are
+survey-data-independent.
+
+**Formal DAG intake** (b8efb2de): all 24 cards registered atomically
+(total 155). Cards generated from the audit gate matrix (sha-pinned in
+`docs/generated/pr185_strengthen_intake_receipt.json`) so card and
+validator cannot drift; `validate_pr_dag` gains a STRENGTHEN slice
+(pins deps/lane/activation/authorization + typed edges + four-axis CAS
+contract for R3-CAS cards; atomic-or-none; count 131→155). Scheduled
+now: {185,186,187,188,189,197,200}; the rest registered-not-scheduled
+(196 native-blocked, 203 gated on PR-151 terminal). Every card enters
+OPEN / spec-first / public_use=false; external novelty is a separate
+axis, never downgraded by an internal blocker.
+
+**PR-185 — dual-axis SSoT + promotion engine** (983c15fa; R1; H23/H24).
+`htt/src/common/dual_axis_claim_state.py` holds two axes that never
+collapse to one ordinal: `novelty_tier_external` (K/C/P/S, literature
+delta only) and `readiness_state` (8-state lifecycle). publication_use
+opens only conjunctively (six gates + VALIDATED + signed independent
+author≠adjudicator non-stale receipt). Sealed gate battery: v10
+external-novelty ledger migrates diff-0 (62/62); all 4×8=32 (novelty,
+readiness) combos legal incl. S+OPEN and P+VALIDATED; 100/100
+publication mutations rejected; author=adjudicator / fabricated /
+circular-parent / stale-gate / OPEN→VALIDATED-jump all killed. 7 gate
+tests. EVIDENCE_READY, Independence gate OPEN.
+
+**PR-186 — W² convention repair (the confirmed H01 drift)** (837e8c1d;
+R3-CAS; H01). The referee found the v10 report displayed
+W²=ω_aω^a/H² while the live comparator/MES code + frozen
+parent-identity seal register ω_abω^ab/(6H²)=ω_aω^a/(3H²) — **exactly
+3×**. Confirmed and fixed. Theorem two independent lineages: numerical
+(10⁵ random antisymmetric tensors, ω_abω^ab=2ω_aω^a to 1.4e-14) + exact
+sympy (registered form, ratio-3, ceiling W²≤3B²/2 with Θ=3H).
+**CAS follow-up (same session): the CAS policy was repaired
+(ADJ-CAS-ROCQ-AXIS-001) to add Rocq (Coq 9.0) as a second
+kernel-independent proof-assistant lineage alongside Lean — the genuine
+H19 answer, not multiple CAS backends re-evaluating one expression —
+making `cas_gate.py` a contract-driven multi-axis gate (CAS_{N}AXIS_PASS,
+no majority vote, backward-compatible: 4-axis contracts still pass, 29
+harness/lineage tests green). The W² identity was verified across all
+five axes (Wolfram+xAct / SymPy / Sage+Singular symbolic-universal +
+Lean native_decide exact-rational witnesses + Rocq universal Ring proof
+over ℤ) under one contract hash → CAS_5AXIS_PASS; the eight strengthening
+R3-CAS cards (186/187/189/190/191/192/193/194) upgraded to the five-axis
+v3 contract. The earlier CAS_BLOCKED was a shortcut, not a real block.**
+v10 builder display corrected + report regenerated
+(--check byte-stable); active-source scanner (historical/frozen
+allowlist) returns 0 hits; frozen MES vorticity ceiling
+W2_max=3.3789e-13 **byte-identical** (code always used 6H² — only the
+display moved). 7 gate tests. EVIDENCE_READY, Independence gate OPEN.
+Third PR-120 quarantine resync after the v10 regen (ok=True, 3931
+scanned); the audit input pack gitignored per the input-drop
+convention. PR-151 undisturbed (350/1000, running). Remaining
+scheduled cards (187 frame/type, 188 hermetic build, 189/197/200/192)
+continue next session; per roadmap §10.2 no new comparator number is
+authoritative until PR-187 passes.
+
 ### v10 revision 3 — full post-PR-119 output completeness (rev-r251, 2026-07-21)
 
 Owner directive: every discovery/proof/analysis/plot produced since

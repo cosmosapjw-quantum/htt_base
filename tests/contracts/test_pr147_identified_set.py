@@ -11,7 +11,7 @@ import pytest
 
 warnings.filterwarnings("ignore")
 
-from common.cf4_identified_set import (
+from obsstat.cf4_identified_set import (
     IdentifiedSetError,
     SetStatus,
     classify_topology,

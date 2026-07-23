@@ -1,0 +1,18 @@
+{
+ "schema": "htt.cas_contract.v3",
+ "identity": {"contract_id": "CAS-PR189-JOINT-SUPPORT-001", "title": "Joint feasible-set support is strictly narrower than the product box on a coupled polytope", "pr": "PR-189"},
+ "required_axes": ["wolfram_xact", "sympy", "sage_singular", "lean", "rocq"],
+ "missing_axis_outcome": "CAS_BLOCKED",
+ "result_blinding": "required_until_adjudication",
+ "theorem": {
+  "fixture": "c=(1,1); polytope 0<=x<=1, 0<=y<=1, x+y<=1 (coupled).",
+  "claims": [
+   "joint support sup_F (x+y) = 1 (the coupling x+y<=1 binds)",
+   "product-box sup = 1*1 + 1*1 = 2 (independent marginals x<=1, y<=1)",
+   "joint sup 1 < product sup 2: the joint identified set is STRICTLY narrower than the product box",
+   "removing the coupling gives joint sup = product sup = 2 (product box is the factorized corollary)"
+  ]
+ },
+ "expected_exact_values": {"joint_sup": "1", "product_sup": "2", "strict": "1 < 2", "factorized_joint_sup": "2"},
+ "notes": "Wolfram/SymPy/Sage solve the exact LP over the rational polytope; Lean and Rocq (independent kernels) verify the exact strict inequality 1 < 2 and that the coupling constraint bounds the joint sup at 1. No majority vote; all five axes PASS."
+}

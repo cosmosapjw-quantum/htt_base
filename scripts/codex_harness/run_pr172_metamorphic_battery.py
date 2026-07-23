@@ -19,7 +19,7 @@ REPO = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPO / "htt/src"))
 sys.path.insert(0, str(REPO / "htt"))
 
-from common.metamorphic_symmetry import (  # noqa: E402
+from htt.metamorphic_symmetry import (  # noqa: E402
     build_battery,
     validate_battery,
 )

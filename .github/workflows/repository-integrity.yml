@@ -54,6 +54,8 @@ jobs:
             scripts/codex_harness/test_repository_integrity_workflow.py \
             scripts/codex_harness/test_harness_enforcement.py \
             scripts/codex_harness/test_codex_assets.py
+      - name: Run architecture boundary contract
+        run: python -m pytest -q scripts/architecture/test_import_boundaries.py
 
   python-package-smoke:
     name: Python package smoke
@@ -74,6 +76,8 @@ jobs:
           python -m pip install -e './htt[dev]'
       - name: Compile Python sources
         run: python -m compileall -q .agent-harness/scripts scripts/codex_harness htt
+      - name: Compile architecture checks
+        run: python -m compileall -q scripts/architecture
       - name: Probe installed import surface
         run: |
           python -c "import bass, common, htt, mio, obsstat, tsc, tsc_legacy; print('IMPORT_OK')"

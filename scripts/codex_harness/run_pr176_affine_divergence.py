@@ -54,8 +54,8 @@ RELEVANT_PATHS = (
     "docs/research_program/long_horizon_rescue/pr176_spec_erratum.yaml",
     "docs/audits/pr176_primary_sources/tsagas_divergence_record.md",
     "htt/obsstat/cf4_affine_divergence.py",
-    "htt/src/common/cf4_velocity_estimators.py",
-    "htt/src/common/cf4_forward_simulator.py",
+    "htt/obsstat/cf4_velocity_estimators.py",
+    "htt/obsstat/cf4_forward_simulator.py",
     "scripts/codex_harness/run_pr176_affine_divergence.py",
 )
 REQUIRED_METADATA = {

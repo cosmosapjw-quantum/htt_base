@@ -1,0 +1,85 @@
+{
+ "forbidden_claims_reaffirmed": [
+  "no implicit cast or default frame; cross-frame only via a registered bridge",
+  "DeltaOmega_k is signed on S+^3 x R and never PSD-clipped",
+  "Omega_tilt^2 (O(beta^4)) is refused against the O(beta^2) quadrupole",
+  "no comparator number is regenerated here; the type system guards them"
+ ],
+ "metadata": {
+  "claim_level": {
+   "level": "C1",
+   "scheme": "roadmap_rescue_v1"
+  },
+  "generating_command": "env PYTHONHASHSEED=0 venv/bin/python -B scripts/codex_harness/run_pr187_frame_typed.py --write",
+  "independence_gate": "OPEN",
+  "owner": "COMMON",
+  "public_use": false,
+  "readiness_state": "EVIDENCE_READY",
+  "spec_sha256": "4169390ee8247cae03d0f2ea59031519193d3236f8dbc08e429e3318de7b4b84"
+ },
+ "pr_id": "PR-187",
+ "result": {
+  "cas_status": {
+   "aggregate": "CAS_5AXIS_PASS",
+   "axis_statuses": {
+    "lean": "PASS",
+    "rocq": "PASS",
+    "sage_singular": "PASS",
+    "sympy": "PASS",
+    "wolfram_xact": "PASS"
+   },
+   "contract": "docs/generated/pr187_cas/CAS_CONTRACT_PR187_FRAME_ORDER.json",
+   "contract_hash_matches_adjudication": true,
+   "contract_sha256": "b16252804f53ea526f143820fd72303235682a7e63b76568276a63ce96030108",
+   "kernel_independent_lineages": [
+    "lean",
+    "rocq"
+   ],
+   "required_axes": [
+    "wolfram_xact",
+    "sympy",
+    "sage_singular",
+    "lean",
+    "rocq"
+   ]
+  },
+  "mutation_battery": {
+   "rejected": 50,
+   "total": 50
+  },
+  "mutations_all_rejected": true,
+  "order_facts": {
+   "forbidden_omega_tilt_squared_subtraction": true,
+   "omega_tilt_order": 2,
+   "omega_tilt_squared_order": 4,
+   "order_correct_deprojection_order": 2,
+   "quadrupole_order": 2
+  },
+  "pair_density": {
+   "pair_per_stream_density_value": "3/5000",
+   "pair_total_density_value": "3/10000",
+   "per_stream_doubles": true,
+   "single_order": 2,
+   "single_value": "3/10000",
+   "total_equals_single": true
+  },
+  "rapidity_roundtrip_residuals": [
+   "0",
+   "0",
+   "0",
+   "0",
+   "0",
+   "0"
+  ],
+  "roundtrip_all_zero": true,
+  "signed_carrier": {
+   "carrier": "S+^3 x R",
+   "negative_branch_sign": -1,
+   "negative_positive_block_rejected": true,
+   "positive_branch_sign": 1,
+   "psd_clips_signed_axis": false
+  }
+ },
+ "schema": "htt.pr187.result_card.v1",
+ "terminal": "FRAME_TYPE_SYSTEM_CAS_5AXIS_PASS"
+}

@@ -13,8 +13,9 @@ import pytest
 
 REPO = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPO / "htt" / "src"))
+sys.path.insert(0, str(REPO / "htt"))
 
-from common.pr184_axisym_contract import (  # noqa: E402
+from bass.pr184_axisym_contract import (  # noqa: E402
     PR172_FIXTURE_VALUE,
     PremiseViolation,
     check_axisymmetric_premise,

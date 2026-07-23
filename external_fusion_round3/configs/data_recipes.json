@@ -1,0 +1,83 @@
+{
+  "schema": "htt.external_data_recipes.v1",
+  "generated_on": "2026-07-22",
+  "policy": {
+    "download_mode": "manual_or_pr_specific_only",
+    "hard_storage_limit_gib": 100,
+    "partial_data_science_use": "forbidden unless the PR spec explicitly defines a partial-data estimand",
+    "hash_requirement": "sha256 for every downloaded file",
+    "actual_data_freeze": "statistics, masks, component-map family and shell bins are frozen before result inspection"
+  },
+  "recipes": [
+    {
+      "id": "PLANCK_PR3_COMPONENT_MAP_FAMILY",
+      "tier": "PUBLIC_MAP",
+      "official_source": "https://doi.org/10.5270/esa-zfx8b4s",
+      "files": [
+        "COM_CMB_IQU-smica_2048_R3.00_full.fits",
+        "COM_CMB_IQU-sevem_2048_R3.01_full.fits",
+        "COM_CMB_IQU-nilc_2048_R3.00_full.fits",
+        "COM_CMB_IQU-commander_2048_R3.00_full.fits"
+      ],
+      "estimated_gib": 12,
+      "use": "Local present-observer low-ell pole nuisance family; four maps are one sky, not independent replications.",
+      "prs": [258]
+    },
+    {
+      "id": "PLANCK_PR4_SELECTED_MAPS",
+      "tier": "PUBLIC_MAP",
+      "official_source": "https://pla.esac.esa.int/",
+      "estimated_gib": "10-30 selected",
+      "use": "Optional PR4/NPIPE map-product sensitivity; matched simulations are a separate readiness gate.",
+      "prs": [258,262]
+    },
+    {
+      "id": "PLANCK_UNWISE_REMOTE_DIPOLE_PAPER",
+      "tier": "PAPER_SUMMARY_OR_AUTHOR_PRODUCT",
+      "official_source": "https://arxiv.org/abs/2405.00809",
+      "estimated_gib": "<5 if public reconstruction products are available",
+      "use": "Remote-dipole amplitude/optical-depth-bias comparison; paper summary cannot masquerade as a reconstructed map.",
+      "prs": [260,262]
+    },
+    {
+      "id": "PSZ_REMOTE_QUADRUPOLE_2026",
+      "tier": "PAPER_SUMMARY_OR_PUBLIC_PRODUCTS",
+      "official_source": "https://arxiv.org/abs/2607.16071",
+      "estimated_gib": "<10 selected CMB/LSS products; full recreation separate",
+      "use": "Remote quadrupole low-S/N identified-region comparison with explicit optical-depth bias.",
+      "prs": [261,262]
+    },
+    {
+      "id": "CMB_S4_PANEX_SELECTED",
+      "tier": "PUBLIC_SIMULATION_MAP",
+      "official_source": "https://data.cmb-s4.org/",
+      "estimated_gib": "2-10 selected components",
+      "use": "Foreground-complexity and frequency-dependence stress tests.",
+      "prs": [254,267]
+    },
+    {
+      "id": "WEBSKY_SELECTIVE",
+      "tier": "PUBLIC_SIMULATION_MAP",
+      "official_source": "https://lambda.gsfc.nasa.gov/simulation/mocks_data.html",
+      "estimated_gib": "20-30 selective bundle",
+      "use": "Same-realization CMB/lensing/kSZ/CIB/halo dependence stress test.",
+      "prs": [254,260,261,267]
+    },
+    {
+      "id": "LOCALLY_GENERATED_GLASS",
+      "tier": "GENERATED",
+      "official_source": "https://github.com/glass-dev/glass",
+      "estimated_gib": "1-30; retain seeds and summaries where possible",
+      "use": "Redshift shell LSS, masks, tracer selection and local-structure pole trajectories.",
+      "prs": [254,269,271]
+    },
+    {
+      "id": "LOCAL_PM_VELOCITY_ENSEMBLE",
+      "tier": "GENERATED",
+      "official_source": "CONCEPT and JaxPM pinned receipts",
+      "estimated_gib": "5-40 summaries; raw snapshots disposable after hash-bound summary validation",
+      "use": "Finite-window velocity and bulk-to-tilt bridge/no-go experiments.",
+      "prs": [269,270]
+    }
+  ]
+}

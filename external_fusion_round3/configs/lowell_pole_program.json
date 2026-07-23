@@ -1,0 +1,54 @@
+{
+  "schema": "htt.lowell_pole_program.v1",
+  "analysis_id": "LOWELL-POLE-RZ-001",
+  "status": "PRE_REGISTERED_PLANNING_TEMPLATE",
+  "pole_definitions": [
+    "anisotropy_tensor",
+    "max_angular_momentum",
+    "multipole_vector_normal_optional"
+  ],
+  "typed_objects": [
+    "ShellSourcePole",
+    "CumulativeObserverPole",
+    "RemoteDipolePole",
+    "RemoteQuadrupolePole"
+  ],
+  "redshift_edges_reference": [0.0, 0.05, 0.15, 0.35, 0.7, 1.2, 2.0, 4.0, 8.0, 20.0, 100.0, 300.0, 800.0, 1200.0],
+  "low_ells": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+  "source_decomposition": [
+    "observer_endpoint_boost",
+    "SW_last_scattering",
+    "Doppler_last_scattering",
+    "early_ISW",
+    "late_ISW",
+    "lensing_and_remapping",
+    "post_reionization_remote_dipole",
+    "post_reionization_remote_quadrupole",
+    "foreground_and_selection"
+  ],
+  "hypotheses": [
+    "H_LOCAL",
+    "H_LSS",
+    "H_GLOBAL_PHENO",
+    "H_GLOBAL_NATIVE",
+    "H_MIX",
+    "H_UNKNOWN"
+  ],
+  "actual_map_family": ["SMICA", "COMMANDER", "NILC", "SEVEM"],
+  "success": {
+    "rotation_covariance_max_error": 1e-9,
+    "coverage_target": 0.95,
+    "coverage_99pct_lower_min": 0.93,
+    "cross_code_total_transfer_relative_tolerance": 0.02,
+    "shell_refinement_pole_shift_deg_max": 5.0,
+    "false_global_label_rate_max": 0.05,
+    "confusable_source_abstention_min": 0.90
+  },
+  "forbidden": [
+    "Treating component-separated Planck maps as independent skies",
+    "Calling a shell source contribution a CMB map observed at that redshift",
+    "Emitting a point remote pole when the eigen-gap or reconstruction S/N is unresolved",
+    "Using H_GLOBAL_PHENO as a native Bianchi transfer substitute",
+    "Using a local observer boost as homogeneous matter tilt without a bridge model"
+  ]
+}
