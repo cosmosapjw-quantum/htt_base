@@ -753,6 +753,8 @@ def test_installer_copies_repo_scoped_assets_with_project_harness_config(
         ".agent-harness/scripts/validate_harness.py",
         ".agent-harness/templates/RESULT_ENVELOPE.json",
         "docs/codex_handoff/pr_backlog.yaml",
+        "docs/research_program/long_horizon_rescue/pr122_spec.yaml",
+        "docs/research_program/long_horizon_rescue/pr138_spec.yaml",
         "scripts/codex_harness/verify_skill_layout.py",
         "harness_templates/vendor/physmath-gpt56/3.1.0/coding/manifest.json",
         "harness_templates/vendor/physmath-gpt56/3.1.0/research/manifest.json",
