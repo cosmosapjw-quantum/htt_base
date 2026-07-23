@@ -283,9 +283,8 @@ def verify_theta4_a2_coefficients(
         accommodate htt's finite-difference step size (1e-2).
     audit_htt
         When ``False``, skip htt cross-check entirely (useful in contexts
-        where htt isn't importable). When ``True`` and the import fails,
-        the ``htt_extracted`` field is ``None`` and the mismatch check is
-        skipped.
+        where htt isn't importable). When ``True``, unavailable htt audit
+        support is an error rather than a silently skipped cross-check.
     N_quad
         Gauss-Legendre order for the tsc-side numerical extraction.
 
@@ -303,9 +302,13 @@ def verify_theta4_a2_coefficients(
         htt_val = None
         if audit_htt:
             htt_val = _extract_htt_a2_coefficient(monomial)
-            if htt_val is not None:
-                rel_htt = abs(htt_val - exact) / max(abs(exact), 1e-300)
-                passed = passed and (rel_htt <= tol_htt)
+            if htt_val is None:
+                raise RuntimeError(
+                    "audit_htt=True requires an importable htt coefficient "
+                    "table or TeffMomentMap"
+                )
+            rel_htt = abs(htt_val - exact) / max(abs(exact), 1e-300)
+            passed = passed and (rel_htt <= tol_htt)
         reports[monomial] = BridgeCoefficientReport(
             monomial=monomial,
             exact=float(exact),

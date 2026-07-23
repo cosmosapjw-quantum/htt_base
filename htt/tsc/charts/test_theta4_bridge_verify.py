@@ -6,7 +6,7 @@ Covers:
 * Numerical Gauss-Legendre extraction of each coefficient
 * End-to-end verifier returns a pass on the closed-form cross-check
 * Direct a_2(A, Q) evaluation matches the expansion at small (A, Q)
-* htt audit is *not* strictly required (passes when htt unavailable)
+* requested htt audit fails closed when htt is unavailable
 """
 from __future__ import annotations
 
@@ -163,24 +163,17 @@ class TestVerifier:
                 f"{monomial} failed: rel_err = {rep.rel_err_vs_exact}"
             )
 
-    def test_htt_audit_graceful_when_unimportable(self):
-        """If ``htt`` cannot be imported, the report's ``htt_extracted``
-        slot is ``None`` and the pass flag still reflects only the
-        closed-form cross-check."""
-        reports = verify_theta4_a2_coefficients(audit_htt=True)
-        for rep in reports.values():
-            # Either htt is importable (and the htt value landed in tol) or
-            # not (and the slot is None); either way, the pass flag is set
-            # by the closed-form check.
-            if rep.htt_extracted is None:
-                assert rep.passed
-            else:
-                assert isinstance(rep.htt_extracted, float)
+    def test_htt_audit_fails_closed_when_unimportable(self, monkeypatch):
+        monkeypatch.setattr(
+            bridge_verify,
+            "_extract_htt_a2_coefficient",
+            lambda _monomial: None,
+        )
+        with pytest.raises(RuntimeError, match="audit_htt=True requires"):
+            verify_theta4_a2_coefficients(audit_htt=True)
 
     def test_htt_native_table_matches_exact_when_available(self):
         reports = verify_theta4_a2_coefficients(audit_htt=True)
-        if any(rep.htt_extracted is None for rep in reports.values()):
-            pytest.skip("htt import unavailable in this environment")
         for monomial, rep in reports.items():
             assert rep.htt_extracted == pytest.approx(
                 THETA4_A2_COEFFS_EXACT[monomial], rel=1e-12
