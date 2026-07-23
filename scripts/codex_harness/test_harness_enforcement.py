@@ -2398,12 +2398,21 @@ def test_ma03_historical_merge_is_read_only(tmp_path: Path) -> None:
     assert "read-only" in completed.stdout + completed.stderr
     assert merged.read_bytes() == sentinel
 
+
 @pytest.mark.parametrize(
     ("mutation", "needle"),
     [
         (
             "copied_evidence",
-            "has no evidence reference matching its PR-scoped spec",
+            "has evidence references without matching PR-scoped specs",
+        ),
+        (
+            "mixed_evidence",
+            "has evidence references without matching PR-scoped specs",
+        ),
+        (
+            "unscoped_evidence",
+            "has no PR-scoped evidence reference",
         ),
         (
             "duplicate_alias",
@@ -2443,8 +2452,13 @@ def test_ma06_claim_reference_integrity_ignores_stored_status(
         declared_nonpass.stdout + declared_nonpass.stderr
     )
 
+    row["status"] = "pass"
     if mutation == "copied_evidence":
         row["evidence_refs"] = ["E-PR128-SPEC"]
+    elif mutation == "mixed_evidence":
+        row["evidence_refs"] = ["E-PR129-SPEC", "E-PR128-AUTHORITY"]
+    elif mutation == "unscoped_evidence":
+        row["evidence_refs"] = ["doi:10.0000/example"]
     else:
         row["evidence_ids"] = list(row["evidence_refs"])
     write_row()

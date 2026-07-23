@@ -637,7 +637,7 @@ def _validate_claim_references(
     line_number: int,
     errors: list[str],
 ) -> None:
-    """Validate live spec/evidence links without evaluating a stored status."""
+    """Validate live spec paths and PR-scoped evidence labels, not stored status."""
 
     spec_refs = row.get("spec_refs")
     evidence_refs = row.get("evidence_refs")
@@ -696,11 +696,18 @@ def _validate_claim_references(
             if match is not None:
                 evidence_prs.add(match.group(1))
 
-    if spec_prs and evidence_prs and spec_prs.isdisjoint(evidence_prs):
+    if spec_prs and not evidence_prs:
         expected = ", ".join(f"E-PR{number}-*" for number in sorted(spec_prs))
         errors.append(
-            f"claim registry line {line_number} has no evidence reference "
-            f"matching its PR-scoped spec; expected one of {expected}"
+            f"claim registry line {line_number} has no PR-scoped evidence "
+            f"reference; expected one of {expected}"
+        )
+    foreign_prs = evidence_prs - spec_prs
+    if spec_prs and foreign_prs:
+        foreign = ", ".join(f"E-PR{number}-*" for number in sorted(foreign_prs))
+        errors.append(
+            f"claim registry line {line_number} has evidence references without "
+            f"matching PR-scoped specs: {foreign}"
         )
 
 
