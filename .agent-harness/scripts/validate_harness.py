@@ -13,6 +13,7 @@ from _harness import (
     resolve_live_context,
     root,
     validate_assignment_payload,
+    validate_claim_registry,
 )
 from strict_result_validation import load_and_validate_registered_result_file
 
@@ -22,6 +23,7 @@ def validate_repo(repo: Path) -> dict:
     index_path = harness / "context" / "CONTEXT_INDEX.json"
     index = load_json(index_path)
     errors: list[str] = []
+    errors.extend(validate_claim_registry(repo))
     state_errors: list[dict[str, str]] = []
     actual = ""
     entries: list[tuple[str, str]] = []
