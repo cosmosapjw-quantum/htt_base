@@ -245,6 +245,97 @@ def test_dirty_build_cache_cannot_change_wheel_or_source_payload() -> None:
         assert not any("untracked_matching_name" in name for name in names)
 
 
+def test_wheel_install_imports_runtime_consumers_without_repository_receipts() -> None:
+    env = os.environ.copy()
+    env["PIP_DISABLE_PIP_VERSION_CHECK"] = "1"
+    env["PIP_NO_INDEX"] = "1"
+    env.pop("PYTHONPATH", None)
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        tmp = Path(tmpdir)
+        wheel_dir = tmp / "wheel"
+        target = tmp / "site-packages"
+        wheel_dir.mkdir()
+
+        build = subprocess.run(
+            [
+                sys.executable,
+                "-m",
+                "pip",
+                "wheel",
+                "--no-cache-dir",
+                "--no-deps",
+                "--no-build-isolation",
+                "--wheel-dir",
+                str(wheel_dir),
+                str(PACKAGE_ROOT),
+            ],
+            cwd=tmp,
+            env=env,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        assert build.returncode == 0, build.stderr
+        wheel = next(wheel_dir.glob("bass_py-*.whl"))
+
+        install = subprocess.run(
+            [
+                sys.executable,
+                "-m",
+                "pip",
+                "install",
+                "--no-deps",
+                "--target",
+                str(target),
+                str(wheel),
+            ],
+            cwd=tmp,
+            env=env,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        assert install.returncode == 0, install.stderr
+
+        code = """
+import sys
+from pathlib import Path
+
+target = Path(sys.argv[1]).resolve()
+sys.path.insert(0, str(target))
+
+import common
+import htt
+from common.mes_successor_registry import (
+    MesConsumerIssueCode,
+    validate_mes_successor_registry,
+)
+from htt.core.ssot import load_obs
+from obsstat.velocity_power import fiducial
+
+assert Path(common.__file__).resolve().is_relative_to(target)
+assert Path(htt.__file__).resolve().is_relative_to(target)
+assert float(load_obs()["Omega_m"]) == fiducial()["om"]
+
+validation = validate_mes_successor_registry(Path.cwd())
+assert validation.release_allowed is False
+assert any(
+    finding.code is MesConsumerIssueCode.SCIENTIFIC_AUTHORITY_BLOCKED
+    for finding in validation.findings
+)
+"""
+        probe = subprocess.run(
+            [sys.executable, "-I", "-c", code, str(target)],
+            cwd=tmp,
+            env=env,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        assert probe.returncode == 0, probe.stderr
+
+
 def test_compat_sdist_and_editable_wheel_are_metadata_only() -> None:
     env = os.environ.copy()
     env.pop("PYTHONPATH", None)

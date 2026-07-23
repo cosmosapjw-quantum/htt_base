@@ -10,9 +10,11 @@ roadmap_rescue_v1:C1 (domain/frame-conditional derived mechanics).
 Authorization is never a caller-supplied string: the pointer's
 ``scientific_authority`` requires the module-pinned receipt hash, and every
 governance validation (``validate_mes_successor_registry``) re-verifies the
-exact receipt bytes live through ``mes_theorem_authority``.  Receipt drift,
-a failed four-axis adjudication, a zero D2 receipt, or a stale MES triple
-in an active consumer re-blocks the authority.
+exact repository receipt bytes through ``mes_theorem_authority``.  Receipt
+drift, a failed four-axis adjudication, a zero D2 receipt, or a stale MES
+triple in an active consumer re-blocks the authority.  Constructing the
+metadata pointer itself does not require a source checkout, so installed
+runtime consumers remain importable outside the repository.
 
 The EGS3 branch-registry seal is retained as hash-bound process evidence.
 Its ``PASS`` result means that its own diagnostic checks executed
@@ -595,18 +597,18 @@ class MesConsumerScanReport:
             raise MesRegistryError(f"MES release blocked: {codes or 'no authority'}")
 
 
-@lru_cache(maxsize=1)
-def _live_receipt_pin_check() -> str:
-    """Cheap, once-per-process check that the on-disk PR-124 authority
-    receipt bytes match the module pin.
+def _source_checkout_root() -> Path | None:
+    """Return the repository root only when this module runs from its source tree."""
 
-    This closes the string-tautology escalation route: a consumer that reads
-    ``current_mes_successor_registry().as_payload()`` without running the
-    governance validation still cannot obtain an AVAILABLE/AUTHORIZED
-    pointer unless the actual receipt bytes on disk hash to the pin. Deep
-    content verification remains in ``validate_mes_successor_registry``.
-    """
-    repo_root = Path(__file__).resolve().parents[3]
+    candidate = Path(__file__).resolve().parents[3]
+    marker = candidate / "docs/codex_handoff/pr_backlog.yaml"
+    return candidate if marker.is_file() else None
+
+
+@lru_cache(maxsize=1)
+def _live_receipt_pin_check(repo_root: Path) -> str:
+    """Check that source-checkout PR-124 receipt bytes match the module pin."""
+
     receipt = repo_root / "docs/generated/pr124_mes_authority_table.json"
     if not receipt.is_file():
         raise MesRegistryError(
@@ -623,13 +625,16 @@ def _live_receipt_pin_check() -> str:
 
 
 def current_mes_successor_registry() -> MesSuccessorRegistry:
-    """Return the current PR-122 pointer without importing a physics module.
+    """Return the current PR-122 metadata pointer.
 
-    PR-124: constructing the AVAILABLE successor requires the live receipt
-    bytes on disk to hash to the module pin (fail-closed, memoized once per
-    process)."""
+    A source checkout retains the cheap live receipt-pin check.  An installed
+    wheel has no repository receipts to inspect, so it constructs the pinned
+    metadata shape without repository I/O.  Exact receipt/source verification
+    remains fail-closed in :func:`validate_mes_successor_registry`."""
 
-    _live_receipt_pin_check()
+    repo_root = _source_checkout_root()
+    if repo_root is not None:
+        _live_receipt_pin_check(repo_root)
     return MesSuccessorRegistry(
         schema_version=SCHEMA_VERSION,
         legacy_reproduction_source=SourceHashBinding(
