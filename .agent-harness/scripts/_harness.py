@@ -274,7 +274,11 @@ def active_run_id(
     is false.
     """
 
-    candidates = [path for path in active_run_pointer_paths(repo) if path.exists()]
+    candidates = [
+        path
+        for path in active_run_pointer_paths(repo)
+        if path.exists() or path.is_symlink()
+    ]
     if not candidates:
         if required:
             raise ActiveRunError(
@@ -562,7 +566,7 @@ def clear_active_run_pointers(
 
     targets: list[tuple[Path, str]] = []
     for path in active_run_pointer_paths(repo):
-        if not path.exists():
+        if not path.exists() and not path.is_symlink():
             continue
         pointer = _relative_pointer(repo, path)
         if expected_run_id is not None:
