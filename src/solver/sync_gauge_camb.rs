@@ -2129,8 +2129,8 @@ mod pol_test {
         eprintln!("  Polarized layout: n_state={}", lay.n_state);
         eprintln!("  i_theta0={}, i_n0={}, i_e0={}, i_b0={}",
             lay.i_theta0, lay.i_n0, lay.i_e0, lay.i_b0);
-        // 5 scalar + 9 photon + 9 neutrino + 7 E-mode + 7 B-mode = 37
-        assert_eq!(lay.n_state, 5 + 9 + 9 + 7 + 7);
+        // 5 scalar + 9 photon + 9 neutrino + 7 E-mode + 7 B-mode + 1 Φ = 38
+        assert_eq!(lay.n_state, 5 + 9 + 9 + 7 + 7 + 1);
         assert!(lay.has_pol());
         assert_eq!(lay.e_mode(0), lay.i_e0);
         assert_eq!(lay.b_mode(6), lay.i_b0 + 6);
@@ -2193,21 +2193,22 @@ mod massive_nu_test {
     fn test_massive_nu_layout() {
         let lay = CambLayout::new_full(8, 8, 0, 10, 12);
         eprintln!("  Massive ν layout: n_state={}", lay.n_state);
-        // 5 + 9 + 9 + 0 + 0 + 10*13 = 153
-        assert_eq!(lay.n_state, 5 + 9 + 9 + 130);
+        // 5 + 9 + 9 + 0 + 0 + 10*13 + 1(Φ) = 154
+        assert_eq!(lay.n_state, 5 + 9 + 9 + 130 + 1);
         assert!(lay.has_massive_nu());
         assert!(!lay.has_pol());
         assert_eq!(lay.psi(0, 0), lay.i_psi0);
         assert_eq!(lay.psi(9, 12), lay.i_psi0 + 9*13 + 12);
-        assert_eq!(lay.psi(9, 12), lay.n_state - 1);
+        assert_eq!(lay.psi(9, 12), lay.n_state - 2);
+        assert_eq!(lay.i_phi, lay.n_state - 1);
     }
 
     #[test]
     fn test_massive_nu_full_layout() {
         // All features: pol + massive ν
         let lay = CambLayout::new_full(8, 8, 6, 10, 12);
-        // 5 + 9 + 9 + 7(E) + 7(B) + 130(massive) = 167
-        assert_eq!(lay.n_state, 167);
+        // 5 + 9 + 9 + 7(E) + 7(B) + 130(massive) + 1(Φ) = 168
+        assert_eq!(lay.n_state, 168);
         assert!(lay.has_pol());
         assert!(lay.has_massive_nu());
         eprintln!("  Full layout: {}", lay.n_state);
@@ -3048,12 +3049,12 @@ mod production_test {
         assert!((k[1999] - 0.3).abs() / 0.3 < 0.01);
         
         let lay = cfg.layout();
-        assert_eq!(lay.n_state, 5 + 17 + 17 + 13 + 13); // with pol: 65 DOF
+        assert_eq!(lay.n_state, 5 + 17 + 17 + 13 + 13 + 1); // with pol and Φ: 66 DOF
         
         let full = ProductionConfig::full_physics();
         let lay_f = full.layout();
-        // 5 + 17(γ) + 17(ν_ml) + 13(E) + 13(B) + 130(ν_mv) = 195
-        assert_eq!(lay_f.n_state, 195);
+        // 5 + 17(γ) + 17(ν_ml) + 13(E) + 13(B) + 130(ν_mv) + 1(Φ) = 196
+        assert_eq!(lay_f.n_state, 196);
         eprintln!("  Default: {} DOF, {} k-modes", lay.n_state, k.len());
         eprintln!("  Full: {} DOF", lay_f.n_state);
     }
