@@ -279,14 +279,21 @@ Exact Theorems, Statistical Architecture, and Current-Data Results\\
 
 
 def s1_scope(tiers: dict | None = None) -> str:
-    _, s_count, _ = _tier_projection(tiers)
+    _, s_count, has_unknown = _tier_projection(tiers)
+    claim_scope = (
+        "classified claims carry a\nnovelty tier from the four-level scheme of"
+        if has_unknown
+        else "every claim carries a\nnovelty tier from the four-level scheme of"
+    )
     if s_count == 5:
         s_summary = "the five externally\nnovel contributions"
-    elif s_count == 0:
+    elif s_count == 0 and has_unknown:
         s_summary = (
             "no \\tier{S} entry; the highest-tier outcome remains\n"
             f"\\code{{{_tex_escape(NOVELTY_UNKNOWN)}}}"
         )
+    elif s_count == 0:
+        s_summary = "the absence of any \\tier{S} entry"
     else:
         noun = "contribution" if s_count == 1 else "contributions"
         s_summary = f"the {s_count} externally novel {noun}"
@@ -296,8 +303,7 @@ def s1_scope(tiers: dict | None = None) -> str:
 This report is a self-contained scientific record of the programme's
 exact mathematical results, statistical architecture, and current-data
 analyses as of 2026-07-21. Every proposition is stated with its proof;
-every data result carries its conditionality; and every claim carries a
-novelty tier from the four-level scheme of
+every data result carries its conditionality; and """ + claim_scope + r"""
 Section~\ref{sec:tiers} --- \tier{K} known (with citation or a
 textbook-level note), \tier{C} cross-check (against a named study),
 \tier{P} potential advance, \tier{S} significant (with the delta over
@@ -1943,11 +1949,17 @@ def s6_tiers(tiers: dict | None = None) -> str:
         s_heading = rf"The {s_count} \tier{{S}} {noun} and their deltas"
     else:
         s_heading = r"No \tier{S} entries"
-        s_blocks = [
-            f"\\code{{{_tex_escape(NOVELTY_UNKNOWN)}}}: no highest-tier "
-            "novelty result is recorded. This is a valid outcome and does "
-            "not block report rendering.\n"
-        ]
+        if has_unknown:
+            s_blocks = [
+                f"\\code{{{_tex_escape(NOVELTY_UNKNOWN)}}}: no highest-tier "
+                "novelty result is recorded. This is a valid outcome and does "
+                "not block report rendering.\n"
+            ]
+        else:
+            s_blocks = [
+                "No highest-tier novelty result is recorded. A zero-S "
+                "outcome is valid and does not block report rendering.\n"
+            ]
     s_section = "\n".join(s_blocks)
     unknown_item = ""
     if has_unknown:
@@ -1956,11 +1968,17 @@ def s6_tiers(tiers: dict | None = None) -> str:
             "external-novelty tier is assigned; this valid absence does "
             "not imply K, C, P, or S.\n"
         )
+    tier_intro = (
+        "Classified claims in this report carry one of four novelty tiers; "
+        f"unclassified rows retain \\code{{{_tex_escape(NOVELTY_UNKNOWN)}}}."
+        if has_unknown
+        else "Every claim in this report carries one of four novelty tiers."
+    )
     return r"""
 \section{Claim and novelty tier ledger}
 \label{sec:tiers}
 
-Every claim in this report carries one of four novelty tiers. The tier
+""" + tier_intro + r""" The tier
 is an \emph{external-novelty adjudication against the published
 literature only} (cross-check performed at build time; evidence
 ledger: \code{docs/audits/v10\_web\_crag\_20260721/}); it is
