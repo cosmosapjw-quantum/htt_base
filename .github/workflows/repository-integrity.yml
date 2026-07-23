@@ -35,6 +35,39 @@ jobs:
           test ! -e .agent-harness/ACTIVE_RUN
           test ! -e .agent-harness/runtime/ACTIVE_RUN
           python3 .agent-harness/scripts/validate_harness.py
+      - name: Discover MA-09 module consumers (temporary)
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          needles = (
+              "common.cf4_velocity_estimators",
+              "common.cf4_forward_simulator",
+              "common.cf4_identified_set",
+              "common.cf4_growth_covariance",
+              "common.metamorphic_symmetry",
+              "common.pr184_axisym_contract",
+              "htt/src/common/cf4_velocity_estimators.py",
+              "htt/src/common/cf4_forward_simulator.py",
+              "htt/src/common/cf4_identified_set.py",
+              "htt/src/common/cf4_growth_covariance.py",
+              "htt/src/common/metamorphic_symmetry.py",
+              "htt/src/common/pr184_axisym_contract.py",
+          )
+          found = False
+          for path in sorted(Path(".").rglob("*")):
+              if not path.is_file() or ".git" in path.parts:
+                  continue
+              try:
+                  body = path.read_text(encoding="utf-8")
+              except (OSError, UnicodeError):
+                  continue
+              hits = [needle for needle in needles if needle in body]
+              if hits:
+                  found = True
+                  print(f"{path.as_posix()}: {', '.join(hits)}")
+          raise SystemExit(1 if found else 0)
+          PY
       - name: Set up Python 3.12
         uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
