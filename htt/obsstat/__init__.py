@@ -34,6 +34,7 @@ from .lowell_poles import (
     estimate_lowell_pole,
     mean_squared_multipole_alignment,
 )
+from .shell_alms import draw_correlated_real_shell_alms
 from .morphology import (
     DiagnosticMorphologyAxis,
     MorphologyAxisSummary,
@@ -105,6 +106,7 @@ for _submodule in (
     "null_ensembles",
     "observable_vector",
     "scalar_lowell",
+    "shell_alms",
     "template_fit",
 ):
     _loaded = _sys.modules.get(f"{__name__}.{_submodule}")
@@ -157,6 +159,7 @@ __all__ = [
     "canonical_temperature_alm_convention",
     "fit_template_diagnostic",
     "estimate_data_random_dipole",
+    "draw_correlated_real_shell_alms",
     "estimate_lowell_pole",
     "mean_squared_multipole_alignment",
     "first_moment",
