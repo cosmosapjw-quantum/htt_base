@@ -56,12 +56,6 @@ jobs:
             scripts/codex_harness/test_codex_assets.py
       - name: Run architecture boundary contract
         run: python -m pytest -q scripts/architecture/test_import_boundaries.py
-      - name: Verify MA-09 relocated behavioral contract (temporary)
-        env:
-          PYTHONPATH: ${{ github.workspace }}/htt:${{ github.workspace }}/htt/src
-        run: >-
-          python -m pytest -q
-          tests/pr_cards/test_pr_172_physics_invariant_symmetry_transform_metamorphic.py::test_live_registered_battery_is_reproducible_after_relocation
 
   python-package-smoke:
     name: Python package smoke
@@ -89,6 +83,12 @@ jobs:
           python -c "import bass, common, htt, mio, obsstat, tsc, tsc_legacy; print('IMPORT_OK')"
       - name: Run package smoke contract
         run: python scripts/codex_harness/run_subset.py package --python python
+      - name: Verify MA-09 relocated behavioral contract (temporary)
+        env:
+          PYTHONPATH: ${{ github.workspace }}/htt:${{ github.workspace }}/htt/src
+        run: >-
+          python -m pytest -q
+          tests/pr_cards/test_pr_172_physics_invariant_symmetry_transform_metamorphic.py::test_live_registered_battery_is_reproducible_after_relocation
 
   rust-compile:
     name: Rust compile
