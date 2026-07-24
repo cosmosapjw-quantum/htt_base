@@ -1,10 +1,9 @@
-"""PR-182 runner: parity-theorem + handedness-registry result card.
+"""PR-182 runner: diagnose the frozen parity-registry result card.
 
-Modes: --write (produce docs/generated/pr182_result_card.json) and
---check (recompute + byte-compare, read-only). The card binds the frozen
-spec, the CAS contract, all four sealed axis envelopes, and the
-adjudication, and re-derives the terminal from the adjudication bytes —
-the terminal is never hand-set.
+``--check`` compares the frozen card with a current fail-closed diagnostic.
+Stored axis envelopes and adjudication bytes preserve historical evidence but
+cannot provide current CAS authority; ``--write`` therefore refuses to replace
+the frozen card without a parent-observed ``cas_gate.py run-adjudicate`` run.
 """
 
 from __future__ import annotations
@@ -12,6 +11,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import subprocess
 import sys
 from pathlib import Path
 
@@ -37,13 +37,56 @@ def _sha(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def _cas_status() -> dict:
+    completed = subprocess.run(
+        [
+            sys.executable,
+            "-B",
+            ".agent-harness/scripts/cas_gate.py",
+            "adjudicate",
+            "--contract",
+            str(CONTRACT.relative_to(REPO)),
+            "--results",
+            *(
+                f"docs/generated/pr182_cas/axis_result_{axis}.json"
+                for axis in AXES
+            ),
+            "--historical-replay",
+        ],
+        cwd=REPO,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    try:
+        diagnostic = json.loads(completed.stdout)
+    except json.JSONDecodeError:
+        diagnostic = {}
+    valid_diagnostic = (
+        completed.returncode == 2
+        and diagnostic.get("aggregate_status") == "CAS_BLOCKED"
+        and diagnostic.get("claim_promotion_cas_eligible") is False
+        and diagnostic.get("evidence_origin") == "stored_axis_result_envelopes"
+    )
+    return {
+        "aggregate_status": "CAS_BLOCKED",
+        "historical_aggregate_status": diagnostic.get(
+            "historical_aggregate_status"
+        ),
+        "contract_sha256": diagnostic.get("contract_sha256"),
+        "axis_statuses": diagnostic.get("axis_statuses", {}),
+        "stored_cas_diagnostic_only": valid_diagnostic,
+        "claim_promotion_cas_eligible": False,
+    }
+
+
 def build_payload() -> dict:
-    adjudication = json.loads(ADJUDICATION.read_text())
-    aggregate = adjudication["aggregate_status"]
+    cas_status = _cas_status()
+    aggregate = cas_status["aggregate_status"]
     terminal = TERMINALS.get(aggregate, "PARITY_IDENTITIES_CAS_FAIL_REGISTRY_WITHHELD")
     contract = json.loads(CONTRACT.read_text())
-    if adjudication["contract_sha256"] != _sha(CONTRACT):
-        raise SystemExit("adjudication is bound to a different contract hash")
+    if cas_status["contract_sha256"] != _sha(CONTRACT):
+        raise SystemExit("stored CAS envelopes are bound to a different contract hash")
     baseline = None
     for line in SPEC.read_text().splitlines():
         if line.startswith("baseline_commit:"):
@@ -52,7 +95,7 @@ def build_payload() -> dict:
     for axis in AXES:
         path = REPO / f"docs/generated/pr182_cas/axis_result_{axis}.json"
         envelope = json.loads(path.read_text())
-        if envelope["contract_sha256"] != adjudication["contract_sha256"]:
+        if envelope["contract_sha256"] != cas_status["contract_sha256"]:
             raise SystemExit(f"{axis} envelope contract binding drifted")
         envelopes[axis] = {
             "path": path.relative_to(REPO).as_posix(),
@@ -69,9 +112,9 @@ def build_payload() -> dict:
         "scientific_artifact_mode": "hypothesis_only",
         "public_use": False,
         "transfer_source": "none",
-        "config_hash": adjudication["contract_sha256"],
+        "config_hash": cas_status["contract_sha256"],
         "spec_sha256": _sha(SPEC),
-        "contract_sha256": adjudication["contract_sha256"],
+        "contract_sha256": cas_status["contract_sha256"],
         "generating_command": (
             "env PYTHONHASHSEED=0 venv/bin/python -B "
             "scripts/codex_harness/run_pr182_parity_registry.py --write"
@@ -90,9 +133,16 @@ def build_payload() -> dict:
         "cas": {
             "contract_id": contract["identity"]["contract_id"],
             "contract_path": CONTRACT.relative_to(REPO).as_posix(),
-            "contract_sha256": adjudication["contract_sha256"],
+            "contract_sha256": cas_status["contract_sha256"],
             "aggregate_status": aggregate,
-            "axis_statuses": adjudication["axis_statuses"],
+            "historical_aggregate_status": cas_status[
+                "historical_aggregate_status"
+            ],
+            "axis_statuses": cas_status["axis_statuses"],
+            "stored_cas_diagnostic_only": cas_status[
+                "stored_cas_diagnostic_only"
+            ],
+            "claim_promotion_cas_eligible": False,
             "adjudication_path": ADJUDICATION.relative_to(REPO).as_posix(),
             "adjudication_sha256": _sha(ADJUDICATION),
             "axis_envelopes": envelopes,
@@ -126,11 +176,25 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     payload = build_payload()
     if args.write:
-        CARD.write_bytes(_render(payload))
-        print(f"wrote {CARD.relative_to(REPO)}")
-        return 0
+        print(
+            "refusing to overwrite the frozen historical result card without "
+            "a new parent-observed cas_gate.py run-adjudicate execution",
+            file=sys.stderr,
+        )
+        return 2
     if not CARD.exists() or CARD.read_bytes() != _render(payload):
-        print(f"artifact differs under --check: {CARD.relative_to(REPO)}")
+        print(
+            json.dumps(
+                {
+                    "mode": "check",
+                    "ok": False,
+                    "read_only": True,
+                    "terminal": payload["terminal"],
+                    "aggregate": payload["cas"]["aggregate_status"],
+                },
+                sort_keys=True,
+            )
+        )
         return 1
     print(
         json.dumps(
