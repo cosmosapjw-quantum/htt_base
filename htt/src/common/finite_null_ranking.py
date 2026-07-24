@@ -104,6 +104,8 @@ def validate_reported_p(p, n_null: int) -> None:
         raise FiniteNullError(
             "a reported zero p-value is refused (the finite null "
             "resolution floor is 1/(N+1), never 0)")
+    if pf > 1:
+        raise FiniteNullError("a reported p-value must not exceed 1")
     if pf < floor:
         raise FiniteNullError(
             f"reported p {pf} is below the 1/(N+1) resolution floor "

@@ -137,6 +137,8 @@ def test_validate_reported_p_floor_gate() -> None:
     assert bad == Fraction(0)
     with pytest.raises(FiniteNullError, match="zero"):
         validate_reported_p(bad, 4)
+    with pytest.raises(FiniteNullError, match="must not exceed 1"):
+        validate_reported_p(Fraction(2), 4)
     good = pooled_rank_p(5.0, [1.0, 2.0, 3.0, 4.0])
     validate_reported_p(good, 4)   # passes
 
