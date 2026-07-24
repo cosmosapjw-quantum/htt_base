@@ -1,6 +1,7 @@
 """PR-144 contract tests: authenticated CF4 row/group/selection manifest."""
 from __future__ import annotations
 
+import importlib.util
 import json
 import subprocess
 import sys
@@ -33,6 +34,63 @@ T3 = REPO_ROOT / "workdir/raw/cf4_full/table3.dat"
 T4 = REPO_ROOT / "workdir/raw/cf4_full/table4.dat"
 _DATA = T3.is_file() and T4.is_file()
 needs_data = pytest.mark.skipif(not _DATA, reason="CF4 raw tables absent")
+
+
+def _load_runner():
+    runner_path = REPO_ROOT / "scripts/codex_harness/run_pr144_cf4_manifest.py"
+    spec = importlib.util.spec_from_file_location("run_pr144", runner_path)
+    runner = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(runner)
+    return runner
+
+
+def test_source_hash_is_generation_time_provenance() -> None:
+    runner = _load_runner()
+    source = runner.SOURCE_PATH
+    manifest_rel = runner.OUTPUTS["manifest"]
+    stored = {
+        "status": "authenticated",
+        "negative_scan": {
+            "targets": {source: {"sha256": "1" * 64, "hits": []}},
+        },
+    }
+    current = {
+        "status": "authenticated",
+        "negative_scan": {
+            "targets": {source: {"sha256": "2" * 64, "hits": []}},
+        },
+    }
+    assert runner._semantic_artifact(
+        manifest_rel, stored
+    ) == runner._semantic_artifact(manifest_rel, current)
+    current["negative_scan"]["targets"][source]["hits"] = [{"line": 1}]
+    assert runner._semantic_artifact(
+        manifest_rel, stored
+    ) != runner._semantic_artifact(manifest_rel, current)
+    current["negative_scan"]["targets"][source] = {
+        "sha256": "not-a-sha",
+        "hits": [],
+    }
+    assert runner._semantic_artifact(
+        manifest_rel, stored
+    ) != runner._semantic_artifact(manifest_rel, current)
+
+    artifact_rel = runner.OUTPUTS["artifact_manifest"]
+    stored = {
+        "input_hashes": [f"{source}:{'1' * 64}"],
+        "raw_data_pins": {"table3_sha256": "a"},
+    }
+    current = {
+        "input_hashes": [f"{source}:{'2' * 64}"],
+        "raw_data_pins": {"table3_sha256": "a"},
+    }
+    assert runner._semantic_artifact(
+        artifact_rel, stored
+    ) == runner._semantic_artifact(artifact_rel, current)
+    current["raw_data_pins"]["table3_sha256"] = "changed"
+    assert runner._semantic_artifact(
+        artifact_rel, stored
+    ) != runner._semantic_artifact(artifact_rel, current)
 
 
 def test_column_authority_types_are_complete() -> None:
