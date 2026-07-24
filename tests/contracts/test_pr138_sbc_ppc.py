@@ -115,6 +115,21 @@ def test_sbc_known_good_passes_known_bad_fails() -> None:
             require_sbc_calibrated(bad, 0.01, "sbc_pass")
 
 
+@pytest.mark.parametrize("floor", [-0.1, 1.0, float("nan")])
+def test_sbc_verdict_floor_domain_rejected(floor: float) -> None:
+    with pytest.raises(SbcPpcError, match="p-value floor.*finite"):
+        sbc_verdict({"uniformity_pvalue": 0.5}, floor)
+
+
+def test_sbc_pass_guard_cannot_be_bypassed() -> None:
+    with pytest.raises(SbcPpcError, match="SBC p-value.*finite"):
+        require_sbc_calibrated(
+            {"uniformity_pvalue": float("nan")}, 0.01, "sbc_pass")
+    with pytest.raises(InadequateModelError, match="INADEQUATE"):
+        require_sbc_calibrated(
+            {"uniformity_pvalue": 0.0}, 0.01, "calibrated")
+
+
 def test_sbc_lineage_mandatory_and_nbins_load_bearing() -> None:
     # a mismatched SBC lineage is refused
     with pytest.raises(SbcPpcError, match="lineage mismatch"):
