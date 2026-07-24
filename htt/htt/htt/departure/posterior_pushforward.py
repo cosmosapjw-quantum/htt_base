@@ -227,7 +227,9 @@ def _validate_sample_transfer(
     if metadata_source != transfer_source.value:
         raise ValueError("sample transfer_source must match transfer_metadata")
     metadata_id = transfer_metadata.get("transfer_id")
-    if metadata_id is not None and str(metadata_id) != transfer_spec_id:
+    if metadata_id is None:
+        raise ValueError("sample transfer_metadata requires transfer_id")
+    if str(metadata_id) != transfer_spec_id:
         raise ValueError("sample transfer_spec_id must match transfer_metadata")
 
 

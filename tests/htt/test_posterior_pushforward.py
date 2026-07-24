@@ -183,6 +183,31 @@ def test_transfer_provenance_is_required_for_external_pushforward_samples():
         )
 
 
+def test_transfer_spec_id_must_bind_to_transfer_metadata():
+    missing_id = _transfer_metadata()
+    del missing_id["transfer_id"]
+    with pytest.raises(ValueError, match="requires transfer_id"):
+        _sample(
+            "sample-x",
+            1.0,
+            0.1,
+            0.2,
+            1.0,
+            transfer_metadata=missing_id,
+        )
+
+    mismatched_id = _transfer_metadata("different-transfer")
+    with pytest.raises(ValueError, match="transfer_spec_id must match"):
+        _sample(
+            "sample-y",
+            1.0,
+            0.1,
+            0.2,
+            1.0,
+            transfer_metadata=mismatched_id,
+        )
+
+
 def test_external_transfer_cannot_claim_native_validation():
     metadata = _transfer_metadata()
     metadata["calibration_status"] = "native_validated"
