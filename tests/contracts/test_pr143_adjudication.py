@@ -132,6 +132,30 @@ def test_tampering_the_seal_is_detected() -> None:
         tally(forged, an)
 
 
+def test_tally_binds_predictions_to_unique_sealed_indices() -> None:
+    ch = _challenge(n_reps=2)
+    an = run_analyst(ch.blind_items(), "analyst.pr141", CFG, n_obs=60,
+                     template_seed=20260718)
+    baseline = tally(ch, an)
+    reordered = {**an, "predictions": list(reversed(an["predictions"]))}
+    assert tally(ch, reordered) == baseline
+    duplicated = {
+        **an,
+        "predictions": [dict(pred, index=0) for pred in an["predictions"]],
+    }
+    with pytest.raises(AdjudicationError, match="unique in-range"):
+        tally(ch, duplicated)
+    out_of_range = {
+        **an,
+        "predictions": [
+            *an["predictions"][:-1],
+            dict(an["predictions"][-1], index=len(ch.items)),
+        ],
+    }
+    with pytest.raises(AdjudicationError, match="unique in-range"):
+        tally(ch, out_of_range)
+
+
 def test_analyst_is_blind_and_never_false_zero_claimed() -> None:
     # the analyst is handed ONLY blind items (no SealedChallenge / truth)
     ch = _challenge(n_reps=4)

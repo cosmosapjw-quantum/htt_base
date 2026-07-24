@@ -30,6 +30,7 @@ import hashlib
 import json
 from dataclasses import dataclass
 from enum import Enum
+from numbers import Integral
 
 import numpy as np
 
@@ -210,12 +211,24 @@ def require_generator_analyst_separation(generator_id: str,
 def tally(challenge: SealedChallenge, analyst: dict) -> dict:
     """Per-family COUNTS on one sealed challenge (verifies the seal first)."""
     verify_truth_seal(challenge)
-    if len(analyst["predictions"]) != len(challenge.items):
+    predictions = analyst["predictions"]
+    if len(predictions) != len(challenge.items):
         raise AdjudicationError("prediction count does not match the "
                                 "sealed challenge")
+    indexed = {}
+    for pred in predictions:
+        index = pred.get("index")
+        if (isinstance(index, bool)
+                or not isinstance(index, Integral)
+                or not 0 <= index < len(challenge.items)
+                or index in indexed):
+            raise AdjudicationError(
+                "predictions require unique in-range sealed item indices")
+        indexed[int(index)] = pred
     counts = {f: {"n": 0, "correct": 0, "expected": 0, "false_candidate": 0}
               for f in DGP_BATTERY}
-    for pred, family in zip(analyst["predictions"], challenge.families()):
+    for index, family in enumerate(challenge.families()):
+        pred = indexed[index]
         spec = DGP_BATTERY[family]
         c = counts[family]
         c["n"] += 1
