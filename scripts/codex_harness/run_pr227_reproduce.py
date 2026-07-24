@@ -33,10 +33,23 @@ def main(argv=None):
     a=ap.parse_args(argv)
     if a.write:
         p=build_payload(); CARD.write_bytes(_render(p)); print(f"wrote {CARD.name}; terminal={p['terminal']}"); return 0
-    # --check: do NOT recurse into reproduce_all (would re-run every runner);
-    # compare the stored card's structural terminal only.
-    if not CARD.exists(): print(json.dumps({"mode":"check","ok":False})); return 1
-    c=json.loads(CARD.read_text())
-    ok = c.get("terminal")=="TRACK_I_AUTHOR_REPRODUCTION_VERIFIED_INDEPENDENCE_OPEN" and c["metadata"]["independence_gate"]=="OPEN"
-    print(json.dumps({"mode":"check","ok":ok,"read_only":True,"terminal":c.get("terminal")},sort_keys=True)); return 0 if ok else 1
+    # A stored terminal is diagnostic-only. Re-run every registered card check
+    # and compare the resulting payload byte-for-byte with the stored capsule.
+    p = build_payload()
+    ok = CARD.exists() and CARD.read_bytes() == _render(p)
+    failed_cards = sorted(
+        pr for pr, result in p["result"]["reproduction"]["per_card"].items()
+        if not result["byte_stable"]
+    )
+    print(json.dumps({
+        "failed_cards": failed_cards,
+        "live_author_reproduction": p["result"]["reproduction"][
+            "author_reproduction"
+        ],
+        "mode": "check",
+        "ok": ok,
+        "read_only": True,
+        "terminal": p["terminal"],
+    }, sort_keys=True))
+    return 0 if ok else 1
 if __name__=="__main__": raise SystemExit(main())
