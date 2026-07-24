@@ -228,6 +228,12 @@ def test_discrimination_verdict() -> None:
     assert discrimination_verdict(boost_removed=True, local_rank=2,
                                   global_rank=2, full_rank=2) == \
         "discriminable_pre_solver"
+    for ranks in (
+        {"local_rank": -1, "global_rank": -1, "full_rank": -1},
+        {"local_rank": 3, "global_rank": 3, "full_rank": 2},
+    ):
+        with pytest.raises(SourceResponseError, match="rank"):
+            discrimination_verdict(boost_removed=True, **ranks)
 
 
 def test_caption_gate() -> None:

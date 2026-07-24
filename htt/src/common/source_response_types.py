@@ -533,6 +533,25 @@ def discrimination_verdict(*, boost_removed: bool,
                            full_rank: int) -> str:
     """non_identified whenever a pure local boost is not removed at the
     declared order OR the local/global response is rank-deficient."""
+    ranks = {
+        "local_rank": local_rank,
+        "global_rank": global_rank,
+        "full_rank": full_rank,
+    }
+    if any(isinstance(rank, bool) or not isinstance(rank, int)
+           for rank in ranks.values()):
+        raise SourceResponseError(
+            "discrimination ranks must be integers"
+        )
+    if full_rank < 1:
+        raise SourceResponseError(
+            "full_rank must be a positive target rank"
+        )
+    if not (0 <= local_rank <= full_rank
+            and 0 <= global_rank <= full_rank):
+        raise SourceResponseError(
+            "local and global ranks must lie between zero and full_rank"
+        )
     if not boost_removed:
         return "non_identified"
     if local_rank < full_rank or global_rank < full_rank:
