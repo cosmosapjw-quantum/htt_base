@@ -104,6 +104,22 @@ def test_native_validated_transfer_requires_native_gate() -> None:
     assert spec.calibration_status is CalibrationStatus.NATIVE_VALIDATED
 
 
+def test_raw_native_transfer_metadata_requires_matching_calibration() -> None:
+    validated_metadata = _native_spec().to_metadata()
+    validated_metadata["calibration_status"] = "external_calibrated"
+    with pytest.raises(ValueError, match="calibration_status native_validated"):
+        validate_transfer_dependent_result(validated_metadata)
+
+    provisional_metadata = _native_spec(
+        source="BASS_native_provisional",
+        calibration_status="native_provisional",
+        passed_validation_gates=(),
+    ).to_metadata()
+    provisional_metadata["calibration_status"] = "native_validated"
+    with pytest.raises(ValueError, match="BASS_native_provisional"):
+        validate_transfer_dependent_result(provisional_metadata)
+
+
 def test_external_and_native_transfer_specs_can_coexist_in_registry() -> None:
     registry = TransferRegistry()
     registry.register(_external_spec())
