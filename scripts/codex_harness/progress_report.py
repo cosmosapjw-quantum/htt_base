@@ -1124,12 +1124,21 @@ def _scoreboard_markdown(report: dict[str, Any]) -> str:
     return "\n".join(lines) + "\n"
 
 
-def write_checkpoint(report: dict[str, Any], checkpoint_dir: str | Path) -> Path | None:
-    if not report["checkpoint_due"]:
-        return None
+def write_checkpoint(
+    report: dict[str, Any],
+    checkpoint_dir: str | Path,
+    *,
+    checkpoint_every: int,
+) -> Path | None:
     output_dir = Path(checkpoint_dir)
-    output_dir.mkdir(parents=True, exist_ok=True)
     previous = _latest_checkpoint_metadata(output_dir, report["completed"])
+    previous_completed = int(previous.get("completed", 0)) if previous else 0
+    overdue = report["completed"] - previous_completed >= checkpoint_every
+    if not report["checkpoint_due"] and not overdue:
+        return None
+    report["checkpoint_due"] = True
+    report["current_checkpoint_at"] = report["completed"]
+    output_dir.mkdir(parents=True, exist_ok=True)
     state = _checkpoint_state(report, previous)
     report.update(state)
     checkpoint_path = output_dir / f"checkpoint_{report['completed']:03d}.md"
@@ -1197,7 +1206,11 @@ def main(argv: list[str] | None = None) -> int:
     checkpoint_path = None
     if args.write_checkpoint_dir:
         try:
-            checkpoint_path = write_checkpoint(report, args.write_checkpoint_dir)
+            checkpoint_path = write_checkpoint(
+                report,
+                args.write_checkpoint_dir,
+                checkpoint_every=args.checkpoint_every,
+            )
         except Exception as exc:
             print(str(exc), file=sys.stderr)
             return 1

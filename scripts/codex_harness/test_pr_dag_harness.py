@@ -1142,6 +1142,61 @@ def test_progress_report_does_not_write_checkpoint_when_not_due(tmp_path: Path) 
     assert not checkpoint_dir.exists()
 
 
+def test_progress_report_recovers_checkpoint_after_completed_count_jump(
+    tmp_path: Path,
+) -> None:
+    backlog = tmp_path / "backlog.yaml"
+    status = tmp_path / "status.yaml"
+    checkpoint_dir = tmp_path / "checkpoints"
+    _write_yaml(backlog, _linear_backlog(7))
+    _write_yaml(
+        status,
+        {
+            "completed": [f"PR-{index:03d}" for index in range(6)],
+            "blocked": [],
+        },
+    )
+
+    recovered = _run(
+        str(PROGRESS),
+        str(backlog),
+        str(status),
+        "--checkpoint-every",
+        "5",
+        "--write-checkpoint-dir",
+        str(checkpoint_dir),
+        "--json",
+    )
+
+    assert recovered.returncode == 0, recovered.stderr
+    payload = json.loads(recovered.stdout)
+    assert payload["checkpoint_due"] is True
+    assert payload["checkpoint_artifact"].endswith("checkpoint_006.md")
+    assert (checkpoint_dir / "checkpoint_006.md").is_file()
+
+    _write_yaml(
+        status,
+        {
+            "completed": [f"PR-{index:03d}" for index in range(7)],
+            "blocked": [],
+        },
+    )
+    not_due = _run(
+        str(PROGRESS),
+        str(backlog),
+        str(status),
+        "--checkpoint-every",
+        "5",
+        "--write-checkpoint-dir",
+        str(checkpoint_dir),
+        "--json",
+    )
+
+    assert not_due.returncode == 0, not_due.stderr
+    assert json.loads(not_due.stdout)["checkpoint_due"] is False
+    assert not (checkpoint_dir / "checkpoint_007.md").exists()
+
+
 def test_progress_report_json_stays_valid_when_writing_checkpoint(tmp_path: Path) -> None:
     backlog = tmp_path / "backlog.yaml"
     status = tmp_path / "status.yaml"
