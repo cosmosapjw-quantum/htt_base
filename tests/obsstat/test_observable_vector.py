@@ -193,6 +193,18 @@ def test_build_observable_vector_holds_required_feature_blocks() -> None:
     assert vector.biposh["A_20"] == 0.01
 
 
+def test_build_observable_vector_rejects_non_integral_ell_max() -> None:
+    from htt.obsstat.observable_vector import build_observable_vector
+
+    with pytest.raises(ValueError, match="ell_max must be an integer"):
+        build_observable_vector(
+            ell_max=2.9,
+            channels=("TT",),
+            sky_support=_sky_support(),
+            manifest=_manifest(),
+        )
+
+
 def test_null_pvalues_require_null_and_look_elsewhere_provenance() -> None:
     from htt.obsstat.observable_vector import build_observable_vector
 

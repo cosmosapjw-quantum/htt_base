@@ -278,7 +278,7 @@ def load_exported_observable_vector(
     statistics = dict(envelope.manifest.statistics_definitions)
     sky_support_payload = dict(statistics.get("sky_support", {}))
     return ObservableVector(
-        ell_max=int(payload["ell_max"]),
+        ell_max=payload["ell_max"],
         channels=tuple(payload["channels"]),
         cl=dict(payload.get("cl", {})),
         alm_features=dict(

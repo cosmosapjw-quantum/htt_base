@@ -191,6 +191,49 @@ class TestVer2BarrierContracts:
                 manifest=_manifest(),
             )
 
+    @pytest.mark.parametrize("ell_max", [2.9, True])
+    def test_observable_vector_requires_integral_ell_max(self, ell_max):
+        with pytest.raises(ValueError, match="ell_max must be an integer"):
+            ObservableVector(
+                ell_max=ell_max,
+                channels=("TT",),
+                cl={},
+                alm_features={},
+                biposh=None,
+                template_fit=None,
+                covariance_features=None,
+                scan_volume={},
+                sky_support=SkySupport(
+                    selection_mode="mock_calibrated",
+                    sky_support_hash="sky",
+                    mask_hash="mask",
+                    mock_coverage_status="ok",
+                ),
+                manifest=_manifest(),
+            )
+
+    def test_observable_vector_normalizes_numpy_integer_ell_max(self):
+        vector = ObservableVector(
+            ell_max=np.int64(8),
+            channels=("TT",),
+            cl={},
+            alm_features={},
+            biposh=None,
+            template_fit=None,
+            covariance_features=None,
+            scan_volume={},
+            sky_support=SkySupport(
+                selection_mode="mock_calibrated",
+                sky_support_hash="sky",
+                mask_hash="mask",
+                mock_coverage_status="ok",
+            ),
+            manifest=_manifest(),
+        )
+
+        assert vector.ell_max == 8
+        assert type(vector.ell_max) is int
+
 
 class TestDirectionalSummary:
     def test_stores_four_channels(self):

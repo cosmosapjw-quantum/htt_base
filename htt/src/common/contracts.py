@@ -20,6 +20,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from enum import Enum
+import operator
 from typing import Any, Mapping, Optional, Literal
 
 try:  # Python 3.11+
@@ -636,10 +637,19 @@ class ObservableVector:
     manifest: ArtifactManifest
 
     def __post_init__(self) -> None:
-        if self.ell_max < 0:
+        if isinstance(self.ell_max, bool):
+            raise ValueError("ObservableVector.ell_max must be an integer")
+        try:
+            ell_max = int(operator.index(self.ell_max))
+        except TypeError as exc:
+            raise ValueError(
+                "ObservableVector.ell_max must be an integer"
+            ) from exc
+        if ell_max < 0:
             raise ValueError("ObservableVector.ell_max must be >= 0")
         if not self.channels:
             raise ValueError("ObservableVector.channels must be non-empty")
+        object.__setattr__(self, "ell_max", ell_max)
 
 
 @dataclass(frozen=True)
