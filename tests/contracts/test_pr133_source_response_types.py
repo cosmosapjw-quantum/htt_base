@@ -234,6 +234,9 @@ def test_discrimination_verdict() -> None:
     ):
         with pytest.raises(SourceResponseError, match="rank"):
             discrimination_verdict(boost_removed=True, **ranks)
+    with pytest.raises(SourceResponseError, match="explicit boolean"):
+        discrimination_verdict(boost_removed="false", local_rank=2,
+                               global_rank=2, full_rank=2)
 
 
 def test_caption_gate() -> None:
