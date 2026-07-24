@@ -309,6 +309,7 @@ import common
 import htt
 from common.mes_successor_registry import (
     MesConsumerIssueCode,
+    current_mes_successor_registry,
     validate_mes_successor_registry,
 )
 from htt.core.ssot import load_obs
@@ -317,6 +318,10 @@ from obsstat.velocity_power import fiducial
 assert Path(common.__file__).resolve().is_relative_to(target)
 assert Path(htt.__file__).resolve().is_relative_to(target)
 assert float(load_obs()["Omega_m"]) == fiducial()["om"]
+
+registry = current_mes_successor_registry()
+assert registry.successor.scientific_authority is False
+assert registry.as_payload()["release_claim_allowed"] is False
 
 validation = validate_mes_successor_registry(Path.cwd())
 assert validation.release_allowed is False

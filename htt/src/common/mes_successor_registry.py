@@ -448,15 +448,25 @@ class MesSuccessorPointer:
     @property
     def scientific_authority(self) -> bool:
         # Strings alone never escalate: authority requires the AVAILABLE
-        # pointer shape AND the module-pinned PR-124 receipt hash.  Live
-        # byte re-verification happens in validate_mes_successor_registry;
-        # any receipt drift re-blocks the release there.
+        # pointer shape, the module-pinned PR-124 receipt hash, AND the
+        # matching receipt bytes in a source checkout.  Installed wheels do
+        # not carry that governance evidence, so their metadata pointer stays
+        # non-authoritative; governance validation remains a source-checkout
+        # operation.
+        repo_root = _source_checkout_root()
+        if repo_root is None:
+            return False
+        try:
+            live_receipt_id = _live_receipt_pin_check(repo_root)
+        except MesRegistryError:
+            return False
         return (
             self.source.availability is SourceAvailability.AVAILABLE
             and self.process_result is MesProcessResult.PASS
             and self.scientific_status
             is MesScientificAuthorityStatus.AUTHORIZED_BY_PR124
             and self.authority_receipt_id == PR124_AUTHORITY_RECEIPT_SHA256
+            and live_receipt_id == PR124_AUTHORITY_RECEIPT_SHA256
         )
 
     def as_payload(self) -> dict[str, object]:
