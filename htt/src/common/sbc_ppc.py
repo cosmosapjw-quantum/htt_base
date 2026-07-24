@@ -240,6 +240,8 @@ def freeze_discrepancies(names) -> dict:
     """Content-address the frozen discrepancy set BEFORE the data; the
     hash pins the set so it can never be swapped after a failure."""
     names = list(names)
+    if not names:
+        raise SbcPpcError("at least one frozen discrepancy is required")
     for n in names:
         _discrepancy(n)   # validate each exists
     canonical = json.dumps(sorted(names), sort_keys=True)
@@ -251,7 +253,10 @@ def freeze_discrepancies(names) -> dict:
 def require_frozen_discrepancies(frozen: dict, current_names) -> None:
     """Swapping a frozen discrepancy (a content-address change) after a
     failure is rejected."""
-    canonical = json.dumps(sorted(list(current_names)), sort_keys=True)
+    current_names = list(current_names)
+    if not current_names:
+        raise SbcPpcError("at least one frozen discrepancy is required")
+    canonical = json.dumps(sorted(current_names), sort_keys=True)
     current_hash = "disc-" + hashlib.sha256(
         canonical.encode()).hexdigest()[:16]
     if current_hash != frozen["frozen_hash"]:
@@ -348,6 +353,11 @@ def require_ppc_receipt(receipt: Mapping) -> None:
     if "lineage_verified" not in receipt:
         raise SbcPpcError("a PPC receipt must record the verified "
                           "posterior lineage hash")
+    results = receipt["discrepancy_results"]
+    if not isinstance(results, list) or not results:
+        raise SbcPpcError(
+            "a PPC receipt needs non-empty replicated-data discrepancy "
+            "results")
 
 
 def standardized_residual_check(model: GaussianModel, y_obs,

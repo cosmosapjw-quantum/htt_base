@@ -126,6 +126,8 @@ def test_sbc_lineage_mandatory_and_nbins_load_bearing() -> None:
 
 
 def test_ppc_frozen_discrepancies_and_mandatory_lineage() -> None:
+    with pytest.raises(SbcPpcError, match="at least one"):
+        freeze_discrepancies([])
     frozen = freeze_discrepancies(["sample_variance", "sample_max",
                                    "sample_range"])
     rng = np.random.Generator(np.random.PCG64(3))
@@ -184,6 +186,12 @@ def test_ppc_receipt_type_guard() -> None:
                             "point_prediction": 0.5})
     with pytest.raises(SbcPpcError, match="not a PPC receipt"):
         require_ppc_receipt({"bayesian_p": 0.5})
+    with pytest.raises(SbcPpcError, match="non-empty"):
+        require_ppc_receipt({
+            "frozen_hash": "disc-empty",
+            "discrepancy_results": [],
+            "lineage_verified": "lin-empty",
+        })
     frozen = freeze_discrepancies(["sample_variance"])
     rng = np.random.Generator(np.random.PCG64(9))
     y = rng.normal(0.5, 1.0, 8)
