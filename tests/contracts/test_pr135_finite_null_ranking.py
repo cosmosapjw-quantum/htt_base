@@ -1,6 +1,7 @@
 """PR-135 contract tests: exchangeable finite-null ranking."""
 from __future__ import annotations
 
+import importlib.util
 import json
 import subprocess
 import sys
@@ -30,6 +31,50 @@ from common.finite_null_ranking import (
 )
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
+
+
+def _load_runner():
+    runner_path = (
+        REPO_ROOT / "scripts/codex_harness/run_pr135_finite_null_ranking.py"
+    )
+    spec = importlib.util.spec_from_file_location("run_pr135", runner_path)
+    runner = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(runner)
+    return runner
+
+
+def test_ranking_source_hash_is_generation_time_provenance() -> None:
+    runner = _load_runner()
+    source = runner.RANKING_SOURCE
+    estimator = runner.OUTPUTS["estimator"]
+    stored = {
+        "negative_scan": {
+            "targets": {
+                source: {"sha256": "1" * 64, "hits": []},
+            }
+        }
+    }
+    current = {
+        "negative_scan": {
+            "targets": {
+                source: {"sha256": "2" * 64, "hits": []},
+            }
+        }
+    }
+    assert runner._semantic_artifact(
+        estimator, stored
+    ) == runner._semantic_artifact(estimator, current)
+    current["negative_scan"]["targets"][source]["hits"] = [{"line": 1}]
+    assert runner._semantic_artifact(
+        estimator, stored
+    ) != runner._semantic_artifact(estimator, current)
+
+    manifest = runner.OUTPUTS["manifest"]
+    stored = {"input_hashes": [f"{source}:{'1' * 64}"]}
+    current = {"input_hashes": [f"{source}:{'2' * 64}"]}
+    assert runner._semantic_artifact(
+        manifest, stored
+    ) == runner._semantic_artifact(manifest, current)
 
 
 def test_exact_discrete_estimator() -> None:
