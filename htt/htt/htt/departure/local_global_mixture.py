@@ -90,6 +90,8 @@ def _optional_non_empty(value: object | None, field_name: str) -> str | None:
 
 
 def _finite_float(value: object, field_name: str) -> float:
+    if isinstance(value, (bool, np.bool_)):
+        raise ValueError(f"{field_name} must be a finite numeric value, not boolean")
     out = float(value)
     if not math.isfinite(out):
         raise ValueError(f"{field_name} must be finite")

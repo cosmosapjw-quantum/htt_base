@@ -589,3 +589,56 @@ def test_noise_block_is_required_and_distinct():
         LocalGlobalMixtureBlock.require_collection(
             tuple(block for block in _blocks() if block.kind != "noise")
         )
+
+
+@pytest.mark.parametrize(
+    ("parameter_name", "boolean_value"),
+    (
+        ("beta_local", True),
+        ("sigma_noise", np.bool_(False)),
+    ),
+)
+def test_boolean_primitive_parameters_are_rejected(parameter_name, boolean_value):
+    from htt.departure.local_global_mixture import (
+        LocalGlobalMixtureSpec,
+        build_local_global_mixture_report,
+    )
+
+    audit = _audit()
+    local_report = _local_fpr_report(audit)
+    survey_report = _survey_fpr_report(audit)
+    spec = LocalGlobalMixtureSpec(
+        observable_vector=(0.16, -0.03, 0.08),
+        covariance=np.diag((0.9, 1.1, 1.4)),
+        blocks=_blocks(),
+        response_overlap_audit=audit,
+        local_null_fpr_report=local_report,
+        survey_systematic_null_fpr_report=survey_report,
+        local_null_report_hash=local_report.report_hash,
+        survey_systematic_null_config_hash=survey_report.bank.config.config_hash,
+        survey_systematic_null_input_hashes=survey_report.bank.input_hashes,
+        survey_systematic_null_report_hash=survey_report.report_hash,
+        response_overlap_config_hash=audit.manifest.config_hash,
+        selection_metadata_hash=(
+            survey_report.bank.selection_metadata.selection_metadata_hash
+        ),
+        survey_axis_hash=survey_report.bank.survey_axis_metadata.survey_axis_hash,
+        artifact_id="htt.pr063.local_global_mixture.boolean_parameter",
+        config_hash=_sha("o"),
+        input_hashes=(_sha("p"),),
+        generating_command=_COMMAND,
+        worktree_state=_WORKTREE,
+    )
+    parameter_values = {
+        "beta_local": 0.10,
+        "beta_global": -0.06,
+        "beta_survey_axis": 0.03,
+        "sigma_noise": 0.04,
+    }
+    parameter_values[parameter_name] = boolean_value
+
+    with pytest.raises(ValueError, match="not boolean"):
+        build_local_global_mixture_report(
+            spec,
+            parameter_values=parameter_values,
+        )
