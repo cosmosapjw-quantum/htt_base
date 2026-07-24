@@ -101,6 +101,25 @@ def require_exchangeable_unit(graph: DependencyGraph) -> None:
             "spanning every row, so there is no held-out exchangeable unit")
 
 
+def _require_group_graph_matches_model(
+        model: GroupModel, graph: DependencyGraph) -> None:
+    """Refuse a graph whose folds differ from the modeled dependencies."""
+
+    if graph.n_rows != len(model.group):
+        raise HoldoutError(
+            "dependency graph row count does not match the model groups")
+    graph_partition = {
+        frozenset(rows) for rows in graph.folds()
+    }
+    model_partition = {
+        frozenset(int(row) for row in model.rows_of_group(group))
+        for group in model.group_ids()
+    }
+    if graph_partition != model_partition:
+        raise HoldoutError(
+            "dependency graph folds do not match the model group partition")
+
+
 def require_units_respect_dependency(
         declared_folds: Sequence[Sequence[int]],
         true_clusters: Sequence[Sequence[int]]) -> None:
@@ -305,6 +324,7 @@ def exact_group_elpd(model: GroupModel, graph: DependencyGraph, *,
     the marginal-MVN conditional (used for the equivalence cross-check).
     """
     require_exchangeable_unit(graph)
+    _require_group_graph_matches_model(model, graph)
     fold_records = []
     total = 0.0
     all_rows = np.arange(model.X.shape[0])
@@ -451,6 +471,7 @@ def psis_group_elpd(model: GroupModel, graph: DependencyGraph,
                     cols: Sequence[int] | None = None) -> dict:
     """PSIS-LOO ELPD over group folds from a single full-data fit."""
     require_exchangeable_unit(graph)
+    _require_group_graph_matches_model(model, graph)
     chosen = tuple(cols) if cols is not None else tuple(range(model.X.shape[1]))
     means, stds, _ = train_only_standardization(
         model.X, list(range(model.X.shape[0])))
@@ -570,6 +591,7 @@ def dependency_optimism(model: GroupModel, graph: DependencyGraph, *,
     shown to split a dependency cluster (refused by the dependency guard).
     """
     require_exchangeable_unit(graph)
+    _require_group_graph_matches_model(model, graph)
     mean, cov = marginal_covariance(model, cols)
     y = model.y
     n = len(y)

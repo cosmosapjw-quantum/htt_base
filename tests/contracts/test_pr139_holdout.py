@@ -129,6 +129,20 @@ def test_dependency_graph_folds_and_status() -> None:
         DependencyGraph("pixel", (0, 1))
 
 
+def test_holdout_refuses_graph_that_conflicts_with_model_groups() -> None:
+    model, _ = _toy(G=6, ng=2)
+    conflicting = DependencyGraph(
+        "group",
+        tuple(row % 2 for row in range(model.X.shape[0])),
+    )
+    with pytest.raises(HoldoutError, match="model group partition"):
+        exact_group_elpd(model, conflicting)
+    with pytest.raises(HoldoutError, match="model group partition"):
+        psis_group_elpd(model, conflicting, n_draws=100, seed=7)
+    with pytest.raises(HoldoutError, match="model group partition"):
+        dependency_optimism(model, conflicting)
+
+
 def test_units_respect_dependency_refuses_row_split() -> None:
     clusters = [[0, 1, 2], [3, 4, 5]]
     require_units_respect_dependency(clusters, clusters)   # group folds OK
