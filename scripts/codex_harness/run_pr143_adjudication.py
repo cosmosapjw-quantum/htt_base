@@ -54,6 +54,10 @@ OUTPUTS = {
     "mutations": "docs/generated/pr143_mutation_report.json",
     "manifest": "docs/generated/pr143_artifact_manifest.json",
 }
+SOURCE_PATHS = (
+    "htt/src/common/synthetic_adjudication.py",
+    "htt/src/common/mixture_competition.py",
+)
 REDACTED = "[REDACTED-PATTERN]"
 
 
@@ -74,6 +78,45 @@ def _round(obj):
 def _render(payload: dict) -> bytes:
     return (json.dumps(_round(payload), indent=2, ensure_ascii=False,
                        sort_keys=True) + "\n").encode()
+
+
+def _is_sha256(value: object) -> bool:
+    return (
+        isinstance(value, str)
+        and len(value) == 64
+        and all(char in "0123456789abcdef" for char in value)
+    )
+
+
+def _semantic_artifact(rel: str, payload: dict) -> dict:
+    """Keep maintained-source hashes as generation-time provenance."""
+
+    normalized = json.loads(json.dumps(_round(payload)))
+    if rel == OUTPUTS["referee"]:
+        scan = normalized.get("negative_scan")
+        targets = scan.get("targets") if isinstance(scan, dict) else None
+        source = (
+            targets.get(SOURCE_PATHS[0])
+            if isinstance(targets, dict) else None
+        )
+        if isinstance(source, dict) and _is_sha256(source.get("sha256")):
+            source["sha256"] = "<generation-time-source>"
+        return normalized
+    if rel != OUTPUTS["manifest"]:
+        return normalized
+    rows = normalized.get("input_hashes")
+    if not isinstance(rows, list):
+        return normalized
+    for source_path in SOURCE_PATHS:
+        prefix = f"{source_path}:"
+        for index, row in enumerate(rows):
+            if (
+                isinstance(row, str)
+                and row.startswith(prefix)
+                and _is_sha256(row.removeprefix(prefix))
+            ):
+                rows[index] = f"{prefix}<generation-time-source>"
+    return normalized
 
 
 def _verify_baseline_commit(spec: dict) -> None:
@@ -305,7 +348,20 @@ def _emit(rel: str, payload: dict, write: bool,
         return
     if not target.is_file():
         problems.append(f"missing artifact: {rel}")
-    elif target.read_bytes() != rendered:
+        return
+    if rel in {OUTPUTS["referee"], OUTPUTS["manifest"]}:
+        try:
+            existing = json.loads(target.read_text(encoding="utf-8"))
+        except (UnicodeError, json.JSONDecodeError):
+            problems.append(f"invalid artifact: {rel}")
+            return
+        if (
+            isinstance(existing, dict)
+            and _semantic_artifact(rel, existing)
+            == _semantic_artifact(rel, payload)
+        ):
+            return
+    if target.read_bytes() != rendered:
         problems.append(f"stale artifact: {rel}")
 
 
@@ -351,8 +407,7 @@ def build(write: bool) -> int:
         "config_hash": _sha(SPEC_PATH),
         "input_hashes": [
             f"{rel}:{_sha(REPO / rel)}"
-            for rel in ("htt/src/common/synthetic_adjudication.py",
-                        "htt/src/common/mixture_competition.py")
+            for rel in SOURCE_PATHS
         ],
         "caveats": [
             "Pre-data method-calibration mechanics at C3 only.",

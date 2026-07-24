@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import dataclasses
+import importlib.util
 import json
 import subprocess
 import sys
@@ -40,6 +41,65 @@ CFG = DiscriminationConfig(
     collinearity_threshold=0.9, ppc_reject=0.01, prior_swing_ceiling=6.0,
     tau2_grid=(1.0, 4.0, 16.0), held_out_gain_floor=0.0,
     combination_margin=5.0, seed=5)
+
+
+def _load_runner():
+    runner_path = REPO_ROOT / "scripts/codex_harness/run_pr143_adjudication.py"
+    spec = importlib.util.spec_from_file_location("run_pr143", runner_path)
+    runner = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(runner)
+    return runner
+
+
+def test_source_hashes_are_generation_time_provenance() -> None:
+    runner = _load_runner()
+    source = runner.SOURCE_PATHS[0]
+    referee_rel = runner.OUTPUTS["referee"]
+    stored = {
+        "measured_size": 0.05,
+        "negative_scan": {
+            "targets": {source: {"sha256": "1" * 64, "hits": []}},
+        },
+    }
+    current = {
+        "measured_size": 0.05,
+        "negative_scan": {
+            "targets": {source: {"sha256": "2" * 64, "hits": []}},
+        },
+    }
+    assert runner._semantic_artifact(
+        referee_rel, stored
+    ) == runner._semantic_artifact(referee_rel, current)
+    current["negative_scan"]["targets"][source]["hits"] = [{"line": 1}]
+    assert runner._semantic_artifact(
+        referee_rel, stored
+    ) != runner._semantic_artifact(referee_rel, current)
+    current["negative_scan"]["targets"][source] = {
+        "sha256": "not-a-sha",
+        "hits": [],
+    }
+    assert runner._semantic_artifact(
+        referee_rel, stored
+    ) != runner._semantic_artifact(referee_rel, current)
+
+    manifest_rel = runner.OUTPUTS["manifest"]
+    stored = {
+        "input_hashes": [
+            f"{path}:{'1' * 64}" for path in runner.SOURCE_PATHS
+        ],
+    }
+    current = {
+        "input_hashes": [
+            f"{path}:{'2' * 64}" for path in runner.SOURCE_PATHS
+        ],
+    }
+    assert runner._semantic_artifact(
+        manifest_rel, stored
+    ) == runner._semantic_artifact(manifest_rel, current)
+    current["config_hash"] = "changed"
+    assert runner._semantic_artifact(
+        manifest_rel, stored
+    ) != runner._semantic_artifact(manifest_rel, current)
 
 
 def _challenge(seed=101, n_reps=4):
