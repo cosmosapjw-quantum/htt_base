@@ -35,6 +35,7 @@ from common.theorem_signatures import (
     TheoremSignatureError,
     load_signature_registry,
 )
+from scripts.codex_harness import run_pr124_cas_lineage as pr124_runner
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 SPEC_PATH = (
@@ -62,6 +63,22 @@ def test_spec_schema_and_remediation_contract(spec: dict) -> None:
     assert contract["rescued_count"] == 0
     assert spec["claim_level"]["level"] == "C1"
     assert spec["claim_tier_ceiling"] == "conditional"
+
+
+def test_historical_generation_location_is_not_live_check_authority() -> None:
+    frozen = {
+        "payload": {"value": 1},
+        "generating_command": "/owner/checkout/venv/bin/python runner.py",
+        "git_commit_or_worktree_state": "old-commit; dirty",
+    }
+    current = {
+        "payload": {"value": 1},
+        "generating_command": "/clean/clone/venv/bin/python runner.py",
+        "git_commit_or_worktree_state": "new-commit",
+    }
+    assert pr124_runner._semantic(frozen) == pr124_runner._semantic(current)
+    current["payload"]["value"] = 2
+    assert pr124_runner._semantic(frozen) != pr124_runner._semantic(current)
 
 
 def test_cas_adjudication_is_four_axis_pass_bound_to_contract(

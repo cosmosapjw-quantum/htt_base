@@ -777,8 +777,13 @@ def _write_if_changed(rel: str, payload: dict, wrote: list[str]) -> None:
     wrote.append(rel)
 
 
-_VOLATILE_KEYS = {"completed_at", "adjudicated_at", "generated_at",
-                  "git_commit_or_worktree_state"}
+_VOLATILE_KEYS = {
+    "adjudicated_at",
+    "completed_at",
+    "generated_at",
+    "generating_command",
+    "git_commit_or_worktree_state",
+}
 
 
 def _semantic(payload):
