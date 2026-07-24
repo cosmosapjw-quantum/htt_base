@@ -531,6 +531,14 @@ def _source_manifest_reasons(
         reasons.append(f"{name}_owner_mismatch")
     if manifest.implementation_scope != ImplementationScope.COMMON:
         reasons.append(f"{name}_scope_mismatch")
+    if manifest.production_status != "diagnostic_only":
+        reasons.append(
+            f"{name}_source_production_status_{manifest.production_status}"
+        )
+    if manifest.claim_tier != ClaimTier.DIAGNOSTIC_ONLY:
+        reasons.append(
+            f"{name}_source_claim_tier_{manifest.claim_tier.value}"
+        )
     if manifest.config_hash != config_hash:
         reasons.append(f"{name}_config_hash_mismatch")
     if list(manifest.input_hashes) != list(input_hashes):

@@ -405,6 +405,42 @@ def test_source_failed_gates_block_even_when_wrapper_claims_available():
     assert "template_failed_gate_typed_null_feature_payload" in result.no_claim_reasons
 
 
+def test_blocked_source_status_cannot_create_information_gain():
+    from htt.statistics.mes_information_gain import build_mes_information_gain_report
+
+    good = _template_result()
+    blocked_manifest = replace(
+        good.report.manifest,
+        production_status="blocked_missing_null_mocks",
+        claim_tier="blocked",
+        failed_gates=[],
+    )
+    forged = replace(
+        good,
+        report=replace(good.report, manifest=blocked_manifest),
+    )
+
+    result = build_mes_information_gain_report(
+        template_result=forged,
+        config_hash=_CONFIG_HASH,
+        input_hashes=_INPUT_HASHES,
+        generating_command=_COMMAND,
+        worktree_state=_WORKTREE,
+    )
+    payload = result.as_payload()
+
+    assert result.i_morph is None
+    assert result.best_valid_branch is None
+    assert result.improvement_candidate is False
+    assert result.manifest.production_status == "blocked_missing_null_mocks"
+    assert payload["branches"]["template"]["status"] == "no_claim"
+    assert (
+        "template_source_production_status_blocked_missing_null_mocks"
+        in result.no_claim_reasons
+    )
+    assert "template_source_claim_tier_blocked" in result.no_claim_reasons
+
+
 @pytest.mark.parametrize(
     ("target", "bad_value", "match"),
     [
