@@ -947,6 +947,12 @@ def _latest_checkpoint_metadata(checkpoint_dir: Path, current_completed: int) ->
         metadata = _checkpoint_metadata(path)
         if metadata is None:
             raise ValueError(f"malformed checkpoint metadata: {path}")
+        metadata_completed = metadata.get("completed")
+        if type(metadata_completed) is not int or metadata_completed != checkpoint_number:
+            raise ValueError(
+                "checkpoint metadata completed count does not match filename: "
+                f"{path}"
+            )
         candidates.append((checkpoint_number, metadata))
     if not candidates:
         return None
@@ -1129,20 +1135,55 @@ def write_checkpoint(report: dict[str, Any], checkpoint_dir: str | Path) -> Path
         return None
     output_dir = Path(checkpoint_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
-    previous = _latest_checkpoint_metadata(output_dir, report["completed"])
-    state = _checkpoint_state(report, previous)
-    report.update(state)
     checkpoint_path = output_dir / f"checkpoint_{report['completed']:03d}.md"
-    rendered = _checkpoint_markdown(report, state)
     if checkpoint_path.exists():
-        existing = checkpoint_path.read_text(encoding="utf-8")
-        if existing != rendered:
+        existing_metadata = _checkpoint_metadata(checkpoint_path)
+        existing_completed = (
+            existing_metadata.get("completed")
+            if existing_metadata is not None
+            else None
+        )
+        if (
+            existing_metadata is None
+            or type(existing_completed) is not int
+            or existing_completed != report["completed"]
+        ):
             raise ValueError(
                 "refusing to overwrite differing immutable checkpoint: "
                 f"{checkpoint_path}"
             )
-    else:
-        checkpoint_path.write_text(rendered, encoding="utf-8")
+        original_replan_required = existing_metadata.get("replan_required")
+        if type(original_replan_required) is not bool:
+            raise ValueError(
+                "refusing to overwrite differing immutable checkpoint: "
+                f"{checkpoint_path}"
+            )
+        original_state = {
+            "previous_checkpoint_completed": None,
+            "progress_delta_completed": None,
+            "replan_required": original_replan_required,
+            "replan_reason": (
+                "progress did not advance since the previous checkpoint"
+                if original_replan_required
+                else "progress advanced; no replan required"
+            ),
+        }
+        existing = checkpoint_path.read_text(encoding="utf-8")
+        if existing != _checkpoint_markdown(report, original_state):
+            raise ValueError(
+                "refusing to overwrite differing immutable checkpoint: "
+                f"{checkpoint_path}"
+            )
+        state = _checkpoint_state(report, existing_metadata)
+        report.update(state)
+        report["checkpoint_artifact"] = str(checkpoint_path)
+        return checkpoint_path
+
+    previous = _latest_checkpoint_metadata(output_dir, report["completed"])
+    state = _checkpoint_state(report, previous)
+    report.update(state)
+    rendered = _checkpoint_markdown(report, state)
+    checkpoint_path.write_text(rendered, encoding="utf-8")
     report["checkpoint_artifact"] = str(checkpoint_path)
     return checkpoint_path
 

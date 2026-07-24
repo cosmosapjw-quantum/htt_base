@@ -1038,7 +1038,13 @@ def test_progress_report_writes_checkpoint_artifact_when_due(tmp_path: Path) -> 
     status = tmp_path / "status.yaml"
     checkpoint_dir = tmp_path / "checkpoints"
     _write_yaml(backlog, _linear_backlog(5))
-    _write_yaml(status, {"completed": [f"PR-{index:03d}" for index in range(5)], "blocked": []})
+    _write_yaml(
+        status,
+        {
+            "completed": [f"PR-{index:03d}" for index in range(5)],
+            "blocked": [],
+        },
+    )
 
     completed = _run(
         str(PROGRESS),
@@ -1090,17 +1096,72 @@ def test_progress_report_scoreboard_records_satisfied_checkpoint(
     assert "checkpoint_005.md" in rendered
 
 
-def test_progress_report_checkpoint_detects_no_progress_since_previous_checkpoint(
+def test_progress_report_checkpoint_detects_no_progress_when_due_count_repeats(
+    tmp_path: Path,
+) -> None:
+    backlog = tmp_path / "backlog.yaml"
+    status = tmp_path / "status.yaml"
+    checkpoint_dir = tmp_path / "checkpoints"
+    _write_yaml(backlog, _linear_backlog(5))
+    _write_yaml(
+        status,
+        {
+            "completed": [f"PR-{index:03d}" for index in range(5)],
+            "blocked": [],
+        },
+    )
+
+    first = _run(
+        str(PROGRESS),
+        str(backlog),
+        str(status),
+        "--checkpoint-every",
+        "5",
+        "--write-checkpoint-dir",
+        str(checkpoint_dir),
+        "--json",
+    )
+    assert first.returncode == 0, first.stderr
+    checkpoint = checkpoint_dir / "checkpoint_005.md"
+    original = checkpoint.read_text(encoding="utf-8")
+
+    repeated = _run(
+        str(PROGRESS),
+        str(backlog),
+        str(status),
+        "--checkpoint-every",
+        "5",
+        "--write-checkpoint-dir",
+        str(checkpoint_dir),
+        "--json",
+    )
+
+    assert repeated.returncode == 0, repeated.stderr
+    payload = json.loads(repeated.stdout)
+    assert payload["previous_checkpoint_completed"] == 5
+    assert payload["progress_delta_completed"] == 0
+    assert payload["replan_required"] is True
+    assert "progress did not advance" in payload["replan_reason"]
+    assert checkpoint.read_text(encoding="utf-8") == original
+
+
+def test_progress_report_rejects_checkpoint_completed_identity_mismatch(
     tmp_path: Path,
 ) -> None:
     backlog = tmp_path / "backlog.yaml"
     status = tmp_path / "status.yaml"
     checkpoint_dir = tmp_path / "checkpoints"
     checkpoint_dir.mkdir()
-    _write_yaml(backlog, _linear_backlog(5))
-    _write_yaml(status, {"completed": [f"PR-{index:03d}" for index in range(5)], "blocked": []})
-    (checkpoint_dir / "checkpoint_004.md").write_text(
-        '<!-- checkpoint_meta {"completed": 5, "percent_complete": 100.0} -->\n',
+    _write_yaml(backlog, _linear_backlog(10))
+    _write_yaml(
+        status,
+        {
+            "completed": [f"PR-{index:03d}" for index in range(10)],
+            "blocked": [],
+        },
+    )
+    (checkpoint_dir / "checkpoint_005.md").write_text(
+        '<!-- checkpoint_meta {"completed": 10, "percent_complete": 100.0} -->\n',
         encoding="utf-8",
     )
 
@@ -1114,10 +1175,8 @@ def test_progress_report_checkpoint_detects_no_progress_since_previous_checkpoin
         str(checkpoint_dir),
     )
 
-    assert completed.returncode == 0, completed.stderr
-    rendered = (checkpoint_dir / "checkpoint_005.md").read_text(encoding="utf-8")
-    assert "Replan required: yes" in rendered
-    assert "Adversarial replan entry" in rendered
+    assert completed.returncode != 0
+    assert "completed count does not match filename" in completed.stderr
 
 
 def test_progress_report_does_not_write_checkpoint_when_not_due(tmp_path: Path) -> None:
@@ -1252,8 +1311,11 @@ def test_progress_checkpoint_is_immutable_but_identical_reuse_is_allowed(
     assert identical.returncode == 0, identical.stderr
     assert checkpoint.read_text(encoding="utf-8") == original
 
-    checkpoint.write_text("pre-existing different checkpoint\n", encoding="utf-8")
+    checkpoint.write_text(
+        original.replace("Replan required: no", "Replan required: yes"),
+        encoding="utf-8",
+    )
     differing = _run(*command)
     assert differing.returncode != 0
     assert "refusing to overwrite differing immutable checkpoint" in differing.stderr
-    assert checkpoint.read_text(encoding="utf-8") == "pre-existing different checkpoint\n"
+    assert checkpoint.read_text(encoding="utf-8") != original
