@@ -42,6 +42,46 @@ def _write_yaml(path: Path, payload: dict) -> None:
     path.write_text(yaml.safe_dump(payload, sort_keys=False), encoding="utf-8")
 
 
+def _post_pr167_snapshot(tmp_path: Path) -> tuple[Path, Path]:
+    spec = intake_advocate_track._load_mapping(intake_advocate_track.SPEC)
+    cards = intake_advocate_track.parse_advocate_cards(
+        intake_advocate_track.ROADMAP.read_text(encoding="utf-8"),
+        spec,
+    )
+    baseline_backlog = yaml.safe_load(
+        intake_advocate_track._baseline_file_text(
+            str(spec["baseline_commit"]),
+            intake_advocate_track.BACKLOG_YAML,
+        )
+    )
+    baseline_status = yaml.safe_load(
+        intake_advocate_track._baseline_file_text(
+            str(spec["baseline_commit"]),
+            intake_advocate_track.STATUS_YAML,
+        )
+    )
+    backlog = intake_advocate_track.materialize_backlog(
+        baseline_backlog,
+        cards,
+        spec,
+    )
+    status = intake_advocate_track.materialize_status(baseline_status, cards)
+    status["in_progress"] = None
+    status["completed"].append("PR-167")
+    status["execution_resolutions"]["PR-167"] = {
+        "resolution": "COMPLETED_SUCCESS",
+        "receipt": "docs/PR_DELTAS/pr-167.md",
+        "resolved_on": "2026-07-19",
+        "scientific_status_effect": "none",
+        "scientific_status_after": "OPEN",
+    }
+    backlog_path = tmp_path / "backlog.yaml"
+    status_path = tmp_path / "status.yaml"
+    _write_yaml(backlog_path, backlog)
+    _write_yaml(status_path, status)
+    return backlog_path, status_path
+
+
 def test_dedicated_intake_check_and_mirrors_are_exact() -> None:
     completed = _run(str(INTAKE), "--check")
     assert completed.returncode == 0, completed.stderr
@@ -128,31 +168,13 @@ def test_progress_status_schema_fails_closed(
 def test_hypothesis_only_cards_are_reported_but_not_auto_scheduled(
     tmp_path: Path,
 ) -> None:
-    status = _yaml(STATUS)
-    # Reconstruct the transaction's own post-PR-167 baseline instead of
-    # inheriting whichever later advocate card is currently foreground.
-    for number in range(168, 183):
-        pr_id = f"PR-{number}"
-        if pr_id in status["completed"]:
-            status["completed"].remove(pr_id)
-        if pr_id in status["blocked"]:
-            status["blocked"].remove(pr_id)
-        status["execution_resolutions"].pop(pr_id, None)
-        if pr_id not in status["pending"]:
-            status["pending"].append(pr_id)
-    if "PR-167" not in status["completed"]:
-        status["completed"].append("PR-167")
-    status["in_progress"] = None
-    status["execution_resolutions"]["PR-167"] = {
-        "resolution": "COMPLETED_SUCCESS",
-        "receipt": "docs/PR_DELTAS/pr-167.md",
-        "resolved_on": "2026-07-19",
-        "scientific_status_effect": "none",
-        "scientific_status_after": "OPEN",
-    }
-    path = tmp_path / "status.yaml"
-    _write_yaml(path, status)
-    completed = _run(str(PROGRESS), str(BACKLOG), str(path), "--json")
+    backlog_path, status_path = _post_pr167_snapshot(tmp_path)
+    completed = _run(
+        str(PROGRESS),
+        str(backlog_path),
+        str(status_path),
+        "--json",
+    )
     assert completed.returncode == 0, completed.stderr
     report = json.loads(completed.stdout)
     assert report["unblocked_next"][:5] == [
@@ -181,11 +203,16 @@ def _move_foreground(status: dict, pr_id: str) -> None:
 
 
 def test_hypothesis_only_card_cannot_be_moved_to_foreground(tmp_path: Path) -> None:
-    status = _yaml(STATUS)
+    backlog_path, status_path = _post_pr167_snapshot(tmp_path)
+    status = _yaml(status_path)
     _move_foreground(status, "PR-174")
-    path = tmp_path / "status.yaml"
-    _write_yaml(path, status)
-    completed = _run(str(PROGRESS), str(BACKLOG), str(path), "--json")
+    _write_yaml(status_path, status)
+    completed = _run(
+        str(PROGRESS),
+        str(backlog_path),
+        str(status_path),
+        "--json",
+    )
     assert completed.returncode != 0
     assert "defensible and execution-authorized" in completed.stderr
 
@@ -193,8 +220,10 @@ def test_hypothesis_only_card_cannot_be_moved_to_foreground(tmp_path: Path) -> N
 def test_hypothesis_only_or_nonacquisition_card_cannot_run_in_background(
     tmp_path: Path,
 ) -> None:
+    backlog_path, status_path = _post_pr167_snapshot(tmp_path)
+    baseline_status = _yaml(status_path)
     for pr_id in ("PR-174", "PR-172"):
-        status = _yaml(STATUS)
+        status = copy.deepcopy(baseline_status)
         if status["in_progress"] == pr_id:
             status["in_progress"] = None
         status["background_in_progress"] = [pr_id]
@@ -213,7 +242,12 @@ def test_hypothesis_only_or_nonacquisition_card_cannot_run_in_background(
         status["pending"].append("PR-151")
         path = tmp_path / f"{pr_id}.yaml"
         _write_yaml(path, status)
-        completed = _run(str(PROGRESS), str(BACKLOG), str(path), "--json")
+        completed = _run(
+            str(PROGRESS),
+            str(backlog_path),
+            str(path),
+            "--json",
+        )
         assert completed.returncode != 0
         assert (
             "defensible and execution-authorized" in completed.stderr

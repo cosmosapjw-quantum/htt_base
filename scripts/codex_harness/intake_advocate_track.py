@@ -1028,13 +1028,23 @@ def _artifact_manifest_payload(
 def _expected_manifest_from_disk(
     spec: Mapping[str, Any], cards: list[dict[str, Any]], receipt: Mapping[str, Any]
 ) -> dict[str, Any]:
+    baseline_backlog_text = _baseline_file_text(
+        str(spec["baseline_commit"]), BACKLOG_YAML
+    )
+    baseline_backlog = yaml.safe_load(baseline_backlog_text)
     baseline_status_text = _baseline_file_text(
         str(spec["baseline_commit"]), STATUS_YAML
     )
     baseline_status = yaml.safe_load(baseline_status_text)
-    if not isinstance(baseline_status, dict):
-        raise ValueError("PR-167 baseline status is malformed")
+    if not isinstance(baseline_backlog, dict) or not isinstance(
+        baseline_status, dict
+    ):
+        raise ValueError("PR-167 baseline backlog/status is malformed")
+    intake_backlog = materialize_backlog(baseline_backlog, cards, spec)
     intake_status = materialize_status(baseline_status, cards)
+    intake_backlog_text = _preserving_backlog_text(
+        baseline_backlog_text, intake_backlog, cards
+    )
     intake_status_text = _preserving_status_text(
         baseline_status_text, intake_status, cards
     )
@@ -1046,7 +1056,7 @@ def _expected_manifest_from_disk(
         cards,
         receipt,
         crosswalk,
-        BACKLOG_YAML.read_text(encoding="utf-8"),
+        intake_backlog_text,
         intake_status_text,
         receipt_text=receipt_text,
         crosswalk_text=crosswalk_text,
@@ -1083,9 +1093,6 @@ def check_materialized(spec: Mapping[str, Any], cards: list[dict[str, Any]]) -> 
     if not isinstance(backlog_cards, list):
         raise ValueError("canonical advocate backlog cards are malformed")
     validate_status_contract(cards=backlog_cards, status=status)
-    expected = materialize_backlog(backlog, cards, spec)
-    if expected != backlog:
-        raise ValueError("canonical advocate backlog is not idempotent")
     if BACKLOG_YAML.read_text(encoding="utf-8") != MACHINE_BACKLOG_YAML.read_text(encoding="utf-8"):
         raise ValueError("advocate YAML backlog mirrors differ")
     if STATUS_YAML.read_text(encoding="utf-8") != MACHINE_STATUS_YAML.read_text(encoding="utf-8"):
@@ -1094,9 +1101,33 @@ def check_materialized(spec: Mapping[str, Any], cards: list[dict[str, Any]]) -> 
     machine_json = json.loads(MACHINE_BACKLOG_JSON.read_text(encoding="utf-8"))
     if docs_json != backlog or machine_json != backlog:
         raise ValueError("advocate JSON backlog mirrors differ from canonical YAML")
-    actual_cards = backlog["prs"][-len(cards) :]
-    if actual_cards != cards:
-        raise ValueError("PR-167..PR-183 cards drifted from the approved SPEC/roadmap projection")
+    actual_by_id = {
+        card.get("id"): card
+        for card in backlog_cards
+        if isinstance(card, dict)
+    }
+    expected_ids = [card["id"] for card in cards]
+    if any(pr_id not in actual_by_id for pr_id in expected_ids):
+        raise ValueError("PR-167..PR-183 cards are missing from the current DAG")
+    for expected_card in cards:
+        current_card = actual_by_id[expected_card["id"]]
+        for field in (
+            "execution_lane",
+            "activation_state",
+            "scientific_artifact_mode",
+            "execution_authorization",
+            "public_use",
+        ):
+            if current_card.get(field) != expected_card.get(field):
+                raise ValueError(
+                    f"{expected_card['id']} intake invariant drifted: {field}"
+                )
+        if not set(expected_card["depends"]).issubset(
+            set(current_card.get("depends", []))
+        ):
+            raise ValueError(
+                f"{expected_card['id']} lost a registered intake dependency"
+            )
     receipt_payload = json.loads(RECEIPT.read_text(encoding="utf-8"))
     receipt_spec = spec["pre_intake_receipt"]
     validate_pre_intake_receipt(
@@ -1118,7 +1149,34 @@ def check_materialized(spec: Mapping[str, Any], cards: list[dict[str, Any]]) -> 
     if actual_crosswalk != expected_crosswalk:
         raise ValueError("PR-167 advocate crosswalk drift")
     actual_manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
-    if actual_manifest != _expected_manifest_from_disk(spec, cards, receipt_payload):
+    artifact_rows = actual_manifest.get("artifact_hashes")
+    if not isinstance(artifact_rows, list) or len(artifact_rows) != 4:
+        raise ValueError("PR-167 artifact manifest hash rows are malformed")
+    artifact_hashes: dict[str, str] = {}
+    for row in artifact_rows:
+        if not isinstance(row, str) or ":" not in row:
+            raise ValueError("PR-167 artifact manifest hash row is malformed")
+        path, digest = row.rsplit(":", 1)
+        if len(digest) != 64 or any(
+            character not in "0123456789abcdef" for character in digest
+        ):
+            raise ValueError("PR-167 artifact manifest digest is malformed")
+        artifact_hashes[path] = digest
+    expected_artifact_paths = {
+        RECEIPT.relative_to(REPO).as_posix(),
+        CROSSWALK.relative_to(REPO).as_posix(),
+        BACKLOG_YAML.relative_to(REPO).as_posix(),
+        STATUS_YAML.relative_to(REPO).as_posix(),
+    }
+    if set(artifact_hashes) != expected_artifact_paths:
+        raise ValueError("PR-167 artifact manifest hash path set drift")
+    for path in (RECEIPT, CROSSWALK):
+        relative = path.relative_to(REPO).as_posix()
+        if artifact_hashes[relative] != file_sha256(path):
+            raise ValueError(f"PR-167 durable artifact hash drift: {relative}")
+    expected_manifest = _expected_manifest_from_disk(spec, cards, receipt_payload)
+    expected_manifest["artifact_hashes"] = artifact_rows
+    if actual_manifest != expected_manifest:
         raise ValueError("PR-167 artifact manifest drift")
 
 

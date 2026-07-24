@@ -23,8 +23,12 @@ def test_advocate_suffix_is_complete_typed_and_non_promoting() -> None:
     status = _yaml("docs/codex_handoff/pr_status.yaml")
     cards = {card["id"]: card for card in backlog["prs"]}
     advocate_ids = [f"PR-{number:03d}" for number in range(167, 184)]
-    assert [card["id"] for card in backlog["prs"][-17:]] == advocate_ids
-    assert set(status["execution_lane"]) == set(advocate_ids)
+    advocate_id_set = set(advocate_ids)
+    assert [
+        card["id"] for card in backlog["prs"]
+        if card["id"] in advocate_id_set
+    ] == advocate_ids
+    assert advocate_id_set <= set(status["execution_lane"])
     assert status["execution_lane"]["PR-171"] == "defensible"
     assert status["execution_lane"]["PR-174"] == "hypothesis_only"
     assert status["execution_lane"]["PR-175"] == "hypothesis_only"
@@ -52,7 +56,13 @@ def test_required_dependency_hardening_is_canonical() -> None:
         "PR-134", "PR-135", "PR-139", "PR-144", "PR-167", "PR-173"
     ]
     assert cards["PR-180"]["depends"] == [
-        "PR-134", "PR-149", "PR-150", "PR-167", "PR-172", "PR-173"
+        "PR-134",
+        "PR-149",
+        "PR-150",
+        "PR-167",
+        "PR-172",
+        "PR-173",
+        "PR-184",
     ]
     assert cards["PR-181"]["depends"] == [
         "PR-140", "PR-141", "PR-143", "PR-155", "PR-167", "PR-173"
