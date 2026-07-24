@@ -223,6 +223,21 @@ def test_gf_is_set_valued_and_correct() -> None:
     assert deg["is_scalar_posterior"] is False
 
 
+def test_gf_rejects_invalid_component_intervals() -> None:
+    valid = {c: (-0.5, 0.7) for c in COMPONENTS}
+    reversed_bounds = {**valid, "Sigma2": (1.0, -1.0)}
+    with pytest.raises(MeasureError, match="lo <= hi"):
+        feasible_range_GF(reversed_bounds, SPEC)
+    nonfinite_bounds = {**valid, "Sigma2": (float("nan"), 1.0)}
+    with pytest.raises(MeasureError, match="finite real"):
+        feasible_range_GF(nonfinite_bounds, SPEC)
+    missing_component = {
+        c: bounds for c, bounds in valid.items() if c != "W2"
+    }
+    with pytest.raises(MeasureError, match="requires exactly one"):
+        feasible_range_GF(missing_component, SPEC)
+
+
 def test_unjustified_measure_no_calibrated_scalar() -> None:
     unjust = MeasureSpec(COMPONENTS, (1.0, 1.0, 1.0, 1.0), Pairing.UNPAIRED,
                          DepthPolicy.RAW, justified=False)

@@ -428,7 +428,20 @@ def feasible_range_GF(component_intervals: dict, spec: MeasureSpec) -> dict:
     hi_sq = 0.0
     w = dict(zip(spec.identity, spec.weights))
     for c in spec.identity:
-        a, b = component_intervals[c]
+        try:
+            a, b = component_intervals[c]
+        except (KeyError, TypeError, ValueError) as exc:
+            raise MeasureError(
+                f"component {c!r} requires exactly one [lo, hi] interval"
+            ) from exc
+        if any(isinstance(v, bool) or not isinstance(v, Real)
+               or not np.isfinite(float(v)) for v in (a, b)):
+            raise MeasureError(
+                f"component {c!r} interval bounds must be finite real numbers")
+        a, b = float(a), float(b)
+        if a > b:
+            raise MeasureError(
+                f"component {c!r} interval must satisfy lo <= hi")
         lo_abs = 0.0 if a <= 0 <= b else min(abs(a), abs(b))
         hi_abs = max(abs(a), abs(b))
         lo_sq += w[c] * lo_abs ** 2
