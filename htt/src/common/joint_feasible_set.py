@@ -22,6 +22,10 @@ class InfeasibleError(ValueError):
     pass
 
 
+class UnboundedError(ValueError):
+    pass
+
+
 def _solve_vertex(rows: list[list[Fraction]], rhs: list[Fraction]) -> list[Fraction] | None:
     """Exact rational solve of a square system (Gaussian elimination)."""
     n = len(rows)
@@ -40,6 +44,86 @@ def _solve_vertex(rows: list[list[Fraction]], rhs: list[Fraction]) -> list[Fract
     return [a[r][n] for r in range(n)]
 
 
+def _is_feasible_exact(
+    A: list[list[Fraction]], b: list[Fraction], n: int
+) -> bool:
+    """Exact rational Fourier--Motzkin feasibility test."""
+    inequalities = [(list(row), rhs) for row, rhs in zip(A, b)]
+    for _ in range(n):
+        positive = []
+        negative = []
+        zero = []
+        for row, rhs in inequalities:
+            coefficient = row[-1]
+            if coefficient > 0:
+                positive.append((row, rhs))
+            elif coefficient < 0:
+                negative.append((row, rhs))
+            else:
+                zero.append((row[:-1], rhs))
+
+        projected = list(zero)
+        for upper_row, upper_rhs in positive:
+            upper_coefficient = upper_row[-1]
+            for lower_row, lower_rhs in negative:
+                lower_coefficient = lower_row[-1]
+                projected.append(
+                    (
+                        [
+                            (-lower_coefficient) * upper_row[j]
+                            + upper_coefficient * lower_row[j]
+                            for j in range(len(upper_row) - 1)
+                        ],
+                        (-lower_coefficient) * upper_rhs
+                        + upper_coefficient * lower_rhs,
+                    )
+                )
+        inequalities = projected
+        if any(not row and rhs < 0 for row, rhs in inequalities):
+            return False
+    return all(rhs >= 0 for _row, rhs in inequalities)
+
+
+def _enumerate_vertices(
+    A: list[list[Fraction]], b: list[Fraction], n: int
+) -> list[list[Fraction]]:
+    vertices = []
+    for combo in itertools.combinations(range(len(A)), n):
+        rows = [A[i] for i in combo]
+        rhs = [b[i] for i in combo]
+        vertex = _solve_vertex(rows, rhs)
+        if vertex is None:
+            continue
+        if all(
+            sum(A[i][j] * vertex[j] for j in range(n)) <= b[i]
+            for i in range(len(A))
+        ):
+            vertices.append(vertex)
+    return vertices
+
+
+def _has_nonzero_recession_direction(
+    A: list[list[Fraction]], n: int
+) -> bool:
+    """Return whether ``{d: A d <= 0}`` contains a nonzero direction.
+
+    Intersecting the recession cone with the unit box makes it a compact
+    rational polytope. It contains a nonzero vertex exactly when the original
+    feasible set is unbounded.
+    """
+    recession_A = [list(row) for row in A]
+    recession_b = [Fraction(0)] * len(A)
+    for j in range(n):
+        positive = [Fraction(0)] * n
+        negative = [Fraction(0)] * n
+        positive[j] = Fraction(1)
+        negative[j] = Fraction(-1)
+        recession_A.extend((positive, negative))
+        recession_b.extend((Fraction(1), Fraction(1)))
+    vertices = _enumerate_vertices(recession_A, recession_b, n)
+    return any(any(value != 0 for value in vertex) for vertex in vertices)
+
+
 def exact_support(
     c: list[Fraction],
     A: list[list[Fraction]],
@@ -47,23 +131,22 @@ def exact_support(
 ) -> dict:
     """Exact I_C over the rational polytope {A g <= b} by vertex enumeration.
 
-    Assumes a bounded polytope (all vertices are intersections of n of the m
-    inequality faces). Returns the exact interval and classification.
+    Requires a nonempty bounded polytope (all vertices are intersections of n
+    of the m inequality faces). Infeasible and unbounded inputs are classified
+    separately before a finite interval is returned.
     """
     n = len(c)
-    m = len(A)
-    vertices = []
-    for combo in itertools.combinations(range(m), n):
-        rows = [A[i] for i in combo]
-        rhs = [b[i] for i in combo]
-        v = _solve_vertex(rows, rhs)
-        if v is None:
-            continue
-        # feasible against all constraints?
-        if all(sum(A[i][j] * v[j] for j in range(n)) <= b[i] for i in range(m)):
-            vertices.append(v)
+    if n == 0:
+        raise ValueError("objective must have at least one dimension")
+    if len(A) != len(b) or any(len(row) != n for row in A):
+        raise ValueError("constraint dimensions must match the objective")
+    if not _is_feasible_exact(A, b, n):
+        raise InfeasibleError("polyhedron is empty")
+    if _has_nonzero_recession_direction(A, n):
+        raise UnboundedError("polyhedron is unbounded; finite support refused")
+    vertices = _enumerate_vertices(A, b, n)
     if not vertices:
-        raise InfeasibleError("no feasible vertex; polytope empty or unbounded")
+        raise RuntimeError("bounded nonempty polytope produced no vertices")
     values = [sum(c[j] * v[j] for j in range(n)) for v in vertices]
     lo, hi = min(values), max(values)
     return {
