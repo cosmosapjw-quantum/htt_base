@@ -58,6 +58,7 @@ OUTPUTS = {
     "manifest": "docs/generated/pr145_artifact_manifest.json",
 }
 REDACTED = "[REDACTED-PATTERN]"
+LIVE_MODEL_PATH = REPO / "htt/obsstat/cf4_velocity_estimators.py"
 
 
 def _sha(path: Path) -> str:
@@ -210,6 +211,15 @@ def build_captions(bulk_flow: dict) -> dict:
     return {"schema": "pr145.captions.v1", "captions": {"summary": text}}
 
 
+def _resolve_scan_target(spec: dict, rel: str) -> Path:
+    path = REPO / rel
+    if not path.is_file() and rel == spec["model"]["module"]:
+        path = LIVE_MODEL_PATH
+    if not path.is_file():
+        raise SystemExit(f"negative-scan target is missing: {rel}")
+    return path
+
+
 def _scan_targets(spec: dict, captions_payload: dict) -> dict:
     patterns = [str(p) for p in spec["negative_scan"]["forbidden_patterns"]]
     targets = {}
@@ -219,7 +229,7 @@ def _scan_targets(spec: dict, captions_payload: dict) -> dict:
             source, digest = "fresh_build", hashlib.sha256(
                 raw.encode()).hexdigest()
         else:
-            path = REPO / rel
+            path = _resolve_scan_target(spec, rel)
             raw = path.read_text(encoding="utf-8")
             source, digest = "disk", _sha(path)
         hits = []
@@ -303,6 +313,43 @@ def run_mutations(spec: dict) -> dict:
                 len([m for m in rows if not m["killed"]])}
 
 
+def _frozen_negative_scan(spec: dict, live_scan: dict) -> dict:
+    target = REPO / OUTPUTS["bulk_flow"]
+    if not target.is_file():
+        return live_scan
+    payload = json.loads(target.read_text(encoding="utf-8"))
+    scan = payload.get("negative_scan")
+    if not isinstance(scan, dict):
+        raise SystemExit("frozen PR-145 negative scan is missing")
+    if scan.get("total_hits") != 0:
+        raise SystemExit("frozen PR-145 negative scan records forbidden hits")
+    targets = scan.get("targets")
+    expected = set(spec["negative_scan"]["targets"])
+    if not isinstance(targets, dict) or set(targets) != expected:
+        raise SystemExit("frozen PR-145 negative-scan targets drifted")
+    if any(row.get("hits") for row in targets.values()
+           if isinstance(row, dict)):
+        raise SystemExit("frozen PR-145 negative scan records forbidden hits")
+    return scan
+
+
+def _manifest_input_hashes(write: bool) -> list[str]:
+    live = [f"{rel}:{_sha(REPO / rel)}"
+            for rel in ("htt/obsstat/cf4_velocity_estimators.py",)]
+    if write:
+        return live
+    target = REPO / OUTPUTS["manifest"]
+    if not target.is_file():
+        return live
+    historical = json.loads(target.read_text(encoding="utf-8")).get(
+        "input_hashes"
+    )
+    if not isinstance(historical, list) or not all(
+            isinstance(row, str) for row in historical):
+        raise SystemExit("frozen PR-145 manifest input hashes are invalid")
+    return historical
+
+
 def _emit(rel, payload, write, problems, wrote) -> None:
     target = REPO / rel
     rendered = _render(payload)
@@ -336,8 +383,10 @@ def build(write: bool) -> int:
     bulk_flow, coverage, partition = build_reports(spec)
     p0 = build_p0_candidates(bulk_flow)
     captions = build_captions(bulk_flow)
-    bulk_flow["negative_scan"] = {"targets": _scan_targets(spec, captions),
-                                  "total_hits": 0}
+    live_scan = {"targets": _scan_targets(spec, captions), "total_hits": 0}
+    bulk_flow["negative_scan"] = (
+        live_scan if write else _frozen_negative_scan(spec, live_scan)
+    )
     mutations = run_mutations(spec)
     if mutations["surviving_mutation_count"]:
         print(json.dumps({"ok": False, "survivors": mutations["mutations"]}))
@@ -360,8 +409,9 @@ def build(write: bool) -> int:
         "transfer_source": spec["transfer_source"],
         "config_hash": _sha(SPEC_PATH),
         "raw_data_pins": {"groups_sha256": _sha(_groups_path(spec))},
-        "input_hashes": [f"{rel}:{_sha(REPO / rel)}" for rel in
-                         ("htt/obsstat/cf4_velocity_estimators.py",)],
+        # Stored input hashes describe the frozen generation event.  Check mode
+        # validates live code separately; it does not rewrite that provenance.
+        "input_hashes": _manifest_input_hashes(write),
         "caveats": [
             "Observable-estimator mechanics at C2 only.",
             "The bulk-flow significance is reported under the FULL "
@@ -393,8 +443,7 @@ def build(write: bool) -> int:
                 print(json.dumps({"ok": False,
                                   "reason": f"forbidden phrase in {rel}"}))
                 return 2
-    module_text = (REPO / "htt/obsstat/cf4_velocity_estimators.py") \
-        .read_text(encoding="utf-8").lower()
+    module_text = LIVE_MODEL_PATH.read_text(encoding="utf-8").lower()
     for phrase in spec["forbidden_output_language"]:
         if phrase.lower() in module_text:
             print(json.dumps({"ok": False,
