@@ -6,11 +6,16 @@ import hashlib
 import json
 import os
 import subprocess
+import sys
 from pathlib import Path
 
 import pytest
 
-from scripts.codex_harness import pr151_phase, pr151_progress
+from scripts.codex_harness import (
+    pr151_finalize_watch,
+    pr151_phase,
+    pr151_progress,
+)
 
 
 def _write(path: Path, payload: dict) -> None:
@@ -298,3 +303,45 @@ def test_fast_probe_never_contains_payload_sha_call() -> None:
     source = Path(pr151_progress.__file__).read_text(encoding="utf-8")
     assert "sha256(path.read_bytes())" in source  # small metadata helper only
     assert "payload_hashing_performed\": False" in source
+
+
+def test_finalize_watcher_paths_are_portable_and_overridable(
+        tmp_path: Path) -> None:
+    target = tmp_path / "data"
+    log = tmp_path / "watch.log"
+    args = pr151_finalize_watch.parse_args([
+        "--target", str(target), "--log", str(log),
+        "--progress-log", str(tmp_path / "acquire.log"),
+        "--interval", "7", "--max-wait-seconds", "11",
+    ])
+
+    assert pr151_finalize_watch.REPO == Path(
+        pr151_finalize_watch.__file__).resolve().parents[2]
+    assert pr151_finalize_watch.PY == sys.executable
+    assert args.target == target
+    assert args.log == log
+    assert args.progress_log == tmp_path / "acquire.log"
+    assert args.interval == 7
+    assert args.max_wait_seconds == 11
+    source = Path(pr151_finalize_watch.__file__).read_text(encoding="utf-8")
+    assert "/home/cosmosapjw/" not in source
+
+
+def test_finalize_watcher_matches_acquire_for_selected_target(
+        tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    selected = (tmp_path / "selected").resolve()
+    other = (tmp_path / "other").resolve()
+
+    def fake_run(argv, **kwargs):
+        assert argv == [
+            "pgrep", "-af", "pr151_phase.py --phase acquire",
+        ]
+        stdout = (
+            "123 python pr151_phase.py --phase acquire "
+            f"--target {selected}\n"
+        )
+        return subprocess.CompletedProcess(argv, 0, stdout=stdout, stderr="")
+
+    monkeypatch.setattr(pr151_finalize_watch.subprocess, "run", fake_run)
+    assert pr151_finalize_watch.acquire_running(selected) is True
+    assert pr151_finalize_watch.acquire_running(other) is False
