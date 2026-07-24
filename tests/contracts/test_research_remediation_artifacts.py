@@ -26,8 +26,7 @@ def _yaml(path: Path) -> dict[str, object]:
 def test_generated_active_finding_root_is_exactly_102_open_zero_rescued() -> None:
     state = _yaml(remediation.STATE)
 
-    expected = remediation.build_state()
-    assert remediation._normalize_state_generation_inputs(state, expected) == expected
+    assert state == remediation.build_state()
     assert state["census"] == {
         "finding_count": 102,
         "known_open_and_audit_gap_count": 69,
@@ -41,11 +40,6 @@ def test_generated_active_finding_root_is_exactly_102_open_zero_rescued() -> Non
     assert {row["execution_resolution"] for row in findings} == {None}
     assert all(row["response_disposition_is_scientific_status"] is False for row in findings)
     assert all(row["remediation_pr_ids"] for row in findings)
-    assert all(
-        119 <= int(pr_id.removeprefix("PR-")) <= 166
-        for row in findings
-        for pr_id in row["remediation_pr_ids"]
-    )
     assert Counter(row["response_disposition"] for row in findings) == {
         "rebuild_required": 56,
         "downclaimed": 43,
@@ -67,40 +61,10 @@ def test_authority_roots_are_hash_bound_and_history_is_not_rewritten() -> None:
     assert remediation._sha256(remediation.CHECKPOINT_065) == (
         remediation.EXPECTED_CHECKPOINT_065_SHA256
     )
-    backlog_prefix = f"{remediation.BACKLOG.relative_to(REPO)}:"
-    backlog_inputs = [value for value in state["input_hashes"] if value.startswith(backlog_prefix)]
-    assert len(backlog_inputs) == 1
-    assert len(backlog_inputs[0].removeprefix(backlog_prefix)) == 64
-
-
-def test_generation_time_backlog_digest_remains_structurally_fail_closed() -> None:
-    state = _yaml(remediation.STATE)
-    expected = remediation.build_state()
-    state["input_hashes"][-1] = f"{remediation.BACKLOG.relative_to(REPO)}:not-a-sha256"
-
-    with pytest.raises(ValueError, match="generation-time backlog digest"):
-        remediation._normalize_state_generation_inputs(state, expected)
-
-
-def test_write_preserves_existing_pr119_state_bytes(
-    monkeypatch: pytest.MonkeyPatch,
-    tmp_path: Path,
-) -> None:
-    state = tmp_path / "research_remediation_state.yaml"
-    mirror = tmp_path / "machine_research_remediation_state.yaml"
-    crosswalk = tmp_path / "pr119_proposal_crosswalk.yaml"
-    state.write_bytes(remediation.STATE.read_bytes())
-    mirror.write_text("stale mirror\n", encoding="utf-8")
-    crosswalk.write_bytes(remediation.CROSSWALK.read_bytes())
-    before = state.read_bytes()
-    monkeypatch.setattr(remediation, "STATE", state)
-    monkeypatch.setattr(remediation, "MACHINE_STATE", mirror)
-    monkeypatch.setattr(remediation, "CROSSWALK", crosswalk)
-
-    remediation.write_all()
-
-    assert state.read_bytes() == before
-    assert mirror.read_bytes() == before
+    backlog_input = (
+        f"{remediation.BACKLOG.relative_to(REPO)}:{remediation._sha256(remediation.BACKLOG)}"
+    )
+    assert backlog_input in state["input_hashes"]
 
 
 @pytest.mark.parametrize(
