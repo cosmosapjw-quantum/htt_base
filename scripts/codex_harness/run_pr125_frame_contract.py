@@ -136,6 +136,7 @@ FORBIDDEN_OUTPUT_LANGUAGE = (
     "Bianchi geometry detected", "Bianchi family identified",
     "finding rescued", "validated as native",
 )
+FRAME_CONTRACT_SOURCE = "htt/src/common/frame_contract.py"
 
 
 def _sha(path: Path) -> str:
@@ -145,6 +146,25 @@ def _sha(path: Path) -> str:
 def _render(payload: dict) -> bytes:
     return (json.dumps(payload, indent=2, ensure_ascii=False, sort_keys=True)
             + "\n").encode()
+
+
+def _semantic_artifact(rel: str, payload: dict) -> dict:
+    """Keep the frozen frame source digest as generation-time provenance."""
+
+    normalized = json.loads(json.dumps(payload))
+    if rel != OUTPUTS["manifest"]:
+        return normalized
+    rows = normalized.get("input_hashes")
+    if not isinstance(rows, list):
+        return normalized
+    prefix = f"{FRAME_CONTRACT_SOURCE}:"
+    for index, row in enumerate(rows):
+        if not isinstance(row, str) or not row.startswith(prefix):
+            continue
+        digest = row.removeprefix(prefix)
+        if len(digest) == 64 and all(char in "0123456789abcdef" for char in digest):
+            rows[index] = f"{prefix}<generation-time-source>"
+    return normalized
 
 
 def _worktree_state() -> str:
@@ -358,6 +378,17 @@ def _emit(rel: str, payload: dict, write: bool,
     if not target.is_file():
         problems.append(f"missing artifact: {rel}")
         return
+    if rel == OUTPUTS["manifest"]:
+        try:
+            existing = json.loads(target.read_text(encoding="utf-8"))
+        except (UnicodeError, json.JSONDecodeError):
+            problems.append(f"invalid artifact: {rel}")
+            return
+        if (
+            isinstance(existing, dict)
+            and _semantic_artifact(rel, existing) == _semantic_artifact(rel, payload)
+        ):
+            return
     if target.read_bytes() != _render(payload):
         problems.append(f"stale artifact: {rel}")
 

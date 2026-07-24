@@ -28,6 +28,7 @@ from common.frame_contract import (
     require_flrw_limit,
     transform_tilt,
 )
+from scripts.codex_harness import run_pr125_frame_contract as pr125_runner
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 
@@ -150,6 +151,43 @@ def test_generated_graph_binds_every_checked_signature() -> None:
                     for row in registry_artifact["contracts"].values()}
     for row in graph["bindings"].values():
         assert row["contract_id"] in contract_ids
+
+
+def test_manifest_frame_source_hash_is_generation_time_provenance() -> None:
+    path = pr125_runner.FRAME_CONTRACT_SOURCE
+    stored = {"input_hashes": [f"{path}:{'1' * 64}"], "owner": "COMMON"}
+    current = {"input_hashes": [f"{path}:{'2' * 64}"], "owner": "COMMON"}
+
+    assert pr125_runner._semantic_artifact(
+        pr125_runner.OUTPUTS["manifest"], stored
+    ) == pr125_runner._semantic_artifact(
+        pr125_runner.OUTPUTS["manifest"], current
+    )
+
+    current["owner"] = "HTT"
+    assert pr125_runner._semantic_artifact(
+        pr125_runner.OUTPUTS["manifest"], stored
+    ) != pr125_runner._semantic_artifact(
+        pr125_runner.OUTPUTS["manifest"], current
+    )
+
+    stored = {
+        "input_hashes": [
+            f"{path}:{'1' * 64}",
+            f"docs/research_program/THEOREM_SIGNATURES_V2.yaml:{'3' * 64}",
+        ]
+    }
+    current = {
+        "input_hashes": [
+            f"{path}:{'2' * 64}",
+            f"docs/research_program/THEOREM_SIGNATURES_V2.yaml:{'4' * 64}",
+        ]
+    }
+    assert pr125_runner._semantic_artifact(
+        pr125_runner.OUTPUTS["manifest"], stored
+    ) != pr125_runner._semantic_artifact(
+        pr125_runner.OUTPUTS["manifest"], current
+    )
 
 
 def test_runner_check_mode_is_current() -> None:
