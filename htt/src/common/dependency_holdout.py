@@ -354,6 +354,12 @@ def select_features(X: np.ndarray, y: np.ndarray, rows: Sequence[int],
     ``scope`` is ``train_only`` and ``held_rows`` is supplied, the row set
     is BEHAVIORALLY verified to exclude the held-out rows.
     """
+    if isinstance(k, bool) or not isinstance(k, (int, np.integer)):
+        raise HoldoutError("feature count k must be an integer")
+    k = int(k)
+    if k < 0 or k > X.shape[1]:
+        raise HoldoutError(
+            f"feature count k must be between 0 and {X.shape[1]}")
     r = _validated_row_indices(rows, X.shape[0], "selection")
     if held_rows is not None and scope == "train_only":
         held = _validated_row_indices(

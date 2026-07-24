@@ -325,6 +325,23 @@ def test_selection_scope_recorded() -> None:
         require_train_only(meta["provenance"])
 
 
+def test_feature_selection_validates_requested_count() -> None:
+    model, _ = _toy(G=4, ng=2)
+    rows = range(model.X.shape[0])
+    with pytest.raises(HoldoutError, match="between 0 and"):
+        select_features(model.X, model.y, rows, -1, "train_only")
+    with pytest.raises(HoldoutError, match="between 0 and"):
+        select_features(
+            model.X,
+            model.y,
+            rows,
+            model.X.shape[1] + 1,
+            "train_only",
+        )
+    chosen, _ = select_features(model.X, model.y, rows, 0, "train_only")
+    assert chosen == ()
+
+
 def test_dependency_optimism_row_beats_group() -> None:
     model, graph = _toy(G=12, ng=5, tau_b2=2.0, seed=20260722)
     opt = dependency_optimism(model, graph, cols=range(3))
