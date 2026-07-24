@@ -28,6 +28,7 @@ from obsstat.cf4_velocity_estimators import (
     require_coverage_in_band,
     require_eight_region_label,
     require_full_covariance_significance,
+    significance,
     subsample,
 )
 
@@ -226,6 +227,40 @@ def test_coverage_injection_rejects_invalid_configuration(
     with pytest.raises(VelocityEstimatorError, match=message):
         coverage_injection(
             sample, flow, monopole, n_inj=n_inj, seed=1)
+
+
+@pytest.mark.parametrize("vector, covariance, message", [
+    (
+        np.array([1.0, np.nan]),
+        np.eye(2),
+        "finite non-empty real vector",
+    ),
+    (
+        np.ones(3),
+        np.diag([1.0, np.nan, 1.0]),
+        "finite real square matrix",
+    ),
+    (
+        np.array([0.0, 1.0, 0.0]),
+        np.diag([1.0, -1.0, 1.0]),
+        "positive definite",
+    ),
+    (
+        np.ones(2),
+        np.array([[2.0, 4.0], [0.0, 2.0]]),
+        "must be symmetric",
+    ),
+    (
+        np.ones(2),
+        np.eye(3),
+        "matching the vector",
+    ),
+])
+def test_significance_rejects_invalid_covariance_inputs(
+    vector: np.ndarray, covariance: np.ndarray, message: str
+) -> None:
+    with pytest.raises(VelocityEstimatorError, match=message):
+        significance(vector, covariance)
 
 
 def test_rank_deficient_refuses_point_estimate() -> None:

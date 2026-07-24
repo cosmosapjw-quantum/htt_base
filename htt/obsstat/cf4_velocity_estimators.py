@@ -309,7 +309,39 @@ def _inv_norm_sf(q: float) -> float:
 
 
 def significance(vector: np.ndarray, cov: np.ndarray) -> dict:
+    vector = np.asarray(vector)
+    cov = np.asarray(cov)
+    if (
+        vector.ndim != 1
+        or len(vector) == 0
+        or not np.issubdtype(vector.dtype, np.number)
+        or not np.isrealobj(vector)
+        or not np.all(np.isfinite(vector))
+    ):
+        raise VelocityEstimatorError(
+            "significance vector must be a finite non-empty real vector")
+    if (
+        cov.shape != (len(vector), len(vector))
+        or not np.issubdtype(cov.dtype, np.number)
+        or not np.isrealobj(cov)
+        or not np.all(np.isfinite(cov))
+    ):
+        raise VelocityEstimatorError(
+            "significance covariance must be a finite real square matrix "
+            "matching the vector")
+    if not np.allclose(cov, cov.T, rtol=1e-10, atol=1e-12):
+        raise VelocityEstimatorError(
+            "significance covariance must be symmetric")
+    cov = 0.5 * (cov + cov.T)
+    try:
+        np.linalg.cholesky(cov)
+    except np.linalg.LinAlgError as exc:
+        raise VelocityEstimatorError(
+            "significance covariance must be positive definite") from exc
     chi2 = float(vector @ np.linalg.solve(cov, vector))
+    if not np.isfinite(chi2) or chi2 < 0:
+        raise VelocityEstimatorError(
+            "significance calculation produced an invalid chi-square")
     return {"chi2": chi2, "dof": len(vector),
             "sigma": _sigma_from_chi2(chi2, len(vector))}
 
