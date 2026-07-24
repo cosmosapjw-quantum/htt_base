@@ -32,6 +32,31 @@ _COMP = {
 _SIGN = {"Sigma2": 1, "W2": -1, "Omega_tilt": 1, "DeltaOmega_k": 1}
 
 
+def component_vector_exact(s: Fr, t: Fr) -> dict[str, Fr]:
+    """Return the exact coupled comparator vector at ``(s, t)``.
+
+    This is the public component-level surface consumed by PR-190.  Returning
+    the vector, rather than only its scalar image, prevents a different
+    physical state with the same ``x_C`` from masquerading as an endpoint
+    realization.
+    """
+    if not S_RANGE[0] <= s <= S_RANGE[1]:
+        raise ValueError("s must lie in [0, 1]")
+    if not T_RANGE[0] <= t <= T_RANGE[1]:
+        raise ValueError("t must lie in [-1, 1]")
+    return {
+        name: a0 + as_ * s + at * t
+        for name, (a0, as_, at) in _COMP.items()
+    }
+
+
+def comparator_value_exact(components: dict[str, Fr]) -> Fr:
+    """Evaluate ``x_C`` on one exact component vector."""
+    if set(components) != set(_SIGN):
+        raise ValueError("component vector must contain the registered four axes")
+    return sum((_SIGN[name] * components[name] for name in _SIGN), Fr(0))
+
+
 def _comparator_affine() -> tuple[Fr, Fr, Fr]:
     """(const, s-coef, t-coef) of x_C on the coupled manifold."""
     c0 = cs = ct = Fr(0)

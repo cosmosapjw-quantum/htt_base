@@ -1,0 +1,143 @@
+{
+ "claim_boundary": [
+  "CAS_5AXIS_PASS applies only to the registered exact identities and mismatch.",
+  "The CAS result does not promote scientific validity, novelty, release, or family identification.",
+  "A valid shear-only scalar match is not a replacement for nonzero W2, tilt, or curvature components.",
+  "The result is internal and non-public; the Independence gate remains OPEN."
+ ],
+ "metadata": {
+  "baseline_commit": "c80e35c9c8484f56c1654bfe96b66ce64bd03985",
+  "claim_level": {
+   "level": "C1",
+   "scheme": "roadmap_rescue_v1"
+  },
+  "generating_command": "env PYTHONHASHSEED=0 venv/bin/python -B scripts/codex_harness/run_pr190_physical_attainability.py --write",
+  "independence_gate": "OPEN",
+  "null_mock_status": "not_applicable",
+  "owner": "BASS",
+  "public_use": false,
+  "readiness_state": "BLOCKED_BY_DECISIVE_FALSIFIER",
+  "scope": "pre-solver physical-attainability attempt",
+  "sky_support_status": "not_applicable",
+  "spec_sha256": "eca9421d34a853e664f2c6cafc15db0a8419a2cc201c3de2553952f8bfa8e2df",
+  "transfer_source": "none"
+ },
+ "pr_id": "PR-190",
+ "result": {
+  "bianchi_i_dust_scalar_match_grid": {
+   "all_developments_succeeded": true,
+   "dust_energy_conditions_preserved": true,
+   "expanding_branch_preserved": true,
+   "grid_size": 100,
+   "interval": [
+    "2/25",
+    "1/10"
+   ],
+   "lorentzian_metric_signature_fixed_by_ansatz": true,
+   "max_hubble_relative_error": 5.6943359295174365e-15,
+   "max_normalized_gauss_residual": 2.666755705149626e-13,
+   "max_sigma2_exact_error": 6.453171330633722e-16,
+   "minimum_density": 8.259362653551421e-07,
+   "minimum_hubble": 0.0005247019132891226,
+   "minimum_interval_efolds": 5.0,
+   "normal_equals_matter_frame": true,
+   "scientific_role": "valid_scalar-match_negative_control_only",
+   "spatial_curvature_exact": "0",
+   "tilt_exact": "0",
+   "vorticity_exact": "0"
+  },
+  "cas_status": {
+   "aggregate": "CAS_5AXIS_PASS",
+   "axis_statuses": {
+    "lean": "PASS",
+    "rocq": "PASS",
+    "sage_singular": "PASS",
+    "sympy": "PASS",
+    "wolfram_xact": "PASS"
+   },
+   "claim_promotion_cas_eligible": true,
+   "contract": "docs/generated/pr190_cas/CAS_CONTRACT_PR190_SHEAR_SUBSTITUTION.json",
+   "contract_hash_matches_adjudication": true,
+   "contract_sha256": "8ee9c6cb93450f8f3997ac17fec921225005d176fce913db2a408b745d89906b",
+   "evidence_origin": "runner_observed_local_subprocess",
+   "required_axes": [
+    "wolfram_xact",
+    "sympy",
+    "sage_singular",
+    "lean",
+    "rocq"
+   ],
+   "scientific_role": "exact_dust_identities_and_component_mismatch_only",
+   "verification_state": "RUNNER_OBSERVED_EXECUTION"
+  },
+  "exact_structural_constraints": {
+   "jacobi_constraint": "0 (Bianchi-I structure constants vanish)",
+   "matter_conservation": "d(rho)/dN=-3*rho",
+   "momentum_constraint": "0 (homogeneous diagonal comoving ansatz)",
+   "normal_equals_matter_frame": true
+  },
+  "gate_evaluation": {
+   "cas_exact_obligations_valid": true,
+   "conjunctive_pr190_pass": false,
+   "five_efolds_completed": true,
+   "lower_full_component_endpoint_realized": false,
+   "normalized_gauss_residual_below_1e_10": true,
+   "scalar_interval_negative_controls_valid": true,
+   "upper_full_component_endpoint_realized": false
+  },
+  "registered_endpoint_comparison": {
+   "full_endpoint_vectors_realized": false,
+   "lower": {
+    "candidate_x_c": "2/25",
+    "component_linf_gap": "1/50",
+    "scalar_gap": "0",
+    "shear_only_components": {
+     "DeltaOmega_k": "0",
+     "Omega_tilt": "0",
+     "Sigma2": "2/25",
+     "W2": "0"
+    },
+    "target_components": {
+     "DeltaOmega_k": "-1/150",
+     "Omega_tilt": "1/50",
+     "Sigma2": "13/150",
+     "W2": "1/50"
+    },
+    "target_parameter": {
+     "s": "0",
+     "t": "-2/3"
+    },
+    "target_x_c": "2/25"
+   },
+   "lower_gap_is_globally_minimal": true,
+   "lower_gap_lower_bound_axis": "Omega_tilt=1/50",
+   "upper": {
+    "candidate_x_c": "1/10",
+    "component_linf_gap": "3/100",
+    "scalar_gap": "0",
+    "shear_only_components": {
+     "DeltaOmega_k": "0",
+     "Omega_tilt": "0",
+     "Sigma2": "1/10",
+     "W2": "0"
+    },
+    "target_components": {
+     "DeltaOmega_k": "0",
+     "Omega_tilt": "3/100",
+     "Sigma2": "1/10",
+     "W2": "3/100"
+    },
+    "target_parameter": {
+     "s": "1",
+     "t": "0"
+    },
+    "target_x_c": "1/10"
+   },
+   "upper_gap_is_globally_minimal": true,
+   "upper_gap_lower_bound_axis": "Omega_tilt=3/100"
+  }
+ },
+ "schema": "htt.pr190.result_card.v1",
+ "scientific_interpretation": "The tested diagonal comoving Bianchi-I dust family is a valid Einstein-matter solution family over the scalar interval, but it does not realize either registered four-component endpoint. Therefore it cannot establish full physical attainability or dynamical sharpness.",
+ "terminal": "BLOCKED_COMPONENT_ENDPOINT_NOT_ATTAINED"
+}
