@@ -207,6 +207,48 @@ def test_inadequate_retention_bias_coverage_and_fpr_fail_closed() -> None:
     assert "requested_claim_tier_exceeds_mock_calibration_ceiling" in decision.blocked_reasons
 
 
+def test_report_cannot_weaken_production_mock_thresholds() -> None:
+    weak_thresholds = AxisMockCalibrationThresholds(
+        min_retention_fraction=0.01,
+        max_bias_direction_deg=180.0,
+        coverage_68_window=(0.0, 1.0),
+        max_false_positive_rate=1.0,
+        min_n_mock=1,
+        min_response_rank=1,
+        min_effective_rank=0.0,
+        max_condition_number=1.0e30,
+        max_null_space_dimension=99,
+    )
+    report = _report(
+        n_mock_requested=100,
+        n_mock_succeeded=1,
+        bias_direction_deg=170.0,
+        bias_direction_p95_deg=175.0,
+        coverage_68=0.0,
+        coverage_68_count=0,
+        false_positive_rate=1.0,
+        false_positive_count=1,
+        look_elsewhere_trials=1,
+        scan_trial_count=1,
+        response_rank=1,
+        effective_rank=0.0,
+        null_space_dimension=0,
+        condition_number=1.0e20,
+        thresholds=weak_thresholds,
+    )
+
+    assert report.allowed_claim_tier is ClaimTier.DIAGNOSTIC_ONLY
+    assert (
+        "mock_calibration_thresholds_weaker_than_policy"
+        in report.blocked_reasons
+    )
+    decision = evaluate_axis_mock_gate(
+        report,
+        requested_claim_tier=ClaimTier.CONDITIONAL,
+    )
+    assert decision.allowed is False
+
+
 def test_zero_success_mock_bank_serializes_as_blocked_report() -> None:
     report = _report(
         n_mock_requested=120,

@@ -631,8 +631,24 @@ class AxisMockCalibrationReport:
     @property
     def blocked_reasons(self) -> tuple[str, ...]:
         thresholds = self.thresholds
+        policy = AxisMockCalibrationThresholds()
         lower, upper = thresholds.coverage_68_window
         blocked: list[str] = []
+        if (
+            thresholds.min_retention_fraction < policy.min_retention_fraction
+            or thresholds.max_bias_direction_deg > policy.max_bias_direction_deg
+            or lower < policy.coverage_68_window[0]
+            or upper > policy.coverage_68_window[1]
+            or thresholds.max_false_positive_rate
+            > policy.max_false_positive_rate
+            or thresholds.min_n_mock < policy.min_n_mock
+            or thresholds.min_response_rank < policy.min_response_rank
+            or thresholds.min_effective_rank < policy.min_effective_rank
+            or thresholds.max_condition_number > policy.max_condition_number
+            or thresholds.max_null_space_dimension
+            > policy.max_null_space_dimension
+        ):
+            blocked.append("mock_calibration_thresholds_weaker_than_policy")
         if self.n_mock_succeeded < thresholds.min_n_mock:
             blocked.append("n_mock_below_threshold")
         if self.retention_fraction < thresholds.min_retention_fraction:
