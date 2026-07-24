@@ -5,7 +5,7 @@ import pytest
 REPO = Path(__file__).resolve().parents[2]
 for e in (str(REPO/"htt"), str(REPO/"htt"/"src")):
     if e not in sys.path: sys.path.insert(0, e)
-from common.revival_dipole_discrimination import run  # noqa: E402
+from common.revival_dipole_discrimination import _choose_model, run  # noqa: E402
 CARD = REPO/"docs/generated/pr221_result_card.json"
 
 def test_discrimination_gate():
@@ -13,6 +13,11 @@ def test_discrimination_gate():
     assert r["gate_pass"]
     assert r["scenario_results"]["confusable_weak"]["abstain_rate"] > 0.95
     assert r["scenario_results"]["superposition"]["correct_rate"] > 0.94
+
+def test_kinematic_best_still_requires_look_elsewhere_gap():
+    fits = {"kin": (10.0, 23)}
+    assert _choose_model([(10.0, "kin"), (10.5, "kin+global")], fits) == "abstain"
+    assert _choose_model([(10.0, "kin"), (12.0, "kin+global")], fits) == "kin"
 
 def test_card_stable():
     if not CARD.exists(): pytest.skip("card")

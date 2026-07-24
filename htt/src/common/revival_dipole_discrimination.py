@@ -11,6 +11,22 @@ import numpy as np
 from scipy.stats import chi2
 
 
+def _choose_model(
+    scores: list[tuple[float, str]],
+    fits: dict[str, tuple[float, int]],
+    minimum_gap: float = 1.0,
+) -> str:
+    """Apply adequacy and the look-elsewhere gap symmetrically."""
+    ranked = sorted(scores)
+    best = ranked[0][1]
+    gap = ranked[1][0] - ranked[0][0]
+    ch, dof = fits[best]
+    adequate = (1 - chi2.cdf(ch, dof)) > 0.01
+    if not adequate or gap <= minimum_gap:
+        return "abstain"
+    return best
+
+
 def run(seed: int = 20260721, nrep: int = 4000, nobs: int = 24) -> dict:
     rng = np.random.default_rng(seed)
     x = np.linspace(0, 1, nobs)
@@ -48,19 +64,7 @@ def run(seed: int = 20260721, nrep: int = 4000, nobs: int = 24) -> dict:
                 ch = float(r @ Ci @ r)
                 fits[mname] = (ch, nobs - X.shape[1])
                 scores.append((ch + X.shape[1] * np.log(nobs), mname))
-            scores.sort()
-            best = scores[0][1]
-            gap = scores[1][0] - scores[0][0]
-            ch, dof = fits[best]
-            adequate = (1 - chi2.cdf(ch, dof)) > 0.01
-            if not adequate:
-                chosen = "abstain"
-            elif best == "kin":
-                chosen = "kin"
-            elif gap > 1.0:
-                chosen = best
-            else:
-                chosen = "abstain"
+            chosen = _choose_model(scores, fits)
             correct += chosen == truth[name]
             abst += chosen == "abstain"
         results[name] = {"correct_rate": correct / per, "abstain_rate": abst / per}
