@@ -11,16 +11,18 @@ CARD = REPO/"docs/generated/pr224_result_card.json"
 def _sha(p): return hashlib.sha256(p.read_bytes()).hexdigest()
 def build_payload():
     f = falsify()
+    no_bulk_substitution = no_bulk_equals_divergence()
+    no_unscaled_h0_percentage = no_h0_percentage_without_scaling(f)
     ok = (f["recovers_truth"] and f["depth_mode_falsifies_bridge_without_it"]
-          and no_bulk_equals_divergence() and no_h0_percentage_without_scaling())
+          and no_bulk_substitution and no_unscaled_h0_percentage)
     terminal = "DIRECTIONAL_DEPTH_HOST_FALSIFIER_CERTIFIED" if ok else "BLOCKED_FALSIFIER_GATE_FAILURE"
     return {"schema":"htt.pr224.result_card.v1","pr_id":"PR-224",
       "metadata":{"owner":"COMMON","spec_sha256":_sha(SPEC),"cross_references":["PR-176","PR-179"],
         "claim_level":{"scheme":"roadmap_rescue_v1","level":"C1"},"public_use":False,
         "readiness_state":"EVIDENCE_READY","independence_gate":"OPEN",
         "generating_command":"env PYTHONHASHSEED=0 venv/bin/python -B scripts/codex_harness/run_pr224_falsifier.py --write"},
-      "result":{"falsifier":f,"no_bulk_equals_divergence":no_bulk_equals_divergence(),
-        "no_h0_percentage_without_scaling":no_h0_percentage_without_scaling()},
+      "result":{"falsifier":f,"no_bulk_equals_divergence":no_bulk_substitution,
+        "no_h0_percentage_without_scaling":no_unscaled_h0_percentage},
       "terminal":terminal,
       "forbidden_claims_reaffirmed":[
         "a bulk amplitude is never substituted for divergence",
