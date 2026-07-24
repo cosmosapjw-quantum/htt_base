@@ -514,6 +514,7 @@ class BudgetCeilingCandidate:
             "transfer_metadata",
         )
         atlas_entry_metadata = _optional_atlas_entry_metadata(self.atlas_entry_metadata)
+        valid_range = _valid_range(self.valid_range)
         if source in _EXTERNAL_SOURCES:
             if transfer_spec_id is None:
                 raise ValueError(
@@ -530,11 +531,14 @@ class BudgetCeilingCandidate:
                 raise ValueError(
                     "BudgetCeilingCandidate transfer_source must match metadata"
                 )
+            if _valid_range(transfer_metadata["valid_range"]) != valid_range:
+                raise ValueError(
+                    "BudgetCeilingCandidate valid_range must match transfer metadata"
+                )
         elif transfer_spec_id is not None or transfer_metadata is not None:
             raise ValueError(
                 "transfer_source='none' candidates must not carry transfer provenance"
             )
-        valid_range = _valid_range(self.valid_range)
         candidate_metadata = _metadata_mapping(
             self.candidate_metadata or {"candidate_role": "explicit_ceiling"},
             "candidate_metadata",
