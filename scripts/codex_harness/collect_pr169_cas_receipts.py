@@ -392,11 +392,38 @@ def _collect_version(version: str, config: dict[str, Any], *, check: bool) -> di
     completed: list[str] = []
     receipt_hashes: dict[str, dict[str, str]] = {}
     input_resolutions: dict[str, list[dict[str, str]]] = {}
+    source_dir = REPO / ".agent-harness/runs" / config["run_id"]
+    run_paths = [
+        source_dir / kind / f"{config['ids'][axis]}.json"
+        for axis in AXES
+        for kind in ("assignments", "results")
+    ]
+    if all(path.is_file() for path in run_paths):
+        use_owner_run = True
+    elif check and not any(path.exists() for path in run_paths):
+        use_owner_run = False
+    else:
+        raise ValueError(
+            f"{version} historical run evidence is partial or mixed"
+        )
+
     for axis in AXES:
         assignment_id = config["ids"][axis]
-        source_dir = REPO / ".agent-harness/runs" / config["run_id"]
-        assignment_source = source_dir / "assignments" / f"{assignment_id}.json"
-        outer_source = source_dir / "results" / f"{assignment_id}.json"
+        destination = REPO / f"docs/generated/pr169_cas/{version}"
+        run_assignment = source_dir / "assignments" / f"{assignment_id}.json"
+        run_outer = source_dir / "results" / f"{assignment_id}.json"
+        tracked_assignment = (
+            destination / "harness_receipts" / f"assignment_{axis}.json"
+        )
+        tracked_outer = (
+            destination / "harness_receipts" / f"outer_result_{axis}.json"
+        )
+        if use_owner_run:
+            assignment_source = run_assignment
+            outer_source = run_outer
+        else:
+            assignment_source = tracked_assignment
+            outer_source = tracked_outer
         assignment = _json(assignment_source)
         outer = _json(outer_source)
         validated = _validate_axis_evidence(
@@ -404,7 +431,6 @@ def _collect_version(version: str, config: dict[str, Any], *, check: bool) -> di
         )
         nested = validated["nested"]
 
-        destination = REPO / f"docs/generated/pr169_cas/{version}"
         assignment_target = destination / "harness_receipts" / f"assignment_{axis}.json"
         outer_target = destination / "harness_receipts" / f"outer_result_{axis}.json"
         normalized_target = destination / f"axis_result_{axis}.json"

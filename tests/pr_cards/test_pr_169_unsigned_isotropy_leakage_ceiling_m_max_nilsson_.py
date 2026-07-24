@@ -65,10 +65,9 @@ def _collector_module():
 def _axis_bundle(version: str, axis: str):
     collector = _collector_module()
     config = collector.VERSIONS[version]
-    assignment_id = config["ids"][axis]
-    run = REPO / ".agent-harness/runs" / config["run_id"]
-    assignment = _json(run / "assignments" / f"{assignment_id}.json")
-    outer = _json(run / "results" / f"{assignment_id}.json")
+    receipts = GENERATED / f"pr169_cas/{version}/harness_receipts"
+    assignment = _json(receipts / f"assignment_{axis}.json")
+    outer = _json(receipts / f"outer_result_{axis}.json")
     contract = _json(REPO / config["contract"])
     return collector, config, contract, assignment, outer
 
@@ -381,6 +380,32 @@ def test_cas_collector_rejects_forged_or_incomplete_evidence() -> None:
         collector._validate_axis_evidence(
             "v2", config, contract, "sympy", drifted_input, outer
         )
+
+
+def test_collector_rejects_partial_owner_run(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    collector = _collector_module()
+    config = deepcopy(collector.VERSIONS["v2"])
+    contract_source = REPO / config["contract"]
+    contract_target = tmp_path / config["contract"]
+    contract_target.parent.mkdir(parents=True)
+    contract_target.write_bytes(contract_source.read_bytes())
+    assignment_id = config["ids"]["wolfram_xact"]
+    dangling_assignment = (
+        tmp_path
+        / ".agent-harness/runs"
+        / config["run_id"]
+        / "assignments"
+        / f"{assignment_id}.json"
+    )
+    dangling_assignment.parent.mkdir(parents=True)
+    dangling_assignment.write_text("{}\n", encoding="utf-8")
+    monkeypatch.setattr(collector, "REPO", tmp_path)
+
+    with pytest.raises(ValueError, match="historical run evidence is partial or mixed"):
+        collector._collect_version("v2", config, check=True)
 
 
 def test_current_results_table_has_scoped_vorticity_zero_column() -> None:
