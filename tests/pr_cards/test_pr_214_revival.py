@@ -1,6 +1,6 @@
 """PR-214 gates: legacy mutation corpus kill matrix + clean surface."""
 from __future__ import annotations
-import json, sys
+import json, math, sys
 from pathlib import Path
 import pytest
 REPO = Path(__file__).resolve().parents[2]
@@ -9,6 +9,7 @@ for entry in (str(REPO/"htt"), str(REPO/"htt"/"src")):
 from common.revival_mutation_lab import (  # noqa: E402
     active_surface_clean, bianchi_class_swap_caught, factor_three_w2_caught,
     inactive_occam_caught, local_equals_global_caught)
+from common import revival_mutation_lab as mutation_lab  # noqa: E402
 CARD = REPO/"docs/generated/pr214_result_card.json"
 
 def test_factor_three_w2_caught():
@@ -19,6 +20,14 @@ def test_class_swap_is_exactly_vi0_viih():
 
 def test_inactive_occam_caught():
     assert inactive_occam_caught()
+
+def test_inactive_occam_rejects_bad_normalized_prior_mass(monkeypatch):
+    monkeypatch.setattr(
+        mutation_lab,
+        "_log_inactive_prior_mass",
+        lambda tau=1.0, scale=1.0, n=20001: math.log(2.0 * scale),
+    )
+    assert not inactive_occam_caught()
 
 def test_local_equals_global_caught():
     assert local_equals_global_caught()

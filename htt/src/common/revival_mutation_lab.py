@@ -66,6 +66,20 @@ def _log_evidence_gaussian(y, sigma, tau, n=20001):
     return math.log(float(np.sum(np.exp(logl + logp - m)) * d)) + m
 
 
+def _log_inactive_prior_mass(tau=1.0, scale=1.0, n=20001):
+    """Numerically integrate an inactive Gaussian prior, including a mutation."""
+    import numpy as np
+    phi = np.linspace(-6 * tau, 6 * tau, n)
+    d = phi[1] - phi[0]
+    logp = (
+        -0.5 * (phi / tau) ** 2
+        - math.log(math.sqrt(2 * math.pi) * tau)
+        + math.log(scale)
+    )
+    m = float(logp.max())
+    return math.log(float(np.sum(np.exp(logp - m)) * d)) + m
+
+
 def inactive_occam_caught(seed: int = 20260721) -> bool:
     """An inactive NORMALIZED prior leaves log-evidence unchanged; an
     unnormalized (x10) prior mutation shifts it by ~ln 10. Both are detected."""
@@ -73,9 +87,14 @@ def inactive_occam_caught(seed: int = 20260721) -> bool:
     rng = np.random.default_rng(seed)
     y = rng.normal(0.4, 0.7, 12)
     base = _log_evidence_gaussian(y, 0.7, 1.5)
-    normalized_gap = 0.0  # a normalized inactive parameter integrates to 1
-    unnormalized_gap = math.log(10.0)  # the mutation multiplies evidence by 10
-    return abs(normalized_gap) < 2e-6 and abs(unnormalized_gap) > 2
+    normalized = base + _log_inactive_prior_mass()
+    unnormalized = base + _log_inactive_prior_mass(scale=10.0)
+    normalized_gap = normalized - base
+    unnormalized_gap = unnormalized - base
+    return (
+        abs(normalized_gap) < 2e-6
+        and abs(unnormalized_gap - math.log(10.0)) < 2e-6
+    )
 
 
 # --- (4) local=global source bridge mutation --------------------------------
