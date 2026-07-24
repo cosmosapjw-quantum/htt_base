@@ -106,6 +106,32 @@ def test_convention_validation_rejects_missing_or_invalid_fields() -> None:
         validate_alm_convention_metadata(broken)
 
 
+def test_convention_factory_rejects_non_integral_harmonic_indices() -> None:
+    from dataclasses import replace
+
+    from htt.obsstat.alm_conventions import (
+        canonical_spin2_alm_convention,
+        canonical_temperature_alm_convention,
+    )
+
+    with pytest.raises(ValueError, match="lmax must be an integer"):
+        canonical_temperature_alm_convention(lmax=2.9)
+    with pytest.raises(ValueError, match="mmax must be an integer"):
+        canonical_temperature_alm_convention(lmax=3, mmax=1.9)
+    with pytest.raises(ValueError, match="lmax must be an integer"):
+        canonical_temperature_alm_convention(lmax=True)
+
+    with pytest.raises(ValueError, match="spin_weight must be an integer"):
+        replace(canonical_spin2_alm_convention(lmax=3), spin_weight=2.9)
+
+    numpy_convention = canonical_temperature_alm_convention(
+        lmax=np.int64(3),
+        mmax=np.int64(2),
+    )
+    assert numpy_convention.to_metadata()["lmax"] == 3
+    assert numpy_convention.to_metadata()["mmax"] == 2
+
+
 def test_spin2_convention_requires_paired_spin_metadata() -> None:
     from htt.obsstat.alm_conventions import (
         canonical_spin2_alm_convention,

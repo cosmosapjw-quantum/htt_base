@@ -12,6 +12,7 @@ from dataclasses import dataclass
 import hashlib
 import json
 import math
+import operator
 from typing import Any
 
 import numpy as np
@@ -158,14 +159,16 @@ class AlmConvention:
             "coordinate_frame": self.coordinate_frame,
             "alm_storage": self.alm_storage,
             "reality_condition": self.reality_condition,
-            "spin_weight": int(self.spin_weight),
+            "spin_weight": _require_int(self.spin_weight, "spin_weight"),
             "spin_transform": self.spin_transform,
             "polarization_basis": self.polarization_basis,
             "paired_map_order": self.paired_map_order,
             "spin_output_convention": self.spin_output_convention,
             "eb_sign_convention": self.eb_sign_convention,
-            "lmax": int(self.lmax),
-            "mmax": None if self.mmax is None else int(self.mmax),
+            "lmax": _require_int(self.lmax, "lmax"),
+            "mmax": (
+                None if self.mmax is None else _require_int(self.mmax, "mmax")
+            ),
             "claim_scope": self.claim_scope,
             "caveats": list(self.caveats),
         }
@@ -338,10 +341,13 @@ def validate_alm_convention_metadata(metadata: Mapping[str, Any]) -> dict[str, A
     _require_value(normalized, "claim_scope", {_CLAIM_SCOPE}, "claim_scope")
     spin_weight = _require_int(normalized["spin_weight"], "spin_weight")
     lmax = _require_int(normalized["lmax"], "lmax")
+    normalized["spin_weight"] = spin_weight
+    normalized["lmax"] = lmax
     if lmax < 0:
         raise ValueError("lmax must be non-negative")
     if normalized["mmax"] is not None:
         mmax = _require_int(normalized["mmax"], "mmax")
+        normalized["mmax"] = mmax
         if mmax < 0 or mmax > lmax:
             raise ValueError("mmax must be between 0 and lmax")
     if spin_weight == 0:
@@ -502,9 +508,12 @@ def _require_value(
 
 
 def _require_int(value: Any, field: str) -> int:
-    if isinstance(value, bool) or not isinstance(value, int):
+    if isinstance(value, bool):
         raise ValueError(f"{field} must be an integer")
-    return value
+    try:
+        return int(operator.index(value))
+    except TypeError as exc:
+        raise ValueError(f"{field} must be an integer") from exc
 
 
 def _sha256_payload(payload: Mapping[str, Any]) -> str:
