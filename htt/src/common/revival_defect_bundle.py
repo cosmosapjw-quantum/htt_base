@@ -6,6 +6,8 @@ ComponentState (the master departure comparator x_C = Sigma2 - W2 + Omega_tilt +
 DeltaOmega_k), a SourceState (kinematic/dynamic source norms), an admissible
 class, and BridgeReceipts. Components from different frames or epochs may not be
 combined without a validated BridgeReceipt -- that is the decisive falsifier.
+The compact legacy receipt in this module is metadata-only and cannot itself
+authenticate that validation, so current cross-frame combination fails closed.
 """
 
 from __future__ import annotations
@@ -82,8 +84,13 @@ class BridgeReceipt:
     provenance_hash: str
 
     def is_valid(self) -> bool:
-        return (self.validation_status == "CERTIFIED"
-                and bool(self.provenance_hash))
+        """Legacy bridge metadata cannot authenticate a frame conversion.
+
+        This compact receipt has no trusted registry, verifier, signed payload,
+        or exact source/target implementation binding.  Caller-supplied status
+        and provenance strings therefore remain diagnostic only.
+        """
+        return False
 
 
 @dataclass(frozen=True)
@@ -118,7 +125,9 @@ def require_common_epoch(*states: ComponentState) -> tuple[str, float]:
 def bridge_component(g: ComponentState, receipt: BridgeReceipt) -> ComponentState:
     """Push a component to receipt.target_frame iff the bridge is valid+matching."""
     if not receipt.is_valid():
-        raise BundleError(f"bridge {receipt.bridge_id!r} is not CERTIFIED with provenance")
+        raise BundleError(
+            f"bridge {receipt.bridge_id!r} lacks authenticated validation"
+        )
     if receipt.source_frame != g.frame:
         raise BundleError("bridge source frame does not match the component frame")
     return ComponentState(g.Sigma2, g.W2, g.Omega_tilt, g.DeltaOmega_k,

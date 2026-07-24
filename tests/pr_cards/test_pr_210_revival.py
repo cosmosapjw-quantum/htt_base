@@ -22,6 +22,7 @@ from common.revival_defect_bundle import (  # noqa: E402
     combine,
     comparator_value,
 )
+from scripts.codex_harness import run_pr210_bundle as runner  # noqa: E402
 
 CARD = REPO / "docs/generated/pr210_result_card.json"
 E = Epoch(redshift=0.0)
@@ -50,10 +51,10 @@ def test_epoch_mix_rejected():
         combine([_g(), ComponentState(0.01, 0, 0.001, 0, Frame.NORMAL, Epoch(redshift=1.0))])
 
 
-def test_certified_bridge_allows_frame_mix():
+def test_self_asserted_certified_bridge_is_rejected():
     b = BridgeReceipt("B", Frame.MATTER, Frame.NORMAL, {}, "CERTIFIED", "prov")
-    val = combine([_g(Frame.NORMAL), _g(Frame.MATTER)], (b,))
-    assert isinstance(val, float)
+    with pytest.raises(BundleError, match="no valid bridge"):
+        combine([_g(Frame.NORMAL), _g(Frame.MATTER)], (b,))
 
 
 def test_uncertified_bridge_rejected():
@@ -68,7 +69,13 @@ def test_signed_delta_omega_k_allowed():
     assert comparator_value(g) < 0
 
 
-def test_card_seal_and_check_stable():
+def test_current_runner_stays_blocked_without_authenticated_bridge():
+    payload = runner.build_payload()
+    assert payload["result"]["typed_gates"]["certified_bridge_combine_ok"] is False
+    assert payload["terminal"] == "BLOCKED_BUNDLE_GATE_FAILURE"
+
+
+def test_historical_card_preserves_pre_ma04_terminal():
     if not CARD.exists():
         pytest.skip("card not yet written")
     card = json.loads(CARD.read_text())

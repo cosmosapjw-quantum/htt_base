@@ -69,12 +69,22 @@ def _typed_gates() -> dict:
         g, ComponentState(0.01, 0, 0.001, 0, Frame.NORMAL, Epoch(redshift=1.0))]))
     unbridged = raises(lambda: combine([
         g, ComponentState(0.01, 0, 0.001, 0, Frame.MATTER, e)]))
-    # a valid bridge lets the frame-mixed combine through
-    good_bridge = BridgeReceipt("B1", Frame.MATTER, Frame.NORMAL, {"beta_max": 1e-2},
-                                "CERTIFIED", "prov:deadbeef")
+    # A caller-asserted legacy bridge is diagnostic metadata, not authenticated
+    # authority, so it must not let the frame-mixed combine through.
+    self_asserted_bridge = BridgeReceipt(
+        "B1",
+        Frame.MATTER,
+        Frame.NORMAL,
+        {"beta_max": 1e-2},
+        "CERTIFIED",
+        "prov:deadbeef",
+    )
     bridged_ok = True
     try:
-        combine([g, ComponentState(0.01, 0, 0.001, 0, Frame.MATTER, e)], (good_bridge,))
+        combine(
+            [g, ComponentState(0.01, 0, 0.001, 0, Frame.MATTER, e)],
+            (self_asserted_bridge,),
+        )
     except BundleError:
         bridged_ok = False
     # an uncertified bridge is rejected
