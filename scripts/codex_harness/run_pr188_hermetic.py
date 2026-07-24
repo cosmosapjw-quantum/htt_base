@@ -159,14 +159,15 @@ def build_payload() -> dict:
         and mutations["all_flipped_to_failure"]
         and mutations["dead_source_stays_green"]
         and mutations["n_load_bearing_mutations"] >= 15
-        # recipe: present-or-explicitly-blocked is acceptable; the gate is that
-        # it never silently skips (blocked_exit_on_missing == 2)
+        and recipe["all_present"]
         and recipe["blocked_exit_on_missing"] == 2
     )
-    terminal = (
-        "HERMETIC_REPRODUCE_LOAD_BEARING_VERIFIED"
-        if all_ok else "BLOCKED_HERMETIC_GATE_FAILURE"
-    )
+    if not recipe["all_present"]:
+        terminal = "BLOCKED_EXTERNAL_DATA_UNAVAILABLE"
+    elif all_ok:
+        terminal = "HERMETIC_REPRODUCE_LOAD_BEARING_VERIFIED"
+    else:
+        terminal = "BLOCKED_HERMETIC_GATE_FAILURE"
     return {
         "schema": "htt.pr188.result_card.v1",
         "pr_id": "PR-188",
@@ -212,6 +213,21 @@ def main(argv: list[str] | None = None) -> int:
     mode.add_argument("--check", action="store_true")
     args = parser.parse_args(argv)
     payload = build_payload()
+    recipe = payload["result"]["external_data_recipe"]
+    if not recipe["all_present"]:
+        print(
+            json.dumps(
+                {
+                    "mode": "check" if args.check else "write",
+                    "ok": False,
+                    "read_only": args.check,
+                    "terminal": payload["terminal"],
+                    "missing": recipe["missing"],
+                },
+                sort_keys=True,
+            )
+        )
+        return recipe["blocked_exit_on_missing"]
     if args.write:
         CARD.write_bytes(_render(payload))
         print(f"wrote {CARD.name}; terminal={payload['terminal']}")

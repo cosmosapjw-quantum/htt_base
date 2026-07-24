@@ -15,6 +15,7 @@ for entry in (str(REPO / "htt"), str(REPO / "htt" / "src")):
 import pytest  # noqa: E402
 
 from common.data_root import DataUnavailable, recipe_status, resolve  # noqa: E402
+from scripts.codex_harness import run_pr188_hermetic as runner  # noqa: E402
 
 CARD = REPO / "docs/generated/pr188_result_card.json"
 SPEC = REPO / "docs/research_program/strengthening/pr188_spec.yaml"
@@ -47,7 +48,7 @@ def test_load_bearing_mutation_firewall() -> None:
     assert m["dead_source_stays_green"] is True
 
 
-def test_data_recipe_blocks_never_silently_skips() -> None:
+def test_data_recipe_blocks_never_silently_skips(monkeypatch, capsys) -> None:
     r = _card()["result"]["external_data_recipe"]
     assert r["blocked_exit_on_missing"] == 2
     # a missing artifact under a bogus root raises DataUnavailable, never a skip
@@ -60,6 +61,18 @@ def test_data_recipe_blocks_never_silently_skips() -> None:
         status = recipe_status([{"relative": "does/not/exist.npz"}])
         assert status["all_present"] is False
         assert status["missing"] == ["does/not/exist.npz"]
+        blocked_payload = {
+            "result": {"external_data_recipe": status},
+            "terminal": "BLOCKED_EXTERNAL_DATA_UNAVAILABLE",
+        }
+        monkeypatch.setattr(runner, "build_payload", lambda: blocked_payload)
+        before = hashlib.sha256(CARD.read_bytes()).hexdigest()
+        assert runner.main(["--check"]) == 2
+        check_result = json.loads(capsys.readouterr().out)
+        assert check_result["terminal"] == "BLOCKED_EXTERNAL_DATA_UNAVAILABLE"
+        assert check_result["ok"] is False
+        assert runner.main(["--write"]) == 2
+        assert hashlib.sha256(CARD.read_bytes()).hexdigest() == before
     finally:
         if old is None:
             del os.environ["HTT_DATA_ROOT"]
