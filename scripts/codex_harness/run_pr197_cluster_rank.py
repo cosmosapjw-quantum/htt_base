@@ -89,7 +89,10 @@ def _pipeline_and_variants() -> dict:
     # leakage negative control: fitting the scorer ON the observation changes it
     scorer_clean = train_scorer(train)
     scorer_leaked = train_scorer(np.vstack([train, obs]))
-    leakage_detected = not np.allclose(scorer_clean.mean, scorer_leaked.mean)
+    leakage_detected = (
+        not np.allclose(scorer_clean.mean, scorer_leaked.mean)
+        and not scoring_pipeline_identical(np.vstack([train, obs]), obs, cal)
+    )
     return {
         "scoring_pipeline_identical_after_fixed_training": identical,
         "cluster_variant_agreement": variants,

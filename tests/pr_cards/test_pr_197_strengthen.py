@@ -7,6 +7,8 @@ import json
 import sys
 from pathlib import Path
 
+import numpy as np
+
 REPO = Path(__file__).resolve().parents[2]
 for entry in (str(REPO / "htt"), str(REPO / "htt" / "src")):
     if entry not in sys.path:
@@ -15,6 +17,7 @@ for entry in (str(REPO / "htt"), str(REPO / "htt" / "src")):
 from common.cluster_exchangeable_rank import (  # noqa: E402
     exact_rejection_probability,
     max_exact_rejection,
+    scoring_pipeline_identical,
 )
 
 CARD = REPO / "docs/generated/pr197_result_card.json"
@@ -57,6 +60,17 @@ def test_pipeline_no_leakage_and_variants() -> None:
     assert pv["scoring_pipeline_identical_after_fixed_training"] is True
     assert pv["cluster_variant_agreement"]["agree_within_2se"] is True
     assert pv["observation_leakage_changes_scorer"] is True
+
+
+def test_exact_training_row_reuse_is_rejected() -> None:
+    rng = np.random.default_rng(7)
+    obs = rng.normal(size=(1, 3))
+    cal = rng.normal(size=(8, 3))
+    clean_train = rng.normal(size=(20, 3))
+
+    assert scoring_pipeline_identical(clean_train, obs, cal) is True
+    assert scoring_pipeline_identical(np.vstack([clean_train, obs]), obs, cal) is False
+    assert scoring_pipeline_identical(np.vstack([clean_train, cal[0]]), obs, cal) is False
 
 
 def test_naive_label_refused() -> None:

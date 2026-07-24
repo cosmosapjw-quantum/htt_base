@@ -114,7 +114,22 @@ def run_size_mc(
 
 
 def scoring_pipeline_identical(train: np.ndarray, obs: np.ndarray, cal: np.ndarray) -> bool:
-    """After fixing the training object, obs and cal go through the same scorer."""
+    """Check a shared scorer after rejecting detectable evaluation-row reuse.
+
+    Exact row overlap is a concrete split violation and therefore fails closed.
+    Absence of overlap is not, by itself, proof of statistical independence;
+    callers remain responsible for how the training ensemble was generated.
+    """
+    train_rows = np.atleast_2d(np.asarray(train))
+    evaluation_rows = np.vstack([np.atleast_2d(obs), np.atleast_2d(cal)])
+    if train_rows.shape[1] != evaluation_rows.shape[1]:
+        raise ValueError("training and evaluation rows must have the same width")
+    if any(
+        np.array_equal(train_row, evaluation_row, equal_nan=True)
+        for train_row in train_rows
+        for evaluation_row in evaluation_rows
+    ):
+        return False
     scorer = train_scorer(train)
     a = scorer.score(obs)
     b = scorer.score(np.vstack([obs, cal]))[:1]
