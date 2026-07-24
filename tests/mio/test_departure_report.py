@@ -297,6 +297,36 @@ def test_report_preserves_external_transfer_provenance_without_native_label():
     assert ("native " + "solver result") not in payload_text
 
 
+def test_report_sections_are_immutable_and_payloads_are_detached():
+    report = _full_report()
+    section = report.sections["x_C"]
+
+    with pytest.raises(TypeError):
+        section.payload["headline_score"] = 0.99
+    with pytest.raises(TypeError):
+        section.transfer_provenance["transfer_source"] = "forged_source"
+    with pytest.raises(TypeError):
+        report.artifact_metadata["headline_score"] = 0.99
+
+    payload = report.as_payload()
+    payload["sections"]["x_C"]["payload"]["display_metadata"][
+        "headline_score"
+    ] = 0.99
+    payload["transfer_provenance_by_section"]["x_C"][
+        "transfer_source"
+    ] = "payload_only"
+    payload["artifact_metadata"]["headline_score"] = 0.99
+
+    fresh = report.as_payload()
+    assert "headline_score" not in fresh["sections"]["x_C"]["payload"][
+        "display_metadata"
+    ]
+    assert fresh["transfer_provenance_by_section"]["x_C"][
+        "transfer_source"
+    ] == "none"
+    assert "headline_score" not in fresh["artifact_metadata"]
+
+
 def test_report_rejects_combined_or_inference_fields():
     from mio.reports.departure_report import build_departure_report
 
