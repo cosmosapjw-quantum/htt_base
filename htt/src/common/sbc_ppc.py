@@ -144,6 +144,11 @@ def require_valid_posterior(post_var: float) -> None:
 # Simulation-based calibration (Talts et al.)
 # ---------------------------------------------------------------------------
 
+def _require_positive_count(value: int, label: str) -> None:
+    if not isinstance(value, int) or isinstance(value, bool) or value < 1:
+        raise SbcPpcError(f"{label} must be a positive integer")
+
+
 def _data_hash(y) -> str:
     import numpy as np
 
@@ -164,6 +169,9 @@ def run_sbc(model: GaussianModel, *, n_simulations: int,
     import numpy as np
 
     verify_sbc_lineage(lineage_hash, model, config)
+    _require_positive_count(n_simulations, "n_simulations")
+    _require_positive_count(n_draws, "n_draws")
+    _require_positive_count(n_bins, "n_bins")
     if not (2 <= n_bins <= n_draws + 1):
         raise SbcPpcError(
             f"n_bins {n_bins} must be in [2, n_draws+1={n_draws + 1}]")
@@ -279,6 +287,7 @@ def run_ppc(model: GaussianModel, y_obs, frozen: dict, *,
     import numpy as np
 
     require_frozen_discrepancies(frozen, frozen["discrepancies"])
+    _require_positive_count(n_predictive, "n_predictive")
     y_obs = np.asarray(y_obs, dtype=np.float64)
     actual_data_hash = _data_hash(y_obs)
     if lineage.get("data_hash") != actual_data_hash:

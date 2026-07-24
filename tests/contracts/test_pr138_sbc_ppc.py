@@ -123,6 +123,10 @@ def test_sbc_lineage_mandatory_and_nbins_load_bearing() -> None:
     # n_bins must divide n_draws+1
     with pytest.raises(SbcPpcError, match="must divide"):
         _run_sbc(GOOD, n_simulations=100, n_draws=20, seed=1, n_bins=4)
+    with pytest.raises(SbcPpcError, match="n_simulations.*positive"):
+        _run_sbc(GOOD, n_simulations=0, n_draws=20, seed=1, n_bins=7)
+    with pytest.raises(SbcPpcError, match="n_draws.*positive"):
+        _run_sbc(GOOD, n_simulations=100, n_draws=0, seed=1, n_bins=2)
 
 
 def test_ppc_frozen_discrepancies_and_mandatory_lineage() -> None:
@@ -145,6 +149,9 @@ def test_ppc_frozen_discrepancies_and_mandatory_lineage() -> None:
     other_y = y + 1.0
     with pytest.raises(SbcPpcError, match="actual observed data"):
         run_ppc(GOOD, other_y, frozen, n_predictive=100, seed=1,
+                lineage=_lineage(GOOD, y))
+    with pytest.raises(SbcPpcError, match="n_predictive.*positive"):
+        run_ppc(GOOD, y, frozen, n_predictive=0, seed=1,
                 lineage=_lineage(GOOD, y))
     # swapping the frozen discrepancy set is refused
     with pytest.raises(SbcPpcError, match="swapping a discrepancy"):
