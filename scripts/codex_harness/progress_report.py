@@ -13,8 +13,6 @@ from datetime import date, datetime
 from pathlib import Path
 from typing import Any
 
-import yaml
-
 if __package__:
     from .validate_pr_dag import DagInfo, load_yaml, validate_backlog
 else:
@@ -412,10 +410,7 @@ def load_status(path: str | Path) -> dict[str, Any]:
     status_path = Path(path)
     if not status_path.exists():
         return {}
-    status = yaml.safe_load(status_path.read_text(encoding="utf-8")) or {}
-    if not isinstance(status, dict):
-        raise ValueError("status YAML must contain a mapping")
-    return status
+    return load_yaml(status_path, document="status")
 
 
 def validate_status(

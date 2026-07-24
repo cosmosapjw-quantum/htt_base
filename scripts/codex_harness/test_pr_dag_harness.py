@@ -110,6 +110,22 @@ def test_validate_rejects_non_mapping_policy(tmp_path: Path) -> None:
     assert "policy must be a mapping" in completed.stderr
 
 
+def test_validate_rejects_duplicate_yaml_mapping_keys(tmp_path: Path) -> None:
+    backlog = tmp_path / "backlog.yaml"
+    backlog.write_text(
+        "prs: []\n"
+        "prs:\n"
+        "  - id: PR-000\n"
+        "    depends: []\n",
+        encoding="utf-8",
+    )
+
+    completed = _run(str(VALIDATOR), str(backlog))
+
+    assert completed.returncode != 0
+    assert "found duplicate key 'prs'" in completed.stderr
+
+
 def test_validate_can_write_mermaid_graph_from_backlog(tmp_path: Path) -> None:
     backlog = tmp_path / "backlog.yaml"
     graph = tmp_path / "pr_dag.mmd"
@@ -129,7 +145,10 @@ def test_progress_report_orders_unblocked_by_policy_and_reports_weighted_metrics
 ) -> None:
     backlog = tmp_path / "backlog.yaml"
     status = tmp_path / "status.yaml"
-    _write_yaml(backlog, _backlog_with_policy(["PR-000", "PR-001", "PR-003", "PR-002"]))
+    _write_yaml(
+        backlog,
+        _backlog_with_policy(["PR-000", "PR-001", "PR-003", "PR-002"]),
+    )
     _write_yaml(status, {"completed": ["PR-000", "PR-001"], "blocked": []})
 
     completed = _run(str(PROGRESS), str(backlog), str(status), "--json")
@@ -152,6 +171,24 @@ def test_progress_report_rejects_unknown_status_ids(tmp_path: Path) -> None:
 
     assert completed.returncode != 0
     assert "unknown completed PR ids" in completed.stderr
+
+
+def test_progress_report_rejects_duplicate_status_keys(tmp_path: Path) -> None:
+    backlog = tmp_path / "backlog.yaml"
+    status = tmp_path / "status.yaml"
+    _write_yaml(backlog, _backlog_with_policy(["PR-000", "PR-001", "PR-003", "PR-002"]))
+    status.write_text(
+        "completed: []\n"
+        "completed:\n"
+        "  - PR-000\n"
+        "blocked: []\n",
+        encoding="utf-8",
+    )
+
+    completed = _run(str(PROGRESS), str(backlog), str(status), "--json")
+
+    assert completed.returncode != 0
+    assert "found duplicate key 'completed'" in completed.stderr
 
 
 def test_progress_report_rejects_completed_skipped_overlap(tmp_path: Path) -> None:

@@ -12,6 +12,8 @@ from pathlib import Path
 from typing import Any
 
 import yaml
+from yaml.constructor import ConstructorError
+from yaml.nodes import MappingNode
 
 if __package__:  # Package import used by pytest and library callers.
     from .pr167_intake_contract import validate_pre_intake_receipt
@@ -311,10 +313,37 @@ class DagInfo:
         return sum(len(deps) for deps in self.prereqs.values())
 
 
-def load_yaml(path: str | Path) -> dict[str, Any]:
-    payload = yaml.safe_load(Path(path).read_text(encoding="utf-8"))
+class _UniqueKeySafeLoader(yaml.SafeLoader):
+    def construct_mapping(
+        self,
+        node: MappingNode,
+        deep: bool = False,
+    ) -> dict[Any, Any]:
+        seen: set[Any] = set()
+        for key_node, _ in node.value:
+            key = self.construct_object(key_node, deep=deep)
+            if key in seen:
+                raise ConstructorError(
+                    "while constructing a mapping",
+                    node.start_mark,
+                    f"found duplicate key {key!r}",
+                    key_node.start_mark,
+                )
+            seen.add(key)
+        return super().construct_mapping(node, deep=deep)
+
+
+def load_yaml(
+    path: str | Path,
+    *,
+    document: str = "backlog",
+) -> dict[str, Any]:
+    payload = yaml.load(
+        Path(path).read_text(encoding="utf-8"),
+        Loader=_UniqueKeySafeLoader,
+    )
     if not isinstance(payload, dict):
-        raise ValueError("backlog YAML must contain a mapping")
+        raise ValueError(f"{document} YAML must contain a mapping")
     return payload
 
 
@@ -1112,7 +1141,11 @@ def main(argv: list[str] | None = None) -> int:
         data = load_yaml(args.backlog)
         info = validate_backlog(data)
         if args.strict_rescue_slice:
-            status = load_yaml(args.status) if args.status else None
+            status = (
+                load_yaml(args.status, document="status")
+                if args.status
+                else None
+            )
             validate_long_horizon_rescue_slice(data, info, status=status)
         if args.write_mermaid:
             Path(args.write_mermaid).write_text(render_mermaid(info), encoding="utf-8")
