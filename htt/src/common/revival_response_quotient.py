@@ -15,6 +15,16 @@ LABELS = ("BI", "BV", "BVIIh", "FLRW_tilt")
 SCALAR = np.array([[1, 0, 1, 0], [1, 0, 1, 0], [1, 0, 1, 0], [0, 0, 1, 0]], float)
 # enlarged response adds transverse-curvature + vorticity observable columns
 ENLARGED = np.array([[1, 0, 1, 0], [1, 0, 1, 1], [1, 1, 1, 1], [0, 0, 1, 0]], float)
+TRANSVERSE_CURVATURE_RESPONSE = np.array([0, 1, 1, 0], float)
+
+
+def add_observable(rows, response):
+    """Append one observable column while preserving the family rows."""
+    rows = np.asarray(rows, float)
+    response = np.asarray(response, float)
+    if rows.ndim != 2 or response.shape != (rows.shape[0],):
+        raise ValueError("response must provide one value per family row")
+    return np.column_stack([rows, response])
 
 
 def quotient(labels, rows, atol=1e-12):
@@ -61,7 +71,9 @@ def quotient_via_nullspace(labels, rows, atol=1e-9):
 def rank_lattice():
     """Rank as observables are added: scalar -> +transverse -> enlarged."""
     scalar_rank = int(np.linalg.matrix_rank(SCALAR))
-    plus_transverse = int(np.linalg.matrix_rank(np.vstack([SCALAR, [0, 1, 0, 0]])))
+    plus_transverse = int(np.linalg.matrix_rank(
+        add_observable(SCALAR, TRANSVERSE_CURVATURE_RESPONSE)
+    ))
     enlarged_rank = int(np.linalg.matrix_rank(ENLARGED))
     return [scalar_rank, plus_transverse, enlarged_rank]
 

@@ -1,12 +1,14 @@
 from __future__ import annotations
 import json, sys
 from pathlib import Path
+import numpy as np
 import pytest
 REPO = Path(__file__).resolve().parents[2]
 for e in (str(REPO/"htt"), str(REPO/"htt"/"src")):
     if e not in sys.path: sys.path.insert(0, e)
 from common.revival_response_quotient import (  # noqa: E402
-    LABELS, SCALAR, ENLARGED, quotient, quotient_via_nullspace, rank_lattice, reopening_requirement)
+    LABELS, SCALAR, ENLARGED, TRANSVERSE_CURVATURE_RESPONSE, add_observable,
+    quotient, quotient_via_nullspace, rank_lattice, reopening_requirement)
 CARD = REPO/"docs/generated/pr219_result_card.json"
 
 def test_scalar_quotient_merges_three_families():
@@ -17,6 +19,13 @@ def test_enlarged_quotient_is_four_singletons():
 
 def test_rank_lattice_2_3_4():
     assert rank_lattice() == [2,3,4]
+
+def test_added_observable_preserves_family_rows():
+    augmented = add_observable(SCALAR, TRANSVERSE_CURVATURE_RESPONSE)
+    assert augmented.shape == (len(LABELS), SCALAR.shape[1] + 1)
+    assert np.linalg.matrix_rank(augmented) == 3
+    with pytest.raises(ValueError):
+        add_observable(SCALAR, [0, 1, 0])
 
 def test_two_lineages_agree():
     a = quotient(LABELS, SCALAR); b = quotient_via_nullspace(LABELS, SCALAR)
