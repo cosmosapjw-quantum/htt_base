@@ -224,6 +224,9 @@ def selection_completeness(t3_lines: list[str]) -> dict:
     for c in TABLE3_COLUMNS:
         if c.ctype is ColumnType.SELECTION_COUNT:
             vals = [c.value(ln) for ln in t3_lines]
+            if any(v is not None and v < 0 for v in vals):
+                raise Cf4ManifestError(
+                    f"selection count {c.label} must be non-negative")
             out[c.label] = {
                 "n_groups_with_method": sum(1 for v in vals if v),
                 "max_members": max((v for v in vals if v), default=0)}

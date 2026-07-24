@@ -176,6 +176,13 @@ def test_range_fixtures_flag_nonpositive_and_nonfinite_distance() -> None:
     assert nonfinite["Dist"]["observed_max"] is None
 
 
+def test_selection_completeness_rejects_negative_counts() -> None:
+    chars = [" "] * 190
+    chars[88:90] = list("-1")
+    with pytest.raises(Cf4ManifestError, match="must be non-negative"):
+        selection_completeness(["".join(chars)])
+
+
 @needs_data
 def test_parse_parity_and_completeness() -> None:
     t3, t4 = read_lines(T3), read_lines(T4)
