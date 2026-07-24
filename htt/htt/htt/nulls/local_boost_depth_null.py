@@ -4,6 +4,7 @@ from __future__ import annotations
 import hashlib
 import json
 import math
+import operator
 import re
 from collections.abc import Mapping, Sequence
 from dataclasses import asdict, dataclass, field
@@ -96,6 +97,23 @@ def _positive_float(value: object, field_name: str) -> float:
     out = _finite_float(value, field_name)
     if out <= 0.0:
         raise ValueError(f"{field_name} must be positive")
+    return out
+
+
+def _exact_integer(
+    value: object,
+    field_name: str,
+    *,
+    minimum: int,
+) -> int:
+    if isinstance(value, bool):
+        raise ValueError(f"{field_name} must be an exact integer")
+    try:
+        out = operator.index(value)
+    except TypeError as exc:
+        raise ValueError(f"{field_name} must be an exact integer") from exc
+    if out < minimum:
+        raise ValueError(f"{field_name} must be >= {minimum}")
     return out
 
 
@@ -296,9 +314,16 @@ class LocalBoostNullConfig:
     coordinate_frame: str = "galactic_cartesian_unit_vector"
 
     def __post_init__(self) -> None:
-        n_mocks = int(self.n_mocks)
-        if n_mocks <= 0:
-            raise ValueError("LocalBoostNullConfig.n_mocks must be positive")
+        n_mocks = _exact_integer(
+            self.n_mocks,
+            "LocalBoostNullConfig.n_mocks",
+            minimum=1,
+        )
+        seed = _exact_integer(
+            self.seed,
+            "LocalBoostNullConfig.seed",
+            minimum=0,
+        )
         depth_bins = tuple(self.depth_bins)
         if not depth_bins:
             raise ValueError("LocalBoostNullConfig.depth_bins must be non-empty")
@@ -310,7 +335,7 @@ class LocalBoostNullConfig:
                 raise ValueError("Depth bins must be ordered and non-overlapping")
 
         object.__setattr__(self, "n_mocks", n_mocks)
-        object.__setattr__(self, "seed", int(self.seed))
+        object.__setattr__(self, "seed", seed)
         object.__setattr__(self, "depth_bins", tuple(ordered))
         object.__setattr__(
             self,
@@ -360,9 +385,11 @@ class LocalBoostNullConfig:
         if not 0.0 <= direction_threshold <= 180.0:
             raise ValueError("direction_threshold_deg must be in [0, 180]")
         object.__setattr__(self, "direction_threshold_deg", direction_threshold)
-        look_elsewhere_trials = int(self.look_elsewhere_trials)
-        if look_elsewhere_trials <= 0:
-            raise ValueError("look_elsewhere_trials must be positive")
+        look_elsewhere_trials = _exact_integer(
+            self.look_elsewhere_trials,
+            "look_elsewhere_trials",
+            minimum=1,
+        )
         object.__setattr__(self, "look_elsewhere_trials", look_elsewhere_trials)
         object.__setattr__(
             self,

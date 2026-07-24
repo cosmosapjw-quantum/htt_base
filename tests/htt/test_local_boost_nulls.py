@@ -159,6 +159,24 @@ def test_local_boost_null_bank_is_deterministic_and_manifest_backed():
     assert "geometry" not in text
 
 
+@pytest.mark.parametrize(
+    ("field_name", "bad_value"),
+    (
+        ("n_mocks", 2.9),
+        ("n_mocks", True),
+        ("seed", 16061.5),
+        ("seed", "16061"),
+        ("look_elsewhere_trials", 2.5),
+    ),
+)
+def test_local_null_config_rejects_coerced_integer_fields(
+    field_name: str,
+    bad_value: object,
+) -> None:
+    with pytest.raises(ValueError, match="exact integer"):
+        _config(**{field_name: bad_value})
+
+
 def test_clustering_dipole_depth_null_is_a_distinct_local_structure_bank():
     from htt.nulls import ClusteringDipoleDepthNull
 
