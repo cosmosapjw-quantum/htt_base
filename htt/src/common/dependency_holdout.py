@@ -129,21 +129,45 @@ def require_units_respect_dependency(
     (e.g. a single row taken from a correlated group) treats dependent
     rows as independent LOO units and is refused.
     """
+    if not true_clusters:
+        raise HoldoutError("the true dependency partition has no clusters")
     cluster_of: dict[int, int] = {}
     for cid, rows in enumerate(true_clusters):
+        if not rows:
+            raise HoldoutError("a true dependency cluster is empty")
         for row in rows:
+            if row in cluster_of:
+                raise HoldoutError(
+                    "true dependency clusters overlap on a row")
             cluster_of[row] = cid
+    seen: set[int] = set()
     for fold in declared_folds:
         fold = list(fold)
-        touched = {cluster_of.get(row) for row in fold}
-        if len(touched) == 1:
-            (cid,) = touched
-            full = set(true_clusters[cid]) if cid is not None else set()
-            if set(fold) != full:
+        if not fold:
+            raise HoldoutError("a declared fold is empty")
+        fold_rows = set(fold)
+        if len(fold_rows) != len(fold):
+            raise HoldoutError("a declared fold repeats a row")
+        unknown = fold_rows - cluster_of.keys()
+        if unknown:
+            raise HoldoutError(
+                f"a declared fold contains unknown rows {sorted(unknown)}")
+        repeated = seen & fold_rows
+        if repeated:
+            raise HoldoutError(
+                f"declared folds repeat rows {sorted(repeated)}")
+        seen.update(fold_rows)
+        touched = {cluster_of[row] for row in fold_rows}
+        for cid in touched:
+            if not set(true_clusters[cid]).issubset(fold_rows):
                 raise HoldoutError(
                     "a declared fold splits a dependency cluster — dependent "
                     "rows may not be used as independent LOO units")
         # a fold spanning several clusters is a coarser (valid) unit
+    missing = cluster_of.keys() - seen
+    if missing:
+        raise HoldoutError(
+            f"declared folds omit rows {sorted(missing)}")
     return None
 
 

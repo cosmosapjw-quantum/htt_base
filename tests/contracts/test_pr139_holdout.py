@@ -146,8 +146,23 @@ def test_holdout_refuses_graph_that_conflicts_with_model_groups() -> None:
 def test_units_respect_dependency_refuses_row_split() -> None:
     clusters = [[0, 1, 2], [3, 4, 5]]
     require_units_respect_dependency(clusters, clusters)   # group folds OK
+    require_units_respect_dependency([[0, 1, 2, 3, 4, 5]], clusters)
     with pytest.raises(HoldoutError, match="splits a dependency cluster"):
         require_units_respect_dependency([[0], [1], [2]], clusters)
+
+
+@pytest.mark.parametrize(
+    ("folds", "message"),
+    (
+        ([[0, 1, 2]], "omit rows"),
+        ([[0, 1, 2], [0, 1, 2], [3, 4, 5]], "repeat rows"),
+        ([[], [0, 1, 2], [3, 4, 5]], "fold is empty"),
+    ),
+)
+def test_units_respect_dependency_requires_complete_partition(
+        folds, message) -> None:
+    with pytest.raises(HoldoutError, match=message):
+        require_units_respect_dependency(folds, [[0, 1, 2], [3, 4, 5]])
 
 
 def test_exact_elpd_train_only_scope_and_hashes() -> None:
