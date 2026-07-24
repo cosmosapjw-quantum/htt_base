@@ -160,6 +160,25 @@ def test_deterministic_coverage() -> None:
     assert r1["covered"] == r2["covered"]
 
 
+@pytest.mark.parametrize(
+    ("n_replicates", "seeds"),
+    [(-1, 10), (10, 0), (True, 10), (10, True)],
+)
+def test_coverage_requires_positive_integer_counts(
+    n_replicates: int,
+    seeds: int,
+) -> None:
+    with pytest.raises(WeakIdError, match="positive integer"):
+        coverage_at_point(
+            0.0,
+            "imbens_manski",
+            n_replicates=n_replicates,
+            seeds=seeds,
+            base_seed=1,
+            w_key="0",
+        )
+
+
 def test_unknown_coverage_procedure_rejected() -> None:
     with pytest.raises(WeakIdError, match="unknown coverage procedure"):
         coverage_at_point(
@@ -230,6 +249,8 @@ def test_preregistration_pins() -> None:
         pre.require_replicates(500, 10)
     with pytest.raises(WeakIdError, match="at least"):
         pre.require_replicates(2000, 3)
+    with pytest.raises(WeakIdError, match="positive integer"):
+        pre.require_replicates(float("nan"), float("nan"))
     pre.require_pinned_threshold(0.93)
     with pytest.raises(WeakIdError, match="NEW calibration"):
         pre.require_pinned_threshold(0.90)

@@ -229,6 +229,11 @@ def _seed_stream(base_seed: int, w_key: str, procedure: str, seed_idx: int):
     return np.random.Generator(np.random.PCG64(mix))
 
 
+def _require_positive_count(value: int, label: str) -> None:
+    if not isinstance(value, int) or isinstance(value, bool) or value < 1:
+        raise WeakIdError(f"{label} must be a positive integer")
+
+
 def coverage_at_point(w: float, procedure: str, *, n_replicates: int,
                       seeds: int, base_seed: int, w_key: str,
                       s: float = 1.0,
@@ -247,6 +252,8 @@ def coverage_at_point(w: float, procedure: str, *, n_replicates: int,
         raise WeakIdError(f"unknown coverage procedure {procedure!r}")
     if theta0_position not in ("midpoint", "boundary"):
         raise WeakIdError("theta0_position must be midpoint or boundary")
+    _require_positive_count(n_replicates, "n_replicates")
+    _require_positive_count(seeds, "seeds")
     theta0 = 0.0 if theta0_position == "midpoint" else w / 2.0
     per_seed = max(1, n_replicates // seeds)
     imc = imbens_manski_c(w, s)
@@ -301,6 +308,9 @@ class Preregistration:
                            seeds: int) -> None:
         """Validate the DELIVERED replicate count (not merely the
         requested n): integer per-seed division can short the total."""
+        _require_positive_count(
+            delivered_replicates, "delivered_replicates")
+        _require_positive_count(seeds, "seeds")
         if delivered_replicates < self.min_replicates or \
                 seeds < self.min_seeds:
             raise WeakIdError(
