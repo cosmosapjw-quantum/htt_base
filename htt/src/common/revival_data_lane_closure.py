@@ -47,7 +47,11 @@ def lane_closure() -> dict:
         lanes[lane] = {
             "receipt_cards": cards,
             "receipts_present": present,
-            "status": "CLOSED_WITH_EXISTING_RECEIPT" if present else "BLOCKED_MISSING_RECEIPT",
+            "status": (
+                "CLOSED_WITH_EXISTING_RECEIPT"
+                if len(present) == len(cards)
+                else "BLOCKED_MISSING_RECEIPT"
+            ),
             "contract": "null + covariance + selection",
         }
     desi_terminal = pr151_is_terminal()

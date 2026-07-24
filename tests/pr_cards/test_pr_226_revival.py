@@ -5,12 +5,20 @@ import pytest
 REPO = Path(__file__).resolve().parents[2]
 for e in (str(REPO/"htt"), str(REPO/"htt"/"src")):
     if e not in sys.path: sys.path.insert(0, e)
+import common.revival_data_lane_closure as data_lane  # noqa: E402
 from common.revival_data_lane_closure import closure_summary, pr151_is_terminal  # noqa: E402
 CARD = REPO/"docs/generated/pr226_result_card.json"
 
 def test_three_lanes_closed():
     s = closure_summary()
     assert set(s["closed_lanes"]) >= {"planck_k1","cf4","act"}
+
+@pytest.mark.parametrize("lane", sorted(data_lane.LANE_RECEIPTS))
+def test_lane_requires_complete_receipt_set(tmp_path, monkeypatch, lane):
+    monkeypatch.setattr(data_lane, "GEN", tmp_path)
+    required = data_lane.LANE_RECEIPTS[lane]
+    (tmp_path / required[0]).touch()
+    assert data_lane.lane_closure()[lane]["status"] == "BLOCKED_MISSING_RECEIPT"
 
 def test_desi_blocked_on_pr151():
     s = closure_summary()
