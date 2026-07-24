@@ -131,6 +131,29 @@ def test_dependency_graph_folds_and_status() -> None:
         DependencyGraph("pixel", (0, 1))
 
 
+def test_group_model_rejects_nonfinite_observations() -> None:
+    model, _ = _toy(G=4, ng=2)
+    bad_y = model.y.copy()
+    bad_y[0] = np.nan
+    with pytest.raises(HoldoutError, match="only finite"):
+        GroupModel(
+            X=model.X,
+            y=bad_y,
+            group=model.group,
+            sig2=model.sig2,
+            tau_b2=model.tau_b2,
+            prior_tau2=model.prior_tau2,
+        )
+
+
+def test_group_model_validates_rows_and_variance_domain() -> None:
+    model, _ = _toy(G=4, ng=2)
+    with pytest.raises(HoldoutError, match="same row count"):
+        GroupModel(model.X, model.y[:-1], model.group, 1.0, 0.5, 2.0)
+    with pytest.raises(HoldoutError, match="sig2 must be positive"):
+        GroupModel(model.X, model.y, model.group, 0.0, 0.5, 2.0)
+
+
 def test_holdout_refuses_graph_that_conflicts_with_model_groups() -> None:
     model, _ = _toy(G=6, ng=2)
     conflicting = DependencyGraph(
