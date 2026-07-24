@@ -530,6 +530,10 @@ class BudgetCeilingCandidate:
                 raise ValueError(
                     "BudgetCeilingCandidate transfer_source must match metadata"
                 )
+            if str(transfer_metadata["transfer_id"]) != transfer_spec_id:
+                raise ValueError(
+                    "BudgetCeilingCandidate transfer_spec_id must match metadata"
+                )
         elif transfer_spec_id is not None or transfer_metadata is not None:
             raise ValueError(
                 "transfer_source='none' candidates must not carry transfer provenance"

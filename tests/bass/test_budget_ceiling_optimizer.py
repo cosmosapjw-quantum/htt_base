@@ -210,6 +210,20 @@ def test_external_transfer_optimizer_requires_pr014_transfer_metadata() -> None:
             transfer_metadata=metadata,
         )
 
+    metadata = dict(_external_entry().transfer_metadata)
+    with pytest.raises(ValueError, match="transfer_spec_id must match"):
+        BudgetCeilingCandidate(
+            candidate_id="bad.mismatched.transfer-id",
+            U_C=1.0,
+            comparator="CMB_FLRW_reference",
+            frame="normal_frame",
+            units="microkelvin_squared",
+            valid_range=metadata["valid_range"],
+            transfer_source="AniCLASS_external",
+            transfer_spec_id="aniclass.lowell.shear_to_D3.v1",
+            transfer_metadata=metadata,
+        )
+
 
 def test_optimizer_rejects_external_transfer_spoofed_as_native() -> None:
     from bass.atlas import BudgetCeilingCandidate
