@@ -22,6 +22,7 @@ from common.revival_w2_convention import (  # noqa: E402
     w2_from_tensor,
     w2_from_vector,
 )
+from scripts.codex_harness import run_pr211_convention as runner  # noqa: E402
 
 CARD = REPO / "docs/generated/pr211_result_card.json"
 
@@ -50,11 +51,18 @@ def test_psd_forcing_of_signed_curvature_detected():
 def test_pr186_frozen_anchor_unchanged():
     xref = crossref_pr186()
     assert xref["frozen_W2_max"] == FROZEN_W2_MAX
-    assert xref["cas_five_axis_pass"] is True
+    assert xref["cas_five_axis_pass"] is False
+    assert xref["cas_aggregate"] == "CAS_BLOCKED"
+    assert xref["historical_cas_aggregate"] == "CAS_5AXIS_PASS"
+    assert xref["stored_cas_diagnostic_only"] is True
     assert xref["ratio_is_three"] is True
 
 
-def test_card_terminal_and_check_stable():
+def test_current_runner_stays_blocked_on_stored_cas():
+    assert runner.build_payload()["terminal"] == "BLOCKED_CONVENTION_GATE_FAILURE"
+
+
+def test_historical_card_preserves_pre_ma04_terminal():
     if not CARD.exists():
         pytest.skip("card not yet written")
     card = json.loads(CARD.read_text())

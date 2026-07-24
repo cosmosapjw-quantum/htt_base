@@ -1,8 +1,9 @@
 """PR-211: constraint-natural conventions and signed curvature split (RESCUE).
 
-The W2 convention theorem and its five-axis CAS proof are already closed in
-PR-186 (W2 := omega_ab omega^ab/(6H^2) = omega_a omega^a/(3H^2); Theta=3H gives
-sqrt(omega_ab omega^ab)/Theta <= B => W2 <= 3 B^2/2; frozen W2_max unchanged).
+The frozen PR-186 author-side card records a pre-MA04 five-axis CAS label for
+W2 := omega_ab omega^ab/(6H^2) = omega_a omega^a/(3H^2); Theta=3H gives
+sqrt(omega_ab omega^ab)/Theta <= B => W2 <= 3 B^2/2.  Its stored axis envelopes
+are diagnostic history, not a current live CAS attestation.
 This module is the clean-room LEGACY SUCCESSOR: the patched htt/ssot.py
 conventions plus the signed DeltaOmega_k / tensor-3-Ricci PSTF split, and a
 cross-reference guard that the frozen PR-186 numbers are byte-identical. It
@@ -99,10 +100,12 @@ def crossref_pr186() -> dict:
     aggregate = _find(card, "aggregate")
     return {
         "pr186_terminal": card.get("terminal"),
-        "cas_aggregate": aggregate,
+        "cas_aggregate": "CAS_BLOCKED",
+        "historical_cas_aggregate": aggregate,
+        "stored_cas_diagnostic_only": True,
         "frozen_W2_max": frozen,
         "wrong_over_right_ratio": ratio,
         "frozen_unchanged": frozen == FROZEN_W2_MAX,
         "ratio_is_three": str(ratio) == str(FROZEN_WRONG_OVER_RIGHT_RATIO),
-        "cas_five_axis_pass": aggregate == "CAS_5AXIS_PASS",
+        "cas_five_axis_pass": False,
     }
