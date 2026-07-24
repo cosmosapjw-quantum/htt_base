@@ -8,6 +8,27 @@ REPO="$1"
 PKG="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 VENDOR_SRC="$PKG/harness_templates/vendor/physmath-gpt56/3.1.0"
 VENDOR_DST="$REPO/harness_templates/vendor/physmath-gpt56/3.1.0"
+CLAIM_SPEC_OUTPUT="$(
+  python3 - "$PKG/.agent-harness/context/CLAIM_REGISTRY.jsonl" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+registry = Path(sys.argv[1])
+refs: set[str] = set()
+for line_number, raw in enumerate(registry.read_text(encoding="utf-8").splitlines(), 1):
+    if not raw.strip():
+        continue
+    row = json.loads(raw)
+    for ref in row.get("spec_refs", ()):
+        path = ref.partition("#")[0]
+        if path:
+            refs.add(path)
+for ref in sorted(refs):
+    print(ref)
+PY
+)"
+mapfile -t CLAIM_SPEC_REFS <<< "$CLAIM_SPEC_OUTPUT"
 
 assert_merge_safe_file() {
   local source="$1"
@@ -68,6 +89,19 @@ do
     exit 1
   fi
 done
+for relative in "${CLAIM_SPEC_REFS[@]}"; do
+  case "$relative" in
+    ""|/*|../*|*/../*|*/..)
+      echo "Refusing unsafe claim-registry spec_ref: $relative" >&2
+      exit 1
+      ;;
+  esac
+  claim_source="$PKG/$relative"
+  if [ -L "$claim_source" ] || [ ! -f "$claim_source" ]; then
+    echo "Claim-registry spec_ref is missing, symlinked, or not a regular file: $relative" >&2
+    exit 1
+  fi
+done
 
 # Merge-only assets are preflighted before the first destination write.  An
 # existing repository policy or intentional Codex setting must be merged by a
@@ -86,6 +120,10 @@ cp "$PKG/.agent-harness/README.md" "$REPO/.agent-harness/README.md"
 cp -R "$PKG/.agent-harness/context" "$REPO/.agent-harness/"
 cp -R "$PKG/.agent-harness/templates" "$REPO/.agent-harness/"
 cp "$PKG/.agent-harness/scripts/"*.py "$REPO/.agent-harness/scripts/"
+for relative in "${CLAIM_SPEC_REFS[@]}"; do
+  mkdir -p "$REPO/$(dirname "$relative")"
+  cp "$PKG/$relative" "$REPO/$relative"
+done
 cp -R "$PKG/docs/codex_handoff/"* "$REPO/docs/codex_handoff/"
 # docs/codex_handoff is canonical. machine_readable is a synchronized
 # compatibility mirror and must never overwrite the canonical install source.

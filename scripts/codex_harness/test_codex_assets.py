@@ -758,6 +758,14 @@ def test_installer_copies_repo_scoped_assets_with_project_harness_config(
         "harness_templates/vendor/physmath-gpt56/3.1.0/research/manifest.json",
     ]:
         assert (target / path).exists(), path
+    for line in (
+        REPO_ROOT / ".agent-harness/context/CLAIM_REGISTRY.jsonl"
+    ).read_text(encoding="utf-8").splitlines():
+        for ref in json.loads(line)["spec_refs"]:
+            relative = ref.partition("#")[0]
+            assert (target / relative).read_bytes() == (
+                REPO_ROOT / relative
+            ).read_bytes()
     assert (
         target / "docs/codex_handoff/pr_backlog.yaml"
     ).read_bytes() == (
