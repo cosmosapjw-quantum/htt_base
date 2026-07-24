@@ -170,7 +170,7 @@ def build_observable_vector(
     _require_transfer_metadata(all_features)
     _require_channel_names(channels)
     return ObservableVector(
-        ell_max=int(ell_max),
+        ell_max=ell_max,
         channels=tuple(channels),
         cl=dict(cl or {}),
         alm_features=blocks,
