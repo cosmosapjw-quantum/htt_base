@@ -341,12 +341,24 @@ def require_full_grid(evaluated_w: Sequence[str],
                       registered_w: Sequence[str]) -> None:
     """Coverage must be computed over the FULL registered grid, never a
     central/high-signal subset."""
-    missing = [w for w in registered_w if w not in set(evaluated_w)]
+    evaluated = list(evaluated_w)
+    registered = list(registered_w)
+    if len(set(registered)) != len(registered):
+        raise WeakIdError("the registered grid contains duplicate points")
+    if len(set(evaluated)) != len(evaluated):
+        raise WeakIdError("the evaluated grid contains duplicate points")
+    evaluated_set = set(evaluated)
+    registered_set = set(registered)
+    missing = [w for w in registered if w not in evaluated_set]
     if missing:
         raise WeakIdError(
             f"coverage evaluated over a subset only; the grid points "
             f"{missing} are missing — computing coverage over central "
             "cases only is refused")
+    unexpected = [w for w in evaluated if w not in registered_set]
+    if unexpected:
+        raise WeakIdError(
+            f"coverage includes unregistered grid points {unexpected}")
 
 
 def build_failure_map(point_results: Sequence[dict],

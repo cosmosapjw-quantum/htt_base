@@ -237,6 +237,10 @@ def test_full_grid_and_failure_map_guards() -> None:
     with pytest.raises(WeakIdError, match="central cases only"):
         require_full_grid(["0", "1/4"], ["0", "1/4", "1/2", "1"])
     require_full_grid(["0", "1/4", "1/2"], ["0", "1/4", "1/2"])
+    with pytest.raises(WeakIdError, match="duplicate points"):
+        require_full_grid(["0", "0", "1"], ["0", "1"])
+    with pytest.raises(WeakIdError, match="unregistered grid points"):
+        require_full_grid(["0", "1", "2"], ["0", "1"])
     with pytest.raises(WeakIdError, match="PRESERVED in the failure"):
         require_failure_map_complete(["0", "1/2"], ["0", "1/4", "1/2"])
 
