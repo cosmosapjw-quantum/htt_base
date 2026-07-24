@@ -118,6 +118,18 @@ def test_seal_challenge_hides_truth_and_is_verifiable() -> None:
     assert ch.truth_hash != other.truth_hash
 
 
+@pytest.mark.parametrize(
+    ("n_reps", "n_obs"),
+    [(0, 60), (-1, 60), (1.5, 60), (True, 60), (1, 0), (1, -1)],
+)
+def test_seal_challenge_rejects_invalid_dimensions(n_reps, n_obs) -> None:
+    with pytest.raises(AdjudicationError, match="positive integer"):
+        seal_challenge(
+            "CH-test", "generator.dgp", n_reps=n_reps, n_obs=n_obs,
+            seed=101, template_seed=20260718,
+        )
+
+
 def test_tampering_the_seal_is_detected() -> None:
     ch = _challenge(n_reps=3)
     # forge the labels after sealing -> the re-verified hash mismatches

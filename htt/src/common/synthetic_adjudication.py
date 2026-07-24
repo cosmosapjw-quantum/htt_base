@@ -114,6 +114,13 @@ def _truth_digest(seed: int, items) -> str:
 
 def seal_challenge(challenge_id: str, generator_id: str, *, n_reps: int,
                    n_obs: int, seed: int, template_seed: int) -> SealedChallenge:
+    for name, value in (("n_reps", n_reps), ("n_obs", n_obs)):
+        if (isinstance(value, bool)
+                or not isinstance(value, Integral)
+                or value < 1):
+            raise AdjudicationError(
+                f"{name} must be a positive integer")
+    n_reps, n_obs = int(n_reps), int(n_obs)
     items = []
     for family, spec in DGP_BATTERY.items():
         collinear = spec["regime"] == "confused"
