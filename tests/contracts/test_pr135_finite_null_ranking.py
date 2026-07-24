@@ -155,6 +155,24 @@ def test_split_evaluated_rank_p_holds_out_calibration() -> None:
     assert result["calibration_held_out"] == 2
 
 
+@pytest.mark.parametrize(
+    ("calibration_ids", "evaluation_ids"),
+    [
+        ((0, 0), (1,)),
+        ((0,), (1, 1)),
+    ],
+)
+def test_split_rejects_duplicate_rows(
+    calibration_ids: tuple[int, ...],
+    evaluation_ids: tuple[int, ...],
+) -> None:
+    with pytest.raises(FiniteNullError, match="duplicate null row"):
+        CalibrationSplit(
+            calibration_ids=calibration_ids,
+            evaluation_ids=evaluation_ids,
+        )
+
+
 def test_identical_scoring_guard() -> None:
     require_identical_scoring("max_scan", "max_scan")
     with pytest.raises(FiniteNullError, match="local observation-only"):

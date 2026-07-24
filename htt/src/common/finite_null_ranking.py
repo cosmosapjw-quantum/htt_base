@@ -273,6 +273,12 @@ class CalibrationSplit:
     def __post_init__(self) -> None:
         cal = set(self.calibration_ids)
         ev = set(self.evaluation_ids)
+        if len(cal) != len(self.calibration_ids):
+            raise FiniteNullError(
+                "calibration split contains a duplicate null row")
+        if len(ev) != len(self.evaluation_ids):
+            raise FiniteNullError(
+                "evaluation split contains a duplicate null row")
         overlap = cal & ev
         if overlap:
             raise FiniteNullError(
