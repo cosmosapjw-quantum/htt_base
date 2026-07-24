@@ -106,6 +106,25 @@ def _status_metadata(cert) -> dict[str, object]:
     return cert.manifest.statistics_definitions["certificate_status_metadata"]
 
 
+@pytest.mark.parametrize("invalid_weight", (-1.0, float("nan"), float("inf")))
+def test_redshift_coherence_rejects_invalid_probe_weights(
+    invalid_weight: float,
+) -> None:
+    probes = (
+        RedshiftBinnedProbe("positive", 0.0, 0.0, 1.0, 0.01, weight=2.0),
+        RedshiftBinnedProbe(
+            "invalid",
+            180.0,
+            0.0,
+            1.0,
+            0.02,
+            weight=invalid_weight,
+        ),
+    )
+    with pytest.raises(ValueError, match="weights must be finite and nonnegative"):
+        per_bin_resultants(probes)
+
+
 def test_redshift_certificate_requires_depth_bin_metadata_for_covariance_gate() -> None:
     cert = _certificate(
         has_covariance=True,

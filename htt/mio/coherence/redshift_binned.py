@@ -522,6 +522,8 @@ def _probe_weights(probes: Sequence[RedshiftBinnedProbe]) -> np.ndarray:
     w = np.array([p.weight for p in probes], dtype=float)
     if np.any(sig <= 0):
         raise ValueError("sigma_cone_deg must be strictly positive")
+    if not np.all(np.isfinite(w)) or np.any(w < 0):
+        raise ValueError("probe weights must be finite and nonnegative")
     return w / (sig * sig)
 
 
