@@ -54,6 +54,47 @@ class Cf4Sample:
     pos_hmpc: np.ndarray     # (N,3) comoving position (Mpc/h, equatorial)
     sg: np.ndarray = None    # (N,3) supergalactic Cartesian (SGX,SGY,SGZ)
 
+    def __post_init__(self) -> None:
+        n = np.asarray(self.n)
+        v = np.asarray(self.v)
+        w = np.asarray(self.w)
+        sig_v = np.asarray(self.sig_v)
+        pos_hmpc = np.asarray(self.pos_hmpc)
+        n_rows = len(v) if v.ndim == 1 else 0
+        if (
+            n_rows == 0
+            or n.shape != (n_rows, 3)
+            or w.shape != (n_rows,)
+            or sig_v.shape != (n_rows,)
+            or pos_hmpc.shape != (n_rows, 3)
+        ):
+            raise VelocityEstimatorError(
+                "CF4 sample arrays have inconsistent estimator shapes")
+        arrays = (n, v, w, sig_v, pos_hmpc)
+        if any(not np.issubdtype(array.dtype, np.number)
+               or not np.isrealobj(array)
+               or not np.all(np.isfinite(array)) for array in arrays):
+            raise VelocityEstimatorError(
+                "CF4 sample arrays must contain finite real values")
+        if np.any(w <= 0) or np.any(sig_v <= 0):
+            raise VelocityEstimatorError(
+                "CF4 weights and velocity uncertainties must be positive")
+        sg = None if self.sg is None else np.asarray(self.sg)
+        if sg is not None and (
+            sg.shape != (n_rows, 3)
+            or not np.issubdtype(sg.dtype, np.number)
+            or not np.isrealobj(sg)
+            or not np.all(np.isfinite(sg))
+        ):
+            raise VelocityEstimatorError(
+                "CF4 supergalactic positions must be finite (N, 3) values")
+        object.__setattr__(self, "n", n)
+        object.__setattr__(self, "v", v)
+        object.__setattr__(self, "w", w)
+        object.__setattr__(self, "sig_v", sig_v)
+        object.__setattr__(self, "pos_hmpc", pos_hmpc)
+        object.__setattr__(self, "sg", sg)
+
 
 def load_sample(groups_path, *, h0: float = H0_CF4,
                 sigma_nl: float = SIGMA_NL) -> Cf4Sample:

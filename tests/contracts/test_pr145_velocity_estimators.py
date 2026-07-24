@@ -127,6 +127,24 @@ def test_guards() -> None:
     require_eight_region_label("eight_region_partition")   # fine
 
 
+def test_cf4_sample_rejects_invalid_estimator_arrays() -> None:
+    valid = {
+        "n": np.eye(3),
+        "v": np.ones(3),
+        "w": np.ones(3),
+        "sig_v": np.ones(3),
+        "pos_hmpc": np.eye(3),
+    }
+    with pytest.raises(VelocityEstimatorError, match="finite real"):
+        Cf4Sample(**{**valid, "v": np.array([np.nan, 1.0, 2.0])})
+    with pytest.raises(VelocityEstimatorError, match="must be positive"):
+        Cf4Sample(**{**valid, "w": np.array([1.0, -1.0, 1.0])})
+    with pytest.raises(VelocityEstimatorError, match="inconsistent"):
+        Cf4Sample(**{**valid, "v": np.ones(2)})
+    with pytest.raises(VelocityEstimatorError, match="supergalactic"):
+        Cf4Sample(**{**valid, "sg": np.ones((2, 3))})
+
+
 def test_rank_deficient_refuses_point_estimate() -> None:
     n = np.tile(np.array([0.0, 0.0, 1.0]), (5, 1))
     s = Cf4Sample(n=n, v=np.ones(5), w=np.ones(5), sig_v=np.ones(5),
