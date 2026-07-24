@@ -106,6 +106,23 @@ def test_imbens_manski_c_and_coverage() -> None:
     assert r["endpoint_error"] < 1e-9
 
 
+@pytest.mark.parametrize(
+    "kwargs",
+    [
+        {"w": float("nan")},
+        {"w": -1.0},
+        {"w": 1.0, "s": float("nan")},
+        {"w": 1.0, "s": 0.0},
+        {"w": 1.0, "level": 1.1},
+        {"w": 1.0, "tol": float("nan")},
+        {"w": 1.0, "tol": 0.0},
+    ],
+)
+def test_imbens_manski_optimizer_domain_rejected(kwargs: dict) -> None:
+    with pytest.raises(WeakIdError, match="must be finite|tolerance"):
+        imbens_manski_c(**kwargs)
+
+
 def test_boundary_config_is_least_favorable() -> None:
     # the identified-set boundary theta0 is the least-favorable position;
     # IM coverage there is ~nominal (not over-covering like the midpoint)
