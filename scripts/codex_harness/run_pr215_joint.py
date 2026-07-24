@@ -1,6 +1,6 @@
 """PR-215 runner: joint comparator interval vs product box (RESCUE->PR-189)."""
 from __future__ import annotations
-import argparse, hashlib, json, sys
+import argparse, hashlib, json, subprocess, sys
 from pathlib import Path
 REPO = Path(__file__).resolve().parents[2]
 for e in (str(REPO/"htt"), str(REPO/"htt"/"src")):
@@ -10,12 +10,47 @@ from fractions import Fraction as Fr  # noqa: E402
 SPEC = REPO/"docs/research_program/revival/pr215_spec.yaml"
 CARD = REPO/"docs/generated/pr215_result_card.json"
 PR189 = REPO/"docs/generated/pr189_result_card.json"
+PR189_CAS_CONTRACT = REPO/"docs/generated/pr189_cas/CAS_CONTRACT_PR189_JOINT.json"
+PR189_CAS_RESULTS = tuple(
+    REPO/f"docs/generated/pr189_cas/axis_result_{axis}.json"
+    for axis in ("wolfram_xact", "sympy", "sage_singular", "lean", "rocq")
+)
 def _sha(p): return hashlib.sha256(p.read_bytes()).hexdigest()
 def _xref():
     c = json.loads(PR189.read_text()); r = c.get("result",{})
     cas = r.get("cas_status",{})
+    command = [
+        sys.executable,
+        "-B",
+        ".agent-harness/scripts/cas_gate.py",
+        "adjudicate",
+        "--contract",
+        str(PR189_CAS_CONTRACT.relative_to(REPO)),
+        "--results",
+        *(str(path.relative_to(REPO)) for path in PR189_CAS_RESULTS),
+        "--historical-replay",
+    ]
+    completed = subprocess.run(
+        command,
+        cwd=REPO,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    try:
+        diagnostic = json.loads(completed.stdout)
+    except json.JSONDecodeError:
+        diagnostic = {}
+    stored_cas_diagnostic_only = (
+        completed.returncode == 2
+        and diagnostic.get("aggregate_status") == "CAS_BLOCKED"
+        and diagnostic.get("claim_promotion_cas_eligible") is False
+        and diagnostic.get("evidence_origin") == "stored_axis_result_envelopes"
+    )
     return {"pr189_terminal": c.get("terminal"),
-            "pr189_cas": cas.get("aggregate"),
+            "pr189_cas": "CAS_BLOCKED",
+            "pr189_historical_cas": cas.get("aggregate"),
+            "stored_cas_diagnostic_only": stored_cas_diagnostic_only,
             "pr189_joint_subset_of_product": r.get("coupled_fixture",{}).get("joint_subset_of_product")}
 def build_payload():
     an = analysis()
