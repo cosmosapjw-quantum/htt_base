@@ -34,6 +34,7 @@ from obsstat.cf4_identified_set import (
     unbounded_scenario,
     verify_nuisance_box_hash,
 )
+from scripts.codex_harness import run_pr147_identified_set as pr147_runner
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 GROUPS = REPO_ROOT / "workdir/obs_bundle/pecvel/cf4_full/cf4_groups.npz"
@@ -87,6 +88,38 @@ def test_caption_gate() -> None:
                 " anomaly " + "detected."):
         with pytest.raises(IdentifiedSetError, match="forbidden"):
             lint_caption(text + bad)
+
+
+def test_negative_scan_resolves_relocated_live_module(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    spec = pr147_runner.yaml.safe_load(
+        pr147_runner.SPEC_PATH.read_text(encoding="utf-8")
+    )
+    captions = json.loads(
+        (REPO_ROOT / pr147_runner.OUTPUTS["captions"]).read_text(
+            encoding="utf-8"
+        )
+    )
+    legacy_path = spec["model"]["module"]
+    assert not (REPO_ROOT / legacy_path).exists()
+    targets = pr147_runner._scan_targets(spec, captions)
+    assert targets[legacy_path]["sha256"] == pr147_runner._sha(
+        pr147_runner.LIVE_MODEL_PATH
+    )
+
+    bad_spec = dict(spec)
+    bad_spec["model"] = dict(spec["model"])
+    bad_spec["negative_scan"] = dict(spec["negative_scan"])
+    bad_spec["negative_scan"]["targets"] = ["missing/not-the-model.py"]
+    with pytest.raises(SystemExit, match="negative-scan target is missing"):
+        pr147_runner._scan_targets(bad_spec, captions)
+
+    forbidden_live = tmp_path / "cf4_identified_set.py"
+    forbidden_live.write_text("anomaly detected\n", encoding="utf-8")
+    monkeypatch.setattr(pr147_runner, "LIVE_MODEL_PATH", forbidden_live)
+    with pytest.raises(SystemExit, match="negative scan found 1 hits"):
+        pr147_runner._scan_targets(spec, captions)
 
 
 @needs_data
