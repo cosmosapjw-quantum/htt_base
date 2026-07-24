@@ -244,9 +244,18 @@ def range_fixtures(t4_lines: list[str], ranges: dict) -> dict:
         col = cols[label]
         vals = [col.value(ln) for ln in t4_lines]
         vals = [v for v in vals if v is not None]
-        n_out = sum(1 for v in vals if v < lo or v > hi)
+        finite_vals = [v for v in vals if np.isfinite(v)]
+        n_out = len(vals) - len(finite_vals)
+        strict_positive_distance = label == "Dist" and lo == 0
+        n_out += sum(
+            1 for v in finite_vals
+            if (v <= lo if strict_positive_distance else v < lo) or v > hi
+        )
         report[label] = {"low": lo, "high": hi, "n_out_of_range": n_out,
-                         "observed_min": min(vals), "observed_max": max(vals)}
+                         "observed_min": (min(finite_vals)
+                                          if finite_vals else None),
+                         "observed_max": (max(finite_vals)
+                                          if finite_vals else None)}
     return report
 
 

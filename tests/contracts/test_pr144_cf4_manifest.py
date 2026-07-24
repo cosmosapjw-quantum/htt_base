@@ -152,6 +152,24 @@ def test_caption_gate() -> None:
             lint_caption(text + bad)
 
 
+def test_range_fixtures_flag_nonpositive_and_nonfinite_distance() -> None:
+    def line_with_distance(raw: str) -> str:
+        chars = [" "] * 157
+        chars[21:26] = list(f"{raw:>5}")
+        return "".join(chars)
+
+    zero = range_fixtures(
+        [line_with_distance("0.0")], {"Dist": [0.0, 1000.0]},
+    )
+    assert zero["Dist"]["n_out_of_range"] == 1
+    nonfinite = range_fixtures(
+        [line_with_distance("nan")], {"Dist": [0.0, 1000.0]},
+    )
+    assert nonfinite["Dist"]["n_out_of_range"] == 1
+    assert nonfinite["Dist"]["observed_min"] is None
+    assert nonfinite["Dist"]["observed_max"] is None
+
+
 @needs_data
 def test_parse_parity_and_completeness() -> None:
     t3, t4 = read_lines(T3), read_lines(T4)
