@@ -289,6 +289,12 @@ def run_ppc(model: GaussianModel, y_obs, frozen: dict, *,
     require_frozen_discrepancies(frozen, frozen["discrepancies"])
     _require_positive_count(n_predictive, "n_predictive")
     y_obs = np.asarray(y_obs, dtype=np.float64)
+    if y_obs.ndim != 1 or y_obs.size != model.n_obs:
+        raise SbcPpcError(
+            f"observed data must be a one-dimensional array of length "
+            f"{model.n_obs}")
+    if not np.all(np.isfinite(y_obs)):
+        raise SbcPpcError("observed data must contain only finite values")
     actual_data_hash = _data_hash(y_obs)
     if lineage.get("data_hash") != actual_data_hash:
         raise SbcPpcError(

@@ -153,6 +153,15 @@ def test_ppc_frozen_discrepancies_and_mandatory_lineage() -> None:
     with pytest.raises(SbcPpcError, match="n_predictive.*positive"):
         run_ppc(GOOD, y, frozen, n_predictive=0, seed=1,
                 lineage=_lineage(GOOD, y))
+    short_y = y[:2]
+    with pytest.raises(SbcPpcError, match="array of length 8"):
+        run_ppc(GOOD, short_y, frozen, n_predictive=100, seed=1,
+                lineage=_lineage(GOOD, short_y))
+    nonfinite_y = y.copy()
+    nonfinite_y[0] = float("nan")
+    with pytest.raises(SbcPpcError, match="only finite values"):
+        run_ppc(GOOD, nonfinite_y, frozen, n_predictive=100, seed=1,
+                lineage=_lineage(GOOD, nonfinite_y))
     # swapping the frozen discrepancy set is refused
     with pytest.raises(SbcPpcError, match="swapping a discrepancy"):
         require_frozen_discrepancies(frozen, ["sample_variance",
