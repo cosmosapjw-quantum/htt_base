@@ -22,6 +22,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from fractions import Fraction
+from types import MappingProxyType
 from typing import Any
 
 # Congruence/frame tags. No default frame exists (a missing frame raises).
@@ -116,11 +117,22 @@ class Bridge:
     note: str
 
 
-_BRIDGE_REGISTRY: dict[tuple[str, str], Bridge] = {}
+_BRIDGE_REGISTRY = MappingProxyType({
+    ("obs", "u"): Bridge(
+        "obs", "u", remainder_order=3, note="observer boost to matter tilt"
+    ),
+    ("u", "n"): Bridge(
+        "u", "n", remainder_order=2, note="tilt frame to normal frame"
+    ),
+})
 
 
-def register_bridge(bridge: Bridge) -> None:
-    _BRIDGE_REGISTRY[(bridge.src_frame, bridge.dst_frame)] = bridge
+def register_bridge(_bridge: Bridge) -> None:
+    """Retained compatibility entry point; runtime authority is refused."""
+    raise FrameTypeError(
+        "runtime bridge registration is forbidden; the canonical bridge "
+        "registry is immutable"
+    )
 
 
 def bridge(value: Typed, dst_frame: str) -> Typed:
@@ -135,13 +147,6 @@ def bridge(value: Typed, dst_frame: str) -> Typed:
         f"bridge[{b.src_frame}->{b.dst_frame}]({value.name})", value.value,
         dst_frame, value.order, value.signed,
     )
-
-
-# canonical registered bridges (observer boost -> matter tilt carries an
-# O(beta^3) remainder; n<->u only at declared order).
-register_bridge(Bridge("obs", "u", remainder_order=3, note="observer boost to matter tilt"))
-register_bridge(Bridge("u", "n", remainder_order=2, note="tilt frame to normal frame"))
-
 
 # --- exact rapidity round-trip (H03) --------------------------------------
 
