@@ -241,6 +241,15 @@ class NativeLowEllSchema:
         names = [observable.name for observable in observables]
         if len(set(names)) != len(names):
             raise ValueError("NativeLowEllSchema observables must have unique names")
+        for observable in observables:
+            if (
+                observable.ell_min < self.valid_range.ell_min
+                or observable.ell_max > self.valid_range.ell_max
+            ):
+                raise ValueError(
+                    "NativeLowEllSchema observable ell range must remain within "
+                    "the schema valid_range"
+                )
         calibration_status = CalibrationStatus(str(self.calibration_status))
         if calibration_status is not CalibrationStatus.NATIVE_PROVISIONAL:
             raise ValueError(

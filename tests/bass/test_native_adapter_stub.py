@@ -196,6 +196,24 @@ def test_native_schema_validates_observable_descriptors() -> None:
             harmonic_ordering="",
         )
 
+    from bass.transfer.native_schema import NativeLowEllSchema
+    from common.transfer_registry import TransferValidRange
+
+    for schema_ell_min, schema_ell_max in ((2, 10), (4, 32)):
+        with pytest.raises(ValueError, match="within the schema valid_range"):
+            NativeLowEllSchema(
+                transfer_id_prefix="native.lowell",
+                family="future_native_lowell_schema",
+                valid_range=TransferValidRange(
+                    k_min=1.0e-5,
+                    k_max=0.2,
+                    ell_min=schema_ell_min,
+                    ell_max=schema_ell_max,
+                ),
+                observables=(descriptor,),
+                source_ref="future-solver-interface:pending",
+            )
+
 
 def test_native_schema_rejects_validated_or_claim_like_language() -> None:
     from bass.transfer.native_schema import (
