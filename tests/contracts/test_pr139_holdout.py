@@ -49,11 +49,13 @@ def test_source_hash_is_generation_time_provenance() -> None:
 
     elpd_rel = runner.OUTPUTS["elpd"]
     stored = {
+        "elpd": -1.23456789,
         "negative_scan": {
             "targets": {source: {"sha256": "1" * 64, "hits": []}},
         }
     }
     current = {
+        "elpd": -1.234567891,
         "negative_scan": {
             "targets": {source: {"sha256": "2" * 64, "hits": []}},
         }

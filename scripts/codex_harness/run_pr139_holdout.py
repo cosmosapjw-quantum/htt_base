@@ -94,7 +94,7 @@ def _is_sha256(value: object) -> bool:
 def _semantic_artifact(rel: str, payload: dict) -> dict:
     """Keep the maintained-source hash as generation-time provenance."""
 
-    normalized = json.loads(json.dumps(payload))
+    normalized = json.loads(json.dumps(_round(payload)))
     if rel == OUTPUTS["elpd"]:
         scan = normalized.get("negative_scan")
         targets = scan.get("targets") if isinstance(scan, dict) else None
