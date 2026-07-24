@@ -321,6 +321,10 @@ def require_independent_engines(e1: dict, e2: dict) -> None:
 def compare_engines(engines: list[dict], analytic_log_evidence: float, *,
                     agreement_tol: float, analytic_tol: float,
                     se_ceiling: float) -> dict:
+    if len(engines) != 2:
+        raise EvidenceError(
+            "coherent evidence requires exactly two independent engines")
+    require_independent_engines(engines[0], engines[1])
     devs = {e["method"]: abs(e["log_evidence"] - analytic_log_evidence)
             for e in engines}
     gap = max(abs(a["log_evidence"] - b["log_evidence"])

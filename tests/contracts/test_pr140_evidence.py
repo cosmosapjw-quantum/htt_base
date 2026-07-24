@@ -133,6 +133,33 @@ def test_underresolved_engine_is_indeterminate() -> None:
         require_coherent(cmp)
 
 
+def test_engine_comparison_requires_two_independent_engines() -> None:
+    engine = {
+        "method": "thermodynamic_integration",
+        "log_evidence": 1.0,
+        "bootstrap_se": 0.0,
+        "sample_provenance": "one",
+        "sample_digest": "draws-one",
+    }
+    with pytest.raises(EvidenceError, match="exactly two"):
+        compare_engines(
+            [engine],
+            1.0,
+            agreement_tol=0.1,
+            analytic_tol=0.1,
+            se_ceiling=0.1,
+        )
+    duplicate = dict(engine, method="bridge_sampling")
+    with pytest.raises(EvidenceError, match="same sample provenance"):
+        compare_engines(
+            [engine, duplicate],
+            1.0,
+            agreement_tol=0.1,
+            analytic_tol=0.1,
+            se_ceiling=0.1,
+        )
+
+
 def test_prior_normalization_guard() -> None:
     require_normalized_prior(NormalPrior(0.0, 4.0))
     assert abs(NormalPrior(0.0, 4.0).normalizer_integral() - 1.0) < 1e-4
