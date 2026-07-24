@@ -475,6 +475,13 @@ def require_within_ceiling(sensitivity: dict, ceiling: float) -> None:
 def evidence_receipt(model: GaussianEvidenceModel, engines: list[dict],
                      comparison: dict) -> dict:
     require_normalized_prior(model.prior)
+    if len(engines) != 2:
+        raise EvidenceError(
+            "an evidence receipt requires exactly two independent engines")
+    require_independent_engines(engines[0], engines[1])
+    status = comparison.get("status")
+    if status not in {member.value for member in EvidenceStatus}:
+        raise EvidenceError("evidence receipt status is invalid")
     inputs = {
         "prior": model.prior.provenance(),
         "likelihood_hash": likelihood_hash(model),
@@ -488,7 +495,7 @@ def evidence_receipt(model: GaussianEvidenceModel, engines: list[dict],
     receipt_hash = hashlib.sha256(
         json.dumps(inputs, sort_keys=True).encode()).hexdigest()
     return {"schema": "pr140.receipt.v1", "receipt_hash": receipt_hash,
-            "inputs": inputs, "status": comparison["status"],
+            "inputs": inputs, "status": status,
             "note": "the evidence is bound to a normalized prior, the "
                     "likelihood, the data, and two independent engines with "
                     "their diagnostics; evidence agreement is not "

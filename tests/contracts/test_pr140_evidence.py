@@ -337,6 +337,10 @@ def test_receipt_binds_inputs() -> None:
     tampered["inputs"]["prior"]["var"] = 9.0
     with pytest.raises(EvidenceError, match="hash does not match"):
         caller_scalar_is_not_a_receipt(tampered)
+    with pytest.raises(EvidenceError, match="exactly two"):
+        evidence_receipt(m, [ti], cmp)
+    with pytest.raises(EvidenceError, match="status is invalid"):
+        evidence_receipt(m, [ti, bs], {"status": "caller_coherent"})
 
 
 def test_caption_gate() -> None:
