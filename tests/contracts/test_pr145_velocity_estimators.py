@@ -160,6 +160,51 @@ def test_load_sample_rejects_invalid_configuration(
         load_sample("validation_precedes_file_access.npz", **kwargs)
 
 
+@pytest.mark.parametrize("report, nominal, half_width, message", [
+    (
+        {"labels": ["Bx"], "coverage_68": [np.nan]},
+        0.68,
+        0.09,
+        "finite and within",
+    ),
+    (
+        {"labels": ["Bx"], "coverage_68": [1.1]},
+        0.68,
+        0.5,
+        "finite and within",
+    ),
+    (
+        {"labels": ["Bx", "By"], "coverage_68": [0.68]},
+        0.68,
+        0.09,
+        "one value for every component",
+    ),
+    (
+        {"labels": ["Bx"], "coverage_95": [0.95]},
+        np.nan,
+        0.06,
+        "nominal must be finite",
+    ),
+    (
+        {"labels": ["Bx"], "coverage_95": [0.95]},
+        0.5,
+        0.06,
+        "0.68 or 0.95",
+    ),
+    (
+        {"labels": ["Bx"], "coverage_68": [0.68]},
+        0.68,
+        np.nan,
+        "half-width must be finite",
+    ),
+])
+def test_coverage_guard_rejects_malformed_reports(
+    report: dict, nominal: float, half_width: float, message: str
+) -> None:
+    with pytest.raises(VelocityEstimatorError, match=message):
+        require_coverage_in_band(report, nominal, half_width)
+
+
 def test_rank_deficient_refuses_point_estimate() -> None:
     n = np.tile(np.array([0.0, 0.0, 1.0]), (5, 1))
     s = Cf4Sample(n=n, v=np.ones(5), w=np.ones(5), sig_v=np.ones(5),

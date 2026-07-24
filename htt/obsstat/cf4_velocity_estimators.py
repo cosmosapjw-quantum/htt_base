@@ -416,8 +416,40 @@ def coverage_injection(sample: Cf4Sample, flow_true, monopole_true, *,
 
 def require_coverage_in_band(coverage_report: dict, nominal: float,
                              half_width: float) -> None:
-    key = "coverage_68" if abs(nominal - 0.68) < 0.1 else "coverage_95"
-    for label, cov in zip(coverage_report["labels"], coverage_report[key]):
+    try:
+        nominal = float(nominal)
+        half_width = float(half_width)
+    except (TypeError, ValueError) as exc:
+        raise VelocityEstimatorError(
+            "coverage nominal and half-width must be real scalars"
+        ) from exc
+    if not np.isfinite(nominal):
+        raise VelocityEstimatorError("coverage nominal must be finite")
+    if np.isclose(nominal, 0.68, rtol=0.0, atol=1e-12):
+        key = "coverage_68"
+    elif np.isclose(nominal, 0.95, rtol=0.0, atol=1e-12):
+        key = "coverage_95"
+    else:
+        raise VelocityEstimatorError(
+            "coverage nominal must select the 0.68 or 0.95 report")
+    if not np.isfinite(half_width) or not 0.0 <= half_width <= 1.0:
+        raise VelocityEstimatorError(
+            "coverage half-width must be finite and within [0, 1]")
+    labels = coverage_report["labels"]
+    values = coverage_report[key]
+    if (
+        isinstance(labels, (str, bytes))
+        or isinstance(values, (str, bytes))
+        or len(labels) == 0
+        or len(labels) != len(values)
+    ):
+        raise VelocityEstimatorError(
+            "coverage report must have one value for every component")
+    for label, cov in zip(labels, values):
+        if not np.isscalar(cov) or not np.isreal(cov) \
+                or not np.isfinite(cov) or not 0.0 <= cov <= 1.0:
+            raise VelocityEstimatorError(
+                f"component {label} coverage must be finite and within [0, 1]")
         if abs(cov - nominal) > half_width:
             raise VelocityEstimatorError(
                 f"component {label} coverage {cov:.3f} is outside the "
