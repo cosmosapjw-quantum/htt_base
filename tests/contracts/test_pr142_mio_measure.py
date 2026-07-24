@@ -96,6 +96,22 @@ SPEC = MeasureSpec(COMPONENTS, (1.0, 1.0, 1.0, 1.0), Pairing.UNPAIRED,
                    DepthPolicy.RAW)
 
 
+def test_departure_table_rejects_malformed_data() -> None:
+    with pytest.raises(MeasureError, match="finite real"):
+        DepartureTable(np.full((2, 4), float("nan")), COMPONENTS)
+    with pytest.raises(MeasureError, match="two-dimensional"):
+        DepartureTable(np.ones(4), COMPONENTS)
+    with pytest.raises(MeasureError, match="unique"):
+        DepartureTable(
+            np.ones((2, 4)),
+            ("Sigma2", "Sigma2", "Omega_tilt", "DeltaOmega_k"),
+        )
+    with pytest.raises(MeasureError, match="depth indices"):
+        DepartureTable(np.ones((2, 4)), COMPONENTS, depth=(0,))
+    with pytest.raises(MeasureError, match="pair indices"):
+        DepartureTable(np.ones((2, 4)), COMPONENTS, pair=(0,))
+
+
 def test_canonical_order_enforced() -> None:
     with pytest.raises(MeasureError, match="canonical"):
         MeasureSpec(("W2", "Sigma2"), (1.0, 1.0), Pairing.UNPAIRED,

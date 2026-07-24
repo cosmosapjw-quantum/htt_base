@@ -140,6 +140,30 @@ class DepartureTable:
     depth: tuple = ()                        # per-row depth-bin id
     pair: tuple = ()                         # per-row pair id (paired only)
 
+    def __post_init__(self) -> None:
+        values = np.asarray(self.values)
+        if values.ndim != 2 or values.shape[0] == 0:
+            raise MeasureError(
+                "departure values must be a non-empty two-dimensional array")
+        if not np.issubdtype(values.dtype, np.number) \
+                or not np.isrealobj(values) \
+                or not np.all(np.isfinite(values)):
+            raise MeasureError("departure values must be finite real numbers")
+        columns = tuple(self.columns)
+        if len(columns) != values.shape[1] or len(set(columns)) != len(columns):
+            raise MeasureError(
+                "departure columns must be unique and match the value width")
+        depth = tuple(self.depth)
+        pair = tuple(self.pair)
+        if depth and len(depth) != values.shape[0]:
+            raise MeasureError("depth indices must match the row count")
+        if pair and len(pair) != values.shape[0]:
+            raise MeasureError("pair indices must match the row count")
+        object.__setattr__(self, "values", values)
+        object.__setattr__(self, "columns", columns)
+        object.__setattr__(self, "depth", depth)
+        object.__setattr__(self, "pair", pair)
+
     def column_index(self, name: str) -> int:
         return self.columns.index(name)
 
