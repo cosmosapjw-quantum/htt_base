@@ -172,6 +172,15 @@ def test_reference_null_scale_validated_against_data() -> None:
         require_null_scale_consistent(t, mis)
 
 
+@pytest.mark.parametrize(
+    "tol", [float("nan"), float("inf"), 0.0, 0.5, -1.0, True],
+)
+def test_reference_null_scale_rejects_invalid_tolerance(tol) -> None:
+    from common.mio_joint_measure import require_null_scale_consistent
+    with pytest.raises(MeasureError, match="finite factor"):
+        require_null_scale_consistent(_table(), SPEC, tol)
+
+
 def test_paired_bootstrap_matches_paired_estimand() -> None:
     from common.mio_joint_measure import bootstrap_uncertainty
     t = _table()

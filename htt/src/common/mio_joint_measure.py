@@ -284,6 +284,12 @@ def require_null_scale_consistent(table: DepartureTable, spec: MeasureSpec,
     """The declared reference (noise) scale must match the data's robust
     scale within a factor, so F's p-value is not governed by an arbitrary
     hyperparameter."""
+    if (isinstance(tol, bool)
+            or not isinstance(tol, Real)
+            or not np.isfinite(float(tol))
+            or tol < 1):
+        raise MeasureError("null scale tolerance must be a finite factor >= 1")
+    tol = float(tol)
     est = robust_component_scale(table, spec)
     declared = np.asarray(spec.null_scale)
     for c, e, d in zip(spec.identity, est, declared):
