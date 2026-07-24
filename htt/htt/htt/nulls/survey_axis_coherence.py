@@ -88,12 +88,12 @@ class SurveyAxisCoherenceNull(SelectionResponseDepthNull):
         return max(beta_center + beta_noise, 0.0)
 
     def generate(self) -> SurveySystematicNullMockBank:
-        rng = np.random.default_rng(self.config.seed)
         samples: list[DepthNullSample] = []
         target = np.asarray(self.config.target_direction, dtype=float)
         base_axis = self._base_axis()
         for mock_index in range(self.config.n_mocks):
             mock_seed = int(self.config.seed + mock_index)
+            rng = np.random.default_rng(mock_seed)
             amplitude = max(
                 rng.normal(
                     self.config.amplitude_beta_mean * self.amplitude_multiplier,
