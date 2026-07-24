@@ -168,6 +168,20 @@ def test_known_bad_ppc_is_extreme() -> None:
     assert ppc_verdict(bad, 0.005) == "inadequate_ppc_extreme"
 
 
+@pytest.mark.parametrize("threshold", [-0.1, 0.0, 0.5, float("nan")])
+def test_ppc_verdict_threshold_domain_rejected(threshold: float) -> None:
+    ppc = {"discrepancy_results": [{"bayesian_p": 0.5}]}
+    with pytest.raises(SbcPpcError, match="reject threshold.*finite"):
+        ppc_verdict(ppc, threshold)
+
+
+@pytest.mark.parametrize("pvalue", [-0.1, 1.1, float("nan")])
+def test_ppc_verdict_pvalue_domain_rejected(pvalue: float) -> None:
+    ppc = {"discrepancy_results": [{"bayesian_p": pvalue}]}
+    with pytest.raises(SbcPpcError, match="Bayesian p-value.*finite"):
+        ppc_verdict(ppc, 0.01)
+
+
 def test_lineage_and_invalid_posterior() -> None:
     dh = "abc123"
     lh = lineage_hash(GOOD, dh, {"n": "8"}, {"rhat": "1.0"})
@@ -191,6 +205,12 @@ def test_ppc_receipt_type_guard() -> None:
             "frozen_hash": "disc-empty",
             "discrepancy_results": [],
             "lineage_verified": "lin-empty",
+        })
+    with pytest.raises(SbcPpcError, match="Bayesian p-value.*finite"):
+        require_ppc_receipt({
+            "frozen_hash": "disc-invalid",
+            "discrepancy_results": [{"bayesian_p": float("nan")}],
+            "lineage_verified": "lin-invalid",
         })
     frozen = freeze_discrepancies(["sample_variance"])
     rng = np.random.Generator(np.random.PCG64(9))

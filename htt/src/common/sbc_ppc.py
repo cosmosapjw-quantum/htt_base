@@ -327,8 +327,17 @@ def ppc_verdict(ppc: dict, two_sided_reject: float) -> str:
     if not isinstance(results, list) or not results:
         raise SbcPpcError(
             "a PPC verdict requires non-empty discrepancy results")
+    if (
+        not math.isfinite(two_sided_reject)
+        or not 0.0 < two_sided_reject < 0.5
+    ):
+        raise SbcPpcError(
+            "the two-sided PPC reject threshold must be finite and in "
+            "(0, 0.5)")
     for r in results:
         p = r["bayesian_p"]
+        if not math.isfinite(p) or not 0.0 <= p <= 1.0:
+            raise SbcPpcError("a Bayesian p-value must be finite and in [0, 1]")
         if p < two_sided_reject or p > 1.0 - two_sided_reject:
             return "inadequate_ppc_extreme"
     return "adequate_conditional"
@@ -362,6 +371,16 @@ def require_ppc_receipt(receipt: Mapping) -> None:
         raise SbcPpcError(
             "a PPC receipt needs non-empty replicated-data discrepancy "
             "results")
+    for result in results:
+        p = result.get("bayesian_p")
+        if (
+            not isinstance(p, (int, float))
+            or isinstance(p, bool)
+            or not math.isfinite(p)
+            or not 0.0 <= p <= 1.0
+        ):
+            raise SbcPpcError(
+                "a PPC receipt Bayesian p-value must be finite and in [0, 1]")
 
 
 def standardized_residual_check(model: GaussianModel, y_obs,
