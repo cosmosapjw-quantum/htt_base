@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Seal both PR-169 CAS attempts after validating every evidence envelope.
+"""Validate both frozen PR-169 CAS attempts as historical diagnostics.
 
 The collector is deliberately not an adjudicator shortcut.  It first binds each
 assignment to its self-hash, required inputs, declared result path, contract,
@@ -7,6 +7,8 @@ outer harness envelope, and complete nested CAS result.  Only then may the four
 axis statuses be aggregated.  Version-1 inputs that were intentionally replaced
 by the repaired version-2 run can resolve only through the immutable text source
 snapshot stored with the v1 failure evidence; v2 never receives that fallback.
+Neither stored attempt supplies current CAS authority; only parent-observed
+``cas_gate.py run-adjudicate`` execution can do so.
 """
 from __future__ import annotations
 
@@ -15,6 +17,7 @@ import hashlib
 import json
 import os
 import re
+import sys
 import tempfile
 from pathlib import Path
 from typing import Any, Iterable
@@ -454,13 +457,20 @@ def _collect_version(version: str, config: dict[str, Any], *, check: bool) -> di
     }
 
 
-def main() -> None:
+def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
+    if not args.check:
+        print(
+            "refusing to overwrite frozen historical PR-169 CAS receipts; "
+            "current authority requires cas_gate.py run-adjudicate",
+            file=sys.stderr,
+        )
+        return 2
 
     versions = {
-        version: _collect_version(version, config, check=args.check)
+        version: _collect_version(version, config, check=True)
         for version, config in VERSIONS.items()
     }
     receipt = {
@@ -482,17 +492,21 @@ def main() -> None:
         "exceptions": [],
     }
     target = REPO / "docs/generated/pr169_cas_collection_receipt.json"
-    _publish(target, _render(receipt), check=args.check)
+    _publish(target, _render(receipt), check=True)
     print(json.dumps({
-        "ok": True,
-        "mode": "check" if args.check else "write",
+        "ok": False,
+        "mode": "historical_replay_check",
         "path": target.relative_to(REPO).as_posix(),
         "sha256": _sha(target),
-        "aggregates": {
+        "current_aggregate": "CAS_BLOCKED",
+        "historical_aggregates": {
             version: row["aggregate_status"] for version, row in versions.items()
         },
+        "stored_cas_diagnostic_only": True,
+        "claim_promotion_cas_eligible": False,
     }, indent=2))
+    return 2
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

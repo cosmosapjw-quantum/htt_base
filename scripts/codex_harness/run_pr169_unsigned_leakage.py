@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Build or byte-check the exact PR-169 algebraic-only result pack."""
+"""Diagnose the frozen PR-169 algebraic-only result pack.
+
+Stored CAS envelopes preserve historical evidence but cannot provide current
+CAS authority. A current pass requires parent-observed
+``cas_gate.py run-adjudicate`` execution.
+"""
 from __future__ import annotations
 
 import argparse
@@ -8,6 +13,7 @@ import json
 import os
 import platform
 import re
+import subprocess
 import sys
 import tempfile
 from pathlib import Path
@@ -276,6 +282,73 @@ def _input_hashes() -> dict[str, str]:
             raise ValueError(f"required PR-169 input absent: {path}")
         hashes[path.as_posix()] = _sha(target)
     return hashes
+
+
+def _stored_cas_diagnostic(
+    contract: Path,
+    *,
+    version: str,
+) -> dict[str, Any]:
+    completed = subprocess.run(
+        [
+            sys.executable,
+            "-B",
+            ".agent-harness/scripts/cas_gate.py",
+            "adjudicate",
+            "--contract",
+            str(contract),
+            "--results",
+            *(
+                f"docs/generated/pr169_cas/{version}/axis_result_{axis}.json"
+                for axis in AXES
+            ),
+            "--historical-replay",
+        ],
+        cwd=REPO,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    try:
+        diagnostic = json.loads(completed.stdout)
+    except json.JSONDecodeError as exc:
+        raise ValueError(
+            f"PR-169 {version} stored CAS diagnostic was not valid JSON"
+        ) from exc
+    if (
+        completed.returncode != 2
+        or diagnostic.get("aggregate_status") != "CAS_BLOCKED"
+        or diagnostic.get("claim_promotion_cas_eligible") is not False
+        or diagnostic.get("evidence_origin") != "stored_axis_result_envelopes"
+    ):
+        raise ValueError(
+            f"PR-169 {version} stored CAS envelopes were not classified "
+            "diagnostic-only"
+        )
+    return diagnostic
+
+
+def _current_cas_status() -> dict[str, Any]:
+    diagnostics = {
+        "v1": _stored_cas_diagnostic(CONTRACT_V1, version="v1"),
+        "v2": _stored_cas_diagnostic(CONTRACT_V2, version="v2"),
+    }
+    historical = {
+        version: diagnostic.get("historical_aggregate_status")
+        for version, diagnostic in diagnostics.items()
+    }
+    if historical != {"v1": "CAS_FAIL", "v2": "CAS_4AXIS_PASS"}:
+        raise ValueError(f"PR-169 historical CAS lineage drifted: {historical}")
+    return {
+        "aggregate_status": "CAS_BLOCKED",
+        "historical_aggregate_statuses": historical,
+        "stored_cas_diagnostic_only": True,
+        "claim_promotion_cas_eligible": False,
+        "contract_sha256": {
+            version: diagnostic["contract_sha256"]
+            for version, diagnostic in diagnostics.items()
+        },
+    }
 
 
 def _metadata(spec: dict[str, Any], inputs: dict[str, str], *, owner: str) -> dict[str, Any]:
@@ -644,6 +717,30 @@ def _mutation_report() -> dict[str, Any]:
 
 
 def build(*, write: bool) -> dict[str, Any]:
+    if write:
+        raise ValueError(
+            "refusing to overwrite the frozen historical PR-169 result pack"
+        )
+    cas_status = _current_cas_status()
+    if cas_status["aggregate_status"] != "CAS_4AXIS_PASS":
+        return {
+            "ok": False,
+            "mode": "check",
+            "scientific_result": "none",
+            "cas_aggregate": "CAS_BLOCKED",
+            "historical_cas_history": cas_status[
+                "historical_aggregate_statuses"
+            ],
+            "stored_cas_diagnostic_only": cas_status[
+                "stored_cas_diagnostic_only"
+            ],
+            "claim_promotion_cas_eligible": False,
+            "physical_bundle_status": "NOT_EVALUATED_CAS_BLOCKED",
+            "consumer_inventory_files": None,
+            "consumer_unresolved": None,
+            "mutation_survivors": None,
+        }
+
     spec = _yaml(REPO / SPEC)
     provenance = _yaml(REPO / PROVENANCE)
     inputs = _input_hashes()
@@ -842,14 +939,23 @@ def build(*, write: bool) -> dict[str, Any]:
     }
 
 
-def main() -> None:
+def main() -> int:
     parser = argparse.ArgumentParser()
     mode = parser.add_mutually_exclusive_group(required=True)
     mode.add_argument("--write", action="store_true")
     mode.add_argument("--check", action="store_true")
     args = parser.parse_args()
-    print(json.dumps(build(write=args.write), indent=2))
+    if args.write:
+        print(
+            "refusing to overwrite the frozen historical PR-169 result pack "
+            "without a new parent-observed cas_gate.py run-adjudicate execution",
+            file=sys.stderr,
+        )
+        return 2
+    result = build(write=False)
+    print(json.dumps(result, indent=2))
+    return 0 if result["ok"] else 2
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

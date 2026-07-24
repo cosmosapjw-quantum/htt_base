@@ -95,7 +95,7 @@ def test_exact_rational_ceiling_fixtures_and_uncapped_family() -> None:
         assert point.m_unsigned() == 2 * a
 
 
-def test_v1_failure_and_fresh_v2_four_axis_pass_are_both_preserved() -> None:
+def test_historical_v1_failure_and_v2_four_axis_pass_are_both_preserved() -> None:
     collection = _json(GENERATED / "pr169_cas_collection_receipt.json")
     assert collection["versions"]["v1"]["aggregate_status"] == "CAS_FAIL"
     assert collection["versions"]["v2"]["aggregate_status"] == "CAS_4AXIS_PASS"
@@ -139,6 +139,18 @@ def test_v1_failure_and_fresh_v2_four_axis_pass_are_both_preserved() -> None:
         "docs/generated/pr169_cas/v1/source_snapshot/"
     )
     assert v2_sympy[source]["resolution"] == "current_repository_input"
+
+
+def test_stored_cas_results_are_diagnostic_only() -> None:
+    runner = _runner_module()
+    status = runner._current_cas_status()
+    assert status["aggregate_status"] == "CAS_BLOCKED"
+    assert status["historical_aggregate_statuses"] == {
+        "v1": "CAS_FAIL",
+        "v2": "CAS_4AXIS_PASS",
+    }
+    assert status["stored_cas_diagnostic_only"] is True
+    assert status["claim_promotion_cas_eligible"] is False
 
 
 def test_nilsson_weyl_symbol_cannot_be_substituted_for_vorticity() -> None:
@@ -395,7 +407,7 @@ def test_candidate_card_is_hash_bound_and_superseded_without_rewrite() -> None:
     assert receipt["disposition"].endswith("algebraic_only_result")
 
 
-def test_result_manifest_hashes_and_metadata_are_exact() -> None:
+def test_historical_result_manifest_hashes_and_metadata_are_exact() -> None:
     manifest = _json(GENERATED / "pr169_artifact_manifest.json")
     card = _json(GENERATED / "pr169_result_card.json")
     assert manifest["scientific_result"] == "algebraic_only"
@@ -413,7 +425,7 @@ def test_result_manifest_hashes_and_metadata_are_exact() -> None:
         assert key in card
 
 
-def test_closeout_review_receipt_preserves_failures_and_binds_remediation() -> None:
+def test_historical_closeout_preserves_failures_and_binds_remediation() -> None:
     receipt = _json(GENERATED / "pr169_closeout_review_receipt.json")
     assert receipt["review_verdicts_preserved"] == {
         "science_claim": "fail",
@@ -423,9 +435,16 @@ def test_closeout_review_receipt_preserves_failures_and_binds_remediation() -> N
         row["status"] == "remediated"
         for row in receipt["finding_resolutions"]
     )
+    current_authority_surfaces = {
+        "scripts/codex_harness/collect_pr169_cas_receipts.py",
+        "scripts/codex_harness/run_pr169_unsigned_leakage.py",
+        "tests/pr_cards/test_pr_169_unsigned_isotropy_leakage_ceiling_m_max_nilsson_.py",
+    }
     for group in ("review_inputs", "remediated_surface_hashes"):
         for path, expected in receipt[group].items():
-            assert _sha(REPO / path) == expected
+            assert len(expected) == 64
+            if path not in current_authority_surfaces:
+                assert _sha(REPO / path) == expected
     terminal = receipt["terminal_adjudication"]
     assert terminal["process_gate_status"] == "PASS"
     assert terminal["scientific_result"] == "algebraic_only"
@@ -433,22 +452,66 @@ def test_closeout_review_receipt_preserves_failures_and_binds_remediation() -> N
     assert terminal["public_use"] is False
 
 
-def test_write_check_and_cas_collection_check_are_byte_stable() -> None:
-    commands = (
+def test_historical_checks_remain_currently_cas_blocked() -> None:
+    collector = subprocess.run(
         [
             sys.executable,
             "-B",
             "scripts/codex_harness/collect_pr169_cas_receipts.py",
             "--check",
         ],
+        cwd=REPO,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    assert collector.returncode == 2, collector.stdout + collector.stderr
+    collector_receipt = json.loads(collector.stdout)
+    assert collector_receipt["current_aggregate"] == "CAS_BLOCKED"
+    assert collector_receipt["historical_aggregates"] == {
+        "v1": "CAS_FAIL",
+        "v2": "CAS_4AXIS_PASS",
+    }
+    assert collector_receipt["claim_promotion_cas_eligible"] is False
+
+    runner = subprocess.run(
         [
             sys.executable,
             "-B",
             "scripts/codex_harness/run_pr169_unsigned_leakage.py",
             "--check",
         ],
+        cwd=REPO,
+        text=True,
+        capture_output=True,
+        check=False,
     )
-    for command in commands:
+    assert runner.returncode == 2, runner.stdout + runner.stderr
+    runner_receipt = json.loads(runner.stdout)
+    assert runner_receipt["cas_aggregate"] == "CAS_BLOCKED"
+    assert runner_receipt["scientific_result"] == "none"
+    assert runner_receipt["claim_promotion_cas_eligible"] is False
+
+
+def test_write_refuses_to_replace_frozen_result_pack() -> None:
+    paths = [
+        *sorted(GENERATED.glob("pr169_*.json")),
+        *sorted((GENERATED / "pr169_cas").rglob("*.json")),
+    ]
+    before = {path: _sha(path) for path in paths}
+    for command in (
+        [
+            sys.executable,
+            "-B",
+            "scripts/codex_harness/collect_pr169_cas_receipts.py",
+        ],
+        [
+            sys.executable,
+            "-B",
+            "scripts/codex_harness/run_pr169_unsigned_leakage.py",
+            "--write",
+        ],
+    ):
         completed = subprocess.run(
             command,
             cwd=REPO,
@@ -456,7 +519,9 @@ def test_write_check_and_cas_collection_check_are_byte_stable() -> None:
             capture_output=True,
             check=False,
         )
-        assert completed.returncode == 0, completed.stdout + completed.stderr
+        assert completed.returncode == 2
+        assert "refusing to overwrite" in completed.stderr
+    assert {path: _sha(path) for path in paths} == before
 
 
 def test_mutation_report_has_no_survivors() -> None:
