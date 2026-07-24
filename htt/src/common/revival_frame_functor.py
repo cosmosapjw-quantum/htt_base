@@ -12,7 +12,13 @@ be assembled into one quantity without a registered bridge.
 from __future__ import annotations
 
 from dataclasses import dataclass
+from fractions import Fraction
 
+from common.frame_typed_algebra import (
+    FrameTypeError,
+    Typed,
+    bridge as apply_registered_bridge,
+)
 from common.revival_defect_bundle import Frame
 
 
@@ -36,6 +42,12 @@ REGISTRY: dict[str, FrameSymbol] = {
     "R3_n": FrameSymbol("R3_n", Frame.NORMAL, "rest_3ricci"),
     "rest_curv_u": FrameSymbol("rest_curv_u", Frame.MATTER, "rest_3ricci"),
     "A_v": FrameSymbol("A_v", Frame.OBSERVER, "kinematic_dipole"),
+}
+
+_FRAME_TAG = {
+    Frame.NORMAL: "n",
+    Frame.MATTER: "u",
+    Frame.OBSERVER: "obs",
 }
 
 
@@ -64,11 +76,25 @@ def assemble(symbols: list[FrameSymbol], bridged: bool = False) -> Frame:
     frames = {s.frame for s in symbols}
     if len(frames) == 1:
         return next(iter(frames))
-    if not bridged:
+    if bridged is not True:
         raise FrameFunctorError(
             "cannot assemble symbols from different frames without a registered bridge "
             f"(frames={sorted(f.value for f in frames)})")
-    return next(iter(frames))
+    target = symbols[0].frame
+    try:
+        target_tag = _FRAME_TAG[target]
+        for symbol in symbols[1:]:
+            if symbol.frame == target:
+                continue
+            source_tag = _FRAME_TAG[symbol.frame]
+            typed = Typed(symbol.name, Fraction(0), source_tag)
+            apply_registered_bridge(typed, target_tag)
+    except (KeyError, FrameTypeError) as exc:
+        raise FrameFunctorError(
+            "requested cross-frame assembly has no registered bridge to "
+            f"{target.value}"
+        ) from exc
+    return target
 
 
 def n_shear_u_w2_without_bridge_rejected() -> bool:

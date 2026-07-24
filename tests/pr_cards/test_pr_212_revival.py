@@ -29,7 +29,17 @@ def test_n_shear_u_w2_without_bridge_rejected():
         assemble([REGISTRY["sigma_ab"], REGISTRY["W2_u"]])
 
 def test_bridged_cross_frame_ok():
-    assert assemble([REGISTRY["sigma_ab"], REGISTRY["W2_u"]], bridged=True) in Frame
+    assert assemble(
+        [REGISTRY["sigma_ab"], REGISTRY["W2_u"]], bridged=True
+    ) is Frame.NORMAL
+
+def test_truthy_bridge_flag_is_not_registration():
+    with pytest.raises(FrameFunctorError, match="registered bridge"):
+        assemble([REGISTRY["sigma_ab"], REGISTRY["W2_u"]], bridged="yes")
+
+def test_unregistered_frame_pair_rejected_even_when_bridge_requested():
+    with pytest.raises(FrameFunctorError, match="no registered bridge"):
+        assemble([REGISTRY["sigma_ab"], REGISTRY["A_v"]], bridged=True)
 
 def test_card_check_stable():
     if not CARD.exists(): pytest.skip("card")
