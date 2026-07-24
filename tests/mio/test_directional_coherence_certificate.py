@@ -3,8 +3,10 @@ from __future__ import annotations
 import json
 
 import numpy as np
+import pytest
 
 from mio.coherence.directional import (
+    DirectionalProbe,
     STANDARD_PROBES,
     emit_directional_coherence_artefact,
     resultant_vector,
@@ -27,6 +29,18 @@ def _certificate(**kwargs):
 def _status_metadata(cert) -> dict[str, object]:
     assert cert.manifest is not None
     return cert.manifest.statistics_definitions["certificate_status_metadata"]
+
+
+@pytest.mark.parametrize("invalid_sigma", (float("nan"), float("inf")))
+def test_directional_coherence_rejects_nonfinite_cone_width(
+    invalid_sigma: float,
+) -> None:
+    probes = (
+        DirectionalProbe("invalid", 0.0, 0.0, invalid_sigma),
+        DirectionalProbe("valid", 90.0, 0.0, 1.0),
+    )
+    with pytest.raises(ValueError, match="finite and strictly positive"):
+        resultant_vector(probes)
 
 
 def test_directional_certificate_records_missing_covariance_statuses() -> None:

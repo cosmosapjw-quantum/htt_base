@@ -106,6 +106,18 @@ def _status_metadata(cert) -> dict[str, object]:
     return cert.manifest.statistics_definitions["certificate_status_metadata"]
 
 
+@pytest.mark.parametrize("invalid_sigma", (float("nan"), float("inf")))
+def test_redshift_coherence_rejects_nonfinite_cone_width(
+    invalid_sigma: float,
+) -> None:
+    probes = (
+        RedshiftBinnedProbe("invalid", 0.0, 0.0, invalid_sigma, 0.1),
+        RedshiftBinnedProbe("valid", 90.0, 0.0, 1.0, 0.1),
+    )
+    with pytest.raises(ValueError, match="finite and strictly positive"):
+        per_bin_resultants(probes, bins=((0.0, 1.0),))
+
+
 def test_redshift_certificate_requires_depth_bin_metadata_for_covariance_gate() -> None:
     cert = _certificate(
         has_covariance=True,

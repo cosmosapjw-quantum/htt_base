@@ -107,8 +107,8 @@ def _probe_weights(probes: Sequence[DirectionalProbe]) -> np.ndarray:
     """Inverse-variance-scaled weights used everywhere as the SSOT."""
     sig = np.array([p.sigma_cone_deg for p in probes], dtype=float)
     w = np.array([p.weight for p in probes], dtype=float)
-    if np.any(sig <= 0):
-        raise ValueError("sigma_cone_deg must be strictly positive")
+    if not np.all(np.isfinite(sig)) or np.any(sig <= 0):
+        raise ValueError("sigma_cone_deg must be finite and strictly positive")
     return w / (sig * sig)
 
 
