@@ -168,3 +168,28 @@ def test_production_mode_requires_adequate_mock_calibration_inputs() -> None:
     )
     assert ladder.mock_calibrated.sky_support.mock_coverage_status == "adequate"
     assert ladder.mock_calibrated.production_allowed is False
+
+
+def test_production_mode_rejects_insufficient_zoa_retention() -> None:
+    l_deg = np.linspace(0.0, 324.0, 10)
+    b_deg = np.array([0.0] * 9 + [80.0])
+
+    with pytest.raises(ValueError, match="retention_fraction.*>= 0.3"):
+        build_zoa_selection_ladder(
+            l_deg,
+            b_deg,
+            bcut_deg=20.0,
+            nside=8,
+            production_mode=True,
+            mock_calibration_weights=np.ones_like(l_deg),
+            mock_coverage_status="adequate",
+        )
+
+    diagnostic = build_zoa_selection_ladder(
+        l_deg,
+        b_deg,
+        bcut_deg=20.0,
+        nside=8,
+        allow_uniform_fallback=False,
+    )
+    assert diagnostic.zoa_masked.retention_fraction == pytest.approx(0.1)

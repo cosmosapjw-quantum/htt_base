@@ -254,6 +254,12 @@ def build_zoa_selection_ladder(
     )
     raw_active = source_mask_from_pixel_mask(l, b, full_mask)
     zoa_active = source_mask_from_pixel_mask(l, b, zoa_mask)
+    zoa_retention = float(zoa_active.mean())
+    if production_mode and zoa_retention < cfg.min_retention_fraction:
+        raise ValueError(
+            "production_mode requires ZoA retention_fraction "
+            f">= {cfg.min_retention_fraction}; got {zoa_retention}"
+        )
     raw_summary = _build_mode_summary(
         SelectionSupportMode.RAW,
         l,
