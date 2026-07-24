@@ -228,6 +228,24 @@ def test_cross_engine_disagreement_blocks() -> None:
         require_cross_engine_agreement(exact, numeric)
 
 
+def test_cross_engine_rejects_non_finite_comparison_inputs() -> None:
+    exact = {
+        "status": "bounded",
+        "axis_intervals": {a: ["0", "1"] for a in AXES},
+        "unbounded_axes": [],
+    }
+    numeric = {
+        "status": "bounded",
+        "axis_intervals": {a: [0.0, 1.0] for a in AXES},
+        "unbounded_axes": [],
+    }
+    with pytest.raises(IdentifiedSetError, match="tolerance.*finite"):
+        require_cross_engine_agreement(exact, numeric, tol=float("nan"))
+    numeric["axis_intervals"]["Sigma2"] = [float("nan"), 1.0]
+    with pytest.raises(IdentifiedSetError, match="non-finite boundary"):
+        require_cross_engine_agreement(exact, numeric)
+
+
 def test_status_semantics_guards() -> None:
     validate_status_semantics("bounded", "a wide uncertainty region")
     with pytest.raises(IdentifiedSetError, match="NEVER a detection"):

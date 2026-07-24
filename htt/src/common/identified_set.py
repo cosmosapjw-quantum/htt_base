@@ -22,6 +22,7 @@ roadmap_rescue_v1:C2.
 """
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass
 from enum import Enum
 from fractions import Fraction
@@ -328,6 +329,9 @@ def require_cross_engine_agreement(exact: dict, numeric: dict,
     bounded-axis comparison runs regardless of the overall status (a
     bounded axis inside an overall-unbounded set is still cross-checked).
     A disagreement raises and blocks the downstream claim."""
+    if not math.isfinite(tol) or tol < 0:
+        raise IdentifiedSetError(
+            "cross-engine tolerance must be finite and non-negative")
     if exact["status"] != numeric["status"]:
         raise IdentifiedSetError(
             f"cross-engine STATUS disagreement: exact "
@@ -357,6 +361,9 @@ def require_cross_engine_agreement(exact: dict, numeric: dict,
                 "numeric engine reports it unbounded/missing")
         e_lo, e_hi = float(Fraction(e[0])), float(Fraction(e[1]))
         n_lo, n_hi = n
+        if not math.isfinite(n_lo) or not math.isfinite(n_hi):
+            raise IdentifiedSetError(
+                f"numeric engine returned a non-finite boundary on {ax}")
         if abs(e_lo - n_lo) > tol or abs(e_hi - n_hi) > tol:
             raise IdentifiedSetError(
                 f"cross-engine boundary disagreement on {ax}: exact "
