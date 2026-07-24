@@ -587,7 +587,16 @@ class DepartureReport:
         object.__setattr__(self, "input_hashes", input_hashes)
         object.__setattr__(self, "config_hash", config_hash)
         object.__setattr__(self, "_sections", sections)
-        object.__setattr__(self, "manifest", manifest)
+        object.__setattr__(
+            self,
+            "_manifest_payload_json",
+            json.dumps(
+                _manifest_payload(manifest),
+                sort_keys=True,
+                separators=(",", ":"),
+                allow_nan=False,
+            ),
+        )
 
     def _validate_score_bindings(self, *, x_payload: Mapping[str, object]) -> None:
         if self.normalized_score is None:
@@ -614,6 +623,12 @@ class DepartureReport:
     @property
     def production_status(self) -> str:
         return "diagnostic_only"
+
+    @property
+    def manifest(self) -> ArtifactManifest:
+        """Return a detached manifest reconstructed from validated report state."""
+
+        return ArtifactManifest(**json.loads(self._manifest_payload_json))
 
     @property
     def sections(self) -> dict[str, DepartureReportSection]:

@@ -297,6 +297,19 @@ def test_report_preserves_external_transfer_provenance_without_native_label():
     assert ("native " + "solver result") not in payload_text
 
 
+def test_report_manifest_mutation_does_not_change_validated_report_state():
+    report = _full_report()
+    detached = report.manifest
+    detached.passed_gates.append("forged_gate")
+    detached.statistics_definitions["headline_score"] = "forged"
+
+    fresh_manifest = report.manifest
+    assert "forged_gate" not in fresh_manifest.passed_gates
+    assert "headline_score" not in fresh_manifest.statistics_definitions
+    assert "forged_gate" not in report.to_json()
+    assert "headline_score" not in report.to_json()
+
+
 def test_report_rejects_combined_or_inference_fields():
     from mio.reports.departure_report import build_departure_report
 
