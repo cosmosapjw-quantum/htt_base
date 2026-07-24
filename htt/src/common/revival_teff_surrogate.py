@@ -37,6 +37,25 @@ class SurrogateCertificate:
                     and self.status == "CERTIFIED")
 
 
+def split_rows_overlap(train: np.ndarray, calibrate: np.ndarray) -> bool:
+    """Return whether two split matrices share any exact parameter row."""
+    train = np.asarray(train, dtype=float)
+    calibrate = np.asarray(calibrate, dtype=float)
+    if (
+        train.ndim != 2
+        or calibrate.ndim != 2
+        or train.shape[1] != calibrate.shape[1]
+    ):
+        raise ValueError("train and calibrate must be 2-D with matching columns")
+    if not np.all(np.isfinite(train)) or not np.all(np.isfinite(calibrate)):
+        raise ValueError("split rows must be finite")
+    train_rows = {tuple(row) for row in train}
+    return any(
+        tuple(row) in train_rows
+        for row in calibrate
+    )
+
+
 def certify(seed: int = 20260721, ntrain: int = 4000, ntest: int = 3000) -> dict:
     rng = np.random.default_rng(seed)
     scale = np.array([0.02, 0.02, 0.01])
@@ -58,7 +77,7 @@ def certify(seed: int = 20260721, ntrain: int = 4000, ntest: int = 3000) -> dict
         "held_out_envelope_holds": violations == 0,
         "out_of_domain_error": ood_err,
         "out_of_domain_rejected": ood_err > 5 * envelope,
-        "nested_split_disjoint": True,  # train/test drawn independently
+        "nested_split_disjoint": not split_rows_overlap(train, test),
         "authorizes_inference": cert.authorize_inference(),  # False: no native solver
     }
 
@@ -69,5 +88,5 @@ def overlapping_split_is_a_defect(seed: int = 1) -> bool:
     rng = np.random.default_rng(seed)
     scale = np.array([0.02, 0.02, 0.01])
     train = rng.uniform(-scale, scale, (2000, 3))
-    calibrate = train  # OVERLAP (the defect)
-    return calibrate is train  # detected: identical object
+    calibrate = train.copy()  # OVERLAP remains a defect after copying
+    return split_rows_overlap(train, calibrate)
