@@ -232,6 +232,24 @@ def test_decisive_language_rejected_without_all_adequacy_statuses():
         )
 
 
+def test_decisive_claim_request_requires_exact_boolean():
+    from htt.infer.prior_sweep import build_inference_adequacy_report
+
+    with pytest.raises(TypeError, match="decisive_claim_requested must be bool"):
+        build_inference_adequacy_report(
+            prior_sweep_report=None,
+            posterior_predictive_report=None,
+            loocv_report=None,
+            matched_null_hook=None,
+            artifact_id="htt.pr065.inference_adequacy.invalid_request",
+            config_hash=_LINEAGE_HASH,
+            input_hashes=(_LINEAGE_HASH, _sha("7")),
+            generating_command=_COMMAND,
+            worktree_state=_WORKTREE,
+            decisive_claim_requested="false",
+        )
+
+
 def test_inference_adequacy_report_carries_all_gate_statuses():
     from htt.infer.prior_sweep import build_inference_adequacy_report
 

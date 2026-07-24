@@ -975,6 +975,8 @@ def build_inference_adequacy_report(
     content, config, input, and code provenance mismatches fail closed.
     """
 
+    if type(decisive_claim_requested) is not bool:
+        raise TypeError("decisive_claim_requested must be bool")
     if decisive_claim_requested and not (
         prior_sweep_report is not None
         and posterior_predictive_report is not None
