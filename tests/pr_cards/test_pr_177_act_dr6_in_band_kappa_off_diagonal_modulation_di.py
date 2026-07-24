@@ -50,6 +50,12 @@ MANIFEST = REPO / "docs/generated/pr177_artifact_manifest.json"
 DEEP_REPLAY = REPO / "docs/generated/pr177_deep_replay_receipt.json"
 
 
+@pytest.fixture(autouse=True)
+def _frozen_thread_environment(monkeypatch: pytest.MonkeyPatch) -> None:
+    for name in ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS"):
+        monkeypatch.setenv(name, "1")
+
+
 def _json(path: Path) -> dict:
     value = json.loads(path.read_text(encoding="utf-8"))
     assert isinstance(value, dict)
