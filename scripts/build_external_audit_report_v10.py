@@ -1,11 +1,13 @@
-"""Build the v10 external research report (successor of the v5-v9 line).
+"""Build the superseded v10 external research report.
 
-v10 is a SELF-CONTAINED scientific record: definitions, theorems with
-full statements and proofs, data-analysis results with figures, a
-K/C/P/S novelty-tier ledger, the data-completeness statement, and a
-reproducibility appendix. It contains no development-history or
-process-narrative content; provenance appears only as artifact paths
-and hashes.
+v10 is retained as a pre-MA04 author-side historical aggregate and is
+superseded by v11. Its CAS and external-literature tier labels are not current
+live CAS attestations or independent novelty adjudications. Within that
+historical boundary, it is a self-contained record of definitions, theorems
+with full statements and proofs, data-analysis results with figures, a K/C/P/S
+novelty-tier ledger, the data-completeness statement, and a reproducibility
+appendix. It contains no development-history or process-narrative content;
+provenance appears only as artifact paths and hashes.
 
 ``--write`` renders external_audit_research_report_20260721_v10/
 (TeX + figures + manifest + README + CITATION), compiles the PDF with
@@ -300,20 +302,22 @@ def s1_scope(tiers: dict | None = None) -> str:
     return r"""
 \section{Scope, claim discipline, and data completeness}
 
-This report is a self-contained scientific record of the programme's
-exact mathematical results, statistical architecture, and current-data
-analyses as of 2026-07-21. Every proposition is stated with its proof;
+This v10 report is a pre-MA04 author-side historical aggregate, retained for
+reproducibility and superseded by v11. Its CAS and external-literature tier
+labels are not current live CAS attestations or independent novelty
+adjudications. Within that historical boundary, it is a self-contained record
+of the programme's exact mathematical results, statistical architecture, and
+current-data analyses as of 2026-07-21. Every proposition is stated with its proof;
 every data result carries its conditionality; and """ + claim_scope + r"""
 Section~\ref{sec:tiers} --- \tier{K} known (with citation or a
 textbook-level note), \tier{C} cross-check (against a named study),
 \tier{P} potential advance, \tier{S} significant (with the delta over
 the closest literature stated) --- so a reader can separate standard
 material, reproductions of external results, and """ + s_summary + r""" at a glance. The tier is a literature-novelty
-adjudication only; each result's scope and conditionality are stated
-in its own section. Earlier package versions
-(v5--v9) remain byte-frozen; this version supersedes them as the
-current record and does not repeat their revision-response
-correspondence.
+adjudication only within this historical author-side record; each result's
+scope and conditionality are stated in its own section. The v5--v10 PDF/ZIP
+artifacts remain byte-frozen; v11 supersedes them as the current record and
+does not repeat their revision-response correspondence.
 
 \subsection{Data completeness statement}
 \label{sec:completeness}
@@ -1978,9 +1982,10 @@ def s6_tiers(tiers: dict | None = None) -> str:
 \section{Claim and novelty tier ledger}
 \label{sec:tiers}
 
-""" + tier_intro + r""" The tier
-is an \emph{external-novelty adjudication against the published
-literature only} (cross-check performed at build time; evidence
+""" + tier_intro + r""" The historical tier
+is a pre-MA04 author-side \emph{external-novelty adjudication against the
+published literature only}, not a current independent novelty adjudication
+(cross-check performed at build time; evidence
 ledger: \code{docs/audits/v10\_web\_crag\_20260721/}); it is
 independent of any internal validation staging, and the scope or
 conditionality of a result lives in its own section's claim boundary,
@@ -2200,7 +2205,12 @@ def build_tex(tiers: dict | None = None) -> str:
 def build_readme() -> str:
     return (
         "# External research report v10 (2026-07-21)\n\n"
-        "Self-contained scientific record: exact theorems with proofs, "
+        "Authority qualifier: v10 is a pre-MA04 author-side historical "
+        "aggregate retained for reproducibility and superseded by v11. "
+        "Its CAS and external-literature tier labels are not current live "
+        "CAS attestations or independent novelty adjudications.\n\n"
+        "Within that historical boundary, this is a self-contained "
+        "scientific record: exact theorems with proofs, "
         "statistical architecture, current-data results with figures, a "
         "K/C/P/S novelty-tier ledger, and the data-completeness "
         "statement (DESI official-mock acquisition in progress: "
@@ -2211,8 +2221,8 @@ def build_readme() -> str:
         "v10.py --write` (pdflatex required). Verify text artifacts: "
         "`--check` (byte-stable; PDF/zip excluded because pdflatex embeds "
         "timestamps).\n\n"
-        "Earlier packages v5-v9 are byte-frozen and superseded by this "
-        "version as the current record.\n"
+        "Earlier packages v5-v9 and the v10 PDF/ZIP remain byte-frozen; "
+        "v11 is the current record.\n"
     )
 
 

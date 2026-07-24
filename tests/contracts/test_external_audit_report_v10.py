@@ -54,6 +54,16 @@ def test_data_completeness_statement_present() -> None:
         in tex
 
 
+def test_superseded_v10_authority_is_explicitly_historical() -> None:
+    tex = _tex()
+    readme = (OUT / "README.md").read_text()
+    for text in (tex, readme):
+        assert "pre-MA04 author-side historical" in text
+        assert "not current live CAS attestations" in text
+        assert re.search(r"independent novelty\s+adjudications", text)
+        assert "superseded by v11" in text
+
+
 def test_tier_ledger_external_novelty_with_s_deltas() -> None:
     tex = _tex()
     for tag in ("tier{K}", "tier{C}", "tier{P}", "tier{S}"):
