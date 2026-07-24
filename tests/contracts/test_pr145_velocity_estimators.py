@@ -205,6 +205,29 @@ def test_coverage_guard_rejects_malformed_reports(
         require_coverage_in_band(report, nominal, half_width)
 
 
+@pytest.mark.parametrize("flow, monopole, n_inj, message", [
+    ([1.0, 2.0, 3.0], 4.0, 0, "positive integer"),
+    ([1.0, 2.0, 3.0], 4.0, -2, "positive integer"),
+    ([1.0, 2.0, 3.0], 4.0, True, "positive integer"),
+    ([1.0, 2.0], 4.0, 1, "finite real 3-vector"),
+    ([1.0, 2.0, np.nan], 4.0, 1, "finite real 3-vector"),
+    ([1.0, 2.0, 3.0], np.nan, 1, "finite real scalar"),
+])
+def test_coverage_injection_rejects_invalid_configuration(
+    flow, monopole, n_inj, message: str
+) -> None:
+    sample = Cf4Sample(
+        n=np.eye(3),
+        v=np.ones(3),
+        w=np.ones(3),
+        sig_v=np.ones(3),
+        pos_hmpc=np.eye(3),
+    )
+    with pytest.raises(VelocityEstimatorError, match=message):
+        coverage_injection(
+            sample, flow, monopole, n_inj=n_inj, seed=1)
+
+
 def test_rank_deficient_refuses_point_estimate() -> None:
     n = np.tile(np.array([0.0, 0.0, 1.0]), (5, 1))
     s = Cf4Sample(n=n, v=np.ones(5), w=np.ones(5), sig_v=np.ones(5),

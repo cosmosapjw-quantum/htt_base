@@ -378,6 +378,33 @@ def coverage_injection(sample: Cf4Sample, flow_true, monopole_true, *,
     correctness of the P(k) / Gorski model); the noise-only assessed
     covariance UNDER-covers, which is the concrete failure the P0's formal
     error committed."""
+    if (
+        isinstance(n_inj, (bool, np.bool_))
+        or not isinstance(n_inj, (int, np.integer))
+        or n_inj <= 0
+    ):
+        raise VelocityEstimatorError(
+            "coverage injection count must be a positive integer")
+    flow_true = np.asarray(flow_true)
+    if (
+        flow_true.shape != (3,)
+        or not np.issubdtype(flow_true.dtype, np.number)
+        or not np.isrealobj(flow_true)
+        or not np.all(np.isfinite(flow_true))
+    ):
+        raise VelocityEstimatorError(
+            "injected bulk flow must be a finite real 3-vector")
+    monopole_true = np.asarray(monopole_true)
+    if (
+        monopole_true.shape != ()
+        or not np.issubdtype(monopole_true.dtype, np.number)
+        or not np.isrealobj(monopole_true)
+        or not np.isfinite(monopole_true)
+    ):
+        raise VelocityEstimatorError(
+            "injected monopole must be a finite real scalar")
+    flow_true = flow_true.astype(float, copy=False)
+    monopole_true = float(monopole_true)
     design = _design_flow(sample, monopole=True)
     a = np.einsum("i,ij,ik->jk", sample.w, design, design)
     a_inv = np.linalg.inv(a)
@@ -387,7 +414,7 @@ def coverage_injection(sample: Cf4Sample, flow_true, monopole_true, *,
     sd_noise = np.sqrt(np.diag(a_inv))
     c_ab = _cv_correlation_matrix(sample)
     lchol = np.linalg.cholesky(c_ab + 1e-6 * np.eye(len(c_ab)))
-    truth = np.concatenate([np.asarray(flow_true, float), [monopole_true]])
+    truth = np.concatenate([flow_true, [monopole_true]])
     rng = np.random.Generator(np.random.PCG64(seed))
     n_gal = len(sample.v)
     h68 = np.zeros(4)
