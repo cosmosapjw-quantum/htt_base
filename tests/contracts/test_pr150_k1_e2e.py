@@ -8,6 +8,7 @@ skip when the card is absent (produced once by
 """
 from __future__ import annotations
 
+import hashlib
 import json
 import subprocess
 import sys
@@ -39,6 +40,10 @@ CARD = REPO_ROOT / "docs/generated/k1_global_maxscan_e2e_full.json"
 GEN = REPO_ROOT / "docs/generated"
 needs_card = pytest.mark.skipif(
     not CARD.is_file(), reason="FFP10 E2E max-scan card absent")
+
+
+def _sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
 # --------------------------------------------------------------------------
@@ -237,7 +242,17 @@ def test_runner_check_mode_is_current_and_mutations_killed() -> None:
         [sys.executable,
          str(REPO_ROOT / "scripts/codex_harness/run_pr150_k1_e2e.py"),
          "--check"], cwd=REPO_ROOT, capture_output=True, text=True, check=False)
-    assert result.returncode == 0, result.stdout + result.stderr
+    raw_dirs = (
+        REPO_ROOT / "workdir/raw/planck_ffp10/smica/cmb_mc",
+        REPO_ROOT / "workdir/raw/planck_ffp10/smica/noise_mc",
+    )
+    if all(path.is_dir() for path in raw_dirs):
+        assert result.returncode == 0, result.stdout + result.stderr
+    elif not any(path.exists() for path in raw_dirs):
+        assert result.returncode == 1
+        assert "PR3 FFP10 E2E ensemble is absent" in result.stderr
+    else:
+        pytest.fail("PR3 FFP10 E2E ensemble is only partially present")
     report = json.loads((GEN / "pr150_mutation_report.json")
                         .read_text(encoding="utf-8"))
     assert report["surviving_mutation_count"] == 0
@@ -249,6 +264,21 @@ def test_runner_check_mode_is_current_and_mutations_killed() -> None:
     assert manifest["raw_data_pins"]["cache_gate_sha256"]
     assert manifest["raw_data_pins"]["compact_cache_sha256"].startswith(
         "sha256:")
+    assert manifest["raw_data_pins"]["e2e_card_sha256"] == _sha256(CARD)
+    assert manifest["raw_data_pins"]["reduced_manifest_sha256"] == _sha256(
+        GEN / "k1_e2e_reduced_manifest_ffp10_smica.json"
+    )
+    assert manifest["raw_data_pins"]["cache_gate_sha256"] == _sha256(
+        GEN / "k1_e2e_cache_gate_ffp10_smica.json"
+    )
+    retention = json.loads(
+        (GEN / "pr150_compact_retention_receipt.json").read_text(encoding="utf-8")
+    )
+    assert manifest["raw_data_pins"]["compact_cache_sha256"] == (
+        retention["compact_cache"]["sha256"]
+    )
+    for relative, expected in manifest["artifacts"].items():
+        assert _sha256(REPO_ROOT / relative) == expected
     # the PR4 external-blocker receipt is a non-numeric artifact on disk
     pr4 = json.loads((GEN / "pr150_pr4_skip_receipt.json")
                      .read_text(encoding="utf-8"))
