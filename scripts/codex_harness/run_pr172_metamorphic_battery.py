@@ -57,6 +57,22 @@ def _load_spec() -> dict[str, Any]:
     return value
 
 
+def _source_authority_errors(spec: dict[str, Any]) -> list[str]:
+    """Check the frozen source paths without relocation or compatibility aliases."""
+    errors: list[str] = []
+    for key in ("cf4_estimator", "b_projector"):
+        frozen = spec["source_bindings"][key]
+        relative = Path(frozen["path"])
+        path = REPO / relative
+        if not path.is_file():
+            errors.append(f"missing authority: {relative}")
+            continue
+        actual = hashlib.sha256(path.read_bytes()).hexdigest()
+        if actual != frozen["sha256"]:
+            errors.append(f"source authority hash mismatch: {relative}")
+    return errors
+
+
 def _metadata(spec: dict[str, Any], result: dict[str, Any]) -> dict[str, Any]:
     return {
         "pr_id": "PR-172",
@@ -280,6 +296,22 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--emit-semantic", action="store_true")
     args = parser.parse_args(argv)
     spec = _load_spec()
+    authority_errors = _source_authority_errors(spec)
+    if authority_errors:
+        print(
+            json.dumps(
+                {
+                    "ok": False,
+                    "read_only": bool(args.check or args.emit_semantic),
+                    "terminal": spec["claim_identity"]["invalid_contract_token"],
+                    "scientific_result": None,
+                    "errors": authority_errors,
+                },
+                indent=2,
+                sort_keys=True,
+            )
+        )
+        return 2
     if args.emit_semantic:
         result = build_battery(spec, REPO)
         errors = validate_battery(result, spec, REPO)

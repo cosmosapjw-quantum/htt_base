@@ -43,7 +43,7 @@ def _reseal(payload: dict) -> dict:
     return payload
 
 
-def test_live_registered_battery_is_reproducible_after_relocation() -> None:
+def test_relocated_mechanics_do_not_restore_frozen_source_authority() -> None:
     spec = _spec()
     first = build_battery(spec, REPO)
     second = build_battery(spec, REPO)
@@ -54,6 +54,62 @@ def test_live_registered_battery_is_reproducible_after_relocation() -> None:
     assert tuple(row["relation_id"] for row in first["relations"]) == RELATION_IDS
     assert tuple(row["mutation_id"] for row in first["mutations"]) == MUTATION_IDS
     assert first["terminal"] == "BLOCKED_METAMORPHIC_RELATION_VIOLATION"
+    assert "cf4_estimator: source binding mismatch" in validate_battery(
+        first, spec, REPO
+    )
+
+
+def test_current_runner_blocks_on_retired_frozen_source_authority() -> None:
+    completed = subprocess.run(
+        [
+            str(REPO / "venv/bin/python"),
+            "-B",
+            str(REPO / "scripts/codex_harness/run_pr172_metamorphic_battery.py"),
+            "--check",
+        ],
+        cwd=REPO,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    assert completed.returncode == 2, completed.stdout + completed.stderr
+    receipt = json.loads(completed.stdout)
+    assert receipt["ok"] is False
+    assert receipt["read_only"] is True
+    assert receipt["terminal"] == "BLOCKED_CONTRACT_INVALID"
+    assert receipt["scientific_result"] is None
+    assert receipt["errors"] == [
+        "missing authority: htt/src/common/cf4_velocity_estimators.py"
+    ]
+
+
+def test_write_refuses_to_replace_frozen_result_pack() -> None:
+    frozen_paths = sorted((REPO / "docs/generated").glob("pr172_*.json"))
+    before = {
+        path: hashlib.sha256(path.read_bytes()).hexdigest()
+        for path in frozen_paths
+    }
+    completed = subprocess.run(
+        [
+            str(REPO / "venv/bin/python"),
+            "-B",
+            str(REPO / "scripts/codex_harness/run_pr172_metamorphic_battery.py"),
+            "--write",
+        ],
+        cwd=REPO,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    assert completed.returncode == 2, completed.stdout + completed.stderr
+    receipt = json.loads(completed.stdout)
+    assert receipt["ok"] is False
+    assert receipt["read_only"] is False
+    assert receipt["terminal"] == "BLOCKED_CONTRACT_INVALID"
+    assert {
+        path: hashlib.sha256(path.read_bytes()).hexdigest()
+        for path in frozen_paths
+    } == before
 
 
 def test_result_is_concrete_split_adapter_evidence_not_a_false_green() -> None:
