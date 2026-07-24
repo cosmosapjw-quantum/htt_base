@@ -528,6 +528,19 @@ def _validate_biposh_payload(
         no_claim_reasons.append("biposh_transfer_source_not_none")
     if not str(normalised.get("entry_hash", "")).startswith("sha256:"):
         no_claim_reasons.append("biposh_entry_hash_missing")
+    threshold_policy = normalised.get("threshold_policy")
+    if not isinstance(threshold_policy, Mapping):
+        no_claim_reasons.append("biposh_threshold_policy_missing")
+    else:
+        expected_entry_hash = _stable_hash(
+            {
+                "entries": normalised.get("entries"),
+                "convention": normalised.get("convention_metadata"),
+                "threshold": threshold_policy.get("absolute_value_threshold"),
+            }
+        )
+        if normalised.get("entry_hash") != expected_entry_hash:
+            no_claim_reasons.append("biposh_entry_hash_mismatch")
     if normalised.get("config_hash") != config_hash:
         no_claim_reasons.append("biposh_config_hash_mismatch")
     if list(normalised.get("input_hashes", ())) != list(input_hashes):

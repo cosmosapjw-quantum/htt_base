@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from copy import deepcopy
+
 import pytest
 
 from obsstat.null_ensembles import (
@@ -296,6 +298,22 @@ def test_mes_covariance_branch_biposh_payload_mismatch_is_no_claim(
     assert result.report.covariance_bound is None
     assert result.report.manifest.production_status == "blocked_provenance_mismatch"
     assert reason in result.no_claim_reasons
+
+
+def test_mes_covariance_branch_rejects_stale_biposh_entry_hash():
+    from htt.statistics.mes_cov_bound import build_mes_covariance_bound
+
+    payload = deepcopy(_biposh_feature_payload())
+    payload["entries"][0]["real"] = 999.0
+
+    result = build_mes_covariance_bound(
+        **_build_kwargs(biposh_feature_payload=payload)
+    )
+
+    assert result.synthetic_bound_available is False
+    assert result.report.covariance_bound is None
+    assert result.report.manifest.production_status == "blocked_provenance_mismatch"
+    assert "biposh_entry_hash_mismatch" in result.no_claim_reasons
 
 
 def test_mes_covariance_branch_missing_full_covariance_is_no_claim():
