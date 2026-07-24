@@ -14,6 +14,7 @@ import hashlib
 import json
 import subprocess
 import sys
+import uuid
 from pathlib import Path
 
 import pytest
@@ -105,7 +106,7 @@ def _cas_gate(args: list[str], tmp_path: Path, name: str) -> tuple[int, dict]:
     out = tmp_path / name
     proc = subprocess.run(
         [
-            str(REPO / "venv/bin/python"),
+            sys.executable,
             "-B",
             str(REPO / ".agent-harness/scripts/cas_gate.py"),
             *args,
@@ -194,7 +195,10 @@ def test_wolfram_parser_rejects_tampered_checks_and_missing_xact() -> None:
 
 def test_stale_contract_binding_is_rejected(tmp_path: Path) -> None:
     """Live cas_gate mutation: a tampered contract invalidates envelopes."""
-    tampered_rel = "docs/generated/pr182_cas/.tmp_contract_tampered_test.json"
+    tampered_rel = (
+        "docs/generated/pr182_cas/"
+        f".tmp_contract_tampered_test_{uuid.uuid4().hex}.json"
+    )
     tampered = REPO / tampered_rel
     contract = json.loads(CONTRACT.read_text())
     contract["target"]["expected_exact_values"]["fixed_space_dim"] = "2"
@@ -202,7 +206,7 @@ def test_stale_contract_binding_is_rejected(tmp_path: Path) -> None:
     try:
         proc = subprocess.run(
             [
-                str(REPO / "venv/bin/python"),
+                sys.executable,
                 "-B",
                 str(REPO / ".agent-harness/scripts/cas_gate.py"),
                 "check-axis",
@@ -239,7 +243,7 @@ def test_sympy_axis_mutations_are_detected(tmp_path: Path) -> None:
         mutant = tmp_path / f"mutant_{name}.py"
         mutant.write_text(text)
         proc = subprocess.run(
-            [str(REPO / "venv/bin/python"), "-B", str(mutant)],
+            [sys.executable, "-B", str(mutant)],
             cwd=REPO,
             capture_output=True,
             text=True,
@@ -319,7 +323,7 @@ def test_status_not_pending_and_lane_is_hypothesis_only() -> None:
 def test_result_card_is_byte_current_under_read_only_check() -> None:
     proc = subprocess.run(
         [
-            str(REPO / "venv/bin/python"),
+            sys.executable,
             "-B",
             str(REPO / "scripts/codex_harness/run_pr182_parity_registry.py"),
             "--check",
