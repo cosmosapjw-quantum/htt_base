@@ -145,6 +145,21 @@ def test_cf4_sample_rejects_invalid_estimator_arrays() -> None:
         Cf4Sample(**{**valid, "sg": np.ones((2, 3))})
 
 
+@pytest.mark.parametrize("kwargs, message", [
+    ({"h0": 0.0}, "H0 must be finite and positive"),
+    ({"h0": -75.0}, "H0 must be finite and positive"),
+    ({"h0": np.nan}, "H0 must be finite and positive"),
+    ({"sigma_nl": -250.0}, "dispersion must be finite and non-negative"),
+    ({"sigma_nl": np.nan}, "dispersion must be finite and non-negative"),
+    ({"sigma_nl": 1.0j}, "must be real scalars"),
+])
+def test_load_sample_rejects_invalid_configuration(
+    kwargs: dict, message: str
+) -> None:
+    with pytest.raises(VelocityEstimatorError, match=message):
+        load_sample("validation_precedes_file_access.npz", **kwargs)
+
+
 def test_rank_deficient_refuses_point_estimate() -> None:
     n = np.tile(np.array([0.0, 0.0, 1.0]), (5, 1))
     s = Cf4Sample(n=n, v=np.ones(5), w=np.ones(5), sig_v=np.ones(5),

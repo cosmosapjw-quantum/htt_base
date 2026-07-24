@@ -98,6 +98,19 @@ class Cf4Sample:
 
 def load_sample(groups_path, *, h0: float = H0_CF4,
                 sigma_nl: float = SIGMA_NL) -> Cf4Sample:
+    try:
+        h0 = float(h0)
+        sigma_nl = float(sigma_nl)
+    except (TypeError, ValueError) as exc:
+        raise VelocityEstimatorError(
+            "CF4 H0 and nonlinear velocity dispersion must be real scalars"
+        ) from exc
+    if not np.isfinite(h0) or h0 <= 0:
+        raise VelocityEstimatorError("CF4 H0 must be finite and positive")
+    if not np.isfinite(sigma_nl) or sigma_nl < 0:
+        raise VelocityEstimatorError(
+            "CF4 nonlinear velocity dispersion must be finite and non-negative"
+        )
     d = np.load(groups_path)
     dist = d["Dist"]
     v3k = d["V3k"]
