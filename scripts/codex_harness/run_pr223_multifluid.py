@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import subprocess
 import sys
 from pathlib import Path
 
@@ -22,7 +23,10 @@ from common.revival_multifluid import (  # noqa: E402
 SPEC = REPO / "docs/research_program/revival/pr223_spec.yaml"
 CARD = REPO / "docs/generated/pr223_result_card.json"
 CAS_CONTRACT = REPO / "docs/generated/pr223_cas/CAS_CONTRACT_PR223_MULTIFLUID.json"
-CAS_ADJUDICATION = REPO / "docs/generated/pr223_cas/adjudication.json"
+CAS_AXIS_RESULTS = tuple(
+    REPO / f"docs/generated/pr223_cas/axis_result_{axis}.json"
+    for axis in ("wolfram_xact", "sympy", "sage_singular", "lean", "rocq")
+)
 
 
 def _sha(path: Path) -> str:
@@ -30,15 +34,45 @@ def _sha(path: Path) -> str:
 
 
 def _cas_status() -> dict:
-    adj = json.loads(CAS_ADJUDICATION.read_text())
     contract_sha = _sha(CAS_CONTRACT)
+    command = [
+        sys.executable,
+        "-B",
+        ".agent-harness/scripts/cas_gate.py",
+        "adjudicate",
+        "--contract",
+        str(CAS_CONTRACT.relative_to(REPO)),
+        "--results",
+        *(str(path.relative_to(REPO)) for path in CAS_AXIS_RESULTS),
+        "--historical-replay",
+    ]
+    completed = subprocess.run(
+        command,
+        cwd=REPO,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    try:
+        diagnostic = json.loads(completed.stdout)
+    except json.JSONDecodeError:
+        diagnostic = {}
+    valid_diagnostic = (
+        completed.returncode == 2
+        and diagnostic.get("aggregate_status") == "CAS_BLOCKED"
+        and diagnostic.get("claim_promotion_cas_eligible") is False
+        and diagnostic.get("evidence_origin") == "stored_axis_result_envelopes"
+    )
     return {
         "contract": "docs/generated/pr223_cas/CAS_CONTRACT_PR223_MULTIFLUID.json",
         "contract_sha256": contract_sha,
-        "contract_hash_matches_adjudication": adj.get("contract_sha256") == contract_sha,
-        "aggregate": adj["aggregate_status"],
-        "required_axes": adj.get("required_axes"),
-        "axis_statuses": adj["axis_statuses"],
+        "contract_hash_matches_adjudication": (
+            valid_diagnostic
+            and diagnostic.get("contract_sha256") == contract_sha
+        ),
+        "aggregate": "CAS_BLOCKED",
+        "required_axes": diagnostic.get("required_axes", []),
+        "axis_statuses": diagnostic.get("axis_statuses", {}),
         "kernel_independent_lineages": ["lean", "rocq"],
     }
 
