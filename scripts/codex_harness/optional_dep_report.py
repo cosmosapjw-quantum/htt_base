@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import shlex
 import subprocess
 import sys
 from pathlib import Path
@@ -147,6 +148,8 @@ def render_report(*, command: str) -> str:
 
 
 def main(argv: list[str] | None = None) -> int:
+    raw_argv = list(sys.argv[1:] if argv is None else argv)
+    script_arg = sys.argv[0] if argv is None else str(Path(__file__))
     parser = argparse.ArgumentParser(
         description="Generate the COMMON optional dependency status report."
     )
@@ -163,7 +166,7 @@ def main(argv: list[str] | None = None) -> int:
     )
     args = parser.parse_args(argv)
 
-    command = "python scripts/codex_harness/optional_dep_report.py"
+    command = shlex.join([sys.executable, script_arg, *raw_argv])
     rendered = render_report(command=command)
     target = args.output if args.output.is_absolute() else REPO_ROOT / args.output
 

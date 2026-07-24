@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import shlex
 import subprocess
 import sys
 from pathlib import Path
@@ -78,7 +79,15 @@ def test_optional_dependency_report_writes_metadata_and_attribution(tmp_path: Pa
     assert "owner: COMMON" in rendered
     assert "claim_tier: diagnostic_only" in rendered
     assert "transfer_source: none" in rendered
-    assert "generating_command: python scripts/codex_harness/optional_dep_report.py" in rendered
+    expected_command = shlex.join(
+        [
+            sys.executable,
+            str(REPORT_SCRIPT),
+            "--output",
+            str(output),
+        ]
+    )
+    assert f"generating_command: {expected_command}" in rendered
     assert "| healpy | healpy |" in rendered
     assert "| dynesty | dynesty |" in rendered
     assert "requires_healpy" in rendered
