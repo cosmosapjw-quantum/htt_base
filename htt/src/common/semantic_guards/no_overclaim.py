@@ -59,6 +59,37 @@ GUARDRAIL_MARKERS = (
     "실패",
     "차단",
 )
+CLAUSE_GUARDRAIL_MARKERS = (
+    "blocked",
+    "blocks ",
+    "cannot",
+    "do not",
+    "does not",
+    "forbidden",
+    "must not",
+    "never",
+    "no ",
+    "none ",
+    "not ",
+    "overclaim",
+    "reject",
+    "smuggle",
+    "아님",
+    "금지",
+    "차단",
+)
+SECTION_GUARDRAIL_MARKERS = (
+    "blocked",
+    "do not",
+    "forbidden",
+    "guardrail",
+    "must not",
+    "never",
+    "overclaim",
+    "reject",
+    "금지",
+    "차단",
+)
 YAML_GUARDRAIL_SECTION_KEYS = frozenset(
     {
         "forbidden_output_language",
@@ -214,7 +245,7 @@ def scan_text(text: str, *, path: Path = Path("<text>")) -> tuple[ClaimLanguageI
             match = rule.pattern.search(line)
             if match is None:
                 continue
-            if _is_guardrail_context(lines, index - 1, path=path):
+            if _is_guardrail_context(lines, index - 1, path=path, match=match):
                 continue
             if _match_is_in_forbidden_markdown_column(
                 lines,
@@ -366,6 +397,7 @@ def _is_guardrail_context(
     zero_based_index: int,
     *,
     path: Path,
+    match: re.Match[str] | None = None,
 ) -> bool:
     if path.suffix.lower() in {".yaml", ".yml"} and _is_yaml_guardrail_section(
         lines, zero_based_index
@@ -378,10 +410,74 @@ def _is_guardrail_context(
         # ``_match_is_in_forbidden_markdown_column`` below.
         window = current.lower()
         return any(marker in window for marker in GUARDRAIL_MARKERS)
-    start = max(0, zero_based_index - 2)
-    stop = min(len(lines), zero_based_index + 2)
-    window = " ".join(lines[start:stop]).lower()
-    return any(marker in window for marker in GUARDRAIL_MARKERS)
+    if _is_markdown_guardrail_list_item(lines, zero_based_index):
+        return True
+    clause = _claim_clause(lines, zero_based_index, match).lower()
+    return any(marker in clause for marker in CLAUSE_GUARDRAIL_MARKERS)
+
+
+def _claim_clause(
+    lines: Sequence[str],
+    zero_based_index: int,
+    match: re.Match[str] | None,
+) -> str:
+    """Return the punctuation/adversative-bounded clause containing a match."""
+
+    line = lines[zero_based_index].strip()
+    if match is None:
+        return line
+    prefix: list[str] = []
+    for candidate in reversed(lines[:zero_based_index]):
+        stripped = candidate.strip()
+        if not stripped or stripped.startswith(("#", "|")):
+            break
+        if re.match(r"(?:[-+*]|\d+[.)])\s+", stripped):
+            prefix.insert(0, stripped)
+            break
+        if re.search(r"[.!?;]\s*$", stripped):
+            break
+        prefix.insert(0, stripped)
+    context = " ".join((*prefix, line))
+    offset = sum(len(item) + 1 for item in prefix)
+    match_start = offset + match.start()
+    match_end = offset + match.end()
+    boundaries = tuple(
+        re.finditer(r"[.!?;]|\b(?:but|however|yet)\b", context, re.IGNORECASE)
+    )
+    start = max(
+        (boundary.end() for boundary in boundaries if boundary.end() <= match_start),
+        default=0,
+    )
+    stop = min(
+        (boundary.start() for boundary in boundaries if boundary.start() >= match_end),
+        default=len(context),
+    )
+    return context[start:stop]
+
+
+def _is_markdown_guardrail_list_item(
+    lines: Sequence[str], zero_based_index: int
+) -> bool:
+    """Return true for list items under an explicit negative-example heading."""
+
+    current = lines[zero_based_index].strip()
+    if re.match(r"(?:[-+*]|\d+[.)])\s+", current) is None:
+        return False
+    skipped_blank = False
+    for candidate in reversed(lines[:zero_based_index]):
+        stripped = candidate.strip()
+        if not stripped:
+            if skipped_blank:
+                return False
+            skipped_blank = True
+            continue
+        if re.match(r"(?:[-+*]|\d+[.)])\s+", stripped):
+            continue
+        is_heading = stripped.endswith(":") or stripped.startswith("#")
+        return is_heading and any(
+            marker in stripped.lower() for marker in SECTION_GUARDRAIL_MARKERS
+        )
+    return False
 
 
 def _is_yaml_guardrail_section(

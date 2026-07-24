@@ -124,6 +124,23 @@ MIO certificates are not truth certificates.
     assert scan_text(text, path=Path("guardrail.md")) == ()
 
 
+def test_unrelated_guardrail_words_do_not_hide_production_claims() -> None:
+    text = """
+This summary is not posterior evidence.
+Bianchi geometry detected in the data.
+Risk discussion follows.
+This does not affect calibration; Bianchi family identified in this artifact.
+"""
+
+    issues = scan_text(text, path=Path("production.md"))
+
+    assert [issue.rule_id for issue in issues] == [
+        "geometry_detected",
+        "geometry_detected",
+    ]
+    assert [issue.line for issue in issues] == [3, 5]
+
+
 def test_yaml_registered_guardrail_sections_are_allowed() -> None:
     text = """
 preregistered_falsifiers:
