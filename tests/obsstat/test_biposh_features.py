@@ -258,6 +258,19 @@ def test_sparse_entries_reject_duplicate_nonfinite_and_invalid_indices() -> None
             M=0,
             value=1.0,
         )
+    with pytest.raises(ValueError, match="alm_convention lmax"):
+        _feature(
+            entries=(
+                SparseBiPoSHCoefficient(
+                    channel_pair=("T", "T"),
+                    ell1=8,
+                    ell2=8,
+                    L=2,
+                    M=0,
+                    value=1.0,
+                ),
+            )
+        )
 
 
 def test_thresholding_is_explicit_and_records_discarded_entries() -> None:
