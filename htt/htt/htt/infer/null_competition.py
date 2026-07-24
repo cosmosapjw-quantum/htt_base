@@ -206,6 +206,8 @@ class FamilyCompetitionResult:
             raise ValueError("family_name must be non-empty")
         if self.status != "diagnostic_only":
             raise ValueError("family competition status must be diagnostic_only")
+        if type(self.robust) is not bool:
+            raise TypeError("robust must be bool")
         if int(self.n_realizations) <= 0:
             raise ValueError("n_realizations must be positive")
         if int(self.n_false_positives) < 0:
@@ -239,6 +241,8 @@ class NullCompetitionResult:
     def __post_init__(self) -> None:
         if self.status != "diagnostic_only":
             raise ValueError("null competition status must be diagnostic_only")
+        if type(self.overall_robust) is not bool:
+            raise TypeError("overall_robust must be bool")
         if int(self.families_tested) <= 0:
             raise ValueError("families_tested must be positive")
         if int(self.families_robust) < 0 or int(self.families_vulnerable) < 0:

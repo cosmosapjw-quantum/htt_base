@@ -208,6 +208,28 @@ def test_null_result_and_hook_reject_overstrong_or_inconsistent_readiness():
     assert "matched_null_not_ready" in hook.blocked_reasons
 
 
+def test_null_readiness_flags_require_exact_booleans():
+    from htt.infer.null_competition import (
+        FamilyCompetitionResult,
+        NullCompetitionResult,
+    )
+
+    with pytest.raises(TypeError, match="robust must be bool"):
+        _family("selection_response", fpr=0.02, robust="false")
+
+    family = _family("selection_response", fpr=0.02, robust=True)
+    with pytest.raises(TypeError, match="overall_robust must be bool"):
+        NullCompetitionResult(
+            families_tested=1,
+            families_robust=1,
+            families_vulnerable=0,
+            worst_family="selection_response",
+            worst_fpr=0.02,
+            overall_robust="false",
+            family_results={"selection_response": family},
+        )
+
+
 def test_matched_null_report_manifest_and_claim_hygiene():
     from htt.infer.null_competition import build_matched_null_competition_report
 
