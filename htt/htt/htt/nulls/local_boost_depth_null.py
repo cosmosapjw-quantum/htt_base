@@ -728,11 +728,11 @@ class LocalBoostDepthNull:
         self.config = config
 
     def generate(self) -> DepthNullMockBank:
-        rng = np.random.default_rng(self.config.seed)
         samples: list[DepthNullSample] = []
         target = np.asarray(self.config.target_direction, dtype=float)
         for mock_index in range(self.config.n_mocks):
             mock_seed = int(self.config.seed + mock_index)
+            rng = np.random.default_rng(mock_seed)
             base_direction = _sample_unit_vector(rng)
             amplitude = max(
                 rng.normal(

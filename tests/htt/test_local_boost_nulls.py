@@ -174,6 +174,35 @@ def test_clustering_dipole_depth_null_is_a_distinct_local_structure_bank():
     assert {sample.depth_label for sample in bank.samples} == {"near", "mid", "far"}
 
 
+@pytest.mark.parametrize(
+    "generator_name",
+    ("local_boost", "clustering_dipole"),
+)
+def test_recorded_mock_seed_replays_each_local_null(generator_name):
+    from htt.nulls import ClusteringDipoleDepthNull, LocalBoostDepthNull
+
+    generator = (
+        LocalBoostDepthNull
+        if generator_name == "local_boost"
+        else ClusteringDipoleDepthNull
+    )
+    seed = 16061
+    bank = generator(_config(n_mocks=3, seed=seed)).generate()
+    for mock_index in range(bank.config.n_mocks):
+        replay = generator(
+            _config(n_mocks=1, seed=seed + mock_index),
+        ).generate()
+        original_samples = [
+            sample.to_metadata()
+            for sample in bank.samples
+            if sample.mock_index == mock_index
+        ]
+        replay_samples = [sample.to_metadata() for sample in replay.samples]
+        for sample in original_samples:
+            sample["mock_index"] = 0
+        assert original_samples == replay_samples
+
+
 def test_local_boost_fpr_report_counts_events_and_binds_response_rank():
     from htt.nulls import (
         LocalBoostDepthNull,
