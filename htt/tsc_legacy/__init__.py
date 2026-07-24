@@ -51,6 +51,14 @@ def assert_legacy_reproduction_manifest(
         raise ValueError(
             "TSC legacy artifacts must stay conditional or diagnostic_only"
         )
+    if manifest.production_status in {
+        "production_candidate",
+        "production_validated",
+    }:
+        raise ValueError(
+            "TSC legacy artifacts cannot carry a production candidate or "
+            "production validated status"
+        )
     assert_owner_can_emit_bundle(TSC_OWNER, TSC_ALLOWED_BUNDLE_KIND)
     return manifest
 

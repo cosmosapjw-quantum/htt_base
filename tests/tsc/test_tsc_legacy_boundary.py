@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import importlib
 import ast
+from dataclasses import replace
 from pathlib import Path
 
 import pytest
@@ -194,6 +195,21 @@ def test_legacy_manifest_helper_rejects_stronger_claim_tiers() -> None:
 
     with pytest.raises(ValueError, match="conditional or diagnostic_only"):
         tsc_legacy.assert_legacy_reproduction_manifest(manifest)
+
+
+@pytest.mark.parametrize(
+    "production_status",
+    ["production_candidate", "production_validated"],
+)
+def test_legacy_manifest_helper_rejects_production_status(
+    production_status: str,
+) -> None:
+    tsc_legacy = importlib.import_module("tsc_legacy")
+
+    with pytest.raises(ValueError, match="cannot carry a production"):
+        tsc_legacy.assert_legacy_reproduction_manifest(
+            replace(_manifest(), production_status=production_status),
+        )
 
 
 def test_active_mio_htt_bass_tsc_imports_are_legacy_or_caveat_only() -> None:
