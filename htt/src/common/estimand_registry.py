@@ -96,6 +96,14 @@ class AnalysisContract:
                 raise EstimandRegistryError(
                     f"contract field {name!r} must be a non-empty string "
                     "(no hidden/defaulted conventions)")
+            object.__setattr__(self, name, value.strip())
+        for name in ("dependence_justification", "supersedes"):
+            value = getattr(self, name)
+            if not isinstance(value, str):
+                raise EstimandRegistryError(
+                    f"contract field {name!r} must be a string"
+                )
+            object.__setattr__(self, name, value.strip())
         if not isinstance(self.generative_branch, GenerativeBranch):
             raise EstimandRegistryError(
                 "generative_branch must be a GenerativeBranch enum")

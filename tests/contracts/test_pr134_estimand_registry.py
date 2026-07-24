@@ -126,6 +126,18 @@ def test_flattening_two_surveys_rejected_via_public_api() -> None:
             dict(BASE, analysis_id=BASE["analysis_id"] + "_CLONE")))
 
 
+def test_whitespace_cannot_mint_a_distinct_channel_identity() -> None:
+    reg = EstimandRegistry()
+    reg.register(AnalysisContract.from_payload(BASE))
+    clone = dict(
+        BASE,
+        analysis_id=BASE["analysis_id"] + "_SPACE",
+        estimand=BASE["estimand"] + " ",
+    )
+    with pytest.raises(EstimandRegistryError, match="flattening"):
+        reg.register(AnalysisContract.from_payload(clone))
+
+
 def test_posthoc_edit_and_multiplicity() -> None:
     reg = EstimandRegistry()
     reg.register(AnalysisContract.from_payload(BASE))
