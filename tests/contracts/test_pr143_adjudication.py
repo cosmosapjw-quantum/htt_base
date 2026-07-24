@@ -118,6 +118,13 @@ def test_seal_challenge_hides_truth_and_is_verifiable() -> None:
     assert ch.truth_hash != other.truth_hash
 
 
+def test_preregistered_dgp_battery_is_immutable() -> None:
+    with pytest.raises(TypeError):
+        DGP_BATTERY["local"]["amplitude"] = 99.0
+    with pytest.raises(TypeError):
+        DGP_BATTERY["new_family"] = DGP_BATTERY["local"]
+
+
 @pytest.mark.parametrize(
     ("n_reps", "n_obs"),
     [(0, 60), (-1, 60), (1.5, 60), (True, 60), (1, 0), (1, -1)],

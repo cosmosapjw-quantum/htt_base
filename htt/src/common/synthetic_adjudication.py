@@ -31,6 +31,7 @@ import json
 from dataclasses import dataclass
 from enum import Enum
 from numbers import Integral, Real
+from types import MappingProxyType
 
 import numpy as np
 
@@ -56,26 +57,32 @@ class Verdict(str, Enum):
 
 # The pre-registered DGP battery. Each family declares how to generate an
 # item and the referee CRITERION it must satisfy.
-DGP_BATTERY = {
-    "known_null": {"true": "iso", "regime": "clean", "amplitude": 0.0,
-                   "criterion": "size", "expected": "abstain"},
-    "local": {"true": "local", "regime": "clean", "amplitude": 2.0,
-              "criterion": "recovery", "expected": "local"},
-    "global": {"true": "global", "regime": "clean", "amplitude": 2.0,
-               "criterion": "recovery", "expected": "global"},
-    "systematic": {"true": "sys", "regime": "clean", "amplitude": 2.0,
-                   "criterion": "recovery", "expected": "sys"},
-    "weak_id": {"true": "global", "regime": "clean", "amplitude": 0.2,
-                "criterion": "abstention",
-                "expected": Outcome.ABSTAIN_NO_GAIN.value},
-    "dependent_mock": {"true": "local", "regime": "confused", "amplitude": 2.0,
-                       "criterion": "abstention",
-                       "expected": Outcome.ABSTAIN_NON_IDENTIFIED.value},
-    "covariance_misspecified": {"true": "global", "regime": "clean",
-                                "amplitude": 2.0, "outliers": 6,
-                                "outlier_scale": 8.0, "criterion": "abstention",
-                                "expected": Outcome.ABSTAIN_INADEQUATE.value},
-}
+DGP_BATTERY = MappingProxyType({
+    "known_null": MappingProxyType({
+        "true": "iso", "regime": "clean", "amplitude": 0.0,
+        "criterion": "size", "expected": "abstain"}),
+    "local": MappingProxyType({
+        "true": "local", "regime": "clean", "amplitude": 2.0,
+        "criterion": "recovery", "expected": "local"}),
+    "global": MappingProxyType({
+        "true": "global", "regime": "clean", "amplitude": 2.0,
+        "criterion": "recovery", "expected": "global"}),
+    "systematic": MappingProxyType({
+        "true": "sys", "regime": "clean", "amplitude": 2.0,
+        "criterion": "recovery", "expected": "sys"}),
+    "weak_id": MappingProxyType({
+        "true": "global", "regime": "clean", "amplitude": 0.2,
+        "criterion": "abstention",
+        "expected": Outcome.ABSTAIN_NO_GAIN.value}),
+    "dependent_mock": MappingProxyType({
+        "true": "local", "regime": "confused", "amplitude": 2.0,
+        "criterion": "abstention",
+        "expected": Outcome.ABSTAIN_NON_IDENTIFIED.value}),
+    "covariance_misspecified": MappingProxyType({
+        "true": "global", "regime": "clean", "amplitude": 2.0, "outliers": 6,
+        "outlier_scale": 8.0, "criterion": "abstention",
+        "expected": Outcome.ABSTAIN_INADEQUATE.value}),
+})
 CANDIDATE = Outcome.DISCRIMINATION_CANDIDATE.value
 
 
