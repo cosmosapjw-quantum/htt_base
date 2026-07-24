@@ -23,9 +23,11 @@ from common.frame_typed_algebra import (  # noqa: E402
     forbidden_omega_tilt_squared_subtraction,
     psd_positive_block_only,
 )
+from scripts.codex_harness import run_pr187_frame_typed as runner  # noqa: E402
 
 CARD = REPO / "docs/generated/pr187_result_card.json"
 SPEC = REPO / "docs/research_program/strengthening/pr187_spec.yaml"
+RUNNER = REPO / "scripts/codex_harness/run_pr187_frame_typed.py"
 
 
 def _card() -> dict:
@@ -83,9 +85,12 @@ def test_pair_density_conventions_explicit() -> None:
     assert p["single_order"] == 2
 
 
-def test_five_axis_cas_pass() -> None:
-    cas = _card()["result"]["cas_status"]
-    assert cas["aggregate"] == "CAS_5AXIS_PASS"
+def test_stored_five_axis_cas_is_diagnostic_only() -> None:
+    cas = runner._cas_status()
+    assert cas["aggregate"] == "CAS_BLOCKED"
+    assert cas["historical_aggregate"] == "CAS_5AXIS_PASS"
+    assert cas["stored_cas_diagnostic_only"] is True
+    assert cas["claim_promotion_cas_eligible"] is False
     assert cas["contract_hash_matches_adjudication"] is True
     assert set(cas["axis_statuses"]) == {
         "wolfram_xact", "sympy", "sage_singular", "lean", "rocq"
@@ -94,13 +99,30 @@ def test_five_axis_cas_pass() -> None:
     assert cas["kernel_independent_lineages"] == ["lean", "rocq"]
 
 
-def test_card_byte_stable_under_check() -> None:
+def test_historical_card_preserves_pre_ma04_cas_label() -> None:
+    cas = _card()["result"]["cas_status"]
+    assert cas["aggregate"] == "CAS_5AXIS_PASS"
+    assert _card()["terminal"] == "FRAME_TYPE_SYSTEM_CAS_5AXIS_PASS"
+
+
+def test_current_check_blocks_without_live_parent_execution() -> None:
     proc = subprocess.run(
-        [str(REPO / "venv/bin/python"), "-B",
-         str(REPO / "scripts/codex_harness/run_pr187_frame_typed.py"), "--check"],
+        [sys.executable, "-B", str(RUNNER), "--check"],
         cwd=REPO, capture_output=True, text=True, timeout=300,
         env={"PYTHONHASHSEED": "0", "PATH": "/usr/bin:/bin"},
     )
-    assert proc.returncode == 0, proc.stdout + proc.stderr
+    assert proc.returncode == 1, proc.stdout + proc.stderr
     payload = json.loads(proc.stdout.strip().splitlines()[-1])
-    assert payload["ok"] is True
+    assert payload["ok"] is False
+    assert payload["terminal"] == "BLOCKED_FRAME_TYPE_GATE_FAILURE"
+
+
+def test_write_refuses_to_overwrite_historical_card() -> None:
+    before = hashlib.sha256(CARD.read_bytes()).hexdigest()
+    proc = subprocess.run(
+        [sys.executable, "-B", str(RUNNER), "--write"],
+        cwd=REPO, capture_output=True, text=True, timeout=300,
+    )
+    assert proc.returncode == 2
+    assert "refusing to overwrite" in proc.stderr
+    assert hashlib.sha256(CARD.read_bytes()).hexdigest() == before

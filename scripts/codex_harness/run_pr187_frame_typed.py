@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import subprocess
 import sys
 from fractions import Fraction
 from pathlib import Path
@@ -32,7 +33,10 @@ from common.frame_typed_algebra import (  # noqa: E402
 SPEC = REPO / "docs/research_program/strengthening/pr187_spec.yaml"
 CARD = REPO / "docs/generated/pr187_result_card.json"
 CAS_CONTRACT = REPO / "docs/generated/pr187_cas/CAS_CONTRACT_PR187_FRAME_ORDER.json"
-CAS_ADJUDICATION = REPO / "docs/generated/pr187_cas/adjudication.json"
+CAS_AXIS_RESULTS = tuple(
+    REPO / f"docs/generated/pr187_cas/axis_result_{axis}.json"
+    for axis in ("wolfram_xact", "sympy", "sage_singular", "lean", "rocq")
+)
 
 
 def _sha(path: Path) -> str:
@@ -112,15 +116,47 @@ def _pair_density() -> dict:
 
 
 def _cas_status() -> dict:
-    adj = json.loads(CAS_ADJUDICATION.read_text())
     contract_sha = _sha(CAS_CONTRACT)
+    completed = subprocess.run(
+        [
+            sys.executable,
+            "-B",
+            ".agent-harness/scripts/cas_gate.py",
+            "adjudicate",
+            "--contract",
+            str(CAS_CONTRACT.relative_to(REPO)),
+            "--results",
+            *(str(path.relative_to(REPO)) for path in CAS_AXIS_RESULTS),
+            "--historical-replay",
+        ],
+        cwd=REPO,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    try:
+        diagnostic = json.loads(completed.stdout)
+    except json.JSONDecodeError:
+        diagnostic = {}
+    stored_cas_diagnostic_only = (
+        completed.returncode == 2
+        and diagnostic.get("aggregate_status") == "CAS_BLOCKED"
+        and diagnostic.get("claim_promotion_cas_eligible") is False
+        and diagnostic.get("evidence_origin") == "stored_axis_result_envelopes"
+    )
     return {
         "contract": "docs/generated/pr187_cas/CAS_CONTRACT_PR187_FRAME_ORDER.json",
         "contract_sha256": contract_sha,
-        "contract_hash_matches_adjudication": adj.get("contract_sha256") == contract_sha,
-        "aggregate": adj["aggregate_status"],
-        "required_axes": adj.get("required_axes"),
-        "axis_statuses": adj["axis_statuses"],
+        "contract_hash_matches_adjudication": (
+            stored_cas_diagnostic_only
+            and diagnostic.get("contract_sha256") == contract_sha
+        ),
+        "aggregate": "CAS_BLOCKED",
+        "historical_aggregate": diagnostic.get("historical_aggregate_status"),
+        "required_axes": diagnostic.get("required_axes", []),
+        "axis_statuses": diagnostic.get("axis_statuses", {}),
+        "stored_cas_diagnostic_only": stored_cas_diagnostic_only,
+        "claim_promotion_cas_eligible": False,
         "kernel_independent_lineages": ["lean", "rocq"],
     }
 
@@ -206,9 +242,12 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     payload = build_payload()
     if args.write:
-        CARD.write_bytes(_render(payload))
-        print(f"wrote {CARD.name}; terminal={payload['terminal']}")
-        return 0
+        print(
+            "refusing to overwrite the frozen historical result card without "
+            "a new parent-observed cas_gate.py run-adjudicate execution",
+            file=sys.stderr,
+        )
+        return 2
     ok = CARD.exists() and CARD.read_bytes() == _render(payload)
     print(json.dumps({"mode": "check", "ok": ok, "read_only": True,
                       "terminal": payload["terminal"]}, sort_keys=True))
