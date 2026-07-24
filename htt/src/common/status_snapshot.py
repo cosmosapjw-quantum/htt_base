@@ -817,8 +817,12 @@ def _ordered_prs(backlog: Mapping[str, object]) -> list[Mapping[str, object]]:
         if not isinstance(raw, Mapping):
             raise ValueError("every PR card must be a mapping")
         pr_id = _required_str(raw, "id")
+        if pr_id in by_id:
+            raise ValueError(f"backlog contains duplicate PR id {pr_id!r}")
         by_id[pr_id] = raw
     order = _topological_order(backlog)
+    if len(order) != len(set(order)):
+        raise ValueError("backlog topological order contains duplicate PR ids")
     ordered = [by_id[pr_id] for pr_id in order if pr_id in by_id]
     remaining = sorted(set(by_id) - set(order))
     ordered.extend(by_id[pr_id] for pr_id in remaining)

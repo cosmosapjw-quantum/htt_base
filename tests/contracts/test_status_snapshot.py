@@ -127,6 +127,50 @@ def test_status_bundle_is_generated_from_dag_status_files(tmp_path: Path) -> Non
     assert "common.status_snapshot" in bundle.metadata["generating_command"]
 
 
+def test_status_bundle_rejects_duplicate_pr_ids(tmp_path: Path) -> None:
+    backlog_path, status_path = _write_fixture(tmp_path)
+    backlog = yaml.safe_load(backlog_path.read_text(encoding="utf-8"))
+    backlog["prs"].append(
+        {
+            "id": "PR-010",
+            "title": "Duplicate replacement",
+            "owner": "MIO",
+            "depends": [],
+            "scope": "pre-solver",
+        }
+    )
+    backlog_path.write_text(
+        yaml.safe_dump(backlog, sort_keys=False),
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ValueError, match="duplicate PR id 'PR-010'"):
+        build_status_bundle(
+            backlog_path=backlog_path,
+            status_path=status_path,
+            source_commit="abc123",
+        )
+
+
+def test_status_bundle_rejects_duplicate_topological_order_ids(
+    tmp_path: Path,
+) -> None:
+    backlog_path, status_path = _write_fixture(tmp_path)
+    backlog = yaml.safe_load(backlog_path.read_text(encoding="utf-8"))
+    backlog["policy"]["topological_order"].append("PR-010")
+    backlog_path.write_text(
+        yaml.safe_dump(backlog, sort_keys=False),
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ValueError, match="topological order contains duplicate"):
+        build_status_bundle(
+            backlog_path=backlog_path,
+            status_path=status_path,
+            source_commit="abc123",
+        )
+
+
 def test_status_bundle_preserves_orthogonal_orchestration_states(
     tmp_path: Path,
 ) -> None:
