@@ -138,6 +138,21 @@ def test_bounded_both_engines_agree() -> None:
     assert e["axis_intervals"]["Sigma2"] == ["1", "1"]
 
 
+def test_large_finite_box_is_not_misclassified_as_unbounded() -> None:
+    constraints = []
+    for axis in AXES:
+        constraints.extend([
+            axis_constraint(axis, ">=", -2_000_000),
+            axis_constraint(axis, "<=", 2_000_000),
+        ])
+    exact = exact_engine(constraints)
+    numeric = numeric_engine(constraints)
+    assert exact["status"] == numeric["status"] == "bounded"
+    require_cross_engine_agreement(exact, numeric)
+    with pytest.raises(IdentifiedSetError, match="not valid"):
+        numeric_engine(constraints, big_m=1e6)
+
+
 def test_empty_both_engines_agree() -> None:
     e = exact_engine(_empty())
     n = numeric_engine(_empty())

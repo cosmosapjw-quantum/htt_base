@@ -251,12 +251,14 @@ def exact_engine(constraints: Sequence[LinearConstraint],
 # ---------------------------------------------------------------------------
 
 def numeric_engine(constraints: Sequence[LinearConstraint],
-                   big_m: float = 1e6) -> dict:
+                   big_m: float | None = None) -> dict:
     """scipy HiGHS feasibility + per-axis min/max. Boundedness is
-    detected by probing each axis for a min/max at the +/- big_m
-    envelope; a status='unbounded' is returned if an axis extremum
-    reaches the envelope. Nonconvergence -> UNDETERMINED."""
-    import numpy as np
+    detected from HiGHS' native unbounded optimization status for each
+    axis, without an artificial finite envelope. Nonconvergence ->
+    UNDETERMINED."""
+    if big_m is not None:
+        raise IdentifiedSetError(
+            "finite big_m envelopes are not valid unboundedness tests")
     from scipy.optimize import linprog
 
     n = len(AXES)
@@ -272,7 +274,7 @@ def numeric_engine(constraints: Sequence[LinearConstraint],
         else:  # >=  ->  -row <= -rhs
             A_ub.append([-v for v in row])
             b_ub.append(-float(c.rhs))
-    bounds = [(-big_m, big_m)] * n
+    bounds = [(None, None)] * n
     kw = dict(A_ub=A_ub or None, b_ub=b_ub or None,
               A_eq=A_eq or None, b_eq=b_eq or None,
               bounds=bounds, method="highs")
@@ -281,7 +283,7 @@ def numeric_engine(constraints: Sequence[LinearConstraint],
     if feas.status == 2:      # infeasible
         return {"engine": "scipy_highs", "status": SetStatus.EMPTY.value,
                 "axis_intervals": None, "unbounded_axes": []}
-    if feas.status not in (0, 3):   # not optimal and not unbounded
+    if feas.status != 0:
         return {"engine": "scipy_highs",
                 "status": SetStatus.UNDETERMINED.value,
                 "axis_intervals": None, "unbounded_axes": []}
@@ -293,21 +295,17 @@ def numeric_engine(constraints: Sequence[LinearConstraint],
         lo = linprog(c=obj, **kw)
         obj[i] = -1.0
         hi = linprog(c=obj, **kw)
-        if lo.status not in (0,) or hi.status not in (0,):
-            # a box-bounded LP cannot be genuinely unbounded (status 3);
-            # a non-optimal, non-infeasible status is a SOLVER FAILURE ->
-            # the whole set status is UNDETERMINED, never unbounded.
+        if lo.status not in (0, 3) or hi.status not in (0, 3):
             return {"engine": "scipy_highs",
                     "status": SetStatus.UNDETERMINED.value,
                     "axis_intervals": None, "unbounded_axes": []}
-        lo_v = float(lo.x[i])
-        hi_v = float(hi.x[i])
-        # reaching the big_m envelope means unbounded on this axis
-        if lo_v <= -big_m * (1 - 1e-9) or hi_v >= big_m * (1 - 1e-9):
+        if lo.status == 3 or hi.status == 3:
             unbounded_axes.append(ax)
             intervals[ax] = None
-        else:
-            intervals[ax] = [lo_v, hi_v]
+            continue
+        lo_v = float(lo.x[i])
+        hi_v = float(hi.x[i])
+        intervals[ax] = [lo_v, hi_v]
     status = (SetStatus.UNBOUNDED.value if unbounded_axes
               else SetStatus.BOUNDED.value)
     return {
