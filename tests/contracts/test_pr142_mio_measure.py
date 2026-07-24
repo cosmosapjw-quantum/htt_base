@@ -1,6 +1,7 @@
 """PR-142 contract tests: MIO joint-measure F/Pi/G_F + matched null."""
 from __future__ import annotations
 
+import importlib.util
 import json
 import subprocess
 import sys
@@ -32,6 +33,54 @@ from common.mio_joint_measure import (
 )
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
+
+
+def _load_runner():
+    runner_path = REPO_ROOT / "scripts/codex_harness/run_pr142_mio_measure.py"
+    spec = importlib.util.spec_from_file_location("run_pr142", runner_path)
+    runner = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(runner)
+    return runner
+
+
+def test_source_hash_is_generation_time_provenance() -> None:
+    runner = _load_runner()
+    source = runner.SOURCE_PATH
+
+    measures_rel = runner.OUTPUTS["measures"]
+    stored = {
+        "F": {"value": 1.23456789},
+        "negative_scan": {
+            "targets": {source: {"sha256": "1" * 64, "hits": []}},
+        },
+    }
+    current = {
+        "F": {"value": 1.234567891},
+        "negative_scan": {
+            "targets": {source: {"sha256": "2" * 64, "hits": []}},
+        },
+    }
+    assert runner._semantic_artifact(
+        measures_rel, stored
+    ) == runner._semantic_artifact(measures_rel, current)
+    current["negative_scan"]["targets"][source]["hits"] = [{"line": 1}]
+    assert runner._semantic_artifact(
+        measures_rel, stored
+    ) != runner._semantic_artifact(measures_rel, current)
+    current["negative_scan"]["targets"][source] = {
+        "sha256": "not-a-sha",
+        "hits": [],
+    }
+    assert runner._semantic_artifact(
+        measures_rel, stored
+    ) != runner._semantic_artifact(measures_rel, current)
+
+    manifest_rel = runner.OUTPUTS["manifest"]
+    stored = {"input_hashes": [f"{source}:{'1' * 64}"]}
+    current = {"input_hashes": [f"{source}:{'2' * 64}"]}
+    assert runner._semantic_artifact(
+        manifest_rel, stored
+    ) == runner._semantic_artifact(manifest_rel, current)
 
 
 def _table(seed=42, n=40, shift=1.2):

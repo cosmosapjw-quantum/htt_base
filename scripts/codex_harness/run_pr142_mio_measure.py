@@ -64,6 +64,7 @@ OUTPUTS = {
     "mutations": "docs/generated/pr142_mutation_report.json",
     "manifest": "docs/generated/pr142_artifact_manifest.json",
 }
+SOURCE_PATH = "htt/src/common/mio_joint_measure.py"
 REDACTED = "[REDACTED-PATTERN]"
 
 
@@ -84,6 +85,44 @@ def _round(obj):
 def _render(payload: dict) -> bytes:
     return (json.dumps(_round(payload), indent=2, ensure_ascii=False,
                        sort_keys=True) + "\n").encode()
+
+
+def _is_sha256(value: object) -> bool:
+    return (
+        isinstance(value, str)
+        and len(value) == 64
+        and all(char in "0123456789abcdef" for char in value)
+    )
+
+
+def _semantic_artifact(rel: str, payload: dict) -> dict:
+    """Keep the maintained-source hash as generation-time provenance."""
+
+    normalized = json.loads(json.dumps(_round(payload)))
+    if rel == OUTPUTS["measures"]:
+        scan = normalized.get("negative_scan")
+        targets = scan.get("targets") if isinstance(scan, dict) else None
+        source = (
+            targets.get(SOURCE_PATH)
+            if isinstance(targets, dict) else None
+        )
+        if isinstance(source, dict) and _is_sha256(source.get("sha256")):
+            source["sha256"] = "<generation-time-source>"
+        return normalized
+    if rel != OUTPUTS["manifest"]:
+        return normalized
+    rows = normalized.get("input_hashes")
+    if not isinstance(rows, list):
+        return normalized
+    prefix = f"{SOURCE_PATH}:"
+    for index, row in enumerate(rows):
+        if (
+            isinstance(row, str)
+            and row.startswith(prefix)
+            and _is_sha256(row.removeprefix(prefix))
+        ):
+            rows[index] = f"{prefix}<generation-time-source>"
+    return normalized
 
 
 def _verify_baseline_commit(spec: dict) -> None:
@@ -408,7 +447,20 @@ def _emit(rel: str, payload: dict, write: bool,
         return
     if not target.is_file():
         problems.append(f"missing artifact: {rel}")
-    elif target.read_bytes() != rendered:
+        return
+    if rel in {OUTPUTS["measures"], OUTPUTS["manifest"]}:
+        try:
+            existing = json.loads(target.read_text(encoding="utf-8"))
+        except (UnicodeError, json.JSONDecodeError):
+            problems.append(f"invalid artifact: {rel}")
+            return
+        if (
+            isinstance(existing, dict)
+            and _semantic_artifact(rel, existing)
+            == _semantic_artifact(rel, payload)
+        ):
+            return
+    if target.read_bytes() != rendered:
         problems.append(f"stale artifact: {rel}")
 
 
