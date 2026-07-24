@@ -1,6 +1,7 @@
 """PR-141 contract tests: contamination-aware mixture + mandatory abstention."""
 from __future__ import annotations
 
+import importlib.util
 import json
 import subprocess
 import sys
@@ -40,6 +41,54 @@ CFG = DiscriminationConfig(
     collinearity_threshold=0.9, ppc_reject=0.01, prior_swing_ceiling=6.0,
     tau2_grid=(1.0, 4.0, 16.0), held_out_gain_floor=0.0,
     combination_margin=5.0, seed=5)
+
+
+def _load_runner():
+    runner_path = REPO_ROOT / "scripts/codex_harness/run_pr141_mixture.py"
+    spec = importlib.util.spec_from_file_location("run_pr141", runner_path)
+    runner = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(runner)
+    return runner
+
+
+def test_source_hash_is_generation_time_provenance() -> None:
+    runner = _load_runner()
+    source = runner.SOURCE_PATH
+
+    confusion_rel = runner.OUTPUTS["confusion"]
+    stored = {
+        "n_cells": 12,
+        "negative_scan": {
+            "targets": {source: {"sha256": "1" * 64, "hits": []}},
+        },
+    }
+    current = {
+        "n_cells": 12,
+        "negative_scan": {
+            "targets": {source: {"sha256": "2" * 64, "hits": []}},
+        },
+    }
+    assert runner._semantic_artifact(
+        confusion_rel, stored
+    ) == runner._semantic_artifact(confusion_rel, current)
+    current["negative_scan"]["targets"][source]["hits"] = [{"line": 1}]
+    assert runner._semantic_artifact(
+        confusion_rel, stored
+    ) != runner._semantic_artifact(confusion_rel, current)
+    current["negative_scan"]["targets"][source] = {
+        "sha256": "not-a-sha",
+        "hits": [],
+    }
+    assert runner._semantic_artifact(
+        confusion_rel, stored
+    ) != runner._semantic_artifact(confusion_rel, current)
+
+    manifest_rel = runner.OUTPUTS["manifest"]
+    stored = {"input_hashes": [f"{source}:{'1' * 64}"]}
+    current = {"input_hashes": [f"{source}:{'2' * 64}"]}
+    assert runner._semantic_artifact(
+        manifest_rel, stored
+    ) == runner._semantic_artifact(manifest_rel, current)
 
 
 def test_log_evidence_matches_scipy() -> None:
