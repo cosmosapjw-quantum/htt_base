@@ -1,6 +1,6 @@
 """PR-222 runner: stochastic bulk->tilt bridge + five-axis CAS status."""
 from __future__ import annotations
-import argparse, hashlib, json, sys
+import argparse, hashlib, json, subprocess, sys
 from pathlib import Path
 REPO = Path(__file__).resolve().parents[2]
 for e in (str(REPO/"htt"), str(REPO/"htt"/"src")):
@@ -9,14 +9,47 @@ from common.revival_bulk_bridge import fisher_rank, recover, single_window_canno
 SPEC = REPO/"docs/research_program/revival/pr222_spec.yaml"
 CARD = REPO/"docs/generated/pr222_result_card.json"
 CAS_CONTRACT = REPO/"docs/generated/pr222_cas/CAS_CONTRACT_PR222_BRIDGE.json"
-CAS_ADJ = REPO/"docs/generated/pr222_cas/adjudication.json"
+CAS_AXIS_RESULTS = tuple(
+    REPO / f"docs/generated/pr222_cas/axis_result_{axis}.json"
+    for axis in ("wolfram_xact", "sympy", "sage_singular", "lean", "rocq")
+)
 def _sha(p): return hashlib.sha256(p.read_bytes()).hexdigest()
 def _cas():
-    adj = json.loads(CAS_ADJ.read_text()); csha=_sha(CAS_CONTRACT)
+    csha = _sha(CAS_CONTRACT)
+    command = [
+        sys.executable,
+        "-B",
+        ".agent-harness/scripts/cas_gate.py",
+        "adjudicate",
+        "--contract",
+        str(CAS_CONTRACT.relative_to(REPO)),
+        "--results",
+        *(str(path.relative_to(REPO)) for path in CAS_AXIS_RESULTS),
+        "--historical-replay",
+    ]
+    completed = subprocess.run(
+        command,
+        cwd=REPO,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    try:
+        diagnostic = json.loads(completed.stdout)
+    except json.JSONDecodeError:
+        diagnostic = {}
+    valid_diagnostic = (
+        completed.returncode == 2
+        and diagnostic.get("aggregate_status") == "CAS_BLOCKED"
+        and diagnostic.get("claim_promotion_cas_eligible") is False
+        and diagnostic.get("evidence_origin") == "stored_axis_result_envelopes"
+    )
     return {"contract":"docs/generated/pr222_cas/CAS_CONTRACT_PR222_BRIDGE.json","contract_sha256":csha,
-            "contract_hash_matches_adjudication":adj.get("contract_sha256")==csha,
-            "aggregate":adj["aggregate_status"],"required_axes":adj.get("required_axes"),
-            "axis_statuses":adj["axis_statuses"],"kernel_independent_lineages":["lean","rocq"]}
+            "contract_hash_matches_adjudication":(
+                valid_diagnostic and diagnostic.get("contract_sha256") == csha),
+            "aggregate":"CAS_BLOCKED","required_axes":diagnostic.get("required_axes", []),
+            "axis_statuses":diagnostic.get("axis_statuses", {}),
+            "kernel_independent_lineages":["lean","rocq"]}
 def build_payload():
     fr = fisher_rank(); rec = recover(); single = single_window_cannot_identify(); cas=_cas()
     ranks = {"multi_window_rank": fr["multi_window_rank"], "single_window_rank": fr["single_window_rank"]}
