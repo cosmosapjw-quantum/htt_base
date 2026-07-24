@@ -289,6 +289,19 @@ class BranchComponent:
     branch: GenerativeBranch
     descriptor: str
 
+    def __post_init__(self) -> None:
+        for name in ("analysis_id", "descriptor"):
+            value = getattr(self, name)
+            if not isinstance(value, str) or not value.strip():
+                raise EstimandRegistryError(
+                    f"branch component {name} must be a non-empty string"
+                )
+            object.__setattr__(self, name, value.strip())
+        if not isinstance(self.branch, GenerativeBranch):
+            raise EstimandRegistryError(
+                "branch component role must be a GenerativeBranch enum"
+            )
+
 
 def compose_generative_model(mean: BranchComponent,
                              covariance: BranchComponent) -> dict:

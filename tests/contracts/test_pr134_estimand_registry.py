@@ -194,6 +194,21 @@ def test_branch_separation() -> None:
                 "B", GenerativeBranch.STOCHASTIC_COVARIANCE_FACTOR, "c"))
 
 
+@pytest.mark.parametrize("analysis_id, descriptor", [
+    ("", "mean"),
+    ("analysis", ""),
+])
+def test_branch_component_requires_nonempty_identity_and_descriptor(
+    analysis_id: str, descriptor: str
+) -> None:
+    with pytest.raises(EstimandRegistryError, match="non-empty string"):
+        BranchComponent(
+            analysis_id,
+            GenerativeBranch.DETERMINISTIC_TEMPLATE_MEAN,
+            descriptor,
+        )
+
+
 def test_dependency_graph_named_clusters() -> None:
     graph = _registry().dependency_graph()
     assert len(graph) == 5
