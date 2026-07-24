@@ -463,6 +463,9 @@ def _gpinv(probs: np.ndarray, kappa: float, sigma: float) -> np.ndarray:
 
 def psis_smooth(log_ratios: np.ndarray) -> tuple[np.ndarray, float]:
     """Pareto-smoothed log importance weights + fitted shape k."""
+    if log_ratios.ndim != 1 or not np.all(np.isfinite(log_ratios)):
+        raise HoldoutError(
+            "PSIS log importance ratios must be a finite vector")
     S = len(log_ratios)
     lw = log_ratios - _logsumexp(log_ratios)  # normalized for stability
     n_tail = int(min(0.2 * S, 3 * np.sqrt(S)))
@@ -479,8 +482,15 @@ def psis_smooth(log_ratios: np.ndarray) -> tuple[np.ndarray, float]:
     exp_cutoff = np.exp(cutoff)
     exceed = np.exp(tail) - exp_cutoff
     k, sigma = _gpdfit(exceed)
+    if not np.isfinite(k) or not np.isfinite(sigma) or sigma <= 0:
+        raise HoldoutError(
+            "PSIS Pareto-tail fit produced a non-finite diagnostic — "
+            "use the exact refit")
     probs = (np.arange(1, n_tail + 1) - 0.5) / n_tail
     smoothed = np.log(_gpinv(probs, k, sigma) + exp_cutoff)
+    if not np.all(np.isfinite(smoothed)):
+        raise HoldoutError(
+            "PSIS smoothing produced non-finite weights — use the exact refit")
     smoothed = np.minimum(smoothed, float(np.max(lw)))
     new_sorted = sorted_lw.copy()
     new_sorted[S - n_tail:] = smoothed
@@ -531,17 +541,35 @@ def psis_group_elpd(model: GroupModel, graph: DependencyGraph,
             "folds": fold_records}
 
 
+def _finite_diagnostic(value: object, label: str) -> float:
+    try:
+        number = float(value)
+    except (TypeError, ValueError) as exc:
+        raise HoldoutError(f"{label} must be finite") from exc
+    if not np.isfinite(number):
+        raise HoldoutError(f"{label} must be finite")
+    return number
+
+
 def compare_exact_psis(exact: dict, psis: dict, tol_elpd: float,
                        k_threshold: float) -> dict:
     """Verify the PSIS approximation against the exact refit."""
+    tol_elpd = _finite_diagnostic(tol_elpd, "ELPD tolerance")
+    if tol_elpd < 0:
+        raise HoldoutError("ELPD tolerance must be non-negative")
+    k_threshold = _finite_diagnostic(k_threshold, "Pareto-k threshold")
     ex = {f["group"]: f["log_predictive_density"] for f in exact["folds"]}
     diffs = [abs(f["elpd"] - ex[f["group"]]) for f in psis["folds"]]
-    max_diff = max(diffs)
-    max_k = psis["max_pareto_k"]
+    max_diff = _finite_diagnostic(max(diffs), "fold ELPD difference")
+    total_diff = _finite_diagnostic(
+        abs(exact["elpd"] - psis["elpd"]), "total ELPD difference")
+    for fold in psis["folds"]:
+        _finite_diagnostic(fold["pareto_k"], "fold Pareto k")
+    max_k = _finite_diagnostic(psis["max_pareto_k"], "maximum Pareto k")
     reliable = max_k <= k_threshold
     agree = max_diff <= tol_elpd
     return {"max_abs_fold_diff": float(max_diff),
-            "total_elpd_diff": float(abs(exact["elpd"] - psis["elpd"])),
+            "total_elpd_diff": float(total_diff),
             "max_pareto_k": float(max_k), "k_threshold": float(k_threshold),
             "tol_elpd": float(tol_elpd), "psis_reliable": bool(reliable),
             "psis_agrees_with_exact": bool(agree),
@@ -551,16 +579,23 @@ def compare_exact_psis(exact: dict, psis: dict, tol_elpd: float,
 def require_reliable_or_exact(psis: dict, k_threshold: float,
                               used_exact_fallback: bool) -> None:
     """Refuse a PSIS ELPD reported when unreliable without exact fallback."""
-    if psis["max_pareto_k"] > k_threshold and not used_exact_fallback:
+    max_k = _finite_diagnostic(psis["max_pareto_k"], "maximum Pareto k")
+    k_threshold = _finite_diagnostic(k_threshold, "Pareto-k threshold")
+    if max_k > k_threshold and not used_exact_fallback:
         raise HoldoutError(
-            f"PSIS Pareto k = {psis['max_pareto_k']:.3f} exceeds "
+            f"PSIS Pareto k = {max_k:.3f} exceeds "
             f"{k_threshold} — the exact refit is required, not the PSIS "
             "approximation")
 
 
 def influential_folds(psis: dict, k_threshold: float = 0.7) -> list:
-    return [{"group": f["group"], "pareto_k": f["pareto_k"]}
-            for f in psis["folds"] if f["pareto_k"] > k_threshold]
+    k_threshold = _finite_diagnostic(k_threshold, "Pareto-k threshold")
+    rows = []
+    for fold in psis["folds"]:
+        pareto_k = _finite_diagnostic(fold["pareto_k"], "fold Pareto k")
+        if pareto_k > k_threshold:
+            rows.append({"group": fold["group"], "pareto_k": pareto_k})
+    return rows
 
 
 # --------------------------------------------------------------------------

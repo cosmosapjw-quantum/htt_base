@@ -17,10 +17,12 @@ from common.dependency_holdout import (
     HoldoutStatus,
     _gpinv,
     _mvn_logpdf,
+    compare_exact_psis,
     conditional_joint_lpd,
     dependency_optimism,
     exact_group_elpd,
     generate_caption,
+    influential_folds,
     lint_caption,
     marginal_covariance,
     psis_group_elpd,
@@ -226,6 +228,30 @@ def test_psis_unreliable_requires_exact_fallback() -> None:
     # with the exact fallback taken, no error
     require_reliable_or_exact({"max_pareto_k": 1.3}, 0.7,
                               used_exact_fallback=True)
+
+
+def test_psis_diagnostics_reject_nonfinite_values() -> None:
+    bad = {
+        "elpd": -1.0,
+        "max_pareto_k": float("nan"),
+        "folds": [{"group": 0, "elpd": -1.0, "pareto_k": float("nan")}],
+    }
+    exact = {
+        "elpd": -1.0,
+        "folds": [{"group": 0, "log_predictive_density": -1.0}],
+    }
+    with pytest.raises(HoldoutError, match="must be finite"):
+        require_reliable_or_exact(bad, 0.7, used_exact_fallback=False)
+    with pytest.raises(HoldoutError, match="must be finite"):
+        compare_exact_psis(exact, bad, 0.5, 0.7)
+    with pytest.raises(HoldoutError, match="must be finite"):
+        influential_folds(bad)
+
+
+def test_psis_smoothing_rejects_nonfinite_ratios() -> None:
+    from common.dependency_holdout import psis_smooth
+    with pytest.raises(HoldoutError, match="finite vector"):
+        psis_smooth(np.full(100, np.nan))
 
 
 def test_train_only_guard_and_selection_leakage() -> None:
