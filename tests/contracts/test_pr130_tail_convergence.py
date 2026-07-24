@@ -21,6 +21,7 @@ from common.nt2_tail_convergence import (
     generate_caption,
     lint_caption,
     partial_sum_exact,
+    profile_sensitivity,
     require_convergent_profile,
     tail_bracket_exact,
     tail_positive_witness,
@@ -132,6 +133,15 @@ def test_invalid_sky_fraction_fails_closed(f_sky: Fraction) -> None:
     ):
         with pytest.raises(Nt2TailError, match="f_sky"):
             call()
+
+
+def test_fractional_sky_scales_tail_sensitivity() -> None:
+    profile = (Fraction(3, 2),)
+    full = profile_sensitivity(p_values=profile, f_sky=Fraction(1))
+    half = profile_sensitivity(p_values=profile, f_sky=Fraction(1, 2))
+    full_tail = float(full["rows"][0]["tail_beyond_L80"])
+    half_tail = float(half["rows"][0]["tail_beyond_L80"])
+    assert half_tail == pytest.approx(full_tail / 2, rel=1e-14)
 
 
 def test_tail_bracket_and_strict_positivity() -> None:

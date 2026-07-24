@@ -442,7 +442,8 @@ def profile_sensitivity(p_values: tuple[Fraction, ...] = (
         value, text = closed_form_infinite_mpmath(p, f)
         with mpmath.workdps(60):
             pf = mpmath.mpf(p.numerator) / mpmath.mpf(p.denominator)
-            tail80 = mpmath.mpf(f.numerator) * (
+            fs = mpmath.mpf(f.numerator) / mpmath.mpf(f.denominator)
+            tail80 = fs * (
                 mpmath.power(2, 2 * pf)
                 * (mpmath.zeta(2 * pf - 1)
                    - mpmath.nsum(lambda l: l ** (1 - 2 * pf), [1, 80]))
