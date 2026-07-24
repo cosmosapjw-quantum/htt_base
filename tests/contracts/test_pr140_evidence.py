@@ -140,6 +140,19 @@ def test_prior_normalization_guard() -> None:
         require_normalized_prior(NormalPrior(0.0, 4.0, normalized=False))
 
 
+@pytest.mark.parametrize(
+    ("mean", "var", "message"),
+    (
+        (0.0, float("nan"), "variance"),
+        (0.0, -1.0, "variance"),
+        (float("nan"), 1.0, "mean"),
+    ),
+)
+def test_normal_prior_rejects_invalid_parameters(mean, var, message) -> None:
+    with pytest.raises(EvidenceError, match=message):
+        NormalPrior(mean, var)
+
+
 def test_evidence_kind_and_caller_scalar_guards() -> None:
     for kind in ("fitted_score", "max_likelihood_ratio", "caller_scalar",
                  "profile_likelihood"):

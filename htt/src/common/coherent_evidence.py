@@ -65,6 +65,15 @@ class NormalPrior:
     var: float
     normalized: bool = True
 
+    def __post_init__(self) -> None:
+        if not np.isfinite(self.mean):
+            raise EvidenceError("normal-prior mean must be finite")
+        if not np.isfinite(self.var) or self.var <= 0:
+            raise EvidenceError(
+                "normal-prior variance must be finite and positive")
+        if not isinstance(self.normalized, bool):
+            raise EvidenceError("normal-prior normalized flag must be boolean")
+
     def log_density(self, mu: np.ndarray) -> np.ndarray:
         mu = np.atleast_1d(mu)
         quad = -0.5 * (mu - self.mean) ** 2 / self.var
@@ -89,7 +98,8 @@ def require_normalized_prior(prior: NormalPrior) -> None:
         raise EvidenceError(
             "the prior is unnormalized — the evidence integral is only "
             "defined for a normalized prior density")
-    if abs(prior.normalizer_integral() - 1.0) > 1e-4:
+    integral = prior.normalizer_integral()
+    if not np.isfinite(integral) or abs(integral - 1.0) > 1e-4:
         raise EvidenceError(
             "the prior density does not integrate to one")
 
