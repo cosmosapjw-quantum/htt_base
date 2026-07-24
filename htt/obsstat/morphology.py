@@ -17,7 +17,7 @@ from typing import Any
 import numpy as np
 
 from common.contracts import PreferredAxis
-from common.sky_geometry import unitvec_to_lb
+from common.sky_geometry import lb_to_unitvec, unitvec_to_lb
 
 __all__ = [
     "DiagnosticMorphologyAxis",
@@ -202,6 +202,19 @@ class DiagnosticMorphologyAxis:
             raise ValueError("DiagnosticMorphologyAxis.b_deg must be in [-90, 90]")
         object.__setattr__(self, "l_deg", l_deg)
         object.__setattr__(self, "b_deg", b_deg)
+        coordinate_vector = lb_to_unitvec(
+            np.asarray(l_deg),
+            np.asarray(b_deg),
+        )
+        if not math.isclose(
+            abs(float(np.dot(np.asarray(vector), coordinate_vector))),
+            1.0,
+            rel_tol=1.0e-10,
+            abs_tol=1.0e-12,
+        ):
+            raise ValueError(
+                "DiagnosticMorphologyAxis vector must match its antipodal l_deg/b_deg"
+            )
         if self.axis_role not in {
             "diagnostic_morphology_axis",
             "diagnostic_plane_normal_axis",

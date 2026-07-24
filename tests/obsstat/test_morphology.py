@@ -386,6 +386,26 @@ def test_morphology_rejects_inference_transfer_or_family_claim_payloads() -> Non
             provenance_hash="sha256:" + "a" * 64,
             source="fiducial_posterior",
         )
+    with pytest.raises(ValueError, match="vector must match"):
+        DiagnosticMorphologyAxis(
+            vector=(1.0, 0.0, 0.0),
+            l_deg=90.0,
+            b_deg=0.0,
+            label="mismatched-axis",
+            axis_role="diagnostic_morphology_axis",
+            axis_status="resolved",
+            provenance_hash="sha256:" + "a" * 64,
+        )
+    antipodal_axis = DiagnosticMorphologyAxis(
+        vector=(1.0, 0.0, 0.0),
+        l_deg=180.0,
+        b_deg=0.0,
+        label="antipodal-axis",
+        axis_role="diagnostic_morphology_axis",
+        axis_status="resolved",
+        provenance_hash="sha256:" + "a" * 64,
+    )
+    assert antipodal_axis.axis_equivalence == "antipodal"
     with pytest.raises(ValueError, match="config_hash"):
         summarize_morphology_axes(
             morphology_tensor=[[1.0, 0.0, 0.0], [0.0, 0.5, 0.0], [0.0, 0.0, 0.1]],
