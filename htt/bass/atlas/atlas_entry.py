@@ -677,6 +677,10 @@ def validate_atlas_entry_lite_metadata(metadata: Mapping[str, object]) -> None:
         "comparison_group",
         "transfer_id",
         "transfer_source",
+        "transfer_family",
+        "observable_kind",
+        "normalization",
+        "valid_range",
         "transfer_metadata",
         "native_solver_result",
         "data_role",
@@ -738,7 +742,20 @@ def validate_atlas_entry_lite_metadata(metadata: Mapping[str, object]) -> None:
     _reject_active_role_keys(metadata)
     if not isinstance(metadata["transfer_metadata"], Mapping):
         raise ValueError("AtlasEntryLite transfer_metadata must be a mapping")
-    _validate_transfer_metadata(metadata["transfer_metadata"])
+    transfer_metadata = _validate_transfer_metadata(metadata["transfer_metadata"])
+    projected_transfer_fields = {
+        "transfer_id": transfer_metadata["transfer_id"],
+        "transfer_source": transfer_metadata["transfer_source"],
+        "transfer_family": transfer_metadata["family"],
+        "observable_kind": transfer_metadata["observable_kind"],
+        "normalization": transfer_metadata["normalization"],
+        "valid_range": transfer_metadata["valid_range"],
+    }
+    for field_name, expected in projected_transfer_fields.items():
+        if _jsonable(metadata[field_name]) != expected:
+            raise ValueError(
+                f"AtlasEntryLite metadata {field_name} must match transfer_metadata"
+            )
 
 
 __all__ = [

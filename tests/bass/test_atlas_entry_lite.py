@@ -323,6 +323,28 @@ def test_metadata_validator_rejects_top_level_role_tampering() -> None:
     with pytest.raises(ValueError, match="inference_role"):
         validate_atlas_entry_lite_metadata(bad_inference)
 
+    bad_transfer_id = dict(metadata)
+    bad_transfer_id["transfer_id"] = "aniclass.lowell.shear_to_D3.v1"
+    with pytest.raises(ValueError, match="transfer_id must match"):
+        validate_atlas_entry_lite_metadata(bad_transfer_id)
+
+    bad_transfer_source = dict(metadata)
+    bad_transfer_source["transfer_source"] = "BASS_native_provisional"
+    with pytest.raises(ValueError, match="transfer_source must match"):
+        validate_atlas_entry_lite_metadata(bad_transfer_source)
+
+    projected_tampering = {
+        "transfer_family": "forged_family",
+        "observable_kind": "forged_observable",
+        "normalization": "forged_normalization",
+        "valid_range": {"ell_min": 999},
+    }
+    for field_name, forged_value in projected_tampering.items():
+        tampered = dict(metadata)
+        tampered[field_name] = forged_value
+        with pytest.raises(ValueError, match=f"{field_name} must match"):
+            validate_atlas_entry_lite_metadata(tampered)
+
 
 def test_atlas_entry_lite_rejects_validated_native_or_none_source() -> None:
     from bass.atlas import AtlasEntryLite
