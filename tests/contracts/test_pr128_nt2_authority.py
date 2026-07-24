@@ -22,6 +22,7 @@ from common.nt2_bracket_authority import (
     sigma_bracket,
     validate_interval_claim,
 )
+from scripts.codex_harness import run_pr128_nt2_authority as pr128_runner
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 
@@ -116,6 +117,32 @@ def test_f_lo_uses_corrected_lower() -> None:
     from common.nt2_bracket_authority import X_MAX_REGISTERED
     assert X_MAX_REGISTERED == Fraction(925, 100000000)
     assert f_lo(a2, a3) == lower * lower / X_MAX_REGISTERED
+
+
+def test_manifest_authority_hash_is_generation_time_provenance() -> None:
+    source = pr128_runner.AUTHORITY_SOURCE
+    legacy = "htt/obsstat/egs2_shear_bracket.py"
+    stored = {
+        "input_hashes": [
+            f"{source}:{'1' * 64}",
+            f"{legacy}:{'2' * 64}",
+        ]
+    }
+    current = {
+        "input_hashes": [
+            f"{source}:{'3' * 64}",
+            f"{legacy}:{'2' * 64}",
+        ]
+    }
+    manifest = pr128_runner.OUTPUTS["manifest"]
+    assert pr128_runner._semantic_artifact(
+        manifest, stored
+    ) == pr128_runner._semantic_artifact(manifest, current)
+
+    current["input_hashes"][1] = f"{legacy}:{'4' * 64}"
+    assert pr128_runner._semantic_artifact(
+        manifest, stored
+    ) != pr128_runner._semantic_artifact(manifest, current)
 
 
 def test_runner_check_mode_is_current() -> None:

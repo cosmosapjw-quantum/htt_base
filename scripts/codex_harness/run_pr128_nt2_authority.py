@@ -53,6 +53,7 @@ OUTPUTS = {
     "mutations": "docs/generated/pr128_mutation_report.json",
     "manifest": "docs/generated/pr128_artifact_manifest.json",
 }
+AUTHORITY_SOURCE = "htt/src/common/nt2_bracket_authority.py"
 
 # Reference input for the before/after table (a2 at a plausible quadrupole
 # amplitude scale, R = 1/2 within the H3 domain).
@@ -67,6 +68,25 @@ def _sha(path: Path) -> str:
 def _render(payload: dict) -> bytes:
     return (json.dumps(payload, indent=2, ensure_ascii=False, sort_keys=True)
             + "\n").encode()
+
+
+def _semantic_artifact(rel: str, payload: dict) -> dict:
+    """Keep the frozen authority-source digest as generation-time provenance."""
+
+    normalized = json.loads(json.dumps(payload))
+    if rel != OUTPUTS["manifest"]:
+        return normalized
+    rows = normalized.get("input_hashes")
+    if not isinstance(rows, list):
+        return normalized
+    prefix = f"{AUTHORITY_SOURCE}:"
+    for index, row in enumerate(rows):
+        if not isinstance(row, str) or not row.startswith(prefix):
+            continue
+        digest = row.removeprefix(prefix)
+        if len(digest) == 64 and all(char in "0123456789abcdef" for char in digest):
+            rows[index] = f"{prefix}<generation-time-source>"
+    return normalized
 
 
 def _verify_remediation_state(spec: dict) -> None:
@@ -289,7 +309,19 @@ def _emit(rel: str, payload: dict, write: bool,
         return
     if not target.is_file():
         problems.append(f"missing artifact: {rel}")
-    elif target.read_bytes() != rendered:
+        return
+    if rel == OUTPUTS["manifest"]:
+        try:
+            existing = json.loads(target.read_text(encoding="utf-8"))
+        except (UnicodeError, json.JSONDecodeError):
+            problems.append(f"invalid artifact: {rel}")
+            return
+        if (
+            isinstance(existing, dict)
+            and _semantic_artifact(rel, existing) == _semantic_artifact(rel, payload)
+        ):
+            return
+    if target.read_bytes() != rendered:
         problems.append(f"stale artifact: {rel}")
 
 
