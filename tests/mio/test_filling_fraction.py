@@ -367,6 +367,26 @@ def test_f_rejects_mismatched_transfer_spec_ids_across_samples() -> None:
         )
 
 
+def test_f_rejects_mixed_transfer_and_nontransfer_departure_samples() -> None:
+    with pytest.raises(ValueError, match="departure transfer_source mismatch"):
+        build_certified_filling_fraction(
+            (
+                _bundle(0.2),
+                _bundle(
+                    0.3,
+                    transfer_source="AniCLASS_external",
+                    transfer_spec_id="aniclass.lowell.scalar.v1",
+                    transfer_metadata=_external_transfer_metadata(
+                        "aniclass.lowell.scalar.v1"
+                    ),
+                ),
+            ),
+            (_budget(1.0), _budget(1.0)),
+            generating_command=_GENERATING_COMMAND,
+            worktree_state=_WORKTREE_STATE,
+        )
+
+
 def test_f_payload_carries_claim_and_provenance_metadata() -> None:
     payload = build_certified_filling_fraction(
         (_bundle(0.2),),

@@ -155,10 +155,15 @@ def _combined_transfer_source(
     departure_bundles: tuple[DepartureBundle, ...],
     budget_specs: tuple[BudgetSpec, ...],
 ) -> str:
+    departure_sources = {bundle.transfer_source for bundle in departure_bundles}
+    if len(departure_sources) != 1:
+        raise ValueError("departure transfer_source mismatch across F samples")
+
+    departure_source = next(iter(departure_sources))
     sources = [
         source
         for source in (
-            *[bundle.transfer_source for bundle in departure_bundles],
+            departure_source,
             *[budget.transfer_source for budget in budget_specs],
         )
         if source != "none"
