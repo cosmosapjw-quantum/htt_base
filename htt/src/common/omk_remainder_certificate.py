@@ -417,6 +417,7 @@ def validate_report_central(report: Mapping) -> None:
     """The central-value rule: remainder is never absorbed."""
     w = Fraction(str(report["w"]))
     k = Fraction(str(report["K"]))
+    REGISTERED_DOMAIN.require_inside(w, k)
     central = Fraction(str(report["central"]))
     if central != central_prediction(w, k):
         raise OmkRemainderError(

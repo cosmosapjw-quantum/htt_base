@@ -167,6 +167,22 @@ def test_budget_separation_and_central_rule() -> None:
                                  "central": "-1/250"})
 
 
+@pytest.mark.parametrize(("w", "k"), [
+    (Fraction(3, 4), Fraction(1, 100)),
+    (Fraction(0), Fraction(1, 5)),
+    (Fraction(0), Fraction(0)),
+])
+def test_report_central_rejects_out_of_domain_state(
+    w: Fraction, k: Fraction
+) -> None:
+    with pytest.raises(OmkRemainderError, match="out-of-domain"):
+        validate_report_central({
+            "w": str(w),
+            "K": str(k),
+            "central": str(central_prediction(w, k)),
+        })
+
+
 def test_propagation_preserves_components() -> None:
     prop = propagate_to_ceiling(Fraction(1, 3), Fraction(-1, 100))
     lo, hi = (Fraction(x) for x in prop["delta_omega_k_enclosure"])
