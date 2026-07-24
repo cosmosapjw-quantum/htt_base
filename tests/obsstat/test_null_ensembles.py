@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import ast
+import dataclasses
 import importlib
 
 import pytest
@@ -186,6 +187,11 @@ def test_pvalues_require_complete_null_and_look_elsewhere_provenance() -> None:
             generating_command="python -m pytest tests/obsstat/test_null_ensembles.py -q",
             worktree_state="test-clean",
         )
+
+    with pytest.raises(ValueError, match="positive integer"):
+        dataclasses.replace(_spec(), mock_count=12.75)
+    with pytest.raises(ValueError, match="positive integer"):
+        dataclasses.replace(_look_elsewhere(), trial_count=3.9)
 
     with pytest.raises(ValueError, match="look_elsewhere_status"):
         _look_elsewhere(status="not_tracked")
