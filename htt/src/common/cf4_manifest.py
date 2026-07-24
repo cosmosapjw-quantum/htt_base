@@ -202,6 +202,9 @@ def id_parity(t3_lines: list[str], t4_lines: list[str]) -> dict:
     set3, set4 = set(ids3), set(ids4)
     duplicates3 = len(ids3) - len(set3)
     duplicates4 = len(ids4) - len(set4)
+    if duplicates3 or duplicates4:
+        raise Cf4ManifestError(
+            "duplicate 1PGC group IDs prevent row identity authentication")
     if set3 != set4:
         raise Cf4ManifestError(
             "the table3 and table4 1PGC group-ID sets do not match — the "

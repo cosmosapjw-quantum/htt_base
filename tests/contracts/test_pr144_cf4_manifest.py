@@ -136,6 +136,12 @@ def test_guards() -> None:
     refuse_cf4_p0_resolution_claim("data_lineage")   # provenance scope is fine
 
 
+def test_id_parity_rejects_duplicate_group_ids() -> None:
+    duplicated = ["      1", "      1"]
+    with pytest.raises(Cf4ManifestError, match="duplicate 1PGC"):
+        id_parity(duplicated, duplicated)
+
+
 def test_caption_gate() -> None:
     text = generate_caption(38053, 46)
     lint_caption(text)
