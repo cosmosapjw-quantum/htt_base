@@ -160,6 +160,38 @@ def test_manifest_registry_hash_is_generation_time_provenance() -> None:
     ) != runner._semantic_artifact(manifest, current)
 
 
+def test_negative_scan_registry_measurements_are_generation_time() -> None:
+    runner = _load_runner()
+    source = runner.REGISTRY_SOURCE
+    stored = {
+        "targets": {
+            source: {
+                "sha256": "1" * 64,
+                "lines_scanned": 10,
+                "hits": [],
+            }
+        }
+    }
+    current = {
+        "targets": {
+            source: {
+                "sha256": "2" * 64,
+                "lines_scanned": 20,
+                "hits": [],
+            }
+        }
+    }
+    scan = runner.OUTPUTS["scan"]
+    assert runner._semantic_artifact(
+        scan, stored
+    ) == runner._semantic_artifact(scan, current)
+
+    current["targets"][source]["hits"] = [{"line": 1}]
+    assert runner._semantic_artifact(
+        scan, stored
+    ) != runner._semantic_artifact(scan, current)
+
+
 def test_negative_scan_sentinel_policy_and_allowlist() -> None:
     runner = _load_runner()
     banned = "universal" + " floor"

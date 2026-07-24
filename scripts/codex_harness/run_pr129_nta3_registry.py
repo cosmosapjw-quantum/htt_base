@@ -69,9 +69,29 @@ def _render(payload: dict) -> bytes:
 
 
 def _semantic_artifact(rel: str, payload: dict) -> dict:
-    """Keep the frozen registry-source digest as generation-time provenance."""
+    """Keep maintained-source measurements as generation-time provenance."""
 
     normalized = json.loads(json.dumps(payload))
+    if rel == OUTPUTS["scan"]:
+        targets = normalized.get("targets")
+        if not isinstance(targets, dict):
+            return normalized
+        registry = targets.get(REGISTRY_SOURCE)
+        if not isinstance(registry, dict):
+            return normalized
+        digest = registry.get("sha256")
+        line_count = registry.get("lines_scanned")
+        if (
+            isinstance(digest, str)
+            and len(digest) == 64
+            and all(char in "0123456789abcdef" for char in digest)
+            and isinstance(line_count, int)
+            and not isinstance(line_count, bool)
+            and line_count >= 0
+        ):
+            registry["sha256"] = "<generation-time-source>"
+            registry["lines_scanned"] = "<generation-time-line-count>"
+        return normalized
     if rel != OUTPUTS["manifest"]:
         return normalized
     rows = normalized.get("input_hashes")
@@ -458,7 +478,7 @@ def _emit(rel: str, payload: dict, write: bool,
     if not target.is_file():
         problems.append(f"missing artifact: {rel}")
         return
-    if rel == OUTPUTS["manifest"]:
+    if rel in {OUTPUTS["manifest"], OUTPUTS["scan"]}:
         try:
             existing = json.loads(target.read_text(encoding="utf-8"))
         except (UnicodeError, json.JSONDecodeError):
