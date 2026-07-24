@@ -373,6 +373,11 @@ def bootstrap_uncertainty(table: DepartureTable, spec: MeasureSpec,
     A paired spec resamples the PAIR CLUSTERS (so the SE quantifies the
     reported paired estimate); an unpaired spec resamples rows.
     """
+    if (isinstance(n_boot, bool)
+            or not isinstance(n_boot, Integral)
+            or n_boot < 2):
+        raise MeasureError("n_boot must be an integer of at least 2")
+    n_boot = int(n_boot)
     rng = np.random.Generator(np.random.PCG64(seed))
     vals = np.empty(n_boot)
     if spec.pairing is Pairing.PAIRED:

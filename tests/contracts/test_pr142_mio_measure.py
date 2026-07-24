@@ -184,6 +184,13 @@ def test_paired_bootstrap_matches_paired_estimand() -> None:
     assert se_paired > 0
 
 
+@pytest.mark.parametrize("n_boot", [0, 1, 1.5, True])
+def test_bootstrap_rejects_invalid_sample_count(n_boot) -> None:
+    from common.mio_joint_measure import bootstrap_uncertainty
+    with pytest.raises(MeasureError, match="integer of at least 2"):
+        bootstrap_uncertainty(_table(), SPEC, "F", 11, n_boot)
+
+
 def test_pairing_counterexample() -> None:
     t = _table()
     paired = MeasureSpec(COMPONENTS, (1.0, 1.0, 1.0, 1.0), Pairing.PAIRED,
