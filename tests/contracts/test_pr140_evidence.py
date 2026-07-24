@@ -94,6 +94,22 @@ def test_exact_evidence_matches_scipy() -> None:
     assert abs(m.exact_log_evidence() - want) < 1e-9
 
 
+def test_evidence_model_rejects_invalid_observations() -> None:
+    prior = NormalPrior(0.0, 4.0)
+    with pytest.raises(EvidenceError, match="finite real"):
+        GaussianEvidenceModel(
+            y=np.array([0.0, float("nan")]),
+            sig2=1.0,
+            prior=prior,
+        )
+    with pytest.raises(EvidenceError, match="variance"):
+        GaussianEvidenceModel(
+            y=np.array([0.0, 1.0]),
+            sig2=0.0,
+            prior=prior,
+        )
+
+
 def test_both_engines_match_exact_and_are_independent() -> None:
     m = _model()
     exact = m.exact_log_evidence()

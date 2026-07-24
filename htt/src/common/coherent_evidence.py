@@ -29,6 +29,7 @@ import hashlib
 import json
 from dataclasses import dataclass
 from enum import Enum
+from numbers import Real
 from typing import Callable
 
 import numpy as np
@@ -120,6 +121,26 @@ class GaussianEvidenceModel:
     y: np.ndarray
     sig2: float
     prior: NormalPrior
+
+    def __post_init__(self) -> None:
+        if not isinstance(self.y, np.ndarray) or self.y.ndim != 1:
+            raise EvidenceError("evidence observations must be a vector")
+        if self.y.size == 0:
+            raise EvidenceError("evidence observations may not be empty")
+        if (
+            not np.issubdtype(self.y.dtype, np.number)
+            or np.iscomplexobj(self.y)
+            or not np.all(np.isfinite(self.y))
+        ):
+            raise EvidenceError(
+                "evidence observations must be finite real numbers")
+        if (
+            not isinstance(self.sig2, Real)
+            or not np.isfinite(float(self.sig2))
+            or self.sig2 <= 0
+        ):
+            raise EvidenceError(
+                "observation variance must be finite and positive")
 
     @property
     def n(self) -> int:
