@@ -247,6 +247,8 @@ def test_classify_from_solver() -> None:
 
 def test_set_valued_and_admissible_pin() -> None:
     validate_set_valued({"status": "bounded", "axis_intervals": {}})
+    with pytest.raises(IdentifiedSetError, match="set geometry"):
+        validate_set_valued({"status": "bounded"})
     with pytest.raises(IdentifiedSetError, match="scalar summary"):
         validate_set_valued({"central_estimate": 0.5})
     box = AdmissibleBox(lower={a: Fraction(-3) for a in AXES},

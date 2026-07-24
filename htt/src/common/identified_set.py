@@ -464,7 +464,13 @@ def disconnected_components(abs_axis: str, threshold: Fraction,
 # Set-valued artifact + subvector projection
 # ---------------------------------------------------------------------------
 
-_SET_VALUED_FIELDS = ("status", "axis_intervals", "unbounded_axes")
+_SET_GEOMETRY_FIELDS = (
+    "axis_intervals",
+    "unbounded_axes",
+    "components",
+    "vertices",
+    "recession_rays",
+)
 
 
 def validate_set_valued(artifact: dict) -> None:
@@ -478,6 +484,10 @@ def validate_set_valued(artifact: dict) -> None:
     if "status" not in artifact:
         raise IdentifiedSetError(
             "a set-valued artifact must carry a topology status")
+    if not any(field in artifact for field in _SET_GEOMETRY_FIELDS):
+        raise IdentifiedSetError(
+            "a set-valued artifact must carry set geometry, not only a "
+            "topology status")
 
 
 def subvector_projection(full_result: dict,
