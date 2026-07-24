@@ -148,6 +148,18 @@ def test_deterministic_coverage() -> None:
     assert r1["covered"] == r2["covered"]
 
 
+def test_unknown_coverage_procedure_rejected() -> None:
+    with pytest.raises(WeakIdError, match="unknown coverage procedure"):
+        coverage_at_point(
+            0.0,
+            "imbens_manski_typo",
+            n_replicates=20,
+            seeds=2,
+            base_seed=1,
+            w_key="0",
+        )
+
+
 def test_adversarial_naive_fails_and_is_preserved() -> None:
     r = coverage_at_point(0.0, "naive_no_expansion", n_replicates=2000,
                           seeds=10, base_seed=20260719, w_key="0")

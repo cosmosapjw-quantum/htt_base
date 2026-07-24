@@ -232,6 +232,8 @@ def coverage_at_point(w: float, procedure: str, *, n_replicates: int,
     returned so a caller can validate it (not merely the requested n)."""
     import numpy as np
 
+    if procedure not in ("imbens_manski", "naive_no_expansion"):
+        raise WeakIdError(f"unknown coverage procedure {procedure!r}")
     if theta0_position not in ("midpoint", "boundary"):
         raise WeakIdError("theta0_position must be midpoint or boundary")
     theta0 = 0.0 if theta0_position == "midpoint" else w / 2.0
