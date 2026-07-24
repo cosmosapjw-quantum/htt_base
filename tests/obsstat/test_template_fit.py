@@ -326,12 +326,12 @@ def test_public_diagnostic_constructor_rejects_inconsistent_chi2_fields() -> Non
 
     base = {
         "amplitude": 1.0,
-        "delta_chi2": 0.5,
+        "delta_chi2": 1.0,
         "chi2_without_template": 1.0,
-        "chi2_with_template": 0.5,
+        "chi2_with_template": 0.0,
         "template_norm_weighted": 1.0,
         "observed_norm_weighted": 1.0,
-        "residual_norm_weighted": 0.5,
+        "residual_norm_weighted": 0.0,
         "vector_length": 2,
         "orientation_scan": _orientation_scan(),
         "covariance_assumption": CovarianceAssumption.identity(),
@@ -343,12 +343,36 @@ def test_public_diagnostic_constructor_rejects_inconsistent_chi2_fields() -> Non
 
     with pytest.raises(ValueError, match="delta_chi2 must equal"):
         TemplateFitDiagnostic(**{**base, "delta_chi2": 2.0})
+    with pytest.raises(ValueError, match="amplitude and template_norm_weighted"):
+        TemplateFitDiagnostic(**{**base, "amplitude": 2.0})
     with pytest.raises(ValueError, match="chi-square values must be non-negative"):
         TemplateFitDiagnostic(**{**base, "chi2_with_template": -0.1})
     with pytest.raises(ValueError, match="observed_norm_weighted must equal"):
         TemplateFitDiagnostic(**{**base, "observed_norm_weighted": 1.5})
     with pytest.raises(ValueError, match="residual_norm_weighted must equal"):
         TemplateFitDiagnostic(**{**base, "residual_norm_weighted": 0.25})
+
+
+def test_template_fit_preserves_small_improvement_on_large_background() -> None:
+    from htt.obsstat.template_fit import (
+        CovarianceAssumption,
+        fit_template_diagnostic,
+    )
+
+    diagnostic = fit_template_diagnostic(
+        observed=[1.0e16, 1.0],
+        template=[0.0, 1.0],
+        orientation_scan=_orientation_scan(),
+        covariance_assumption=CovarianceAssumption.identity(),
+        config_hash="sha256:fit-config",
+        input_hashes=("sha256:fit-input",),
+        generating_command="python -m pytest tests/obsstat/test_template_fit.py -q",
+        worktree_state="test-clean",
+    )
+
+    assert diagnostic.amplitude == pytest.approx(1.0)
+    assert diagnostic.delta_chi2 == pytest.approx(1.0)
+    assert diagnostic.chi2_without_template == diagnostic.chi2_with_template
 
 
 def test_template_fit_exports_and_import_boundaries() -> None:

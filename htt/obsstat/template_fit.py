@@ -424,15 +424,37 @@ class TemplateFitDiagnostic:
                 "TemplateFitDiagnostic.template_norm_weighted must be positive"
             )
         expected_delta = self.chi2_without_template - self.chi2_with_template
+        subtraction_tolerance = max(
+            1.0e-12,
+            64.0
+            * np.finfo(float).eps
+            * max(
+                abs(self.chi2_without_template),
+                abs(self.chi2_with_template),
+                abs(self.delta_chi2),
+                1.0,
+            ),
+        )
         if not math.isclose(
             self.delta_chi2,
             expected_delta,
             rel_tol=1.0e-10,
-            abs_tol=1.0e-12,
+            abs_tol=subtraction_tolerance,
         ):
             raise ValueError(
                 "TemplateFitDiagnostic.delta_chi2 must equal "
                 "chi2_without_template - chi2_with_template"
+            )
+        expected_fit_delta = self.amplitude**2 * self.template_norm_weighted
+        if not math.isclose(
+            self.delta_chi2,
+            expected_fit_delta,
+            rel_tol=1.0e-10,
+            abs_tol=1.0e-12,
+        ):
+            raise ValueError(
+                "TemplateFitDiagnostic.delta_chi2 must match amplitude and "
+                "template_norm_weighted"
             )
         if self.delta_chi2 < -1.0e-12:
             raise ValueError(
@@ -614,7 +636,7 @@ def fit_template_diagnostic(
     residual = observed_vec - amplitude * template_vec
     chi2_without = assumption.weighted_dot(observed_vec, observed_vec)
     chi2_with = assumption.weighted_dot(residual, residual)
-    delta_chi2 = chi2_without - chi2_with
+    delta_chi2 = amplitude**2 * template_norm
     return TemplateFitDiagnostic(
         amplitude=amplitude,
         delta_chi2=float(delta_chi2),
