@@ -27,7 +27,7 @@ import hashlib
 import json
 from dataclasses import dataclass, field
 from enum import Enum
-from numbers import Real
+from numbers import Integral, Real
 
 import numpy as np
 
@@ -314,6 +314,11 @@ def matched_null_distribution(table: DepartureTable, spec: MeasureSpec,
     null.
     """
     require_justified_measure(spec)
+    if (isinstance(n_null, bool)
+            or not isinstance(n_null, Integral)
+            or n_null < 2):
+        raise MeasureError("n_null must be an integer of at least 2")
+    n_null = int(n_null)
     if null_type not in NULL_TYPES:
         raise MeasureError(f"unknown null_type {null_type!r}")
     obs = measured(kind, table, spec)

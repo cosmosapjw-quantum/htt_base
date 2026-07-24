@@ -146,6 +146,12 @@ def test_measure_appropriate_matched_nulls() -> None:
         matched_null_distribution(t, SPEC, "F", 7, 100, null_type="sign_flip")
 
 
+@pytest.mark.parametrize("n_null", [0, 1, 1.5, True])
+def test_matched_null_rejects_invalid_sample_count(n_null) -> None:
+    with pytest.raises(MeasureError, match="integer of at least 2"):
+        matched_null_distribution(_table(), SPEC, "F", 7, n_null)
+
+
 def test_pi_two_sided_detects_negative_contrast() -> None:
     # a NEGATIVE contrast of equal magnitude must be detected (the one-sided
     # upper tail would mis-report it as p ~ 1) — the review regression
