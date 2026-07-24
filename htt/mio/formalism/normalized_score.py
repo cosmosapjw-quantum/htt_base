@@ -439,18 +439,40 @@ class ComparatorMultiverseSummary:
         if summary_label != "Q_comparator_multiverse":
             raise ValueError("summary_label must be 'Q_comparator_multiverse'")
         comparator_axis_id = _non_empty(self.comparator_axis_id, "comparator_axis_id")
+        if comparator_axis_id != "explicit_current_code_comparator_axis":
+            raise ValueError(
+                "comparator_axis_id must be 'explicit_current_code_comparator_axis'"
+            )
         comparator_axis_status = _non_empty(
             self.comparator_axis_status,
             "comparator_axis_status",
         )
+        if comparator_axis_status != "registered_current_code_display_axis":
+            raise ValueError(
+                "comparator_axis_status must be "
+                "'registered_current_code_display_axis'"
+            )
         admissible_set_status = _non_empty(
             self.admissible_set_status,
             "admissible_set_status",
         )
+        if admissible_set_status != "explicit_display_set_not_exhaustive":
+            raise ValueError(
+                "admissible_set_status must be "
+                "'explicit_display_set_not_exhaustive'"
+            )
         rank_equivalence_status = _non_empty(
             self.rank_equivalence_status,
             "rank_equivalence_status",
         )
+        if (
+            rank_equivalence_status
+            != "not_evaluated_no_equivalence_or_morphology_claim"
+        ):
+            raise ValueError(
+                "rank_equivalence_status must be "
+                "'not_evaluated_no_equivalence_or_morphology_claim'"
+            )
         generating_command = _non_empty(
             self.generating_command,
             "generating_command",

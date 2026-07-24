@@ -218,6 +218,46 @@ def test_q_comparator_multiverse_rejects_implicit_or_incompatible_comparators() 
         )
 
 
+@pytest.mark.parametrize(
+    "field",
+    (
+        "comparator_axis_id",
+        "comparator_axis_status",
+        "admissible_set_status",
+        "rank_equivalence_status",
+    ),
+)
+def test_q_comparator_multiverse_rejects_semantic_status_overrides(
+    field: str,
+) -> None:
+    scores = (
+        build_normalized_score(
+            _bundle(comparator="CMB_FLRW_reference", input_hashes=("x-cmb",)),
+            _budget(comparator="CMB_FLRW_reference", input_hashes=("budget-cmb",)),
+            numerator_policy="absolute",
+        ),
+        build_normalized_score(
+            _bundle(
+                comparator="observer_frame_reference",
+                input_hashes=("x-observer",),
+            ),
+            _budget(
+                comparator="observer_frame_reference",
+                input_hashes=("budget-observer",),
+            ),
+            numerator_policy="absolute",
+        ),
+    )
+
+    with pytest.raises(ValueError, match=field):
+        ComparatorMultiverseSummary(
+            scores=scores,
+            generating_command="pytest tests/mio/test_normalized_score.py",
+            worktree_state="test-fixture",
+            **{field: "forged_override"},
+        )
+
+
 def test_numerator_policies_do_not_silently_hide_sign() -> None:
     bundle = _bundle()
     budget = _budget()
