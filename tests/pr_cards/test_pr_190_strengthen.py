@@ -24,6 +24,9 @@ from common.pr190_physical_attainability import (  # noqa: E402
     shear_only_vector,
 )
 from common.revival_joint_comparator import component_vector_exact  # noqa: E402
+from scripts.codex_harness import (  # noqa: E402
+    run_pr190_physical_attainability as runner,
+)
 
 CARD = REPO / "docs/generated/pr190_result_card.json"
 SPEC = REPO / "docs/research_program/strengthening/pr190_spec.yaml"
@@ -84,16 +87,19 @@ def test_five_efold_dust_developments_preserve_constraints() -> None:
     assert grid["all_developments_succeeded"] is True
 
 
-def test_parent_observed_five_axis_cas_is_narrowly_scoped() -> None:
-    card_cas = _card()["result"]["cas_status"]
+def test_stored_parent_observed_cas_is_diagnostic_only() -> None:
+    current_cas = runner._cas_status()
     adjudication = json.loads(ADJUDICATION.read_text(encoding="utf-8"))
     contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
     contract_sha = hashlib.sha256(CONTRACT.read_bytes()).hexdigest()
-    assert card_cas["aggregate"] == "CAS_5AXIS_PASS"
-    assert card_cas["contract_sha256"] == contract_sha
+    assert current_cas["aggregate"] == "CAS_BLOCKED"
+    assert current_cas["historical_aggregate"] == "CAS_5AXIS_PASS"
+    assert current_cas["stored_cas_diagnostic_only"] is True
+    assert current_cas["claim_promotion_cas_eligible"] is False
+    assert current_cas["verification_state"] == "STORED_DIAGNOSTIC_ONLY"
+    assert current_cas["evidence_origin"] == "stored_adjudication_json"
+    assert current_cas["contract_sha256"] == contract_sha
     assert adjudication["contract_sha256"] == contract_sha
-    assert adjudication["verification_state"] == "RUNNER_OBSERVED_EXECUTION"
-    assert adjudication["evidence_origin"] == "runner_observed_local_subprocess"
     assert set(adjudication["axis_statuses"]) == {
         "wolfram_xact",
         "sympy",
@@ -108,12 +114,18 @@ def test_parent_observed_five_axis_cas_is_narrowly_scoped() -> None:
         assert hashlib.sha256((REPO / source["path"]).read_bytes()).hexdigest() == (
             source["sha256"]
         )
-    assert card_cas["scientific_role"] == (
+    assert current_cas["scientific_role"] == (
         "exact_dust_identities_and_component_mismatch_only"
     )
 
 
-def test_result_card_is_byte_stable() -> None:
+def test_historical_card_preserves_parent_observed_result() -> None:
+    card = _card()
+    assert card["result"]["cas_status"]["aggregate"] == "CAS_5AXIS_PASS"
+    assert card["terminal"] == "BLOCKED_COMPONENT_ENDPOINT_NOT_ATTAINED"
+
+
+def test_current_check_blocks_without_live_parent_execution() -> None:
     env = os.environ.copy()
     env["PYTHONHASHSEED"] = "0"
     env["OPENBLAS_NUM_THREADS"] = "4"
@@ -126,5 +138,22 @@ def test_result_card_is_byte_stable() -> None:
         env=env,
         check=False,
     )
-    assert completed.returncode == 0, completed.stdout + completed.stderr
-    assert json.loads(completed.stdout.strip().splitlines()[-1])["ok"] is True
+    assert completed.returncode == 1, completed.stdout + completed.stderr
+    result = json.loads(completed.stdout.strip().splitlines()[-1])
+    assert result["ok"] is False
+    assert result["terminal"] == "BLOCKED_PR190_VALIDATION_FAILURE"
+
+
+def test_write_refuses_to_overwrite_historical_card() -> None:
+    before = hashlib.sha256(CARD.read_bytes()).hexdigest()
+    completed = subprocess.run(
+        [sys.executable, "-B", str(RUNNER), "--write"],
+        cwd=REPO,
+        capture_output=True,
+        text=True,
+        timeout=300,
+        check=False,
+    )
+    assert completed.returncode == 2
+    assert "refusing to overwrite" in completed.stderr
+    assert hashlib.sha256(CARD.read_bytes()).hexdigest() == before

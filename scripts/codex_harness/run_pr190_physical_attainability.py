@@ -49,14 +49,14 @@ def _cas_status() -> dict:
         "contract_hash_matches_adjudication": (
             adjudication.get("contract_sha256") == contract_sha
         ),
-        "aggregate": adjudication.get("aggregate_status"),
+        "aggregate": "CAS_BLOCKED",
+        "historical_aggregate": adjudication.get("aggregate_status"),
         "required_axes": adjudication.get("required_axes"),
         "axis_statuses": adjudication.get("axis_statuses"),
-        "verification_state": adjudication.get("verification_state"),
-        "evidence_origin": adjudication.get("evidence_origin"),
-        "claim_promotion_cas_eligible": adjudication.get(
-            "claim_promotion_cas_eligible"
-        ),
+        "verification_state": "STORED_DIAGNOSTIC_ONLY",
+        "evidence_origin": "stored_adjudication_json",
+        "claim_promotion_cas_eligible": False,
+        "stored_cas_diagnostic_only": True,
         "scientific_role": (
             "exact_dust_identities_and_component_mismatch_only"
         ),
@@ -169,9 +169,12 @@ def main(argv: list[str] | None = None) -> int:
     payload = build_payload()
     rendered = _render(payload)
     if args.write:
-        CARD.write_bytes(rendered)
-        print(f"wrote {CARD.name}; terminal={payload['terminal']}")
-        return 0
+        print(
+            "refusing to overwrite the frozen historical result card without "
+            "a new parent-observed cas_gate.py run-adjudicate execution",
+            file=sys.stderr,
+        )
+        return 2
     ok = CARD.is_file() and CARD.read_bytes() == rendered
     print(
         json.dumps(
