@@ -103,6 +103,12 @@ def test_mc_module_pin_rejects_widening_on_real_path() -> None:
                       tolerance_abs=PREREGISTERED_TOLERANCE_ABS * 10)
 
 
+def test_mc_rejects_sample_too_small_for_sample_sd() -> None:
+    with pytest.raises(Nta3RegistryError, match="integer >= 2"):
+        run_seeded_mc(_quad(), seed=1, replicates=1,
+                      tolerance_abs=PREREGISTERED_TOLERANCE_ABS)
+
+
 def test_seeded_estimator_mc_within_preregistered_tolerance() -> None:
     result = run_seeded_mc(_quad(), seed=20260718, replicates=200000,
                            tolerance_abs=PREREGISTERED_TOLERANCE_ABS)

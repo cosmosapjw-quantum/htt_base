@@ -216,6 +216,12 @@ def run_seeded_mc(spec: EstimatorSpec, *, seed: int, replicates: int,
             f"module pin {PREREGISTERED_TOLERANCE_ABS} — post-hoc "
             "widening is rejected"
         )
+    if (
+        isinstance(replicates, bool)
+        or not isinstance(replicates, int)
+        or replicates < 2
+    ):
+        raise Nta3RegistryError("replicates must be an integer >= 2")
     if spec.dof is None or spec.dispersion_squared_exact is None \
             or spec.ell is None:
         raise Nta3RegistryError("MC needs a fully specified estimator")
@@ -232,6 +238,12 @@ def run_seeded_mc(spec: EstimatorSpec, *, seed: int, replicates: int,
     sample_ratio = float(np.std(draws, ddof=1) / np.mean(draws))
     target = math.sqrt(float(spec.dispersion_squared_exact))
     deviation = abs(sample_ratio - target)
+    if not all(math.isfinite(value) for value in (
+        sample_ratio, target, deviation
+    )):
+        raise Nta3RegistryError(
+            "MC produced a non-finite dispersion result — no claim"
+        )
     if deviation >= tolerance_abs:
         raise Nta3RegistryError(
             f"MC deviates from the exact dispersion by {deviation:.5f} >= "
