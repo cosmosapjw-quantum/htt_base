@@ -213,6 +213,17 @@ def test_loocv_min_folds_rejects_non_integral_counts():
         _loocv_report(min_folds=1.5)
 
 
+def test_adequacy_numeric_inputs_reject_boolean_pseudo_evidence():
+    import numpy as np
+
+    with pytest.raises(ValueError, match="numeric, not boolean"):
+        _prior_report(baseline_log_evidence=True)
+    with pytest.raises(ValueError, match="numeric, not boolean"):
+        _ppc_report(observed={"beta_CF4": np.bool_(True), "beta_CMB": 1.2})
+    with pytest.raises(ValueError, match="numeric, not boolean"):
+        _loocv_report(full_log_evidence=False)
+
+
 def test_decisive_language_rejected_without_all_adequacy_statuses():
     from htt.infer.prior_sweep import build_inference_adequacy_report
 

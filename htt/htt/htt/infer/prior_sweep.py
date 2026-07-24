@@ -86,6 +86,8 @@ def input_hashes(values: Sequence[object], field_name: str) -> tuple[str, ...]:
 
 
 def finite_float(value: object, field_name: str) -> float:
+    if isinstance(value, (bool, np.bool_)):
+        raise ValueError(f"{field_name} must be numeric, not boolean")
     out = float(value)
     if not math.isfinite(out):
         raise ValueError(f"{field_name} must be finite")
