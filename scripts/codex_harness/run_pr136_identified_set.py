@@ -57,6 +57,10 @@ OUTPUTS = {
     "mutations": "docs/generated/pr136_mutation_report.json",
     "manifest": "docs/generated/pr136_artifact_manifest.json",
 }
+MAINTAINED_SOURCES = (
+    "htt/src/common/identified_set.py",
+    "htt/src/common/graded_nonid.py",
+)
 REDACTED = "[REDACTED-PATTERN]"
 GRID = [Fraction(k) for k in range(-2, 3)]
 
@@ -68,6 +72,46 @@ def _sha(path: Path) -> str:
 def _render(payload: dict) -> bytes:
     return (json.dumps(payload, indent=2, ensure_ascii=False, sort_keys=True)
             + "\n").encode()
+
+
+def _is_sha256(value: object) -> bool:
+    return (
+        isinstance(value, str)
+        and len(value) == 64
+        and all(char in "0123456789abcdef" for char in value)
+    )
+
+
+def _semantic_artifact(rel: str, payload: dict) -> dict:
+    """Keep maintained-source hashes as generation-time provenance."""
+
+    normalized = json.loads(json.dumps(payload))
+    if rel == OUTPUTS["sets"]:
+        scan = normalized.get("negative_scan")
+        targets = scan.get("targets") if isinstance(scan, dict) else None
+        source = (
+            targets.get(MAINTAINED_SOURCES[0])
+            if isinstance(targets, dict) else None
+        )
+        if isinstance(source, dict) and _is_sha256(source.get("sha256")):
+            source["sha256"] = "<generation-time-source>"
+        return normalized
+    if rel != OUTPUTS["manifest"]:
+        return normalized
+    rows = normalized.get("input_hashes")
+    if not isinstance(rows, list):
+        return normalized
+    prefixes = tuple(f"{source}:" for source in MAINTAINED_SOURCES)
+    for index, row in enumerate(rows):
+        if not isinstance(row, str):
+            continue
+        prefix = next(
+            (candidate for candidate in prefixes if row.startswith(candidate)),
+            None,
+        )
+        if prefix is not None and _is_sha256(row.removeprefix(prefix)):
+            rows[index] = f"{prefix}<generation-time-source>"
+    return normalized
 
 
 def _verify_baseline_commit(spec: dict) -> None:
@@ -380,7 +424,20 @@ def _emit(rel: str, payload: dict, write: bool,
         return
     if not target.is_file():
         problems.append(f"missing artifact: {rel}")
-    elif target.read_bytes() != rendered:
+        return
+    if rel in {OUTPUTS["sets"], OUTPUTS["manifest"]}:
+        try:
+            existing = json.loads(target.read_text(encoding="utf-8"))
+        except (UnicodeError, json.JSONDecodeError):
+            problems.append(f"invalid artifact: {rel}")
+            return
+        if (
+            isinstance(existing, dict)
+            and _semantic_artifact(rel, existing)
+            == _semantic_artifact(rel, payload)
+        ):
+            return
+    if target.read_bytes() != rendered:
         problems.append(f"stale artifact: {rel}")
 
 
