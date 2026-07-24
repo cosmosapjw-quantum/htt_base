@@ -78,6 +78,43 @@ class CompactDomain:
     w_hi: Fraction = W_BOX[1]
     k_abs_max: Fraction = K_ABS_MAX
 
+    def __post_init__(self) -> None:
+        version = str(self.version).strip()
+        w_lo = Fraction(self.w_lo)
+        w_hi = Fraction(self.w_hi)
+        k_abs_max = Fraction(self.k_abs_max)
+        if not version:
+            raise OmkRemainderError("compact domain version is required")
+        if w_lo > w_hi:
+            raise OmkRemainderError(
+                "compact domain bounds must be ordered w_lo <= w_hi"
+            )
+        if k_abs_max <= 0:
+            raise OmkRemainderError(
+                "compact domain k_abs_max must be positive"
+            )
+        if (
+            w_lo < W_BOX[0]
+            or w_hi > W_BOX[1]
+            or k_abs_max > K_ABS_MAX
+        ):
+            raise OmkRemainderError(
+                "compact domain exceeds the registered domain — "
+                "post-hoc expansion is refused"
+            )
+        if (
+            (w_lo, w_hi, k_abs_max)
+            != (W_BOX[0], W_BOX[1], K_ABS_MAX)
+            and version == DOMAIN_VERSION
+        ):
+            raise OmkRemainderError(
+                "a domain shrink must mint a NEW version string"
+            )
+        object.__setattr__(self, "version", version)
+        object.__setattr__(self, "w_lo", w_lo)
+        object.__setattr__(self, "w_hi", w_hi)
+        object.__setattr__(self, "k_abs_max", k_abs_max)
+
     def require_inside(self, w: Fraction, k: Fraction) -> None:
         wv, kv = Fraction(w), Fraction(k)
         if not (self.w_lo <= wv <= self.w_hi and

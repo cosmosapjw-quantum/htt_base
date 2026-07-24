@@ -15,6 +15,7 @@ from common.omk_remainder_certificate import (
     M_TRAP,
     W_BOX,
     ClaimBlockError,
+    CompactDomain,
     OmkRemainderError,
     build_budget,
     central_prediction,
@@ -139,6 +140,12 @@ def test_domain_api_fail_closed() -> None:
     shrunk = register_domain("omk_domain_v1_test_shrink", Fraction(0),
                              Fraction(1, 3), Fraction(1, 20))
     assert shrunk.k_abs_max == Fraction(1, 20)
+    with pytest.raises(OmkRemainderError, match="post-hoc expansion"):
+        CompactDomain("direct-expansion", Fraction(-1), Fraction(2),
+                      Fraction(1))
+    with pytest.raises(OmkRemainderError, match="must be ordered"):
+        register_domain("reversed", Fraction(1, 3), Fraction(0),
+                        Fraction(1, 20))
 
 
 def test_budget_separation_and_central_rule() -> None:
