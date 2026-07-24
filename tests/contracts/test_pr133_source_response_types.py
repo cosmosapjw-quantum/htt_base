@@ -1,6 +1,7 @@
 """PR-133 contract tests: source-response type system."""
 from __future__ import annotations
 
+import importlib.util
 import json
 import subprocess
 import sys
@@ -36,6 +37,68 @@ _PR127_WITNESS_EV = "docs/generated/pr127_nonid_witnesses.json"
 _DOPPLER_EV = "htt/bass/forward/doppler_boost.py"
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
+
+
+def _load_runner():
+    runner_path = (
+        REPO_ROOT / "scripts/codex_harness/run_pr133_source_response_types.py"
+    )
+    spec = importlib.util.spec_from_file_location("run_pr133", runner_path)
+    runner = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(runner)
+    return runner
+
+
+def test_source_types_hash_is_generation_time_provenance() -> None:
+    runner = _load_runner()
+    source = runner.SOURCE_TYPES_PATH
+    types = runner.OUTPUTS["types"]
+    stored = {
+        "negative_scan": {
+            "targets": {
+                source: {"sha256": "1" * 64, "hits": []},
+            }
+        }
+    }
+    current = {
+        "negative_scan": {
+            "targets": {
+                source: {"sha256": "2" * 64, "hits": []},
+            }
+        }
+    }
+    assert runner._semantic_artifact(
+        types, stored
+    ) == runner._semantic_artifact(types, current)
+    current["negative_scan"]["targets"][source]["hits"] = [{"line": 1}]
+    assert runner._semantic_artifact(
+        types, stored
+    ) != runner._semantic_artifact(types, current)
+
+    legacy = "htt/obsstat/egs3_kinematic_deprojection.py"
+    upstream = "htt/src/common/graded_nonid.py"
+    manifest = runner.OUTPUTS["manifest"]
+    stored = {
+        "input_hashes": [
+            f"{source}:{'1' * 64}",
+            f"{legacy}:{'3' * 64}",
+            f"{upstream}:{'4' * 64}",
+        ]
+    }
+    current = {
+        "input_hashes": [
+            f"{source}:{'2' * 64}",
+            f"{legacy}:{'3' * 64}",
+            f"{upstream}:{'4' * 64}",
+        ]
+    }
+    assert runner._semantic_artifact(
+        manifest, stored
+    ) == runner._semantic_artifact(manifest, current)
+    current["input_hashes"][1] = f"{legacy}:{'5' * 64}"
+    assert runner._semantic_artifact(
+        manifest, stored
+    ) != runner._semantic_artifact(manifest, current)
 
 
 def test_type_firewall_blocks_cross_type() -> None:
