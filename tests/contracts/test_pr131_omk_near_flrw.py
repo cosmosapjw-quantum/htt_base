@@ -1,6 +1,7 @@
 """PR-131 contract tests: near-FLRW expansion + singular map."""
 from __future__ import annotations
 
+import importlib.util
 import json
 import subprocess
 import sys
@@ -30,6 +31,65 @@ from common.omk_near_flrw_expansion import (
 )
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
+
+
+def _load_runner():
+    runner_path = (
+        REPO_ROOT / "scripts/codex_harness/run_pr131_omk_near_flrw.py"
+    )
+    spec = importlib.util.spec_from_file_location("run_pr131", runner_path)
+    runner = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(runner)
+    return runner
+
+
+def test_current_expansion_hash_is_generation_time_provenance() -> None:
+    runner = _load_runner()
+    source = runner.EXPANSION_SOURCE
+    system = runner.OUTPUTS["system"]
+    stored = {
+        "negative_scan": {
+            "targets": {
+                source: {"sha256": "1" * 64, "hits": []},
+            }
+        }
+    }
+    current = {
+        "negative_scan": {
+            "targets": {
+                source: {"sha256": "2" * 64, "hits": []},
+            }
+        }
+    }
+    assert runner._semantic_artifact(
+        system, stored
+    ) == runner._semantic_artifact(system, current)
+    current["negative_scan"]["targets"][source]["hits"] = [{"line": 1}]
+    assert runner._semantic_artifact(
+        system, stored
+    ) != runner._semantic_artifact(system, current)
+
+    legacy = "htt/obsstat/egs3_omega_k_reopening.py"
+    manifest = runner.OUTPUTS["manifest"]
+    stored = {
+        "input_hashes": [
+            f"{source}:{'1' * 64}",
+            f"{legacy}:{'3' * 64}",
+        ]
+    }
+    current = {
+        "input_hashes": [
+            f"{source}:{'2' * 64}",
+            f"{legacy}:{'3' * 64}",
+        ]
+    }
+    assert runner._semantic_artifact(
+        manifest, stored
+    ) == runner._semantic_artifact(manifest, current)
+    current["input_hashes"][1] = f"{legacy}:{'4' * 64}"
+    assert runner._semantic_artifact(
+        manifest, stored
+    ) != runner._semantic_artifact(manifest, current)
 
 
 def test_jacobian_and_exact_coefficients() -> None:
@@ -123,19 +183,12 @@ def test_claim_and_caption_gates() -> None:
 
 
 def test_baseline_pin_resolves_and_fabrication_refused() -> None:
-    import importlib.util
-
     import yaml
     spec_file = (REPO_ROOT /
                  "docs/research_program/long_horizon_rescue/"
                  "pr131_spec.yaml")
     spec = yaml.safe_load(spec_file.read_text(encoding="utf-8"))
-    runner_path = (REPO_ROOT /
-                   "scripts/codex_harness/run_pr131_omk_near_flrw.py")
-    module_spec = importlib.util.spec_from_file_location(
-        "run_pr131", runner_path)
-    runner = importlib.util.module_from_spec(module_spec)
-    module_spec.loader.exec_module(runner)
+    runner = _load_runner()
     runner._verify_baseline_commit(spec)
     with pytest.raises(SystemExit, match="does not resolve"):
         runner._verify_baseline_commit(
