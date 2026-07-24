@@ -54,7 +54,10 @@ MANIFEST = AUDIT / "MANIFEST.json"
 ATOMIC_LEDGER = AUDIT / "atomic_finding_ledger.json"
 SHORTLIST_FREEZE = AUDIT / "shortlist_freeze.json"
 BASELINE_HEAD = "8af39b36c1d5ed4f9b16f0bc71dbecd8b22548d4"
-PR117_COMMIT = "f96e8d9eed9d318141d9ea77ab3ce47c2acecef3"
+# PR-124 preflight (2026-07-17): the pre-rewrite PR-117 id
+# f96e8d9eed9d318141d9ea77ab3ce47c2acecef3 resolves to this commit via
+# docs/git_history/commit_map_20260717.tsv.
+PR117_COMMIT = "4a3721f44a60ac5a30fe5bda178f6b087698a059"
 # PR-124 preflight (2026-07-17): rebased by the history rewrite; the
 # pre-rewrite id 294d74ce07de030da2f18720d3d45c8a2fef6e17 resolves via
 # docs/git_history/commit_map_20260717.tsv.
@@ -2152,6 +2155,37 @@ def _git_blob(commit: str, path_text: str) -> bytes:
     return run.stdout
 
 
+def _git_tree_files(commit: str, roots: tuple[str, ...]) -> list[str]:
+    """List tracked files below ``roots`` in one frozen repository tree."""
+
+    run = subprocess.run(
+        [
+            "git",
+            "ls-tree",
+            "-r",
+            "-z",
+            "--name-only",
+            "--full-tree",
+            commit,
+            "--",
+            *roots,
+        ],
+        cwd=REPO,
+        capture_output=True,
+        check=False,
+    )
+    if run.returncode:
+        detail = run.stderr.decode("utf-8", errors="replace").strip()
+        raise RuntimeError(detail or f"git ls-tree {commit} failed")
+    return [
+        path_text
+        for path_text in run.stdout.decode(
+            "utf-8", errors="surrogateescape"
+        ).split("\0")
+        if path_text
+    ]
+
+
 def _validate_manifest_sealed_config(
     manifest: dict[str, Any], errors: list[str]
 ) -> None:
@@ -2503,6 +2537,60 @@ def _counterfactual_public_text_hits(text: str) -> list[str]:
         if match and match.group(0) not in hits:
             hits.append(match.group(0))
     return hits
+
+
+def _validate_counterfactual_leaks(errors: list[str], *, final: bool) -> None:
+    """Reject public counterfactual material at the applicable audit snapshot."""
+
+    root_names = ("docs/manuscript", "docs/generated", "figures")
+    allowed_suffixes = {".json", ".yaml", ".yml", ".md", ".tex", ".txt"}
+    sources: list[tuple[str, bytes]] = []
+    if final:
+        try:
+            seal_commit = _manifest_seal_commit()
+            frozen_paths = _git_tree_files(seal_commit, root_names)
+        except RuntimeError as exc:
+            errors.append(f"counterfactual leak seal tree is unavailable: {exc}")
+            return
+        for path_text in frozen_paths:
+            if Path(path_text).suffix.lower() not in allowed_suffixes:
+                continue
+            try:
+                sources.append((path_text, _git_blob(seal_commit, path_text)))
+            except RuntimeError as exc:
+                errors.append(
+                    f"counterfactual leak seal input is unavailable: {path_text}: {exc}"
+                )
+    else:
+        for root_name in root_names:
+            root = REPO / root_name
+            if not root.exists():
+                continue
+            for path in root.rglob("*"):
+                if path.is_file() and path.suffix.lower() in allowed_suffixes:
+                    try:
+                        sources.append((relative(path), path.read_bytes()))
+                    except OSError:
+                        continue
+
+    for path_text, raw in sources:
+        try:
+            text = raw.decode("utf-8")
+        except UnicodeDecodeError:
+            continue
+        path = Path(path_text)
+        leaked = bool(_counterfactual_public_text_hits(text))
+        leaked = leaked or bool(scan_claim_text(text, path=path))
+        if path.suffix.lower() == ".json":
+            try:
+                leaked = leaked or _contains_counterfactual_marker(json.loads(text))
+            except json.JSONDecodeError:
+                pass
+        if leaked:
+            errors.append(
+                "counterfactual metadata or forbidden claim leaked outside audit "
+                f"package: {path_text}"
+            )
 
 
 def _reference_path(reference: str) -> tuple[Path, str | None]:
@@ -2976,23 +3064,49 @@ def _validate_sealed_diagnostics(
     # would either invalidate valid receipts or encourage rewriting history.
     # Bind instead to the recorded hash and independently verify the committed
     # blob so the constant cannot silently drift.
-    committed_runner = subprocess.run(
-        ["git", "show", f"{PR117_COMMIT}:scripts/audits/jcap_prd_20260714.py"],
-        cwd=REPO,
-        capture_output=True,
-        check=False,
-    )
-    if committed_runner.returncode:
-        errors.append("cannot read committed PR-117 audit runner")
-    elif sha256_bytes(committed_runner.stdout) != PR117_SEALED_RUNNER_SHA256:
+    runner_path = "scripts/audits/jcap_prd_20260714.py"
+    try:
+        committed_runner = _git_blob(PR117_COMMIT, runner_path)
+    except RuntimeError as exc:
+        errors.append(f"cannot read committed PR-117 audit runner: {exc}")
+        committed_runner = None
+    if (
+        committed_runner is not None
+        and sha256_bytes(committed_runner) != PR117_SEALED_RUNNER_SHA256
+    ):
         errors.append("committed PR-117 audit runner hash differs from frozen receipt hash")
+    frozen_hashes = {runner_path: PR117_SEALED_RUNNER_SHA256}
+    tracked_input_paths = {
+        str(item.get("path", ""))
+        for row in sealed_rows
+        for item in row.get("input_hashes", [])
+        if item.get("status") == "present" and item.get("path")
+    }
+    for path_text in sorted(tracked_input_paths - {runner_path}):
+        try:
+            frozen_hashes[path_text] = sha256_bytes(
+                _git_blob(PR117_COMMIT, path_text)
+            )
+        except RuntimeError as exc:
+            # PR-117 also consumed owner-local, ignored workdir inputs.  Those
+            # have no Git blob and retain the existing live exact-byte check.
+            ignored = subprocess.run(
+                ["git", "check-ignore", "--quiet", "--", path_text],
+                cwd=REPO,
+                check=False,
+            ).returncode == 0
+            if not ignored:
+                errors.append(
+                    f"committed PR-117 diagnostic input is unavailable: "
+                    f"{path_text}: {exc}"
+                )
     for lane, row in zip(DIAGNOSTIC_LANE_NAMES, sealed_rows):
         label = f"{SEALED_RECEIPT_PREFIX}{lane}"
         _validate_current_input_hashes(
             row,
             label,
             errors,
-            frozen_hashes={relative(Path(__file__)): PR117_SEALED_RUNNER_SHA256},
+            frozen_hashes=frozen_hashes,
         )
         script_inputs = [
             item
@@ -5821,44 +5935,10 @@ def validate(*, final: bool = False) -> list[str]:
                 elif listed[key].get("sha256") != sha256_file(path):
                     errors.append(f"manifest hash stale for {key}")
 
-    # Counterfactual results may exist only inside this audit package.  Scan
-    # structured JSON and textual YAML/Markdown/TeX, including untagged strong
-    # public claims; serialization and whitespace cannot bypass this gate.
-    forbidden_roots = [
-        REPO / "docs/manuscript",
-        REPO / "docs/generated",
-        REPO / "figures",
-    ]
-    for root in forbidden_roots:
-        if not root.exists():
-            continue
-        for path in root.rglob("*"):
-            if not path.is_file() or path.suffix.lower() not in {
-                ".json",
-                ".yaml",
-                ".yml",
-                ".md",
-                ".tex",
-                ".txt",
-            }:
-                continue
-            try:
-                text = path.read_text(encoding="utf-8")
-            except (OSError, UnicodeDecodeError):
-                continue
-            leaked = bool(_counterfactual_public_text_hits(text))
-            canonical_claim_issues = scan_claim_text(text, path=path)
-            leaked = leaked or bool(canonical_claim_issues)
-            if path.suffix.lower() == ".json":
-                try:
-                    leaked = leaked or _contains_counterfactual_marker(json.loads(text))
-                except json.JSONDecodeError:
-                    pass
-            if leaked:
-                errors.append(
-                    "counterfactual metadata or forbidden claim leaked outside audit "
-                    f"package: {relative(path)}"
-                )
+    # Counterfactual results may exist only inside this audit package.  Final
+    # closeout validates the PR-118 seal tree; exploratory validation retains
+    # the live-tree check.
+    _validate_counterfactual_leaks(errors, final=final)
     return errors
 
 

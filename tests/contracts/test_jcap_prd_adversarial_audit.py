@@ -980,6 +980,67 @@ def test_counterfactual_family_sandbox_cannot_leak_to_public_roots():
                 assert not contains_marker(payload), path
 
 
+def test_pr117_rewrite_mapping_preserves_frozen_diagnostic_inputs():
+    module = _audit_module()
+    runner_path = "scripts/audits/jcap_prd_20260714.py"
+    assert (
+        module.sha256_bytes(module._git_blob(module.PR117_COMMIT, runner_path))
+        == module.PR117_SEALED_RUNNER_SHA256
+    )
+    expected = {
+        "docs/generated/act_kappa_card.json": (
+            "sha256:f0278ab610e324813c1f0079298dcbb8b95d82261cf205e700d9556b801a6118"
+        ),
+        "docs/generated/jwst_cf4_anchors.json": (
+            "sha256:5f9467f8ec06e7547f43a56fab1953641ce3932c1cb71109f7271b00028f4ce8"
+        ),
+        "dl_pipeline/data/jwst_distances_seed.csv": (
+            "sha256:d02e7c988592f0217d968b59385d6494c7288654cd7620c43005c2cdb658b5c8"
+        ),
+        "dl_pipeline/scripts/download_jwst_anchors.py": (
+            "sha256:e77a5caf66522868cd1a9a6c36c9c6d4a3aae274d1d2c825c3277a09e8f5c823"
+        ),
+        "htt/obsstat/velocity_field_curl.py": (
+            "sha256:f6aa025e5ed0f7a7b5c47eee2b333f4af26c2d5203cb4b99c9139d5acf978c65"
+        ),
+    }
+    assert {
+        path: module.sha256_bytes(module._git_blob(module.PR117_COMMIT, path))
+        for path in expected
+    } == expected
+
+
+def test_final_counterfactual_scan_reads_only_the_pr118_seal_tree(
+    tmp_path, monkeypatch
+):
+    module = _audit_module()
+    live_path = tmp_path / "docs/generated/post_pr118.md"
+    live_path.parent.mkdir(parents=True)
+    live_path.write_text("COUNTERFACTUAL_SENTINEL", encoding="utf-8")
+    monkeypatch.setattr(module, "REPO", tmp_path)
+    monkeypatch.setattr(module, "_manifest_seal_commit", lambda: "sealed-tree")
+    monkeypatch.setattr(
+        module,
+        "_git_tree_files",
+        lambda commit, roots: ["docs/generated/frozen.md"],
+    )
+    frozen = {"docs/generated/frozen.md": b"historical public text is safe"}
+    monkeypatch.setattr(module, "_git_blob", lambda commit, path: frozen[path])
+
+    final_errors = []
+    module._validate_counterfactual_leaks(final_errors, final=True)
+    assert final_errors == []
+
+    live_errors = []
+    module._validate_counterfactual_leaks(live_errors, final=False)
+    assert any("post_pr118.md" in error for error in live_errors)
+
+    frozen["docs/generated/frozen.md"] = b"COUNTERFACTUAL_SENTINEL"
+    frozen_errors = []
+    module._validate_counterfactual_leaks(frozen_errors, final=True)
+    assert any("frozen.md" in error for error in frozen_errors)
+
+
 def test_manifest_is_complete_and_self_consistent():
     manifest = _json("MANIFEST.json")
     required = {
