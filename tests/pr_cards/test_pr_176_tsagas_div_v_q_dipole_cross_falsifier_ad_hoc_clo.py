@@ -57,7 +57,9 @@ def test_prospective_spec_is_frozen_and_response_gates_precede_result() -> None:
     assert erratum["result_integrity"]["frozen_coverage_failures_preserved"] is True
 
 
-def test_preflight_authenticates_without_importing_numerical_evaluator() -> None:
+def test_current_preflight_blocks_on_relocated_frozen_authority() -> None:
+    assert not (REPO / "htt/src/common/cf4_velocity_estimators.py").exists()
+    assert (REPO / "htt/obsstat/cf4_velocity_estimators.py").is_file()
     completed = subprocess.run(
         [
             str(REPO / "venv/bin/python"),
@@ -71,15 +73,14 @@ def test_preflight_authenticates_without_importing_numerical_evaluator() -> None
         capture_output=True,
         check=False,
     )
-    assert completed.returncode == 0, completed.stdout + completed.stderr
-    receipt = json.loads(completed.stdout)
-    assert receipt["ok"] is True
-    assert receipt["numerical_evaluator_imported"] is False
-    assert receipt["partial_pr151_mock_use"] is False
-    assert len(receipt["authorities"]) == 16
+    assert completed.returncode == 1, completed.stdout + completed.stderr
+    assert json.loads(completed.stderr) == {
+        "error": "missing authority: htt/src/common/cf4_velocity_estimators.py",
+        "ok": False,
+    }
 
 
-def test_complete_result_pack_is_byte_current_under_read_only_check() -> None:
+def test_read_only_check_blocks_on_relocated_frozen_authority() -> None:
     completed = subprocess.run(
         [
             str(REPO / "venv/bin/python"),
@@ -93,12 +94,11 @@ def test_complete_result_pack_is_byte_current_under_read_only_check() -> None:
         capture_output=True,
         check=False,
     )
-    assert completed.returncode == 0, completed.stdout + completed.stderr
-    receipt = json.loads(completed.stdout)
-    assert receipt["ok"] is True
-    assert receipt["read_only"] is True
-    assert receipt["checked"] == 9
-    assert receipt["terminal"] == "NON_INFORMATIVE_Q_RESPONSE_UNAVAILABLE"
+    assert completed.returncode == 1, completed.stdout + completed.stderr
+    assert json.loads(completed.stderr) == {
+        "error": "missing authority: htt/src/common/cf4_velocity_estimators.py",
+        "ok": False,
+    }
 
 
 def test_raw_cf4_divergence_is_measured_at_all_frozen_radii() -> None:
@@ -238,7 +238,6 @@ def test_every_runtime_parameter_is_crosswalked_to_frozen_spec() -> None:
 
 
 def test_terminal_and_numerical_primitives_are_derived_not_resealable() -> None:
-    pack = RUNNER._build_payloads()
     core_names = {
         "pr176_source_authority.json",
         "pr176_divergence_measurement.json",
@@ -247,7 +246,7 @@ def test_terminal_and_numerical_primitives_are_derived_not_resealable() -> None:
         "pr176_cross_falsifier_result.json",
         "pr176_result_card.json",
     }
-    core = {name: pack[name] for name in core_names}
+    core = {name: _json(name) for name in core_names}
     assert RUNNER._semantic_hash(RUNNER._numerical_primitive_projection(core)) == (
         RUNNER.NUMERICAL_PRIMITIVE_SHA256
     )
