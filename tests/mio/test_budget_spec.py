@@ -122,6 +122,12 @@ def test_denominator_must_be_positive_finite(bad_value: float) -> None:
         BudgetSpec(**_base_kwargs(denominator_value=bad_value))
 
 
+@pytest.mark.parametrize("bad_value", [1, 0, "false", None])
+def test_admissible_ceiling_flag_must_be_boolean(bad_value: object) -> None:
+    with pytest.raises(ValueError, match="is_admissible_ceiling must be boolean"):
+        BudgetSpec(**_base_kwargs(is_admissible_ceiling=bad_value))
+
+
 def test_external_transfer_budget_requires_pr014_metadata() -> None:
     with pytest.raises(ValueError, match="transfer_metadata"):
         BudgetSpec(

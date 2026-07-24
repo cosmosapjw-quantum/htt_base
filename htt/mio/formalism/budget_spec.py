@@ -391,6 +391,9 @@ class BudgetSpec:
         covariance_status = _non_empty(self.covariance_status, "covariance_status")
         null_mock_status = _non_empty(self.null_mock_status, "null_mock_status")
         admissible_uses = _canonical_uses(self.admissible_uses)
+        if not isinstance(self.is_admissible_ceiling, bool):
+            raise ValueError("is_admissible_ceiling must be boolean")
+        is_admissible_ceiling = self.is_admissible_ceiling
         caveats = tuple(dict.fromkeys(_tuple_of_str(self.caveats, "caveats")))
         if DEFAULT_BUDGET_CAVEAT not in caveats:
             caveats = (DEFAULT_BUDGET_CAVEAT, *caveats)
@@ -424,13 +427,13 @@ class BudgetSpec:
             raise ValueError("BudgetSpec implementation_scope must be 'mio'")
         if (
             BudgetUse.CERTIFIED_FILLING_CEILING in admissible_uses
-            and not self.is_admissible_ceiling
+            and not is_admissible_ceiling
         ):
             raise ValueError(
                 "certified filling use requires is_admissible_ceiling=True"
             )
         if (
-            self.is_admissible_ceiling
+            is_admissible_ceiling
             and BudgetUse.CERTIFIED_FILLING_CEILING not in admissible_uses
         ):
             raise ValueError(
@@ -459,6 +462,7 @@ class BudgetSpec:
         object.__setattr__(self, "sky_support_status", sky_support_status)
         object.__setattr__(self, "covariance_status", covariance_status)
         object.__setattr__(self, "null_mock_status", null_mock_status)
+        object.__setattr__(self, "is_admissible_ceiling", is_admissible_ceiling)
         object.__setattr__(self, "admissible_uses", admissible_uses)
         object.__setattr__(self, "caveats", caveats)
 
