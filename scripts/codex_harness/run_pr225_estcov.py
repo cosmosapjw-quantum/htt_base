@@ -10,6 +10,10 @@ SPEC = REPO/"docs/research_program/revival/pr225_spec.yaml"
 CARD = REPO/"docs/generated/pr225_result_card.json"
 PR200 = REPO/"docs/generated/pr200_result_card.json"
 PR197 = REPO/"docs/generated/pr197_result_card.json"
+REQUIRED_CROSSREFS = {
+    "pr200_terminal": "PARTIAL_ID_COVERAGE_CALIBRATED_POINT_CI_UNDERCOVERS",
+    "pr197_terminal": "CLUSTER_EXACT_RANK_VERIFIED_NAIVE_LABEL_REFUSED",
+}
 def _sha(p): return hashlib.sha256(p.read_bytes()).hexdigest()
 def _xref():
     x={}
@@ -21,7 +25,8 @@ def _xref():
 def build_payload():
     h=hartlap_stress(); ev=evalue_anytime(); xref=_xref()
     ok = (h["raw_inflated"] and h["corrected_calibrated"]
-          and ev["merged_mean_le_one"] and ev["tails_within_markov"] and ev["ville_holds"])
+          and ev["merged_mean_le_one"] and ev["tails_within_markov"] and ev["ville_holds"]
+          and xref == REQUIRED_CROSSREFS)
     terminal = "ESTCOV_PARTIAL_ID_ANYTIME_EVALUE_CALIBRATED" if ok else "BLOCKED_ESTCOV_GATE_FAILURE"
     return {"schema":"htt.pr225.result_card.v1","pr_id":"PR-225",
       "metadata":{"owner":"COMMON","spec_sha256":_sha(SPEC),"cross_references":["PR-200","PR-197"],
