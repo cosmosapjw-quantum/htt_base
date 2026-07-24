@@ -25,6 +25,8 @@ _SIGMA2_ANICLASS_RANGE = {
     "Sigma2_min": 1.0e-24,
     "Sigma2_max": 1.0e-20,
     "Sigma2_note": "legacy Saadeh-linear-regime external calibration window",
+    **_X_H_RANGE,
+    "x_h_note": "explicit x_h values use the AniCLASS interpolation domain",
 }
 _SIGMA2_PROXY_RANGE = {"Sigma2_min": 1.0e-11, "Sigma2_max": 1.0e-3}
 _ANICLASS_CAVEATS = (

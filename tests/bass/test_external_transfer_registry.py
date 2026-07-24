@@ -53,6 +53,9 @@ def test_adapter_records_transfer_conditional_metadata_not_native() -> None:
         "Sigma2_min": 1.0e-24,
         "Sigma2_max": 1.0e-20,
         "Sigma2_note": "legacy Saadeh-linear-regime external calibration window",
+        "x_h_min": 0.001,
+        "x_h_max": 1000.0,
+        "x_h_note": "explicit x_h values use the AniCLASS interpolation domain",
     }
     assert "callable input domain" in str(metadata["valid_range_role"])
     assert "transfer-conditional result" in metadata["caveats"]
@@ -208,6 +211,19 @@ def test_adapter_fails_closed_outside_declared_input_domain() -> None:
         adapters.evaluate("aniclass.lowell.f2_vector.v1", 1.0e-4)
     with pytest.raises(ValueError, match="Sigma2.*outside"):
         adapters.evaluate("aniclass.lowell.shear_to_D2.v1", 1.0e-8)
+    with pytest.raises(ValueError, match="x_h.*outside"):
+        adapters.evaluate(
+            "aniclass.lowell.shear_to_D2.v1",
+            1.0e-22,
+            x_h=1.0e12,
+        )
+    with pytest.raises(ValueError, match="x_h.*outside"):
+        adapters.evaluate(
+            "aniclass.lowell.shear_to_D2.v1",
+            1.0e-22,
+            "decay",
+            1.0e12,
+        )
     with pytest.raises(ValueError, match="Sigma2.*outside"):
         adapters.evaluate("bass.empirical_proxy.shear_to_D2.v1", 1.0e-12)
 

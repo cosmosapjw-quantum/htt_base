@@ -10,6 +10,7 @@ from __future__ import annotations
 from collections.abc import Callable, Iterable, Mapping
 from dataclasses import dataclass
 from importlib import import_module
+import inspect
 import math
 from typing import Any
 
@@ -95,8 +96,9 @@ class ExternalTransferAdapter:
     def evaluate(self, *args: Any, **kwargs: Any) -> TransferEvaluation:
         """Run the legacy callable and attach validated transfer metadata."""
 
-        self._validate_input_domain(args, kwargs)
-        value = _load_callable(self.callable_path)(*args, **kwargs)
+        function = _load_callable(self.callable_path)
+        self._validate_input_domain(function, args, kwargs)
+        value = function(*args, **kwargs)
         metadata = self.metadata()
         return TransferEvaluation(
             value=value,
@@ -108,20 +110,27 @@ class ExternalTransferAdapter:
 
     def _validate_input_domain(
         self,
+        function: Callable[..., Any],
         args: tuple[Any, ...],
         kwargs: Mapping[str, Any],
     ) -> None:
         domain = dict(self.parameter_range or {})
         if "x_h_min" in domain or "x_h_max" in domain:
-            value = _first_argument(args, kwargs, "x_h")
-            _require_in_domain(
-                value,
-                lower=_optional_domain_bound(domain, "x_h_min", -math.inf),
-                upper=_optional_domain_bound(domain, "x_h_max", math.inf),
-                label="x_h",
-            )
+            value, optional_none = _call_argument(function, args, kwargs, "x_h")
+            if value is not None or not optional_none:
+                _require_in_domain(
+                    value,
+                    lower=_optional_domain_bound(domain, "x_h_min", -math.inf),
+                    upper=_optional_domain_bound(domain, "x_h_max", math.inf),
+                    label="x_h",
+                )
         if "Sigma2_min" in domain or "Sigma2_max" in domain:
-            value = _first_argument(args, kwargs, "Sigma2")
+            value, _optional_none = _call_argument(
+                function,
+                args,
+                kwargs,
+                "Sigma2",
+            )
             _require_in_domain(
                 value,
                 lower=_optional_domain_bound(domain, "Sigma2_min", -math.inf),
@@ -181,15 +190,20 @@ def _load_callable(path: str) -> Callable[..., Any]:
     return function
 
 
-def _first_argument(
+def _call_argument(
+    function: Callable[..., Any],
     args: tuple[Any, ...],
     kwargs: Mapping[str, Any],
     name: str,
-) -> Any:
-    if args:
-        return args[0]
-    if name in kwargs:
-        return kwargs[name]
+) -> tuple[Any, bool]:
+    signature = inspect.signature(function)
+    bound = signature.bind(*args, **kwargs)
+    bound.apply_defaults()
+    candidate_names = (name, "x") if name == "x_h" else (name,)
+    for candidate_name in candidate_names:
+        if candidate_name in bound.arguments:
+            parameter = signature.parameters[candidate_name]
+            return bound.arguments[candidate_name], parameter.default is None
     raise ValueError(f"{name} input is required for transfer adapter evaluation")
 
 

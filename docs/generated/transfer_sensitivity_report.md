@@ -14,16 +14,16 @@ transfer_source: none
 report_subject_transfer_sources: AniCLASS_external, empirical_proxy, external_transfer
 sky_support_status: not_directional
 null_mock_status: not_statistical
-config_hash: `sha256:53af2631d2c59ae5ce7547a32bda978688498e6645867ae9913f26938c2fd7e5`
+config_hash: `sha256:ac227dfb5bb66f66a34128a956bd1b6f0433a58468558bee8026e632e5cbe1db`
 input_hashes:
 - `scripts/generate_transfer_sensitivity_report.py:5dedf6db87a5bb3e0e95c418f4e7e4bd37c9b02cfec2f589c20b9487b4867d87`
-- `htt/src/common/transfer_registry.py:d22beea71bc0e9ffe308c2ae1c9424017c2274aedc7c791d8b432042f5175554`
-- `htt/bass/transfer/registry.py:3891053f5d9c91de3cc37a228817c1d98a0aebb3a5cff3d726318f1271621415`
-- `htt/bass/transfer/aniclass_adapter.py:685cc43faf3024df1563c66f49444e98a053bba2407896db0a07f58f4fb3e1b3`
-- `htt/bass/atlas/atlas_entry.py:07164104137bcc008548c254d179841661de14226ff449ee641537809ab93cc4`
-- `htt/bass/atlas/budget_ceiling_optimizer.py:af3ea2eb6817ce56cbf1d870de6f53a7814ea949902ba43a1ab0612842967cae`
-- `htt/mio/formalism/budget_spec.py:e836268d37323288d4b9e6bc3442f8eab2b3928ac6ebc91b7caef46d6210166a`
-- `htt/mio/reports/departure_report.py:2e28a9523f06d4c05966d2819e3823eeb8f4449c5e4934509bee8fdffcbe982a`
+- `htt/src/common/transfer_registry.py:7c08a18c14a4833411e0139e2362886e8353eb5c67a28a24df6fe1e57b455265`
+- `htt/bass/transfer/registry.py:c1065aa3e2fc0a1d83fb9ace26073b674f66eac627d83eedb4344dd8e15983a0`
+- `htt/bass/transfer/aniclass_adapter.py:962d30a4d32bd7263fd52d9db95fc459fbae38daf8296bada99fafb493d242dc`
+- `htt/bass/atlas/atlas_entry.py:7012a5a06f819b62c194975c7f025142388621f5dc06668d4b008a222eee14db`
+- `htt/bass/atlas/budget_ceiling_optimizer.py:fec33e6fcd768abc809563731ac3828764324a4bd278afb3b5eb0be0ae0c2953`
+- `htt/mio/formalism/budget_spec.py:25213b00a1f0e6c373e17960e15de567240ce6f22d914a54e6cad8047a4d727e`
+- `htt/mio/reports/departure_report.py:636530f1c4acc6e3f7f051a8b58d82eb08e85948a2a6dc84d1ade4b3c525f464`
 - `docs/PR_DELTAS/pr-080.md:b36fd653e635da8ab6ca3646c1def17c1c0ba5e96f7e739a28aa8b5d5220e717`
 - `docs/PR_DELTAS/pr-082.md:403a9b5529e5db701430b4dffcc0b2ff012429db2f33e9fc472833ad43afacec`
 - `docs/PR_DELTAS/pr-083.md:1c09331231e734c71e1754a4110a298ee6accbd8f4129cd4c51b2c8aea56e98b`
@@ -35,7 +35,7 @@ caveats:
 - Family labels in transfer metadata are provenance labels, not morphology or classification claims.
 - This report is not HTT evidence, not a MIO certificate, and not a transfer calibration result.
 generating_command: python scripts/generate_transfer_sensitivity_report.py
-git_commit_or_worktree_state: e208cd9+dirty
+git_commit_or_worktree_state: c80e35c9+dirty
 
 ## Current Transfer Dependencies
 
@@ -45,8 +45,8 @@ git_commit_or_worktree_state: e208cd9+dirty
 | aniclass.lowell.f2_vector.v1 | AniCLASS_external | conditional | True | True | scalar_summary | external_calibrated | htt.core.evidence_models_R03a:f2_vector | {"x_h_max": 1000.0, "x_h_min": 0.001} | 6 |
 | aniclass.lowell.f3_tensor.v1 | AniCLASS_external | conditional | True | True | scalar_summary | external_calibrated | htt.core.evidence_models_R03a:f3_tensor | {"x_h_max": 1000.0, "x_h_min": 0.001} | 6 |
 | aniclass.lowell.f3_vector.v1 | AniCLASS_external | conditional | True | True | scalar_summary | external_calibrated | htt.core.evidence_models_R03a:f3_vector | {"x_h_max": 1000.0, "x_h_min": 0.001} | 6 |
-| aniclass.lowell.shear_to_D2.v1 | AniCLASS_external | conditional | True | True | temperature | external_calibrated | htt.core.evidence_models_R03a:shear_to_D2 | {"Sigma2_max": 1e-20, "Sigma2_min": 1e-24, "Sigma2_note": "legacy Saadeh-linear-regime external calibration window"} | 6 |
-| aniclass.lowell.shear_to_D3.v1 | AniCLASS_external | conditional | True | True | temperature | external_calibrated | htt.core.evidence_models_R03a:shear_to_D3 | {"Sigma2_max": 1e-20, "Sigma2_min": 1e-24, "Sigma2_note": "legacy Saadeh-linear-regime external calibration window"} | 6 |
+| aniclass.lowell.shear_to_D2.v1 | AniCLASS_external | conditional | True | True | temperature | external_calibrated | htt.core.evidence_models_R03a:shear_to_D2 | {"Sigma2_max": 1e-20, "Sigma2_min": 1e-24, "Sigma2_note": "legacy Saadeh-linear-regime external calibration window", "x_h_max": 1000.0, "x_h_min": 0.001, "x_h_note": "explicit x_h values use the AniCLASS interpolation domain"} | 6 |
+| aniclass.lowell.shear_to_D3.v1 | AniCLASS_external | conditional | True | True | temperature | external_calibrated | htt.core.evidence_models_R03a:shear_to_D3 | {"Sigma2_max": 1e-20, "Sigma2_min": 1e-24, "Sigma2_note": "legacy Saadeh-linear-regime external calibration window", "x_h_max": 1000.0, "x_h_min": 0.001, "x_h_note": "explicit x_h values use the AniCLASS interpolation domain"} | 6 |
 | bass.empirical_proxy.shear_to_D2.v1 | empirical_proxy | conditional | True | True | temperature | empirical_proxy | htt.core.evidence_models_R03a:bass_shear_to_D2 | {"Sigma2_max": 0.001, "Sigma2_min": 1e-11} | 6 |
 
 Family labels above are provenance labels only; they are not classification claims.
