@@ -198,6 +198,8 @@ def test_ppc_receipt_type_guard() -> None:
     ppc = run_ppc(GOOD, y, frozen, n_predictive=1000, seed=1,
                   lineage=_lineage(GOOD, y))
     require_ppc_receipt(ppc)   # a real PPC record passes
+    with pytest.raises(SbcPpcError, match="non-empty"):
+        ppc_verdict({"discrepancy_results": []}, 0.01)
     # a receipt missing the verified lineage is refused
     with pytest.raises(SbcPpcError, match="verified posterior lineage"):
         require_ppc_receipt({k: v for k, v in ppc.items()
