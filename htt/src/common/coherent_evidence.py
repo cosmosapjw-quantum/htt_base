@@ -329,14 +329,31 @@ def compare_engines(engines: list[dict], analytic_log_evidence: float, *,
             for e in engines}
     gap = max(abs(a["log_evidence"] - b["log_evidence"])
               for a in engines for b in engines)
-    max_se = max(e.get("bootstrap_se", 0.0) for e in engines)
+    standard_errors = []
+    for engine in engines:
+        value = engine.get("bootstrap_se")
+        if isinstance(value, bool):
+            continue
+        try:
+            standard_error = float(value)
+        except (TypeError, ValueError):
+            continue
+        if np.isfinite(standard_error) and standard_error >= 0:
+            standard_errors.append(standard_error)
+    diagnostics_complete = len(standard_errors) == len(engines)
+    max_se = max(standard_errors) if diagnostics_complete else None
     agree = gap <= agreement_tol
     analytic_ok = max(devs.values()) <= analytic_tol
-    se_ok = max_se <= se_ceiling
+    se_ok = (
+        max_se is not None
+        and np.isfinite(se_ceiling)
+        and se_ceiling >= 0
+        and max_se <= se_ceiling
+    )
     status = (EvidenceStatus.COHERENT if (agree and analytic_ok and se_ok)
               else EvidenceStatus.INDETERMINATE)
     return {"deviation_vs_analytic": devs, "engine_gap": float(gap),
-            "max_bootstrap_se": float(max_se), "engines_agree": bool(agree),
+            "max_bootstrap_se": max_se, "engines_agree": bool(agree),
             "match_analytic": bool(analytic_ok), "diagnostics_ok": bool(se_ok),
             "status": status.value}
 

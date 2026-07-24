@@ -160,6 +160,34 @@ def test_engine_comparison_requires_two_independent_engines() -> None:
         )
 
 
+@pytest.mark.parametrize("diagnostic", (None, float("nan"), -0.1))
+def test_engine_comparison_requires_valid_diagnostics(diagnostic) -> None:
+    first = {
+        "method": "thermodynamic_integration",
+        "log_evidence": 1.0,
+        "bootstrap_se": 0.0,
+        "sample_provenance": "one",
+        "sample_digest": "draws-one",
+    }
+    second = {
+        "method": "bridge_sampling",
+        "log_evidence": 1.0,
+        "sample_provenance": "two",
+        "sample_digest": "draws-two",
+    }
+    if diagnostic is not None:
+        second["bootstrap_se"] = diagnostic
+    comparison = compare_engines(
+        [first, second],
+        1.0,
+        agreement_tol=0.1,
+        analytic_tol=0.1,
+        se_ceiling=0.1,
+    )
+    assert comparison["diagnostics_ok"] is False
+    assert comparison["status"] == "indeterminate"
+
+
 def test_prior_normalization_guard() -> None:
     require_normalized_prior(NormalPrior(0.0, 4.0))
     assert abs(NormalPrior(0.0, 4.0).normalizer_integral() - 1.0) < 1e-4
