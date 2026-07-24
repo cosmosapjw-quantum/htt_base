@@ -8,8 +8,16 @@ configured NSIDE/lmax under both full-sky and masked+inpainted modes.
 from __future__ import annotations
 
 import numpy as np
-import healpy as hp
 import pytest
+
+hp = pytest.importorskip(
+    "healpy",
+    reason=(
+        "optional dependency 'healpy' not installed; "
+        "install it to run tests marked requires_healpy"
+    ),
+)
+pytestmark = pytest.mark.requires_healpy
 
 from htt.obsstat.lowell_precision import (
     PrecisionConfig, downgrade_mask, diffuse_inpaint, precision_map_statistics,

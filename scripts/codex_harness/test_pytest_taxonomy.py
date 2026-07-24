@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import configparser
 import importlib.util
+import os
 import subprocess
 import sys
 import tomllib
@@ -149,6 +150,66 @@ def test_collect_only_runs_without_unknown_marker_warnings() -> None:
 
     assert completed.returncode == 0, completed.stdout + completed.stderr
     assert "PytestUnknownMarkWarning" not in completed.stdout + completed.stderr
+
+
+def test_healpy_absence_skips_all_healpy_collection_surfaces(
+    tmp_path: Path,
+) -> None:
+    plugin = tmp_path / "block_healpy.py"
+    plugin.write_text(
+        "import importlib.abc\n"
+        "import sys\n"
+        "class BlockHealpy(importlib.abc.MetaPathFinder):\n"
+        "    def find_spec(self, fullname, path=None, target=None):\n"
+        "        if fullname == 'healpy' or fullname.startswith('healpy.'):\n"
+        "            raise ModuleNotFoundError('blocked optional dependency: healpy')\n"
+        "        return None\n"
+        "for name in tuple(sys.modules):\n"
+        "    if name == 'healpy' or name.startswith('healpy.'):\n"
+        "        del sys.modules[name]\n"
+        "sys.meta_path.insert(0, BlockHealpy())\n",
+        encoding="utf-8",
+    )
+    sentinel = tmp_path / "test_sentinel.py"
+    sentinel.write_text("def test_sentinel():\n    pass\n", encoding="utf-8")
+    env = os.environ.copy()
+    env["PYTHONPATH"] = os.pathsep.join(
+        part
+        for part in (str(tmp_path), env.get("PYTHONPATH", ""))
+        if part
+    )
+    completed = subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "-ra",
+            "-p",
+            "block_healpy",
+            str(sentinel),
+            "tests/obsstat/test_lowell_precision.py",
+            "tests/obsstat/test_k1_noise_mode.py",
+            "tests/obsstat/test_lowell_morphology_real_map.py",
+            "tests/contracts/test_pr151_desi_exact_selection.py",
+            (
+                "tests/pr_cards/"
+                "test_pr_177_act_dr6_in_band_kappa_off_diagonal_modulation_di.py"
+            ),
+        ],
+        cwd=REPO_ROOT,
+        env=env,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+
+    output = completed.stdout + completed.stderr
+    assert completed.returncode == 0, output
+    assert "ERROR collecting" not in output
+    assert "1 test collected" in output
+    assert output.count("optional dependency 'healpy' not installed") == 5
 
 
 def test_optional_dependency_tests_have_named_skip_gates() -> None:

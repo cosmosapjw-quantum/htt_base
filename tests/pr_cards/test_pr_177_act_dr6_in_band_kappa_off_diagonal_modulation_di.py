@@ -7,9 +7,17 @@ import shlex
 import subprocess
 from pathlib import Path
 
-import healpy as hp
 import numpy as np
 import pytest
+
+hp = pytest.importorskip(
+    "healpy",
+    reason=(
+        "optional dependency 'healpy' not installed; "
+        "install it to run tests marked requires_healpy"
+    ),
+)
+pytestmark = pytest.mark.requires_healpy
 
 from obsstat.act_inband_modulation import (
     ActInbandModulationError,

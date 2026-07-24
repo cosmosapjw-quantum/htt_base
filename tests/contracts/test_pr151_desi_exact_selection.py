@@ -19,7 +19,14 @@ import pytest
 
 warnings.filterwarnings("ignore")
 
-import healpy as hp
+hp = pytest.importorskip(
+    "healpy",
+    reason=(
+        "optional dependency 'healpy' not installed; "
+        "install it to run tests marked requires_healpy"
+    ),
+)
+pytestmark = pytest.mark.requires_healpy
 
 from obsstat.desi_exact_selection_mock import (
     DESIExactSelectionError,

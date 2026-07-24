@@ -7,12 +7,22 @@ import sys
 import pytest
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-SCRIPT = REPO_ROOT / "scripts/make_lowell_morphology_real_map.py"
-
-pytestmark = pytest.mark.skipif(
-    not (REPO_ROOT / "workdir/obs_bundle/cmb/maps/smica_nside16.npz").exists(),
-    reason="real Planck NSIDE=16 map not present in this checkout",
+pytest.importorskip(
+    "healpy",
+    reason=(
+        "optional dependency 'healpy' not installed; "
+        "install it to run tests marked requires_healpy"
+    ),
 )
+pytestmark = [
+    pytest.mark.requires_healpy,
+    pytest.mark.skipif(
+        not (REPO_ROOT / "workdir/obs_bundle/cmb/maps/smica_nside16.npz").exists(),
+        reason="real Planck NSIDE=16 map not present in this checkout",
+    ),
+]
+
+SCRIPT = REPO_ROOT / "scripts/make_lowell_morphology_real_map.py"
 
 
 def _load():
