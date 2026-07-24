@@ -70,13 +70,16 @@ def _kill_battery() -> dict:
     kills["unsigned_receipt_rejected"] = rejected(
         lambda: ClaimState(Novelty.S, Readiness.VALIDATED, public_use=True,
                            receipt=AdjudicationReceipt("A", "B", "l", False)).validate())
-    # the legal public_use path is accepted
-    legal_ok = True
-    try:
-        ClaimState(Novelty.S, Readiness.VALIDATED, public_use=True, receipt=valid).validate()
-    except ClaimStateError:
-        legal_ok = False
-    kills["legal_public_use_accepted"] = legal_ok
+    # This legacy boolean/string receipt cannot authenticate external authority.
+    # Public use remains blocked until a trusted verifier path is supplied.
+    kills["legal_public_use_accepted"] = not rejected(
+        lambda: ClaimState(
+            Novelty.S,
+            Readiness.VALIDATED,
+            public_use=True,
+            receipt=valid,
+        ).validate()
+    )
     return kills
 
 

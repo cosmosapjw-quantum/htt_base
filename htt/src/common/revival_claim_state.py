@@ -6,6 +6,9 @@ novelty (K/C/P/S) and internal readiness (8-state) are independent axes, and
 public_use opens only through a validated readiness state AND a proof-carrying
 external adjudication receipt whose author differs from the adjudicator. High
 novelty alone never opens public use.
+
+The compact legacy receipt below carries metadata only; because this module has
+no trusted signature verifier or principal registry, it cannot open public use.
 """
 
 from __future__ import annotations
@@ -44,8 +47,13 @@ class AdjudicationReceipt:
     signed: bool
 
     def is_valid(self) -> bool:
-        return (self.signed and bool(self.lineage)
-                and self.author != self.adjudicator)
+        """Legacy receipt metadata is not an authenticated authority proof.
+
+        This compact successor has no trusted principal registry, signature
+        verifier, scope binding, or signed payload.  Caller-supplied strings
+        and a boolean therefore cannot authorize public use.
+        """
+        return False
 
 
 @dataclass(frozen=True)
@@ -62,8 +70,8 @@ class ClaimState:
                 raise ClaimStateError("public_use requires VALIDATED readiness")
             if self.receipt is None or not self.receipt.is_valid():
                 raise ClaimStateError(
-                    "public_use requires a signed external adjudication receipt "
-                    "with author != adjudicator")
+                    "public_use requires an authenticated external adjudication "
+                    "receipt; this legacy receipt format is diagnostic only")
 
 
 # forward-only readiness ladder (matches the PR-185 lattice shape)
