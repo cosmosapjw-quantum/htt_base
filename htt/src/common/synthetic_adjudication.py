@@ -289,6 +289,7 @@ def adjudicate_ensemble(challenge_id: str, generator_id: str, analyst_id: str,
     """A NON-AUTHOR referee scores the BLIND analyst over a seed ENSEMBLE."""
     require_generator_analyst_separation(generator_id, analyst_id)
     require_non_author_referee(generator_id, analyst_id, referee_id)
+    seeds = tuple(seeds)
     agg = {f: {"n": 0, "correct": 0, "expected": 0, "false_candidate": 0}
            for f in DGP_BATTERY}
     seed_hashes = []
@@ -307,7 +308,7 @@ def adjudicate_ensemble(challenge_id: str, generator_id: str, analyst_id: str,
     return {
         "referee_id": referee_id, "challenge_id": challenge_id,
         "criteria_hash": criteria.criteria_hash, "ensemble_hash": ensemble_hash,
-        "n_seeds": len(list(seeds)), "rows": rows,
+        "n_seeds": len(seeds), "rows": rows,
         "method_verdict": (Verdict.READY.value if all_passed
                            else Verdict.BLOCK.value),
         "blocked_families": [r["family"] for r in rows if not r["passed"]],

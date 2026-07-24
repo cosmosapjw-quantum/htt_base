@@ -184,6 +184,17 @@ def test_ensemble_measured_size_within_alpha_and_covariance_blocks() -> None:
     assert rep["method_verdict"] == Verdict.BLOCK.value
 
 
+def test_ensemble_counts_one_shot_seed_iterable() -> None:
+    rep = adjudicate_ensemble(
+        "CH-test", "generator.dgp", "analyst.pr141", "referee.nonauthor",
+        seeds=(seed for seed in [101, 102]), n_reps=1, n_obs=60,
+        template_seed=20260718, config=CFG,
+        criteria=Criteria(0.1, 0.75, 0.7),
+    )
+    assert rep["n_seeds"] == 2
+    assert all(row["n_items"] == 2 for row in rep["rows"])
+
+
 @pytest.mark.parametrize(
     ("field", "value"),
     [
