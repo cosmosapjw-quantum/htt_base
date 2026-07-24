@@ -288,7 +288,25 @@ def test_obsstat_rejects_inference_or_family_identification_payload_keys() -> No
         build_observable_vector(
             ell_max=2,
             channels=("TT",),
+            cl={"posterior_odds": 1.2},
+            manifest=_manifest(),
+            sky_support=_sky_support(),
+        )
+
+    with pytest.raises(ValueError, match="forbidden inference key"):
+        build_observable_vector(
+            ell_max=2,
+            channels=("TT",),
             scalar_features={"posterior_odds": 1.2},
+            manifest=_manifest(),
+            sky_support=_sky_support(),
+        )
+
+    with pytest.raises(ValueError, match="family identification"):
+        build_observable_vector(
+            ell_max=2,
+            channels=("TT",),
+            scan_volume={"identified_family": "VII_h"},
             manifest=_manifest(),
             sky_support=_sky_support(),
         )
@@ -344,6 +362,15 @@ def test_obsstat_rejects_inference_or_family_identification_payload_keys() -> No
 
 def test_transfer_derived_features_require_transfer_source_metadata() -> None:
     from htt.obsstat.observable_vector import build_observable_vector
+
+    with pytest.raises(ValueError, match="transfer_source"):
+        build_observable_vector(
+            ell_max=2,
+            channels=("TT",),
+            cl={"TT": {"transfer_derived": True}},
+            manifest=_manifest(),
+            sky_support=_sky_support(),
+        )
 
     with pytest.raises(ValueError, match="transfer_source"):
         build_observable_vector(

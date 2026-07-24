@@ -141,6 +141,8 @@ def build_observable_vector(
     """Build the canonical ObservableVector from OBSSTAT feature blocks."""
 
     _require_obsstat_manifest(manifest)
+    cl_payload = dict(cl or {})
+    scan_volume_payload = dict(scan_volume or {})
     blocks = {
         "alm": dict(alm_features or {}),
         "scalar_features": dict(scalar_features or {}),
@@ -149,7 +151,6 @@ def build_observable_vector(
     }
     alm_convention_metadata = validate_alm_feature_conventions(blocks["alm"])
     _require_alm_coordinate_frame_match(alm_convention_metadata, sky_support)
-    _reject_forbidden_feature_keys(blocks)
     template_payload = dict(template_features or {})
     covariance_payload = dict(covariance_features or {})
     biposh_payload = dict(biposh_features or {})
@@ -158,26 +159,22 @@ def build_observable_vector(
         "template_features": template_payload,
         "covariance_features": covariance_payload,
         "biposh_features": biposh_payload,
+        "cl": cl_payload,
+        "scan_volume": scan_volume_payload,
     }
+    _reject_forbidden_feature_keys(all_features)
     _require_null_provenance(all_features)
-    _reject_forbidden_feature_keys(
-        {
-            "template_features": template_payload,
-            "covariance_features": covariance_payload,
-            "biposh_features": biposh_payload,
-        }
-    )
     _require_transfer_metadata(all_features)
     _require_channel_names(channels)
     return ObservableVector(
         ell_max=int(ell_max),
         channels=tuple(channels),
-        cl=dict(cl or {}),
+        cl=cl_payload,
         alm_features=blocks,
         biposh=biposh_payload or None,
         template_fit=template_payload or None,
         covariance_features=covariance_payload or None,
-        scan_volume=dict(scan_volume or {}),
+        scan_volume=scan_volume_payload,
         sky_support=sky_support,
         manifest=manifest,
     )
