@@ -33,7 +33,6 @@ import hashlib
 from dataclasses import dataclass
 from enum import Enum
 from fractions import Fraction
-from numbers import Real
 from typing import Sequence
 
 import numpy as np
@@ -190,36 +189,6 @@ class GroupModel:
     sig2: float
     tau_b2: float
     prior_tau2: float
-
-    def __post_init__(self) -> None:
-        if not isinstance(self.X, np.ndarray) or self.X.ndim != 2:
-            raise HoldoutError("X must be a two-dimensional numeric array")
-        if not isinstance(self.y, np.ndarray) or self.y.ndim != 1:
-            raise HoldoutError("y must be a one-dimensional numeric array")
-        if self.X.shape[0] == 0:
-            raise HoldoutError("group model has no rows")
-        if self.y.shape[0] != self.X.shape[0] \
-                or len(self.group) != self.X.shape[0]:
-            raise HoldoutError("X, y, and group must have the same row count")
-        if (
-            not np.issubdtype(self.X.dtype, np.number)
-            or not np.issubdtype(self.y.dtype, np.number)
-            or np.iscomplexobj(self.X)
-            or np.iscomplexobj(self.y)
-        ):
-            raise HoldoutError("X and y must be real numeric arrays")
-        if not np.all(np.isfinite(self.X)) or not np.all(np.isfinite(self.y)):
-            raise HoldoutError("X and y must contain only finite values")
-        for name, value, lower, inclusive in (
-            ("sig2", self.sig2, 0.0, False),
-            ("tau_b2", self.tau_b2, 0.0, True),
-            ("prior_tau2", self.prior_tau2, 0.0, False),
-        ):
-            if not isinstance(value, Real) or not np.isfinite(float(value)):
-                raise HoldoutError(f"{name} must be finite")
-            if value < lower or (not inclusive and value == lower):
-                relation = "non-negative" if inclusive else "positive"
-                raise HoldoutError(f"{name} must be {relation}")
 
     def rows_of_group(self, g: int) -> np.ndarray:
         return np.array([i for i, gg in enumerate(self.group) if gg == g],
