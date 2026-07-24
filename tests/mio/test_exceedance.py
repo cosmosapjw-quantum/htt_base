@@ -415,6 +415,43 @@ def test_pi_curve_only_rejects_hidden_selected_threshold_metadata() -> None:
         )
 
 
+def test_pi_validated_metadata_is_immutable_and_payloads_are_detached() -> None:
+    curve = build_exceedance_curve(
+        (0.1, 0.4),
+        source_score_label="Q",
+        input_hashes=("samples-input",),
+        measure_kind=MeasureKind.SAMPLE_DISTRIBUTION,
+        generating_command=_GENERATING_COMMAND,
+        worktree_state=_WORKTREE_STATE,
+        source_metadata=({"selection": {"rule": "fixed"}},),
+        source_transfer_sources=("AniCLASS_external",),
+        source_transfer_spec_ids=("aniclass.pi.direct",),
+        source_transfer_metadata=(_external_transfer_metadata("aniclass.pi.direct"),),
+        artifact_metadata={"purpose": {"kind": "diagnostic"}},
+    )
+
+    with pytest.raises(TypeError):
+        curve.artifact_metadata["selected_threshold"] = 0.4
+    with pytest.raises(TypeError):
+        curve.source_metadata[0]["selected_exceedance_fraction"] = 0.5
+    with pytest.raises(TypeError):
+        curve.artifact_metadata["purpose"]["selected_threshold"] = 0.4
+    with pytest.raises(TypeError):
+        curve.source_transfer_metadata[0]["transfer_id"] = "forged"
+
+    payload = curve.as_payload()
+    payload["artifact_metadata"]["selected_threshold"] = 0.4
+    payload["source_metadata"][0]["selected_exceedance_fraction"] = 0.5
+    payload["source_transfer_metadata"][0]["transfer_id"] = "forged"
+
+    regenerated = curve.as_payload()
+    assert "selected_threshold" not in regenerated["artifact_metadata"]
+    assert "selected_exceedance_fraction" not in regenerated["source_metadata"][0]
+    assert regenerated["source_transfer_metadata"][0]["transfer_id"] == (
+        "aniclass.pi.direct"
+    )
+
+
 def test_pi_requires_explicit_measure_kind() -> None:
     with pytest.raises(ValueError, match="measure_kind"):
         ExceedanceCurve(
