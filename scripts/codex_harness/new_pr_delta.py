@@ -62,7 +62,15 @@ def render_pr_delta(
 def target_path(output_dir: str | Path, pr_id: str) -> Path:
     """Return the default PR delta output path."""
 
-    return Path(output_dir) / f"{pr_id.lower()}.md"
+    output_root = Path(output_dir)
+    out = output_root / f"{pr_id.lower()}.md"
+    try:
+        out.resolve().relative_to(output_root.resolve())
+    except ValueError as exc:
+        raise ValueError(
+            f"PR id {pr_id!r} resolves outside output directory {output_root}"
+        ) from exc
+    return out
 
 
 def write_pr_delta(

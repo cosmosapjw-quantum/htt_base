@@ -228,6 +228,34 @@ def test_cli_refuses_overwrite_unless_force(tmp_path: Path) -> None:
     assert "# PR-999 - Fixture delta generator" in output.read_text(encoding="utf-8")
 
 
+def test_cli_rejects_pr_id_that_escapes_output_directory(tmp_path: Path) -> None:
+    backlog_path = _write_backlog(tmp_path)
+    backlog = yaml.safe_load(backlog_path.read_text(encoding="utf-8"))
+    backlog["prs"][0]["id"] = "../../owner-local"
+    backlog_path.write_text(yaml.safe_dump(backlog), encoding="utf-8")
+    output_dir = tmp_path / "declared" / "deltas"
+
+    completed = subprocess.run(
+        [
+            sys.executable,
+            str(SCRIPT_PATH),
+            "../../owner-local",
+            "--backlog",
+            str(backlog_path),
+            "--dir",
+            str(output_dir),
+        ],
+        cwd=REPO_ROOT,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+
+    assert completed.returncode == 1
+    assert "resolves outside output directory" in completed.stderr
+    assert not (tmp_path / "owner-local.md").exists()
+
+
 def test_cli_rejects_unknown_pr_id(tmp_path: Path) -> None:
     backlog_path = _write_backlog(tmp_path)
 
