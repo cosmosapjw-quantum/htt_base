@@ -347,6 +347,12 @@ def _sky_support_blockers(sky_support: SkySupport) -> tuple[str, ...]:
         blocked.append("pixelization_legacy_unspecified")
     if sky_support.nside is None or int(sky_support.nside) <= 0:
         blocked.append("nside_missing")
+    elif (
+        str(sky_support.pixelization).strip().lower()
+        in {"healpix", "equal_area_iso_latitude_ring"}
+        and int(sky_support.nside) & (int(sky_support.nside) - 1)
+    ):
+        blocked.append("nside_not_power_of_two")
     return tuple(blocked)
 
 

@@ -185,6 +185,23 @@ def test_promotion_requires_rich_sky_support_and_record() -> None:
     assert "promotion_record_sky_support_hash_mismatch" in decision.blocked_reasons
 
 
+def test_promotion_rejects_invalid_healpix_nside() -> None:
+    axis = _posterior_axis()
+    sky_support = _rich_sky_support(nside=3)
+    report = _axis_mock_report(sky_support)
+
+    decision = evaluate_axis_promotion(
+        axis,
+        sky_support=sky_support,
+        promotion_record=_promotion_record(axis, sky_support, report),
+        mock_calibration_report=report,
+        target="a_lm",
+    )
+
+    assert decision.allowed is False
+    assert "nside_not_power_of_two" in decision.blocked_reasons
+
+
 def test_promotion_rejects_malformed_sha256_prefixes() -> None:
     axis = _posterior_axis()
     sky_support = _rich_sky_support(sky_support_hash="sha256:not-a-digest")
