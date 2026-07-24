@@ -211,27 +211,25 @@ def _verify_mes_inventory(root: Path, graph: EvidenceGraph) -> None:
         raise EvidenceGraphError(
             f"live MES inventory integrity failure: {sorted(failures)}"
         )
-    # PR-124: the typed MES authority is delivered. The kill switch inverts —
-    # the live scan must now be CLEAN (no successor blocker, no stale triple,
-    # no bypass) and the receipt-verified MES governance release must hold at
-    # conditional C1. Any receipt drift re-introduces
-    # SCIENTIFIC_AUTHORITY_BLOCKED via the live verifier and trips this gate.
+    # Audit disclosure still requires the current source topology to be
+    # structurally sound.  It does not require current scientific authority:
+    # stored PR-124 CAS evidence is diagnostic-only, and blocking authority
+    # must not erase access to the frozen historical evidence.
     forbidden_blockers = {
         MesConsumerIssueCode.SUCCESSOR_MISSING.value,
-        MesConsumerIssueCode.SCIENTIFIC_AUTHORITY_BLOCKED.value,
         MesConsumerIssueCode.SUCCESSOR_POINTER_MISSING.value,
         MesConsumerIssueCode.SUCCESSOR_BYPASS.value,
         MesConsumerIssueCode.STALE_MES_TRIPLE.value,
         MesConsumerIssueCode.SUCCESSOR_ID_MISMATCH.value,
     }
-    if codes & forbidden_blockers or not report.release_allowed:
+    if codes & forbidden_blockers:
         raise EvidenceGraphError(
-            "live MES inventory is not clean under the PR-124 authority: "
+            "live MES inventory topology is not clean: "
             f"{sorted(codes & forbidden_blockers)}"
         )
-    if registry_codes & forbidden_blockers or not registry_report.release_allowed:
+    if registry_codes & forbidden_blockers:
         raise EvidenceGraphError(
-            "live MES witness is not clean under the PR-124 authority: "
+            "live MES witness topology is not clean: "
             f"{sorted(registry_codes & forbidden_blockers)}"
         )
 

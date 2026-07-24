@@ -105,7 +105,7 @@ def _inventory_declarations(
     )
 
 
-def test_current_successor_is_available_and_pr124_authorized() -> None:
+def test_current_successor_is_available_but_not_currently_authoritative() -> None:
     registry = current_mes_successor_registry()
     pointer = registry.successor
 
@@ -116,10 +116,10 @@ def test_current_successor_is_available_and_pr124_authorized() -> None:
     assert (
         pointer.scientific_status is MesScientificAuthorityStatus.AUTHORIZED_BY_PR124
     )
-    # governance authority at conditional C1 (pins match + live verification
-    # is re-run by validate_mes_successor_registry below)
-    assert pointer.scientific_authority is True
-    assert registry.as_payload()["release_claim_allowed"] is True
+    # The status and receipt describe the historical PR-124 event. Stored
+    # bytes do not replace a parent-observed current CAS run.
+    assert pointer.scientific_authority is False
+    assert registry.as_payload()["release_claim_allowed"] is False
 
 
 @pytest.mark.parametrize(
@@ -197,12 +197,15 @@ def test_egs3_pass_binds_source_and_seal_but_has_no_scientific_authority() -> No
     )
 
 
-def test_current_registry_validates_clean_under_pr124_authority() -> None:
+def test_current_registry_blocks_stored_pr124_cas_authority() -> None:
     report = validate_mes_successor_registry(REPO_ROOT)
 
-    assert finding_codes(report) == frozenset()
-    assert report.release_allowed is True
-    report.assert_release_allowed()
+    assert finding_codes(report) == frozenset({
+        MesConsumerIssueCode.SCIENTIFIC_AUTHORITY_BLOCKED.value
+    })
+    assert report.release_allowed is False
+    with pytest.raises(MesRegistryError, match="SCIENTIFIC_AUTHORITY_BLOCKED"):
+        report.assert_release_allowed()
 
 
 def test_witness_source_and_seal_hashes_are_checked_separately(

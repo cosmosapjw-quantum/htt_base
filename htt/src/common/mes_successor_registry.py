@@ -48,7 +48,7 @@ PLANNED_PR124_SOURCE = "htt/src/common/mes_theorem_authority.py"
 # these constants (and re-run the PR-122 evidence-graph resync ritual);
 # silent drift is re-blocked by validate_mes_successor_registry.
 PR124_AUTHORITY_SOURCE_SHA256 = (
-    "d149d8599eba65dd1af536d30f289466b642e990bd8cee6cc8639566ab787af8"
+    "10cc3c960df5279a47397d2ac6baec4289dcc4fbb33f6bedfb3cb242075fe557"
 )
 PR124_AUTHORITY_RECEIPT_SHA256 = (
     "81ad8c382fbe481eaf715b971680199fed5142e2498928cff57ae9d847cc20f3"
@@ -445,17 +445,10 @@ class MesSuccessorPointer:
 
     @property
     def scientific_authority(self) -> bool:
-        # Strings alone never escalate: authority requires the AVAILABLE
-        # pointer shape AND the module-pinned PR-124 receipt hash.  Live
-        # byte re-verification happens in validate_mes_successor_registry;
-        # any receipt drift re-blocks the release there.
-        return (
-            self.source.availability is SourceAvailability.AVAILABLE
-            and self.process_result is MesProcessResult.PASS
-            and self.scientific_status
-            is MesScientificAuthorityStatus.AUTHORIZED_BY_PR124
-            and self.authority_receipt_id == PR124_AUTHORITY_RECEIPT_SHA256
-        )
+        # The stored receipt records the historical PR-124 result.  It is not
+        # a current parent-observed CAS execution token and therefore cannot
+        # promote scientific or release authority by itself.
+        return False
 
     def as_payload(self) -> dict[str, object]:
         return {

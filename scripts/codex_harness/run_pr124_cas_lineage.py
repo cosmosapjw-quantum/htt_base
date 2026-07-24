@@ -889,23 +889,6 @@ def build(write: bool, run_rust: bool) -> int:
                     }))
                     return 2
             _write_if_changed(rel, envelope, wrote)
-        adjudication = _adjudicate(CAS_CONTRACT_PATH, axis_rel)
-        # The frozen v1 adjudication remains a reproducibility artifact.  A
-        # stored-envelope replay may check its historical verdict, but must
-        # not mint or overwrite a claim-promotion-shaped CAS pass.
-        if (
-            adjudication.get("gate_exit_code") != 2
-            or adjudication.get("verification_state") != "HISTORICAL_REPLAY"
-            or adjudication.get("aggregate_status") != "CAS_BLOCKED"
-            or adjudication.get("historical_aggregate_status")
-            != "CAS_4AXIS_PASS"
-            or adjudication.get("claim_promotion_cas_requirement")
-            != "NOT_SATISFIED"
-        ):
-            problems.append(
-                "stored-envelope replay did not reproduce the historical "
-                "CAS_4AXIS_PASS as a non-promotable diagnostic"
-            )
     for axis, rel in axis_rel.items():
         target = REPO / rel
         if not target.is_file():
@@ -918,18 +901,42 @@ def build(write: bool, run_rust: bool) -> int:
     if problems:
         print(json.dumps({"ok": False, "problems": problems}))
         return 2
-    adjudication = json.loads(
+
+    # Parent observes cas_gate classify the serialized envelopes in both
+    # modes.  This is deliberately the diagnostic replay path, not the
+    # execution-authoritative `run-adjudicate` path.
+    stored_replay = _adjudicate(CAS_CONTRACT_PATH, axis_rel)
+    if (
+        stored_replay.get("gate_exit_code") != 2
+        or stored_replay.get("verification_state") != "HISTORICAL_REPLAY"
+        or stored_replay.get("aggregate_status") != "CAS_BLOCKED"
+        or stored_replay.get("historical_aggregate_status")
+        != "CAS_4AXIS_PASS"
+        or stored_replay.get("claim_promotion_cas_requirement")
+        != "NOT_SATISFIED"
+    ):
+        problems.append(
+            "stored-envelope replay did not remain a non-promotable "
+            "historical diagnostic"
+        )
+    if problems:
+        print(json.dumps({"ok": False, "problems": problems}))
+        return 2
+
+    historical_adjudication = json.loads(
         (REPO / CAS_ADJUDICATION_PATH).read_text(encoding="utf-8"))
     if (
-        adjudication.get("aggregate_status") != "CAS_4AXIS_PASS"
-        or adjudication.get("contract_sha256") != contract_sha
-        or adjudication.get("errors")
-        or adjudication.get("missing_axes")
+        historical_adjudication.get("aggregate_status") != "CAS_4AXIS_PASS"
+        or historical_adjudication.get("contract_sha256") != contract_sha
+        or historical_adjudication.get("errors")
+        or historical_adjudication.get("missing_axes")
     ):
         print(json.dumps({"ok": False,
-                          "reason": "CAS adjudication is not a clean "
-                                    "CAS_4AXIS_PASS bound to this contract",
-                          "aggregate": adjudication.get("aggregate_status")}))
+                          "reason": "historical CAS adjudication is not a "
+                                    "clean recorded CAS_4AXIS_PASS bound to "
+                                    "this contract",
+                          "aggregate":
+                              historical_adjudication.get("aggregate_status")}))
         return 2
 
     # 3. theorem inventory
@@ -983,10 +990,20 @@ def build(write: bool, run_rust: bool) -> int:
 
     # 9. full authority verification (the same check the successor uses)
     try:
-        verification = verify_authority_receipt(REPO)
+        verify_authority_receipt(REPO)
     except MesAuthorityError as exc:
-        print(json.dumps({"ok": False,
-                          "reason": f"authority verification failed: {exc}"}))
+        authority_blocker = str(exc)
+        if "diagnostic-only" not in authority_blocker:
+            print(json.dumps({
+                "ok": False,
+                "reason": f"authority verification failed: {exc}",
+            }))
+            return 2
+    else:
+        print(json.dumps({
+            "ok": False,
+            "reason": "stored CAS evidence unexpectedly granted authority",
+        }))
         return 2
 
     # 10. forbidden-language lint over every artifact (the manifest's own
@@ -1013,17 +1030,23 @@ def build(write: bool, run_rust: bool) -> int:
         return 2
 
     summary = {
-        "ok": True,
+        "ok": False,
         "mode": "write" if write else "check",
         "wrote": wrote,
-        "cas_aggregate": adjudication["aggregate_status"],
+        "cas_aggregate": stored_replay["aggregate_status"],
+        "historical_cas_aggregate":
+            historical_adjudication["aggregate_status"],
+        "verification_state": stored_replay["verification_state"],
+        "claim_promotion_cas_requirement":
+            stored_replay["claim_promotion_cas_requirement"],
         "honest_theorem_count": inventory["honest_theorem_count"],
         "d2_value_uK2": d2_receipt["rust_target"]["d2_value_uK2"],
         "surviving_mutations": 0,
-        "authority_receipt_sha256": verification.receipt_sha256,
+        "authority_receipt_sha256": sha256_file(REPO / AUTHORITY_TABLE_PATH),
+        "authority_blocker": authority_blocker,
     }
     print(json.dumps(summary, indent=2))
-    return 0
+    return 2
 
 
 def main() -> None:

@@ -1,9 +1,8 @@
-"""PR-124 contract tests: four-axis CAS contract + derivation-lineage oracle.
+"""PR-124 contract tests: historical CAS record + derivation-lineage oracle.
 
-Covers the spec acceptance switches: CAS_4AXIS_PASS binding, honest theorem
-counting (the 65-entry overstatement must fail), branch/lineage fail-closed
-validation, D2 receipt zero-test, mutation-report completeness, and the
-receipt-bytes successor authorization (strings never escalate).
+Covers historical CAS_4AXIS_PASS binding without current authority, honest
+theorem counting (the 65-entry overstatement must fail), branch/lineage
+fail-closed validation, D2 receipt zero-test, and mutation-report completeness.
 """
 from __future__ import annotations
 
@@ -81,7 +80,7 @@ def test_historical_generation_location_is_not_live_check_authority() -> None:
     assert pr124_runner._semantic(frozen) != pr124_runner._semantic(current)
 
 
-def test_cas_adjudication_is_four_axis_pass_bound_to_contract(
+def test_historical_cas_adjudication_is_four_axis_pass_bound_to_contract(
     adjudication: dict,
 ) -> None:
     assert adjudication["aggregate_status"] == "CAS_4AXIS_PASS"
@@ -92,6 +91,19 @@ def test_cas_adjudication_is_four_axis_pass_bound_to_contract(
     assert all(status == "PASS" for status in statuses.values())
     assert adjudication["missing_axes"] == []
     assert adjudication["errors"] == []
+
+
+def test_stored_axis_replay_is_currently_blocked() -> None:
+    axis_rel = {
+        axis: f"docs/generated/pr124_cas/axis_result_{axis}.json"
+        for axis in ("wolfram_xact", "sympy", "sage_singular", "lean")
+    }
+    replay = pr124_runner._adjudicate(CAS_CONTRACT_PATH, axis_rel)
+    assert replay["gate_exit_code"] == 2
+    assert replay["verification_state"] == "HISTORICAL_REPLAY"
+    assert replay["aggregate_status"] == "CAS_BLOCKED"
+    assert replay["historical_aggregate_status"] == "CAS_4AXIS_PASS"
+    assert replay["claim_promotion_cas_requirement"] == "NOT_SATISFIED"
 
 
 def test_axis_envelopes_bind_contract_and_agree_exactly(spec: dict) -> None:
@@ -247,21 +259,18 @@ def test_mutation_report_complete_and_zero_survivors(spec: dict) -> None:
     assert report["surviving_mutation_count"] == 0
 
 
-def test_authority_receipt_verifies_and_binds_artifacts() -> None:
-    verification = verify_authority_receipt(REPO_ROOT)
-    assert verification.receipt_sha256 == sha256_file(
-        REPO_ROOT / AUTHORITY_TABLE_PATH
-    )
-    assert verification.d2_value_uK2 > 0.0
+def test_authority_receipt_is_historical_and_binds_artifacts() -> None:
     table = json.loads(
         (REPO_ROOT / AUTHORITY_TABLE_PATH).read_text(encoding="utf-8")
     )
     assert table["branch_table"] == branch_table_payload()
     for rel, digest in table["bound_artifacts"].items():
         assert sha256_file(REPO_ROOT / rel) == digest
+    with pytest.raises(MesAuthorityError, match="diagnostic-only"):
+        verify_authority_receipt(REPO_ROOT)
 
 
-def test_successor_pointer_authorized_by_receipt_bytes_only() -> None:
+def test_successor_pointer_receipt_bytes_do_not_grant_current_authority() -> None:
     from common.mes_successor_registry import (
         PR124_AUTHORITY_RECEIPT_SHA256,
         PR124_AUTHORITY_SOURCE_SHA256,
@@ -275,7 +284,8 @@ def test_successor_pointer_authorized_by_receipt_bytes_only() -> None:
         REPO_ROOT / "htt/src/common/mes_theorem_authority.py"
     )
     registry = current_mes_successor_registry()
-    assert registry.successor.scientific_authority is True
+    assert registry.successor.scientific_authority is False
+    assert registry.as_payload()["release_claim_allowed"] is False
 
 
 def test_frozen_modules_untouched(spec: dict) -> None:
