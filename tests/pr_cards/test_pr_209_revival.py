@@ -52,6 +52,35 @@ def test_mutation_flipped_sha_is_caught():
     assert not all(r.matches for r in rows)  # kill
 
 
+def test_inventory_path_escape_is_rejected(tmp_path):
+    drop = tmp_path / "drop"
+    drop.mkdir()
+    outside = tmp_path / "outside.bin"
+    outside.write_bytes(b"outside")
+    ledger = [{
+        "path": "../outside.bin",
+        "disposition": "RETIRE_RESULT",
+        "sha256": "00" * 32,
+    }]
+    with pytest.raises(ValueError, match="escapes the drop"):
+        verify_inventory(ledger, drop)
+
+
+def test_inventory_symlink_escape_is_rejected(tmp_path):
+    drop = tmp_path / "drop"
+    drop.mkdir()
+    outside = tmp_path / "outside.bin"
+    outside.write_bytes(b"outside")
+    (drop / "linked.bin").symlink_to(outside)
+    ledger = [{
+        "path": "linked.bin",
+        "disposition": "RETIRE_RESULT",
+        "sha256": "00" * 32,
+    }]
+    with pytest.raises(ValueError, match="crosses a symlink"):
+        verify_inventory(ledger, drop)
+
+
 def test_mutation_missing_disposition_is_caught():
     ledger = load_ledger(LEDGER)
     bad = dict(ledger[0], disposition="TOTALLY_UNKNOWN")

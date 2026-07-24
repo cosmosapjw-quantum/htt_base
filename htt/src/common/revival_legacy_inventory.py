@@ -17,7 +17,7 @@ import json
 import re
 import zipfile
 from dataclasses import dataclass
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 # Disposition classes grouped by salvage action.
 KEEP_CLASSES = {"KEEP_INTERFACE", "KEEP_MATH", "KEEP_VISUAL_LANGUAGE"}
@@ -48,6 +48,33 @@ def load_ledger(ledger_path: Path) -> list[dict]:
     return json.loads(ledger_path.read_text(encoding="utf-8"))["items"]
 
 
+def _inventory_path(drop_root: Path, relative: str) -> Path:
+    """Resolve one ledger member without escaping or following symlinks."""
+    if not isinstance(relative, str) or not relative:
+        raise ValueError("legacy inventory path must be a non-empty string")
+    pure = PurePosixPath(relative)
+    if pure.is_absolute() or not pure.parts or ".." in pure.parts:
+        raise ValueError(f"legacy inventory path escapes the drop: {relative!r}")
+
+    candidate = drop_root.joinpath(*pure.parts)
+    current = drop_root
+    for part in pure.parts:
+        current = current / part
+        if current.is_symlink():
+            raise ValueError(
+                f"legacy inventory path crosses a symlink: {relative!r}"
+            )
+    try:
+        candidate.resolve(strict=False).relative_to(
+            drop_root.resolve(strict=False)
+        )
+    except ValueError as exc:
+        raise ValueError(
+            f"legacy inventory path escapes the drop: {relative!r}"
+        ) from exc
+    return candidate
+
+
 @dataclass(frozen=True)
 class InventoryRow:
     path: str
@@ -65,7 +92,7 @@ def verify_inventory(ledger: list[dict], drop_root: Path) -> list[InventoryRow]:
     """Hash every pinned legacy object under the drop and compare to the ledger."""
     rows = []
     for item in ledger:
-        p = drop_root / item["path"]
+        p = _inventory_path(drop_root, item["path"])
         present = p.is_file()
         actual = sha256_file(p) if present else None
         rows.append(InventoryRow(item["path"], item["disposition"],
@@ -79,7 +106,7 @@ def archive_integrity(drop_root: Path, ledger: list[dict]) -> list[dict]:
     for item in ledger:
         if not item["path"].endswith(".zip"):
             continue
-        p = drop_root / item["path"]
+        p = _inventory_path(drop_root, item["path"])
         if not p.is_file():
             out.append({"path": item["path"], "present": False, "bad_crc": "MISSING"})
             continue
