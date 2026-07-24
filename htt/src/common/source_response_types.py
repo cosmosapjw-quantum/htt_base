@@ -361,6 +361,24 @@ _RUNG_ORDER = (Rung.ALGEBRAIC_WITNESS, Rung.CONSTRAINT_ADMISSIBLE,
                Rung.GLOBAL_DYNAMICS_ADMISSIBLE)
 
 
+def _require_repo_evidence_file(pointer: str, rung: Rung) -> None:
+    root = _REPO_ROOT.resolve()
+    raw = Path(pointer)
+    candidate = raw.resolve() if raw.is_absolute() else (root / raw).resolve()
+    try:
+        candidate.relative_to(root)
+    except ValueError as exc:
+        raise SourceResponseError(
+            f"evidence pointer {pointer!r} for rung {rung.value} resolves "
+            "outside the repository"
+        ) from exc
+    if not candidate.is_file():
+        raise SourceResponseError(
+            f"evidence pointer {pointer!r} for rung {rung.value} does "
+            "not resolve to a repo file — false citation is refused"
+        )
+
+
 def label_highest_rung(evidence: Mapping[Rung, str | None]) -> dict:
     """The highest rung reached is the last CONSECUTIVE rung whose
     evidence pointer is present AND resolves to a real repo file,
@@ -372,10 +390,7 @@ def label_highest_rung(evidence: Mapping[Rung, str | None]) -> dict:
         pointer = evidence.get(rung)
         if not pointer or not str(pointer).strip():
             break
-        if not (_REPO_ROOT / str(pointer)).is_file():
-            raise SourceResponseError(
-                f"evidence pointer {pointer!r} for rung {rung.value} does "
-                "not resolve to a repo file — false citation is refused")
+        _require_repo_evidence_file(str(pointer), rung)
         reached = rung
     if reached is None:
         raise SourceResponseError(

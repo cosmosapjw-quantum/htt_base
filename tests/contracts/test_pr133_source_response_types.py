@@ -152,7 +152,7 @@ def test_deprojection_estimator_property() -> None:
         Fraction(1, 100)
 
 
-def test_response_ladder_no_auto_promotion() -> None:
+def test_response_ladder_no_auto_promotion(tmp_path: Path) -> None:
     # a gap in the middle caps the candidate below the gap (pointers
     # must resolve to real repo files)
     labelled = label_highest_rung({
@@ -164,6 +164,10 @@ def test_response_ladder_no_auto_promotion() -> None:
     # an unresolvable pointer is a false citation -> raise
     with pytest.raises(SourceResponseError, match="does not resolve"):
         label_highest_rung({Rung.ALGEBRAIC_WITNESS: "docs/nope.json"})
+    outside = tmp_path / "outside-evidence.txt"
+    outside.write_text("not repository evidence", encoding="utf-8")
+    with pytest.raises(SourceResponseError, match="outside the repository"):
+        label_highest_rung({Rung.ALGEBRAIC_WITNESS: str(outside)})
     # claiming the top rung with no base evidence -> raise
     with pytest.raises(SourceResponseError, match="no rung reached"):
         label_highest_rung({Rung.GLOBAL_DYNAMICS_ADMISSIBLE: _DOPPLER_EV})
