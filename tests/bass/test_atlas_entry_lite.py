@@ -345,6 +345,11 @@ def test_metadata_validator_rejects_top_level_role_tampering() -> None:
         with pytest.raises(ValueError, match=f"{field_name} must match"):
             validate_atlas_entry_lite_metadata(tampered)
 
+    bad_entry_hash = dict(metadata)
+    bad_entry_hash["entry_hash"] = "attacker-controlled-not-a-hash"
+    with pytest.raises(ValueError, match="entry_hash mismatch"):
+        validate_atlas_entry_lite_metadata(bad_entry_hash)
+
 
 def test_atlas_entry_lite_rejects_validated_native_or_none_source() -> None:
     from bass.atlas import AtlasEntryLite

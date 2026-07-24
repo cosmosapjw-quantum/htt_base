@@ -756,6 +756,22 @@ def validate_atlas_entry_lite_metadata(metadata: Mapping[str, object]) -> None:
             raise ValueError(
                 f"AtlasEntryLite metadata {field_name} must match transfer_metadata"
             )
+    expected_entry_hash = _hash_payload(
+        {
+            "schema_version": metadata["schema_version"],
+            "entry_id": metadata["entry_id"],
+            "comparison_group": metadata["comparison_group"],
+            "transfer_metadata": transfer_metadata,
+            "config_hash": metadata["config_hash"],
+            "input_hashes": metadata["input_hashes"],
+            "generating_command": metadata["generating_command"],
+            "git_commit_or_worktree_state": metadata[
+                "git_commit_or_worktree_state"
+            ],
+        }
+    )
+    if metadata["entry_hash"] != expected_entry_hash:
+        raise ValueError("AtlasEntryLite metadata entry_hash mismatch")
 
 
 __all__ = [
