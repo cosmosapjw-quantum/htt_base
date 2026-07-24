@@ -147,6 +147,8 @@ def test_sbc_lineage_mandatory_and_nbins_load_bearing() -> None:
 def test_ppc_frozen_discrepancies_and_mandatory_lineage() -> None:
     with pytest.raises(SbcPpcError, match="at least one"):
         freeze_discrepancies([])
+    with pytest.raises(SbcPpcError, match="must be unique"):
+        freeze_discrepancies(["sample_variance", "sample_variance"])
     frozen = freeze_discrepancies(["sample_variance", "sample_max",
                                    "sample_range"])
     rng = np.random.Generator(np.random.PCG64(3))

@@ -260,6 +260,8 @@ def freeze_discrepancies(names) -> dict:
     names = list(names)
     if not names:
         raise SbcPpcError("at least one frozen discrepancy is required")
+    if len(set(names)) != len(names):
+        raise SbcPpcError("frozen discrepancy names must be unique")
     for n in names:
         _discrepancy(n)   # validate each exists
     canonical = json.dumps(sorted(names), sort_keys=True)
@@ -274,6 +276,8 @@ def require_frozen_discrepancies(frozen: dict, current_names) -> None:
     current_names = list(current_names)
     if not current_names:
         raise SbcPpcError("at least one frozen discrepancy is required")
+    if len(set(current_names)) != len(current_names):
+        raise SbcPpcError("frozen discrepancy names must be unique")
     canonical = json.dumps(sorted(current_names), sort_keys=True)
     current_hash = "disc-" + hashlib.sha256(
         canonical.encode()).hexdigest()[:16]
