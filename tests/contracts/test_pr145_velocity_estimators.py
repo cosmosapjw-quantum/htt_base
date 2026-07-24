@@ -1,6 +1,7 @@
 """PR-145 contract tests: CF4 velocity estimator mechanics."""
 from __future__ import annotations
 
+import importlib.util
 import json
 import subprocess
 import sys
@@ -34,6 +35,75 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 GROUPS = REPO_ROOT / "workdir/obs_bundle/pecvel/cf4_full/cf4_groups.npz"
 needs_data = pytest.mark.skipif(not GROUPS.is_file(),
                                 reason="CF4 groups npz absent")
+
+
+def _load_runner():
+    runner_path = (
+        REPO_ROOT / "scripts/codex_harness/run_pr145_velocity_estimators.py"
+    )
+    spec = importlib.util.spec_from_file_location("run_pr145", runner_path)
+    runner = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(runner)
+    return runner
+
+
+def test_relocated_source_is_generation_time_provenance() -> None:
+    runner = _load_runner()
+    bulk_rel = runner.OUTPUTS["bulk_flow"]
+    stored = {
+        "amplitude_kms": 250.0,
+        "negative_scan": {
+            "targets": {
+                runner.HISTORICAL_SOURCE_PATH: {
+                    "sha256": "1" * 64,
+                    "hits": [],
+                },
+            },
+        },
+    }
+    current = {
+        "amplitude_kms": 250.0,
+        "negative_scan": {
+            "targets": {
+                runner.SOURCE_PATH: {"sha256": "2" * 64, "hits": []},
+            },
+        },
+    }
+    assert runner._semantic_artifact(
+        bulk_rel, stored
+    ) == runner._semantic_artifact(bulk_rel, current)
+    current["negative_scan"]["targets"][runner.SOURCE_PATH]["hits"] = [
+        {"line": 1},
+    ]
+    assert runner._semantic_artifact(
+        bulk_rel, stored
+    ) != runner._semantic_artifact(bulk_rel, current)
+    current["negative_scan"]["targets"][runner.SOURCE_PATH] = {
+        "sha256": "not-a-sha",
+        "hits": [],
+    }
+    assert runner._semantic_artifact(
+        bulk_rel, stored
+    ) != runner._semantic_artifact(bulk_rel, current)
+
+    manifest_rel = runner.OUTPUTS["manifest"]
+    stored = {
+        "input_hashes": [
+            f"{runner.HISTORICAL_SOURCE_PATH}:{'1' * 64}",
+        ],
+        "raw_data_pins": {"groups_sha256": "raw"},
+    }
+    current = {
+        "input_hashes": [f"{runner.SOURCE_PATH}:{'2' * 64}"],
+        "raw_data_pins": {"groups_sha256": "raw"},
+    }
+    assert runner._semantic_artifact(
+        manifest_rel, stored
+    ) == runner._semantic_artifact(manifest_rel, current)
+    current["raw_data_pins"]["groups_sha256"] = "changed"
+    assert runner._semantic_artifact(
+        manifest_rel, stored
+    ) != runner._semantic_artifact(manifest_rel, current)
 
 
 def test_chi2_sf_matches_scipy() -> None:

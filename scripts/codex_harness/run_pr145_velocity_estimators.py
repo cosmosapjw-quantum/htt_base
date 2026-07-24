@@ -57,6 +57,8 @@ OUTPUTS = {
     "mutations": "docs/generated/pr145_mutation_report.json",
     "manifest": "docs/generated/pr145_artifact_manifest.json",
 }
+SOURCE_PATH = "htt/obsstat/cf4_velocity_estimators.py"
+HISTORICAL_SOURCE_PATH = "htt/src/common/cf4_velocity_estimators.py"
 REDACTED = "[REDACTED-PATTERN]"
 
 
@@ -77,6 +79,49 @@ def _round(obj):
 def _render(payload: dict) -> bytes:
     return (json.dumps(_round(payload), indent=2, ensure_ascii=False,
                        sort_keys=True) + "\n").encode()
+
+
+def _is_sha256(value: object) -> bool:
+    return (
+        isinstance(value, str)
+        and len(value) == 64
+        and all(char in "0123456789abcdef" for char in value)
+    )
+
+
+def _semantic_artifact(rel: str, payload: dict) -> dict:
+    """Treat the relocated maintained source as generation-time provenance."""
+
+    normalized = json.loads(json.dumps(_round(payload)))
+    aliases = (HISTORICAL_SOURCE_PATH, SOURCE_PATH)
+    if rel == OUTPUTS["bulk_flow"]:
+        scan = normalized.get("negative_scan")
+        targets = scan.get("targets") if isinstance(scan, dict) else None
+        if not isinstance(targets, dict):
+            return normalized
+        for source_path in aliases:
+            source = targets.get(source_path)
+            if isinstance(source, dict) and _is_sha256(source.get("sha256")):
+                source["sha256"] = "<generation-time-source>"
+                if source_path != SOURCE_PATH:
+                    targets[SOURCE_PATH] = targets.pop(source_path)
+        return normalized
+    if rel != OUTPUTS["manifest"]:
+        return normalized
+    rows = normalized.get("input_hashes")
+    if not isinstance(rows, list):
+        return normalized
+    for index, row in enumerate(rows):
+        for source_path in aliases:
+            prefix = f"{source_path}:"
+            if (
+                isinstance(row, str)
+                and row.startswith(prefix)
+                and _is_sha256(row.removeprefix(prefix))
+            ):
+                rows[index] = f"{SOURCE_PATH}:<generation-time-source>"
+                break
+    return normalized
 
 
 def _verify_baseline_commit(spec: dict) -> None:
@@ -219,7 +264,9 @@ def _scan_targets(spec: dict, captions_payload: dict) -> dict:
             source, digest = "fresh_build", hashlib.sha256(
                 raw.encode()).hexdigest()
         else:
-            path = REPO / rel
+            path = REPO / (
+                SOURCE_PATH if rel == HISTORICAL_SOURCE_PATH else rel
+            )
             raw = path.read_text(encoding="utf-8")
             source, digest = "disk", _sha(path)
         hits = []
@@ -317,7 +364,20 @@ def _emit(rel, payload, write, problems, wrote) -> None:
         return
     if not target.is_file():
         problems.append(f"missing artifact: {rel}")
-    elif target.read_bytes() != rendered:
+        return
+    if rel in {OUTPUTS["bulk_flow"], OUTPUTS["manifest"]}:
+        try:
+            existing = json.loads(target.read_text(encoding="utf-8"))
+        except (UnicodeError, json.JSONDecodeError):
+            problems.append(f"invalid artifact: {rel}")
+            return
+        if (
+            isinstance(existing, dict)
+            and _semantic_artifact(rel, existing)
+            == _semantic_artifact(rel, payload)
+        ):
+            return
+    if target.read_bytes() != rendered:
         problems.append(f"stale artifact: {rel}")
 
 
@@ -361,7 +421,7 @@ def build(write: bool) -> int:
         "config_hash": _sha(SPEC_PATH),
         "raw_data_pins": {"groups_sha256": _sha(_groups_path(spec))},
         "input_hashes": [f"{rel}:{_sha(REPO / rel)}" for rel in
-                         ("htt/obsstat/cf4_velocity_estimators.py",)],
+                         (SOURCE_PATH,)],
         "caveats": [
             "Observable-estimator mechanics at C2 only.",
             "The bulk-flow significance is reported under the FULL "
