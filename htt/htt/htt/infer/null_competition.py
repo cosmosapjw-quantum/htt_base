@@ -160,6 +160,13 @@ def _dedupe(values: tuple[str, ...] | list[str]) -> tuple[str, ...]:
     return tuple(out)
 
 
+def _validate_matched_complexity_readiness(
+    hook: MatchedComplexityHook | None,
+) -> None:
+    if hook is not None and type(hook.overall_pass) is not bool:
+        raise TypeError("MatchedComplexityHook.overall_pass must be bool")
+
+
 def _primary_provenance_state(
     *,
     git_commit: str | None,
@@ -752,6 +759,7 @@ def build_matched_null_competition_report(
         raise TypeError(
             "matched_complexity_hook must be an exact MatchedComplexityHook"
         )
+    _validate_matched_complexity_readiness(matched_complexity_hook)
     threshold = _fpr_threshold(fpr_threshold)
     for family_name, result in null_result.family_results.items():
         if type(result) is not FamilyCompetitionResult:
@@ -1263,6 +1271,7 @@ def build_null_competition_hook(
         matched_null_report_hash = matched_null_report.report_hash
         required_families = list(result.family_results)
         fpr_threshold = matched_null_report.fpr_threshold
+    _validate_matched_complexity_readiness(matched_complexity_hook)
     families = tuple(
         required_families
         or (

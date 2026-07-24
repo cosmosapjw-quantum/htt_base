@@ -164,6 +164,34 @@ def test_null_competition_hook_requires_matched_complexity_for_readiness():
     assert "matched_complexity_failed" in failed_matched.blocked_reasons
 
 
+def test_matched_complexity_readiness_requires_exact_boolean():
+    from htt.infer.matched_complexity import MatchedComplexityHook
+    from htt.infer.null_competition import (
+        build_matched_null_competition_report,
+        build_null_competition_hook,
+    )
+
+    with pytest.raises(TypeError, match="overall_pass must be bool"):
+        MatchedComplexityHook(
+            controls_required=("C1", "C2", "C3"),
+            overall_pass="false",
+            violations=(),
+        )
+
+    forged = _matched_hook()
+    object.__setattr__(forged, "overall_pass", "false")
+    with pytest.raises(TypeError, match="overall_pass must be bool"):
+        build_matched_null_competition_report(
+            **_report_kwargs(matched_complexity_hook=forged)
+        )
+    with pytest.raises(TypeError, match="overall_pass must be bool"):
+        build_null_competition_hook(
+            _null_result(),
+            matched_complexity_hook=forged,
+            matched_null_report_hash=_sha("r"),
+        )
+
+
 def test_null_result_and_hook_reject_overstrong_or_inconsistent_readiness():
     from htt.infer.null_competition import (
         FamilyCompetitionResult,

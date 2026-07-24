@@ -51,6 +51,10 @@ class MatchedComplexityHook:
     violations: tuple[str, ...]
     scope: str = "pre_inference_only"
 
+    def __post_init__(self) -> None:
+        if type(self.overall_pass) is not bool:
+            raise TypeError("MatchedComplexityHook.overall_pass must be bool")
+
 
 def _jsonify(obj: Any) -> Any:
     """Recursively convert numpy-heavy structures to JSON-native values."""
