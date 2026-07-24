@@ -272,11 +272,24 @@ def validate_transfer_dependent_result(metadata: Mapping[str, object]) -> None:
             CalibrationStatus.NATIVE_VALIDATED,
         } or _NATIVE_VALIDATION_GATES.intersection(gates):
             raise ValueError("external transfer metadata cannot claim native validation")
+    if source is TransferSource.BASS_NATIVE_VALIDATED:
+        if calibration_status is not CalibrationStatus.NATIVE_VALIDATED:
+            raise ValueError(
+                "BASS_native_validated transfer metadata requires "
+                "calibration_status native_validated"
+            )
+        if not _NATIVE_VALIDATION_GATES.intersection(gates):
+            raise ValueError(
+                "native transfer metadata requires native_transfer_validated gate"
+            )
     if (
-        source is TransferSource.BASS_NATIVE_VALIDATED
-        and not _NATIVE_VALIDATION_GATES.intersection(gates)
+        source is TransferSource.BASS_NATIVE_PROVISIONAL
+        and calibration_status is CalibrationStatus.NATIVE_VALIDATED
     ):
-        raise ValueError("native transfer metadata requires native_transfer_validated gate")
+        raise ValueError(
+            "BASS_native_provisional transfer metadata cannot use "
+            "native_validated calibration"
+        )
 
 
 __all__ = [
