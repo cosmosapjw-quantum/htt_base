@@ -74,6 +74,13 @@ def _repo_relative(path: Path, repo_root: Path) -> str:
         return path.as_posix()
 
 
+def _require_repo_contained(path: Path, repo_root: Path, *, label: str) -> None:
+    try:
+        path.resolve().relative_to(repo_root)
+    except ValueError as exc:
+        raise ValueError(f"{label} must remain within the repository root") from exc
+
+
 def _is_empty(value: object) -> bool:
     if value is None:
         return True
@@ -217,8 +224,13 @@ def sidecar_manifest_candidates(figure_path: Path) -> tuple[Path, Path]:
     )
 
 
-def _existing_sidecar(figure_path: Path) -> Path | None:
+def _existing_sidecar(figure_path: Path, repo_root: Path) -> Path | None:
     for candidate in sidecar_manifest_candidates(figure_path):
+        _require_repo_contained(
+            candidate,
+            repo_root,
+            label="manifest sidecar",
+        )
         if candidate.exists():
             return candidate
     return None
@@ -228,11 +240,15 @@ def _figure_paths(repo_root: Path, scan_roots: Iterable[str]) -> list[Path]:
     paths: list[Path] = []
     for root_text in scan_roots:
         root = repo_root / root_text
+        _require_repo_contained(root, repo_root, label="scan root")
         if not root.exists():
             continue
         candidates = [root] if root.is_file() else sorted(root.rglob("*"))
         for path in candidates:
-            if path.is_file() and path.suffix.lower() in FIGURE_SUFFIXES:
+            if path.suffix.lower() not in FIGURE_SUFFIXES:
+                continue
+            _require_repo_contained(path, repo_root, label="scanned artifact")
+            if path.is_file():
                 paths.append(path)
     return sorted(set(paths), key=lambda path: _repo_relative(path, repo_root))
 
@@ -258,7 +274,7 @@ def build_quarantine_report(
 
     for figure_path in _figure_paths(root, scan_root_tuple):
         relative_figure = _repo_relative(figure_path, root)
-        sidecar = _existing_sidecar(figure_path)
+        sidecar = _existing_sidecar(figure_path, root)
         if sidecar is None:
             quarantined.append(
                 FigureManifestRecord(

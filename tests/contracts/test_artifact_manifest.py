@@ -5,6 +5,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+import pytest
+
 from common.artifact_manifest import (
     REQUIRED_ARTIFACT_FIELDS,
     REQUIRED_PROVENANCE_FIELDS,
@@ -199,6 +201,85 @@ def test_sidecar_must_match_scanned_artifact_path(tmp_path: Path) -> None:
     assert [issue.code for issue in report.manifest_issues] == [
         "artifact_path_mismatch"
     ]
+
+
+def test_scan_root_cannot_escape_repository(tmp_path: Path) -> None:
+    repo_root = tmp_path / "repo"
+    repo_root.mkdir()
+    outside = tmp_path / "outside"
+    outside.mkdir()
+    (outside / "owner-local.pdf").write_bytes(b"outside")
+
+    with pytest.raises(
+        ValueError,
+        match="scan root must remain within the repository root",
+    ):
+        build_quarantine_report(repo_root, scan_roots=("../outside",))
+
+
+def test_figure_and_sidecar_symlinks_cannot_escape_repository(
+    tmp_path: Path,
+) -> None:
+    repo_root = tmp_path / "repo"
+    figure_dir = repo_root / "figures"
+    figure_dir.mkdir(parents=True)
+    outside = tmp_path / "outside"
+    outside.mkdir()
+    outside_figure = outside / "owner-local.pdf"
+    outside_figure.write_bytes(b"outside")
+    (figure_dir / "linked.pdf").symlink_to(outside_figure)
+
+    with pytest.raises(
+        ValueError,
+        match="scanned artifact must remain within the repository root",
+    ):
+        build_quarantine_report(repo_root, scan_roots=("figures",))
+
+    (figure_dir / "linked.pdf").unlink()
+    figure = figure_dir / "ready.png"
+    figure.write_bytes(b"inside")
+    outside_manifest = outside / "ready.manifest.json"
+    outside_manifest.write_text(
+        json.dumps(_manifest_payload("figures/ready.png")),
+        encoding="utf-8",
+    )
+    (figure_dir / "ready.manifest.json").symlink_to(outside_manifest)
+
+    with pytest.raises(
+        ValueError,
+        match="manifest sidecar must remain within the repository root",
+    ):
+        build_quarantine_report(repo_root, scan_roots=("figures",))
+
+
+def test_cli_rejects_scan_root_outside_repository(tmp_path: Path) -> None:
+    repo_root = tmp_path / "repo"
+    repo_root.mkdir()
+    outside = tmp_path / "outside"
+    outside.mkdir()
+    (outside / "owner-local.pdf").write_bytes(b"outside")
+
+    completed = subprocess.run(
+        [
+            sys.executable,
+            str(REPO_ROOT / "scripts" / "check_artifact_manifests.py"),
+            "--repo-root",
+            str(repo_root),
+            "--scan-root",
+            "../outside",
+            "--dry-run",
+        ],
+        cwd=REPO_ROOT,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+
+    assert completed.returncode == 2
+    assert completed.stdout == ""
+    assert completed.stderr.strip() == (
+        "scan root must remain within the repository root"
+    )
 
 
 def test_render_quarantine_markdown_carries_required_metadata(tmp_path: Path) -> None:

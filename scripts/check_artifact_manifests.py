@@ -70,7 +70,11 @@ def main(argv: list[str] | None = None) -> int:
     output = args.output if args.output.is_absolute() else repo_root / args.output
     command = _command_from_args(argv)
 
-    report = build_quarantine_report(repo_root, scan_roots=scan_roots)
+    try:
+        report = build_quarantine_report(repo_root, scan_roots=scan_roots)
+    except ValueError as exc:
+        print(str(exc), file=sys.stderr)
+        return 2
     rendered = render_quarantine_markdown(
         report,
         repo_root=repo_root,
