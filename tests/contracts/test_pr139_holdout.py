@@ -227,6 +227,23 @@ def test_train_only_transform_rejects_heldout_rows() -> None:
     train_only_standardization(model.X, list(range(3, n)), held_rows=[0, 1, 2])
 
 
+def test_train_only_transform_rejects_aliased_row_indices() -> None:
+    from common.dependency_holdout import train_only_standardization
+    model, _ = _toy(G=4, ng=2)
+    last = model.X.shape[0] - 1
+    with pytest.raises(HoldoutError, match="outside"):
+        train_only_standardization(model.X, [-1], held_rows=[last])
+    with pytest.raises(HoldoutError, match="must be integers"):
+        select_features(
+            model.X,
+            model.y,
+            [0.5, 1.5],
+            1,
+            "train_only",
+            held_rows=[last],
+        )
+
+
 def test_psis_raises_on_too_few_draws() -> None:
     from common.dependency_holdout import psis_smooth
     with pytest.raises(HoldoutError, match="too few posterior draws"):

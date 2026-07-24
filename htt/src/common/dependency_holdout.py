@@ -275,6 +275,26 @@ def _round_vec(v: np.ndarray) -> list:
     return [round(float(x), 12) for x in np.atleast_1d(v)]
 
 
+def _validated_row_indices(
+        rows: Sequence[int], n_rows: int, label: str, *,
+        allow_empty: bool = False) -> np.ndarray:
+    values = list(rows)
+    if not values and not allow_empty:
+        raise HoldoutError(f"{label} row indices may not be empty")
+    normalized = []
+    for row in values:
+        if isinstance(row, bool) or not isinstance(row, (int, np.integer)):
+            raise HoldoutError(f"{label} row indices must be integers")
+        index = int(row)
+        if index < 0 or index >= n_rows:
+            raise HoldoutError(
+                f"{label} row index {index} is outside [0, {n_rows})")
+        normalized.append(index)
+    if len(set(normalized)) != len(normalized):
+        raise HoldoutError(f"{label} row indices contain duplicates")
+    return np.asarray(normalized, dtype=int)
+
+
 def _assert_excludes(rows_used: Sequence[int],
                      held_rows: Sequence[int]) -> None:
     """Behavioral guard: a train-only transform must not see held-out rows."""
@@ -293,9 +313,12 @@ def train_only_standardization(X: np.ndarray, train_rows: Sequence[int],
     When ``held_rows`` is supplied the row set is BEHAVIORALLY verified to
     exclude every held-out row (not merely self-labeled train_only).
     """
-    tr = np.asarray(train_rows, dtype=int)
+    tr = _validated_row_indices(
+        train_rows, X.shape[0], "training")
     if held_rows is not None:
-        _assert_excludes(tr, held_rows)
+        held = _validated_row_indices(
+            held_rows, X.shape[0], "held-out", allow_empty=True)
+        _assert_excludes(tr, held)
     means = X[tr].mean(axis=0)
     stds = X[tr].std(axis=0, ddof=0)
     stds = np.where(stds < 1e-12, 1.0, stds)
@@ -331,9 +354,11 @@ def select_features(X: np.ndarray, y: np.ndarray, rows: Sequence[int],
     ``scope`` is ``train_only`` and ``held_rows`` is supplied, the row set
     is BEHAVIORALLY verified to exclude the held-out rows.
     """
-    r = np.asarray(rows, dtype=int)
+    r = _validated_row_indices(rows, X.shape[0], "selection")
     if held_rows is not None and scope == "train_only":
-        _assert_excludes(r, held_rows)
+        held = _validated_row_indices(
+            held_rows, X.shape[0], "held-out", allow_empty=True)
+        _assert_excludes(r, held)
     yc = y[r] - y[r].mean()
     scores = []
     for j in range(X.shape[1]):
