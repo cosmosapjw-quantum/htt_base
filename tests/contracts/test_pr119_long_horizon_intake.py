@@ -22,6 +22,7 @@ from validate_pr_dag import (  # noqa: E402
 )
 from intake_long_horizon_roadmap import (  # noqa: E402
     _preserving_yaml_text,
+    check_materialized,
     materialize_payload,
     parse_roadmap_cards,
 )
@@ -81,6 +82,64 @@ def _card(payload: dict[str, object], pr_id: str) -> dict[str, object]:
     return next(card for card in _cards(payload) if card["id"] == pr_id)
 
 
+def _pr119_intake_text() -> str:
+    """Project the approved intake view without depending on owner-local git history."""
+
+    cards = parse_roadmap_cards(ROADMAP.read_text(encoding="utf-8"))
+    return _preserving_yaml_text(BACKLOG_YAML.read_text(encoding="utf-8"), cards)
+
+
+def _pr119_intake_payload() -> dict[str, object]:
+    payload = copy.deepcopy(_yaml(BACKLOG_YAML))
+    cards = _cards(payload)
+    first = next(index for index, card in enumerate(cards) if card["id"] == "PR-119")
+    last = next(index for index, card in enumerate(cards) if card["id"] == "PR-166")
+    payload["prs"] = cards[: last + 1]
+    allowed = {card["id"] for card in _cards(payload)}
+    payload["policy"]["topological_order"] = [
+        pr_id
+        for pr_id in payload["policy"]["topological_order"]
+        if pr_id in allowed
+    ]
+    payload["policy"]["long_horizon_intake"]["advocate_slice"] = (
+        "deferred_to_PR-167"
+    )
+    payload["policy"].pop("advocate_intake", None)
+    payload["waves"] = [
+        row for row in payload["waves"] if row.get("wave", 22) <= 21
+    ]
+    assert first == 65
+    assert last == 112
+    return payload
+
+
+def _pr119_status(payload: dict[str, object]) -> dict[str, object]:
+    """Project live orchestration state onto the PR-119 intake card set."""
+
+    allowed = {card["id"] for card in _cards(payload)}
+    status = copy.deepcopy(_yaml(STATUS))
+    for field in (
+        "completed",
+        "blocked",
+        "skipped",
+        "pending",
+        "dormant_external",
+        "background_in_progress",
+    ):
+        status[field] = [pr_id for pr_id in status.get(field, []) if pr_id in allowed]
+    if status.get("in_progress") not in allowed:
+        status["in_progress"] = None
+    for field in ("execution_lane", "execution_resolutions"):
+        status[field] = {
+            pr_id: value
+            for pr_id, value in status.get(field, {}).items()
+            if pr_id in allowed
+        }
+    if status["background_in_progress"] != ["PR-151"]:
+        status["background_execution_contracts"] = {}
+    return status
+
+
 def _strings(value: object):
     if isinstance(value, str):
         yield value
@@ -93,9 +152,9 @@ def _strings(value: object):
 
 
 def test_pr119_intake_is_exact_atomic_and_preserves_frozen_legacy_slice() -> None:
-    backlog = _yaml(BACKLOG_YAML)
+    backlog = _pr119_intake_payload()
     info = validate_backlog(backlog)
-    status = _yaml(STATUS)
+    status = _pr119_status(backlog)
 
     validate_long_horizon_rescue_slice(backlog, info, status=status)
 
@@ -110,9 +169,9 @@ def test_pr119_intake_is_exact_atomic_and_preserves_frozen_legacy_slice() -> Non
 
 
 def test_intake_rewrite_is_deterministic_idempotent_and_preserves_frozen_prefix() -> None:
-    original_text = BACKLOG_YAML.read_text(encoding="utf-8")
+    original_text = _pr119_intake_text()
     cards = parse_roadmap_cards(ROADMAP.read_text(encoding="utf-8"))
-    payload_once = materialize_payload(copy.deepcopy(_yaml(BACKLOG_YAML)), cards)
+    payload_once = materialize_payload(copy.deepcopy(_pr119_intake_payload()), cards)
     rendered_once = _preserving_yaml_text(original_text, cards)
     assert yaml.safe_load(rendered_once) == payload_once
 
@@ -128,7 +187,7 @@ def test_intake_rewrite_is_deterministic_idempotent_and_preserves_frozen_prefix(
 
 
 def test_intake_rewrite_repairs_policy_and_rescue_wave_metadata_drift() -> None:
-    canonical = _yaml(BACKLOG_YAML)
+    canonical = _pr119_intake_payload()
     cards = parse_roadmap_cards(ROADMAP.read_text(encoding="utf-8"))
     drifted = copy.deepcopy(canonical)
     drifted["policy"]["long_horizon_intake"][
@@ -143,7 +202,7 @@ def test_intake_rewrite_repairs_policy_and_rescue_wave_metadata_drift() -> None:
     ]
     assert repaired["waves"] == canonical["waves"]
 
-    canonical_text = BACKLOG_YAML.read_text(encoding="utf-8")
+    canonical_text = _pr119_intake_text()
     drifted_text = canonical_text.replace(
         "scientific_rescue_count_on_intake: 0",
         "scientific_rescue_count_on_intake: 999",
@@ -154,6 +213,13 @@ def test_intake_rewrite_repairs_policy_and_rescue_wave_metadata_drift() -> None:
         1,
     )
     assert _preserving_yaml_text(drifted_text, cards) == canonical_text
+
+
+def test_pr119_checker_accepts_later_atomic_dag_slices() -> None:
+    payload = _yaml(BACKLOG_YAML)
+    cards = parse_roadmap_cards(ROADMAP.read_text(encoding="utf-8"))
+
+    check_materialized(payload, cards)
 
 
 def test_pr119_authoring_roots_and_generated_mirrors_are_exact() -> None:
@@ -317,7 +383,7 @@ def test_active_claim_level_prose_is_scheme_qualified_but_finding_ids_are_immuta
     ],
 )
 def test_strict_rescue_validator_rejects_semantic_drift(mutation, message: str) -> None:
-    backlog = copy.deepcopy(_yaml(BACKLOG_YAML))
+    backlog = copy.deepcopy(_pr119_intake_payload())
     mutation(backlog)
 
     with pytest.raises(ValueError, match=message):
@@ -325,9 +391,9 @@ def test_strict_rescue_validator_rejects_semantic_drift(mutation, message: str) 
 
 
 def test_status_axes_require_disjoint_full_coverage_and_terminal_receipts() -> None:
-    backlog = _yaml(BACKLOG_YAML)
+    backlog = _pr119_intake_payload()
     info = validate_backlog(backlog)
-    status = _yaml(STATUS)
+    status = _pr119_status(backlog)
 
     overlapping = copy.deepcopy(status)
     overlapping["pending"].append("PR-159")
@@ -354,9 +420,9 @@ def test_status_axes_require_disjoint_full_coverage_and_terminal_receipts() -> N
 
 
 def test_status_terminal_buckets_have_exact_resolution_mapping_and_receipt_pointer() -> None:
-    backlog = _yaml(BACKLOG_YAML)
+    backlog = _pr119_intake_payload()
     info = validate_backlog(backlog)
-    status = _yaml(STATUS)
+    status = _pr119_status(backlog)
 
     completed_mismatch = copy.deepcopy(status)
     completed_mismatch["execution_resolutions"]["PR-119"]["resolution"] = (
