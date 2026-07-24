@@ -28,6 +28,7 @@ CACHE_SHA256 = "86b792c821b3e641c76c83d96523148c65e9d30a439d7c850acc808c1bc5fadb
 BETA = 1.23357e-3
 DIPOLE_L_DEG = 264.021
 DIPOLE_B_DEG = 48.253
+DIPOLE_FRAME_ROTATION = "healpy_zyx_dipole_to_z_v2"
 LMAX = 24
 ELL_MIN = 2
 ELL_MAX_FEATURE = 10  # F_ell for ell = 2..10 (couples to ell+1 <= 11)
@@ -49,6 +50,7 @@ class BoostBiposhConfig:
             {
                 "beta": self.beta,
                 "dipole": [DIPOLE_L_DEG, DIPOLE_B_DEG],
+                "dipole_frame_rotation": DIPOLE_FRAME_ROTATION,
                 "lmax": self.lmax,
                 "ells": [self.ell_min, self.ell_max_feature],
                 "n_template_sims": self.n_template_sims,
@@ -69,7 +71,13 @@ def verify_cache() -> dict:
 
 def _rotator() -> hp.Rotator:
     """Active rotation carrying the solar-dipole axis to the z-axis."""
-    return hp.Rotator(rot=[DIPOLE_L_DEG, DIPOLE_B_DEG, 0.0], inv=True)
+    # In healpy's ZYX convention the second angle is minus colatitude,
+    # not Galactic latitude.
+    return hp.Rotator(
+        rot=[DIPOLE_L_DEG, DIPOLE_B_DEG - 90.0, 0.0],
+        inv=False,
+        eulertype="ZYX",
+    )
 
 
 def feature_from_map(

@@ -13,7 +13,10 @@ for entry in (str(REPO / "htt"), str(REPO / "htt" / "src")):
     if entry not in sys.path:
         sys.path.insert(0, entry)
 
-from obsstat.boost_biposh_residual import run_estimator  # noqa: E402
+from obsstat.boost_biposh_residual import (  # noqa: E402
+    BoostBiposhConfig,
+    run_estimator,
+)
 
 SPEC = REPO / "docs/research_program/long_horizon_rescue/pr180_spec.yaml"
 CARD = REPO / "docs/generated/pr180_result_card.json"
@@ -81,6 +84,24 @@ def main(argv: list[str] | None = None) -> int:
     mode.add_argument("--write", action="store_true")
     mode.add_argument("--check", action="store_true")
     args = parser.parse_args(argv)
+    if args.check and CARD.exists():
+        frozen = json.loads(CARD.read_text())
+        if (
+            frozen.get("metadata", {}).get("config_hash")
+            != BoostBiposhConfig().config_hash()
+        ):
+            print(
+                json.dumps(
+                    {
+                        "mode": "check",
+                        "ok": False,
+                        "read_only": True,
+                        "reason": "config_hash_mismatch",
+                    },
+                    sort_keys=True,
+                )
+            )
+            return 1
     payload = build_payload()
     if args.write:
         CARD.write_bytes(_render(payload))

@@ -8,10 +8,20 @@ import subprocess
 import sys
 from pathlib import Path
 
+import healpy as hp
+import numpy as np
+
 REPO = Path(__file__).resolve().parents[2]
 for entry in (str(REPO / "htt"), str(REPO / "htt" / "src")):
     if entry not in sys.path:
         sys.path.insert(0, entry)
+
+from obsstat.boost_biposh_residual import (  # noqa: E402
+    BoostBiposhConfig,
+    DIPOLE_B_DEG,
+    DIPOLE_L_DEG,
+    _rotator,
+)
 
 SPEC = REPO / "docs/research_program/long_horizon_rescue/pr180_spec.yaml"
 CARD = REPO / "docs/generated/pr180_result_card.json"
@@ -82,6 +92,28 @@ def test_identical_treatment_and_boosted_null_disclosed() -> None:
     )
 
 
+def test_dipole_frame_rotation_places_solar_dipole_on_z_axis() -> None:
+    dipole = np.asarray(
+        hp.rotator.dir2vec(
+            DIPOLE_L_DEG,
+            DIPOLE_B_DEG,
+            lonlat=True,
+        )
+    )
+    rotated = np.asarray(_rotator()(dipole))
+    np.testing.assert_allclose(rotated, [0.0, 0.0, 1.0], atol=1e-14)
+
+    nside = 8
+    pixels = np.arange(hp.nside2npix(nside))
+    directions = np.asarray(hp.pix2vec(nside, pixels)).T
+    pure_dipole = directions @ dipole
+    alm = hp.map2alm(pure_dipole, lmax=3, iter=3)
+    rotated_alm = _rotator().rotate_alm(alm, lmax=3)
+    a10 = rotated_alm[hp.Alm.getidx(3, 1, 0)]
+    a11 = rotated_alm[hp.Alm.getidx(3, 1, 1)]
+    assert abs(a11) <= 1e-9 * abs(a10)
+
+
 def test_no_forbidden_claims() -> None:
     joined = json.dumps(_card()).lower()
     for token in ("detection of", "confirms the boost", "family identification",
@@ -100,7 +132,8 @@ def test_no_forbidden_claims() -> None:
     assert "never fitted" in reaffirmed
 
 
-def test_card_is_byte_current_under_read_only_check() -> None:
+def test_frozen_card_is_detected_as_stale_after_frame_fix() -> None:
+    assert _card()["metadata"]["config_hash"] != BoostBiposhConfig().config_hash()
     proc = subprocess.run(
         [
             str(REPO / "venv/bin/python"),
@@ -118,6 +151,11 @@ def test_card_is_byte_current_under_read_only_check() -> None:
             "PATH": "/usr/bin:/bin",
         },
     )
-    assert proc.returncode == 0, proc.stdout + proc.stderr
+    assert proc.returncode == 1, proc.stdout + proc.stderr
     payload = json.loads(proc.stdout.strip().splitlines()[-1])
-    assert payload["ok"] is True and payload["read_only"] is True
+    assert payload == {
+        "mode": "check",
+        "ok": False,
+        "read_only": True,
+        "reason": "config_hash_mismatch",
+    }
