@@ -157,6 +157,9 @@ def test_plateau_report_gate() -> None:
     with pytest.raises(OmkNearFlrwError, match="finite coefficient"):
         validate_plateau_report({"claimed_c2": "nan", "w": "0",
                                  "probe_K": "1/100000"})
+    with pytest.raises(OmkNearFlrwError, match="outside the declared"):
+        validate_plateau_report({"claimed_c2": "-34/605", "w": "2",
+                                 "probe_K": "1/100000"})
     with pytest.raises(OmkNearFlrwError, match="not\na derivation|not "
                        "a derivation"):
         validate_plateau_report({"claimed_c2": "-0.2485714", "w": "0",
@@ -178,6 +181,8 @@ def test_claim_and_caption_gates() -> None:
                         "fixed_background": "q0 = 1/2"})
     text = generate_caption(Fraction(0))
     lint_caption(text)
+    with pytest.raises(OmkNearFlrwError, match="outside the declared"):
+        generate_caption(Fraction(2))
     for suffix in (" Holds for all" + " q.",
                    " The six finite" + " ceilings follow.",
                    " Matches the observed" + " shear."):

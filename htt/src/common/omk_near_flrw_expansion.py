@@ -433,6 +433,18 @@ def validate_declared_domain(domain: tuple[Fraction, Fraction]) -> None:
                 "(roadmap exit rule)")
 
 
+def _require_w_in_declared_domain(w_value: Fraction) -> Fraction:
+    """Return a fixed background only when it lies in the open domain."""
+
+    wv = Fraction(w_value)
+    validate_declared_domain(DECLARED_DOMAIN)
+    if not DECLARED_DOMAIN[0] < wv < DECLARED_DOMAIN[1]:
+        raise OmkNearFlrwError(
+            f"w = {wv} is outside the declared open domain"
+        )
+    return wv
+
+
 # ---------------------------------------------------------------------------
 # Finite-difference plateau (independent numeric path)
 # ---------------------------------------------------------------------------
@@ -455,13 +467,9 @@ def fd_plateau(w_value: Fraction, probes=(Fraction(1, 100000),
     derivation)."""
     import mpmath
 
-    wv = Fraction(w_value)
+    wv = _require_w_in_declared_domain(w_value)
     if branch not in (1, -1):
         raise OmkNearFlrwError("branch must be +1 (BIII) or -1 (KS)")
-    validate_declared_domain(DECLARED_DOMAIN)
-    if not DECLARED_DOMAIN[0] < wv < DECLARED_DOMAIN[1]:
-        raise OmkNearFlrwError(
-            f"w = {wv} is outside the declared open domain")
     kappa = Fraction(-2, 1) / (3 * wv + 5)
     c2 = C2_EXACT.subs(W, sp.Rational(wv))
     c2_frac = Fraction(sp.Rational(c2).p, sp.Rational(c2).q)
@@ -553,7 +561,9 @@ def validate_plateau_report(report: Mapping) -> None:
         raise OmkNearFlrwError(
             "plateau claim must carry a finite coefficient"
         )
-    w_value = Fraction(str(report.get("w")))
+    w_value = _require_w_in_declared_domain(
+        Fraction(str(report.get("w")))
+    )
     c2 = C2_EXACT.subs(W, sp.Rational(w_value))
     c2_exact = mpmath.mpf(sp.Rational(c2).p) / mpmath.mpf(
         sp.Rational(c2).q)
@@ -604,7 +614,7 @@ def lint_caption(text: str) -> None:
 
 
 def generate_caption(w_value: Fraction) -> str:
-    wv = Fraction(w_value)
+    wv = _require_w_in_declared_domain(w_value)
     kappa = Fraction(-2, 1) / (3 * wv + 5)
     c2 = C2_EXACT.subs(W, sp.Rational(wv))
     text = (
