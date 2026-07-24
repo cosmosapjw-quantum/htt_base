@@ -130,6 +130,16 @@ def test_bonferroni_simultaneous_bound() -> None:
         clopper_pearson_lower(9500, 10000, 0.99)
 
 
+@pytest.mark.parametrize("confidence", [-0.1, 0.0, 1.0, 1.1, float("nan")])
+def test_confidence_domain_rejected(confidence: float) -> None:
+    with pytest.raises(WeakIdError, match="confidence.*between 0 and 1"):
+        clopper_pearson_lower(95, 100, confidence)
+    with pytest.raises(WeakIdError, match="confidence.*between 0 and 1"):
+        clopper_pearson_upper(95, 100, confidence)
+    with pytest.raises(WeakIdError, match="confidence.*between 0 and 1"):
+        bonferroni_conf(confidence, 9)
+
+
 def test_wrong_binomial_bound_rejected() -> None:
     # an upper CP bound routed through the lower-bound guard is rejected
     k, n = 9500, 10000

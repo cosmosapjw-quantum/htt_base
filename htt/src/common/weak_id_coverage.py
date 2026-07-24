@@ -80,6 +80,12 @@ def imbens_manski_c(w: float, s: float = 1.0, level: float = 0.95,
 # Clopper-Pearson lower bound (family-wise binomial)
 # ---------------------------------------------------------------------------
 
+def _require_confidence(conf: float) -> None:
+    if not math.isfinite(conf) or not 0.0 < conf < 1.0:
+        raise WeakIdError(
+            "confidence must be finite and strictly between 0 and 1")
+
+
 def clopper_pearson_lower(k: int, n: int, conf: float = 0.99) -> float:
     """Exact one-sided Clopper-Pearson LOWER confidence bound on a
     binomial proportion: the p such that P(Bin(n, p) >= k) = 1 - conf,
@@ -87,6 +93,7 @@ def clopper_pearson_lower(k: int, n: int, conf: float = 0.99) -> float:
     for k = 0. Conservative (never anti-conservative)."""
     if not (0 <= k <= n) or n <= 0:
         raise WeakIdError("invalid (k, n) for Clopper-Pearson")
+    _require_confidence(conf)
     if k == 0:
         return 0.0
     alpha = 1.0 - conf
@@ -99,6 +106,7 @@ def clopper_pearson_upper(k: int, n: int, conf: float = 0.99) -> float:
     anti-conservative when reported as the coverage guarantee)."""
     if not (0 <= k <= n) or n <= 0:
         raise WeakIdError("invalid (k, n) for Clopper-Pearson")
+    _require_confidence(conf)
     if k == n:
         return 1.0
     return _beta_ppf(conf, k + 1, n - k)
@@ -110,6 +118,7 @@ def bonferroni_conf(family_conf: float, n_points: int) -> float:
     Bonferroni bound: 1 - (1 - family_conf)/n_points."""
     if n_points < 1:
         raise WeakIdError("n_points must be >= 1")
+    _require_confidence(family_conf)
     return 1.0 - (1.0 - family_conf) / n_points
 
 
