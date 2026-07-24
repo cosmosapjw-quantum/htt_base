@@ -18,6 +18,7 @@ from common.omk_near_flrw_expansion import (
     KAPPA_EXACT,
     W,
     OmkNearFlrwError,
+    fd_plateau,
     generate_caption,
     invariance_coefficients,
     jacobian_at_flrw,
@@ -164,6 +165,11 @@ def test_plateau_report_gate() -> None:
                        "a derivation"):
         validate_plateau_report({"claimed_c2": "-0.2485714", "w": "0",
                                  "probe_K": "1/100000"})
+
+
+def test_fd_plateau_rejects_empty_probe_set() -> None:
+    with pytest.raises(OmkNearFlrwError, match="at least one probe"):
+        fd_plateau(Fraction(0), probes=())
 
 
 def test_claim_and_caption_gates() -> None:
