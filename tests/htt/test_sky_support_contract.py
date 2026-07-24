@@ -127,6 +127,24 @@ def test_spherical_mean_reports_unit_vector_method_not_raw_angle_mean() -> None:
     assert abs(float(np.mean(l)) - 180.0) < 1.0
 
 
+def test_spherical_mean_rejects_signed_directional_weights() -> None:
+    with pytest.raises(ValueError, match="non-negative"):
+        spherical_mean(
+            np.array([0.0, 180.0]),
+            np.array([0.0, 0.0]),
+            np.array([2.0, -1.0]),
+        )
+
+
+def test_spherical_mean_rejects_nonfinite_directional_weights() -> None:
+    with pytest.raises(ValueError, match="finite"):
+        spherical_mean(
+            np.array([0.0, 180.0]),
+            np.array([0.0, 0.0]),
+            np.array([1.0, np.nan]),
+        )
+
+
 def test_raw_longitude_latitude_means_are_rejected_for_production_sources() -> None:
     bad_source = """
 def summarize(l_deg, b_deg):

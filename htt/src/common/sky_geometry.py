@@ -87,6 +87,10 @@ def spherical_mean(
         raise ValueError(
             f"weight shape {w.shape} does not match data shape {l.shape}"
         )
+    if not np.all(np.isfinite(w)):
+        raise ValueError("directional weights must be finite")
+    if np.any(w < 0.0):
+        raise ValueError("directional weights must be non-negative")
     wsum = float(w.sum())
     if wsum <= 0:
         raise ValueError(f"non-positive weight sum in spherical_mean: {wsum}")
@@ -139,6 +143,10 @@ def normalize_weights(
         or if the weight sum is non-positive.
     """
     w = np.asarray(w, dtype=float)
+    if not np.all(np.isfinite(w)):
+        raise ValueError("Directional weights must be finite")
+    if np.any(w < 0.0):
+        raise ValueError("Directional weights must be non-negative")
     if np.allclose(w, 0.0):
         if not allow_uniform_fallback:
             raise ValueError(

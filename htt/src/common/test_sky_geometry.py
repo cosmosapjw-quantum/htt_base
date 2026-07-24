@@ -91,7 +91,7 @@ class TestSphericalMean:
             )
 
     def test_nonpositive_weight_sum_raises(self):
-        with pytest.raises(ValueError, match="non-positive"):
+        with pytest.raises(ValueError, match="non-negative"):
             spherical_mean(
                 np.array([0.0, 1.0]), np.array([0.0, 0.0]),
                 np.array([1.0, -1.0]),
@@ -160,5 +160,13 @@ class TestNormalizeWeights:
         np.testing.assert_allclose(w, 0.25)
 
     def test_negative_weight_sum_rejected(self):
-        with pytest.raises(ValueError, match="Non-positive"):
+        with pytest.raises(ValueError, match="non-negative"):
             normalize_weights(np.array([1.0, -2.0]))
+
+    def test_mixed_sign_positive_sum_rejected(self):
+        with pytest.raises(ValueError, match="non-negative"):
+            normalize_weights(np.array([2.0, -1.0]))
+
+    def test_nonfinite_weight_rejected(self):
+        with pytest.raises(ValueError, match="finite"):
+            normalize_weights(np.array([1.0, np.nan]))
