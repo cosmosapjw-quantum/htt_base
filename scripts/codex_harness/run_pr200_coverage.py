@@ -95,7 +95,9 @@ def _pseudotrue_never_empty() -> dict:
     r = coverage_mc(half_width=0.05, sigma=3.0, alpha=ALPHA, reps=5000,
                     seed=11, method="im")
     return {"crossing_regime_coverage": r["coverage"],
-            "never_empty": True,
+            "never_empty": (
+                r["crossing_samples"] > 0 and r["invalid_intervals"] == 0
+            ),
             "note": "lo_hat > hi_hat samples are routed to the midpoint pseudotrue"}
 
 

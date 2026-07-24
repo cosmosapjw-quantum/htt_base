@@ -6,6 +6,7 @@ REPO = Path(__file__).resolve().parents[2]
 for e in (str(REPO/"htt"), str(REPO/"htt"/"src")):
     if e not in sys.path: sys.path.insert(0, e)
 from common.partial_id_coverage import coverage_mc  # noqa: E402
+from scripts.codex_harness import run_pr200_coverage as runner  # noqa: E402
 CARD=REPO/"docs/generated/pr200_result_card.json"; SPEC=REPO/"docs/research_program/strengthening/pr200_spec.yaml"
 def _card(): return json.loads(CARD.read_text())
 def test_spec_and_terminal():
@@ -26,6 +27,25 @@ def test_mesh_and_pseudotrue():
     r=_card()["result"]
     assert r["mesh_stability"]["stable"] is True
     assert r["pseudotrue_never_empty"]["never_empty"] is True
+
+def test_pseudotrue_gate_observes_crossings_and_interval_validity():
+    result=coverage_mc(
+        half_width=0.05, sigma=3.0, alpha=0.05, reps=2000, seed=11, method="im")
+    assert result["crossing_samples"] > 0
+    assert result["invalid_intervals"] == 0
+
+def test_pseudotrue_gate_rejects_an_unexercised_crossing_branch(monkeypatch):
+    monkeypatch.setattr(
+        runner,
+        "coverage_mc",
+        lambda **kwargs: {
+            "coverage": 1.0,
+            "crossing_samples": 0,
+            "invalid_intervals": 0,
+        },
+    )
+    assert runner._pseudotrue_never_empty()["never_empty"] is False
+
 def test_im_beats_point_ci_independently():
     im=coverage_mc(half_width=3.0,sigma=1.0,alpha=0.05,reps=8000,seed=7,method="im")
     pg=coverage_mc(half_width=3.0,sigma=1.0,alpha=0.05,reps=8000,seed=7,method="point_gaussian")

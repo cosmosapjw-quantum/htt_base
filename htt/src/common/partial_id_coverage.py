@@ -73,10 +73,13 @@ def coverage_mc(
     w = half_width
     theta0 = w  # least-favorable boundary
     covered = 0
+    crossing_samples = 0
+    invalid_intervals = 0
     for _ in range(reps):
         lo_hat = -w + rng.normal(scale=sigma)
         hi_hat = w + rng.normal(scale=sigma)
         if lo_hat > hi_hat:  # sample crossing -> pseudotrue midpoint (never empty)
+            crossing_samples += 1
             mid = 0.5 * (lo_hat + hi_hat)
             lo_hat = hi_hat = mid
         if method == "im":
@@ -85,7 +88,10 @@ def coverage_mc(
             a, b = point_gaussian_interval(lo_hat, hi_hat, sigma, alpha)
         else:
             a, b = naive_interval(lo_hat, hi_hat, sigma, alpha)
-        if a <= theta0 <= b:
+        interval_valid = math.isfinite(a) and math.isfinite(b) and a <= b
+        if not interval_valid:
+            invalid_intervals += 1
+        elif a <= theta0 <= b:
             covered += 1
     est = covered / reps
     return {
@@ -95,6 +101,8 @@ def coverage_mc(
         "coverage": est,
         "cp_lower_99": cp_lower(covered, reps, 0.99),
         "covered": covered,
+        "crossing_samples": crossing_samples,
+        "invalid_intervals": invalid_intervals,
     }
 
 
