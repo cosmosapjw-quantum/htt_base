@@ -37,6 +37,7 @@ from obsstat.cf4_forward_simulator import (
     verify_cholesky_generator,
     verify_independent_reference,
 )
+from scripts.codex_harness import run_pr146_forward_mocks as pr146_runner
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 GROUPS = REPO_ROOT / "workdir/obs_bundle/pecvel/cf4_full/cf4_groups.npz"
@@ -84,6 +85,40 @@ def test_covariance_uncertainty_scales() -> None:
         "monte_carlo_fractional_uncertainty_per_variance_element"] > \
         covariance_uncertainty(800)[
             "monte_carlo_fractional_uncertainty_per_variance_element"]
+
+
+def test_negative_scan_resolves_relocated_live_module(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    spec = pr146_runner.yaml.safe_load(
+        pr146_runner.SPEC_PATH.read_text(encoding="utf-8")
+    )
+    captions = json.loads(
+        (REPO_ROOT / pr146_runner.OUTPUTS["captions"]).read_text(
+            encoding="utf-8"
+        )
+    )
+    legacy_path = spec["model"]["module"]
+    assert not (REPO_ROOT / legacy_path).exists()
+    targets = pr146_runner._scan_targets(spec, captions)
+    assert targets[legacy_path]["sha256"] == pr146_runner._sha(
+        pr146_runner.LIVE_MODEL_PATH
+    )
+
+    bad_spec = dict(spec)
+    bad_spec["model"] = dict(spec["model"])
+    bad_spec["negative_scan"] = dict(spec["negative_scan"])
+    bad_spec["negative_scan"]["targets"] = ["missing/not-the-model.py"]
+    with pytest.raises(SystemExit, match="negative-scan target is missing"):
+        pr146_runner._scan_targets(bad_spec, captions)
+
+    forbidden_live = tmp_path / "cf4_forward_simulator.py"
+    forbidden_live.write_text(
+        "same-box octants are independent\n", encoding="utf-8"
+    )
+    monkeypatch.setattr(pr146_runner, "LIVE_MODEL_PATH", forbidden_live)
+    with pytest.raises(SystemExit, match="negative scan found 1 hits"):
+        pr146_runner._scan_targets(spec, captions)
 
 
 @needs_data
