@@ -105,6 +105,22 @@ def test_canonical_order_enforced() -> None:
                 DepthPolicy.RAW)
 
 
+def test_measure_spec_rejects_undefined_numeric_domain() -> None:
+    with pytest.raises(MeasureError, match="must not be empty"):
+        MeasureSpec((), (), Pairing.UNPAIRED, DepthPolicy.RAW)
+    with pytest.raises(MeasureError, match="finite real"):
+        MeasureSpec(("Sigma2",), (float("nan"),), Pairing.UNPAIRED,
+                    DepthPolicy.RAW)
+    with pytest.raises(MeasureError, match="positive"):
+        MeasureSpec(("Sigma2",), (0.0,), Pairing.UNPAIRED, DepthPolicy.RAW)
+    with pytest.raises(MeasureError, match="positive finite real"):
+        MeasureSpec(("Sigma2",), (1.0,), Pairing.UNPAIRED, DepthPolicy.RAW,
+                    null_scale=(float("nan"),))
+    with pytest.raises(MeasureError, match="positive finite real"):
+        MeasureSpec(("Sigma2",), (1.0,), Pairing.UNPAIRED, DepthPolicy.RAW,
+                    null_scale=(0.0,))
+
+
 def test_F_and_Pi_are_distinct_and_permutation_invariant() -> None:
     t = _table()
     assert measure_F(t, SPEC) != measure_Pi(t, SPEC)

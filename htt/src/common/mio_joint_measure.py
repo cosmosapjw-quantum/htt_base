@@ -27,6 +27,7 @@ import hashlib
 import json
 from dataclasses import dataclass, field
 from enum import Enum
+from numbers import Real
 
 import numpy as np
 
@@ -83,14 +84,21 @@ class MeasureSpec:
     def __post_init__(self) -> None:
         # canonical (fixed physical) order required so relabeling cannot
         # silently change identity
+        if not self.identity:
+            raise MeasureError("measure identity must not be empty")
         canonical = tuple(c for c in COMPONENTS if c in self.identity)
         if tuple(self.identity) != canonical:
             raise MeasureError("measure identity must be in canonical "
                                "component order")
         if len(self.weights) != len(self.identity):
             raise MeasureError("weights must match the identity length")
+        if any(not isinstance(w, Real) or not np.isfinite(float(w))
+               for w in self.weights):
+            raise MeasureError("weights must be finite real numbers")
         if any(w < 0 for w in self.weights):
             raise MeasureError("weights must be non-negative")
+        if not any(w > 0 for w in self.weights):
+            raise MeasureError("at least one weight must be positive")
         for c in self.identity:
             if c not in COMPONENTS:
                 raise MeasureError(f"unknown component {c!r}")
@@ -99,6 +107,10 @@ class MeasureSpec:
                                tuple(1.0 for _ in self.identity))
         elif len(self.null_scale) != len(self.identity):
             raise MeasureError("null_scale must match the identity length")
+        if any(not isinstance(s, Real) or not np.isfinite(float(s)) or s <= 0
+               for s in self.null_scale):
+            raise MeasureError(
+                "null_scale entries must be positive finite real numbers")
 
     def fingerprint(self) -> str:
         payload = {"identity": list(self.identity),
