@@ -4,14 +4,17 @@ from __future__ import annotations
 from collections.abc import Mapping
 from dataclasses import dataclass
 import math
+from types import MappingProxyType
 
 
-CANONICAL_COMPONENT_SIGNS: dict[str, float] = {
-    "Sigma2_std": 1.0,
-    "W2_std": -1.0,
-    "Omega_tilt": 1.0,
-    "Omega_k_aniso": 1.0,
-}
+CANONICAL_COMPONENT_SIGNS: Mapping[str, float] = MappingProxyType(
+    {
+        "Sigma2_std": 1.0,
+        "W2_std": -1.0,
+        "Omega_tilt": 1.0,
+        "Omega_k_aniso": 1.0,
+    }
+)
 CANONICAL_COMPONENT_ORDER: tuple[str, ...] = tuple(CANONICAL_COMPONENT_SIGNS)
 
 

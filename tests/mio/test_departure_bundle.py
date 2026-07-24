@@ -47,6 +47,31 @@ def test_signed_projection_uses_comparator_basis_not_norm() -> None:
     )
 
 
+def test_canonical_component_signs_cannot_mutate_existing_bundles() -> None:
+    bundle = build_departure_bundle(
+        {
+            "Sigma2_std": 0.1,
+            "W2_std": 0.4,
+            "Omega_tilt": 0.0,
+            "Omega_k_aniso": 0.0,
+        },
+        comparator="CMB_FLRW_reference",
+        frame="normal_frame",
+        units="dimensionless_hubble_normalized",
+        config_hash="cfg-immutable-signs",
+        input_hashes=("input",),
+    )
+    original_x_c = bundle.x_C
+
+    with pytest.raises(TypeError):
+        CANONICAL_COMPONENT_SIGNS["W2_std"] = 1.0
+
+    assert bundle.x_C == original_x_c
+    assert bundle.as_payload()["component_breakdown"]["component_signs"][
+        "W2_std"
+    ] == pytest.approx(-1.0)
+
+
 def test_departure_bundle_exports_xc_with_required_metadata() -> None:
     bundle = build_departure_bundle(
         {
