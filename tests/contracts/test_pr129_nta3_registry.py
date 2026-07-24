@@ -133,6 +133,33 @@ def _load_runner():
     return runner
 
 
+def test_manifest_registry_hash_is_generation_time_provenance() -> None:
+    runner = _load_runner()
+    source = runner.REGISTRY_SOURCE
+    legacy = "htt/obsstat/egs2_fisher.py"
+    stored = {
+        "input_hashes": [
+            f"{source}:{'1' * 64}",
+            f"{legacy}:{'2' * 64}",
+        ]
+    }
+    current = {
+        "input_hashes": [
+            f"{source}:{'3' * 64}",
+            f"{legacy}:{'2' * 64}",
+        ]
+    }
+    manifest = runner.OUTPUTS["manifest"]
+    assert runner._semantic_artifact(
+        manifest, stored
+    ) == runner._semantic_artifact(manifest, current)
+
+    current["input_hashes"][1] = f"{legacy}:{'4' * 64}"
+    assert runner._semantic_artifact(
+        manifest, stored
+    ) != runner._semantic_artifact(manifest, current)
+
+
 def test_negative_scan_sentinel_policy_and_allowlist() -> None:
     runner = _load_runner()
     banned = "universal" + " floor"
