@@ -18,9 +18,11 @@ from common.w2_convention import (  # noqa: E402
     scan_active_sources,
     vorticity_tensor_vector_identity,
 )
+from scripts.codex_harness import run_pr186_w2_convention as runner  # noqa: E402
 
 CARD = REPO / "docs/generated/pr186_result_card.json"
 SPEC = REPO / "docs/research_program/strengthening/pr186_spec.yaml"
+RUNNER = REPO / "scripts/codex_harness/run_pr186_w2_convention.py"
 
 
 def _card() -> dict:
@@ -37,9 +39,12 @@ def test_spec_bound_and_terminal() -> None:
     assert card["terminal"] == "W2_CONVENTION_REPAIRED_CAS_5AXIS_PASS_SOURCES_CLEAN"
 
 
-def test_five_axis_cas_pass_contract_bound() -> None:
-    cas = _card()["cas_status"]
-    assert cas["aggregate"] == "CAS_5AXIS_PASS"
+def test_stored_five_axis_cas_is_diagnostic_only() -> None:
+    cas = runner._cas_status()
+    assert cas["aggregate"] == "CAS_BLOCKED"
+    assert cas["historical_aggregate"] == "CAS_5AXIS_PASS"
+    assert cas["stored_cas_diagnostic_only"] is True
+    assert cas["claim_promotion_cas_eligible"] is False
     assert cas["contract_hash_matches_adjudication"] is True
     assert set(cas["axis_statuses"]) == {
         "wolfram_xact", "sympy", "sage_singular", "lean", "rocq"
@@ -47,14 +52,12 @@ def test_five_axis_cas_pass_contract_bound() -> None:
     assert all(v == "PASS" for v in cas["axis_statuses"].values())
     # Lean and Rocq are the two kernel-independent proof-assistant lineages
     assert cas["kernel_independent_lineages"] == ["lean", "rocq"]
-    # the sealed adjudication agrees
-    adj = json.loads(
-        (REPO / "docs/generated/pr186_cas/adjudication.json").read_text()
-    )
-    assert adj["aggregate_status"] == "CAS_5AXIS_PASS"
-    assert adj["required_axes"] == [
-        "wolfram_xact", "sympy", "sage_singular", "lean", "rocq"
-    ]
+
+
+def test_historical_card_preserves_pre_ma04_cas_label() -> None:
+    cas = _card()["cas_status"]
+    assert cas["aggregate"] == "CAS_5AXIS_PASS"
+    assert _card()["terminal"] == "W2_CONVENTION_REPAIRED_CAS_5AXIS_PASS_SOURCES_CLEAN"
 
 
 def test_tensor_vector_identity() -> None:
@@ -92,13 +95,24 @@ def test_two_independent_lineages() -> None:
     assert _card()["derivation_lineages"]["two_independent_lineages_agree"] is True
 
 
-def test_card_byte_stable_under_check() -> None:
+def test_current_check_blocks_without_live_parent_execution() -> None:
     proc = subprocess.run(
-        [str(REPO / "venv/bin/python"), "-B",
-         str(REPO / "scripts/codex_harness/run_pr186_w2_convention.py"), "--check"],
+        [sys.executable, "-B", str(RUNNER), "--check"],
         cwd=REPO, capture_output=True, text=True, timeout=600,
         env={"PYTHONHASHSEED": "0", "PATH": "/usr/bin:/bin"},
     )
-    assert proc.returncode == 0, proc.stdout + proc.stderr
+    assert proc.returncode == 1, proc.stdout + proc.stderr
     payload = json.loads(proc.stdout.strip().splitlines()[-1])
-    assert payload["ok"] is True
+    assert payload["ok"] is False
+    assert payload["terminal"] == "BLOCKED_CONVENTION_DRIFT_REMAINS"
+
+
+def test_write_refuses_to_overwrite_historical_card() -> None:
+    before = hashlib.sha256(CARD.read_bytes()).hexdigest()
+    proc = subprocess.run(
+        [sys.executable, "-B", str(RUNNER), "--write"],
+        cwd=REPO, capture_output=True, text=True, timeout=600,
+    )
+    assert proc.returncode == 2
+    assert "refusing to overwrite" in proc.stderr
+    assert hashlib.sha256(CARD.read_bytes()).hexdigest() == before
