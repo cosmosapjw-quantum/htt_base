@@ -1,6 +1,7 @@
 """PR-130 contract tests: NT2 tail convergence vs sufficiency."""
 from __future__ import annotations
 
+import importlib.util
 import json
 import subprocess
 import sys
@@ -27,6 +28,77 @@ from common.nt2_tail_convergence import (
 )
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
+
+
+def _load_runner():
+    runner_path = (
+        REPO_ROOT / "scripts/codex_harness/run_pr130_tail_convergence.py"
+    )
+    spec = importlib.util.spec_from_file_location("run_pr130", runner_path)
+    runner = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(runner)
+    return runner
+
+
+def test_current_tail_source_measurements_are_generation_time() -> None:
+    runner = _load_runner()
+    source = runner.TAIL_SOURCE
+    theorem = runner.OUTPUTS["theorem"]
+    stored = {
+        "negative_scan": {
+            "targets": {
+                source: {
+                    "sha256": "1" * 64,
+                    "lines_scanned": 10,
+                    "hits": [],
+                }
+            }
+        }
+    }
+    current = {
+        "negative_scan": {
+            "targets": {
+                source: {
+                    "sha256": "2" * 64,
+                    "lines_scanned": 20,
+                    "hits": [],
+                }
+            }
+        }
+    }
+    assert runner._semantic_artifact(
+        theorem, stored
+    ) == runner._semantic_artifact(theorem, current)
+    current["negative_scan"]["targets"][source]["hits"] = [{"line": 1}]
+    assert runner._semantic_artifact(
+        theorem, stored
+    ) != runner._semantic_artifact(theorem, current)
+
+
+def test_manifest_tail_source_hash_is_generation_time() -> None:
+    runner = _load_runner()
+    source = runner.TAIL_SOURCE
+    legacy = "htt/obsstat/egs2_fisher.py"
+    manifest = runner.OUTPUTS["manifest"]
+    stored = {
+        "input_hashes": [
+            f"{source}:{'1' * 64}",
+            f"{legacy}:{'2' * 64}",
+        ]
+    }
+    current = {
+        "input_hashes": [
+            f"{source}:{'3' * 64}",
+            f"{legacy}:{'2' * 64}",
+        ]
+    }
+    assert runner._semantic_artifact(
+        manifest, stored
+    ) == runner._semantic_artifact(manifest, current)
+    current["input_hashes"][1] = f"{legacy}:{'4' * 64}"
+    assert runner._semantic_artifact(
+        manifest, stored
+    ) != runner._semantic_artifact(manifest, current)
 
 
 def test_registered_profile_and_exact_terms() -> None:
