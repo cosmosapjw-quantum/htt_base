@@ -15,6 +15,8 @@ from common.nt2_tail_convergence import (
     PROFILE_P_REGISTERED,
     Nt2TailError,
     certified_tail_enclosure,
+    closed_form_infinite_mpmath,
+    divergence_witness_p1,
     fisher_term_exact,
     generate_caption,
     lint_caption,
@@ -116,6 +118,20 @@ def test_convergence_domain_boundary() -> None:
     for p in (Fraction(1), Fraction(1, 2), Fraction(0)):
         with pytest.raises(Nt2TailError, match="outside the convergence"):
             require_convergent_profile(p)
+
+
+@pytest.mark.parametrize("f_sky", [
+    Fraction(0), Fraction(-1), Fraction(3, 2),
+])
+def test_invalid_sky_fraction_fails_closed(f_sky: Fraction) -> None:
+    for call in (
+        lambda: fisher_term_exact(2, f_sky),
+        lambda: tail_bracket_exact(80, f_sky),
+        lambda: closed_form_infinite_mpmath(Fraction(3, 2), f_sky),
+        lambda: divergence_witness_p1(f_sky=f_sky),
+    ):
+        with pytest.raises(Nt2TailError, match="f_sky"):
+            call()
 
 
 def test_tail_bracket_and_strict_positivity() -> None:

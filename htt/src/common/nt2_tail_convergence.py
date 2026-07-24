@@ -71,6 +71,19 @@ class Nt2TailError(ValueError):
     """Raised on any tail-theorem or sufficiency-gate violation."""
 
 
+def _validated_f_sky(f_sky: Fraction) -> Fraction:
+    """Return a physical observed-sky fraction in the interval (0, 1]."""
+
+    try:
+        value = Fraction(f_sky)
+    except (OverflowError, TypeError, ValueError, ZeroDivisionError) as exc:
+        raise Nt2TailError("f_sky must be a finite fraction in (0, 1]") \
+            from exc
+    if not Fraction(0) < value <= Fraction(1):
+        raise Nt2TailError("f_sky must be in the physical interval (0, 1]")
+    return value
+
+
 def require_convergent_profile(p: Fraction) -> None:
     """The Fisher term scales as l^(1-2p); the sum over l converges iff
     2p - 1 > 1, i.e. p > 1. p = 1 (harmonic) and below are rejected."""
@@ -88,7 +101,8 @@ def fisher_term_exact(ell: int, f_sky: Fraction = F_SKY_REGISTERED,
     t_l = ((2l+1)/2) f_sky (2/l)^3 = f_sky (8/l^2 + 4/l^3)."""
     if ell < 2:
         raise Nt2TailError("multipoles start at ell = 2")
-    return Fraction(f_sky) * (Fraction(8, ell ** 2) + Fraction(4, ell ** 3))
+    f = _validated_f_sky(f_sky)
+    return f * (Fraction(8, ell ** 2) + Fraction(4, ell ** 3))
 
 
 def partial_sum_exact(l_from: int, l_to: int,
@@ -111,7 +125,7 @@ def tail_bracket_exact(L: int, f_sky: Fraction = F_SKY_REGISTERED,
     """
     if L < 2:
         raise Nt2TailError("tail bracket needs L >= 2")
-    f = Fraction(f_sky)
+    f = _validated_f_sky(f_sky)
     lower = f * (Fraction(8, L + 1) + Fraction(2, (L + 1) ** 2))
     upper = f * (Fraction(8, L) + Fraction(2, L ** 2))
     return lower, upper
@@ -148,10 +162,10 @@ def closed_form_infinite_mpmath(p: Fraction,
     import mpmath
 
     require_convergent_profile(p)
+    f = _validated_f_sky(f_sky)
     with mpmath.workdps(dps):
         pf = mpmath.mpf(p.numerator) / mpmath.mpf(p.denominator)
-        fs = mpmath.mpf(Fraction(f_sky).numerator) / \
-            mpmath.mpf(Fraction(f_sky).denominator)
+        fs = mpmath.mpf(f.numerator) / mpmath.mpf(f.denominator)
         value = fs * (mpmath.power(2, 2 * pf)
                       * (mpmath.zeta(2 * pf - 1) - 1)
                       + mpmath.power(2, 2 * pf - 1)
@@ -388,9 +402,10 @@ def divergence_witness_p1(L_values: tuple[int, ...] = (100, 1000, 10000),
     4 f_sky ln(10) - 1, matching the harmonic growth rate)."""
     import hashlib
 
+    f = _validated_f_sky(f_sky)
     rows = []
     for L in L_values:
-        bound = sum((Fraction(4, ell) * Fraction(f_sky)
+        bound = sum((Fraction(4, ell) * f
                      for ell in range(2, L + 1)), Fraction(0))
         # the exact rational's decimal form exceeds the interpreter's
         # int-to-str guard at large L; sha-pin the exact value and
@@ -403,7 +418,7 @@ def divergence_witness_p1(L_values: tuple[int, ...] = (100, 1000, 10000),
                      "float": float(bound)})
     import math
 
-    min_growth = 4.0 * float(Fraction(f_sky)) * math.log(10.0) - 1.0
+    min_growth = 4.0 * float(f) * math.log(10.0) - 1.0
     for a, b in zip(rows, rows[1:]):
         if not b["float"] > a["float"] + min_growth:
             raise Nt2TailError("divergence witness rows failed to grow")
@@ -420,13 +435,14 @@ def profile_sensitivity(p_values: tuple[Fraction, ...] = (
     different theorem)."""
     import mpmath
 
+    f = _validated_f_sky(f_sky)
     rows = []
     for p in p_values:
         require_convergent_profile(p)
-        value, text = closed_form_infinite_mpmath(p, f_sky)
+        value, text = closed_form_infinite_mpmath(p, f)
         with mpmath.workdps(60):
             pf = mpmath.mpf(p.numerator) / mpmath.mpf(p.denominator)
-            tail80 = mpmath.mpf(Fraction(f_sky).numerator) * (
+            tail80 = mpmath.mpf(f.numerator) * (
                 mpmath.power(2, 2 * pf)
                 * (mpmath.zeta(2 * pf - 1)
                    - mpmath.nsum(lambda l: l ** (1 - 2 * pf), [1, 80]))
@@ -441,7 +457,7 @@ def profile_sensitivity(p_values: tuple[Fraction, ...] = (
         })
     return {
         "rows": rows,
-        "divergent_boundary": divergence_witness_p1(f_sky=f_sky),
+        "divergent_boundary": divergence_witness_p1(f_sky=f),
         "anti_drift_note": "the tail theorem is conditional on the "
                            "registered response family; the toy "
                            "response is never an observed low-ell "
