@@ -151,6 +151,25 @@ def test_tampering_the_seal_is_detected() -> None:
         tally(forged, an)
 
 
+def test_seal_verification_rejects_structural_metadata_forgery() -> None:
+    ch = _challenge(n_reps=1)
+    family, rep, values, collinear = ch.items[0]
+    reshaped = dataclasses.replace(
+        ch,
+        items=(
+            (family, rep, values.reshape(2, 30), collinear),
+            *ch.items[1:],
+        ),
+    )
+    for forged in (
+        reshaped,
+        dataclasses.replace(ch, n_obs=999),
+        dataclasses.replace(ch, n_reps=2),
+    ):
+        with pytest.raises(AdjudicationError, match="sealed challenge"):
+            verify_truth_seal(forged)
+
+
 def test_tally_binds_predictions_to_unique_sealed_indices() -> None:
     ch = _challenge(n_reps=2)
     an = run_analyst(ch.blind_items(), "analyst.pr141", CFG, n_obs=60,

@@ -156,6 +156,48 @@ def verify_truth_seal(challenge: SealedChallenge) -> None:
         raise AdjudicationError(
             "the sealed truth hash does not match the realized labels/data — "
             "the challenge was tampered with after sealing")
+    if (
+        isinstance(challenge.n_reps, bool)
+        or not isinstance(challenge.n_reps, Integral)
+        or challenge.n_reps < 1
+        or isinstance(challenge.n_obs, bool)
+        or not isinstance(challenge.n_obs, Integral)
+        or challenge.n_obs < 1
+    ):
+        raise AdjudicationError("the sealed challenge dimensions are invalid")
+    expected = [
+        (family, rep)
+        for family in DGP_BATTERY
+        for rep in range(challenge.n_reps)
+    ]
+    if len(challenge.items) != len(expected):
+        raise AdjudicationError(
+            "the sealed challenge item count does not match its dimensions")
+    for item, (expected_family, expected_rep) in zip(
+            challenge.items, expected):
+        try:
+            family, rep, values, collinear = item
+        except (TypeError, ValueError) as exc:
+            raise AdjudicationError(
+                "the sealed challenge item structure is invalid") from exc
+        expected_collinear = (
+            DGP_BATTERY[expected_family]["regime"] == "confused"
+        )
+        values = np.asarray(values)
+        if (
+            family != expected_family
+            or isinstance(rep, bool)
+            or not isinstance(rep, Integral)
+            or rep != expected_rep
+            or not isinstance(collinear, bool)
+            or collinear is not expected_collinear
+            or values.shape != (challenge.n_obs,)
+            or not np.issubdtype(values.dtype, np.number)
+            or not np.isrealobj(values)
+            or not np.all(np.isfinite(values))
+        ):
+            raise AdjudicationError(
+                "the sealed challenge item structure is invalid")
 
 
 # --------------------------------------------------------------------------
