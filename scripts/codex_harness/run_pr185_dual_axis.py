@@ -17,6 +17,7 @@ for entry in (str(REPO / "htt"), str(REPO / "htt" / "src")):
 from common.dual_axis_claim_state import (  # noqa: E402
     AdjudicationReceipt,
     ClaimState,
+    DualAxisError,
     GATE_NAMES,
     NOVELTY_TIERS,
     READINESS_STATES,
@@ -38,7 +39,7 @@ def _sha(path: Path) -> str:
 
 
 def _validated_claim() -> ClaimState:
-    """A fully-passing claim used as the mutation base."""
+    """A syntactically complete legacy receipt used as a mutation base."""
     gates = {name: "pass" for name in GATE_NAMES}
     claim = ClaimState(
         id="BASE",
@@ -95,7 +96,7 @@ def _publication_mutation_battery(n: int = 100) -> dict[str, int]:
     rejected = 0
     total = 0
     base = _validated_claim()
-    base = promote(base, "VALIDATED")
+    base.readiness_state = "VALIDATED"
     for i in range(n):
         c = replace(base)
         c.publication_use = True
@@ -134,7 +135,7 @@ def _publication_mutation_battery(n: int = 100) -> dict[str, int]:
 def _kill_battery() -> dict[str, bool]:
     """The four named adversarial kills must each be caught."""
     base = _validated_claim()
-    base = promote(base, "VALIDATED")
+    base.readiness_state = "VALIDATED"
 
     # author == adjudicator
     c1 = replace(base, publication_use=True)
@@ -186,6 +187,11 @@ def build_payload() -> tuple[dict, dict]:
     combos = _legal_combos()
     pub = _publication_mutation_battery()
     kills = _kill_battery()
+    try:
+        promote(_validated_claim(), "VALIDATED")
+        authenticated_receipt_authority_available = True
+    except DualAxisError:
+        authenticated_receipt_authority_available = False
 
     dual_ledger = {
         "schema": "htt.dual_axis_claim_ledger.v1",
@@ -234,19 +240,26 @@ def build_payload() -> tuple[dict, dict]:
             "publication_mutations_all_rejected": pub["rejected"] == pub["total"],
             "kill_battery": kills,
             "kill_battery_all_caught": all(kills.values()),
+            "authenticated_receipt_authority_available": (
+                authenticated_receipt_authority_available
+            ),
             "dual_ledger_sha256": hashlib.sha256(
                 (json.dumps(dual_ledger, sort_keys=True, indent=1) + "\n").encode()
             ).hexdigest(),
         },
         "terminal": (
-            "DUAL_AXIS_SSOT_EVIDENCE_READY_INDEPENDENCE_OPEN"
-            if (
-                diff["diff_zero"]
-                and all(combos.values())
-                and pub["rejected"] == pub["total"]
-                and all(kills.values())
+            "BLOCKED_AUTHENTICATED_RECEIPT_UNAVAILABLE"
+            if not authenticated_receipt_authority_available
+            else (
+                "DUAL_AXIS_SSOT_EVIDENCE_READY_INDEPENDENCE_OPEN"
+                if (
+                    diff["diff_zero"]
+                    and all(combos.values())
+                    and pub["rejected"] == pub["total"]
+                    and all(kills.values())
+                )
+                else "BLOCKED_GATE_FAILURE"
             )
-            else "BLOCKED_GATE_FAILURE"
         ),
         "forbidden_claims_reaffirmed": [
             "novelty and readiness are never a single ordinal",
@@ -269,6 +282,13 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     dual_ledger, card = build_payload()
     if args.write:
+        if card["terminal"] != "DUAL_AXIS_SSOT_EVIDENCE_READY_INDEPENDENCE_OPEN":
+            print(
+                "refusing to overwrite frozen historical outputs without an "
+                "authenticated external receipt verifier",
+                file=sys.stderr,
+            )
+            return 2
         LEDGER_OUT.write_bytes(_render(dual_ledger))
         CARD.write_bytes(_render(card))
         print(f"wrote {LEDGER_OUT.name} + {CARD.name}; terminal={card['terminal']}")

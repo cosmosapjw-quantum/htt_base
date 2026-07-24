@@ -25,10 +25,12 @@ from common.dual_axis_claim_state import (  # noqa: E402
     promote,
     validate_claim,
 )
+from scripts.codex_harness import run_pr185_dual_axis as runner  # noqa: E402
 
 CARD = REPO / "docs/generated/pr185_result_card.json"
 LEDGER = REPO / "docs/generated/dual_axis_claim_ledger.json"
 SPEC = REPO / "docs/research_program/strengthening/pr185_spec.yaml"
+RUNNER = REPO / "scripts/codex_harness/run_pr185_dual_axis.py"
 
 
 def _card() -> dict:
@@ -111,12 +113,18 @@ def test_named_kills_all_caught() -> None:
     assert all(kb.values())
 
 
-def test_promote_never_changes_novelty_and_validated_needs_receipt() -> None:
+def test_self_issued_receipt_cannot_validate() -> None:
     c = _base_validated()
     before = c.novelty_tier_external
-    promote(c, "VALIDATED")
+    try:
+        promote(c, "VALIDATED")
+        raised = False
+    except DualAxisError:
+        raised = True
+    assert raised
     assert c.novelty_tier_external == before
-    # remove the independent receipt -> VALIDATED refused
+    assert c.readiness_state == "ADJUDICATION_PENDING"
+    # Removing even the diagnostic receipt remains refused.
     c2 = _base_validated()
     c2.adjudication_receipts = ()
     try:
@@ -127,13 +135,37 @@ def test_promote_never_changes_novelty_and_validated_needs_receipt() -> None:
     assert raised
 
 
-def test_card_byte_stable_under_check() -> None:
+def test_direct_validated_state_requires_authenticated_receipt() -> None:
+    c = _base_validated()
+    c.readiness_state = "VALIDATED"
+    errors = validate_claim(c)
+    assert any("signed independent receipt" in error for error in errors)
+
+
+def test_historical_card_preserves_pre_review_terminal() -> None:
+    assert _card()["terminal"] == "DUAL_AXIS_SSOT_EVIDENCE_READY_INDEPENDENCE_OPEN"
+
+
+def test_current_check_blocks_without_authenticated_verifier() -> None:
     proc = subprocess.run(
-        [str(REPO / "venv/bin/python"), "-B",
-         str(REPO / "scripts/codex_harness/run_pr185_dual_axis.py"), "--check"],
+        [sys.executable, "-B", str(RUNNER), "--check"],
         cwd=REPO, capture_output=True, text=True, timeout=300,
         env={"PYTHONHASHSEED": "0", "PATH": "/usr/bin:/bin"},
     )
-    assert proc.returncode == 0, proc.stdout + proc.stderr
+    assert proc.returncode == 1, proc.stdout + proc.stderr
     payload = json.loads(proc.stdout.strip().splitlines()[-1])
-    assert payload["ok"] is True and payload["read_only"] is True
+    assert payload["ok"] is False and payload["read_only"] is True
+    assert payload["terminal"] == "BLOCKED_AUTHENTICATED_RECEIPT_UNAVAILABLE"
+
+
+def test_write_refuses_to_overwrite_historical_outputs() -> None:
+    before_card = hashlib.sha256(CARD.read_bytes()).hexdigest()
+    before_ledger = hashlib.sha256(LEDGER.read_bytes()).hexdigest()
+    proc = subprocess.run(
+        [sys.executable, "-B", str(RUNNER), "--write"],
+        cwd=REPO, capture_output=True, text=True, timeout=300,
+    )
+    assert proc.returncode == 2
+    assert "refusing to overwrite" in proc.stderr
+    assert hashlib.sha256(CARD.read_bytes()).hexdigest() == before_card
+    assert hashlib.sha256(LEDGER.read_bytes()).hexdigest() == before_ledger

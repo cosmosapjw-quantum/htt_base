@@ -74,8 +74,12 @@ class DualAxisError(ValueError):
 class AdjudicationReceipt:
     adjudicator_principal: str
     independent: bool
-    signature: str  # non-empty => signed; empty => fabricated/unsigned
+    signature: str  # legacy metadata only; not an authenticated signature
     gate_snapshot_digest: str  # binds the receipt to the gate state it saw
+
+    def is_authoritative(self) -> bool:
+        """This legacy shape has no trusted verifier or principal registry."""
+        return False
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -138,7 +142,8 @@ def _validated_gate_ok(claim: ClaimState) -> list[str]:
     signed_independent = [
         r
         for r in claim.adjudication_receipts
-        if r.independent
+        if r.is_authoritative()
+        and r.independent
         and r.signature.strip()
         and r.adjudicator_principal not in claim.author_principals
         and r.gate_snapshot_digest == claim.gate_digest()  # not stale
@@ -156,11 +161,14 @@ def validate_claim(claim: ClaimState) -> list[str]:
     # The non-conflation invariant: novelty is a literature axis only.
     if claim.readiness_state in ("VALIDATED",) and claim.novelty_tier_external not in NOVELTY_TIERS:
         errs.append(f"{claim.id}: readiness must not define novelty")
+    validated_errs = (
+        _validated_gate_ok(claim) if claim.readiness_state == "VALIDATED" else []
+    )
+    errs.extend(validated_errs)
     # publication_use fail-closed.
     if claim.publication_use:
         if claim.readiness_state != "VALIDATED":
             errs.append(f"{claim.id}: publication_use=true requires VALIDATED")
-        errs.extend(_validated_gate_ok(claim))
     # promotion parent must not be self (circular).
     if claim.promotion_parent == claim.id:
         errs.append(f"{claim.id}: circular promotion parent")
