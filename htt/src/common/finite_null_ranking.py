@@ -58,6 +58,10 @@ def pooled_rank_p(obs_score: float, null_scores: Sequence[float],
     n = len(nulls)
     if n == 0:
         raise FiniteNullError("need at least one null row")
+    if not math.isfinite(obs_score):
+        raise FiniteNullError("observation score must be finite")
+    if any(not math.isfinite(score) for score in nulls):
+        raise FiniteNullError("every null score must be finite")
     b = sum(1 for s in nulls if s >= obs_score)
     p = Fraction(1 + b, n + 1)
     if p <= 0:
@@ -122,6 +126,8 @@ def _max_scan_score(row: Sequence[float]) -> float:
     values = list(row)
     if not values:
         raise FiniteNullError("a scan row must be non-empty")
+    if any(not math.isfinite(value) for value in values):
+        raise FiniteNullError("every scan score must be finite")
     return max(values)
 
 

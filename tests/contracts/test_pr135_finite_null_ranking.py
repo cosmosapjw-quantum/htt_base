@@ -95,6 +95,18 @@ def test_non_conservative_tie_rejected() -> None:
         pooled_rank_p(1.0, [1.0, 2.0], tie_policy="strict_gt")
 
 
+def test_non_finite_scores_rejected() -> None:
+    with pytest.raises(FiniteNullError, match="observation score.*finite"):
+        pooled_rank_p(float("nan"), [1.0, 2.0])
+    with pytest.raises(FiniteNullError, match="null score.*finite"):
+        pooled_rank_p(1.0, [2.0, float("inf")])
+    with pytest.raises(FiniteNullError, match="scan score.*finite"):
+        scan_pooled_rank_p(
+            [1.0, float("nan")],
+            [[0.0, 2.0]],
+        )
+
+
 def test_dependence_preserving_scan() -> None:
     obs = [0.4, 1.1, 0.9, 0.7, 0.5]
     nulls = [[0.3, 0.5, 0.4, 0.6, 0.2],
