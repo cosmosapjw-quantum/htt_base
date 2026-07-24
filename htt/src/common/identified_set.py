@@ -489,6 +489,19 @@ def subvector_projection(full_result: dict,
     for ax in subaxes:
         if ax not in AXES:
             raise IdentifiedSetError(f"unknown axis {ax!r}")
+    full_status = full_result["status"]
+    if full_status in (
+        SetStatus.EMPTY.value,
+        SetStatus.UNDETERMINED.value,
+    ):
+        return {
+            "subaxes": list(subaxes),
+            "status": full_status,
+            "axis_intervals": None,
+            "unbounded_in_subvector": [],
+            "note": "the terminal full-set status is preserved in the "
+                    "separately reported subvector projection",
+        }
     unbounded_in_sub = [ax for ax in full_result["unbounded_axes"]
                         if ax in subaxes]
     if unbounded_in_sub:

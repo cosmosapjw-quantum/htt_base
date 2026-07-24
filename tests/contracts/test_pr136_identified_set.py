@@ -206,6 +206,18 @@ def test_subvector_projection_separate() -> None:
     assert sub_kernel["status"] == "unbounded"
 
 
+@pytest.mark.parametrize("status", ["empty", "undetermined"])
+def test_subvector_projection_preserves_terminal_status(status: str) -> None:
+    full = {
+        "status": status,
+        "axis_intervals": None,
+        "unbounded_axes": [],
+    }
+    projected = subvector_projection(full, ["Sigma2"])
+    assert projected["status"] == status
+    assert projected["axis_intervals"] is None
+
+
 def test_cross_engine_disagreement_blocks() -> None:
     exact = {"status": "bounded",
              "axis_intervals": {a: ["0", "1"] for a in AXES},
