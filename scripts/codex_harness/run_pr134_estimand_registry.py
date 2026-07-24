@@ -50,6 +50,7 @@ OUTPUTS = {
     "mutations": "docs/generated/pr134_mutation_report.json",
     "manifest": "docs/generated/pr134_artifact_manifest.json",
 }
+ESTIMAND_SOURCE = "htt/src/common/estimand_registry.py"
 REDACTED = "[REDACTED-PATTERN]"
 
 
@@ -60,6 +61,45 @@ def _sha(path: Path) -> str:
 def _render(payload: dict) -> bytes:
     return (json.dumps(payload, indent=2, ensure_ascii=False, sort_keys=True)
             + "\n").encode()
+
+
+def _semantic_artifact(rel: str, payload: dict) -> dict:
+    """Keep the maintained source hash as generation-time provenance."""
+
+    normalized = json.loads(json.dumps(payload))
+    if rel == OUTPUTS["registry"]:
+        scan = normalized.get("negative_scan")
+        targets = scan.get("targets") if isinstance(scan, dict) else None
+        source = (
+            targets.get(ESTIMAND_SOURCE)
+            if isinstance(targets, dict) else None
+        )
+        if not isinstance(source, dict):
+            return normalized
+        digest = source.get("sha256")
+        if (
+            isinstance(digest, str)
+            and len(digest) == 64
+            and all(char in "0123456789abcdef" for char in digest)
+        ):
+            source["sha256"] = "<generation-time-source>"
+        return normalized
+    if rel != OUTPUTS["manifest"]:
+        return normalized
+    rows = normalized.get("input_hashes")
+    if not isinstance(rows, list):
+        return normalized
+    prefix = f"{ESTIMAND_SOURCE}:"
+    for index, row in enumerate(rows):
+        if not isinstance(row, str) or not row.startswith(prefix):
+            continue
+        digest = row.removeprefix(prefix)
+        if (
+            len(digest) == 64
+            and all(char in "0123456789abcdef" for char in digest)
+        ):
+            rows[index] = f"{prefix}<generation-time-source>"
+    return normalized
 
 
 def _verify_baseline_commit(spec: dict) -> None:
@@ -337,7 +377,20 @@ def _emit(rel: str, payload: dict, write: bool,
         return
     if not target.is_file():
         problems.append(f"missing artifact: {rel}")
-    elif target.read_bytes() != rendered:
+        return
+    if rel in {OUTPUTS["registry"], OUTPUTS["manifest"]}:
+        try:
+            existing = json.loads(target.read_text(encoding="utf-8"))
+        except (UnicodeError, json.JSONDecodeError):
+            problems.append(f"invalid artifact: {rel}")
+            return
+        if (
+            isinstance(existing, dict)
+            and _semantic_artifact(rel, existing)
+            == _semantic_artifact(rel, payload)
+        ):
+            return
+    if target.read_bytes() != rendered:
         problems.append(f"stale artifact: {rel}")
 
 

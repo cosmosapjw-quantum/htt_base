@@ -1,6 +1,7 @@
 """PR-134 contract tests: estimand/analysis registry."""
 from __future__ import annotations
 
+import importlib.util
 import json
 import subprocess
 import sys
@@ -25,6 +26,50 @@ SPEC = yaml.safe_load(
     (REPO_ROOT / "docs/research_program/long_horizon_rescue/pr134_spec.yaml")
     .read_text(encoding="utf-8"))
 BASE = SPEC["representative_contracts"][0]
+
+
+def _load_runner():
+    runner_path = (
+        REPO_ROOT / "scripts/codex_harness/run_pr134_estimand_registry.py"
+    )
+    spec = importlib.util.spec_from_file_location("run_pr134", runner_path)
+    runner = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(runner)
+    return runner
+
+
+def test_estimand_source_hash_is_generation_time_provenance() -> None:
+    runner = _load_runner()
+    source = runner.ESTIMAND_SOURCE
+    registry = runner.OUTPUTS["registry"]
+    stored = {
+        "negative_scan": {
+            "targets": {
+                source: {"sha256": "1" * 64, "hits": []},
+            }
+        }
+    }
+    current = {
+        "negative_scan": {
+            "targets": {
+                source: {"sha256": "2" * 64, "hits": []},
+            }
+        }
+    }
+    assert runner._semantic_artifact(
+        registry, stored
+    ) == runner._semantic_artifact(registry, current)
+    current["negative_scan"]["targets"][source]["hits"] = [{"line": 1}]
+    assert runner._semantic_artifact(
+        registry, stored
+    ) != runner._semantic_artifact(registry, current)
+
+    manifest = runner.OUTPUTS["manifest"]
+    stored = {"input_hashes": [f"{source}:{'1' * 64}"]}
+    current = {"input_hashes": [f"{source}:{'2' * 64}"]}
+    assert runner._semantic_artifact(
+        manifest, stored
+    ) == runner._semantic_artifact(manifest, current)
 
 
 def _registry() -> EstimandRegistry:
