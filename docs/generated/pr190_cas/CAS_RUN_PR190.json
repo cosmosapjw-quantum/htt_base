@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "axes": {
+    "wolfram_xact": {
+      "argv": [
+        "wolframscript",
+        "-file",
+        "wolfram/pr190_shear_substitution.wls"
+      ],
+      "cwd": ".",
+      "timeout_seconds": 300
+    },
+    "sympy": {
+      "argv": [
+        "python3",
+        "-B",
+        "wolfram/pr190_shear_substitution_sympy.py"
+      ],
+      "cwd": ".",
+      "timeout_seconds": 300
+    },
+    "sage_singular": {
+      "argv": [
+        "sage",
+        "sage/pr190_shear_substitution.sage"
+      ],
+      "cwd": ".",
+      "timeout_seconds": 600
+    },
+    "lean": {
+      "argv": [
+        "env",
+        "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0",
+        "lake",
+        "env",
+        "lean",
+        "Pr190Dynamical.lean"
+      ],
+      "cwd": "formal_mathlib",
+      "timeout_seconds": 600
+    },
+    "rocq": {
+      "argv": [
+        "python3",
+        "-B",
+        "scripts/codex_harness/pr190_rocq_axis.py"
+      ],
+      "cwd": ".",
+      "timeout_seconds": 300
+    }
+  }
+}

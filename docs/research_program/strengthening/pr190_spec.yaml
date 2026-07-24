@@ -1,0 +1,65 @@
+schema: htt.strengthen_spec.v1
+pr_id: PR-190
+title: Physical endpoint attainability attempt with a shear-substitution kill gate
+baseline_commit: c80e35c9c8484f56c1654bfe96b66ce64bd03985
+frozen_before_result: true
+owner: BASS
+targets_audit_criticisms: [H04, H05]
+risk_tier: R3-CAS+ODE
+claim_ceiling: {scheme: roadmap_rescue_v1, level: C1}
+public_use: false
+transfer_source: none
+
+controlling_assumptions:
+  metric_signature: "(-,+,+,+)"
+  units: "8*pi*G=1"
+  frame: "normal/comoving n=u; zero tilt"
+  model: "expanding diagonal Bianchi-I with pressureless dust, including vacuum boundary"
+  time: "N=ln(a/a0), H>0"
+  shear_normalization: "Sigma2=sigma_ab sigma^ab/(6 H^2)"
+  comparator: "x_C=Sigma2-W2+Omega_tilt+DeltaOmega_k"
+
+attempted_route: >
+  Test whether a dynamically valid diagonal Bianchi-I dust family can realize
+  the registered PR-215 lower and upper comparator endpoints by tuning Sigma2.
+  Run 100 five-e-fold ODE developments over the scalar interval and compare the
+  complete four-component vectors exactly.
+
+decisive_falsifier: >
+  Even with exact scalar x_C agreement and valid Einstein-dust evolution, the
+  route fails if any registered endpoint component is not realized. A
+  shear-only state must not replace nonzero W2, Omega_tilt, or DeltaOmega_k.
+
+interfaces:
+  module: htt/src/common/pr190_physical_attainability.py
+  runner: scripts/codex_harness/run_pr190_physical_attainability.py
+  card_out: docs/generated/pr190_result_card.json
+  cas_contract: docs/generated/pr190_cas/CAS_CONTRACT_PR190_SHEAR_SUBSTITUTION.json
+
+pass_gate_conjunctive:
+  - lower and upper registered endpoint component vectors are realized exactly
+  - every scalar interior value has a solution witness or a rigorous connectedness proof
+  - normalized Gauss residual remains below 1e-10 for at least five e-folds
+  - momentum, Jacobi, matter conservation, and evolution equations hold
+  - energy conditions, domain, frame, and metric signature remain valid
+
+expected_negative_terminal: >
+  BLOCKED_COMPONENT_ENDPOINT_NOT_ATTAINED is required when scalar endpoint
+  values match but the four-component endpoint vectors do not.
+
+cas_policy:
+  risk_tier: R3
+  required_axes:
+    - wolfram_xact
+    - sympy_high_precision
+    - sage_singular
+    - lean_mathlib
+    - rocq_stdlib
+  rocq_reason: explicit contract opt-in for an independent proof kernel
+  execution_authority: parent-observed cas_gate.py run-adjudicate only
+  stored_axis_json_authority: diagnostic_only
+
+claim_boundary: >
+  A CAS pass verifies the exact identities and endpoint mismatch only. It does
+  not establish full physical attainability, scientific validity, novelty,
+  publication readiness, or any Bianchi-family identification.
