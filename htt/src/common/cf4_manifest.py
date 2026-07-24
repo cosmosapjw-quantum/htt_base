@@ -199,6 +199,10 @@ def id_parity(t3_lines: list[str], t4_lines: list[str]) -> dict:
     id_col4 = require_registered_column("1PGC", TABLE4_COLUMNS)
     ids3 = [id_col3.value(ln) for ln in t3_lines]
     ids4 = [id_col4.value(ln) for ln in t4_lines]
+    if any(not isinstance(group_id, int) or group_id <= 0
+           for group_id in (*ids3, *ids4)):
+        raise Cf4ManifestError(
+            "1PGC group IDs must be present positive integers")
     set3, set4 = set(ids3), set(ids4)
     duplicates3 = len(ids3) - len(set3)
     duplicates4 = len(ids4) - len(set4)

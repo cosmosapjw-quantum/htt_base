@@ -142,6 +142,12 @@ def test_id_parity_rejects_duplicate_group_ids() -> None:
         id_parity(duplicated, duplicated)
 
 
+@pytest.mark.parametrize("line", ["       ", "      0", "     -1"])
+def test_id_parity_rejects_missing_or_nonpositive_group_ids(line: str) -> None:
+    with pytest.raises(Cf4ManifestError, match="present positive integers"):
+        id_parity([line], [line])
+
+
 def test_caption_gate() -> None:
     text = generate_caption(38053, 46)
     lint_caption(text)
