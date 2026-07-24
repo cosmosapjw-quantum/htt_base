@@ -55,26 +55,29 @@ GEN = REPO_ROOT / "docs/generated"
 CARD = GEN / "act_raw_qe_card.json"
 
 
-def _v2_card_available() -> bool:
-    if not CARD.is_file():
-        return False
-    try:
-        return json.loads(CARD.read_text(encoding="utf-8")).get("schema") \
-            == "htt.act_raw_qe_card.v2"
-    except (OSError, ValueError):
-        return False
-
-
-needs_card = pytest.mark.skipif(
-    not _v2_card_available(), reason="provenance-bound real ACT v2 card absent")
-
-
 def _record(path: Path) -> dict:
     return {
         "path": str(path),
         "size_bytes": path.stat().st_size,
         "sha256": "sha256:" + hashlib.sha256(path.read_bytes()).hexdigest(),
     }
+
+
+def _card_with_isolated_cache(tmp_path: Path) -> dict:
+    """Bind the tracked card to a tiny cache so each validator mutation is causal."""
+
+    card = json.loads(CARD.read_text(encoding="utf-8"))
+    cache = tmp_path / "act_lowl_cache.npz"
+    cache.write_bytes(b"isolated PR-152 validator cache fixture\n")
+    card["input_provenance"]["cache_path"] = str(cache)
+    card["input_provenance"]["cache_sha256"] = _record(cache)["sha256"]
+    return card
+
+
+def _recorded_cache_path() -> Path:
+    card = json.loads(CARD.read_text(encoding="utf-8"))
+    path = Path(card["input_provenance"]["cache_path"])
+    return path if path.is_absolute() else REPO_ROOT / path
 
 
 def _receipt(tmp_path: Path) -> dict:
@@ -373,18 +376,19 @@ def test_caption_lint_blocks_a_detection_phrase() -> None:
         lint_caption("this is an ACT kappa detection with anisotropy detected")
 
 
-@needs_card
 @pytest.mark.parametrize("field", [
     "schema", "n_sims", "n_exchangeable_units", "support", "p",
     "score", "rank", "decision",
 ])
-def test_heavy_card_validator_kills_semantic_mutations(field) -> None:
+def test_heavy_card_validator_kills_semantic_mutations(
+        field: str, tmp_path: Path) -> None:
     import yaml
 
-    card = json.loads(CARD.read_text(encoding="utf-8"))
+    card = _card_with_isolated_cache(tmp_path)
     spec = yaml.safe_load((REPO_ROOT /
         "docs/research_program/long_horizon_rescue/pr152_spec.yaml")
         .read_text(encoding="utf-8"))
+    _validate_card(card, spec)
     broken = copy.deepcopy(card)
     if field == "schema":
         broken["schema"] = "wrong"
@@ -411,13 +415,30 @@ def test_heavy_card_validator_kills_semantic_mutations(field) -> None:
 # --------------------------------------------------------------------------
 # built artifacts from the real ACT card (data-gated)
 # --------------------------------------------------------------------------
-@needs_card
 def test_runner_check_and_real_artifacts() -> None:
+    card = json.loads(CARD.read_text(encoding="utf-8"))
     result = subprocess.run(
         [sys.executable,
          str(REPO_ROOT / "scripts/codex_harness/run_pr152_act_raw_qe.py"),
          "--check"], cwd=REPO_ROOT, capture_output=True, text=True, check=False)
-    assert result.returncode == 0, result.stdout + result.stderr
+    if _recorded_cache_path().is_file():
+        assert result.returncode == 0, result.stdout + result.stderr
+    else:
+        assert result.returncode == 1
+        assert "cache bytes do not match provenance" in result.stderr
+    manifest = json.loads(
+        (GEN / "pr152_artifact_manifest.json").read_text(encoding="utf-8")
+    )
+    assert manifest["raw_data_pins"]["act_raw_qe_card_sha256"] == (
+        _record(CARD)["sha256"]
+    )
+    assert manifest["raw_data_pins"]["low_l_cache_sha256"] == (
+        card["input_provenance"]["cache_sha256"]
+    )
+    for relative, expected in manifest["artifacts"].items():
+        assert hashlib.sha256((REPO_ROOT / relative).read_bytes()).hexdigest() == (
+            expected
+        )
     dec = json.loads((GEN / "pr152_availability_decision.json")
                      .read_text(encoding="utf-8"))
     assert dec["decision"] == "DEFER_RAW_QE_RDN0_PUBLIC_INPUTS_LARGE_RECONSTRUCTION"
