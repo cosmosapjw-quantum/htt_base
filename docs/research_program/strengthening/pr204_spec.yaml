@@ -1,0 +1,143 @@
+schema: htt.pr204.spec.v1
+pr_id: PR-204
+title: ACT DR6 strict-band post-reconstruction injection closure
+baseline_commit: c80e35c9c8484f56c1654bfe96b66ce64bd03985
+frozen_before_result: true
+owner: OBSSTAT
+contributors: [HTT]
+implementation_scope: [obsstat]
+risk_tier: R2-data
+claim_level: {scheme: roadmap_rescue_v1, level: C1}
+claim_tier: exploratory
+scientific_artifact_mode: standard_internal
+public_use: false
+transfer_source: none
+readiness_ceiling: EVIDENCE_READY
+independence_gate: OPEN
+
+route:
+  selected: validated_band_post_reconstruction
+  raw_qe_selected: false
+  statement: >
+    Calibrate the already-frozen PR-177 strict-band reconstructed-kappa
+    modulation estimator with paired, hard-reprojected variance-modulation
+    injections into all 400 authenticated ACT DR6 release reconstructions.
+  boundary: >
+    This is a post-reconstruction release-alm response test. It is not a
+    pre-QE injection, raw-QE reproduction, RDN0 validation, or validation of
+    the ACT reconstruction transfer.
+
+source_authorities:
+  pr177_feature_card:
+    path: docs/generated/pr177_act_inband_feature_card.json
+    sha256: d73d6fd71dde644f50a00732b00129ee91b4bdcaa82d688a1ddb58fb3b41f832
+  pr177_deep_replay:
+    path: docs/generated/pr177_deep_replay_receipt.json
+    sha256: c7f1e15d9119821ba72ecef5f1e822e90192abe97c2f8ff9fff9c3421ef0a7ba
+  pr177_result:
+    path: docs/generated/pr177_result_card.json
+    sha256: 513cad677b3737f9dbe8d8657533024252b21d12f7bee5894307218bd2ec56d0
+    scientific_result: NO_RESOLVED_COUPLING_AT_CURRENT_MC_RESOLUTION
+  pr152_inventory:
+    path: docs/generated/pr152_inventory.json
+    sha256: 3be58014deb2d3b280b10f27cbfb9efb7df0ca075b08bcd7053b9e8c1dd1245d
+    raw_qe_inputs_on_disk: false
+  pr152_availability:
+    path: docs/generated/pr152_availability_decision.json
+    sha256: 30d6d1a97112b011c0e3dbdcff16d0453b85f92e82b65a6170656039f29ab6d5
+    decision: DEFER_RAW_QE_RDN0_PUBLIC_INPUTS_LARGE_RECONSTRUCTION
+  raw_records_only_sha256: 63b65bfd0ef6593cbf6cfa11602f0e09a589932bfc907aeb31ecbc09a2142968
+
+harmonic_contract:
+  coordinate_frame: Equatorial
+  support: "40 < L < 763"
+  integer_min: 41
+  integer_max: 762
+  endpoints_included: false
+  nside: 1024
+  ordering: RING
+  synthesis_lmax: 762
+  mask_variant: baseline
+  mask_threshold: 0.99
+  real_y2_order: [Y20, Y21c, Y21s, Y22c, Y22s]
+
+injection_contract:
+  total_units: 400
+  amplitude_magnitude: 0.08
+  assignment:
+    axis: "(simulation_id - 1) mod 5"
+    within_axis_index: "(simulation_id - 1) div 5"
+    sign: "+ for even within_axis_index; - for odd"
+    response_fit: "within_axis_index 0..19; 10 positive and 10 negative per axis"
+    coverage_calibration: "within_axis_index 20..39; 10 positive and 10 negative per axis"
+    evaluation: "within_axis_index 40..79; 20 positive and 20 negative per axis"
+  field_definition: >
+    Start from the strict-band reconstructed-kappa map x(n). Form
+    x_mod(n)=x(n)*sqrt(1+a*T_j(n)), where T_j is the assigned physical
+    real-Y2 basis function and 1+a*T_j remains positive. Transform x_mod to
+    alm, hard-zero every mode outside 41..762, synthesize the projected map,
+    then run the unchanged PR-177 raw and mask-controlled feature fit.
+  transform:
+    map2alm_iterations: 0
+    pixel_weights: false
+    hard_reprojection_required: true
+  paired_baseline_gate:
+    cached_feature_match_absolute_tolerance: 1.0e-10
+
+calibration_and_coverage:
+  response_matrix: >
+    For each input axis, regress paired injected-minus-baseline five-vectors
+    on the signed amplitude without an intercept using only its 20
+    response-fit units.
+  response_gates:
+    diagonal_min: 0.8
+    diagonal_max: 1.2
+    maximum_absolute_off_diagonal: 0.2
+    maximum_condition_number: 2.0
+  split_conformal_coverage:
+    response_fit_units_per_axis: 20
+    coverage_calibration_units_per_axis: 20
+    evaluation_units_per_axis: 40
+    score: absolute recovered-amplitude error
+    quantile: "19th ordered coverage-calibration residual out of 20: ceil((20+1)*0.9)"
+    minimum_evaluation_coverage_per_axis: 0.9
+    maximum_absolute_evaluation_bias: 0.01
+  mask_sensitivity:
+    ratio: "norm(delta_q_raw-delta_q_controlled)/norm(delta_q_controlled)"
+    maximum_evaluation_p95_ratio: 0.5
+
+terminal_routing:
+  pass: AUTHOR_EVIDENCE_READY_VALIDATED_BAND_RESPONSE_CALIBRATED
+  fail_response: BLOCKED_INBAND_INJECTION_RESPONSE_FAILURE
+  fail_coverage: BLOCKED_INBAND_INJECTION_COVERAGE_FAILURE
+  fail_mask: BLOCKED_MASK_SENSITIVITY_COMPARABLE_TO_INJECTION
+  fail_integrity: BLOCKED_PR204_INPUT_OR_EXECUTION_INTEGRITY
+  interpretation: >
+    A pass calibrates only the selected post-reconstruction strict-band
+    estimator on the author side. PR-177's release-simulation-conditional
+    null remains an upstream result rather than a new PR-204 result, and the
+    non-author Independence gate remains OPEN. This is not a raw-QE or
+    sky-anisotropy result.
+
+resource_policy:
+  raw_workers: 1
+  sequential_reader: true
+  required_nice: 15
+  required_ionice_class: idle
+  thread_caps:
+    OMP_NUM_THREADS: 1
+    OPENBLAS_NUM_THREADS: 1
+    MKL_NUM_THREADS: 1
+  minimum_free_gib_to_start: 300
+  pr151_log_fresh_seconds: 1800
+  collision_rule: stop_PR204_preserve_PR151
+  network_access: false
+  raw_payload_rehash: false
+  cache: ignored_atomic_per_unit
+
+kill_switches:
+  - any injected or measured mode outside integer 41..762
+  - any use of fewer than the registered 400 release simulations
+  - any observed/simulation, raw/control, or calibration/evaluation path drift
+  - response, coverage, bias, or mask-sensitivity gate failure
+  - any label implying pre-QE injection, raw-QE reproduction, detection, isotropy, cosmological anisotropy, geometry, or family identification

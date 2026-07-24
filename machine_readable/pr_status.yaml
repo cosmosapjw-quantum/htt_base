@@ -1,4 +1,4 @@
-generated_on: '2026-07-20'
+generated_on: '2026-07-24'
 completed:
 - PR-228
 - PR-227
@@ -143,6 +143,7 @@ completed:
 - PR-180
 blocked:
 - PR-172
+- PR-204
 pending:
 - PR-155
 - PR-156
@@ -161,7 +162,6 @@ pending:
 - PR-201
 - PR-202
 - PR-203
-- PR-204
 - PR-205
 - PR-206
 - PR-207
@@ -285,6 +285,18 @@ execution_lane:
   PR-245: needs_native
   PR-246: needs_native
 execution_resolutions:
+  PR-204:
+    resolution: COMPLETED_FAILED_WITH_RECEIPT
+    receipt: docs/PR_DELTAS/pr-204.md
+    calibration_receipt: docs/generated/pr204_injection_calibration.json
+    calibration_receipt_sha256: cd954698e5974325ec408abb48165e2cfe06a4caed474b5ab8b45096efef3164
+    result_card_receipt: docs/generated/pr204_result_card.json
+    result_card_receipt_sha256: 6dc14aa49f770222c16efc113de91bb2e2b944e2d9ef9192b19637605819549f
+    resolved_on: '2026-07-24'
+    scientific_status_effect: strict_band_response_and_mask_gates_passed_but_registered_y21c_split_coverage_failed
+    scientific_status_after: BLOCKED_INBAND_INJECTION_COVERAGE_FAILURE
+    public_use: false
+    success_dependency_satisfied: false
   PR-228:
     resolution: COMPLETED_SUCCESS
     receipt: docs/PR_DELTAS/pr-228.md

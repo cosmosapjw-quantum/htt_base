@@ -1,0 +1,150 @@
+{
+ "analysis_support": {
+  "coordinate_frame": "Equatorial",
+  "endpoints_included": false,
+  "inequality": "40 < L < 763",
+  "integer_max": 762,
+  "integer_min": 41
+ },
+ "author_side_gates": {
+  "calibration": "BLOCKED",
+  "identification": "EVIDENCE_READY",
+  "mechanics": "EVIDENCE_READY",
+  "provenance": "EVIDENCE_READY"
+ },
+ "calibration_card_sha256": "cd954698e5974325ec408abb48165e2cfe06a4caed474b5ab8b45096efef3164",
+ "calibration_terminal": "BLOCKED_INBAND_INJECTION_COVERAGE_FAILURE",
+ "caveats": [
+  "The injection starts from released reconstructed-kappa alms after the ACT quadratic estimator.",
+  "This author-side calibration does not reproduce raw-QE filtering, RDN0, or reconstruction transfer.",
+  "PR-177's release-simulation-conditional null remains upstream context and is not promoted into a new PR-204 scientific result.",
+  "This does not establish detection, isotropy, cosmological anisotropy, geometry, novelty, release readiness, or family identification.",
+  "The non-author Independence gate remains OPEN."
+ ],
+ "claim_level": {
+  "level": "C1",
+  "scheme": "roadmap_rescue_v1"
+ },
+ "claim_tier": "exploratory",
+ "covariance_status": "paired_release_simulation_response_and_split_empirical_coverage",
+ "coverage_summary": {
+  "coverage_gate_passed": false,
+  "per_axis": [
+   {
+    "absolute_error_threshold": 0.002322299197126579,
+    "axis": "Y20",
+    "coverage_calibration_count": 20,
+    "evaluation_bias": 0.0009895777121940019,
+    "evaluation_count": 40,
+    "evaluation_coverage": 0.975,
+    "evaluation_coverage_count": 39,
+    "evaluation_rmse": 0.0012650427413332121
+   },
+   {
+    "absolute_error_threshold": 0.001970893291259282,
+    "axis": "Y21c",
+    "coverage_calibration_count": 20,
+    "evaluation_bias": 0.0012725444793306542,
+    "evaluation_count": 40,
+    "evaluation_coverage": 0.875,
+    "evaluation_coverage_count": 35,
+    "evaluation_rmse": 0.0014424167055337512
+   },
+   {
+    "absolute_error_threshold": 0.0014361549801849144,
+    "axis": "Y21s",
+    "coverage_calibration_count": 20,
+    "evaluation_bias": 0.0001861105950918405,
+    "evaluation_count": 40,
+    "evaluation_coverage": 0.95,
+    "evaluation_coverage_count": 38,
+    "evaluation_rmse": 0.0008154992812405302
+   },
+   {
+    "absolute_error_threshold": 0.0017376166310204139,
+    "axis": "Y22c",
+    "coverage_calibration_count": 20,
+    "evaluation_bias": -0.0010523675609895738,
+    "evaluation_count": 40,
+    "evaluation_coverage": 0.95,
+    "evaluation_coverage_count": 38,
+    "evaluation_rmse": 0.0011576585082133093
+   },
+   {
+    "absolute_error_threshold": 0.000987847506352807,
+    "axis": "Y22s",
+    "coverage_calibration_count": 20,
+    "evaluation_bias": -0.00015885905676582096,
+    "evaluation_count": 40,
+    "evaluation_coverage": 0.9,
+    "evaluation_coverage_count": 36,
+    "evaluation_rmse": 0.0005478993671751442
+   }
+  ]
+ },
+ "generating_command": "env OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 venv/bin/python -B scripts/codex_harness/run_pr204_act_inband_closure.py --write",
+ "identification_scope": "artifact_and_route_identity_only_not_model_or_family_identification",
+ "implementation_scope": [
+  "obsstat"
+ ],
+ "independence_gate": "OPEN",
+ "independence_note": "Non-author derivation lineage and preserved dissent were not adjudicated by this author-side run.",
+ "injection_stage": "post_reconstruction_strict_band_hard_reprojected",
+ "input_hashes": {
+  "docs/generated/pr152_availability_decision.json": "30d6d1a97112b011c0e3dbdcff16d0453b85f92e82b65a6170656039f29ab6d5",
+  "docs/generated/pr152_inventory.json": "3be58014deb2d3b280b10f27cbfb9efb7df0ca075b08bcd7053b9e8c1dd1245d",
+  "docs/generated/pr177_deep_replay_receipt.json": "c7f1e15d9119821ba72ecef5f1e822e90192abe97c2f8ff9fff9c3421ef0a7ba",
+  "docs/generated/pr177_result_card.json": "513cad677b3737f9dbe8d8657533024252b21d12f7bee5894307218bd2ec56d0",
+  "docs/generated/pr204_injection_calibration.json": "cd954698e5974325ec408abb48165e2cfe06a4caed474b5ab8b45096efef3164",
+  "docs/research_program/strengthening/pr204_spec.yaml": "b65bdb8fd3cbbdc5b5aea337933a9c896c281acdb5e8806aca0c84040fcf14c8",
+  "htt/obsstat/act_inband_injection.py": "ea63665b0a3ba6da121d59f6f4b4e0f2c6d7b30f8203e65cb0562ca929d8c65c",
+  "scripts/act_inband_injection_card.py": "c4356917e761f220d722ab896462e3d6694f060a03c65392b6e1384402e1398b",
+  "scripts/codex_harness/run_pr204_act_inband_closure.py": "e2421b72a902188afb376367acd72831991c2bff46f3d67307e3b4b02c6c8e9e"
+ },
+ "mask_sensitivity_summary": {
+  "evaluation_ratio_p95": 0.0010837281076016135,
+  "mask_sensitivity_gate_passed": true
+ },
+ "mask_status": "authenticated_release_mask_with_raw_and_MK_squared_controlled_fits",
+ "null_mock_status": "exactly_400_authenticated_release_reconstructions",
+ "owner": "OBSSTAT",
+ "process_execution_status": "PASS_REPRODUCIBLE_AUTHOR_SIDE_CALIBRATION",
+ "public_use": false,
+ "raw_qe_reproduction": false,
+ "raw_qe_route_selected": false,
+ "readiness_ceiling": "EVIDENCE_READY",
+ "readiness_state": "BLOCKED",
+ "release_simulation_count": 400,
+ "response_summary": {
+  "controlled_maximum_absolute_off_diagonal": 0.0943572847171723,
+  "controlled_response_condition_number": 1.294569115707037,
+  "controlled_response_diagonal": [
+   0.842600671418178,
+   1.006475399320626,
+   0.8891076704184094,
+   1.026298820889237,
+   1.0634480312201888
+  ],
+  "response_gate_passed": true
+ },
+ "schema": "htt.pr204.result_card.v1",
+ "scientific_artifact_mode": "standard_internal",
+ "scientific_result": null,
+ "scientific_status": "NOT_EVALUATED_AUTHOR_CALIBRATION_ONLY",
+ "semantic_digest": "1bd732227e873c8c6e2fb0d0b34d91ce1af9081884d98d143595c15f90de2a36",
+ "sky_support_status": "released_baseline_reconstructed_kappa_equatorial_MK_ge_0p99_core",
+ "spec_sha256": "b65bdb8fd3cbbdc5b5aea337933a9c896c281acdb5e8806aca0c84040fcf14c8",
+ "terminal": "BLOCKED_INBAND_INJECTION_COVERAGE_FAILURE",
+ "transfer_source": "none",
+ "upstream_context": {
+  "availability_decision": "DEFER_RAW_QE_RDN0_PUBLIC_INPUTS_LARGE_RECONSTRUCTION",
+  "pr177_replay_sha256": "c7f1e15d9119821ba72ecef5f1e822e90192abe97c2f8ff9fff9c3421ef0a7ba",
+  "pr177_result_sha256": "513cad677b3737f9dbe8d8657533024252b21d12f7bee5894307218bd2ec56d0",
+  "pr177_scientific_result": "NO_RESOLVED_COUPLING_AT_CURRENT_MC_RESOLUTION",
+  "raw_qe_inputs_on_disk": false,
+  "raw_qe_route_selected": false
+ },
+ "upstream_result_role": "retained_context_only_not_a_new_PR204_scientific_result",
+ "worktree_content_receipt": "85e66b607f1e83e98aa4c313144e4ef9b4d0b968d9e99fdb3bb9b21b54b4dc73",
+ "worktree_state": "c80e35c9c8484f56c1654bfe96b66ce64bd03985+content-sha256:85e66b607f1e83e98aa4c313144e4ef9b4d0b968d9e99fdb3bb9b21b54b4dc73"
+}
