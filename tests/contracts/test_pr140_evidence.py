@@ -174,6 +174,13 @@ def test_sensitivity_grid_and_ceiling() -> None:
         require_within_ceiling({"log_bf_swing": 9.0}, 4.0)
 
 
+def test_sensitivity_gate_rejects_nonfinite_values() -> None:
+    with pytest.raises(EvidenceError, match="must be finite"):
+        require_within_ceiling({"log_bf_swing": float("nan")}, 4.0)
+    with pytest.raises(EvidenceError, match="ceiling must be finite"):
+        require_within_ceiling({"log_bf_swing": 1.0}, float("nan"))
+
+
 def test_prior_sensitive_grid_gate_is_live() -> None:
     # a wide grid whose swing exceeds the ceiling is refused by the same
     # require_within_ceiling the production verdict asserts

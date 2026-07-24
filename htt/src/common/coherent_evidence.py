@@ -353,11 +353,16 @@ def sensitivity_grid(build_model: Callable[[float, float],
                      tau2_grid: list[float], sig2_scale_grid: list[float],
                      ) -> dict:
     """Exact log BF over the prior-scale / covariance grid."""
+    if not tau2_grid or not sig2_scale_grid:
+        raise EvidenceError("sensitivity grids may not be empty")
     rows = []
     for tau2 in tau2_grid:
         for sc in sig2_scale_grid:
             model = build_model(tau2, sc)
             log_bf = model.exact_log_evidence() - model.exact_log_null_evidence()
+            if not np.isfinite(log_bf):
+                raise EvidenceError(
+                    "sensitivity grid produced a non-finite log Bayes factor")
             rows.append({"prior_tau2": tau2, "sig2_scale": sc,
                          "log_bf10": float(log_bf)})
     swing = (max(r["log_bf10"] for r in rows)
@@ -366,9 +371,18 @@ def sensitivity_grid(build_model: Callable[[float, float],
 
 
 def require_within_ceiling(sensitivity: dict, ceiling: float) -> None:
-    if sensitivity["log_bf_swing"] > ceiling:
+    swing = sensitivity["log_bf_swing"]
+    if not np.isfinite(swing) or swing < 0:
         raise EvidenceError(
-            f"the log Bayes factor swings {sensitivity['log_bf_swing']:.3f} "
+            "the log Bayes-factor sensitivity swing must be finite and "
+            "non-negative")
+    if not np.isfinite(ceiling) or ceiling < 0:
+        raise EvidenceError(
+            "the log Bayes-factor sensitivity ceiling must be finite and "
+            "non-negative")
+    if swing > ceiling:
+        raise EvidenceError(
+            f"the log Bayes factor swings {swing:.3f} "
             f"across the prior/covariance grid (> {ceiling}) — the result "
             "is prior-sensitive and the decisive claim is indeterminate")
 
