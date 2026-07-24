@@ -106,6 +106,21 @@ def test_htt_likelihood_term_rejects_nested_mio_diagnostic_metadata() -> None:
         _term(metadata={"diagnostics": {"mio_score": 0.99}})
 
 
+def test_htt_likelihood_term_rejects_nested_mio_certificate_payload() -> None:
+    with pytest.raises(TypeError, match="MIO diagnostic payload"):
+        _term(
+            metadata={
+                "diagnostics": {
+                    "report_type": "directional_coherence",
+                    "departure_variables": {"resultant_R": 0.91},
+                    "adequacy_indicators": {"isotropy_p_lt_0p01": True},
+                    "consistency_metrics": {"isotropy_pvalue": 0.001},
+                    "reduction_status": "diagnostic-only",
+                }
+            }
+        )
+
+
 def test_htt_likelihood_term_rejects_dynamic_model_claim_key() -> None:
     key = "m" + "io_" + "truth"
     with pytest.raises(ValueError, match=key):

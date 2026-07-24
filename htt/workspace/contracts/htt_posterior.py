@@ -174,7 +174,7 @@ class HttLikelihoodTerm:
         contribution = float(self.log_likelihood_contribution)
         if not math.isfinite(contribution):
             raise ValueError("HttLikelihoodTerm.log_likelihood_contribution must be finite")
-        _validate_no_mio_diagnostic_metadata(self.metadata)
+        reject_mio_likelihood_inputs(self.metadata)
         object.__setattr__(self, "source_owner", owner)
         object.__setattr__(self, "log_likelihood_contribution", contribution)
         object.__setattr__(self, "caveats", tuple(self.caveats))
