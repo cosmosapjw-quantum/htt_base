@@ -147,6 +147,8 @@ def test_wrong_binomial_bound_rejected() -> None:
     assert upper > k / n
     with pytest.raises(WeakIdError, match="upper bound"):
         validate_lower_bound(upper, k, n, 0.99)
+    with pytest.raises(WeakIdError, match="lower bound must be finite"):
+        validate_lower_bound(float("nan"), k, n, 0.99)
     # the true lower bound passes
     validate_lower_bound(clopper_pearson_lower(k, n, 0.99), k, n, 0.99)
 
@@ -179,6 +181,20 @@ def test_adversarial_naive_fails_and_is_preserved() -> None:
     fmap = build_failure_map([r], 0.93, "family_wise_lower")
     assert fmap["failing_count"] == 1
     assert fmap["failing_points"][0]["w"] == "0"
+
+
+def test_failure_map_rejects_non_finite_decision_inputs() -> None:
+    row = {
+        "w": "0",
+        "procedure": "imbens_manski",
+        "coverage": 0.95,
+        "family_wise_lower": 0.94,
+    }
+    with pytest.raises(WeakIdError, match="threshold must be finite"):
+        build_failure_map([row], float("nan"))
+    row["family_wise_lower"] = float("nan")
+    with pytest.raises(WeakIdError, match="bound.*must be finite"):
+        build_failure_map([row], 0.93)
 
 
 def test_full_grid_and_failure_map_guards() -> None:
@@ -217,6 +233,8 @@ def test_preregistration_pins() -> None:
     pre.require_pinned_threshold(0.93)
     with pytest.raises(WeakIdError, match="NEW calibration"):
         pre.require_pinned_threshold(0.90)
+    with pytest.raises(WeakIdError, match="thresholds must be finite"):
+        pre.require_pinned_threshold(float("nan"))
 
 
 def test_caption_gate() -> None:

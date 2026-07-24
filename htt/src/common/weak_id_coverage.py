@@ -128,6 +128,8 @@ def validate_lower_bound(claimed: float, k: int, n: int,
     not exceed the point estimate k/n and (b) equal the Clopper-Pearson
     lower bound at ``conf``. An upper bound (or a point estimate)
     masquerading as the guarantee is rejected."""
+    if not math.isfinite(claimed):
+        raise WeakIdError("claimed lower bound must be finite")
     point = k / n
     if claimed > point + 1e-12:
         raise WeakIdError(
@@ -307,6 +309,11 @@ class Preregistration:
                 f"least {self.min_replicates} over {self.min_seeds}")
 
     def require_pinned_threshold(self, threshold: float) -> None:
+        if (
+            not math.isfinite(threshold)
+            or not math.isfinite(self.retain_lower_bound)
+        ):
+            raise WeakIdError("retain thresholds must be finite")
         if abs(threshold - self.retain_lower_bound) > 1e-12:
             raise WeakIdError(
                 f"retain threshold {threshold} differs from the pinned "
@@ -332,6 +339,12 @@ def build_failure_map(point_results: Sequence[dict],
     """A below-threshold grid point is PRESERVED here (never removed
     from the reported grid). The retain decision uses the family-wise
     (simultaneous) lower bound recorded under ``bound_key``."""
+    if not math.isfinite(threshold):
+        raise WeakIdError("failure-map threshold must be finite")
+    for result in point_results:
+        if not math.isfinite(result[bound_key]):
+            raise WeakIdError(
+                f"failure-map bound {bound_key!r} must be finite")
     failures = [{"w": r["w"], "procedure": r["procedure"],
                  "theta0_position": r.get("theta0_position"),
                  "coverage": r["coverage"],
