@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import pytest
 
+import common.contracts as contracts
 from common.contracts import (
     ArtifactManifest,
     BundleKind,
@@ -144,6 +145,17 @@ def test_mio_cannot_own_posterior_and_htt_cannot_own_certificate() -> None:
         assert_owner_can_emit_bundle(Owner.MIO, BundleKind.POSTERIOR)
     with pytest.raises(ValueError, match="HTT.*diagnostic_certificate"):
         assert_owner_can_emit_bundle(Owner.HTT, BundleKind.DIAGNOSTIC_CERTIFICATE)
+
+
+def test_owner_bundle_firewall_matrix_is_immutable() -> None:
+    with pytest.raises(TypeError):
+        contracts._ALLOWED_BUNDLES_BY_OWNER[Owner.MIO] = frozenset(
+            {BundleKind.POSTERIOR}
+        )
+    with pytest.raises(AttributeError):
+        contracts._ALLOWED_BUNDLES_BY_OWNER[Owner.MIO].add(BundleKind.POSTERIOR)
+
+    assert not owner_can_emit_bundle(Owner.MIO, BundleKind.POSTERIOR)
 
 
 def test_owner_firewall_assigns_non_inference_roles() -> None:

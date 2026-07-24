@@ -20,6 +20,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from enum import Enum
+from types import MappingProxyType
 from typing import Any, Mapping, Optional, Literal
 
 try:  # Python 3.11+
@@ -150,15 +151,17 @@ def normalize_bundle_kind(bundle_kind: str | BundleKind) -> BundleKind:
 _ALLOWED_OWNERS = {owner.value for owner in Owner}
 _ALLOWED_CLAIM_TIERS = {claim_tier.value for claim_tier in ClaimTier}
 _ALLOWED_IMPLEMENTATION_SCOPES = {scope.value for scope in ImplementationScope}
-_ALLOWED_BUNDLES_BY_OWNER = {
-    Owner.COMMON: {BundleKind.COMMON_CONTRACT},
-    Owner.HTT: {BundleKind.POSTERIOR},
-    Owner.MIO: {BundleKind.DIAGNOSTIC_CERTIFICATE},
-    Owner.BASS: {BundleKind.TRANSFER_ATLAS},
-    Owner.OBSSTAT: {BundleKind.OBSERVABLE_FEATURES},
-    Owner.TSC_LEGACY: {BundleKind.LEGACY_REPRODUCTION},
-    Owner.TEFF: {BundleKind.TEFF_REPRESENTATIVE},
-}
+_ALLOWED_BUNDLES_BY_OWNER = MappingProxyType(
+    {
+        Owner.COMMON: frozenset({BundleKind.COMMON_CONTRACT}),
+        Owner.HTT: frozenset({BundleKind.POSTERIOR}),
+        Owner.MIO: frozenset({BundleKind.DIAGNOSTIC_CERTIFICATE}),
+        Owner.BASS: frozenset({BundleKind.TRANSFER_ATLAS}),
+        Owner.OBSSTAT: frozenset({BundleKind.OBSERVABLE_FEATURES}),
+        Owner.TSC_LEGACY: frozenset({BundleKind.LEGACY_REPRODUCTION}),
+        Owner.TEFF: frozenset({BundleKind.TEFF_REPRESENTATIVE}),
+    }
+)
 _ALLOWED_PRODUCTION_STATUSES = {
     "diagnostic_only",
     "production_candidate",
