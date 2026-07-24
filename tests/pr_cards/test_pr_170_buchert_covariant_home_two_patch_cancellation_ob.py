@@ -26,10 +26,80 @@ from scripts.codex_harness.verify_pr170_sources import verify
 ROOT = Path(__file__).resolve().parents[2]
 CONTRACT = ROOT / "docs/generated/pr170_cas/CAS_CONTRACT_PR170_BUCHERT_TWO_PATCH.json"
 RUN_DIR = Path(".agent-harness/runs/pr170-cas-remediation-20260719")
+TRACKED_HARNESS_RECEIPTS = ROOT / "docs/generated/pr170_cas/harness_receipts"
 
 
 def _sha(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+@pytest.fixture
+def tracked_pr170_harness_receipts(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Replay negative controls from the tracked copies of the historical run."""
+
+    original_load = collector._load
+    original_sha = collector._sha
+    original_is_file = Path.is_file
+    assignment_axis = {
+        assignment_id: axis
+        for axis, assignment_id in collector.ASSIGNMENT_IDS.items()
+    }
+
+    def tracked_path(path: Path) -> Path:
+        if path.parent == ROOT / RUN_DIR / "assignments":
+            axis = assignment_axis.get(path.stem)
+            if axis is not None:
+                return TRACKED_HARNESS_RECEIPTS / f"assignment_{axis}.json"
+        if path.parent == ROOT / RUN_DIR / "results":
+            axis = assignment_axis.get(path.stem)
+            if axis is not None:
+                return TRACKED_HARNESS_RECEIPTS / f"outer_result_{axis}.json"
+        return path
+
+    assignment_template = json.loads(
+        (ROOT / ".agent-harness/templates/ASSIGNMENT.json").read_text(
+            encoding="utf-8"
+        )
+    )
+
+    def replay_sha(path: Path) -> str:
+        tracked = tracked_path(path)
+        if path.parent == ROOT / RUN_DIR / "assignments":
+            payload = original_load(tracked)
+            field_order = [
+                *assignment_template,
+                "cas_axis",
+                "cas_contract",
+                "assignment_sha256",
+            ]
+            assert set(payload) == set(field_order)
+            original_bytes = (
+                json.dumps(
+                    {field: payload[field] for field in field_order},
+                    indent=2,
+                    ensure_ascii=False,
+                )
+                + "\n"
+            ).encode("utf-8")
+            return hashlib.sha256(original_bytes).hexdigest()
+        return original_sha(tracked)
+
+    authorization = json.loads(
+        (ROOT / "docs/generated/pr170_cas/preaxis_authorization.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    for assignment_id in assignment_axis:
+        run_assignment = ROOT / RUN_DIR / "assignments" / f"{assignment_id}.json"
+        assert replay_sha(run_assignment) == authorization["assignments"][assignment_id]
+
+    monkeypatch.setattr(collector, "_load", lambda path: original_load(tracked_path(path)))
+    monkeypatch.setattr(collector, "_sha", replay_sha)
+    monkeypatch.setattr(
+        Path,
+        "is_file",
+        lambda path: original_is_file(tracked_path(path)),
+    )
 
 
 def test_equal_expansion_identity_is_exact() -> None:
@@ -158,7 +228,10 @@ def test_primary_provenance_refuses_universal_type_closure() -> None:
     assert payload["type_curvature_registry"]["VII_h"].startswith("UNRESOLVED_")
 
 
-def test_collector_rejects_tampered_obligation(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_collector_rejects_tampered_obligation(
+    monkeypatch: pytest.MonkeyPatch,
+    tracked_pr170_harness_receipts: None,
+) -> None:
     original_load = collector._load
 
     def tampered(path: Path) -> dict[str, object]:
@@ -175,7 +248,10 @@ def test_collector_rejects_tampered_obligation(monkeypatch: pytest.MonkeyPatch) 
     assert any("false/nonboolean" in error for error in collection["errors"])
 
 
-def test_collector_rejects_outer_nested_status_disagreement(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_collector_rejects_outer_nested_status_disagreement(
+    monkeypatch: pytest.MonkeyPatch,
+    tracked_pr170_harness_receipts: None,
+) -> None:
     original_load = collector._load
 
     def tampered(path: Path) -> dict[str, object]:
@@ -191,7 +267,10 @@ def test_collector_rejects_outer_nested_status_disagreement(monkeypatch: pytest.
     assert any("outer/nested status mismatch" in error for error in collection["errors"])
 
 
-def test_collector_rejects_posthoc_assignment_context_rewrite(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_collector_rejects_posthoc_assignment_context_rewrite(
+    monkeypatch: pytest.MonkeyPatch,
+    tracked_pr170_harness_receipts: None,
+) -> None:
     original_load = collector._load
 
     def tampered(path: Path) -> dict[str, object]:
