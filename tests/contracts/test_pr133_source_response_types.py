@@ -128,6 +128,22 @@ def test_non_bridge_guard_and_provenance() -> None:
         TypedQuantity(QuantityType.PHYSICAL_TILT, Fraction(1, 100)))
 
 
+def test_same_type_arithmetic_cannot_launder_bridge_provenance() -> None:
+    forged = TypedQuantity(
+        QuantityType.PHYSICAL_TILT,
+        Fraction(1, 100),
+        provenance="bridged:forged",
+    )
+    declared = TypedQuantity(
+        QuantityType.PHYSICAL_TILT,
+        Fraction(1, 100),
+    )
+    result = forged + declared
+    assert result.provenance == "bridged:forged"
+    with pytest.raises(SourceResponseError, match="unsanctioned"):
+        require_declared_provenance(result)
+
+
 def test_harmonic_order_counting() -> None:
     counting = harmonic_order_counting()
     assert counting["A_v_order_in_beta"] == 1

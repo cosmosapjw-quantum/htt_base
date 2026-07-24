@@ -131,13 +131,33 @@ class TypedQuantity:
                 "implicit coercion (route through a registered typed "
                 "operation instead)")
 
+    def _combined_provenance(self, other: "TypedQuantity") -> str:
+        if self.provenance == other.provenance:
+            return self.provenance
+        if self.provenance == "declared":
+            return other.provenance
+        if other.provenance == "declared":
+            return self.provenance
+        raise SourceResponseError(
+            "same-type arithmetic cannot combine different non-declared "
+            "provenance references"
+        )
+
     def __add__(self, other: "TypedQuantity") -> "TypedQuantity":
         self._require_same(other, "arithmetic")
-        return TypedQuantity(self.qtype, self.value + other.value)
+        return TypedQuantity(
+            self.qtype,
+            self.value + other.value,
+            provenance=self._combined_provenance(other),
+        )
 
     def __sub__(self, other: "TypedQuantity") -> "TypedQuantity":
         self._require_same(other, "arithmetic")
-        return TypedQuantity(self.qtype, self.value - other.value)
+        return TypedQuantity(
+            self.qtype,
+            self.value - other.value,
+            provenance=self._combined_provenance(other),
+        )
 
     def __lt__(self, other: "TypedQuantity") -> bool:
         self._require_same(other, "ordering")
