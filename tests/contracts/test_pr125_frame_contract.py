@@ -22,6 +22,7 @@ from common.frame_contract import (
     UnitsConvention,
     compose_beta,
     flrw_limit,
+    global_tilt_limit,
     legacy_reproduction_contract,
     local_boost_limit,
     no_tilt_limit,
@@ -132,6 +133,34 @@ def test_local_boost_preserves_quadratic_sector() -> None:
     assert moved.w2 == state.w2
     assert moved.delta_omega_k == state.delta_omega_k
     assert moved.beta == compose_beta(state.beta, -boost.beta)
+
+
+def test_global_tilt_covers_every_registered_anisotropic_homogeneous_class() -> None:
+    state = KinematicState(beta=Fraction(1, 100), sigma2=0, w2=0,
+                           delta_omega_k=0)
+    expected = {
+        BackgroundClass.BIANCHI_I,
+        BackgroundClass.BIANCHI_II,
+        BackgroundClass.BIANCHI_IV,
+        BackgroundClass.BIANCHI_V,
+        BackgroundClass.BIANCHI_VI_0,
+        BackgroundClass.BIANCHI_VI_H,
+        BackgroundClass.BIANCHI_VII_0,
+        BackgroundClass.BIANCHI_VII_H,
+        BackgroundClass.BIANCHI_VIII,
+        BackgroundClass.BIANCHI_IX,
+        BackgroundClass.LRS_BIANCHI_III,
+        BackgroundClass.KANTOWSKI_SACHS,
+    }
+    accepted = {
+        background
+        for background in BackgroundClass
+        if global_tilt_limit(
+            state,
+            _contract(background_class=background),
+        )
+    }
+    assert accepted == expected
 
 
 def test_generated_graph_binds_every_checked_signature() -> None:

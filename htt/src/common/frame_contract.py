@@ -413,7 +413,16 @@ def global_tilt_limit(state: KinematicState,
     (Bianchi/LRS/KS) background class; FLRW classes, though spatially
     homogeneous, are excluded by definition of this limit."""
     return state.beta != 0 and contract.background_class in {
-        BackgroundClass.BIANCHI_I, BackgroundClass.BIANCHI_V,
-        BackgroundClass.BIANCHI_VII_H, BackgroundClass.BIANCHI_IX,
-        BackgroundClass.LRS_BIANCHI_III, BackgroundClass.KANTOWSKI_SACHS,
+        BackgroundClass.BIANCHI_I,
+        BackgroundClass.BIANCHI_II,
+        BackgroundClass.BIANCHI_IV,
+        BackgroundClass.BIANCHI_V,
+        BackgroundClass.BIANCHI_VI_0,
+        BackgroundClass.BIANCHI_VI_H,
+        BackgroundClass.BIANCHI_VII_0,
+        BackgroundClass.BIANCHI_VII_H,
+        BackgroundClass.BIANCHI_VIII,
+        BackgroundClass.BIANCHI_IX,
+        BackgroundClass.LRS_BIANCHI_III,
+        BackgroundClass.KANTOWSKI_SACHS,
     }
