@@ -462,7 +462,15 @@ def require_registered_measure_family(original: MeasureSpec,
                                       multiplicity: int | None) -> None:
     """Changing weights/pairing after the result is a NEW diagnostic family."""
     if original.fingerprint() != revised.fingerprint():
-        if supersedes is None or multiplicity is None:
+        registered_parent = (
+            isinstance(supersedes, str) and bool(supersedes.strip())
+        )
+        registered_multiplicity = (
+            not isinstance(multiplicity, bool)
+            and isinstance(multiplicity, Integral)
+            and multiplicity >= 1
+        )
+        if not registered_parent or not registered_multiplicity:
             raise MeasureError(
                 "changing the joint-measure weights or pairing after the "
                 "result requires a NEW registered diagnostic family and an "

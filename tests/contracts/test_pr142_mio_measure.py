@@ -240,6 +240,11 @@ def test_guards() -> None:
     # post-hoc weight change without multiplicity refused
     with pytest.raises(MeasureError, match="registered diagnostic family"):
         require_registered_measure_family(SPEC, other, None, None)
+    for supersedes, multiplicity in (
+            ("", 1), ("   ", 1), ("prev", 0), ("prev", -1), ("prev", True)):
+        with pytest.raises(MeasureError, match="registered diagnostic family"):
+            require_registered_measure_family(
+                SPEC, other, supersedes, multiplicity)
     require_registered_measure_family(SPEC, other, "prev", 3)   # ok w/ family
 
 
