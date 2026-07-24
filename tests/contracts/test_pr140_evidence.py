@@ -188,6 +188,10 @@ def test_evidence_kind_and_caller_scalar_guards() -> None:
     require_evidence_kind("thermodynamic_integration")   # a real engine is fine
     with pytest.raises(EvidenceError, match="not an evidence receipt"):
         caller_scalar_is_not_a_receipt({"log_evidence": 1.0})
+    with pytest.raises(EvidenceError, match="not an evidence receipt"):
+        caller_scalar_is_not_a_receipt(
+            {"receipt_hash": "made-up", "inputs": {}}
+        )
 
 
 def test_sensitivity_grid_and_ceiling() -> None:
@@ -251,6 +255,11 @@ def test_receipt_binds_inputs() -> None:
     assert receipt["receipt_hash"] and receipt["inputs"]["prior"]["normalized"]
     assert sorted(receipt["inputs"]["engines"]) == \
         ["bridge_sampling", "thermodynamic_integration"]
+    caller_scalar_is_not_a_receipt(receipt)
+    tampered = json.loads(json.dumps(receipt))
+    tampered["inputs"]["prior"]["var"] = 9.0
+    with pytest.raises(EvidenceError, match="hash does not match"):
+        caller_scalar_is_not_a_receipt(tampered)
 
 
 def test_caption_gate() -> None:

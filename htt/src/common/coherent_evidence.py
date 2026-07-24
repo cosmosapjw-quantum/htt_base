@@ -418,11 +418,29 @@ def evidence_receipt(model: GaussianEvidenceModel, engines: list[dict],
 
 
 def caller_scalar_is_not_a_receipt(obj: dict) -> None:
-    if "receipt_hash" not in obj or "inputs" not in obj:
+    required_inputs = {
+        "prior",
+        "likelihood_hash",
+        "data_hash",
+        "engines",
+        "engine_configs",
+    }
+    inputs = obj.get("inputs")
+    if (
+        obj.get("schema") != "pr140.receipt.v1"
+        or not isinstance(inputs, dict)
+        or not required_inputs.issubset(inputs)
+    ):
         raise EvidenceError(
             "a caller-supplied scalar is not an evidence receipt — a "
             "receipt binds the normalized prior, likelihood, data, and "
             "engine diagnostics")
+    receipt_hash = obj.get("receipt_hash")
+    expected = hashlib.sha256(
+        json.dumps(inputs, sort_keys=True).encode()).hexdigest()
+    if receipt_hash != expected:
+        raise EvidenceError(
+            "the evidence receipt hash does not match its bound inputs")
 
 
 # --------------------------------------------------------------------------
