@@ -30,6 +30,7 @@ import json
 import math
 from dataclasses import dataclass
 from enum import Enum
+from numbers import Real
 
 import numpy as np
 
@@ -234,6 +235,53 @@ class DiscriminationConfig:
     held_out_gain_floor: float
     combination_margin: float = 3.0
     seed: int = 0
+
+    def __post_init__(self) -> None:
+        numeric = {
+            "sig2": self.sig2,
+            "tau2": self.tau2,
+            "gain_margin_log_bf": self.gain_margin_log_bf,
+            "identifiability_gap": self.identifiability_gap,
+            "collinearity_threshold": self.collinearity_threshold,
+            "ppc_reject": self.ppc_reject,
+            "prior_swing_ceiling": self.prior_swing_ceiling,
+            "held_out_gain_floor": self.held_out_gain_floor,
+            "combination_margin": self.combination_margin,
+        }
+        for name, value in numeric.items():
+            if not isinstance(value, Real) or not np.isfinite(float(value)):
+                raise CompetitionError(f"{name} must be finite")
+        if self.sig2 <= 0 or self.tau2 <= 0:
+            raise CompetitionError("sig2 and tau2 must be positive")
+        for name in (
+            "gain_margin_log_bf",
+            "identifiability_gap",
+            "prior_swing_ceiling",
+            "combination_margin",
+        ):
+            if numeric[name] < 0:
+                raise CompetitionError(f"{name} must be non-negative")
+        if not 0 <= self.collinearity_threshold <= 1:
+            raise CompetitionError(
+                "collinearity_threshold must be between zero and one")
+        if not 0 < self.ppc_reject < 0.5:
+            raise CompetitionError("ppc_reject must be between zero and 0.5")
+        if not self.tau2_grid:
+            raise CompetitionError("tau2_grid may not be empty")
+        if any(
+            not isinstance(value, Real)
+            or not np.isfinite(float(value))
+            or value <= 0
+            for value in self.tau2_grid
+        ):
+            raise CompetitionError(
+                "tau2_grid values must be finite and positive")
+        if (
+            isinstance(self.seed, bool)
+            or not isinstance(self.seed, (int, np.integer))
+            or self.seed < 0
+        ):
+            raise CompetitionError("seed must be a non-negative integer")
 
 
 def discriminate(y: np.ndarray, templates: dict,

@@ -5,6 +5,7 @@ import importlib.util
 import json
 import subprocess
 import sys
+from dataclasses import replace
 from pathlib import Path
 
 import numpy as np
@@ -109,6 +110,29 @@ def test_clean_recovers_true_branch() -> None:
         d = discriminate(y, T, CFG)
         assert d["outcome"] == Outcome.DISCRIMINATION_CANDIDATE.value
         assert d["candidate"] == true
+
+
+@pytest.mark.parametrize(
+    "field",
+    (
+        "gain_margin_log_bf",
+        "identifiability_gap",
+        "ppc_reject",
+        "prior_swing_ceiling",
+        "held_out_gain_floor",
+        "combination_margin",
+    ),
+)
+def test_discrimination_config_rejects_nonfinite_thresholds(field) -> None:
+    with pytest.raises(CompetitionError, match="must be finite"):
+        replace(CFG, **{field: float("nan")})
+
+
+def test_discrimination_config_validates_probability_and_prior_grid() -> None:
+    with pytest.raises(CompetitionError, match="ppc_reject"):
+        replace(CFG, ppc_reject=0.6)
+    with pytest.raises(CompetitionError, match="tau2_grid"):
+        replace(CFG, tau2_grid=())
 
 
 def test_confused_abstains_non_identified() -> None:
