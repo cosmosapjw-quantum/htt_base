@@ -196,6 +196,25 @@ def test_ensemble_counts_one_shot_seed_iterable() -> None:
 
 
 @pytest.mark.parametrize(
+    ("seeds", "message"),
+    [
+        ([], "must not be empty"),
+        ([101, 101], "must be unique"),
+        (["101"], "must be integers"),
+        ([True], "must be integers"),
+    ],
+)
+def test_ensemble_rejects_invalid_seed_set(seeds, message: str) -> None:
+    with pytest.raises(AdjudicationError, match=message):
+        adjudicate_ensemble(
+            "CH-test", "generator.dgp", "analyst.pr141",
+            "referee.nonauthor", seeds=seeds, n_reps=1, n_obs=60,
+            template_seed=20260718, config=CFG,
+            criteria=Criteria(0.1, 0.75, 0.7),
+        )
+
+
+@pytest.mark.parametrize(
     ("field", "value"),
     [
         ("size_alpha", float("nan")),

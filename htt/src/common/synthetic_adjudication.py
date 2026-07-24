@@ -290,6 +290,14 @@ def adjudicate_ensemble(challenge_id: str, generator_id: str, analyst_id: str,
     require_generator_analyst_separation(generator_id, analyst_id)
     require_non_author_referee(generator_id, analyst_id, referee_id)
     seeds = tuple(seeds)
+    if not seeds:
+        raise AdjudicationError("the seed ensemble must not be empty")
+    if any(isinstance(seed, bool) or not isinstance(seed, Integral)
+           for seed in seeds):
+        raise AdjudicationError("ensemble seeds must be integers")
+    seeds = tuple(int(seed) for seed in seeds)
+    if len(set(seeds)) != len(seeds):
+        raise AdjudicationError("ensemble seeds must be unique")
     agg = {f: {"n": 0, "correct": 0, "expected": 0, "false_candidate": 0}
            for f in DGP_BATTERY}
     seed_hashes = []
