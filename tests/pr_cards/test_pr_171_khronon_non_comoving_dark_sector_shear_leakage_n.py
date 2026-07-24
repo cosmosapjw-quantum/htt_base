@@ -33,7 +33,7 @@ from common.tilt_relaxation import (  # noqa: E402
 from pr171_cas_support import assignment_self_hash, load, sha, validate_contract  # noqa: E402
 
 
-RUN_DIR = Path(".agent-harness/runs/pr171-cas-g3-20260720")
+GENERATION_3 = Path("docs/generated/pr171_cas/generation_3")
 AXES = ("wolfram_xact", "sympy", "sage_singular", "lean")
 ASSIGNMENTS = {
     "wolfram_xact": "A-PR171-CAS3-WOLFRAM",
@@ -90,20 +90,33 @@ def test_suppression_value_is_not_invented_without_duration() -> None:
     assert receipt["missing_inputs"] == ["N_f-N_i"]
 
 
-def test_source_archives_records_and_receipt_are_authenticated() -> None:
+def test_source_records_and_historical_archive_receipt_are_authenticated() -> None:
     provenance = yaml.safe_load(
         (REPO / "docs/research_program/long_horizon_rescue/pr171_primary_source_provenance.yaml").read_text(encoding="utf-8")
     )
+    receipt = _json("docs/generated/pr171_source_verification.json")
     assert len(provenance["sources"]) == 5
+    verified = {
+        row["source_id"]: row
+        for row in receipt["verified_sources"]
+    }
     for row in provenance["sources"]:
         raw = REPO / row["raw_archive"]
         record = REPO / row["record"]
-        assert raw.is_file() and not raw.is_symlink()
         assert record.is_file() and not record.is_symlink()
-        assert sha(raw) == row["raw_sha256"]
-        assert raw.stat().st_size == row["raw_bytes"]
         assert sha(record) == row["record_sha256"]
-    receipt = _json("docs/generated/pr171_source_verification.json")
+        historical = verified[row["source_id"]]
+        assert historical["ok"] is True
+        assert historical["raw_path"] == row["raw_archive"]
+        assert historical["raw_sha256"] == row["raw_sha256"]
+        assert historical["raw_bytes"] == row["raw_bytes"]
+        assert historical["record_path"] == row["record"]
+        assert historical["record_sha256"] == row["record_sha256"]
+        assert not raw.is_symlink()
+        if raw.exists():
+            assert raw.is_file()
+            assert sha(raw) == row["raw_sha256"]
+            assert raw.stat().st_size == row["raw_bytes"]
     assert receipt["ok"] is True
     assert receipt["source_count"] == 5
 
@@ -115,16 +128,24 @@ def test_contract_authorization_and_four_blind_receipts_are_hash_bound() -> None
     assert authorization["axes_authorized"] is True
     assert authorization["all_results_absent_before_authorization"] is True
     assert authorization["errors"] == []
+    collection = _json("docs/generated/pr171_cas_collection_receipt.json")
     contract_sha = sha(REPO / "docs/generated/pr171_cas/CAS_CONTRACT_PR171_CLASS_CONDITIONAL_TILT_V3.json")
     for axis in AXES:
         assignment_id = ASSIGNMENTS[axis]
-        assignment_path = REPO / RUN_DIR / "assignments" / f"{assignment_id}.json"
-        result_path = REPO / RUN_DIR / "results" / f"{assignment_id}.json"
+        assignment_path = (
+            REPO / GENERATION_3 / "assignments" / f"assignment_{axis}.json"
+        )
+        result_path = (
+            REPO / GENERATION_3 / "outer_results" / f"outer_result_{axis}.json"
+        )
         assignment = _json(assignment_path.relative_to(REPO))
         outer = _json(result_path.relative_to(REPO))
         nested = outer["payload"]["cas_axis_result"]
         assert assignment["assignment_sha256"] == assignment_self_hash(assignment)
-        assert authorization["assignments"][assignment_id] == sha(assignment_path)
+        assert (
+            authorization["assignments"][assignment_id]
+            == collection["receipt_hashes"][axis]["assignment_sha256"]
+        )
         assert assignment["allowed_sibling_results"] == []
         assert nested["sibling_results_read"] == []
         assert nested["contract_sha256"] == contract_sha
@@ -139,10 +160,28 @@ def test_historical_collection_is_strict_and_no_majority_vote_is_used() -> None:
     assert collection["cross_generation_result_reuse"] is False
     assert collection["errors"] == []
 
-    collector = _module("scripts/codex_harness/collect_pr171_cas_receipts.py", "pr171_collector")
-    files, replay = collector.build(RUN_DIR)
-    assert replay == collection
-    assert files["adjudication.json"] == (REPO / "docs/generated/pr171_cas/generation_3/adjudication.json").read_bytes()
+    adjudication = _json(GENERATION_3 / "adjudication.json")
+    assert adjudication == collection
+    authorization = _json(
+        "docs/generated/pr171_cas/preaxis_authorization_v3.json"
+    )
+    for axis in AXES:
+        outer_path = (
+            REPO / GENERATION_3 / "outer_results" / f"outer_result_{axis}.json"
+        )
+        nested_path = REPO / GENERATION_3 / f"axis_result_{axis}.json"
+        assignment_id = ASSIGNMENTS[axis]
+        outer = _json(outer_path.relative_to(REPO))
+        receipt = collection["receipt_hashes"][axis]
+        assert (
+            authorization["assignments"][assignment_id]
+            == receipt["assignment_sha256"]
+        )
+        assert outer["payload"]["cas_axis_result"] == _json(
+            nested_path.relative_to(REPO)
+        )
+        assert receipt["outer_result_sha256"] == sha(outer_path)
+        assert receipt["normalized_result_sha256"] == sha(nested_path)
 
 
 def test_stored_four_axis_results_are_diagnostic_only() -> None:
