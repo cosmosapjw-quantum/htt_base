@@ -12,6 +12,9 @@ ceiling.
 """
 from __future__ import annotations
 import math
+from fractions import Fraction
+
+from common.mes_theorem_authority import BRANCHES as MES_AUTHORITY_BRANCHES
 
 # Frozen geodesic ceiling this card anchors to (PR-186 / MES-BR). Never re-frozen.
 FROZEN_W2_MAX = 3.3789222980376e-13
@@ -71,8 +74,46 @@ def attribution_surface() -> dict:
 
 
 def coefficient_is_live_ceiling(branch: dict) -> bool:
-    """A coefficient is a live ceiling only if it has an accessible source."""
-    return branch.get("source_status") == "accessible_primary_source_reduction"
+    """Recognise the source-backed geodesic coefficients, fail closed otherwise.
+
+    The caller-facing ``source_status`` is descriptive metadata, not authority.
+    Bind the proposed coefficients to the existing MES theorem authority so a
+    status-only or branch-swapped payload cannot become a live ceiling.
+    """
+    if branch.get("branch_id") != GEODESIC_SAG["branch_id"]:
+        return False
+
+    sigma_authority = MES_AUTHORITY_BRANCHES["MES_G_SIGMA"]
+    omega_authority = MES_AUTHORITY_BRANCHES["MES_G_OMEGA"]
+    accel_authority = MES_AUTHORITY_BRANCHES["MES_G_ACCEL"]
+
+    def exact_as_float(authority: dict) -> tuple[float, ...]:
+        return tuple(
+            float(Fraction(value))
+            for value in authority["coefficients_exact"]
+        )
+
+    def has_accessible_source_equation(authority: dict) -> bool:
+        sources = authority.get("sources", ())
+        return bool(sources) and all(
+            source.get("path")
+            and source.get("sha256")
+            and source.get("equation")
+            for source in sources
+        )
+
+    return (
+        branch.get("source_status") == "accessible_primary_source_reduction"
+        and sigma_authority["status"] == "VERIFIED"
+        and omega_authority["status"] == "VERIFIED"
+        and accel_authority["status"] == "VERIFIED_STRUCTURAL"
+        and has_accessible_source_equation(sigma_authority)
+        and has_accessible_source_equation(omega_authority)
+        and has_accessible_source_equation(accel_authority)
+        and tuple(branch.get("sigma", ())) == exact_as_float(sigma_authority)
+        and tuple(branch.get("omega", ())) == exact_as_float(omega_authority)
+        and branch.get("acceleration", object()) is None
+    )
 
 
 def epsilon1_zero_is_branch_choice_not_uniqueness() -> bool:
