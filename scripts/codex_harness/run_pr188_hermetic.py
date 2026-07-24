@@ -109,7 +109,8 @@ def _mutate_and_check(source_rel: str, old: str, new: str, checker: str) -> bool
 
 def _mutation_suite() -> dict:
     load_bearing_results = []
-    for source, old, new, checker in LOAD_BEARING * 4:  # >=15 mutations
+    unique_mutations = list(dict.fromkeys(LOAD_BEARING))
+    for source, old, new, checker in unique_mutations:
         flipped = _mutate_and_check(source, old, new, checker)
         load_bearing_results.append(flipped)
     # dead-source negative control: check stays green
@@ -213,6 +214,13 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     payload = build_payload()
     if args.write:
+        if payload["terminal"] != "HERMETIC_REPRODUCE_LOAD_BEARING_VERIFIED":
+            print(
+                "refusing to overwrite the frozen historical result card "
+                "while the current hermetic gate is blocked",
+                file=sys.stderr,
+            )
+            return 2
         CARD.write_bytes(_render(payload))
         print(f"wrote {CARD.name}; terminal={payload['terminal']}")
         return 0
