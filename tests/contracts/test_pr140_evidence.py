@@ -188,6 +188,39 @@ def test_engine_comparison_requires_valid_diagnostics(diagnostic) -> None:
     assert comparison["status"] == "indeterminate"
 
 
+@pytest.mark.parametrize("bad_location", ("engine", "analytic"))
+def test_engine_comparison_rejects_nonfinite_estimates(bad_location) -> None:
+    first = {
+        "method": "thermodynamic_integration",
+        "log_evidence": 1.0,
+        "bootstrap_se": 0.0,
+        "sample_provenance": "one",
+        "sample_digest": "draws-one",
+    }
+    second = {
+        "method": "bridge_sampling",
+        "log_evidence": 1.0,
+        "bootstrap_se": 0.0,
+        "sample_provenance": "two",
+        "sample_digest": "draws-two",
+    }
+    analytic = 1.0
+    if bad_location == "engine":
+        second["log_evidence"] = float("nan")
+    else:
+        analytic = float("nan")
+    comparison = compare_engines(
+        [first, second],
+        analytic,
+        agreement_tol=0.1,
+        analytic_tol=0.1,
+        se_ceiling=0.1,
+    )
+    assert comparison["engines_agree"] is False
+    assert comparison["match_analytic"] is False
+    assert comparison["status"] == "indeterminate"
+
+
 def test_prior_normalization_guard() -> None:
     require_normalized_prior(NormalPrior(0.0, 4.0))
     assert abs(NormalPrior(0.0, 4.0).normalizer_integral() - 1.0) < 1e-4

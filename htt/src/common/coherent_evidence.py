@@ -325,10 +325,37 @@ def compare_engines(engines: list[dict], analytic_log_evidence: float, *,
         raise EvidenceError(
             "coherent evidence requires exactly two independent engines")
     require_independent_engines(engines[0], engines[1])
-    devs = {e["method"]: abs(e["log_evidence"] - analytic_log_evidence)
-            for e in engines}
-    gap = max(abs(a["log_evidence"] - b["log_evidence"])
-              for a in engines for b in engines)
+    try:
+        analytic_value = float(analytic_log_evidence)
+    except (TypeError, ValueError):
+        analytic_value = None
+    if analytic_value is not None and not np.isfinite(analytic_value):
+        analytic_value = None
+    estimates = {}
+    for engine in engines:
+        try:
+            value = float(engine.get("log_evidence"))
+        except (TypeError, ValueError):
+            value = None
+        if value is not None and not np.isfinite(value):
+            value = None
+        estimates[engine["method"]] = value
+    estimates_complete = (
+        analytic_value is not None
+        and all(value is not None for value in estimates.values())
+    )
+    devs = {
+        method: (
+            abs(value - analytic_value)
+            if estimates_complete and value is not None else None
+        )
+        for method, value in estimates.items()
+    }
+    estimate_values = list(estimates.values())
+    gap = (
+        abs(estimate_values[0] - estimate_values[1])
+        if estimates_complete else None
+    )
     standard_errors = []
     for engine in engines:
         value = engine.get("bootstrap_se")
@@ -342,8 +369,21 @@ def compare_engines(engines: list[dict], analytic_log_evidence: float, *,
             standard_errors.append(standard_error)
     diagnostics_complete = len(standard_errors) == len(engines)
     max_se = max(standard_errors) if diagnostics_complete else None
-    agree = gap <= agreement_tol
-    analytic_ok = max(devs.values()) <= analytic_tol
+    agreement_limit_ok = (
+        np.isfinite(agreement_tol) and agreement_tol >= 0
+    )
+    analytic_limit_ok = np.isfinite(analytic_tol) and analytic_tol >= 0
+    agree = (
+        gap is not None
+        and agreement_limit_ok
+        and gap <= agreement_tol
+    )
+    analytic_ok = (
+        estimates_complete
+        and analytic_limit_ok
+        and max(value for value in devs.values() if value is not None)
+        <= analytic_tol
+    )
     se_ok = (
         max_se is not None
         and np.isfinite(se_ceiling)
@@ -352,7 +392,7 @@ def compare_engines(engines: list[dict], analytic_log_evidence: float, *,
     )
     status = (EvidenceStatus.COHERENT if (agree and analytic_ok and se_ok)
               else EvidenceStatus.INDETERMINATE)
-    return {"deviation_vs_analytic": devs, "engine_gap": float(gap),
+    return {"deviation_vs_analytic": devs, "engine_gap": gap,
             "max_bootstrap_se": max_se, "engines_agree": bool(agree),
             "match_analytic": bool(analytic_ok), "diagnostics_ok": bool(se_ok),
             "status": status.value}
