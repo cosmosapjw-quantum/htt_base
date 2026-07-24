@@ -131,7 +131,7 @@ def test_contract_authorization_and_four_blind_receipts_are_hash_bound() -> None
         assert set(nested["checks"] or {}) in (set(), set(contract["target"]["exact_test_obligations"]))
 
 
-def test_collection_is_strict_and_no_majority_vote_is_used() -> None:
+def test_historical_collection_is_strict_and_no_majority_vote_is_used() -> None:
     collection = _json("docs/generated/pr171_cas_collection_receipt.json")
     assert collection["aggregate_status"] in {"CAS_4AXIS_PASS", "CAS_BLOCKED"}
     assert collection["majority_vote_used"] is False
@@ -143,6 +143,18 @@ def test_collection_is_strict_and_no_majority_vote_is_used() -> None:
     files, replay = collector.build(RUN_DIR)
     assert replay == collection
     assert files["adjudication.json"] == (REPO / "docs/generated/pr171_cas/generation_3/adjudication.json").read_bytes()
+
+
+def test_stored_four_axis_results_are_diagnostic_only() -> None:
+    runner = _module(
+        "scripts/codex_harness/run_pr171_tilt_relaxation.py",
+        "pr171_current_cas_runner",
+    )
+    cas = runner._cas_status()
+    assert cas["aggregate_status"] == "CAS_BLOCKED"
+    assert cas["historical_aggregate_status"] == "CAS_4AXIS_PASS"
+    assert cas["stored_cas_diagnostic_only"] is True
+    assert cas["claim_promotion_cas_eligible"] is False
 
 
 def test_generation_one_failures_are_preserved_and_not_reused() -> None:
@@ -192,6 +204,10 @@ def test_result_pack_is_claim_safe_and_all_live_mutants_are_killed() -> None:
     artifacts = runner.build()
     result = artifacts["result"]
     runner.validate_terminal_card(result)
+    assert result["cas_status"] == "CAS_BLOCKED"
+    assert result["historical_cas_status"] == "CAS_4AXIS_PASS"
+    assert result["exact_stability_result"] is None
+    assert result["claim_promotion_cas_eligible"] is False
     assert result["blanket_no_go_status"] == "RETIRED_BY_AUTHENTICATED_EXTERNAL_SOURCE"
     assert result["suppression_result"] is None
     assert result["suppression_status"] == "SUPPRESSION_CEILING_NOT_IDENTIFIED"
@@ -214,7 +230,39 @@ def test_generated_pack_replays_byte_for_byte() -> None:
         capture_output=True,
         check=False,
     )
-    assert done.returncode == 0, done.stdout + done.stderr
+    assert done.returncode == 2, done.stdout + done.stderr
+    receipt = json.loads(done.stdout)
+    assert receipt["ok"] is False
+    assert receipt["cas_status"] == "CAS_BLOCKED"
+    assert receipt["scientific_result"] == (
+        "source_counterexample_audit_only_cas_blocked"
+    )
+
+
+def test_write_refuses_to_replace_frozen_result_pack() -> None:
+    paths = sorted((REPO / "docs/generated").glob("pr171_*.json"))
+    before = {
+        path: hashlib.sha256(path.read_bytes()).hexdigest()
+        for path in paths
+    }
+    done = subprocess.run(
+        [
+            str(REPO / "venv/bin/python"),
+            "-B",
+            str(REPO / "scripts/codex_harness/run_pr171_tilt_relaxation.py"),
+            "--write",
+        ],
+        cwd=REPO,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    assert done.returncode == 2
+    assert "refusing to overwrite" in done.stderr
+    assert {
+        path: hashlib.sha256(path.read_bytes()).hexdigest()
+        for path in paths
+    } == before
 
 
 def test_review_archive_and_postcas_erratum_are_reproducible() -> None:
@@ -269,7 +317,12 @@ def test_review_archive_and_postcas_erratum_are_reproducible() -> None:
         capture_output=True,
         check=False,
     )
-    assert closeout.returncode == 0, closeout.stdout + closeout.stderr
+    assert closeout.returncode == 2, closeout.stdout + closeout.stderr
+    current_closeout = json.loads(closeout.stdout)
+    assert current_closeout["ok"] is False
+    assert current_closeout["errors"] == [
+        "pre-axis-bound result router drifted"
+    ]
     closeout_manifest = _json("docs/generated/pr171_closeout_manifest.json")
     for key in (
         "owner",

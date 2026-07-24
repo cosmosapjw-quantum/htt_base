@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Build/check the reproducible PR-171 source-counterexample result pack."""
+"""Diagnose the frozen PR-171 source-counterexample result pack.
+
+Stored CAS envelopes preserve historical evidence but cannot provide current
+CAS authority.  A current pass requires parent-observed
+``cas_gate.py run-adjudicate`` execution.
+"""
 
 from __future__ import annotations
 
@@ -9,6 +14,7 @@ import json
 import os
 import platform
 import re
+import subprocess
 import sys
 import tempfile
 from copy import deepcopy
@@ -18,7 +24,7 @@ from typing import Any
 
 import yaml
 
-from pr171_cas_support import COLLECTION_PATH, CONTRACT_PATH, REPO, atomic_write, load, render, sha
+from pr171_cas_support import COLLECTION_PATH, CONTRACT_PATH, REPO, load, render, sha
 
 sys.path.insert(0, str(REPO / "htt/src"))
 from common.tilt_relaxation import (  # noqa: E402
@@ -52,6 +58,7 @@ FORBIDDEN = [
     re.compile(r"validated as native", re.I),
     re.compile(r"(?:1e-6|10\^-6).{0,80}(?:expected|threshold|conclusion)", re.I),
 ]
+AXES = ("wolfram_xact", "sympy", "sage_singular", "lean")
 
 
 def _yaml(path: Path) -> dict[str, Any]:
@@ -127,7 +134,6 @@ def execute_mutations(base: dict[str, Any]) -> list[dict[str, Any]]:
 
 def _input_paths() -> list[Path]:
     paths = [SPEC, PROVENANCE, SOURCE_RECEIPT, CONTRACT_PATH, COLLECTION_PATH, Path("htt/src/common/tilt_relaxation.py"), RUNNER]
-    collection = load(REPO / COLLECTION_PATH)
     for axis in ("wolfram_xact", "sympy", "sage_singular", "lean"):
         paths.append(Path(f"docs/generated/pr171_cas/generation_3/axis_result_{axis}.json"))
     return paths
@@ -137,16 +143,61 @@ def _input_hashes() -> dict[str, str]:
     return {str(path): sha(REPO / path) for path in _input_paths()}
 
 
+def _cas_status() -> dict[str, Any]:
+    completed = subprocess.run(
+        [
+            sys.executable,
+            "-B",
+            ".agent-harness/scripts/cas_gate.py",
+            "adjudicate",
+            "--contract",
+            str(CONTRACT_PATH),
+            "--results",
+            *(
+                f"docs/generated/pr171_cas/generation_3/axis_result_{axis}.json"
+                for axis in AXES
+            ),
+            "--historical-replay",
+        ],
+        cwd=REPO,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    try:
+        diagnostic = json.loads(completed.stdout)
+    except json.JSONDecodeError:
+        diagnostic = {}
+    valid_diagnostic = (
+        completed.returncode == 2
+        and diagnostic.get("aggregate_status") == "CAS_BLOCKED"
+        and diagnostic.get("claim_promotion_cas_eligible") is False
+        and diagnostic.get("evidence_origin") == "stored_axis_result_envelopes"
+    )
+    return {
+        "aggregate_status": "CAS_BLOCKED",
+        "historical_aggregate_status": diagnostic.get(
+            "historical_aggregate_status"
+        ),
+        "contract_sha256": diagnostic.get("contract_sha256"),
+        "axis_statuses": diagnostic.get("axis_statuses", {}),
+        "stored_cas_diagnostic_only": valid_diagnostic,
+        "claim_promotion_cas_eligible": False,
+    }
+
+
 def build() -> dict[str, dict[str, Any]]:
     spec = _yaml(REPO / SPEC)
     provenance = _yaml(REPO / PROVENANCE)
     source_receipt = load(REPO / SOURCE_RECEIPT)
-    collection = load(REPO / COLLECTION_PATH)
     if source_receipt.get("ok") is not True or source_receipt.get("source_count") != 5:
         raise ValueError("source authentication gate failed")
-    cas_status = collection.get("aggregate_status")
+    cas_diagnostic = _cas_status()
+    cas_status = cas_diagnostic["aggregate_status"]
     if cas_status not in {"CAS_4AXIS_PASS", "CAS_BLOCKED", "CAS_CONFLICT", "CAS_FAIL"}:
         raise ValueError(f"invalid CAS aggregate: {cas_status}")
+    if cas_diagnostic["contract_sha256"] != sha(REPO / CONTRACT_PATH):
+        raise ValueError("stored CAS envelopes are bound to a different contract hash")
     fixture = source_counterexample_fixture()
     counterexample_gate = all(
         fixture[key] is True
@@ -181,6 +232,11 @@ def build() -> dict[str, dict[str, Any]]:
         "runtime_environment": {"python": platform.python_version()},
         "git_commit": spec["baseline_commit"],
         "worktree_state": f"{spec['baseline_commit']}+PR-171-worktree",
+        "historical_cas_status": cas_diagnostic["historical_aggregate_status"],
+        "stored_cas_diagnostic_only": cas_diagnostic[
+            "stored_cas_diagnostic_only"
+        ],
+        "claim_promotion_cas_eligible": False,
     }
     mechanics = {
         **common,
@@ -272,12 +328,17 @@ def main() -> int:
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
     artifacts = build()
+    if args.write:
+        print(
+            "refusing to overwrite the frozen historical result pack without "
+            "a new parent-observed cas_gate.py run-adjudicate execution",
+            file=sys.stderr,
+        )
+        return 2
     mismatches: list[str] = []
     for name, value in artifacts.items():
         path = REPO / OUTPUTS[name]
         data = render(value)
-        if args.write:
-            atomic_write(path, data)
         if args.check and (not path.is_file() or path.read_bytes() != data):
             mismatches.append(str(OUTPUTS[name]))
     print(json.dumps({"ok": not mismatches, "cas_status": artifacts["result"]["cas_status"], "scientific_result": artifacts["result"]["scientific_result"], "mismatches": mismatches}, indent=2, sort_keys=True))
