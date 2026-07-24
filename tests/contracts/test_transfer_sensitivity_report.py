@@ -9,6 +9,7 @@ import pytest
 
 from common.artifact_manifest import validate_manifest_payload
 from common.semantic_guards.no_overclaim import scan_text
+from common.transfer_registry import TransferFunctionSpec, TransferValidRange
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -162,6 +163,74 @@ def test_payload_summary_rejects_provisional_or_ungated_native_sources() -> None
             row_id="payload.bad.native",
             payload=ungated_native,
             source_path="memory://native-ungated",
+            generating_command="pytest fixture",
+        )
+
+    native_metadata = TransferFunctionSpec(
+        transfer_id="bass.native.lowell.temperature.v1",
+        source="BASS_native_validated",
+        family="BianchiI",
+        valid_range=TransferValidRange(
+            k_min=1.0e-5,
+            k_max=0.2,
+            ell_min=2,
+            ell_max=30,
+        ),
+        observable_kind="temperature",
+        normalization="unit_primordial_curvature",
+        calibration_status="native_validated",
+        caveats=("native transfer fixture",),
+        passed_validation_gates=("native_transfer_validated",),
+    ).to_metadata()
+    partially_ungated = dict(base_payload)
+    partially_ungated["transfer_provenance_by_section"] = {
+        "missing_metadata": {
+            "transfer_source": "BASS_native_validated",
+            "transfer_spec_id": "bass.native.missing.v1",
+        },
+        "valid_metadata": {
+            "transfer_source": "BASS_native_validated",
+            "transfer_spec_id": "bass.native.lowell.temperature.v1",
+            "transfer_metadata": native_metadata,
+        },
+    }
+    with pytest.raises(ValueError, match="validation gates"):
+        module.summarize_downstream_result_card_payload(
+            row_id="payload.bad.partially-ungated-native",
+            payload=partially_ungated,
+            source_path="memory://native-partially-ungated",
+            generating_command="pytest fixture",
+        )
+
+    valid_native = dict(base_payload)
+    valid_native["transfer_provenance_by_section"] = {
+        "alm_T": {
+            "transfer_source": "BASS_native_validated",
+            "transfer_spec_id": "bass.native.lowell.temperature.v1",
+            "transfer_metadata": native_metadata,
+        },
+    }
+    row = module.summarize_downstream_result_card_payload(
+        row_id="payload.valid.native",
+        payload=valid_native,
+        source_path="memory://native-valid",
+        generating_command="pytest fixture",
+    )
+    assert row["transfer_conditional_status"] == "native_validated_result_card"
+
+    mismatched_native = dict(base_payload)
+    mismatched_native["transfer_provenance_by_section"] = {
+        "alm_T": {
+            "transfer_source": "BASS_native_validated",
+            "transfer_spec_id": "bass.native.other.v1",
+            "transfer_metadata": native_metadata,
+        },
+    }
+    with pytest.raises(ValueError, match="transfer_spec_id must match"):
+        module.summarize_downstream_result_card_payload(
+            row_id="payload.bad.mismatched-native",
+            payload=mismatched_native,
+            source_path="memory://native-mismatched",
             generating_command="pytest fixture",
         )
 

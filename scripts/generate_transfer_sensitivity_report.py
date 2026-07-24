@@ -366,7 +366,6 @@ def summarize_downstream_result_card_payload(
     transfer_by_section = payload.get("transfer_provenance_by_section")
     sources: list[str] = []
     transfer_spec_ids: list[str] = []
-    transfer_metadata_by_section: list[Mapping[str, object]] = []
     if isinstance(transfer_by_section, Mapping):
         for value in transfer_by_section.values():
             if not isinstance(value, Mapping):
@@ -378,8 +377,21 @@ def summarize_downstream_result_card_payload(
             if spec_id:
                 transfer_spec_ids.append(str(spec_id))
             metadata = value.get("transfer_metadata")
-            if isinstance(metadata, Mapping):
-                transfer_metadata_by_section.append(metadata)
+            if source == "BASS_native_validated":
+                if not isinstance(metadata, Mapping):
+                    raise ValueError(
+                        "BASS_native_validated sections require transfer metadata "
+                        "and validation gates"
+                    )
+                validate_transfer_dependent_result(metadata)
+                if str(metadata.get("transfer_source", "")) != source:
+                    raise ValueError(
+                        "section transfer_source must match transfer metadata"
+                    )
+                if spec_id and str(metadata.get("transfer_id", "")) != str(spec_id):
+                    raise ValueError(
+                        "section transfer_spec_id must match transfer metadata"
+                    )
     transfer_source = "none"
     if sources:
         unique_sources = sorted(set(sources))
@@ -389,13 +401,6 @@ def summarize_downstream_result_card_payload(
         raise ValueError(
             "BASS_native_provisional payloads are schema-only and not consumable"
         )
-    if "BASS_native_validated" in native_sources:
-        if not transfer_metadata_by_section:
-            raise ValueError(
-                "BASS_native_validated payloads require transfer metadata and validation gates"
-            )
-        for metadata in transfer_metadata_by_section:
-            validate_transfer_dependent_result(metadata)
     is_transfer_conditional = any(source in EXTERNAL_TRANSFER_SOURCES for source in sources)
     has_native_validated = bool(native_sources)
     row = {
