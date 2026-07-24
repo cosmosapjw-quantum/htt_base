@@ -1,6 +1,7 @@
 """PR-137 contract tests: weak-identification grid coverage."""
 from __future__ import annotations
 
+import importlib.util
 import json
 import subprocess
 import sys
@@ -28,6 +29,50 @@ from common.weak_id_coverage import (
 )
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
+
+
+def _load_runner():
+    runner_path = (
+        REPO_ROOT / "scripts/codex_harness/run_pr137_weak_id_coverage.py"
+    )
+    spec = importlib.util.spec_from_file_location("run_pr137", runner_path)
+    runner = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(runner)
+    return runner
+
+
+def test_source_hash_is_generation_time_provenance() -> None:
+    runner = _load_runner()
+    source = runner.SOURCE_PATH
+    grid_rel = runner.OUTPUTS["grid"]
+    stored = {
+        "negative_scan": {
+            "targets": {
+                source: {"sha256": "1" * 64, "hits": []},
+            }
+        }
+    }
+    current = {
+        "negative_scan": {
+            "targets": {
+                source: {"sha256": "2" * 64, "hits": []},
+            }
+        }
+    }
+    assert runner._semantic_artifact(
+        grid_rel, stored
+    ) == runner._semantic_artifact(grid_rel, current)
+    current["negative_scan"]["targets"][source]["hits"] = [{"line": 1}]
+    assert runner._semantic_artifact(
+        grid_rel, stored
+    ) != runner._semantic_artifact(grid_rel, current)
+
+    manifest_rel = runner.OUTPUTS["manifest"]
+    stored = {"input_hashes": [f"{source}:{'1' * 64}"]}
+    current = {"input_hashes": [f"{source}:{'2' * 64}"]}
+    assert runner._semantic_artifact(
+        manifest_rel, stored
+    ) == runner._semantic_artifact(manifest_rel, current)
 
 
 def test_betainc_matches_reference() -> None:
