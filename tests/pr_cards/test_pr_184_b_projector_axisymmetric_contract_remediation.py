@@ -68,6 +68,22 @@ def test_premise_checker_negative_paths() -> None:
         check_axisymmetric_premise(sigma_bad, b_zero)
 
 
+@pytest.mark.parametrize(
+    ("sigma", "b_history", "message"),
+    [
+        (np.zeros((9, 4)), np.zeros((9, 3, 5)), "sigma_2M_history"),
+        (np.zeros((9, 5)), np.zeros((9, 1, 5)), "include ell=2"),
+        (np.zeros((9, 5)), np.zeros((1, 3, 5)), "share a nonempty n_eta"),
+        (np.zeros((0, 5)), np.zeros((0, 3, 5)), "share a nonempty n_eta"),
+    ],
+)
+def test_premise_checker_rejects_non_projector_shapes(
+    sigma: np.ndarray, b_history: np.ndarray, message: str
+) -> None:
+    with pytest.raises(PremiseViolation, match=message):
+        check_axisymmetric_premise(sigma, b_history)
+
+
 def test_pr172_receipts_untouched_and_never_relabeled() -> None:
     status = (REPO / "docs/codex_handoff/pr_status.yaml").read_text()
     assert "COMPLETED_FAILED_WITH_RECEIPT" in status

@@ -60,6 +60,19 @@ def check_axisymmetric_premise(
     """Fail-closed premise checker for the premise-complete contract."""
     sigma = np.asarray(sigma_2M_history, dtype=np.float64)
     b_hist = np.asarray(photon_B_tower_history, dtype=np.float64)
+    if sigma.ndim != 2 or sigma.shape[1] != 5:
+        raise PremiseViolation(
+            "sigma_2M_history must have projector shape (n_eta, 5)"
+        )
+    if b_hist.ndim != 3 or b_hist.shape[1] <= 2 or b_hist.shape[2] != 5:
+        raise PremiseViolation(
+            "photon_B_tower_history must have projector shape "
+            "(n_eta, L_B+1, 5) and include ell=2"
+        )
+    if sigma.shape[0] == 0 or sigma.shape[0] != b_hist.shape[0]:
+        raise PremiseViolation(
+            "sigma and photon B histories must share a nonempty n_eta axis"
+        )
     off_axis = np.max(np.abs(np.delete(sigma, 2, axis=-1)))
     if off_axis != 0.0:
         raise PremiseViolation(
