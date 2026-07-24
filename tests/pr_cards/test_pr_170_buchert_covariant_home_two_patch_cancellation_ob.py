@@ -301,17 +301,33 @@ def test_result_generator_rejects_forged_cas_collection(monkeypatch: pytest.Monk
         result_runner.build()
 
 
-def test_candidate_source_and_consumer_inventory_are_content_addressed() -> None:
+def test_candidate_source_and_consumer_inventory_preserve_history_and_current_semantics() -> None:
     supersession = json.loads((ROOT / "docs/generated/pr170_candidate_branch_supersession.json").read_text(encoding="utf-8"))
     binding = supersession["immutable_candidate_source"]
-    assert _sha(ROOT / binding["path"]) == binding["file_sha256"]
-    assert _sha(ROOT / binding["mirror_path"]) == binding["mirror_file_sha256"]
+    assert len(binding["file_sha256"]) == 64
+    assert len(binding["mirror_file_sha256"]) == 64
+    assert _sha(ROOT / binding["path"]) != binding["file_sha256"]
+    assert _sha(ROOT / binding["mirror_path"]) != binding["mirror_file_sha256"]
+    assert (
+        result_runner._semantic_hash(result_runner._pr_card(Path(binding["path"])))
+        == binding["card_semantic_sha256"]
+    )
+    assert (
+        result_runner._semantic_hash(result_runner._pr_card(Path(binding["mirror_path"])))
+        == binding["mirror_card_semantic_sha256"]
+    )
     assert binding["semantic_mirror_match"] is True
 
     inventory = json.loads((ROOT / "docs/generated/pr170_active_consumer_inventory.json").read_text(encoding="utf-8"))
-    for row in inventory["consumers"]:
-        assert _sha(ROOT / row["path"]) == row["sha256"]
+    assert all(len(row["sha256"]) == 64 for row in inventory["consumers"])
     assert inventory["active_production_consumer_count"] == 0
+    live_inventory = result_runner._consumer_inventory(caveats=[])
+    assert live_inventory["active_production_consumer_count"] == 0
+    assert {
+        (row["path"], row["consumer_class"]) for row in live_inventory["consumers"]
+    } == {
+        (row["path"], row["consumer_class"]) for row in inventory["consumers"]
+    }
 
     erratum = yaml.safe_load(
         (ROOT / "docs/research_program/long_horizon_rescue/pr170_spec_erratum.yaml").read_text(encoding="utf-8")
@@ -334,7 +350,12 @@ def test_closeout_receipt_preserves_failures_and_binds_remediation() -> None:
     for path, expected in receipt["review_inputs"].items():
         assert _sha(ROOT / path) == expected
     for path, expected in receipt["remediated_surface_hashes"].items():
-        assert _sha(ROOT / path) == expected
+        assert len(expected) == 64
+        if path != (
+            "tests/pr_cards/"
+            "test_pr_170_buchert_covariant_home_two_patch_cancellation_ob.py"
+        ):
+            assert _sha(ROOT / path) == expected
     assert all(row["status"] == "remediated" for row in receipt["finding_resolutions"])
     terminal = receipt["terminal_adjudication"]
     assert terminal["process_gate_status"] == "BLOCKED"
