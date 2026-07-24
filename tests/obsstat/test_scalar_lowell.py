@@ -177,6 +177,18 @@ def test_compute_cl_from_dense_full_alm_and_rejects_ambiguous_storage() -> None:
         compute_cl_from_alm(_dense_l2({0: float("nan")}))
     with pytest.raises(ValueError, match="invalid ell/m"):
         compute_cl_from_alm({(2, 3): 1.0})
+    with pytest.raises(ValueError, match="ell index must be an integer"):
+        compute_cl_from_alm({(2.5, m): 1.0 for m in range(-2, 3)})
+    with pytest.raises(ValueError, match="m index must be an integer"):
+        compute_cl_from_alm({(2, 0.5): 1.0})
+    with pytest.raises(ValueError, match="C_l ell key must be an integer"):
+        summarize_lowell_scalars({2.5: 1.0}, ell_min=2, ell_max=2)
+    with pytest.raises(ValueError, match="C_l ell key must be an integer"):
+        summarize_lowell_scalars({True: 1.0}, ell_min=1, ell_max=1)
+    with pytest.raises(ValueError, match="ell_min must be an integer"):
+        summarize_lowell_scalars({2: 1.0}, ell_min=2.9, ell_max=2)
+    with pytest.raises(ValueError, match="ell_max must be an integer"):
+        summarize_lowell_scalars({2: 1.0}, ell_min=2, ell_max=2.9)
 
 
 def test_mixed_cl_and_alm_sources_must_be_consistent() -> None:

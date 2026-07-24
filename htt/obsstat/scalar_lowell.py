@@ -10,6 +10,7 @@ from __future__ import annotations
 from collections.abc import Mapping
 from dataclasses import dataclass, field
 import math
+import operator
 from typing import Any
 
 import numpy as np
@@ -173,8 +174,8 @@ class LowEllScalarSummary:
     caveats: tuple[str, ...] = (_FEATURE_CAVEAT,)
 
     def __post_init__(self) -> None:
-        ell_min_i = int(self.ell_min)
-        ell_max_i = int(self.ell_max)
+        ell_min_i = _integer_index(self.ell_min, "LowEllScalarSummary.ell_min")
+        ell_max_i = _integer_index(self.ell_max, "LowEllScalarSummary.ell_max")
         if ell_min_i < 0:
             raise ValueError("LowEllScalarSummary.ell_min must be non-negative")
         if ell_max_i < ell_min_i:
@@ -206,7 +207,8 @@ class LowEllScalarSummary:
                 f"status: {expected_role}"
             )
         cl_by_ell = {
-            int(ell): float(value) for ell, value in self.cl_by_ell.items()
+            _integer_index(ell, "LowEllScalarSummary C_l ell key"): float(value)
+            for ell, value in self.cl_by_ell.items()
         }
         if set(cl_by_ell) != set(range(ell_min_i, ell_max_i + 1)):
             raise ValueError(
@@ -299,13 +301,16 @@ def summarize_lowell_scalars(
 ) -> LowEllScalarSummary:
     """Compute feature-only low-ell scalar summaries with explicit definitions."""
 
-    ell_min_i = int(ell_min)
+    ell_min_i = _integer_index(ell_min, "ell_min")
     if ell_min_i < 0:
         raise ValueError("ell_min must be non-negative")
     cl = _prepare_cl_by_ell(cl_by_ell, alm_by_lm=alm_by_lm)
     if not cl:
         raise ValueError("at least one C_l or alm entry is required")
-    ell_max_i = int(max(cl) if ell_max is None else ell_max)
+    ell_max_i = _integer_index(
+        max(cl) if ell_max is None else ell_max,
+        "ell_max",
+    )
     if ell_max_i < ell_min_i:
         raise ValueError("ell_max must be >= ell_min")
     selected = _select_contiguous_cl(cl, ell_min=ell_min_i, ell_max=ell_max_i)
@@ -368,7 +373,7 @@ def _prepare_cl_by_ell(
         cl.update(alm_cl)
     if cl_by_ell:
         for raw_ell, raw_value in cl_by_ell.items():
-            ell = int(raw_ell)
+            ell = _integer_index(raw_ell, "C_l ell key")
             value = float(raw_value)
             if ell < 0:
                 raise ValueError("C_l ell keys must be non-negative")
@@ -555,7 +560,8 @@ def _group_dense_full_alm(
     for key, value in alm_by_lm.items():
         if not isinstance(key, tuple) or len(key) != 2:
             raise ValueError("alm_by_lm keys must be (ell, m) tuples")
-        ell, m = int(key[0]), int(key[1])
+        ell = _integer_index(key[0], "alm_by_lm ell index")
+        m = _integer_index(key[1], "alm_by_lm m index")
         if ell < 0 or abs(m) > ell:
             raise ValueError("alm_by_lm key has invalid ell/m")
         coeff = complex(value)
@@ -591,6 +597,15 @@ def _cl_source_label(
     if has_alm:
         return "computed_from_dense_full_alm"
     return "provided_cl_by_ell"
+
+
+def _integer_index(value: object, label: str) -> int:
+    if isinstance(value, bool):
+        raise ValueError(f"{label} must be an integer")
+    try:
+        return operator.index(value)
+    except TypeError as exc:
+        raise ValueError(f"{label} must be an integer") from exc
 
 
 def _validate_pvalue_key(key: str) -> None:
