@@ -19,6 +19,12 @@ def test_cannot_skip_stages():
     with pytest.raises(SharpnessError):
         L.auto_promote_global_from_algebraic()
 
+def test_caller_evidence_cannot_overwrite_global_block():
+    L = build_certified_ladder()
+    with pytest.raises(SharpnessError, match="native solver"):
+        L.attain("global", "ATTAINED", "caller supplied evidence")
+    assert L.snapshot()["global"]["status"] == "BLOCKED"
+
 def test_constraint_residual_exactly_zero():
     assert homogeneous_momentum_constraint_residual() == 0
 

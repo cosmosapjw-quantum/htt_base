@@ -36,6 +36,11 @@ class SharpnessLadder:
             if self.stages[low].status not in ("ATTAINED", "ATTAINED_WITH_OBLIGATION"):
                 raise SharpnessError(
                     f"cannot attain {name}: lower stage {low} is {self.stages[low].status}")
+        if name == "global" and status != "BLOCKED":
+            raise SharpnessError(
+                "global sharpness remains BLOCKED until a native solver "
+                "verification path is implemented"
+            )
         self.stages[name] = Stage(name, status, evidence)
 
     def auto_promote_global_from_algebraic(self) -> None:
@@ -70,6 +75,6 @@ def build_certified_ladder() -> SharpnessLadder:
     L.attain("local", "ATTAINED_WITH_OBLIGATION",
              "endpoint attainability (PR-131 slaving / T3); full development deferred")
     # global: Einstein-matter solution-space dynamics need the native solver
-    L.stages["global"] = Stage("global", "BLOCKED",
-                               "native Bianchi Boltzmann solver required (Track II)")
+    L.attain("global", "BLOCKED",
+             "native Bianchi Boltzmann solver required (Track II)")
     return L
