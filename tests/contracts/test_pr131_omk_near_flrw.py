@@ -154,6 +154,9 @@ def test_resonance_family_and_domain() -> None:
 def test_plateau_report_gate() -> None:
     validate_plateau_report({"claimed_c2": "-0.14857142857", "w": "0",
                              "probe_K": "1/100000"})
+    with pytest.raises(OmkNearFlrwError, match="finite coefficient"):
+        validate_plateau_report({"claimed_c2": "nan", "w": "0",
+                                 "probe_K": "1/100000"})
     with pytest.raises(OmkNearFlrwError, match="not\na derivation|not "
                        "a derivation"):
         validate_plateau_report({"claimed_c2": "-0.2485714", "w": "0",

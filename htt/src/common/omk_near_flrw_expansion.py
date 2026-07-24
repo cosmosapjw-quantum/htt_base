@@ -549,6 +549,10 @@ def validate_plateau_report(report: Mapping) -> None:
     import mpmath
 
     c2_claim = mpmath.mpf(str(report.get("claimed_c2")))
+    if not mpmath.isfinite(c2_claim):
+        raise OmkNearFlrwError(
+            "plateau claim must carry a finite coefficient"
+        )
     w_value = Fraction(str(report.get("w")))
     c2 = C2_EXACT.subs(W, sp.Rational(w_value))
     c2_exact = mpmath.mpf(sp.Rational(c2).p) / mpmath.mpf(
