@@ -32,6 +32,7 @@ from common.sbc_ppc import (
     standardized_residual_check,
     verify_lineage,
     _chi2_sf,
+    _data_hash,
 )
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -87,7 +88,7 @@ def _run_sbc(model, **kw):
 
 
 def _lineage(model, y):
-    dh = "d" + str(hash(tuple(np.asarray(y).tolist())) % 10 ** 8)
+    dh = _data_hash(y)
     lh = lineage_hash(model, dh, _CFG, {"r": "1.0"})
     return {"claimed_hash": lh, "data_hash": dh, "config": _CFG,
             "diagnostics": {"r": "1.0"}}
@@ -139,6 +140,10 @@ def test_ppc_frozen_discrepancies_and_mandatory_lineage() -> None:
     with pytest.raises(SbcPpcError, match="lineage mismatch"):
         run_ppc(GOOD, y, frozen, n_predictive=100, seed=1,
                 lineage=bad_lineage)
+    other_y = y + 1.0
+    with pytest.raises(SbcPpcError, match="actual observed data"):
+        run_ppc(GOOD, other_y, frozen, n_predictive=100, seed=1,
+                lineage=_lineage(GOOD, y))
     # swapping the frozen discrepancy set is refused
     with pytest.raises(SbcPpcError, match="swapping a discrepancy"):
         require_frozen_discrepancies(frozen, ["sample_variance",
@@ -152,7 +157,7 @@ def test_known_bad_ppc_is_extreme() -> None:
     y = rng.normal(0.5, 1.0, 8)
     from common.sbc_ppc import GaussianModel as GM
     fit = GM(GOOD.tau2, Fraction(1, 9), 8, Fraction(1))
-    dh = "z"
+    dh = _data_hash(y)
     lh = lineage_hash(fit, dh, _CFG, {"r": "1.0"})
     bad = run_ppc(GOOD, y, frozen, n_predictive=5000, seed=20260721,
                   fit_sig2=1 / 9,

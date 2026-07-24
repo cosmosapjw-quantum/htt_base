@@ -275,13 +275,18 @@ def run_ppc(model: GaussianModel, y_obs, frozen: dict, *,
 
     require_frozen_discrepancies(frozen, frozen["discrepancies"])
     y_obs = np.asarray(y_obs, dtype=np.float64)
+    actual_data_hash = _data_hash(y_obs)
+    if lineage.get("data_hash") != actual_data_hash:
+        raise SbcPpcError(
+            "posterior lineage data hash does not match the actual "
+            "observed data")
     fit_model = model if fit_sig2 is None else GaussianModel(
         model.tau2, Fraction(fit_sig2).limit_denominator(10 ** 9),
         model.n_obs, model.var_scale)
     # lineage binds the ACTUAL posterior inputs (the fit model), and is
     # mandatory — a PPC on an unverified lineage is refused.
     verify_lineage(lineage["claimed_hash"], fit_model,
-                   lineage["data_hash"], lineage["config"],
+                   actual_data_hash, lineage["config"],
                    lineage["diagnostics"])
     pm, pv = fit_model.posterior(float(np.sum(y_obs)))
     require_valid_posterior(pv)
