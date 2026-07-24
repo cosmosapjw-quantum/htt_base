@@ -15,51 +15,34 @@ Safety contract (this watcher NEVER writes to the acquisition target):
 
 from __future__ import annotations
 
-import argparse
 import datetime
 import json
 import subprocess
-import sys
 import time
 from pathlib import Path
 
-try:  # package import in tests
-    from .pr151_progress import DEFAULT_LOG as DEFAULT_PROGRESS_LOG, DEFAULT_TARGET
-except ImportError:  # direct script execution
-    from pr151_progress import DEFAULT_LOG as DEFAULT_PROGRESS_LOG, DEFAULT_TARGET
-
-REPO = Path(__file__).resolve().parents[2]
-PY = sys.executable
+REPO = Path("/home/cosmosapjw/Dropbox/bianchi/htt_base")
+TARGET = Path("/mnt/sn850x2t/htt_base_e2e/workdir/raw/desi_dr1_mocks")
+PY = str(REPO / "venv/bin/python")
 PHASE = str(REPO / "scripts/codex_harness/pr151_phase.py")
-DEFAULT_LOG = REPO / "workdir/pr151_finalize_watch.log"
+LOG = REPO / "workdir/pr151_finalize_watch.log"
 INTERVAL = 300              # 5-minute poll
 HEARTBEAT_EVERY = 12        # log a heartbeat once per hour
 MAX_WAIT_S = 14 * 24 * 3600  # 14-day safety cap
 
 
-def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--target", type=Path, default=DEFAULT_TARGET)
-    parser.add_argument("--log", type=Path, default=DEFAULT_LOG)
-    parser.add_argument("--progress-log", type=Path, default=DEFAULT_PROGRESS_LOG)
-    parser.add_argument("--interval", type=int, default=INTERVAL)
-    parser.add_argument("--max-wait-seconds", type=int, default=MAX_WAIT_S)
-    return parser.parse_args(argv)
-
-
-def log(msg: str, log_path: Path) -> None:
+def log(msg: str) -> None:
     ts = datetime.datetime.now().isoformat(timespec="seconds")
     line = f"[{ts}] {msg}\n"
-    log_path.parent.mkdir(parents=True, exist_ok=True)
-    with open(log_path, "a", encoding="utf-8") as f:
+    LOG.parent.mkdir(parents=True, exist_ok=True)
+    with open(LOG, "a", encoding="utf-8") as f:
         f.write(line)
     print(line, end="", flush=True)
 
 
-def progress(target: Path, progress_log: Path) -> dict | None:
+def progress() -> dict | None:
     r = subprocess.run([PY, "-B", PHASE, "--phase", "progress",
-                        "--target", str(target), "--log", str(progress_log),
-                        "--compact"],
+                        "--target", str(TARGET), "--compact"],
                        cwd=REPO, capture_output=True, text=True)
     if r.returncode != 0:
         return None
@@ -69,70 +52,55 @@ def progress(target: Path, progress_log: Path) -> dict | None:
         return None
 
 
-def acquire_running(target: Path) -> bool:
-    r = subprocess.run(["pgrep", "-af", "pr151_phase.py --phase acquire"],
+def acquire_running() -> bool:
+    r = subprocess.run(["pgrep", "-f", "pr151_phase.py --phase acquire"],
                        capture_output=True, text=True)
-    return r.returncode == 0 and str(target) in r.stdout
+    return r.returncode == 0
 
 
-def main(argv: list[str] | None = None) -> int:
-    args = parse_args(argv)
-    target = args.target.expanduser().resolve()
-    log_path = args.log.expanduser().resolve()
-    progress_log = args.progress_log.expanduser().resolve()
-    if args.interval <= 0 or args.max_wait_seconds <= 0:
-        raise SystemExit("interval and max-wait-seconds must be positive")
-
-    def write_log(message: str) -> None:
-        log(message, log_path)
-
-    write_log("watcher start; read-only polling for PR-151 acquire terminal "
-              "(fires finalize once, never touches the acquire writer)")
+def main() -> int:
+    log("watcher start; read-only polling for PR-151 acquire terminal "
+        "(fires finalize once, never touches the acquire writer)")
     start = time.time()
     beat = 0
     while True:
-        if time.time() - start > args.max_wait_seconds:
-            write_log("SAFETY CAP reached; exiting WITHOUT finalize")
+        if time.time() - start > MAX_WAIT_S:
+            log("SAFETY CAP reached (14d); exiting WITHOUT finalize")
             return 1
-        p = progress(target, progress_log)
+        p = progress()
         if p is None:
-            write_log("progress probe failed; retry in %ds" % args.interval)
-            time.sleep(args.interval)
+            log("progress probe failed; retry in %ds" % INTERVAL)
+            time.sleep(INTERVAL)
             continue
         term = p.get("terminal", {})
         if term.get("finalization_complete"):
-            write_log("finalization already complete; nothing to do; exit")
+            log("finalization already complete; nothing to do; exit")
             return 0
         ready = bool(term.get("acquisition_ready"))
-        running = acquire_running(target)
+        running = acquire_running()
 
         if ready and not running:
-            write_log("ACQUIRE TERMINAL detected (acquisition_ready=true, "
-                      "acquire process gone); running `--phase finalize` ONCE")
+            log("ACQUIRE TERMINAL detected (acquisition_ready=true, acquire "
+                "process gone); running `--phase finalize` ONCE")
             r = subprocess.run([PY, "-B", PHASE, "--phase", "finalize",
-                                "--target", str(target)],
+                                "--target", str(TARGET)],
                                cwd=REPO, capture_output=True, text=True)
-            write_log(f"finalize rc={r.returncode}")
+            log(f"finalize rc={r.returncode}")
             if r.stdout.strip():
-                write_log("finalize stdout tail: " + r.stdout.strip()[-600:])
+                log("finalize stdout tail: " + r.stdout.strip()[-600:])
             if r.stderr.strip():
-                write_log("finalize stderr tail: " + r.stderr.strip()[-600:])
-            done = (progress(target, progress_log) or {}).get(
-                "terminal", {}).get("finalization_complete")
+                log("finalize stderr tail: " + r.stderr.strip()[-600:])
+            done = (progress() or {}).get("terminal", {}).get("finalization_complete")
             if done:
-                write_log(
-                    "FINALIZE COMPLETE — PR-151 terminal reached. NOTE: the "
+                log("FINALIZE COMPLETE — PR-151 terminal reached. NOTE: the "
                     "downstream science steps (PR-226 DESI-lane close, "
-                    "PR-155->158) are a SEPARATE owner/manual step, not this "
-                    "watcher.")
+                    "PR-155->158) are a SEPARATE owner/manual step, not this watcher.")
                 return 0
-            write_log(
-                "finalize did NOT reach complete; leaving for owner inspection")
+            log("finalize did NOT reach complete; leaving for owner inspection")
             return r.returncode or 6
 
         if not running and not ready:
-            write_log(
-                "ANOMALY: acquire process is gone but acquisition_ready=false "
+            log("ANOMALY: acquire process is gone but acquisition_ready=false "
                 "(acquire may have failed or died). NOT finalizing. Owner "
                 "inspection required; exiting.")
             return 2
@@ -140,10 +108,9 @@ def main(argv: list[str] | None = None) -> int:
         beat += 1
         if beat % HEARTBEAT_EVERY == 1:
             counts = p.get("counts") or p.get("progress") or {}
-            write_log(
-                f"waiting: acquisition_ready={ready} acquire_running={running} "
+            log(f"waiting: acquisition_ready={ready} acquire_running={running} "
                 f"counts={json.dumps(counts, sort_keys=True)[:200]}")
-        time.sleep(args.interval)
+        time.sleep(INTERVAL)
 
 
 if __name__ == "__main__":
