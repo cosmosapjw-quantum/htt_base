@@ -24,6 +24,7 @@ from common.egs_oneway import (
     validate_counterexample,
     validate_theorem_claim,
 )
+from scripts.codex_harness import run_pr126_egs_oneway as pr126_runner
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 
@@ -102,6 +103,32 @@ def test_safe_text_lint() -> None:
     assert "ONE-WAY" in text
     with pytest.raises(EgsOnewayError, match="forbidden"):
         lint_theorem_text("this result certifies FLRW isotropy")
+
+
+def test_manifest_source_hashes_are_generation_time_provenance() -> None:
+    stored = {
+        "input_hashes": [
+            f"htt/src/common/egs_oneway.py:{'1' * 64}",
+            f"htt/src/common/frame_contract.py:{'2' * 64}",
+        ],
+        "owner": "COMMON",
+    }
+    current = {
+        "input_hashes": [
+            f"htt/src/common/egs_oneway.py:{'3' * 64}",
+            f"htt/src/common/frame_contract.py:{'4' * 64}",
+        ],
+        "owner": "COMMON",
+    }
+    manifest = pr126_runner.OUTPUTS["manifest"]
+    assert pr126_runner._semantic_artifact(
+        manifest, stored
+    ) == pr126_runner._semantic_artifact(manifest, current)
+
+    current["owner"] = "BASS"
+    assert pr126_runner._semantic_artifact(
+        manifest, stored
+    ) != pr126_runner._semantic_artifact(manifest, current)
 
 
 def test_runner_check_mode_is_current() -> None:

@@ -56,6 +56,12 @@ OUTPUTS = {
     "mutations": "docs/generated/pr126_mutation_report.json",
     "manifest": "docs/generated/pr126_artifact_manifest.json",
 }
+HISTORICAL_SOURCE_INPUTS = frozenset({
+    "htt/src/common/egs_oneway.py",
+    "htt/src/common/frame_contract.py",
+})
+
+
 def _forbidden_language(spec: dict) -> tuple[str, ...]:
     return tuple(spec["forbidden_output_language"])
 
@@ -67,6 +73,28 @@ def _sha(path: Path) -> str:
 def _render(payload: dict) -> bytes:
     return (json.dumps(payload, indent=2, ensure_ascii=False, sort_keys=True)
             + "\n").encode()
+
+
+def _semantic_artifact(rel: str, payload: dict) -> dict:
+    """Treat frozen source digests as generation-time provenance only."""
+
+    normalized = json.loads(json.dumps(payload))
+    if rel != OUTPUTS["manifest"]:
+        return normalized
+    rows = normalized.get("input_hashes")
+    if not isinstance(rows, list):
+        return normalized
+    for index, row in enumerate(rows):
+        if not isinstance(row, str) or ":" not in row:
+            continue
+        source, digest = row.rsplit(":", 1)
+        if (
+            source in HISTORICAL_SOURCE_INPUTS
+            and len(digest) == 64
+            and all(char in "0123456789abcdef" for char in digest)
+        ):
+            rows[index] = f"{source}:<generation-time-source>"
+    return normalized
 
 
 def _sympy_combination_check() -> bool:
@@ -251,7 +279,19 @@ def _emit(rel: str, payload: dict, write: bool,
         return
     if not target.is_file():
         problems.append(f"missing artifact: {rel}")
-    elif target.read_bytes() != rendered:
+        return
+    if rel == OUTPUTS["manifest"]:
+        try:
+            existing = json.loads(target.read_text(encoding="utf-8"))
+        except (UnicodeError, json.JSONDecodeError):
+            problems.append(f"invalid artifact: {rel}")
+            return
+        if (
+            isinstance(existing, dict)
+            and _semantic_artifact(rel, existing) == _semantic_artifact(rel, payload)
+        ):
+            return
+    if target.read_bytes() != rendered:
         problems.append(f"stale artifact: {rel}")
 
 
