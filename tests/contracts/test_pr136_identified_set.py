@@ -249,6 +249,16 @@ def test_set_valued_and_admissible_pin() -> None:
     # an equal or wider proposal is allowed (not a shrink)
     box.validate_proposed({}, {"Omega_tilt": Fraction(3)})
     box.validate_proposed({}, {"Omega_tilt": Fraction(5)})
+    unbounded = AdmissibleBox(
+        lower={a: None for a in AXES},
+        upper={a: None for a in AXES},
+        pinned_id="unbounded-pin",
+    )
+    with pytest.raises(IdentifiedSetError, match="tighter than the pinned"):
+        unbounded.validate_proposed({"W2": Fraction(0)}, {})
+    with pytest.raises(IdentifiedSetError, match="tighter than the pinned"):
+        unbounded.validate_proposed({}, {"W2": Fraction(0)})
+    unbounded.validate_proposed({"W2": None}, {"W2": None})
 
 
 def test_caption_gate() -> None:

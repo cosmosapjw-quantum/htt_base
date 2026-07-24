@@ -138,15 +138,19 @@ class AdmissibleBox:
             pin_lo, pin_hi = self.lower.get(axis), self.upper.get(axis)
             new_lo = proposed_lower.get(axis)
             new_hi = proposed_upper.get(axis)
-            if pin_lo is not None and new_lo is not None and \
-                    Fraction(new_lo) > Fraction(pin_lo):
+            lower_shrinks = new_lo is not None and (
+                pin_lo is None or Fraction(new_lo) > Fraction(pin_lo)
+            )
+            if lower_shrinks:
                 raise IdentifiedSetError(
                     f"proposed lower bound on {axis} ({new_lo}) is tighter "
                     f"than the pinned {pin_lo}; the admissible box "
                     f"{self.pinned_id} is fixed before the fit and cannot "
                     "be shrunk to an observed value")
-            if pin_hi is not None and new_hi is not None and \
-                    Fraction(new_hi) < Fraction(pin_hi):
+            upper_shrinks = new_hi is not None and (
+                pin_hi is None or Fraction(new_hi) < Fraction(pin_hi)
+            )
+            if upper_shrinks:
                 raise IdentifiedSetError(
                     f"proposed upper bound on {axis} ({new_hi}) is tighter "
                     f"than the pinned {pin_hi}; the admissible box "
