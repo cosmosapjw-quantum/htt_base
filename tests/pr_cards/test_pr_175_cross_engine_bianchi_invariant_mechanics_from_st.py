@@ -25,6 +25,7 @@ from common.pr175_invariant_oracle import (  # noqa: E402
     engine_a_ricci_scalar,
     engine_b_ricci_scalar,
 )
+from scripts.codex_harness import run_pr175_invariant_card as runner  # noqa: E402
 
 SPEC = REPO / "docs/research_program/long_horizon_rescue/pr175_spec.yaml"
 CONTRACT = REPO / "docs/generated/pr175_cas/CAS_CONTRACT_PR175_INVARIANT_V2.json"
@@ -77,7 +78,7 @@ def test_engine_b_point_independence() -> None:
         assert abs(first - second) <= 1.0e-5, name
 
 
-def test_four_axis_adjudication_pass_and_bound() -> None:
+def test_historical_four_axis_adjudication_is_preserved() -> None:
     adjudication = json.loads(ADJUDICATION.read_text())
     assert adjudication["contract_sha256"] == _sha(CONTRACT)
     assert adjudication["aggregate_status"] == "CAS_4AXIS_PASS"
@@ -87,6 +88,14 @@ def test_four_axis_adjudication_pass_and_bound() -> None:
         "INVARIANT_ORACLE_CAS_4AXIS_PASS_ANCHOR_CONSISTENT"
     )
     assert card["cas"]["adjudication_sha256"] == _sha(ADJUDICATION)
+
+
+def test_stored_four_axis_results_are_diagnostic_only() -> None:
+    cas = runner._cas_status()
+    assert cas["aggregate_status"] == "CAS_BLOCKED"
+    assert cas["historical_aggregate_status"] == "CAS_4AXIS_PASS"
+    assert cas["stored_cas_diagnostic_only"] is True
+    assert cas["claim_promotion_cas_eligible"] is False
 
 
 def test_envelopes_bound_uniform_and_value_pinned() -> None:
@@ -181,6 +190,27 @@ def test_result_card_is_byte_current_under_read_only_check() -> None:
         text=True,
         timeout=600,
     )
-    assert proc.returncode == 0, proc.stdout + proc.stderr
+    assert proc.returncode == 1, proc.stdout + proc.stderr
     payload = json.loads(proc.stdout.strip().splitlines()[-1])
-    assert payload["ok"] is True and payload["read_only"] is True
+    assert payload["ok"] is False and payload["read_only"] is True
+    assert payload["aggregate"] == "CAS_BLOCKED"
+    assert payload["terminal"] == "INVARIANT_ORACLE_CAS_BLOCKED"
+
+
+def test_write_refuses_to_overwrite_historical_card() -> None:
+    before = _sha(CARD)
+    proc = subprocess.run(
+        [
+            str(REPO / "venv/bin/python"),
+            "-B",
+            str(REPO / "scripts/codex_harness/run_pr175_invariant_card.py"),
+            "--write",
+        ],
+        cwd=REPO,
+        capture_output=True,
+        text=True,
+        timeout=600,
+    )
+    assert proc.returncode == 2
+    assert "refusing to overwrite" in proc.stderr
+    assert _sha(CARD) == before
