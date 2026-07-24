@@ -235,7 +235,21 @@ def check_forward(states: Sequence[ComparatorState],
     exists, and WITHOUT any refutation claim where the reduced statement
     happens to remain true (dropping beta_zero): the registered theorem id
     binds the FULL premise set either way."""
-    missing = set(COMPARATOR_FORWARD_PREMISES) - set(premise_ids)
+    if isinstance(premise_ids, (str, bytes)) or not isinstance(
+        premise_ids, Sequence
+    ):
+        raise EgsOnewayError("forward premise ids must be a sequence")
+    provided = tuple(str(premise) for premise in premise_ids)
+    required = set(COMPARATOR_FORWARD_PREMISES)
+    unexpected = set(provided) - required
+    if unexpected:
+        raise EgsOnewayError(
+            "forward claim includes unregistered additional premises "
+            f"{sorted(unexpected)}; premise additions require a new theorem id"
+        )
+    if len(provided) != len(set(provided)):
+        raise EgsOnewayError("forward premise ids must not contain duplicates")
+    missing = required - set(provided)
     if missing:
         witness = _verified_refutation_witness(missing)
         if witness is not None:

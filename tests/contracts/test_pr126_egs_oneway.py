@@ -44,6 +44,17 @@ def test_incomplete_premise_set_is_refuted_by_witness() -> None:
             if p != "CMP-P4-delta_omega_k_zero"))
 
 
+def test_additional_premise_cannot_reuse_the_registered_theorem_id() -> None:
+    zero = ComparatorState(beta=0, sigma2=0, w2=0, omega_tilt=0,
+                           delta_omega_k=0)
+    premises = tuple(COMPARATOR_FORWARD_PREMISES) + (
+        "CMP-P6-posthoc_counterexample_exclusion",
+    )
+
+    with pytest.raises(EgsOnewayError, match="new theorem id"):
+        check_forward([zero], premise_ids=premises)
+
+
 def test_counterexamples_cancel_and_fail_flrw() -> None:
     ce1 = ComparatorState(beta=0, sigma2=Fraction(1, 10**8), w2=0,
                           omega_tilt=0,
