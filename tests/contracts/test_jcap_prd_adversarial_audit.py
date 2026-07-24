@@ -1010,7 +1010,7 @@ def test_pr117_rewrite_mapping_preserves_frozen_diagnostic_inputs():
     } == expected
 
 
-def test_final_counterfactual_scan_reads_only_the_pr118_seal_tree(
+def test_historical_counterfactual_scans_read_only_their_seal_trees(
     tmp_path, monkeypatch
 ):
     module = _audit_module()
@@ -1018,27 +1018,44 @@ def test_final_counterfactual_scan_reads_only_the_pr118_seal_tree(
     live_path.parent.mkdir(parents=True)
     live_path.write_text("COUNTERFACTUAL_SENTINEL", encoding="utf-8")
     monkeypatch.setattr(module, "REPO", tmp_path)
-    monkeypatch.setattr(module, "_manifest_seal_commit", lambda: "sealed-tree")
+    monkeypatch.setattr(module, "PR117_COMMIT", "pr117-tree")
+    monkeypatch.setattr(module, "_manifest_seal_commit", lambda: "pr118-tree")
     monkeypatch.setattr(
         module,
         "_git_tree_files",
-        lambda commit, roots: ["docs/generated/frozen.md"],
+        lambda commit, roots: [f"docs/generated/{commit}.md"],
     )
-    frozen = {"docs/generated/frozen.md": b"historical public text is safe"}
-    monkeypatch.setattr(module, "_git_blob", lambda commit, path: frozen[path])
+    frozen = {
+        ("pr117-tree", "docs/generated/pr117-tree.md"): (
+            b"historical PR-117 public text is safe"
+        ),
+        ("pr118-tree", "docs/generated/pr118-tree.md"): (
+            b"historical PR-118 public text is safe"
+        ),
+    }
+    monkeypatch.setattr(module, "_git_blob", lambda commit, path: frozen[(commit, path)])
 
     final_errors = []
     module._validate_counterfactual_leaks(final_errors, final=True)
     assert final_errors == []
 
-    live_errors = []
-    module._validate_counterfactual_leaks(live_errors, final=False)
-    assert any("post_pr118.md" in error for error in live_errors)
+    pr117_errors = []
+    module._validate_counterfactual_leaks(pr117_errors, final=False)
+    assert pr117_errors == []
 
-    frozen["docs/generated/frozen.md"] = b"COUNTERFACTUAL_SENTINEL"
+    frozen[("pr117-tree", "docs/generated/pr117-tree.md")] = (
+        b"COUNTERFACTUAL_SENTINEL"
+    )
+    pr117_errors = []
+    module._validate_counterfactual_leaks(pr117_errors, final=False)
+    assert any("pr117-tree.md" in error for error in pr117_errors)
+
+    frozen[("pr118-tree", "docs/generated/pr118-tree.md")] = (
+        b"COUNTERFACTUAL_SENTINEL"
+    )
     frozen_errors = []
     module._validate_counterfactual_leaks(frozen_errors, final=True)
-    assert any("frozen.md" in error for error in frozen_errors)
+    assert any("pr118-tree.md" in error for error in frozen_errors)
 
 
 def test_manifest_is_complete_and_self_consistent():

@@ -2540,38 +2540,33 @@ def _counterfactual_public_text_hits(text: str) -> list[str]:
 
 
 def _validate_counterfactual_leaks(errors: list[str], *, final: bool) -> None:
-    """Reject public counterfactual material at the applicable audit snapshot."""
+    """Reject public counterfactual material at the historical audit snapshot."""
 
     root_names = ("docs/manuscript", "docs/generated", "figures")
     allowed_suffixes = {".json", ".yaml", ".yml", ".md", ".tex", ".txt"}
     sources: list[tuple[str, bytes]] = []
     if final:
         try:
-            seal_commit = _manifest_seal_commit()
-            frozen_paths = _git_tree_files(seal_commit, root_names)
+            audit_commit = _manifest_seal_commit()
         except RuntimeError as exc:
             errors.append(f"counterfactual leak seal tree is unavailable: {exc}")
             return
-        for path_text in frozen_paths:
-            if Path(path_text).suffix.lower() not in allowed_suffixes:
-                continue
-            try:
-                sources.append((path_text, _git_blob(seal_commit, path_text)))
-            except RuntimeError as exc:
-                errors.append(
-                    f"counterfactual leak seal input is unavailable: {path_text}: {exc}"
-                )
     else:
-        for root_name in root_names:
-            root = REPO / root_name
-            if not root.exists():
-                continue
-            for path in root.rglob("*"):
-                if path.is_file() and path.suffix.lower() in allowed_suffixes:
-                    try:
-                        sources.append((relative(path), path.read_bytes()))
-                    except OSError:
-                        continue
+        audit_commit = PR117_COMMIT
+    try:
+        frozen_paths = _git_tree_files(audit_commit, root_names)
+    except RuntimeError as exc:
+        errors.append(f"counterfactual leak seal tree is unavailable: {exc}")
+        return
+    for path_text in frozen_paths:
+        if Path(path_text).suffix.lower() not in allowed_suffixes:
+            continue
+        try:
+            sources.append((path_text, _git_blob(audit_commit, path_text)))
+        except RuntimeError as exc:
+            errors.append(
+                f"counterfactual leak seal input is unavailable: {path_text}: {exc}"
+            )
 
     for path_text, raw in sources:
         try:
@@ -5935,9 +5930,8 @@ def validate(*, final: bool = False) -> list[str]:
                 elif listed[key].get("sha256") != sha256_file(path):
                     errors.append(f"manifest hash stale for {key}")
 
-    # Counterfactual results may exist only inside this audit package.  Final
-    # closeout validates the PR-118 seal tree; exploratory validation retains
-    # the live-tree check.
+    # Counterfactual results may exist only inside this audit package.  The
+    # PR-117 and PR-118 validators read their respective frozen Git trees.
     _validate_counterfactual_leaks(errors, final=final)
     return errors
 
