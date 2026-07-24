@@ -30,7 +30,7 @@ import hashlib
 import json
 from dataclasses import dataclass
 from enum import Enum
-from numbers import Integral
+from numbers import Integral, Real
 
 import numpy as np
 
@@ -180,6 +180,16 @@ class Criteria:
     size_alpha: float          # max null false-candidate rate (size)
     power_min: float           # min correct recovery on a clean signal
     abstain_min: float         # min required-diagnosis rate
+
+    def __post_init__(self) -> None:
+        for name in ("size_alpha", "power_min", "abstain_min"):
+            value = getattr(self, name)
+            if (isinstance(value, bool)
+                    or not isinstance(value, Real)
+                    or not np.isfinite(float(value))
+                    or not 0 <= value <= 1):
+                raise AdjudicationError(
+                    f"{name} must be a finite real threshold in [0, 1]")
 
     def sealed(self) -> "Criteria":
         return self

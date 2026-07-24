@@ -184,6 +184,24 @@ def test_ensemble_measured_size_within_alpha_and_covariance_blocks() -> None:
     assert rep["method_verdict"] == Verdict.BLOCK.value
 
 
+@pytest.mark.parametrize(
+    ("field", "value"),
+    [
+        ("size_alpha", float("nan")),
+        ("size_alpha", float("inf")),
+        ("size_alpha", -0.1),
+        ("power_min", 1.1),
+        ("abstain_min", True),
+    ],
+)
+def test_criteria_reject_invalid_probability_thresholds(
+        field: str, value) -> None:
+    kwargs = {"size_alpha": 0.1, "power_min": 0.75, "abstain_min": 0.7}
+    kwargs[field] = value
+    with pytest.raises(AdjudicationError, match=r"threshold in \[0, 1\]"):
+        Criteria(**kwargs)
+
+
 def test_separation_guards_live() -> None:
     require_generator_analyst_separation("generator.dgp", "analyst.pr141")
     with pytest.raises(AdjudicationError, match="generator and the analyst"):
