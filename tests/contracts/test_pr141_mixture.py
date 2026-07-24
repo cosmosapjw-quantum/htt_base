@@ -220,7 +220,12 @@ def test_deterministic_branch_separate_from_evidence() -> None:
     assert max(evidence, key=evidence.get) == "iso"
     with pytest.raises(CompetitionError, match="deterministic"):
         refuse_deterministic_as_evidence(GenerativeBranch.DETERMINISTIC)
+    with pytest.raises(CompetitionError, match="deterministic"):
+        refuse_deterministic_as_evidence("deterministic")
     refuse_deterministic_as_evidence(GenerativeBranch.COVARIANCE)   # ok
+    refuse_deterministic_as_evidence("covariance")
+    with pytest.raises(CompetitionError, match="unknown generative"):
+        refuse_deterministic_as_evidence("profile")
 
 
 def test_guards() -> None:

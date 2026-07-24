@@ -402,9 +402,15 @@ def refuse_mio_as_likelihood(factor_kind: str) -> None:
             "a MIO / reporting score is not a likelihood factor")
 
 
-def refuse_deterministic_as_evidence(branch: GenerativeBranch) -> None:
+def refuse_deterministic_as_evidence(
+        branch: GenerativeBranch | str) -> None:
     """The deterministic profile branch is never the model-comparison score."""
-    if branch is GenerativeBranch.DETERMINISTIC:
+    try:
+        normalized = GenerativeBranch(branch)
+    except ValueError as exc:
+        raise CompetitionError(
+            f"unknown generative branch {branch!r}") from exc
+    if normalized is GenerativeBranch.DETERMINISTIC:
         raise CompetitionError(
             "the deterministic (profile / fixed-amplitude) branch is not an "
             "evidence and may not be used for model comparison; use the "
