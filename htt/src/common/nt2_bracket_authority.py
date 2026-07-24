@@ -228,11 +228,17 @@ def validate_interval_claim(claim: Mapping) -> None:
         )
     hi = claim.get("proven_upper")
     placeholder = claim.get("mes_placeholder_upper")
-    if hi is not None and placeholder is not None and str(hi) == str(
-            placeholder):
-        raise Nt2AuthorityError(
-            "the proven upper endpoint may not be the MES placeholder"
-        )
+    if hi is not None and placeholder is not None:
+        try:
+            same_endpoint = Fraction(str(hi)) == Fraction(str(placeholder))
+        except (ValueError, ZeroDivisionError) as exc:
+            raise Nt2AuthorityError(
+                "interval endpoints must be exact finite rational values"
+            ) from exc
+        if same_endpoint:
+            raise Nt2AuthorityError(
+                "the proven upper endpoint may not be the MES placeholder"
+            )
 
 
 def validate_theorem_upper(claimed_upper: Fraction, a2: Fraction,

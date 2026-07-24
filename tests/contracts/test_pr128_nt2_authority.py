@@ -109,6 +109,12 @@ def test_placeholder_never_merges() -> None:
     assert payload["mes_placeholder_provenance"] == "placeholder_not_merged"
     with pytest.raises(Nt2AuthorityError, match="forbidden"):
         validate_interval_claim({"merged": True})
+    with pytest.raises(Nt2AuthorityError, match="may not be"):
+        validate_interval_claim({
+            "merged": False,
+            "proven_upper": "0.5",
+            "mes_placeholder_upper": "1/2",
+        })
 
 
 def test_f_lo_uses_corrected_lower() -> None:
