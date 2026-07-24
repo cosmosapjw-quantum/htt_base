@@ -15,6 +15,7 @@ for entry in (str(REPO / "htt"), str(REPO / "htt" / "src")):
 import pytest  # noqa: E402
 
 from common.data_root import DataUnavailable, recipe_status, resolve  # noqa: E402
+from scripts.codex_harness import run_pr188_hermetic as runner  # noqa: E402
 
 CARD = REPO / "docs/generated/pr188_result_card.json"
 SPEC = REPO / "docs/research_program/strengthening/pr188_spec.yaml"
@@ -40,11 +41,38 @@ def test_hermetic_reproduce_path_clean() -> None:
     assert r["private_path_hits_on_reproduce_path"] == []
 
 
-def test_load_bearing_mutation_firewall() -> None:
+def test_historical_card_preserves_recorded_mutation_suite() -> None:
     m = _card()["result"]["load_bearing_mutation_suite"]
     assert m["n_load_bearing_mutations"] >= 15
     assert m["all_flipped_to_failure"] is True
     assert m["dead_source_stays_green"] is True
+
+
+def test_current_gate_counts_only_unique_mutations(monkeypatch) -> None:
+    monkeypatch.setattr(
+        runner,
+        "_mutate_and_check",
+        lambda source, old, new, checker: (
+            (source, old, new, checker) != runner.DEAD_CONTROL
+        ),
+    )
+    mutations = runner._mutation_suite()
+    assert mutations == {
+        "n_load_bearing_mutations": 4,
+        "all_flipped_to_failure": True,
+        "dead_source_stays_green": True,
+    }
+
+
+def test_blocked_current_gate_cannot_overwrite_history(monkeypatch) -> None:
+    monkeypatch.setattr(
+        runner,
+        "build_payload",
+        lambda: {"terminal": "BLOCKED_HERMETIC_GATE_FAILURE"},
+    )
+    before = hashlib.sha256(CARD.read_bytes()).hexdigest()
+    assert runner.main(["--write"]) == 2
+    assert hashlib.sha256(CARD.read_bytes()).hexdigest() == before
 
 
 def test_data_recipe_blocks_never_silently_skips() -> None:
