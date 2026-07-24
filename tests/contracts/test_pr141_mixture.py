@@ -232,6 +232,11 @@ def test_guards() -> None:
     # post-hoc model-list change without multiplicity refused
     with pytest.raises(CompetitionError, match="new registered family|updated"):
         require_registered_model_list(tuple(MODELS) + ("x",), True, None, None)
+    with pytest.raises(CompetitionError, match="updated"):
+        require_registered_model_list(tuple(MODELS) + ("x",), True, "", 0)
+    require_registered_model_list(
+        tuple(MODELS) + ("x",), True, "mixture-family-v2", 2
+    )
     # a fixed list before the outcome is fine
     require_registered_model_list(tuple(MODELS), False, None, None)
     # departing before the outcome is refused

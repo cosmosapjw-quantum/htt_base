@@ -419,7 +419,15 @@ def require_registered_model_list(declared: tuple, seen_outcome: bool,
         if not seen_outcome:
             raise CompetitionError(
                 "the model list is fixed and pre-registered")
-        if supersedes is None or multiplicity is None:
+        valid_supersedes = (
+            isinstance(supersedes, str) and bool(supersedes.strip())
+        )
+        valid_multiplicity = (
+            isinstance(multiplicity, (int, np.integer))
+            and not isinstance(multiplicity, bool)
+            and multiplicity > 0
+        )
+        if not valid_supersedes or not valid_multiplicity:
             raise CompetitionError(
                 "changing the model list after the outcome requires a NEW "
                 "registered family and an updated look-elsewhere multiplicity")
