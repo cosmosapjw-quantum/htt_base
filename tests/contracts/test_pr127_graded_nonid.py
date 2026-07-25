@@ -9,6 +9,8 @@ from pathlib import Path
 
 import pytest
 
+from scripts.codex_harness import run_pr127_graded_nonid as pr127_runner
+
 from common.graded_nonid import (
     EXPECTED_KERNEL_BASIS,
     EXPECTED_RANK,
@@ -25,6 +27,31 @@ from common.graded_nonid import (
 )
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
+
+
+def test_manifest_source_hash_is_generation_time_provenance() -> None:
+    source = pr127_runner.NONID_SOURCE
+    comparator = "htt/obsstat/egs3_graded_comparator.py"
+    manifest = pr127_runner.OUTPUTS["manifest"]
+    stored = {
+        "input_hashes": [
+            f"{source}:{'1' * 64}",
+            f"{comparator}:{'2' * 64}",
+        ]
+    }
+    current = {
+        "input_hashes": [
+            f"{source}:{'3' * 64}",
+            f"{comparator}:{'2' * 64}",
+        ]
+    }
+    assert pr127_runner._semantic_artifact(
+        manifest, stored
+    ) == pr127_runner._semantic_artifact(manifest, current)
+    current["input_hashes"][1] = f"{comparator}:{'4' * 64}"
+    assert pr127_runner._semantic_artifact(
+        manifest, stored
+    ) != pr127_runner._semantic_artifact(manifest, current)
 
 
 def test_sympy_rank_and_kernel_match_registration() -> None:
