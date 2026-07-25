@@ -223,6 +223,20 @@ def test_response_graph_analytic_vs_observed() -> None:
     with pytest.raises(SourceResponseError, match="hiding the exception"):
         require_surfaced_exception({"analytic_rank": 2, "observed_rank": 1,
                                     "aligned_axis_exception": None})
+    with pytest.raises(SourceResponseError, match="inconsistent"):
+        require_surfaced_exception({
+            "analytic_rank": 2,
+            "observed_rank": 1,
+            "aligned_axis_exception": {"kind": "placeholder"},
+        })
+    with pytest.raises(SourceResponseError, match="without.*reduction"):
+        require_surfaced_exception({
+            "analytic_rank": 2,
+            "observed_rank": 2,
+            "aligned_axis_exception": {
+                "kind": "aligned_axis_rank_reduction",
+            },
+        })
 
 
 @pytest.mark.parametrize("pairs", [

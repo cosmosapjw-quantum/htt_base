@@ -537,12 +537,33 @@ def observed_response(window: Mapping | None = None) -> dict:
 def require_surfaced_exception(report: Mapping) -> None:
     """A rank-reduced observed response MUST carry the aligned-axis
     exception; omitting it is rejected."""
-    if report["observed_rank"] < report["analytic_rank"] and \
-            not report.get("aligned_axis_exception"):
+    analytic_rank = report["analytic_rank"]
+    observed_rank = report["observed_rank"]
+    exception = report.get("aligned_axis_exception")
+    if observed_rank < analytic_rank:
+        if not exception:
+            raise SourceResponseError(
+                "observed rank is below the analytic rank but the "
+                "aligned-axis exception is missing — hiding the exception "
+                "is forbidden"
+            )
+        expected_axes = [sorted(_ACTIVE_AXES)]
+        if (
+            not isinstance(exception, Mapping)
+            or exception.get("kind") != "aligned_axis_rank_reduction"
+            or exception.get("analytic_rank") != analytic_rank
+            or exception.get("observed_rank") != observed_rank
+            or exception.get("colliding_axes") != expected_axes
+        ):
+            raise SourceResponseError(
+                "observed rank is below the analytic rank but the "
+                "aligned-axis exception is inconsistent"
+            )
+    elif exception is not None:
         raise SourceResponseError(
-            "observed rank is below the analytic rank but the "
-            "aligned-axis exception is missing — hiding the exception "
-            "is forbidden")
+            "an aligned-axis exception cannot be reported without an "
+            "observed rank reduction"
+        )
 
 
 # ---------------------------------------------------------------------------
