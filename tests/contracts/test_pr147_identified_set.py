@@ -1,6 +1,7 @@
 """PR-147 contract tests: nuisance-augmented CF4 identified sets."""
 from __future__ import annotations
 
+import importlib.util
 import json
 import subprocess
 import sys
@@ -44,6 +45,79 @@ BOX = {"observable": ["primary", "Vpec", "Vpwf"],
        "calibration_fraction": [-0.05, 0.0, 0.05],
        "sigma_nl_kms": [150, 250, 350], "monopole": [True],
        "n_shells": 3}
+
+
+def _load_runner():
+    runner_path = (
+        REPO_ROOT / "scripts/codex_harness/run_pr147_identified_set.py"
+    )
+    spec = importlib.util.spec_from_file_location("run_pr147", runner_path)
+    runner = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(runner)
+    return runner
+
+
+def test_relocated_sources_are_generation_time_provenance() -> None:
+    runner = _load_runner()
+    aliases = runner.SOURCE_ALIASES
+    historical_source = "htt/src/common/cf4_identified_set.py"
+    current_source = aliases[historical_source]
+    stored_result = {
+        "negative_scan": {
+            "targets": {
+                historical_source: {"sha256": "1" * 64, "hits": []},
+            },
+        },
+    }
+    current_result = {
+        "negative_scan": {
+            "targets": {
+                current_source: {"sha256": "2" * 64, "hits": []},
+            },
+        },
+    }
+    result_rel = runner.OUTPUTS["identified_set"]
+    assert runner._semantic_artifact(
+        result_rel, stored_result
+    ) == runner._semantic_artifact(result_rel, current_result)
+    current_result["negative_scan"]["targets"][current_source]["hits"] = [
+        {"line": 1},
+    ]
+    assert runner._semantic_artifact(
+        result_rel, stored_result
+    ) != runner._semantic_artifact(result_rel, current_result)
+
+    stored_manifest = {
+        "input_hashes": [
+            f"{historical}:{'1' * 64}" for historical in aliases
+        ],
+        "raw_data_pins": {
+            "groups_sha256": "groups",
+            "variants_sha256": "variants",
+        },
+    }
+    current_manifest = {
+        "input_hashes": [
+            f"{current}:{'2' * 64}" for current in aliases.values()
+        ],
+        "raw_data_pins": {
+            "groups_sha256": "groups",
+            "variants_sha256": "variants",
+        },
+    }
+    manifest_rel = runner.OUTPUTS["manifest"]
+    assert runner._semantic_artifact(
+        manifest_rel, stored_manifest
+    ) == runner._semantic_artifact(manifest_rel, current_manifest)
+    current_manifest["raw_data_pins"]["variants_sha256"] = "changed"
+    assert runner._semantic_artifact(
+        manifest_rel, stored_manifest
+    ) != runner._semantic_artifact(manifest_rel, current_manifest)
+    current_manifest["raw_data_pins"]["variants_sha256"] = "variants"
+    current_manifest["input_hashes"][0] = f"{current_source}:not-a-sha"
+    assert runner._semantic_artifact(
+        manifest_rel, stored_manifest
+    ) != runner._semantic_artifact(manifest_rel, current_manifest)
 
 
 def test_classify_topology() -> None:
