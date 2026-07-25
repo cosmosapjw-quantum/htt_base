@@ -96,13 +96,22 @@ class AnalysisContract:
                 raise EstimandRegistryError(
                     f"contract field {name!r} must be a non-empty string "
                     "(no hidden/defaulted conventions)")
+            if value != value.strip():
+                raise EstimandRegistryError(
+                    f"contract field {name!r} has non-canonical "
+                    "surrounding whitespace")
         if not isinstance(self.generative_branch, GenerativeBranch):
             raise EstimandRegistryError(
                 "generative_branch must be a GenerativeBranch enum")
         for name in ("dependence_justification", "supersedes"):
-            if not isinstance(getattr(self, name), str):
+            value = getattr(self, name)
+            if not isinstance(value, str):
                 raise EstimandRegistryError(
                     f"contract field {name!r} must be a string")
+            if value != value.strip():
+                raise EstimandRegistryError(
+                    f"contract field {name!r} has non-canonical "
+                    "surrounding whitespace")
         if _names_independence(self.dependence_cluster) and \
                 not self.dependence_justification.strip():
             raise EstimandRegistryError(
