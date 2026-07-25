@@ -160,7 +160,18 @@ def _rewrite_record_rows(
 
 @pytest.mark.parametrize(
     "raw",
-    ("../escape", "/absolute", "C:/drive", "a\\b", "a/../../b", ""),
+    (
+        "../escape",
+        "/absolute",
+        "C:/drive",
+        "a\\b",
+        "a/../../b",
+        "a/./b",
+        "a//b",
+        "a/b/",
+        ".",
+        "",
+    ),
 )
 def test_archive_path_traversal_is_rejected(raw: str) -> None:
     with pytest.raises(PackageTopologyError):

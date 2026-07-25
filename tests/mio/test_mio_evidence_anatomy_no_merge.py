@@ -97,6 +97,25 @@ def test_evidence_trace_payload_is_copied_and_rejected_as_mio_input():
         )
 
 
+@pytest.mark.parametrize(
+    ("overrides", "field"),
+    (
+        ({"config_hash": None}, "config_hash"),
+        ({"input_hashes": [None]}, "input_hashes"),
+        (
+            {
+                "channel_contributions": None,
+                "terms": [{"channel": None, "delta_lnB": 2.15}],
+            },
+            r"terms\[0\]\.channel",
+        ),
+    ),
+)
+def test_evidence_trace_rejects_null_required_fields(overrides, field):
+    with pytest.raises(ValueError, match=field):
+        build_htt_evidence_trace_from_payload(_trace_payload(**overrides))
+
+
 def test_predictive_residual_payload_is_diagnostic_context_only():
     payload = predictive_residual_atlas_payload(_atlas())
 

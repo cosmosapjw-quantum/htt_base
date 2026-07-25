@@ -43,6 +43,18 @@ def test_directional_coherence_rejects_nonfinite_cone_width(
         resultant_vector(probes)
 
 
+@pytest.mark.parametrize("invalid_weight", (-1.0, float("nan"), float("inf")))
+def test_directional_coherence_rejects_invalid_probe_weights(
+    invalid_weight: float,
+) -> None:
+    probes = (
+        DirectionalProbe("positive", 0.0, 0.0, 1.0, weight=2.0),
+        DirectionalProbe("invalid", 180.0, 0.0, 1.0, weight=invalid_weight),
+    )
+    with pytest.raises(ValueError, match="weights must be finite and nonnegative"):
+        resultant_vector(probes)
+
+
 def test_directional_certificate_records_missing_covariance_statuses() -> None:
     cert = _certificate()
     manifest = cert.manifest
