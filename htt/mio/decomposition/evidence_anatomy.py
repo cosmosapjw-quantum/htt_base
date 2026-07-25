@@ -73,6 +73,8 @@ class EvidenceAnatomyReport:
 
 
 def _non_empty(value: object, field_name: str) -> str:
+    if value is None:
+        raise ValueError(f"{field_name} must be non-empty")
     text = str(value).strip()
     if not text:
         raise ValueError(f"{field_name} must be non-empty")

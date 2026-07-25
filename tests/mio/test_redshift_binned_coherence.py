@@ -11,6 +11,8 @@ from mio.coherence.redshift_binned import (
     RedshiftBinnedProbe,
     RedshiftDepthBinMetadata,
     STANDARD_Z_PROBES,
+    ZBinResult,
+    assign_probes_to_bins,
     emit_redshift_coherence_artefact,
     per_bin_resultants,
     to_mio_certificate,
@@ -270,6 +272,38 @@ def test_redshift_certificate_rejects_metadata_bin_mismatch() -> None:
             has_null_mocks=True,
             sky_support_status="complete",
             depth_bin_metadata=mismatched,
+        )
+
+
+@pytest.mark.parametrize(
+    "bins",
+    (
+        ((0.0, 1.0), (0.5, 1.5)),
+        ((1.0, 2.0), (0.0, 0.5)),
+    ),
+)
+def test_redshift_assignment_rejects_ambiguous_bin_order(bins) -> None:
+    with pytest.raises(ValueError, match="ordered and non-overlapping"):
+        assign_probes_to_bins(STANDARD_Z_PROBES, bins)
+
+
+def test_redshift_certificate_rejects_overlapping_manual_bin_results() -> None:
+    bin_results = (
+        ZBinResult(0.0, 1.0, ("CF4pp",), 289.0, 30.0, 1.0, 1),
+        ZBinResult(0.5, 1.5, ("CatWISE",), 238.2, 28.8, 1.0, 1),
+    )
+    with pytest.raises(ValueError, match="ordered and non-overlapping"):
+        to_mio_certificate(
+            STANDARD_Z_PROBES,
+            bin_results,
+            p_drift=0.2,
+            total_drift=20.0,
+            has_covariance=True,
+            has_null_mocks=True,
+            sky_support_status="complete",
+            depth_bin_metadata=_metadata_for_bins(
+                bins=((0.0, 1.0), (0.5, 1.5))
+            ),
         )
 
 

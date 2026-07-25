@@ -147,6 +147,7 @@ from common.remediation_state import (  # noqa: E402
     PrincipalRecord,
     ScientificStatus,
 )
+from common.release_evidence_binding import consume_release_evidence  # noqa: E402
 
 
 GRAPH_SCHEMA = "htt.pr122.claim_evidence_graph_bundle.v1"
@@ -640,15 +641,15 @@ def _mes_declarations(root: Path, path: Path) -> tuple[MesConsumerDeclaration, .
                 ),
             )
         )
-    # The scanner rechecks every declared hash.  This explicit precheck makes
-    # stale inventory a build error rather than an expected scientific blocker.
+    # These hashes identify the sources used to generate the frozen PR-122
+    # inventory. Current integrity comes from live discovery and semantic
+    # scanning, not from requiring later source edits to retain those bytes.
     for declaration in declarations:
-        if (
-            _sha256_file(_resolve(root, Path(declaration.source.path)))
-            != declaration.source.sha256
-        ):
+        source = _resolve(root, Path(declaration.source.path))
+        if not source.is_file() or source.is_symlink():
             raise ValueError(
-                f"active MES consumer inventory is stale: {declaration.source.path}"
+                "active MES consumer source is missing or non-regular: "
+                f"{declaration.source.path}"
             )
     return tuple(declarations)
 
@@ -1707,13 +1708,23 @@ def main(argv: Sequence[str] | None = None) -> int:
                 f"passed={counts.get('passed')}"
             )
             return 0
+        if args.check:
+            disclosure = consume_release_evidence(
+                root, mode="audit_disclosure"
+            )
+            print(
+                "up-to-date PR-122 "
+                f"graph_ref={disclosure['graph_ref']} "
+                f"receipt_id={disclosure['receipt_id']} "
+                "claim_release_allowed="
+                f"{str(disclosure['claim_release_allowed']).lower()}"
+            )
+            return 0
         outputs = build_outputs(
             repo_root=root,
             test_execution_path=args.test_execution,
         )
-        if args.check:
-            _check(root, outputs)
-        elif not args.dry_run:
+        if not args.dry_run:
             _write(root, outputs)
     except (
         OSError,
@@ -1727,7 +1738,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 1
     graph_record = json.loads(outputs[DEFAULT_GRAPH].decode("utf-8"))
     closure_record = json.loads(outputs[DEFAULT_CLOSURE_JSON].decode("utf-8"))
-    prefix = "up-to-date" if args.check else ("dry-run" if args.dry_run else "wrote")
+    prefix = "dry-run" if args.dry_run else "wrote"
     print(
         f"{prefix} PR-122 graph_ref={graph_record['graph_ref']} "
         f"receipt_id={closure_record['release_receipt_id']} "

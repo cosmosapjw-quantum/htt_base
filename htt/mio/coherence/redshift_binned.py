@@ -527,6 +527,28 @@ def _probe_weights(probes: Sequence[RedshiftBinnedProbe]) -> np.ndarray:
     return w / (sig * sig)
 
 
+def _validated_redshift_bins(
+    bins: Sequence[Tuple[float, float]],
+) -> tuple[tuple[float, float], ...]:
+    if not bins:
+        raise ValueError("bins must be a non-empty sequence of (z_min, z_max) tuples")
+    normalized: list[tuple[float, float]] = []
+    previous_hi: float | None = None
+    for lo, hi in bins:
+        lo_value = _finite_float(lo, "z bin lower bound")
+        hi_value = _finite_float(hi, "z bin upper bound")
+        if hi_value <= lo_value:
+            raise ValueError(
+                "z bin upper bound must exceed lower: "
+                f"got ({lo_value}, {hi_value})"
+            )
+        if previous_hi is not None and lo_value < previous_hi:
+            raise ValueError("z bins must be ordered and non-overlapping")
+        normalized.append((lo_value, hi_value))
+        previous_hi = hi_value
+    return tuple(normalized)
+
+
 def assign_probes_to_bins(
     probes: Sequence[RedshiftBinnedProbe],
     bins: Sequence[Tuple[float, float]] = DEFAULT_Z_BINS,
@@ -538,15 +560,11 @@ def assign_probes_to_bins(
     probe at ``z_eff = z_max_last`` still lands in the final bin
     rather than being silently dropped).
     """
-    if not bins:
-        raise ValueError("bins must be a non-empty sequence of (z_min, z_max) tuples")
-    for lo, hi in bins:
-        if not (hi > lo):
-            raise ValueError(f"z bin upper bound must exceed lower: got ({lo}, {hi})")
-    out: List[List[RedshiftBinnedProbe]] = [[] for _ in bins]
-    last_idx = len(bins) - 1
+    normalized_bins = _validated_redshift_bins(bins)
+    out: List[List[RedshiftBinnedProbe]] = [[] for _ in normalized_bins]
+    last_idx = len(normalized_bins) - 1
     for p in probes:
-        for i, (lo, hi) in enumerate(bins):
+        for i, (lo, hi) in enumerate(normalized_bins):
             if i == last_idx:
                 if lo <= p.z_eff <= hi:
                     out[i].append(p)
@@ -567,9 +585,10 @@ def per_bin_resultants(
     Empty bins are returned with ``n_probes=0`` and NaN direction; they
     contribute no entries to the drift statistic.
     """
-    grouped = assign_probes_to_bins(probes, bins)
+    normalized_bins = _validated_redshift_bins(bins)
+    grouped = assign_probes_to_bins(probes, normalized_bins)
     results: List[ZBinResult] = []
-    for (lo, hi), probes_in in zip(bins, grouped):
+    for (lo, hi), probes_in in zip(normalized_bins, grouped):
         if len(probes_in) == 0:
             results.append(
                 ZBinResult(
@@ -965,6 +984,10 @@ def to_mio_certificate(
     resultant R and the probe counts. ``reduction_status`` is hard-pinned
     to ``'diagnostic-only'``: HJ-02b never merges into a posterior.
     """
+    if bin_results:
+        _validated_redshift_bins(
+            tuple((result.z_min, result.z_max) for result in bin_results)
+        )
     n_populated = sum(1 for r in bin_results if r.n_probes > 0)
     mean_R = (
         float(np.mean([r.resultant_R for r in bin_results if r.n_probes > 0]))
