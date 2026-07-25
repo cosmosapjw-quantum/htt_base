@@ -180,6 +180,9 @@ def test_harmonic_order_counting() -> None:
         require_beta_order("kinematic_quadrupole", 1)
     with pytest.raises(SourceResponseError, match="order counting"):
         require_beta_order("A_v", 2)
+    for claimed in (True, Fraction(1)):
+        with pytest.raises(SourceResponseError, match="explicit integer"):
+            require_beta_order("A_v", claimed)
 
 
 def test_deprojection_estimator_property() -> None:

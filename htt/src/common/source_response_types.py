@@ -307,6 +307,10 @@ def harmonic_order_counting() -> dict:
 
 def require_beta_order(quantity: str, claimed_order: int) -> None:
     """Kill a wrong beta-order declaration against the symbolic count."""
+    if isinstance(claimed_order, bool) or not isinstance(claimed_order, int):
+        raise SourceResponseError(
+            "claimed beta order must be an explicit integer"
+        )
     counting = harmonic_order_counting()
     truth = {
         "A_v": counting["A_v_order_in_beta"],
