@@ -1,6 +1,7 @@
 """PR-135 contract tests: exchangeable finite-null ranking."""
 from __future__ import annotations
 
+import importlib.util
 import json
 import subprocess
 import sys
@@ -30,6 +31,57 @@ from common.finite_null_ranking import (
 )
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
+
+
+def _load_runner():
+    path = (
+        REPO_ROOT
+        / "scripts/codex_harness/run_pr135_finite_null_ranking.py"
+    )
+    spec = importlib.util.spec_from_file_location("run_pr135", path)
+    runner = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(runner)
+    return runner
+
+
+def test_check_normalizes_only_generation_time_source_hash() -> None:
+    runner = _load_runner()
+    source = runner.SOURCE_PATH
+    rel = runner.OUTPUTS["estimator"]
+    stored = {
+        "min_p_is_nonzero": True,
+        "negative_scan": {
+            "targets": {
+                source: {"sha256": "1" * 64, "hits": []},
+            },
+        },
+    }
+    current = json.loads(json.dumps(stored))
+    current["negative_scan"]["targets"][source]["sha256"] = "2" * 64
+    assert runner._semantic_artifact(
+        rel, stored
+    ) == runner._semantic_artifact(rel, current)
+    current["min_p_is_nonzero"] = False
+    assert runner._semantic_artifact(
+        rel, stored
+    ) != runner._semantic_artifact(rel, current)
+    current["min_p_is_nonzero"] = True
+    current["negative_scan"]["targets"][source]["hits"] = [{"line": 1}]
+    assert runner._semantic_artifact(
+        rel, stored
+    ) != runner._semantic_artifact(rel, current)
+    current["negative_scan"]["targets"][source]["hits"] = []
+    current["negative_scan"]["targets"][source]["sha256"] = "not-a-sha"
+    assert runner._semantic_artifact(
+        rel, stored
+    ) != runner._semantic_artifact(rel, current)
+
+    manifest_rel = runner.OUTPUTS["manifest"]
+    stored_manifest = {"input_hashes": [f"{source}:{'1' * 64}"]}
+    current_manifest = {"input_hashes": [f"{source}:{'2' * 64}"]}
+    assert runner._semantic_artifact(
+        manifest_rel, stored_manifest
+    ) == runner._semantic_artifact(manifest_rel, current_manifest)
 
 
 def test_exact_discrete_estimator() -> None:

@@ -50,6 +50,7 @@ from common.finite_null_ranking import (  # noqa: E402
 )
 
 SPEC_PATH = REPO / "docs/research_program/long_horizon_rescue/pr135_spec.yaml"
+SOURCE_PATH = "htt/src/common/finite_null_ranking.py"
 OUTPUTS = {
     "estimator": "docs/generated/pr135_rank_estimator.json",
     "enumeration": "docs/generated/pr135_exact_enumeration.json",
@@ -69,6 +70,37 @@ def _sha(path: Path) -> str:
 def _render(payload: dict) -> bytes:
     return (json.dumps(payload, indent=2, ensure_ascii=False, sort_keys=True)
             + "\n").encode()
+
+
+def _is_sha256(value: object) -> bool:
+    return (
+        isinstance(value, str)
+        and len(value) == 64
+        and all(char in "0123456789abcdef" for char in value)
+    )
+
+
+def _semantic_artifact(rel: str, payload: dict) -> dict:
+    """Treat the maintained module hash as generation-time provenance."""
+
+    normalized = json.loads(json.dumps(payload))
+    scan = normalized.get("negative_scan")
+    targets = scan.get("targets") if isinstance(scan, dict) else None
+    source = targets.get(SOURCE_PATH) if isinstance(targets, dict) else None
+    if isinstance(source, dict) and _is_sha256(source.get("sha256")):
+        source["sha256"] = "<generation-time-source>"
+    if rel == OUTPUTS["manifest"]:
+        rows = normalized.get("input_hashes")
+        prefix = f"{SOURCE_PATH}:"
+        if isinstance(rows, list):
+            for index, row in enumerate(rows):
+                if (
+                    isinstance(row, str)
+                    and row.startswith(prefix)
+                    and _is_sha256(row.removeprefix(prefix))
+                ):
+                    rows[index] = f"{SOURCE_PATH}:<generation-time-source>"
+    return normalized
 
 
 def _verify_baseline_commit(spec: dict) -> None:
@@ -350,7 +382,19 @@ def _emit(rel: str, payload: dict, write: bool,
         return
     if not target.is_file():
         problems.append(f"missing artifact: {rel}")
-    elif target.read_bytes() != rendered:
+        return
+    try:
+        existing = json.loads(target.read_text(encoding="utf-8"))
+    except (UnicodeError, json.JSONDecodeError):
+        problems.append(f"invalid artifact: {rel}")
+        return
+    if (
+        isinstance(existing, dict)
+        and _semantic_artifact(rel, existing)
+        == _semantic_artifact(rel, payload)
+    ):
+        return
+    if target.read_bytes() != rendered:
         problems.append(f"stale artifact: {rel}")
 
 
