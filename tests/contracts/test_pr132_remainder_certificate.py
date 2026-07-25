@@ -143,6 +143,14 @@ def test_enclosure_and_claim_block() -> None:
 
 
 def test_domain_api_fail_closed() -> None:
+    with pytest.raises(OmkRemainderError, match="coordinates.*boolean"):
+        enclosure(False, Fraction(1, 100))
+    with pytest.raises(OmkRemainderError, match="bounds.*boolean"):
+        CompactDomain("omk_domain_v1", False, W_BOX[1], K_ABS_MAX)
+    with pytest.raises(OmkRemainderError, match="bounds.*boolean"):
+        register_domain(
+            "boolean-bound", W_BOX[0], W_BOX[1], True
+        )
     with pytest.raises(OmkRemainderError, match="out-of-domain"):
         enclosure(Fraction(0), Fraction(1, 5))
     with pytest.raises(OmkRemainderError, match="out-of-domain"):

@@ -79,6 +79,12 @@ class CompactDomain:
     k_abs_max: Fraction = K_ABS_MAX
 
     def __post_init__(self) -> None:
+        if any(isinstance(value, bool) for value in (
+            self.w_lo, self.w_hi, self.k_abs_max
+        )):
+            raise OmkRemainderError(
+                "compact domain bounds must not be boolean"
+            )
         version = str(self.version).strip()
         w_lo = Fraction(self.w_lo)
         w_hi = Fraction(self.w_hi)
@@ -118,6 +124,10 @@ class CompactDomain:
         object.__setattr__(self, "k_abs_max", k_abs_max)
 
     def require_inside(self, w: Fraction, k: Fraction) -> None:
+        if isinstance(w, bool) or isinstance(k, bool):
+            raise OmkRemainderError(
+                "compact domain coordinates must not be boolean"
+            )
         wv, kv = Fraction(w), Fraction(k)
         if not (self.w_lo <= wv <= self.w_hi and
                 abs(kv) <= self.k_abs_max and kv != 0):
@@ -136,6 +146,12 @@ def register_domain(version: str, w_lo: Fraction, w_hi: Fraction,
     """Only SHRINKS of the registered domain are acceptable, and every
     shrink must mint a NEW version string. Post-hoc expansion — the
     classic fit-to-observation drift — is refused."""
+    if any(isinstance(value, bool) for value in (
+        w_lo, w_hi, k_abs_max
+    )):
+        raise OmkRemainderError(
+            "compact domain bounds must not be boolean"
+        )
     w_lo, w_hi = Fraction(w_lo), Fraction(w_hi)
     k_abs_max = Fraction(k_abs_max)
     base = REGISTERED_DOMAIN
