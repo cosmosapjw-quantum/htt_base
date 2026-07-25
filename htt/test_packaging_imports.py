@@ -1092,6 +1092,41 @@ def test_active_sources_use_canonical_bass_imports() -> None:
         assert "htt.bass" not in source, relative_path
 
 
+def test_obsstat_joint_forecast_import_does_not_boot_bass() -> None:
+    env = os.environ.copy()
+    env.pop("PYTHONPATH", None)
+    code = """
+import sys
+
+import obsstat
+
+assert not any(name == "bass" or name.startswith("bass.") for name in sys.modules)
+
+from obsstat import joint_pv_cmb_forecast as forecast
+
+assert not any(name == "bass" or name.startswith("bass.") for name in sys.modules)
+assert forecast.OutOfScopeError.__module__ == "obsstat.joint_pv_cmb_forecast"
+try:
+    forecast.anisotropic_cmb_covariance({}, l_max=3)
+except forecast.OutOfScopeError:
+    pass
+else:
+    raise AssertionError("blocked theory path did not fail closed")
+"""
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        completed = subprocess.run(
+            [sys.executable, "-I", "-c", code],
+            cwd=tmpdir,
+            env=env,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+
+    assert completed.returncode == 0, completed.stderr
+
+
 def test_legacy_teff_consumers_are_not_canonicalized_into_an_active_owner() -> None:
     legacy_reproduction_consumers = [
         "htt/obsstat/egs3_fingerprint_sum_theorem.py",

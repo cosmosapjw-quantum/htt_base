@@ -23,11 +23,11 @@ from __future__ import annotations
 
 import numpy as np
 
-from bass.los.flrw_bessel_projector import OutOfScopeError
 from htt.obsstat.egs3_kinematic_deprojection import coupled_fisher, covariance_inflation
 from htt.obsstat import pv_covariance as pv
 
 __all__ = [
+    "OutOfScopeError",
     "jwst_anchor_forecast",
     "synthetic_error_shrink_sensitivity",
     "joint_fisher_sensitivity",
@@ -41,6 +41,10 @@ __all__ = [
 
 AWAITING_NATIVE_LOWELL_SOLVER = "AWAITING_NATIVE_LOWELL_SOLVER"
 CF4_DOWNSTREAM_OPEN = "N-DATA-CF4-DOWNSTREAM"
+
+
+class OutOfScopeError(NotImplementedError):
+    """Raised when this observer-side diagnostic needs unavailable theory."""
 
 
 class QuarantinedCF4DownstreamError(RuntimeError):

@@ -1,5 +1,7 @@
 {
   "schema_version": 2,
+  "risk_tier": "R3",
+  "required_axes": ["wolfram_xact", "sympy", "sage_singular", "lean"],
   "identity": {
     "contract_id": "CAS-001",
     "contract_version": 1,
@@ -96,7 +98,7 @@
       "registered_at": "must precede the earliest axis completed_at",
       "expiry_retry": ""
     },
-    "aggregate_status_rule": "CAS_4AXIS_PASS | CAS_PASS_WITH_REGISTERED_EXCEPTION | CAS_CONFLICT | CAS_BLOCKED | CAS_FAIL",
+    "aggregate_status_rule": "R0: NOT_APPLICABLE; R1/R2: PASS; R3: CAS_4AXIS_PASS; explicit R3 Rocq opt-in: CAS_5AXIS_PASS; failures: CAS_PASS_WITH_REGISTERED_EXCEPTION | CAS_CONFLICT | CAS_BLOCKED | CAS_FAIL",
     "invalidation_triggers": [
       "contract_hash_change",
       "assumption_or_domain_diff",
