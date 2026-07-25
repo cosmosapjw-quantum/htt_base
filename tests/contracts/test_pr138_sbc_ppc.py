@@ -111,6 +111,20 @@ def test_chi2_sf_matches_scipy() -> None:
         assert abs(_chi2_sf(x, k) - float(1 - stats.chi2.cdf(x, k))) < 1e-9
 
 
+@pytest.mark.parametrize("args", [
+    (True, Fraction(1), 8, Fraction(1)),
+    (Fraction(4), Fraction(1), True, Fraction(1)),
+    (Fraction(4), Fraction(1), 2.5, Fraction(1)),
+    (Fraction(4), Fraction(1), 8, True),
+    (float("nan"), Fraction(1), 8, Fraction(1)),
+    (Fraction(4), float("inf"), 8, Fraction(1)),
+    (Fraction(4), Fraction(1), 8, Fraction(0)),
+])
+def test_gaussian_model_rejects_invalid_parameter_domain(args) -> None:
+    with pytest.raises(SbcPpcError, match="invalid model parameters"):
+        GaussianModel(*args)
+
+
 def test_sbc_known_good_passes_known_bad_fails() -> None:
     good = _run_sbc(GOOD, n_simulations=3000, n_draws=20, seed=20260720,
                     n_bins=7)

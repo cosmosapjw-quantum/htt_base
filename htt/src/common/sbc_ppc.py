@@ -30,6 +30,7 @@ import json
 import math
 from dataclasses import dataclass
 from fractions import Fraction
+from numbers import Integral, Real
 from typing import Callable, Mapping
 
 SCHEMA_VERSION = "pr138.sbc_ppc.v1"
@@ -55,8 +56,21 @@ class GaussianModel:
     var_scale: Fraction = Fraction(1)   # 1 = exact; != 1 = known-bad
 
     def __post_init__(self) -> None:
-        if self.tau2 <= 0 or self.sig2 <= 0 or self.n_obs < 1:
+        variances = (self.tau2, self.sig2, self.var_scale)
+        if (
+            any(
+                isinstance(value, bool)
+                or not isinstance(value, Real)
+                or not math.isfinite(float(value))
+                or value <= 0
+                for value in variances
+            )
+            or isinstance(self.n_obs, bool)
+            or not isinstance(self.n_obs, Integral)
+            or self.n_obs < 1
+        ):
             raise SbcPpcError("invalid model parameters")
+        object.__setattr__(self, "n_obs", int(self.n_obs))
 
     def posterior(self, y_sum: float) -> tuple[float, float]:
         """Exact posterior (mean, variance). The mean always uses the
