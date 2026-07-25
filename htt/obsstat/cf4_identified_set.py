@@ -216,6 +216,30 @@ def classify_topology(amp_hi: float, cone_deg: float, *,
                       feasible: bool = True) -> SetStatus:
     if not feasible:
         return SetStatus.EMPTY
+    try:
+        amp_hi = float(amp_hi)
+        cone_deg = float(cone_deg)
+        apex_nonid_deg = float(apex_nonid_deg)
+        unbounded_amp = float(unbounded_amp)
+    except (TypeError, ValueError) as exc:
+        raise IdentifiedSetError(
+            "identified-set topology inputs must be real scalars") from exc
+    if not all(np.isfinite(value) for value in
+               (amp_hi, cone_deg, apex_nonid_deg, unbounded_amp)):
+        raise IdentifiedSetError(
+            "identified-set topology inputs must be finite")
+    if amp_hi < 0:
+        raise IdentifiedSetError(
+            "identified-set upper amplitude must be non-negative")
+    if not 0.0 <= cone_deg <= 180.0:
+        raise IdentifiedSetError(
+            "identified-set apex cone must be within [0, 180] degrees")
+    if not 0.0 <= apex_nonid_deg <= 180.0:
+        raise IdentifiedSetError(
+            "apex nonidentification threshold must be within [0, 180] degrees")
+    if unbounded_amp <= 0:
+        raise IdentifiedSetError(
+            "effectively-unbounded amplitude threshold must be positive")
     if amp_hi >= unbounded_amp:
         return SetStatus.UNBOUNDED
     if cone_deg >= apex_nonid_deg:

@@ -132,6 +132,29 @@ def test_classify_topology() -> None:
                              feasible=False) == SetStatus.EMPTY
 
 
+@pytest.mark.parametrize("amp_hi, cone_deg, apex_deg, threshold, message", [
+    (float("nan"), float("nan"), 90.0, 2000.0, "must be finite"),
+    (-1.0, 20.0, 90.0, 2000.0, "amplitude must be non-negative"),
+    (300.0, -5.0, 90.0, 2000.0, "apex cone must be within"),
+    (300.0, 20.0, float("nan"), 2000.0, "must be finite"),
+    (300.0, 20.0, 90.0, 0.0, "threshold must be positive"),
+])
+def test_classify_topology_rejects_invalid_numeric_domain(
+    amp_hi: float,
+    cone_deg: float,
+    apex_deg: float,
+    threshold: float,
+    message: str,
+) -> None:
+    with pytest.raises(IdentifiedSetError, match=message):
+        classify_topology(
+            amp_hi,
+            cone_deg,
+            apex_nonid_deg=apex_deg,
+            unbounded_amp=threshold,
+        )
+
+
 def test_guards() -> None:
     with pytest.raises(IdentifiedSetError, match="point estimate"):
         refuse_favourable_endpoint("favourable_endpoint")
