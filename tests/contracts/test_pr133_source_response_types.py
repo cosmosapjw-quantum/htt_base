@@ -120,6 +120,19 @@ def test_typed_quantity_rejects_boolean_values(value) -> None:
         TypedQuantity(QuantityType.OBSERVER_PROXY, value)
 
 
+def test_typed_quantity_requires_string_provenance() -> None:
+    class ForgedDeclared:
+        def __str__(self) -> str:
+            return "declared"
+
+    with pytest.raises(SourceResponseError, match="non-empty string"):
+        TypedQuantity(
+            QuantityType.PHYSICAL_TILT,
+            Fraction(1, 100),
+            provenance=ForgedDeclared(),
+        )
+
+
 def test_non_bridge_guard_and_provenance() -> None:
     av = TypedQuantity(QuantityType.OBSERVER_PROXY, Fraction(1, 100))
     with pytest.raises(SourceResponseError, match="bridge.*refused"):

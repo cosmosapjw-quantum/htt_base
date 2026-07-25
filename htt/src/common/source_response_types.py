@@ -118,8 +118,13 @@ class TypedQuantity:
                 "typed-quantity value must not be boolean"
             )
         object.__setattr__(self, "value", Fraction(self.value))
-        if not str(self.provenance).strip():
-            raise SourceResponseError("provenance must be non-empty")
+        if (
+            not isinstance(self.provenance, str)
+            or not self.provenance.strip()
+        ):
+            raise SourceResponseError(
+                "provenance must be a non-empty string"
+            )
 
     @property
     def symbol(self) -> str:
@@ -217,7 +222,7 @@ def require_declared_provenance(quantity: TypedQuantity) -> None:
     ``bridged:<registered-edge>`` provenance. A value smuggled across
     types by direct reconstruction (which no type system can prevent)
     is caught HERE when its provenance names an unregistered bridge."""
-    prov = str(quantity.provenance)
+    prov = quantity.provenance
     if prov == "declared":
         return
     if prov.startswith("bridged:"):
