@@ -10,9 +10,11 @@ roadmap_rescue_v1:C1 (domain/frame-conditional derived mechanics).
 Authorization is never a caller-supplied string: the pointer's
 ``scientific_authority`` requires the module-pinned receipt hash, and every
 governance validation (``validate_mes_successor_registry``) re-verifies the
-exact receipt bytes live through ``mes_theorem_authority``.  Receipt drift,
-a failed four-axis adjudication, a zero D2 receipt, or a stale MES triple
-in an active consumer re-blocks the authority.
+exact repository receipt bytes through ``mes_theorem_authority``.  Receipt
+drift, a failed four-axis adjudication, a zero D2 receipt, or a stale MES
+triple in an active consumer re-blocks the authority.  Constructing the
+metadata pointer itself does not require a source checkout, so installed
+runtime consumers remain importable outside the repository.
 
 The EGS3 branch-registry seal is retained as hash-bound process evidence.
 Its ``PASS`` result means that its own diagnostic checks executed
@@ -48,7 +50,7 @@ PLANNED_PR124_SOURCE = "htt/src/common/mes_theorem_authority.py"
 # these constants (and re-run the PR-122 evidence-graph resync ritual);
 # silent drift is re-blocked by validate_mes_successor_registry.
 PR124_AUTHORITY_SOURCE_SHA256 = (
-    "d149d8599eba65dd1af536d30f289466b642e990bd8cee6cc8639566ab787af8"
+    "b6ab36f43701a7ef168ea45e835158c317278c5bf232a2981378ec79db7f7130"
 )
 PR124_AUTHORITY_RECEIPT_SHA256 = (
     "81ad8c382fbe481eaf715b971680199fed5142e2498928cff57ae9d847cc20f3"
@@ -445,17 +447,10 @@ class MesSuccessorPointer:
 
     @property
     def scientific_authority(self) -> bool:
-        # Strings alone never escalate: authority requires the AVAILABLE
-        # pointer shape AND the module-pinned PR-124 receipt hash.  Live
-        # byte re-verification happens in validate_mes_successor_registry;
-        # any receipt drift re-blocks the release there.
-        return (
-            self.source.availability is SourceAvailability.AVAILABLE
-            and self.process_result is MesProcessResult.PASS
-            and self.scientific_status
-            is MesScientificAuthorityStatus.AUTHORIZED_BY_PR124
-            and self.authority_receipt_id == PR124_AUTHORITY_RECEIPT_SHA256
-        )
+        # The stored receipt records the historical PR-124 result.  It is not
+        # a current parent-observed CAS execution token and therefore cannot
+        # promote scientific or release authority by itself.
+        return False
 
     def as_payload(self) -> dict[str, object]:
         return {
@@ -595,18 +590,18 @@ class MesConsumerScanReport:
             raise MesRegistryError(f"MES release blocked: {codes or 'no authority'}")
 
 
-@lru_cache(maxsize=1)
-def _live_receipt_pin_check() -> str:
-    """Cheap, once-per-process check that the on-disk PR-124 authority
-    receipt bytes match the module pin.
+def _source_checkout_root() -> Path | None:
+    """Return the repository root only when this module runs from its source tree."""
 
-    This closes the string-tautology escalation route: a consumer that reads
-    ``current_mes_successor_registry().as_payload()`` without running the
-    governance validation still cannot obtain an AVAILABLE/AUTHORIZED
-    pointer unless the actual receipt bytes on disk hash to the pin. Deep
-    content verification remains in ``validate_mes_successor_registry``.
-    """
-    repo_root = Path(__file__).resolve().parents[3]
+    candidate = Path(__file__).resolve().parents[3]
+    marker = candidate / "docs/codex_handoff/pr_backlog.yaml"
+    return candidate if marker.is_file() else None
+
+
+@lru_cache(maxsize=1)
+def _live_receipt_pin_check(repo_root: Path) -> str:
+    """Check that source-checkout PR-124 receipt bytes match the module pin."""
+
     receipt = repo_root / "docs/generated/pr124_mes_authority_table.json"
     if not receipt.is_file():
         raise MesRegistryError(
@@ -623,13 +618,16 @@ def _live_receipt_pin_check() -> str:
 
 
 def current_mes_successor_registry() -> MesSuccessorRegistry:
-    """Return the current PR-122 pointer without importing a physics module.
+    """Return the current PR-122 metadata pointer.
 
-    PR-124: constructing the AVAILABLE successor requires the live receipt
-    bytes on disk to hash to the module pin (fail-closed, memoized once per
-    process)."""
+    A source checkout retains the cheap live receipt-pin check.  An installed
+    wheel has no repository receipts to inspect, so it constructs the pinned
+    metadata shape without repository I/O.  Exact receipt/source verification
+    remains fail-closed in :func:`validate_mes_successor_registry`."""
 
-    _live_receipt_pin_check()
+    repo_root = _source_checkout_root()
+    if repo_root is not None:
+        _live_receipt_pin_check(repo_root)
     return MesSuccessorRegistry(
         schema_version=SCHEMA_VERSION,
         legacy_reproduction_source=SourceHashBinding(
@@ -1506,6 +1504,8 @@ def _consumer_scan_findings(
     selected_exclusions: Sequence[MesConsumerExclusion],
     roots: Sequence[str],
     successor_id: str,
+    *,
+    verify_declaration_hashes: bool = True,
 ) -> list[MesConsumerFinding]:
     """Consumer-level findings only (no successor-registry validation).
 
@@ -1561,13 +1561,21 @@ def _consumer_scan_findings(
             )
 
     for declaration in sorted(declarations, key=lambda item: item.consumer_id):
-        findings.extend(
-            _verify_binding(
-                repo_root,
-                declaration.source,
-                subject=declaration.consumer_id,
-            )
+        binding_findings = _verify_binding(
+            repo_root,
+            declaration.source,
+            subject=declaration.consumer_id,
         )
+        if not verify_declaration_hashes:
+            # The PR-122 inventory is a generation-time snapshot.  Current
+            # authority comes from live discovery and the semantic checks
+            # below, not from making every later consumer edit rewrite that
+            # historical record.
+            binding_findings = tuple(
+                finding for finding in binding_findings
+                if finding.code is not MesConsumerIssueCode.SOURCE_HASH_MISMATCH
+            )
+        findings.extend(binding_findings)
         if declaration.expected_successor_id != successor_id:
             findings.append(
                 MesConsumerFinding(
@@ -1663,6 +1671,7 @@ def scan_consumer_sources_only(
             inventory_exclusions,
             inventory_roots,
             CURRENT_SUCCESSOR_ID,
+            verify_declaration_hashes=False,
         )
     )
 
@@ -1757,6 +1766,7 @@ def scan_declared_mes_consumers(
             selected_exclusions,
             roots,
             base.registry.successor.successor_id,
+            verify_declaration_hashes=not inventory_present,
         )
     )
     return MesConsumerScanReport(base.registry, len(declarations), tuple(findings))

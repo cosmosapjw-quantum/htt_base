@@ -72,11 +72,14 @@ def _git_state(repo_root: Path) -> str:
             text=True,
             stderr=subprocess.DEVNULL,
         ).strip()
-        dirty = subprocess.run(
-            ["git", "diff", "--quiet"],
-            cwd=repo_root,
-            check=False,
-        ).returncode != 0
+        dirty = bool(
+            subprocess.check_output(
+                ["git", "status", "--porcelain", "--untracked-files=normal"],
+                cwd=repo_root,
+                text=True,
+                stderr=subprocess.DEVNULL,
+            )
+        )
     except (OSError, subprocess.CalledProcessError):
         return "unknown"
     return f"{commit}+dirty" if dirty else commit

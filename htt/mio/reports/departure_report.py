@@ -6,6 +6,7 @@ import json
 import math
 from collections.abc import Mapping, Sequence
 from dataclasses import asdict, dataclass, field
+from types import MappingProxyType
 from typing import Any
 
 from common.contracts import (
@@ -176,6 +177,16 @@ def _plain_json(value: object) -> Any:
     if isinstance(value, (int, bool)) or value is None:
         return value
     raise TypeError(f"value {value!r} is not JSON-compatible")
+
+
+def _freeze_json(value: Any) -> Any:
+    if isinstance(value, Mapping):
+        return MappingProxyType(
+            {str(key): _freeze_json(item) for key, item in value.items()}
+        )
+    if isinstance(value, list):
+        return tuple(_freeze_json(item) for item in value)
+    return value
 
 
 def _normalise_metadata(
@@ -418,6 +429,13 @@ class DepartureReportSection:
         status = _non_empty(self.status, "status")
         if status not in {"available", "not_provided"}:
             raise ValueError("section status must be available or not_provided")
+        payload = (
+            None
+            if self.payload is None
+            else _plain_json(dict(self.payload))
+        )
+        if payload is not None and not isinstance(payload, dict):
+            raise ValueError("section payload must be a mapping")
         transfer_provenance = _plain_json(dict(self.transfer_provenance))
         if not isinstance(transfer_provenance, dict):
             raise ValueError("transfer_provenance must be a mapping")
@@ -425,7 +443,16 @@ class DepartureReportSection:
         caveats = _tuple_of_str(self.caveats, "caveats")
         object.__setattr__(self, "score_label", score_label)
         object.__setattr__(self, "status", status)
-        object.__setattr__(self, "transfer_provenance", transfer_provenance)
+        object.__setattr__(
+            self,
+            "payload",
+            None if payload is None else _freeze_json(payload),
+        )
+        object.__setattr__(
+            self,
+            "transfer_provenance",
+            _freeze_json(transfer_provenance),
+        )
         object.__setattr__(self, "input_hashes", input_hashes)
         object.__setattr__(self, "caveats", caveats)
 
@@ -433,8 +460,10 @@ class DepartureReportSection:
         return {
             "score_label": self.score_label,
             "status": self.status,
-            "payload": None if self.payload is None else dict(self.payload),
-            "transfer_provenance": dict(self.transfer_provenance),
+            "payload": (
+                None if self.payload is None else _plain_json(self.payload)
+            ),
+            "transfer_provenance": _plain_json(self.transfer_provenance),
             "config_hash": self.config_hash,
             "input_hashes": list(self.input_hashes),
             "caveats": list(self.caveats),
@@ -582,11 +611,15 @@ class DepartureReport:
         object.__setattr__(self, "generating_command", generating_command)
         object.__setattr__(self, "git_commit", git_commit)
         object.__setattr__(self, "worktree_state", worktree_state)
-        object.__setattr__(self, "artifact_metadata", artifact_metadata)
+        object.__setattr__(
+            self,
+            "artifact_metadata",
+            _freeze_json(artifact_metadata),
+        )
         object.__setattr__(self, "caveats", caveats)
         object.__setattr__(self, "input_hashes", input_hashes)
         object.__setattr__(self, "config_hash", config_hash)
-        object.__setattr__(self, "_sections", sections)
+        object.__setattr__(self, "_sections", MappingProxyType(sections))
         object.__setattr__(
             self,
             "_manifest_payload_json",
@@ -637,7 +670,7 @@ class DepartureReport:
     @property
     def transfer_provenance_by_section(self) -> dict[str, dict[str, object]]:
         return {
-            label: dict(self._sections[label].transfer_provenance)
+            label: _plain_json(self._sections[label].transfer_provenance)
             for label in SCORE_ORDER
         }
 
@@ -722,7 +755,7 @@ class DepartureReport:
             ],
             "config_hash": self.config_hash,
             "input_hashes": list(self.input_hashes),
-            "artifact_metadata": dict(self.artifact_metadata),
+            "artifact_metadata": _plain_json(self.artifact_metadata),
             "caveats": list(self.caveats),
             "generating_command": self.generating_command,
             "git_commit": self.git_commit,
