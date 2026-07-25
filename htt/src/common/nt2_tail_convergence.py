@@ -377,11 +377,17 @@ def validate_sufficiency_claim(claim: Mapping) -> None:
             )
     ref = claim.get("factorization_proof_reference")
     entry = FACTORIZATION_REGISTRY.get(str(ref)) if ref else None
-    if not isinstance(entry, Mapping) or not entry.get("family_id"):
+    required_fields = ("family_id", "proof_artifact", "reviewed_by")
+    if (
+        not isinstance(entry, Mapping)
+        or any(not entry.get(field) for field in required_fields)
+        or not Path(str(entry.get("proof_artifact"))).is_file()
+    ):
         raise Nt2TailError(
-            "sufficiency-type claims require a registered model-family "
-            "factorization proof; the registry is empty, so the claim "
-            "is rejected (the strictly positive tail makes the "
+            "sufficiency-type claims require a typed registered model-family "
+            "factorization proof with an existing artifact and reviewer; "
+            "the registry is empty or invalid, so the claim is rejected "
+            "(the strictly positive tail makes the "
             "exact-sufficiency reading permanently forbidden)"
         )
     family = claim.get("family")

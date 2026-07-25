@@ -213,14 +213,16 @@ def test_factorization_registration_typed_and_toy_barred() -> None:
                                "docs/NO_SUCH_FILE.md", "reviewer")
     # even a hand-inserted untyped entry cannot unlock a claim, and a
     # typed entry for another family never binds the toy family
-    FACTORIZATION_REGISTRY["fake"] = "no proof"
+    FACTORIZATION_REGISTRY["fake"] = {"family_id": "other_family"}
     try:
-        with pytest.raises(Nt2TailError):
+        with pytest.raises(Nt2TailError, match="typed registered"):
             validate_sufficiency_claim({
                 "asserts": "is sufficient" + " for inference",
-                "factorization_proof_reference": "fake"})
+                "factorization_proof_reference": "fake",
+                "family": "other_family"})
         FACTORIZATION_REGISTRY["typed"] = {
-            "family_id": "other_family", "proof_artifact": "x",
+            "family_id": "other_family",
+            "proof_artifact": "docs/SSOT_POLICY.md",
             "reviewed_by": "r"}
         with pytest.raises(Nt2TailError, match="does not bind"):
             validate_sufficiency_claim({
