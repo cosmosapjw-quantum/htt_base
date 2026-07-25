@@ -11,14 +11,56 @@ from common.artifact_manifest import validate_manifest_payload
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 SCRIPT_PATH = REPO_ROOT / "scripts/result_packs/generate_pack_B_local_global.py"
+RESULT_PACK_SCRIPT_PATHS = (
+    REPO_ROOT / "scripts/result_packs/generate_pack_A_scalar_to_morphology.py",
+    SCRIPT_PATH,
+    REPO_ROOT / "scripts/result_packs/generate_pack_C_mio_certificates.py",
+)
 
 
-def _load_module():
-    spec = importlib.util.spec_from_file_location("pack_b_generator", SCRIPT_PATH)
+def _load_module(script_path: Path = SCRIPT_PATH):
+    spec = importlib.util.spec_from_file_location(
+        f"result_pack_generator_{script_path.stem}",
+        script_path,
+    )
     assert spec is not None and spec.loader is not None
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
+
+
+def test_result_pack_git_state_detects_staged_changes(tmp_path):
+    subprocess.run(["git", "init", "-q"], cwd=tmp_path, check=True)
+    tracked = tmp_path / "tracked.txt"
+    tracked.write_text("v1\n", encoding="utf-8")
+    subprocess.run(["git", "add", "tracked.txt"], cwd=tmp_path, check=True)
+    subprocess.run(
+        [
+            "git",
+            "-c",
+            "user.name=result-pack-test",
+            "-c",
+            "user.email=result-pack-test@example.invalid",
+            "commit",
+            "-qm",
+            "base",
+        ],
+        cwd=tmp_path,
+        check=True,
+    )
+    commit = subprocess.check_output(
+        ["git", "rev-parse", "--short", "HEAD"],
+        cwd=tmp_path,
+        text=True,
+    ).strip()
+    for script_path in RESULT_PACK_SCRIPT_PATHS:
+        assert _load_module(script_path)._git_state(tmp_path) == commit
+
+    tracked.write_text("v2\n", encoding="utf-8")
+    subprocess.run(["git", "add", "tracked.txt"], cwd=tmp_path, check=True)
+
+    for script_path in RESULT_PACK_SCRIPT_PATHS:
+        assert _load_module(script_path)._git_state(tmp_path) == f"{commit}+dirty"
 
 
 def _payload(**overrides):
