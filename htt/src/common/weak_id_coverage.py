@@ -55,8 +55,38 @@ def imbens_manski_c(w: float, s: float = 1.0, level: float = 0.95,
     """Solve Phi(c + w/s) - Phi(-c) = level for c by bisection. Returns
     c and the OPTIMIZER ENDPOINT ERROR (the residual at the returned c),
     which the mesh report checks against the tolerance fraction."""
-    if w < 0 or s <= 0:
-        raise WeakIdError("need w >= 0 and s > 0")
+    if (
+        isinstance(w, bool)
+        or not isinstance(w, Real)
+        or not math.isfinite(float(w))
+        or w < 0
+    ):
+        raise WeakIdError("w must be a finite non-negative real value")
+    if (
+        isinstance(s, bool)
+        or not isinstance(s, Real)
+        or not math.isfinite(float(s))
+        or s <= 0
+    ):
+        raise WeakIdError("s must be a finite positive real value")
+    if (
+        isinstance(level, bool)
+        or not isinstance(level, Real)
+        or not math.isfinite(float(level))
+        or not 0 < level < 1
+    ):
+        raise WeakIdError("level must be a finite real value in (0, 1)")
+    if (
+        isinstance(tol, bool)
+        or not isinstance(tol, Real)
+        or not math.isfinite(float(tol))
+        or tol <= 0
+    ):
+        raise WeakIdError("tol must be a finite positive real value")
+    w = float(w)
+    s = float(s)
+    level = float(level)
+    tol = float(tol)
 
     def f(c):
         return _norm_cdf(c + w / s) - _norm_cdf(-c) - level

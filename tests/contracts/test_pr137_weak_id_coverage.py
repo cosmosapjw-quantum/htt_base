@@ -149,6 +149,28 @@ def test_imbens_manski_c_and_coverage() -> None:
     assert r["endpoint_error"] < 1e-9
 
 
+@pytest.mark.parametrize("kwargs,message", [
+    ({"w": True}, "finite non-negative"),
+    ({"w": float("nan")}, "finite non-negative"),
+    ({"w": float("inf")}, "finite non-negative"),
+    ({"w": -1.0}, "finite non-negative"),
+    ({"w": 1.0, "s": True}, "finite positive"),
+    ({"w": 1.0, "s": float("nan")}, "finite positive"),
+    ({"w": 1.0, "s": float("inf")}, "finite positive"),
+    ({"w": 1.0, "s": 0.0}, "finite positive"),
+    ({"w": 1.0, "level": True}, r"in \(0, 1\)"),
+    ({"w": 1.0, "level": float("nan")}, r"in \(0, 1\)"),
+    ({"w": 1.0, "level": 0.0}, r"in \(0, 1\)"),
+    ({"w": 1.0, "level": 1.0}, r"in \(0, 1\)"),
+    ({"w": 1.0, "tol": True}, "finite positive"),
+    ({"w": 1.0, "tol": float("nan")}, "finite positive"),
+    ({"w": 1.0, "tol": 0.0}, "finite positive"),
+])
+def test_critical_value_rejects_invalid_domain(kwargs, message) -> None:
+    with pytest.raises(WeakIdError, match=message):
+        imbens_manski_c(**kwargs)
+
+
 def test_boundary_config_is_least_favorable() -> None:
     # the identified-set boundary theta0 is the least-favorable position;
     # IM coverage there is ~nominal (not over-covering like the midpoint)
