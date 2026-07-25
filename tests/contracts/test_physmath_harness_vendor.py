@@ -167,12 +167,16 @@ def test_root_controls_and_adapter_preserve_repo_authority() -> None:
 
 
 def test_receipt_is_explicitly_non_scientific() -> None:
-    metadata = json.loads(RECEIPT.read_text(encoding="utf-8"))["artifact_metadata"]
+    receipt = json.loads(RECEIPT.read_text(encoding="utf-8"))
+    metadata = receipt["artifact_metadata"]
     assert validate_manifest_payload(
         metadata,
         manifest_path=RECEIPT,
         expected_artifact_path="docs/audits/harness_intake_20260714/receipt.json",
     ) == ()
+    assert metadata["input_hashes"] == [
+        archive["sha256"] for archive in receipt["archives"]
+    ]
     assert metadata["owner"] == "COMMON"
     assert metadata["implementation_scope"] == "common"
     assert metadata["bundle_kind"] == "common_contract"
