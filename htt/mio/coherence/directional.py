@@ -247,6 +247,10 @@ def to_mio_certificate(
     variables (resultant_R, fitted axis) + adequacy indicators
     (isotropy_p_lt_0p01) + consistency metrics (χ² per dof).
     """
+    p_iso_value = float(p_iso)
+    if not np.isfinite(p_iso_value) or not 0.0 <= p_iso_value <= 1.0:
+        raise ValueError("p_iso must be finite and within [0, 1]")
+
     l_star, b_star, r_star = resultant
     if chi2_stat is None:
         chi2_stat = coherence_chi2(probes)
@@ -260,14 +264,14 @@ def to_mio_certificate(
         "n_probes": float(len(probes)),
     }
     adequacy = {
-        "isotropy_p_lt_0p01": bool(p_iso < 0.01),
-        "isotropy_p_lt_0p05": bool(p_iso < 0.05),
+        "isotropy_p_lt_0p01": bool(p_iso_value < 0.01),
+        "isotropy_p_lt_0p05": bool(p_iso_value < 0.05),
         "covariance_ready": bool(has_covariance),
         "null_mocks_ready": bool(has_null_mocks),
         "sky_support_complete": bool(sky_support_status == "complete"),
     }
     consistency = {
-        "isotropy_pvalue": float(p_iso),
+        "isotropy_pvalue": p_iso_value,
         "coherence_chi2": float(chi2),
         "coherence_dof": float(dof),
         "coherence_chi2_per_dof": float(per_dof),

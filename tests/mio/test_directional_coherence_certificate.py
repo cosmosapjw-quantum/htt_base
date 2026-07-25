@@ -55,6 +55,24 @@ def test_directional_coherence_rejects_invalid_probe_weights(
         resultant_vector(probes)
 
 
+@pytest.mark.parametrize(
+    "invalid_p_iso",
+    (-0.1, 1.1, float("nan"), float("inf")),
+)
+def test_directional_certificate_rejects_invalid_isotropy_pvalue(
+    invalid_p_iso: float,
+) -> None:
+    with pytest.raises(ValueError, match=r"p_iso must be finite and within \[0, 1\]"):
+        to_mio_certificate(
+            STANDARD_PROBES,
+            p_iso=invalid_p_iso,
+            resultant=resultant_vector(STANDARD_PROBES),
+            has_covariance=True,
+            has_null_mocks=True,
+            sky_support_status="complete",
+        )
+
+
 def test_directional_certificate_records_missing_covariance_statuses() -> None:
     cert = _certificate()
     manifest = cert.manifest
