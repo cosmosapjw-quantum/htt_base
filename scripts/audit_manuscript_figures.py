@@ -95,6 +95,7 @@ FAMILY_IDENTIFICATION_NEGATIONS = (
     "family identification remains blocked",
     "family identification is blocked",
     "no family identification",
+    "not geometry or family identification.",
 )
 # A file that records the generated source it was derived from (with a content
 # hash) carries generated counts, not hand-typed manual status numbers, so it is

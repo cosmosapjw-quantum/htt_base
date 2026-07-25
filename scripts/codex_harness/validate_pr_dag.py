@@ -215,6 +215,14 @@ REVIVAL_TERMINAL_RECEIPT_EDGES: set[tuple[str, str]] = set()
 REVIVAL_CAS_CARDS = {"PR-222", "PR-223"}
 
 
+def canonical_execution_receipt_pointer(pr_id: str) -> str:
+    """Return the one process-receipt pointer owned by a PR."""
+
+    if re.fullmatch(r"PR-\d{3}", pr_id) is None:
+        raise ValueError(f"invalid PR id for execution receipt pointer: {pr_id!r}")
+    return f"docs/PR_DELTAS/{pr_id.lower()}.md"
+
+
 def _revival_track(pr_id: str) -> str:
     n = int(pr_id.split("-")[1])
     if pr_id in REVIVAL_TRACK_I or 209 <= n <= 228:
@@ -582,8 +590,12 @@ def _validate_rescue_status(status: dict[str, Any], info: DagInfo) -> None:
                 f"found {resolution!r}"
             )
         receipt_pointer = receipt.get("receipt")
-        if not isinstance(receipt_pointer, str) or not receipt_pointer.strip():
-            raise ValueError(f"{pr_id} execution resolution receipt pointer must be nonempty")
+        expected_pointer = canonical_execution_receipt_pointer(pr_id)
+        if receipt_pointer != expected_pointer:
+            raise ValueError(
+                f"{pr_id} execution resolution receipt pointer must equal "
+                f"{expected_pointer!r}"
+            )
     terminal_rescue = terminal & rescue_ids
     missing_receipts = sorted(terminal_rescue - set(resolutions))
     if missing_receipts:

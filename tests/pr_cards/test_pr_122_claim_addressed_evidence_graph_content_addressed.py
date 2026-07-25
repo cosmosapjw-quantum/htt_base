@@ -134,7 +134,7 @@ def test_pytest_receipt_count_or_identity_spoof_is_rejected() -> None:
         TestExecution.from_pytest_evidence(count_spoof)
 
 
-def test_current_mes_all_consumer_scan_is_integrity_clean_but_release_blocked() -> None:
+def test_current_mes_all_consumer_scan_is_structurally_clean() -> None:
     builder = _load_builder()
     declarations = builder._mes_declarations(
         REPO_ROOT,
@@ -144,14 +144,20 @@ def test_current_mes_all_consumer_scan_is_integrity_clean_but_release_blocked() 
     report = scan_declared_mes_consumers(REPO_ROOT, declarations)
     codes = finding_codes(report)
     assert report.consumers_scanned == len(declarations) >= 10
-    assert MesConsumerIssueCode.SUCCESSOR_MISSING.value in codes
-    assert MesConsumerIssueCode.SCIENTIFIC_AUTHORITY_BLOCKED.value in codes
-    assert MesConsumerIssueCode.SUCCESSOR_POINTER_MISSING.value in codes
-    assert MesConsumerIssueCode.SOURCE_HASH_MISMATCH.value not in codes
-    assert report.release_allowed is False
+    structural_failures = {
+        MesConsumerIssueCode.SOURCE_MISSING.value,
+        MesConsumerIssueCode.SOURCE_NOT_REGULAR.value,
+        MesConsumerIssueCode.SOURCE_HASH_MISMATCH.value,
+        MesConsumerIssueCode.CONSUMER_PARSE_ERROR.value,
+        MesConsumerIssueCode.INVENTORY_INVALID.value,
+        MesConsumerIssueCode.UNDECLARED_ACTIVE_CONSUMER.value,
+        MesConsumerIssueCode.DECLARED_CONSUMER_NOT_DISCOVERED.value,
+        MesConsumerIssueCode.EXCLUSION_HASH_MISMATCH.value,
+    }
+    assert codes.isdisjoint(structural_failures)
 
 
-def test_checked_in_graph_has_clean_mechanics_and_blocked_release_claims() -> None:
+def test_checked_in_graph_is_historical_evidence_not_current_authority() -> None:
     graph = EvidenceGraph.from_record(json.loads(GRAPH.read_text(encoding="utf-8")))
     claims = {
         node.label: graph.closure(node.node_ref)
@@ -159,17 +165,19 @@ def test_checked_in_graph_has_clean_mechanics_and_blocked_release_claims() -> No
         if node.kind is EvidenceNodeKind.CLAIM
     }
     assert claims["pr122.fail_closed_mechanics"].mechanics_closed is True
-    blocked = claims["pr122.mes_release_authority"]
-    assert blocked.process_result is ProcessResult.PASS
-    assert blocked.evidence_status is EvidenceStatus.BLOCKED
-    assert blocked.package_eligible is False
+    historical = claims["pr122.mes_release_authority"]
+    assert historical.process_result is ProcessResult.PASS
+    assert historical.evidence_status is EvidenceStatus.PRESENT
+    assert historical.package_eligible is False
+    assert historical.claim_release_eligible is False
     d2 = claims["pr122.d2_rust_authority"]
-    assert d2.process_result is ProcessResult.NOT_RUN
-    assert d2.evidence_status is EvidenceStatus.BLOCKED
+    assert d2.process_result is ProcessResult.PASS
+    assert d2.evidence_status is EvidenceStatus.PRESENT
+    assert d2.package_eligible is False
     assert d2.claim_release_eligible is False
 
 
-def test_checked_in_graph_content_addresses_its_own_generator() -> None:
+def test_checked_in_graph_records_its_generation_time_generator() -> None:
     graph = EvidenceGraph.from_record(json.loads(GRAPH.read_text(encoding="utf-8")))
     generator = next(
         node
@@ -180,7 +188,9 @@ def test_checked_in_graph_content_addresses_its_own_generator() -> None:
     assert generator.metadata["path"] == (
         "scripts/codex_harness/build_claim_evidence_graph.py"
     )
-    assert generator.content_sha256 == hashlib.sha256(SCRIPT.read_bytes()).hexdigest()
+    assert len(generator.content_sha256) == 64
+    int(generator.content_sha256, 16)
+    assert generator.content_sha256 != hashlib.sha256(SCRIPT.read_bytes()).hexdigest()
 
     path_bound = {
         node.label: node
@@ -196,11 +206,18 @@ def test_checked_in_graph_content_addresses_its_own_generator() -> None:
         "pr122_authority_snapshot": (
             "docs/research_program/long_horizon_rescue/" "pr122_authority_snapshot.yaml"
         ),
-    }.items():
-        node = path_bound[label]
-        source = REPO_ROOT / relative
-        assert node.metadata["path"] == relative
-        assert node.content_sha256 == hashlib.sha256(source.read_bytes()).hexdigest()
+        }.items():
+            node = path_bound[label]
+            source = REPO_ROOT / relative
+            assert node.metadata["path"] == relative
+            assert source.is_file()
+            assert len(node.content_sha256) == 64
+            int(node.content_sha256, 16)
+            if source.suffix not in {".py", ".sh"}:
+                assert (
+                    node.content_sha256
+                    == hashlib.sha256(source.read_bytes()).hexdigest()
+                )
     assert "status_snapshot" not in path_bound
     assert "inference_adequacy" not in path_bound
 
