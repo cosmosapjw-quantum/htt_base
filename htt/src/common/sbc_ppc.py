@@ -204,7 +204,24 @@ def run_sbc(model: GaussianModel, *, n_simulations: int,
 def sbc_verdict(sbc: dict, pvalue_floor: float) -> str:
     """A calibrated model PASSES (uniform ranks, p > floor); a
     miscalibrated one FAILS (p <= floor) and is INADEQUATE."""
-    return "calibrated" if sbc["uniformity_pvalue"] > pvalue_floor \
+    pvalue = sbc.get("uniformity_pvalue")
+    if (
+        isinstance(pvalue_floor, bool)
+        or not isinstance(pvalue_floor, (int, float))
+        or not math.isfinite(pvalue_floor)
+        or not 0.0 <= pvalue_floor < 1.0
+    ):
+        raise SbcPpcError(
+            "the SBC p-value floor must be finite and in [0, 1)")
+    if (
+        isinstance(pvalue, bool)
+        or not isinstance(pvalue, (int, float))
+        or not math.isfinite(pvalue)
+        or not 0.0 <= pvalue <= 1.0
+    ):
+        raise SbcPpcError(
+            "the SBC uniformity p-value must be finite and in [0, 1]")
+    return "calibrated" if pvalue > pvalue_floor \
         else "inadequate_sbc_failed"
 
 
@@ -212,7 +229,7 @@ def require_sbc_calibrated(sbc: dict, pvalue_floor: float,
                           claim: str = "sbc_pass") -> None:
     """A claim of SBC pass is refuted if the rank-uniformity test fails
     (the known-bad model cannot claim calibration)."""
-    if "pass" in claim and sbc["uniformity_pvalue"] <= pvalue_floor:
+    if sbc_verdict(sbc, pvalue_floor) != "calibrated":
         raise InadequateModelError(
             f"SBC rank-uniformity p-value {sbc['uniformity_pvalue']:.4g} "
             f"<= {pvalue_floor}; the model+sampler is INADEQUATE and "

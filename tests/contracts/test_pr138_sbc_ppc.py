@@ -136,6 +136,27 @@ def test_sbc_lineage_mandatory_and_nbins_load_bearing() -> None:
         _run_sbc(GOOD, n_simulations=100, n_draws=20, seed=1, n_bins=4)
 
 
+def test_sbc_verdict_cannot_be_bypassed_by_claim_or_floor() -> None:
+    bad = _run_sbc(
+        GaussianModel(Fraction(4), Fraction(1), 8, Fraction(1, 2)),
+        n_simulations=3000,
+        n_draws=20,
+        seed=20260720,
+        n_bins=7,
+    )
+    with pytest.raises(InadequateModelError, match="INADEQUATE"):
+        require_sbc_calibrated(bad, 0.01, "calibrated")
+    for floor in (-1.0, 1.0, float("nan"), float("inf"), True):
+        with pytest.raises(SbcPpcError, match="floor must be finite"):
+            sbc_verdict(bad, floor)
+        with pytest.raises(SbcPpcError, match="floor must be finite"):
+            require_sbc_calibrated(bad, floor, "sbc_pass")
+    for pvalue in (float("nan"), float("inf"), -0.1, 1.1, True):
+        malformed = {**bad, "uniformity_pvalue": pvalue}
+        with pytest.raises(SbcPpcError, match="uniformity p-value"):
+            sbc_verdict(malformed, 0.01)
+
+
 def test_ppc_frozen_discrepancies_and_mandatory_lineage() -> None:
     frozen = freeze_discrepancies(["sample_variance", "sample_max",
                                    "sample_range"])
