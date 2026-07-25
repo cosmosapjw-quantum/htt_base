@@ -331,6 +331,15 @@ class BiPoSHFeatureSummary:
         else:
             convention = _convention_from_metadata(self.convention)
         object.__setattr__(self, "convention", convention)
+        convention_lmax = int(convention.alm_convention["lmax"])
+        if any(
+            max(entry.ell1, entry.ell2) > convention_lmax
+            for entry in entries
+        ):
+            raise ValueError(
+                "BiPoSHFeatureSummary entries must remain within "
+                "alm_convention lmax"
+            )
         for field_name in (
             "sky_support_status",
             "mask_status",

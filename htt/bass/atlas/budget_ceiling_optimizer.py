@@ -531,6 +531,10 @@ class BudgetCeilingCandidate:
                 raise ValueError(
                     "BudgetCeilingCandidate transfer_source must match metadata"
                 )
+            if str(transfer_metadata["transfer_id"]) != transfer_spec_id:
+                raise ValueError(
+                    "BudgetCeilingCandidate transfer_spec_id must match metadata"
+                )
             if _valid_range(transfer_metadata["valid_range"]) != valid_range:
                 raise ValueError(
                     "BudgetCeilingCandidate valid_range must match transfer metadata"

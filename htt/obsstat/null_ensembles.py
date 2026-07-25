@@ -12,6 +12,7 @@ from dataclasses import dataclass, field
 import hashlib
 import json
 import math
+import operator
 import re
 from typing import Any
 
@@ -105,8 +106,17 @@ def _tuple_of_str(values: Sequence[object], name: str) -> tuple[str, ...]:
 
 
 def _positive_int(value: object, name: str) -> int:
+    if isinstance(value, bool):
+        raise ValueError(f"{name} must be a positive integer")
     try:
-        number = int(value)
+        if isinstance(value, str):
+            number = int(value)
+        elif isinstance(value, float):
+            if not math.isfinite(value) or not value.is_integer():
+                raise ValueError
+            number = int(value)
+        else:
+            number = operator.index(value)
     except (TypeError, ValueError) as exc:
         raise ValueError(f"{name} must be a positive integer") from exc
     if number <= 0:

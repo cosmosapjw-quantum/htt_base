@@ -7,6 +7,7 @@ import math
 from bisect import bisect_right
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass, field
+from types import MappingProxyType
 from typing import Any
 
 from common.enum_compat import StrEnum
@@ -222,6 +223,23 @@ def _plain_metadata(value: object) -> Any:
     if isinstance(value, (int, float, bool)) or value is None:
         return value
     raise TypeError(f"metadata value {value!r} is not JSON-compatible")
+
+
+def _freeze_json_metadata(value: object) -> object:
+    if isinstance(value, Mapping):
+        return MappingProxyType(
+            {str(key): _freeze_json_metadata(item) for key, item in value.items()}
+        )
+    if isinstance(value, Sequence) and not isinstance(value, (str, bytes)):
+        return tuple(_freeze_json_metadata(item) for item in value)
+    return value
+
+
+def _freeze_mapping(value: Mapping[str, Any]) -> Mapping[str, Any]:
+    frozen = _freeze_json_metadata(value)
+    if not isinstance(frozen, Mapping):
+        raise TypeError("expected mapping metadata")
+    return frozen
 
 
 def _ensure_json_metadata(value: object, name: str) -> None:
@@ -637,6 +655,15 @@ class ExceedanceCurve:
             )
         )
         _combined_transfer_source(source_transfer_sources)
+        threshold_metadata = _freeze_mapping(threshold_metadata)
+        source_metadata = tuple(
+            _freeze_mapping(metadata) for metadata in source_metadata
+        )
+        source_transfer_metadata = tuple(
+            None if metadata is None else _freeze_mapping(metadata)
+            for metadata in source_transfer_metadata
+        )
+        artifact_metadata = _freeze_mapping(artifact_metadata)
 
         object.__setattr__(self, "sample_values", sample_values)
         object.__setattr__(self, "thresholds", thresholds)
@@ -751,7 +778,7 @@ class ExceedanceCurve:
             "threshold_policy": self.threshold_policy.value,
             "threshold_values": list(self.thresholds),
             "threshold_grid": list(self.thresholds),
-            "threshold_metadata": dict(self.threshold_metadata),
+            "threshold_metadata": _plain_metadata(self.threshold_metadata),
             "threshold_registration_status": self.threshold_registration_status,
             "threshold_labels": [f"threshold:{index}" for index, _ in enumerate(self.thresholds)],
             "selected_threshold": self.selected_threshold,
@@ -768,7 +795,9 @@ class ExceedanceCurve:
             "transfer_source": self.transfer_source,
             "source_transfer_sources": list(self.source_transfer_sources),
             "source_transfer_spec_ids": list(self.source_transfer_spec_ids),
-            "source_transfer_metadata": list(self.source_transfer_metadata),
+            "source_transfer_metadata": _plain_metadata(
+                self.source_transfer_metadata
+            ),
             "sky_support_status": self.sky_support_status,
             "sky_support_statuses": list(self.sky_support_statuses),
             "covariance_status": self.covariance_status,
@@ -777,10 +806,10 @@ class ExceedanceCurve:
             "null_mock_statuses": list(self.null_mock_statuses),
             "config_hash": self.config_hash,
             "source_config_hashes": list(self.source_config_hashes),
-            "source_metadata": [dict(metadata) for metadata in self.source_metadata],
+            "source_metadata": _plain_metadata(self.source_metadata),
             "input_hashes": list(self.input_hashes),
             "display_metadata": self.display_metadata,
-            "artifact_metadata": dict(self.artifact_metadata),
+            "artifact_metadata": _plain_metadata(self.artifact_metadata),
             "caveats": list(self.caveats),
         }
         return payload

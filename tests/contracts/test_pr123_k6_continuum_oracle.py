@@ -87,6 +87,22 @@ def test_unexpected_consumer_blocks_k6_lane() -> None:
     assert no_consumer.passed is False
 
 
+def test_consumer_inventory_cannot_be_laundered_by_empty_unexpected_list() -> None:
+    spec = yaml.safe_load(SPEC.read_text(encoding="utf-8"))
+    report, outcome = run_k6_continuum_suite(
+        spec["k6_continuum_contract"],
+        consumer_inventory=["scripts/empirical_consumer.py"],
+        unexpected_consumers=[],
+    )
+    no_consumer = next(
+        item for item in outcome.properties if item.property_id == "no_empirical_consumer"
+    )
+    assert no_consumer.passed is False
+    assert outcome.status == "BLOCKED_PROPERTY_FAILURE"
+    assert report["unexpected_consumers"] == ["scripts/empirical_consumer.py"]
+    assert report["empirical_consumer_count"] == 1
+
+
 def test_checked_in_k6_card_has_no_empirical_consumer_or_observed_claim() -> None:
     payload = json.loads(CARD.read_text(encoding="utf-8"))
     assert payload["mutation_status"] == "PASS_MECHANICS_C2"

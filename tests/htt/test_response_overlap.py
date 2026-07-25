@@ -178,6 +178,38 @@ def test_response_overlap_preserves_external_transfer_provenance():
     assert ("native " + "solver result") not in payload_text
 
 
+def test_response_overlap_provenance_is_immutable_and_payload_is_detached():
+    from htt.departure.response_overlap import build_response_overlap_audit
+
+    transfer_id = "aniclass.response.overlap.v1"
+    audit = build_response_overlap_audit(
+        **_audit_kwargs(
+            transfer_source="AniCLASS_external",
+            transfer_spec_id=transfer_id,
+            transfer_metadata=_transfer_metadata(transfer_id),
+            artifact_metadata={
+                "bindings": {
+                    "observable": "sha256:" + "b" * 64,
+                }
+            },
+        )
+    )
+
+    with pytest.raises(TypeError):
+        audit.transfer_metadata["transfer_id"] = "forged.transfer"
+    with pytest.raises(TypeError):
+        audit.artifact_metadata["bindings"]["observable"] = "forged-observable"
+
+    payload = audit.as_payload()
+    payload["transfer_metadata"]["transfer_id"] = "payload-only.transfer"
+    payload["artifact_metadata"]["bindings"]["observable"] = "payload-only-observable"
+
+    assert audit.transfer_metadata["transfer_id"] == transfer_id
+    assert audit.artifact_metadata["bindings"]["observable"] == (
+        "sha256:" + "b" * 64
+    )
+
+
 def test_response_overlap_rejects_inference_or_claim_drift_metadata():
     from htt.departure.response_overlap import build_response_overlap_audit
 
