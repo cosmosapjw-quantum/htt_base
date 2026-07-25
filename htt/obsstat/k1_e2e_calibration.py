@@ -134,12 +134,22 @@ def e2e_input_manifest(cmb_dir: Path, noise_dir: Path, *,
     """Authenticate the PR3/FFP10 E2E input: the CMB and noise Monte-Carlo map
     counts, a deterministic sample of content-addressed sha256s (the full ~600
     GB is not hashed), and the byte-equivalent observed/null path declaration."""
+    if (
+        isinstance(sample_hash_count, (bool, np.bool_))
+        or not isinstance(sample_hash_count, (int, np.integer))
+        or sample_hash_count <= 0
+    ):
+        raise K1E2EError("sample_hash_count must be a positive integer")
+    sample_hash_count = int(sample_hash_count)
     cmb = sorted(p for p in cmb_dir.glob("*.fits") if p.is_file())
     noise = sorted(p for p in noise_dir.glob("*.fits") if p.is_file())
     if not cmb or not noise:
         raise K1E2EError(
             "the PR3 FFP10 E2E ensemble is absent — no real-sky p-value may be "
             "emitted; the science state is BLOCKED on the E2E ensemble")
+    if sample_hash_count > len(cmb):
+        raise K1E2EError(
+            "sample_hash_count exceeds the available CMB ensemble")
     # a deterministic, evenly-spaced sample of sha256s (not the whole ensemble)
     step = max(1, len(cmb) // sample_hash_count)
     sample = [cmb[i] for i in range(0, len(cmb), step)][:sample_hash_count]

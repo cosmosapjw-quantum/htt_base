@@ -22,6 +22,7 @@ warnings.filterwarnings("ignore")
 
 from obsstat.k1_e2e_calibration import (
     K1E2EError,
+    e2e_input_manifest,
     generate_caption,
     idealised_super_uniformity,
     lint_caption,
@@ -145,6 +146,33 @@ def test_check_normalizes_only_maintenance_provenance() -> None:
     assert runner._semantic_artifact(
         manifest_rel, stored_manifest
     ) != runner._semantic_artifact(manifest_rel, current_manifest)
+
+
+@pytest.mark.parametrize("sample_hash_count", [-1, 0, True, 2.5])
+def test_input_manifest_rejects_invalid_sample_hash_count(
+    tmp_path, sample_hash_count
+) -> None:
+    cmb = tmp_path / "cmb"
+    noise = tmp_path / "noise"
+    cmb.mkdir()
+    noise.mkdir()
+    (cmb / "cmb_00001.fits").touch()
+    (noise / "noise_00001.fits").touch()
+    with pytest.raises(K1E2EError, match="positive integer"):
+        e2e_input_manifest(
+            cmb, noise, sample_hash_count=sample_hash_count
+        )
+
+
+def test_input_manifest_rejects_sample_larger_than_ensemble(tmp_path) -> None:
+    cmb = tmp_path / "cmb"
+    noise = tmp_path / "noise"
+    cmb.mkdir()
+    noise.mkdir()
+    (cmb / "cmb_00001.fits").touch()
+    (noise / "noise_00001.fits").touch()
+    with pytest.raises(K1E2EError, match="exceeds"):
+        e2e_input_manifest(cmb, noise, sample_hash_count=2)
 
 
 # --------------------------------------------------------------------------
