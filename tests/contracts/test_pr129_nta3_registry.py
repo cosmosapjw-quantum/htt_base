@@ -109,6 +109,15 @@ def test_mc_rejects_sample_too_small_for_sample_sd() -> None:
                       tolerance_abs=PREREGISTERED_TOLERANCE_ABS)
 
 
+def test_mc_rejects_structurally_inconsistent_estimator() -> None:
+    bad_dof = EstimatorSpec.from_payload(dict(QUAD_PAYLOAD, dof=9))
+    with pytest.raises(Nta3RegistryError, match="reality-condition count"):
+        run_seeded_mc(
+            bad_dof, seed=20260718, replicates=200000,
+            tolerance_abs=PREREGISTERED_TOLERANCE_ABS,
+        )
+
+
 def test_seeded_estimator_mc_within_preregistered_tolerance() -> None:
     result = run_seeded_mc(_quad(), seed=20260718, replicates=200000,
                            tolerance_abs=PREREGISTERED_TOLERANCE_ABS)

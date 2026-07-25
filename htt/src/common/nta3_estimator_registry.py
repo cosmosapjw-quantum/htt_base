@@ -225,6 +225,7 @@ def run_seeded_mc(spec: EstimatorSpec, *, seed: int, replicates: int,
     if spec.dof is None or spec.dispersion_squared_exact is None \
             or spec.ell is None:
         raise Nta3RegistryError("MC needs a fully specified estimator")
+    verify_quadrupole_dispersion(spec)
     ell = spec.ell
     rng = np.random.Generator(np.random.PCG64(seed))
     c_true = 1.0
