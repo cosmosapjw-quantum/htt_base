@@ -483,6 +483,15 @@ def render_markdown(payload: dict[str, Any]) -> str:
     return "\n".join(lines)
 
 
+def _existing_pack_worktree_state(path: Path) -> str | None:
+    if not path.exists():
+        return None
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if line.startswith("git_commit_or_worktree_state: `") and line.endswith("`"):
+            return line.removeprefix("git_commit_or_worktree_state: `").removesuffix("`")
+    return None
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
@@ -500,16 +509,18 @@ def main() -> int:
         command += " --dry-run"
     if args.output != DEFAULT_OUTPUT:
         command += f" --output {args.output}"
+    output = args.repo_root / args.output
+    worktree_state = _existing_pack_worktree_state(output) if args.check else None
     payload = build_result_pack_payload(
         repo_root=args.repo_root,
         generating_command=command,
+        worktree_state=worktree_state,
     )
     markdown = render_markdown(payload)
     if args.dry_run:
         print("DRY-RUN: not writing result pack")
         print(markdown)
         return 0
-    output = args.repo_root / args.output
     if args.check:
         if not output.exists():
             print(f"missing result pack: {output}")
