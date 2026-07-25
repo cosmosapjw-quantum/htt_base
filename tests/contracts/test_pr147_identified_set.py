@@ -175,6 +175,22 @@ def test_simultaneous_coverage_binds_identified_set_shell_grid(
         )
 
 
+@pytest.mark.parametrize("n_inject", [0, -2, True, 1.5])
+def test_simultaneous_coverage_requires_positive_injection_count(
+    n_inject,
+) -> None:
+    with pytest.raises(IdentifiedSetError, match="positive integer"):
+        simultaneous_coverage(
+            None,
+            {},
+            {"n_shells": 1, "shells": [{"shell": 0}]},
+            n_inject=n_inject,
+            seed=1,
+            subsample=100,
+            family_conf=0.95,
+        )
+
+
 def test_guards() -> None:
     with pytest.raises(IdentifiedSetError, match="point estimate"):
         refuse_favourable_endpoint("favourable_endpoint")

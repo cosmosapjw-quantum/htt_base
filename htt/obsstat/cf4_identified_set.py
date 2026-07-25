@@ -377,6 +377,14 @@ def simultaneous_coverage(data: Cf4Data, box: dict, set_result: dict, *,
         raise IdentifiedSetError(
             "simultaneous coverage shell grid must match the identified set")
     n_shells = int(n_shells)
+    if (
+        isinstance(n_inject, (bool, np.bool_))
+        or not isinstance(n_inject, (int, np.integer))
+        or n_inject <= 0
+    ):
+        raise IdentifiedSetError(
+            "simultaneous coverage injection count must be a positive integer")
+    n_inject = int(n_inject)
     rng = np.random.Generator(np.random.PCG64(seed))
     per_shell = bonferroni_conf(family_conf, n_shells)
     truth = np.array([120.0, -80.0, 60.0])
