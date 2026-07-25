@@ -304,9 +304,30 @@ class CalibrationSplit:
     evaluation_ids: tuple[int, ...]
 
     def __post_init__(self) -> None:
-        cal = set(self.calibration_ids)
-        ev = set(self.evaluation_ids)
-        overlap = cal & ev
+        calibration = tuple(self.calibration_ids)
+        evaluation = tuple(self.evaluation_ids)
+        for name, values in (
+            ("calibration_ids", calibration),
+            ("evaluation_ids", evaluation),
+        ):
+            if not values:
+                raise FiniteNullError(f"{name} must be non-empty")
+            if any(
+                isinstance(value, bool)
+                or not isinstance(value, Integral)
+                or value < 0
+                for value in values
+            ):
+                raise FiniteNullError(
+                    f"{name} must contain non-negative integer row ids")
+            if len(set(values)) != len(values):
+                raise FiniteNullError(
+                    f"{name} must not contain duplicate row ids")
+        object.__setattr__(self, "calibration_ids",
+                           tuple(int(value) for value in calibration))
+        object.__setattr__(self, "evaluation_ids",
+                           tuple(int(value) for value in evaluation))
+        overlap = set(calibration) & set(evaluation)
         if overlap:
             raise FiniteNullError(
                 f"calibration and evaluation splits overlap on rows "

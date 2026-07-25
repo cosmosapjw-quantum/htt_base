@@ -261,6 +261,22 @@ def test_calibration_split_and_fingerprint() -> None:
     assert fp1 != fp2   # scan-range change mints a new calibration id
 
 
+@pytest.mark.parametrize("calibration,evaluation,message", [
+    ((), (0,), "non-empty"),
+    ((0,), (), "non-empty"),
+    ((0, 0), (1,), "duplicate"),
+    ((0,), (1, 1), "duplicate"),
+    ((True,), (1,), "non-negative integer"),
+    ((0,), (1.5,), "non-negative integer"),
+    ((-1,), (1,), "non-negative integer"),
+])
+def test_calibration_split_rejects_invalid_row_identity(
+    calibration, evaluation, message
+) -> None:
+    with pytest.raises(FiniteNullError, match=message):
+        CalibrationSplit(calibration, evaluation)
+
+
 def test_caption_gate() -> None:
     text = generate_caption(39)
     lint_caption(text)
