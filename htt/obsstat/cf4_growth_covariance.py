@@ -226,8 +226,20 @@ def joint_covariance(sub: Cf4Sample, preps, *, n_mock: int, seed: int) -> dict:
     amplitude is re-fit — so the cross-shell covariance is measured, not
     assumed."""
     fs8_fid = fiducial_fsigma8()
-    gen = build_cholesky_generator(sub)
     n_shells = len(preps)
+    if n_shells <= 0:
+        raise GrowthCovarianceError(
+            "joint covariance requires at least one depth shell")
+    if (
+        isinstance(n_mock, (bool, np.bool_))
+        or not isinstance(n_mock, (int, np.integer))
+        or n_mock <= n_shells
+    ):
+        raise GrowthCovarianceError(
+            "joint covariance mock count must be an integer greater than the "
+            "number of shells")
+    n_mock = int(n_mock)
+    gen = build_cholesky_generator(sub)
     rng = np.random.Generator(np.random.PCG64(seed))
     fs8_mock = np.zeros((n_mock, n_shells))
     for k in range(n_mock):

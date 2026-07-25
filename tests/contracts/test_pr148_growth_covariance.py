@@ -178,6 +178,19 @@ def test_constrained_classification_rejects_invalid_inputs(
         )
 
 
+@pytest.mark.parametrize("n_mock", [0, 1, 3, True, 3.5])
+def test_joint_covariance_requires_enough_mock_realisations(
+    n_mock,
+) -> None:
+    with pytest.raises(GrowthCovarianceError, match="greater than"):
+        joint_covariance(
+            None,
+            [None, None, None],
+            n_mock=n_mock,
+            seed=1,
+        )
+
+
 def test_growth_difference_nonidentified_when_endpoint_unconstrained() -> None:
     fs8 = {"fiducial_fsigma8": 0.43,
            "shells": [{"shell": 0, "fsigma8": 0.4, "constrained": True,
