@@ -1,6 +1,7 @@
 """PR-149 contract tests: Planck K1 convention + BiPoSH structural-zero theorem."""
 from __future__ import annotations
 
+import importlib.util
 import json
 import subprocess
 import sys
@@ -33,6 +34,74 @@ needs_data = pytest.mark.skipif(not SMICA.is_file(),
                                 reason="Planck PR3 maps absent")
 
 
+def _load_runner():
+    runner_path = (
+        REPO_ROOT / "scripts/codex_harness/run_pr149_k1_convention.py"
+    )
+    spec = importlib.util.spec_from_file_location("run_pr149", runner_path)
+    runner = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(runner)
+    return runner
+
+
+def test_source_hash_is_generation_time_provenance_only() -> None:
+    runner = _load_runner()
+    source = runner.SOURCE_PATH
+    stored_contract = {
+        "content_address": "contract",
+        "negative_scan": {
+            "targets": {
+                source: {"sha256": "1" * 64, "hits": []},
+            },
+        },
+    }
+    current_contract = {
+        "content_address": "contract",
+        "negative_scan": {
+            "targets": {
+                source: {"sha256": "2" * 64, "hits": []},
+            },
+        },
+    }
+    contract_rel = runner.OUTPUTS["contract"]
+    assert runner._semantic_artifact(
+        contract_rel, stored_contract
+    ) == runner._semantic_artifact(contract_rel, current_contract)
+    current_contract["content_address"] = "changed"
+    assert runner._semantic_artifact(
+        contract_rel, stored_contract
+    ) != runner._semantic_artifact(contract_rel, current_contract)
+    current_contract["content_address"] = "contract"
+    current_contract["negative_scan"]["targets"][source]["hits"] = [
+        {"line": 1},
+    ]
+    assert runner._semantic_artifact(
+        contract_rel, stored_contract
+    ) != runner._semantic_artifact(contract_rel, current_contract)
+
+    stored_manifest = {
+        "input_hashes": [f"{source}:{'1' * 64}"],
+        "raw_data_pins": {"smica": "raw"},
+    }
+    current_manifest = {
+        "input_hashes": [f"{source}:{'2' * 64}"],
+        "raw_data_pins": {"smica": "raw"},
+    }
+    manifest_rel = runner.OUTPUTS["manifest"]
+    assert runner._semantic_artifact(
+        manifest_rel, stored_manifest
+    ) == runner._semantic_artifact(manifest_rel, current_manifest)
+    current_manifest["raw_data_pins"]["smica"] = "changed"
+    assert runner._semantic_artifact(
+        manifest_rel, stored_manifest
+    ) != runner._semantic_artifact(manifest_rel, current_manifest)
+    current_manifest["raw_data_pins"]["smica"] = "raw"
+    current_manifest["input_hashes"][0] = f"{source}:not-a-sha"
+    assert runner._semantic_artifact(
+        manifest_rel, stored_manifest
+    ) != runner._semantic_artifact(manifest_rel, current_manifest)
+
+
 def test_structural_zero_theorem_odd_L_vanishes() -> None:
     th = structural_zero_theorem([2, 3, 4, 5], tol=1e-10)
     # the TT BiPoSH diagonal is a structural zero for every odd L and
@@ -44,6 +113,20 @@ def test_structural_zero_theorem_odd_L_vanishes() -> None:
     for row in th["rows"]:
         if row["odd"]:
             assert row["max_abs_diagonal_coefficient"] < 1e-10
+
+
+@pytest.mark.parametrize("l_values, tol, message", [
+    ([], 1e-10, "unique integer multipoles"),
+    ([0], 1e-10, "unique integer multipoles"),
+    ([2, 2], 1e-10, "unique integer multipoles"),
+    ([2.5], 1e-10, "unique integer multipoles"),
+    ([2], float("nan"), "finite and positive"),
+])
+def test_structural_zero_theorem_rejects_vacuous_domain(
+    l_values, tol: float, message: str
+) -> None:
+    with pytest.raises(K1ConventionError, match=message):
+        structural_zero_theorem(l_values, tol=tol)
 
 
 def test_convention_contract_content_addressed() -> None:

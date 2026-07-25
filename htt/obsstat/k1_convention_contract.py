@@ -136,6 +136,25 @@ def structural_zero_theorem(l_values, *, tol: float, seed: int = 20260724
     independent Wigner-3j oracle at machine precision on BOTH random real alm
     and reality-VIOLATING complex alm (so the reality condition is shown to be
     irrelevant to the zero)."""
+    try:
+        l_values = list(l_values)
+        tol = float(tol)
+    except (TypeError, ValueError) as exc:
+        raise K1ConventionError(
+            "structural-zero theorem inputs are malformed") from exc
+    if (
+        not l_values
+        or any(isinstance(l, (bool, np.bool_))
+               or not isinstance(l, (int, np.integer))
+               or l < 1 for l in l_values)
+        or len(set(int(l) for l in l_values)) != len(l_values)
+    ):
+        raise K1ConventionError(
+            "structural-zero theorem requires unique integer multipoles l >= 1")
+    if not np.isfinite(tol) or tol <= 0:
+        raise K1ConventionError(
+            "structural-zero theorem tolerance must be finite and positive")
+    l_values = [int(l) for l in l_values]
     rng = np.random.Generator(np.random.PCG64(seed))
     rows = []
     ok = True
@@ -158,7 +177,7 @@ def structural_zero_theorem(l_values, *, tol: float, seed: int = 20260724
         raise K1ConventionError(
             "the TT BiPoSH odd-L diagonal structural-zero theorem failed "
             "against the independent Wigner-3j oracle")
-    return {"l_values": list(l_values), "tolerance_scientific": repr(tol),
+    return {"l_values": l_values, "tolerance_scientific": repr(tol),
             "rows": rows,
             "odd_L_diagonal_all_zero":
                 bool(all(r["structural_zero"] for r in rows if r["odd"])),
