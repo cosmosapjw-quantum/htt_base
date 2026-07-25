@@ -28,6 +28,7 @@ from __future__ import annotations
 import math
 from dataclasses import dataclass
 from fractions import Fraction
+from numbers import Integral, Real
 from typing import Sequence
 
 SCHEMA_VERSION = "pr137.weak_id_coverage.v1"
@@ -80,13 +81,35 @@ def imbens_manski_c(w: float, s: float = 1.0, level: float = 0.95,
 # Clopper-Pearson lower bound (family-wise binomial)
 # ---------------------------------------------------------------------------
 
+def _validated_binomial_inputs(
+    k: int, n: int, conf: float
+) -> tuple[int, int, float]:
+    if (
+        isinstance(k, bool)
+        or not isinstance(k, Integral)
+        or isinstance(n, bool)
+        or not isinstance(n, Integral)
+        or n <= 0
+        or not 0 <= k <= n
+    ):
+        raise WeakIdError("invalid integer (k, n) for Clopper-Pearson")
+    if (
+        isinstance(conf, bool)
+        or not isinstance(conf, Real)
+        or not math.isfinite(float(conf))
+        or not 0.0 < float(conf) < 1.0
+    ):
+        raise WeakIdError(
+            "Clopper-Pearson confidence must be finite and in (0, 1)")
+    return int(k), int(n), float(conf)
+
+
 def clopper_pearson_lower(k: int, n: int, conf: float = 0.99) -> float:
     """Exact one-sided Clopper-Pearson LOWER confidence bound on a
     binomial proportion: the p such that P(Bin(n, p) >= k) = 1 - conf,
     via the Beta quantile lower = BetaInv(1-conf; k, n-k+1). Returns 0
     for k = 0. Conservative (never anti-conservative)."""
-    if not (0 <= k <= n) or n <= 0:
-        raise WeakIdError("invalid (k, n) for Clopper-Pearson")
+    k, n, conf = _validated_binomial_inputs(k, n, conf)
     if k == 0:
         return 0.0
     alpha = 1.0 - conf
@@ -97,8 +120,7 @@ def clopper_pearson_upper(k: int, n: int, conf: float = 0.99) -> float:
     """Exact one-sided Clopper-Pearson UPPER bound — provided ONLY so the
     lower-bound guard can be shown to reject it (an upper bound is
     anti-conservative when reported as the coverage guarantee)."""
-    if not (0 <= k <= n) or n <= 0:
-        raise WeakIdError("invalid (k, n) for Clopper-Pearson")
+    k, n, conf = _validated_binomial_inputs(k, n, conf)
     if k == n:
         return 1.0
     return _beta_ppf(conf, k + 1, n - k)
@@ -108,9 +130,21 @@ def bonferroni_conf(family_conf: float, n_points: int) -> float:
     """Per-point confidence so the JOINT (family-wise, simultaneous over
     all grid points) confidence is at least ``family_conf`` by the
     Bonferroni bound: 1 - (1 - family_conf)/n_points."""
-    if n_points < 1:
-        raise WeakIdError("n_points must be >= 1")
-    return 1.0 - (1.0 - family_conf) / n_points
+    if (
+        isinstance(n_points, bool)
+        or not isinstance(n_points, Integral)
+        or n_points < 1
+    ):
+        raise WeakIdError("n_points must be a positive integer")
+    if (
+        isinstance(family_conf, bool)
+        or not isinstance(family_conf, Real)
+        or not math.isfinite(float(family_conf))
+        or not 0.0 < float(family_conf) < 1.0
+    ):
+        raise WeakIdError(
+            "family confidence must be finite and in (0, 1)")
+    return 1.0 - (1.0 - float(family_conf)) / int(n_points)
 
 
 def validate_lower_bound(claimed: float, k: int, n: int,
@@ -119,6 +153,16 @@ def validate_lower_bound(claimed: float, k: int, n: int,
     not exceed the point estimate k/n and (b) equal the Clopper-Pearson
     lower bound at ``conf``. An upper bound (or a point estimate)
     masquerading as the guarantee is rejected."""
+    k, n, conf = _validated_binomial_inputs(k, n, conf)
+    if (
+        isinstance(claimed, bool)
+        or not isinstance(claimed, Real)
+        or not math.isfinite(float(claimed))
+        or not 0.0 <= float(claimed) <= 1.0
+    ):
+        raise WeakIdError(
+            "claimed lower bound must be finite and in [0, 1]")
+    claimed = float(claimed)
     point = k / n
     if claimed > point + 1e-12:
         raise WeakIdError(

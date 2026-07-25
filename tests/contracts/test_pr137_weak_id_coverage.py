@@ -99,6 +99,45 @@ def test_clopper_pearson_lower_conservative() -> None:
         clopper_pearson_lower(960, 1000, 0.99)
 
 
+@pytest.mark.parametrize("k,n,conf", [
+    (950.5, 1000, 0.99),
+    (True, 1000, 0.99),
+    (950, 1000.5, 0.99),
+    (950, True, 0.99),
+    (950, 1000, float("nan")),
+    (950, 1000, float("inf")),
+    (950, 1000, 0.0),
+    (950, 1000, 1.0),
+])
+def test_clopper_pearson_rejects_invalid_domain(k, n, conf) -> None:
+    with pytest.raises(WeakIdError, match="integer|confidence"):
+        clopper_pearson_lower(k, n, conf)
+    with pytest.raises(WeakIdError, match="integer|confidence"):
+        clopper_pearson_upper(k, n, conf)
+
+
+@pytest.mark.parametrize("claimed", [
+    float("nan"), float("inf"), -0.1, 1.1, True,
+])
+def test_lower_bound_guard_rejects_malformed_claim(claimed) -> None:
+    with pytest.raises(WeakIdError, match="claimed lower bound"):
+        validate_lower_bound(claimed, 950, 1000, 0.99)
+
+
+@pytest.mark.parametrize("family_conf,n_points", [
+    (float("nan"), 9),
+    (float("inf"), 9),
+    (0.0, 9),
+    (1.0, 9),
+    (0.99, 0),
+    (0.99, True),
+    (0.99, 2.5),
+])
+def test_bonferroni_rejects_invalid_domain(family_conf, n_points) -> None:
+    with pytest.raises(WeakIdError, match="confidence|positive integer"):
+        bonferroni_conf(family_conf, n_points)
+
+
 def test_imbens_manski_c_and_coverage() -> None:
     # w=0 -> two-sided 0.95 -> c = 1.96
     assert abs(imbens_manski_c(0.0)["c"] - 1.959963985) < 1e-4
