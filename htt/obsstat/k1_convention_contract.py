@@ -49,6 +49,20 @@ def canonical_convention_contract(*, proc_nside: int, lmax: int) -> dict:
     """The frozen, content-addressed low-ell K1 convention.  The reality and
     spin fields are DERIVED from the imported alm-convention validator (bind, do
     not restate), so a drift in the validator changes the content address."""
+    if (
+        isinstance(proc_nside, (bool, np.bool_))
+        or not isinstance(proc_nside, (int, np.integer))
+        or proc_nside <= 0
+    ):
+        raise K1ConventionError("proc_nside must be a positive integer")
+    if (
+        isinstance(lmax, (bool, np.bool_))
+        or not isinstance(lmax, (int, np.integer))
+        or lmax < 0
+    ):
+        raise K1ConventionError("lmax must be a non-negative integer")
+    proc_nside = int(proc_nside)
+    lmax = int(lmax)
     conv = canonical_temperature_alm_convention(lmax=lmax)   # bind + validate
     bound = {"reality_condition": conv.reality_condition,
              "spin_weight": int(conv.spin_weight),
@@ -59,8 +73,8 @@ def canonical_convention_contract(*, proc_nside: int, lmax: int) -> dict:
         "alm_phase": "condon_shortley_healpy",
         "reality_condition": "a_l_minus_m_equals_neg1_pow_m_conj_a_lm",
         "beam_pixel_window": "downgrade_pixel_window_at_proc_nside",
-        "proc_nside": int(proc_nside),
-        "lmax": int(lmax),
+        "proc_nside": proc_nside,
+        "lmax": lmax,
         "common_mask": "COM_Mask_CMB-common-Mask-Int_2048_R3.00",
         "orientation_scan": "healpix_orientation_grid",
         "bound_alm_convention": bound,

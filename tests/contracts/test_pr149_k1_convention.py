@@ -138,6 +138,18 @@ def test_convention_contract_content_addressed() -> None:
         verify_convention_frozen(tampered, "")
 
 
+@pytest.mark.parametrize("proc_nside", [64.5, True, 0, -64])
+def test_convention_contract_rejects_invalid_proc_nside(proc_nside) -> None:
+    with pytest.raises(K1ConventionError, match="positive integer"):
+        canonical_convention_contract(proc_nside=proc_nside, lmax=32)
+
+
+@pytest.mark.parametrize("lmax", [32.5, True, -1])
+def test_convention_contract_rejects_invalid_lmax(lmax) -> None:
+    with pytest.raises(K1ConventionError, match="non-negative integer"):
+        canonical_convention_contract(proc_nside=64, lmax=lmax)
+
+
 def test_guards() -> None:
     with pytest.raises(K1ConventionError, match="stale Planck axis"):
         refuse_stale_axis_discovery("hardcoded_axis")
