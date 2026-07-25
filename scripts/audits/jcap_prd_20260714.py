@@ -16,7 +16,7 @@ import hashlib
 import importlib.util
 import json
 import os
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 import platform
 import re
 import subprocess
@@ -2979,6 +2979,29 @@ def _validate_pr118_receipts(
             errors.append(f"{command_id} lacks durable resource evidence")
 
 
+def _canonical_repo_input_path(
+    value: object,
+    label: str,
+    errors: list[str],
+) -> str | None:
+    """Return one canonical repository-relative receipt input path."""
+
+    if not isinstance(value, str) or not value:
+        errors.append(f"{label} has an invalid decisive input path {value!r}")
+        return None
+    candidate = value.replace("\\", "/")
+    pure = PurePosixPath(candidate)
+    if (
+        value != candidate
+        or pure.is_absolute()
+        or ".." in pure.parts
+        or candidate != pure.as_posix()
+    ):
+        errors.append(f"{label} has an unsafe decisive input path {value!r}")
+        return None
+    return candidate
+
+
 def _validate_current_input_hashes(
     row: dict[str, Any],
     label: str,
@@ -2989,11 +3012,10 @@ def _validate_current_input_hashes(
     frozen_hashes = frozen_hashes or {}
     paths: list[str] = []
     for item in row.get("input_hashes", []):
-        raw = str(item.get("path", ""))
+        raw = _canonical_repo_input_path(item.get("path"), label, errors)
+        if raw is None:
+            continue
         paths.append(raw)
-        path = Path(raw)
-        if not path.is_absolute():
-            path = REPO / path
         if item.get("status") != "present":
             errors.append(f"{label} has non-present decisive input {raw}")
             continue
@@ -3003,6 +3025,18 @@ def _validate_current_input_hashes(
                     f"{label} frozen input hash mismatch for {raw}: "
                     f"stored={item.get('sha256')} expected={frozen_hashes[raw]}"
                 )
+            continue
+        path = REPO.resolve()
+        symlink_component = None
+        for part in PurePosixPath(raw).parts:
+            path = path / part
+            if path.is_symlink():
+                symlink_component = path
+                break
+        if symlink_component is not None:
+            errors.append(
+                f"{label} decisive input has a symlink component: {raw}"
+            )
             continue
         if not path.is_file():
             errors.append(f"{label} decisive input is not a file: {raw}")

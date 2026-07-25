@@ -1010,6 +1010,48 @@ def test_pr117_rewrite_mapping_preserves_frozen_diagnostic_inputs():
     } == expected
 
 
+def test_sealed_input_hashes_reject_off_repo_and_symlink_paths(
+    tmp_path, monkeypatch
+):
+    module = _audit_module()
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    inside = repo / "inside.txt"
+    inside.write_text("frozen", encoding="utf-8")
+    outside = tmp_path / "outside.txt"
+    outside.write_text("frozen", encoding="utf-8")
+    (repo / "link.txt").symlink_to(outside)
+    monkeypatch.setattr(module, "REPO", repo)
+
+    digest = module.sha256_file(inside)
+    valid_errors = []
+    module._validate_current_input_hashes(
+        {
+            "input_hashes": [
+                {"path": "inside.txt", "status": "present", "sha256": digest}
+            ]
+        },
+        "valid",
+        valid_errors,
+    )
+    assert valid_errors == []
+
+    invalid_errors = []
+    module._validate_current_input_hashes(
+        {
+            "input_hashes": [
+                {"path": "../outside.txt", "status": "present", "sha256": digest},
+                {"path": str(outside), "status": "present", "sha256": digest},
+                {"path": "link.txt", "status": "present", "sha256": digest},
+            ]
+        },
+        "invalid",
+        invalid_errors,
+    )
+    assert sum("unsafe decisive input path" in error for error in invalid_errors) == 2
+    assert sum("symlink component" in error for error in invalid_errors) == 1
+
+
 def test_historical_counterfactual_scans_read_only_their_seal_trees(
     tmp_path, monkeypatch
 ):
