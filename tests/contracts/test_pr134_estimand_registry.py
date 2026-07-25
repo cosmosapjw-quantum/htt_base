@@ -103,6 +103,15 @@ def test_runner_rejects_duplicate_representative_contracts() -> None:
         })
 
 
+def test_runner_binds_required_fields_to_production_contract() -> None:
+    runner = _load_runner()
+    with pytest.raises(SystemExit, match="production contract"):
+        runner.build_registry_artifact(
+            {"registry": {"required_fields": ["analysis_id"]}},
+            _registry(),
+        )
+
+
 def test_hidden_default_field_rejected() -> None:
     for missing in ("estimand", "selection_window", "nuisance_family",
                     "preprocessing", "allowed_transformations"):

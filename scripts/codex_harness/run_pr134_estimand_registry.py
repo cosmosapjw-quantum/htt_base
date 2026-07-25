@@ -29,6 +29,7 @@ sys.path.insert(0, str(REPO / "htt"))
 import yaml  # noqa: E402
 
 from common.estimand_registry import (  # noqa: E402
+    REQUIRED_FIELDS,
     SCHEMA_VERSION,
     AnalysisContract,
     BranchComponent,
@@ -163,12 +164,17 @@ def _build_registry(spec: dict) -> tuple[EstimandRegistry, dict]:
 
 
 def build_registry_artifact(spec: dict, reg: EstimandRegistry) -> dict:
+    declared = spec["registry"]["required_fields"]
+    if tuple(declared) != REQUIRED_FIELDS:
+        raise SystemExit(
+            "spec required_fields do not match the production contract"
+        )
     return {
         "schema": "pr134.contract_registry.v1",
         "module_schema": SCHEMA_VERSION,
         "contracts": {cid: reg.get(cid).canonical_payload()
                       for cid in reg.ids()},
-        "required_fields": list(spec["registry"]["required_fields"]),
+        "required_fields": list(declared),
         "representative_only_no_data_run": True,
     }
 
