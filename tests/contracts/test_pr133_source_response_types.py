@@ -102,6 +102,23 @@ def test_source_types_hash_is_generation_time_provenance() -> None:
     ) != runner._semantic_artifact(manifest, current)
 
 
+def test_runner_rejects_unknown_typed_quantity_rows() -> None:
+    runner = _load_runner()
+    rows = [
+        {"name": qtype.value, **runner._TYPE_META[qtype]}
+        for qtype in QuantityType
+    ]
+    rows.append({
+        "name": "forged_type",
+        "symbol": "X",
+        "order_in_beta": 0,
+        "harmonic_channel": 0,
+        "physical": True,
+    })
+    with pytest.raises(SystemExit, match="production enum"):
+        runner.build_types({"typed_quantities": {"types": rows}})
+
+
 def test_type_firewall_blocks_cross_type() -> None:
     av = TypedQuantity(QuantityType.OBSERVER_PROXY, Fraction(1, 100))
     ot = TypedQuantity(QuantityType.PHYSICAL_TILT, Fraction(1, 100))

@@ -162,7 +162,18 @@ def _verify_prohibition_cross_list(spec: dict) -> int:
 
 
 def build_types(spec: dict) -> dict:
-    reg = {t["name"]: t for t in spec["typed_quantities"]["types"]}
+    rows = spec["typed_quantities"]["types"]
+    names = [row["name"] for row in rows]
+    production_names = {qtype.value for qtype in QuantityType}
+    if (
+        len(rows) != len(production_names)
+        or len(set(names)) != len(names)
+        or set(names) != production_names
+    ):
+        raise SystemExit(
+            "typed-quantity registry does not match the production enum"
+        )
+    reg = {t["name"]: t for t in rows}
     types = []
     for qtype in QuantityType:
         meta = _TYPE_META[qtype]
