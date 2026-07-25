@@ -255,6 +255,20 @@ def test_subvector_projection_separate() -> None:
     assert sub_kernel["status"] == "unbounded"
 
 
+@pytest.mark.parametrize("full_result,expected", [
+    (exact_engine(_empty()), "empty"),
+    ({"status": "undetermined", "axis_intervals": None,
+      "unbounded_axes": []}, "undetermined"),
+])
+def test_subvector_projection_preserves_non_estimable_status(
+    full_result, expected
+) -> None:
+    projection = subvector_projection(full_result, ["Sigma2"])
+    assert projection["status"] == expected
+    assert projection["axis_intervals"] is None
+    assert projection["unbounded_in_subvector"] == []
+
+
 @pytest.mark.parametrize("artifact,message", [
     ({"status": "bounded"}, "missing required fields"),
     ({"status": "bounded", "central_estimate": 0.5},
