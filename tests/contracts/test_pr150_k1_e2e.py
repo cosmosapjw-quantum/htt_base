@@ -244,6 +244,18 @@ def test_falsifier_kills_a_non_super_uniform_method() -> None:
         refuse_non_super_uniform(False)
 
 
+@pytest.mark.parametrize("band", [float("inf"), float("nan"), 1.0, 2.0])
+def test_idealised_check_rejects_non_discriminating_band(band) -> None:
+    with pytest.raises(K1E2EError, match="finite and less than 1"):
+        idealised_super_uniformity(
+            n_statistics=8,
+            rho=0.35,
+            n_realizations=400,
+            seed=20260724,
+            band=band,
+        )
+
+
 # --------------------------------------------------------------------------
 # non-numeric PR4/NPIPE external-blocker receipt
 # --------------------------------------------------------------------------

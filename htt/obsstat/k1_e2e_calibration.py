@@ -63,6 +63,9 @@ def idealised_super_uniformity(*, n_statistics: int, rho: float,
     exceedance band is a real threshold separating the conservative estimator
     from the anti-conservative one, not a rubber stamp.  Method self-consistency
     only; NEVER promoted to a Planck systematics calibration."""
+    if not _is_finite_number(band) or float(band) >= 1.0:
+        raise K1E2EError(
+            "the super-uniformity band must be finite and less than 1")
     rng = np.random.Generator(np.random.PCG64(seed))
     cov = rho * np.ones((n_statistics, n_statistics)) \
         + (1.0 - rho) * np.eye(n_statistics)
