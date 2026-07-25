@@ -110,6 +110,8 @@ def validate_archive_path(raw_path: str) -> PurePosixPath:
     path = PurePosixPath(raw_path)
     if path.is_absolute() or raw_path.startswith("/"):
         raise PackageTopologyError(f"absolute archive path: {raw_path!r}")
+    if not path.parts or raw_path != path.as_posix():
+        raise PackageTopologyError(f"noncanonical archive path: {raw_path!r}")
     if any(part in {"", ".", ".."} for part in path.parts):
         raise PackageTopologyError(f"traversing archive path: {raw_path!r}")
     if path.parts and path.parts[0].endswith(":"):

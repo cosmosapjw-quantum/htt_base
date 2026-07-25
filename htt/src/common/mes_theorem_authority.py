@@ -28,6 +28,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Mapping, Sequence
@@ -358,7 +359,15 @@ def validate_d2_receipt(payload: Mapping, repo_root: Path) -> dict:
     if not isinstance(rust, Mapping) or not isinstance(python_anchor, Mapping):
         raise MesAuthorityError("d2 receipt needs rust_target and python_anchor")
     value = rust.get("d2_value_uK2")
-    if not isinstance(value, (int, float)) or not value > 0.0:
+    if (
+        isinstance(value, bool)
+        or not isinstance(value, (int, float))
+        or not math.isfinite(float(value))
+    ):
+        raise MesAuthorityError(
+            f"rust D2 target must be a finite numeric value (got {value!r})"
+        )
+    if not value > 0.0:
         raise MesAuthorityError(
             f"rust D2 target must be executed and NONZERO (got {value!r})"
         )
@@ -436,6 +445,11 @@ def _load_json(path: Path, subject: str) -> Mapping:
 
 
 def _verify_cas_adjudication(repo_root: Path) -> dict:
+    """Validate the frozen PR-124 adjudication as historical evidence.
+
+    Stored axis envelopes cannot establish current CAS authority.  A current
+    pass requires a parent-observed ``cas_gate.py run-adjudicate`` execution.
+    """
     contract_path = repo_root / CAS_CONTRACT_PATH
     if not contract_path.is_file():
         raise MesAuthorityError("CAS contract missing")
@@ -470,7 +484,12 @@ def _verify_cas_adjudication(repo_root: Path) -> dict:
     )
     if not isinstance(expected, Mapping):
         raise MesAuthorityError("CAS contract lacks expected_exact_values")
-    return {"contract_sha256": contract_sha, "expected_exact_values": expected}
+    return {
+        "contract_sha256": contract_sha,
+        "expected_exact_values": expected,
+        "historical_aggregate_status": "CAS_4AXIS_PASS",
+        "current_authority": False,
+    }
 
 
 def validate_ceiling_map(b_exact: str, ceiling_exact: str) -> None:
@@ -651,6 +670,12 @@ class MesAuthorityVerification:
         #    cannot launder corrupted coefficients under the CAS receipt)
         cas = _verify_cas_adjudication(root)
         _branches_match_contract(cas["expected_exact_values"])
+        if not cas["current_authority"]:
+            raise MesAuthorityError(
+                "stored PR-124 CAS adjudication is diagnostic-only; current "
+                "authority requires parent-observed cas_gate.py "
+                "run-adjudicate"
+            )
 
         # 2b. lineage sources and archived primary sources are byte-pinned
         _verify_lineage_sources(root)

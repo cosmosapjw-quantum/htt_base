@@ -559,17 +559,9 @@ def _read_absolute_regular_bytes(path: Path, *, label: str) -> bytes:
         raise CF4P0PolicyError(f"cannot read {label} {absolute}: {exc}") from exc
 
 
-def load_policy(
-    repo_root: Path | str | None = None,
-    *,
-    policy_path: Path | str | None = None,
-) -> tuple[Mapping[str, Any], str]:
-    """Load and structurally validate the canonical quarantine policy."""
+def _load_active_scan_policy(path: Path) -> tuple[Mapping[str, Any], bytes]:
+    """Load the policy fields needed to scan one active/public payload."""
 
-    root = Path(repo_root or repository_root()).resolve()
-    path = Path(policy_path) if policy_path is not None else root / POLICY_RELATIVE_PATH
-    if not path.is_absolute():
-        path = root / path
     raw_policy = _read_absolute_regular_bytes(path, label="CF4 P0 quarantine policy")
     try:
         payload = yaml.safe_load(raw_policy.decode("utf-8"))
@@ -609,6 +601,45 @@ def load_policy(
         raise CF4P0PolicyError(
             f"policy findings must be exactly {list(_EXPECTED_FINDINGS)!r}"
         )
+
+    rules = payload.get("stale_signatures")
+    if not isinstance(rules, Sequence) or isinstance(rules, (str, bytes)):
+        raise CF4P0PolicyError("stale_signatures must be a sequence")
+    seen_rule_ids: set[str] = set()
+    for index, rule in enumerate(rules):
+        if not isinstance(rule, Mapping):
+            raise CF4P0PolicyError(f"stale_signatures[{index}] must be a mapping")
+        rule_id = str(rule.get("id", ""))
+        if not rule_id or rule_id in seen_rule_ids:
+            raise CF4P0PolicyError("stale signature IDs must be unique and non-empty")
+        seen_rule_ids.add(rule_id)
+        finding_ids = tuple(str(value) for value in rule.get("finding_ids", ()))
+        if not finding_ids or not set(finding_ids).issubset(_EXPECTED_FINDINGS):
+            raise CF4P0PolicyError(
+                f"stale signature {rule_id!r} has invalid finding IDs"
+            )
+        try:
+            re.compile(str(rule["token_regex"]))
+            re.compile(str(rule["context_regex"]))
+        except (KeyError, re.error) as exc:
+            raise CF4P0PolicyError(
+                f"stale signature {rule_id!r} has invalid regex: {exc}"
+            ) from exc
+    return payload, raw_policy
+
+
+def load_policy(
+    repo_root: Path | str | None = None,
+    *,
+    policy_path: Path | str | None = None,
+) -> tuple[Mapping[str, Any], str]:
+    """Load and validate the policy plus its repository-bound resources."""
+
+    root = Path(repo_root or repository_root()).resolve()
+    path = Path(policy_path) if policy_path is not None else root / POLICY_RELATIVE_PATH
+    if not path.is_absolute():
+        path = root / path
+    payload, raw_policy = _load_active_scan_policy(path)
 
     scan = payload.get("scan")
     if not isinstance(scan, Mapping):
@@ -703,29 +734,6 @@ def load_policy(
     ]
     if len(normalized_governance) != len(set(normalized_governance)):
         raise CF4P0PolicyError("governance control paths must be unique")
-    rules = payload.get("stale_signatures")
-    if not isinstance(rules, Sequence) or isinstance(rules, (str, bytes)):
-        raise CF4P0PolicyError("stale_signatures must be a sequence")
-    seen_rule_ids: set[str] = set()
-    for index, rule in enumerate(rules):
-        if not isinstance(rule, Mapping):
-            raise CF4P0PolicyError(f"stale_signatures[{index}] must be a mapping")
-        rule_id = str(rule.get("id", ""))
-        if not rule_id or rule_id in seen_rule_ids:
-            raise CF4P0PolicyError("stale signature IDs must be unique and non-empty")
-        seen_rule_ids.add(rule_id)
-        finding_ids = tuple(str(value) for value in rule.get("finding_ids", ()))
-        if not finding_ids or not set(finding_ids).issubset(_EXPECTED_FINDINGS):
-            raise CF4P0PolicyError(
-                f"stale signature {rule_id!r} has invalid finding IDs"
-            )
-        try:
-            re.compile(str(rule["token_regex"]))
-            re.compile(str(rule["context_regex"]))
-        except (KeyError, re.error) as exc:
-            raise CF4P0PolicyError(
-                f"stale signature {rule_id!r} has invalid regex: {exc}"
-            ) from exc
 
     inventory = payload.get("inventory")
     if not isinstance(inventory, Mapping):
@@ -1921,6 +1929,21 @@ def _validate_artifact_schema(
                 "blocked figure artifact must keep active_png_status=ABSENT_BY_QUARANTINE",
             )
         )
+    if str(kind).startswith("figure_"):
+        figure_path = artifact.get("active_png", artifact.get("active_path"))
+        if isinstance(figure_path, str):
+            figure_filename = PurePosixPath(figure_path).name
+            figure_identity = figure_filename.removesuffix(".png").removesuffix(
+                ".source.json"
+            ).removesuffix(".manifest.json")
+            if artifact_id != figure_identity:
+                issues.append(
+                    _artifact_issue(
+                        path,
+                        "invalid_embedded_quarantine_artifact_schema",
+                        "figure artifact_id must match its active path identity",
+                    )
+                )
 
     if kind == "conditioned_method_diagnostic_block_record":
         exact_values = {
@@ -2056,14 +2079,15 @@ def _validate_embedded_block_record(
             figure_stem = filename.removesuffix(".source.json").removesuffix(
                 ".manifest.json"
             )
-            path_matches = (
-                active_path == path
-                or active_json == path
-                or (
-                    str(artifact.get("artifact_kind", "")).startswith("figure_")
-                    and artifact_id == figure_stem
+            if str(artifact.get("artifact_kind", "")).startswith("figure_"):
+                expected_png = (
+                    PurePosixPath(path).parent / f"{figure_stem}.png"
+                ).as_posix()
+                path_matches = artifact_id == figure_stem and (
+                    active_path == path or artifact.get("active_png") == expected_png
                 )
-            )
+            else:
+                path_matches = active_path == path or active_json == path
             if require_path_match and not path_matches:
                 issues.append(
                     QuarantineIssue(
@@ -2115,7 +2139,7 @@ def validate_active_text(
     """Scan one active/public payload without applying repository exceptions."""
 
     root = Path(repo_root or repository_root()).resolve()
-    policy, _ = load_policy(root)
+    policy, _ = _load_active_scan_policy(root / POLICY_RELATIVE_PATH)
     return _validate_active_text_with_policy(path, text, policy=policy)
 
 
