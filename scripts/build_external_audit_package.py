@@ -113,6 +113,10 @@ from common.package_binary_binding import (  # noqa: E402
     verify_package_binary_binding,
     verify_packaged_entry_bytes,
 )
+from common.package_topology import (  # noqa: E402
+    PackageTopologyError,
+    validate_archive_path,
+)
 from common.release_evidence_binding import consume_release_evidence  # noqa: E402
 
 
@@ -1029,8 +1033,10 @@ def _entry_rows(
     )
     for entry in sorted(entries, key=lambda item: item.archive_path):
         _validate_entry_semantics(entry)
-        if entry.archive_path.startswith("/") or ".." in Path(entry.archive_path).parts:
-            raise ValueError(f"unsafe archive path: {entry.archive_path}")
+        try:
+            validate_archive_path(entry.archive_path)
+        except PackageTopologyError as exc:
+            raise ValueError(str(exc)) from exc
         if entry.archive_path in seen_archive_paths:
             raise ValueError(f"duplicate archive path: {entry.archive_path}")
         seen_archive_paths.add(entry.archive_path)

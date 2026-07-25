@@ -105,7 +105,7 @@ def _inventory_declarations(
     )
 
 
-def test_current_successor_is_available_and_pr124_authorized() -> None:
+def test_current_successor_is_available_but_not_currently_authoritative() -> None:
     registry = current_mes_successor_registry()
     pointer = registry.successor
 
@@ -116,10 +116,10 @@ def test_current_successor_is_available_and_pr124_authorized() -> None:
     assert (
         pointer.scientific_status is MesScientificAuthorityStatus.AUTHORIZED_BY_PR124
     )
-    # governance authority at conditional C1 (pins match + live verification
-    # is re-run by validate_mes_successor_registry below)
-    assert pointer.scientific_authority is True
-    assert registry.as_payload()["release_claim_allowed"] is True
+    # The status and receipt describe the historical PR-124 event. Stored
+    # bytes do not replace a parent-observed current CAS run.
+    assert pointer.scientific_authority is False
+    assert registry.as_payload()["release_claim_allowed"] is False
 
 
 @pytest.mark.parametrize(
@@ -197,12 +197,15 @@ def test_egs3_pass_binds_source_and_seal_but_has_no_scientific_authority() -> No
     )
 
 
-def test_current_registry_validates_clean_under_pr124_authority() -> None:
+def test_current_registry_blocks_stored_pr124_cas_authority() -> None:
     report = validate_mes_successor_registry(REPO_ROOT)
 
-    assert finding_codes(report) == frozenset()
-    assert report.release_allowed is True
-    report.assert_release_allowed()
+    assert finding_codes(report) == frozenset({
+        MesConsumerIssueCode.SCIENTIFIC_AUTHORITY_BLOCKED.value
+    })
+    assert report.release_allowed is False
+    with pytest.raises(MesRegistryError, match="SCIENTIFIC_AUTHORITY_BLOCKED"):
+        report.assert_release_allowed()
 
 
 def test_witness_source_and_seal_hashes_are_checked_separately(
@@ -607,7 +610,7 @@ def test_self_asserted_successor_source_is_not_auto_promoted(
     assert report.release_allowed is False
 
 
-def test_inventory_is_exact_hash_pinned_and_matches_ast_discovery() -> None:
+def test_inventory_is_historical_snapshot_and_matches_live_ast_discovery() -> None:
     payload = _inventory()
     declarations = _inventory_declarations(payload)
 
@@ -625,9 +628,14 @@ def test_inventory_is_exact_hash_pinned_and_matches_ast_discovery() -> None:
     assert report.consumers_scanned == len(declarations) == 22
     assert tuple(payload["active_python_roots"]) == DEFAULT_ACTIVE_PYTHON_ROOTS
 
+    snapshot_mismatches = []
     for row in payload["active_consumers"]:
         assert set(row) == {"consumer_id", "path", "sha256"}
-        assert row["sha256"] == _digest(REPO_ROOT / row["path"])
+        assert len(row["sha256"]) == 64
+        int(row["sha256"], 16)
+        if row["sha256"] != _digest(REPO_ROOT / row["path"]):
+            snapshot_mismatches.append(row["consumer_id"])
+    assert "mio.formalism.budget_spec" in snapshot_mismatches
     for row in payload["excluded_consumers"]:
         assert set(row) == {"exclusion_id", "path", "sha256", "reason"}
         assert row["path"].endswith(".py")
@@ -785,7 +793,7 @@ def test_repository_inventory_roots_and_exclusions_cannot_be_overridden() -> Non
         )
 
 
-def test_yaml_active_hash_cannot_be_replaced_by_caller_declaration(
+def test_yaml_snapshot_hash_cannot_be_replaced_but_is_not_live_authority(
     tmp_path: Path,
 ) -> None:
     _copy_current_registry_inputs(tmp_path)
@@ -833,7 +841,14 @@ def test_yaml_active_hash_cannot_be_replaced_by_caller_declaration(
         ),
     )
     report = scan_declared_mes_consumers(tmp_path, (stale_declaration,))
-    assert MesConsumerIssueCode.SOURCE_HASH_MISMATCH.value in finding_codes(report)
+    assert (
+        MesConsumerIssueCode.SOURCE_HASH_MISMATCH.value
+        not in finding_codes(report)
+    )
+    assert (
+        MesConsumerIssueCode.SUCCESSOR_POINTER_MISSING.value
+        not in finding_codes(report)
+    )
 
 
 def test_inventory_symlink_cannot_disable_repository_controls(

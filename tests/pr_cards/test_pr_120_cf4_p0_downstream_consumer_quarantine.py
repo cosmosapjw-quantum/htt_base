@@ -120,6 +120,41 @@ def test_contextual_scan_preserves_false_positive_controls(text: str):
     )
 
 
+def test_active_payload_scan_does_not_require_repository_bound_evidence(
+    tmp_path: Path,
+):
+    clean_root = tmp_path / "clean-clone"
+    policy_path = clean_root / quarantine.POLICY_RELATIVE_PATH
+    policy_path.parent.mkdir(parents=True)
+    policy_path.write_bytes((REPO / quarantine.POLICY_RELATIVE_PATH).read_bytes())
+
+    issues = quarantine.validate_active_text(
+        "release/public_result.json",
+        "CF4 MV bulk-flow B200 amplitude 405.22 km/s",
+        repo_root=clean_root,
+    )
+
+    assert {issue.signature_id for issue in issues} == {"cf4_mv_r200_headline"}
+
+
+def test_active_payload_scan_rejects_malformed_signature_policy(tmp_path: Path):
+    clean_root = tmp_path / "clean-clone"
+    policy_path = clean_root / quarantine.POLICY_RELATIVE_PATH
+    policy_path.parent.mkdir(parents=True)
+    payload = yaml.safe_load(
+        (REPO / quarantine.POLICY_RELATIVE_PATH).read_text(encoding="utf-8")
+    )
+    payload["stale_signatures"][0]["token_regex"] = "("
+    policy_path.write_text(yaml.safe_dump(payload), encoding="utf-8")
+
+    with pytest.raises(quarantine.CF4P0PolicyError, match="invalid regex"):
+        quarantine.validate_active_text(
+            "release/public_result.json",
+            "CF4 MV bulk-flow B200 amplitude 405.22 km/s",
+            repo_root=clean_root,
+        )
+
+
 @pytest.mark.parametrize("padding", [255, 256, 300, 420, 421])
 def test_context_window_cannot_be_evaded_at_declared_boundaries(padding: int):
     text = "CF4 bulk-flow amplitude " + ("x" * padding) + "405.22 km/s"
@@ -1029,6 +1064,37 @@ def test_existing_embedded_block_artifacts_match_a_finite_strict_schema():
         } & {issue.code for issue in issues}, [issue.to_dict() for issue in issues]
         checked += 1
     assert checked >= 20
+
+
+@pytest.mark.parametrize(
+    ("field", "value"),
+    [
+        ("active_png", "figures/unrelated/other.png"),
+        ("artifact_id", "unrelated_figure"),
+    ],
+)
+def test_figure_block_artifact_binds_output_path_and_identity(
+    field: str,
+    value: str,
+):
+    path = (
+        "figures/data_analysis_current/"
+        "fig_data_observed_sector_proxy_coordinates.manifest.json"
+    )
+    payload = json.loads((REPO / path).read_text(encoding="utf-8"))
+    payload["artifact"][field] = value
+
+    issues = quarantine._validate_embedded_block_record(
+        path,
+        json.dumps(payload),
+        _raw_canonical_block(),
+        require_path_match=False,
+    )
+
+    assert any(
+        issue.code == "invalid_embedded_quarantine_artifact_schema"
+        for issue in issues
+    ), [issue.to_dict() for issue in issues]
 
 
 def test_inventory_hash_mutation_is_rejected(tmp_path: Path, monkeypatch):

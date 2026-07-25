@@ -171,6 +171,53 @@ def test_invalid_artifact_manifest_structure_is_rejected(tmp_path: Path) -> None
         _verify_artifact_manifest(tmp_path, manifest)
 
 
+def test_artifact_manifest_rejects_path_aliases_and_symlink_parents(
+    tmp_path: Path,
+) -> None:
+    source = tmp_path / "source.txt"
+    artifact = tmp_path / "artifact.txt"
+    source.write_text("source\n", encoding="utf-8")
+    artifact.write_text("artifact\n", encoding="utf-8")
+    source_hash = hashlib.sha256(source.read_bytes()).hexdigest()
+    artifact_hash = hashlib.sha256(artifact.read_bytes()).hexdigest()
+    manifest = tmp_path / "manifest.json"
+    payload = {
+        "schema": "htt.pr122.artifact_manifest.v1",
+        "owner": "COMMON",
+        "implementation_scope": "common",
+        "claim_tier": "exploratory",
+        "transfer_source": "none",
+        "config_hash": "0" * 64,
+        "input_hashes": [f"source.txt:{source_hash}"],
+        "sky_support_status": "not_directional",
+        "null_mock_status": "not_statistical",
+        "caveats": ["test-only invalid manifest"],
+        "generating_command": "test-only",
+        "git_commit_or_worktree_state": "test-only",
+        "artifacts": [
+            {
+                "path": "sub/../artifact.txt",
+                "sha256": artifact_hash,
+                "artifact_role": "test",
+            }
+        ],
+    }
+    (tmp_path / "sub").mkdir()
+    manifest.write_text(json.dumps(payload, sort_keys=True), encoding="utf-8")
+    with pytest.raises(
+        EvidenceGraphError, match="canonical repository-relative"
+    ):
+        _verify_artifact_manifest(tmp_path, manifest)
+
+    (tmp_path / "real").mkdir()
+    (tmp_path / "real" / "artifact.txt").write_bytes(artifact.read_bytes())
+    (tmp_path / "alias").symlink_to(tmp_path / "real", target_is_directory=True)
+    payload["artifacts"][0]["path"] = "alias/artifact.txt"
+    manifest.write_text(json.dumps(payload, sort_keys=True), encoding="utf-8")
+    with pytest.raises(EvidenceGraphError, match="symlink component"):
+        _verify_artifact_manifest(tmp_path, manifest)
+
+
 def test_data_only_pin_rejects_noncanonical_trust_root_fields() -> None:
     pin_source = REPO_ROOT / "htt/src/common/release_evidence_pin.py"
     tree = ast.parse(pin_source.read_text(encoding="utf-8"))
@@ -220,7 +267,7 @@ def test_executable_release_pin_payload_is_rejected_without_execution(
     assert not sentinel.exists()
 
 
-def test_graph_bound_verifier_source_drift_is_rejected(tmp_path: Path) -> None:
+def test_historical_source_hash_is_not_live_authority(tmp_path: Path) -> None:
     source = tmp_path / "verifier.py"
     source.write_text("VALUE = 1\n", encoding="utf-8")
     node = EvidenceNode(
@@ -238,5 +285,26 @@ def test_graph_bound_verifier_source_drift_is_rejected(tmp_path: Path) -> None:
     _verify_graph_sources(tmp_path, graph)  # type: ignore[arg-type]
 
     source.write_text("VALUE = 2\n", encoding="utf-8")
+    _verify_graph_sources(tmp_path, graph)  # type: ignore[arg-type]
+
+
+def test_non_source_graph_input_drift_is_rejected(tmp_path: Path) -> None:
+    source = tmp_path / "config.yaml"
+    source.write_text("value: 1\n", encoding="utf-8")
+    node = EvidenceNode(
+        kind=EvidenceNodeKind.INPUT,
+        label="frozen-config",
+        content_sha256=hashlib.sha256(source.read_bytes()).hexdigest(),
+        axes=EvidenceAxes(
+            ProcessResult.PASS,
+            EvidenceStatus.PRESENT,
+            ScientificStatus.OPEN,
+        ),
+        metadata={"path": "config.yaml"},
+    )
+    graph = SimpleNamespace(nodes=(node,))
+    _verify_graph_sources(tmp_path, graph)  # type: ignore[arg-type]
+
+    source.write_text("value: 2\n", encoding="utf-8")
     with pytest.raises(EvidenceGraphError, match="file hash mismatch"):
         _verify_graph_sources(tmp_path, graph)  # type: ignore[arg-type]

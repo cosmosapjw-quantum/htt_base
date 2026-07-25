@@ -33,6 +33,7 @@ _NULL_PREDICTIVE_CAVEAT = (
     "MIO FLRW tail summaries are diagnostic-only and do not provide HTT "
     "model-dependent inference outputs or validation."
 )
+_FLRW_NULL_FEATURE_TARGET = "flrw_null_predictive_check"
 _TAIL_TO_NULL_PAYLOAD_TAIL = {
     "greater": "upper_tail",
     "less": "lower_tail",
@@ -303,6 +304,11 @@ def _validate_null_predictive_payload(
     payload = dict(null_predictive_payload)
     if payload["null_family"] != "flrw_mask_noise":
         raise ValueError("null_predictive_payload.null_family must be flrw_mask_noise")
+    if _FLRW_NULL_FEATURE_TARGET not in payload["feature_targets"]:
+        raise ValueError(
+            "null_predictive_payload.feature_targets must include "
+            "flrw_null_predictive_check"
+        )
 
     report_stats = {item.name: item for item in report.statistics}
     payload_p_values = {
