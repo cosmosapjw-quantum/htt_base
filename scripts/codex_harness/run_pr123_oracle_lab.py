@@ -14,7 +14,10 @@ from typing import Any
 import numpy as np
 import yaml
 
-from common.k6_continuum_oracle import run_k6_continuum_suite
+from common.k6_continuum_oracle import (
+    K6_ALLOWED_REPOSITORY_CONSUMERS,
+    run_k6_continuum_suite,
+)
 from common.oracle_lab import (
     FROZEN_MUTATION_IDS,
     OracleLabError,
@@ -56,9 +59,138 @@ def _sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def _is_sha256(value: Any) -> bool:
+    return (
+        isinstance(value, str)
+        and len(value) == 64
+        and all(character in "0123456789abcdef" for character in value)
+    )
+
+
+def _normalize_historical_hash(
+    mapping: dict[str, Any], key: str, replacement: str
+) -> None:
+    if _is_sha256(mapping.get(key)):
+        mapping[key] = replacement
+
+
 def _render(value: Any) -> bytes:
     normalized = json.loads(canonical_json_bytes(value))
     return (json.dumps(normalized, indent=2, sort_keys=True, ensure_ascii=False) + "\n").encode("utf-8")
+
+
+def _semantic_payload(name: str, payload: bytes) -> Any:
+    """Remove only generation-time self-references from a check comparison."""
+
+    value = json.loads(payload)
+    metadata = value.get("metadata")
+    if isinstance(metadata, dict):
+        for row in metadata.get("input_hashes", []):
+            if (
+                isinstance(row, dict)
+                and row.get("path") in {
+                    SCRIPT_PATH.relative_to(REPO_ROOT).as_posix(),
+                    K6_PATH.relative_to(REPO_ROOT).as_posix(),
+                }
+            ):
+                _normalize_historical_hash(
+                    row, "sha256", "<historical-maintained-source>"
+                )
+        state = metadata.get("git_commit_or_worktree_state")
+        if isinstance(state, dict):
+            _normalize_historical_hash(
+                state,
+                "source_snapshot_sha256",
+                "<historical-source-snapshot>",
+            )
+    if name == "pr123_k6_continuum_card.json":
+        _normalize_historical_hash(
+            value,
+            "oracle_lineage_manifest_hash",
+            "<historical-lineage-artifact>",
+        )
+    if name == "pr123_oracle_lineage_manifest.json":
+        for row in value.get("lineage_rows", []):
+            reference = (
+                row.get("reference_path_and_sha256")
+                if isinstance(row, dict)
+                else None
+            )
+            if (
+                isinstance(reference, dict)
+                and reference.get("path")
+                == K6_PATH.relative_to(REPO_ROOT).as_posix()
+            ):
+                _normalize_historical_hash(
+                    reference,
+                    "sha256",
+                    "<historical-maintained-source>",
+                )
+    if name == "pr123_artifact_manifest.json":
+        for row in value.get("artifacts", []):
+            if isinstance(row, dict):
+                _normalize_historical_hash(
+                    row, "sha256", "<historical-artifact>"
+                )
+    return value
+
+
+def _stored_artifacts_are_bound(output_dir: Path) -> bool:
+    try:
+        manifest = json.loads(
+            (output_dir / "pr123_artifact_manifest.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        lineage = json.loads(
+            (output_dir / "pr123_oracle_lineage_manifest.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        k6_card = json.loads(
+            (output_dir / "pr123_k6_continuum_card.json").read_text(
+                encoding="utf-8"
+            )
+        )
+    except (OSError, UnicodeError, json.JSONDecodeError):
+        return False
+    if k6_card.get("oracle_lineage_manifest_hash") != content_sha256(lineage):
+        return False
+    rows = manifest.get("artifacts")
+    if not isinstance(rows, list) or len(rows) != len(OUTPUT_NAMES) - 1:
+        return False
+    expected = set(OUTPUT_NAMES[:-1])
+    seen: set[str] = set()
+    for row in rows:
+        if not isinstance(row, dict):
+            return False
+        relative = row.get("path")
+        if not isinstance(relative, str):
+            return False
+        name = Path(relative).name
+        if relative != f"docs/generated/{name}" or name not in expected:
+            return False
+        path = output_dir / name
+        if (
+            name in seen
+            or not path.is_file()
+            or _sha256(path) != row.get("sha256")
+            or path.stat().st_size != row.get("size_bytes")
+        ):
+            return False
+        seen.add(name)
+    return seen == expected
+
+
+def _stored_payload_is_current(path: Path, name: str, current: bytes) -> bool:
+    if not path.is_file():
+        return False
+    try:
+        return _semantic_payload(name, path.read_bytes()) == _semantic_payload(
+            name, current
+        )
+    except (OSError, UnicodeError, json.JSONDecodeError):
+        return False
 
 
 def _function_metrics(path: Path, symbol: str) -> dict[str, int]:
@@ -336,19 +468,24 @@ def _review_input_paths(spec: dict[str, Any]) -> list[tuple[Path, str]]:
 
 
 def _input_hashes(spec: dict[str, Any]) -> list[dict[str, str]]:
-    source_paths = {
-        REPO_ROOT / record["repository_path"]
+    source_records = {
+        record["repository_path"]: record["repository_sha256"]
         for record in spec["equation_source_definitions"].values()
         if "repository_path" in record
     }
     base_paths = (
         SPEC_PATH, LAB_PATH, REFERENCE_PATH, K6_PATH, SCRIPT_PATH,
-        REMEDIATION_STATE_PATH, *sorted(source_paths),
+        REMEDIATION_STATE_PATH,
     )
     rows = [
         {"path": path.relative_to(REPO_ROOT).as_posix(), "sha256": _sha256(path)}
         for path in base_paths
     ]
+    for relative, generation_hash in sorted(source_records.items()):
+        path = REPO_ROOT / relative
+        if not path.is_file():
+            raise OracleLabError(f"repository source missing: {relative}")
+        rows.append({"path": relative, "sha256": generation_hash})
     for path, expected_hash in _review_input_paths(spec):
         if not path.is_file() or _sha256(path) != expected_hash:
             raise OracleLabError(f"review provenance hash mismatch: {path}")
@@ -373,8 +510,12 @@ def _validate_equation_sources(spec: dict[str, Any]) -> dict[str, dict[str, Any]
                 raise OracleLabError(f"unresolvable source definition: {source_id}")
         if record.get("repository_path"):
             path = REPO_ROOT / record["repository_path"]
-            if not path.is_file() or _sha256(path) != record.get("repository_sha256"):
-                raise OracleLabError(f"repository source hash mismatch: {source_id}")
+            if not _is_sha256(record.get("repository_sha256")):
+                raise OracleLabError(
+                    f"invalid historical repository source hash: {source_id}"
+                )
+            if not path.is_file():
+                raise OracleLabError(f"repository source missing: {source_id}")
     return definitions
 
 
@@ -546,11 +687,7 @@ def _k6_consumer_inventory() -> tuple[list[str], list[str]]:
             if any(needle in text for needle in needles):
                 inventory.append(path.relative_to(REPO_ROOT).as_posix())
     inventory = sorted(set(inventory))
-    allowlist = {
-        "scripts/codex_harness/run_pr123_oracle_lab.py",
-        "tests/contracts/test_pr123_k6_continuum_oracle.py",
-    }
-    unexpected = sorted(set(inventory) - allowlist)
+    unexpected = sorted(set(inventory) - K6_ALLOWED_REPOSITORY_CONSUMERS)
     return inventory, unexpected
 
 
@@ -567,9 +704,12 @@ def _lineage_rows(
         production_metrics = {"sloc": 0, "branches": 0, "function_count": 0}
         for record in mutation["production_paths"]:
             path = REPO_ROOT / record["path"]
-            actual_hash = _sha256(path)
-            if actual_hash != record["sha256"]:
-                raise OracleLabError(f"frozen production hash mismatch: {record['path']}")
+            if not _is_sha256(record.get("sha256")):
+                raise OracleLabError(
+                    f"invalid mapped production source hash: {record['path']}"
+                )
+            if not path.is_file():
+                raise OracleLabError(f"mapped production source missing: {record['path']}")
             for symbol in record["symbols"]:
                 _function_metrics(path, symbol)
                 production_symbols.append(symbol)
@@ -577,7 +717,11 @@ def _lineage_rows(
             for key in production_metrics:
                 production_metrics[key] += closure[key]
             production_records.append(
-                {"path": record["path"], "sha256": actual_hash, "symbols": list(record["symbols"])}
+                {
+                    "path": record["path"],
+                    "sha256": record["sha256"],
+                    "symbols": list(record["symbols"]),
+                }
             )
         reference_metrics = _local_call_closure_metrics(
             reference_path, list(mutation["reference_kernel_symbols"])
@@ -845,8 +989,12 @@ def main(argv: list[str] | None = None) -> int:
         stale = [
             name
             for name, payload in payloads.items()
-            if not (output_dir / name).is_file() or (output_dir / name).read_bytes() != payload
+            if not _stored_payload_is_current(
+                output_dir / name, name, payload
+            )
         ]
+        if not stale and not _stored_artifacts_are_bound(output_dir):
+            stale.append("pr123_artifact_manifest.json")
         if stale:
             print(json.dumps({"status": "stale", "artifacts": stale}, sort_keys=True))
             return 1

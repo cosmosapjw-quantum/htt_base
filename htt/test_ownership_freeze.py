@@ -70,6 +70,19 @@ def _collect_imports(path: Path) -> Set[str]:
     return names
 
 
+def _unexpected_top_level_solver_modules(root: Path) -> Set[str]:
+    """Return production modules that violate the frozen package layout."""
+
+    allowed_scaffolding = {"conftest.py", "precision_dashboard.py"}
+    return {
+        path.name
+        for path in root.glob("*.py")
+        if path.name != "__init__.py"
+        and not path.name.startswith("test_")
+        and path.name not in allowed_scaffolding
+    }
+
+
 # ============================================================================
 # Test Class 1 - Directory structure
 # ============================================================================
@@ -104,17 +117,23 @@ class TestDirectoryStructure:
 
     def test_no_stale_top_level_solver_modules(self):
         # After the freeze, solver modules must not live at repo root.
-        # precision_dashboard and conftest are allowed; test_ownership_freeze
-        # is this file. Everything else at root should not be a solver file.
-        allowed_at_root = {
-            "precision_dashboard.py",
-            "conftest.py",
-            "test_precision_dashboard.py",
-            "test_ownership_freeze.py",
-        }
-        root_py = {p.name for p in ROOT.glob("*.py")}
-        stray = root_py - allowed_at_root
+        # Package/test scaffolding is not a solver module; every other
+        # production module must live below its owning package.
+        stray = _unexpected_top_level_solver_modules(ROOT)
         assert not stray, f"unexpected root-level .py files: {sorted(stray)}"
+
+    def test_top_level_solver_check_still_rejects_production_modules(self, tmp_path):
+        for filename in (
+            "__init__.py",
+            "conftest.py",
+            "precision_dashboard.py",
+            "test_packaging.py",
+        ):
+            (tmp_path / filename).touch()
+        assert _unexpected_top_level_solver_modules(tmp_path) == set()
+
+        (tmp_path / "solver.py").touch()
+        assert _unexpected_top_level_solver_modules(tmp_path) == {"solver.py"}
 
 
 # ============================================================================
