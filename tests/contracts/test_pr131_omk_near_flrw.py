@@ -161,6 +161,9 @@ def test_plateau_report_gate() -> None:
     with pytest.raises(OmkNearFlrwError, match="outside the declared"):
         validate_plateau_report({"claimed_c2": "-34/605", "w": "2",
                                  "probe_K": "1/100000"})
+    with pytest.raises(OmkNearFlrwError, match="positive probe"):
+        validate_plateau_report({"claimed_c2": "-26/175", "w": "0",
+                                 "probe_K": "0"})
     with pytest.raises(OmkNearFlrwError, match="not\na derivation|not "
                        "a derivation"):
         validate_plateau_report({"claimed_c2": "-0.2485714", "w": "0",

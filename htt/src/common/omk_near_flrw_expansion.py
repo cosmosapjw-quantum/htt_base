@@ -572,6 +572,10 @@ def validate_plateau_report(report: Mapping) -> None:
     c2_exact = mpmath.mpf(sp.Rational(c2).p) / mpmath.mpf(
         sp.Rational(c2).q)
     probe = Fraction(str(report.get("probe_K")))
+    if probe <= 0:
+        raise OmkNearFlrwError(
+            "plateau claim must carry a strictly positive probe magnitude"
+        )
     envelope = 5 * mpmath.mpf(probe.numerator) / mpmath.mpf(
         probe.denominator)
     if abs(c2_claim - c2_exact) > envelope:
