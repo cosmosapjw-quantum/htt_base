@@ -487,15 +487,32 @@ def observed_response(window: Mapping | None = None) -> dict:
     if window:
         collinear = window.get("collinear_axes") or []
         for pair in collinear:
-            i, j = (RESPONSE_AXES.index(pair[0]),
-                    RESPONSE_AXES.index(pair[1]))
+            try:
+                axes = tuple(pair)
+            except TypeError as exc:
+                raise SourceResponseError(
+                    "collinear_axes entries must name the two active "
+                    "response axes"
+                ) from exc
+            if (
+                len(axes) != 2
+                or any(not isinstance(axis, str) for axis in axes)
+                or set(axes) != set(_ACTIVE_AXES)
+                or aligned_pairs
+            ):
+                raise SourceResponseError(
+                    "collinear_axes must contain exactly one pair of "
+                    "the two distinct active response axes"
+                )
+            i, j = (RESPONSE_AXES.index(axes[0]),
+                    RESPONSE_AXES.index(axes[1]))
             # a window that makes axis j respond collinearly with axis i:
             # every row's axis-j entry is folded onto axis i, killing the
             # independent j-direction contribution.
             for row in rows:
                 row[i] = row[i] + row[j]
                 row[j] = Fraction(0)
-            aligned_pairs.append(sorted(pair))
+            aligned_pairs.append(sorted(axes))
     observed_rank = _exact_rank(rows)
     analytic = analytic_response_rank()
     exception = None

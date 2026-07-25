@@ -225,6 +225,16 @@ def test_response_graph_analytic_vs_observed() -> None:
                                     "aligned_axis_exception": None})
 
 
+@pytest.mark.parametrize("pairs", [
+    [("Sigma2", "Sigma2")],
+    [("W2", "DeltaOmega_k")],
+    [("Sigma2", "Omega_tilt"), ("Omega_tilt", "Sigma2")],
+])
+def test_observed_response_rejects_invalid_collinear_axes(pairs) -> None:
+    with pytest.raises(SourceResponseError, match="active response axes"):
+        observed_response({"collinear_axes": pairs})
+
+
 def test_discrimination_verdict() -> None:
     assert discrimination_verdict(boost_removed=False, local_rank=2,
                                   global_rank=2, full_rank=2) == \
