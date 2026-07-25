@@ -164,6 +164,20 @@ def run_sbc(model: GaussianModel, *, n_simulations: int,
     import numpy as np
 
     verify_sbc_lineage(lineage_hash, model, config)
+    for name, value in (
+        ("n_simulations", n_simulations),
+        ("n_draws", n_draws),
+        ("n_bins", n_bins),
+    ):
+        if (
+            isinstance(value, (bool, np.bool_))
+            or not isinstance(value, (int, np.integer))
+            or value <= 0
+        ):
+            raise SbcPpcError(f"{name} must be a positive integer")
+    n_simulations = int(n_simulations)
+    n_draws = int(n_draws)
+    n_bins = int(n_bins)
     if not (2 <= n_bins <= n_draws + 1):
         raise SbcPpcError(
             f"n_bins {n_bins} must be in [2, n_draws+1={n_draws + 1}]")

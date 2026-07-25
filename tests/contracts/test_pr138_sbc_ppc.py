@@ -136,6 +136,35 @@ def test_sbc_lineage_mandatory_and_nbins_load_bearing() -> None:
         _run_sbc(GOOD, n_simulations=100, n_draws=20, seed=1, n_bins=4)
 
 
+@pytest.mark.parametrize(
+    "field,value",
+    [
+        ("n_simulations", -1),
+        ("n_simulations", 0),
+        ("n_simulations", True),
+        ("n_simulations", 2.5),
+        ("n_draws", -1),
+        ("n_draws", 0),
+        ("n_draws", True),
+        ("n_draws", 2.5),
+        ("n_bins", -1),
+        ("n_bins", 0),
+        ("n_bins", True),
+        ("n_bins", 2.5),
+    ],
+)
+def test_sbc_rejects_invalid_counts(field, value) -> None:
+    kwargs = {
+        "n_simulations": 100,
+        "n_draws": 20,
+        "seed": 1,
+        "n_bins": 7,
+    }
+    kwargs[field] = value
+    with pytest.raises(SbcPpcError, match=f"{field} must be a positive integer"):
+        _run_sbc(GOOD, **kwargs)
+
+
 def test_sbc_verdict_cannot_be_bypassed_by_claim_or_floor() -> None:
     bad = _run_sbc(
         GaussianModel(Fraction(4), Fraction(1), 8, Fraction(1, 2)),
