@@ -237,11 +237,40 @@ def joint_covariance(sub: Cf4Sample, preps, *, n_mock: int, seed: int) -> dict:
 
 
 def require_positive_definite(cov_report: dict) -> None:
-    if not cov_report["positive_definite"]:
+    try:
+        reported = cov_report["positive_definite"]
+    except (KeyError, TypeError) as exc:
+        raise GrowthCovarianceError(
+            "the joint covariance report is missing its PSD disposition"
+        ) from exc
+    if (
+        not isinstance(reported, (bool, np.bool_))
+        or not bool(reported)
+    ):
         raise GrowthCovarianceError(
             "the joint covariance is not positive-definite — the covariance is "
             "not identified; report a bound/nonidentification, not a precision "
             "sigma")
+    cov = np.asarray(cov_report.get("joint_covariance"))
+    if (
+        cov.ndim != 2
+        or cov.shape[0] == 0
+        or cov.shape[0] != cov.shape[1]
+        or not np.issubdtype(cov.dtype, np.number)
+        or not np.isrealobj(cov)
+        or not np.all(np.isfinite(cov))
+    ):
+        raise GrowthCovarianceError(
+            "the joint covariance report must include a finite real square "
+            "matrix")
+    if not np.allclose(cov, cov.T, rtol=1e-10, atol=1e-12):
+        raise GrowthCovarianceError(
+            "the reported joint covariance matrix is not symmetric")
+    ev = np.linalg.eigvalsh(0.5 * (cov + cov.T))
+    if not np.all(ev > 0):
+        raise GrowthCovarianceError(
+            "the reported joint covariance matrix is not positive-definite — "
+            "the covariance is not identified")
 
 
 # --------------------------------------------------------------------------

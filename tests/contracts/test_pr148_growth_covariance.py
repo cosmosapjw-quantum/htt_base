@@ -122,9 +122,43 @@ def test_guards() -> None:
 
 
 def test_require_positive_definite() -> None:
-    require_positive_definite({"positive_definite": True})   # fine
+    require_positive_definite({
+        "positive_definite": True,
+        "joint_covariance": np.eye(2).tolist(),
+    })
     with pytest.raises(GrowthCovarianceError, match="not identified"):
         require_positive_definite({"positive_definite": False})
+
+
+@pytest.mark.parametrize("report, message", [
+    ({"positive_definite": True}, "must include a finite real square"),
+    (
+        {
+            "positive_definite": True,
+            "joint_covariance": [[1.0, 2.0], [2.0, 1.0]],
+        },
+        "not positive-definite",
+    ),
+    (
+        {
+            "positive_definite": True,
+            "joint_covariance": [[1.0, np.nan], [np.nan, 1.0]],
+        },
+        "finite real square",
+    ),
+    (
+        {
+            "positive_definite": True,
+            "joint_covariance": [[2.0, 3.0], [0.0, 2.0]],
+        },
+        "not symmetric",
+    ),
+])
+def test_positive_definite_guard_recomputes_matrix_evidence(
+    report: dict, message: str
+) -> None:
+    with pytest.raises(GrowthCovarianceError, match=message):
+        require_positive_definite(report)
 
 
 def test_growth_difference_nonidentified_when_endpoint_unconstrained() -> None:
