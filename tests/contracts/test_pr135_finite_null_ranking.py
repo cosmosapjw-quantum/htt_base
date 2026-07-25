@@ -102,6 +102,30 @@ def test_non_conservative_tie_rejected() -> None:
         pooled_rank_p(1.0, [1.0, 2.0], tie_policy="strict_gt")
 
 
+@pytest.mark.parametrize("obs,nulls", [
+    (float("nan"), [1.0, 2.0]),
+    (float("inf"), [1.0, 2.0]),
+    (True, [1.0, 2.0]),
+    (1.0, [float("nan"), 2.0]),
+    (1.0, [float("inf"), 2.0]),
+    (1.0, [True, 2.0]),
+])
+def test_pooled_rank_rejects_invalid_scores(obs, nulls) -> None:
+    with pytest.raises(FiniteNullError, match="finite non-boolean"):
+        pooled_rank_p(obs, nulls)
+
+
+@pytest.mark.parametrize("row", [
+    [float("nan"), 1.0],
+    [1.0, float("nan")],
+    [float("inf"), 1.0],
+    [True, 1.0],
+])
+def test_scan_rank_rejects_invalid_scores(row) -> None:
+    with pytest.raises(FiniteNullError, match="finite non-boolean"):
+        scan_pooled_rank_p(row, [[0.0, 1.0]])
+
+
 def test_dependence_preserving_scan() -> None:
     obs = [0.4, 1.1, 0.9, 0.7, 0.5]
     nulls = [[0.3, 0.5, 0.4, 0.6, 0.2],

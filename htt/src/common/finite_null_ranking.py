@@ -30,6 +30,7 @@ import json
 import math
 from dataclasses import dataclass
 from fractions import Fraction
+from numbers import Real
 from typing import Sequence
 
 SCHEMA_VERSION = "pr135.finite_null_ranking.v1"
@@ -37,6 +38,16 @@ SCHEMA_VERSION = "pr135.finite_null_ranking.v1"
 
 class FiniteNullError(ValueError):
     """Raised on any ranking / resolution / calibration violation."""
+
+
+def _require_finite_score(value, label: str) -> None:
+    if (
+        isinstance(value, bool)
+        or not isinstance(value, Real)
+        or not math.isfinite(float(value))
+    ):
+        raise FiniteNullError(
+            f"{label} must be a finite non-boolean real score")
 
 
 # ---------------------------------------------------------------------------
@@ -58,6 +69,9 @@ def pooled_rank_p(obs_score: float, null_scores: Sequence[float],
     n = len(nulls)
     if n == 0:
         raise FiniteNullError("need at least one null row")
+    _require_finite_score(obs_score, "observation score")
+    for index, score in enumerate(nulls):
+        _require_finite_score(score, f"null score {index}")
     b = sum(1 for s in nulls if s >= obs_score)
     p = Fraction(1 + b, n + 1)
     if p <= 0:
@@ -85,6 +99,9 @@ def naive_zero_permitting_p(obs_score: float,
     n = len(nulls)
     if n == 0:
         raise FiniteNullError("need at least one null row")
+    _require_finite_score(obs_score, "observation score")
+    for index, score in enumerate(nulls):
+        _require_finite_score(score, f"null score {index}")
     b = sum(1 for s in nulls if s >= obs_score)
     return Fraction(b, n)
 
@@ -122,6 +139,8 @@ def _max_scan_score(row: Sequence[float]) -> float:
     values = list(row)
     if not values:
         raise FiniteNullError("a scan row must be non-empty")
+    for index, value in enumerate(values):
+        _require_finite_score(value, f"scan score {index}")
     return max(values)
 
 
