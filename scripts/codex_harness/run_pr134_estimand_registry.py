@@ -53,6 +53,13 @@ OUTPUTS = {
     "manifest": "docs/generated/pr134_artifact_manifest.json",
 }
 REDACTED = "[REDACTED-PATTERN]"
+REPRESENTATIVE_IDS = {
+    "CF4_MV_BULKFLOW",
+    "K1_CMB_ISOTROPY",
+    "DESI_NUMBER_COUNT_DIPOLE",
+    "ACT_DR6_KAPPA",
+    "JWST_ANCHORS",
+}
 
 
 def _sha(path: Path) -> str:
@@ -155,8 +162,7 @@ def _build_registry(spec: dict) -> tuple[EstimandRegistry, dict]:
         raise SystemExit(
             "representative contracts contain duplicate analysis ids"
         )
-    expected = {r["analysis_id"] for r in rows}
-    if set(reg.ids()) != expected:
+    if set(reg.ids()) != REPRESENTATIVE_IDS:
         raise SystemExit("representative contract set drifted")
     if len(set(fingerprints.values())) != len(fingerprints):
         raise SystemExit("estimand fingerprints are not unique")

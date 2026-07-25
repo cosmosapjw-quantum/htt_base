@@ -103,6 +103,16 @@ def test_runner_rejects_duplicate_representative_contracts() -> None:
         })
 
 
+def test_runner_requires_all_five_representative_contracts() -> None:
+    runner = _load_runner()
+    rows = [
+        row for row in SPEC["representative_contracts"]
+        if row["analysis_id"] != "K1_CMB_ISOTROPY"
+    ]
+    with pytest.raises(SystemExit, match="contract set drifted"):
+        runner._build_registry({"representative_contracts": rows})
+
+
 def test_runner_binds_required_fields_to_production_contract() -> None:
     runner = _load_runner()
     with pytest.raises(SystemExit, match="production contract"):
