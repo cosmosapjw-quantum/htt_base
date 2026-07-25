@@ -207,6 +207,16 @@ def test_ppc_frozen_discrepancies_and_mandatory_lineage() -> None:
                                               "sample_mean"])
 
 
+@pytest.mark.parametrize("names", [
+    [],
+    ["sample_variance", "sample_variance"],
+    ["sample_variance", ""],
+])
+def test_discrepancy_registry_rejects_empty_or_duplicate_sets(names) -> None:
+    with pytest.raises(SbcPpcError, match="non-empty unique"):
+        freeze_discrepancies(names)
+
+
 def test_known_bad_ppc_is_extreme() -> None:
     # a mis-specified under-dispersed fit produces extreme p-values
     frozen = freeze_discrepancies(["sample_variance"])

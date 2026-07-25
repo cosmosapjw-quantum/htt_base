@@ -267,12 +267,31 @@ def _discrepancy(name: str) -> Callable:
     return table[name]
 
 
+def _validated_discrepancy_names(
+    names, *, require_known: bool = True
+) -> list[str]:
+    try:
+        names = list(names)
+    except TypeError as exc:
+        raise SbcPpcError(
+            "the frozen discrepancy set must be a non-empty unique list") from exc
+    if (
+        not names
+        or any(not isinstance(name, str) or not name for name in names)
+        or len(set(names)) != len(names)
+    ):
+        raise SbcPpcError(
+            "the frozen discrepancy set must be a non-empty unique list")
+    if require_known:
+        for name in names:
+            _discrepancy(name)
+    return names
+
+
 def freeze_discrepancies(names) -> dict:
     """Content-address the frozen discrepancy set BEFORE the data; the
     hash pins the set so it can never be swapped after a failure."""
-    names = list(names)
-    for n in names:
-        _discrepancy(n)   # validate each exists
+    names = _validated_discrepancy_names(names)
     canonical = json.dumps(sorted(names), sort_keys=True)
     return {"discrepancies": names,
             "frozen_hash": "disc-" + hashlib.sha256(
@@ -282,7 +301,9 @@ def freeze_discrepancies(names) -> dict:
 def require_frozen_discrepancies(frozen: dict, current_names) -> None:
     """Swapping a frozen discrepancy (a content-address change) after a
     failure is rejected."""
-    canonical = json.dumps(sorted(list(current_names)), sort_keys=True)
+    current_names = _validated_discrepancy_names(
+        current_names, require_known=False)
+    canonical = json.dumps(sorted(current_names), sort_keys=True)
     current_hash = "disc-" + hashlib.sha256(
         canonical.encode()).hexdigest()[:16]
     if current_hash != frozen["frozen_hash"]:
@@ -290,6 +311,8 @@ def require_frozen_discrepancies(frozen: dict, current_names) -> None:
             "the discrepancy set was changed after freezing (hash "
             f"{current_hash} != frozen {frozen['frozen_hash']}); "
             "swapping a discrepancy after a failure is refused")
+    for name in current_names:
+        _discrepancy(name)
 
 
 def run_ppc(model: GaussianModel, y_obs, frozen: dict, *,
