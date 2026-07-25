@@ -123,10 +123,42 @@ class AdmissibleBox:
     pinned_id: str
 
     def __post_init__(self) -> None:
+        lower = dict(self.lower)
+        upper = dict(self.upper)
+        unknown = (set(lower) | set(upper)) - set(AXES)
+        if unknown:
+            raise IdentifiedSetError(
+                f"admissible box contains unknown axes {sorted(unknown)}")
+        if not isinstance(self.pinned_id, str) or not self.pinned_id:
+            raise IdentifiedSetError("pinned_id must be a non-empty string")
+        normalized = {}
+        for axis in AXES:
+            normalized[axis] = {}
+            for side, bounds in (("lower", lower), ("upper", upper)):
+                value = bounds.get(axis)
+                if value is None:
+                    normalized[axis][side] = None
+                    continue
+                if isinstance(value, bool):
+                    raise IdentifiedSetError(
+                        f"{side} bound on {axis} must be a finite "
+                        "Fraction-compatible value")
+                try:
+                    normalized[axis][side] = Fraction(value)
+                except (TypeError, ValueError, ZeroDivisionError,
+                        OverflowError) as exc:
+                    raise IdentifiedSetError(
+                        f"{side} bound on {axis} must be a finite "
+                        "Fraction-compatible value") from exc
+            lo = normalized[axis]["lower"]
+            hi = normalized[axis]["upper"]
+            if lo is not None and hi is not None and lo > hi:
+                raise IdentifiedSetError(
+                    f"admissible lower bound exceeds upper bound on {axis}")
         object.__setattr__(
-            self, "lower", MappingProxyType(dict(self.lower)))
+            self, "lower", MappingProxyType(lower))
         object.__setattr__(
-            self, "upper", MappingProxyType(dict(self.upper)))
+            self, "upper", MappingProxyType(upper))
 
     def as_constraints(self) -> list[LinearConstraint]:
         cons = []

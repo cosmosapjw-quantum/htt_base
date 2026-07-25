@@ -377,6 +377,22 @@ def test_admissible_box_copies_and_freezes_pinned_bounds() -> None:
         box.upper["Omega_tilt"] = Fraction(0)
 
 
+@pytest.mark.parametrize("lower,upper,pinned_id,message", [
+    ({"typo": -1}, {"typo": 1}, "pin", "unknown axes"),
+    ({"Sigma2": 2}, {"Sigma2": 1}, "pin", "exceeds upper"),
+    ({"Sigma2": -1}, {"Sigma2": 1}, "", "non-empty string"),
+    ({"Sigma2": float("nan")}, {"Sigma2": 1}, "pin",
+     "finite Fraction-compatible"),
+    ({"Sigma2": True}, {"Sigma2": 1}, "pin",
+     "finite Fraction-compatible"),
+])
+def test_admissible_box_rejects_invalid_definition(
+    lower, upper, pinned_id, message
+) -> None:
+    with pytest.raises(IdentifiedSetError, match=message):
+        AdmissibleBox(lower=lower, upper=upper, pinned_id=pinned_id)
+
+
 def test_caption_gate() -> None:
     text = generate_caption({"bounded_box": "bounded"})
     lint_caption(text)
