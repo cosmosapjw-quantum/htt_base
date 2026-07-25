@@ -184,6 +184,9 @@ def test_response_ladder_no_auto_promotion(tmp_path: Path) -> None:
         Rung.LOCAL_DYNAMICS_ADMISSIBLE: None,
         Rung.GLOBAL_DYNAMICS_ADMISSIBLE: _DOPPLER_EV})
     assert labelled["highest_rung"] == "constraint_admissible"
+    assert set(labelled["evidence"]) == {
+        "algebraic_witness", "constraint_admissible"
+    }
     # an unresolvable pointer is a false citation -> raise
     with pytest.raises(SourceResponseError, match="does not resolve"):
         label_highest_rung({Rung.ALGEBRAIC_WITNESS: "docs/nope.json"})

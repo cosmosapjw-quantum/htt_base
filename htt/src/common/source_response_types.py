@@ -409,20 +409,21 @@ def label_highest_rung(evidence: Mapping[Rung, str | None]) -> dict:
     candidate below the gap — no rung is auto-promoted, and a missing
     lower pointer blocks the higher ones."""
     reached = None
+    reached_rungs = []
     for rung in _RUNG_ORDER:
         pointer = evidence.get(rung)
         if not pointer or not str(pointer).strip():
             break
         _require_repo_evidence_file(str(pointer), rung)
         reached = rung
+        reached_rungs.append(rung)
     if reached is None:
         raise SourceResponseError(
             "no rung reached: even algebraic_witness needs an evidence "
             "pointer that resolves (the ladder never auto-promotes)")
     return {
         "highest_rung": reached.value,
-        "evidence": {r.value: evidence.get(r) for r in _RUNG_ORDER
-                     if evidence.get(r)},
+        "evidence": {r.value: evidence[r] for r in reached_rungs},
     }
 
 
