@@ -475,16 +475,37 @@ class Preregistration:
                 "coverage requires a NEW calibration/evaluation split")
 
 
+def _validated_grid_values(values: Sequence[str], label: str) -> list[str]:
+    if isinstance(values, (str, bytes)) or not values:
+        raise WeakIdError(f"{label} must be a non-empty sequence")
+    normalized = list(values)
+    if any(not isinstance(value, str) or not value for value in normalized):
+        raise WeakIdError(
+            f"{label} must contain only non-empty string grid keys")
+    if len(set(normalized)) != len(normalized):
+        raise WeakIdError(f"{label} must not contain duplicate grid keys")
+    return normalized
+
+
 def require_full_grid(evaluated_w: Sequence[str],
                       registered_w: Sequence[str]) -> None:
     """Coverage must be computed over the FULL registered grid, never a
     central/high-signal subset."""
-    missing = [w for w in registered_w if w not in set(evaluated_w)]
+    evaluated = _validated_grid_values(evaluated_w, "evaluated grid")
+    registered = _validated_grid_values(registered_w, "registered grid")
+    evaluated_set = set(evaluated)
+    registered_set = set(registered)
+    missing = [w for w in registered if w not in evaluated_set]
     if missing:
         raise WeakIdError(
             f"coverage evaluated over a subset only; the grid points "
             f"{missing} are missing — computing coverage over central "
             "cases only is refused")
+    unexpected = [w for w in evaluated if w not in registered_set]
+    if unexpected:
+        raise WeakIdError(
+            f"coverage includes unregistered grid points {unexpected}; "
+            "the frozen evaluation grid must be matched exactly")
 
 
 def build_failure_map(point_results: Sequence[dict],
@@ -511,12 +532,21 @@ def require_failure_map_complete(reported_w: Sequence[str],
                                  all_w: Sequence[str]) -> None:
     """A failing grid point must remain in the reported grid, not be
     silently dropped."""
-    dropped = [w for w in all_w if w not in set(reported_w)]
+    reported = _validated_grid_values(reported_w, "reported grid")
+    registered = _validated_grid_values(all_w, "registered grid")
+    reported_set = set(reported)
+    registered_set = set(registered)
+    dropped = [w for w in registered if w not in reported_set]
     if dropped:
         raise WeakIdError(
             f"grid points {dropped} were dropped from the reported grid; "
             "a below-threshold corner must be PRESERVED in the failure "
             "map, never removed")
+    unexpected = [w for w in reported if w not in registered_set]
+    if unexpected:
+        raise WeakIdError(
+            f"reported grid contains unregistered points {unexpected}; "
+            "the frozen grid must be preserved exactly")
 
 
 # ---------------------------------------------------------------------------

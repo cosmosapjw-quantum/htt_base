@@ -259,8 +259,41 @@ def test_full_grid_and_failure_map_guards() -> None:
     with pytest.raises(WeakIdError, match="central cases only"):
         require_full_grid(["0", "1/4"], ["0", "1/4", "1/2", "1"])
     require_full_grid(["0", "1/4", "1/2"], ["0", "1/4", "1/2"])
+    require_full_grid(["1/2", "0", "1/4"], ["0", "1/4", "1/2"])
     with pytest.raises(WeakIdError, match="PRESERVED in the failure"):
         require_failure_map_complete(["0", "1/2"], ["0", "1/4", "1/2"])
+    require_failure_map_complete(
+        ["1/2", "0", "1/4"], ["0", "1/4", "1/2"])
+
+
+@pytest.mark.parametrize("evaluated,registered,message", [
+    ([], [], "non-empty"),
+    (["0", "extra"], ["0"], "unregistered"),
+    (["0"], ["0", "0"], "duplicate"),
+    (["0", "0"], ["0"], "duplicate"),
+    ([""], ["0"], "non-empty string"),
+    ("0", ["0"], "non-empty sequence"),
+])
+def test_full_grid_rejects_invalid_identity(
+    evaluated, registered, message
+) -> None:
+    with pytest.raises(WeakIdError, match=message):
+        require_full_grid(evaluated, registered)
+
+
+@pytest.mark.parametrize("reported,registered,message", [
+    ([], [], "non-empty"),
+    (["0", "extra"], ["0"], "unregistered"),
+    (["0"], ["0", "0"], "duplicate"),
+    (["0", "0"], ["0"], "duplicate"),
+    ([""], ["0"], "non-empty string"),
+    ("0", ["0"], "non-empty sequence"),
+])
+def test_failure_map_rejects_invalid_grid_identity(
+    reported, registered, message
+) -> None:
+    with pytest.raises(WeakIdError, match=message):
+        require_failure_map_complete(reported, registered)
 
 
 def test_uniform_language_gate() -> None:
