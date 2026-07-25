@@ -291,7 +291,27 @@ def run_ppc(model: GaussianModel, y_obs, frozen: dict, *,
     import numpy as np
 
     require_frozen_discrepancies(frozen, frozen["discrepancies"])
-    y_obs = np.asarray(y_obs, dtype=np.float64)
+    if (
+        isinstance(n_predictive, (bool, np.bool_))
+        or not isinstance(n_predictive, (int, np.integer))
+        or n_predictive <= 0
+    ):
+        raise SbcPpcError(
+            "n_predictive must be a positive integer")
+    n_predictive = int(n_predictive)
+    try:
+        y_obs = np.asarray(y_obs, dtype=np.float64)
+    except (TypeError, ValueError) as exc:
+        raise SbcPpcError(
+            "observed PPC data must be a finite one-dimensional vector") from exc
+    if (
+        y_obs.ndim != 1
+        or y_obs.size != model.n_obs
+        or not np.all(np.isfinite(y_obs))
+    ):
+        raise SbcPpcError(
+            f"observed PPC data must contain exactly {model.n_obs} finite "
+            "values")
     fit_model = model if fit_sig2 is None else GaussianModel(
         model.tau2, Fraction(fit_sig2).limit_denominator(10 ** 9),
         model.n_obs, model.var_scale)

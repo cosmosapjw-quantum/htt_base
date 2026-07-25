@@ -194,6 +194,39 @@ def test_known_bad_ppc_is_extreme() -> None:
     assert ppc_verdict(bad, 0.005) == "inadequate_ppc_extreme"
 
 
+@pytest.mark.parametrize("n_predictive", [-1, 0, True, 2.5])
+def test_ppc_rejects_invalid_predictive_count(n_predictive) -> None:
+    y = np.arange(8, dtype=float)
+    frozen = freeze_discrepancies(["sample_variance"])
+    with pytest.raises(SbcPpcError, match="positive integer"):
+        run_ppc(
+            GOOD,
+            y,
+            frozen,
+            n_predictive=n_predictive,
+            seed=1,
+            lineage=_lineage(GOOD, y),
+        )
+
+
+@pytest.mark.parametrize("y", [
+    np.arange(2, dtype=float),
+    np.arange(8, dtype=float).reshape(2, 4),
+    np.array([0.0, 1.0, np.nan, 3.0, 4.0, 5.0, 6.0, 7.0]),
+])
+def test_ppc_rejects_wrong_shape_or_nonfinite_observations(y) -> None:
+    frozen = freeze_discrepancies(["sample_variance"])
+    with pytest.raises(SbcPpcError, match="exactly 8 finite"):
+        run_ppc(
+            GOOD,
+            y,
+            frozen,
+            n_predictive=100,
+            seed=1,
+            lineage=_lineage(GOOD, np.arange(8, dtype=float)),
+        )
+
+
 def test_ppc_verdict_rejects_malformed_thresholds_and_results() -> None:
     extreme = {
         "discrepancy_results": [
