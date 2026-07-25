@@ -351,6 +351,19 @@ def test_status_semantics_guards() -> None:
         validate_status_semantics("undetermined", "non-identification")
 
 
+@pytest.mark.parametrize("status,reading,message", [
+    ("EMPTY", "this is a detection", "invalid set status"),
+    ("mystery", "this is a detection", "invalid set status"),
+    ("bounded", "", "non-empty string"),
+    ("bounded", None, "non-empty string"),
+])
+def test_status_semantics_rejects_invalid_inputs(
+    status, reading, message
+) -> None:
+    with pytest.raises(IdentifiedSetError, match=message):
+        validate_status_semantics(status, reading)
+
+
 def test_classify_from_solver() -> None:
     assert classify_status_from_solver(False, True, False) == "undetermined"
     assert classify_status_from_solver(True, False, False) == "empty"

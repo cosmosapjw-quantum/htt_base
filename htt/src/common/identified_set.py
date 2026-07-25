@@ -524,6 +524,12 @@ def require_cross_engine_agreement(exact: dict, numeric: dict,
 def validate_status_semantics(status: str, reading: str) -> None:
     """Enforce the status semantics: empty != detection, broad !=
     central, nonconvergence != non-identification."""
+    if status not in {candidate.value for candidate in SetStatus}:
+        raise IdentifiedSetError(
+            f"semantic reading has an invalid set status {status!r}")
+    if not isinstance(reading, str) or not reading.strip():
+        raise IdentifiedSetError(
+            "semantic reading must be a non-empty string")
     reading = reading.lower()
     if status == SetStatus.EMPTY.value and "detection" in reading:
         raise IdentifiedSetError(
