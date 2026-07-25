@@ -95,6 +95,14 @@ def test_all_five_contracts_register_with_unique_fingerprints() -> None:
     assert len(set(fps.values())) == 5
 
 
+def test_runner_rejects_duplicate_representative_contracts() -> None:
+    runner = _load_runner()
+    with pytest.raises(SystemExit, match="duplicate analysis ids"):
+        runner._build_registry({
+            "representative_contracts": [BASE, BASE],
+        })
+
+
 def test_hidden_default_field_rejected() -> None:
     for missing in ("estimand", "selection_window", "nuisance_family",
                     "preprocessing", "allowed_transformations"):

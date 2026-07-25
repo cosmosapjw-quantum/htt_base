@@ -146,10 +146,15 @@ def _verify_prohibition_cross_list(spec: dict) -> int:
 def _build_registry(spec: dict) -> tuple[EstimandRegistry, dict]:
     reg = EstimandRegistry()
     fingerprints = {}
-    for row in spec["representative_contracts"]:
+    rows = spec["representative_contracts"]
+    for row in rows:
         contract = AnalysisContract.from_payload(row)
         fingerprints[contract.analysis_id] = reg.register(contract)
-    expected = {r["analysis_id"] for r in spec["representative_contracts"]}
+    if len(reg.ids()) != len(rows):
+        raise SystemExit(
+            "representative contracts contain duplicate analysis ids"
+        )
+    expected = {r["analysis_id"] for r in rows}
     if set(reg.ids()) != expected:
         raise SystemExit("representative contract set drifted")
     if len(set(fingerprints.values())) != len(fingerprints):
