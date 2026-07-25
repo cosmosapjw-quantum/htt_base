@@ -194,6 +194,27 @@ def test_known_bad_ppc_is_extreme() -> None:
     assert ppc_verdict(bad, 0.005) == "inadequate_ppc_extreme"
 
 
+def test_ppc_verdict_rejects_malformed_thresholds_and_results() -> None:
+    extreme = {
+        "discrepancy_results": [
+            {"discrepancy": "sample_variance", "bayesian_p": 0.0},
+            {"discrepancy": "sample_max", "bayesian_p": 1.0},
+        ],
+    }
+    for threshold in (-1.0, 0.5, 0.6, float("nan"), float("inf"), True):
+        with pytest.raises(SbcPpcError, match="threshold must be finite"):
+            ppc_verdict(extreme, threshold)
+    for rows in (
+        [],
+        [{"discrepancy": "sample_variance", "bayesian_p": float("nan")}],
+        [{"discrepancy": "sample_variance", "bayesian_p": -0.1}],
+        [{"discrepancy": "sample_variance", "bayesian_p": 1.1}],
+        [{"discrepancy": "sample_variance", "bayesian_p": True}],
+    ):
+        with pytest.raises(SbcPpcError, match="discrepancy|p-value"):
+            ppc_verdict({"discrepancy_results": rows}, 0.005)
+
+
 def test_lineage_and_invalid_posterior() -> None:
     dh = "abc123"
     lh = lineage_hash(GOOD, dh, {"n": "8"}, {"rhat": "1.0"})

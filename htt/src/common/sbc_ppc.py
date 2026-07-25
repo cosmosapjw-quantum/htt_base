@@ -330,8 +330,31 @@ def ppc_verdict(ppc: dict, two_sided_reject: float) -> str:
     """A PPC passes if no Bayesian p-value is below the reject threshold
     or above its complement; a pass is model-CONDITIONAL adequacy, never
     model truth."""
-    for r in ppc["discrepancy_results"]:
-        p = r["bayesian_p"]
+    if (
+        isinstance(two_sided_reject, bool)
+        or not isinstance(two_sided_reject, (int, float))
+        or not math.isfinite(two_sided_reject)
+        or not 0.0 <= two_sided_reject < 0.5
+    ):
+        raise SbcPpcError(
+            "the PPC two-sided reject threshold must be finite and in [0, 0.5)")
+    rows = ppc.get("discrepancy_results")
+    if not isinstance(rows, list) or not rows:
+        raise SbcPpcError(
+            "the PPC verdict requires non-empty discrepancy results")
+    for r in rows:
+        if not isinstance(r, Mapping):
+            raise SbcPpcError(
+                "each PPC discrepancy result must be a mapping")
+        p = r.get("bayesian_p")
+        if (
+            isinstance(p, bool)
+            or not isinstance(p, (int, float))
+            or not math.isfinite(p)
+            or not 0.0 <= p <= 1.0
+        ):
+            raise SbcPpcError(
+                "each PPC Bayesian p-value must be finite and in [0, 1]")
         if p < two_sided_reject or p > 1.0 - two_sided_reject:
             return "inadequate_ppc_extreme"
     return "adequate_conditional"
