@@ -141,6 +141,16 @@ def validate_theorem_claim(claim: Mapping) -> None:
             f"(cited groups: {touched}); exact, almost-EGS "
             f"({ALMOST_EGS_STATUS}), and comparator premise sets never merge"
         )
+    if touched == ["comparator"] and (
+        cited != known_groups["comparator"]
+        or statement != FORWARD_STATEMENT
+        or claimed_id != FORWARD_THEOREM_ID
+    ):
+        raise EgsOnewayError(
+            "the only registered comparator theorem is the full-premise "
+            "forward statement; self-minted premise reductions or statement "
+            "edits are not registered claims"
+        )
 
 
 # ---------------------------------------------------------------------------

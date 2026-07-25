@@ -97,6 +97,14 @@ def test_theorem_ids_are_content_addressed() -> None:
             "premise_ids": [p for p in COMPARATOR_FORWARD_PREMISES
                             if p != "CMP-P2-sigma2_zero"],
         })
+    reduced = [p for p in COMPARATOR_FORWARD_PREMISES
+               if p != "CMP-P2-sigma2_zero"]
+    with pytest.raises(EgsOnewayError, match="only registered comparator"):
+        validate_theorem_claim({
+            "theorem_id": theorem_id(reduced, FORWARD_STATEMENT),
+            "statement": FORWARD_STATEMENT,
+            "premise_ids": reduced,
+        })
 
 
 def test_exact_and_almost_claims_never_merge() -> None:
