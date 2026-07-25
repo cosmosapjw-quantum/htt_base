@@ -293,6 +293,66 @@ def test_preregistration_pins() -> None:
         pre.require_pinned_threshold(0.90)
 
 
+@pytest.mark.parametrize("overrides,message", [
+    ({"nominal_coverage": float("nan")}, "finite probability"),
+    ({"nominal_coverage": 0.0}, "strictly inside"),
+    ({"nominal_coverage": 1.0}, "strictly inside"),
+    ({"retain_lower_bound": float("nan")}, "finite probability"),
+    ({"retain_lower_bound": -0.1}, "finite probability"),
+    ({"retain_lower_bound": 1.1}, "finite probability"),
+    ({"min_replicates": True}, "positive integer"),
+    ({"min_replicates": 0}, "positive integer"),
+    ({"min_seeds": 0}, "positive integer"),
+    ({"min_replicates": 5, "min_seeds": 10}, "at least"),
+    ({"base_seed": True}, "positive integer"),
+    ({"endpoint_tol_fraction": float("nan")}, "finite interval"),
+    ({"endpoint_tol_fraction": 0.0}, "finite interval"),
+    ({"endpoint_tol_fraction": 1.1}, "finite interval"),
+    ({"frozen_id": ""}, "non-empty"),
+])
+def test_preregistration_rejects_invalid_domain(overrides, message) -> None:
+    kwargs = {
+        "nominal_coverage": 0.95,
+        "retain_lower_bound": 0.93,
+        "min_replicates": 2000,
+        "min_seeds": 10,
+        "base_seed": 20260719,
+        "endpoint_tol_fraction": 0.10,
+    }
+    kwargs.update(overrides)
+    with pytest.raises(WeakIdError, match=message):
+        Preregistration(**kwargs)
+
+
+@pytest.mark.parametrize("delivered,seeds", [
+    (float("nan"), 10),
+    (2000, float("nan")),
+    (True, 10),
+    (2000, True),
+    (0, 10),
+    (2000, 0),
+])
+def test_preregistration_rejects_invalid_delivered_counts(
+    delivered, seeds
+) -> None:
+    pre = Preregistration(0.95, 0.93, 2000, 10, 20260719, 0.10)
+    with pytest.raises(WeakIdError, match="positive integer"):
+        pre.require_replicates(delivered, seeds)
+
+
+@pytest.mark.parametrize("threshold", [
+    float("nan"),
+    float("inf"),
+    True,
+    -0.1,
+    1.1,
+])
+def test_preregistration_rejects_invalid_threshold(threshold) -> None:
+    pre = Preregistration(0.95, 0.93, 2000, 10, 20260719, 0.10)
+    with pytest.raises(WeakIdError, match="finite probability"):
+        pre.require_pinned_threshold(threshold)
+
+
 def test_caption_gate() -> None:
     text = generate_caption(0.94, 9, 0)
     lint_caption(text)

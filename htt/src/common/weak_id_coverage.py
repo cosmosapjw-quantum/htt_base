@@ -396,10 +396,62 @@ class Preregistration:
     endpoint_tol_fraction: float
     frozen_id: str = "prereg_v1"
 
+    def __post_init__(self) -> None:
+        for name, value in (
+            ("nominal_coverage", self.nominal_coverage),
+            ("retain_lower_bound", self.retain_lower_bound),
+        ):
+            if (
+                isinstance(value, bool)
+                or not isinstance(value, Real)
+                or not math.isfinite(float(value))
+                or not 0 <= value <= 1
+            ):
+                raise WeakIdError(
+                    f"{name} must be a finite probability in [0, 1]")
+        if self.nominal_coverage in (0, 1):
+            raise WeakIdError(
+                "nominal_coverage must be strictly inside (0, 1)")
+        for name, value in (
+            ("min_replicates", self.min_replicates),
+            ("min_seeds", self.min_seeds),
+            ("base_seed", self.base_seed),
+        ):
+            if (
+                isinstance(value, bool)
+                or not isinstance(value, Integral)
+                or value <= 0
+            ):
+                raise WeakIdError(f"{name} must be a positive integer")
+        if self.min_replicates < self.min_seeds:
+            raise WeakIdError(
+                "min_replicates must be at least min_seeds")
+        if (
+            isinstance(self.endpoint_tol_fraction, bool)
+            or not isinstance(self.endpoint_tol_fraction, Real)
+            or not math.isfinite(float(self.endpoint_tol_fraction))
+            or not 0 < self.endpoint_tol_fraction <= 1
+        ):
+            raise WeakIdError(
+                "endpoint_tol_fraction must be in the finite interval "
+                "(0, 1]")
+        if not isinstance(self.frozen_id, str) or not self.frozen_id:
+            raise WeakIdError("frozen_id must be a non-empty string")
+
     def require_replicates(self, delivered_replicates: int,
                            seeds: int) -> None:
         """Validate the DELIVERED replicate count (not merely the
         requested n): integer per-seed division can short the total."""
+        for name, value in (
+            ("delivered_replicates", delivered_replicates),
+            ("seeds", seeds),
+        ):
+            if (
+                isinstance(value, bool)
+                or not isinstance(value, Integral)
+                or value <= 0
+            ):
+                raise WeakIdError(f"{name} must be a positive integer")
         if delivered_replicates < self.min_replicates or \
                 seeds < self.min_seeds:
             raise WeakIdError(
@@ -408,6 +460,14 @@ class Preregistration:
                 f"least {self.min_replicates} over {self.min_seeds}")
 
     def require_pinned_threshold(self, threshold: float) -> None:
+        if (
+            isinstance(threshold, bool)
+            or not isinstance(threshold, Real)
+            or not math.isfinite(float(threshold))
+            or not 0 <= threshold <= 1
+        ):
+            raise WeakIdError(
+                "retain threshold must be a finite probability in [0, 1]")
         if abs(threshold - self.retain_lower_bound) > 1e-12:
             raise WeakIdError(
                 f"retain threshold {threshold} differs from the pinned "
