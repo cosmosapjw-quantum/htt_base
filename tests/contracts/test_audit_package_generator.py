@@ -584,6 +584,24 @@ def test_zip_bytes_are_deterministic_sorted_and_path_safe():
     assert all(not name.endswith((".pyc", ".tmp")) for name in names)
 
 
+def test_windows_archive_traversal_alias_is_rejected(tmp_path: Path):
+    module = _load_module()
+    (tmp_path / "source.txt").write_text("review me", encoding="utf-8")
+    entry = module.AuditPackageEntry(
+        source_path=Path("source.txt"),
+        archive_path=r"safe\..\escape.txt",
+        group="fixture",
+        description="Windows traversal alias",
+    )
+
+    try:
+        module._entry_rows(tmp_path, (entry,))
+    except ValueError as exc:
+        assert "unsafe archive path" in str(exc)
+    else:
+        raise AssertionError("Windows traversal alias did not fail closed")
+
+
 def test_cli_check_detects_missing_and_stale_outputs(tmp_path: Path):
     output_zip = tmp_path / "audit.zip"
     output_manifest = tmp_path / "manifest.json"
