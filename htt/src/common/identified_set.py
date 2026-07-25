@@ -555,6 +555,8 @@ _SET_VALUED_FIELDS = ("status", "axis_intervals", "unbounded_axes")
 def validate_set_valued(artifact: dict) -> None:
     """Reject a scalar-only summary: a set-valued artifact must carry
     the set fields, not merely a point estimate."""
+    if not isinstance(artifact, dict):
+        raise IdentifiedSetError("a set-valued artifact must be a mapping")
     if "central_estimate" in artifact and set(artifact) <= {
             "central_estimate", "point_estimate"}:
         raise IdentifiedSetError(
@@ -563,6 +565,19 @@ def validate_set_valued(artifact: dict) -> None:
     if "status" not in artifact:
         raise IdentifiedSetError(
             "a set-valued artifact must carry a topology status")
+    if artifact["status"] == SetStatus.DISCONNECTED.value:
+        components = artifact.get("components")
+        if not isinstance(components, list) or not components:
+            raise IdentifiedSetError(
+                "a disconnected set-valued artifact must carry "
+                "non-empty components")
+        return
+    missing = [field for field in _SET_VALUED_FIELDS
+               if field not in artifact]
+    if missing:
+        raise IdentifiedSetError(
+            f"set-valued artifact is missing required fields {missing}")
+    _validate_engine_result_shape(artifact, "set-valued artifact")
 
 
 def subvector_projection(full_result: dict,

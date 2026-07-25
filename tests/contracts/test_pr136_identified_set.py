@@ -255,6 +255,30 @@ def test_subvector_projection_separate() -> None:
     assert sub_kernel["status"] == "unbounded"
 
 
+@pytest.mark.parametrize("artifact,message", [
+    ({"status": "bounded"}, "missing required fields"),
+    ({"status": "bounded", "central_estimate": 0.5},
+     "missing required fields"),
+    ({"status": "mystery",
+      "axis_intervals": {axis: ["0", "1"] for axis in AXES},
+      "unbounded_axes": []}, "invalid status"),
+    ({"status": "disconnected"}, "non-empty components"),
+])
+def test_set_valued_validator_rejects_incomplete_artifact(
+    artifact, message
+) -> None:
+    with pytest.raises(IdentifiedSetError, match=message):
+        validate_set_valued(artifact)
+
+
+def test_set_valued_validator_accepts_disconnected_components() -> None:
+    validate_set_valued({
+        "status": "disconnected",
+        "components": [{"component": "positive"},
+                       {"component": "negative"}],
+    })
+
+
 def test_cross_engine_disagreement_blocks() -> None:
     exact = {"status": "bounded",
              "axis_intervals": {a: ["0", "1"] for a in AXES},
@@ -283,7 +307,7 @@ def test_classify_from_solver() -> None:
 
 
 def test_set_valued_and_admissible_pin() -> None:
-    validate_set_valued({"status": "bounded", "axis_intervals": {}})
+    validate_set_valued(exact_engine(_bounded()))
     with pytest.raises(IdentifiedSetError, match="scalar summary"):
         validate_set_valued({"central_estimate": 0.5})
     box = AdmissibleBox(lower={a: Fraction(-3) for a in AXES},
