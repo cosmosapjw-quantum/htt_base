@@ -3,8 +3,10 @@ from __future__ import annotations
 import json
 
 import numpy as np
+import pytest
 
 from mio.coherence.directional import (
+    DirectionalProbe,
     STANDARD_PROBES,
     emit_directional_coherence_artefact,
     resultant_vector,
@@ -27,6 +29,48 @@ def _certificate(**kwargs):
 def _status_metadata(cert) -> dict[str, object]:
     assert cert.manifest is not None
     return cert.manifest.statistics_definitions["certificate_status_metadata"]
+
+
+@pytest.mark.parametrize("invalid_sigma", (float("nan"), float("inf")))
+def test_directional_coherence_rejects_nonfinite_cone_width(
+    invalid_sigma: float,
+) -> None:
+    probes = (
+        DirectionalProbe("invalid", 0.0, 0.0, invalid_sigma),
+        DirectionalProbe("valid", 90.0, 0.0, 1.0),
+    )
+    with pytest.raises(ValueError, match="finite and strictly positive"):
+        resultant_vector(probes)
+
+
+@pytest.mark.parametrize("invalid_weight", (-1.0, float("nan"), float("inf")))
+def test_directional_coherence_rejects_invalid_probe_weights(
+    invalid_weight: float,
+) -> None:
+    probes = (
+        DirectionalProbe("positive", 0.0, 0.0, 1.0, weight=2.0),
+        DirectionalProbe("invalid", 180.0, 0.0, 1.0, weight=invalid_weight),
+    )
+    with pytest.raises(ValueError, match="weights must be finite and nonnegative"):
+        resultant_vector(probes)
+
+
+@pytest.mark.parametrize(
+    "invalid_p_iso",
+    (-0.1, 1.1, float("nan"), float("inf")),
+)
+def test_directional_certificate_rejects_invalid_isotropy_pvalue(
+    invalid_p_iso: float,
+) -> None:
+    with pytest.raises(ValueError, match=r"p_iso must be finite and within \[0, 1\]"):
+        to_mio_certificate(
+            STANDARD_PROBES,
+            p_iso=invalid_p_iso,
+            resultant=resultant_vector(STANDARD_PROBES),
+            has_covariance=True,
+            has_null_mocks=True,
+            sky_support_status="complete",
+        )
 
 
 def test_directional_certificate_records_missing_covariance_statuses() -> None:
