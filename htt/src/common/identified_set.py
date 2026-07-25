@@ -586,7 +586,16 @@ def subvector_projection(full_result: dict,
     SEPARATELY from the full set. A subvector may be bounded even when
     the full set is unbounded (the unbounded axes lie outside the
     subvector)."""
-    for ax in subaxes:
+    if isinstance(subaxes, (str, bytes)):
+        raise IdentifiedSetError(
+            "subaxes must be a non-empty sequence of registered axes")
+    selected = list(subaxes)
+    if not selected:
+        raise IdentifiedSetError(
+            "subaxes must be a non-empty sequence of registered axes")
+    if len(set(selected)) != len(selected):
+        raise IdentifiedSetError("subaxes must not contain duplicates")
+    for ax in selected:
         if ax not in AXES:
             raise IdentifiedSetError(f"unknown axis {ax!r}")
     _validate_engine_result_shape(full_result, "full")
@@ -595,7 +604,7 @@ def subvector_projection(full_result: dict,
         SetStatus.UNDETERMINED.value,
     ):
         return {
-            "subaxes": list(subaxes),
+            "subaxes": selected,
             "status": full_result["status"],
             "axis_intervals": None,
             "unbounded_in_subvector": [],
@@ -603,18 +612,18 @@ def subvector_projection(full_result: dict,
                     "from the full-parameter set",
         }
     unbounded_in_sub = [ax for ax in full_result["unbounded_axes"]
-                        if ax in subaxes]
+                        if ax in selected]
     if unbounded_in_sub:
         status = SetStatus.UNBOUNDED.value
         intervals = {ax: (full_result["axis_intervals"] or {}).get(ax)
-                     for ax in subaxes}
+                     for ax in selected}
     else:
         status = SetStatus.BOUNDED.value
         intervals = {ax: full_result["axis_intervals"][ax]
-                     for ax in subaxes} if full_result[
+                     for ax in selected} if full_result[
                          "axis_intervals"] else {}
     return {
-        "subaxes": list(subaxes),
+        "subaxes": selected,
         "status": status,
         "axis_intervals": intervals,
         "unbounded_in_subvector": unbounded_in_sub,

@@ -269,6 +269,19 @@ def test_subvector_projection_preserves_non_estimable_status(
     assert projection["unbounded_in_subvector"] == []
 
 
+@pytest.mark.parametrize("subaxes,message", [
+    ([], "non-empty sequence"),
+    ("Sigma2", "non-empty sequence"),
+    (["Sigma2", "Sigma2"], "duplicates"),
+    (["not-an-axis"], "unknown axis"),
+])
+def test_subvector_projection_rejects_invalid_axes(
+    subaxes, message
+) -> None:
+    with pytest.raises(IdentifiedSetError, match=message):
+        subvector_projection(exact_engine(_bounded()), subaxes)
+
+
 @pytest.mark.parametrize("artifact,message", [
     ({"status": "bounded"}, "missing required fields"),
     ({"status": "bounded", "central_estimate": 0.5},
