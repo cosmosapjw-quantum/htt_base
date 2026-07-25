@@ -64,6 +64,7 @@ def _write_fixture_repo(tmp_path: Path) -> Path:
         + "family identification."
     )
     family_guardrail_line = "Bianchi " + "family identification is not established."
+    joint_guardrail_line = "This is not geometry or " + "family identification."
     (manuscript / "main.tex").write_text(
         r"""
 \documentclass{article}
@@ -82,6 +83,8 @@ def _write_fixture_repo(tmp_path: Path) -> Path:
         + family_risk_line
         + "\n"
         + family_guardrail_line
+        + "\n"
+        + joint_guardrail_line
         + "\n"
         + "The VER06 production values are listed here.\n"
         + "This line claims 18 production modules and 331 automated tests.\n"
@@ -134,6 +137,7 @@ def test_audit_classifies_resolved_quarantined_and_missing_figures(tmp_path: Pat
         "pytest_count",
     ]
     assert all("not established" not in issue.text for issue in audit.text_issues)
+    assert all("not geometry or" not in issue.text for issue in audit.text_issues)
 
 
 def test_rendered_reports_carry_required_metadata_and_findings(tmp_path: Path) -> None:

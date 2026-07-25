@@ -547,13 +547,65 @@ def write_materialized(payload: dict[str, Any], cards: list[dict[str, Any]]) -> 
 
 
 def check_materialized(payload: dict[str, Any], cards: list[dict[str, Any]]) -> None:
-    expected = materialize_payload(payload, cards)
     if BACKLOG_YAML.read_text(encoding="utf-8") != MACHINE_BACKLOG_YAML.read_text(encoding="utf-8"):
         raise ValueError("YAML backlog mirrors differ")
     docs_json = json.loads(BACKLOG_JSON.read_text(encoding="utf-8"))
     machine_json = json.loads(MACHINE_BACKLOG_JSON.read_text(encoding="utf-8"))
-    if docs_json != machine_json or docs_json != expected:
+    if docs_json != machine_json or docs_json != payload:
         raise ValueError("JSON backlog mirrors are not semantically equal to canonical YAML")
+
+    current_cards = payload.get("prs")
+    if not isinstance(current_cards, list) or not all(
+        isinstance(card, dict) for card in current_cards
+    ):
+        raise ValueError("backlog prs must be a list of mappings")
+    current_by_id = {card.get("id"): card for card in current_cards}
+    if len(current_by_id) != len(current_cards):
+        raise ValueError("backlog PR ids must be unique")
+    for expected_card in cards:
+        pr_id = expected_card["id"]
+        if current_by_id.get(pr_id) != expected_card:
+            raise ValueError(f"{pr_id} no longer matches the approved PR-119 roadmap")
+
+    policy = payload.get("policy")
+    if not isinstance(policy, dict):
+        raise ValueError("backlog policy must be a mapping")
+    intake_policy = policy.get("long_horizon_intake")
+    expected_intake_policy = {
+        "spec": "docs/research_program/long_horizon_rescue/pr119_spec.yaml",
+        "active_slice": "PR-119..PR-166",
+        "scientific_rescue_count_on_intake": 0,
+    }
+    if not isinstance(intake_policy, dict) or any(
+        intake_policy.get(key) != value
+        for key, value in expected_intake_policy.items()
+    ):
+        raise ValueError("PR-119 long-horizon intake policy drift")
+    if intake_policy.get("advocate_slice") not in {
+        "deferred_to_PR-167",
+        "active_PR-167..PR-183",
+    }:
+        raise ValueError("PR-119 advocate-slice handoff state is invalid")
+
+    order = policy.get("topological_order")
+    expected_ids = [card["id"] for card in cards]
+    if not isinstance(order, list):
+        raise ValueError("policy.topological_order must be a list")
+    expected_id_set = set(expected_ids)
+    if [pr_id for pr_id in order if pr_id in expected_id_set] != expected_ids:
+        raise ValueError("PR-119..PR-166 topological order drift")
+
+    waves = payload.get("waves")
+    if not isinstance(waves, list):
+        raise ValueError("backlog waves must be a list")
+    for expected_wave in _wave_rows():
+        matches = [
+            row
+            for row in waves
+            if isinstance(row, dict) and row.get("wave") == expected_wave["wave"]
+        ]
+        if matches != [expected_wave]:
+            raise ValueError(f"PR-119 wave {expected_wave['wave']} metadata drift")
 
 
 def main(argv: list[str] | None = None) -> int:
