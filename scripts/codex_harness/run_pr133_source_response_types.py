@@ -247,10 +247,16 @@ def build_boost(spec: dict) -> dict:
 
 
 def build_deprojection(spec: dict) -> dict:
+    formula = "Sigma_tilde^2 = Sigma^2 - alpha (Omega_tilt)^2"
+    if spec["deprojection"]["formula"] != formula:
+        raise SystemExit(
+            "deprojection formula does not match the production "
+            "subtraction"
+        )
     prop = deprojection_estimator_property()
     return {
         "schema": "pr133.deprojection_property.v1",
-        "formula": spec["deprojection"]["formula"],
+        "formula": formula,
         "alpha_note": spec["deprojection"]["alpha_note"],
         "estimator_property": prop,
     }

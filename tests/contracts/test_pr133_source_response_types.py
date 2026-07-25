@@ -136,6 +136,20 @@ def test_runner_binds_boost_labels_to_symbolic_derivation() -> None:
         })
 
 
+def test_runner_binds_deprojection_formula_to_implementation() -> None:
+    runner = _load_runner()
+    with pytest.raises(SystemExit, match="production subtraction"):
+        runner.build_deprojection({
+            "deprojection": {
+                "formula": (
+                    "Sigma_tilde^2 = Sigma^2 "
+                    "+ 7 alpha (Omega_tilt)^2"
+                ),
+                "alpha_note": "forged",
+            },
+        })
+
+
 def test_type_firewall_blocks_cross_type() -> None:
     av = TypedQuantity(QuantityType.OBSERVER_PROXY, Fraction(1, 100))
     ot = TypedQuantity(QuantityType.PHYSICAL_TILT, Fraction(1, 100))
