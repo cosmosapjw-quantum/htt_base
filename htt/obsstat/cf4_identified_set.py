@@ -357,8 +357,27 @@ def simultaneous_coverage(data: Cf4Data, box: dict, set_result: dict, *,
     is reported.  A wide interval covers conservatively — coverage is a set
     self-consistency check, NOT evidence of precision; the amplitude Rice-bias
     non-Gaussianity at noise-dominated depth is disclosed."""
+    try:
+        n_shells = set_result["n_shells"]
+        result_shells = set_result["shells"]
+    except (KeyError, TypeError) as exc:
+        raise IdentifiedSetError(
+            "simultaneous coverage requires an identified-set shell result"
+        ) from exc
+    if (
+        isinstance(n_shells, (bool, np.bool_))
+        or not isinstance(n_shells, (int, np.integer))
+        or n_shells <= 0
+        or not isinstance(result_shells, list)
+        or len(result_shells) != n_shells
+        or any(not isinstance(shell, dict)
+               or shell.get("shell") != index
+               for index, shell in enumerate(result_shells))
+    ):
+        raise IdentifiedSetError(
+            "simultaneous coverage shell grid must match the identified set")
+    n_shells = int(n_shells)
     rng = np.random.Generator(np.random.PCG64(seed))
-    n_shells = set_result["n_shells"]
     per_shell = bonferroni_conf(family_conf, n_shells)
     truth = np.array([120.0, -80.0, 60.0])
     truth_amp = float(np.linalg.norm(truth))

@@ -155,6 +155,26 @@ def test_classify_topology_rejects_invalid_numeric_domain(
         )
 
 
+@pytest.mark.parametrize("set_result", [
+    {"n_shells": 1, "shells": []},
+    {"n_shells": 1, "shells": [{"shell": 7}, {"shell": 8}]},
+    {"n_shells": 2, "shells": [{"shell": 0}, {"shell": 0}]},
+])
+def test_simultaneous_coverage_binds_identified_set_shell_grid(
+    set_result: dict,
+) -> None:
+    with pytest.raises(IdentifiedSetError, match="must match"):
+        simultaneous_coverage(
+            None,
+            {},
+            set_result,
+            n_inject=1,
+            seed=1,
+            subsample=100,
+            family_conf=0.95,
+        )
+
+
 def test_guards() -> None:
     with pytest.raises(IdentifiedSetError, match="point estimate"):
         refuse_favourable_endpoint("favourable_endpoint")
