@@ -36,12 +36,13 @@ def _null_payload(
     mask_status: str = "matched_mask_hash",
     noise_model_status: str = "matched_noise_model",
     tail_definitions: dict[str, str] | None = None,
+    feature_target: str = "flrw_null_predictive_check",
 ):
     spec = NullEnsembleSpec(
         null_ensemble_ref="mock://obsstat/flrw-mask-noise/pr102",
         null_family="flrw_mask_noise",
         mock_count=4,
-        feature_targets=("flrw_null_predictive_check",),
+        feature_targets=(feature_target,),
         statistic_keys=statistic_keys,
         sky_support_status=sky_support_status,
         mask_status=mask_status,
@@ -58,7 +59,7 @@ def _null_payload(
         look_elsewhere_status=status,
         trial_count=len(statistic_keys),
         scan_volume={
-            "feature_targets": ["flrw_null_predictive_check"],
+            "feature_targets": [feature_target],
             "statistic_keys": list(statistic_keys),
             "trial_count": len(statistic_keys),
             "global_local_status": status,
@@ -141,6 +142,16 @@ def test_null_predictive_payload_must_match_report_statistics() -> None:
             null_predictive_payload=_null_payload(
                 statistic_keys=("T_other",),
                 p_values={"T_other": 0.2},
+            ),
+        )
+
+
+def test_null_predictive_payload_must_target_flrw_tension() -> None:
+    with pytest.raises(ValueError, match="flrw_null_predictive_check"):
+        to_mio_certificate(
+            _report(),
+            null_predictive_payload=_null_payload(
+                feature_target="unrelated_obsstat_feature"
             ),
         )
 

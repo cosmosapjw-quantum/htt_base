@@ -3,7 +3,9 @@ from __future__ import annotations
 import importlib.util
 import json
 from pathlib import Path
+import shutil
 import subprocess
+import sys
 
 from common.artifact_manifest import validate_manifest_payload
 
@@ -123,7 +125,7 @@ def test_pack_a_cli_dry_run_does_not_write_output(tmp_path):
 
     result = subprocess.run(
         [
-            str(REPO_ROOT / "venv/bin/python"),
+            sys.executable,
             str(SCRIPT_PATH),
             "--dry-run",
             "--output",
@@ -146,7 +148,7 @@ def test_pack_a_cli_writes_report(tmp_path):
 
     result = subprocess.run(
         [
-            str(REPO_ROOT / "venv/bin/python"),
+            sys.executable,
             str(SCRIPT_PATH),
             "--output",
             str(output),
@@ -168,7 +170,7 @@ def test_pack_a_cli_check_detects_drift(tmp_path):
 
     write_result = subprocess.run(
         [
-            str(REPO_ROOT / "venv/bin/python"),
+            sys.executable,
             str(SCRIPT_PATH),
             "--output",
             str(output),
@@ -182,7 +184,7 @@ def test_pack_a_cli_check_detects_drift(tmp_path):
 
     check_result = subprocess.run(
         [
-            str(REPO_ROOT / "venv/bin/python"),
+            sys.executable,
             str(SCRIPT_PATH),
             "--check",
             "--output",
@@ -199,7 +201,7 @@ def test_pack_a_cli_check_detects_drift(tmp_path):
     output.write_text(output.read_text(encoding="utf-8") + "\nmanual drift\n")
     stale_result = subprocess.run(
         [
-            str(REPO_ROOT / "venv/bin/python"),
+            sys.executable,
             str(SCRIPT_PATH),
             "--check",
             "--output",
@@ -212,3 +214,58 @@ def test_pack_a_cli_check_detects_drift(tmp_path):
     )
     assert stale_result.returncode == 1
     assert "stale result pack" in stale_result.stdout
+
+
+def test_pack_a_cli_check_reuses_repo_local_report_state(tmp_path):
+    module = _load_module()
+    for relative in module.INPUT_FILES:
+        source = REPO_ROOT / relative
+        target = tmp_path / relative
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(source, target)
+
+    subprocess.run(["git", "init", "-q"], cwd=tmp_path, check=True)
+    subprocess.run(["git", "add", "."], cwd=tmp_path, check=True)
+    subprocess.run(
+        [
+            "git",
+            "-c",
+            "user.name=result-pack-test",
+            "-c",
+            "user.email=result-pack-test@example.invalid",
+            "commit",
+            "-qm",
+            "base",
+        ],
+        cwd=tmp_path,
+        check=True,
+    )
+    script_path = tmp_path / module.CREATED_BY
+    output = Path("result_pack_A.md")
+    command = [
+        sys.executable,
+        str(script_path),
+        "--repo-root",
+        str(tmp_path),
+        "--output",
+        str(output),
+    ]
+
+    write_result = subprocess.run(
+        command,
+        cwd=tmp_path,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    check_result = subprocess.run(
+        [*command, "--check"],
+        cwd=tmp_path,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+
+    assert write_result.returncode == 0, write_result.stderr
+    assert check_result.returncode == 0, check_result.stderr
+    assert "up-to-date" in check_result.stdout
