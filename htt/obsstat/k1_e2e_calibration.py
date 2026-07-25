@@ -129,6 +129,18 @@ def _sha256_file(path: Path) -> str:
     return h.hexdigest()
 
 
+def _is_finite_number(value: object) -> bool:
+    return (
+        not isinstance(value, (bool, np.bool_))
+        and isinstance(value, (int, float, np.integer, np.floating))
+        and bool(np.isfinite(value))
+    )
+
+
+def _is_probability(value: object) -> bool:
+    return _is_finite_number(value) and 0.0 <= float(value) <= 1.0
+
+
 def e2e_input_manifest(cmb_dir: Path, noise_dir: Path, *,
                        sample_hash_count: int) -> dict:
     """Authenticate the PR3/FFP10 E2E input: the CMB and noise Monte-Carlo map
@@ -223,21 +235,69 @@ def pooled_rank_from_e2e_card(card_path: Path) -> dict:
     validate_reported_p(Fraction(round(global_p * (n_sim + 1)), n_sim + 1),
                         n_sim)
     local_p = result.get("local_p", card.get("local_p"))
+    statistics = card.get("statistics", config.get("statistics"))
+    if (
+        not isinstance(statistics, list)
+        or len(statistics) != 6
+        or any(not isinstance(name, str) or not name for name in statistics)
+        or len(set(statistics)) != len(statistics)
+    ):
+        raise K1E2EError(
+            "the E2E card must name six unique registered statistics")
+    if (
+        not isinstance(local_p, dict)
+        or set(local_p) != set(statistics)
+        or any(not _is_probability(value) for value in local_p.values())
+    ):
+        raise K1E2EError(
+            "the E2E card must report one finite local p-value for each "
+            "registered statistic")
+    observed_max_score = result.get(
+        "observed_max_score", card.get("observed_max_score"))
+    if not _is_finite_number(observed_max_score):
+        raise K1E2EError(
+            "the E2E card must report a finite observed max-scan score")
     n_noise = int(e2e.get("n_noise_used") or n_sim)
+    if n_noise <= 0:
+        raise K1E2EError(
+            "the E2E card must report a positive noise-realization count")
     reuse = result.get("noise_reuse_sensitivity")
     noise_reused = n_noise < n_sim
-    if noise_reused and not reuse:
-        raise K1E2EError(
-            "the E2E card reuses noise realizations but lacks the registered "
-            "cycle and noise-cluster sensitivity")
+    if noise_reused:
+        cycles = reuse.get("cycle_split_pooled_ranks") \
+            if isinstance(reuse, dict) else None
+        bootstrap = reuse.get("noise_cluster_bootstrap") \
+            if isinstance(reuse, dict) else None
+        interval = bootstrap.get("percentile_95_interval") \
+            if isinstance(bootstrap, dict) else None
+        replicates = bootstrap.get("replicates") \
+            if isinstance(bootstrap, dict) else None
+        if (
+            not isinstance(cycles, list)
+            or not cycles
+            or any(
+                not isinstance(row, dict)
+                or not _is_probability(row.get("pooled_rank_p"))
+                for row in cycles
+            )
+            or isinstance(replicates, (bool, np.bool_))
+            or not isinstance(replicates, (int, np.integer))
+            or replicates <= 0
+            or not isinstance(interval, list)
+            or len(interval) != 2
+            or any(not _is_probability(value) for value in interval)
+            or float(interval[0]) > float(interval[1])
+        ):
+            raise K1E2EError(
+                "the E2E card reuses noise realizations but lacks valid cycle "
+                "and noise-cluster sensitivity")
     return {"e2e_global_pooled_rank_p": global_p,
             "simulation_count": n_sim, "resolution_floor": floor,
             "on_finite_rank_support_grid": bool(on_grid),
             # Compatibility alias for the pre-amendment consumer. This names
             # only the arithmetic grid, not an exchangeability theorem.
             "on_exchangeable_support_grid": bool(on_grid),
-            "observed_max_scan_score": result.get(
-                "observed_max_score", card.get("observed_max_score")),
+            "observed_max_scan_score": float(observed_max_score),
             "per_statistic_local_p": local_p,
             "look_elsewhere_global_p": global_p,
             "unique_noise_realization_count": n_noise,

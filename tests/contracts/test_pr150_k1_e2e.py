@@ -293,7 +293,9 @@ def test_pooled_rank_rejects_off_grid_and_sub_floor_cards(tmp_path) -> None:
     def _card(gp: float) -> Path:
         p = tmp_path / f"card_{gp}.json"
         p.write_text(json.dumps({
-            "result": {"global_p": gp, "local_p": {"a": gp},
+            "statistics": [f"stat_{i}" for i in range(6)],
+            "result": {"global_p": gp,
+                       "local_p": {f"stat_{i}": gp for i in range(6)},
                        "observed_max_score": 1.0},
             "config": {"n_sims": 300}}))
         return p
@@ -307,6 +309,53 @@ def test_pooled_rank_rejects_off_grid_and_sub_floor_cards(tmp_path) -> None:
     # an exact grid node at/above the floor is accepted
     ok = pooled_rank_from_e2e_card(_card(11.0 / 301.0))
     assert ok["e2e_global_pooled_rank_p"] == pytest.approx(11.0 / 301.0)
+
+
+@pytest.mark.parametrize("mutation", [
+    "missing_observed_score",
+    "missing_local_p",
+    "wrong_local_p_keys",
+    "string_reuse",
+    "partial_reuse",
+])
+def test_pooled_rank_rejects_incomplete_card_evidence(
+    tmp_path, mutation
+) -> None:
+    statistics = [f"stat_{i}" for i in range(6)]
+    result = {
+        "global_p": 11.0 / 301.0,
+        "local_p": {name: 0.1 for name in statistics},
+        "observed_max_score": 1.0,
+        "noise_reuse_sensitivity": {
+            "cycle_split_pooled_ranks": [{"pooled_rank_p": 0.1}],
+            "noise_cluster_bootstrap": {
+                "replicates": 10,
+                "percentile_95_interval": [0.05, 0.2],
+            },
+        },
+    }
+    card = {
+        "statistics": statistics,
+        "result": result,
+        "config": {"n_sims": 300},
+        "e2e_sims": {"n_noise_used": 10},
+    }
+    if mutation == "missing_observed_score":
+        result.pop("observed_max_score")
+    elif mutation == "missing_local_p":
+        result.pop("local_p")
+    elif mutation == "wrong_local_p_keys":
+        result["local_p"] = {"other": 0.1}
+    elif mutation == "string_reuse":
+        result["noise_reuse_sensitivity"] = "yes"
+    elif mutation == "partial_reuse":
+        result["noise_reuse_sensitivity"] = {
+            "cycle_split_pooled_ranks": [],
+        }
+    path = tmp_path / f"{mutation}.json"
+    path.write_text(json.dumps(card), encoding="utf-8")
+    with pytest.raises(K1E2EError, match="must report|six unique|sensitivity"):
+        pooled_rank_from_e2e_card(path)
 
 
 @needs_card
