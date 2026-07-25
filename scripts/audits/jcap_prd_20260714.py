@@ -2821,6 +2821,74 @@ def _validate_atomic_findings(
         errors.append("atomic remediated_in_pr117_count must be 1")
 
 
+def _validate_execution_outcome(
+    row: dict[str, Any],
+    label: str,
+    errors: list[str],
+) -> None:
+    """Bind a stored receipt outcome to the observed process exit status."""
+
+    schema = row.get("schema")
+    exit_code = row.get("exit_code")
+    if isinstance(exit_code, bool) or not isinstance(exit_code, int):
+        errors.append(f"{label} has invalid exit_code {exit_code!r}")
+        return
+    if schema == "htt.jcap_prd.execution_receipt.v1":
+        expected_result = "PASS" if exit_code == 0 else "FAIL_OR_BLOCKED"
+        if row.get("result") != expected_result:
+            errors.append(
+                f"{label} outcome mismatch: exit_code={exit_code} "
+                f"requires result={expected_result}"
+            )
+        return
+    if schema != "htt.jcap_prd.execution_receipt.v2":
+        errors.append(f"{label} has unsupported execution receipt schema {schema!r}")
+        return
+
+    unavailable_input = any(
+        isinstance(item, dict) and item.get("status") != "present"
+        for item in row.get("input_hashes", [])
+    )
+    if unavailable_input:
+        expected = (
+            66,
+            "NOT_RUN",
+            "BLOCKED_MISSING_DECLARED_INPUT",
+            "BLOCKED_MISSING_DECLARED_INPUT",
+        )
+    elif exit_code != 0:
+        expected = (exit_code, "FAIL", "NOT_APPLICABLE", "FAIL_OR_BLOCKED")
+    else:
+        command = row.get("command")
+        diagnostic = (
+            _diagnostic_invocation(command)
+            if isinstance(command, list)
+            and all(isinstance(item, str) for item in command)
+            else None
+        )
+        scientific_status = row.get("scientific_status")
+        if diagnostic and str(scientific_status).startswith("BLOCKED"):
+            expected_result = "BLOCKED_SCIENTIFIC"
+        elif diagnostic and scientific_status == "MISSING_SCIENTIFIC_STATUS":
+            expected_result = "INVALID_SCIENTIFIC_OUTPUT"
+        elif diagnostic:
+            expected_result = "PASS_PROCESS_ONLY"
+        else:
+            scientific_status = "NOT_APPLICABLE"
+            expected_result = "PASS"
+        expected = (0, "PASS", scientific_status, expected_result)
+    actual = (
+        exit_code,
+        row.get("process_result"),
+        row.get("scientific_status"),
+        row.get("result"),
+    )
+    if actual != expected:
+        errors.append(
+            f"{label} outcome mismatch: actual={actual!r} expected={expected!r}"
+        )
+
+
 def _read_execution_ledger(errors: list[str]) -> list[dict[str, Any]]:
     if not EXECUTION_LEDGER.is_file():
         errors.append("execution ledger missing")
@@ -2857,6 +2925,11 @@ def _read_execution_ledger(errors: list[str]) -> list[dict[str, Any]]:
         command_id = row.get("command_id")
         if command_id:
             ids.append(str(command_id))
+        _validate_execution_outcome(
+            row,
+            f"execution ledger line {line_number} ({command_id})",
+            errors,
+        )
         for stream in ("stdout", "stderr"):
             receipt = row.get(stream, {})
             path = REPO / str(receipt.get("path", ""))

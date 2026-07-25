@@ -197,6 +197,68 @@ def test_execution_receipts_have_replay_and_hash_evidence():
         assert json.loads(stdout.read_text(encoding="utf-8")) == diagnostics[stored_name]
 
 
+def test_execution_receipt_outcomes_cannot_hide_failed_processes(
+    tmp_path, monkeypatch
+):
+    module = _audit_module()
+    stdout = tmp_path / "stdout.txt"
+    stderr = tmp_path / "stderr.txt"
+    stdout.write_text("", encoding="utf-8")
+    stderr.write_text("failed\n", encoding="utf-8")
+    common = {
+        "agent": "contract-test",
+        "command": ["/usr/bin/false"],
+        "cwd": str(tmp_path),
+        "started_at": "2026-07-14T00:00:00+00:00",
+        "ended_at": "2026-07-14T00:00:01+00:00",
+        "exit_code": 1,
+        "seed": 20260714,
+        "environment_hash": "sha256:" + "0" * 64,
+        "input_hashes": [],
+        "stdout": {"path": "stdout.txt", "sha256": module.sha256_file(stdout)},
+        "stderr": {"path": "stderr.txt", "sha256": module.sha256_file(stderr)},
+        "wall_seconds": 1.0,
+    }
+    rows = [
+        {
+            **common,
+            "schema": "htt.jcap_prd.execution_receipt.v1",
+            "command_id": "hidden-v1-failure",
+            "result": "FAIL_OR_BLOCKED",
+        },
+        {
+            **common,
+            "schema": "htt.jcap_prd.execution_receipt.v2",
+            "command_id": "hidden-v2-failure",
+            "process_result": "FAIL",
+            "scientific_status": "NOT_APPLICABLE",
+            "result": "FAIL_OR_BLOCKED",
+        },
+    ]
+    ledger = tmp_path / "execution_ledger.jsonl"
+    ledger.write_text(
+        "\n".join(json.dumps(row) for row in rows) + "\n",
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(module, "REPO", tmp_path)
+    monkeypatch.setattr(module, "EXECUTION_LEDGER", ledger)
+
+    errors = []
+    module._read_execution_ledger(errors)
+    assert errors == []
+
+    rows[0]["result"] = "PASS"
+    rows[1]["process_result"] = "PASS"
+    rows[1]["result"] = "PASS"
+    ledger.write_text(
+        "\n".join(json.dumps(row) for row in rows) + "\n",
+        encoding="utf-8",
+    )
+    errors = []
+    module._read_execution_ledger(errors)
+    assert sum("outcome mismatch" in error for error in errors) == 2
+
+
 def test_record_command_fails_closed_on_missing_input_and_duplicate_id(
     tmp_path, monkeypatch
 ):
