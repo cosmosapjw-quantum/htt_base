@@ -161,6 +161,23 @@ def test_positive_definite_guard_recomputes_matrix_evidence(
         require_positive_definite(report)
 
 
+@pytest.mark.parametrize("sigma, threshold, message", [
+    ([-0.1], 0.5, "finite non-negative"),
+    ([0.1, 0.2], 0.5, "one finite non-negative"),
+    ([0.1], float("nan"), "finite and positive"),
+])
+def test_constrained_classification_rejects_invalid_inputs(
+    sigma, threshold: float, message: str
+) -> None:
+    fs8 = {"fiducial_fsigma8": 0.43, "shells": [{"shell": 0}]}
+    with pytest.raises(GrowthCovarianceError, match=message):
+        classify_constrained(
+            fs8,
+            {"sigma": sigma},
+            constrained_rel_err=threshold,
+        )
+
+
 def test_growth_difference_nonidentified_when_endpoint_unconstrained() -> None:
     fs8 = {"fiducial_fsigma8": 0.43,
            "shells": [{"shell": 0, "fsigma8": 0.4, "constrained": True,

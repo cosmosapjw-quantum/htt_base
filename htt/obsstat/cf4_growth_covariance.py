@@ -178,14 +178,40 @@ def classify_constrained(fs8_report: dict, cov_report: dict, *,
     its full-ensemble measurement scatter is small relative to the fiducial
     value.  This is immune to the local-Fisher underestimate on a flat deep-
     shell likelihood."""
-    fs8_fid = fs8_report["fiducial_fsigma8"]
-    sig = cov_report["sigma"]
-    for r, s in zip(fs8_report["shells"], sig):
-        rel = s / fs8_fid if fs8_fid > 0 else np.inf
+    try:
+        fs8_fid = float(fs8_report["fiducial_fsigma8"])
+        shells = fs8_report["shells"]
+        sig = np.asarray(cov_report["sigma"])
+        constrained_rel_err = float(constrained_rel_err)
+    except (KeyError, TypeError, ValueError) as exc:
+        raise GrowthCovarianceError(
+            "constrained-shell classification inputs are malformed") from exc
+    if (
+        not np.isfinite(fs8_fid)
+        or fs8_fid <= 0
+        or not np.isfinite(constrained_rel_err)
+        or constrained_rel_err <= 0
+    ):
+        raise GrowthCovarianceError(
+            "classification fiducial and relative-error threshold must be "
+            "finite and positive")
+    if (
+        not isinstance(shells, list)
+        or len(shells) == 0
+        or sig.shape != (len(shells),)
+        or not np.issubdtype(sig.dtype, np.number)
+        or not np.isrealobj(sig)
+        or not np.all(np.isfinite(sig))
+        or np.any(sig < 0)
+    ):
+        raise GrowthCovarianceError(
+            "mock sigma must provide one finite non-negative value per shell")
+    for r, s in zip(shells, sig):
+        rel = s / fs8_fid
         r["mock_sigma"] = float(s)
         r["mock_relative_error"] = float(rel)
         r["constrained"] = bool(rel < constrained_rel_err)
-    n_con = sum(1 for r in fs8_report["shells"] if r["constrained"])
+    n_con = sum(1 for r in shells if r["constrained"])
     fs8_report["n_constrained_shells"] = int(n_con)
     return fs8_report
 
