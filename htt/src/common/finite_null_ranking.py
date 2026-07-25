@@ -30,7 +30,7 @@ import json
 import math
 from dataclasses import dataclass
 from fractions import Fraction
-from numbers import Real
+from numbers import Integral, Real
 from typing import Sequence
 
 SCHEMA_VERSION = "pr135.finite_null_ranking.v1"
@@ -48,6 +48,16 @@ def _require_finite_score(value, label: str) -> None:
     ):
         raise FiniteNullError(
             f"{label} must be a finite non-boolean real score")
+
+
+def _positive_integer(value, label: str) -> int:
+    if (
+        isinstance(value, bool)
+        or not isinstance(value, Integral)
+        or value <= 0
+    ):
+        raise FiniteNullError(f"{label} must be a positive integer")
+    return int(value)
 
 
 # ---------------------------------------------------------------------------
@@ -84,8 +94,7 @@ def pooled_rank_p(obs_score: float, null_scores: Sequence[float],
 
 def resolution_floor(n_null: int) -> Fraction:
     """The finite resolution 1/(N+1): the smallest reportable p."""
-    if n_null < 1:
-        raise FiniteNullError("need at least one null row")
+    n_null = _positive_integer(n_null, "n_null")
     return Fraction(1, n_null + 1)
 
 
@@ -137,6 +146,7 @@ def validate_reported_p(p, n_null: int) -> None:
 
 def support_grid(n_null: int) -> list[Fraction]:
     """The discrete support {1/(N+1), ..., (N+1)/(N+1)}."""
+    n_null = _positive_integer(n_null, "n_null")
     return [Fraction(k, n_null + 1) for k in range(1, n_null + 2)]
 
 
@@ -331,6 +341,7 @@ def calibration_fingerprint(statistic_family: str, scan_range: str,
                             n_null: int) -> str:
     """Fingerprint over (statistic_family, scan_range, mask, tie_policy,
     N) — any change mints a new calibration id, forcing recomputation."""
+    n_null = _positive_integer(n_null, "n_null")
     canonical = json.dumps({
         "statistic_family": statistic_family, "scan_range": scan_range,
         "mask": mask, "tie_policy": tie_policy, "n_null": n_null,
@@ -351,6 +362,7 @@ def exact_rank_distribution(n_null: int) -> dict:
     placements is equally likely, so the multiset of p-values MUST be
     exactly the grid {1/(N+1), ..., 1}, each once — this both proves
     super-uniformity AND exercises the estimator being certified."""
+    n_null = _positive_integer(n_null, "n_null")
     nulls = [float(i) for i in range(n_null)]
     grid = support_grid(n_null)
     observed_ps = []
@@ -397,6 +409,7 @@ def type_i_simulation(n_null: int, trials: int, seed: int,
     two, not just a loose tail band."""
     import numpy as np
 
+    n_null = _positive_integer(n_null, "n_null")
     rng = np.random.Generator(np.random.PCG64(seed))
     # continuous exchangeable draws -> ties have measure zero
     draws = rng.standard_normal(size=(trials, n_null + 1))

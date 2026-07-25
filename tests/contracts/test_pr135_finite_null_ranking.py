@@ -26,6 +26,7 @@ from common.finite_null_ranking import (
     resolution_floor,
     scan_pooled_rank_p,
     split_evaluated_rank_p,
+    support_grid,
     type_i_simulation,
     validate_reported_p,
 )
@@ -201,6 +202,23 @@ def test_resolution_and_sigma_guard() -> None:
     # p above the floor -> a sigma is reportable
     sig = gaussian_sigma_from_p(Fraction(1, 100), 999)
     assert 2.5 < sig < 2.6   # two-sided 0.01 -> ~2.576
+
+
+@pytest.mark.parametrize("n_null", [True, 0, -1, 1.5])
+def test_null_count_must_be_positive_integer(n_null) -> None:
+    calls = [
+        lambda: resolution_floor(n_null),
+        lambda: support_grid(n_null),
+        lambda: exact_rank_distribution(n_null),
+        lambda: type_i_simulation(
+            n_null, 100, 1, [Fraction(1, 2)]),
+        lambda: calibration_fingerprint(
+            "max", "0..1", "full", "conservative_ge", n_null),
+        lambda: generate_caption(n_null),
+    ]
+    for call in calls:
+        with pytest.raises(FiniteNullError, match="positive integer"):
+            call()
 
 
 def test_exact_enumeration_exercises_estimator() -> None:
