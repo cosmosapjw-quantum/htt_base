@@ -36,6 +36,7 @@ from dataclasses import dataclass, field
 from enum import Enum
 from fractions import Fraction
 from pathlib import Path
+from types import MappingProxyType
 from typing import Mapping, Sequence
 
 import sympy as sp
@@ -183,7 +184,9 @@ class TypedQuantity:
 # Registered source-response equivalence edges. EMPTY: no A_v ->
 # Omega_tilt bridge is authorized. An edge would require a reviewed
 # equivalence proof; the registry stays empty at the pre-solver tier.
-EQUIVALENCE_EDGES: dict[tuple[QuantityType, QuantityType], dict] = {}
+EQUIVALENCE_EDGES: Mapping[
+    tuple[QuantityType, QuantityType], Mapping
+] = MappingProxyType({})
 
 
 def bridge(source: TypedQuantity, target_type: QuantityType,

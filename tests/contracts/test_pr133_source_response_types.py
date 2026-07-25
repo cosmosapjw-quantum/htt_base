@@ -11,6 +11,7 @@ from pathlib import Path
 import pytest
 
 from common.source_response_types import (
+    EQUIVALENCE_EDGES,
     EXPECTED_RANK,
     QuantityType,
     Rung,
@@ -126,6 +127,12 @@ def test_non_bridge_guard_and_provenance() -> None:
         require_declared_provenance(smuggled)
     require_declared_provenance(
         TypedQuantity(QuantityType.PHYSICAL_TILT, Fraction(1, 100)))
+
+
+def test_equivalence_edges_cannot_be_registered_at_runtime() -> None:
+    key = (QuantityType.OBSERVER_PROXY, QuantityType.PHYSICAL_TILT)
+    with pytest.raises(TypeError):
+        EQUIVALENCE_EDGES[key] = {"evidence": "forged-local-reference"}
 
 
 def test_same_type_arithmetic_cannot_launder_bridge_provenance() -> None:
