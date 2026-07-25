@@ -207,6 +207,10 @@ def build_mes_template_bound(
     )
     config_hash_text = _require_hash(config_hash, "config_hash")
     input_hash_list = list(_require_input_hashes(input_hashes, "input_hashes"))
+    if orientation_scan.config_hash != config_hash_text:
+        raise ValueError("orientation_scan.config_hash must match config_hash")
+    if list(orientation_scan.input_hashes) != input_hash_list:
+        raise ValueError("orientation_scan.input_hashes must match input_hashes")
     command_text = _non_empty(generating_command, "generating_command")
     git_commit_text = None if git_commit is None else _non_empty(git_commit, "git_commit")
     worktree_text = (

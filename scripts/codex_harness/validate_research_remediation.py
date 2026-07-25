@@ -291,7 +291,12 @@ def build_state() -> dict[str, Any]:
     _, matrix, _, _ = _validate_frozen_authority_inputs()
     spec_hash = EXPECTED_PR119_SPEC_SHA256
     backlog = _load_yaml(BACKLOG)
-    cards = [card for card in backlog.get("prs", []) if isinstance(card, dict)]
+    pr119_slice = {f"PR-{value:03d}" for value in range(119, 167)}
+    cards = [
+        card
+        for card in backlog.get("prs", [])
+        if isinstance(card, dict) and card.get("id") in pr119_slice
+    ]
     rows = matrix.get("rows")
     if not isinstance(rows, list):
         raise ValueError("criticism matrix rows must be a list")
@@ -365,6 +370,34 @@ def build_state() -> dict[str, Any]:
         },
         "findings": findings,
     }
+
+
+def _normalize_state_generation_inputs(
+    state: dict[str, Any],
+    expected_state: dict[str, Any],
+) -> dict[str, Any]:
+    """Treat the PR-119 backlog digest as generation-time provenance only."""
+
+    inputs = state.get("input_hashes")
+    expected_inputs = expected_state.get("input_hashes")
+    if (
+        not isinstance(inputs, list)
+        or not isinstance(expected_inputs, list)
+        or len(inputs) != len(expected_inputs)
+        or inputs[:-1] != expected_inputs[:-1]
+    ):
+        raise ValueError("remediation state frozen input identities drifted")
+    backlog_prefix = f"{BACKLOG.relative_to(REPO)}:"
+    backlog_input = inputs[-1]
+    if not isinstance(backlog_input, str) or not backlog_input.startswith(backlog_prefix):
+        raise ValueError("remediation state generation-time backlog identity is malformed")
+    digest = backlog_input.removeprefix(backlog_prefix)
+    if len(digest) != 64 or any(character not in "0123456789abcdef" for character in digest):
+        raise ValueError("remediation state generation-time backlog digest is malformed")
+
+    normalized = dict(state)
+    normalized["input_hashes"] = expected_inputs
+    return normalized
 
 
 def build_crosswalk() -> dict[str, Any]:
@@ -508,7 +541,8 @@ def validate_all() -> None:
         raise ValueError("authority registry mirror drift")
     state = _load_yaml(STATE)
     expected_state = build_state()
-    if state != expected_state or STATE.read_bytes() != MACHINE_STATE.read_bytes():
+    normalized_state = _normalize_state_generation_inputs(state, expected_state)
+    if normalized_state != expected_state or STATE.read_bytes() != MACHINE_STATE.read_bytes():
         raise ValueError("remediation state is stale or mirror-drifted")
     if _load_yaml(CROSSWALK) != build_crosswalk():
         raise ValueError("proposal crosswalk is stale")
@@ -536,9 +570,20 @@ def write_all() -> None:
     # never repaired in place by ``--write``.
     _validate_frozen_authority_inputs()
     build_reconciliation()
-    state = build_state()
+    expected_state = build_state()
+    if STATE.exists():
+        state = _load_yaml(STATE)
+        if _normalize_state_generation_inputs(state, expected_state) != expected_state:
+            raise ValueError("existing PR-119 remediation state semantic drift; refusing overwrite")
+        state_text = STATE.read_text(encoding="utf-8")
+    else:
+        state_text = yaml.safe_dump(
+            expected_state,
+            sort_keys=False,
+            allow_unicode=True,
+            width=100,
+        )
     crosswalk = build_crosswalk()
-    state_text = yaml.safe_dump(state, sort_keys=False, allow_unicode=True, width=100)
     STATE.write_text(state_text, encoding="utf-8")
     MACHINE_STATE.write_text(state_text, encoding="utf-8")
     CROSSWALK.write_text(

@@ -561,12 +561,14 @@ def _c5_c6_family_id_violations(
 
 
 def _all_claims_have(claims: Sequence[dict[str, Any]], key: str) -> bool:
-    return all(bool(claim.get(key)) for claim in claims)
+    return bool(claims) and all(bool(claim.get(key)) for claim in claims)
 
 
 def _all_claim_paths_exist(
     repo_root: Path, claims: Sequence[dict[str, Any]], key: str
 ) -> bool:
+    if not claims:
+        return False
     for claim in claims:
         for item in claim.get(key, ()):
             if not (repo_root / str(item)).exists():
