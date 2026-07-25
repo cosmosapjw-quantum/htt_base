@@ -113,6 +113,10 @@ class TypedQuantity:
     def __post_init__(self) -> None:
         if not isinstance(self.qtype, QuantityType):
             raise SourceResponseError("qtype must be a QuantityType")
+        if isinstance(self.value, bool):
+            raise SourceResponseError(
+                "typed-quantity value must not be boolean"
+            )
         object.__setattr__(self, "value", Fraction(self.value))
         if not str(self.provenance).strip():
             raise SourceResponseError("provenance must be non-empty")

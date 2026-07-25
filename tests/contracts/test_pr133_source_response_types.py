@@ -114,6 +114,12 @@ def test_type_firewall_blocks_cross_type() -> None:
     assert (av == ot) is False
 
 
+@pytest.mark.parametrize("value", [True, False])
+def test_typed_quantity_rejects_boolean_values(value) -> None:
+    with pytest.raises(SourceResponseError, match="must not be boolean"):
+        TypedQuantity(QuantityType.OBSERVER_PROXY, value)
+
+
 def test_non_bridge_guard_and_provenance() -> None:
     av = TypedQuantity(QuantityType.OBSERVER_PROXY, Fraction(1, 100))
     with pytest.raises(SourceResponseError, match="bridge.*refused"):
