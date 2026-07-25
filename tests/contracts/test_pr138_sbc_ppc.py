@@ -1,6 +1,7 @@
 """PR-138 contract tests: SBC + replicated-data PPC."""
 from __future__ import annotations
 
+import importlib.util
 import json
 import subprocess
 import sys
@@ -48,6 +49,60 @@ def _lineage(model, y):
     lh = lineage_hash(model, dh, _CFG, {"r": "1.0"})
     return {"claimed_hash": lh, "data_hash": dh, "config": _CFG,
             "diagnostics": {"r": "1.0"}}
+
+
+def _load_runner():
+    path = REPO_ROOT / "scripts/codex_harness/run_pr138_sbc_ppc.py"
+    spec = importlib.util.spec_from_file_location("run_pr138", path)
+    runner = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(runner)
+    return runner
+
+
+def test_check_normalizes_only_generation_time_source_hash() -> None:
+    runner = _load_runner()
+    source = runner.SOURCE_PATH
+    stored = {
+        "uniformity_pvalue": 0.1,
+        "negative_scan": {
+            "targets": {
+                source: {"sha256": "1" * 64, "hits": []},
+            },
+        },
+    }
+    current = {
+        "uniformity_pvalue": 0.1,
+        "negative_scan": {
+            "targets": {
+                source: {"sha256": "2" * 64, "hits": []},
+            },
+        },
+    }
+    rel = runner.OUTPUTS["sbc"]
+    assert runner._semantic_artifact(
+        rel, stored
+    ) == runner._semantic_artifact(rel, current)
+    current["uniformity_pvalue"] = 0.2
+    assert runner._semantic_artifact(
+        rel, stored
+    ) != runner._semantic_artifact(rel, current)
+    current["uniformity_pvalue"] = 0.1
+    current["negative_scan"]["targets"][source]["hits"] = [{"line": 1}]
+    assert runner._semantic_artifact(
+        rel, stored
+    ) != runner._semantic_artifact(rel, current)
+    current["negative_scan"]["targets"][source]["hits"] = []
+    current["negative_scan"]["targets"][source]["sha256"] = "not-a-sha"
+    assert runner._semantic_artifact(
+        rel, stored
+    ) != runner._semantic_artifact(rel, current)
+
+    manifest_rel = runner.OUTPUTS["manifest"]
+    stored_manifest = {"input_hashes": [f"{source}:{'1' * 64}"]}
+    current_manifest = {"input_hashes": [f"{source}:{'2' * 64}"]}
+    assert runner._semantic_artifact(
+        manifest_rel, stored_manifest
+    ) == runner._semantic_artifact(manifest_rel, current_manifest)
 
 
 def test_chi2_sf_matches_scipy() -> None:
