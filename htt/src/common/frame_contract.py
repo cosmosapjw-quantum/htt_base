@@ -182,7 +182,7 @@ class PremiseContract:
             units=payload["units"],
             harmonic_convention=payload["harmonic_convention"],
             redshift_depth_convention=payload["redshift_depth_convention"],
-            reproduction_mode=bool(payload.get("reproduction_mode", False)),
+            reproduction_mode=payload.get("reproduction_mode", False),
         )
 
     def as_payload(self) -> dict:

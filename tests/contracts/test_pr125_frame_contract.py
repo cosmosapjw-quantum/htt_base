@@ -72,6 +72,11 @@ def test_legacy_reproduction_channel_is_labeled() -> None:
     legacy = legacy_reproduction_contract()
     assert legacy.reproduction_mode is True
     assert _contract().reproduction_mode is False
+    with pytest.raises(FrameContractError, match="must be a bool"):
+        PremiseContract.from_payload({
+            **_contract().as_payload(),
+            "reproduction_mode": "false",
+        })
 
 
 def test_exact_rapidity_witnesses() -> None:
