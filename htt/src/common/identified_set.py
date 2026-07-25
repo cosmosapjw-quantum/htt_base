@@ -27,7 +27,8 @@ from dataclasses import dataclass
 from enum import Enum
 from fractions import Fraction
 from numbers import Real
-from typing import Sequence
+from types import MappingProxyType
+from typing import Mapping, Sequence
 
 from common.graded_nonid import EXPECTED_KERNEL_BASIS, SECTORS
 
@@ -117,9 +118,15 @@ class AdmissibleBox:
     """The pre-registered admissible box on each axis. Pinned BEFORE the
     fit; never shrunk to an observed value."""
 
-    lower: dict
-    upper: dict
+    lower: Mapping
+    upper: Mapping
     pinned_id: str
+
+    def __post_init__(self) -> None:
+        object.__setattr__(
+            self, "lower", MappingProxyType(dict(self.lower)))
+        object.__setattr__(
+            self, "upper", MappingProxyType(dict(self.upper)))
 
     def as_constraints(self) -> list[LinearConstraint]:
         cons = []

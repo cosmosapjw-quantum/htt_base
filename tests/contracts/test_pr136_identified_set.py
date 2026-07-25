@@ -363,6 +363,20 @@ def test_admissible_pin_rejects_bound_on_unbounded_side(
         box.validate_proposed(lower, upper)
 
 
+def test_admissible_box_copies_and_freezes_pinned_bounds() -> None:
+    lower = {axis: Fraction(-3) for axis in AXES}
+    upper = {axis: Fraction(3) for axis in AXES}
+    box = AdmissibleBox(lower=lower, upper=upper, pinned_id="pin")
+    lower["Omega_tilt"] = Fraction(0)
+    upper["Omega_tilt"] = Fraction(0)
+    assert box.lower["Omega_tilt"] == Fraction(-3)
+    assert box.upper["Omega_tilt"] == Fraction(3)
+    with pytest.raises(TypeError):
+        box.lower["Omega_tilt"] = Fraction(0)
+    with pytest.raises(TypeError):
+        box.upper["Omega_tilt"] = Fraction(0)
+
+
 def test_caption_gate() -> None:
     text = generate_caption({"bounded_box": "bounded"})
     lint_caption(text)
