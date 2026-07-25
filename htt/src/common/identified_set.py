@@ -558,6 +558,14 @@ def classify_status_from_solver(converged: bool, feasible: bool,
                                 unbounded: bool) -> str:
     """Map solver outcomes to the status vocabulary. A nonconverged
     solver is UNDETERMINED — never empty or non-identification."""
+    for name, value in (
+        ("converged", converged),
+        ("feasible", feasible),
+        ("unbounded", unbounded),
+    ):
+        if not isinstance(value, bool):
+            raise IdentifiedSetError(
+                f"solver outcome {name} must be a boolean")
     if not converged:
         return SetStatus.UNDETERMINED.value
     if not feasible:

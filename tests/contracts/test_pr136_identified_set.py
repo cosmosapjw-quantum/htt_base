@@ -358,6 +358,17 @@ def test_classify_from_solver() -> None:
     assert classify_status_from_solver(True, True, False) == "bounded"
 
 
+@pytest.mark.parametrize("args", [
+    ("false", True, False),
+    (1, False, False),
+    (True, "false", False),
+    (True, True, "false"),
+])
+def test_classify_from_solver_rejects_non_boolean_outcomes(args) -> None:
+    with pytest.raises(IdentifiedSetError, match="must be a boolean"):
+        classify_status_from_solver(*args)
+
+
 def test_set_valued_and_admissible_pin() -> None:
     validate_set_valued(exact_engine(_bounded()))
     with pytest.raises(IdentifiedSetError, match="scalar summary"):
