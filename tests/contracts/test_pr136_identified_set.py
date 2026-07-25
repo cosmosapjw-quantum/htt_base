@@ -393,6 +393,22 @@ def test_admissible_box_rejects_invalid_definition(
         AdmissibleBox(lower=lower, upper=upper, pinned_id=pinned_id)
 
 
+@pytest.mark.parametrize("lower,upper", [
+    ({"Omega_tlt": Fraction(0)}, {}),
+    ({}, {"Omega_tlt": Fraction(0)}),
+])
+def test_admissible_box_rejects_unknown_proposed_axes(
+    lower, upper
+) -> None:
+    box = AdmissibleBox(
+        lower={"Omega_tilt": Fraction(-3)},
+        upper={"Omega_tilt": Fraction(3)},
+        pinned_id="pin",
+    )
+    with pytest.raises(IdentifiedSetError, match="unknown axes"):
+        box.validate_proposed(lower, upper)
+
+
 def test_caption_gate() -> None:
     text = generate_caption({"bounded_box": "bounded"})
     lint_caption(text)

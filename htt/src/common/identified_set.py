@@ -175,6 +175,18 @@ class AdmissibleBox:
         shrink the pinned box on any axis. A strictly-tighter bound on any
         axis (the signature of data-driven shrinkage to fit) is refused;
         an equal or wider proposal is allowed."""
+        if not isinstance(proposed_lower, Mapping) or not isinstance(
+            proposed_upper, Mapping
+        ):
+            raise IdentifiedSetError(
+                "proposed lower and upper bounds must be mappings")
+        unknown = (
+            set(proposed_lower) | set(proposed_upper)
+        ) - set(AXES)
+        if unknown:
+            raise IdentifiedSetError(
+                "proposed admissible box contains unknown axes "
+                f"{sorted(str(axis) for axis in unknown)}")
         for axis in AXES:
             pin_lo, pin_hi = self.lower.get(axis), self.upper.get(axis)
             new_lo = proposed_lower.get(axis)
