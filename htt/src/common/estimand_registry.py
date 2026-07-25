@@ -99,6 +99,10 @@ class AnalysisContract:
         if not isinstance(self.generative_branch, GenerativeBranch):
             raise EstimandRegistryError(
                 "generative_branch must be a GenerativeBranch enum")
+        for name in ("dependence_justification", "supersedes"):
+            if not isinstance(getattr(self, name), str):
+                raise EstimandRegistryError(
+                    f"contract field {name!r} must be a string")
         if _names_independence(self.dependence_cluster) and \
                 not self.dependence_justification.strip():
             raise EstimandRegistryError(

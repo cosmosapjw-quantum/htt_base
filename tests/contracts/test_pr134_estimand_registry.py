@@ -105,6 +105,15 @@ def test_hidden_default_field_rejected() -> None:
         AnalysisContract.from_payload(dict(BASE, estimand="   "))
 
 
+@pytest.mark.parametrize("field,value", [
+    ("dependence_justification", 123),
+    ("supersedes", 0),
+])
+def test_optional_contract_metadata_must_be_strings(field, value) -> None:
+    with pytest.raises(EstimandRegistryError, match=field):
+        AnalysisContract.from_payload(dict(BASE, **{field: value}))
+
+
 def test_independent_dependency_needs_justification() -> None:
     # underscore, hyphen, and space separators must all be caught
     for label in ("independent", "iid", "independent_rows", "flat",
