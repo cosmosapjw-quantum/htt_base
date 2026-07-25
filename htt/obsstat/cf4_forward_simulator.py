@@ -101,6 +101,19 @@ def load_sample_and_meta(groups_path, *, h0: float = H0_CF4,
     """Load the CF4 groups into a PR-145 ``Cf4Sample`` and a ``SimMeta`` that
     carries the raw distance and distance-modulus error the realism layers need,
     both aligned to the same rows."""
+    try:
+        h0 = float(h0)
+        sigma_nl = float(sigma_nl)
+    except (TypeError, ValueError) as exc:
+        raise ForwardSimulatorError(
+            "CF4 H0 and nonlinear velocity dispersion must be real scalars"
+        ) from exc
+    if not np.isfinite(h0) or h0 <= 0:
+        raise ForwardSimulatorError("CF4 H0 must be finite and positive")
+    if not np.isfinite(sigma_nl) or sigma_nl < 0:
+        raise ForwardSimulatorError(
+            "CF4 nonlinear velocity dispersion must be finite and non-negative"
+        )
     d = np.load(groups_path)
     dist = d["Dist"]
     v3k = d["V3k"]

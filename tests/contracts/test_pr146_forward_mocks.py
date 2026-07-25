@@ -228,6 +228,22 @@ def test_ensemble_counts_must_be_positive_integers(
         call()
 
 
+@pytest.mark.parametrize("kwargs, message", [
+    ({"h0": 0.0}, "H0 must be finite and positive"),
+    ({"h0": -75.0}, "H0 must be finite and positive"),
+    ({"h0": np.nan}, "H0 must be finite and positive"),
+    ({"sigma_nl": -250.0}, "dispersion must be finite and non-negative"),
+    ({"sigma_nl": np.nan}, "dispersion must be finite and non-negative"),
+    ({"sigma_nl": 1.0j}, "must be real scalars"),
+])
+def test_forward_loader_rejects_invalid_configuration(
+    kwargs: dict, message: str
+) -> None:
+    with pytest.raises(ForwardSimulatorError, match=message):
+        load_sample_and_meta(
+            "validation_precedes_file_access.npz", **kwargs)
+
+
 def test_caption_gate() -> None:
     text = generate_caption(1.02, 82.0, 0.65)
     lint_caption(text)
