@@ -12,6 +12,14 @@ import numpy as np
 from .oracle_lab import PropertyResult, content_sha256, make_outcome
 
 
+K6_ALLOWED_REPOSITORY_CONSUMERS = frozenset(
+    {
+        "scripts/codex_harness/run_pr123_oracle_lab.py",
+        "tests/contracts/test_pr123_k6_continuum_oracle.py",
+    }
+)
+
+
 def derivative_periodic(field: np.ndarray, spacing: float, axis: int, order: int) -> np.ndarray:
     if order == 2:
         return (np.roll(field, -1, axis) - np.roll(field, 1, axis)) / (2.0 * spacing)
@@ -320,7 +328,7 @@ def run_k6_continuum_suite(
         PropertyResult("continuum_upper_bound", continuum_pass, max(periodic_report[str(order)]["continuum"]["numerical_upper_bound"] for order in orders), str(contract["continuum_upper_bound_max"]), "intercept plus max fit residual"),
         PropertyResult("sqrt2", bool(sqrt2_error < contract["sqrt2_absolute_tolerance"] and signed_covariance_pass and challenge_suspends_lock), float(sqrt2_error), contract["sqrt2_absolute_tolerance"], "explicit signed zero-mean isotropic gradient-tensor covariance cubature plus correlated challenge"),
         PropertyResult("two_stencil_execution", set(orders) == {2, 4}, len(orders), 2, "both numerical operators executed on identical fields"),
-        PropertyResult("no_empirical_consumer", not unexpected_consumers and not contract["empirical_inputs"] and not contract["empirical_consumers"], len(unexpected_consumers), 0, "repository consumer inventory is allowlisted"),
+        PropertyResult("no_empirical_consumer", not (set(consumer_inventory) - K6_ALLOWED_REPOSITORY_CONSUMERS) and not contract["empirical_inputs"] and not contract["empirical_consumers"], len(set(consumer_inventory) - K6_ALLOWED_REPOSITORY_CONSUMERS), 0, "repository consumer inventory is allowlisted"),
     )
     mutant_failed = (
         "observed_orders",
@@ -350,9 +358,9 @@ def run_k6_continuum_suite(
         "sqrt2_residual_lock": {"expected": float(np.sqrt(2.0)), "observed": sqrt2, "domain": contract["sqrt2_domain"], "correlated_challenge_suspends_lock": challenge_suspends_lock},
         "empirical_inputs": [],
         "consumer_inventory": consumer_inventory,
-        "unexpected_consumers": unexpected_consumers,
-        "empirical_consumers": unexpected_consumers,
-        "empirical_consumer_count": len(unexpected_consumers),
+        "unexpected_consumers": sorted(set(consumer_inventory) - K6_ALLOWED_REPOSITORY_CONSUMERS),
+        "empirical_consumers": sorted(set(consumer_inventory) - K6_ALLOWED_REPOSITORY_CONSUMERS),
+        "empirical_consumer_count": len(set(consumer_inventory) - K6_ALLOWED_REPOSITORY_CONSUMERS),
         "interpretation": "catalog-independent numerical upper-bound mechanics only",
         "scientific_status": "OPEN",
     }
