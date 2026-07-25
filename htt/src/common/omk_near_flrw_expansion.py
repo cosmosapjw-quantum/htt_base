@@ -474,6 +474,10 @@ def fd_plateau(w_value: Fraction, probes=(Fraction(1, 100000),
         raise OmkNearFlrwError(
             "finite-difference plateau needs at least one probe"
         )
+    if k0 <= 0:
+        raise OmkNearFlrwError(
+            "finite-difference seed magnitude k0 must be strictly positive"
+        )
     kappa = Fraction(-2, 1) / (3 * wv + 5)
     c2 = C2_EXACT.subs(W, sp.Rational(wv))
     c2_frac = Fraction(sp.Rational(c2).p, sp.Rational(c2).q)

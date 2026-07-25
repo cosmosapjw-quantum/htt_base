@@ -175,6 +175,11 @@ def test_fd_plateau_rejects_empty_probe_set() -> None:
         fd_plateau(Fraction(0), probes=())
 
 
+def test_fd_plateau_rejects_nonpositive_seed_magnitude() -> None:
+    with pytest.raises(OmkNearFlrwError, match="strictly positive"):
+        fd_plateau(Fraction(0), k0=Fraction(-1, 10 ** 8), branch=1)
+
+
 def test_claim_and_caption_gates() -> None:
     validate_claim({"asserts": "asymptotic coefficient",
                     "fixed_background": "q0 = 1/2"})
