@@ -10,6 +10,7 @@ from pathlib import Path
 
 import pytest
 
+import common.finite_null_ranking as finite_null_ranking
 from common.finite_null_ranking import (
     CalibrationSplit,
     FiniteNullError,
@@ -268,6 +269,19 @@ def test_type_i_simulation_rejects_invalid_domain(
 ) -> None:
     with pytest.raises(FiniteNullError, match=message):
         type_i_simulation(39, trials, seed, alphas)
+
+
+def test_type_i_negative_control_uses_production_floor_gate(
+    monkeypatch
+) -> None:
+    monkeypatch.setattr(
+        finite_null_ranking,
+        "validate_reported_p",
+        lambda p, n_null: None,
+    )
+    with pytest.raises(FiniteNullError, match="production floor gate"):
+        type_i_simulation(
+            39, 100, 1, [Fraction(1, 100), Fraction(1, 2)])
 
 
 def test_calibration_split_and_fingerprint() -> None:

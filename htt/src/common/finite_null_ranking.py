@@ -493,11 +493,21 @@ def type_i_simulation(n_null: int, trials: int, seed: int,
     # never 0.
     bad_min = float(p_bad.min())
     bad_zero_fraction = float((p_bad <= 0).mean())
-    negative_control_caught = bad_min <= 0.0 and bad_zero_fraction > 0.0
+    floor_gate_rejected = False
+    try:
+        validate_reported_p(bad_min, n_null)
+    except FiniteNullError:
+        floor_gate_rejected = True
+    negative_control_caught = (
+        bad_min <= 0.0
+        and bad_zero_fraction > 0.0
+        and floor_gate_rejected
+    )
     if not negative_control_caught:
         raise FiniteNullError(
-            "the b/N negative control did not produce a zero p-value — "
-            "the type-I check could not demonstrate discriminating power")
+            "the b/N negative control was not rejected by the production "
+            "floor gate — the type-I check could not demonstrate "
+            "discriminating power")
     if not ok:
         raise FiniteNullError(
             "type-I simulation failed super-uniformity at some alpha — "
