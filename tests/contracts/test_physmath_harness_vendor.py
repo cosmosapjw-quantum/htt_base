@@ -12,6 +12,7 @@ from common.artifact_manifest import validate_manifest_payload
 ROOT = Path(__file__).resolve().parents[2]
 VENDOR = ROOT / "harness_templates/vendor/physmath-gpt56/3.1.0"
 RECEIPT = ROOT / "docs/audits/harness_intake_20260714/receipt.json"
+COMMIT_MAP = ROOT / "docs/git_history/commit_map_20260717.tsv"
 GENERIC_SKILLS = {
     "adversarial-review",
     "claim-source-audit",
@@ -40,6 +41,31 @@ def _tree_hash(root: Path) -> tuple[int, int, str]:
         rel = path.relative_to(root).as_posix().encode()
         digest.update(rel + b"\0" + _sha256(path).encode() + b"\n")
     return len(files), sum(path.stat().st_size for path in files), digest.hexdigest()
+
+
+def _mapped_commit(old_commit: str) -> str:
+    matches = [
+        new
+        for line in COMMIT_MAP.read_text(encoding="utf-8").splitlines()
+        if line.strip()
+        for old, new in [line.split()]
+        if old == old_commit
+    ]
+    assert len(matches) == 1
+    return matches[0]
+
+
+def _git_blob(commit: str, path: str) -> bytes:
+    completed = subprocess.run(
+        ["git", "show", f"{commit}:{path}"],
+        cwd=ROOT,
+        capture_output=True,
+        check=False,
+    )
+    assert completed.returncode == 0, completed.stderr.decode(
+        "utf-8", errors="replace"
+    )
+    return completed.stdout
 
 
 def test_receipt_matches_immutable_vendor_trees() -> None:
@@ -104,9 +130,11 @@ def test_vendor_has_only_expected_executables_and_safe_paths() -> None:
 
 def test_root_controls_and_adapter_preserve_repo_authority() -> None:
     receipt = json.loads(RECEIPT.read_text(encoding="utf-8"))
+    baseline_commit = _mapped_commit(receipt["baseline"]["git_commit"])
     for rel, expected in receipt["root_control_hashes"].items():
         assert len(expected) == 64
         int(expected, 16)
+        assert hashlib.sha256(_git_blob(baseline_commit, rel)).hexdigest() == expected
         assert (ROOT / rel).is_file()
         for mode in ("coding", "research"):
             upstream = VENDOR / mode / rel
@@ -139,12 +167,16 @@ def test_root_controls_and_adapter_preserve_repo_authority() -> None:
 
 
 def test_receipt_is_explicitly_non_scientific() -> None:
-    metadata = json.loads(RECEIPT.read_text(encoding="utf-8"))["artifact_metadata"]
+    receipt = json.loads(RECEIPT.read_text(encoding="utf-8"))
+    metadata = receipt["artifact_metadata"]
     assert validate_manifest_payload(
         metadata,
         manifest_path=RECEIPT,
         expected_artifact_path="docs/audits/harness_intake_20260714/receipt.json",
     ) == ()
+    assert metadata["input_hashes"] == [
+        archive["sha256"] for archive in receipt["archives"]
+    ]
     assert metadata["owner"] == "COMMON"
     assert metadata["implementation_scope"] == "common"
     assert metadata["bundle_kind"] == "common_contract"

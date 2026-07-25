@@ -4,6 +4,7 @@ import importlib.util
 import json
 from pathlib import Path
 import subprocess
+import sys
 
 from common.artifact_manifest import validate_manifest_payload
 
@@ -143,7 +144,7 @@ def test_pack_c_cli_dry_run_does_not_write_output(tmp_path):
 
     result = subprocess.run(
         [
-            str(REPO_ROOT / "venv/bin/python"),
+            sys.executable,
             str(SCRIPT_PATH),
             "--dry-run",
             "--output",
@@ -166,7 +167,7 @@ def test_pack_c_cli_writes_report(tmp_path):
 
     result = subprocess.run(
         [
-            str(REPO_ROOT / "venv/bin/python"),
+            sys.executable,
             str(SCRIPT_PATH),
             "--output",
             str(output),
@@ -189,7 +190,7 @@ def test_pack_c_cli_check_detects_missing_and_stale_without_writing(tmp_path):
 
     missing_result = subprocess.run(
         [
-            str(REPO_ROOT / "venv/bin/python"),
+            sys.executable,
             str(SCRIPT_PATH),
             "--check",
             "--output",
@@ -206,7 +207,7 @@ def test_pack_c_cli_check_detects_missing_and_stale_without_writing(tmp_path):
 
     write_result = subprocess.run(
         [
-            str(REPO_ROOT / "venv/bin/python"),
+            sys.executable,
             str(SCRIPT_PATH),
             "--output",
             str(output),
@@ -220,7 +221,7 @@ def test_pack_c_cli_check_detects_missing_and_stale_without_writing(tmp_path):
 
     check_result = subprocess.run(
         [
-            str(REPO_ROOT / "venv/bin/python"),
+            sys.executable,
             str(SCRIPT_PATH),
             "--check",
             "--output",
@@ -237,7 +238,7 @@ def test_pack_c_cli_check_detects_missing_and_stale_without_writing(tmp_path):
     output.write_text(output.read_text(encoding="utf-8") + "\nmanual drift\n")
     stale_result = subprocess.run(
         [
-            str(REPO_ROOT / "venv/bin/python"),
+            sys.executable,
             str(SCRIPT_PATH),
             "--check",
             "--output",
