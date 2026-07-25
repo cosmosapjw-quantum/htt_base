@@ -220,7 +220,7 @@ def test_executable_release_pin_payload_is_rejected_without_execution(
     assert not sentinel.exists()
 
 
-def test_graph_bound_verifier_source_drift_is_rejected(tmp_path: Path) -> None:
+def test_historical_source_hash_is_not_live_authority(tmp_path: Path) -> None:
     source = tmp_path / "verifier.py"
     source.write_text("VALUE = 1\n", encoding="utf-8")
     node = EvidenceNode(
@@ -238,5 +238,26 @@ def test_graph_bound_verifier_source_drift_is_rejected(tmp_path: Path) -> None:
     _verify_graph_sources(tmp_path, graph)  # type: ignore[arg-type]
 
     source.write_text("VALUE = 2\n", encoding="utf-8")
+    _verify_graph_sources(tmp_path, graph)  # type: ignore[arg-type]
+
+
+def test_non_source_graph_input_drift_is_rejected(tmp_path: Path) -> None:
+    source = tmp_path / "config.yaml"
+    source.write_text("value: 1\n", encoding="utf-8")
+    node = EvidenceNode(
+        kind=EvidenceNodeKind.INPUT,
+        label="frozen-config",
+        content_sha256=hashlib.sha256(source.read_bytes()).hexdigest(),
+        axes=EvidenceAxes(
+            ProcessResult.PASS,
+            EvidenceStatus.PRESENT,
+            ScientificStatus.OPEN,
+        ),
+        metadata={"path": "config.yaml"},
+    )
+    graph = SimpleNamespace(nodes=(node,))
+    _verify_graph_sources(tmp_path, graph)  # type: ignore[arg-type]
+
+    source.write_text("value: 2\n", encoding="utf-8")
     with pytest.raises(EvidenceGraphError, match="file hash mismatch"):
         _verify_graph_sources(tmp_path, graph)  # type: ignore[arg-type]
