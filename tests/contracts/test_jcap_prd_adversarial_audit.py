@@ -197,6 +197,68 @@ def test_execution_receipts_have_replay_and_hash_evidence():
         assert json.loads(stdout.read_text(encoding="utf-8")) == diagnostics[stored_name]
 
 
+def test_execution_receipt_outcomes_cannot_hide_failed_processes(
+    tmp_path, monkeypatch
+):
+    module = _audit_module()
+    stdout = tmp_path / "stdout.txt"
+    stderr = tmp_path / "stderr.txt"
+    stdout.write_text("", encoding="utf-8")
+    stderr.write_text("failed\n", encoding="utf-8")
+    common = {
+        "agent": "contract-test",
+        "command": ["/usr/bin/false"],
+        "cwd": str(tmp_path),
+        "started_at": "2026-07-14T00:00:00+00:00",
+        "ended_at": "2026-07-14T00:00:01+00:00",
+        "exit_code": 1,
+        "seed": 20260714,
+        "environment_hash": "sha256:" + "0" * 64,
+        "input_hashes": [],
+        "stdout": {"path": "stdout.txt", "sha256": module.sha256_file(stdout)},
+        "stderr": {"path": "stderr.txt", "sha256": module.sha256_file(stderr)},
+        "wall_seconds": 1.0,
+    }
+    rows = [
+        {
+            **common,
+            "schema": "htt.jcap_prd.execution_receipt.v1",
+            "command_id": "hidden-v1-failure",
+            "result": "FAIL_OR_BLOCKED",
+        },
+        {
+            **common,
+            "schema": "htt.jcap_prd.execution_receipt.v2",
+            "command_id": "hidden-v2-failure",
+            "process_result": "FAIL",
+            "scientific_status": "NOT_APPLICABLE",
+            "result": "FAIL_OR_BLOCKED",
+        },
+    ]
+    ledger = tmp_path / "execution_ledger.jsonl"
+    ledger.write_text(
+        "\n".join(json.dumps(row) for row in rows) + "\n",
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(module, "REPO", tmp_path)
+    monkeypatch.setattr(module, "EXECUTION_LEDGER", ledger)
+
+    errors = []
+    module._read_execution_ledger(errors)
+    assert errors == []
+
+    rows[0]["result"] = "PASS"
+    rows[1]["process_result"] = "PASS"
+    rows[1]["result"] = "PASS"
+    ledger.write_text(
+        "\n".join(json.dumps(row) for row in rows) + "\n",
+        encoding="utf-8",
+    )
+    errors = []
+    module._read_execution_ledger(errors)
+    assert sum("outcome mismatch" in error for error in errors) == 2
+
+
 def test_record_command_fails_closed_on_missing_input_and_duplicate_id(
     tmp_path, monkeypatch
 ):
@@ -978,6 +1040,126 @@ def test_counterfactual_family_sandbox_cannot_leak_to_public_roots():
                 except json.JSONDecodeError:
                     continue
                 assert not contains_marker(payload), path
+
+
+def test_pr117_rewrite_mapping_preserves_frozen_diagnostic_inputs():
+    module = _audit_module()
+    runner_path = "scripts/audits/jcap_prd_20260714.py"
+    assert (
+        module.sha256_bytes(module._git_blob(module.PR117_COMMIT, runner_path))
+        == module.PR117_SEALED_RUNNER_SHA256
+    )
+    expected = {
+        "docs/generated/act_kappa_card.json": (
+            "sha256:f0278ab610e324813c1f0079298dcbb8b95d82261cf205e700d9556b801a6118"
+        ),
+        "docs/generated/jwst_cf4_anchors.json": (
+            "sha256:5f9467f8ec06e7547f43a56fab1953641ce3932c1cb71109f7271b00028f4ce8"
+        ),
+        "dl_pipeline/data/jwst_distances_seed.csv": (
+            "sha256:d02e7c988592f0217d968b59385d6494c7288654cd7620c43005c2cdb658b5c8"
+        ),
+        "dl_pipeline/scripts/download_jwst_anchors.py": (
+            "sha256:e77a5caf66522868cd1a9a6c36c9c6d4a3aae274d1d2c825c3277a09e8f5c823"
+        ),
+        "htt/obsstat/velocity_field_curl.py": (
+            "sha256:f6aa025e5ed0f7a7b5c47eee2b333f4af26c2d5203cb4b99c9139d5acf978c65"
+        ),
+    }
+    assert {
+        path: module.sha256_bytes(module._git_blob(module.PR117_COMMIT, path))
+        for path in expected
+    } == expected
+
+
+def test_sealed_input_hashes_reject_off_repo_and_symlink_paths(
+    tmp_path, monkeypatch
+):
+    module = _audit_module()
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    inside = repo / "inside.txt"
+    inside.write_text("frozen", encoding="utf-8")
+    outside = tmp_path / "outside.txt"
+    outside.write_text("frozen", encoding="utf-8")
+    (repo / "link.txt").symlink_to(outside)
+    monkeypatch.setattr(module, "REPO", repo)
+
+    digest = module.sha256_file(inside)
+    valid_errors = []
+    module._validate_current_input_hashes(
+        {
+            "input_hashes": [
+                {"path": "inside.txt", "status": "present", "sha256": digest}
+            ]
+        },
+        "valid",
+        valid_errors,
+    )
+    assert valid_errors == []
+
+    invalid_errors = []
+    module._validate_current_input_hashes(
+        {
+            "input_hashes": [
+                {"path": "../outside.txt", "status": "present", "sha256": digest},
+                {"path": str(outside), "status": "present", "sha256": digest},
+                {"path": "link.txt", "status": "present", "sha256": digest},
+            ]
+        },
+        "invalid",
+        invalid_errors,
+    )
+    assert sum("unsafe decisive input path" in error for error in invalid_errors) == 2
+    assert sum("symlink component" in error for error in invalid_errors) == 1
+
+
+def test_historical_counterfactual_scans_read_only_their_seal_trees(
+    tmp_path, monkeypatch
+):
+    module = _audit_module()
+    live_path = tmp_path / "docs/generated/post_pr118.md"
+    live_path.parent.mkdir(parents=True)
+    live_path.write_text("COUNTERFACTUAL_SENTINEL", encoding="utf-8")
+    monkeypatch.setattr(module, "REPO", tmp_path)
+    monkeypatch.setattr(module, "PR117_COMMIT", "pr117-tree")
+    monkeypatch.setattr(module, "_manifest_seal_commit", lambda: "pr118-tree")
+    monkeypatch.setattr(
+        module,
+        "_git_tree_files",
+        lambda commit, roots: [f"docs/generated/{commit}.md"],
+    )
+    frozen = {
+        ("pr117-tree", "docs/generated/pr117-tree.md"): (
+            b"historical PR-117 public text is safe"
+        ),
+        ("pr118-tree", "docs/generated/pr118-tree.md"): (
+            b"historical PR-118 public text is safe"
+        ),
+    }
+    monkeypatch.setattr(module, "_git_blob", lambda commit, path: frozen[(commit, path)])
+
+    final_errors = []
+    module._validate_counterfactual_leaks(final_errors, final=True)
+    assert final_errors == []
+
+    pr117_errors = []
+    module._validate_counterfactual_leaks(pr117_errors, final=False)
+    assert pr117_errors == []
+
+    frozen[("pr117-tree", "docs/generated/pr117-tree.md")] = (
+        b"COUNTERFACTUAL_SENTINEL"
+    )
+    pr117_errors = []
+    module._validate_counterfactual_leaks(pr117_errors, final=False)
+    assert any("pr117-tree.md" in error for error in pr117_errors)
+
+    frozen[("pr118-tree", "docs/generated/pr118-tree.md")] = (
+        b"COUNTERFACTUAL_SENTINEL"
+    )
+    frozen_errors = []
+    module._validate_counterfactual_leaks(frozen_errors, final=True)
+    assert any("pr118-tree.md" in error for error in frozen_errors)
 
 
 def test_manifest_is_complete_and_self_consistent():

@@ -16,9 +16,19 @@ from typing import Any
 import yaml
 
 if __package__:
-    from .validate_pr_dag import DagInfo, load_yaml, validate_backlog
+    from .validate_pr_dag import (
+        DagInfo,
+        canonical_execution_receipt_pointer,
+        load_yaml,
+        validate_backlog,
+    )
 else:
-    from validate_pr_dag import DagInfo, load_yaml, validate_backlog
+    from validate_pr_dag import (
+        DagInfo,
+        canonical_execution_receipt_pointer,
+        load_yaml,
+        validate_backlog,
+    )
 
 _REPO_ROOT = Path(__file__).resolve().parents[2]
 _HTT_SRC = _REPO_ROOT / "htt" / "src"
@@ -96,10 +106,10 @@ def _nonempty_string(value: object) -> bool:
     return isinstance(value, str) and bool(value.strip())
 
 
-def _valid_receipt_reference(value: object) -> bool:
-    """Accept the canonical non-empty process-receipt path/identifier string."""
+def _valid_receipt_reference(pr_id: str, value: object) -> bool:
+    """Accept only the process-receipt pointer owned by ``pr_id``."""
 
-    return _nonempty_string(value)
+    return value == canonical_execution_receipt_pointer(pr_id)
 
 
 def _load_hash_bound_json_receipt(
@@ -314,7 +324,9 @@ def _edge_satisfied(
 ) -> bool:
     record = _execution_record(status, upstream_id)
     resolution = record.get("resolution") if record else None
-    has_receipt = bool(record) and _valid_receipt_reference(record.get("receipt"))
+    has_receipt = bool(record) and _valid_receipt_reference(
+        upstream_id, record.get("receipt")
+    )
 
     if mode == "requires_success":
         if resolution is not None:
@@ -563,7 +575,7 @@ def validate_status(
         resolution = record.get("resolution")
         if resolution not in _TERMINAL_EXECUTION_RESOLUTIONS:
             raise ValueError(f"invalid execution resolution for {pr_id}: {resolution!r}")
-        if not _valid_receipt_reference(record.get("receipt")):
+        if not _valid_receipt_reference(pr_id, record.get("receipt")):
             raise ValueError(f"execution resolution for {pr_id} lacks a valid receipt")
         if pr_id in completed and resolution != "COMPLETED_SUCCESS":
             raise ValueError(
