@@ -133,6 +133,19 @@ def test_multi_axis_constraint_refused() -> None:
         exact_engine([axis_constraint("Sigma2", "==", 0), multi])
 
 
+@pytest.mark.parametrize("point", [
+    [],
+    [0],
+    [0, 0, 0],
+    [0, 0, 0, 0, 0],
+    "0000",
+])
+def test_constraint_satisfaction_rejects_wrong_point_arity(point) -> None:
+    constraint = axis_constraint("Sigma2", "<=", 1)
+    with pytest.raises(IdentifiedSetError, match="exactly"):
+        constraint.satisfied(point)
+
+
 def test_bounded_both_engines_agree() -> None:
     e = exact_engine(_bounded())
     n = numeric_engine(_bounded())

@@ -92,6 +92,9 @@ class LinearConstraint:
         object.__setattr__(self, "rhs", Fraction(self.rhs))
 
     def satisfied(self, point: Sequence[Fraction]) -> bool:
+        if isinstance(point, (str, bytes)) or len(point) != len(AXES):
+            raise IdentifiedSetError(
+                f"point needs exactly {len(AXES)} coordinates")
         lhs = sum((c * Fraction(x) for c, x in zip(self.coeffs, point)),
                   Fraction(0))
         if self.op == "==":
