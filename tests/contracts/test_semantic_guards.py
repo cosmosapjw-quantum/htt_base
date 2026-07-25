@@ -209,6 +209,26 @@ def test_source_propagation_hard_failures_block_claim_ceiling() -> None:
     assert propagation_failed.claim_tier_ceiling is ClaimTier.BLOCKED
 
 
+def test_base_semantic_record_hard_failures_block_claim_ceiling() -> None:
+    cases = (
+        ("inadequate", "validated", "conditional"),
+        ("adequate", "blocked", "conditional"),
+        ("adequate", "validated", "inadequate"),
+    )
+
+    for source_status, propagation_status, observable_status in cases:
+        record = SemanticAdequacyRecord(
+            source_status=source_status,
+            propagation_status=propagation_status,
+            observable_status=observable_status,
+            claim_tier_ceiling=ClaimTier.EXPLORATORY,
+        )
+        assert record.claim_tier_ceiling is ClaimTier.BLOCKED
+
+    with pytest.raises(ValueError, match="claim_tier above 'blocked'"):
+        attach_semantic_caveats(_manifest(Owner.HTT), record)
+
+
 def _unsafe_source_observable_phrase(variant: str) -> str:
     source = "source"
     adequate = "adequate"

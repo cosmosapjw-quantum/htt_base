@@ -164,6 +164,16 @@ class SemanticAdequacyRecord:
                 "SemanticAdequacyRecord.claim_tier_ceiling must be "
                 "diagnostic_only, exploratory, or blocked"
             )
+        if (
+            source_status is SourceAdequacyStatus.INADEQUATE
+            or propagation_status is PropagationAdequacyStatus.BLOCKED
+            or observable_status in _BLOCKING_OBSERVABLE_STATUSES
+        ):
+            object.__setattr__(
+                self,
+                "claim_tier_ceiling",
+                ClaimTier.BLOCKED,
+            )
         owner = normalize_owner(self.semantic_guard_owner)
         scope = normalize_implementation_scope(self.implementation_scope)
         object.__setattr__(self, "semantic_guard_owner", owner)
