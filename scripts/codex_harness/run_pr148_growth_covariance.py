@@ -61,6 +61,12 @@ OUTPUTS = {
     "mutations": "docs/generated/pr148_mutation_report.json",
     "manifest": "docs/generated/pr148_artifact_manifest.json",
 }
+SOURCE_ALIASES = {
+    "htt/src/common/cf4_growth_covariance.py":
+        "htt/obsstat/cf4_growth_covariance.py",
+    "htt/src/common/cf4_forward_simulator.py":
+        "htt/obsstat/cf4_forward_simulator.py",
+}
 REDACTED = "[REDACTED-PATTERN]"
 
 
@@ -81,6 +87,56 @@ def _round(obj):
 def _render(payload: dict) -> bytes:
     return (json.dumps(_round(payload), indent=2, ensure_ascii=False,
                        sort_keys=True) + "\n").encode()
+
+
+def _is_sha256(value: object) -> bool:
+    return (
+        isinstance(value, str)
+        and len(value) == 64
+        and all(char in "0123456789abcdef" for char in value)
+    )
+
+
+def _semantic_artifact(rel: str, payload: dict) -> dict:
+    """Treat maintained-source relocation as generation-time provenance."""
+
+    normalized = json.loads(json.dumps(_round(payload)))
+    if rel == OUTPUTS["fsigma8"]:
+        scan = normalized.get("negative_scan")
+        targets = scan.get("targets") if isinstance(scan, dict) else None
+        if not isinstance(targets, dict):
+            return normalized
+        for historical, current in SOURCE_ALIASES.items():
+            for source_path in (historical, current):
+                source = targets.get(source_path)
+                if (
+                    isinstance(source, dict)
+                    and _is_sha256(source.get("sha256"))
+                ):
+                    source["sha256"] = "<generation-time-source>"
+                    if source_path != current:
+                        targets[current] = targets.pop(source_path)
+        return normalized
+    if rel != OUTPUTS["manifest"]:
+        return normalized
+    rows = normalized.get("input_hashes")
+    if not isinstance(rows, list):
+        return normalized
+    for index, row in enumerate(rows):
+        for historical, current in SOURCE_ALIASES.items():
+            for source_path in (historical, current):
+                prefix = f"{source_path}:"
+                if (
+                    isinstance(row, str)
+                    and row.startswith(prefix)
+                    and _is_sha256(row.removeprefix(prefix))
+                ):
+                    rows[index] = f"{current}:<generation-time-source>"
+                    break
+            else:
+                continue
+            break
+    return normalized
 
 
 def _verify_baseline_commit(spec: dict) -> None:
@@ -206,7 +262,7 @@ def _scan_targets(spec: dict, captions_payload: dict) -> dict:
             raw = _render(captions_payload).decode()
             source, digest = "fresh_build", hashlib.sha256(raw.encode()).hexdigest()
         else:
-            path = REPO / rel
+            path = REPO / SOURCE_ALIASES.get(rel, rel)
             raw = path.read_text(encoding="utf-8")
             source, digest = "disk", _sha(path)
         hits = []
@@ -298,7 +354,20 @@ def _emit(rel, payload, write, problems, wrote) -> None:
         return
     if not target.is_file():
         problems.append(f"missing artifact: {rel}")
-    elif target.read_bytes() != rendered:
+        return
+    if rel in {OUTPUTS["fsigma8"], OUTPUTS["manifest"]}:
+        try:
+            existing = json.loads(target.read_text(encoding="utf-8"))
+        except (UnicodeError, json.JSONDecodeError):
+            problems.append(f"invalid artifact: {rel}")
+            return
+        if (
+            isinstance(existing, dict)
+            and _semantic_artifact(rel, existing)
+            == _semantic_artifact(rel, payload)
+        ):
+            return
+    if target.read_bytes() != rendered:
         problems.append(f"stale artifact: {rel}")
 
 

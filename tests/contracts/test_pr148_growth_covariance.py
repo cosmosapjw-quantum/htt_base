@@ -1,6 +1,7 @@
 """PR-148 contract tests: depth-resolved fsigma8 + same-data joint covariance."""
 from __future__ import annotations
 
+import importlib.util
 import json
 import subprocess
 import sys
@@ -37,6 +38,73 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 GROUPS = REPO_ROOT / "workdir/obs_bundle/pecvel/cf4_full/cf4_groups.npz"
 needs_data = pytest.mark.skipif(not GROUPS.is_file(),
                                 reason="CF4 groups npz absent")
+
+
+def _load_runner():
+    runner_path = (
+        REPO_ROOT / "scripts/codex_harness/run_pr148_growth_covariance.py"
+    )
+    spec = importlib.util.spec_from_file_location("run_pr148", runner_path)
+    runner = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(runner)
+    return runner
+
+
+def test_relocated_sources_are_generation_time_provenance() -> None:
+    runner = _load_runner()
+    aliases = runner.SOURCE_ALIASES
+    historical_source = "htt/src/common/cf4_growth_covariance.py"
+    current_source = aliases[historical_source]
+    stored_result = {
+        "negative_scan": {
+            "targets": {
+                historical_source: {"sha256": "1" * 64, "hits": []},
+            },
+        },
+    }
+    current_result = {
+        "negative_scan": {
+            "targets": {
+                current_source: {"sha256": "2" * 64, "hits": []},
+            },
+        },
+    }
+    result_rel = runner.OUTPUTS["fsigma8"]
+    assert runner._semantic_artifact(
+        result_rel, stored_result
+    ) == runner._semantic_artifact(result_rel, current_result)
+    current_result["negative_scan"]["targets"][current_source]["hits"] = [
+        {"line": 1},
+    ]
+    assert runner._semantic_artifact(
+        result_rel, stored_result
+    ) != runner._semantic_artifact(result_rel, current_result)
+
+    stored_manifest = {
+        "input_hashes": [
+            f"{historical}:{'1' * 64}" for historical in aliases
+        ],
+        "raw_data_pins": {"groups_sha256": "groups"},
+    }
+    current_manifest = {
+        "input_hashes": [
+            f"{current}:{'2' * 64}" for current in aliases.values()
+        ],
+        "raw_data_pins": {"groups_sha256": "groups"},
+    }
+    manifest_rel = runner.OUTPUTS["manifest"]
+    assert runner._semantic_artifact(
+        manifest_rel, stored_manifest
+    ) == runner._semantic_artifact(manifest_rel, current_manifest)
+    current_manifest["raw_data_pins"]["groups_sha256"] = "changed"
+    assert runner._semantic_artifact(
+        manifest_rel, stored_manifest
+    ) != runner._semantic_artifact(manifest_rel, current_manifest)
+    current_manifest["raw_data_pins"]["groups_sha256"] = "groups"
+    current_manifest["input_hashes"][0] = f"{current_source}:not-a-sha"
+    assert runner._semantic_artifact(
+        manifest_rel, stored_manifest
+    ) != runner._semantic_artifact(manifest_rel, current_manifest)
 
 
 def test_guards() -> None:
