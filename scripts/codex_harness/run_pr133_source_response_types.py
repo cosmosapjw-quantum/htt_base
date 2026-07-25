@@ -264,6 +264,10 @@ def build_deprojection(spec: dict) -> dict:
 
 def build_graph(spec: dict) -> dict:
     analytic = analytic_response_rank()
+    if spec["response_graph"].get("analytic_rank") != analytic:
+        raise SystemExit(
+            "spec analytic_rank does not match the PR-127 response map"
+        )
     clean = observed_response(None)
     aligned = observed_response(
         {"collinear_axes": [("Sigma2", "Omega_tilt")]})

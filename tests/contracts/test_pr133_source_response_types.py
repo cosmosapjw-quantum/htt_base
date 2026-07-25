@@ -150,6 +150,14 @@ def test_runner_binds_deprojection_formula_to_implementation() -> None:
         })
 
 
+def test_runner_binds_analytic_rank_to_response_map() -> None:
+    runner = _load_runner()
+    with pytest.raises(SystemExit, match="PR-127 response map"):
+        runner.build_graph({
+            "response_graph": {"analytic_rank": 4},
+        })
+
+
 def test_type_firewall_blocks_cross_type() -> None:
     av = TypedQuantity(QuantityType.OBSERVER_PROXY, Fraction(1, 100))
     ot = TypedQuantity(QuantityType.PHYSICAL_TILT, Fraction(1, 100))
