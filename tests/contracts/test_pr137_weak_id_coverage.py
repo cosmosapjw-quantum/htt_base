@@ -134,6 +134,21 @@ def test_runner_accepts_canonical_extension_config() -> None:
     }, prereg) == (10000, 0.01)
 
 
+@pytest.mark.parametrize("levels", [True, 2.5, 1, 3])
+def test_runner_rejects_unimplemented_mesh_levels(levels) -> None:
+    runner = _load_runner()
+    prereg = Preregistration(0.95, 0.93, 2000, 10, 20260719, 0.10)
+    row = {"w": "0", "coverage": 0.95, "endpoint_error": 0.0}
+    grid = {
+        "imbens_manski_boundary_coarse": [row.copy()],
+        "imbens_manski_boundary_fine": [row.copy()],
+    }
+    with pytest.raises(WeakIdError, match="exactly.*coarse and fine"):
+        runner.build_mesh({
+            "preregistration": {"mesh_refinement_levels": levels},
+        }, grid, prereg)
+
+
 def test_betainc_matches_reference() -> None:
     # I_0.5(1,1) = 0.5; I_x(a,b) monotone; endpoints
     assert abs(_betainc_reg(0.5, 1, 1) - 0.5) < 1e-9

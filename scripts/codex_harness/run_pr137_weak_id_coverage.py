@@ -312,6 +312,15 @@ def build_bounds(spec: dict, prereg: Preregistration, grid: dict) -> dict:
 
 
 def build_mesh(spec: dict, grid: dict, prereg: Preregistration) -> dict:
+    levels = spec["preregistration"]["mesh_refinement_levels"]
+    if (
+        isinstance(levels, bool)
+        or not isinstance(levels, Integral)
+        or levels != 2
+    ):
+        raise WeakIdError(
+            "mesh_refinement_levels must be the integer 2 because this "
+            "runner computes exactly the registered coarse and fine meshes")
     coarse_list = grid["imbens_manski_boundary_coarse"]
     fine_list = grid["imbens_manski_boundary_fine"]
     # per-point coverage on the two meshes (a coverage ESTIMATE, so the
@@ -343,7 +352,7 @@ def build_mesh(spec: dict, grid: dict, prereg: Preregistration) -> dict:
                                          1e-13)
     return {
         "schema": "pr137.mesh_refinement.v1",
-        "levels": int(spec["preregistration"]["mesh_refinement_levels"]),
+        "levels": int(levels),
         "shared_points": shared,
         "per_point": changes,
         "max_coverage_change_shared": max_change,
