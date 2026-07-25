@@ -319,6 +319,68 @@ def numeric_engine(constraints: Sequence[LinearConstraint],
 # Cross-engine agreement + status semantics
 # ---------------------------------------------------------------------------
 
+_ENGINE_STATUSES = {
+    SetStatus.BOUNDED.value,
+    SetStatus.EMPTY.value,
+    SetStatus.UNBOUNDED.value,
+    SetStatus.UNDETERMINED.value,
+}
+
+
+def _validate_engine_result_shape(result: dict, label: str) -> None:
+    if not isinstance(result, dict):
+        raise IdentifiedSetError(f"{label} engine result must be a mapping")
+    status = result.get("status")
+    if status not in _ENGINE_STATUSES:
+        raise IdentifiedSetError(
+            f"{label} engine returned an invalid status {status!r}")
+    unbounded = result.get("unbounded_axes")
+    if (
+        not isinstance(unbounded, (list, tuple))
+        or any(axis not in AXES for axis in unbounded)
+        or len(set(unbounded)) != len(unbounded)
+    ):
+        raise IdentifiedSetError(
+            f"{label} engine returned invalid unbounded_axes")
+    if status == SetStatus.UNBOUNDED.value:
+        if not unbounded:
+            raise IdentifiedSetError(
+                f"{label} unbounded result names no unbounded axis")
+    elif unbounded:
+        raise IdentifiedSetError(
+            f"{label} {status} result cannot name unbounded axes")
+
+    intervals = result.get("axis_intervals")
+    if status in (SetStatus.EMPTY.value, SetStatus.UNDETERMINED.value):
+        if intervals is not None:
+            raise IdentifiedSetError(
+                f"{label} {status} result must not carry axis intervals")
+        return
+    if not isinstance(intervals, dict) or set(intervals) != set(AXES):
+        raise IdentifiedSetError(
+            f"{label} {status} result must carry every registered axis")
+    unbounded_set = set(unbounded)
+    for axis in AXES:
+        interval = intervals[axis]
+        if axis in unbounded_set:
+            if interval is None:
+                continue
+            if (
+                not isinstance(interval, (list, tuple))
+                or len(interval) != 2
+                or all(endpoint is not None for endpoint in interval)
+            ):
+                raise IdentifiedSetError(
+                    f"{label} unbounded axis {axis} has an invalid interval")
+        elif (
+            not isinstance(interval, (list, tuple))
+            or len(interval) != 2
+            or any(endpoint is None for endpoint in interval)
+        ):
+            raise IdentifiedSetError(
+                f"{label} bounded axis {axis} has an invalid interval")
+
+
 def require_cross_engine_agreement(exact: dict, numeric: dict,
                                    tol: float = 1e-6) -> None:
     """Both engines must agree on the STATUS, on the set of unbounded
@@ -335,11 +397,17 @@ def require_cross_engine_agreement(exact: dict, numeric: dict,
         raise IdentifiedSetError(
             "cross-engine tolerance must be a finite non-negative real")
     tol = float(tol)
-    if exact["status"] != numeric["status"]:
+    if not isinstance(exact, dict) or not isinstance(numeric, dict):
+        raise IdentifiedSetError("engine results must be mappings")
+    exact_status = exact.get("status")
+    numeric_status = numeric.get("status")
+    if exact_status != numeric_status:
         raise IdentifiedSetError(
             f"cross-engine STATUS disagreement: exact "
-            f"{exact['status']!r} vs numeric {numeric['status']!r} — the "
+            f"{exact_status!r} vs numeric {numeric_status!r} — the "
             "downstream numerical claim is blocked")
+    _validate_engine_result_shape(exact, "exact")
+    _validate_engine_result_shape(numeric, "numeric")
     if set(exact["unbounded_axes"]) != set(numeric["unbounded_axes"]):
         raise IdentifiedSetError(
             "cross-engine disagreement on the unbounded axes: exact "

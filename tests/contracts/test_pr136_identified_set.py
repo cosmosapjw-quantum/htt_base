@@ -203,6 +203,26 @@ def test_cross_engine_rejects_invalid_numeric_boundary(endpoint) -> None:
         require_cross_engine_agreement(exact, numeric)
 
 
+@pytest.mark.parametrize("result,message", [
+    ({"status": "bounded", "axis_intervals": {},
+      "unbounded_axes": []}, "every registered axis"),
+    ({"status": "mystery", "axis_intervals": {},
+      "unbounded_axes": []}, "invalid status"),
+    ({"status": "empty", "axis_intervals": None,
+      "unbounded_axes": ["Sigma2"]}, "cannot name unbounded"),
+    ({"status": "unbounded", "axis_intervals": {},
+      "unbounded_axes": ["Sigma2"]}, "every registered axis"),
+    ({"status": "unbounded",
+      "axis_intervals": {axis: [None, None] for axis in AXES},
+      "unbounded_axes": []}, "names no unbounded"),
+])
+def test_cross_engine_rejects_malformed_result_shape(
+    result, message
+) -> None:
+    with pytest.raises(IdentifiedSetError, match=message):
+        require_cross_engine_agreement(result, dict(result))
+
+
 def test_kernel_binding_live() -> None:
     binding = verify_kernel_binding()
     assert binding["bound_live"] is True
