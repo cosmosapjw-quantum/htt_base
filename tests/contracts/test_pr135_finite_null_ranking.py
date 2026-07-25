@@ -140,6 +140,21 @@ def test_runner_binds_reported_estimator_to_implementation(
         runner.build_estimator({"ranking": ranking})
 
 
+def test_runner_binds_reported_bit_generator_to_implementation() -> None:
+    runner = _load_runner()
+    config = {
+        "N": 39,
+        "trials": 100,
+        "seed": 1,
+        "alpha_grid": ["0.01", "0.5"],
+        "bit_generator": "MT19937",
+    }
+    with pytest.raises(SystemExit, match="PCG64"):
+        runner.build_simulation({
+            "verification": {"type_i_simulation": config},
+        })
+
+
 def test_exact_discrete_estimator() -> None:
     # obs strictly largest -> p = 1/(N+1)
     assert pooled_rank_p(5.0, [1.0, 2.0, 3.0, 4.0]) == Fraction(1, 5)

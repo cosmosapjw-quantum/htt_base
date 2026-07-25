@@ -209,6 +209,11 @@ def build_enumeration(spec: dict) -> dict:
 
 def build_simulation(spec: dict) -> dict:
     cfg = spec["verification"]["type_i_simulation"]
+    if cfg.get("bit_generator") != "PCG64":
+        raise SystemExit(
+            "type-I bit_generator does not match the production PCG64 "
+            "implementation"
+        )
     alpha_grid = [Fraction(a) for a in cfg["alpha_grid"]]
     result = type_i_simulation(
         cfg["N"], cfg["trials"], cfg["seed"], alpha_grid)
