@@ -6,6 +6,7 @@ from dataclasses import dataclass, field
 import hashlib
 import json
 import math
+import operator
 import re
 from typing import Any
 
@@ -124,9 +125,11 @@ def _positive_float(value: object, name: str) -> float:
 
 
 def _positive_int(value: object, name: str) -> int:
+    if isinstance(value, bool):
+        raise ValueError(f"{name} must be a positive integer")
     try:
-        number = int(value)
-    except (TypeError, ValueError) as exc:
+        number = operator.index(value)
+    except TypeError as exc:
         raise ValueError(f"{name} must be a positive integer") from exc
     if number <= 0:
         raise ValueError(f"{name} must be a positive integer")

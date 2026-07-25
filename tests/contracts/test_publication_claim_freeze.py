@@ -147,6 +147,31 @@ def test_payload_maps_public_claims_to_artifacts_tests_caveats_and_owner():
     _assert_no_forbidden_language(json.dumps(payload["public_claims"], sort_keys=True))
 
 
+def test_empty_public_claim_set_fails_existing_mapping_assertions():
+    module = _load_module()
+    payload = module.build_publication_claim_freeze_payload(
+        repo_root=REPO_ROOT,
+        freeze_output=Path("docs/generated/publication_claim_freeze.md"),
+        matrix_output=Path("docs/generated/hostile_review_response_matrix.md"),
+        generating_command="python scripts/check_publication_claim_freeze.py --dry-run",
+        public_claims=[],
+        hostile_review_rows=module.HOSTILE_REVIEW_ROWS,
+        worktree_state="test-worktree",
+    )
+
+    for assertion in (
+        "all_claims_have_owner",
+        "all_claims_have_artifacts",
+        "all_claim_artifacts_exist",
+        "all_claims_have_manifest_refs",
+        "all_manifest_refs_exist",
+        "all_claims_have_tests",
+        "all_claims_have_caveats",
+    ):
+        assert payload["required_assertions"][assertion] is False
+        assert assertion in payload["failed_gates"]
+
+
 def test_dry_run_does_not_write_reports(tmp_path: Path):
     module = _load_module()
     freeze_output = tmp_path / "freeze.md"

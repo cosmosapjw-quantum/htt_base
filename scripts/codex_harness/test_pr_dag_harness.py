@@ -303,10 +303,10 @@ def _typed_card(
     return card
 
 
-def _resolution(resolution: str, **extra: object) -> dict:
+def _resolution(pr_id: str, resolution: str, **extra: object) -> dict:
     return {
         "resolution": resolution,
-        "receipt": "docs/PR_DELTAS/test-receipt.md",
+        "receipt": f"docs/PR_DELTAS/{pr_id.lower()}.md",
         **extra,
     }
 
@@ -534,7 +534,7 @@ def test_progress_report_requires_full_disjoint_pr119_plus_status_coverage(
             "pending": [],
             "dormant_external": [],
             "execution_resolutions": {
-                "PR-119": _resolution("COMPLETED_SUCCESS")
+                "PR-119": _resolution("PR-119", "COMPLETED_SUCCESS")
             },
             "external_events": {},
         },
@@ -566,7 +566,7 @@ def test_progress_report_uses_success_receipt_for_typed_unblocking(
         "pending": ["PR-120"],
         "dormant_external": [],
         "execution_resolutions": {
-            "PR-119": _resolution("COMPLETED_SUCCESS")
+            "PR-119": _resolution("PR-119", "COMPLETED_SUCCESS")
         },
         "external_events": {},
     }
@@ -581,7 +581,8 @@ def test_progress_report_uses_success_receipt_for_typed_unblocking(
     assert payload["dormant_external_count"] == 0
 
     base_status["execution_resolutions"]["PR-119"] = _resolution(
-        "COMPLETED_FAILED_WITH_RECEIPT"
+        "PR-119",
+        "COMPLETED_FAILED_WITH_RECEIPT",
     )
     _write_yaml(status, base_status)
     failed = _run(str(PROGRESS), str(backlog), str(status), "--json")
@@ -615,8 +616,17 @@ def test_progress_report_rejects_truthy_flag_as_terminal_receipt(
     assert "lacks a valid receipt" in completed.stderr
 
 
-def test_progress_and_strict_validator_reject_the_same_structured_process_receipt(
+@pytest.mark.parametrize(
+    "receipt_pointer",
+    [
+        {"path": "docs/PR_DELTAS/pr-119.md", "sha256": "a" * 64},
+        "../../fake",
+        "docs/PR_DELTAS/pr-120.md",
+    ],
+)
+def test_progress_and_strict_validator_reject_foreign_process_receipt(
     tmp_path: Path,
+    receipt_pointer: object,
 ) -> None:
     backlog = tmp_path / "backlog.yaml"
     status = tmp_path / "status.yaml"
@@ -630,10 +640,7 @@ def test_progress_and_strict_validator_reject_the_same_structured_process_receip
             encoding="utf-8"
         )
     )
-    canonical_status["execution_resolutions"]["PR-119"]["receipt"] = {
-        "path": "docs/PR_DELTAS/pr-119.md",
-        "sha256": "a" * 64,
-    }
+    canonical_status["execution_resolutions"]["PR-119"]["receipt"] = receipt_pointer
     _write_yaml(backlog, canonical_backlog)
     _write_yaml(status, canonical_status)
 
@@ -649,7 +656,7 @@ def test_progress_and_strict_validator_reject_the_same_structured_process_receip
     assert progress.returncode != 0
     assert "lacks a valid receipt" in progress.stderr
     assert strict.returncode != 0
-    assert "receipt pointer must be nonempty" in strict.stderr
+    assert "receipt pointer must equal" in strict.stderr
 
 
 @pytest.mark.parametrize(
@@ -674,7 +681,7 @@ def test_noncompleted_terminal_state_rejects_success_resolution(
         "pending": [],
         "dormant_external": [],
         "execution_resolutions": {
-            "PR-119": _resolution("COMPLETED_SUCCESS")
+            "PR-119": _resolution("PR-119", "COMPLETED_SUCCESS")
         },
         "external_events": {},
     }
@@ -709,7 +716,9 @@ def test_terminal_bucket_rejects_a_different_negative_resolution(
         "skipped": [],
         "pending": [],
         "dormant_external": [],
-        "execution_resolutions": {"PR-119": _resolution(resolution)},
+        "execution_resolutions": {
+            "PR-119": _resolution("PR-119", resolution)
+        },
         "external_events": {},
     }
     payload[terminal_state] = ["PR-119"]
@@ -743,7 +752,7 @@ def test_terminal_receipt_closes_only_explicit_terminal_edge(tmp_path: Path) -> 
             "pending": ["PR-157"],
             "dormant_external": [],
             "execution_resolutions": {
-                "PR-143": _resolution("BLOCKED_WITH_RECEIPT")
+                "PR-143": _resolution("PR-143", "BLOCKED_WITH_RECEIPT")
             },
             "external_events": {},
         },
@@ -780,7 +789,9 @@ def test_cli_adjudicated_edge_never_unlocks_from_shape_only_record(
         "dormant_external": [],
         "execution_resolutions": {
             "PR-157": _resolution(
-                "COMPLETED_SUCCESS", adjudication={"authorized": True}
+                "PR-157",
+                "COMPLETED_SUCCESS",
+                adjudication={"authorized": True},
             )
         },
         "external_events": {},
@@ -793,6 +804,7 @@ def test_cli_adjudicated_edge_never_unlocks_from_shape_only_record(
     assert json.loads(unverified.stdout)["unblocked_next"] == []
 
     status_payload["execution_resolutions"]["PR-157"] = _resolution(
+        "PR-157",
         "COMPLETED_SUCCESS",
         adjudication={
             "receipt": {
@@ -836,6 +848,7 @@ def test_typed_adjudication_api_unlocks_only_hash_bound_attested_receipt(
         "dormant_external": [],
         "execution_resolutions": {
             upstream_id: _resolution(
+                upstream_id,
                 "COMPLETED_SUCCESS",
                 adjudication={"receipt": pointer},
             )
@@ -879,6 +892,7 @@ def test_typed_adjudication_api_rejects_an_attested_empty_claim_set(
         "dormant_external": [],
         "execution_resolutions": {
             "PR-157": _resolution(
+                "PR-157",
                 "COMPLETED_SUCCESS",
                 adjudication={"receipt": pointer},
             )
