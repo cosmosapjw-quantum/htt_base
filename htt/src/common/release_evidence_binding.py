@@ -103,7 +103,24 @@ def _sha256_file(path: Path) -> str:
 
 
 def _bound_path(root: Path, relative: str) -> Path:
-    candidate = root.joinpath(*PurePosixPath(relative).parts)
+    posix = PurePosixPath(relative)
+    if (
+        not relative
+        or posix.is_absolute()
+        or relative != posix.as_posix()
+        or any(part in {"", ".", ".."} for part in posix.parts)
+    ):
+        raise EvidenceGraphError(
+            f"evidence path must be canonical repository-relative: {relative}"
+        )
+    candidate = root.joinpath(*posix.parts)
+    current = root
+    for part in posix.parts:
+        current /= part
+        if current.is_symlink():
+            raise EvidenceGraphError(
+                f"evidence path contains a symlink component: {relative}"
+            )
     resolved = candidate.resolve(strict=False)
     try:
         resolved.relative_to(root)
@@ -111,7 +128,7 @@ def _bound_path(root: Path, relative: str) -> Path:
         raise EvidenceGraphError(
             f"evidence path escapes repository: {relative}"
         ) from exc
-    if candidate.is_symlink() or not candidate.is_file():
+    if not candidate.is_file():
         raise EvidenceGraphError(f"evidence path is missing or non-regular: {relative}")
     return candidate
 
