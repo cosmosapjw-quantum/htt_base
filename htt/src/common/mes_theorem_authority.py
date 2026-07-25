@@ -28,6 +28,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Mapping, Sequence
@@ -358,7 +359,15 @@ def validate_d2_receipt(payload: Mapping, repo_root: Path) -> dict:
     if not isinstance(rust, Mapping) or not isinstance(python_anchor, Mapping):
         raise MesAuthorityError("d2 receipt needs rust_target and python_anchor")
     value = rust.get("d2_value_uK2")
-    if not isinstance(value, (int, float)) or not value > 0.0:
+    if (
+        isinstance(value, bool)
+        or not isinstance(value, (int, float))
+        or not math.isfinite(float(value))
+    ):
+        raise MesAuthorityError(
+            f"rust D2 target must be a finite numeric value (got {value!r})"
+        )
+    if not value > 0.0:
         raise MesAuthorityError(
             f"rust D2 target must be executed and NONZERO (got {value!r})"
         )

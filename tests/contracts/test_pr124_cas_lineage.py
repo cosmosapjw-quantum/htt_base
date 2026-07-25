@@ -243,6 +243,11 @@ def test_d2_receipt_nonzero_and_zero_mutant_killed() -> None:
     mutant["rust_target"]["d2_value_uK2"] = 0.0
     with pytest.raises(MesAuthorityError, match="NONZERO"):
         validate_d2_receipt(mutant, REPO_ROOT)
+    for malformed in (float("inf"), True):
+        mutant = json.loads(json.dumps(receipt))
+        mutant["rust_target"]["d2_value_uK2"] = malformed
+        with pytest.raises(MesAuthorityError, match="finite numeric"):
+            validate_d2_receipt(mutant, REPO_ROOT)
     # the receipt must not claim the bit-identical dump anchor
     assert "1002.086744" not in json.dumps(receipt["rust_target"])
 
