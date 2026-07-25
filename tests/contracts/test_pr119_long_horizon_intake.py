@@ -448,8 +448,16 @@ def test_status_terminal_buckets_have_exact_resolution_mapping_and_receipt_point
 
     empty_receipt = copy.deepcopy(status)
     empty_receipt["execution_resolutions"]["PR-119"]["receipt"] = "  "
-    with pytest.raises(ValueError, match="receipt pointer must be nonempty"):
+    with pytest.raises(ValueError, match="receipt pointer must equal"):
         validate_long_horizon_rescue_slice(backlog, info, status=empty_receipt)
+
+    for foreign_pointer in ("../../fake", "docs/PR_DELTAS/pr-120.md"):
+        foreign_receipt = copy.deepcopy(status)
+        foreign_receipt["execution_resolutions"]["PR-119"]["receipt"] = foreign_pointer
+        with pytest.raises(ValueError, match="receipt pointer must equal"):
+            validate_long_horizon_rescue_slice(
+                backlog, info, status=foreign_receipt
+            )
 
     blocked_valid = copy.deepcopy(status)
     blocked_valid["completed"].remove("PR-119")
