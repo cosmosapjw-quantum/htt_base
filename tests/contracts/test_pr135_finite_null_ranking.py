@@ -160,6 +160,19 @@ def test_validate_reported_p_floor_gate() -> None:
     validate_reported_p(good, 4)   # passes
 
 
+@pytest.mark.parametrize("p,message", [
+    (True, "finite Fraction-compatible"),
+    (2, "upper bound"),
+    ("2", "upper bound"),
+    (float("nan"), "finite Fraction-compatible"),
+    (float("inf"), "finite Fraction-compatible"),
+    ("not-a-number", "finite Fraction-compatible"),
+])
+def test_validate_reported_p_rejects_invalid_probability(p, message) -> None:
+    with pytest.raises(FiniteNullError, match=message):
+        validate_reported_p(p, 4)
+
+
 def test_split_evaluated_rank_p_holds_out_calibration() -> None:
     obs = [0.4, 1.1, 0.9]
     nulls = [[2.0, 2.1, 2.2], [1.5, 1.4, 1.3],

@@ -111,12 +111,24 @@ def validate_reported_p(p, n_null: int) -> None:
     and at or above the 1/(N+1) resolution floor. The naive b/N
     estimator (which can be 0) is rejected here; the (1+b)/(N+1) form
     always passes by construction."""
-    pf = Fraction(p)
+    if isinstance(p, bool):
+        raise FiniteNullError(
+            "reported p must be a finite Fraction-compatible probability")
+    try:
+        pf = Fraction(p)
+    except (TypeError, ValueError, ZeroDivisionError,
+            OverflowError) as exc:
+        raise FiniteNullError(
+            "reported p must be a finite Fraction-compatible probability"
+        ) from exc
     floor = resolution_floor(n_null)
     if pf <= 0:
         raise FiniteNullError(
             "a reported zero p-value is refused (the finite null "
             "resolution floor is 1/(N+1), never 0)")
+    if pf > 1:
+        raise FiniteNullError(
+            f"reported p {pf} exceeds the probability upper bound 1")
     if pf < floor:
         raise FiniteNullError(
             f"reported p {pf} is below the 1/(N+1) resolution floor "
