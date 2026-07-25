@@ -158,7 +158,8 @@ def _metadata(spec: dict, config_hash: str, input_hashes: list[str]) -> dict:
             "The executed Rust receipt does not reproduce the dump_dl_spectrum_sparse bit-identical anchor (documented gap).",
         ],
         "generating_command": (
-            f"{REPO / 'venv/bin/python'} scripts/codex_harness/run_pr124_cas_lineage.py --write"
+            f"{sys.executable} scripts/codex_harness/"
+            "run_pr124_cas_lineage.py --write"
         ),
         "git_commit_or_worktree_state": _worktree_state(),
     }
@@ -392,7 +393,7 @@ def _computed_mismatches(computed: dict, expected: dict) -> dict:
 
 def _adjudicate(contract_rel: str, axis_rel: dict[str, str]) -> dict:
     cas_gate = REPO / ".agent-harness/scripts/cas_gate.py"
-    cmd = [str(REPO / "venv/bin/python"), str(cas_gate), "adjudicate",
+    cmd = [sys.executable, str(cas_gate), "adjudicate",
            "--historical-replay", "--contract", contract_rel,
            "--results", *axis_rel.values()]
     completed = subprocess.run(cmd, capture_output=True, text=True,
@@ -456,14 +457,14 @@ def _run_python_anchor(spec: dict) -> dict:
     anchor = spec["d2_authority_contract"]["python_anchor"]
     test_rel = anchor["test_path"]
     collect = subprocess.run(
-        [str(REPO / "venv/bin/python"), "-B", "-m", "pytest", test_rel,
+        [sys.executable, "-B", "-m", "pytest", test_rel,
          "--collect-only", "-q", "--no-header", "-p", "no:cacheprovider"],
         capture_output=True, text=True, cwd=REPO, check=False,
     )
     collected = len([ln for ln in collect.stdout.splitlines()
                      if "::" in ln and not ln.startswith(" ")])
     run = subprocess.run(
-        [str(REPO / "venv/bin/python"), "-B", "-m", "pytest", test_rel,
+        [sys.executable, "-B", "-m", "pytest", test_rel,
          "-q", "--no-header", "-p", "no:cacheprovider"],
         capture_output=True, text=True, cwd=REPO, check=False,
     )
