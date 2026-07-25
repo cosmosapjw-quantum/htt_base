@@ -102,11 +102,13 @@ class CompactDomain:
                 "compact domain exceeds the registered domain — "
                 "post-hoc expansion is refused"
             )
-        if (
-            (w_lo, w_hi, k_abs_max)
-            != (W_BOX[0], W_BOX[1], K_ABS_MAX)
-            and version == DOMAIN_VERSION
-        ):
+        bounds = (w_lo, w_hi, k_abs_max)
+        registered_bounds = (W_BOX[0], W_BOX[1], K_ABS_MAX)
+        if bounds == registered_bounds and version != DOMAIN_VERSION:
+            raise OmkRemainderError(
+                "an unchanged domain must retain the registered version"
+            )
+        if bounds != registered_bounds and version == DOMAIN_VERSION:
             raise OmkRemainderError(
                 "a domain shrink must mint a NEW version string"
             )

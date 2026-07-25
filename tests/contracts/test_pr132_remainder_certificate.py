@@ -137,6 +137,10 @@ def test_domain_api_fail_closed() -> None:
     with pytest.raises(OmkRemainderError, match="NEW version"):
         register_domain("omk_domain_v1", Fraction(0), Fraction(1, 3),
                         Fraction(1, 20))
+    with pytest.raises(OmkRemainderError, match="unchanged domain"):
+        register_domain("omk_domain_v2", W_BOX[0], W_BOX[1], K_ABS_MAX)
+    with pytest.raises(OmkRemainderError, match="unchanged domain"):
+        CompactDomain("omk_domain_v2")
     shrunk = register_domain("omk_domain_v1_test_shrink", Fraction(0),
                              Fraction(1, 3), Fraction(1, 20))
     assert shrunk.k_abs_max == Fraction(1, 20)
