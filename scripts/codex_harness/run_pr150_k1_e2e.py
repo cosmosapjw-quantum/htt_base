@@ -377,7 +377,7 @@ def build_reports(spec: dict):
 
     manifest_e2e = {"schema": "pr150.e2e_input_manifest.v1",
                     **e2e_input_manifest(cmb_dir, noise_dir,
-                                         sample_hash_count=int(e2e["sample_hash_count"]))}
+                                         sample_hash_count=e2e["sample_hash_count"])}
     if (manifest_e2e["usable_cmb_count"] != 999
             or manifest_e2e["noise_mc_count"] != 300):
         raise SystemExit("PR3 readiness contract requires exactly 999 CMB and 300 noise maps")

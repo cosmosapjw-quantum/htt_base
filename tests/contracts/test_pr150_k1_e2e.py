@@ -175,6 +175,35 @@ def test_input_manifest_rejects_sample_larger_than_ensemble(tmp_path) -> None:
         e2e_input_manifest(cmb, noise, sample_hash_count=2)
 
 
+def test_runner_preserves_sample_hash_count_type(tmp_path, monkeypatch) -> None:
+    runner = _load_runner()
+    config = runner.yaml.safe_load(
+        runner.SPEC_PATH.read_text(encoding="utf-8")
+    )
+    cmb = tmp_path / "cmb"
+    noise = tmp_path / "noise"
+    cmb.mkdir()
+    noise.mkdir()
+    for index in range(3):
+        (cmb / f"cmb_{index:05}.fits").touch()
+    (noise / "noise_00000.fits").touch()
+    paths = config["data_scope"]["raw_data_paths"]
+    paths["cmb_mc_dir"] = str(cmb)
+    paths["noise_mc_dir"] = str(noise)
+    config["model"]["e2e"]["sample_hash_count"] = 2.5
+
+    def fail_if_hashing_is_reached(path):
+        pytest.fail("fractional sample count reached file hashing")
+
+    monkeypatch.setitem(
+        runner.e2e_input_manifest.__globals__,
+        "_sha256_file",
+        fail_if_hashing_is_reached,
+    )
+    with pytest.raises(K1E2EError, match="positive integer"):
+        runner.build_reports(config)
+
+
 # --------------------------------------------------------------------------
 # idealised correlated-GRF pooled-rank super-uniformity (the falsifier)
 # --------------------------------------------------------------------------
