@@ -102,6 +102,25 @@ def test_source_hash_is_generation_time_provenance_only() -> None:
     ) != runner._semantic_artifact(manifest_rel, current_manifest)
 
 
+def test_runner_rejects_fractional_theorem_multipole_before_map_io(
+    monkeypatch
+) -> None:
+    runner = _load_runner()
+    config = runner.yaml.safe_load(
+        runner.SPEC_PATH.read_text(encoding="utf-8")
+    )
+    config["model"]["structural_zero_l_values"] = [2.5]
+
+    def fail_if_map_io_is_reached(*args, **kwargs):
+        pytest.fail("invalid theorem multipole reached Planck map I/O")
+
+    monkeypatch.setattr(
+        runner, "load_downgrade_mask_alm", fail_if_map_io_is_reached
+    )
+    with pytest.raises(K1ConventionError, match="unique integer multipoles"):
+        runner.build_reports(config)
+
+
 def test_structural_zero_theorem_odd_L_vanishes() -> None:
     th = structural_zero_theorem([2, 3, 4, 5], tol=1e-10)
     # the TT BiPoSH diagonal is a structural zero for every odd L and

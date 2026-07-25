@@ -156,7 +156,7 @@ def build_reports(spec: dict):
     m = spec["model"]
     proc_nside = m["proc_nside"]
     lmax = m["lmax"]
-    l_values = [int(x) for x in m["structural_zero_l_values"]]
+    l_values = m["structural_zero_l_values"]
     tol = float(m["structural_zero_tolerance"])
     paths = _paths(spec)
     # anti-drift guards invoked LIVE with admissible input
