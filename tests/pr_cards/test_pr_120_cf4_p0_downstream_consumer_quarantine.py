@@ -1066,6 +1066,37 @@ def test_existing_embedded_block_artifacts_match_a_finite_strict_schema():
     assert checked >= 20
 
 
+@pytest.mark.parametrize(
+    ("field", "value"),
+    [
+        ("active_png", "figures/unrelated/other.png"),
+        ("artifact_id", "unrelated_figure"),
+    ],
+)
+def test_figure_block_artifact_binds_output_path_and_identity(
+    field: str,
+    value: str,
+):
+    path = (
+        "figures/data_analysis_current/"
+        "fig_data_observed_sector_proxy_coordinates.manifest.json"
+    )
+    payload = json.loads((REPO / path).read_text(encoding="utf-8"))
+    payload["artifact"][field] = value
+
+    issues = quarantine._validate_embedded_block_record(
+        path,
+        json.dumps(payload),
+        _raw_canonical_block(),
+        require_path_match=False,
+    )
+
+    assert any(
+        issue.code == "invalid_embedded_quarantine_artifact_schema"
+        for issue in issues
+    ), [issue.to_dict() for issue in issues]
+
+
 def test_inventory_hash_mutation_is_rejected(tmp_path: Path, monkeypatch):
     payload = json.loads(
         (REPO / quarantine.INVENTORY_RELATIVE_PATH).read_text(encoding="utf-8")

@@ -1929,6 +1929,21 @@ def _validate_artifact_schema(
                 "blocked figure artifact must keep active_png_status=ABSENT_BY_QUARANTINE",
             )
         )
+    if str(kind).startswith("figure_"):
+        figure_path = artifact.get("active_png", artifact.get("active_path"))
+        if isinstance(figure_path, str):
+            figure_filename = PurePosixPath(figure_path).name
+            figure_identity = figure_filename.removesuffix(".png").removesuffix(
+                ".source.json"
+            ).removesuffix(".manifest.json")
+            if artifact_id != figure_identity:
+                issues.append(
+                    _artifact_issue(
+                        path,
+                        "invalid_embedded_quarantine_artifact_schema",
+                        "figure artifact_id must match its active path identity",
+                    )
+                )
 
     if kind == "conditioned_method_diagnostic_block_record":
         exact_values = {
@@ -2064,14 +2079,15 @@ def _validate_embedded_block_record(
             figure_stem = filename.removesuffix(".source.json").removesuffix(
                 ".manifest.json"
             )
-            path_matches = (
-                active_path == path
-                or active_json == path
-                or (
-                    str(artifact.get("artifact_kind", "")).startswith("figure_")
-                    and artifact_id == figure_stem
+            if str(artifact.get("artifact_kind", "")).startswith("figure_"):
+                expected_png = (
+                    PurePosixPath(path).parent / f"{figure_stem}.png"
+                ).as_posix()
+                path_matches = artifact_id == figure_stem and (
+                    active_path == path or artifact.get("active_png") == expected_png
                 )
-            )
+            else:
+                path_matches = active_path == path or active_json == path
             if require_path_match and not path_matches:
                 issues.append(
                     QuarantineIssue(
