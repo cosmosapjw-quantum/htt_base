@@ -119,6 +119,27 @@ def test_runner_preserves_count_and_seed_types() -> None:
             })
 
 
+@pytest.mark.parametrize("field,value,message", [
+    ("estimator", "p = b/N", "estimator"),
+    ("tie_policy", "strict_gt", "tie_policy"),
+])
+def test_runner_binds_reported_estimator_to_implementation(
+    field, value, message
+) -> None:
+    runner = _load_runner()
+    ranking = {
+        "estimator": (
+            "p = (1 + b) / (N + 1), "
+            "b = #{null_score >= obs_score} "
+            "(Phipson-Smyth exact-discrete)"
+        ),
+        "tie_policy": "conservative_ge",
+    }
+    ranking[field] = value
+    with pytest.raises(SystemExit, match=message):
+        runner.build_estimator({"ranking": ranking})
+
+
 def test_exact_discrete_estimator() -> None:
     # obs strictly largest -> p = 1/(N+1)
     assert pooled_rank_p(5.0, [1.0, 2.0, 3.0, 4.0]) == Fraction(1, 5)

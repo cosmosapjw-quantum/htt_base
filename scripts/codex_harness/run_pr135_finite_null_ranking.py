@@ -154,6 +154,20 @@ def _verify_prohibition_cross_list(spec: dict) -> int:
 
 def build_estimator(spec: dict) -> dict:
     ranking = spec["ranking"]
+    expected_estimator = (
+        "p = (1 + b) / (N + 1), b = #{null_score >= obs_score} "
+        "(Phipson-Smyth exact-discrete)"
+    )
+    if ranking.get("estimator") != expected_estimator:
+        raise SystemExit(
+            "ranking estimator does not match the production "
+            "(1+b)/(N+1) implementation"
+        )
+    if ranking.get("tie_policy") != "conservative_ge":
+        raise SystemExit(
+            "ranking tie_policy does not match the production "
+            "conservative >= implementation"
+        )
     # canonical worked examples on a small N
     n = 4
     examples = [
