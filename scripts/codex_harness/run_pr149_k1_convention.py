@@ -206,7 +206,7 @@ def build_reports(spec: dict):
                                                null_seed=int(m["null_seed"]))}
     ledger = {"schema": "pr149.scan_family_ledger.v1",
               **scan_family_ledger(l_values=l_values,
-                                   orientation_grid_n=int(m["orientation_grid_n"]))}
+                                   orientation_grid_n=m["orientation_grid_n"])}
     return contract_rec, theorem, map_checks, path_eq, ledger
 
 

@@ -364,13 +364,37 @@ def scan_family_ledger(*, l_values, orientation_grid_n: int) -> dict:
     """The effective scan family: the odd-L diagonal (structural zero) carries
     no trials and is quotiented; the orientation scans are quotiented over the
     monotone/equivalent grid; the effective family is frozen."""
+    try:
+        l_values = list(l_values)
+    except TypeError as exc:
+        raise K1ConventionError(
+            "scan-family multipoles are malformed") from exc
+    if (
+        not l_values
+        or any(isinstance(l, (bool, np.bool_))
+               or not isinstance(l, (int, np.integer))
+               or l < 1 for l in l_values)
+        or len(set(int(l) for l in l_values)) != len(l_values)
+    ):
+        raise K1ConventionError(
+            "scan family requires unique integer multipoles l >= 1")
+    if (
+        isinstance(orientation_grid_n, (bool, np.bool_))
+        or not isinstance(orientation_grid_n, (int, np.integer))
+        or orientation_grid_n <= 0
+        or orientation_grid_n % 2
+    ):
+        raise K1ConventionError(
+            "orientation grid must be a positive even integer")
+    l_values = [int(l) for l in l_values]
+    orientation_grid_n = int(orientation_grid_n)
     even_diag = [(l, L) for l in l_values
                  for L in range(2, 2 * l + 1, 2)]
     odd_diag = [(l, L) for l in l_values
                 for L in range(1, 2 * l + 1, 2)]
     # orientation scans are equivalent up to the antipodal identification, so
     # the effective count is half the grid (quotient)
-    effective_orientations = max(1, orientation_grid_n // 2)
+    effective_orientations = orientation_grid_n // 2
     effective_family = len(even_diag) * effective_orientations
     return {"even_L_diagonal_terms": [list(t) for t in even_diag],
             "odd_L_diagonal_terms_quotiented_zero": [list(t) for t in odd_diag],

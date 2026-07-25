@@ -175,6 +175,23 @@ def test_scan_family_quotients_odd_L() -> None:
     assert led["effective_orientations_after_antipodal_quotient"] == 6
 
 
+@pytest.mark.parametrize("l_values", [[], [0], [2, 2], [2.5], [True]])
+def test_scan_family_rejects_invalid_multipoles(l_values) -> None:
+    with pytest.raises(K1ConventionError, match="unique integer multipoles"):
+        scan_family_ledger(l_values=l_values, orientation_grid_n=12)
+
+
+@pytest.mark.parametrize("orientation_grid_n", [-12, 0, 3, 2.5, True])
+def test_scan_family_rejects_invalid_orientation_grid(
+    orientation_grid_n
+) -> None:
+    with pytest.raises(K1ConventionError, match="positive even integer"):
+        scan_family_ledger(
+            l_values=[2, 3, 4, 5],
+            orientation_grid_n=orientation_grid_n,
+        )
+
+
 @needs_data
 def test_runner_check_mode_is_current() -> None:
     result = subprocess.run(
