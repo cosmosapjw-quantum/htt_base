@@ -404,7 +404,8 @@ def build_budget(w: Fraction, k: Fraction) -> UncertaintyBudget:
 def validate_budget(payload: Mapping) -> None:
     """Reject collapsed or incomplete budgets."""
     missing = [c for c in REQUIRED_COMPONENTS
-               if not str(payload.get(c) or "").strip()]
+               if not isinstance(payload.get(c), str)
+               or not payload[c].strip()]
     if missing:
         raise OmkRemainderError(
             f"uncertainty budget missing typed components: {missing} — "

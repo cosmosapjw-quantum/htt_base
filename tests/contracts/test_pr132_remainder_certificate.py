@@ -178,6 +178,9 @@ def test_budget_separation_and_central_rule() -> None:
     incomplete["physical_model_form"] = ""
     with pytest.raises(OmkRemainderError, match="missing typed"):
         validate_budget(incomplete)
+    wrong_type = dict(payload, source_convention=1)
+    with pytest.raises(OmkRemainderError, match="missing typed"):
+        validate_budget(wrong_type)
     validate_report_central({
         "w": "0", "K": "1/100",
         "central": str(central_prediction(Fraction(0),
