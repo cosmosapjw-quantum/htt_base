@@ -99,6 +99,41 @@ def test_runner_preserves_preregistration_count_types(field, value) -> None:
         runner._prereg({"preregistration": preregistration})
 
 
+@pytest.mark.parametrize("field,value,message", [
+    ("extension_replicates", True, "integer at least"),
+    ("extension_replicates", 10000.5, "integer at least"),
+    ("extension_replicates", 0, "integer at least"),
+    ("extension_replicates", 1000, "integer at least"),
+    ("extension_trigger_within", True, "finite probability"),
+    ("extension_trigger_within", "nan", "finite probability"),
+    ("extension_trigger_within", "inf", "finite probability"),
+    ("extension_trigger_within", "-0.1", "finite probability"),
+    ("extension_trigger_within", "1.1", "finite probability"),
+    ("extension_trigger_within", "not-a-number", "finite probability"),
+])
+def test_runner_rejects_invalid_extension_config(
+    field, value, message
+) -> None:
+    runner = _load_runner()
+    prereg = Preregistration(0.95, 0.93, 2000, 10, 20260719, 0.10)
+    config = {
+        "extension_replicates": 10000,
+        "extension_trigger_within": "0.01",
+    }
+    config[field] = value
+    with pytest.raises(WeakIdError, match=message):
+        runner._extension_config(config, prereg)
+
+
+def test_runner_accepts_canonical_extension_config() -> None:
+    runner = _load_runner()
+    prereg = Preregistration(0.95, 0.93, 2000, 10, 20260719, 0.10)
+    assert runner._extension_config({
+        "extension_replicates": 10000,
+        "extension_trigger_within": "0.01",
+    }, prereg) == (10000, 0.01)
+
+
 def test_betainc_matches_reference() -> None:
     # I_0.5(1,1) = 0.5; I_x(a,b) monotone; endpoints
     assert abs(_betainc_reg(0.5, 1, 1) - 0.5) < 1e-9

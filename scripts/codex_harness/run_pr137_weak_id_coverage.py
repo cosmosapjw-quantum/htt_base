@@ -18,8 +18,10 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
 import sys
 from fractions import Fraction
+from numbers import Integral, Real
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[2]
@@ -214,6 +216,37 @@ def _family_wise(r: dict, per_point_conf: float) -> float:
                                  per_point_conf)
 
 
+def _extension_config(p: dict,
+                      prereg: Preregistration) -> tuple[int, float]:
+    ext_reps = p["extension_replicates"]
+    if (
+        isinstance(ext_reps, bool)
+        or not isinstance(ext_reps, Integral)
+        or ext_reps < prereg.min_replicates
+    ):
+        raise WeakIdError(
+            "extension_replicates must be an integer at least as large "
+            "as min_replicates_per_point")
+    raw_within = p["extension_trigger_within"]
+    if isinstance(raw_within, bool) or not isinstance(
+        raw_within, (Real, str)
+    ):
+        raise WeakIdError(
+            "extension_trigger_within must be a finite probability "
+            "distance in [0, 1]")
+    try:
+        ext_within = float(raw_within)
+    except ValueError as exc:
+        raise WeakIdError(
+            "extension_trigger_within must be a finite probability "
+            "distance in [0, 1]") from exc
+    if not math.isfinite(ext_within) or not 0 <= ext_within <= 1:
+        raise WeakIdError(
+            "extension_trigger_within must be a finite probability "
+            "distance in [0, 1]")
+    return int(ext_reps), ext_within
+
+
 def build_bounds(spec: dict, prereg: Preregistration, grid: dict) -> dict:
     fine = grid["imbens_manski_boundary_fine"]
     n_points = len(fine)
@@ -221,8 +254,7 @@ def build_bounds(spec: dict, prereg: Preregistration, grid: dict) -> dict:
     # simultaneous over all grid points) confidence is at least 0.99.
     per_point_conf = bonferroni_conf(0.99, n_points)
     p = spec["preregistration"]
-    ext_reps = int(p["extension_replicates"])
-    ext_within = float(p["extension_trigger_within"])
+    ext_reps, ext_within = _extension_config(p, prereg)
     seeds = prereg.min_seeds
     rows = []
     extended = []
