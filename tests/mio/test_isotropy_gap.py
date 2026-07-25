@@ -316,6 +316,17 @@ def test_depth_metadata_is_required_and_fail_closed_for_statistical_statuses() -
         _bin("near", 0.5, 0.5)
 
 
+@pytest.mark.parametrize("bad_sample_count", [8.9, True, "12"])
+def test_depth_sample_count_requires_an_exact_integer(bad_sample_count: object) -> None:
+    with pytest.raises(ValueError, match="sample_count"):
+        _bin(
+            "near",
+            0.0,
+            0.5,
+            sample_count=bad_sample_count,
+        )
+
+
 def test_depth_bins_must_be_ordered_unique_and_non_overlapping() -> None:
     with pytest.raises(ValueError, match="overlap"):
         build_isotropy_gap(

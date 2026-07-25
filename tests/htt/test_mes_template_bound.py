@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from dataclasses import replace
+
 import pytest
 
 from obsstat.null_ensembles import (
@@ -177,6 +179,42 @@ def test_mes_template_branch_missing_full_covariance_is_no_claim():
     assert result.synthetic_bound_available is False
     assert result.report.manifest.production_status == "blocked_missing_covariance"
     assert "missing_full_covariance" in result.no_claim_reasons
+
+
+@pytest.mark.parametrize(
+    ("scan_changes", "message"),
+    (
+        (
+            {"config_hash": "sha256:" + "e" * 64},
+            r"orientation_scan\.config_hash",
+        ),
+        (
+            {"input_hashes": ("sha256:" + "f" * 64,)},
+            r"orientation_scan\.input_hashes",
+        ),
+    ),
+)
+def test_mes_template_branch_rejects_mismatched_orientation_provenance(
+    scan_changes: dict[str, object],
+    message: str,
+):
+    from htt.statistics.mes_template_bound import build_mes_template_bound
+
+    with pytest.raises(ValueError, match=message):
+        build_mes_template_bound(
+            observed=(2.0, 0.25),
+            template=(1.0, 0.0),
+            full_covariance=((2.0, 0.5), (0.5, 1.0)),
+            diagonal_bound=3.0,
+            rho_synthetic=1.0,
+            parameter_block="sigma_template",
+            orientation_scan=replace(_orientation_scan(), **scan_changes),
+            null_feature_payload=_null_feature_payload(),
+            config_hash=_CONFIG_HASH,
+            input_hashes=_INPUT_HASHES,
+            generating_command=_COMMAND,
+            worktree_state=_WORKTREE,
+        )
 
 
 @pytest.mark.parametrize(

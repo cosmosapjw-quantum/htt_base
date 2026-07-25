@@ -123,6 +123,16 @@ def _plain_json(value: object) -> Any:
     raise TypeError(f"value {value!r} is not JSON-compatible")
 
 
+def _freeze_json(value: Any) -> Any:
+    if isinstance(value, Mapping):
+        return MappingProxyType(
+            {str(key): _freeze_json(item) for key, item in value.items()}
+        )
+    if isinstance(value, list):
+        return tuple(_freeze_json(item) for item in value)
+    return value
+
+
 def _scan_reserved_language(value: object, name: str) -> None:
     if isinstance(value, Mapping):
         for key, item in value.items():
@@ -389,6 +399,10 @@ class ResponseOverlapAudit:
             transfer_spec_id=self.transfer_spec_id,
             transfer_metadata=self.transfer_metadata,
         )
+        artifact_metadata = _freeze_json(artifact_metadata)
+        transfer_metadata = (
+            None if transfer_metadata is None else _freeze_json(transfer_metadata)
+        )
         sky_support_status = _non_empty(self.sky_support_status, "sky_support_status")
         mask_status = _non_empty(self.mask_status, "mask_status")
         covariance_status = _non_empty(self.covariance_status, "covariance_status")
@@ -624,14 +638,18 @@ class ResponseOverlapAudit:
             "nuisance_responses": [list(row) for row in self.nuisance_responses],
             "transfer_source": self.transfer_source,
             "transfer_spec_id": self.transfer_spec_id,
-            "transfer_metadata": self.transfer_metadata,
+            "transfer_metadata": (
+                None
+                if self.transfer_metadata is None
+                else _plain_json(self.transfer_metadata)
+            ),
             "sky_support_status": self.sky_support_status,
             "mask_status": self.mask_status,
             "covariance_status": self.covariance_status,
             "null_mock_status": self.null_mock_status,
             "config_hash": self.manifest.config_hash,
             "input_hashes": list(self.input_hashes),
-            "artifact_metadata": dict(self.artifact_metadata),
+            "artifact_metadata": _plain_json(self.artifact_metadata),
             "caveats": list(self.caveats),
             "generating_command": self.generating_command,
             "git_commit": self.git_commit,
