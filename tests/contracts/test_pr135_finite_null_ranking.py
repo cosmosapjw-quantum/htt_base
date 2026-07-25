@@ -86,6 +86,39 @@ def test_check_normalizes_only_generation_time_source_hash() -> None:
     ) == runner._semantic_artifact(manifest_rel, current_manifest)
 
 
+def test_runner_preserves_count_and_seed_types() -> None:
+    runner = _load_runner()
+    with pytest.raises(FiniteNullError, match="positive integer"):
+        runner.build_enumeration({
+            "verification": {
+                "exact_enumeration": {"N_values": [4.5]},
+            },
+        })
+    with pytest.raises(FiniteNullError, match="positive integer"):
+        runner.build_captions({
+            "verification": {
+                "type_i_simulation": {"N": True},
+            },
+        })
+    base = {
+        "N": 39,
+        "trials": 100,
+        "seed": 1,
+        "alpha_grid": ["0.01", "0.5"],
+        "bit_generator": "PCG64",
+    }
+    for field, value, message in (
+        ("trials", 100.5, "positive integer"),
+        ("seed", True, "non-negative integer"),
+    ):
+        config = dict(base)
+        config[field] = value
+        with pytest.raises(FiniteNullError, match=message):
+            runner.build_simulation({
+                "verification": {"type_i_simulation": config},
+            })
+
+
 def test_exact_discrete_estimator() -> None:
     # obs strictly largest -> p = 1/(N+1)
     assert pooled_rank_p(5.0, [1.0, 2.0, 3.0, 4.0]) == Fraction(1, 5)

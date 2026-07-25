@@ -183,7 +183,7 @@ def build_enumeration(spec: dict) -> dict:
     rows = {}
     all_ok = True
     for n in spec["verification"]["exact_enumeration"]["N_values"]:
-        enum = exact_rank_distribution(int(n))
+        enum = exact_rank_distribution(n)
         rows[str(n)] = enum
         all_ok = all_ok and enum["all_super_uniform"]
     return {
@@ -196,8 +196,8 @@ def build_enumeration(spec: dict) -> dict:
 def build_simulation(spec: dict) -> dict:
     cfg = spec["verification"]["type_i_simulation"]
     alpha_grid = [Fraction(a) for a in cfg["alpha_grid"]]
-    result = type_i_simulation(int(cfg["N"]), int(cfg["trials"]),
-                               int(cfg["seed"]), alpha_grid)
+    result = type_i_simulation(
+        cfg["N"], cfg["trials"], cfg["seed"], alpha_grid)
     return {"schema": "pr135.type_i_simulation.v1",
             "bit_generator": cfg["bit_generator"], **result}
 
@@ -252,7 +252,7 @@ def build_scan(spec: dict) -> dict:
 
 
 def build_captions(spec: dict) -> dict:
-    n = int(spec["verification"]["type_i_simulation"]["N"])
+    n = spec["verification"]["type_i_simulation"]["N"]
     text = generate_caption(n)
     lint_caption(text)
     return {"schema": "pr135.captions.v1", "captions": {"summary": text}}
