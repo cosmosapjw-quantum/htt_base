@@ -514,17 +514,57 @@ def build_failure_map(point_results: Sequence[dict],
     """A below-threshold grid point is PRESERVED here (never removed
     from the reported grid). The retain decision uses the family-wise
     (simultaneous) lower bound recorded under ``bound_key``."""
-    failures = [{"w": r["w"], "procedure": r["procedure"],
-                 "theta0_position": r.get("theta0_position"),
-                 "coverage": r["coverage"],
-                 bound_key: r[bound_key]}
-                for r in point_results
-                if r[bound_key] < threshold]
+    if isinstance(point_results, (str, bytes)) or not point_results:
+        raise WeakIdError("point_results must be a non-empty sequence")
+    if not isinstance(bound_key, str) or not bound_key:
+        raise WeakIdError("bound_key must be a non-empty string")
+
+    def probability(value, label: str) -> float:
+        if (
+            isinstance(value, bool)
+            or not isinstance(value, Real)
+            or not math.isfinite(float(value))
+            or not 0 <= value <= 1
+        ):
+            raise WeakIdError(
+                f"{label} must be a finite probability in [0, 1]")
+        return float(value)
+
+    threshold_value = probability(threshold, "threshold")
+    validated = []
+    for result in point_results:
+        if not isinstance(result, dict):
+            raise WeakIdError("each point result must be a mapping")
+        try:
+            w = result["w"]
+            procedure = result["procedure"]
+            coverage = probability(result["coverage"], "coverage")
+            bound = probability(result[bound_key], bound_key)
+        except KeyError as exc:
+            raise WeakIdError(
+                f"point result is missing required field {exc.args[0]}"
+            ) from exc
+        if not isinstance(w, str) or not w:
+            raise WeakIdError("point result w must be a non-empty string")
+        if not isinstance(procedure, str) or not procedure:
+            raise WeakIdError(
+                "point result procedure must be a non-empty string")
+        validated.append({
+            "w": w,
+            "procedure": procedure,
+            "theta0_position": result.get("theta0_position"),
+            "coverage": coverage,
+            bound_key: bound,
+        })
+    failures = [
+        result for result in validated
+        if result[bound_key] < threshold_value
+    ]
     return {
-        "threshold": threshold,
+        "threshold": threshold_value,
         "failing_points": failures,
         "failing_count": len(failures),
-        "all_points_reported": len(point_results),
+        "all_points_reported": len(validated),
     }
 
 

@@ -255,6 +255,41 @@ def test_adversarial_naive_fails_and_is_preserved() -> None:
     assert fmap["failing_points"][0]["w"] == "0"
 
 
+@pytest.mark.parametrize("rows,threshold,bound_key,message", [
+    ([], 0.93, "family_wise_lower", "non-empty sequence"),
+    ([{"w": "0", "procedure": "p", "coverage": 0.95,
+       "family_wise_lower": 0.94}], float("nan"),
+     "family_wise_lower", "finite probability"),
+    ([{"w": "0", "procedure": "p", "coverage": 0.95,
+       "family_wise_lower": 0.94}], float("inf"),
+     "family_wise_lower", "finite probability"),
+    ([{"w": "0", "procedure": "p", "coverage": float("nan"),
+       "family_wise_lower": 0.94}], 0.93,
+     "family_wise_lower", "coverage"),
+    ([{"w": "0", "procedure": "p", "coverage": 0.95,
+       "family_wise_lower": float("nan")}], 0.93,
+     "family_wise_lower", "family_wise_lower"),
+    ([{"w": "0", "procedure": "p", "coverage": 0.95,
+       "family_wise_lower": -0.1}], 0.93,
+     "family_wise_lower", "finite probability"),
+    ([{"w": "", "procedure": "p", "coverage": 0.95,
+       "family_wise_lower": 0.94}], 0.93,
+     "family_wise_lower", "non-empty string"),
+    ([{"w": "0", "procedure": "", "coverage": 0.95,
+       "family_wise_lower": 0.94}], 0.93,
+     "family_wise_lower", "non-empty string"),
+    ([{"w": "0", "procedure": "p", "coverage": 0.95}], 0.93,
+     "family_wise_lower", "missing required field"),
+    ([{"w": "0", "procedure": "p", "coverage": 0.95,
+       "family_wise_lower": 0.94}], 0.93, "", "non-empty string"),
+])
+def test_failure_map_rejects_invalid_input(
+    rows, threshold, bound_key, message
+) -> None:
+    with pytest.raises(WeakIdError, match=message):
+        build_failure_map(rows, threshold, bound_key)
+
+
 def test_full_grid_and_failure_map_guards() -> None:
     with pytest.raises(WeakIdError, match="central cases only"):
         require_full_grid(["0", "1/4"], ["0", "1/4", "1/2", "1"])
