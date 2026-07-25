@@ -325,9 +325,13 @@ def observed_null_shared_pipeline(observed_alm, *, proc_nside: int, lmax: int,
 
     cl = hp.alm2cl(observed_alm, lmax=lmax)
     rng = np.random.Generator(np.random.PCG64(null_seed))
-    np.random.seed(int(rng.integers(0, 2 ** 31 - 1)))   # synfast legacy RNG
-    null_alm = hp.map2alm(hp.synfast(cl, proc_nside, lmax=lmax, new=True),
-                          lmax=lmax)
+    legacy_state = np.random.get_state()
+    try:
+        np.random.seed(int(rng.integers(0, 2 ** 31 - 1)))  # synfast legacy RNG
+        null_map = hp.synfast(cl, proc_nside, lmax=lmax, new=True)
+    finally:
+        np.random.set_state(legacy_state)
+    null_alm = hp.map2alm(null_map, lmax=lmax)
     obs_feat = _even_diagonal_feature(observed_alm, lmax=lmax,
                                       l_values=l_values)
     null_feat = _even_diagonal_feature(null_alm, lmax=lmax, l_values=l_values)

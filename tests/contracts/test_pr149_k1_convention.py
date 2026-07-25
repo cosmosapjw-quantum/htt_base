@@ -8,6 +8,8 @@ import sys
 import warnings
 from pathlib import Path
 
+import healpy as hp
+import numpy as np
 import pytest
 
 warnings.filterwarnings("ignore")
@@ -23,6 +25,7 @@ from obsstat.k1_convention_contract import (
     refuse_raw_deletion_before_frozen,
     refuse_shared_null_hiding,
     refuse_stale_axis_discovery,
+    observed_null_shared_pipeline,
     scan_family_ledger,
     structural_zero_theorem,
     verify_convention_frozen,
@@ -221,6 +224,23 @@ def test_scan_family_rejects_invalid_orientation_grid(
             l_values=[2, 3, 4, 5],
             orientation_grid_n=orientation_grid_n,
         )
+
+
+def test_observed_null_pipeline_preserves_global_numpy_rng() -> None:
+    np.random.seed(987654)
+    before = np.random.get_state()
+    observed_alm = np.zeros(hp.Alm.getsize(3), dtype=complex)
+    observed_null_shared_pipeline(
+        observed_alm,
+        proc_nside=2,
+        lmax=3,
+        l_values=[2],
+        null_seed=1,
+    )
+    after = np.random.get_state()
+    assert before[0] == after[0]
+    assert np.array_equal(before[1], after[1])
+    assert before[2:] == after[2:]
 
 
 @needs_data
