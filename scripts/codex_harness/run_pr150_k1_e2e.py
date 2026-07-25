@@ -61,6 +61,11 @@ OUTPUTS = {
     "mutations": "docs/generated/pr150_mutation_report.json",
     "manifest": "docs/generated/pr150_artifact_manifest.json",
 }
+SOURCE_PATH = "htt/obsstat/k1_e2e_calibration.py"
+LOCAL_DATA_PATHS = {
+    "cmb_mc_dir": "workdir/raw/planck_ffp10/smica/cmb_mc",
+    "noise_mc_dir": "workdir/raw/planck_ffp10/smica/noise_mc",
+}
 REDACTED = "[REDACTED-PATTERN]"
 
 
@@ -71,6 +76,70 @@ def _sha(path: Path) -> str:
 def _render(payload: dict) -> bytes:
     return (json.dumps(payload, indent=2, ensure_ascii=False,
                        sort_keys=True) + "\n").encode()
+
+
+def _is_sha256(value: object, *, prefix: str = "") -> bool:
+    if not isinstance(value, str) or not value.startswith(prefix):
+        return False
+    digest = value.removeprefix(prefix)
+    return (
+        len(digest) == 64
+        and all(char in "0123456789abcdef" for char in digest)
+    )
+
+
+def _has_path_suffix(value: object, suffix: str) -> bool:
+    if not isinstance(value, str):
+        return False
+    value_parts = Path(value).parts
+    suffix_parts = Path(suffix).parts
+    return (
+        len(value_parts) >= len(suffix_parts)
+        and value_parts[-len(suffix_parts):] == suffix_parts
+    )
+
+
+def _semantic_artifact(rel: str, payload: dict) -> dict:
+    """Ignore only maintained-source and local-location provenance drift."""
+
+    normalized = json.loads(json.dumps(payload))
+    metadata = normalized.get("artifact_metadata")
+    rows = metadata.get("input_hashes") if isinstance(metadata, dict) else None
+    if isinstance(rows, list):
+        for row in rows:
+            if (
+                isinstance(row, dict)
+                and row.get("path") == SOURCE_PATH
+                and _is_sha256(row.get("sha256"), prefix="sha256:")
+            ):
+                row["sha256"] = "sha256:<generation-time-source>"
+
+    input_hashes = normalized.get("input_hashes")
+    if isinstance(input_hashes, list):
+        prefix = f"{SOURCE_PATH}:"
+        for index, row in enumerate(input_hashes):
+            if (
+                isinstance(row, str)
+                and row.startswith(prefix)
+                and _is_sha256(row.removeprefix(prefix))
+            ):
+                input_hashes[index] = (
+                    f"{SOURCE_PATH}:<generation-time-source>"
+                )
+
+    scan = normalized.get("negative_scan")
+    targets = scan.get("targets") if isinstance(scan, dict) else None
+    if isinstance(targets, dict):
+        for target in (SOURCE_PATH, OUTPUTS["captions"]):
+            row = targets.get(target)
+            if isinstance(row, dict) and _is_sha256(row.get("sha256")):
+                row["sha256"] = "<generation-time-scan>"
+
+    if rel == OUTPUTS["manifest_e2e"]:
+        for field, suffix in LOCAL_DATA_PATHS.items():
+            if _has_path_suffix(normalized.get(field), suffix):
+                normalized[field] = f"<local:{suffix}>"
+    return normalized
 
 
 def _artifact_metadata(spec: dict) -> dict:
@@ -412,7 +481,19 @@ def _emit(rel, payload, write, problems, wrote) -> None:
         return
     if not target.is_file():
         problems.append(f"missing artifact: {rel}")
-    elif target.read_bytes() != rendered:
+        return
+    try:
+        existing = json.loads(target.read_text(encoding="utf-8"))
+    except (UnicodeError, json.JSONDecodeError):
+        problems.append(f"invalid artifact: {rel}")
+        return
+    if (
+        isinstance(existing, dict)
+        and _semantic_artifact(rel, existing)
+        == _semantic_artifact(rel, payload)
+    ):
+        return
+    if target.read_bytes() != rendered:
         problems.append(f"stale artifact: {rel}")
 
 

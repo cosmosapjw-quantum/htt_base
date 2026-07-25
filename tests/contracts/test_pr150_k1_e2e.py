@@ -8,6 +8,7 @@ skip when the card is absent (produced once by
 """
 from __future__ import annotations
 
+import importlib.util
 import json
 import subprocess
 import sys
@@ -39,6 +40,111 @@ CARD = REPO_ROOT / "docs/generated/k1_global_maxscan_e2e_full.json"
 GEN = REPO_ROOT / "docs/generated"
 needs_card = pytest.mark.skipif(
     not CARD.is_file(), reason="FFP10 E2E max-scan card absent")
+
+
+def _load_runner():
+    runner_path = REPO_ROOT / "scripts/codex_harness/run_pr150_k1_e2e.py"
+    spec = importlib.util.spec_from_file_location("run_pr150", runner_path)
+    runner = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(runner)
+    return runner
+
+
+def test_check_normalizes_only_maintenance_provenance() -> None:
+    runner = _load_runner()
+    source = runner.SOURCE_PATH
+    rel = runner.OUTPUTS["manifest_e2e"]
+    stored = {
+        "e2e_global_pooled_rank_p": 0.039,
+        "cmb_mc_dir": (
+            "/owner/repo/workdir/raw/planck_ffp10/smica/cmb_mc"
+        ),
+        "noise_mc_dir": (
+            "/owner/repo/workdir/raw/planck_ffp10/smica/noise_mc"
+        ),
+        "artifact_metadata": {
+            "input_hashes": [
+                {"path": source, "sha256": f"sha256:{'1' * 64}"},
+                {"path": "input.json", "sha256": f"sha256:{'a' * 64}"},
+            ],
+        },
+        "negative_scan": {
+            "targets": {
+                source: {"sha256": "2" * 64, "hits": []},
+                runner.OUTPUTS["captions"]: {
+                    "sha256": "3" * 64,
+                    "hits": [],
+                },
+            },
+        },
+    }
+    current = json.loads(json.dumps(stored))
+    current["cmb_mc_dir"] = (
+        "/tmp/worktree/workdir/raw/planck_ffp10/smica/cmb_mc"
+    )
+    current["noise_mc_dir"] = (
+        "/tmp/worktree/workdir/raw/planck_ffp10/smica/noise_mc"
+    )
+    current["artifact_metadata"]["input_hashes"][0]["sha256"] = (
+        f"sha256:{'4' * 64}"
+    )
+    current["negative_scan"]["targets"][source]["sha256"] = "5" * 64
+    current["negative_scan"]["targets"][
+        runner.OUTPUTS["captions"]
+    ]["sha256"] = "6" * 64
+    assert runner._semantic_artifact(
+        rel, stored
+    ) == runner._semantic_artifact(rel, current)
+
+    current["e2e_global_pooled_rank_p"] = 0.04
+    assert runner._semantic_artifact(
+        rel, stored
+    ) != runner._semantic_artifact(rel, current)
+    current["e2e_global_pooled_rank_p"] = 0.039
+    current["artifact_metadata"]["input_hashes"][1]["sha256"] = (
+        f"sha256:{'b' * 64}"
+    )
+    assert runner._semantic_artifact(
+        rel, stored
+    ) != runner._semantic_artifact(rel, current)
+    current["artifact_metadata"]["input_hashes"][1]["sha256"] = (
+        f"sha256:{'a' * 64}"
+    )
+    current["negative_scan"]["targets"][source]["hits"] = [{"line": 1}]
+    assert runner._semantic_artifact(
+        rel, stored
+    ) != runner._semantic_artifact(rel, current)
+    current["negative_scan"]["targets"][source]["hits"] = []
+    current["cmb_mc_dir"] = "/tmp/unrelated/cmb_mc"
+    assert runner._semantic_artifact(
+        rel, stored
+    ) != runner._semantic_artifact(rel, current)
+    current["cmb_mc_dir"] = stored["cmb_mc_dir"]
+    current["artifact_metadata"]["input_hashes"][0]["sha256"] = "not-a-sha"
+    assert runner._semantic_artifact(
+        rel, stored
+    ) != runner._semantic_artifact(rel, current)
+
+    manifest_rel = runner.OUTPUTS["manifest"]
+    stored_manifest = {
+        "input_hashes": [
+            f"{source}:{'1' * 64}",
+            f"input.json:{'a' * 64}",
+        ],
+    }
+    current_manifest = {
+        "input_hashes": [
+            f"{source}:{'2' * 64}",
+            f"input.json:{'a' * 64}",
+        ],
+    }
+    assert runner._semantic_artifact(
+        manifest_rel, stored_manifest
+    ) == runner._semantic_artifact(manifest_rel, current_manifest)
+    current_manifest["input_hashes"][1] = f"input.json:{'b' * 64}"
+    assert runner._semantic_artifact(
+        manifest_rel, stored_manifest
+    ) != runner._semantic_artifact(manifest_rel, current_manifest)
 
 
 # --------------------------------------------------------------------------
