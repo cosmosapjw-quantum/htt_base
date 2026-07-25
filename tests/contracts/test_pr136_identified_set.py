@@ -177,6 +177,32 @@ def test_cross_engine_checks_bounded_axis_inside_unbounded_set() -> None:
         require_cross_engine_agreement(e_bad, n)
 
 
+@pytest.mark.parametrize("tol", [
+    True,
+    -1.0,
+    float("nan"),
+    float("inf"),
+])
+def test_cross_engine_rejects_invalid_tolerance(tol) -> None:
+    exact = exact_engine(_bounded())
+    numeric = numeric_engine(_bounded())
+    with pytest.raises(IdentifiedSetError, match="finite non-negative"):
+        require_cross_engine_agreement(exact, numeric, tol=tol)
+
+
+@pytest.mark.parametrize("endpoint", [
+    True,
+    float("nan"),
+    float("inf"),
+])
+def test_cross_engine_rejects_invalid_numeric_boundary(endpoint) -> None:
+    exact = exact_engine(_bounded())
+    numeric = numeric_engine(_bounded())
+    numeric["axis_intervals"]["Sigma2"] = [endpoint, endpoint]
+    with pytest.raises(IdentifiedSetError, match="non-finite/non-real"):
+        require_cross_engine_agreement(exact, numeric)
+
+
 def test_kernel_binding_live() -> None:
     binding = verify_kernel_binding()
     assert binding["bound_live"] is True

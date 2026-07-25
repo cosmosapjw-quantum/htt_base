@@ -22,9 +22,11 @@ roadmap_rescue_v1:C2.
 """
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass
 from enum import Enum
 from fractions import Fraction
+from numbers import Real
 from typing import Sequence
 
 from common.graded_nonid import EXPECTED_KERNEL_BASIS, SECTORS
@@ -324,6 +326,15 @@ def require_cross_engine_agreement(exact: dict, numeric: dict,
     bounded-axis comparison runs regardless of the overall status (a
     bounded axis inside an overall-unbounded set is still cross-checked).
     A disagreement raises and blocks the downstream claim."""
+    if (
+        isinstance(tol, bool)
+        or not isinstance(tol, Real)
+        or not math.isfinite(float(tol))
+        or tol < 0
+    ):
+        raise IdentifiedSetError(
+            "cross-engine tolerance must be a finite non-negative real")
+    tol = float(tol)
     if exact["status"] != numeric["status"]:
         raise IdentifiedSetError(
             f"cross-engine STATUS disagreement: exact "
@@ -353,6 +364,16 @@ def require_cross_engine_agreement(exact: dict, numeric: dict,
                 "numeric engine reports it unbounded/missing")
         e_lo, e_hi = float(Fraction(e[0])), float(Fraction(e[1]))
         n_lo, n_hi = n
+        if any(
+            isinstance(value, bool)
+            or not isinstance(value, Real)
+            or not math.isfinite(float(value))
+            for value in (n_lo, n_hi)
+        ):
+            raise IdentifiedSetError(
+                f"numeric engine returned a non-finite/non-real boundary "
+                f"on {ax}: {n!r}")
+        n_lo, n_hi = float(n_lo), float(n_hi)
         if abs(e_lo - n_lo) > tol or abs(e_hi - n_hi) > tol:
             raise IdentifiedSetError(
                 f"cross-engine boundary disagreement on {ax}: exact "
