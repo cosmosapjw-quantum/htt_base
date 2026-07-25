@@ -320,6 +320,15 @@ def numeric_engine(constraints: Sequence[LinearConstraint],
     import numpy as np
     from scipy.optimize import linprog
 
+    if (
+        isinstance(big_m, bool)
+        or not isinstance(big_m, Real)
+        or not math.isfinite(float(big_m))
+        or big_m <= 0
+    ):
+        raise IdentifiedSetError(
+            "numeric engine big_m must be a finite positive real")
+    big_m = float(big_m)
     n = len(AXES)
     A_ub, b_ub, A_eq, b_eq = [], [], [], []
     for c in constraints:

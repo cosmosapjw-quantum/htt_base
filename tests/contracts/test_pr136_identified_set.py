@@ -170,6 +170,18 @@ def test_rank_deficient_unbounded_on_kernel() -> None:
     require_cross_engine_agreement(e, n)
 
 
+@pytest.mark.parametrize("big_m", [
+    True,
+    0,
+    -1,
+    float("nan"),
+    float("inf"),
+])
+def test_numeric_engine_rejects_invalid_envelope(big_m) -> None:
+    with pytest.raises(IdentifiedSetError, match="finite positive"):
+        numeric_engine(_bounded(), big_m=big_m)
+
+
 def test_cross_engine_checks_bounded_axis_inside_unbounded_set() -> None:
     # a bounded Omega_tilt with a non-integer bound INSIDE an
     # overall-unbounded set must still be cross-checked (the P0 hole)
