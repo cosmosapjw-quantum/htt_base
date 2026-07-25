@@ -19,6 +19,7 @@ from obsstat.cf4_forward_simulator import (
     RealismConfig,
     band_limited_sigma_v,
     build_cholesky_generator,
+    coverage_in_band,
     covariance_uncertainty,
     effective_n_modes,
     forward_mock_coverage,
@@ -128,6 +129,63 @@ def test_guards() -> None:
     with pytest.raises(ForwardSimulatorError, match="finite-box"):
         refuse_box_grf_for_covariance("covariance")
     refuse_box_grf_for_covariance("diagonal_variance_reference")   # fine
+
+
+@pytest.mark.parametrize("report, message", [
+    (
+        {
+            "variant": "idealised",
+            "labels": [],
+            "coverage_68": [],
+            "coverage_95": [],
+            "coverage_68_noise_only": [0.0],
+        },
+        "one value for every unique component",
+    ),
+    (
+        {
+            "variant": "idealised",
+            "labels": ["Bx", "By"],
+            "coverage_68": [0.68],
+            "coverage_95": [0.95],
+            "coverage_68_noise_only": [0.0],
+        },
+        "one value for every unique component",
+    ),
+    (
+        {
+            "variant": "idealised",
+            "labels": ["Bx"],
+            "coverage_68": [1.1],
+            "coverage_95": [0.95],
+            "coverage_68_noise_only": [0.0],
+        },
+        "finite and within",
+    ),
+    (
+        {
+            "variant": "idealised",
+            "labels": ["Bx"],
+            "coverage_68": [0.68],
+            "coverage_95": [0.95],
+            "coverage_68_noise_only": [-1.0],
+        },
+        "noise-only coverage",
+    ),
+])
+def test_idealised_coverage_guard_rejects_malformed_reports(
+    report: dict, message: str
+) -> None:
+    with pytest.raises(ForwardSimulatorError, match=message):
+        require_idealised_covers(report, 0.5, 0.5)
+
+
+def test_coverage_subset_must_name_observed_components() -> None:
+    report = {"labels": ["Bx"], "coverage_68": [0.68]}
+    with pytest.raises(ForwardSimulatorError, match="unique report labels"):
+        coverage_in_band(report, 0.68, 0.1, labels=["Q"])
+    assert coverage_in_band(
+        report, 0.68, 0.1, labels=["Bx"]) == {"Bx": True}
 
 
 def test_caption_gate() -> None:

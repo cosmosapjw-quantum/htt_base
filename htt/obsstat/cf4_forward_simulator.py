@@ -520,13 +520,72 @@ def realism_from_variant(variant: str) -> RealismConfig:
 
 def coverage_in_band(coverage: dict, nominal: float, half_width: float,
                      labels=None) -> dict:
-    key = "coverage_68" if abs(nominal - 0.68) < 0.1 else "coverage_95"
-    labels = labels or coverage["labels"]
-    flags = {}
-    for lab, cov in zip(coverage["labels"], coverage[key]):
-        if lab in labels:
-            flags[lab] = bool(abs(cov - nominal) <= half_width)
-    return flags
+    try:
+        nominal = float(nominal)
+        half_width = float(half_width)
+    except (TypeError, ValueError) as exc:
+        raise ForwardSimulatorError(
+            "coverage nominal and half-width must be real scalars") from exc
+    if not np.isfinite(nominal):
+        raise ForwardSimulatorError("coverage nominal must be finite")
+    if np.isclose(nominal, 0.68, rtol=0.0, atol=1e-12):
+        key = "coverage_68"
+    elif np.isclose(nominal, 0.95, rtol=0.0, atol=1e-12):
+        key = "coverage_95"
+    else:
+        raise ForwardSimulatorError(
+            "coverage nominal must select the 0.68 or 0.95 report")
+    if not np.isfinite(half_width) or not 0.0 <= half_width <= 1.0:
+        raise ForwardSimulatorError(
+            "coverage half-width must be finite and within [0, 1]")
+    try:
+        report_labels = coverage["labels"]
+        values = coverage[key]
+    except (KeyError, TypeError) as exc:
+        raise ForwardSimulatorError(
+            "coverage report is missing component values") from exc
+    if (
+        isinstance(report_labels, (str, bytes))
+        or isinstance(values, (str, bytes))
+        or len(report_labels) == 0
+        or len(report_labels) != len(values)
+        or any(not isinstance(label, str) or not label
+               for label in report_labels)
+        or len(set(report_labels)) != len(report_labels)
+    ):
+        raise ForwardSimulatorError(
+            "coverage report must have one value for every unique component")
+    value_by_label = {}
+    for label, cov in zip(report_labels, values):
+        if not np.isscalar(cov) or not np.isreal(cov) \
+                or not np.isfinite(cov) or not 0.0 <= cov <= 1.0:
+            raise ForwardSimulatorError(
+                f"component {label} coverage must be finite and within [0, 1]")
+        value_by_label[label] = float(cov)
+    if labels is None:
+        selected = list(report_labels)
+    else:
+        if isinstance(labels, (str, bytes)):
+            raise ForwardSimulatorError(
+                "coverage component selection must be a non-empty sequence")
+        try:
+            selected = list(labels)
+        except TypeError as exc:
+            raise ForwardSimulatorError(
+                "coverage component selection must be a non-empty sequence"
+            ) from exc
+        if (
+            not selected
+            or any(not isinstance(label, str)
+                   or label not in value_by_label for label in selected)
+            or len(set(selected)) != len(selected)
+        ):
+            raise ForwardSimulatorError(
+                "coverage component selection must name unique report labels")
+    return {
+        label: bool(abs(value_by_label[label] - nominal) <= half_width)
+        for label in selected
+    }
 
 
 def require_idealised_covers(coverage: dict, half68: float, half95: float
@@ -542,7 +601,20 @@ def require_idealised_covers(coverage: dict, half68: float, half95: float
         raise ForwardSimulatorError(
             f"the idealised full covariance does not cover: 68 {flags68}, "
             f"95 {flags95} — the propagation is broken")
-    if max(coverage["coverage_68_noise_only"]) >= 0.60:
+    noise = coverage.get("coverage_68_noise_only")
+    labels = coverage["labels"]
+    if (
+        isinstance(noise, (str, bytes))
+        or not hasattr(noise, "__len__")
+        or len(noise) != len(labels)
+        or any(not np.isscalar(cov) or not np.isreal(cov)
+               or not np.isfinite(cov) or not 0.0 <= cov <= 1.0
+               for cov in noise)
+    ):
+        raise ForwardSimulatorError(
+            "noise-only coverage must provide one finite probability per "
+            "component")
+    if max(noise) >= 0.60:
         raise ForwardSimulatorError(
             "the noise-only covariance did not under-cover — the full-vs-"
             "noise-only discrimination is not exercised")
