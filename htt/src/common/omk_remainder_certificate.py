@@ -413,11 +413,11 @@ def validate_budget(payload: Mapping) -> None:
     if payload.get("collapsed_single_number") is not None:
         raise OmkRemainderError(
             "uncertainty budget collapsed into one number — rejected")
-    if "zero" in str(payload.get("physical_model_form")).lower() and \
-            "unquantified" not in \
-            str(payload.get("physical_model_form")).lower():
+    if "unquantified_conditional" not in \
+            payload["physical_model_form"].lower():
         raise OmkRemainderError(
-            "physical model-form uncertainty may not be set to zero")
+            "physical model-form uncertainty must remain "
+            "UNQUANTIFIED_CONDITIONAL, never numeric zero")
 
 
 def validate_report_central(report: Mapping) -> None:
