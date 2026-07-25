@@ -431,6 +431,39 @@ def type_i_simulation(n_null: int, trials: int, seed: int,
     import numpy as np
 
     n_null = _positive_integer(n_null, "n_null")
+    trials = _positive_integer(trials, "trials")
+    if (
+        isinstance(seed, bool)
+        or not isinstance(seed, Integral)
+        or seed < 0
+    ):
+        raise FiniteNullError("seed must be a non-negative integer")
+    seed = int(seed)
+    raw_alphas = list(alpha_grid)
+    if not raw_alphas:
+        raise FiniteNullError("alpha_grid must be non-empty")
+    alphas = []
+    for alpha in raw_alphas:
+        if isinstance(alpha, bool):
+            raise FiniteNullError(
+                "alpha values must be probabilities strictly inside (0, 1)")
+        try:
+            value = Fraction(alpha)
+        except (TypeError, ValueError, ZeroDivisionError,
+                OverflowError) as exc:
+            raise FiniteNullError(
+                "alpha values must be probabilities strictly inside (0, 1)"
+            ) from exc
+        if not 0 < value < 1:
+            raise FiniteNullError(
+                "alpha values must be probabilities strictly inside (0, 1)")
+        alphas.append(value)
+    if len(set(alphas)) != len(alphas):
+        raise FiniteNullError("alpha_grid must not contain duplicates")
+    floor_fraction = Fraction(1, n_null + 1)
+    if not any(alpha < floor_fraction for alpha in alphas):
+        raise FiniteNullError(
+            "alpha_grid must include a sub-resolution probe below 1/(N+1)")
     rng = np.random.Generator(np.random.PCG64(seed))
     # continuous exchangeable draws -> ties have measure zero
     draws = rng.standard_normal(size=(trials, n_null + 1))
@@ -438,18 +471,18 @@ def type_i_simulation(n_null: int, trials: int, seed: int,
     nulls = draws[:, 1:]
     b = (nulls >= obs[:, None]).sum(axis=1)
     p = (1 + b) / (n_null + 1)
-    floor = float(Fraction(1, n_null + 1))
+    floor = float(floor_fraction)
     p_bad = b / n_null   # the anti-conservative b/N form
     rows = []
     ok = True
-    for alpha in alpha_grid:
-        af = float(Fraction(alpha))
+    for alpha in alphas:
+        af = float(alpha)
         emp = float((p <= af + 1e-12).mean())
         emp_bad = float((p_bad <= af + 1e-12).mean())
         se = math.sqrt(max(af * (1 - af), 1e-12) / trials)
         within = emp <= af + 3.0 * se
         ok = ok and within
-        rows.append({"alpha": str(Fraction(alpha)),
+        rows.append({"alpha": str(alpha),
                      "empirical_reject": round(emp, 5),
                      "naive_bN_reject": round(emp_bad, 5),
                      "slack_3se": round(3.0 * se, 5),

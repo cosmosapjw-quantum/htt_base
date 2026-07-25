@@ -249,6 +249,27 @@ def test_type_i_simulation_super_uniform_with_negative_control() -> None:
     assert sub["naive_bN_reject"] > 0.0
 
 
+@pytest.mark.parametrize("trials,seed,alphas,message", [
+    (True, 1, [Fraction(1, 100)], "positive integer"),
+    (0, 1, [Fraction(1, 100)], "positive integer"),
+    (1.5, 1, [Fraction(1, 100)], "positive integer"),
+    (100, True, [Fraction(1, 100)], "non-negative integer"),
+    (100, -1, [Fraction(1, 100)], "non-negative integer"),
+    (100, 1.5, [Fraction(1, 100)], "non-negative integer"),
+    (100, 1, [], "non-empty"),
+    (100, 1, [Fraction(1, 2)], "sub-resolution"),
+    (100, 1, [Fraction(0)], "strictly inside"),
+    (100, 1, [Fraction(1)], "strictly inside"),
+    (100, 1, [float("nan")], "strictly inside"),
+    (100, 1, [Fraction(1, 100), Fraction(1, 100)], "duplicates"),
+])
+def test_type_i_simulation_rejects_invalid_domain(
+    trials, seed, alphas, message
+) -> None:
+    with pytest.raises(FiniteNullError, match=message):
+        type_i_simulation(39, trials, seed, alphas)
+
+
 def test_calibration_split_and_fingerprint() -> None:
     CalibrationSplit(calibration_ids=(0, 1, 2), evaluation_ids=(3, 4, 5))
     with pytest.raises(FiniteNullError, match="overlap"):
