@@ -1,6 +1,7 @@
 """PR-134 contract tests: estimand/analysis registry."""
 from __future__ import annotations
 
+import importlib.util
 import json
 import subprocess
 import sys
@@ -25,6 +26,57 @@ SPEC = yaml.safe_load(
     (REPO_ROOT / "docs/research_program/long_horizon_rescue/pr134_spec.yaml")
     .read_text(encoding="utf-8"))
 BASE = SPEC["representative_contracts"][0]
+
+
+def _load_runner():
+    path = (
+        REPO_ROOT
+        / "scripts/codex_harness/run_pr134_estimand_registry.py"
+    )
+    spec = importlib.util.spec_from_file_location("run_pr134", path)
+    runner = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(runner)
+    return runner
+
+
+def test_check_normalizes_only_generation_time_source_hash() -> None:
+    runner = _load_runner()
+    source = runner.SOURCE_PATH
+    rel = runner.OUTPUTS["registry"]
+    stored = {
+        "representative_only_no_data_run": True,
+        "negative_scan": {
+            "targets": {
+                source: {"sha256": "1" * 64, "hits": []},
+            },
+        },
+    }
+    current = json.loads(json.dumps(stored))
+    current["negative_scan"]["targets"][source]["sha256"] = "2" * 64
+    assert runner._semantic_artifact(
+        rel, stored
+    ) == runner._semantic_artifact(rel, current)
+    current["representative_only_no_data_run"] = False
+    assert runner._semantic_artifact(
+        rel, stored
+    ) != runner._semantic_artifact(rel, current)
+    current["representative_only_no_data_run"] = True
+    current["negative_scan"]["targets"][source]["hits"] = [{"line": 1}]
+    assert runner._semantic_artifact(
+        rel, stored
+    ) != runner._semantic_artifact(rel, current)
+    current["negative_scan"]["targets"][source]["hits"] = []
+    current["negative_scan"]["targets"][source]["sha256"] = "not-a-sha"
+    assert runner._semantic_artifact(
+        rel, stored
+    ) != runner._semantic_artifact(rel, current)
+
+    manifest_rel = runner.OUTPUTS["manifest"]
+    stored_manifest = {"input_hashes": [f"{source}:{'1' * 64}"]}
+    current_manifest = {"input_hashes": [f"{source}:{'2' * 64}"]}
+    assert runner._semantic_artifact(
+        manifest_rel, stored_manifest
+    ) == runner._semantic_artifact(manifest_rel, current_manifest)
 
 
 def _registry() -> EstimandRegistry:
