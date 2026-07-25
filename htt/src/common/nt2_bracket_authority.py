@@ -112,7 +112,27 @@ def require_engine_consensus(results: Mapping[str, tuple]) -> tuple:
             f"bracket claims require BOTH engines {sorted(expected_engines)}; "
             f"got {sorted(results)}"
         )
-    values = {tuple(Fraction(x) for x in v) for v in results.values()}
+    values = set()
+    for engine, endpoints in results.items():
+        if (
+            isinstance(endpoints, (str, bytes))
+            or not isinstance(endpoints, Sequence)
+            or len(endpoints) != 2
+        ):
+            raise Nt2AuthorityError(
+                f"{engine} must return exactly two bracket endpoints"
+            )
+        try:
+            pair = tuple(Fraction(endpoint) for endpoint in endpoints)
+        except (OverflowError, TypeError, ValueError, ZeroDivisionError) as exc:
+            raise Nt2AuthorityError(
+                f"{engine} returned non-rational bracket endpoints"
+            ) from exc
+        if pair[0] > pair[1]:
+            raise Nt2AuthorityError(
+                f"{engine} returned reversed bracket endpoints"
+            )
+        values.add(pair)
     if len(values) != 1:
         raise Nt2AuthorityError(
             f"engines disagree on the bracket endpoints: {sorted(values)}"

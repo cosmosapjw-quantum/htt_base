@@ -61,7 +61,14 @@ def test_engine_consensus_gate() -> None:
     with pytest.raises(Nt2AuthorityError, match="disagree"):
         require_engine_consensus({
             "fraction_numeric": endpoints,
-            "sympy_symbolic": (endpoints[0] * 2, endpoints[1]),
+            "sympy_symbolic": (
+                endpoints[0] * Fraction(11, 10), endpoints[1]
+            ),
+        })
+    with pytest.raises(Nt2AuthorityError, match="exactly two"):
+        require_engine_consensus({
+            "fraction_numeric": (endpoints[0],),
+            "sympy_symbolic": (endpoints[0],),
         })
 
 
