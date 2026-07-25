@@ -112,6 +112,17 @@ def test_runner_binds_required_fields_to_production_contract() -> None:
         )
 
 
+def test_runner_binds_generative_branches_to_production_enum() -> None:
+    runner = _load_runner()
+    spec = {
+        "registry": {
+            "generative_branches": ["combined"],
+        },
+    }
+    with pytest.raises(SystemExit, match="production enum"):
+        runner.build_branches(spec, _registry())
+
+
 def test_hidden_default_field_rejected() -> None:
     for missing in ("estimand", "selection_window", "nuisance_family",
                     "preprocessing", "allowed_transformations"):

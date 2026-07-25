@@ -202,6 +202,12 @@ def build_graph(spec: dict, reg: EstimandRegistry) -> dict:
 
 
 def build_branches(spec: dict, reg: EstimandRegistry) -> dict:
+    declared_branches = spec["registry"]["generative_branches"]
+    production_branches = [branch.value for branch in GenerativeBranch]
+    if declared_branches != production_branches:
+        raise SystemExit(
+            "spec generative_branches do not match the production enum"
+        )
     # exercise the branch separation with a valid same-analysis compose
     # and record the refusal of a cross-analysis mix.
     cf4 = reg.get("CF4_MV_BULKFLOW")
@@ -230,8 +236,7 @@ def build_branches(spec: dict, reg: EstimandRegistry) -> dict:
     return {
         "schema": "pr134.branch_separation.v1",
         "branch_rule": spec["registry"]["branch_rule"],
-        "generative_branches": list(spec["registry"][
-            "generative_branches"]),
+        "generative_branches": list(declared_branches),
         "per_analysis_branch": branch_roles,
         "valid_same_analysis_compose": composed,
         "cross_analysis_mix_refused": cross_refused,
