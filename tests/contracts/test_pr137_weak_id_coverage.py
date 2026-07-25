@@ -79,6 +79,26 @@ def test_check_normalizes_only_generation_time_source_hash() -> None:
     ) == runner._semantic_artifact(manifest_rel, current_manifest)
 
 
+@pytest.mark.parametrize("field,value", [
+    ("base_seed", True),
+    ("min_seeds", 2.5),
+    ("min_replicates_per_point", 2000.5),
+])
+def test_runner_preserves_preregistration_count_types(field, value) -> None:
+    runner = _load_runner()
+    preregistration = {
+        "nominal_coverage": "0.95",
+        "retain_lower_bound": "0.93",
+        "min_replicates_per_point": 2000,
+        "min_seeds": 10,
+        "base_seed": 20260719,
+        "optimizer_error_tolerance_fraction": "0.10",
+    }
+    preregistration[field] = value
+    with pytest.raises(WeakIdError, match="positive integer"):
+        runner._prereg({"preregistration": preregistration})
+
+
 def test_betainc_matches_reference() -> None:
     # I_0.5(1,1) = 0.5; I_x(a,b) monotone; endpoints
     assert abs(_betainc_reg(0.5, 1, 1) - 0.5) < 1e-9

@@ -154,18 +154,17 @@ def _prereg(spec: dict) -> Preregistration:
     return Preregistration(
         nominal_coverage=float(p["nominal_coverage"]),
         retain_lower_bound=float(p["retain_lower_bound"]),
-        min_replicates=int(p["min_replicates_per_point"]),
-        min_seeds=int(p["min_seeds"]),
-        base_seed=int(p["base_seed"]),
+        min_replicates=p["min_replicates_per_point"],
+        min_seeds=p["min_seeds"],
+        base_seed=p["base_seed"],
         endpoint_tol_fraction=float(p["optimizer_error_tolerance_fraction"]),
     )
 
 
 def _run_grid(spec: dict, prereg: Preregistration, grid_key: str,
               procedure: str, theta0_position: str = "midpoint") -> list:
-    p = spec["preregistration"]
-    n_rep = int(p["min_replicates_per_point"])
-    seeds = int(p["min_seeds"])
+    n_rep = prereg.min_replicates
+    seeds = prereg.min_seeds
     results = []
     for w_str in spec["preregistration"][grid_key]:
         r = coverage_at_point(float(Fraction(w_str)), procedure,
@@ -224,7 +223,7 @@ def build_bounds(spec: dict, prereg: Preregistration, grid: dict) -> dict:
     p = spec["preregistration"]
     ext_reps = int(p["extension_replicates"])
     ext_within = float(p["extension_trigger_within"])
-    seeds = int(p["min_seeds"])
+    seeds = prereg.min_seeds
     rows = []
     extended = []
     for r in fine:
