@@ -72,6 +72,20 @@ class ForwardSimulatorError(ValueError):
     """Raised when the forward-simulator discipline is violated."""
 
 
+def _positive_count(value, name: str, *, minimum: int = 1) -> int:
+    if (
+        isinstance(value, (bool, np.bool_))
+        or not isinstance(value, (int, np.integer))
+        or value < minimum
+    ):
+        requirement = (
+            "a positive integer" if minimum == 1
+            else f"an integer of at least {minimum}"
+        )
+        raise ForwardSimulatorError(f"{name} must be {requirement}")
+    return int(value)
+
+
 # --------------------------------------------------------------------------
 # aligned sample + simulation metadata (Dist, e_DMzp needed by realism layers)
 # --------------------------------------------------------------------------
@@ -156,6 +170,8 @@ def verify_cholesky_generator(gen: CholeskyGenerator, *, n_real: int,
     """Draw ``n_real`` correlated fields and verify (a) the per-galaxy velocity
     dispersion equals ``sigma_v_1d`` and (b) the ensemble bulk-flow covariance
     equals the analytic ``A^-1 M A^-1`` within Monte-Carlo tolerance."""
+    n_real = _positive_count(
+        n_real, "Cholesky realisation count", minimum=2)
     sample = gen.sample
     design = _design_flow(sample, monopole=False)
     a = np.einsum("i,ij,ik->jk", sample.w, design, design)
@@ -286,6 +302,8 @@ def verify_independent_reference(sample: Cf4Sample, cfg: BoxGrfConfig, *,
     finite-box factor away from the analytic (documented, not used), and the
     band captures a documented fraction of the full dispersion (the
     super-sample gap)."""
+    n_fields = _positive_count(
+        n_fields, "independent field count", minimum=2)
     fid = fiducial()
     spatial_sig = []
     iso = []
@@ -475,6 +493,7 @@ def forward_mock_coverage(sample: Cf4Sample, meta: SimMeta, flow_true,
     """Draw ``n_mock`` correlated mocks with the realism layers, re-fit the
     bulk-flow-plus-monopole estimator on each, and return the per-component
     68/95 coverage under the full covariance and the noise-only covariance."""
+    n_mock = _positive_count(n_mock, "forward-mock count")
     sample, meta = realism_sample(sample, meta, realism)
     gen = build_cholesky_generator(sample)
     design, a_inv, full_cov = _full_and_noise_covariance(sample)
@@ -624,6 +643,7 @@ def require_idealised_covers(coverage: dict, half68: float, half95: float
 # 5. per-depth simultaneous grid-conditional coverage (PR-137 discipline)
 # --------------------------------------------------------------------------
 def depth_shell_edges(meta: SimMeta, n_shells: int) -> np.ndarray:
+    n_shells = _positive_count(n_shells, "depth-shell count")
     q = np.linspace(0.0, 1.0, n_shells + 1)
     return np.quantile(meta.dist, q)
 
@@ -638,6 +658,7 @@ def per_depth_coverage(sample: Cf4Sample, meta: SimMeta, flow_true,
     (PR-137 lessons 20/21); the family-wise note states how a simultaneous
     statement over the grid would be formed (a per-shell Bonferroni), which is
     not itself computed here."""
+    n_mock = _positive_count(n_mock, "per-depth mock count")
     edges = depth_shell_edges(meta, n_shells)
     shells = []
     stressor = RealismConfig(nongaussian_distance_error=True)
@@ -707,6 +728,7 @@ def effective_n_modes(sample: Cf4Sample) -> dict:
 
 
 def covariance_uncertainty(n_mock: int) -> dict:
+    n_mock = _positive_count(n_mock, "covariance mock count")
     frac = float(np.sqrt(2.0 / n_mock))
     return {"n_mock": n_mock,
             "monte_carlo_fractional_uncertainty_per_variance_element": frac,

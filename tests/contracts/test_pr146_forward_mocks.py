@@ -188,6 +188,46 @@ def test_coverage_subset_must_name_observed_components() -> None:
         report, 0.68, 0.1, labels=["Bx"]) == {"Bx": True}
 
 
+@pytest.mark.parametrize("call, message", [
+    (
+        lambda: covariance_uncertainty(0),
+        "covariance mock count",
+    ),
+    (
+        lambda: verify_cholesky_generator(None, n_real=1, seed=1),
+        "Cholesky realisation count",
+    ),
+    (
+        lambda: verify_independent_reference(
+            None, BoxGrfConfig(8, 100.0), n_fields=1, seed=1),
+        "independent field count",
+    ),
+    (
+        lambda: forward_mock_coverage(
+            None, None, [1.0, 2.0, 3.0], 4.0, RealismConfig(),
+            n_mock=0, seed=1),
+        "forward-mock count",
+    ),
+    (
+        lambda: per_depth_coverage(
+            None, None, [1.0, 2.0, 3.0], 4.0,
+            n_shells=0, n_mock=1, seed=1),
+        "depth-shell count",
+    ),
+    (
+        lambda: per_depth_coverage(
+            None, None, [1.0, 2.0, 3.0], 4.0,
+            n_shells=1, n_mock=0, seed=1),
+        "per-depth mock count",
+    ),
+])
+def test_ensemble_counts_must_be_positive_integers(
+    call, message: str
+) -> None:
+    with pytest.raises(ForwardSimulatorError, match=message):
+        call()
+
+
 def test_caption_gate() -> None:
     text = generate_caption(1.02, 82.0, 0.65)
     lint_caption(text)
