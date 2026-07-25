@@ -164,6 +164,10 @@ def _poly_bounds(poly: sp.Poly, xbox: tuple[Fraction, Fraction],
     if xbox[0] < 0 or ybox[0] < 0:
         raise OmkRemainderError("interval evaluator needs a nonnegative "
                                 "box (substitute variables first)")
+    if xbox[0] > xbox[1] or ybox[0] > ybox[1]:
+        raise OmkRemainderError(
+            "interval evaluator needs ordered box endpoints"
+        )
     lo = Fraction(0)
     hi = Fraction(0)
     for (a, b), coeff in poly.terms():

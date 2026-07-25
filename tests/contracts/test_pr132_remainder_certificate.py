@@ -24,6 +24,7 @@ from common.omk_remainder_certificate import (
     generate_caption,
     lint_caption,
     propagate_to_ceiling,
+    prove_polynomial_sign,
     prove_trapping_certificate,
     register_domain,
     validate_budget,
@@ -108,6 +109,21 @@ def test_trapping_certificate_proves_all_four_boundaries() -> None:
 def test_wrong_trap_constant_fails_with_counterexample() -> None:
     with pytest.raises(OmkRemainderError, match="FAILED"):
         prove_trapping_certificate(Fraction(1, 100))
+
+
+def test_interval_prover_rejects_reversed_boxes() -> None:
+    import sympy as sp
+
+    x, y = sp.symbols("x y")
+    with pytest.raises(OmkRemainderError, match="ordered box"):
+        prove_polynomial_sign(
+            x - sp.Rational(1, 2),
+            True,
+            (Fraction(1), Fraction(0)),
+            (Fraction(0), Fraction(0)),
+            x,
+            y,
+        )
 
 
 def test_enclosure_and_claim_block() -> None:
