@@ -225,9 +225,23 @@ def build_types(spec: dict) -> dict:
 
 def build_boost(spec: dict) -> dict:
     counting = harmonic_order_counting()
+    order_counting = {
+        "A_v": (
+            f"O(beta^{counting['A_v_order_in_beta']}), ell = 1"
+        ),
+        "kinematic_quadrupole": (
+            "O(beta^"
+            f"{counting['kinematic_quadrupole_order_in_beta']}), ell = 2 "
+            "(from the Doppler/aberration transform of the monopole)"
+        ),
+    }
+    if spec["harmonic_boost"]["order_counting"] != order_counting:
+        raise SystemExit(
+            "harmonic boost labels do not match the symbolic derivation"
+        )
     return {
         "schema": "pr133.harmonic_boost.v1",
-        "order_counting": spec["harmonic_boost"]["order_counting"],
+        "order_counting": order_counting,
         "derivation": counting,
     }
 

@@ -119,6 +119,23 @@ def test_runner_rejects_unknown_typed_quantity_rows() -> None:
         runner.build_types({"typed_quantities": {"types": rows}})
 
 
+def test_runner_binds_boost_labels_to_symbolic_derivation() -> None:
+    runner = _load_runner()
+    with pytest.raises(SystemExit, match="symbolic derivation"):
+        runner.build_boost({
+            "harmonic_boost": {
+                "order_counting": {
+                    "A_v": "O(beta^0), ell = 0",
+                    "kinematic_quadrupole": (
+                        "O(beta^2), ell = 2 "
+                        "(from the Doppler/aberration transform of the "
+                        "monopole)"
+                    ),
+                },
+            },
+        })
+
+
 def test_type_firewall_blocks_cross_type() -> None:
     av = TypedQuantity(QuantityType.OBSERVER_PROXY, Fraction(1, 100))
     ot = TypedQuantity(QuantityType.PHYSICAL_TILT, Fraction(1, 100))
