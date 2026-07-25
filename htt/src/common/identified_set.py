@@ -140,6 +140,16 @@ class AdmissibleBox:
             pin_lo, pin_hi = self.lower.get(axis), self.upper.get(axis)
             new_lo = proposed_lower.get(axis)
             new_hi = proposed_upper.get(axis)
+            if pin_lo is None and new_lo is not None:
+                raise IdentifiedSetError(
+                    f"proposed lower bound on {axis} ({new_lo}) is tighter "
+                    f"than the unbounded pinned lower side; the admissible "
+                    f"box {self.pinned_id} is fixed before the fit")
+            if pin_hi is None and new_hi is not None:
+                raise IdentifiedSetError(
+                    f"proposed upper bound on {axis} ({new_hi}) is tighter "
+                    f"than the unbounded pinned upper side; the admissible "
+                    f"box {self.pinned_id} is fixed before the fit")
             if pin_lo is not None and new_lo is not None and \
                     Fraction(new_lo) > Fraction(pin_lo):
                 raise IdentifiedSetError(

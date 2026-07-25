@@ -351,6 +351,18 @@ def test_set_valued_and_admissible_pin() -> None:
     box.validate_proposed({}, {"Omega_tilt": Fraction(5)})
 
 
+@pytest.mark.parametrize("lower,upper", [
+    ({"Omega_tilt": Fraction(0)}, {}),
+    ({}, {"Omega_tilt": Fraction(0)}),
+])
+def test_admissible_pin_rejects_bound_on_unbounded_side(
+    lower, upper
+) -> None:
+    box = AdmissibleBox(lower={}, upper={}, pinned_id="unbounded-pin")
+    with pytest.raises(IdentifiedSetError, match="unbounded pinned"):
+        box.validate_proposed(lower, upper)
+
+
 def test_caption_gate() -> None:
     text = generate_caption({"bounded_box": "bounded"})
     lint_caption(text)
