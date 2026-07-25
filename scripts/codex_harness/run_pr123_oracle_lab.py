@@ -14,7 +14,10 @@ from typing import Any
 import numpy as np
 import yaml
 
-from common.k6_continuum_oracle import run_k6_continuum_suite
+from common.k6_continuum_oracle import (
+    K6_ALLOWED_REPOSITORY_CONSUMERS,
+    run_k6_continuum_suite,
+)
 from common.oracle_lab import (
     FROZEN_MUTATION_IDS,
     OracleLabError,
@@ -85,11 +88,13 @@ def _semantic_payload(name: str, payload: bytes) -> Any:
         for row in metadata.get("input_hashes", []):
             if (
                 isinstance(row, dict)
-                and row.get("path")
-                == SCRIPT_PATH.relative_to(REPO_ROOT).as_posix()
+                and row.get("path") in {
+                    SCRIPT_PATH.relative_to(REPO_ROOT).as_posix(),
+                    K6_PATH.relative_to(REPO_ROOT).as_posix(),
+                }
             ):
                 _normalize_historical_hash(
-                    row, "sha256", "<historical-generator-source>"
+                    row, "sha256", "<historical-maintained-source>"
                 )
         state = metadata.get("git_commit_or_worktree_state")
         if isinstance(state, dict):
@@ -104,6 +109,23 @@ def _semantic_payload(name: str, payload: bytes) -> Any:
             "oracle_lineage_manifest_hash",
             "<historical-lineage-artifact>",
         )
+    if name == "pr123_oracle_lineage_manifest.json":
+        for row in value.get("lineage_rows", []):
+            reference = (
+                row.get("reference_path_and_sha256")
+                if isinstance(row, dict)
+                else None
+            )
+            if (
+                isinstance(reference, dict)
+                and reference.get("path")
+                == K6_PATH.relative_to(REPO_ROOT).as_posix()
+            ):
+                _normalize_historical_hash(
+                    reference,
+                    "sha256",
+                    "<historical-maintained-source>",
+                )
     if name == "pr123_artifact_manifest.json":
         for row in value.get("artifacts", []):
             if isinstance(row, dict):
@@ -665,11 +687,7 @@ def _k6_consumer_inventory() -> tuple[list[str], list[str]]:
             if any(needle in text for needle in needles):
                 inventory.append(path.relative_to(REPO_ROOT).as_posix())
     inventory = sorted(set(inventory))
-    allowlist = {
-        "scripts/codex_harness/run_pr123_oracle_lab.py",
-        "tests/contracts/test_pr123_k6_continuum_oracle.py",
-    }
-    unexpected = sorted(set(inventory) - allowlist)
+    unexpected = sorted(set(inventory) - K6_ALLOWED_REPOSITORY_CONSUMERS)
     return inventory, unexpected
 
 
