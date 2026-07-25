@@ -172,7 +172,12 @@ class CarrierPoint:
 
     def __post_init__(self) -> None:
         for name in ("sigma2", "w2", "omega_tilt", "delta_omega_k"):
-            object.__setattr__(self, name, Fraction(getattr(self, name)))
+            value = getattr(self, name)
+            if isinstance(value, bool):
+                raise GradedNonIdError(
+                    f"{name} must be numeric, not a boolean"
+                )
+            object.__setattr__(self, name, Fraction(value))
         for name in ("sigma2", "w2", "omega_tilt"):
             if getattr(self, name) < 0:
                 raise GradedNonIdError(
@@ -248,8 +253,14 @@ def constraint_assignment(point: CarrierPoint, *, omega_m: Fraction,
     promote an absurd state. Momentum/Gauss fixtures are deferred to the
     dynamical PRs (disclosed); without a verified assignment the witness
     stays algebraic_only."""
+    raw_assignment = (omega_m, omega_l, omega_k_total)
+    if any(isinstance(value, bool) for value in raw_assignment):
+        raise GradedNonIdError(
+            "constraint assignment values must be numeric, not booleans"
+        )
     omega_m, omega_l, omega_k_total = (
-        Fraction(omega_m), Fraction(omega_l), Fraction(omega_k_total))
+        Fraction(value) for value in raw_assignment
+    )
     lo, hi = A_C_DOMAIN_BOX["omega_m"]
     if not (lo <= omega_m <= hi):
         raise GradedNonIdError(

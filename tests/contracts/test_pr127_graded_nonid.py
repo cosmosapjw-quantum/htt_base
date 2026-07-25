@@ -72,6 +72,8 @@ def test_carrier_rejects_negative_moments_and_psd_clipping() -> None:
     with pytest.raises(GradedNonIdError, match="nonnegative"):
         CarrierPoint(sigma2=Fraction(-1, 10), w2=0, omega_tilt=0,
                      delta_omega_k=0)
+    with pytest.raises(GradedNonIdError, match="boolean"):
+        CarrierPoint(sigma2=True, w2=0, omega_tilt=0, delta_omega_k=0)
     original = CarrierPoint(sigma2=0, w2=0, omega_tilt=0,
                             delta_omega_k=Fraction(-1, 10**8))
     clipped = CarrierPoint(sigma2=0, w2=0, omega_tilt=0, delta_omega_k=0)
@@ -113,6 +115,10 @@ def test_physical_label_requires_verified_assignment() -> None:
         constraint_assignment(point, omega_m=Fraction(3, 10),
                               omega_l=Fraction(1, 2),
                               omega_k_total=Fraction(0))
+    zero = CarrierPoint(sigma2=0, w2=0, omega_tilt=0, delta_omega_k=0)
+    with pytest.raises(GradedNonIdError, match="booleans"):
+        constraint_assignment(zero, omega_m=True, omega_l=0,
+                              omega_k_total=0)
 
 
 def test_isotropy_language_lint() -> None:
