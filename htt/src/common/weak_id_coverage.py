@@ -276,6 +276,44 @@ def coverage_at_point(w: float, procedure: str, *, n_replicates: int,
     returned so a caller can validate it (not merely the requested n)."""
     import numpy as np
 
+    if (
+        isinstance(w, bool)
+        or not isinstance(w, Real)
+        or not math.isfinite(float(w))
+        or w < 0
+    ):
+        raise WeakIdError("w must be a finite non-negative real value")
+    if (
+        isinstance(s, bool)
+        or not isinstance(s, Real)
+        or not math.isfinite(float(s))
+        or s <= 0
+    ):
+        raise WeakIdError("s must be a finite positive real value")
+    if procedure not in ("imbens_manski", "naive_no_expansion"):
+        raise WeakIdError(
+            "procedure must be imbens_manski or naive_no_expansion")
+    for name, value in (
+        ("n_replicates", n_replicates),
+        ("seeds", seeds),
+        ("base_seed", base_seed),
+    ):
+        if (
+            isinstance(value, bool)
+            or not isinstance(value, Integral)
+            or value <= 0
+        ):
+            raise WeakIdError(f"{name} must be a positive integer")
+    if n_replicates < seeds:
+        raise WeakIdError(
+            "n_replicates must be at least the number of seeds")
+    if not isinstance(w_key, str) or not w_key:
+        raise WeakIdError("w_key must be a non-empty string")
+    w = float(w)
+    s = float(s)
+    n_replicates = int(n_replicates)
+    seeds = int(seeds)
+    base_seed = int(base_seed)
     if theta0_position not in ("midpoint", "boundary"):
         raise WeakIdError("theta0_position must be midpoint or boundary")
     theta0 = 0.0 if theta0_position == "midpoint" else w / 2.0

@@ -191,6 +191,37 @@ def test_deterministic_coverage() -> None:
     assert r1["covered"] == r2["covered"]
 
 
+@pytest.mark.parametrize("overrides,message", [
+    ({"procedure": "imbens_manksi"}, "procedure"),
+    ({"n_replicates": 0}, "positive integer"),
+    ({"n_replicates": -5}, "positive integer"),
+    ({"n_replicates": True}, "positive integer"),
+    ({"n_replicates": 2.5}, "positive integer"),
+    ({"seeds": True}, "positive integer"),
+    ({"seeds": 0}, "positive integer"),
+    ({"n_replicates": 5, "seeds": 10}, "at least"),
+    ({"base_seed": True}, "positive integer"),
+    ({"w": float("nan")}, "finite non-negative"),
+    ({"w": float("inf")}, "finite non-negative"),
+    ({"s": float("nan")}, "finite positive"),
+    ({"s": 0.0}, "finite positive"),
+    ({"w_key": ""}, "non-empty"),
+])
+def test_coverage_rejects_invalid_execution_domain(overrides, message) -> None:
+    kwargs = {
+        "w": 1.0,
+        "procedure": "imbens_manski",
+        "n_replicates": 2000,
+        "seeds": 10,
+        "base_seed": 20260719,
+        "w_key": "1",
+        "s": 1.0,
+    }
+    kwargs.update(overrides)
+    with pytest.raises(WeakIdError, match=message):
+        coverage_at_point(**kwargs)
+
+
 def test_adversarial_naive_fails_and_is_preserved() -> None:
     r = coverage_at_point(0.0, "naive_no_expansion", n_replicates=2000,
                           seeds=10, base_seed=20260719, w_key="0")
