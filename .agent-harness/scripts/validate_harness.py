@@ -14,6 +14,7 @@ from _harness import (
     root,
     validate_assignment_payload,
     validate_claim_registry,
+    validate_run_plan_payload,
 )
 from strict_result_validation import load_and_validate_registered_result_file
 
@@ -73,10 +74,23 @@ def validate_repo(repo: Path) -> dict:
     if active:
         run_dir = harness / "runs" / active
         plan = load_json(run_dir / "RUN_PLAN.json")
-        if plan.get("context_version") != index.get("context_version"):
-            errors.append("Active run was initialized against a stale context version.")
+        errors.extend(
+            validate_run_plan_payload(
+                plan,
+                repo=repo,
+                run_id=active,
+                context_version=str(index.get("context_version", "")),
+            )
+        )
         assignments = sorted((run_dir / "assignments").glob("*.json"))
-        if len(assignments) > int(plan["budget"]["max_total"]):
+        budget = plan.get("budget")
+        max_total = (
+            budget.get("max_total")
+            if isinstance(budget, dict)
+            and type(budget.get("max_total")) is int
+            else 0
+        )
+        if max_total and len(assignments) > max_total:
             errors.append("Assignment count exceeds run max_total.")
         ids: set[str] = set()
         for path in assignments:
@@ -103,6 +117,15 @@ def validate_repo(repo: Path) -> dict:
                 repo=repo,
             )
             errors.extend(f"{path.name}: {item}" for item in assignment_errors)
+
+        assignment_stems = {assignment.stem for assignment in assignments}
+        for path in sorted((run_dir / "launches").glob("*.json")):
+            if path.is_symlink() or not path.is_file():
+                errors.append(f"{path.name}: launch is not a regular file")
+            elif path.stem not in assignment_stems:
+                errors.append(
+                    f"{path.name}: launch has no registered assignment"
+                )
 
         for path in sorted((run_dir / "results").glob("*.json")):
             validation = load_and_validate_registered_result_file(

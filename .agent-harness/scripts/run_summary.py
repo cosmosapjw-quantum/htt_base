@@ -58,8 +58,16 @@ def summarize_run(repo: Path, run_dir: Path, disposition: str) -> dict:
         "schema_version": 1,
         "run_id": run_dir.name,
         "work_unit_id": plan.get("work_unit_id"),
+        "change_set_id": plan.get("change_set_id"),
+        "publication_group_id": plan.get("publication_group_id"),
         "created_at": plan.get("created_at"),
         "context_version": plan.get("context_version"),
+        "candidate_binding": plan.get("candidate_binding"),
+        "publication_mode": plan.get("publication_mode"),
+        "github_pr_created_by_harness": plan.get(
+            "github_pr_created_by_harness", False
+        ),
+        "publication_state": "NOT_PUBLISHED_BY_HARNESS",
         "assignment_count": len(assignments),
         "results": results,
         "merged_results": merged,

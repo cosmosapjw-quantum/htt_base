@@ -292,6 +292,12 @@ formal_rocq/.*.aux
 .agent-harness/runtime/
 .agent-harness/ACTIVE_RUN
 
+# PR-247 change-set/publication-integrity runtime evidence.  Candidate seals,
+# review matrices, integration logs, inventories, and authorization copies are
+# local process artifacts; promote only a deliberately selected receipt.
+.prguard/runtime/
+/universal_pr_guard_v1.zip
+
 # ─────────────────────────────────────────────────────────────────────
 #  Bulk artifact quarantine (PR-124 preflight, 2026-07-17)
 #  Bytes are preserved on disk (Dropbox) and in the off-repo backup

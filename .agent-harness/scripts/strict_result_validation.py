@@ -18,6 +18,13 @@ from _harness import (
     role_file_hashes,
     validate_assignment_payload,
 )
+from publication_integrity import (
+    PublicationIntegrityError,
+    bytes_sha256,
+    load_publication_policy,
+    read_repo_json,
+    validate_review_coverage_payload,
+)
 
 
 RESULT_STATUSES = {"pass", "fail", "inconclusive", "error"}
@@ -327,7 +334,7 @@ def validate_result_payload(
         historical_runs = historical_run_ids(repo)
     historical = run_id in historical_runs
     assignment_id = str(assignment.get("assignment_id", ""))
-    expected_schema = 1 if historical else 2
+    expected_schema = 1 if historical else assignment.get("schema_version", 2)
     if result.get("schema_version") != expected_schema:
         errors.append(f"result schema_version must equal {expected_schema}")
     if result.get("run_id") != run_id:
@@ -380,6 +387,19 @@ def validate_result_payload(
     elif result.get("execution_evidence") != "self_declared":
         errors.append("result execution_evidence must be self_declared")
 
+    if expected_schema == 3:
+        for field in (
+            "work_unit_id",
+            "change_set_id",
+            "publication_group_id",
+            "workflow_role",
+            "candidate_binding",
+        ):
+            if result.get(field) != assignment.get(field):
+                errors.append(
+                    f"result {field} does not match the sealed assignment"
+                )
+
     for field in ("started_at", "completed_at"):
         if not isinstance(result.get(field), str) or not result.get(field):
             errors.append(f"result {field} must be a non-empty string")
@@ -403,6 +423,116 @@ def validate_result_payload(
         expected_result_path=expected_result_path,
         errors=errors,
     )
+
+    if expected_schema == 3:
+        workflow_role = assignment.get("workflow_role")
+        coverage_path = result.get("review_coverage_path")
+        coverage_sha = result.get("review_coverage_sha256")
+        if workflow_role != "reviewer":
+            if coverage_path is not None or coverage_sha is not None:
+                errors.append(
+                    "only reviewer results may carry review_coverage_path/hash"
+                )
+        else:
+            if not isinstance(coverage_path, str) or not coverage_path:
+                errors.append("reviewer result requires review_coverage_path")
+            if not isinstance(coverage_sha, str) or SHA256_RE.fullmatch(
+                coverage_sha
+            ) is None:
+                errors.append(
+                    "reviewer result requires review_coverage_sha256"
+                )
+            if isinstance(coverage_path, str) and coverage_path:
+                try:
+                    _, coverage_bytes, coverage = read_repo_json(
+                        repo,
+                        coverage_path,
+                        field="review coverage",
+                    )
+                    if bytes_sha256(coverage_bytes) != coverage_sha:
+                        raise PublicationIntegrityError(
+                            "review coverage file hash drifted"
+                        )
+                    matching_artifacts = [
+                        row
+                        for row in result.get("artifacts", [])
+                        if isinstance(row, Mapping)
+                        and row.get("path") == coverage_path
+                        and row.get("sha256") == coverage_sha
+                        and row.get("producer") == assignment_id
+                    ]
+                    if len(matching_artifacts) != 1:
+                        raise PublicationIntegrityError(
+                            "review coverage must be referenced exactly once as "
+                            "an assignment-produced artifact"
+                        )
+                    binding = assignment.get("candidate_binding")
+                    if not isinstance(binding, Mapping):
+                        raise PublicationIntegrityError(
+                            "reviewer assignment lacks candidate_binding"
+                        )
+                    _, _, seal = read_repo_json(
+                        repo,
+                        binding.get("seal_path"),
+                        field="candidate seal",
+                    )
+                    plan = load_json(
+                        repo
+                        / ".agent-harness"
+                        / "runs"
+                        / run_id
+                        / "RUN_PLAN.json"
+                    )
+                    policy_ref = plan.get("integration_policy")
+                    if not isinstance(policy_ref, Mapping):
+                        raise PublicationIntegrityError(
+                            "RUN_PLAN lacks integration_policy"
+                        )
+                    _, policy = load_publication_policy(
+                        repo,
+                        policy_ref.get("path"),
+                        expected_sha256=str(policy_ref.get("sha256") or ""),
+                    )
+                    errors.extend(
+                        validate_review_coverage_payload(
+                            coverage,
+                            seal=seal,
+                            policy=policy,
+                            run_id=run_id,
+                            assignment_id=assignment_id,
+                            risk_tier=str(assignment.get("risk_tier") or ""),
+                            require_ready=status == "pass",
+                            repo=repo,
+                        )
+                    )
+                    for index, oracle in enumerate(
+                        coverage.get("independent_oracles", [])
+                    ):
+                        if not isinstance(oracle, Mapping):
+                            continue
+                        matching_oracle_artifacts = [
+                            row
+                            for row in result.get("artifacts", [])
+                            if isinstance(row, Mapping)
+                            and row.get("path") == oracle.get("artifact_path")
+                            and row.get("sha256")
+                            == oracle.get("artifact_sha256")
+                            and row.get("bytes")
+                            == oracle.get("artifact_bytes")
+                            and row.get("producer") == assignment_id
+                        ]
+                        if len(matching_oracle_artifacts) != 1:
+                            errors.append(
+                                "independent oracle "
+                                f"{index} artifact must be referenced exactly "
+                                "once as an assignment-produced artifact"
+                            )
+                except (
+                    OSError,
+                    json.JSONDecodeError,
+                    PublicationIntegrityError,
+                ) as exc:
+                    errors.append(str(exc))
 
     findings = result.get("findings")
     claim_results = result.get("claim_results")

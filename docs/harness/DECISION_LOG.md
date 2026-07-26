@@ -2,6 +2,98 @@
 
 Record accepted, rejected, and deferred design decisions.
 
+## 2026-07-27 - PR-247 local completion
+
+- Accepted: candidate C `b431da78...`, seal `4facb9...`, passed its complete
+  registered read-only review and latest-target integration against
+  `be2d545...`; PR-247 may close as an internal process-integrity card.
+- Accepted: the status/SSoT amendment is a new Git candidate and must be
+  resealed, reviewed, and integrated before handoff. Candidate-C evidence is
+  completion input but cannot masquerade as evidence for the amended bytes.
+- Boundary: completion creates no external publisher authorization, GitHub PR,
+  publication readiness, or scientific claim. Those remain separate actions
+  and evidence lanes.
+
+## 2026-07-27 - PR-247 candidate-B invalidation
+
+- Accepted: candidate `f3521b42...` and seal `0fdfe9...` are invalidated. Its
+  complete registered read-only review reproduced a publication bypass when
+  the adapter received Google's codelab-documented top-level
+  `tool_args.CommandLine` Antigravity envelope.
+- Accepted: the current `toolCall.name`/`toolCall.args` Antigravity contract
+  remains primary, while the documented legacy top-level envelope is also
+  inspected. Current calls return decision JSON; legacy calls use nonzero-exit
+  denial. Missing, malformed, mixed, or unmatched-tool envelopes are denied
+  fail-closed. Hook registration retains the current official schema.
+- Evidence boundary: the candidate-B review is a valid FAIL artifact, not
+  readiness evidence. The repair requires a new commit, seal, registered
+  read-only result, and latest-target integration receipt.
+
+## 2026-07-27 - PR-247 candidate-A invalidation
+
+- Accepted: candidate `c1d2716f...` and seal `b5d845...` are invalidated. A
+  bundled inline option such as `/bin/bash -lc` bypassed the static publication
+  classifier, and resolving the selected venv launcher before execution
+  discarded its pytest environment.
+- Accepted: runtime-wrapper parsing covers bundled short options and long
+  inline-code options. The `{python}` token preserves its absolute invocation
+  path while separately receipting the resolved binary path and byte hash.
+- Rejected: changing the Codex hook matcher away from `^Bash$`. Current
+  official Codex documentation states that shell and unified `exec_command`
+  calls both reach hooks under canonical tool name `Bash`.
+- Evidence boundary: the first frozen reviewer produced structural-only
+  coverage but timed out before a registered result envelope. Its findings are
+  preliminary repair input, not a completed independent review or readiness
+  decision.
+- Kill switch: any repaired bytes require a new commit, seal, registered
+  read-only result, and latest-target integration receipt.
+
+## 2026-07-26 - PR-247 change-set and publication boundary
+
+- Accepted: an internal DAG work card, a coherent Git change-set, and an
+  external GitHub publication group are three distinct identities. One failure
+  type maps to a finding or commit; one coherent change-set maps to at most one
+  open GitHub PR.
+- Accepted: unattended agents normally end with local commits, a candidate
+  seal/review/integration recommendation when possible, and zero GitHub PRs.
+  Publisher is not an assignment role.
+- Accepted: review and integration authority begins only after a committed,
+  clean candidate binds the exact target, candidate, merge-base, tree, commit
+  set, binary diff, file set, remote destination, GitHub repository identity,
+  and integration-policy bytes.
+- Accepted: any candidate, target, repository, policy, review, integration,
+  inventory, or authorization drift invalidates downstream evidence. A repair
+  after first review creates a new candidate and requires a new review.
+- Accepted: the first reviewer verdict is read-only and carries an executable
+  coverage matrix. Same-model repetition is correlated review, not an
+  independent oracle; R2/R3 require at least one executable externalized
+  oracle.
+- Accepted: integration-policy argv is sealed and must be nonpublication;
+  publication-capable commands are rejected before a rehearsal subprocess can
+  run beneath provider hooks.
+- Accepted: the policy uses a portable `{python}` token rather than assuming
+  bare system Python or a host-specific venv path. The rehearsal preserves the
+  selected invocation path and separately receipts the real executable path
+  and byte hash.
+- Accepted: repository hooks deny ordinary-agent publication as a defense in
+  depth. The hard capability boundary is a serialized external publisher whose
+  credential, authorization key, and nonce ledger are unavailable to agent
+  sandboxes and whose live repository inventory is bound to the sealed remote.
+- Accepted: the repository gate may validate and consume a short-lived
+  one-time authorization but never execute `git push`, create a PR, or select
+  publisher authority.
+- Rejected: implicit `main`, branch-name-sourced push authorization,
+  self-declared publisher roles, repo-local publisher secrets, point-in-time
+  inventory for an unbound `--repo-slug`, credential-bearing remote URLs, and
+  green per-card CI as evidence of combined change-set safety.
+- Deferred: provider-authenticated execution/read telemetry, richer
+  domain-specific coverage generation, existing PR-topology cleanup,
+  merge-queue deployment, and full CI cost re-tiering.
+- Status boundary: this architecture is implemented but PR-247 stays
+  `in_progress` until a repaired candidate has a clean seal, complete
+  independent read-only result, and latest-target integration receipt. No
+  scientific or publication-readiness claim changes.
+
 ## 2026-07-20 - PR-176 conservative non-identification boundary
 
 - Accepted: the scientific terminal follows only the frozen response/rank

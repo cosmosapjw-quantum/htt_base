@@ -38,6 +38,30 @@
           }
         ]
       }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "^Bash$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/usr/bin/python3 \"$(git rev-parse --show-toplevel)/.agent-harness/scripts/provider_publication_hook.py\" --provider codex",
+            "timeout": 5,
+            "statusMessage": "Enforcing publication firewall"
+          }
+        ]
+      },
+      {
+        "matcher": ".*[Gg]ithub.*|.*pull[_-]request.*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/usr/bin/python3 \"$(git rev-parse --show-toplevel)/.agent-harness/scripts/provider_publication_hook.py\" --provider codex",
+            "timeout": 5,
+            "statusMessage": "Enforcing GitHub mutation firewall"
+          }
+        ]
+      }
     ]
   }
 }

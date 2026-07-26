@@ -74,13 +74,39 @@ done
 # human; the installer never guesses which side owns a conflicting value.
 assert_merge_safe_file "$PKG/AGENTS.md" "$REPO/AGENTS.md" "AGENTS.md"
 assert_merge_safe_file "$PKG/AGENTS.md.fragment" "$REPO/AGENTS.md.fragment" "AGENTS.md.fragment"
+assert_merge_safe_tree "$PKG/.agents" "$REPO/.agents" ".agents"
 assert_merge_safe_tree "$PKG/.codex" "$REPO/.codex" ".codex"
+assert_merge_safe_tree "$PKG/.claude" "$REPO/.claude" ".claude"
+assert_merge_safe_file "$PKG/.prguard/.gitignore" "$REPO/.prguard/.gitignore" ".prguard/.gitignore"
+assert_merge_safe_tree \
+  "$PKG/docs/research_program/long_horizon_rescue" \
+  "$REPO/docs/research_program/long_horizon_rescue" \
+  "docs/research_program/long_horizon_rescue"
+assert_merge_safe_file \
+  "$PKG/docs/harness/PUBLICATION_INTEGRITY.md" \
+  "$REPO/docs/harness/PUBLICATION_INTEGRITY.md" \
+  "docs/harness/PUBLICATION_INTEGRITY.md"
+assert_merge_safe_file \
+  "$PKG/docs/harness/OVERNIGHT_CONTROLLER_PUBLICATION_CONTRACT.md" \
+  "$REPO/docs/harness/OVERNIGHT_CONTROLLER_PUBLICATION_CONTRACT.md" \
+  "docs/harness/OVERNIGHT_CONTROLLER_PUBLICATION_CONTRACT.md"
 
-mkdir -p "$REPO/.agents" "$REPO/.codex" "$REPO/docs/codex_handoff" "$REPO/machine_readable" "$REPO/scripts/codex_harness" "$REPO/docs/harness" "$REPO/harness_templates/vendor/physmath-gpt56"
+mkdir -p "$REPO/.agents" "$REPO/.codex" "$REPO/.claude" "$REPO/.prguard" "$REPO/docs/codex_handoff" "$REPO/machine_readable" "$REPO/scripts/codex_harness" "$REPO/docs/harness" "$REPO/docs/research_program/long_horizon_rescue" "$REPO/harness_templates/vendor/physmath-gpt56"
 copy_merge_only_file "$PKG/AGENTS.md" "$REPO/AGENTS.md"
 copy_merge_only_file "$PKG/AGENTS.md.fragment" "$REPO/AGENTS.md.fragment"
-cp -R "$PKG/.agents/"* "$REPO/.agents/"
+copy_merge_only_tree "$PKG/.agents" "$REPO/.agents"
 copy_merge_only_tree "$PKG/.codex" "$REPO/.codex"
+copy_merge_only_tree "$PKG/.claude" "$REPO/.claude"
+copy_merge_only_file "$PKG/.prguard/.gitignore" "$REPO/.prguard/.gitignore"
+copy_merge_only_tree \
+  "$PKG/docs/research_program/long_horizon_rescue" \
+  "$REPO/docs/research_program/long_horizon_rescue"
+copy_merge_only_file \
+  "$PKG/docs/harness/PUBLICATION_INTEGRITY.md" \
+  "$REPO/docs/harness/PUBLICATION_INTEGRITY.md"
+copy_merge_only_file \
+  "$PKG/docs/harness/OVERNIGHT_CONTROLLER_PUBLICATION_CONTRACT.md" \
+  "$REPO/docs/harness/OVERNIGHT_CONTROLLER_PUBLICATION_CONTRACT.md"
 mkdir -p "$REPO/.agent-harness/scripts"
 cp "$PKG/.agent-harness/README.md" "$REPO/.agent-harness/README.md"
 cp -R "$PKG/.agent-harness/context" "$REPO/.agent-harness/"
@@ -96,6 +122,8 @@ if [ ! -e "$VENDOR_DST" ]; then
   cp -R "$VENDOR_SRC" "$VENDOR_DST"
 fi
 chmod +x "$REPO/scripts/codex_harness/"*.py || true
+chmod +x "$REPO/.agent-harness/scripts/"*.py || true
+chmod +x "$REPO/.codex/hooks/"*.py || true
 python "$REPO/scripts/codex_harness/verify_skill_layout.py" "$REPO"
 (
   cd "$REPO"

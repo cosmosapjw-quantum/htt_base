@@ -1,5 +1,51 @@
 # Project State
 
+## 2026-07-27 - PR-247 publication-integrity completion
+
+This section supersedes the older active-DAG positions below for current
+process orchestration. Older scientific closeouts remain historical records.
+
+- Active DAG: 194 cards, 142 completed, 1 blocked, 22 pending, 28 dormant
+  external/native, no foreground card, and background PR-151 acquisition.
+  Count completion is 73.20%, dependency-weighted completion 79.19%, and the
+  critical-path proxy 81.82%. These are bookkeeping metrics only.
+- PR-247 is an internal process card on the isolated worktree
+  `/home/cosmosapjw/Dropbox/bianchi/htt_base_prguard_p0`, branch
+  `changeset/pr247-publication-integrity-p0`, baseline
+  `be2d545654a5abc7af0819c72ab08d17a4c68d34`.
+- P0 implementation separates work units, coherent change-sets, and external
+  publication groups; seals exact Git/GitHub candidate identity; requires
+  read-only coverage and latest-target integration; and reserves publication
+  for a credential-isolated serialized publisher.
+- The pre-candidate-A bounded suite passed 156 tests; strict DAG, live harness,
+  mirrors, collection, structured-file parsing, and whitespace checks passed.
+  Candidate-A review then invalidated commit `c1d2716f...` and seal
+  `b5d845...` after reproducing a bundled-shell classifier bypass. Main-writer
+  integration inspection separately reproduced venv-launcher resolution
+  losing the selected pytest environment.
+- Candidate B (`f3521b42...`, seal `0fdfe9...`) received a complete registered
+  FAIL review. Its executable oracle showed that the codelab-documented
+  top-level Antigravity `tool_args.CommandLine` envelope was allowed by the
+  nested-only adapter. The repaired adapter now inspects both documented
+  envelopes, emits contract-specific denial output, and denies malformed,
+  missing, mixed, or unmatched-tool forms fail-closed; the bounded suite
+  passes 162 tests.
+- Candidate C (`b431da78...`, seal `4facb9...`) passed a complete registered
+  read-only review: focused suite 51/51, executable provider oracle 10/10, and
+  no surviving P0/P1 finding. Exact latest-target integration then passed all
+  three sealed policy commands against target `be2d545...`, receipt
+  `6c7e3281...`.
+- PR-247 is `completed`. The status/SSoT amendment creates a final closeout
+  tree that must itself be resealed, reviewed, and integrated before handoff.
+- No push, GitHub PR, publisher authorization, approval, or merge exists.
+- Repository hooks are defense-in-depth only. A hard publication boundary
+  still requires administrator-managed enforcement or network isolation and
+  publisher credentials/key/nonce state inaccessible to agent sandboxes.
+- PR-190 and PR-204 are reported as unblocked next cards; neither was started
+  in this change-set. No five-completion checkpoint is due.
+- No numerical, solver, transfer, data, posterior, certificate, morphology,
+  family, scientific-claim, or public-use status changed.
+
 ## 2026-07-20 - PR-176 conservative divergence closeout
 
 This section supersedes the older active-DAG positions below; older sections

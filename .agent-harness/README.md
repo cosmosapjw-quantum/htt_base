@@ -46,14 +46,18 @@ Use the governing spec or scientific contract for the current work unit.
 ```bash
 python3 .agent-harness/scripts/build_context_pack.py
 python3 .agent-harness/scripts/init_run.py \
-  --work-unit PR-124 \
-  --spec-ref docs/specs/current.md \
-  --base-ref main \
-  --head-ref HEAD
+  --work-unit PR-247 \
+  --change-set CS-PR247-PUBLICATION-INTEGRITY-P0 \
+  --publication-group PG-PR247-PUBLICATION-INTEGRITY-P0 \
+  --spec-ref docs/research_program/long_horizon_rescue/pr247_spec.yaml \
+  --target-ref origin/research/pr04-multicomponent \
+  --integration-policy \
+    docs/research_program/long_horizon_rescue/pr247_publication_policy.json
 
 python3 .agent-harness/scripts/new_assignment.py \
   --assignment-id A-WX \
   --agent-type cas_wolfram_xact \
+  --workflow-role implementer \
   --independence-mode blind-results \
   --risk-tier R3 \
   --claim-id C-001 \
@@ -70,6 +74,13 @@ python3 .agent-harness/scripts/launch_receipt.py verify --assignment-id A-WX
 
 python3 .agent-harness/scripts/validate_harness.py
 ```
+
+`init_run.py` never guesses `main`. If `--target-ref` is omitted, an existing
+`origin/HEAD` must resolve to one remote-tracking branch. A schema-v2 run keeps
+`work_unit_id`, canonical `change_set_id`, and canonical
+`publication_group_id` separate. Implementer assignments are allowed only
+while the candidate is mutable; reviewer/adjudicator assignments require one
+exact frozen seal and a read-only reviewer profile.
 
 Registration is fail-closed (audit H3): empty `claim_ids`,
 `required_inputs`, `allowed_tools`, or `required_outputs`, an unknown
@@ -91,10 +102,11 @@ resolvable evidence references. CAS contracts remain exactly pinned.
 
 Paste the header printed by `new_assignment.py` at the start of the subagent spawn prompt. The assignment JSON supplies the unique result path.
 
-## Strict result contract (MA-03)
+## Strict result contract (MA-03 + PR-247)
 
-New runs use `templates/RESULT_ENVELOPE.json` schema v2. Every assigned claim
-must have exactly one typed terminal disposition:
+Schema-v2 run plans use assignment/result schema v3; legacy non-historical
+schema-v1 run plans continue to use assignment/result schema v2. Every
+assigned claim must have exactly one typed terminal disposition:
 
 - `findings_present` names one or more finding IDs;
 - `examined_no_findings` explicitly records a completed review with no
@@ -199,6 +211,56 @@ schema field. Resolved findings are recorded in
 `MERGED_RESULTS.json.process_status` reports only envelope/merge integrity.
 Its `claim_gate_status` is always `NOT_EVALUATED`; a zero merge exit code is
 never a novelty, scientific-validity, or claim-acceptance decision.
+
+## Freeze, review, integrate, and hand off to the publisher
+
+Ordinary agents stop before publication:
+
+```bash
+python3 .agent-harness/scripts/candidate_seal.py create \
+  --change-set CS-PR247-PUBLICATION-INTEGRITY-P0 \
+  --publication-group PG-PR247-PUBLICATION-INTEGRITY-P0 \
+  --target-ref origin/research/pr04-multicomponent \
+  --integration-policy \
+    docs/research_program/long_horizon_rescue/pr247_publication_policy.json \
+  --output .prguard/runtime/CANDIDATE_SEAL.json
+
+python3 .agent-harness/scripts/bind_candidate.py \
+  --seal .prguard/runtime/CANDIDATE_SEAL.json
+
+python3 .agent-harness/scripts/new_assignment.py \
+  --assignment-id A-REVIEW \
+  --agent-type claim_gate_reviewer \
+  --workflow-role reviewer \
+  --independence-mode blind-results \
+  --risk-tier R2 \
+  --claim-id RUN-<run-id>-publication-review \
+  --required-input .prguard/runtime/CANDIDATE_SEAL.json \
+  --allowed-tool read \
+  --allowed-tool pytest \
+  --required-output REVIEW_COVERAGE.json \
+  --task 'Falsify the exact frozen candidate without modifying it.'
+
+python3 .agent-harness/scripts/integration_rehearsal.py create \
+  --seal .prguard/runtime/CANDIDATE_SEAL.json \
+  --output .prguard/runtime/INTEGRATION_RECEIPT.json
+```
+
+The coverage matrix must bind concrete executable-oracle argv and an
+assignment-produced output artifact. The integration receipt binds the
+recomputed target/candidate merge tree and the exact command logs. Any target,
+candidate, tree, diff, changed-file, remote, policy, review, or integration
+drift blocks the gate.
+
+`pr_publication_gate.py` validates but never publishes. A separate serialized
+publisher, running outside ordinary agent sandboxes with its own credentials,
+key, nonce ledger, and `pr_inventory.py` output, may call `check` and then
+`consume`. Its authorization fixes the PR title/body/base/head/draft state;
+the body carries exactly one matching `Change-Set-ID:` and
+`Publication-Group-ID:` line. Its fixed push refspec uses the sealed commit
+SHA as the source, not the movable local branch. Repository hooks are only
+guardrails; managed policy and credential/network isolation are the capability
+boundary. See `docs/harness/PUBLICATION_INTEGRITY.md`.
 
 ## Four-axis CAS gate
 

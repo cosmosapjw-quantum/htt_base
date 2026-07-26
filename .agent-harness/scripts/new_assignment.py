@@ -24,7 +24,9 @@ from _harness import (
     load_json,
     root,
     validate_assignment_payload,
+    validate_run_plan_payload,
 )
+from publication_integrity import validate_candidate_binding
 
 
 def _hashed_ref(repo, rel: str) -> dict:
@@ -61,6 +63,12 @@ def main() -> None:
     parser.add_argument("--assignment-id", required=True)
     parser.add_argument("--agent-type", required=True)
     parser.add_argument("--task", required=True)
+    parser.add_argument(
+        "--workflow-role",
+        choices=["implementer", "reviewer", "adjudicator"],
+        default="implementer",
+        help="publisher is intentionally not a subagent role",
+    )
     parser.add_argument("--parent-assignment-id")
     parser.add_argument(
         "--independence-mode",
@@ -122,6 +130,17 @@ def main() -> None:
     run_dir = harness / "runs" / run_id
     plan = load_json(run_dir / "RUN_PLAN.json")
     index = load_json(harness / "context" / "CONTEXT_INDEX.json")
+    plan_errors = validate_run_plan_payload(
+        plan,
+        repo=repo,
+        run_id=run_id,
+        context_version=str(index.get("context_version", "")),
+    )
+    if plan_errors:
+        raise SystemExit(
+            "assignment registration REFUSED (invalid RUN_PLAN):\n- "
+            + "\n- ".join(plan_errors)
+        )
     assignments_dir = run_dir / "assignments"
     existing = sorted(assignments_dir.glob("*.json"))
     max_total = int(plan["budget"]["max_total"])
@@ -156,10 +175,34 @@ def main() -> None:
     if out.exists():
         raise SystemExit(f"Assignment already exists: {out}")
 
+    plan_schema = plan.get("schema_version")
+    new_schema = 3 if plan_schema == 2 else 2
+    candidate_binding = plan.get("candidate_binding")
+    if new_schema == 3:
+        binding_errors = validate_candidate_binding(
+            candidate_binding,
+            repo=repo,
+            require_frozen=args.workflow_role in {"reviewer", "adjudicator"},
+        )
+        if binding_errors:
+            raise SystemExit(
+                "assignment registration REFUSED (candidate binding):\n- "
+                + "\n- ".join(binding_errors)
+            )
+        if (
+            args.workflow_role == "implementer"
+            and isinstance(candidate_binding, dict)
+            and candidate_binding.get("state") != "mutable"
+        ):
+            raise SystemExit(
+                "implementer assignment requires a mutable candidate; repair after "
+                "freeze must start a new candidate/run"
+            )
+
     value = load_json(harness / "templates" / "ASSIGNMENT.json")
     value.update(
         {
-            "schema_version": 2,
+            "schema_version": new_schema,
             "run_id": run_id,
             "assignment_id": args.assignment_id,
             "parent_assignment_id": args.parent_assignment_id,
@@ -186,6 +229,25 @@ def main() -> None:
             "status": "registered",
         }
     )
+    if new_schema == 3:
+        value.update(
+            {
+                "work_unit_id": plan.get("work_unit_id"),
+                "change_set_id": plan.get("change_set_id"),
+                "publication_group_id": plan.get("publication_group_id"),
+                "workflow_role": args.workflow_role,
+                "candidate_binding": candidate_binding,
+            }
+        )
+    else:
+        for field in (
+            "work_unit_id",
+            "change_set_id",
+            "publication_group_id",
+            "workflow_role",
+            "candidate_binding",
+        ):
+            value.pop(field, None)
     if args.cas_axis:
         value["cas_axis"] = args.cas_axis
     if args.cas_contract:

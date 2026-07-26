@@ -176,13 +176,90 @@ def test_clean_clone_init_validate_close_and_dangling_recovery(
     assert validated.returncode == 0, validated.stdout + validated.stderr
     assert json.loads(validated.stdout)["active_run"] is None
 
+    policy_path = repo / "publication-policy.json"
+    policy_path.write_text(
+        json.dumps(
+            {
+                "schema_version": 1,
+                "policy_id": "MA01-PUBLICATION-POLICY",
+                "max_open_prs": 1,
+                "max_direct_to_target_prs": 1,
+                "max_prs_per_change_set": 1,
+                "max_stack_depth": 1,
+                "max_file_overlap_prs": 0,
+                "max_inventory_age_seconds": 300,
+                "max_receipt_age_seconds": 1800,
+                "max_authorization_ttl_seconds": 1800,
+                "required_review_cells": ["candidate_identity"],
+                "required_commands": [
+                    {
+                        "id": "lifecycle-smoke",
+                        "argv": [sys.executable, "-c", "raise SystemExit(0)"],
+                        "timeout_seconds": 30,
+                    }
+                ],
+            },
+            indent=2,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    assert _run(
+        ["git", "config", "user.name", "Harness Test"], cwd=repo
+    ).returncode == 0
+    assert _run(
+        ["git", "config", "user.email", "harness@example.invalid"], cwd=repo
+    ).returncode == 0
+    assert _run(["git", "add", "."], cwd=repo).returncode == 0
+    committed = _run(["git", "commit", "-qm", "test baseline"], cwd=repo)
+    assert committed.returncode == 0, committed.stdout + committed.stderr
+    remote = tmp_path / "origin.git"
+    remote.mkdir()
+    assert _run(["git", "init", "--bare", "-q"], cwd=remote).returncode == 0
+    assert _run(
+        ["git", "remote", "add", "origin", str(remote)],
+        cwd=repo,
+    ).returncode == 0
+    pushed = _run(
+        [
+            "git",
+            "push",
+            "-q",
+            "origin",
+            "HEAD:refs/heads/research/test",
+        ],
+        cwd=repo,
+    )
+    assert pushed.returncode == 0, pushed.stdout + pushed.stderr
+    assert _run(
+        [
+            "git",
+            "update-ref",
+            "refs/remotes/origin/research/test",
+            "HEAD",
+        ],
+        cwd=repo,
+    ).returncode == 0
+    run_args = (
+        "--work-unit",
+        "MA-01",
+        "--change-set",
+        "CS-MA01-LIFECYCLE",
+        "--publication-group",
+        "PG-MA01-LIFECYCLE",
+        "--integration-policy",
+        "publication-policy.json",
+        "--target-ref",
+        "origin/research/test",
+        "--spec-ref",
+        "input.txt",
+    )
     initialized = _harness_cli(
         repo,
         "init_run.py",
         "--run-id",
         "ma01-lifecycle",
-        "--work-unit",
-        "MA-01",
+        *run_args,
     )
     assert initialized.returncode == 0, initialized.stdout + initialized.stderr
     active_pointer = repo / ".agent-harness" / "runtime" / "ACTIVE_RUN"
@@ -193,8 +270,7 @@ def test_clean_clone_init_validate_close_and_dangling_recovery(
         "init_run.py",
         "--run-id",
         "ma01-overwrite",
-        "--work-unit",
-        "MA-01",
+        *run_args,
     )
     assert refused_overwrite.returncode != 0
     assert "Active run already exists" in refused_overwrite.stderr
@@ -204,6 +280,27 @@ def test_clean_clone_init_validate_close_and_dangling_recovery(
     assert active_validation.returncode == 0
     assert json.loads(active_validation.stdout)["active_run"] == "ma01-lifecycle"
 
+    plan_path = repo / ".agent-harness/runs/ma01-lifecycle/RUN_PLAN.json"
+    plan = json.loads(plan_path.read_text(encoding="utf-8"))
+    plan["budget"]["max_total"] = True
+    plan_path.write_text(json.dumps(plan, indent=2) + "\n", encoding="utf-8")
+    bool_budget = _harness_cli(repo, "validate_harness.py")
+    assert bool_budget.returncode == 1
+    assert "budget.max_total" in bool_budget.stdout
+    plan["budget"]["max_total"] = 8
+    plan_path.write_text(json.dumps(plan, indent=2) + "\n", encoding="utf-8")
+
+    rogue_launch = (
+        repo / ".agent-harness/runs/ma01-lifecycle/launches/A-ROGUE.json"
+    )
+    rogue_launch.write_text("{}\n", encoding="utf-8")
+    unregistered_launch = _harness_cli(repo, "validate_harness.py")
+    assert unregistered_launch.returncode == 1
+    assert "launch has no registered assignment" in unregistered_launch.stdout
+    rogue_launch.unlink()
+
+    merged = _harness_cli(repo, "merge_results.py")
+    assert merged.returncode == 0, merged.stdout + merged.stderr
     closed = _harness_cli(
         repo,
         "close_run.py",
@@ -624,6 +721,72 @@ def _write_result(repo: Path, assignment_id: str, extra: dict) -> Path:
     )
     path.write_text(json.dumps(result) + "\n", encoding="utf-8")
     return path
+
+
+def test_normal_close_requires_complete_results_and_fresh_merge(
+    tmp_path: Path,
+) -> None:
+    repo = _init_tmp_repo(tmp_path)
+    _register_assignment(repo)
+
+    missing_result = _harness_cli(repo, "close_run.py", "--run-id", "run-1")
+    assert missing_result.returncode == 1
+    assert json.loads(missing_result.stdout)["error"]["code"] == (
+        "INCOMPLETE_RUN_RESULTS"
+    )
+
+    artifact_path = repo / "artifact.bin"
+    artifact_bytes = b"verified artifact\n"
+    artifact_path.write_bytes(artifact_bytes)
+    result_path = _write_result(
+        repo,
+        "A-001",
+        {
+            "artifacts": [
+                {
+                    "path": "artifact.bin",
+                    "sha256": hashlib.sha256(artifact_bytes).hexdigest(),
+                    "bytes": len(artifact_bytes),
+                    "producer": "test",
+                }
+            ]
+        },
+    )
+    missing_merge = _harness_cli(repo, "close_run.py", "--run-id", "run-1")
+    assert missing_merge.returncode == 1
+    assert json.loads(missing_merge.stdout)["error"]["code"] == (
+        "MISSING_MERGED_RESULTS"
+    )
+
+    merged = _harness_cli(repo, "merge_results.py")
+    assert merged.returncode == 0, merged.stdout + merged.stderr
+    result_path.write_text(
+        result_path.read_text(encoding="utf-8") + "\n",
+        encoding="utf-8",
+    )
+    stale = _harness_cli(repo, "close_run.py", "--run-id", "run-1")
+    assert stale.returncode == 1
+    assert json.loads(stale.stdout)["error"]["code"] == (
+        "STALE_OR_INVALID_MERGED_RESULTS"
+    )
+
+    refreshed = _harness_cli(repo, "merge_results.py")
+    assert refreshed.returncode == 0, refreshed.stdout + refreshed.stderr
+
+    artifact_path.write_bytes(b"drifted artifact\n")
+    stale_evidence = _harness_cli(repo, "close_run.py", "--run-id", "run-1")
+    assert stale_evidence.returncode == 1
+    stale_evidence_payload = json.loads(stale_evidence.stdout)
+    assert stale_evidence_payload["error"]["code"] == "HARNESS_VALIDATION_FAILED"
+    assert any(
+        "sha256 does not match artifact bytes" in error
+        for error in stale_evidence_payload["validation"]["errors"]
+    )
+
+    artifact_path.write_bytes(artifact_bytes)
+    closed = _harness_cli(repo, "close_run.py", "--run-id", "run-1")
+    assert closed.returncode == 0, closed.stdout + closed.stderr
+    assert json.loads(closed.stdout)["closed_run"] == "run-1"
 
 
 def _stop_hook(repo: Path, envelope: dict, trailing: str = ""):
