@@ -132,6 +132,11 @@ def test_forged_or_zero_verified_mes_anchor_cannot_normalize() -> None:
         MESAnchorSpec(**fields)
 
     fields = dict(sigma.__dict__)
+    fields["value"] = 42.0
+    with pytest.raises(StatisticalFoundationError, match="does not match"):
+        MESAnchorSpec(**fields)
+
+    fields = dict(sigma.__dict__)
     fields["authority_kind"] = AnchorAuthorityKind.LEGACY
     fields["status"] = AnchorStatus.LEGACY_REPRODUCTION
     legacy = MESAnchorSpec(**fields)
@@ -184,13 +189,14 @@ def test_frame_correction_and_s2a_ceiling_cannot_normalize_active_results() -> N
 def test_live_likelihood_uses_uncorrected_typed_geodesic_anchor() -> None:
     from htt.core.evidence_models_R03a import (
         BianchiModel,
+        BianchiI_orth,
         EPS2,
         EPS3,
         Sig2_max_MES,
         _active_sig2_mes_ceiling,
     )
 
-    eps1 = 1.233e-3
+    eps1 = 0.0
     expected = registered_geodesic_mes_anchors(
         eps1=eps1,
         eps2=EPS2,
@@ -199,15 +205,27 @@ def test_live_likelihood_uses_uncorrected_typed_geodesic_anchor() -> None:
         conditioning=AnchorConditioning.REALIZATION_CONDITIONAL,
     )["sigma"].value
     active = _active_sig2_mes_ceiling(eps1)
-    legacy_corrected = Sig2_max_MES(eps1)
+    legacy_corrected = Sig2_max_MES(1.233e-3)
     assert active == expected
     assert active < legacy_corrected
     midpoint = 0.5 * (active + legacy_corrected)
     assert BianchiModel._mes_ok(midpoint) is False
     assert BianchiModel._mes_ok(-1e-12) is False
     assert BianchiModel._mes_ok(True) is False
+    assert BianchiModel._mes_ok(0.0, True) is False
     with pytest.raises(StatisticalFoundationError, match="eps1"):
         _active_sig2_mes_ceiling(True)
+    with pytest.raises(StatisticalFoundationError, match="hierarchy"):
+        _active_sig2_mes_ceiling(1.233e-3)
+
+    g_only = BianchiI_orth(channels="g")
+    above = 2.0 * active
+    predicted = g_only.predicted_observables([above])
+    assert predicted is not None
+    assert np.isfinite(g_only._core_logL(predicted))
+
+    hard = BianchiI_orth(channels="f")
+    assert hard.predicted_observables([above]) is None
 
 
 def test_psd_shell_uses_registered_reciprocal_bracket() -> None:

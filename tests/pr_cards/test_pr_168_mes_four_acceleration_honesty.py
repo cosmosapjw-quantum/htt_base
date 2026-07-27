@@ -9,6 +9,10 @@ from pathlib import Path
 
 import yaml
 
+from common.pr248_pr168_integrity_supersession import (
+    authorized_pr168_transition,
+)
+
 
 REPO = Path(__file__).resolve().parents[2]
 GENERATED = REPO / "docs/generated"
@@ -109,7 +113,13 @@ def test_fail_branch_leaves_every_inventoried_consumer_unchanged() -> None:
     assert receipt["all_inventoried_consumers_unchanged"] is True
     assert receipt["pass_only_status_source_absent"] is True
     for rel, expected_sha in expected.items():
-        assert _sha(REPO / rel) == expected_sha
+        current_sha = _sha(REPO / rel)
+        assert current_sha == expected_sha or authorized_pr168_transition(
+            REPO,
+            relative_path=rel,
+            prior_sha256=expected_sha,
+            current_sha256=current_sha,
+        )
     assert not (REPO / "htt/src/common/mes_acceleration_status.py").exists()
 
 

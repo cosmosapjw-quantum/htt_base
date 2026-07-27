@@ -75,6 +75,9 @@ DEFAULT_CONSUMER_SUPERSESSION_PATH = (
     "docs/research_program/stat_foundations/"
     "pr248_mes_consumer_supersession.yaml"
 )
+PR248_CONSUMER_SUPERSESSION_SHA256 = (
+    "7a96eff7d3cc7929fc2d090f835da359848d6a5ee3d9fd7e22da4a5763e0109e"
+)
 DEFAULT_ACTIVE_PYTHON_ROOTS = (
     "htt/htt/htt",
     "htt/bass",
@@ -1526,6 +1529,12 @@ def _apply_consumer_supersessions(
         raise MesRegistryError(
             "MES consumer supersession must be a regular repository file"
         )
+    observed_sha256 = hashlib.sha256(path.read_bytes()).hexdigest()
+    if observed_sha256 != PR248_CONSUMER_SUPERSESSION_SHA256:
+        raise MesRegistryError(
+            "MES consumer supersession hash does not match the PR-248 "
+            "authority root"
+        )
     try:
         payload = yaml.safe_load(path.read_text(encoding="utf-8"))
     except (OSError, UnicodeDecodeError, yaml.YAMLError) as exc:
@@ -1897,6 +1906,7 @@ __all__ = [
     "MesSuccessorPointer",
     "MesSuccessorRegistry",
     "PLANNED_PR124_SOURCE",
+    "PR248_CONSUMER_SUPERSESSION_SHA256",
     "SCHEMA_VERSION",
     "SourceAvailability",
     "SourceHashBinding",

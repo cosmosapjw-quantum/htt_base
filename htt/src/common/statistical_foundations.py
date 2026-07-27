@@ -23,7 +23,11 @@ from enum import Enum
 from fractions import Fraction
 from typing import Iterable
 
-from common.mes_theorem_authority import BRANCHES
+from common.mes_theorem_authority import (
+    BRANCHES,
+    MesAuthorityError,
+    validate_hierarchy_strict,
+)
 
 
 class StatisticalFoundationError(ValueError):
@@ -140,6 +144,7 @@ class MESAnchorSpec:
     allowed_use: tuple[str, ...]
     forbidden_use: tuple[str, ...]
     withheld_reason: str | None = None
+    calibration_values: tuple[tuple[str, float], ...] = ()
 
     def __post_init__(self) -> None:
         for name, enum_type in (
@@ -183,6 +188,22 @@ class MESAnchorSpec:
             raise StatisticalFoundationError(
                 "shared_nuisance must not contain duplicates"
             )
+        calibration_values: list[tuple[str, float]] = []
+        for item in self.calibration_values:
+            if not isinstance(item, (tuple, list)) or len(item) != 2:
+                raise StatisticalFoundationError(
+                    "calibration_values entries must be (name, value) pairs"
+                )
+            name = _required_text(item[0], "calibration_values.name")
+            value = _finite_nonnegative(item[1], f"calibration_values.{name}")
+            calibration_values.append((name, value))
+        if len({name for name, _ in calibration_values}) != len(
+            calibration_values
+        ):
+            raise StatisticalFoundationError(
+                "calibration_values must not contain duplicate names"
+            )
+        object.__setattr__(self, "calibration_values", tuple(calibration_values))
 
         if self.status is AnchorStatus.NO_MES_ANCHOR:
             if self.value is not None:
@@ -216,6 +237,34 @@ class MESAnchorSpec:
                 raise StatisticalFoundationError(
                     "verified MES anchor metadata does not match the registered "
                     f"branch: {', '.join(mismatches)}"
+                )
+            calibration = dict(self.calibration_values)
+            if set(calibration) != {"eps1", "eps2", "eps3"}:
+                raise StatisticalFoundationError(
+                    "verified MES anchors require exact eps1/eps2/eps3 "
+                    "calibration values"
+                )
+            try:
+                validate_hierarchy_strict(
+                    str(calibration["eps1"]),
+                    str(calibration["eps2"]),
+                    str(calibration["eps3"]),
+                )
+            except MesAuthorityError as exc:
+                raise StatisticalFoundationError(
+                    "verified MES anchor calibration violates the registered "
+                    "strict geodesic hierarchy"
+                ) from exc
+            expected_value = 1.5 * _branch_bound(
+                self.branch,
+                calibration["eps1"],
+                calibration["eps2"],
+                calibration["eps3"],
+            ) ** 2
+            if self.value != expected_value:
+                raise StatisticalFoundationError(
+                    "verified MES anchor value does not match its registered "
+                    "branch and calibration values"
                 )
 
         if self.status is AnchorStatus.WITHHELD:
@@ -308,6 +357,11 @@ def registered_geodesic_mes_anchors(
             validity_domain="registered C1/C2 linear almost-EGS premises",
             source_equations=("MESa eq (59)", "MESa raw eq (51)"),
             shared_nuisance=shared_nuisance,
+            calibration_values=(
+                ("eps1", eps1),
+                ("eps2", eps2),
+                ("eps3", eps3),
+            ),
             status=AnchorStatus.VERIFIED,
             allowed_use=("channel-matched one-way linear-consistency stress",),
             forbidden_use=common_forbidden,
@@ -328,6 +382,11 @@ def registered_geodesic_mes_anchors(
             validity_domain="registered C1/C2 linear almost-EGS premises",
             source_equations=("MESa eq (60)", "MESa raw eq (52)"),
             shared_nuisance=shared_nuisance,
+            calibration_values=(
+                ("eps1", eps1),
+                ("eps2", eps2),
+                ("eps3", eps3),
+            ),
             status=AnchorStatus.VERIFIED,
             allowed_use=("channel-matched one-way linear-consistency stress",),
             forbidden_use=common_forbidden,

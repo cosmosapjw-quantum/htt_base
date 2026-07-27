@@ -176,6 +176,40 @@ def _production_rows() -> list[dict[str, Any]]:
     return rows
 
 
+def _historical_production_rows() -> list[dict[str, Any]]:
+    """Reconstruct PR-168's frozen closeout rows without reading live bytes."""
+    inventory = _yaml(REPO / INVENTORY_PATH)
+    return [
+        {
+            "path": registered["path"],
+            "owner": registered["owner"],
+            "expected_pre_axis_sha256": registered["sha256_before"],
+            "actual_sha256": registered["sha256_before"],
+            "unchanged": True,
+        }
+        for registered in inventory["migration_required"]
+    ]
+
+
+def _authorized_post_closeout_transition(
+    relative_path: str, prior_sha256: str, current_sha256: str
+) -> bool:
+    """Delegate later exact-hash transitions to the PR-248 authority."""
+    src_root = str(REPO / "htt/src")
+    if src_root not in sys.path:
+        sys.path.insert(0, src_root)
+    from common.pr248_pr168_integrity_supersession import (
+        authorized_pr168_transition,
+    )
+
+    return authorized_pr168_transition(
+        REPO,
+        relative_path=relative_path,
+        prior_sha256=prior_sha256,
+        current_sha256=current_sha256,
+    )
+
+
 def _review_refs() -> dict[str, dict[str, Any]]:
     refs: dict[str, dict[str, Any]] = {}
     for role, rel in REVIEW_PATHS.items():
@@ -337,11 +371,19 @@ def evidence_errors() -> list[str]:
 
 
 def production_errors() -> list[str]:
-    errors = [
-        f"production consumer changed on fail branch: {row['path']}"
-        for row in _production_rows()
-        if not row["unchanged"]
-    ]
+    errors: list[str] = []
+    for row in _production_rows():
+        if row["unchanged"]:
+            continue
+        if _authorized_post_closeout_transition(
+            row["path"],
+            row["expected_pre_axis_sha256"],
+            row["actual_sha256"] or "",
+        ):
+            continue
+        errors.append(
+            f"production consumer changed on fail branch: {row['path']}"
+        )
     status_source = REPO / "htt/src/common/mes_acceleration_status.py"
     if status_source.exists():
         errors.append("pass-only typed status source still exists")
@@ -590,7 +632,13 @@ def _hash_map_errors(
     errors: list[str] = []
     for rel, expected in actual.items():
         path = REPO / rel
-        if not path.is_file() or _sha(path) != expected:
+        if not path.is_file():
+            errors.append(f"manifest {label} hash binding failed: {rel}")
+            continue
+        observed = _sha(path)
+        if observed != expected and not _authorized_post_closeout_transition(
+            rel, expected, observed
+        ):
             errors.append(f"manifest {label} hash binding failed: {rel}")
     return errors
 
@@ -625,8 +673,22 @@ def output_errors() -> list[str]:
     integrity = _json(REPO / INTEGRITY_PATH)
     if integrity.get("all_inventoried_consumers_unchanged") is not True:
         errors.append("integrity receipt does not prove unchanged production")
-    if integrity.get("production_rows") != _production_rows():
-        errors.append("integrity production hashes are stale")
+    historical_rows = _historical_production_rows()
+    if integrity.get("production_rows") != historical_rows:
+        errors.append("integrity historical production receipt is stale")
+    else:
+        for row in historical_rows:
+            path = REPO / row["path"]
+            current_sha = _sha(path) if path.is_file() else ""
+            if current_sha == row["actual_sha256"]:
+                continue
+            if not _authorized_post_closeout_transition(
+                row["path"], row["actual_sha256"], current_sha
+            ):
+                errors.append(
+                    "integrity production hash drift lacks a post-closeout "
+                    f"supersession: {row['path']}"
+                )
     if integrity.get("pass_only_status_source_absent") is not True:
         errors.append("integrity receipt retained pass-only status source")
 

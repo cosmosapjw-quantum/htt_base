@@ -181,9 +181,7 @@ def x_defect(Sig2, Omega_tilt=0.0, Omega_k_aniso=0.0, W2=0.0):
     Returns
     -------
     float
-        Signed Gauss/Friedmann budget projection.  It may be negative because
-        the vorticity term enters with a minus sign and the anisotropic
-        curvature coordinate is signed; it is not a distance or occupancy.
+        Total defect x ≥ 0 for physical configurations.
 
     References
     ----------

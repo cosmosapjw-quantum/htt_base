@@ -440,6 +440,10 @@ class BianchiModel:
         p = self.predicted_observables(theta)
         return self._core_logL(p) if p is not None else -np.inf
 
+    def _mes_prediction_allowed(self, Sig2, eps1_intrinsic=0.):
+        """Apply the hard MES support only when channel (f) is selected."""
+        return 'f' not in self.channels or self._mes_ok(Sig2, eps1_intrinsic)
+
     def _get_x_h(self, p):
         if self._bianchi_type == 'VIIh': return p.get('x_h', 1.0)
         return None
@@ -496,7 +500,7 @@ class BianchiModel:
         # (g) MES exponential-tail penalty — INERT when (f) is active (see
         #     __init__ docstring). Retained for historical MCMC comparison.
         if 'g' in ch:
-            Sig2_max = _active_sig2_mes_ceiling(1.233e-3 + e1)
+            Sig2_max = _active_sig2_mes_ceiling(0.0)
             if Sig2_max > 0:
                 ratio = Sig2 / Sig2_max
                 if ratio > 1.0:
@@ -519,21 +523,29 @@ class BianchiModel:
             or Sig2 < 0.0
         ):
             return False
-        EPS1_KIN = 1.233e-3
-        eps1_total = EPS1_KIN + eps1_intrinsic
-        ceil = _active_sig2_mes_ceiling(eps1_total)
+        if (
+            isinstance(eps1_intrinsic, (bool, np.bool_))
+            or not isinstance(
+                eps1_intrinsic, (int, float, np.integer, np.floating)
+            )
+            or not np.isfinite(eps1_intrinsic)
+        ):
+            return False
+        # PR-124 authorizes the strict geodesic hierarchy only for the
+        # registered residual dipole eps1=0.  The observed/kinematic or model
+        # intrinsic dipole may enter its own likelihood channels, but it must
+        # never inflate the MES normalization.
+        ceil = _active_sig2_mes_ceiling(0.0)
         return Sig2 <= ceil
 
 
-def _active_sig2_mes_ceiling(e1_total):
-    """Return the verified uncorrected geodesic shear anchor for this input."""
+def _active_sig2_mes_ceiling(eps1_residual):
+    """Return the strict-hierarchy geodesic shear anchor for a residual dipole."""
     anchor = registered_geodesic_mes_anchors(
-        eps1=e1_total,
+        eps1=eps1_residual,
         eps2=EPS2,
         eps3=EPS3,
-        attribution=(
-            "evidence_models_R03a total observed-plus-model-intrinsic dipole"
-        ),
+        attribution="SAG residual cosmological dipole",
         conditioning=AnchorConditioning.REALIZATION_CONDITIONAL,
     )["sigma"]
     if anchor.status is not AnchorStatus.VERIFIED or not anchor.normalization_allowed:
@@ -665,7 +677,7 @@ class _OrthBase(BianchiModel):
     _shear_mode = 'decay'
 
     def _pred_orth(self, Sig2, x_h=None):
-        if not self._mes_ok(Sig2): return None
+        if not self._mes_prediction_allowed(Sig2): return None
         return {"eps1":0., "beta":0., "omega_H":0.,
                 "Sigma2": Sig2,
                 "D2_shear": shear_to_D2(Sig2, self._shear_mode, x_h),
@@ -719,7 +731,7 @@ class BianchiVIIh_orth(_OrthBase):
         return np.array([_logu(u[0], 1e-30, 1e-4), _logu(u[1], 1e-3, 1e3)])
     def predicted_observables(self, theta):
         Sig2, xh = theta
-        if not self._mes_ok(Sig2): return None
+        if not self._mes_prediction_allowed(Sig2): return None
         W2 = R_WS_VIIH**2 * Sig2
         omH = omH_from_W2(W2)
         return {"eps1":0., "beta":0., "omega_H":omH,
@@ -735,7 +747,7 @@ class BianchiVIIh_orth_grow(_OrthBase):
         return np.array([_logu(u[0], 1e-20, 1e-4), _logu(u[1], 1e-3, 1e3)])
     def predicted_observables(self, theta):
         Sig2, xh = theta
-        if not self._mes_ok(Sig2): return None
+        if not self._mes_prediction_allowed(Sig2): return None
         W2 = R_WS_VIIH**2 * Sig2
         omH = omH_from_W2(W2)
         return {"eps1":0., "beta":0., "omega_H":omH,
@@ -755,7 +767,7 @@ class BianchiI_tilt(BianchiModel):
     def predicted_observables(self, theta):
         Sig2, beta = theta
         e1 = eps1_from_beta(beta)
-        if not self._mes_ok(Sig2, e1): return None
+        if not self._mes_prediction_allowed(Sig2, e1): return None
         return {"eps1":e1, "beta":beta, "omega_H":0., "Sigma2":Sig2,
                 "D2_shear": shear_to_D2(Sig2, "decay", None),
                 "D2_boost": boost_to_D2(beta),
@@ -772,7 +784,7 @@ class BianchiV_tilt(BianchiModel):
         if Ok <= 0: return None
         Sig2 = Sig2_BV(beta, Ok)
         e1 = eps1_from_beta(beta)
-        if not self._mes_ok(Sig2, e1): return None
+        if not self._mes_prediction_allowed(Sig2, e1): return None
         return {"eps1":e1, "beta":beta, "omega_H":0., "Sigma2":Sig2,
                 "Omega_k":Ok,
                 "D2_shear": shear_to_D2(Sig2, "decay", None),
@@ -788,7 +800,7 @@ class BianchiIII_tilt(BianchiModel):
     def predicted_observables(self, theta):
         Sig2, beta, Ok = theta
         e1 = eps1_from_beta(beta)
-        if not self._mes_ok(Sig2, e1): return None
+        if not self._mes_prediction_allowed(Sig2, e1): return None
         return {"eps1":e1, "beta":beta, "omega_H":0., "Sigma2":Sig2,
                 "Omega_k":Ok,
                 "D2_shear": shear_to_D2(Sig2, "decay", None),
@@ -805,7 +817,7 @@ class BianchiIX_tilt(BianchiModel):
     def predicted_observables(self, theta):
         Sig2, beta, Ok = theta
         e1 = eps1_from_beta(beta)
-        if not self._mes_ok(Sig2, e1): return None
+        if not self._mes_prediction_allowed(Sig2, e1): return None
         return {"eps1":e1, "beta":beta, "omega_H":0., "Sigma2":Sig2,
                 "Omega_k":Ok,
                 "D2_shear": shear_to_D2(Sig2, "decay", None),
@@ -822,7 +834,7 @@ class BianchiVIIh_tilt(BianchiModel):
     def predicted_observables(self, theta):
         Sig2, W2, beta, xh = theta
         e1 = eps1_from_beta(beta)
-        if not self._mes_ok(Sig2, e1): return None
+        if not self._mes_prediction_allowed(Sig2, e1): return None
         omH = omH_from_W2(W2)
         return {"eps1":e1, "beta":beta, "omega_H":omH,
                 "Sigma2":Sig2, "W2":W2, "x_h":xh,
@@ -840,7 +852,7 @@ class BianchiVIIh_tilt_grow(BianchiModel):
     def predicted_observables(self, theta):
         Sig2, W2, beta, xh = theta
         e1 = eps1_from_beta(beta)
-        if not self._mes_ok(Sig2, e1): return None
+        if not self._mes_prediction_allowed(Sig2, e1): return None
         omH = omH_from_W2(W2)
         return {"eps1":e1, "beta":beta, "omega_H":omH,
                 "Sigma2":Sig2, "W2":W2, "x_h":xh,

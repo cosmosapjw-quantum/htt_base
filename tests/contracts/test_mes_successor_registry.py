@@ -23,6 +23,7 @@ from common.mes_successor_registry import (
     MesScientificAuthorityStatus,
     MesSuccessorPointer,
     MesSuccessorRegistry,
+    PR248_CONSUMER_SUPERSESSION_SHA256,
     SourceAvailability,
     SourceHashBinding,
     current_mes_successor_registry,
@@ -107,11 +108,9 @@ def _inventory_declarations(
 
 
 def _consumer_supersession() -> dict[str, object]:
-    payload = yaml.safe_load(
-        (REPO_ROOT / DEFAULT_CONSUMER_SUPERSESSION_PATH).read_text(
-            encoding="utf-8"
-        )
-    )
+    path = REPO_ROOT / DEFAULT_CONSUMER_SUPERSESSION_PATH
+    assert _digest(path) == PR248_CONSUMER_SUPERSESSION_SHA256
+    payload = yaml.safe_load(path.read_text(encoding="utf-8"))
     assert isinstance(payload, dict)
     return payload
 
