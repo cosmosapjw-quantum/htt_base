@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field
+from types import MappingProxyType
 from typing import Mapping
 
 from common.mes_successor_registry import current_mes_successor_registry
@@ -97,7 +98,11 @@ class StatisticalFoundationResultCard:
                 raise ValueError(
                     "morphology_reference status must remain diagnostic_only"
                 )
-            object.__setattr__(self, "morphology_reference", reference)
+            object.__setattr__(
+                self,
+                "morphology_reference",
+                MappingProxyType(reference),
+            )
 
     def as_payload(self) -> dict[str, object]:
         def payload(value):

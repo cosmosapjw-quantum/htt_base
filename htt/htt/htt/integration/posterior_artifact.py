@@ -6,6 +6,7 @@ import json
 import math
 from numbers import Real
 from pathlib import Path
+from types import MappingProxyType
 from typing import Any, Mapping, Sequence
 
 from common.contracts import ArtifactManifest
@@ -221,7 +222,11 @@ class DirectionalPosteriorArtifact:
             _finite_float(getattr(self, field_name), field_name)
         for field_name in ("x_hpd68", "x_hpd95", "Q_hpd68", "Pi_hpd68", "F_hpd68"):
             _interval(getattr(self, field_name), field_name=field_name)
-        _float_mapping(self.model_evidences)
+        object.__setattr__(
+            self,
+            "model_evidences",
+            MappingProxyType(_float_mapping(self.model_evidences)),
+        )
         if self.manifest.owner != "HTT":
             raise ValueError("DirectionalPosteriorArtifact.manifest.owner must be 'HTT'")
         _nonempty_string(

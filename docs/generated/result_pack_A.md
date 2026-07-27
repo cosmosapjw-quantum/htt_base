@@ -17,11 +17,11 @@ input_hashes:
 - htt/obsstat/null_ensembles.py:sha256:1033f1f4a5a105f455bf11b83bd421052b1520a486493560abd0f80fda16658c
 - htt/htt/htt/statistics/mes_information_gain.py:sha256:251c44f18fbfe7949dc5b02e6b96db12154ce0488560748c8987458446d991b1
 - htt/src/common/statistical_foundations.py:sha256:830d1698a8f57dd3a050862f4ee1b59da3b64688774e439171e4c40165939eff
-- docs/generated/status_snapshot.json:sha256:90f804c527b01b112c1ef2c076f37086fa1bbc4edb3b390a0f05e4851a4dccf7
+- docs/generated/status_snapshot.json:sha256:2599a57db43d856cf794074f2ab43e8c8f1fd108870cbcb22f9c93a5394d41ce
 sky_support_status: not_directional
 null_mock_status: summarized_from_dependency_surfaces
 generating_command: `python scripts/result_packs/generate_pack_A_scalar_to_morphology.py`
-git_commit_or_worktree_state: `declared-input-set:sha256:2277dae240782157ff303feb6e1ab897818050fec715e407f7c7475a408315ce`
+git_commit_or_worktree_state: `declared-input-set:sha256:8ad114210e254403f0f9ebb7dcbca2a17f301dcff7f936a46e18cb85998e98af`
 
 ## Scope
 
@@ -103,7 +103,7 @@ Source `docs/ver2_upgrade/generated/result_pack_A_scalar_to_morphology.json` is 
     "readiness labels are provenance only; not current production readiness"
   ],
   "claim_tier": "diagnostic_only",
-  "code_version": "declared-input-set:sha256:2277dae240782157ff303feb6e1ab897818050fec715e407f7c7475a408315ce",
+  "code_version": "declared-input-set:sha256:8ad114210e254403f0f9ebb7dcbca2a17f301dcff7f936a46e18cb85998e98af",
   "config_hash": "sha256:e7e0272ceb046b83e5a9e25f150e807eb780ab9924a9b724d36d0cc2f2527f62",
   "created_by": "scripts/result_packs/generate_pack_A_scalar_to_morphology.py",
   "failed_gates": [],
@@ -121,7 +121,7 @@ Source `docs/ver2_upgrade/generated/result_pack_A_scalar_to_morphology.json` is 
     "htt/obsstat/null_ensembles.py:sha256:1033f1f4a5a105f455bf11b83bd421052b1520a486493560abd0f80fda16658c",
     "htt/htt/htt/statistics/mes_information_gain.py:sha256:251c44f18fbfe7949dc5b02e6b96db12154ce0488560748c8987458446d991b1",
     "htt/src/common/statistical_foundations.py:sha256:830d1698a8f57dd3a050862f4ee1b59da3b64688774e439171e4c40165939eff",
-    "docs/generated/status_snapshot.json:sha256:90f804c527b01b112c1ef2c076f37086fa1bbc4edb3b390a0f05e4851a4dccf7"
+    "docs/generated/status_snapshot.json:sha256:2599a57db43d856cf794074f2ab43e8c8f1fd108870cbcb22f9c93a5394d41ce"
   ],
   "owner": "COMMON",
   "passed_gates": [

@@ -288,6 +288,36 @@ class DepartureComponents:
                 "Omega_k_ref",
                 _finite_real(self.Omega_k_ref, "Omega_k_ref"),
             )
+        if self.policy is ComparatorPolicy.NULL:
+            if self.Omega_k_ref is not None:
+                raise ValueError("NULL comparator requires Omega_k_ref=None")
+        elif self.Omega_k_ref is None:
+            raise ValueError(
+                f"{self.policy.value.upper()} comparator requires Omega_k_ref"
+            )
+        elif (
+            self.policy is ComparatorPolicy.FLAT
+            and self.Omega_k_ref != 0.0
+        ):
+            raise ValueError("FLAT comparator requires Omega_k_ref=0")
+
+        direct = (
+            self.Sigstd_sq
+            - self.Wstd_sq
+            + self.Omega_tilt
+            + self.Omega_k
+        )
+        _finite_real(direct, "x_C_direct")
+        if self.Omega_k_ref is not None:
+            omega_k_aniso = self.Omega_k - self.Omega_k_ref
+            _finite_real(omega_k_aniso, "Omega_k_aniso")
+            _finite_real(
+                self.Sigstd_sq
+                - self.Wstd_sq
+                + self.Omega_tilt
+                + omega_k_aniso,
+                "x_C",
+            )
 
     @property
     def Omega_k_aniso(self) -> Optional[float]:
@@ -433,9 +463,9 @@ def compute_departure_components(
 
     # Comparator reference
     if policy == ComparatorPolicy.FLAT:
-        resolved_Omega_k_ref = (
-            0.0 if Omega_k_ref_value is None else Omega_k_ref_value
-        )
+        if Omega_k_ref_value is not None and Omega_k_ref_value != 0.0:
+            raise ValueError("FLAT comparator requires Omega_k_ref=0")
+        resolved_Omega_k_ref = 0.0
     elif policy == ComparatorPolicy.MATCHED:
         if Omega_k_ref_value is not None:
             resolved_Omega_k_ref = Omega_k_ref_value
@@ -446,6 +476,8 @@ def compute_departure_components(
             # construction for the matched FLRW branch.
             resolved_Omega_k_ref = Omega_k_value
     else:  # NULL
+        if Omega_k_ref_value is not None:
+            raise ValueError("NULL comparator requires Omega_k_ref=None")
         resolved_Omega_k_ref = None
 
     return DepartureComponents(

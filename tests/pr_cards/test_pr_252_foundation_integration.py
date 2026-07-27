@@ -9,6 +9,7 @@ from pathlib import Path
 import pytest
 import yaml
 
+from bass.validation.comparator_policy import ComparatorPolicy
 from common.contracts import ArtifactManifest
 from common.mes_successor_registry import (
     MesConsumerDeclaration,
@@ -339,6 +340,22 @@ def test_result_card_claim_policy_and_morphology_status_are_not_caller_controlle
                 "status": "native Bianchi family identified",
             },
         )
+    card = StatisticalFoundationResultCard(
+        card_id="morphology-post-init-mutation",
+        departure_state=_state(),
+        morphology_reference={
+            "artifact_id": "obsstat.fixture",
+            "owner": "OBSSTAT",
+            "status": "diagnostic_only",
+        },
+    )
+    with pytest.raises(TypeError):
+        card.morphology_reference["status"] = (  # type: ignore[index]
+            "native Bianchi family identified"
+        )
+    assert card.as_payload()["output_spaces"]["morphology_reference"][
+        "status"
+    ] == "diagnostic_only"
 
 
 def test_active_htt_to_mio_contract_carries_no_evidence_fields(tmp_path: Path) -> None:
@@ -398,6 +415,17 @@ def test_v2_directional_loader_rejects_empty_ids_and_claim_policy_drift() -> Non
         drifted["legacy_projection_summary"][key] = replacement  # type: ignore[index]
         with pytest.raises(ValueError, match=f"{key} policy drift"):
             load_directional_posterior_artifact(drifted)
+
+
+def test_v2_directional_evidences_are_immutable_after_validation() -> None:
+    from htt.integration.posterior_artifact import (
+        load_directional_posterior_artifact,
+    )
+
+    artifact = load_directional_posterior_artifact(_directional_payload())
+    with pytest.raises(TypeError):
+        artifact.model_evidences["FLRW_tilt"] = float("nan")  # type: ignore[index]
+    assert artifact.model_evidences["FLRW_tilt"] == 5.0
 
 
 @pytest.mark.parametrize(
@@ -486,6 +514,88 @@ def test_departure_component_constructor_rejects_invalid_pseudo_state() -> None:
             Omega_k=0.0,
             Omega_k_ref=0.0,
             policy=ComparatorPolicy.FLAT,
+        )
+
+
+@pytest.mark.parametrize(
+    ("policy", "omega_k_ref", "message"),
+    [
+        (ComparatorPolicy.FLAT, None, "requires Omega_k_ref"),
+        (ComparatorPolicy.FLAT, 0.1, "requires Omega_k_ref=0"),
+        (ComparatorPolicy.MATCHED, None, "requires Omega_k_ref"),
+        (ComparatorPolicy.NULL, 0.0, "requires Omega_k_ref=None"),
+    ],
+)
+def test_departure_component_constructor_enforces_policy_reference_identity(
+    policy: ComparatorPolicy,
+    omega_k_ref: float | None,
+    message: str,
+) -> None:
+    from bass.validation.comparator_policy import DepartureComponents
+
+    with pytest.raises(ValueError, match=message):
+        DepartureComponents(
+            Sigstd_sq=1.0,
+            Wstd_sq=0.0,
+            Omega_tilt=0.0,
+            Omega_k=0.0,
+            Omega_k_ref=omega_k_ref,
+            policy=policy,
+        )
+
+
+@pytest.mark.parametrize(
+    ("policy", "omega_k_ref", "message"),
+    [
+        (ComparatorPolicy.FLAT, 0.1, "requires Omega_k_ref=0"),
+        (ComparatorPolicy.NULL, 0.0, "requires Omega_k_ref=None"),
+    ],
+)
+def test_departure_component_factory_rejects_policy_reference_contradictions(
+    policy: ComparatorPolicy,
+    omega_k_ref: float,
+    message: str,
+) -> None:
+    from bass.background.bianchi_types import get_type
+    from bass.validation.comparator_policy import compute_departure_components
+
+    with pytest.raises(ValueError, match=message):
+        compute_departure_components(
+            get_type("I"),
+            sigma_sq=0.0,
+            omega_sq=0.0,
+            H_theta=1.0,
+            Omega_k=0.0,
+            Omega_k_ref=omega_k_ref,
+            policy=policy,
+        )
+
+
+def test_departure_component_constructor_rejects_direct_projection_overflow() -> None:
+    from bass.validation.comparator_policy import DepartureComponents
+
+    with pytest.raises(ValueError, match="x_C_direct must be finite"):
+        DepartureComponents(
+            Sigstd_sq=1.0e308,
+            Wstd_sq=0.0,
+            Omega_tilt=1.0e308,
+            Omega_k=1.0e308,
+            Omega_k_ref=0.0,
+            policy=ComparatorPolicy.MATCHED,
+        )
+
+
+def test_departure_component_constructor_rejects_anisotropic_curvature_overflow() -> None:
+    from bass.validation.comparator_policy import DepartureComponents
+
+    with pytest.raises(ValueError, match="Omega_k_aniso must be finite"):
+        DepartureComponents(
+            Sigstd_sq=0.0,
+            Wstd_sq=0.0,
+            Omega_tilt=0.0,
+            Omega_k=1.0e308,
+            Omega_k_ref=-1.0e308,
+            policy=ComparatorPolicy.MATCHED,
         )
 
 
