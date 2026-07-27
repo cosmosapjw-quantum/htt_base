@@ -104,6 +104,30 @@ class LowEllPoleAnalysisSpec:
         return f"sha256:{hashlib.sha256(encoded).hexdigest()}"
 
 
+def _selection_scores(
+    eigenvalues: tuple[float, float, float] | np.ndarray,
+    definition: PoleDefinition,
+) -> np.ndarray:
+    values = np.asarray(eigenvalues, dtype=float)
+    if definition is PoleDefinition.MAX_ANGULAR_MOMENTUM:
+        return values
+    if definition is PoleDefinition.MIN_ANGULAR_MOMENTUM:
+        return -values
+    return np.abs(values - float(np.mean(values)))
+
+
+def _selection_gap(
+    eigenvalues: tuple[float, float, float] | np.ndarray,
+    definition: PoleDefinition,
+) -> float:
+    scores = _selection_scores(eigenvalues, definition)
+    score_order = np.argsort(scores, kind="stable")
+    return max(
+        0.0,
+        float(scores[int(score_order[-1])] - scores[int(score_order[-2])]),
+    )
+
+
 @dataclass(frozen=True)
 class AntipodalAxis:
     """A unit axis for which ``p`` and ``-p`` denote the same object."""
@@ -167,6 +191,7 @@ class LowEllPoleEstimate:
     eigenvalues: tuple[float, float, float]
     selection_gap: float
     gap_tolerance: float
+    analysis_spec: LowEllPoleAnalysisSpec
 
     def __post_init__(self) -> None:
         ell = _validate_ell(self.ell)
@@ -175,6 +200,10 @@ class LowEllPoleEstimate:
         values = tuple(float(value) for value in self.eigenvalues)
         gap = float(self.selection_gap)
         tolerance = float(self.gap_tolerance)
+        if not isinstance(self.analysis_spec, LowEllPoleAnalysisSpec):
+            raise TypeError(
+                "analysis_spec must be a LowEllPoleAnalysisSpec"
+            )
         if len(values) != 3 or not all(math.isfinite(value) for value in values):
             raise ValueError("eigenvalues must contain three finite values")
         if values != tuple(sorted(values)):
@@ -182,6 +211,23 @@ class LowEllPoleEstimate:
         if not math.isfinite(gap) or gap < 0.0:
             raise ValueError("selection_gap must be finite and non-negative")
         _validate_gap_tolerance(tolerance)
+        if ell not in self.analysis_spec.ell_values:
+            raise ValueError("ell must be registered in analysis_spec")
+        if definition is not self.analysis_spec.definition:
+            raise ValueError("definition must match analysis_spec")
+        if tolerance != self.analysis_spec.gap_tolerance:
+            raise ValueError("gap_tolerance must match analysis_spec")
+        derived_gap = _selection_gap(values, definition)
+        gap_scale = max(1.0, abs(derived_gap), abs(gap))
+        if not math.isclose(
+            gap,
+            derived_gap,
+            rel_tol=0.0,
+            abs_tol=64.0 * np.finfo(float).eps * gap_scale,
+        ):
+            raise ValueError(
+                "selection gap must be derived from eigenvalues and definition"
+            )
         if self.axis is not None and not isinstance(self.axis, AntipodalAxis):
             raise TypeError("axis must be an AntipodalAxis or None")
         object.__setattr__(self, "ell", ell)
@@ -194,6 +240,18 @@ class LowEllPoleEstimate:
             raise ValueError("identified status and axis presence must agree")
         if (status is PoleStatus.IDENTIFIED) != (gap > tolerance):
             raise ValueError("identified status must agree with the selection gap")
+
+    @property
+    def analysis_id(self) -> str:
+        return self.analysis_spec.analysis_id
+
+    @property
+    def coordinate_frame(self) -> str:
+        return self.analysis_spec.coordinate_frame
+
+    @property
+    def harmonic_convention(self) -> str:
+        return self.analysis_spec.harmonic_convention
 
 
 def angular_momentum_power_tensor(
@@ -232,28 +290,26 @@ def estimate_lowell_pole(
     *,
     alm_by_lm: Mapping[tuple[int, int], complex | float],
     ell: int,
-    definition: PoleDefinition | str,
-    gap_tolerance: float,
+    analysis_spec: LowEllPoleAnalysisSpec,
 ) -> LowEllPoleEstimate:
     """Estimate an antipodal pole, abstaining when its eigendirection is tied."""
 
+    if not isinstance(analysis_spec, LowEllPoleAnalysisSpec):
+        raise TypeError(
+            "analysis_spec must be a LowEllPoleAnalysisSpec"
+        )
     ell_i = _validate_ell(ell)
-    definition_i = PoleDefinition(definition)
-    tolerance = _validate_gap_tolerance(gap_tolerance)
+    if ell_i not in analysis_spec.ell_values:
+        raise ValueError("ell must be registered in analysis_spec")
+    definition_i = analysis_spec.definition
+    tolerance = analysis_spec.gap_tolerance
 
     tensor = angular_momentum_power_tensor(alm_by_lm=alm_by_lm, ell=ell_i)
     eigenvalues, eigenvectors = np.linalg.eigh(tensor)
-    if definition_i is PoleDefinition.MAX_ANGULAR_MOMENTUM:
-        scores = eigenvalues
-    elif definition_i is PoleDefinition.MIN_ANGULAR_MOMENTUM:
-        scores = -eigenvalues
-    else:
-        scores = np.abs(eigenvalues - float(np.mean(eigenvalues)))
-
+    scores = _selection_scores(eigenvalues, definition_i)
     score_order = np.argsort(scores, kind="stable")
     selected_index = int(score_order[-1])
-    runner_up_index = int(score_order[-2])
-    gap = max(0.0, float(scores[selected_index] - scores[runner_up_index]))
+    gap = _selection_gap(eigenvalues, definition_i)
     values_tuple = tuple(float(value) for value in eigenvalues)
 
     if gap <= tolerance:
@@ -265,6 +321,7 @@ def estimate_lowell_pole(
             eigenvalues=values_tuple,
             selection_gap=gap,
             gap_tolerance=tolerance,
+            analysis_spec=analysis_spec,
         )
 
     return LowEllPoleEstimate(
@@ -275,6 +332,7 @@ def estimate_lowell_pole(
         eigenvalues=values_tuple,
         selection_gap=gap,
         gap_tolerance=tolerance,
+        analysis_spec=analysis_spec,
     )
 
 
@@ -299,6 +357,18 @@ def mean_squared_multipole_alignment(
         raise TypeError("estimates must contain only LowEllPoleEstimate values")
     if len({item.definition for item in estimates_i}) != 1:
         raise ValueError("alignment estimates must use the same pole definition")
+    if len({item.analysis_id for item in estimates_i}) != 1:
+        raise ValueError(
+            "alignment estimates must use the same analysis identity"
+        )
+    if len({item.coordinate_frame for item in estimates_i}) != 1:
+        raise ValueError(
+            "alignment estimates must use the same coordinate frame"
+        )
+    if len({item.harmonic_convention for item in estimates_i}) != 1:
+        raise ValueError(
+            "alignment estimates must use the same harmonic convention"
+        )
     ells = tuple(item.ell for item in estimates_i)
     if len(set(ells)) != len(ells):
         raise ValueError("alignment estimates must have distinct ell values")

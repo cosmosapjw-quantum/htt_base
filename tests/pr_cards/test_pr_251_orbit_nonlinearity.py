@@ -35,6 +35,10 @@ from htt.departure.multicomponent_response import rank_gain_ladder  # noqa: E402
 from obsstat.lowell_poles import AntipodalAxis  # noqa: E402
 
 
+HELD_OUT_RECEIPT = "sha256:" + "c" * 64
+MATCHED_INJECTION_RECEIPT = "sha256:" + "d" * 64
+
+
 def _state(beta: tuple[float, float, float]) -> DepartureState:
     return DepartureState(
         sigma_ab=(0.4, -0.2, 0.1, 0.3, -0.5),
@@ -65,7 +69,8 @@ def _catalog() -> InvariantCatalogSpec:
 def _competition(
     *,
     winner: CandidateKind,
-    receipt: str = "HELD-OUT-1",
+    receipt: str = HELD_OUT_RECEIPT,
+    matched_injection_receipt: str = MATCHED_INJECTION_RECEIPT,
 ) -> tuple[CandidateEvaluation, ...]:
     kinds = (
         CandidateKind.NONLINEAR,
@@ -81,6 +86,7 @@ def _competition(
             held_out_score=10.0 if kind is winner else 1.0,
             matched_injection_score=9.0 if kind is winner else 0.5,
             held_out_data_id=receipt,
+            matched_injection_data_id=matched_injection_receipt,
         )
         for kind in kinds
     )
@@ -91,6 +97,7 @@ def _report(
     residual: tuple[float, float, float],
     candidates: tuple[CandidateEvaluation, ...] = (),
     receipt: str | None = None,
+    matched_injection_receipt: str | None = None,
 ):
     return decompose_nonlinearity(
         residual=residual,
@@ -101,6 +108,7 @@ def _report(
         covariance_id="COVARIANCE-FIXTURE",
         candidates=candidates,
         held_out_receipt=receipt,
+        matched_injection_receipt=matched_injection_receipt,
         off_manifold_tolerance=1e-12,
         null_residual_tolerance=1e-12,
         nonlinear_gain_margin=1.0,
@@ -181,11 +189,15 @@ def test_preregistered_discrepancy_cases(
 ) -> None:
     del case
     candidates = () if winner is None else _competition(winner=winner)
-    receipt = None if winner is None else "HELD-OUT-1"
+    receipt = None if winner is None else HELD_OUT_RECEIPT
+    matched_receipt = (
+        None if winner is None else MATCHED_INJECTION_RECEIPT
+    )
     report = _report(
         residual=residual,
         candidates=candidates,
         receipt=receipt,
+        matched_injection_receipt=matched_receipt,
     )
     assert report.attribution_status is expected
 
@@ -212,7 +224,8 @@ def test_anchor_stress_and_nonlinearity_remain_separate_outputs() -> None:
     nonlinear = _report(
         residual=(1.0, 1.0, 0.0),
         candidates=_competition(winner=CandidateKind.NONLINEAR),
-        receipt="HELD-OUT-1",
+        receipt=HELD_OUT_RECEIPT,
+        matched_injection_receipt=MATCHED_INJECTION_RECEIPT,
     )
     assert nonlinear.attribution_status is NonlinearityAttributionStatus.NONLINEAR_COMPATIBLE
     assert within.exceedance != exceeded.exceedance
@@ -228,7 +241,8 @@ def test_incomplete_alternative_registry_cannot_authorize_nonlinear_label() -> N
     report = _report(
         residual=(1.0, 1.0, 0.0),
         candidates=incomplete,
-        receipt="HELD-OUT-1",
+        receipt=HELD_OUT_RECEIPT,
+        matched_injection_receipt=MATCHED_INJECTION_RECEIPT,
     )
     assert (
         report.attribution_status

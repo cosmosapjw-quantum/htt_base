@@ -54,6 +54,7 @@ class CandidateKind(_StringEnum):
 class NonlinearityAttributionStatus(_StringEnum):
     LINEAR_COMPATIBLE = "LINEAR_COMPATIBLE"
     NONLINEAR_COMPATIBLE = "NONLINEAR_COMPATIBLE"
+    NON_IDENTIFIED_RESPONSE = "NON_IDENTIFIED_RESPONSE"
     UNATTRIBUTED_OFF_MANIFOLD = "UNATTRIBUTED_OFF_MANIFOLD"
     OUTSIDE_SUPPORTED_QUOTIENT = "OUTSIDE_SUPPORTED_QUOTIENT"
     MISSING_RESPONSE = "MISSING_RESPONSE"
@@ -63,6 +64,7 @@ STF5_CARTESIAN_BASIS = "STF5_CARTESIAN_XX_YY_XY_XZ_YZ_V1"
 DEPARTURE_O3_PARITY = (
     "SIGMA_STF2;OMEGA_AXIAL;BETA_POLAR;DELTA_OMEGA_K_SCALAR"
 )
+DEPARTURE_O3_UNITS = "dimensionless"
 ACTIVE_O3_CONVENTION = "ACTIVE_CARTESIAN_COMPONENT_ACTION_V1"
 FOUND_EQUIV_STATUS = "ACTIVE_CONDITIONAL"
 FOUND_EQUIV_PREREQUISITE = "EGS3-B1"
@@ -105,6 +107,16 @@ def _contains_bool(value: object) -> bool:
     return False
 
 
+def _contains_complex(value: object) -> bool:
+    if isinstance(value, (complex, np.complexfloating)):
+        return True
+    if isinstance(value, np.ndarray):
+        return value.dtype.kind == "c"
+    if isinstance(value, (tuple, list)):
+        return any(_contains_complex(item) for item in value)
+    return False
+
+
 def _array(
     value: object,
     name: str,
@@ -114,6 +126,8 @@ def _array(
 ) -> np.ndarray:
     if _contains_bool(value):
         raise OrbitNonlinearityError(f"{name} must not contain booleans")
+    if _contains_complex(value):
+        raise OrbitNonlinearityError(f"{name} must be real, not complex")
     try:
         out = np.asarray(value, dtype=float)
     except (TypeError, ValueError) as exc:
@@ -132,6 +146,8 @@ def _array(
 def _real(value: object, name: str) -> float:
     if isinstance(value, (bool, np.bool_)):
         raise OrbitNonlinearityError(f"{name} must not be boolean")
+    if isinstance(value, (complex, np.complexfloating)):
+        raise OrbitNonlinearityError(f"{name} must be real, not complex")
     try:
         out = float(value)
     except (TypeError, ValueError) as exc:
@@ -155,10 +171,32 @@ def _positive(value: object, name: str) -> float:
     return out
 
 
+def _relative_tolerance(value: object, name: str = "rtol") -> float:
+    out = _positive(value, name)
+    if out > 1.0e-3:
+        raise OrbitNonlinearityError(
+            f"{name} must be at most 1e-3 for rank/covariance decisions"
+        )
+    return out
+
+
 def _text(value: object, name: str) -> str:
     if not isinstance(value, str) or not value.strip() or value != value.strip():
         raise OrbitNonlinearityError(f"{name} must be non-empty trimmed text")
     return value
+
+
+def _evidence_receipt(value: object, name: str) -> str:
+    out = _text(value, name)
+    prefix = "sha256:"
+    digest = out[len(prefix) :] if out.startswith(prefix) else ""
+    if len(digest) != 64 or any(
+        character not in "0123456789abcdef" for character in digest
+    ):
+        raise OrbitNonlinearityError(
+            f"{name} must be a lowercase sha256 content identity"
+        )
+    return out
 
 
 def _texts(
@@ -190,12 +228,16 @@ class OrientedDirection:
 
     def __post_init__(self) -> None:
         vector = _array(self.vector, "vector", shape=(3,))
-        norm = float(np.linalg.norm(vector))
-        if norm == 0.0:
+        scale = float(np.max(np.abs(vector)))
+        if scale == 0.0:
             raise OrbitNonlinearityError("vector must be non-zero")
+        scaled = vector / scale
+        norm = float(np.linalg.norm(scaled))
+        if not math.isfinite(norm) or norm == 0.0:
+            raise OrbitNonlinearityError("vector cannot be normalized safely")
         if not isinstance(self.parity, VectorParity):
             raise OrbitNonlinearityError("parity must be a VectorParity")
-        unit = vector / norm
+        unit = scaled / norm
         object.__setattr__(
             self, "vector", tuple(float(value) for value in unit)
         )
@@ -225,6 +267,10 @@ class O3Transform:
     def __post_init__(self) -> None:
         matrix = _array(self.matrix, "matrix", shape=(3, 3))
         atol = _positive(self.atol, "atol")
+        if atol > 1.0e-6:
+            raise OrbitNonlinearityError(
+                "atol must be at most 1e-6 for an O(3) contract"
+            )
         if not np.allclose(
             matrix.T @ matrix, np.eye(3), atol=atol, rtol=0.0
         ):
@@ -371,6 +417,8 @@ class OrbitInvariantReport:
     epoch_window: str
     averaging_scale: str
     basis: str
+    units: str
+    parity: str
     perturbative_order: str
     allowed_use: tuple[str, ...] = _DIAGNOSTIC_ALLOWED_USE
     forbidden_use: tuple[str, ...] = _DIAGNOSTIC_FORBIDDEN_USE
@@ -395,6 +443,8 @@ class OrbitInvariantReport:
             "epoch_window",
             "averaging_scale",
             "basis",
+            "units",
+            "parity",
             "perturbative_order",
         ):
             _text(getattr(self, name), name)
@@ -428,6 +478,14 @@ def orbit_invariants(
         raise OrbitNonlinearityError(
             "orbit invariants require the registered STF5 Cartesian basis"
         )
+    if state.units != DEPARTURE_O3_UNITS:
+        raise OrbitNonlinearityError(
+            "orbit invariants require the registered dimensionless units"
+        )
+    if state.parity != DEPARTURE_O3_PARITY:
+        raise OrbitNonlinearityError(
+            "orbit invariants require the registered STF/axial/polar parity"
+        )
     sigma = stf5_to_matrix(state.sigma_ab)
     sigma2 = sigma @ sigma
     beta = np.asarray(state.beta_a)
@@ -451,6 +509,8 @@ def orbit_invariants(
         epoch_window=state.epoch_window,
         averaging_scale=state.averaging_scale,
         basis=state.basis,
+        units=state.units,
+        parity=state.parity,
         perturbative_order=state.perturbative_order,
     )
 
@@ -524,6 +584,10 @@ class ResponseRankReport:
                 raise OrbitNonlinearityError(
                     f"{name} must be a non-negative integer"
                 )
+        if self.parameter_dimension == 0 or self.data_dimension == 0:
+            raise OrbitNonlinearityError(
+                "MEASURED rank report requires positive matrix dimensions"
+            )
         if self.rank > min(
             self.parameter_dimension, self.supported_data_dimension
         ):
@@ -587,9 +651,12 @@ def _covariance_support(
     *,
     rtol: float,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray, float]:
+    rtol = _relative_tolerance(rtol)
     value = _array(covariance, "covariance", ndim=2)
     if value.shape[0] != value.shape[1]:
         raise OrbitNonlinearityError("covariance must be square")
+    if value.shape[0] == 0:
+        raise OrbitNonlinearityError("covariance must not be empty")
     scale = float(np.max(np.abs(value), initial=0.0))
     symmetry_tolerance = 64.0 * np.finfo(float).eps * scale
     if not np.allclose(value, value.T, atol=symmetry_tolerance, rtol=0.0):
@@ -687,8 +754,12 @@ def measure_response_rank(
             covariance_id=covariance_id,
             missing_inputs=missing,
         )
-    rtol = _positive(rtol, "rtol")
+    rtol = _relative_tolerance(rtol)
     matrix = _array(response, "response", ndim=2)
+    if matrix.shape[0] == 0 or matrix.shape[1] == 0:
+        raise OrbitNonlinearityError(
+            "response must have positive data and parameter dimensions"
+        )
     for name, value in (
         ("transfer_id", transfer_id),
         ("mask_id", mask_id),
@@ -738,6 +809,7 @@ class CandidateEvaluation:
     held_out_score: float
     matched_injection_score: float
     held_out_data_id: str
+    matched_injection_data_id: str
 
     def __post_init__(self) -> None:
         _text(self.candidate_id, "candidate_id")
@@ -751,7 +823,23 @@ class CandidateEvaluation:
             "matched_injection_score",
             _real(self.matched_injection_score, "matched_injection_score"),
         )
-        _text(self.held_out_data_id, "held_out_data_id")
+        object.__setattr__(
+            self,
+            "held_out_data_id",
+            _evidence_receipt(self.held_out_data_id, "held_out_data_id"),
+        )
+        object.__setattr__(
+            self,
+            "matched_injection_data_id",
+            _evidence_receipt(
+                self.matched_injection_data_id,
+                "matched_injection_data_id",
+            ),
+        )
+        if self.held_out_data_id == self.matched_injection_data_id:
+            raise OrbitNonlinearityError(
+                "held-out and matched-injection data identities must differ"
+            )
 
 
 @dataclass(frozen=True)
@@ -763,6 +851,7 @@ class NonlinearityReport:
     response_rank: ResponseRankReport
     candidate_comparisons: tuple[CandidateEvaluation, ...]
     held_out_receipt: str | None
+    matched_injection_receipt: str | None
     off_manifold_tolerance: float | None
     null_residual_tolerance: float | None
     nonlinear_gain_margin: float | None
@@ -785,6 +874,10 @@ class NonlinearityReport:
                 "attribution_status must be a NonlinearityAttributionStatus"
             )
         if self.attribution_status is NonlinearityAttributionStatus.MISSING_RESPONSE:
+            if self.response_rank.status is not ResponseRankStatus.MISSING_INPUT:
+                raise OrbitNonlinearityError(
+                    "MISSING_RESPONSE requires a missing-input rank report"
+                )
             if any(
                 value is not None
                 for value in (
@@ -801,6 +894,10 @@ class NonlinearityReport:
                     "MISSING_RESPONSE report cannot carry statistics"
                 )
         else:
+            if self.response_rank.status is not ResponseRankStatus.MEASURED:
+                raise OrbitNonlinearityError(
+                    "non-missing attribution requires a measured rank report"
+                )
             object.__setattr__(
                 self,
                 "tangent_statistic",
@@ -854,15 +951,53 @@ class NonlinearityReport:
         if len({value.candidate_id for value in comparisons}) != len(comparisons):
             raise OrbitNonlinearityError("candidate ids must be unique")
         object.__setattr__(self, "candidate_comparisons", comparisons)
+        if (
+            self.attribution_status
+            is NonlinearityAttributionStatus.MISSING_RESPONSE
+            and (
+                comparisons
+                or self.held_out_receipt is not None
+                or self.matched_injection_receipt is not None
+            )
+        ):
+            raise OrbitNonlinearityError(
+                "MISSING_RESPONSE report cannot carry candidate evidence"
+            )
         if self.held_out_receipt is not None:
-            _text(self.held_out_receipt, "held_out_receipt")
+            object.__setattr__(
+                self,
+                "held_out_receipt",
+                _evidence_receipt(
+                    self.held_out_receipt, "held_out_receipt"
+                ),
+            )
+        if self.matched_injection_receipt is not None:
+            object.__setattr__(
+                self,
+                "matched_injection_receipt",
+                _evidence_receipt(
+                    self.matched_injection_receipt,
+                    "matched_injection_receipt",
+                ),
+            )
+        if (
+            self.held_out_receipt is not None
+            and self.held_out_receipt == self.matched_injection_receipt
+        ):
+            raise OrbitNonlinearityError(
+                "held-out and matched-injection receipts must differ"
+            )
         if (
             self.attribution_status
             is NonlinearityAttributionStatus.NONLINEAR_COMPATIBLE
-            and self.held_out_receipt is None
+            and (
+                self.held_out_receipt is None
+                or self.matched_injection_receipt is None
+            )
         ):
             raise OrbitNonlinearityError(
-                "NONLINEAR_COMPATIBLE requires a held-out receipt"
+                "NONLINEAR_COMPATIBLE requires held-out and "
+                "matched-injection receipts"
             )
         if self.attribution_status is not NonlinearityAttributionStatus.MISSING_RESPONSE:
             null_outside = (
@@ -879,10 +1014,15 @@ class NonlinearityReport:
             )
             complete = (
                 self.held_out_receipt is not None
+                and self.matched_injection_receipt is not None
                 and bool(nonlinear)
                 and _REQUIRED_ALTERNATIVES.issubset(kinds)
                 and all(
-                    value.held_out_data_id == self.held_out_receipt
+                    (
+                        value.held_out_data_id == self.held_out_receipt
+                        and value.matched_injection_data_id
+                        == self.matched_injection_receipt
+                    )
                     for value in comparisons
                 )
             )
@@ -907,15 +1047,19 @@ class NonlinearityReport:
                     + self.nonlinear_gain_margin
                 )
             expected = (
-                NonlinearityAttributionStatus.OUTSIDE_SUPPORTED_QUOTIENT
-                if null_outside
+                NonlinearityAttributionStatus.NON_IDENTIFIED_RESPONSE
+                if not self.response_rank.identifiable
                 else (
-                    NonlinearityAttributionStatus.LINEAR_COMPATIBLE
-                    if not off_manifold
+                    NonlinearityAttributionStatus.OUTSIDE_SUPPORTED_QUOTIENT
+                    if null_outside
                     else (
-                        NonlinearityAttributionStatus.NONLINEAR_COMPATIBLE
-                        if nonlinear_wins
-                        else NonlinearityAttributionStatus.UNATTRIBUTED_OFF_MANIFOLD
+                        NonlinearityAttributionStatus.LINEAR_COMPATIBLE
+                        if not off_manifold
+                        else (
+                            NonlinearityAttributionStatus.NONLINEAR_COMPATIBLE
+                            if nonlinear_wins
+                            else NonlinearityAttributionStatus.UNATTRIBUTED_OFF_MANIFOLD
+                        )
                     )
                 )
             )
@@ -951,6 +1095,7 @@ def decompose_nonlinearity(
     covariance_id: str | None,
     candidates: Sequence[CandidateEvaluation] = (),
     held_out_receipt: str | None = None,
+    matched_injection_receipt: str | None = None,
     off_manifold_tolerance: float,
     null_residual_tolerance: float,
     nonlinear_gain_margin: float,
@@ -981,6 +1126,7 @@ def decompose_nonlinearity(
             response_rank=rank_report,
             candidate_comparisons=(),
             held_out_receipt=None,
+            matched_injection_receipt=None,
             off_manifold_tolerance=None,
             null_residual_tolerance=None,
             nonlinear_gain_margin=None,
@@ -996,7 +1142,7 @@ def decompose_nonlinearity(
         null_residual_tolerance, "null_residual_tolerance"
     )
     gain_margin = _positive(nonlinear_gain_margin, "nonlinear_gain_margin")
-    rtol = _positive(rtol, "rtol")
+    rtol = _relative_tolerance(rtol)
     residual_vector = _array(residual, "residual", ndim=1)
     response = _array(tangent_response, "tangent_response", ndim=2)
     if residual_vector.shape[0] != response.shape[0]:
@@ -1034,7 +1180,12 @@ def decompose_nonlinearity(
     if len({value.candidate_id for value in comparisons}) != len(comparisons):
         raise OrbitNonlinearityError("candidate ids must be unique")
 
-    if null_residual_sq > null_tolerance:
+    if not rank_report.identifiable:
+        status = NonlinearityAttributionStatus.NON_IDENTIFIED_RESPONSE
+        rationale = (
+            "response rank is below the registered parameter dimension"
+        )
+    elif null_residual_sq > null_tolerance:
         status = NonlinearityAttributionStatus.OUTSIDE_SUPPORTED_QUOTIENT
         rationale = (
             "residual has a component in the covariance-null subspace"
@@ -1049,10 +1200,15 @@ def decompose_nonlinearity(
         )
         if (
             held_out_receipt is None
+            or matched_injection_receipt is None
             or not nonlinear
             or not _REQUIRED_ALTERNATIVES.issubset(kinds)
             or any(
-                value.held_out_data_id != held_out_receipt
+                (
+                    value.held_out_data_id != held_out_receipt
+                    or value.matched_injection_data_id
+                    != matched_injection_receipt
+                )
                 for value in comparisons
             )
         ):
@@ -1098,6 +1254,7 @@ def decompose_nonlinearity(
         response_rank=rank_report,
         candidate_comparisons=comparisons,
         held_out_receipt=held_out_receipt,
+        matched_injection_receipt=matched_injection_receipt,
         off_manifold_tolerance=off_tolerance,
         null_residual_tolerance=null_tolerance,
         nonlinear_gain_margin=gain_margin,
@@ -1111,6 +1268,7 @@ __all__ = [
     "CandidateEvaluation",
     "CandidateKind",
     "DEPARTURE_O3_PARITY",
+    "DEPARTURE_O3_UNITS",
     "FOUND_EQUIV_PREREQUISITE",
     "FOUND_EQUIV_STATUS",
     "InvariantCatalogSpec",
