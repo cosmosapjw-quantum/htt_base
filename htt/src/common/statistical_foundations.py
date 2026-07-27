@@ -79,6 +79,15 @@ def _finite_nonnegative(value: object, field_name: str) -> float:
     return out
 
 
+def _finite_positive(value: object, field_name: str) -> float:
+    out = _finite_nonnegative(value, field_name)
+    if out == 0.0:
+        raise StatisticalFoundationError(
+            f"{field_name} must be a finite positive real number"
+        )
+    return out
+
+
 def _text_tuple(values: Iterable[object], field_name: str) -> tuple[str, ...]:
     out = tuple(_required_text(value, field_name) for value in values)
     if not out:
@@ -86,6 +95,26 @@ def _text_tuple(values: Iterable[object], field_name: str) -> tuple[str, ...]:
     if len(set(out)) != len(out):
         raise StatisticalFoundationError(f"{field_name} must not contain duplicates")
     return out
+
+
+_VERIFIED_MES_CHANNELS: dict[str, dict[str, str]] = {
+    "MES_G_SIGMA": {
+        "target_sector": "Sigma2",
+        "target_invariant": "sigma_ab_sigma_ab_over_6H2",
+        "frame": "registered MES fundamental-observer frame",
+        "congruence": "geodesic",
+        "normalization": "Sigma2_std",
+        "perturbative_order": "linear almost-EGS",
+    },
+    "MES_G_OMEGA": {
+        "target_sector": "W2",
+        "target_invariant": "omega_ab_omega_ab_over_6H2",
+        "frame": "registered MES fundamental-observer frame",
+        "congruence": "geodesic",
+        "normalization": "W2_std",
+        "perturbative_order": "linear almost-EGS",
+    },
+}
 
 
 @dataclass(frozen=True)
@@ -160,10 +189,34 @@ class MESAnchorSpec:
                 raise StatisticalFoundationError(
                     "NO_MES_ANCHOR must carry value=None"
                 )
+        elif self.status is AnchorStatus.VERIFIED:
+            object.__setattr__(
+                self, "value", _finite_positive(self.value, "value")
+            )
         else:
             object.__setattr__(
                 self, "value", _finite_nonnegative(self.value, "value")
             )
+
+        if (
+            self.status is AnchorStatus.VERIFIED
+            and self.authority_kind is AnchorAuthorityKind.MES
+        ):
+            registered = _VERIFIED_MES_CHANNELS.get(self.branch)
+            if registered is None:
+                raise StatisticalFoundationError(
+                    "verified MES anchors require a registered geodesic branch"
+                )
+            mismatches = tuple(
+                name
+                for name, expected in registered.items()
+                if getattr(self, name) != expected
+            )
+            if mismatches:
+                raise StatisticalFoundationError(
+                    "verified MES anchor metadata does not match the registered "
+                    f"branch: {', '.join(mismatches)}"
+                )
 
         if self.status is AnchorStatus.WITHHELD:
             _required_text(self.withheld_reason, "withheld_reason")
@@ -187,7 +240,17 @@ class MESAnchorSpec:
 
     @property
     def normalization_allowed(self) -> bool:
-        return self.status is AnchorStatus.VERIFIED
+        if self.status is not AnchorStatus.VERIFIED:
+            return False
+        if self.value is None or self.value <= 0.0:
+            return False
+        if self.authority_kind is not AnchorAuthorityKind.MES:
+            return True
+        registered = _VERIFIED_MES_CHANNELS.get(self.branch)
+        return registered is not None and all(
+            getattr(self, name) == expected
+            for name, expected in registered.items()
+        )
 
 
 def _branch_bound(

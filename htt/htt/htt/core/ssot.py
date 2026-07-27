@@ -104,6 +104,34 @@ class C:
 
 # ─── Conversion functions ────────────────────────────────────
 
+def _validated_nonnegative_numeric(value, name):
+    """Return a non-empty finite array without silently coercing booleans."""
+    def contains_bool(item):
+        if isinstance(item, (bool, np.bool_)):
+            return True
+        if isinstance(item, np.ndarray):
+            if item.dtype.kind == 'b':
+                return True
+            if item.dtype.kind == 'O':
+                return any(contains_bool(element) for element in item.flat)
+            return False
+        if isinstance(item, (list, tuple)):
+            return any(contains_bool(element) for element in item)
+        return False
+
+    if contains_bool(value):
+        raise TypeError(f"{name} must not contain boolean values")
+    try:
+        values = np.asarray(value, dtype=float)
+    except (TypeError, ValueError) as exc:
+        raise TypeError(f"{name} must be numeric") from exc
+    if values.size == 0:
+        raise ValueError(f"{name} must not be empty")
+    if np.any(~np.isfinite(values)) or np.any(values < 0.0):
+        raise ValueError(f"{name} must be finite and non-negative")
+    return values
+
+
 def eps_ell(D_ell, ell):
     """Convert power ``D_l`` to the dimensionless multipole amplitude.
 
@@ -114,9 +142,7 @@ def eps_ell(D_ell, ell):
         raise TypeError("ell must be an integer")
     if ell < 1:
         raise ValueError("ell must be >= 1")
-    values = np.asarray(D_ell, dtype=float)
-    if np.any(~np.isfinite(values)) or np.any(values < 0.0):
-        raise ValueError("D_ell must be finite and non-negative")
+    values = _validated_nonnegative_numeric(D_ell, "D_ell")
     return np.sqrt((2*ell + 1) * values / (2 * ell * (ell + 1))) / C.T0_uK
 
 def D_ell_from_eps(eps, ell):
@@ -125,9 +151,7 @@ def D_ell_from_eps(eps, ell):
         raise TypeError("ell must be an integer")
     if ell < 1:
         raise ValueError("ell must be >= 1")
-    values = np.asarray(eps, dtype=float)
-    if np.any(~np.isfinite(values)) or np.any(values < 0.0):
-        raise ValueError("eps must be finite and non-negative")
+    values = _validated_nonnegative_numeric(eps, "eps")
     return (
         2 * ell * (ell + 1) * values**2 * C.T0_uK**2 / (2*ell + 1)
     )

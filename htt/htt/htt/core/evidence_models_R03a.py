@@ -512,6 +512,13 @@ class BianchiModel:
 
     @staticmethod
     def _mes_ok(Sig2, eps1_intrinsic=0.):
+        if (
+            isinstance(Sig2, (bool, np.bool_))
+            or not isinstance(Sig2, (int, float, np.integer, np.floating))
+            or not np.isfinite(Sig2)
+            or Sig2 < 0.0
+        ):
+            return False
         EPS1_KIN = 1.233e-3
         eps1_total = EPS1_KIN + eps1_intrinsic
         ceil = _active_sig2_mes_ceiling(eps1_total)
@@ -521,7 +528,7 @@ class BianchiModel:
 def _active_sig2_mes_ceiling(e1_total):
     """Return the verified uncorrected geodesic shear anchor for this input."""
     anchor = registered_geodesic_mes_anchors(
-        eps1=float(e1_total),
+        eps1=e1_total,
         eps2=EPS2,
         eps3=EPS3,
         attribution=(

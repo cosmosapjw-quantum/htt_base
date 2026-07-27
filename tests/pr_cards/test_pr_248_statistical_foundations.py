@@ -10,8 +10,10 @@ import pytest
 
 from common.nt2_bracket_authority import require_bracket_agreement
 from common.statistical_foundations import (
+    AnchorAuthorityKind,
     AnchorConditioning,
     AnchorStatus,
+    MESAnchorSpec,
     StatisticalFoundationError,
     quarantined_shear_anchors,
     registered_geodesic_mes_anchors,
@@ -68,6 +70,24 @@ def test_dl_conversion_fails_closed(value: float, ell: int, error: type[Exceptio
         eps_ell(value, ell)
 
 
+@pytest.mark.parametrize(
+    ("function", "value", "error"),
+    (
+        (eps_ell, True, TypeError),
+        (eps_ell, [1.0, True], TypeError),
+        (eps_ell, np.array([], dtype=float), ValueError),
+        (D_ell_from_eps, False, TypeError),
+        (D_ell_from_eps, [1.0, False], TypeError),
+        (D_ell_from_eps, np.array([], dtype=float), ValueError),
+    ),
+)
+def test_dl_conversion_rejects_bool_and_empty_payloads(
+    function, value, error: type[Exception]
+) -> None:
+    with pytest.raises(error):
+        function(value, 2)
+
+
 def _anchors():
     return registered_geodesic_mes_anchors(
         eps1=0.0,
@@ -92,6 +112,30 @@ def test_only_verified_geodesic_numeric_anchors_are_active() -> None:
         anchor.branch not in {"MES_NG_OMEGA", "MES_NG_ACCEL"}
         for anchor in anchors.values()
     )
+
+
+def test_forged_or_zero_verified_mes_anchor_cannot_normalize() -> None:
+    sigma = _anchors()["sigma"]
+    fields = dict(sigma.__dict__)
+    fields["value"] = 0.0
+    with pytest.raises(StatisticalFoundationError, match="positive"):
+        MESAnchorSpec(**fields)
+
+    fields = dict(sigma.__dict__)
+    fields["frame"] = "forged frame"
+    with pytest.raises(StatisticalFoundationError, match="metadata"):
+        MESAnchorSpec(**fields)
+
+    fields = dict(sigma.__dict__)
+    fields["branch"] = "MES_NG_SIGMA"
+    with pytest.raises(StatisticalFoundationError, match="registered geodesic"):
+        MESAnchorSpec(**fields)
+
+    fields = dict(sigma.__dict__)
+    fields["authority_kind"] = AnchorAuthorityKind.LEGACY
+    fields["status"] = AnchorStatus.LEGACY_REPRODUCTION
+    legacy = MESAnchorSpec(**fields)
+    assert legacy.normalization_allowed is False
 
 
 def test_anchor_conditioning_and_attribution_are_mandatory() -> None:
@@ -160,6 +204,10 @@ def test_live_likelihood_uses_uncorrected_typed_geodesic_anchor() -> None:
     assert active < legacy_corrected
     midpoint = 0.5 * (active + legacy_corrected)
     assert BianchiModel._mes_ok(midpoint) is False
+    assert BianchiModel._mes_ok(-1e-12) is False
+    assert BianchiModel._mes_ok(True) is False
+    with pytest.raises(StatisticalFoundationError, match="eps1"):
+        _active_sig2_mes_ceiling(True)
 
 
 def test_psd_shell_uses_registered_reciprocal_bracket() -> None:
