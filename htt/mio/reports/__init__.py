@@ -1,14 +1,6 @@
-"""MIO report-card surfaces for diagnostic x/Q/Pi/F/G bookkeeping."""
+"""Active MIO report-card surfaces."""
 from __future__ import annotations
 
-from .departure_report import (
-    DepartureReport,
-    DepartureReportSection,
-    build_departure_report,
-)
+from .statistical_foundation import StatisticalFoundationResultCard
 
-__all__ = [
-    "DepartureReport",
-    "DepartureReportSection",
-    "build_departure_report",
-]
+__all__ = ["StatisticalFoundationResultCard"]

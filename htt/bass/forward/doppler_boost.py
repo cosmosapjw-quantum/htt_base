@@ -34,6 +34,17 @@ background, not a dependency.
 """
 from __future__ import annotations
 
+import warnings
+
+LEGACY_REPRODUCTION_ONLY = True
+
+warnings.warn(
+    "bass.forward.doppler_boost preserves a withheld historical MES "
+    "correction derivation",
+    DeprecationWarning,
+    stacklevel=2,
+)
+
 import numpy as np
 
 # PR-124: active MES consumers traverse the typed successor registry

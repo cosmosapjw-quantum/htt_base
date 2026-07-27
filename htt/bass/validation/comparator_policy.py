@@ -10,15 +10,15 @@ The master departure identity (ch03 Thm 3.master-defect-id) is:
 
     x_C = Σ²_std - W²_std + Ω_tilt + Ω_{k,aniso}
 
-where x_C is the comparator-dependent FLRW departure scalar and
+where x_C is the comparator-dependent signed budget coordinate and
 Ω_{k,aniso} = Ω_k - Ω_{k,ref}. The choice of comparator determines Ω_{k,ref}:
 
-  - FLAT comparator (Ω_{k,ref} = 0): always well-defined; "distance from flat"
+  - FLAT comparator (Ω_{k,ref} = 0): always algebraically well-defined
   - MATCHED comparator (Ω_{k,ref} = Ω_k^FLRW of matched type): only valid when
     the Bianchi type admits an FLRW limit
   - NULL comparator: for cosmologically marginal types (no FLRW limit) where
     neither FLAT nor MATCHED carries unambiguous physical meaning — in this
-    case only x_C^direct (raw departure scalar) is reported, with F undefined
+    case only x_C^direct (raw signed projection) is reported
 
 Type compatibility (from ch03 §sec:ceiling-semantics + ch04 §sec:classAB)
 ------------------------------------------------------------------------
@@ -40,22 +40,19 @@ Type compatibility (from ch03 §sec:ceiling-semantics + ch04 §sec:classAB)
   ❌ = undefined (MATCHED requires matched FLRW limit)
   ✅ default = canonical choice for the type
 
-Filling fraction semantics
----------------------------
-For types with x_C ≥ 0 under the chosen comparator, the filling fraction
-F_C = x / x_max_C ∈ [0, 1] is well-defined and carries the "MES bound
-occupancy" interpretation.
-
-For types with x_C < 0 (negative irrotational sector; ch03 §sec:sector-partition),
-F_C is undefined in the unsigned sense; the signed saturation coordinate
-F_C^± = x / |x_max_C| ∈ (-∞, 1] is reported instead.
+Ratio semantics
+---------------
+The active module never divides this cross-sector signed projection by a bare
+``x_max``.  A valid stress requires a non-negative identified sector and an
+exactly channel-matched typed anchor.  Historical ``x_C/x_max`` arithmetic
+lives only in ``bass.validation.legacy_comparator_policy``.
 
 This module provides the logic for:
   1. Determining the appropriate comparator per type (`recommend_comparator`)
   2. Computing x_C given structure constants + kinematic variables
      (`compute_x_C` — Week 5 wires up; Day 3 provides API shape)
   3. Structured-null handling for Type IV and other marginal types
-  4. Filling fraction F_C with sign-aware behaviour
+  4. Typed channel-matched anchor stress
 
 References
 ----------
@@ -66,13 +63,23 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from enum import Enum
-from typing import Optional, Tuple
+from typing import Optional, Sequence
 import warnings
 
+from common.statistical_foundations import (
+    MESAnchorSpec,
+    ScalarRange,
+    SectorStress,
+    evaluate_sector_stress,
+)
+from common.mes_successor_registry import current_mes_successor_registry
 from bass.background.bianchi_types import (
     StructureConstants,
     TYPES_WITH_FLRW_LIMIT, MARGINAL_TYPES,
 )
+
+_MES_SUCCESSOR = current_mes_successor_registry().successor
+_MES_SUCCESSOR_ID = _MES_SUCCESSOR.successor_id
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -83,14 +90,14 @@ class ComparatorPolicy(Enum):
     """Comparator choice for the departure identity x_C = ... + Ω_{k,aniso}.
 
     FLAT: Ω_{k,ref} = 0 (Euclidean FLRW comparator). Always valid but does
-          not carry physical "deviation-from-matched-FLRW" meaning for
+          not carry distance-from-matched-FLRW meaning for
           curvature-carrying types.
 
     MATCHED: Ω_{k,ref} = Ω_k^FLRW of the FLRW limit of this type. Only valid
              for types with an FLRW limit (I, V, VII_0, VII_h, IX).
 
-    NULL: No comparator applied. Only the raw departure scalar x_C^direct is
-          reported; filling fraction F is undefined. Used for marginal types
+    NULL: No comparator applied. Only the raw signed projection x_C^direct is
+          reported. Used for marginal types
           (II, III, IV, VI_0, VI_h, VIII) where MATCHED is undefined and
           FLAT carries ambiguous meaning.
     """
@@ -109,13 +116,18 @@ class ComparatorStatus:
 
     @property
     def x_C_defined(self) -> bool:
-        """Whether x_C carries a physical "deviation from comparator" meaning."""
+        """Deprecated alias: whether a comparator-defined projection exists."""
         return self.is_valid and self.policy != ComparatorPolicy.NULL
 
     @property
     def F_C_defined(self) -> bool:
-        """Whether the filling fraction F_C is defined in the unsigned sense."""
-        return self.x_C_defined  # further restricted by sign of x_C at runtime
+        """Deprecated compatibility flag; never authorizes an active ratio."""
+        return False
+
+    @property
+    def signed_budget_coordinate_defined(self) -> bool:
+        """Whether the comparator-defined signed algebraic projection exists."""
+        return self.is_valid and self.policy != ComparatorPolicy.NULL
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -133,7 +145,7 @@ def recommend_comparator(type_label: str) -> ComparatorPolicy:
     """Recommend the canonical comparator for a given Bianchi type.
 
     Recommendation policy:
-      - If the type admits an FLRW limit → MATCHED (physical deviation)
+      - If the type admits an FLRW limit → MATCHED (algebraic comparator)
       - Otherwise → NULL (comparator-free reporting)
 
     The FLAT comparator is always available as a secondary option but is
@@ -231,7 +243,7 @@ class DepartureComponents:
 
     @property
     def x_C(self) -> Optional[float]:
-        """Master departure identity x_C. Returns None if NULL comparator."""
+        """Signed budget projection x_C. Returns None for a NULL comparator."""
         oka = self.Omega_k_aniso
         if oka is None:
             return None
@@ -239,7 +251,7 @@ class DepartureComponents:
 
     @property
     def x_C_direct(self) -> float:
-        """Raw departure scalar without comparator subtraction.
+        """Raw signed projection without comparator subtraction.
 
         x_C^direct = Σ²_std - W²_std + Ω_tilt + Ω_k
 
@@ -366,45 +378,29 @@ def compute_departure_components(
 
 
 # ═══════════════════════════════════════════════════════════════
-# §4 — Filling fraction F_C with sign-aware behaviour
+# §4 — Typed, channel-matched anchor stress
 # ═══════════════════════════════════════════════════════════════
 
-def filling_fraction(
-    comp: DepartureComponents,
-    x_max: float,
-) -> Tuple[Optional[float], str]:
-    """Compute filling fraction F_C = x_C / x_max (ch03 Def. FC-def).
+def evaluate_comparator_anchor_stress(
+    *,
+    sector: str,
+    numerator: ScalarRange | None,
+    anchor: MESAnchorSpec | None,
+    numerator_channel_key: Sequence[str] | None,
+) -> SectorStress:
+    """Evaluate one non-negative sector against an exactly matched anchor.
 
-    Returns
-    -------
-    (F_C, flag) : tuple
-        F_C : Optional[float]
-            Unsigned filling fraction F_C ∈ [0, 1] if well-defined,
-            signed saturation F_C^± ∈ (-∞, 1] if x_C < 0,
-            None if NULL comparator.
-        flag : str
-            'unsigned'        : F_C ∈ [0, 1] (canonical)
-            'signed'          : F_C^± (irrotational negative sector)
-            'null_comparator' : F is undefined (returns None)
-            'invalid_x_max'   : x_max ≤ 0
-
-    References
-    ----------
-    ch03 Proposition `FC-no-auto`, Proposition `FC-certified`, Remark `signed-sat`.
+    ``DepartureComponents.x_C`` is intentionally not accepted because it
+    combines signed, heterogeneous channels. Missing and mismatched channels
+    produce typed non-numeric statuses in the COMMON evaluator.
     """
-    if x_max <= 0:
-        return None, "invalid_x_max"
 
-    x = comp.x_C
-    if x is None:
-        return None, "null_comparator"
-
-    if x >= 0:
-        # Unsigned, canonical case
-        return x / x_max, "unsigned"
-    else:
-        # Signed saturation coordinate (Remark `signed-sat`)
-        return x / abs(x_max), "signed"
+    return evaluate_sector_stress(
+        sector=sector,
+        numerator=numerator,
+        anchor=anchor,
+        numerator_channel_key=numerator_channel_key,
+    )
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -417,10 +413,8 @@ def bianchi_iv_falsifiability_probe(
 ) -> dict:
     """Falsifiability probe for Bianchi IV (cosmologically marginal).
 
-    Bianchi IV has no FLRW limit, so the canonical inference pipeline should
-    decisively exclude it (ln B < -10) when data are close to FLRW. This
-    function packages the forward-model output in a way that the HTT/MIO
-    evidence layer (Week 6) can use for this exclusion test.
+    Bianchi IV has no FLRW limit. This function reports only structural
+    comparator facts that a separately registered HTT likelihood may consume.
 
     Returns
     -------
@@ -428,16 +422,14 @@ def bianchi_iv_falsifiability_probe(
         A structured-null report with fields:
             type_label:          'IV'
             comparator_status:   'NULL' (always for Type IV)
-            x_C_direct:          the raw departure scalar (always finite)
+            x_C_direct:          the raw signed projection (always finite)
             sector:              'irrotational_positive' or 'irrotational_negative'
-            F_C:                 None (undefined)
             no_flrw_limit_flag:  True (structural metadata)
 
     Notes
     -----
-    This is a **placeholder for the full falsifiability test** that runs in
-    Week 6. The test will inject near-FLRW synthetic data, run the full
-    pipeline, and verify that Type IV returns ln B < -10.
+    This function does not calculate or predict a Bayes factor. Any exclusion
+    test belongs to an HTT-owned registered likelihood and execution receipt.
     """
     if sc.label != "IV":
         raise ValueError(f"Expected Type IV, got {sc.label}")
@@ -452,10 +444,27 @@ def bianchi_iv_falsifiability_probe(
         'x_C_direct': comp.x_C_direct,
         'x_C': None,                    # undefined under NULL comparator
         'sector': comp.sector,
-        'F_C': None,                    # undefined
         'no_flrw_limit_flag': True,
-        'expected_pipeline_behaviour': (
-            'ln B < -10 under near-FLRW data (Week 6 verification)'
+        'inference_status': 'not_run_structural_diagnostic_only',
+        'allowed_use': ('HTT validation-contract input',),
+        'forbidden_use': (
+            'Bayes-factor result',
+            'MIO evidence',
+            'family identification',
         ),
         'policy': comp.policy.value,
     }
+
+
+__all__ = [
+    "ComparatorPolicy",
+    "ComparatorStatus",
+    "DepartureComponents",
+    "MATCHED_COMPATIBLE",
+    "NULL_RECOMMENDED",
+    "bianchi_iv_falsifiability_probe",
+    "compute_departure_components",
+    "evaluate_comparator_anchor_stress",
+    "recommend_comparator",
+    "validate_comparator",
+]

@@ -57,6 +57,7 @@ from common.mes_successor_registry import current_mes_successor_registry
 
 _MES_SUCCESSOR = current_mes_successor_registry().successor
 _MES_SUCCESSOR_ID = _MES_SUCCESSOR.successor_id
+LEGACY_REPRODUCTION_ONLY = True
 
 
 # ============================================================================

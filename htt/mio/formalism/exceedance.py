@@ -1,9 +1,10 @@
-"""MIO Pi exceedance-curve contract with explicit threshold policy."""
+"""Legacy MIO Pi exceedance-curve reproduction with threshold provenance."""
 from __future__ import annotations
 
 import hashlib
 import json
 import math
+import warnings
 from bisect import bisect_right
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass, field
@@ -15,6 +16,15 @@ from common.transfer_registry import validate_transfer_dependent_result
 from .budget_spec import BudgetUse
 from .filling_fraction import CertifiedFillingFraction
 from .normalized_score import NormalizedScore
+
+LEGACY_REPRODUCTION_ONLY = True
+
+warnings.warn(
+    "mio.formalism.exceedance is a legacy reproduction surface; "
+    "Pi is not an active probability or evidence quantity",
+    DeprecationWarning,
+    stacklevel=2,
+)
 
 DEFAULT_PI_CAVEAT = (
     "Pi is a MIO diagnostic exceedance curve over recorded diagnostic samples "

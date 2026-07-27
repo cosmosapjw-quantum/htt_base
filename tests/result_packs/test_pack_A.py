@@ -4,8 +4,13 @@ import importlib.util
 import json
 from pathlib import Path
 import subprocess
+import sys
 
 from common.artifact_manifest import validate_manifest_payload
+from common.statistical_foundations import (
+    BC1_LEGACY_PROJECTION,
+    BC2_NO_REPRESENTATION_PROMOTION,
+)
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -45,6 +50,18 @@ def test_pack_a_payload_compares_scalar_and_morphology_surfaces():
         "Pi",
     }
     assert {item["owner"] for item in payload["scalar_diagnostics"]} == {"MIO"}
+    assert {
+        item["classification"] for item in payload["scalar_diagnostics"]
+    } == {BC1_LEGACY_PROJECTION}
+    assert {
+        item["representation_policy"] for item in payload["scalar_diagnostics"]
+    } == {BC2_NO_REPRESENTATION_PROMOTION}
+    assert {
+        item["status"] for item in payload["scalar_diagnostics"]
+    } == {"legacy_projection_only"}
+    scalar_text = json.dumps(payload["scalar_diagnostics"], sort_keys=True).lower()
+    assert "certified filling-fraction" not in scalar_text
+    assert "occupancy-style" not in scalar_text
     assert {"OBSSTAT", "COMMON"} <= {
         item["owner"] for item in payload["morphology_mes_diagnostics"]
     }
@@ -103,6 +120,8 @@ def test_pack_a_markdown_has_manifest_and_caveated_comparison():
     assert "owner: COMMON" in markdown
     assert "claim_tier: diagnostic_only" in markdown
     assert "| Q | MIO |" in markdown
+    assert BC1_LEGACY_PROJECTION in markdown
+    assert BC2_NO_REPRESENTATION_PROMOTION in markdown
     assert "| MES I_morph | COMMON |" in markdown
     assert "bass.ver2.export.solver_core_output_tier_b.atlas_lite" in markdown
     assert "prior_context_only" in markdown
@@ -123,7 +142,7 @@ def test_pack_a_cli_dry_run_does_not_write_output(tmp_path):
 
     result = subprocess.run(
         [
-            str(REPO_ROOT / "venv/bin/python"),
+            sys.executable,
             str(SCRIPT_PATH),
             "--dry-run",
             "--output",
@@ -146,7 +165,7 @@ def test_pack_a_cli_writes_report(tmp_path):
 
     result = subprocess.run(
         [
-            str(REPO_ROOT / "venv/bin/python"),
+            sys.executable,
             str(SCRIPT_PATH),
             "--output",
             str(output),
@@ -168,7 +187,7 @@ def test_pack_a_cli_check_detects_drift(tmp_path):
 
     write_result = subprocess.run(
         [
-            str(REPO_ROOT / "venv/bin/python"),
+            sys.executable,
             str(SCRIPT_PATH),
             "--output",
             str(output),
@@ -182,7 +201,7 @@ def test_pack_a_cli_check_detects_drift(tmp_path):
 
     check_result = subprocess.run(
         [
-            str(REPO_ROOT / "venv/bin/python"),
+            sys.executable,
             str(SCRIPT_PATH),
             "--check",
             "--output",
@@ -199,7 +218,7 @@ def test_pack_a_cli_check_detects_drift(tmp_path):
     output.write_text(output.read_text(encoding="utf-8") + "\nmanual drift\n")
     stale_result = subprocess.run(
         [
-            str(REPO_ROOT / "venv/bin/python"),
+            sys.executable,
             str(SCRIPT_PATH),
             "--check",
             "--output",

@@ -633,10 +633,13 @@ def test_pi_requires_generation_and_worktree_provenance() -> None:
         )
 
 
-def test_formalism_package_exports_exceedance_contract() -> None:
+def test_active_formalism_hides_legacy_exceedance_contract() -> None:
     import mio.formalism as formalism
+    import mio.legacy_projection as legacy
 
-    assert formalism.ExceedanceCurve is ExceedanceCurve
-    assert formalism.MeasureKind.SAMPLE_DISTRIBUTION.value == "sample_distribution"
-    assert formalism.ThresholdPolicy.CURVE_ONLY.value == "curve_only"
-    assert formalism.build_exceedance_curve is build_exceedance_curve
+    assert not hasattr(formalism, "ExceedanceCurve")
+    assert not hasattr(formalism, "build_exceedance_curve")
+    assert legacy.ExceedanceCurve is ExceedanceCurve
+    assert legacy.MeasureKind.SAMPLE_DISTRIBUTION.value == "sample_distribution"
+    assert legacy.ThresholdPolicy.CURVE_ONLY.value == "curve_only"
+    assert legacy.build_exceedance_curve is build_exceedance_curve

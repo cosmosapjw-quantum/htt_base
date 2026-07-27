@@ -21,8 +21,9 @@ Depends on: ssot.py, bounds.py, tilted_flrw.py
 Convention: VA-02 (Σ²_std = σ_{ab}σ^{ab}/(6H²))
 """
 import numpy as np
+import warnings
 from htt.core.ssot import C, omega_tilt
-from htt.core.bounds import B_sigma_corrected, Sig2_max_MES
+from tsc_legacy.htt_core_bounds import B_sigma_corrected, Sig2_max_MES
 
 # PR-124: active MES consumers traverse the typed successor registry
 # (common.mes_theorem_authority is the live authority; legacy values are
@@ -31,6 +32,14 @@ from common.mes_successor_registry import current_mes_successor_registry
 
 _MES_SUCCESSOR = current_mes_successor_registry().successor
 _MES_SUCCESSOR_ID = _MES_SUCCESSOR.successor_id
+LEGACY_REPRODUCTION_ONLY = True
+
+warnings.warn(
+    "htt.core.departure_posteriors preserves a historical scalar projection; "
+    "new outputs must use typed statistical-foundation reports",
+    DeprecationWarning,
+    stacklevel=2,
+)
 
 __all__ = [
     'DeparturePosterior',

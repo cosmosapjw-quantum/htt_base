@@ -232,7 +232,9 @@ def test_departure_report_preserves_separate_x_q_pi_f_g_sections():
     assert payload["sections"]["x_C"]["status"] == "available"
     assert payload["sections"]["Q"]["payload"]["score_kind"] == "policy_normalized_score"
     assert payload["sections"]["Pi"]["payload"]["score_kind"] == "exceedance_curve"
-    assert payload["sections"]["F"]["payload"]["score_kind"] == "certified_filling_fraction"
+    assert payload["sections"]["F"]["payload"]["score_kind"] == (
+        "legacy_denominator_conditioned_ratio"
+    )
     assert payload["sections"]["G_F"]["payload"]["score_kind"] == "isotropy_depth_gap"
     assert payload["f_status"]["status"] == "available"
     assert payload["f_status"]["sample_count"] == 3
@@ -372,9 +374,14 @@ def test_report_requires_q_to_match_x_departure_bundle():
 
 
 def test_report_exports_and_avoids_htt_inference_imports():
-    from mio.reports import DepartureReport
+    import mio.reports as active_reports
+    from mio.legacy_projection import DepartureReport
     from mio.reports.departure_report import build_departure_report
 
+    assert not hasattr(active_reports, "DepartureReport")
+    assert active_reports.StatisticalFoundationResultCard.__name__ == (
+        "StatisticalFoundationResultCard"
+    )
     assert DepartureReport.__name__ == "DepartureReport"
     assert callable(build_departure_report)
 

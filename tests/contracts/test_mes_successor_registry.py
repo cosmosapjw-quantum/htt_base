@@ -12,6 +12,7 @@ from common.mes_successor_registry import (
     CURRENT_SUCCESSOR_ID,
     DEFAULT_ACTIVE_PYTHON_ROOTS,
     DEFAULT_CONSUMER_INVENTORY_PATH,
+    DEFAULT_CONSUMER_MIGRATION_PATH,
     DEFAULT_CONSUMER_SUPERSESSION_PATH,
     EGS3_BRANCH_SEAL_PATH,
     EGS3_BRANCH_SEAL_SHA256,
@@ -24,6 +25,7 @@ from common.mes_successor_registry import (
     MesSuccessorPointer,
     MesSuccessorRegistry,
     PR248_CONSUMER_SUPERSESSION_SHA256,
+    PR252_CONSUMER_MIGRATION_SHA256,
     SourceAvailability,
     SourceHashBinding,
     current_mes_successor_registry,
@@ -110,6 +112,14 @@ def _inventory_declarations(
 def _consumer_supersession() -> dict[str, object]:
     path = REPO_ROOT / DEFAULT_CONSUMER_SUPERSESSION_PATH
     assert _digest(path) == PR248_CONSUMER_SUPERSESSION_SHA256
+    payload = yaml.safe_load(path.read_text(encoding="utf-8"))
+    assert isinstance(payload, dict)
+    return payload
+
+
+def _consumer_migration() -> dict[str, object]:
+    path = REPO_ROOT / DEFAULT_CONSUMER_MIGRATION_PATH
+    assert _digest(path) == PR252_CONSUMER_MIGRATION_SHA256
     payload = yaml.safe_load(path.read_text(encoding="utf-8"))
     assert isinstance(payload, dict)
     return payload
@@ -620,6 +630,7 @@ def test_self_asserted_successor_source_is_not_auto_promoted(
 def test_inventory_is_exact_hash_pinned_and_matches_ast_discovery() -> None:
     payload = _inventory()
     declarations = _inventory_declarations(payload)
+    migration = _consumer_migration()
 
     report = scan_declared_mes_consumers(REPO_ROOT, declarations)
     forbidden = {
@@ -632,8 +643,17 @@ def test_inventory_is_exact_hash_pinned_and_matches_ast_discovery() -> None:
         MesConsumerIssueCode.CONSUMER_PARSE_ERROR.value,
     }
     assert finding_codes(report).isdisjoint(forbidden)
-    assert report.consumers_scanned == len(declarations) == 22
+    assert len(declarations) == 22
+    reclassified_ids = {
+        row["consumer_id"] for row in migration["legacy_reclassifications"]
+    }
+    new_ids = {row["consumer_id"] for row in migration["new_bindings"]}
+    retained_ids = {row.consumer_id for row in declarations} - reclassified_ids
+    assert report.consumers_scanned == len(retained_ids | new_ids) == 7
     assert tuple(payload["active_python_roots"]) == DEFAULT_ACTIVE_PYTHON_ROOTS
+    assert migration["schema"] == "htt.mes_consumer_migration.v1"
+    assert migration["authority"] == "PR-252"
+    assert migration["claim_effect"] == "none"
 
     supersession = _consumer_supersession()
     assert supersession["schema"] == "htt.mes_consumer_supersession.v1"
@@ -641,19 +661,43 @@ def test_inventory_is_exact_hash_pinned_and_matches_ast_discovery() -> None:
     replacement_by_id = {
         row["consumer_id"]: row for row in supersession["bindings"]
     }
+    migration_by_id = {
+        row["consumer_id"]: row
+        for section in ("bindings", "legacy_reclassifications")
+        for row in migration[section]
+    }
     for row in payload["active_consumers"]:
         assert set(row) == {"consumer_id", "path", "sha256"}
         replacement = replacement_by_id.get(row["consumer_id"])
-        if replacement is None:
-            assert row["sha256"] == _digest(REPO_ROOT / row["path"])
-        else:
+        prior_sha256 = row["sha256"]
+        if replacement is not None:
             assert replacement["path"] == row["path"]
             assert replacement["prior_sha256"] == row["sha256"]
-            assert replacement["sha256"] == _digest(REPO_ROOT / row["path"])
+            prior_sha256 = replacement["sha256"]
+        transition = migration_by_id.get(row["consumer_id"])
+        if transition is not None:
+            assert transition["path"] == row["path"]
+            assert transition["prior_sha256"] == prior_sha256
+            prior_sha256 = transition["sha256"]
+        assert prior_sha256 == _digest(REPO_ROOT / row["path"])
+
+    for row in migration["new_bindings"]:
+        assert row["expected_successor_id"] == CURRENT_SUCCESSOR_ID
+        assert row["sha256"] == _digest(REPO_ROOT / row["path"])
+
+    exclusion_transition_by_id = {
+        row["exclusion_id"]: row for row in migration["exclusion_bindings"]
+    }
     for row in payload["excluded_consumers"]:
         assert set(row) == {"exclusion_id", "path", "sha256", "reason"}
         assert row["path"].endswith(".py")
-        assert row["sha256"] == _digest(REPO_ROOT / row["path"])
+        transition = exclusion_transition_by_id.get(row["exclusion_id"])
+        expected_sha256 = row["sha256"]
+        if transition is not None:
+            assert transition["path"] == row["path"]
+            assert transition["prior_sha256"] == expected_sha256
+            expected_sha256 = transition["sha256"]
+        assert expected_sha256 == _digest(REPO_ROOT / row["path"])
 
 
 def test_inventory_declaration_comparison_is_order_independent() -> None:
@@ -662,7 +706,7 @@ def test_inventory_declaration_comparison_is_order_independent() -> None:
 
     report = scan_declared_mes_consumers(REPO_ROOT, tuple(reversed(declarations)))
 
-    assert report.consumers_scanned == len(declarations)
+    assert report.consumers_scanned == 7
     assert MesConsumerIssueCode.INVENTORY_INVALID.value not in finding_codes(report)
 
 

@@ -192,9 +192,9 @@ def test_live_likelihood_uses_uncorrected_typed_geodesic_anchor() -> None:
         BianchiI_orth,
         EPS2,
         EPS3,
-        Sig2_max_MES,
         _active_sig2_mes_ceiling,
     )
+    from tsc_legacy.htt_core_bounds import Sig2_max_MES
 
     eps1 = 0.0
     expected = registered_geodesic_mes_anchors(

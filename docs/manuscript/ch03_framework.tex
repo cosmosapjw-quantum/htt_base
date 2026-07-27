@@ -715,15 +715,15 @@ model, at every instant, satisfies this relation exactly.
 
 
 % ============================================================
-\section{FLRW comparators and the departure parameter}
+\section{FLRW comparators and the signed budget coordinate}
 \label{sec:defect-def}
 % ============================================================
 
 \subsection{Comparator FLRW models}\label{sec:comparators}
 
-To define the ``distance from FLRW'' of a Bianchi model, we
-need a reference FLRW geometry against which to measure the
-departure.  We call this the \emph{comparator}.  A comparator
+To define a signed Gauss--Friedmann budget coordinate for a Bianchi
+model, we need a reference FLRW budget against which to form the
+algebraic projection.  We call this the \emph{comparator}.  A comparator
 is specified by choosing a reference curvature parameter
 $\Okref$ and defining the FLRW matter budget as
 \begin{equation}\label{eq:FLRW-budget}
@@ -750,20 +750,21 @@ otherwise stated.
 \textbf{Warning.}  The three comparators $\compflat$,
 $\compclosed$, $\compmatched$ are \emph{not} identical: they
 assign different values of $x$ to the same spacetime.  In
-particular, $x = 0$ under $\compflat$ means the model coincides
-with a spatially flat FLRW, while $x = 0$ under $\compmatched$
-means only that the shear and tilt vanish---the model may still
-have non-zero spatial curvature.  \emph{Every} statement
+particular, $x=0$ is only a necessary scalar-budget condition for
+the selected comparator.  It is not sufficient for spacetime
+coincidence, isotropy, morphology, or family identification; under
+$\compmatched$ it does not even constrain the matched background
+curvature.  \emph{Every} statement
 involving $x$, $Q$, $\Pi$, or $\FC$ is implicitly conditioned on
 the comparator.}}
 \end{center}
 
 
-\subsection{The departure parameter}\label{sec:defect-x}
+\subsection{The signed budget coordinate}\label{sec:defect-x}
 
-\begin{definition}[Departure parameter]\label{def:defect}
-The \emph{defect} of a Bianchi model relative to a specified
-FLRW comparator is
+\begin{definition}[Signed budget coordinate]\label{def:defect}
+The historical signed Gauss--Friedmann budget coordinate of a Bianchi
+model relative to a specified FLRW comparator is
 \begin{equation}\label{eq:defect-def}
 x := \OFLRW - \Omega\,,
 \end{equation}
@@ -772,14 +773,18 @@ rest-frame (matter-frame) density parameter and $\hat{\rho}$
 is the matter-frame energy density.
 \end{definition}
 
-The departure parameter $x$ measures how much the matter density falls short
-of the FLRW budget.  Every unit of shear, tilt, or anisotropic
-curvature diverts energy density away from the FLRW value,
-increasing $x$.
+This is an exact algebraic projection, not a norm or a distance from
+FLRW.  Its terms have different signs and physical channels:
+$\Wstd$ enters negatively and $\Okaniso$ may have either sign.
+Consequently cancellations can make $x$ small or zero while the
+irreducible state remains non-zero.  Historical values are classified
+\texttt{BC1\_LEGACY\_PROJECTION}; the refined representation does not
+promote their claim tier
+(\texttt{BC2\_NO\_REPRESENTATION\_PROMOTION}).
 
 \begin{proposition}[Sector-dependent sign structure of $x$ {\normalfont $[\ExactStatus]$}]
 \label{prop:x-sign}
-The departure parameter $x$ is a signed quantity.  Its sign is determined by
+The signed budget coordinate $x$ is a signed quantity.  Its sign is determined by
 the sector to which the model belongs.
 \begin{enumerate}
 \item[\emph{(i)}]
@@ -788,11 +793,15 @@ the sector to which the model belongs.
   \begin{equation}\label{eq:x-irrot-pos}
   x = \Sigstd + \Otilt + \Okaniso \geq 0\,,
   \end{equation}
-  with equality if and only if the model coincides with the
-  chosen FLRW comparator.  All flat orthogonal Bianchi types
+  with equality only if these three displayed scalar contributions
+  vanish.  That condition alone does not establish full-state,
+  morphological, or family equivalence with the chosen comparator.
+  All flat orthogonal Bianchi types
   (BI, BVII$_0$, BII, BVI$_0$) and all flat tilted types (BI,
   BIII) under the flat comparator belong to this sector.
-  Certification of $\FC = x/\xmax$ is straightforward.
+  A historical ratio $x/\xmax$ may be reproduced only under its
+  recorded denominator policy; it has no physical fraction
+  interpretation.
 
 \item[\emph{(ii)}]
   \textbf{Irrotational negative sector} ($\Wstd = 0$,\;
@@ -805,10 +814,11 @@ the sector to which the model belongs.
   The Bianchi~IX tilted model is the principal example:
   $x = -1.36 \times 10^{-3}$, driven entirely by
   $\Okaniso = -1.36 \times 10^{-3}$ from the Planck curvature
-  constraint (Table~\ref{tab:departure_summary}).  The standard
-  filling fraction $\FC = x/\xmax$ is ill-defined; a signed
-  saturation coordinate is required.  BVIII and BIX~(orth) under
-  the flat comparator also belong to this sector.
+  constraint (Table~\ref{tab:departure_summary}).  The historical
+  denominator-conditioned ratio $\FC=x/\xmax$ lies outside a
+  non-negative reporting domain here; only a signed compatibility
+  coordinate may be retained for reproduction.  BVIII and BIX~(orth)
+  under the flat comparator also belong to this sector.
 
 \item[\emph{(iii)}]
   \textbf{Vortical sector} ($\Wstd > 0$):
@@ -816,8 +826,8 @@ the sector to which the model belongs.
   x = \Sigstd - \Wstd + \Otilt + \Okaniso\,,
   \end{equation}
   where the sign depends on the balance of all four terms.
-  Certification is blocked: the $\Wstd$ subtraction can make $x$
-  negative even when the geometry is far from FLRW.  The
+  Scalar converse interpretation is blocked: the $\Wstd$ subtraction
+  can make $x$ small or negative for a non-zero irreducible state.  The
   BVII$_h$ tilted models belong to this sector.
 \end{enumerate}
 \end{proposition}
@@ -858,7 +868,7 @@ vorticity $\omega_{ab}$ [$\Gframe$].  Assume:
 \item[\emph{(iv)}] The matter content is a perfect fluid with
   equation of state $w > -1$ and tilt rapidity $\beta$.
 \end{enumerate}
-Then the departure parameter $x := \OFLRW - \Omega$ satisfies
+Then the signed budget coordinate $x := \OFLRW - \Omega$ satisfies
 \begin{equation}\label{eq:master-identity}
 \boxed{x = \Sigstd - \Wstd + \Otilt + \Okaniso}\,,
 \end{equation}
@@ -947,10 +957,11 @@ If the comparator is curvature-matched ($\Okref = \Omega_k$),
 then $\Okaniso = 0$ and the identity gives
 $x = 0 + 0 + 0 + 0 = 0$.
 For the flat comparator, an FLRW model with $\Omega_k \neq 0$
-gives $x = \Okaniso \neq 0$; thus $x = 0$ with a flat
-comparator implies the model is \emph{spatially flat} FLRW.
-In short, $x = 0$ means the model coincides with the chosen
-comparator---not with ``FLRW'' in an absolute sense.
+gives $x = \Okaniso \neq 0$.  The converse is unavailable:
+for any comparator, $x=0$ establishes only equality of the declared
+signed scalar budget.  It does not establish spatial flatness, an
+FLRW state, spacetime coincidence, morphology, or family equivalence
+without independent full-state conditions.
 \end{remark}
 
 \begin{remark}[Sign of the vorticity term]
@@ -969,13 +980,13 @@ anisotropic curvature.  For the Bianchi~IX tilted model, the
 dominant contribution is $\Okaniso = -1.36 \times 10^{-3}$
 (from the Planck curvature constraint), giving $x = -1.36
 \times 10^{-3}$---an explicitly negative defect
-(Proposition~\ref{prop:x-sign}, part~ii).  The occupancy ratio
+(Proposition~\ref{prop:x-sign}, part~ii).  The conditioned legacy ratio
 $Q = x / x_{\max}$ inherits this sign, producing $Q = -211$
 and exceedance $\Pi(q_\star) = 0$ for all positive thresholds.
-This is not a failure of the framework: negative $x$ means the
-model \emph{overshoots} the FLRW comparator, and the
-three-layer structure correctly propagates this through $Q$ and
-$\Pi$ without artificial sign-clipping.
+The sign records only the signed projection relative to the comparator.
+It has no filling, saturation, occupancy, distance, or overshoot
+semantics; the historical three-layer calculation propagates the sign
+through $Q$ and $\Pi$ without artificial clipping.
 \end{remark}
 
 \begin{remark}[Irrotational limit]\label{rem:irrot}
@@ -1102,88 +1113,80 @@ $\tilde{\Otilt}$, $\tilde{\Okaniso}$.
 \end{definition}
 
 
-\subsection{Layer~2: The occupancy ratio}
+\subsection{Layer~2: The conditioned legacy normalised ratio}
 \label{sec:layer2}
 
-The defect $x$ depends on the normalisation of the Hubble rate.
-To obtain a dimensionless measure of ``how close to the
-ceiling,'' we define the \emph{occupancy ratio}
+The signed coordinate $x$ depends on the normalisation of the
+Hubble rate.  Historical runs formed the conditioned normalised
+ratio
 \begin{equation}\label{eq:Q-def}
 Q := \frac{x}{x_{\max}}\,,
 \end{equation}
-where $x_{\max}$ is the MES algebraic ceiling---the largest
-value of $\Sigstd$ permitted by the MES shear bound for
-the adopted scenario.
-For the S3 kinematic scenario with $\epsilon_1 = 1.233
-\times 10^{-3}$, the ceiling is
-$x_{\max} = \frac{3}{2}\Bsig^2 = 6.47 \times 10^{-6}$
-(Chapter~\ref{ch:bianchi-bounds},
-Table~\ref{tab:bounds}).
+where $x_{\max}$ is the denominator policy recorded by that run.
+The archived S3 calculation used
+$x_{\max}=6.47\times10^{-6}$, derived from the historical
+$2.69\epsilon_1$-corrected shear formula.  That correction is now
+\texttt{WITHHELD\_DERIVATION\_MISMATCH}; the number is retained
+only for byte/value-compatible reproduction and is not an active
+typed MES anchor.
 
-Because the numerator $x$ is a departure (tilt-sector dominated)
-projection while the denominator $x_{\max}$ is a shear-sector
-ceiling, the scalar $Q$ is a \emph{channel-mismatched proxy score
-only}, not a channel-matched physical occupancy.  Channel-matched
-occupancy is reserved for the MIO channel-matched occupancy vector,
-whose numerator and denominator share a sector; the classifier
-\texttt{classify\_occupancy\_language} blocks ``physical occupancy''
-wording for scalar $Q/F$ rows unless the channels match or a joint
-admissible-ceiling proof is attached (see
-\texttt{docs/generated/channel\_occupancy\_repair\_report.md}).
+The numerator combines signed shear, vorticity, tilt, and curvature
+terms while the archived denominator is a shear-channel quantity.
+Therefore $Q$ is not a channel-matched stress, filling, saturation,
+or occupancy.  Active stress reports require identical invariant,
+frame, perturbative order, and branch; unavailable or mismatched
+channels return a typed non-numeric status.
 
-The HTT posterior use of $Q$ is a ratio of two model-dependent
+The historical HTT posterior use of $Q$ is a ratio of two model-dependent
 quantities evaluated under a declared transfer path, comparator,
 and denominator policy.  MIO may report the same algebraic ratio
-as a diagnostic coordinate, but the MIO diagnostic $Q$ has no
-posterior, occupancy, or evidence semantics.  In both lanes
+as a legacy diagnostic coordinate, but the MIO diagnostic $Q$ has no
+posterior, distance, occupancy, or evidence semantics.  In both lanes
 $Q$ inherits the sign of $x$: for models with
 $x < 0$ (such as Bianchi~IX with dominant negative $\Okaniso$),
 $Q < 0$.
 
-For the FLRW$_{\mathrm{tilt}}$ model under the flat comparator,
-the posterior mean occupancy is $\bar{Q} = 0.092$, with a 95\%
+For the archived FLRW$_{\mathrm{tilt}}$ run under the flat comparator,
+the posterior mean ratio is $\bar{Q} = 0.092$, with a 95\%
 highest posterior density interval
-$[0.035,\, 0.19]$.  That is, the data place the defect at
-roughly $9\%$ of the algebraic ceiling in this conditioned HTT
-posterior pushforward---resolved within the legacy diagnostic,
-but far from saturation.
+$[0.035,\, 0.19]$.  These values reproduce the conditioned legacy
+pushforward only; they do not locate the Universe along a departure
+distance or quantify occupation of a physical budget.
 
 
-\subsection{Layer~3: The HTT posterior exceedance}
+\subsection{Layer~3: Threshold summaries of the legacy ratio}
 \label{sec:layer3}
 
-The occupancy ratio $Q$ records how a signed projection compares
+The legacy ratio $Q$ records how a signed projection compares
 with a declared denominator policy.  To make threshold use
 auditable, we define the registered HTT \emph{posterior
 exceedance curve}
 \begin{equation}\label{eq:Pi-def}
 \Pi_{\rm HTT}(q_\star) := P(Q > q_\star \,|\, D)\,,
 \end{equation}
-where $q_\star$ is a chosen threshold.  For the
-FLRW$_{\mathrm{tilt}}$ model: $\Pi_{\rm HTT}(0.01) = 1.000$
-(the posterior unambiguously exceeds $1\%$ of the ceiling),
+where $q_\star$ is a chosen threshold.  For the archived
+FLRW$_{\mathrm{tilt}}$ run: $\Pi_{\rm HTT}(0.01) = 1.000$,
 $\Pi_{\rm HTT}(0.05) = 0.974$,
 $\Pi_{\rm HTT}(0.1) = 0.352$, and
-$\Pi_{\rm HTT}(0.5) = 0.000$.  This legacy conditioned example exceeds
-the $1$--$5\%$ thresholds under its recorded inputs, is
-indeterminate at $10\%$, and does not exceed $50\%$.  The curve
-is not a truth probability, p-value, or geometry-detection
-probability.
+$\Pi_{\rm HTT}(0.5) = 0.000$.  This says only that the recorded
+ratio crosses the $1$--$5\%$ thresholds under those inputs, is
+indeterminate at $10\%$, and does not cross $50\%$.  The curve is
+not a truth probability, p-value, or geometry-detection probability.
 It is an HTT posterior exceedance probability for this legacy
 conditioned run, distinct from the MIO diagnostic exceedance curve
-$\Pi_{\rm MIO}$, which is an empirical exceedance fraction with
-no posterior, occupancy, or evidence semantics.
+$\Pi_{\rm MIO}$, which is an empirical threshold summary with no
+posterior, distance, occupancy, or evidence semantics.
 
 \begin{remark}[Interpretation guide]\label{rem:Pi-interpretation}
-The three layers form a chain of increasing interpretive
-commitment.  Layer~1 ($x$) is exact algebra---no choice is made
-beyond the comparator.  Layer~2 ($Q$) introduces the MES
-ceiling, coupling the result to the adopted observational bound.
+The three archived layers form a chain of additional conditioning,
+not increasing physical authority.  Layer~1 ($x$) is exact signed
+algebra under a comparator.  Layer~2 ($Q$) introduces a recorded
+denominator policy, which may be legacy or channel-mismatched.
 Layer~3 ($\Pi$) introduces a threshold $q_\star$, whose choice
 must be registered before interpretation and accompanied by
 look-elsewhere and null-status metadata.
-A referee who objects to the ceiling choice can read $x$ alone;
-a referee who accepts the ceiling but disputes the threshold
+A referee who objects to the denominator can read $x$ alone;
+a referee who accepts the recorded ratio but disputes the threshold
 can read $Q$ alone.  This stratification makes the
 interpretive dependencies explicit and auditable.
 \end{remark}
@@ -1243,70 +1246,71 @@ the defect identity algebra and its decomposition figures.
 
 
 % ============================================================
-\subsection{Ceiling semantics and certified \texorpdfstring{$\FC$}{F\_C}}
+\subsection{Historical denominator semantics and
+  \texorpdfstring{$\FC$}{F\_C} compatibility}
 \label{sec:ceiling-semantics}
 % ============================================================
 
-The three-layer framework uses $\xmax$ as a normalisation
-ceiling for the occupancy ratio $Q = x/\xmax$.  We now formalise
-the conditions under which this normalisation carries physical
-content.
+Archived three-layer outputs use $\xmax$ as a recorded denominator
+for $Q=x/\xmax$.  The following definitions preserve those numbers
+without treating the denominator as a universal physical ceiling.
 
-\begin{definition}[Admissible ceiling family]
+\begin{definition}[Recorded denominator family]
 \label{def:ceiling-family}
-An \emph{admissible ceiling family} is a map
+ A \emph{recorded denominator family} is a map
 $\xmaxC: \Theta \to \mathbb{R}_{>0}$,
 where $\Theta$ is the parameter space and $C$ labels the
-comparator, such that $\xmaxC(\theta) \geq |x(\theta)|$
-for all $\theta$ in the sector where $\xmaxC$ is
-evaluated.  The MES ceiling $\xmax = \frac{3}{2}\Bsig^2$
-is the principal instance used in this work.
+comparator, together with its invariant, frame, perturbative order,
+branch, conditioning, source, and validity domain.  It is not assumed
+to bound the signed composite $|x|$.  Historical runs used
+$\xmax=\frac{3}{2}\Bsig^2$ as a shear-channel denominator.
 \end{definition}
 
-\begin{definition}[Class-conditioned filling fraction]
+\begin{definition}[Conditioned legacy normalised ratio]
 \label{def:FC}
 For a model in sign-domain sector $S$ under comparator $C$,
-the \emph{class-conditioned filling fraction} is
+the historical normalised ratio is
 \begin{equation}\label{eq:FC-def}
 \FC := \frac{x}{\xmaxC}\,,
 \end{equation}
-defined only when $x \geq 0$ (irrotational non-negative
-sector) and $\xmaxC > 0$.
+when the recorded denominator is positive and the ratio is
+identified under the declared tolerance.  This compatibility
+quantity is \texttt{BC1\_LEGACY\_PROJECTION}; it is not filling,
+occupancy, distance, saturation, probability, or evidence.
 \end{definition}
 
-\begin{proposition}[No automatic physical interpretation {\normalfont $[\ExactStatus]$}]
+\begin{proposition}[No physical converse {\normalfont $[\ExactStatus]$}]
 \label{prop:FC-no-auto}
-The class-conditioned filling fraction $\FC$ does \emph{not}
-automatically carry a physical interpretation as ``the fraction
-of the anisotropy budget that is filled.''  A counterexample is
+The conditioned legacy ratio $\FC$ does not carry a physical
+interpretation as a fraction of a joint anisotropy budget.  A
+counterexample is
 the Bianchi~IX orthogonal model under the flat comparator: the
 negative $\Okaniso = -1.36 \times 10^{-3}$ drives $x < 0$,
-making $\FC$ undefined by Definition~\ref{def:FC}.  Switching
-to $\compmatched$ sets $\Okaniso = 0$ and restores $\FC \geq 0$,
-but the ``physical meaning'' of $\FC$ now depends entirely on
-the comparator choice.
+while switching to $\compmatched$ changes the signed numerator.
+More generally, the shear denominator has no authority over
+four-acceleration or anisotropic curvature and cannot absorb
+vorticity, tilt, or cancellation into a scalar MES theorem.
 \end{proposition}
 
-\begin{proposition}[Certified saturation in the sign-clean
-  sector {\normalfont $[\ConditionalStatus]$}]\label{prop:FC-certified}
-In the irrotational non-negative sector
-(Proposition~\ref{prop:x-sign}, part~(i)), under any admissible
-ceiling, $0 \leq \FC \leq 1$.  The value $\FC = 0$ means exact
-coincidence with the comparator; $\FC = 1$ means the defect
-saturates the ceiling.  The MES ceiling gives $\FC \in
-[0, 0.090]$ (WFH2009 primary) to $[0, 0.063]$ (CF4++ sensitivity variant)
-across the observationally relevant scenarios.
+\begin{proposition}[No representation-driven promotion
+  {\normalfont $[\ExactStatus]$}]\label{prop:FC-certified}
+Restricting to a sign-clean sector does not turn $\FC$ into a
+physical budget fraction.  The archived values
+$0.090$ (WFH2009 primary) and $0.063$ (CF4++ sensitivity
+variant) remain reproducible ratios under their recorded inputs,
+but their refined representation cannot promote the original
+claim tier
+(\texttt{BC2\_NO\_REPRESENTATION\_PROMOTION}).
 \end{proposition}
 
-\begin{remark}[Signed saturation coordinate]
+\begin{remark}[Signed compatibility coordinate]
 \label{rem:signed-sat}
 For models in the irrotational negative or vortical sectors,
-a signed saturation coordinate $\FC^{\pm} := x / |\xmaxC|$
-can be defined, taking values on $(-\infty, 1]$.  Negative
-values indicate ``overshoot'' beyond the comparator, not a
-failure of the framework.  We report $\FC^{\pm}$ for these
-models in the appendix but do not include them in the main
-evidence or occupancy tables.
+a signed compatibility coordinate
+$\FC^{\pm}:=x/|\xmaxC|$ can be reproduced.  Its sign records the
+signed projection relative to the chosen comparator; it does not
+measure overshoot, distance, or occupied budget.  We retain
+$\FC^{\pm}$ only in historical compatibility tables.
 \end{remark}
 
 
@@ -1349,68 +1353,49 @@ m_{T,s}(D)
 \end{equation}
 The three masses sum to unity.  A large $m_{T,-}^{\mathrm{irr}}$
 signals that the posterior places substantial weight in the
-negative-departure region, where the occupancy ratio $\FC$ is
-undefined (Definition~\ref{def:FC}) and the signed coordinate
-$\FC^{\pm}$ (Remark~\ref{rem:signed-sat}) must be used instead.
+negative signed-coordinate region.  It does not imply greater
+physical distance from a comparator; any archived $\FC$ or
+$\FC^\pm$ remains a denominator-conditioned compatibility ratio.
 \end{definition}
 
-The full posterior summary for a model is therefore not a single
-occupancy number but the triple
+The posterior sign-sector summary is the triple
 \begin{equation}\label{eq:full-summary}
 \bigl(\,
   m_{T,+}^{\mathrm{irr}}(D),\;
   m_{T,-}^{\mathrm{irr}}(D),\;
   m_T^{\mathrm{vort}}(D)\,\bigr)
 \end{equation}
-together with the sector-conditional diagnostic laws
+together with the explicitly legacy, sector-conditional ratio laws
 $p(\FC \,|\, D,\,\theta \in \Theta_{T,+}^{\mathrm{irr}})$ and
 $p(\FC^{\pm} \,|\, D,\,\theta \in \Theta_{T,-}^{\mathrm{irr}}
 \cup \Theta_T^{\mathrm{vort}})$.
 
-\begin{proposition}[Sectoral ceiling existence
-  {\normalfont $[\ConditionalStatus]$}]
+\begin{proposition}[MES does not supply a composite scalar ceiling
+  {\normalfont $[\ExactStatus]$}]
 \label{prop:ceiling-existence}
-Let $C_{\mathrm{irr}}^{+}$ denote the irrotational non-negative
-sector under the flat comparator, and suppose:
-\textup{(i)}~the MES shear bound gives
-$\Sigstd \leq (3/2)\Bsig^2$ for the adopted $\eps_\ell$;
-\textup{(ii)}~the safe-route tilt bound gives
-$\beta \leq \eps_1/(1 + \etaud)$;
-\textup{(iii)}~$\Omega_m \in (0,1]$ and $w \in [0, 1/3]$;
-\textup{(iv)}~$C_{\mathrm{irr}}^{+}$ is a closed bounded
-subset of $\Theta_T$.
-Then
-\begin{equation}
-U_{C_{\mathrm{irr}}^{+}}
-:= \max_{\theta \in C_{\mathrm{irr}}^{+}} x(\theta)
-= \tfrac{3}{2}\Bsig^2 + (1+w)\Omega_m\sinh^2\!\beta_{\max}
-\end{equation}
-exists and is finite.
+The verified geodesic MES branches constrain their registered
+shear and vorticity invariants under declared linear premises.
+They provide no MES anchor for four-acceleration or anisotropic
+curvature and no theorem that turns those channel-specific bounds
+into a scalar upper bound on the signed composite $x$.
 \end{proposition}
 
 \begin{proof}
-In $C_{\mathrm{irr}}^{+}$ we have $W^2 = 0$ and
-$\Okaniso \geq 0$, so $x = \Sigstd + \Otilt + \Okaniso$.
-Each summand is non-negative and bounded above:
-$\Sigstd \leq (3/2)\Bsig^2$ by~(i),
-$\Otilt = (1+w)\Omega_m\sinh^2\!\beta
-\leq (1+w)\Omega_m\sinh^2\!\beta_{\max}$ by~(ii)--(iii),
-and $\Okaniso \leq (3/2)\Bsig^2$ (it contributes to the
-same MES budget).  Hence $x$ is continuous and bounded on a
-compact set; by the Weierstrass extreme-value theorem the
-maximum exists.
+The MES statements are typed by invariant, frame, order, and
+branch.  No registered source equation bounds $\Okaniso$ by the
+shear anchor, and summing channel-specific bounds would add an
+unstated joint theorem.  Hence the former composite-ceiling proof
+does not follow from MES.
 \end{proof}
 
-\begin{remark}[Scope of the ceiling guarantee]
+\begin{remark}[Typed replacement]
 \label{rem:ceiling-scope}
-Proposition~\ref{prop:ceiling-existence} does \emph{not}
-extend to the irrotational negative or vortical sectors.  In
-those sectors, the interplay of $-W^2$ and negative $\Okaniso$
-can make $\sup x$ depend on cancellation structures for which
-no universal bound exists.  For this reason the occupancy ratio
-$Q = x/\xmax$ carries $\ConditionalStatus$: it is a
-theorem-backed quantity only within $C_{\mathrm{irr}}^{+}$, and
-a proxy score elsewhere.
+Active output is a vector of channel-matched stress reports.  A
+missing anchor yields \texttt{ANCHOR\_UNAVAILABLE}; a frame,
+order, invariant, or branch mismatch yields
+\texttt{CHANNEL\_MISMATCH}.  Neither status is replaced by zero,
+and no vector component is automatically converted into $Q$ or
+$\FC$.
 \end{remark}
 
 
@@ -1767,7 +1752,7 @@ redshifts~\cite{TsagasReview2025}.
 % ============================================================
 
 Our goal in this section is to express the dynamical content
-of the Raychaudhuri equation in terms of the departure parameter
+of the Raychaudhuri equation in terms of the signed budget coordinate
 and its components, revealing how shear, vorticity, tilt, and
 curvature interact during the cosmological expansion.  The
 derivation follows the analysis of VT-09a.
@@ -1931,20 +1916,21 @@ For the observationally relevant case where $\Sigstd$
 dominates $x$, the defect decays at the same rate as the
 shear: $x \approx \Sigstd \propto a^{-2(1-q)}$.
 
-Before closing this chapter, we note that the framework
-developed here---the kinematic decomposition, the
-standardised variables, the master identity, the frame
-corrections, the three-layer inference chain, and the defect
-evolution---is exact within the Bianchi symmetry class and a
-chosen perfect-fluid equation of state.  It is not
+Before closing this chapter, we note that the signed budget identity
+and the stated propagation equations are exact only under their
+declared Bianchi-symmetry, frame, and matter assumptions.  The
+archived $Q$ and $\Pi$ layers are denominator-, threshold-, owner-,
+and transfer-conditioned summaries rather than exact state
+coordinates.  The construction is not
 ``model-independent'' in the sense of holding for arbitrary
 matter content: the tilt contribution $\Otilt$ assumes a
-perfect fluid with $w > -1$, and the MES ceiling assumes the
-Copernican extension postulate.  What the framework does provide
+perfect fluid with $w > -1$, while MES supplies only registered
+channel-specific anchors under stated linear and Copernican premises.
+What the framework does provide
 is \emph{assumption-explicit} bookkeeping: every approximation
 and every dictionary choice is localised to a specific layer
-(algebraic identity, bound application, or observational
-connection), and the three-layer inference structure
+(algebraic identity, anchor application, or observational
+connection), and the three-layer reporting structure
 (Section~\ref{sec:three-layer}) makes the interpretive
 dependencies auditable.  The approximations that connect the
 exact algebra to observational data enter only in
@@ -1968,7 +1954,10 @@ correction terms from the shear and tilt:
 \begin{equation}
 \dot{\theta} = -\tfrac{1}{3}\theta^2 - 2\sigma^2 + 2\omega^2 + \dot{u}^a{}_{;a} - \tfrac{1}{2}(\rho + 3p) + \Lambda.
 \end{equation}
-The defect $x = \Sigstd - \Wstd + \Otilt + \Okaniso$ measures the aggregate departure from the FLRW Raychaudhuri relation.
+The signed coordinate
+$x = \Sigstd - \Wstd + \Otilt + \Okaniso$ is the declared
+Gauss--Friedmann budget projection relative to the chosen comparator;
+it is not a norm or distance from FLRW.
 
 % === END INLINED ===
 
@@ -1994,7 +1983,7 @@ Chapter~\ref{ch:results} show that neutrinos contribute
 $98.4\%$ of the CMB quadrupole power $D_2$
 (Section~\ref{sec:sp03-result}), a dominance that is
 invisible to a single-fluid treatment.  To connect the
-departure parameter $x_C$ to species-resolved observables, we
+signed budget coordinate $x_C$ to species-resolved observables, we
 need a covariant framework that assigns each species its own
 kinematic variables while maintaining a single, unambiguous
 reference frame for the geometry.
@@ -2290,7 +2279,7 @@ relative velocity $v_{bc} \sim 30$~km/s
 (Tseliakhovich \& Hirata~\cite{TseliakhovichHirata2010})
 is coherent on $\sim\!\text{few Mpc}$ scales and affects
 small-scale structure formation, but its contribution to
-the global departure parameter is
+the global signed budget projection is
 $(v_{bc}/c)^2 \sim 10^{-8}$, far below the sensitivity
 of any current survey.  Hence: $b \in \mathcal{F}$.
 
@@ -2878,8 +2867,10 @@ with $\rho_{\rm tot} = \sum_s \rho_s + \sum_\alpha
 \rho_\alpha$ and $p_{\rm tot} = \sum_s p_s + \sum_\alpha
 p_\alpha$.  The Friedmann equation
 (Section~\ref{sec:gen-friedmann}) is recovered exactly,
-and the departure parameter $x_C = 0$ by the master
-identity (Eq.~\ref{eq:master-identity}).  This recovery is the
+and the signed budget coordinate has $x_C = 0$ by the master
+identity (Eq.~\ref{eq:master-identity}).  This is a necessary
+consistency check for the declared state, not a converse criterion.
+The recovery is the
 multi-species generalisation of the
 single-fluid FLRW limit derived in
 Section~\ref{sec:defect-x}.

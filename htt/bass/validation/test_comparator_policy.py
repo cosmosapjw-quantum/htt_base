@@ -30,9 +30,11 @@ from bass.validation.comparator_policy import (
     ComparatorPolicy, ComparatorStatus, DepartureComponents,
     MATCHED_COMPATIBLE, NULL_RECOMMENDED,
     recommend_comparator, validate_comparator,
-    compute_departure_components, filling_fraction,
+    compute_departure_components, evaluate_comparator_anchor_stress,
     bianchi_iv_falsifiability_probe,
 )
+from bass.validation.legacy_comparator_policy import filling_fraction
+from common.statistical_foundations import ScalarRange, StressStatus
 from bass.background.einstein_bianchi import (
     BianchiCosmology, BianchiBackgroundState,
     make_cosmology, COSMOLOGY_FACTORY,
@@ -101,11 +103,12 @@ class TestComparatorStatus:
         status = validate_comparator("IV", ComparatorPolicy.NULL)
         assert not status.x_C_defined   # NULL → x_C undefined
 
-    def test_F_C_tracks_x_C(self):
+    def test_F_C_is_never_an_active_ratio_permission(self):
         status_flat = validate_comparator("I", ComparatorPolicy.FLAT)
         status_null = validate_comparator("IV", ComparatorPolicy.NULL)
-        assert status_flat.F_C_defined
+        assert not status_flat.F_C_defined
         assert not status_null.F_C_defined
+        assert status_flat.signed_budget_coordinate_defined
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -250,6 +253,28 @@ class TestFillingFraction:
         assert F < 0
 
 
+class TestTypedAnchorStress:
+    def test_missing_anchor_returns_non_numeric_status(self):
+        stress = evaluate_comparator_anchor_stress(
+            sector="sigma",
+            numerator=ScalarRange(0.0, 1.0e-7),
+            anchor=None,
+            numerator_channel_key=("sigma", "frame", "order", "branch"),
+        )
+        assert stress.status is StressStatus.ANCHOR_UNAVAILABLE
+        assert stress.saturation is None
+
+    def test_signed_comparator_projection_is_not_accepted(self):
+        stress = evaluate_comparator_anchor_stress(
+            sector="x_C",
+            numerator=None,
+            anchor=None,
+            numerator_channel_key=None,
+        )
+        assert stress.status is StressStatus.NUMERATOR_UNIDENTIFIED
+        assert stress.saturation is None
+
+
 # ═══════════════════════════════════════════════════════════════
 # §4 — Bianchi IV falsifiability probe
 # ═══════════════════════════════════════════════════════════════
@@ -268,8 +293,9 @@ class TestBianchiIVProbe:
         assert report['comparator_status'] == 'NULL'
         assert report['x_C'] is None
         assert math.isfinite(report['x_C_direct'])
-        assert report['F_C'] is None
+        assert 'F_C' not in report
         assert report['no_flrw_limit_flag'] is True
+        assert report['inference_status'] == 'not_run_structural_diagnostic_only'
 
     def test_probe_raises_for_wrong_type(self):
         sc = get_type("I")

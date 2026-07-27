@@ -1,12 +1,32 @@
-"""MIO formalism helpers for diagnostic departure coordinates."""
+"""Active MIO formalism surface.
+
+Only typed state, identified-set, channel-stress, legacy-projection-report and
+orbit/nonlinearity contracts are exported here.  Historical scalar Q/F/Pi/G_F
+builders remain reproducible under :mod:`mio.legacy_projection`; they are not
+active estimands, occupancies, probabilities, evidence, or family classifiers.
+"""
 from __future__ import annotations
 
-from .component_breakdown import (
-    CANONICAL_COMPONENT_ORDER,
-    CANONICAL_COMPONENT_SIGNS,
-    ComponentBreakdown,
-    DepartureComponent,
-    signed_component_projection,
+from common.orbit_nonlinearity import NonlinearityReport
+from common.mes_successor_registry import current_mes_successor_registry
+from common.statistical_foundations import (
+    AnchorStressReport,
+    BudgetRadiusResult,
+    DepartureState,
+    DiagnosticScalarReport,
+    IdentifiedDepartureSet,
+    LegacyProjectionReport,
+    MESAnchorSpec,
+    ScalarRange,
+    SectorStress,
+    SummaryDepartureState,
+)
+
+from .bound_pushforward import (
+    BoundToPiDominationResult,
+    FiniteCoverUnionBoundResult,
+    bound_to_pi_domination,
+    finite_cover_union_bound,
 )
 from .budget_spec import (
     BudgetPolicy,
@@ -17,81 +37,47 @@ from .budget_spec import (
     build_budget_spec,
     compare_denominator_policies,
 )
-from .departure_bundle import DepartureBundle, build_departure_bundle
-from .bound_pushforward import (
-    BoundToPiDominationResult,
-    FiniteCoverUnionBoundResult,
-    bound_to_pi_domination,
-    finite_cover_union_bound,
+from .component_breakdown import (
+    CANONICAL_COMPONENT_ORDER,
+    CANONICAL_COMPONENT_SIGNS,
+    ComponentBreakdown,
+    DepartureComponent,
+    signed_component_projection,
 )
 from .dynamic_budget import (
     DynamicBudgetBarrierResult,
     dynamic_comparison_budget_barrier,
 )
-from .exceedance import (
-    ExceedanceCurve,
-    MeasureKind,
-    ThresholdPolicy,
-    build_exceedance_curve,
-    build_exceedance_curve_from_filling_fraction,
-    build_exceedance_curve_from_normalized_scores,
-)
-from .filling_fraction import (
-    CertifiedFillingFraction,
-    build_certified_filling_fraction,
-)
-from .channel_occupancy_vector import channel_matched_occupancy
-from .isotropy_gap import (
-    DepthBinFRecord,
-    DepthBinMetadata,
-    IsotropyGap,
-    build_depth_bin_f_record,
-    build_isotropy_gap,
-)
-from .normalized_score import (
-    ComparatorMultiverseSummary,
-    NormalizedScore,
-    NumeratorPolicy,
-    build_comparator_multiverse_summary,
-    build_normalized_score,
-)
+
+_MES_SUCCESSOR = current_mes_successor_registry().successor
+_MES_SUCCESSOR_ID = _MES_SUCCESSOR.successor_id
 
 __all__ = [
+    "AnchorStressReport",
+    "BoundToPiDominationResult",
     "BudgetPolicy",
+    "BudgetRadiusResult",
     "BudgetSensitivityPoint",
     "BudgetSpec",
     "BudgetUse",
-    "BoundToPiDominationResult",
     "CANONICAL_COMPONENT_ORDER",
     "CANONICAL_COMPONENT_SIGNS",
-    "ComparatorMultiverseSummary",
-    "CertifiedFillingFraction",
     "ComponentBreakdown",
-    "DepthBinFRecord",
-    "DepthBinMetadata",
-    "DepartureBundle",
     "DepartureComponent",
+    "DepartureState",
+    "DiagnosticScalarReport",
     "DynamicBudgetBarrierResult",
-    "ExceedanceCurve",
     "FiniteCoverUnionBoundResult",
-    "IsotropyGap",
-    "MeasureKind",
+    "IdentifiedDepartureSet",
+    "LegacyProjectionReport",
+    "MESAnchorSpec",
     "NativeMorphologyAtlasStatus",
-    "NormalizedScore",
-    "NumeratorPolicy",
-    "ThresholdPolicy",
-    "build_budget_spec",
-    "build_certified_filling_fraction",
+    "NonlinearityReport",
+    "ScalarRange",
+    "SectorStress",
+    "SummaryDepartureState",
     "bound_to_pi_domination",
-    "channel_matched_occupancy",
-    "build_depth_bin_f_record",
-    "build_departure_bundle",
-    "build_comparator_multiverse_summary",
-    "build_exceedance_curve",
-    "build_exceedance_curve_from_filling_fraction",
-    "build_exceedance_curve_from_normalized_scores",
-    "build_isotropy_gap",
-    "build_normalized_score",
+    "build_budget_spec",
     "compare_denominator_policies",
     "dynamic_comparison_budget_barrier",
     "finite_cover_union_bound",

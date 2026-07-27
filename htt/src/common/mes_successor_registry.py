@@ -59,7 +59,7 @@ PR124_AUTHORITY_RECEIPT_SHA256 = (
 # requires an explicit registry update; silently consuming changed bytes is a
 # release blocker.
 LEGACY_REPRODUCTION_SHA256 = (
-    "cc3ba841a4b61ac10a1d7a82e56b96391afcd81d8bd169bd8ca33940c7cf671e"
+    "281a35d1bd2a54f0aef236ffda0f33b4154e1e31eeb096eb209b2af1924af33a"
 )
 EGS3_BRANCH_WITNESS_SHA256 = (
     "9b0817c99944e796b4c980cad43df724d0abde9381c8f542195d249447bfe816"
@@ -77,6 +77,15 @@ DEFAULT_CONSUMER_SUPERSESSION_PATH = (
 )
 PR248_CONSUMER_SUPERSESSION_SHA256 = (
     "7a96eff7d3cc7929fc2d090f835da359848d6a5ee3d9fd7e22da4a5763e0109e"
+)
+DEFAULT_CONSUMER_MIGRATION_PATH = (
+    "docs/research_program/stat_foundations/"
+    "pr252_mes_consumer_migration.yaml"
+)
+# Filled only after the PR-252 migration document binds the final consumer
+# bytes.  A mismatch fails closed before any migrated declaration is trusted.
+PR252_CONSUMER_MIGRATION_SHA256 = (
+    "0121b247d9f54e86cd54c6e8df26aa9d190e0f40d0d15a56445c76148f8c5624"
 )
 DEFAULT_ACTIVE_PYTHON_ROOTS = (
     "htt/htt/htt",
@@ -131,7 +140,9 @@ _MES_CONSUMER_IDENTIFIERS = frozenset(
         "B_sigma_lin",
         "DopplerBoostCorrection",
         "MESBounds",
+        "MESAnchorSpec",
         "MES_LINEAR",
+        "AnchorStressReport",
         "Sig2_max_MES",
         "TeffMESBounds",
         "W2_max_MES",
@@ -139,6 +150,9 @@ _MES_CONSUMER_IDENTIFIERS = frozenset(
         "compute_mes_bounds_2sigma_upper",
         "compute_planck_central_bounds",
         "delta_B_sigma",
+        "evaluate_sector_stress",
+        "quarantined_shear_anchors",
+        "registered_geodesic_mes_anchors",
     }
 )
 _MES_CONSUMER_MODULES = frozenset(
@@ -1476,10 +1490,6 @@ def _load_inventory_controls(
                 ),
             )
         )
-    declarations = list(
-        _apply_consumer_supersessions(repo_root, tuple(declarations))
-    )
-
     raw_exclusions = payload.get("excluded_consumers")
     if not isinstance(raw_exclusions, Sequence) or isinstance(
         raw_exclusions, (str, bytes)
@@ -1507,7 +1517,18 @@ def _load_inventory_controls(
                 reason=row["reason"],
             )
         )
-    return roots, tuple(declarations), tuple(exclusions), True
+    effective_declarations = _apply_consumer_supersessions(
+        repo_root, tuple(declarations)
+    )
+    effective_declarations, effective_exclusions = (
+        _apply_pr252_consumer_migration(
+            repo_root,
+            effective_declarations,
+            tuple(exclusions),
+        )
+    )
+    assert effective_exclusions is not None
+    return roots, effective_declarations, effective_exclusions, True
 
 
 def _apply_consumer_supersessions(
@@ -1594,6 +1615,305 @@ def _apply_consumer_supersessions(
             expected_successor_id=prior.expected_successor_id,
         )
     return tuple(by_id[row.consumer_id] for row in declarations)
+
+
+def _apply_pr252_consumer_migration(
+    repo_root: Path,
+    declarations: tuple[MesConsumerDeclaration, ...],
+    exclusions: tuple[MesConsumerExclusion, ...] | None,
+) -> tuple[
+    tuple[MesConsumerDeclaration, ...],
+    tuple[MesConsumerExclusion, ...] | None,
+]:
+    """Apply the lossless PR-252 active/legacy consumer migration.
+
+    PR-122 and PR-248 remain byte-preserved authority records.  This overlay
+    may (1) bind changed active bytes, (2) reclassify an exact prior active
+    declaration as an exact legacy exclusion, or (3) bind changed bytes for an
+    existing exclusion.  Every transition names its prior digest; an unknown
+    identity, path drift, duplicate, or no-op fails closed.
+
+    ``exclusions=None`` is used only to normalize a caller's preserved
+    declaration list for compatibility comparison.  In that mode declaration
+    bindings and removals still apply, while exclusion rows are not materialized.
+    """
+
+    path = repo_root / DEFAULT_CONSUMER_MIGRATION_PATH
+    if not path.exists():
+        return declarations, exclusions
+    if path.is_symlink() or not path.is_file():
+        raise MesRegistryError(
+            "MES consumer migration must be a regular repository file"
+        )
+    observed_sha256 = hashlib.sha256(path.read_bytes()).hexdigest()
+    if observed_sha256 != PR252_CONSUMER_MIGRATION_SHA256:
+        raise MesRegistryError(
+            "MES consumer migration hash does not match the PR-252 authority root"
+        )
+    try:
+        payload = yaml.safe_load(path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeDecodeError, yaml.YAMLError) as exc:
+        raise MesRegistryError(f"invalid MES consumer migration: {exc}") from exc
+    if not isinstance(payload, Mapping):
+        raise MesRegistryError("MES consumer migration root must be a mapping")
+    if payload.get("schema") != "htt.mes_consumer_migration.v1":
+        raise MesRegistryError("unsupported MES consumer migration schema")
+    if payload.get("authority") != "PR-252":
+        raise MesRegistryError("MES consumer migration authority must be PR-252")
+
+    binding_rows = payload.get("bindings")
+    new_binding_rows = payload.get("new_bindings")
+    reclassification_rows = payload.get("legacy_reclassifications")
+    exclusion_rows = payload.get("exclusion_bindings")
+    for label, rows in (
+        ("bindings", binding_rows),
+        ("new_bindings", new_binding_rows),
+        ("legacy_reclassifications", reclassification_rows),
+        ("exclusion_bindings", exclusion_rows),
+    ):
+        if not isinstance(rows, Sequence) or isinstance(rows, (str, bytes)):
+            raise MesRegistryError(f"MES consumer migration {label} must be a sequence")
+    if (
+        not binding_rows
+        and not new_binding_rows
+        and not reclassification_rows
+        and not exclusion_rows
+    ):
+        raise MesRegistryError("MES consumer migration must contain a transition")
+
+    declaration_order = [row.consumer_id for row in declarations]
+    declaration_by_id = {row.consumer_id: row for row in declarations}
+    declaration_paths = {row.source.path for row in declarations}
+    seen_declarations: set[str] = set()
+
+    for row in binding_rows:
+        required = {
+            "consumer_id",
+            "path",
+            "prior_sha256",
+            "sha256",
+            "reason",
+        }
+        if not isinstance(row, Mapping) or set(row) != required:
+            raise MesRegistryError(
+                "each PR-252 binding requires consumer_id/path/prior_sha256/"
+                "sha256/reason"
+            )
+        consumer_id = _nonempty(row["consumer_id"], "migration consumer_id")
+        if consumer_id in seen_declarations:
+            raise MesRegistryError("duplicate PR-252 consumer transition")
+        seen_declarations.add(consumer_id)
+        prior = declaration_by_id.get(consumer_id)
+        if prior is None:
+            raise MesRegistryError(
+                f"PR-252 binding names unknown consumer {consumer_id!r}"
+            )
+        source_path = _source_path(row["path"], "migration path")
+        prior_sha = _sha256(row["prior_sha256"], "migration prior_sha256")
+        next_sha = _sha256(row["sha256"], "migration sha256")
+        _nonempty(row["reason"], "migration reason")
+        if source_path != prior.source.path or prior_sha != prior.source.sha256:
+            raise MesRegistryError(
+                f"PR-252 prior binding drifted for {consumer_id}"
+            )
+        if next_sha == prior_sha:
+            raise MesRegistryError(
+                f"PR-252 replacement must differ for {consumer_id}"
+            )
+        declaration_by_id[consumer_id] = MesConsumerDeclaration(
+            consumer_id=consumer_id,
+            source=SourceHashBinding(
+                path=source_path,
+                availability=SourceAvailability.AVAILABLE,
+                sha256=next_sha,
+            ),
+            expected_successor_id=prior.expected_successor_id,
+        )
+
+    for row in new_binding_rows:
+        required = {
+            "consumer_id",
+            "path",
+            "sha256",
+            "expected_successor_id",
+            "reason",
+        }
+        if not isinstance(row, Mapping) or set(row) != required:
+            raise MesRegistryError(
+                "each PR-252 new binding requires consumer_id/path/sha256/"
+                "expected_successor_id/reason"
+            )
+        consumer_id = _nonempty(row["consumer_id"], "new migration consumer_id")
+        source_path = _source_path(row["path"], "new migration path")
+        digest = _sha256(row["sha256"], "new migration sha256")
+        expected_successor_id = _nonempty(
+            row["expected_successor_id"],
+            "new migration expected_successor_id",
+        )
+        _nonempty(row["reason"], "new migration reason")
+        if consumer_id in declaration_by_id or consumer_id in seen_declarations:
+            raise MesRegistryError("duplicate PR-252 new consumer identity")
+        if source_path in declaration_paths:
+            raise MesRegistryError("duplicate PR-252 new consumer path")
+        if expected_successor_id != CURRENT_SUCCESSOR_ID:
+            raise MesRegistryError(
+                "PR-252 new consumers must traverse the current successor"
+            )
+        seen_declarations.add(consumer_id)
+        declaration_order.append(consumer_id)
+        declaration_paths.add(source_path)
+        declaration_by_id[consumer_id] = MesConsumerDeclaration(
+            consumer_id=consumer_id,
+            source=SourceHashBinding(
+                path=source_path,
+                availability=SourceAvailability.AVAILABLE,
+                sha256=digest,
+            ),
+            expected_successor_id=expected_successor_id,
+        )
+
+    materialized_exclusions = (
+        None if exclusions is None else list(exclusions)
+    )
+    existing_exclusion_ids = (
+        set()
+        if exclusions is None
+        else {row.exclusion_id for row in exclusions}
+    )
+    existing_exclusion_paths = (
+        set()
+        if exclusions is None
+        else {row.source.path for row in exclusions}
+    )
+    for row in reclassification_rows:
+        required = {
+            "consumer_id",
+            "exclusion_id",
+            "path",
+            "prior_sha256",
+            "sha256",
+            "reason",
+        }
+        if not isinstance(row, Mapping) or set(row) != required:
+            raise MesRegistryError(
+                "each PR-252 reclassification requires consumer_id/exclusion_id/"
+                "path/prior_sha256/sha256/reason"
+            )
+        consumer_id = _nonempty(
+            row["consumer_id"], "reclassification consumer_id"
+        )
+        if consumer_id in seen_declarations:
+            raise MesRegistryError("duplicate PR-252 consumer transition")
+        seen_declarations.add(consumer_id)
+        prior = declaration_by_id.get(consumer_id)
+        if prior is None:
+            raise MesRegistryError(
+                f"PR-252 reclassification names unknown consumer {consumer_id!r}"
+            )
+        exclusion_id = _nonempty(
+            row["exclusion_id"], "reclassification exclusion_id"
+        )
+        source_path = _source_path(row["path"], "reclassification path")
+        prior_sha = _sha256(
+            row["prior_sha256"], "reclassification prior_sha256"
+        )
+        next_sha = _sha256(row["sha256"], "reclassification sha256")
+        reason = _nonempty(row["reason"], "reclassification reason")
+        if source_path != prior.source.path or prior_sha != prior.source.sha256:
+            raise MesRegistryError(
+                f"PR-252 reclassification prior drifted for {consumer_id}"
+            )
+        if exclusion_id in existing_exclusion_ids:
+            raise MesRegistryError("duplicate PR-252 exclusion_id")
+        if source_path in existing_exclusion_paths:
+            raise MesRegistryError("duplicate PR-252 exclusion path")
+        del declaration_by_id[consumer_id]
+        if materialized_exclusions is not None:
+            materialized_exclusions.append(
+                MesConsumerExclusion(
+                    exclusion_id=exclusion_id,
+                    source=SourceHashBinding(
+                        path=source_path,
+                        availability=SourceAvailability.AVAILABLE,
+                        sha256=next_sha,
+                    ),
+                    reason=reason,
+                )
+            )
+            existing_exclusion_ids.add(exclusion_id)
+            existing_exclusion_paths.add(source_path)
+
+    if exclusions is not None:
+        assert materialized_exclusions is not None
+        exclusion_order = tuple(row.exclusion_id for row in materialized_exclusions)
+        exclusion_by_id = {
+            row.exclusion_id: row for row in materialized_exclusions
+        }
+        seen_exclusions: set[str] = set()
+        for row in exclusion_rows:
+            required = {
+                "exclusion_id",
+                "path",
+                "prior_sha256",
+                "sha256",
+                "reason",
+            }
+            if not isinstance(row, Mapping) or set(row) != required:
+                raise MesRegistryError(
+                    "each PR-252 exclusion binding requires exclusion_id/path/"
+                    "prior_sha256/sha256/reason"
+                )
+            exclusion_id = _nonempty(
+                row["exclusion_id"], "migration exclusion_id"
+            )
+            if exclusion_id in seen_exclusions:
+                raise MesRegistryError("duplicate PR-252 exclusion transition")
+            seen_exclusions.add(exclusion_id)
+            prior = exclusion_by_id.get(exclusion_id)
+            if prior is None:
+                raise MesRegistryError(
+                    f"PR-252 binding names unknown exclusion {exclusion_id!r}"
+                )
+            source_path = _source_path(row["path"], "migration exclusion path")
+            prior_sha = _sha256(
+                row["prior_sha256"], "migration exclusion prior_sha256"
+            )
+            next_sha = _sha256(
+                row["sha256"], "migration exclusion sha256"
+            )
+            reason = _nonempty(row["reason"], "migration exclusion reason")
+            if source_path != prior.source.path or prior_sha != prior.source.sha256:
+                raise MesRegistryError(
+                    f"PR-252 prior exclusion drifted for {exclusion_id}"
+                )
+            if next_sha == prior_sha:
+                raise MesRegistryError(
+                    f"PR-252 exclusion replacement must differ for {exclusion_id}"
+                )
+            exclusion_by_id[exclusion_id] = MesConsumerExclusion(
+                exclusion_id=exclusion_id,
+                source=SourceHashBinding(
+                    path=source_path,
+                    availability=SourceAvailability.AVAILABLE,
+                    sha256=next_sha,
+                ),
+                reason=reason,
+            )
+        materialized_exclusions = [
+            exclusion_by_id[exclusion_id] for exclusion_id in exclusion_order
+        ]
+
+    effective_declarations = tuple(
+        declaration_by_id[consumer_id]
+        for consumer_id in declaration_order
+        if consumer_id in declaration_by_id
+    )
+    effective_exclusions = (
+        None
+        if materialized_exclusions is None
+        else tuple(materialized_exclusions)
+    )
+    return effective_declarations, effective_exclusions
 
 
 def _consumer_scan_findings(
@@ -1808,11 +2128,15 @@ def scan_declared_mes_consumers(
         )
         if caller_sorted != inventory_sorted:
             # Compatibility for callers that faithfully loaded the preserved
-            # PR-122 inventory: apply the repository-owned overlay to that
-            # exact declaration set, then require equality with the effective
-            # inventory. Arbitrary caller replacement remains forbidden.
+            # PR-122 inventory: apply the repository-owned PR-248 and PR-252
+            # overlays to that exact declaration set, then require equality
+            # with the effective inventory. Arbitrary replacement remains
+            # forbidden.
             overlaid = _apply_consumer_supersessions(
                 repo_root, caller_declarations
+            )
+            overlaid, _ = _apply_pr252_consumer_migration(
+                repo_root, overlaid, None
             )
             if tuple(
                 sorted(overlaid, key=lambda item: item.consumer_id)
@@ -1825,9 +2149,23 @@ def scan_declared_mes_consumers(
         source_paths = tuple(item.source.path for item in declarations)
     if inventory_present and exclusions is not None:
         if tuple(exclusions) != inventory_exclusions:
-            raise MesRegistryError(
-                "caller exclusions cannot replace the repository inventory"
-            )
+            try:
+                preserved_declarations = _apply_consumer_supersessions(
+                    repo_root, caller_declarations
+                )
+                _, migrated_exclusions = _apply_pr252_consumer_migration(
+                    repo_root,
+                    preserved_declarations,
+                    tuple(exclusions),
+                )
+            except MesRegistryError as exc:
+                raise MesRegistryError(
+                    "caller exclusions cannot replace the repository inventory"
+                ) from exc
+            if migrated_exclusions != inventory_exclusions:
+                raise MesRegistryError(
+                    "caller exclusions cannot replace the repository inventory"
+                )
     if inventory_present and discovery_roots is not None:
         if tuple(discovery_roots) != inventory_roots:
             raise MesRegistryError(
@@ -1888,6 +2226,7 @@ def finding_codes(report: MesConsumerScanReport) -> frozenset[str]:
 __all__ = [
     "CURRENT_SUCCESSOR_ID",
     "DEFAULT_ACTIVE_PYTHON_ROOTS",
+    "DEFAULT_CONSUMER_MIGRATION_PATH",
     "DEFAULT_CONSUMER_INVENTORY_PATH",
     "DEFAULT_CONSUMER_SUPERSESSION_PATH",
     "EGS3_BRANCH_SEAL_PATH",
@@ -1907,6 +2246,7 @@ __all__ = [
     "MesSuccessorRegistry",
     "PLANNED_PR124_SOURCE",
     "PR248_CONSUMER_SUPERSESSION_SHA256",
+    "PR252_CONSUMER_MIGRATION_SHA256",
     "SCHEMA_VERSION",
     "SourceAvailability",
     "SourceHashBinding",

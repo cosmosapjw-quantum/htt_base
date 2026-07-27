@@ -184,15 +184,8 @@ def f3_tensor(x):
 
 
 # =====================================================================
-#  Physics: MES bounds, shear-to-Dℓ, tilt
+#  Physics: active typed anchor, shear-to-Dℓ, tilt
 # =====================================================================
-def B_sigma(e1, e2=EPS2, e3=EPS3):
-    return (5./3)*e1 + 3.*e2 + (3./7)*e3
-
-def B_sigma_corrected(e1, e2=EPS2, e3=EPS3):
-    R = 1. + 2.69 * e1
-    return R * B_sigma(e1, e2, e3)
-
 def eps1_from_beta(beta):
     return beta * (1. + ETA_UDOT)
 
@@ -551,12 +544,6 @@ def _active_sig2_mes_ceiling(eps1_residual):
     if anchor.status is not AnchorStatus.VERIFIED or not anchor.normalization_allowed:
         raise RuntimeError("active shear likelihood requires a verified MES anchor")
     return float(anchor.value)
-
-
-# Historical corrected ceiling: retained for explicit reproduction only.
-def Sig2_max_MES(e1_total):
-    """Legacy frame-corrected ceiling; active channels do not call this."""
-    return 1.5 * B_sigma_corrected(e1_total)**2
 
 
 # =====================================================================

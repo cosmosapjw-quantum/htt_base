@@ -1,4 +1,4 @@
-"""Regression anchors for ``htt.core.bounds`` and ``htt.core.tilted_flrw``.
+"""Regression anchors for legacy bounds and ``htt.core.tilted_flrw``.
 
 These two modules are the pure-algebra core of the MES-bound hierarchy
 (`fig_MES_three_bounds`, `fig_sigma_omega_contour`, `fig_sigma_accel_contour`)
@@ -15,7 +15,7 @@ from __future__ import annotations
 
 import pytest
 
-from htt.core.bounds import (
+from tsc_legacy.htt_core_bounds import (
     A2_max_MES,
     B_accel,
     B_omega,

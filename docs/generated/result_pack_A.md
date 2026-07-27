@@ -4,35 +4,36 @@ owner: COMMON
 implementation_scope: common
 claim_tier: diagnostic_only
 transfer_source: none
-config_hash: `sha256:e90dfe8d4a6bdb91671d90d8a3081bb00f3e31358e26d90193fc45e383cba5bf`
+config_hash: `sha256:e7e0272ceb046b83e5a9e25f150e807eb780ab9924a9b724d36d0cc2f2527f62`
 input_hashes:
-- scripts/result_packs/generate_pack_A_scalar_to_morphology.py:sha256:c9c8a622a33cedd1232d3ab11f22c822f40b0e15d81c0e78b31f1db452485316
+- scripts/result_packs/generate_pack_A_scalar_to_morphology.py:sha256:fa9983ed90998f4e9b83aea4ab244ddf4d001e686987d32257bb0305a033a6e5
 - docs/ver2_upgrade/generated/result_pack_A_scalar_to_morphology.json:sha256:2cb5c46c2eaacb5fe400b5910b8ebe85c7b78b5ae448772ea5c9be2d0b07beca
 - docs/PR_DELTAS/pr-056.md:sha256:ca22c09c8a1822c1894fd775e2991932e9a6c28ba55ec9876a137e6000bf4207
 - docs/PR_DELTAS/pr-076.md:sha256:a32bf4e530c1af1dcd941c9af73c7bc3d678eae8c7767c5f37179cf9b9a6906a
 - docs/PR_DELTAS/pr-092.md:sha256:01f50c7a4cf69ec2c02d02be60c2373f7eb24167da25123464153a720340104c
-- htt/mio/reports/departure_report.py:sha256:2e28a9523f06d4c05966d2819e3823eeb8f4449c5e4934509bee8fdffcbe982a
+- htt/mio/reports/departure_report.py:sha256:ed4a43543f103cd9dee9f3f335cc8d37f25558c313de01df6fa817388fb1cefe
 - htt/obsstat/scalar_lowell.py:sha256:c7bf763cb684d183a13e6f1dd51369a93f79ab8f3ac3eef27be7e68c98fe12e9
 - htt/obsstat/morphology.py:sha256:67899dad4232f0c944fb766db2c48b16bdd19efae95df58fd1fbd243e3261108
 - htt/obsstat/null_ensembles.py:sha256:1033f1f4a5a105f455bf11b83bd421052b1520a486493560abd0f80fda16658c
 - htt/htt/htt/statistics/mes_information_gain.py:sha256:251c44f18fbfe7949dc5b02e6b96db12154ce0488560748c8987458446d991b1
-- docs/generated/status_snapshot.json:sha256:da0dbc84e54addf1c927361d1e1620aad45a7cf55188c82b6d8996ebb8a7982d
+- htt/src/common/statistical_foundations.py:sha256:830d1698a8f57dd3a050862f4ee1b59da3b64688774e439171e4c40165939eff
+- docs/generated/status_snapshot.json:sha256:fd70078906979a9fa0d70f2097b6a8530c4c3d2c28ec696dcd0dfed2fb687fbb
 sky_support_status: not_directional
 null_mock_status: summarized_from_dependency_surfaces
 generating_command: `python scripts/result_packs/generate_pack_A_scalar_to_morphology.py`
-git_commit_or_worktree_state: `3225e56+dirty`
+git_commit_or_worktree_state: `4b49b05b+dirty`
 
 ## Scope
 
-This is a diagnostic-only comparison pack. It compares scalar MIO Q/F/Pi report surfaces with OBSSTAT morphology features and COMMON MES I_morph status under explicit caveats. Native morphology atlas support remains absent.
+This is a diagnostic-only comparison pack. It compares scalar MIO Q/F/Pi legacy-projection report surfaces with OBSSTAT morphology features and COMMON MES I_morph status under explicit caveats. BC1 preserves recorded scalar values and BC2 forbids interpreting their representation as distance, occupancy, probability, or evidence. Native morphology atlas support remains absent.
 
 ## Scalar Diagnostics
 
-| Name | Owner | Surface | Role | Required Provenance |
-| --- | --- | --- | --- | --- |
-| Q | MIO | DepartureReport.sections.Q | policy-normalized diagnostic score | denominator policy and transfer provenance by section |
-| F | MIO | DepartureReport.sections.F | certified filling-fraction diagnostic when supplied | admissible ceiling budget and samplewise input hashes |
-| Pi | MIO | DepartureReport.sections.Pi | empirical exceedance curve | measure kind, thresholds, and source score label |
+| Name | Owner | Classification | Status | Role | Allowed Use | Forbidden Use |
+| --- | --- | --- | --- | --- | --- | --- |
+| Q | MIO | BC1_LEGACY_PROJECTION | legacy_projection_only | legacy signed policy-normalized ratio | historical reproduction and signed ratio reporting | departure distance, occupancy, probability, or evidence |
+| F | MIO | BC1_LEGACY_PROJECTION | legacy_projection_only | legacy policy-normalized ratio when supplied | historical reproduction and declared ratio reporting | filling, occupancy, saturation, probability, or evidence |
+| Pi | MIO | BC1_LEGACY_PROJECTION | legacy_projection_only | empirical exceedance curve | threshold summary of the recorded legacy ratio | truth probability, occupancy, or evidence |
 
 ## Morphology And MES Diagnostics
 
@@ -70,13 +71,15 @@ Source `docs/ver2_upgrade/generated/result_pack_A_scalar_to_morphology.json` is 
 
 | PR | Implemented | Smoke Tested | Claim Tier | Production Gate |
 | --- | --- | --- | --- | --- |
-| PR-056 | True | True | diagnostic_only | False |
-| PR-076 | True | True | diagnostic_only | False |
-| PR-092 | True | True | diagnostic_only | False |
+| PR-056 | True | False | diagnostic_only | False |
+| PR-076 | True | False | diagnostic_only | False |
+| PR-092 | True | False | diagnostic_only | False |
 
 ## Caveats
 
 - diagnostic-only comparison over existing contract-backed report surfaces
+- Q/F/Pi rows are BC1_LEGACY_PROJECTION with BC2_NO_REPRESENTATION_PROMOTION
+- legacy scalar values are not departure distance, occupancy, probability, or evidence
 - scalar Q/F/Pi values do not identify geometry or a Bianchi family
 - morphology and MES features are observer/statistics diagnostics, not native atlas support
 - native morphology atlas support remains absent
@@ -91,6 +94,8 @@ Source `docs/ver2_upgrade/generated/result_pack_A_scalar_to_morphology.json` is 
   "artifact_path": "docs/generated/result_pack_A.md",
   "caveats": [
     "diagnostic-only comparison over existing contract-backed report surfaces",
+    "Q/F/Pi rows are BC1_LEGACY_PROJECTION with BC2_NO_REPRESENTATION_PROMOTION",
+    "legacy scalar values are not departure distance, occupancy, probability, or evidence",
     "scalar Q/F/Pi values do not identify geometry or a Bianchi family",
     "morphology and MES features are observer/statistics diagnostics, not native atlas support",
     "native morphology atlas support remains absent",
@@ -98,24 +103,25 @@ Source `docs/ver2_upgrade/generated/result_pack_A_scalar_to_morphology.json` is 
     "readiness labels are provenance only; not current production readiness"
   ],
   "claim_tier": "diagnostic_only",
-  "code_version": "3225e56+dirty",
-  "config_hash": "sha256:e90dfe8d4a6bdb91671d90d8a3081bb00f3e31358e26d90193fc45e383cba5bf",
+  "code_version": "4b49b05b+dirty",
+  "config_hash": "sha256:e7e0272ceb046b83e5a9e25f150e807eb780ab9924a9b724d36d0cc2f2527f62",
   "created_by": "scripts/result_packs/generate_pack_A_scalar_to_morphology.py",
   "failed_gates": [],
   "git_commit": null,
   "implementation_scope": "common",
   "input_hashes": [
-    "scripts/result_packs/generate_pack_A_scalar_to_morphology.py:sha256:c9c8a622a33cedd1232d3ab11f22c822f40b0e15d81c0e78b31f1db452485316",
+    "scripts/result_packs/generate_pack_A_scalar_to_morphology.py:sha256:fa9983ed90998f4e9b83aea4ab244ddf4d001e686987d32257bb0305a033a6e5",
     "docs/ver2_upgrade/generated/result_pack_A_scalar_to_morphology.json:sha256:2cb5c46c2eaacb5fe400b5910b8ebe85c7b78b5ae448772ea5c9be2d0b07beca",
     "docs/PR_DELTAS/pr-056.md:sha256:ca22c09c8a1822c1894fd775e2991932e9a6c28ba55ec9876a137e6000bf4207",
     "docs/PR_DELTAS/pr-076.md:sha256:a32bf4e530c1af1dcd941c9af73c7bc3d678eae8c7767c5f37179cf9b9a6906a",
     "docs/PR_DELTAS/pr-092.md:sha256:01f50c7a4cf69ec2c02d02be60c2373f7eb24167da25123464153a720340104c",
-    "htt/mio/reports/departure_report.py:sha256:2e28a9523f06d4c05966d2819e3823eeb8f4449c5e4934509bee8fdffcbe982a",
+    "htt/mio/reports/departure_report.py:sha256:ed4a43543f103cd9dee9f3f335cc8d37f25558c313de01df6fa817388fb1cefe",
     "htt/obsstat/scalar_lowell.py:sha256:c7bf763cb684d183a13e6f1dd51369a93f79ab8f3ac3eef27be7e68c98fe12e9",
     "htt/obsstat/morphology.py:sha256:67899dad4232f0c944fb766db2c48b16bdd19efae95df58fd1fbd243e3261108",
     "htt/obsstat/null_ensembles.py:sha256:1033f1f4a5a105f455bf11b83bd421052b1520a486493560abd0f80fda16658c",
     "htt/htt/htt/statistics/mes_information_gain.py:sha256:251c44f18fbfe7949dc5b02e6b96db12154ce0488560748c8987458446d991b1",
-    "docs/generated/status_snapshot.json:sha256:da0dbc84e54addf1c927361d1e1620aad45a7cf55188c82b6d8996ebb8a7982d"
+    "htt/src/common/statistical_foundations.py:sha256:830d1698a8f57dd3a050862f4ee1b59da3b64688774e439171e4c40165939eff",
+    "docs/generated/status_snapshot.json:sha256:fd70078906979a9fa0d70f2097b6a8530c4c3d2c28ec696dcd0dfed2fb687fbb"
   ],
   "owner": "COMMON",
   "passed_gates": [
@@ -130,7 +136,7 @@ Source `docs/ver2_upgrade/generated/result_pack_A_scalar_to_morphology.json` is 
     "no_native_or_family_claim",
     "manifest_metadata_present"
   ],
-  "schema_version": "common.result_pack_A_scalar_to_morphology.v1",
+  "schema_version": "common.result_pack_A_scalar_to_morphology.v2",
   "statistics_definitions": {
     "comparison_status": "diagnostic_side_by_side",
     "legacy_ver2_context": "hashed_prior_context_only",

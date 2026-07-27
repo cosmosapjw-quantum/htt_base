@@ -127,7 +127,7 @@ class TestMESHierarchy:
 
     def test_hierarchy_at_eps1_kin(self):
         """B_σ > B_ω > B_u̇ at ε₁ = ε₁_kin."""
-        from htt.core.bounds import B_sigma, B_omega, B_accel
+        from tsc_legacy.htt_core_bounds import B_sigma, B_omega, B_accel
         from htt.core.ssot import C
         e1 = C.eps1_kin
         bs = B_sigma(e1)
@@ -137,7 +137,7 @@ class TestMESHierarchy:
 
     def test_hierarchy_across_range(self):
         """Hierarchy holds for ε₁ from 10⁻⁶ to 10⁻²."""
-        from htt.core.bounds import B_sigma, B_omega, B_accel
+        from tsc_legacy.htt_core_bounds import B_sigma, B_omega, B_accel
         for e1 in np.geomspace(1e-6, 1e-2, 20):
             bs = B_sigma(e1)
             bo = B_omega(e1)
@@ -146,14 +146,14 @@ class TestMESHierarchy:
 
     def test_Sig2_max_positive(self):
         """Σ²_max from MES should be positive."""
-        from htt.core.bounds import Sig2_max_MES
+        from tsc_legacy.htt_core_bounds import Sig2_max_MES
         from htt.core.ssot import C
         s2max = Sig2_max_MES(C.eps1_kin)
         assert s2max > 0
 
     def test_B_sigma_corrected_ge_B_sigma(self):
         """Corrected bound ≥ linear bound."""
-        from htt.core.bounds import B_sigma, B_sigma_corrected
+        from tsc_legacy.htt_core_bounds import B_sigma, B_sigma_corrected
         from htt.core.ssot import C
         e1 = C.eps1_kin
         assert B_sigma_corrected(e1) >= B_sigma(e1)
@@ -243,25 +243,25 @@ class TestBoundsConsistency:
 
     def test_x_defect_pure_shear(self):
         """x = Σ² for pure shear (no tilt, no curvature, no vorticity)."""
-        from htt.core.bounds import x_defect
+        from tsc_legacy.htt_core_bounds import x_defect
         x = x_defect(Sig2=1e-6)
         assert x == pytest.approx(1e-6)
 
     def test_x_defect_with_tilt(self):
-        from htt.core.bounds import x_defect, Omega_tilt
+        from tsc_legacy.htt_core_bounds import x_defect, Omega_tilt
         beta = SYNTHETIC_BETA
         Ot = Omega_tilt(beta)
         x = x_defect(Sig2=1e-6, Omega_tilt=Ot)
         assert x > 1e-6  # tilt adds positive contribution
 
     def test_filling_fraction_bounded(self):
-        from htt.core.bounds import filling_fraction
+        from tsc_legacy.htt_core_bounds import filling_fraction
         ff = filling_fraction(1e-6, 1e-3)
         assert 0 <= ff <= 1
 
     def test_BV_Sigma2_momentum(self):
         """BV momentum constraint should give large Σ²."""
-        from htt.core.bounds import Sig2_BV
+        from tsc_legacy.htt_core_bounds import Sig2_BV
         from htt.core.ssot import C
         S2 = Sig2_BV(beta=SYNTHETIC_BETA, Omega_K=0.01)
         # Should be large (overproduction)

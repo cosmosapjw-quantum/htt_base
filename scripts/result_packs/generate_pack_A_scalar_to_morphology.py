@@ -9,8 +9,13 @@ from pathlib import Path
 import subprocess
 from typing import Any
 
+from common.statistical_foundations import (
+    BC1_LEGACY_PROJECTION,
+    BC2_NO_REPRESENTATION_PROMOTION,
+)
 
-SCHEMA_VERSION = "common.result_pack_A_scalar_to_morphology.v1"
+
+SCHEMA_VERSION = "common.result_pack_A_scalar_to_morphology.v2"
 DEFAULT_OUTPUT = Path("docs/generated/result_pack_A.md")
 ARTIFACT_ID = "result_pack_A_scalar_to_morphology"
 ARTIFACT_PATH = "docs/generated/result_pack_A.md"
@@ -27,10 +32,13 @@ INPUT_FILES = (
     "htt/obsstat/morphology.py",
     "htt/obsstat/null_ensembles.py",
     "htt/htt/htt/statistics/mes_information_gain.py",
+    "htt/src/common/statistical_foundations.py",
     "docs/generated/status_snapshot.json",
 )
 DEFAULT_CAVEATS = (
     "diagnostic-only comparison over existing contract-backed report surfaces",
+    "Q/F/Pi rows are BC1_LEGACY_PROJECTION with BC2_NO_REPRESENTATION_PROMOTION",
+    "legacy scalar values are not departure distance, occupancy, probability, or evidence",
     "scalar Q/F/Pi values do not identify geometry or a Bianchi family",
     "morphology and MES features are observer/statistics diagnostics, not native atlas support",
     "native morphology atlas support remains absent",
@@ -133,20 +141,30 @@ def _diagnostic_payloads() -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
             "owner": "MIO",
             "source_pr": "PR-056",
             "surface": "DepartureReport.sections.Q",
-            "role": "policy-normalized diagnostic score",
+            "role": "legacy signed policy-normalized ratio",
             "claim_tier": "diagnostic_only",
+            "status": "legacy_projection_only",
+            "classification": BC1_LEGACY_PROJECTION,
+            "representation_policy": BC2_NO_REPRESENTATION_PROMOTION,
+            "allowed_use": "historical reproduction and signed ratio reporting",
+            "forbidden_use": "departure distance, occupancy, probability, or evidence",
             "required_provenance": "denominator policy and transfer provenance by section",
-            "comparison_use": "scalar compression for side-by-side reporting only",
+            "comparison_use": "legacy scalar compression for side-by-side reporting only",
         },
         {
             "name": "F",
             "owner": "MIO",
             "source_pr": "PR-056",
             "surface": "DepartureReport.sections.F",
-            "role": "certified filling-fraction diagnostic when supplied",
+            "role": "legacy policy-normalized ratio when supplied",
             "claim_tier": "diagnostic_only",
-            "required_provenance": "admissible ceiling budget and samplewise input hashes",
-            "comparison_use": "occupancy-style diagnostic status, not evidence",
+            "status": "legacy_projection_only",
+            "classification": BC1_LEGACY_PROJECTION,
+            "representation_policy": BC2_NO_REPRESENTATION_PROMOTION,
+            "allowed_use": "historical reproduction and declared ratio reporting",
+            "forbidden_use": "filling, occupancy, saturation, probability, or evidence",
+            "required_provenance": "declared denominator policy and samplewise input hashes",
+            "comparison_use": "legacy ratio status only",
         },
         {
             "name": "Pi",
@@ -155,6 +173,11 @@ def _diagnostic_payloads() -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
             "surface": "DepartureReport.sections.Pi",
             "role": "empirical exceedance curve",
             "claim_tier": "diagnostic_only",
+            "status": "legacy_projection_only",
+            "classification": BC1_LEGACY_PROJECTION,
+            "representation_policy": BC2_NO_REPRESENTATION_PROMOTION,
+            "allowed_use": "threshold summary of the recorded legacy ratio",
+            "forbidden_use": "truth probability, occupancy, or evidence",
             "required_provenance": "measure kind, thresholds, and source score label",
             "comparison_use": "tail-shape descriptor, not truth probability",
         },
@@ -274,6 +297,8 @@ def build_result_pack_payload(
         "legacy_ver2_context": legacy_ver2_context,
         "comparison_matrix": _comparison_matrix(scalar, morphology_mes),
         "claim_boundaries": {
+            "legacy_scalar_classification": BC1_LEGACY_PROJECTION,
+            "representation_policy": BC2_NO_REPRESENTATION_PROMOTION,
             "native_solver_status": "not_native_solver_output",
             "family_status": "blocked_until_native_morphology_atlas",
             "geometry_status": "blocked_until_native_morphology_atlas",
@@ -358,9 +383,12 @@ def render_markdown(payload: dict[str, Any]) -> str:
             "",
             (
                 "This is a diagnostic-only comparison pack. It compares scalar "
-                "MIO Q/F/Pi report surfaces with OBSSTAT morphology features and "
-                "COMMON MES I_morph status under explicit caveats. Native "
-                "morphology atlas support remains absent."
+                "MIO Q/F/Pi legacy-projection report surfaces with OBSSTAT "
+                "morphology features and COMMON MES I_morph status under "
+                "explicit caveats. BC1 preserves recorded scalar values and BC2 "
+                "forbids interpreting their representation as distance, "
+                "occupancy, probability, or evidence. Native morphology atlas "
+                "support remains absent."
             ),
             "",
             "## Scalar Diagnostics",
@@ -369,14 +397,24 @@ def render_markdown(payload: dict[str, Any]) -> str:
     )
     lines.extend(
         _table(
-            ("Name", "Owner", "Surface", "Role", "Required Provenance"),
+            (
+                "Name",
+                "Owner",
+                "Classification",
+                "Status",
+                "Role",
+                "Allowed Use",
+                "Forbidden Use",
+            ),
             [
                 (
                     item["name"],
                     item["owner"],
-                    item["surface"],
+                    item["classification"],
+                    item["status"],
                     item["role"],
-                    item["required_provenance"],
+                    item["allowed_use"],
+                    item["forbidden_use"],
                 )
                 for item in payload["scalar_diagnostics"]
             ],

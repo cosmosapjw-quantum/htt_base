@@ -301,12 +301,12 @@ class MESAnchorSpec:
                     "verified MES anchor calibration violates the registered "
                     "strict geodesic hierarchy"
                 ) from exc
-            expected_value = 1.5 * _branch_bound(
+            expected_value = _branch_anchor_value(
                 self.branch,
                 calibration["eps1"],
                 calibration["eps2"],
                 calibration["eps3"],
-            ) ** 2
+            )
             if self.value != expected_value:
                 raise StatisticalFoundationError(
                     "verified MES anchor value does not match its registered "
@@ -363,6 +363,15 @@ def _branch_bound(
     return float(sum(coefficient * value for coefficient, value in zip(coefficients, values)))
 
 
+def _branch_anchor_value(
+    branch_id: str, eps1: float, eps2: float, eps3: float
+) -> float:
+    """Use one rounding path for construction and exact self-validation."""
+
+    bound = _branch_bound(branch_id, eps1, eps2, eps3)
+    return 1.5 * bound * bound
+
+
 def registered_geodesic_mes_anchors(
     *,
     eps1: float,
@@ -377,8 +386,8 @@ def registered_geodesic_mes_anchors(
     observed-dipole, SAG-residual, realization or ensemble default is guessed.
     """
     attribution = _required_text(attribution, "attribution")
-    sigma_bound = _branch_bound("MES_G_SIGMA", eps1, eps2, eps3)
-    omega_bound = _branch_bound("MES_G_OMEGA", eps1, eps2, eps3)
+    sigma_value = _branch_anchor_value("MES_G_SIGMA", eps1, eps2, eps3)
+    omega_value = _branch_anchor_value("MES_G_OMEGA", eps1, eps2, eps3)
     common_forbidden = (
         "FLRW converse",
         "Bianchi family identification",
@@ -389,7 +398,7 @@ def registered_geodesic_mes_anchors(
     return {
         "sigma": MESAnchorSpec(
             anchor_id="MES_G_SIGMA_UNCORRECTED",
-            value=1.5 * sigma_bound * sigma_bound,
+            value=sigma_value,
             authority_kind=AnchorAuthorityKind.MES,
             target_sector="Sigma2",
             target_invariant="sigma_ab_sigma_ab_over_6H2",
@@ -414,7 +423,7 @@ def registered_geodesic_mes_anchors(
         ),
         "omega": MESAnchorSpec(
             anchor_id="MES_G_OMEGA",
-            value=1.5 * omega_bound * omega_bound,
+            value=omega_value,
             authority_kind=AnchorAuthorityKind.MES,
             target_sector="W2",
             target_invariant="omega_ab_omega_ab_over_6H2",

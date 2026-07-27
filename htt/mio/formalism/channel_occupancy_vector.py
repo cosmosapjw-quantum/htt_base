@@ -1,11 +1,24 @@
-"""MIO channel-matched occupancy diagnostics."""
+"""Legacy MIO channel-ratio reproduction.
+
+The historical spelling is preserved for frozen callers.  Active analysis
+uses ``AnchorStressReport``; this module does not establish physical occupancy.
+"""
 from __future__ import annotations
 
 from collections.abc import Mapping, Sequence
 import hashlib
 import json
 import math
+import warnings
 from typing import Any
+
+LEGACY_REPRODUCTION_ONLY = True
+
+warnings.warn(
+    "mio.formalism.channel_occupancy_vector is legacy reproduction only",
+    DeprecationWarning,
+    stacklevel=2,
+)
 
 
 def _finite(value: object, name: str) -> float:
@@ -48,7 +61,7 @@ def channel_matched_occupancy(
     worktree_state: str,
     input_hashes: Sequence[str],
 ) -> dict[str, Any]:
-    """Return bounded MIO diagnostic occupancies F_i = X_i / U_i."""
+    """Return historical bounded channel ratios ``X_i/U_i``."""
 
     if isinstance(rows, (str, bytes)) or not rows:
         raise ValueError("rows must be a non-empty sequence")
@@ -76,17 +89,18 @@ def channel_matched_occupancy(
             raise ValueError("numerator must be non-negative")
         if denominator <= 0.0:
             raise ValueError("denominator must be positive")
-        occupancy = numerator / denominator
-        if not 0.0 <= occupancy <= 1.0:
-            raise ValueError("occupancy must be within [0, 1] without clipping")
+        ratio = numerator / denominator
+        if not 0.0 <= ratio <= 1.0:
+            raise ValueError("legacy ratio must be within [0, 1] without clipping")
         output_rows.append(
             {
                 "channel": channel,
                 "numerator": numerator,
                 "denominator": denominator,
                 "denominator_channel": denominator_channel,
-                "occupancy": occupancy,
+                "ratio": ratio,
                 "denominator_policy": "channel_matched",
+                "legacy_compatibility": {"occupancy": ratio},
             }
         )
     return {
@@ -97,7 +111,10 @@ def channel_matched_occupancy(
         "posterior_compatible": False,
         "evidence_compatible": False,
         "truth_certificate": False,
-        "score_kind": "channel_matched_occupancy_vector",
+        "score_kind": "legacy_channel_matched_ratio_vector",
+        "classification": "BC1_LEGACY_PROJECTION",
+        "representation_policy": "BC2_NO_REPRESENTATION_PROMOTION",
+        "physical_occupancy": False,
         "rows": output_rows,
         "config_hash": _config_hash(rows),
         "input_hashes": list(hashes),
@@ -142,23 +159,18 @@ def classify_occupancy_language(
     channels_match = numerator == denominator
     has_ceiling_proof = bool(str(joint_admissible_ceiling_proof or "").strip())
     uses_occupancy_language = any(token in phrase for token in _OCCUPANCY_LANGUAGE_TOKENS)
-    allowed = channels_match or has_ceiling_proof
+    allowed = False
 
     blocked_reasons: list[str] = []
-    if not allowed:
-        if not channels_match:
-            blocked_reasons.append("channel_mismatch")
-        if uses_occupancy_language:
-            blocked_reasons.append(
-                "occupancy_language_requires_channel_match_or_ceiling_proof"
-            )
-
-    if channels_match:
-        status = "channel_matched_occupancy"
-    elif has_ceiling_proof:
-        status = "joint_admissible_ceiling"
-    else:
-        status = "proxy_score_only"
+    if not channels_match:
+        blocked_reasons.append("channel_mismatch")
+    if uses_occupancy_language:
+        blocked_reasons.append("occupancy_language_retired_for_legacy_ratio")
+    if has_ceiling_proof:
+        blocked_reasons.append(
+            "joint_ceiling_proof_does_not_convert_ratio_to_occupancy"
+        )
+    status = "legacy_ratio_only"
 
     return {
         "owner": "MIO",

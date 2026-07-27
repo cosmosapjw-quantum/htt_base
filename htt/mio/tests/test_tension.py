@@ -7,6 +7,10 @@ from pathlib import Path
 
 import pytest
 
+from common.statistical_foundations import (
+    BC1_LEGACY_PROJECTION,
+    BC2_NO_REPRESENTATION_PROMOTION,
+)
 from mio.tension import (
     ARTEFACT_FILENAME,
     XC_ARTEFACT_FILENAME,
@@ -127,10 +131,23 @@ def test_emit_xc_direct_estimate_artefact_round_trip(tmp_path: Path):
     )
     loaded = json.loads(out.read_text(encoding="utf-8"))
     assert loaded == payload
-    assert payload["certificate"]["report_type"] == "flrw_tension"
-    assert payload["certificate"]["channel"] == "xc_direct"
+    assert payload["certificate"]["report_type"] == "legacy_projection"
+    assert payload["certificate"]["channel"] == "xc_legacy_projection"
     assert payload["certificate"]["tsc_overlay_ref"] == "tsc.overlay"
     assert payload["report"]["x_c"] == pytest.approx(0.29)
+    assert payload["report"]["owner"] == "MIO"
+    assert payload["report"]["status"] == "diagnostic_only"
+    assert payload["report"]["classification"] == BC1_LEGACY_PROJECTION
+    assert (
+        payload["report"]["representation_policy"]
+        == BC2_NO_REPRESENTATION_PROMOTION
+    )
+    assert payload["report"]["legacy_projection"]["x_C"]["value_range"] == {
+        "lower": pytest.approx(0.29),
+        "upper": pytest.approx(0.29),
+    }
+    assert "x_C_abs_gt_2sigma" not in payload["certificate"]["adequacy_indicators"]
+    assert "x_C_abs_gt_3sigma" not in payload["certificate"]["adequacy_indicators"]
 
 
 def test_xc_report_significance_tracks_sigma():
@@ -148,3 +165,7 @@ def test_xc_report_significance_tracks_sigma():
     )
     assert report.x_c == pytest.approx(0.16)
     assert report.significance_sigma > 2.0
+    assert report.classification == BC1_LEGACY_PROJECTION
+    assert report.representation_policy == BC2_NO_REPRESENTATION_PROMOTION
+    assert "occupancy" in report.forbidden_use
+    assert "evidence" in report.forbidden_use

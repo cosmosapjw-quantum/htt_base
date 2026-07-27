@@ -1,9 +1,8 @@
-"""BASS budget-ceiling policy interface for MIO denominator references.
+"""Legacy BASS scalar budget-ceiling policy reproduction.
 
-This module records policy-conditioned ``U_C`` ceiling candidates with transfer,
-prior, admissible-set, and valid-range provenance.  It is a pre-solver
-diagnostic interface: it does not call a native low-ell solver, validate
-external transfer as native, or identify a Bianchi family.
+This module preserves historical ``U_C`` candidates.  Active analysis uses
+typed channel anchors and identified sets; these scalar candidates cannot
+normalize a live departure estimand.
 """
 
 from __future__ import annotations
@@ -13,6 +12,7 @@ from dataclasses import dataclass, field
 import hashlib
 import json
 import math
+import warnings
 from typing import Any
 
 from common.transfer_registry import TransferSource, validate_transfer_dependent_result
@@ -27,6 +27,13 @@ from common.mes_successor_registry import current_mes_successor_registry
 
 _MES_SUCCESSOR = current_mes_successor_registry().successor
 _MES_SUCCESSOR_ID = _MES_SUCCESSOR.successor_id
+LEGACY_REPRODUCTION_ONLY = True
+
+warnings.warn(
+    "bass.atlas.budget_ceiling_optimizer is a legacy scalar-policy surface",
+    DeprecationWarning,
+    stacklevel=2,
+)
 
 _SCHEMA_VERSION = "bass.budget_ceiling_policy.v1"
 _RESULT_SCHEMA_VERSION = "bass.budget_ceiling_policy_result.v1"

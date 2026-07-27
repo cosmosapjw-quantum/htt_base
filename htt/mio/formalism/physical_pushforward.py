@@ -1,8 +1,9 @@
-"""Fail-closed pushforward from identified multicomponent states to legacy scalars.
+"""Explicit legacy pushforward from multicomponent states to scalar projections.
 
 The module does not infer missing physical components and does not reinterpret
 legacy variables.  Inputs named ``Sigma_standard`` etc. must already follow the
-legacy report's registered convention.
+legacy report's registered convention. It is not part of the active
+``mio.formalism`` namespace.
 """
 from __future__ import annotations
 
@@ -14,8 +15,20 @@ import warnings
 import numpy as np
 
 from common.statistical_foundations import (
+    BC1_LEGACY_PROJECTION,
+    BC2_NO_REPRESENTATION_PROMOTION,
     BudgetRadiusResult,
     BudgetRadiusStatus,
+    ScalarRange,
+)
+
+LEGACY_REPRODUCTION_ONLY = True
+
+warnings.warn(
+    "mio.formalism.physical_pushforward is a legacy reproduction adapter; "
+    "use typed state and identified-set contracts for active analysis",
+    DeprecationWarning,
+    stacklevel=2,
 )
 
 @dataclass(frozen=True)
@@ -30,6 +43,16 @@ class PushforwardResult:
     claim_tier: str = 'diagnostic'
     source_hash: str = ''
     message: str = ''
+    classification: str = BC1_LEGACY_PROJECTION
+    representation_policy: str = BC2_NO_REPRESENTATION_PROMOTION
+    allowed_use: tuple[str, ...] = ("historical reproduction",)
+    forbidden_use: tuple[str, ...] = (
+        "departure distance",
+        "occupancy",
+        "probability",
+        "evidence",
+        "family identification",
+    )
 
     def as_dict(self) -> dict:
         return {
@@ -40,6 +63,10 @@ class PushforwardResult:
             'identified_components': list(self.identified_components),
             'claim_tier': self.claim_tier, 'source_hash': self.source_hash,
             'message': self.message,
+            'classification': self.classification,
+            'representation_policy': self.representation_policy,
+            'allowed_use': list(self.allowed_use),
+            'forbidden_use': list(self.forbidden_use),
         }
 
 
@@ -61,7 +88,10 @@ def _summary(x: np.ndarray) -> dict:
 def legacy_signed_defect_pushforward(samples: Mapping[str, np.ndarray],
                                       x_max: Optional[float] = None,
                                       assumptions: Sequence[str] = (),
-                                      claim_tier: str = 'conditional_inference') -> dict[str, PushforwardResult]:
+                                      claim_tier: str = 'diagnostic_legacy_reproduction',
+                                      *,
+                                      legacy_reproduction: bool = False
+                                      ) -> dict[str, PushforwardResult]:
     """Registered legacy relation
 
     ``x_C = Sigma_standard - W_standard + Omega_tilt + Omega_k_aniso``.
@@ -85,23 +115,51 @@ def legacy_signed_defect_pushforward(samples: Mapping[str, np.ndarray],
     arrays = [np.asarray(samples[k], dtype=float) for k in required]
     arrays = np.broadcast_arrays(*arrays)
     x = arrays[0] - arrays[1] + arrays[2] + arrays[3]
-    xr = PushforwardResult('x_C', 'OK', 'legacy_signed_defect_v1', _summary(x),
-                           tuple(assumptions), (), required, claim_tier, source)
+    if claim_tier != 'diagnostic_legacy_reproduction':
+        warnings.warn(
+            "legacy pushforward claim_tier is fixed to diagnostic reproduction",
+            DeprecationWarning,
+            stacklevel=2,
+        )
+    xr = PushforwardResult(
+        'x_C',
+        'OK',
+        'legacy_signed_defect_v1',
+        _summary(x),
+        tuple(assumptions),
+        (),
+        required,
+        'diagnostic_legacy_reproduction',
+        source,
+    )
     out = {'x_C': xr}
     if x_max is not None:
-        if not np.isfinite(x_max) or x_max <= 0:
+        if not legacy_reproduction:
+            out['Q'] = PushforwardResult(
+                'Q',
+                'BLOCKED_UNTYPED_DENOMINATOR',
+                'legacy_Q_v1',
+                assumptions=tuple(assumptions),
+                source_hash=source,
+                message=(
+                    'A bare x_max cannot create an active ratio; set '
+                    'legacy_reproduction=True only for frozen compatibility.'
+                ),
+            )
+        elif not np.isfinite(x_max) or x_max <= 0:
             out['Q'] = PushforwardResult('Q', 'BLOCKED_INVALID_DENOMINATOR', 'legacy_Q_v1',
                                          assumptions=tuple(assumptions), source_hash=source)
         else:
             out['Q'] = PushforwardResult('Q', 'OK', 'legacy_Q_v1', _summary(x/x_max),
-                                         tuple(assumptions), (), required, claim_tier, source)
+                                         tuple(assumptions), (), required,
+                                         'diagnostic_legacy_reproduction', source)
     return out
 
 
 def registered_callable_pushforward(name: str, samples: Mapping[str, np.ndarray],
                                     required: Sequence[str], function: Callable[..., np.ndarray],
                                     definition_id: str, assumptions: Sequence[str] = (),
-                                    claim_tier: str = 'conditional_inference') -> PushforwardResult:
+                                    claim_tier: str = 'diagnostic') -> PushforwardResult:
     missing = tuple(k for k in required if k not in samples)
     source = _source_hash(samples)
     if missing:
@@ -117,17 +175,59 @@ def registered_callable_pushforward(name: str, samples: Mapping[str, np.ndarray]
                              (), tuple(required), claim_tier, source)
 
 
-def ratio_pushforward(name: str, numerator: np.ndarray, denominator: np.ndarray,
-                      definition_id: str, zero_guard: float = 1e-12,
-                      assumptions: Sequence[str] = ()) -> PushforwardResult:
+def ratio_pushforward(
+    name: str,
+    numerator: np.ndarray,
+    denominator: np.ndarray,
+    definition_id: str,
+    *,
+    denominator_interval: ScalarRange | None = None,
+    atol: float | None = None,
+    rtol: float | None = None,
+    assumptions: Sequence[str] = (),
+    legacy_reproduction: bool = False,
+) -> PushforwardResult:
     n, d = np.broadcast_arrays(np.asarray(numerator, dtype=float), np.asarray(denominator, dtype=float))
     source = _source_hash({'numerator': n, 'denominator': d})
-    if np.any(np.abs(d) <= zero_guard):
-        return PushforwardResult(name, 'BLOCKED_ZERO_DENOMINATOR_BRANCH', definition_id,
+    if not legacy_reproduction:
+        return PushforwardResult(
+            name,
+            'BLOCKED_UNTYPED_DENOMINATOR',
+            definition_id,
+            assumptions=tuple(assumptions),
+            source_hash=source,
+            message='Raw-array ratios are legacy reproduction only.',
+        )
+    if denominator_interval is None or atol is None or rtol is None:
+        return PushforwardResult(
+            name,
+            'RATIO_UNIDENTIFIED',
+            definition_id,
+            assumptions=tuple(assumptions),
+            source_hash=source,
+            message='An identified denominator interval and atol/rtol are required.',
+        )
+    if not denominator_interval.separated_from_zero(atol=atol, rtol=rtol):
+        return PushforwardResult(
+            name,
+            'RATIO_UNIDENTIFIED',
+            definition_id,
+            assumptions=tuple(assumptions),
+            source_hash=source,
+            message='Denominator identified interval intersects the zero tolerance.',
+        )
+    tolerance = float(atol) + float(rtol) * max(
+        float(np.max(np.abs(d))),
+        1.0,
+    )
+    if np.any(np.abs(d) <= tolerance):
+        return PushforwardResult(name, 'RATIO_UNIDENTIFIED', definition_id,
                                  assumptions=tuple(assumptions), source_hash=source,
-                                 message='Use a reference-free contrast on this branch.')
+                                 message='Point denominator enters the zero-tolerance branch.')
     return PushforwardResult(name, 'OK', definition_id, _summary(n/d), tuple(assumptions),
-                             identified_components=('numerator','denominator'), source_hash=source)
+                             identified_components=('numerator','denominator'),
+                             claim_tier='diagnostic_legacy_reproduction',
+                             source_hash=source)
 
 
 def matrix_budget_radius_report(

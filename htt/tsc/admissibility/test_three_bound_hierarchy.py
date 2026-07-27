@@ -41,7 +41,7 @@ class TestBianchiTypesRoster:
             assert isinstance(t, str) and t, f"bad type label: {t!r}"
 
     def test_roster_matches_htt_core_bounds(self):
-        from htt.core.bounds import _TYPE_INFO
+        from tsc_legacy.htt_core_bounds import _TYPE_INFO
         assert set(BIANCHI_TYPES) == set(_TYPE_INFO.keys())
 
 
@@ -284,7 +284,7 @@ class TestEvaluateAllBianchiTypes:
 
 
 # ---------------------------------------------------------------------------
-# §6 - Cross-check against htt.core.bounds (hero integration test)
+# §6 - Cross-check against the explicit legacy HTT bounds
 # ---------------------------------------------------------------------------
 
 
