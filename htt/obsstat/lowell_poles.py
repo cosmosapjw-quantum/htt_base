@@ -26,6 +26,7 @@ __all__ = [
     "AntipodalAxis",
     "LowEllPoleAnalysisSpec",
     "LowEllPoleEstimate",
+    "IMPLEMENTED_HARMONIC_CONVENTION",
     "MIN_NUMERICAL_GAP_TOLERANCE",
     "PoleDefinition",
     "PoleStatus",
@@ -41,6 +42,80 @@ __all__ = [
 # A trace-one 3x3 tensor has O(1) eigenvalues.  Below this floor, roundoff from
 # an exactly repeated eigenvalue can be larger than a caller's threshold.
 MIN_NUMERICAL_GAP_TOLERANCE = float(64.0 * np.finfo(float).eps)
+IMPLEMENTED_HARMONIC_CONVENTION = (
+    "orthonormal Condon-Shortley dense real scalar map"
+)
+
+
+def _contains_bool(value: object) -> bool:
+    if isinstance(value, (bool, np.bool_)):
+        return True
+    if isinstance(value, np.ndarray):
+        if value.dtype.kind == "b":
+            return True
+        if value.dtype.kind == "O":
+            return any(_contains_bool(item) for item in value.flat)
+        return False
+    if isinstance(value, (tuple, list)):
+        return any(_contains_bool(item) for item in value)
+    return False
+
+
+def _contains_complex(value: object) -> bool:
+    if isinstance(value, (complex, np.complexfloating)):
+        return True
+    if isinstance(value, np.ndarray):
+        if value.dtype.kind == "c":
+            return True
+        if value.dtype.kind == "O":
+            return any(_contains_complex(item) for item in value.flat)
+        return False
+    if isinstance(value, (tuple, list)):
+        return any(_contains_complex(item) for item in value)
+    return False
+
+
+def _real_array(
+    value: object,
+    name: str,
+    *,
+    shape: tuple[int, ...],
+) -> np.ndarray:
+    if _contains_bool(value):
+        raise ValueError(f"{name} must not contain booleans")
+    if _contains_complex(value):
+        raise ValueError(f"{name} must be real, not complex")
+    try:
+        array = np.asarray(value, dtype=float)
+    except (TypeError, ValueError) as exc:
+        raise ValueError(f"{name} must be numeric") from exc
+    if array.shape != shape or not np.isfinite(array).all():
+        raise ValueError(f"{name} must be a finite array with shape {shape}")
+    return array
+
+
+def _matrix_tuple(matrix: np.ndarray) -> tuple[tuple[float, ...], ...]:
+    return tuple(tuple(float(value) for value in row) for row in matrix)
+
+
+def _array_content_identity(value: np.ndarray, *, role: str) -> str:
+    array = np.ascontiguousarray(value, dtype="<f8")
+    header = json.dumps(
+        {
+            "dtype": "<f8",
+            "role": role,
+            "schema": "LOWELL_NUMERIC_ARRAY_V1",
+            "shape": list(array.shape),
+        },
+        sort_keys=True,
+        separators=(",", ":"),
+        ensure_ascii=True,
+    ).encode("ascii")
+    digest = hashlib.sha256()
+    digest.update(header)
+    digest.update(b"\0")
+    digest.update(array.tobytes(order="C"))
+    return f"sha256:{digest.hexdigest()}"
 
 
 class PoleDefinition(str, Enum):
@@ -87,6 +162,10 @@ class LowEllPoleAnalysisSpec:
             value = getattr(self, name)
             if not isinstance(value, str) or not value.strip() or value != value.strip():
                 raise ValueError(f"{name} must be non-empty trimmed text")
+        if self.harmonic_convention != IMPLEMENTED_HARMONIC_CONVENTION:
+            raise ValueError(
+                "harmonic_convention is not implemented by this kernel"
+            )
 
     @property
     def analysis_id(self) -> str:
@@ -135,18 +214,11 @@ class AntipodalAxis:
     representative: tuple[float, float, float]
 
     def __post_init__(self) -> None:
-        if isinstance(self.representative, np.ndarray):
-            has_bool = self.representative.dtype.kind == "b"
-        else:
-            has_bool = any(
-                isinstance(value, (bool, np.bool_))
-                for value in self.representative
-            )
-        if has_bool:
-            raise ValueError("axis representative must not contain booleans")
-        vector = np.asarray(self.representative, dtype=float)
-        if vector.shape != (3,) or not np.isfinite(vector).all():
-            raise ValueError("axis representative must be a finite 3-vector")
+        vector = _real_array(
+            self.representative,
+            "axis representative",
+            shape=(3,),
+        )
         scale = float(np.max(np.abs(vector)))
         if scale == 0.0:
             raise ValueError("axis representative must be non-zero")
@@ -191,21 +263,21 @@ class LowEllPoleEstimate:
     eigenvalues: tuple[float, float, float]
     selection_gap: float
     gap_tolerance: float
+    power_tensor: tuple[tuple[float, float, float], ...]
     analysis_spec: LowEllPoleAnalysisSpec
 
     def __post_init__(self) -> None:
         ell = _validate_ell(self.ell)
         definition = PoleDefinition(self.definition)
         status = PoleStatus(self.status)
-        values = tuple(float(value) for value in self.eigenvalues)
+        raw_values = _real_array(self.eigenvalues, "eigenvalues", shape=(3,))
+        values = tuple(float(value) for value in raw_values)
         gap = float(self.selection_gap)
         tolerance = float(self.gap_tolerance)
         if not isinstance(self.analysis_spec, LowEllPoleAnalysisSpec):
             raise TypeError(
                 "analysis_spec must be a LowEllPoleAnalysisSpec"
             )
-        if len(values) != 3 or not all(math.isfinite(value) for value in values):
-            raise ValueError("eigenvalues must contain three finite values")
         if values != tuple(sorted(values)):
             raise ValueError("eigenvalues must be in ascending order")
         if not math.isfinite(gap) or gap < 0.0:
@@ -218,15 +290,41 @@ class LowEllPoleEstimate:
         if tolerance != self.analysis_spec.gap_tolerance:
             raise ValueError("gap_tolerance must match analysis_spec")
         derived_gap = _selection_gap(values, definition)
-        gap_scale = max(1.0, abs(derived_gap), abs(gap))
-        if not math.isclose(
-            gap,
-            derived_gap,
-            rel_tol=0.0,
-            abs_tol=64.0 * np.finfo(float).eps * gap_scale,
-        ):
+        if gap != derived_gap:
             raise ValueError(
                 "selection gap must be derived from eigenvalues and definition"
+            )
+        tensor = _real_array(
+            self.power_tensor,
+            "power_tensor",
+            shape=(3, 3),
+        )
+        spectral_scale = float(np.max(np.abs(tensor), initial=0.0))
+        tensor_tolerance = 128.0 * np.finfo(float).eps * max(
+            spectral_scale, 1.0
+        )
+        if not np.allclose(
+            tensor, tensor.T, atol=tensor_tolerance, rtol=0.0
+        ):
+            raise ValueError("power_tensor must be symmetric")
+        if not math.isclose(
+            float(np.trace(tensor)),
+            1.0,
+            abs_tol=tensor_tolerance,
+            rel_tol=0.0,
+        ):
+            raise ValueError("power_tensor must have unit trace")
+        derived_values, _ = np.linalg.eigh(tensor)
+        if float(np.min(derived_values)) < -tensor_tolerance:
+            raise ValueError("power_tensor must be positive semidefinite")
+        if not np.allclose(
+            derived_values,
+            raw_values,
+            atol=tensor_tolerance,
+            rtol=0.0,
+        ):
+            raise ValueError(
+                "eigenvalues must be derived from power_tensor"
             )
         if self.axis is not None and not isinstance(self.axis, AntipodalAxis):
             raise TypeError("axis must be an AntipodalAxis or None")
@@ -236,10 +334,24 @@ class LowEllPoleEstimate:
         object.__setattr__(self, "eigenvalues", values)
         object.__setattr__(self, "selection_gap", gap)
         object.__setattr__(self, "gap_tolerance", tolerance)
+        object.__setattr__(self, "power_tensor", _matrix_tuple(tensor))
         if (status is PoleStatus.IDENTIFIED) != (self.axis is not None):
             raise ValueError("identified status and axis presence must agree")
         if (status is PoleStatus.IDENTIFIED) != (gap > tolerance):
             raise ValueError("identified status must agree with the selection gap")
+        if status is PoleStatus.IDENTIFIED:
+            scores = _selection_scores(values, definition)
+            selected_index = int(np.argsort(scores, kind="stable")[-1])
+            axis_vector = np.asarray(self.axis.representative)
+            eigen_residual = (
+                tensor @ axis_vector
+                - values[selected_index] * axis_vector
+            )
+            if float(np.linalg.norm(eigen_residual)) > tensor_tolerance:
+                raise ValueError(
+                    "identified axis must be the selected power-tensor "
+                    "eigendirection"
+                )
 
     @property
     def analysis_id(self) -> str:
@@ -252,6 +364,13 @@ class LowEllPoleEstimate:
     @property
     def harmonic_convention(self) -> str:
         return self.analysis_spec.harmonic_convention
+
+    @property
+    def power_tensor_id(self) -> str:
+        return _array_content_identity(
+            np.asarray(self.power_tensor),
+            role="lowell_power_tensor",
+        )
 
 
 def angular_momentum_power_tensor(
@@ -321,6 +440,7 @@ def estimate_lowell_pole(
             eigenvalues=values_tuple,
             selection_gap=gap,
             gap_tolerance=tolerance,
+            power_tensor=_matrix_tuple(tensor),
             analysis_spec=analysis_spec,
         )
 
@@ -332,6 +452,7 @@ def estimate_lowell_pole(
         eigenvalues=values_tuple,
         selection_gap=gap,
         gap_tolerance=tolerance,
+        power_tensor=_matrix_tuple(tensor),
         analysis_spec=analysis_spec,
     )
 
@@ -396,21 +517,7 @@ def scalar_alm_inversion_phase(ell: int) -> int:
 
 
 def _validate_o3_matrix(matrix: object) -> np.ndarray:
-    if isinstance(matrix, np.ndarray):
-        has_bool = matrix.dtype.kind == "b"
-    elif isinstance(matrix, (tuple, list)):
-        has_bool = any(
-            isinstance(value, (bool, np.bool_))
-            for row in matrix
-            for value in (row if isinstance(row, (tuple, list)) else (row,))
-        )
-    else:
-        has_bool = isinstance(matrix, (bool, np.bool_))
-    if has_bool:
-        raise ValueError("O(3) matrix must not contain booleans")
-    value = np.asarray(matrix, dtype=float)
-    if value.shape != (3, 3) or not np.isfinite(value).all():
-        raise ValueError("O(3) matrix must be a finite 3x3 matrix")
+    value = _real_array(matrix, "O(3) matrix", shape=(3, 3))
     tolerance = 1e-10
     if not np.allclose(value.T @ value, np.eye(3), atol=tolerance, rtol=0.0):
         raise ValueError("O(3) matrix must be orthogonal")
@@ -427,9 +534,7 @@ def _validate_o3_matrix(matrix: object) -> np.ndarray:
 def transform_power_tensor_o3(tensor: object, matrix: object) -> np.ndarray:
     """Apply the tensor action ``T -> R T R^T`` for any O(3) matrix."""
 
-    value = np.asarray(tensor, dtype=float)
-    if value.shape != (3, 3) or not np.isfinite(value).all():
-        raise ValueError("power tensor must be a finite 3x3 matrix")
+    value = _real_array(tensor, "power tensor", shape=(3, 3))
     if not np.allclose(value, value.T, atol=1e-12, rtol=0.0):
         raise ValueError("power tensor must be symmetric")
     transform = _validate_o3_matrix(matrix)

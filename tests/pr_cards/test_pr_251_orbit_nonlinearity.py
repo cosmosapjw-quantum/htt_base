@@ -37,6 +37,9 @@ from obsstat.lowell_poles import AntipodalAxis  # noqa: E402
 
 HELD_OUT_RECEIPT = "sha256:" + "c" * 64
 MATCHED_INJECTION_RECEIPT = "sha256:" + "d" * 64
+TRANSFER_ID = "sha256:" + "4" * 64
+MASK_ID = "sha256:" + "5" * 64
+COVARIANCE_ID = "sha256:" + "6" * 64
 
 
 def _state(beta: tuple[float, float, float]) -> DepartureState:
@@ -103,9 +106,9 @@ def _report(
         residual=residual,
         tangent_response=((1.0,), (0.0,), (0.0,)),
         covariance=np.eye(3),
-        transfer_id="TRANSFER-COEFFICIENT-FIXTURE",
-        mask_id="MASK-FIXTURE",
-        covariance_id="COVARIANCE-FIXTURE",
+        transfer_id=TRANSFER_ID,
+        mask_id=MASK_ID,
+        covariance_id=COVARIANCE_ID,
         candidates=candidates,
         held_out_receipt=receipt,
         matched_injection_receipt=matched_injection_receipt,

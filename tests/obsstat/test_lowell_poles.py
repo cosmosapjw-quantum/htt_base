@@ -12,6 +12,7 @@ from scipy.linalg import expm
 
 from obsstat.lowell_poles import (
     AntipodalAxis,
+    IMPLEMENTED_HARMONIC_CONVENTION,
     LowEllPoleAnalysisSpec,
     LowEllPoleEstimate,
     MIN_NUMERICAL_GAP_TOLERANCE,
@@ -27,9 +28,7 @@ from obsstat.lowell_poles import (
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-TEST_HARMONIC_CONVENTION = (
-    "orthonormal Condon-Shortley dense real scalar map"
-)
+TEST_HARMONIC_CONVENTION = IMPLEMENTED_HARMONIC_CONVENTION
 
 
 def _analysis_spec(
@@ -161,21 +160,49 @@ def _pole_estimate(
             eigenvalues=(0.2, 0.4, 0.4),
             selection_gap=0.0,
             gap_tolerance=MIN_NUMERICAL_GAP_TOLERANCE,
+            power_tensor=(
+                (0.2, 0.0, 0.0),
+                (0.0, 0.4, 0.0),
+                (0.0, 0.0, 0.4),
+            ),
             analysis_spec=analysis_spec,
         )
-    selection_gap = {
-        PoleDefinition.MAX_ANGULAR_MOMENTUM: 0.3,
-        PoleDefinition.MIN_ANGULAR_MOMENTUM: 0.2,
-        PoleDefinition.ANISOTROPY_TENSOR: 1.0 / 30.0,
-    }[definition]
+    values = (0.1, 0.3, 0.6)
+    if definition is PoleDefinition.MAX_ANGULAR_MOMENTUM:
+        scores = np.asarray(values)
+    elif definition is PoleDefinition.MIN_ANGULAR_MOMENTUM:
+        scores = -np.asarray(values)
+    else:
+        scores = np.abs(np.asarray(values) - float(np.mean(values)))
+    score_order = np.argsort(scores, kind="stable")
+    selection_gap = float(
+        scores[int(score_order[-1])] - scores[int(score_order[-2])]
+    )
+    selected_index = (
+        0
+        if definition is PoleDefinition.MIN_ANGULAR_MOMENTUM
+        else 2
+    )
+    selected = np.asarray(axis.representative)
+    seed = np.eye(3)[int(np.argmin(np.abs(selected)))]
+    first_other = seed - float(seed @ selected) * selected
+    first_other /= np.linalg.norm(first_other)
+    second_other = np.cross(selected, first_other)
+    columns: list[np.ndarray] = [first_other, second_other]
+    columns.insert(selected_index, selected)
+    eigenvectors = np.column_stack(columns)
+    power_tensor = eigenvectors @ np.diag(values) @ eigenvectors.T
     return LowEllPoleEstimate(
         ell=ell,
         definition=definition,
         status=PoleStatus.IDENTIFIED,
         axis=axis,
-        eigenvalues=(0.1, 0.3, 0.6),
+        eigenvalues=values,
         selection_gap=selection_gap,
         gap_tolerance=MIN_NUMERICAL_GAP_TOLERANCE,
+        power_tensor=tuple(
+            tuple(float(value) for value in row) for row in power_tensor
+        ),
         analysis_spec=analysis_spec,
     )
 
@@ -299,7 +326,7 @@ def test_analysis_identity_binds_definition_tolerance_and_frame() -> None:
         definition=PoleDefinition.MAX_ANGULAR_MOMENTUM,
         gap_tolerance=1e-12,
         coordinate_frame="Galactic",
-        harmonic_convention="orthonormal Condon-Shortley dense real map",
+        harmonic_convention=IMPLEMENTED_HARMONIC_CONVENTION,
     )
     changed_definition = LowEllPoleAnalysisSpec(
         ell_values=base.ell_values,
@@ -374,6 +401,17 @@ def test_pole_contracts_reject_boolean_numeric_inputs(factory, match: str) -> No
         factory()
 
 
+def test_analysis_spec_rejects_an_unimplemented_harmonic_convention() -> None:
+    with pytest.raises(ValueError, match="not implemented"):
+        LowEllPoleAnalysisSpec(
+            ell_values=(2, 3),
+            definition=PoleDefinition.MAX_ANGULAR_MOMENTUM,
+            gap_tolerance=MIN_NUMERICAL_GAP_TOLERANCE,
+            coordinate_frame="frame",
+            harmonic_convention="unsupported free-form convention",
+        )
+
+
 def test_pole_estimate_constructor_cannot_bypass_gap_abstention() -> None:
     with pytest.raises(ValueError, match="selection gap"):
         LowEllPoleEstimate(
@@ -384,10 +422,52 @@ def test_pole_estimate_constructor_cannot_bypass_gap_abstention() -> None:
             eigenvalues=(0.2, 0.4, 0.4),
             selection_gap=MIN_NUMERICAL_GAP_TOLERANCE,
             gap_tolerance=MIN_NUMERICAL_GAP_TOLERANCE,
+            power_tensor=(
+                (0.2, 0.0, 0.0),
+                (0.0, 0.4, 0.0),
+                (0.0, 0.0, 0.4),
+            ),
             analysis_spec=_analysis_spec(
                 definition=PoleDefinition.MAX_ANGULAR_MOMENTUM,
                 gap_tolerance=MIN_NUMERICAL_GAP_TOLERANCE,
             ),
+        )
+
+
+def test_pole_estimate_rejects_axis_unbound_to_power_tensor() -> None:
+    with pytest.raises(ValueError, match="eigendirection"):
+        LowEllPoleEstimate(
+            ell=2,
+            definition=PoleDefinition.MAX_ANGULAR_MOMENTUM,
+            status=PoleStatus.IDENTIFIED,
+            axis=AntipodalAxis((1.0, 0.0, 0.0)),
+            eigenvalues=(0.1, 0.3, 0.6),
+            selection_gap=0.3,
+            gap_tolerance=MIN_NUMERICAL_GAP_TOLERANCE,
+            power_tensor=(
+                (0.1, 0.0, 0.0),
+                (0.0, 0.3, 0.0),
+                (0.0, 0.0, 0.6),
+            ),
+            analysis_spec=_analysis_spec(
+                definition=PoleDefinition.MAX_ANGULAR_MOMENTUM,
+                gap_tolerance=MIN_NUMERICAL_GAP_TOLERANCE,
+            ),
+        )
+
+
+def test_object_arrays_cannot_hide_boolean_or_complex_geometry() -> None:
+    hidden_bool = np.asarray([True, 0.0, 0.0], dtype=object)
+    hidden_complex = np.asarray(
+        [[1.0 + 0.0j, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]],
+        dtype=object,
+    )
+    with pytest.raises(ValueError, match="booleans"):
+        AntipodalAxis(hidden_bool)  # type: ignore[arg-type]
+    with pytest.raises(ValueError, match="real"):
+        transform_antipodal_axis_o3(
+            AntipodalAxis((1.0, 0.0, 0.0)),
+            hidden_complex,
         )
 
 

@@ -31,6 +31,9 @@ from common.statistical_foundations import DepartureState
 
 HELD_OUT_RECEIPT = "sha256:" + "a" * 64
 MATCHED_INJECTION_RECEIPT = "sha256:" + "b" * 64
+TRANSFER_ID = "sha256:" + "1" * 64
+MASK_ID = "sha256:" + "2" * 64
+COVARIANCE_ID = "sha256:" + "3" * 64
 
 
 def _state(*, beta: tuple[float, float, float] = (0.4, 0.5, 0.6)) -> DepartureState:
@@ -109,9 +112,9 @@ def _nonlinearity(
         residual=residual,
         tangent_response=((1.0,), (0.0,), (0.0,)),
         covariance=covariance,
-        transfer_id="TRANSFER-FIXTURE",
-        mask_id="MASK-FIXTURE",
-        covariance_id="COV-FIXTURE",
+        transfer_id=TRANSFER_ID,
+        mask_id=MASK_ID,
+        covariance_id=COVARIANCE_ID,
         candidates=candidates,
         held_out_receipt=receipt,
         matched_injection_receipt=matched_injection_receipt,
@@ -207,9 +210,9 @@ def test_rank_comes_from_supplied_response_and_exposes_wide_null() -> None:
     report = measure_response_rank(
         response=((1.0, 0.0, 0.0), (0.0, 1.0, 0.0)),
         covariance=np.eye(2),
-        transfer_id="T",
-        mask_id="M",
-        covariance_id="C",
+        transfer_id=TRANSFER_ID,
+        mask_id=MASK_ID,
+        covariance_id=COVARIANCE_ID,
     )
     assert report.status is ResponseRankStatus.MEASURED
     assert report.rank == 2
@@ -245,9 +248,9 @@ def test_rank_is_invariant_to_common_covariance_scale() -> None:
         measure_response_rank(
             response=response,
             covariance=scale * np.eye(3),
-            transfer_id="T",
-            mask_id="M",
-            covariance_id=f"C-{scale}",
+            transfer_id=TRANSFER_ID,
+            mask_id=MASK_ID,
+            covariance_id=COVARIANCE_ID,
         )
         for scale in (1e-30, 1.0, 1e30)
     ]
@@ -271,9 +274,9 @@ def test_rank_rejects_complex_empty_and_oversized_tolerance_inputs(
         measure_response_rank(
             response=response,
             covariance=covariance,
-            transfer_id="T",
-            mask_id="M",
-            covariance_id="C",
+            transfer_id=TRANSFER_ID,
+            mask_id=MASK_ID,
+            covariance_id=COVARIANCE_ID,
             rtol=rtol,
         )
 
@@ -330,9 +333,9 @@ def test_rank_deficiency_blocks_nonlinear_attribution() -> None:
         residual=(2.0, 1.0, 0.0),
         tangent_response=((1.0, 0.0), (0.0, 0.0), (0.0, 0.0)),
         covariance=np.eye(3),
-        transfer_id="TRANSFER-FIXTURE",
-        mask_id="MASK-FIXTURE",
-        covariance_id="COV-FIXTURE",
+        transfer_id=TRANSFER_ID,
+        mask_id=MASK_ID,
+        covariance_id=COVARIANCE_ID,
         candidates=_candidates(),
         held_out_receipt=HELD_OUT_RECEIPT,
         matched_injection_receipt=MATCHED_INJECTION_RECEIPT,
@@ -349,7 +352,7 @@ def test_rank_deficiency_blocks_nonlinear_attribution() -> None:
 
 def test_report_constructor_cannot_forge_nonlinear_compatibility() -> None:
     linear = _nonlinearity((2.0, 0.0, 0.0))
-    with pytest.raises(OrbitNonlinearityError, match="does not follow"):
+    with pytest.raises(OrbitNonlinearityError, match="must be created"):
         replace(
             linear,
             attribution_status=(
@@ -372,7 +375,7 @@ def test_missing_response_report_cannot_be_relabelled_nonlinear() -> None:
         null_residual_tolerance=0.0,
         nonlinear_gain_margin=1.0,
     )
-    with pytest.raises(OrbitNonlinearityError, match="measured rank"):
+    with pytest.raises(OrbitNonlinearityError, match="must be created"):
         replace(
             missing,
             attribution_status=(
@@ -439,7 +442,57 @@ def test_rank_rejects_boolean_and_nonfinite_response(bad: object) -> None:
         measure_response_rank(
             response=bad,
             covariance=np.eye(2),
-            transfer_id="T",
-            mask_id="M",
-            covariance_id="C",
+            transfer_id=TRANSFER_ID,
+            mask_id=MASK_ID,
+            covariance_id=COVARIANCE_ID,
+        )
+
+
+def test_rank_report_rewrite_cannot_forge_identifiability() -> None:
+    measured = measure_response_rank(
+        response=((1.0, 0.0), (0.0, 0.0)),
+        covariance=np.eye(2),
+        transfer_id=TRANSFER_ID,
+        mask_id=MASK_ID,
+        covariance_id=COVARIANCE_ID,
+    )
+    with pytest.raises(OrbitNonlinearityError, match="must be created"):
+        replace(
+            measured,
+            rank=2,
+            singular_values=(1.0, 0.0),
+            nullspace=(),
+        )
+
+
+def test_covariance_psd_validity_is_not_weakened_by_rank_tolerance() -> None:
+    covariance = np.diag((-1.0, 0.0, 1000.0, 2000.0))
+    with pytest.raises(OrbitNonlinearityError, match="semidefinite"):
+        measure_response_rank(
+            response=np.eye(4),
+            covariance=covariance,
+            transfer_id=TRANSFER_ID,
+            mask_id=MASK_ID,
+            covariance_id=COVARIANCE_ID,
+            rtol=1.0e-3,
+        )
+
+
+@pytest.mark.parametrize(
+    "bad",
+    (
+        np.asarray([[True, 0.0], [0.0, 1.0]], dtype=object),
+        np.asarray([[1.0 + 0.0j, 0.0], [0.0, 1.0]], dtype=object),
+    ),
+)
+def test_object_arrays_cannot_hide_boolean_or_complex_response(
+    bad: np.ndarray,
+) -> None:
+    with pytest.raises(OrbitNonlinearityError):
+        measure_response_rank(
+            response=bad,
+            covariance=np.eye(2),
+            transfer_id=TRANSFER_ID,
+            mask_id=MASK_ID,
+            covariance_id=COVARIANCE_ID,
         )

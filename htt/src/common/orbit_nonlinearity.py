@@ -15,7 +15,9 @@ detect a geometry, or turn morphology compatibility into likelihood evidence.
 from __future__ import annotations
 
 import math
-from dataclasses import dataclass
+import hashlib
+import json
+from dataclasses import InitVar, dataclass
 from enum import Enum
 from typing import Sequence
 
@@ -95,13 +97,19 @@ _DIAGNOSTIC_FORBIDDEN_USE = (
     "native solver result",
     "posterior or evidence term",
 )
+_RANK_REPORT_TOKEN = object()
+_NONLINEARITY_REPORT_TOKEN = object()
 
 
 def _contains_bool(value: object) -> bool:
     if isinstance(value, (bool, np.bool_)):
         return True
     if isinstance(value, np.ndarray):
-        return value.dtype.kind == "b"
+        if value.dtype.kind == "b":
+            return True
+        if value.dtype.kind == "O":
+            return any(_contains_bool(item) for item in value.flat)
+        return False
     if isinstance(value, (tuple, list)):
         return any(_contains_bool(item) for item in value)
     return False
@@ -111,7 +119,11 @@ def _contains_complex(value: object) -> bool:
     if isinstance(value, (complex, np.complexfloating)):
         return True
     if isinstance(value, np.ndarray):
-        return value.dtype.kind == "c"
+        if value.dtype.kind == "c":
+            return True
+        if value.dtype.kind == "O":
+            return any(_contains_complex(item) for item in value.flat)
+        return False
     if isinstance(value, (tuple, list)):
         return any(_contains_complex(item) for item in value)
     return False
@@ -217,6 +229,28 @@ def _texts(
 
 def _matrix_tuple(matrix: np.ndarray) -> tuple[tuple[float, ...], ...]:
     return tuple(tuple(float(value) for value in row) for row in matrix)
+
+
+def _array_content_identity(value: np.ndarray, *, role: str) -> str:
+    """Return a deterministic identity for one accepted float64 array."""
+
+    array = np.ascontiguousarray(value, dtype="<f8")
+    header = json.dumps(
+        {
+            "dtype": "<f8",
+            "role": role,
+            "schema": "HTT_NUMERIC_ARRAY_V1",
+            "shape": list(array.shape),
+        },
+        sort_keys=True,
+        separators=(",", ":"),
+        ensure_ascii=True,
+    ).encode("ascii")
+    digest = hashlib.sha256()
+    digest.update(header)
+    digest.update(b"\0")
+    digest.update(array.tobytes(order="C"))
+    return f"sha256:{digest.hexdigest()}"
 
 
 @dataclass(frozen=True)
@@ -529,11 +563,18 @@ class ResponseRankReport:
     transfer_id: str | None
     mask_id: str | None
     covariance_id: str | None
+    response_id: str | None
+    covariance_content_id: str | None
     missing_inputs: tuple[str, ...]
     allowed_use: tuple[str, ...] = _DIAGNOSTIC_ALLOWED_USE
     forbidden_use: tuple[str, ...] = _DIAGNOSTIC_FORBIDDEN_USE
+    _construction_token: InitVar[object] = None
 
-    def __post_init__(self) -> None:
+    def __post_init__(self, _construction_token: object) -> None:
+        if _construction_token is not _RANK_REPORT_TOKEN:
+            raise OrbitNonlinearityError(
+                "ResponseRankReport must be created by measure_response_rank"
+            )
         if not isinstance(self.status, ResponseRankStatus):
             raise OrbitNonlinearityError(
                 "status must be a ResponseRankStatus"
@@ -550,7 +591,11 @@ class ResponseRankReport:
             for name in ("transfer_id", "mask_id", "covariance_id"):
                 value = getattr(self, name)
                 if value is not None:
-                    _text(value, name)
+                    _evidence_receipt(value, name)
+            if self.response_id is not None or self.covariance_content_id is not None:
+                raise OrbitNonlinearityError(
+                    "MISSING_INPUT rank report must not carry array identities"
+                )
             numeric = (
                 self.rank,
                 self.parameter_dimension,
@@ -592,6 +637,10 @@ class ResponseRankReport:
             self.parameter_dimension, self.supported_data_dimension
         ):
             raise OrbitNonlinearityError("rank exceeds a matrix dimension")
+        if self.supported_data_dimension > self.data_dimension:
+            raise OrbitNonlinearityError(
+                "supported_data_dimension exceeds data_dimension"
+            )
         singular = tuple(
             _nonnegative(value, "singular_values")
             for value in self.singular_values
@@ -603,7 +652,20 @@ class ResponseRankReport:
             raise OrbitNonlinearityError(
                 "singular_values must be descending"
             )
+        expected_singular_count = min(
+            self.supported_data_dimension, self.parameter_dimension
+        )
+        if len(singular) != expected_singular_count:
+            raise OrbitNonlinearityError(
+                "singular_values count must match the supported matrix shape"
+            )
         object.__setattr__(self, "singular_values", singular)
+        tolerance = _nonnegative(self.tolerance, "tolerance")
+        expected_rank = sum(value > tolerance for value in singular)
+        if self.rank != expected_rank:
+            raise OrbitNonlinearityError(
+                "rank must be derived from singular_values and tolerance"
+            )
         expected_min = (
             0.0
             if self.rank < self.parameter_dimension
@@ -617,21 +679,24 @@ class ResponseRankReport:
         ):
             raise OrbitNonlinearityError(
                 "min_singular must expose structural parameter nulls as zero"
-            )
-        object.__setattr__(self, "min_singular", expected_min)
-        object.__setattr__(
-            self, "tolerance", _nonnegative(self.tolerance, "tolerance")
         )
+        object.__setattr__(self, "min_singular", expected_min)
+        object.__setattr__(self, "tolerance", tolerance)
         for name in ("transfer_id", "mask_id", "covariance_id"):
-            _text(getattr(self, name), name)
+            _evidence_receipt(getattr(self, name), name)
+        for name in ("response_id", "covariance_content_id"):
+            _evidence_receipt(getattr(self, name), name)
         nullspace = tuple(
-            tuple(float(value) for value in row)
+            tuple(
+                float(value)
+                for value in _array(
+                    row,
+                    "nullspace",
+                    shape=(self.parameter_dimension,),
+                )
+            )
             for row in self.nullspace
         )
-        if any(len(row) != self.parameter_dimension for row in nullspace):
-            raise OrbitNonlinearityError(
-                "nullspace vectors must match parameter_dimension"
-            )
         if len(nullspace) != self.parameter_dimension - self.rank:
             raise OrbitNonlinearityError(
                 "nullspace dimension must equal parameter_dimension-rank"
@@ -665,11 +730,12 @@ def _covariance_support(
     spectral_scale = (
         float(np.max(np.abs(eigenvalues))) if eigenvalues.size else 0.0
     )
-    tolerance = rtol * spectral_scale
-    if float(np.min(eigenvalues, initial=0.0)) < -tolerance:
+    psd_tolerance = 64.0 * np.finfo(float).eps * spectral_scale
+    if float(np.min(eigenvalues, initial=0.0)) < -psd_tolerance:
         raise OrbitNonlinearityError(
             "covariance must be positive semidefinite"
         )
+    tolerance = rtol * spectral_scale
     support = eigenvalues > tolerance
     return eigenvalues, eigenvectors, support, tolerance
 
@@ -752,7 +818,10 @@ def measure_response_rank(
             transfer_id=transfer_id,
             mask_id=mask_id,
             covariance_id=covariance_id,
+            response_id=None,
+            covariance_content_id=None,
             missing_inputs=missing,
+            _construction_token=_RANK_REPORT_TOKEN,
         )
     rtol = _relative_tolerance(rtol)
     matrix = _array(response, "response", ndim=2)
@@ -765,9 +834,10 @@ def measure_response_rank(
         ("mask_id", mask_id),
         ("covariance_id", covariance_id),
     ):
-        _text(value, name)
+        _evidence_receipt(value, name)
+    covariance_matrix = _array(covariance, "covariance", ndim=2)
     whitened, _, supported, _ = _whiten_supported(
-        matrix, covariance, rtol=rtol
+        matrix, covariance_matrix, rtol=rtol
     )
     rank, singular, tolerance, nullspace = _svd_rank(
         whitened, rtol=rtol
@@ -792,7 +862,12 @@ def measure_response_rank(
         transfer_id=transfer_id,
         mask_id=mask_id,
         covariance_id=covariance_id,
+        response_id=_array_content_identity(matrix, role="response"),
+        covariance_content_id=_array_content_identity(
+            covariance_matrix, role="covariance"
+        ),
         missing_inputs=(),
+        _construction_token=_RANK_REPORT_TOKEN,
     )
 
 
@@ -861,8 +936,13 @@ class NonlinearityReport:
     found_equiv_prerequisite: str = FOUND_EQUIV_PREREQUISITE
     allowed_use: tuple[str, ...] = _DIAGNOSTIC_ALLOWED_USE
     forbidden_use: tuple[str, ...] = _DIAGNOSTIC_FORBIDDEN_USE
+    _construction_token: InitVar[object] = None
 
-    def __post_init__(self) -> None:
+    def __post_init__(self, _construction_token: object) -> None:
+        if _construction_token is not _NONLINEARITY_REPORT_TOKEN:
+            raise OrbitNonlinearityError(
+                "NonlinearityReport must be created by decompose_nonlinearity"
+            )
         if not isinstance(self.response_rank, ResponseRankReport):
             raise OrbitNonlinearityError(
                 "response_rank must be a ResponseRankReport"
@@ -1134,6 +1214,7 @@ def decompose_nonlinearity(
             attribution_rationale=(
                 "transfer, mask, covariance and tangent response are required"
             ),
+            _construction_token=_NONLINEARITY_REPORT_TOKEN,
         )
     off_tolerance = _nonnegative(
         off_manifold_tolerance, "off_manifold_tolerance"
@@ -1260,6 +1341,7 @@ def decompose_nonlinearity(
         nonlinear_gain_margin=gain_margin,
         attribution_status=status,
         attribution_rationale=rationale,
+        _construction_token=_NONLINEARITY_REPORT_TOKEN,
     )
 
 
