@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 import ast
-from dataclasses import fields
+from dataclasses import fields, replace
 import json
 from pathlib import Path
 
@@ -428,6 +428,44 @@ def test_v2_directional_evidences_are_immutable_after_validation() -> None:
     assert artifact.model_evidences["FLRW_tilt"] == 5.0
 
 
+def test_directional_intervals_are_defensively_normalized() -> None:
+    from htt.integration.posterior_artifact import (
+        load_directional_posterior_artifact,
+    )
+
+    artifact = load_directional_posterior_artifact(_directional_payload())
+    source_interval = [0.1, 0.3]
+    replaced = replace(artifact, x_hpd68=source_interval)
+    source_interval[0] = float("nan")
+    assert replaced.x_hpd68 == (0.1, 0.3)
+    json.dumps(
+        {
+            "x_hpd68": replaced.x_hpd68,
+            "model_evidences": dict(replaced.model_evidences),
+        },
+        allow_nan=False,
+    )
+    with pytest.raises(ValueError, match="exactly two numeric values"):
+        replace(artifact, x_hpd68=3)
+    with pytest.raises(ValueError, match="model_evidences must be a mapping"):
+        replace(artifact, model_evidences=[("FLRW_tilt", 5.0)])
+
+
+@pytest.mark.parametrize("bad_ref", ["", True, 3])
+def test_directional_optional_refs_reject_invalid_direct_inputs(
+    bad_ref: object,
+) -> None:
+    from htt.integration.posterior_artifact import (
+        load_directional_posterior_artifact,
+    )
+
+    artifact = load_directional_posterior_artifact(_directional_payload())
+    with pytest.raises(ValueError, match="must be a non-empty string"):
+        replace(artifact, posterior_predictive_ref=bad_ref)
+    with pytest.raises(ValueError, match="must be a non-empty string"):
+        replace(artifact, loocv_ref=bad_ref)
+
+
 @pytest.mark.parametrize(
     ("is_cross_check_only", "evidence_included"),
     [(1, False), (True, 0)],
@@ -632,6 +670,36 @@ def test_manuscript_keeps_curvature_condition_and_shear_anchor_scope() -> None:
     assert "is the MES \\emph{linear} algebraic bound" not in chapter7
     assert "linear geodesic MES \\emph{shear-channel} bound" in chapter7
     assert "does not make $\\xmax$ a joint" in chapter7
+
+
+def test_detachable_evidence_captions_carry_complete_claim_lanes() -> None:
+    chapter7 = (REPO_ROOT / "docs/manuscript/ch07_results.tex").read_text(
+        encoding="utf-8"
+    )
+    labels = (
+        "tab:fb7_lnB_11types",
+        "tab:class-collapsed",
+        "tab:evidence-grand",
+        "tab:decomposition-results",
+    )
+    required = (
+        "Owner: HTT.",
+        "Claim tier: diagnostic-only.",
+        "Artifact mode: conditioned",
+        "Transfer source: historical external/proxy",
+        "Null/covariance status: historical fixture only",
+        "Allowed use: historical reproduction and method comparison.",
+        "Forbidden use: current",
+        "native-solver or morphology ranking",
+        "Bianchi family identification.",
+    )
+    for label in labels:
+        before_label = chapter7.split(f"\\label{{{label}}}", 1)[0]
+        caption = " ".join(
+            before_label.rsplit("\\caption{", 1)[1].split()
+        )
+        for phrase in required:
+            assert phrase in caption, (label, phrase)
 
 
 def test_foundation_dependency_overlay_has_an_exact_typed_projection() -> None:

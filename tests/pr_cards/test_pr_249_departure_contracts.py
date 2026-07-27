@@ -132,6 +132,36 @@ def test_summary_preserves_signed_xc_but_never_promotes_it() -> None:
     assert "Nilsson" in W2_V2_ALIAS.caveat
 
 
+def test_summary_departure_state_rejects_derived_xc_overflow() -> None:
+    with pytest.raises(
+        StatisticalFoundationError,
+        match="x_C must be a finite real number",
+    ):
+        SummaryDepartureState(
+            sigma2=1.0e308,
+            w2=0.0,
+            omega_tilt=1.0e308,
+            delta_omega_k=1.0e308,
+            normalization="overflow regression",
+            source_state_id="PR-252-R3",
+        )
+
+
+def test_legacy_projection_rejects_unbounded_numeric_ranges() -> None:
+    with pytest.raises(
+        StatisticalFoundationError,
+        match="legacy projection value ranges must be finite",
+    ):
+        LegacyProjectionReport(
+            x_C=DiagnosticScalarReport(
+                name="x_C",
+                value_range=ScalarRange(math.inf, math.inf),
+                status="HISTORICAL_VALUE_PRESERVED",
+                null_calibration="not an evidence calibration",
+            )
+        )
+
+
 def test_identified_set_support_preserves_recession_and_null_kind() -> None:
     identified = IdentifiedDepartureSet(
         coordinate_names=("Sigma2", "W2"),

@@ -3,13 +3,17 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import shutil
 import subprocess
 import sys
 from pathlib import Path
 
+import pytest
 import yaml
 
+import common.pr248_pr168_integrity_supersession as pr168_supersession
 from common.pr248_pr168_integrity_supersession import (
+    Pr168SupersessionError,
     authorized_pr168_transition,
 )
 
@@ -20,6 +24,22 @@ CONTRACT = GENERATED / (
     "pr168_cas/CAS_CONTRACT_PR168_ACCEL_KINEMATIC_SOURCE_BASIS.json"
 )
 AXES = ("wolfram_xact", "sympy", "sage_singular", "lean")
+CHAIN_FILES = (
+    "docs/generated/pr168_code_integrity_receipt.json",
+    "docs/generated/pr168_artifact_manifest.json",
+    "docs/research_program/stat_foundations/"
+    "pr248_pr168_integrity_supersession.yaml",
+    "docs/research_program/stat_foundations/"
+    "pr252_pr248_integrity_supersession.yaml",
+    "docs/research_program/stat_foundations/pr252_mes_consumer_migration.yaml",
+    "htt/htt/htt/core/__init__.py",
+    "htt/htt/htt/core/bounds.py",
+    "htt/htt/htt/core/teff_extended.py",
+    "htt/htt/tests/test_bounds_and_tilted_flrw_anchors.py",
+    "htt/htt/tests/test_legacy_core.py",
+    "htt/src/common/mes_successor_registry.py",
+    "scripts/codex_harness/run_pr168_mes_four_acceleration_honesty.py",
+)
 
 
 def _json(path: Path) -> dict:
@@ -42,6 +62,124 @@ def _runner_module():
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
+
+
+def _copy_supersession_chain(destination: Path) -> Path:
+    for relative in CHAIN_FILES:
+        target = destination / relative
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(REPO / relative, target)
+    return destination
+
+
+def test_pr168_integrity_bridge_accepts_only_the_registered_terminal_chain() -> None:
+    registry_path = "htt/src/common/mes_successor_registry.py"
+    runner_path = (
+        "scripts/codex_harness/"
+        "run_pr168_mes_four_acceleration_honesty.py"
+    )
+    assert authorized_pr168_transition(
+        REPO,
+        relative_path=registry_path,
+        prior_sha256=(
+            "13b844b086f954d841dd6d3e38bbca9ef226ab07dac91f17beb0296c03fae72a"
+        ),
+        current_sha256=_sha(REPO / registry_path),
+    )
+    assert not authorized_pr168_transition(
+        REPO,
+        relative_path=registry_path,
+        prior_sha256=(
+            "13b844b086f954d841dd6d3e38bbca9ef226ab07dac91f17beb0296c03fae72a"
+        ),
+        current_sha256=(
+            "718f27ae02a4c556aec817a534c840740f6820557596fbdc2ef2c447366fd8ed"
+        ),
+    )
+    assert authorized_pr168_transition(
+        REPO,
+        relative_path=runner_path,
+        prior_sha256=(
+            "746705f6026e397801f948d5b6d77fb3500c6af4cf7d3230f17600635b0fdc3b"
+        ),
+        current_sha256=_sha(REPO / runner_path),
+    )
+
+
+def test_pr168_integrity_bridge_rejects_extension_or_terminal_drift(
+    tmp_path: Path,
+) -> None:
+    root = _copy_supersession_chain(tmp_path)
+    extension = root / pr168_supersession.EXTENSION_RECEIPT_PATH
+    extension.write_text(
+        extension.read_text(encoding="utf-8") + "\n",
+        encoding="utf-8",
+    )
+    with pytest.raises(Pr168SupersessionError, match="extension hash mismatch"):
+        authorized_pr168_transition(
+            root,
+            relative_path="htt/src/common/mes_successor_registry.py",
+            prior_sha256=(
+                "13b844b086f954d841dd6d3e38bbca9ef"
+                "226ab07dac91f17beb0296c03fae72a"
+            ),
+            current_sha256=(
+                "6875ac70a2459233d3d18640da60652c"
+                "48eecf30807906c940d709169fa39a01"
+            ),
+        )
+
+    root = _copy_supersession_chain(tmp_path / "terminal")
+    registry = root / "htt/src/common/mes_successor_registry.py"
+    registry.write_text(
+        registry.read_text(encoding="utf-8") + "\n",
+        encoding="utf-8",
+    )
+    with pytest.raises(
+        Pr168SupersessionError,
+        match="terminal supersession binding",
+    ):
+        authorized_pr168_transition(
+            root,
+            relative_path="htt/src/common/mes_successor_registry.py",
+            prior_sha256=(
+                "13b844b086f954d841dd6d3e38bbca9ef"
+                "226ab07dac91f17beb0296c03fae72a"
+            ),
+            current_sha256=_sha(registry),
+        )
+
+
+def test_pr168_integrity_bridge_rejects_forked_extension(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    root = _copy_supersession_chain(tmp_path)
+    extension = root / pr168_supersession.EXTENSION_RECEIPT_PATH
+    payload = yaml.safe_load(extension.read_text(encoding="utf-8"))
+    payload["bindings"][0]["prior_sha256"] = "0" * 64
+    extension.write_text(
+        yaml.safe_dump(payload, sort_keys=False),
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(
+        pr168_supersession,
+        "EXTENSION_RECEIPT_SHA256",
+        _sha(extension),
+    )
+    with pytest.raises(Pr168SupersessionError, match="prior digest drifted"):
+        authorized_pr168_transition(
+            root,
+            relative_path="htt/src/common/mes_successor_registry.py",
+            prior_sha256=(
+                "13b844b086f954d841dd6d3e38bbca9ef"
+                "226ab07dac91f17beb0296c03fae72a"
+            ),
+            current_sha256=(
+                "6875ac70a2459233d3d18640da60652c"
+                "48eecf30807906c940d709169fa39a01"
+            ),
+        )
 
 
 def test_original_four_axis_agreement_is_preserved_but_superseded() -> None:

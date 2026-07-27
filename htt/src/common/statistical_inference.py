@@ -65,6 +65,9 @@ class CovarianceLikelihoodStatus(_StringEnum):
     BLOCKED_ASSUMPTIONS = "BLOCKED_ASSUMPTIONS"
 
 
+_EVIDENCE_MAX_RELATIVE_TOLERANCE = math.sqrt(np.finfo(float).eps)
+
+
 class PriorLearningMode(_StringEnum):
     FIXED_PHYSICAL = "FIXED_PHYSICAL"
     SPLIT_SAMPLE = "SPLIT_SAMPLE"
@@ -444,6 +447,9 @@ class FiniteCovarianceLikelihoodResult:
     method: str
     assumptions: FiniteCovarianceAssumptions
     allowed_use: tuple[str, ...]
+    rcond: float
+    null_atol: float
+    evidence_null_atol_ceiling: float
 
 
 def covariance_marginalized_t_loglikelihood(
@@ -468,6 +474,16 @@ def covariance_marginalized_t_loglikelihood(
         )
     rcond = _positive(rcond, "rcond")
     null_atol = _nonnegative(null_atol, "null_atol")
+    if rcond >= 1.0:
+        raise StatisticalInferenceError("rcond must be less than 1")
+    if (
+        assumptions.evidence_grade
+        and rcond > _EVIDENCE_MAX_RELATIVE_TOLERANCE
+    ):
+        raise StatisticalInferenceError(
+            "evidence-grade rcond exceeds the registered "
+            "sqrt(machine-epsilon) ceiling"
+        )
     raw_residual = np.asarray(residual, dtype=object)
     raw_covariance = np.asarray(sample_covariance, dtype=object)
     if any(isinstance(value, (bool, np.bool_)) for value in raw_residual.flat):
@@ -500,11 +516,45 @@ def covariance_marginalized_t_loglikelihood(
             )
         supported = eigenvalues > rcond * spectral_scale
     rank = int(np.count_nonzero(supported))
+    residual_scale = max(
+        1.0,
+        float(np.max(np.abs(vector))),
+        math.sqrt(spectral_scale),
+    )
+    evidence_null_atol_ceiling = (
+        _EVIDENCE_MAX_RELATIVE_TOLERANCE * residual_scale
+    )
+    if (
+        assumptions.evidence_grade
+        and null_atol > evidence_null_atol_ceiling
+    ):
+        raise StatisticalInferenceError(
+            "evidence-grade null_atol exceeds the registered "
+            "scale-aware sqrt(machine-epsilon) ceiling"
+        )
+    if assumptions.evidence_grade and rank == 0:
+        raise StatisticalInferenceError(
+            "evidence-grade covariance must retain at least one "
+            "supported direction"
+        )
     supported_basis = eigenvectors[:, supported]
     null_basis = eigenvectors[:, ~supported]
-    supported_coordinates = vector @ supported_basis
-    null_coordinates = vector @ null_basis
-    null_norm = float(np.linalg.norm(null_coordinates))
+    with np.errstate(over="ignore", invalid="ignore"):
+        supported_coordinates = vector @ supported_basis
+        null_coordinates = vector @ null_basis
+    if not (
+        np.all(np.isfinite(supported_coordinates))
+        and np.all(np.isfinite(null_coordinates))
+    ):
+        raise StatisticalInferenceError(
+            "covariance quotient projection produced a non-finite coordinate"
+        )
+    with np.errstate(over="ignore", invalid="ignore"):
+        null_norm = float(np.linalg.norm(null_coordinates))
+    if not math.isfinite(null_norm):
+        raise StatisticalInferenceError(
+            "covariance quotient null residual norm is non-finite"
+        )
     if null_norm > null_atol:
         return FiniteCovarianceLikelihoodResult(
             status=CovarianceLikelihoodStatus.OUTSIDE_SUPPORTED_QUOTIENT,
@@ -516,6 +566,9 @@ def covariance_marginalized_t_loglikelihood(
             method="covariance_marginalized_multivariate_t_supported_quotient",
             assumptions=assumptions,
             allowed_use=("support-mismatch diagnostic",),
+            rcond=rcond,
+            null_atol=null_atol,
+            evidence_null_atol_ceiling=evidence_null_atol_ceiling,
         )
     if not assumptions.evidence_grade:
         return FiniteCovarianceLikelihoodResult(
@@ -528,6 +581,9 @@ def covariance_marginalized_t_loglikelihood(
             method="covariance_marginalized_multivariate_t_supported_quotient",
             assumptions=assumptions,
             allowed_use=("assumption failure report",),
+            rcond=rcond,
+            null_atol=null_atol,
+            evidence_null_atol_ceiling=evidence_null_atol_ceiling,
         )
     wishart_df = n_simulations if assumptions.known_simulation_mean else n_simulations - 1
     if wishart_df < rank:
@@ -537,12 +593,34 @@ def covariance_marginalized_t_loglikelihood(
         )
     if rank:
         positive = eigenvalues[supported]
-        chi2 = float(np.sum(supported_coordinates**2 / positive))
+        with np.errstate(over="ignore", invalid="ignore", divide="ignore"):
+            chi2_terms = supported_coordinates**2 / positive
+        if not np.all(np.isfinite(chi2_terms)):
+            raise StatisticalInferenceError(
+                "supported covariance quadratic form is non-finite"
+            )
+        chi2 = float(np.sum(chi2_terms))
         log_pseudodeterminant = float(np.sum(np.log(positive)))
     else:
         chi2 = 0.0
         log_pseudodeterminant = 0.0
-    nu = float(wishart_df)
+    if not (
+        math.isfinite(chi2)
+        and math.isfinite(log_pseudodeterminant)
+    ):
+        raise StatisticalInferenceError(
+            "supported covariance likelihood terms must be finite"
+        )
+    try:
+        nu = float(wishart_df)
+    except OverflowError as exc:
+        raise StatisticalInferenceError(
+            "Wishart degrees of freedom exceed the finite likelihood domain"
+        ) from exc
+    if not math.isfinite(nu):
+        raise StatisticalInferenceError(
+            "Wishart degrees of freedom exceed the finite likelihood domain"
+        )
     log_normalization = (
         math.lgamma((nu + 1.0) / 2.0)
         - math.lgamma((nu - rank + 1.0) / 2.0)
@@ -552,6 +630,13 @@ def covariance_marginalized_t_loglikelihood(
     log_likelihood = log_normalization - 0.5 * (nu + 1.0) * math.log1p(
         chi2 / nu
     )
+    if not (
+        math.isfinite(log_normalization)
+        and math.isfinite(log_likelihood)
+    ):
+        raise StatisticalInferenceError(
+            "covariance-marginalized likelihood produced a non-finite result"
+        )
     return FiniteCovarianceLikelihoodResult(
         status=CovarianceLikelihoodStatus.DEFINED,
         log_likelihood=float(log_likelihood),
@@ -565,6 +650,9 @@ def covariance_marginalized_t_loglikelihood(
         ),
         assumptions=assumptions,
         allowed_use=("conditional likelihood under registered Gaussian/Wishart assumptions",),
+        rcond=rcond,
+        null_atol=null_atol,
+        evidence_null_atol_ceiling=evidence_null_atol_ceiling,
     )
 
 

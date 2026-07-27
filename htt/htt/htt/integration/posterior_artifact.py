@@ -102,7 +102,7 @@ def _require_manifest_response_overlap_provenance(
 
 
 def _interval(values: Sequence[float], *, field_name: str) -> tuple[float, float]:
-    if isinstance(values, (str, bytes)):
+    if not isinstance(values, Sequence) or isinstance(values, (str, bytes)):
         raise ValueError(f"{field_name} must contain exactly two numeric values")
     if len(values) != 2:
         raise ValueError(f"{field_name} must contain exactly two values")
@@ -131,6 +131,8 @@ def _positive_int(value: Any, field_name: str) -> int:
 
 
 def _float_mapping(payload: Mapping[str, Any]) -> dict[str, float]:
+    if not isinstance(payload, Mapping):
+        raise ValueError("model_evidences must be a mapping")
     if not payload:
         raise ValueError("model_evidences must not be empty")
     result: dict[str, float] = {}
@@ -207,7 +209,11 @@ class DirectionalPosteriorArtifact:
     representation_policy: str = BC2_NO_REPRESENTATION_PROMOTION
 
     def __post_init__(self) -> None:
-        _nonempty_string(self.model, "DirectionalPosteriorArtifact.model")
+        object.__setattr__(
+            self,
+            "model",
+            _nonempty_string(self.model, "DirectionalPosteriorArtifact.model"),
+        )
         if isinstance(self.n_live, bool) or not isinstance(self.n_live, int):
             raise ValueError("DirectionalPosteriorArtifact.n_live must be an integer")
         if self.n_live <= 0:
@@ -219,23 +225,59 @@ class DirectionalPosteriorArtifact:
             "ln_B_total",
             "F_median",
         ):
-            _finite_float(getattr(self, field_name), field_name)
+            object.__setattr__(
+                self,
+                field_name,
+                _finite_float(getattr(self, field_name), field_name),
+            )
         for field_name in ("x_hpd68", "x_hpd95", "Q_hpd68", "Pi_hpd68", "F_hpd68"):
-            _interval(getattr(self, field_name), field_name=field_name)
+            object.__setattr__(
+                self,
+                field_name,
+                _interval(getattr(self, field_name), field_name=field_name),
+            )
         object.__setattr__(
             self,
             "model_evidences",
             MappingProxyType(_float_mapping(self.model_evidences)),
         )
+        if not isinstance(self.manifest, ArtifactManifest):
+            raise TypeError(
+                "DirectionalPosteriorArtifact.manifest must be ArtifactManifest"
+            )
         if self.manifest.owner != "HTT":
             raise ValueError("DirectionalPosteriorArtifact.manifest.owner must be 'HTT'")
-        _nonempty_string(
-            self.posterior_ref,
-            "DirectionalPosteriorArtifact.posterior_ref",
+        object.__setattr__(
+            self,
+            "posterior_ref",
+            _nonempty_string(
+                self.posterior_ref,
+                "DirectionalPosteriorArtifact.posterior_ref",
+            ),
         )
-        _nonempty_string(
-            self.evidence_ref,
-            "DirectionalPosteriorArtifact.evidence_ref",
+        object.__setattr__(
+            self,
+            "evidence_ref",
+            _nonempty_string(
+                self.evidence_ref,
+                "DirectionalPosteriorArtifact.evidence_ref",
+            ),
+        )
+        object.__setattr__(
+            self,
+            "posterior_predictive_ref",
+            _optional_nonempty_string(
+                self.posterior_predictive_ref,
+                "DirectionalPosteriorArtifact.posterior_predictive_ref",
+            ),
+        )
+        object.__setattr__(
+            self,
+            "loocv_ref",
+            _optional_nonempty_string(
+                self.loocv_ref,
+                "DirectionalPosteriorArtifact.loocv_ref",
+            ),
         )
         if self.legacy_projection_classification != BC1_LEGACY_PROJECTION:
             raise ValueError("legacy projections must remain BC1_LEGACY_PROJECTION")

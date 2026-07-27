@@ -653,6 +653,13 @@ class SummaryDepartureState:
             "delta_omega_k",
             _finite_real(self.delta_omega_k, "delta_omega_k"),
         )
+        _finite_real(
+            self.sigma2
+            - self.w2
+            + self.omega_tilt
+            + self.delta_omega_k,
+            "x_C",
+        )
         _required_text(self.normalization, "normalization")
         _required_text(self.source_state_id, "source_state_id")
 
@@ -1048,6 +1055,18 @@ class LegacyProjectionReport:
             raise StatisticalFoundationError(
                 "representation policy must prohibit claim promotion"
             )
+        def require_finite_range(report: DiagnosticScalarReport) -> None:
+            if report.value_range is None:
+                return
+            if not (
+                math.isfinite(report.value_range.lower)
+                and math.isfinite(report.value_range.upper)
+            ):
+                raise StatisticalFoundationError(
+                    "legacy projection value ranges must be finite"
+                )
+
+        require_finite_range(self.x_C)
         expected_names = {
             "Q": "Q",
             "F": "F",
@@ -1063,6 +1082,7 @@ class LegacyProjectionReport:
                 raise StatisticalFoundationError(
                     f"{field_name} must be a DiagnosticScalarReport"
                 )
+            require_finite_range(report)
             if report.name != expected_name:
                 raise StatisticalFoundationError(
                     f"{field_name} report must be named {expected_name}"

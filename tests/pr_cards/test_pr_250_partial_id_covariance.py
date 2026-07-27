@@ -186,6 +186,9 @@ def test_covariance_marginalized_t_supported_quotient_and_null_residual() -> Non
     assert defined.status is CovarianceLikelihoodStatus.DEFINED
     assert defined.rank == 1
     assert defined.chi2_supported == pytest.approx(0.5)
+    assert defined.rcond == 1e-12
+    assert defined.null_atol == 1e-12
+    assert defined.null_atol <= defined.evidence_null_atol_ceiling
     outside = covariance_marginalized_t_loglikelihood(
         [1.0, 0.1],
         [[2.0, 0.0], [0.0, 0.0]],
@@ -196,6 +199,60 @@ def test_covariance_marginalized_t_supported_quotient_and_null_residual() -> Non
     )
     assert outside.status is CovarianceLikelihoodStatus.OUTSIDE_SUPPORTED_QUOTIENT
     assert outside.log_likelihood is None
+
+
+def test_evidence_covariance_tolerances_cannot_erase_support() -> None:
+    with pytest.raises(
+        StatisticalInferenceError,
+        match="rcond must be less than 1",
+    ):
+        covariance_marginalized_t_loglikelihood(
+            [100.0],
+            [[1.0]],
+            n_simulations=100,
+            assumptions=_assumptions(),
+            rcond=1.0,
+            null_atol=100.0,
+        )
+    with pytest.raises(
+        StatisticalInferenceError,
+        match="null_atol exceeds",
+    ):
+        covariance_marginalized_t_loglikelihood(
+            [100.0],
+            [[1.0]],
+            n_simulations=100,
+            assumptions=_assumptions(),
+            rcond=1e-12,
+            null_atol=100.0,
+        )
+    with pytest.raises(
+        StatisticalInferenceError,
+        match="at least one supported direction",
+    ):
+        covariance_marginalized_t_loglikelihood(
+            [0.0],
+            [[0.0]],
+            n_simulations=100,
+            assumptions=_assumptions(),
+            rcond=1e-12,
+            null_atol=0.0,
+        )
+
+
+def test_covariance_likelihood_rejects_nonfinite_derived_quadratic_form() -> None:
+    with pytest.raises(
+        StatisticalInferenceError,
+        match="quadratic form is non-finite",
+    ):
+        covariance_marginalized_t_loglikelihood(
+            [1e308],
+            [[1.0]],
+            n_simulations=100,
+            assumptions=_assumptions(),
+            rcond=1e-12,
+            null_atol=0.0,
+        )
 
 
 def test_finite_covariance_t_approaches_gaussian_limit() -> None:
