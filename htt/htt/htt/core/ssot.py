@@ -19,6 +19,7 @@ from importlib import resources
 from pathlib import Path
 
 __all__ = ['load_obs', 'C', 'eps_ell', 'D_ell_from_eps',
+           'eps_ell_legacy_dl_as_cl', 'D_ell_from_eps_legacy',
            'sigma_H_from_Sig2', 'ombar_from_W2', 'omH_from_W2',
            'omega_tilt']
 
@@ -74,13 +75,11 @@ class C:
 
     # CMB multipole amplitudes (ε_ℓ = √((2ℓ+1)C_ℓ/(4π))/T₀)
     eps1_kin = 1.2336e-3
-    # eps2/eps3: Planck PR3 Commander component-separation pipeline
-    # (distinct from D₂/D₃ which are from the TT full-mission spectrum).
-    # The Commander values are used in B_σ; the D_ℓ values enter the
-    # χ² likelihood channels (e, h) directly.  Impact of the difference
-    # on B_σ: < 0.04% (dipole contributes 99.4%).
-    eps2     = 3.559629e-6    # Commander ℓ=2
-    eps3     = 6.065291e-6    # Commander ℓ=3
+    # eps2/eps3 are the dimensionless amplitudes obtained from the registered
+    # D2/D3 values with C_l = 2π D_l/[l(l+1)].  They are rounded historical
+    # constants; value-anchored tests guard the conversion independently.
+    eps2     = 3.559629e-6
+    eps3     = 6.065291e-6
 
     # Frame correction (VT-07): η_{u̇} = w/[3(1+w)] = 1/12 for radiation
     eta_udot = 1.0 / 12.0  # exact; previously 0.083 (0.4% truncation)
@@ -106,11 +105,41 @@ class C:
 # ─── Conversion functions ────────────────────────────────────
 
 def eps_ell(D_ell, ell):
-    """ε_ℓ from D_ℓ: ε_ℓ = √((2ℓ+1)D_ℓ/(4π)) / T₀  (dimensionless ΔT/T)."""
-    return np.sqrt((2*ell + 1) * D_ell / (4 * np.pi)) / C.T0_uK
+    """Convert power ``D_l`` to the dimensionless multipole amplitude.
+
+    ``D_l = l(l+1) C_l/(2π)`` is converted to ``C_l`` before applying
+    ``eps_l = sqrt((2l+1) C_l/(4π))/T0``.
+    """
+    if isinstance(ell, (bool, np.bool_)) or not isinstance(ell, (int, np.integer)):
+        raise TypeError("ell must be an integer")
+    if ell < 1:
+        raise ValueError("ell must be >= 1")
+    values = np.asarray(D_ell, dtype=float)
+    if np.any(~np.isfinite(values)) or np.any(values < 0.0):
+        raise ValueError("D_ell must be finite and non-negative")
+    return np.sqrt((2*ell + 1) * values / (2 * ell * (ell + 1))) / C.T0_uK
 
 def D_ell_from_eps(eps, ell):
-    """D_ℓ from ε_ℓ: D_ℓ = 4π ε_ℓ² T₀² / (2ℓ+1)."""
+    """Inverse of :func:`eps_ell` for ``D_l``."""
+    if isinstance(ell, (bool, np.bool_)) or not isinstance(ell, (int, np.integer)):
+        raise TypeError("ell must be an integer")
+    if ell < 1:
+        raise ValueError("ell must be >= 1")
+    values = np.asarray(eps, dtype=float)
+    if np.any(~np.isfinite(values)) or np.any(values < 0.0):
+        raise ValueError("eps must be finite and non-negative")
+    return (
+        2 * ell * (ell + 1) * values**2 * C.T0_uK**2 / (2*ell + 1)
+    )
+
+
+def eps_ell_legacy_dl_as_cl(D_ell, ell):
+    """Historical incorrect conversion, for explicit reproduction only."""
+    return np.sqrt((2*ell + 1) * D_ell / (4 * np.pi)) / C.T0_uK
+
+
+def D_ell_from_eps_legacy(eps, ell):
+    """Inverse of :func:`eps_ell_legacy_dl_as_cl`."""
     return 4 * np.pi * eps**2 * C.T0_uK**2 / (2*ell + 1)
 
 def sigma_H_from_Sig2(Sig2):

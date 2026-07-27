@@ -3,7 +3,7 @@
 evidence_models_R03a.py — 8-channel Bianchi evidence framework
 ================================================================
 VE-R03a: Extensions over R03:
-  Channel (g): MES soft logistic prior — converts hard boundary to smooth penalty
+  Channel (g): MES exponential-tail penalty — a historical smooth comparator
   Channel (h): D₃ octupole χ²(7) — includes shear contribution via f₃(x)
   New: f₃(x) interpolation from AniCLASS dataset for VII_h octupole power fraction
 
@@ -13,8 +13,8 @@ Channels:
   (c) quarantined observational input              [blocked while findings are OPEN]
   (d) Saadeh vorticity upper limit             [half-Gaussian on ω/H]
   (e) D₂ quadrupole χ²(5)                     [scaled χ² with D₂^shear(Σ², f₂(x))]
-  (f) MES hard ceiling                         [hard prior: reject if Σ² > Σ²_max]
-  (g) MES soft logistic prior                   [INERT by default; redundant with (f)]
+  (f) typed geodesic MES hard ceiling          [hard support: reject if Σ² > Σ²_max]
+  (g) MES exponential-tail penalty             [INERT by default; redundant with (f)]
   (h) D₃ octupole χ²(7)             *** NEW *** [scaled χ² with D₃^shear(Σ², f₃(x))]
 
 There is no implicit active default while PR-120 is in force: the historical
@@ -49,6 +49,11 @@ from htt.core.cf4_observational_input import (
 # (common.mes_theorem_authority is the live authority; legacy values are
 # labeled non-authoritative reproduction, see legacy_reproduction_coefficients).
 from common.mes_successor_registry import current_mes_successor_registry
+from common.statistical_foundations import (
+    AnchorConditioning,
+    AnchorStatus,
+    registered_geodesic_mes_anchors,
+)
 
 _MES_SUCCESSOR = current_mes_successor_registry().successor
 _MES_SUCCESSOR_ID = _MES_SUCCESSOR.successor_id
@@ -85,7 +90,7 @@ D3_LCDM   = 1000.0         # μK²
 T2_TOTAL_DECAY = 2.75e4    # (ΔT/T) per unit (σ/H), ℓ=all, decay mode
 T2_TOTAL_GROW  = 5.5       # same, growing tensor mode
 
-# MES soft prior steepness
+# MES exponential-tail penalty steepness
 K_MES_STEEP = 10.0
 
 
@@ -415,7 +420,7 @@ class BianchiModel:
     # channel (c). Explicit c-free method checks may use ACTIVE_DEFAULT_CHANNELS.
     # Channel (g) is intentionally excluded from the default because it is
     # redundant with channel (f): the hard MES ceiling in (f) rejects any
-    # sample with Σ² > Σ²_max BEFORE the soft logistic penalty in (g) can
+    # sample with Σ² > Σ²_max BEFORE the exponential-tail penalty in (g) can
     # activate.  Channel (g) code is retained below for use with samplers
     # that do not support hard prior boundaries (e.g. MCMC).  To include
     # it, pass channels='abdefgh' (still excluding quarantined channel c).
@@ -488,10 +493,10 @@ class BianchiModel:
             if not self._mes_ok(Sig2, e1):
                 return -np.inf
 
-        # (g) MES soft logistic prior — INERT when (f) is active (see __init__ docstring).
-        #     Retained for MCMC samplers that cannot enforce hard boundaries.
+        # (g) MES exponential-tail penalty — INERT when (f) is active (see
+        #     __init__ docstring). Retained for historical MCMC comparison.
         if 'g' in ch:
-            Sig2_max = Sig2_max_MES(1.233e-3 + e1)
+            Sig2_max = _active_sig2_mes_ceiling(1.233e-3 + e1)
             if Sig2_max > 0:
                 ratio = Sig2 / Sig2_max
                 if ratio > 1.0:
@@ -509,17 +514,29 @@ class BianchiModel:
     def _mes_ok(Sig2, eps1_intrinsic=0.):
         EPS1_KIN = 1.233e-3
         eps1_total = EPS1_KIN + eps1_intrinsic
-        ceil = Sig2_max_MES(eps1_total)
+        ceil = _active_sig2_mes_ceiling(eps1_total)
         return Sig2 <= ceil
 
 
-# MES ceiling: Σ²_max = (3/2) × [B_σ^corr(ε₁)]²  (Corollary 3.1)
+def _active_sig2_mes_ceiling(e1_total):
+    """Return the verified uncorrected geodesic shear anchor for this input."""
+    anchor = registered_geodesic_mes_anchors(
+        eps1=float(e1_total),
+        eps2=EPS2,
+        eps3=EPS3,
+        attribution=(
+            "evidence_models_R03a total observed-plus-model-intrinsic dipole"
+        ),
+        conditioning=AnchorConditioning.REALIZATION_CONDITIONAL,
+    )["sigma"]
+    if anchor.status is not AnchorStatus.VERIFIED or not anchor.normalization_allowed:
+        raise RuntimeError("active shear likelihood requires a verified MES anchor")
+    return float(anchor.value)
+
+
+# Historical corrected ceiling: retained for explicit reproduction only.
 def Sig2_max_MES(e1_total):
-    """MES algebraic ceiling on Σ²_std from total observed ε₁.
-    
-    Combines the frame-corrected shear combination B_σ^corr with the
-    standardised normalisation factor 3/2.  Used by channels (f) and (g).
-    """
+    """Legacy frame-corrected ceiling; active channels do not call this."""
     return 1.5 * B_sigma_corrected(e1_total)**2
 
 

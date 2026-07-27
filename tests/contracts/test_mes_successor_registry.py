@@ -12,6 +12,7 @@ from common.mes_successor_registry import (
     CURRENT_SUCCESSOR_ID,
     DEFAULT_ACTIVE_PYTHON_ROOTS,
     DEFAULT_CONSUMER_INVENTORY_PATH,
+    DEFAULT_CONSUMER_SUPERSESSION_PATH,
     EGS3_BRANCH_SEAL_PATH,
     EGS3_BRANCH_SEAL_SHA256,
     MesConsumerDeclaration,
@@ -103,6 +104,16 @@ def _inventory_declarations(
         )
         for row in rows
     )
+
+
+def _consumer_supersession() -> dict[str, object]:
+    payload = yaml.safe_load(
+        (REPO_ROOT / DEFAULT_CONSUMER_SUPERSESSION_PATH).read_text(
+            encoding="utf-8"
+        )
+    )
+    assert isinstance(payload, dict)
+    return payload
 
 
 def test_current_successor_is_available_and_pr124_authorized() -> None:
@@ -625,9 +636,21 @@ def test_inventory_is_exact_hash_pinned_and_matches_ast_discovery() -> None:
     assert report.consumers_scanned == len(declarations) == 22
     assert tuple(payload["active_python_roots"]) == DEFAULT_ACTIVE_PYTHON_ROOTS
 
+    supersession = _consumer_supersession()
+    assert supersession["schema"] == "htt.mes_consumer_supersession.v1"
+    assert supersession["authority"] == "PR-248"
+    replacement_by_id = {
+        row["consumer_id"]: row for row in supersession["bindings"]
+    }
     for row in payload["active_consumers"]:
         assert set(row) == {"consumer_id", "path", "sha256"}
-        assert row["sha256"] == _digest(REPO_ROOT / row["path"])
+        replacement = replacement_by_id.get(row["consumer_id"])
+        if replacement is None:
+            assert row["sha256"] == _digest(REPO_ROOT / row["path"])
+        else:
+            assert replacement["path"] == row["path"]
+            assert replacement["prior_sha256"] == row["sha256"]
+            assert replacement["sha256"] == _digest(REPO_ROOT / row["path"])
     for row in payload["excluded_consumers"]:
         assert set(row) == {"exclusion_id", "path", "sha256", "reason"}
         assert row["path"].endswith(".py")

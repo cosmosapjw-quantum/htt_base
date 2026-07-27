@@ -71,6 +71,10 @@ EGS3_BRANCH_SEAL_PATH = "docs/generated/mes_branch_registry_seal.json"
 DEFAULT_CONSUMER_INVENTORY_PATH = (
     "docs/research_program/long_horizon_rescue/" "pr122_active_mes_consumers.yaml"
 )
+DEFAULT_CONSUMER_SUPERSESSION_PATH = (
+    "docs/research_program/stat_foundations/"
+    "pr248_mes_consumer_supersession.yaml"
+)
 DEFAULT_ACTIVE_PYTHON_ROOTS = (
     "htt/htt/htt",
     "htt/bass",
@@ -1469,6 +1473,9 @@ def _load_inventory_controls(
                 ),
             )
         )
+    declarations = list(
+        _apply_consumer_supersessions(repo_root, tuple(declarations))
+    )
 
     raw_exclusions = payload.get("excluded_consumers")
     if not isinstance(raw_exclusions, Sequence) or isinstance(
@@ -1498,6 +1505,86 @@ def _load_inventory_controls(
             )
         )
     return roots, tuple(declarations), tuple(exclusions), True
+
+
+def _apply_consumer_supersessions(
+    repo_root: Path,
+    declarations: tuple[MesConsumerDeclaration, ...],
+) -> tuple[MesConsumerDeclaration, ...]:
+    """Apply an explicit post-PR-124 hash overlay without rewriting history.
+
+    The PR-122 inventory and PR-124 receipts remain byte-preserved.  A later
+    authorized change set may bind new consumer bytes only by naming the exact
+    prior digest, exact replacement digest, path, authority card and reason in
+    the dedicated overlay.  Any mismatch fails closed.
+    """
+
+    path = repo_root / DEFAULT_CONSUMER_SUPERSESSION_PATH
+    if not path.exists():
+        return declarations
+    if path.is_symlink() or not path.is_file():
+        raise MesRegistryError(
+            "MES consumer supersession must be a regular repository file"
+        )
+    try:
+        payload = yaml.safe_load(path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeDecodeError, yaml.YAMLError) as exc:
+        raise MesRegistryError(f"invalid MES consumer supersession: {exc}") from exc
+    if not isinstance(payload, Mapping):
+        raise MesRegistryError("MES consumer supersession root must be a mapping")
+    if payload.get("schema") != "htt.mes_consumer_supersession.v1":
+        raise MesRegistryError("unsupported MES consumer supersession schema")
+    if payload.get("authority") != "PR-248":
+        raise MesRegistryError("MES consumer supersession authority must be PR-248")
+    rows = payload.get("bindings")
+    if not isinstance(rows, Sequence) or isinstance(rows, (str, bytes)) or not rows:
+        raise MesRegistryError("MES consumer supersession bindings must be non-empty")
+
+    by_id = {row.consumer_id: row for row in declarations}
+    seen: set[str] = set()
+    for row in rows:
+        if not isinstance(row, Mapping) or set(row) != {
+            "consumer_id",
+            "path",
+            "prior_sha256",
+            "sha256",
+            "reason",
+        }:
+            raise MesRegistryError(
+                "each supersession requires consumer_id/path/prior_sha256/"
+                "sha256/reason"
+            )
+        consumer_id = _nonempty(row["consumer_id"], "supersession consumer_id")
+        if consumer_id in seen:
+            raise MesRegistryError("duplicate MES consumer supersession")
+        seen.add(consumer_id)
+        prior = by_id.get(consumer_id)
+        if prior is None:
+            raise MesRegistryError(
+                f"supersession names unknown consumer {consumer_id!r}"
+            )
+        source_path = _source_path(row["path"], "supersession path")
+        prior_sha = _sha256(row["prior_sha256"], "supersession prior_sha256")
+        next_sha = _sha256(row["sha256"], "supersession sha256")
+        _nonempty(row["reason"], "supersession reason")
+        if source_path != prior.source.path or prior_sha != prior.source.sha256:
+            raise MesRegistryError(
+                f"supersession prior binding drifted for {consumer_id}"
+            )
+        if next_sha == prior_sha:
+            raise MesRegistryError(
+                f"supersession replacement must differ for {consumer_id}"
+            )
+        by_id[consumer_id] = MesConsumerDeclaration(
+            consumer_id=consumer_id,
+            source=SourceHashBinding(
+                path=source_path,
+                availability=SourceAvailability.AVAILABLE,
+                sha256=next_sha,
+            ),
+            expected_successor_id=prior.expected_successor_id,
+        )
+    return tuple(by_id[row.consumer_id] for row in declarations)
 
 
 def _consumer_scan_findings(
@@ -1702,12 +1789,31 @@ def scan_declared_mes_consumers(
         inventory_exclusions,
         inventory_present,
     ) = _load_inventory_controls(repo_root)
-    if inventory_present and tuple(
-        sorted(declarations, key=lambda item: item.consumer_id)
-    ) != tuple(sorted(inventory_declarations, key=lambda item: item.consumer_id)):
-        raise MesRegistryError(
-            "caller declarations cannot replace the repository inventory"
+    if inventory_present:
+        caller_declarations = tuple(declarations)
+        caller_sorted = tuple(
+            sorted(caller_declarations, key=lambda item: item.consumer_id)
         )
+        inventory_sorted = tuple(
+            sorted(inventory_declarations, key=lambda item: item.consumer_id)
+        )
+        if caller_sorted != inventory_sorted:
+            # Compatibility for callers that faithfully loaded the preserved
+            # PR-122 inventory: apply the repository-owned overlay to that
+            # exact declaration set, then require equality with the effective
+            # inventory. Arbitrary caller replacement remains forbidden.
+            overlaid = _apply_consumer_supersessions(
+                repo_root, caller_declarations
+            )
+            if tuple(
+                sorted(overlaid, key=lambda item: item.consumer_id)
+            ) != inventory_sorted:
+                raise MesRegistryError(
+                    "caller declarations cannot replace the repository inventory"
+                )
+        declarations = inventory_declarations
+        consumer_ids = tuple(item.consumer_id for item in declarations)
+        source_paths = tuple(item.source.path for item in declarations)
     if inventory_present and exclusions is not None:
         if tuple(exclusions) != inventory_exclusions:
             raise MesRegistryError(
@@ -1774,6 +1880,7 @@ __all__ = [
     "CURRENT_SUCCESSOR_ID",
     "DEFAULT_ACTIVE_PYTHON_ROOTS",
     "DEFAULT_CONSUMER_INVENTORY_PATH",
+    "DEFAULT_CONSUMER_SUPERSESSION_PATH",
     "EGS3_BRANCH_SEAL_PATH",
     "EGS3_BRANCH_SEAL_SHA256",
     "EGS3_BRANCH_WITNESS_SHA256",
