@@ -99,6 +99,25 @@ def _competition(
     )
 
 
+def test_candidate_evaluation_rejects_role_salted_target_reuse() -> None:
+    """Byte-identical targets cannot serve as two evidence roles."""
+
+    shared_target = np.array([0.25, -0.5, 1.25], dtype=np.float64)
+    with pytest.raises(
+        OrbitNonlinearityError,
+        match="data identities must differ",
+    ):
+        evaluate_candidate_predictions(
+            candidate_id="nonlinear-reused-target",
+            kind=CandidateKind.NONLINEAR,
+            held_out_prediction=np.array([0.2, -0.4, 1.1]),
+            held_out_target=shared_target,
+            matched_injection_prediction=np.array([0.3, -0.6, 1.2]),
+            matched_injection_target=shared_target.copy(),
+            model_config_id="sha256:" + "a" * 64,
+        )
+
+
 def _report(
     *,
     residual: tuple[float, float, float],

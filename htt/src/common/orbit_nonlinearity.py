@@ -277,14 +277,18 @@ def _matrix_tuple(matrix: np.ndarray) -> tuple[tuple[float, ...], ...]:
     return tuple(tuple(float(value) for value in row) for row in matrix)
 
 
-def _array_content_identity(value: np.ndarray, *, role: str) -> str:
-    """Return a deterministic identity for one accepted float64 array."""
+def _array_content_identity(value: np.ndarray) -> str:
+    """Return a role-independent identity for one accepted float64 array.
+
+    Role labels belong to the enclosing evaluation receipt.  Including them
+    here would let identical bytes masquerade as independent evidence merely
+    by renaming their role.
+    """
 
     array = np.ascontiguousarray(value, dtype="<f8")
     header = json.dumps(
         {
             "dtype": "<f8",
-            "role": role,
             "schema": "HTT_NUMERIC_ARRAY_V1",
             "shape": list(array.shape),
         },
@@ -930,10 +934,8 @@ def measure_response_rank(
         transfer_id=transfer_id,
         mask_id=mask_id,
         covariance_id=covariance_id,
-        response_id=_array_content_identity(matrix, role="response"),
-        covariance_content_id=_array_content_identity(
-            covariance_matrix, role="covariance"
-        ),
+        response_id=_array_content_identity(matrix),
+        covariance_content_id=_array_content_identity(covariance_matrix),
         missing_inputs=(),
         _construction_token=_RANK_REPORT_TOKEN,
     )
@@ -1130,18 +1132,10 @@ def evaluate_candidate_predictions(
     injection_score = _negative_mean_squared_error(
         injection_prediction, injection_target, name="matched_injection"
     )
-    held_data_id = _array_content_identity(
-        held_target, role="held_out_target"
-    )
-    injection_data_id = _array_content_identity(
-        injection_target, role="matched_injection_target"
-    )
-    held_prediction_id = _array_content_identity(
-        held_prediction, role="held_out_prediction"
-    )
-    injection_prediction_id = _array_content_identity(
-        injection_prediction, role="matched_injection_prediction"
-    )
+    held_data_id = _array_content_identity(held_target)
+    injection_data_id = _array_content_identity(injection_target)
+    held_prediction_id = _array_content_identity(held_prediction)
+    injection_prediction_id = _array_content_identity(injection_prediction)
     evaluation_id = _candidate_evaluation_identity(
         candidate_id=candidate_id,
         kind=kind,
