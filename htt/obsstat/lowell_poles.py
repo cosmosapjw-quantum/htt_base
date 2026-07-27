@@ -15,6 +15,8 @@ from collections.abc import Iterable, Mapping
 from dataclasses import dataclass
 from enum import Enum
 from functools import lru_cache
+import hashlib
+import json
 import math
 import operator
 
@@ -22,6 +24,7 @@ import numpy as np
 
 __all__ = [
     "AntipodalAxis",
+    "LowEllPoleAnalysisSpec",
     "LowEllPoleEstimate",
     "MIN_NUMERICAL_GAP_TOLERANCE",
     "PoleDefinition",
@@ -29,6 +32,9 @@ __all__ = [
     "angular_momentum_power_tensor",
     "estimate_lowell_pole",
     "mean_squared_multipole_alignment",
+    "scalar_alm_inversion_phase",
+    "transform_antipodal_axis_o3",
+    "transform_power_tensor_o3",
 ]
 
 
@@ -53,12 +59,67 @@ class PoleStatus(str, Enum):
 
 
 @dataclass(frozen=True)
+class LowEllPoleAnalysisSpec:
+    """Identity-bound configuration for one pole/alignment analysis."""
+
+    ell_values: tuple[int, ...]
+    definition: PoleDefinition
+    gap_tolerance: float
+    coordinate_frame: str
+    harmonic_convention: str
+
+    def __post_init__(self) -> None:
+        if isinstance(self.ell_values, (str, bytes)):
+            raise ValueError("ell_values must be an integer sequence")
+        values = tuple(_validate_ell(value) for value in self.ell_values)
+        if not values or len(set(values)) != len(values):
+            raise ValueError("ell_values must be non-empty and distinct")
+        if tuple(sorted(values)) != values:
+            raise ValueError("ell_values must be strictly increasing")
+        object.__setattr__(self, "ell_values", values)
+        object.__setattr__(self, "definition", PoleDefinition(self.definition))
+        object.__setattr__(
+            self,
+            "gap_tolerance",
+            _validate_gap_tolerance(self.gap_tolerance),
+        )
+        for name in ("coordinate_frame", "harmonic_convention"):
+            value = getattr(self, name)
+            if not isinstance(value, str) or not value.strip() or value != value.strip():
+                raise ValueError(f"{name} must be non-empty trimmed text")
+
+    @property
+    def analysis_id(self) -> str:
+        payload = {
+            "coordinate_frame": self.coordinate_frame,
+            "definition": self.definition.value,
+            "ell_values": list(self.ell_values),
+            "gap_tolerance_hex": self.gap_tolerance.hex(),
+            "harmonic_convention": self.harmonic_convention,
+            "schema": "LOWELL_POLE_ANALYSIS_V1",
+        }
+        encoded = json.dumps(
+            payload, sort_keys=True, separators=(",", ":"), ensure_ascii=True
+        ).encode("ascii")
+        return f"sha256:{hashlib.sha256(encoded).hexdigest()}"
+
+
+@dataclass(frozen=True)
 class AntipodalAxis:
     """A unit axis for which ``p`` and ``-p`` denote the same object."""
 
     representative: tuple[float, float, float]
 
     def __post_init__(self) -> None:
+        if isinstance(self.representative, np.ndarray):
+            has_bool = self.representative.dtype.kind == "b"
+        else:
+            has_bool = any(
+                isinstance(value, (bool, np.bool_))
+                for value in self.representative
+            )
+        if has_bool:
+            raise ValueError("axis representative must not contain booleans")
         vector = np.asarray(self.representative, dtype=float)
         if vector.shape != (3,) or not np.isfinite(vector).all():
             raise ValueError("axis representative must be a finite 3-vector")
@@ -257,7 +318,70 @@ def mean_squared_multipole_alignment(
     return float(pair_sum / pair_count)
 
 
+def scalar_alm_inversion_phase(ell: int) -> int:
+    """Return the parity factor ``(-1)^ell`` for a scalar multipole."""
+
+    ell_i = _validate_ell(ell)
+    return -1 if ell_i % 2 else 1
+
+
+def _validate_o3_matrix(matrix: object) -> np.ndarray:
+    if isinstance(matrix, np.ndarray):
+        has_bool = matrix.dtype.kind == "b"
+    elif isinstance(matrix, (tuple, list)):
+        has_bool = any(
+            isinstance(value, (bool, np.bool_))
+            for row in matrix
+            for value in (row if isinstance(row, (tuple, list)) else (row,))
+        )
+    else:
+        has_bool = isinstance(matrix, (bool, np.bool_))
+    if has_bool:
+        raise ValueError("O(3) matrix must not contain booleans")
+    value = np.asarray(matrix, dtype=float)
+    if value.shape != (3, 3) or not np.isfinite(value).all():
+        raise ValueError("O(3) matrix must be a finite 3x3 matrix")
+    tolerance = 1e-10
+    if not np.allclose(value.T @ value, np.eye(3), atol=tolerance, rtol=0.0):
+        raise ValueError("O(3) matrix must be orthogonal")
+    if not math.isclose(
+        abs(float(np.linalg.det(value))),
+        1.0,
+        abs_tol=tolerance,
+        rel_tol=0.0,
+    ):
+        raise ValueError("O(3) matrix determinant must be +/-1")
+    return value
+
+
+def transform_power_tensor_o3(tensor: object, matrix: object) -> np.ndarray:
+    """Apply the tensor action ``T -> R T R^T`` for any O(3) matrix."""
+
+    value = np.asarray(tensor, dtype=float)
+    if value.shape != (3, 3) or not np.isfinite(value).all():
+        raise ValueError("power tensor must be a finite 3x3 matrix")
+    if not np.allclose(value, value.T, atol=1e-12, rtol=0.0):
+        raise ValueError("power tensor must be symmetric")
+    transform = _validate_o3_matrix(matrix)
+    out = transform @ value @ transform.T
+    return (out + out.T) / 2.0
+
+
+def transform_antipodal_axis_o3(
+    axis: AntipodalAxis,
+    matrix: object,
+) -> AntipodalAxis:
+    """Transform an unoriented pole; inversion remains the same axis."""
+
+    if not isinstance(axis, AntipodalAxis):
+        raise TypeError("axis must be an AntipodalAxis")
+    transform = _validate_o3_matrix(matrix)
+    return AntipodalAxis(tuple(transform @ np.asarray(axis.representative)))
+
+
 def _validate_ell(ell: int) -> int:
+    if isinstance(ell, (bool, np.bool_)):
+        raise ValueError("ell must be an integer >= 1")
     try:
         ell_i = operator.index(ell)
     except TypeError as exc:
@@ -268,6 +392,8 @@ def _validate_ell(ell: int) -> int:
 
 
 def _validate_gap_tolerance(gap_tolerance: float) -> float:
+    if isinstance(gap_tolerance, (bool, np.bool_)):
+        raise ValueError("gap_tolerance must not be boolean")
     tolerance = float(gap_tolerance)
     if not math.isfinite(tolerance) or tolerance < MIN_NUMERICAL_GAP_TOLERANCE:
         raise ValueError(

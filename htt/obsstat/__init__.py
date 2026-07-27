@@ -26,6 +26,7 @@ from .biposh_features import (
 )
 from .lowell_poles import (
     AntipodalAxis,
+    LowEllPoleAnalysisSpec,
     LowEllPoleEstimate,
     MIN_NUMERICAL_GAP_TOLERANCE,
     PoleDefinition,
@@ -33,6 +34,9 @@ from .lowell_poles import (
     angular_momentum_power_tensor,
     estimate_lowell_pole,
     mean_squared_multipole_alignment,
+    scalar_alm_inversion_phase,
+    transform_antipodal_axis_o3,
+    transform_power_tensor_o3,
 )
 from .shell_alms import draw_correlated_real_shell_alms
 from .morphology import (
@@ -128,6 +132,7 @@ __all__ = [
     "CovarianceAssumption",
     "DiagnosticMorphologyAxis",
     "LowEllNullCalibration",
+    "LowEllPoleAnalysisSpec",
     "LowEllPoleEstimate",
     "LowEllScalarSummary",
     "LookElsewhereBookkeeping",
@@ -162,12 +167,15 @@ __all__ = [
     "draw_correlated_real_shell_alms",
     "estimate_lowell_pole",
     "mean_squared_multipole_alignment",
+    "scalar_alm_inversion_phase",
     "first_moment",
     "load_cf4_catalog_npz",
     "load_authenticated_cf4_raw_groups",
     "obsstat_manifest",
     "summarize_morphology_axes",
     "summarize_lowell_scalars",
+    "transform_antipodal_axis_o3",
+    "transform_power_tensor_o3",
     "validate_alm_convention_metadata",
     "validate_alm_feature_conventions",
     "validate_null_feature_payload",
