@@ -63,6 +63,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from enum import Enum
+import math
+from numbers import Real
 from typing import Optional, Sequence
 import warnings
 
@@ -80,6 +82,29 @@ from bass.background.bianchi_types import (
 
 _MES_SUCCESSOR = current_mes_successor_registry().successor
 _MES_SUCCESSOR_ID = _MES_SUCCESSOR.successor_id
+
+
+def _finite_real(value: object, field_name: str) -> float:
+    if isinstance(value, bool) or not isinstance(value, Real):
+        raise ValueError(f"{field_name} must be a real number, not boolean")
+    result = float(value)
+    if not math.isfinite(result):
+        raise ValueError(f"{field_name} must be finite")
+    return result
+
+
+def _finite_nonnegative(value: object, field_name: str) -> float:
+    result = _finite_real(value, field_name)
+    if result < 0.0:
+        raise ValueError(f"{field_name} must be non-negative")
+    return result
+
+
+def _finite_positive(value: object, field_name: str) -> float:
+    result = _finite_real(value, field_name)
+    if result <= 0.0:
+        raise ValueError(f"{field_name} must be strictly positive")
+    return result
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -234,6 +259,36 @@ class DepartureComponents:
     Omega_k_ref: Optional[float]        # comparator reference (None if NULL)
     policy: ComparatorPolicy
 
+    def __post_init__(self) -> None:
+        if not isinstance(self.policy, ComparatorPolicy):
+            raise TypeError("policy must be a ComparatorPolicy")
+        object.__setattr__(
+            self,
+            "Sigstd_sq",
+            _finite_nonnegative(self.Sigstd_sq, "Sigstd_sq"),
+        )
+        object.__setattr__(
+            self,
+            "Wstd_sq",
+            _finite_nonnegative(self.Wstd_sq, "Wstd_sq"),
+        )
+        object.__setattr__(
+            self,
+            "Omega_tilt",
+            _finite_nonnegative(self.Omega_tilt, "Omega_tilt"),
+        )
+        object.__setattr__(
+            self,
+            "Omega_k",
+            _finite_real(self.Omega_k, "Omega_k"),
+        )
+        if self.Omega_k_ref is not None:
+            object.__setattr__(
+                self,
+                "Omega_k_ref",
+                _finite_real(self.Omega_k_ref, "Omega_k_ref"),
+            )
+
     @property
     def Omega_k_aniso(self) -> Optional[float]:
         """Ω_{k,aniso} = Ω_k - Ω_{k,ref}. Returns None if NULL comparator."""
@@ -335,6 +390,8 @@ def compute_departure_components(
     """
     if policy is None:
         policy = recommend_comparator(sc.label)
+    if not isinstance(policy, ComparatorPolicy):
+        raise TypeError("policy must be a ComparatorPolicy")
 
     status = validate_comparator(sc.label, policy)
     if not status.is_valid:
@@ -343,27 +400,51 @@ def compute_departure_components(
             f"{status.reason}"
         )
 
+    sigma_sq_value = _finite_nonnegative(sigma_sq, "sigma_sq")
+    omega_sq_value = _finite_nonnegative(omega_sq, "omega_sq")
+    H_theta_value = _finite_positive(H_theta, "H_theta")
+    beta_value = _finite_real(beta, "beta")
+    w_value = _finite_real(w, "w")
+    if w_value < -1.0:
+        raise ValueError("w must be at least -1 so Omega_tilt is non-negative")
+    Omega_matter_value = _finite_nonnegative(Omega_matter, "Omega_matter")
+    Omega_k_value = _finite_real(Omega_k, "Omega_k")
+    Omega_k_ref_value = (
+        None
+        if Omega_k_ref is None
+        else _finite_real(Omega_k_ref, "Omega_k_ref")
+    )
+
     # Dimensionless kinematic components
-    H_theta_sq = H_theta ** 2 if H_theta > 0 else 1e-30
-    Sigstd_sq = sigma_sq / (6.0 * H_theta_sq)
-    Wstd_sq = omega_sq / (6.0 * H_theta_sq)
+    H_theta_sq = _finite_positive(H_theta_value**2, "H_theta squared")
+    Sigstd_sq = sigma_sq_value / (6.0 * H_theta_sq)
+    Wstd_sq = omega_sq_value / (6.0 * H_theta_sq)
 
     # Tilt component (ch03 Eq. eq:Otilt-def)
-    import math
-    Omega_tilt = (1.0 + w) * Omega_matter * math.sinh(beta) ** 2
+    try:
+        Omega_tilt = (
+            (1.0 + w_value)
+            * Omega_matter_value
+            * math.sinh(beta_value) ** 2
+        )
+    except OverflowError as exc:
+        raise ValueError("beta produces a non-finite Omega_tilt") from exc
+    Omega_tilt = _finite_nonnegative(Omega_tilt, "Omega_tilt")
 
     # Comparator reference
     if policy == ComparatorPolicy.FLAT:
-        resolved_Omega_k_ref = 0.0 if Omega_k_ref is None else float(Omega_k_ref)
+        resolved_Omega_k_ref = (
+            0.0 if Omega_k_ref_value is None else Omega_k_ref_value
+        )
     elif policy == ComparatorPolicy.MATCHED:
-        if Omega_k_ref is not None:
-            resolved_Omega_k_ref = float(Omega_k_ref)
+        if Omega_k_ref_value is not None:
+            resolved_Omega_k_ref = Omega_k_ref_value
         elif sc.label in ("I", "VII_0"):
             resolved_Omega_k_ref = 0.0
         else:
             # Curvature-matched comparator sets Ω_{k,aniso} = 0 by
             # construction for the matched FLRW branch.
-            resolved_Omega_k_ref = float(Omega_k)
+            resolved_Omega_k_ref = Omega_k_value
     else:  # NULL
         resolved_Omega_k_ref = None
 
@@ -371,7 +452,7 @@ def compute_departure_components(
         Sigstd_sq=Sigstd_sq,
         Wstd_sq=Wstd_sq,
         Omega_tilt=Omega_tilt,
-        Omega_k=Omega_k,
+        Omega_k=Omega_k_value,
         Omega_k_ref=resolved_Omega_k_ref,
         policy=policy,
     )

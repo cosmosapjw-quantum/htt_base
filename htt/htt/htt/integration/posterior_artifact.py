@@ -4,6 +4,7 @@ from __future__ import annotations
 from dataclasses import asdict, dataclass
 import json
 import math
+from numbers import Real
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
@@ -31,6 +32,18 @@ __all__ = [
 HTT_DIRECTIONAL_POSTERIOR_ARTIFACT_KIND = "htt_directional_posterior_summary_v2"
 HTT_DIRECTIONAL_POSTERIOR_ARTIFACT_KIND_V1 = (
     "htt_directional_posterior_summary_v1"
+)
+_LEGACY_ALLOWED_USE = (
+    "historical value reproduction",
+    "diagnostic cross-check",
+)
+_LEGACY_FORBIDDEN_USE = (
+    "posterior estimand",
+    "departure distance",
+    "occupancy",
+    "probability",
+    "evidence",
+    "family identification",
 )
 
 
@@ -102,8 +115,8 @@ def _interval(values: Sequence[float], *, field_name: str) -> tuple[float, float
 
 
 def _finite_float(value: Any, field_name: str) -> float:
-    if isinstance(value, bool):
-        raise ValueError(f"{field_name} must be finite and not boolean")
+    if isinstance(value, bool) or not isinstance(value, Real):
+        raise ValueError(f"{field_name} must be a real number, not boolean")
     number = float(value)
     if not math.isfinite(number):
         raise ValueError(f"{field_name} must be finite")
@@ -119,10 +132,39 @@ def _positive_int(value: Any, field_name: str) -> int:
 def _float_mapping(payload: Mapping[str, Any]) -> dict[str, float]:
     if not payload:
         raise ValueError("model_evidences must not be empty")
-    return {
-        str(key): _finite_float(value, f"model_evidences[{key!r}]")
-        for key, value in payload.items()
-    }
+    result: dict[str, float] = {}
+    for key, value in payload.items():
+        if not isinstance(key, str) or not key.strip():
+            raise ValueError("model_evidences keys must be non-empty strings")
+        result[key] = _finite_float(value, f"model_evidences[{key!r}]")
+    return result
+
+
+def _nonempty_string(value: Any, field_name: str) -> str:
+    if not isinstance(value, str) or not value.strip():
+        raise ValueError(f"{field_name} must be a non-empty string")
+    return value
+
+
+def _optional_nonempty_string(value: Any, field_name: str) -> str | None:
+    if value is None:
+        return None
+    return _nonempty_string(value, field_name)
+
+
+def _require_exact_string_list(
+    payload: Mapping[str, Any],
+    key: str,
+    *,
+    expected: tuple[str, ...],
+) -> None:
+    value = _required_value(payload, key)
+    if (
+        not isinstance(value, list)
+        or any(not isinstance(item, str) for item in value)
+        or tuple(value) != expected
+    ):
+        raise ValueError(f"legacy projection {key} policy drift")
 
 
 def _required_mapping(payload: Mapping[str, Any], key: str) -> Mapping[str, Any]:
@@ -164,8 +206,7 @@ class DirectionalPosteriorArtifact:
     representation_policy: str = BC2_NO_REPRESENTATION_PROMOTION
 
     def __post_init__(self) -> None:
-        if not self.model:
-            raise ValueError("DirectionalPosteriorArtifact.model must be non-empty")
+        _nonempty_string(self.model, "DirectionalPosteriorArtifact.model")
         if isinstance(self.n_live, bool) or not isinstance(self.n_live, int):
             raise ValueError("DirectionalPosteriorArtifact.n_live must be an integer")
         if self.n_live <= 0:
@@ -183,14 +224,14 @@ class DirectionalPosteriorArtifact:
         _float_mapping(self.model_evidences)
         if self.manifest.owner != "HTT":
             raise ValueError("DirectionalPosteriorArtifact.manifest.owner must be 'HTT'")
-        if not self.posterior_ref:
-            raise ValueError(
-                "DirectionalPosteriorArtifact.posterior_ref must be non-empty"
-            )
-        if not self.evidence_ref:
-            raise ValueError(
-                "DirectionalPosteriorArtifact.evidence_ref must be non-empty"
-            )
+        _nonempty_string(
+            self.posterior_ref,
+            "DirectionalPosteriorArtifact.posterior_ref",
+        )
+        _nonempty_string(
+            self.evidence_ref,
+            "DirectionalPosteriorArtifact.evidence_ref",
+        )
         if self.legacy_projection_classification != BC1_LEGACY_PROJECTION:
             raise ValueError("legacy projections must remain BC1_LEGACY_PROJECTION")
         if self.representation_policy != BC2_NO_REPRESENTATION_PROMOTION:
@@ -208,18 +249,8 @@ def _artifact_to_payload(artifact: DirectionalPosteriorArtifact) -> dict[str, ob
             "classification": artifact.legacy_projection_classification,
             "representation_policy": artifact.representation_policy,
             "status": "LEGACY_REPRODUCTION",
-            "allowed_use": [
-                "historical value reproduction",
-                "diagnostic cross-check",
-            ],
-            "forbidden_use": [
-                "posterior estimand",
-                "departure distance",
-                "occupancy",
-                "probability",
-                "evidence",
-                "family identification",
-            ],
+            "allowed_use": list(_LEGACY_ALLOWED_USE),
+            "forbidden_use": list(_LEGACY_FORBIDDEN_USE),
             "values": {
                 "x_C": {
                     "median": float(artifact.x_median),
@@ -306,7 +337,7 @@ def emit_directional_posterior_artifact(
         response_overlap_audit,
     )
     artifact = DirectionalPosteriorArtifact(
-        model=str(model),
+        model=_nonempty_string(model, "model"),
         x_median=_finite_float(x_median, "x_median"),
         x_hpd68=_interval(x_hpd68, field_name="x_hpd68"),
         x_hpd95=_interval(x_hpd95, field_name="x_hpd95"),
@@ -320,8 +351,8 @@ def emit_directional_posterior_artifact(
         F_hpd68=_interval(F_hpd68, field_name="F_hpd68"),
         n_live=_positive_int(n_live, "n_live"),
         manifest=resolved_manifest,
-        posterior_ref=str(posterior_ref),
-        evidence_ref=str(evidence_ref),
+        posterior_ref=_nonempty_string(posterior_ref, "posterior_ref"),
+        evidence_ref=_nonempty_string(evidence_ref, "evidence_ref"),
         posterior_predictive_ref=posterior_predictive_ref,
         loocv_ref=loocv_ref,
     )
@@ -366,6 +397,16 @@ def load_directional_posterior_artifact(
         raise ValueError("legacy projection representation policy drift")
     if _required_value(projection, "status") != "LEGACY_REPRODUCTION":
         raise ValueError("legacy projection status must be LEGACY_REPRODUCTION")
+    _require_exact_string_list(
+        projection,
+        "allowed_use",
+        expected=_LEGACY_ALLOWED_USE,
+    )
+    _require_exact_string_list(
+        projection,
+        "forbidden_use",
+        expected=_LEGACY_FORBIDDEN_USE,
+    )
     values = _required_mapping(projection, "values")
     evidence_summary = _required_mapping(payload, "evidence_summary")
     refs = _required_mapping(payload, "refs")
@@ -374,27 +415,42 @@ def load_directional_posterior_artifact(
     pi_summary = _required_mapping(values, "Pi")
     f_summary = _required_mapping(values, "F")
     return DirectionalPosteriorArtifact(
-        model=str(_required_value(payload, "model")),
-        x_median=float(_required_value(x_summary, "median")),
+        model=_nonempty_string(_required_value(payload, "model"), "model"),
+        x_median=_finite_float(
+            _required_value(x_summary, "median"),
+            "x_C.median",
+        ),
         x_hpd68=_interval(
             _required_value(x_summary, "hpd_68"), field_name="x_C.hpd_68"
         ),
         x_hpd95=_interval(
             _required_value(x_summary, "hpd_95"), field_name="x_C.hpd_95"
         ),
-        Q_median=float(_required_value(q_summary, "median")),
+        Q_median=_finite_float(
+            _required_value(q_summary, "median"),
+            "Q.median",
+        ),
         Q_hpd68=_interval(
             _required_value(q_summary, "hpd_68"), field_name="Q.hpd_68"
         ),
-        Pi_median=float(_required_value(pi_summary, "median")),
+        Pi_median=_finite_float(
+            _required_value(pi_summary, "median"),
+            "Pi.median",
+        ),
         Pi_hpd68=_interval(
             _required_value(pi_summary, "hpd_68"), field_name="Pi.hpd_68"
         ),
-        ln_B_total=float(_required_value(evidence_summary, "lnB_total")),
+        ln_B_total=_finite_float(
+            _required_value(evidence_summary, "lnB_total"),
+            "lnB_total",
+        ),
         model_evidences=_float_mapping(
             _required_mapping(evidence_summary, "model_evidences")
         ),
-        F_median=float(_required_value(f_summary, "median")),
+        F_median=_finite_float(
+            _required_value(f_summary, "median"),
+            "F.median",
+        ),
         F_hpd68=_interval(
             _required_value(f_summary, "hpd_68"), field_name="F.hpd_68"
         ),
@@ -402,15 +458,25 @@ def load_directional_posterior_artifact(
             _required_value(evidence_summary, "n_live"), "n_live"
         ),
         manifest=ArtifactManifest(**dict(manifest_payload)),
-        posterior_ref=str(_required_value(refs, "posterior_ref")),
-        evidence_ref=str(_required_value(refs, "evidence_ref")),
+        posterior_ref=_nonempty_string(
+            _required_value(refs, "posterior_ref"),
+            "posterior_ref",
+        ),
+        evidence_ref=_nonempty_string(
+            _required_value(refs, "evidence_ref"),
+            "evidence_ref",
+        ),
         posterior_predictive_ref=(
-            None
-            if refs.get("posterior_predictive_ref") is None
-            else str(refs.get("posterior_predictive_ref"))
+            _optional_nonempty_string(
+                refs.get("posterior_predictive_ref"),
+                "posterior_predictive_ref",
+            )
         ),
         loocv_ref=(
-            None if refs.get("loocv_ref") is None else str(refs.get("loocv_ref"))
+            _optional_nonempty_string(
+                refs.get("loocv_ref"),
+                "loocv_ref",
+            )
         ),
         legacy_projection_classification=str(projection["classification"]),
         representation_policy=str(projection["representation_policy"]),
@@ -431,27 +497,42 @@ def _load_v1_directional_posterior_artifact(
     q_summary = _required_mapping(posterior_summary, "Q")
     pi_summary = _required_mapping(posterior_summary, "Pi")
     return DirectionalPosteriorArtifact(
-        model=str(_required_value(payload, "model")),
-        x_median=float(_required_value(x_summary, "median")),
+        model=_nonempty_string(_required_value(payload, "model"), "model"),
+        x_median=_finite_float(
+            _required_value(x_summary, "median"),
+            "x.median",
+        ),
         x_hpd68=_interval(
             _required_value(x_summary, "hpd_68"), field_name="x.hpd_68"
         ),
         x_hpd95=_interval(
             _required_value(x_summary, "hpd_95"), field_name="x.hpd_95"
         ),
-        Q_median=float(_required_value(q_summary, "median")),
+        Q_median=_finite_float(
+            _required_value(q_summary, "median"),
+            "Q.median",
+        ),
         Q_hpd68=_interval(
             _required_value(q_summary, "hpd_68"), field_name="Q.hpd_68"
         ),
-        Pi_median=float(_required_value(pi_summary, "median")),
+        Pi_median=_finite_float(
+            _required_value(pi_summary, "median"),
+            "Pi.median",
+        ),
         Pi_hpd68=_interval(
             _required_value(pi_summary, "hpd_68"), field_name="Pi.hpd_68"
         ),
-        ln_B_total=float(_required_value(evidence_summary, "lnB_total")),
+        ln_B_total=_finite_float(
+            _required_value(evidence_summary, "lnB_total"),
+            "lnB_total",
+        ),
         model_evidences=_float_mapping(
             _required_mapping(evidence_summary, "model_evidences")
         ),
-        F_median=float(_required_value(filling_summary, "median")),
+        F_median=_finite_float(
+            _required_value(filling_summary, "median"),
+            "F.median",
+        ),
         F_hpd68=_interval(
             _required_value(filling_summary, "hpd_68"), field_name="F.hpd_68"
         ),
@@ -459,15 +540,25 @@ def _load_v1_directional_posterior_artifact(
             _required_value(evidence_summary, "n_live"), "n_live"
         ),
         manifest=ArtifactManifest(**dict(manifest_payload)),
-        posterior_ref=str(_required_value(refs, "posterior_ref")),
-        evidence_ref=str(_required_value(refs, "evidence_ref")),
+        posterior_ref=_nonempty_string(
+            _required_value(refs, "posterior_ref"),
+            "posterior_ref",
+        ),
+        evidence_ref=_nonempty_string(
+            _required_value(refs, "evidence_ref"),
+            "evidence_ref",
+        ),
         posterior_predictive_ref=(
-            None
-            if refs.get("posterior_predictive_ref") is None
-            else str(refs["posterior_predictive_ref"])
+            _optional_nonempty_string(
+                refs.get("posterior_predictive_ref"),
+                "posterior_predictive_ref",
+            )
         ),
         loocv_ref=(
-            None if refs.get("loocv_ref") is None else str(refs["loocv_ref"])
+            _optional_nonempty_string(
+                refs.get("loocv_ref"),
+                "loocv_ref",
+            )
         ),
     )
 

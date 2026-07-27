@@ -6,7 +6,7 @@ claim_tier: diagnostic_only
 transfer_source: none
 config_hash: `sha256:e7e0272ceb046b83e5a9e25f150e807eb780ab9924a9b724d36d0cc2f2527f62`
 input_hashes:
-- scripts/result_packs/generate_pack_A_scalar_to_morphology.py:sha256:fa9983ed90998f4e9b83aea4ab244ddf4d001e686987d32257bb0305a033a6e5
+- scripts/result_packs/generate_pack_A_scalar_to_morphology.py:sha256:2ce369fd60461d35dbc93416f82cf8d52e9805db8eb5989c28aaa970f965848d
 - docs/ver2_upgrade/generated/result_pack_A_scalar_to_morphology.json:sha256:2cb5c46c2eaacb5fe400b5910b8ebe85c7b78b5ae448772ea5c9be2d0b07beca
 - docs/PR_DELTAS/pr-056.md:sha256:ca22c09c8a1822c1894fd775e2991932e9a6c28ba55ec9876a137e6000bf4207
 - docs/PR_DELTAS/pr-076.md:sha256:a32bf4e530c1af1dcd941c9af73c7bc3d678eae8c7767c5f37179cf9b9a6906a
@@ -17,11 +17,11 @@ input_hashes:
 - htt/obsstat/null_ensembles.py:sha256:1033f1f4a5a105f455bf11b83bd421052b1520a486493560abd0f80fda16658c
 - htt/htt/htt/statistics/mes_information_gain.py:sha256:251c44f18fbfe7949dc5b02e6b96db12154ce0488560748c8987458446d991b1
 - htt/src/common/statistical_foundations.py:sha256:830d1698a8f57dd3a050862f4ee1b59da3b64688774e439171e4c40165939eff
-- docs/generated/status_snapshot.json:sha256:fd70078906979a9fa0d70f2097b6a8530c4c3d2c28ec696dcd0dfed2fb687fbb
+- docs/generated/status_snapshot.json:sha256:90f804c527b01b112c1ef2c076f37086fa1bbc4edb3b390a0f05e4851a4dccf7
 sky_support_status: not_directional
 null_mock_status: summarized_from_dependency_surfaces
 generating_command: `python scripts/result_packs/generate_pack_A_scalar_to_morphology.py`
-git_commit_or_worktree_state: `4b49b05b+dirty`
+git_commit_or_worktree_state: `declared-input-set:sha256:2277dae240782157ff303feb6e1ab897818050fec715e407f7c7475a408315ce`
 
 ## Scope
 
@@ -103,14 +103,14 @@ Source `docs/ver2_upgrade/generated/result_pack_A_scalar_to_morphology.json` is 
     "readiness labels are provenance only; not current production readiness"
   ],
   "claim_tier": "diagnostic_only",
-  "code_version": "4b49b05b+dirty",
+  "code_version": "declared-input-set:sha256:2277dae240782157ff303feb6e1ab897818050fec715e407f7c7475a408315ce",
   "config_hash": "sha256:e7e0272ceb046b83e5a9e25f150e807eb780ab9924a9b724d36d0cc2f2527f62",
   "created_by": "scripts/result_packs/generate_pack_A_scalar_to_morphology.py",
   "failed_gates": [],
   "git_commit": null,
   "implementation_scope": "common",
   "input_hashes": [
-    "scripts/result_packs/generate_pack_A_scalar_to_morphology.py:sha256:fa9983ed90998f4e9b83aea4ab244ddf4d001e686987d32257bb0305a033a6e5",
+    "scripts/result_packs/generate_pack_A_scalar_to_morphology.py:sha256:2ce369fd60461d35dbc93416f82cf8d52e9805db8eb5989c28aaa970f965848d",
     "docs/ver2_upgrade/generated/result_pack_A_scalar_to_morphology.json:sha256:2cb5c46c2eaacb5fe400b5910b8ebe85c7b78b5ae448772ea5c9be2d0b07beca",
     "docs/PR_DELTAS/pr-056.md:sha256:ca22c09c8a1822c1894fd775e2991932e9a6c28ba55ec9876a137e6000bf4207",
     "docs/PR_DELTAS/pr-076.md:sha256:a32bf4e530c1af1dcd941c9af73c7bc3d678eae8c7767c5f37179cf9b9a6906a",
@@ -121,7 +121,7 @@ Source `docs/ver2_upgrade/generated/result_pack_A_scalar_to_morphology.json` is 
     "htt/obsstat/null_ensembles.py:sha256:1033f1f4a5a105f455bf11b83bd421052b1520a486493560abd0f80fda16658c",
     "htt/htt/htt/statistics/mes_information_gain.py:sha256:251c44f18fbfe7949dc5b02e6b96db12154ce0488560748c8987458446d991b1",
     "htt/src/common/statistical_foundations.py:sha256:830d1698a8f57dd3a050862f4ee1b59da3b64688774e439171e4c40165939eff",
-    "docs/generated/status_snapshot.json:sha256:fd70078906979a9fa0d70f2097b6a8530c4c3d2c28ec696dcd0dfed2fb687fbb"
+    "docs/generated/status_snapshot.json:sha256:90f804c527b01b112c1ef2c076f37086fa1bbc4edb3b390a0f05e4851a4dccf7"
   ],
   "owner": "COMMON",
   "passed_gates": [

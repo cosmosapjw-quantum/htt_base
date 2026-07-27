@@ -6,7 +6,6 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
-import subprocess
 from typing import Any
 
 from common.statistical_foundations import (
@@ -67,24 +66,6 @@ def _stable_hash(payload: dict[str, Any]) -> str:
     return "sha256:" + hashlib.sha256(encoded).hexdigest()
 
 
-def _git_state(repo_root: Path) -> str:
-    try:
-        commit = subprocess.check_output(
-            ["git", "rev-parse", "--short", "HEAD"],
-            cwd=repo_root,
-            text=True,
-            stderr=subprocess.DEVNULL,
-        ).strip()
-        dirty = subprocess.run(
-            ["git", "diff", "--quiet"],
-            cwd=repo_root,
-            check=False,
-        ).returncode != 0
-    except (OSError, subprocess.CalledProcessError):
-        return "unknown"
-    return f"{commit}+dirty" if dirty else commit
-
-
 def _load_status_rows(repo_root: Path) -> dict[str, dict[str, Any]]:
     status_path = repo_root / "docs/generated/status_snapshot.json"
     payload = json.loads(status_path.read_text(encoding="utf-8"))
@@ -102,6 +83,19 @@ def _input_hashes(repo_root: Path) -> list[str]:
         path = repo_root / relative
         hashes.append(f"{relative}:{_sha256_file(path)}")
     return hashes
+
+
+def _declared_input_state(input_hashes: list[str]) -> str:
+    """Return a stable source identity without self-referential commit metadata.
+
+    The generated Markdown is deliberately absent from ``INPUT_FILES``.  A
+    Git commit identifier embedded in that same Markdown can never be a stable
+    fixed point: committing the regenerated file changes the identifier again.
+    The declared input-set digest instead binds every source byte consumed by
+    this diagnostic pack and remains checkable after commit.
+    """
+
+    return "declared-input-set:" + _stable_hash({"input_hashes": input_hashes})
 
 
 def _load_legacy_ver2_pack(repo_root: Path) -> dict[str, Any]:
@@ -253,6 +247,7 @@ def build_result_pack_payload(
     status_rows = _load_status_rows(root)
     scalar, morphology_mes = _diagnostic_payloads()
     input_hashes = _input_hashes(root)
+    source_state = worktree_state or _declared_input_state(input_hashes)
     legacy_ver2_context = _load_legacy_ver2_pack(root)
     config = {
         "schema_version": SCHEMA_VERSION,
@@ -289,7 +284,7 @@ def build_result_pack_payload(
         "sky_support_status": "not_directional",
         "null_mock_status": "summarized_from_dependency_surfaces",
         "generating_command": generating_command,
-        "git_commit_or_worktree_state": worktree_state or _git_state(root),
+        "git_commit_or_worktree_state": source_state,
         "dependencies": list(DEPENDENCIES),
         "dependency_status": dependency_status,
         "scalar_diagnostics": scalar,
@@ -316,7 +311,7 @@ def build_result_pack_payload(
             "git_commit": None,
             "config_hash": config_hash,
             "input_hashes": input_hashes,
-            "code_version": worktree_state or _git_state(root),
+            "code_version": source_state,
             "schema_version": SCHEMA_VERSION,
             "caveats": list(DEFAULT_CAVEATS),
             "required_gates": [

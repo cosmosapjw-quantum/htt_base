@@ -1,7 +1,7 @@
 """Typed MIO result card for the rebuilt statistical foundation."""
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
 from typing import Mapping
 
 from common.mes_successor_registry import current_mes_successor_registry
@@ -15,6 +15,19 @@ from common.statistical_foundations import (
 
 _MES_SUCCESSOR = current_mes_successor_registry().successor
 _MES_SUCCESSOR_ID = _MES_SUCCESSOR.successor_id
+_ALLOWED_USE = (
+    "typed diagnostic reporting",
+    "separate output-space comparison",
+)
+_FORBIDDEN_USE = (
+    "MIO posterior",
+    "evidence",
+    "FLRW converse",
+    "geometry detection",
+    "Bianchi family identification",
+    "automatic cross-space conversion",
+)
+_MORPHOLOGY_REFERENCE_STATUSES = frozenset({"diagnostic_only"})
 
 
 @dataclass(frozen=True)
@@ -34,18 +47,8 @@ class StatisticalFoundationResultCard:
     morphology_reference: Mapping[str, str] | None = None
     owner: str = "MIO"
     status: str = "diagnostic_only"
-    allowed_use: tuple[str, ...] = (
-        "typed diagnostic reporting",
-        "separate output-space comparison",
-    )
-    forbidden_use: tuple[str, ...] = (
-        "MIO posterior",
-        "evidence",
-        "FLRW converse",
-        "geometry detection",
-        "Bianchi family identification",
-        "automatic cross-space conversion",
-    )
+    allowed_use: tuple[str, ...] = field(default=_ALLOWED_USE, init=False)
+    forbidden_use: tuple[str, ...] = field(default=_FORBIDDEN_USE, init=False)
 
     def __post_init__(self) -> None:
         if not isinstance(self.card_id, str) or not self.card_id.strip():
@@ -81,8 +84,19 @@ class StatisticalFoundationResultCard:
                 raise ValueError(
                     "morphology_reference requires artifact_id/owner/status"
                 )
+            if any(
+                not isinstance(reference[key], str) or not reference[key].strip()
+                for key in required
+            ):
+                raise ValueError(
+                    "morphology_reference values must be non-empty strings"
+                )
             if reference["owner"] != "OBSSTAT":
                 raise ValueError("morphology_reference must remain OBSSTAT-owned")
+            if reference["status"] not in _MORPHOLOGY_REFERENCE_STATUSES:
+                raise ValueError(
+                    "morphology_reference status must remain diagnostic_only"
+                )
             object.__setattr__(self, "morphology_reference", reference)
 
     def as_payload(self) -> dict[str, object]:

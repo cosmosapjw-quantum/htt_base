@@ -85,7 +85,7 @@ DEFAULT_CONSUMER_MIGRATION_PATH = (
 # Filled only after the PR-252 migration document binds the final consumer
 # bytes.  A mismatch fails closed before any migrated declaration is trusted.
 PR252_CONSUMER_MIGRATION_SHA256 = (
-    "0121b247d9f54e86cd54c6e8df26aa9d190e0f40d0d15a56445c76148f8c5624"
+    "1c56d931a0c1f3b76698da31f5e8c9aff78bfdb09bf46aa9a895d8743d05ce2a"
 )
 DEFAULT_ACTIVE_PYTHON_ROOTS = (
     "htt/htt/htt",

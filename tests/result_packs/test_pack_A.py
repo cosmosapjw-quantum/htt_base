@@ -106,6 +106,24 @@ def test_pack_a_payload_compares_scalar_and_morphology_surfaces():
     assert "mio certificate" not in text
 
 
+def test_pack_a_default_source_identity_is_content_addressed_and_stable():
+    module = _load_module()
+
+    first = module.build_result_pack_payload(
+        repo_root=REPO_ROOT,
+        generating_command="unit-test",
+    )
+    second = module.build_result_pack_payload(
+        repo_root=REPO_ROOT,
+        generating_command="unit-test",
+    )
+
+    identity = first["git_commit_or_worktree_state"]
+    assert identity.startswith("declared-input-set:sha256:")
+    assert second["git_commit_or_worktree_state"] == identity
+    assert first["manifest"]["code_version"] == identity
+
+
 def test_pack_a_markdown_has_manifest_and_caveated_comparison():
     module = _load_module()
     payload = module.build_result_pack_payload(
@@ -231,3 +249,20 @@ def test_pack_a_cli_check_detects_drift(tmp_path):
     )
     assert stale_result.returncode == 1
     assert "stale result pack" in stale_result.stdout
+
+
+def test_repository_pack_a_is_current():
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(SCRIPT_PATH),
+            "--check",
+        ],
+        cwd=REPO_ROOT,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert "up-to-date" in result.stdout

@@ -41,11 +41,23 @@ class MioCrossCheckExport:
     evidence_included: bool = False
 
     def __post_init__(self) -> None:
-        if not self.model or not self.source_artifact_ref or not self.posterior_ref:
+        if any(
+            not isinstance(value, str) or not value.strip()
+            for value in (
+                self.model,
+                self.source_artifact_ref,
+                self.posterior_ref,
+            )
+        ):
             raise ValueError("cross-check model and source refs must be non-empty")
         if not isinstance(self.legacy_projection, LegacyProjectionReport):
             raise TypeError("legacy_projection must be a LegacyProjectionReport")
-        if not self.is_cross_check_only or self.evidence_included:
+        if (
+            type(self.is_cross_check_only) is not bool
+            or type(self.evidence_included) is not bool
+        ):
+            raise TypeError("cross-check firewall fields must be exact booleans")
+        if self.is_cross_check_only is not True or self.evidence_included is not False:
             raise ValueError("MIO cross-check exports cannot carry HTT evidence")
         if self.manifest.owner != "HTT":
             raise ValueError("MioCrossCheckExport.manifest.owner must be 'HTT'")
