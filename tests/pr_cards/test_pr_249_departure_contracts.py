@@ -184,6 +184,15 @@ def test_anchor_stress_is_channel_typed_and_one_way() -> None:
     assert mismatch.status is StressStatus.CHANNEL_MISMATCH
     assert mismatch.saturation is None
 
+    cross_sector = evaluate_sector_stress(
+        sector="W2",
+        numerator=ScalarRange(1.0, 1.0),
+        numerator_channel_key=anchor.channel_key,
+        anchor=anchor,
+    )
+    assert cross_sector.status is StressStatus.CHANNEL_MISMATCH
+    assert cross_sector.saturation is None
+
     unavailable = evaluate_sector_stress(
         sector="A2",
         numerator=ScalarRange(0.0, 0.0),
@@ -202,6 +211,16 @@ def test_budget_radius_exposes_null_residual() -> None:
     assert result.rank == 1
     assert result.null_residual == pytest.approx((0.0, 2.0))
     assert result.status is BudgetRadiusStatus.NULL_RESIDUAL_PRESENT
+    full_rank = matrix_budget_radius_report(
+        np.array([1.0, 1.0]), np.diag([1.0, 2.0])
+    )
+    scaled = matrix_budget_radius_report(
+        np.array([1.0, 1.0]), 1.0e-14 * np.diag([1.0, 2.0])
+    )
+    assert full_rank.rank == scaled.rank == 2
+    assert scaled.radius_sq[0] == pytest.approx(
+        full_rank.radius_sq[0] * 1.0e14
+    )
     with pytest.deprecated_call():
         legacy = matrix_budget_radius([1.0, 0.0], np.diag([1.0, 0.0]))
     assert legacy == pytest.approx([1.0])
@@ -231,3 +250,38 @@ def test_one_im_critical_value_domain_and_wrappers() -> None:
     for delta, se in ((-1.0, 1.0), (0.0, 0.0), (0.0, -1.0)):
         with pytest.raises(StatisticalFoundationError):
             im_critical_value(delta, se)
+
+
+def test_legacy_projection_semantics_cannot_be_weakened() -> None:
+    x_report = DiagnosticScalarReport(
+        name="x_C",
+        value_range=ScalarRange(0.0, 0.0),
+        status="HISTORICAL_VALUE_PRESERVED",
+        null_calibration="not a null-calibrated evidence quantity",
+    )
+    with pytest.raises(StatisticalFoundationError, match="allowed_use"):
+        LegacyProjectionReport(
+            x_C=x_report,
+            allowed_use=("Bianchi family identification",),
+        )
+    with pytest.raises(StatisticalFoundationError, match="must be named Pi"):
+        LegacyProjectionReport(
+            x_C=x_report,
+            Pi=DiagnosticScalarReport(
+                name="truth_probability",
+                value_range=ScalarRange(0.9, 0.9),
+                status="LEGACY_DIAGNOSTIC",
+                null_calibration="NOT_AVAILABLE_NON_EVIDENCE",
+                bin_metadata=(("bin_id", "legacy-bin-1"),),
+            ),
+        )
+    with pytest.raises(StatisticalFoundationError, match="bin metadata"):
+        LegacyProjectionReport(
+            x_C=x_report,
+            G_F=DiagnosticScalarReport(
+                name="G_F",
+                value_range=ScalarRange(0.1, 0.1),
+                status="LEGACY_DIAGNOSTIC",
+                null_calibration="NOT_AVAILABLE_NON_EVIDENCE",
+            ),
+        )

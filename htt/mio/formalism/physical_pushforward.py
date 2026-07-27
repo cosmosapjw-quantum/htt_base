@@ -147,15 +147,24 @@ def matrix_budget_radius_report(
         raise ValueError("samples must be a non-empty finite vector/matrix")
     if isinstance(rcond, (bool, np.bool_)) or not np.isfinite(rcond) or rcond <= 0:
         raise ValueError("rcond must be a finite positive real")
-    if u.shape != (x.shape[1], x.shape[1]) or not np.allclose(u, u.T, atol=1e-12, rtol=0):
+    if u.shape != (x.shape[1], x.shape[1]):
         raise ValueError('budget must be a symmetric square matrix matching sample dimension')
     if not np.all(np.isfinite(u)):
         raise ValueError("budget must be finite")
+    matrix_scale = float(np.max(np.abs(u)))
+    symmetry_atol = rcond * matrix_scale
+    if not np.allclose(u, u.T, atol=symmetry_atol, rtol=rcond):
+        raise ValueError('budget must be a symmetric square matrix matching sample dimension')
     values, vectors = np.linalg.eigh(u)
-    scale = max(1.0, float(np.max(np.abs(values))))
-    if float(np.min(values)) < -rcond*scale:
+    spectral_scale = float(np.max(np.abs(values)))
+    if spectral_scale == 0.0:
+        supported = np.zeros_like(values, dtype=bool)
+    else:
+        if float(np.min(values)) < -rcond * spectral_scale:
+            raise ValueError('budget matrix is not positive semidefinite')
+        supported = values > rcond * spectral_scale
+    if spectral_scale == 0.0 and float(np.min(values)) < 0.0:
         raise ValueError('budget matrix is not positive semidefinite')
-    supported = values > rcond * scale
     inv = np.zeros_like(values)
     np.divide(1.0, values, out=inv, where=supported)
     pinv = (vectors * inv) @ vectors.T

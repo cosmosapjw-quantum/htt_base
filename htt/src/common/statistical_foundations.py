@@ -888,6 +888,18 @@ def evaluate_sector_stress(
             allowed_use=("anchor availability report",),
             rationale="no verified numeric anchor is available",
         )
+    if sector != anchor.target_sector:
+        return SectorStress(
+            sector=sector,
+            status=StressStatus.CHANNEL_MISMATCH,
+            anchor_id=anchor.anchor_id,
+            saturation=None,
+            exceedance=None,
+            allowed_use=("channel mismatch report",),
+            rationale=(
+                "requested sector does not match the anchor target sector"
+            ),
+        )
     if tuple(numerator_channel_key) != anchor.channel_key:
         return SectorStress(
             sector=sector,
@@ -1016,6 +1028,56 @@ class LegacyProjectionReport:
         if self.representation_policy != BC2_NO_REPRESENTATION_PROMOTION:
             raise StatisticalFoundationError(
                 "representation policy must prohibit claim promotion"
+            )
+        expected_names = {
+            "Q": "Q",
+            "F": "F",
+            "F_C_plus_minus": "F_C_plus_minus",
+            "Pi": "Pi",
+            "G_F": "G_F",
+        }
+        for field_name, expected_name in expected_names.items():
+            report = getattr(self, field_name)
+            if report is None:
+                continue
+            if report.name != expected_name:
+                raise StatisticalFoundationError(
+                    f"{field_name} report must be named {expected_name}"
+                )
+            if not report.bin_metadata:
+                raise StatisticalFoundationError(
+                    f"{field_name} report requires explicit bin metadata"
+                )
+            calibration = report.null_calibration.casefold()
+            if calibration in {
+                "none",
+                "unknown",
+                "uncalibrated",
+                "not calibrated",
+            }:
+                raise StatisticalFoundationError(
+                    f"{field_name} report requires an explicit null-calibration "
+                    "status"
+                )
+        canonical_allowed_use = (
+            "historical reproduction",
+            "signed budget-coordinate reporting",
+        )
+        canonical_forbidden_use = (
+            "departure distance",
+            "identified estimand",
+            "probability",
+            "occupancy",
+            "evidence",
+            "claim-tier promotion",
+        )
+        if tuple(self.allowed_use) != canonical_allowed_use:
+            raise StatisticalFoundationError(
+                "legacy allowed_use is immutable under BC2"
+            )
+        if tuple(self.forbidden_use) != canonical_forbidden_use:
+            raise StatisticalFoundationError(
+                "legacy forbidden_use is immutable under BC2"
             )
         object.__setattr__(
             self, "allowed_use", _text_tuple(self.allowed_use, "allowed_use")
