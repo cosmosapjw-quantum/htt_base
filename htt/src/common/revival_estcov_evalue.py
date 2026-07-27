@@ -9,6 +9,8 @@ Markov's 1/t bound, and a running product crosses 20 at most 5% of the time.
 from __future__ import annotations
 import numpy as np
 
+HARTLAP_INFERENCE_ROLE = "DIAGNOSTIC_COMPARATOR_ONLY"
+
 
 def hartlap_stress(seed=20260721, nrep=3000, m=12, nsim=90) -> dict:
     for name, value, minimum in (
@@ -35,7 +37,6 @@ def hartlap_stress(seed=20260721, nrep=3000, m=12, nsim=90) -> dict:
         cor.append(alpha * y @ P @ y)
     raw, cor = np.asarray(raw), np.asarray(cor)
     return {"m": m, "Nsim": nsim, "hartlap_factor": float(alpha),
-            "inference_role": "DIAGNOSTIC_COMPARATOR_ONLY",
             "raw_mean_over_m": float(raw.mean() / m),
             "corrected_mean_over_m": float(cor.mean() / m),
             "raw_inflated": bool(raw.mean() / m > 1.08),

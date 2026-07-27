@@ -6,9 +6,13 @@ from fractions import Fraction
 
 import numpy as np
 import pytest
+from scipy.stats import beta
 
 from common.joint_feasible_set import exact_support
-from common.revival_estcov_evalue import hartlap_stress
+from common.revival_estcov_evalue import (
+    HARTLAP_INFERENCE_ROLE,
+    hartlap_stress,
+)
 from common.statistical_foundations import (
     AnchorConditioning,
     IdentificationStatus,
@@ -20,6 +24,7 @@ from common.statistical_inference import (
     CovarianceLikelihoodStatus,
     CrossCovarianceStatus,
     CrossFitFold,
+    FactorizationPremise,
     FiellerSetKind,
     FiniteCovarianceAssumptions,
     InferenceLane,
@@ -235,7 +240,9 @@ def test_cross_block_covariance_is_never_silently_zeroed() -> None:
         blocks,
         {},
         lane=InferenceLane.EXPLORATORY,
-        factorization_assumption="explicit exploratory block factorization",
+        factorization_assumption=(
+            FactorizationPremise.EXPLORATORY_ZERO_CROSS_COVARIANCE
+        ),
     )
     assert exploratory.cross_covariance_status is (
         CrossCovarianceStatus.EXPLORATORY_FACTORIZED
@@ -277,6 +284,36 @@ def test_empirical_bayes_requires_split_or_cross_fit() -> None:
         ),
     )
     assert cross_fit.mode is PriorLearningMode.CROSS_FIT
+    with pytest.raises(StatisticalInferenceError, match="may not select"):
+        CrossFitFold(selection_ids=("same",), estimation_ids=("same",))
+    with pytest.raises(StatisticalInferenceError, match="at least two"):
+        PriorLearningReceipt(
+            mode=PriorLearningMode.CROSS_FIT,
+            prior_center=1.0,
+            data_dependent=True,
+            selection_ids=("train",),
+            estimation_ids=("held-out",),
+            folds=(
+                CrossFitFold(
+                    selection_ids=("train",),
+                    estimation_ids=("held-out",),
+                ),
+            ),
+        )
+    mutable_folds = [
+        CrossFitFold(selection_ids=("b",), estimation_ids=("a",)),
+        CrossFitFold(selection_ids=("a",), estimation_ids=("b",)),
+    ]
+    frozen = PriorLearningReceipt(
+        mode=PriorLearningMode.CROSS_FIT,
+        prior_center=1.0,
+        data_dependent=True,
+        selection_ids=("a", "b"),
+        estimation_ids=("a", "b"),
+        folds=mutable_folds,
+    )
+    mutable_folds.append(mutable_folds[0])
+    assert len(frozen.folds) == 2
 
 
 def test_null_sector_cannot_create_posterior_evidence() -> None:
@@ -297,7 +334,8 @@ def test_null_sector_cannot_create_posterior_evidence() -> None:
 
 def test_hartlap_is_diagnostic_and_unknown_coverage_method_fails() -> None:
     diagnostic = hartlap_stress(nrep=20, m=2, nsim=20)
-    assert diagnostic["inference_role"] == "DIAGNOSTIC_COMPARATOR_ONLY"
+    assert HARTLAP_INFERENCE_ROLE == "DIAGNOSTIC_COMPARATOR_ONLY"
+    assert "inference_role" not in diagnostic
     with pytest.raises(ValueError, match="method must be"):
         coverage_mc(
             half_width=1.0,
@@ -323,27 +361,41 @@ def test_preregistered_ratio_dgp_seed_grid_preserves_coverage_and_status() -> No
         ("weak", np.array([0.1, 0.2]), np.array([[0.04, 0.01], [0.01, 0.04]])),
         ("active_constraint", np.array([0.0, 2.0]), np.array([[0.04, 0.0], [0.0, 0.04]])),
     )
-    for index, (name, mean, covariance) in enumerate(regimes):
-        rng = np.random.default_rng(250_000 + index)
-        covered = 0
-        for numerator, anchor in rng.multivariate_normal(
-            mean, covariance, size=1_500
-        ):
-            result = fieller_ratio(
-                _joint(
-                    numerator=float(numerator),
-                    anchor=float(anchor),
-                    var_n=float(covariance[0, 0]),
-                    var_d=float(covariance[1, 1]),
-                    covariance=float(covariance[0, 1]),
-                ),
-                confidence_level=0.95,
-                atol=1e-12,
-                rtol=1e-12,
-                lane=InferenceLane.CLAIM_BEARING,
+    preregistered_seeds = tuple(range(250_000, 250_010))
+    draws_per_cell = 5_000
+    for regime_index, (name, mean, covariance) in enumerate(regimes):
+        for seed in preregistered_seeds:
+            rng = np.random.default_rng(seed + 100 * regime_index)
+            covered = 0
+            for numerator, anchor in rng.multivariate_normal(
+                mean, covariance, size=draws_per_cell
+            ):
+                result = fieller_ratio(
+                    _joint(
+                        numerator=float(numerator),
+                        anchor=float(anchor),
+                        var_n=float(covariance[0, 0]),
+                        var_d=float(covariance[1, 1]),
+                        covariance=float(covariance[0, 1]),
+                    ),
+                    confidence_level=0.95,
+                    atol=1e-12,
+                    rtol=1e-12,
+                    lane=InferenceLane.CLAIM_BEARING,
+                )
+                covered += contains(result, float(mean[0] / mean[1]))
+            cp_lower_99 = (
+                0.0
+                if covered == 0
+                else float(
+                    beta.ppf(
+                        0.01,
+                        covered,
+                        draws_per_cell - covered + 1,
+                    )
+                )
             )
-            covered += contains(result, float(mean[0] / mean[1]))
-        assert covered / 1_500 >= 0.92, name
+            assert cp_lower_99 >= 0.93, (name, seed, cp_lower_99)
 
     for status in (
         IdentificationStatus.PARTIALLY_IDENTIFIED,
@@ -357,3 +409,34 @@ def test_preregistered_ratio_dgp_seed_grid_preserves_coverage_and_status() -> No
             lane=InferenceLane.CLAIM_BEARING,
         )
         assert result.status is StressStatus.NUMERATOR_UNIDENTIFIED
+
+
+def test_finite_n_t_matches_independent_formula_and_not_gaussian() -> None:
+    covariance = np.array([[1.5, 0.2], [0.2, 0.8]])
+    residual = np.array([0.4, -0.7])
+    n_simulations = 8
+    result = covariance_marginalized_t_loglikelihood(
+        residual,
+        covariance,
+        n_simulations=n_simulations,
+        assumptions=_assumptions(known_simulation_mean=True),
+        rcond=1e-12,
+        null_atol=1e-12,
+    )
+    rank = 2
+    chi2 = float(residual @ np.linalg.solve(covariance, residual))
+    logdet = float(np.linalg.slogdet(covariance)[1])
+    expected = (
+        math.lgamma((n_simulations + 1.0) / 2.0)
+        - math.lgamma((n_simulations - rank + 1.0) / 2.0)
+        - 0.5 * rank * math.log(math.pi * n_simulations)
+        - 0.5 * logdet
+        - 0.5
+        * (n_simulations + 1.0)
+        * math.log1p(chi2 / n_simulations)
+    )
+    gaussian = -0.5 * (
+        rank * math.log(2.0 * math.pi) + logdet + chi2
+    )
+    assert result.log_likelihood == pytest.approx(expected, abs=1e-14)
+    assert abs(float(result.log_likelihood) - gaussian) > 1e-3

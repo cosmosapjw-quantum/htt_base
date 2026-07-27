@@ -71,6 +71,12 @@ class PriorLearningMode(_StringEnum):
     CROSS_FIT = "CROSS_FIT"
 
 
+class FactorizationPremise(_StringEnum):
+    EXPLORATORY_ZERO_CROSS_COVARIANCE = (
+        "EXPLORATORY_ZERO_CROSS_COVARIANCE"
+    )
+
+
 def _real(value: object, name: str) -> float:
     if isinstance(value, (bool, np.bool_)):
         raise StatisticalInferenceError(f"{name} must not be boolean")
@@ -151,9 +157,14 @@ class JointRandomAnchorEstimate:
                 )
         else:
             cov = _real(self.cross_covariance, "cross_covariance")
-            determinant_scale = max(vn * vd, cov * cov)
-            determinant_tol = np.finfo(float).eps * 64.0 * determinant_scale
-            if cov * cov > vn * vd + determinant_tol:
+            covariance_limit = math.sqrt(vn) * math.sqrt(vd)
+            if covariance_limit == 0.0:
+                covariance_valid = cov == 0.0
+            else:
+                covariance_valid = abs(cov) <= covariance_limit * (
+                    1.0 + np.finfo(float).eps * 64.0
+                )
+            if not covariance_valid:
                 raise StatisticalInferenceError(
                     "joint numerator-anchor covariance is not positive semidefinite"
                 )
@@ -279,6 +290,11 @@ def _quadratic_fieller_set(a: float, b: float, c: float, *, tol: float) -> Fiell
             )
         return FiellerConfidenceSet(FiellerSetKind.EMPTY, ())
     discriminant = max(discriminant, 0.0)
+    if a < 0.0 and discriminant <= tol:
+        return FiellerConfidenceSet(
+            FiellerSetKind.ALL_REAL,
+            (ScalarRange(-math.inf, math.inf),),
+        )
     sqrt_disc = math.sqrt(discriminant)
     r1, r2 = sorted(((-b - sqrt_disc) / (2.0 * a), (-b + sqrt_disc) / (2.0 * a)))
     if a > 0.0:
@@ -358,10 +374,10 @@ def fieller_ratio(
     )
     separated = denominator_interval.separated_from_zero(atol=atol, rtol=rtol)
     if not separated:
-        if not confidence_set.is_unbounded and confidence_set.kind is not FiellerSetKind.ALL_REAL:
-            raise StatisticalInferenceError(
-                "Fieller invariant violated: zero-crossing denominator produced "
-                "a bounded confidence set"
+        if not confidence_set.is_unbounded:
+            confidence_set = FiellerConfidenceSet(
+                FiellerSetKind.ALL_REAL,
+                (ScalarRange(-math.inf, math.inf),),
             )
         return RatioInferenceResult(
             status=StressStatus.RATIO_UNIDENTIFIED,
@@ -413,7 +429,6 @@ class FiniteCovarianceAssumptions:
                 self.gaussian_simulations,
                 self.wishart_sample_covariance,
                 self.observation_independent_of_simulations,
-                self.known_simulation_mean,
             )
         )
 
@@ -514,9 +529,11 @@ def covariance_marginalized_t_loglikelihood(
             assumptions=assumptions,
             allowed_use=("assumption failure report",),
         )
-    if n_simulations <= rank:
+    wishart_df = n_simulations if assumptions.known_simulation_mean else n_simulations - 1
+    if wishart_df < rank:
         raise StatisticalInferenceError(
-            "covariance-marginalized t requires n_simulations > supported rank"
+            "covariance-marginalized t requires Wishart degrees of freedom "
+            "at least the supported rank"
         )
     if rank:
         positive = eigenvalues[supported]
@@ -525,15 +542,15 @@ def covariance_marginalized_t_loglikelihood(
     else:
         chi2 = 0.0
         log_pseudodeterminant = 0.0
-    n = float(n_simulations)
+    nu = float(wishart_df)
     log_normalization = (
-        math.lgamma(n / 2.0)
-        - math.lgamma((n - rank) / 2.0)
-        - 0.5 * rank * math.log(math.pi * (n - 1.0))
+        math.lgamma((nu + 1.0) / 2.0)
+        - math.lgamma((nu - rank + 1.0) / 2.0)
+        - 0.5 * rank * math.log(math.pi * nu)
         - 0.5 * log_pseudodeterminant
     )
-    log_likelihood = log_normalization - 0.5 * n * math.log1p(
-        chi2 / (n - 1.0)
+    log_likelihood = log_normalization - 0.5 * (nu + 1.0) * math.log1p(
+        chi2 / nu
     )
     return FiniteCovarianceLikelihoodResult(
         status=CovarianceLikelihoodStatus.DEFINED,
@@ -542,7 +559,10 @@ def covariance_marginalized_t_loglikelihood(
         rank=rank,
         null_residual_norm=null_norm,
         n_simulations=int(n_simulations),
-        method="covariance_marginalized_multivariate_t_supported_quotient",
+        method=(
+            "covariance_marginalized_multivariate_t_supported_quotient_"
+            + ("known_mean" if assumptions.known_simulation_mean else "estimated_mean")
+        ),
         assumptions=assumptions,
         allowed_use=("conditional likelihood under registered Gaussian/Wishart assumptions",),
     )
@@ -562,7 +582,7 @@ def assemble_block_covariance(
     cross_blocks: Mapping[tuple[str, str], Sequence[Sequence[object]]],
     *,
     lane: InferenceLane,
-    factorization_assumption: str | None = None,
+    factorization_assumption: FactorizationPremise | None = None,
 ) -> BlockCovarianceAssembly:
     """Assemble all cross blocks; missing pieces never silently become zero."""
     if not isinstance(lane, InferenceLane):
@@ -611,6 +631,10 @@ def assemble_block_covariance(
         for right in names[index + 1 :]:
             key = (left, right)
             reverse = (right, left)
+            if key in cross_blocks and reverse in cross_blocks:
+                raise StatisticalInferenceError(
+                    f"duplicate cross-covariance orientations for {left}/{right}"
+                )
             if key in cross_blocks:
                 raw_cross = np.asarray(cross_blocks[key], dtype=object)
                 cross = np.asarray(cross_blocks[key], dtype=float)
@@ -636,8 +660,15 @@ def assemble_block_covariance(
             raise StatisticalInferenceError(
                 f"missing cross covariance blocks: {missing}"
             )
-        assumption = _text(factorization_assumption, "factorization_assumption")
-        assumptions = (assumption,)
+        if (
+            factorization_assumption
+            is not FactorizationPremise.EXPLORATORY_ZERO_CROSS_COVARIANCE
+        ):
+            raise StatisticalInferenceError(
+                "missing exploratory cross blocks require the typed "
+                "EXPLORATORY_ZERO_CROSS_COVARIANCE premise"
+            )
+        assumptions = (factorization_assumption.value,)
         status = CrossCovarianceStatus.EXPLORATORY_FACTORIZED
     else:
         if factorization_assumption is not None:
@@ -694,9 +725,11 @@ class PriorLearningReceipt:
             raise StatisticalInferenceError("data_dependent must be boolean")
         selection = _texts(self.selection_ids, "selection_ids", empty_ok=True)
         estimation = _texts(self.estimation_ids, "estimation_ids", empty_ok=True)
+        folds = tuple(self.folds)
         object.__setattr__(self, "selection_ids", selection)
         object.__setattr__(self, "estimation_ids", estimation)
-        if any(not isinstance(fold, CrossFitFold) for fold in self.folds):
+        object.__setattr__(self, "folds", folds)
+        if any(not isinstance(fold, CrossFitFold) for fold in folds):
             raise StatisticalInferenceError("folds must contain CrossFitFold values")
         if self.mode is PriorLearningMode.FIXED_PHYSICAL:
             if self.data_dependent or selection or self.folds:
@@ -715,8 +748,10 @@ class PriorLearningReceipt:
             if self.folds:
                 raise StatisticalInferenceError("split-sample mode must not carry folds")
         if self.mode is PriorLearningMode.CROSS_FIT:
-            if not self.folds:
-                raise StatisticalInferenceError("cross-fit mode requires folds")
+            if len(self.folds) < 2:
+                raise StatisticalInferenceError(
+                    "cross-fit mode requires at least two folds"
+                )
             validation_ids = [
                 value for fold in self.folds for value in fold.estimation_ids
             ]
@@ -774,6 +809,7 @@ __all__ = [
     "CrossFitFold",
     "FiellerConfidenceSet",
     "FiellerSetKind",
+    "FactorizationPremise",
     "FiniteCovarianceAssumptions",
     "FiniteCovarianceLikelihoodResult",
     "InferenceLane",
