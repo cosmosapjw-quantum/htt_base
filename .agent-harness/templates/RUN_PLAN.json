@@ -1,11 +1,33 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "run_id": "REPLACE_ME",
   "work_unit_id": null,
+  "change_set_id": null,
+  "publication_group_id": null,
   "created_at": "REPLACE_ME",
   "spec_ref": "SPEC.md",
-  "base_ref": "main",
-  "head_ref": "HEAD",
+  "target_remote": null,
+  "target_branch": null,
+  "target_ref": null,
+  "base_sha": null,
+  "candidate_ref": "HEAD",
+  "integration_policy": {
+    "path": null,
+    "sha256": null,
+    "policy_id": null
+  },
+  "candidate_binding": {
+    "state": "mutable",
+    "seal_path": null,
+    "seal_file_sha256": null,
+    "seal_sha256": null,
+    "base_sha": null,
+    "candidate_sha": null,
+    "merge_base_sha": null,
+    "candidate_tree_sha": null,
+    "diff_sha256": null,
+    "changed_files_sha256": null
+  },
   "context_version": "UNBUILT",
   "budget": {
     "max_concurrent": 4,
@@ -13,13 +35,22 @@
     "max_total_per_work_unit": 16,
     "max_depth": 2
   },
+  "publication_budget": {
+    "max_open_prs": 1,
+    "max_direct_to_target_prs": 1,
+    "max_prs_per_change_set": 1,
+    "max_stack_depth": 1,
+    "max_file_overlap_prs": 0
+  },
   "stages": [
     "context-build",
-    "independent-analysis",
-    "deduplication",
-    "targeted-adjudication",
-    "gate-evaluation",
-    "single-writer-update"
+    "work-unit-implementation",
+    "candidate-freeze",
+    "read-only-review",
+    "latest-target-integration",
+    "external-publisher-authorization"
   ],
+  "publication_mode": "external_publisher_only",
+  "github_pr_created_by_harness": false,
   "status": "initialized"
 }

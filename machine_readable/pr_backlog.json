@@ -195,7 +195,8 @@
       "PR-243",
       "PR-244",
       "PR-245",
-      "PR-246"
+      "PR-246",
+      "PR-247"
     ],
     "checkpoint_every_completed_prs": 5,
     "no_native_lowell_solver_implementation": true,
@@ -11797,6 +11798,88 @@
       "scientific_status_on_intake": "OPEN",
       "track": "INTEGRATION",
       "solver_gate_required": true
+    },
+    {
+      "id": "PR-247",
+      "wave": 42,
+      "title": "Change-set and publication integrity firewall",
+      "owner": "COMMON",
+      "contributors": [],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-124",
+        "PR-167"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-124",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-167",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Bind every review and integration receipt to one immutable Git candidate.",
+        "Separate internal work units from the sole external publication unit.",
+        "Deny ordinary-agent publication and require a credential-isolated publisher."
+      ],
+      "files": [
+        ".agent-harness",
+        ".codex",
+        ".claude",
+        ".agents",
+        "scripts/codex_harness",
+        "docs/harness",
+        "docs/research_program/long_horizon_rescue/pr247_spec.yaml",
+        "docs/PR_DELTAS/pr-247.md"
+      ],
+      "tests": [
+        "python3 -B -m pytest -p no:cacheprovider -q scripts/codex_harness/test_harness_enforcement.py scripts/codex_harness/test_publication_integrity.py scripts/codex_harness/test_codex_assets.py",
+        "python3 -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice"
+      ],
+      "dod": [
+        "Exact candidate bytes, review coverage, latest-target integration, live PR inventory, and short-lived authorization are transitively bound before an external publisher may act.",
+        "Ordinary agent workspaces create zero GitHub PRs and cannot select the publisher role.",
+        "Normal run closure fails on missing results or stale merged evidence."
+      ],
+      "kill": "Any ordinary agent publication path succeeds, or evidence for one candidate authorizes another candidate, target, repository, or change-set.",
+      "cost": "medium",
+      "level": "L2",
+      "scope": "pre-solver",
+      "risk": "R-HARNESS-PUBLICATION",
+      "claim_tier_ceiling": "diagnostic_only",
+      "claim_level": {
+        "scheme": "not_applicable_governance_v1",
+        "level": "NOT_APPLICABLE"
+      },
+      "claim_impact": "Internal process integrity only; no scientific state, transfer status, publication readiness, or family-identification claim changes.",
+      "forbidden": [
+        "No commit, push, PR creation, merge, approval, or reseal without explicit authority.",
+        "Repository hooks are guardrails, never described as a complete capability boundary.",
+        "One failure type maps to a finding or commit, not automatically to a GitHub PR."
+      ],
+      "anti_drift": [
+        "One canonical change_set_id maps to at most one open GitHub PR.",
+        "Candidate mutation invalidates every prior review, integration, inventory, and authorization receipt.",
+        "The publisher credential and nonce ledger remain outside ordinary agent sandboxes."
+      ],
+      "roadmap_anchor": "docs/research_program/long_horizon_rescue/pr247_spec.yaml",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "governance_diagnostic",
+      "execution_authorization": "EXPLICIT_USER_AUTHORIZED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "PROCESS",
+      "solver_gate_required": false,
+      "change_set_id": "CS-PR247-PUBLICATION-INTEGRITY-P0",
+      "publication_group_id": "PG-PR247-PUBLICATION-INTEGRITY-P0"
     }
   ]
 }

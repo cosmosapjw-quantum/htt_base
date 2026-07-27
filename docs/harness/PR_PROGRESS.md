@@ -2,6 +2,71 @@
 
 Update every five PRs with percent complete and blockers.
 
+## PR-247 completion (not a five-PR checkpoint)
+
+Date: 2026-07-27
+
+- Active DAG: 142/194 complete = 73.20%; dependency-weighted completion
+  79.19%; critical-path proxy 81.82%. No five-PR checkpoint is due.
+- Candidate C (`b431da78...`, seal `4facb9...`) passed the complete registered
+  review with focused suite 51/51 and executable provider oracle 10/10.
+- Latest-target integration passed all three sealed policy commands against
+  `be2d545...`; receipt `6c7e3281...` verifies cleanly.
+- Claim drift: none. This process card changes no numerical, transfer, data,
+  posterior, MIO, morphology, family, scientific, public-use, or publication
+  readiness state.
+- PR-247 is completed and no foreground card was started. PR-190 and PR-204
+  remain reported as unblocked; PR-151 remains the background acquisition.
+- The final status/SSoT amendment still requires exact reseal, read-only
+  review, and integration before handoff. No push or GitHub PR was created.
+
+## PR-247 candidate-B repair (not a completion checkpoint)
+
+Date: 2026-07-27
+
+- Active DAG remains 141/194 complete = 72.68%; this repair changes no
+  completion count and no five-PR checkpoint is due.
+- Candidate B (`f3521b42...`, seal `0fdfe9...`) received a complete registered
+  FAIL review. Its executable oracle reproduced a publication bypass through
+  Google's codelab-documented top-level Antigravity
+  `tool_args.CommandLine` envelope.
+- The repaired adapter retains the current nested Antigravity contract,
+  additionally inspects the legacy documented envelope, rejects mixed or
+  malformed shapes and unmatched tools fail-closed, emits contract-specific
+  denial output, and passes the 162-test bounded suite.
+- Remaining blocker: the repaired bytes need a new commit/seal, complete
+  registered read-only result, and latest-target integration receipt. No push
+  or GitHub PR was created.
+
+## PR-247 candidate-A repair (not a completion checkpoint)
+
+Date: 2026-07-27
+
+- Active DAG: 141/194 complete = 72.68%; dependency-weighted completion
+  79.05%; critical-path proxy 81.82%.
+- Foreground: PR-247. Background: PR-151 acquisition. Blocked: PR-172.
+  Pending: 22. Dormant external/native: 28.
+- P0 implementation now binds one coherent change-set to one publication group,
+  exact candidate/remote/GitHub repository identity, executable review
+  coverage, latest-target integration, complete live PR inventory, and a
+  short-lived one-use external-publisher authorization.
+- Pre-candidate-A validation passed 156 tests. Repair validation passes 162
+  tests and collects `9682/9741` with 59 deselected. Candidate-A review
+  reproduced bundled-shell and
+  venv-launcher defects, invalidating that readiness evidence while retaining
+  the earlier pass as historical regression evidence.
+- A main-writer hostile pass found and fixed an unbound live `--repo-slug`
+  substitution and an integration-policy subprocess publication bypass after
+  the first full green replay.
+- Claim drift: none. This process work creates no scientific result, transfer
+  validation, posterior/evidence, MIO certificate, morphology compatibility,
+  family identification, or publication-readiness claim.
+- Checkpoint due: false. PR-190 and PR-204 are unblocked in the DAG but must not
+  replace the active PR-247 foreground.
+- Remaining blocker: repaired bytes need a new commit/seal, complete registered
+  read-only result, and latest-target integration receipt. Candidate-A
+  structural coverage alone is insufficient. No push or GitHub PR was created.
+
 ## PR-176 closeout (not a five-PR checkpoint)
 
 Date: 2026-07-20

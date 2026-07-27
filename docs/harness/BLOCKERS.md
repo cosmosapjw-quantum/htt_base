@@ -2,6 +2,26 @@
 
 Open blockers, owner, required resolution, and PR dependency impact.
 
+## 2026-07-27 - PR-247 repository closure resolved; deployment remains external
+
+- Candidate A and candidate B remain preserved invalidated evidence. Candidate
+  C passed a complete registered read-only review and exact latest-target
+  integration; the canonical PR-247 process card is complete.
+- The status/SSoT closeout amendment must still pass its own exact seal,
+  read-only review, and latest-target integration before final handoff. This is
+  a change-set integrity condition, not a reopened implementation finding.
+- Live PR inventory, publisher authorization, and publication remain outside
+  ordinary-agent closure and were not produced in this worktree.
+- Repo-local Codex, Claude Code, and Antigravity hooks are mutable
+  defense-in-depth. Hard publication enforcement requires administrator-managed
+  policy or network isolation plus publisher credentials, HMAC key, and nonce
+  ledger outside ordinary agent sandboxes and removal of write-capable GitHub
+  browser sessions from those profiles.
+- P2 cleanup of the existing PR graph, merge-queue deployment, and CI
+  re-tiering is deferred and did not block PR-247 P0 completion.
+- No push, PR creation, approval, merge, or publisher invocation is
+  authorized. The process blocker changes no scientific or public-use state.
+
 ## 2026-07-20 - post-PR-176 active blockers
 
 - PR-151 is non-terminal at 160/1000 EZmocks, 0/25 Abacus, and 10/15 audit

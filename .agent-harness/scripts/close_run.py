@@ -12,7 +12,10 @@ from _harness import (
     clear_active_run_pointers,
     dump_json,
     is_safe_identifier,
+    load_json,
     root,
+    run_merge_input_manifest,
+    run_merge_input_sha256,
     utc_now,
 )
 from run_summary import summarize_run
@@ -95,6 +98,64 @@ def main() -> None:
         )
 
     run_dir = repo / ".agent-harness" / "runs" / run_id
+    plan = load_json(run_dir / "RUN_PLAN.json")
+    assignments = sorted((run_dir / "assignments").glob("*.json"))
+    results = sorted((run_dir / "results").glob("*.json"))
+    if len(results) != len(assignments):
+        fail(
+            "INCOMPLETE_RUN_RESULTS",
+            "Every registered assignment requires exactly one validated result "
+            "before normal close.",
+            assignment_count=len(assignments),
+            result_count=len(results),
+        )
+    merged_path = run_dir / "MERGED_RESULTS.json"
+    if merged_path.is_symlink() or not merged_path.is_file():
+        fail(
+            "MISSING_MERGED_RESULTS",
+            "Run merge must complete before normal close.",
+        )
+    try:
+        merged = load_json(merged_path)
+        current_inputs = run_merge_input_manifest(repo, run_dir)
+    except (OSError, ValueError, json.JSONDecodeError) as exc:
+        fail(
+            "INVALID_MERGED_RESULTS",
+            f"Cannot validate merged run evidence: {exc}",
+        )
+    expected = {
+        "run_id": run_id,
+        "process_status": "STRUCTURALLY_VALID",
+        "assignment_count": len(assignments),
+        "validated_result_count": len(results),
+        "merge_inputs": current_inputs,
+        "merge_input_sha256": run_merge_input_sha256(current_inputs),
+    }
+    if plan.get("schema_version") == 2:
+        expected.update(
+            {
+                "work_unit_id": plan.get("work_unit_id"),
+                "change_set_id": plan.get("change_set_id"),
+                "publication_group_id": plan.get("publication_group_id"),
+            }
+        )
+    drifted = {
+        field: {"expected": value, "actual": merged.get(field)}
+        for field, value in expected.items()
+        if merged.get(field) != value
+    }
+    if (
+        drifted
+        or merged.get("errors") not in ([], None)
+        or merged.get("conflicts") not in ([], None)
+    ):
+        fail(
+            "STALE_OR_INVALID_MERGED_RESULTS",
+            "MERGED_RESULTS does not match the complete current run.",
+            drifted=drifted,
+            errors=merged.get("errors"),
+            conflicts=merged.get("conflicts"),
+        )
     summary = summarize_run(repo, run_dir, "summarized_discardable")
     summary["closed_at"] = utc_now()
     summary_path = run_dir / "RUN_SUMMARY.json"

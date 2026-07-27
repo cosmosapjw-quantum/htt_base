@@ -214,6 +214,22 @@ REVIVAL_DEPENDS = {
 REVIVAL_TERMINAL_RECEIPT_EDGES: set[tuple[str, str]] = set()
 REVIVAL_CAS_CARDS = {"PR-222", "PR-223"}
 
+# --- Process-integrity interruption card (PR-247, Wave 42) -----------------
+# This is an internal DAG work unit, not a GitHub pull request.  It is
+# deliberately outside the scientific revival slices and carries no scientific
+# claim level.  Its explicit intake prevents urgent harness work from bypassing
+# the same DAG/status authority it is repairing.
+PROCESS_INTEGRITY_CARD_CONTRACTS = {
+    "PR-247": {
+        "depends": ["PR-124", "PR-167"],
+        "change_set_id": "CS-PR247-PUBLICATION-INTEGRITY-P0",
+        "publication_group_id": "PG-PR247-PUBLICATION-INTEGRITY-P0",
+        "execution_lane": "defensible",
+        "activation_state": "PENDING",
+        "execution_authorization": "EXPLICIT_USER_AUTHORIZED",
+    }
+}
+
 
 def _revival_track(pr_id: str) -> str:
     n = int(pr_id.split("-")[1])
@@ -638,6 +654,17 @@ def validate_long_horizon_rescue_slice(
             "legacy-revival round-2 intake must be atomic; "
             f"missing={sorted(revival_ids - actual_revival_ids)}"
         )
+    process_ids = set(PROCESS_INTEGRITY_CARD_CONTRACTS)
+    actual_process_ids = actual_ids & process_ids
+    if actual_process_ids and not actual_revival_ids:
+        raise ValueError(
+            "process-integrity interruption cards require the full revival slice"
+        )
+    if actual_process_ids and actual_process_ids != process_ids:
+        raise ValueError(
+            "process-integrity interruption intake must be atomic; "
+            f"missing={sorted(process_ids - actual_process_ids)}"
+        )
     expected_total = (
         RESCUE_WITH_ADVOCATE_CARD_COUNT
         if actual_advocate_ids
@@ -647,6 +674,8 @@ def validate_long_horizon_rescue_slice(
         expected_total += STRENGTHEN_CARD_COUNT
     if actual_revival_ids:
         expected_total += REVIVAL_CARD_COUNT
+    if actual_process_ids:
+        expected_total += len(PROCESS_INTEGRITY_CARD_CONTRACTS)
     if len(info.ids) != expected_total:
         raise ValueError(
             f"strict rescue slice expects {expected_total} total cards, found {len(info.ids)}"
@@ -922,6 +951,9 @@ def validate_long_horizon_rescue_slice(
     if actual_revival_ids:
         _validate_revival_slice(cards)
 
+    if actual_process_ids:
+        _validate_process_integrity_slice(cards)
+
     if status is not None:
         _validate_rescue_status(status, info)
 
@@ -991,6 +1023,59 @@ def _validate_revival_slice(cards: dict[str, Any]) -> None:
                 "lean_mathlib", "rocq_stdlib",
             ]:
                 raise ValueError(f"{pr_id} must carry the five-axis CAS v3 contract")
+
+
+def _validate_process_integrity_slice(cards: dict[str, Any]) -> None:
+    """Validate non-scientific process cards added after the frozen roadmap."""
+
+    for pr_id, expected in PROCESS_INTEGRITY_CARD_CONTRACTS.items():
+        card = cards[pr_id]
+        if card.get("depends") != expected["depends"]:
+            raise ValueError(f"{pr_id} process-integrity dependencies drifted")
+        contracts = card.get("dependency_contracts")
+        if not isinstance(contracts, list) or contracts != [
+            {"upstream_id": dep, "mode": "requires_success"}
+            for dep in expected["depends"]
+        ]:
+            raise ValueError(f"{pr_id} typed dependency projection drifted")
+        for field in (
+            "change_set_id",
+            "publication_group_id",
+            "execution_lane",
+            "activation_state",
+            "execution_authorization",
+        ):
+            if card.get(field) != expected[field]:
+                raise ValueError(
+                    f"{pr_id} {field} drifted: "
+                    f"{card.get(field)!r} != {expected[field]!r}"
+                )
+        if card.get("owner") != "COMMON":
+            raise ValueError(f"{pr_id} process-integrity owner must be COMMON")
+        if card.get("implementation_scopes") != ["common"]:
+            raise ValueError(f"{pr_id} implementation scope must be common")
+        if card.get("claim_level") != {
+            "scheme": "not_applicable_governance_v1",
+            "level": "NOT_APPLICABLE",
+        }:
+            raise ValueError(f"{pr_id} must carry the non-scientific claim level")
+        if card.get("claim_tier_ceiling") != "diagnostic_only":
+            raise ValueError(f"{pr_id} claim tier must remain diagnostic_only")
+        if card.get("scientific_artifact_mode") != "governance_diagnostic":
+            raise ValueError(
+                f"{pr_id} scientific_artifact_mode must be governance_diagnostic"
+            )
+        if card.get("scientific_status_on_intake") != "OPEN":
+            raise ValueError(f"{pr_id} scientific status must remain OPEN")
+        if (
+            card.get("public_use") is not False
+            or card.get("spec_first_required") is not True
+            or card.get("solver_gate_required") is not False
+            or card.get("track") != "PROCESS"
+        ):
+            raise ValueError(
+                f"{pr_id} must remain internal, spec-first, solver-independent PROCESS work"
+            )
 
 
 def _validate_strengthen_slice(cards: dict[str, Any]) -> None:

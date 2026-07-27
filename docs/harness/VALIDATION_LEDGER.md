@@ -2,6 +2,81 @@
 
 Record commands actually run. Never mark skipped checks as passed.
 
+## PR-247 - publication-integrity P0 completion and closeout amendment
+
+Date: 2026-07-27
+
+Change classification: COMMON harness lifecycle, Git identity/provenance,
+provider guardrails, external-publisher preflight, installer, tests, and SSoT
+documentation. No numerical method, physical model, transfer function, dataset,
+inference, scientific artifact, claim tier, or public-use state changed.
+
+| Command or check | Result | Notes |
+|---|---:|---|
+| bounded pre-change harness/Codex suite | FAIL, REPRODUCED | `109 passed, 1 failed`; the fresh installer omitted the already-governing PR-122--138 specification files. The installer now copies the complete long-horizon specification directory. |
+| pre-candidate-A bounded suite | PASS, HISTORICAL | `156 passed in 29.06s`; candidate-A review later invalidated readiness by reproducing wrapper/interpreter defects. |
+| candidate-A repair bounded suite | PASS | `162 passed in 28.10s`. Added bundled short-option inline-runtime attacks, a nested read-only control, invocation-path preservation, real-binary binding, and realpath-drift rejection. |
+| candidate-B provider repair bounded suite | PASS | `162 passed in 27.88s`. The current nested and codelab-documented legacy Antigravity envelopes are both inspected; denial uses contract-specific output, and missing, malformed, mixed, or unmatched-tool envelopes deny fail-closed. |
+| closeout-amendment bounded suite | PASS | `162 passed in 27.99s`. Canonical completion status and SSoT changes introduce no bounded harness regression. |
+| full `pytest --collect-only -q` with `PYTHONPATH=$PWD/htt/src:$PWD/htt:$PWD` | PASS | Repair replay: `9682/9741 tests collected`, `59 deselected`, in `14.21s`. The first broad attempt lacked the explicit worktree paths and resolved editable imports through the original shared venv, causing 272 collection errors; it is retained as environment/path contamination and not called a test failure in PR-247 code. |
+| `python -B .agent-harness/scripts/validate_harness.py` | PASS | Context `2aadf7...`; candidate-C review run validated and closed normally, leaving `active_run=null`. |
+| `python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --strict` | PASS | `194 PRs, DAG valid`. |
+| `python -B scripts/codex_harness/sync_pr_dag_mirrors.py --check` | PASS | Canonical DAG/status and compatibility mirrors synchronized. |
+| progress report with `--checkpoint-every 5` | PASS | Completion update: `142/194 = 73.20%`; dependency weighted `79.19%`; critical-path proxy `81.82%`; checkpoint not due. |
+| changed/new Python AST parse | PASS | Final replay parsed all 21 changed/new Python files. |
+| changed/new strict JSON parse | PASS | Final replay parsed all 14 changed/new JSON files while rejecting duplicate keys and non-finite values. |
+| exact pre-fix policy argv under bare `python3` | FAIL, REPRODUCED | `/usr/bin/python3: No module named pytest`. The portable `{python}` policy token now resolves through the rehearsal interpreter and records its absolute executable path and byte hash. |
+| PR-247 YAML semantic parse | PASS | `htt.process_integrity.pr247.v1` has 23 distinct required-test rows after candidate-B repair. |
+| eight new CLI `--help` invocations | PASS | Candidate seal/bind, review, integration, inventory, authorization, publication gate, and provider hook parsers loaded. |
+| candidate-A seal and preliminary frozen review | FAIL, INVALIDATED | Local commit `c1d2716f...`, seal `b5d845...`. Structural-only coverage reproduced a bundled-shell classifier bypass; main-writer integration inspection reproduced venv-launcher realpath loss. The reviewer timed out before a registered result envelope, so the run was preserved and abandoned rather than counted as final review evidence. |
+| candidate-B seal and frozen review | FAIL, INVALIDATED | Local commit `f3521b42...`, seal `0fdfe9...`. A complete registered schema-v3 FAIL review and executable oracle reproduced a top-level Antigravity `tool_args.CommandLine` publication bypass. The result was validated, merged, closed, and preserved before repair. |
+| candidate-C seal and frozen review | PASS | Commit `b431da78...`, seal `4facb9...`. Focused publication suite 51/51 and executable provider matrix 10/10 passed; coverage has 12 PASS plus an honest integration N/A because the candidate-specific receipt followed review. The schema-v3 result validated, merged, and closed normally. |
+| candidate-C latest-target integration | PASS | Target `be2d545...`; receipt `6c7e3281...`. The 162-test bounded suite, strict rescue-slice DAG/status, and live harness all returned zero in the temporary worktree; receipt verification passed. |
+| current official Codex hook contract | PASS, FINDING REJECTED | Official tool-coverage documentation says shell and unified `exec_command` both match canonical `Bash`; the preliminary proposal to replace `^Bash$` was rejected. Repo-local hooks remain guardrails, not a hard boundary. |
+| repo-wide no-mock leakage checker | FAIL, PRE-EXISTING | Historical `calibration_factor` and mock-result markers remain. Scoped search over all PR-247 changed/new surfaces returned exit 1 with no matches. |
+| `python -m ruff ...` | UNAVAILABLE | The shared venv has no `ruff` module; no lint pass is claimed. |
+| `git diff --check` | PASS | No whitespace errors before SSoT closure. |
+
+Adversarial review found and fixed: command-equivalent bypasses; movable
+candidate/refspec authority; unbound tree/log receipts; change-set, group, head,
+path, and metadata aliases; stale or incomplete inventory; boolean budgets;
+duplicate/non-finite JSON; runtime path traversal; premature freeze/close;
+secret and nonce hard links; replayable authorization; and a live GitHub
+`--repo-slug` that was not transitively bound to the sealed remote repository.
+The final subprocess-path pass also found and closed publication-capable argv
+inside the integration policy, which otherwise could execute beneath provider
+hooks.
+It then reproduced the unusable bare-system Python policy and replaced it with
+the receipt-bound portable interpreter token.
+Remote URL userinfo/query ambiguity is rejected so secrets cannot be copied
+into seal or authorization artifacts.
+The final closure challenge confirmed that `close_run` reaches the single
+strict result validator through `validate_repo`; a post-merge mutation of a
+result-referenced artifact is rejected before the active-run pointer can be
+cleared.
+Candidate-A review then found two further execution-boundary defects. Bundled
+inline runtime options now recurse through the publication classifier, and
+integration retains the selected venv invocation path while separately
+receipting the resolved executable bytes. Candidate A and its partial review
+are invalidated.
+Candidate-B review then reproduced the documented legacy Antigravity-envelope
+bypass. The adapter now handles current nested and legacy top-level forms and
+uses each contract's denial output while rejecting unknown, malformed, mixed,
+or unmatched-tool envelopes. Candidate B and its complete FAIL review are
+invalidated for readiness.
+Candidate C then passed the complete registered review and exact latest-target
+integration cycle without a surviving P0/P1 defect. That evidence supports the
+canonical completion update. The status/SSoT amendment changes the Git tree and
+therefore still requires its own final seal/review/integration before handoff.
+
+Scientific and publication status: no scientific validation was performed or
+needed. PR-247 is complete as an internal process-integrity card but is not a
+GitHub publication or publication-readiness claim. No publisher authorization
+or PR exists. Repo-local hooks remain mutable
+guardrails; hard enforcement requires managed policy or network isolation and
+publisher credentials outside the agent sandbox. Launch/read/execution
+evidence remains `self_declared` until platform authentication exists.
+
 ## MA-03 - unified strict harness-result validation
 
 Date: 2026-07-23

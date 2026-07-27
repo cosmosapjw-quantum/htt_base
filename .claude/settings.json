@@ -52,6 +52,21 @@
             "type": "command",
             "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/check_phase_boundary_audit.py",
             "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "/usr/bin/python3 \"${CLAUDE_PROJECT_DIR}/.agent-harness/scripts/provider_publication_hook.py\" --provider claude",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "mcp__.*github.*|mcp__.*pull[_-]request.*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/usr/bin/python3 \"${CLAUDE_PROJECT_DIR}/.agent-harness/scripts/provider_publication_hook.py\" --provider claude",
+            "timeout": 5
           }
         ]
       }

@@ -8,6 +8,18 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Mapping
 
+from publication_integrity import (
+    PublicationIntegrityError,
+    bytes_sha256,
+    canonical_target_ref,
+    git,
+    load_publication_policy,
+    mutable_candidate_binding,
+    require_change_set_id,
+    require_publication_group_id,
+    validate_candidate_binding,
+)
+
 
 SAFE_IDENTIFIER_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$")
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
@@ -454,9 +466,15 @@ def resolve_live_context(repo: Path, index: Mapping[str, Any]) -> dict[str, Any]
             for key in (
                 "run_id",
                 "work_unit_id",
+                "change_set_id",
+                "publication_group_id",
                 "spec_ref",
                 "base_ref",
                 "head_ref",
+                "target_ref",
+                "base_sha",
+                "candidate_ref",
+                "candidate_binding",
                 "context_version",
                 "status",
             )
@@ -506,7 +524,8 @@ def format_live_context(state: Mapping[str, Any]) -> str:
     if isinstance(run, Mapping):
         run_text = (
             f"{run.get('run_id')} (status={run.get('status') or 'unspecified'}, "
-            f"work_unit={run.get('work_unit_id')}, spec={run.get('spec_ref')})"
+            f"work_unit={run.get('work_unit_id')}, "
+            f"change_set={run.get('change_set_id')}, spec={run.get('spec_ref')})"
         )
     return "\n".join(
         [
@@ -632,6 +651,164 @@ def assignment_sha256(assignment: Mapping[str, Any]) -> str:
         payload, sort_keys=True, ensure_ascii=False
     ).encode("utf-8")
     return hashlib.sha256(encoded).hexdigest()
+
+
+def run_merge_input_manifest(repo: Path, run_dir: Path) -> list[dict[str, Any]]:
+    """Hash every run-local input consumed by result merging."""
+
+    paths = [run_dir / "RUN_PLAN.json"]
+    for directory in ("assignments", "results", "launches"):
+        paths.extend(sorted((run_dir / directory).glob("*.json")))
+    rows: list[dict[str, Any]] = []
+    for path in sorted(paths, key=lambda item: item.relative_to(repo).as_posix()):
+        if path.is_symlink() or not path.is_file():
+            raise ValueError(
+                f"merge input is missing or not a regular file: "
+                f"{path.relative_to(repo).as_posix()}"
+            )
+        data = path.read_bytes()
+        rows.append(
+            {
+                "path": path.relative_to(repo).as_posix(),
+                "sha256": hashlib.sha256(data).hexdigest(),
+                "bytes": len(data),
+            }
+        )
+    return rows
+
+
+def run_merge_input_sha256(rows: list[dict[str, Any]]) -> str:
+    return hashlib.sha256(
+        json.dumps(
+            rows,
+            sort_keys=True,
+            separators=(",", ":"),
+            ensure_ascii=False,
+        ).encode("utf-8")
+    ).hexdigest()
+
+
+def validate_run_plan_payload(
+    plan: object,
+    *,
+    repo: Path,
+    run_id: str,
+    context_version: str,
+) -> list[str]:
+    """Validate a run plan without rewriting frozen schema-v1 run history."""
+
+    errors: list[str] = []
+    if not isinstance(plan, Mapping):
+        return ["RUN_PLAN is not a JSON object"]
+    if plan.get("run_id") != run_id:
+        errors.append("RUN_PLAN run_id does not match its directory")
+    if plan.get("context_version") != context_version:
+        errors.append("RUN_PLAN context_version is stale")
+    if not is_safe_identifier(plan.get("work_unit_id")):
+        errors.append("RUN_PLAN work_unit_id is missing or unsafe")
+    schema = plan.get("schema_version")
+    if schema == 1:
+        return errors
+    if schema != 2:
+        errors.append("RUN_PLAN schema_version must equal 1 or 2")
+        return errors
+
+    try:
+        budget = plan.get("budget")
+        if not isinstance(budget, Mapping):
+            raise PublicationIntegrityError("RUN_PLAN budget must be an object")
+        for field, maximum in (
+            ("max_concurrent", 4),
+            ("max_total", 8),
+            ("max_total_per_work_unit", 16),
+            ("max_depth", 2),
+        ):
+            value = budget.get(field)
+            if type(value) is not int or not 1 <= value <= maximum:
+                raise PublicationIntegrityError(
+                    f"RUN_PLAN budget.{field} must be an integer in [1, {maximum}]"
+                )
+        change_set_id = require_change_set_id(plan.get("change_set_id"))
+        publication_group_id = require_publication_group_id(
+            plan.get("publication_group_id")
+        )
+        target_remote, target_branch, target_ref = canonical_target_ref(
+            repo, str(plan.get("target_ref") or "")
+        )
+        if (
+            plan.get("target_remote") != target_remote
+            or plan.get("target_branch") != target_branch
+            or plan.get("target_ref") != target_ref
+        ):
+            raise PublicationIntegrityError("RUN_PLAN target identity drifted")
+        base_sha = str(
+            git(repo, "rev-parse", "--verify", f"{target_ref}^{{commit}}")
+        ).strip()
+        if plan.get("base_sha") != base_sha:
+            raise PublicationIntegrityError(
+                "RUN_PLAN target moved; rebase and initialize a new candidate run"
+            )
+        policy_ref = plan.get("integration_policy")
+        if not isinstance(policy_ref, Mapping):
+            raise PublicationIntegrityError("RUN_PLAN lacks integration_policy")
+        policy_bytes, policy = load_publication_policy(
+            repo,
+            policy_ref.get("path"),
+            expected_sha256=str(policy_ref.get("sha256") or ""),
+        )
+        if policy_ref != {
+            "path": policy_ref.get("path"),
+            "sha256": bytes_sha256(policy_bytes),
+            "policy_id": policy.get("policy_id"),
+        }:
+            raise PublicationIntegrityError("RUN_PLAN integration_policy drifted")
+        expected_publication_budget = {
+            field: policy[field]
+            for field in (
+                "max_open_prs",
+                "max_direct_to_target_prs",
+                "max_prs_per_change_set",
+                "max_stack_depth",
+                "max_file_overlap_prs",
+            )
+        }
+        if plan.get("publication_budget") != expected_publication_budget:
+            raise PublicationIntegrityError("RUN_PLAN publication budget drifted")
+        binding = plan.get("candidate_binding")
+        binding_errors = validate_candidate_binding(
+            binding,
+            repo=repo,
+            require_frozen=False,
+        )
+        if binding_errors:
+            raise PublicationIntegrityError("; ".join(binding_errors))
+        if isinstance(binding, Mapping) and binding.get("state") == "frozen":
+            if binding.get("base_sha") != base_sha:
+                raise PublicationIntegrityError(
+                    "RUN_PLAN candidate seal is based on a different target"
+                )
+        if plan.get("publication_mode") != "external_publisher_only":
+            raise PublicationIntegrityError(
+                "RUN_PLAN publication_mode must be external_publisher_only"
+            )
+        if plan.get("github_pr_created_by_harness") is not False:
+            raise PublicationIntegrityError(
+                "RUN_PLAN must record github_pr_created_by_harness=false"
+            )
+        if plan.get("status") not in {"initialized", "candidate_frozen"}:
+            raise PublicationIntegrityError(
+                "RUN_PLAN status must be initialized or candidate_frozen"
+            )
+        candidate_ref = plan.get("candidate_ref")
+        if not isinstance(candidate_ref, str) or not candidate_ref:
+            raise PublicationIntegrityError("RUN_PLAN candidate_ref must be non-empty")
+        spec_ref = plan.get("spec_ref")
+        confined_repo_file(repo, str(spec_ref or ""), label="RUN_PLAN spec_ref")
+        # Keep these names used so a malformed value cannot be normalized away.
+        _ = (change_set_id, publication_group_id)
+    except (OSError, PublicationIntegrityError, ValueError) as exc:
+        errors.append(str(exc))
+    return errors
 
 
 def _validate_claim_references(
@@ -868,7 +1045,22 @@ def validate_assignment_payload(
     historical = run_id in historical_runs
 
     actual_id = assignment.get("assignment_id")
-    expected_schema = 1 if historical else 2
+    run_plan: Mapping[str, Any] | None = None
+    if not historical and repo is not None:
+        plan_path = repo / ".agent-harness" / "runs" / run_id / "RUN_PLAN.json"
+        try:
+            loaded_plan = load_json(plan_path)
+        except (OSError, json.JSONDecodeError):
+            loaded_plan = None
+        if isinstance(loaded_plan, Mapping):
+            run_plan = loaded_plan
+    expected_schema = (
+        1
+        if historical
+        else 3
+        if run_plan is not None and run_plan.get("schema_version") == 2
+        else 2
+    )
     if assignment.get("schema_version") != expected_schema:
         errors.append(f"assignment schema_version must equal {expected_schema}")
     if assignment.get("run_id") != run_id:
@@ -971,6 +1163,59 @@ def validate_assignment_payload(
                 errors=errors,
                 require_hash=True,
             )
+    if expected_schema == 3:
+        if run_plan is None:
+            errors.append("schema-v3 assignment requires a schema-v2 RUN_PLAN")
+        else:
+            for field in (
+                "work_unit_id",
+                "change_set_id",
+                "publication_group_id",
+            ):
+                if assignment.get(field) != run_plan.get(field):
+                    errors.append(
+                        f"assignment {field} does not match the registered RUN_PLAN"
+                    )
+        workflow_role = assignment.get("workflow_role")
+        if workflow_role not in {"implementer", "reviewer", "adjudicator"}:
+            errors.append(
+                "assignment workflow_role must be implementer, reviewer, or adjudicator"
+            )
+        if workflow_role == "publisher":
+            errors.append("publisher is not a subagent workflow role")
+        if (
+            workflow_role in {"reviewer", "adjudicator"}
+            and run_plan is not None
+            and assignment.get("candidate_binding")
+            != run_plan.get("candidate_binding")
+        ):
+            errors.append(
+                "review assignment candidate_binding does not match the "
+                "frozen RUN_PLAN candidate"
+            )
+        binding_errors = validate_candidate_binding(
+            assignment.get("candidate_binding"),
+            repo=repo if repo is not None else root(),
+            require_frozen=workflow_role in {"reviewer", "adjudicator"},
+        )
+        errors.extend(f"assignment {item}" for item in binding_errors)
+        binding = assignment.get("candidate_binding")
+        if (
+            workflow_role == "implementer"
+            and isinstance(binding, Mapping)
+            and binding.get("state") != "mutable"
+        ):
+            errors.append(
+                "implementer assignment cannot mutate an already frozen candidate"
+            )
+        if (
+            workflow_role == "reviewer"
+            and isinstance(agent_type, str)
+            and registry is not None
+            and agent_type in registry
+            and registry[agent_type].get("sandbox_mode") != "read-only"
+        ):
+            errors.append("reviewer workflow_role requires a read-only profile")
     return errors
 
 

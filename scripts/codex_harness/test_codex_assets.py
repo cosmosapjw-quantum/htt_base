@@ -216,7 +216,12 @@ def test_shared_context_packet_is_merged_and_versioned() -> None:
     }
 
     hooks = json.loads((REPO_ROOT / ".codex/hooks.json").read_text(encoding="utf-8"))
-    assert set(hooks["hooks"]) == {"SessionStart", "SubagentStart", "SubagentStop"}
+    assert set(hooks["hooks"]) == {
+        "SessionStart",
+        "SubagentStart",
+        "SubagentStop",
+        "PreToolUse",
+    }
 
 
 def test_shared_context_harness_and_stop_hook_fail_closed(tmp_path: Path) -> None:
@@ -748,11 +753,29 @@ def test_installer_copies_repo_scoped_assets_with_project_harness_config(
         ".codex/hooks.json",
         ".codex/hooks/session_start_context.py",
         ".codex/rules/default.rules",
+        ".claude/settings.json",
+        ".agents/hooks.json",
+        ".agents/rules/publication-integrity.md",
+        ".prguard/.gitignore",
         ".agent-harness/README.md",
         ".agent-harness/generated/CONTEXT_PACK.md",
+        ".agent-harness/scripts/candidate_seal.py",
+        ".agent-harness/scripts/pr_inventory.py",
+        ".agent-harness/scripts/pr_publication_gate.py",
+        ".agent-harness/scripts/provider_publication_hook.py",
+        ".agent-harness/scripts/publication_integrity.py",
         ".agent-harness/scripts/validate_harness.py",
+        ".agent-harness/templates/CANDIDATE_SEAL.json",
+        ".agent-harness/templates/INTEGRATION_RECEIPT.json",
+        ".agent-harness/templates/PR_INVENTORY.json",
+        ".agent-harness/templates/PUBLISH_AUTHORIZATION.json",
+        ".agent-harness/templates/REVIEW_COVERAGE.json",
         ".agent-harness/templates/RESULT_ENVELOPE.json",
         "docs/codex_handoff/pr_backlog.yaml",
+        "docs/harness/OVERNIGHT_CONTROLLER_PUBLICATION_CONTRACT.md",
+        "docs/harness/PUBLICATION_INTEGRITY.md",
+        "docs/research_program/long_horizon_rescue/pr247_publication_policy.json",
+        "docs/research_program/long_horizon_rescue/pr247_spec.yaml",
         "scripts/codex_harness/verify_skill_layout.py",
         "harness_templates/vendor/physmath-gpt56/3.1.0/coding/manifest.json",
         "harness_templates/vendor/physmath-gpt56/3.1.0/research/manifest.json",

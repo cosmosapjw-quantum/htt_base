@@ -27,6 +27,8 @@ from _harness import (
     historical_run_ids,
     load_json,
     root,
+    run_merge_input_manifest,
+    run_merge_input_sha256,
     utc_now,
     validate_assignment_payload,
 )
@@ -295,6 +297,34 @@ def main() -> None:
         "conflicts": conflicts,
         "errors": errors,
     }
+    try:
+        merge_inputs = run_merge_input_manifest(repo, run_dir)
+    except ValueError as exc:
+        errors.append(
+            {
+                "path": str(run_dir.relative_to(repo)),
+                "error": str(exc),
+            }
+        )
+        merge_inputs = []
+    output.update(
+        {
+            "work_unit_id": plan.get("work_unit_id"),
+            "change_set_id": plan.get("change_set_id"),
+            "publication_group_id": plan.get("publication_group_id"),
+            "assignment_count": len(assignments),
+            "validated_result_count": len(valid_assignment_ids),
+            "merge_inputs": merge_inputs,
+            "merge_input_sha256": run_merge_input_sha256(merge_inputs),
+        }
+    )
+    output["process_status"] = (
+        "INVALID_ENVELOPES"
+        if errors
+        else "CONFLICTS_REQUIRE_ADJUDICATION"
+        if conflicts
+        else "STRUCTURALLY_VALID"
+    )
     out = run_dir / "MERGED_RESULTS.json"
     dump_json(out, output)
     print(out.relative_to(repo))

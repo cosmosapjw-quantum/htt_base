@@ -158,6 +158,29 @@ If progress percentage does not advance after five PRs, perform step-back/advers
 
 <!-- Distribution note: AGENTS.md.fragment is a merge-only compatibility suffix. This merged AGENTS.md copy is authoritative; the fragment has no independent authority. -->
 
+## Change-set and publication integrity
+
+- An internal DAG `PR-*` card is a work unit, not a GitHub pull request.
+  One failure type produces a finding or commit; one coherent frozen
+  `change_set_id` may produce at most one open GitHub PR.
+- Implementers and reviewers stop at local branches, commits, candidate seals,
+  review coverage, integration receipts, and publication recommendations.
+  They must not run `git push`, Git transport equivalents, `gh`/GitHub API PR
+  mutations, GitHub MCP mutation actions, or authenticated GitHub web-UI
+  publication. Unattended work normally creates zero GitHub PRs.
+- Reviewer and adjudicator assignments require a frozen candidate seal. Any
+  target, candidate, tree, diff, changed-file, remote-destination, or
+  integration-policy drift invalidates downstream evidence. A repair creates a
+  new candidate and requires a new read-only first verdict.
+- Publication belongs to a serialized process outside ordinary agent
+  sandboxes. It must own credentials and a nonce ledger unavailable to agents,
+  refresh the remote target and open-PR inventory, and consume the exact
+  candidate, review, integration, inventory, and short-lived authorization
+  artifacts through `pr_publication_gate.py`.
+- Repository hooks are guardrails, not a complete capability boundary.
+  Managed policy plus credential/network isolation, including removal of
+  write-capable browser sessions, is required for hard enforcement.
+
 ## Mandatory shared-context protocol for subagent workflows
 
 This repository uses spec-driven development and evidence-bearing subagent audits. `AGENTS.md` is the durable operating policy and `.agent-harness/context/CONTEXT_INDEX.json` is the sole persistent harness context configuration. `CONTEXT_PACK.md` is a generated delivery view; assignments and results are evidence scoped to one run, not global authority.

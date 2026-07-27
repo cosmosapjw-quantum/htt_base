@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "policy_id": "PR247-PUBLICATION-POLICY",
+  "max_open_prs": 1,
+  "max_direct_to_target_prs": 1,
+  "max_prs_per_change_set": 1,
+  "max_stack_depth": 1,
+  "max_file_overlap_prs": 0,
+  "max_inventory_age_seconds": 300,
+  "max_receipt_age_seconds": 1800,
+  "max_authorization_ttl_seconds": 1800,
+  "required_review_cells": [
+    "candidate_identity",
+    "changed_public_apis",
+    "changed_call_sites",
+    "bool_as_int",
+    "nan_inf",
+    "empty_zero_negative",
+    "shape_dtype",
+    "duplicate_alias_reuse",
+    "mutation_control",
+    "property_metamorphic",
+    "compatibility",
+    "concurrency_replay_state",
+    "latest_target_integration"
+  ],
+  "required_commands": [
+    {
+      "id": "harness-enforcement",
+      "argv": [
+        "{python}",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "-q",
+        "scripts/codex_harness/test_harness_enforcement.py",
+        "scripts/codex_harness/test_publication_integrity.py",
+        "scripts/codex_harness/test_codex_assets.py"
+      ],
+      "timeout_seconds": 900
+    },
+    {
+      "id": "dag-and-status",
+      "argv": [
+        "{python}",
+        "-B",
+        "scripts/codex_harness/validate_pr_dag.py",
+        "docs/codex_handoff/pr_backlog.yaml",
+        "--status",
+        "docs/codex_handoff/pr_status.yaml",
+        "--strict-rescue-slice"
+      ],
+      "timeout_seconds": 180
+    },
+    {
+      "id": "harness-live",
+      "argv": [
+        "{python}",
+        "-B",
+        ".agent-harness/scripts/validate_harness.py"
+      ],
+      "timeout_seconds": 180
+    }
+  ]
+}
