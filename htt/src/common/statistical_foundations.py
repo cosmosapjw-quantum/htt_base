@@ -21,7 +21,8 @@ import math
 from dataclasses import dataclass
 from enum import Enum
 from fractions import Fraction
-from typing import Iterable
+from statistics import NormalDist
+from typing import Iterable, Mapping, Sequence
 
 from common.mes_theorem_authority import (
     BRANCHES,
@@ -58,6 +59,38 @@ class AnchorConditioning(_StringEnum):
     ENSEMBLE_CALIBRATED = "ENSEMBLE_CALIBRATED"
 
 
+class IdentificationStatus(_StringEnum):
+    POINT_IDENTIFIED = "POINT_IDENTIFIED"
+    WEAKLY_IDENTIFIED = "WEAKLY_IDENTIFIED"
+    PARTIALLY_IDENTIFIED = "PARTIALLY_IDENTIFIED"
+    NON_IDENTIFIED = "NON_IDENTIFIED"
+    EMPTY = "EMPTY"
+
+
+class NullKind(_StringEnum):
+    NONE = "NONE"
+    STRUCTURAL = "STRUCTURAL"
+    LEADING_ORDER = "LEADING_ORDER"
+    NUMERICAL = "NUMERICAL"
+
+
+class StressStatus(_StringEnum):
+    DEFINED = "DEFINED"
+    RATIO_UNIDENTIFIED = "RATIO_UNIDENTIFIED"
+    ANCHOR_UNAVAILABLE = "ANCHOR_UNAVAILABLE"
+    CHANNEL_MISMATCH = "CHANNEL_MISMATCH"
+    NUMERATOR_UNIDENTIFIED = "NUMERATOR_UNIDENTIFIED"
+
+
+class BudgetRadiusStatus(_StringEnum):
+    DEFINED = "DEFINED"
+    NULL_RESIDUAL_PRESENT = "NULL_RESIDUAL_PRESENT"
+
+
+BC1_LEGACY_PROJECTION = "BC1_LEGACY_PROJECTION"
+BC2_NO_REPRESENTATION_PROMOTION = "BC2_NO_REPRESENTATION_PROMOTION"
+
+
 def _required_text(value: object, field_name: str) -> str:
     if not isinstance(value, str) or not value.strip():
         raise StatisticalFoundationError(
@@ -79,6 +112,19 @@ def _finite_nonnegative(value: object, field_name: str) -> float:
     if not math.isfinite(out) or out < 0.0:
         raise StatisticalFoundationError(
             f"{field_name} must be a finite non-negative real number"
+        )
+    return out
+
+
+def _finite_real(value: object, field_name: str) -> float:
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        raise StatisticalFoundationError(
+            f"{field_name} must be a finite real number"
+        )
+    out = float(value)
+    if not math.isfinite(out):
+        raise StatisticalFoundationError(
+            f"{field_name} must be a finite real number"
         )
     return out
 
@@ -504,12 +550,531 @@ def quarantined_shear_anchors(
     }
 
 
+def _numeric_tuple(
+    values: Sequence[object], field_name: str, *, length: int | None = None
+) -> tuple[float, ...]:
+    if isinstance(values, (str, bytes)):
+        raise StatisticalFoundationError(f"{field_name} must be a numeric sequence")
+    out = tuple(
+        _finite_real(value, f"{field_name}[{index}]")
+        for index, value in enumerate(values)
+    )
+    if length is not None and len(out) != length:
+        raise StatisticalFoundationError(
+            f"{field_name} must have length {length}, got {len(out)}"
+        )
+    if not out:
+        raise StatisticalFoundationError(f"{field_name} must not be empty")
+    return out
+
+
+@dataclass(frozen=True)
+class DepartureState:
+    """Immutable signed irreducible state, separate from every anchor.
+
+    Components use an explicitly named basis and units.  This type deliberately
+    has no automatic conversion to a family, morphology, probability or MES
+    stress.  A caller that needs the non-negative budget summaries must provide
+    their already registered normalization through :class:`SummaryDepartureState`.
+    """
+
+    sigma_ab: tuple[float, ...]
+    omega_a: tuple[float, ...]
+    beta_a: tuple[float, ...]
+    delta_omega_k: float
+    frame: str
+    congruence: str
+    epoch_window: str
+    averaging_scale: str
+    basis: str
+    units: str
+    parity: str
+    perturbative_order: str
+
+    def __post_init__(self) -> None:
+        object.__setattr__(
+            self, "sigma_ab", _numeric_tuple(self.sigma_ab, "sigma_ab", length=5)
+        )
+        object.__setattr__(
+            self, "omega_a", _numeric_tuple(self.omega_a, "omega_a", length=3)
+        )
+        object.__setattr__(
+            self, "beta_a", _numeric_tuple(self.beta_a, "beta_a", length=3)
+        )
+        object.__setattr__(
+            self,
+            "delta_omega_k",
+            _finite_real(self.delta_omega_k, "delta_omega_k"),
+        )
+        for name in (
+            "frame",
+            "congruence",
+            "epoch_window",
+            "averaging_scale",
+            "basis",
+            "units",
+            "parity",
+            "perturbative_order",
+        ):
+            _required_text(getattr(self, name), name)
+
+    @property
+    def vector(self) -> tuple[float, ...]:
+        return (*self.sigma_ab, *self.omega_a, *self.beta_a, self.delta_omega_k)
+
+
+@dataclass(frozen=True)
+class SummaryDepartureState:
+    """Non-negative sector summaries plus the signed curvature coordinate."""
+
+    sigma2: float
+    w2: float
+    omega_tilt: float
+    delta_omega_k: float
+    normalization: str
+    source_state_id: str
+
+    def __post_init__(self) -> None:
+        for name in ("sigma2", "w2", "omega_tilt"):
+            object.__setattr__(
+                self, name, _finite_nonnegative(getattr(self, name), name)
+            )
+        object.__setattr__(
+            self,
+            "delta_omega_k",
+            _finite_real(self.delta_omega_k, "delta_omega_k"),
+        )
+        _required_text(self.normalization, "normalization")
+        _required_text(self.source_state_id, "source_state_id")
+
+    @property
+    def x_C(self) -> float:
+        """Exact legacy signed Gauss/Friedmann coordinate in float form."""
+        return self.sigma2 - self.w2 + self.omega_tilt + self.delta_omega_k
+
+
+@dataclass(frozen=True)
+class SectorAlias:
+    alias: str
+    canonical: str
+    caveat: str
+
+    def __post_init__(self) -> None:
+        _required_text(self.alias, "alias")
+        _required_text(self.canonical, "canonical")
+        _required_text(self.caveat, "caveat")
+        if self.alias == self.canonical:
+            raise StatisticalFoundationError("alias must differ from canonical")
+
+
+W2_V2_ALIAS = SectorAlias(
+    alias="V2",
+    canonical="W2",
+    caveat="normalized vorticity alias only; never identify it with Nilsson W_N2",
+)
+
+
+@dataclass(frozen=True)
+class ScalarRange:
+    lower: float
+    upper: float
+
+    def __post_init__(self) -> None:
+        if isinstance(self.lower, bool) or isinstance(self.upper, bool):
+            raise StatisticalFoundationError(
+                "ScalarRange endpoints must not be boolean"
+            )
+        lower = float(self.lower)
+        upper = float(self.upper)
+        if math.isnan(lower) or math.isnan(upper) or lower > upper:
+            raise StatisticalFoundationError(
+                "ScalarRange requires ordered non-NaN endpoints"
+            )
+        object.__setattr__(self, "lower", lower)
+        object.__setattr__(self, "upper", upper)
+
+    @property
+    def is_point(self) -> bool:
+        return self.lower == self.upper
+
+    def separated_from_zero(self, *, atol: float, rtol: float) -> bool:
+        atol = _finite_nonnegative(atol, "atol")
+        rtol = _finite_nonnegative(rtol, "rtol")
+        scale = max(abs(self.lower), abs(self.upper), 1.0)
+        tolerance = atol + rtol * scale
+        return self.lower > tolerance or self.upper < -tolerance
+
+
+@dataclass(frozen=True)
+class IdentifiedDepartureSet:
+    """Finite-generator feasible set with explicit recession and null kinds."""
+
+    coordinate_names: tuple[str, ...]
+    vertices: tuple[tuple[float, ...], ...]
+    recession_directions: tuple[tuple[float, ...], ...]
+    null_kinds: tuple[NullKind, ...]
+    assumptions: tuple[str, ...]
+    status: IdentificationStatus
+    representation: str = "VERTEX_RECESSION_V1"
+
+    def __post_init__(self) -> None:
+        if not isinstance(self.status, IdentificationStatus):
+            raise StatisticalFoundationError(
+                "status must be an IdentificationStatus"
+            )
+        names = _text_tuple(self.coordinate_names, "coordinate_names")
+        object.__setattr__(self, "coordinate_names", names)
+        dimension = len(names)
+        vertices = tuple(
+            _numeric_tuple(row, "vertices", length=dimension)
+            for row in self.vertices
+        )
+        recession = tuple(
+            _numeric_tuple(row, "recession_directions", length=dimension)
+            for row in self.recession_directions
+        )
+        if any(all(value == 0.0 for value in row) for row in recession):
+            raise StatisticalFoundationError(
+                "recession directions must be non-zero"
+            )
+        if self.status is IdentificationStatus.EMPTY:
+            if vertices or recession:
+                raise StatisticalFoundationError(
+                    "EMPTY identified sets must not carry generators"
+                )
+        elif not vertices:
+            raise StatisticalFoundationError(
+                "non-empty identified sets require at least one vertex"
+            )
+        if self.status is IdentificationStatus.POINT_IDENTIFIED and (
+            len(set(vertices)) != 1 or recession
+        ):
+            raise StatisticalFoundationError(
+                "POINT_IDENTIFIED requires one unique point and no recession"
+            )
+        if len(self.null_kinds) != dimension:
+            raise StatisticalFoundationError(
+                "null_kinds must match the coordinate dimension"
+            )
+        if any(not isinstance(kind, NullKind) for kind in self.null_kinds):
+            raise StatisticalFoundationError(
+                "null_kinds entries must be NullKind values"
+            )
+        object.__setattr__(self, "vertices", vertices)
+        object.__setattr__(self, "recession_directions", recession)
+        object.__setattr__(
+            self, "assumptions", _text_tuple(self.assumptions, "assumptions")
+        )
+        _required_text(self.representation, "representation")
+
+    @property
+    def dimension(self) -> int:
+        return len(self.coordinate_names)
+
+    def support(self, direction: Sequence[object], *, tol: float = 1e-12) -> float:
+        if self.status is IdentificationStatus.EMPTY:
+            raise StatisticalFoundationError("EMPTY set has no support function")
+        vector = _numeric_tuple(direction, "direction", length=self.dimension)
+        tol = _finite_nonnegative(tol, "tol")
+        if any(
+            sum(a * b for a, b in zip(vector, ray)) > tol
+            for ray in self.recession_directions
+        ):
+            return math.inf
+        return max(
+            sum(a * b for a, b in zip(vector, vertex))
+            for vertex in self.vertices
+        )
+
+    def interval(self, direction: Sequence[object]) -> ScalarRange:
+        vector = _numeric_tuple(direction, "direction", length=self.dimension)
+        upper = self.support(vector)
+        lower_support = self.support(tuple(-value for value in vector))
+        lower = -lower_support
+        return ScalarRange(lower=lower, upper=upper)
+
+
+@dataclass(frozen=True)
+class SectorStress:
+    sector: str
+    status: StressStatus
+    anchor_id: str | None
+    saturation: ScalarRange | None
+    exceedance: ScalarRange | None
+    allowed_use: tuple[str, ...]
+    rationale: str
+
+    def __post_init__(self) -> None:
+        _required_text(self.sector, "sector")
+        if not isinstance(self.status, StressStatus):
+            raise StatisticalFoundationError("status must be a StressStatus")
+        if self.status is StressStatus.DEFINED:
+            if self.saturation is None or self.exceedance is None:
+                raise StatisticalFoundationError(
+                    "DEFINED stress requires saturation and exceedance ranges"
+                )
+            _required_text(self.anchor_id, "anchor_id")
+        elif self.saturation is not None or self.exceedance is not None:
+            raise StatisticalFoundationError(
+                "undefined stress must not carry numeric ranges"
+            )
+        object.__setattr__(
+            self, "allowed_use", _text_tuple(self.allowed_use, "allowed_use")
+        )
+        _required_text(self.rationale, "rationale")
+
+
+@dataclass(frozen=True)
+class AnchorStressReport:
+    stresses: tuple[SectorStress, ...]
+    conditioning: AnchorConditioning
+    allowed_use: tuple[str, ...] = (
+        "one-way channel-matched anchor stress",
+    )
+    forbidden_use: tuple[str, ...] = (
+        "FLRW converse",
+        "distance",
+        "occupancy",
+        "family identification",
+    )
+
+    def __post_init__(self) -> None:
+        if not self.stresses:
+            raise StatisticalFoundationError("stresses must not be empty")
+        if len({stress.sector for stress in self.stresses}) != len(self.stresses):
+            raise StatisticalFoundationError("stress sectors must be unique")
+        if not isinstance(self.conditioning, AnchorConditioning):
+            raise StatisticalFoundationError(
+                "conditioning must be an AnchorConditioning"
+            )
+        object.__setattr__(
+            self, "allowed_use", _text_tuple(self.allowed_use, "allowed_use")
+        )
+        object.__setattr__(
+            self, "forbidden_use", _text_tuple(self.forbidden_use, "forbidden_use")
+        )
+
+    @property
+    def saturation_vector(self) -> tuple[ScalarRange | None, ...]:
+        return tuple(stress.saturation for stress in self.stresses)
+
+
+def evaluate_sector_stress(
+    *,
+    sector: str,
+    numerator: ScalarRange | None,
+    numerator_channel_key: tuple[str, ...] | None,
+    anchor: MESAnchorSpec | None,
+) -> SectorStress:
+    """Construct one typed stress without cross-channel scalar synthesis."""
+    sector = _required_text(sector, "sector")
+    if numerator is None or numerator_channel_key is None:
+        return SectorStress(
+            sector=sector,
+            status=StressStatus.NUMERATOR_UNIDENTIFIED,
+            anchor_id=None if anchor is None else anchor.anchor_id,
+            saturation=None,
+            exceedance=None,
+            allowed_use=("partial-identification status",),
+            rationale="numerator is not point/set identified in this channel",
+        )
+    if anchor is None or not anchor.normalization_allowed:
+        return SectorStress(
+            sector=sector,
+            status=StressStatus.ANCHOR_UNAVAILABLE,
+            anchor_id=None if anchor is None else anchor.anchor_id,
+            saturation=None,
+            exceedance=None,
+            allowed_use=("anchor availability report",),
+            rationale="no verified numeric anchor is available",
+        )
+    if tuple(numerator_channel_key) != anchor.channel_key:
+        return SectorStress(
+            sector=sector,
+            status=StressStatus.CHANNEL_MISMATCH,
+            anchor_id=anchor.anchor_id,
+            saturation=None,
+            exceedance=None,
+            allowed_use=("channel mismatch report",),
+            rationale="numerator and anchor frame/order/branch identities differ",
+        )
+    if numerator.lower < 0.0:
+        return SectorStress(
+            sector=sector,
+            status=StressStatus.NUMERATOR_UNIDENTIFIED,
+            anchor_id=anchor.anchor_id,
+            saturation=None,
+            exceedance=None,
+            allowed_use=("partial-identification status",),
+            rationale="non-negative invariant numerator has a negative feasible bound",
+        )
+    assert anchor.value is not None
+    saturation = ScalarRange(
+        numerator.lower / anchor.value,
+        numerator.upper / anchor.value,
+    )
+    exceedance = ScalarRange(
+        max(saturation.lower - 1.0, 0.0),
+        max(saturation.upper - 1.0, 0.0),
+    )
+    return SectorStress(
+        sector=sector,
+        status=StressStatus.DEFINED,
+        anchor_id=anchor.anchor_id,
+        saturation=saturation,
+        exceedance=exceedance,
+        allowed_use=("one-way linear-premise stress",),
+        rationale=(
+            "s>1 is evidence against the registered premises; s<=1 proves no "
+            "converse"
+        ),
+    )
+
+
+@dataclass(frozen=True)
+class BudgetRadiusResult:
+    radius_sq: tuple[float, ...]
+    rank: int
+    null_residual: tuple[float, ...]
+    status: BudgetRadiusStatus
+
+    def __post_init__(self) -> None:
+        object.__setattr__(
+            self, "radius_sq", _numeric_tuple(self.radius_sq, "radius_sq")
+        )
+        object.__setattr__(
+            self,
+            "null_residual",
+            _numeric_tuple(self.null_residual, "null_residual"),
+        )
+        if len(self.radius_sq) != len(self.null_residual):
+            raise StatisticalFoundationError(
+                "radius_sq and null_residual must have equal length"
+            )
+        if isinstance(self.rank, bool) or not isinstance(self.rank, int) or self.rank < 0:
+            raise StatisticalFoundationError("rank must be a non-negative integer")
+        if not isinstance(self.status, BudgetRadiusStatus):
+            raise StatisticalFoundationError(
+                "status must be a BudgetRadiusStatus"
+            )
+
+
+@dataclass(frozen=True)
+class DiagnosticScalarReport:
+    name: str
+    value_range: ScalarRange | None
+    status: str
+    null_calibration: str
+    bin_metadata: tuple[tuple[str, str], ...] = ()
+
+    def __post_init__(self) -> None:
+        _required_text(self.name, "name")
+        _required_text(self.status, "status")
+        _required_text(self.null_calibration, "null_calibration")
+        metadata = tuple(
+            (
+                _required_text(key, "bin_metadata.key"),
+                _required_text(value, "bin_metadata.value"),
+            )
+            for key, value in self.bin_metadata
+        )
+        if len({key for key, _ in metadata}) != len(metadata):
+            raise StatisticalFoundationError("bin_metadata keys must be unique")
+        object.__setattr__(self, "bin_metadata", metadata)
+
+
+@dataclass(frozen=True)
+class LegacyProjectionReport:
+    """BC1 wrapper around unchanged historical x_C/Q/F/Pi/G_F values."""
+
+    x_C: DiagnosticScalarReport
+    Q: DiagnosticScalarReport | None = None
+    F: DiagnosticScalarReport | None = None
+    F_C_plus_minus: DiagnosticScalarReport | None = None
+    Pi: DiagnosticScalarReport | None = None
+    G_F: DiagnosticScalarReport | None = None
+    classification: str = BC1_LEGACY_PROJECTION
+    representation_policy: str = BC2_NO_REPRESENTATION_PROMOTION
+    allowed_use: tuple[str, ...] = (
+        "historical reproduction",
+        "signed budget-coordinate reporting",
+    )
+    forbidden_use: tuple[str, ...] = (
+        "departure distance",
+        "identified estimand",
+        "probability",
+        "occupancy",
+        "evidence",
+        "claim-tier promotion",
+    )
+
+    def __post_init__(self) -> None:
+        if self.x_C.name != "x_C":
+            raise StatisticalFoundationError("x_C report must be named x_C")
+        if self.classification != BC1_LEGACY_PROJECTION:
+            raise StatisticalFoundationError("legacy classification is immutable")
+        if self.representation_policy != BC2_NO_REPRESENTATION_PROMOTION:
+            raise StatisticalFoundationError(
+                "representation policy must prohibit claim promotion"
+            )
+        object.__setattr__(
+            self, "allowed_use", _text_tuple(self.allowed_use, "allowed_use")
+        )
+        object.__setattr__(
+            self, "forbidden_use", _text_tuple(self.forbidden_use, "forbidden_use")
+        )
+
+
+def im_critical_value(delta: float, se: float, alpha: float = 0.05) -> float:
+    """Canonical Imbens-Manski critical value with one strict domain."""
+    delta = _finite_nonnegative(delta, "delta")
+    se = _finite_positive(se, "se")
+    alpha = _finite_real(alpha, "alpha")
+    if not 0.0 < alpha < 1.0:
+        raise StatisticalFoundationError("alpha must lie in (0, 1)")
+    normal = NormalDist()
+    ratio = delta / se
+    target = 1.0 - alpha
+
+    def residual(value: float) -> float:
+        return normal.cdf(value + ratio) - normal.cdf(-value) - target
+
+    lower = normal.inv_cdf(1.0 - alpha)
+    upper = normal.inv_cdf(1.0 - alpha / 2.0)
+    for _ in range(100):
+        midpoint = 0.5 * (lower + upper)
+        if residual(midpoint) >= 0.0:
+            upper = midpoint
+        else:
+            lower = midpoint
+    return 0.5 * (lower + upper)
+
+
 __all__ = [
     "AnchorAuthorityKind",
     "AnchorConditioning",
     "AnchorStatus",
+    "AnchorStressReport",
+    "BC1_LEGACY_PROJECTION",
+    "BC2_NO_REPRESENTATION_PROMOTION",
+    "BudgetRadiusResult",
+    "BudgetRadiusStatus",
+    "DepartureState",
+    "DiagnosticScalarReport",
+    "IdentificationStatus",
+    "IdentifiedDepartureSet",
+    "LegacyProjectionReport",
     "MESAnchorSpec",
+    "NullKind",
+    "ScalarRange",
+    "SectorAlias",
+    "SectorStress",
+    "StressStatus",
+    "SummaryDepartureState",
+    "W2_V2_ALIAS",
     "StatisticalFoundationError",
+    "evaluate_sector_stress",
+    "im_critical_value",
     "quarantined_shear_anchors",
     "registered_geodesic_mes_anchors",
 ]

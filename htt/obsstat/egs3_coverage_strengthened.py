@@ -39,6 +39,10 @@ import numpy as np
 import sympy as sp
 from scipy import stats
 
+from common.statistical_foundations import (
+    im_critical_value as _canonical_im_critical_value,
+)
+
 __all__ = [
     "hotelling_scale",
     "estimated_cov_uncorrected_size",
@@ -153,18 +157,8 @@ def hartlap_factor(m: int, n_sim: int) -> float:
 
 # --------------------------------------------------------------------------- T5'
 def im_critical_value(delta: float, se: float, alpha: float = 0.05) -> float:
-    """Solve the Imbens-Manski equation Phi(C + delta/se) - Phi(-C) = 1 - alpha
-    for C >= 0 (deterministic width delta, known se). Monotone in C, unique root."""
-    if se <= 0:
-        raise ValueError("se must be positive")
-    d = float(delta) / float(se)
-    target = 1.0 - float(alpha)
-    from scipy.optimize import brentq
-    f = lambda C: (stats.norm.cdf(C + d) - stats.norm.cdf(-C)) - target
-    # C=z_{1-alpha} (one-sided) undercovers-> f<0; C=z_{1-alpha/2} overcovers-> f>0
-    lo = stats.norm.ppf(1.0 - alpha)
-    hi = stats.norm.ppf(1.0 - alpha / 2.0) + max(d, 0.0) + 1.0
-    return float(brentq(f, lo, hi, xtol=1e-13))
+    """Compatibility wrapper around the strict common IM primitive."""
+    return _canonical_im_critical_value(delta, se, alpha)
 
 
 def im_coverage_exact(delta: float, se: float, alpha: float = 0.05) -> dict:

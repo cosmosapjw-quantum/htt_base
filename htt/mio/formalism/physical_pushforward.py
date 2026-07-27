@@ -10,8 +10,13 @@ from dataclasses import dataclass, field
 from typing import Callable, Mapping, Optional, Sequence
 import hashlib
 import json
+import warnings
 import numpy as np
 
+from common.statistical_foundations import (
+    BudgetRadiusResult,
+    BudgetRadiusStatus,
+)
 
 @dataclass(frozen=True)
 class PushforwardResult:
@@ -125,18 +130,66 @@ def ratio_pushforward(name: str, numerator: np.ndarray, denominator: np.ndarray,
                              identified_components=('numerator','denominator'), source_hash=source)
 
 
-def matrix_budget_radius(samples: np.ndarray, budget: np.ndarray, rcond: float = 1e-12) -> np.ndarray:
-    """Return x^T U^+ x for vector/tensor samples and a PSD budget matrix U."""
+def matrix_budget_radius_report(
+    samples: np.ndarray, budget: np.ndarray, rcond: float = 1e-12
+) -> BudgetRadiusResult:
+    """Return supported quotient radius and explicit null-space residual.
+
+    A singular PSD budget defines a quotient geometry, not a free zero-cost
+    direction.  The supported component receives ``x^T U^+ x`` while the
+    Euclidean norm of the orthogonal null component is reported separately.
+    """
     x = np.asarray(samples, dtype=float)
     u = np.asarray(budget, dtype=float)
     if x.ndim == 1:
         x = x[None, :]
+    if x.ndim != 2 or x.shape[0] == 0 or not np.all(np.isfinite(x)):
+        raise ValueError("samples must be a non-empty finite vector/matrix")
+    if isinstance(rcond, (bool, np.bool_)) or not np.isfinite(rcond) or rcond <= 0:
+        raise ValueError("rcond must be a finite positive real")
     if u.shape != (x.shape[1], x.shape[1]) or not np.allclose(u, u.T, atol=1e-12, rtol=0):
         raise ValueError('budget must be a symmetric square matrix matching sample dimension')
+    if not np.all(np.isfinite(u)):
+        raise ValueError("budget must be finite")
     values, vectors = np.linalg.eigh(u)
     scale = max(1.0, float(np.max(np.abs(values))))
     if float(np.min(values)) < -rcond*scale:
         raise ValueError('budget matrix is not positive semidefinite')
-    inv = np.where(values > rcond*scale, 1.0/values, 0.0)
+    supported = values > rcond * scale
+    inv = np.zeros_like(values)
+    np.divide(1.0, values, out=inv, where=supported)
     pinv = (vectors * inv) @ vectors.T
-    return np.einsum('ni,ij,nj->n', x, pinv, x)
+    radius = np.einsum('ni,ij,nj->n', x, pinv, x)
+    null_basis = vectors[:, ~supported]
+    if null_basis.size:
+        null_residual = np.linalg.norm(x @ null_basis, axis=1)
+    else:
+        null_residual = np.zeros(x.shape[0], dtype=float)
+    threshold = rcond * max(1.0, float(np.linalg.norm(x, ord=2)))
+    status = (
+        BudgetRadiusStatus.NULL_RESIDUAL_PRESENT
+        if np.any(null_residual > threshold)
+        else BudgetRadiusStatus.DEFINED
+    )
+    return BudgetRadiusResult(
+        radius_sq=tuple(float(value) for value in radius),
+        rank=int(np.count_nonzero(supported)),
+        null_residual=tuple(float(value) for value in null_residual),
+        status=status,
+    )
+
+
+def matrix_budget_radius(
+    samples: np.ndarray, budget: np.ndarray, rcond: float = 1e-12
+) -> np.ndarray:
+    """Legacy float-array wrapper; use :func:`matrix_budget_radius_report`."""
+    warnings.warn(
+        "matrix_budget_radius hides rank/null metadata; use "
+        "matrix_budget_radius_report",
+        DeprecationWarning,
+        stacklevel=2,
+    )
+    return np.asarray(
+        matrix_budget_radius_report(samples, budget, rcond).radius_sq,
+        dtype=float,
+    )

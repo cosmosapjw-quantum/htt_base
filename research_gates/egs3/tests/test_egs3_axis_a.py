@@ -41,7 +41,14 @@ class A1GradedComparatorTests(unittest.TestCase):
         nk = describe_null_sectors()
         self.assertEqual(set(nk), {"W2", "Omega_k"})
         self.assertEqual(nk["W2"]["kind"], "structural_null")
-        self.assertEqual(nk["W2"]["order_dependence"], "order_independent")
+        self.assertEqual(
+            nk["W2"]["order_dependence"],
+            "not_claimed_beyond_registered_map",
+        )
+        self.assertEqual(
+            nk["W2"]["scope"],
+            "registered_leading_egs_response_map_only",
+        )
         self.assertEqual(nk["Omega_k"]["kind"], "no_channel_leading_order")
         self.assertEqual(nk["Omega_k"]["order_dependence"], "leading_egs_order_only")
         # the two kinds must differ (no conflation into a single "joint null")

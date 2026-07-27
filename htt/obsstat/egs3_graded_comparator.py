@@ -43,6 +43,7 @@ content, exact response amplitudes need the covariant transfer (EGS3-B1).
 from __future__ import annotations
 
 from dataclasses import dataclass
+import warnings
 import numpy as np
 
 SECTORS = ("Sigma2", "W2", "Omega_tilt", "Omega_k")
@@ -95,27 +96,69 @@ NULL_SECTOR_KIND = {
 class GradedComparator:
     g: np.ndarray            # (Sigma2, W2, Omega_tilt, Omega_k)
     x_C: float               # derived linear summary c . g
-    sector_filling: dict     # per-nonnegative-sector fraction of x_max
 
     def as_dict(self) -> dict:
-        return {"sectors": list(SECTORS), "g": self.g.tolist(), "x_C": self.x_C,
-                "sector_filling": self.sector_filling}
+        return {
+            "sectors": list(SECTORS),
+            "g": self.g.tolist(),
+            "x_C": self.x_C,
+            "classification": "BC1_LEGACY_PROJECTION",
+            "forbidden_use": [
+                "distance",
+                "occupancy",
+                "evidence",
+                "family identification",
+            ],
+        }
 
 
 def graded_comparator(sigma2: float, w2: float, omega_tilt: float, omega_k: float,
-                      x_max: float = 9.25e-6) -> GradedComparator:
-    """Build the graded comparator vector and its derived signed summary x_C.
+                      *, x_max: float | None = None) -> GradedComparator:
+    """Build the graded state and signed BC1 projection.
 
-    Per-sector filling is defined only on the nonnegative sectors (so it never
-    inherits the sign-cancellation pathology of F = x_C/x_max)."""
+    ``x_max`` is no longer an active cross-sector denominator.  Supplying it
+    fails closed; historical reproduction must call
+    :func:`legacy_sector_filling`.
+    """
     g = np.array([float(sigma2), float(w2), float(omega_tilt), float(omega_k)], dtype=float)
+    if not np.all(np.isfinite(g)):
+        raise ValueError("graded comparator components must be finite")
     if np.any(g[[0, 1, 2]] < 0.0):
         raise ValueError("Sigma2, W2, Omega_tilt must be nonnegative")
-    if x_max <= 0.0:
-        raise ValueError("x_max must be positive")
+    if x_max is not None:
+        raise ValueError(
+            "x_max sector filling is legacy-only; call legacy_sector_filling"
+        )
     x_c = float(COMPARATOR_SIGNS @ g)
-    filling = {SECTORS[i]: float(g[i] / x_max) for i in (0, 1, 2)}
-    return GradedComparator(g=g, x_C=x_c, sector_filling=filling)
+    return GradedComparator(g=g, x_C=x_c)
+
+
+def legacy_sector_filling(
+    sigma2: float,
+    w2: float,
+    omega_tilt: float,
+    omega_k: float,
+    *,
+    x_max: float,
+) -> dict:
+    """Historical per-sector box normalization, never an MES occupancy."""
+    warnings.warn(
+        "legacy_sector_filling is BC1 historical reproduction only",
+        DeprecationWarning,
+        stacklevel=2,
+    )
+    if isinstance(x_max, (bool, np.bool_)) or not np.isfinite(x_max) or x_max <= 0:
+        raise ValueError("x_max must be a finite positive legacy box width")
+    comparator = graded_comparator(sigma2, w2, omega_tilt, omega_k)
+    return {
+        "comparator": comparator,
+        "sector_filling": {
+            SECTORS[index]: float(comparator.g[index] / x_max)
+            for index in (0, 1, 2)
+        },
+        "anchor_kind": "SYNTHETIC_SUPPORT_BOUND",
+        "allowed_use": "historical reproduction only",
+    }
 
 
 def channel_response_design(channels: tuple[str, ...] = CHANNELS) -> np.ndarray:

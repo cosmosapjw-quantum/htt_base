@@ -16,21 +16,17 @@ import numpy as np
 from scipy.optimize import brentq
 from scipy.stats import beta, norm
 
+from common.statistical_foundations import im_critical_value
+
 
 def im_constant(delta_over_sigma: float, alpha: float) -> float:
     """Solve Phi(C + Delta/sigma) - Phi(-C) = 1 - alpha for C (Imbens-Manski)."""
-    target = 1.0 - alpha
-
-    def f(c: float) -> float:
-        return norm.cdf(c + delta_over_sigma) - norm.cdf(-c) - target
-
-    # C is between the one-sided z_{1-alpha} and the two-sided z_{1-alpha/2}
-    lo = norm.ppf(1.0 - alpha) - 1e-6
-    hi = norm.ppf(1.0 - alpha / 2.0) + 1e-6
-    return float(brentq(f, lo, hi))
+    return im_critical_value(delta_over_sigma, 1.0, alpha)
 
 
 def im_interval(lo_hat: float, hi_hat: float, sigma: float, alpha: float) -> tuple[float, float]:
+    if not np.isfinite(sigma) or sigma <= 0.0:
+        raise ValueError("sigma must be finite and positive")
     delta = max(hi_hat - lo_hat, 0.0)
     c = im_constant(delta / sigma, alpha)
     return lo_hat - c * sigma, hi_hat + c * sigma
