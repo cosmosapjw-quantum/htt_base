@@ -19,6 +19,7 @@ import hashlib
 import json
 from dataclasses import InitVar, dataclass
 from enum import Enum
+from numbers import Real
 from typing import Sequence
 
 import numpy as np
@@ -51,6 +52,12 @@ class CandidateKind(_StringEnum):
     SYSTEMATICS = "SYSTEMATICS"
     FRAME_MISMATCH = "FRAME_MISMATCH"
     DERIVATIVE_FAILURE = "DERIVATIVE_FAILURE"
+
+
+class CandidateScoringRule(_StringEnum):
+    """Registered score whose values are derived from bound arrays."""
+
+    NEGATIVE_MEAN_SQUARED_ERROR = "NEGATIVE_MEAN_SQUARED_ERROR_V1"
 
 
 class NonlinearityAttributionStatus(_StringEnum):
@@ -99,6 +106,8 @@ _DIAGNOSTIC_FORBIDDEN_USE = (
 )
 _RANK_REPORT_TOKEN = object()
 _NONLINEARITY_REPORT_TOKEN = object()
+_ORBIT_REPORT_TOKEN = object()
+_CANDIDATE_EVALUATION_TOKEN = object()
 
 
 def _contains_bool(value: object) -> bool:
@@ -129,6 +138,20 @@ def _contains_complex(value: object) -> bool:
     return False
 
 
+def _contains_text(value: object) -> bool:
+    if isinstance(value, (str, bytes, np.str_, np.bytes_)):
+        return True
+    if isinstance(value, np.ndarray):
+        if value.dtype.kind in {"U", "S"}:
+            return True
+        if value.dtype.kind == "O":
+            return any(_contains_text(item) for item in value.flat)
+        return False
+    if isinstance(value, (tuple, list)):
+        return any(_contains_text(item) for item in value)
+    return False
+
+
 def _array(
     value: object,
     name: str,
@@ -140,6 +163,8 @@ def _array(
         raise OrbitNonlinearityError(f"{name} must not contain booleans")
     if _contains_complex(value):
         raise OrbitNonlinearityError(f"{name} must be real, not complex")
+    if _contains_text(value):
+        raise OrbitNonlinearityError(f"{name} must be numeric, not text")
     try:
         out = np.asarray(value, dtype=float)
     except (TypeError, ValueError) as exc:
@@ -160,6 +185,10 @@ def _real(value: object, name: str) -> float:
         raise OrbitNonlinearityError(f"{name} must not be boolean")
     if isinstance(value, (complex, np.complexfloating)):
         raise OrbitNonlinearityError(f"{name} must be real, not complex")
+    if isinstance(value, (str, bytes, np.str_, np.bytes_)):
+        raise OrbitNonlinearityError(f"{name} must be numeric, not text")
+    if not isinstance(value, Real):
+        raise OrbitNonlinearityError(f"{name} must be a real number")
     try:
         out = float(value)
     except (TypeError, ValueError) as exc:
@@ -225,6 +254,23 @@ def _texts(
     if len(set(out)) != len(out):
         raise OrbitNonlinearityError(f"{name} must not contain duplicates")
     return out
+
+
+def _diagnostic_lanes(
+    allowed_use: Sequence[object],
+    forbidden_use: Sequence[object],
+) -> tuple[tuple[str, ...], tuple[str, ...]]:
+    allowed = _texts(allowed_use, "allowed_use")
+    forbidden = _texts(forbidden_use, "forbidden_use")
+    if allowed != _DIAGNOSTIC_ALLOWED_USE:
+        raise OrbitNonlinearityError(
+            "allowed_use must match the registered diagnostic lane"
+        )
+    if forbidden != _DIAGNOSTIC_FORBIDDEN_USE:
+        raise OrbitNonlinearityError(
+            "forbidden_use must match the registered claim firewall"
+        )
+    return allowed, forbidden
 
 
 def _matrix_tuple(matrix: np.ndarray) -> tuple[tuple[float, ...], ...]:
@@ -456,8 +502,13 @@ class OrbitInvariantReport:
     perturbative_order: str
     allowed_use: tuple[str, ...] = _DIAGNOSTIC_ALLOWED_USE
     forbidden_use: tuple[str, ...] = _DIAGNOSTIC_FORBIDDEN_USE
+    _construction_token: InitVar[object] = None
 
-    def __post_init__(self) -> None:
+    def __post_init__(self, _construction_token: object) -> None:
+        if _construction_token is not _ORBIT_REPORT_TOKEN:
+            raise OrbitNonlinearityError(
+                "OrbitInvariantReport must be created by orbit_invariants"
+            )
         for name in (
             "tr_sigma2",
             "tr_sigma3",
@@ -482,12 +533,11 @@ class OrbitInvariantReport:
             "perturbative_order",
         ):
             _text(getattr(self, name), name)
-        object.__setattr__(
-            self, "allowed_use", _texts(self.allowed_use, "allowed_use")
+        allowed, forbidden = _diagnostic_lanes(
+            self.allowed_use, self.forbidden_use
         )
-        object.__setattr__(
-            self, "forbidden_use", _texts(self.forbidden_use, "forbidden_use")
-        )
+        object.__setattr__(self, "allowed_use", allowed)
+        object.__setattr__(self, "forbidden_use", forbidden)
 
     @property
     def even_values(self) -> tuple[float, ...]:
@@ -546,6 +596,7 @@ def orbit_invariants(
         units=state.units,
         parity=state.parity,
         perturbative_order=state.perturbative_order,
+        _construction_token=_ORBIT_REPORT_TOKEN,
     )
 
 
@@ -579,12 +630,11 @@ class ResponseRankReport:
             raise OrbitNonlinearityError(
                 "status must be a ResponseRankStatus"
             )
-        object.__setattr__(
-            self, "allowed_use", _texts(self.allowed_use, "allowed_use")
+        allowed, forbidden = _diagnostic_lanes(
+            self.allowed_use, self.forbidden_use
         )
-        object.__setattr__(
-            self, "forbidden_use", _texts(self.forbidden_use, "forbidden_use")
-        )
+        object.__setattr__(self, "allowed_use", allowed)
+        object.__setattr__(self, "forbidden_use", forbidden)
         if self.status is ResponseRankStatus.MISSING_INPUT:
             missing = _texts(self.missing_inputs, "missing_inputs")
             object.__setattr__(self, "missing_inputs", missing)
@@ -745,6 +795,7 @@ def _whiten_supported(
     covariance: object,
     *,
     rtol: float,
+    scale_invariant: bool = False,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray, float]:
     eigenvalues, eigenvectors, support, tolerance = _covariance_support(
         covariance, rtol=rtol
@@ -757,12 +808,26 @@ def _whiten_supported(
     if supported.shape[1] == 0:
         whitened = np.empty((0, *value.shape[1:]), dtype=float)
     else:
-        projected = supported.T @ value
+        projected_value = value
+        if scale_invariant:
+            value_scale = float(np.max(np.abs(value), initial=0.0))
+            if value_scale > 0.0:
+                projected_value = value / value_scale
+        projected = supported.T @ projected_value
         scale = np.sqrt(eigenvalues[support])
+        if scale_invariant:
+            # A positive common covariance scale cannot change a response
+            # rank or tangent subspace.  Remove it before division so finite
+            # response/covariance pairs cannot silently underflow to rank 0.
+            scale = scale / float(np.max(scale))
         if value.ndim == 1:
             whitened = projected / scale
         else:
             whitened = projected / scale[:, None]
+        if not np.isfinite(whitened).all():
+            raise OrbitNonlinearityError(
+                "supported whitening is not representable at float64 precision"
+            )
     null_vectors = eigenvectors[:, ~support]
     return whitened, null_vectors, supported, tolerance
 
@@ -837,7 +902,10 @@ def measure_response_rank(
         _evidence_receipt(value, name)
     covariance_matrix = _array(covariance, "covariance", ndim=2)
     whitened, _, supported, _ = _whiten_supported(
-        matrix, covariance_matrix, rtol=rtol
+        matrix,
+        covariance_matrix,
+        rtol=rtol,
+        scale_invariant=True,
     )
     rank, singular, tolerance, nullspace = _svd_rank(
         whitened, rtol=rtol
@@ -873,11 +941,7 @@ def measure_response_rank(
 
 @dataclass(frozen=True)
 class CandidateEvaluation:
-    """Held-out scores for one registered explanatory candidate.
-
-    Larger scores are better.  Both held-out and matched-injection scores are
-    required so a candidate cannot win only by reusing the observed residual.
-    """
+    """Factory-derived held-out scores bound to predictions and targets."""
 
     candidate_id: str
     kind: CandidateKind
@@ -885,11 +949,26 @@ class CandidateEvaluation:
     matched_injection_score: float
     held_out_data_id: str
     matched_injection_data_id: str
+    model_config_id: str
+    scoring_rule: CandidateScoringRule
+    held_out_prediction_id: str
+    matched_injection_prediction_id: str
+    evaluation_id: str
+    _construction_token: InitVar[object] = None
 
-    def __post_init__(self) -> None:
+    def __post_init__(self, _construction_token: object) -> None:
+        if _construction_token is not _CANDIDATE_EVALUATION_TOKEN:
+            raise OrbitNonlinearityError(
+                "CandidateEvaluation must be created by "
+                "evaluate_candidate_predictions"
+            )
         _text(self.candidate_id, "candidate_id")
         if not isinstance(self.kind, CandidateKind):
             raise OrbitNonlinearityError("kind must be a CandidateKind")
+        if not isinstance(self.scoring_rule, CandidateScoringRule):
+            raise OrbitNonlinearityError(
+                "scoring_rule must be a CandidateScoringRule"
+            )
         object.__setattr__(
             self, "held_out_score", _real(self.held_out_score, "held_out_score")
         )
@@ -911,10 +990,184 @@ class CandidateEvaluation:
                 "matched_injection_data_id",
             ),
         )
+        for name in (
+            "model_config_id",
+            "held_out_prediction_id",
+            "matched_injection_prediction_id",
+            "evaluation_id",
+        ):
+            object.__setattr__(
+                self, name, _evidence_receipt(getattr(self, name), name)
+            )
         if self.held_out_data_id == self.matched_injection_data_id:
             raise OrbitNonlinearityError(
                 "held-out and matched-injection data identities must differ"
             )
+        expected_id = _candidate_evaluation_identity(
+            candidate_id=self.candidate_id,
+            kind=self.kind,
+            held_out_score=self.held_out_score,
+            matched_injection_score=self.matched_injection_score,
+            held_out_data_id=self.held_out_data_id,
+            matched_injection_data_id=self.matched_injection_data_id,
+            model_config_id=self.model_config_id,
+            scoring_rule=self.scoring_rule,
+            held_out_prediction_id=self.held_out_prediction_id,
+            matched_injection_prediction_id=(
+                self.matched_injection_prediction_id
+            ),
+        )
+        if self.evaluation_id != expected_id:
+            raise OrbitNonlinearityError(
+                "evaluation_id does not bind the candidate evaluation"
+            )
+
+
+def _negative_mean_squared_error(
+    prediction: np.ndarray,
+    target: np.ndarray,
+    *,
+    name: str,
+) -> float:
+    difference = prediction - target
+    if not np.isfinite(difference).all():
+        raise OrbitNonlinearityError(
+            f"{name} prediction-target difference is not finite"
+        )
+    scale = float(np.max(np.abs(difference), initial=0.0))
+    if scale == 0.0:
+        return -0.0
+    normalized = difference / scale
+    mean_square = float(np.mean(normalized * normalized))
+    if mean_square > 0.0 and scale > (
+        math.sqrt(np.finfo(float).max) / math.sqrt(mean_square)
+    ):
+        raise OrbitNonlinearityError(f"{name} score is not finite")
+    score = -(scale * scale) * mean_square
+    if not math.isfinite(score):
+        raise OrbitNonlinearityError(f"{name} score is not finite")
+    return score
+
+
+def _candidate_evaluation_identity(
+    *,
+    candidate_id: str,
+    kind: CandidateKind,
+    held_out_score: float,
+    matched_injection_score: float,
+    held_out_data_id: str,
+    matched_injection_data_id: str,
+    model_config_id: str,
+    scoring_rule: CandidateScoringRule,
+    held_out_prediction_id: str,
+    matched_injection_prediction_id: str,
+) -> str:
+    payload = {
+        "candidate_id": candidate_id,
+        "held_out_data_id": held_out_data_id,
+        "held_out_prediction_id": held_out_prediction_id,
+        "held_out_score_hex": held_out_score.hex(),
+        "kind": kind.value,
+        "matched_injection_data_id": matched_injection_data_id,
+        "matched_injection_prediction_id": matched_injection_prediction_id,
+        "matched_injection_score_hex": matched_injection_score.hex(),
+        "model_config_id": model_config_id,
+        "schema": "CANDIDATE_EVALUATION_V1",
+        "scoring_rule": scoring_rule.value,
+    }
+    encoded = json.dumps(
+        payload, sort_keys=True, separators=(",", ":"), ensure_ascii=True
+    ).encode("ascii")
+    return f"sha256:{hashlib.sha256(encoded).hexdigest()}"
+
+
+def evaluate_candidate_predictions(
+    *,
+    candidate_id: str,
+    kind: CandidateKind,
+    held_out_prediction: object,
+    held_out_target: object,
+    matched_injection_prediction: object,
+    matched_injection_target: object,
+    model_config_id: str,
+    scoring_rule: CandidateScoringRule = (
+        CandidateScoringRule.NEGATIVE_MEAN_SQUARED_ERROR
+    ),
+) -> CandidateEvaluation:
+    """Compute and bind one candidate evaluation from exact numeric arrays."""
+
+    _text(candidate_id, "candidate_id")
+    if not isinstance(kind, CandidateKind):
+        raise OrbitNonlinearityError("kind must be a CandidateKind")
+    if not isinstance(scoring_rule, CandidateScoringRule):
+        raise OrbitNonlinearityError(
+            "scoring_rule must be a CandidateScoringRule"
+        )
+    model_id = _evidence_receipt(model_config_id, "model_config_id")
+    held_prediction = _array(
+        held_out_prediction, "held_out_prediction", ndim=1
+    )
+    held_target = _array(held_out_target, "held_out_target", ndim=1)
+    injection_prediction = _array(
+        matched_injection_prediction,
+        "matched_injection_prediction",
+        ndim=1,
+    )
+    injection_target = _array(
+        matched_injection_target, "matched_injection_target", ndim=1
+    )
+    for name, prediction, target in (
+        ("held_out", held_prediction, held_target),
+        ("matched_injection", injection_prediction, injection_target),
+    ):
+        if prediction.size == 0 or prediction.shape != target.shape:
+            raise OrbitNonlinearityError(
+                f"{name} prediction and target must have the same non-empty shape"
+            )
+    held_score = _negative_mean_squared_error(
+        held_prediction, held_target, name="held_out"
+    )
+    injection_score = _negative_mean_squared_error(
+        injection_prediction, injection_target, name="matched_injection"
+    )
+    held_data_id = _array_content_identity(
+        held_target, role="held_out_target"
+    )
+    injection_data_id = _array_content_identity(
+        injection_target, role="matched_injection_target"
+    )
+    held_prediction_id = _array_content_identity(
+        held_prediction, role="held_out_prediction"
+    )
+    injection_prediction_id = _array_content_identity(
+        injection_prediction, role="matched_injection_prediction"
+    )
+    evaluation_id = _candidate_evaluation_identity(
+        candidate_id=candidate_id,
+        kind=kind,
+        held_out_score=held_score,
+        matched_injection_score=injection_score,
+        held_out_data_id=held_data_id,
+        matched_injection_data_id=injection_data_id,
+        model_config_id=model_id,
+        scoring_rule=scoring_rule,
+        held_out_prediction_id=held_prediction_id,
+        matched_injection_prediction_id=injection_prediction_id,
+    )
+    return CandidateEvaluation(
+        candidate_id=candidate_id,
+        kind=kind,
+        held_out_score=held_score,
+        matched_injection_score=injection_score,
+        held_out_data_id=held_data_id,
+        matched_injection_data_id=injection_data_id,
+        model_config_id=model_id,
+        scoring_rule=scoring_rule,
+        held_out_prediction_id=held_prediction_id,
+        matched_injection_prediction_id=injection_prediction_id,
+        evaluation_id=evaluation_id,
+        _construction_token=_CANDIDATE_EVALUATION_TOKEN,
+    )
 
 
 @dataclass(frozen=True)
@@ -1157,12 +1410,11 @@ class NonlinearityReport:
             raise OrbitNonlinearityError(
                 "FOUND-EQUIV must remain conditional on EGS3-B1"
             )
-        object.__setattr__(
-            self, "allowed_use", _texts(self.allowed_use, "allowed_use")
+        allowed, forbidden = _diagnostic_lanes(
+            self.allowed_use, self.forbidden_use
         )
-        object.__setattr__(
-            self, "forbidden_use", _texts(self.forbidden_use, "forbidden_use")
-        )
+        object.__setattr__(self, "allowed_use", allowed)
+        object.__setattr__(self, "forbidden_use", forbidden)
 
 
 def decompose_nonlinearity(
@@ -1234,7 +1486,10 @@ def decompose_nonlinearity(
         residual_vector, covariance, rtol=rtol
     )
     whitened_response, _, _, _ = _whiten_supported(
-        response, covariance, rtol=rtol
+        response,
+        covariance,
+        rtol=rtol,
+        scale_invariant=True,
     )
     if rank_report.rank:
         u, _, _ = np.linalg.svd(whitened_response, full_matrices=False)
@@ -1349,6 +1604,7 @@ __all__ = [
     "ACTIVE_O3_CONVENTION",
     "CandidateEvaluation",
     "CandidateKind",
+    "CandidateScoringRule",
     "DEPARTURE_O3_PARITY",
     "DEPARTURE_O3_UNITS",
     "FOUND_EQUIV_PREREQUISITE",
@@ -1366,6 +1622,7 @@ __all__ = [
     "STF5_CARTESIAN_BASIS",
     "VectorParity",
     "decompose_nonlinearity",
+    "evaluate_candidate_predictions",
     "matrix_to_stf5",
     "measure_response_rank",
     "orbit_invariants",

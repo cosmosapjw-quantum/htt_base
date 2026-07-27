@@ -20,6 +20,7 @@ from obsstat.lowell_poles import (
     PoleStatus,
     angular_momentum_power_tensor,
     estimate_lowell_pole as _estimate_lowell_pole,
+    estimate_lowell_pole_from_power_tensor,
     mean_squared_multipole_alignment,
     scalar_alm_inversion_phase,
     transform_antipodal_axis_o3,
@@ -152,19 +153,13 @@ def _pole_estimate(
         coordinate_frame=coordinate_frame,
     )
     if axis is None:
-        return LowEllPoleEstimate(
-            ell=ell,
-            definition=definition,
-            status=PoleStatus.UNDETERMINED,
-            axis=None,
-            eigenvalues=(0.2, 0.4, 0.4),
-            selection_gap=0.0,
-            gap_tolerance=MIN_NUMERICAL_GAP_TOLERANCE,
+        return estimate_lowell_pole_from_power_tensor(
             power_tensor=(
                 (0.2, 0.0, 0.0),
                 (0.0, 0.4, 0.0),
                 (0.0, 0.0, 0.4),
             ),
+            ell=ell,
             analysis_spec=analysis_spec,
         )
     values = (0.1, 0.3, 0.6)
@@ -192,17 +187,9 @@ def _pole_estimate(
     columns.insert(selected_index, selected)
     eigenvectors = np.column_stack(columns)
     power_tensor = eigenvectors @ np.diag(values) @ eigenvectors.T
-    return LowEllPoleEstimate(
+    return estimate_lowell_pole_from_power_tensor(
+        power_tensor=power_tensor,
         ell=ell,
-        definition=definition,
-        status=PoleStatus.IDENTIFIED,
-        axis=axis,
-        eigenvalues=values,
-        selection_gap=selection_gap,
-        gap_tolerance=MIN_NUMERICAL_GAP_TOLERANCE,
-        power_tensor=tuple(
-            tuple(float(value) for value in row) for row in power_tensor
-        ),
         analysis_spec=analysis_spec,
     )
 
@@ -413,7 +400,7 @@ def test_analysis_spec_rejects_an_unimplemented_harmonic_convention() -> None:
 
 
 def test_pole_estimate_constructor_cannot_bypass_gap_abstention() -> None:
-    with pytest.raises(ValueError, match="selection gap"):
+    with pytest.raises(ValueError, match="must be created"):
         LowEllPoleEstimate(
             ell=2,
             definition=PoleDefinition.MAX_ANGULAR_MOMENTUM,
@@ -435,7 +422,7 @@ def test_pole_estimate_constructor_cannot_bypass_gap_abstention() -> None:
 
 
 def test_pole_estimate_rejects_axis_unbound_to_power_tensor() -> None:
-    with pytest.raises(ValueError, match="eigendirection"):
+    with pytest.raises(ValueError, match="must be created"):
         LowEllPoleEstimate(
             ell=2,
             definition=PoleDefinition.MAX_ANGULAR_MOMENTUM,
@@ -449,6 +436,52 @@ def test_pole_estimate_rejects_axis_unbound_to_power_tensor() -> None:
                 (0.0, 0.3, 0.0),
                 (0.0, 0.0, 0.6),
             ),
+            analysis_spec=_analysis_spec(
+                definition=PoleDefinition.MAX_ANGULAR_MOMENTUM,
+                gap_tolerance=MIN_NUMERICAL_GAP_TOLERANCE,
+            ),
+        )
+
+
+def test_power_tensor_factory_abstains_on_an_exact_top_eigenspace_tie() -> None:
+    estimate = estimate_lowell_pole_from_power_tensor(
+        power_tensor=(
+            (0.2, 0.0, 0.0),
+            (0.0, 0.4, 0.0),
+            (0.0, 0.0, 0.4),
+        ),
+        ell=2,
+        analysis_spec=_analysis_spec(
+            definition=PoleDefinition.MAX_ANGULAR_MOMENTUM,
+            gap_tolerance=MIN_NUMERICAL_GAP_TOLERANCE,
+        ),
+    )
+    assert estimate.status is PoleStatus.UNDETERMINED
+    assert estimate.axis is None
+    assert estimate.selection_gap == 0.0
+
+
+def test_public_numeric_paths_reject_boolean_and_numeric_text() -> None:
+    with pytest.raises(ValueError, match="not be boolean"):
+        LowEllPoleAnalysisSpec(
+            ell_values=(2,),
+            definition=PoleDefinition.MAX_ANGULAR_MOMENTUM,
+            gap_tolerance=True,
+            coordinate_frame="frame",
+            harmonic_convention=IMPLEMENTED_HARMONIC_CONVENTION,
+        )
+    with pytest.raises(ValueError, match="numeric scalars"):
+        angular_momentum_power_tensor(
+            alm_by_lm={(1, -1): 0.0, (1, 0): True, (1, 1): 0.0},
+            ell=1,
+        )
+    with pytest.raises(ValueError, match="not text"):
+        estimate_lowell_pole_from_power_tensor(
+            power_tensor=np.asarray(
+                (("0.2", "0", "0"), ("0", "0.3", "0"), ("0", "0", "0.5")),
+                dtype=object,
+            ),
+            ell=2,
             analysis_spec=_analysis_spec(
                 definition=PoleDefinition.MAX_ANGULAR_MOMENTUM,
                 gap_tolerance=MIN_NUMERICAL_GAP_TOLERANCE,

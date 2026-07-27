@@ -22,6 +22,7 @@ from common.orbit_nonlinearity import (
     STF5_CARTESIAN_BASIS,
     VectorParity,
     decompose_nonlinearity,
+    evaluate_candidate_predictions,
     measure_response_rank,
     orbit_invariants,
     transform_departure_state,
@@ -29,11 +30,11 @@ from common.orbit_nonlinearity import (
 from common.statistical_foundations import DepartureState
 
 
-HELD_OUT_RECEIPT = "sha256:" + "a" * 64
-MATCHED_INJECTION_RECEIPT = "sha256:" + "b" * 64
 TRANSFER_ID = "sha256:" + "1" * 64
 MASK_ID = "sha256:" + "2" * 64
 COVARIANCE_ID = "sha256:" + "3" * 64
+FORGED_HELD_OUT_RECEIPT = "sha256:" + "a" * 64
+FORGED_MATCHED_INJECTION_RECEIPT = "sha256:" + "b" * 64
 
 
 def _state(*, beta: tuple[float, float, float] = (0.4, 0.5, 0.6)) -> DepartureState:
@@ -77,8 +78,6 @@ def _candidates(
     *,
     nonlinear_score: float = 12.0,
     frame_score: float = 4.0,
-    receipt: str = HELD_OUT_RECEIPT,
-    matched_injection_receipt: str = MATCHED_INJECTION_RECEIPT,
 ) -> tuple[CandidateEvaluation, ...]:
     scores = {
         CandidateKind.NONLINEAR: nonlinear_score,
@@ -87,14 +86,21 @@ def _candidates(
         CandidateKind.FRAME_MISMATCH: frame_score,
         CandidateKind.DERIVATIVE_FAILURE: 2.0,
     }
+    maximum = max(scores.values())
     return tuple(
-        CandidateEvaluation(
+        evaluate_candidate_predictions(
             candidate_id=f"candidate-{kind.value.lower()}",
             kind=kind,
-            held_out_score=score,
-            matched_injection_score=score - 0.5,
-            held_out_data_id=receipt,
-            matched_injection_data_id=matched_injection_receipt,
+            held_out_prediction=(math.sqrt(maximum - score), 0.0),
+            held_out_target=(0.0, 0.0),
+            matched_injection_prediction=(
+                1.0 + math.sqrt(maximum - score),
+                1.0,
+            ),
+            matched_injection_target=(1.0, 1.0),
+            model_config_id=(
+                "sha256:" + f"{list(scores).index(kind) + 1:064x}"
+            ),
         )
         for kind, score in scores.items()
     )
@@ -108,6 +114,13 @@ def _nonlinearity(
     receipt: str | None = None,
     matched_injection_receipt: str | None = None,
 ):
+    if candidates:
+        if receipt is None:
+            receipt = candidates[0].held_out_data_id
+        if matched_injection_receipt is None:
+            matched_injection_receipt = (
+                candidates[0].matched_injection_data_id
+            )
     return decompose_nonlinearity(
         residual=residual,
         tangent_response=((1.0,), (0.0,), (0.0,)),
@@ -179,6 +192,17 @@ def test_catalogue_requires_registered_parity_and_units(
 ) -> None:
     with pytest.raises(OrbitNonlinearityError, match="registered"):
         orbit_invariants(replace(_state(), **field_value), _catalog())
+
+
+def test_orbit_report_rewrite_cannot_forge_values_or_claim_lanes() -> None:
+    report = orbit_invariants(_state(), _catalog())
+    with pytest.raises(OrbitNonlinearityError, match="must be created"):
+        replace(
+            report,
+            beta2=999.0,
+            allowed_use=("Bianchi family identification",),
+            forbidden_use=("none",),
+        )
 
 
 def test_oriented_direction_keeps_sign_and_parity_type() -> None:
@@ -257,6 +281,18 @@ def test_rank_is_invariant_to_common_covariance_scale() -> None:
     assert [report.rank for report in reports] == [2, 2, 2]
 
 
+def test_rank_does_not_underflow_for_finite_common_whitening_scale() -> None:
+    report = measure_response_rank(
+        response=1.0e-308 * np.eye(2),
+        covariance=1.0e308 * np.eye(2),
+        transfer_id=TRANSFER_ID,
+        mask_id=MASK_ID,
+        covariance_id=COVARIANCE_ID,
+    )
+    assert report.rank == 2
+    assert report.identifiable
+
+
 @pytest.mark.parametrize(
     ("response", "covariance", "rtol"),
     (
@@ -316,8 +352,6 @@ def test_nonlinear_compatibility_requires_both_held_out_wins() -> None:
     report = _nonlinearity(
         (2.0, 1.0, 0.0),
         candidates=_candidates(),
-        receipt=HELD_OUT_RECEIPT,
-        matched_injection_receipt=MATCHED_INJECTION_RECEIPT,
     )
     assert (
         report.attribution_status
@@ -328,7 +362,27 @@ def test_nonlinear_compatibility_requires_both_held_out_wins() -> None:
     assert "family identification" in " ".join(report.forbidden_use)
 
 
+def test_candidate_scores_are_factory_derived_and_rewrite_protected() -> None:
+    candidate = _candidates()[0]
+    with pytest.raises(OrbitNonlinearityError, match="must be created"):
+        replace(candidate, held_out_score=999.0)
+    changed = evaluate_candidate_predictions(
+        candidate_id=candidate.candidate_id,
+        kind=candidate.kind,
+        held_out_prediction=(3.0, 0.0),
+        held_out_target=(0.0, 0.0),
+        matched_injection_prediction=(4.0, 1.0),
+        matched_injection_target=(1.0, 1.0),
+        model_config_id=candidate.model_config_id,
+    )
+    assert changed.held_out_data_id == candidate.held_out_data_id
+    assert changed.held_out_prediction_id != candidate.held_out_prediction_id
+    assert changed.evaluation_id != candidate.evaluation_id
+    assert changed.held_out_score != candidate.held_out_score
+
+
 def test_rank_deficiency_blocks_nonlinear_attribution() -> None:
+    candidates = _candidates()
     report = decompose_nonlinearity(
         residual=(2.0, 1.0, 0.0),
         tangent_response=((1.0, 0.0), (0.0, 0.0), (0.0, 0.0)),
@@ -336,9 +390,11 @@ def test_rank_deficiency_blocks_nonlinear_attribution() -> None:
         transfer_id=TRANSFER_ID,
         mask_id=MASK_ID,
         covariance_id=COVARIANCE_ID,
-        candidates=_candidates(),
-        held_out_receipt=HELD_OUT_RECEIPT,
-        matched_injection_receipt=MATCHED_INJECTION_RECEIPT,
+        candidates=candidates,
+        held_out_receipt=candidates[0].held_out_data_id,
+        matched_injection_receipt=(
+            candidates[0].matched_injection_data_id
+        ),
         off_manifold_tolerance=1.0e-12,
         null_residual_tolerance=1.0e-12,
         nonlinear_gain_margin=1.0,
@@ -358,8 +414,8 @@ def test_report_constructor_cannot_forge_nonlinear_compatibility() -> None:
             attribution_status=(
                 NonlinearityAttributionStatus.NONLINEAR_COMPATIBLE
             ),
-            held_out_receipt=HELD_OUT_RECEIPT,
-            matched_injection_receipt=MATCHED_INJECTION_RECEIPT,
+            held_out_receipt=FORGED_HELD_OUT_RECEIPT,
+            matched_injection_receipt=FORGED_MATCHED_INJECTION_RECEIPT,
         )
 
 
@@ -387,8 +443,8 @@ def test_missing_response_report_cannot_be_relabelled_nonlinear() -> None:
             off_manifold_tolerance=0.0,
             null_residual_tolerance=0.0,
             nonlinear_gain_margin=1.0,
-            held_out_receipt=HELD_OUT_RECEIPT,
-            matched_injection_receipt=MATCHED_INJECTION_RECEIPT,
+            held_out_receipt=FORGED_HELD_OUT_RECEIPT,
+            matched_injection_receipt=FORGED_MATCHED_INJECTION_RECEIPT,
             attribution_rationale="forged",
         )
 
@@ -398,7 +454,6 @@ def test_matched_injection_identity_must_match_every_candidate() -> None:
     report = _nonlinearity(
         (2.0, 1.0, 0.0),
         candidates=_candidates(),
-        receipt=HELD_OUT_RECEIPT,
         matched_injection_receipt=stale,
     )
     assert (
@@ -421,8 +476,6 @@ def test_frame_or_insufficient_gain_remains_unattributed(
             nonlinear_score=nonlinear_score,
             frame_score=frame_score,
         ),
-        receipt=HELD_OUT_RECEIPT,
-        matched_injection_receipt=MATCHED_INJECTION_RECEIPT,
     )
     assert (
         report.attribution_status
@@ -435,6 +488,7 @@ def test_frame_or_insufficient_gain_remains_unattributed(
     (
         [[True, False], [False, True]],
         [[1.0, math.nan], [0.0, 1.0]],
+        np.asarray([["1.0", "0.0"], ["0.0", "1.0"]], dtype=object),
     ),
 )
 def test_rank_rejects_boolean_and_nonfinite_response(bad: object) -> None:

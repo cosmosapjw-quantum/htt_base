@@ -12,12 +12,13 @@ axes are expressed in the input coordinate frame.
 from __future__ import annotations
 
 from collections.abc import Iterable, Mapping
-from dataclasses import dataclass
+from dataclasses import InitVar, dataclass
 from enum import Enum
 from functools import lru_cache
 import hashlib
 import json
 import math
+from numbers import Complex, Real
 import operator
 
 import numpy as np
@@ -32,6 +33,7 @@ __all__ = [
     "PoleStatus",
     "angular_momentum_power_tensor",
     "estimate_lowell_pole",
+    "estimate_lowell_pole_from_power_tensor",
     "mean_squared_multipole_alignment",
     "scalar_alm_inversion_phase",
     "transform_antipodal_axis_o3",
@@ -45,6 +47,7 @@ MIN_NUMERICAL_GAP_TOLERANCE = float(64.0 * np.finfo(float).eps)
 IMPLEMENTED_HARMONIC_CONVENTION = (
     "orthonormal Condon-Shortley dense real scalar map"
 )
+_LOWELL_POLE_ESTIMATE_TOKEN = object()
 
 
 def _contains_bool(value: object) -> bool:
@@ -75,6 +78,20 @@ def _contains_complex(value: object) -> bool:
     return False
 
 
+def _contains_text(value: object) -> bool:
+    if isinstance(value, (str, bytes, np.str_, np.bytes_)):
+        return True
+    if isinstance(value, np.ndarray):
+        if value.dtype.kind in {"U", "S"}:
+            return True
+        if value.dtype.kind == "O":
+            return any(_contains_text(item) for item in value.flat)
+        return False
+    if isinstance(value, (tuple, list)):
+        return any(_contains_text(item) for item in value)
+    return False
+
+
 def _real_array(
     value: object,
     name: str,
@@ -85,6 +102,8 @@ def _real_array(
         raise ValueError(f"{name} must not contain booleans")
     if _contains_complex(value):
         raise ValueError(f"{name} must be real, not complex")
+    if _contains_text(value):
+        raise ValueError(f"{name} must be numeric, not text")
     try:
         array = np.asarray(value, dtype=float)
     except (TypeError, ValueError) as exc:
@@ -92,6 +111,19 @@ def _real_array(
     if array.shape != shape or not np.isfinite(array).all():
         raise ValueError(f"{name} must be a finite array with shape {shape}")
     return array
+
+
+def _strict_real(value: object, name: str) -> float:
+    if isinstance(value, (bool, np.bool_)):
+        raise ValueError(f"{name} must not be boolean")
+    if isinstance(value, (str, bytes, np.str_, np.bytes_)):
+        raise ValueError(f"{name} must be numeric, not text")
+    if not isinstance(value, Real):
+        raise ValueError(f"{name} must be a real number")
+    out = float(value)
+    if not math.isfinite(out):
+        raise ValueError(f"{name} must be finite")
+    return out
 
 
 def _matrix_tuple(matrix: np.ndarray) -> tuple[tuple[float, ...], ...]:
@@ -265,15 +297,21 @@ class LowEllPoleEstimate:
     gap_tolerance: float
     power_tensor: tuple[tuple[float, float, float], ...]
     analysis_spec: LowEllPoleAnalysisSpec
+    _construction_token: InitVar[object] = None
 
-    def __post_init__(self) -> None:
+    def __post_init__(self, _construction_token: object) -> None:
+        if _construction_token is not _LOWELL_POLE_ESTIMATE_TOKEN:
+            raise ValueError(
+                "LowEllPoleEstimate must be created by "
+                "estimate_lowell_pole_from_power_tensor"
+            )
         ell = _validate_ell(self.ell)
         definition = PoleDefinition(self.definition)
         status = PoleStatus(self.status)
         raw_values = _real_array(self.eigenvalues, "eigenvalues", shape=(3,))
         values = tuple(float(value) for value in raw_values)
-        gap = float(self.selection_gap)
-        tolerance = float(self.gap_tolerance)
+        gap = _strict_real(self.selection_gap, "selection_gap")
+        tolerance = _strict_real(self.gap_tolerance, "gap_tolerance")
         if not isinstance(self.analysis_spec, LowEllPoleAnalysisSpec):
             raise TypeError(
                 "analysis_spec must be a LowEllPoleAnalysisSpec"
@@ -317,14 +355,10 @@ class LowEllPoleEstimate:
         derived_values, _ = np.linalg.eigh(tensor)
         if float(np.min(derived_values)) < -tensor_tolerance:
             raise ValueError("power_tensor must be positive semidefinite")
-        if not np.allclose(
-            derived_values,
-            raw_values,
-            atol=tensor_tolerance,
-            rtol=0.0,
-        ):
+        canonical_values = tuple(float(value) for value in derived_values)
+        if values != canonical_values:
             raise ValueError(
-                "eigenvalues must be derived from power_tensor"
+                "eigenvalues must be the exact canonical spectrum of power_tensor"
             )
         if self.axis is not None and not isinstance(self.axis, AntipodalAxis):
             raise TypeError("axis must be an AntipodalAxis or None")
@@ -347,7 +381,14 @@ class LowEllPoleEstimate:
                 tensor @ axis_vector
                 - values[selected_index] * axis_vector
             )
-            if float(np.linalg.norm(eigen_residual)) > tensor_tolerance:
+            selected_axis_tolerance = max(
+                16.0 * np.finfo(float).eps,
+                min(tensor_tolerance, gap / 4.0),
+            )
+            if (
+                float(np.linalg.norm(eigen_residual))
+                > selected_axis_tolerance
+            ):
                 raise ValueError(
                     "identified axis must be the selected power-tensor "
                     "eigendirection"
@@ -420,10 +461,34 @@ def estimate_lowell_pole(
     ell_i = _validate_ell(ell)
     if ell_i not in analysis_spec.ell_values:
         raise ValueError("ell must be registered in analysis_spec")
+    tensor = angular_momentum_power_tensor(alm_by_lm=alm_by_lm, ell=ell_i)
+    return estimate_lowell_pole_from_power_tensor(
+        power_tensor=tensor,
+        ell=ell_i,
+        analysis_spec=analysis_spec,
+    )
+
+
+def estimate_lowell_pole_from_power_tensor(
+    *,
+    power_tensor: object,
+    ell: int,
+    analysis_spec: LowEllPoleAnalysisSpec,
+) -> LowEllPoleEstimate:
+    """Derive every pole-report field from one canonical tensor eigensystem."""
+
+    if not isinstance(analysis_spec, LowEllPoleAnalysisSpec):
+        raise TypeError("analysis_spec must be a LowEllPoleAnalysisSpec")
+    ell_i = _validate_ell(ell)
+    if ell_i not in analysis_spec.ell_values:
+        raise ValueError("ell must be registered in analysis_spec")
     definition_i = analysis_spec.definition
     tolerance = analysis_spec.gap_tolerance
-
-    tensor = angular_momentum_power_tensor(alm_by_lm=alm_by_lm, ell=ell_i)
+    tensor = _real_array(
+        power_tensor,
+        "power_tensor",
+        shape=(3, 3),
+    )
     eigenvalues, eigenvectors = np.linalg.eigh(tensor)
     scores = _selection_scores(eigenvalues, definition_i)
     score_order = np.argsort(scores, kind="stable")
@@ -442,6 +507,7 @@ def estimate_lowell_pole(
             gap_tolerance=tolerance,
             power_tensor=_matrix_tuple(tensor),
             analysis_spec=analysis_spec,
+            _construction_token=_LOWELL_POLE_ESTIMATE_TOKEN,
         )
 
     return LowEllPoleEstimate(
@@ -454,6 +520,7 @@ def estimate_lowell_pole(
         gap_tolerance=tolerance,
         power_tensor=_matrix_tuple(tensor),
         analysis_spec=analysis_spec,
+        _construction_token=_LOWELL_POLE_ESTIMATE_TOKEN,
     )
 
 
@@ -567,9 +634,7 @@ def _validate_ell(ell: int) -> int:
 
 
 def _validate_gap_tolerance(gap_tolerance: float) -> float:
-    if isinstance(gap_tolerance, (bool, np.bool_)):
-        raise ValueError("gap_tolerance must not be boolean")
-    tolerance = float(gap_tolerance)
+    tolerance = _strict_real(gap_tolerance, "gap_tolerance")
     if not math.isfinite(tolerance) or tolerance < MIN_NUMERICAL_GAP_TOLERANCE:
         raise ValueError(
             "gap_tolerance must be finite and at least "
@@ -587,6 +652,8 @@ def _dense_real_alm(
     for key, raw_value in alm_by_lm.items():
         if not isinstance(key, tuple) or len(key) != 2:
             raise ValueError("alm_by_lm keys must be (ell, m) integer tuples")
+        if any(isinstance(part, (bool, np.bool_)) for part in key):
+            raise ValueError("alm_by_lm keys must be (ell, m) integer tuples")
         try:
             key_ell = operator.index(key[0])
             key_m = operator.index(key[1])
@@ -594,6 +661,11 @@ def _dense_real_alm(
             raise ValueError("alm_by_lm keys must be (ell, m) integer tuples") from exc
         if key_ell < 0 or abs(key_m) > key_ell:
             raise ValueError("alm_by_lm key has invalid ell/m")
+        if isinstance(
+            raw_value,
+            (bool, np.bool_, str, bytes, np.str_, np.bytes_),
+        ) or not isinstance(raw_value, Complex):
+            raise ValueError("alm coefficients must be numeric scalars")
         value = complex(raw_value)
         if not (math.isfinite(value.real) and math.isfinite(value.imag)):
             raise ValueError("alm coefficients must be finite")
