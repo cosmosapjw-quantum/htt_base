@@ -21,7 +21,6 @@ from common.mes_successor_registry import (
 from common.statistical_foundations import (
     AnchorConditioning,
     AnchorStatus,
-    AnchorStressReport,
     BC1_LEGACY_PROJECTION,
     BC2_NO_REPRESENTATION_PROMOTION,
     DepartureState,
@@ -32,6 +31,7 @@ from common.statistical_foundations import (
     NullKind,
     ScalarRange,
     SummaryDepartureState,
+    build_anchor_stress_report,
     evaluate_sector_stress,
     quarantined_shear_anchors,
     registered_geodesic_mes_anchors,
@@ -276,7 +276,7 @@ def test_result_card_keeps_output_spaces_disjoint_and_diagnostic_only() -> None:
         numerator_channel_key=anchor.channel_key,
         anchor=anchor,
     )
-    stress_report = AnchorStressReport(
+    stress_report = build_anchor_stress_report(
         stresses=(stress,),
         conditioning=AnchorConditioning.ENSEMBLE_CALIBRATED,
     )
@@ -319,6 +319,28 @@ def test_result_card_keeps_output_spaces_disjoint_and_diagnostic_only() -> None:
         "representation_policy"
     ] == BC2_NO_REPRESENTATION_PROMOTION
     json.dumps(payload, allow_nan=False)
+
+
+def test_chapter7_scenario_table_has_detachable_claim_metadata() -> None:
+    chapter = (
+        REPO_ROOT / "docs/manuscript/ch07_results.tex"
+    ).read_text(encoding="utf-8")
+    label_index = chapter.index(r"\label{tab:scenario-dual}")
+    caption_start = chapter.rfind(r"\caption{", 0, label_index)
+    caption = chapter[caption_start:label_index]
+    for required in (
+        "Owner: HTT",
+        "Claim tier:",
+        "diagnostic-only",
+        r"BC1\_LEGACY\_PROJECTION",
+        r"BC2\_NO\_REPRESENTATION\_PROMOTION",
+        "historical external/proxy",
+        "current mask/random, covariance, null, PPC",
+        "Allowed use:",
+        "Forbidden use:",
+        "Bianchi family identification",
+    ):
+        assert required in caption
 
 
 def test_result_card_claim_policy_and_morphology_status_are_not_caller_controlled() -> None:

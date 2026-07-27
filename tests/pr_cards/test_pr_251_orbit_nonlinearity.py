@@ -27,10 +27,13 @@ from common.orbit_nonlinearity import (  # noqa: E402
     orbit_invariants,
 )
 from common.statistical_foundations import (  # noqa: E402
+    AnchorAuthorityKind,
+    AnchorConditioning,
+    AnchorStatus,
     DepartureState,
+    MESAnchorSpec,
     ScalarRange,
-    SectorStress,
-    StressStatus,
+    evaluate_sector_stress,
 )
 from htt.departure.multicomponent_response import rank_gain_ladder  # noqa: E402
 from obsstat.lowell_poles import AntipodalAxis  # noqa: E402
@@ -96,6 +99,35 @@ def _competition(
             ),
         )
         for kind in kinds
+    )
+
+
+def _external_sigma_stress(numerator: float):
+    anchor = MESAnchorSpec(
+        anchor_id="EXTERNAL-SIGMA-ORBIT-FIXTURE",
+        value=1.0,
+        authority_kind=AnchorAuthorityKind.EXTERNAL_PHYSICAL,
+        target_sector="Sigma2",
+        target_invariant="sigma_ab_sigma_ab_over_6H2",
+        frame="orbit fixture frame",
+        congruence="geodesic",
+        normalization="Sigma2_std",
+        perturbative_order="registered fixture order",
+        branch="external fixture branch",
+        attribution="PR-251 separation fixture",
+        conditioning=AnchorConditioning.ENSEMBLE_CALIBRATED,
+        validity_domain="unit-test domain",
+        source_equations=("fixture equation",),
+        shared_nuisance=(),
+        status=AnchorStatus.VERIFIED,
+        allowed_use=("channel-matched stress",),
+        forbidden_use=("FLRW converse",),
+    )
+    return evaluate_sector_stress(
+        sector="Sigma2",
+        numerator=ScalarRange(numerator, numerator),
+        numerator_channel_key=anchor.channel_key,
+        anchor=anchor,
     )
 
 
@@ -230,24 +262,8 @@ def test_preregistered_discrepancy_cases(
 
 
 def test_anchor_stress_and_nonlinearity_remain_separate_outputs() -> None:
-    within = SectorStress(
-        sector="Sigma2",
-        status=StressStatus.DEFINED,
-        anchor_id="MES-G-SIGMA",
-        saturation=ScalarRange(0.8, 0.8),
-        exceedance=ScalarRange(0.0, 0.0),
-        allowed_use=("one-way stress",),
-        rationale="fixture",
-    )
-    exceeded = SectorStress(
-        sector="Sigma2",
-        status=StressStatus.DEFINED,
-        anchor_id="MES-G-SIGMA",
-        saturation=ScalarRange(1.2, 1.2),
-        exceedance=ScalarRange(0.2, 0.2),
-        allowed_use=("one-way stress",),
-        rationale="fixture",
-    )
+    within = _external_sigma_stress(0.8)
+    exceeded = _external_sigma_stress(1.2)
     nonlinear = _report(
         residual=(1.0, 1.0, 0.0),
         candidates=_competition(winner=CandidateKind.NONLINEAR),
@@ -255,6 +271,62 @@ def test_anchor_stress_and_nonlinearity_remain_separate_outputs() -> None:
     assert nonlinear.attribution_status is NonlinearityAttributionStatus.NONLINEAR_COMPATIBLE
     assert within.exceedance != exceeded.exceedance
     assert not hasattr(nonlinear, "anchor_stress")
+
+
+def test_nonlinear_candidate_is_selected_on_both_score_axes() -> None:
+    """A held-out-only ranking must not hide the jointly eligible candidate."""
+
+    kinds = (
+        CandidateKind.NONLINEAR,
+        CandidateKind.NONLINEAR,
+        CandidateKind.LINEAR,
+        CandidateKind.SYSTEMATICS,
+        CandidateKind.FRAME_MISMATCH,
+        CandidateKind.DERIVATIVE_FAILURE,
+    )
+    ids = (
+        "nonlinear-held-only",
+        "nonlinear-joint-winner",
+        "linear-control",
+        "systematics-control",
+        "frame-control",
+        "derivative-control",
+    )
+    held_predictions = (0.0, 1.0, 2.0, 2.0, 2.0, 2.0)
+    injection_predictions = (13.0, 10.0, 12.0, 12.0, 12.0, 12.0)
+    candidates = tuple(
+        evaluate_candidate_predictions(
+            candidate_id=candidate_id,
+            kind=kind,
+            held_out_prediction=(held_prediction,),
+            held_out_target=(0.0,),
+            matched_injection_prediction=(injection_prediction,),
+            matched_injection_target=(10.0,),
+            model_config_id="sha256:" + f"{index + 100:064x}",
+        )
+        for index, (
+            candidate_id,
+            kind,
+            held_prediction,
+            injection_prediction,
+        ) in enumerate(
+            zip(
+                ids,
+                kinds,
+                held_predictions,
+                injection_predictions,
+            )
+        )
+    )
+    report = _report(
+        residual=(1.0, 1.0, 0.0),
+        candidates=candidates,
+    )
+    assert (
+        report.attribution_status
+        is NonlinearityAttributionStatus.NONLINEAR_COMPATIBLE
+    )
+    assert "nonlinear-joint-winner" in report.attribution_rationale
 
 
 def test_incomplete_alternative_registry_cannot_authorize_nonlinear_label() -> None:

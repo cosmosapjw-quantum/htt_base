@@ -1164,6 +1164,52 @@ def evaluate_candidate_predictions(
     )
 
 
+def _select_nonlinear_winner(
+    nonlinear: Sequence[CandidateEvaluation],
+    controls: Sequence[CandidateEvaluation],
+    *,
+    gain_margin: float,
+) -> CandidateEvaluation | None:
+    """Select only among candidates that clear both registered score axes.
+
+    Ranking by one axis before applying the other can discard a candidate that
+    is the only member to beat every control on both held-out and matched-
+    injection data.  The tie-break below maximizes the weaker excess margin
+    first, then the two score axes, and finally the unique candidate id so the
+    result is independent of caller ordering.
+    """
+
+    if not nonlinear or not controls:
+        return None
+    held_threshold = (
+        max(value.held_out_score for value in controls) + gain_margin
+    )
+    injection_threshold = (
+        max(value.matched_injection_score for value in controls)
+        + gain_margin
+    )
+    eligible = tuple(
+        value
+        for value in nonlinear
+        if value.held_out_score >= held_threshold
+        and value.matched_injection_score >= injection_threshold
+    )
+    if not eligible:
+        return None
+    return max(
+        eligible,
+        key=lambda value: (
+            min(
+                value.held_out_score - held_threshold,
+                value.matched_injection_score - injection_threshold,
+            ),
+            value.held_out_score,
+            value.matched_injection_score,
+            value.candidate_id,
+        ),
+    )
+
+
 @dataclass(frozen=True)
 class NonlinearityReport:
     tangent_statistic: float | None
@@ -1360,19 +1406,12 @@ class NonlinearityReport:
                     for value in comparisons
                     if value.kind is not CandidateKind.NONLINEAR
                 )
-                winner = max(
-                    nonlinear, key=lambda value: value.held_out_score
+                winner = _select_nonlinear_winner(
+                    nonlinear,
+                    controls,
+                    gain_margin=self.nonlinear_gain_margin,
                 )
-                nonlinear_wins = (
-                    winner.held_out_score
-                    >= max(value.held_out_score for value in controls)
-                    + self.nonlinear_gain_margin
-                    and winner.matched_injection_score
-                    >= max(
-                        value.matched_injection_score for value in controls
-                    )
-                    + self.nonlinear_gain_margin
-                )
+                nonlinear_wins = winner is not None
             expected = (
                 NonlinearityAttributionStatus.NON_IDENTIFIED_RESPONSE
                 if not self.response_rank.identifiable
@@ -1553,19 +1592,17 @@ def decompose_nonlinearity(
                 for value in comparisons
                 if value.kind is not CandidateKind.NONLINEAR
             )
-            winner = max(nonlinear, key=lambda value: value.held_out_score)
-            held_out_win = winner.held_out_score >= (
-                max(value.held_out_score for value in controls) + gain_margin
+            winner = _select_nonlinear_winner(
+                nonlinear,
+                controls,
+                gain_margin=gain_margin,
             )
-            injection_win = winner.matched_injection_score >= (
-                max(value.matched_injection_score for value in controls)
-                + gain_margin
-            )
-            if held_out_win and injection_win:
+            if winner is not None:
                 status = NonlinearityAttributionStatus.NONLINEAR_COMPATIBLE
                 rationale = (
-                    "registered nonlinear candidate wins held-out and "
-                    "matched-injection comparisons over every alternative"
+                    f"registered nonlinear candidate {winner.candidate_id!r} "
+                    "wins held-out and matched-injection comparisons over "
+                    "every alternative"
                 )
             else:
                 status = (

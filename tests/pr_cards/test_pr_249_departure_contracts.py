@@ -23,10 +23,12 @@ from common.statistical_foundations import (
     MESAnchorSpec,
     NullKind,
     ScalarRange,
+    SectorStress,
     StatisticalFoundationError,
     StressStatus,
     SummaryDepartureState,
     W2_V2_ALIAS,
+    build_anchor_stress_report,
     evaluate_sector_stress,
     im_critical_value,
 )
@@ -46,7 +48,11 @@ from obsstat.egs3_identified_set import (
 )
 
 
-def _external_anchor(value: float = 2.0) -> MESAnchorSpec:
+def _external_anchor(
+    value: float = 2.0,
+    *,
+    conditioning: AnchorConditioning = AnchorConditioning.ENSEMBLE_CALIBRATED,
+) -> MESAnchorSpec:
     return MESAnchorSpec(
         anchor_id="EXTERNAL_SIGMA_TEST",
         value=value,
@@ -59,7 +65,7 @@ def _external_anchor(value: float = 2.0) -> MESAnchorSpec:
         perturbative_order="registered order",
         branch="external branch",
         attribution="independent fixture",
-        conditioning=AnchorConditioning.ENSEMBLE_CALIBRATED,
+        conditioning=conditioning,
         validity_domain="unit-test domain",
         source_equations=("fixture eq 1",),
         shared_nuisance=(),
@@ -163,14 +169,16 @@ def test_legacy_projection_rejects_unbounded_numeric_ranges() -> None:
 
 
 def test_identified_set_support_preserves_recession_and_null_kind() -> None:
+    source_null_kinds = [NullKind.NONE, NullKind.STRUCTURAL]
     identified = IdentifiedDepartureSet(
         coordinate_names=("Sigma2", "W2"),
         vertices=((0.0, 0.0), (1.0, 0.0)),
         recession_directions=((0.0, 1.0),),
-        null_kinds=(NullKind.NONE, NullKind.STRUCTURAL),
+        null_kinds=source_null_kinds,  # type: ignore[arg-type]
         assumptions=("registered response map",),
         status=IdentificationStatus.PARTIALLY_IDENTIFIED,
     )
+    source_null_kinds[1] = NullKind.LEADING_ORDER
     assert identified.interval((1.0, 0.0)) == ScalarRange(0.0, 1.0)
     assert identified.support((0.0, 1.0)) == math.inf
     assert identified.interval((0.0, 1.0)) == ScalarRange(0.0, math.inf)
@@ -199,12 +207,14 @@ def test_anchor_stress_is_channel_typed_and_one_way() -> None:
     assert stress.status is StressStatus.DEFINED
     assert stress.saturation == ScalarRange(0.5, 1.5)
     assert stress.exceedance == ScalarRange(0.0, 0.5)
-    report = AnchorStressReport(
+    report = build_anchor_stress_report(
         stresses=(stress,),
         conditioning=AnchorConditioning.ENSEMBLE_CALIBRATED,
     )
     assert report.saturation_vector == (ScalarRange(0.5, 1.5),)
     assert "FLRW converse" in report.forbidden_use
+    assert "evidence" in report.forbidden_use
+    assert stress.conditioning is AnchorConditioning.ENSEMBLE_CALIBRATED
 
     mismatch = evaluate_sector_stress(
         sector="Sigma2",
@@ -231,6 +241,60 @@ def test_anchor_stress_is_channel_typed_and_one_way() -> None:
         anchor=None,
     )
     assert unavailable.status is StressStatus.ANCHOR_UNAVAILABLE
+
+
+def test_anchor_stress_cannot_relabel_random_anchor_or_forge_claim_lanes() -> None:
+    anchor = _external_anchor(
+        conditioning=AnchorConditioning.REALIZATION_CONDITIONAL
+    )
+    stress = evaluate_sector_stress(
+        sector="Sigma2",
+        numerator=ScalarRange(1.0, 3.0),
+        numerator_channel_key=anchor.channel_key,
+        anchor=anchor,
+    )
+    assert stress.status is StressStatus.RATIO_UNIDENTIFIED
+    assert stress.saturation is None
+    assert stress.exceedance is None
+    assert stress.conditioning is AnchorConditioning.REALIZATION_CONDITIONAL
+    assert stress.allowed_use == ("partial-identification status",)
+
+    with pytest.raises(
+        StatisticalFoundationError,
+        match="report conditioning must match",
+    ):
+        build_anchor_stress_report(
+            stresses=(stress,),
+            conditioning=AnchorConditioning.ENSEMBLE_CALIBRATED,
+        )
+    report = build_anchor_stress_report(
+        stresses=(stress,),
+        conditioning=AnchorConditioning.REALIZATION_CONDITIONAL,
+    )
+    assert "evidence" in report.forbidden_use
+    assert "family identification" in report.forbidden_use
+
+    with pytest.raises(
+        StatisticalFoundationError,
+        match="must be created by evaluate_sector_stress",
+    ):
+        SectorStress(
+            sector="Sigma2",
+            status=StressStatus.DEFINED,
+            anchor_id="forged",
+            conditioning=AnchorConditioning.ENSEMBLE_CALIBRATED,
+            saturation=ScalarRange(0.5, 0.5),
+            exceedance=ScalarRange(99.0, 99.0),
+            rationale="forged evidence lane",
+        )
+    with pytest.raises(
+        StatisticalFoundationError,
+        match="must be created by build_anchor_stress_report",
+    ):
+        AnchorStressReport(
+            stresses=(stress,),
+            conditioning=AnchorConditioning.REALIZATION_CONDITIONAL,
+        )
 
 
 def test_budget_radius_exposes_null_residual() -> None:

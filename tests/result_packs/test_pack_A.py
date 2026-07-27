@@ -140,6 +140,19 @@ def test_pack_a_markdown_has_manifest_and_caveated_comparison():
     assert "| Q | MIO |" in markdown
     assert BC1_LEGACY_PROJECTION in markdown
     assert BC2_NO_REPRESENTATION_PROMOTION in markdown
+    scalar_rows = {
+        name: next(
+            line
+            for line in markdown.splitlines()
+            if line.startswith(f"| {name} | MIO |")
+        )
+        for name in ("Q", "F", "Pi")
+    }
+    assert all(
+        BC1_LEGACY_PROJECTION in row
+        and BC2_NO_REPRESENTATION_PROMOTION in row
+        for row in scalar_rows.values()
+    )
     assert "| MES I_morph | COMMON |" in markdown
     assert "bass.ver2.export.solver_core_output_tier_b.atlas_lite" in markdown
     assert "prior_context_only" in markdown

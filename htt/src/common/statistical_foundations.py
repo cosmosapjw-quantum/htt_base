@@ -18,7 +18,7 @@ for the converse.
 from __future__ import annotations
 
 import math
-from dataclasses import dataclass
+from dataclasses import InitVar, dataclass, field
 from enum import Enum
 from fractions import Fraction
 from statistics import NormalDist
@@ -89,6 +89,24 @@ class BudgetRadiusStatus(_StringEnum):
 
 BC1_LEGACY_PROJECTION = "BC1_LEGACY_PROJECTION"
 BC2_NO_REPRESENTATION_PROMOTION = "BC2_NO_REPRESENTATION_PROMOTION"
+
+_SECTOR_STRESS_TOKEN = object()
+_ANCHOR_STRESS_REPORT_TOKEN = object()
+_SECTOR_STRESS_ALLOWED_USE = {
+    StressStatus.DEFINED: ("one-way linear-premise stress",),
+    StressStatus.RATIO_UNIDENTIFIED: ("partial-identification status",),
+    StressStatus.ANCHOR_UNAVAILABLE: ("anchor availability report",),
+    StressStatus.CHANNEL_MISMATCH: ("channel mismatch report",),
+    StressStatus.NUMERATOR_UNIDENTIFIED: ("partial-identification status",),
+}
+_ANCHOR_STRESS_ALLOWED_USE = ("one-way channel-matched anchor stress",)
+_ANCHOR_STRESS_FORBIDDEN_USE = (
+    "FLRW converse",
+    "distance",
+    "occupancy",
+    "evidence",
+    "family identification",
+)
 
 
 def _required_text(value: object, field_name: str) -> str:
@@ -768,16 +786,18 @@ class IdentifiedDepartureSet:
             raise StatisticalFoundationError(
                 "POINT_IDENTIFIED requires one unique point and no recession"
             )
-        if len(self.null_kinds) != dimension:
+        null_kinds = tuple(self.null_kinds)
+        if len(null_kinds) != dimension:
             raise StatisticalFoundationError(
                 "null_kinds must match the coordinate dimension"
             )
-        if any(not isinstance(kind, NullKind) for kind in self.null_kinds):
+        if any(not isinstance(kind, NullKind) for kind in null_kinds):
             raise StatisticalFoundationError(
                 "null_kinds entries must be NullKind values"
             )
         object.__setattr__(self, "vertices", vertices)
         object.__setattr__(self, "recession_directions", recession)
+        object.__setattr__(self, "null_kinds", null_kinds)
         object.__setattr__(
             self, "assumptions", _text_tuple(self.assumptions, "assumptions")
         )
@@ -815,27 +835,73 @@ class SectorStress:
     sector: str
     status: StressStatus
     anchor_id: str | None
+    conditioning: AnchorConditioning | None
     saturation: ScalarRange | None
     exceedance: ScalarRange | None
-    allowed_use: tuple[str, ...]
     rationale: str
+    allowed_use: tuple[str, ...] = field(init=False)
+    _construction_token: InitVar[object] = None
 
-    def __post_init__(self) -> None:
+    def __post_init__(self, _construction_token: object) -> None:
+        if _construction_token is not _SECTOR_STRESS_TOKEN:
+            raise StatisticalFoundationError(
+                "SectorStress must be created by evaluate_sector_stress"
+            )
         _required_text(self.sector, "sector")
         if not isinstance(self.status, StressStatus):
             raise StatisticalFoundationError("status must be a StressStatus")
+        if self.conditioning is not None and not isinstance(
+            self.conditioning, AnchorConditioning
+        ):
+            raise StatisticalFoundationError(
+                "conditioning must be an AnchorConditioning or None"
+            )
         if self.status is StressStatus.DEFINED:
             if self.saturation is None or self.exceedance is None:
                 raise StatisticalFoundationError(
                     "DEFINED stress requires saturation and exceedance ranges"
                 )
             _required_text(self.anchor_id, "anchor_id")
+            if self.conditioning is not AnchorConditioning.ENSEMBLE_CALIBRATED:
+                raise StatisticalFoundationError(
+                    "DEFINED stress requires an ENSEMBLE_CALIBRATED anchor"
+                )
+            if not isinstance(self.saturation, ScalarRange) or not isinstance(
+                self.exceedance, ScalarRange
+            ):
+                raise StatisticalFoundationError(
+                    "DEFINED stress ranges must be ScalarRange values"
+                )
+            if self.saturation.lower < 0.0:
+                raise StatisticalFoundationError(
+                    "DEFINED saturation must be non-negative"
+                )
+            expected_exceedance = ScalarRange(
+                max(self.saturation.lower - 1.0, 0.0),
+                max(self.saturation.upper - 1.0, 0.0),
+            )
+            if self.exceedance != expected_exceedance:
+                raise StatisticalFoundationError(
+                    "exceedance must equal max(saturation - 1, 0)"
+                )
         elif self.saturation is not None or self.exceedance is not None:
             raise StatisticalFoundationError(
                 "undefined stress must not carry numeric ranges"
             )
+        if (
+            self.status is StressStatus.RATIO_UNIDENTIFIED
+            and self.conditioning
+            is not AnchorConditioning.REALIZATION_CONDITIONAL
+        ):
+            raise StatisticalFoundationError(
+                "RATIO_UNIDENTIFIED requires a REALIZATION_CONDITIONAL anchor"
+            )
+        if self.anchor_id is not None:
+            _required_text(self.anchor_id, "anchor_id")
         object.__setattr__(
-            self, "allowed_use", _text_tuple(self.allowed_use, "allowed_use")
+            self,
+            "allowed_use",
+            _SECTOR_STRESS_ALLOWED_USE[self.status],
         )
         _required_text(self.rationale, "rationale")
 
@@ -844,35 +910,99 @@ class SectorStress:
 class AnchorStressReport:
     stresses: tuple[SectorStress, ...]
     conditioning: AnchorConditioning
-    allowed_use: tuple[str, ...] = (
-        "one-way channel-matched anchor stress",
-    )
-    forbidden_use: tuple[str, ...] = (
-        "FLRW converse",
-        "distance",
-        "occupancy",
-        "family identification",
-    )
+    allowed_use: tuple[str, ...] = field(init=False)
+    forbidden_use: tuple[str, ...] = field(init=False)
+    _construction_token: InitVar[object] = None
 
-    def __post_init__(self) -> None:
-        if not self.stresses:
+    def __post_init__(self, _construction_token: object) -> None:
+        if _construction_token is not _ANCHOR_STRESS_REPORT_TOKEN:
+            raise StatisticalFoundationError(
+                "AnchorStressReport must be created by "
+                "build_anchor_stress_report"
+            )
+        stresses = tuple(self.stresses)
+        if not stresses:
             raise StatisticalFoundationError("stresses must not be empty")
-        if len({stress.sector for stress in self.stresses}) != len(self.stresses):
+        if any(not isinstance(stress, SectorStress) for stress in stresses):
+            raise StatisticalFoundationError(
+                "stresses must contain SectorStress values"
+            )
+        if len({stress.sector for stress in stresses}) != len(stresses):
             raise StatisticalFoundationError("stress sectors must be unique")
         if not isinstance(self.conditioning, AnchorConditioning):
             raise StatisticalFoundationError(
                 "conditioning must be an AnchorConditioning"
             )
+        child_conditioning = {
+            stress.conditioning
+            for stress in stresses
+            if stress.conditioning is not None
+        }
+        if child_conditioning and child_conditioning != {self.conditioning}:
+            raise StatisticalFoundationError(
+                "report conditioning must match every bound anchor"
+            )
+        object.__setattr__(self, "stresses", stresses)
         object.__setattr__(
-            self, "allowed_use", _text_tuple(self.allowed_use, "allowed_use")
+            self, "allowed_use", _ANCHOR_STRESS_ALLOWED_USE
         )
         object.__setattr__(
-            self, "forbidden_use", _text_tuple(self.forbidden_use, "forbidden_use")
+            self, "forbidden_use", _ANCHOR_STRESS_FORBIDDEN_USE
         )
 
     @property
     def saturation_vector(self) -> tuple[ScalarRange | None, ...]:
         return tuple(stress.saturation for stress in self.stresses)
+
+    @classmethod
+    def build(
+        cls,
+        *,
+        stresses: Sequence[SectorStress],
+        conditioning: AnchorConditioning,
+    ) -> AnchorStressReport:
+        """Build a report whose conditioning is inherited from its anchors."""
+
+        return cls(
+            stresses=tuple(stresses),
+            conditioning=conditioning,
+            _construction_token=_ANCHOR_STRESS_REPORT_TOKEN,
+        )
+
+
+def _make_sector_stress(
+    *,
+    sector: str,
+    status: StressStatus,
+    anchor_id: str | None,
+    conditioning: AnchorConditioning | None,
+    saturation: ScalarRange | None,
+    exceedance: ScalarRange | None,
+    rationale: str,
+) -> SectorStress:
+    return SectorStress(
+        sector=sector,
+        status=status,
+        anchor_id=anchor_id,
+        conditioning=conditioning,
+        saturation=saturation,
+        exceedance=exceedance,
+        rationale=rationale,
+        _construction_token=_SECTOR_STRESS_TOKEN,
+    )
+
+
+def build_anchor_stress_report(
+    *,
+    stresses: Sequence[SectorStress],
+    conditioning: AnchorConditioning,
+) -> AnchorStressReport:
+    """Build a report whose conditioning is inherited from its anchors."""
+
+    return AnchorStressReport.build(
+        stresses=stresses,
+        conditioning=conditioning,
+    )
 
 
 def evaluate_sector_stress(
@@ -885,56 +1015,69 @@ def evaluate_sector_stress(
     """Construct one typed stress without cross-channel scalar synthesis."""
     sector = _required_text(sector, "sector")
     if numerator is None or numerator_channel_key is None:
-        return SectorStress(
+        return _make_sector_stress(
             sector=sector,
             status=StressStatus.NUMERATOR_UNIDENTIFIED,
             anchor_id=None if anchor is None else anchor.anchor_id,
+            conditioning=None if anchor is None else anchor.conditioning,
             saturation=None,
             exceedance=None,
-            allowed_use=("partial-identification status",),
             rationale="numerator is not point/set identified in this channel",
         )
     if anchor is None or not anchor.normalization_allowed:
-        return SectorStress(
+        return _make_sector_stress(
             sector=sector,
             status=StressStatus.ANCHOR_UNAVAILABLE,
             anchor_id=None if anchor is None else anchor.anchor_id,
+            conditioning=None if anchor is None else anchor.conditioning,
             saturation=None,
             exceedance=None,
-            allowed_use=("anchor availability report",),
             rationale="no verified numeric anchor is available",
         )
     if sector != anchor.target_sector:
-        return SectorStress(
+        return _make_sector_stress(
             sector=sector,
             status=StressStatus.CHANNEL_MISMATCH,
             anchor_id=anchor.anchor_id,
+            conditioning=anchor.conditioning,
             saturation=None,
             exceedance=None,
-            allowed_use=("channel mismatch report",),
             rationale=(
                 "requested sector does not match the anchor target sector"
             ),
         )
     if tuple(numerator_channel_key) != anchor.channel_key:
-        return SectorStress(
+        return _make_sector_stress(
             sector=sector,
             status=StressStatus.CHANNEL_MISMATCH,
             anchor_id=anchor.anchor_id,
+            conditioning=anchor.conditioning,
             saturation=None,
             exceedance=None,
-            allowed_use=("channel mismatch report",),
             rationale="numerator and anchor frame/order/branch identities differ",
         )
     if numerator.lower < 0.0:
-        return SectorStress(
+        return _make_sector_stress(
             sector=sector,
             status=StressStatus.NUMERATOR_UNIDENTIFIED,
             anchor_id=anchor.anchor_id,
+            conditioning=anchor.conditioning,
             saturation=None,
             exceedance=None,
-            allowed_use=("partial-identification status",),
             rationale="non-negative invariant numerator has a negative feasible bound",
+        )
+    if anchor.conditioning is AnchorConditioning.REALIZATION_CONDITIONAL:
+        return _make_sector_stress(
+            sector=sector,
+            status=StressStatus.RATIO_UNIDENTIFIED,
+            anchor_id=anchor.anchor_id,
+            conditioning=anchor.conditioning,
+            saturation=None,
+            exceedance=None,
+            rationale=(
+                "realization-conditional numerator and anchor require a joint "
+                "random-anchor/Fieller analysis"
+            ),
         )
     assert anchor.value is not None
     saturation = ScalarRange(
@@ -945,13 +1088,13 @@ def evaluate_sector_stress(
         max(saturation.lower - 1.0, 0.0),
         max(saturation.upper - 1.0, 0.0),
     )
-    return SectorStress(
+    return _make_sector_stress(
         sector=sector,
         status=StressStatus.DEFINED,
         anchor_id=anchor.anchor_id,
+        conditioning=anchor.conditioning,
         saturation=saturation,
         exceedance=exceedance,
-        allowed_use=("one-way linear-premise stress",),
         rationale=(
             "s>1 is evidence against the registered premises; s<=1 proves no "
             "converse"
@@ -1178,6 +1321,7 @@ __all__ = [
     "SummaryDepartureState",
     "W2_V2_ALIAS",
     "StatisticalFoundationError",
+    "build_anchor_stress_report",
     "evaluate_sector_stress",
     "im_critical_value",
     "quarantined_shear_anchors",
