@@ -11,6 +11,18 @@ import numpy as np
 
 
 def hartlap_stress(seed=20260721, nrep=3000, m=12, nsim=90) -> dict:
+    for name, value, minimum in (
+        ("seed", seed, 0),
+        ("nrep", nrep, 1),
+        ("m", m, 1),
+        ("nsim", nsim, 2),
+    ):
+        if isinstance(value, (bool, np.bool_)) or not isinstance(
+            value, (int, np.integer)
+        ) or int(value) < minimum:
+            raise ValueError(f"{name} must be an integer >= {minimum}")
+    if nsim <= m + 2:
+        raise ValueError("Hartlap diagnostic requires nsim > m + 2")
     rng = np.random.default_rng(seed)
     alpha = (nsim - m - 2) / (nsim - 1)   # Hartlap factor
     raw, cor = [], []
@@ -23,6 +35,7 @@ def hartlap_stress(seed=20260721, nrep=3000, m=12, nsim=90) -> dict:
         cor.append(alpha * y @ P @ y)
     raw, cor = np.asarray(raw), np.asarray(cor)
     return {"m": m, "Nsim": nsim, "hartlap_factor": float(alpha),
+            "inference_role": "DIAGNOSTIC_COMPARATOR_ONLY",
             "raw_mean_over_m": float(raw.mean() / m),
             "corrected_mean_over_m": float(cor.mean() / m),
             "raw_inflated": bool(raw.mean() / m > 1.08),
