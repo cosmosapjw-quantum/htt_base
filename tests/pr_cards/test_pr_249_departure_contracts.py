@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import math
+from types import SimpleNamespace
 
 import numpy as np
 import pytest
@@ -221,6 +222,13 @@ def test_budget_radius_exposes_null_residual() -> None:
     assert scaled.radius_sq[0] == pytest.approx(
         full_rank.radius_sq[0] * 1.0e14
     )
+    for samples, budget in (
+        (np.array([True, False]), np.eye(2)),
+        (np.array([1.0, 0.0]), np.array([[True, False], [False, True]])),
+        ([True, 0.0], np.eye(2)),
+    ):
+        with pytest.raises(ValueError, match="boolean"):
+            matrix_budget_radius_report(samples, budget)
     with pytest.deprecated_call():
         legacy = matrix_budget_radius([1.0, 0.0], np.diag([1.0, 0.0]))
     assert legacy == pytest.approx([1.0])
@@ -284,4 +292,23 @@ def test_legacy_projection_semantics_cannot_be_weakened() -> None:
                 status="LEGACY_DIAGNOSTIC",
                 null_calibration="NOT_AVAILABLE_NON_EVIDENCE",
             ),
+        )
+    with pytest.raises(StatisticalFoundationError, match="x_C must be"):
+        LegacyProjectionReport(x_C=SimpleNamespace(name="x_C"))
+    with pytest.raises(StatisticalFoundationError, match="Pi must be"):
+        LegacyProjectionReport(
+            x_C=x_report,
+            Pi=SimpleNamespace(
+                name="Pi",
+                bin_metadata=(("bin_id", "legacy-bin-1"),),
+                null_calibration="NOT_AVAILABLE_NON_EVIDENCE",
+            ),
+        )
+    with pytest.raises(StatisticalFoundationError, match="value_range"):
+        DiagnosticScalarReport(
+            name="Q",
+            value_range=SimpleNamespace(lower=0.0, upper=1.0),
+            status="LEGACY_DIAGNOSTIC",
+            null_calibration="NOT_AVAILABLE_NON_EVIDENCE",
+            bin_metadata=(("bin_id", "legacy-bin-1"),),
         )

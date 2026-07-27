@@ -139,6 +139,12 @@ def matrix_budget_radius_report(
     direction.  The supported component receives ``x^T U^+ x`` while the
     Euclidean norm of the orthogonal null component is reported separately.
     """
+    raw_x = np.asarray(samples, dtype=object)
+    raw_u = np.asarray(budget, dtype=object)
+    if any(isinstance(value, (bool, np.bool_)) for value in raw_x.flat):
+        raise ValueError("samples must not contain boolean coordinates")
+    if any(isinstance(value, (bool, np.bool_)) for value in raw_u.flat):
+        raise ValueError("budget must not contain boolean entries")
     x = np.asarray(samples, dtype=float)
     u = np.asarray(budget, dtype=float)
     if x.ndim == 1:

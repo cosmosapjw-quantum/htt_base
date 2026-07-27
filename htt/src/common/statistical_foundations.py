@@ -981,6 +981,12 @@ class DiagnosticScalarReport:
 
     def __post_init__(self) -> None:
         _required_text(self.name, "name")
+        if self.value_range is not None and not isinstance(
+            self.value_range, ScalarRange
+        ):
+            raise StatisticalFoundationError(
+                "value_range must be a ScalarRange or None"
+            )
         _required_text(self.status, "status")
         _required_text(self.null_calibration, "null_calibration")
         metadata = tuple(
@@ -1021,6 +1027,10 @@ class LegacyProjectionReport:
     )
 
     def __post_init__(self) -> None:
+        if not isinstance(self.x_C, DiagnosticScalarReport):
+            raise StatisticalFoundationError(
+                "x_C must be a DiagnosticScalarReport"
+            )
         if self.x_C.name != "x_C":
             raise StatisticalFoundationError("x_C report must be named x_C")
         if self.classification != BC1_LEGACY_PROJECTION:
@@ -1040,6 +1050,10 @@ class LegacyProjectionReport:
             report = getattr(self, field_name)
             if report is None:
                 continue
+            if not isinstance(report, DiagnosticScalarReport):
+                raise StatisticalFoundationError(
+                    f"{field_name} must be a DiagnosticScalarReport"
+                )
             if report.name != expected_name:
                 raise StatisticalFoundationError(
                     f"{field_name} report must be named {expected_name}"
