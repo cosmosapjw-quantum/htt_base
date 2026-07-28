@@ -244,3 +244,62 @@ def test_j1_all_passes_only_reaches_independent_adjudication() -> None:
     assert decision["status"] == READY_OUTCOME
     assert decision["ready"] is True
     assert "PROMOT" not in decision["status"]
+
+
+def test_source_identity_removal_or_promotion_fails_closed() -> None:
+    promoted = copy.deepcopy(_load(INTAKE))
+    promoted["sources"][0]["disposition"] = "VALIDATED"
+    with pytest.raises(
+        ValueError,
+        match="source identities or dispositions drifted",
+    ):
+        validate_premise_anchor_intake(promoted)
+
+    removed = copy.deepcopy(_load(INTAKE))
+    removed["sources"].pop()
+    with pytest.raises(
+        ValueError,
+        match="source identities or dispositions drifted",
+    ):
+        validate_premise_anchor_intake(removed)
+
+
+def test_duplicate_conjecture_shadow_cannot_bypass_gate() -> None:
+    mutated = copy.deepcopy(_load(INTAKE))
+    shadow = copy.deepcopy(mutated["claim_intake"]["conjectures"][0])
+    shadow["evidence_status"] = "VALIDATED"
+    shadow["promotion_blocked"] = False
+    mutated["claim_intake"]["conjectures"].insert(0, shadow)
+
+    with pytest.raises(
+        ValueError,
+        match="conjectures must be unique and complete",
+    ):
+        validate_premise_anchor_intake(mutated)
+
+
+def test_family_identification_prohibitions_cannot_be_erased() -> None:
+    backlog = _load(BACKLOG)
+    status = _load(STATUS)
+    mutated = copy.deepcopy(backlog)
+    for card in mutated["prs"]:
+        if card["id"] in {f"PR-{index}" for index in range(253, 259)}:
+            card["forbidden"] = []
+
+    with pytest.raises(ValueError, match="PR-253 forbidden drifted"):
+        _strict_validate(mutated, status)
+
+
+def test_strict_slice_consumes_mirror_gate(monkeypatch: pytest.MonkeyPatch) -> None:
+    backlog = _load(BACKLOG)
+    status = _load(STATUS)
+
+    def reject_mirror_drift() -> None:
+        raise ValueError("mirror drift sentinel")
+
+    monkeypatch.setattr(
+        "scripts.codex_harness.validate_pr_dag.check_mirrors",
+        reject_mirror_drift,
+    )
+    with pytest.raises(ValueError, match="mirror drift sentinel"):
+        _strict_validate(backlog, status)

@@ -46,6 +46,13 @@ requirements:
     Every quoted numerical entry is explicitly QUOTATION_ONLY and
     evidence-ineligible; the strict DAG validator consumes and validates the
     intake artifact.
+  - >
+    The five attachment source identities and dispositions are exact-pinned,
+    conjecture IDs are unique, and duplicate shadow claims fail closed.
+  - >
+    The six premise-anchor cards retain their card-specific forbidden-use and
+    anti-drift boundaries, and strict slice validation consumes the canonical
+    compatibility-mirror gate.
 claim_boundary:
   status: IMPLEMENTATION_AND_TEST_REMEDIATION
   allowed:
@@ -68,3 +75,6 @@ kill_switches:
   - PR-151 partial data enters code, fixtures, calibration, or claims
   - a quoted number is marked validated inside the unverified intake
   - a counterexample or failed proof satisfies a conjecture promotion gate
+  - an attachment source is removed or promoted inside the intake
+  - a duplicate conjecture shadows the canonical J1/J2 record
+  - a premise-anchor forbidden-use boundary or compatibility mirror drifts

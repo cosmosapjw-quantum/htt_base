@@ -19,12 +19,14 @@ if __package__:  # Package import used by pytest and library callers.
         validate_premise_anchor_intake,
     )
     from .pr167_intake_contract import validate_pre_intake_receipt
+    from .sync_pr_dag_mirrors import check_mirrors
 else:  # Direct script execution places this directory on sys.path.
     from premise_anchor_gates import (
         claim_contracts_for_backlog,
         validate_premise_anchor_intake,
     )
     from pr167_intake_contract import validate_pre_intake_receipt
+    from sync_pr_dag_mirrors import check_mirrors
 
 
 RESCUE_FIRST_PR = 119
@@ -301,6 +303,12 @@ PREMISE_ANCHOR_CARD_CONTRACTS = {
         "owner": "COMMON",
         "change_set_id": "CS-PR253-BASELINE-REPLAN",
         "publication_group_id": "PG-PR253-BASELINE-REPLAN",
+        "forbidden": [
+            "No PR-151 partial data, FLRW-departure result, or family-identification claim."
+        ],
+        "anti_drift": [
+            "Proposed attachment numbers remain unverified inputs until independently regenerated."
+        ],
     },
     "PR-254": {
         "depends": ["PR-253", "PR-216", "PR-217", "PR-225"],
@@ -308,30 +316,60 @@ PREMISE_ANCHOR_CARD_CONTRACTS = {
         "change_set_id": "CS-PR254-ANCHOR-GEOMETRY",
         "publication_group_id": "PG-PR254-ANCHOR-GEOMETRY",
         "claim_contracts": claim_contracts_for_backlog(),
+        "forbidden": [
+            "No converse MES theorem, automatic e-value, or FLRW proximity claim."
+        ],
+        "anti_drift": [
+            "MES may finish as ONE_ANCHOR_AMONG_FAMILY without making the benchmark fail."
+        ],
     },
     "PR-255": {
         "depends": ["PR-254", "PR-219", "PR-251"],
         "owner": "HTT",
         "change_set_id": "CS-PR255-RESPONSE-GEOMETRY",
         "publication_group_id": "PG-PR255-RESPONSE-GEOMETRY",
+        "forbidden": [
+            "No native-solver, geometry-detection, or family-identification claim."
+        ],
+        "anti_drift": [
+            "Held-out or matched-injection reuse invalidates candidate attribution."
+        ],
     },
     "PR-256": {
         "depends": ["PR-255", "PR-222", "PR-251"],
         "owner": "HTT",
         "change_set_id": "CS-PR256-VELOCITY-FRAMES",
         "publication_group_id": "PG-PR256-VELOCITY-FRAMES",
+        "forbidden": [
+            "No observed DESI/CMB result, global-tilt detection, or geometry claim."
+        ],
+        "anti_drift": [
+            "Analytic and synthetic responses remain hypothesis_only with non-native transfer provenance."
+        ],
     },
     "PR-257": {
         "depends": ["PR-255", "PR-251"],
         "owner": "OBSSTAT",
         "change_set_id": "CS-PR257-LOWELL-MORPHOLOGY",
         "publication_group_id": "PG-PR257-LOWELL-MORPHOLOGY",
+        "forbidden": [
+            "No complete invariant-basis, cosmological detection, or family-identification claim without the declared proof and native gates."
+        ],
+        "anti_drift": [
+            "OBSSTAT owns features and nulls; HTT alone owns held-out model/source comparison."
+        ],
     },
     "PR-258": {
         "depends": ["PR-256", "PR-257", "PR-219"],
         "owner": "HTT",
         "change_set_id": "CS-PR258-OPEN-SET-INTEGRATION",
         "publication_group_id": "PG-PR258-OPEN-SET-INTEGRATION",
+        "forbidden": [
+            "No FLRW-departure detection, native-solver validation, or Bianchi-family identification."
+        ],
+        "anti_drift": [
+            "Strong J1/J2 conjectures and blocked native steps remain outside validated manuscript results."
+        ],
     },
 }
 PREMISE_ANCHOR_DEPENDENCY_OVERLAY = {
@@ -1155,6 +1193,7 @@ def validate_long_horizon_rescue_slice(
     if actual_premise_anchor_ids:
         _validate_premise_anchor_slice(cards)
         validate_premise_anchor_intake(load_yaml(PREMISE_ANCHOR_INTAKE))
+        check_mirrors()
 
     if status is not None:
         _validate_rescue_status(status, info)
@@ -1376,7 +1415,13 @@ def _validate_premise_anchor_slice(cards: dict[str, Any]) -> None:
         ]
         if card.get("dependency_contracts") != expected_contracts:
             raise ValueError(f"{pr_id} typed dependency projection drifted")
-        for field in ("owner", "change_set_id", "publication_group_id"):
+        for field in (
+            "owner",
+            "change_set_id",
+            "publication_group_id",
+            "forbidden",
+            "anti_drift",
+        ):
             if card.get(field) != expected[field]:
                 raise ValueError(
                     f"{pr_id} {field} drifted: "

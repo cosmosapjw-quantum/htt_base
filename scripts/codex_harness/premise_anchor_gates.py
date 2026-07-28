@@ -29,6 +29,54 @@ _COMMON_REFUTING_OUTCOMES = [
     "CAS_FAIL",
 ]
 
+SOURCE_CONTRACTS: list[dict[str, Any]] = [
+    {
+        "source_id": "INPUT-METHOD-CORE-KO",
+        "attachment_id": "7aafa5fc-50e4-46b6-ba46-bd0cfbb6235d",
+        "title": "Premise-Anchored Response Geometry core research proposal",
+        "language": "ko",
+        "byte_count": 40264,
+        "sha256": "12e68bed1be9bea44490c967c37198fd521b1292b26e86e9f0a8758a5c5c8659",
+        "disposition": "PROPOSED_UNVERIFIED_INPUT",
+    },
+    {
+        "source_id": "INPUT-METHOD-CRITIQUE-KO",
+        "attachment_id": "fa8ef0ba-784f-4100-8023-c514db73fa96",
+        "title": "Over-identifying-restriction critique and revised MES role",
+        "language": "ko",
+        "byte_count": 14484,
+        "sha256": "122aa0beb26950e7cf10bc6946c0f3bf517028ecbddc760dd3e608db98ca0b1a",
+        "disposition": "PROPOSED_UNVERIFIED_INPUT",
+    },
+    {
+        "source_id": "INPUT-JUSTIFICATION-EN",
+        "attachment_id": "f9728318-cb8c-4601-a690-702681e4fd99",
+        "title": "Justification of the Saturation-Gauge Methodology",
+        "language": "en",
+        "byte_count": 29785,
+        "sha256": "ee5805c4fb5ee9eb19838a43be9b74596756f88bd3dff266926deb2fd7f5907a",
+        "disposition": "PROPOSED_REQUIRES_CLAIM_REPAIR",
+    },
+    {
+        "source_id": "INPUT-MANUSCRIPT-SNIPPETS",
+        "attachment_id": "060ba220-b3a0-4eed-bbb0-cd0a27170b1c",
+        "title": "Premise-anchor manuscript-ready motivation snippets M1-M5",
+        "language": "en",
+        "byte_count": 7773,
+        "sha256": "253a8698218825439aa612044e12017cf9c7a1b3ac8bed4742443e9b35a0d8c6",
+        "disposition": "WITHHELD_UNTIL_PR258",
+    },
+    {
+        "source_id": "INPUT-JUSTIFICATION-SUMMARY-KO",
+        "attachment_id": "cc05f4a4-1a70-4f5e-b3db-2b0f77bf761a",
+        "title": "Justification research Korean trace summary",
+        "language": "ko",
+        "byte_count": 13417,
+        "sha256": "93ed6b92d9f2404790db5504cc1a16d1b9b491f30dcf96d62e836a8b9e5e7651",
+        "disposition": "PROPOSED_REQUIRES_CLAIM_REPAIR",
+    },
+]
+
 CONJECTURE_GATE_CONTRACTS: dict[str, dict[str, Any]] = {
     "J1-EXACT": {
         "claim_id": "J1-EXACT",
@@ -204,6 +252,10 @@ def validate_premise_anchor_intake(payload: Mapping[str, Any]) -> None:
         raise ValueError("premise-anchor intake must remain evidence-ineligible")
     if payload.get("canonical_authority") is not None:
         raise ValueError("premise-anchor intake must not declare authority")
+    if payload.get("sources") != SOURCE_CONTRACTS:
+        raise ValueError(
+            "premise-anchor source identities or dispositions drifted"
+        )
 
     claim_intake = payload.get("claim_intake")
     if not isinstance(claim_intake, Mapping):
@@ -211,6 +263,17 @@ def validate_premise_anchor_intake(payload: Mapping[str, Any]) -> None:
     conjectures = claim_intake.get("conjectures")
     if not isinstance(conjectures, list):
         raise ValueError("premise-anchor conjectures must be a list")
+    if len(conjectures) != len(CONJECTURE_GATE_CONTRACTS) or any(
+        not isinstance(item, Mapping) for item in conjectures
+    ):
+        raise ValueError(
+            "premise-anchor conjectures must be unique and complete"
+        )
+    ordered_ids = [item.get("claim_id") for item in conjectures]
+    if ordered_ids != ["J1-EXACT", "J2-UNIFORM"]:
+        raise ValueError(
+            "premise-anchor conjecture identities are duplicated or reordered"
+        )
     by_id = {
         item.get("claim_id"): item
         for item in conjectures
