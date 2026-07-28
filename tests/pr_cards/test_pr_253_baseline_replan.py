@@ -52,7 +52,23 @@ def test_registered_premise_anchor_slice_is_atomic_and_status_bound() -> None:
     assert backlog["policy"]["dependency_overlays"] == (
         PREMISE_ANCHOR_DEPENDENCY_OVERLAY
     )
-    assert status["in_progress"] == "PR-253"
+    assert "PR-253" in status["completed"]
+    assert status["in_progress"] is None
+    assert "PR-254" in status["pending"]
+    assert status["execution_resolutions"]["PR-253"] == {
+        "resolution": "COMPLETED_SUCCESS",
+        "receipt": "docs/PR_DELTAS/pr-253.md",
+        "review_receipt": (
+            ".agent-harness/runs/premise-anchor-pr253-r5-20260728/"
+            "RUN_SUMMARY.json"
+        ),
+        "resolved_on": "2026-07-28",
+        "scientific_status_effect": "none_methodology_conditional_only",
+        "scientific_status_after": "OPEN",
+        "scientific_artifact_mode": "methodology_conditional",
+        "public_use": False,
+        "success_dependency_satisfied": True,
+    }
     assert status["background_execution_contracts"]["PR-151"] == {
         "kind": "acquisition",
         "allowed_phase": "acquire",
