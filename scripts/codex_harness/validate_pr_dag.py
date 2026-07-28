@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import html
 import json
 import re
@@ -387,6 +388,14 @@ PREMISE_ANCHOR_DEPENDENCY_OVERLAY = {
         "PR-193": ["PR-254"],
         "PR-205": ["PR-254", "PR-255"],
     },
+}
+PREMISE_ANCHOR_CARD_SEMANTIC_SHA256 = {
+    "PR-253": "06af832de9b936a12e587d9242d57a7507e3013c20e124ab32315008a613e11f",
+    "PR-254": "cc4a201550c8b34832ab93d5136379f38a8bb7bb8cc2d2728c9dc75eb1fa4321",
+    "PR-255": "9222695858d24e6d9abb4fed865ab29e7cce5cffe945083bef318ad456f9a640",
+    "PR-256": "e30ec0f706f817e827a80da054dcdf93d1ac9f932ee79eeb184874688533cd6a",
+    "PR-257": "49030111c83160e40c366669eab1524d2db485e4956dccb5c44e34f47cf40adf",
+    "PR-258": "364880c01495ee2be26fd573dca065d322040cb58c10d359750e3a8dbc69018a",
 }
 
 
@@ -1457,6 +1466,17 @@ def _validate_premise_anchor_slice(cards: dict[str, Any]) -> None:
             "diagnostic_only",
         }:
             raise ValueError(f"{pr_id} has an invalid premise-anchor claim ceiling")
+        semantic_bytes = json.dumps(
+            card,
+            sort_keys=True,
+            separators=(",", ":"),
+            ensure_ascii=False,
+        ).encode("utf-8")
+        if (
+            hashlib.sha256(semantic_bytes).hexdigest()
+            != PREMISE_ANCHOR_CARD_SEMANTIC_SHA256[pr_id]
+        ):
+            raise ValueError(f"{pr_id} semantic card identity drifted")
         for field in RESCUE_SEMANTIC_CLAIM_FIELDS:
             for prose in _iter_strings(card.get(field)):
                 match = BARE_ACTIVE_CLAIM_LEVEL_RE.search(prose)

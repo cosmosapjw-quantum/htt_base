@@ -264,6 +264,17 @@ def test_source_identity_removal_or_promotion_fails_closed() -> None:
         validate_premise_anchor_intake(removed)
 
 
+def test_frozen_numerical_intake_cannot_drop_a_quoted_value() -> None:
+    mutated = copy.deepcopy(_load(INTAKE))
+    mutated["numerical_intake"]["claims"].pop()
+
+    with pytest.raises(
+        ValueError,
+        match="intake semantic identity drifted",
+    ):
+        validate_premise_anchor_intake(mutated)
+
+
 def test_duplicate_conjecture_shadow_cannot_bypass_gate() -> None:
     mutated = copy.deepcopy(_load(INTAKE))
     shadow = copy.deepcopy(mutated["claim_intake"]["conjectures"][0])
@@ -287,6 +298,17 @@ def test_family_identification_prohibitions_cannot_be_erased() -> None:
             card["forbidden"] = []
 
     with pytest.raises(ValueError, match="PR-253 forbidden drifted"):
+        _strict_validate(mutated, status)
+
+
+def test_registered_card_kill_switch_cannot_drift() -> None:
+    backlog = _load(BACKLOG)
+    status = _load(STATUS)
+    mutated = copy.deepcopy(backlog)
+    card = next(card for card in mutated["prs"] if card["id"] == "PR-258")
+    card["kill"] = "No kill switch."
+
+    with pytest.raises(ValueError, match="PR-258 semantic card identity drifted"):
         _strict_validate(mutated, status)
 
 

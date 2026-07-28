@@ -9,6 +9,8 @@ module.
 
 from __future__ import annotations
 
+import hashlib
+import json
 from copy import deepcopy
 from typing import Any, Mapping, Sequence
 
@@ -21,6 +23,9 @@ READY_OUTCOME = "READY_FOR_INDEPENDENT_ADJUDICATION"
 MISSING_OUTCOME = "BLOCKED_MISSING_EVIDENCE"
 INVALID_OUTCOME = "BLOCKED_INVALID_EVIDENCE"
 REFUTED_OUTCOME = "REFUTED_OR_RESTRICTED"
+INTAKE_SEMANTIC_SHA256 = (
+    "0831f062eb439e1e999c8c56fa7e1ac937d7f6ae1b4770bf90d427e007988883"
+)
 
 _COMMON_REFUTING_OUTCOMES = [
     "VALID_COUNTEREXAMPLE",
@@ -332,3 +337,12 @@ def validate_premise_anchor_intake(payload: Mapping[str, Any]) -> None:
             raise ValueError(
                 f"quoted number {label} must remain evidence-ineligible"
             )
+
+    semantic_bytes = json.dumps(
+        payload,
+        sort_keys=True,
+        separators=(",", ":"),
+        ensure_ascii=False,
+    ).encode("utf-8")
+    if hashlib.sha256(semantic_bytes).hexdigest() != INTAKE_SEMANTIC_SHA256:
+        raise ValueError("premise-anchor intake semantic identity drifted")
