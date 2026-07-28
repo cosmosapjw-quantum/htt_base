@@ -289,6 +289,35 @@ def test_nonlinearity_rejects_candidate_evaluation_subclasses() -> None:
             candidates=(ForgedEvaluation(legitimate),),
         )
 
+    forged_exact = object.__new__(CandidateEvaluation)
+    for name in (
+        "candidate_id",
+        "kind",
+        "held_out_data_id",
+        "matched_injection_data_id",
+        "model_config_id",
+        "scoring_rule",
+        "held_out_prediction_id",
+        "matched_injection_prediction_id",
+        "independence_receipt",
+    ):
+        object.__setattr__(forged_exact, name, getattr(legitimate, name))
+    object.__setattr__(forged_exact, "held_out_score", 10.0)
+    object.__setattr__(forged_exact, "matched_injection_score", 10.0)
+    object.__setattr__(
+        forged_exact,
+        "evaluation_id",
+        "sha256:" + "9" * 64,
+    )
+    with pytest.raises(
+        OrbitNonlinearityError,
+        match="scores must be non-positive",
+    ):
+        _report(
+            residual=(0.0, 1.0, 0.0),
+            candidates=(forged_exact,),
+        )
+
 
 def _report(
     *,

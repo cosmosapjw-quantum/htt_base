@@ -107,6 +107,20 @@ def test_pack_a_payload_compares_scalar_and_morphology_surfaces():
         item["current_public_production_status"] == "diagnostic_only"
         for item in payload["legacy_ver2_context"]["artifacts"]
     )
+    required_local_fields = {
+        "claim_tier",
+        "artifact_mode",
+        "transfer_source",
+        "null_status",
+        "covariance_status",
+        "allowed_use",
+        "forbidden_use",
+    }
+    assert all(
+        required_local_fields <= set(item)
+        and all(str(item[field]).strip() for field in required_local_fields)
+        for item in payload["morphology_mes_diagnostics"]
+    )
     assert all(
         item["legacy_readiness_status"] == "legacy_not_current"
         for item in payload["legacy_ver2_context"]["artifacts"]
@@ -176,6 +190,26 @@ def test_pack_a_markdown_has_manifest_and_caveated_comparison():
         and "not bound in this summary row" in row
         for row in scalar_rows.values()
     )
+    morphology_rows = {
+        item["name"]: next(
+            line
+            for line in markdown.splitlines()
+            if line.startswith(f"| {item['name']} | {item['owner']} |")
+        )
+        for item in payload["morphology_mes_diagnostics"]
+    }
+    for item in payload["morphology_mes_diagnostics"]:
+        row = morphology_rows[item["name"]]
+        for field in (
+            "claim_tier",
+            "artifact_mode",
+            "transfer_source",
+            "null_status",
+            "covariance_status",
+            "allowed_use",
+            "forbidden_use",
+        ):
+            assert item[field] in row
     assert "| MES I_morph | COMMON |" in markdown
     assert "bass.ver2.export.solver_core_output_tier_b.atlas_lite" in markdown
     assert "prior_context_only" in markdown

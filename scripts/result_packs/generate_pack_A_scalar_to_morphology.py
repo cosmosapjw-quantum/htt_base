@@ -196,6 +196,18 @@ def _diagnostic_payloads() -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
             "surface": "obsstat.scalar_lowell.LowEllScalarSummary",
             "role": "observer-side scalar feature extraction",
             "claim_tier": "diagnostic_only",
+            "artifact_mode": "diagnostic_observable_features",
+            "transfer_source": "none_observer_side",
+            "null_status": "required_for_p_values_not_bound_in_summary",
+            "covariance_status": (
+                "required_for_claim_interpretation_not_bound_in_summary"
+            ),
+            "allowed_use": (
+                "feature extraction and explicitly null-calibrated diagnostics"
+            ),
+            "forbidden_use": (
+                "posterior evidence, geometry detection, or family identification"
+            ),
             "required_provenance": "null ensemble and look-elsewhere metadata for p-values",
             "comparison_use": "records scalar feature provenance feeding the upgrade context",
         },
@@ -206,6 +218,14 @@ def _diagnostic_payloads() -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
             "surface": "obsstat.morphology.MorphologyAxisSummary",
             "role": "diagnostic morphology-axis and alignment features",
             "claim_tier": "diagnostic_only",
+            "artifact_mode": "diagnostic_morphology_features",
+            "transfer_source": "none_observer_side",
+            "null_status": "alignment_null_not_bound_in_summary",
+            "covariance_status": "mask_and_covariance_not_bound_in_summary",
+            "allowed_use": "diagnostic morphology and alignment description",
+            "forbidden_use": (
+                "native-atlas equivalence, geometry detection, or family identification"
+            ),
             "required_provenance": "mask, covariance, null, and scan-volume metadata",
             "comparison_use": "morphology descriptors without native atlas or family labels",
         },
@@ -216,6 +236,19 @@ def _diagnostic_payloads() -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
             "surface": "htt.statistics.mes_information_gain.MesInformationGainReport",
             "role": "branch-separated MES morphology information-gain report",
             "claim_tier": "diagnostic_only_or_blocked",
+            "artifact_mode": "diagnostic_or_blocked_mes_information_gain",
+            "transfer_source": "matched_source_manifest_conditional",
+            "null_status": "not_a_null_calibrated_detection_statistic",
+            "covariance_status": (
+                "matched_covariance_manifest_required_not_bound_in_summary"
+            ),
+            "allowed_use": (
+                "branch-separated conditional information-gain diagnostic"
+            ),
+            "forbidden_use": (
+                "MES converse, FLRW proof, evidence, native-solver validation, "
+                "or family identification"
+            ),
             "required_provenance": "positive finite branch bounds and matched source manifests",
             "comparison_use": "reports template/covariance tightening status under caveats",
         },
@@ -442,13 +475,33 @@ def render_markdown(payload: dict[str, Any]) -> str:
     lines.extend(["", "## Morphology And MES Diagnostics", ""])
     lines.extend(
         _table(
-            ("Name", "Owner", "Surface", "Role", "Required Provenance"),
+            (
+                "Name",
+                "Owner",
+                "Claim Tier",
+                "Artifact Mode",
+                "Transfer Source",
+                "Null Status",
+                "Covariance Status",
+                "Surface",
+                "Role",
+                "Allowed Use",
+                "Forbidden Use",
+                "Required Provenance",
+            ),
             [
                 (
                     item["name"],
                     item["owner"],
+                    item["claim_tier"],
+                    item["artifact_mode"],
+                    item["transfer_source"],
+                    item["null_status"],
+                    item["covariance_status"],
                     item["surface"],
                     item["role"],
+                    item["allowed_use"],
+                    item["forbidden_use"],
                     item["required_provenance"],
                 )
                 for item in payload["morphology_mes_diagnostics"]

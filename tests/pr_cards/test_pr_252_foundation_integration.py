@@ -22,6 +22,7 @@ from common.mes_successor_registry import (
 from common.statistical_foundations import (
     AnchorConditioning,
     AnchorStatus,
+    AnchorStressReport,
     BC1_LEGACY_PROJECTION,
     BC2_NO_REPRESENTATION_PROMOTION,
     DepartureState,
@@ -321,6 +322,52 @@ def test_result_card_keeps_output_spaces_disjoint_and_diagnostic_only() -> None:
         "representation_policy"
     ] == BC2_NO_REPRESENTATION_PROMOTION
     json.dumps(payload, allow_nan=False)
+
+
+def test_result_card_rejects_anchor_report_subclass_claim_lane_override() -> None:
+    from mio.reports import StatisticalFoundationResultCard
+
+    anchor = registered_geodesic_mes_anchors(
+        eps1=0.0,
+        eps2=2.0e-5,
+        eps3=3.0e-5,
+        attribution="subclass-boundary fixture",
+        conditioning=AnchorConditioning.ENSEMBLE_CALIBRATED,
+    )["sigma"]
+    stress = evaluate_sector_stress(
+        sector="Sigma2",
+        numerator=ScalarRange(0.0, 0.2),
+        numerator_channel_key=anchor.channel_key,
+        anchor=anchor,
+    )
+    legitimate = build_anchor_stress_report(
+        stresses=(stress,),
+        conditioning=AnchorConditioning.ENSEMBLE_CALIBRATED,
+    )
+
+    class ForgedAggregate(AnchorStressReport):
+        def __init__(self, source: AnchorStressReport) -> None:
+            object.__setattr__(self, "stresses", source.stresses)
+            object.__setattr__(self, "conditioning", source.conditioning)
+            object.__setattr__(self, "allowed_use", source.allowed_use)
+            object.__setattr__(self, "forbidden_use", source.forbidden_use)
+
+        def __getattribute__(self, name: str):
+            if name == "allowed_use":
+                return ("evidence",)
+            return super().__getattribute__(name)
+
+    assert type(
+        ForgedAggregate.build(
+            stresses=(stress,),
+            conditioning=AnchorConditioning.ENSEMBLE_CALIBRATED,
+        )
+    ) is AnchorStressReport
+    with pytest.raises(TypeError, match="exact AnchorStressReport"):
+        StatisticalFoundationResultCard(
+            card_id="forged-anchor-report",
+            anchor_stress=ForgedAggregate(legitimate),
+        )
 
 
 def test_sector_stress_rejects_duck_typed_numerators_anchors_and_channels() -> None:

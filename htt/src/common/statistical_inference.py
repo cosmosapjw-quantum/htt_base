@@ -439,14 +439,45 @@ def fieller_ratio(
         joint.anchor_estimate + z * math.sqrt(joint.anchor_variance),
     )
     cov = float(joint.cross_covariance)
-    a = joint.anchor_estimate**2 - z**2 * joint.anchor_variance
-    b = -2.0 * (
-        joint.numerator_estimate * joint.anchor_estimate - z**2 * cov
+    coefficient_unit = max(
+        abs(joint.numerator_estimate),
+        abs(joint.anchor_estimate),
+        math.sqrt(joint.numerator_variance),
+        math.sqrt(joint.anchor_variance),
+        math.sqrt(abs(cov)),
     )
-    c = joint.numerator_estimate**2 - z**2 * joint.numerator_variance
-    coefficient_scale = max(abs(a), abs(b), abs(c), 1.0)
+    if coefficient_unit == 0.0:
+        normalized_numerator = 0.0
+        normalized_anchor = 0.0
+        normalized_numerator_variance = 0.0
+        normalized_anchor_variance = 0.0
+        normalized_covariance = 0.0
+    else:
+        normalized_numerator = joint.numerator_estimate / coefficient_unit
+        normalized_anchor = joint.anchor_estimate / coefficient_unit
+        normalized_numerator_variance = (
+            joint.numerator_variance / coefficient_unit / coefficient_unit
+        )
+        normalized_anchor_variance = (
+            joint.anchor_variance / coefficient_unit / coefficient_unit
+        )
+        normalized_covariance = cov / coefficient_unit / coefficient_unit
+    a = normalized_anchor**2 - z**2 * normalized_anchor_variance
+    b = -2.0 * (
+        normalized_numerator * normalized_anchor
+        - z**2 * normalized_covariance
+    )
+    c = normalized_numerator**2 - z**2 * normalized_numerator_variance
+    coefficient_scale = max(abs(a), abs(b), abs(c))
+    if coefficient_scale > 0.0:
+        a /= coefficient_scale
+        b /= coefficient_scale
+        c /= coefficient_scale
     confidence_set = _quadratic_fieller_set(
-        a, b, c, tol=np.finfo(float).eps * 64.0 * coefficient_scale
+        a,
+        b,
+        c,
+        tol=np.finfo(float).eps * 64.0,
     )
     separated = denominator_interval.separated_from_zero(atol=atol, rtol=rtol)
     if not separated:

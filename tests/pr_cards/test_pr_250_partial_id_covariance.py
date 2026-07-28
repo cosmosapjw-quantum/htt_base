@@ -102,6 +102,27 @@ def test_random_anchor_ratio_is_joint_and_channel_covariance_matters() -> None:
         _joint(var_n=0.0, var_d=0.0, covariance=1e-10)
 
 
+@pytest.mark.parametrize("scale", (1.0, 1.0e-9, 1.0e9))
+def test_deterministic_fieller_ratio_is_scale_invariant(scale: float) -> None:
+    result = fieller_ratio(
+        _joint(
+            numerator=2.0 * scale,
+            anchor=1.0 * scale,
+            var_n=0.0,
+            var_d=0.0,
+            covariance=0.0,
+        ),
+        confidence_level=0.95,
+        atol=0.0,
+        rtol=0.0,
+        lane=InferenceLane.CLAIM_BEARING,
+    )
+    assert result.status is StressStatus.DEFINED
+    assert result.point_estimate == pytest.approx(2.0)
+    assert result.confidence_set.kind is FiellerSetKind.BOUNDED
+    assert result.confidence_set.intervals == (ScalarRange(2.0, 2.0),)
+
+
 def test_zero_crossing_denominator_never_returns_finite_ratio() -> None:
     result = fieller_ratio(
         _joint(anchor=0.05, var_d=0.25, covariance=0.0),

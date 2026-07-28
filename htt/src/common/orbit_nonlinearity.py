@@ -1090,6 +1090,38 @@ def build_candidate_independence_receipt(
     )
 
 
+def _revalidated_candidate_independence_receipt(
+    value: object,
+) -> CandidateIndependenceReceipt:
+    if type(value) is not CandidateIndependenceReceipt:
+        raise OrbitNonlinearityError(
+            "independence_receipt must be an exact "
+            "CandidateIndependenceReceipt"
+        )
+    try:
+        canonical = CandidateIndependenceReceipt(
+            candidate_id=value.candidate_id,
+            model_config_id=value.model_config_id,
+            training_data_id=value.training_data_id,
+            held_out_data_id=value.held_out_data_id,
+            matched_injection_data_id=value.matched_injection_data_id,
+            fit_receipt_id=value.fit_receipt_id,
+            split_receipt_id=value.split_receipt_id,
+            receipt_id=value.receipt_id,
+            _construction_token=_CANDIDATE_INDEPENDENCE_TOKEN,
+        )
+    except AttributeError as exc:
+        raise OrbitNonlinearityError(
+            "CandidateIndependenceReceipt is missing factory-validated fields"
+        ) from exc
+    if canonical != value:
+        raise OrbitNonlinearityError(
+            "CandidateIndependenceReceipt fields do not match a "
+            "factory-derived value"
+        )
+    return canonical
+
+
 @dataclass(frozen=True)
 class CandidateEvaluation:
     """Factory-derived held-out scores bound to predictions and fit evidence."""
@@ -1129,6 +1161,17 @@ class CandidateEvaluation:
             "matched_injection_score",
             _real(self.matched_injection_score, "matched_injection_score"),
         )
+        if (
+            self.scoring_rule
+            is CandidateScoringRule.NEGATIVE_MEAN_SQUARED_ERROR
+            and (
+                self.held_out_score > 0.0
+                or self.matched_injection_score > 0.0
+            )
+        ):
+            raise OrbitNonlinearityError(
+                "negative-mean-squared-error scores must be non-positive"
+            )
         object.__setattr__(
             self,
             "held_out_data_id",
@@ -1151,18 +1194,15 @@ class CandidateEvaluation:
             object.__setattr__(
                 self, name, _evidence_receipt(getattr(self, name), name)
             )
-        if type(self.independence_receipt) is not CandidateIndependenceReceipt:
-            raise OrbitNonlinearityError(
-                "independence_receipt must be a "
-                "CandidateIndependenceReceipt"
-            )
+        receipt = _revalidated_candidate_independence_receipt(
+            self.independence_receipt
+        )
+        object.__setattr__(self, "independence_receipt", receipt)
         if (
-            self.independence_receipt.candidate_id != self.candidate_id
-            or self.independence_receipt.model_config_id
-            != self.model_config_id
-            or self.independence_receipt.held_out_data_id
-            != self.held_out_data_id
-            or self.independence_receipt.matched_injection_data_id
+            receipt.candidate_id != self.candidate_id
+            or receipt.model_config_id != self.model_config_id
+            or receipt.held_out_data_id != self.held_out_data_id
+            or receipt.matched_injection_data_id
             != self.matched_injection_data_id
         ):
             raise OrbitNonlinearityError(
@@ -1192,6 +1232,41 @@ class CandidateEvaluation:
             raise OrbitNonlinearityError(
                 "evaluation_id does not bind the candidate evaluation"
             )
+
+
+def _revalidated_candidate_evaluation(value: object) -> CandidateEvaluation:
+    if type(value) is not CandidateEvaluation:
+        raise OrbitNonlinearityError(
+            "candidate evidence must be an exact factory-derived "
+            "CandidateEvaluation"
+        )
+    try:
+        canonical = CandidateEvaluation(
+            candidate_id=value.candidate_id,
+            kind=value.kind,
+            held_out_score=value.held_out_score,
+            matched_injection_score=value.matched_injection_score,
+            held_out_data_id=value.held_out_data_id,
+            matched_injection_data_id=value.matched_injection_data_id,
+            model_config_id=value.model_config_id,
+            scoring_rule=value.scoring_rule,
+            held_out_prediction_id=value.held_out_prediction_id,
+            matched_injection_prediction_id=(
+                value.matched_injection_prediction_id
+            ),
+            independence_receipt=value.independence_receipt,
+            evaluation_id=value.evaluation_id,
+            _construction_token=_CANDIDATE_EVALUATION_TOKEN,
+        )
+    except AttributeError as exc:
+        raise OrbitNonlinearityError(
+            "CandidateEvaluation is missing factory-validated fields"
+        ) from exc
+    if canonical != value:
+        raise OrbitNonlinearityError(
+            "CandidateEvaluation fields do not match a factory-derived value"
+        )
+    return canonical
 
 
 def _negative_mean_squared_error(
@@ -1278,10 +1353,9 @@ def evaluate_candidate_predictions(
             "scoring_rule must be a CandidateScoringRule"
         )
     model_id = _evidence_receipt(model_config_id, "model_config_id")
-    if type(independence_receipt) is not CandidateIndependenceReceipt:
-        raise OrbitNonlinearityError(
-            "independence_receipt must be a CandidateIndependenceReceipt"
-        )
+    independence_receipt = _revalidated_candidate_independence_receipt(
+        independence_receipt
+    )
     held_prediction = _array(
         held_out_prediction, "held_out_prediction", ndim=1
     )
@@ -1512,12 +1586,10 @@ class NonlinearityReport:
                     self.nonlinear_gain_margin, "nonlinear_gain_margin"
                 ),
             )
-        comparisons = tuple(self.candidate_comparisons)
-        if any(type(value) is not CandidateEvaluation for value in comparisons):
-            raise OrbitNonlinearityError(
-                "candidate_comparisons must contain exact factory-derived "
-                "CandidateEvaluation values"
-            )
+        comparisons = tuple(
+            _revalidated_candidate_evaluation(value)
+            for value in self.candidate_comparisons
+        )
         if len({value.candidate_id for value in comparisons}) != len(comparisons):
             raise OrbitNonlinearityError("candidate ids must be unique")
         if comparisons and len(
@@ -1665,6 +1737,45 @@ class NonlinearityReport:
         object.__setattr__(self, "forbidden_use", forbidden)
 
 
+def revalidate_nonlinearity_report(value: object) -> NonlinearityReport:
+    """Return a canonical report after replaying every nested invariant."""
+
+    if type(value) is not NonlinearityReport:
+        raise OrbitNonlinearityError(
+            "nonlinearity must be an exact NonlinearityReport"
+        )
+    try:
+        canonical = NonlinearityReport(
+            tangent_statistic=value.tangent_statistic,
+            perpendicular_statistic=value.perpendicular_statistic,
+            delta_nl=value.delta_nl,
+            null_residual_sq=value.null_residual_sq,
+            response_rank=value.response_rank,
+            candidate_comparisons=value.candidate_comparisons,
+            held_out_receipt=value.held_out_receipt,
+            matched_injection_receipt=value.matched_injection_receipt,
+            off_manifold_tolerance=value.off_manifold_tolerance,
+            null_residual_tolerance=value.null_residual_tolerance,
+            nonlinear_gain_margin=value.nonlinear_gain_margin,
+            attribution_status=value.attribution_status,
+            attribution_rationale=value.attribution_rationale,
+            found_equiv_status=value.found_equiv_status,
+            found_equiv_prerequisite=value.found_equiv_prerequisite,
+            allowed_use=value.allowed_use,
+            forbidden_use=value.forbidden_use,
+            _construction_token=_NONLINEARITY_REPORT_TOKEN,
+        )
+    except AttributeError as exc:
+        raise OrbitNonlinearityError(
+            "NonlinearityReport is missing factory-validated fields"
+        ) from exc
+    if canonical != value:
+        raise OrbitNonlinearityError(
+            "NonlinearityReport fields do not match a factory-derived value"
+        )
+    return canonical
+
+
 def decompose_nonlinearity(
     *,
     residual: object,
@@ -1754,12 +1865,9 @@ def decompose_nonlinearity(
         None if delta_nl is None else _nonnegative(delta_nl, "delta_nl")
     )
 
-    comparisons = tuple(candidates)
-    if any(type(value) is not CandidateEvaluation for value in comparisons):
-        raise OrbitNonlinearityError(
-            "candidates must contain exact factory-derived "
-            "CandidateEvaluation values"
-        )
+    comparisons = tuple(
+        _revalidated_candidate_evaluation(value) for value in candidates
+    )
     if len({value.candidate_id for value in comparisons}) != len(comparisons):
         raise OrbitNonlinearityError("candidate ids must be unique")
 
@@ -1873,6 +1981,7 @@ __all__ = [
     "matrix_to_stf5",
     "measure_response_rank",
     "orbit_invariants",
+    "revalidate_nonlinearity_report",
     "stf5_to_matrix",
     "transform_departure_state",
 ]

@@ -183,6 +183,16 @@ def test_identified_set_support_preserves_recession_and_null_kind() -> None:
     assert identified.support((0.0, 1.0)) == math.inf
     assert identified.interval((0.0, 1.0)) == ScalarRange(0.0, math.inf)
     assert identified.null_kinds[1] is NullKind.STRUCTURAL
+    rescaled = IdentifiedDepartureSet(
+        coordinate_names=("Sigma2", "W2"),
+        vertices=((0.0, 0.0), (1.0, 0.0)),
+        recession_directions=((0.0, 1.0e-13),),
+        null_kinds=(NullKind.NONE, NullKind.STRUCTURAL),
+        assumptions=("same cone under positive generator scaling",),
+        status=IdentificationStatus.PARTIALLY_IDENTIFIED,
+    )
+    assert rescaled.support((0.0, 1.0)) == math.inf
+    assert rescaled.support((0.0, 1.0e-30)) == math.inf
 
     empty = IdentifiedDepartureSet(
         coordinate_names=("Sigma2",),
@@ -295,6 +305,27 @@ def test_anchor_stress_cannot_relabel_random_anchor_or_forge_claim_lanes() -> No
     ):
         build_anchor_stress_report(
             stresses=(ForgedStress(),),
+            conditioning=AnchorConditioning.ENSEMBLE_CALIBRATED,
+        )
+
+    forged_exact = object.__new__(SectorStress)
+    for name, value in {
+        "sector": "Sigma2",
+        "status": StressStatus.DEFINED,
+        "anchor_id": "forged",
+        "conditioning": AnchorConditioning.ENSEMBLE_CALIBRATED,
+        "saturation": ScalarRange(0.0, 0.0),
+        "exceedance": ScalarRange(99.0, 99.0),
+        "rationale": "post-init bypass",
+        "allowed_use": ("evidence",),
+    }.items():
+        object.__setattr__(forged_exact, name, value)
+    with pytest.raises(
+        StatisticalFoundationError,
+        match="exceedance must equal",
+    ):
+        build_anchor_stress_report(
+            stresses=(forged_exact,),
             conditioning=AnchorConditioning.ENSEMBLE_CALIBRATED,
         )
 

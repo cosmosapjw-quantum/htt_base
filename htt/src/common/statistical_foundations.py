@@ -812,13 +812,23 @@ class IdentifiedDepartureSet:
             raise StatisticalFoundationError("EMPTY set has no support function")
         vector = _numeric_tuple(direction, "direction", length=self.dimension)
         tol = _finite_nonnegative(tol, "tol")
-        if any(
-            sum(a * b for a, b in zip(vector, ray)) > tol
-            for ray in self.recession_directions
-        ):
-            return math.inf
+        vector_scale = max((abs(value) for value in vector), default=0.0)
+        if vector_scale > 0.0:
+            scaled_vector = tuple(value / vector_scale for value in vector)
+            vector_norm = math.hypot(*scaled_vector)
+            for ray in self.recession_directions:
+                ray_scale = max(abs(value) for value in ray)
+                scaled_ray = tuple(value / ray_scale for value in ray)
+                ray_norm = math.hypot(*scaled_ray)
+                directional_cosine_numerator = math.fsum(
+                    a * b for a, b in zip(scaled_vector, scaled_ray)
+                )
+                if directional_cosine_numerator > (
+                    tol * vector_norm * ray_norm
+                ):
+                    return math.inf
         return max(
-            sum(a * b for a, b in zip(vector, vertex))
+            math.fsum(a * b for a, b in zip(vector, vertex))
             for vertex in self.vertices
         )
 
@@ -866,11 +876,11 @@ class SectorStress:
                 raise StatisticalFoundationError(
                     "DEFINED stress requires an ENSEMBLE_CALIBRATED anchor"
                 )
-            if not isinstance(self.saturation, ScalarRange) or not isinstance(
-                self.exceedance, ScalarRange
-            ):
+            if type(self.saturation) is not ScalarRange or type(
+                self.exceedance
+            ) is not ScalarRange:
                 raise StatisticalFoundationError(
-                    "DEFINED stress ranges must be ScalarRange values"
+                    "DEFINED stress ranges must be exact ScalarRange values"
                 )
             if self.saturation.lower < 0.0:
                 raise StatisticalFoundationError(
@@ -906,6 +916,33 @@ class SectorStress:
         _required_text(self.rationale, "rationale")
 
 
+def _revalidated_sector_stress(value: object) -> SectorStress:
+    if type(value) is not SectorStress:
+        raise StatisticalFoundationError(
+            "stresses must contain exact factory-derived SectorStress values"
+        )
+    try:
+        canonical = SectorStress(
+            sector=value.sector,
+            status=value.status,
+            anchor_id=value.anchor_id,
+            conditioning=value.conditioning,
+            saturation=value.saturation,
+            exceedance=value.exceedance,
+            rationale=value.rationale,
+            _construction_token=_SECTOR_STRESS_TOKEN,
+        )
+    except AttributeError as exc:
+        raise StatisticalFoundationError(
+            "SectorStress is missing factory-validated fields"
+        ) from exc
+    if canonical != value:
+        raise StatisticalFoundationError(
+            "SectorStress fields do not match a factory-derived value"
+        )
+    return canonical
+
+
 @dataclass(frozen=True)
 class AnchorStressReport:
     stresses: tuple[SectorStress, ...]
@@ -920,13 +957,11 @@ class AnchorStressReport:
                 "AnchorStressReport must be created by "
                 "build_anchor_stress_report"
             )
-        stresses = tuple(self.stresses)
+        stresses = tuple(
+            _revalidated_sector_stress(stress) for stress in self.stresses
+        )
         if not stresses:
             raise StatisticalFoundationError("stresses must not be empty")
-        if any(type(stress) is not SectorStress for stress in stresses):
-            raise StatisticalFoundationError(
-                "stresses must contain exact factory-derived SectorStress values"
-            )
         if len({stress.sector for stress in stresses}) != len(stresses):
             raise StatisticalFoundationError("stress sectors must be unique")
         if not isinstance(self.conditioning, AnchorConditioning):
@@ -963,11 +998,35 @@ class AnchorStressReport:
     ) -> AnchorStressReport:
         """Build a report whose conditioning is inherited from its anchors."""
 
-        return cls(
+        return AnchorStressReport(
             stresses=tuple(stresses),
             conditioning=conditioning,
             _construction_token=_ANCHOR_STRESS_REPORT_TOKEN,
         )
+
+
+def revalidate_anchor_stress_report(value: object) -> AnchorStressReport:
+    """Return a canonical report after replaying every child invariant."""
+
+    if type(value) is not AnchorStressReport:
+        raise StatisticalFoundationError(
+            "anchor_stress must be an exact AnchorStressReport"
+        )
+    try:
+        canonical = AnchorStressReport(
+            stresses=value.stresses,
+            conditioning=value.conditioning,
+            _construction_token=_ANCHOR_STRESS_REPORT_TOKEN,
+        )
+    except AttributeError as exc:
+        raise StatisticalFoundationError(
+            "AnchorStressReport is missing factory-validated fields"
+        ) from exc
+    if canonical != value:
+        raise StatisticalFoundationError(
+            "AnchorStressReport fields do not match a factory-derived value"
+        )
+    return canonical
 
 
 def _make_sector_stress(
@@ -1354,5 +1413,6 @@ __all__ = [
     "evaluate_sector_stress",
     "im_critical_value",
     "quarantined_shear_anchors",
+    "revalidate_anchor_stress_report",
     "registered_geodesic_mes_anchors",
 ]

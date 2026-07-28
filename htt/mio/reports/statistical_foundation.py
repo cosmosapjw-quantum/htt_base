@@ -1,17 +1,22 @@
 """Typed MIO result card for the rebuilt statistical foundation."""
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass, field
+from dataclasses import asdict, dataclass, field, replace
 from types import MappingProxyType
 from typing import Mapping
 
 from common.mes_successor_registry import current_mes_successor_registry
-from common.orbit_nonlinearity import NonlinearityReport
+from common.orbit_nonlinearity import (
+    NonlinearityReport,
+    revalidate_nonlinearity_report,
+)
 from common.statistical_foundations import (
     AnchorStressReport,
     DepartureState,
     IdentifiedDepartureSet,
     LegacyProjectionReport,
+    StatisticalFoundationError,
+    revalidate_anchor_stress_report,
 )
 
 _MES_SUCCESSOR = current_mes_successor_registry().successor
@@ -76,8 +81,28 @@ class StatisticalFoundationResultCard:
             ("nonlinearity", self.nonlinearity, NonlinearityReport),
         )
         for name, value, expected_type in expected_types:
-            if value is not None and not isinstance(value, expected_type):
-                raise TypeError(f"{name} must be {expected_type.__name__} or None")
+            if value is None:
+                continue
+            if type(value) is not expected_type:
+                raise TypeError(
+                    f"{name} must be an exact {expected_type.__name__} or None"
+                )
+            try:
+                if expected_type is AnchorStressReport:
+                    canonical = revalidate_anchor_stress_report(value)
+                elif expected_type is NonlinearityReport:
+                    canonical = revalidate_nonlinearity_report(value)
+                else:
+                    canonical = replace(value)
+            except (AttributeError, StatisticalFoundationError, ValueError) as exc:
+                raise ValueError(
+                    f"{name} does not satisfy its constructor invariants"
+                ) from exc
+            if canonical != value:
+                raise ValueError(
+                    f"{name} does not match a constructor-validated value"
+                )
+            object.__setattr__(self, name, canonical)
         if self.morphology_reference is not None:
             reference = dict(self.morphology_reference)
             required = {"artifact_id", "owner", "status"}

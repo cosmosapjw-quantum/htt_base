@@ -6,7 +6,7 @@ claim_tier: diagnostic_only
 transfer_source: none
 config_hash: `sha256:e7e0272ceb046b83e5a9e25f150e807eb780ab9924a9b724d36d0cc2f2527f62`
 input_hashes:
-- scripts/result_packs/generate_pack_A_scalar_to_morphology.py:sha256:5851508496acd1a24d9d4cb320087510db0532f6533560eafebc4db71d133a3c
+- scripts/result_packs/generate_pack_A_scalar_to_morphology.py:sha256:079b67478da7bde0f17fca5e2fbe432015e1f8a59cfe342c3e219e6c885d4201
 - docs/ver2_upgrade/generated/result_pack_A_scalar_to_morphology.json:sha256:2cb5c46c2eaacb5fe400b5910b8ebe85c7b78b5ae448772ea5c9be2d0b07beca
 - docs/PR_DELTAS/pr-056.md:sha256:ca22c09c8a1822c1894fd775e2991932e9a6c28ba55ec9876a137e6000bf4207
 - docs/PR_DELTAS/pr-076.md:sha256:a32bf4e530c1af1dcd941c9af73c7bc3d678eae8c7767c5f37179cf9b9a6906a
@@ -16,12 +16,12 @@ input_hashes:
 - htt/obsstat/morphology.py:sha256:67899dad4232f0c944fb766db2c48b16bdd19efae95df58fd1fbd243e3261108
 - htt/obsstat/null_ensembles.py:sha256:1033f1f4a5a105f455bf11b83bd421052b1520a486493560abd0f80fda16658c
 - htt/htt/htt/statistics/mes_information_gain.py:sha256:251c44f18fbfe7949dc5b02e6b96db12154ce0488560748c8987458446d991b1
-- htt/src/common/statistical_foundations.py:sha256:b37ddfb3fc9628de3027f28cc2c4b62574da1a0ce9b7affcb4b4fcf00a07a5b2
+- htt/src/common/statistical_foundations.py:sha256:b787dba26264eaffa1294e3109de7f5a009ad2f9dcb7af399c6f96c5d7dd75d6
 - docs/generated/status_snapshot.json:sha256:2599a57db43d856cf794074f2ab43e8c8f1fd108870cbcb22f9c93a5394d41ce
 sky_support_status: not_directional
 null_mock_status: summarized_from_dependency_surfaces
 generating_command: `python scripts/result_packs/generate_pack_A_scalar_to_morphology.py`
-git_commit_or_worktree_state: `declared-input-set:sha256:94f04533cfb7488628e727a22140afee9e4027740b057bff9b42ba0bef150926`
+git_commit_or_worktree_state: `declared-input-set:sha256:5c61cd1c1adc6f4d3260f0a162be04d81f7543ce151c432dd4c0cd05bb41efee`
 
 ## Scope
 
@@ -37,11 +37,11 @@ This is a diagnostic-only comparison pack. It compares scalar MIO Q/F/Pi legacy-
 
 ## Morphology And MES Diagnostics
 
-| Name | Owner | Surface | Role | Required Provenance |
-| --- | --- | --- | --- | --- |
-| Low-ell scalar features | OBSSTAT | obsstat.scalar_lowell.LowEllScalarSummary | observer-side scalar feature extraction | null ensemble and look-elsewhere metadata for p-values |
-| Morphology axes | OBSSTAT | obsstat.morphology.MorphologyAxisSummary | diagnostic morphology-axis and alignment features | mask, covariance, null, and scan-volume metadata |
-| MES I_morph | COMMON | htt.statistics.mes_information_gain.MesInformationGainReport | branch-separated MES morphology information-gain report | positive finite branch bounds and matched source manifests |
+| Name | Owner | Claim Tier | Artifact Mode | Transfer Source | Null Status | Covariance Status | Surface | Role | Allowed Use | Forbidden Use | Required Provenance |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Low-ell scalar features | OBSSTAT | diagnostic_only | diagnostic_observable_features | none_observer_side | required_for_p_values_not_bound_in_summary | required_for_claim_interpretation_not_bound_in_summary | obsstat.scalar_lowell.LowEllScalarSummary | observer-side scalar feature extraction | feature extraction and explicitly null-calibrated diagnostics | posterior evidence, geometry detection, or family identification | null ensemble and look-elsewhere metadata for p-values |
+| Morphology axes | OBSSTAT | diagnostic_only | diagnostic_morphology_features | none_observer_side | alignment_null_not_bound_in_summary | mask_and_covariance_not_bound_in_summary | obsstat.morphology.MorphologyAxisSummary | diagnostic morphology-axis and alignment features | diagnostic morphology and alignment description | native-atlas equivalence, geometry detection, or family identification | mask, covariance, null, and scan-volume metadata |
+| MES I_morph | COMMON | diagnostic_only_or_blocked | diagnostic_or_blocked_mes_information_gain | matched_source_manifest_conditional | not_a_null_calibrated_detection_statistic | matched_covariance_manifest_required_not_bound_in_summary | htt.statistics.mes_information_gain.MesInformationGainReport | branch-separated MES morphology information-gain report | branch-separated conditional information-gain diagnostic | MES converse, FLRW proof, evidence, native-solver validation, or family identification | positive finite branch bounds and matched source manifests |
 
 ## Comparison Matrix
 
@@ -103,14 +103,14 @@ Source `docs/ver2_upgrade/generated/result_pack_A_scalar_to_morphology.json` is 
     "readiness labels are provenance only; not current production readiness"
   ],
   "claim_tier": "diagnostic_only",
-  "code_version": "declared-input-set:sha256:94f04533cfb7488628e727a22140afee9e4027740b057bff9b42ba0bef150926",
+  "code_version": "declared-input-set:sha256:5c61cd1c1adc6f4d3260f0a162be04d81f7543ce151c432dd4c0cd05bb41efee",
   "config_hash": "sha256:e7e0272ceb046b83e5a9e25f150e807eb780ab9924a9b724d36d0cc2f2527f62",
   "created_by": "scripts/result_packs/generate_pack_A_scalar_to_morphology.py",
   "failed_gates": [],
   "git_commit": null,
   "implementation_scope": "common",
   "input_hashes": [
-    "scripts/result_packs/generate_pack_A_scalar_to_morphology.py:sha256:5851508496acd1a24d9d4cb320087510db0532f6533560eafebc4db71d133a3c",
+    "scripts/result_packs/generate_pack_A_scalar_to_morphology.py:sha256:079b67478da7bde0f17fca5e2fbe432015e1f8a59cfe342c3e219e6c885d4201",
     "docs/ver2_upgrade/generated/result_pack_A_scalar_to_morphology.json:sha256:2cb5c46c2eaacb5fe400b5910b8ebe85c7b78b5ae448772ea5c9be2d0b07beca",
     "docs/PR_DELTAS/pr-056.md:sha256:ca22c09c8a1822c1894fd775e2991932e9a6c28ba55ec9876a137e6000bf4207",
     "docs/PR_DELTAS/pr-076.md:sha256:a32bf4e530c1af1dcd941c9af73c7bc3d678eae8c7767c5f37179cf9b9a6906a",
@@ -120,7 +120,7 @@ Source `docs/ver2_upgrade/generated/result_pack_A_scalar_to_morphology.json` is 
     "htt/obsstat/morphology.py:sha256:67899dad4232f0c944fb766db2c48b16bdd19efae95df58fd1fbd243e3261108",
     "htt/obsstat/null_ensembles.py:sha256:1033f1f4a5a105f455bf11b83bd421052b1520a486493560abd0f80fda16658c",
     "htt/htt/htt/statistics/mes_information_gain.py:sha256:251c44f18fbfe7949dc5b02e6b96db12154ce0488560748c8987458446d991b1",
-    "htt/src/common/statistical_foundations.py:sha256:b37ddfb3fc9628de3027f28cc2c4b62574da1a0ce9b7affcb4b4fcf00a07a5b2",
+    "htt/src/common/statistical_foundations.py:sha256:b787dba26264eaffa1294e3109de7f5a009ad2f9dcb7af399c6f96c5d7dd75d6",
     "docs/generated/status_snapshot.json:sha256:2599a57db43d856cf794074f2ab43e8c8f1fd108870cbcb22f9c93a5394d41ce"
   ],
   "owner": "COMMON",

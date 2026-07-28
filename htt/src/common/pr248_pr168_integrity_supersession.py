@@ -29,14 +29,14 @@ EXTENSION_RECEIPT_PATH = (
     "pr252_pr248_integrity_supersession.yaml"
 )
 EXTENSION_RECEIPT_SHA256 = (
-    "b4961f3db5f6b2e4a0386a96f1ead78bd24f5a51cd6778917f4c181e5d19bb81"
+    "4f66b0924db5ced757125aa6455232200502656e80ca913ef3fad5377acdf83a"
 )
 PR252_AUTHORIZING_RECEIPT_PATH = (
     "docs/research_program/stat_foundations/"
     "pr252_mes_consumer_migration.yaml"
 )
 PR252_AUTHORIZING_RECEIPT_SHA256 = (
-    "3a02843f3c2ebe2231889e135518c8cc2375af7529228682ba7c0f57bc0c09d7"
+    "a90134895e34aff79e2c22538c012a08b692efe6486a29ce2dfef8db378a5efb"
 )
 _SHA_RE = re.compile(r"[0-9a-f]{64}\Z")
 
