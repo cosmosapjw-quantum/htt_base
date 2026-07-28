@@ -4,10 +4,11 @@
 # reproducible across machines and CI jobs. The external gates are necessary but
 # not sufficient; the canonical pytest suite remains the merge authority.
 #
-# PR07-005 (reproducible gate surface): PYTHONPATH spans repo root, repo/htt and
-# repo/htt/htt so canonical modules import in a clean checkout; the interpreter
-# falls back venv -> python3 -> python; the portable numerical gates are kept
-# separate from the local-only Wolfram symbolic gate.
+# PR07-005 (reproducible gate surface): PYTHONPATH spans repo root, repo/htt,
+# repo/htt/htt, and the common-contract source tree under repo/htt/src so
+# canonical modules import in a clean checkout; the interpreter falls back
+# venv -> python3 -> python; the portable numerical gates are kept separate
+# from the local-only Wolfram symbolic gate.
 
 REPO     := $(CURDIR)
 # Interpreter fallback: repo venv, then python3, then python.
@@ -18,7 +19,7 @@ GATEDIR7 := $(REPO)/research_gates/pr07/tests
 GATEDIRE := $(REPO)/research_gates/egs2/tests
 GATEDIR3 := $(REPO)/research_gates/egs3/tests
 THREADS  := OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1
-PYPATH   := PYTHONPATH=$(REPO):$(REPO)/htt:$(REPO)/htt/htt
+PYPATH   := PYTHONPATH=$(REPO):$(REPO)/htt:$(REPO)/htt/htt:$(REPO)/htt/src
 
 .PHONY: pr04-gates pr07-gates egs2-gates egs3-gates paper-a-gates paper-b-gates \
         pr04-proofs pr04-forbidden-deps pr07-wolfram pr07-cove egs2-experiments \

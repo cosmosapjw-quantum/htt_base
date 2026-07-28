@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import html
 import json
 import re
@@ -14,9 +15,19 @@ from typing import Any
 import yaml
 
 if __package__:  # Package import used by pytest and library callers.
+    from .premise_anchor_gates import (
+        claim_contracts_for_backlog,
+        validate_premise_anchor_intake,
+    )
     from .pr167_intake_contract import validate_pre_intake_receipt
+    from .sync_pr_dag_mirrors import check_mirrors
 else:  # Direct script execution places this directory on sys.path.
+    from premise_anchor_gates import (
+        claim_contracts_for_backlog,
+        validate_premise_anchor_intake,
+    )
     from pr167_intake_contract import validate_pre_intake_receipt
+    from sync_pr_dag_mirrors import check_mirrors
 
 
 RESCUE_FIRST_PR = 119
@@ -283,6 +294,110 @@ FOUNDATION_DEPENDENCY_OVERLAY = {
     },
 }
 
+# --- Premise-anchored response geometry (PR-253..258, Waves 48..53) ------
+# PR-253 is a distinct atomic replan layered on top of the receipt-sealed
+# statistical-foundation intake.  It extends the dependency overlay without
+# attributing new edges retroactively to PR-248.
+PREMISE_ANCHOR_CARD_CONTRACTS = {
+    "PR-253": {
+        "depends": ["PR-252"],
+        "owner": "COMMON",
+        "change_set_id": "CS-PR253-BASELINE-REPLAN",
+        "publication_group_id": "PG-PR253-BASELINE-REPLAN",
+        "forbidden": [
+            "No PR-151 partial data, FLRW-departure result, or family-identification claim."
+        ],
+        "anti_drift": [
+            "Proposed attachment numbers remain unverified inputs until independently regenerated."
+        ],
+    },
+    "PR-254": {
+        "depends": ["PR-253", "PR-216", "PR-217", "PR-225"],
+        "owner": "COMMON",
+        "change_set_id": "CS-PR254-ANCHOR-GEOMETRY",
+        "publication_group_id": "PG-PR254-ANCHOR-GEOMETRY",
+        "claim_contracts": claim_contracts_for_backlog(),
+        "forbidden": [
+            "No converse MES theorem, automatic e-value, or FLRW proximity claim."
+        ],
+        "anti_drift": [
+            "MES may finish as ONE_ANCHOR_AMONG_FAMILY without making the benchmark fail."
+        ],
+    },
+    "PR-255": {
+        "depends": ["PR-254", "PR-219", "PR-251"],
+        "owner": "HTT",
+        "change_set_id": "CS-PR255-RESPONSE-GEOMETRY",
+        "publication_group_id": "PG-PR255-RESPONSE-GEOMETRY",
+        "forbidden": [
+            "No native-solver, geometry-detection, or family-identification claim."
+        ],
+        "anti_drift": [
+            "Held-out or matched-injection reuse invalidates candidate attribution."
+        ],
+    },
+    "PR-256": {
+        "depends": ["PR-255", "PR-222", "PR-251"],
+        "owner": "HTT",
+        "change_set_id": "CS-PR256-VELOCITY-FRAMES",
+        "publication_group_id": "PG-PR256-VELOCITY-FRAMES",
+        "forbidden": [
+            "No observed DESI/CMB result, global-tilt detection, or geometry claim."
+        ],
+        "anti_drift": [
+            "Analytic and synthetic responses remain hypothesis_only with non-native transfer provenance."
+        ],
+    },
+    "PR-257": {
+        "depends": ["PR-255", "PR-251"],
+        "owner": "OBSSTAT",
+        "change_set_id": "CS-PR257-LOWELL-MORPHOLOGY",
+        "publication_group_id": "PG-PR257-LOWELL-MORPHOLOGY",
+        "forbidden": [
+            "No complete invariant-basis, cosmological detection, or family-identification claim without the declared proof and native gates."
+        ],
+        "anti_drift": [
+            "OBSSTAT owns features and nulls; HTT alone owns held-out model/source comparison."
+        ],
+    },
+    "PR-258": {
+        "depends": ["PR-256", "PR-257", "PR-219"],
+        "owner": "HTT",
+        "change_set_id": "CS-PR258-OPEN-SET-INTEGRATION",
+        "publication_group_id": "PG-PR258-OPEN-SET-INTEGRATION",
+        "forbidden": [
+            "No FLRW-departure detection, native-solver validation, or Bianchi-family identification."
+        ],
+        "anti_drift": [
+            "Strong J1/J2 conjectures and blocked native steps remain outside validated manuscript results."
+        ],
+    },
+}
+PREMISE_ANCHOR_DEPENDENCY_OVERLAY = {
+    "schema": "htt.pr_dependency_overlay.v1",
+    "authority": "PR-253",
+    "rationale": (
+        "Preserve receipt-sealed historical cards while applying the "
+        "owner-authorized statistical-foundation and premise-anchor replans."
+    ),
+    "additions": {
+        "PR-155": ["PR-250", "PR-251", "PR-255"],
+        "PR-156": ["PR-251", "PR-256", "PR-257"],
+        "PR-157": ["PR-252"],
+        "PR-181": ["PR-255", "PR-256", "PR-257"],
+        "PR-193": ["PR-254"],
+        "PR-205": ["PR-254", "PR-255"],
+    },
+}
+PREMISE_ANCHOR_CARD_SEMANTIC_SHA256 = {
+    "PR-253": "06af832de9b936a12e587d9242d57a7507e3013c20e124ab32315008a613e11f",
+    "PR-254": "cc4a201550c8b34832ab93d5136379f38a8bb7bb8cc2d2728c9dc75eb1fa4321",
+    "PR-255": "9222695858d24e6d9abb4fed865ab29e7cce5cffe945083bef318ad456f9a640",
+    "PR-256": "e30ec0f706f817e827a80da054dcdf93d1ac9f932ee79eeb184874688533cd6a",
+    "PR-257": "49030111c83160e40c366669eab1524d2db485e4956dccb5c44e34f47cf40adf",
+    "PR-258": "364880c01495ee2be26fd573dca065d322040cb58c10d359750e3a8dbc69018a",
+}
+
 
 def _revival_track(pr_id: str) -> str:
     n = int(pr_id.split("-")[1])
@@ -315,6 +430,10 @@ ADVOCATE_RECEIPT = (
 ADVOCATE_TRANSACTION_JOURNAL = (
     Path(__file__).resolve().parents[2]
     / ".agent-harness/generated/pr167_intake_write_journal.json"
+)
+PREMISE_ANCHOR_INTAKE = (
+    Path(__file__).resolve().parents[2]
+    / "docs/research_program/premise_anchor/pr253_input_intake.yaml"
 )
 RESCUE_SEMANTIC_CLAIM_FIELDS = (
     "title",
@@ -763,11 +882,27 @@ def validate_long_horizon_rescue_slice(
             "statistical-foundation intake must be atomic; "
             f"missing={sorted(foundation_ids - actual_foundation_ids)}"
         )
+    premise_anchor_ids = set(PREMISE_ANCHOR_CARD_CONTRACTS)
+    actual_premise_anchor_ids = actual_ids & premise_anchor_ids
+    if actual_premise_anchor_ids and actual_foundation_ids != foundation_ids:
+        raise ValueError(
+            "premise-anchor cards require the full statistical-foundation slice"
+        )
+    if actual_premise_anchor_ids and actual_premise_anchor_ids != premise_anchor_ids:
+        raise ValueError(
+            "premise-anchor intake must be atomic; "
+            f"missing={sorted(premise_anchor_ids - actual_premise_anchor_ids)}"
+        )
     if actual_foundation_ids:
         policy = data.get("policy") or {}
-        if policy.get("dependency_overlays") != FOUNDATION_DEPENDENCY_OVERLAY:
+        expected_overlay = (
+            PREMISE_ANCHOR_DEPENDENCY_OVERLAY
+            if actual_premise_anchor_ids
+            else FOUNDATION_DEPENDENCY_OVERLAY
+        )
+        if policy.get("dependency_overlays") != expected_overlay:
             raise ValueError(
-                "statistical-foundation dependency overlay drifted"
+                "statistical-foundation or premise-anchor dependency overlay drifted"
             )
     expected_total = (
         RESCUE_WITH_ADVOCATE_CARD_COUNT
@@ -782,6 +917,8 @@ def validate_long_horizon_rescue_slice(
         expected_total += len(PROCESS_INTEGRITY_CARD_CONTRACTS)
     if actual_foundation_ids:
         expected_total += len(FOUNDATION_CARD_CONTRACTS)
+    if actual_premise_anchor_ids:
+        expected_total += len(PREMISE_ANCHOR_CARD_CONTRACTS)
     if len(info.ids) != expected_total:
         raise ValueError(
             f"strict rescue slice expects {expected_total} total cards, found {len(info.ids)}"
@@ -1062,6 +1199,10 @@ def validate_long_horizon_rescue_slice(
 
     if actual_foundation_ids:
         _validate_foundation_slice(cards)
+    if actual_premise_anchor_ids:
+        _validate_premise_anchor_slice(cards)
+        validate_premise_anchor_intake(load_yaml(PREMISE_ANCHOR_INTAKE))
+        check_mirrors()
 
     if status is not None:
         _validate_rescue_status(status, info)
@@ -1249,6 +1390,93 @@ def _validate_foundation_slice(cards: dict[str, Any]) -> None:
             raise ValueError(f"{pr_id} has an invalid claim-limited foundation level")
         if card.get("claim_tier_ceiling") not in {"conditional", "diagnostic_only"}:
             raise ValueError(f"{pr_id} has an invalid foundation claim ceiling")
+        for field in RESCUE_SEMANTIC_CLAIM_FIELDS:
+            for prose in _iter_strings(card.get(field)):
+                match = BARE_ACTIVE_CLAIM_LEVEL_RE.search(prose)
+                if match:
+                    raise ValueError(
+                        f"{pr_id} {field} contains unqualified roadmap claim level "
+                        f"{match.group(0)!r}"
+                    )
+
+
+def _validate_premise_anchor_slice(cards: dict[str, Any]) -> None:
+    """Validate the atomic, claim-limited PR-253..258 methodology intake."""
+
+    for pr_id, expected in PREMISE_ANCHOR_CARD_CONTRACTS.items():
+        card = cards[pr_id]
+        missing_fields = sorted(
+            (ADVOCATE_REQUIRED_FIELDS | {"track", "solver_gate_required"})
+            - set(card)
+        )
+        if missing_fields:
+            raise ValueError(
+                f"{pr_id} missing premise-anchor fields: {missing_fields}"
+            )
+        if card.get("depends") != expected["depends"]:
+            raise ValueError(
+                f"{pr_id} dependencies drifted: "
+                f"{card.get('depends')!r} != {expected['depends']!r}"
+            )
+        expected_contracts = [
+            {"upstream_id": dep, "mode": "requires_success"}
+            for dep in expected["depends"]
+        ]
+        if card.get("dependency_contracts") != expected_contracts:
+            raise ValueError(f"{pr_id} typed dependency projection drifted")
+        for field in (
+            "owner",
+            "change_set_id",
+            "publication_group_id",
+            "forbidden",
+            "anti_drift",
+        ):
+            if card.get(field) != expected[field]:
+                raise ValueError(
+                    f"{pr_id} {field} drifted: "
+                    f"{card.get(field)!r} != {expected[field]!r}"
+                )
+        if "claim_contracts" in expected and card.get("claim_contracts") != expected[
+            "claim_contracts"
+        ]:
+            raise ValueError(f"{pr_id} conjecture claim contracts drifted")
+        if (
+            card.get("execution_lane") != "defensible"
+            or card.get("activation_state") != "PENDING"
+            or card.get("execution_authorization") != "EXPLICIT_USER_AUTHORIZED"
+        ):
+            raise ValueError(f"{pr_id} execution-state contract drifted")
+        if (
+            card.get("scientific_status_on_intake") != "OPEN"
+            or card.get("public_use") is not False
+            or card.get("spec_first_required") is not True
+            or card.get("solver_gate_required") is not False
+            or card.get("track") != "FOUNDATION"
+        ):
+            raise ValueError(
+                f"{pr_id} must remain internal, OPEN, spec-first FOUNDATION work"
+            )
+        if card.get("claim_level") not in (
+            {"scheme": "roadmap_rescue_v1", "level": "C1"},
+            {"scheme": "roadmap_rescue_v1", "level": "C2"},
+        ):
+            raise ValueError(f"{pr_id} has an invalid premise-anchor claim level")
+        if card.get("claim_tier_ceiling") not in {
+            "conditional",
+            "diagnostic_only",
+        }:
+            raise ValueError(f"{pr_id} has an invalid premise-anchor claim ceiling")
+        semantic_bytes = json.dumps(
+            card,
+            sort_keys=True,
+            separators=(",", ":"),
+            ensure_ascii=False,
+        ).encode("utf-8")
+        if (
+            hashlib.sha256(semantic_bytes).hexdigest()
+            != PREMISE_ANCHOR_CARD_SEMANTIC_SHA256[pr_id]
+        ):
+            raise ValueError(f"{pr_id} semantic card identity drifted")
         for field in RESCUE_SEMANTIC_CLAIM_FIELDS:
             for prose in _iter_strings(card.get(field)):
                 match = BARE_ACTIVE_CLAIM_LEVEL_RE.search(prose)

@@ -1,0 +1,205 @@
+schema_version: 1
+intake_id: PR253-PREMISE-ANCHOR-INPUT-20260728
+received_on: '2026-07-28'
+target_sha: 4a2565eaf41cca03c3b86cc7d0ef3794474b0e67
+status: PROPOSED_UNVERIFIED_INPUT
+evidence_eligible: false
+canonical_authority: null
+allowed_use:
+  - derive bounded specifications for PR-254 through PR-258
+  - enumerate counterexamples, simulations, and destructive ablations
+  - preserve proposed wording for later claim-by-claim adjudication
+forbidden_use:
+  - validate a theorem, coefficient, numerical result, or scientific claim
+  - promote J1-EXACT or J2-UNIFORM
+  - enter a manuscript result before independent reproduction and review
+  - supply PR-151 data, native-solver output, or family-identification evidence
+sources:
+  - source_id: INPUT-METHOD-CORE-KO
+    attachment_id: 7aafa5fc-50e4-46b6-ba46-bd0cfbb6235d
+    title: Premise-Anchored Response Geometry core research proposal
+    language: ko
+    byte_count: 40264
+    sha256: 12e68bed1be9bea44490c967c37198fd521b1292b26e86e9f0a8758a5c5c8659
+    disposition: PROPOSED_UNVERIFIED_INPUT
+  - source_id: INPUT-METHOD-CRITIQUE-KO
+    attachment_id: fa8ef0ba-784f-4100-8023-c514db73fa96
+    title: Over-identifying-restriction critique and revised MES role
+    language: ko
+    byte_count: 14484
+    sha256: 122aa0beb26950e7cf10bc6946c0f3bf517028ecbddc760dd3e608db98ca0b1a
+    disposition: PROPOSED_UNVERIFIED_INPUT
+  - source_id: INPUT-JUSTIFICATION-EN
+    attachment_id: f9728318-cb8c-4601-a690-702681e4fd99
+    title: Justification of the Saturation-Gauge Methodology
+    language: en
+    byte_count: 29785
+    sha256: ee5805c4fb5ee9eb19838a43be9b74596756f88bd3dff266926deb2fd7f5907a
+    disposition: PROPOSED_REQUIRES_CLAIM_REPAIR
+  - source_id: INPUT-MANUSCRIPT-SNIPPETS
+    attachment_id: 060ba220-b3a0-4eed-bbb0-cd0a27170b1c
+    title: Premise-anchor manuscript-ready motivation snippets M1-M5
+    language: en
+    byte_count: 7773
+    sha256: 253a8698218825439aa612044e12017cf9c7a1b3ac8bed4742443e9b35a0d8c6
+    disposition: WITHHELD_UNTIL_PR258
+  - source_id: INPUT-JUSTIFICATION-SUMMARY-KO
+    attachment_id: cc05f4a4-1a70-4f5e-b3db-2b0f77bf761a
+    title: Justification research Korean trace summary
+    language: ko
+    byte_count: 13417
+    sha256: 93ed6b92d9f2404790db5504cc1a16d1b9b491f30dcf96d62e836a8b9e5e7651
+    disposition: PROPOSED_REQUIRES_CLAIM_REPAIR
+claim_intake:
+  adopted_one_way:
+    - claim_id: PA-THM-GAUGE-SUBLEVEL
+      statement: The unit sublevel of the Minkowski gauge equals its fixed closed convex absorbing anchor body.
+      target_card: PR-254
+      status: PROPOSED_FOR_FOUR_AXIS_CAS
+    - claim_id: PA-THM-PRODUCT-BALL
+      statement: A product-of-block-balls gauge is the maximum typed block ratio.
+      target_card: PR-254
+      status: PROPOSED_FOR_FOUR_AXIS_CAS
+    - claim_id: PA-THM-ONE-WAY-MES
+      statement: A registered physical premise implying H_lin subset A_MES permits only the one-way implication H_lin implies rho_MES at most one.
+      target_card: PR-254
+      status: PROPOSED_FOR_SOURCE_AND_CAS_AUDIT
+    - claim_id: PA-THM-RANK-INVARIANCE
+      statement: Invertible anchor scaling preserves response rank on the anchored supported subspace.
+      target_card: PR-254
+      status: PROPOSED_FOR_FOUR_AXIS_CAS
+  conjectures:
+    - claim_id: J1-EXACT
+      owner: COMMON
+      statement: H_lin equals the MES anchor body and the MES gauge is essentially unique.
+      target_card: PR-254
+      status: CONJECTURE_COUNTEREXAMPLE_FIRST
+      evidence_status: NONE
+      evidence_required:
+        - physical proof that H_lin equals rather than is contained in the typed anchor body
+        - essential-uniqueness proof under a declared equivalence relation
+        - one four-axis CAS contract over the exact mathematical statement
+        - counterexample-first adjudication with no unresolved valid counterexample
+      promotion_gate: ALL_J1_EVIDENCE_REQUIRED
+      gate_status_on_intake: BLOCKED_MISSING_EVIDENCE
+      gate_contract:
+        claim_id: J1-EXACT
+        owner: COMMON
+        claim_status: CONJECTURE_COUNTEREXAMPLE_FIRST
+        promotion_gate: ALL_J1_EVIDENCE_REQUIRED
+        gate_evaluator: scripts/codex_harness/premise_anchor_gates.py:evaluate_conjecture_gate
+        statement_components:
+          - physical_set_equality
+          - essential_uniqueness_under_declared_equivalence
+        obligations:
+          - obligation_id: PHYSICAL_SET_EQUALITY_PROOF
+            required_outcome: PASS
+          - obligation_id: ESSENTIAL_UNIQUENESS_PROOF
+            required_outcome: PASS
+          - obligation_id: FOUR_AXIS_CAS
+            required_outcome: CAS_4AXIS_PASS
+          - obligation_id: COUNTEREXAMPLE_ADJUDICATION
+            required_outcome: NO_VALID_COUNTEREXAMPLE
+        refuting_outcomes:
+          - VALID_COUNTEREXAMPLE
+          - COUNTEREXAMPLE_FOUND
+          - PROOF_FAILURE
+          - CAS_FAIL
+        ready_outcome: READY_FOR_INDEPENDENT_ADJUDICATION
+        failure_disposition: REFUTED_OR_RESTRICTED
+      promotion_blocked: true
+    - claim_id: J2-UNIFORM
+      owner: HTT
+      statement: A noisy random-anchor exceedance test is uniformly finite-sample valid over the whole composite null.
+      target_card: PR-254
+      status: CONJECTURE_COUNTEREXAMPLE_FIRST
+      evidence_status: NONE
+      evidence_required:
+        - registered numerator-anchor joint sampling law and conditioning contract
+        - finite-sample uniform-validity proof over the declared composite null
+        - independent executable coverage oracle over the preregistered DGP grid
+        - counterexample-first adjudication with no unresolved valid counterexample
+      promotion_gate: ALL_J2_EVIDENCE_REQUIRED
+      gate_status_on_intake: BLOCKED_MISSING_EVIDENCE
+      gate_contract:
+        claim_id: J2-UNIFORM
+        owner: HTT
+        claim_status: CONJECTURE_COUNTEREXAMPLE_FIRST
+        promotion_gate: ALL_J2_EVIDENCE_REQUIRED
+        gate_evaluator: scripts/codex_harness/premise_anchor_gates.py:evaluate_conjecture_gate
+        statement_components:
+          - registered_joint_random_anchor_law
+          - whole_composite_null_finite_sample_uniform_validity
+        obligations:
+          - obligation_id: JOINT_NUMERATOR_ANCHOR_LAW
+            required_outcome: PASS
+          - obligation_id: FINITE_SAMPLE_UNIFORM_VALIDITY_PROOF
+            required_outcome: PASS
+          - obligation_id: INDEPENDENT_COVERAGE_ORACLE
+            required_outcome: PASS
+          - obligation_id: COUNTEREXAMPLE_ADJUDICATION
+            required_outcome: NO_VALID_COUNTEREXAMPLE
+        refuting_outcomes:
+          - VALID_COUNTEREXAMPLE
+          - COUNTEREXAMPLE_FOUND
+          - PROOF_FAILURE
+          - CAS_FAIL
+        ready_outcome: READY_FOR_INDEPENDENT_ADJUDICATION
+        failure_disposition: REFUTED_OR_RESTRICTED
+      promotion_blocked: true
+  mandatory_repairs:
+    - raw anchor excess is not an e-value
+    - one minus stress is additive radial margin, not multiplicative headroom
+    - multiplicative boundary scale is one over stress and relative growth is one over stress minus one
+    - a common typed anchor does not establish cross-lane e-value validity
+    - a sub-unit stress profile is diagnostic screening, not source evidence
+    - the existing six sigma-beta invariants are not a complete sigma-omega-beta orbit basis
+    - DepartureState remains the canonical sigma-omega-beta-deltaOmegaK state
+    - acceleration remains an auxiliary NO_MES_ANCHOR block
+numerical_intake:
+  policy: >
+    Every value below is quotation-only until regenerated by an independent
+    script with a frozen seed/configuration and reviewed receipt.
+  claims:
+    - label: apparent_fixed_anchor_exceedance_rate
+      quoted_value: 0.451
+      target_card: PR-254
+      evidence_status: QUOTATION_ONLY
+      evidence_eligible: false
+    - label: random_anchor_boundary_threshold
+      quoted_value: 4.365
+      target_card: PR-254
+      evidence_status: QUOTATION_ONLY
+      evidence_eligible: false
+    - label: vorticity_refreeze_tightening_orders
+      quoted_value: 6.59
+      target_card: PR-256
+      evidence_status: QUOTATION_ONLY
+      evidence_eligible: false
+    - label: alignment_variance_inflation_at_15deg
+      quoted_value: 5.24
+      target_card: PR-256
+      evidence_status: QUOTATION_ONLY
+      evidence_eligible: false
+    - label: quadrupole_anchor_single_sky_scatter
+      quoted_value: 0.63
+      target_card: PR-254
+      evidence_status: QUOTATION_ONLY
+      evidence_eligible: false
+    - label: demo_master_seed
+      quoted_value: 20260728
+      target_card: PR-254
+      evidence_status: QUOTATION_ONLY
+      evidence_eligible: false
+reproduction_contract:
+  master_seed: 20260728
+  minimum_replicates_per_cell: 20000
+  maximum_replicates_per_cell: 400000
+  maximum_mcse: 0.0025
+  nominal_size_upper_rule: 0.05 + 3 * MCSE
+  nominal_coverage_lower_rule: 0.95 - 3 * MCSE
+  split:
+    train: 0.6
+    validation: 0.2
+    held_out: 0.2
+  failure_status: INCONCLUSIVE_MC_PRECISION
