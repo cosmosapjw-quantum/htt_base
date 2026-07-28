@@ -280,6 +280,10 @@ def _comparison_matrix(
                     "morphology_mes_artifact_mode": (
                         morphology_item["artifact_mode"]
                     ),
+                    "scalar_readiness_status": scalar_item["status"],
+                    "morphology_mes_readiness_status": (
+                        morphology_item["readiness_status"]
+                    ),
                     "scalar_transfer_source": scalar_item["transfer_source"],
                     "morphology_mes_transfer_source": (
                         morphology_item["transfer_source"]
@@ -289,6 +293,10 @@ def _comparison_matrix(
                     "scalar_covariance_status": scalar_item["covariance_status"],
                     "morphology_mes_covariance_status": (
                         morphology_item["covariance_status"]
+                    ),
+                    "scalar_allowed_use": scalar_item["allowed_use"],
+                    "morphology_mes_allowed_use": (
+                        morphology_item["allowed_use"]
                     ),
                     "scalar_forbidden_use": scalar_item["forbidden_use"],
                     "morphology_mes_forbidden_use": (
@@ -549,6 +557,8 @@ def render_markdown(payload: dict[str, Any]) -> str:
                 "Morphology/MES Claim Tier",
                 "Scalar Artifact Mode",
                 "Morphology/MES Artifact Mode",
+                "Scalar Readiness Status",
+                "Morphology/MES Readiness Status",
                 "Scalar Transfer Source",
                 "Morphology/MES Transfer Source",
                 "Scalar Null Status",
@@ -557,6 +567,8 @@ def render_markdown(payload: dict[str, Any]) -> str:
                 "Morphology/MES Covariance Status",
                 "Status",
                 "Allowed Statement",
+                "Scalar Allowed Use",
+                "Morphology/MES Allowed Use",
                 "Scalar Forbidden Use",
                 "Morphology/MES Forbidden Use",
                 "Blocked Statement",
@@ -571,6 +583,8 @@ def render_markdown(payload: dict[str, Any]) -> str:
                     row["morphology_mes_claim_tier"],
                     row["scalar_artifact_mode"],
                     row["morphology_mes_artifact_mode"],
+                    row["scalar_readiness_status"],
+                    row["morphology_mes_readiness_status"],
                     row["scalar_transfer_source"],
                     row["morphology_mes_transfer_source"],
                     row["scalar_null_status"],
@@ -579,6 +593,8 @@ def render_markdown(payload: dict[str, Any]) -> str:
                     row["morphology_mes_covariance_status"],
                     row["comparison_status"],
                     row["allowed_statement"],
+                    row["scalar_allowed_use"],
+                    row["morphology_mes_allowed_use"],
                     row["scalar_forbidden_use"],
                     row["morphology_mes_forbidden_use"],
                     row["blocked_statement"],

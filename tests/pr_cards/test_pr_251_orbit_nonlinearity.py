@@ -350,7 +350,10 @@ def test_nonlinearity_rejects_forged_nested_response_rank(
 
     with pytest.raises(
         OrbitNonlinearityError,
-        match="allowed_use must match|exact factory-derived ResponseRankReport",
+        match=(
+            "allowed_use must match|exact factory-derived ResponseRankReport|"
+            "fields do not match a factory-derived value"
+        ),
     ):
         revalidate_nonlinearity_report(forged_report)
     with pytest.raises(
@@ -361,6 +364,51 @@ def test_nonlinearity_rejects_forged_nested_response_rank(
             card_id=f"forged-rank-{use_subclass}",
             nonlinearity=forged_report,
         )
+
+
+def test_nonlinearity_rederives_rank_from_bound_replay_inputs() -> None:
+    legitimate = decompose_nonlinearity(
+        residual=(1.0, 0.0, 0.0),
+        tangent_response=((1.0, 0.0), (0.0, 0.0), (0.0, 0.0)),
+        covariance=np.eye(3),
+        transfer_id=TRANSFER_ID,
+        mask_id=MASK_ID,
+        covariance_id=COVARIANCE_ID,
+        off_manifold_tolerance=1e-12,
+        null_residual_tolerance=1e-12,
+        nonlinear_gain_margin=1.0,
+    )
+    rank = legitimate.response_rank
+    assert rank.rank == 1
+
+    forged_rank = object.__new__(ResponseRankReport)
+    for name, value in vars(rank).items():
+        object.__setattr__(forged_rank, name, value)
+    object.__setattr__(forged_rank, "rank", 2)
+    object.__setattr__(forged_rank, "singular_values", (1.0, 0.5))
+    object.__setattr__(forged_rank, "min_singular", 0.5)
+    object.__setattr__(forged_rank, "nullspace", ())
+
+    forged_report = object.__new__(type(legitimate))
+    for name, value in vars(legitimate).items():
+        object.__setattr__(forged_report, name, value)
+    object.__setattr__(forged_report, "response_rank", forged_rank)
+    object.__setattr__(
+        forged_report,
+        "attribution_status",
+        NonlinearityAttributionStatus.LINEAR_COMPATIBLE,
+    )
+    object.__setattr__(
+        forged_report,
+        "attribution_rationale",
+        "forged full-rank attribution",
+    )
+
+    with pytest.raises(
+        OrbitNonlinearityError,
+        match="fields do not match a factory-derived value",
+    ):
+        revalidate_nonlinearity_report(forged_report)
 
 
 def _report(

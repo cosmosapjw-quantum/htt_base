@@ -138,12 +138,16 @@ def test_pack_a_payload_compares_scalar_and_morphology_surfaces():
         "morphology_mes_claim_tier",
         "scalar_artifact_mode",
         "morphology_mes_artifact_mode",
+        "scalar_readiness_status",
+        "morphology_mes_readiness_status",
         "scalar_transfer_source",
         "morphology_mes_transfer_source",
         "scalar_null_status",
         "morphology_mes_null_status",
         "scalar_covariance_status",
         "morphology_mes_covariance_status",
+        "scalar_allowed_use",
+        "morphology_mes_allowed_use",
         "scalar_forbidden_use",
         "morphology_mes_forbidden_use",
         "blocked_statement",
@@ -163,6 +167,33 @@ def test_pack_a_payload_compares_scalar_and_morphology_surfaces():
         assert row["morphology_mes_owner"] == morphology["owner"]
         assert row["scalar_claim_tier"] == scalar["claim_tier"]
         assert row["morphology_mes_claim_tier"] == morphology["claim_tier"]
+        assert row["scalar_artifact_mode"] == scalar["artifact_mode"]
+        assert (
+            row["morphology_mes_artifact_mode"]
+            == morphology["artifact_mode"]
+        )
+        assert row["scalar_readiness_status"] == scalar["status"]
+        assert (
+            row["morphology_mes_readiness_status"]
+            == morphology["readiness_status"]
+        )
+        assert row["scalar_transfer_source"] == scalar["transfer_source"]
+        assert (
+            row["morphology_mes_transfer_source"]
+            == morphology["transfer_source"]
+        )
+        assert row["scalar_null_status"] == scalar["null_status"]
+        assert row["morphology_mes_null_status"] == morphology["null_status"]
+        assert row["scalar_covariance_status"] == scalar["covariance_status"]
+        assert (
+            row["morphology_mes_covariance_status"]
+            == morphology["covariance_status"]
+        )
+        assert row["scalar_allowed_use"] == scalar["allowed_use"]
+        assert (
+            row["morphology_mes_allowed_use"]
+            == morphology["allowed_use"]
+        )
         assert row["scalar_forbidden_use"] == scalar["forbidden_use"]
         assert (
             row["morphology_mes_forbidden_use"]
@@ -277,12 +308,16 @@ def test_pack_a_markdown_has_manifest_and_caveated_comparison():
             "morphology_mes_claim_tier",
             "scalar_artifact_mode",
             "morphology_mes_artifact_mode",
+            "scalar_readiness_status",
+            "morphology_mes_readiness_status",
             "scalar_transfer_source",
             "morphology_mes_transfer_source",
             "scalar_null_status",
             "morphology_mes_null_status",
             "scalar_covariance_status",
             "morphology_mes_covariance_status",
+            "scalar_allowed_use",
+            "morphology_mes_allowed_use",
             "scalar_forbidden_use",
             "morphology_mes_forbidden_use",
             "blocked_statement",

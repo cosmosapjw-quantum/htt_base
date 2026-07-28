@@ -621,6 +621,9 @@ class ResponseRankReport:
     covariance_id: str | None
     response_id: str | None
     covariance_content_id: str | None
+    response_replay_matrix: tuple[tuple[float, ...], ...] | None
+    covariance_replay_matrix: tuple[tuple[float, ...], ...] | None
+    relative_tolerance: float | None
     missing_inputs: tuple[str, ...]
     allowed_use: tuple[str, ...] = _DIAGNOSTIC_ALLOWED_USE
     forbidden_use: tuple[str, ...] = _DIAGNOSTIC_FORBIDDEN_USE
@@ -651,6 +654,13 @@ class ResponseRankReport:
                 raise OrbitNonlinearityError(
                     "MISSING_INPUT rank report must not carry array identities"
                 )
+            if (
+                self.response_replay_matrix is not None
+                or self.covariance_replay_matrix is not None
+            ):
+                raise OrbitNonlinearityError(
+                    "MISSING_INPUT rank report must not carry replay matrices"
+                )
             numeric = (
                 self.rank,
                 self.parameter_dimension,
@@ -658,6 +668,7 @@ class ResponseRankReport:
                 self.supported_data_dimension,
                 self.min_singular,
                 self.tolerance,
+                self.relative_tolerance,
             )
             if any(value is not None for value in numeric):
                 raise OrbitNonlinearityError(
@@ -741,6 +752,42 @@ class ResponseRankReport:
             _evidence_receipt(getattr(self, name), name)
         for name in ("response_id", "covariance_content_id"):
             _evidence_receipt(getattr(self, name), name)
+        response_matrix = _array(
+            self.response_replay_matrix,
+            "response_replay_matrix",
+            shape=(self.data_dimension, self.parameter_dimension),
+        )
+        covariance_matrix = _array(
+            self.covariance_replay_matrix,
+            "covariance_replay_matrix",
+            shape=(self.data_dimension, self.data_dimension),
+        )
+        if _array_content_identity(response_matrix) != self.response_id:
+            raise OrbitNonlinearityError(
+                "response_id does not match response_replay_matrix"
+            )
+        if (
+            _array_content_identity(covariance_matrix)
+            != self.covariance_content_id
+        ):
+            raise OrbitNonlinearityError(
+                "covariance_content_id does not match "
+                "covariance_replay_matrix"
+            )
+        relative_tolerance = _relative_tolerance(
+            self.relative_tolerance, "relative_tolerance"
+        )
+        object.__setattr__(
+            self, "response_replay_matrix", _matrix_tuple(response_matrix)
+        )
+        object.__setattr__(
+            self,
+            "covariance_replay_matrix",
+            _matrix_tuple(covariance_matrix),
+        )
+        object.__setattr__(
+            self, "relative_tolerance", relative_tolerance
+        )
         nullspace = tuple(
             tuple(
                 float(value)
@@ -772,26 +819,39 @@ def _revalidated_response_rank_report(value: object) -> ResponseRankReport:
             "response_rank must be an exact factory-derived ResponseRankReport"
         )
     try:
-        canonical = ResponseRankReport(
-            status=value.status,
-            rank=value.rank,
-            parameter_dimension=value.parameter_dimension,
-            data_dimension=value.data_dimension,
-            supported_data_dimension=value.supported_data_dimension,
-            singular_values=value.singular_values,
-            min_singular=value.min_singular,
-            nullspace=value.nullspace,
-            tolerance=value.tolerance,
-            transfer_id=value.transfer_id,
-            mask_id=value.mask_id,
-            covariance_id=value.covariance_id,
-            response_id=value.response_id,
-            covariance_content_id=value.covariance_content_id,
-            missing_inputs=value.missing_inputs,
-            allowed_use=value.allowed_use,
-            forbidden_use=value.forbidden_use,
-            _construction_token=_RANK_REPORT_TOKEN,
-        )
+        if value.status is ResponseRankStatus.MEASURED:
+            canonical = measure_response_rank(
+                response=value.response_replay_matrix,
+                covariance=value.covariance_replay_matrix,
+                transfer_id=value.transfer_id,
+                mask_id=value.mask_id,
+                covariance_id=value.covariance_id,
+                rtol=value.relative_tolerance,
+            )
+        else:
+            canonical = ResponseRankReport(
+                status=value.status,
+                rank=value.rank,
+                parameter_dimension=value.parameter_dimension,
+                data_dimension=value.data_dimension,
+                supported_data_dimension=value.supported_data_dimension,
+                singular_values=value.singular_values,
+                min_singular=value.min_singular,
+                nullspace=value.nullspace,
+                tolerance=value.tolerance,
+                transfer_id=value.transfer_id,
+                mask_id=value.mask_id,
+                covariance_id=value.covariance_id,
+                response_id=value.response_id,
+                covariance_content_id=value.covariance_content_id,
+                response_replay_matrix=value.response_replay_matrix,
+                covariance_replay_matrix=value.covariance_replay_matrix,
+                relative_tolerance=value.relative_tolerance,
+                missing_inputs=value.missing_inputs,
+                allowed_use=value.allowed_use,
+                forbidden_use=value.forbidden_use,
+                _construction_token=_RANK_REPORT_TOKEN,
+            )
     except AttributeError as exc:
         raise OrbitNonlinearityError(
             "ResponseRankReport is missing factory-validated fields"
@@ -927,6 +987,9 @@ def measure_response_rank(
             covariance_id=covariance_id,
             response_id=None,
             covariance_content_id=None,
+            response_replay_matrix=None,
+            covariance_replay_matrix=None,
+            relative_tolerance=None,
             missing_inputs=missing,
             _construction_token=_RANK_REPORT_TOKEN,
         )
@@ -974,6 +1037,9 @@ def measure_response_rank(
         covariance_id=covariance_id,
         response_id=_array_content_identity(matrix),
         covariance_content_id=_array_content_identity(covariance_matrix),
+        response_replay_matrix=_matrix_tuple(matrix),
+        covariance_replay_matrix=_matrix_tuple(covariance_matrix),
+        relative_tolerance=rtol,
         missing_inputs=(),
         _construction_token=_RANK_REPORT_TOKEN,
     )
