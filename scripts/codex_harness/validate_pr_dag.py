@@ -14,8 +14,16 @@ from typing import Any
 import yaml
 
 if __package__:  # Package import used by pytest and library callers.
+    from .premise_anchor_gates import (
+        claim_contracts_for_backlog,
+        validate_premise_anchor_intake,
+    )
     from .pr167_intake_contract import validate_pre_intake_receipt
 else:  # Direct script execution places this directory on sys.path.
+    from premise_anchor_gates import (
+        claim_contracts_for_backlog,
+        validate_premise_anchor_intake,
+    )
     from pr167_intake_contract import validate_pre_intake_receipt
 
 
@@ -299,30 +307,7 @@ PREMISE_ANCHOR_CARD_CONTRACTS = {
         "owner": "COMMON",
         "change_set_id": "CS-PR254-ANCHOR-GEOMETRY",
         "publication_group_id": "PG-PR254-ANCHOR-GEOMETRY",
-        "claim_contracts": [
-            {
-                "claim_id": "J1-EXACT",
-                "owner": "COMMON",
-                "status": "CONJECTURE_COUNTEREXAMPLE_FIRST",
-                "evidence_required": [
-                    "physical equality proof for H_lin and the typed anchor body",
-                    "one shared four-axis CAS contract",
-                    "counterexample-first adjudication",
-                ],
-                "promotion_gate": "ALL_J1_EVIDENCE_REQUIRED",
-            },
-            {
-                "claim_id": "J2-UNIFORM",
-                "owner": "HTT",
-                "status": "CONJECTURE_COUNTEREXAMPLE_FIRST",
-                "evidence_required": [
-                    "registered joint numerator-anchor sampling law",
-                    "finite-sample composite-null proof or bounded counterexample class",
-                    "independent executable coverage oracle",
-                ],
-                "promotion_gate": "ALL_J2_EVIDENCE_REQUIRED",
-            },
-        ],
+        "claim_contracts": claim_contracts_for_backlog(),
     },
     "PR-255": {
         "depends": ["PR-254", "PR-219", "PR-251"],
@@ -398,6 +383,10 @@ ADVOCATE_RECEIPT = (
 ADVOCATE_TRANSACTION_JOURNAL = (
     Path(__file__).resolve().parents[2]
     / ".agent-harness/generated/pr167_intake_write_journal.json"
+)
+PREMISE_ANCHOR_INTAKE = (
+    Path(__file__).resolve().parents[2]
+    / "docs/research_program/premise_anchor/pr253_input_intake.yaml"
 )
 RESCUE_SEMANTIC_CLAIM_FIELDS = (
     "title",
@@ -1165,6 +1154,7 @@ def validate_long_horizon_rescue_slice(
         _validate_foundation_slice(cards)
     if actual_premise_anchor_ids:
         _validate_premise_anchor_slice(cards)
+        validate_premise_anchor_intake(load_yaml(PREMISE_ANCHOR_INTAKE))
 
     if status is not None:
         _validate_rescue_status(status, info)

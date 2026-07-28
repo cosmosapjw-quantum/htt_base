@@ -6,6 +6,12 @@ from pathlib import Path
 import pytest
 import yaml
 
+from scripts.codex_harness.premise_anchor_gates import (
+    READY_OUTCOME,
+    REFUTED_OUTCOME,
+    evaluate_conjecture_gate,
+    validate_premise_anchor_intake,
+)
 from scripts.codex_harness.validate_pr_dag import (
     PREMISE_ANCHOR_DEPENDENCY_OVERLAY,
     validate_backlog,
@@ -123,9 +129,25 @@ def test_methodology_inputs_and_quoted_numbers_are_not_evidence() -> None:
     assert all(conjecture["evidence_status"] == "NONE" for conjecture in conjectures)
     assert all(conjecture["evidence_required"] for conjecture in conjectures)
     assert len({conjecture["promotion_gate"] for conjecture in conjectures}) == 2
+    assert all(
+        conjecture["gate_status_on_intake"] == "BLOCKED_MISSING_EVIDENCE"
+        for conjecture in conjectures
+    )
+    assert all(
+        conjecture["gate_contract"]["gate_evaluator"].endswith(
+            "premise_anchor_gates.py:evaluate_conjecture_gate"
+        )
+        for conjecture in conjectures
+    )
     assert intake["numerical_intake"]["policy"].startswith(
         "Every value below is quotation-only"
     )
+    assert all(
+        item["evidence_status"] == "QUOTATION_ONLY"
+        and item["evidence_eligible"] is False
+        for item in intake["numerical_intake"]["claims"]
+    )
+    validate_premise_anchor_intake(intake)
 
 
 def test_j1_j2_claim_gates_cannot_collapse_to_one_owner() -> None:
@@ -154,3 +176,71 @@ def test_pr255_scalar_information_gain_is_compatibility_only() -> None:
 
     assert "compatibility view only" in done_text
     assert "anchor scaling alone is never information gain" in done_text
+
+
+def test_quoted_number_cannot_be_promoted_inside_unverified_intake() -> None:
+    mutated = copy.deepcopy(_load(INTAKE))
+    mutated["numerical_intake"]["claims"][0]["evidence_status"] = "VALIDATED"
+
+    with pytest.raises(ValueError, match="must remain quotation-only"):
+        validate_premise_anchor_intake(mutated)
+
+
+def test_j1_uniqueness_obligation_cannot_be_removed() -> None:
+    mutated = copy.deepcopy(_load(INTAKE))
+    j1 = next(
+        item
+        for item in mutated["claim_intake"]["conjectures"]
+        if item["claim_id"] == "J1-EXACT"
+    )
+    j1["gate_contract"]["obligations"] = [
+        obligation
+        for obligation in j1["gate_contract"]["obligations"]
+        if obligation["obligation_id"] != "ESSENTIAL_UNIQUENESS_PROOF"
+    ]
+
+    with pytest.raises(
+        ValueError,
+        match="J1-EXACT outcome-aware gate contract drifted",
+    ):
+        validate_premise_anchor_intake(mutated)
+
+
+def test_j2_counterexample_refutes_instead_of_satisfying_gate() -> None:
+    decision = evaluate_conjecture_gate(
+        "J2-UNIFORM",
+        [
+            {"obligation_id": "JOINT_NUMERATOR_ANCHOR_LAW", "outcome": "PASS"},
+            {
+                "obligation_id": "FINITE_SAMPLE_UNIFORM_VALIDITY_PROOF",
+                "outcome": "COUNTEREXAMPLE_FOUND",
+            },
+            {"obligation_id": "INDEPENDENT_COVERAGE_ORACLE", "outcome": "PASS"},
+            {
+                "obligation_id": "COUNTEREXAMPLE_ADJUDICATION",
+                "outcome": "VALID_COUNTEREXAMPLE",
+            },
+        ],
+    )
+
+    assert decision["status"] == REFUTED_OUTCOME
+    assert decision["ready"] is False
+
+
+def test_j1_all_passes_only_reaches_independent_adjudication() -> None:
+    decision = evaluate_conjecture_gate(
+        "J1-EXACT",
+        [
+            {"obligation_id": "PHYSICAL_SET_EQUALITY_PROOF", "outcome": "PASS"},
+            {"obligation_id": "ESSENTIAL_UNIQUENESS_PROOF", "outcome": "PASS"},
+            {"obligation_id": "FOUR_AXIS_CAS", "outcome": "CAS_4AXIS_PASS"},
+            {
+                "obligation_id": "COUNTEREXAMPLE_ADJUDICATION",
+                "outcome": "NO_VALID_COUNTEREXAMPLE",
+            },
+        ],
+    )
+
+    assert decision["status"] == READY_OUTCOME
+    assert decision["ready"] is True
+    assert "PROMOT" not in decision["status"]

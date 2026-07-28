@@ -77,9 +77,36 @@ claim_intake:
       evidence_status: NONE
       evidence_required:
         - physical proof that H_lin equals rather than is contained in the typed anchor body
+        - essential-uniqueness proof under a declared equivalence relation
         - one four-axis CAS contract over the exact mathematical statement
         - counterexample-first adjudication with no unresolved valid counterexample
       promotion_gate: ALL_J1_EVIDENCE_REQUIRED
+      gate_status_on_intake: BLOCKED_MISSING_EVIDENCE
+      gate_contract:
+        claim_id: J1-EXACT
+        owner: COMMON
+        claim_status: CONJECTURE_COUNTEREXAMPLE_FIRST
+        promotion_gate: ALL_J1_EVIDENCE_REQUIRED
+        gate_evaluator: scripts/codex_harness/premise_anchor_gates.py:evaluate_conjecture_gate
+        statement_components:
+          - physical_set_equality
+          - essential_uniqueness_under_declared_equivalence
+        obligations:
+          - obligation_id: PHYSICAL_SET_EQUALITY_PROOF
+            required_outcome: PASS
+          - obligation_id: ESSENTIAL_UNIQUENESS_PROOF
+            required_outcome: PASS
+          - obligation_id: FOUR_AXIS_CAS
+            required_outcome: CAS_4AXIS_PASS
+          - obligation_id: COUNTEREXAMPLE_ADJUDICATION
+            required_outcome: NO_VALID_COUNTEREXAMPLE
+        refuting_outcomes:
+          - VALID_COUNTEREXAMPLE
+          - COUNTEREXAMPLE_FOUND
+          - PROOF_FAILURE
+          - CAS_FAIL
+        ready_outcome: READY_FOR_INDEPENDENT_ADJUDICATION
+        failure_disposition: REFUTED_OR_RESTRICTED
       promotion_blocked: true
     - claim_id: J2-UNIFORM
       owner: HTT
@@ -89,9 +116,36 @@ claim_intake:
       evidence_status: NONE
       evidence_required:
         - registered numerator-anchor joint sampling law and conditioning contract
-        - finite-sample composite-null proof or an explicitly bounded counterexample class
+        - finite-sample uniform-validity proof over the declared composite null
         - independent executable coverage oracle over the preregistered DGP grid
+        - counterexample-first adjudication with no unresolved valid counterexample
       promotion_gate: ALL_J2_EVIDENCE_REQUIRED
+      gate_status_on_intake: BLOCKED_MISSING_EVIDENCE
+      gate_contract:
+        claim_id: J2-UNIFORM
+        owner: HTT
+        claim_status: CONJECTURE_COUNTEREXAMPLE_FIRST
+        promotion_gate: ALL_J2_EVIDENCE_REQUIRED
+        gate_evaluator: scripts/codex_harness/premise_anchor_gates.py:evaluate_conjecture_gate
+        statement_components:
+          - registered_joint_random_anchor_law
+          - whole_composite_null_finite_sample_uniform_validity
+        obligations:
+          - obligation_id: JOINT_NUMERATOR_ANCHOR_LAW
+            required_outcome: PASS
+          - obligation_id: FINITE_SAMPLE_UNIFORM_VALIDITY_PROOF
+            required_outcome: PASS
+          - obligation_id: INDEPENDENT_COVERAGE_ORACLE
+            required_outcome: PASS
+          - obligation_id: COUNTEREXAMPLE_ADJUDICATION
+            required_outcome: NO_VALID_COUNTEREXAMPLE
+        refuting_outcomes:
+          - VALID_COUNTEREXAMPLE
+          - COUNTEREXAMPLE_FOUND
+          - PROOF_FAILURE
+          - CAS_FAIL
+        ready_outcome: READY_FOR_INDEPENDENT_ADJUDICATION
+        failure_disposition: REFUTED_OR_RESTRICTED
       promotion_blocked: true
   mandatory_repairs:
     - raw anchor excess is not an e-value
@@ -110,21 +164,33 @@ numerical_intake:
     - label: apparent_fixed_anchor_exceedance_rate
       quoted_value: 0.451
       target_card: PR-254
+      evidence_status: QUOTATION_ONLY
+      evidence_eligible: false
     - label: random_anchor_boundary_threshold
       quoted_value: 4.365
       target_card: PR-254
+      evidence_status: QUOTATION_ONLY
+      evidence_eligible: false
     - label: vorticity_refreeze_tightening_orders
       quoted_value: 6.59
       target_card: PR-256
+      evidence_status: QUOTATION_ONLY
+      evidence_eligible: false
     - label: alignment_variance_inflation_at_15deg
       quoted_value: 5.24
       target_card: PR-256
+      evidence_status: QUOTATION_ONLY
+      evidence_eligible: false
     - label: quadrupole_anchor_single_sky_scatter
       quoted_value: 0.63
       target_card: PR-254
+      evidence_status: QUOTATION_ONLY
+      evidence_eligible: false
     - label: demo_master_seed
       quoted_value: 20260728
       target_card: PR-254
+      evidence_status: QUOTATION_ONLY
+      evidence_eligible: false
 reproduction_contract:
   master_seed: 20260728
   minimum_replicates_per_cell: 20000

@@ -12495,24 +12495,76 @@
         {
           "claim_id": "J1-EXACT",
           "owner": "COMMON",
-          "status": "CONJECTURE_COUNTEREXAMPLE_FIRST",
-          "evidence_required": [
-            "physical equality proof for H_lin and the typed anchor body",
-            "one shared four-axis CAS contract",
-            "counterexample-first adjudication"
+          "claim_status": "CONJECTURE_COUNTEREXAMPLE_FIRST",
+          "promotion_gate": "ALL_J1_EVIDENCE_REQUIRED",
+          "gate_evaluator": "scripts/codex_harness/premise_anchor_gates.py:evaluate_conjecture_gate",
+          "statement_components": [
+            "physical_set_equality",
+            "essential_uniqueness_under_declared_equivalence"
           ],
-          "promotion_gate": "ALL_J1_EVIDENCE_REQUIRED"
+          "obligations": [
+            {
+              "obligation_id": "PHYSICAL_SET_EQUALITY_PROOF",
+              "required_outcome": "PASS"
+            },
+            {
+              "obligation_id": "ESSENTIAL_UNIQUENESS_PROOF",
+              "required_outcome": "PASS"
+            },
+            {
+              "obligation_id": "FOUR_AXIS_CAS",
+              "required_outcome": "CAS_4AXIS_PASS"
+            },
+            {
+              "obligation_id": "COUNTEREXAMPLE_ADJUDICATION",
+              "required_outcome": "NO_VALID_COUNTEREXAMPLE"
+            }
+          ],
+          "refuting_outcomes": [
+            "VALID_COUNTEREXAMPLE",
+            "COUNTEREXAMPLE_FOUND",
+            "PROOF_FAILURE",
+            "CAS_FAIL"
+          ],
+          "ready_outcome": "READY_FOR_INDEPENDENT_ADJUDICATION",
+          "failure_disposition": "REFUTED_OR_RESTRICTED"
         },
         {
           "claim_id": "J2-UNIFORM",
           "owner": "HTT",
-          "status": "CONJECTURE_COUNTEREXAMPLE_FIRST",
-          "evidence_required": [
-            "registered joint numerator-anchor sampling law",
-            "finite-sample composite-null proof or bounded counterexample class",
-            "independent executable coverage oracle"
+          "claim_status": "CONJECTURE_COUNTEREXAMPLE_FIRST",
+          "promotion_gate": "ALL_J2_EVIDENCE_REQUIRED",
+          "gate_evaluator": "scripts/codex_harness/premise_anchor_gates.py:evaluate_conjecture_gate",
+          "statement_components": [
+            "registered_joint_random_anchor_law",
+            "whole_composite_null_finite_sample_uniform_validity"
           ],
-          "promotion_gate": "ALL_J2_EVIDENCE_REQUIRED"
+          "obligations": [
+            {
+              "obligation_id": "JOINT_NUMERATOR_ANCHOR_LAW",
+              "required_outcome": "PASS"
+            },
+            {
+              "obligation_id": "FINITE_SAMPLE_UNIFORM_VALIDITY_PROOF",
+              "required_outcome": "PASS"
+            },
+            {
+              "obligation_id": "INDEPENDENT_COVERAGE_ORACLE",
+              "required_outcome": "PASS"
+            },
+            {
+              "obligation_id": "COUNTEREXAMPLE_ADJUDICATION",
+              "required_outcome": "NO_VALID_COUNTEREXAMPLE"
+            }
+          ],
+          "refuting_outcomes": [
+            "VALID_COUNTEREXAMPLE",
+            "COUNTEREXAMPLE_FOUND",
+            "PROOF_FAILURE",
+            "CAS_FAIL"
+          ],
+          "ready_outcome": "READY_FOR_INDEPENDENT_ADJUDICATION",
+          "failure_disposition": "REFUTED_OR_RESTRICTED"
         }
       ],
       "files": [
@@ -12528,7 +12580,7 @@
       "dod": [
         "Product balls, ellipsoids, polytopes, finite nuisance families and missing blocks fail closed with typed statuses.",
         "Four blind CAS axes agree on one contract before any mathematical claim is promoted.",
-        "J1 requires its physical equality proof in addition to CAS, while J2 requires its separately owned joint-law, finite-sample and independent coverage gates; neither may inherit the other's evidence."
+        "J1 requires physical equality and essential-uniqueness proofs in addition to CAS, while J2 requires its separately owned joint-law, finite-sample uniform-validity and independent coverage gates; the outcome-aware evaluator sends any valid counterexample to REFUTED_OR_RESTRICTED and neither claim may inherit the other's evidence."
       ],
       "kill": "A nonconvex union receives one false gauge, a continuous nuisance is discretized silently, or scaling is reported as information gain.",
       "cost": "high",

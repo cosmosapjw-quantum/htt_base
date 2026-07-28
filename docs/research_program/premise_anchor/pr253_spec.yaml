@@ -38,6 +38,14 @@ requirements:
     All five user-supplied methodology notes and every quoted numerical value
     are registered as PROPOSED_UNVERIFIED_INPUT until independently
     regenerated and reviewed.
+  - >
+    J1-EXACT and J2-UNIFORM use separately owned outcome-aware gates:
+    required PASS outcomes may reach independent adjudication, while any
+    valid counterexample or proof/CAS failure returns REFUTED_OR_RESTRICTED.
+  - >
+    Every quoted numerical entry is explicitly QUOTATION_ONLY and
+    evidence-ineligible; the strict DAG validator consumes and validates the
+    intake artifact.
 claim_boundary:
   status: IMPLEMENTATION_AND_TEST_REMEDIATION
   allowed:
@@ -58,3 +66,5 @@ kill_switches:
   - any required PR04 or PR07 test remains red
   - canonical and compatibility DAG or status mirrors diverge
   - PR-151 partial data enters code, fixtures, calibration, or claims
+  - a quoted number is marked validated inside the unverified intake
+  - a counterexample or failed proof satisfies a conjecture promotion gate
