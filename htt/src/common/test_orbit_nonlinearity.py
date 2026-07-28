@@ -21,6 +21,7 @@ from common.orbit_nonlinearity import (
     ResponseRankStatus,
     STF5_CARTESIAN_BASIS,
     VectorParity,
+    build_candidate_independence_receipt,
     decompose_nonlinearity,
     evaluate_candidate_predictions,
     measure_response_rank,
@@ -35,6 +36,8 @@ MASK_ID = "sha256:" + "2" * 64
 COVARIANCE_ID = "sha256:" + "3" * 64
 FORGED_HELD_OUT_RECEIPT = "sha256:" + "a" * 64
 FORGED_MATCHED_INJECTION_RECEIPT = "sha256:" + "b" * 64
+TRAINING_DATA_ID = "sha256:" + "c" * 64
+SPLIT_RECEIPT_ID = "sha256:" + "d" * 64
 
 
 def _state(*, beta: tuple[float, float, float] = (0.4, 0.5, 0.6)) -> DepartureState:
@@ -74,6 +77,38 @@ def _rotation() -> O3Transform:
     )
 
 
+def _candidate(
+    *,
+    candidate_id: str,
+    kind: CandidateKind,
+    held_out_prediction: object,
+    held_out_target: object,
+    matched_injection_prediction: object,
+    matched_injection_target: object,
+    model_config_id: str,
+    fit_index: int,
+) -> CandidateEvaluation:
+    receipt = build_candidate_independence_receipt(
+        candidate_id=candidate_id,
+        model_config_id=model_config_id,
+        training_data_id=TRAINING_DATA_ID,
+        held_out_target=held_out_target,
+        matched_injection_target=matched_injection_target,
+        fit_receipt_id="sha256:" + f"{2000 + fit_index:064x}",
+        split_receipt_id=SPLIT_RECEIPT_ID,
+    )
+    return evaluate_candidate_predictions(
+        candidate_id=candidate_id,
+        kind=kind,
+        held_out_prediction=held_out_prediction,
+        held_out_target=held_out_target,
+        matched_injection_prediction=matched_injection_prediction,
+        matched_injection_target=matched_injection_target,
+        model_config_id=model_config_id,
+        independence_receipt=receipt,
+    )
+
+
 def _candidates(
     *,
     nonlinear_score: float = 12.0,
@@ -88,19 +123,20 @@ def _candidates(
     }
     maximum = max(scores.values())
     return tuple(
-        evaluate_candidate_predictions(
+        _candidate(
             candidate_id=f"candidate-{kind.value.lower()}",
             kind=kind,
-            held_out_prediction=(math.sqrt(maximum - score), 0.0),
+            held_out_prediction=(math.sqrt(maximum - score + 1e-4), 0.0),
             held_out_target=(0.0, 0.0),
             matched_injection_prediction=(
-                1.0 + math.sqrt(maximum - score),
+                1.0 + math.sqrt(maximum - score + 1e-4),
                 1.0,
             ),
             matched_injection_target=(1.0, 1.0),
             model_config_id=(
                 "sha256:" + f"{list(scores).index(kind) + 1:064x}"
             ),
+            fit_index=list(scores).index(kind),
         )
         for kind, score in scores.items()
     )
@@ -366,7 +402,7 @@ def test_candidate_scores_are_factory_derived_and_rewrite_protected() -> None:
     candidate = _candidates()[0]
     with pytest.raises(OrbitNonlinearityError, match="must be created"):
         replace(candidate, held_out_score=999.0)
-    changed = evaluate_candidate_predictions(
+    changed = _candidate(
         candidate_id=candidate.candidate_id,
         kind=candidate.kind,
         held_out_prediction=(3.0, 0.0),
@@ -374,6 +410,7 @@ def test_candidate_scores_are_factory_derived_and_rewrite_protected() -> None:
         matched_injection_prediction=(4.0, 1.0),
         matched_injection_target=(1.0, 1.0),
         model_config_id=candidate.model_config_id,
+        fit_index=99,
     )
     assert changed.held_out_data_id == candidate.held_out_data_id
     assert changed.held_out_prediction_id != candidate.held_out_prediction_id

@@ -108,6 +108,7 @@ _RANK_REPORT_TOKEN = object()
 _NONLINEARITY_REPORT_TOKEN = object()
 _ORBIT_REPORT_TOKEN = object()
 _CANDIDATE_EVALUATION_TOKEN = object()
+_CANDIDATE_INDEPENDENCE_TOKEN = object()
 
 
 def _contains_bool(value: object) -> bool:
@@ -942,8 +943,156 @@ def measure_response_rank(
 
 
 @dataclass(frozen=True)
+class CandidateIndependenceReceipt:
+    """Declared train/fit/split boundary bound to exact evaluation targets."""
+
+    candidate_id: str
+    model_config_id: str
+    training_data_id: str
+    held_out_data_id: str
+    matched_injection_data_id: str
+    fit_receipt_id: str
+    split_receipt_id: str
+    receipt_id: str
+    _construction_token: InitVar[object] = None
+
+    def __post_init__(self, _construction_token: object) -> None:
+        if _construction_token is not _CANDIDATE_INDEPENDENCE_TOKEN:
+            raise OrbitNonlinearityError(
+                "CandidateIndependenceReceipt must be created by "
+                "build_candidate_independence_receipt"
+            )
+        _text(self.candidate_id, "candidate_id")
+        for name in (
+            "model_config_id",
+            "training_data_id",
+            "held_out_data_id",
+            "matched_injection_data_id",
+            "fit_receipt_id",
+            "split_receipt_id",
+            "receipt_id",
+        ):
+            object.__setattr__(
+                self, name, _evidence_receipt(getattr(self, name), name)
+            )
+        data_ids = {
+            self.training_data_id,
+            self.held_out_data_id,
+            self.matched_injection_data_id,
+        }
+        if len(data_ids) != 3:
+            raise OrbitNonlinearityError(
+                "training, held-out and matched-injection data identities "
+                "must be distinct"
+            )
+        boundary_ids = {
+            self.model_config_id,
+            self.fit_receipt_id,
+            self.split_receipt_id,
+            *data_ids,
+        }
+        if len(boundary_ids) != 6:
+            raise OrbitNonlinearityError(
+                "model, fit and split receipts must be distinct from each "
+                "other and from all data identities"
+            )
+        expected_id = _candidate_independence_identity(
+            candidate_id=self.candidate_id,
+            model_config_id=self.model_config_id,
+            training_data_id=self.training_data_id,
+            held_out_data_id=self.held_out_data_id,
+            matched_injection_data_id=self.matched_injection_data_id,
+            fit_receipt_id=self.fit_receipt_id,
+            split_receipt_id=self.split_receipt_id,
+        )
+        if self.receipt_id != expected_id:
+            raise OrbitNonlinearityError(
+                "receipt_id does not bind the candidate independence boundary"
+            )
+
+
+def _candidate_independence_identity(
+    *,
+    candidate_id: str,
+    model_config_id: str,
+    training_data_id: str,
+    held_out_data_id: str,
+    matched_injection_data_id: str,
+    fit_receipt_id: str,
+    split_receipt_id: str,
+) -> str:
+    payload = {
+        "candidate_id": candidate_id,
+        "fit_receipt_id": fit_receipt_id,
+        "held_out_data_id": held_out_data_id,
+        "matched_injection_data_id": matched_injection_data_id,
+        "model_config_id": model_config_id,
+        "schema": "CANDIDATE_INDEPENDENCE_RECEIPT_V1",
+        "split_receipt_id": split_receipt_id,
+        "training_data_id": training_data_id,
+    }
+    encoded = json.dumps(
+        payload, sort_keys=True, separators=(",", ":"), ensure_ascii=True
+    ).encode("ascii")
+    return f"sha256:{hashlib.sha256(encoded).hexdigest()}"
+
+
+def build_candidate_independence_receipt(
+    *,
+    candidate_id: str,
+    model_config_id: str,
+    training_data_id: str,
+    held_out_target: object,
+    matched_injection_target: object,
+    fit_receipt_id: str,
+    split_receipt_id: str,
+) -> CandidateIndependenceReceipt:
+    """Bind a declared independent fit/split to exact evaluation targets.
+
+    This receipt records a fail-closed evidence boundary; it is not a
+    platform-authenticated proof that the declared training process occurred.
+    """
+
+    candidate = _text(candidate_id, "candidate_id")
+    model = _evidence_receipt(model_config_id, "model_config_id")
+    training = _evidence_receipt(training_data_id, "training_data_id")
+    fit = _evidence_receipt(fit_receipt_id, "fit_receipt_id")
+    split = _evidence_receipt(split_receipt_id, "split_receipt_id")
+    held_target = _array(held_out_target, "held_out_target", ndim=1)
+    injection_target = _array(
+        matched_injection_target, "matched_injection_target", ndim=1
+    )
+    if held_target.size == 0 or injection_target.size == 0:
+        raise OrbitNonlinearityError(
+            "independence receipt targets must be non-empty"
+        )
+    held_data_id = _array_content_identity(held_target)
+    injection_data_id = _array_content_identity(injection_target)
+    receipt_id = _candidate_independence_identity(
+        candidate_id=candidate,
+        model_config_id=model,
+        training_data_id=training,
+        held_out_data_id=held_data_id,
+        matched_injection_data_id=injection_data_id,
+        fit_receipt_id=fit,
+        split_receipt_id=split,
+    )
+    return CandidateIndependenceReceipt(
+        candidate_id=candidate,
+        model_config_id=model,
+        training_data_id=training,
+        held_out_data_id=held_data_id,
+        matched_injection_data_id=injection_data_id,
+        fit_receipt_id=fit,
+        split_receipt_id=split,
+        receipt_id=receipt_id,
+        _construction_token=_CANDIDATE_INDEPENDENCE_TOKEN,
+    )
+
+
+@dataclass(frozen=True)
 class CandidateEvaluation:
-    """Factory-derived held-out scores bound to predictions and targets."""
+    """Factory-derived held-out scores bound to predictions and fit evidence."""
 
     candidate_id: str
     kind: CandidateKind
@@ -955,6 +1104,7 @@ class CandidateEvaluation:
     scoring_rule: CandidateScoringRule
     held_out_prediction_id: str
     matched_injection_prediction_id: str
+    independence_receipt: CandidateIndependenceReceipt
     evaluation_id: str
     _construction_token: InitVar[object] = None
 
@@ -1001,6 +1151,24 @@ class CandidateEvaluation:
             object.__setattr__(
                 self, name, _evidence_receipt(getattr(self, name), name)
             )
+        if type(self.independence_receipt) is not CandidateIndependenceReceipt:
+            raise OrbitNonlinearityError(
+                "independence_receipt must be a "
+                "CandidateIndependenceReceipt"
+            )
+        if (
+            self.independence_receipt.candidate_id != self.candidate_id
+            or self.independence_receipt.model_config_id
+            != self.model_config_id
+            or self.independence_receipt.held_out_data_id
+            != self.held_out_data_id
+            or self.independence_receipt.matched_injection_data_id
+            != self.matched_injection_data_id
+        ):
+            raise OrbitNonlinearityError(
+                "independence receipt does not match the candidate, model "
+                "and evaluation targets"
+            )
         if self.held_out_data_id == self.matched_injection_data_id:
             raise OrbitNonlinearityError(
                 "held-out and matched-injection data identities must differ"
@@ -1018,6 +1186,7 @@ class CandidateEvaluation:
             matched_injection_prediction_id=(
                 self.matched_injection_prediction_id
             ),
+            independence_receipt_id=self.independence_receipt.receipt_id,
         )
         if self.evaluation_id != expected_id:
             raise OrbitNonlinearityError(
@@ -1063,18 +1232,20 @@ def _candidate_evaluation_identity(
     scoring_rule: CandidateScoringRule,
     held_out_prediction_id: str,
     matched_injection_prediction_id: str,
+    independence_receipt_id: str,
 ) -> str:
     payload = {
         "candidate_id": candidate_id,
         "held_out_data_id": held_out_data_id,
         "held_out_prediction_id": held_out_prediction_id,
         "held_out_score_hex": held_out_score.hex(),
+        "independence_receipt_id": independence_receipt_id,
         "kind": kind.value,
         "matched_injection_data_id": matched_injection_data_id,
         "matched_injection_prediction_id": matched_injection_prediction_id,
         "matched_injection_score_hex": matched_injection_score.hex(),
         "model_config_id": model_config_id,
-        "schema": "CANDIDATE_EVALUATION_V1",
+        "schema": "CANDIDATE_EVALUATION_V2",
         "scoring_rule": scoring_rule.value,
     }
     encoded = json.dumps(
@@ -1092,6 +1263,7 @@ def evaluate_candidate_predictions(
     matched_injection_prediction: object,
     matched_injection_target: object,
     model_config_id: str,
+    independence_receipt: CandidateIndependenceReceipt,
     scoring_rule: CandidateScoringRule = (
         CandidateScoringRule.NEGATIVE_MEAN_SQUARED_ERROR
     ),
@@ -1106,6 +1278,10 @@ def evaluate_candidate_predictions(
             "scoring_rule must be a CandidateScoringRule"
         )
     model_id = _evidence_receipt(model_config_id, "model_config_id")
+    if type(independence_receipt) is not CandidateIndependenceReceipt:
+        raise OrbitNonlinearityError(
+            "independence_receipt must be a CandidateIndependenceReceipt"
+        )
     held_prediction = _array(
         held_out_prediction, "held_out_prediction", ndim=1
     )
@@ -1136,6 +1312,25 @@ def evaluate_candidate_predictions(
     injection_data_id = _array_content_identity(injection_target)
     held_prediction_id = _array_content_identity(held_prediction)
     injection_prediction_id = _array_content_identity(injection_prediction)
+    if (
+        held_prediction_id == held_data_id
+        or injection_prediction_id == injection_data_id
+    ):
+        raise OrbitNonlinearityError(
+            "prediction bytes must not equal evaluation-target bytes; "
+            "target-copy independence is unverifiable"
+        )
+    if (
+        independence_receipt.candidate_id != candidate_id
+        or independence_receipt.model_config_id != model_id
+        or independence_receipt.held_out_data_id != held_data_id
+        or independence_receipt.matched_injection_data_id
+        != injection_data_id
+    ):
+        raise OrbitNonlinearityError(
+            "independence_receipt does not bind this candidate, model and "
+            "evaluation targets"
+        )
     evaluation_id = _candidate_evaluation_identity(
         candidate_id=candidate_id,
         kind=kind,
@@ -1147,6 +1342,7 @@ def evaluate_candidate_predictions(
         scoring_rule=scoring_rule,
         held_out_prediction_id=held_prediction_id,
         matched_injection_prediction_id=injection_prediction_id,
+        independence_receipt_id=independence_receipt.receipt_id,
     )
     return CandidateEvaluation(
         candidate_id=candidate_id,
@@ -1159,6 +1355,7 @@ def evaluate_candidate_predictions(
         scoring_rule=scoring_rule,
         held_out_prediction_id=held_prediction_id,
         matched_injection_prediction_id=injection_prediction_id,
+        independence_receipt=independence_receipt,
         evaluation_id=evaluation_id,
         _construction_token=_CANDIDATE_EVALUATION_TOKEN,
     )
@@ -1323,6 +1520,24 @@ class NonlinearityReport:
             )
         if len({value.candidate_id for value in comparisons}) != len(comparisons):
             raise OrbitNonlinearityError("candidate ids must be unique")
+        if comparisons and len(
+            {
+                value.independence_receipt.split_receipt_id
+                for value in comparisons
+            }
+        ) != 1:
+            raise OrbitNonlinearityError(
+                "candidate comparisons must share one held-out split receipt"
+            )
+        if len(
+            {
+                value.independence_receipt.fit_receipt_id
+                for value in comparisons
+            }
+        ) != len(comparisons):
+            raise OrbitNonlinearityError(
+                "candidate comparisons require unique fit receipts"
+            )
         object.__setattr__(self, "candidate_comparisons", comparisons)
         if (
             self.attribution_status
@@ -1634,6 +1849,7 @@ def decompose_nonlinearity(
 __all__ = [
     "ACTIVE_O3_CONVENTION",
     "CandidateEvaluation",
+    "CandidateIndependenceReceipt",
     "CandidateKind",
     "CandidateScoringRule",
     "DEPARTURE_O3_PARITY",
@@ -1652,6 +1868,7 @@ __all__ = [
     "ResponseRankStatus",
     "STF5_CARTESIAN_BASIS",
     "VectorParity",
+    "build_candidate_independence_receipt",
     "decompose_nonlinearity",
     "evaluate_candidate_predictions",
     "matrix_to_stf5",

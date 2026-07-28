@@ -10,6 +10,7 @@ from __future__ import annotations
 import hashlib
 import json
 import re
+import stat
 from pathlib import Path, PurePosixPath
 from typing import Mapping, Sequence
 
@@ -28,14 +29,14 @@ EXTENSION_RECEIPT_PATH = (
     "pr252_pr248_integrity_supersession.yaml"
 )
 EXTENSION_RECEIPT_SHA256 = (
-    "acde06633e651e7015bf5976e33e59a44332c2634aed259d60b71df5707451d3"
+    "b4961f3db5f6b2e4a0386a96f1ead78bd24f5a51cd6778917f4c181e5d19bb81"
 )
 PR252_AUTHORIZING_RECEIPT_PATH = (
     "docs/research_program/stat_foundations/"
     "pr252_mes_consumer_migration.yaml"
 )
 PR252_AUTHORIZING_RECEIPT_SHA256 = (
-    "5a65eeed591f0312e8a984d6cabe5aab636adda92dae1cc39e69f9fbe0c0b0b8"
+    "3a02843f3c2ebe2231889e135518c8cc2375af7529228682ba7c0f57bc0c09d7"
 )
 _SHA_RE = re.compile(r"[0-9a-f]{64}\Z")
 
@@ -65,6 +66,42 @@ def _sha(value: object, field: str) -> str:
     return value
 
 
+def _regular_repo_file(root: Path, relative: str, *, field: str) -> Path:
+    """Return a regular file only when every in-repository component is real."""
+
+    normalized = _safe_path(relative, field)
+    current = root
+    parts = PurePosixPath(normalized).parts
+    for index, part in enumerate(parts):
+        current = current / part
+        try:
+            info = current.lstat()
+        except (FileNotFoundError, OSError) as exc:
+            raise Pr168SupersessionError(
+                f"{field} is missing: {normalized}"
+            ) from exc
+        if stat.S_ISLNK(info.st_mode):
+            raise Pr168SupersessionError(
+                f"{field} traverses a symlink: {normalized}"
+            )
+        if index < len(parts) - 1:
+            if not stat.S_ISDIR(info.st_mode):
+                raise Pr168SupersessionError(
+                    f"{field} parent is not a directory: {normalized}"
+                )
+        elif not stat.S_ISREG(info.st_mode):
+            raise Pr168SupersessionError(
+                f"{field} must be a regular file: {normalized}"
+            )
+    try:
+        current.resolve(strict=True).relative_to(root)
+    except (OSError, ValueError) as exc:
+        raise Pr168SupersessionError(
+            f"{field} escapes the repository: {normalized}"
+        ) from exc
+    return current
+
+
 def _exact_bound_file(
     root: Path,
     binding: object,
@@ -81,8 +118,8 @@ def _exact_bound_file(
     digest = _sha(binding["sha256"], f"{field}.sha256")
     if relative != expected_path or digest != expected_sha256:
         raise Pr168SupersessionError(f"{field} identity drifted")
-    path = root / relative
-    if path.is_symlink() or not path.is_file() or _digest(path) != digest:
+    path = _regular_repo_file(root, relative, field=field)
+    if _digest(path) != digest:
         raise Pr168SupersessionError(f"{field} bytes do not match the binding")
 
 
@@ -92,9 +129,11 @@ def _compose_pr252_extension(
     transitions: Mapping[str, str],
     historical_priors: Mapping[str, object],
 ) -> tuple[dict[str, str], dict[str, str]]:
-    path = root / EXTENSION_RECEIPT_PATH
-    if path.is_symlink() or not path.is_file():
-        raise Pr168SupersessionError("PR-252 supersession extension is missing")
+    path = _regular_repo_file(
+        root,
+        EXTENSION_RECEIPT_PATH,
+        field="PR-252 supersession extension",
+    )
     if _digest(path) != EXTENSION_RECEIPT_SHA256:
         raise Pr168SupersessionError(
             "PR-252 supersession extension hash mismatch"
@@ -215,9 +254,11 @@ def _compose_pr252_extension(
 
 def _load(repo_root: Path) -> tuple[dict[str, str], dict[str, str]]:
     root = Path(repo_root).resolve()
-    receipt_path = root / RECEIPT_PATH
-    if receipt_path.is_symlink() or not receipt_path.is_file():
-        raise Pr168SupersessionError("PR-248 supersession receipt is missing")
+    receipt_path = _regular_repo_file(
+        root,
+        RECEIPT_PATH,
+        field="PR-248 supersession receipt",
+    )
     if _digest(receipt_path) != RECEIPT_SHA256:
         raise Pr168SupersessionError("PR-248 supersession receipt hash mismatch")
     payload = yaml.safe_load(receipt_path.read_text(encoding="utf-8"))
@@ -235,8 +276,8 @@ def _load(repo_root: Path) -> tuple[dict[str, str], dict[str, str]]:
             raise Pr168SupersessionError(f"{key} must be an exact hash binding")
         rel = _safe_path(binding["path"], f"{key}.path")
         expected = _sha(binding["sha256"], f"{key}.sha256")
-        path = root / rel
-        if path.is_symlink() or not path.is_file() or _digest(path) != expected:
+        path = _regular_repo_file(root, rel, field=key)
+        if _digest(path) != expected:
             raise Pr168SupersessionError(f"{key} bytes do not match the receipt")
         historical[key] = json.loads(path.read_text(encoding="utf-8"))
 
@@ -296,12 +337,12 @@ def _load(repo_root: Path) -> tuple[dict[str, str], dict[str, str]]:
         historical_priors,
     )
     for relative, terminal_sha256 in terminal_transitions.items():
-        path = root / relative
-        if (
-            path.is_symlink()
-            or not path.is_file()
-            or _digest(path) != terminal_sha256
-        ):
+        path = _regular_repo_file(
+            root,
+            relative,
+            field="terminal supersession binding",
+        )
+        if _digest(path) != terminal_sha256:
             raise Pr168SupersessionError(
                 f"current bytes do not match terminal supersession binding: "
                 f"{relative}"

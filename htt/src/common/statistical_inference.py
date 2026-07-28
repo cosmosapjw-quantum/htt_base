@@ -14,7 +14,7 @@ geometry, or Bianchi-family claim.
 from __future__ import annotations
 
 import math
-from dataclasses import dataclass
+from dataclasses import InitVar, dataclass, field
 from enum import Enum
 from statistics import NormalDist
 from typing import Mapping, Sequence
@@ -66,6 +66,19 @@ class CovarianceLikelihoodStatus(_StringEnum):
 
 
 _EVIDENCE_MAX_RELATIVE_TOLERANCE = math.sqrt(np.finfo(float).eps)
+_RATIO_INFERENCE_RESULT_TOKEN = object()
+_FINITE_COVARIANCE_RESULT_TOKEN = object()
+_FINITE_COVARIANCE_ALLOWED_USE = {
+    CovarianceLikelihoodStatus.DEFINED: (
+        "conditional likelihood under registered Gaussian/Wishart assumptions",
+    ),
+    CovarianceLikelihoodStatus.OUTSIDE_SUPPORTED_QUOTIENT: (
+        "support-mismatch diagnostic",
+    ),
+    CovarianceLikelihoodStatus.BLOCKED_ASSUMPTIONS: (
+        "assumption failure report",
+    ),
+}
 
 
 class PriorLearningMode(_StringEnum):
@@ -248,8 +261,47 @@ class RatioInferenceResult:
     lane: InferenceLane
     conditioning: AnchorConditioning
     assumptions: tuple[str, ...]
+    _construction_token: InitVar[object] = None
 
-    def __post_init__(self) -> None:
+    def __post_init__(self, _construction_token: object) -> None:
+        if _construction_token is not _RATIO_INFERENCE_RESULT_TOKEN:
+            raise StatisticalInferenceError(
+                "RatioInferenceResult must be created by fieller_ratio"
+            )
+        if not isinstance(self.status, StressStatus) or self.status not in {
+            StressStatus.DEFINED,
+            StressStatus.RATIO_UNIDENTIFIED,
+            StressStatus.NUMERATOR_UNIDENTIFIED,
+        }:
+            raise StatisticalInferenceError(
+                "ratio status is not valid for joint random-anchor inference"
+            )
+        if type(self.confidence_set) is not FiellerConfidenceSet:
+            raise StatisticalInferenceError(
+                "confidence_set must be a FiellerConfidenceSet"
+            )
+        if type(self.denominator_interval) is not ScalarRange:
+            raise StatisticalInferenceError(
+                "denominator_interval must be a ScalarRange"
+            )
+        confidence = _real(self.confidence_level, "confidence_level")
+        if not 0.0 < confidence < 1.0:
+            raise StatisticalInferenceError(
+                "confidence_level must lie in (0, 1)"
+            )
+        atol = _nonnegative(self.atol, "atol")
+        rtol = _nonnegative(self.rtol, "rtol")
+        if not isinstance(self.lane, InferenceLane):
+            raise StatisticalInferenceError("lane must be an InferenceLane")
+        if not isinstance(self.conditioning, AnchorConditioning):
+            raise StatisticalInferenceError(
+                "conditioning must be an AnchorConditioning"
+            )
+        assumptions = _texts(self.assumptions, "assumptions")
+        object.__setattr__(self, "confidence_level", confidence)
+        object.__setattr__(self, "atol", atol)
+        object.__setattr__(self, "rtol", rtol)
+        object.__setattr__(self, "assumptions", assumptions)
         if self.status is StressStatus.DEFINED:
             object.__setattr__(
                 self, "point_estimate", _real(self.point_estimate, "point_estimate")
@@ -258,9 +310,29 @@ class RatioInferenceResult:
                 raise StatisticalInferenceError(
                     "DEFINED ratio requires a bounded Fieller set"
                 )
+            if not self.denominator_interval.separated_from_zero(
+                atol=atol, rtol=rtol
+            ):
+                raise StatisticalInferenceError(
+                    "DEFINED ratio denominator interval must exclude zero"
+                )
         elif self.point_estimate is not None:
             raise StatisticalInferenceError(
                 "unidentified ratio must not carry a finite point estimate"
+            )
+        if (
+            self.status is StressStatus.RATIO_UNIDENTIFIED
+            and not self.confidence_set.is_unbounded
+        ):
+            raise StatisticalInferenceError(
+                "RATIO_UNIDENTIFIED requires an unbounded Fieller set"
+            )
+        if (
+            self.status is StressStatus.NUMERATOR_UNIDENTIFIED
+            and self.confidence_set.kind is not FiellerSetKind.EMPTY
+        ):
+            raise StatisticalInferenceError(
+                "NUMERATOR_UNIDENTIFIED requires an empty Fieller set"
             )
 
 
@@ -359,6 +431,7 @@ def fieller_ratio(
             lane=lane,
             conditioning=joint.conditioning,
             assumptions=joint.assumptions,
+            _construction_token=_RATIO_INFERENCE_RESULT_TOKEN,
         )
     z = NormalDist().inv_cdf(0.5 + confidence / 2.0)
     denominator_interval = ScalarRange(
@@ -393,6 +466,7 @@ def fieller_ratio(
             lane=lane,
             conditioning=joint.conditioning,
             assumptions=joint.assumptions,
+            _construction_token=_RATIO_INFERENCE_RESULT_TOKEN,
         )
     return RatioInferenceResult(
         status=StressStatus.DEFINED,
@@ -405,6 +479,7 @@ def fieller_ratio(
         lane=lane,
         conditioning=joint.conditioning,
         assumptions=joint.assumptions,
+        _construction_token=_RATIO_INFERENCE_RESULT_TOKEN,
     )
 
 
@@ -446,10 +521,101 @@ class FiniteCovarianceLikelihoodResult:
     n_simulations: int
     method: str
     assumptions: FiniteCovarianceAssumptions
-    allowed_use: tuple[str, ...]
     rcond: float
     null_atol: float
     evidence_null_atol_ceiling: float
+    allowed_use: tuple[str, ...] = field(init=False)
+    _construction_token: InitVar[object] = None
+
+    def __post_init__(self, _construction_token: object) -> None:
+        if _construction_token is not _FINITE_COVARIANCE_RESULT_TOKEN:
+            raise StatisticalInferenceError(
+                "FiniteCovarianceLikelihoodResult must be created by "
+                "covariance_marginalized_t_loglikelihood"
+            )
+        if not isinstance(self.status, CovarianceLikelihoodStatus):
+            raise StatisticalInferenceError(
+                "status must be a CovarianceLikelihoodStatus"
+            )
+        if isinstance(self.rank, (bool, np.bool_)) or not isinstance(
+            self.rank, (int, np.integer)
+        ) or self.rank < 0:
+            raise StatisticalInferenceError("rank must be a non-negative integer")
+        if isinstance(self.n_simulations, (bool, np.bool_)) or not isinstance(
+            self.n_simulations, (int, np.integer)
+        ) or self.n_simulations < 2:
+            raise StatisticalInferenceError(
+                "n_simulations must be an integer of at least 2"
+            )
+        null_norm = _nonnegative(
+            self.null_residual_norm, "null_residual_norm"
+        )
+        rcond = _positive(self.rcond, "rcond")
+        if rcond >= 1.0:
+            raise StatisticalInferenceError("rcond must be less than 1")
+        null_atol = _nonnegative(self.null_atol, "null_atol")
+        ceiling = _nonnegative(
+            self.evidence_null_atol_ceiling,
+            "evidence_null_atol_ceiling",
+        )
+        _text(self.method, "method")
+        if not isinstance(self.assumptions, FiniteCovarianceAssumptions):
+            raise StatisticalInferenceError(
+                "assumptions must be FiniteCovarianceAssumptions"
+            )
+        object.__setattr__(self, "rank", int(self.rank))
+        object.__setattr__(self, "n_simulations", int(self.n_simulations))
+        object.__setattr__(self, "null_residual_norm", null_norm)
+        object.__setattr__(self, "rcond", rcond)
+        object.__setattr__(self, "null_atol", null_atol)
+        object.__setattr__(self, "evidence_null_atol_ceiling", ceiling)
+        object.__setattr__(
+            self, "allowed_use", _FINITE_COVARIANCE_ALLOWED_USE[self.status]
+        )
+        if self.status is CovarianceLikelihoodStatus.DEFINED:
+            if not self.assumptions.evidence_grade:
+                raise StatisticalInferenceError(
+                    "DEFINED likelihood requires evidence-grade assumptions"
+                )
+            if self.rank == 0:
+                raise StatisticalInferenceError(
+                    "DEFINED likelihood requires positive supported rank"
+                )
+            object.__setattr__(
+                self,
+                "log_likelihood",
+                _real(self.log_likelihood, "log_likelihood"),
+            )
+            object.__setattr__(
+                self,
+                "chi2_supported",
+                _nonnegative(self.chi2_supported, "chi2_supported"),
+            )
+            if self.null_residual_norm > self.null_atol:
+                raise StatisticalInferenceError(
+                    "DEFINED likelihood cannot exceed null_atol"
+                )
+        else:
+            if self.log_likelihood is not None or self.chi2_supported is not None:
+                raise StatisticalInferenceError(
+                    "undefined likelihood statuses must not carry likelihood values"
+                )
+            if (
+                self.status
+                is CovarianceLikelihoodStatus.OUTSIDE_SUPPORTED_QUOTIENT
+                and self.null_residual_norm <= self.null_atol
+            ):
+                raise StatisticalInferenceError(
+                    "OUTSIDE_SUPPORTED_QUOTIENT requires a null residual "
+                    "above null_atol"
+                )
+            if (
+                self.status is CovarianceLikelihoodStatus.BLOCKED_ASSUMPTIONS
+                and self.assumptions.evidence_grade
+            ):
+                raise StatisticalInferenceError(
+                    "BLOCKED_ASSUMPTIONS requires a failed evidence premise"
+                )
 
 
 def covariance_marginalized_t_loglikelihood(
@@ -505,6 +671,15 @@ def covariance_marginalized_t_loglikelihood(
         covariance, covariance.T, atol=rcond * scale, rtol=rcond
     ):
         raise StatisticalInferenceError("sample_covariance must be symmetric")
+    # The registered tolerance admits harmless round-off asymmetry, but the
+    # eigensolver consumes one triangle.  Canonicalize the accepted matrix so
+    # transposing identical evidence cannot change the likelihood.
+    with np.errstate(over="ignore", invalid="ignore"):
+        covariance = covariance * 0.5 + covariance.T * 0.5
+    if not np.all(np.isfinite(covariance)):
+        raise StatisticalInferenceError(
+            "sample_covariance symmetrization produced non-finite values"
+        )
     eigenvalues, eigenvectors = np.linalg.eigh(covariance)
     spectral_scale = float(np.max(np.abs(eigenvalues)))
     if spectral_scale == 0.0:
@@ -565,10 +740,10 @@ def covariance_marginalized_t_loglikelihood(
             n_simulations=int(n_simulations),
             method="covariance_marginalized_multivariate_t_supported_quotient",
             assumptions=assumptions,
-            allowed_use=("support-mismatch diagnostic",),
             rcond=rcond,
             null_atol=null_atol,
             evidence_null_atol_ceiling=evidence_null_atol_ceiling,
+            _construction_token=_FINITE_COVARIANCE_RESULT_TOKEN,
         )
     if not assumptions.evidence_grade:
         return FiniteCovarianceLikelihoodResult(
@@ -580,10 +755,10 @@ def covariance_marginalized_t_loglikelihood(
             n_simulations=int(n_simulations),
             method="covariance_marginalized_multivariate_t_supported_quotient",
             assumptions=assumptions,
-            allowed_use=("assumption failure report",),
             rcond=rcond,
             null_atol=null_atol,
             evidence_null_atol_ceiling=evidence_null_atol_ceiling,
+            _construction_token=_FINITE_COVARIANCE_RESULT_TOKEN,
         )
     wishart_df = n_simulations if assumptions.known_simulation_mean else n_simulations - 1
     if wishart_df < rank:
@@ -649,10 +824,10 @@ def covariance_marginalized_t_loglikelihood(
             + ("known_mean" if assumptions.known_simulation_mean else "estimated_mean")
         ),
         assumptions=assumptions,
-        allowed_use=("conditional likelihood under registered Gaussian/Wishart assumptions",),
         rcond=rcond,
         null_atol=null_atol,
         evidence_null_atol_ceiling=evidence_null_atol_ceiling,
+        _construction_token=_FINITE_COVARIANCE_RESULT_TOKEN,
     )
 
 
@@ -820,7 +995,7 @@ class PriorLearningReceipt:
         if any(not isinstance(fold, CrossFitFold) for fold in folds):
             raise StatisticalInferenceError("folds must contain CrossFitFold values")
         if self.mode is PriorLearningMode.FIXED_PHYSICAL:
-            if self.data_dependent or selection or self.folds:
+            if self.data_dependent or selection or estimation or self.folds:
                 raise StatisticalInferenceError(
                     "fixed physical priors must not be data learned"
                 )

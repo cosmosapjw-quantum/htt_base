@@ -6,7 +6,7 @@ claim_tier: diagnostic_only
 transfer_source: none
 config_hash: `sha256:e7e0272ceb046b83e5a9e25f150e807eb780ab9924a9b724d36d0cc2f2527f62`
 input_hashes:
-- scripts/result_packs/generate_pack_A_scalar_to_morphology.py:sha256:d66a094baddd9b11d9a6440fbeae4cf17bd3fd8dc872de425fd486a3aeb48e2c
+- scripts/result_packs/generate_pack_A_scalar_to_morphology.py:sha256:5851508496acd1a24d9d4cb320087510db0532f6533560eafebc4db71d133a3c
 - docs/ver2_upgrade/generated/result_pack_A_scalar_to_morphology.json:sha256:2cb5c46c2eaacb5fe400b5910b8ebe85c7b78b5ae448772ea5c9be2d0b07beca
 - docs/PR_DELTAS/pr-056.md:sha256:ca22c09c8a1822c1894fd775e2991932e9a6c28ba55ec9876a137e6000bf4207
 - docs/PR_DELTAS/pr-076.md:sha256:a32bf4e530c1af1dcd941c9af73c7bc3d678eae8c7767c5f37179cf9b9a6906a
@@ -16,12 +16,12 @@ input_hashes:
 - htt/obsstat/morphology.py:sha256:67899dad4232f0c944fb766db2c48b16bdd19efae95df58fd1fbd243e3261108
 - htt/obsstat/null_ensembles.py:sha256:1033f1f4a5a105f455bf11b83bd421052b1520a486493560abd0f80fda16658c
 - htt/htt/htt/statistics/mes_information_gain.py:sha256:251c44f18fbfe7949dc5b02e6b96db12154ce0488560748c8987458446d991b1
-- htt/src/common/statistical_foundations.py:sha256:771a852336296bf17ba760be9354b1ef5b75a23eb167e1a17d23da20d286194a
+- htt/src/common/statistical_foundations.py:sha256:d13a11e2a17b610db76417fd267cfa67fc89ad97869003627c9e1d99aed68f3d
 - docs/generated/status_snapshot.json:sha256:2599a57db43d856cf794074f2ab43e8c8f1fd108870cbcb22f9c93a5394d41ce
 sky_support_status: not_directional
 null_mock_status: summarized_from_dependency_surfaces
 generating_command: `python scripts/result_packs/generate_pack_A_scalar_to_morphology.py`
-git_commit_or_worktree_state: `declared-input-set:sha256:ec376e860619955f0ecb95356bc2eabe5aef8f69234843c5d3185ad7d42c30f2`
+git_commit_or_worktree_state: `declared-input-set:sha256:62e0dcb631053fcffa94f3c4bdbfb4b34e344ecd5e925a11327cd500d5822c7e`
 
 ## Scope
 
@@ -29,11 +29,11 @@ This is a diagnostic-only comparison pack. It compares scalar MIO Q/F/Pi legacy-
 
 ## Scalar Diagnostics
 
-| Name | Owner | Classification | Representation Policy | Status | Role | Allowed Use | Forbidden Use |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| Q | MIO | BC1_LEGACY_PROJECTION | BC2_NO_REPRESENTATION_PROMOTION | legacy_projection_only | legacy signed policy-normalized ratio | historical reproduction and signed ratio reporting | departure distance, occupancy, probability, or evidence |
-| F | MIO | BC1_LEGACY_PROJECTION | BC2_NO_REPRESENTATION_PROMOTION | legacy_projection_only | legacy policy-normalized ratio when supplied | historical reproduction and declared ratio reporting | filling, occupancy, saturation, probability, or evidence |
-| Pi | MIO | BC1_LEGACY_PROJECTION | BC2_NO_REPRESENTATION_PROMOTION | legacy_projection_only | empirical exceedance curve | threshold summary of the recorded legacy ratio | truth probability, occupancy, or evidence |
+| Name | Owner | Classification | Representation Policy | Claim Tier | Artifact Mode | Transfer Source | Null Status | Covariance Status | Status | Role | Allowed Use | Forbidden Use |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Q | MIO | BC1_LEGACY_PROJECTION | BC2_NO_REPRESENTATION_PROMOTION | diagnostic_only | diagnostic_legacy_projection | section-bound historical/proxy only | not calibrated in this summary row | not bound in this summary row | legacy_projection_only | legacy signed policy-normalized ratio | historical reproduction and signed ratio reporting | departure distance, occupancy, probability, or evidence |
+| F | MIO | BC1_LEGACY_PROJECTION | BC2_NO_REPRESENTATION_PROMOTION | diagnostic_only | diagnostic_legacy_projection | section-bound historical/proxy only | not calibrated in this summary row | not bound in this summary row | legacy_projection_only | legacy policy-normalized ratio when supplied | historical reproduction and declared ratio reporting | filling, occupancy, saturation, probability, or evidence |
+| Pi | MIO | BC1_LEGACY_PROJECTION | BC2_NO_REPRESENTATION_PROMOTION | diagnostic_only | diagnostic_legacy_projection | section-bound historical/proxy only | not calibrated in this summary row | not bound in this summary row | legacy_projection_only | empirical exceedance curve | threshold summary of the recorded legacy ratio | truth probability, occupancy, or evidence |
 
 ## Morphology And MES Diagnostics
 
@@ -103,14 +103,14 @@ Source `docs/ver2_upgrade/generated/result_pack_A_scalar_to_morphology.json` is 
     "readiness labels are provenance only; not current production readiness"
   ],
   "claim_tier": "diagnostic_only",
-  "code_version": "declared-input-set:sha256:ec376e860619955f0ecb95356bc2eabe5aef8f69234843c5d3185ad7d42c30f2",
+  "code_version": "declared-input-set:sha256:62e0dcb631053fcffa94f3c4bdbfb4b34e344ecd5e925a11327cd500d5822c7e",
   "config_hash": "sha256:e7e0272ceb046b83e5a9e25f150e807eb780ab9924a9b724d36d0cc2f2527f62",
   "created_by": "scripts/result_packs/generate_pack_A_scalar_to_morphology.py",
   "failed_gates": [],
   "git_commit": null,
   "implementation_scope": "common",
   "input_hashes": [
-    "scripts/result_packs/generate_pack_A_scalar_to_morphology.py:sha256:d66a094baddd9b11d9a6440fbeae4cf17bd3fd8dc872de425fd486a3aeb48e2c",
+    "scripts/result_packs/generate_pack_A_scalar_to_morphology.py:sha256:5851508496acd1a24d9d4cb320087510db0532f6533560eafebc4db71d133a3c",
     "docs/ver2_upgrade/generated/result_pack_A_scalar_to_morphology.json:sha256:2cb5c46c2eaacb5fe400b5910b8ebe85c7b78b5ae448772ea5c9be2d0b07beca",
     "docs/PR_DELTAS/pr-056.md:sha256:ca22c09c8a1822c1894fd775e2991932e9a6c28ba55ec9876a137e6000bf4207",
     "docs/PR_DELTAS/pr-076.md:sha256:a32bf4e530c1af1dcd941c9af73c7bc3d678eae8c7767c5f37179cf9b9a6906a",
@@ -120,7 +120,7 @@ Source `docs/ver2_upgrade/generated/result_pack_A_scalar_to_morphology.json` is 
     "htt/obsstat/morphology.py:sha256:67899dad4232f0c944fb766db2c48b16bdd19efae95df58fd1fbd243e3261108",
     "htt/obsstat/null_ensembles.py:sha256:1033f1f4a5a105f455bf11b83bd421052b1520a486493560abd0f80fda16658c",
     "htt/htt/htt/statistics/mes_information_gain.py:sha256:251c44f18fbfe7949dc5b02e6b96db12154ce0488560748c8987458446d991b1",
-    "htt/src/common/statistical_foundations.py:sha256:771a852336296bf17ba760be9354b1ef5b75a23eb167e1a17d23da20d286194a",
+    "htt/src/common/statistical_foundations.py:sha256:d13a11e2a17b610db76417fd267cfa67fc89ad97869003627c9e1d99aed68f3d",
     "docs/generated/status_snapshot.json:sha256:2599a57db43d856cf794074f2ab43e8c8f1fd108870cbcb22f9c93a5394d41ce"
   ],
   "owner": "COMMON",

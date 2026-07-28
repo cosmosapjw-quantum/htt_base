@@ -5,6 +5,7 @@ import ast
 from dataclasses import fields, replace
 import json
 from pathlib import Path
+import types
 
 import pytest
 import yaml
@@ -30,6 +31,7 @@ from common.statistical_foundations import (
     LegacyProjectionReport,
     NullKind,
     ScalarRange,
+    StatisticalFoundationError,
     SummaryDepartureState,
     build_anchor_stress_report,
     evaluate_sector_stress,
@@ -319,6 +321,55 @@ def test_result_card_keeps_output_spaces_disjoint_and_diagnostic_only() -> None:
         "representation_policy"
     ] == BC2_NO_REPRESENTATION_PROMOTION
     json.dumps(payload, allow_nan=False)
+
+
+def test_sector_stress_rejects_duck_typed_numerators_anchors_and_channels() -> None:
+    anchor = registered_geodesic_mes_anchors(
+        eps1=0.0,
+        eps2=2.0e-5,
+        eps3=3.0e-5,
+        attribution="type-boundary fixture",
+        conditioning=AnchorConditioning.ENSEMBLE_CALIBRATED,
+    )["sigma"]
+    with pytest.raises(
+        StatisticalFoundationError,
+        match="numerator must be a ScalarRange",
+    ):
+        evaluate_sector_stress(
+            sector="Sigma2",
+            numerator=types.SimpleNamespace(lower=1.0, upper=3.0),
+            numerator_channel_key=anchor.channel_key,
+            anchor=anchor,
+        )
+    fake_anchor = types.SimpleNamespace(
+        normalization_allowed=True,
+        target_sector="Sigma2",
+        channel_key=anchor.channel_key,
+        anchor_id="FAKE",
+        conditioning=AnchorConditioning.ENSEMBLE_CALIBRATED,
+        value=anchor.value,
+    )
+    with pytest.raises(
+        StatisticalFoundationError,
+        match="anchor must be a MESAnchorSpec",
+    ):
+        evaluate_sector_stress(
+            sector="Sigma2",
+            numerator=ScalarRange(1.0, 3.0),
+            numerator_channel_key=anchor.channel_key,
+            anchor=fake_anchor,
+        )
+    for malformed in ("not-a-channel", ("valid", 3), ()):
+        with pytest.raises(
+            StatisticalFoundationError,
+            match="numerator_channel_key",
+        ):
+            evaluate_sector_stress(
+                sector="Sigma2",
+                numerator=ScalarRange(1.0, 3.0),
+                numerator_channel_key=malformed,
+                anchor=anchor,
+            )
 
 
 def test_chapter7_scenario_table_has_detachable_claim_metadata() -> None:
@@ -708,6 +759,8 @@ def test_detachable_evidence_captions_carry_complete_claim_lanes() -> None:
         "Owner: HTT.",
         "Claim tier: diagnostic-only.",
         "Artifact mode: conditioned",
+        r"BC1\_LEGACY\_PROJECTION",
+        r"BC2\_NO\_REPRESENTATION\_PROMOTION",
         "Transfer source: historical external/proxy",
         "Null/covariance status: historical fixture only",
         "Allowed use: historical reproduction and method comparison.",

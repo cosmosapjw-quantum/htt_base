@@ -22,6 +22,7 @@ from common.orbit_nonlinearity import (  # noqa: E402
     PR251_INVARIANT_NAMES,
     STF5_CARTESIAN_BASIS,
     VectorParity,
+    build_candidate_independence_receipt,
     decompose_nonlinearity,
     evaluate_candidate_predictions,
     orbit_invariants,
@@ -42,6 +43,8 @@ from obsstat.lowell_poles import AntipodalAxis  # noqa: E402
 TRANSFER_ID = "sha256:" + "4" * 64
 MASK_ID = "sha256:" + "5" * 64
 COVARIANCE_ID = "sha256:" + "6" * 64
+TRAINING_DATA_ID = "sha256:" + "7" * 64
+SPLIT_RECEIPT_ID = "sha256:" + "8" * 64
 
 
 def _state(beta: tuple[float, float, float]) -> DepartureState:
@@ -71,6 +74,38 @@ def _catalog() -> InvariantCatalogSpec:
     )
 
 
+def _candidate(
+    *,
+    candidate_id: str,
+    kind: CandidateKind,
+    held_out_prediction: object,
+    held_out_target: object,
+    matched_injection_prediction: object,
+    matched_injection_target: object,
+    model_config_id: str,
+    fit_index: int,
+) -> CandidateEvaluation:
+    receipt = build_candidate_independence_receipt(
+        candidate_id=candidate_id,
+        model_config_id=model_config_id,
+        training_data_id=TRAINING_DATA_ID,
+        held_out_target=held_out_target,
+        matched_injection_target=matched_injection_target,
+        fit_receipt_id="sha256:" + f"{1000 + fit_index:064x}",
+        split_receipt_id=SPLIT_RECEIPT_ID,
+    )
+    return evaluate_candidate_predictions(
+        candidate_id=candidate_id,
+        kind=kind,
+        held_out_prediction=held_out_prediction,
+        held_out_target=held_out_target,
+        matched_injection_prediction=matched_injection_prediction,
+        matched_injection_target=matched_injection_target,
+        model_config_id=model_config_id,
+        independence_receipt=receipt,
+    )
+
+
 def _competition(
     *,
     winner: CandidateKind,
@@ -83,20 +118,21 @@ def _competition(
         CandidateKind.DERIVATIVE_FAILURE,
     )
     return tuple(
-        evaluate_candidate_predictions(
+        _candidate(
             candidate_id=f"{kind.value}-CANDIDATE",
             kind=kind,
             held_out_prediction=(
-                (0.0, 0.0) if kind is winner else (3.0, 0.0)
+                (0.01, 0.0) if kind is winner else (3.0, 0.0)
             ),
             held_out_target=(0.0, 0.0),
             matched_injection_prediction=(
-                (1.0, 1.0) if kind is winner else (4.0, 1.0)
+                (1.01, 1.0) if kind is winner else (4.0, 1.0)
             ),
             matched_injection_target=(1.0, 1.0),
             model_config_id=(
                 "sha256:" + f"{kinds.index(kind) + 10:064x}"
             ),
+            fit_index=kinds.index(kind),
         )
         for kind in kinds
     )
@@ -137,16 +173,46 @@ def test_candidate_evaluation_rejects_role_salted_target_reuse() -> None:
     shared_target = np.array([0.25, -0.5, 1.25], dtype=np.float64)
     with pytest.raises(
         OrbitNonlinearityError,
-        match="data identities must differ",
+        match="data identities must be distinct",
+    ):
+        build_candidate_independence_receipt(
+            candidate_id="nonlinear-reused-target",
+            model_config_id="sha256:" + "a" * 64,
+            training_data_id=TRAINING_DATA_ID,
+            held_out_target=shared_target,
+            matched_injection_target=shared_target.copy(),
+            fit_receipt_id="sha256:" + "b" * 64,
+            split_receipt_id=SPLIT_RECEIPT_ID,
+        )
+
+
+def test_candidate_evaluation_rejects_exact_target_copy() -> None:
+    candidate_id = "nonlinear-target-copy"
+    model_config_id = "sha256:" + "c" * 64
+    held_target = np.array([0.25, -0.5, 1.25], dtype=np.float64)
+    injection_target = np.array([0.4, 0.8, -0.2], dtype=np.float64)
+    receipt = build_candidate_independence_receipt(
+        candidate_id=candidate_id,
+        model_config_id=model_config_id,
+        training_data_id=TRAINING_DATA_ID,
+        held_out_target=held_target,
+        matched_injection_target=injection_target,
+        fit_receipt_id="sha256:" + "d" * 64,
+        split_receipt_id=SPLIT_RECEIPT_ID,
+    )
+    with pytest.raises(
+        OrbitNonlinearityError,
+        match="target-copy independence is unverifiable",
     ):
         evaluate_candidate_predictions(
-            candidate_id="nonlinear-reused-target",
+            candidate_id=candidate_id,
             kind=CandidateKind.NONLINEAR,
-            held_out_prediction=np.array([0.2, -0.4, 1.1]),
-            held_out_target=shared_target,
-            matched_injection_prediction=np.array([0.3, -0.6, 1.2]),
-            matched_injection_target=shared_target.copy(),
-            model_config_id="sha256:" + "a" * 64,
+            held_out_prediction=held_target.copy(),
+            held_out_target=held_target,
+            matched_injection_prediction=injection_target.copy(),
+            matched_injection_target=injection_target,
+            model_config_id=model_config_id,
+            independence_receipt=receipt,
         )
 
 
@@ -292,10 +358,10 @@ def test_nonlinear_candidate_is_selected_on_both_score_axes() -> None:
         "frame-control",
         "derivative-control",
     )
-    held_predictions = (0.0, 1.0, 2.0, 2.0, 2.0, 2.0)
-    injection_predictions = (13.0, 10.0, 12.0, 12.0, 12.0, 12.0)
+    held_predictions = (0.01, 1.0, 2.0, 2.0, 2.0, 2.0)
+    injection_predictions = (13.0, 10.01, 12.0, 12.0, 12.0, 12.0)
     candidates = tuple(
-        evaluate_candidate_predictions(
+        _candidate(
             candidate_id=candidate_id,
             kind=kind,
             held_out_prediction=(held_prediction,),
@@ -303,6 +369,7 @@ def test_nonlinear_candidate_is_selected_on_both_score_axes() -> None:
             matched_injection_prediction=(injection_prediction,),
             matched_injection_target=(10.0,),
             model_config_id="sha256:" + f"{index + 100:064x}",
+            fit_index=index + 100,
         )
         for index, (
             candidate_id,

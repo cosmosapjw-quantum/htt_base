@@ -59,6 +59,24 @@ def test_pack_a_payload_compares_scalar_and_morphology_surfaces():
     assert {
         item["status"] for item in payload["scalar_diagnostics"]
     } == {"legacy_projection_only"}
+    assert {
+        (
+            item["claim_tier"],
+            item["artifact_mode"],
+            item["transfer_source"],
+            item["null_status"],
+            item["covariance_status"],
+        )
+        for item in payload["scalar_diagnostics"]
+    } == {
+        (
+            "diagnostic_only",
+            "diagnostic_legacy_projection",
+            "section-bound historical/proxy only",
+            "not calibrated in this summary row",
+            "not bound in this summary row",
+        )
+    }
     scalar_text = json.dumps(payload["scalar_diagnostics"], sort_keys=True).lower()
     assert "certified filling-fraction" not in scalar_text
     assert "occupancy-style" not in scalar_text
@@ -151,6 +169,11 @@ def test_pack_a_markdown_has_manifest_and_caveated_comparison():
     assert all(
         BC1_LEGACY_PROJECTION in row
         and BC2_NO_REPRESENTATION_PROMOTION in row
+        and "diagnostic_only" in row
+        and "diagnostic_legacy_projection" in row
+        and "section-bound historical/proxy only" in row
+        and "not calibrated in this summary row" in row
+        and "not bound in this summary row" in row
         for row in scalar_rows.values()
     )
     assert "| MES I_morph | COMMON |" in markdown

@@ -1014,6 +1014,35 @@ def evaluate_sector_stress(
 ) -> SectorStress:
     """Construct one typed stress without cross-channel scalar synthesis."""
     sector = _required_text(sector, "sector")
+    if numerator is not None and type(numerator) is not ScalarRange:
+        raise StatisticalFoundationError(
+            "numerator must be a ScalarRange or None"
+        )
+    if anchor is not None and type(anchor) is not MESAnchorSpec:
+        raise StatisticalFoundationError(
+            "anchor must be a MESAnchorSpec or None"
+        )
+    normalized_channel_key: tuple[str, ...] | None
+    if numerator_channel_key is None:
+        normalized_channel_key = None
+    else:
+        if isinstance(numerator_channel_key, (str, bytes)):
+            raise StatisticalFoundationError(
+                "numerator_channel_key must be a sequence of channel fields"
+            )
+        try:
+            normalized_channel_key = tuple(
+                _required_text(value, "numerator_channel_key")
+                for value in numerator_channel_key
+            )
+        except TypeError as exc:
+            raise StatisticalFoundationError(
+                "numerator_channel_key must be a sequence of channel fields"
+            ) from exc
+        if not normalized_channel_key:
+            raise StatisticalFoundationError(
+                "numerator_channel_key must not be empty"
+            )
     if numerator is None or numerator_channel_key is None:
         return _make_sector_stress(
             sector=sector,
@@ -1046,7 +1075,7 @@ def evaluate_sector_stress(
                 "requested sector does not match the anchor target sector"
             ),
         )
-    if tuple(numerator_channel_key) != anchor.channel_key:
+    if normalized_channel_key != anchor.channel_key:
         return _make_sector_stress(
             sector=sector,
             status=StressStatus.CHANNEL_MISMATCH,

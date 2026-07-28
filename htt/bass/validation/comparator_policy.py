@@ -352,18 +352,21 @@ class DepartureComponents:
 
         Returns:
             'irrotational_positive'  if W²_std = 0 and x_C > 0
+            'irrotational_zero'      if W²_std = 0 and x_C = 0
             'irrotational_negative'  if W²_std = 0 and x_C < 0
             'vortical'               if W²_std > 0
-            'undefined'              if x_C is None (NULL comparator)
+            NULL comparators use the exact sign of x_C_direct.
         """
-        if self.Wstd_sq > 1e-30:
+        if self.Wstd_sq > 0.0:
             return "vortical"
         x = self.x_C
         if x is None:
             x = self.x_C_direct
-        if x >= 0:
+        if x > 0.0:
             return "irrotational_positive"
-        return "irrotational_negative"
+        if x < 0.0:
+            return "irrotational_negative"
+        return "irrotational_zero"
 
 
 def compute_departure_components(
@@ -536,7 +539,7 @@ def bianchi_iv_falsifiability_probe(
             type_label:          'IV'
             comparator_status:   'NULL' (always for Type IV)
             x_C_direct:          the raw signed projection (always finite)
-            sector:              'irrotational_positive' or 'irrotational_negative'
+            sector:              exact irrotational sign sector or 'vortical'
             no_flrw_limit_flag:  True (structural metadata)
 
     Notes
@@ -549,6 +552,10 @@ def bianchi_iv_falsifiability_probe(
     if not sc.no_flrw_limit:
         raise ValueError(
             "Bianchi IV must have no_flrw_limit=True (structural invariant)"
+        )
+    if comp.policy is not ComparatorPolicy.NULL:
+        raise ValueError(
+            "Bianchi IV structural probe requires a NULL comparator"
         )
 
     return {

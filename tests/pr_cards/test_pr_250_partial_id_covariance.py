@@ -1,6 +1,7 @@
 """PR-250 joint-anchor, partial-ID, finite-covariance and prior contracts."""
 from __future__ import annotations
 
+from dataclasses import replace
 import math
 from fractions import Fraction
 
@@ -25,13 +26,16 @@ from common.statistical_inference import (
     CrossCovarianceStatus,
     CrossFitFold,
     FactorizationPremise,
+    FiellerConfidenceSet,
     FiellerSetKind,
     FiniteCovarianceAssumptions,
+    FiniteCovarianceLikelihoodResult,
     InferenceLane,
     JointRandomAnchorEstimate,
     NullSectorReport,
     PriorLearningMode,
     PriorLearningReceipt,
+    RatioInferenceResult,
     StatisticalInferenceError,
     assemble_block_covariance,
     covariance_marginalized_t_loglikelihood,
@@ -112,6 +116,71 @@ def test_zero_crossing_denominator_never_returns_finite_ratio() -> None:
     assert not result.denominator_interval.separated_from_zero(
         atol=result.atol, rtol=result.rtol
     )
+
+
+def test_inference_results_are_factory_only_and_cannot_forge_claim_states() -> None:
+    defined = fieller_ratio(
+        _joint(),
+        confidence_level=0.95,
+        atol=1e-12,
+        rtol=1e-12,
+        lane=InferenceLane.CLAIM_BEARING,
+    )
+    with pytest.raises(
+        StatisticalInferenceError,
+        match="must be created by fieller_ratio",
+    ):
+        RatioInferenceResult(
+            status=StressStatus.DEFINED,
+            point_estimate=1.0,
+            confidence_set=FiellerConfidenceSet(
+                FiellerSetKind.BOUNDED,
+                (ScalarRange(-1.0, 1.0),),
+            ),
+            denominator_interval=ScalarRange(-1.0, 1.0),
+            confidence_level=2.0,
+            atol=-1.0,
+            rtol=-1.0,
+            lane=InferenceLane.CLAIM_BEARING,
+            conditioning=AnchorConditioning.ENSEMBLE_CALIBRATED,
+            assumptions=defined.assumptions,
+        )
+    with pytest.raises(
+        StatisticalInferenceError,
+        match="must be created by fieller_ratio",
+    ):
+        replace(defined, point_estimate=999.0)
+
+    likelihood = covariance_marginalized_t_loglikelihood(
+        [1.0],
+        [[2.0]],
+        n_simulations=100,
+        assumptions=_assumptions(),
+        rcond=1e-12,
+        null_atol=1e-12,
+    )
+    with pytest.raises(
+        StatisticalInferenceError,
+        match="must be created by covariance_marginalized",
+    ):
+        FiniteCovarianceLikelihoodResult(
+            status=CovarianceLikelihoodStatus.DEFINED,
+            log_likelihood=float("nan"),
+            chi2_supported=-1.0,
+            rank=-1,
+            null_residual_norm=0.0,
+            n_simulations=100,
+            method="forged",
+            assumptions=_assumptions(),
+            rcond=1e-12,
+            null_atol=1e-12,
+            evidence_null_atol_ceiling=likelihood.evidence_null_atol_ceiling,
+        )
+    with pytest.raises(
+        StatisticalInferenceError,
+        match="must be created by covariance_marginalized",
+    ):
+        replace(likelihood, rank=-1)
 
 
 def test_missing_cross_covariance_fails_claim_bearing_lane() -> None:
@@ -199,6 +268,28 @@ def test_covariance_marginalized_t_supported_quotient_and_null_residual() -> Non
     )
     assert outside.status is CovarianceLikelihoodStatus.OUTSIDE_SUPPORTED_QUOTIENT
     assert outside.log_likelihood is None
+
+
+def test_accepted_covariance_roundoff_is_orientation_invariant() -> None:
+    covariance = np.array([[2.0, 0.25], [0.250000001, 1.0]])
+    direct = covariance_marginalized_t_loglikelihood(
+        [0.4, -0.3],
+        covariance,
+        n_simulations=100,
+        assumptions=_assumptions(),
+        rcond=1e-8,
+        null_atol=1e-12,
+    )
+    transposed = covariance_marginalized_t_loglikelihood(
+        [0.4, -0.3],
+        covariance.T,
+        n_simulations=100,
+        assumptions=_assumptions(),
+        rcond=1e-8,
+        null_atol=1e-12,
+    )
+    assert direct.log_likelihood == transposed.log_likelihood
+    assert direct.chi2_supported == transposed.chi2_supported
 
 
 def test_evidence_covariance_tolerances_cannot_erase_support() -> None:
@@ -313,6 +404,17 @@ def test_cross_block_covariance_is_never_silently_zeroed() -> None:
 
 
 def test_empirical_bayes_requires_split_or_cross_fit() -> None:
+    with pytest.raises(
+        StatisticalInferenceError,
+        match="must not be data learned",
+    ):
+        PriorLearningReceipt(
+            mode=PriorLearningMode.FIXED_PHYSICAL,
+            prior_center=1.0,
+            data_dependent=False,
+            selection_ids=(),
+            estimation_ids=("hidden-estimation-use",),
+        )
     with pytest.raises(StatisticalInferenceError, match="disjoint"):
         PriorLearningReceipt(
             mode=PriorLearningMode.SPLIT_SAMPLE,

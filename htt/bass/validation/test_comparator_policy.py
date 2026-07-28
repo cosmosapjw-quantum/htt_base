@@ -200,6 +200,26 @@ class TestSectorClassification:
         )
         assert comp.sector == "vortical"
 
+    def test_exact_zero_and_any_positive_vorticity_are_distinct(self):
+        zero = DepartureComponents(
+            Sigstd_sq=0.0,
+            Wstd_sq=0.0,
+            Omega_tilt=0.0,
+            Omega_k=0.0,
+            Omega_k_ref=0.0,
+            policy=ComparatorPolicy.FLAT,
+        )
+        tiny_vorticity = DepartureComponents(
+            Sigstd_sq=0.0,
+            Wstd_sq=1e-40,
+            Omega_tilt=0.0,
+            Omega_k=0.0,
+            Omega_k_ref=0.0,
+            policy=ComparatorPolicy.FLAT,
+        )
+        assert zero.sector == "irrotational_zero"
+        assert tiny_vorticity.sector == "vortical"
+
 
 # ═══════════════════════════════════════════════════════════════
 # §3 — Filling fraction
@@ -305,6 +325,22 @@ class TestBianchiIVProbe:
             policy=ComparatorPolicy.FLAT,
         )
         with pytest.raises(ValueError, match="Expected Type IV"):
+            bianchi_iv_falsifiability_probe(comp, sc)
+
+    def test_probe_rejects_non_null_component_policy(self):
+        sc = get_type("IV")
+        comp = compute_departure_components(
+            sc,
+            sigma_sq=1e-6,
+            omega_sq=0.0,
+            H_theta=1.0,
+            beta=0.0,
+            w=0.0,
+            Omega_matter=0.3,
+            Omega_k=1e-3,
+            policy=ComparatorPolicy.FLAT,
+        )
+        with pytest.raises(ValueError, match="requires a NULL comparator"):
             bianchi_iv_falsifiability_probe(comp, sc)
 
 

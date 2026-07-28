@@ -150,6 +150,32 @@ def test_pr168_integrity_bridge_rejects_extension_or_terminal_drift(
         )
 
 
+def test_pr168_integrity_bridge_rejects_ancestor_symlink_escape(
+    tmp_path: Path,
+) -> None:
+    root = _copy_supersession_chain(tmp_path / "repo")
+    common = root / "htt/src/common"
+    outside = tmp_path / "outside-common"
+    shutil.copytree(common, outside)
+    shutil.rmtree(common)
+    common.symlink_to(outside, target_is_directory=True)
+    registry = outside / "mes_successor_registry.py"
+
+    with pytest.raises(
+        Pr168SupersessionError,
+        match="traverses a symlink",
+    ):
+        authorized_pr168_transition(
+            root,
+            relative_path="htt/src/common/mes_successor_registry.py",
+            prior_sha256=(
+                "13b844b086f954d841dd6d3e38bbca9ef"
+                "226ab07dac91f17beb0296c03fae72a"
+            ),
+            current_sha256=_sha(registry),
+        )
+
+
 def test_pr168_integrity_bridge_rejects_forked_extension(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
