@@ -42,6 +42,15 @@ from htt.core.bounds import (
     quarantined_shear_anchors,
     registered_geodesic_mes_anchors,
 )
+from common.anchor_geometry import (
+    AnchorBodySpec,
+    AnchorFamily,
+    AnchorGaugeInterval,
+    AnchorMarginReport,
+    NormalizerBenchmarkReport,
+    NormalizerPurpose,
+    NormalizerSpec,
+)
 
 # Dependency-light summaries.  Importing the active core package must not
 # activate the historical scalar-projection posterior engine.
@@ -64,6 +73,9 @@ __all__ = [
     'AnchorStressReport', 'MESAnchorSpec', 'ScalarRange', 'SectorStress',
     'StressStatus', 'evaluate_sector_stress', 'quarantined_shear_anchors',
     'registered_geodesic_mes_anchors',
+    'AnchorBodySpec', 'AnchorFamily', 'AnchorGaugeInterval',
+    'AnchorMarginReport', 'NormalizerBenchmarkReport', 'NormalizerPurpose',
+    'NormalizerSpec',
     'weighted_hpd', 'weighted_quantile',
     'PipelineConfig',
 ]

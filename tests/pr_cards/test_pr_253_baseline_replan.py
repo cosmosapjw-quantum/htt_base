@@ -18,7 +18,6 @@ from scripts.codex_harness.validate_pr_dag import (
     validate_long_horizon_rescue_slice,
 )
 
-
 ROOT = Path(__file__).resolve().parents[2]
 BACKLOG = ROOT / "docs/codex_handoff/pr_backlog.yaml"
 STATUS = ROOT / "docs/codex_handoff/pr_status.yaml"
@@ -52,9 +51,25 @@ def test_registered_premise_anchor_slice_is_atomic_and_status_bound() -> None:
     assert backlog["policy"]["dependency_overlays"] == (
         PREMISE_ANCHOR_DEPENDENCY_OVERLAY
     )
-    assert "PR-253" in status["completed"]
-    assert status["in_progress"] is None
-    assert "PR-254" in status["pending"]
+    lane = tuple(f"PR-{index}" for index in range(253, 259))
+    completed = set(status["completed"])
+    pending = set(status["pending"])
+    in_progress = status["in_progress"]
+    seen_noncompleted = False
+    for card_id in lane:
+        state_count = sum(
+            (
+                card_id in completed,
+                card_id in pending,
+                card_id == in_progress,
+            )
+        )
+        assert state_count == 1
+        if card_id in completed:
+            assert not seen_noncompleted
+        else:
+            seen_noncompleted = True
+    assert "PR-253" in completed
     assert status["execution_resolutions"]["PR-253"] == {
         "resolution": "COMPLETED_SUCCESS",
         "receipt": "docs/PR_DELTAS/pr-253.md",

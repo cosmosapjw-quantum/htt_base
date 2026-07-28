@@ -40,7 +40,12 @@ from publication_integrity import (  # noqa: E402
     validate_review_coverage_payload,
     write_json_exclusive,
 )
-from _harness import validate_assignment_payload  # noqa: E402
+from _harness import (  # noqa: E402
+    enforce_work_unit_assignment_budget,
+    validate_assignment_payload,
+    validate_review_rereview_budget_exception,
+)
+from new_assignment import _work_unit_assignment_count  # noqa: E402
 from integration_rehearsal import create_receipt  # noqa: E402
 from pr_inventory import collect as collect_pr_inventory  # noqa: E402
 from pr_inventory import inventory_from_gh_rows, parse_gh_json  # noqa: E402
@@ -1246,6 +1251,378 @@ def test_init_run_never_guesses_main_and_records_explicit_target(
     assert plan["target_branch"] == TARGET_BRANCH
     assert plan["change_set_id"] == CHANGE_SET
     assert plan["candidate_binding"] == mutable_candidate_binding()
+
+
+def test_reviewer_rereview_budget_exception_is_named_single_run_and_single_use(
+) -> None:
+    run_id = "run-pr254-rereview"
+    allowed = ["A-PR254-FINAL-HARNESS", "A-PR254-FINAL-PHYSSTAT"]
+    plan = {
+        "run_id": run_id,
+        "work_unit_id": "PR-254",
+        "budget": {
+            "max_total_per_work_unit": 16,
+        },
+        "budget_exception": {
+            "exception_id": "PR254-OWNER-REREVIEW-20260729",
+            "kind": "single_run_reviewer_rereview",
+            "run_id": run_id,
+            "work_unit_id": "PR-254",
+            "authorized_by": "owner user explicit authorization 2026-07-29",
+            "reason": "two executed benchmark evidence defects require rereview",
+            "baseline_limit": 16,
+            "additional_assignments": 2,
+            "allowed_workflow_role": "reviewer",
+            "allowed_assignment_ids": allowed,
+            "single_use": True,
+        },
+    }
+    assert (
+        validate_review_rereview_budget_exception(plan, run_id=run_id)
+        == plan["budget_exception"]
+    )
+
+    enforce_work_unit_assignment_budget(
+        plan,
+        run_id=run_id,
+        assignment_id=allowed[0],
+        workflow_role="reviewer",
+        cumulative_count=16,
+        current_run_assignment_ids=set(),
+    )
+    enforce_work_unit_assignment_budget(
+        plan,
+        run_id=run_id,
+        assignment_id=allowed[1],
+        workflow_role="reviewer",
+        cumulative_count=17,
+        current_run_assignment_ids={allowed[0]},
+    )
+
+    with pytest.raises(
+        PublicationIntegrityError,
+        match="named reviewer assignments",
+    ):
+        enforce_work_unit_assignment_budget(
+            plan,
+            run_id=run_id,
+            assignment_id="A-PR254-UNLISTED",
+            workflow_role="reviewer",
+            cumulative_count=16,
+            current_run_assignment_ids=set(),
+        )
+    with pytest.raises(
+        PublicationIntegrityError,
+        match="named reviewer assignments",
+    ):
+        enforce_work_unit_assignment_budget(
+            plan,
+            run_id=run_id,
+            assignment_id=allowed[0],
+            workflow_role="implementer",
+            cumulative_count=16,
+            current_run_assignment_ids=set(),
+        )
+    with pytest.raises(
+        PublicationIntegrityError,
+        match="named reviewer assignments",
+    ):
+        enforce_work_unit_assignment_budget(
+            plan,
+            run_id=run_id,
+            assignment_id=allowed[0],
+            workflow_role="adjudicator",
+            cumulative_count=16,
+            current_run_assignment_ids=set(),
+        )
+    with pytest.raises(
+        PublicationIntegrityError,
+        match="cannot be consumed before",
+    ):
+        enforce_work_unit_assignment_budget(
+            plan,
+            run_id=run_id,
+            assignment_id=allowed[0],
+            workflow_role="reviewer",
+            cumulative_count=15,
+            current_run_assignment_ids=set(),
+        )
+    with pytest.raises(PublicationIntegrityError, match="exhausted"):
+        enforce_work_unit_assignment_budget(
+            plan,
+            run_id=run_id,
+            assignment_id=allowed[1],
+            workflow_role="reviewer",
+            cumulative_count=18,
+            current_run_assignment_ids=set(allowed),
+        )
+    wrong_run = copy.deepcopy(plan)
+    wrong_run["budget_exception"]["run_id"] = "different-run"
+    with pytest.raises(
+        PublicationIntegrityError,
+        match="different run",
+    ):
+        validate_review_rereview_budget_exception(
+            wrong_run,
+            run_id=run_id,
+        )
+    wrong_work_unit = copy.deepcopy(plan)
+    wrong_work_unit["budget_exception"]["work_unit_id"] = "PR-OTHER"
+    with pytest.raises(
+        PublicationIntegrityError,
+        match="different work unit",
+    ):
+        validate_review_rereview_budget_exception(
+            wrong_work_unit,
+            run_id=run_id,
+        )
+
+
+def test_init_run_records_the_exact_reviewer_rereview_exception(
+    tmp_path: Path,
+) -> None:
+    repo, _ = _make_candidate_repo(tmp_path)
+    run_id = "run-pr254-rereview"
+    initialized = _run(
+        [
+            sys.executable,
+            str(HARNESS_SCRIPTS / "init_run.py"),
+            "--run-id",
+            run_id,
+            "--work-unit",
+            "PR-254",
+            "--change-set",
+            CHANGE_SET,
+            "--publication-group",
+            PUBLICATION_GROUP,
+            "--integration-policy",
+            POLICY_REL,
+            "--target-ref",
+            f"origin/{TARGET_BRANCH}",
+            "--spec-ref",
+            "SPEC.md",
+            "--review-rereview-exception-id",
+            "PR254-OWNER-REREVIEW-20260729",
+            "--review-rereview-authorized-by",
+            "owner user explicit authorization 2026-07-29",
+            "--review-rereview-reason",
+            "two executed benchmark evidence defects require rereview",
+            "--review-rereview-exception-assignment",
+            "A-PR254-FINAL-HARNESS",
+            "--review-rereview-exception-assignment",
+            "A-PR254-FINAL-PHYSSTAT",
+        ],
+        cwd=repo,
+    )
+    assert initialized.returncode == 0, initialized.stdout + initialized.stderr
+    plan = json.loads(
+        (
+            repo
+            / f".agent-harness/runs/{run_id}/RUN_PLAN.json"
+        ).read_text(encoding="utf-8")
+    )
+    assert plan["budget"]["max_total_per_work_unit"] == 16
+    assert plan["budget_exception"]["run_id"] == run_id
+    assert plan["budget_exception"]["work_unit_id"] == "PR-254"
+    assert plan["budget_exception"]["allowed_workflow_role"] == "reviewer"
+    assert plan["budget_exception"]["allowed_assignment_ids"] == [
+        "A-PR254-FINAL-HARNESS",
+        "A-PR254-FINAL-PHYSSTAT",
+    ]
+    assert plan["budget_exception"]["single_use"] is True
+
+
+def test_reviewer_rereview_budget_exception_cannot_raise_the_ordinary_limit(
+) -> None:
+    plan = {
+        "run_id": "run-pr254-rereview",
+        "work_unit_id": "PR-254",
+        "budget": {"max_total_per_work_unit": 18},
+        "budget_exception": {
+            "exception_id": "PR254-OWNER-REREVIEW-20260729",
+            "kind": "single_run_reviewer_rereview",
+            "run_id": "run-pr254-rereview",
+            "work_unit_id": "PR-254",
+            "authorized_by": "owner user explicit authorization 2026-07-29",
+            "reason": "two executed benchmark evidence defects require rereview",
+            "baseline_limit": 16,
+            "additional_assignments": 2,
+            "allowed_workflow_role": "reviewer",
+            "allowed_assignment_ids": [
+                "A-PR254-FINAL-HARNESS",
+                "A-PR254-FINAL-PHYSSTAT",
+            ],
+            "single_use": True,
+        },
+    }
+    with pytest.raises(
+        PublicationIntegrityError,
+        match="cannot alter the ordinary work-unit limit",
+    ):
+        validate_review_rereview_budget_exception(
+            plan,
+            run_id="run-pr254-rereview",
+        )
+
+
+def test_reviewer_rereview_reauthorization_is_exactly_the_second_wave(
+) -> None:
+    run_id = "run-pr254-rereview-r2"
+    allowed = ["A-PR254-R2-HARNESS", "A-PR254-R2-PHYSSTAT"]
+    plan = {
+        "run_id": run_id,
+        "work_unit_id": "PR-254",
+        "budget": {"max_total_per_work_unit": 16},
+        "budget_exception": {
+            "exception_id": "PR254-OWNER-REREVIEW-R2-20260729",
+            "kind": "single_run_reviewer_rereview_reauthorization",
+            "run_id": run_id,
+            "work_unit_id": "PR-254",
+            "authorized_by": "owner user explicit authorization 2026-07-29",
+            "reason": "repair findings require one final candidate bound review",
+            "baseline_limit": 16,
+            "cumulative_start": 18,
+            "additional_assignments": 2,
+            "allowed_workflow_role": "reviewer",
+            "allowed_assignment_ids": allowed,
+            "single_use": True,
+        },
+    }
+    assert (
+        validate_review_rereview_budget_exception(plan, run_id=run_id)
+        == plan["budget_exception"]
+    )
+    enforce_work_unit_assignment_budget(
+        plan,
+        run_id=run_id,
+        assignment_id=allowed[0],
+        workflow_role="reviewer",
+        cumulative_count=18,
+        current_run_assignment_ids=set(),
+    )
+    enforce_work_unit_assignment_budget(
+        plan,
+        run_id=run_id,
+        assignment_id=allowed[1],
+        workflow_role="reviewer",
+        cumulative_count=19,
+        current_run_assignment_ids={allowed[0]},
+    )
+    with pytest.raises(
+        PublicationIntegrityError,
+        match="consumption does not match",
+    ):
+        enforce_work_unit_assignment_budget(
+            plan,
+            run_id=run_id,
+            assignment_id=allowed[0],
+            workflow_role="reviewer",
+            cumulative_count=20,
+            current_run_assignment_ids=set(),
+        )
+    early = copy.deepcopy(plan)
+    early["budget_exception"]["cumulative_start"] = 17
+    with pytest.raises(
+        PublicationIntegrityError,
+        match="must begin at cumulative assignment 18",
+    ):
+        validate_review_rereview_budget_exception(early, run_id=run_id)
+
+
+def test_init_run_records_exact_second_wave_reauthorization(
+    tmp_path: Path,
+) -> None:
+    repo, _ = _make_candidate_repo(tmp_path)
+    run_id = "run-pr254-rereview-r2"
+    initialized = _run(
+        [
+            sys.executable,
+            str(HARNESS_SCRIPTS / "init_run.py"),
+            "--run-id",
+            run_id,
+            "--work-unit",
+            "PR-254",
+            "--change-set",
+            CHANGE_SET,
+            "--publication-group",
+            PUBLICATION_GROUP,
+            "--integration-policy",
+            POLICY_REL,
+            "--target-ref",
+            f"origin/{TARGET_BRANCH}",
+            "--spec-ref",
+            "SPEC.md",
+            "--review-rereview-exception-id",
+            "PR254-OWNER-REREVIEW-R2-20260729",
+            "--review-rereview-authorized-by",
+            "owner user explicit authorization 2026-07-29",
+            "--review-rereview-reason",
+            "repair findings require one final candidate bound review",
+            "--review-rereview-reauthorization-start",
+            "18",
+            "--review-rereview-exception-assignment",
+            "A-PR254-R2-HARNESS",
+            "--review-rereview-exception-assignment",
+            "A-PR254-R2-PHYSSTAT",
+        ],
+        cwd=repo,
+    )
+    assert initialized.returncode == 0, initialized.stdout + initialized.stderr
+    plan = json.loads(
+        (
+            repo
+            / f".agent-harness/runs/{run_id}/RUN_PLAN.json"
+        ).read_text(encoding="utf-8")
+    )
+    assert plan["budget"]["max_total_per_work_unit"] == 16
+    assert plan["budget_exception"][
+        "kind"
+    ] == "single_run_reviewer_rereview_reauthorization"
+    assert plan["budget_exception"]["cumulative_start"] == 18
+    assert plan["budget_exception"]["allowed_assignment_ids"] == [
+        "A-PR254-R2-HARNESS",
+        "A-PR254-R2-PHYSSTAT",
+    ]
+
+
+def test_cumulative_work_unit_budget_fails_closed_on_malformed_history(
+    tmp_path: Path,
+) -> None:
+    harness = tmp_path / ".agent-harness"
+    malformed_run = harness / "runs" / "malformed-history"
+    (malformed_run / "assignments").mkdir(parents=True)
+    (malformed_run / "assignments" / "A-PR254-HISTORICAL.json").write_text(
+        "{}\n",
+        encoding="utf-8",
+    )
+    (malformed_run / "RUN_PLAN.json").write_text(
+        "{not valid json\n",
+        encoding="utf-8",
+    )
+    with pytest.raises(
+        PublicationIntegrityError,
+        match="cannot be verified.*malformed RUN_PLAN",
+    ):
+        _work_unit_assignment_count(harness, "PR-254")
+
+
+def test_pr254_focused_runner_resolves_tests_outside_repository_cwd(
+    tmp_path: Path,
+) -> None:
+    completed = _run(
+        [
+            sys.executable,
+            "-B",
+            str(
+                REPO_ROOT
+                / "scripts/codex_harness/run_pr254_integration.py"
+            ),
+            "focused",
+        ],
+        cwd=tmp_path,
+    )
+    assert completed.returncode == 0, completed.stdout + completed.stderr
+    assert "42 passed" in completed.stdout
 
 
 def test_reviewer_registration_requires_frozen_candidate_and_no_publisher_role(

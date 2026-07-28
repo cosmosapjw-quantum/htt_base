@@ -1,0 +1,334 @@
+{
+  "schema_version": 2,
+  "risk_tier": "R3",
+  "required_axes": [
+    "wolfram_xact",
+    "sympy",
+    "sage_singular",
+    "lean"
+  ],
+  "identity": {
+    "contract_id": "CAS-PR254-ANCHOR-GEOMETRY-001",
+    "contract_version": 2,
+    "claim_ids": [
+      "PA-THM-GAUGE-SUBLEVEL",
+      "PA-THM-PRODUCT-BALL",
+      "PA-THM-ONE-WAY-MES",
+      "PA-THM-RANK-INVARIANCE",
+      "J1-EXACT",
+      "J2-UNIFORM"
+    ],
+    "statement_class": "theorem_and_exact_counterexample",
+    "source_input_hashes": [
+      {
+        "path": "docs/research_program/premise_anchor/pr254_spec.yaml",
+        "sha256": "4e2e497e0a3f13b9b9bbed02088072230315848a8669beb4b1901894d7fafe40"
+      },
+      {
+        "path": "htt/src/common/anchor_geometry.py",
+        "sha256": "dc7f2496ff0c96e34847c7b13e2e8d989722cdf1457525f311d0d21b0d5dfbb9"
+      },
+      {
+        "path": "scripts/codex_harness/run_pr254_counterexamples.py",
+        "sha256": "b99cd66c0515bcad0989618cb428d24de322b9e731ab70538dab9d361069d00a"
+      },
+      {
+        "path": "docs/generated/pr254_anchor_geometry/counterexample_oracle.json",
+        "sha256": "03e4d591a3be1c97f4954e2afcb2c3a98b85a8a4b244e4396aeb6292ba19e45f"
+      }
+    ],
+    "claim_ceiling": "conditional",
+    "adjudicator": "independent_non_author_reviewer"
+  },
+  "semantics": {
+    "exact_statement": "On a finite-dimensional real typed channel, the registered product-ball, positive-definite ellipsoid, and certified centrally symmetric spanning H-polytope gauges have the declared unit sublevels. If H is contained in the registered anchor body A, u in H implies rho_A(u) <= 1, with no converse. For an invertible anchor scaling D, rank(RD)=rank(R) and R u=(R D)(D^-1 u). The exact J1 outer-envelope and J2 dependence constructions restrict the corresponding unqualified strong conjectures.",
+    "symbol_type_domain_map": {
+      "u": "finite real column vector",
+      "r_j": "strictly positive real block radius",
+      "Q": "real symmetric positive-definite matrix",
+      "a_i": "real polytope halfspace normal",
+      "b_i": "strictly positive halfspace bound",
+      "R": "real m by n response matrix",
+      "D": "invertible real n by n anchor scaling",
+      "N": "strictly positive random numerator in J2 fixture",
+      "B": "strictly positive random anchor in J2 fixture"
+    },
+    "frame_signature_units_conventions": {
+      "conventions_ref": "docs/research_program/premise_anchor/pr254_spec.yaml",
+      "symbols_ref": "htt/src/common/anchor_geometry.py"
+    },
+    "assumptions": [
+      "All coordinates compared in one gauge have identical coordinate labels, frame, normalization, perturbative order, and branch.",
+      "Product-ball radii are strictly positive and blocks cover each coordinate exactly once.",
+      "Ellipsoid Q is real symmetric positive definite.",
+      "Runtime H-polytopes have positive bounds, spanning normals, and an antipodal halfspace for every halfspace.",
+      "Rank invariance is asserted only for invertible D on the declared anchored supported subspace.",
+      "The J2 counterexample targets joint-law-free or marginal-only calibration, not every test under a fully registered joint law."
+    ],
+    "positivity_nonzero_conditions": [
+      "r_j > 0",
+      "b_i > 0",
+      "det(D) != 0",
+      "Q positive definite",
+      "B > 0 in every J2 atom"
+    ],
+    "branches": [
+      "single convex typed anchor body",
+      "finite conditional family reported as an interval",
+      "nonconvex union reported only by conditional component gauges",
+      "continuous nuisance returns OPTIMIZER_REQUIRED"
+    ],
+    "exclusions": [
+      "No MES converse or physical-set equality is assumed.",
+      "No anchor uniqueness is assumed.",
+      "No random-anchor raw excess is assumed to be an e-value.",
+      "No missing or withheld channel is replaced by zero.",
+      "No nonconvex union is assigned one sublinear gauge."
+    ],
+    "singular_loci": [
+      "any zero product-ball radius",
+      "non-positive-definite Q",
+      "non-spanning or non-antipodal H-polytope",
+      "det(D)=0",
+      "B=0"
+    ],
+    "order_of_limits": [],
+    "boundary_or_initial_conditions": [
+      "the anchor body contains the origin",
+      "the gauge unit boundary is rho=1",
+      "the exact J1 probe is u=1/2",
+      "the J2 atoms have probability 1/2 each"
+    ]
+  },
+  "target": {
+    "canonical_form": "Exact rational values and Boolean theorem checks in the registered runtime scope; no converse, uniqueness, evidence, or physical proximity conclusion.",
+    "equivalence_relation": "exact equality over rationals for fixtures and theorem equality or iff under the declared real-domain assumptions",
+    "invariants": [
+      "rho_product=max_j norm(u_j)/r_j",
+      "rho_ellipsoid_sq=u^T Q u",
+      "rho_polytope=max_i a_i.u/b_i",
+      "rank(RD)=rank(R) for invertible D",
+      "R u=(R D)(D^-1 u)"
+    ],
+    "exact_test_obligations": [
+      "product_ball_max_ratio",
+      "ellipsoid_unit_sublevel",
+      "polytope_unit_sublevel",
+      "one_way_outer_envelope",
+      "invertible_scaling_rank",
+      "transformed_response_identity",
+      "j1_counterexample",
+      "j2_dependence_counterexample"
+    ],
+    "expected_exact_values": {
+      "product_gauge": "5/2",
+      "ellipsoid_gauge_sq": "1",
+      "polytope_gauge": "1/2",
+      "rank_R": "2",
+      "rank_RD": "2",
+      "det_D": "1",
+      "j1_rho_a": "1/2",
+      "j1_rho_b": "1/4",
+      "j2_comonotone_exceedance": "0",
+      "j2_countermonotone_exceedance": "1/2",
+      "one_way_violation_count": "0"
+    },
+    "numeric_test_vectors": [
+      {
+        "id": "PRODUCT-FIXTURE",
+        "blocks": [
+          {
+            "u": [
+              "3",
+              "4"
+            ],
+            "radius": "2"
+          },
+          {
+            "u": [
+              "8"
+            ],
+            "radius": "4"
+          }
+        ]
+      },
+      {
+        "id": "ELLIPSOID-FIXTURE",
+        "u": [
+          "2",
+          "0"
+        ],
+        "Q": [
+          [
+            "1/4",
+            "0"
+          ],
+          [
+            "0",
+            "1/9"
+          ]
+        ]
+      },
+      {
+        "id": "POLYTOPE-FIXTURE",
+        "u": [
+          "1",
+          "2"
+        ],
+        "halfspace_normals": [
+          [
+            "1",
+            "0"
+          ],
+          [
+            "-1",
+            "0"
+          ],
+          [
+            "0",
+            "1"
+          ],
+          [
+            "0",
+            "-1"
+          ]
+        ],
+        "halfspace_bounds": [
+          "2",
+          "2",
+          "4",
+          "4"
+        ]
+      },
+      {
+        "id": "RANK-FIXTURE",
+        "R": [
+          [
+            "1",
+            "2"
+          ],
+          [
+            "0",
+            "1"
+          ],
+          [
+            "1",
+            "0"
+          ]
+        ],
+        "D": [
+          [
+            "2",
+            "1"
+          ],
+          [
+            "0",
+            "1/2"
+          ]
+        ]
+      }
+    ],
+    "approximation_order": "exact",
+    "numeric_precision_digits": 80,
+    "absolute_tolerance": "0",
+    "relative_tolerance": "0",
+    "forbidden_shortcuts": [
+      "Do not assume the target identity in an intermediate rewrite.",
+      "Do not import sibling solver scripts or results before adjudication.",
+      "Do not substitute a finite nuisance grid for a continuous family.",
+      "Do not infer physical equality or uniqueness from outer containment.",
+      "Do not calibrate J2 from marginals while ignoring the joint law.",
+      "Do not report invertible scaling as information or rank gain."
+    ]
+  },
+  "axes": {
+    "wolfram_xact": {
+      "applicability": "required",
+      "obligation": "Independent exact verification in Wolfram Language; load xAct and report its version even though the registered claims are scalar and matrix algebra.",
+      "required_outputs": [
+        "script",
+        "engine transcript",
+        "runner-observed JSON payload"
+      ],
+      "pinned_toolchain": {
+        "wolfram": "15.0.0",
+        "xact": "1.2.0+"
+      },
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "sympy": {
+      "applicability": "required",
+      "obligation": "Independent exact symbolic and rational verification in SymPy.",
+      "required_outputs": [
+        "script",
+        "engine transcript",
+        "runner-observed JSON payload"
+      ],
+      "pinned_toolchain": {
+        "python": "venv/bin/python or system Python with SymPy 1.14.0",
+        "sympy": "1.14.0"
+      },
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "sage_singular": {
+      "applicability": "required",
+      "obligation": "Independent exact verification in SageMath; load Singular and record its version.",
+      "required_outputs": [
+        "script",
+        "engine transcript",
+        "runner-observed JSON payload"
+      ],
+      "pinned_toolchain": {
+        "sage": "10.9",
+        "singular": "4.3.2+"
+      },
+      "resource_limit": {
+        "wall_seconds": 1800
+      }
+    },
+    "lean": {
+      "applicability": "required",
+      "obligation": "Faithful theorem formalization and compiled proof under formal/lean-toolchain, plus exact fixture values.",
+      "required_outputs": [
+        "Lean source",
+        "build receipt",
+        "runner-observed JSON payload"
+      ],
+      "pinned_toolchain": {
+        "source": "formal/lean-toolchain"
+      },
+      "resource_limit": {
+        "wall_seconds": 3600
+      }
+    }
+  },
+  "independence": {
+    "mode": "blind-results",
+    "permitted_inputs": [
+      "this contract",
+      "docs/research_program/premise_anchor/pr254_spec.yaml",
+      "the assignment required_inputs"
+    ],
+    "forbidden_sibling_paths": [
+      ".agent-harness/runs/*/results/*",
+      ".agent-harness/runs/*/artifacts/*"
+    ],
+    "script_result_ownership": "per-axis; scripts and outputs are never shared before parent-owned run-adjudicate execution",
+    "correlation_disclosure": "record when one LLM family authored multiple axis scripts; engine agreement is not derivation independence"
+  },
+  "exceptions_adjudication": {
+    "preregistered_exceptions": [],
+    "aggregate_status_rule": "R3 requires CAS_4AXIS_PASS; failures are CAS_PASS_WITH_REGISTERED_EXCEPTION, CAS_CONFLICT, CAS_BLOCKED, or CAS_FAIL",
+    "invalidation_triggers": [
+      "contract_hash_change",
+      "assumption_or_domain_diff",
+      "source_input_hash_change",
+      "unpinned_toolchain",
+      "candidate_code_or_test_change"
+    ]
+  }
+}

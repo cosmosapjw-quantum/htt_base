@@ -7,8 +7,8 @@ bindings:
 - consumer_id: htt.core.namespace
   path: htt/htt/htt/core/__init__.py
   prior_sha256: bbbb4f6ad6350316524b3f2b0f85489e9b140fa5e86a34c24ba81de39e0cf0c8
-  sha256: 18eb33f4ca39e91dd748475f39cc278cd1810d82296daf404670a5d8faab5b96
-  reason: The active HTT namespace now exports typed anchors and stress reports while keeping historical scalar modules off the eager import surface.
+  sha256: a81c6b95bf668067984adad49f9a7691bfe30437f17f8fd2d91380568fff6c94
+  reason: The active HTT namespace now also re-exports PR-254 typed anchor bodies, gauge intervals, margin reports, and purpose-specific benchmark contracts while keeping historical scalar modules off the eager import surface.
 - consumer_id: htt.core.bounds
   path: htt/htt/htt/core/bounds.py
   prior_sha256: 9ef8a57b61e68ebb8977a5650cf9eb732f3fa1bd0d513bfeabde59062116cdeb
@@ -28,9 +28,9 @@ new_bindings:
   reason: The active comparator reports only signed coordinates and typed channel-matched anchor stress.
 - consumer_id: mio.formalism.namespace
   path: htt/mio/formalism/__init__.py
-  sha256: 2a7525fb49b119db6df76d591f9c28d02419d9770b7a1086a47bac1473d2909f
+  sha256: 9a0090522d18e864526c749d44af20dde64790ca5b6717a7565d7f53561d3726
   expected_successor_id: mes.typed-successor.pr124
-  reason: The active MIO namespace exports typed state, identified-set, anchor-stress, and nonlinearity contracts while hiding legacy scalar constructors.
+  reason: The active MIO namespace also re-exports PR-254 typed anchor bodies, gauge intervals, margin reports, and purpose-specific benchmark contracts while hiding legacy scalar constructors.
 - consumer_id: mio.reports.statistical_foundation
   path: htt/mio/reports/statistical_foundation.py
   sha256: baca2194235ccc03fa3874c0f1745ef1f83a81e44dd82f71f1ce9e702afa36db

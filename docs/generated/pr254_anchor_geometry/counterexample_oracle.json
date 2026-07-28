@@ -1,0 +1,52 @@
+{
+  "arithmetic": "exact_fraction",
+  "checks": {
+    "j1_both_outer_containments_hold": true,
+    "j1_gauges_differ_on_same_state": true,
+    "j1_neither_anchor_equals_physical_set": true,
+    "j2_exceedance_laws_differ": true,
+    "j2_joint_laws_have_same_marginals": true
+  },
+  "claim_boundary": {
+    "allowed": [
+      "restrict the general J1-EXACT conjecture",
+      "require a registered joint numerator-anchor law",
+      "restrict joint-law-free J2-UNIFORM calibration"
+    ],
+    "forbidden": [
+      "claim no narrower physical MES theorem can exist",
+      "claim every registered joint-law test is invalid",
+      "promote raw excess to calibrated evidence",
+      "claim FLRW proximity, departure detection, or family identification"
+    ]
+  },
+  "j1_exact": {
+    "anchor_a_radius": "1",
+    "anchor_b_radius": "2",
+    "claim_id": "J1-EXACT",
+    "disposition": "REFUTED_OR_RESTRICTED",
+    "gate_outcome": "COUNTEREXAMPLE_FOUND",
+    "physical_radius": "1/2",
+    "probe": "1/2",
+    "rho_a": "1/2",
+    "rho_b": "1/4",
+    "scope": "outer-envelope implication without an independent physical equality axiom"
+  },
+  "j2_exact": {
+    "anchor_marginal": {
+      "1": "1/2",
+      "2": "1/2"
+    },
+    "claim_id": "J2-UNIFORM",
+    "comonotone_exceedance_probability": "0",
+    "countermonotone_exceedance_probability": "1/2",
+    "disposition": "REFUTED_OR_RESTRICTED",
+    "gate_outcome": "COUNTEREXAMPLE_FOUND",
+    "numerator_marginal": {
+      "1": "1/2",
+      "2": "1/2"
+    },
+    "scope": "joint-law-free or marginal-only calibration over a composite null"
+  },
+  "schema_version": "pr254.counterexample_oracle.v1"
+}
