@@ -1,0 +1,60 @@
+schema_version: 1
+work_unit_id: PR-253
+title: Baseline remediation and atomic premise-anchor DAG replan
+target_ref: origin/research/pr04-multicomponent
+target_sha: 4a2565eaf41cca03c3b86cc7d0ef3794474b0e67
+scientific_role: >
+  Restore the merged statistical-foundations baseline to a green state without
+  weakening typed-denominator fail-closed semantics, then register the six
+  sequential premise-anchored response-geometry change-sets.
+scope:
+  code:
+    - research_gates/pr04/tests/test_pr04_pushforward.py
+  dag:
+    - docs/codex_handoff/pr_backlog.yaml
+    - machine_readable/pr_backlog.yaml
+    - docs/codex_handoff/pr_status.yaml
+    - machine_readable/pr_status.yaml
+  documentation:
+    - docs/PR_DELTAS/pr-253.md
+    - docs/research_program/premise_anchor/
+requirements:
+  - >
+    Active bare x_max and raw ratio calls remain blocked with
+    BLOCKED_UNTYPED_DENOMINATOR.
+  - >
+    Historical Q values are reproduced only when legacy_reproduction=true and
+    the legacy denominator contract is explicit.
+  - >
+    A denominator interval containing zero returns RATIO_UNIDENTIFIED; the
+    obsolete BLOCKED_ZERO_DENOMINATOR_BRANCH expectation is not restored.
+  - >
+    PR-253 through PR-258 and their declared dependencies are added atomically
+    to the canonical DAG and compatibility mirror.
+  - >
+    PR-151 acquisition dependencies, status, and partial-data prohibition are
+    unchanged.
+  - >
+    All five user-supplied methodology notes and every quoted numerical value
+    are registered as PROPOSED_UNVERIFIED_INPUT until independently
+    regenerated and reviewed.
+claim_boundary:
+  status: IMPLEMENTATION_AND_TEST_REMEDIATION
+  allowed:
+    - typed premise-anchor methodology planning
+    - regression evidence for active and legacy contracts
+  forbidden:
+    - FLRW departure detection
+    - Bianchi family identification
+    - use of PR-151 partial acquisition data
+    - treating proposed attachment numbers as validation evidence
+tests:
+  - python -m pytest -q research_gates/pr04/tests
+  - python -m pytest -q research_gates/pr07/tests
+  - python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml
+kill_switches:
+  - production semantics revert to the bare-scalar legacy behavior
+  - any required PR04 or PR07 test remains red
+  - canonical and compatibility DAG or status mirrors diverge
+  - PR-151 partial data enters code, fixtures, calibration, or claims

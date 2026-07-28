@@ -283,6 +283,65 @@ FOUNDATION_DEPENDENCY_OVERLAY = {
     },
 }
 
+# --- Premise-anchored response geometry (PR-253..258, Waves 48..53) ------
+# PR-253 is a distinct atomic replan layered on top of the receipt-sealed
+# statistical-foundation intake.  It extends the dependency overlay without
+# attributing new edges retroactively to PR-248.
+PREMISE_ANCHOR_CARD_CONTRACTS = {
+    "PR-253": {
+        "depends": ["PR-252"],
+        "owner": "COMMON",
+        "change_set_id": "CS-PR253-BASELINE-REPLAN",
+        "publication_group_id": "PG-PR253-BASELINE-REPLAN",
+    },
+    "PR-254": {
+        "depends": ["PR-253", "PR-216", "PR-217", "PR-225"],
+        "owner": "COMMON",
+        "change_set_id": "CS-PR254-ANCHOR-GEOMETRY",
+        "publication_group_id": "PG-PR254-ANCHOR-GEOMETRY",
+    },
+    "PR-255": {
+        "depends": ["PR-254", "PR-219", "PR-251"],
+        "owner": "HTT",
+        "change_set_id": "CS-PR255-RESPONSE-GEOMETRY",
+        "publication_group_id": "PG-PR255-RESPONSE-GEOMETRY",
+    },
+    "PR-256": {
+        "depends": ["PR-255", "PR-222", "PR-251"],
+        "owner": "HTT",
+        "change_set_id": "CS-PR256-VELOCITY-FRAMES",
+        "publication_group_id": "PG-PR256-VELOCITY-FRAMES",
+    },
+    "PR-257": {
+        "depends": ["PR-255", "PR-251"],
+        "owner": "OBSSTAT",
+        "change_set_id": "CS-PR257-LOWELL-MORPHOLOGY",
+        "publication_group_id": "PG-PR257-LOWELL-MORPHOLOGY",
+    },
+    "PR-258": {
+        "depends": ["PR-256", "PR-257", "PR-219"],
+        "owner": "HTT",
+        "change_set_id": "CS-PR258-OPEN-SET-INTEGRATION",
+        "publication_group_id": "PG-PR258-OPEN-SET-INTEGRATION",
+    },
+}
+PREMISE_ANCHOR_DEPENDENCY_OVERLAY = {
+    "schema": "htt.pr_dependency_overlay.v1",
+    "authority": "PR-253",
+    "rationale": (
+        "Preserve receipt-sealed historical cards while applying the "
+        "owner-authorized statistical-foundation and premise-anchor replans."
+    ),
+    "additions": {
+        "PR-155": ["PR-250", "PR-251", "PR-255"],
+        "PR-156": ["PR-251", "PR-256", "PR-257"],
+        "PR-157": ["PR-252"],
+        "PR-181": ["PR-255", "PR-256", "PR-257"],
+        "PR-193": ["PR-254"],
+        "PR-205": ["PR-254", "PR-255"],
+    },
+}
+
 
 def _revival_track(pr_id: str) -> str:
     n = int(pr_id.split("-")[1])
@@ -763,11 +822,27 @@ def validate_long_horizon_rescue_slice(
             "statistical-foundation intake must be atomic; "
             f"missing={sorted(foundation_ids - actual_foundation_ids)}"
         )
+    premise_anchor_ids = set(PREMISE_ANCHOR_CARD_CONTRACTS)
+    actual_premise_anchor_ids = actual_ids & premise_anchor_ids
+    if actual_premise_anchor_ids and actual_foundation_ids != foundation_ids:
+        raise ValueError(
+            "premise-anchor cards require the full statistical-foundation slice"
+        )
+    if actual_premise_anchor_ids and actual_premise_anchor_ids != premise_anchor_ids:
+        raise ValueError(
+            "premise-anchor intake must be atomic; "
+            f"missing={sorted(premise_anchor_ids - actual_premise_anchor_ids)}"
+        )
     if actual_foundation_ids:
         policy = data.get("policy") or {}
-        if policy.get("dependency_overlays") != FOUNDATION_DEPENDENCY_OVERLAY:
+        expected_overlay = (
+            PREMISE_ANCHOR_DEPENDENCY_OVERLAY
+            if actual_premise_anchor_ids
+            else FOUNDATION_DEPENDENCY_OVERLAY
+        )
+        if policy.get("dependency_overlays") != expected_overlay:
             raise ValueError(
-                "statistical-foundation dependency overlay drifted"
+                "statistical-foundation or premise-anchor dependency overlay drifted"
             )
     expected_total = (
         RESCUE_WITH_ADVOCATE_CARD_COUNT
@@ -782,6 +857,8 @@ def validate_long_horizon_rescue_slice(
         expected_total += len(PROCESS_INTEGRITY_CARD_CONTRACTS)
     if actual_foundation_ids:
         expected_total += len(FOUNDATION_CARD_CONTRACTS)
+    if actual_premise_anchor_ids:
+        expected_total += len(PREMISE_ANCHOR_CARD_CONTRACTS)
     if len(info.ids) != expected_total:
         raise ValueError(
             f"strict rescue slice expects {expected_total} total cards, found {len(info.ids)}"
@@ -1062,6 +1139,8 @@ def validate_long_horizon_rescue_slice(
 
     if actual_foundation_ids:
         _validate_foundation_slice(cards)
+    if actual_premise_anchor_ids:
+        _validate_premise_anchor_slice(cards)
 
     if status is not None:
         _validate_rescue_status(status, info)
@@ -1249,6 +1328,72 @@ def _validate_foundation_slice(cards: dict[str, Any]) -> None:
             raise ValueError(f"{pr_id} has an invalid claim-limited foundation level")
         if card.get("claim_tier_ceiling") not in {"conditional", "diagnostic_only"}:
             raise ValueError(f"{pr_id} has an invalid foundation claim ceiling")
+        for field in RESCUE_SEMANTIC_CLAIM_FIELDS:
+            for prose in _iter_strings(card.get(field)):
+                match = BARE_ACTIVE_CLAIM_LEVEL_RE.search(prose)
+                if match:
+                    raise ValueError(
+                        f"{pr_id} {field} contains unqualified roadmap claim level "
+                        f"{match.group(0)!r}"
+                    )
+
+
+def _validate_premise_anchor_slice(cards: dict[str, Any]) -> None:
+    """Validate the atomic, claim-limited PR-253..258 methodology intake."""
+
+    for pr_id, expected in PREMISE_ANCHOR_CARD_CONTRACTS.items():
+        card = cards[pr_id]
+        missing_fields = sorted(
+            (ADVOCATE_REQUIRED_FIELDS | {"track", "solver_gate_required"})
+            - set(card)
+        )
+        if missing_fields:
+            raise ValueError(
+                f"{pr_id} missing premise-anchor fields: {missing_fields}"
+            )
+        if card.get("depends") != expected["depends"]:
+            raise ValueError(
+                f"{pr_id} dependencies drifted: "
+                f"{card.get('depends')!r} != {expected['depends']!r}"
+            )
+        expected_contracts = [
+            {"upstream_id": dep, "mode": "requires_success"}
+            for dep in expected["depends"]
+        ]
+        if card.get("dependency_contracts") != expected_contracts:
+            raise ValueError(f"{pr_id} typed dependency projection drifted")
+        for field in ("owner", "change_set_id", "publication_group_id"):
+            if card.get(field) != expected[field]:
+                raise ValueError(
+                    f"{pr_id} {field} drifted: "
+                    f"{card.get(field)!r} != {expected[field]!r}"
+                )
+        if (
+            card.get("execution_lane") != "defensible"
+            or card.get("activation_state") != "PENDING"
+            or card.get("execution_authorization") != "EXPLICIT_USER_AUTHORIZED"
+        ):
+            raise ValueError(f"{pr_id} execution-state contract drifted")
+        if (
+            card.get("scientific_status_on_intake") != "OPEN"
+            or card.get("public_use") is not False
+            or card.get("spec_first_required") is not True
+            or card.get("solver_gate_required") is not False
+            or card.get("track") != "FOUNDATION"
+        ):
+            raise ValueError(
+                f"{pr_id} must remain internal, OPEN, spec-first FOUNDATION work"
+            )
+        if card.get("claim_level") not in (
+            {"scheme": "roadmap_rescue_v1", "level": "C1"},
+            {"scheme": "roadmap_rescue_v1", "level": "C2"},
+        ):
+            raise ValueError(f"{pr_id} has an invalid premise-anchor claim level")
+        if card.get("claim_tier_ceiling") not in {
+            "conditional",
+            "diagnostic_only",
+        }:
+            raise ValueError(f"{pr_id} has an invalid premise-anchor claim ceiling")
         for field in RESCUE_SEMANTIC_CLAIM_FIELDS:
             for prose in _iter_strings(card.get(field)):
                 match = BARE_ACTIVE_CLAIM_LEVEL_RE.search(prose)

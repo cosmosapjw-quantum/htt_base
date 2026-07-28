@@ -176,6 +176,12 @@
       "PR-250",
       "PR-251",
       "PR-252",
+      "PR-253",
+      "PR-254",
+      "PR-255",
+      "PR-256",
+      "PR-257",
+      "PR-258",
       "PR-155",
       "PR-156",
       "PR-157",
@@ -205,18 +211,33 @@
     ],
     "dependency_overlays": {
       "schema": "htt.pr_dependency_overlay.v1",
-      "authority": "PR-248",
-      "rationale": "Preserve receipt-sealed historical cards while applying the owner-authorized statistical-foundation replan.",
+      "authority": "PR-253",
+      "rationale": "Preserve receipt-sealed historical cards while applying the owner-authorized statistical-foundation and premise-anchor replans.",
       "additions": {
         "PR-155": [
           "PR-250",
-          "PR-251"
+          "PR-251",
+          "PR-255"
         ],
         "PR-156": [
-          "PR-251"
+          "PR-251",
+          "PR-256",
+          "PR-257"
         ],
         "PR-157": [
           "PR-252"
+        ],
+        "PR-181": [
+          "PR-255",
+          "PR-256",
+          "PR-257"
+        ],
+        "PR-193": [
+          "PR-254"
+        ],
+        "PR-205": [
+          "PR-254",
+          "PR-255"
         ]
       }
     },
@@ -12353,6 +12374,479 @@
       "solver_gate_required": false,
       "change_set_id": "CS-PR252-FOUNDATION-INTEGRATION",
       "publication_group_id": "PG-PR252-FOUNDATION-INTEGRATION"
+    },
+    {
+      "id": "PR-253",
+      "wave": 48,
+      "title": "Baseline remediation and atomic premise-anchor DAG replan",
+      "owner": "COMMON",
+      "contributors": [
+        "MIO"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-252"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-252",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Restore the merged PR04 and PR07 baseline without weakening typed-denominator fail-closed semantics.",
+        "Register PR-253 through PR-258 and their downstream dependency overlays atomically.",
+        "Intake the premise-anchor methodology inputs as proposed and unverified rather than numerical evidence."
+      ],
+      "files": [
+        "research_gates/pr04/tests/test_pr04_pushforward.py",
+        "docs/codex_handoff",
+        "machine_readable",
+        "docs/research_program/premise_anchor",
+        "tests/pr_cards/test_pr_253_baseline_replan.py",
+        "docs/PR_DELTAS/pr-253.md"
+      ],
+      "tests": [
+        "PYTHONPATH=htt/src:htt python -B -m pytest -p no:cacheprovider -q research_gates/pr04/tests",
+        "PYTHONPATH=htt/src:htt python -B -m pytest -p no:cacheprovider -q research_gates/pr07/tests",
+        "PYTHONPATH=htt/src:htt python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_253_baseline_replan.py",
+        "python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml"
+      ],
+      "dod": [
+        "Active bare denominators remain blocked, while historical values require an explicit legacy-reproduction path.",
+        "The canonical and compatibility DAG/status mirrors agree and PR-151 remains background-only."
+      ],
+      "kill": "Any production path regains the bare-scalar behavior or any required PR04/PR07 check remains red.",
+      "cost": "medium",
+      "level": "L2",
+      "scope": "pre-solver",
+      "risk": "R2-INTEGRATION",
+      "claim_tier_ceiling": "diagnostic_only",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C1"
+      },
+      "claim_impact": "Baseline and scheduling mechanics only; scientific status stays OPEN.",
+      "forbidden": [
+        "No PR-151 partial data, FLRW-departure result, or family-identification claim."
+      ],
+      "anti_drift": [
+        "Proposed attachment numbers remain unverified inputs until independently regenerated."
+      ],
+      "roadmap_anchor": "docs/research_program/premise_anchor/pr253_spec.yaml",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "methodology_conditional",
+      "execution_authorization": "EXPLICIT_USER_AUTHORIZED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "FOUNDATION",
+      "solver_gate_required": false,
+      "change_set_id": "CS-PR253-BASELINE-REPLAN",
+      "publication_group_id": "PG-PR253-BASELINE-REPLAN"
+    },
+    {
+      "id": "PR-254",
+      "wave": 49,
+      "title": "Normalizer benchmark and typed anchor geometry",
+      "owner": "COMMON",
+      "contributors": [
+        "HTT",
+        "MIO"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-253",
+        "PR-216",
+        "PR-217",
+        "PR-225"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-253",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-216",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-217",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-225",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Add purpose-typed normalizers, convex anchor bodies, gauge intervals, margins, and Pareto benchmark reports.",
+        "Compare expansion, MES, Fisher, template, dynamical and prior-quantile normalizers without a universal winner score.",
+        "Prove only the one-way anchor theorems and attack J1-EXACT and J2-UNIFORM by counterexample first."
+      ],
+      "files": [
+        "htt/src/common",
+        "htt/htt",
+        "htt/mio",
+        "tests/pr_cards/test_pr_254_normalizer_anchor_geometry.py",
+        "docs/PR_DELTAS/pr-254.md"
+      ],
+      "tests": [
+        "to-be-created:PYTHONPATH=htt/src:htt python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_254_normalizer_anchor_geometry.py"
+      ],
+      "dod": [
+        "Product balls, ellipsoids, polytopes, finite nuisance families and missing blocks fail closed with typed statuses.",
+        "Four blind CAS axes agree on one contract before any mathematical claim is promoted."
+      ],
+      "kill": "A nonconvex union receives one false gauge, a continuous nuisance is discretized silently, or scaling is reported as information gain.",
+      "cost": "high",
+      "level": "L2",
+      "scope": "pre-solver",
+      "risk": "R3-CAS+STATISTICS",
+      "claim_tier_ceiling": "conditional",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C2"
+      },
+      "claim_impact": "Typed conditional anchor methodology; observed scientific status stays OPEN.",
+      "forbidden": [
+        "No converse MES theorem, automatic e-value, or FLRW proximity claim."
+      ],
+      "anti_drift": [
+        "MES may finish as ONE_ANCHOR_AMONG_FAMILY without making the benchmark fail."
+      ],
+      "roadmap_anchor": "docs/research_program/premise_anchor/pr253_spec.yaml",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "methodology_conditional",
+      "execution_authorization": "EXPLICIT_USER_AUTHORIZED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "FOUNDATION",
+      "solver_gate_required": false,
+      "change_set_id": "CS-PR254-ANCHOR-GEOMETRY",
+      "publication_group_id": "PG-PR254-ANCHOR-GEOMETRY"
+    },
+    {
+      "id": "PR-255",
+      "wave": 50,
+      "title": "Anchored response geometry and nonlinearity phase diagram",
+      "owner": "HTT",
+      "contributors": [
+        "COMMON"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "htt"
+      ],
+      "depends": [
+        "PR-254",
+        "PR-219",
+        "PR-251"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-254",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-219",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-251",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Report supported-quotient response rank, singular spectrum, null directions, principal angles and identified-set contraction.",
+        "Use Schur-complement incremental morphology information and held-out nonlinear source competition."
+      ],
+      "files": [
+        "htt/src/common",
+        "htt/htt",
+        "tests/pr_cards/test_pr_255_anchored_response_geometry.py",
+        "docs/PR_DELTAS/pr-255.md"
+      ],
+      "tests": [
+        "to-be-created:PYTHONPATH=htt/src:htt python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_255_anchored_response_geometry.py"
+      ],
+      "dod": [
+        "Missing channels stay missing, singular covariance returns its null residual, and off-manifold states may abstain.",
+        "Scalar MES information gain remains only a validated one-dimensional compatibility view."
+      ],
+      "kill": "Anchor scaling creates rank, missing response becomes zero, or stress alone attributes a nonlinear source.",
+      "cost": "high",
+      "level": "L2",
+      "scope": "pre-solver",
+      "risk": "R3-STATISTICS",
+      "claim_tier_ceiling": "diagnostic_only",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C2"
+      },
+      "claim_impact": "Pre-solver response and nonlinearity diagnostics only.",
+      "forbidden": [
+        "No native-solver, geometry-detection, or family-identification claim."
+      ],
+      "anti_drift": [
+        "Held-out or matched-injection reuse invalidates candidate attribution."
+      ],
+      "roadmap_anchor": "docs/research_program/premise_anchor/pr253_spec.yaml",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "diagnostic_only",
+      "execution_authorization": "EXPLICIT_USER_AUTHORIZED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "FOUNDATION",
+      "solver_gate_required": false,
+      "change_set_id": "CS-PR255-RESPONSE-GEOMETRY",
+      "publication_group_id": "PG-PR255-RESPONSE-GEOMETRY"
+    },
+    {
+      "id": "PR-256",
+      "wave": 51,
+      "title": "Global-tilt versus local-boost response geometry",
+      "owner": "HTT",
+      "contributors": [
+        "COMMON"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "htt"
+      ],
+      "depends": [
+        "PR-255",
+        "PR-222",
+        "PR-251"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-255",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-222",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-251",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Add an explicit radiation-observer, radiation-matter and matter-observer velocity decomposition.",
+        "Calibrate local/global tangent-space separation and mandatory abstention on synthetic registered responses."
+      ],
+      "files": [
+        "htt/htt",
+        "tests/pr_cards/test_pr_256_velocity_frame_decomposition.py",
+        "docs/PR_DELTAS/pr-256.md"
+      ],
+      "tests": [
+        "to-be-created:PYTHONPATH=htt/src:htt python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_256_velocity_frame_decomposition.py"
+      ],
+      "dod": [
+        "Reports distinguish NON_IDENTIFIED, SUM_ONLY, SEPARABLE_CANDIDATE and MISSING_RESPONSE_PROVIDER.",
+        "No PR-151 bytes or partial products enter any fixture, calibration or conclusion."
+      ],
+      "kill": "An unavailable provider becomes a zero response or a confusable cell is force-classified.",
+      "cost": "high",
+      "level": "L2",
+      "scope": "pre-solver",
+      "risk": "R3-RESPONSE",
+      "claim_tier_ceiling": "diagnostic_only",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C2"
+      },
+      "claim_impact": "Hypothesis-only local/global discrimination candidate.",
+      "forbidden": [
+        "No observed DESI/CMB result, global-tilt detection, or geometry claim."
+      ],
+      "anti_drift": [
+        "Analytic and synthetic responses remain hypothesis_only with non-native transfer provenance."
+      ],
+      "roadmap_anchor": "docs/research_program/premise_anchor/pr253_spec.yaml",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "hypothesis_only",
+      "execution_authorization": "EXPLICIT_USER_AUTHORIZED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "FOUNDATION",
+      "solver_gate_required": false,
+      "change_set_id": "CS-PR256-VELOCITY-FRAMES",
+      "publication_group_id": "PG-PR256-VELOCITY-FRAMES"
+    },
+    {
+      "id": "PR-257",
+      "wave": 52,
+      "title": "Low-ell matched-counterpair morphology benchmark",
+      "owner": "OBSSTAT",
+      "contributors": [
+        "HTT",
+        "COMMON"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "obsstat"
+      ],
+      "depends": [
+        "PR-255",
+        "PR-251"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-255",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-251",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Compare scalar, state, anchor-coordinate and low-ell morphology representations on matched counterpairs.",
+        "Re-derive the sigma-omega-beta orbit catalogue with parity and syzygy checks before seeing test skies."
+      ],
+      "files": [
+        "htt/src/common",
+        "htt/obsstat",
+        "htt/htt",
+        "tests/pr_cards/test_pr_257_lowell_morphology.py",
+        "docs/PR_DELTAS/pr-257.md"
+      ],
+      "tests": [
+        "to-be-created:PYTHONPATH=htt/src:htt python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_257_lowell_morphology.py"
+      ],
+      "dod": [
+        "Same-power and same-anchor counterpairs separate phase, orientation and parity where the registered features can do so.",
+        "Catalogue and multiplicity rules are frozen before benchmark skies and four blind CAS axes adjudicate completeness language."
+      ],
+      "kill": "Post-hoc catalogue edits, parity collapse, or scalar stress is used as morphology/source evidence.",
+      "cost": "high",
+      "level": "L2",
+      "scope": "pre-solver",
+      "risk": "R3-CAS+MORPHOLOGY",
+      "claim_tier_ceiling": "diagnostic_only",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C2"
+      },
+      "claim_impact": "Pre-solver morphology compatibility benchmark only.",
+      "forbidden": [
+        "No complete invariant-basis, cosmological detection, or family-identification claim without the declared proof and native gates."
+      ],
+      "anti_drift": [
+        "OBSSTAT owns features and nulls; HTT alone owns held-out model/source comparison."
+      ],
+      "roadmap_anchor": "docs/research_program/premise_anchor/pr253_spec.yaml",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "diagnostic_only",
+      "execution_authorization": "EXPLICIT_USER_AUTHORIZED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "FOUNDATION",
+      "solver_gate_required": false,
+      "change_set_id": "CS-PR257-LOWELL-MORPHOLOGY",
+      "publication_group_id": "PG-PR257-LOWELL-MORPHOLOGY"
+    },
+    {
+      "id": "PR-258",
+      "wave": 53,
+      "title": "Open-set response-class quotient and premise-anchor integration",
+      "owner": "HTT",
+      "contributors": [
+        "COMMON",
+        "OBSSTAT"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "htt"
+      ],
+      "depends": [
+        "PR-256",
+        "PR-257",
+        "PR-219"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-256",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-257",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-219",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Extend the response quotient to analytic/synthetic response classes, equivalence coverage and unknown-class abstention.",
+        "Integrate only validated claims into the canonical English authority, Korean trace summary and manuscript fragments."
+      ],
+      "files": [
+        "htt/src/common",
+        "htt/htt",
+        "htt/obsstat",
+        "docs/research_program",
+        "docs/manuscript",
+        "tests/pr_cards/test_pr_258_open_set_response_classes.py",
+        "docs/PR_DELTAS/pr-258.md"
+      ],
+      "tests": [
+        "to-be-created:PYTHONPATH=htt/src:htt python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_258_open_set_response_classes.py",
+        "python -B scripts/check_claim_language.py --dry-run docs/manuscript --format json"
+      ],
+      "dod": [
+        "Overlapping or boundary-coincident classes return an equivalence class or TYPE_UNIDENTIFIED.",
+        "Historical x_C bytes and BC1/BC2 remain exact while PR-151 and native-solver status remain unchanged."
+      ],
+      "kill": "Unknown classes are removed, a nearest known family is forced, or a toy/proxy result enters the manuscript as observed validation.",
+      "cost": "high",
+      "level": "L2",
+      "scope": "pre-solver",
+      "risk": "R3-INTEGRATION",
+      "claim_tier_ceiling": "diagnostic_only",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C2"
+      },
+      "claim_impact": "Typed premise-anchor and response-geometry intermediate layer; scientific status stays OPEN.",
+      "forbidden": [
+        "No FLRW-departure detection, native-solver validation, or Bianchi-family identification."
+      ],
+      "anti_drift": [
+        "Strong J1/J2 conjectures and blocked native steps remain outside validated manuscript results."
+      ],
+      "roadmap_anchor": "docs/research_program/premise_anchor/pr253_spec.yaml",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "methodology_conditional",
+      "execution_authorization": "EXPLICIT_USER_AUTHORIZED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "FOUNDATION",
+      "solver_gate_required": false,
+      "change_set_id": "CS-PR258-OPEN-SET-INTEGRATION",
+      "publication_group_id": "PG-PR258-OPEN-SET-INTEGRATION"
     }
   ]
 }
