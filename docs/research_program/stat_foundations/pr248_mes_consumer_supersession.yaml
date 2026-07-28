@@ -1,0 +1,15 @@
+schema: htt.mes_consumer_supersession.v1
+authority: PR-248
+allowed_use: exact live-consumer hash binding without rewriting PR-122 or PR-124 receipts
+claim_effect: none
+bindings:
+- consumer_id: htt.core.evidence_models_R03a
+  path: htt/htt/htt/core/evidence_models_R03a.py
+  prior_sha256: b83b8fb1ccdf3e68979a77d7aefd44243f0140f98e1c0eb6400e0c6f40ef1f3c
+  sha256: b73e62c8cc4949a3363c249b9bfb50d344d8eef2f4e449315894662574492c19
+  reason: PR-248 routes active f/g normalization through the verified residual-dipole geodesic anchor, rejects malformed physical states, and keeps g-only exponential-tail evaluation reachable.
+- consumer_id: mio.formalism.budget_spec
+  path: htt/mio/formalism/budget_spec.py
+  prior_sha256: 49b0afc480d4a311eedbae1bfaf6b7b8076a72cc11fc43d069b758b47f1a182f
+  sha256: 25213b00a1f0e6c373e17960e15de567240ce6f22d914a54e6cad8047a4d727e
+  reason: PR-248 adopts the already-present target-branch consumer bytes so the live scanner no longer compares against the stale PR-122 binding.

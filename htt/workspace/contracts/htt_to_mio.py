@@ -1,10 +1,9 @@
-"""workspace.contracts.htt_to_mio — HTT posterior export bundle.
+"""workspace.contracts.htt_to_mio — HTT/MIO cross-check boundaries.
 
-Frozen dataclass that packages an HTT pipeline's posterior summary for
-**cross-check** consumption by MIO. Per BASS_PY_HTT_TSC_MIO_RESEARCH_PLAN
-v3 §10.2bis G19 hard-separation rule, this bundle is NEVER a likelihood
-input to MIO — MIO may inspect it only to reconcile direction / amplitude
-with its own independent observatory report.
+The active export carries only explicitly legacy-classified scalar projections
+and an HTT-owned diagnostic manifest.  HTT posterior odds and model evidences
+do not cross into MIO.  ``PosteriorExportBundle`` remains below for explicit
+historical reproduction only.
 
 Field set (reverse-traced from `bass_py/htt/htt/integration/to_mio.py`
 `build_posterior_bundle` construction, plus the v3 §10.2bis
@@ -26,10 +25,52 @@ from dataclasses import dataclass, field
 from typing import Mapping, Tuple
 
 from common.contracts import ArtifactManifest
+from common.statistical_foundations import LegacyProjectionReport
+
+
+@dataclass(frozen=True)
+class MioCrossCheckExport:
+    """Active HTT → MIO diagnostic cross-check without HTT evidence."""
+
+    model: str
+    legacy_projection: LegacyProjectionReport
+    manifest: ArtifactManifest
+    source_artifact_ref: str
+    posterior_ref: str
+    is_cross_check_only: bool = True
+    evidence_included: bool = False
+
+    def __post_init__(self) -> None:
+        if any(
+            not isinstance(value, str) or not value.strip()
+            for value in (
+                self.model,
+                self.source_artifact_ref,
+                self.posterior_ref,
+            )
+        ):
+            raise ValueError("cross-check model and source refs must be non-empty")
+        if not isinstance(self.legacy_projection, LegacyProjectionReport):
+            raise TypeError("legacy_projection must be a LegacyProjectionReport")
+        if (
+            type(self.is_cross_check_only) is not bool
+            or type(self.evidence_included) is not bool
+        ):
+            raise TypeError("cross-check firewall fields must be exact booleans")
+        if self.is_cross_check_only is not True or self.evidence_included is not False:
+            raise ValueError("MIO cross-check exports cannot carry HTT evidence")
+        if self.manifest.owner != "HTT":
+            raise ValueError("MioCrossCheckExport.manifest.owner must be 'HTT'")
+        if self.manifest.claim_tier != "diagnostic_only":
+            raise ValueError("MIO cross-check manifest must be diagnostic_only")
+        if self.manifest.production_status != "diagnostic_only":
+            raise ValueError(
+                "MIO cross-check manifest production_status must be diagnostic_only"
+            )
 
 @dataclass(frozen=True)
 class PosteriorExportBundle:
-    """HTT → MIO posterior summary (cross-check only; NOT a likelihood)."""
+    """Legacy HTT → MIO posterior summary; explicit reproduction only."""
 
     x_median: float
     x_hpd68: Tuple[float, float]
@@ -46,6 +87,7 @@ class PosteriorExportBundle:
     model: str = ""
     is_cross_check_only: bool = True
     manifest: ArtifactManifest | None = None
+    legacy_reproduction_only: bool = True
 
     def __post_init__(self) -> None:
         if not self.is_cross_check_only:
@@ -54,6 +96,8 @@ class PosteriorExportBundle:
                 "Cannot be merged into MIO evidence score; cannot be "
                 "ingested as an MIO likelihood input."
             )
+        if not self.legacy_reproduction_only:
+            raise ValueError("PosteriorExportBundle is legacy reproduction only")
         if self.manifest is not None and self.manifest.owner != "HTT":
             raise ValueError(
                 "PosteriorExportBundle.manifest.owner must be 'HTT' "

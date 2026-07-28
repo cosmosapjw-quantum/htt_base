@@ -183,7 +183,7 @@ def null_library_fpr_report_artifact(
     The report collapses those per-model runs into the 5-family × 15-model
     heatmap requested by the research plan.
     """
-    from htt.core.analysis_extended import EVIDENCE_MODEL_TAGS
+    from htt.core.evidence_model_tags import EVIDENCE_MODEL_TAGS
 
     models = list(model_order or EVIDENCE_MODEL_TAGS)
     families = list(family_order or [fam.name for fam in ALL_FAMILIES])

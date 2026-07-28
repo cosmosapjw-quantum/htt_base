@@ -1,9 +1,10 @@
-"""Manifest-backed MIO report cards for x/Q/Pi/F/G diagnostics."""
+"""Legacy manifest-backed MIO scalar report-card reproduction."""
 from __future__ import annotations
 
 import hashlib
 import json
 import math
+import warnings
 from collections.abc import Mapping, Sequence
 from dataclasses import asdict, dataclass, field
 from typing import Any
@@ -15,6 +16,15 @@ from common.contracts import (
     Owner,
 )
 from common.enum_compat import StrEnum
+
+LEGACY_REPRODUCTION_ONLY = True
+
+warnings.warn(
+    "mio.reports.departure_report is a legacy reproduction surface; "
+    "use StatisticalFoundationResultCard for active reporting",
+    DeprecationWarning,
+    stacklevel=2,
+)
 
 SCHEMA_VERSION = "mio.departure_report.v1"
 SCORE_ORDER = ("x_C", "Q", "Pi", "F", "G_F")
@@ -73,9 +83,12 @@ _RESERVED_TERMS = (
 )
 _SKIP_VALUE_SCAN_KEYS = {
     "caveats",
-    "claim_boundary",
-    "forbidden_claims",
-    "does_not_establish",
+    "claim boundary",
+    "forbidden claims",
+    "does not establish",
+    "allowed use",
+    "forbidden use",
+    "legacy compatibility",
 }
 
 
@@ -207,6 +220,11 @@ def _ensure_json(value: object, name: str) -> None:
 def _scan_reserved_language(value: object, name: str) -> None:
     if isinstance(value, Mapping):
         for key, item in value.items():
+            if (
+                _normalise_claim_text(key) == "classification"
+                and str(item) == "BC1_LEGACY_PROJECTION"
+            ):
+                continue
             _reject_reserved_key(key, name)
             _scan_reserved_language(item, name)
         return
@@ -228,6 +246,11 @@ def _scan_section_payload_language(value: object, name: str) -> None:
 
     if isinstance(value, Mapping):
         for key, item in value.items():
+            if (
+                _normalise_claim_text(key) == "classification"
+                and str(item) == "BC1_LEGACY_PROJECTION"
+            ):
+                continue
             _reject_reserved_key(key, name)
             if _normalise_claim_text(key) in _SKIP_VALUE_SCAN_KEYS:
                 continue

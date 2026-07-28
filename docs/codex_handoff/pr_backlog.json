@@ -104,18 +104,9 @@
       "PR-152",
       "PR-153",
       "PR-154",
-      "PR-155",
-      "PR-156",
-      "PR-157",
-      "PR-158",
       "PR-159",
       "PR-160",
       "PR-161",
-      "PR-162",
-      "PR-163",
-      "PR-164",
-      "PR-165",
-      "PR-166",
       "PR-167",
       "PR-168",
       "PR-169",
@@ -127,11 +118,9 @@
       "PR-175",
       "PR-176",
       "PR-177",
-      "PR-178",
       "PR-179",
       "PR-184",
       "PR-180",
-      "PR-181",
       "PR-182",
       "PR-183",
       "PR-185",
@@ -139,25 +128,10 @@
       "PR-187",
       "PR-188",
       "PR-189",
-      "PR-190",
-      "PR-191",
-      "PR-192",
-      "PR-193",
-      "PR-194",
-      "PR-195",
-      "PR-196",
       "PR-197",
-      "PR-198",
-      "PR-199",
       "PR-200",
-      "PR-201",
-      "PR-202",
       "PR-203",
       "PR-204",
-      "PR-205",
-      "PR-206",
-      "PR-207",
-      "PR-208",
       "PR-209",
       "PR-210",
       "PR-211",
@@ -196,8 +170,56 @@
       "PR-244",
       "PR-245",
       "PR-246",
-      "PR-247"
+      "PR-247",
+      "PR-248",
+      "PR-249",
+      "PR-250",
+      "PR-251",
+      "PR-252",
+      "PR-155",
+      "PR-156",
+      "PR-157",
+      "PR-158",
+      "PR-162",
+      "PR-163",
+      "PR-164",
+      "PR-165",
+      "PR-166",
+      "PR-178",
+      "PR-181",
+      "PR-190",
+      "PR-191",
+      "PR-192",
+      "PR-193",
+      "PR-194",
+      "PR-195",
+      "PR-196",
+      "PR-198",
+      "PR-199",
+      "PR-201",
+      "PR-202",
+      "PR-205",
+      "PR-206",
+      "PR-207",
+      "PR-208"
     ],
+    "dependency_overlays": {
+      "schema": "htt.pr_dependency_overlay.v1",
+      "authority": "PR-248",
+      "rationale": "Preserve receipt-sealed historical cards while applying the owner-authorized statistical-foundation replan.",
+      "additions": {
+        "PR-155": [
+          "PR-250",
+          "PR-251"
+        ],
+        "PR-156": [
+          "PR-251"
+        ],
+        "PR-157": [
+          "PR-252"
+        ]
+      }
+    },
     "checkpoint_every_completed_prs": 5,
     "no_native_lowell_solver_implementation": true,
     "family_identification_claims_blocked_until_native_morphology_atlas": true,
@@ -6520,7 +6542,8 @@
         "PR-143",
         "PR-155",
         "PR-167",
-        "PR-173"
+        "PR-173",
+        "PR-251"
       ],
       "dependency_contracts": [
         {
@@ -6545,6 +6568,10 @@
         },
         {
           "upstream_id": "PR-173",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-251",
           "mode": "requires_success"
         }
       ],
@@ -7216,7 +7243,8 @@
       ],
       "depends": [
         "PR-187",
-        "PR-189"
+        "PR-189",
+        "PR-249"
       ],
       "dependency_contracts": [
         {
@@ -7225,6 +7253,10 @@
         },
         {
           "upstream_id": "PR-189",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-249",
           "mode": "requires_success"
         }
       ],
@@ -7469,7 +7501,8 @@
       "depends": [
         "PR-186",
         "PR-187",
-        "PR-191"
+        "PR-191",
+        "PR-248"
       ],
       "dependency_contracts": [
         {
@@ -7482,6 +7515,10 @@
         },
         {
           "upstream_id": "PR-191",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-248",
           "mode": "requires_success"
         }
       ],
@@ -8439,7 +8476,8 @@
         "PR-201",
         "PR-202",
         "PR-203",
-        "PR-204"
+        "PR-204",
+        "PR-252"
       ],
       "dependency_contracts": [
         {
@@ -8480,6 +8518,10 @@
         },
         {
           "upstream_id": "PR-204",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-252",
           "mode": "requires_success"
         }
       ],
@@ -11880,6 +11922,437 @@
       "solver_gate_required": false,
       "change_set_id": "CS-PR247-PUBLICATION-INTEGRITY-P0",
       "publication_group_id": "PG-PR247-PUBLICATION-INTEGRITY-P0"
+    },
+    {
+      "id": "PR-248",
+      "wave": 43,
+      "title": "Typed statistical foundation and MES anchor authority",
+      "owner": "COMMON",
+      "contributors": [
+        "HTT",
+        "MIO",
+        "OBSSTAT"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-124",
+        "PR-168",
+        "PR-187",
+        "PR-247"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-124",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-168",
+          "mode": "requires_terminal_receipt"
+        },
+        {
+          "upstream_id": "PR-187",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-247",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Separate exact x_C projection, typed anchor stress, and identified estimand.",
+        "Activate only verified geodesic MES anchors and quarantine the 2.69 eps1 correction.",
+        "Repair D_l conversion, scenario-dipole provenance, and the reciprocal-wrong PSD-shell caller."
+      ],
+      "files": [
+        "common",
+        "htt/htt/htt/core",
+        "htt/obsstat",
+        "docs/research_program/STAT_FOUNDATIONS_REVIEW_20260727.md",
+        "tests/pr_cards/test_pr_248_statistical_foundations.py",
+        "docs/PR_DELTAS/pr-248.md"
+      ],
+      "tests": [
+        "venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_248_statistical_foundations.py",
+        "venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice"
+      ],
+      "dod": [
+        "Every active anchor binds invariant, frame, order, branch, attribution and conditioning.",
+        "Acceleration and anisotropic curvature return NO_MES_ANCHOR, never a numeric ceiling.",
+        "Historical corrected/S2a values remain reproducible but cannot normalize active results."
+      ],
+      "kill": "Any withheld, legacy, cross-channel or untyped anchor authorizes a stress or claim.",
+      "cost": "medium",
+      "level": "L2",
+      "scope": "pre-solver",
+      "risk": "R2-FOUNDATION",
+      "claim_tier_ceiling": "conditional",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C1"
+      },
+      "claim_impact": "Typed conditional methodology only; no data, solver, geometry or family-identification claim.",
+      "forbidden": [
+        "No MES converse, scalar family claim, native-solver label or historical result regeneration.",
+        "No reactivation of the 2.69 eps1 correction without a new four-axis CAS contract."
+      ],
+      "anti_drift": [
+        "x_C remains the exact signed legacy projection.",
+        "Missing anchors are statuses, not zero, NaN or infinity."
+      ],
+      "roadmap_anchor": "docs/research_program/STAT_FOUNDATIONS_REVIEW_20260727.md",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "methodology_conditional",
+      "execution_authorization": "EXPLICIT_USER_AUTHORIZED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "FOUNDATION",
+      "solver_gate_required": false,
+      "change_set_id": "CS-PR248-TYPED-MES-AUTHORITY",
+      "publication_group_id": "PG-PR248-TYPED-MES-AUTHORITY"
+    },
+    {
+      "id": "PR-249",
+      "wave": 44,
+      "title": "Departure state, estimand and reporting contracts",
+      "owner": "COMMON",
+      "contributors": [
+        "HTT",
+        "MIO",
+        "OBSSTAT"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-127",
+        "PR-136",
+        "PR-187",
+        "PR-189",
+        "PR-248"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-127",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-136",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-187",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-189",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-248",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Add typed irreducible/summary state, identified set, sector stress, budget radius and legacy projection reports.",
+        "Remove cross-sector scalar filling and preserve structural versus leading-order null kinds.",
+        "Unify W2 naming, critical-value policy and Q/F/Pi/G_F allowed-use metadata."
+      ],
+      "files": [
+        "common",
+        "htt/mio",
+        "htt/obsstat",
+        "htt/htt",
+        "tests/pr_cards/test_pr_249_departure_contracts.py",
+        "docs/PR_DELTAS/pr-249.md"
+      ],
+      "tests": [
+        "venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_249_departure_contracts.py"
+      ],
+      "dod": [
+        "x_C is bit-identical as BC1_LEGACY_PROJECTION while no active API treats it as distance or occupancy.",
+        "Stress exists only for a channel-matched verified anchor; null kinds survive serialization."
+      ],
+      "kill": "Any bare x_max normalizes multiple sectors, or a nullspace is silently assigned zero cost.",
+      "cost": "medium",
+      "level": "L2",
+      "scope": "pre-solver",
+      "risk": "R2-CONTRACT",
+      "claim_tier_ceiling": "conditional",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C1"
+      },
+      "claim_impact": "Typed diagnostic/reporting capability only; BC2 forbids representation-driven promotion.",
+      "forbidden": [
+        "No scalar occupancy or posterior from an unidentified sector."
+      ],
+      "anti_drift": [
+        "Legacy values are preserved with explicit allowed-use metadata."
+      ],
+      "roadmap_anchor": "docs/research_program/STAT_FOUNDATIONS_REVIEW_20260727.md",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "methodology_conditional",
+      "execution_authorization": "EXPLICIT_USER_AUTHORIZED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "FOUNDATION",
+      "solver_gate_required": false,
+      "change_set_id": "CS-PR249-DEPARTURE-CONTRACTS",
+      "publication_group_id": "PG-PR249-DEPARTURE-CONTRACTS"
+    },
+    {
+      "id": "PR-250",
+      "wave": 45,
+      "title": "Joint random-anchor partial identification and finite covariance",
+      "owner": "HTT",
+      "contributors": [
+        "COMMON",
+        "OBSSTAT"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "htt"
+      ],
+      "depends": [
+        "PR-137",
+        "PR-189",
+        "PR-200",
+        "PR-225",
+        "PR-249"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-137",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-189",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-200",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-225",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-249",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Make numerator and data-derived anchor one joint random object.",
+        "Return unbounded Fieller-style status when the denominator is not separated from zero.",
+        "Add covariance-marginalized t inference, singular support handling and cross-fit prior policy."
+      ],
+      "files": [
+        "common",
+        "htt/htt",
+        "htt/obsstat",
+        "tests/pr_cards/test_pr_250_partial_id_covariance.py",
+        "docs/PR_DELTAS/pr-250.md"
+      ],
+      "tests": [
+        "venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_250_partial_id_covariance.py"
+      ],
+      "dod": [
+        "Missing cross covariance fails claim-bearing inference and ratio denominators crossing zero never return a finite estimate.",
+        "Finite-simulation covariance likelihood states its Gaussian/Wishart assumptions and converges to the Gaussian limit."
+      ],
+      "kill": "Any random anchor is treated as fixed, any null-sector posterior is called data evidence, or empirical Bayes reuses the same data silently.",
+      "cost": "medium-high",
+      "level": "L2",
+      "scope": "pre-solver",
+      "risk": "R3-STATISTICS",
+      "claim_tier_ceiling": "conditional",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C2"
+      },
+      "claim_impact": "Conditional statistical mechanics; observed scientific status stays OPEN.",
+      "forbidden": [
+        "No evidence-grade label outside the registered likelihood assumptions."
+      ],
+      "anti_drift": [
+        "Hartlap remains diagnostic and cannot substitute for covariance marginalization."
+      ],
+      "roadmap_anchor": "docs/research_program/STAT_FOUNDATIONS_REVIEW_20260727.md",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "methodology_conditional",
+      "execution_authorization": "EXPLICIT_USER_AUTHORIZED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "FOUNDATION",
+      "solver_gate_required": false,
+      "change_set_id": "CS-PR250-PARTIAL-ID-COVARIANCE",
+      "publication_group_id": "PG-PR250-PARTIAL-ID-COVARIANCE"
+    },
+    {
+      "id": "PR-251",
+      "wave": 46,
+      "title": "Equivariant orbit response and model discrepancy",
+      "owner": "HTT",
+      "contributors": [
+        "COMMON",
+        "OBSSTAT"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "htt"
+      ],
+      "depends": [
+        "PR-216",
+        "PR-219",
+        "PR-250"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-216",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-219",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-250",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Add O(3)/parity actions, a preregistered invariant catalogue and response-rank metadata.",
+        "Decompose response into tangent/perpendicular residuals and compare explicit nonlinear candidates against held-out controls."
+      ],
+      "files": [
+        "common",
+        "htt/htt",
+        "htt/obsstat",
+        "tests/pr_cards/test_pr_251_orbit_nonlinearity.py",
+        "docs/PR_DELTAS/pr-251.md"
+      ],
+      "tests": [
+        "venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_251_orbit_nonlinearity.py"
+      ],
+      "dod": [
+        "Proper rotations preserve invariants, reflections flip only parity-odd invariants, and rank comes from the supplied response.",
+        "Nonlinear attribution requires a held-out win over every registered alternative."
+      ],
+      "kill": "Any hard-coded rank or norm-only statistic authorizes morphology, source, geometry or family identification.",
+      "cost": "medium-high",
+      "level": "L2",
+      "scope": "pre-solver",
+      "risk": "R3-RESPONSE",
+      "claim_tier_ceiling": "diagnostic_only",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C2"
+      },
+      "claim_impact": "Pre-solver response and discrepancy diagnostics only.",
+      "forbidden": [
+        "No family identification or native morphology-atlas claim."
+      ],
+      "anti_drift": [
+        "FOUND-EQUIV remains ACTIVE_CONDITIONAL pending EGS3-B1."
+      ],
+      "roadmap_anchor": "docs/research_program/STAT_FOUNDATIONS_REVIEW_20260727.md",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "diagnostic_only",
+      "execution_authorization": "EXPLICIT_USER_AUTHORIZED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "FOUNDATION",
+      "solver_gate_required": false,
+      "change_set_id": "CS-PR251-ORBIT-NONLINEARITY",
+      "publication_group_id": "PG-PR251-ORBIT-NONLINEARITY"
+    },
+    {
+      "id": "PR-252",
+      "wave": 47,
+      "title": "Lossless statistical-foundation consumer migration",
+      "owner": "COMMON",
+      "contributors": [
+        "HTT",
+        "MIO",
+        "OBSSTAT"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-251"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-251",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Migrate live consumers, result cards and manuscript language to the typed foundation.",
+        "Preserve historical bytes and provide a compatibility map without claim promotion.",
+        "Run cross-package integration and close the F1-F12 traceability ledger."
+      ],
+      "files": [
+        "common",
+        "htt/htt",
+        "htt/mio",
+        "htt/obsstat",
+        "docs/manuscript",
+        "tests/pr_cards/test_pr_252_foundation_integration.py",
+        "docs/PR_DELTAS/pr-252.md"
+      ],
+      "tests": [
+        "venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_252_foundation_integration.py",
+        "venv/bin/python -B scripts/check_claim_language.py --dry-run docs/manuscript --format json"
+      ],
+      "dod": [
+        "Active callers contain no bare cross-sector x_max, active B_accel, refuted NG coefficient or untyped legacy sector filling.",
+        "Historical x_C values remain exact and every live output declares owner, status and allowed use."
+      ],
+      "kill": "Any migration changes frozen historical values, consumes partial PR-151 data, or promotes a scientific claim.",
+      "cost": "high",
+      "level": "L2",
+      "scope": "pre-solver",
+      "risk": "R2-INTEGRATION",
+      "claim_tier_ceiling": "diagnostic_only",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C2"
+      },
+      "claim_impact": "Lossless live-consumer migration; scientific status remains OPEN.",
+      "forbidden": [
+        "No PR-151 partial data, native-solver label, geometry detection or family identification."
+      ],
+      "anti_drift": [
+        "BC1 preserves numbers and BC2 forbids representation-driven promotion."
+      ],
+      "roadmap_anchor": "docs/research_program/STAT_FOUNDATIONS_REVIEW_20260727.md",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "diagnostic_only",
+      "execution_authorization": "EXPLICIT_USER_AUTHORIZED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "FOUNDATION",
+      "solver_gate_required": false,
+      "change_set_id": "CS-PR252-FOUNDATION-INTEGRATION",
+      "publication_group_id": "PG-PR252-FOUNDATION-INTEGRATION"
     }
   ]
 }

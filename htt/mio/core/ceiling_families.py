@@ -1,14 +1,15 @@
-"""mio.core.ceiling_families — active ceiling-family registry.
+"""Historical scalar ceiling-family registry.
 
-The certification-matrix figure (F24 in
-``BASS_PY_HTT_TSC_RESEARCH_PLAN.md``) and downstream MIO diagnostics both
-need a stable, importable record of which model families have a certified
-ceiling, an adopted-but-uncertified ceiling, or a hard obstruction.
+The entries remain importable for frozen figure and payload reproduction.
+They are not active MES anchors, cannot normalize Q/F, and cannot certify or
+identify a Bianchi family. Active code uses typed channel anchors and
+identified sets from ``common.statistical_foundations``.
 """
 from __future__ import annotations
 
 from dataclasses import dataclass
 from enum import Enum
+import warnings
 
 # PR-124: active MES consumers traverse the typed successor registry
 # (common.mes_theorem_authority is the live authority; legacy values are
@@ -17,6 +18,14 @@ from common.mes_successor_registry import current_mes_successor_registry
 
 _MES_SUCCESSOR = current_mes_successor_registry().successor
 _MES_SUCCESSOR_ID = _MES_SUCCESSOR.successor_id
+LEGACY_REPRODUCTION_ONLY = True
+
+warnings.warn(
+    "mio.core.ceiling_families is a historical scalar registry; "
+    "use typed channel anchors for active analysis",
+    DeprecationWarning,
+    stacklevel=2,
+)
 
 __all__ = [
     "CeilingStatus",
@@ -29,11 +38,13 @@ __all__ = [
 
 
 class CeilingStatus(Enum):
-    """Status of a ceiling family's ``x_max`` derivation."""
+    """Compatibility status of a historical scalar formula."""
 
     ADOPTED = "adopted"
     NUMERICALLY_CERTIFIED = "numerically_certified"
     THEOREM_GRADE = "theorem_grade"
+    LEGACY_REPRODUCTION = "legacy_reproduction"
+    NO_MES_ANCHOR = "no_mes_anchor"
     BLOCKED = "blocked"
 
 
@@ -48,6 +59,13 @@ class CeilingFamily:
     status: CeilingStatus
     obstruction_reason: str | None = None
     certification_evidence: str | None = None
+    allowed_use: tuple[str, ...] = ("historical reproduction",)
+    forbidden_use: tuple[str, ...] = (
+        "active normalization",
+        "family certification",
+        "family identification",
+        "cross-channel scalar ceiling",
+    )
 
 
 CEILING_FAMILIES: dict[str, CeilingFamily] = {
@@ -63,9 +81,9 @@ CEILING_FAMILIES: dict[str, CeilingFamily] = {
             "BVIII_orth",
         ),
         x_max_formula="Sig2_max_MES(eps1_kin)",
-        status=CeilingStatus.NUMERICALLY_CERTIFIED,
+        status=CeilingStatus.LEGACY_REPRODUCTION,
         certification_evidence=(
-            "Restricted-scan MIO evidence: x >= 0 across the sector."
+            "Historical restricted scan only; not a certification."
         ),
     ),
     "irrotational_nonneg_tilt": CeilingFamily(
@@ -73,9 +91,9 @@ CEILING_FAMILIES: dict[str, CeilingFamily] = {
         sign_sector="irrotational_nonneg",
         models=("FLRW_tilt", "BI_tilt", "BVII0_tilt", "BIII_tilt"),
         x_max_formula="Sig2_max_MES(eps1_kin) + Omega_tilt(beta)",
-        status=CeilingStatus.NUMERICALLY_CERTIFIED,
+        status=CeilingStatus.NO_MES_ANCHOR,
         certification_evidence=(
-            "Restricted-scan MIO evidence: x >= 0 and Omega_tilt >= 0."
+            "Tilt and shear are different channels; no composite MES anchor."
         ),
     ),
     "irrotational_neg": CeilingFamily(
@@ -83,11 +101,11 @@ CEILING_FAMILIES: dict[str, CeilingFamily] = {
         sign_sector="irrotational_neg",
         models=("BIX_orth", "BIX_tilt", "BV_tilt"),
         x_max_formula="Sig2_max - |Omega_k_aniso|",
-        status=CeilingStatus.ADOPTED,
+        status=CeilingStatus.NO_MES_ANCHOR,
         obstruction_reason=(
             "Negative Omega_k_aniso can flip x below zero (BIX counterexample)."
         ),
-        certification_evidence="MES ceiling adopted operationally, not certified.",
+        certification_evidence="No anisotropic-curvature MES anchor.",
     ),
     "blocked_momentum": CeilingFamily(
         name="blocked_momentum",
@@ -104,19 +122,24 @@ CEILING_FAMILIES: dict[str, CeilingFamily] = {
         sign_sector="vortical",
         models=("BVIIh_orth", "BVIIh_orth_grow", "BVIIh_tilt", "BVIIh_tilt_grow"),
         x_max_formula="Sig2_max - W2_max + Omega_tilt",
-        status=CeilingStatus.ADOPTED,
+        status=CeilingStatus.NO_MES_ANCHOR,
         obstruction_reason=(
             "W2 makes the sign sector indefinite without a vorticity bound."
         ),
         certification_evidence=(
-            "Saadeh-style vorticity upper limits keep this operational but uncertified."
+            "Subtracting a vorticity upper bound is not an upper bound on -W2."
         ),
     ),
 }
 
 
 def get_ceiling_family(name: str) -> CeilingFamily:
-    """Return a named ceiling family or raise a keyed error."""
+    """Return a historical entry or raise a keyed error."""
+    warnings.warn(
+        "get_ceiling_family returns legacy reproduction metadata only",
+        DeprecationWarning,
+        stacklevel=2,
+    )
     if name not in CEILING_FAMILIES:
         raise KeyError(
             f"Unknown ceiling family: {name}. "
@@ -126,19 +149,10 @@ def get_ceiling_family(name: str) -> CeilingFamily:
 
 
 def certified_families() -> dict[str, CeilingFamily]:
-    """Return families that are numerically certified or theorem grade."""
-    return {
-        name: family
-        for name, family in CEILING_FAMILIES.items()
-        if family.status
-        in (CeilingStatus.NUMERICALLY_CERTIFIED, CeilingStatus.THEOREM_GRADE)
-    }
+    """No scalar formula in this legacy registry certifies a family."""
+    return {}
 
 
 def blocked_families() -> dict[str, CeilingFamily]:
-    """Return the hard-obstruction families."""
-    return {
-        name: family
-        for name, family in CEILING_FAMILIES.items()
-        if family.status == CeilingStatus.BLOCKED
-    }
+    """Return every entry blocked from active scalar normalization."""
+    return dict(CEILING_FAMILIES)

@@ -107,7 +107,7 @@ ADVOCATE_CARD_CONTRACTS = {
     "PR-178": (["PR-151", "PR-155", "PR-156", "PR-157", "PR-158", "PR-167"], "defensible", "PENDING"),
     "PR-179": (["PR-134", "PR-135", "PR-139", "PR-144", "PR-167", "PR-173"], "defensible", "PENDING"),
     "PR-180": (["PR-134", "PR-149", "PR-150", "PR-167", "PR-172", "PR-173", "PR-184"], "defensible", "PENDING"),
-    "PR-181": (["PR-140", "PR-141", "PR-143", "PR-155", "PR-167", "PR-173"], "defensible", "PENDING"),
+    "PR-181": (["PR-140", "PR-141", "PR-143", "PR-155", "PR-167", "PR-173", "PR-251"], "defensible", "PENDING"),
     "PR-182": (["PR-167"], "hypothesis_only", "PENDING"),
     "PR-183": (["PR-159", "PR-160", "PR-161", "PR-167"], "needs_native", "NEEDS_NATIVE"),
     "PR-184": (["PR-172"], "defensible", "PENDING"),
@@ -138,10 +138,10 @@ STRENGTHEN_CARD_CONTRACTS = {
     "PR-187": (["PR-186"], "defensible", "PENDING", "DAG_SCHEDULABLE"),
     "PR-188": (["PR-185", "PR-186", "PR-187"], "defensible", "PENDING", "DAG_SCHEDULABLE"),
     "PR-189": (["PR-187", "PR-188"], "defensible", "PENDING", "DAG_SCHEDULABLE"),
-    "PR-190": (["PR-187", "PR-189"], "defensible", "PENDING", "REGISTERED_NOT_SCHEDULED"),
+    "PR-190": (["PR-187", "PR-189", "PR-249"], "defensible", "PENDING", "REGISTERED_NOT_SCHEDULED"),
     "PR-191": (["PR-187", "PR-190"], "defensible", "PENDING", "REGISTERED_NOT_SCHEDULED"),
     "PR-192": (["PR-187", "PR-191"], "defensible", "PENDING", "REGISTERED_NOT_SCHEDULED"),
-    "PR-193": (["PR-186", "PR-187", "PR-191"], "defensible", "PENDING", "REGISTERED_NOT_SCHEDULED"),
+    "PR-193": (["PR-186", "PR-187", "PR-191", "PR-248"], "defensible", "PENDING", "REGISTERED_NOT_SCHEDULED"),
     "PR-194": (["PR-187", "PR-193"], "defensible", "PENDING", "REGISTERED_NOT_SCHEDULED"),
     "PR-195": (["PR-187", "PR-194"], "defensible", "PENDING", "REGISTERED_NOT_SCHEDULED"),
     "PR-196": (["PR-159", "PR-160", "PR-161", "PR-187", "PR-194", "PR-195"], "needs_native", "NEEDS_NATIVE", "NATIVE_BLOCKED"),
@@ -153,7 +153,7 @@ STRENGTHEN_CARD_CONTRACTS = {
     "PR-202": (["PR-149", "PR-150", "PR-197", "PR-198", "PR-199"], "defensible", "PENDING", "REGISTERED_NOT_SCHEDULED"),
     "PR-203": (["PR-151", "PR-197", "PR-200"], "defensible", "PENDING", "REGISTERED_NOT_SCHEDULED"),
     "PR-204": (["PR-152", "PR-177", "PR-197", "PR-200"], "defensible", "PENDING", "REGISTERED_NOT_SCHEDULED"),
-    "PR-205": (["PR-189", "PR-190", "PR-193", "PR-195", "PR-196", "PR-200", "PR-201", "PR-202", "PR-203", "PR-204"], "defensible", "PENDING", "REGISTERED_NOT_SCHEDULED"),
+    "PR-205": (["PR-189", "PR-190", "PR-193", "PR-195", "PR-196", "PR-200", "PR-201", "PR-202", "PR-203", "PR-204", "PR-252"], "defensible", "PENDING", "REGISTERED_NOT_SCHEDULED"),
     "PR-206": (["PR-196", "PR-201", "PR-202", "PR-203", "PR-204", "PR-205", "PR-181"], "defensible", "PENDING", "REGISTERED_NOT_SCHEDULED"),
     "PR-207": (["PR-186", "PR-189", "PR-191", "PR-192", "PR-193", "PR-199", "PR-200", "PR-205", "PR-206"], "defensible", "PENDING", "REGISTERED_NOT_SCHEDULED"),
     "PR-208": (["PR-157", "PR-158", "PR-207"], "defensible", "PENDING", "REGISTERED_NOT_SCHEDULED"),
@@ -228,6 +228,59 @@ PROCESS_INTEGRITY_CARD_CONTRACTS = {
         "activation_state": "PENDING",
         "execution_authorization": "EXPLICIT_USER_AUTHORIZED",
     }
+}
+
+# --- Statistical-foundation reconstruction (PR-248..252, Waves 43..47) ----
+# These cards separate signed Gauss/Friedmann coordinates, typed anchor
+# stress, identified estimands, finite-covariance inference, and orbit/model
+# discrepancy.  They are an atomic intake but remain five sequential internal
+# change sets and at most one externally published PR at a time.
+FOUNDATION_FIRST_PR = 248
+FOUNDATION_LAST_PR = 252
+FOUNDATION_CARD_CONTRACTS = {
+    "PR-248": {
+        "depends": ["PR-124", "PR-168", "PR-187", "PR-247"],
+        "owner": "COMMON",
+        "change_set_id": "CS-PR248-TYPED-MES-AUTHORITY",
+        "publication_group_id": "PG-PR248-TYPED-MES-AUTHORITY",
+    },
+    "PR-249": {
+        "depends": ["PR-127", "PR-136", "PR-187", "PR-189", "PR-248"],
+        "owner": "COMMON",
+        "change_set_id": "CS-PR249-DEPARTURE-CONTRACTS",
+        "publication_group_id": "PG-PR249-DEPARTURE-CONTRACTS",
+    },
+    "PR-250": {
+        "depends": ["PR-137", "PR-189", "PR-200", "PR-225", "PR-249"],
+        "owner": "HTT",
+        "change_set_id": "CS-PR250-PARTIAL-ID-COVARIANCE",
+        "publication_group_id": "PG-PR250-PARTIAL-ID-COVARIANCE",
+    },
+    "PR-251": {
+        "depends": ["PR-216", "PR-219", "PR-250"],
+        "owner": "HTT",
+        "change_set_id": "CS-PR251-ORBIT-NONLINEARITY",
+        "publication_group_id": "PG-PR251-ORBIT-NONLINEARITY",
+    },
+    "PR-252": {
+        "depends": ["PR-251"],
+        "owner": "COMMON",
+        "change_set_id": "CS-PR252-FOUNDATION-INTEGRATION",
+        "publication_group_id": "PG-PR252-FOUNDATION-INTEGRATION",
+    },
+}
+FOUNDATION_DEPENDENCY_OVERLAY = {
+    "schema": "htt.pr_dependency_overlay.v1",
+    "authority": "PR-248",
+    "rationale": (
+        "Preserve receipt-sealed historical cards while applying the "
+        "owner-authorized statistical-foundation replan."
+    ),
+    "additions": {
+        "PR-155": ["PR-250", "PR-251"],
+        "PR-156": ["PR-251"],
+        "PR-157": ["PR-252"],
+    },
 }
 
 
@@ -431,11 +484,45 @@ def validate_backlog(data: dict[str, Any]) -> DagInfo:
     if missing_deps:
         raise ValueError(f"missing dependency ids: {missing_deps}")
 
-    computed_order = _stable_topological_order(ids, prereqs)
     policy_raw = data.get("policy")
     if policy_raw is not None and not isinstance(policy_raw, dict):
         raise ValueError("policy must be a mapping")
     policy = policy_raw or {}
+    overlay = policy.get("dependency_overlays")
+    if overlay is not None:
+        if not isinstance(overlay, dict):
+            raise ValueError("policy.dependency_overlays must be a mapping")
+        additions = overlay.get("additions")
+        if not isinstance(additions, dict):
+            raise ValueError(
+                "policy.dependency_overlays.additions must be a mapping"
+            )
+        for pr_id, added_deps in additions.items():
+            if pr_id not in idset:
+                raise ValueError(
+                    f"dependency overlay has unknown target id: {pr_id!r}"
+                )
+            if (
+                not isinstance(added_deps, list)
+                or not all(isinstance(dep, str) for dep in added_deps)
+                or len(added_deps) != len(set(added_deps))
+            ):
+                raise ValueError(
+                    f"dependency overlay for {pr_id} must be a unique string list"
+                )
+            unknown = sorted(set(added_deps) - idset)
+            if unknown:
+                raise ValueError(
+                    f"dependency overlay for {pr_id} has unknown ids: {unknown}"
+                )
+            duplicate = sorted(set(added_deps) & set(prereqs[pr_id]))
+            if duplicate:
+                raise ValueError(
+                    f"dependency overlay for {pr_id} duplicates card edges: {duplicate}"
+                )
+            prereqs[pr_id].extend(added_deps)
+
+    computed_order = _stable_topological_order(ids, prereqs)
     policy_order = policy.get("topological_order")
     if policy_order is not None:
         if not isinstance(policy_order, list) or not all(
@@ -665,6 +752,23 @@ def validate_long_horizon_rescue_slice(
             "process-integrity interruption intake must be atomic; "
             f"missing={sorted(process_ids - actual_process_ids)}"
         )
+    foundation_ids = set(FOUNDATION_CARD_CONTRACTS)
+    actual_foundation_ids = actual_ids & foundation_ids
+    if actual_foundation_ids and not actual_process_ids:
+        raise ValueError(
+            "statistical-foundation cards require the process-integrity card"
+        )
+    if actual_foundation_ids and actual_foundation_ids != foundation_ids:
+        raise ValueError(
+            "statistical-foundation intake must be atomic; "
+            f"missing={sorted(foundation_ids - actual_foundation_ids)}"
+        )
+    if actual_foundation_ids:
+        policy = data.get("policy") or {}
+        if policy.get("dependency_overlays") != FOUNDATION_DEPENDENCY_OVERLAY:
+            raise ValueError(
+                "statistical-foundation dependency overlay drifted"
+            )
     expected_total = (
         RESCUE_WITH_ADVOCATE_CARD_COUNT
         if actual_advocate_ids
@@ -676,6 +780,8 @@ def validate_long_horizon_rescue_slice(
         expected_total += REVIVAL_CARD_COUNT
     if actual_process_ids:
         expected_total += len(PROCESS_INTEGRITY_CARD_CONTRACTS)
+    if actual_foundation_ids:
+        expected_total += len(FOUNDATION_CARD_CONTRACTS)
     if len(info.ids) != expected_total:
         raise ValueError(
             f"strict rescue slice expects {expected_total} total cards, found {len(info.ids)}"
@@ -954,6 +1060,9 @@ def validate_long_horizon_rescue_slice(
     if actual_process_ids:
         _validate_process_integrity_slice(cards)
 
+    if actual_foundation_ids:
+        _validate_foundation_slice(cards)
+
     if status is not None:
         _validate_rescue_status(status, info)
 
@@ -1033,10 +1142,11 @@ def _validate_process_integrity_slice(cards: dict[str, Any]) -> None:
         if card.get("depends") != expected["depends"]:
             raise ValueError(f"{pr_id} process-integrity dependencies drifted")
         contracts = card.get("dependency_contracts")
-        if not isinstance(contracts, list) or contracts != [
+        expected_contracts = [
             {"upstream_id": dep, "mode": "requires_success"}
             for dep in expected["depends"]
-        ]:
+        ]
+        if not isinstance(contracts, list) or contracts != expected_contracts:
             raise ValueError(f"{pr_id} typed dependency projection drifted")
         for field in (
             "change_set_id",
@@ -1076,6 +1186,77 @@ def _validate_process_integrity_slice(cards: dict[str, Any]) -> None:
             raise ValueError(
                 f"{pr_id} must remain internal, spec-first, solver-independent PROCESS work"
             )
+
+
+def _validate_foundation_slice(cards: dict[str, Any]) -> None:
+    """Validate the atomic, claim-limited PR-248..252 foundation intake."""
+
+    for pr_id, expected in FOUNDATION_CARD_CONTRACTS.items():
+        card = cards[pr_id]
+        missing_fields = sorted(
+            (ADVOCATE_REQUIRED_FIELDS | {"track", "solver_gate_required"})
+            - set(card)
+        )
+        if missing_fields:
+            raise ValueError(
+                f"{pr_id} missing statistical-foundation fields: {missing_fields}"
+            )
+        if card.get("depends") != expected["depends"]:
+            raise ValueError(
+                f"{pr_id} dependencies drifted: "
+                f"{card.get('depends')!r} != {expected['depends']!r}"
+            )
+        contracts = card.get("dependency_contracts")
+        expected_contracts = [
+            {
+                "upstream_id": dep,
+                "mode": (
+                    "requires_terminal_receipt"
+                    if pr_id == "PR-248" and dep == "PR-168"
+                    else "requires_success"
+                ),
+            }
+            for dep in expected["depends"]
+        ]
+        if not isinstance(contracts, list) or contracts != expected_contracts:
+            raise ValueError(f"{pr_id} typed dependency projection drifted")
+        for field in ("owner", "change_set_id", "publication_group_id"):
+            if card.get(field) != expected[field]:
+                raise ValueError(
+                    f"{pr_id} {field} drifted: "
+                    f"{card.get(field)!r} != {expected[field]!r}"
+                )
+        if (
+            card.get("execution_lane") != "defensible"
+            or card.get("activation_state") != "PENDING"
+            or card.get("execution_authorization") != "EXPLICIT_USER_AUTHORIZED"
+        ):
+            raise ValueError(f"{pr_id} execution-state contract drifted")
+        if (
+            card.get("scientific_status_on_intake") != "OPEN"
+            or card.get("public_use") is not False
+            or card.get("spec_first_required") is not True
+            or card.get("solver_gate_required") is not False
+            or card.get("track") != "FOUNDATION"
+        ):
+            raise ValueError(
+                f"{pr_id} must remain internal, OPEN, spec-first FOUNDATION work"
+            )
+        if card.get("claim_level") not in (
+            {"scheme": "roadmap_rescue_v1", "level": "C1"},
+            {"scheme": "roadmap_rescue_v1", "level": "C2"},
+        ):
+            raise ValueError(f"{pr_id} has an invalid claim-limited foundation level")
+        if card.get("claim_tier_ceiling") not in {"conditional", "diagnostic_only"}:
+            raise ValueError(f"{pr_id} has an invalid foundation claim ceiling")
+        for field in RESCUE_SEMANTIC_CLAIM_FIELDS:
+            for prose in _iter_strings(card.get(field)):
+                match = BARE_ACTIVE_CLAIM_LEVEL_RE.search(prose)
+                if match:
+                    raise ValueError(
+                        f"{pr_id} {field} contains unqualified roadmap claim level "
+                        f"{match.group(0)!r}"
+                    )
 
 
 def _validate_strengthen_slice(cards: dict[str, Any]) -> None:

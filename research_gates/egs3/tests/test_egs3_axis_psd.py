@@ -69,7 +69,10 @@ class P4ConeShellBracketTests(unittest.TestCase):
     def test_bracket_is_a_convex_shell_excluding_the_flrw_vertex(self):
         s_lo, s_hi = bracket_shell_from_a2a3(5.0, 3.0)
         self.assertGreater(s_lo, 0.0)                    # lower bound is strictly positive
-        cs = cone_shell_membership(sector_matrix((4.0, 0.0, 0.0, 0.0)), s_lo, s_hi)
+        lam_inside = 0.5 * (s_lo + s_hi)
+        cs = cone_shell_membership(
+            sector_matrix((lam_inside, 0.0, 0.0, 0.0)), s_lo, s_hi
+        )
         self.assertTrue(cs.in_shell)
         self.assertTrue(cs.excludes_vertex)
         # the shear-free vertex (lambda_Sigma = 0) is NOT in the shell
@@ -144,30 +147,33 @@ class P6DiagonalScopeGuardTests(unittest.TestCase):
 
 
 class P7ReviewRepairTests(unittest.TestCase):
-    """2026-07 independent-review repairs (P1 units + P2 null-kind).
+    """2026-07 independent-review repairs (P1 units/coefficient + P2 null-kind).
 
     P1: bracket_shell_from_a2a3 must return the SQUARED (Sigma^2-coordinate)
-    image of the linear-shear bracket, and a discriminating eigenvalue between
-    the squared and linear lower bounds must be IN the shell (the pre-repair
-    linear bracket wrongly ejected it).  P2: eigen_identifiability must carry
-    the null-KIND distinction (W2 structural vs Omega_k leading-order)."""
+    image of the PR-128 reciprocal-coefficient authority.  A discriminating
+    eigenvalue admitted by the legacy ``a2*kappa`` lower bound must be ejected
+    by the registered ``a2/kappa`` lower bound.  P2: eigen_identifiability must
+    carry the null-KIND distinction (W2 structural vs Omega_k leading-order)."""
 
     def test_bracket_is_the_square_of_the_linear_bracket(self):
-        from htt.obsstat.egs2_shear_bracket import shear_lower, shear_upper
-        s_lo, s_hi = bracket_shell_from_a2a3(5.0, 3.0)
-        self.assertEqual(s_lo, float(shear_lower(5.0, 3.0)) ** 2)
-        self.assertEqual(s_hi, float(shear_upper(5.0)) ** 2)
+        from fractions import Fraction
+        from common.nt2_bracket_authority import require_bracket_agreement
 
-    def test_discriminating_eigenvalue_between_squared_and_linear_bounds(self):
-        from htt.obsstat.egs2_shear_bracket import shear_lower
-        lo_lin = float(shear_lower(5.0, 3.0))
-        self.assertLess(lo_lin, 1.0)   # squared < linear on (0,1): discriminating
+        lo, hi = require_bracket_agreement(Fraction(5), Fraction(3))
         s_lo, s_hi = bracket_shell_from_a2a3(5.0, 3.0)
-        lam = 0.5 * (lo_lin ** 2 + lo_lin)   # strictly between the two bounds
-        self.assertGreater(lam, s_lo)
-        self.assertLess(lam, lo_lin)         # pre-repair bracket ejected this
+        self.assertEqual(s_lo, float(lo) ** 2)
+        self.assertEqual(s_hi, float(hi) ** 2)
+
+    def test_reciprocal_wrong_lower_bound_mutation_is_ejected(self):
+        from htt.obsstat.egs2_shear_bracket import shear_lower
+
+        legacy_lo_sq = float(shear_lower(5.0, 3.0)) ** 2
+        s_lo, s_hi = bracket_shell_from_a2a3(5.0, 3.0)
+        lam = 0.5 * (legacy_lo_sq + s_lo)
+        self.assertGreater(lam, legacy_lo_sq)
+        self.assertLess(lam, s_lo)
         cs = cone_shell_membership(sector_matrix((lam, 0.0, 0.0, 0.0)), s_lo, s_hi)
-        self.assertTrue(cs.in_shell)
+        self.assertFalse(cs.in_shell)
 
     def test_null_kinds_distinguish_structural_from_leading_order(self):
         ei = eigen_identifiability(sector_matrix((2e-6, 9.9e-6, 8e-7, 9.9e-6)))

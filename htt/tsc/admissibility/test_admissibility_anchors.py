@@ -5,7 +5,8 @@ verdicts, and the domain flags — all BASS-independent, pure algebra.
 
 Cross-package consistency: every bound function in
 ``tsc.admissibility.three_bound_hierarchy`` must match the corresponding
-``htt.core.bounds`` function bit-exact at canonical S1/S2a/S2c ε₁ values.
+``tsc_legacy.htt_core_bounds`` function bit-exact at canonical S1/S2a/S2c
+ε₁ values.
 A drift on either side fires here.
 
 Scope note: TSC's ``Sigma2_max`` uses the *uncorrected* ``B_sigma`` exactly
@@ -42,7 +43,7 @@ from tsc.admissibility.three_bound_hierarchy import (
     evaluate_all_bianchi_types,
 )
 
-from htt.core.bounds import (
+from tsc_legacy.htt_core_bounds import (
     B_accel as htt_B_accel,
     B_omega as htt_B_omega,
     B_sigma as htt_B_sigma,
@@ -109,7 +110,7 @@ def test_Sigma2_max_uncorrected_differs_from_htt_corrected():
     if a refactor ever aliases them, this test fires. Expected relative
     gap at S1: `~2*2.69*eps1 ≈ 6.6e-3` (leading-order frame-bias term).
     """
-    from htt.core.bounds import Sig2_max_MES as htt_sig2_max
+    from tsc_legacy.htt_core_bounds import Sig2_max_MES as htt_sig2_max
 
     tsc_val = Sigma2_max(_S1_EPS1, _EPS2, _EPS3)
     htt_val = htt_sig2_max(_S1_EPS1)

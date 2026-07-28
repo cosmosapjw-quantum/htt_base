@@ -1,4 +1,4 @@
-"""MIO certified filling-fraction contract with sample-wise pushforward."""
+"""Historical MIO F-ratio reproduction with sample-wise pushforward."""
 from __future__ import annotations
 
 from collections.abc import Mapping, Sequence
@@ -6,17 +6,30 @@ from dataclasses import dataclass, field
 import hashlib
 import json
 import math
+import warnings
+
+from common.statistical_foundations import (
+    BC1_LEGACY_PROJECTION,
+    BC2_NO_REPRESENTATION_PROMOTION,
+)
 
 from .budget_spec import BudgetSpec, BudgetUse
 from .departure_bundle import DepartureBundle
 
 
 DEFAULT_F_CAVEAT = (
-    "F is a MIO diagnostic certified filling fraction for a sign-clean sector "
-    "under an admissible positive ceiling; report it with the unsigned "
-    "sector-magnitude companion M and the sector profile. It is not an HTT "
-    "inference quantity, model-selection statistic, solver-validation output, "
-    "material-occupancy claim, or classification."
+    "F is a historical denominator-conditioned MIO diagnostic ratio. It is "
+    "not filling, occupancy, distance, probability, evidence, an identified "
+    "estimand, or a family classifier."
+)
+
+LEGACY_REPRODUCTION_ONLY = True
+
+warnings.warn(
+    "mio.formalism.filling_fraction is a legacy reproduction surface; "
+    "use LegacyProjectionReport and typed sector stress for active analysis",
+    DeprecationWarning,
+    stacklevel=2,
 )
 
 _FORBIDDEN_F_METADATA_TERMS = (
@@ -213,7 +226,7 @@ def _sequence_of_budgets(values: Sequence[BudgetSpec]) -> tuple[BudgetSpec, ...]
 
 @dataclass(frozen=True)
 class CertifiedFillingFraction:
-    """MIO diagnostic ``F`` as sample-wise ``x_C / U`` under certified gates."""
+    """Deprecated compatibility carrier for sample-wise historical ``x_C/U``."""
 
     departure_bundles: tuple[DepartureBundle, ...]
     budget_specs: tuple[BudgetSpec, ...]
@@ -293,9 +306,7 @@ class CertifiedFillingFraction:
                 budget.denominator_value,
                 f"sample {index} U",
             )
-            value = numerator / ceiling
-            if not 0.0 <= value <= 1.0:
-                raise ValueError("F samples must satisfy 0<=F<=1 without clipping")
+            numerator / ceiling
 
         config_hash = (
             _non_empty(self.config_hash, "config_hash")
@@ -322,7 +333,10 @@ class CertifiedFillingFraction:
         if DEFAULT_F_CAVEAT not in caveats:
             caveats = (DEFAULT_F_CAVEAT, *caveats)
         _scan_reserved_language(artifact_metadata, "artifact_metadata")
-        _scan_reserved_language(caveats, "caveats")
+        _scan_reserved_language(
+            tuple(caveat for caveat in caveats if caveat != DEFAULT_F_CAVEAT),
+            "caveats",
+        )
         _scan_reserved_language(
             tuple(budget.denominator_label for budget in budget_specs),
             "budget_spec",
@@ -399,7 +413,22 @@ class CertifiedFillingFraction:
 
     @property
     def F_Bayes(self) -> float:
+        """Deprecated alias; this is an arithmetic mean, not Bayesian."""
+        warnings.warn(
+            "F_Bayes is a deprecated name for mean_samplewise_legacy_F",
+            DeprecationWarning,
+            stacklevel=2,
+        )
+        return self.mean_samplewise_legacy_F
+
+    @property
+    def mean_samplewise_legacy_F(self) -> float:
         return math.fsum(self.f_samples) / self.sample_count
+
+    @property
+    def exceedance_samples(self) -> tuple[float, ...]:
+        """One-way denominator stress retained without clipping or rejection."""
+        return tuple(max(value - 1.0, 0.0) for value in self.f_samples)
 
     @property
     def M_sector_magnitude(self) -> float:
@@ -426,11 +455,24 @@ class CertifiedFillingFraction:
         budget = self.budget_specs[0]
         bundle = self.departure_bundles[0]
         return {
+            "schema": "mio.legacy_projection_f.v2",
             "owner": self.owner,
             "implementation_scope": self.implementation_scope,
             "claim_tier": self.claim_tier,
+            "status": "legacy_reproduction_only",
+            "classification": BC1_LEGACY_PROJECTION,
+            "representation_policy": BC2_NO_REPRESENTATION_PROMOTION,
+            "allowed_use": ["historical reproduction", "threshold diagnostics"],
+            "forbidden_use": [
+                "filling",
+                "occupancy",
+                "distance",
+                "probability",
+                "evidence",
+                "family identification",
+            ],
             "score_label": self.score_label,
-            "score_kind": "certified_filling_fraction",
+            "score_kind": "legacy_denominator_conditioned_ratio",
             "sample_pushforward": "sample_wise",
             "aggregation_method": "sample_mean_of_samplewise_F",
             "ratio_of_means_used": False,
@@ -455,10 +497,15 @@ class CertifiedFillingFraction:
                 "sector-magnitude companion to signed F"
             ),
             "F_definition": (
-                "F = x_C / U for sign-clean samples under an admissible "
-                "MES-linear ceiling; no clipping is applied"
+                "F = x_C / U under the recorded historical denominator "
+                "policy; no clipping is applied"
             ),
-            "F_Bayes": self.F_Bayes,
+            "mean_samplewise_legacy_F": self.mean_samplewise_legacy_F,
+            "exceedance_samples": list(self.exceedance_samples),
+            "legacy_compatibility": {
+                "F_Bayes": self.mean_samplewise_legacy_F,
+                "original_field_semantics": "arithmetic_mean_not_Bayesian",
+            },
             "f_min": min(f_samples),
             "f_max": max(f_samples),
             "m_min": min(m_samples),

@@ -12,6 +12,7 @@ and classifies the feasible-set topology.
 from __future__ import annotations
 
 import itertools
+import math
 from fractions import Fraction
 
 import numpy as np
@@ -45,13 +46,51 @@ def exact_support(
     A: list[list[Fraction]],
     b: list[Fraction],
 ) -> dict:
-    """Exact I_C over the rational polytope {A g <= b} by vertex enumeration.
+    """I_C over ``{A g <= b}``, preserving objective recession explicitly.
 
-    Assumes a bounded polytope (all vertices are intersections of n of the m
-    inequality faces). Returns the exact interval and classification.
+    Finite endpoints remain exact rational vertex values. HiGHS is used only
+    to classify feasibility/recession before the exact endpoint calculation;
+    an unbounded objective is returned as ``+/- inf`` rather than clipped by a
+    synthetic big-M box.
     """
     n = len(c)
     m = len(A)
+    if n == 0 or m == 0 or len(b) != m or any(len(row) != n for row in A):
+        raise ValueError("c, A and b must define a non-empty rectangular system")
+    float_A = [[float(value) for value in row] for row in A]
+    float_b = [float(value) for value in b]
+    float_c = np.asarray([float(value) for value in c], dtype=float)
+    feasibility = linprog(
+        np.zeros(n),
+        A_ub=float_A,
+        b_ub=float_b,
+        bounds=[(None, None)] * n,
+        method="highs",
+    )
+    if feasibility.status == 2:
+        raise InfeasibleError("polyhedron is infeasible")
+    if not feasibility.success:
+        raise RuntimeError(f"HiGHS feasibility classification failed: {feasibility.message}")
+    lower_lp = linprog(
+        float_c,
+        A_ub=float_A,
+        b_ub=float_b,
+        bounds=[(None, None)] * n,
+        method="highs",
+    )
+    upper_lp = linprog(
+        -float_c,
+        A_ub=float_A,
+        b_ub=float_b,
+        bounds=[(None, None)] * n,
+        method="highs",
+    )
+    lower_unbounded = lower_lp.status == 3
+    upper_unbounded = upper_lp.status == 3
+    if not lower_unbounded and not lower_lp.success:
+        raise RuntimeError(f"HiGHS lower support failed: {lower_lp.message}")
+    if not upper_unbounded and not upper_lp.success:
+        raise RuntimeError(f"HiGHS upper support failed: {upper_lp.message}")
     vertices = []
     for combo in itertools.combinations(range(m), n):
         rows = [A[i] for i in combo]
@@ -62,15 +101,29 @@ def exact_support(
         # feasible against all constraints?
         if all(sum(A[i][j] * v[j] for j in range(n)) <= b[i] for i in range(m)):
             vertices.append(v)
-    if not vertices:
-        raise InfeasibleError("no feasible vertex; polytope empty or unbounded")
+    if not vertices and not all(value == 0 for value in c):
+        raise RuntimeError(
+            "feasible support has no exact vertex representation; use the "
+            "recession-aware IdentifiedDepartureSet contract"
+        )
     values = [sum(c[j] * v[j] for j in range(n)) for v in vertices]
-    lo, hi = min(values), max(values)
+    if values:
+        lo = -math.inf if lower_unbounded else min(values)
+        hi = math.inf if upper_unbounded else max(values)
+    else:
+        lo = hi = Fraction(0)
     return {
         "exact_interval": [str(lo), str(hi)],
         "exact_lo": lo,
         "exact_hi": hi,
         "n_vertices": len(vertices),
+        "lower_unbounded": lower_unbounded,
+        "upper_unbounded": upper_unbounded,
+        "topology": (
+            "UNBOUNDED"
+            if lower_unbounded or upper_unbounded
+            else "BOUNDED"
+        ),
     }
 
 

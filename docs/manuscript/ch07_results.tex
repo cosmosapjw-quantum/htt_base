@@ -19,11 +19,11 @@ summaries, we provide a self-contained account of the Bayesian inference
 methodology (Section~\ref{sec:bayes-background}) and the
 likelihood architecture (Section~\ref{sec:evidence-method}).
 The remaining sections present scenario-dependent bounds with
-dual-framing corrections
-(Section~\ref{sec:scenario-tables}), the filling fraction as a
-statistical observable (Section~\ref{sec:filling}), the regular
+historical frame-correction compatibility
+(Section~\ref{sec:scenario-tables}), the conditioned legacy
+normalised ratio (Section~\ref{sec:filling}), the regular
 tensor growing mode (Section~\ref{sec:growing}), the redshift
-evolution of the filling fraction
+evolution of the archived ratio
 (Section~\ref{sec:filling-z}), and the Bayesian evidence
 comparison across the full Bianchi classification
 (Section~\ref{sec:evidence}).  The phase-FB-6 regression closure and
@@ -36,7 +36,7 @@ Chapter~\ref{ch:pipeline}.
 For the revised architecture, legacy Bayes factors are
 sensitivity/provenance records, not headline discoveries.  The
 reader should first apply the method-level identifiability
-theorem, finite-mock calibration rule, channel-matched occupancy
+theorem, finite-mock calibration rule, typed channel-matching
 requirement, data-binding gap report, and rest-frame analysis
 plan and rank gate.  Observer-frame marginalization remains
 pending for archived rest-frame likelihood numbers, so those
@@ -190,16 +190,19 @@ $|\Delta\ln\mathcal{Z}| < 0.2$ in benchmark tests.
 \label{sec:evidence-method}
 % ============================================================
 
-The total log-likelihood decomposes into eight independent
-channels:
+The archived likelihood architecture decomposed into eight
+configured channels:
 \begin{equation}\label{eq:logL-total}
 \ln\mathcal{L}(\boldsymbol{\theta})
 = \sum_{k \in \{a,b,c,d,e,f,g,h\}}
   \ln\mathcal{L}_k(\boldsymbol{\theta})\,.
 \end{equation}
-The default active set is channels (a--f, h); channel~(g) is
-excluded because the hard ceiling~(f) makes it redundant for
-nested sampling.  We now describe each channel.
+The current registered set is (a,b,d,e,f,h): channel~(c) is blocked
+by its observational-input contract and channel~(g) is inert.  The
+current channel~(f) uses only the verified, uncorrected
+\texttt{MES\_G\_SIGMA} shear anchor under its registered geodesic,
+linear, residual-dipole premises.  Historical corrected-shear
+variants are described below for reproduction only.
 
 \paragraph{Channel~(a): Ferreira--Quartin intrinsic dipole.}
 A half-Gaussian upper limit on the intrinsic dipole amplitude:
@@ -283,20 +286,18 @@ $D_2^{\mathrm{obs}}/D_2^{\Lambda\mathrm{CDM}} = 0.196$ is a
 $\sim 2\sigma$ downward fluctuation in the $\chi^2(5)$ model,
 consistent with cosmic variance.
 
-\paragraph{Channel~(f): MES hard ceiling.}
-A hard prior: $\mathcal{L}_f = 0$ (equivalently,
-$\ln\mathcal{L}_f = -\infty$) if
-$\Sigstd > (3/2)[\Bsig^{\mathrm{corr}}(\eps_1)]^2$; otherwise
-$\ln\mathcal{L}_f = 0$.  The frame-corrected shear bound uses
-the total $\eps_1$ (kinematic plus tilt-generated) to compute
-the ceiling.
+\paragraph{Channel~(f): registered shear-anchor consistency.}
+The active implementation sets zero likelihood when the non-negative
+shear coordinate exceeds the verified, uncorrected
+\texttt{MES\_G\_SIGMA} anchor evaluated with the registered residual
+dipole.  This is a one-way test of the named linear premises, not a
+composite $x$ ceiling and not a converse test for FLRW.
 
-\paragraph{Channel~(g): MES soft logistic.}
-A soft alternative to the hard ceiling: $\ln\mathcal{L}_g =
--K\max(0, \Sigstd/\Sigmax - 1)$ with $K = 10$.  This channel
-is inert by default (redundant with~f for nested sampling) but
-available for MCMC exploration where hard boundaries are
-numerically problematic.
+\paragraph{Channel~(g): historical soft anchor stress.}
+The archived soft alternative used a logistic penalty above its
+recorded shear denominator.  It remains inert and is retained only
+for reproduction; it is not an active replacement for the typed
+channel-stress report.
 
 \paragraph{Channel~(h): $D_3$ octupole.}
 Analogous to channel~(e) but for the octupole:
@@ -332,44 +333,25 @@ as enforced by
 \label{sec:scenarios}
 % ============================================================
 
-Table~\ref{tab:scenario-dual} presents the MES bounds and
-departure variables for all observational scenarios, computed with
-the VT-07 frame-attribution corrections throughout.  The table
-employs a dual-framing structure
-(Section~\ref{sec:reframing} of Chapter~\ref{ch:dipole}):
-the conservative reading treats the bounds as upper limits on
-permitted anisotropy, while the progressive reading treats them
-as measurements of FLRW departure.
+Table~\ref{tab:scenario-dual} preserves historical scenario
+values and their recorded denominator policies.  The former
+VT-07 $2.69\epsilon_1$ shear correction is now
+\texttt{WITHHELD\_DERIVATION\_MISMATCH}: it remains visible only
+for legacy reproduction and is not an active typed MES anchor or
+a measurement of FLRW departure.
 
-The frame-attribution correction tightens the safe-route
-$\beta$ by $7.7\%$ across all scenarios, propagating to a
-$14.7\%$ tightening of the tilt defect and a corresponding
-$16\%$ loosening of the MES ceiling $\Sigmax$ (because
-$\Bsig^{\mathrm{corr}} > \Bsig$).  The correction is
-scenario-independent in percentage terms because $\etaud$ is a
-physical constant ($= 1/12$ for $w = 1/3$), not a function of
-the dipole amplitude.
-
-The filling fraction $\FF := \xV / \xmax$ is invariant under
-frame corrections, because both numerator and denominator shift
-by the same factor.%
-\footnote{The invariance is exact for the $\Sigstd$ component of $x$,
-which carries the same MES-induced $R_\sigma$ factor in both
-numerator and denominator.  The $\Otilt$ component does not
-carry the same factor, introducing a $\Teff$-mediated correction
-of relative magnitude $\Delta\FF/\FF \sim 8 \times 10^{-6}$
-(Section~\ref{sec:TAM-vs-Teff}), negligible at current data
-precision.}
-  At the S3 scenario,
-$\FF \approx 6.3\%$ (using $\Omega_{\mathrm{tilt}} =
-\Omega_m\sinh^2\!\beta$, $w = 0$): this is a
-class-conditioned filling diagnostic and legacy
-budget-normalised score relative to the adopted linear MES
-ceiling, not a physical occupancy certificate for the full
-anisotropy budget.  the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery} plots
-the frame-corrected shear bound $\Bsig^{\mathrm{corr}}$
-across the five equation-of-state scenarios, confirming the
-monotonic dependence on the adopted $w$.
+The archived ratio
+$\FF:=\xV/\xmax$ is likewise classified
+\texttt{BC1\_LEGACY\_PROJECTION}.  At the recorded S3 settings it
+is approximately $6.3\%$.  That number is a conditioned legacy
+ratio to the historical denominator, not a filling, occupancy,
+distance, saturation, probability, or evidence statement.
+Refining the representation does not promote its claim tier
+(\texttt{BC2\_NO\_REPRESENTATION\_PROMOTION}).  The conditioned
+legacy figure gallery in
+Appendix~\ref{app:conditioned-legacy-figure-gallery} reproduces
+the historical curves with this status attached; it does not
+reactivate the quarantined correction.
 
 \subsection{Perturbation-sector validation on the shared $k$ grid}
 
@@ -575,8 +557,19 @@ result as a bar chart.
 
 \begin{table}[t]
 \caption{FB-7.5 cosmological-frame evidence summary against the FLRW
-baseline.  Rows marked ``explicit no limit'' are carried forward
-honestly rather than silently treated as FLRW-limit comparisons.}
+baseline.  Owner: HTT.  Claim tier: diagnostic-only.  Artifact mode:
+conditioned legacy.  Classification:
+\texttt{BC1\_LEGACY\_PROJECTION}.
+Representation policy:
+\texttt{BC2\_NO\_REPRESENTATION\_PROMOTION}.  Transfer source:
+historical external/proxy,
+rest-frame.  Null/covariance status: historical fixture only; current
+mask/random, covariance, null, PPC, and held-out validation are absent.
+Allowed use: historical reproduction and method comparison.  Forbidden
+use: current observed-data evidence, native-solver or morphology ranking,
+and Bianchi family identification.  Rows marked ``explicit no limit'' are
+carried forward honestly rather than silently treated as FLRW-limit
+comparisons.}
 \label{tab:fb7_lnB_11types}
 \centering
 \scriptsize
@@ -609,10 +602,11 @@ caption-gate compliance may be promoted into the paper.  At the current
 phase boundary this admits five new `ver2\_generated' figure bases, but
 only two of the five are promoted into the main numerical argument:
 Result Pack~A and Result Pack~D.  Result Pack~A is a
-\ConditionalStatus\ observer-neutral scalar-to-morphology bridge built
-from the BASS observable substrate, atlas substrate, and rank-gated MES
-ceiling.  It does \emph{not} constitute a full directional BiPoSH
-detection, nor does it carry posterior or evidence semantics.  Result
+\ConditionalStatus\ diagnostic morphology-compatibility surface built
+from declared BASS observable and atlas inputs plus registered
+channel-stress status.  It does not promote a scalar claim tier, supply
+a composite MES ceiling, constitute a directional BiPoSH detection, or
+carry posterior or evidence semantics.  Result
 Pack~D is a \ConditionalStatus\ MIO predictive-residual certificate with
 an attached TSC overlay; it remains a diagnostic model--data comparison
 surface and must not be read as truth-certification authority or as HTT posterior
@@ -620,34 +614,33 @@ evidence.
 
 Result Packs~B, C, and E remain \ExploratoryStatus\ surfaces.  Pack~B
 is a local-versus-global degeneracy screen, Pack~C is a descriptive
-departure-card export with uncertified filling language downgraded to a
-proxy score, and Pack~E is a manifest-backed coverage matrix
+legacy-projection card with its historical ratio downgraded to a
+compatibility score, and Pack~E is a manifest-backed coverage matrix
 whose campaigns remain `warn' rather than science gates.  The
 full result-pack to manuscript map and the exploratory figures are
 therefore quarantined to Appendix~\ref{app:ver2-crosswalk}.
 
 
 % ============================================================
-\section{Filling fraction}\label{sec:filling}
+\section{Conditioned legacy normalised ratio}\label{sec:filling}
 \label{sec:filling-fraction}
 % ============================================================
 
-\subsection{Definition and Monte Carlo posterior}
+\subsection{Archived definition and Monte Carlo pushforward}
 \label{sec:filling-mc}
 
-The filling fraction is defined as
+The archived ratio was defined as
 \begin{equation}\label{eq:FF-def}
 \FF := \frac{x_V^{(\mathrm{anomaly})}}{x_V^{(\mathrm{max,MES})}}
 = \frac{(1+w)\Omega_m\sinh^2\!\beta}{(3/2)[\Bsig^{\mathrm{corr}}]^2}\,,
 \end{equation}
-where the numerator is the tilt defect at the observed
-$\beta$ and the denominator is the MES algebraic ceiling.  The
-filling fraction measures a class-conditioned ratio to the
-adopted MES algebraic ceiling; until a channel-matched or joint
-admissible ceiling is supplied it is not an occupancy certificate
-for the full anisotropy budget.
+where the numerator is the recorded tilt contribution and the
+denominator is the historical corrected-shear policy.  The two
+channels do not define a common typed MES saturation.  Equation
+\eqref{eq:FF-def} is retained for historical reproduction only and
+does not define filling, occupancy, distance, or evidence.
 
-The $\FF$ inherits uncertainties from the observational inputs
+The archived $\FF$ distribution inherits uncertainties from the inputs
 $\eps_1$, $\eps_2$, $\eps_3$, and $\beta$.  We propagate these
 by Monte Carlo sampling ($N = 10^5$ draws) from the
 observational likelihoods, computing $\FF$ for each realisation.
@@ -661,23 +654,21 @@ For $w = 1/3$ (radiation), $\FF$ increases by the factor
 $(1 + 1/3) = 4/3$:
 $\FF_{w=1/3} = 0.084^{+0.038}_{-0.031}$.
 
-\subsection{Bayes factor for non-zero filling}
+\subsection{Archived dipole-premise likelihood-ratio label}
 \label{sec:filling-BF}
 
-The Savage--Dickey density ratio gives the Bayes factor for
-$\FF > 0$ versus $\FF = 0$ (exact FLRW).  With the Monte Carlo
-posterior entirely above zero to numerical precision,
-$\mathrm{BF}(\FF > 0) > 5 \times 10^4$ in the legacy
-transfer-conditional calculation.  This is a dipole-premise-conditional
-tilt-compatible preference, not native-transfer evidence, not a
-geometry detection, and not Bianchi family-ID.
+The archived workflow labelled a Savage--Dickey calculation
+$\mathrm{BF}(\FF>0)>5\times10^4$.  Because $\FF=0$ is not
+sufficient for exact FLRW and the ratio uses a quarantined,
+channel-mismatched denominator, this value is not a Bayes factor
+for non-zero physical filling or FLRW departure.  It is preserved
+only as a dipole-premise-conditional likelihood-ratio label under
+the historical model and prior.
 
-We emphasise that this legacy transfer-conditional likelihood-ratio summary is a restatement of the
-$> 5\sigma$ dipole anomaly in the language of departure variables,
-not an independent discovery.  Its value lies in providing a
-dimensionless measure of FLRW departure that is invariant under
-frame corrections and directly comparable across scenarios and
-equation-of-state assumptions.
+This transfer-conditional summary restates the same input dipole
+premise in a legacy coordinate; it is not an independent discovery,
+native-transfer evidence, geometry detection, family
+identification, or representation-driven claim promotion.
 the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery} shows the Monte Carlo
 $\FF$ posterior at the S3 scenario.
 
@@ -726,17 +717,20 @@ the resulting $D_2^{\mathrm{shear}}$ for this mode.
 
 
 % ============================================================
-\section{Redshift evolution}\label{sec:filling-z}
+\section{Archived ratio evolution}\label{sec:filling-z}
 % ============================================================
 
-The filling fraction $\FF(z = 0)$ is a snapshot; its evolution
-with redshift depends on $\beta(z)$.  We consider four
-representative models that span the theoretical range.
+For compatibility define
+$R_{\rm legacy}(z)\equiv\FF(z)$ as the archived
+denominator-conditioned ratio.  Its scenario evolution depends on
+$\beta(z)$.  We consider four illustrative assumptions; none turns
+$R_{\rm legacy}$ into a physical filling or identified estimand.
 
 The \emph{FLRW constant} model assumes $\beta(z) = \beta_0$
 (frozen tilt, appropriate for the radiation era where
 $\dot{\beta} = 0$ at $w = 1/3$; Eq.~\eqref{eq:rad-decay}).
-The filling fraction is constant: $\FF(z) = \FF_0$.
+The archived ratio is constant:
+$R_{\rm legacy}(z)=R_{\rm legacy}(0)$.
 
 The \emph{BV plateau} model assumes
 $\beta(z) = \beta_0(1 + 0.1z)$, a mild growth consistent with
@@ -752,11 +746,13 @@ The \emph{Khronon} model assumes
 $\beta(z) = \beta_0[1 - 0.3z/(1+z)]$, motivated by
 Ho\v{r}ava gravity corrections that modify the tilt propagation.
 
-The isotropy gap $\mathcal{G} := \FF(0)/\FF(z_*)$ measures how
-much the filling fraction changes between the present epoch and
-a reference redshift $z_*$.  Euclid DR1 measurements of the
-number-count dipole at $z \sim 1$--$2$ will provide the first
-empirical constraint on $\mathcal{G}$.
+The archived ratio-evolution diagnostic
+$\mathcal{G}_{\rm legacy}:=\FF(0)/\FF(z_*)$ records how this
+configured ratio changes between the present epoch and a reference
+redshift $z_*$.  It does not measure isotropy, occupancy, distance,
+evidence, or an empirically identified departure estimand.  Future
+depth-resolved data would first require a new typed estimand,
+response, covariance, and matched-null contract.
 the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery} shows $\beta(z)$ and
 $\FF(z)$ for the four representative models.
 
@@ -798,9 +794,18 @@ Section~\ref{sec:cf4-sensitivity}.
 
 \begin{table}[t]
 \caption{Equivalence-class-collapsed Bayes factors (VER06, standard CF4).
-  Within-class $\ln\mathcal{B}$ spread $< 0.02$ nats in all cases.
-  Intra-class differences are prior-volume artifacts with no physical
-  content (Proposition~\ref{prop:FC-no-auto}).}
+  Owner: HTT.  Claim tier: diagnostic-only.  Artifact mode: conditioned
+  legacy.  Classification: \texttt{BC1\_LEGACY\_PROJECTION}.
+  Representation policy:
+  \texttt{BC2\_NO\_REPRESENTATION\_PROMOTION}.  Transfer source:
+  historical external/proxy, rest-frame.
+  Null/covariance status: historical fixture only; current mask/random,
+  covariance, null, PPC, and held-out validation are absent.  Allowed use:
+  historical reproduction and method comparison.  Forbidden use: current
+  observed-data evidence, native-solver or morphology ranking, and Bianchi
+  family identification.  Within-class $\ln\mathcal{B}$ spread $< 0.02$
+  nats in all cases.  Intra-class differences are prior-volume artifacts
+  with no physical content (Proposition~\ref{prop:FC-no-auto}).}
 \label{tab:class-collapsed}
 \centering\footnotesize
 \setlength{\tabcolsep}{3pt}
@@ -994,8 +999,8 @@ $D_2^{\mathrm{obs}} = 225.9\;\mu\mathrm{K}^2$, yielding a mild
 $\chi^2(5)$ penalty of $\Delta\ln\mathcal{B} \approx -1.5$~nats
 relative to FLRW$_{\mathrm{tilt}}$.  The corrected result is
 $\ln\mathcal{B}_{\mathrm{VER05}}(\text{BV tilt}) = +24.8$,
-placing BV~(tilt) in Tier~1 with an
-\textsc{Exploratory} departure-$x$ ceiling
+placing BV~(tilt) in the archived Tier~1 ordering with an
+\textsc{Exploratory} transfer-conditional legacy-denominator status
 (transfer-calibration flag active).
 
 To this end, BV~(tilt) is no longer excluded by the data.
@@ -1124,68 +1129,58 @@ their $x$ is determined entirely by $\Sigstd$, which is
 unconstrained ($\tilde{x} \lesssim 10^{-18}$, i.e., $Q \approx 0$).
 
 
-\subsection{Layer~2: Occupancy ratios}
+\subsection{Layer~2: Conditioned legacy ratios}
 \label{sec:layer2-results}
 
-For the four irrotational tilted models, the occupancy
-$\tilde{Q} = 0.090 \pm 0.002$ across models---roughly $9\%$ of
-the MES algebraic ceiling.  The stability of $Q$ across these
-models, despite different numbers of free parameters,
-confirms that the occupancy is determined by $\beta$ alone.
+For the four archived irrotational tilted runs,
+$\tilde{Q}=0.090\pm0.002$.  The similarity reflects their shared
+input construction and denominator policy; it does not establish
+that a physical occupancy is determined by $\beta$ alone.
 
 We stress a semantic point that the reader should carry through
-the remainder of this chapter.  The ceiling $\xmax =
-\frac{3}{2}\Bsig^2$ is the MES \emph{linear} algebraic bound
-(Definition~\ref{def:ceiling-family}), derived under the
-almost-isotropic linearisation of the Boltzmann hierarchy.  It
-is not a proven nonperturbative supremum of the full admissible
-departure space.  The ratio $Q = x/\xmax$ is therefore a
-\emph{linear-budget-normalised departure score}, not a
-theorem-backed occupancy fraction of a nonperturbative budget.
-The distinction matters only if the true nonperturbative ceiling
-differs substantially from the linear MES value; the $\Teff$
-analysis of Chapter~\ref{ch:teff} bounds this discrepancy to
-$< 10^{-5}$ relative at current data precision, so the
-practical impact is negligible but the logical status is
-$\ConditionalStatus$, not $\ExactStatus$.
+the remainder of this chapter.  The archived denominator $\xmax =
+\frac{3}{2}\Bsig^2$ was constructed by applying the registered
+linear geodesic MES \emph{shear-channel} bound to the shear term
+(Definition~\ref{def:ceiling-family}).  MES supplies that
+channel-specific inequality; it does not make $\xmax$ a joint
+algebraic bound on the composite signed coordinate $x$, nor a
+nonperturbative supremum of an admissible departure space.  Moreover,
+the $2.69\epsilon_1$ correction used by these archived rows is now
+withheld.  Thus $Q=x/\xmax$ is a conditioned legacy ratio, not a
+theorem-backed occupancy fraction; neither a historical $\Teff$
+estimate nor sign-sector membership repairs the channel mismatch.
 
-We report $Q$ only for models whose posterior lies entirely in
-the irrotational non-negative sector
-(Definition~\ref{def:sector-partition}).  For the four
-irrotational tilted models (FLRW$_{\mathrm{tilt}}$, BI, BVIIh,
-BVIIh~grow), the posterior sector mass
-$m_{T,+}^{\mathrm{irr}}(D) = 1.000$ to numerical precision:
-every posterior sample has $W^2 = 0$ and $x > 0$, so the
-occupancy diagnostic is unconditionally valid.  For the
-orthogonal models, $m_{T,+}^{\mathrm{irr}} = 1.000$ as well
-(trivially, since $\Otilt = 0$ and $\Sigstd \geq 0$).
+We report archived $Q$ only with its comparator, denominator,
+transfer, and sign-sector metadata.  A posterior lying in the
+irrotational non-negative sector does not make the ratio
+unconditionally valid as filling, distance, saturation, or
+evidence.
 
 For BIX$_{\mathrm{tilt}}$, the posterior sits entirely in the
 irrotational \emph{negative} sector
 ($m_{T,-}^{\mathrm{irr}} = 1.000$), where $Q$ is undefined
 (Definition~\ref{def:FC}).  We report only the signed
-coordinate $\FC^{\pm} = -211$ for this model, not an
+coordinate $\FC^{\pm} = -211$ for this model, not a distance or
 occupancy.  For BIII$_{\mathrm{tilt}}$, the inactive $\Omega_K$
-parameter inflates $x$ beyond the MES ceiling
-($Q \approx 100$, status \texttt{super\_ceiling}), confirming
-that the occupancy diagnostic is not meaningful when prior-driven
-parameters dominate $x$
+parameter makes $x$ exceed the recorded historical denominator
+($Q \approx 100$, historical status \texttt{super\_ceiling}),
+showing that the old label means only that the recorded ratio exceeds
+its historical denominator policy
 (Table~\ref{tab:Q-status}).
 
 The posterior mean for the sign-clean tilted models is
 $\bar{Q} = 0.092$ with a 95\% HPD
 interval $[0.035, 0.19]$.  Under the assumed physical-dipole
-premise, the conditioned posterior mass lies away from $Q = 0$
-(zero departure) while also concentrating below $Q > 0.2$
-(more than $20\%$ ceiling occupancy).  The allowed diagnostic
-band is narrow; it is not truth-certification authority or a detection claim.
+premise, this is the distribution of the recorded ratio only.
+Neither separation from $Q=0$ nor concentration below $0.2$
+measures distance from FLRW or an occupied anisotropy budget.
 This is an HTT posterior pushforward statement.  The corresponding
-MIO diagnostic $Q$ is the same declared ratio only as a
-model-family-independent diagnostic coordinate and carries no
-posterior, occupancy, or evidence semantics.
+MIO diagnostic $Q$ is the same declared ratio only as a legacy
+diagnostic coordinate and carries no posterior, distance,
+occupancy, or evidence semantics.
 
 
-\subsection{Layer~3: HTT posterior exceedance}
+\subsection{Layer~3: Threshold summaries of the legacy ratio}
 \label{sec:layer3-results}
 
 the conditioned legacy figure gallery in Appendix~\ref{app:conditioned-legacy-figure-gallery} shows the exceedance curves
@@ -1195,18 +1190,17 @@ identical across models within this equivalence class.
 Here $\Pi_{\rm HTT}$ is the HTT posterior exceedance curve for the
 legacy conditioned posterior.  It is distinct from a MIO
 diagnostic exceedance curve $\Pi_{\rm MIO}$, which is an empirical threshold
-summary with no posterior, occupancy, or evidence semantics.
+summary with no posterior, distance, occupancy, or evidence semantics.
 
 At $q_\star = 0.01$: $\Pi_{\rm HTT} = 1.000$ for all tilted models.
 At $q_\star = 0.05$: $\Pi_{\rm HTT} = 0.974$.
 At $q_\star = 0.1$: $\Pi_{\rm HTT} = 0.35$.
 At $q_\star = 0.5$: $\Pi_{\rm HTT} = 0.000$.
 
-The crossover from a strong conditioned-diagnostic label to an
-indeterminate label occurs at $q_\star \approx 0.08$; the historical
-conditioned run says that the
-universe is at least $1\%$ of the way to the MES ceiling but
-probably less than $15\%$.
+The crossover of the archived threshold label occurs at
+$q_\star\approx0.08$.  This says only how often the recorded ratio
+crosses preregistered numerical thresholds; it supplies no physical
+separation or channel-anchor conclusion.
 
 
 \subsection{Derived physical observables}
@@ -1450,12 +1444,21 @@ a native morphology atlas.
 
 \begin{table}[t]
 \centering
-\caption{Scenario-dependent bounds with VT-07 frame-attribution corrections.}
+\caption{Historical scenario values under the quarantined VT-07
+correction, retained for reproduction only.  Owner: HTT.  Claim tier:
+diagnostic-only.  Artifact mode: conditioned legacy.  Classification:
+\texttt{BC1\_LEGACY\_PROJECTION}.  Representation policy:
+\texttt{BC2\_NO\_REPRESENTATION\_PROMOTION}.  Transfer source:
+historical external/proxy, rest-frame.  Null/covariance status:
+historical fixture only; current mask/random, covariance, null, PPC, and
+held-out validation are absent.  Allowed use: historical reproduction
+and method comparison.  Forbidden use: current observed-data evidence,
+native-solver or morphology ranking, and Bianchi family identification.}
 \label{tab:scenario-dual}
 \footnotesize
 \begin{tabular}{lcccc}
 \toprule
-Scenario & $\eps_1$ & $\Bsig^{\mathrm{corr}}$ & $\beta_{\mathrm{sr}}$ & $\FF$ (\%) \\
+Scenario & $\eps_1$ & Historical corrected shear value & $\beta_{\mathrm{sr}}$ & Legacy ratio (\%) \\
 \midrule
 S0  & $0$                   & $1.33 \times 10^{-5}$ & $0$ & $0$ \\
 S1  & $1.233 \times 10^{-3}$ & $2.08 \times 10^{-3}$ & $1.14 \times 10^{-3}$ & $6.3$ \\
@@ -1468,7 +1471,19 @@ S3  & $1.476 \times 10^{-3}$ & $2.48 \times 10^{-3}$ & $1.36 \times 10^{-3}$ & $
 
 \begin{table}[t]
 \centering
-\caption{Conditioned legacy scalar-amplitude/equivalence-class evidence table.  The entries reproduce the historical external-transfer-conditioned run, including the pure-tilt FLRW$_{\mathrm{tilt}}$ row, and are retained as a diagnostic comparison surface only.  They are not a native morphology ranking, Bianchi family-ID claim, or current observed-data evidence claim.}
+\caption{Conditioned legacy scalar-amplitude/equivalence-class evidence
+table.  Owner: HTT.  Claim tier: diagnostic-only.  Artifact mode:
+conditioned legacy.  Classification:
+\texttt{BC1\_LEGACY\_PROJECTION}.  Representation policy:
+\texttt{BC2\_NO\_REPRESENTATION\_PROMOTION}.  Transfer source:
+historical external/proxy,
+rest-frame.  Null/covariance status: historical fixture only; current
+mask/random, covariance, null, PPC, and held-out validation are absent.
+Allowed use: historical reproduction and method comparison.  Forbidden
+use: current observed-data evidence, native-solver or morphology ranking,
+and Bianchi family identification.  The entries reproduce the historical
+external-transfer-conditioned run, including the pure-tilt
+FLRW$_{\mathrm{tilt}}$ row.}
 \label{tab:evidence-grand}
 \footnotesize
 \begin{tabular}{rlcrrl}
@@ -1485,14 +1500,24 @@ Rk & Legacy label & $d$ & $\ln\mathcal{B}$ & $\pm$ & Legacy diagnostic bin \\
 7--13 & Orthogonal (7 types) & 1--2 & $-0.8$ to $-1.1$ & 0.05 & Negligible \\
 \midrule
 14 & BVII$_h$ (orth, grow) & 2 & $-18.7$ & 0.13 & Excluded \\
-15 & BV (tilt) & 3 & $+24.8$ & --- & legacy high-support (exploratory ceiling) \\
+15 & BV (tilt) & 3 & $+24.8$ & --- & legacy high-support (transfer-conditional denominator) \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \begin{table}[t]
 \centering
-\caption{Channel decomposition: $\ln\mathcal{B}$ by data combination.}
+\caption{Channel decomposition: $\ln\mathcal{B}$ by data combination.
+Owner: HTT.  Claim tier: diagnostic-only.  Artifact mode: conditioned
+legacy.  Classification: \texttt{BC1\_LEGACY\_PROJECTION}.
+Representation policy:
+\texttt{BC2\_NO\_REPRESENTATION\_PROMOTION}.  Transfer source:
+historical external/proxy, rest-frame.
+Null/covariance status: historical fixture only; current mask/random,
+covariance, null, PPC, and held-out validation are absent.  Allowed use:
+historical reproduction and method comparison.  Forbidden use: current
+observed-data evidence, native-solver or morphology ranking, and Bianchi
+family identification.}
 \label{tab:decomposition-results}
 \footnotesize
 \begin{tabular}{lrrrrrr}
@@ -1584,7 +1609,7 @@ but only the tomographic diagnostic forecast is currently admitted to
 paper-main use.  Figure~\ref{fig:revision-tomographic-forecast}
 records the depth-template separation design that would be needed to
 stress the local/global degeneracy with DESI and CF4-style tomography.
-The prior-support sensitivity, sigma-beta, and per-channel occupancy
+The prior-support sensitivity, sigma-beta, and per-channel compatibility
 panels are appendix-only diagnostics
 (Appendix~\ref{app:revision-diagnostic-assets}); the finite-null
 rule-of-three panel is external-audit-only.  None of these assets are

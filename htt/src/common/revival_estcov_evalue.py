@@ -9,8 +9,22 @@ Markov's 1/t bound, and a running product crosses 20 at most 5% of the time.
 from __future__ import annotations
 import numpy as np
 
+HARTLAP_INFERENCE_ROLE = "DIAGNOSTIC_COMPARATOR_ONLY"
+
 
 def hartlap_stress(seed=20260721, nrep=3000, m=12, nsim=90) -> dict:
+    for name, value, minimum in (
+        ("seed", seed, 0),
+        ("nrep", nrep, 1),
+        ("m", m, 1),
+        ("nsim", nsim, 2),
+    ):
+        if isinstance(value, (bool, np.bool_)) or not isinstance(
+            value, (int, np.integer)
+        ) or int(value) < minimum:
+            raise ValueError(f"{name} must be an integer >= {minimum}")
+    if nsim <= m + 2:
+        raise ValueError("Hartlap diagnostic requires nsim > m + 2")
     rng = np.random.default_rng(seed)
     alpha = (nsim - m - 2) / (nsim - 1)   # Hartlap factor
     raw, cor = [], []

@@ -32,6 +32,7 @@ PR-120 findings remain OPEN.
 from __future__ import annotations
 
 from typing import Dict
+import warnings
 
 from bass.forward.doppler_boost import DopplerBoostCorrection, analytical_c1
 from bass.forward.teff_forward import theta4_coefficients  # noqa: F401
@@ -43,6 +44,14 @@ from common.mes_successor_registry import current_mes_successor_registry
 
 _MES_SUCCESSOR = current_mes_successor_registry().successor
 _MES_SUCCESSOR_ID = _MES_SUCCESSOR.successor_id
+LEGACY_REPRODUCTION_ONLY = True
+
+warnings.warn(
+    "bass.forward.teff_mes_bounds is WITHHELD_DERIVATION_MISMATCH legacy "
+    "reproduction only",
+    DeprecationWarning,
+    stacklevel=2,
+)
 
 __all__ = [
     'TeffMESBounds',

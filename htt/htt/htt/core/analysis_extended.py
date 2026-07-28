@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""
+"""Legacy unified statistical and evidence analysis.
+
+This module is retained for historical result reproduction.  Its scalar
+ceiling/filling calculations are not active typed statistical-foundation
+outputs.
+
 analysis_extended.py — Unified Statistical & Evidence Analysis
 ==============================================================
 Consolidates VT-09c (filling fraction), VT-09d (growing mode),
@@ -19,12 +24,20 @@ import numpy as np
 import json
 import hashlib
 import platform
+import warnings
 from pathlib import Path
 from typing import Any, Mapping
 
 from htt.core.ssot import C, sigma_H_from_Sig2
-from htt.core.bounds import (B_sigma as B_sigma_lin, B_sigma_corrected, Sig2_max_MES,
-                    eps1_from_beta, beta_safe, Sig2_BV, filling_fraction)
+from tsc_legacy.htt_core_bounds import (
+    B_sigma as B_sigma_lin,
+    B_sigma_corrected,
+    Sig2_BV,
+    Sig2_max_MES,
+    beta_safe,
+    eps1_from_beta,
+    filling_fraction,
+)
 from htt.core.cf4_observational_input import (
     ACTIVE_DEFAULT_CHANNELS,
     OPEN_FINDING_IDS,
@@ -38,6 +51,14 @@ from common.mes_successor_registry import current_mes_successor_registry
 
 _MES_SUCCESSOR = current_mes_successor_registry().successor
 _MES_SUCCESSOR_ID = _MES_SUCCESSOR.successor_id
+LEGACY_REPRODUCTION_ONLY = True
+
+warnings.warn(
+    "htt.core.analysis_extended is a historical reproduction surface; "
+    "new outputs must use typed statistical-foundation reports",
+    DeprecationWarning,
+    stacklevel=2,
+)
 
 __all__ = ['FillingFraction', 'GrowingMode', 'ScenarioTable',
            'ForecastTable', 'EvidenceComparison',

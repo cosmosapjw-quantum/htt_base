@@ -295,12 +295,22 @@ def _dependency_contracts(info: DagInfo, pr_id: str) -> tuple[dict[str, str], ..
         if not isinstance(upstream, str) or mode not in _DEPENDENCY_MODES:
             raise ValueError(f"{pr_id} has invalid typed dependency contract: {contract}")
         contracts.append({"upstream_id": upstream, "mode": str(mode)})
-    if [contract["upstream_id"] for contract in contracts] != list(
-        info.prereqs[pr_id]
-    ):
+    card_dependencies = list(card.get("depends") or [])
+    if [contract["upstream_id"] for contract in contracts] != card_dependencies:
         raise ValueError(
-            f"{pr_id} typed dependency projection must exactly match depends"
+            f"{pr_id} typed dependency projection must exactly match card depends"
         )
+    # Receipt-sealed historical cards keep their in-card dependency contracts
+    # byte-stable. Repository-owned dependency overlays append only
+    # requires-success edges to the effective graph.
+    effective_dependencies = list(info.prereqs[pr_id])
+    if effective_dependencies[: len(card_dependencies)] != card_dependencies:
+        raise ValueError(f"{pr_id} dependency overlay reordered card dependencies")
+    overlay_dependencies = effective_dependencies[len(card_dependencies) :]
+    contracts.extend(
+        {"upstream_id": dependency, "mode": "requires_success"}
+        for dependency in overlay_dependencies
+    )
     return tuple(contracts)
 
 

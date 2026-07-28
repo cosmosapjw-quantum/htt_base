@@ -6,11 +6,15 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
-import subprocess
 from typing import Any
 
+from common.statistical_foundations import (
+    BC1_LEGACY_PROJECTION,
+    BC2_NO_REPRESENTATION_PROMOTION,
+)
 
-SCHEMA_VERSION = "common.result_pack_A_scalar_to_morphology.v1"
+
+SCHEMA_VERSION = "common.result_pack_A_scalar_to_morphology.v2"
 DEFAULT_OUTPUT = Path("docs/generated/result_pack_A.md")
 ARTIFACT_ID = "result_pack_A_scalar_to_morphology"
 ARTIFACT_PATH = "docs/generated/result_pack_A.md"
@@ -27,10 +31,13 @@ INPUT_FILES = (
     "htt/obsstat/morphology.py",
     "htt/obsstat/null_ensembles.py",
     "htt/htt/htt/statistics/mes_information_gain.py",
+    "htt/src/common/statistical_foundations.py",
     "docs/generated/status_snapshot.json",
 )
 DEFAULT_CAVEATS = (
     "diagnostic-only comparison over existing contract-backed report surfaces",
+    "Q/F/Pi rows are BC1_LEGACY_PROJECTION with BC2_NO_REPRESENTATION_PROMOTION",
+    "legacy scalar values are not departure distance, occupancy, probability, or evidence",
     "scalar Q/F/Pi values do not identify geometry or a Bianchi family",
     "morphology and MES features are observer/statistics diagnostics, not native atlas support",
     "native morphology atlas support remains absent",
@@ -59,24 +66,6 @@ def _stable_hash(payload: dict[str, Any]) -> str:
     return "sha256:" + hashlib.sha256(encoded).hexdigest()
 
 
-def _git_state(repo_root: Path) -> str:
-    try:
-        commit = subprocess.check_output(
-            ["git", "rev-parse", "--short", "HEAD"],
-            cwd=repo_root,
-            text=True,
-            stderr=subprocess.DEVNULL,
-        ).strip()
-        dirty = subprocess.run(
-            ["git", "diff", "--quiet"],
-            cwd=repo_root,
-            check=False,
-        ).returncode != 0
-    except (OSError, subprocess.CalledProcessError):
-        return "unknown"
-    return f"{commit}+dirty" if dirty else commit
-
-
 def _load_status_rows(repo_root: Path) -> dict[str, dict[str, Any]]:
     status_path = repo_root / "docs/generated/status_snapshot.json"
     payload = json.loads(status_path.read_text(encoding="utf-8"))
@@ -94,6 +83,19 @@ def _input_hashes(repo_root: Path) -> list[str]:
         path = repo_root / relative
         hashes.append(f"{relative}:{_sha256_file(path)}")
     return hashes
+
+
+def _declared_input_state(input_hashes: list[str]) -> str:
+    """Return a stable source identity without self-referential commit metadata.
+
+    The generated Markdown is deliberately absent from ``INPUT_FILES``.  A
+    Git commit identifier embedded in that same Markdown can never be a stable
+    fixed point: committing the regenerated file changes the identifier again.
+    The declared input-set digest instead binds every source byte consumed by
+    this diagnostic pack and remains checkable after commit.
+    """
+
+    return "declared-input-set:" + _stable_hash({"input_hashes": input_hashes})
 
 
 def _load_legacy_ver2_pack(repo_root: Path) -> dict[str, Any]:
@@ -133,20 +135,38 @@ def _diagnostic_payloads() -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
             "owner": "MIO",
             "source_pr": "PR-056",
             "surface": "DepartureReport.sections.Q",
-            "role": "policy-normalized diagnostic score",
+            "role": "legacy signed policy-normalized ratio",
             "claim_tier": "diagnostic_only",
+            "artifact_mode": "diagnostic_legacy_projection",
+            "transfer_source": "section-bound historical/proxy only",
+            "null_status": "not calibrated in this summary row",
+            "covariance_status": "not bound in this summary row",
+            "status": "legacy_projection_only",
+            "classification": BC1_LEGACY_PROJECTION,
+            "representation_policy": BC2_NO_REPRESENTATION_PROMOTION,
+            "allowed_use": "historical reproduction and signed ratio reporting",
+            "forbidden_use": "departure distance, occupancy, probability, or evidence",
             "required_provenance": "denominator policy and transfer provenance by section",
-            "comparison_use": "scalar compression for side-by-side reporting only",
+            "comparison_use": "legacy scalar compression for side-by-side reporting only",
         },
         {
             "name": "F",
             "owner": "MIO",
             "source_pr": "PR-056",
             "surface": "DepartureReport.sections.F",
-            "role": "certified filling-fraction diagnostic when supplied",
+            "role": "legacy policy-normalized ratio when supplied",
             "claim_tier": "diagnostic_only",
-            "required_provenance": "admissible ceiling budget and samplewise input hashes",
-            "comparison_use": "occupancy-style diagnostic status, not evidence",
+            "artifact_mode": "diagnostic_legacy_projection",
+            "transfer_source": "section-bound historical/proxy only",
+            "null_status": "not calibrated in this summary row",
+            "covariance_status": "not bound in this summary row",
+            "status": "legacy_projection_only",
+            "classification": BC1_LEGACY_PROJECTION,
+            "representation_policy": BC2_NO_REPRESENTATION_PROMOTION,
+            "allowed_use": "historical reproduction and declared ratio reporting",
+            "forbidden_use": "filling, occupancy, saturation, probability, or evidence",
+            "required_provenance": "declared denominator policy and samplewise input hashes",
+            "comparison_use": "legacy ratio status only",
         },
         {
             "name": "Pi",
@@ -155,6 +175,15 @@ def _diagnostic_payloads() -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
             "surface": "DepartureReport.sections.Pi",
             "role": "empirical exceedance curve",
             "claim_tier": "diagnostic_only",
+            "artifact_mode": "diagnostic_legacy_projection",
+            "transfer_source": "section-bound historical/proxy only",
+            "null_status": "not calibrated in this summary row",
+            "covariance_status": "not bound in this summary row",
+            "status": "legacy_projection_only",
+            "classification": BC1_LEGACY_PROJECTION,
+            "representation_policy": BC2_NO_REPRESENTATION_PROMOTION,
+            "allowed_use": "threshold summary of the recorded legacy ratio",
+            "forbidden_use": "truth probability, occupancy, or evidence",
             "required_provenance": "measure kind, thresholds, and source score label",
             "comparison_use": "tail-shape descriptor, not truth probability",
         },
@@ -167,6 +196,19 @@ def _diagnostic_payloads() -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
             "surface": "obsstat.scalar_lowell.LowEllScalarSummary",
             "role": "observer-side scalar feature extraction",
             "claim_tier": "diagnostic_only",
+            "artifact_mode": "diagnostic_observable_features",
+            "readiness_status": "conditional_on_registered_null_binding",
+            "transfer_source": "none_observer_side",
+            "null_status": "required_for_p_values_not_bound_in_summary",
+            "covariance_status": (
+                "required_for_claim_interpretation_not_bound_in_summary"
+            ),
+            "allowed_use": (
+                "feature extraction and explicitly null-calibrated diagnostics"
+            ),
+            "forbidden_use": (
+                "posterior evidence, geometry detection, or family identification"
+            ),
             "required_provenance": "null ensemble and look-elsewhere metadata for p-values",
             "comparison_use": "records scalar feature provenance feeding the upgrade context",
         },
@@ -177,6 +219,17 @@ def _diagnostic_payloads() -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
             "surface": "obsstat.morphology.MorphologyAxisSummary",
             "role": "diagnostic morphology-axis and alignment features",
             "claim_tier": "diagnostic_only",
+            "artifact_mode": "diagnostic_morphology_features",
+            "readiness_status": (
+                "conditional_on_mask_covariance_alignment_null_binding"
+            ),
+            "transfer_source": "none_observer_side",
+            "null_status": "alignment_null_not_bound_in_summary",
+            "covariance_status": "mask_and_covariance_not_bound_in_summary",
+            "allowed_use": "diagnostic morphology and alignment description",
+            "forbidden_use": (
+                "native-atlas equivalence, geometry detection, or family identification"
+            ),
             "required_provenance": "mask, covariance, null, and scan-volume metadata",
             "comparison_use": "morphology descriptors without native atlas or family labels",
         },
@@ -186,7 +239,21 @@ def _diagnostic_payloads() -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
             "source_pr": "PR-092",
             "surface": "htt.statistics.mes_information_gain.MesInformationGainReport",
             "role": "branch-separated MES morphology information-gain report",
-            "claim_tier": "diagnostic_only_or_blocked",
+            "claim_tier": "diagnostic_only",
+            "artifact_mode": "diagnostic_mes_information_gain",
+            "readiness_status": "blocked_pending_matched_source_manifests",
+            "transfer_source": "matched_source_manifest_conditional",
+            "null_status": "not_a_null_calibrated_detection_statistic",
+            "covariance_status": (
+                "matched_covariance_manifest_required_not_bound_in_summary"
+            ),
+            "allowed_use": (
+                "branch-separated conditional information-gain diagnostic"
+            ),
+            "forbidden_use": (
+                "MES converse, FLRW proof, evidence, native-solver validation, "
+                "or family identification"
+            ),
             "required_provenance": "positive finite branch bounds and matched source manifests",
             "comparison_use": "reports template/covariance tightening status under caveats",
         },
@@ -205,6 +272,36 @@ def _comparison_matrix(
                 {
                     "scalar": scalar_item["name"],
                     "morphology_mes": morphology_item["name"],
+                    "scalar_owner": scalar_item["owner"],
+                    "morphology_mes_owner": morphology_item["owner"],
+                    "scalar_claim_tier": scalar_item["claim_tier"],
+                    "morphology_mes_claim_tier": morphology_item["claim_tier"],
+                    "scalar_artifact_mode": scalar_item["artifact_mode"],
+                    "morphology_mes_artifact_mode": (
+                        morphology_item["artifact_mode"]
+                    ),
+                    "scalar_readiness_status": scalar_item["status"],
+                    "morphology_mes_readiness_status": (
+                        morphology_item["readiness_status"]
+                    ),
+                    "scalar_transfer_source": scalar_item["transfer_source"],
+                    "morphology_mes_transfer_source": (
+                        morphology_item["transfer_source"]
+                    ),
+                    "scalar_null_status": scalar_item["null_status"],
+                    "morphology_mes_null_status": morphology_item["null_status"],
+                    "scalar_covariance_status": scalar_item["covariance_status"],
+                    "morphology_mes_covariance_status": (
+                        morphology_item["covariance_status"]
+                    ),
+                    "scalar_allowed_use": scalar_item["allowed_use"],
+                    "morphology_mes_allowed_use": (
+                        morphology_item["allowed_use"]
+                    ),
+                    "scalar_forbidden_use": scalar_item["forbidden_use"],
+                    "morphology_mes_forbidden_use": (
+                        morphology_item["forbidden_use"]
+                    ),
                     "comparison_status": "diagnostic_side_by_side",
                     "allowed_statement": (
                         f"{scalar_item['name']} and {morphology_item['name']} "
@@ -230,6 +327,7 @@ def build_result_pack_payload(
     status_rows = _load_status_rows(root)
     scalar, morphology_mes = _diagnostic_payloads()
     input_hashes = _input_hashes(root)
+    source_state = worktree_state or _declared_input_state(input_hashes)
     legacy_ver2_context = _load_legacy_ver2_pack(root)
     config = {
         "schema_version": SCHEMA_VERSION,
@@ -266,7 +364,7 @@ def build_result_pack_payload(
         "sky_support_status": "not_directional",
         "null_mock_status": "summarized_from_dependency_surfaces",
         "generating_command": generating_command,
-        "git_commit_or_worktree_state": worktree_state or _git_state(root),
+        "git_commit_or_worktree_state": source_state,
         "dependencies": list(DEPENDENCIES),
         "dependency_status": dependency_status,
         "scalar_diagnostics": scalar,
@@ -274,6 +372,8 @@ def build_result_pack_payload(
         "legacy_ver2_context": legacy_ver2_context,
         "comparison_matrix": _comparison_matrix(scalar, morphology_mes),
         "claim_boundaries": {
+            "legacy_scalar_classification": BC1_LEGACY_PROJECTION,
+            "representation_policy": BC2_NO_REPRESENTATION_PROMOTION,
             "native_solver_status": "not_native_solver_output",
             "family_status": "blocked_until_native_morphology_atlas",
             "geometry_status": "blocked_until_native_morphology_atlas",
@@ -291,7 +391,7 @@ def build_result_pack_payload(
             "git_commit": None,
             "config_hash": config_hash,
             "input_hashes": input_hashes,
-            "code_version": worktree_state or _git_state(root),
+            "code_version": source_state,
             "schema_version": SCHEMA_VERSION,
             "caveats": list(DEFAULT_CAVEATS),
             "required_gates": [
@@ -358,9 +458,12 @@ def render_markdown(payload: dict[str, Any]) -> str:
             "",
             (
                 "This is a diagnostic-only comparison pack. It compares scalar "
-                "MIO Q/F/Pi report surfaces with OBSSTAT morphology features and "
-                "COMMON MES I_morph status under explicit caveats. Native "
-                "morphology atlas support remains absent."
+                "MIO Q/F/Pi legacy-projection report surfaces with OBSSTAT "
+                "morphology features and COMMON MES I_morph status under "
+                "explicit caveats. BC1 preserves recorded scalar values and BC2 "
+                "forbids interpreting their representation as distance, "
+                "occupancy, probability, or evidence. Native morphology atlas "
+                "support remains absent."
             ),
             "",
             "## Scalar Diagnostics",
@@ -369,14 +472,36 @@ def render_markdown(payload: dict[str, Any]) -> str:
     )
     lines.extend(
         _table(
-            ("Name", "Owner", "Surface", "Role", "Required Provenance"),
+            (
+                "Name",
+                "Owner",
+                "Classification",
+                "Representation Policy",
+                "Claim Tier",
+                "Artifact Mode",
+                "Transfer Source",
+                "Null Status",
+                "Covariance Status",
+                "Status",
+                "Role",
+                "Allowed Use",
+                "Forbidden Use",
+            ),
             [
                 (
                     item["name"],
                     item["owner"],
-                    item["surface"],
+                    item["classification"],
+                    item["representation_policy"],
+                    item["claim_tier"],
+                    item["artifact_mode"],
+                    item["transfer_source"],
+                    item["null_status"],
+                    item["covariance_status"],
+                    item["status"],
                     item["role"],
-                    item["required_provenance"],
+                    item["allowed_use"],
+                    item["forbidden_use"],
                 )
                 for item in payload["scalar_diagnostics"]
             ],
@@ -385,13 +510,35 @@ def render_markdown(payload: dict[str, Any]) -> str:
     lines.extend(["", "## Morphology And MES Diagnostics", ""])
     lines.extend(
         _table(
-            ("Name", "Owner", "Surface", "Role", "Required Provenance"),
+            (
+                "Name",
+                "Owner",
+                "Claim Tier",
+                "Artifact Mode",
+                "Readiness Status",
+                "Transfer Source",
+                "Null Status",
+                "Covariance Status",
+                "Surface",
+                "Role",
+                "Allowed Use",
+                "Forbidden Use",
+                "Required Provenance",
+            ),
             [
                 (
                     item["name"],
                     item["owner"],
+                    item["claim_tier"],
+                    item["artifact_mode"],
+                    item["readiness_status"],
+                    item["transfer_source"],
+                    item["null_status"],
+                    item["covariance_status"],
                     item["surface"],
                     item["role"],
+                    item["allowed_use"],
+                    item["forbidden_use"],
                     item["required_provenance"],
                 )
                 for item in payload["morphology_mes_diagnostics"]
@@ -401,13 +548,56 @@ def render_markdown(payload: dict[str, Any]) -> str:
     lines.extend(["", "## Comparison Matrix", ""])
     lines.extend(
         _table(
-            ("Scalar", "Morphology/MES", "Status", "Allowed Statement"),
+            (
+                "Scalar",
+                "Morphology/MES",
+                "Scalar Owner",
+                "Morphology/MES Owner",
+                "Scalar Claim Tier",
+                "Morphology/MES Claim Tier",
+                "Scalar Artifact Mode",
+                "Morphology/MES Artifact Mode",
+                "Scalar Readiness Status",
+                "Morphology/MES Readiness Status",
+                "Scalar Transfer Source",
+                "Morphology/MES Transfer Source",
+                "Scalar Null Status",
+                "Morphology/MES Null Status",
+                "Scalar Covariance Status",
+                "Morphology/MES Covariance Status",
+                "Status",
+                "Allowed Statement",
+                "Scalar Allowed Use",
+                "Morphology/MES Allowed Use",
+                "Scalar Forbidden Use",
+                "Morphology/MES Forbidden Use",
+                "Blocked Statement",
+            ),
             [
                 (
                     row["scalar"],
                     row["morphology_mes"],
+                    row["scalar_owner"],
+                    row["morphology_mes_owner"],
+                    row["scalar_claim_tier"],
+                    row["morphology_mes_claim_tier"],
+                    row["scalar_artifact_mode"],
+                    row["morphology_mes_artifact_mode"],
+                    row["scalar_readiness_status"],
+                    row["morphology_mes_readiness_status"],
+                    row["scalar_transfer_source"],
+                    row["morphology_mes_transfer_source"],
+                    row["scalar_null_status"],
+                    row["morphology_mes_null_status"],
+                    row["scalar_covariance_status"],
+                    row["morphology_mes_covariance_status"],
                     row["comparison_status"],
                     row["allowed_statement"],
+                    row["scalar_allowed_use"],
+                    row["morphology_mes_allowed_use"],
+                    row["scalar_forbidden_use"],
+                    row["morphology_mes_forbidden_use"],
+                    row["blocked_statement"],
                 )
                 for row in payload["comparison_matrix"]
             ],

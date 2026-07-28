@@ -64,6 +64,10 @@ import math
 import numpy as np
 from scipy import optimize, stats
 
+from common.statistical_foundations import (
+    im_critical_value as _canonical_im_critical_value,
+)
+
 STATUS_FEASIBLE = "feasible"
 STATUS_EMPTY = "empty"
 STATUS_UNBOUNDED = "unbounded"
@@ -917,22 +921,8 @@ def signed_curvature_branch_reports(y, R, c, lower, upper, *, curvature_index: i
 # ---------------------------------------------------------------------------
 
 def im_critical_value(delta_hat: float, se_max: float, alpha: float = 0.05) -> float:
-    """C_N solving Phi(C_N + delta_hat/se_max) - Phi(-C_N) = 1 - alpha.
-
-    Interpolates between the one-sided z_{1-alpha} (wide interval, delta >> se) and
-    the two-sided z_{1-alpha/2} (point-identified limit, delta = 0)."""
-    delta_hat = max(float(delta_hat), 0.0)
-    alpha = float(alpha)
-    if not (0.0 < alpha < 1.0):
-        raise ValueError("alpha in (0,1)")
-    if se_max <= 0.0:
-        return float(stats.norm.ppf(1.0 - alpha))
-    ratio = delta_hat / float(se_max)
-
-    def f(cn: float) -> float:
-        return stats.norm.cdf(cn + ratio) - stats.norm.cdf(-cn) - (1.0 - alpha)
-
-    return float(optimize.brentq(f, 0.0, 10.0, xtol=1e-12))
+    """Compatibility wrapper around the strict common IM primitive."""
+    return _canonical_im_critical_value(delta_hat, se_max, alpha)
 
 
 def im_interval(x_lo: float, x_hi: float, se_lo: float, se_hi: float,

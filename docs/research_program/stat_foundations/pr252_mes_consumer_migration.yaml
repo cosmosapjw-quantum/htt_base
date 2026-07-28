@@ -1,0 +1,155 @@
+schema: htt.mes_consumer_migration.v1
+authority: PR-252
+allowed_use: exact active-to-legacy migration without rewriting PR-122 or PR-248 history
+claim_effect: none
+
+bindings:
+- consumer_id: htt.core.namespace
+  path: htt/htt/htt/core/__init__.py
+  prior_sha256: bbbb4f6ad6350316524b3f2b0f85489e9b140fa5e86a34c24ba81de39e0cf0c8
+  sha256: 18eb33f4ca39e91dd748475f39cc278cd1810d82296daf404670a5d8faab5b96
+  reason: The active HTT namespace now exports typed anchors and stress reports while keeping historical scalar modules off the eager import surface.
+- consumer_id: htt.core.bounds
+  path: htt/htt/htt/core/bounds.py
+  prior_sha256: 9ef8a57b61e68ebb8977a5650cf9eb732f3fa1bd0d513bfeabde59062116cdeb
+  sha256: bd236a599e3bdb2d75cbef7b0fce5385b42b27c28823be4258efda21dbef683b
+  reason: The active bounds module is now a typed channel-matched facade with no scalar acceleration anchor or corrected shear ceiling.
+- consumer_id: htt.core.evidence_models_R03a
+  path: htt/htt/htt/core/evidence_models_R03a.py
+  prior_sha256: b73e62c8cc4949a3363c249b9bfb50d344d8eef2f4e449315894662574492c19
+  sha256: 75dc3bd8f0fda593a9b28fb3547f98640f07436589fb6226b6174719311c4ed0
+  reason: The active likelihood retains the verified geodesic anchor and removes corrected scalar ceiling helpers from its public module surface.
+
+new_bindings:
+- consumer_id: bass.validation.comparator_policy
+  path: htt/bass/validation/comparator_policy.py
+  sha256: 785237dfa926a61115d160f534e8629cc23c87faf4d5c97899d22111646e0528
+  expected_successor_id: mes.typed-successor.pr124
+  reason: The active comparator reports only signed coordinates and typed channel-matched anchor stress.
+- consumer_id: mio.formalism.namespace
+  path: htt/mio/formalism/__init__.py
+  sha256: 2a7525fb49b119db6df76d591f9c28d02419d9770b7a1086a47bac1473d2909f
+  expected_successor_id: mes.typed-successor.pr124
+  reason: The active MIO namespace exports typed state, identified-set, anchor-stress, and nonlinearity contracts while hiding legacy scalar constructors.
+- consumer_id: mio.reports.statistical_foundation
+  path: htt/mio/reports/statistical_foundation.py
+  sha256: baca2194235ccc03fa3874c0f1745ef1f83a81e44dd82f71f1ce9e702afa36db
+  expected_successor_id: mes.typed-successor.pr124
+  reason: The active result card keeps departure state, identification, anchor stress, legacy projection, nonlinearity, and morphology references as disjoint typed sections.
+
+legacy_reclassifications:
+- consumer_id: bass.atlas.budget_ceiling_optimizer
+  exclusion_id: legacy.bass.atlas.budget_ceiling_optimizer
+  path: htt/bass/atlas/budget_ceiling_optimizer.py
+  prior_sha256: fec33e6fcd768abc809563731ac3828764324a4bd278afb3b5eb0be0ae0c2953
+  sha256: a7194a31b1210a37144227bddf11cd571c303420e885bdb0daf721c2e77ab837
+  reason: Historical scalar denominator optimization retained only through deprecated lazy compatibility access.
+- consumer_id: bass.forward.namespace
+  exclusion_id: legacy.bass.forward.namespace
+  path: htt/bass/forward/__init__.py
+  prior_sha256: 6eb4457c5f352f7303eb99f61e911474e6f87de1de0a243f0812847e180c8633
+  sha256: 88e116bce935fcf4ee8799ffa001c53e311ea8c018b115719ef9e996d4e59dc0
+  reason: The active namespace now exports solver-output contracts only; historical Teff and correction names are lazy deprecated compatibility attributes.
+- consumer_id: bass.forward.doppler_boost
+  exclusion_id: legacy.bass.forward.doppler_boost
+  path: htt/bass/forward/doppler_boost.py
+  prior_sha256: 4f03f76158f5456ed25207f88dda8a04bb532a61013f0e469b8c370c49657f04
+  sha256: dd2c864e01a667b108128531b939e8c2b24a1fe20dad6d8047dfe2e25ad92f73
+  reason: The 2.69 epsilon_1 correction lineage is withheld and preserved only for historical reproduction.
+- consumer_id: bass.forward.teff_mes_bounds
+  exclusion_id: legacy.bass.forward.teff_mes_bounds
+  path: htt/bass/forward/teff_mes_bounds.py
+  prior_sha256: ee891940e2691426b38975dffe5f265174a5317f13f113cf75ae87ca0b2618ee
+  sha256: 589cdf2860902619f2ecca777cd07274a0440ccedded6740d8adb6eac9863541
+  reason: Corrected Teff MES ceilings are WITHHELD_DERIVATION_MISMATCH legacy reproduction only.
+- consumer_id: bass.observational.beta_threshold
+  exclusion_id: legacy.bass.observational.beta_threshold
+  path: htt/bass/observational/beta_threshold.py
+  prior_sha256: faa4e3f7e0184cad556c073654c03a9dee2d4385d2e37772bd3e3e429470b9fa
+  sha256: 0133e424dd9321201b65eb5721c5fc16c6e3e17291f6ce5ab970f6759361a8f9
+  reason: The historical VT-07 beta threshold uses an inactive acceleration relation and is not an active anchor.
+- consumer_id: bass.observational.planck_mes_bounds
+  exclusion_id: legacy.bass.observational.planck_mes_bounds
+  path: htt/bass/observational/planck_mes_bounds.py
+  prior_sha256: e06c1f8659452724054a43a073a969f1c6b17095fb9c0aefb2e6cf5f6491a7e3
+  sha256: 4e2d861fc8c031e18126d016a1c7a8722b66402cea8ec880f025d5ef13f287f4
+  reason: Historical mixed scalar MESBounds including four-acceleration remain available only for reproduction and constants.
+- consumer_id: htt.core.analysis_extended
+  exclusion_id: legacy.htt.core.analysis_extended
+  path: htt/htt/htt/core/analysis_extended.py
+  prior_sha256: 7946a9359a3459448b1508d95aa7204fdfe36de5598352d9c14605fd5eeadefb
+  sha256: 89685ea13910e078f04d1237431c8ce568e3fab3a1f68ae88aabf7e8df9bb216
+  reason: Historical scalar x over x_max scenario and evidence reports are explicit legacy reproduction.
+- consumer_id: htt.core.departure_posteriors
+  exclusion_id: legacy.htt.core.departure_posteriors
+  path: htt/htt/htt/core/departure_posteriors.py
+  prior_sha256: 86abda3ab073700cd3f8382617821093c4dad7b04d03ce5bf5cc2bbbd2e8afe9
+  sha256: 96cd53ac94226dbeb9677d839d840b06d7914da034e1edf010eb3399ccc02363
+  reason: Historical HTT x Q Pi posterior pushforwards are explicit legacy reproduction and no longer activate on htt.core import.
+- consumer_id: htt.core.teff_extended
+  exclusion_id: legacy.htt.core.teff_extended
+  path: htt/htt/htt/core/teff_extended.py
+  prior_sha256: 67ce36f51a4ae2cafac0b4b5cb10bb5105aac6c2fcd60492aaf238e21f5f465b
+  sha256: 1ad9cb9cf773e486b62dfde3b6cc02f1b4e92e1cca4dbf8fdfd2c9f1acb98adb
+  reason: Nonlinear Teff scalar corrections use frozen legacy coefficients and do not provide active anchors.
+- consumer_id: htt.figures.constraint_volume_3d
+  exclusion_id: legacy.htt.figures.constraint_volume_3d
+  path: htt/htt/htt/figures/fig_3D_constraint_volume.py
+  prior_sha256: aaaa365750dc107e0c27f34839e4119fa6ac31ea22b18329c076ed9fd9137dca
+  sha256: aaaa365750dc107e0c27f34839e4119fa6ac31ea22b18329c076ed9fd9137dca
+  reason: Frozen historical figure source; not an active result or anchor consumer.
+- consumer_id: htt.figures.projection_atlas_4d
+  exclusion_id: legacy.htt.figures.projection_atlas_4d
+  path: htt/htt/htt/figures/fig_4D_projection_atlas.py
+  prior_sha256: 87fda67ef4135f962f5d57344bafdcc4e489d6ada0636ebe0957d5e3a99dddc9
+  sha256: 87fda67ef4135f962f5d57344bafdcc4e489d6ada0636ebe0957d5e3a99dddc9
+  reason: Frozen historical figure source; not an active result or anchor consumer.
+- consumer_id: htt.figures.mes_three_bounds
+  exclusion_id: legacy.htt.figures.mes_three_bounds
+  path: htt/htt/htt/figures/fig_MES_three_bounds.py
+  prior_sha256: c78c36be6c50aa8d9346d83af5bf02c400c54c2183ce2dd7d3b7256e66b7d494
+  sha256: c78c36be6c50aa8d9346d83af5bf02c400c54c2183ce2dd7d3b7256e66b7d494
+  reason: Frozen historical three-bound figure; not an active authority consumer.
+- consumer_id: htt.figures.nonlinear_heatmap_vorticity_accel
+  exclusion_id: legacy.htt.figures.nonlinear_heatmap_vorticity_accel
+  path: htt/htt/htt/figures/fig_nonlinear_heatmap_vorticity_accel.py
+  prior_sha256: 4e0158d2a49299b5b1cb1f5837d3b54aefcc0033f44939349a4a49fe0dc0ef18
+  sha256: 4e0158d2a49299b5b1cb1f5837d3b54aefcc0033f44939349a4a49fe0dc0ef18
+  reason: Frozen historical acceleration-correction figure; not an active authority consumer.
+- consumer_id: htt.figures.sigma_accel_contour
+  exclusion_id: legacy.htt.figures.sigma_accel_contour
+  path: htt/htt/htt/figures/fig_sigma_accel_contour.py
+  prior_sha256: 61b245cce5119e9c8b819a680cdd58f7a0e6959e4d5c813937aeed99928ac4a4
+  sha256: 61b245cce5119e9c8b819a680cdd58f7a0e6959e4d5c813937aeed99928ac4a4
+  reason: Frozen historical acceleration-contour figure; not an active authority consumer.
+- consumer_id: htt.figures.sigma_omega_contour
+  exclusion_id: legacy.htt.figures.sigma_omega_contour
+  path: htt/htt/htt/figures/fig_sigma_omega_contour.py
+  prior_sha256: 42e3c5a3dd30d7584c8e00c8b4ddb570239366b6087f0fe8d1fff1f8b4e5974f
+  sha256: 42e3c5a3dd30d7584c8e00c8b4ddb570239366b6087f0fe8d1fff1f8b4e5974f
+  reason: Frozen historical shear-vorticity figure; not an active authority consumer.
+- consumer_id: htt.figures.type_by_type_summary
+  exclusion_id: legacy.htt.figures.type_by_type_summary
+  path: htt/htt/htt/figures/fig_type_by_type_summary.py
+  prior_sha256: face5b75033a109179cf1f33c257141b40c7ea888dfc603022323007f3972cb5
+  sha256: face5b75033a109179cf1f33c257141b40c7ea888dfc603022323007f3972cb5
+  reason: Frozen historical type-summary figure; not an active family-identification surface.
+- consumer_id: htt.figures.vorticity_hierarchy
+  exclusion_id: legacy.htt.figures.vorticity_hierarchy
+  path: htt/htt/htt/figures/fig_vorticity_hierarchy.py
+  prior_sha256: 71530d4d92622551105adadd5dd4a968642af6f153533a88620ce9d4b9cfb1b6
+  sha256: 71530d4d92622551105adadd5dd4a968642af6f153533a88620ce9d4b9cfb1b6
+  reason: Frozen historical vorticity-hierarchy figure; not an active authority consumer.
+- consumer_id: mio.core.ceiling_families
+  exclusion_id: legacy.mio.core.ceiling_families
+  path: htt/mio/core/ceiling_families.py
+  prior_sha256: 4e57adcaa6bfef1353ab143c33090984da418df6ff6685f06d023df4285e19f1
+  sha256: bb26763ce7ce5b851411b59541f5546f801a191b374e85ce002b7b9fa96f9cd7
+  reason: Historical scalar ceiling-family formulas certify no active family and normalize no active result.
+
+exclusion_bindings:
+- exclusion_id: tsc.admissibility.three_bound_hierarchy
+  path: htt/tsc/admissibility/three_bound_hierarchy.py
+  prior_sha256: cc3ba841a4b61ac10a1d7a82e56b96391afcd81d8bd169bd8ca33940c7cf671e
+  sha256: 281a35d1bd2a54f0aef236ffda0f33b4154e1e31eeb096eb209b2af1924af33a
+  reason: The exact historical hierarchy now imports its compatibility cross-check from tsc_legacy while remaining non-authoritative reproduction.

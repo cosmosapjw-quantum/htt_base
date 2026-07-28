@@ -1,4 +1,4 @@
-"""Tests for the active MIO ceiling-family registry."""
+"""Tests for the quarantined legacy MIO ceiling-family registry."""
 from __future__ import annotations
 
 import pytest
@@ -25,14 +25,18 @@ def test_registry_contains_expected_operational_families():
 def test_certified_and_blocked_filters_are_disjoint():
     certified = certified_families()
     blocked = blocked_families()
-    assert certified
+    assert certified == {}
     assert blocked
     assert set(certified).isdisjoint(blocked)
     assert all(
-        family.status in (CeilingStatus.NUMERICALLY_CERTIFIED, CeilingStatus.THEOREM_GRADE)
-        for family in certified.values()
+        family.status
+        in (
+            CeilingStatus.BLOCKED,
+            CeilingStatus.LEGACY_REPRODUCTION,
+            CeilingStatus.NO_MES_ANCHOR,
+        )
+        for family in blocked.values()
     )
-    assert all(family.status == CeilingStatus.BLOCKED for family in blocked.values())
 
 
 def test_lookup_rejects_unknown_family():

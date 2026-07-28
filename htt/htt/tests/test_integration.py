@@ -90,9 +90,10 @@ class TestHTTIntegrationAdapters:
 
     def test_to_mio_builds_bundle(self):
         from htt.integration.to_mio import build_posterior_bundle
-        bundle = build_posterior_bundle()
+        bundle = build_posterior_bundle(legacy_reproduction=True)
         assert bundle.x_median >= 0
         assert bundle.ln_B_total > 0  # Pipeline has positive evidence
+        assert bundle.Pi_hpd68 == pytest.approx((0.05, 0.22))
 
 
 class TestDirectionalLowell:

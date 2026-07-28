@@ -18,6 +18,13 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Optional, Sequence, Tuple
 
+from common.statistical_foundations import (
+    BC1_LEGACY_PROJECTION,
+    BC2_NO_REPRESENTATION_PROMOTION,
+    DiagnosticScalarReport,
+    LegacyProjectionReport,
+    ScalarRange,
+)
 from mio.interface.manifest import MioPrerequisites, assess_mio_readiness
 from mio.interface.mio_certificate import build_mio_certificate, certificate_to_payload
 from workspace.contracts.mio_certificate import MioCertificate
@@ -25,8 +32,24 @@ from workspace.contracts.tsc_overlay import TscAdequacyOverlay
 
 
 DEFAULT_DOMAIN_CAVEAT = (
-    "x_C is a transfer-level composite estimate; upstream component "
-    "calibration must be validated separately."
+    "x_C is BC1_LEGACY_PROJECTION: an exact signed Gauss/Friedmann budget "
+    "coordinate under its recorded inputs, not a departure distance, "
+    "identified estimand, probability, occupancy, or evidence."
+)
+
+_XC_ALLOWED_USE = (
+    "historical reproduction",
+    "signed budget-coordinate reporting",
+    "component bookkeeping audit",
+)
+_XC_FORBIDDEN_USE = (
+    "departure distance",
+    "identified estimand",
+    "probability",
+    "occupancy",
+    "evidence",
+    "claim-tier promotion",
+    "family identification",
 )
 
 
@@ -44,15 +67,31 @@ class XCInputs:
     omega_k_aniso_sigma: float = 0.0
 
     def __post_init__(self) -> None:
-        for name in (
+        sigma_names = {
             "sigma2_mio_sigma",
             "w2_sigma",
             "omega_tilt_sigma",
             "omega_k_aniso_sigma",
+        }
+        for name in (
+            "sigma2_mio",
+            "sigma2_mio_sigma",
+            "w2",
+            "w2_sigma",
+            "omega_tilt",
+            "omega_tilt_sigma",
+            "omega_k_aniso",
+            "omega_k_aniso_sigma",
         ):
-            value = float(getattr(self, name))
-            if value < 0.0:
+            raw = getattr(self, name)
+            if isinstance(raw, bool) or not isinstance(raw, (int, float)):
+                raise TypeError(f"{name} must be a finite real number")
+            value = float(raw)
+            if not math.isfinite(value):
+                raise ValueError(f"{name} must be finite; got {value}")
+            if name in sigma_names and value < 0.0:
                 raise ValueError(f"{name} must be >= 0; got {value}")
+            object.__setattr__(self, name, value)
 
 
 @dataclass(frozen=True)
@@ -70,6 +109,13 @@ class XCReport:
     w2_sigma: float
     omega_tilt_sigma: float
     omega_k_aniso_sigma: float
+    legacy_projection: LegacyProjectionReport
+    owner: str = "MIO"
+    status: str = "diagnostic_only"
+    classification: str = BC1_LEGACY_PROJECTION
+    representation_policy: str = BC2_NO_REPRESENTATION_PROMOTION
+    allowed_use: tuple[str, ...] = _XC_ALLOWED_USE
+    forbidden_use: tuple[str, ...] = _XC_FORBIDDEN_USE
 
 
 def departure_parameter_estimate(inputs: XCInputs) -> Tuple[float, float]:
@@ -90,9 +136,17 @@ def departure_parameter_estimate(inputs: XCInputs) -> Tuple[float, float]:
 
 
 def estimate_xc_report(inputs: XCInputs) -> XCReport:
-    """Return the full direct-estimate report."""
+    """Return the unchanged value inside an explicit BC1/BC2 report."""
     x_c, sigma_x = departure_parameter_estimate(inputs)
     significance = abs(x_c) / sigma_x if sigma_x > 0.0 else float("inf")
+    legacy_projection = LegacyProjectionReport(
+        x_C=DiagnosticScalarReport(
+            name="x_C",
+            value_range=ScalarRange(x_c, x_c),
+            status=BC1_LEGACY_PROJECTION,
+            null_calibration="not_applicable_legacy_signed_coordinate",
+        )
+    )
     return XCReport(
         x_c=x_c,
         sigma_x=sigma_x,
@@ -105,6 +159,7 @@ def estimate_xc_report(inputs: XCInputs) -> XCReport:
         w2_sigma=float(inputs.w2_sigma),
         omega_tilt_sigma=float(inputs.omega_tilt_sigma),
         omega_k_aniso_sigma=float(inputs.omega_k_aniso_sigma),
+        legacy_projection=legacy_projection,
     )
 
 
@@ -112,9 +167,9 @@ def to_mio_certificate(
     report: XCReport,
     *,
     probe_name: str = "FLRW",
-    channel: str = "xc_direct",
+    channel: str = "xc_legacy_projection",
     domain_caveats: Optional[Sequence[str]] = None,
-    generated_by: str = "mio.tension.xc_estimator v0.1",
+    generated_by: str = "mio.tension.xc_estimator v0.2",
     input_data_hashes: Optional[Sequence[str]] = None,
     config_hash: Optional[str] = None,
     artifact_path: str = "artifacts/mio/mio_xc_direct_estimate_v1.json",
@@ -127,10 +182,10 @@ def to_mio_certificate(
         "x_C_sigma": float(report.sigma_x),
         "x_C_significance_sigma": float(report.significance_sigma),
     }
-    adequacy = {
-        "x_C_abs_gt_2sigma": bool(report.significance_sigma >= 2.0),
-        "x_C_abs_gt_3sigma": bool(report.significance_sigma >= 3.0),
-    }
+    # A z-like component-uncertainty ratio is retained in ``departure`` for
+    # byte/value compatibility, but it is not an adequacy or claim-promotion
+    # gate.  BC1/BC2 therefore authorizes no sigma-threshold flags.
+    adequacy: dict[str, bool] = {}
     consistency = {
         "sigma2_mio": float(report.sigma2_mio),
         "w2": float(report.w2),
@@ -148,20 +203,23 @@ def to_mio_certificate(
     readiness = assess_mio_readiness(MioPrerequisites(eligible_for_production=False))
 
     return build_mio_certificate(
-        report_type="flrw_tension",
+        report_type="legacy_projection",
         probe_name=probe_name,
         channel=channel,
         departure_variables=departure,
         adequacy_indicators=adequacy,
         consistency_metrics=consistency,
         domain_caveats=caveats,
-        reduction_status="theory-approximate",
+        reduction_status="diagnostic-only",
         generated_by=generated_by,
         input_data_hashes=list(input_data_hashes) if input_data_hashes else [],
         config_hash=config_hash,
         htt_cross_check_suggested={
             "compare_to": "htt.core.advanced_diagnostics.redshift_tomography_report_artifact",
-            "expected_relation": "non-zero x_C should coincide with directional-depth tension, not replace it",
+            "expected_relation": (
+                "component bookkeeping audit only; no non-zero-x_C tension, "
+                "distance, occupancy, source, or morphology implication"
+            ),
         },
         tsc_overlay=tsc_overlay,
         tsc_overlay_ref=tsc_overlay_ref,
@@ -169,8 +227,14 @@ def to_mio_certificate(
         artifact_id="mio.xc_direct_estimate.certificate",
         artifact_path=artifact_path,
         statistics_definitions={
-            "report_type": "flrw_tension",
+            "report_type": "legacy_projection",
             "channel": channel,
+            "owner": report.owner,
+            "status": report.status,
+            "classification": report.classification,
+            "representation_policy": report.representation_policy,
+            "allowed_use": list(report.allowed_use),
+            "forbidden_use": list(report.forbidden_use),
         },
     )
 
@@ -183,7 +247,7 @@ def emit_xc_direct_estimate_artefact(
     inputs: XCInputs,
     *,
     probe_name: str = "FLRW",
-    channel: str = "xc_direct",
+    channel: str = "xc_legacy_projection",
     domain_caveats: Optional[Sequence[str]] = None,
     input_data_hashes: Optional[Sequence[str]] = None,
     tsc_overlay: TscAdequacyOverlay | None = None,
@@ -210,11 +274,12 @@ def emit_xc_direct_estimate_artefact(
     )
 
     payload = {
-        "schema_version": "v1",
+        "schema_version": "v2",
         "inputs": asdict(inputs),
         "report": asdict(report),
         "certificate": certificate_to_payload(cert),
     }
+    payload = json.loads(json.dumps(payload, allow_nan=False, sort_keys=True))
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True), encoding="utf-8")
     return payload
 

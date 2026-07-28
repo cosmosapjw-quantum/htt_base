@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""
+"""Legacy nonlinear T_eff reproduction.
+
+The formulas below remain available for frozen historical artifacts.  They
+are not active MES authority and cannot provide current anchors or evidence.
+
 teff_extended.py — Unified Nonlinear T_eff Module
 ==================================================
 Consolidates VN-01 (vorticity moment map), VN-01b (nonlinear mixing),
@@ -16,6 +20,7 @@ Classes:
 Convention: VA-02 (Σ²_std = σ_{ab}σ^{ab}/(6H²))
 """
 import numpy as np
+import warnings
 from scipy.special import legendre
 from scipy.integrate import solve_ivp
 
@@ -33,6 +38,13 @@ _MES_LEGACY_COEFFS = legacy_reproduction_coefficients()
 _C_SIG1, _C_SIG2, _C_SIG3 = (float(c) for c in _MES_LEGACY_COEFFS["sigma"])
 _C_OM1, _C_OM2, _C_OM3 = (float(c) for c in _MES_LEGACY_COEFFS["omega"])
 _C_AC1, _C_AC2, _C_AC3 = (float(c) for c in _MES_LEGACY_COEFFS["accel"])
+LEGACY_REPRODUCTION_ONLY = True
+
+warnings.warn(
+    "htt.core.teff_extended is a legacy reproduction surface",
+    DeprecationWarning,
+    stacklevel=2,
+)
 
 __all__ = ['TeffMomentMap', 'EllMixingMatrix', 'EinsteinTeffODE',
            'NonlinearCorrection', 'DefectPropagation']

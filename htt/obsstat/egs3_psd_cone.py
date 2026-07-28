@@ -245,9 +245,15 @@ def bracket_shell_from_a2a3(a2: float, a3: float) -> tuple[float, float]:
     through the (monotone on Sigma >= 0) square before being compared with
     ``lambda_Sigma``; both `shear_lower` and `shear_upper` are nonnegative by
     construction, so the endpoint order is preserved."""
-    from htt.obsstat.egs2_shear_bracket import shear_lower, shear_upper
-    lo = max(float(shear_lower(a2, a3)), 0.0)
-    hi = float(shear_upper(a2))
+    from fractions import Fraction
+
+    from common.nt2_bracket_authority import require_bracket_agreement
+
+    lo_exact, hi_exact = require_bracket_agreement(
+        Fraction(str(a2)), Fraction(str(a3))
+    )
+    lo = max(float(lo_exact), 0.0)
+    hi = float(hi_exact)
     return lo * lo, hi * hi
 
 

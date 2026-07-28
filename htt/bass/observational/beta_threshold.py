@@ -46,6 +46,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from enum import Enum
 from typing import Optional
+import warnings
 
 from bass.observational.planck_mes_bounds import (
     MESBounds,
@@ -62,6 +63,14 @@ from common.mes_successor_registry import current_mes_successor_registry
 
 _MES_SUCCESSOR = current_mes_successor_registry().successor
 _MES_SUCCESSOR_ID = _MES_SUCCESSOR.successor_id
+LEGACY_REPRODUCTION_ONLY = True
+
+warnings.warn(
+    "bass.observational.beta_threshold preserves the historical VT-07 "
+    "derivation and is not an active MES anchor",
+    DeprecationWarning,
+    stacklevel=2,
+)
 
 
 # ============================================================================

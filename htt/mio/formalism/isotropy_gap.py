@@ -1,4 +1,10 @@
-"""MIO G_F depth-gap contract with explicit depth-bin provenance."""
+"""Legacy MIO G_F depth-gap reproduction with explicit provenance.
+
+This module preserves the historical scalar diagnostic for exact replay.  It
+is deliberately absent from the active :mod:`mio.formalism` namespace.  New
+analysis must use typed state, identified-set, nonlinearity, and morphology
+reports instead of treating a depth ratio as an isotropy estimand.
+"""
 from __future__ import annotations
 
 from collections.abc import Mapping, Sequence
@@ -7,10 +13,21 @@ import hashlib
 import json
 import math
 import re
+import warnings
 from typing import Any
 
 from .budget_spec import BudgetUse
 from .filling_fraction import CertifiedFillingFraction
+
+
+LEGACY_REPRODUCTION_ONLY = True
+
+warnings.warn(
+    "mio.formalism.isotropy_gap is a legacy reproduction surface; "
+    "G_F is not an active isotropy or local/global estimand",
+    DeprecationWarning,
+    stacklevel=2,
+)
 
 
 DEFAULT_DEPTH_BIN_CAVEAT = (
@@ -470,7 +487,7 @@ class DepthBinFRecord:
 
     @property
     def f_value(self) -> float:
-        return self.filling_fraction.F_Bayes
+        return self.filling_fraction.mean_samplewise_legacy_F
 
     @property
     def x_C_mean(self) -> float:
@@ -551,7 +568,7 @@ class DepthBinFRecord:
     def as_payload(self) -> dict[str, object]:
         return {
             "bin_id": self.bin_id,
-            "F_Bayes": self.f_value,
+            "mean_samplewise_legacy_F": self.f_value,
             "f_samples": list(self.filling_fraction.f_samples),
             "x_C_samples": list(self.filling_fraction.x_C_samples),
             "x_C_mean": self.x_C_mean,
@@ -567,6 +584,10 @@ class DepthBinFRecord:
             "config_hash": self.config_hash,
             "input_hashes": list(self.input_hashes),
             "caveats": list(self.caveats),
+            "legacy_compatibility": {
+                "F_Bayes": self.f_value,
+                "status": "LEGACY_REPRODUCTION",
+            },
         }
 
 
@@ -794,8 +815,9 @@ class IsotropyGap:
             "mean_summary_is_decompositional": False,
             "mean_summary_note": (
                 "Mean x_C and denominator deltas summarize per-bin centers only; "
-                "F_Bayes is the mean of sample-wise ratios, so sample-wise arrays "
-                "are the provenance for denominator-evolution effects."
+                "mean_samplewise_legacy_F is the arithmetic mean of sample-wise "
+                "ratios, so sample-wise arrays are the provenance for historical "
+                "denominator-evolution effects."
             ),
             "x_C_by_bin": {
                 record.bin_id: record.x_C_mean for record in self.depth_bin_records
@@ -966,22 +988,21 @@ def build_isotropy_gap(
     )
 
 
-_GF_EVOLUTION_BOUND_TOKENS = frozenset({"bound", "explicit"})
-
-
 def classify_gf_evolution_model(
     *,
     model_kind: str,
     selection_covariance_status: str,
     boltzmann_or_gr_status: str,
+    response_rank_receipt: Mapping[str, object] | None = None,
 ) -> dict[str, Any]:
-    """Classify a G_F evolution curve as a registered model or a blocked toy.
+    """Fail closed on historical G_F local/global interpretation.
 
-    A G_F evolution curve may be shown as a registered phenomenological model
-    only if its evolution equation, redshift-bin covariance, and selection
-    transfer status are explicit. A toy beta(z) law, or any unbound evolution or
-    selection status, remains a blocked toy curve and is not a local/global
-    discriminator.
+    The old three-string policy was not an executable discrimination
+    contract.  A diagnostic candidate now requires a measured full-rank
+    response receipt bound to transfer, mask, covariance, all three nuisance
+    blocks, and matched-null/FPR checks.  Even then this function grants only a
+    legacy diagnostic-candidate label; it never promotes G_F into an active
+    local/global discriminator.
     """
 
     kind = str(model_kind).strip().lower()
@@ -991,26 +1012,59 @@ def classify_gf_evolution_model(
     blocked_reasons: list[str] = []
     if "toy" in kind:
         blocked_reasons.append("toy_evolution_law")
-    if boltzmann not in _GF_EVOLUTION_BOUND_TOKENS:
+    if boltzmann not in {"bound", "explicit"}:
         blocked_reasons.append("evolution_equation_not_bound")
-    if selection not in _GF_EVOLUTION_BOUND_TOKENS:
+    if selection not in {"bound", "explicit"}:
         blocked_reasons.append("redshift_bin_covariance_or_selection_not_bound")
+    receipt = dict(response_rank_receipt or {})
+    required_text = (
+        "transfer_id",
+        "mask_id",
+        "covariance_id",
+        "local_block_id",
+        "global_block_id",
+        "systematics_block_id",
+    )
+    if receipt.get("status") != "MEASURED":
+        blocked_reasons.append("response_rank_not_measured")
+    for field_name in required_text:
+        if not str(receipt.get(field_name, "")).strip():
+            blocked_reasons.append(f"{field_name}_missing")
+    try:
+        rank = int(receipt["rank"])
+        dimension = int(receipt["parameter_dimension"])
+    except (KeyError, TypeError, ValueError):
+        blocked_reasons.append("response_rank_or_dimension_invalid")
+        rank = -1
+        dimension = 0
+    else:
+        if dimension <= 0 or rank < dimension:
+            blocked_reasons.append("response_not_full_rank")
+    if receipt.get("matched_null_status") != "matched_calibrated":
+        blocked_reasons.append("matched_null_not_calibrated")
+    if receipt.get("fpr_status") != "passed":
+        blocked_reasons.append("false_positive_rate_not_passed")
 
-    allowed = not blocked_reasons
+    candidate_ready = not blocked_reasons
     return {
         "owner": "MIO",
         "implementation_scope": "mio",
         "model_kind": model_kind,
         "selection_covariance_status": selection_covariance_status,
         "boltzmann_or_gr_status": boltzmann_or_gr_status,
-        "claim_tier": "blocked" if blocked_reasons else "registered_phenomenological",
-        "local_global_discriminator_allowed": allowed,
+        "claim_tier": (
+            "diagnostic_candidate"
+            if candidate_ready
+            else "blocked"
+        ),
+        "local_global_discriminator_allowed": False,
+        "diagnostic_candidate_ready": candidate_ready,
+        "response_rank_receipt": receipt,
         "blocked_reasons": blocked_reasons,
         "caveats": [
-            "G_F evolution is a blocked toy curve unless registered",
-            "a registered model requires explicit evolution equation, "
-            "redshift-bin covariance, and selection transfer status",
-            "G_F evolution is not a local/global discriminator while blocked",
+            "G_F is a historical scalar diagnostic, not an isotropy estimand",
+            "string labels alone never authorize local/global discrimination",
+            "a complete receipt permits only a diagnostic candidate",
         ],
     }
 

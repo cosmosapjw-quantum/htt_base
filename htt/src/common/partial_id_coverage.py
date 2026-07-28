@@ -16,21 +16,17 @@ import numpy as np
 from scipy.optimize import brentq
 from scipy.stats import beta, norm
 
+from common.statistical_foundations import im_critical_value
+
 
 def im_constant(delta_over_sigma: float, alpha: float) -> float:
     """Solve Phi(C + Delta/sigma) - Phi(-C) = 1 - alpha for C (Imbens-Manski)."""
-    target = 1.0 - alpha
-
-    def f(c: float) -> float:
-        return norm.cdf(c + delta_over_sigma) - norm.cdf(-c) - target
-
-    # C is between the one-sided z_{1-alpha} and the two-sided z_{1-alpha/2}
-    lo = norm.ppf(1.0 - alpha) - 1e-6
-    hi = norm.ppf(1.0 - alpha / 2.0) + 1e-6
-    return float(brentq(f, lo, hi))
+    return im_critical_value(delta_over_sigma, 1.0, alpha)
 
 
 def im_interval(lo_hat: float, hi_hat: float, sigma: float, alpha: float) -> tuple[float, float]:
+    if not np.isfinite(sigma) or sigma <= 0.0:
+        raise ValueError("sigma must be finite and positive")
     delta = max(hi_hat - lo_hat, 0.0)
     c = im_constant(delta / sigma, alpha)
     return lo_hat - c * sigma, hi_hat + c * sigma
@@ -69,6 +65,22 @@ def coverage_mc(
     Identified set [theta_lo, theta_hi] = [-w, w]; the true point is the
     least-favorable boundary theta0 = w (worst case for one-sided coverage).
     """
+    if method not in {"im", "point_gaussian", "naive"}:
+        raise ValueError("method must be one of: im, point_gaussian, naive")
+    if isinstance(reps, (bool, np.bool_)) or not isinstance(
+        reps, (int, np.integer)
+    ) or reps <= 0:
+        raise ValueError("reps must be a positive integer")
+    if isinstance(seed, (bool, np.bool_)) or not isinstance(
+        seed, (int, np.integer)
+    ):
+        raise ValueError("seed must be an integer")
+    if not np.isfinite(half_width) or half_width < 0.0:
+        raise ValueError("half_width must be finite and non-negative")
+    if not np.isfinite(sigma) or sigma <= 0.0:
+        raise ValueError("sigma must be finite and positive")
+    if not np.isfinite(alpha) or not 0.0 < alpha < 1.0:
+        raise ValueError("alpha must lie in (0, 1)")
     rng = np.random.default_rng(seed)
     w = half_width
     theta0 = w  # least-favorable boundary
@@ -83,7 +95,7 @@ def coverage_mc(
             a, b = im_interval(lo_hat, hi_hat, sigma, alpha)
         elif method == "point_gaussian":
             a, b = point_gaussian_interval(lo_hat, hi_hat, sigma, alpha)
-        else:
+        elif method == "naive":
             a, b = naive_interval(lo_hat, hi_hat, sigma, alpha)
         if a <= theta0 <= b:
             covered += 1

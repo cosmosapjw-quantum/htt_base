@@ -4,8 +4,13 @@ import importlib.util
 import json
 from pathlib import Path
 import subprocess
+import sys
 
 from common.artifact_manifest import validate_manifest_payload
+from common.statistical_foundations import (
+    BC1_LEGACY_PROJECTION,
+    BC2_NO_REPRESENTATION_PROMOTION,
+)
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -45,6 +50,36 @@ def test_pack_a_payload_compares_scalar_and_morphology_surfaces():
         "Pi",
     }
     assert {item["owner"] for item in payload["scalar_diagnostics"]} == {"MIO"}
+    assert {
+        item["classification"] for item in payload["scalar_diagnostics"]
+    } == {BC1_LEGACY_PROJECTION}
+    assert {
+        item["representation_policy"] for item in payload["scalar_diagnostics"]
+    } == {BC2_NO_REPRESENTATION_PROMOTION}
+    assert {
+        item["status"] for item in payload["scalar_diagnostics"]
+    } == {"legacy_projection_only"}
+    assert {
+        (
+            item["claim_tier"],
+            item["artifact_mode"],
+            item["transfer_source"],
+            item["null_status"],
+            item["covariance_status"],
+        )
+        for item in payload["scalar_diagnostics"]
+    } == {
+        (
+            "diagnostic_only",
+            "diagnostic_legacy_projection",
+            "section-bound historical/proxy only",
+            "not calibrated in this summary row",
+            "not bound in this summary row",
+        )
+    }
+    scalar_text = json.dumps(payload["scalar_diagnostics"], sort_keys=True).lower()
+    assert "certified filling-fraction" not in scalar_text
+    assert "occupancy-style" not in scalar_text
     assert {"OBSSTAT", "COMMON"} <= {
         item["owner"] for item in payload["morphology_mes_diagnostics"]
     }
@@ -72,6 +107,98 @@ def test_pack_a_payload_compares_scalar_and_morphology_surfaces():
         item["current_public_production_status"] == "diagnostic_only"
         for item in payload["legacy_ver2_context"]["artifacts"]
     )
+    required_local_fields = {
+        "claim_tier",
+        "artifact_mode",
+        "readiness_status",
+        "transfer_source",
+        "null_status",
+        "covariance_status",
+        "allowed_use",
+        "forbidden_use",
+    }
+    assert all(
+        required_local_fields <= set(item)
+        and all(str(item[field]).strip() for field in required_local_fields)
+        for item in payload["morphology_mes_diagnostics"]
+    )
+    mes_row = next(
+        item
+        for item in payload["morphology_mes_diagnostics"]
+        if item["name"] == "MES I_morph"
+    )
+    assert mes_row["claim_tier"] == "diagnostic_only"
+    assert mes_row["artifact_mode"] == "diagnostic_mes_information_gain"
+    assert mes_row["readiness_status"].startswith("blocked_")
+
+    comparison_local_fields = {
+        "scalar_owner",
+        "morphology_mes_owner",
+        "scalar_claim_tier",
+        "morphology_mes_claim_tier",
+        "scalar_artifact_mode",
+        "morphology_mes_artifact_mode",
+        "scalar_readiness_status",
+        "morphology_mes_readiness_status",
+        "scalar_transfer_source",
+        "morphology_mes_transfer_source",
+        "scalar_null_status",
+        "morphology_mes_null_status",
+        "scalar_covariance_status",
+        "morphology_mes_covariance_status",
+        "scalar_allowed_use",
+        "morphology_mes_allowed_use",
+        "scalar_forbidden_use",
+        "morphology_mes_forbidden_use",
+        "blocked_statement",
+    }
+    scalar_by_name = {
+        item["name"]: item for item in payload["scalar_diagnostics"]
+    }
+    morphology_by_name = {
+        item["name"]: item for item in payload["morphology_mes_diagnostics"]
+    }
+    for row in payload["comparison_matrix"]:
+        assert comparison_local_fields <= set(row)
+        assert all(str(row[field]).strip() for field in comparison_local_fields)
+        scalar = scalar_by_name[row["scalar"]]
+        morphology = morphology_by_name[row["morphology_mes"]]
+        assert row["scalar_owner"] == scalar["owner"]
+        assert row["morphology_mes_owner"] == morphology["owner"]
+        assert row["scalar_claim_tier"] == scalar["claim_tier"]
+        assert row["morphology_mes_claim_tier"] == morphology["claim_tier"]
+        assert row["scalar_artifact_mode"] == scalar["artifact_mode"]
+        assert (
+            row["morphology_mes_artifact_mode"]
+            == morphology["artifact_mode"]
+        )
+        assert row["scalar_readiness_status"] == scalar["status"]
+        assert (
+            row["morphology_mes_readiness_status"]
+            == morphology["readiness_status"]
+        )
+        assert row["scalar_transfer_source"] == scalar["transfer_source"]
+        assert (
+            row["morphology_mes_transfer_source"]
+            == morphology["transfer_source"]
+        )
+        assert row["scalar_null_status"] == scalar["null_status"]
+        assert row["morphology_mes_null_status"] == morphology["null_status"]
+        assert row["scalar_covariance_status"] == scalar["covariance_status"]
+        assert (
+            row["morphology_mes_covariance_status"]
+            == morphology["covariance_status"]
+        )
+        assert row["scalar_allowed_use"] == scalar["allowed_use"]
+        assert (
+            row["morphology_mes_allowed_use"]
+            == morphology["allowed_use"]
+        )
+        assert row["scalar_forbidden_use"] == scalar["forbidden_use"]
+        assert (
+            row["morphology_mes_forbidden_use"]
+            == morphology["forbidden_use"]
+        )
     assert all(
         item["legacy_readiness_status"] == "legacy_not_current"
         for item in payload["legacy_ver2_context"]["artifacts"]
@@ -89,6 +216,24 @@ def test_pack_a_payload_compares_scalar_and_morphology_surfaces():
     assert "mio certificate" not in text
 
 
+def test_pack_a_default_source_identity_is_content_addressed_and_stable():
+    module = _load_module()
+
+    first = module.build_result_pack_payload(
+        repo_root=REPO_ROOT,
+        generating_command="unit-test",
+    )
+    second = module.build_result_pack_payload(
+        repo_root=REPO_ROOT,
+        generating_command="unit-test",
+    )
+
+    identity = first["git_commit_or_worktree_state"]
+    assert identity.startswith("declared-input-set:sha256:")
+    assert second["git_commit_or_worktree_state"] == identity
+    assert first["manifest"]["code_version"] == identity
+
+
 def test_pack_a_markdown_has_manifest_and_caveated_comparison():
     module = _load_module()
     payload = module.build_result_pack_payload(
@@ -103,6 +248,81 @@ def test_pack_a_markdown_has_manifest_and_caveated_comparison():
     assert "owner: COMMON" in markdown
     assert "claim_tier: diagnostic_only" in markdown
     assert "| Q | MIO |" in markdown
+    assert BC1_LEGACY_PROJECTION in markdown
+    assert BC2_NO_REPRESENTATION_PROMOTION in markdown
+    scalar_rows = {
+        name: next(
+            line
+            for line in markdown.splitlines()
+            if line.startswith(f"| {name} | MIO |")
+        )
+        for name in ("Q", "F", "Pi")
+    }
+    assert all(
+        BC1_LEGACY_PROJECTION in row
+        and BC2_NO_REPRESENTATION_PROMOTION in row
+        and "diagnostic_only" in row
+        and "diagnostic_legacy_projection" in row
+        and "section-bound historical/proxy only" in row
+        and "not calibrated in this summary row" in row
+        and "not bound in this summary row" in row
+        for row in scalar_rows.values()
+    )
+    morphology_rows = {
+        item["name"]: next(
+            line
+            for line in markdown.splitlines()
+            if line.startswith(f"| {item['name']} | {item['owner']} |")
+        )
+        for item in payload["morphology_mes_diagnostics"]
+    }
+    for item in payload["morphology_mes_diagnostics"]:
+        row = morphology_rows[item["name"]]
+        for field in (
+            "claim_tier",
+            "artifact_mode",
+            "readiness_status",
+            "transfer_source",
+            "null_status",
+            "covariance_status",
+            "allowed_use",
+            "forbidden_use",
+        ):
+            assert item[field] in row
+    comparison_rows = {
+        (item["scalar"], item["morphology_mes"]): next(
+            line
+            for line in markdown.splitlines()
+            if line.startswith(
+                f"| {item['scalar']} | {item['morphology_mes']} |"
+            )
+        )
+        for item in payload["comparison_matrix"]
+    }
+    for item in payload["comparison_matrix"]:
+        row = comparison_rows[(item["scalar"], item["morphology_mes"])]
+        for field in (
+            "scalar_owner",
+            "morphology_mes_owner",
+            "scalar_claim_tier",
+            "morphology_mes_claim_tier",
+            "scalar_artifact_mode",
+            "morphology_mes_artifact_mode",
+            "scalar_readiness_status",
+            "morphology_mes_readiness_status",
+            "scalar_transfer_source",
+            "morphology_mes_transfer_source",
+            "scalar_null_status",
+            "morphology_mes_null_status",
+            "scalar_covariance_status",
+            "morphology_mes_covariance_status",
+            "scalar_allowed_use",
+            "morphology_mes_allowed_use",
+            "scalar_forbidden_use",
+            "morphology_mes_forbidden_use",
+            "blocked_statement",
+        ):
+            assert item[field] in row
     assert "| MES I_morph | COMMON |" in markdown
     assert "bass.ver2.export.solver_core_output_tier_b.atlas_lite" in markdown
     assert "prior_context_only" in markdown
@@ -123,7 +343,7 @@ def test_pack_a_cli_dry_run_does_not_write_output(tmp_path):
 
     result = subprocess.run(
         [
-            str(REPO_ROOT / "venv/bin/python"),
+            sys.executable,
             str(SCRIPT_PATH),
             "--dry-run",
             "--output",
@@ -146,7 +366,7 @@ def test_pack_a_cli_writes_report(tmp_path):
 
     result = subprocess.run(
         [
-            str(REPO_ROOT / "venv/bin/python"),
+            sys.executable,
             str(SCRIPT_PATH),
             "--output",
             str(output),
@@ -168,7 +388,7 @@ def test_pack_a_cli_check_detects_drift(tmp_path):
 
     write_result = subprocess.run(
         [
-            str(REPO_ROOT / "venv/bin/python"),
+            sys.executable,
             str(SCRIPT_PATH),
             "--output",
             str(output),
@@ -182,7 +402,7 @@ def test_pack_a_cli_check_detects_drift(tmp_path):
 
     check_result = subprocess.run(
         [
-            str(REPO_ROOT / "venv/bin/python"),
+            sys.executable,
             str(SCRIPT_PATH),
             "--check",
             "--output",
@@ -199,7 +419,7 @@ def test_pack_a_cli_check_detects_drift(tmp_path):
     output.write_text(output.read_text(encoding="utf-8") + "\nmanual drift\n")
     stale_result = subprocess.run(
         [
-            str(REPO_ROOT / "venv/bin/python"),
+            sys.executable,
             str(SCRIPT_PATH),
             "--check",
             "--output",
@@ -212,3 +432,20 @@ def test_pack_a_cli_check_detects_drift(tmp_path):
     )
     assert stale_result.returncode == 1
     assert "stale result pack" in stale_result.stdout
+
+
+def test_repository_pack_a_is_current():
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(SCRIPT_PATH),
+            "--check",
+        ],
+        cwd=REPO_ROOT,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert "up-to-date" in result.stdout

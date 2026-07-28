@@ -95,11 +95,11 @@ def test_f_valid_certified_samplewise_pushforward() -> None:
 
     assert dataclasses.is_dataclass(f)
     assert f.f_samples == pytest.approx((0.2, 0.5))
-    assert f.F_Bayes == pytest.approx(0.35)
+    assert f.mean_samplewise_legacy_F == pytest.approx(0.35)
     assert f.sector_magnitude_companion_samples == pytest.approx((0.2, 0.5))
     assert f.M_sector_magnitude == pytest.approx(0.35)
     assert payload["score_label"] == "F"
-    assert payload["score_kind"] == "certified_filling_fraction"
+    assert payload["score_kind"] == "legacy_denominator_conditioned_ratio"
     assert payload["sample_pushforward"] == "sample_wise"
     assert payload["aggregation_method"] == "sample_mean_of_samplewise_F"
     assert payload["ratio_of_means_used"] is False
@@ -136,8 +136,8 @@ def test_f_bayes_is_sample_mean_not_ratio_of_means() -> None:
     ratio_of_means = ((1.0 + 9.0) / 2.0) / ((2.0 + 90.0) / 2.0)
 
     assert f.f_samples == pytest.approx((0.5, 0.1))
-    assert f.F_Bayes == pytest.approx(0.3)
-    assert f.F_Bayes != pytest.approx(ratio_of_means)
+    assert f.mean_samplewise_legacy_F == pytest.approx(0.3)
+    assert f.mean_samplewise_legacy_F != pytest.approx(ratio_of_means)
     assert f.as_payload()["ratio_of_means_used"] is False
 
 
@@ -222,14 +222,16 @@ def test_f_rejects_bundle_budget_metadata_mismatch() -> None:
         )
 
 
-def test_f_rejects_super_ceiling_values_without_clipping() -> None:
-    with pytest.raises(ValueError, match="0<=F<=1"):
-        build_certified_filling_fraction(
-            (_bundle(1.1),),
-            (_budget(1.0),),
-            generating_command=_GENERATING_COMMAND,
-            worktree_state=_WORKTREE_STATE,
-        )
+def test_f_preserves_super_anchor_stress_without_clipping() -> None:
+    result = build_certified_filling_fraction(
+        (_bundle(1.1),),
+        (_budget(1.0),),
+        generating_command=_GENERATING_COMMAND,
+        worktree_state=_WORKTREE_STATE,
+    )
+    assert result.f_samples == pytest.approx((1.1,))
+    assert result.exceedance_samples == pytest.approx((0.1,))
+    assert result.as_payload()["status"] == "legacy_reproduction_only"
 
 
 def test_f_allows_closed_interval_boundaries() -> None:
@@ -456,32 +458,26 @@ def test_f_payload_requires_generation_and_worktree_provenance() -> None:
         )
 
 
-def test_f_payload_has_no_inference_or_family_surface() -> None:
-    payload_text = json.dumps(
-        build_certified_filling_fraction(
-            (_bundle(0.2),),
-            (_budget(1.0),),
-            generating_command=_GENERATING_COMMAND,
-            worktree_state=_WORKTREE_STATE,
-        ).as_payload(),
-        sort_keys=True,
-    ).lower()
+def test_f_payload_marks_inference_and_family_uses_forbidden() -> None:
+    payload = build_certified_filling_fraction(
+        (_bundle(0.2),),
+        (_budget(1.0),),
+        generating_command=_GENERATING_COMMAND,
+        worktree_state=_WORKTREE_STATE,
+    ).as_payload()
 
-    for forbidden in (
-        "posterior",
-        "evidence",
-        "family_id",
-        "geometry",
-        "native_validated",
-        "physical occupancy",
-    ):
-        assert forbidden not in payload_text
+    assert payload["classification"] == "BC1_LEGACY_PROJECTION"
+    assert payload["representation_policy"] == "BC2_NO_REPRESENTATION_PROMOTION"
+    forbidden = set(payload["forbidden_use"])
+    assert {"occupancy", "probability", "evidence", "family identification"} <= forbidden
+    assert "posterior_summary" not in payload
 
 
-def test_formalism_package_exports_filling_fraction_contract() -> None:
+def test_active_formalism_hides_legacy_filling_fraction_contract() -> None:
     import mio.formalism as formalism
+    import mio.legacy_projection as legacy
 
-    assert formalism.CertifiedFillingFraction is CertifiedFillingFraction
-    assert formalism.build_certified_filling_fraction is (
-        build_certified_filling_fraction
-    )
+    assert not hasattr(formalism, "CertifiedFillingFraction")
+    assert not hasattr(formalism, "build_certified_filling_fraction")
+    assert legacy.CertifiedFillingFraction is CertifiedFillingFraction
+    assert legacy.build_certified_filling_fraction is build_certified_filling_fraction

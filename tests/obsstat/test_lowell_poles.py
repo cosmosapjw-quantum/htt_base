@@ -12,17 +12,57 @@ from scipy.linalg import expm
 
 from obsstat.lowell_poles import (
     AntipodalAxis,
+    IMPLEMENTED_HARMONIC_CONVENTION,
+    LowEllPoleAnalysisSpec,
     LowEllPoleEstimate,
     MIN_NUMERICAL_GAP_TOLERANCE,
     PoleDefinition,
     PoleStatus,
     angular_momentum_power_tensor,
-    estimate_lowell_pole,
+    estimate_lowell_pole as _estimate_lowell_pole,
+    estimate_lowell_pole_from_power_tensor,
     mean_squared_multipole_alignment,
+    scalar_alm_inversion_phase,
+    transform_antipodal_axis_o3,
+    transform_power_tensor_o3,
 )
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
+TEST_HARMONIC_CONVENTION = IMPLEMENTED_HARMONIC_CONVENTION
+
+
+def _analysis_spec(
+    *,
+    definition: PoleDefinition | str,
+    gap_tolerance: float,
+    coordinate_frame: str = "registered test frame",
+) -> LowEllPoleAnalysisSpec:
+    return LowEllPoleAnalysisSpec(
+        ell_values=(1, 2, 3, 4, 5),
+        definition=PoleDefinition(definition),
+        gap_tolerance=gap_tolerance,
+        coordinate_frame=coordinate_frame,
+        harmonic_convention=TEST_HARMONIC_CONVENTION,
+    )
+
+
+def estimate_lowell_pole(
+    *,
+    alm_by_lm,
+    ell: int,
+    definition: PoleDefinition | str,
+    gap_tolerance: float,
+) -> LowEllPoleEstimate:
+    """Test adapter that always binds the active API to an analysis spec."""
+    return _estimate_lowell_pole(
+        alm_by_lm=alm_by_lm,
+        ell=ell,
+        analysis_spec=_analysis_spec(
+            definition=definition,
+            gap_tolerance=gap_tolerance,
+        ),
+    )
 
 
 def _alm_mapping(ell: int, coefficients: np.ndarray) -> dict[tuple[int, int], complex]:
@@ -105,30 +145,52 @@ def _pole_estimate(
     axis: AntipodalAxis | None,
     *,
     definition: PoleDefinition = PoleDefinition.MAX_ANGULAR_MOMENTUM,
+    coordinate_frame: str = "registered test frame",
 ) -> LowEllPoleEstimate:
-    if axis is None:
-        return LowEllPoleEstimate(
-            ell=ell,
-            definition=definition,
-            status=PoleStatus.UNDETERMINED,
-            axis=None,
-            eigenvalues=(0.2, 0.4, 0.4),
-            selection_gap=0.0,
-            gap_tolerance=MIN_NUMERICAL_GAP_TOLERANCE,
-        )
-    selection_gap = {
-        PoleDefinition.MAX_ANGULAR_MOMENTUM: 0.3,
-        PoleDefinition.MIN_ANGULAR_MOMENTUM: 0.2,
-        PoleDefinition.ANISOTROPY_TENSOR: 1.0 / 30.0,
-    }[definition]
-    return LowEllPoleEstimate(
-        ell=ell,
+    analysis_spec = _analysis_spec(
         definition=definition,
-        status=PoleStatus.IDENTIFIED,
-        axis=axis,
-        eigenvalues=(0.1, 0.3, 0.6),
-        selection_gap=selection_gap,
         gap_tolerance=MIN_NUMERICAL_GAP_TOLERANCE,
+        coordinate_frame=coordinate_frame,
+    )
+    if axis is None:
+        return estimate_lowell_pole_from_power_tensor(
+            power_tensor=(
+                (0.2, 0.0, 0.0),
+                (0.0, 0.4, 0.0),
+                (0.0, 0.0, 0.4),
+            ),
+            ell=ell,
+            analysis_spec=analysis_spec,
+        )
+    values = (0.1, 0.3, 0.6)
+    if definition is PoleDefinition.MAX_ANGULAR_MOMENTUM:
+        scores = np.asarray(values)
+    elif definition is PoleDefinition.MIN_ANGULAR_MOMENTUM:
+        scores = -np.asarray(values)
+    else:
+        scores = np.abs(np.asarray(values) - float(np.mean(values)))
+    score_order = np.argsort(scores, kind="stable")
+    selection_gap = float(
+        scores[int(score_order[-1])] - scores[int(score_order[-2])]
+    )
+    selected_index = (
+        0
+        if definition is PoleDefinition.MIN_ANGULAR_MOMENTUM
+        else 2
+    )
+    selected = np.asarray(axis.representative)
+    seed = np.eye(3)[int(np.argmin(np.abs(selected)))]
+    first_other = seed - float(seed @ selected) * selected
+    first_other /= np.linalg.norm(first_other)
+    second_other = np.cross(selected, first_other)
+    columns: list[np.ndarray] = [first_other, second_other]
+    columns.insert(selected_index, selected)
+    eigenvectors = np.column_stack(columns)
+    power_tensor = eigenvectors @ np.diag(values) @ eigenvectors.T
+    return estimate_lowell_pole_from_power_tensor(
+        power_tensor=power_tensor,
+        ell=ell,
+        analysis_spec=analysis_spec,
     )
 
 
@@ -204,6 +266,11 @@ def test_multipole_alignment_rejects_ambiguous_requests_before_abstaining() -> N
         AntipodalAxis((0.0, 1.0, 0.0)),
         definition=PoleDefinition.MIN_ANGULAR_MOMENTUM,
     )
+    mixed_frame = _pole_estimate(
+        3,
+        AntipodalAxis((0.0, 1.0, 0.0)),
+        coordinate_frame="different registered frame",
+    )
 
     with pytest.raises(ValueError, match="at least two"):
         mean_squared_multipole_alignment(estimates=())
@@ -221,6 +288,8 @@ def test_multipole_alignment_rejects_ambiguous_requests_before_abstaining() -> N
         mean_squared_multipole_alignment(estimates=(undetermined, mixed))
     with pytest.raises(ValueError, match="distinct ell"):
         mean_squared_multipole_alignment(estimates=(first, undetermined))
+    with pytest.raises(ValueError, match="analysis identity"):
+        mean_squared_multipole_alignment(estimates=(first, mixed_frame))
 
 
 def test_antipodal_axis_makes_sign_invariance_explicit() -> None:
@@ -238,8 +307,100 @@ def test_antipodal_axis_makes_sign_invariance_explicit() -> None:
         positive.abs_dot(np.asarray([-1.0, 0.0, 0.0]))  # type: ignore[arg-type]
 
 
+def test_analysis_identity_binds_definition_tolerance_and_frame() -> None:
+    base = LowEllPoleAnalysisSpec(
+        ell_values=(2, 3, 4, 5),
+        definition=PoleDefinition.MAX_ANGULAR_MOMENTUM,
+        gap_tolerance=1e-12,
+        coordinate_frame="Galactic",
+        harmonic_convention=IMPLEMENTED_HARMONIC_CONVENTION,
+    )
+    changed_definition = LowEllPoleAnalysisSpec(
+        ell_values=base.ell_values,
+        definition=PoleDefinition.MIN_ANGULAR_MOMENTUM,
+        gap_tolerance=base.gap_tolerance,
+        coordinate_frame=base.coordinate_frame,
+        harmonic_convention=base.harmonic_convention,
+    )
+    changed_tolerance = LowEllPoleAnalysisSpec(
+        ell_values=base.ell_values,
+        definition=base.definition,
+        gap_tolerance=2e-12,
+        coordinate_frame=base.coordinate_frame,
+        harmonic_convention=base.harmonic_convention,
+    )
+    changed_frame = LowEllPoleAnalysisSpec(
+        ell_values=base.ell_values,
+        definition=base.definition,
+        gap_tolerance=base.gap_tolerance,
+        coordinate_frame="ICRS",
+        harmonic_convention=base.harmonic_convention,
+    )
+    assert len(
+        {
+            base.analysis_id,
+            changed_definition.analysis_id,
+            changed_tolerance.analysis_id,
+            changed_frame.analysis_id,
+        }
+    ) == 4
+
+
+def test_improper_o3_tensor_and_antipodal_axis_action() -> None:
+    reflection = np.diag((-1.0, 1.0, 1.0))
+    tensor = np.array(
+        ((0.5, 0.1, 0.2), (0.1, 0.3, -0.05), (0.2, -0.05, 0.2))
+    )
+    transformed = transform_power_tensor_o3(tensor, reflection)
+    np.testing.assert_allclose(
+        transformed, reflection @ tensor @ reflection.T, atol=0.0, rtol=0.0
+    )
+    np.testing.assert_allclose(
+        np.linalg.eigvalsh(transformed),
+        np.linalg.eigvalsh(tensor),
+        atol=1e-15,
+        rtol=0.0,
+    )
+    axis = AntipodalAxis((1.0, 0.0, 0.0))
+    assert transform_antipodal_axis_o3(axis, -np.eye(3)) == axis
+    assert scalar_alm_inversion_phase(2) == 1
+    assert scalar_alm_inversion_phase(3) == -1
+
+
+@pytest.mark.parametrize(
+    ("factory", "match"),
+    (
+        (lambda: AntipodalAxis((True, False, False)), "booleans"),
+        (
+            lambda: LowEllPoleAnalysisSpec(
+                ell_values=(True, 2),
+                definition=PoleDefinition.MAX_ANGULAR_MOMENTUM,
+                gap_tolerance=1e-12,
+                coordinate_frame="frame",
+                harmonic_convention="convention",
+            ),
+            "integer",
+        ),
+    ),
+)
+def test_pole_contracts_reject_boolean_numeric_inputs(factory, match: str) -> None:
+    with pytest.raises(ValueError, match=match):
+        factory()
+
+
+def test_analysis_spec_rejects_an_unimplemented_harmonic_convention() -> None:
+    with pytest.raises(ValueError, match="not implemented"):
+        LowEllPoleAnalysisSpec(
+            ell_values=(2, 3),
+            definition=PoleDefinition.MAX_ANGULAR_MOMENTUM,
+            gap_tolerance=MIN_NUMERICAL_GAP_TOLERANCE,
+            coordinate_frame="frame",
+            harmonic_convention="unsupported free-form convention",
+        )
+
+
 def test_pole_estimate_constructor_cannot_bypass_gap_abstention() -> None:
-    with pytest.raises(ValueError, match="selection gap"):
+    with pytest.raises(ValueError, match="must be created"):
         LowEllPoleEstimate(
             ell=2,
             definition=PoleDefinition.MAX_ANGULAR_MOMENTUM,
@@ -248,6 +409,125 @@ def test_pole_estimate_constructor_cannot_bypass_gap_abstention() -> None:
             eigenvalues=(0.2, 0.4, 0.4),
             selection_gap=MIN_NUMERICAL_GAP_TOLERANCE,
             gap_tolerance=MIN_NUMERICAL_GAP_TOLERANCE,
+            power_tensor=(
+                (0.2, 0.0, 0.0),
+                (0.0, 0.4, 0.0),
+                (0.0, 0.0, 0.4),
+            ),
+            analysis_spec=_analysis_spec(
+                definition=PoleDefinition.MAX_ANGULAR_MOMENTUM,
+                gap_tolerance=MIN_NUMERICAL_GAP_TOLERANCE,
+            ),
+        )
+
+
+def test_pole_estimate_rejects_axis_unbound_to_power_tensor() -> None:
+    with pytest.raises(ValueError, match="must be created"):
+        LowEllPoleEstimate(
+            ell=2,
+            definition=PoleDefinition.MAX_ANGULAR_MOMENTUM,
+            status=PoleStatus.IDENTIFIED,
+            axis=AntipodalAxis((1.0, 0.0, 0.0)),
+            eigenvalues=(0.1, 0.3, 0.6),
+            selection_gap=0.3,
+            gap_tolerance=MIN_NUMERICAL_GAP_TOLERANCE,
+            power_tensor=(
+                (0.1, 0.0, 0.0),
+                (0.0, 0.3, 0.0),
+                (0.0, 0.0, 0.6),
+            ),
+            analysis_spec=_analysis_spec(
+                definition=PoleDefinition.MAX_ANGULAR_MOMENTUM,
+                gap_tolerance=MIN_NUMERICAL_GAP_TOLERANCE,
+            ),
+        )
+
+
+def test_power_tensor_factory_abstains_on_an_exact_top_eigenspace_tie() -> None:
+    estimate = estimate_lowell_pole_from_power_tensor(
+        power_tensor=(
+            (0.2, 0.0, 0.0),
+            (0.0, 0.4, 0.0),
+            (0.0, 0.0, 0.4),
+        ),
+        ell=2,
+        analysis_spec=_analysis_spec(
+            definition=PoleDefinition.MAX_ANGULAR_MOMENTUM,
+            gap_tolerance=MIN_NUMERICAL_GAP_TOLERANCE,
+        ),
+    )
+    assert estimate.status is PoleStatus.UNDETERMINED
+    assert estimate.axis is None
+    assert estimate.selection_gap == 0.0
+
+
+def test_public_numeric_paths_reject_boolean_and_numeric_text() -> None:
+    with pytest.raises(ValueError, match="not be boolean"):
+        LowEllPoleAnalysisSpec(
+            ell_values=(2,),
+            definition=PoleDefinition.MAX_ANGULAR_MOMENTUM,
+            gap_tolerance=True,
+            coordinate_frame="frame",
+            harmonic_convention=IMPLEMENTED_HARMONIC_CONVENTION,
+        )
+    with pytest.raises(ValueError, match="numeric scalars"):
+        angular_momentum_power_tensor(
+            alm_by_lm={(1, -1): 0.0, (1, 0): True, (1, 1): 0.0},
+            ell=1,
+        )
+    with pytest.raises(ValueError, match="not text"):
+        estimate_lowell_pole_from_power_tensor(
+            power_tensor=np.asarray(
+                (("0.2", "0", "0"), ("0", "0.3", "0"), ("0", "0", "0.5")),
+                dtype=object,
+            ),
+            ell=2,
+            analysis_spec=_analysis_spec(
+                definition=PoleDefinition.MAX_ANGULAR_MOMENTUM,
+                gap_tolerance=MIN_NUMERICAL_GAP_TOLERANCE,
+            ),
+        )
+
+
+def test_object_arrays_cannot_hide_boolean_or_complex_geometry() -> None:
+    hidden_bool = np.asarray([True, 0.0, 0.0], dtype=object)
+    hidden_complex = np.asarray(
+        [[1.0 + 0.0j, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]],
+        dtype=object,
+    )
+    with pytest.raises(ValueError, match="booleans"):
+        AntipodalAxis(hidden_bool)  # type: ignore[arg-type]
+    with pytest.raises(ValueError, match="real"):
+        transform_antipodal_axis_o3(
+            AntipodalAxis((1.0, 0.0, 0.0)),
+            hidden_complex,
+        )
+
+
+def test_estimate_carries_the_exact_analysis_identity() -> None:
+    spec = LowEllPoleAnalysisSpec(
+        ell_values=(2, 3),
+        definition=PoleDefinition.MIN_ANGULAR_MOMENTUM,
+        gap_tolerance=MIN_NUMERICAL_GAP_TOLERANCE,
+        coordinate_frame="Galactic",
+        harmonic_convention=TEST_HARMONIC_CONVENTION,
+    )
+    estimate = _estimate_lowell_pole(
+        alm_by_lm=_alm_mapping(2, _m_zero(2)),
+        ell=2,
+        analysis_spec=spec,
+    )
+    assert estimate.analysis_id == spec.analysis_id
+    assert estimate.coordinate_frame == "Galactic"
+    assert estimate.harmonic_convention == TEST_HARMONIC_CONVENTION
+
+
+def test_estimator_requires_a_typed_analysis_spec() -> None:
+    with pytest.raises(TypeError, match="analysis_spec"):
+        _estimate_lowell_pole(
+            alm_by_lm=_alm_mapping(2, _m_zero(2)),
+            ell=2,
+            analysis_spec=None,  # type: ignore[arg-type]
         )
 
 

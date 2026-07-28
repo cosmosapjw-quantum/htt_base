@@ -19,7 +19,7 @@ in the manuscript (I, II, V, VI_0, VII_0, VIII, IX, VII_h, III).
 Role
 ----
 TSC-03 is the *tsc-side* re-derivation of the bounds enumerated in
-``htt.core.bounds``; the two implementations must agree to
+``tsc_legacy.htt_core_bounds``; the two legacy implementations must agree to
 ``rtol = 1e-10`` on arbitrary (eps1, eps2, eps3) triples. The
 cross-check anchor ``test_three_bound_hierarchy_matches_htt_bounds``
 asserts this agreement and fires the TSC-03 regression gate listed in
@@ -90,7 +90,7 @@ __all__ = [
 # ---------------------------------------------------------------------------
 
 #: Nine Bianchi classes covered by the TSC-03 hierarchy check.
-#: Matches ``htt.core.bounds._TYPE_INFO`` keys (up to ordering).
+#: Matches ``tsc_legacy.htt_core_bounds._TYPE_INFO`` keys (up to ordering).
 BIANCHI_TYPES: tuple[str, ...] = (
     "I", "II", "V", "VI0", "VII0", "VIII", "IX", "VIIh", "III",
 )
@@ -369,7 +369,7 @@ def evaluate_all_bianchi_types(
 
 
 # ---------------------------------------------------------------------------
-# Cross-check against htt.core.bounds
+# Cross-check against the explicit legacy HTT bounds
 # ---------------------------------------------------------------------------
 
 
@@ -382,7 +382,7 @@ def compare_against_htt_bounds(
 ) -> dict[str, Any]:
     """Evaluate tsc and htt bounds at the same eps-triple and compare.
 
-    Imports ``htt.core.bounds`` lazily so that downstream consumers of
+    Imports ``tsc_legacy.htt_core_bounds`` lazily so that downstream consumers of
     this module (e.g. manuscript tooling) don't need the editable-htt
     install just to evaluate the bounds on the tsc side.
 
@@ -405,9 +405,9 @@ def compare_against_htt_bounds(
         ``'agree'`` flags. The convenience boolean ``'all_agree'``
         summarises the three bounds.
     """
-    from htt.core.bounds import B_sigma as htt_B_sigma
-    from htt.core.bounds import B_omega as htt_B_omega
-    from htt.core.bounds import B_accel as htt_B_accel
+    from tsc_legacy.htt_core_bounds import B_sigma as htt_B_sigma
+    from tsc_legacy.htt_core_bounds import B_omega as htt_B_omega
+    from tsc_legacy.htt_core_bounds import B_accel as htt_B_accel
 
     tsc_bs = B_sigma(eps1, eps2, eps3)
     tsc_bo = B_omega(eps1, eps2, eps3)

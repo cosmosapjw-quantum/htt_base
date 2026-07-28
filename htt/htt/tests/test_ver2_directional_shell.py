@@ -338,6 +338,7 @@ def test_build_posterior_bundle_preserves_htt_manifest(tmp_path):
         results_path=str(results_path),
         model="FLRW_tilt",
         manifest=manifest,
+        legacy_reproduction=True,
     )
     assert bundle.manifest == manifest
     assert bundle.model == "FLRW_tilt"
@@ -522,10 +523,13 @@ def test_build_posterior_bundle_auto_materializes_htt_manifest(tmp_path):
         results_path=str(results_path),
         model="FLRW_tilt",
         directional_inputs=shell,
+        legacy_reproduction=True,
     )
     assert bundle.manifest is not None
     assert bundle.manifest.owner == "HTT"
-    assert bundle.manifest.statistics_definitions["surface"] == "posterior_export_bundle"
+    assert bundle.manifest.statistics_definitions["surface"] == (
+        "posterior_export_bundle_legacy_reproduction"
+    )
     assert bundle.manifest.statistics_definitions["cross_check_only"] is True
     assert "mio_cross_check_only_export" in bundle.manifest.caveats
     assert bundle.is_cross_check_only is True
@@ -572,6 +576,7 @@ def test_build_posterior_bundle_blocks_rank_deficient_directional_inputs(tmp_pat
             results_path=str(results_path),
             model="FLRW_tilt",
             directional_inputs=shell,
+            legacy_reproduction=True,
         )
 
 
@@ -609,10 +614,19 @@ def test_emit_directional_posterior_artifact_writes_dedicated_htt_summary(tmp_pa
         evidence_ref="results.json#evidence/FLRW_tilt",
     )
     assert out_path.exists()
-    assert payload["artifact_kind"] == "htt_directional_posterior_summary_v1"
+    assert payload["artifact_kind"] == "htt_directional_posterior_summary_v2"
+    assert "posterior_summary" not in payload
+    assert "filling_fraction_summary" not in payload
+    legacy = payload["legacy_projection_summary"]
+    assert legacy["classification"] == "BC1_LEGACY_PROJECTION"
+    assert legacy["representation_policy"] == "BC2_NO_REPRESENTATION_PROMOTION"
+    assert legacy["status"] == "LEGACY_REPRODUCTION"
+    assert set(legacy["values"]) == {"x_C", "Q", "Pi", "F"}
     manifest = payload["manifest"]
     assert manifest["owner"] == "HTT"
-    assert manifest["statistics_definitions"]["surface"] == "directional_posterior_summary"
+    assert manifest["statistics_definitions"]["surface"] == (
+        "directional_evidence_with_legacy_projection"
+    )
     assert manifest["statistics_definitions"]["cross_check_only"] is False
     assert manifest["statistics_definitions"]["response_overlap_rank_ready"] is True
     audit = shell.response_overlap_audit
@@ -782,9 +796,9 @@ def test_emit_directional_posterior_artifact_rejects_override_manifest_without_r
     assert not out_path.exists()
 
 
-def test_build_posterior_bundle_reads_dedicated_htt_artifact(tmp_path):
+def test_build_mio_cross_check_reads_dedicated_htt_artifact_without_evidence(tmp_path):
     from htt.integration import emit_directional_posterior_artifact
-    from htt.integration.to_mio import build_posterior_bundle
+    from htt.integration.to_mio import build_mio_cross_check_export
     from htt.integration.from_bass import build_ver2_directional_inputs
 
     out_path = tmp_path / "htt_directional_posterior_summary.json"
@@ -816,16 +830,60 @@ def test_build_posterior_bundle_reads_dedicated_htt_artifact(tmp_path):
         posterior_ref="results.json#departure/FLRW_tilt",
         evidence_ref="results.json#evidence/FLRW_tilt",
     )
-    bundle = build_posterior_bundle(results_path=str(out_path), model="FLRW_tilt")
-    assert bundle.model == "FLRW_tilt"
-    assert bundle.x_median == pytest.approx(0.2)
-    assert bundle.ln_B_total == pytest.approx(5.0)
-    assert bundle.is_cross_check_only is True
-    assert bundle.manifest is not None
-    assert bundle.manifest.statistics_definitions["surface"] == "posterior_export_bundle"
-    assert bundle.manifest.statistics_definitions["source_surface"] == "directional_posterior_summary"
-    assert bundle.manifest.statistics_definitions["cross_check_only"] is True
-    assert "mio_cross_check_only_export" in bundle.manifest.caveats
+    export = build_mio_cross_check_export(out_path)
+    assert export.model == "FLRW_tilt"
+    assert export.legacy_projection.x_C.value_range.lower == pytest.approx(0.1)
+    assert export.evidence_included is False
+    assert not hasattr(export, "ln_B_total")
+    assert not hasattr(export, "model_evidences")
+    assert export.is_cross_check_only is True
+    assert export.manifest.statistics_definitions["source_surface"] == (
+        "directional_evidence_with_legacy_projection"
+    )
+    assert export.manifest.statistics_definitions["cross_check_only"] is True
+    assert export.manifest.claim_tier == "diagnostic_only"
+    assert export.manifest.production_status == "diagnostic_only"
+    assert "mio_cross_check_only_export" in export.manifest.caveats
+
+
+def test_active_cross_check_rejects_missing_legacy_projection_field(tmp_path):
+    from htt.integration import emit_directional_posterior_artifact
+    from htt.integration.from_bass import build_ver2_directional_inputs
+    from htt.integration.to_mio import build_mio_cross_check_export
+
+    out_path = tmp_path / "htt_directional_posterior_summary.json"
+    shell = build_ver2_directional_inputs(
+        _observable_vector(),
+        _preferred_axis(),
+        solver_core_output=_solver_output(),
+        null_competition=_ready_null_hook(),
+        posterior_predictive_ready=True,
+        loocv_ready=True,
+        response_overlap_audit=_response_overlap_audit(),
+    )
+    payload = emit_directional_posterior_artifact(
+        out_path,
+        model="FLRW_tilt",
+        x_median=0.2,
+        x_hpd68=(0.1, 0.3),
+        x_hpd95=(0.05, 0.35),
+        Q_median=0.4,
+        Q_hpd68=(0.2, 0.5),
+        Pi_median=0.1,
+        Pi_hpd68=(0.05, 0.2),
+        ln_B_total=5.0,
+        model_evidences={"FLRW_tilt": 5.0},
+        F_median=0.07,
+        F_hpd68=(0.05, 0.09),
+        n_live=128,
+        directional_inputs=shell,
+        posterior_ref="results.json#departure/FLRW_tilt",
+        evidence_ref="results.json#evidence/FLRW_tilt",
+    )
+    del payload["legacy_projection_summary"]["values"]["Q"]
+    out_path.write_text(json.dumps(payload), encoding="utf-8")
+    with pytest.raises(ValueError, match="mapping 'Q'"):
+        build_mio_cross_check_export(out_path)
 
 
 def test_directional_bridge_promotion_gate_is_closed_fail():
