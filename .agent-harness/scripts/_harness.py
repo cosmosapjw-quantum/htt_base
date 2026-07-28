@@ -28,6 +28,12 @@ RISK_TIERS = {"R0", "R1", "R2", "R3"}
 CAS_AXES = {"wolfram_xact", "sympy", "sage_singular", "lean"}
 ACTIVE_RUN_RELATIVE_PATH = Path(".agent-harness/runtime/ACTIVE_RUN")
 LEGACY_ACTIVE_RUN_RELATIVE_PATH = Path(".agent-harness/ACTIVE_RUN")
+DEFAULT_MAX_TOTAL_PER_WORK_UNIT = 16
+MAX_REVIEW_REREVIEW_EXCEPTION_ASSIGNMENTS = 2
+REAUTHORIZED_REVIEW_REREVIEW_CUMULATIVE_START = (
+    DEFAULT_MAX_TOTAL_PER_WORK_UNIT
+    + MAX_REVIEW_REREVIEW_EXCEPTION_ASSIGNMENTS
+)
 
 
 class ActiveRunError(RuntimeError):
@@ -720,7 +726,10 @@ def validate_run_plan_payload(
         for field, maximum in (
             ("max_concurrent", 4),
             ("max_total", 8),
-            ("max_total_per_work_unit", 16),
+            (
+                "max_total_per_work_unit",
+                DEFAULT_MAX_TOTAL_PER_WORK_UNIT,
+            ),
             ("max_depth", 2),
         ):
             value = budget.get(field)
@@ -728,6 +737,10 @@ def validate_run_plan_payload(
                 raise PublicationIntegrityError(
                     f"RUN_PLAN budget.{field} must be an integer in [1, {maximum}]"
                 )
+        validate_review_rereview_budget_exception(
+            plan,
+            run_id=run_id,
+        )
         change_set_id = require_change_set_id(plan.get("change_set_id"))
         publication_group_id = require_publication_group_id(
             plan.get("publication_group_id")
@@ -809,6 +822,198 @@ def validate_run_plan_payload(
     except (OSError, PublicationIntegrityError, ValueError) as exc:
         errors.append(str(exc))
     return errors
+
+
+def validate_review_rereview_budget_exception(
+    plan: Mapping[str, Any],
+    *,
+    run_id: str,
+) -> Mapping[str, Any] | None:
+    """Validate a narrow, owner-authorized reviewer-only budget exception.
+
+    The ordinary cumulative work-unit ceiling remains 16.  An exception may
+    authorize at most two named reviewer assignments in exactly one run after
+    that ceiling has been exhausted.  One explicit reauthorization may begin
+    only after the first two named assignments have been consumed.  Neither
+    form can authorize implementers, adjudicators, arbitrary assignment IDs,
+    a third review wave, or a reusable/global increase.
+    """
+
+    value = plan.get("budget_exception")
+    if value is None:
+        return None
+    if not isinstance(value, Mapping):
+        raise PublicationIntegrityError(
+            "RUN_PLAN budget_exception must be an object"
+        )
+    required_fields = {
+        "exception_id",
+        "kind",
+        "run_id",
+        "work_unit_id",
+        "authorized_by",
+        "reason",
+        "baseline_limit",
+        "additional_assignments",
+        "allowed_workflow_role",
+        "allowed_assignment_ids",
+        "single_use",
+    }
+    kind = value.get("kind")
+    if kind == "single_run_reviewer_rereview_reauthorization":
+        required_fields.add("cumulative_start")
+    if set(value) != required_fields:
+        raise PublicationIntegrityError(
+            "RUN_PLAN budget_exception fields must exactly match the "
+            "review-rereview exception schema"
+        )
+    if not is_safe_identifier(value.get("exception_id")):
+        raise PublicationIntegrityError(
+            "RUN_PLAN budget_exception.exception_id is missing or unsafe"
+        )
+    if kind not in {
+        "single_run_reviewer_rereview",
+        "single_run_reviewer_rereview_reauthorization",
+    }:
+        raise PublicationIntegrityError(
+            "RUN_PLAN budget_exception.kind is not a registered "
+            "review-rereview exception"
+        )
+    if value.get("run_id") != run_id:
+        raise PublicationIntegrityError(
+            "RUN_PLAN budget_exception is bound to a different run"
+        )
+    if value.get("work_unit_id") != plan.get("work_unit_id"):
+        raise PublicationIntegrityError(
+            "RUN_PLAN budget_exception is bound to a different work unit"
+        )
+    authorized_by = value.get("authorized_by")
+    reason = value.get("reason")
+    if (
+        not isinstance(authorized_by, str)
+        or not authorized_by.strip()
+        or not EVIDENCE_IDENTITY_RE.fullmatch(authorized_by)
+        or not isinstance(reason, str)
+        or not reason.strip()
+        or not EVIDENCE_IDENTITY_RE.fullmatch(reason)
+    ):
+        raise PublicationIntegrityError(
+            "RUN_PLAN budget_exception requires bounded authorization and reason"
+        )
+    budget = plan.get("budget")
+    if not isinstance(budget, Mapping):
+        raise PublicationIntegrityError("RUN_PLAN budget must be an object")
+    if (
+        value.get("baseline_limit") != DEFAULT_MAX_TOTAL_PER_WORK_UNIT
+        or budget.get("max_total_per_work_unit")
+        != DEFAULT_MAX_TOTAL_PER_WORK_UNIT
+    ):
+        raise PublicationIntegrityError(
+            "RUN_PLAN budget_exception cannot alter the ordinary work-unit limit"
+        )
+    additional = value.get("additional_assignments")
+    assignment_ids = value.get("allowed_assignment_ids")
+    if (
+        type(additional) is not int
+        or not 1 <= additional <= MAX_REVIEW_REREVIEW_EXCEPTION_ASSIGNMENTS
+        or not isinstance(assignment_ids, list)
+        or len(assignment_ids) != additional
+        or any(
+            not isinstance(item, str) or not is_safe_identifier(item)
+            for item in assignment_ids
+        )
+        or len(set(assignment_ids)) != len(assignment_ids)
+    ):
+        raise PublicationIntegrityError(
+            "RUN_PLAN budget_exception must name one or two unique safe "
+            "assignment IDs"
+        )
+    if value.get("allowed_workflow_role") != "reviewer":
+        raise PublicationIntegrityError(
+            "RUN_PLAN budget_exception may authorize only reviewer assignments"
+        )
+    if value.get("single_use") is not True:
+        raise PublicationIntegrityError(
+            "RUN_PLAN budget_exception must be single_use=true"
+        )
+    if kind == "single_run_reviewer_rereview_reauthorization":
+        cumulative_start = value.get("cumulative_start")
+        if (
+            type(cumulative_start) is not int
+            or cumulative_start
+            != REAUTHORIZED_REVIEW_REREVIEW_CUMULATIVE_START
+        ):
+            raise PublicationIntegrityError(
+                "RUN_PLAN reviewer rereview reauthorization must begin at "
+                f"cumulative assignment "
+                f"{REAUTHORIZED_REVIEW_REREVIEW_CUMULATIVE_START}"
+            )
+    return value
+
+
+def enforce_work_unit_assignment_budget(
+    plan: Mapping[str, Any],
+    *,
+    run_id: str,
+    assignment_id: str,
+    workflow_role: str,
+    cumulative_count: int,
+    current_run_assignment_ids: set[str],
+) -> None:
+    """Fail closed unless an assignment fits the ordinary or narrow exception."""
+
+    budget = plan.get("budget")
+    if not isinstance(budget, Mapping):
+        raise PublicationIntegrityError("RUN_PLAN budget must be an object")
+    ordinary_limit = int(budget.get("max_total_per_work_unit", 0) or 0)
+    if cumulative_count < ordinary_limit and plan.get("budget_exception") is None:
+        return
+
+    exception = validate_review_rereview_budget_exception(
+        plan,
+        run_id=run_id,
+    )
+    if exception is None:
+        raise PublicationIntegrityError(
+            f"Cumulative work-unit budget exhausted for "
+            f"{plan.get('work_unit_id')}: {cumulative_count}/{ordinary_limit} "
+            "(budget spans ALL runs of this work unit; a new run does not "
+            "reset it)"
+        )
+
+    allowed_ids = set(exception["allowed_assignment_ids"])
+    additional = int(exception["additional_assignments"])
+    authorized_start = int(
+        exception.get("cumulative_start", ordinary_limit)
+    )
+    if cumulative_count < ordinary_limit:
+        raise PublicationIntegrityError(
+            "RUN_PLAN budget_exception cannot be consumed before the ordinary "
+            "work-unit budget is exhausted"
+        )
+    if cumulative_count < authorized_start:
+        raise PublicationIntegrityError(
+            "RUN_PLAN budget_exception cannot be consumed before its "
+            "authorized cumulative start"
+        )
+    if not current_run_assignment_ids <= allowed_ids:
+        raise PublicationIntegrityError(
+            "RUN_PLAN budget_exception run contains a non-authorized assignment"
+        )
+    if cumulative_count != authorized_start + len(current_run_assignment_ids):
+        raise PublicationIntegrityError(
+            "RUN_PLAN budget_exception consumption does not match cumulative "
+            "work-unit history"
+        )
+    if workflow_role != "reviewer" or assignment_id not in allowed_ids:
+        raise PublicationIntegrityError(
+            "Cumulative work-unit budget exception authorizes only the named "
+            "reviewer assignments"
+        )
+    if len(current_run_assignment_ids) >= additional:
+        raise PublicationIntegrityError(
+            "Cumulative work-unit budget exception is exhausted"
+        )
 
 
 def _validate_claim_references(

@@ -1,0 +1,501 @@
+#!/usr/bin/env sage
+"""Final independent SageMath + Singular axis for PR-254 anchor geometry.
+
+The program binds itself to the immutable R3 inputs, parses the contract
+fixtures (including ordered polytope normal/bound pairs), and writes exactly
+one JSON document to stdout for parent-owned ``cas_gate run-adjudicate``.
+"""
+
+import hashlib
+import json
+from pathlib import Path
+
+from sage.all import PolynomialRing, QQ, ZZ, matrix, vector
+from sage.env import SAGE_VERSION
+from sage.interfaces.singular import singular
+
+
+CONTRACT_REL = (
+    "docs/generated/pr254_anchor_geometry/"
+    "CAS_CONTRACT_PR254_ANCHOR_GEOMETRY.json"
+)
+ORACLE_REL = "docs/generated/pr254_anchor_geometry/counterexample_oracle.json"
+EXPECTED_INPUT_HASHES = {
+    CONTRACT_REL: "4f7092860fde327e0029154e3c4ca4c7e60f7095c4026c7fb00d1899ca8c3322",
+    "docs/research_program/premise_anchor/pr254_spec.yaml": (
+        "4e2e497e0a3f13b9b9bbed02088072230315848a8669beb4b1901894d7fafe40"
+    ),
+    "htt/src/common/anchor_geometry.py": (
+        "dc7f2496ff0c96e34847c7b13e2e8d989722cdf1457525f311d0d21b0d5dfbb9"
+    ),
+    ORACLE_REL: "03e4d591a3be1c97f4954e2afcb2c3a98b85a8a4b244e4396aeb6292ba19e45f",
+}
+
+
+def find_repo_root():
+    """Resolve the repository without consulting any sibling run artifacts."""
+
+    for candidate in Path(__file__).resolve().parents:
+        if (candidate / ".agent-harness").is_dir() and (candidate / "docs").is_dir():
+            return candidate
+    raise RuntimeError("repository root not found")
+
+
+def file_sha256(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def exact(value):
+    return QQ(str(value))
+
+
+def rational_text(value):
+    """Return the canonical contract spelling of an exact rational."""
+
+    value = QQ(value)
+    if value.denominator() == 1:
+        return str(value.numerator())
+    return f"{value.numerator()}/{value.denominator()}"
+
+
+def exact_nonnegative_sqrt(value):
+    """Return a rational square root, rejecting non-square exact fixtures."""
+
+    value = QQ(value)
+    if value < 0:
+        raise ValueError("negative squared norm")
+    numerator = ZZ(value.numerator())
+    denominator = ZZ(value.denominator())
+    if not numerator.is_square() or not denominator.is_square():
+        raise ValueError("fixture norm is not an exact rational square")
+    return QQ(numerator.sqrt()) / QQ(denominator.sqrt())
+
+
+def parse_vector(values):
+    return vector(QQ, [exact(value) for value in values])
+
+
+def parse_matrix(rows):
+    return matrix(QQ, [[exact(value) for value in row] for row in rows])
+
+
+def weighted_marginal(atoms, coordinate):
+    marginal = {}
+    for atom in atoms:
+        value = atom[coordinate]
+        marginal[value] = marginal.get(value, QQ.zero()) + atom[2]
+    return marginal
+
+
+def singular_linear_form(coefficients, variable_names):
+    terms = [
+        f"({rational_text(coefficient)})*{name}"
+        for coefficient, name in zip(coefficients, variable_names)
+    ]
+    return "(" + "+".join(terms) + ")" if terms else "0"
+
+
+repo = find_repo_root()
+observed_input_hashes = {
+    relative: file_sha256(repo / relative)
+    for relative in EXPECTED_INPUT_HASHES
+}
+domain_assumption_diff = [
+    f"required input hash mismatch: {relative}"
+    for relative, expected_hash in EXPECTED_INPUT_HASHES.items()
+    if observed_input_hashes[relative] != expected_hash
+]
+
+contract = json.loads((repo / CONTRACT_REL).read_text(encoding="utf-8"))
+oracle = json.loads((repo / ORACLE_REL).read_text(encoding="utf-8"))
+target = contract["target"]
+obligations = list(target["exact_test_obligations"])
+expected_values = dict(target["expected_exact_values"])
+
+fixture_rows = target["numeric_test_vectors"]
+fixture_ids = [row["id"] for row in fixture_rows]
+if len(fixture_ids) != len(set(fixture_ids)):
+    domain_assumption_diff.append("duplicate numeric fixture id")
+fixtures = {row["id"]: row for row in fixture_rows}
+
+
+# Product-ball fixture, parsed block by block from the contract.
+product_fixture = fixtures["PRODUCT-FIXTURE"]
+product_ratios = []
+product_positive_radii = True
+for block in product_fixture["blocks"]:
+    block_vector = parse_vector(block["u"])
+    radius = exact(block["radius"])
+    product_positive_radii = product_positive_radii and radius > 0
+    block_norm = exact_nonnegative_sqrt(block_vector.dot_product(block_vector))
+    product_ratios.append(block_norm / radius)
+product_gauge = max(product_ratios)
+product_body_membership = all(ratio <= 1 for ratio in product_ratios)
+product_gauge_membership = product_gauge <= 1
+if not product_positive_radii:
+    domain_assumption_diff.append("product-ball radius is not strictly positive")
+
+
+# Positive-definite ellipsoid fixture, parsed from the contract.
+ellipsoid_fixture = fixtures["ELLIPSOID-FIXTURE"]
+ellipsoid_u = parse_vector(ellipsoid_fixture["u"])
+ellipsoid_q = parse_matrix(ellipsoid_fixture["Q"])
+ellipsoid_dimension = len(ellipsoid_u)
+ellipsoid_shape_ok = (
+    ellipsoid_q.nrows() == ellipsoid_dimension
+    and ellipsoid_q.ncols() == ellipsoid_dimension
+)
+ellipsoid_symmetric = ellipsoid_shape_ok and ellipsoid_q.is_symmetric()
+ellipsoid_positive_definite = ellipsoid_symmetric and all(
+    ellipsoid_q.matrix_from_rows_and_columns(
+        range(size), range(size)
+    ).det()
+    > 0
+    for size in range(1, ellipsoid_dimension + 1)
+)
+if not ellipsoid_positive_definite:
+    domain_assumption_diff.append(
+        "ellipsoid Q is not exact symmetric positive definite"
+    )
+ellipsoid_gauge_squared = ellipsoid_u.dot_product(ellipsoid_q * ellipsoid_u)
+ellipsoid_body_membership = ellipsoid_gauge_squared <= 1
+ellipsoid_gauge_membership = ellipsoid_gauge_squared <= 1
+
+
+# H-polytope fixture.  Normals and bounds are parsed separately, then consumed
+# only as ordered pairs in the exact sequence declared by the sealed contract.
+polytope_fixture = fixtures["POLYTOPE-FIXTURE"]
+polytope_u = parse_vector(polytope_fixture["u"])
+ordered_normals = tuple(
+    parse_vector(row) for row in polytope_fixture["halfspace_normals"]
+)
+ordered_bounds = tuple(
+    exact(value) for value in polytope_fixture["halfspace_bounds"]
+)
+polytope_pair_count_ok = len(ordered_normals) == len(ordered_bounds)
+ordered_halfspaces = tuple(zip(ordered_normals, ordered_bounds))
+polytope_dimension = len(polytope_u)
+polytope_dimensions_ok = all(
+    len(normal) == polytope_dimension for normal, _ in ordered_halfspaces
+)
+polytope_positive_bounds = all(bound > 0 for _, bound in ordered_halfspaces)
+polytope_nonzero_normals = all(
+    normal.dot_product(normal) > 0 for normal, _ in ordered_halfspaces
+)
+polytope_spanning = (
+    polytope_dimensions_ok
+    and matrix(QQ, list(ordered_normals)).rank() == polytope_dimension
+)
+polytope_antipodal = all(
+    any(
+        other_normal == -normal and other_bound == bound
+        for other_normal, other_bound in ordered_halfspaces
+    )
+    for normal, bound in ordered_halfspaces
+)
+if not (
+    polytope_pair_count_ok
+    and polytope_dimensions_ok
+    and polytope_positive_bounds
+    and polytope_nonzero_normals
+    and polytope_spanning
+    and polytope_antipodal
+):
+    domain_assumption_diff.append(
+        "polytope is not a positive-bound spanning antipodal H-polytope"
+    )
+polytope_ordered_ratios = tuple(
+    normal.dot_product(polytope_u) / bound
+    for normal, bound in ordered_halfspaces
+)
+polytope_gauge = max((QQ.zero(),) + polytope_ordered_ratios)
+polytope_body_membership = all(ratio <= 1 for ratio in polytope_ordered_ratios)
+polytope_gauge_membership = polytope_gauge <= 1
+
+
+# Rank and transformed-response fixtures, parsed from the contract.
+rank_fixture = fixtures["RANK-FIXTURE"]
+response = parse_matrix(rank_fixture["R"])
+scaling = parse_matrix(rank_fixture["D"])
+det_scaling = scaling.det()
+if det_scaling == 0:
+    domain_assumption_diff.append("anchor scaling D is singular")
+inverse_scaling = scaling.inverse()
+transformed_response = response * scaling
+rank_response = response.rank()
+rank_transformed_response = transformed_response.rank()
+
+polynomial_ring = PolynomialRing(
+    QQ, names=tuple(f"u{index + 1}" for index in range(scaling.nrows()))
+)
+state_variables = vector(polynomial_ring, polynomial_ring.gens())
+response_polynomial = response.change_ring(polynomial_ring)
+scaling_polynomial = scaling.change_ring(polynomial_ring)
+sage_response_difference = (
+    response_polynomial * state_variables
+    - (response_polynomial * scaling_polynomial)
+    * (scaling_polynomial.inverse() * state_variables)
+)
+sage_response_identity = all(
+    coefficient == 0 for coefficient in sage_response_difference
+)
+
+
+# Load Sage's bundled Singular and independently expand the unsimplified
+# transformed-response expressions built from R*D and D^-1.
+singular_version = singular.version().splitlines()[0]
+singular_names = tuple(
+    f"u{index + 1}" for index in range(scaling.nrows())
+)
+singular.eval(
+    "ring pr254r3 = 0,(" + ",".join(singular_names) + "),dp;"
+)
+singular_response_checks = []
+for row_index in range(response.nrows()):
+    left_expression = singular_linear_form(
+        response.row(row_index), singular_names
+    )
+    transformed_state_expressions = tuple(
+        singular_linear_form(inverse_scaling.row(index), singular_names)
+        for index in range(inverse_scaling.nrows())
+    )
+    right_terms = [
+        f"({rational_text(transformed_response[row_index, index])})"
+        f"*({transformed_state_expressions[index]})"
+        for index in range(transformed_response.ncols())
+    ]
+    right_expression = "(" + "+".join(right_terms) + ")"
+    singular.eval(
+        f"poly response_difference_{row_index + 1}="
+        f"({left_expression})-({right_expression});"
+    )
+    singular_response_checks.append(
+        singular.eval(
+            f"response_difference_{row_index + 1};"
+        ).strip()
+        == "0"
+    )
+singular_response_identity = all(singular_response_checks)
+
+
+# J1 and the one-way containment obligation, parsed from the exact oracle.
+j1 = oracle["j1_exact"]
+physical_radius = exact(j1["physical_radius"])
+anchor_a_radius = exact(j1["anchor_a_radius"])
+anchor_b_radius = exact(j1["anchor_b_radius"])
+j1_probe = exact(j1["probe"])
+j1_rho_a = abs(j1_probe) / anchor_a_radius
+j1_rho_b = abs(j1_probe) / anchor_b_radius
+outer_containments = (
+    physical_radius <= anchor_a_radius
+    and physical_radius <= anchor_b_radius
+)
+one_way_violation_count = sum(
+    int(physical_radius > anchor_radius)
+    for anchor_radius in (anchor_a_radius, anchor_b_radius)
+)
+converse_witnesses = tuple(
+    (physical_radius + anchor_radius) / 2
+    for anchor_radius in (anchor_a_radius, anchor_b_radius)
+)
+converses_fail = all(
+    witness > physical_radius and witness <= anchor_radius
+    for witness, anchor_radius in zip(
+        converse_witnesses, (anchor_a_radius, anchor_b_radius)
+    )
+)
+
+
+# J2, constructed from the oracle's exact marginal tables.  The two joint
+# couplings are computed explicitly; no marginal-only calibration is inferred.
+def parse_marginal(table):
+    return tuple(
+        sorted((exact(value), exact(probability)) for value, probability in table.items())
+    )
+
+
+numerator_marginal = parse_marginal(oracle["j2_exact"]["numerator_marginal"])
+anchor_marginal = parse_marginal(oracle["j2_exact"]["anchor_marginal"])
+j2_marginal_shape_ok = (
+    len(numerator_marginal) == len(anchor_marginal) == 2
+)
+j2_comonotone = tuple(
+    (numerator_value, anchor_value, numerator_probability)
+    for (numerator_value, numerator_probability), (
+        anchor_value,
+        anchor_probability,
+    ) in zip(numerator_marginal, anchor_marginal)
+    if numerator_probability == anchor_probability
+)
+reversed_anchor_marginal = tuple(reversed(anchor_marginal))
+j2_countermonotone = tuple(
+    (numerator_value, anchor_value, numerator_probability)
+    for (numerator_value, numerator_probability), (
+        anchor_value,
+        anchor_probability,
+    ) in zip(numerator_marginal, reversed_anchor_marginal)
+    if numerator_probability == anchor_probability
+)
+j2_joint_constructions_complete = (
+    len(j2_comonotone) == len(numerator_marginal)
+    and len(j2_countermonotone) == len(numerator_marginal)
+)
+j2_positive_atoms = all(
+    numerator > 0 and anchor > 0 and probability > 0
+    for atoms in (j2_comonotone, j2_countermonotone)
+    for numerator, anchor, probability in atoms
+)
+if not (
+    j2_marginal_shape_ok
+    and j2_joint_constructions_complete
+    and j2_positive_atoms
+):
+    domain_assumption_diff.append(
+        "J2 fixture does not define two complete strictly positive couplings"
+    )
+j2_comonotone_exceedance = sum(
+    probability
+    for numerator, anchor, probability in j2_comonotone
+    if numerator / anchor > 1
+)
+j2_countermonotone_exceedance = sum(
+    probability
+    for numerator, anchor, probability in j2_countermonotone
+    if numerator / anchor > 1
+)
+j2_same_marginals = (
+    weighted_marginal(j2_comonotone, 0)
+    == weighted_marginal(j2_countermonotone, 0)
+    and weighted_marginal(j2_comonotone, 1)
+    == weighted_marginal(j2_countermonotone, 1)
+)
+
+
+computed = {
+    "product_gauge": rational_text(product_gauge),
+    "ellipsoid_gauge_sq": rational_text(ellipsoid_gauge_squared),
+    "polytope_gauge": rational_text(polytope_gauge),
+    "rank_R": str(rank_response),
+    "rank_RD": str(rank_transformed_response),
+    "det_D": rational_text(det_scaling),
+    "j1_rho_a": rational_text(j1_rho_a),
+    "j1_rho_b": rational_text(j1_rho_b),
+    "j2_comonotone_exceedance": rational_text(
+        j2_comonotone_exceedance
+    ),
+    "j2_countermonotone_exceedance": rational_text(
+        j2_countermonotone_exceedance
+    ),
+    "one_way_violation_count": str(one_way_violation_count),
+}
+
+raw_checks = {
+    "product_ball_max_ratio": (
+        product_positive_radii
+        and product_body_membership == product_gauge_membership
+        and computed["product_gauge"] == expected_values["product_gauge"]
+    ),
+    "ellipsoid_unit_sublevel": (
+        ellipsoid_positive_definite
+        and ellipsoid_body_membership == ellipsoid_gauge_membership
+        and computed["ellipsoid_gauge_sq"]
+        == expected_values["ellipsoid_gauge_sq"]
+    ),
+    "polytope_unit_sublevel": (
+        polytope_pair_count_ok
+        and polytope_dimensions_ok
+        and polytope_positive_bounds
+        and polytope_nonzero_normals
+        and polytope_spanning
+        and polytope_antipodal
+        and polytope_body_membership == polytope_gauge_membership
+        and computed["polytope_gauge"] == expected_values["polytope_gauge"]
+    ),
+    "one_way_outer_envelope": (
+        outer_containments
+        and converses_fail
+        and computed["one_way_violation_count"]
+        == expected_values["one_way_violation_count"]
+    ),
+    "invertible_scaling_rank": (
+        det_scaling != 0
+        and rank_response == rank_transformed_response
+        and computed["det_D"] == expected_values["det_D"]
+        and computed["rank_R"] == expected_values["rank_R"]
+        and computed["rank_RD"] == expected_values["rank_RD"]
+    ),
+    "transformed_response_identity": (
+        sage_response_identity and singular_response_identity
+    ),
+    "j1_counterexample": (
+        outer_containments
+        and anchor_a_radius != physical_radius
+        and anchor_b_radius != physical_radius
+        and j1_rho_a != j1_rho_b
+        and computed["j1_rho_a"] == expected_values["j1_rho_a"]
+        and computed["j1_rho_b"] == expected_values["j1_rho_b"]
+        and rational_text(j1_rho_a) == j1["rho_a"]
+        and rational_text(j1_rho_b) == j1["rho_b"]
+    ),
+    "j2_dependence_counterexample": (
+        j2_marginal_shape_ok
+        and j2_joint_constructions_complete
+        and j2_positive_atoms
+        and j2_same_marginals
+        and j2_comonotone_exceedance != j2_countermonotone_exceedance
+        and computed["j2_comonotone_exceedance"]
+        == expected_values["j2_comonotone_exceedance"]
+        and computed["j2_countermonotone_exceedance"]
+        == expected_values["j2_countermonotone_exceedance"]
+        and computed["j2_comonotone_exceedance"]
+        == oracle["j2_exact"]["comonotone_exceedance_probability"]
+        and computed["j2_countermonotone_exceedance"]
+        == oracle["j2_exact"]["countermonotone_exceedance_probability"]
+    ),
+}
+
+if set(raw_checks) != set(obligations):
+    domain_assumption_diff.append(
+        "contract obligation keyset differs from implemented exact checks"
+    )
+checks = {
+    obligation: bool(raw_checks.get(obligation, False))
+    for obligation in obligations
+}
+failed_obligations = sorted(
+    obligation for obligation, passed in checks.items() if not passed
+)
+
+payload = {
+    "checks": checks,
+    "domain_assumption_diff": domain_assumption_diff,
+    "computed": computed,
+    "counterexample": (
+        None
+        if not failed_obligations
+        else {"failed_obligations": failed_obligations}
+    ),
+    "tool_versions": {
+        "sage": SAGE_VERSION,
+        "singular": singular_version,
+    },
+    "input_sha256": observed_input_hashes,
+    "fixture_trace": {
+        "polytope_ordered_pairs": [
+            {
+                "normal": [rational_text(value) for value in normal],
+                "bound": rational_text(bound),
+                "ratio": rational_text(ratio),
+            }
+            for (normal, bound), ratio in zip(
+                ordered_halfspaces, polytope_ordered_ratios
+            )
+        ]
+    },
+    "authoring_correlation": (
+        "Same-model-family script authorship can correlate derivations; "
+        "engine agreement is not derivation independence."
+    ),
+}
+
+print(json.dumps(payload, sort_keys=True, separators=(",", ":")))

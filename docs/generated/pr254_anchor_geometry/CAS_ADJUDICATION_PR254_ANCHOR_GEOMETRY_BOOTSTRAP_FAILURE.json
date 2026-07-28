@@ -1,0 +1,230 @@
+{
+  "schema_version": 2,
+  "contract_id": "CAS-PR254-ANCHOR-GEOMETRY-001",
+  "contract_sha256": "c417a5a741e33e49abe2100e3d9758fd90b4579f717a875fc20b9b3866680a78",
+  "aggregate_status": "CAS_CONFLICT",
+  "risk_tier": "R3",
+  "required_axes": [
+    "wolfram_xact",
+    "sympy",
+    "sage_singular",
+    "lean"
+  ],
+  "axis_statuses": {
+    "wolfram_xact": "PASS",
+    "sympy": "PASS",
+    "sage_singular": "PASS",
+    "lean": "INCONCLUSIVE"
+  },
+  "missing_axes": [],
+  "exceptions_applied": [],
+  "errors": [],
+  "adjudicated_at": "2026-07-28T14:52:07+00:00",
+  "note": "CAS_4AXIS_PASS requires all 4 contract-required axes to satisfy the risk-scaled contract under one contract hash; majority vote is structurally forbidden. Runner observation establishes only the CAS evidence component; it does not establish scientific validity, novelty, or overall claim readiness. Local observation is not a security attestation.",
+  "verification_state": "RUNNER_OBSERVED_EXECUTION",
+  "evidence_origin": "runner_observed_local_subprocess",
+  "execution_evidence": {
+    "wolfram_xact": {
+      "evidence_origin": "runner_observed_local_subprocess",
+      "axis": "wolfram_xact",
+      "argv": [
+        "wolframscript",
+        "-file",
+        "docs/generated/pr254_anchor_geometry/axes/wolfram_xact/axis_program/pr254_anchor_geometry_wolfram_xact.wls"
+      ],
+      "cwd": ".",
+      "timeout_seconds": 1800,
+      "solver_executed": true,
+      "preflight_probe": {
+        "status": "PASS",
+        "commands": [
+          {
+            "cmd": "wolframscript -code <version+xAct probe>",
+            "exit": 0
+          }
+        ],
+        "transcript_tail": "---------------------------------------------------------\nPackage xAct`xPerm`  version 1.2.4, {2025, 12, 29}\nCopyRight (C) 2003-2026, Jose M. Martin-Garcia, under the General Public License.\nConnecting to external linux executable...\nConnection established.\n------------------------------------------------------------\nPackage xAct`xTensor` version 1.3.0, {2025, 12, 29}\nCopyRight (C) 2002-2026, Jose M. Martin-Garcia, under the General Public License.\n------------------------------------------------------------\nThese packages come with ABSOLUTELY NO WARRANTY; for details type Disclaimer[]. This is free software, and you are welcome to redistribute it under certain conditions. See the General Public License for details.\n------------------------------------------------------------\nXACT_LOAD_OK\n"
+      },
+      "started_at": "2026-07-28T14:47:40+00:00",
+      "completed_at": "2026-07-28T14:47:46+00:00",
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_tail": "\",\"rank_R\":\"2\",\"rank_RD\":\"2\",\"det_D\":\"1\",\"j1_rho_a\":\"1\\/2\",\"j1_rho_b\":\"1\\/4\",\"j2_comonotone_exceedance\":\"0\",\"j2_countermonotone_exceedance\":\"1\\/2\",\"one_way_violation_count\":\"0\"},\"counterexample\":null,\"tool_metadata\":{\"engine\":\"wolfram_xact\",\"wolfram_version\":\"15.0.0 for Linux x86 (64-bit) (May 26, 2026)\",\"wolfram_version_number\":\"15.\",\"wolfram_pinned_15_0_0\":true,\"xact_loaded\":true,\"xact_xTensor_version\":\"1.3.0\",\"xact_minimum_1_2_0\":true,\"declared_dependencies\":[\"xAct`xTensor`\"],\"loaded_manifolds\":[],\"loaded_bundles\":[],\"loaded_metrics\":[],\"index_conventions\":\"none; exact scalar and finite real matrix algebra\",\"arithmetic\":\"exact integers and rationals\",\"numeric_precision_digits\":80,\"transformation_functions\":[\"Resolve\",\"FullSimplify\",\"Together\",\"MatrixRank\",\"Det\",\"Inverse\"],\"branch_changes\":[]},\"source_metadata\":{\"contract_path\":\"docs\\/generated\\/pr254_anchor_geometry\\/CAS_CONTRACT_PR254_ANCHOR_GEOMETRY.json\",\"contract_sha256\":\"c417a5a741e33e49abe2100e3d9758fd90b4579f717a875fc20b9b3866680a78\",\"spec_sha256\":\"4e2e497e0a3f13b9b9bbed02088072230315848a8669beb4b1901894d7fafe40\",\"source_sha256\":\"68a044a953acbdec9bda8dc6d6094205f4fd49e748a5d3cd2d90d69be84556de\",\"oracle_sha256\":\"03e4d591a3be1c97f4954e2afcb2c3a98b85a8a4b244e4396aeb6292ba19e45f\",\"polytope_fixture_source\":\"target.numeric_test_vectors[id=POLYTOPE-FIXTURE]\",\"polytope_fixture_ordered_trace\":[{\"normal\":[\"1\",\"0\"],\"bound\":\"2\",\"dot_over_bound\":\"1\\/2\"},{\"normal\":[\"-1\",\"0\"],\"bound\":\"2\",\"dot_over_bound\":\"-1\\/2\"},{\"normal\":[\"0\",\"1\"],\"bound\":\"4\",\"dot_over_bound\":\"1\\/2\"},{\"normal\":[\"0\",\"-1\"],\"bound\":\"4\",\"dot_over_bound\":\"-1\\/2\"}]},\"claim_boundary\":{\"claim_ceiling\":\"conditional\",\"safe_scope\":\"conditional exact gauge, containment, scaling, and counterexample algebra\",\"forbidden_inference\":\"evidence, FLRW proximity, geometry detection, family identification, native solver status, or anchor uniqueness\"},\"authoring_correlation\":\"same Codex model family may author multiple axes; engine agreement is not derivation independence\"}\n",
+      "stderr_tail": "",
+      "derived_status": "PASS",
+      "errors": [],
+      "payload": {
+        "checks": {
+          "product_ball_max_ratio": true,
+          "ellipsoid_unit_sublevel": true,
+          "polytope_unit_sublevel": true,
+          "one_way_outer_envelope": true,
+          "invertible_scaling_rank": true,
+          "transformed_response_identity": true,
+          "j1_counterexample": true,
+          "j2_dependence_counterexample": true
+        },
+        "domain_assumption_diff": [],
+        "computed": {
+          "product_gauge": "5/2",
+          "ellipsoid_gauge_sq": "1",
+          "polytope_gauge": "1/2",
+          "rank_R": "2",
+          "rank_RD": "2",
+          "det_D": "1",
+          "j1_rho_a": "1/2",
+          "j1_rho_b": "1/4",
+          "j2_comonotone_exceedance": "0",
+          "j2_countermonotone_exceedance": "1/2",
+          "one_way_violation_count": "0"
+        },
+        "counterexample": null
+      }
+    },
+    "sympy": {
+      "evidence_origin": "runner_observed_local_subprocess",
+      "axis": "sympy",
+      "argv": [
+        "python3",
+        "docs/generated/pr254_anchor_geometry/axes/sympy/axis_program/sympy_axis.py"
+      ],
+      "cwd": ".",
+      "timeout_seconds": 1800,
+      "solver_executed": true,
+      "preflight_probe": {
+        "status": "PASS",
+        "commands": [
+          {
+            "cmd": "/usr/bin/python3 -c <sympy exact factor probe>",
+            "exit": 0
+          }
+        ],
+        "transcript_tail": "1.14.0\n"
+      },
+      "started_at": "2026-07-28T14:47:46+00:00",
+      "completed_at": "2026-07-28T14:47:46+00:00",
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_tail": "{\"checks\":{\"ellipsoid_unit_sublevel\":true,\"invertible_scaling_rank\":true,\"j1_counterexample\":true,\"j2_dependence_counterexample\":true,\"one_way_outer_envelope\":true,\"polytope_unit_sublevel\":true,\"product_ball_max_ratio\":true,\"transformed_response_identity\":true},\"computed\":{\"det_D\":\"1\",\"ellipsoid_gauge_sq\":\"1\",\"j1_rho_a\":\"1/2\",\"j1_rho_b\":\"1/4\",\"j2_comonotone_exceedance\":\"0\",\"j2_countermonotone_exceedance\":\"1/2\",\"one_way_violation_count\":\"0\",\"polytope_gauge\":\"1/2\",\"product_gauge\":\"5/2\",\"rank_R\":\"2\",\"rank_RD\":\"2\"},\"counterexample\":null,\"domain_assumption_diff\":[]}\n",
+      "stderr_tail": "",
+      "derived_status": "PASS",
+      "errors": [],
+      "payload": {
+        "checks": {
+          "ellipsoid_unit_sublevel": true,
+          "invertible_scaling_rank": true,
+          "j1_counterexample": true,
+          "j2_dependence_counterexample": true,
+          "one_way_outer_envelope": true,
+          "polytope_unit_sublevel": true,
+          "product_ball_max_ratio": true,
+          "transformed_response_identity": true
+        },
+        "domain_assumption_diff": [],
+        "computed": {
+          "det_D": "1",
+          "ellipsoid_gauge_sq": "1",
+          "j1_rho_a": "1/2",
+          "j1_rho_b": "1/4",
+          "j2_comonotone_exceedance": "0",
+          "j2_countermonotone_exceedance": "1/2",
+          "one_way_violation_count": "0",
+          "polytope_gauge": "1/2",
+          "product_gauge": "5/2",
+          "rank_R": "2",
+          "rank_RD": "2"
+        },
+        "counterexample": null
+      }
+    },
+    "sage_singular": {
+      "evidence_origin": "runner_observed_local_subprocess",
+      "axis": "sage_singular",
+      "argv": [
+        "sage",
+        "docs/generated/pr254_anchor_geometry/axes/sage_singular/axis_program"
+      ],
+      "cwd": ".",
+      "timeout_seconds": 1800,
+      "solver_executed": true,
+      "preflight_probe": {
+        "status": "PASS",
+        "commands": [
+          {
+            "cmd": "sage -c <exact factor + singular version probe>",
+            "exit": 0
+          }
+        ],
+        "transcript_tail": "SageMath version 10.9, Release Date: 2026-05-04\n44100\n<cmdline>:1: DeprecationWarning: Use sage.version.version instead.\nSee https://github.com/sagemath/sage/issues/39015 for details.\n"
+      },
+      "started_at": "2026-07-28T14:47:54+00:00",
+      "completed_at": "2026-07-28T14:48:01+00:00",
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_tail": "{\"authoring_correlation\":\"Same-model-family script authorship can correlate derivations; engine agreement is not derivation independence.\",\"checks\":{\"ellipsoid_unit_sublevel\":true,\"invertible_scaling_rank\":true,\"j1_counterexample\":true,\"j2_dependence_counterexample\":true,\"one_way_outer_envelope\":true,\"polytope_unit_sublevel\":true,\"product_ball_max_ratio\":true,\"transformed_response_identity\":true},\"computed\":{\"det_D\":\"1\",\"ellipsoid_gauge_sq\":\"1\",\"j1_rho_a\":\"1/2\",\"j1_rho_b\":\"1/4\",\"j2_comonotone_exceedance\":\"0\",\"j2_countermonotone_exceedance\":\"1/2\",\"one_way_violation_count\":\"0\",\"polytope_gauge\":\"1/2\",\"product_gauge\":\"5/2\",\"rank_R\":\"2\",\"rank_RD\":\"2\"},\"counterexample\":null,\"domain_assumption_diff\":[],\"fixture_trace\":{\"polytope_ordered_pairs\":[{\"bound\":\"2\",\"normal\":[\"1\",\"0\"],\"ratio\":\"1/2\"},{\"bound\":\"2\",\"normal\":[\"-1\",\"0\"],\"ratio\":\"-1/2\"},{\"bound\":\"4\",\"normal\":[\"0\",\"1\"],\"ratio\":\"1/2\"},{\"bound\":\"4\",\"normal\":[\"0\",\"-1\"],\"ratio\":\"-1/2\"}]},\"input_sha256\":{\"docs/generated/pr254_anchor_geometry/CAS_CONTRACT_PR254_ANCHOR_GEOMETRY.json\":\"c417a5a741e33e49abe2100e3d9758fd90b4579f717a875fc20b9b3866680a78\",\"docs/generated/pr254_anchor_geometry/counterexample_oracle.json\":\"03e4d591a3be1c97f4954e2afcb2c3a98b85a8a4b244e4396aeb6292ba19e45f\",\"docs/research_program/premise_anchor/pr254_spec.yaml\":\"4e2e497e0a3f13b9b9bbed02088072230315848a8669beb4b1901894d7fafe40\",\"htt/src/common/anchor_geometry.py\":\"68a044a953acbdec9bda8dc6d6094205f4fd49e748a5d3cd2d90d69be84556de\"},\"tool_versions\":{\"sage\":\"10.9\",\"singular\":\"Singular for x86_64-Linux version 4.4.1 (44100, 64 bit) Jan 2025\"}}\n",
+      "stderr_tail": "",
+      "derived_status": "PASS",
+      "errors": [],
+      "payload": {
+        "checks": {
+          "ellipsoid_unit_sublevel": true,
+          "invertible_scaling_rank": true,
+          "j1_counterexample": true,
+          "j2_dependence_counterexample": true,
+          "one_way_outer_envelope": true,
+          "polytope_unit_sublevel": true,
+          "product_ball_max_ratio": true,
+          "transformed_response_identity": true
+        },
+        "domain_assumption_diff": [],
+        "computed": {
+          "det_D": "1",
+          "ellipsoid_gauge_sq": "1",
+          "j1_rho_a": "1/2",
+          "j1_rho_b": "1/4",
+          "j2_comonotone_exceedance": "0",
+          "j2_countermonotone_exceedance": "1/2",
+          "one_way_violation_count": "0",
+          "polytope_gauge": "1/2",
+          "product_gauge": "5/2",
+          "rank_R": "2",
+          "rank_RD": "2"
+        },
+        "counterexample": null
+      }
+    },
+    "lean": {
+      "evidence_origin": "runner_observed_local_subprocess",
+      "axis": "lean",
+      "argv": [
+        "docs/generated/pr254_anchor_geometry/axes/lean/axis_program"
+      ],
+      "cwd": ".",
+      "timeout_seconds": 3600,
+      "solver_executed": true,
+      "preflight_probe": {
+        "status": "PASS",
+        "commands": [
+          {
+            "cmd": "ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0 lean --version",
+            "exit": 0
+          }
+        ],
+        "transcript_tail": "Lean (version 4.31.0, x86_64-unknown-linux-gnu, commit 68218e876d2a38b1985b8590fff244a83c321783, Release)\n",
+        "pinned_toolchain": "leanprover/lean4:v4.31.0"
+      },
+      "started_at": "2026-07-28T14:48:01+00:00",
+      "completed_at": "2026-07-28T14:52:07+00:00",
+      "exit_code": 1,
+      "timed_out": false,
+      "stdout_tail": "PR254R3LeanAxis.lean:1:0: error: unknown module prefix 'Mathlib'\n\nNo directory 'Mathlib' or file 'Mathlib.olean' in the search path entries:\n/home/cosmosapjw/worktrees/htt-premise-anchor-pr254-20260728/docs/generated/pr254_anchor_geometry/axes/lean/.lake/packages/Cli/.lake/build/lib/lean\n/home/cosmosapjw/worktrees/htt-premise-anchor-pr254-20260728/docs/generated/pr254_anchor_geometry/axes/lean/.lake/packages/batteries/.lake/build/lib/lean\n/home/cosmosapjw/worktrees/htt-premise-anchor-pr254-20260728/docs/generated/pr254_anchor_geometry/axes/lean/.lake/packages/Qq/.lake/build/lib/lean\n/home/cosmosapjw/worktrees/htt-premise-anchor-pr254-20260728/docs/generated/pr254_anchor_geometry/axes/lean/.lake/packages/aesop/.lake/build/lib/lean\n/home/cosmosapjw/worktrees/htt-premise-anchor-pr254-20260728/docs/generated/pr254_anchor_geometry/axes/lean/.lake/packages/proofwidgets/.lake/build/lib/lean\n/home/cosmosapjw/worktrees/htt-premise-anchor-pr254-20260728/docs/generated/pr254_anchor_geometry/axes/lean/.lake/packages/importGraph/.lake/build/lib/lean\n/home/cosmosapjw/worktrees/htt-premise-anchor-pr254-20260728/docs/generated/pr254_anchor_geometry/axes/lean/.lake/packages/LeanSearchClient/.lake/build/lib/lean\n/home/cosmosapjw/worktrees/htt-premise-anchor-pr254-20260728/docs/generated/pr254_anchor_geometry/axes/lean/.lake/packages/plausible/.lake/build/lib/lean\n/home/cosmosapjw/worktrees/htt-premise-anchor-pr254-20260728/docs/generated/pr254_anchor_geometry/axes/lean/.lake/packages/mathlib/.lake/build/lib/lean\n/home/cosmosapjw/worktrees/htt-premise-anchor-pr254-20260728/docs/generated/pr254_anchor_geometry/axes/lean/.lake/build/lib/lean\n/home/cosmosapjw/.elan/toolchains/leanprover--lean4---v4.31.0/lib/lean\n/home/cosmosapjw/.elan/toolchains/leanprover--lean4---v4.31.0/lib/lean\n",
+      "stderr_tail": "info: mathlib: cloning https://github.com/leanprover-community/mathlib4.git\ninfo: mathlib: checking out revision 'fabf563a7c95a166b8d7b6efca11c8b4dc9d911f'\ninfo: plausible: cloning https://github.com/leanprover-community/plausible\ninfo: plausible: checking out revision '63045536fe95024e6c18fc7b48e03f506701c5bc'\ninfo: LeanSearchClient: cloning https://github.com/leanprover-community/LeanSearchClient\ninfo: LeanSearchClient: checking out revision 'c5d5b8fe6e5158def25cd28eb94e4141ad97c843'\ninfo: importGraph: cloning https://github.com/leanprover-community/import-graph\ninfo: importGraph: checking out revision '5c7542ed018c78194f1e2b903eaf6a792b74c03d'\ninfo: proofwidgets: cloning https://github.com/leanprover-community/ProofWidgets4\ninfo: proofwidgets: checking out revision '24b0d9dc081c5423f8eec7e866c441e5184f29d9'\ninfo: aesop: cloning https://github.com/leanprover-community/aesop\ninfo: aesop: checking out revision 'e3cb2f741431ce31bf73549fb52316a57368b06f'\ninfo: Qq: cloning https://github.com/leanprover-community/quote4\ninfo: Qq: checking out revision 'f46324995fca5f0483b742e4eb4daec7f4ee50d2'\ninfo: batteries: cloning https://github.com/leanprover-community/batteries\ninfo: batteries: checking out revision 'fa08db58b30eb033edcdab331bba000827f9f785'\ninfo: Cli: cloning https://github.com/leanprover/lean4-cli\ninfo: Cli: checking out revision '92564e5770e4d09f2d86dfbf8ada1e9c715b384c'\n",
+      "derived_status": "INCONCLUSIVE",
+      "errors": [
+        "child stdout is not one JSON document: Expecting value: line 1 column 1 (char 0)"
+      ]
+    }
+  },
+  "claim_promotion_cas_eligible": false,
+  "claim_promotion_cas_requirement": "NOT_SATISFIED"
+}

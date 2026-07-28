@@ -20,13 +20,17 @@ from _harness import (
     assignment_sha256,
     cli_active_run_id,
     dump_json,
+    enforce_work_unit_assignment_budget,
     is_safe_identifier,
     load_json,
     root,
     validate_assignment_payload,
     validate_run_plan_payload,
 )
-from publication_integrity import validate_candidate_binding
+from publication_integrity import (
+    PublicationIntegrityError,
+    validate_candidate_binding,
+)
 
 
 def _hashed_ref(repo, rel: str) -> dict:
@@ -48,10 +52,23 @@ def _work_unit_assignment_count(harness, work_unit_id) -> int:
         return 0
     count = 0
     for plan_path in sorted(harness.glob("runs/*/RUN_PLAN.json")):
+        if plan_path.is_symlink() or not plan_path.is_file():
+            raise PublicationIntegrityError(
+                "Cumulative work-unit budget cannot be verified: "
+                f"{plan_path} is not a regular RUN_PLAN file"
+            )
         try:
             plan = load_json(plan_path)
-        except (OSError, json.JSONDecodeError):
-            continue
+        except (OSError, json.JSONDecodeError) as exc:
+            raise PublicationIntegrityError(
+                "Cumulative work-unit budget cannot be verified: malformed "
+                f"RUN_PLAN {plan_path}"
+            ) from exc
+        if not isinstance(plan, dict):
+            raise PublicationIntegrityError(
+                "Cumulative work-unit budget cannot be verified: non-object "
+                f"RUN_PLAN {plan_path}"
+            )
         if plan.get("work_unit_id") != work_unit_id:
             continue
         count += len(sorted((plan_path.parent / "assignments").glob("*.json")))
@@ -148,15 +165,19 @@ def main() -> None:
         raise SystemExit(f"Assignment budget exhausted: {len(existing)}/{max_total}")
 
     work_unit_id = plan.get("work_unit_id")
-    max_per_unit = int(plan.get("budget", {}).get("max_total_per_work_unit", 0) or 0)
-    if work_unit_id and max_per_unit:
+    if work_unit_id:
         unit_count = _work_unit_assignment_count(harness, work_unit_id)
-        if unit_count >= max_per_unit:
-            raise SystemExit(
-                f"Cumulative work-unit budget exhausted for {work_unit_id}: "
-                f"{unit_count}/{max_per_unit} (budget spans ALL runs of this "
-                "work unit; a new run does not reset it)"
+        try:
+            enforce_work_unit_assignment_budget(
+                plan,
+                run_id=run_id,
+                assignment_id=args.assignment_id,
+                workflow_role=args.workflow_role,
+                cumulative_count=unit_count,
+                current_run_assignment_ids={path.stem for path in existing},
             )
+        except PublicationIntegrityError as exc:
+            raise SystemExit(str(exc)) from None
 
     depth = 1
     if args.parent_assignment_id:

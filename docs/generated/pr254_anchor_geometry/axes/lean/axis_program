@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+axis_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+cd "$axis_dir"
+exec lake env lean --run PR254R3LeanAxis.lean

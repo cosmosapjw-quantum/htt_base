@@ -9,6 +9,15 @@ from __future__ import annotations
 
 from common.orbit_nonlinearity import NonlinearityReport
 from common.mes_successor_registry import current_mes_successor_registry
+from common.anchor_geometry import (
+    AnchorBodySpec,
+    AnchorFamily,
+    AnchorGaugeInterval,
+    AnchorMarginReport,
+    NormalizerBenchmarkReport,
+    NormalizerPurpose,
+    NormalizerSpec,
+)
 from common.statistical_foundations import (
     AnchorStressReport,
     BudgetRadiusResult,
@@ -54,6 +63,10 @@ _MES_SUCCESSOR_ID = _MES_SUCCESSOR.successor_id
 
 __all__ = [
     "AnchorStressReport",
+    "AnchorBodySpec",
+    "AnchorFamily",
+    "AnchorGaugeInterval",
+    "AnchorMarginReport",
     "BoundToPiDominationResult",
     "BudgetPolicy",
     "BudgetRadiusResult",
@@ -71,6 +84,9 @@ __all__ = [
     "IdentifiedDepartureSet",
     "LegacyProjectionReport",
     "MESAnchorSpec",
+    "NormalizerBenchmarkReport",
+    "NormalizerPurpose",
+    "NormalizerSpec",
     "NativeMorphologyAtlasStatus",
     "NonlinearityReport",
     "ScalarRange",
