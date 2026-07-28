@@ -299,6 +299,30 @@ PREMISE_ANCHOR_CARD_CONTRACTS = {
         "owner": "COMMON",
         "change_set_id": "CS-PR254-ANCHOR-GEOMETRY",
         "publication_group_id": "PG-PR254-ANCHOR-GEOMETRY",
+        "claim_contracts": [
+            {
+                "claim_id": "J1-EXACT",
+                "owner": "COMMON",
+                "status": "CONJECTURE_COUNTEREXAMPLE_FIRST",
+                "evidence_required": [
+                    "physical equality proof for H_lin and the typed anchor body",
+                    "one shared four-axis CAS contract",
+                    "counterexample-first adjudication",
+                ],
+                "promotion_gate": "ALL_J1_EVIDENCE_REQUIRED",
+            },
+            {
+                "claim_id": "J2-UNIFORM",
+                "owner": "HTT",
+                "status": "CONJECTURE_COUNTEREXAMPLE_FIRST",
+                "evidence_required": [
+                    "registered joint numerator-anchor sampling law",
+                    "finite-sample composite-null proof or bounded counterexample class",
+                    "independent executable coverage oracle",
+                ],
+                "promotion_gate": "ALL_J2_EVIDENCE_REQUIRED",
+            },
+        ],
     },
     "PR-255": {
         "depends": ["PR-254", "PR-219", "PR-251"],
@@ -1368,6 +1392,10 @@ def _validate_premise_anchor_slice(cards: dict[str, Any]) -> None:
                     f"{pr_id} {field} drifted: "
                     f"{card.get(field)!r} != {expected[field]!r}"
                 )
+        if "claim_contracts" in expected and card.get("claim_contracts") != expected[
+            "claim_contracts"
+        ]:
+            raise ValueError(f"{pr_id} conjecture claim contracts drifted")
         if (
             card.get("execution_lane") != "defensible"
             or card.get("activation_state") != "PENDING"

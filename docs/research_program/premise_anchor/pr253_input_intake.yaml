@@ -70,12 +70,28 @@ claim_intake:
       status: PROPOSED_FOR_FOUR_AXIS_CAS
   conjectures:
     - claim_id: J1-EXACT
+      owner: COMMON
       statement: H_lin equals the MES anchor body and the MES gauge is essentially unique.
+      target_card: PR-254
       status: CONJECTURE_COUNTEREXAMPLE_FIRST
+      evidence_status: NONE
+      evidence_required:
+        - physical proof that H_lin equals rather than is contained in the typed anchor body
+        - one four-axis CAS contract over the exact mathematical statement
+        - counterexample-first adjudication with no unresolved valid counterexample
+      promotion_gate: ALL_J1_EVIDENCE_REQUIRED
       promotion_blocked: true
     - claim_id: J2-UNIFORM
+      owner: HTT
       statement: A noisy random-anchor exceedance test is uniformly finite-sample valid over the whole composite null.
+      target_card: PR-254
       status: CONJECTURE_COUNTEREXAMPLE_FIRST
+      evidence_status: NONE
+      evidence_required:
+        - registered numerator-anchor joint sampling law and conditioning contract
+        - finite-sample composite-null proof or an explicitly bounded counterexample class
+        - independent executable coverage oracle over the preregistered DGP grid
+      promotion_gate: ALL_J2_EVIDENCE_REQUIRED
       promotion_blocked: true
   mandatory_repairs:
     - raw anchor excess is not an e-value

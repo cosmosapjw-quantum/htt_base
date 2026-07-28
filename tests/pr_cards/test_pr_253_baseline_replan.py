@@ -97,6 +97,7 @@ def test_new_card_dependency_contract_is_fail_closed() -> None:
 
 def test_methodology_inputs_and_quoted_numbers_are_not_evidence() -> None:
     intake = _load(INTAKE)
+    conjectures = intake["claim_intake"]["conjectures"]
 
     assert intake["status"] == "PROPOSED_UNVERIFIED_INPUT"
     assert intake["evidence_eligible"] is False
@@ -113,8 +114,43 @@ def test_methodology_inputs_and_quoted_numbers_are_not_evidence() -> None:
     )
     assert all(
         conjecture["promotion_blocked"] is True
-        for conjecture in intake["claim_intake"]["conjectures"]
+        for conjecture in conjectures
     )
+    assert {conjecture["owner"] for conjecture in conjectures} == {
+        "COMMON",
+        "HTT",
+    }
+    assert all(conjecture["evidence_status"] == "NONE" for conjecture in conjectures)
+    assert all(conjecture["evidence_required"] for conjecture in conjectures)
+    assert len({conjecture["promotion_gate"] for conjecture in conjectures}) == 2
     assert intake["numerical_intake"]["policy"].startswith(
         "Every value below is quotation-only"
     )
+
+
+def test_j1_j2_claim_gates_cannot_collapse_to_one_owner() -> None:
+    backlog = _load(BACKLOG)
+    status = _load(STATUS)
+    mutated = copy.deepcopy(backlog)
+    card = next(card for card in mutated["prs"] if card["id"] == "PR-254")
+    j2 = next(
+        contract
+        for contract in card["claim_contracts"]
+        if contract["claim_id"] == "J2-UNIFORM"
+    )
+    j2["owner"] = "COMMON"
+
+    with pytest.raises(
+        ValueError,
+        match="PR-254 conjecture claim contracts drifted",
+    ):
+        _strict_validate(mutated, status)
+
+
+def test_pr255_scalar_information_gain_is_compatibility_only() -> None:
+    backlog = _load(BACKLOG)
+    card = next(card for card in backlog["prs"] if card["id"] == "PR-255")
+    done_text = " ".join(card["dod"])
+
+    assert "compatibility view only" in done_text
+    assert "anchor scaling alone is never information gain" in done_text

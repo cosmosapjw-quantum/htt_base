@@ -12491,6 +12491,30 @@
         "Compare expansion, MES, Fisher, template, dynamical and prior-quantile normalizers without a universal winner score.",
         "Prove only the one-way anchor theorems and attack J1-EXACT and J2-UNIFORM by counterexample first."
       ],
+      "claim_contracts": [
+        {
+          "claim_id": "J1-EXACT",
+          "owner": "COMMON",
+          "status": "CONJECTURE_COUNTEREXAMPLE_FIRST",
+          "evidence_required": [
+            "physical equality proof for H_lin and the typed anchor body",
+            "one shared four-axis CAS contract",
+            "counterexample-first adjudication"
+          ],
+          "promotion_gate": "ALL_J1_EVIDENCE_REQUIRED"
+        },
+        {
+          "claim_id": "J2-UNIFORM",
+          "owner": "HTT",
+          "status": "CONJECTURE_COUNTEREXAMPLE_FIRST",
+          "evidence_required": [
+            "registered joint numerator-anchor sampling law",
+            "finite-sample composite-null proof or bounded counterexample class",
+            "independent executable coverage oracle"
+          ],
+          "promotion_gate": "ALL_J2_EVIDENCE_REQUIRED"
+        }
+      ],
       "files": [
         "htt/src/common",
         "htt/htt",
@@ -12503,7 +12527,8 @@
       ],
       "dod": [
         "Product balls, ellipsoids, polytopes, finite nuisance families and missing blocks fail closed with typed statuses.",
-        "Four blind CAS axes agree on one contract before any mathematical claim is promoted."
+        "Four blind CAS axes agree on one contract before any mathematical claim is promoted.",
+        "J1 requires its physical equality proof in addition to CAS, while J2 requires its separately owned joint-law, finite-sample and independent coverage gates; neither may inherit the other's evidence."
       ],
       "kill": "A nonconvex union receives one false gauge, a continuous nuisance is discretized silently, or scaling is reported as information gain.",
       "cost": "high",
@@ -12581,7 +12606,7 @@
       ],
       "dod": [
         "Missing channels stay missing, singular covariance returns its null residual, and off-manifold states may abstain.",
-        "Scalar MES information gain remains only a validated one-dimensional compatibility view."
+        "The legacy scalar MesInformationGainReport is a compatibility view only when derived from an exact one-dimensional matrix reduction; anchor scaling alone is never information gain."
       ],
       "kill": "Anchor scaling creates rank, missing response becomes zero, or stress alone attributes a nonlinear source.",
       "cost": "high",
