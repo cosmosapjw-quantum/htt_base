@@ -411,6 +411,68 @@ def test_nonlinearity_rederives_rank_from_bound_replay_inputs() -> None:
         revalidate_nonlinearity_report(forged_report)
 
 
+def test_outer_analysis_identity_rejects_factory_valid_rank_transplant() -> None:
+    from mio.reports import StatisticalFoundationResultCard
+
+    common = {
+        "residual": (1.0, 0.0, 0.0),
+        "covariance": np.eye(3),
+        "transfer_id": TRANSFER_ID,
+        "mask_id": MASK_ID,
+        "covariance_id": COVARIANCE_ID,
+        "off_manifold_tolerance": 1e-12,
+        "null_residual_tolerance": 1e-12,
+        "nonlinear_gain_margin": 1.0,
+    }
+    base = decompose_nonlinearity(
+        tangent_response=((1.0, 0.0), (0.0, 0.0), (0.0, 0.0)),
+        **common,
+    )
+    alternative = decompose_nonlinearity(
+        tangent_response=((1.0, 0.0), (0.0, 1.0), (0.0, 0.0)),
+        **common,
+    )
+    assert (
+        base.attribution_status
+        is NonlinearityAttributionStatus.NON_IDENTIFIED_RESPONSE
+    )
+    assert (
+        alternative.attribution_status
+        is NonlinearityAttributionStatus.LINEAR_COMPATIBLE
+    )
+    assert base.tangent_statistic == alternative.tangent_statistic
+    assert base.perpendicular_statistic == alternative.perpendicular_statistic
+    assert base.null_residual_sq == alternative.null_residual_sq
+    assert base.response_rank.response_id != alternative.response_rank.response_id
+    assert base.analysis_id != alternative.analysis_id
+    assert revalidate_nonlinearity_report(alternative) == alternative
+
+    forged = object.__new__(type(base))
+    for name, value in vars(base).items():
+        object.__setattr__(forged, name, value)
+    object.__setattr__(forged, "response_rank", alternative.response_rank)
+    object.__setattr__(
+        forged, "attribution_status", alternative.attribution_status
+    )
+    object.__setattr__(
+        forged, "attribution_rationale", alternative.attribution_rationale
+    )
+
+    with pytest.raises(
+        OrbitNonlinearityError,
+        match="fields do not match a factory-derived value",
+    ):
+        revalidate_nonlinearity_report(forged)
+    with pytest.raises(
+        ValueError,
+        match="nonlinearity does not satisfy its constructor invariants",
+    ):
+        StatisticalFoundationResultCard(
+            card_id="rank-transplant",
+            nonlinearity=forged,
+        )
+
+
 def _report(
     *,
     residual: tuple[float, float, float],

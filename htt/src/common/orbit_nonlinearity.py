@@ -1586,6 +1586,85 @@ def _select_nonlinear_winner(
     )
 
 
+def _nonlinearity_analysis_identity(
+    report: "NonlinearityReport",
+) -> str:
+    """Bind one outer attribution to its exact replayable decomposition.
+
+    This is a content-integrity identity, not an authenticated execution
+    receipt or an independent scientific oracle.  Nested response and
+    covariance bytes are bound through identities that their own replay
+    contract has already checked.
+    """
+
+    def encoded_float(value: float | None) -> str | None:
+        return None if value is None else float(value).hex()
+
+    rank = report.response_rank
+    payload = {
+        "schema": "HTT_NONLINEARITY_ANALYSIS_V1",
+        "residual_id": report.residual_id,
+        "response_rank": {
+            "status": rank.status.value,
+            "rank": rank.rank,
+            "parameter_dimension": rank.parameter_dimension,
+            "data_dimension": rank.data_dimension,
+            "supported_data_dimension": rank.supported_data_dimension,
+            "singular_values": [
+                encoded_float(value) for value in rank.singular_values
+            ],
+            "min_singular": encoded_float(rank.min_singular),
+            "nullspace": [
+                [encoded_float(value) for value in row]
+                for row in rank.nullspace
+            ],
+            "tolerance": encoded_float(rank.tolerance),
+            "relative_tolerance": encoded_float(rank.relative_tolerance),
+            "transfer_id": rank.transfer_id,
+            "mask_id": rank.mask_id,
+            "covariance_id": rank.covariance_id,
+            "response_id": rank.response_id,
+            "covariance_content_id": rank.covariance_content_id,
+            "missing_inputs": list(rank.missing_inputs),
+            "allowed_use": list(rank.allowed_use),
+            "forbidden_use": list(rank.forbidden_use),
+        },
+        "candidate_evaluation_ids": [
+            value.evaluation_id for value in report.candidate_comparisons
+        ],
+        "held_out_receipt": report.held_out_receipt,
+        "matched_injection_receipt": report.matched_injection_receipt,
+        "tangent_statistic": encoded_float(report.tangent_statistic),
+        "perpendicular_statistic": encoded_float(
+            report.perpendicular_statistic
+        ),
+        "delta_nl": encoded_float(report.delta_nl),
+        "null_residual_sq": encoded_float(report.null_residual_sq),
+        "off_manifold_tolerance": encoded_float(
+            report.off_manifold_tolerance
+        ),
+        "null_residual_tolerance": encoded_float(
+            report.null_residual_tolerance
+        ),
+        "nonlinear_gain_margin": encoded_float(
+            report.nonlinear_gain_margin
+        ),
+        "attribution_status": report.attribution_status.value,
+        "attribution_rationale": report.attribution_rationale,
+        "found_equiv_status": report.found_equiv_status,
+        "found_equiv_prerequisite": report.found_equiv_prerequisite,
+        "allowed_use": list(report.allowed_use),
+        "forbidden_use": list(report.forbidden_use),
+    }
+    encoded = json.dumps(
+        payload,
+        sort_keys=True,
+        separators=(",", ":"),
+        ensure_ascii=True,
+    ).encode("ascii")
+    return f"sha256:{hashlib.sha256(encoded).hexdigest()}"
+
+
 @dataclass(frozen=True)
 class NonlinearityReport:
     tangent_statistic: float | None
@@ -1593,6 +1672,8 @@ class NonlinearityReport:
     delta_nl: float | None
     null_residual_sq: float | None
     response_rank: ResponseRankReport
+    residual_id: str | None
+    residual_replay_vector: tuple[float, ...] | None
     candidate_comparisons: tuple[CandidateEvaluation, ...]
     held_out_receipt: str | None
     matched_injection_receipt: str | None
@@ -1601,6 +1682,7 @@ class NonlinearityReport:
     nonlinear_gain_margin: float | None
     attribution_status: NonlinearityAttributionStatus
     attribution_rationale: str
+    analysis_id: str | None
     found_equiv_status: str = FOUND_EQUIV_STATUS
     found_equiv_prerequisite: str = FOUND_EQUIV_PREREQUISITE
     allowed_use: tuple[str, ...] = _DIAGNOSTIC_ALLOWED_USE
@@ -1625,6 +1707,13 @@ class NonlinearityReport:
                 raise OrbitNonlinearityError(
                     "MISSING_RESPONSE requires a missing-input rank report"
                 )
+            if (
+                self.residual_id is not None
+                or self.residual_replay_vector is not None
+            ):
+                raise OrbitNonlinearityError(
+                    "MISSING_RESPONSE report must not carry residual replay"
+                )
             if any(
                 value is not None
                 for value in (
@@ -1645,6 +1734,24 @@ class NonlinearityReport:
                 raise OrbitNonlinearityError(
                     "non-missing attribution requires a measured rank report"
                 )
+            residual = _array(
+                self.residual_replay_vector,
+                "residual_replay_vector",
+                shape=(self.response_rank.data_dimension,),
+            )
+            residual_id = _evidence_receipt(
+                self.residual_id, "residual_id"
+            )
+            if _array_content_identity(residual) != residual_id:
+                raise OrbitNonlinearityError(
+                    "residual_id does not match residual_replay_vector"
+                )
+            object.__setattr__(
+                self,
+                "residual_replay_vector",
+                tuple(float(value) for value in residual),
+            )
+            object.__setattr__(self, "residual_id", residual_id)
             object.__setattr__(
                 self,
                 "tangent_statistic",
@@ -1836,6 +1943,18 @@ class NonlinearityReport:
         )
         object.__setattr__(self, "allowed_use", allowed)
         object.__setattr__(self, "forbidden_use", forbidden)
+        expected_analysis_id = _nonlinearity_analysis_identity(self)
+        if self.analysis_id is None:
+            object.__setattr__(self, "analysis_id", expected_analysis_id)
+        else:
+            analysis_id = _evidence_receipt(
+                self.analysis_id, "analysis_id"
+            )
+            if analysis_id != expected_analysis_id:
+                raise OrbitNonlinearityError(
+                    "analysis_id does not bind the outer residual decomposition"
+                )
+            object.__setattr__(self, "analysis_id", analysis_id)
 
 
 def revalidate_nonlinearity_report(value: object) -> NonlinearityReport:
@@ -1846,26 +1965,48 @@ def revalidate_nonlinearity_report(value: object) -> NonlinearityReport:
             "nonlinearity must be an exact NonlinearityReport"
         )
     try:
-        canonical = NonlinearityReport(
-            tangent_statistic=value.tangent_statistic,
-            perpendicular_statistic=value.perpendicular_statistic,
-            delta_nl=value.delta_nl,
-            null_residual_sq=value.null_residual_sq,
-            response_rank=value.response_rank,
-            candidate_comparisons=value.candidate_comparisons,
-            held_out_receipt=value.held_out_receipt,
-            matched_injection_receipt=value.matched_injection_receipt,
-            off_manifold_tolerance=value.off_manifold_tolerance,
-            null_residual_tolerance=value.null_residual_tolerance,
-            nonlinear_gain_margin=value.nonlinear_gain_margin,
-            attribution_status=value.attribution_status,
-            attribution_rationale=value.attribution_rationale,
-            found_equiv_status=value.found_equiv_status,
-            found_equiv_prerequisite=value.found_equiv_prerequisite,
-            allowed_use=value.allowed_use,
-            forbidden_use=value.forbidden_use,
-            _construction_token=_NONLINEARITY_REPORT_TOKEN,
-        )
+        response_rank = _revalidated_response_rank_report(value.response_rank)
+        if response_rank.status is ResponseRankStatus.MEASURED:
+            canonical = decompose_nonlinearity(
+                residual=value.residual_replay_vector,
+                tangent_response=response_rank.response_replay_matrix,
+                covariance=response_rank.covariance_replay_matrix,
+                transfer_id=response_rank.transfer_id,
+                mask_id=response_rank.mask_id,
+                covariance_id=response_rank.covariance_id,
+                candidates=value.candidate_comparisons,
+                held_out_receipt=value.held_out_receipt,
+                matched_injection_receipt=value.matched_injection_receipt,
+                off_manifold_tolerance=value.off_manifold_tolerance,
+                null_residual_tolerance=value.null_residual_tolerance,
+                nonlinear_gain_margin=value.nonlinear_gain_margin,
+                delta_nl=value.delta_nl,
+                rtol=response_rank.relative_tolerance,
+            )
+        else:
+            canonical = NonlinearityReport(
+                tangent_statistic=value.tangent_statistic,
+                perpendicular_statistic=value.perpendicular_statistic,
+                delta_nl=value.delta_nl,
+                null_residual_sq=value.null_residual_sq,
+                response_rank=response_rank,
+                residual_id=value.residual_id,
+                residual_replay_vector=value.residual_replay_vector,
+                candidate_comparisons=value.candidate_comparisons,
+                held_out_receipt=value.held_out_receipt,
+                matched_injection_receipt=value.matched_injection_receipt,
+                off_manifold_tolerance=value.off_manifold_tolerance,
+                null_residual_tolerance=value.null_residual_tolerance,
+                nonlinear_gain_margin=value.nonlinear_gain_margin,
+                attribution_status=value.attribution_status,
+                attribution_rationale=value.attribution_rationale,
+                analysis_id=value.analysis_id,
+                found_equiv_status=value.found_equiv_status,
+                found_equiv_prerequisite=value.found_equiv_prerequisite,
+                allowed_use=value.allowed_use,
+                forbidden_use=value.forbidden_use,
+                _construction_token=_NONLINEARITY_REPORT_TOKEN,
+            )
     except AttributeError as exc:
         raise OrbitNonlinearityError(
             "NonlinearityReport is missing factory-validated fields"
@@ -1916,6 +2057,8 @@ def decompose_nonlinearity(
             delta_nl=None,
             null_residual_sq=None,
             response_rank=rank_report,
+            residual_id=None,
+            residual_replay_vector=None,
             candidate_comparisons=(),
             held_out_receipt=None,
             matched_injection_receipt=None,
@@ -1926,6 +2069,7 @@ def decompose_nonlinearity(
             attribution_rationale=(
                 "transfer, mask, covariance and tangent response are required"
             ),
+            analysis_id=None,
             _construction_token=_NONLINEARITY_REPORT_TOKEN,
         )
     off_tolerance = _nonnegative(
@@ -2042,6 +2186,10 @@ def decompose_nonlinearity(
         delta_nl=delta_value,
         null_residual_sq=null_residual_sq,
         response_rank=rank_report,
+        residual_id=_array_content_identity(residual_vector),
+        residual_replay_vector=tuple(
+            float(value) for value in residual_vector
+        ),
         candidate_comparisons=comparisons,
         held_out_receipt=held_out_receipt,
         matched_injection_receipt=matched_injection_receipt,
@@ -2050,6 +2198,7 @@ def decompose_nonlinearity(
         nonlinear_gain_margin=gain_margin,
         attribution_status=status,
         attribution_rationale=rationale,
+        analysis_id=None,
         _construction_token=_NONLINEARITY_REPORT_TOKEN,
     )
 
