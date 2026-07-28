@@ -341,3 +341,12 @@ def test_strict_slice_consumes_mirror_gate(monkeypatch: pytest.MonkeyPatch) -> N
     )
     with pytest.raises(ValueError, match="mirror drift sentinel"):
         _strict_validate(backlog, status)
+
+
+def test_pr07_portable_gate_includes_common_source_layout() -> None:
+    makefile = (ROOT / "Makefile").read_text(encoding="utf-8")
+    pypath = next(
+        line for line in makefile.splitlines() if line.startswith("PYPATH")
+    )
+
+    assert "$(REPO)/htt/src" in pypath
