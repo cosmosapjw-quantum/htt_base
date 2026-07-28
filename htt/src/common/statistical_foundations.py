@@ -923,9 +923,9 @@ class AnchorStressReport:
         stresses = tuple(self.stresses)
         if not stresses:
             raise StatisticalFoundationError("stresses must not be empty")
-        if any(not isinstance(stress, SectorStress) for stress in stresses):
+        if any(type(stress) is not SectorStress for stress in stresses):
             raise StatisticalFoundationError(
-                "stresses must contain SectorStress values"
+                "stresses must contain exact factory-derived SectorStress values"
             )
         if len({stress.sector for stress in stresses}) != len(stresses):
             raise StatisticalFoundationError("stress sectors must be unique")

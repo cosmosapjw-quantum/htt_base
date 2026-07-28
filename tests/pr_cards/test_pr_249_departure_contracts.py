@@ -274,6 +274,30 @@ def test_anchor_stress_cannot_relabel_random_anchor_or_forge_claim_lanes() -> No
     assert "evidence" in report.forbidden_use
     assert "family identification" in report.forbidden_use
 
+    class ForgedStress(SectorStress):
+        def __init__(self) -> None:
+            object.__setattr__(self, "sector", "Sigma2")
+            object.__setattr__(self, "status", StressStatus.DEFINED)
+            object.__setattr__(self, "anchor_id", "forged")
+            object.__setattr__(
+                self,
+                "conditioning",
+                AnchorConditioning.ENSEMBLE_CALIBRATED,
+            )
+            object.__setattr__(self, "saturation", ScalarRange(0.0, 0.0))
+            object.__setattr__(self, "exceedance", ScalarRange(99.0, 99.0))
+            object.__setattr__(self, "rationale", "forged subclass")
+            object.__setattr__(self, "allowed_use", ("evidence",))
+
+    with pytest.raises(
+        StatisticalFoundationError,
+        match="exact factory-derived SectorStress",
+    ):
+        build_anchor_stress_report(
+            stresses=(ForgedStress(),),
+            conditioning=AnchorConditioning.ENSEMBLE_CALIBRATED,
+        )
+
     with pytest.raises(
         StatisticalFoundationError,
         match="must be created by evaluate_sector_stress",

@@ -16,12 +16,12 @@ input_hashes:
 - htt/obsstat/morphology.py:sha256:67899dad4232f0c944fb766db2c48b16bdd19efae95df58fd1fbd243e3261108
 - htt/obsstat/null_ensembles.py:sha256:1033f1f4a5a105f455bf11b83bd421052b1520a486493560abd0f80fda16658c
 - htt/htt/htt/statistics/mes_information_gain.py:sha256:251c44f18fbfe7949dc5b02e6b96db12154ce0488560748c8987458446d991b1
-- htt/src/common/statistical_foundations.py:sha256:d13a11e2a17b610db76417fd267cfa67fc89ad97869003627c9e1d99aed68f3d
+- htt/src/common/statistical_foundations.py:sha256:b37ddfb3fc9628de3027f28cc2c4b62574da1a0ce9b7affcb4b4fcf00a07a5b2
 - docs/generated/status_snapshot.json:sha256:2599a57db43d856cf794074f2ab43e8c8f1fd108870cbcb22f9c93a5394d41ce
 sky_support_status: not_directional
 null_mock_status: summarized_from_dependency_surfaces
 generating_command: `python scripts/result_packs/generate_pack_A_scalar_to_morphology.py`
-git_commit_or_worktree_state: `declared-input-set:sha256:62e0dcb631053fcffa94f3c4bdbfb4b34e344ecd5e925a11327cd500d5822c7e`
+git_commit_or_worktree_state: `declared-input-set:sha256:94f04533cfb7488628e727a22140afee9e4027740b057bff9b42ba0bef150926`
 
 ## Scope
 
@@ -103,7 +103,7 @@ Source `docs/ver2_upgrade/generated/result_pack_A_scalar_to_morphology.json` is 
     "readiness labels are provenance only; not current production readiness"
   ],
   "claim_tier": "diagnostic_only",
-  "code_version": "declared-input-set:sha256:62e0dcb631053fcffa94f3c4bdbfb4b34e344ecd5e925a11327cd500d5822c7e",
+  "code_version": "declared-input-set:sha256:94f04533cfb7488628e727a22140afee9e4027740b057bff9b42ba0bef150926",
   "config_hash": "sha256:e7e0272ceb046b83e5a9e25f150e807eb780ab9924a9b724d36d0cc2f2527f62",
   "created_by": "scripts/result_packs/generate_pack_A_scalar_to_morphology.py",
   "failed_gates": [],
@@ -120,7 +120,7 @@ Source `docs/ver2_upgrade/generated/result_pack_A_scalar_to_morphology.json` is 
     "htt/obsstat/morphology.py:sha256:67899dad4232f0c944fb766db2c48b16bdd19efae95df58fd1fbd243e3261108",
     "htt/obsstat/null_ensembles.py:sha256:1033f1f4a5a105f455bf11b83bd421052b1520a486493560abd0f80fda16658c",
     "htt/htt/htt/statistics/mes_information_gain.py:sha256:251c44f18fbfe7949dc5b02e6b96db12154ce0488560748c8987458446d991b1",
-    "htt/src/common/statistical_foundations.py:sha256:d13a11e2a17b610db76417fd267cfa67fc89ad97869003627c9e1d99aed68f3d",
+    "htt/src/common/statistical_foundations.py:sha256:b37ddfb3fc9628de3027f28cc2c4b62574da1a0ce9b7affcb4b4fcf00a07a5b2",
     "docs/generated/status_snapshot.json:sha256:2599a57db43d856cf794074f2ab43e8c8f1fd108870cbcb22f9c93a5394d41ce"
   ],
   "owner": "COMMON",

@@ -216,6 +216,80 @@ def test_candidate_evaluation_rejects_exact_target_copy() -> None:
         )
 
 
+@pytest.mark.parametrize("copied_role", ("held_out", "matched_injection"))
+def test_candidate_evaluation_rejects_signed_zero_target_copy(
+    copied_role: str,
+) -> None:
+    candidate_id = f"nonlinear-signed-zero-{copied_role}"
+    model_config_id = "sha256:" + "e" * 64
+    held_target = np.array([0.0, 1.0], dtype=np.float64)
+    injection_target = np.array([2.0, 0.0], dtype=np.float64)
+    receipt = build_candidate_independence_receipt(
+        candidate_id=candidate_id,
+        model_config_id=model_config_id,
+        training_data_id=TRAINING_DATA_ID,
+        held_out_target=held_target,
+        matched_injection_target=injection_target,
+        fit_receipt_id="sha256:" + "f" * 64,
+        split_receipt_id=SPLIT_RECEIPT_ID,
+    )
+    held_prediction = (
+        np.array([-0.0, 1.0])
+        if copied_role == "held_out"
+        else np.array([1.0, 2.0])
+    )
+    injection_prediction = (
+        np.array([3.0, 1.0])
+        if copied_role == "held_out"
+        else np.array([2.0, -0.0])
+    )
+    with pytest.raises(
+        OrbitNonlinearityError,
+        match="target-copy independence is unverifiable",
+    ):
+        evaluate_candidate_predictions(
+            candidate_id=candidate_id,
+            kind=CandidateKind.NONLINEAR,
+            held_out_prediction=held_prediction,
+            held_out_target=held_target,
+            matched_injection_prediction=injection_prediction,
+            matched_injection_target=injection_target,
+            model_config_id=model_config_id,
+            independence_receipt=receipt,
+        )
+
+
+def test_nonlinearity_rejects_candidate_evaluation_subclasses() -> None:
+    legitimate = _competition(winner=CandidateKind.NONLINEAR)[0]
+
+    class ForgedEvaluation(CandidateEvaluation):
+        def __init__(self, source: CandidateEvaluation) -> None:
+            for name in (
+                "candidate_id",
+                "kind",
+                "held_out_score",
+                "matched_injection_score",
+                "held_out_data_id",
+                "matched_injection_data_id",
+                "model_config_id",
+                "scoring_rule",
+                "held_out_prediction_id",
+                "matched_injection_prediction_id",
+                "independence_receipt",
+                "evaluation_id",
+            ):
+                object.__setattr__(self, name, getattr(source, name))
+
+    with pytest.raises(
+        OrbitNonlinearityError,
+        match="exact factory-derived CandidateEvaluation",
+    ):
+        _report(
+            residual=(0.0, 1.0, 0.0),
+            candidates=(ForgedEvaluation(legitimate),),
+        )
+
+
 def _report(
     *,
     residual: tuple[float, float, float],

@@ -1313,11 +1313,13 @@ def evaluate_candidate_predictions(
     held_prediction_id = _array_content_identity(held_prediction)
     injection_prediction_id = _array_content_identity(injection_prediction)
     if (
-        held_prediction_id == held_data_id
+        np.array_equal(held_prediction, held_target)
+        or np.array_equal(injection_prediction, injection_target)
+        or held_prediction_id == held_data_id
         or injection_prediction_id == injection_data_id
     ):
         raise OrbitNonlinearityError(
-            "prediction bytes must not equal evaluation-target bytes; "
+            "prediction values must not equal evaluation-target values; "
             "target-copy independence is unverifiable"
         )
     if (
@@ -1511,12 +1513,10 @@ class NonlinearityReport:
                 ),
             )
         comparisons = tuple(self.candidate_comparisons)
-        if any(
-            not isinstance(value, CandidateEvaluation)
-            for value in comparisons
-        ):
+        if any(type(value) is not CandidateEvaluation for value in comparisons):
             raise OrbitNonlinearityError(
-                "candidate_comparisons must contain CandidateEvaluation values"
+                "candidate_comparisons must contain exact factory-derived "
+                "CandidateEvaluation values"
             )
         if len({value.candidate_id for value in comparisons}) != len(comparisons):
             raise OrbitNonlinearityError("candidate ids must be unique")
@@ -1755,11 +1755,10 @@ def decompose_nonlinearity(
     )
 
     comparisons = tuple(candidates)
-    if any(
-        not isinstance(value, CandidateEvaluation) for value in comparisons
-    ):
+    if any(type(value) is not CandidateEvaluation for value in comparisons):
         raise OrbitNonlinearityError(
-            "candidates must contain CandidateEvaluation values"
+            "candidates must contain exact factory-derived "
+            "CandidateEvaluation values"
         )
     if len({value.candidate_id for value in comparisons}) != len(comparisons):
         raise OrbitNonlinearityError("candidate ids must be unique")
