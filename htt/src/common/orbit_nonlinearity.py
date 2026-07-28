@@ -766,6 +766,43 @@ class ResponseRankReport:
         )
 
 
+def _revalidated_response_rank_report(value: object) -> ResponseRankReport:
+    if type(value) is not ResponseRankReport:
+        raise OrbitNonlinearityError(
+            "response_rank must be an exact factory-derived ResponseRankReport"
+        )
+    try:
+        canonical = ResponseRankReport(
+            status=value.status,
+            rank=value.rank,
+            parameter_dimension=value.parameter_dimension,
+            data_dimension=value.data_dimension,
+            supported_data_dimension=value.supported_data_dimension,
+            singular_values=value.singular_values,
+            min_singular=value.min_singular,
+            nullspace=value.nullspace,
+            tolerance=value.tolerance,
+            transfer_id=value.transfer_id,
+            mask_id=value.mask_id,
+            covariance_id=value.covariance_id,
+            response_id=value.response_id,
+            covariance_content_id=value.covariance_content_id,
+            missing_inputs=value.missing_inputs,
+            allowed_use=value.allowed_use,
+            forbidden_use=value.forbidden_use,
+            _construction_token=_RANK_REPORT_TOKEN,
+        )
+    except AttributeError as exc:
+        raise OrbitNonlinearityError(
+            "ResponseRankReport is missing factory-validated fields"
+        ) from exc
+    if canonical != value:
+        raise OrbitNonlinearityError(
+            "ResponseRankReport fields do not match a factory-derived value"
+        )
+    return canonical
+
+
 def _covariance_support(
     covariance: object,
     *,
@@ -1509,10 +1546,8 @@ class NonlinearityReport:
             raise OrbitNonlinearityError(
                 "NonlinearityReport must be created by decompose_nonlinearity"
             )
-        if not isinstance(self.response_rank, ResponseRankReport):
-            raise OrbitNonlinearityError(
-                "response_rank must be a ResponseRankReport"
-            )
+        response_rank = _revalidated_response_rank_report(self.response_rank)
+        object.__setattr__(self, "response_rank", response_rank)
         if not isinstance(
             self.attribution_status, NonlinearityAttributionStatus
         ):

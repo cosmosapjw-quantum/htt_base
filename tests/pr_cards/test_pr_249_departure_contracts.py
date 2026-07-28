@@ -194,6 +194,46 @@ def test_identified_set_support_preserves_recession_and_null_kind() -> None:
     assert rescaled.support((0.0, 1.0)) == math.inf
     assert rescaled.support((0.0, 1.0e-30)) == math.inf
 
+    near_orthogonal = IdentifiedDepartureSet(
+        coordinate_names=("Sigma2", "W2"),
+        vertices=((0.0, 0.0),),
+        recession_directions=((1.0, 0.0),),
+        null_kinds=(NullKind.STRUCTURAL, NullKind.NONE),
+        assumptions=("strict positive recession projection",),
+        status=IdentificationStatus.PARTIALLY_IDENTIFIED,
+    )
+    for scale in (1.0e-300, 1.0, 1.0e300):
+        assert near_orthogonal.support((1.0e-13 * scale, scale)) == math.inf
+    assert near_orthogonal.interval((1.0e-13, 1.0)).upper == math.inf
+    tiny_ray = IdentifiedDepartureSet(
+        coordinate_names=("Sigma2", "W2"),
+        vertices=((0.0, 0.0),),
+        recession_directions=((1.0e-300, 0.0),),
+        null_kinds=(NullKind.STRUCTURAL, NullKind.NONE),
+        assumptions=("same cone under extreme positive ray scaling",),
+        status=IdentificationStatus.PARTIALLY_IDENTIFIED,
+    )
+    assert tiny_ray.support((1.0e-13, 1.0)) == math.inf
+    with pytest.raises(
+        StatisticalFoundationError,
+        match="support topology requires tol=0",
+    ):
+        near_orthogonal.support((1.0e-13, 1.0), tol=1.0e-12)
+
+    compact_overflow = IdentifiedDepartureSet(
+        coordinate_names=("Sigma2",),
+        vertices=((1.0e308,),),
+        recession_directions=(),
+        null_kinds=(NullKind.NONE,),
+        assumptions=("compact overflow must remain distinct from recession",),
+        status=IdentificationStatus.PARTIALLY_IDENTIFIED,
+    )
+    with pytest.raises(
+        StatisticalFoundationError,
+        match="compact support is not representable",
+    ):
+        compact_overflow.support((1.0e308,))
+
     empty = IdentifiedDepartureSet(
         coordinate_names=("Sigma2",),
         vertices=(),

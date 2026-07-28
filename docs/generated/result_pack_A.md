@@ -6,7 +6,7 @@ claim_tier: diagnostic_only
 transfer_source: none
 config_hash: `sha256:e7e0272ceb046b83e5a9e25f150e807eb780ab9924a9b724d36d0cc2f2527f62`
 input_hashes:
-- scripts/result_packs/generate_pack_A_scalar_to_morphology.py:sha256:079b67478da7bde0f17fca5e2fbe432015e1f8a59cfe342c3e219e6c885d4201
+- scripts/result_packs/generate_pack_A_scalar_to_morphology.py:sha256:b941a6774a89fcc6b2fe2a70d4fb2765ed2fa7485d4827dbdef18f0f349bab48
 - docs/ver2_upgrade/generated/result_pack_A_scalar_to_morphology.json:sha256:2cb5c46c2eaacb5fe400b5910b8ebe85c7b78b5ae448772ea5c9be2d0b07beca
 - docs/PR_DELTAS/pr-056.md:sha256:ca22c09c8a1822c1894fd775e2991932e9a6c28ba55ec9876a137e6000bf4207
 - docs/PR_DELTAS/pr-076.md:sha256:a32bf4e530c1af1dcd941c9af73c7bc3d678eae8c7767c5f37179cf9b9a6906a
@@ -16,12 +16,12 @@ input_hashes:
 - htt/obsstat/morphology.py:sha256:67899dad4232f0c944fb766db2c48b16bdd19efae95df58fd1fbd243e3261108
 - htt/obsstat/null_ensembles.py:sha256:1033f1f4a5a105f455bf11b83bd421052b1520a486493560abd0f80fda16658c
 - htt/htt/htt/statistics/mes_information_gain.py:sha256:251c44f18fbfe7949dc5b02e6b96db12154ce0488560748c8987458446d991b1
-- htt/src/common/statistical_foundations.py:sha256:b787dba26264eaffa1294e3109de7f5a009ad2f9dcb7af399c6f96c5d7dd75d6
+- htt/src/common/statistical_foundations.py:sha256:8d3706754e41b1b456c12cb0e8b3b446c33ae7f5a78b5902b5e692ce354149aa
 - docs/generated/status_snapshot.json:sha256:129f4ccfa1666a3e69d7e1af6eac5a58d8c9b2202532aeeac31d1d1d6c168de8
 sky_support_status: not_directional
 null_mock_status: summarized_from_dependency_surfaces
 generating_command: `python scripts/result_packs/generate_pack_A_scalar_to_morphology.py`
-git_commit_or_worktree_state: `declared-input-set:sha256:1c8b58e34b7b06433dd270a1f43c2f7c1de4d913a29a0b503a8f44cde517d591`
+git_commit_or_worktree_state: `declared-input-set:sha256:70460d4196b416fb94ff0052fa1c9f8848a406f30d1f30e68a82a9335d83a2b6`
 
 ## Scope
 
@@ -37,25 +37,25 @@ This is a diagnostic-only comparison pack. It compares scalar MIO Q/F/Pi legacy-
 
 ## Morphology And MES Diagnostics
 
-| Name | Owner | Claim Tier | Artifact Mode | Transfer Source | Null Status | Covariance Status | Surface | Role | Allowed Use | Forbidden Use | Required Provenance |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Low-ell scalar features | OBSSTAT | diagnostic_only | diagnostic_observable_features | none_observer_side | required_for_p_values_not_bound_in_summary | required_for_claim_interpretation_not_bound_in_summary | obsstat.scalar_lowell.LowEllScalarSummary | observer-side scalar feature extraction | feature extraction and explicitly null-calibrated diagnostics | posterior evidence, geometry detection, or family identification | null ensemble and look-elsewhere metadata for p-values |
-| Morphology axes | OBSSTAT | diagnostic_only | diagnostic_morphology_features | none_observer_side | alignment_null_not_bound_in_summary | mask_and_covariance_not_bound_in_summary | obsstat.morphology.MorphologyAxisSummary | diagnostic morphology-axis and alignment features | diagnostic morphology and alignment description | native-atlas equivalence, geometry detection, or family identification | mask, covariance, null, and scan-volume metadata |
-| MES I_morph | COMMON | diagnostic_only_or_blocked | diagnostic_or_blocked_mes_information_gain | matched_source_manifest_conditional | not_a_null_calibrated_detection_statistic | matched_covariance_manifest_required_not_bound_in_summary | htt.statistics.mes_information_gain.MesInformationGainReport | branch-separated MES morphology information-gain report | branch-separated conditional information-gain diagnostic | MES converse, FLRW proof, evidence, native-solver validation, or family identification | positive finite branch bounds and matched source manifests |
+| Name | Owner | Claim Tier | Artifact Mode | Readiness Status | Transfer Source | Null Status | Covariance Status | Surface | Role | Allowed Use | Forbidden Use | Required Provenance |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Low-ell scalar features | OBSSTAT | diagnostic_only | diagnostic_observable_features | conditional_on_registered_null_binding | none_observer_side | required_for_p_values_not_bound_in_summary | required_for_claim_interpretation_not_bound_in_summary | obsstat.scalar_lowell.LowEllScalarSummary | observer-side scalar feature extraction | feature extraction and explicitly null-calibrated diagnostics | posterior evidence, geometry detection, or family identification | null ensemble and look-elsewhere metadata for p-values |
+| Morphology axes | OBSSTAT | diagnostic_only | diagnostic_morphology_features | conditional_on_mask_covariance_alignment_null_binding | none_observer_side | alignment_null_not_bound_in_summary | mask_and_covariance_not_bound_in_summary | obsstat.morphology.MorphologyAxisSummary | diagnostic morphology-axis and alignment features | diagnostic morphology and alignment description | native-atlas equivalence, geometry detection, or family identification | mask, covariance, null, and scan-volume metadata |
+| MES I_morph | COMMON | diagnostic_only | diagnostic_mes_information_gain | blocked_pending_matched_source_manifests | matched_source_manifest_conditional | not_a_null_calibrated_detection_statistic | matched_covariance_manifest_required_not_bound_in_summary | htt.statistics.mes_information_gain.MesInformationGainReport | branch-separated MES morphology information-gain report | branch-separated conditional information-gain diagnostic | MES converse, FLRW proof, evidence, native-solver validation, or family identification | positive finite branch bounds and matched source manifests |
 
 ## Comparison Matrix
 
-| Scalar | Morphology/MES | Status | Allowed Statement |
-| --- | --- | --- | --- |
-| Q | Low-ell scalar features | diagnostic_side_by_side | Q and Low-ell scalar features can be reported together only as claim-tiered diagnostics with separate provenance. |
-| Q | Morphology axes | diagnostic_side_by_side | Q and Morphology axes can be reported together only as claim-tiered diagnostics with separate provenance. |
-| Q | MES I_morph | diagnostic_side_by_side | Q and MES I_morph can be reported together only as claim-tiered diagnostics with separate provenance. |
-| F | Low-ell scalar features | diagnostic_side_by_side | F and Low-ell scalar features can be reported together only as claim-tiered diagnostics with separate provenance. |
-| F | Morphology axes | diagnostic_side_by_side | F and Morphology axes can be reported together only as claim-tiered diagnostics with separate provenance. |
-| F | MES I_morph | diagnostic_side_by_side | F and MES I_morph can be reported together only as claim-tiered diagnostics with separate provenance. |
-| Pi | Low-ell scalar features | diagnostic_side_by_side | Pi and Low-ell scalar features can be reported together only as claim-tiered diagnostics with separate provenance. |
-| Pi | Morphology axes | diagnostic_side_by_side | Pi and Morphology axes can be reported together only as claim-tiered diagnostics with separate provenance. |
-| Pi | MES I_morph | diagnostic_side_by_side | Pi and MES I_morph can be reported together only as claim-tiered diagnostics with separate provenance. |
+| Scalar | Morphology/MES | Scalar Owner | Morphology/MES Owner | Scalar Claim Tier | Morphology/MES Claim Tier | Scalar Artifact Mode | Morphology/MES Artifact Mode | Scalar Transfer Source | Morphology/MES Transfer Source | Scalar Null Status | Morphology/MES Null Status | Scalar Covariance Status | Morphology/MES Covariance Status | Status | Allowed Statement | Scalar Forbidden Use | Morphology/MES Forbidden Use | Blocked Statement |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Q | Low-ell scalar features | MIO | OBSSTAT | diagnostic_only | diagnostic_only | diagnostic_legacy_projection | diagnostic_observable_features | section-bound historical/proxy only | none_observer_side | not calibrated in this summary row | required_for_p_values_not_bound_in_summary | not bound in this summary row | required_for_claim_interpretation_not_bound_in_summary | diagnostic_side_by_side | Q and Low-ell scalar features can be reported together only as claim-tiered diagnostics with separate provenance. | departure distance, occupancy, probability, or evidence | posterior evidence, geometry detection, or family identification | Do not infer geometry, family labels, native-solver support, or posterior/evidence from this comparison. |
+| Q | Morphology axes | MIO | OBSSTAT | diagnostic_only | diagnostic_only | diagnostic_legacy_projection | diagnostic_morphology_features | section-bound historical/proxy only | none_observer_side | not calibrated in this summary row | alignment_null_not_bound_in_summary | not bound in this summary row | mask_and_covariance_not_bound_in_summary | diagnostic_side_by_side | Q and Morphology axes can be reported together only as claim-tiered diagnostics with separate provenance. | departure distance, occupancy, probability, or evidence | native-atlas equivalence, geometry detection, or family identification | Do not infer geometry, family labels, native-solver support, or posterior/evidence from this comparison. |
+| Q | MES I_morph | MIO | COMMON | diagnostic_only | diagnostic_only | diagnostic_legacy_projection | diagnostic_mes_information_gain | section-bound historical/proxy only | matched_source_manifest_conditional | not calibrated in this summary row | not_a_null_calibrated_detection_statistic | not bound in this summary row | matched_covariance_manifest_required_not_bound_in_summary | diagnostic_side_by_side | Q and MES I_morph can be reported together only as claim-tiered diagnostics with separate provenance. | departure distance, occupancy, probability, or evidence | MES converse, FLRW proof, evidence, native-solver validation, or family identification | Do not infer geometry, family labels, native-solver support, or posterior/evidence from this comparison. |
+| F | Low-ell scalar features | MIO | OBSSTAT | diagnostic_only | diagnostic_only | diagnostic_legacy_projection | diagnostic_observable_features | section-bound historical/proxy only | none_observer_side | not calibrated in this summary row | required_for_p_values_not_bound_in_summary | not bound in this summary row | required_for_claim_interpretation_not_bound_in_summary | diagnostic_side_by_side | F and Low-ell scalar features can be reported together only as claim-tiered diagnostics with separate provenance. | filling, occupancy, saturation, probability, or evidence | posterior evidence, geometry detection, or family identification | Do not infer geometry, family labels, native-solver support, or posterior/evidence from this comparison. |
+| F | Morphology axes | MIO | OBSSTAT | diagnostic_only | diagnostic_only | diagnostic_legacy_projection | diagnostic_morphology_features | section-bound historical/proxy only | none_observer_side | not calibrated in this summary row | alignment_null_not_bound_in_summary | not bound in this summary row | mask_and_covariance_not_bound_in_summary | diagnostic_side_by_side | F and Morphology axes can be reported together only as claim-tiered diagnostics with separate provenance. | filling, occupancy, saturation, probability, or evidence | native-atlas equivalence, geometry detection, or family identification | Do not infer geometry, family labels, native-solver support, or posterior/evidence from this comparison. |
+| F | MES I_morph | MIO | COMMON | diagnostic_only | diagnostic_only | diagnostic_legacy_projection | diagnostic_mes_information_gain | section-bound historical/proxy only | matched_source_manifest_conditional | not calibrated in this summary row | not_a_null_calibrated_detection_statistic | not bound in this summary row | matched_covariance_manifest_required_not_bound_in_summary | diagnostic_side_by_side | F and MES I_morph can be reported together only as claim-tiered diagnostics with separate provenance. | filling, occupancy, saturation, probability, or evidence | MES converse, FLRW proof, evidence, native-solver validation, or family identification | Do not infer geometry, family labels, native-solver support, or posterior/evidence from this comparison. |
+| Pi | Low-ell scalar features | MIO | OBSSTAT | diagnostic_only | diagnostic_only | diagnostic_legacy_projection | diagnostic_observable_features | section-bound historical/proxy only | none_observer_side | not calibrated in this summary row | required_for_p_values_not_bound_in_summary | not bound in this summary row | required_for_claim_interpretation_not_bound_in_summary | diagnostic_side_by_side | Pi and Low-ell scalar features can be reported together only as claim-tiered diagnostics with separate provenance. | truth probability, occupancy, or evidence | posterior evidence, geometry detection, or family identification | Do not infer geometry, family labels, native-solver support, or posterior/evidence from this comparison. |
+| Pi | Morphology axes | MIO | OBSSTAT | diagnostic_only | diagnostic_only | diagnostic_legacy_projection | diagnostic_morphology_features | section-bound historical/proxy only | none_observer_side | not calibrated in this summary row | alignment_null_not_bound_in_summary | not bound in this summary row | mask_and_covariance_not_bound_in_summary | diagnostic_side_by_side | Pi and Morphology axes can be reported together only as claim-tiered diagnostics with separate provenance. | truth probability, occupancy, or evidence | native-atlas equivalence, geometry detection, or family identification | Do not infer geometry, family labels, native-solver support, or posterior/evidence from this comparison. |
+| Pi | MES I_morph | MIO | COMMON | diagnostic_only | diagnostic_only | diagnostic_legacy_projection | diagnostic_mes_information_gain | section-bound historical/proxy only | matched_source_manifest_conditional | not calibrated in this summary row | not_a_null_calibrated_detection_statistic | not bound in this summary row | matched_covariance_manifest_required_not_bound_in_summary | diagnostic_side_by_side | Pi and MES I_morph can be reported together only as claim-tiered diagnostics with separate provenance. | truth probability, occupancy, or evidence | MES converse, FLRW proof, evidence, native-solver validation, or family identification | Do not infer geometry, family labels, native-solver support, or posterior/evidence from this comparison. |
 
 ## Legacy VER2 Context
 
@@ -103,14 +103,14 @@ Source `docs/ver2_upgrade/generated/result_pack_A_scalar_to_morphology.json` is 
     "readiness labels are provenance only; not current production readiness"
   ],
   "claim_tier": "diagnostic_only",
-  "code_version": "declared-input-set:sha256:1c8b58e34b7b06433dd270a1f43c2f7c1de4d913a29a0b503a8f44cde517d591",
+  "code_version": "declared-input-set:sha256:70460d4196b416fb94ff0052fa1c9f8848a406f30d1f30e68a82a9335d83a2b6",
   "config_hash": "sha256:e7e0272ceb046b83e5a9e25f150e807eb780ab9924a9b724d36d0cc2f2527f62",
   "created_by": "scripts/result_packs/generate_pack_A_scalar_to_morphology.py",
   "failed_gates": [],
   "git_commit": null,
   "implementation_scope": "common",
   "input_hashes": [
-    "scripts/result_packs/generate_pack_A_scalar_to_morphology.py:sha256:079b67478da7bde0f17fca5e2fbe432015e1f8a59cfe342c3e219e6c885d4201",
+    "scripts/result_packs/generate_pack_A_scalar_to_morphology.py:sha256:b941a6774a89fcc6b2fe2a70d4fb2765ed2fa7485d4827dbdef18f0f349bab48",
     "docs/ver2_upgrade/generated/result_pack_A_scalar_to_morphology.json:sha256:2cb5c46c2eaacb5fe400b5910b8ebe85c7b78b5ae448772ea5c9be2d0b07beca",
     "docs/PR_DELTAS/pr-056.md:sha256:ca22c09c8a1822c1894fd775e2991932e9a6c28ba55ec9876a137e6000bf4207",
     "docs/PR_DELTAS/pr-076.md:sha256:a32bf4e530c1af1dcd941c9af73c7bc3d678eae8c7767c5f37179cf9b9a6906a",
@@ -120,7 +120,7 @@ Source `docs/ver2_upgrade/generated/result_pack_A_scalar_to_morphology.json` is 
     "htt/obsstat/morphology.py:sha256:67899dad4232f0c944fb766db2c48b16bdd19efae95df58fd1fbd243e3261108",
     "htt/obsstat/null_ensembles.py:sha256:1033f1f4a5a105f455bf11b83bd421052b1520a486493560abd0f80fda16658c",
     "htt/htt/htt/statistics/mes_information_gain.py:sha256:251c44f18fbfe7949dc5b02e6b96db12154ce0488560748c8987458446d991b1",
-    "htt/src/common/statistical_foundations.py:sha256:b787dba26264eaffa1294e3109de7f5a009ad2f9dcb7af399c6f96c5d7dd75d6",
+    "htt/src/common/statistical_foundations.py:sha256:8d3706754e41b1b456c12cb0e8b3b446c33ae7f5a78b5902b5e692ce354149aa",
     "docs/generated/status_snapshot.json:sha256:129f4ccfa1666a3e69d7e1af6eac5a58d8c9b2202532aeeac31d1d1d6c168de8"
   ],
   "owner": "COMMON",

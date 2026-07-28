@@ -197,6 +197,7 @@ def _diagnostic_payloads() -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
             "role": "observer-side scalar feature extraction",
             "claim_tier": "diagnostic_only",
             "artifact_mode": "diagnostic_observable_features",
+            "readiness_status": "conditional_on_registered_null_binding",
             "transfer_source": "none_observer_side",
             "null_status": "required_for_p_values_not_bound_in_summary",
             "covariance_status": (
@@ -219,6 +220,9 @@ def _diagnostic_payloads() -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
             "role": "diagnostic morphology-axis and alignment features",
             "claim_tier": "diagnostic_only",
             "artifact_mode": "diagnostic_morphology_features",
+            "readiness_status": (
+                "conditional_on_mask_covariance_alignment_null_binding"
+            ),
             "transfer_source": "none_observer_side",
             "null_status": "alignment_null_not_bound_in_summary",
             "covariance_status": "mask_and_covariance_not_bound_in_summary",
@@ -235,8 +239,9 @@ def _diagnostic_payloads() -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
             "source_pr": "PR-092",
             "surface": "htt.statistics.mes_information_gain.MesInformationGainReport",
             "role": "branch-separated MES morphology information-gain report",
-            "claim_tier": "diagnostic_only_or_blocked",
-            "artifact_mode": "diagnostic_or_blocked_mes_information_gain",
+            "claim_tier": "diagnostic_only",
+            "artifact_mode": "diagnostic_mes_information_gain",
+            "readiness_status": "blocked_pending_matched_source_manifests",
             "transfer_source": "matched_source_manifest_conditional",
             "null_status": "not_a_null_calibrated_detection_statistic",
             "covariance_status": (
@@ -267,6 +272,28 @@ def _comparison_matrix(
                 {
                     "scalar": scalar_item["name"],
                     "morphology_mes": morphology_item["name"],
+                    "scalar_owner": scalar_item["owner"],
+                    "morphology_mes_owner": morphology_item["owner"],
+                    "scalar_claim_tier": scalar_item["claim_tier"],
+                    "morphology_mes_claim_tier": morphology_item["claim_tier"],
+                    "scalar_artifact_mode": scalar_item["artifact_mode"],
+                    "morphology_mes_artifact_mode": (
+                        morphology_item["artifact_mode"]
+                    ),
+                    "scalar_transfer_source": scalar_item["transfer_source"],
+                    "morphology_mes_transfer_source": (
+                        morphology_item["transfer_source"]
+                    ),
+                    "scalar_null_status": scalar_item["null_status"],
+                    "morphology_mes_null_status": morphology_item["null_status"],
+                    "scalar_covariance_status": scalar_item["covariance_status"],
+                    "morphology_mes_covariance_status": (
+                        morphology_item["covariance_status"]
+                    ),
+                    "scalar_forbidden_use": scalar_item["forbidden_use"],
+                    "morphology_mes_forbidden_use": (
+                        morphology_item["forbidden_use"]
+                    ),
                     "comparison_status": "diagnostic_side_by_side",
                     "allowed_statement": (
                         f"{scalar_item['name']} and {morphology_item['name']} "
@@ -480,6 +507,7 @@ def render_markdown(payload: dict[str, Any]) -> str:
                 "Owner",
                 "Claim Tier",
                 "Artifact Mode",
+                "Readiness Status",
                 "Transfer Source",
                 "Null Status",
                 "Covariance Status",
@@ -495,6 +523,7 @@ def render_markdown(payload: dict[str, Any]) -> str:
                     item["owner"],
                     item["claim_tier"],
                     item["artifact_mode"],
+                    item["readiness_status"],
                     item["transfer_source"],
                     item["null_status"],
                     item["covariance_status"],
@@ -511,13 +540,48 @@ def render_markdown(payload: dict[str, Any]) -> str:
     lines.extend(["", "## Comparison Matrix", ""])
     lines.extend(
         _table(
-            ("Scalar", "Morphology/MES", "Status", "Allowed Statement"),
+            (
+                "Scalar",
+                "Morphology/MES",
+                "Scalar Owner",
+                "Morphology/MES Owner",
+                "Scalar Claim Tier",
+                "Morphology/MES Claim Tier",
+                "Scalar Artifact Mode",
+                "Morphology/MES Artifact Mode",
+                "Scalar Transfer Source",
+                "Morphology/MES Transfer Source",
+                "Scalar Null Status",
+                "Morphology/MES Null Status",
+                "Scalar Covariance Status",
+                "Morphology/MES Covariance Status",
+                "Status",
+                "Allowed Statement",
+                "Scalar Forbidden Use",
+                "Morphology/MES Forbidden Use",
+                "Blocked Statement",
+            ),
             [
                 (
                     row["scalar"],
                     row["morphology_mes"],
+                    row["scalar_owner"],
+                    row["morphology_mes_owner"],
+                    row["scalar_claim_tier"],
+                    row["morphology_mes_claim_tier"],
+                    row["scalar_artifact_mode"],
+                    row["morphology_mes_artifact_mode"],
+                    row["scalar_transfer_source"],
+                    row["morphology_mes_transfer_source"],
+                    row["scalar_null_status"],
+                    row["morphology_mes_null_status"],
+                    row["scalar_covariance_status"],
+                    row["morphology_mes_covariance_status"],
                     row["comparison_status"],
                     row["allowed_statement"],
+                    row["scalar_forbidden_use"],
+                    row["morphology_mes_forbidden_use"],
+                    row["blocked_statement"],
                 )
                 for row in payload["comparison_matrix"]
             ],

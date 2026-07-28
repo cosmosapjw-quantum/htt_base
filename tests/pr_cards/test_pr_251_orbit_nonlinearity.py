@@ -20,12 +20,14 @@ from common.orbit_nonlinearity import (  # noqa: E402
     OrbitNonlinearityError,
     OrientedDirection,
     PR251_INVARIANT_NAMES,
+    ResponseRankReport,
     STF5_CARTESIAN_BASIS,
     VectorParity,
     build_candidate_independence_receipt,
     decompose_nonlinearity,
     evaluate_candidate_predictions,
     orbit_invariants,
+    revalidate_nonlinearity_report,
 )
 from common.statistical_foundations import (  # noqa: E402
     AnchorAuthorityKind,
@@ -316,6 +318,48 @@ def test_nonlinearity_rejects_candidate_evaluation_subclasses() -> None:
         _report(
             residual=(0.0, 1.0, 0.0),
             candidates=(forged_exact,),
+        )
+
+
+@pytest.mark.parametrize("use_subclass", (False, True))
+def test_nonlinearity_rejects_forged_nested_response_rank(
+    use_subclass: bool,
+) -> None:
+    from mio.reports import StatisticalFoundationResultCard
+
+    legitimate = _report(residual=(1.0, 0.0, 0.0))
+    rank = legitimate.response_rank
+
+    class ForgedRank(ResponseRankReport):
+        pass
+
+    forged_type = ForgedRank if use_subclass else ResponseRankReport
+    forged_rank = object.__new__(forged_type)
+    for name, value in vars(rank).items():
+        object.__setattr__(forged_rank, name, value)
+    object.__setattr__(
+        forged_rank,
+        "allowed_use",
+        ("evidence", "Bianchi family identification"),
+    )
+
+    forged_report = object.__new__(type(legitimate))
+    for name, value in vars(legitimate).items():
+        object.__setattr__(forged_report, name, value)
+    object.__setattr__(forged_report, "response_rank", forged_rank)
+
+    with pytest.raises(
+        OrbitNonlinearityError,
+        match="allowed_use must match|exact factory-derived ResponseRankReport",
+    ):
+        revalidate_nonlinearity_report(forged_report)
+    with pytest.raises(
+        (OrbitNonlinearityError, ValueError),
+        match="nonlinearity does not satisfy its constructor invariants",
+    ):
+        StatisticalFoundationResultCard(
+            card_id=f"forged-rank-{use_subclass}",
+            nonlinearity=forged_report,
         )
 
 

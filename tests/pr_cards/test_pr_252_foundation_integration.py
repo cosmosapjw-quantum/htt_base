@@ -370,6 +370,75 @@ def test_result_card_rejects_anchor_report_subclass_claim_lane_override() -> Non
         )
 
 
+@pytest.mark.parametrize("use_subclass", (False, True))
+def test_legacy_projection_rejects_forged_nested_scalar_reports(
+    use_subclass: bool,
+) -> None:
+    from mio.reports import StatisticalFoundationResultCard
+
+    legitimate_scalar = DiagnosticScalarReport(
+        name="x_C",
+        value_range=ScalarRange(-0.1, 0.1),
+        status="HISTORICAL_VALUE_PRESERVED",
+        null_calibration="not an evidence calibration",
+    )
+
+    class ForgedScalar(DiagnosticScalarReport):
+        pass
+
+    forged_type = ForgedScalar if use_subclass else DiagnosticScalarReport
+    forged_scalar = object.__new__(forged_type)
+    for name, value in vars(legitimate_scalar).items():
+        object.__setattr__(forged_scalar, name, value)
+    object.__setattr__(forged_scalar, "status", "")
+    object.__setattr__(forged_scalar, "null_calibration", "")
+    object.__setattr__(
+        forged_scalar,
+        "bin_metadata",
+        (("duplicate", "one"), ("duplicate", "two")),
+    )
+
+    with pytest.raises(
+        StatisticalFoundationError,
+        match="x_C must be|status must be a non-empty string",
+    ):
+        LegacyProjectionReport(x_C=forged_scalar)
+
+    legitimate_legacy = LegacyProjectionReport(x_C=legitimate_scalar)
+    forged_legacy = object.__new__(LegacyProjectionReport)
+    for name, value in vars(legitimate_legacy).items():
+        object.__setattr__(forged_legacy, name, value)
+    object.__setattr__(forged_legacy, "x_C", forged_scalar)
+    with pytest.raises(
+        ValueError,
+        match="legacy_projection does not satisfy its constructor invariants",
+    ):
+        StatisticalFoundationResultCard(
+            card_id=f"forged-legacy-scalar-{use_subclass}",
+            legacy_projection=forged_legacy,
+        )
+
+
+def test_legacy_projection_rejects_forged_nested_scalar_range() -> None:
+    forged_range = object.__new__(ScalarRange)
+    object.__setattr__(forged_range, "lower", 2.0)
+    object.__setattr__(forged_range, "upper", 1.0)
+    forged_scalar = object.__new__(DiagnosticScalarReport)
+    for name, value in {
+        "name": "x_C",
+        "value_range": forged_range,
+        "status": "HISTORICAL_VALUE_PRESERVED",
+        "null_calibration": "not an evidence calibration",
+        "bin_metadata": (),
+    }.items():
+        object.__setattr__(forged_scalar, name, value)
+    with pytest.raises(
+        StatisticalFoundationError,
+        match="ScalarRange requires ordered",
+    ):
+        LegacyProjectionReport(x_C=forged_scalar)
+
+
 def test_sector_stress_rejects_duck_typed_numerators_anchors_and_channels() -> None:
     anchor = registered_geodesic_mes_anchors(
         eps1=0.0,

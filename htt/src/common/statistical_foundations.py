@@ -595,6 +595,43 @@ def _numeric_tuple(
     return out
 
 
+def _exact_dot_product(
+    left: Sequence[float], right: Sequence[float]
+) -> Fraction:
+    """Return the exact dot product of the represented finite floats."""
+
+    return sum(
+        (
+            Fraction.from_float(left_value)
+            * Fraction.from_float(right_value)
+            for left_value, right_value in zip(left, right)
+        ),
+        start=Fraction(0),
+    )
+
+
+def _finite_dot_product(
+    left: Sequence[float],
+    right: Sequence[float],
+    *,
+    field_name: str,
+) -> float:
+    """Return a finite float dot product or fail without topology confusion."""
+
+    exact = _exact_dot_product(left, right)
+    try:
+        out = float(exact)
+    except OverflowError as exc:
+        raise StatisticalFoundationError(
+            f"{field_name} is not representable at float64 precision"
+        ) from exc
+    if not math.isfinite(out):
+        raise StatisticalFoundationError(
+            f"{field_name} is not representable at float64 precision"
+        )
+    return out
+
+
 @dataclass(frozen=True)
 class DepartureState:
     """Immutable signed irreducible state, separate from every anchor.
@@ -807,28 +844,36 @@ class IdentifiedDepartureSet:
     def dimension(self) -> int:
         return len(self.coordinate_names)
 
-    def support(self, direction: Sequence[object], *, tol: float = 1e-12) -> float:
+    def support(self, direction: Sequence[object], *, tol: float = 0.0) -> float:
+        """Evaluate support without treating numerical tolerance as topology.
+
+        A recession direction with any strictly positive dot product makes
+        the mathematical support unbounded.  The sign is therefore evaluated
+        exactly for the represented finite floats.  A non-zero tolerance
+        would silently turn an unbounded feasible set into a bounded one and
+        is rejected rather than interpreted as an angular cutoff.
+        """
+
         if self.status is IdentificationStatus.EMPTY:
             raise StatisticalFoundationError("EMPTY set has no support function")
         vector = _numeric_tuple(direction, "direction", length=self.dimension)
         tol = _finite_nonnegative(tol, "tol")
-        vector_scale = max((abs(value) for value in vector), default=0.0)
-        if vector_scale > 0.0:
-            scaled_vector = tuple(value / vector_scale for value in vector)
-            vector_norm = math.hypot(*scaled_vector)
-            for ray in self.recession_directions:
-                ray_scale = max(abs(value) for value in ray)
-                scaled_ray = tuple(value / ray_scale for value in ray)
-                ray_norm = math.hypot(*scaled_ray)
-                directional_cosine_numerator = math.fsum(
-                    a * b for a, b in zip(scaled_vector, scaled_ray)
-                )
-                if directional_cosine_numerator > (
-                    tol * vector_norm * ray_norm
-                ):
-                    return math.inf
+        if tol != 0.0:
+            raise StatisticalFoundationError(
+                "support topology requires tol=0; precondition inputs instead "
+                "of applying an angular cutoff"
+            )
+        if any(
+            _exact_dot_product(vector, ray) > 0
+            for ray in self.recession_directions
+        ):
+            return math.inf
         return max(
-            math.fsum(a * b for a, b in zip(vector, vertex))
+            _finite_dot_product(
+                vector,
+                vertex,
+                field_name="compact support",
+            )
             for vertex in self.vertices
         )
 
@@ -1248,6 +1293,56 @@ class DiagnosticScalarReport:
         object.__setattr__(self, "bin_metadata", metadata)
 
 
+def _revalidated_scalar_range(value: object) -> ScalarRange:
+    if type(value) is not ScalarRange:
+        raise StatisticalFoundationError(
+            "value_range must be an exact ScalarRange"
+        )
+    try:
+        canonical = ScalarRange(lower=value.lower, upper=value.upper)
+    except AttributeError as exc:
+        raise StatisticalFoundationError(
+            "ScalarRange is missing constructor-validated fields"
+        ) from exc
+    if canonical != value:
+        raise StatisticalFoundationError(
+            "ScalarRange fields do not match a constructor-validated value"
+        )
+    return canonical
+
+
+def _revalidated_diagnostic_scalar_report(
+    value: object,
+) -> DiagnosticScalarReport:
+    if type(value) is not DiagnosticScalarReport:
+        raise StatisticalFoundationError(
+            "legacy scalar entries must be exact DiagnosticScalarReport values"
+        )
+    try:
+        value_range = (
+            None
+            if value.value_range is None
+            else _revalidated_scalar_range(value.value_range)
+        )
+        canonical = DiagnosticScalarReport(
+            name=value.name,
+            value_range=value_range,
+            status=value.status,
+            null_calibration=value.null_calibration,
+            bin_metadata=value.bin_metadata,
+        )
+    except AttributeError as exc:
+        raise StatisticalFoundationError(
+            "DiagnosticScalarReport is missing constructor-validated fields"
+        ) from exc
+    if canonical != value:
+        raise StatisticalFoundationError(
+            "DiagnosticScalarReport fields do not match a "
+            "constructor-validated value"
+        )
+    return canonical
+
+
 @dataclass(frozen=True)
 class LegacyProjectionReport:
     """BC1 wrapper around unchanged historical x_C/Q/F/Pi/G_F values."""
@@ -1274,10 +1369,12 @@ class LegacyProjectionReport:
     )
 
     def __post_init__(self) -> None:
-        if not isinstance(self.x_C, DiagnosticScalarReport):
+        if type(self.x_C) is not DiagnosticScalarReport:
             raise StatisticalFoundationError(
-                "x_C must be a DiagnosticScalarReport"
+                "x_C must be an exact DiagnosticScalarReport"
             )
+        x_c = _revalidated_diagnostic_scalar_report(self.x_C)
+        object.__setattr__(self, "x_C", x_c)
         if self.x_C.name != "x_C":
             raise StatisticalFoundationError("x_C report must be named x_C")
         if self.classification != BC1_LEGACY_PROJECTION:
@@ -1309,10 +1406,12 @@ class LegacyProjectionReport:
             report = getattr(self, field_name)
             if report is None:
                 continue
-            if not isinstance(report, DiagnosticScalarReport):
+            if type(report) is not DiagnosticScalarReport:
                 raise StatisticalFoundationError(
-                    f"{field_name} must be a DiagnosticScalarReport"
+                    f"{field_name} must be an exact DiagnosticScalarReport"
                 )
+            report = _revalidated_diagnostic_scalar_report(report)
+            object.__setattr__(self, field_name, report)
             require_finite_range(report)
             if report.name != expected_name:
                 raise StatisticalFoundationError(

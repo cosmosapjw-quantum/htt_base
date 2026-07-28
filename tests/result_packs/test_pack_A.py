@@ -110,6 +110,7 @@ def test_pack_a_payload_compares_scalar_and_morphology_surfaces():
     required_local_fields = {
         "claim_tier",
         "artifact_mode",
+        "readiness_status",
         "transfer_source",
         "null_status",
         "covariance_status",
@@ -121,6 +122,52 @@ def test_pack_a_payload_compares_scalar_and_morphology_surfaces():
         and all(str(item[field]).strip() for field in required_local_fields)
         for item in payload["morphology_mes_diagnostics"]
     )
+    mes_row = next(
+        item
+        for item in payload["morphology_mes_diagnostics"]
+        if item["name"] == "MES I_morph"
+    )
+    assert mes_row["claim_tier"] == "diagnostic_only"
+    assert mes_row["artifact_mode"] == "diagnostic_mes_information_gain"
+    assert mes_row["readiness_status"].startswith("blocked_")
+
+    comparison_local_fields = {
+        "scalar_owner",
+        "morphology_mes_owner",
+        "scalar_claim_tier",
+        "morphology_mes_claim_tier",
+        "scalar_artifact_mode",
+        "morphology_mes_artifact_mode",
+        "scalar_transfer_source",
+        "morphology_mes_transfer_source",
+        "scalar_null_status",
+        "morphology_mes_null_status",
+        "scalar_covariance_status",
+        "morphology_mes_covariance_status",
+        "scalar_forbidden_use",
+        "morphology_mes_forbidden_use",
+        "blocked_statement",
+    }
+    scalar_by_name = {
+        item["name"]: item for item in payload["scalar_diagnostics"]
+    }
+    morphology_by_name = {
+        item["name"]: item for item in payload["morphology_mes_diagnostics"]
+    }
+    for row in payload["comparison_matrix"]:
+        assert comparison_local_fields <= set(row)
+        assert all(str(row[field]).strip() for field in comparison_local_fields)
+        scalar = scalar_by_name[row["scalar"]]
+        morphology = morphology_by_name[row["morphology_mes"]]
+        assert row["scalar_owner"] == scalar["owner"]
+        assert row["morphology_mes_owner"] == morphology["owner"]
+        assert row["scalar_claim_tier"] == scalar["claim_tier"]
+        assert row["morphology_mes_claim_tier"] == morphology["claim_tier"]
+        assert row["scalar_forbidden_use"] == scalar["forbidden_use"]
+        assert (
+            row["morphology_mes_forbidden_use"]
+            == morphology["forbidden_use"]
+        )
     assert all(
         item["legacy_readiness_status"] == "legacy_not_current"
         for item in payload["legacy_ver2_context"]["artifacts"]
@@ -203,11 +250,42 @@ def test_pack_a_markdown_has_manifest_and_caveated_comparison():
         for field in (
             "claim_tier",
             "artifact_mode",
+            "readiness_status",
             "transfer_source",
             "null_status",
             "covariance_status",
             "allowed_use",
             "forbidden_use",
+        ):
+            assert item[field] in row
+    comparison_rows = {
+        (item["scalar"], item["morphology_mes"]): next(
+            line
+            for line in markdown.splitlines()
+            if line.startswith(
+                f"| {item['scalar']} | {item['morphology_mes']} |"
+            )
+        )
+        for item in payload["comparison_matrix"]
+    }
+    for item in payload["comparison_matrix"]:
+        row = comparison_rows[(item["scalar"], item["morphology_mes"])]
+        for field in (
+            "scalar_owner",
+            "morphology_mes_owner",
+            "scalar_claim_tier",
+            "morphology_mes_claim_tier",
+            "scalar_artifact_mode",
+            "morphology_mes_artifact_mode",
+            "scalar_transfer_source",
+            "morphology_mes_transfer_source",
+            "scalar_null_status",
+            "morphology_mes_null_status",
+            "scalar_covariance_status",
+            "morphology_mes_covariance_status",
+            "scalar_forbidden_use",
+            "morphology_mes_forbidden_use",
+            "blocked_statement",
         ):
             assert item[field] in row
     assert "| MES I_morph | COMMON |" in markdown
