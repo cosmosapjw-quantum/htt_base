@@ -1,0 +1,191 @@
+schema_version: 1
+work_unit_id: PR-255
+title: Anchored response geometry and nonlinearity phase diagram
+target_ref: origin/research/pr04-multicomponent
+target_sha: 090525951cc30ad29da7fa8ae0a11bd4553f5b4f
+change_set_id: CS-PR255-RESPONSE-GEOMETRY
+publication_group_id: PG-PR255-RESPONSE-GEOMETRY
+scientific_role: >
+  Build a diagnostic-only, pre-solver response-geometry layer on the
+  covariance-supported quotient and keep premise-anchor stress separate from
+  nonlinear source competition.  This work does not detect FLRW departure,
+  identify a Bianchi family, or validate a native response provider.
+governing_sources:
+  - source_id: PR254-ANCHOR-GEOMETRY
+    identity: docs/research_program/premise_anchor/pr254_spec.yaml
+    role: typed invertible normalizer and no-information-from-scaling contract
+  - source_id: PR251-ORBIT-NONLINEARITY
+    identity: docs/PR_DELTAS/pr-251.md
+    role: supported covariance quotient and held-out attribution contract
+  - source_id: PR219-RESPONSE-QUOTIENT
+    identity: docs/PR_DELTAS/pr-219.md
+    role: pre-solver response equivalence and rank boundary
+  - source_id: PR253-INTAKE
+    identity: docs/research_program/premise_anchor/pr253_input_intake.yaml
+    role: proposed benchmark design only; quoted numbers remain evidence-ineligible
+adopted_contracts:
+  - contract_id: ARG-SUPPORTED-QUOTIENT
+    statement: >
+      Anchored response geometry is computed only after projecting onto the
+      positive-eigenvalue covariance support and removing any registered
+      nuisance tangent space.
+    ceiling: diagnostic_only
+  - contract_id: ARG-RANK-INVARIANCE
+    statement: >
+      Right multiplication by the declared invertible normalizer map may
+      change conditioning and singular values but cannot create response rank.
+    ceiling: diagnostic_only
+  - contract_id: ARG-SCHUR-INCREMENT
+    statement: >
+      Incremental morphology information is the conditional Fisher matrix
+      obtained from one joint covariance through a generalized Schur
+      complement; it is not a subtraction of statistics computed under
+      different covariance models.
+    ceiling: diagnostic_only
+  - contract_id: ARG-LOCAL-CONTRACTION
+    statement: >
+      A finite local Gaussian confidence-ellipsoid contraction is reported
+      only on a common identified subspace.  It is not a global feasible-set
+      contraction.  A rank gain or changed identified subspace is reported
+      structurally rather than assigned a finite volume ratio.
+    ceiling: diagnostic_only
+  - contract_id: ARG-ATTRIBUTION-SEPARATION
+    statement: >
+      Anchor gauge or stress cannot attribute a nonlinear source.  Nonlinear
+      compatibility requires the existing identity-bound held-out and
+      matched-injection competition against every registered alternative.
+    ceiling: diagnostic_only
+public_contract:
+  common_module: common.anchored_response_geometry
+  htt_module: htt.statistics.anchored_response_geometry
+  types:
+    - AnchoredResponseGeometryReport
+    - PrincipalAngleReport
+    - IdentifiedSetContractionReport
+    - SchurMorphologyInformationReport
+    - NonlinearityPhaseCell
+    - NonlinearityPhaseDiagramReport
+  factories:
+    - measure_anchored_response_geometry
+    - measure_schur_morphology_information
+    - build_nonlinearity_phase_cell
+    - build_nonlinearity_phase_diagram
+  exact_response_identity:
+    required:
+      - transfer_id receipt identity
+      - transfer_source
+      - full TransferFunctionSpec when transfer_source is not none
+      - mask_id receipt identity
+      - covariance_id canonical numeric content identity
+      - response content digest
+      - normalizer_id
+      - normalizer source_identity
+    semantics:
+      transfer_id: >
+        External provider identity or a digest of an explicitly serialized
+        synthetic semantic descriptor; the response factory validates the
+        receipt shape and cross-object equality, not unavailable provider
+        bytes.
+      mask_id: >
+        External mask receipt or a digest of an explicitly serialized
+        synthetic mask descriptor; it is not called a byte-content identity
+        unless the supplying layer provides and verifies those bytes.
+      covariance_id: >
+        Canonical HTT_ANCHORED_NUMERIC_ARRAY_V1 digest computed from the
+        covariance values and verified by the response factory.
+  fail_closed:
+    missing_response_or_covariance: MISSING_INPUT
+    missing_or_withheld_normalizer: MISSING_INPUT
+    zero_filled_missing_channel: forbidden
+    covariance_negative_eigenvalue: error
+    no_covariance_support: OUTSIDE_SUPPORTED_QUOTIENT
+    covariance_null_response: EXPLICIT_NULL_RESPONSE
+    empty_principal_angle_subspace: EMPTY_SUBSPACE
+    incompatible_schur_range: error
+    changed_identified_subspace: SUBSPACE_CHANGED
+    rank_gain_scalar_contraction: RANK_GAIN_NO_FINITE_RATIO
+    global_feasible_set_without_feasible_set_input: NOT_COMPUTED_NO_FEASIBLE_SET_INPUT
+matrix_contract:
+  anchored_response: J_A = P_nuisance C_supp^(-1/2) R D_A
+  schur_conditional_response: R_m_cond = R_m - C_mb C_bb^+ R_b
+  schur_conditional_covariance: S = C_mm - C_mb C_bb^+ C_bm
+  incremental_information: F_inc = (W_S R_m_cond D_A)^T (W_S R_m_cond D_A)
+  joint_information: F_joint = F_base + F_inc
+  scalar_compatibility: >
+    MesInformationGainReport may be derived from the matrix result only when
+    the parameter dimension and both identified ranks are exactly one.
+legacy_policy:
+  preserved_function: htt.statistics.mes_information_gain.build_mes_information_gain_report
+  status: LEGACY_REPRODUCTION
+  active_module: htt.statistics.mes_information_gain_compatibility
+  active_replacement: build_mes_information_gain_compatibility_view
+  historical_bytes_changed: false
+  forbidden:
+    - treating a branch-bound ratio as active matrix information
+    - deriving information gain from anchor scaling alone
+phase_diagram:
+  required_cells:
+    - LINEAR_ANCHOR_COMPATIBLE
+    - LINEAR_PREMISE_MISMATCH
+    - NONLINEAR_ANCHOR_COMPATIBLE
+    - NONLINEAR_PLUS_EXCEEDANCE
+    - OBSERVER_FRAME_MISMATCH
+    - DERIVATIVE_CONTROL_FAILURE
+    - SYSTEMATICS_MIMIC
+    - UNKNOWN_SOURCE
+  stress_role: premise consistency diagnostic only
+  attribution_source: common.orbit_nonlinearity.NonlinearityReport
+  per_cell_reporting:
+    - anchor stress interval
+    - T_parallel
+    - T_perp
+    - Delta_NL or explicit NOT_COMPUTED status
+    - held-out and matched-injection nonlinear gain over the best control
+    - coverage or explicit NOT_APPLICABLE status
+    - attribution status
+  mandatory_abstention:
+    - incomplete candidate competition
+    - wrong alternative wins
+    - non-identified response
+    - covariance-null residual
+    - missing response
+benchmark:
+  data_source: synthetic_only
+  transfer_source: none
+  response_role: hypothesis_only_analytic_synthetic
+  pr151_data_used: false
+  master_seed: 20260728
+  minimum_replicates_per_cell: 20000
+  maximum_replicates_per_cell: 400000
+  maximum_mcse: 0.0025
+  train_validation_held_out_split: [0.6, 0.2, 0.2]
+  precision_failure_status: INCONCLUSIVE_MC_PRECISION
+tests:
+  - PYTHONPATH=htt/src:htt python -B -m pytest -p no:cacheprovider -q htt/src/common/test_anchored_response_geometry.py
+  - PYTHONPATH=htt/src:htt python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_255_anchored_response_geometry.py
+  - PYTHONPATH=htt/src:htt python -B scripts/codex_harness/run_pr255_response_geometry_benchmark.py
+  - PYTHONPATH=htt/src:htt python -B scripts/codex_harness/run_pr255_response_geometry_oracle.py
+kill_switches:
+  - an unavailable response or channel is represented by zeros
+  - invertible anchor scaling creates rank or is serialized as information gain
+  - covariance-null response or residual is discarded
+  - incremental morphology information subtracts separately whitened statistics
+  - rank gain or changed identified subspace receives a finite contraction ratio
+  - stress alone assigns a nonlinear source
+  - held-out or matched-injection targets are reused for fit or selection
+  - an incomplete or losing nonlinear candidate receives NONLINEAR_COMPATIBLE
+  - unknown source is forced to a registered class
+  - PR-151 partial acquisition data enters a fixture, calibration, or claim
+claim_boundary:
+  allowed:
+    - pre-solver supported-quotient response diagnostics
+    - matrix-valued conditional morphology information
+    - synthetic held-out source-competition methodology
+    - explicit abstention and negative results
+  forbidden:
+    - FLRW departure detection
+    - geometry detection
+    - Bianchi family identification
+    - native-solver validation
+    - observational use of PR-151 partial data
+    - posterior, Bayes factor, e-value, or evidence from anchor scaling

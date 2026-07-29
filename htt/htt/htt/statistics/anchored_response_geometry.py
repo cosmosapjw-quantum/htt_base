@@ -1,8 +1,12 @@
-"""COMMON-owned statistics harnesses for pre-solver HTT work."""
+"""HTT public surface for COMMON-owned anchored response diagnostics.
 
-from __future__ import annotations
+All numerical contracts are implemented in :mod:`common` so HTT, MIO and
+future adapter consumers cannot acquire divergent definitions.  HTT owns the
+model-dependent held-out source competition that may be carried by a phase
+diagram; the matrix geometry itself remains a COMMON contract.
+"""
 
-from .anchored_response_geometry import (
+from common.anchored_response_geometry import (
     AnchoredResponseGeometryError,
     AnchoredResponseGeometryReport,
     AnchoredResponseStatus,
@@ -21,17 +25,9 @@ from .anchored_response_geometry import (
     build_nonlinearity_phase_diagram,
     measure_anchored_response_geometry,
     measure_schur_morphology_information,
+    revalidate_anchored_response_geometry,
+    revalidate_schur_morphology_information,
 )
-from .mes_cov_bound import MesCovarianceBoundResult, build_mes_covariance_bound
-from .mes_information_gain import (
-    MesInformationGainBranch,
-    MesInformationGainReport,
-    build_mes_information_gain_report,
-)
-from .mes_information_gain_compatibility import (
-    build_mes_information_gain_compatibility_view,
-)
-from .mes_template_bound import MesTemplateBoundResult, build_mes_template_bound
 
 __all__ = [
     "AnchoredResponseGeometryError",
@@ -39,10 +35,6 @@ __all__ = [
     "AnchoredResponseStatus",
     "IdentifiedSetContractionReport",
     "IdentifiedSetContractionStatus",
-    "MesCovarianceBoundResult",
-    "MesInformationGainBranch",
-    "MesInformationGainReport",
-    "MesTemplateBoundResult",
     "NonlinearityDGPKind",
     "NonlinearityPhaseCell",
     "NonlinearityPhaseDiagramReport",
@@ -54,10 +46,8 @@ __all__ = [
     "anchored_numeric_content_id",
     "build_nonlinearity_phase_cell",
     "build_nonlinearity_phase_diagram",
-    "build_mes_covariance_bound",
-    "build_mes_information_gain_compatibility_view",
-    "build_mes_information_gain_report",
-    "build_mes_template_bound",
     "measure_anchored_response_geometry",
     "measure_schur_morphology_information",
+    "revalidate_anchored_response_geometry",
+    "revalidate_schur_morphology_information",
 ]

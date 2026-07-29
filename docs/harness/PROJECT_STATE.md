@@ -1,5 +1,43 @@
 # Project State
 
+## 2026-07-29 - PR-255 anchored response geometry conditional closeout
+
+This section supersedes older orchestration snapshots below.
+
+- Active DAG: 205 cards, 150 conditionally completed, 1 blocked, 25 pending,
+  28 dormant external/native, no foreground card, and background PR-151
+  acquisition. Count completion is 73.17%, dependency-weighted completion
+  79.69%, and the critical-path proxy 85.71%. These are bookkeeping metrics.
+- PR-255 introduces COMMON-owned supported-quotient anchored response
+  geometry, same-joint-covariance Schur information, structural
+  identified-subspace contraction states, and an HTT-reported eight-cell
+  synthetic nonlinearity phase diagram.
+- The frozen benchmark is synthetic-only with transfer source `none`; the
+  separate executable oracle directly compares 300 randomized Schur cases
+  against the full joint-covariance Fisher matrix.
+- Candidate r1 failed all three registered review lanes after exposing
+  covariance-scale, identified-subspace, transfer-receipt, and provenance
+  defects. Candidate r2 passed the claim lane but failed physics/statistics
+  and harness review on observable-unit congruence, indefinite covariance,
+  and a stale checkpoint binding. Candidate r3 passed harness and claim review
+  but failed physics/statistics review because a near-singular joint mode was
+  re-admitted by the conditional
+  Schur quotient and scalar compatibility view. Candidate r4 passed harness
+  and claim review but failed physics/statistics review because a scalar
+  conditional eigenvalue was compared directly with the joint cutoff, leaving
+  a factor-of-two boundary gap. All four failed runs remain preserved.
+  Completion is conditional on the repaired exact candidate
+  passing all three read-only failure classes and latest-target integration
+  under
+  `.agent-harness/runs/premise-anchor-pr255-candidate-r5-20260729/`. A stale,
+  failed, or SHA-mismatched receipt invalidates the transition.
+- Checkpoint 150 is generated. PR-256 is the next planned sequential research
+  card after PR-255 is merged and its head branch is deleted; PR-257 and
+  PR-258 follow. Other unblocked historical cards remain scheduler-deferred.
+- PR-151 remains background acquisition only. No partial data, external or
+  native transfer, old Rust science output, observational result, posterior,
+  geometry, or family-identification status changed.
+
 ## 2026-07-27 - PR-247 publication-integrity completion
 
 This section supersedes the older active-DAG positions below for current

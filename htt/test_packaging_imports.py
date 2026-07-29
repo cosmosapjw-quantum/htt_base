@@ -362,8 +362,10 @@ for name in [
     "htt.obsstat.scalar_lowell",
     "htt.obsstat.template_fit",
     "htt.statistics",
+    "htt.statistics.anchored_response_geometry",
     "htt.statistics.mes_cov_bound",
     "htt.statistics.mes_information_gain",
+    "htt.statistics.mes_information_gain_compatibility",
     "htt.statistics.mes_template_bound",
     "htt.rest_frame",
     "htt.rest_frame.cf4_likelihood",
@@ -458,8 +460,10 @@ for name in [
     "htt.obsstat.scalar_lowell",
     "htt.obsstat.template_fit",
     "htt.statistics",
+    "htt.statistics.anchored_response_geometry",
     "htt.statistics.mes_cov_bound",
     "htt.statistics.mes_information_gain",
+    "htt.statistics.mes_information_gain_compatibility",
     "htt.statistics.mes_template_bound",
     "htt.rest_frame",
     "htt.rest_frame.cf4_likelihood",
@@ -526,8 +530,10 @@ for name in [
     "htt.infer.fisher_compression",
     "htt.infer.nuisance_rank",
     "htt.direction",
+    "htt.statistics.anchored_response_geometry",
     "htt.statistics.mes_cov_bound",
     "htt.statistics.mes_information_gain",
+    "htt.statistics.mes_information_gain_compatibility",
     "htt.statistics.mes_template_bound",
     "htt.obsstat.catalogs.redshift_selection",
     "htt.obsstat.catalogs.spectroscopic_dipole",
@@ -574,8 +580,10 @@ import htt.departure.response_overlap
 import htt.departure.local_global_mixture
 import htt.departure.posterior_pushforward
 import htt.direction
+import htt.statistics.anchored_response_geometry
 import htt.statistics.mes_cov_bound
 import htt.statistics.mes_information_gain
+import htt.statistics.mes_information_gain_compatibility
 import htt.statistics.mes_template_bound
 import htt.rest_frame.cf4_likelihood
 import htt.zoa.axis_promotion

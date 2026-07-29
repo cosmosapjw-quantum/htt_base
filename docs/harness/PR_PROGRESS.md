@@ -2,6 +2,33 @@
 
 Update every five PRs with percent complete and blockers.
 
+## Checkpoint 150 — PR-251 through PR-255
+
+Date: 2026-07-29
+
+- Active DAG: 150/205 conditionally complete = 73.17%; dependency-weighted
+  completion 79.69%; critical-path proxy 60/70 = 85.71%.
+- The five-card window separates orbit/nonlinearity reporting, migrates live
+  consumers, repairs active/legacy denominator semantics, introduces typed
+  anchor geometry and purpose-specific normalizers, and adds supported-
+  quotient anchored response geometry plus a synthetic phase diagram.
+- PR-255 repaired pre-seal validation passes 51 focused, 65 adjacent,
+  263 COMMON, 172 sequential PR-card, and 36 claim/history tests. The benchmark and
+  300-case direct-Fisher oracle pass. The broad packaging probe retains the
+  exact target-baseline 17 environmental failures.
+- Claim drift: none. No partial PR-151 data, observational catalogue,
+  external/native transfer, old Rust science output, native solver, FLRW
+  departure, physical source attribution, geometry, or family result is used
+  or promoted.
+- Candidates r1 through r4 are preserved FAIL reviews, not closeout evidence.
+  Completion is valid only with the exact PASS run at
+  `.agent-harness/runs/premise-anchor-pr255-candidate-r5-20260729/` and its
+  latest-target integration receipt. Any tracked-byte change invalidates it.
+- PR-256 is the next sequential premise-anchor card after merge and branch
+  deletion; PR-257 and PR-258 follow. PR-172 remains blocked and PR-151 remains
+  non-terminal background acquisition. Progress advanced, so no stagnation
+  replan is required.
+
 ## PR-247 completion (not a five-PR checkpoint)
 
 Date: 2026-07-27

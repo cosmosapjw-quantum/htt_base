@@ -2,6 +2,44 @@
 
 Record commands actually run. Never mark skipped checks as passed.
 
+## PR-255 - anchored response geometry and nonlinearity phase diagram
+
+Date: 2026-07-29
+
+Change classification: COMMON matrix/statistical contracts, HTT compatibility
+exports, synthetic diagnostic benchmark, executable oracle, tests, PR delta,
+status mirrors, and checkpoint/handoff metadata. No observational dataset,
+external/native transfer, posterior/evidence result, native solver, geometry,
+family-identification, claim tier, or public-use state changed.
+
+| Command or check | Result | Notes |
+|---|---:|---|
+| focused COMMON and PR-card suite | PASS | `51 passed`, including candidate-r1 through candidate-r4 failure reproductions, diagonal observable-unit congruence, inherited near-singular support, and scalar refusal. |
+| synthetic benchmark replay | PASS | Seed `20260728`; 20,000 replicates per cell; frozen artifact hash `53393e0417e8dcdc0a99effc32a71b0cd18a86e0da59b1803f15561fc6e5da7b`. |
+| direct-Fisher executable oracle | PASS | `300/300`; maximum absolute matrix error `1.705e-13`; six unit-congruent near-singular cases refuse the jointly excluded conditional mode and three just-above-cutoff controls remain measured. |
+| adjacent PR-251/254/255 and historical MES suite | PASS | `65 passed`. |
+| full COMMON suite | PASS | `263 passed`. |
+| PR-248 through PR-255 card slice | PASS | `172 passed`; three expected legacy deprecation warnings. |
+| claim language, artifact manifest, historical result-pack A | PASS | `36 passed`. |
+| strict DAG/status and mirror sync | PASS | `205` cards valid; canonical and compatibility mirrors synchronized. |
+| checkpoint 150 regeneration and idempotent replay | PASS | Pure generated checkpoint and scoreboard bind canonical status hash `b708b73d05cf495c128f85a07592cb25da796e11c57e29ff7ba0a7b73e3b825a`; the scoreboard records the checkpoint as satisfied. |
+| Python 3.10 and 3.12 benchmark replay | PASS | Python 3.12 focused suite also `51 passed`; local Python 3.10 lacks pytest, while 3.11/3.13 lack NumPy and are recorded unavailable. |
+| broad packaging-import probe | FAIL, TARGET BASELINE | Candidate and clean target both return `9 passed, 17 failed`; failures are uninstalled source-layout/NumPy and legacy setuptools-finder expectations. Not counted as a pass. |
+| canonical-venv packaging-import diagnostic after candidate-r2 repair | FAIL, ENVIRONMENT MIX | `23 passed, 3 failed`; isolated children resolve a mixture of the canonical editable install and isolated-worktree modules. This is not counted as candidate regression evidence. |
+| direct focused and PR-card slice invocations without declared source paths | SETUP FAIL, CORRECTED | Initial invocations could not import `bass` or `common`; reruns through the integration runner or with the declared source-layout `PYTHONPATH` produced the passing counts above. |
+| old MES implementation byte comparison | PASS | `htt.statistics.mes_information_gain.py` remains unchanged. |
+| candidate-r1 independent review | FAIL, PRESERVED | Commit `080743f3...` failed physics/statistics, harness, and claim review. The immutable run is `.agent-harness/runs/premise-anchor-pr255-candidate-r1-20260729/`; it is not publication evidence. |
+| candidate-r2 independent review | FAIL, PRESERVED | Commit `530928e4...` passed claim review but failed physics/statistics and harness review on observable-unit congruence, indefinite covariance acceptance, and a stale checkpoint binding. The immutable run is `.agent-harness/runs/premise-anchor-pr255-candidate-r2-20260729/`; it is not publication evidence. |
+| candidate-r3 independent review | FAIL, PRESERVED | Commit `0edca519...` passed harness and claim review but failed physics/statistics review because a mode excluded by the joint support cutoff was re-admitted by scalar Schur standardization. The immutable run is `.agent-harness/runs/premise-anchor-pr255-candidate-r3-20260729/`; it is not publication evidence. |
+| candidate-r4 independent review | FAIL, PRESERVED | Commit `cd13f24b...` passed harness and claim review but failed physics/statistics review because a scalar Schur eigenvalue was compared directly with the joint cutoff, leaving a factor-of-two boundary gap. The immutable run is `.agent-harness/runs/premise-anchor-pr255-candidate-r4-20260729/`; it is not publication evidence. |
+| repaired exact candidate review and integration | REQUIRED EXTERNAL RECEIPT | Valid only at `.agent-harness/runs/premise-anchor-pr255-candidate-r5-20260729/`; a missing, failed, or SHA-mismatched receipt invalidates completion. |
+| `git diff --check` | PASS | No whitespace errors in the pre-seal candidate tree. |
+
+Scientific impact: the change-set validates a typed diagnostic intermediate
+layer under finite-dimensional Gaussian response assumptions. It does not
+validate an observational transfer, infer FLRW departure, attribute a physical
+source from stress, run a native solver, or identify a Bianchi family.
+
 ## PR-247 - publication-integrity P0 completion and closeout amendment
 
 Date: 2026-07-27
