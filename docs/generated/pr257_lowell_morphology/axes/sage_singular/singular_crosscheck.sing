@@ -1,0 +1,66 @@
+// Independent Singular polynomial check for CAS-PR257-ORBIT-CATALOGUE-V2-001.
+// The trace-free symmetric matrix is parametrized by five independent entries.
+ring r = 0,(a,b,c,d,e,x,y,z,u,v,w),dp;
+
+matrix sigma[3][3] =
+  a,c,d,
+  c,b,e,
+  d,e,-a-b;
+matrix eye[3][3] =
+  1,0,0,
+  0,1,0,
+  0,0,1;
+matrix beta[3][1] = x,y,z;
+matrix omega[3][1] = u,v,w;
+
+matrix sigma2 = sigma*sigma;
+matrix sigma3 = sigma2*sigma;
+poly tr2 = sigma2[1,1] + sigma2[2,2] + sigma2[3,3];
+poly tr3 = sigma3[1,1] + sigma3[2,2] + sigma3[3,3];
+matrix ch = sigma3 - (tr2/2)*sigma - (tr3/3)*eye;
+
+poly ch_sum_squares = 0;
+int i;
+int j;
+for (i=1; i<=3; i=i+1)
+{
+  for (j=1; j<=3; j=j+1)
+  {
+    ch_sum_squares = ch_sum_squares + ch[i,j]^2;
+  }
+}
+
+matrix sigma_beta = sigma*beta;
+matrix sigma2_beta = sigma2*beta;
+matrix krylov[3][3] =
+  beta[1,1],sigma_beta[1,1],sigma2_beta[1,1],
+  beta[2,1],sigma_beta[2,1],sigma2_beta[2,1],
+  beta[3,1],sigma_beta[3,1],sigma2_beta[3,1];
+matrix gram = transpose(krylov)*krylov;
+poly gram_difference = det(krylov)^2 - det(gram);
+
+matrix beta_ch_beta = transpose(beta)*ch*beta;
+matrix omega_ch_omega = transpose(omega)*ch*omega;
+matrix beta_ch_omega = transpose(beta)*ch*omega;
+poly contraction_sum_squares =
+  beta_ch_beta[1,1]^2
+  + omega_ch_omega[1,1]^2
+  + beta_ch_omega[1,1]^2;
+
+if (
+  ch_sum_squares == 0
+  && gram_difference == 0
+  && contraction_sum_squares == 0
+)
+{
+  print("SINGULAR_EXACT_PASS");
+}
+else
+{
+  print("SINGULAR_EXACT_FAIL");
+  print(ch_sum_squares);
+  print(gram_difference);
+  print(contraction_sum_squares);
+}
+
+quit;

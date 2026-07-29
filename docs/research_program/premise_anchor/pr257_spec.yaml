@@ -1,0 +1,274 @@
+schema_version: 1
+work_unit_id: PR-257
+title: Low-ell matched-counterpair morphology benchmark
+target_ref: origin/research/pr04-multicomponent
+target_sha: bbdabec76458d0e66187fbd2631718059f7a7c8d
+change_set_id: CS-PR257-LOWELL-MORPHOLOGY
+publication_group_id: PG-PR257-LOWELL-MORPHOLOGY
+scientific_role: >
+  Build a diagnostic-only, pre-native-solver benchmark that holds low-ell
+  power and one typed anchor-stress identity fixed while varying phase,
+  orientation, or parity.  OBSSTAT owns feature extraction and null-feature
+  bookkeeping; HTT owns only the preregistered held-out comparison.  The
+  benchmark does not use an observed sky, infer a source, detect FLRW
+  departure, or identify a Bianchi family.
+governing_sources:
+  - source_id: PR251-O3-ORBIT-CONTRACT
+    identity: docs/PR_DELTAS/pr-251.md
+    role: signed O(3) action, parity, rank, and held-out attribution boundary
+  - source_id: PR255-ANCHORED-RESPONSE-GEOMETRY
+    identity: docs/research_program/premise_anchor/pr255_spec.yaml
+    role: supported-quotient singular spectrum and identified-set contraction
+  - source_id: OBSSTAT-LOWELL-POLES
+    identity: htt/obsstat/lowell_poles.py
+    role: harmonic power tensor and antipodal-axis feature contract
+  - source_id: OBSSTAT-BIPOSH
+    identity: htt/obsstat/biposh_features.py
+    role: typed BiPoSH feature provenance and harmonic convention
+adopted_contracts:
+  - contract_id: PR257-MATCHED-POWER-ANCHOR
+    statement: >
+      Every counterpair binds the same ell set, harmonic convention, exact
+      C_ell vector, typed anchor identity, and anchor-stress interval.  The
+      registered changed factor is exactly one of phase, orientation, or
+      parity.
+    ceiling: diagnostic_only
+  - contract_id: PR257-FROZEN-CATALOGUE
+    statement: >
+      The orbit catalogue, representation list, multiplicity rule, split,
+      seeds, thresholds, targets, and scoring rule are content-addressed
+      before any benchmark test-sky score is read.
+    ceiling: diagnostic_only
+  - contract_id: PR257-EQUIVARIANT-INVARIANT
+    statement: >
+      DepartureState remains equivariant under the registered O(3) action.
+      Coordinate features may transform.  The catalogue is an O(3)-typed
+      scalar/pseudoscalar polynomial report: even scalars are invariant and
+      reflection-odd pseudoscalars must flip sign.
+    ceiling: diagnostic_only
+  - contract_id: PR257-NO-COMPLETE-CATALOGUE-CLAIM
+    statement: >
+      The sigma-omega-beta list is a preregistered degree-bounded typed
+      polynomial catalogue, not an unqualified orbit-invariant catalogue.
+      Generic orbit separation and invariant-ring completeness remain
+      UNPROVEN. Passing finite vectors or Cayley-Hamilton syzygies cannot
+      promote that language.
+    ceiling: diagnostic_only
+  - contract_id: PR257-HELD-OUT-ABSTENTION
+    statement: >
+      HTT compares frozen representations only on the held-out split.
+      Degenerate, unavailable, mask-unstable, or unknown-source cells abstain
+      instead of selecting the nearest morphology or source.
+    ceiling: diagnostic_only
+orbit_catalogue_v2:
+  representation: V2_sigma_STF2_plus_V1_axial_omega_plus_V1_polar_beta
+  perturbative_order: registered_state_order
+  polynomial_names:
+    - tr_sigma2
+    - tr_sigma3
+    - beta2
+    - beta_sigma_beta
+    - beta_sigma2_beta
+    - det_beta_sigma_beta_sigma2_beta
+    - omega2
+    - omega_sigma_omega
+    - omega_sigma2_omega
+    - beta_dot_omega
+    - beta_sigma_omega
+    - beta_sigma2_omega
+  parity_even:
+    - tr_sigma2
+    - tr_sigma3
+    - beta2
+    - beta_sigma_beta
+    - beta_sigma2_beta
+    - omega2
+    - omega_sigma_omega
+    - omega_sigma2_omega
+  parity_odd:
+    - det_beta_sigma_beta_sigma2_beta
+    - beta_dot_omega
+    - beta_sigma_omega
+    - beta_sigma2_omega
+  polynomial_degrees: [2, 3, 2, 3, 4, 6, 2, 3, 4, 2, 3, 4]
+  syzygy_obligation: >
+    For trace-free 3x3 sigma, verify
+    sigma^3 - tr(sigma^2) sigma / 2 - tr(sigma^3) I / 3 = 0 and its
+    beta-beta, omega-omega, and beta-omega contractions.
+  generic_orbit_separation_status: UNPROVEN
+  degree_completeness_status: UNPROVEN
+  forbidden_language:
+    - complete invariant basis
+    - complete catalogue
+    - inverse morphology atlas
+matched_counterpairs:
+  ell_values: [2, 3]
+  harmonic_convention: orthonormal Condon-Shortley dense real scalar map
+  required_matches:
+    - exact C_ell vector
+    - exact typed anchor identity
+    - same anchor-stress interval
+    - same units, frame, window, mask and beam identities
+  changed_factors:
+    PHASE:
+      operator: NONLINEAR_M_PHASE_V1
+      rule: >
+        For m>0 multiply by exp(i m^2 phi), transform m<0 by the conjugate
+        phase required by the real-field condition, and leave m=0 fixed.
+        The factory rejects any registered angle whose action equals a common
+        proper z rotation or scalar parity on the selected shells.
+    ORIENTATION:
+      operator: COMMON_PROPER_Z_ROTATION_V1
+      rule: >
+        One common R_z(alpha) in SO(3) acts on every selected ell as
+        a_lm -> exp(-i m alpha) a_lm. No improper rotation is admitted.
+    PARITY:
+      operator: SCALAR_PARITY_V1
+      rule: >
+        Scalar coefficients transform as a_lm -> (-1)^ell a_lm with no added
+        rotation. Polarization parity is not provided by this scalar contract.
+  required_feature_blocks:
+    - scalar_x_C
+    - full_departure_state
+    - fisher_whitened_state
+    - anchor_coordinate_with_identity
+    - orbit_catalogue_v2
+    - multipole_power_tensor
+    - biposh
+    - directional_wavelet
+    - TEB_cross_morphology
+  unavailable_feature_rule: >
+    A feature provider without registered bytes is MISSING_FEATURE_PROVIDER;
+    it is never replaced by zeros and is not included in a method score.
+  frozen_availability_rule: >
+    The availability mask is fixed in the preregistered protocol before any
+    held-out score. Missing directional-wavelet or T/E/B providers make the
+    entire corresponding representation MISSING_FEATURE_PROVIDER; the
+    max-statistic family is never shrunk after scoring.
+  provider_status:
+    directional_wavelet: MISSING_FEATURE_PROVIDER
+    TEB_cross_morphology: MISSING_FEATURE_PROVIDER
+  teb_convention_status: >
+    MISSING_FEATURE_PROVIDER until scalar and spin-2 conventions, Q/U order,
+    polarization basis, E/B sign, channel masks/beams and the exact requested
+    TT/TE/EE/TB/EB/BB subset are registered.
+benchmark:
+  data_source: synthetic_only
+  response_role: hypothesis_only
+  transfer_source: none
+  pr151_data_used: false
+  old_rust_output_used: false
+  native_solver_output_used: false
+  master_seed: 20260728
+  minimum_replicates_per_cell: 20000
+  maximum_replicates_per_cell: 400000
+  maximum_mcse: 0.0025
+  train_validation_held_out_split: [0.6, 0.2, 0.2]
+  precision_failure_status: INCONCLUSIVE_MC_PRECISION
+  multiplicity_rule: MAX_ABS_Z_FIXED_CATALOGUE_V1
+  multiplicity_definition:
+    centering: train-only frozen null mean
+    scaling: train-only frozen null standard deviation
+    zero_scale: representation abstains
+    statistic: maximum absolute standardized coordinate on the frozen available set
+    use: descriptive multiplicity-controlled diagnostic only
+  fixed_available_representations:
+    - scalar_x_C
+    - full_departure_state
+    - fisher_whitened_state
+    - anchor_coordinate_with_identity
+    - orbit_catalogue_v2
+    - multipole_power_tensor
+    - biposh
+  fixed_missing_representations:
+    - directional_wavelet
+    - TEB_cross_morphology
+  compared_representations:
+    - scalar_x_C
+    - full_departure_state
+    - fisher_whitened_state
+    - anchor_coordinate_with_identity
+    - orbit_catalogue_v2
+    - multipole_power_tensor
+    - biposh
+    - directional_wavelet
+    - TEB_cross_morphology
+  required_cells:
+    - phase_counterpair
+    - orientation_counterpair
+    - parity_counterpair
+    - mask_perturbation
+    - beam_perturbation
+    - foreground_mimic
+    - unknown_source
+  required_metrics:
+    - covariance-whitened supported singular spectrum on common parameter coordinates
+    - PR-255 contraction status on a common baseline and identified subspace
+    - paired held-out synthetic generator-label loss reduction
+    - mask and beam sensitivity
+    - mandatory abstention rate
+  common_geometry_contract: >
+    Every compared available representation uses the same parameter labels,
+    response normalizer, baseline observable, nuisance policy, transfer
+    identity, mask identity and PR-255 support tolerance. Raw feature-space
+    singular values are not compared. Rank gain or a changed identified
+    subspace never emits a finite contraction ratio.
+  held_out_loss:
+    misclassification_cost: 1.0
+    abstention_cost: 0.5
+    class_weights: balanced synthetic design weights
+    interpretation: synthetic generator-label compatibility, not source evidence
+  forbidden_headline:
+    - p-value ranking
+    - source detection
+    - family identification
+    - cosmological anomaly detection
+cas_contract:
+  path: docs/generated/pr257_lowell_morphology/CAS_CONTRACT_PR257_ORBIT_V2.json
+  axes:
+    - wolfram_xact
+    - sympy
+    - sage_singular
+    - lean
+  required_obligations:
+    - O3 scalar/pseudoscalar transformation for all twelve registered polynomials
+    - trace-free 3x3 Cayley-Hamilton syzygy
+    - fixed exact-rational cross-axis test vectors
+    - explicit non-promotion of generic separation or completeness
+  pass_language: >
+    Four-axis agreement validates the declared scalar/pseudoscalar
+    polynomial/parity/syzygy
+    obligations only.  It does not establish invariant-ring completeness,
+    generic orbit separation, a native morphology atlas, or a physical source.
+tests:
+  - PYTHONPATH=htt/src:htt python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_257_lowell_morphology.py
+  - PYTHONPATH=htt/src:htt python -B scripts/codex_harness/run_pr257_morphology_benchmark.py
+  - PYTHONPATH=htt/src:htt python -B scripts/codex_harness/run_pr257_morphology_oracle.py
+  - python -B .agent-harness/scripts/cas_gate.py adjudicate --contract docs/generated/pr257_lowell_morphology/CAS_CONTRACT_PR257_ORBIT_V2.json --results docs/generated/pr257_lowell_morphology/axes/wolfram_xact/result.json docs/generated/pr257_lowell_morphology/axes/sympy/result.json docs/generated/pr257_lowell_morphology/axes/sage_singular/result.json docs/generated/pr257_lowell_morphology/axes/lean/result.json
+kill_switches:
+  - C_ell or typed anchor stress differs inside a claimed matched counterpair
+  - catalogue, multiplicity rule, threshold, split, or seed changes after test scores are read
+  - reflection treats omega as polar or beta as axial
+  - a parity-odd pseudoscalar is serialized as reflection-even or called an O3 invariant
+  - a PHASE operator overlaps common proper rotation or scalar parity
+  - a missing feature provider is represented by a zero feature
+  - scalar x_C or anchor stress is used as morphology or source evidence
+  - the unknown-source cell is assigned to the nearest known class
+  - test targets are reused for training, threshold selection, or catalogue selection
+  - raw singular values or finite-pair separation are reported as supported local rank
+  - rank gain or changed identified subspace is serialized as a finite contraction ratio
+  - PR-151 partial data, old Rust output, or native-solver output enters a fixture or claim
+claim_boundary:
+  allowed:
+    - diagnostic matched-counterpair construction
+    - preregistered low-ell feature comparison
+    - parity and O3 covariance checks
+    - held-out synthetic source-confusion and abstention metrics
+    - negative or inconclusive morphology results
+  forbidden:
+    - complete invariant basis or complete morphology catalogue
+    - observed cosmological anomaly or source detection
+    - FLRW departure or geometry detection
+    - Bianchi family identification
+    - native-solver or external-transfer validation
+    - posterior odds, Bayes factor, e-value, or evidence from feature separation

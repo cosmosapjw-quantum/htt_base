@@ -354,6 +354,7 @@ for name in [
     "htt.direction",
     "htt.obsstat",
     "htt.obsstat.biposh_features",
+    "htt.obsstat.lowell_counterpairs",
     "htt.obsstat.catalogs.cf4",
     "htt.obsstat.catalogs.redshift_selection",
     "htt.obsstat.catalogs.spectroscopic_dipole",
@@ -364,6 +365,7 @@ for name in [
     "htt.obsstat.template_fit",
     "htt.statistics",
     "htt.statistics.anchored_response_geometry",
+    "htt.statistics.morphology_benchmark",
     "htt.statistics.mes_cov_bound",
     "htt.statistics.mes_information_gain",
     "htt.statistics.mes_information_gain_compatibility",
@@ -393,6 +395,7 @@ for name in [
     "bass.transfer.native_schema",
     "common",
     "common.data_contracts",
+    "common.orbit_catalogue_v2",
     "common.semantic_guards.admissibility_status",
     "common.semantic_guards.source_propagation_status",
     "common.theorem_registry",
@@ -453,6 +456,7 @@ for name in [
     "htt.nulls.survey_axis_coherence",
     "htt.obsstat",
     "htt.obsstat.biposh_features",
+    "htt.obsstat.lowell_counterpairs",
     "htt.obsstat.catalogs.cf4",
     "htt.obsstat.catalogs.redshift_selection",
     "htt.obsstat.catalogs.spectroscopic_dipole",
@@ -463,6 +467,7 @@ for name in [
     "htt.obsstat.template_fit",
     "htt.statistics",
     "htt.statistics.anchored_response_geometry",
+    "htt.statistics.morphology_benchmark",
     "htt.statistics.mes_cov_bound",
     "htt.statistics.mes_information_gain",
     "htt.statistics.mes_information_gain_compatibility",
@@ -534,6 +539,7 @@ for name in [
     "htt.infer.nuisance_rank",
     "htt.direction",
     "htt.statistics.anchored_response_geometry",
+    "htt.statistics.morphology_benchmark",
     "htt.statistics.mes_cov_bound",
     "htt.statistics.mes_information_gain",
     "htt.statistics.mes_information_gain_compatibility",
@@ -550,6 +556,7 @@ for name in [
     "htt.zoa.axis_promotion",
     "common.contracts",
     "common.data_contracts",
+    "common.orbit_catalogue_v2",
     "bass.transfer.evidence_stability",
     "mio.formalism.channel_occupancy_vector",
 ]:
@@ -585,6 +592,7 @@ import htt.departure.posterior_pushforward
 import htt.departure.velocity_frame_decomposition
 import htt.direction
 import htt.statistics.anchored_response_geometry
+import htt.statistics.morphology_benchmark
 import htt.statistics.mes_cov_bound
 import htt.statistics.mes_information_gain
 import htt.statistics.mes_information_gain_compatibility
@@ -722,6 +730,35 @@ assert top_level.BiPoSHFeatureSummary is htt_level.BiPoSHFeatureSummary
         assert completed.returncode == 0, completed.stderr
 
 
+def test_obsstat_top_level_and_htt_alias_share_lowell_counterpair_identity() -> None:
+    env = os.environ.copy()
+    env.pop("PYTHONPATH", None)
+    codes = [
+        """
+import obsstat.lowell_counterpairs as top_level
+import htt.obsstat.lowell_counterpairs as htt_level
+assert top_level is htt_level
+assert top_level.MatchedCounterpairReport is htt_level.MatchedCounterpairReport
+""",
+        """
+import htt.obsstat.lowell_counterpairs as htt_level
+import obsstat.lowell_counterpairs as top_level
+assert top_level is htt_level
+assert top_level.MatchedCounterpairReport is htt_level.MatchedCounterpairReport
+""",
+    ]
+    for code in codes:
+        completed = subprocess.run(
+            [sys.executable, "-c", code],
+            cwd=REPO_ROOT,
+            env=env,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        assert completed.returncode == 0, completed.stderr
+
+
 def test_obsstat_top_level_and_htt_alias_share_null_ensemble_identity() -> None:
     env = os.environ.copy()
     env.pop("PYTHONPATH", None)
@@ -790,6 +827,10 @@ def test_deep_compatibility_aliases_preserve_identity_and_metadata_both_orders()
         (
             "bass.transfer.shear_quadrupole_seminative",
             "htt.bass.transfer.shear_quadrupole_seminative",
+        ),
+        (
+            "obsstat.lowell_counterpairs",
+            "htt.obsstat.lowell_counterpairs",
         ),
         ("obsstat.velocity_power", "htt.obsstat.velocity_power"),
         ("mio.formalism.dynamic_budget", "htt.mio.formalism.dynamic_budget"),
