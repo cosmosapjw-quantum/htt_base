@@ -354,6 +354,7 @@ for name in [
     "htt.direction",
     "htt.obsstat",
     "htt.obsstat.biposh_features",
+    "htt.obsstat.lowell_counterpairs",
     "htt.obsstat.catalogs.cf4",
     "htt.obsstat.catalogs.redshift_selection",
     "htt.obsstat.catalogs.spectroscopic_dipole",
@@ -364,6 +365,7 @@ for name in [
     "htt.obsstat.template_fit",
     "htt.statistics",
     "htt.statistics.anchored_response_geometry",
+    "htt.statistics.morphology_benchmark",
     "htt.statistics.mes_cov_bound",
     "htt.statistics.mes_information_gain",
     "htt.statistics.mes_information_gain_compatibility",
@@ -393,6 +395,7 @@ for name in [
     "bass.transfer.native_schema",
     "common",
     "common.data_contracts",
+    "common.orbit_catalogue_v2",
     "common.semantic_guards.admissibility_status",
     "common.semantic_guards.source_propagation_status",
     "common.theorem_registry",
@@ -453,6 +456,7 @@ for name in [
     "htt.nulls.survey_axis_coherence",
     "htt.obsstat",
     "htt.obsstat.biposh_features",
+    "htt.obsstat.lowell_counterpairs",
     "htt.obsstat.catalogs.cf4",
     "htt.obsstat.catalogs.redshift_selection",
     "htt.obsstat.catalogs.spectroscopic_dipole",
@@ -463,6 +467,7 @@ for name in [
     "htt.obsstat.template_fit",
     "htt.statistics",
     "htt.statistics.anchored_response_geometry",
+    "htt.statistics.morphology_benchmark",
     "htt.statistics.mes_cov_bound",
     "htt.statistics.mes_information_gain",
     "htt.statistics.mes_information_gain_compatibility",
@@ -534,6 +539,7 @@ for name in [
     "htt.infer.nuisance_rank",
     "htt.direction",
     "htt.statistics.anchored_response_geometry",
+    "htt.statistics.morphology_benchmark",
     "htt.statistics.mes_cov_bound",
     "htt.statistics.mes_information_gain",
     "htt.statistics.mes_information_gain_compatibility",
@@ -550,6 +556,7 @@ for name in [
     "htt.zoa.axis_promotion",
     "common.contracts",
     "common.data_contracts",
+    "common.orbit_catalogue_v2",
     "bass.transfer.evidence_stability",
     "mio.formalism.channel_occupancy_vector",
 ]:
@@ -585,6 +592,7 @@ import htt.departure.posterior_pushforward
 import htt.departure.velocity_frame_decomposition
 import htt.direction
 import htt.statistics.anchored_response_geometry
+import htt.statistics.morphology_benchmark
 import htt.statistics.mes_cov_bound
 import htt.statistics.mes_information_gain
 import htt.statistics.mes_information_gain_compatibility
@@ -720,6 +728,52 @@ assert top_level.BiPoSHFeatureSummary is htt_level.BiPoSHFeatureSummary
             check=False,
         )
         assert completed.returncode == 0, completed.stderr
+
+
+def test_obsstat_top_level_and_htt_alias_share_lowell_counterpair_identity() -> None:
+    env = os.environ.copy()
+    env.pop("PYTHONPATH", None)
+    code_template = """
+import importlib
+import sys
+
+canonical_name = "obsstat.lowell_counterpairs"
+alias_name = "htt.obsstat.lowell_counterpairs"
+assert canonical_name not in sys.modules
+assert alias_name not in sys.modules
+first_name, second_name = (
+    (canonical_name, alias_name)
+    if {canonical_first!r}
+    else (alias_name, canonical_name)
+)
+first = importlib.import_module(first_name)
+second = importlib.import_module(second_name)
+assert first is second
+assert first.MatchedCounterpairReport is second.MatchedCounterpairReport
+assert first.__name__ == canonical_name
+assert first.__spec__ is not None
+assert first.__spec__.name == canonical_name
+assert first.__loader__ is first.__spec__.loader
+assert first.__package__ == canonical_name.rpartition(".")[0]
+"""
+    with tempfile.TemporaryDirectory() as tmpdir:
+        for cwd in (REPO_ROOT, Path(tmpdir)):
+            for canonical_first in (True, False):
+                completed = subprocess.run(
+                    [
+                        sys.executable,
+                        "-c",
+                        code_template.format(
+                            canonical_first=canonical_first,
+                        ),
+                    ],
+                    cwd=cwd,
+                    env=env,
+                    text=True,
+                    capture_output=True,
+                    check=False,
+                )
+                assert completed.returncode == 0, completed.stderr
 
 
 def test_obsstat_top_level_and_htt_alias_share_null_ensemble_identity() -> None:
