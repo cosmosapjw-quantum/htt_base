@@ -1,0 +1,200 @@
+schema_version: 1
+work_unit_id: PR-256
+title: Global-tilt versus local-boost velocity-frame response geometry
+target_ref: origin/research/pr04-multicomponent
+target_sha: f96403e0e6885b7e23986833ebb75b49630fa265
+change_set_id: CS-PR256-VELOCITY-FRAMES
+publication_group_id: PG-PR256-VELOCITY-FRAMES
+scientific_role: >
+  Build a diagnostic-only, pre-solver separation contract for a radiation-
+  observer velocity, a radiation-matter global-tilt candidate, and a
+  matter-observer local boost.  Separation is assessed only from registered
+  analytic or synthetic hypothesis responses on the PR-255 covariance-
+  supported quotient.  This work does not detect a global tilt, use an
+  observational DESI/CMB product, identify a Bianchi family, or validate a
+  native response provider.
+governing_sources:
+  - source_id: PR255-ANCHORED-RESPONSE-GEOMETRY
+    identity: docs/research_program/premise_anchor/pr255_spec.yaml
+    role: supported covariance quotient, nuisance projection, and rank contract
+  - source_id: PR251-HELD-OUT-SOURCE-COMPETITION
+    identity: docs/PR_DELTAS/pr-251.md
+    role: mandatory abstention and held-out source-competition boundary
+  - source_id: PR222-FINITE-WINDOW-OPERATOR
+    identity: htt/src/common/revival_bulk_bridge.py
+    role: registered synthetic finite-window operator; never observational data
+  - source_id: PR253-INTAKE
+    identity: docs/research_program/premise_anchor/pr253_input_intake.yaml
+    role: proposed benchmark design only; quoted numbers remain evidence-ineligible
+adopted_contracts:
+  - contract_id: VFD-FIRST-ORDER-CLOSURE
+    statement: >
+      In one declared Cartesian basis, epoch/window, and dimensionless c=1
+      convention, the registered first-order relation is
+      beta_RO = beta_RM + beta_MO + O(beta^2).  Its residual is a kinematic
+      consistency diagnostic, not source identification.
+    ceiling: diagnostic_only
+  - contract_id: VFD-NO-BETA-REINTERPRETATION
+    statement: >
+      DepartureState.beta_a is not renamed or silently reinterpreted.
+      VelocityFrameDecomposition is a separate typed report.
+    ceiling: diagnostic_only
+  - contract_id: SRG-SUPPORTED-QUOTIENT
+    statement: >
+      Local and global tangent spaces are compared after one declared
+      covariance support projection and one declared nuisance projection.
+      Anchor scaling is block-preserving and cannot create rank.
+    ceiling: diagnostic_only
+  - contract_id: SRG-MISSING-PROVIDER-FAIL-CLOSED
+    statement: >
+      A missing aberration, remote-dipole, depth, or other registered response
+      provider produces MISSING_RESPONSE_PROVIDER.  It is never represented by
+      a zero response.
+    ceiling: diagnostic_only
+  - contract_id: SRG-MANDATORY-ABSTENTION
+    statement: >
+      Rank deficiency, covariance-null response, or a principal angle at or
+      below the preregistered separation threshold produces NON_IDENTIFIED or
+      SUM_ONLY rather than a forced local/global label.
+    ceiling: diagnostic_only
+velocity_frame_contract:
+  components:
+    beta_RO: radiation relative to observer
+    beta_RM: radiation relative to matter; global-tilt candidate
+    beta_MO: matter relative to observer; local boost
+  relation: beta_RO = beta_RM + beta_MO + O(beta^2)
+  units: dimensionless beta with c=1
+  perturbative_order: first_order_small_velocity
+  first_order_beta_ceiling: 0.01
+  closure_envelope: >
+    The closure threshold is atol + rtol times the larger of the reported
+    beta_RO norm and linear-sum norm, plus the registered conservative
+    first-order truncation envelope
+    (norm(beta_RM) + norm(beta_MO))^2. This accepts residuals inside the
+    declared O(beta^2) remainder but is not an exact all-orders velocity
+    composition theorem.
+  validity_rule: >
+    Every caller must register a positive first_order_beta_ceiling no larger
+    than 0.1. The larger of norm(beta_RO) and
+    norm(beta_RM)+norm(beta_MO), using available components for partial
+    reports, must not exceed that ceiling. The PR-256 benchmark and oracle
+    register 0.01; inputs outside the registered domain fail closed.
+  required_common_metadata:
+    - basis
+    - epoch_window
+    - parity
+    - perturbative_order
+  parity: polar_vector
+  statuses:
+    - CLOSURE_VERIFIED
+    - CLOSURE_MISMATCH
+    - SUM_ONLY
+    - MISSING_COMPONENT
+  forbidden:
+    - deriving a missing physical component from the other two
+    - treating closure as global-tilt detection
+    - mutating or retyping DepartureState.beta_a
+    - accepting an exact_all_orders perturbative label
+    - extending the O(beta^2) envelope outside the registered beta domain
+source_response_contract:
+  response_role: hypothesis_only
+  allowed_provider_kinds:
+    - ANALYTIC
+    - SYNTHETIC
+    - EMPIRICAL_PROXY
+  allowed_transfer_sources:
+    - none
+    - empirical_proxy
+  statuses:
+    - NON_IDENTIFIED
+    - SUM_ONLY
+    - SEPARABLE_CANDIDATE
+    - MISSING_RESPONSE_PROVIDER
+  required_report_fields:
+    - exact local and global provider identities
+    - response and covariance content identities
+    - nuisance-projected local, global, and joint ranks
+    - local, global, and joint singular spectra
+    - principal angles and preregistered minimum-angle threshold
+    - covariance-null residual
+    - assumptions, allowed uses, and forbidden uses
+  normalizer_rule: >
+    The normalizer must declare RESPONSE_CONDITIONING, match the concatenated
+    local/global parameter labels, remain invertible within each block, and
+    have exactly zero cross-block entries.
+  fail_closed:
+    unavailable_provider: MISSING_RESPONSE_PROVIDER
+    supplied_response_for_missing_provider: error
+    missing_response_for_available_provider: error
+    mixed_transfer_provenance: error
+    duplicate_provider_identity: error
+    covariance_null_response: NON_IDENTIFIED
+    empty_local_or_global_supported_space: NON_IDENTIFIED
+    rank_deficient_local_or_global_parameter_block: NON_IDENTIFIED
+    local_global_overlap_above_threshold: SUM_ONLY
+    direct_sum_below_registered_threshold: SUM_ONLY
+    direct_sum_above_registered_threshold: SEPARABLE_CANDIDATE
+benchmark:
+  data_source: synthetic_only
+  transfer_source: none
+  response_role: hypothesis_only
+  theta_units: dimensionless beta with c=1
+  first_order_beta_ceiling: 0.01
+  maximum_theta_source_norm_sum: 0.008
+  response_units: synthetic observable units per dimensionless beta
+  synthetic_response_per_beta_scale: 1000.0
+  pr151_data_used: false
+  finite_window_source: common.revival_bulk_bridge.W
+  finite_window_role: registered_synthetic_operator_only
+  master_seed: 20260728
+  minimum_replicates_per_cell: 20000
+  maximum_replicates_per_cell: 400000
+  maximum_mcse: 0.0025
+  train_validation_held_out_split: [0.6, 0.2, 0.2]
+  precision_failure_status: INCONCLUSIVE_MC_PRECISION
+  compared_methods:
+    - dipole_amplitude
+    - diagonal_Cl
+    - morphology_only
+    - anchor_stress_only
+    - anchored_response_geometry
+    - full_held_out_source_competition
+  required_cells:
+    - pure_local
+    - pure_global
+    - mixed_source
+    - confusable_sum_only
+  required_controls:
+    - confusable methods abstain
+    - pure-local false-global rate is at most 0.05 plus 3 MCSE
+    - mixed-source single-global error is at most 0.05 plus 3 MCSE
+    - an added registered observable increases rank or the minimum principal angle
+tests:
+  - PYTHONPATH=htt/src:htt python -B -m pytest -p no:cacheprovider -q htt/htt/tests/test_velocity_frame_decomposition.py
+  - PYTHONPATH=htt/src:htt python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_256_velocity_frame_decomposition.py
+  - PYTHONPATH=htt/src:htt python -B scripts/codex_harness/run_pr256_velocity_frame_benchmark.py
+  - PYTHONPATH=htt/src:htt python -B scripts/codex_harness/run_pr256_response_geometry_oracle.py
+kill_switches:
+  - DepartureState.beta_a is reinterpreted or mutated
+  - a missing provider is represented by a zero response
+  - local and global response blocks use different covariance or transfer provenance
+  - an anchor coordinate map mixes local and global parameter blocks
+  - anchor scaling creates response rank
+  - covariance-null response is discarded
+  - a confusable or rank-deficient cell is force-classified
+  - a pure-local cell is reported as a global candidate above the registered error ceiling
+  - a mixed-source cell is collapsed to a single global candidate above the registered error ceiling
+  - PR-151 partial acquisition data enters a fixture, calibration, or claim
+claim_boundary:
+  allowed:
+    - first-order velocity-frame closure diagnostics
+    - pre-solver local/global tangent-space diagnostics
+    - synthetic hypothesis-response benchmarks
+    - mandatory abstention and negative results
+  forbidden:
+    - observed global-tilt detection
+    - FLRW departure or geometry detection
+    - Bianchi family identification
+    - native-solver validation
+    - observational use of PR-151 partial data
+    - posterior odds, Bayes factor, e-value, or evidence from response geometry

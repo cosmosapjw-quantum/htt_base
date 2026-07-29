@@ -21,6 +21,24 @@ _POSTERIOR_PUSHFORWARD_EXPORTS = {
     "build_posterior_pushforward_report",
     "reject_mio_pushforward_inputs",
 }
+_VELOCITY_FRAME_EXPORTS = {
+    "ResponseProviderAvailability",
+    "ResponseProviderKind",
+    "SourceHypothesis",
+    "SourceResponseGeometryReport",
+    "SourceResponseGeometryStatus",
+    "SourceResponseProviderSpec",
+    "VelocityComponent",
+    "VelocityDecompositionStatus",
+    "VelocityFrameDecomposition",
+    "VelocityFrameError",
+    "build_velocity_frame_decomposition",
+    "measure_source_response_geometry",
+    "register_source_response_provider",
+    "revalidate_source_response_geometry",
+    "revalidate_source_response_provider",
+    "revalidate_velocity_frame_decomposition",
+}
 
 
 def __getattr__(name: str):
@@ -32,6 +50,10 @@ def __getattr__(name: str):
         from . import posterior_pushforward
 
         return getattr(posterior_pushforward, name)
+    if name in _VELOCITY_FRAME_EXPORTS:
+        from . import velocity_frame_decomposition
+
+        return getattr(velocity_frame_decomposition, name)
     raise AttributeError(name)
 
 __all__ = [
@@ -43,9 +65,25 @@ __all__ = [
     "PosteriorPushforwardReport",
     "PosteriorPushforwardSample",
     "ResponseOverlapAudit",
+    "ResponseProviderAvailability",
+    "ResponseProviderKind",
+    "SourceHypothesis",
+    "SourceResponseGeometryReport",
+    "SourceResponseGeometryStatus",
+    "SourceResponseProviderSpec",
+    "VelocityComponent",
+    "VelocityDecompositionStatus",
+    "VelocityFrameDecomposition",
+    "VelocityFrameError",
     "build_response_overlap_audit",
     "build_local_global_mixture_report",
     "build_posterior_pushforward_report",
+    "build_velocity_frame_decomposition",
+    "measure_source_response_geometry",
     "reject_mio_pushforward_inputs",
+    "register_source_response_provider",
+    "revalidate_source_response_geometry",
+    "revalidate_source_response_provider",
+    "revalidate_velocity_frame_decomposition",
     "require_rank_audit_for_model_run",
 ]

@@ -350,6 +350,7 @@ for name in [
     "htt.departure.local_global_mixture",
     "htt.departure.posterior_pushforward",
     "htt.departure.response_overlap",
+    "htt.departure.velocity_frame_decomposition",
     "htt.direction",
     "htt.obsstat",
     "htt.obsstat.biposh_features",
@@ -436,6 +437,7 @@ for name in [
     "htt.departure.local_global_mixture",
     "htt.departure.posterior_pushforward",
     "htt.departure.response_overlap",
+    "htt.departure.velocity_frame_decomposition",
     "htt.direction",
     "htt.infer",
     "htt.infer.loocv",
@@ -526,6 +528,7 @@ for name in [
     "htt.departure.response_overlap",
     "htt.departure.local_global_mixture",
     "htt.departure.posterior_pushforward",
+    "htt.departure.velocity_frame_decomposition",
     "htt.infer.finite_mock",
     "htt.infer.fisher_compression",
     "htt.infer.nuisance_rank",
@@ -579,6 +582,7 @@ assert "rest_frame" in namespace
 import htt.departure.response_overlap
 import htt.departure.local_global_mixture
 import htt.departure.posterior_pushforward
+import htt.departure.velocity_frame_decomposition
 import htt.direction
 import htt.statistics.anchored_response_geometry
 import htt.statistics.mes_cov_bound
