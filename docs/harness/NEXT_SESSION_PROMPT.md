@@ -1,9 +1,10 @@
 # Next Session Prompt
 
-Verify the completed PR-247 closeout from the isolated worktree
-`/home/cosmosapjw/Dropbox/bianchi/htt_base_prguard_p0`, branch
-`changeset/pr247-publication-integrity-p0`. Do not work from or modify the
-user's canonical `/home/cosmosapjw/Dropbox/bianchi/htt_base` tree.
+Verify or continue after the PR-255 anchored-response-geometry change-set from
+the isolated worktree
+`/home/cosmosapjw/worktrees/htt-anchored-response-pr255-20260729`, branch
+`changeset/pr255-anchored-response-geometry`. Do not move, checkout, or clean
+the canonical PR-151 acquisition path.
 
 Read first:
 
@@ -14,75 +15,58 @@ Read first:
 - `.agents/skills/htt-scientific-code-validation/SKILL.md`
 - `.agents/skills/htt-adversarial-review-loop/SKILL.md`
 - `.agents/skills/htt-ssot-handoff-maintainer/SKILL.md`
-- `docs/research_program/long_horizon_rescue/pr247_spec.yaml`
-- `docs/harness/PUBLICATION_INTEGRITY.md`
-- `docs/PR_DELTAS/pr-247.md`
+- `.agents/skills/htt-physics-math-audit/SKILL.md`
+- `.agents/skills/htt-statistical-hardening/SKILL.md`
+- `.agents/skills/htt-claim-firewall/SKILL.md`
+- `docs/research_program/premise_anchor/pr255_spec.yaml`
+- `docs/research_program/premise_anchor/pr255_publication_policy.json`
+- `docs/PR_DELTAS/pr-255.md`
 - `docs/codex_handoff/pr_backlog.yaml`
 - `docs/codex_handoff/pr_status.yaml`
 
 ## Current state
 
-- Baseline commit:
-  `be2d545654a5abc7af0819c72ab08d17a4c68d34`.
-- Internal work unit `PR-247`, change-set
-  `CS-PR247-PUBLICATION-INTEGRITY-P0`, publication group
-  `PG-PR247-PUBLICATION-INTEGRITY-P0`, target
-  `origin/research/pr04-multicomponent`.
-- Active DAG: 194 cards, 142 complete (73.20%), dependency-weighted 79.19%,
-  critical-path proxy 81.82%. There is no foreground card; PR-151 remains the
-  background acquisition. PR-172 is blocked. No checkpoint is due.
-- Candidate A (`c1d2716f...`, seal `b5d845...`) is invalidated. Preliminary
-  structural coverage reproduced a bundled-shell classifier bypass, and
-  main-writer integration inspection reproduced venv-launcher realpath loss.
-  That reviewer timed out before a registered result envelope and is not final
-  review evidence.
-- Candidate B (`f3521b42...`, seal `0fdfe9...`) is also invalidated. Its
-  complete registered FAIL review reproduced a publication bypass through
-  Google's codelab-documented top-level Antigravity
-  `tool_args.CommandLine` envelope.
-- Candidate C (`b431da78...`, seal `4facb9...`) passed a complete registered
-  read-only review and latest-target integration against `be2d545...`; receipt
-  `6c7e3281...` verifies cleanly.
-- PR-247 is `completed`. Its status/SSoT amendment creates a later exact Git
-  candidate, so verify that the final branch HEAD has its own matching seal,
-  registered PASS review, and latest-target integration receipt. Do not reuse
-  candidate-C identities for the amended tree.
-- The canonical user tree was not modified. One local implementation commit
-  was authorized; no push, PR creation, approval, merge, publisher
-  authorization, or external PR was performed.
+- Baseline target:
+  `origin/research/pr04-multicomponent@090525951cc30ad29da7fa8ae0a11bd4553f5b4f`.
+- Internal work unit `PR-255`, change-set
+  `CS-PR255-RESPONSE-GEOMETRY`, publication group
+  `PG-PR255-RESPONSE-GEOMETRY`.
+- Active DAG: 205 cards, 150 conditionally complete (73.17%),
+  dependency-weighted 79.69%, critical-path proxy 85.71%. PR-151 remains the
+  background acquisition and PR-172 remains blocked. Checkpoint 150 exists.
+- PR-255 implements supported-quotient anchored response geometry,
+  same-covariance Schur information, structural contraction states, a typed
+  eight-cell synthetic nonlinearity phase report, and a direct-Fisher oracle.
+- Candidates r1 through r4 under
+  `.agent-harness/runs/premise-anchor-pr255-candidate-r*-20260729/` are
+  preserved FAIL reviews. The exact closeout authority is only a PASS run at
+  `.agent-harness/runs/premise-anchor-pr255-candidate-r5-20260729/` plus its
+  candidate seal and latest-target integration receipt. Verify all identities
+  before relying on the status transition.
+- No partial PR-151 data, observational catalogue, external/native transfer,
+  old Rust science result, posterior, geometry, or family result was used.
 
 ## Authority boundary
 
-Local commit authority was granted for this coherent change-set. Do not push,
-create or mutate a GitHub PR, approve, merge, or invoke a publisher without
-separate explicit authority. Ordinary agents never act as publisher.
+The owner authorized one commit and push for the current coherent PR-255
+candidate. That authority does not include PR creation, approval, merge, or
+other GitHub PR mutation. Ordinary agents never act as publisher.
 
-Repository hooks are only defense in depth. Hard publication enforcement
-requires administrator-managed policy or equivalent network isolation and
-publisher credentials, HMAC key, and nonce ledger outside ordinary agent
-sandboxes.
+Before continuing:
 
-For the completed closeout:
-
-1. verify the branch is clean and retains the coherent local commit message
-   `PR-247: enforce change-set publication integrity`;
-2. verify the current `CANDIDATE_SEAL.json` binds the exact final HEAD;
-3. verify the final registered review and integration receipt against that
-   same seal;
-4. if any tracked byte changes, invalidate those artifacts and repeat the
-   seal/review/integration cycle;
-5. stop at local `READY_FOR_EXTERNAL_PUBLISHER`. Do not invoke the publisher.
-
-The credential-isolated publisher, if separately deployed and authorized,
-must collect a fresh repository-bound PR inventory, issue a short-lived
-one-use authorization, consume it through the gate, push the sealed SHA
-refspec, and create at most one PR for the change-set.
+1. verify the branch is clean and the pushed SHA equals the candidate seal;
+2. verify all three registered review results and coverage matrices;
+3. verify the integration receipt against the same target and candidate;
+4. if any tracked byte changed, invalidate all evidence and do not reuse it;
+5. if PR-255 has been human-reviewed and merged and its branch deleted, create
+   one isolated PR-256 worktree at the latest target. Otherwise stop.
 
 ## Immediate verification
 
 ```bash
-/home/cosmosapjw/Dropbox/bianchi/htt_base/venv/bin/python -B -m pytest -p no:cacheprovider -q scripts/codex_harness/test_harness_enforcement.py scripts/codex_harness/test_codex_assets.py scripts/codex_harness/test_publication_integrity.py
-PYTHONPATH="$PWD/htt/src:$PWD/htt:$PWD" /home/cosmosapjw/Dropbox/bianchi/htt_base/venv/bin/python -B -m pytest -p no:cacheprovider --collect-only -q
+PYTHONPATH="$PWD/htt/src:$PWD/htt:$PWD/htt/htt" /home/cosmosapjw/Dropbox/bianchi/htt_base/venv/bin/python -B -m pytest -p no:cacheprovider -q htt/src/common/test_anchored_response_geometry.py tests/pr_cards/test_pr_255_anchored_response_geometry.py
+/home/cosmosapjw/Dropbox/bianchi/htt_base/venv/bin/python -B scripts/codex_harness/run_pr255_response_geometry_benchmark.py
+/home/cosmosapjw/Dropbox/bianchi/htt_base/venv/bin/python -B scripts/codex_harness/run_pr255_response_geometry_oracle.py
 /home/cosmosapjw/Dropbox/bianchi/htt_base/venv/bin/python -B .agent-harness/scripts/validate_harness.py
 /home/cosmosapjw/Dropbox/bianchi/htt_base/venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --strict
 /home/cosmosapjw/Dropbox/bianchi/htt_base/venv/bin/python -B scripts/codex_harness/sync_pr_dag_mirrors.py --check
@@ -90,7 +74,8 @@ PYTHONPATH="$PWD/htt/src:$PWD/htt:$PWD" /home/cosmosapjw/Dropbox/bianchi/htt_bas
 git diff --check
 ```
 
-Do not start PR-190 or PR-204 until the exact final PR-247 closeout artifacts
-verify. Do not alter PR-151 acquisition state, run partial-mock science,
-implement a native solver, or promote any scientific/transfer/family/
-publication claim from this process work.
+Do not start PR-256 before PR-255 merge and branch deletion. Do not start
+PR-257 before PR-256, or PR-258 before PR-256 and PR-257. Do not alter PR-151
+acquisition state, run partial-data science, implement a native solver, or
+promote any observational, transfer, geometry, family, or publication claim
+from this diagnostic methodology.
