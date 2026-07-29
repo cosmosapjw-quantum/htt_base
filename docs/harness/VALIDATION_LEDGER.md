@@ -2,6 +2,72 @@
 
 Record commands actually run. Never mark skipped checks as passed.
 
+## PR-258 - open-set response classes and premise-anchor integration
+
+Date: 2026-07-30
+
+Change classification: COMMON finite analytic/synthetic response-class
+contracts, HTT compatibility exports, synthetic diagnostic benchmark,
+executable oracle, tests, methodology documentation, generated manuscript
+methods text, claim-registry entry, status mirrors, and PR delta. No PR-151
+partial data, observed sky, old Rust science output, external/native transfer,
+posterior/evidence result, native solver, geometry, Bianchi-family
+identification, claim promotion, or public-use state is introduced.
+
+| Command or check | Result | Notes |
+|---|---:|---|
+| `PYTHONPATH=htt/src:htt python -B scripts/codex_harness/run_pr258_integration.py focused` | PASS | Remediated mutable-candidate replay: `43 passed`, including full/partial nuisance-orbit versus covariance-null separation, exact structural-null unit congruence, exact PR-256/PR-258 observable/covariance/nuisance/provider-response gate binding, metadata-only report rebinding, precedence, signed-zero canonical identity, frozen MC threshold/cap, frozen-artifact metadata, and perturbation-label destructive regressions. |
+| same runner, `benchmark` | PASS | Seed `20260728`; minimum/realized 20,000 held-out draws per registered cell; declared maximum MCSE `0.0025`, cap `400000`; frozen artifact hash `b2e7473eaee85a6a6e9c7afa4663486b5f64a274e284cc92a7eb8026eef7af29`. |
+| `PYTHONPATH=htt/src:htt python -B scripts/codex_harness/run_pr258_open_set_oracle.py` | PASS | Independent squared-metric, exact structural-null unit-congruence, signed-zero identity, artifact-metadata binding, MC-contract rejection, covariance-null precedence, nuisance-orbit quotient, class-contract binding, equivalence precedence, source-gate surface and 3D-to-2D/covariance rebinding rejection, graph closure, node-consistent tie, rank, and full-regraph checks passed. |
+| same integration runner, `adjacent` | PASS | `139 passed` across PR-219/255/256/257/258, followed by the isolated wheel import and HTT-facade identity probe. |
+| same integration runner, `claim` | PASS | Manuscript claim-language scan returned `issue_count: 0`; explicit owner/scope/artifact-mode/sky/null/covariance metadata, artifact provenance, typed perturbation relations, distinct non-baseline report identities, forbidden-key absence, and historical PR-219/statistical-foundation hashes passed. |
+| strict PR DAG/status validation | PASS | `205` cards valid; PR-257 is completed at merged PR #365 / `d62d63d...`; PR-258 remains pending until merge. |
+| canonical/compatibility status comparison | PASS | `docs/codex_handoff/pr_status.yaml` and `machine_readable/pr_status.yaml` are byte-identical. |
+| final architecture/SSOT handoff replay | PASS | Project state, progress, decisions, blockers, next-session prompt, PR delta, and validation ledger pass scoped claim-language and forbidden-claim scans with zero findings. Progress remains 152/205 (74.15%), and remote target `d62d63d...` is unchanged. |
+| candidate Python byte compilation | PASS | PR-258 COMMON/HTT facade and three registered runner/oracle scripts compile. |
+| scoped mock/fake-result search | PASS BY ABSENCE | No mock-result marker appears on PR-258 implementation, test, runner, specification, methodology, manuscript, PR-delta, or generated-artifact surfaces. |
+| repo-wide no-mock checker | FAIL, PRE-EXISTING | Historical `calibration_factor` and mock-marker inventory remains; this global result is not relabelled as a PR-258 pass. |
+| full package subset in the workstation interpreter | FAIL, ENVIRONMENTAL/BASELINE | The source layout is not installed into `/usr/bin/python`; the direct package-file replay reached `9 passed, 18 failed`, dominated by missing top-level source-layout packages/NumPy and legacy editable-finder expectations. An isolated PR-258 wheel probe passes; an earlier temporary isolated package environment reached `21 passed, 6 failed`. No broad packaging pass is claimed. |
+| full source-layout `pytest --collect-only -q` | FAIL, PRE-EXISTING | Collection reached `10059/10118` before the existing PR-172 `htt.metamorphic_symmetry` import error. The directly affected and adjacent suites above pass. |
+| ordinary manuscript `latexmk` | BLOCKED AS DESIGNED | PR-120 publication quarantine rejects a public/current PDF. |
+| explicit historical-reproduction TeX build | PASS, NON-PUBLIC | The opt-in legacy build produced a 364-page PDF with no undefined citation/reference, missing-file, duplicate-label, or fatal-error diagnostic. This is compatibility evidence only and does not authorize public use. |
+| registered harness remediation review R3 | PASS | All six independent failure probes, focused 35, benchmark replay, oracle, adjacent 131, isolated wheel, claim lint, and strict DAG passed; the schema-v3 result passes the strict result kernel. |
+| registered claim remediation review R3 | PASS THEN INPUT-INVALIDATED | It found no remaining claim blocker on the substantive methodology/claim surfaces. The later required PR-delta closeout changed one exact registered input, so this envelope is preserved but not used as the final current-byte documentation verdict. |
+| first post-commit sealed physics/statistics and harness reviews at `9318fa1` | FAIL, CANDIDATE INVALIDATED | The reviews independently reproduced nuisance/covariance-null conflation, a forgeable public PR-256 gate, precedence drift, label-only perturbation acceptance, and provider/convention/nuisance-policy rebinding. Findings were accepted; the old seal and its incomplete readiness chain are historical only. |
+| second sealed physics/statistics, harness, and claim-lane reviews at `b19d20e5` | FAIL, CANDIDATE INVALIDATED | Independent reviews reproduced signed-zero support identity drift, an unsealed/uncapped benchmark MC contract, stale current-candidate test counts, and a public factory-list mismatch. Findings were accepted; no PASS envelope or readiness receipt was created for the invalidated candidate. |
+| final same-SHA physics/statistics and claim/provenance rereviews at `05005fc1` | FAIL, CANDIDATE INVALIDATED | Physics/statistics found a zero-variance covariance-null decision that changed under a units-only rescaling; claim review found the manuscript-consumed frozen benchmark lacked explicit owner, scope, artifact mode, and sky/null/covariance status. Both findings were accepted, no PASS envelope was written, and the seal was abandoned before repair. |
+| `python3 .agent-harness/scripts/validate_harness.py` | FAIL, PRESERVED HISTORY | The whole mutable run intentionally retains preimplementation and failed R2 assignments whose exact inputs were superseded by repairs. Current R3 results pass the strict kernel individually; a broad all-history pass is not claimed. |
+| `git diff --check` | PASS | No whitespace errors in the mutable pre-seal candidate. |
+
+The first registered preimplementation physics/statistics audit failed before
+implementation and forced explicit squared-score, covariance-null,
+source-rank, stable-node, full-regraph, finite-support-sensitivity, and
+claim-tier contracts. The first precommit claim review then found an
+implemented-status promotion and missing BC1/BC2 boundaries in the Korean
+trace summary. The first precommit harness review found six executable
+defects: node/null tie decoupling, unbound nuisance geometry, mixed neutral
+and source-specific semantics, unbound benchmark equivalence reports,
+incomplete perturbation acceptance, and a raw scalar-input `TypeError`.
+Those failed envelopes are preserved and are not counted as readiness
+evidence. The mutable candidate now binds nuisance and equivalence identities,
+uses node-consistent tie ordering, rejects mixed semantics, requires every
+frozen perturbation cell, normalizes malformed reopening inputs, and carries
+destructive regressions for each failure.
+
+`A-PR258-DOCS-R4` passed the pre-handoff documentation bytes. The required
+architecture/SSOT closeout then changed the PR delta and handoff tree, so R4
+is preserved as remediation evidence but no longer controls the exact Git
+candidate. Only a new post-commit seal, read-only candidate review, and
+latest-target integration may control handoff; this mutable ledger does not
+self-certify readiness.
+
+Scientific impact: the change-set validates a pre-native, finite-library,
+synthetic diagnostic intermediate. It may report response-equivalence
+components, finite-library candidates, abstention, finite-support sensitivity,
+and a minimal reopening observable under declared assumptions. It does not
+establish FLRW departure, observational anisotropy, a physical source, a
+native transfer, a geometry, or a Bianchi family.
+
 ## PR-255 - anchored response geometry and nonlinearity phase diagram
 
 Date: 2026-07-29

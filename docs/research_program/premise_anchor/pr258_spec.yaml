@@ -1,0 +1,382 @@
+schema_version: 1
+work_unit_id: PR-258
+title: Open-set response-class quotient and premise-anchor integration
+target_ref: origin/research/pr04-multicomponent
+target_sha: d62d63de6fdae1fbaf595ccce52b3abf532899e5
+change_set_id: CS-PR258-OPEN-SET-INTEGRATION
+publication_group_id: PG-PR258-OPEN-SET-INTEGRATION
+scientific_role: >
+  Extend the PR-219 response quotient into a typed, diagnostic-only open-set
+  response-class layer using preregistered analytic or synthetic finite
+  response supports.  The layer reports response equivalence, unknown-class
+  rejection, abstention, parameter-support sensitivity and the minimal
+  registered observable needed to reopen a quotient class.  It does not use
+  observed data, instantiate a native solver manifold, classify a Bianchi
+  family, or detect departure from FLRW.
+governing_sources:
+  - source_id: PR219-RESPONSE-QUOTIENT
+    identity: docs/research_program/revival/pr219_spec.yaml
+    role: >
+      Historical pre-solver quotient and zero-column reopening contract;
+      legacy bytes remain unchanged.
+  - source_id: PR255-ANCHORED-RESPONSE-GEOMETRY
+    identity: docs/research_program/premise_anchor/pr255_spec.yaml
+    role: >
+      Common covariance-supported quotient, nuisance projection, response
+      rank and identified-subspace contract.
+  - source_id: PR256-VELOCITY-FRAME-GEOMETRY
+    identity: docs/research_program/premise_anchor/pr256_spec.yaml
+    role: >
+      Missing-provider failure and mandatory local/global abstention contract.
+  - source_id: PR257-LOWELL-MORPHOLOGY
+    identity: docs/research_program/premise_anchor/pr257_spec.yaml
+    role: >
+      Frozen low-ell feature provenance, open-set unknown partition and
+      degree-bounded morphology boundary.
+  - source_id: PR253-INTAKE
+    identity: docs/research_program/premise_anchor/pr253_input_intake.yaml
+    role: >
+      Proposed methodology inputs only; quoted numbers and strong J1/J2
+      statements remain evidence-ineligible.
+adopted_contracts:
+  - contract_id: PR258-RESPONSE-CLASS-NOT-FAMILY
+    statement: >
+      A response class is a declared finite analytic or synthetic response
+      support under one observable/covariance/nuisance contract.  Its label is
+      not a Bianchi family, geometry, source, likelihood model or native
+      solver manifold.
+    ceiling: diagnostic_only
+  - contract_id: PR258-SUPPORTED-QUOTIENT
+    statement: >
+      Every edge and decision uses squared Mahalanobis distance under
+      OBSERVABLE_COVARIANCE_SQUARED_DISTANCE_V1: the public PR-255
+      covariance-supported quotient, one declared nuisance projection and
+      identity response-coordinate scaling. Covariance-null residuals are
+      retained and dominate a finite-node candidate; supported-score ties use
+      the smallest node-consistent covariance-null residual. The exact
+      nuisance-tangent content identity is bound into the equivalence report,
+      and missing observables are never represented by zeros.
+    ceiling: diagnostic_only
+  - contract_id: PR258-EQUIVALENCE-FIRST
+    statement: >
+      Response supports whose minimum squared supported separation is at or
+      below the preregistered squared-distance tolerance form one response-equivalence
+      component.  Boundary-coincident or noise-overlapping classes return the
+      component or TYPE_UNIDENTIFIED, never a forced nearest class.
+    ceiling: diagnostic_only
+  - contract_id: PR258-OPEN-SET-ABSTENTION
+    statement: >
+      The unknown threshold defines an explicit squared-distance acceptance
+      tube around exact finite nodes; it does not interpolate a manifold.
+      An input on or beyond the tube boundary returns UNKNOWN_CLASS. A tied,
+      weakly separated, equivalence-collapsed, covariance-null or
+      provider-incomplete input abstains.  Only a uniquely separated finite
+      response class may return RESPONSE_CLASS_CANDIDATE.
+    ceiling: diagnostic_only
+  - contract_id: PR258-FINITE-SUPPORT-PERTURBATION-SENSITIVITY
+    statement: >
+      Class decisions are based on minimum supported distance and are
+      invariant to exact duplicate support nodes.  Sensitivity to a declared
+      exact duplication, refinement, expansion, contraction or boundary
+      restriction of the finite support is reported separately. It is never
+      called support volume, Bayesian evidence or prior robustness unless a
+      parameter-domain measure is separately supplied.
+    ceiling: diagnostic_only
+  - contract_id: PR258-REOPENING-OBSERVABLE
+    statement: >
+      A response graph is reopened only by a preregistered observable with
+      stable support-node identities, an enlarged joint covariance including
+      cross-covariance, and an enlarged joint nuisance contract. The full
+      class graph is recomputed; separation only inside the old component is
+      insufficient. This does not assert that a physical response kernel was
+      reopened. An unavailable provider returns MISSING_RESPONSE_PROVIDER.
+    ceiling: diagnostic_only
+  - contract_id: PR258-FUTURE-NATIVE-ADAPTER
+    statement: >
+      The future-native adapter validates only schema, identity and required
+      provenance fields and returns NEEDS_NATIVE until actual native response
+      bytes and their validation receipt exist.  It cannot emit synthetic
+      native science values.
+    ceiling: diagnostic_only
+  - contract_id: PR258-JUSTIFICATION-BOUNDARY
+    statement: >
+      The one-way outer-envelope and invertible-rank results may enter the
+      canonical justification.  J1 exact-boundary uniqueness and J2 uniform
+      finite-sample validity remain counterexample-first conjectures and do
+      not enter the claim registry or manuscript as established results.
+    ceiling: diagnostic_only
+public_contract:
+  common_module: common.open_set_response_classes
+  htt_module: htt.statistics.open_set_response_classes
+  types:
+    - ResponseClassManifoldSpec
+    - ResponseEquivalenceClassReport
+    - OpenSetClassificationReport
+    - OpenSetBenchmarkReport
+    - FutureNativeResponseAdapterSpec
+    - ReopeningObservableSpec
+    - SourceSeparationGate
+  factories:
+    - build_response_class_manifold
+    - build_response_equivalence_report
+    - classify_open_set_response
+    - classify_open_set_response_batch
+    - evaluate_open_set_benchmark
+    - build_future_native_response_adapter
+    - build_reopening_observable_spec
+    - source_separation_gate_from_pr256
+  statuses:
+    manifold:
+      - FINITE_ANALYTIC_SUPPORT
+      - FINITE_SYNTHETIC_SUPPORT
+      - NEEDS_NATIVE
+    equivalence:
+      - SEPARATED
+      - EQUIVALENCE_CLASS
+      - TYPE_UNIDENTIFIED
+      - MISSING_RESPONSE_PROVIDER
+      - OUTSIDE_SUPPORTED_QUOTIENT
+    classification:
+      - RESPONSE_CLASS_CANDIDATE
+      - EQUIVALENCE_CLASS
+      - TYPE_UNIDENTIFIED
+      - UNKNOWN_CLASS
+      - NEEDS_NATIVE
+      - MISSING_RESPONSE_PROVIDER
+      - OUTSIDE_SUPPORTED_QUOTIENT
+  required_identity:
+    - class_id
+    - provider_id
+    - response_content_id
+    - observable labels and convention identity
+    - covariance content identity
+    - nuisance policy identity
+    - nuisance-tangent numeric content identity
+    - transfer source
+    - support role and support-node content identity
+    - stable support_node_id for every added-observable row
+    - metric identity and squared-distance threshold scale
+    - joint covariance and nuisance identities for reopening observables
+  exact_response_support: >
+    Pre-native analytic and synthetic classes are finite preregistered support
+    sets.  No interpolation between nodes is implied.  A future native
+    manifold requires its own adapter and validation receipt.
+response_equivalence:
+  metric_id: OBSERVABLE_COVARIANCE_SQUARED_DISTANCE_V1
+  score: covariance-supported nuisance-projected squared Mahalanobis distance
+  coordinate_scaling: identity
+  tolerance_contract: >
+    equivalence_squared_distance_tolerance, unknown_squared_distance_threshold
+    and decision_squared_margin are finite dimensionless quantities in the
+    same squared-score space. Equivalence includes exact equality. Unknown
+    and decision-margin equality abstain conservatively.
+  covariance_contract: >
+    PR-255 defines PSD support and nuisance projection. PR-258 binds explicit
+    positive absolute and relative tolerances for identity checks and a
+    nonnegative covariance-null residual tolerance for dimensionless
+    correlation-null decisions. A coordinate with exactly zero covariance
+    diagonal supplies no scale for such a tolerance and is therefore retained
+    as an exact structural-null equality constraint. Any nonzero displacement
+    on that coordinate returns OUTSIDE_SUPPORTED_QUOTIENT independently of a
+    positive change of units. A material dimensionless covariance-null
+    residual likewise returns OUTSIDE_SUPPORTED_QUOTIENT before any
+    candidate. Structural-null mismatch and dimensionless null residual are
+    separate report fields. The covariance-null operator is retained before
+    nuisance projection; a displacement wholly along a supported nuisance
+    orbit has zero covariance-null residual and cannot be relabelled as
+    outside the covariance quotient.
+  graph_rule: >
+    Add an undirected edge when the minimum pairwise support-node squared
+    distance is at or below equivalence_squared_distance_tolerance. Connected
+    components, direct edges and the full squared-distance table are reported;
+    graph closure is not represented as pairwise equality.
+  shared_boundary_rule: >
+    If class supports contain a common FLRW-boundary response within
+    tolerance, those classes are non-separated at that boundary.  A
+    detectable-annulus restriction must be explicit and is not inferred from
+    the class label.
+  minimal_reopening_rule: >
+    Test only preregistered node-keyed added-observable tables under one
+    enlarged joint covariance and nuisance contract. Recompute the complete
+    graph over all classes. Report the minimum added dimension that yields
+    global singleton components; otherwise return NEEDS_ADDITIONAL_OBSERVABLE.
+open_set_decision:
+  class_score: minimum squared supported distance to any registered support node
+  acceptance_tube: >
+    A positive threshold admits a diagnostic neighborhood around each exact
+    finite node. It does not create interpolation or a continuous manifold.
+  unknown_rule: best class score is at or above the preregistered squared threshold
+  equivalence_rule: best response-equivalence component contains multiple classes
+  ambiguity_rule: >
+    The best and second-best separated component scores differ by at most the
+    preregistered squared-distance decision margin.
+  candidate_rule: >
+    Exactly one single-class component is inside the unknown threshold and
+    exceeds the registered separation margin over every competitor.
+  forbidden_outputs:
+    - family probability
+    - family posterior
+    - Bayes factor
+    - native geometry label
+    - nearest known class when the decision is unknown or ambiguous
+  source_gate_precedence: >
+    Classes carrying LOCAL_BOOST or GLOBAL_TILT semantics require an exact
+    PR-256 SourceResponseGeometryReport projection bound to the same PR-258
+    class contracts, observable labels and order, covariance bytes, nuisance
+    tangent, provider IDs, provider response IDs and transfer provenance.
+    NON_IDENTIFIED, SUM_ONLY and MISSING_RESPONSE_PROVIDER prevent
+    RESPONSE_CLASS_CANDIDATE regardless of finite-node separation. Neutral
+    response classes require an explicit NOT_APPLICABLE gate and cannot be
+    mixed with source-specific classes under one collection-level source gate.
+    The arbitrary status-plus-receipt constructor is private and is not part
+    of the COMMON or HTT public API. The active exact-identity path is
+    source_separation_gate_from_pr256(exact_report, classes, covariance,
+    nuisance_tangent). Dimension-changing or nonidentical crosswalks are not
+    implemented and fail closed; target-space source geometry must be
+    recomputed instead.
+future_native_adapter:
+  status: NEEDS_NATIVE
+  required_future_fields:
+    - native_solver_release
+    - native_solver_commit
+    - transfer_function_spec
+    - response_grid_identity
+    - parameter_domain_identity
+    - harmonic_convention
+    - sky_mask_covariance_contract
+    - validation_receipt
+  forbidden:
+    - synthetic bytes labeled as native
+    - external transfer labeled as native
+    - native class scores before validation receipt
+benchmark:
+  frozen_artifact: docs/generated/pr258_open_set_response_classes/open_set_benchmark.json
+  artifact_metadata:
+    owner: common
+    scope: pre_native_finite_synthetic_response_library_software_validation
+    artifact_mode: internal_exploratory
+    sky_support_status: not_applicable_synthetic_feature_space
+    null_mock_status: synthetic_generator_cells_only_not_observational_null_calibration
+    covariance_status: fixed_registered_synthetic_covariance_exact_bytes
+  data_source: synthetic_only
+  transfer_source: none
+  response_role: hypothesis_only
+  pr151_data_used: false
+  observed_data_used: false
+  old_rust_output_used: false
+  native_solver_output_used: false
+  master_seed: 20260728
+  minimum_replicates_per_cell: 20000
+  maximum_replicates_per_cell: 400000
+  maximum_mcse: 0.0025
+  train_validation_held_out_split: [0.6, 0.2, 0.2]
+  calibration_contract: >
+    Representation/support fitting belongs to train, any threshold selection
+    belongs to validation, and held-out is scored once. The initial benchmark
+    instead freezes metric, support catalogue, equivalence tolerance, unknown
+    threshold and decision margin before generation and content-identifies
+    that calibration. Held-out labels cannot modify them.
+  report_binding_contract: >
+    Known and unknown decisions bind one supplied baseline equivalence report;
+    the equivalence cell binds its own supplied report; every finite-support
+    perturbation binds a supplied perturbation-specific equivalence report.
+    Each equivalence report also binds provider, convention, nuisance-policy,
+    response-content, support-node, transfer and source-semantics identities;
+    changing only metadata is a contract error in both single and batch
+    classification. Exact duplication preserves the complete baseline report
+    identity. The evaluator receives the baseline and perturbed typed class
+    collections, validates the declared support relation for each kind, and
+    rejects baseline reuse or duplicate non-baseline perturbation identities.
+    All cells share one frozen decision protocol, and a pass-capable envelope
+    must contain every registered perturbation kind.
+  precision_failure_status: INCONCLUSIVE_MC_PRECISION
+  required_cells:
+    - separated_known_classes
+    - shared_boundary_equivalence
+    - noise_overlap_type_unidentified
+    - library_misspecification_unknown
+    - finite_support_perturbation
+    - missing_reopening_provider
+  required_metrics:
+    - false response-class candidate rate
+    - equivalence-class coverage
+    - generator-conditional unknown detection rate
+    - abstention rate
+    - exact-duplicate invariance
+    - refinement sensitivity
+    - expansion sensitivity
+    - contraction sensitivity
+    - boundary-restriction sensitivity
+    - minimal reopening observable
+  error_controls:
+    false_response_class_candidate_rate: at most 0.05 plus 3 MCSE
+    equivalence_class_coverage: at least 0.95 minus 3 MCSE
+    generator_conditional_unknown_detection_rate: at least 0.95 minus 3 MCSE
+claim_integration:
+  canonical_english: docs/research_program/STAT_FOUNDATIONS_JUSTIFICATION_20260728.md
+  korean_trace_summary: docs/research_program/STAT_FOUNDATIONS_JUSTIFICATION_20260728_KO.md
+  manuscript_fragment: docs/manuscript/generated/premise_anchor_justification.tex
+  allowed_claims:
+    - typed premise anchors are reporting and premise-consistency objects
+    - invertible anchor scaling preserves response rank
+    - response equivalence and open-set abstention are first-class outputs
+    - finite synthetic support can validate software behavior only
+  withheld_claims:
+    - J1 exact equality between the physical linear class and MES anchor body
+    - J1 uniqueness or optimality of MES
+    - J2 uniform finite-sample validity for a noisy random anchor
+    - complete invariant catalogue
+    - observed family or geometry classification
+    - native response manifold validation
+historical_compatibility:
+  x_C:
+    policy: BC1_LEGACY_PROJECTION
+    bytes_changed: false
+    claim_promotion: forbidden
+  pr219:
+    policy: legacy compatibility input
+    bytes_changed: false
+  pr151:
+    acquisition_contract_changed: false
+    partial_data_used: false
+tests:
+  - PYTHONPATH=htt/src:htt python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_258_open_set_response_classes.py
+  - PYTHONPATH=htt/src:htt python -B scripts/codex_harness/run_pr258_open_set_benchmark.py
+  - PYTHONPATH=htt/src:htt python -B scripts/codex_harness/run_pr258_open_set_oracle.py
+  - python -B scripts/check_claim_language.py --dry-run docs/manuscript --format json
+  - python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice
+kill_switches:
+  - response-class labels are serialized or narrated as Bianchi family labels
+  - all classes sharing a boundary are force-ranked instead of collapsed or abstained
+  - an unknown input is assigned to its nearest known class
+  - support-node duplication changes output or finite-support perturbation is called prior robustness
+  - covariance-null residual or a missing observable is replaced by zero
+  - a future-native adapter emits synthetic or external-transfer science values
+  - a toy or proxy result enters the manuscript as observed validation
+  - strong J1 or J2 language enters the claim registry or manuscript
+  - historical x_C or PR-219 bytes change
+  - PR-151 partial data, old Rust output or native-solver output enters a fixture or claim
+  - a local/global source-labelled candidate bypasses PR-256 rank status
+  - a PR-256 source gate is reused across observable, covariance, nuisance,
+    provider, provider-response, transfer or class-contract identities
+  - an added observable is aligned by row position rather than support_node_id
+  - an old component is reopened without full joint-covariance regraphing
+claim_boundary:
+  claim_tier_ceiling: diagnostic_only
+  requested_claim_level:
+    scheme: roadmap_rescue_v1
+    level: C2
+  allowed_claim_level:
+    scheme: roadmap_rescue_v1
+    level: C2
+  allowed:
+    - typed pre-native response-class quotient
+    - finite analytic or synthetic support diagnostics
+    - equivalence coverage, unknown rejection and abstention metrics
+    - negative, inconclusive and missing-provider results
+  forbidden:
+    - FLRW departure detection
+    - observed anisotropy or geometry detection
+    - Bianchi family identification or ranking
+    - native-solver or external-transfer validation
+    - posterior odds, Bayes factors, p-values or e-values from response-class distance

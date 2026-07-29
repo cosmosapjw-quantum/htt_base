@@ -1,5 +1,72 @@
 # Project State
 
+## 2026-07-30 - PR-258 open-set response integration local handoff
+
+This section supersedes older orchestration snapshots below. It records a
+local, unmerged candidate; it does not mark PR-258 complete.
+
+- Active DAG: 205 cards, 152 completed, 1 blocked, 23 pending, 28 dormant
+  external/native, no foreground status entry, and background PR-151
+  acquisition. Count completion is 74.15%, dependency-weighted completion
+  80.72%, and the critical-path proxy 85.71%. These are bookkeeping metrics.
+- PR-256 and PR-257 are merged. The exact PR-258 target is
+  `research/pr04-multicomponent@d62d63de6fdae1fbaf595ccce52b3abf532899e5`
+  (GitHub PR #365 / internal PR-257), and the isolated candidate branch is
+  `changeset/pr258-open-set-integration`.
+- PR-258 adds finite analytic/synthetic response-class supports, connected
+  response-equivalence components, covariance-supported squared distances,
+  dimensionless correlation-null residuals separated from exact
+  zero-variance structural constraints and supported nuisance orbits, exact
+  class-contract binding, PR-256-derived source-separation gates, open-set
+  abstention, signed-zero-stable finite-support identity, frozen Monte Carlo
+  precision/cap semantics, typed finite-support sensitivity, explicit frozen
+  artifact owner/scope/sky/null/covariance metadata, and minimal
+  reopening-observable reports. Future-native support remains schema-only at
+  `NEEDS_NATIVE`.
+- The frozen benchmark is synthetic-only, uses no transfer provider, and
+  runs 20,000 held-out draws per registered cell. It reports zero false
+  response-class candidates, unit equivalence coverage, unit
+  generator-conditional unknown detection, two-thirds abstention over the
+  declared three-cell mixture, and zero decision changes for all five frozen
+  finite-support perturbations. These are software-cell results, not
+  observational or uniform open-set validation.
+- Focused validation passes 42 tests; the adjacent PR-219/255/256/257/258
+  slice passes 138 tests plus an isolated wheel/facade probe. The executable
+  oracle, benchmark replay, claim scans, strict 205-card DAG, status mirrors,
+  Python compilation, and legacy-reproduction TeX build pass. The public
+  manuscript build remains blocked by the PR-120 quarantine.
+- The first physics/statistics intake, claim review, harness review, and first
+  post-commit sealed reviews are preserved as failures. The sealed
+  `9318fa1` reviewers exposed nuisance/covariance-null conflation, a forgeable
+  source gate, status-precedence drift, label-only perturbation acceptance,
+  and class-metadata rebinding. The `b19d20e5` reviewers then exposed
+  signed-zero identity, mutable/uncapped Monte Carlo semantics, stale current
+  test counts, and a public-contract specification mismatch. The `05005fc1`
+  rereviews additionally exposed unit-dependent structural-null handling and
+  incomplete frozen-artifact metadata. All are repaired in the amended
+  candidate. Publication readiness still requires runtime
+  seal, read-only review, and latest-target integration receipts bound to one
+  unchanged commit.
+- Broad packaging and full collection are not reported as passing: the local
+  environment retains legacy packaging expectations and PR-172's
+  `htt.metamorphic_symmetry` source-layout import error. The repo-wide no-mock
+  checker remains noisy on historical markers. PR-258's scoped surfaces pass.
+- BC1 preserves historical `x_C` values only as legacy projections; BC2
+  forbids representation-driven claim promotion. No partial PR-151 data,
+  observed sky, old Rust science output, external/native transfer, likelihood,
+  posterior, evidence term, FLRW-departure result, geometry, or Bianchi-family
+  identification is introduced.
+- The owner authorized one commit and one push of this coherent branch. That
+  authorization does not create a GitHub PR, approve, merge, delete a branch,
+  alter the target, or mark PR-258 complete. The exact pushed commit remains
+  subject to human review and merge.
+- The latest read-only PR-151 probe reports 530/1000 authenticated EZmocks,
+  0/25 Abacus, and 10/15 audit members. No acquisition process is visible
+  despite the retained writer lock; the manifest records a transient
+  acquisition failure and `continue_acquire_after_restart`. PR-151 is not
+  terminal, no partial support is admissible, and this change-set does not
+  restart or consume it.
+
 ## 2026-07-29 - PR-255 anchored response geometry conditional closeout
 
 This section supersedes older orchestration snapshots below.

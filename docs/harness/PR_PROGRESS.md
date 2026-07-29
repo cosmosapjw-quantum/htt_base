@@ -2,6 +2,36 @@
 
 Update every five PRs with percent complete and blockers.
 
+## PR-258 local candidate (not a five-PR checkpoint)
+
+Date: 2026-07-30
+
+- Active DAG: 152/205 complete = 74.15%; dependency-weighted completion
+  80.72%; critical-path proxy 60/70 = 85.71%. The next canonical checkpoint is
+  155 completed cards, so no checkpoint artifact is generated here.
+- PR-256 and PR-257 are merged. PR-258 remains pending on the isolated
+  `changeset/pr258-open-set-integration` branch at target `d62d63d...`.
+- PR-258 supplies a typed pre-native response-class quotient, finite-library
+  equivalence and unknown/ambiguous abstention, source-separation gating,
+  finite-support perturbation sensitivity, and reopening-observable planning.
+- Validation passes 43 focused tests, 139 adjacent tests, the isolated wheel
+  facade probe, 20,000-draw-per-cell benchmark replay, executable
+  structural-null/artifact-metadata/source-gate-binding oracle, claim scans,
+  strict DAG/status, and legacy-reproduction TeX build. Broad
+  packaging, full collection, and repo-wide no-mock failures remain explicitly
+  recorded and are not counted as passes.
+- The first review failures remain preserved. Current mutable-byte harness and
+  documentation/claim reviews pass, but publication handoff still requires
+  the exact committed tree to pass candidate sealing, read-only review, and
+  latest-target integration.
+- Claim drift: none. The implementation remains `diagnostic_only`,
+  `transfer_source=none`, `public_use=false`; roadmap `C2` is a separate
+  planning level. BC1/BC2, PR-151 exclusion, future-native `NEEDS_NATIVE`, and
+  the pre-native family-identification prohibition remain active.
+- PR-151 remains non-terminal background acquisition at the latest read-only
+  probe: 530/1000 EZmocks, 0/25 Abacus, and 10/15 audit members. No partial
+  data enters PR-258.
+
 ## Checkpoint 150 — PR-251 through PR-255
 
 Date: 2026-07-29

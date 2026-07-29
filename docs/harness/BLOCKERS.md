@@ -2,6 +2,30 @@
 
 Open blockers, owner, required resolution, and PR dependency impact.
 
+## 2026-07-30 - PR-258 handoff and surviving external blockers
+
+- PR-258 candidates `9318fa1`, `b19d20e5`, and `05005fc1` are invalidated by
+  blocking sealed-review findings. The latest mutable repair separates exact
+  structural covariance nulls from dimensionless correlation nulls and adds
+  complete frozen-artifact metadata. It has no known surviving implementation
+  blocker, but publication/merge remains fail-closed until its amended SHA has
+  a new candidate seal, current read-only review, executable coverage matrix,
+  and latest-target integration receipt. A branch push is not completion.
+- PR-151 is non-terminal: the latest read-only probe reports 530/1000 EZmocks,
+  0/25 Abacus, and 10/15 audit members. No acquisition process is visible
+  despite the retained writer lock; the manifest records a transient
+  acquisition failure and requests restart. Partial support remains forbidden
+  for calibration, fixtures, covariance, or scientific conclusions.
+- PR-172 remains blocked and its source-layout
+  `htt.metamorphic_symmetry` import defect still prevents a broad collection
+  pass. PR-258 neither suppresses nor repairs this unrelated blocker.
+- The public/current manuscript build remains blocked by the PR-120 CF4 P0
+  quarantine. The successful opt-in legacy reproduction is not publication
+  authorization.
+- No authenticated native low-ell solver or morphology atlas exists.
+  Future-native PR-258 adapters therefore remain `NEEDS_NATIVE`, and response
+  classes cannot identify a Bianchi family.
+
 ## 2026-07-27 - PR-247 repository closure resolved; deployment remains external
 
 - Candidate A and candidate B remain preserved invalidated evidence. Candidate

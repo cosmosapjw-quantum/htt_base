@@ -2,6 +2,60 @@
 
 Record accepted, rejected, and deferred design decisions.
 
+## 2026-07-30 - PR-258 open-set response-class boundary
+
+- Accepted: pre-native comparison operates on typed finite analytic or
+  synthetic response-class supports. It may report response-equivalence
+  components, finite-library candidates, unknown/ambiguous abstention, and
+  reopening-observable requirements; these are not Bianchi-family labels.
+- Accepted: all comparisons share one covariance-supported,
+  nuisance-projected squared-distance geometry. Covariance-null operators are
+  retained before nuisance projection, so supported nuisance orbits are not
+  relabelled as covariance-null residuals; supported-score ties retain the
+  same node's null residual.
+- Accepted: covariance-null decisions separate two contracts. A
+  positive-diagonal correlation null has a dimensionless standardized
+  residual and registered tolerance. An exactly zero-variance coordinate has
+  no covariance-derived scale and remains an exact structural equality
+  constraint, so a positive unit rescaling cannot change its decision.
+- Accepted: tolerance edges close by connected components. A non-clique
+  component is `TYPE_UNIDENTIFIED`, not pairwise equality. Missing or
+  future-native providers fail closed at `NEEDS_NATIVE`.
+- Accepted: local/global semantics are consumed only through the PR-256
+  source-separation gate. The public arbitrary status-plus-receipt constructor
+  is removed. Neutral and source-labelled class libraries cannot be mixed,
+  and unavailable observables are never replaced with zero response.
+- Accepted: the frozen synthetic benchmark binds every classification report
+  to its exact class/provider/convention/nuisance/support contract and
+  equivalence report. It validates typed exact-duplicate, refinement,
+  expansion, contraction, and boundary-restriction relations before
+  `MEASURED_PASS`; map labels alone are insufficient.
+- Accepted: the manuscript-consumed frozen benchmark self-describes
+  `owner=common`, bounded synthetic scope, `artifact_mode=internal_exploratory`,
+  non-sky support, generator-conditional non-observational null status, and
+  exact registered synthetic covariance status at artifact, report, and
+  provenance levels.
+- Accepted: BC1 preserves historical `x_C` bytes and values only as a legacy
+  projection. BC2 forbids claim promotion caused solely by a richer
+  representation. Raw stress/excess is not an e-value, source classifier,
+  geometry result, or family evidence.
+- Rejected: forcing every unknown input to its nearest known class; hiding
+  covariance-null or missing-provider directions; treating finite-support
+  sensitivity as prior-volume robustness; and promoting synthetic response
+  classes to observed or native-solver validation.
+- Deferred: native response manifolds, observed-data response-class
+  classification, Bianchi-family equivalence breaking, and any use of PR-151
+  until authenticated terminal acquisition and the downstream covariance/data
+  gates exist.
+- Publication boundary: the implementation is a local pending candidate. One
+  authorized commit and push does not create, approve, merge, or scientifically
+  validate a GitHub PR. The exact commit needs a seal, read-only review, and
+  latest-target integration before push.
+- Review boundary: sealed SHAs `9318fa1`, `b19d20e5`, and `05005fc1` failed
+  and are invalidated. Accepted review findings require an amended SHA and a
+  completely new seal/review/integration chain; old green commands cannot be
+  transferred.
+
 ## 2026-07-27 - PR-247 local completion
 
 - Accepted: candidate C `b431da78...`, seal `4facb9...`, passed its complete
