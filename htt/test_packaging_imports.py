@@ -733,30 +733,47 @@ assert top_level.BiPoSHFeatureSummary is htt_level.BiPoSHFeatureSummary
 def test_obsstat_top_level_and_htt_alias_share_lowell_counterpair_identity() -> None:
     env = os.environ.copy()
     env.pop("PYTHONPATH", None)
-    codes = [
-        """
-import obsstat.lowell_counterpairs as top_level
-import htt.obsstat.lowell_counterpairs as htt_level
-assert top_level is htt_level
-assert top_level.MatchedCounterpairReport is htt_level.MatchedCounterpairReport
-""",
-        """
-import htt.obsstat.lowell_counterpairs as htt_level
-import obsstat.lowell_counterpairs as top_level
-assert top_level is htt_level
-assert top_level.MatchedCounterpairReport is htt_level.MatchedCounterpairReport
-""",
-    ]
-    for code in codes:
-        completed = subprocess.run(
-            [sys.executable, "-c", code],
-            cwd=REPO_ROOT,
-            env=env,
-            text=True,
-            capture_output=True,
-            check=False,
-        )
-        assert completed.returncode == 0, completed.stderr
+    code_template = """
+import importlib
+import sys
+
+canonical_name = "obsstat.lowell_counterpairs"
+alias_name = "htt.obsstat.lowell_counterpairs"
+assert canonical_name not in sys.modules
+assert alias_name not in sys.modules
+first_name, second_name = (
+    (canonical_name, alias_name)
+    if {canonical_first!r}
+    else (alias_name, canonical_name)
+)
+first = importlib.import_module(first_name)
+second = importlib.import_module(second_name)
+assert first is second
+assert first.MatchedCounterpairReport is second.MatchedCounterpairReport
+assert first.__name__ == canonical_name
+assert first.__spec__ is not None
+assert first.__spec__.name == canonical_name
+assert first.__loader__ is first.__spec__.loader
+assert first.__package__ == canonical_name.rpartition(".")[0]
+"""
+    with tempfile.TemporaryDirectory() as tmpdir:
+        for cwd in (REPO_ROOT, Path(tmpdir)):
+            for canonical_first in (True, False):
+                completed = subprocess.run(
+                    [
+                        sys.executable,
+                        "-c",
+                        code_template.format(
+                            canonical_first=canonical_first,
+                        ),
+                    ],
+                    cwd=cwd,
+                    env=env,
+                    text=True,
+                    capture_output=True,
+                    check=False,
+                )
+                assert completed.returncode == 0, completed.stderr
 
 
 def test_obsstat_top_level_and_htt_alias_share_null_ensemble_identity() -> None:
@@ -827,10 +844,6 @@ def test_deep_compatibility_aliases_preserve_identity_and_metadata_both_orders()
         (
             "bass.transfer.shear_quadrupole_seminative",
             "htt.bass.transfer.shear_quadrupole_seminative",
-        ),
-        (
-            "obsstat.lowell_counterpairs",
-            "htt.obsstat.lowell_counterpairs",
         ),
         ("obsstat.velocity_power", "htt.obsstat.velocity_power"),
         ("mio.formalism.dynamic_budget", "htt.mio.formalism.dynamic_budget"),
