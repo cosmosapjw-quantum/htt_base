@@ -65,6 +65,13 @@ from htt.infer.conditional_exceedance import (
     build_sampling_law_spec,
     identified_vertex_id,
 )
+from htt.infer.depth_path import (
+    DepthHypothesisClass,
+    DepthLikelihoodResult,
+    DepthModelPrediction,
+    build_depth_model_prediction,
+    evaluate_depth_path_likelihood,
+)
 from htt.infer.finite_mock import zero_trigger_upper_bound
 from htt.infer.nuisance_rank import (
     NuisanceProjectedRankAudit,
@@ -133,12 +140,14 @@ __all__ = [
     'PosteriorPredictiveReport', 'build_posterior_predictive_report',
     'posterior_exceedance_summary',
     'ConditionalExceedanceProfile', 'ConditioningSource',
+    'DepthHypothesisClass', 'DepthLikelihoodResult', 'DepthModelPrediction',
     'EnvelopeCertificate', 'ExceedanceLane', 'ExceedanceStatus',
     'EnvelopeCertificateReport',
     'LikelihoodObjective', 'PosteriorCalibrationReport',
     'PosteriorCalibrationStatus', 'PosteriorExceedance',
     'SamplingDraws', 'SamplingLaw', 'SamplingLawSpec',
     'build_conditional_exceedance_envelope',
+    'build_depth_model_prediction', 'evaluate_depth_path_likelihood',
     'build_envelope_certificate_report',
     'build_likelihood_objective',
     'build_missing_probability_law_profile',
