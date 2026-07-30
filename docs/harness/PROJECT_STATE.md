@@ -1,5 +1,35 @@
 # Project State
 
+## 2026-07-30 - PR-266 depth/mask path conditional closeout
+
+This section supersedes older orchestration snapshots below.
+
+- Active DAG: 222 cards, 161 completed, 1 blocked, 31 pending, 28 dormant
+  external/native, no foreground card, and background PR-151 acquisition.
+  Count completion is 72.52%, dependency-weighted completion 79.78%, and the
+  critical-path proxy remains 89.61%. Checkpoint 165 is not due.
+- PR-265's exact remediated closeout passed its independent R2 review with all
+  16 registered cells. The five R1 failures remain preserved and do not
+  authorize completion.
+- PR-266 binds every ordered depth stratum to exact sky support, mask,
+  selection, covariance, source, feature, and transport identities. Later
+  supports must be subsets of earlier supports.
+- OBSSTAT owns feature extraction and covariance transport; MIO owns
+  diagnostic coherence and depth scrambling; HTT alone owns the explicit
+  model-conditional likelihood adapter. Rank-deficient covariance emits no
+  MIO score, and non-positive-definite covariance emits no HTT likelihood.
+- Validation passes 13 focused tests, 58 adjacent regressions, 6 smoke tests,
+  10257/10316 collection with 59 deselected, strict DAG/status, claim scan,
+  compileall, source-origin checks, `pip check`, and whitespace checks. Ruff
+  is unavailable and no Ruff pass is claimed.
+- PR-266 completion is valid only if the exact closeout commit passes
+  `.agent-harness/runs/pr266-final-review-20260730-r1/`. A missing, stale,
+  malformed, candidate-mismatched, or non-PASS result invalidates the status
+  transition and keeps PR-267 closed.
+- These changes remain diagnostic-only and pre-solver. They do not validate
+  data, a transfer model, a native solver/atlas, global tilt, geometry,
+  posterior evidence, or a Bianchi family.
+
 ## 2026-07-30 - Checkpoint 160 and PR-265 conditional closeout
 
 This section supersedes older orchestration snapshots below.

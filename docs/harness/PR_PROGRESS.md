@@ -2,6 +2,27 @@
 
 Update every five PRs with percent complete and blockers.
 
+## PR-266 conditional closeout (not a five-PR checkpoint)
+
+Date: 2026-07-30
+
+- Active DAG: 161/222 complete = 72.52%; dependency-weighted completion
+  79.78%; critical-path proxy 89.61%. Checkpoint 165 is not due.
+- PR-265's exact remediated R2 review passed all 16 registered cells. PR-266
+  adds one named scientific-support capability: an exact nested sky-support
+  path with typed feature/covariance transport, MIO diagnostic coherence and
+  scramble control, and a separate HTT model-likelihood adapter.
+- Validation passes 13 focused tests, 58 adjacent regressions, 6 smoke tests,
+  10257/10316 collection with 59 deselected, strict DAG/status, claim scan,
+  compileall, source-origin checks, `pip check`, and whitespace checks. Ruff
+  is unavailable and is not counted as passed.
+- Claim drift: none. A rank failure produces no statistic; MIO does not own
+  likelihood/posterior/evidence; no observed data, native solver/atlas,
+  global-tilt evidence, geometry, or family status is promoted.
+- Completion remains conditional on the exact schema-v3 frozen-candidate
+  review. PR-267 cannot start until that review passes. PR-172 and background
+  PR-151 retain their prior states.
+
 ## Checkpoint 160 — PR-261 through PR-265
 
 Date: 2026-07-30

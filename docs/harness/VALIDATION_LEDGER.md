@@ -2,6 +2,35 @@
 
 Record commands actually run. Never mark skipped checks as passed.
 
+## PR-266 - typed depth, mask, transport, and coherence path
+
+Date: 2026-07-30
+
+Change classification: COMMON immutable contracts, OBSSTAT feature/covariance
+transport, MIO diagnostic coherence/scramble control, HTT explicit
+model-conditional likelihood adapter, tests, PR delta, status mirrors, and
+SSoT handoff. No observed data, external/native transfer validation, posterior
+or evidence result, native solver/atlas, geometry, family identification,
+claim tier, or public-use state changed.
+
+| Command or check | Result | Notes |
+|---|---:|---|
+| PR-266 focused contract | PASS | `13 passed`, including nested/non-nested support, composition, covariance perturbation and scale invariance, rank refusal, depth scramble, likelihood separation, indefinite-covariance refusal, mutation sealing, and claim ceiling. |
+| adjacent sky-support/depth/PR-264 regression | PASS | `58 passed`. |
+| smoke | PASS | `6 passed`, `10310 deselected`; eight declared legacy deprecation warnings. |
+| full source-layout collection | PASS | `10257/10316 collected`, `59 deselected`, zero errors. |
+| strict canonical DAG/status | PASS | `222 PRs, DAG valid`; PR-266 is the only new conditional completion. |
+| scoped claim-language scan | PASS | No forbidden claim language detected. |
+| compileall, source import origins, `pip check`, `git diff --check` | PASS | All new modules resolve from this worktree and the environment has no broken requirements. |
+| first focused implementation run | FAIL, REPRODUCED AND FIXED | `3 passed, 8 failed`; strict three-way `zip` used unequal adjacent sequences. Exact left slices now bind every path edge. |
+| `python -m ruff` | UNAVAILABLE | Shared environment has no `ruff` module; no lint pass is claimed. |
+| exact frozen candidate review | REQUIRED | Valid only at `.agent-harness/runs/pr266-final-review-20260730-r1/RUN_SUMMARY.json`; missing, stale, malformed, SHA-mismatched, or non-PASS evidence invalidates completion. |
+
+Scientific impact: this validates a typed observer-side diagnostic and
+model-input boundary. It does not validate an observational transfer, infer a
+global tilt, produce posterior evidence, run a native solver, establish a
+geometry, or identify a Bianchi family.
+
 ## PR-258 - open-set response classes and premise-anchor integration
 
 Date: 2026-07-30
