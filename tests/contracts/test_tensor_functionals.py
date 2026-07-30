@@ -27,6 +27,7 @@ from common.joint_anisotropy_state import (
     JointAnisotropyState,
     JointStateSourceKind,
     UnitsConvention,
+    VelocityFrameBundle,
     VelocityNormalization,
     apply_o3_action,
     build_velocity_frame_bundle,
@@ -140,6 +141,25 @@ def _joint(
         transfer_spec=None,
         source_kind=JointStateSourceKind.DIRECT,
         source_identity=f"PR262-DIRECT-FIXTURE-{sigma_scale.hex()}",
+    )
+
+
+def _joint_with_basis(basis: str) -> JointAnisotropyState:
+    state = _joint()
+    kinematics_payload = state.congruence_kinematics.to_payload()
+    kinematics_payload["basis"] = basis
+    velocity_payload = state.velocity_frames.to_payload()
+    velocity_payload["basis"] = basis
+    geometry_payload = state.geometry_state.to_payload()
+    geometry_payload["basis"] = basis
+    return replace(
+        state,
+        congruence_kinematics=CongruenceKinematics.from_payload(
+            kinematics_payload
+        ),
+        velocity_frames=VelocityFrameBundle.from_payload(velocity_payload),
+        geometry_state=GeometryState.from_payload(geometry_payload),
+        basis=basis,
     )
 
 
@@ -363,6 +383,72 @@ def test_spec_and_result_are_factory_only_and_metadata_is_closed() -> None:
     payload["tensor_degree"] = 7
     with pytest.raises(TensorFunctionalError, match="tensor_degree"):
         TensorFunctionalSpec.from_payload(payload)
+
+    payload = spec.to_payload()
+    payload["coordinate_labels"] = ["unregistered:value"]
+    with pytest.raises(TensorFunctionalError, match="coordinate_labels"):
+        TensorFunctionalSpec.from_payload(payload)
+
+
+def test_spec_identity_seal_refuses_operator_and_claim_lane_mutation() -> None:
+    spec = _spec(
+        TensorFunctionalOperator.TR_SIGMA2,
+        anchor_id="pr262.mutation.anchor",
+    )
+    object.__setattr__(
+        spec,
+        "operator",
+        TensorFunctionalOperator.TR_SIGMA3,
+    )
+    with pytest.raises(
+        TensorFunctionalError,
+        match="functional spec failed canonical replay",
+    ):
+        evaluate_tensor_functional(
+            _joint(sigma_scale=-1.0),
+            spec,
+            anchor=_ball(
+                spec,
+                body_id="pr262.mutation.anchor",
+                radius=1.0,
+            ),
+        )
+
+    original = _spec(TensorFunctionalOperator.TR_SIGMA2)
+    result = evaluate_tensor_functional(_joint(), original)
+    object.__setattr__(original, "claim_ceiling", "family_identified")
+    object.__setattr__(original, "allowed_use", ("likelihood",))
+    assert result.spec.claim_ceiling == FUNCTIONAL_CLAIM_CEILING
+    assert result.spec.allowed_use != ("likelihood",)
+    assert result.as_payload()["claim_ceiling"] == FUNCTIONAL_CLAIM_CEILING
+
+    object.__setattr__(result.spec, "claim_ceiling", "family_identified")
+    object.__setattr__(result.spec, "allowed_use", ("likelihood",))
+    with pytest.raises(TensorFunctionalError, match="identity drifted"):
+        result.as_payload()
+    with pytest.raises(
+        TensorFunctionalError,
+        match="functional spec failed canonical replay",
+    ):
+        revalidate_tensor_functional_result(result, _joint())
+
+
+def test_noncanonical_stf_basis_is_a_typed_forbidden_domain() -> None:
+    state = _joint_with_basis("NONCANONICAL_STF5_BASIS")
+    for operator in TensorFunctionalOperator:
+        result = evaluate_tensor_functional(state, _spec(operator))
+        assert result.domain.status is FunctionalDomainStatus.FORBIDDEN_DOMAIN
+        assert result.domain.reasons
+        assert result.value is None
+        assert result.anchor.status is FunctionalAnchorStatus.NOT_REQUESTED
+        assert result.stress.status is FunctionalStressStatus.UNAVAILABLE
+        assert (
+            result.admissibility.status
+            is FunctionalAdmissibilityStatus.ABSTAIN
+        )
+        assert not result.admissibility.signed_score_eligible
+        assert not result.admissibility.occupancy_eligible
+        assert not result.admissibility.exceedance_eligible
 
 
 def test_value_domain_codomain_anchor_admissibility_and_stress_are_separate() -> None:

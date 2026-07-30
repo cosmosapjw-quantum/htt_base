@@ -2557,6 +2557,9 @@ family result is created.
 | `sync_pr_dag_mirrors.py --write` then `--check` | linked PR-262 worktree | PASS | Canonical and compatibility mirrors synchronized. The preceding mode-less argparse failure changed no files and is recorded in the PR delta. |
 | scoped claim-language scan and research-surface lint | linked PR-262 worktree | PASS | Zero issues or hits. |
 | `compileall`, `pip check`, `git diff --check` | linked PR-262 worktree | PASS | No import, environment, or whitespace defect. Ruff is unavailable and no Ruff result is claimed. |
+| frozen schema-v3 review R1 at `2a1eb64d...` | linked PR-262 worktree | **FAIL** | Preserved two P1 findings: all 13 operators admitted an unsupported STF basis, and post-construction spec drift enabled negative signed occupancy plus nested claim-lane mutation. Run closed at `.agent-harness/runs/pr262-final-review-20260730-r1/RUN_SUMMARY.json`. |
+| focused suite after R1 remediation | linked PR-262 worktree | PASS | `31 passed`; adds canonical-basis refusal and spec identity-seal/replay mutation regressions. |
+| adjacent suite after R1 remediation | linked PR-262 worktree | PASS | `67 passed`; PR-254 and PR-261 regressions unchanged. |
 
 Physics/math disposition: the closed operator registry fixes codomain shape,
 homogeneous degree, sign class, and scalar/pseudoscalar/polar/axial/STF O(3)
@@ -2569,7 +2572,7 @@ authority. Rank collapse and one-sided/non-compact support cannot emit gauge,
 margin, or stress. MIO re-exports the exact COMMON types for diagnostic use
 only and adds no inference operation.
 
-Independent acceptance authority: the exact final closeout candidate must pass
-the schema-v3 review at
-`.agent-harness/runs/pr262-final-review-20260730-r1/RUN_SUMMARY.json`. Missing,
-stale, malformed, or non-PASS evidence invalidates PR-262 completion.
+Independent acceptance authority: R1 is retained as a failed historical
+receipt and cannot authorize completion. The exact remediated closeout
+candidate must pass a fresh schema-v3 R2 review. Missing, stale, malformed, or
+non-PASS R2 evidence invalidates PR-262 completion.

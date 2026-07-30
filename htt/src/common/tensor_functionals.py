@@ -17,7 +17,7 @@ or family-identification semantics.
 
 from __future__ import annotations
 
-from dataclasses import InitVar, dataclass
+from dataclasses import InitVar, dataclass, field
 from enum import Enum
 import hashlib
 import json
@@ -47,7 +47,7 @@ from common.joint_anisotropy_state import (
     JointAnisotropyStateError,
     MissingComponent,
 )
-from common.orbit_nonlinearity import stf5_to_matrix
+from common.orbit_nonlinearity import STF5_CARTESIAN_BASIS, stf5_to_matrix
 
 
 class TensorFunctionalError(ValueError):
@@ -347,6 +347,7 @@ class TensorFunctionalSpec:
     claim_ceiling: str = FUNCTIONAL_CLAIM_CEILING
     allowed_use: tuple[str, ...] = FUNCTIONAL_ALLOWED_USE
     forbidden_use: tuple[str, ...] = FUNCTIONAL_FORBIDDEN_USE
+    _identity_seal: str = field(init=False, repr=False, compare=False)
     _construction_token: InitVar[object] = None
 
     def __post_init__(self, _construction_token: object) -> None:
@@ -355,7 +356,7 @@ class TensorFunctionalSpec:
                 "TensorFunctionalSpec must be created by "
                 "build_tensor_functional_spec or from_payload"
             )
-        _text(self.functional_id, "functional_id")
+        functional_id = _text(self.functional_id, "functional_id")
         if type(self.operator) is not TensorFunctionalOperator:
             raise TensorFunctionalError(
                 "operator must be an exact TensorFunctionalOperator"
@@ -373,6 +374,14 @@ class TensorFunctionalSpec:
         if len(labels) != math.prod(shape):
             raise TensorFunctionalError(
                 "coordinate_labels must cover the flattened codomain"
+            )
+        expected_labels = tuple(
+            f"{functional_id}:{suffix}"
+            for suffix in contract.coordinate_suffixes
+        )
+        if labels != expected_labels:
+            raise TensorFunctionalError(
+                "coordinate_labels do not match the registered operator"
             )
         if self.tensor_degree != contract.tensor_degree:
             raise TensorFunctionalError(
@@ -414,12 +423,18 @@ class TensorFunctionalSpec:
             raise TensorFunctionalError("functional forbidden-use lane drifted")
         object.__setattr__(self, "output_shape", shape)
         object.__setattr__(self, "coordinate_labels", labels)
+        object.__setattr__(
+            self,
+            "_identity_seal",
+            _sha256_payload(self._payload_unchecked()),
+        )
 
     @property
     def spec_id(self) -> str:
-        return _sha256_payload(self.to_payload())
+        self._assert_identity_sealed()
+        return self._identity_seal
 
-    def to_payload(self) -> dict[str, object]:
+    def _payload_unchecked(self) -> dict[str, object]:
         return {
             "allowed_use": list(self.allowed_use),
             "anchor_id": self.anchor_id,
@@ -444,6 +459,20 @@ class TensorFunctionalSpec:
             "source_state_schema": self.source_state_schema,
             "tensor_degree": self.tensor_degree,
         }
+
+    def _assert_identity_sealed(self) -> None:
+        if (
+            not hasattr(self, "_identity_seal")
+            or _sha256_payload(self._payload_unchecked())
+            != self._identity_seal
+        ):
+            raise TensorFunctionalError(
+                "functional spec identity drifted after construction"
+            )
+
+    def to_payload(self) -> dict[str, object]:
+        self._assert_identity_sealed()
+        return self._payload_unchecked()
 
     @classmethod
     def from_payload(cls, payload: object) -> "TensorFunctionalSpec":
@@ -590,6 +619,41 @@ class FunctionalDomainReport:
             "reasons",
             _texts(self.reasons, "reasons", empty_ok=True),
         )
+        if self.status is FunctionalDomainStatus.ADMISSIBLE:
+            if (
+                self.missing_components
+                or self.mismatched_metadata
+                or self.reasons
+            ):
+                raise TensorFunctionalError(
+                    "admissible domain must not carry refusal evidence"
+                )
+        elif self.status is FunctionalDomainStatus.METADATA_MISMATCH:
+            if (
+                not self.mismatched_metadata
+                or self.missing_components
+                or not self.reasons
+            ):
+                raise TensorFunctionalError(
+                    "metadata mismatch requires only metadata evidence"
+                )
+        elif self.status is FunctionalDomainStatus.MISSING_COMPONENT:
+            if (
+                not self.missing_components
+                or self.mismatched_metadata
+                or not self.reasons
+            ):
+                raise TensorFunctionalError(
+                    "missing-component domain requires only missing evidence"
+                )
+        elif (
+            self.missing_components
+            or self.mismatched_metadata
+            or not self.reasons
+        ):
+            raise TensorFunctionalError(
+                "forbidden domain requires a reason and no mismatch evidence"
+            )
 
     def as_payload(self) -> dict[str, object]:
         return {
@@ -1203,6 +1267,15 @@ def evaluate_tensor_functional(
     if type(spec) is not TensorFunctionalSpec:
         raise TypeError("spec must be an exact TensorFunctionalSpec")
     try:
+        checked_spec = TensorFunctionalSpec.from_payload(spec.to_payload())
+    except TensorFunctionalError as exc:
+        raise TensorFunctionalError(
+            "functional spec failed canonical replay"
+        ) from exc
+    if checked_spec != spec or checked_spec.spec_id != spec.spec_id:
+        raise TensorFunctionalError("functional spec identity drifted")
+    spec = checked_spec
+    try:
         replay = JointAnisotropyState.from_payload(state.to_payload())
     except JointAnisotropyStateError as exc:
         raise TensorFunctionalError(
@@ -1233,7 +1306,19 @@ def evaluate_tensor_functional(
         for name in spec.required_components
         if type(_component(state, name)) is MissingComponent
     )
-    if mismatches:
+    if state.basis != STF5_CARTESIAN_BASIS:
+        domain = FunctionalDomainReport(
+            status=FunctionalDomainStatus.FORBIDDEN_DOMAIN,
+            required_components=spec.required_components,
+            missing_components=(),
+            mismatched_metadata=(),
+            reasons=(
+                "tensor functionals require the registered "
+                f"{STF5_CARTESIAN_BASIS} basis",
+            ),
+        )
+        value = None
+    elif mismatches:
         domain = FunctionalDomainReport(
             status=FunctionalDomainStatus.METADATA_MISMATCH,
             required_components=spec.required_components,
