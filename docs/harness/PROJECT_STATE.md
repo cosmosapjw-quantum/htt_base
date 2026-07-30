@@ -1,6 +1,6 @@
 # Project State
 
-## 2026-07-30 - PR-267 anisotropy compatibility conditional closeout
+## 2026-07-30 - PR-267 remediated anisotropy compatibility closeout
 
 This section supersedes older orchestration snapshots below.
 
@@ -19,11 +19,16 @@ This section supersedes older orchestration snapshots below.
 - The report carries no family, geometry, or nearest-label field. Orbit
   completeness remains `UNPROVEN`, the family gate remains
   `BLOCKED_PRE_NATIVE_ATLAS`, and the ceiling remains C2 diagnostic-only.
-- Validation passes 16 focused tests, 154 adjacent regressions, 6 smoke tests,
-  10275/10334 collection with 59 deselected, strict DAG/status, claim scan,
+- The exact R1 candidate failed one high-severity family-label namespace
+  mutation: `response-class-type-vii-h` could bypass the old literal filter.
+  R1 is preserved and cannot authorize completion. The remediation accepts
+  only the exact neutral/local/global identifiers fixed by source semantics
+  and kills all three registered alias mutations.
+- Validation passes 20 focused tests, 154 adjacent regressions, 6 smoke tests,
+  10279/10338 collection with 59 deselected, strict DAG/status, claim scan,
   compileall, and whitespace checks.
 - PR-267 completion is valid only if the exact closeout commit passes
-  `.agent-harness/runs/pr267-final-review-20260730-r1/`. Missing, stale,
+  `.agent-harness/runs/pr267-final-review-20260730-r2/`. Missing, stale,
   malformed, candidate-mismatched, or non-PASS evidence invalidates the
   transition and keeps PR-268 closed.
 - No data, external/native transfer value, native solver/atlas, source,

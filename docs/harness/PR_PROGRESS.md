@@ -2,7 +2,7 @@
 
 Update every five PRs with percent complete and blockers.
 
-## PR-267 conditional closeout (not a five-PR checkpoint)
+## PR-267 remediated conditional closeout (not a five-PR checkpoint)
 
 Date: 2026-07-30
 
@@ -12,15 +12,19 @@ Date: 2026-07-30
   capability: a replay-bound, abstaining anisotropy compatibility report that
   keeps orbit, response-rank, local/global, open-set, exceedance, depth, and
   geometry missingness in one typed C2 diagnostic.
-- Validation passes 16 focused tests, 154 adjacent regressions, 6 smoke tests,
-  10275/10334 collection with 59 deselected, strict DAG/status, claim scan,
+- R1 failed on a family-coded response-class alias that bypassed the literal
+  filter. The failed receipt remains preserved. The remediation admits only
+  the exact neutral/local/global identifiers fixed by source semantics and
+  directly kills three alias mutations.
+- Validation passes 20 focused tests, 154 adjacent regressions, 6 smoke tests,
+  10279/10338 collection with 59 deselected, strict DAG/status, claim scan,
   compileall, and whitespace checks.
 - Claim drift: none. Orbit proof status remains `UNPROVEN`; MIO retains only
   diagnostic inputs; HTT alone replays model-dependent local/global inputs;
   the report has no nearest geometry or family label.
-- Completion remains conditional on the exact schema-v3 frozen-candidate
-  review. PR-268 cannot start until that review passes. PR-172 and background
-  PR-151 retain their prior states.
+- Completion remains conditional on a fresh exact schema-v3 R2
+  frozen-candidate review; R1 cannot authorize it. PR-268 cannot start until
+  R2 passes. PR-172 and background PR-151 retain their prior states.
 
 ## PR-266 conditional closeout (not a five-PR checkpoint)
 

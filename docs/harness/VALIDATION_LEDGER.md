@@ -14,15 +14,17 @@ public-use state changed.
 
 | Command or check | Result | Notes |
 |---|---:|---|
-| PR-267 focused contract | PASS | `16 passed`; candidate, partial, rank-deficient, overlap, equivalence, unknown, missing-law, unavailable-depth, identity mutation, owner, and family-gate paths. |
+| PR-267 focused contract after remediation | PASS | `20 passed`; candidate, partial, rank-deficient, overlap, equivalence, unknown, missing-law, unavailable-depth, identity mutation, owner, family-gate paths, exact source-semantic vocabulary, and three namespace-smuggling mutations. |
 | adjacent PR-255/256/258/orbit/exceedance/depth regression | PASS | `154 passed`. |
-| smoke | PASS | `6 passed`, `10328 deselected`; eight declared legacy deprecation warnings. |
-| full source-layout collection | PASS | `10275/10334 collected`, `59 deselected`, zero errors. |
+| smoke | PASS | `6 passed`, `10332 deselected`; eight declared legacy deprecation warnings. |
+| full source-layout collection | PASS | `10279/10338 collected`, `59 deselected`, zero errors. |
 | strict canonical DAG/status before completion | PASS | `222 PRs, DAG valid`. |
 | scoped claim-language scan | PASS | No forbidden claim language detected after one correctly refused prohibited-use phrase was rewritten. |
 | compileall and `git diff --check` | PASS | No bytecode or whitespace defect. |
 | first focused implementation run | FAIL, REPRODUCED AND FIXED | `13 passed, 3 failed`; all failures were test/policy fixture defects and are recorded in the PR delta. |
-| exact frozen candidate review | REQUIRED | Valid only at `.agent-harness/runs/pr267-final-review-20260730-r1/RUN_SUMMARY.json`; missing, stale, malformed, SHA-mismatched, or non-PASS evidence invalidates completion. |
+| exact frozen review R1 | FAIL, PRESERVED | `F-PR267-NAMESPACE-SMUGGLE`: a neutral class named `response-class-type-vii-h` could enter the compatibility-candidate payload. All other 19 review cells passed. R1 cannot authorize completion. |
+| namespace remediation | PASS | Exact `response-class-neutral`, `response-class-local`, and `response-class-global` vocabulary is fixed by PR-258 source semantics; `type-vii-h`, `type-ix`, and compound aliases are refused. |
+| exact frozen candidate review R2 | REQUIRED | Valid only at `.agent-harness/runs/pr267-final-review-20260730-r2/RUN_SUMMARY.json`; missing, stale, malformed, SHA-mismatched, or non-PASS evidence invalidates completion. |
 
 Scientific impact: this validates an abstaining pre-native diagnostic
 composition boundary. It does not validate data or transfer behavior, infer a
