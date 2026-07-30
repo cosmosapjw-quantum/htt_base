@@ -1,9 +1,11 @@
 """Active MIO formalism surface.
 
 Only typed state, identified-set, channel-stress, legacy-projection-report and
-orbit/nonlinearity contracts are exported here.  Historical scalar Q/F/Pi/G_F
-builders remain reproducible under :mod:`mio.legacy_projection`; they are not
-active estimands, occupancies, probabilities, evidence, or family classifiers.
+orbit/nonlinearity contracts are exported here.  The active object named
+``OccupancyMeasure`` is an empirical diagnostic level-set mass, never physical
+occupancy. Historical scalar Q/F/Pi/G_F builders remain reproducible under
+:mod:`mio.legacy_projection`; they are not active estimands, probabilities,
+evidence, or family classifiers.
 """
 from __future__ import annotations
 
@@ -42,6 +44,24 @@ from common.tensor_functionals import (
     build_tensor_functional_spec,
     evaluate_tensor_functional,
     revalidate_tensor_functional_result,
+)
+from common.tensor_departure_statistics import (
+    CertifiedFunctionalPushforward,
+    DirectionalRatioStatus,
+    FunctionalCellStatus,
+    LegacyCompatibilityStatus,
+    LegacyXQPiFGView,
+    OccupancyMeasure,
+    OccupancyMeasureStatus,
+    PushforwardSummaryStatus,
+    ScalarizationPolicy,
+    SupportUtilizationProfile,
+    SupportUtilizationStatus,
+    TensorDepartureStatisticsError,
+    build_certified_functional_pushforward,
+    build_legacy_xqpi_fg_view,
+    build_occupancy_measure,
+    build_support_utilization_profile,
 )
 
 from .bound_pushforward import (
@@ -89,6 +109,7 @@ __all__ = [
     "CANONICAL_COMPONENT_ORDER",
     "CANONICAL_COMPONENT_SIGNS",
     "ComponentBreakdown",
+    "CertifiedFunctionalPushforward",
     "DepartureComponent",
     "DepartureState",
     "DiagnosticScalarReport",
@@ -99,24 +120,39 @@ __all__ = [
     "FunctionalCodomainReport",
     "FunctionalDomainReport",
     "FunctionalStressReport",
+    "FunctionalCellStatus",
     "IdentifiedDepartureSet",
     "LegacyProjectionReport",
+    "LegacyCompatibilityStatus",
+    "LegacyXQPiFGView",
     "MESAnchorSpec",
     "NormalizerBenchmarkReport",
     "NormalizerPurpose",
     "NormalizerSpec",
     "NativeMorphologyAtlasStatus",
     "NonlinearityReport",
+    "OccupancyMeasure",
+    "OccupancyMeasureStatus",
     "ScalarRange",
+    "ScalarizationPolicy",
     "SectorStress",
     "SummaryDepartureState",
+    "SupportUtilizationProfile",
+    "SupportUtilizationStatus",
     "TensorFunctionalOperator",
     "TensorFunctionalResult",
     "TensorFunctionalSpec",
+    "TensorDepartureStatisticsError",
+    "DirectionalRatioStatus",
+    "PushforwardSummaryStatus",
     "bound_to_pi_domination",
     "build_tensor_functional_spec",
+    "build_certified_functional_pushforward",
     "build_budget_spec",
     "compare_denominator_policies",
+    "build_legacy_xqpi_fg_view",
+    "build_occupancy_measure",
+    "build_support_utilization_profile",
     "dynamic_comparison_budget_barrier",
     "evaluate_tensor_functional",
     "revalidate_tensor_functional_result",
