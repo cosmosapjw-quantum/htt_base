@@ -1,4 +1,5 @@
-# Progress scoreboard
+<!-- checkpoint_meta {"completed": 165, "critical_path_percent_complete": 93.51, "dependency_weighted_percent_complete": 80.87, "percent_complete": 74.32, "replan_required": false, "total": 222} -->
+# Progress checkpoint 165
 
 ## Artifact metadata
 
@@ -29,8 +30,6 @@
 - Background in progress: PR-151
 - Unblocked next: PR-204, PR-270, PR-272, PR-190
 - Hypothesis-only unblocked (not auto-scheduled): none
-- Checkpoint due: yes; satisfied by docs/generated/progress_checkpoints/checkpoint_165.md
-- Next checkpoint at: 170
 - Replan required: no
 - Replan reason: progress advanced; no replan required
 

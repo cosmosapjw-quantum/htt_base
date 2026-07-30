@@ -2,6 +2,32 @@
 
 Update every five PRs with percent complete and blockers.
 
+## Checkpoint 165 — PR-266 through PR-269 and PR-271
+
+Date: 2026-07-30
+
+- Active DAG: 165/222 complete = 74.32%; dependency-weighted completion
+  80.87%; critical-path proxy 72/77 = 93.51%.
+- Generated artifact:
+  `docs/generated/progress_checkpoints/checkpoint_165.md`; progress advanced
+  by five from checkpoint 160, so no replan is required.
+- The slice completes the depth/mask path, abstaining anisotropy report,
+  two-pillar obligation registry, bounded Pillar-T analytic/core records, and
+  exact/bounded Pillar-S statistical-method records.
+- PR-271 candidate `697e1e1c...` passed the R5 statistics audit and a fresh
+  isolated R6 claim/provenance audit. The R5 claim reviewer disclosed a
+  blind-results search violation and its `ERROR` result remains
+  non-acceptance evidence.
+- Closeout validation: 27 focused tests, 42 programme-DAG/status tests,
+  strict 222-card DAG, byte-identical mirrors, both claim scans, and
+  checkpoint generation all pass.
+- Blockers: PR-172 remains blocked. PR-151 remains background-only and
+  incomplete. PR-270 and PR-272 are the permitted next vector/tensor nodes;
+  PR-273 is dependency-closed until both pass.
+- Claim drift: none. All source theorem rows remain `NOT_ADJUDICATED`; no
+  observed-data, native solver/atlas, transfer-validation, geometry, truth,
+  posterior/evidence, public-use, or family-identification status is promoted.
+
 ## PR-268 programme checkpoint (not a five-count checkpoint)
 
 Date: 2026-07-30

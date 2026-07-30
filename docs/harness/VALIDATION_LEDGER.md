@@ -2,6 +2,35 @@
 
 Record commands actually run. Never mark skipped checks as passed.
 
+## Checkpoint 165 and PR-271 exact/core statistical closeout
+
+Date: 2026-07-30
+
+Change classification: status/delta closeout and generated five-PR progress
+checkpoint for an unchanged, independently reviewed PR-271 implementation.
+No observed-data execution, transfer validation, theorem-source promotion,
+likelihood/posterior/evidence result, native solver/atlas result, geometry
+verdict, public-use state, or family identification is created.
+
+| Command or check | Result | Notes |
+|---|---:|---|
+| PR-271 R5 independent statistics review | PASS | Frozen candidate `697e1e1c...`; all 23 cells pass. Focused 27, adjacent 140, smoke 6, collection 10347/10406 with 59 deselected, generator, DAG, and claim checks pass. |
+| PR-271 R5 claim review | ERROR, PRESERVED | Reviewer disclosed a broad harness search that exposed prior/sibling snippets. It stopped substantive work; this lane is not acceptance evidence. |
+| PR-271 R6 isolated claim/provenance review | PASS | Same unchanged candidate; all 23 cells and eight registered commands pass without prior/sibling result inspection. |
+| `run_pr271_pillar_s_core.py focused` after status closeout | PASS | `27 passed`. |
+| programme-DAG and status snapshot tests | PASS | `42 passed`. |
+| strict canonical DAG | PASS | `222 PRs, DAG valid`. |
+| canonical/machine status comparison | PASS | Files are byte-identical. |
+| five-PR checkpoint generator | PASS | `165/222 = 74.32%`; dependency weighted `80.87%`; critical path `72/77 = 93.51%`; no replan required. |
+| claim-language and research-surface checks | PASS | No forbidden claim-language hit. |
+| proposed 100-case 4,000-digit R5 stress extension | INTERRUPTED, PARTIAL ONLY | It exceeded the bounded review budget and is not counted as a pass. The reviewer completed a bounded 100-case 300-digit differential with zero discrepancies. |
+
+Scientific impact: PR-271 satisfies its exact-candidate review contract for
+bounded statistical-method records only. All theorem source statuses remain
+`NOT_ADJUDICATED`, scientific status remains `OPEN`, and PR-272 is now
+dependency-open. PR-270 is independently open; PR-273 remains closed until
+both succeed.
+
 ## PR-268 - two-pillar theorem registry v3 and executable oracle
 
 Date: 2026-07-30

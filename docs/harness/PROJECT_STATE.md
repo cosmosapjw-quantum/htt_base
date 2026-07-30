@@ -1,5 +1,36 @@
 # Project State
 
+## 2026-07-30 - Checkpoint 165 and PR-271 exact/core closeout
+
+This section supersedes older orchestration snapshots below.
+
+- Active DAG: 222 cards, 165 completed, 1 blocked, 27 pending, 28 dormant
+  external/native, no foreground card, and background PR-151 acquisition.
+  Count completion is 74.32%, dependency-weighted completion 80.87%, and the
+  critical-path proxy is 72/77 = 93.51%.
+- Checkpoint 165 covers the completed PR-266 through PR-269 and PR-271
+  capability slice. Its generated source is
+  `docs/generated/progress_checkpoints/checkpoint_165.md`; progress advanced
+  by five from checkpoint 160, so no replan PR is required.
+- PR-269 supplies typed, conditional analytic/core proof-author records
+  without changing any source theorem status. PR-271 supplies exact and
+  bounded statistical-method records for its registered VT/TF slice while
+  keeping all source rows `NOT_ADJUDICATED`.
+- The exact PR-271 candidate `697e1e1c...` passed the independent statistics
+  lane in R5. The R5 claim lane stopped with an independence `ERROR` and is
+  not acceptance evidence. The same unchanged candidate then passed a fresh,
+  isolated claim/provenance R6 review. Both accepted lanes cover all 23
+  registered cells.
+- Closeout validation passes 27 focused tests, 42 programme-DAG/status tests,
+  the strict 222-card DAG, byte-identical status mirrors, the checkpoint
+  generator, and both claim-language checks.
+- PR-270 and PR-272 are dependency-open. PR-273 remains closed until both
+  succeed. PR-172 remains blocked and PR-151 remains non-terminal background
+  acquisition.
+- No observed data, transfer result, theorem-source promotion, native
+  solver/atlas result, likelihood/evidence result, geometry verdict, truth
+  certificate, public-use state, or family-identification status changed.
+
 ## 2026-07-30 - PR-268 theorem-obligation registry checkpoint
 
 This section supersedes older orchestration snapshots below.
