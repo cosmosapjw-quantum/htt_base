@@ -1,0 +1,1075 @@
+schema: htt.pillar_t_core_proofs.v1
+authority: PR-269
+registry_status: PROOF_AUTHOR_ARTIFACT_AWAITING_INDEPENDENT_REVIEW
+scientific_status_effect: none
+claim_ceiling: diagnostic_only
+source_hashes:
+  docs/research_program/vector_tensor/pr269_spec.yaml: a196882190bf38e2d62c0c26de61dc6135dd3f4942f58113e93f112c853216d9
+  docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml: d14b24fda9556545abaf337310471af971c68f01438d32df13349f8cd4308f8b
+  docs/research_program/vector_tensor/PROGRAM_INTAKE_REGISTRY_V1.yaml: b6964771c50c483e7697b087b9f058a3fd7d20ec893475a056608b852fdeb677
+  docs/research_program/vector_tensor/vector_tensor_mes_upgrade_blueprint.md: 518d4763baafb1cfd57c0674b354f110e86748849cd8cb0a9e4bc1b6eb2f32fc
+  docs/research_program/HTT_VECTOR_TENSOR_MES_TWO_PILLAR_UPGRADE_PLAN_20260730.md: 8ac8ddaf6f8d50b2e5c1c628de8749b9e17762e9750755154519e5f7e0dd4944
+  htt/src/common/joint_anisotropy_state.py: 3b3ce3d125ae50103150859541df1300bb19f6b15f82ecf24316d00fb83f0d1c
+  htt/src/common/tensor_functionals.py: f261a4645dad6dcf7a333f22718de607c8fcb88e289bf251477976be35ba06ac
+  htt/src/common/orbit_catalogue_v3.py: 215746fce9e43407fb3d19750ef6cfcd3258a247b2a4aefc0b22356882400833
+  htt/src/common/tensor_foundations_oracle.py: ddd819323642f5b86e26ee8cad2c9e0bca9175ab842aa66ac4fc81d0c20eb444
+  htt/src/common/statistical_foundations.py: 8d3706754e41b1b456c12cb0e8b3b446c33ae7f5a78b5902b5e692ce354149aa
+  htt/src/common/w2_convention.py: 39b15209868fe81c8c5f907384820313b90615aa916e0a16f1ad56eb5db8bcac
+inventory:
+  legacy_pillar_t: 31
+  tf_analytic_core: 5
+  vt_analytic_core: 6
+  raw_record_count_is_public_theorem_count: false
+review_gate:
+  required: true
+  role: independent_non_author_reviewer
+  rendering_rule: A record may be rendered as accepted only when canonical PR-269 status is completed
+    and its frozen independent review receipt is resolvable.
+records:
+- proof_id: PR269-LEGACY-SIG-P3
+  obligation_id: SIG-P3
+  source_identity:
+    kind: legacy_signature_inventory
+    id: SIG-P3
+    statement_identity_sha256: 00c0fd823ebbce03290bc4c949864afb44238f610ea0c5f2137450787ed67d74
+    evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P3
+  relation_to_source: EXACT_SOURCE_REFERENCE
+  statement: Diagonal MES three-bound hierarchy
+  statement_identity_sha256: 369469150701b11b55376496dabc41ba5183dfecd0c39a1e2a61a1c6fc5fcb7a
+  assumptions:
+  - linearized almost-EGS covariant multipole hierarchy
+  - diagonal (uncorrelated) bound combination
+  - MES reduction assumptions C1 (spatial <= time derivative) and C2 (Theta t_R ~ 3)
+  - admissibility ordering B_sigma > B_omega > B_accel (module raises otherwise)
+  domain:
+  - strictly positive multipole triples satisfying the hierarchy ordering
+  frame_convention: covariant CMB-frame multipole bounds (MES convention)
+  branch_convention: SOURCE_NOT_TYPED
+  proof_method: resolve frozen typed source reference without readjudication
+  proof_artifact: docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-p3
+  executable_evidence:
+  - tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact
+  counterexample_boundary:
+  - No new PR-269 proof is asserted; the frozen source premises and limitations remain authoritative.
+  verdict: REFERENCE_RESOLVED_NOT_READJUDICATED
+  claim_ceiling: diagnostic_only
+- proof_id: PR269-LEGACY-SIG-P4
+  obligation_id: SIG-P4
+  source_identity:
+    kind: legacy_signature_inventory
+    id: SIG-P4
+    statement_identity_sha256: 6d0944cc64657deda7cabb87fa78566b1deee9a0f483c8316473bac8cfadcdf6
+    evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P4
+  relation_to_source: SOURCE_SIGNATURE_MISSING
+  statement: Frame-attribution safe-route correction
+  statement_identity_sha256: f23c9b2fdbb5813e66f1f88b5c0f70aa7c6ca18c1225676cd577d58f51a1db2a
+  assumptions: []
+  domain: []
+  frame_convention: SOURCE_NOT_TYPED
+  branch_convention: SOURCE_NOT_TYPED
+  proof_method: fail-closed missing-signature inventory
+  proof_artifact: docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-p4
+  executable_evidence:
+  - tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact
+  counterexample_boundary:
+  - No proof is admissible until assumptions, domain, frame, branch, and perturbative order are typed.
+  verdict: INCONCLUSIVE_MISSING_SIGNATURE
+  claim_ceiling: diagnostic_only
+- proof_id: PR269-LEGACY-SIG-P5
+  obligation_id: SIG-P5
+  source_identity:
+    kind: legacy_signature_inventory
+    id: SIG-P5
+    statement_identity_sha256: 307ea01ec9cb887164561670ec3553b0c633f2e111fe91319049a6b3f544d00b
+    evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P5
+  relation_to_source: SOURCE_SIGNATURE_MISSING
+  statement: Conditional Bianchi V momentum-response formula
+  statement_identity_sha256: 9bd4867720ee6723ac8d0f4e20c3687932ebb97ef9a9153eb4313d4f0ad39c27
+  assumptions: []
+  domain: []
+  frame_convention: SOURCE_NOT_TYPED
+  branch_convention: SOURCE_NOT_TYPED
+  proof_method: fail-closed missing-signature inventory
+  proof_artifact: docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-p5
+  executable_evidence:
+  - tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact
+  counterexample_boundary:
+  - No proof is admissible until assumptions, domain, frame, branch, and perturbative order are typed.
+  verdict: INCONCLUSIVE_MISSING_SIGNATURE
+  claim_ceiling: diagnostic_only
+- proof_id: PR269-LEGACY-SIG-P6
+  obligation_id: SIG-P6
+  source_identity:
+    kind: legacy_signature_inventory
+    id: SIG-P6
+    statement_identity_sha256: 9073bbea90cd6a8f00df21c7b747505f4a3b0457f054b0b477562db670fb7f32
+    evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P6
+  relation_to_source: SOURCE_SIGNATURE_MISSING
+  statement: Flat-FLRW first jet
+  statement_identity_sha256: ffaf199404ecbda5f57d7abb32fc51ab481697f9fecb55b43c4a66a0fa1d6313
+  assumptions: []
+  domain: []
+  frame_convention: SOURCE_NOT_TYPED
+  branch_convention: SOURCE_NOT_TYPED
+  proof_method: fail-closed missing-signature inventory
+  proof_artifact: docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-p6
+  executable_evidence:
+  - tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact
+  counterexample_boundary:
+  - No proof is admissible until assumptions, domain, frame, branch, and perturbative order are typed.
+  verdict: INCONCLUSIVE_MISSING_SIGNATURE
+  claim_ceiling: diagnostic_only
+- proof_id: PR269-LEGACY-SIG-P7
+  obligation_id: SIG-P7
+  source_identity:
+    kind: legacy_signature_inventory
+    id: SIG-P7
+    statement_identity_sha256: 570af4956379820f7d96aa49e67954980b5b15a83f555ed01b31634f99ff8c39
+    evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P7
+  relation_to_source: SOURCE_SIGNATURE_MISSING
+  statement: Non-collinear boost composition and first-jet separation
+  statement_identity_sha256: 9afd1d0d7eb4bd665b8b57041d1f4c93011c38fa652b38e607d5ff04a98f4db1
+  assumptions: []
+  domain: []
+  frame_convention: SOURCE_NOT_TYPED
+  branch_convention: SOURCE_NOT_TYPED
+  proof_method: fail-closed missing-signature inventory
+  proof_artifact: docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-p7
+  executable_evidence:
+  - tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact
+  counterexample_boundary:
+  - No proof is admissible until assumptions, domain, frame, branch, and perturbative order are typed.
+  verdict: INCONCLUSIVE_MISSING_SIGNATURE
+  claim_ceiling: diagnostic_only
+- proof_id: PR269-LEGACY-SIG-P9
+  obligation_id: SIG-P9
+  source_identity:
+    kind: legacy_signature_inventory
+    id: SIG-P9
+    statement_identity_sha256: f21f61cfe40a209485c0e5d0dc70682ec6c36ca19581e3382f638454a61702d9
+    evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P9
+  relation_to_source: SOURCE_SIGNATURE_MISSING
+  statement: Radial-vorticity blindness
+  statement_identity_sha256: 6077ebe22a2c28073d5be1d4ffbd86dd13e560b1b361ffa1a0b84c7fc8da294a
+  assumptions: []
+  domain: []
+  frame_convention: SOURCE_NOT_TYPED
+  branch_convention: SOURCE_NOT_TYPED
+  proof_method: fail-closed missing-signature inventory
+  proof_artifact: docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-p9
+  executable_evidence:
+  - tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact
+  counterexample_boundary:
+  - No proof is admissible until assumptions, domain, frame, branch, and perturbative order are typed.
+  verdict: INCONCLUSIVE_MISSING_SIGNATURE
+  claim_ceiling: diagnostic_only
+- proof_id: PR269-LEGACY-SIG-P11
+  obligation_id: SIG-P11
+  source_identity:
+    kind: legacy_signature_inventory
+    id: SIG-P11
+    statement_identity_sha256: b5e094a1f44db17e7787c5c7fa4bf192a72fb75112ca7e0315d5b54cbb8dcaa9
+    evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P11
+  relation_to_source: EXACT_SOURCE_REFERENCE
+  statement: PSD second-moment cone
+  statement_identity_sha256: aac6283866a873f73b0c359fd04cbaa90e9d04f89b0b04d00bf41304e429dfc0
+  assumptions:
+  - M = diag(g) is positive semidefinite on the genuine second-moment sectors {Sigma2, W2, Omega_tilt};
+    the signed Delta Omega_k component rides a separate signed carrier (global M >= 0 is NOT asserted)
+  - x_C = tr(C M) is linear in M (bit-identical to the scalar comparator)
+  - admissible set is the PSD moment cone intersected with registered ceilings
+  domain:
+  - PSD cone with registered ceiling intersections
+  frame_convention: comparator scalar sector (no sky frame)
+  branch_convention: SOURCE_NOT_TYPED
+  proof_method: resolve frozen typed source reference without readjudication
+  proof_artifact: docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-p11
+  executable_evidence:
+  - tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact
+  counterexample_boundary:
+  - No new PR-269 proof is asserted; the frozen source premises and limitations remain authoritative.
+  verdict: REFERENCE_RESOLVED_NOT_READJUDICATED
+  claim_ceiling: diagnostic_only
+- proof_id: PR269-LEGACY-SIG-P12
+  obligation_id: SIG-P12
+  source_identity:
+    kind: legacy_signature_inventory
+    id: SIG-P12
+    statement_identity_sha256: 4fef058a0342ef79cdb60ff3cdfe5e2890e297ece24abc4934726e2fe7a8b0da
+    evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P12
+  relation_to_source: SOURCE_SIGNATURE_MISSING
+  statement: Scalar tilt trace is not sufficient
+  statement_identity_sha256: 33015d669461e1cbe26af2599ca54a88bbc1fa31f759f9e36341aadf4536d53a
+  assumptions: []
+  domain: []
+  frame_convention: SOURCE_NOT_TYPED
+  branch_convention: SOURCE_NOT_TYPED
+  proof_method: fail-closed missing-signature inventory
+  proof_artifact: docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-p12
+  executable_evidence:
+  - tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact
+  counterexample_boundary:
+  - No proof is admissible until assumptions, domain, frame, branch, and perturbative order are typed.
+  verdict: INCONCLUSIVE_MISSING_SIGNATURE
+  claim_ceiling: diagnostic_only
+- proof_id: PR269-LEGACY-SIG-P13
+  obligation_id: SIG-P13
+  source_identity:
+    kind: legacy_signature_inventory
+    id: SIG-P13
+    statement_identity_sha256: b574b98d9aabb5b15313adae62ff8e849354dbdfa21dda2c7a1478fbf2711def
+    evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P13
+  relation_to_source: SOURCE_SIGNATURE_MISSING
+  statement: Shear memory of anisotropic stress
+  statement_identity_sha256: 84bbdb83842b618e20cb694a42b9a570ba07b7bb10197fb8c00323a32cbe980a
+  assumptions: []
+  domain: []
+  frame_convention: SOURCE_NOT_TYPED
+  branch_convention: SOURCE_NOT_TYPED
+  proof_method: fail-closed missing-signature inventory
+  proof_artifact: docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-p13
+  executable_evidence:
+  - tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact
+  counterexample_boundary:
+  - No proof is admissible until assumptions, domain, frame, branch, and perturbative order are typed.
+  verdict: INCONCLUSIVE_MISSING_SIGNATURE
+  claim_ceiling: diagnostic_only
+- proof_id: PR269-LEGACY-SIG-P14
+  obligation_id: SIG-P14
+  source_identity:
+    kind: legacy_signature_inventory
+    id: SIG-P14
+    statement_identity_sha256: 04d2374c14cb995702e1452b563f0bbcba57b001b488da35abb331e3942a2851
+    evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P14
+  relation_to_source: SOURCE_SIGNATURE_MISSING
+  statement: Dust-FLRW oracle
+  statement_identity_sha256: e14aa6bac029a31af801abaf73bd24c96bb686e8b897e13e9619fa18944102a3
+  assumptions: []
+  domain: []
+  frame_convention: SOURCE_NOT_TYPED
+  branch_convention: SOURCE_NOT_TYPED
+  proof_method: fail-closed missing-signature inventory
+  proof_artifact: docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-p14
+  executable_evidence:
+  - tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact
+  counterexample_boundary:
+  - No proof is admissible until assumptions, domain, frame, branch, and perturbative order are typed.
+  verdict: INCONCLUSIVE_MISSING_SIGNATURE
+  claim_ceiling: diagnostic_only
+- proof_id: PR269-LEGACY-SIG-P15
+  obligation_id: SIG-P15
+  source_identity:
+    kind: legacy_signature_inventory
+    id: SIG-P15
+    statement_identity_sha256: e38173585a3261bf339aee16619413b442ea063d820468b2060ec37ee9216792
+    evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P15
+  relation_to_source: SOURCE_SIGNATURE_MISSING
+  statement: Quadrupole filling under registered closure
+  statement_identity_sha256: 13926c7b64914d63facc255aa64126290a51b40be576b9caf01da3a2ce1640b4
+  assumptions: []
+  domain: []
+  frame_convention: SOURCE_NOT_TYPED
+  branch_convention: SOURCE_NOT_TYPED
+  proof_method: fail-closed missing-signature inventory
+  proof_artifact: docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-p15
+  executable_evidence:
+  - tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact
+  counterexample_boundary:
+  - No proof is admissible until assumptions, domain, frame, branch, and perturbative order are typed.
+  verdict: INCONCLUSIVE_MISSING_SIGNATURE
+  claim_ceiling: diagnostic_only
+- proof_id: PR269-LEGACY-SIG-P21
+  obligation_id: SIG-P21
+  source_identity:
+    kind: legacy_signature_inventory
+    id: SIG-P21
+    statement_identity_sha256: 70e7b6d6cd417813618e5f96629827bb7ecf952118e40f7c145a5634c81f553d
+    evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P21
+  relation_to_source: SOURCE_SIGNATURE_MISSING
+  statement: Volterra depth-memory representation
+  statement_identity_sha256: 361991ec312360b8e93042fdc7c04d9feecf8eb78843d11679d0fb2d19657520
+  assumptions: []
+  domain: []
+  frame_convention: SOURCE_NOT_TYPED
+  branch_convention: SOURCE_NOT_TYPED
+  proof_method: fail-closed missing-signature inventory
+  proof_artifact: docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-p21
+  executable_evidence:
+  - tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact
+  counterexample_boundary:
+  - No proof is admissible until assumptions, domain, frame, branch, and perturbative order are typed.
+  verdict: INCONCLUSIVE_MISSING_SIGNATURE
+  claim_ceiling: diagnostic_only
+- proof_id: PR269-LEGACY-SIG-P22
+  obligation_id: SIG-P22
+  source_identity:
+    kind: legacy_signature_inventory
+    id: SIG-P22
+    statement_identity_sha256: a5bf59b2873d07f3865184c9b10827d32aeea4da16cf3acafac277fa1b1be26f
+    evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P22
+  relation_to_source: SOURCE_SIGNATURE_MISSING
+  statement: Transverse reopening of the vorticity sector
+  statement_identity_sha256: de4393ce95b1a1eef7e4ffa9862bfd300cd6d138791be886f93e437106f60f19
+  assumptions: []
+  domain: []
+  frame_convention: SOURCE_NOT_TYPED
+  branch_convention: SOURCE_NOT_TYPED
+  proof_method: fail-closed missing-signature inventory
+  proof_artifact: docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-p22
+  executable_evidence:
+  - tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact
+  counterexample_boundary:
+  - No proof is admissible until assumptions, domain, frame, branch, and perturbative order are typed.
+  verdict: INCONCLUSIVE_MISSING_SIGNATURE
+  claim_ceiling: diagnostic_only
+- proof_id: PR269-LEGACY-SIG-P27
+  obligation_id: SIG-P27
+  source_identity:
+    kind: legacy_signature_inventory
+    id: SIG-P27
+    statement_identity_sha256: 449a7b0b4242264c26c7a6246a2ea655c7c6813fe1954c7c4f66b38369e65f6a
+    evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P27
+  relation_to_source: SOURCE_SIGNATURE_MISSING
+  statement: MES-rank route reconciliation
+  statement_identity_sha256: 0d84887970c827bbb961a6c9072ce63d08f0b0821547b5c5cc8ae89816df4793
+  assumptions: []
+  domain: []
+  frame_convention: SOURCE_NOT_TYPED
+  branch_convention: SOURCE_NOT_TYPED
+  proof_method: fail-closed missing-signature inventory
+  proof_artifact: docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-p27
+  executable_evidence:
+  - tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact
+  counterexample_boundary:
+  - No proof is admissible until assumptions, domain, frame, branch, and perturbative order are typed.
+  verdict: INCONCLUSIVE_MISSING_SIGNATURE
+  claim_ceiling: diagnostic_only
+- proof_id: PR269-LEGACY-SIG-P32
+  obligation_id: SIG-P32
+  source_identity:
+    kind: legacy_signature_inventory
+    id: SIG-P32
+    statement_identity_sha256: d9f1a1622ce3317b56548548dfc8bb4a4d2ebdc573c33ee916f6bca549825f4b
+    evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P32
+  relation_to_source: SOURCE_SIGNATURE_MISSING
+  statement: Optical ansatz branch identifiability
+  statement_identity_sha256: 124bd0f783840f625ad8c4fa8b58b18a8bb19a4f33fbb34e0f9648e3d059870a
+  assumptions: []
+  domain: []
+  frame_convention: SOURCE_NOT_TYPED
+  branch_convention: SOURCE_NOT_TYPED
+  proof_method: fail-closed missing-signature inventory
+  proof_artifact: docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-p32
+  executable_evidence:
+  - tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact
+  counterexample_boundary:
+  - No proof is admissible until assumptions, domain, frame, branch, and perturbative order are typed.
+  verdict: INCONCLUSIVE_MISSING_SIGNATURE
+  claim_ceiling: diagnostic_only
+- proof_id: PR269-LEGACY-SIG-T3-lin
+  obligation_id: SIG-T3-lin
+  source_identity:
+    kind: legacy_signature_inventory
+    id: SIG-T3-lin
+    statement_identity_sha256: a0827ccb07ac17624b1df5f7dfb560852e5ed861079b2b1d5e53c9e2c062a9d2
+    evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-T3-lin
+  relation_to_source: SOURCE_SIGNATURE_MISSING
+  statement: Linearized realization of the identified-interval endpoints
+  statement_identity_sha256: 8193dd8c46774f9ea6072a1df7743f165deef7f5c2307a2d890cd0210053321b
+  assumptions: []
+  domain: []
+  frame_convention: SOURCE_NOT_TYPED
+  branch_convention: SOURCE_NOT_TYPED
+  proof_method: fail-closed missing-signature inventory
+  proof_artifact: docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-t3-lin
+  executable_evidence:
+  - tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact
+  counterexample_boundary:
+  - No proof is admissible until assumptions, domain, frame, branch, and perturbative order are typed.
+  verdict: INCONCLUSIVE_MISSING_SIGNATURE
+  claim_ceiling: diagnostic_only
+- proof_id: PR269-LEGACY-SIG-T3-full
+  obligation_id: SIG-T3-full
+  source_identity:
+    kind: legacy_signature_inventory
+    id: SIG-T3-full
+    statement_identity_sha256: 5cb875c0f74c8b62c438c9b5ecd6b822e5cee64dfab97c6ae9cc5129434b93ed
+    evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-T3-full
+  relation_to_source: SOURCE_SIGNATURE_MISSING
+  statement: Exact constraint-surface endpoint witnesses (homogeneous initial-data candidates)
+  statement_identity_sha256: 3f80394214c962c7edc44e4c4378b806bfe61376dd845d90e0acfd3f110c748d
+  assumptions: []
+  domain: []
+  frame_convention: SOURCE_NOT_TYPED
+  branch_convention: SOURCE_NOT_TYPED
+  proof_method: fail-closed missing-signature inventory
+  proof_artifact: docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-t3-full
+  executable_evidence:
+  - tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact
+  counterexample_boundary:
+  - No proof is admissible until assumptions, domain, frame, branch, and perturbative order are typed.
+  verdict: INCONCLUSIVE_MISSING_SIGNATURE
+  claim_ceiling: diagnostic_only
+- proof_id: PR269-LEGACY-SIG-T3-int
+  obligation_id: SIG-T3-int
+  source_identity:
+    kind: legacy_signature_inventory
+    id: SIG-T3-int
+    statement_identity_sha256: 3b6fa634cebc354f19a50dd7687d642fe9abe184641c946add07b3abedfd9bfb
+    evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-T3-int
+  relation_to_source: SOURCE_SIGNATURE_MISSING
+  statement: Interior x_C-value family (two-segment exact sweep)
+  statement_identity_sha256: 8e31818bc7c99ffe3a5a21067c197ab53f495b80fbd5551326587fc369890094
+  assumptions: []
+  domain: []
+  frame_convention: SOURCE_NOT_TYPED
+  branch_convention: SOURCE_NOT_TYPED
+  proof_method: fail-closed missing-signature inventory
+  proof_artifact: docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-t3-int
+  executable_evidence:
+  - tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact
+  counterexample_boundary:
+  - No proof is admissible until assumptions, domain, frame, branch, and perturbative order are typed.
+  verdict: INCONCLUSIVE_MISSING_SIGNATURE
+  claim_ceiling: diagnostic_only
+- proof_id: PR269-LEGACY-SIG-T9p
+  obligation_id: SIG-T9p
+  source_identity:
+    kind: legacy_signature_inventory
+    id: SIG-T9p
+    statement_identity_sha256: d1963648f636e25a2f440c8ab667483430d773494391f25cfcac697f61840b55
+    evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-T9p
+  relation_to_source: SOURCE_SIGNATURE_MISSING
+  statement: Multi-component tilt composition
+  statement_identity_sha256: af4a4f0d1aaf2fa99b0140661b2a4bfa220004c4aee978c879233d43966ce33e
+  assumptions: []
+  domain: []
+  frame_convention: SOURCE_NOT_TYPED
+  branch_convention: SOURCE_NOT_TYPED
+  proof_method: fail-closed missing-signature inventory
+  proof_artifact: docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-t9p
+  executable_evidence:
+  - tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact
+  counterexample_boundary:
+  - No proof is admissible until assumptions, domain, frame, branch, and perturbative order are typed.
+  verdict: INCONCLUSIVE_MISSING_SIGNATURE
+  claim_ceiling: diagnostic_only
+- proof_id: PR269-LEGACY-SIG-MES-PROV
+  obligation_id: SIG-MES-PROV
+  source_identity:
+    kind: legacy_signature_inventory
+    id: SIG-MES-PROV
+    statement_identity_sha256: 709185c38f89b4ce43aa7187486e0f1c2a05bedd5e93d0b7e2df886d3035c4d4
+    evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-MES-PROV
+  relation_to_source: EXACT_SOURCE_REFERENCE
+  statement: MES coefficient provenance (sigma rederived bit-exact; omega/accel primary-sourced print-only;
+    SAG1997 discrepancy documented)
+  statement_identity_sha256: f2edfc2852588d2f65b7ade3027114aa9168d2260c4922d575815c0f3e8b727e
+  assumptions:
+  - transcription authority of the SHA-archived MESa raw bounds (eq 51/52)
+  - 'C1: a spatial-gradient bound is <= the same-order time-derivative bound'
+  - 'C2: k-th time derivatives reduce by (1/(Theta t_R))^k with Theta t_R ~ 3'
+  domain:
+  - MESa raw bound term lists as archived
+  frame_convention: covariant CMB-frame multipole bounds (MES convention)
+  branch_convention: SOURCE_NOT_TYPED
+  proof_method: resolve frozen typed source reference without readjudication
+  proof_artifact: docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-mes-prov
+  executable_evidence:
+  - tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact
+  counterexample_boundary:
+  - No new PR-269 proof is asserted; the frozen source premises and limitations remain authoritative.
+  verdict: REFERENCE_RESOLVED_NOT_READJUDICATED
+  claim_ceiling: diagnostic_only
+- proof_id: PR269-LEGACY-SIG-U1
+  obligation_id: SIG-U1
+  source_identity:
+    kind: legacy_signature_inventory
+    id: SIG-U1
+    statement_identity_sha256: cef8c494d7da66641b6a33382d63988d3039843f334018bb6d928efde141ce10
+    evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-U1
+  relation_to_source: SOURCE_SIGNATURE_MISSING
+  statement: Beta-channel toy correspondence (s = tanh beta; pair-tilt map s^2 = t/(2+t))
+  statement_identity_sha256: e005324a05eb1f428b3c26ccd85dd2d654e9e3326054f77e2d2fa97700235cfe
+  assumptions: []
+  domain: []
+  frame_convention: SOURCE_NOT_TYPED
+  branch_convention: SOURCE_NOT_TYPED
+  proof_method: fail-closed missing-signature inventory
+  proof_artifact: docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-u1
+  executable_evidence:
+  - tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact
+  counterexample_boundary:
+  - No proof is admissible until assumptions, domain, frame, branch, and perturbative order are typed.
+  verdict: INCONCLUSIVE_MISSING_SIGNATURE
+  claim_ceiling: diagnostic_only
+- proof_id: PR269-LEGACY-SIG-U2
+  obligation_id: SIG-U2
+  source_identity:
+    kind: legacy_signature_inventory
+    id: SIG-U2
+    statement_identity_sha256: 60ca69f1e0d69ec450f4fb1e0fd11a5ab2e186136526eee452a5d480d79f2e21
+    evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-U2
+  relation_to_source: SOURCE_SIGNATURE_MISSING
+  statement: Fingerprint envelope ceilings at eps1 (exact rationals)
+  statement_identity_sha256: 0c78229d0592483c2d1150186ea11637189efc210b5574e34c53865bb7a41a22
+  assumptions: []
+  domain: []
+  frame_convention: SOURCE_NOT_TYPED
+  branch_convention: SOURCE_NOT_TYPED
+  proof_method: fail-closed missing-signature inventory
+  proof_artifact: docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-u2
+  executable_evidence:
+  - tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact
+  counterexample_boundary:
+  - No proof is admissible until assumptions, domain, frame, branch, and perturbative order are typed.
+  verdict: INCONCLUSIVE_MISSING_SIGNATURE
+  claim_ceiling: diagnostic_only
+- proof_id: PR269-LEGACY-SIG-TSUM
+  obligation_id: SIG-TSUM
+  source_identity:
+    kind: legacy_signature_inventory
+    id: SIG-TSUM
+    statement_identity_sha256: 7d28cc90eb778cacae7bd9fd6c5df2a2e57963b034e42ae8ae6d8f98a829fdd9
+    evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-TSUM
+  relation_to_source: EXACT_SOURCE_REFERENCE
+  statement: Two-temperature fingerprint sum bound R3 + R5 >= 2 (exact factorization mu3*mu5 - mu4^2
+    = s^2 (1-s^2)^3)
+  statement_identity_sha256: eaae541064e6e3920bc7fa325b6f30a30d0dc6ce58b1f71ff5214f18af340dd3
+  assumptions:
+  - fingerprint ratios R3, R5 from the registered two-temperature family
+  - equality holds iff s = 0
+  domain:
+  - s in [0, 1]
+  frame_convention: Teff fingerprint lane (no sky frame)
+  branch_convention: SOURCE_NOT_TYPED
+  proof_method: resolve frozen typed source reference without readjudication
+  proof_artifact: docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-tsum
+  executable_evidence:
+  - tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact
+  counterexample_boundary:
+  - No new PR-269 proof is asserted; the frozen source premises and limitations remain authoritative.
+  verdict: REFERENCE_RESOLVED_NOT_READJUDICATED
+  claim_ceiling: diagnostic_only
+- proof_id: PR269-LEGACY-SIG-MES-BR
+  obligation_id: SIG-MES-BR
+  source_identity:
+    kind: legacy_signature_inventory
+    id: SIG-MES-BR
+    statement_identity_sha256: 3a9a3d96ba1d602ac56dc76fc7fe8c4f6c389fb998fbda0b14dd079796a66134
+    evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-MES-BR
+  relation_to_source: EXACT_SOURCE_REFERENCE
+  statement: MES coefficient branch registry (MES-G verified geodesic / MES-NG unverified non-geodesic
+    / ACCEL withheld) + eps1 attribution triple
+  statement_identity_sha256: fb6aff151b7b7eb131ae7626b20f1f91b9ffb65f767c9d1ef27c0b17f6336c95
+  assumptions:
+  - frozen registry values unchanged (byte-identity guard)
+  - ceiling map W2_max = (3/2) B_omega^2 under the registered convention W2 = omega^2/(6 H^2)
+  - branch provenance disclosed per source accessibility
+  domain:
+  - registered branch table (geodesic verified; non-geodesic print-only)
+  frame_convention: covariant CMB-frame multipole bounds (MES convention)
+  branch_convention: SOURCE_NOT_TYPED
+  proof_method: resolve frozen typed source reference without readjudication
+  proof_artifact: docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-mes-br
+  executable_evidence:
+  - tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact
+  counterexample_boundary:
+  - No new PR-269 proof is asserted; the frozen source premises and limitations remain authoritative.
+  verdict: REFERENCE_RESOLVED_NOT_READJUDICATED
+  claim_ceiling: diagnostic_only
+- proof_id: PR269-LEGACY-SIG-BV-DYN
+  obligation_id: SIG-BV-DYN
+  source_identity:
+    kind: legacy_signature_inventory
+    id: SIG-BV-DYN
+    statement_identity_sha256: 455e8b01219ce39c1f2f73dcac3ef2ebf6fdb04c1145a8de5a8d1f6ecd58c07d
+    evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-BV-DYN
+  relation_to_source: SOURCE_SIGNATURE_MISSING
+  statement: Tilted-LRS Bianchi V evolution seal (constraint preservation monitored on non-vacuum
+    trajectories; P5 exact-rapidity relation holds dynamically)
+  statement_identity_sha256: 8aea7d3c096daa08b97cf7530f7f4a4cf8ffcd1c5e2672f00160b12fa1ad5027
+  assumptions: []
+  domain: []
+  frame_convention: SOURCE_NOT_TYPED
+  branch_convention: SOURCE_NOT_TYPED
+  proof_method: fail-closed missing-signature inventory
+  proof_artifact: docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-bv-dyn
+  executable_evidence:
+  - tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact
+  counterexample_boundary:
+  - No proof is admissible until assumptions, domain, frame, branch, and perturbative order are typed.
+  verdict: INCONCLUSIVE_MISSING_SIGNATURE
+  claim_ceiling: diagnostic_only
+- proof_id: PR269-LEGACY-SIG-KE-FRAME
+  obligation_id: SIG-KE-FRAME
+  source_identity:
+    kind: legacy_signature_inventory
+    id: SIG-KE-FRAME
+    statement_identity_sha256: 986735c02f5d2b6dde851d70a884234a67a125db4829291f8add5d1dbdc39ea0
+    evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-KE-FRAME
+  relation_to_source: SOURCE_SIGNATURE_MISSING
+  statement: King-Ellis tilted-congruence frame kinematics + constraint algebra (items 1-7 of the
+    rotating-congruence program)
+  statement_identity_sha256: ef0f863290fc58d9b0bd2d045b4ab0ed50f9d6434273145e0ccc82ec38fce6cd
+  assumptions: []
+  domain: []
+  frame_convention: SOURCE_NOT_TYPED
+  branch_convention: SOURCE_NOT_TYPED
+  proof_method: fail-closed missing-signature inventory
+  proof_artifact: docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-ke-frame
+  executable_evidence:
+  - tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact
+  counterexample_boundary:
+  - No proof is admissible until assumptions, domain, frame, branch, and perturbative order are typed.
+  verdict: INCONCLUSIVE_MISSING_SIGNATURE
+  claim_ceiling: diagnostic_only
+- proof_id: PR269-LEGACY-SIG-KE-OBS
+  obligation_id: SIG-KE-OBS
+  source_identity:
+    kind: legacy_signature_inventory
+    id: SIG-KE-OBS
+    statement_identity_sha256: 9fa2733a1679eaa20f4c9d3d91c8f6865c0cdb96e174ce259e5a2ed6e6dd21e7
+    evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-KE-OBS
+  relation_to_source: SOURCE_SIGNATURE_MISSING
+  statement: Exact vorticity classification of group-invariant tilted congruences (corrects the blanket
+    Omega_k=0 irrotationality reading)
+  statement_identity_sha256: c7ba4113d3581655b4b1d69932f392e0a93daabded6a6e22d1fc7ba5ed341c84
+  assumptions: []
+  domain: []
+  frame_convention: SOURCE_NOT_TYPED
+  branch_convention: SOURCE_NOT_TYPED
+  proof_method: fail-closed missing-signature inventory
+  proof_artifact: docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-ke-obs
+  executable_evidence:
+  - tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact
+  counterexample_boundary:
+  - No proof is admissible until assumptions, domain, frame, branch, and perturbative order are typed.
+  verdict: INCONCLUSIVE_MISSING_SIGNATURE
+  claim_ceiling: diagnostic_only
+- proof_id: PR269-LEGACY-SIG-KE-DYN
+  obligation_id: SIG-KE-DYN
+  source_identity:
+    kind: legacy_signature_inventory
+    id: SIG-KE-DYN
+    statement_identity_sha256: 461c4f0d3ea296df98409c16f67259758924687cd2ac71a0db43b7b0b25ad494
+    evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-KE-DYN
+  relation_to_source: SOURCE_SIGNATURE_MISSING
+  statement: Rotating perfect-fluid development at Omega_k>0 + the double Omega_k=0 obstruction (items
+    8-10)
+  statement_identity_sha256: 2f86c97f86b1a9a20718482eb6ea448ffb946bd9ac42983fa235189d85c8a75c
+  assumptions: []
+  domain: []
+  frame_convention: SOURCE_NOT_TYPED
+  branch_convention: SOURCE_NOT_TYPED
+  proof_method: fail-closed missing-signature inventory
+  proof_artifact: docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-ke-dyn
+  executable_evidence:
+  - tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact
+  counterexample_boundary:
+  - No proof is admissible until assumptions, domain, frame, branch, and perturbative order are typed.
+  verdict: INCONCLUSIVE_MISSING_SIGNATURE
+  claim_ceiling: diagnostic_only
+- proof_id: PR269-LEGACY-SIG-OMK-REOPEN
+  obligation_id: SIG-OMK-REOPEN
+  source_identity:
+    kind: legacy_signature_inventory
+    id: SIG-OMK-REOPEN
+    statement_identity_sha256: f3ebe67e5d5c86ae8d87a1c1f98b69e02811f006efc40d8aa8fab65d275921c8
+    evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-OMK-REOPEN
+  relation_to_source: SOURCE_SIGNATURE_MISSING
+  statement: Higher-order anisotropic-Omega_k re-opening transfer (curvature-shear slaving) + finite
+    attribution/class-conditional ceilings
+  statement_identity_sha256: b2e92758b809b39ab9a8ea78ddcfb0b3a707a5254438bbd15c7bfa1f9f455d8b
+  assumptions: []
+  domain: []
+  frame_convention: SOURCE_NOT_TYPED
+  branch_convention: SOURCE_NOT_TYPED
+  proof_method: fail-closed missing-signature inventory
+  proof_artifact: docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-omk-reopen
+  executable_evidence:
+  - tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact
+  counterexample_boundary:
+  - No proof is admissible until assumptions, domain, frame, branch, and perturbative order are typed.
+  verdict: INCONCLUSIVE_MISSING_SIGNATURE
+  claim_ceiling: diagnostic_only
+- proof_id: PR269-LEGACY-SIG-MES-REFREEZE
+  obligation_id: SIG-MES-REFREEZE
+  source_identity:
+    kind: legacy_signature_inventory
+    id: SIG-MES-REFREEZE
+    statement_identity_sha256: 6e20d9965c190c9f740798733484df7e30d2282647b761f17bdf7a97af646e44
+    evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-MES-REFREEZE
+  relation_to_source: EXACT_SOURCE_REFERENCE
+  statement: MES geodesic derivation + re-freeze of the vorticity-ceiling anchor (W2_max 1.3087e-6
+    -> 3.3789e-13)
+  statement_identity_sha256: dc1df579136ade74f247de2cd58726d15db7476056753574f0bcf1bb6d7d273b
+  assumptions:
+  - geodesic congruence u_dot = 0 (MESa p.123)
+  - SAG observer-motion convention eps1 = 0 (the observed dipole is observer motion)
+  - hierarchy preservation B_sigma > B_omega excludes the full-dipole ceiling (e1_crit = (43/25) eps2
+    + (9/35) eps3)
+  domain:
+  - geodesic branch at the registered eps values
+  frame_convention: covariant CMB-frame multipole bounds, SAG observer-motion convention
+  branch_convention: SOURCE_NOT_TYPED
+  proof_method: resolve frozen typed source reference without readjudication
+  proof_artifact: docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-mes-refreeze
+  executable_evidence:
+  - tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact
+  counterexample_boundary:
+  - No new PR-269 proof is asserted; the frozen source premises and limitations remain authoritative.
+  verdict: REFERENCE_RESOLVED_NOT_READJUDICATED
+  claim_ceiling: diagnostic_only
+- proof_id: PR269-LEGACY-SIG-MES-MESB-TRACE
+  obligation_id: SIG-MES-MESB-TRACE
+  source_identity:
+    kind: legacy_signature_inventory
+    id: SIG-MES-MESB-TRACE
+    statement_identity_sha256: 1f0d8be3f5b71511e919277f8e0e138f2ca922235cb9aa762af5b71cce63680e
+    evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-MES-MESB-TRACE
+  relation_to_source: EXACT_SOURCE_REFERENCE
+  statement: MESb web-trace + refutation of the in-house non-geodesic bounds; geodesic vorticity anchor
+    re-adopted from three primary sources
+  statement_identity_sha256: e7fa2541f8beece92618156897e378bc473ca51c3bd02ca7d32d8eb5f4d1011e
+  assumptions:
+  - only accessible, SHA-archived primary sources ground coefficient attributions
+  - the in-house non-geodesic omega/accel reconstruction is refuted (appears in no accessible source;
+    exceeds the companion's faithful cap at eps1 = 0)
+  - the geodesic anchor survives adversarial refutation lanes
+  domain:
+  - accessible-source claims about the MESb branch
+  frame_convention: covariant CMB-frame multipole bounds (MES convention)
+  branch_convention: SOURCE_NOT_TYPED
+  proof_method: resolve frozen typed source reference without readjudication
+  proof_artifact: docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-legacy-sig-mes-mesb-trace
+  executable_evidence:
+  - tests/contracts/test_pillar_t_core.py::test_legacy_t_inventory_is_exact
+  counterexample_boundary:
+  - No new PR-269 proof is asserted; the frozen source premises and limitations remain authoritative.
+  verdict: REFERENCE_RESOLVED_NOT_READJUDICATED
+  claim_ceiling: diagnostic_only
+- proof_id: PR269-TF-01-PARITY-TYPING
+  obligation_id: TF-01-PARITY-TYPING
+  source_identity:
+    kind: proposal_registry_rows
+    id: I-1.1
+    statement_identity_sha256: 415a855585eee4e019c6e7cc314c763c2d2bb950cf4970ef238cc3d893b6008d
+    evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#I-1.1
+  relation_to_source: EXACT_REGISTERED_ORACLE_STATEMENT
+  statement: Under sigma -> R sigma R^T, beta -> R beta, and omega -> det(R) R omega, the axial Krylov
+    determinant det[omega, sigma omega, sigma^2 omega] is an O(3) scalar, while the polar analogue
+    is a pseudoscalar.
+  statement_identity_sha256: c4e930d1b0eb0c27a6ea99ff975006ff4fee0ac8d70c1199c31ab64a2b984613
+  assumptions:
+  - sigma is a real spatial symmetric trace-free rank-two tensor
+  - omega is axial and beta is polar under the same O(3) action
+  - the Krylov determinants use columns v, sigma v, and sigma squared v
+  domain:
+  - real three-dimensional O(3) representation
+  frame_convention: ACTIVE_CARTESIAN_O3_ACTION_V1
+  branch_convention: REAL_FINITE_REGISTERED_BRANCH
+  proof_method: determinant parity bookkeeping
+  proof_artifact: docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-tf-01-parity-typing
+  executable_evidence:
+  - tests/contracts/test_pillar_t_core.py::test_tf_analytic_core_boundaries
+  counterexample_boundary:
+  - axial omega is silently transformed as a polar vector
+  - the determinant parity type is erased before a reflection
+  verdict: PROVED_ANALYTIC
+  claim_ceiling: diagnostic_only
+- proof_id: PR269-TF-02-CATALOGUE-COMPLETION
+  obligation_id: TF-02-CATALOGUE-COMPLETION
+  source_identity:
+    kind: proposal_registry_rows
+    id: I-2.5
+    statement_identity_sha256: e473d3ba88f671a8d1cc162bff6a569ae3cd10ec54150b0feb9c508aeffffbfb
+    evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#I-2.5
+  relation_to_source: EXACT_RESTRICTED_WITNESS_ONLY
+  statement: At the registered witness the v2 catalogue does not separate (sigma, omega) from (sigma,
+    -omega); the axial Krylov determinant does, and the two states lie in distinct SO(3) orbits because
+    the computed Klein four stabilizer contains no map from omega to -omega.
+  statement_identity_sha256: cfb624a9a37346435631941a068371ec19b10126088ab7c8edecb67fc5cc2f35
+  assumptions:
+  - sigma is diag(1, 2, -3), beta is zero, and omega is (1, 2, 3)
+  - comparison uses omega and minus omega under the registered SO(3) action
+  - the residual stabilizer is computed from the commutant
+  domain:
+  - the registered off-principal-stratum beta-equals-zero witness only
+  frame_convention: REGISTERED_SO3_WITNESS_FRAME
+  branch_convention: REAL_FINITE_REGISTERED_BRANCH
+  proof_method: exact registered witness and finite residual-stabilizer enumeration
+  proof_artifact: docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-tf-02-catalogue-completion
+  executable_evidence:
+  - tests/contracts/test_pillar_t_core.py::test_tf_analytic_core_boundaries
+  counterexample_boundary:
+  - generic beta where the witness premise does not hold
+  - an arbitrary odd non-invariant used as a separating coordinate
+  - a claimed stabilizer not computed from the commutant
+  verdict: RESTRICTED_WITNESS_CONFIRMED
+  claim_ceiling: diagnostic_only
+- proof_id: PR269-TF-07-BUDGET-MORPHOLOGY-SPLIT
+  obligation_id: TF-07-BUDGET-MORPHOLOGY-SPLIT
+  source_identity:
+    kind: proposal_registry_rows
+    id: I-3.1
+    statement_identity_sha256: 829ca929285ca36083db983171c328689c42be7627b8e0d45419fc9224cacbfd
+    evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#I-3.1
+  relation_to_source: TYPED_ELABORATION_WITH_EXPLICIT_PREMISES
+  statement: A budget that factors through the four registered named invariants is constant on their
+    common fibres and has zero directional derivative along tangent vectors annihilated by all four
+    differentials.
+  statement_identity_sha256: 1d6475c2d3ca777d6b93a394b13122cc53857c0cd382c07c2581c776df587886
+  assumptions:
+  - the registered budget factors through tr_sigma2, omega2, beta2, and delta_omega_k
+  - the budget is differentiable at the evaluated state
+  - tangent directions annihilate all four named invariant differentials
+  domain:
+  - regular points of the common level sets of the four named invariants
+  frame_convention: REGISTERED_KINEMATIC_INVARIANT_COORDINATES
+  branch_convention: REAL_FINITE_REGISTERED_BRANCH
+  proof_method: factorization through named invariants and the chain rule
+  proof_artifact: docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-tf-07-budget-morphology-split
+  executable_evidence:
+  - tests/contracts/test_pillar_t_core.py::test_tf_analytic_core_boundaries
+  counterexample_boundary:
+  - a budget with explicit helicity or other morphology dependence
+  - a singular point where the declared differential statement is unavailable
+  - replacing named factorization with a polynomial-degree claim
+  verdict: PROVED_CONDITIONAL_ANALYTIC
+  claim_ceiling: diagnostic_only
+- proof_id: PR269-TF-08-PRODUCT-GAUGE-MAX
+  obligation_id: TF-08-PRODUCT-GAUGE-MAX
+  source_identity:
+    kind: proposal_registry_rows
+    id: II-2.1
+    statement_identity_sha256: 5295198b8114e1d6e4883d7f306715ecf0d5fc72065f4cc329558fad4ba2bbf1
+    evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#II-2.1
+  relation_to_source: EXACT_ANALYTIC_STATEMENT
+  statement: The gauge of the Cartesian product anchor body is the maximum of the sector gauges, and
+    its exceedance is max(rho - 1, 0).
+  statement_identity_sha256: cd1ae40daa20e55b4e41470f83ba692a40e296683f252416beaea16de3bb5946
+  assumptions:
+  - each sector body is a nonempty closed centered norm ball
+  - every sector radius is finite and strictly positive
+  - the joint anchor is the Cartesian product of the sector bodies
+  domain:
+  - finite direct product of the registered sector normed spaces
+  frame_convention: FRAME_FREE_PRODUCT_NORMED_SPACE
+  branch_convention: REAL_FINITE_REGISTERED_BRANCH
+  proof_method: Cartesian-product membership and Minkowski-gauge definition
+  proof_artifact: docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-tf-08-product-gauge-max
+  executable_evidence:
+  - tests/contracts/test_pillar_t_core.py::test_tf_analytic_core_boundaries
+  counterexample_boundary:
+  - a nonpositive or nonfinite sector radius
+  - a coupled non-product joint anchor
+  - a nonabsorbing sector body with a nonfinite gauge
+  verdict: PROVED_ANALYTIC
+  claim_ceiling: diagnostic_only
+- proof_id: PR269-TF-12-ACCELERATION-EULER-SLAVING
+  obligation_id: TF-12-ACCELERATION-EULER-SLAVING
+  source_identity:
+    kind: proposal_registry_rows
+    id: I-4.1
+    statement_identity_sha256: e18afc8e39a7af15870ec465ea31d5021b87db01874c5c71d5355784c6b74c42
+    evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#I-4.1
+  relation_to_source: CONDITIONAL_ANALYTIC_SHAPE_ONLY
+  statement: A/Theta = -[cs2/(1+w)] D ln(mu)/Theta. If eps_g is the exact norm of D ln(mu)/Theta then
+    A2_std = (3/2)[cs2/(1+w)]^2 eps_g^2; if eps_g is only an upper bound, the corresponding relation
+    is an upper bound on A2_std.
+  statement_identity_sha256: 485736a889b71a3370ce7c78b4b685d328de56978802492c9889574de175a590
+  assumptions:
+  - perfect fluid
+  - no heat flux
+  - no anisotropic stress
+  - barotropic pressure with declared sound-speed convention
+  - one declared spatial gradient and congruence convention
+  - mu is strictly positive
+  - mu plus p is nonzero, equivalently 1 plus w is nonzero
+  domain:
+  - finite fluid variables with mu greater than zero and w not equal to minus one
+  frame_convention: DECLARED_PERFECT_FLUID_CONGRUENCE
+  branch_convention: REAL_FINITE_REGISTERED_BRANCH
+  proof_method: perfect-fluid momentum equation and normalization conversion
+  proof_artifact: docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-tf-12-acceleration-euler-slaving
+  executable_evidence:
+  - tests/contracts/test_pillar_t_core.py::test_tf_analytic_core_boundaries
+  counterexample_boundary:
+  - vacuum or a nonpositive mu where ln(mu) is unavailable
+  - w equals minus one so the Euler denominator vanishes
+  - heat flux, anisotropic stress, or nonbarotropic pressure terms are present
+  verdict: PROVED_CONDITIONAL_ANALYTIC
+  claim_ceiling: diagnostic_only
+- proof_id: PR269-VT-T1
+  obligation_id: VT-T1
+  source_identity:
+    kind: vt_theorem_obligations
+    id: VT-T1
+    statement_identity_sha256: fe86f771d3f376c34ee82f36d491cd1fa4fd1655134ae3a9158b075059984311
+    evidence_path: docs/research_program/vector_tensor/VECTOR_TENSOR_PROOF_PROGRAM_V1.yaml#VT-T1
+  relation_to_source: TYPED_ELABORATION_WITH_EXPLICIT_PREMISES
+  statement: Sigma2 = (sigma_ab sigma^ab)/(6 H^2) = (3/2) ||sigma/Theta||_F^2, and W2 = (omega_ab
+    omega^ab)/(6 H^2) = (omega_a omega^a)/(3 H^2) = 3 ||omega/Theta||_2^2.
+  statement_identity_sha256: d06b417cb8e484f07dca31aa666abf65e15e2f1165cf3957e90449c14dfeb832
+  assumptions:
+  - H is finite and strictly positive and Theta equals 3 H
+  - sigma_ab is a spatial symmetric trace-free tensor
+  - omega_ab is a spatial antisymmetric two-form with spatial dual omega_a
+  domain:
+  - real finite components with H greater than zero
+  frame_convention: DECLARED_SPATIAL_METRIC_AND_CONGRUENCE
+  branch_convention: REAL_FINITE_PRINCIPAL_BRANCH
+  proof_method: index contraction and convention-exact algebra
+  proof_artifact: docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-vt-t1
+  executable_evidence:
+  - tests/contracts/test_pillar_t_core.py::test_vt_analytic_core_exact_vectors
+  - tests/contracts/test_pillar_t_core.py::test_vt_analytic_core_mutations_refuse
+  counterexample_boundary:
+  - H or Theta zero
+  - non-spatial or non-STF shear
+  - polar rather than axial vorticity-vector convention
+  verdict: PROVED_ANALYTIC
+  claim_ceiling: diagnostic_only
+- proof_id: PR269-VT-T2
+  obligation_id: VT-T2
+  source_identity:
+    kind: vt_theorem_obligations
+    id: VT-T2
+    statement_identity_sha256: a5f3d5226a5a378030dfdcdd9b11d47edc4306d5967b8e01872a2017d7405dea
+    evidence_path: docs/research_program/vector_tensor/VECTOR_TENSOR_PROOF_PROGRAM_V1.yaml#VT-T2
+  relation_to_source: TYPED_ELABORATION_WITH_EXPLICIT_PREMISES
+  statement: p_{A(g y)}(g k) = p_{A(y)}(k)
+  statement_identity_sha256: e7366d5ead77747de81d140d15fd8fc749457f334e48a9aa2c74283a4b57df0a
+  assumptions:
+  - g is an invertible linear action on the typed state space
+  - each anchor body is nonempty, closed, convex, absorbing, and contains zero
+  - A(g y) equals g A(y)
+  domain:
+  - finite-dimensional real typed state space
+  frame_convention: FRAME_FREE_TYPED_LINEAR_ACTION
+  branch_convention: REAL_FINITE_PRINCIPAL_BRANCH
+  proof_method: Minkowski-gauge definition under an invertible linear action
+  proof_artifact: docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-vt-t2
+  executable_evidence:
+  - tests/contracts/test_pillar_t_core.py::test_vt_analytic_core_exact_vectors
+  - tests/contracts/test_pillar_t_core.py::test_vt_analytic_core_mutations_refuse
+  counterexample_boundary:
+  - non-invertible g
+  - action-equivariance failure
+  - non-absorbing body where the gauge is not finite
+  verdict: PROVED_ANALYTIC
+  claim_ceiling: diagnostic_only
+- proof_id: PR269-VT-T3
+  obligation_id: VT-T3
+  source_identity:
+    kind: vt_theorem_obligations
+    id: VT-T3
+    statement_identity_sha256: f2038997357b5de5b1b7df62733b52b1341e6ff7180688b9be7264fa838cde3d
+    evidence_path: docs/research_program/vector_tensor/VECTOR_TENSOR_PROOF_PROGRAM_V1.yaml#VT-T3
+  relation_to_source: TYPED_ELABORATION_WITH_EXPLICIT_PREMISES
+  statement: p_A(k) = sup_{phi in A_polar} abs(phi(k))
+  statement_identity_sha256: f6844b742f93d764f137c441aaf2e9f78bb1853b8af6f124b3dd6c1670f84059
+  assumptions:
+  - A is closed, convex, balanced, absorbing, and contains zero
+  - A_polar is defined by absolute dual pairing at most one
+  domain:
+  - finite-dimensional real vector space and algebraic dual
+  frame_convention: FRAME_FREE_DUAL_PAIRING
+  branch_convention: REAL_FINITE_PRINCIPAL_BRANCH
+  proof_method: finite-dimensional bipolar and support-function duality
+  proof_artifact: docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-vt-t3
+  executable_evidence:
+  - tests/contracts/test_pillar_t_core.py::test_vt_analytic_core_exact_vectors
+  - tests/contracts/test_pillar_t_core.py::test_vt_analytic_core_mutations_refuse
+  counterexample_boundary:
+  - non-balanced A with an absolute-polar definition
+  - non-closed or non-absorbing A without the required gauge closure
+  verdict: PROVED_ANALYTIC
+  claim_ceiling: diagnostic_only
+- proof_id: PR269-VT-T4
+  obligation_id: VT-T4
+  source_identity:
+    kind: vt_theorem_obligations
+    id: VT-T4
+    statement_identity_sha256: aa2808551553e475a15d1b0ec2dbb45621c50edbfda88c49e67a89bd4e5f725e
+    evidence_path: docs/research_program/vector_tensor/VECTOR_TENSOR_PROOF_PROGRAM_V1.yaml#VT-T4
+  relation_to_source: TYPED_ELABORATION_WITH_EXPLICIT_PREMISES
+  statement: x_phi <= p_A(k), so each typed directional stress is a certified lower bound
+  statement_identity_sha256: 5b3e95508f9abca12a46e2bf35c573409f614443b98a42b89e7e99210963c364
+  assumptions:
+  - the VT-T3 anchor and polar premises hold
+  - x_phi is typed as abs(phi(k)) for phi in A_polar
+  domain:
+  - admissible directional functionals in the registered polar body
+  frame_convention: FRAME_FREE_DUAL_PAIRING
+  branch_convention: REAL_FINITE_PRINCIPAL_BRANCH
+  proof_method: polar membership inequality and supremum ordering
+  proof_artifact: docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-vt-t4
+  executable_evidence:
+  - tests/contracts/test_pillar_t_core.py::test_vt_analytic_core_exact_vectors
+  - tests/contracts/test_pillar_t_core.py::test_vt_analytic_core_mutations_refuse
+  counterexample_boundary:
+  - phi outside A_polar
+  - signed phi(k) relabelled as the nonnegative x_phi
+  - point estimate relabelled as a global equality
+  verdict: PROVED_ANALYTIC
+  claim_ceiling: diagnostic_only
+- proof_id: PR269-VT-T9
+  obligation_id: VT-T9
+  source_identity:
+    kind: vt_theorem_obligations
+    id: VT-T9
+    statement_identity_sha256: b33994613f9fa7b26f4546732b3e5470f831698d04b62b9f1578cf8792567e9d
+    evidence_path: docs/research_program/vector_tensor/VECTOR_TENSOR_PROOF_PROGRAM_V1.yaml#VT-T9
+  relation_to_source: TYPED_ELABORATION_WITH_EXPLICIT_PREMISES
+  statement: A polar vector transforms as R v and an axial vector as det(R) R w; polar-polar and axial-axial
+    contractions are scalars, while polar-axial contraction is a pseudoscalar. Proper rotations preserve
+    all contractions and reflections flip only pseudoscalars.
+  statement_identity_sha256: 606794846644e0e80a4674877c800c83f82976c2a27970e2428304ba68b4419d
+  assumptions:
+  - R is orthogonal in three spatial dimensions
+  - polar and axial slots retain their parity types
+  domain:
+  - O(3), with SO(3) as the determinant-positive subgroup
+  frame_convention: ACTIVE_CARTESIAN_O3_ACTION_V1
+  branch_convention: REAL_FINITE_PRINCIPAL_BRANCH
+  proof_method: determinant bookkeeping in the O(3) representation
+  proof_artifact: docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-vt-t9
+  executable_evidence:
+  - tests/contracts/test_pillar_t_core.py::test_vt_analytic_core_exact_vectors
+  - tests/contracts/test_pillar_t_core.py::test_vt_analytic_core_mutations_refuse
+  counterexample_boundary:
+  - erasing polar or axial type
+  - treating an O(3) reflection as an SO(3) action
+  verdict: PROVED_ANALYTIC
+  claim_ceiling: diagnostic_only
+- proof_id: PR269-VT-T10
+  obligation_id: VT-T10
+  source_identity:
+    kind: vt_theorem_obligations
+    id: VT-T10
+    statement_identity_sha256: 01bb50795b0f36e2d00f3660f7f4f1e508f2b7fc543ed5026e129a055575cd3a
+    evidence_path: docs/research_program/vector_tensor/VECTOR_TENSOR_PROOF_PROGRAM_V1.yaml#VT-T10
+  relation_to_source: TYPED_ELABORATION_WITH_EXPLICIT_PREMISES
+  statement: k = r u with r = p_A(k), u = k/r, and p_A(u) = 1; r and u are unique. The group orbit
+    of u is the normalized orbit shape.
+  statement_identity_sha256: 2a051f7d2e05b43fd5ee4aded07958937ed540d25915b908e21f6186ef3f352c
+  assumptions:
+  - A is a group-invariant gauge body
+  - k is nonzero and r = p_A(k) is finite and strictly positive
+  domain:
+  - nonzero finite-gauge states
+  frame_convention: REGISTERED_GROUP_ACTION_ON_TYPED_STATE_SPACE
+  branch_convention: REAL_FINITE_PRINCIPAL_BRANCH
+  proof_method: positive one-homogeneity and normalization uniqueness
+  proof_artifact: docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-vt-t10
+  executable_evidence:
+  - tests/contracts/test_pillar_t_core.py::test_vt_analytic_core_exact_vectors
+  - tests/contracts/test_pillar_t_core.py::test_vt_analytic_core_mutations_refuse
+  counterexample_boundary:
+  - k equals zero
+  - gauge has a nontrivial null direction
+  - A is not group invariant when orbit invariance is claimed
+  verdict: PROVED_ANALYTIC
+  claim_ceiling: diagnostic_only
