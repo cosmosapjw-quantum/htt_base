@@ -17,6 +17,7 @@ The implementation keeps five distinctions explicit:
 from __future__ import annotations
 
 from dataclasses import dataclass
+from decimal import Decimal, localcontext
 from enum import Enum
 from fractions import Fraction
 import hashlib
@@ -275,6 +276,86 @@ def _exact_float_rank(values: np.ndarray) -> int:
         if rank == row_count:
             break
     return rank
+
+
+def _exact_float_quadratic_solve(
+    matrix: np.ndarray,
+    vector: np.ndarray,
+) -> Fraction:
+    coefficients = _exact_float_matrix(matrix)
+    right = [Fraction.from_float(float(value)) for value in vector]
+    size = len(coefficients)
+    augmented = [
+        [*row, right[index]]
+        for index, row in enumerate(coefficients)
+    ]
+    for column in range(size):
+        pivot = next(
+            (
+                row
+                for row in range(column, size)
+                if augmented[row][column] != 0
+            ),
+            None,
+        )
+        if pivot is None:
+            raise VectorTensorStatisticalFoundationError(
+                "active covariance body is rank deficient"
+            )
+        augmented[column], augmented[pivot] = (
+            augmented[pivot],
+            augmented[column],
+        )
+        pivot_value = augmented[column][column]
+        augmented[column] = [
+            value / pivot_value for value in augmented[column]
+        ]
+        for row in range(size):
+            if row == column or augmented[row][column] == 0:
+                continue
+            multiplier = augmented[row][column]
+            augmented[row] = [
+                left - multiplier * right_value
+                for left, right_value in zip(
+                    augmented[row], augmented[column], strict=True
+                )
+            ]
+    solution = tuple(row[-1] for row in augmented)
+    quadratic = sum(
+        (
+            Fraction.from_float(float(value)) * solved
+            for value, solved in zip(vector, solution, strict=True)
+        ),
+        Fraction(0, 1),
+    )
+    if quadratic < 0:
+        raise VectorTensorStatisticalFoundationError(
+            "ellipsoid quadratic form became negative"
+        )
+    return quadratic
+
+
+def _sqrt_fraction_to_float(value: Fraction, name: str) -> float:
+    if value == 0:
+        return 0.0
+    with localcontext() as context:
+        context.prec = 80
+        context.Emax = 999_999_999
+        context.Emin = -999_999_999
+        root = (
+            Decimal(value.numerator) / Decimal(value.denominator)
+        ).sqrt()
+    try:
+        result = float(root)
+    except (TypeError, ValueError, OverflowError) as exc:
+        raise VectorTensorStatisticalFoundationError(
+            f"{name} must remain finite and representable"
+        ) from exc
+    if not math.isfinite(result) or result == 0.0:
+        raise VectorTensorStatisticalFoundationError(
+            f"{name} must remain finite and representable"
+        )
+    return result
 
 
 def _canonical_sha256(value: object) -> str:
@@ -773,12 +854,13 @@ class AcceptanceBodySpec:
                 raise VectorTensorStatisticalFoundationError(
                     "covariance must be exactly symmetric"
                 )
-            try:
-                np.linalg.cholesky(matrix)
-            except np.linalg.LinAlgError as exc:
+            if (
+                not _exact_float_psd(matrix)
+                or _exact_float_rank(matrix) != len(labels)
+            ):
                 raise VectorTensorStatisticalFoundationError(
                     "covariance ellipsoid requires positive-definite covariance"
-                ) from exc
+                )
             object.__setattr__(
                 self,
                 "covariance",
@@ -834,18 +916,12 @@ def evaluate_acceptance_gauge(
     if spec.kind is AcceptanceBodyKind.COVARIANCE_ELLIPSOID:
         covariance = np.asarray(spec.covariance, dtype=float)
         subcovariance = covariance[np.ix_(active_indices, active_indices)]
-        try:
-            solved = np.linalg.solve(subcovariance, active_values)
-        except np.linalg.LinAlgError as exc:
-            raise VectorTensorStatisticalFoundationError(
-                "active covariance body is rank deficient"
-            ) from exc
-        quadratic = float(active_values @ solved)
-        if quadratic < -128.0 * np.finfo(float).eps:
-            raise VectorTensorStatisticalFoundationError(
-                "ellipsoid quadratic form became negative"
-            )
-        q_value = math.sqrt(max(0.0, quadratic))
+        quadratic = _exact_float_quadratic_solve(
+            subcovariance, active_values
+        )
+        q_value = _sqrt_fraction_to_float(
+            quadratic, "ellipsoid gauge"
+        )
     else:
         radii = np.asarray(spec.radii, dtype=float)[np.asarray(active_indices)]
         q_value = float(np.max(np.abs(active_values) / radii))

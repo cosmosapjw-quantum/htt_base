@@ -393,6 +393,51 @@ def test_vt_s2_rank_symmetry_and_dimension_mutations_refuse() -> None:
             coordinate_labels=("x",),
             radii=(10**10000,),
         )
+    with pytest.raises(
+        VectorTensorStatisticalFoundationError,
+        match="positive-definite",
+    ):
+        AcceptanceBodySpec(
+            body_id="PR271-INDEFINITE",
+            kind=AcceptanceBodyKind.COVARIANCE_ELLIPSOID,
+            coordinate_labels=("x", "y"),
+            covariance=((1.0, 2.0), (2.0, 1.0)),
+        )
+
+
+def test_vt_s2_exact_spd_gate_accepts_cholesky_counterexample() -> None:
+    covariance = (
+        (1.0, 0.9999999999999997, 0.9999999999999999),
+        (0.9999999999999997, 1.0, 0.9999999999999999),
+        (0.9999999999999999, 0.9999999999999999, 1.0),
+    )
+    exact = tuple(
+        tuple(Fraction.from_float(value) for value in row)
+        for row in covariance
+    )
+    leading_two = (
+        exact[0][0] * exact[1][1] - exact[0][1] * exact[1][0]
+    )
+    determinant = (
+        exact[0][0]
+        * (exact[1][1] * exact[2][2] - exact[1][2] * exact[2][1])
+        - exact[0][1]
+        * (exact[1][0] * exact[2][2] - exact[1][2] * exact[2][0])
+        + exact[0][2]
+        * (exact[1][0] * exact[2][1] - exact[1][1] * exact[2][0])
+    )
+    assert exact[0][0] > 0
+    assert leading_two > 0
+    assert determinant > 0
+    body = AcceptanceBodySpec(
+        body_id="PR271-EXACT-SPD",
+        kind=AcceptanceBodyKind.COVARIANCE_ELLIPSOID,
+        coordinate_labels=("x", "y", "z"),
+        covariance=covariance,
+    )
+    report = evaluate_acceptance_gauge(body, (1.0, -1.0, 0.0))
+    assert math.isfinite(report.q_value)
+    assert report.q_value > 0.0
 
 
 def _null_profile():
