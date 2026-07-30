@@ -1,0 +1,4382 @@
+schema: htt.theorem_signatures.v3
+status: REGISTERED
+authority: PR-268
+scientific_status_effect: none
+claim_ceiling: diagnostic_only
+proof_adjudication_status: NOT_ADJUDICATED
+counting_rule: registry rows and oracle PASS are not theorem counts
+frozen_sources:
+- path: docs/research_program/THEOREM_SIGNATURES_V2.yaml
+  sha256: 4e43de815088b372cac82e889fe86b55c815f327af231611336b11ebb8a487d9
+- path: htt/src/common/theorem_signatures.py
+  sha256: 214edec76e6deb8c2064b7edb5765a683213b552783baebe6be1b902fa0e160e
+- path: docs/research_program/vector_tensor/PROGRAM_INTAKE_REGISTRY_V1.yaml
+  sha256: b6964771c50c483e7697b087b9f058a3fd7d20ec893475a056608b852fdeb677
+- path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml
+  sha256: 01e278c2223c7f117b429a3359dbc3d483ce0ef409bbb06140b62a9ca3b2f201
+- path: docs/research_program/vector_tensor/tensor_foundations_oracle_proposal.py
+  sha256: ddd819323642f5b86e26ee8cad2c9e0bca9175ab842aa66ac4fc81d0c20eb444
+cardinality_aliases:
+  requested_pillar_T_65: legacy_signature_inventory
+  requested_pillar_S_58: proposal_registry_rows
+  semantic_guard: legacy 65 = 31 T + 34 S; proposal 58 = 30 I + 24 II + 4 BRIDGE
+source_groups:
+  legacy_signature_inventory:
+    expected_count: 65
+    source_partition_counts:
+      T: 31
+      S: 34
+    entries:
+    - entry_id: SIG-P1
+      source_group: legacy_signature_inventory
+      source_partition: S
+      statement_status: TITLE_ONLY
+      statement: Signed comparator identity and Domain-checked semantics
+      statement_identity_sha256: 491a24ee5397886ffd1d0c72d02cb16641b0dd9bc93bab402c382bc19a5e6778
+      source_record_sha256: 496f0b44ab6358e6c8fd85044d5f1381d64ecd3008ea7d49719500c7394ed471
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: MIO/common
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P1
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-P2
+      source_group: legacy_signature_inventory
+      source_partition: S
+      statement_status: TITLE_ONLY
+      statement: Diagnostic variables Q, F, Pi, G_F, and P_post are distinct
+      statement_identity_sha256: 50227383aa6f260a8aa16df45a27ee46bfad67f9799a0d61d00048793d25e8f1
+      source_record_sha256: 17e9f8ba8af49890879335b14c90edebb33db5efb5ba7e8024de0203daab50d7
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: MIO/HTT/common
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P2
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-P3
+      source_group: legacy_signature_inventory
+      source_partition: T
+      statement_status: TITLE_ONLY
+      statement: Diagonal MES three-bound hierarchy
+      statement_identity_sha256: 00c0fd823ebbce03290bc4c949864afb44238f610ea0c5f2137450787ed67d74
+      source_record_sha256: 71f64b021a0c2e11c72f37fca1b4465cb61477888ba1d34d5f741e3b0ae3ab22
+      assumption_status: DECLARED
+      assumptions:
+      - linearized almost-EGS covariant multipole hierarchy
+      - diagonal (uncorrelated) bound combination
+      - MES reduction assumptions C1 (spatial <= time derivative) and C2 (Theta t_R ~ 3)
+      - admissibility ordering B_sigma > B_omega > B_accel (module raises otherwise)
+      domain_status: DECLARED
+      domains:
+      - strictly positive multipole triples satisfying the hierarchy ordering
+      frame_status: DECLARED
+      frame_convention: covariant CMB-frame multipole bounds (MES convention)
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: DECLARED
+      perturbative_order: linear in kinematic quantities
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: BASS/MIO
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P3
+      source_status: CHECKED
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-P4
+      source_group: legacy_signature_inventory
+      source_partition: T
+      statement_status: TITLE_ONLY
+      statement: Frame-attribution safe-route correction
+      statement_identity_sha256: 6d0944cc64657deda7cabb87fa78566b1deee9a0f483c8316473bac8cfadcdf6
+      source_record_sha256: 7304743cc111761d742ec28d591e9e0c8169afec93a96e5c27e8a56f1b1aafca
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: BASS/MIO
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P4
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-P5
+      source_group: legacy_signature_inventory
+      source_partition: T
+      statement_status: TITLE_ONLY
+      statement: Conditional Bianchi V momentum-response formula
+      statement_identity_sha256: 307ea01ec9cb887164561670ec3553b0c633f2e111fe91319049a6b3f544d00b
+      source_record_sha256: e795f246101feb93682493a7e496910473521dfd2481910f9b80e7494cd431c7
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: BASS/MIO
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P5
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-P6
+      source_group: legacy_signature_inventory
+      source_partition: T
+      statement_status: TITLE_ONLY
+      statement: Flat-FLRW first jet
+      statement_identity_sha256: 9073bbea90cd6a8f00df21c7b747505f4a3b0457f054b0b477562db670fb7f32
+      source_record_sha256: ea95946cecefaf48ed55b914920b295bd45f9e25bd17c150769d1075990c601e
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: BASS/OBSSTAT
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P6
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-P7
+      source_group: legacy_signature_inventory
+      source_partition: T
+      statement_status: TITLE_ONLY
+      statement: Non-collinear boost composition and first-jet separation
+      statement_identity_sha256: 570af4956379820f7d96aa49e67954980b5b15a83f555ed01b31634f99ff8c39
+      source_record_sha256: f77176fd5b634b3de2c0820a58a6efb3d0139e26b64ee7418a4c637f15a5a6d1
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: BASS/OBSSTAT
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P7
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-P8
+      source_group: legacy_signature_inventory
+      source_partition: S
+      statement_status: TITLE_ONLY
+      statement: Response rank and duplicated channels
+      statement_identity_sha256: 76faae226e63f7fb9a181e03b6e5fa9964d64968630e2d947bbdb1249e962b0e
+      source_record_sha256: 06f8dcf5c874e55e5edaea3c6d4d2d67c78c1ceccd32e5ca13aefbd0f6de66ff
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: HTT/OBSSTAT
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P8
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-P9
+      source_group: legacy_signature_inventory
+      source_partition: T
+      statement_status: TITLE_ONLY
+      statement: Radial-vorticity blindness
+      statement_identity_sha256: f21f61cfe40a209485c0e5d0dc70682ec6c36ca19581e3382f638454a61702d9
+      source_record_sha256: d4809f2d9255aebf04dfb446f853dc07ffcfbb8ad5aa067316b76b48054ea280
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: OBSSTAT/HTT
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P9
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-P10
+      source_group: legacy_signature_inventory
+      source_partition: S
+      statement_status: TITLE_ONLY
+      statement: Single-shell degeneracy and broad-depth rank recovery
+      statement_identity_sha256: d190f9bcfa5cb7198e19d6ccad994f8cdf716085948eff9a00d18dc66988a157
+      source_record_sha256: e015755253b155d57e5a04da71e666e2c4b42e31197a2ed249b723f5e43caa42
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: OBSSTAT/HTT
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P10
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-P11
+      source_group: legacy_signature_inventory
+      source_partition: T
+      statement_status: TITLE_ONLY
+      statement: PSD second-moment cone
+      statement_identity_sha256: b5e094a1f44db17e7787c5c7fa4bf192a72fb75112ca7e0315d5b54cbb8dcaa9
+      source_record_sha256: 9a14e2c3725668e76383ebb226c163e62c2c1cf00a7a76fc8734ab26f46fee73
+      assumption_status: DECLARED
+      assumptions:
+      - M = diag(g) is positive semidefinite on the genuine second-moment sectors {Sigma2, W2, Omega_tilt};
+        the signed Delta Omega_k component rides a separate signed carrier (global M >= 0 is NOT asserted)
+      - x_C = tr(C M) is linear in M (bit-identical to the scalar comparator)
+      - admissible set is the PSD moment cone intersected with registered ceilings
+      domain_status: DECLARED
+      domains:
+      - PSD cone with registered ceiling intersections
+      frame_status: DECLARED
+      frame_convention: comparator scalar sector (no sky frame)
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: DECLARED
+      perturbative_order: exact algebraic (no perturbative expansion)
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: BASS/HTT
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P11
+      source_status: CHECKED
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-P12
+      source_group: legacy_signature_inventory
+      source_partition: T
+      statement_status: TITLE_ONLY
+      statement: Scalar tilt trace is not sufficient
+      statement_identity_sha256: 4fef058a0342ef79cdb60ff3cdfe5e2890e297ece24abc4934726e2fe7a8b0da
+      source_record_sha256: 255d21c9aabb0e71687f7f54472acb1e8dd543d1b8107b5561bfc5e108edd81d
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: BASS/HTT
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P12
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-P13
+      source_group: legacy_signature_inventory
+      source_partition: T
+      statement_status: TITLE_ONLY
+      statement: Shear memory of anisotropic stress
+      statement_identity_sha256: b574b98d9aabb5b15313adae62ff8e849354dbdfa21dda2c7a1478fbf2711def
+      source_record_sha256: f036f89eb818ba2de22d5b0f00f019719735ba7a96cdf5733064a3dc8c648471
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: BASS/HTT
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P13
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-P14
+      source_group: legacy_signature_inventory
+      source_partition: T
+      statement_status: TITLE_ONLY
+      statement: Dust-FLRW oracle
+      statement_identity_sha256: 04d2374c14cb995702e1452b563f0bbcba57b001b488da35abb331e3942a2851
+      source_record_sha256: 3acb1ad36f1b3908e9a17249ef8782888da8bafbcc72e84b8783d2024c8cfc0f
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: BASS/HTT
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P14
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-P15
+      source_group: legacy_signature_inventory
+      source_partition: T
+      statement_status: TITLE_ONLY
+      statement: Quadrupole filling under registered closure
+      statement_identity_sha256: e38173585a3261bf339aee16619413b442ea063d820468b2060ec37ee9216792
+      source_record_sha256: 4e27de901d7db1b21f706be6dc04a8c2dbc737c56c2197c9676acd4f4ae29a23
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: OBSSTAT/MIO
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P15
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-P16
+      source_group: legacy_signature_inventory
+      source_partition: S
+      statement_status: TITLE_ONLY
+      statement: Single-sky sampling dispersion
+      statement_identity_sha256: 260c4c86bc225e2fc80a1365184cd665f9187054aab51807afd60174d17609a7
+      source_record_sha256: 4eb1b362a746e38081abd136e4a7a80724f70013b1fbc8d24fcc17662767f193
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: OBSSTAT
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P16
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-P17
+      source_group: legacy_signature_inventory
+      source_partition: S
+      statement_status: TITLE_ONLY
+      statement: Multi-ell Fisher floor and transfer-profile refinement
+      statement_identity_sha256: ea3c1e1cad7b62193f06f64edd0c340cd4c449fe8e0be61eafa6148af4d0da6d
+      source_record_sha256: 4acdc7cb891efa8baef3c603358d61051c6f2b048cdce87044fedbf04973c101
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: OBSSTAT/BASS
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P17
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-P18
+      source_group: legacy_signature_inventory
+      source_partition: S
+      statement_status: TITLE_ONLY
+      statement: Graded rank-2 comparator
+      statement_identity_sha256: 340a741d1ce0d01d3de805367202ae2d45a2af523d2aa3bacca35a191a053133
+      source_record_sha256: 7eec7b9abbbc7eee62a8ef693d1e9c1f94707353e61a9901fe3335524a572147
+      assumption_status: DECLARED
+      assumptions:
+      - the registered response map only is used (no transfer/mask extension)
+      - reachable eigen-directions have rank 2
+      - '{W2, Omega_k} is a joint structural null of the registered map'
+      domain_status: DECLARED
+      domains:
+      - registered response map on the graded comparator
+      frame_status: DECLARED
+      frame_convention: comparator scalar sector (no sky frame)
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: DECLARED
+      perturbative_order: exact algebraic
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: OBSSTAT/MIO
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P18
+      source_status: CHECKED
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-P19
+      source_group: legacy_signature_inventory
+      source_partition: S
+      statement_status: TITLE_ONLY
+      statement: Exceedance and e-value calibration
+      statement_identity_sha256: 0211e62b19d57f1764981d700668024123aeaad5fd19b1b5957c8798c874e5b3
+      source_record_sha256: f478a6c247469f25ea4a1f9ea3c68285f7543dccee5dd57b6d085ce140fc65d4
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: OBSSTAT/HTT
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P19
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-P20
+      source_group: legacy_signature_inventory
+      source_partition: S
+      statement_status: TITLE_ONLY
+      statement: Rao-Blackwell reachable-sector domination
+      statement_identity_sha256: 66c405e9998ddd78e0d2f0f019c8e8f01deff22cadae285de657ef83bfd4c685
+      source_record_sha256: abe6c86969b0e94f37dbd950749eb6e3b4ca18156c81c514fa179822cd6d74b9
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: OBSSTAT
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P20
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-P21
+      source_group: legacy_signature_inventory
+      source_partition: T
+      statement_status: TITLE_ONLY
+      statement: Volterra depth-memory representation
+      statement_identity_sha256: 70e7b6d6cd417813618e5f96629827bb7ecf952118e40f7c145a5634c81f553d
+      source_record_sha256: 6519b2d5b1d8269d92f9729345bd864b6f6ff34e03251d9c9748cf8a36a8fed3
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: OBSSTAT/MIO
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P21
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-P22
+      source_group: legacy_signature_inventory
+      source_partition: T
+      statement_status: TITLE_ONLY
+      statement: Transverse reopening of the vorticity sector
+      statement_identity_sha256: a5bf59b2873d07f3865184c9b10827d32aeea4da16cf3acafac277fa1b1be26f
+      source_record_sha256: 2d05b5e193dc9c5135b624a768cad9fa84da5584fa273dc8ca83881d37228632
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: OBSSTAT
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P22
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-P23
+      source_group: legacy_signature_inventory
+      source_partition: S
+      statement_status: TITLE_ONLY
+      statement: Diagonal covariance compression loses morphology
+      statement_identity_sha256: 3848fe99214bbbcfa6b86a84fa1274cb7dd7b4086cba68b41c61ebb84440f858
+      source_record_sha256: c28a1a18fa12ac8697e1652b34c0191e486278d56adaa791a49601449fbb5b17
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: OBSSTAT/BASS
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P23
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-P24
+      source_group: legacy_signature_inventory
+      source_partition: S
+      statement_status: TITLE_ONLY
+      statement: Full-covariance MES tightening
+      statement_identity_sha256: 77b91c26b74fe86db1c90d0ea8bcedf269ff60e38a5366e92598f4b615ac612a
+      source_record_sha256: e1e07314da072b495108e1ed7520408d9c049ee9655fd104037f6f8b49dd92a6
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: OBSSTAT/BASS/MIO
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P24
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-P25
+      source_group: legacy_signature_inventory
+      source_partition: S
+      statement_status: TITLE_ONLY
+      statement: Rank-failure no-result and morphology information gain
+      statement_identity_sha256: 9d3144235524f45645b4cf2c660f666961439121f30095178833edb9d64eebcd
+      source_record_sha256: 32fdde6052a1a4750be0e7ccb53e821c49dc1aee97dbee92394e8a46b9dff0f1
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: OBSSTAT/BASS/MIO
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P25
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-P26
+      source_group: legacy_signature_inventory
+      source_partition: S
+      statement_status: TITLE_ONLY
+      statement: Partial-identification interval for x_C (one-sided nonnegative cone)
+      statement_identity_sha256: ae10c1393f3684214d40f749ba32c308293282042cc4e09eda1f9a52c93e3915
+      source_record_sha256: 0aec3a8ab825f50409ef9c5a492fa8072796259d6652d35ef9f85767de18566e
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: MIO/OBSSTAT/HTT
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P26
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-P27
+      source_group: legacy_signature_inventory
+      source_partition: T
+      statement_status: TITLE_ONLY
+      statement: MES-rank route reconciliation
+      statement_identity_sha256: 449a7b0b4242264c26c7a6246a2ea655c7c6813fe1954c7c4f66b38369e65f6a
+      source_record_sha256: 3fecb1886a416c3b140207bf95f70bd7206d65e6897f1d342e1ee1b792c51c95
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: BASS/OBSSTAT/MIO
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P27
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-P28
+      source_group: legacy_signature_inventory
+      source_partition: S
+      statement_status: TITLE_ONLY
+      statement: Posterior prior-exposure under null directions
+      statement_identity_sha256: 8090ccd29c68314d34918b954e738d5baa0e12203f33bc41f03bd91048febb2e
+      source_record_sha256: 4d142532a122c288b109dc3c594e77f6537755942d1fe4beefb73524110f4ce6
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: HTT/MIO
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P28
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-P29
+      source_group: legacy_signature_inventory
+      source_partition: S
+      statement_status: TITLE_ONLY
+      statement: Finite-cover e-value combination
+      statement_identity_sha256: 13ebff00302dd8e3c7e1591ed8ce373878039673a881496d35688a63046edc18
+      source_record_sha256: f83752667d75dfb9020938741cf739859ff6107ba46e760fc56e5ae6a3e76721
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: OBSSTAT/HTT
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P29
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-P30
+      source_group: legacy_signature_inventory
+      source_partition: S
+      statement_status: TITLE_ONLY
+      statement: Parameter duplication versus observation duplication
+      statement_identity_sha256: 254ca71739ab4ca88f9ae9622e09862519ecf2fb5555ef5ee74eaab736eb3921
+      source_record_sha256: 58b1d592b00b0f26221b5dad1495c689cc39030512db6499f56e5e7a183894e9
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: OBSSTAT/HTT
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P30
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-P31
+      source_group: legacy_signature_inventory
+      source_partition: S
+      statement_status: TITLE_ONLY
+      statement: Identified-set sharpness over PSD and ceiling cones
+      statement_identity_sha256: f214cf4e9dbe8684c6292c52be8c803c676739bd6da8d42a1146ee2073db9e1f
+      source_record_sha256: 8f84872529fd48d044694269470e7f1cd46ab0af62190bde9d1d5617a21a124c
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: MIO/OBSSTAT
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P31
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-P32
+      source_group: legacy_signature_inventory
+      source_partition: T
+      statement_status: TITLE_ONLY
+      statement: Optical ansatz branch identifiability
+      statement_identity_sha256: d9f1a1622ce3317b56548548dfc8bb4a4d2ebdc573c33ee916f6bca549825f4b
+      source_record_sha256: 449e73d0f9de60e88676f30219ecafd4c0edc9b2582db9286502a45c1f26382b
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: HTT/OBSSTAT/BASS
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P32
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-P33
+      source_group: legacy_signature_inventory
+      source_partition: S
+      statement_status: TITLE_ONLY
+      statement: Depth-gap delta-method propagation
+      statement_identity_sha256: e4e683dfc7511a084ed72e9af0ad524217cea53da5909f704fd7132d24cafffd
+      source_record_sha256: a2090b5faa6a6c4524f212037d56df51d3084746f084e0448abd9c21140c96b9
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: MIO/HTT
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P33
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-P34
+      source_group: legacy_signature_inventory
+      source_partition: S
+      statement_status: TITLE_ONLY
+      statement: Vector-g response covariance propagation
+      statement_identity_sha256: 91deda6cfa56638ed561e10cecefbecc3c76de2b6faf394621fa155ec4434698
+      source_record_sha256: 0fa6e1535817b55135e0297f6920f666872d6585a2779cc4b341fe4698c2bf84
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: OBSSTAT/HTT/MIO
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P34
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-P35
+      source_group: legacy_signature_inventory
+      source_partition: S
+      statement_status: TITLE_ONLY
+      statement: Two-stage identified-set coverage with Imbens-Manski endpoint correction
+      statement_identity_sha256: fff15f6840f3bc27e6f53b0b5e87e67b92d766e6bc2130b072f9269cb7d3d304
+      source_record_sha256: 9eaf4244c5fb1aac74154471ce42eb0c557696e1176add189a0017ea4186e46b
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: OBSSTAT/MIO
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P35
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-P36
+      source_group: legacy_signature_inventory
+      source_partition: S
+      statement_status: TITLE_ONLY
+      statement: Joint-feasible-set depth-gap interval propagation ("strict whenever")
+      statement_identity_sha256: bfd792651193429bd0b8f16ee97cbb73ee6cca3a2511cb2f5e9728cabc3ed0fe
+      source_record_sha256: 5cc6ad9822e5cb0a7a191e12a0de6eb2422966a26f7a87052078f1daba3a67d5
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: MIO/OBSSTAT
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-P36
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-T1p
+      source_group: legacy_signature_inventory
+      source_partition: S
+      statement_status: TITLE_ONLY
+      statement: Signed-box two-branch identified interval (curvature signed, two-sided)
+      statement_identity_sha256: 2108d52681dc028371a217839f7f991bf2c725bffe8f1f0e7fc0495b3940d4e6
+      source_record_sha256: a308e1901a4d3ff962dd8d89346e051c69c5b931e4cbd0e0f8a6b057980e6573
+      assumption_status: DECLARED
+      assumptions:
+      - signed-box component model for the comparator budget
+      - two-branch split by curvature sign (open vs all-curvature)
+      - registered box ceilings
+      domain_status: DECLARED
+      domains:
+      - registered box bounds; branch intervals [11/100,17/100] and [9/100,17/100]
+      frame_status: DECLARED
+      frame_convention: comparator scalar sector (no sky frame)
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: DECLARED
+      perturbative_order: exact algebraic
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: OBSSTAT/MIO
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-T1p
+      source_status: CHECKED
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-DL1
+      source_group: legacy_signature_inventory
+      source_partition: S
+      statement_status: TITLE_ONLY
+      statement: Lower-gap monotonicity of the all-curvature branch (|c_k| U_k)
+      statement_identity_sha256: 423851358a0dbff7dfb1eb8c7d749215cb50737851c3a91d19f73f34a76facb9
+      source_record_sha256: e9fc331d89ca6634dc04e0692c81b74933cfd82e484df951fe18124f6fb1df07
+      assumption_status: DECLARED
+      assumptions:
+      - all-curvature branch lower endpoint x_lo(U_k_max) = x_lo(0) - |c_k| U_k_max
+      - upper endpoints of the two branches coincide
+      domain_status: DECLARED
+      domains:
+      - nonnegative curvature ceilings
+      frame_status: DECLARED
+      frame_convention: comparator scalar sector (no sky frame)
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: DECLARED
+      perturbative_order: exact algebraic
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: OBSSTAT/MIO
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-DL1
+      source_status: CHECKED
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-L-T2-EXIST
+      source_group: legacy_signature_inventory
+      source_partition: S
+      statement_status: TITLE_ONLY
+      statement: Existence-level depth-gap strictness lemma (some endpoint strict iff a shared component
+        conflicts)
+      statement_identity_sha256: 38163cb8b13a8fabf25d9587b9d7fedd07bbe87375e1c29d25190646affe5901
+      source_record_sha256: a9b555da81177a453f18326dbaa3543f3d24b2219046f1414fb2b6a7972e0954
+      assumption_status: DECLARED
+      assumptions:
+      - 'existence-level statement only: some endpoint is strict iff a registered sign condition holds'
+      - the retracted per-endpoint iff (T2p) is not implied
+      domain_status: DECLARED
+      domains:
+      - registered coefficient domain excluding zero denominators
+      frame_status: DECLARED
+      frame_convention: comparator scalar sector (no sky frame)
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: DECLARED
+      perturbative_order: exact algebraic
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: MIO/OBSSTAT
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-L-T2-EXIST
+      source_status: CHECKED
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-T2p
+      source_group: legacy_signature_inventory
+      source_partition: S
+      statement_status: TITLE_ONLY
+      statement: Depth-gap strictness per-endpoint iff via coefficient signs
+      statement_identity_sha256: c1f13d1f4d91158e5c148d0884c3cea02a07cbd9836ae72677a18c251017b184
+      source_record_sha256: 8dba8598c6677e8e22261720ceb8f783253b4d48f5a6a9e20af6f82fec62d056
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: MIO/OBSSTAT
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-T2p
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-T2pp
+      source_group: legacy_signature_inventory
+      source_partition: S
+      statement_status: TITLE_ONLY
+      statement: Signed-numerator domain repair of the fixed-pairing quotient interval
+      statement_identity_sha256: c2e60921a3211fbb2760d46311e2d21400e1e131c5619c9715da6324092cdb7c
+      source_record_sha256: e213ce0ff1c0b970d7f61a1b27e67987f0953232de4587e606aceaeca6218d4e
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: MIO/OBSSTAT
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-T2pp
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-T3-lin
+      source_group: legacy_signature_inventory
+      source_partition: T
+      statement_status: TITLE_ONLY
+      statement: Linearized realization of the identified-interval endpoints
+      statement_identity_sha256: a0827ccb07ac17624b1df5f7dfb560852e5ed861079b2b1d5e53c9e2c062a9d2
+      source_record_sha256: 7b98e92b27a9110c4d6039c61ec5d9f54923ce0838ac80afa5942172795b00db
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: BASS/OBSSTAT
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-T3-lin
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-T3-full
+      source_group: legacy_signature_inventory
+      source_partition: T
+      statement_status: TITLE_ONLY
+      statement: Exact constraint-surface endpoint witnesses (homogeneous initial-data candidates)
+      statement_identity_sha256: 5cb875c0f74c8b62c438c9b5ecd6b822e5cee64dfab97c6ae9cc5129434b93ed
+      source_record_sha256: 169b31fbf501a66c04ef02c464fecc1de2482cd79806f294214b4a1295a64740
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: BASS/OBSSTAT
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-T3-full
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-T3-int
+      source_group: legacy_signature_inventory
+      source_partition: T
+      statement_status: TITLE_ONLY
+      statement: Interior x_C-value family (two-segment exact sweep)
+      statement_identity_sha256: 3b6fa634cebc354f19a50dd7687d642fe9abe184641c946add07b3abedfd9bfb
+      source_record_sha256: 499b7b0f83aa485f182c251294df0ca20e0ca6a8e91e6ba85664283c333fb486
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: BASS/OBSSTAT
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-T3-int
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-T4p
+      source_group: legacy_signature_inventory
+      source_partition: S
+      statement_status: TITLE_ONLY
+      statement: Estimated-covariance residual test is Hotelling T^2 / F
+      statement_identity_sha256: ab4bb64439686714d0bf310acccc6ca2d7be218935faafd0b10807b99afd091d
+      source_record_sha256: b0c17d12d40e725c0a320b69bf8ebaed783b017eece2c52cd5a6d8693d600075
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: OBSSTAT
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-T4p
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-T5p
+      source_group: legacy_signature_inventory
+      source_partition: S
+      statement_status: TITLE_ONLY
+      statement: Exact deterministic-width Imbens-Manski endpoint coverage (special model)
+      statement_identity_sha256: 0ecb19f8d4082a22055569b13005b6fb27ec530dd568067c8145549e99822af5
+      source_record_sha256: e92f69c88c95c0a6c71e331436e6415d6088b28642eb91b84716244510bdec1c
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: OBSSTAT
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-T5p
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-T8p
+      source_group: legacy_signature_inventory
+      source_partition: S
+      statement_status: TITLE_ONLY
+      statement: Noncentral-chi-square power monotonicity
+      statement_identity_sha256: 0d0238ea2dfe90c644bab190f9de0d6b2ec2fd6904208965afb48ec448321ffb
+      source_record_sha256: d37390c7dab27b4cfcfb0ad29a76ca14a9c0cac084355b3d5bdb7dd74d8800ea
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: OBSSTAT
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-T8p
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-T9p
+      source_group: legacy_signature_inventory
+      source_partition: T
+      statement_status: TITLE_ONLY
+      statement: Multi-component tilt composition
+      statement_identity_sha256: d1963648f636e25a2f440c8ab667483430d773494391f25cfcac697f61840b55
+      source_record_sha256: b28509bbfa87ab3e6e93973cb94f6e9940d0f4920f973b7021f928d9cc06af19
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: OBSSTAT/BASS
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-T9p
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-MES-PROV
+      source_group: legacy_signature_inventory
+      source_partition: T
+      statement_status: TITLE_ONLY
+      statement: MES coefficient provenance (sigma rederived bit-exact; omega/accel primary-sourced print-only;
+        SAG1997 discrepancy documented)
+      statement_identity_sha256: 709185c38f89b4ce43aa7187486e0f1c2a05bedd5e93d0b7e2df886d3035c4d4
+      source_record_sha256: d1a7b1dafc60d1094df50d702b083e9c92ec3d0a10d6cc03f27199bc4cc20d26
+      assumption_status: DECLARED
+      assumptions:
+      - transcription authority of the SHA-archived MESa raw bounds (eq 51/52)
+      - 'C1: a spatial-gradient bound is <= the same-order time-derivative bound'
+      - 'C2: k-th time derivatives reduce by (1/(Theta t_R))^k with Theta t_R ~ 3'
+      domain_status: DECLARED
+      domains:
+      - MESa raw bound term lists as archived
+      frame_status: DECLARED
+      frame_convention: covariant CMB-frame multipole bounds (MES convention)
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: DECLARED
+      perturbative_order: linear in kinematic quantities
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: BASS/OBSSTAT
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-MES-PROV
+      source_status: CHECKED
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-U1
+      source_group: legacy_signature_inventory
+      source_partition: T
+      statement_status: TITLE_ONLY
+      statement: Beta-channel toy correspondence (s = tanh beta; pair-tilt map s^2 = t/(2+t))
+      statement_identity_sha256: cef8c494d7da66641b6a33382d63988d3039843f334018bb6d928efde141ce10
+      source_record_sha256: e3dd49c547c2afc32ec1db58a9007f24aca874e018ecea1cd1956799fcde6283
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: OBSSTAT/TEFF
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-U1
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-U2
+      source_group: legacy_signature_inventory
+      source_partition: T
+      statement_status: TITLE_ONLY
+      statement: Fingerprint envelope ceilings at eps1 (exact rationals)
+      statement_identity_sha256: 60ca69f1e0d69ec450f4fb1e0fd11a5ab2e186136526eee452a5d480d79f2e21
+      source_record_sha256: 572a1bc7c1d6e398aef45bb26b98bf63ac602ff95d3622fae21cbff8fec56136
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: OBSSTAT/TEFF
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-U2
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-U3
+      source_group: legacy_signature_inventory
+      source_partition: S
+      statement_status: TITLE_ONLY
+      statement: Rank-2 response schema correspondence (comparator and Teff lanes)
+      statement_identity_sha256: 24348ddc0f4d9bdad335983db0c87340c929937f26abb5368367e30ed4d0f602
+      source_record_sha256: a6bd557de92f9e2f99e9f0e21643c27323b2c607364e72a13e496019a3bc4068
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: OBSSTAT/TEFF
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-U3
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-U4
+      source_group: legacy_signature_inventory
+      source_partition: S
+      statement_status: TITLE_ONLY
+      statement: Teff fingerprint statistical closure (IM coverage + Hotelling calibration)
+      statement_identity_sha256: 28d5837b338f7539070d11fb2d8d4b29a0509cf18a2ca90af459d699b5bf58b4
+      source_record_sha256: a71fa29efd5786cfcfec0269868c1a89d28691291340687c221ec3026ebc949d
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: OBSSTAT/TEFF
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-U4
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-T2G
+      source_group: legacy_signature_inventory
+      source_partition: S
+      statement_status: TITLE_ONLY
+      statement: General fractional-program interval theorem (product relaxation; per-endpoint diagonal-attainment
+        iff; argmin/argmax corollary)
+      statement_identity_sha256: 2e3f9ef5f729e7ed25556ac2849fcc62344720dfb32a851a30e94635643458a6
+      source_record_sha256: fba7ade0762c9b49dbcd6c59d5c5a508aa29ba816ad5c2116a8c270e01dce780
+      assumption_status: DECLARED
+      assumptions:
+      - product relaxation of the fractional program
+      - diagonal-attainment criterion
+      - argmin/argmax intersection corollary for N > 0
+      domain_status: DECLARED
+      domains:
+      - S = [0, 1] with strictly positive denominator
+      frame_status: DECLARED
+      frame_convention: comparator scalar sector (no sky frame)
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: DECLARED
+      perturbative_order: exact algebraic
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: MIO/OBSSTAT
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-T2G
+      source_status: CHECKED
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-TSUM
+      source_group: legacy_signature_inventory
+      source_partition: T
+      statement_status: TITLE_ONLY
+      statement: Two-temperature fingerprint sum bound R3 + R5 >= 2 (exact factorization mu3*mu5 - mu4^2
+        = s^2 (1-s^2)^3)
+      statement_identity_sha256: 7d28cc90eb778cacae7bd9fd6c5df2a2e57963b034e42ae8ae6d8f98a829fdd9
+      source_record_sha256: ac6dd96c992a004eca994cd7a395bb2ce778f0c598e4f2678573d9cedc554145
+      assumption_status: DECLARED
+      assumptions:
+      - fingerprint ratios R3, R5 from the registered two-temperature family
+      - equality holds iff s = 0
+      domain_status: DECLARED
+      domains:
+      - s in [0, 1]
+      frame_status: DECLARED
+      frame_convention: Teff fingerprint lane (no sky frame)
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: DECLARED
+      perturbative_order: exact algebraic
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: OBSSTAT/TEFF
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-TSUM
+      source_status: CHECKED
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-U4-v9
+      source_group: legacy_signature_inventory
+      source_partition: S
+      statement_status: TITLE_ONLY
+      statement: Teff fingerprint statistical closure, v9 rerun (full MC provenance, Wilson CIs, pre-registered
+        acceptance)
+      statement_identity_sha256: 8cd844a8753091b030abfdd63737a5b2372624f9468cdc2aa5579b381bdc96ff
+      source_record_sha256: 317075b92939d81e505f02c8ed73281006ee56386feb19a4a1c2d6b0ba8f3cac
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: OBSSTAT/TEFF
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-U4-v9
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-MES-BR
+      source_group: legacy_signature_inventory
+      source_partition: T
+      statement_status: TITLE_ONLY
+      statement: MES coefficient branch registry (MES-G verified geodesic / MES-NG unverified non-geodesic
+        / ACCEL withheld) + eps1 attribution triple
+      statement_identity_sha256: 3a9a3d96ba1d602ac56dc76fc7fe8c4f6c389fb998fbda0b14dd079796a66134
+      source_record_sha256: d290aa3d4005075dce14a83af40463c4f048a4e2cb7bffee0dad75ee93cd285d
+      assumption_status: DECLARED
+      assumptions:
+      - frozen registry values unchanged (byte-identity guard)
+      - ceiling map W2_max = (3/2) B_omega^2 under the registered convention W2 = omega^2/(6 H^2)
+      - branch provenance disclosed per source accessibility
+      domain_status: DECLARED
+      domains:
+      - registered branch table (geodesic verified; non-geodesic print-only)
+      frame_status: DECLARED
+      frame_convention: covariant CMB-frame multipole bounds (MES convention)
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: DECLARED
+      perturbative_order: linear in kinematic quantities
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: BASS/OBSSTAT
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-MES-BR
+      source_status: CHECKED
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-BV-DYN
+      source_group: legacy_signature_inventory
+      source_partition: T
+      statement_status: TITLE_ONLY
+      statement: Tilted-LRS Bianchi V evolution seal (constraint preservation monitored on non-vacuum
+        trajectories; P5 exact-rapidity relation holds dynamically)
+      statement_identity_sha256: 455e8b01219ce39c1f2f73dcac3ef2ebf6fdb04c1145a8de5a8d1f6ecd58c07d
+      source_record_sha256: 3aeb84031b7826fa94bdbb6f70ac758d3923fa6207190496e5d9c42493d95862
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: BASS/OBSSTAT
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-BV-DYN
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-K5-CARD-v2
+      source_group: legacy_signature_inventory
+      source_partition: S
+      statement_status: TITLE_ONLY
+      statement: K5/CF4 identified-interval card v9 (three labeled W^2 ceiling branches x two curvature
+        branches)
+      statement_identity_sha256: 6b3ef14ac365d658d5b78d1c82e66430c417b0be5cb95a40680fae42b1f805f0
+      source_record_sha256: be8a6103ffdeba6af7de6b9e234d68f211e7e36fa300e19148f1beb10ad6885d
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: OBSSTAT/MIO
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-K5-CARD-v2
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-KE-FRAME
+      source_group: legacy_signature_inventory
+      source_partition: T
+      statement_status: TITLE_ONLY
+      statement: King-Ellis tilted-congruence frame kinematics + constraint algebra (items 1-7 of the
+        rotating-congruence program)
+      statement_identity_sha256: 986735c02f5d2b6dde851d70a884234a67a125db4829291f8add5d1dbdc39ea0
+      source_record_sha256: 443a3f7fa3ff15aded261304efcece7a626cb33fb07dff2751fe0c51cea1f096
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: OBSSTAT/GR
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-KE-FRAME
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-KE-OBS
+      source_group: legacy_signature_inventory
+      source_partition: T
+      statement_status: TITLE_ONLY
+      statement: Exact vorticity classification of group-invariant tilted congruences (corrects the blanket
+        Omega_k=0 irrotationality reading)
+      statement_identity_sha256: 9fa2733a1679eaa20f4c9d3d91c8f6865c0cdb96e174ce259e5a2ed6e6dd21e7
+      source_record_sha256: 01f2090e41cd89354dbb3212fde6b720728f266f917d307b962bf5a5cc4b6bf9
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: OBSSTAT/GR
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-KE-OBS
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-KE-DYN
+      source_group: legacy_signature_inventory
+      source_partition: T
+      statement_status: TITLE_ONLY
+      statement: Rotating perfect-fluid development at Omega_k>0 + the double Omega_k=0 obstruction (items
+        8-10)
+      statement_identity_sha256: 461c4f0d3ea296df98409c16f67259758924687cd2ac71a0db43b7b0b25ad494
+      source_record_sha256: d65b8853b0f9b94a81402608011fc9ad4b6c040082f05765f5fa796013259bd9
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: OBSSTAT/GR
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-KE-DYN
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-OMK-REOPEN
+      source_group: legacy_signature_inventory
+      source_partition: T
+      statement_status: TITLE_ONLY
+      statement: Higher-order anisotropic-Omega_k re-opening transfer (curvature-shear slaving) + finite
+        attribution/class-conditional ceilings
+      statement_identity_sha256: f3ebe67e5d5c86ae8d87a1c1f98b69e02811f006efc40d8aa8fab65d275921c8
+      source_record_sha256: 07c310412fd97574a17ddf98036fc47e8976d0ad3a3877f5b51996d9b51e7967
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: OBSSTAT/GR
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-OMK-REOPEN
+      source_status: MIGRATION_PENDING
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-MES-REFREEZE
+      source_group: legacy_signature_inventory
+      source_partition: T
+      statement_status: TITLE_ONLY
+      statement: MES geodesic derivation + re-freeze of the vorticity-ceiling anchor (W2_max 1.3087e-6
+        -> 3.3789e-13)
+      statement_identity_sha256: 6e20d9965c190c9f740798733484df7e30d2282647b761f17bdf7a97af646e44
+      source_record_sha256: 8a33b254f2d920cca7f1342bdf07470e102944e2237ebba2f3408f37877457e0
+      assumption_status: DECLARED
+      assumptions:
+      - geodesic congruence u_dot = 0 (MESa p.123)
+      - SAG observer-motion convention eps1 = 0 (the observed dipole is observer motion)
+      - hierarchy preservation B_sigma > B_omega excludes the full-dipole ceiling (e1_crit = (43/25) eps2
+        + (9/35) eps3)
+      domain_status: DECLARED
+      domains:
+      - geodesic branch at the registered eps values
+      frame_status: DECLARED
+      frame_convention: covariant CMB-frame multipole bounds, SAG observer-motion convention
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: DECLARED
+      perturbative_order: linear in kinematic quantities
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: OBSSTAT/GR
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-MES-REFREEZE
+      source_status: CHECKED
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: SIG-MES-MESB-TRACE
+      source_group: legacy_signature_inventory
+      source_partition: T
+      statement_status: TITLE_ONLY
+      statement: MESb web-trace + refutation of the in-house non-geodesic bounds; geodesic vorticity anchor
+        re-adopted from three primary sources
+      statement_identity_sha256: 1f0d8be3f5b71511e919277f8e0e138f2ca922235cb9aa762af5b71cce63680e
+      source_record_sha256: 1d07d1ab63a1a8f5f9a0a69b53fed6ed26190a966f0ff364e36d3f82a8b25b9e
+      assumption_status: DECLARED
+      assumptions:
+      - only accessible, SHA-archived primary sources ground coefficient attributions
+      - the in-house non-geodesic omega/accel reconstruction is refuted (appears in no accessible source;
+        exceeds the companion's faithful cap at eps1 = 0)
+      - the geodesic anchor survives adversarial refutation lanes
+      domain_status: DECLARED
+      domains:
+      - accessible-source claims about the MESb branch
+      frame_status: DECLARED
+      frame_convention: covariant CMB-frame multipole bounds (MES convention)
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: DECLARED
+      perturbative_order: linear in kinematic quantities
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: OBSSTAT/GR
+      dependencies:
+      - PR-124
+      - PR-125
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/THEOREM_SIGNATURES_V2.yaml#SIG-MES-MESB-TRACE
+      source_status: CHECKED
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+  proposal_registry_rows:
+    expected_count: 58
+    source_partition_counts:
+      I: 30
+      II: 24
+      BRIDGE: 4
+    entries:
+    - entry_id: I-1.1
+      source_group: proposal_registry_rows
+      source_partition: I
+      statement_status: DECLARED
+      statement: Under sigma -> R sigma R^T, beta -> R beta, omega -> det(R) R omega, the axial Krylov
+        determinant det[omega, sigma omega, sigma^2 omega] is an O(3) scalar; the polar analogue is a
+        pseudoscalar.
+      statement_identity_sha256: 415a855585eee4e019c6e7cc314c763c2d2bb950cf4970ef238cc3d893b6008d
+      source_record_sha256: 415a855585eee4e019c6e7cc314c763c2d2bb950cf4970ef238cc3d893b6008d
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: COMMON_PHYSICS
+      dependencies:
+      - PR-268
+      - PR-269
+      - PR-270
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#I-1.1
+      source_status: ORACLE_VERIFIED
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: I-1.2
+      source_group: proposal_registry_rows
+      source_partition: I
+      statement_status: DECLARED
+      statement: 'ON THE PRINCIPAL STRATUM (finite generic isotropy) the kinematic state has exactly dim(state)
+        - 3 functionally independent SO(3) invariants: 9 for (sigma, omega, beta, DeltaOmega_k), 12 with
+        four-acceleration, 15 with the velocity-frame split. x_C resolves one. Off-stratum the rule fails:
+        a single vector alone has isotropy U(1) and one invariant, not zero.'
+      statement_identity_sha256: 04b957717552d50897045b6ff3822226ad7397099936f2bebc101e952fa9a124
+      source_record_sha256: 04b957717552d50897045b6ff3822226ad7397099936f2bebc101e952fa9a124
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: COMMON_PHYSICS
+      dependencies:
+      - PR-268
+      - PR-269
+      - PR-270
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#I-1.2
+      source_status: ORACLE_VERIFIED
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: I-1.3
+      source_group: proposal_registry_rows
+      source_partition: I
+      statement_status: DECLARED
+      statement: Generic orbits are three-dimensional; isotropy jumps on the axisymmetric shear locus
+        and on non-cyclic vector configurations. Separation statements are stratum-conditional.
+      statement_identity_sha256: 9131979856028314799ee816a16466848ebd25209f4af23cf1c4be62d5314fca
+      source_record_sha256: 9131979856028314799ee816a16466848ebd25209f4af23cf1c4be62d5314fca
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: COMMON_PHYSICS
+      dependencies:
+      - PR-268
+      - PR-269
+      - PR-270
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#I-1.3
+      source_status: PROPOSED
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: I-2.1
+      source_group: proposal_registry_rows
+      source_partition: I
+      statement_status: DECLARED
+      statement: The twelve registered v2 polynomials carry their declared parity.
+      statement_identity_sha256: ab952d30176d66c215e39582048f3c523c18a1a0e6a8413651b7b44a27c5ba91
+      source_record_sha256: ab952d30176d66c215e39582048f3c523c18a1a0e6a8413651b7b44a27c5ba91
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: COMMON_PHYSICS
+      dependencies:
+      - PR-268
+      - PR-269
+      - PR-270
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#I-2.1
+      source_status: PROVEN_CAS4
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: I-2.2
+      source_group: proposal_registry_rows
+      source_partition: I
+      statement_status: DECLARED
+      statement: sigma^3 = (tr sigma^2 / 2) sigma + (tr sigma^3 / 3) I for trace-free symmetric sigma;
+        hence v.sigma^3.v and v.sigma^4.v reduce.
+      statement_identity_sha256: efc73cdd56c7a6809d1f744bac10297a9359696b60d04712cd56560f7c16de5b
+      source_record_sha256: efc73cdd56c7a6809d1f744bac10297a9359696b60d04712cd56560f7c16de5b
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: COMMON_PHYSICS
+      dependencies:
+      - PR-268
+      - PR-269
+      - PR-270
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#I-2.2
+      source_status: PROVEN_CAS4
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: I-2.3
+      source_group: proposal_registry_rows
+      source_partition: I
+      statement_status: DECLARED
+      statement: det[v, sigma v, sigma^2 v]^2 equals the Gram determinant of the Krylov chain, which is
+        a polynomial in the five even invariants of (sigma, v).
+      statement_identity_sha256: 9717003f15fdc0b3626b5280f43b192873190b7183ba7f0e1646d37efcc27e59
+      source_record_sha256: 9717003f15fdc0b3626b5280f43b192873190b7183ba7f0e1646d37efcc27e59
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: COMMON_PHYSICS
+      dependencies:
+      - PR-268
+      - PR-269
+      - PR-270
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#I-2.3
+      source_status: PROVEN_CAS4
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: I-2.4
+      source_group: proposal_registry_rows
+      source_partition: I
+      statement_status: DECLARED
+      statement: J_sigma = sqrt(6) I3 / I2^{3/2} lies in [-1, 1]; Delta_sigma = I2^3/2 - 3 I3^2 = (I2^3/2)(1
+        - J^2) is exactly the discriminant of the characteristic polynomial; |J| = 1 iff repeated eigenvalue,
+        J = 0 iff eigenvalues (lambda, -lambda, 0); J is scale-free.
+      statement_identity_sha256: 3af97aa52c39ef4ecd3a001776a5efc1c5544f5f2e651f8f1ee98a2f4c145942
+      source_record_sha256: 3af97aa52c39ef4ecd3a001776a5efc1c5544f5f2e651f8f1ee98a2f4c145942
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: COMMON_PHYSICS
+      dependencies:
+      - PR-268
+      - PR-269
+      - PR-270
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#I-2.4
+      source_status: ORACLE_VERIFIED
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: I-2.5
+      source_group: proposal_registry_rows
+      source_partition: I
+      statement_status: DECLARED
+      statement: At the registered witness (beta = 0) the v2 catalogue does not separate (sigma, omega)
+        from (sigma, -omega); the axial Krylov determinant does; and the two states lie in distinct SO(3)
+        orbits (the stabiliser of diag(1,2,-3) is COMPUTED from the commutant to be the Klein four-group,
+        no element of which maps omega to -omega).
+      statement_identity_sha256: e473d3ba88f671a8d1cc162bff6a569ae3cd10ec54150b0feb9c508aeffffbfb
+      source_record_sha256: e473d3ba88f671a8d1cc162bff6a569ae3cd10ec54150b0feb9c508aeffffbfb
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: COMMON_PHYSICS
+      dependencies:
+      - PR-268
+      - PR-269
+      - PR-270
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#I-2.5
+      source_status: ORACLE_VERIFIED
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: I-2.6
+      source_group: proposal_registry_rows
+      source_partition: I
+      statement_status: DECLARED
+      statement: 'Catalogue v3 is the degree-bounded closure of the Gram-Krylov generating set over {beta_RM,
+        beta_MO, A, omega} plus one Krylov determinant per vector, triple determinants, tr sigma^2, tr
+        sigma^3 and DeltaOmega_k; parity is mechanical in (#omega + #epsilon).'
+      statement_identity_sha256: 92402c89f03ced19a67c673986208787fff107dbded59345b0f08cd21bfb637b
+      source_record_sha256: 92402c89f03ced19a67c673986208787fff107dbded59345b0f08cd21bfb637b
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: COMMON_PHYSICS
+      dependencies:
+      - PR-268
+      - PR-269
+      - PR-270
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#I-2.6
+      source_status: PROPOSED
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: I-2.7
+      source_group: proposal_registry_rows
+      source_partition: I
+      statement_status: DECLARED
+      statement: The v3 catalogue separates SO(3) orbits on the principal stratum (distinct shear eigenvalues,
+        participating vectors cyclic).
+      statement_identity_sha256: 25e66540c05f81f373b5535ae0da72238729d4e30a92158696d3656351ecb4ac
+      source_record_sha256: 25e66540c05f81f373b5535ae0da72238729d4e30a92158696d3656351ecb4ac
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: COMMON_PHYSICS
+      dependencies:
+      - PR-268
+      - PR-269
+      - PR-270
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#I-2.7
+      source_status: PROPOSED
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: I-2.8
+      source_group: proposal_registry_rows
+      source_partition: I
+      statement_status: DECLARED
+      statement: Whether v3 generates the full invariant ring (Molien/Hilbert series).
+      statement_identity_sha256: bd16d5b3c1ce0e0c442262ad571536f1daa232d5bd593fd4d69967bddc80146e
+      source_record_sha256: bd16d5b3c1ce0e0c442262ad571536f1daa232d5bd593fd4d69967bddc80146e
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: COMMON_PHYSICS
+      dependencies:
+      - PR-268
+      - PR-269
+      - PR-270
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#I-2.8
+      source_status: OPEN
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: I-2.9
+      source_group: proposal_registry_rows
+      source_partition: I
+      statement_status: DECLARED
+      statement: The exact beta=0, omega vs -omega witness for catalogue v2.
+      statement_identity_sha256: c9831747bac5faf80367579ecde9ec862550d2b22b7fb1daef7c4ec08a3333cd
+      source_record_sha256: c9831747bac5faf80367579ecde9ec862550d2b22b7fb1daef7c4ec08a3333cd
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: COMMON_PHYSICS
+      dependencies:
+      - PR-268
+      - PR-269
+      - PR-270
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#I-2.9
+      source_status: PROVEN_CAS4
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: I-3.1
+      source_group: proposal_registry_rows
+      source_partition: I
+      statement_status: DECLARED
+      statement: 'The Gauss-Friedmann budget functional FACTORS THROUGH the four invariants {tr sigma^2,
+        omega^2, beta^2, DeltaOmega_k}; it therefore has exactly zero derivative along the helicity beta.omega
+        and along every direction transverse to their common level set. Stated as a factorisation, not
+        a polynomial grading: Omega_tilt = (1+w) Omega_m sinh^2(beta) is an even function of beta.beta,
+        not the monomial beta^2, so the budget does depend on higher even powers and a "vanishes on degree
+        >= 3" claim would be false.'
+      statement_identity_sha256: 829ca929285ca36083db983171c328689c42be7627b8e0d45419fc9224cacbfd
+      source_record_sha256: 829ca929285ca36083db983171c328689c42be7627b8e0d45419fc9224cacbfd
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: COMMON_PHYSICS
+      dependencies:
+      - PR-268
+      - PR-269
+      - PR-270
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#I-3.1
+      source_status: ORACLE_VERIFIED
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: I-3.2
+      source_group: proposal_registry_rows
+      source_partition: I
+      statement_status: DECLARED
+      statement: The comparator sign vector c = (+1,-1,+1,+1) is forced by the constraint.
+      statement_identity_sha256: abfd6dcd0469f616419edbc444ca58dca79c792bf445955b04baf5ed8469ebc9
+      source_record_sha256: abfd6dcd0469f616419edbc444ca58dca79c792bf445955b04baf5ed8469ebc9
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: COMMON_PHYSICS
+      dependencies:
+      - PR-268
+      - PR-269
+      - PR-270
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#I-3.2
+      source_status: ACTIVE_CONDITIONAL
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: I-3.3
+      source_group: proposal_registry_rows
+      source_partition: I
+      statement_status: DECLARED
+      statement: The anisotropic-curvature sector re-opens beyond leading EGS order within the same channels;
+        LRS slaving coefficient exactly -1, kappa = -2/(5+3w).
+      statement_identity_sha256: 25e2fad7344938a3d8f54f8a869d55a185d208db5569a9250b0d69e2bf022fb0
+      source_record_sha256: 25e2fad7344938a3d8f54f8a869d55a185d208db5569a9250b0d69e2bf022fb0
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: COMMON_PHYSICS
+      dependencies:
+      - PR-268
+      - PR-269
+      - PR-270
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#I-3.3
+      source_status: ACTIVE
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: I-4.1
+      source_group: proposal_registry_rows
+      source_partition: I
+      statement_status: DECLARED
+      statement: For a perfect fluid (mu + p) A_a = -D_a p slaves the four-acceleration to the pressure
+        gradient, giving A2_max_euler = (3/2)[c_s^2/(1+w)]^2 eps_g^2 for an ASSUMED gradient bound eps_g.
+      statement_identity_sha256: e18afc8e39a7af15870ec465ea31d5021b87db01874c5c71d5355784c6b74c42
+      source_record_sha256: e18afc8e39a7af15870ec465ea31d5021b87db01874c5c71d5355784c6b74c42
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: COMMON_PHYSICS
+      dependencies:
+      - PR-268
+      - PR-269
+      - PR-270
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#I-4.1
+      source_status: ACTIVE_CONDITIONAL
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: I-4.2
+      source_group: proposal_registry_rows
+      source_partition: I
+      statement_status: DECLARED
+      statement: Radial peculiar velocities carry no vorticity; n.Omega.n = 0 exactly.
+      statement_identity_sha256: c64c99444a9c40f76a068e6c9455d417f0ca3da20e4801e24531725f08982bdc
+      source_record_sha256: c64c99444a9c40f76a068e6c9455d417f0ca3da20e4801e24531725f08982bdc
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: COMMON_PHYSICS
+      dependencies:
+      - PR-268
+      - PR-269
+      - PR-270
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#I-4.2
+      source_status: ACTIVE
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: I-4.3
+      source_group: proposal_registry_rows
+      source_partition: I
+      statement_status: DECLARED
+      statement: Transverse velocities re-open the vorticity sector; the 3-mode design has rank 3.
+      statement_identity_sha256: 0933337f1793a5682623f609ade8ae696b20d9fe9af72198826e4d83733d8136
+      source_record_sha256: 0933337f1793a5682623f609ade8ae696b20d9fe9af72198826e4d83733d8136
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: COMMON_PHYSICS
+      dependencies:
+      - PR-268
+      - PR-269
+      - PR-270
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#I-4.3
+      source_status: ACTIVE_CONDITIONAL
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: I-4.4
+      source_group: proposal_registry_rows
+      source_partition: I
+      statement_status: DECLARED
+      statement: Shear memory of anisotropic stress; registered scalar closure differs from the exact
+        linearised law.
+      statement_identity_sha256: 07a011c82dc777fbd274c2f3efc7f335d7c7146a92f8f854dd7742d34e4298d0
+      source_record_sha256: 07a011c82dc777fbd274c2f3efc7f335d7c7146a92f8f854dd7742d34e4298d0
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: COMMON_PHYSICS
+      dependencies:
+      - PR-268
+      - PR-269
+      - PR-270
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#I-4.4
+      source_status: ACTIVE_CONDITIONAL
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: I-4.5
+      source_group: proposal_registry_rows
+      source_partition: I
+      statement_status: DECLARED
+      statement: King-Ellis tilted-congruence kinematics, exact vorticity classification, rotating perfect-fluid
+        development with the double Omega_k = 0 obstruction.
+      statement_identity_sha256: a15611d70fd8e893c34b774e518be6f9e6b48bf851e6cf805fa83339a8bf7d82
+      source_record_sha256: a15611d70fd8e893c34b774e518be6f9e6b48bf851e6cf805fa83339a8bf7d82
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: COMMON_PHYSICS
+      dependencies:
+      - PR-268
+      - PR-269
+      - PR-270
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#I-4.5
+      source_status: ACTIVE
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: I-5.1
+      source_group: proposal_registry_rows
+      source_partition: I
+      statement_status: DECLARED
+      statement: '{u : rho_A(u) <= 1} = A for the registered closed convex absorbing body.'
+      statement_identity_sha256: 015f5c83c2a08951db07f9ec399fb50aaf15e9f310ddaa10878737364f1d02b5
+      source_record_sha256: 015f5c83c2a08951db07f9ec399fb50aaf15e9f310ddaa10878737364f1d02b5
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: COMMON_PHYSICS
+      dependencies:
+      - PR-268
+      - PR-269
+      - PR-270
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#I-5.1
+      source_status: PROVEN_CAS4
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: I-5.2
+      source_group: proposal_registry_rows
+      source_partition: I
+      statement_status: DECLARED
+      statement: For a product of block balls, rho_A(u) = max_j ||u_j|| / B_j.
+      statement_identity_sha256: 191a14db833229604cd3f5b772062f2620f5c8aef9736e2842e97aab3f13d7b5
+      source_record_sha256: 191a14db833229604cd3f5b772062f2620f5c8aef9736e2842e97aab3f13d7b5
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: COMMON_PHYSICS
+      dependencies:
+      - PR-268
+      - PR-269
+      - PR-270
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#I-5.2
+      source_status: PROVEN_CAS4
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: I-5.3
+      source_group: proposal_registry_rows
+      source_partition: I
+      statement_status: DECLARED
+      statement: H_lin subset A_MES implies (H_lin implies rho_MES <= 1), no converse.
+      statement_identity_sha256: 7038ff46698ff4a615676366321c30e0ff01c868524ec93ddfa81edcacb39f56
+      source_record_sha256: 7038ff46698ff4a615676366321c30e0ff01c868524ec93ddfa81edcacb39f56
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: COMMON_PHYSICS
+      dependencies:
+      - PR-268
+      - PR-269
+      - PR-270
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#I-5.3
+      source_status: PROVEN_CAS4
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: I-5.4
+      source_group: proposal_registry_rows
+      source_partition: I
+      statement_status: DECLARED
+      statement: 'For invertible anchor scaling D: rank(RD) = rank(R) and Ru = (RD)(D^-1 u).'
+      statement_identity_sha256: 272cbff617e46e66976db267b89575363fa91f6b17129fe9967ec9ea5ad225ed
+      source_record_sha256: 272cbff617e46e66976db267b89575363fa91f6b17129fe9967ec9ea5ad225ed
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: COMMON_PHYSICS
+      dependencies:
+      - PR-268
+      - PR-269
+      - PR-270
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#I-5.4
+      source_status: PROVEN_CAS4
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: I-5.5
+      source_group: proposal_registry_rows
+      source_partition: I
+      statement_status: SOURCE_NOT_TYPED
+      statement: null
+      statement_identity_sha256: 0f08fdf2e6e5b6ffff858d0b1c909310b0d3e85d439a983d5d9e6be99d511104
+      source_record_sha256: 0f08fdf2e6e5b6ffff858d0b1c909310b0d3e85d439a983d5d9e6be99d511104
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: COMMON_PHYSICS
+      dependencies:
+      - PR-268
+      - PR-269
+      - PR-270
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#I-5.5
+      source_status: RESTRICTED
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: I-5.6
+      source_group: proposal_registry_rows
+      source_partition: I
+      statement_status: DECLARED
+      statement: Branch registry, geodesic re-freeze, MESb web trace and refutation.
+      statement_identity_sha256: d7a03684b0e09950e22696be87b02bff1d803cf1e69b25763943f65ba91e35d0
+      source_record_sha256: d7a03684b0e09950e22696be87b02bff1d803cf1e69b25763943f65ba91e35d0
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: COMMON_PHYSICS
+      dependencies:
+      - PR-268
+      - PR-269
+      - PR-270
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#I-5.6
+      source_status: ACTIVE
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: I-6.1
+      source_group: proposal_registry_rows
+      source_partition: I
+      statement_status: SOURCE_NOT_TYPED
+      statement: null
+      statement_identity_sha256: e29660b4982487a09db82af781a3d8d2beb27fe70ea36da078bbba2524092232
+      source_record_sha256: e29660b4982487a09db82af781a3d8d2beb27fe70ea36da078bbba2524092232
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: COMMON_PHYSICS
+      dependencies:
+      - PR-268
+      - PR-269
+      - PR-270
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#I-6.1
+      source_status: ACTIVE_CONDITIONAL
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: I-6.2
+      source_group: proposal_registry_rows
+      source_partition: I
+      statement_status: SOURCE_NOT_TYPED
+      statement: null
+      statement_identity_sha256: cc555f19ee880f6d4abce0e5c2bad0efa449274c15da1c63fd9f954af1be0577
+      source_record_sha256: cc555f19ee880f6d4abce0e5c2bad0efa449274c15da1c63fd9f954af1be0577
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: COMMON_PHYSICS
+      dependencies:
+      - PR-268
+      - PR-269
+      - PR-270
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#I-6.2
+      source_status: ACTIVE_CONDITIONAL
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: I-6.3
+      source_group: proposal_registry_rows
+      source_partition: I
+      statement_status: SOURCE_NOT_TYPED
+      statement: null
+      statement_identity_sha256: da8dd2e16ba6e53ce8960d46b4b5aef1ea7c70f6fe9c9a220fbdf83d48e71272
+      source_record_sha256: da8dd2e16ba6e53ce8960d46b4b5aef1ea7c70f6fe9c9a220fbdf83d48e71272
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: COMMON_PHYSICS
+      dependencies:
+      - PR-268
+      - PR-269
+      - PR-270
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#I-6.3
+      source_status: ACTIVE_CONDITIONAL
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: I-6.4
+      source_group: proposal_registry_rows
+      source_partition: I
+      statement_status: DECLARED
+      statement: Which points of the completed invariant space are realised by constraint-satisfying data
+        (the K -> G lift).
+      statement_identity_sha256: 267fcf66c9cdf6be24c69ee949352c6bc982aa9faec487349ff634bf7f5347e0
+      source_record_sha256: 267fcf66c9cdf6be24c69ee949352c6bc982aa9faec487349ff634bf7f5347e0
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: TC
+      registry_owner: COMMON
+      scientific_owner: COMMON_PHYSICS
+      dependencies:
+      - PR-268
+      - PR-269
+      - PR-270
+      required_evidence:
+      - typed_mathematical_physics_proof_artifact
+      - domain_appropriate_exact_or_cas_evidence
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#I-6.4
+      source_status: OPEN
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: II-1.1
+      source_group: proposal_registry_rows
+      source_partition: II
+      statement_status: DECLARED
+      statement: The scalar-sector data-identifiable subspace of g has rank 2 under the registered leading-order
+        channels.
+      statement_identity_sha256: 36c58ce44194c6c206c38ee2d592a31efb8a8a4cdc38689185f8a01ab373d8f7
+      source_record_sha256: 36c58ce44194c6c206c38ee2d592a31efb8a8a4cdc38689185f8a01ab373d8f7
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: HTT_STATISTICS
+      dependencies:
+      - PR-268
+      - PR-271
+      - PR-272
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#II-1.1
+      source_status: ACTIVE
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: II-1.2
+      source_group: proposal_registry_rows
+      source_partition: II
+      statement_status: DECLARED
+      statement: Dipole alone gives rank 3 against 6 velocity parameters. A boost-only channel restores
+        rank 6 - but only ABERRATION is a linear O(beta) channel and can do so; the kinematic quadrupole
+        is O(beta^2) (repo-typed, frame_typed_algebra.py), contributes no linear rank about beta = 0,
+        and about a fiducial beta_MO != 0 enters at relative amplitude O(beta) ~ 1e-3, already the WEAKLY_IDENTIFIED
+        regime - an over-determination check, not a second linear channel. As that channel weakens, rank
+        stays 6 while the minimum principal angle tends to zero - a state distinct from rank deficiency.
+      statement_identity_sha256: 81a6f63c60b55f326c67bb55a7a44e54efba937e3a4357e4cb2d87e62eb056e8
+      source_record_sha256: 81a6f63c60b55f326c67bb55a7a44e54efba937e3a4357e4cb2d87e62eb056e8
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: HTT_STATISTICS
+      dependencies:
+      - PR-268
+      - PR-271
+      - PR-272
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#II-1.2
+      source_status: ORACLE_VERIFIED
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: II-1.3
+      source_group: proposal_registry_rows
+      source_partition: II
+      statement_status: DECLARED
+      statement: Posterior marginal equals prior marginal on a null response direction (restricted KL
+        exactly zero).
+      statement_identity_sha256: ab7ed2a547d831b234f4f429fcc748672f955a95ae2262a44e6cae93a792ec6a
+      source_record_sha256: ab7ed2a547d831b234f4f429fcc748672f955a95ae2262a44e6cae93a792ec6a
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: HTT_STATISTICS
+      dependencies:
+      - PR-268
+      - PR-271
+      - PR-272
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#II-1.3
+      source_status: ACTIVE
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: II-2.1
+      source_group: proposal_registry_rows
+      source_partition: II
+      statement_status: DECLARED
+      statement: rho of a product of sector balls is max_j s_j; exceedance E = max(rho - 1, 0).
+      statement_identity_sha256: 5295198b8114e1d6e4883d7f306715ecf0d5fc72065f4cc329558fad4ba2bbf1
+      source_record_sha256: 5295198b8114e1d6e4883d7f306715ecf0d5fc72065f4cc329558fad4ba2bbf1
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: HTT_STATISTICS
+      dependencies:
+      - PR-268
+      - PR-271
+      - PR-272
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#II-2.1
+      source_status: ORACLE_VERIFIED
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: II-2.2
+      source_group: proposal_registry_rows
+      source_partition: II
+      statement_status: DECLARED
+      statement: 'Well-posedness table for the functional-indexed family: F_phi requires phi sign-definite
+        AND anchored; signed and pseudoscalar functionals admit signed Q_phi and Pi_phi only; scale-free
+        shape coordinates admit neither Q nor F.'
+      statement_identity_sha256: b04c205ff22fdae9ed940724a55860a03ec65b9462c031707d98807470801fd5
+      source_record_sha256: b04c205ff22fdae9ed940724a55860a03ec65b9462c031707d98807470801fd5
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: HTT_STATISTICS
+      dependencies:
+      - PR-268
+      - PR-271
+      - PR-272
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#II-2.2
+      source_status: PROPOSED
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: II-3.1
+      source_group: proposal_registry_rows
+      source_partition: II
+      statement_status: DECLARED
+      statement: 'Under (H1) a null law invariant under a reflection P that also fixes the analysis geometry,
+        (H2) an exactly P-equivariant estimator including mask deconvolution and weighting, and (H3) P(psi_hat
+        = 0) = 0: the law of psi_hat is symmetric about zero, hence sign ~ Bernoulli(1/2) exactly and
+        independent of magnitude.'
+      statement_identity_sha256: 011104cca223a99b1238262bd291bbe7083d44e21672298bdee58488ffc1a5e4
+      source_record_sha256: 011104cca223a99b1238262bd291bbe7083d44e21672298bdee58488ffc1a5e4
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: HTT_STATISTICS
+      dependencies:
+      - PR-268
+      - PR-271
+      - PR-272
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#II-3.1
+      source_status: ORACLE_VERIFIED
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: II-3.2
+      source_group: proposal_registry_rows
+      source_partition: II
+      statement_status: DECLARED
+      statement: A nested mask ladder is a reverse martingale if and only if every rung reports the conditional
+        expectation of the SAME full-sky target; Doob then calibrates the path by P(max |M_j| >= lambda
+        sd(M_full)) <= 1/lambda^2.
+      statement_identity_sha256: 592cf0bbf90f544f9c11e8e33335eaa2e8d49959145c7d295372c5ca3453f9dd
+      source_record_sha256: 592cf0bbf90f544f9c11e8e33335eaa2e8d49959145c7d295372c5ca3453f9dd
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: HTT_STATISTICS
+      dependencies:
+      - PR-268
+      - PR-271
+      - PR-272
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#II-3.2
+      source_status: ORACLE_VERIFIED
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: II-3.3
+      source_group: proposal_registry_rows
+      source_partition: II
+      statement_status: DECLARED
+      statement: Indicator e-values with finite-null correction; arithmetic-mean merging valid under arbitrary
+        dependence.
+      statement_identity_sha256: b62f1fcb873dee726260c2d48a0b1df7a2e6d82a37ef88ea093c5c2e0aaf5f2d
+      source_record_sha256: b62f1fcb873dee726260c2d48a0b1df7a2e6d82a37ef88ea093c5c2e0aaf5f2d
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: HTT_STATISTICS
+      dependencies:
+      - PR-268
+      - PR-271
+      - PR-272
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#II-3.3
+      source_status: ACTIVE
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: II-4.1
+      source_group: proposal_registry_rows
+      source_partition: II
+      statement_status: SOURCE_NOT_TYPED
+      statement: null
+      statement_identity_sha256: 416a1b1efc61f82a16cd069bcd1041a4fec216abfcec7de3110fdf79ebf66c05
+      source_record_sha256: 416a1b1efc61f82a16cd069bcd1041a4fec216abfcec7de3110fdf79ebf66c05
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: HTT_STATISTICS
+      dependencies:
+      - PR-268
+      - PR-271
+      - PR-272
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#II-4.1
+      source_status: ACTIVE
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: II-4.2
+      source_group: proposal_registry_rows
+      source_partition: II
+      statement_status: SOURCE_NOT_TYPED
+      statement: null
+      statement_identity_sha256: 5eee55bd0e08b779db6c61d144fd374557c63c4d59850bb83a0aeb5f21ab760e
+      source_record_sha256: 5eee55bd0e08b779db6c61d144fd374557c63c4d59850bb83a0aeb5f21ab760e
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: HTT_STATISTICS
+      dependencies:
+      - PR-268
+      - PR-271
+      - PR-272
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#II-4.2
+      source_status: ACTIVE
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: II-4.3
+      source_group: proposal_registry_rows
+      source_partition: II
+      statement_status: SOURCE_NOT_TYPED
+      statement: null
+      statement_identity_sha256: a9f6c2097ac35bad29c5a7d248af0fb211d7f53c8fafda16e0fbae73fcb481f6
+      source_record_sha256: a9f6c2097ac35bad29c5a7d248af0fb211d7f53c8fafda16e0fbae73fcb481f6
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: HTT_STATISTICS
+      dependencies:
+      - PR-268
+      - PR-271
+      - PR-272
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#II-4.3
+      source_status: ACTIVE_CONDITIONAL
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: II-4.4
+      source_group: proposal_registry_rows
+      source_partition: II
+      statement_status: DECLARED
+      statement: 'When eta is not point-identified, report the envelope [inf_eta Pi_phi(c|eta), sup_eta
+        Pi_phi(c|eta)]. Vertex enumeration over the existing vertex/recession representation returns the
+        endpoints when the identified set is convex AND BOUNDED (no active recession direction) and the
+        conditional map is MONOTONE, or quasi-convex for the upper endpoint AND QUASI-CONCAVE for the
+        lower; otherwise return OPTIMIZER_REQUIRED. Bauer''s maximum principle places the SUPREMUM of
+        a quasi-convex function at an extreme point; the INFIMUM is generically interior (Pi = eta^2 on
+        conv{-1,+1}: true inf 0 at eta = 0, vertex enumeration returns 1), and the lower envelope is the
+        conservative endpoint.'
+      statement_identity_sha256: e600edffcc3a9a00e6e2859f189e015aa0971dd7958a31ad432740a299ea5b89
+      source_record_sha256: e600edffcc3a9a00e6e2859f189e015aa0971dd7958a31ad432740a299ea5b89
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: HTT_STATISTICS
+      dependencies:
+      - PR-268
+      - PR-271
+      - PR-272
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#II-4.4
+      source_status: PROPOSED
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: II-4.5
+      source_group: proposal_registry_rows
+      source_partition: II
+      statement_status: SOURCE_NOT_TYPED
+      statement: null
+      statement_identity_sha256: e0d56f039f9931fccb70f2098ae73b18085a6d796eb9eb9cb60bcb58989bce00
+      source_record_sha256: e0d56f039f9931fccb70f2098ae73b18085a6d796eb9eb9cb60bcb58989bce00
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: HTT_STATISTICS
+      dependencies:
+      - PR-268
+      - PR-271
+      - PR-272
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#II-4.5
+      source_status: RESTRICTED
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: II-5.1
+      source_group: proposal_registry_rows
+      source_partition: II
+      statement_status: DECLARED
+      statement: For a testing problem whose null and alternative class are invariant under a group G,
+        every G-invariant test statistic is a function of a maximal invariant; on the principal stratum
+        the completed catalogue is a maximal invariant for SO(3). With registered external directions,
+        G is their stabiliser and the maximal invariant is the catalogue augmented by relative-orientation
+        coordinates.
+      statement_identity_sha256: 73f25fe0e4c28f4900b21d60c9c936eea3379a06050dfac1805c6a187495bf6f
+      source_record_sha256: 73f25fe0e4c28f4900b21d60c9c936eea3379a06050dfac1805c6a187495bf6f
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: HTT_STATISTICS
+      dependencies:
+      - PR-268
+      - PR-271
+      - PR-272
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#II-5.1
+      source_status: PROPOSED
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: II-5.2
+      source_group: proposal_registry_rows
+      source_partition: II
+      statement_status: DECLARED
+      statement: SO(3) is compact hence amenable; by Hunt-Stein the best invariant test is minimax among
+        all tests for the invariant problem.
+      statement_identity_sha256: 0cd9d87d9df6907802dd7c171b711fd2d42619e51755e06673d69dfa2a8def32
+      source_record_sha256: 0cd9d87d9df6907802dd7c171b711fd2d42619e51755e06673d69dfa2a8def32
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: HTT_STATISTICS
+      dependencies:
+      - PR-268
+      - PR-271
+      - PR-272
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#II-5.2
+      source_status: PROPOSED
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: II-5.3
+      source_group: proposal_registry_rows
+      source_partition: II
+      statement_status: DECLARED
+      statement: Because the maximal invariant is a finite-dimensional coordinate (9/12/15) and the catalogue
+        is pre-registered, the invariant test family is finite and known; look-elsewhere becomes bookkeeping
+        over a complete catalogue.
+      statement_identity_sha256: 2c4b059ff09a1cccaeef1a80fecba2b704fa4a6067c6461238ae47e98632f5bc
+      source_record_sha256: 2c4b059ff09a1cccaeef1a80fecba2b704fa4a6067c6461238ae47e98632f5bc
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: HTT_STATISTICS
+      dependencies:
+      - PR-268
+      - PR-271
+      - PR-272
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#II-5.3
+      source_status: PROPOSED
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: II-5.4
+      source_group: proposal_registry_rows
+      source_partition: II
+      statement_status: SOURCE_NOT_TYPED
+      statement: null
+      statement_identity_sha256: 4fbcabc3ca0c9f8bcc76129eab59651f3e404eb7bc2dc813dd1aedcde542171b
+      source_record_sha256: 4fbcabc3ca0c9f8bcc76129eab59651f3e404eb7bc2dc813dd1aedcde542171b
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: HTT_STATISTICS
+      dependencies:
+      - PR-268
+      - PR-271
+      - PR-272
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#II-5.4
+      source_status: ACTIVE
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: II-6.1
+      source_group: proposal_registry_rows
+      source_partition: II
+      statement_status: DECLARED
+      statement: Open-set classification with TYPE_UNIDENTIFIED and UNKNOWN_CLASS as first-class outcomes.
+      statement_identity_sha256: 94e706fb540560a80d83120a6f0c0777ab61d51b43167d82f0ace4a95f2d2ec9
+      source_record_sha256: 94e706fb540560a80d83120a6f0c0777ab61d51b43167d82f0ace4a95f2d2ec9
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: HTT_STATISTICS
+      dependencies:
+      - PR-268
+      - PR-271
+      - PR-272
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#II-6.1
+      source_status: ACTIVE
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: II-6.2
+      source_group: proposal_registry_rows
+      source_partition: II
+      statement_status: DECLARED
+      statement: Preregistered held-out comparison across nine representations - the scalar x_C has rank
+        zero and abstains on every held-out draw, while non-scalar losses drop by 0.105 to 0.301.
+      statement_identity_sha256: 52efcfde260f6382a5c4ff2aa2989562474776d4720f4aa5f4561bdae5029c05
+      source_record_sha256: 52efcfde260f6382a5c4ff2aa2989562474776d4720f4aa5f4561bdae5029c05
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: HTT_STATISTICS
+      dependencies:
+      - PR-268
+      - PR-271
+      - PR-272
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#II-6.2
+      source_status: ACTIVE
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: II-6.3
+      source_group: proposal_registry_rows
+      source_partition: II
+      statement_status: DECLARED
+      statement: All six methods abstain on the confusable sum-only cell; pure-local false-global rate
+        0.0246 below ceiling; adding the registered finite-window depth contrast raises the minimum principal
+        angle from 0.134 to 1.310 rad.
+      statement_identity_sha256: 37cb67c500a7f0d6f9835b385ff048f13c5f48ecbefd882327cf7f3cbf7fcbde
+      source_record_sha256: 37cb67c500a7f0d6f9835b385ff048f13c5f48ecbefd882327cf7f3cbf7fcbde
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: HTT_STATISTICS
+      dependencies:
+      - PR-268
+      - PR-271
+      - PR-272
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#II-6.3
+      source_status: ACTIVE
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: II-1.4
+      source_group: proposal_registry_rows
+      source_partition: II
+      statement_status: DECLARED
+      statement: Response rank, single-shell degeneracy, and parameter-vs-observation duplication.
+      statement_identity_sha256: be80fe037253c51eb9909b396eb4bec62d44323da934e6e949bf7c4576a01df9
+      source_record_sha256: be80fe037253c51eb9909b396eb4bec62d44323da934e6e949bf7c4576a01df9
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: HTT_STATISTICS
+      dependencies:
+      - PR-268
+      - PR-271
+      - PR-272
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#II-1.4
+      source_status: ACTIVE
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: II-1.5
+      source_group: proposal_registry_rows
+      source_partition: II
+      statement_status: DECLARED
+      statement: Vector-g response covariance propagation.
+      statement_identity_sha256: 9fa0862b70d9d3e51e95031c064e2e4e8ec47a240cb85af9caea54327bdd8c34
+      source_record_sha256: 9fa0862b70d9d3e51e95031c064e2e4e8ec47a240cb85af9caea54327bdd8c34
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: HTT_STATISTICS
+      dependencies:
+      - PR-268
+      - PR-271
+      - PR-272
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#II-1.5
+      source_status: ACTIVE_CONDITIONAL
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: II-2.3
+      source_group: proposal_registry_rows
+      source_partition: II
+      statement_status: DECLARED
+      statement: Anchor scaling alone is not information gain.
+      statement_identity_sha256: de13c869f5e2f209351e4af6d781f379f6c569468cf1af43cd77dcda53807d4e
+      source_record_sha256: de13c869f5e2f209351e4af6d781f379f6c569468cf1af43cd77dcda53807d4e
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: HTT_STATISTICS
+      dependencies:
+      - PR-268
+      - PR-271
+      - PR-272
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#II-2.3
+      source_status: ACTIVE
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: II-5.5
+      source_group: proposal_registry_rows
+      source_partition: II
+      statement_status: DECLARED
+      statement: Single-sky sampling dispersion; multi-ell Fisher floor.
+      statement_identity_sha256: ce4a99b758a7c73052697f0b4098ebe22d1fbf8c5036555782c08bb211720d8e
+      source_record_sha256: ce4a99b758a7c73052697f0b4098ebe22d1fbf8c5036555782c08bb211720d8e
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: ST
+      registry_owner: COMMON
+      scientific_owner: HTT_STATISTICS
+      dependencies:
+      - PR-268
+      - PR-271
+      - PR-272
+      required_evidence:
+      - typed_statistical_proof_artifact
+      - sampling_law_and_covariance_assumptions
+      - finite_sample_or_asymptotic_status
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#II-5.5
+      source_status: ACTIVE
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: B-1
+      source_group: proposal_registry_rows
+      source_partition: BRIDGE
+      statement_status: DECLARED
+      statement: 'The MES anchors bound the degree-2 even invariants and, by I-3.1, the budget factors
+        through the same four. Therefore NO MES-ANCHORED ceiling exists for a scale-free shape coordinate
+        and no morphology statistic contributes to the budget. The firewall is about AUTHORITY, not algebraic
+        independence: |J_sigma| <= 1 (I-2.4) is an exact algebraic bound, so an anchor on I2 does induce
+        |tr sigma^3| <= I2^{3/2}/sqrt(6) - that bound is ALGEBRAIC, NOT ANCHORED, is saturated on the
+        axisymmetric locus, and must never be reported as a saturation or occupancy.'
+      statement_identity_sha256: 804008b84646c9d0217965f7fb0683cd4afd75813426f45d9060030bc325cca8
+      source_record_sha256: 804008b84646c9d0217965f7fb0683cd4afd75813426f45d9060030bc325cca8
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: U
+      registry_owner: COMMON
+      scientific_owner: COMMON
+      dependencies:
+      - PR-268
+      required_evidence:
+      - typed_cross_pillar_argument
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#B-1
+      source_status: PROPOSED
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: B-2
+      source_group: proposal_registry_rows
+      source_partition: BRIDGE
+      statement_status: DECLARED
+      statement: One-way MES logic supplies the deterministic implication; restricted J2 supplies the
+        condition under which the corresponding test is valid. Neither alone licenses a refutation claim.
+      statement_identity_sha256: 6c33f2d1011015864e65eb1043e1e4d43bc415d1c35646032dfd337c79b85880
+      source_record_sha256: 6c33f2d1011015864e65eb1043e1e4d43bc415d1c35646032dfd337c79b85880
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: U
+      registry_owner: COMMON
+      scientific_owner: COMMON
+      dependencies:
+      - PR-268
+      required_evidence:
+      - typed_cross_pillar_argument
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#B-2
+      source_status: ACTIVE_CONDITIONAL
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: B-3
+      source_group: proposal_registry_rows
+      source_partition: BRIDGE
+      statement_status: DECLARED
+      statement: The acceleration ceiling of I-4.1 is a statement about a declared congruence; the statistical
+        channel key must carry congruence or two epochs' acceleration saturations become silently comparable.
+      statement_identity_sha256: bfec94f45b4f5dd4b529a0252f65de96a62839935c60f2dcd2c348fae37bc9fd
+      source_record_sha256: bfec94f45b4f5dd4b529a0252f65de96a62839935c60f2dcd2c348fae37bc9fd
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: U
+      registry_owner: COMMON
+      scientific_owner: COMMON
+      dependencies:
+      - PR-268
+      required_evidence:
+      - typed_cross_pillar_argument
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#B-3
+      source_status: ACTIVE_CONDITIONAL
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+    - entry_id: B-4
+      source_group: proposal_registry_rows
+      source_partition: BRIDGE
+      statement_status: DECLARED
+      statement: Parity typing is what makes the exact sign test available; collapsing parity for convenience
+        destroys an exact test, not merely a label.
+      statement_identity_sha256: 9cf0c852952bdc2b9551f90b485fcebad548fb2b70b9f4304886f59389a733a4
+      source_record_sha256: 9cf0c852952bdc2b9551f90b485fcebad548fb2b70b9f4304886f59389a733a4
+      assumption_status: SOURCE_NOT_TYPED
+      assumptions: []
+      domain_status: SOURCE_NOT_TYPED
+      domains: []
+      frame_status: SOURCE_NOT_TYPED
+      frame_convention: null
+      branch_status: SOURCE_NOT_TYPED
+      branch_convention: null
+      perturbative_order_status: SOURCE_NOT_TYPED
+      perturbative_order: null
+      proof_class: U
+      registry_owner: COMMON
+      scientific_owner: COMMON
+      dependencies:
+      - PR-268
+      required_evidence:
+      - typed_cross_pillar_argument
+      - counterexample_boundary
+      - independent_adjudication
+      evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#B-4
+      source_status: ORACLE_VERIFIED
+      registration_status: REGISTERED_OBLIGATION
+      proof_adjudication_status: NOT_ADJUDICATED
+      claim_ceiling: diagnostic_only
+oracle:
+  oracle_id: TENSOR_FOUNDATIONS_ORACLE_V1
+  source_path: docs/research_program/vector_tensor/tensor_foundations_oracle_proposal.py
+  production_path: htt/src/common/tensor_foundations_oracle.py
+  source_sha256: ddd819323642f5b86e26ee8cad2c9e0bca9175ab842aa66ac4fc81d0c20eb444
+  production_sha256: ddd819323642f5b86e26ee8cad2c9e0bca9175ab842aa66ac4fc81d0c20eb444
+  seed: 20260730
+  proposition_count: 12
+  evidence_posture: EXECUTABLE_TEST_EVIDENCE_ONLY
+  proof_effect: none
+  statement_links:
+  - proposition_id: TF-01-PARITY-TYPING
+    entry_id: I-1.1
+    primary_source_status: ORACLE_VERIFIED
+    alignment_status: ALIGNED_FOR_EXECUTABLE_TEST_INTAKE
+    alignment_scope: statement/domain/frame/branch/premise contract only
+    proof_effect: none
+  - proposition_id: TF-02-CATALOGUE-COMPLETION
+    entry_id: I-2.5
+    primary_source_status: ORACLE_VERIFIED
+    alignment_status: ALIGNED_FOR_EXECUTABLE_TEST_INTAKE
+    alignment_scope: statement/domain/frame/branch/premise contract only
+    proof_effect: none
+  - proposition_id: TF-03-KRYLOV-SYZYGY
+    entry_id: I-2.3
+    primary_source_status: PROVEN_CAS4
+    alignment_status: ALIGNED_FOR_EXECUTABLE_TEST_INTAKE
+    alignment_scope: statement/domain/frame/branch/premise contract only
+    proof_effect: none
+  - proposition_id: TF-04-CAYLEY-HAMILTON-REDUCTION
+    entry_id: I-2.2
+    primary_source_status: PROVEN_CAS4
+    alignment_status: ALIGNED_FOR_EXECUTABLE_TEST_INTAKE
+    alignment_scope: statement/domain/frame/branch/premise contract only
+    proof_effect: none
+  - proposition_id: TF-05-SHAPE-DISCRIMINANT
+    entry_id: I-2.4
+    primary_source_status: ORACLE_VERIFIED
+    alignment_status: ALIGNED_FOR_EXECUTABLE_TEST_INTAKE
+    alignment_scope: statement/domain/frame/branch/premise contract only
+    proof_effect: none
+  - proposition_id: TF-06-INVARIANT-DIMENSION
+    entry_id: I-1.2
+    primary_source_status: ORACLE_VERIFIED
+    alignment_status: ALIGNED_FOR_EXECUTABLE_TEST_INTAKE
+    alignment_scope: statement/domain/frame/branch/premise contract only
+    proof_effect: none
+  - proposition_id: TF-07-BUDGET-MORPHOLOGY-SPLIT
+    entry_id: I-3.1
+    primary_source_status: ORACLE_VERIFIED
+    alignment_status: ALIGNED_FOR_EXECUTABLE_TEST_INTAKE
+    alignment_scope: statement/domain/frame/branch/premise contract only
+    proof_effect: none
+  - proposition_id: TF-08-PRODUCT-GAUGE-MAX
+    entry_id: II-2.1
+    primary_source_status: ORACLE_VERIFIED
+    alignment_status: ALIGNED_FOR_EXECUTABLE_TEST_INTAKE
+    alignment_scope: statement/domain/frame/branch/premise contract only
+    proof_effect: none
+  - proposition_id: TF-09-PARITY-SIGN-EXACTNESS
+    entry_id: II-3.1
+    primary_source_status: ORACLE_VERIFIED
+    alignment_status: ALIGNED_FOR_EXECUTABLE_TEST_INTAKE
+    alignment_scope: statement/domain/frame/branch/premise contract only
+    proof_effect: none
+  - proposition_id: TF-10-LOCAL-GLOBAL-SEPARATION
+    entry_id: II-1.2
+    primary_source_status: ORACLE_VERIFIED
+    alignment_status: ALIGNED_FOR_EXECUTABLE_TEST_INTAKE
+    alignment_scope: statement/domain/frame/branch/premise contract only
+    proof_effect: none
+  - proposition_id: TF-11-MASK-PATH-MARTINGALE
+    entry_id: II-3.2
+    primary_source_status: ORACLE_VERIFIED
+    alignment_status: ALIGNED_FOR_EXECUTABLE_TEST_INTAKE
+    alignment_scope: statement/domain/frame/branch/premise contract only
+    proof_effect: none
+  - proposition_id: TF-12-ACCELERATION-EULER-SLAVING
+    entry_id: I-4.1
+    primary_source_status: ACTIVE_CONDITIONAL
+    alignment_status: ALIGNED_FOR_EXECUTABLE_TEST_INTAKE
+    alignment_scope: statement/domain/frame/branch/premise contract only
+    proof_effect: none
+  stable_vectors:
+  - id: TF-STABLE-FULL-20260730
+    seed: 20260730
+    fast: false
+    expected_ok: true
+  - id: TF-STABLE-REPEAT-20260730
+    seed: 20260730
+    fast: false
+    expected_relation: exact_receipt_equality
+  supplied_fast_mode_status: REPRODUCED_NON_STABLE_TF11_AT_REGISTERED_SEED
+  mutation_vectors:
+  - id: TF-MUT-ORACLE-ID
+    mutation: replace oracle_id
+    expected: REFUSED
+  - id: TF-MUT-SEED
+    mutation: replace registered seed
+    expected: REFUSED
+  - id: TF-MUT-MISSING-PROPOSITION
+    mutation: delete one proposition
+    expected: REFUSED
+  - id: TF-MUT-PROPOSITION-FAIL
+    mutation: set one proposition ok=false
+    expected: REFUSED
+  - id: TF-MUT-UNPROVEN-PROMOTION
+    mutation: promote an unchanged UNPROVEN oracle status
+    expected: REFUSED
+  - id: TF-MUT-PREMISE-ERASURE
+    mutation: erase TF-12 premise block
+    expected: REFUSED

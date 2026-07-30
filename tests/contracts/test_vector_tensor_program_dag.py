@@ -5,6 +5,7 @@ import hashlib
 import json
 import subprocess
 from pathlib import Path
+import sys
 
 import pytest
 import yaml
@@ -122,7 +123,7 @@ def test_registered_source_schema_ids_and_statuses_are_preserved() -> None:
 
 def test_generator_is_deterministic_and_current() -> None:
     result = _run(
-        "venv/bin/python",
+        sys.executable,
         "-B",
         "scripts/codex_harness/intake_vector_tensor_program.py",
         "--check",
@@ -297,7 +298,7 @@ def test_pr261_275_cards_match_revalidated_dag_and_common_contract() -> None:
 
 def test_canonical_dag_and_compatibility_mirrors_validate() -> None:
     dag = _run(
-        "venv/bin/python",
+        sys.executable,
         "-B",
         "scripts/codex_harness/validate_pr_dag.py",
         "docs/codex_handoff/pr_backlog.yaml",
@@ -309,7 +310,7 @@ def test_canonical_dag_and_compatibility_mirrors_validate() -> None:
     assert "OK: 222 PRs, DAG valid" in dag.stdout
 
     mirrors = _run(
-        "venv/bin/python",
+        sys.executable,
         "-B",
         "scripts/codex_harness/sync_pr_dag_mirrors.py",
         "--check",
