@@ -316,46 +316,47 @@ outside this statement.
 
 Assume a perfect fluid with no frame heat flux or anisotropic stress, a
 barotropic pressure law, `mu > 0`, `mu+p != 0`, and finite nonzero expansion
-`Theta`. The spatial momentum equation is
+`Theta`. Define the dimensionless sound-speed ratio
+`chi_s := dp/dmu`. Under the explicit convention `u^a u_a = -c^2`, the
+spatial momentum equation is
 
 ```text
-(mu+p) A_a = -D_a p.
+(mu+p) A_a/c^2 = -D_a p.
 ```
 
 With `p = w mu` at the evaluated state and
-`D_a p = cs2 D_a mu`, division by `mu(1+w)Theta` gives two explicitly typed
-repository branches.
+`D_a p = chi_s D_a mu`, division gives two explicitly typed repository
+branches.
 
 For `C_EQUALS_ONE_THETA_NORMALIZED` with
 `A_OVER_THETA_C_EQUALS_ONE`,
 
 ```text
-A_a/Theta = -[cs2/(1+w)] D_a ln(mu)/Theta.
+A_a/Theta = -[chi_s/(1+w)] D_a ln(mu)/Theta.
 ```
 
 For `EXPLICIT_C_THETA_NORMALIZED` with `A_OVER_C_THETA`, an explicit finite
-strictly positive numerical `c` in the source velocity units is mandatory:
+strictly positive numerical `c` in the source velocity units is mandatory.
+The matching dimensionless gradient contains the same `c`:
 
 ```text
-A_a/(c Theta) = -[cs2/(c(1+w))] D_a ln(mu)/Theta.
+A_a/(c Theta) = -[chi_s/(1+w)] [c D_a ln(mu)/Theta].
 ```
 
 The two normalizations are not aliases and cannot be selected by inference
-from numerical values. If `eps_g` is the exact norm
-`||D ln(mu)/Theta||`, the branch-specific normalized acceleration gives
+from numerical values. In the `c=1` branch, `eps_g` is the exact norm
+`||D ln(mu)/Theta||`; in the explicit-`c` branch it is
+`||c D ln(mu)/Theta||`. The branch-specific normalized acceleration gives
 
 ```text
-A2_std = (3/2) coefficient(branch)^2 eps_g^2,
-
-coefficient(c=1)       = -cs2/(1+w),
-coefficient(explicit-c) = -cs2/[c(1+w)].
+A2_std = (3/2)[chi_s/(1+w)]^2 eps_g^2.
 ```
 
 If the explicitly supplied `eps_g` is instead only an upper bound on that
 norm, the corresponding relation is
 
 ```text
-A2_std <= (3/2) coefficient(branch)^2 eps_g^2.
+A2_std <= (3/2)[chi_s/(1+w)]^2 eps_g^2.
 ```
 
 No repository input currently gives this proof an absolute numerical
@@ -363,8 +364,8 @@ No repository input currently gives this proof an absolute numerical
 value, labels the result conditional, and always returns
 `numerical_ceiling_authorized = false`. The function refuses `mu <= 0`,
 `w = -1`, `Theta = 0`, a missing/nonpositive `c` on the explicit-c branch,
-any units/acceleration-normalization mismatch, or failure of the perfect-fluid
-premises.
+any units/acceleration/gradient-normalization mismatch, any nonfinite computed
+coefficient or shape, or failure of the perfect-fluid premises.
 
 ## Legacy source resolution
 

@@ -240,25 +240,27 @@ typed_statements:
       - perfect fluid
       - no heat flux
       - no anisotropic stress
-      - barotropic pressure with declared sound-speed convention
+      - barotropic pressure with chi_s defined as the dimensionless ratio dp/dmu
       - one declared spatial gradient and congruence convention
       - mu is strictly positive
       - mu plus p is nonzero, equivalently 1 plus w is nonzero
       - Theta is finite and nonzero
       - the acceleration normalization exactly matches the declared joint-state units convention
       - the explicit-c branch supplies a finite strictly positive numerical c in the source velocity units
+      - eps_g uses c D ln(mu)/Theta on the explicit-c branch and D ln(mu)/Theta on the c-equals-one branch
     domain: >-
       finite fluid variables with mu greater than zero, w not equal to minus
       one, nonzero expansion Theta, and exactly one registered acceleration
       normalization branch
     statement: >-
       On EXPLICIT_C_THETA_NORMALIZED with A_OVER_C_THETA and a declared
-      positive c, A/(c Theta) = -[cs2/(c(1+w))] D ln(mu)/Theta. On
+      positive c, (mu+p)A/c^2 = -D p and therefore
+      A/(c Theta) = -[chi_s/(1+w)] [c D ln(mu)/Theta]. On
       C_EQUALS_ONE_THETA_NORMALIZED with A_OVER_THETA_C_EQUALS_ONE,
-      A/Theta = -[cs2/(1+w)] D ln(mu)/Theta. If eps_g is the exact norm
-      of D ln(mu)/Theta then A2_std is (3/2) times the squared
-      branch-specific coefficient times eps_g squared; if eps_g is only an
-      upper bound, the corresponding relation is an upper bound on A2_std.
+      A/Theta = -[chi_s/(1+w)] D ln(mu)/Theta. If eps_g is the exact norm
+      of the matching branch-normalized gradient then A2_std is (3/2) times
+      [chi_s/(1+w)] squared times eps_g squared; if eps_g is only an upper
+      bound, the corresponding relation is an upper bound on A2_std.
     forbidden_extension: numerical ceiling without a registered eps_g input
     counterexample_boundary:
       - vacuum or a nonpositive mu where ln(mu) is unavailable
@@ -266,6 +268,8 @@ typed_statements:
       - Theta equals zero so the normalized gradient and acceleration are unavailable
       - a missing, nonpositive, or silently assumed c on the explicit-c branch
       - an acceleration normalization that does not match the declared units convention
+      - a gradient normalization that does not match the declared units convention
+      - a nonfinite branch-normalized coefficient or shape in representable arithmetic
       - heat flux, anisotropic stress, or nonbarotropic pressure terms are present
 
 proof_record_contract:

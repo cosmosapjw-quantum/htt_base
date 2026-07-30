@@ -18,6 +18,7 @@ from common.joint_anisotropy_state import (
 )
 from common.orbit_nonlinearity import matrix_to_stf5, stf5_to_matrix
 from common.pillar_t_core_proofs import (
+    GradientNormalization,
     REGISTRY_SHA256,
     REFERENCE_RESOLVED_LEGACY,
     SOURCE_HASHES,
@@ -58,6 +59,10 @@ V3_PATH = (
     ROOT
     / "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml"
 )
+C1_GRADIENT = (
+    GradientNormalization.D_LN_MU_OVER_THETA_C_EQUALS_ONE
+)
+EXPLICIT_C_GRADIENT = GradientNormalization.C_D_LN_MU_OVER_THETA
 
 
 def _sha256(path: Path) -> str:
@@ -574,13 +579,14 @@ def test_tf_analytic_core_boundaries() -> None:
     shape = euler_slaving_shape(
         mu=1.0,
         w=0.25,
-        sound_speed_squared=0.1,
+        dimensionless_sound_speed_ratio=0.1,
         eps_g=0.03,
         theta=2.0,
         units_convention=UnitsConvention.C_EQUALS_ONE_THETA_NORMALIZED,
         acceleration_normalization=(
             AccelerationNormalization.A_OVER_THETA_C_EQUALS_ONE
         ),
+        gradient_normalization=C1_GRADIENT,
     )
     expected = 1.5 * (0.1 / 1.25) ** 2 * 0.03**2
     assert shape.conditional_a2_shape_value == pytest.approx(expected)
@@ -596,20 +602,21 @@ def test_tf_analytic_core_boundaries() -> None:
     explicit_c = euler_slaving_shape(
         mu=1.0,
         w=0.25,
-        sound_speed_squared=0.1,
+        dimensionless_sound_speed_ratio=0.1,
         eps_g=0.03,
         theta=2.0,
         units_convention=UnitsConvention.EXPLICIT_C_THETA_NORMALIZED,
         acceleration_normalization=(
             AccelerationNormalization.A_OVER_C_THETA
         ),
+        gradient_normalization=EXPLICIT_C_GRADIENT,
         c_numeric_in_source_velocity_units=2.0,
     )
     assert explicit_c.normalized_acceleration_coefficient == pytest.approx(
-        -0.1 / (2.0 * 1.25)
+        -0.1 / 1.25
     )
     assert explicit_c.conditional_a2_shape_value == pytest.approx(
-        expected / 4.0
+        expected
     )
 
 
@@ -620,101 +627,167 @@ def test_tf_conditional_mutations_refuse() -> None:
         euler_slaving_shape(
             mu=0.0,
             w=0.0,
-            sound_speed_squared=0.1,
+            dimensionless_sound_speed_ratio=0.1,
             eps_g=0.2,
             theta=1.0,
             units_convention=UnitsConvention.C_EQUALS_ONE_THETA_NORMALIZED,
             acceleration_normalization=(
                 AccelerationNormalization.A_OVER_THETA_C_EQUALS_ONE
             ),
+            gradient_normalization=C1_GRADIENT,
         )
     with pytest.raises(PillarTCoreProofError, match=r"1 \+ w"):
         euler_slaving_shape(
             mu=1.0,
             w=-1.0,
-            sound_speed_squared=0.1,
+            dimensionless_sound_speed_ratio=0.1,
             eps_g=0.2,
             theta=1.0,
             units_convention=UnitsConvention.C_EQUALS_ONE_THETA_NORMALIZED,
             acceleration_normalization=(
                 AccelerationNormalization.A_OVER_THETA_C_EQUALS_ONE
             ),
+            gradient_normalization=C1_GRADIENT,
         )
     with pytest.raises(PillarTCoreProofError, match="nonnegative"):
         euler_slaving_shape(
             mu=1.0,
             w=0.0,
-            sound_speed_squared=0.1,
+            dimensionless_sound_speed_ratio=0.1,
             eps_g=-0.2,
             theta=1.0,
             units_convention=UnitsConvention.C_EQUALS_ONE_THETA_NORMALIZED,
             acceleration_normalization=(
                 AccelerationNormalization.A_OVER_THETA_C_EQUALS_ONE
             ),
+            gradient_normalization=C1_GRADIENT,
         )
     with pytest.raises(PillarTCoreProofError, match="theta"):
         euler_slaving_shape(
             mu=1.0,
             w=0.0,
-            sound_speed_squared=0.1,
+            dimensionless_sound_speed_ratio=0.1,
             eps_g=0.2,
             theta=0.0,
             units_convention=UnitsConvention.C_EQUALS_ONE_THETA_NORMALIZED,
             acceleration_normalization=(
                 AccelerationNormalization.A_OVER_THETA_C_EQUALS_ONE
             ),
+            gradient_normalization=C1_GRADIENT,
         )
     with pytest.raises(PillarTCoreProofError, match="does not match"):
         euler_slaving_shape(
             mu=1.0,
             w=0.0,
-            sound_speed_squared=0.1,
+            dimensionless_sound_speed_ratio=0.1,
             eps_g=0.2,
             theta=1.0,
             units_convention=UnitsConvention.EXPLICIT_C_THETA_NORMALIZED,
             acceleration_normalization=(
                 AccelerationNormalization.A_OVER_THETA_C_EQUALS_ONE
             ),
+            gradient_normalization=EXPLICIT_C_GRADIENT,
             c_numeric_in_source_velocity_units=2.0,
         )
     with pytest.raises(PillarTCoreProofError, match="requires a real"):
         euler_slaving_shape(
             mu=1.0,
             w=0.0,
-            sound_speed_squared=0.1,
+            dimensionless_sound_speed_ratio=0.1,
             eps_g=0.2,
             theta=1.0,
             units_convention=UnitsConvention.EXPLICIT_C_THETA_NORMALIZED,
             acceleration_normalization=(
                 AccelerationNormalization.A_OVER_C_THETA
             ),
+            gradient_normalization=EXPLICIT_C_GRADIENT,
         )
     with pytest.raises(PillarTCoreProofError, match="strictly positive c"):
         euler_slaving_shape(
             mu=1.0,
             w=0.0,
-            sound_speed_squared=0.1,
+            dimensionless_sound_speed_ratio=0.1,
             eps_g=0.2,
             theta=1.0,
             units_convention=UnitsConvention.EXPLICIT_C_THETA_NORMALIZED,
             acceleration_normalization=(
                 AccelerationNormalization.A_OVER_C_THETA
             ),
+            gradient_normalization=EXPLICIT_C_GRADIENT,
             c_numeric_in_source_velocity_units=0.0,
         )
     with pytest.raises(PillarTCoreProofError, match="exact numerical 1"):
         euler_slaving_shape(
             mu=1.0,
             w=0.0,
-            sound_speed_squared=0.1,
+            dimensionless_sound_speed_ratio=0.1,
             eps_g=0.2,
             theta=1.0,
             units_convention=UnitsConvention.C_EQUALS_ONE_THETA_NORMALIZED,
             acceleration_normalization=(
                 AccelerationNormalization.A_OVER_THETA_C_EQUALS_ONE
             ),
+            gradient_normalization=C1_GRADIENT,
             c_numeric_in_source_velocity_units=2.0,
         )
+    with pytest.raises(PillarTCoreProofError, match="gradient normalization"):
+        euler_slaving_shape(
+            mu=1.0,
+            w=0.0,
+            dimensionless_sound_speed_ratio=0.1,
+            eps_g=0.2,
+            theta=1.0,
+            units_convention=UnitsConvention.EXPLICIT_C_THETA_NORMALIZED,
+            acceleration_normalization=(
+                AccelerationNormalization.A_OVER_C_THETA
+            ),
+            gradient_normalization=C1_GRADIENT,
+            c_numeric_in_source_velocity_units=2.0,
+        )
+    with pytest.raises(PillarTCoreProofError, match="shape must be finite"):
+        euler_slaving_shape(
+            mu=1.0,
+            w=0.0,
+            dimensionless_sound_speed_ratio=np.finfo(float).max,
+            eps_g=0.2,
+            theta=1.0,
+            units_convention=UnitsConvention.C_EQUALS_ONE_THETA_NORMALIZED,
+            acceleration_normalization=(
+                AccelerationNormalization.A_OVER_THETA_C_EQUALS_ONE
+            ),
+            gradient_normalization=C1_GRADIENT,
+        )
+    with pytest.raises(PillarTCoreProofError, match="coefficient must be finite"):
+        euler_slaving_shape(
+            mu=1.0,
+            w=-0.5,
+            dimensionless_sound_speed_ratio=np.finfo(float).max,
+            eps_g=0.2,
+            theta=1.0,
+            units_convention=UnitsConvention.C_EQUALS_ONE_THETA_NORMALIZED,
+            acceleration_normalization=(
+                AccelerationNormalization.A_OVER_THETA_C_EQUALS_ONE
+            ),
+            gradient_normalization=C1_GRADIENT,
+        )
+
+
+def test_tf12_subnormal_positive_c_has_finite_branch_neutral_shape() -> None:
+    result = euler_slaving_shape(
+        mu=1.0,
+        w=0.25,
+        dimensionless_sound_speed_ratio=0.1,
+        eps_g=0.03,
+        theta=2.0,
+        units_convention=UnitsConvention.EXPLICIT_C_THETA_NORMALIZED,
+        acceleration_normalization=(
+            AccelerationNormalization.A_OVER_C_THETA
+        ),
+        gradient_normalization=EXPLICIT_C_GRADIENT,
+        c_numeric_in_source_velocity_units=np.nextafter(0.0, 1.0),
+    )
+    assert math.isfinite(result.normalized_acceleration_coefficient)
+    assert math.isfinite(result.conditional_a2_shape_value)
 
 
 def test_no_deferred_or_cas_obligation_is_promoted(registry) -> None:
@@ -756,6 +829,7 @@ def test_statement_boundaries_are_machine_visible(registry) -> None:
     assert "strictly positive" in joined
     assert "nonzero" in joined
     assert "Theta" in joined
+    assert "eps_g uses c D ln(mu)/Theta" in joined
     assert "EXPLICIT_C_OR_C_EQUALS_ONE" in tf12.branch_convention
     assert tf12.verdict is ProofVerdict.PROVED_CONDITIONAL_ANALYTIC
 

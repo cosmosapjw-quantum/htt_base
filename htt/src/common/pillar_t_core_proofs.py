@@ -46,7 +46,7 @@ INTAKE_PATH = (
 )
 SOURCE_HASHES = {
     SPEC_PATH:
-        "1abd632610b7ce51b9bf1ebe91b8f64c32e5ecddeea18af0bfc14901135c1c51",
+        "510e7513ee058d9d20aa6a399a431cc24e013f721a5af6d3a794c7690d4164e7",
     V3_PATH:
         "d14b24fda9556545abaf337310471af971c68f01438d32df13349f8cd4308f8b",
     INTAKE_PATH:
@@ -108,7 +108,7 @@ RENDERING_RULE = (
 # appropriate here because this registry is the frozen proof-author evidence
 # consumed by later proof-atlas work.
 REGISTRY_SHA256 = (
-    "0729466278169d9368e5a7a3f23e1e534e348e4ce5888a4ff0a65d57da957d6b"
+    "808c69ca1111591a6d6b52079b6caa7889a838009540ef9959a077640dcdc1d6"
 )
 LEGACY_PILLAR_T_IDS = frozenset(
     {
@@ -185,6 +185,15 @@ class ProofVerdict(_StringEnum):
     INCONCLUSIVE_MISSING_SIGNATURE = "INCONCLUSIVE_MISSING_SIGNATURE"
     INCONCLUSIVE = "INCONCLUSIVE"
     FAIL = "FAIL"
+
+
+class GradientNormalization(_StringEnum):
+    """Dimensionless pressure-gradient branch paired with acceleration units."""
+
+    C_D_LN_MU_OVER_THETA = "C_D_LN_MU_OVER_THETA"
+    D_LN_MU_OVER_THETA_C_EQUALS_ONE = (
+        "D_LN_MU_OVER_THETA_C_EQUALS_ONE"
+    )
 
 
 def _sha256(path: Path) -> str:
@@ -974,8 +983,10 @@ def factorized_budget_directional_derivative(
 class EulerSlavingShape:
     units_convention: UnitsConvention
     acceleration_normalization: AccelerationNormalization
+    gradient_normalization: GradientNormalization
     theta: float
     c_numeric_in_source_velocity_units: float
+    dimensionless_sound_speed_ratio: float
     normalized_acceleration_coefficient: float
     conditional_a2_shape_value: float
     eps_g: float
@@ -986,11 +997,12 @@ def euler_slaving_shape(
     *,
     mu: float,
     w: float,
-    sound_speed_squared: float,
+    dimensionless_sound_speed_ratio: float,
     eps_g: float,
     theta: float,
     units_convention: UnitsConvention | str,
     acceleration_normalization: AccelerationNormalization | str,
+    gradient_normalization: GradientNormalization | str,
     c_numeric_in_source_velocity_units: float | None = None,
 ) -> EulerSlavingShape:
     """Evaluate the conditional TF-12 shape with no MES ceiling authority."""
@@ -998,7 +1010,9 @@ def euler_slaving_shape(
     values = {
         "mu": mu,
         "w": w,
-        "sound_speed_squared": sound_speed_squared,
+        "dimensionless_sound_speed_ratio": (
+            dimensionless_sound_speed_ratio
+        ),
         "eps_g": eps_g,
         "theta": theta,
     }
@@ -1041,6 +1055,21 @@ def euler_slaving_shape(
         raise PillarTCoreProofError(
             "acceleration normalization does not match units convention"
         )
+    try:
+        gradient = GradientNormalization(gradient_normalization)
+    except (TypeError, ValueError) as exc:
+        raise PillarTCoreProofError(
+            "gradient_normalization is not registered"
+        ) from exc
+    expected_gradient = (
+        GradientNormalization.C_D_LN_MU_OVER_THETA
+        if units is UnitsConvention.EXPLICIT_C_THETA_NORMALIZED
+        else GradientNormalization.D_LN_MU_OVER_THETA_C_EQUALS_ONE
+    )
+    if gradient is not expected_gradient:
+        raise PillarTCoreProofError(
+            "gradient normalization does not match units convention"
+        )
     if units is UnitsConvention.EXPLICIT_C_THETA_NORMALIZED:
         c_value = c_numeric_in_source_velocity_units
         if isinstance(c_value, (bool, np.bool_)) or not isinstance(
@@ -1073,15 +1102,25 @@ def euler_slaving_shape(
             )
         else:
             c_numeric = 1.0
-    coefficient = (
-        -float(sound_speed_squared) / (c_numeric * denominator)
-    )
+    coefficient = -float(dimensionless_sound_speed_ratio) / denominator
+    if not math.isfinite(coefficient):
+        raise PillarTCoreProofError(
+            "branch-normalized coefficient must be finite"
+        )
     shape = 1.5 * coefficient * coefficient * float(eps_g) ** 2
+    if not math.isfinite(shape):
+        raise PillarTCoreProofError(
+            "conditional acceleration shape must be finite"
+        )
     return EulerSlavingShape(
         units_convention=units,
         acceleration_normalization=normalization,
+        gradient_normalization=gradient,
         theta=float(theta),
         c_numeric_in_source_velocity_units=c_numeric,
+        dimensionless_sound_speed_ratio=float(
+            dimensionless_sound_speed_ratio
+        ),
         normalized_acceleration_coefficient=coefficient,
         conditional_a2_shape_value=shape,
         eps_g=float(eps_g),
@@ -1091,6 +1130,7 @@ def euler_slaving_shape(
 __all__ = [
     "AmplitudeOrbitFactorization",
     "EulerSlavingShape",
+    "GradientNormalization",
     "KinematicNormalization",
     "ParityTransformResult",
     "PillarTCoreProofError",

@@ -34,7 +34,7 @@ TEST = Path("tests/contracts/test_pillar_t_core.py")
 
 SCHEMA = "htt.pillar_t_core_proofs.v1"
 SPEC_SHA256 = (
-    "1abd632610b7ce51b9bf1ebe91b8f64c32e5ecddeea18af0bfc14901135c1c51"
+    "510e7513ee058d9d20aa6a399a431cc24e013f721a5af6d3a794c7690d4164e7"
 )
 V3_SHA256 = (
     "d14b24fda9556545abaf337310471af971c68f01438d32df13349f8cd4308f8b"
