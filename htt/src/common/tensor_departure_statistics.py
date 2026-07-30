@@ -38,12 +38,14 @@ from common.anchor_geometry import (
     AnchorAvailability,
     AnchorBlockSpec,
     AnchorBodySpec,
+    AnchorFamily,
     AnchorGaugeStatus,
     AnchorGeometryKind,
     AnchorVector,
     PolytopeHalfspace,
     evaluate_anchor_gauge,
 )
+from common.joint_anisotropy_state import JointAnisotropyState
 from common.orbit_nonlinearity import stf5_to_matrix
 from common.tensor_functionals import (
     FunctionalAdmissibilityStatus,
@@ -52,6 +54,7 @@ from common.tensor_functionals import (
     FunctionalSignClass,
     FunctionalStressStatus,
     TensorFunctionalResult,
+    revalidate_tensor_functional_result,
 )
 
 
@@ -338,6 +341,8 @@ class CertifiedFunctionalPushforward:
     quantiles_by_functional: tuple[tuple[float, ...], ...] | None
     summary_status: PushforwardSummaryStatus
     transfer_source: str
+    transfer_spec_id: str | None
+    transfer_provenance_id: str
     claim_ceiling: str = TENSOR_DEPARTURE_CLAIM_CEILING
     allowed_use: tuple[str, ...] = TENSOR_DEPARTURE_ALLOWED_USE
     forbidden_use: tuple[str, ...] = TENSOR_DEPARTURE_FORBIDDEN_USE
@@ -405,6 +410,9 @@ class CertifiedFunctionalPushforward:
                 "summary_status must use the registered vocabulary"
             )
         _text(self.transfer_source, "transfer_source")
+        if self.transfer_spec_id is not None:
+            _text(self.transfer_spec_id, "transfer_spec_id")
+        _text(self.transfer_provenance_id, "transfer_provenance_id")
         object.__setattr__(self, "functional_ids", functional_ids)
         object.__setattr__(self, "functional_spec_ids", spec_ids)
         object.__setattr__(self, "sample_state_ids", sample_ids)
@@ -476,6 +484,8 @@ class CertifiedFunctionalPushforward:
             "sign_classes": [value.value for value in self.sign_classes],
             "summary_status": self.summary_status.value,
             "transfer_source": self.transfer_source,
+            "transfer_spec_id": self.transfer_spec_id,
+            "transfer_provenance_id": self.transfer_provenance_id,
         }
 
     def _assert_identity_sealed(self) -> None:
@@ -499,12 +509,20 @@ def build_certified_functional_pushforward(
     *,
     pushforward_id: str,
     samples: Sequence[Sequence[TensorFunctionalResult]],
+    source_states: Sequence[JointAnisotropyState],
+    anchors: Mapping[str, AnchorBodySpec | AnchorFamily | None],
     scalarization_policies: Mapping[
         str, ScalarizationPolicy | str
     ],
     quantile_levels: Sequence[float] = (0.05, 0.5, 0.95),
 ) -> CertifiedFunctionalPushforward:
-    """Build sample-wise ``x`` and inherited ``Q`` without ratio-of-means."""
+    """Build sample-wise ``x`` and inherited ``Q`` from replayed inputs.
+
+    Every functional result is recomputed from its exact joint state, functional
+    specification, and declared anchor before any value enters the
+    pushforward.  This prevents a post-construction mutation of a result from
+    being promoted into a certified diagnostic.
+    """
 
     _text(pushforward_id, "pushforward_id")
     if isinstance(samples, (str, bytes)):
@@ -521,6 +539,27 @@ def build_certified_functional_pushforward(
         raise TypeError(
             "samples must contain exact TensorFunctionalResult instances"
         )
+    if isinstance(source_states, (str, bytes)):
+        raise TensorDepartureStatisticsError(
+            "source_states must be a sequence"
+        )
+    states = tuple(source_states)
+    if len(states) != len(rows):
+        raise TensorDepartureStatisticsError(
+            "source_states must contain exactly one state per sample row"
+        )
+    if any(type(state) is not JointAnisotropyState for state in states):
+        raise TypeError(
+            "source_states must contain exact JointAnisotropyState instances"
+        )
+    replayed_states: list[JointAnisotropyState] = []
+    for state in states:
+        replayed = JointAnisotropyState.from_payload(state.to_payload())
+        if replayed.content_id != state.content_id:
+            raise TensorDepartureStatisticsError(
+                "source state failed canonical identity replay"
+            )
+        replayed_states.append(replayed)
 
     first = rows[0]
     functional_ids = tuple(result.spec.functional_id for result in first)
@@ -540,6 +579,21 @@ def build_certified_functional_pushforward(
         raise TensorDepartureStatisticsError(
             "scalarization policies must be preregistered for every functional"
         )
+    if set(anchors) != set(functional_ids):
+        raise TensorDepartureStatisticsError(
+            "anchors must be preregistered for every functional"
+        )
+    resolved_anchors: tuple[AnchorBodySpec | AnchorFamily | None, ...] = tuple(
+        anchors[functional_id] for functional_id in functional_ids
+    )
+    if any(
+        anchor is not None
+        and type(anchor) not in {AnchorBodySpec, AnchorFamily}
+        for anchor in resolved_anchors
+    ):
+        raise TypeError(
+            "anchors must contain exact AnchorBodySpec, AnchorFamily, or None"
+        )
     policies = tuple(
         _enum(
             scalarization_policies[functional_id],
@@ -549,21 +603,56 @@ def build_certified_functional_pushforward(
         for functional_id in functional_ids
     )
 
-    transfer_sources = {
-        result.transfer_source for row in rows for result in row
-    }
-    if len(transfer_sources) != 1:
+    transfer_payloads = tuple(
+        {
+            "transfer_source": state.transfer_source.value,
+            "transfer_spec": (
+                None
+                if state.transfer_spec is None
+                else state.transfer_spec.to_metadata()
+            ),
+        }
+        for state in replayed_states
+    )
+    transfer_provenance_ids = tuple(
+        _sha256_payload(payload) for payload in transfer_payloads
+    )
+    if len(set(transfer_provenance_ids)) != 1:
         raise TensorDepartureStatisticsError(
-            "transfer_source must be uniform across the pushforward"
+            "exact transfer provenance must be uniform across the pushforward"
         )
-    state_ids = tuple(row[0].source_state_id for row in rows)
-    if any(
-        any(result.source_state_id != state_ids[index] for result in row)
-        for index, row in enumerate(rows)
+    transfer_source = replayed_states[0].transfer_source.value
+    transfer_spec_id = (
+        None
+        if replayed_states[0].transfer_spec is None
+        else replayed_states[0].transfer_spec.transfer_id
+    )
+    state_ids = tuple(state.content_id for state in replayed_states)
+
+    replayed_rows: list[tuple[TensorFunctionalResult, ...]] = []
+    for row_index, (row, state) in enumerate(
+        zip(rows, replayed_states, strict=True)
     ):
-        raise TensorDepartureStatisticsError(
-            "one sample row must come from one joint state"
-        )
+        replayed_row: list[TensorFunctionalResult] = []
+        for result, anchor in zip(row, resolved_anchors, strict=True):
+            if result.source_state_id != state.content_id:
+                raise TensorDepartureStatisticsError(
+                    "functional result source_state_id does not match "
+                    f"source_states[{row_index}]"
+                )
+            rebuilt = revalidate_tensor_functional_result(
+                result,
+                state,
+                anchor=anchor,
+            )
+            if rebuilt.transfer_source != transfer_source:
+                raise TensorDepartureStatisticsError(
+                    "functional result transfer_source drifted from source state"
+                )
+            replayed_row.append(rebuilt)
+        replayed_rows.append(tuple(replayed_row))
+    rows = tuple(replayed_rows)
+    first = rows[0]
     anchor_ids = tuple(
         result.stress.anchor_id or result.spec.anchor_id for result in first
     )
@@ -684,7 +773,9 @@ def build_certified_functional_pushforward(
         quantile_levels=levels,
         quantiles_by_functional=quantiles,
         summary_status=summary_status,
-        transfer_source=next(iter(transfer_sources)),
+        transfer_source=transfer_source,
+        transfer_spec_id=transfer_spec_id,
+        transfer_provenance_id=transfer_provenance_ids[0],
         _construction_token=_PUSHFORWARD_TOKEN,
     )
 

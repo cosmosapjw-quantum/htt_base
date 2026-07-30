@@ -33,10 +33,17 @@ public_contract:
     - build_occupancy_measure
     - build_legacy_xqpi_fg_view
 functional_pushforward:
-  input_type: exact TensorFunctionalResult matrix
-  row_identity: one JointAnisotropyState content identity
+  input_type: >-
+    exact TensorFunctionalResult matrix plus one exact
+    JointAnisotropyState per row and one registered PR-254 anchor per column
+  replay_requirement: >-
+    every result is recomputed from its bound state, sealed functional
+    specification, and declared anchor before aggregation
+  post_construction_result_mutation: fail closed
+  row_identity: replayed JointAnisotropyState content identity
   column_identity: one ordered TensorFunctionalSpec identity
-  transfer_provenance: uniform and retained
+  anchor_identity: exact functional-id keyed registration
+  transfer_provenance: exact uniform state-bound metadata identity retained
   scalarization:
     scalar: SCALAR_IDENTITY
     polar_or_axial_vector: EUCLIDEAN_NORM

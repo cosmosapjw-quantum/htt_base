@@ -55,6 +55,7 @@ from common.tensor_departure_statistics import (
 )
 from common.tensor_functionals import (
     FunctionalStressStatus,
+    TensorFunctionalError,
     TensorFunctionalOperator,
     TensorFunctionalResult,
     build_tensor_functional_spec,
@@ -225,15 +226,24 @@ def _functional_family():
     )
 
 
-def _rows(scales=(0.5, 1.0, 1.5)):
+def _inputs(scales=(0.5, 1.0, 1.5)):
     family = _functional_family()
-    return tuple(
+    states = tuple(_joint(scale) for scale in scales)
+    rows = tuple(
         tuple(
-            evaluate_tensor_functional(_joint(scale), spec, anchor=anchor)
+            evaluate_tensor_functional(state, spec, anchor=anchor)
             for spec, anchor in family
         )
-        for scale in scales
+        for state in states
     )
+    anchors = {
+        spec.functional_id: anchor for spec, anchor in family
+    }
+    return states, rows, anchors
+
+
+def _rows(scales=(0.5, 1.0, 1.5)):
+    return _inputs(scales)[1]
 
 
 def _policies(rows):
@@ -245,10 +255,12 @@ def _policies(rows):
 
 
 def _pushforward(scales=(0.5, 1.0, 1.5)):
-    rows = _rows(scales)
+    states, rows, anchors = _inputs(scales)
     return build_certified_functional_pushforward(
         pushforward_id="PR264-SYNTHETIC-PUSHFORWARD",
         samples=rows,
+        source_states=states,
+        anchors=anchors,
         scalarization_policies=_policies(rows),
     )
 
@@ -316,10 +328,12 @@ def test_spec_and_backlog_bind_the_required_pr264_contract() -> None:
 
 
 def test_pushforward_keeps_raw_x_q_points_bounds_and_summaries_separate() -> None:
-    rows = _rows()
+    states, rows, anchors = _inputs()
     result = build_certified_functional_pushforward(
         pushforward_id="PR264-PUSHFORWARD",
         samples=rows,
+        source_states=states,
+        anchors=anchors,
         scalarization_policies=_policies(rows),
         quantile_levels=(0.25, 0.5, 0.75),
     )
@@ -341,6 +355,8 @@ def test_pushforward_keeps_raw_x_q_points_bounds_and_summaries_separate() -> Non
         )
     )
     assert result.claim_ceiling == TENSOR_DEPARTURE_CLAIM_CEILING
+    assert result.transfer_spec_id is None
+    assert result.transfer_provenance_id.startswith("sha256:")
     assert "content_id" in result.as_payload()
 
 
@@ -356,8 +372,80 @@ def test_pushforward_is_sample_wise_and_never_substitutes_ratio_of_means() -> No
     assert "ratio_of_means" not in result.as_payload()
 
 
+@pytest.mark.parametrize(
+    "mutation",
+    (
+        "value",
+        "source_state_id",
+        "stress",
+        "anchor_id",
+        "transfer_source",
+    ),
+)
+def test_pushforward_replays_and_refuses_mutated_upstream_results(
+    mutation: str,
+) -> None:
+    state = _joint()
+    spec, anchor = _functional_family()[0]
+    result = evaluate_tensor_functional(state, spec, anchor=anchor)
+    if mutation == "value":
+        object.__setattr__(result, "value", (999.0,))
+    elif mutation == "source_state_id":
+        object.__setattr__(result, "source_state_id", "forged-state")
+    elif mutation == "stress":
+        object.__setattr__(result.stress, "point_estimate", 0.001)
+    elif mutation == "anchor_id":
+        object.__setattr__(result.stress, "anchor_id", "forged-anchor")
+    else:
+        object.__setattr__(
+            result,
+            "transfer_source",
+            "BASS_NATIVE_LOW_ELL_FORGED",
+        )
+
+    with pytest.raises(
+        (TensorDepartureStatisticsError, TensorFunctionalError),
+        match="does not match|fields do not match|drifted",
+    ):
+        build_certified_functional_pushforward(
+            pushforward_id=f"PR264-MUTATION-{mutation}",
+            samples=((result,),),
+            source_states=(state,),
+            anchors={spec.functional_id: anchor},
+            scalarization_policies={
+                spec.functional_id: ScalarizationPolicy.SCALAR_IDENTITY
+            },
+        )
+
+
+def test_pushforward_requires_exact_state_and_anchor_registration() -> None:
+    states, rows, anchors = _inputs((1.0,))
+    with pytest.raises(
+        TensorDepartureStatisticsError, match="one state per sample"
+    ):
+        build_certified_functional_pushforward(
+            pushforward_id="PR264-MISSING-STATE",
+            samples=rows,
+            source_states=(),
+            anchors=anchors,
+            scalarization_policies=_policies(rows),
+        )
+    missing_anchor = dict(anchors)
+    missing_anchor.pop(rows[0][-1].spec.functional_id)
+    with pytest.raises(
+        TensorDepartureStatisticsError, match="anchors must be preregistered"
+    ):
+        build_certified_functional_pushforward(
+            pushforward_id="PR264-MISSING-ANCHOR",
+            samples=rows,
+            source_states=states,
+            anchors=missing_anchor,
+            scalarization_policies=_policies(rows),
+        )
+
+
 def test_non_scalar_scalarization_must_be_explicit_and_type_compatible() -> None:
-    rows = _rows()
+    states, rows, anchors = _inputs()
     missing = dict(_policies(rows))
     missing.pop(rows[0][2].spec.functional_id)
     with pytest.raises(
@@ -366,6 +454,8 @@ def test_non_scalar_scalarization_must_be_explicit_and_type_compatible() -> None
         build_certified_functional_pushforward(
             pushforward_id="PR264-MISSING-POLICY",
             samples=rows,
+            source_states=states,
+            anchors=anchors,
             scalarization_policies=missing,
         )
     bad = dict(_policies(rows))
@@ -376,6 +466,8 @@ def test_non_scalar_scalarization_must_be_explicit_and_type_compatible() -> None
         build_certified_functional_pushforward(
             pushforward_id="PR264-BAD-POLICY",
             samples=rows,
+            source_states=states,
+            anchors=anchors,
             scalarization_policies=bad,
         )
 
@@ -386,17 +478,20 @@ def test_missing_component_remains_none_and_blocks_derived_summaries() -> None:
         "anchor.acceleration",
     )
     anchor = _ball(spec)
+    states = (_joint(), _joint(acceleration_missing=True))
     rows = (
-        (evaluate_tensor_functional(_joint(), spec, anchor=anchor),),
+        (evaluate_tensor_functional(states[0], spec, anchor=anchor),),
         (
             evaluate_tensor_functional(
-                _joint(acceleration_missing=True), spec, anchor=anchor
+                states[1], spec, anchor=anchor
             ),
         ),
     )
     result = build_certified_functional_pushforward(
         pushforward_id="PR264-PARTIAL",
         samples=rows,
+        source_states=states,
+        anchors={spec.functional_id: anchor},
         scalarization_policies={
             spec.functional_id: ScalarizationPolicy.EUCLIDEAN_NORM
         },
@@ -418,11 +513,14 @@ def test_conditional_anchor_has_bounds_but_no_fabricated_q_point() -> None:
         bodies=(body_a, body_b),
         nuisance_identity="PR264 finite anchor nuisance",
     )
-    value = evaluate_tensor_functional(_joint(), spec, anchor=family)
+    state = _joint()
+    value = evaluate_tensor_functional(state, spec, anchor=family)
     assert value.stress.status is FunctionalStressStatus.CONDITIONAL
     result = build_certified_functional_pushforward(
         pushforward_id="PR264-CONDITIONAL",
         samples=((value,),),
+        source_states=(state,),
+        anchors={spec.functional_id: family},
         scalarization_policies={
             spec.functional_id: ScalarizationPolicy.SCALAR_IDENTITY
         },
@@ -450,6 +548,10 @@ def test_vector_and_tensor_scalarizations_are_o3_covariant() -> None:
     result = build_certified_functional_pushforward(
         pushforward_id="PR264-O3",
         samples=rows,
+        source_states=(state, rotated),
+        anchors={
+            spec.functional_id: anchor for spec, anchor in family
+        },
         scalarization_policies={
             rows[0][0].spec.functional_id: ScalarizationPolicy.EUCLIDEAN_NORM,
             rows[0][1].spec.functional_id: (
@@ -693,10 +795,13 @@ def test_occupancy_measure_is_empirical_monotone_and_not_physical() -> None:
 def test_signed_functional_cannot_create_occupancy_measure() -> None:
     spec = _spec(TensorFunctionalOperator.TR_SIGMA3, "anchor.signed")
     anchor = _ball(spec)
-    row = (evaluate_tensor_functional(_joint(), spec, anchor=anchor),)
+    state = _joint()
+    row = (evaluate_tensor_functional(state, spec, anchor=anchor),)
     pushforward = build_certified_functional_pushforward(
         pushforward_id="PR264-SIGNED",
         samples=(row,),
+        source_states=(state,),
+        anchors={spec.functional_id: anchor},
         scalarization_policies={
             spec.functional_id: ScalarizationPolicy.SCALAR_IDENTITY
         },
