@@ -1,0 +1,266 @@
+schema: htt.vector_tensor_proof_program.draft.v1
+status: REGISTERED
+source_status: PROPOSED_NOT_REGISTERED_IN_CANONICAL_DAG
+registration:
+  authority: PR-260
+  registered_on: "2026-07-30"
+  scientific_status_effect: none
+  claim_tier_ceiling: diagnostic_only
+  source_attachment_sha256: 75d8ac2f40aeb501d046d9c35f56f9bb4e393e191e90eb024cd7b44800682a55
+target:
+  repository: cosmosapjw-quantum/htt_base
+  branch: research/pr04-multicomponent
+  commit: e7c20643c0dd323481f0887aff8e437a1bf7950a
+source_blueprint: vector_tensor_mes_upgrade_blueprint.md
+claim_boundary:
+  scientific_status_effect: none
+  observational_use: false
+  family_identification: false
+  native_solver_result: false
+  pr151_partial_data_use: forbidden
+current_inventory:
+  legacy_records: 65
+  v2_checked_signatures: 12
+  v2_migration_pending: 53
+  primary_pillar_T: 31
+  primary_pillar_S: 34
+baseline_blockers:
+  focused_suite:
+    environment:
+      python: 3.12.13
+      numpy: 2.3.5
+    passed: 86
+    failed: 2
+  items:
+    - id: PR258_NUMERIC_ZERO_CANONICALIZATION
+      symptom: unit-congruent supported squared distances serialize as 0.0 and 4.81482486096809e-35
+      required_resolution: scale-aware covariance-quotient zero canonicalization
+      forbidden_resolution: weaken the exact contract without a numeric policy
+    - id: PR124_POST_PR252_FREEZE_SCOPE
+      symptom: PR124 pins cc3ba8 while the authorized post-PR252 consumer hash is 281a35
+      required_resolution: separate historical freeze scope from successor-authority scope
+      forbidden_resolution: revert the authorized consumer migration silently
+    - id: PR258_STATUS_SYNC
+      symptom: GitHub merge exists while tracked canonical status remains pending
+      required_resolution: synchronize through the registered closeout workflow
+canonical_objects:
+  - CongruenceKinematics
+  - VelocityFrameBundle
+  - JointAnisotropyState
+  - MESAnchorBody
+  - TensorFunctionalSpec
+  - FunctionalStressProfile
+  - AcceptanceBodyScore
+  - ConditionalExceedanceSurface
+  - CertifiedFunctionalPushforward
+  - FunctionalDepthPath
+  - OrbitAtlasReport
+  - AnisotropyTypeReport
+theorems:
+  pillar_T:
+    - id: VT-T1
+      title: Typed 1+3 normalization conversion
+      status: READY_FOR_PROOF
+      proof_mode: exact_algebra
+    - id: VT-T2
+      title: Equivariant anchor-body gauge
+      status: READY_FOR_PROOF
+      proof_mode: convex_analysis
+    - id: VT-T3
+      title: Polar support-gauge duality
+      status: READY_FOR_PROOF
+      proof_mode: convex_analysis
+    - id: VT-T4
+      title: Homogeneous functional stress lower bound
+      status: READY_FOR_PROOF
+      proof_mode: exact_algebra
+    - id: VT-T5
+      title: Shear shape and discriminant strata
+      status: READY_FOR_PROOF
+      proof_mode: exact_algebra_four_axis_cas
+    - id: VT-T6
+      title: STF Cayley-Hamilton contraction reduction
+      status: READY_FOR_PROOF
+      proof_mode: exact_algebra_four_axis_cas
+    - id: VT-T7
+      title: Krylov determinant factorization and cyclicity
+      status: READY_FOR_PROOF
+      proof_mode: exact_algebra_four_axis_cas
+    - id: VT-T8
+      title: Generic cyclic-chart SO3 reconstruction and parity-typed O3 quotient
+      status: READY_FOR_PROOF
+      proof_mode: constructive_invariant_theory_four_axis_cas
+    - id: VT-T9
+      title: Polar-axial parity transformation law
+      status: READY_FOR_PROOF
+      proof_mode: representation_theory
+    - id: VT-T10
+      title: Anchor amplitude-orbit factorization
+      status: READY_FOR_PROOF
+      proof_mode: group_action_convex_analysis
+    - id: VT-T11
+      title: Supported linear-response quotient
+      status: CONDITIONAL_PROGRAM
+      proof_mode: linear_algebra
+    - id: VT-T12
+      title: Local-global Schur and principal-angle identifiability
+      status: CONDITIONAL_PROGRAM
+      proof_mode: linear_algebra_statistical_information
+    - id: VT-T13
+      title: Invariant 1+3 evolution identities
+      status: CONDITIONAL_PROGRAM
+      proof_mode: covariant_dynamics_four_axis_cas
+    - id: VT-T14
+      title: Kinematic-to-geometric type escalation
+      status: PROGRAM_OBLIGATION
+      proof_mode: covariant_geometry_native_gate
+  pillar_S:
+    - id: VT-S1
+      title: Functional-profile information dominance
+      status: READY_FOR_PROOF
+      proof_mode: statistical_experiment_data_processing
+    - id: VT-S2
+      title: Acceptance-body Q unification
+      status: READY_FOR_PROOF
+      proof_mode: convex_analysis
+    - id: VT-S3
+      title: Matched-null max-Q simultaneous calibration
+      status: CONDITIONAL_PROGRAM
+      proof_mode: finite_ensemble_rank_and_simulation
+    - id: VT-S4
+      title: Conditional Pi survival surface
+      status: READY_FOR_PROOF
+      proof_mode: probability_measure_contract
+    - id: VT-S5
+      title: Partially identified Pi envelopes
+      status: CONDITIONAL_PROGRAM
+      proof_mode: support_function_inference
+    - id: VT-S6
+      title: Joint random-anchor confidence-body pushforward
+      status: CONDITIONAL_PROGRAM
+      proof_mode: multivariate_ratio_inference
+    - id: VT-S7
+      title: Certified sample-wise F pushforward
+      status: READY_FOR_PROOF
+      proof_mode: probability_pushforward
+    - id: VT-S8
+      title: Paired depth-contrast covariance
+      status: READY_FOR_PROOF
+      proof_mode: exact_covariance_algebra
+    - id: VT-S9
+      title: ZoA finite-path morphology test
+      status: CONDITIONAL_PROGRAM
+      proof_mode: singular_covariance_and_resampling
+    - id: VT-S10
+      title: Weak-identification error bound
+      status: CONDITIONAL_PROGRAM
+      proof_mode: perturbation_theory_and_simulation
+    - id: VT-S11
+      title: Orbit-response composition identifiability
+      status: CONDITIONAL_PROGRAM
+      proof_mode: composition_of_injective_maps
+    - id: VT-S12
+      title: Matched-counterpair morphology power
+      status: CONDITIONAL_PROGRAM
+      proof_mode: preregistered_simulation
+    - id: VT-S13
+      title: Open-set type-report abstention and coverage
+      status: CONDITIONAL_PROGRAM
+      proof_mode: finite_library_simulation
+    - id: VT-S14
+      title: Depth-conditioned local-global discrimination
+      status: PROGRAM_OBLIGATION
+      proof_mode: joint_response_and_data_adapter
+implementation_phases:
+  - id: VT-00
+    title: Formal DAG replan
+    depends_on:
+      - PR-258_COMPLETED_SUCCESS_SYNC
+    scientific_change: none
+  - id: VT-01
+    title: Canonical state and convention SSOT
+    depends_on: [VT-00]
+  - id: VT-02
+    title: Anchor body and tensor functional contracts
+    depends_on: [VT-01]
+  - id: VT-03
+    title: Extended orbit atlas and parity
+    depends_on: [VT-01]
+  - id: VT-04
+    title: Vector x Q F profiles and scalar compatibility
+    depends_on: [VT-02, VT-03]
+  - id: VT-05
+    title: Conditional Pi and partial-identification envelopes
+    depends_on: [VT-04]
+  - id: VT-06
+    title: Depth and ZoA path G_F
+    depends_on: [VT-04]
+  - id: VT-07
+    title: Weak identification and AnisotropyTypeReport
+    depends_on: [VT-03, VT-05, VT-06]
+  - id: VT-08
+    title: Theorem registry v3 and two-pillar migration schema
+    depends_on: [VT-02, VT-03]
+  - id: VT-09
+    title: Pillar T proof migration and new proofs
+    depends_on: [VT-07, VT-08]
+  - id: VT-10
+    title: Pillar S proof migration and new proofs
+    depends_on: [VT-07, VT-08]
+  - id: VT-11
+    title: Synthetic integration and adversarial validation
+    depends_on: [VT-09, VT-10]
+  - id: VT-12
+    title: Verified manuscript integration
+    depends_on: [VT-11]
+required_status_vocabulary:
+  local_global:
+    - MISSING_RESPONSE_PROVIDER
+    - NON_IDENTIFIED
+    - SUM_ONLY
+    - WEAKLY_IDENTIFIED
+    - SEPARABLE_CANDIDATE
+  anchor:
+    - DEFINED
+    - NO_MES_ANCHOR
+    - ANCHOR_DEGENERATE
+    - CHANNEL_MISMATCH
+    - RATIO_UNIDENTIFIED
+    - STRUCTURAL_NULL
+  orbit:
+    - GENERIC_SEPARATING_CHART
+    - WEAKLY_IDENTIFIED_CHART
+    - DEGENERATE_STRATUM
+    - PARITY_TYPED_ONLY
+    - UNCOVERED_DIRECTIONS
+    - COMPLETENESS_UNPROVEN
+validation:
+  cas_axes:
+    - Wolfram_xAct
+    - SymPy
+    - Sage_Singular
+    - Lean
+  mandatory_tests:
+    - legacy_scalar_byte_value_reproduction
+    - units_and_dimension_round_trip
+    - O3_SO3_equivariance_and_parity
+    - shear_strata_chart_conditioning_and_overlap
+    - rank_and_structural_null_mutations
+    - random_anchor_cross_covariance
+    - conditional_exceedance_coverage
+    - depth_path_joint_covariance
+    - matched_counterpair_morphology
+    - open_set_abstention
+    - claim_language_and_provenance
+kill_switches:
+  - scalar_stress_promoted_to_nonlinearity_or_FLRW_distance
+  - observer_boost_added_to_geometric_departure
+  - missing_anchor_or_provider_replaced_by_zero
+  - pseudoscalar_labeled_as_O3_invariant
+  - generic_chart_promoted_to_complete_invariant_ring
+  - shared_covariance_dropped
+  - Pi_labeled_as_truth_probability
+  - F_labeled_as_physical_occupancy
+  - G_F_labeled_as_global_tilt_evidence
+  - unknown_class_force_assigned
+  - PR151_partial_data_used

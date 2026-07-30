@@ -1,0 +1,837 @@
+schema: htt.proof_registry.two_pillars.v1
+registration_status: REGISTERED
+source_status: PROPOSED_REGISTRY_ROWS
+registration:
+  authority: PR-260
+  registered_on: "2026-07-30"
+  scientific_status_effect: none
+  claim_tier_ceiling: diagnostic_only
+  source_attachment_sha256: 2dbe47f44b3920318acd78b1f636ca0ba1dc051358da483ea98db2ba6a719c9a
+  counting_rule: registry rows are not theorem counts and do not promote proof status
+document_id: PROOF-REGISTRY-2P-v1
+date: "2026-07-30"
+audited_revision: e7c2064
+companions:
+  - STAT_FOUNDATIONS_TENSOR_UPGRADE_20260730.md
+  - tensor_foundations_oracle.py
+  - PROOF_REGISTRY_TWO_PILLARS_20260730.md
+
+# This file is a machine-readable mirror of the two-pillar registry. It is
+# governance metadata and validates no theorem by itself. It proposes deltas;
+# owning code, contracts and CAS adjudications remain authoritative. The legacy
+# THEOREM_REGISTRY.yaml stays byte-frozen; new entries type directly into
+# THEOREM_SIGNATURES_V2.yaml.
+
+status_enum:
+  ACTIVE: proven as stated
+  ACTIVE_CONDITIONAL: proven under explicitly stated premises
+  PROVEN_CAS4: proven with a four-axis CAS contract at CAS_4AXIS_PASS
+  ORACLE_VERIFIED: verified by an executable independent oracle, no CAS contract yet
+  PROPOSED: stated with a derivation, awaiting CAS or independent adjudication
+  RESTRICTED: stronger conjecture cut down by an exact counterexample; surviving form registered
+  OPEN: registered so no downstream claim silently assumes it
+  SUPERSEDED: replaced by a stronger or corrected item
+  RETRACTED: statement false as printed; retained as a marked counterexample
+
+claim_posture: >-
+  No entry is a detection, a Bianchi-family identification, a geometry
+  measurement, or a native-solver validation. No entry consumes PR-151 partial
+  acquisition data.
+
+oracle:
+  module: tensor_foundations_oracle.py
+  oracle_id: TENSOR_FOUNDATIONS_ORACLE_V1
+  seed: 20260730
+  propositions: 12
+  all_ok: true
+  independence_note: >-
+    The oracle re-implements every generator, action and identity from its
+    mathematical definition and imports nothing from the repository, so
+    agreement with orbit_nonlinearity / orbit_catalogue_v2 / anchor_geometry is
+    evidence rather than tautology. It is executable multi-surface evidence, not
+    independent human derivation, and it is not a CAS contract.
+
+pillars:
+  I:
+    name: mathematical physics and theoretical cosmology
+    sections: [state_and_orbit, invariant_algebra, constraint_structure,
+               sector_closure, anchor_geometry, realizability]
+  II:
+    name: statistics for real data analysis
+    sections: [estimand_and_identifiability, gauge_and_stress,
+               exact_inference, partial_identification,
+               invariance_optimality_multiplicity, discrimination]
+  BRIDGE:
+    name: load-bearing in both pillars
+
+entries:
+
+  # ---------------- PILLAR I ----------------
+  - id: I-1.1
+    legacy_id: TF-01-PARITY-TYPING
+    pillar: I
+    section: state_and_orbit
+    statement: >-
+      Under sigma -> R sigma R^T, beta -> R beta, omega -> det(R) R omega, the
+      axial Krylov determinant det[omega, sigma omega, sigma^2 omega] is an O(3)
+      scalar; the polar analogue is a pseudoscalar.
+    status: ORACLE_VERIFIED
+    evidence: oracle TF-01 (axial max abs error 1.47e-14, polar 5.8e-15, 600 proper and improper transforms)
+    no_go: false
+    buys: >-
+      Parity type is derivable rather than declared; enables the exact test
+      II-3.1 and forbids collapsing reflection-related types.
+
+  - id: I-1.2
+    legacy_id: TF-06-INVARIANT-DIMENSION
+    pillar: I
+    section: state_and_orbit
+    statement: >-
+      ON THE PRINCIPAL STRATUM (finite generic isotropy) the kinematic state has
+      exactly dim(state) - 3 functionally independent SO(3) invariants: 9 for
+      (sigma, omega, beta, DeltaOmega_k), 12 with four-acceleration, 15 with the
+      velocity-frame split. x_C resolves one. Off-stratum the rule fails: a
+      single vector alone has isotropy U(1) and one invariant, not zero.
+    status: ORACLE_VERIFIED
+    evidence: oracle TF-06 (Jacobian rank at 5 base points for all three dimensions, plus the off-stratum counterexample)
+    not_an_identifiability_claim: >-
+      counts directions in the INVARIANT space; reachability from data is the
+      separate question of II-1.2 and II-4.4
+    no_go: false
+    buys: >-
+      The counted statement of what the tensor upgrade recovers, and the
+      acceptance test for any proposed catalogue.
+
+  - id: I-1.3
+    pillar: I
+    section: state_and_orbit
+    statement: >-
+      Generic orbits are three-dimensional; isotropy jumps on the axisymmetric
+      shear locus and on non-cyclic vector configurations. Separation statements
+      are stratum-conditional.
+    status: PROPOSED
+    no_go: false
+    buys: The degenerate strata are the anisotropy types, not the failures.
+
+  - id: I-2.1
+    legacy_id: PR257-O3-SCALAR-PSEUDOSCALAR
+    pillar: I
+    section: invariant_algebra
+    statement: The twelve registered v2 polynomials carry their declared parity.
+    status: PROVEN_CAS4
+    evidence: CAS-PR257-ORBIT-CATALOGUE-V2-001
+    no_go: false
+    buys: The parity firewall the morphology layer rests on.
+
+  - id: I-2.2
+    legacy_id: PR257-TRACEFREE-CAYLEY-HAMILTON
+    pillar: I
+    section: invariant_algebra
+    statement: >-
+      sigma^3 = (tr sigma^2 / 2) sigma + (tr sigma^3 / 3) I for trace-free
+      symmetric sigma; hence v.sigma^3.v and v.sigma^4.v reduce.
+    status: PROVEN_CAS4
+    also: ORACLE_VERIFIED (TF-04)
+    no_go: false
+    buys: Degree bound - no v.sigma^k.v with k >= 3 is a new generator.
+
+  - id: I-2.3
+    legacy_id: PR257-KRYLOV-GRAM-SYZYGY
+    pillar: I
+    section: invariant_algebra
+    statement: >-
+      det[v, sigma v, sigma^2 v]^2 equals the Gram determinant of the Krylov
+      chain, which is a polynomial in the five even invariants of (sigma, v).
+    status: PROVEN_CAS4
+    also: ORACLE_VERIFIED (TF-03)
+    no_go: false
+    buys: >-
+      The magnitude of a Krylov determinant is old information; its entire new
+      content is one bit, the sign. This makes II-3.1 an exact one-bit test.
+
+  - id: I-2.4
+    legacy_id: TF-05-SHAPE-DISCRIMINANT
+    pillar: I
+    section: invariant_algebra
+    statement: >-
+      J_sigma = sqrt(6) I3 / I2^{3/2} lies in [-1, 1]; Delta_sigma = I2^3/2 -
+      3 I3^2 = (I2^3/2)(1 - J^2) is exactly the discriminant of the
+      characteristic polynomial; |J| = 1 iff repeated eigenvalue, J = 0 iff
+      eigenvalues (lambda, -lambda, 0); J is scale-free.
+    status: ORACLE_VERIFIED
+    evidence: >-
+      oracle TF-05 (exact symbolic corroboration, sympy residuals 0; empirical
+      range over 2e5 draws). J_sigma is degree-0 scale-free; Delta_sigma is
+      degree-6 homogeneous.
+    no_go: false
+    buys: >-
+      Promotes tr sigma^3 from higher-order amplitude to an anisotropy-TYPE
+      coordinate; shear morphology becomes nameable without a Bianchi family.
+
+  - id: I-2.5
+    legacy_id: TF-02-CATALOGUE-COMPLETION
+    pillar: I
+    section: invariant_algebra
+    statement: >-
+      At the registered witness (beta = 0) the v2 catalogue does not separate
+      (sigma, omega) from (sigma, -omega); the axial Krylov determinant does;
+      and the two states lie in distinct SO(3) orbits (the stabiliser of
+      diag(1,2,-3) is COMPUTED from the commutant to be the Klein four-group,
+      no element of which maps omega to -omega).
+    scope: >-
+      The witness lies OFF the principal stratum. For generic beta the v2
+      catalogue already separates and K_omega does not raise the Jacobian rank.
+      K_omega supplies a sign bit exactly where a vector fails to be cyclic.
+    status: ORACLE_VERIFIED
+    evidence: >-
+      oracle TF-02 (K_omega = +/-120; candidate SO(3)-invariance verified before
+      separation is claimed; commutant dimension 3; stabiliser order 4 verified;
+      0 spurious stabiliser elements in 2000 random rotations)
+    closes: PR257-NONGENERIC-NONSEPARATION (the non-generic witness only)
+    unchanged_statuses: [generic_orbit_separation_status, degree_completeness_status]
+    no_go: false
+    buys: >-
+      Closes the registered non-generic witness, and the same exhaustive check
+      is positive evidence for the still-unproved generic-separation conjecture
+      I-2.7.
+
+  - id: I-2.6
+    pillar: I
+    section: invariant_algebra
+    statement: >-
+      Catalogue v3 is the degree-bounded closure of the Gram-Krylov generating
+      set over {beta_RM, beta_MO, A, omega} plus one Krylov determinant per
+      vector, triple determinants, tr sigma^2, tr sigma^3 and DeltaOmega_k;
+      parity is mechanical in (#omega + #epsilon).
+    status: PROPOSED
+    acceptance_gate: I-1.2 Jacobian rank
+    no_go: false
+    buys: Replaces hand enumeration with an auditable, extensible, rank-testable rule.
+
+  - id: I-2.7
+    pillar: I
+    section: invariant_algebra
+    statement: >-
+      The v3 catalogue separates SO(3) orbits on the principal stratum
+      (distinct shear eigenvalues, participating vectors cyclic).
+    status: PROPOSED
+    requires: dedicated four-axis CAS contract before promotion
+    no_go: false
+    buys: >-
+      Would move generic_orbit_separation_status from UNPROVEN to
+      PROVEN_ON_PRINCIPAL_STRATUM - the largest outstanding Pillar-I upgrade.
+
+  - id: I-2.8
+    pillar: I
+    section: invariant_algebra
+    statement: Whether v3 generates the full invariant ring (Molien/Hilbert series).
+    status: OPEN
+    no_go: true
+    buys: Registered so that no downstream claim silently assumes ring completeness.
+
+  - id: I-2.9
+    legacy_id: PR257-NONGENERIC-NONSEPARATION
+    pillar: I
+    section: invariant_algebra
+    statement: The exact beta=0, omega vs -omega witness for catalogue v2.
+    status: PROVEN_CAS4
+    role_change: >-
+      Limitation status discharged by I-2.5; retained permanently as the
+      regression test that v3 must pass.
+    no_go: false
+
+  - id: I-3.1
+    legacy_id: TF-07-BUDGET-MORPHOLOGY-SPLIT
+    pillar: I
+    section: constraint_structure
+    statement: >-
+      The Gauss-Friedmann budget functional FACTORS THROUGH the four invariants
+      {tr sigma^2, omega^2, beta^2, DeltaOmega_k}; it therefore has exactly zero
+      derivative along the helicity beta.omega and along every direction
+      transverse to their common level set. Stated as a factorisation, not a
+      polynomial grading: Omega_tilt = (1+w) Omega_m sinh^2(beta) is an even
+      function of beta.beta, not the monomial beta^2, so the budget does depend
+      on higher even powers and a "vanishes on degree >= 3" claim would be false.
+    status: ORACLE_VERIFIED
+    evidence: >-
+      oracle TF-07 (computed gradient test: budget-gradient residual 9.5e-11 in
+      the span of the four invariant gradients, helicity transverse fraction
+      >= 0.38; plus an explicit witness)
+    no_go: false
+    buys: >-
+      The blindness of x_C is structural and counted; budget and morphology live
+      on complementary graded pieces and can be reported side by side without
+      double counting.
+
+  - id: I-3.2
+    legacy_id: P1
+    pillar: I
+    section: constraint_structure
+    statement: The comparator sign vector c = (+1,-1,+1,+1) is forced by the constraint.
+    status: ACTIVE_CONDITIONAL
+    disposition: preserve unchanged
+    no_go: false
+
+  - id: I-3.3
+    legacy_id: OMK-REOPEN
+    pillar: I
+    section: constraint_structure
+    statement: >-
+      The anisotropic-curvature sector re-opens beyond leading EGS order within
+      the same channels; LRS slaving coefficient exactly -1, kappa = -2/(5+3w).
+    status: ACTIVE
+    no_go: false
+    buys: The one NO_MES_ANCHOR sector with a derived route back; ceiling stays conditional.
+
+  - id: I-4.1
+    legacy_id: TF-12-ACCELERATION-EULER-SLAVING
+    pillar: I
+    section: sector_closure
+    statement: >-
+      For a perfect fluid (mu + p) A_a = -D_a p slaves the four-acceleration to
+      the pressure gradient, giving A2_max_euler = (3/2)[c_s^2/(1+w)]^2 eps_g^2
+      for an ASSUMED gradient bound eps_g.
+    provenance_warning: >-
+      No eps_g is registered anywhere in the repository. The oracle default is a
+      PLACEHOLDER numerically equal to C.eps2 (a Delta T / T quadrupole
+      amplitude) carrying no MES authority. What is established is the SHAPE of
+      the result - the [c_s^2/(1+w)]^2 factor and its exact zero at c_s^2 = 0 -
+      not any absolute ceiling value.
+    status: ACTIVE_CONDITIONAL
+    premises: [perfect_fluid, vanishing_frame_heat_flux, vanishing_anisotropic_stress,
+               barotropic_or_constant_w]
+    gradient_regularity_registered: false
+    authority_kind: MOMENTUM_CONSTRAINT_NOT_MES
+    evidence: oracle TF-12
+    forbidden_use:
+      - rehabilitating the refuted non-geodesic MES acceleration triple
+      - an acceleration saturation reported without its congruence and epoch
+    no_go: false
+    buys: >-
+      (i) the geodesic premise becomes a derived late-time limit rather than an
+      assumption; (ii) the NO_MES_ANCHOR acceleration sector acquires a typed
+      epoch-conditional ceiling from a different authority; (iii) the sector is
+      congruence-typed by construction, which is why the state must carry it.
+
+  - id: I-4.2
+    legacy_id: P9
+    pillar: I
+    section: sector_closure
+    statement: Radial peculiar velocities carry no vorticity; n.Omega.n = 0 exactly.
+    status: ACTIVE
+    no_go: true
+    buys: A constructive no-go - it names the exact repair, I-4.3.
+
+  - id: I-4.3
+    legacy_id: P22
+    pillar: I
+    section: sector_closure
+    statement: Transverse velocities re-open the vorticity sector; the 3-mode design has rank 3.
+    status: ACTIVE_CONDITIONAL
+    no_go: false
+    buys: A named observable converting a structural null into a measurable sector.
+
+  - id: I-4.4
+    legacy_id: P13
+    pillar: I
+    section: sector_closure
+    statement: Shear memory of anisotropic stress; registered scalar closure differs from the exact linearised law.
+    status: ACTIVE_CONDITIONAL
+    disposition: >-
+      Under the tensor upgrade the missing electric-Weyl term becomes a named
+      G-level object rather than an unlabelled discrepancy.
+    no_go: false
+
+  - id: I-4.5
+    legacy_id: [KE-FRAME, KE-OBS, KE-DYN]
+    pillar: I
+    section: sector_closure
+    statement: King-Ellis tilted-congruence kinematics, exact vorticity classification, rotating perfect-fluid development with the double Omega_k = 0 obstruction.
+    status: ACTIVE
+    sharpness_level: 3
+    no_go: false
+    buys: The only dynamical-rung results in the corpus; the G-level anchors of the type ladder.
+
+  - id: I-5.1
+    legacy_id: PA-THM-GAUGE-SUBLEVEL
+    pillar: I
+    section: anchor_geometry
+    statement: "{u : rho_A(u) <= 1} = A for the registered closed convex absorbing body."
+    status: PROVEN_CAS4
+    evidence: CAS-PR254-ANCHOR-GEOMETRY-001
+    no_go: false
+
+  - id: I-5.2
+    legacy_id: PA-THM-PRODUCT-BALL
+    pillar: I
+    section: anchor_geometry
+    statement: For a product of block balls, rho_A(u) = max_j ||u_j|| / B_j.
+    status: PROVEN_CAS4
+    no_go: false
+    buys: With II-2.1, the canonical collapse of a vector saturation to one number.
+
+  - id: I-5.3
+    legacy_id: PA-THM-ONE-WAY-MES
+    pillar: I
+    section: anchor_geometry
+    statement: H_lin subset A_MES implies (H_lin implies rho_MES <= 1), no converse.
+    status: PROVEN_CAS4
+    no_go: false
+
+  - id: I-5.4
+    legacy_id: PA-THM-RANK-INVARIANCE
+    pillar: I
+    section: anchor_geometry
+    statement: "For invertible anchor scaling D: rank(RD) = rank(R) and Ru = (RD)(D^-1 u)."
+    status: PROVEN_CAS4
+    no_go: false
+    buys: Anchor choice cannot manufacture identifiability; makes normalizer comparison safe.
+
+  - id: I-5.5
+    legacy_id: J1-EXACT
+    pillar: I
+    section: anchor_geometry
+    status: RESTRICTED
+    original_statement: H_lin equals the MES anchor body and the MES gauge is essentially unique.
+    counterexample: >-
+      One physical set inside two unequal admissible bodies yields gauges 1/2
+      and 1/4 (physical radius 1/2, anchor radii 1 and 2). Retained exactly.
+    surviving_statement: >-
+      Given a REGISTERED anchor body the gauge is unique up to monotone
+      reparametrisation of the unit level set, with the linear form fixed by
+      positive homogeneity; residual freedom is exactly the branch, attribution
+      and regularity typing carried by MESAnchorSpec.
+    disposition_enum: ONE_ANCHOR_AMONG_FAMILY
+    no_go: false
+    buys: >-
+      The counterexample proves the anchor body must be registered - which is
+      why MESAnchorSpec typing is load-bearing rather than bureaucratic.
+
+  - id: I-5.6
+    legacy_id: [MES-BR, MES-REFREEZE, MES-MESB-TRACE]
+    pillar: I
+    section: anchor_geometry
+    statement: Branch registry, geodesic re-freeze, MESb web trace and refutation.
+    status: ACTIVE
+    disposition: preserve unchanged; I-4.1 does not touch the ACCEL withholding
+    no_go: false
+
+  - id: I-6.1
+    legacy_id: T3-lin
+    pillar: I
+    section: realizability
+    status: ACTIVE_CONDITIONAL
+    sharpness_level: 1
+    no_go: false
+  - id: I-6.2
+    legacy_id: T3-full
+    pillar: I
+    section: realizability
+    status: ACTIVE_CONDITIONAL
+    sharpness_level: 2
+    note: upper endpoint only; lower-endpoint W2 sector constraint-unverified
+    no_go: false
+  - id: I-6.3
+    legacy_id: T3-int
+    pillar: I
+    section: realizability
+    status: ACTIVE_CONDITIONAL
+    sharpness_level: 1
+    no_go: false
+  - id: I-6.4
+    pillar: I
+    section: realizability
+    statement: Which points of the completed invariant space are realised by constraint-satisfying data (the K -> G lift).
+    status: OPEN
+    no_go: true
+    buys: Registered so the type ladder cannot be read as a realisability claim.
+
+  # ---------------- PILLAR II ----------------
+  - id: II-1.1
+    legacy_id: P18
+    pillar: II
+    section: estimand_and_identifiability
+    statement: The scalar-sector data-identifiable subspace of g has rank 2 under the registered leading-order channels.
+    status: ACTIVE
+    disposition: restate with scope - this is a SCALAR-SECTOR statement, not the tensor-level rank
+    no_go: true
+
+  - id: II-1.2
+    legacy_id: TF-10-LOCAL-GLOBAL-SEPARATION
+    pillar: II
+    section: estimand_and_identifiability
+    statement: >-
+      Dipole alone gives rank 3 against 6 velocity parameters. A boost-only
+      channel restores rank 6 - but only ABERRATION is a linear O(beta) channel
+      and can do so; the kinematic quadrupole is O(beta^2) (repo-typed,
+      frame_typed_algebra.py), contributes no linear rank about beta = 0, and
+      about a fiducial beta_MO != 0 enters at relative amplitude O(beta) ~ 1e-3,
+      already the WEAKLY_IDENTIFIED regime - an over-determination check, not a
+      second linear channel. As that channel weakens, rank stays 6 while
+      the minimum principal angle tends to zero - a state distinct from rank
+      deficiency.
+    status: ORACLE_VERIFIED
+    evidence: oracle TF-10 (angle 0.704 -> 0.001 rad at constant rank 6)
+    required_status_set: [MISSING_RESPONSE_PROVIDER, NON_IDENTIFIED, SUM_ONLY,
+                          WEAKLY_IDENTIFIED, SEPARABLE_CANDIDATE]
+    required_gate: (psi_min, s_min, kappa, held-out wrong-source rate)
+    no_go: false
+    buys: >-
+      The positive identification result for the tilt-vs-boost axis: the local
+      sector is over-determined once a boost-only channel is registered, so the
+      global tilt is identified as the residual rather than removed by a
+      subtraction convention.
+
+  - id: II-1.3
+    legacy_id: P28
+    pillar: II
+    section: estimand_and_identifiability
+    statement: Posterior marginal equals prior marginal on a null response direction (restricted KL exactly zero).
+    status: ACTIVE
+    disposition: unchanged; now applies per functional phi
+    no_go: false
+
+  - id: II-2.1
+    legacy_id: TF-08-PRODUCT-GAUGE-MAX
+    pillar: II
+    section: gauge_and_stress
+    statement: rho of a product of sector balls is max_j s_j; exceedance E = max(rho - 1, 0).
+    status: ORACLE_VERIFIED
+    also: PROVEN_CAS4 as PA-THM-PRODUCT-BALL
+    evidence: oracle TF-08 verified against a bisection evaluation of the gauge definition
+    no_go: false
+    buys: >-
+      Comparability without a new convention; a multi-sector exceedance is
+      refuted by its worst sector and by nothing else - sign cancellation is
+      structurally impossible in the gauge.
+
+  - id: II-2.2
+    pillar: II
+    section: gauge_and_stress
+    statement: >-
+      Well-posedness table for the functional-indexed family: F_phi requires phi
+      sign-definite AND anchored; signed and pseudoscalar functionals admit
+      signed Q_phi and Pi_phi only; scale-free shape coordinates admit neither
+      Q nor F.
+    status: PROPOSED
+    no_go: false
+    buys: Makes the R1-R3 conditions enforceable at construction rather than by review.
+
+  - id: II-3.1
+    legacy_id: TF-09-PARITY-SIGN-EXACTNESS
+    pillar: II
+    section: exact_inference
+    statement: >-
+      Under (H1) a null law invariant under a reflection P that also fixes the
+      analysis geometry, (H2) an exactly P-equivariant estimator including mask
+      deconvolution and weighting, and (H3) P(psi_hat = 0) = 0: the law of
+      psi_hat is symmetric about zero, hence sign ~ Bernoulli(1/2) exactly and
+      independent of magnitude.
+    hypotheses: [reflection_symmetric_null, P_equivariant_estimator, no_atom_at_zero]
+    status: ORACLE_VERIFIED
+    evidence: >-
+      oracle TF-09 - three reflection-symmetric nulls, P(psi>0) = 0.4988 /
+      0.4980 / 0.5022, while the even statistic's SCALE moves by 36.5x (sd 3.18
+      -> 116.0) with its mean fixed at zero; plus the (H3) failure demonstration
+      on Delta_sigma = 0 (max |K_beta| = 2.1e-14).
+    h3_failure_strata: ["Delta_sigma = 0 (axisymmetric shear)", "any MISSING_COMPONENT sector"]
+    requires_covariance_model: false
+    requires_mock_ensemble: false
+    scope: >-
+      Tests the one bit per vector sector identified by I-2.3. With one sky it
+      is a single Bernoulli draw. Independence of sign from magnitude is a
+      statement about ONE statistic: signs across nested rungs are NOT
+      independent (II-3.2 proves they form a filtration), so BINOMIAL POOLING IS
+      INVALID and combination must use the arbitrary-dependence e-value merge of
+      II-3.3. (H2) is the binding practical hypothesis: real selection functions
+      and point-source holes are not b -> -b symmetric and any violation must be
+      declared. A detected asymmetry localises to genuine chirality OR to a
+      parity-asymmetric systematic.
+    no_go: false
+    buys: >-
+      The most differentiating statistical capability in the programme: exact
+      calibration that survives mask coupling, anisotropic noise and covariance
+      misspecification, because reflection through the Galactic plane fixes any
+      latitude-symmetric mask and any parity-symmetric variance model.
+
+  - id: II-3.2
+    legacy_id: TF-11-MASK-PATH-MARTINGALE
+    pillar: II
+    section: exact_inference
+    statement: >-
+      A nested mask ladder is a reverse martingale if and only if every rung
+      reports the conditional expectation of the SAME full-sky target; Doob then
+      calibrates the path by P(max |M_j| >= lambda sd(M_full)) <= 1/lambda^2.
+    status: ORACLE_VERIFIED
+    evidence: >-
+      oracle TF-11 - bound holds at every lambda for the correct normalisation;
+      the naive per-rung renormalisation gives P(sup >= 3) = 0.60 against 0.111.
+    no_go: false
+    buys: >-
+      Converts the ZoA ladder into a sequential test with free calibration, and
+      names the exact design trap that destroys it.
+
+  - id: II-3.3
+    legacy_id: [P19, P29]
+    pillar: II
+    section: exact_inference
+    statement: Indicator e-values with finite-null correction; arithmetic-mean merging valid under arbitrary dependence.
+    status: ACTIVE
+    no_go: false
+    buys: The combiner for II-3.1 and II-3.2 outputs across lanes.
+
+  - id: II-4.1
+    legacy_id: [T1p, DL1]
+    pillar: II
+    section: partial_identification
+    status: ACTIVE
+    no_go: false
+  - id: II-4.2
+    legacy_id: T2G
+    pillar: II
+    section: partial_identification
+    supersedes: [P36, T2p]
+    status: ACTIVE
+    no_go: false
+  - id: II-4.3
+    legacy_id: [T4p, T5p]
+    pillar: II
+    section: partial_identification
+    status: ACTIVE_CONDITIONAL
+    open_item: estimated-covariance regime (M-PARTIALID, M-ESTCOV, Sellentin-Heavens-t)
+    no_go: false
+
+  - id: II-4.4
+    pillar: II
+    section: partial_identification
+    statement: >-
+      When eta is not point-identified, report the envelope
+      [inf_eta Pi_phi(c|eta), sup_eta Pi_phi(c|eta)]. Vertex enumeration over the
+      existing vertex/recession representation returns the endpoints when the
+      identified set is convex AND BOUNDED (no active recession direction) and
+      the conditional map is MONOTONE, or quasi-convex for the upper endpoint
+      AND QUASI-CONCAVE for the lower; otherwise return OPTIMIZER_REQUIRED.
+      Bauer's maximum principle places the SUPREMUM of a quasi-convex function at
+      an extreme point; the INFIMUM is generically interior (Pi = eta^2 on
+      conv{-1,+1}: true inf 0 at eta = 0, vertex enumeration returns 1), and the
+      lower envelope is the conservative endpoint.
+    status: PROPOSED
+    no_go: false
+    buys: Turns the local/global no-go into an interval with content.
+
+  - id: II-4.5
+    legacy_id: J2-UNIFORM
+    pillar: II
+    section: partial_identification
+    status: RESTRICTED
+    original_statement: A noisy random-anchor exceedance test is uniformly finite-sample valid over the whole composite null.
+    counterexample: >-
+      Equal numerator and anchor marginals give exceedance probabilities 0
+      (comonotone) and 1/2 (countermonotone). Retained exactly.
+    surviving_statement: >-
+      Validity holds under a REGISTERED joint law of the numerator-anchor pair;
+      marginals alone do not determine the ratio's exceedance probability.
+    conclusion_id: equal_marginals_do_not_determine_raw_ratio_exceedance
+    no_go: false
+    buys: The reason PR-250 mandatory cross-covariance is not optional.
+
+  - id: II-5.1
+    pillar: II
+    section: invariance_optimality_multiplicity
+    statement: >-
+      For a testing problem whose null and alternative class are invariant under
+      a group G, every G-invariant test statistic is a function of a maximal
+      invariant; on the principal stratum the completed catalogue is a maximal
+      invariant for SO(3). With registered external directions, G is their
+      stabiliser and the maximal invariant is the catalogue augmented by
+      relative-orientation coordinates.
+    status: PROPOSED
+    basis: classical invariance reduction, applied; separation supplied by I-2.7
+    no_go: false
+    buys: >-
+      The deepest justification for the orbit-space reduction - nothing is lost;
+      and the reason alignment statistics belong inside the catalogue.
+
+  - id: II-5.2
+    pillar: II
+    section: invariance_optimality_multiplicity
+    statement: >-
+      SO(3) is compact hence amenable; by Hunt-Stein the best invariant test is
+      minimax among all tests for the invariant problem.
+    status: PROPOSED
+    no_go: false
+    buys: >-
+      Upgrades the reduction from canonical to optimal. A hand-picked low-ell
+      anomaly statistic is an arbitrary member of the same function class with
+      no optimality property.
+
+  - id: II-5.3
+    pillar: II
+    section: invariance_optimality_multiplicity
+    statement: >-
+      Because the maximal invariant is a finite-dimensional coordinate (9/12/15)
+      and the catalogue is pre-registered, the invariant test family is finite
+      and known; look-elsewhere becomes bookkeeping over a complete catalogue.
+    status: PROPOSED
+    no_go: false
+    buys: A design fix for the a-posteriori-selection objection, not a better correction.
+
+  - id: II-5.4
+    legacy_id: P20
+    pillar: II
+    section: invariance_optimality_multiplicity
+    status: ACTIVE
+    disposition: restate over the invariant catalogue
+    no_go: false
+
+  - id: II-6.1
+    pillar: II
+    section: discrimination
+    legacy_id: PR-258
+    statement: Open-set classification with TYPE_UNIDENTIFIED and UNKNOWN_CLASS as first-class outcomes.
+    status: ACTIVE
+    note: card pending merge
+    no_go: false
+    buys: Abstention as an output; with II-5.3 a complete multiplicity story.
+
+  - id: II-6.2
+    pillar: II
+    section: discrimination
+    legacy_id: PR-257-benchmark
+    statement: >-
+      Preregistered held-out comparison across nine representations - the scalar
+      x_C has rank zero and abstains on every held-out draw, while non-scalar
+      losses drop by 0.105 to 0.301.
+    status: ACTIVE
+    no_go: false
+    buys: The in-repo empirical demonstration of the counting statements I-1.2 and I-3.1.
+
+  - id: II-6.3
+    pillar: II
+    section: discrimination
+    legacy_id: PR-256-benchmark
+    statement: >-
+      All six methods abstain on the confusable sum-only cell; pure-local
+      false-global rate 0.0246 below ceiling; adding the registered finite-window
+      depth contrast raises the minimum principal angle from 0.134 to 1.310 rad.
+    status: ACTIVE
+    no_go: false
+    buys: A registered additional observable, not a better statistic, is what buys separation.
+
+  - id: II-1.4
+    legacy_id: [P8, P10, P30]
+    pillar: II
+    section: estimand_and_identifiability
+    statement: Response rank, single-shell degeneracy, and parameter-vs-observation duplication.
+    status: ACTIVE
+    disposition: preserve; these are the scalar-sector instances of the PR-255 anchored-response geometry
+    no_go: false
+
+  - id: II-1.5
+    legacy_id: P34
+    pillar: II
+    section: estimand_and_identifiability
+    statement: Vector-g response covariance propagation.
+    status: ACTIVE_CONDITIONAL
+    disposition: restate over the functional-indexed family rather than the 4-sector vector
+    no_go: false
+    buys: The legacy entry closest in spirit to the tensor upgrade.
+
+  - id: II-2.3
+    legacy_id: PR-253-MesInformationGainReport
+    pillar: II
+    section: gauge_and_stress
+    statement: Anchor scaling alone is not information gain.
+    status: ACTIVE
+    no_go: false
+    buys: With I-5.4, closes the "normalizer creates information" failure mode permanently.
+
+  - id: II-5.5
+    legacy_id: [P16, P17]
+    pillar: II
+    section: invariance_optimality_multiplicity
+    statement: Single-sky sampling dispersion; multi-ell Fisher floor.
+    status: ACTIVE
+    note: P17's toy response is superseded in practice once EGS3-B1 lands
+    no_go: false
+
+  # ---------------- BRIDGE ----------------
+  - id: B-1
+    pillar: BRIDGE
+    statement: >-
+      The MES anchors bound the degree-2 even invariants and, by I-3.1, the
+      budget factors through the same four. Therefore NO MES-ANCHORED ceiling
+      exists for a scale-free shape coordinate and no morphology statistic
+      contributes to the budget. The firewall is about AUTHORITY, not algebraic
+      independence: |J_sigma| <= 1 (I-2.4) is an exact algebraic bound, so an
+      anchor on I2 does induce |tr sigma^3| <= I2^{3/2}/sqrt(6) - that bound is
+      ALGEBRAIC, NOT ANCHORED, is saturated on the axisymmetric locus, and must
+      never be reported as a saturation or occupancy.
+    status: PROPOSED
+    no_go: false
+    buys: >-
+      Physically a statement about what the constraint and the almost-EGS bounds
+      can see; statistically the reason a shape coordinate must be tested
+      against a null rather than a ceiling.
+
+  - id: B-2
+    pillar: BRIDGE
+    statement: >-
+      One-way MES logic supplies the deterministic implication; restricted J2
+      supplies the condition under which the corresponding test is valid.
+      Neither alone licenses a refutation claim.
+    status: ACTIVE_CONDITIONAL
+    no_go: false
+
+  - id: B-3
+    pillar: BRIDGE
+    statement: >-
+      The acceleration ceiling of I-4.1 is a statement about a declared
+      congruence; the statistical channel key must carry congruence or two
+      epochs' acceleration saturations become silently comparable.
+    status: ACTIVE_CONDITIONAL
+    no_go: false
+
+  - id: B-4
+    pillar: BRIDGE
+    statement: >-
+      Parity typing is what makes the exact sign test available; collapsing
+      parity for convenience destroys an exact test, not merely a label.
+    status: ORACLE_VERIFIED
+    no_go: false
+
+counts:
+  total_entries_this_registry: 58
+  by_pillar: {I: 30, II: 24, BRIDGE: 4}
+  by_status:
+    ACTIVE: 16
+    ACTIVE_CONDITIONAL: 11
+    ORACLE_VERIFIED: 10
+    PROPOSED: 9
+    PROVEN_CAS4: 8
+    RESTRICTED: 2
+    OPEN: 2
+  new_oracle_propositions: 12   # TF-01..TF-12; TF-03 and TF-04 are filed under
+                                # entries whose primary status is PROVEN_CAS4
+  new_proposed: 9
+  restricted_with_counterexample: 2
+  newly_opened: 2
+  no_go_entries: 4              # I-2.8, I-4.2, I-6.4, II-1.1
+
+legacy_registry_disposition:
+  status_edits_required: 0
+  preserve_unchanged:
+    [T1p, DL1, L-T2-EXIST, T2pp, T2G, T3-lin, T3-full, T3-int, T4p, T5p, T8p, T9p,
+     MES-PROV, MES-BR, MES-REFREEZE, MES-MESB-TRACE, KE-FRAME, KE-OBS, KE-DYN,
+     OMK-REOPEN, BV-DYN, TSUM, U2, U3, U4-v9, K5-CARD-v2,
+     P6, P7, P9, P10, P11, P14, P15, P16, P17, P19, P21, P22, P23, P24, P25,
+     P27, P28, P29, P30, P32, P33]
+  restate_with_tensor_scope: [P1, P2, P18, P20, P34]
+  role_change_no_status_change: [PR257-NONGENERIC-NONSEPARATION]
+  unchanged_superseded: [P26, P31, P35, U4]
+  unchanged_retracted: [P36, T2p]
+
+gates_unchanged:
+  - PR-157 independent non-author adjudication
+  - four-axis CAS contract for catalogue v3 (I-2.7) - largest outstanding Pillar I item
+  - estimated-covariance regime (M-PARTIALID, M-ESTCOV) - largest outstanding Pillar II item

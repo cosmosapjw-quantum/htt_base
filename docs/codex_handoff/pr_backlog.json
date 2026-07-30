@@ -184,6 +184,21 @@
       "PR-258",
       "PR-259",
       "PR-260",
+      "PR-261",
+      "PR-262",
+      "PR-263",
+      "PR-264",
+      "PR-265",
+      "PR-266",
+      "PR-267",
+      "PR-268",
+      "PR-269",
+      "PR-271",
+      "PR-270",
+      "PR-272",
+      "PR-273",
+      "PR-274",
+      "PR-275",
       "PR-155",
       "PR-156",
       "PR-157",
@@ -385,6 +400,50 @@
     {
       "wave": 55,
       "title": "Vector/tensor proof-program formal intake"
+    },
+    {
+      "wave": 56,
+      "title": "Canonical joint vector/tensor anisotropy state"
+    },
+    {
+      "wave": 57,
+      "title": "Tensor functionals and orbit catalogue v3"
+    },
+    {
+      "wave": 58,
+      "title": "Vector/tensor departure-statistic successor"
+    },
+    {
+      "wave": 59,
+      "title": "Conditional exceedance and depth/mask paths"
+    },
+    {
+      "wave": 60,
+      "title": "Typed anisotropy compatibility report"
+    },
+    {
+      "wave": 61,
+      "title": "Two-pillar theorem registry v3 and executable oracle intake"
+    },
+    {
+      "wave": 62,
+      "title": "Pillar T and Pillar S analytic foundations"
+    },
+    {
+      "wave": 63,
+      "title": "Four-axis CAS and statistical inference validation"
+    },
+    {
+      "wave": 64,
+      "title": "Blind synthetic integration"
+    },
+    {
+      "wave": 65,
+      "title": "Data admission and separately authorized pilot boundary"
+    },
+    {
+      "wave": 66,
+      "title": "Generated proof atlas, report, and replication package"
     }
   ],
   "prs": [
@@ -13030,12 +13089,12 @@
       "capability": "vector_tensor_program_and_two_pillar_registry_intake",
       "inputs": [
         "Supplied vector/tensor MES programme schemas and theorem identifiers",
-        "Supplied two-pillar registry with exact Pillar T and Pillar S membership",
+        "Supplied legacy-signature and two-pillar proposal registries with their exact source partitions",
         "PR-259 chronology-safe canonical bootstrap"
       ],
       "outputs": [
         "Canonical PR-261 through PR-275 extension DAG",
-        "Machine-readable disjoint 65-entry Pillar T and 58-entry Pillar S registry",
+        "Machine-readable disjoint 65-entry legacy-signature inventory and 58-entry proposal-row registry",
         "Synchronized canonical and compatibility DAG/status records"
       ],
       "contributors": [
@@ -13058,7 +13117,7 @@
       ],
       "targets": [
         "Register PR-261 through PR-275 as one validated extension DAG without silently renaming supplied schema or theorem identifiers.",
-        "Register an exact disjoint 65-entry Pillar T and 58-entry Pillar S membership with U, TC and ST proof classes."
+        "Register exact disjoint 65-entry and 58-entry source memberships with U, TC and ST proof classes while preserving the true 31 T plus 34 S and 30 I plus 24 II plus 4 BRIDGE partitions."
       ],
       "files": [
         "docs/research_program/HTT_VECTOR_TENSOR_MES_TWO_PILLAR_UPGRADE_PLAN_20260730.md",
@@ -13074,9 +13133,9 @@
       ],
       "dod": [
         "Every PR-261 through PR-275 dependency resolves and the declared topological order is acyclic.",
-        "Pillar T and Pillar S counts, identities, owners, proof classes and evidence paths are exact and disjoint."
+        "Source counts, partitions, identities, owners, proof classes and evidence paths are exact and disjoint."
       ],
-      "kill": "The supplied 65/58 membership cannot be reconstructed one-to-one or any schema/theorem identifier is silently reinterpreted.",
+      "kill": "The supplied 65/58 source memberships cannot be reconstructed one-to-one or any schema/theorem identifier is silently reinterpreted.",
       "cost": "medium",
       "level": "L0",
       "scope": "pre-solver",
@@ -13091,7 +13150,7 @@
         "No implementation of PR-261+, proof-status promotion, native-solver claim, or family-identification claim."
       ],
       "anti_drift": [
-        "The proposal remains non-authoritative until this card, its exact registry partition and mirror checks pass together."
+        "The 65/58 labels are cardinality aliases only and never reclassify the source's 31/34 or 30/24/4 scientific partitions."
       ],
       "roadmap_anchor": "docs/research_program/HTT_VECTOR_TENSOR_MES_TWO_PILLAR_UPGRADE_PLAN_20260730.md",
       "activation_state": "PENDING",
@@ -13105,6 +13164,1280 @@
       "solver_gate_required": false,
       "change_set_id": "CS-PR260-VECTOR-TENSOR-INTAKE",
       "publication_group_id": "PG-PR260-VECTOR-TENSOR-INTAKE"
+    },
+    {
+      "id": "PR-261",
+      "wave": 56,
+      "title": "Canonical joint vector/tensor anisotropy state",
+      "owner": "COMMON",
+      "capability": "typed_joint_vector_tensor_state_with_legacy_adapter",
+      "inputs": [
+        "PR-260 registered programme and canonical objects",
+        "PR-249 departure-state contracts",
+        "PR-256 velocity-frame decomposition"
+      ],
+      "outputs": [
+        "CongruenceKinematics, VelocityFrameBundle, GeometryState, and JointAnisotropyState",
+        "Typed missing-component status and explicit legacy DepartureState adapter"
+      ],
+      "contributors": [
+        "HTT",
+        "MIO"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-260",
+        "PR-249",
+        "PR-256"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-260",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-249",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-256",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Serialize content identity, units, congruence/frame identities, missingness, and transfer provenance.",
+        "Preserve DepartureState through an explicit adapter without auto-promoting scalar beta."
+      ],
+      "files": [
+        "htt/src/common/joint_anisotropy_state.py",
+        "tests/contracts/test_joint_anisotropy_state.py",
+        "docs/PR_DELTAS/pr-261.md"
+      ],
+      "tests": [
+        "to-be-created:PYTHONPATH=htt/src:htt python -B -m pytest -p no:cacheprovider -q tests/contracts/test_joint_anisotropy_state.py",
+        "python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml"
+      ],
+      "dod": [
+        "Round trips, unit errors, frame mismatches, partial states, legacy regression, and action compatibility are tested.",
+        "Ambiguous scalar roles return ABSTAIN or MISSING and never gain vector/tensor semantics implicitly."
+      ],
+      "kill": "Existing scalar-fixture meaning changes or TSC/Teff becomes an active owner.",
+      "cost": "medium",
+      "level": "L1",
+      "scope": "pre-solver",
+      "risk": "R2-CONTRACT",
+      "claim_tier_ceiling": "diagnostic_only",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C1"
+      },
+      "claim_impact": "Typed state transport only; no scientific status promotion.",
+      "forbidden": [
+        "No native-solver result, scalar-to-tensor inference, or Bianchi family-identification claim."
+      ],
+      "anti_drift": [
+        "Missing geometry or channel content is represented explicitly rather than replaced by zero."
+      ],
+      "roadmap_anchor": "docs/research_program/vector_tensor/PROGRAM_INTAKE_REGISTRY_V1.yaml",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "methodology_conditional",
+      "execution_authorization": "EXPLICIT_USER_AUTHORIZED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "VECTOR_TENSOR",
+      "solver_gate_required": false,
+      "change_set_id": "CS-PR261-JOINT-ANISOTROPY-STATE",
+      "publication_group_id": "PG-PR261-JOINT-ANISOTROPY-STATE"
+    },
+    {
+      "id": "PR-262",
+      "wave": 57,
+      "title": "Tensor-valued functional and anchor contract",
+      "owner": "COMMON",
+      "capability": "tensor_functional_evaluation_with_shared_anchor_authority",
+      "inputs": [
+        "PR-261 joint anisotropy state",
+        "PR-254 AnchorBodySpec, AnchorGaugeInterval, and AnchorMarginReport"
+      ],
+      "outputs": [
+        "TensorFunctionalSpec and typed functional result",
+        "Separate value, domain, codomain shape, anchor status, admissibility, and stress report"
+      ],
+      "contributors": [
+        "MIO"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common",
+        "mio"
+      ],
+      "depends": [
+        "PR-261",
+        "PR-254"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-261",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-254",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Extend the existing anchor authority rather than create a parallel anchor hierarchy.",
+        "Fail closed on rank-deficient anchors, non-compact support, forbidden domains, and missing components."
+      ],
+      "files": [
+        "htt/src/common/tensor_functionals.py",
+        "htt/mio",
+        "tests/contracts/test_tensor_functionals.py",
+        "docs/PR_DELTAS/pr-262.md"
+      ],
+      "tests": [
+        "to-be-created:PYTHONPATH=htt/src:htt python -B -m pytest -p no:cacheprovider -q tests/contracts/test_tensor_functionals.py"
+      ],
+      "dod": [
+        "Anchor covariance, scaling, rank collapse, forbidden-domain, and randomized metamorphic cases pass.",
+        "Functional evaluation remains a typed diagnostic and cannot acquire likelihood semantics."
+      ],
+      "kill": "A parallel anchor authority is introduced or a rank-deficient anchor returns an ordinary value.",
+      "cost": "high",
+      "level": "L2",
+      "scope": "pre-solver",
+      "risk": "R3-PHYSMATH",
+      "claim_tier_ceiling": "diagnostic_only",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C2"
+      },
+      "claim_impact": "Formal tensor-functional diagnostics only.",
+      "forbidden": [
+        "No native-solver validation, posterior/evidence output, or Bianchi family-identification claim."
+      ],
+      "anti_drift": [
+        "Value, bound, admissibility, and stress remain distinct typed fields."
+      ],
+      "roadmap_anchor": "docs/research_program/vector_tensor/VECTOR_TENSOR_PROOF_PROGRAM_V1.yaml",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "methodology_conditional",
+      "execution_authorization": "EXPLICIT_USER_AUTHORIZED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "VECTOR_TENSOR",
+      "solver_gate_required": false,
+      "change_set_id": "CS-PR262-TENSOR-FUNCTIONALS",
+      "publication_group_id": "PG-PR262-TENSOR-FUNCTIONALS"
+    },
+    {
+      "id": "PR-263",
+      "wave": 57,
+      "title": "Orbit catalogue v3 with action, parity, and strata",
+      "owner": "OBSSTAT",
+      "capability": "parity_typed_orbit_catalogue_v3",
+      "inputs": [
+        "PR-261 joint anisotropy state",
+        "PR-257 low-ell morphology catalogue and witnesses"
+      ],
+      "outputs": [
+        "O3/SO3 action, parity, stabilizer, stratum, chart, and invariant-signature records",
+        "v2 adapter preserving existing witness fixtures"
+      ],
+      "contributors": [
+        "COMMON"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common",
+        "obsstat"
+      ],
+      "depends": [
+        "PR-261",
+        "PR-257"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-261",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-257",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Type O3 versus SO3 actions and parity without collapsing pseudoscalar information.",
+        "Preserve UNPROVEN where generic separation or completeness has not been established."
+      ],
+      "files": [
+        "htt/src/common/orbit_catalogue_v3.py",
+        "htt/obsstat",
+        "tests/contracts/test_orbit_catalogue_v3.py",
+        "docs/PR_DELTAS/pr-263.md"
+      ],
+      "tests": [
+        "to-be-created:PYTHONPATH=htt/src:htt python -B -m pytest -p no:cacheprovider -q tests/contracts/test_orbit_catalogue_v3.py"
+      ],
+      "dod": [
+        "Group-action composition, parity mutation, stabilizer boundaries, chart overlap, and v2 regression pass.",
+        "Nearest-orbit numerics remain morphology-compatibility diagnostics only."
+      ],
+      "kill": "A nearest orbit is used as family identity or an unproved complete chart is marked complete.",
+      "cost": "high",
+      "level": "L2",
+      "scope": "pre-solver",
+      "risk": "R3-MORPHOLOGY",
+      "claim_tier_ceiling": "diagnostic_only",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C2"
+      },
+      "claim_impact": "Pre-solver orbit and morphology compatibility only.",
+      "forbidden": [
+        "No native morphology-atlas substitute, native-solver result, or Bianchi family-identification claim."
+      ],
+      "anti_drift": [
+        "Generic-chart separation and global completeness retain separate statuses."
+      ],
+      "roadmap_anchor": "docs/research_program/vector_tensor/VECTOR_TENSOR_PROOF_PROGRAM_V1.yaml",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "diagnostic_only",
+      "execution_authorization": "EXPLICIT_USER_AUTHORIZED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "VECTOR_TENSOR",
+      "solver_gate_required": false,
+      "change_set_id": "CS-PR263-ORBIT-CATALOGUE-V3",
+      "publication_group_id": "PG-PR263-ORBIT-CATALOGUE-V3"
+    },
+    {
+      "id": "PR-264",
+      "wave": 58,
+      "title": "Vector/tensor x, Q, F, and G_F successor",
+      "owner": "MIO",
+      "capability": "tensor_departure_diagnostic_successor",
+      "inputs": [
+        "PR-262 tensor functional and shared anchor contract",
+        "PR-263 orbit catalogue v3"
+      ],
+      "outputs": [
+        "CertifiedFunctionalPushforward, SupportUtilizationProfile, and OccupancyMeasure",
+        "LegacyXQPiFGView with declared scalar-reduction tolerance"
+      ],
+      "contributors": [
+        "COMMON"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common",
+        "mio"
+      ],
+      "depends": [
+        "PR-262",
+        "PR-263"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-262",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-263",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Declare denominator, support eligibility, tensor contraction, and missing-component policies for x, Q, F, and G_F.",
+        "Keep point estimates, bounds, and support utilization in separate fields."
+      ],
+      "files": [
+        "htt/src/common/tensor_departure_statistics.py",
+        "htt/mio",
+        "tests/contracts/test_tensor_departure_statistics.py",
+        "docs/PR_DELTAS/pr-264.md"
+      ],
+      "tests": [
+        "to-be-created:PYTHONPATH=htt/src:htt python -B -m pytest -p no:cacheprovider -q tests/contracts/test_tensor_departure_statistics.py"
+      ],
+      "dod": [
+        "Zero support, denominator collapse, rotation covariance, scalar regression, and occupancy monotonicity pass.",
+        "Legacy scalar values reproduce within the registered tolerance without changing their meanings."
+      ],
+      "kill": "MIO output gains posterior/evidence semantics or missing support is silently treated as occupied.",
+      "cost": "high",
+      "level": "L2",
+      "scope": "pre-solver",
+      "risk": "R3-XQFG",
+      "claim_tier_ceiling": "diagnostic_only",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C2"
+      },
+      "claim_impact": "Tensor-valued diagnostic successor with scalar compatibility.",
+      "forbidden": [
+        "No MIO posterior, native-solver result, physical occupancy claim, or Bianchi family-identification claim."
+      ],
+      "anti_drift": [
+        "Q, F, occupancy, bounds, and support utilization remain semantically distinct."
+      ],
+      "roadmap_anchor": "docs/research_program/vector_tensor/STAT_FOUNDATIONS_TENSOR_UPGRADE_20260730.md",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "diagnostic_only",
+      "execution_authorization": "EXPLICIT_USER_AUTHORIZED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "VECTOR_TENSOR",
+      "solver_gate_required": false,
+      "change_set_id": "CS-PR264-TENSOR-XQFG",
+      "publication_group_id": "PG-PR264-TENSOR-XQFG"
+    },
+    {
+      "id": "PR-265",
+      "wave": 59,
+      "title": "Conditional exceedance Pi with law and objective separation",
+      "owner": "MIO",
+      "capability": "conditional_exceedance_law_typed_contract",
+      "inputs": [
+        "PR-264 tensor departure diagnostics",
+        "PR-250 finite-covariance and partial-identification contracts"
+      ],
+      "outputs": [
+        "ConditionalExceedanceProfile common contract",
+        "Distinct sampling-law, likelihood-objective, null-exceedance, and posterior-exceedance types"
+      ],
+      "contributors": [
+        "HTT",
+        "COMMON"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common",
+        "mio",
+        "htt"
+      ],
+      "depends": [
+        "PR-264",
+        "PR-250"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-264",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-250",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Restrict MIO to matched-null or empirical laws and HTT to explicit likelihood/posterior laws.",
+        "Reject optimizer point outputs as samples, null draws, or posterior draws."
+      ],
+      "files": [
+        "htt/src/common/conditional_exceedance.py",
+        "htt/mio",
+        "htt/htt",
+        "tests/contracts/test_conditional_exceedance.py",
+        "docs/PR_DELTAS/pr-265.md"
+      ],
+      "tests": [
+        "to-be-created:PYTHONPATH=htt/src:htt python -B -m pytest -p no:cacheprovider -q tests/contracts/test_conditional_exceedance.py"
+      ],
+      "dod": [
+        "Point-output refusal, finite-null coverage, posterior calibration, tail monotonicity, and law/objective mutations pass.",
+        "A missing probability law yields typed refusal rather than a numerical Pi value."
+      ],
+      "kill": "The input artifact does not identify a probability law or optimizer output is relabelled probabilistic.",
+      "cost": "high",
+      "level": "L2",
+      "scope": "pre-solver",
+      "risk": "R3-STATISTICS",
+      "claim_tier_ceiling": "diagnostic_only",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C2"
+      },
+      "claim_impact": "Law-conditional exceedance methodology only.",
+      "forbidden": [
+        "No truth probability, MIO posterior, native-solver validation, or Bianchi family-identification claim."
+      ],
+      "anti_drift": [
+        "Sampling laws, objectives, null laws, and posteriors never share one untyped field."
+      ],
+      "roadmap_anchor": "docs/research_program/vector_tensor/STAT_FOUNDATIONS_TENSOR_UPGRADE_20260730.md",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "methodology_conditional",
+      "execution_authorization": "EXPLICIT_USER_AUTHORIZED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "VECTOR_TENSOR",
+      "solver_gate_required": false,
+      "change_set_id": "CS-PR265-CONDITIONAL-EXCEEDANCE",
+      "publication_group_id": "PG-PR265-CONDITIONAL-EXCEEDANCE"
+    },
+    {
+      "id": "PR-266",
+      "wave": 59,
+      "title": "Depth, mask, transport, and coherence path",
+      "owner": "OBSSTAT",
+      "capability": "sky_support_typed_depth_coherence_path",
+      "inputs": [
+        "PR-264 tensor departure diagnostics",
+        "Survey depth, mask, selection, covariance, and transport metadata"
+      ],
+      "outputs": [
+        "DepthPath, MaskStratum, TransportKernel, and DepthCoherenceReport",
+        "Separate OBSSTAT features, MIO coherence diagnostics, and HTT likelihood adapters"
+      ],
+      "contributors": [
+        "MIO",
+        "HTT",
+        "COMMON"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common",
+        "obsstat",
+        "mio",
+        "htt"
+      ],
+      "depends": [
+        "PR-264"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-264",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Bind depth, mask, selection, covariance, and transport identities at every path step.",
+        "Refuse silent merging of incompatible or non-nested sky supports."
+      ],
+      "files": [
+        "htt/src/common/depth_path.py",
+        "htt/obsstat",
+        "htt/mio",
+        "htt/htt",
+        "tests/contracts/test_depth_path.py",
+        "docs/PR_DELTAS/pr-266.md"
+      ],
+      "tests": [
+        "to-be-created:PYTHONPATH=htt/src:htt python -B -m pytest -p no:cacheprovider -q tests/contracts/test_depth_path.py"
+      ],
+      "dod": [
+        "Nested-mask, non-nested refusal, transport composition, covariance perturbation, and depth-scramble controls pass.",
+        "Feature extraction, diagnostic coherence, and model-dependent likelihood ownership stay separated."
+      ],
+      "kill": "Different sky supports are silently merged into one path.",
+      "cost": "high",
+      "level": "L2",
+      "scope": "pre-solver",
+      "risk": "R3-SKY-SUPPORT",
+      "claim_tier_ceiling": "diagnostic_only",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C2"
+      },
+      "claim_impact": "Sky-support-conditional depth diagnostics only.",
+      "forbidden": [
+        "No native-solver result, global-tilt evidence from coherence alone, or Bianchi family-identification claim."
+      ],
+      "anti_drift": [
+        "Mask, depth, selection, and covariance changes retain distinct provenance."
+      ],
+      "roadmap_anchor": "docs/research_program/vector_tensor/VECTOR_TENSOR_PROOF_PROGRAM_V1.yaml",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "diagnostic_only",
+      "execution_authorization": "EXPLICIT_USER_AUTHORIZED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "VECTOR_TENSOR",
+      "solver_gate_required": false,
+      "change_set_id": "CS-PR266-DEPTH-MASK-PATH",
+      "publication_group_id": "PG-PR266-DEPTH-MASK-PATH"
+    },
+    {
+      "id": "PR-267",
+      "wave": 60,
+      "title": "Typed AnisotropyTypeReport",
+      "owner": "COMMON",
+      "capability": "abstaining_anisotropy_compatibility_report",
+      "inputs": [
+        "PR-263 orbit strata",
+        "PR-265 conditional exceedance and PR-266 depth coherence",
+        "PR-255 anchored response, PR-256 velocity frames, and PR-258 open-set classes"
+      ],
+      "outputs": [
+        "AnisotropyTypeReport with strata, rank, angles, compatibility, coherence, missingness, and claim ceiling",
+        "Partial diagnostic report when geometry information is unavailable"
+      ],
+      "contributors": [
+        "OBSSTAT",
+        "MIO",
+        "HTT"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common",
+        "obsstat",
+        "mio",
+        "htt"
+      ],
+      "depends": [
+        "PR-263",
+        "PR-265",
+        "PR-266",
+        "PR-255",
+        "PR-256",
+        "PR-258"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-263",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-265",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-266",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-255",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-256",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-258",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Reuse anchored/open-set/velocity-frame hierarchies and report UNKNOWN or INDETERMINATE under weak identification.",
+        "Prevent partial diagnostic content from being rendered as a geometry or family conclusion."
+      ],
+      "files": [
+        "htt/src/common/anisotropy_type_report.py",
+        "tests/contracts/test_anisotropy_type_report.py",
+        "docs/PR_DELTAS/pr-267.md"
+      ],
+      "tests": [
+        "to-be-created:PYTHONPATH=htt/src:htt python -B -m pytest -p no:cacheprovider -q tests/contracts/test_anisotropy_type_report.py"
+      ],
+      "dod": [
+        "Rank transitions, open-set continuity, local/global overlap, weak-ID abstention, and PR-255/256/258 regressions pass.",
+        "Missing geometry yields a typed partial report and never a nearest label."
+      ],
+      "kill": "Any family label is emitted without a validated native morphology atlas.",
+      "cost": "high",
+      "level": "L2",
+      "scope": "pre-solver",
+      "risk": "R3-CLAIM",
+      "claim_tier_ceiling": "diagnostic_only",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C2"
+      },
+      "claim_impact": "Typed morphology and response compatibility report only.",
+      "forbidden": [
+        "No native-atlas substitution, native-solver result, geometry detection, or Bianchi family-identification claim."
+      ],
+      "anti_drift": [
+        "UNKNOWN and INDETERMINATE are terminal diagnostic outcomes, not errors to force-label."
+      ],
+      "roadmap_anchor": "docs/research_program/vector_tensor/VECTOR_TENSOR_PROOF_PROGRAM_V1.yaml",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "diagnostic_only",
+      "execution_authorization": "EXPLICIT_USER_AUTHORIZED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "VECTOR_TENSOR",
+      "solver_gate_required": false,
+      "change_set_id": "CS-PR267-ANISOTROPY-TYPE-REPORT",
+      "publication_group_id": "PG-PR267-ANISOTROPY-TYPE-REPORT"
+    },
+    {
+      "id": "PR-268",
+      "wave": 61,
+      "title": "Two-pillar theorem registry v3 and executable oracle intake",
+      "owner": "COMMON",
+      "capability": "theorem_signature_v3_and_tensor_oracle_registration",
+      "inputs": [
+        "PR-262 tensor functionals and PR-263 orbit catalogue",
+        "PR-267 typed compatibility report",
+        "PR-260 registered legacy, proposal, U/TC/ST, and VT memberships"
+      ],
+      "outputs": [
+        "THEOREM_SIGNATURES_V3 loader without changing frozen v2",
+        "Stable and mutation vectors for the supplied tensor-foundation oracle"
+      ],
+      "contributors": [
+        "HTT",
+        "MIO",
+        "OBSSTAT"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-262",
+        "PR-263",
+        "PR-267"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-262",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-263",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-267",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Bind statement identity, assumptions, domain, proof class, evidence requirement, and claim ceiling to every registered row.",
+        "Package the supplied oracle as a proposal-derived test target without treating its self-report as proof."
+      ],
+      "files": [
+        "htt/src/common/theorem_signatures_v3.py",
+        "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml",
+        "tests/contracts/test_theorem_signatures_v3.py",
+        "docs/PR_DELTAS/pr-268.md"
+      ],
+      "tests": [
+        "to-be-created:PYTHONPATH=htt/src:htt python -B -m pytest -p no:cacheprovider -q tests/contracts/test_theorem_signatures_v3.py"
+      ],
+      "dod": [
+        "Exact source partitions, ID uniqueness, signature round trip, oracle determinism, and claim-language lint pass.",
+        "Frozen v2 bytes and statuses remain unchanged."
+      ],
+      "kill": "A theorem statement and its oracle use different domain, branch, or frame conventions.",
+      "cost": "high",
+      "level": "L2",
+      "scope": "pre-solver",
+      "risk": "R3-REGISTRY",
+      "claim_tier_ceiling": "diagnostic_only",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C2"
+      },
+      "claim_impact": "Proof-obligation registration only; no theorem status promotion.",
+      "forbidden": [
+        "No raw-cardinality theorem count, native-solver validation, or Bianchi family-identification claim."
+      ],
+      "anti_drift": [
+        "Oracle PASS is test evidence only until the registered proof gate adjudicates it."
+      ],
+      "roadmap_anchor": "docs/research_program/vector_tensor/PROGRAM_INTAKE_REGISTRY_V1.yaml",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "methodology_conditional",
+      "execution_authorization": "EXPLICIT_USER_AUTHORIZED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "VECTOR_TENSOR",
+      "solver_gate_required": false,
+      "change_set_id": "CS-PR268-THEOREM-REGISTRY-V3",
+      "publication_group_id": "PG-PR268-THEOREM-REGISTRY-V3"
+    },
+    {
+      "id": "PR-269",
+      "wave": 62,
+      "title": "Pillar T analytic and core proofs",
+      "owner": "COMMON",
+      "capability": "analytic_tensor_foundation_proof_artifacts",
+      "inputs": [
+        "PR-268 theorem signatures v3 and proof routes",
+        "Legacy and TF analytic/core obligations plus VT-T1-4 and VT-T9-10"
+      ],
+      "outputs": [
+        "Assumption-, frame-, domain-, artifact-, and counterexample-bound proof records",
+        "FAIL or INCONCLUSIVE records when a statement cannot be proved unchanged"
+      ],
+      "contributors": [
+        "MIO"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-268"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-268",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Resolve analytic/core proof obligations without weakening their registered statements.",
+        "Avoid CAS gates for elementary identities or type-preservation propositions."
+      ],
+      "files": [
+        "formal",
+        "docs/research_program/vector_tensor/proofs",
+        "tests/contracts/test_pillar_t_core.py",
+        "docs/PR_DELTAS/pr-269.md"
+      ],
+      "tests": [
+        "to-be-created:PYTHONPATH=htt/src:htt python -B -m pytest -p no:cacheprovider -q tests/contracts/test_pillar_t_core.py"
+      ],
+      "dod": [
+        "Typed signatures, domain-boundary vectors, and legacy proof-reference resolution pass.",
+        "Every unresolved obligation preserves its negative or inconclusive verdict."
+      ],
+      "kill": "A registered statement must be weakened silently to obtain a passing proof.",
+      "cost": "high",
+      "level": "L3",
+      "scope": "pre-solver",
+      "risk": "R3-PROOF",
+      "claim_tier_ceiling": "diagnostic_only",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C2"
+      },
+      "claim_impact": "Registered mathematical proof status only; no observational implication.",
+      "forbidden": [
+        "No unregistered theorem promotion, native-solver validation, or Bianchi family-identification claim."
+      ],
+      "anti_drift": [
+        "Proof status follows the exact registered statement and declared assumptions."
+      ],
+      "roadmap_anchor": "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "proof_diagnostic",
+      "execution_authorization": "EXPLICIT_USER_AUTHORIZED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "VECTOR_TENSOR",
+      "solver_gate_required": false,
+      "change_set_id": "CS-PR269-PILLAR-T-CORE",
+      "publication_group_id": "PG-PR269-PILLAR-T-CORE"
+    },
+    {
+      "id": "PR-270",
+      "wave": 63,
+      "title": "Pillar T orbit, response, realizability, and four-axis CAS",
+      "owner": "COMMON",
+      "capability": "blind_four_axis_tensor_cas_adjudication",
+      "inputs": [
+        "PR-269 analytic/core proof artifacts",
+        "VT-T5-8, VT-T11-14, and registry-declared CAS obligations"
+      ],
+      "outputs": [
+        "One assumption- and branch-aligned CAS_CONTRACT.json",
+        "Independent Wolfram+xAct, SymPy, SageMath+Singular, Lean results and aggregate verdict"
+      ],
+      "contributors": [
+        "MIO"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-269"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-269",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Keep global-orbit and stabilizer-local statements separate under blind-results execution.",
+        "Admit only CAS_4AXIS_PASS, CAS_PASS_WITH_REGISTERED_EXCEPTION, CAS_CONFLICT, CAS_BLOCKED, or CAS_FAIL."
+      ],
+      "files": [
+        "formal",
+        ".agent-harness",
+        "docs/research_program/vector_tensor/cas",
+        "tests/contracts/test_pillar_t_cas.py",
+        "docs/PR_DELTAS/pr-270.md"
+      ],
+      "tests": [
+        "to-be-created:PYTHONPATH=htt/src:htt python -B -m pytest -p no:cacheprovider -q tests/contracts/test_pillar_t_cas.py",
+        "to-be-created:python -B .agent-harness/scripts/cas_gate.py adjudicate --contract docs/research_program/vector_tensor/cas/CAS_CONTRACT.json"
+      ],
+      "dod": [
+        "All axes consume one sealed contract and cannot inspect sibling derivations before adjudication.",
+        "Missing axes, branch mismatch, or unregistered exceptions yield a blocked/conflict/fail state."
+      ],
+      "kill": "An axis is omitted, assumptions diverge, or an exception is registered after results are read.",
+      "cost": "very_high",
+      "level": "L3",
+      "scope": "pre-solver",
+      "risk": "R3-CAS",
+      "claim_tier_ceiling": "diagnostic_only",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C2"
+      },
+      "claim_impact": "Contract-scoped mathematical verdicts only.",
+      "forbidden": [
+        "No majority-vote proof, native-solver validation, or Bianchi family-identification claim."
+      ],
+      "anti_drift": [
+        "Platform absence is CAS_BLOCKED and never silently converted into an exception or pass."
+      ],
+      "roadmap_anchor": "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "proof_diagnostic",
+      "execution_authorization": "EXPLICIT_USER_AUTHORIZED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "VECTOR_TENSOR",
+      "solver_gate_required": false,
+      "change_set_id": "CS-PR270-PILLAR-T-CAS",
+      "publication_group_id": "PG-PR270-PILLAR-T-CAS"
+    },
+    {
+      "id": "PR-271",
+      "wave": 62,
+      "title": "Pillar S exact and core statistical foundations",
+      "owner": "HTT",
+      "capability": "tensor_reduction_statistical_foundations",
+      "inputs": [
+        "PR-268 theorem signatures v3",
+        "Exact/asymptotic foundation obligations and VT-S1, S2, S4, S7, S8"
+      ],
+      "outputs": [
+        "Estimand, sampling-law, covariance, and finite/asymptotic status records",
+        "Tensor-to-scalar reduction tests for legacy propositions"
+      ],
+      "contributors": [
+        "COMMON",
+        "OBSSTAT"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common",
+        "obsstat",
+        "htt"
+      ],
+      "depends": [
+        "PR-268"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-268",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Implement exact and asymptotic statements with explicit finite-sample boundaries.",
+        "Require exact evidence for exact claims rather than simulation-only promotion."
+      ],
+      "files": [
+        "htt/src/common/vector_tensor_statistical_foundations.py",
+        "htt/obsstat",
+        "htt/htt",
+        "tests/contracts/test_pillar_s_core.py",
+        "docs/PR_DELTAS/pr-271.md"
+      ],
+      "tests": [
+        "to-be-created:PYTHONPATH=htt/src:htt python -B -m pytest -p no:cacheprovider -q tests/contracts/test_pillar_s_core.py"
+      ],
+      "dod": [
+        "Estimands, laws, covariance assumptions, finite/asymptotic status, and scalar reductions are machine checked.",
+        "Simulation evidence cannot promote an exact statement."
+      ],
+      "kill": "An exact proposition is promoted from simulation-only evidence.",
+      "cost": "high",
+      "level": "L3",
+      "scope": "pre-solver",
+      "risk": "R3-STATISTICS",
+      "claim_tier_ceiling": "diagnostic_only",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C2"
+      },
+      "claim_impact": "Statistical-method foundations only.",
+      "forbidden": [
+        "No MIO inference ownership, native-solver validation, or Bianchi family-identification claim."
+      ],
+      "anti_drift": [
+        "Finite-sample and asymptotic evidence grades remain distinct."
+      ],
+      "roadmap_anchor": "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "methodology_conditional",
+      "execution_authorization": "EXPLICIT_USER_AUTHORIZED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "VECTOR_TENSOR",
+      "solver_gate_required": false,
+      "change_set_id": "CS-PR271-PILLAR-S-CORE",
+      "publication_group_id": "PG-PR271-PILLAR-S-CORE"
+    },
+    {
+      "id": "PR-272",
+      "wave": 63,
+      "title": "Pillar S inference, coverage, and multiplicity",
+      "owner": "HTT",
+      "capability": "preregistered_coverage_and_weak_identification_validation",
+      "inputs": [
+        "PR-271 exact/core statistical foundations",
+        "VT-S3, S5, S6, S9-S14 obligations"
+      ],
+      "outputs": [
+        "Preregistered DGP, seed family, tolerance, coverage interval, and multiplicity records",
+        "MIO diagnostic cross-check without inference ownership"
+      ],
+      "contributors": [
+        "MIO",
+        "COMMON"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common",
+        "mio",
+        "htt"
+      ],
+      "depends": [
+        "PR-271"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-271",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Validate coverage, weak identification, multiplicity, optimizer refusal, and open-set behavior.",
+        "Require null, prior, PPC, or LOOCV only where the registered claim depends on it."
+      ],
+      "files": [
+        "htt/htt",
+        "htt/mio",
+        "tests/contracts/test_pillar_s_inference.py",
+        "docs/PR_DELTAS/pr-272.md"
+      ],
+      "tests": [
+        "to-be-created:PYTHONPATH=htt/src:htt python -B -m pytest -p no:cacheprovider -q tests/contracts/test_pillar_s_inference.py"
+      ],
+      "dod": [
+        "SBC/coverage, misspecified covariance, optimizer mutation, depth multiplicity, and weak-ID abstention pass.",
+        "Failed coverage remains visible under the preregistered tolerance."
+      ],
+      "kill": "Coverage failure is hidden by post-hoc tolerance or seed adjustment.",
+      "cost": "very_high",
+      "level": "L3",
+      "scope": "pre-solver",
+      "risk": "R3-STATISTICS",
+      "claim_tier_ceiling": "diagnostic_only",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C2"
+      },
+      "claim_impact": "Preregistered synthetic inference validation only.",
+      "forbidden": [
+        "No MIO posterior, native-solver validation, observed-data claim, or Bianchi family-identification claim."
+      ],
+      "anti_drift": [
+        "DGP, seeds, tolerances, and coverage intervals freeze before result inspection."
+      ],
+      "roadmap_anchor": "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "synthetic_diagnostic",
+      "execution_authorization": "EXPLICIT_USER_AUTHORIZED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "VECTOR_TENSOR",
+      "solver_gate_required": false,
+      "change_set_id": "CS-PR272-PILLAR-S-INFERENCE",
+      "publication_group_id": "PG-PR272-PILLAR-S-INFERENCE"
+    },
+    {
+      "id": "PR-273",
+      "wave": 64,
+      "title": "Blind synthetic vector/tensor integration",
+      "owner": "HTT",
+      "capability": "held_out_vector_tensor_pipeline_integration",
+      "inputs": [
+        "PR-270 Pillar T adjudicated verdicts",
+        "PR-272 Pillar S preregistered validation"
+      ],
+      "outputs": [
+        "State-to-report synthetic benchmark with held-out truth and reviewer blinding",
+        "Frozen diagnostic pack with config, seed, transfer source, and claim ceiling"
+      ],
+      "contributors": [
+        "COMMON",
+        "OBSSTAT",
+        "MIO"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common",
+        "obsstat",
+        "mio",
+        "htt"
+      ],
+      "depends": [
+        "PR-270",
+        "PR-272"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-270",
+          "mode": "requires_success"
+        },
+        {
+          "upstream_id": "PR-272",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Integrate state, functional, orbit, x/Q/F/G_F/Pi, and type-report paths on blind synthetic cases.",
+        "Cover scalar-limit, tensor-only, missing-channel, local/global-degenerate, and mask/depth-confounded cases."
+      ],
+      "files": [
+        "htt/htt",
+        "tests/integration/test_vector_tensor_blind_synthetic.py",
+        "docs/PR_DELTAS/pr-273.md"
+      ],
+      "tests": [
+        "to-be-created:PYTHONPATH=htt/src:htt python -B -m pytest -p no:cacheprovider -q tests/integration/test_vector_tensor_blind_synthetic.py"
+      ],
+      "dod": [
+        "Held-out truth and reviewer results remain blind until a registered adjudication step.",
+        "Every declared negative-control mutation is killed and no observed-data claim enters the pack."
+      ],
+      "kill": "Held-out leakage, a surviving mutation, or observed-data language appears.",
+      "cost": "very_high",
+      "level": "L3",
+      "scope": "pre-solver",
+      "risk": "R3-INTEGRATION",
+      "claim_tier_ceiling": "diagnostic_only",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C2"
+      },
+      "claim_impact": "Synthetic integration evidence only.",
+      "forbidden": [
+        "No synthetic-to-observed promotion, native-solver validation, or Bianchi family-identification claim."
+      ],
+      "anti_drift": [
+        "Truth parameters and reviewer verdicts stay inaccessible before result submission."
+      ],
+      "roadmap_anchor": "docs/research_program/vector_tensor/PROGRAM_INTAKE_REGISTRY_V1.yaml",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "synthetic_diagnostic",
+      "execution_authorization": "EXPLICIT_USER_AUTHORIZED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "VECTOR_TENSOR",
+      "solver_gate_required": false,
+      "change_set_id": "CS-PR273-BLIND-SYNTHETIC-INTEGRATION",
+      "publication_group_id": "PG-PR273-BLIND-SYNTHETIC-INTEGRATION"
+    },
+    {
+      "id": "PR-274",
+      "wave": 65,
+      "title": "Data admission and separately authorized limited pilot",
+      "owner": "OBSSTAT",
+      "capability": "repository_bound_vector_tensor_data_admission",
+      "inputs": [
+        "PR-273 blind synthetic diagnostic pack",
+        "Candidate product source, release, license, mask, covariance, transfer, and field identities"
+      ],
+      "outputs": [
+        "Per-product admission verdict and repository-bound input contract",
+        "NO_ADMITTED_DATA_PILOT terminal result when no input passes"
+      ],
+      "contributors": [
+        "HTT",
+        "COMMON"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common",
+        "obsstat",
+        "htt"
+      ],
+      "depends": [
+        "PR-273"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-273",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Preflight candidate products by exact source/release/license/mask/covariance/transfer/field contracts.",
+        "Keep scientific execution disabled until a separate explicit data-execution approval is recorded."
+      ],
+      "files": [
+        "htt/obsstat",
+        "htt/htt",
+        "docs/research_program/vector_tensor/data_admission",
+        "tests/contracts/test_vector_tensor_data_admission.py",
+        "docs/PR_DELTAS/pr-274.md"
+      ],
+      "tests": [
+        "to-be-created:PYTHONPATH=htt/src:htt python -B -m pytest -p no:cacheprovider -q tests/contracts/test_vector_tensor_data_admission.py"
+      ],
+      "dod": [
+        "Dataset names alone never pass admission and PR-151 partial/background acquisition is rejected as complete input.",
+        "In the absence of separately authorized admitted inputs, the card closes transparently as NO_ADMITTED_DATA_PILOT."
+      ],
+      "kill": "Raw or incomplete data is used for a claim-bearing figure.",
+      "cost": "high",
+      "level": "L2",
+      "scope": "pre-solver",
+      "risk": "R3-DATA",
+      "claim_tier_ceiling": "diagnostic_only",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C2"
+      },
+      "claim_impact": "Data-admission or transfer-conditional diagnostic only.",
+      "forbidden": [
+        "No automatic data pilot, native-solver validation, raw-data claim, or Bianchi family-identification claim."
+      ],
+      "anti_drift": [
+        "Planck, CF4, HSC, or KiDS names are not source identities and confer no admission."
+      ],
+      "roadmap_anchor": "docs/research_program/HTT_VECTOR_TENSOR_MES_TWO_PILLAR_UPGRADE_PLAN_20260730.md",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "data_admission_preflight",
+      "execution_authorization": "EXPLICIT_USER_AUTHORIZED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "VECTOR_TENSOR",
+      "solver_gate_required": false,
+      "change_set_id": "CS-PR274-DATA-ADMISSION",
+      "publication_group_id": "PG-PR274-DATA-ADMISSION"
+    },
+    {
+      "id": "PR-275",
+      "wave": 66,
+      "title": "Generated proof atlas, report, and replication package",
+      "owner": "COMMON",
+      "capability": "registry_generated_proof_and_replication_atlas",
+      "inputs": [
+        "PR-274 data-admission or NO_ADMITTED_DATA_PILOT result",
+        "Theorem registry, proof statuses, CAS verdicts, and synthetic integration records"
+      ],
+      "outputs": [
+        "Registry-generated proof atlas and status tables",
+        "Replication package with commands, environment, source identities, seeds, tolerances, caveats, and claim ceiling"
+      ],
+      "contributors": [
+        "HTT",
+        "MIO",
+        "OBSSTAT"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-274"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-274",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Generate every theorem count and proof status from the registered source rather than hand transcription.",
+        "Restrict figures to concrete synthetic or separately admitted-data analyses."
+      ],
+      "files": [
+        "docs/research_program/vector_tensor/report",
+        "scripts/vector_tensor",
+        "tests/contracts/test_vector_tensor_report.py",
+        "docs/PR_DELTAS/pr-275.md"
+      ],
+      "tests": [
+        "to-be-created:python scripts/check_claim_language.py",
+        "to-be-created:python scripts/claim_lint_research_surfaces.py",
+        "python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml",
+        "python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml",
+        "python -m pytest --collect-only -q",
+        "python -m pytest -m smoke -q",
+        "python -m pytest -q"
+      ],
+      "dod": [
+        "Blocked or inconclusive theorems render as blocked or inconclusive, and all counts derive from the registry.",
+        "Replication metadata is sufficient for the declared scientific-reproducibility grade without pretending exact upstream replay."
+      ],
+      "kill": "A manuscript number lacks generated source or a blocked theorem renders as proved.",
+      "cost": "high",
+      "level": "L3",
+      "scope": "pre-solver",
+      "risk": "R3-REPORT",
+      "claim_tier_ceiling": "diagnostic_only",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C2"
+      },
+      "claim_impact": "Generated status and diagnostic reporting only.",
+      "forbidden": [
+        "No governance figure as science, native-solver validation, proof-count inflation, or Bianchi family-identification claim."
+      ],
+      "anti_drift": [
+        "Report tables, captions, and counts are generated from the same machine-readable registry."
+      ],
+      "roadmap_anchor": "docs/research_program/vector_tensor/PROGRAM_INTAKE_REGISTRY_V1.yaml",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "generated_report_diagnostic",
+      "execution_authorization": "EXPLICIT_USER_AUTHORIZED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "VECTOR_TENSOR",
+      "solver_gate_required": false,
+      "change_set_id": "CS-PR275-PROOF-ATLAS-REPORT",
+      "publication_group_id": "PG-PR275-PROOF-ATLAS-REPORT"
     }
   ]
 }
