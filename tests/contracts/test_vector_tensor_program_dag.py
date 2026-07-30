@@ -258,7 +258,15 @@ def test_pr261_275_cards_match_revalidated_dag_and_common_contract() -> None:
         assert card["solver_gate_required"] is False
         assert card["scientific_status_on_intake"] == "OPEN"
 
-    assert status["in_progress"] == "PR-260"
+    assert status["in_progress"] is None
+    assert "PR-260" in status["completed"]
+    assert status["execution_resolutions"]["PR-260"][
+        "resolution"
+    ] == "COMPLETED_SUCCESS"
+    assert status["execution_resolutions"]["PR-260"][
+        "scientific_status_effect"
+    ] == "none_programme_registration_only"
+    assert status["execution_resolutions"]["PR-260"]["public_use"] is False
     assert set(EXPECTED_DEPENDENCIES) <= set(status["pending"])
     assert all(
         status["execution_lane"][pr_id] == "defensible"

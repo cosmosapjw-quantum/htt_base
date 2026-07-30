@@ -2465,3 +2465,39 @@ Independent review authority: the exact final closeout candidate must pass the
 registered schema-v3 reviewer run
 `.agent-harness/runs/pr259-final-review-20260730-r3/RUN_SUMMARY.json`; any
 missing, malformed, or non-PASS result invalidates this ledger closeout.
+
+## PR-260 — vector/tensor MES and proof-program formal intake (2026-07-30)
+
+Change classification: COMMON programme contracts, supplied-source intake,
+canonical DAG/status expansion, deterministic registry generation, loader,
+tests, and checkpoint metadata. No theorem is proved or promoted; no numerical
+science, data, transfer, likelihood, posterior, evidence, MIO certificate,
+native solver/atlas, geometry, or family result is created.
+
+| Command | CWD | Result | Notes |
+| --- | --- | --- | --- |
+| `venv/bin/python -B scripts/codex_harness/run_pr260_intake.py focused` | linked PR-260 worktree | PASS | `21 passed`; exact source partitions, registry loader, mutations, policy, DAG, and PR-259 bootstrap regression. |
+| `PYTHONPATH=htt/src:htt venv/bin/python -B -m pytest -p no:cacheprovider -q tests/contracts/test_generated_status_counts.py tests/contracts/test_pr_delta_template.py tests/pr_cards/test_pr_253_baseline_replan.py tests/contracts/test_vector_tensor_program_dag.py` | linked PR-260 worktree | PASS | `47 passed`; existing premise-anchor atomic-intake failure semantics preserved. |
+| `venv/bin/python -B scripts/codex_harness/intake_vector_tensor_program.py --check` | linked PR-260 worktree | PASS | Legacy 65 = 31 T + 34 S; proposal 58 = 30 I + 24 II + 4 BRIDGE; U9/TC20/ST25; VT-T14/VT-S14. |
+| strict `validate_pr_dag.py ... --status ... --strict-rescue-slice` | linked PR-260 worktree | PASS | `222 PRs, DAG valid`; exact PR-261–275 order and dependencies. |
+| `sync_pr_dag_mirrors.py --check` | linked PR-260 worktree | PASS | Canonical YAML/status and compatibility YAML/JSON mirrors synchronized. |
+| `PYTHONPATH=htt/src:htt ... --collect-only -q` | linked PR-260 worktree | PASS | `10107/10166 collected`, `59 deselected`; zero collection errors. |
+| `run_pr260_intake.py smoke` | linked PR-260 worktree | PASS | `6 passed`, `10160 deselected`; eight legacy deprecation warnings retained. |
+| changed-surface `check_claim_language.py --dry-run --format json` | linked PR-260 worktree | PASS | Zero issues. |
+| `claim_lint_research_surfaces.py` | linked PR-260 worktree | PASS | Zero research-surface hits. |
+| `compileall`, `pip check`, `git diff --check` | linked PR-260 worktree | PASS | No import/bytecode errors, broken requirements, or un-dispositioned whitespace errors. Ruff is unavailable in the venv and no Ruff result is claimed. |
+| checkpoint-155 generation and scoreboard replay | linked PR-260 worktree | PASS | 155/222 = 69.82%; dependency weighted 77.72%; critical path 65/77 = 84.42%; progress +5, no replan required. |
+
+Source-intake disposition: A1's standalone seven-equals relation was recorded
+by attachment hash and normalized to a single equality symbol because Git
+treats the original byte sequence as a conflict sentinel. Two-space Markdown
+hard breaks in the owner-supplied combined plan are explicitly attributed.
+Registration wrappers for A3/A6 and terminal-newline normalization are recorded
+separately. Source proposal/open/conditional statuses remain unchanged.
+
+The first source-map subagent reconstructed the right cardinalities but wrote a
+schema-v1 envelope after schema v3 was required. The run is preserved as
+abandoned process evidence and is not accepted as review. Conditional
+completion requires a fresh frozen-candidate schema-v3 review at
+`.agent-harness/runs/pr260-final-review-20260730-r1/RUN_SUMMARY.json`; a
+missing, stale, or non-PASS result invalidates PR-260.

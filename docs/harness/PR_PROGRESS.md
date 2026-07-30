@@ -2,6 +2,35 @@
 
 Update every five PRs with percent complete and blockers.
 
+## Checkpoint 155 — PR-256 through PR-260
+
+Date: 2026-07-30
+
+- Active DAG: 155/222 complete = 69.82%; dependency-weighted completion
+  77.72%; critical-path proxy 65/77 = 84.42%.
+- The five-card window adds velocity-frame decomposition, a parity-typed
+  low-ell morphology benchmark, open-set response-class abstention,
+  chronology-safe frozen-successor resolution, and the formal PR-261–275
+  vector/tensor programme intake.
+- PR-260 reconstructs the supplied sources without semantic reassignment:
+  legacy 65 = 31 T + 34 S; proposal 58 = 30 I + 24 II + 4 BRIDGE;
+  obligations U9/TC20/ST25 and VT-T14/VT-S14. Raw counts are not theorem
+  counts.
+- Validation passes 21 focused tests, 47 DAG/status regressions, strict
+  222-card DAG and mirror checks, 10107/10166 collection with 59 deselected,
+  smoke 6, deterministic source regeneration, and scoped claim lints.
+- Artifact:
+  `docs/generated/progress_checkpoints/checkpoint_155.md`. Completion advanced
+  by five from checkpoint 150; no stagnation replan is required. The lower
+  percentage is caused by atomically registering 15 new cards.
+- Claim drift: none. Registration proves no theorem and creates no data,
+  native solver/atlas, transfer validation, posterior/evidence, MIO truth
+  certificate, geometry, or family-identification claim.
+- PR-260 remains valid only if the exact closeout candidate passes the
+  registered schema-v3 independent review. PR-261 is then the next programme
+  node. PR-172 stays blocked and PR-151 stays non-terminal background
+  acquisition.
+
 ## PR-258 local candidate (not a five-PR checkpoint)
 
 Date: 2026-07-30

@@ -1,5 +1,43 @@
 # Project State
 
+## 2026-07-30 - PR-260 vector/tensor programme intake conditional closeout
+
+This section supersedes older orchestration snapshots below.
+
+- Active DAG: 222 cards, 155 completed, 1 blocked, 37 pending, 28 dormant
+  external/native, no foreground card, and background PR-151 acquisition.
+  Count completion is 69.82%, dependency-weighted completion 77.72%, and the
+  critical-path proxy 65/77 = 84.42%. The percentage decrease from the
+  205-card baseline is the declared 15-card denominator expansion, not loss of
+  a completed capability.
+- PR-259 repaired frozen-lineage chronology. PR-260 registers PR-261–275 and
+  the supplied proof programme. The registered sources contain 65 legacy
+  signatures partitioned 31 T + 34 S, 58 proposal rows partitioned 30 I +
+  24 II + 4 BRIDGE, U9/TC20/ST25 obligations, and VT-T1–14/VT-S1–14.
+  The 65/58 labels are cardinality aliases only and cannot reclassify source
+  ownership.
+- The COMMON loader binds all eight supplied source identities, exact tracked
+  hashes, proof classes, owners, dependencies, evidence paths, claim ceiling,
+  and the revalidated PR dependency graph. Raw cardinality is forbidden as a
+  theorem count. The supplied Python oracle remains proposal input, not a
+  validated proof surface.
+- Focused validation passes 21 tests; the DAG/status regression slice passes
+  47 tests; full collection reports 10107/10166 with 59 deselected; smoke
+  passes 6 with 10160 deselected. Strict 222-card DAG, mirrors, source
+  regeneration, claim-language scans, research-surface lint, compileall,
+  `pip check`, and whitespace checks pass.
+- Checkpoint 155 is generated and records five additional completions since
+  checkpoint 150. Progress advanced, so no replan PR is required.
+- PR-260 completion remains conditional on a schema-v3 read-only adversarial
+  review of the exact final closeout commit at
+  `.agent-harness/runs/pr260-final-review-20260730-r1/`. A missing, stale, or
+  non-PASS result invalidates the transition.
+- PR-261 is the next programme node. It may start only after the exact review
+  closes. PR-172 remains blocked and PR-151 remains non-terminal background
+  acquisition; no partial data, observed result, native solver/atlas,
+  posterior, MIO truth claim, geometry, or family-identification status
+  changed.
+
 ## 2026-07-30 - PR-258 open-set response integration local handoff
 
 This section supersedes older orchestration snapshots below. It records a
