@@ -2560,6 +2560,8 @@ family result is created.
 | frozen schema-v3 review R1 at `2a1eb64d...` | linked PR-262 worktree | **FAIL** | Preserved two P1 findings: all 13 operators admitted an unsupported STF basis, and post-construction spec drift enabled negative signed occupancy plus nested claim-lane mutation. Run closed at `.agent-harness/runs/pr262-final-review-20260730-r1/RUN_SUMMARY.json`. |
 | focused suite after R1 remediation | linked PR-262 worktree | PASS | `31 passed`; adds canonical-basis refusal and spec identity-seal/replay mutation regressions. |
 | adjacent suite after R1 remediation | linked PR-262 worktree | PASS | `67 passed`; PR-254 and PR-261 regressions unchanged. |
+| smoke suite after R1 remediation | linked PR-262 worktree | PASS | `6 passed`, `10216 deselected`; eight declared legacy deprecation warnings retained. |
+| full collection after R1 remediation | linked PR-262 worktree | PASS | `10163/10222 collected`, `59 deselected`; zero collection errors. |
 
 Physics/math disposition: the closed operator registry fixes codomain shape,
 homogeneous degree, sign class, and scalar/pseudoscalar/polar/axial/STF O(3)
@@ -2574,5 +2576,6 @@ only and adds no inference operation.
 
 Independent acceptance authority: R1 is retained as a failed historical
 receipt and cannot authorize completion. The exact remediated closeout
-candidate must pass a fresh schema-v3 R2 review. Missing, stale, malformed, or
-non-PASS R2 evidence invalidates PR-262 completion.
+candidate must pass a fresh schema-v3 R2 review at
+`.agent-harness/runs/pr262-final-review-20260730-r2/RUN_SUMMARY.json`. Missing,
+stale, malformed, or non-PASS R2 evidence invalidates PR-262 completion.
