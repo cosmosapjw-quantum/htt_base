@@ -72,6 +72,10 @@ from htt.infer.depth_path import (
     build_depth_model_prediction,
     evaluate_depth_path_likelihood,
 )
+from htt.infer.anisotropy_type_report import (
+    LocalGlobalCompatibilityInput,
+    build_local_global_compatibility_input,
+)
 from htt.infer.finite_mock import zero_trigger_upper_bound
 from htt.infer.nuisance_rank import (
     NuisanceProjectedRankAudit,
@@ -141,12 +145,14 @@ __all__ = [
     'posterior_exceedance_summary',
     'ConditionalExceedanceProfile', 'ConditioningSource',
     'DepthHypothesisClass', 'DepthLikelihoodResult', 'DepthModelPrediction',
+    'LocalGlobalCompatibilityInput',
     'EnvelopeCertificate', 'ExceedanceLane', 'ExceedanceStatus',
     'EnvelopeCertificateReport',
     'LikelihoodObjective', 'PosteriorCalibrationReport',
     'PosteriorCalibrationStatus', 'PosteriorExceedance',
     'SamplingDraws', 'SamplingLaw', 'SamplingLawSpec',
     'build_conditional_exceedance_envelope',
+    'build_local_global_compatibility_input',
     'build_depth_model_prediction', 'evaluate_depth_path_likelihood',
     'build_envelope_certificate_report',
     'build_likelihood_objective',
