@@ -2,6 +2,36 @@
 
 Update every five PRs with percent complete and blockers.
 
+## Checkpoint 160 — PR-261 through PR-265
+
+Date: 2026-07-30
+
+- Active DAG: 160/222 complete = 72.07%; dependency-weighted completion
+  79.54%; critical-path proxy 69/77 = 89.61%.
+- The five-card window adds a provenance-bound joint anisotropy state,
+  tensor-functional/anchor evaluation, an explicitly incomplete O(3)/SO(3)
+  orbit catalogue, tensor departure diagnostics, and law-typed conditional
+  exceedance.
+- PR-264 review R1 failed because a post-construction-mutated functional
+  result could be admitted. The preserved remediation binds exact source
+  states, anchors, functional identities, and transfer metadata, and the
+  remediated R2 review passed all registered cells.
+- Validation through the PR-265 implementation passes 25 focused tests,
+  84 adjacent regressions, 6 smoke tests, 10243/10302 collection with 59
+  deselected, strict DAG/mirror gates, scoped claim scans, compileall,
+  `pip check`, and whitespace checks.
+- Artifact:
+  `docs/generated/progress_checkpoints/checkpoint_160.md`. Progress advanced
+  by five from checkpoint 155, so no stagnation replan is required.
+- Claim drift: none. Orbit completeness remains `UNPROVEN`; MIO owns only
+  diagnostic/null quantities; HTT owns explicit objective/posterior lanes;
+  no native solver/atlas, geometry, truth, evidence, or family status is
+  promoted.
+- PR-265 completion remains conditional on the exact closeout candidate
+  passing the registered independent review. PR-266 is the next programme
+  node; PR-172 stays blocked and PR-151 stays non-terminal background
+  acquisition.
+
 ## PR-262 remediated conditional closeout (not a five-PR checkpoint)
 
 Date: 2026-07-30

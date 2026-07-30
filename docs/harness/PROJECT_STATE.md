@@ -1,5 +1,41 @@
 # Project State
 
+## 2026-07-30 - Checkpoint 160 and PR-265 conditional closeout
+
+This section supersedes older orchestration snapshots below.
+
+- Active DAG: 222 cards, 160 completed, 1 blocked, 32 pending, 28 dormant
+  external/native, no foreground card, and background PR-151 acquisition.
+  Count completion is 72.07%, dependency-weighted completion 79.54%, and the
+  critical-path proxy is 69/77 = 89.61%.
+- Checkpoint 160 covers PR-261 through PR-265. It records the joint state,
+  tensor-functional/anchor surface, incomplete orbit catalogue, tensor
+  departure diagnostics, and law-typed conditional-exceedance capability.
+  The generated source is
+  `docs/generated/progress_checkpoints/checkpoint_160.md`.
+- PR-264 review R1 failed on a mutable result-boundary defect. The failed
+  receipt is preserved; the exact-source replay remediation and fresh R2
+  review passed. No failed receipt authorizes completion.
+- PR-265 separates matched-null sampling laws, profile-likelihood objectives,
+  and posterior laws. It refuses optimizer points as draws, requires an
+  explicit passed calibration for posterior numbers, and keeps bounded
+  partial-identification envelopes distinct from point estimates.
+- Validation through the PR-265 implementation passes 25 focused tests,
+  84 adjacent regressions, 6 smoke tests, 10243/10302 collection with 59
+  deselected, strict 222-card DAG/mirror checks, scoped claim lints,
+  compileall, `pip check`, and whitespace checks.
+- Progress advanced by five from checkpoint 155, so no replan PR is required.
+  PR-266 is dependency-ready. PR-172 remains blocked and PR-151 remains
+  non-terminal background acquisition.
+- Completion of PR-265 is valid only if the exact final closeout commit passes
+  `.agent-harness/runs/pr265-final-review-20260730-r1/`. A missing, stale,
+  malformed, candidate-mismatched, or non-PASS result invalidates the status
+  transition.
+- These states remain pre-solver and transfer-conditional where applicable.
+  They do not validate a native solver/atlas, promote a geometry or family
+  label, create MIO posterior/evidence semantics, or support observed-data
+  claims.
+
 ## 2026-07-30 - PR-262 tensor-functional remediated conditional closeout
 
 This section supersedes older orchestration snapshots below.

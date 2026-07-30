@@ -2579,3 +2579,41 @@ receipt and cannot authorize completion. The exact remediated closeout
 candidate must pass a fresh schema-v3 R2 review at
 `.agent-harness/runs/pr262-final-review-20260730-r2/RUN_SUMMARY.json`. Missing,
 stale, malformed, or non-PASS R2 evidence invalidates PR-262 completion.
+
+## Checkpoint 160 — PR-263 through PR-265 validation closeout (2026-07-30)
+
+Change classification: incomplete orbit catalogue, tensor departure
+diagnostics, law-typed conditional exceedance, exact-candidate adversarial
+review, and five-PR progress checkpoint. No observed-data execution, native
+solver/atlas result, geometry verdict, likelihood evidence term, MIO
+posterior, or family result is created.
+
+| Command or evidence | CWD | Result | Notes |
+| --- | --- | --- | --- |
+| PR-263 focused/adjacent/smoke/collection suites | linked vector/tensor worktree | PASS | O(3)/SO(3), parity, stabilizer, chart overlap, v2 regression, and explicit `UNPROVEN` completeness boundaries pass. |
+| PR-264 focused/adjacent/smoke/collection suites | linked vector/tensor worktree | PASS | Tensor `x/Q/F/G_F`, scalar reduction, denominator/support refusal, covariance, monotonic occupancy, and legacy-view separation pass. |
+| frozen PR-264 review R1 | linked vector/tensor worktree | **FAIL** | Preserved finding: post-construction result mutation bypassed source/anchor consistency. |
+| exact-source PR-264 remediation and frozen review R2 | linked vector/tensor worktree | PASS | Source states, anchors, functional identity, and transfer metadata are replayed and sealed; all 15 registered cells pass. |
+| `venv/bin/python -B scripts/codex_harness/run_pr265_conditional_exceedance.py focused` | linked vector/tensor worktree | PASS | `25 passed`; law/conditioning typing, point-output refusal, DKW coverage, posterior calibration, identified-set envelope, ownership, mutation, and claim policy. |
+| PR-265 adjacent suite | linked vector/tensor worktree | PASS | `84 passed`; historical MIO/HTT exceedance, PR-250, and PR-264 regressions; six declared deprecation warnings. |
+| PR-265 smoke suite | linked vector/tensor worktree | PASS | `6 passed`, `10296 deselected`; eight declared deprecation warnings. |
+| PR-265 full collection | linked vector/tensor worktree | PASS | `10243/10302 collected`, `59 deselected`; zero collection errors. |
+| strict DAG, status mirror, scoped claim scans | linked vector/tensor worktree | PASS | `222 PRs, DAG valid`; canonical/mirror status equivalent; zero claim-language findings. |
+| checkpoint generator with `--checkpoint-every 5` | linked vector/tensor worktree | PASS | `160/222 = 72.07%`; dependency-weighted `79.54%`; critical path `69/77 = 89.61%`; progress advanced and no replan is required. |
+| compileall, `pip check`, `git diff --check` | linked vector/tensor worktree | PASS | No import, installed-environment, or whitespace defect. |
+
+Statistical disposition: every exceedance value is bound to one declared
+sampling law and conditioning source. An optimization objective is not a
+sampling distribution; an optimizer point is not a draw. MIO emits only
+finite-null/empirical diagnostics, while HTT posterior output additionally
+requires an explicit posterior law and passed calibration.
+
+Claim disposition: scalar/tensor reductions, orbit signatures, support
+utilization, occupancy, and conditional exceedance remain methodology or
+diagnostic surfaces. They do not establish orbit completeness, transfer
+validity, geometry, truth, evidence, or Bianchi family identification.
+
+Independent acceptance authority: PR-264 is authorized only by its fresh R2
+PASS. PR-265 remains conditional until the exact final closeout candidate
+passes and closes at
+`.agent-harness/runs/pr265-final-review-20260730-r1/RUN_SUMMARY.json`.
