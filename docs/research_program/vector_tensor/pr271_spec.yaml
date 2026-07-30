@@ -1,0 +1,195 @@
+schema: htt.pr271.pillar_s_core.spec.v1
+pr_id: PR-271
+title: Pillar S exact and core statistical foundations
+owner: HTT
+contributors: [COMMON, OBSSTAT]
+dependencies: [PR-268]
+capability: tensor_reduction_statistical_foundations
+scope: pre-solver exact and explicitly bounded statistical-method records
+claim_ceiling: diagnostic_only
+roadmap_level: C2
+scientific_status_effect: registered statistical-method proof status only
+
+frozen_inputs:
+  theorem_signatures_v3:
+    path: docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml
+    sha256: d14b24fda9556545abaf337310471af971c68f01438d32df13349f8cd4308f8b
+  program_intake:
+    path: docs/research_program/vector_tensor/PROGRAM_INTAKE_REGISTRY_V1.yaml
+    sha256: b6964771c50c483e7697b087b9f058a3fd7d20ec893475a056608b852fdeb677
+  vector_tensor_blueprint:
+    path: docs/research_program/vector_tensor/vector_tensor_mes_upgrade_blueprint.md
+    sha256: 518d4763baafb1cfd57c0674b354f110e86748849cd8cb0a9e4bc1b6eb2f32fc
+  tensor_upgrade_source:
+    path: docs/research_program/vector_tensor/STAT_FOUNDATIONS_TENSOR_UPGRADE_20260730.md
+    sha256: 2b6c091c2d9da0d342c7c7765bac4e9d845fe513ef93eb3b61d7b771aa830fd2
+  scalar_foundations:
+    path: htt/src/common/statistical_foundations.py
+    sha256: 8d3706754e41b1b456c12cb0e8b3b446c33ae7f5a78b5902b5e692ce354149aa
+  conditional_exceedance:
+    path: htt/src/common/conditional_exceedance.py
+    sha256: a6e912ec1b6ff98c11ad5c6ef513073b9fbb67b725c36a92697bc0d4d120b300
+  depth_path:
+    path: htt/src/common/depth_path.py
+    sha256: 41ffe054645c00a36158688b55a0aab390919d3759283b9d5e2f33d69ec8f247
+  tensor_departure_statistics:
+    path: htt/src/common/tensor_departure_statistics.py
+    sha256: 8ce951ab652d5dac5896c66c63a8740a001031470e04ea9f28e149795e0a826b
+
+selection:
+  vt_exact_core:
+    exact_ids: [VT-S1, VT-S2, VT-S4, VT-S7, VT-S8]
+    deferred_to_pr272:
+      [VT-S3, VT-S5, VT-S6, VT-S9, VT-S10, VT-S11, VT-S12, VT-S13, VT-S14]
+  tf_statistical_core:
+    exact_ids: [TF-09-PARITY-SIGN-EXACTNESS]
+    bounded_ids: [TF-11-MASK-PATH-MARTINGALE]
+    required_boundary: >-
+      TF-11 is only a finite registered nested-path conditional-expectation
+      identity. The supplied fast oracle instability remains visible and no
+      general martingale convergence or coverage claim is authorized.
+  legacy_pillar_s:
+    inventory_count: 34
+    already_typed_source_ids:
+      [SIG-P18, SIG-T1p, SIG-DL1, SIG-L-T2-EXIST, SIG-T2G]
+    typed_source_disposition: REFERENCE_RESOLVED_WITH_SCALAR_REDUCTION
+    untyped_source_disposition: INCONCLUSIVE_MISSING_SIGNATURE
+    required_rule: >-
+      Every one of the 34 legacy Pillar-S rows occurs exactly once. A source
+      CHECKED label or historical seal is not a PR-271 proof verdict.
+
+statement_identity_policy:
+  no_silent_weakening: >-
+    Every added finite-support, covariance-rank, nesting, or law assumption is
+    explicit. A failed exact statement remains FAIL or INCONCLUSIVE.
+  evidence_grade: >-
+    EXACT_ANALYTIC, FINITE_REGISTERED_EXACT, ASYMPTOTIC_ANALYTIC,
+    SIMULATION_DIAGNOSTIC, and REFERENCE_ONLY are distinct. Simulation cannot
+    promote an exact proposition.
+  ownership: >-
+    HTT owns model-dependent inference. OBSSTAT supplies observable features.
+    MIO may consume only diagnostic reductions; model-dependent inference
+    remains under HTT ownership.
+  proof_effect: >-
+    PR-268 source status and NOT_ADJUDICATED fields remain immutable
+    provenance. Only the PR-271 successor registry carries PR-271 verdicts.
+
+typed_statements:
+  VT-S1:
+    relation_to_source: TYPED_ELABORATION_WITH_EXPLICIT_PREMISES
+    estimand: information retained by a deterministic registered scalarization
+    sampling_law: finite dominated pair of probability laws on one profile space
+    covariance_assumptions: none
+    finite_or_asymptotic_status: EXACT_FINITE
+    assumptions:
+      - scalarization is a deterministic measurable function of the full profile
+      - both laws use the same finite support
+      - zero-probability terms use the standard extended KL convention
+    statement: >-
+      Total variation and Kullback-Leibler divergence after scalarization do
+      not exceed their full-profile values. A scalarization is sufficient only
+      for a separately registered decision that is constant on every
+      scalarization fibre.
+  VT-S2:
+    relation_to_source: TYPED_ELABORATION_WITH_EXPLICIT_PREMISES
+    estimand: acceptance-body gauge Q
+    sampling_law: deterministic statistic conditional on a declared body
+    covariance_assumptions: positive-definite covariance for ellipsoid bodies
+    finite_or_asymptotic_status: EXACT_FINITE
+    assumptions:
+      - vector thresholds are finite and strictly positive
+      - covariance ellipsoids are symmetric positive definite
+      - max-statistic and vector-threshold bodies retain coordinate identity
+    statement: >-
+      Coordinate threshold, weighted max, and covariance ellipsoid acceptance
+      rules are evaluations of one typed gauge contract; rank-deficient or
+      mismatched bodies refuse rather than pseudoinvert silently.
+  VT-S4:
+    relation_to_source: EXACT_TYPED_LAW_CONSEQUENCE
+    estimand: conditional survival profile Pi(t)
+    sampling_law: sealed empirical, matched-null, or explicit posterior draws
+    covariance_assumptions: declared by the input sampling-law artifact
+    finite_or_asymptotic_status: EXACT_FINITE_EMPIRICAL
+    assumptions:
+      - the input is a probability-eligible SamplingLawSpec with sealed draws
+      - thresholds are strictly increasing
+    statement: >-
+      Pi(t)=P[X>t] is nonincreasing on registered thresholds. Optimizer points
+      and profile objectives are not probability laws.
+  VT-S7:
+    relation_to_source: EXACT_SAMPLEWISE_PUSHFORWARD
+    estimand: distribution of a registered sample-wise functional F(X)
+    sampling_law: sealed source draws with one deterministic functional
+    covariance_assumptions: none beyond the source-law contract
+    finite_or_asymptotic_status: EXACT_FINITE_EMPIRICAL
+    assumptions:
+      - the same registered functional is applied independently to every draw
+      - missing or ineligible samples remain typed rather than imputed
+    statement: >-
+      The pushforward empirical law consists of sample-wise F values and is not
+      replaceable by F of component means or by a ratio of means.
+  VT-S8:
+    relation_to_source: EXACT_COVARIANCE_ALGEBRA
+    estimand: paired depth contrast X_a-X_b
+    sampling_law: joint finite-second-moment law for a paired feature vector
+    covariance_assumptions: all four covariance blocks share one feature basis
+    finite_or_asymptotic_status: EXACT_FINITE_SECOND_MOMENT
+    assumptions:
+      - paired depths refer to the same observational unit
+      - covariance blocks are finite and dimension-compatible
+    statement: >-
+      Cov(X_a-X_b)=C_aa+C_bb-C_ab-C_ba. Omitting cross-covariance changes the
+      reported covariance from C_actual to
+      C_omitted=C_aa+C_bb, so
+      C_omitted-C_actual=C_ab+C_ba (equivalently
+      C_actual-C_omitted=-(C_ab+C_ba)). It is never a paired calculation.
+  TF-09-PARITY-SIGN-EXACTNESS:
+    relation_to_source: EXACT_REGISTERED_ORACLE_STATEMENT
+    estimand: parity-odd sign diagnostic
+    sampling_law: sign-symmetric null paired by orientation reversal
+    covariance_assumptions: none
+    finite_or_asymptotic_status: EXACT_FINITE
+    assumptions:
+      - the statistic is parity odd and zero ties are retained
+      - each nonzero registered pair has a conditionally fair sign
+      - for a pooled test, the conditional sign vector is uniform on all
+        sign flips, equivalently the registered signs are conditionally
+        independent Bernoulli one-half
+    statement: >-
+      Conditional on the number of nonzero parity pairs, positive and negative
+      signs follow the registered fair-sign law; a binomial sign test is exact
+      only under the uniform conditional sign-vector premise. Dependent nested
+      rungs or globally sign-symmetric but dependent pairs are not pooled.
+  TF-11-MASK-PATH-MARTINGALE:
+    relation_to_source: FINITE_REGISTERED_PATH_ONLY
+    estimand: conditional feature expectation along a nested mask filtration
+    sampling_law: one finite integrable law with exact conditional cells
+    covariance_assumptions: finite second moments only where covariance is used
+    finite_or_asymptotic_status: EXACT_FINITE_REGISTERED_PATH
+    assumptions:
+      - one common finite atomic probability space and one common target random
+        variable are registered for every rung
+      - each mask rung is an explicit positive-mass partition and every finer
+        partition refines the preceding coarser partition
+      - the registered common target is integrable
+      - every conditional cell has positive mass
+    statement: >-
+      Exact conditional expectations obey the finite tower identity on the
+      registered nested path. No general convergence, optional-stopping,
+      support-nesting-without-partitions, different-target, nonnested-mask, or
+      fast-oracle stability claim follows.
+
+forbidden:
+  - simulation-only evidence promoted to exact
+  - optimizer output relabelled as a sample or posterior
+  - independent-depth covariance relabelled as paired covariance
+  - model-dependent inference outside HTT ownership
+  - native solver or morphology-atlas validation
+  - geometry detection or Bianchi family identification
+
+kill_conditions:
+  - an exact record requires simulation-only promotion
+  - any of the 34 legacy Pillar-S rows is missing or duplicated
+  - a source status is rewritten as a PR-271 verdict
+  - TF-11 fast-oracle instability is hidden or promoted
+  - a covariance or sampling-law assumption is inferred rather than declared
