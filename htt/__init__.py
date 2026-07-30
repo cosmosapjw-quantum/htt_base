@@ -15,12 +15,14 @@ from importlib import util as _importlib_util
 from pathlib import Path
 
 _ROOT = Path(__file__).resolve().parent
-_NESTED_HTT = _ROOT / "htt" / "htt"
+_HTT_WRAPPER = _ROOT / "htt"
+_NESTED_HTT = _HTT_WRAPPER / "htt"
 
-if _NESTED_HTT.is_dir():
-    _nested_str = str(_NESTED_HTT)
-    if _nested_str not in __path__:
-        __path__.append(_nested_str)
+for _package_root in (_HTT_WRAPPER, _NESTED_HTT):
+    if _package_root.is_dir():
+        _package_root_str = str(_package_root)
+        if _package_root_str not in __path__:
+            __path__.append(_package_root_str)
 
 __version__ = "8.3.0"
 _TOP_LEVEL_ALIASES = (
