@@ -76,6 +76,12 @@ class AcceptanceBodyKind(_StringEnum):
     ONE_DIMENSIONAL_INTERVAL = "ONE_DIMENSIONAL_INTERVAL"
 
 
+class AcceptanceBoundaryRelation(_StringEnum):
+    LT = "LT"
+    EQ = "EQ"
+    GT = "GT"
+
+
 class PairingStatus(_StringEnum):
     PAIRED_JOINT_LAW = "PAIRED_JOINT_LAW"
     INDEPENDENT_MARGINALS_ONLY = "INDEPENDENT_MARGINALS_ONLY"
@@ -99,7 +105,7 @@ REGISTRY_PATH = Path(
     "PILLAR_S_CORE_PROOFS_V1.yaml"
 )
 EXPECTED_REGISTRY_SHA256 = (
-    "b95cc30cbf66a22f66908c41e8f4ecd803265796711574863d048c832562df6a"
+    "48262fce614cdcc3f78e43e85cc86e5b27d0e829e86dec5025512bf90441c9a6"
 )
 EXPECTED_LEGACY_REFERENCE_IDS = frozenset(
     {"SIG-P18", "SIG-T1p", "SIG-DL1", "SIG-L-T2-EXIST", "SIG-T2G"}
@@ -347,6 +353,22 @@ def _sqrt_fraction_to_float(value: Fraction, name: str) -> float:
         ).sqrt()
     try:
         result = float(root)
+    except (TypeError, ValueError, OverflowError) as exc:
+        raise VectorTensorStatisticalFoundationError(
+            f"{name} must remain finite and representable"
+        ) from exc
+    if not math.isfinite(result) or result == 0.0:
+        raise VectorTensorStatisticalFoundationError(
+            f"{name} must remain finite and representable"
+        )
+    return result
+
+
+def _fraction_to_float(value: Fraction, name: str) -> float:
+    if value == 0:
+        return 0.0
+    try:
+        result = float(value)
     except (TypeError, ValueError, OverflowError) as exc:
         raise VectorTensorStatisticalFoundationError(
             f"{name} must remain finite and representable"
@@ -662,11 +684,58 @@ def load_pillar_s_core_registry(
     )
 
 
-def _probability_vector(values: Sequence[object], name: str) -> np.ndarray:
-    result = _vector(values, name)
-    if np.any(result < 0.0) or not math.isclose(
-        float(np.sum(result)), 1.0, rel_tol=0.0, abs_tol=1e-12
-    ):
+def _probability_mass(value: object, name: str) -> Fraction:
+    if isinstance(value, (bool, np.bool_)):
+        raise VectorTensorStatisticalFoundationError(
+            f"{name} must contain finite real probability masses"
+        )
+    if isinstance(value, Decimal):
+        if not value.is_finite():
+            raise VectorTensorStatisticalFoundationError(
+                f"{name} must contain finite real probability masses"
+            )
+        mass = Fraction(value)
+    elif isinstance(value, Rational):
+        mass = Fraction(value.numerator, value.denominator)
+    elif isinstance(value, Real):
+        try:
+            encoded = float(value)
+        except (TypeError, ValueError, OverflowError) as exc:
+            raise VectorTensorStatisticalFoundationError(
+                f"{name} must contain finite real probability masses"
+            ) from exc
+        if not math.isfinite(encoded):
+            raise VectorTensorStatisticalFoundationError(
+                f"{name} must contain finite real probability masses"
+            )
+        # A binary float enters this contract through its shortest
+        # round-trip decimal spelling.  This makes ordinary declared decimal
+        # laws such as (0.4, 0.1, 0.2, 0.3) exact while still refusing a
+        # tolerance-only mass such as 1.0 + 5e-13.
+        mass = Fraction(str(encoded))
+    else:
+        raise VectorTensorStatisticalFoundationError(
+            f"{name} must contain finite real probability masses"
+        )
+    if mass < 0:
+        raise VectorTensorStatisticalFoundationError(
+            f"{name} must contain nonnegative probability masses"
+        )
+    return mass
+
+
+def _probability_vector(
+    values: Sequence[object],
+    name: str,
+) -> tuple[Fraction, ...]:
+    if isinstance(values, (str, bytes)):
+        raise VectorTensorStatisticalFoundationError(
+            f"{name} must be a probability vector summing to one"
+        )
+    result = tuple(
+        _probability_mass(value, name) for value in values
+    )
+    if not result or sum(result, Fraction(0, 1)) != Fraction(1, 1):
         raise VectorTensorStatisticalFoundationError(
             f"{name} must be a probability vector summing to one"
         )
@@ -674,11 +743,11 @@ def _probability_vector(values: Sequence[object], name: str) -> np.ndarray:
 
 
 def _aggregate(
-    probabilities: np.ndarray,
+    probabilities: Sequence[Fraction],
     labels: Sequence[Hashable],
-) -> tuple[tuple[Hashable, ...], np.ndarray]:
+) -> tuple[tuple[Hashable, ...], tuple[Fraction, ...]]:
     order: list[Hashable] = []
-    totals: dict[Hashable, float] = {}
+    totals: dict[Hashable, Fraction] = {}
     for probability, label in zip(probabilities, labels, strict=True):
         try:
             hash(label)
@@ -688,9 +757,9 @@ def _aggregate(
             ) from exc
         if label not in totals:
             order.append(label)
-            totals[label] = 0.0
-        totals[label] += float(probability)
-    return tuple(order), np.asarray(tuple(totals[label] for label in order))
+            totals[label] = Fraction(0, 1)
+        totals[label] += probability
+    return tuple(order), tuple(totals[label] for label in order)
 
 
 def _require_hashable(value: object, name: str) -> Hashable:
@@ -703,19 +772,50 @@ def _require_hashable(value: object, name: str) -> Hashable:
     return value
 
 
-def _total_variation(left: np.ndarray, right: np.ndarray) -> float:
-    return 0.5 * float(np.sum(np.abs(left - right)))
+def _total_variation(
+    left: Sequence[Fraction],
+    right: Sequence[Fraction],
+) -> Fraction:
+    return sum(
+        (
+            abs(p_value - q_value)
+            for p_value, q_value in zip(left, right, strict=True)
+        ),
+        Fraction(0, 1),
+    ) / 2
 
 
-def _kl(left: np.ndarray, right: np.ndarray) -> float:
-    total = 0.0
-    for p_value, q_value in zip(left, right, strict=True):
-        if p_value == 0.0:
-            continue
-        if q_value == 0.0:
-            return math.inf
-        total += float(p_value) * math.log(float(p_value) / float(q_value))
-    return total
+def _kl(
+    left: Sequence[Fraction],
+    right: Sequence[Fraction],
+) -> float:
+    if any(
+        p_value > 0 and q_value == 0
+        for p_value, q_value in zip(left, right, strict=True)
+    ):
+        return math.inf
+    with localcontext() as context:
+        context.prec = 120
+        total = Decimal(0)
+        for p_value, q_value in zip(left, right, strict=True):
+            if p_value == 0:
+                continue
+            p_decimal = (
+                Decimal(p_value.numerator) / Decimal(p_value.denominator)
+            )
+            q_decimal = (
+                Decimal(q_value.numerator) / Decimal(q_value.denominator)
+            )
+            total += p_decimal * (p_decimal / q_decimal).ln()
+    # Exact normalization makes KL nonnegative.  Decimal logarithms can leave
+    # a negative final-place residue after cancellation; it has no semantic
+    # standing and must never be exposed as a divergence.
+    if total < 0:
+        total = Decimal(0)
+    result = float(total)
+    if not math.isfinite(result):
+        return math.inf
+    return result
 
 
 @dataclass(frozen=True)
@@ -769,8 +869,14 @@ def certify_deterministic_scalarization(
     q_scalar_order, q_scalar = _aggregate(q_values, scalar_labels)
     if scalar_order != q_scalar_order:
         raise AssertionError("shared labels must produce shared order")
-    profile_tv = _total_variation(p_profile, q_profile)
-    scalar_tv = _total_variation(p_scalar, q_scalar)
+    profile_tv_exact = _total_variation(p_profile, q_profile)
+    scalar_tv_exact = _total_variation(p_scalar, q_scalar)
+    if scalar_tv_exact > profile_tv_exact:
+        raise VectorTensorStatisticalFoundationError(
+            "deterministic data-processing inequality failed exactly"
+        )
+    profile_tv = float(profile_tv_exact)
+    scalar_tv = float(scalar_tv_exact)
     profile_kl = _kl(p_profile, q_profile)
     scalar_kl = _kl(p_scalar, q_scalar)
     tolerance = 128.0 * np.finfo(float).eps
@@ -890,6 +996,7 @@ class AcceptanceBodySpec:
 class AcceptanceGaugeResult:
     body_id: str
     q_value: float
+    exact_acceptance_relation: AcceptanceBoundaryRelation
     accepted: bool
     active_set: tuple[str, ...]
     point: tuple[float, ...]
@@ -922,9 +1029,29 @@ def evaluate_acceptance_gauge(
         q_value = _sqrt_fraction_to_float(
             quadratic, "ellipsoid gauge"
         )
+        exact_gauge_relation = (
+            AcceptanceBoundaryRelation.LT
+            if quadratic < 1
+            else AcceptanceBoundaryRelation.EQ
+            if quadratic == 1
+            else AcceptanceBoundaryRelation.GT
+        )
     else:
         radii = np.asarray(spec.radii, dtype=float)[np.asarray(active_indices)]
-        q_value = float(np.max(np.abs(active_values) / radii))
+        exact_ratios = tuple(
+            abs(Fraction.from_float(float(value)))
+            / Fraction.from_float(float(radius))
+            for value, radius in zip(active_values, radii, strict=True)
+        )
+        exact_gauge = max(exact_ratios)
+        q_value = _fraction_to_float(exact_gauge, "max gauge")
+        exact_gauge_relation = (
+            AcceptanceBoundaryRelation.LT
+            if exact_gauge < 1
+            else AcceptanceBoundaryRelation.EQ
+            if exact_gauge == 1
+            else AcceptanceBoundaryRelation.GT
+        )
     if not math.isfinite(q_value):
         raise VectorTensorStatisticalFoundationError(
             "acceptance gauge must be finite"
@@ -932,7 +1059,8 @@ def evaluate_acceptance_gauge(
     return AcceptanceGaugeResult(
         body_id=spec.body_id,
         q_value=q_value,
-        accepted=q_value <= 1.0,
+        exact_acceptance_relation=exact_gauge_relation,
+        accepted=exact_gauge_relation is not AcceptanceBoundaryRelation.GT,
         active_set=spec.active_set,
         point=tuple(float(value) for value in values),
     )
@@ -1365,6 +1493,7 @@ def certify_finite_partition_tower(
 
 __all__ = [
     "ALLOWED_USE",
+    "AcceptanceBoundaryRelation",
     "AcceptanceBodyKind",
     "AcceptanceBodySpec",
     "AcceptanceGaugeResult",

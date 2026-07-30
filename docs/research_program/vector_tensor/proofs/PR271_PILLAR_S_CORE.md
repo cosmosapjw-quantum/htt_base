@@ -31,6 +31,15 @@ divergences. It is sufficient only for a separately registered decision that
 is constant on every scalar fibre; this is not a claim that scalar \(Q\) is a
 sufficient statistic for the full state.
 
+Probability-law admission is exact under the declared input encoding.
+`Rational` and `Decimal` masses retain their exact values. A binary float is
+decoded through its shortest round-trip decimal spelling, so the ordinary
+declared law `(0.4, 0.1, 0.2, 0.3)` has unit mass while
+`(1.0 + 5e-13,)` does not. No normalization tolerance can turn a non-law into
+a probability law. KL is evaluated from those exact masses at high precision;
+a negative last-place logarithm residue is reported as zero, never as a
+negative divergence.
+
 ## VT-S2
 
 For an axis-aligned acceptance body
@@ -47,7 +56,9 @@ p_{\mathcal B}(x)=\sqrt{x^\mathsf TC^{-1}x}.
 \]
 The implementation solves the linear system and refuses rank deficiency; it
 does not silently introduce a pseudoinverse or erase the active coordinate
-set.
+set. Acceptance is decided from the exact encoded rational relation to the
+unit boundary (`LT`, `EQ`, or `GT`). The floating `q_value` is a display value
+only: even if a square root rounds to `1.0`, an exact `GT` result is rejected.
 
 ## VT-S4
 

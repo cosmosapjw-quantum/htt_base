@@ -24,6 +24,7 @@ from common.conditional_exceedance import (
 )
 from common.vector_tensor_statistical_foundations import (
     CLAIM_CEILING,
+    AcceptanceBoundaryRelation,
     AcceptanceBodyKind,
     AcceptanceBodySpec,
     EvidenceGrade,
@@ -297,6 +298,16 @@ def test_vt_s1_refuses_nonfunctional_or_malformed_laws() -> None:
         )
     with pytest.raises(
         VectorTensorStatisticalFoundationError,
+        match="summing to one",
+    ):
+        certify_deterministic_scalarization(
+            profile_labels=("only",),
+            scalar_labels=("only",),
+            law_p=(1.0,),
+            law_q=(1.0 + 5.0e-13,),
+        )
+    with pytest.raises(
+        VectorTensorStatisticalFoundationError,
         match="profile label must be hashable",
     ):
         certify_deterministic_scalarization(
@@ -335,6 +346,11 @@ def test_vt_s2_unifies_scalar_box_max_and_ellipsoid_gauges() -> None:
     assert evaluate_acceptance_gauge(
         scalar, (-0.17,)
     ).q_value == pytest.approx(1.0)
+    scalar_report = evaluate_acceptance_gauge(scalar, (-0.17,))
+    assert scalar_report.exact_acceptance_relation is (
+        AcceptanceBoundaryRelation.EQ
+    )
+    assert scalar_report.accepted
 
     covariance = ((2.0, 0.5), (0.5, 1.0))
     ellipsoid = AcceptanceBodySpec(
@@ -438,6 +454,53 @@ def test_vt_s2_exact_spd_gate_accepts_cholesky_counterexample() -> None:
     report = evaluate_acceptance_gauge(body, (1.0, -1.0, 0.0))
     assert math.isfinite(report.q_value)
     assert report.q_value > 0.0
+
+
+def test_vt_s2_acceptance_uses_exact_relation_not_rounded_display() -> None:
+    covariance = math.nextafter(1.0, 0.0)
+    ellipsoid = AcceptanceBodySpec(
+        body_id="PR271-ROUNDED-ELLIPSOID",
+        kind=AcceptanceBodyKind.COVARIANCE_ELLIPSOID,
+        coordinate_labels=("x",),
+        covariance=((covariance,),),
+    )
+    ellipsoid_report = evaluate_acceptance_gauge(ellipsoid, (1.0,))
+    assert ellipsoid_report.q_value == 1.0
+    assert ellipsoid_report.exact_acceptance_relation is (
+        AcceptanceBoundaryRelation.GT
+    )
+    assert not ellipsoid_report.accepted
+
+    box = AcceptanceBodySpec(
+        body_id="PR271-EXACT-BOX-BOUNDARY",
+        kind=AcceptanceBodyKind.COORDINATE_THRESHOLDS,
+        coordinate_labels=("x",),
+        radii=(covariance,),
+    )
+    box_report = evaluate_acceptance_gauge(box, (1.0,))
+    assert box_report.exact_acceptance_relation is (
+        AcceptanceBoundaryRelation.GT
+    )
+    assert not box_report.accepted
+
+
+def test_vt_s1_exact_probability_encoding_keeps_kl_nonnegative() -> None:
+    denominator = 10**40
+    report = certify_deterministic_scalarization(
+        profile_labels=("a", "b"),
+        scalar_labels=("same", "same"),
+        law_p=(
+            Fraction(1, denominator),
+            Fraction(denominator - 1, denominator),
+        ),
+        law_q=(
+            Fraction(2, denominator),
+            Fraction(denominator - 2, denominator),
+        ),
+    )
+    assert report.profile_kl >= 0.0
+    assert report.scalar_kl == 0.0
+    assert report.scalar_kl <= report.profile_kl
 
 
 def _null_profile():

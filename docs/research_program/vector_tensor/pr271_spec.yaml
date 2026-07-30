@@ -84,6 +84,10 @@ typed_statements:
     assumptions:
       - scalarization is a deterministic measurable function of the full profile
       - both laws use the same finite support
+      - >-
+        probability masses are nonnegative and sum exactly to one; Rational and
+        Decimal inputs retain their exact values, while binary floats are
+        decoded through their shortest round-trip decimal spellings
       - zero-probability terms use the standard extended KL convention
     statement: >-
       Total variation and Kullback-Leibler divergence after scalarization do
@@ -100,6 +104,9 @@ typed_statements:
       - vector thresholds are finite and strictly positive
       - covariance ellipsoids are symmetric positive definite
       - max-statistic and vector-threshold bodies retain coordinate identity
+      - >-
+        acceptance is decided from the exact encoded rational gauge relation
+        LT, EQ, or GT; the rounded q_value is display-only
     statement: >-
       Coordinate threshold, weighted max, and covariance ellipsoid acceptance
       rules are evaluations of one typed gauge contract; rank-deficient or

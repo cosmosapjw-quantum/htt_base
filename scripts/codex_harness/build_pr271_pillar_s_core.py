@@ -30,7 +30,7 @@ MODULE = Path("htt/src/common/vector_tensor_statistical_foundations.py")
 SCHEMA = "htt.pillar_s_core_proofs.v1"
 SOURCE_HASHES = {
     SPEC:
-        "0ccd2184f08c27d59c546946ba47eaab5013013affeaba2dc2078cb16d9ede0b",
+        "dc9d5d5b3440964d9883182ee4a8f2757921aac978a5f23481b44b17b550e6ce",
     V3:
         "d14b24fda9556545abaf337310471af971c68f01438d32df13349f8cd4308f8b",
     INTAKE:
@@ -85,12 +85,17 @@ COUNTEREXAMPLES = {
     "VT-S1": [
         "scalar label is not a deterministic function of the profile",
         "laws do not share one support",
+        "a tolerance-only total mass is admitted as a probability law",
         "sufficiency is claimed for an unregistered decision",
     ],
     "VT-S2": [
         "rank-deficient covariance is silently pseudoinverted",
         "coordinate identity or active set is erased",
         "nonpositive threshold is admitted",
+        (
+            "rounded display q rather than the exact gauge relation "
+            "decides acceptance"
+        ),
     ],
     "VT-S4": [
         "optimizer output or profile objective is treated as draws",
