@@ -1,5 +1,5 @@
 {
-  "generated_on": "2026-06-11",
+  "generated_on": "2026-07-30",
   "scope": "htt_base_pre_native_lowell_solver_codex_dag_v2",
   "policy": {
     "topological_order": [
@@ -182,6 +182,8 @@
       "PR-256",
       "PR-257",
       "PR-258",
+      "PR-259",
+      "PR-260",
       "PR-155",
       "PR-156",
       "PR-157",
@@ -375,6 +377,14 @@
     {
       "wave": 27,
       "title": "Advocate hypothesis-only and needs-native registry"
+    },
+    {
+      "wave": 54,
+      "title": "Vector/tensor programme bootstrap and chronology repair"
+    },
+    {
+      "wave": 55,
+      "title": "Vector/tensor proof-program formal intake"
     }
   ],
   "prs": [
@@ -12924,6 +12934,173 @@
       "solver_gate_required": false,
       "change_set_id": "CS-PR258-OPEN-SET-INTEGRATION",
       "publication_group_id": "PG-PR258-OPEN-SET-INTEGRATION"
+    },
+    {
+      "id": "PR-259",
+      "wave": 54,
+      "title": "Frozen-lineage successor chronology repair and programme bootstrap",
+      "owner": "COMMON",
+      "capability": "chronology_preserving_frozen_successor_resolution",
+      "inputs": [
+        "PR-124 historical frozen-module hash pins",
+        "PR-252 hash-bound consumer-migration authority",
+        "PR-258 completed merge and canonical status"
+      ],
+      "outputs": [
+        "One fail-closed historical-to-current exclusion-transition resolver",
+        "Canonical bootstrap cards for PR-259 and PR-260 only",
+        "Synchronized canonical and compatibility DAG/status records"
+      ],
+      "contributors": [
+        "HARNESS"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-258"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-258",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Preserve every PR-124 historical hash while accepting exactly one PR-252-authorized historical-to-current exclusion transition.",
+        "Bootstrap only PR-259 and PR-260 before the full vector/tensor programme intake."
+      ],
+      "files": [
+        "htt/src/common/mes_successor_registry.py",
+        "tests/contracts/test_pr124_cas_lineage.py",
+        "tests/contracts/test_mes_successor_registry.py",
+        "docs/codex_handoff",
+        "machine_readable",
+        "docs/PR_DELTAS/pr-259.md"
+      ],
+      "tests": [
+        "PYTHONPATH=htt/src:htt venv/bin/python -B -m pytest -p no:cacheprovider -q tests/contracts/test_pr124_cas_lineage.py tests/contracts/test_mes_successor_registry.py",
+        "venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml",
+        "venv/bin/python -B scripts/codex_harness/sync_pr_dag_mirrors.py --check"
+      ],
+      "dod": [
+        "Unknown, duplicate, wrong-prior and wrong-current transitions fail closed while the exact PR-252 successor passes.",
+        "Historical PR-124 specification and frozen module bytes remain unchanged."
+      ],
+      "kill": "Any historical receipt or frozen module is edited, or more than one transition can authorize the same path.",
+      "cost": "low",
+      "level": "L0",
+      "scope": "pre-solver",
+      "risk": "R2-HARNESS",
+      "claim_tier_ceiling": "diagnostic_only",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C1"
+      },
+      "claim_impact": "Chronology and scheduling mechanics only; scientific status stays OPEN.",
+      "forbidden": [
+        "No historical receipt rewrite, scientific status promotion, native-solver claim, or family-identification claim."
+      ],
+      "anti_drift": [
+        "A later authority may supersede a frozen pin only through one hash-bound prior/current edge with a non-empty reason."
+      ],
+      "roadmap_anchor": "docs/research_program/stat_foundations/pr252_mes_consumer_migration.yaml",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "diagnostic_only",
+      "execution_authorization": "EXPLICIT_USER_AUTHORIZED",
+      "public_use": false,
+      "spec_first_required": false,
+      "scientific_status_on_intake": "OPEN",
+      "track": "FOUNDATION",
+      "solver_gate_required": false,
+      "change_set_id": "CS-PR259-FROZEN-LINEAGE",
+      "publication_group_id": "PG-PR259-FROZEN-LINEAGE"
+    },
+    {
+      "id": "PR-260",
+      "wave": 55,
+      "title": "Vector/tensor MES and two-pillar proof-program formal intake",
+      "owner": "COMMON",
+      "capability": "vector_tensor_program_and_two_pillar_registry_intake",
+      "inputs": [
+        "Supplied vector/tensor MES programme schemas and theorem identifiers",
+        "Supplied two-pillar registry with exact Pillar T and Pillar S membership",
+        "PR-259 chronology-safe canonical bootstrap"
+      ],
+      "outputs": [
+        "Canonical PR-261 through PR-275 extension DAG",
+        "Machine-readable disjoint 65-entry Pillar T and 58-entry Pillar S registry",
+        "Synchronized canonical and compatibility DAG/status records"
+      ],
+      "contributors": [
+        "HTT",
+        "MIO",
+        "OBSSTAT"
+      ],
+      "adjudicator_role": "independent_non_author_reviewer",
+      "implementation_scopes": [
+        "common"
+      ],
+      "depends": [
+        "PR-259"
+      ],
+      "dependency_contracts": [
+        {
+          "upstream_id": "PR-259",
+          "mode": "requires_success"
+        }
+      ],
+      "targets": [
+        "Register PR-261 through PR-275 as one validated extension DAG without silently renaming supplied schema or theorem identifiers.",
+        "Register an exact disjoint 65-entry Pillar T and 58-entry Pillar S membership with U, TC and ST proof classes."
+      ],
+      "files": [
+        "docs/research_program/HTT_VECTOR_TENSOR_MES_TWO_PILLAR_UPGRADE_PLAN_20260730.md",
+        "docs/codex_handoff",
+        "machine_readable",
+        "tests/contracts/test_vector_tensor_program_dag.py",
+        "docs/PR_DELTAS/pr-260.md"
+      ],
+      "tests": [
+        "to-be-created:PYTHONPATH=htt/src:htt venv/bin/python -B -m pytest -p no:cacheprovider -q tests/contracts/test_vector_tensor_program_dag.py",
+        "venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml",
+        "venv/bin/python -B scripts/codex_harness/sync_pr_dag_mirrors.py --check"
+      ],
+      "dod": [
+        "Every PR-261 through PR-275 dependency resolves and the declared topological order is acyclic.",
+        "Pillar T and Pillar S counts, identities, owners, proof classes and evidence paths are exact and disjoint."
+      ],
+      "kill": "The supplied 65/58 membership cannot be reconstructed one-to-one or any schema/theorem identifier is silently reinterpreted.",
+      "cost": "medium",
+      "level": "L0",
+      "scope": "pre-solver",
+      "risk": "R2-GOVERNANCE",
+      "claim_tier_ceiling": "diagnostic_only",
+      "claim_level": {
+        "scheme": "roadmap_rescue_v1",
+        "level": "C1"
+      },
+      "claim_impact": "Programme registration only; no theorem or scientific claim is promoted.",
+      "forbidden": [
+        "No implementation of PR-261+, proof-status promotion, native-solver claim, or family-identification claim."
+      ],
+      "anti_drift": [
+        "The proposal remains non-authoritative until this card, its exact registry partition and mirror checks pass together."
+      ],
+      "roadmap_anchor": "docs/research_program/HTT_VECTOR_TENSOR_MES_TWO_PILLAR_UPGRADE_PLAN_20260730.md",
+      "activation_state": "PENDING",
+      "execution_lane": "defensible",
+      "scientific_artifact_mode": "methodology_conditional",
+      "execution_authorization": "EXPLICIT_USER_AUTHORIZED",
+      "public_use": false,
+      "spec_first_required": true,
+      "scientific_status_on_intake": "OPEN",
+      "track": "FOUNDATION",
+      "solver_gate_required": false,
+      "change_set_id": "CS-PR260-VECTOR-TENSOR-INTAKE",
+      "publication_group_id": "PG-PR260-VECTOR-TENSOR-INTAKE"
     }
   ]
 }
