@@ -37,8 +37,11 @@ decoded through its shortest round-trip decimal spelling, so the ordinary
 declared law `(0.4, 0.1, 0.2, 0.3)` has unit mass while
 `(1.0 + 5e-13,)` does not. No normalization tolerance can turn a non-law into
 a probability law. KL is evaluated from those exact masses at high precision;
-a negative last-place logarithm residue is reported as zero, never as a
-negative divergence.
+the working precision scales with the encoded rational mass size, and the
+binary64 report must agree at two successive precisions while retaining the
+data-processing order. A negative cancellation residue is never clipped into
+an apparent certificate. Exhausted precision or an unrepresentable nonzero
+projection refuses rather than emitting a misleading divergence.
 
 ## VT-S2
 

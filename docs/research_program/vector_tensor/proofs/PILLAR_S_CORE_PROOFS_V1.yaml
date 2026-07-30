@@ -5,7 +5,7 @@ scientific_status_effect: statistical_method_status_only
 source_proof_adjudication_status: NOT_ADJUDICATED
 raw_count_publication: FORBIDDEN
 source_hashes:
-  docs/research_program/vector_tensor/pr271_spec.yaml: dc9d5d5b3440964d9883182ee4a8f2757921aac978a5f23481b44b17b550e6ce
+  docs/research_program/vector_tensor/pr271_spec.yaml: e145fdcca06078d79b65f8b47c6912983923e6fd33b24fa7caddb9b24214a871
   docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml: d14b24fda9556545abaf337310471af971c68f01438d32df13349f8cd4308f8b
   docs/research_program/vector_tensor/PROGRAM_INTAKE_REGISTRY_V1.yaml: b6964771c50c483e7697b087b9f058a3fd7d20ec893475a056608b852fdeb677
   docs/research_program/vector_tensor/vector_tensor_mes_upgrade_blueprint.md: 518d4763baafb1cfd57c0674b354f110e86748849cd8cb0a9e4bc1b6eb2f32fc
@@ -31,7 +31,7 @@ selection:
   tf_ids:
   - TF-09-PARITY-SIGN-EXACTNESS
   - TF-11-MASK-PATH-MARTINGALE
-canonical_records_sha256: 70cd02854eb82da5d70f4a175fa212d8be127ab40fddf99d7b6b5051a7b65b34
+canonical_records_sha256: 1c0763346b96805a16d836018732228645977b3d6ce51d56211ab95c0345fdeb
 records:
 - obligation_id: SIG-P1
   source_group: LEGACY_S
@@ -826,6 +826,9 @@ records:
   - both laws use the same finite support
   - probability masses are nonnegative and sum exactly to one; Rational and Decimal inputs retain their
     exact values, while binary floats are decoded through their shortest round-trip decimal spellings
+  - KL display values use mass-size-adaptive Decimal precision and must agree at two successive precisions
+    while preserving the data-processing order; an exhausted precision budget or an unrepresentable nonzero
+    binary64 projection refuses
   - zero-probability terms use the standard extended KL convention
   domains:
   - registered typed finite-dimensional method domain
@@ -842,6 +845,7 @@ records:
   - scalar label is not a deterministic function of the profile
   - laws do not share one support
   - a tolerance-only total mass is admitted as a probability law
+  - fixed-precision KL cancellation reverses data-processing order
   - sufficiency is claimed for an unregistered decision
   claim_ceiling: diagnostic_only
 - obligation_id: VT-S2

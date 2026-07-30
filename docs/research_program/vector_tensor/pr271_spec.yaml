@@ -88,6 +88,11 @@ typed_statements:
         probability masses are nonnegative and sum exactly to one; Rational and
         Decimal inputs retain their exact values, while binary floats are
         decoded through their shortest round-trip decimal spellings
+      - >-
+        KL display values use mass-size-adaptive Decimal precision and must
+        agree at two successive precisions while preserving the
+        data-processing order; an exhausted precision budget or an
+        unrepresentable nonzero binary64 projection refuses
       - zero-probability terms use the standard extended KL convention
     statement: >-
       Total variation and Kullback-Leibler divergence after scalarization do

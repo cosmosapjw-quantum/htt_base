@@ -105,7 +105,7 @@ REGISTRY_PATH = Path(
     "PILLAR_S_CORE_PROOFS_V1.yaml"
 )
 EXPECTED_REGISTRY_SHA256 = (
-    "48262fce614cdcc3f78e43e85cc86e5b27d0e829e86dec5025512bf90441c9a6"
+    "8221b6e723ab1b2a8863b63f48e4a0bd77c730fe785618815446bb2dc9112c3e"
 )
 EXPECTED_LEGACY_REFERENCE_IDS = frozenset(
     {"SIG-P18", "SIG-T1p", "SIG-DL1", "SIG-L-T2-EXIST", "SIG-T2G"}
@@ -114,6 +114,8 @@ EXPECTED_VT_IDS = frozenset({"VT-S1", "VT-S2", "VT-S4", "VT-S7", "VT-S8"})
 EXPECTED_TF_IDS = frozenset(
     {"TF-09-PARITY-SIGN-EXACTNESS", "TF-11-MASK-PATH-MARTINGALE"}
 )
+_KL_MIN_DECIMAL_PRECISION = 120
+_KL_MAX_DECIMAL_PRECISION = 16_384
 
 
 def _text(value: object, name: str) -> str:
@@ -785,17 +787,58 @@ def _total_variation(
     ) / 2
 
 
-def _kl(
+def _integer_decimal_digit_bound(value: int) -> int:
+    bits = abs(value).bit_length()
+    if bits == 0:
+        return 1
+    # 30103/100000 is a slight upper approximation to log10(2).
+    return (bits * 30_103 + 99_999) // 100_000 + 1
+
+
+def _kl_required_precision(
+    *vectors: Sequence[Fraction],
+) -> int:
+    masses = tuple(value for vector in vectors for value in vector)
+    maximum_digits = max(
+        (
+            max(
+                _integer_decimal_digit_bound(value.numerator),
+                _integer_decimal_digit_bound(value.denominator),
+            )
+            for value in masses
+        ),
+        default=1,
+    )
+    count_margin = (
+        math.ceil(math.log10(len(masses) + 1)) if masses else 0
+    )
+    required = max(
+        _KL_MIN_DECIMAL_PRECISION,
+        4 * maximum_digits + 64 + count_margin,
+    )
+    if required > _KL_MAX_DECIMAL_PRECISION:
+        raise VectorTensorStatisticalFoundationError(
+            "KL stable-projection precision budget exceeded"
+        )
+    return required
+
+
+def _kl_decimal_at_precision(
     left: Sequence[Fraction],
     right: Sequence[Fraction],
-) -> float:
+    precision: int,
+) -> Decimal | None:
+    if tuple(left) == tuple(right):
+        return Decimal(0)
     if any(
         p_value > 0 and q_value == 0
         for p_value, q_value in zip(left, right, strict=True)
     ):
-        return math.inf
+        return None
     with localcontext() as context:
-        context.prec = 120
+        context.prec = precision
+        context.Emax = 999_999_999
+        context.Emin = -999_999_999
         total = Decimal(0)
         for p_value, q_value in zip(left, right, strict=True):
             if p_value == 0:
@@ -803,19 +846,150 @@ def _kl(
             p_decimal = (
                 Decimal(p_value.numerator) / Decimal(p_value.denominator)
             )
-            q_decimal = (
-                Decimal(q_value.numerator) / Decimal(q_value.denominator)
+            ratio = p_value / q_value
+            ratio_decimal = (
+                Decimal(ratio.numerator) / Decimal(ratio.denominator)
             )
-            total += p_decimal * (p_decimal / q_decimal).ln()
-    # Exact normalization makes KL nonnegative.  Decimal logarithms can leave
-    # a negative final-place residue after cancellation; it has no semantic
-    # standing and must never be exposed as a divergence.
-    if total < 0:
-        total = Decimal(0)
-    result = float(total)
-    if not math.isfinite(result):
+            total += p_decimal * ratio_decimal.ln()
+        return +total
+
+
+def _kl_projection(
+    value: Decimal | None,
+    *,
+    exact_equality: bool,
+) -> float:
+    if value is None:
         return math.inf
+    if exact_equality:
+        if value != 0:
+            raise VectorTensorStatisticalFoundationError(
+                "equal probability laws produced nonzero KL"
+            )
+        return 0.0
+    if value <= 0:
+        raise VectorTensorStatisticalFoundationError(
+            "KL stable projection could not certify strict positivity"
+        )
+    try:
+        result = float(value)
+    except (TypeError, ValueError, OverflowError) as exc:
+        raise VectorTensorStatisticalFoundationError(
+            "KL stable projection must remain finite and representable"
+        ) from exc
+    if not math.isfinite(result) or result == 0.0:
+        raise VectorTensorStatisticalFoundationError(
+            "KL stable projection must remain finite and representable"
+        )
     return result
+
+
+def _kl_sign_is_certified(
+    value: Decimal | None,
+    *,
+    exact_equality: bool,
+) -> bool:
+    if value is None:
+        return not exact_equality
+    return value == 0 if exact_equality else value > 0
+
+
+def _stable_kl_pair(
+    *,
+    profile_left: Sequence[Fraction],
+    profile_right: Sequence[Fraction],
+    scalar_left: Sequence[Fraction],
+    scalar_right: Sequence[Fraction],
+) -> tuple[float, float, int]:
+    profile_equal = tuple(profile_left) == tuple(profile_right)
+    scalar_equal = tuple(scalar_left) == tuple(scalar_right)
+    precision_vectors: list[Sequence[Fraction]] = []
+    if not profile_equal:
+        precision_vectors.extend((profile_left, profile_right))
+    if not scalar_equal:
+        precision_vectors.extend((scalar_left, scalar_right))
+    if not precision_vectors:
+        return 0.0, 0.0, _KL_MIN_DECIMAL_PRECISION
+    precision = _kl_required_precision(*precision_vectors)
+    while True:
+        confirmation_precision = min(
+            _KL_MAX_DECIMAL_PRECISION,
+            max(precision + 64, 2 * precision),
+        )
+        if confirmation_precision == precision:
+            raise VectorTensorStatisticalFoundationError(
+                "KL stable-projection precision budget exhausted"
+            )
+        low_profile = _kl_decimal_at_precision(
+            profile_left, profile_right, precision
+        )
+        low_scalar = _kl_decimal_at_precision(
+            scalar_left, scalar_right, precision
+        )
+        high_profile = _kl_decimal_at_precision(
+            profile_left, profile_right, confirmation_precision
+        )
+        high_scalar = _kl_decimal_at_precision(
+            scalar_left, scalar_right, confirmation_precision
+        )
+        low_signs_are_certified = _kl_sign_is_certified(
+            low_profile, exact_equality=profile_equal
+        ) and _kl_sign_is_certified(
+            low_scalar, exact_equality=scalar_equal
+        )
+        high_signs_are_certified = (
+            _kl_sign_is_certified(
+                high_profile, exact_equality=profile_equal
+            )
+            and _kl_sign_is_certified(
+                high_scalar, exact_equality=scalar_equal
+            )
+        )
+        low_order_is_certified = (
+            low_profile is None
+            or (
+                low_scalar is not None
+                and low_scalar <= low_profile
+            )
+        )
+        high_order_is_certified = (
+            high_profile is None
+            or (
+                high_scalar is not None
+                and high_scalar <= high_profile
+            )
+        )
+        if not (
+            low_signs_are_certified
+            and high_signs_are_certified
+            and low_order_is_certified
+            and high_order_is_certified
+        ):
+            precision = confirmation_precision
+            continue
+        low_values = (
+            _kl_projection(
+                low_profile, exact_equality=profile_equal
+            ),
+            _kl_projection(
+                low_scalar, exact_equality=scalar_equal
+            ),
+        )
+        high_values = (
+            _kl_projection(
+                high_profile, exact_equality=profile_equal
+            ),
+            _kl_projection(
+                high_scalar, exact_equality=scalar_equal
+            ),
+        )
+        if low_values == high_values:
+            return (
+                high_values[0],
+                high_values[1],
+                confirmation_precision,
+            )
+        precision = confirmation_precision
 
 
 @dataclass(frozen=True)
@@ -824,6 +998,8 @@ class ScalarizationDominanceReport:
     scalar_total_variation: float
     profile_kl: float
     scalar_kl: float
+    kl_decimal_precision: int
+    kl_stability_verified: bool
     decision_sufficient: bool | None
     exact_statement: str = (
         "deterministic scalarization cannot increase TV or KL divergence"
@@ -877,16 +1053,12 @@ def certify_deterministic_scalarization(
         )
     profile_tv = float(profile_tv_exact)
     scalar_tv = float(scalar_tv_exact)
-    profile_kl = _kl(p_profile, q_profile)
-    scalar_kl = _kl(p_scalar, q_scalar)
-    tolerance = 128.0 * np.finfo(float).eps
-    if scalar_tv > profile_tv + tolerance or (
-        math.isfinite(profile_kl)
-        and scalar_kl > profile_kl + tolerance
-    ):
-        raise VectorTensorStatisticalFoundationError(
-            "deterministic data-processing inequality failed numerically"
-        )
+    profile_kl, scalar_kl, kl_precision = _stable_kl_pair(
+        profile_left=p_profile,
+        profile_right=q_profile,
+        scalar_left=p_scalar,
+        scalar_right=q_scalar,
+    )
     decision_sufficient: bool | None = None
     if registered_decisions is not None:
         if len(registered_decisions) != size:
@@ -911,6 +1083,8 @@ def certify_deterministic_scalarization(
         scalar_total_variation=scalar_tv,
         profile_kl=profile_kl,
         scalar_kl=scalar_kl,
+        kl_decimal_precision=kl_precision,
+        kl_stability_verified=True,
         decision_sufficient=decision_sufficient,
     )
 

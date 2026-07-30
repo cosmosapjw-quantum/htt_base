@@ -30,7 +30,7 @@ MODULE = Path("htt/src/common/vector_tensor_statistical_foundations.py")
 SCHEMA = "htt.pillar_s_core_proofs.v1"
 SOURCE_HASHES = {
     SPEC:
-        "dc9d5d5b3440964d9883182ee4a8f2757921aac978a5f23481b44b17b550e6ce",
+        "e145fdcca06078d79b65f8b47c6912983923e6fd33b24fa7caddb9b24214a871",
     V3:
         "d14b24fda9556545abaf337310471af971c68f01438d32df13349f8cd4308f8b",
     INTAKE:
@@ -86,6 +86,7 @@ COUNTEREXAMPLES = {
         "scalar label is not a deterministic function of the profile",
         "laws do not share one support",
         "a tolerance-only total mass is admitted as a probability law",
+        "fixed-precision KL cancellation reverses data-processing order",
         "sufficiency is claimed for an unregistered decision",
     ],
     "VT-S2": [

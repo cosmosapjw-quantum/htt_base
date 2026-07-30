@@ -501,6 +501,49 @@ def test_vt_s1_exact_probability_encoding_keeps_kl_nonnegative() -> None:
     assert report.profile_kl >= 0.0
     assert report.scalar_kl == 0.0
     assert report.scalar_kl <= report.profile_kl
+    assert report.kl_stability_verified
+    assert report.kl_decimal_precision >= 120
+
+
+def test_vt_s1_adaptive_kl_precision_preserves_near_equal_dpi() -> None:
+    denominator = 10**120
+    quarter = denominator // 4
+    report = certify_deterministic_scalarization(
+        profile_labels=("a", "b", "c", "d"),
+        scalar_labels=("x", "x", "y", "y"),
+        law_p=(Fraction(1, 4),) * 4,
+        law_q=(
+            Fraction(quarter + 6, denominator),
+            Fraction(quarter - 2, denominator),
+            Fraction(quarter - 3, denominator),
+            Fraction(quarter - 1, denominator),
+        ),
+    )
+    assert report.profile_kl > 0.0
+    assert report.scalar_kl > 0.0
+    assert report.scalar_kl <= report.profile_kl
+    assert report.profile_kl == pytest.approx(1.0e-238, rel=1.0e-12)
+    assert report.scalar_kl == pytest.approx(3.2e-239, rel=1.0e-12)
+    assert report.kl_decimal_precision > 400
+    assert report.kl_stability_verified
+
+
+def test_vt_s1_unrepresentable_nonzero_kl_projection_refuses() -> None:
+    denominator = 10**200
+    half = denominator // 2
+    with pytest.raises(
+        VectorTensorStatisticalFoundationError,
+        match="finite and representable",
+    ):
+        certify_deterministic_scalarization(
+            profile_labels=("a", "b"),
+            scalar_labels=("same", "same"),
+            law_p=(Fraction(1, 2), Fraction(1, 2)),
+            law_q=(
+                Fraction(half + 1, denominator),
+                Fraction(half - 1, denominator),
+            ),
+        )
 
 
 def _null_profile():
