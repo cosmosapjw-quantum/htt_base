@@ -2,6 +2,27 @@
 
 Update every five PRs with percent complete and blockers.
 
+## PR-262 conditional closeout (not a five-PR checkpoint)
+
+Date: 2026-07-30
+
+- Active DAG: 157/222 complete = 70.72%; dependency-weighted completion
+  78.45%; critical-path proxy 87.01%. Checkpoint 160 is not due.
+- PR-261's frozen review passed and closed normally. PR-262 adds one named
+  scientific-support capability: tensor-functional evaluation whose value,
+  domain, codomain, anchor authority, admissibility, and stress cannot be
+  collapsed into one scalar.
+- Validation passes 29 focused tests, 67 adjacent regressions, 6 smoke tests,
+  10161/10220 collection with 59 deselected, strict DAG/mirror gates, claim
+  scans, compileall, `pip check`, and whitespace checks.
+- Claim drift: none. The PR-254 anchor hierarchy is reused; rank/non-compact
+  and missing-component paths do not emit stress; MIO receives no inference
+  surface; no native solver/atlas, geometry, observed-data, posterior/evidence,
+  truth, or family status is promoted.
+- Completion remains conditional on the exact schema-v3 frozen-candidate
+  review. PR-263 is the remaining dependency-ready parallel node; PR-264
+  awaits both. PR-172 and background PR-151 retain their prior states.
+
 ## PR-261 conditional closeout (not a five-PR checkpoint)
 
 Date: 2026-07-30

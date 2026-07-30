@@ -1,5 +1,37 @@
 # Project State
 
+## 2026-07-30 - PR-262 tensor-functional conditional closeout
+
+This section supersedes older orchestration snapshots below.
+
+- Active DAG: 222 cards, 157 completed, 1 blocked, 35 pending, 28 dormant
+  external/native, no foreground card, and background PR-151 acquisition.
+  Count completion is 70.72%, dependency-weighted completion 78.45%, and the
+  critical-path proxy is 87.01%. Checkpoint 160 is not yet due.
+- PR-261's exact `7fd79bfc...` closeout candidate passed all 14 registered
+  review cells and its independent 23-case oracle. The run closed normally at
+  `.agent-harness/runs/pr261-final-review-20260730-r1/RUN_SUMMARY.json`.
+- PR-262 adds COMMON-owned functional specifications and typed results over
+  `JointAnisotropyState`. Value, domain, codomain, PR-254 anchor status,
+  admissibility, and stress remain separate.
+- The implementation reuses PR-254 bodies, families, gauges, and margins.
+  It reconstructs the supplied authority before evaluation, so rank collapse,
+  one-sided/non-compact support, channel drift, continuous-family optimizer
+  requirements, and missing state components fail closed.
+- MIO receives only a diagnostic bridge to the same COMMON objects. No
+  likelihood, posterior, evidence, truth, native solver/atlas, geometry, or
+  family status changed.
+- Validation passes 29 focused tests, 67 adjacent regressions, 6 smoke tests,
+  10161/10220 collection with 59 deselected, strict 222-card DAG and mirror
+  checks, scoped claim lints, compileall, `pip check`, and whitespace checks.
+- PR-262 completion is valid only if the exact final closeout commit passes
+  the registered schema-v3 review at
+  `.agent-harness/runs/pr262-final-review-20260730-r1/`. Missing, stale, or
+  non-PASS evidence invalidates the transition.
+- PR-263 is the remaining dependency-ready wave-57 node. PR-264 remains
+  blocked on both PR-262 and PR-263. PR-172 remains blocked and PR-151 remains
+  non-terminal background acquisition.
+
 ## 2026-07-30 - PR-261 joint anisotropy state conditional closeout
 
 This section supersedes older orchestration snapshots below.

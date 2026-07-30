@@ -2538,3 +2538,38 @@ Independent acceptance authority: the exact final closeout candidate must pass
 the schema-v3 review at
 `.agent-harness/runs/pr261-final-review-20260730-r1/RUN_SUMMARY.json`. Missing,
 stale, malformed, or non-PASS evidence invalidates PR-261 completion.
+
+## PR-262 — tensor-valued functional and shared anchor contract (2026-07-30)
+
+Change classification: COMMON formal tensor-functional evaluation, PR-254
+anchor reuse, typed domain/admissibility/stress reports, MIO diagnostic bridge,
+tests, and review policy. No data, transfer value, likelihood, posterior,
+evidence, MIO truth certificate, native solver/atlas, geometry verdict, or
+family result is created.
+
+| Command | CWD | Result | Notes |
+| --- | --- | --- | --- |
+| `venv/bin/python -B scripts/codex_harness/run_pr262_tensor_functionals.py focused` | linked PR-262 worktree | PASS | `29 passed`; functional registry, six-field result separation, missingness, anchor refusal, O(3), scaling, mutation, MIO, and claim boundaries. |
+| `venv/bin/python -B scripts/codex_harness/run_pr262_tensor_functionals.py adjacent` | linked PR-262 worktree | PASS | `67 passed`; PR-254 anchor, PR-261 joint-state, and PR-254 card regressions. |
+| `venv/bin/python -B scripts/codex_harness/run_pr262_tensor_functionals.py smoke` | linked PR-262 worktree | PASS | `6 passed`, `10214 deselected`; eight declared legacy deprecation warnings retained. |
+| `PYTHONPATH=htt/src:htt ... --collect-only -q` | linked PR-262 worktree | PASS | `10161/10220 collected`, `59 deselected`; zero collection errors. |
+| strict `validate_pr_dag.py ... --status ... --strict-rescue-slice` | linked PR-262 worktree | PASS | `222 PRs, DAG valid`; PR-263 remains ready and PR-264 remains dependency-blocked. |
+| `sync_pr_dag_mirrors.py --write` then `--check` | linked PR-262 worktree | PASS | Canonical and compatibility mirrors synchronized. The preceding mode-less argparse failure changed no files and is recorded in the PR delta. |
+| scoped claim-language scan and research-surface lint | linked PR-262 worktree | PASS | Zero issues or hits. |
+| `compileall`, `pip check`, `git diff --check` | linked PR-262 worktree | PASS | No import, environment, or whitespace defect. Ruff is unavailable and no Ruff result is claimed. |
+
+Physics/math disposition: the closed operator registry fixes codomain shape,
+homogeneous degree, sign class, and scalar/pseudoscalar/polar/axial/STF O(3)
+typing. Proper/improper metamorphics check scalar invariance, pseudoscalar
+sign, and isotropic vector-anchor covariance. Scaling checks the degree-2
+homogeneity of `tr(sigma^2)` and unchanged gauge under matched anchor scaling.
+
+Anchor/ownership disposition: the evaluator reconstructs the existing PR-254
+authority. Rank collapse and one-sided/non-compact support cannot emit gauge,
+margin, or stress. MIO re-exports the exact COMMON types for diagnostic use
+only and adds no inference operation.
+
+Independent acceptance authority: the exact final closeout candidate must pass
+the schema-v3 review at
+`.agent-harness/runs/pr262-final-review-20260730-r1/RUN_SUMMARY.json`. Missing,
+stale, malformed, or non-PASS evidence invalidates PR-262 completion.
