@@ -1,0 +1,91 @@
+"""OBSSTAT bridge for COMMON-owned orbit-catalogue v3 diagnostics.
+
+COMMON owns the action, parity, stratum, stabilizer, chart, and invariant
+contracts.  OBSSTAT may consume those contracts for observer-side morphology
+feature extraction, but this bridge intentionally adds no likelihood,
+posterior, evidence, source-classification, or family-identification surface.
+"""
+
+from __future__ import annotations
+
+from common.orbit_catalogue_v3 import (
+    CatalogueProofStatus,
+    ChartCoordinateStatus,
+    ChartOverlapReport,
+    ChartOverlapStatus,
+    CyclicChartReport,
+    CyclicChartStatus,
+    InvariantAvailability,
+    InvariantAlgebraicForm,
+    JointStabilizerStatus,
+    LegacyBetaChannel,
+    LegacyV2AdapterReport,
+    LegacyV2AdapterStatus,
+    ORBIT_V3_ALLOWED_USE,
+    ORBIT_V3_CLAIM_CEILING,
+    ORBIT_V3_DEGREE_COMPLETENESS_STATUS,
+    ORBIT_V3_FORBIDDEN_USE,
+    ORBIT_V3_GENERIC_SEPARATION_STATUS,
+    ORBIT_V3_GLOBAL_CHART_COMPLETENESS_STATUS,
+    ORBIT_V3_REPRESENTATION,
+    ORBIT_V3_VECTOR_CHANNELS,
+    OrbitActionGroup,
+    OrbitCatalogueV3Error,
+    OrbitCatalogueV3Report,
+    OrbitCatalogueV3Spec,
+    OrbitScalarParity,
+    OrbitStratumReport,
+    OrbitVectorChannel,
+    ShearOrbitStratum,
+    ShearStabilizer,
+    StabilizerReport,
+    TypedOrbitInvariant,
+    adapt_joint_state_to_orbit_catalogue_v2,
+    apply_orbit_group_action,
+    build_orbit_catalogue_v3_spec,
+    orbit_catalogue_v3,
+    revalidate_orbit_catalogue_v3,
+)
+
+__obsstat_owned__ = True
+evaluate_orbit_catalogue_v3 = orbit_catalogue_v3
+
+__all__ = [
+    "CatalogueProofStatus",
+    "ChartCoordinateStatus",
+    "ChartOverlapReport",
+    "ChartOverlapStatus",
+    "CyclicChartReport",
+    "CyclicChartStatus",
+    "InvariantAvailability",
+    "InvariantAlgebraicForm",
+    "JointStabilizerStatus",
+    "LegacyBetaChannel",
+    "LegacyV2AdapterReport",
+    "LegacyV2AdapterStatus",
+    "ORBIT_V3_ALLOWED_USE",
+    "ORBIT_V3_CLAIM_CEILING",
+    "ORBIT_V3_DEGREE_COMPLETENESS_STATUS",
+    "ORBIT_V3_FORBIDDEN_USE",
+    "ORBIT_V3_GENERIC_SEPARATION_STATUS",
+    "ORBIT_V3_GLOBAL_CHART_COMPLETENESS_STATUS",
+    "ORBIT_V3_REPRESENTATION",
+    "ORBIT_V3_VECTOR_CHANNELS",
+    "OrbitActionGroup",
+    "OrbitCatalogueV3Error",
+    "OrbitCatalogueV3Report",
+    "OrbitCatalogueV3Spec",
+    "OrbitScalarParity",
+    "OrbitStratumReport",
+    "OrbitVectorChannel",
+    "ShearOrbitStratum",
+    "ShearStabilizer",
+    "StabilizerReport",
+    "TypedOrbitInvariant",
+    "adapt_joint_state_to_orbit_catalogue_v2",
+    "apply_orbit_group_action",
+    "build_orbit_catalogue_v3_spec",
+    "evaluate_orbit_catalogue_v3",
+    "orbit_catalogue_v3",
+    "revalidate_orbit_catalogue_v3",
+]

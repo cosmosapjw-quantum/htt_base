@@ -1,0 +1,123 @@
+schema_version: 1
+work_unit_id: PR-263
+title: Orbit catalogue v3 and stratified local atlas
+target_ref: origin/research/pr04-multicomponent
+target_sha: e7c20643c0dd323481f0887aff8e437a1bf7950a
+change_set_id: CS-PR263-ORBIT-CATALOGUE-V3
+publication_group_id: PG-PR263-ORBIT-CATALOGUE-V3
+dependencies:
+  - PR-261
+  - PR-257
+owner: OBSSTAT
+contributors:
+  - COMMON
+contract_owner: COMMON
+capability: parity_typed_stratified_orbit_catalogue_v3
+scientific_role: >-
+  Evaluate a Gram-Krylov signature, shear stratum, residual stabilizer,
+  cyclic-chart conditioning, and chart overlap for the canonical joint
+  anisotropy state. This is a local diagnostic atlas, not a complete
+  invariant ring, native morphology atlas, source classifier, or family
+  identifier.
+public_contract:
+  module: common.orbit_catalogue_v3
+  obsstat_bridge: obsstat.orbit_catalogue_v3
+  types:
+    - OrbitCatalogueV3Spec
+    - OrbitCatalogueV3Report
+    - OrbitStratumReport
+    - StabilizerReport
+    - CyclicChartReport
+    - ChartOverlapReport
+    - TypedOrbitInvariant
+    - LegacyV2AdapterReport
+  factories:
+    - build_orbit_catalogue_v3_spec
+    - orbit_catalogue_v3
+    - apply_orbit_group_action
+    - adapt_joint_state_to_orbit_catalogue_v2
+representation:
+  tensor: sigma_stf5
+  axial_vectors:
+    - omega_axial3
+  polar_vectors:
+    - acceleration_polar3
+    - beta_RM
+    - beta_MO
+  scalar:
+    - delta_omega_k
+  redundant_velocity_view:
+    beta_RO: excluded_from_generator_family
+group_contract:
+  SO3: proper actions only
+  O3: proper and improper actions with scalar/pseudoscalar typing
+  improper_SO3_action: refused
+  shear_stabilizers:
+    SO3:
+      zero_shear: SO3_FULL
+      repeated_eigenvalue: SO3_AXISYMMETRIC_O2
+      simple_spectrum: SO3_SIMPLE_KLEIN_FOUR
+    O3:
+      zero_shear: O3_FULL
+      repeated_eigenvalue: O3_AXISYMMETRIC_O2_X_Z2
+      simple_spectrum: O3_SIMPLE_SIGN_EIGHT
+atlas_boundary:
+  shear_strata:
+    - ZERO_SHEAR
+    - REPEATED_EIGENVALUE
+    - SIMPLE_SPECTRUM
+    - NUMERICALLY_UNRESOLVED
+  cyclicity: numerical_candidate_only
+  sampled_jacobian_status: local_only
+  generic_orbit_separation_status: UNPROVEN
+  global_chart_completeness_status: UNPROVEN
+  degree_completeness_status: UNPROVEN
+canonical_chart:
+  reference_family:
+    - omega_axial3
+    - acceleration_polar3
+    - beta_RM
+    - beta_MO
+  coordinate_count: 14
+  coordinates: >-
+    tr(sigma^2), tr(sigma^3), and
+    v_ref^T sigma^k v_j for k=0,1,2 over all four labeled vectors
+  coordinate_missingness: typed_partial
+  selection: complete_well_conditioned_numerical_candidate_only
+signature:
+  generator_count_including_J_sigma: 42
+  polynomial_generators: 41
+  normalized_rational_shape_coordinates: 1
+  J_sigma_homogeneous_degree: 0
+legacy:
+  orbit_catalogue_v2: preserved
+  beta_channel: explicit_choice_required
+  automatic_scalar_or_beta_promotion: forbidden
+claim_boundary:
+  ceiling: diagnostic_only
+  allowed:
+    - parity-typed orbit morphology compatibility
+    - local cyclic-chart conditioning
+    - shear-stratum and residual-stabilizer diagnostics
+    - exact v2 compatibility replay with explicit beta channel
+  forbidden:
+    - complete invariant ring
+    - globally separating orbit atlas
+    - native morphology atlas
+    - source or geometry detection
+    - Bianchi family identification
+tests:
+  - >-
+    PYTHONPATH=htt/src:htt python -B -m pytest -p no:cacheprovider -q
+    tests/contracts/test_orbit_catalogue_v3.py
+  - >-
+    PYTHONPATH=htt/src:htt python -B -m pytest -p no:cacheprovider -q
+    tests/pr_cards/test_pr_257_lowell_morphology.py
+    tests/contracts/test_joint_anisotropy_state.py
+kill_switches:
+  - a pseudoscalar is described as an O3 invariant
+  - finite fixtures or sampled Jacobians promote generic separation
+  - a numerical cyclic chart is called a global inverse
+  - repeated or zero shear silently uses the simple-spectrum chart
+  - a nearest orbit becomes a source, geometry, or family label
+  - v2 is deleted or a beta channel is chosen implicitly
