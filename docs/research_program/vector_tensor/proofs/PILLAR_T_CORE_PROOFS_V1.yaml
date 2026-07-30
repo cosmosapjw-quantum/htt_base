@@ -4,7 +4,7 @@ registry_status: PROOF_AUTHOR_ARTIFACT_AWAITING_INDEPENDENT_REVIEW
 scientific_status_effect: none
 claim_ceiling: diagnostic_only
 source_hashes:
-  docs/research_program/vector_tensor/pr269_spec.yaml: a196882190bf38e2d62c0c26de61dc6135dd3f4942f58113e93f112c853216d9
+  docs/research_program/vector_tensor/pr269_spec.yaml: 1abd632610b7ce51b9bf1ebe91b8f64c32e5ecddeea18af0bfc14901135c1c51
   docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml: d14b24fda9556545abaf337310471af971c68f01438d32df13349f8cd4308f8b
   docs/research_program/vector_tensor/PROGRAM_INTAKE_REGISTRY_V1.yaml: b6964771c50c483e7697b087b9f058a3fd7d20ec893475a056608b852fdeb677
   docs/research_program/vector_tensor/vector_tensor_mes_upgrade_blueprint.md: 518d4763baafb1cfd57c0674b354f110e86748849cd8cb0a9e4bc1b6eb2f32fc
@@ -23,8 +23,8 @@ inventory:
 review_gate:
   required: true
   role: independent_non_author_reviewer
-  rendering_rule: A record may be rendered as accepted only when canonical PR-269 status is completed
-    and its frozen independent review receipt is resolvable.
+  rendering_rule: The registry alone is never renderable; a downstream consumer must independently
+    resolve canonical PR-269 completion and a candidate-bound frozen PASS review receipt.
 records:
 - proof_id: PR269-LEGACY-SIG-P3
   obligation_id: SIG-P3
@@ -875,10 +875,12 @@ records:
     statement_identity_sha256: e18afc8e39a7af15870ec465ea31d5021b87db01874c5c71d5355784c6b74c42
     evidence_path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml#I-4.1
   relation_to_source: CONDITIONAL_ANALYTIC_SHAPE_ONLY
-  statement: A/Theta = -[cs2/(1+w)] D ln(mu)/Theta. If eps_g is the exact norm of D ln(mu)/Theta then
-    A2_std = (3/2)[cs2/(1+w)]^2 eps_g^2; if eps_g is only an upper bound, the corresponding relation
-    is an upper bound on A2_std.
-  statement_identity_sha256: 485736a889b71a3370ce7c78b4b685d328de56978802492c9889574de175a590
+  statement: On EXPLICIT_C_THETA_NORMALIZED with A_OVER_C_THETA and a declared positive c, A/(c Theta)
+    = -[cs2/(c(1+w))] D ln(mu)/Theta. On C_EQUALS_ONE_THETA_NORMALIZED with A_OVER_THETA_C_EQUALS_ONE,
+    A/Theta = -[cs2/(1+w)] D ln(mu)/Theta. If eps_g is the exact norm of D ln(mu)/Theta then A2_std
+    is (3/2) times the squared branch-specific coefficient times eps_g squared; if eps_g is only an
+    upper bound, the corresponding relation is an upper bound on A2_std.
+  statement_identity_sha256: 4da936eef0c1ba4286668fd0c8f4c3e3f46e9f1ea122fd59ae20524847c6f312
   assumptions:
   - perfect fluid
   - no heat flux
@@ -887,10 +889,14 @@ records:
   - one declared spatial gradient and congruence convention
   - mu is strictly positive
   - mu plus p is nonzero, equivalently 1 plus w is nonzero
+  - Theta is finite and nonzero
+  - the acceleration normalization exactly matches the declared joint-state units convention
+  - the explicit-c branch supplies a finite strictly positive numerical c in the source velocity units
   domain:
-  - finite fluid variables with mu greater than zero and w not equal to minus one
+  - finite fluid variables with mu greater than zero, w not equal to minus one, nonzero expansion
+    Theta, and exactly one registered acceleration normalization branch
   frame_convention: DECLARED_PERFECT_FLUID_CONGRUENCE
-  branch_convention: REAL_FINITE_REGISTERED_BRANCH
+  branch_convention: EXPLICIT_C_OR_C_EQUALS_ONE_ACCELERATION_BRANCH
   proof_method: perfect-fluid momentum equation and normalization conversion
   proof_artifact: docs/research_program/vector_tensor/proofs/PR269_PILLAR_T_CORE.md#pr269-tf-12-acceleration-euler-slaving
   executable_evidence:
@@ -898,6 +904,9 @@ records:
   counterexample_boundary:
   - vacuum or a nonpositive mu where ln(mu) is unavailable
   - w equals minus one so the Euler denominator vanishes
+  - Theta equals zero so the normalized gradient and acceleration are unavailable
+  - a missing, nonpositive, or silently assumed c on the explicit-c branch
+  - an acceleration normalization that does not match the declared units convention
   - heat flux, anisotropic stress, or nonbarotropic pressure terms are present
   verdict: PROVED_CONDITIONAL_ANALYTIC
   claim_ceiling: diagnostic_only

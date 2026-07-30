@@ -25,6 +25,10 @@ from typing import Callable, Mapping, Sequence
 import numpy as np
 import yaml
 
+from common.joint_anisotropy_state import (
+    AccelerationNormalization,
+    UnitsConvention,
+)
 from common.orbit_nonlinearity import stf5_to_matrix
 
 
@@ -42,7 +46,7 @@ INTAKE_PATH = (
 )
 SOURCE_HASHES = {
     SPEC_PATH:
-        "a196882190bf38e2d62c0c26de61dc6135dd3f4942f58113e93f112c853216d9",
+        "1abd632610b7ce51b9bf1ebe91b8f64c32e5ecddeea18af0bfc14901135c1c51",
     V3_PATH:
         "d14b24fda9556545abaf337310471af971c68f01438d32df13349f8cd4308f8b",
     INTAKE_PATH:
@@ -94,6 +98,56 @@ REFERENCE_RESOLVED_LEGACY = frozenset(
     }
 )
 CLAIM_CEILING = "diagnostic_only"
+REGISTRY_STATUS = "PROOF_AUTHOR_ARTIFACT_AWAITING_INDEPENDENT_REVIEW"
+RENDERING_RULE = (
+    "The registry alone is never renderable; a downstream consumer must "
+    "independently resolve canonical PR-269 completion and a candidate-bound "
+    "frozen PASS review receipt."
+)
+# Updated only after deterministic regeneration. Exact-byte identity is
+# appropriate here because this registry is the frozen proof-author evidence
+# consumed by later proof-atlas work.
+REGISTRY_SHA256 = (
+    "0729466278169d9368e5a7a3f23e1e534e348e4ce5888a4ff0a65d57da957d6b"
+)
+LEGACY_PILLAR_T_IDS = frozenset(
+    {
+        "SIG-P3",
+        "SIG-P4",
+        "SIG-P5",
+        "SIG-P6",
+        "SIG-P7",
+        "SIG-P9",
+        "SIG-P11",
+        "SIG-P12",
+        "SIG-P13",
+        "SIG-P14",
+        "SIG-P15",
+        "SIG-P21",
+        "SIG-P22",
+        "SIG-P27",
+        "SIG-P32",
+        "SIG-T3-lin",
+        "SIG-T3-full",
+        "SIG-T3-int",
+        "SIG-T9p",
+        "SIG-MES-PROV",
+        "SIG-U1",
+        "SIG-U2",
+        "SIG-TSUM",
+        "SIG-MES-BR",
+        "SIG-BV-DYN",
+        "SIG-KE-FRAME",
+        "SIG-KE-OBS",
+        "SIG-KE-DYN",
+        "SIG-OMK-REOPEN",
+        "SIG-MES-REFREEZE",
+        "SIG-MES-MESB-TRACE",
+    }
+)
+EXPECTED_OBLIGATION_IDS = (
+    LEGACY_PILLAR_T_IDS | TF_ANALYTIC_IDS | VT_ANALYTIC_IDS
+)
 
 
 class PillarTCoreProofError(ValueError):
@@ -267,18 +321,10 @@ class PillarTCoreRegistry:
             )
         return matches[0]
 
-    def accepted_for_rendering(
-        self,
-        *,
-        canonical_pr_status: str,
-        frozen_review_receipt_valid: bool,
-    ) -> bool:
-        if type(frozen_review_receipt_valid) is not bool:
-            raise TypeError("frozen_review_receipt_valid must be bool")
-        return (
-            canonical_pr_status == "completed"
-            and frozen_review_receipt_valid
-        )
+    def accepted_for_rendering(self) -> bool:
+        """Proof-author bytes cannot self-adjudicate an external review."""
+
+        return False
 
     def reject_raw_proof_count(self, claimed_count: int) -> None:
         raise PillarTCoreProofError(
@@ -322,6 +368,28 @@ def _parse_source_identity(
 
 
 def _parse_record(value: Mapping[str, object]) -> PillarTProofRecord:
+    required_keys = {
+        "proof_id",
+        "obligation_id",
+        "source_identity",
+        "relation_to_source",
+        "statement",
+        "statement_identity_sha256",
+        "assumptions",
+        "domain",
+        "frame_convention",
+        "branch_convention",
+        "proof_method",
+        "proof_artifact",
+        "executable_evidence",
+        "counterexample_boundary",
+        "verdict",
+        "claim_ceiling",
+    }
+    if set(value) != required_keys:
+        raise PillarTCoreProofError(
+            "proof-record keys must match the frozen PR-269 contract"
+        )
     obligation_id = _text(value.get("obligation_id"), "obligation_id")
     statement = _text(value.get("statement"), f"{obligation_id}.statement")
     statement_digest = _text(
@@ -409,6 +477,104 @@ def _parse_record(value: Mapping[str, object]) -> PillarTProofRecord:
     )
 
 
+def _validate_repo_reference(
+    root: Path,
+    reference: str,
+    *,
+    field: str,
+) -> None:
+    if "::" in reference:
+        relative, fragment = reference.split("::", 1)
+    elif "#" in reference:
+        relative, fragment = reference.split("#", 1)
+    else:
+        raise PillarTCoreProofError(
+            f"{field} must include a resolvable # or :: fragment"
+        )
+    relative_path = Path(relative)
+    if relative_path.is_absolute() or ".." in relative_path.parts:
+        raise PillarTCoreProofError(f"{field} escapes the repository")
+    candidate = root / relative_path
+    if candidate.is_symlink() or not candidate.is_file():
+        raise PillarTCoreProofError(f"{field} path does not resolve")
+    content = candidate.read_text(encoding="utf-8").casefold()
+    if not fragment.strip() or fragment.strip().casefold() not in content:
+        raise PillarTCoreProofError(f"{field} fragment does not resolve")
+
+
+def _validate_record_semantics(
+    root: Path,
+    record: PillarTProofRecord,
+) -> None:
+    obligation_id = record.obligation_id
+    if obligation_id in VT_ANALYTIC_IDS:
+        expected_relation = (
+            RelationToSource.TYPED_ELABORATION_WITH_EXPLICIT_PREMISES
+        )
+        expected_verdict = ProofVerdict.PROVED_ANALYTIC
+    elif obligation_id in TF_ANALYTIC_IDS:
+        expected_relation = {
+            "TF-01-PARITY-TYPING": (
+                RelationToSource.EXACT_REGISTERED_ORACLE_STATEMENT
+            ),
+            "TF-02-CATALOGUE-COMPLETION": (
+                RelationToSource.EXACT_RESTRICTED_WITNESS_ONLY
+            ),
+            "TF-07-BUDGET-MORPHOLOGY-SPLIT": (
+                RelationToSource.TYPED_ELABORATION_WITH_EXPLICIT_PREMISES
+            ),
+            "TF-08-PRODUCT-GAUGE-MAX": (
+                RelationToSource.EXACT_ANALYTIC_STATEMENT
+            ),
+            "TF-12-ACCELERATION-EULER-SLAVING": (
+                RelationToSource.CONDITIONAL_ANALYTIC_SHAPE_ONLY
+            ),
+        }[obligation_id]
+        expected_verdict = {
+            "TF-01-PARITY-TYPING": ProofVerdict.PROVED_ANALYTIC,
+            "TF-02-CATALOGUE-COMPLETION": (
+                ProofVerdict.RESTRICTED_WITNESS_CONFIRMED
+            ),
+            "TF-07-BUDGET-MORPHOLOGY-SPLIT": (
+                ProofVerdict.PROVED_CONDITIONAL_ANALYTIC
+            ),
+            "TF-08-PRODUCT-GAUGE-MAX": ProofVerdict.PROVED_ANALYTIC,
+            "TF-12-ACCELERATION-EULER-SLAVING": (
+                ProofVerdict.PROVED_CONDITIONAL_ANALYTIC
+            ),
+        }[obligation_id]
+    elif obligation_id in REFERENCE_RESOLVED_LEGACY:
+        expected_relation = RelationToSource.EXACT_SOURCE_REFERENCE
+        expected_verdict = (
+            ProofVerdict.REFERENCE_RESOLVED_NOT_READJUDICATED
+        )
+    else:
+        expected_relation = RelationToSource.SOURCE_SIGNATURE_MISSING
+        expected_verdict = ProofVerdict.INCONCLUSIVE_MISSING_SIGNATURE
+    if record.relation_to_source is not expected_relation:
+        raise PillarTCoreProofError(
+            f"{obligation_id}: relation-to-source drifted"
+        )
+    if record.verdict is not expected_verdict:
+        raise PillarTCoreProofError(f"{obligation_id}: verdict drifted")
+    _validate_repo_reference(
+        root,
+        record.source_identity.evidence_path,
+        field=f"{obligation_id}.source_identity.evidence_path",
+    )
+    _validate_repo_reference(
+        root,
+        record.proof_artifact,
+        field=f"{obligation_id}.proof_artifact",
+    )
+    for index, reference in enumerate(record.executable_evidence):
+        _validate_repo_reference(
+            root,
+            reference,
+            field=f"{obligation_id}.executable_evidence[{index}]",
+        )
+
+
 def load_pillar_t_core_registry(
     repo_root: Path,
     path: Path | None = None,
@@ -423,10 +589,28 @@ def load_pillar_t_core_registry(
                 f"frozen PR-269 input hash drifted for {relative}"
             )
     source = path if path is not None else root / REGISTRY_PATH
+    if source.is_symlink() or not source.is_file():
+        raise PillarTCoreProofError(
+            "proof registry is missing or not a regular file"
+        )
     raw = _mapping(
         yaml.safe_load(source.read_text(encoding="utf-8")),
         "pillar_t_core_registry",
     )
+    if set(raw) != {
+        "schema",
+        "authority",
+        "registry_status",
+        "scientific_status_effect",
+        "claim_ceiling",
+        "source_hashes",
+        "inventory",
+        "review_gate",
+        "records",
+    }:
+        raise PillarTCoreProofError(
+            "proof-registry keys must match the frozen PR-269 contract"
+        )
     if raw.get("schema") != SCHEMA_VERSION:
         raise PillarTCoreProofError("unsupported Pillar-T core schema")
     if raw.get("authority") != "PR-269":
@@ -450,6 +634,12 @@ def load_pillar_t_core_registry(
     obligation_ids = {row.obligation_id for row in records}
     if len(obligation_ids) != len(records):
         raise PillarTCoreProofError("duplicate obligation ID")
+    if len(records) != 42 or obligation_ids != EXPECTED_OBLIGATION_IDS:
+        raise PillarTCoreProofError(
+            "PR-269 obligation membership must be the exact frozen 42"
+        )
+    for record in records:
+        _validate_record_semantics(root, record)
 
     vt = {row.obligation_id for row in records if row.obligation_id in VT_ANALYTIC_IDS}
     tf = {row.obligation_id for row in records if row.obligation_id in TF_ANALYTIC_IDS}
@@ -492,20 +682,25 @@ def load_pillar_t_core_registry(
     }:
         raise PillarTCoreProofError("registry inventory contract drifted")
     review = _mapping(raw.get("review_gate"), "registry.review_gate")
-    if review.get("required") is not True:
-        raise PillarTCoreProofError("independent review gate was disabled")
-    if review.get("role") != "independent_non_author_reviewer":
-        raise PillarTCoreProofError("independent review role drifted")
+    if review != {
+        "required": True,
+        "role": "independent_non_author_reviewer",
+        "rendering_rule": RENDERING_RULE,
+    }:
+        raise PillarTCoreProofError("independent review gate drifted")
+    registry_status = _text(
+        raw.get("registry_status"), "registry.registry_status"
+    )
+    if registry_status != REGISTRY_STATUS:
+        raise PillarTCoreProofError("registry status drifted")
+    if _sha256(source) != REGISTRY_SHA256:
+        raise PillarTCoreProofError("proof registry exact bytes drifted")
     return PillarTCoreRegistry(
         records=records,
-        registry_status=_text(
-            raw.get("registry_status"), "registry.registry_status"
-        ),
+        registry_status=registry_status,
         claim_ceiling=CLAIM_CEILING,
         review_required=True,
-        rendering_rule=_text(
-            review.get("rendering_rule"), "registry.rendering_rule"
-        ),
+        rendering_rule=RENDERING_RULE,
     )
 
 
@@ -613,13 +808,14 @@ def linear_image_gauge(
     matrix = _array(
         action, "action", shape=(len(value), len(value))
     )
-    determinant = float(np.linalg.det(matrix))
-    tolerance = 64.0 * np.finfo(float).eps * max(
-        1.0, float(np.linalg.norm(matrix, ord=2))
-    )
-    if abs(determinant) <= tolerance:
-        raise PillarTCoreProofError("action must be invertible")
-    pulled_back = np.linalg.solve(matrix, value)
+    try:
+        pulled_back = np.linalg.solve(matrix, value)
+    except np.linalg.LinAlgError as exc:
+        raise PillarTCoreProofError("action must be invertible") from exc
+    if not np.all(np.isfinite(pulled_back)):
+        raise PillarTCoreProofError(
+            "numerical pullback must remain finite"
+        )
     result = base_gauge(pulled_back)
     if isinstance(result, (bool, np.bool_)) or not isinstance(
         result, (int, float, np.integer, np.floating)
@@ -776,7 +972,11 @@ def factorized_budget_directional_derivative(
 
 @dataclass(frozen=True)
 class EulerSlavingShape:
-    acceleration_over_theta_coefficient: float
+    units_convention: UnitsConvention
+    acceleration_normalization: AccelerationNormalization
+    theta: float
+    c_numeric_in_source_velocity_units: float
+    normalized_acceleration_coefficient: float
     conditional_a2_shape_value: float
     eps_g: float
     numerical_ceiling_authorized: bool = False
@@ -788,6 +988,10 @@ def euler_slaving_shape(
     w: float,
     sound_speed_squared: float,
     eps_g: float,
+    theta: float,
+    units_convention: UnitsConvention | str,
+    acceleration_normalization: AccelerationNormalization | str,
+    c_numeric_in_source_velocity_units: float | None = None,
 ) -> EulerSlavingShape:
     """Evaluate the conditional TF-12 shape with no MES ceiling authority."""
 
@@ -796,6 +1000,7 @@ def euler_slaving_shape(
         "w": w,
         "sound_speed_squared": sound_speed_squared,
         "eps_g": eps_g,
+        "theta": theta,
     }
     for name, value in values.items():
         if isinstance(value, (bool, np.bool_)) or not isinstance(
@@ -811,10 +1016,73 @@ def euler_slaving_shape(
         raise PillarTCoreProofError("1 + w must be nonzero")
     if float(eps_g) < 0.0:
         raise PillarTCoreProofError("eps_g must be nonnegative")
-    coefficient = -float(sound_speed_squared) / denominator
+    if float(theta) == 0.0:
+        raise PillarTCoreProofError("theta must be nonzero")
+    try:
+        units = UnitsConvention(units_convention)
+    except (TypeError, ValueError) as exc:
+        raise PillarTCoreProofError(
+            "units_convention is not registered"
+        ) from exc
+    try:
+        normalization = AccelerationNormalization(
+            acceleration_normalization
+        )
+    except (TypeError, ValueError) as exc:
+        raise PillarTCoreProofError(
+            "acceleration_normalization is not registered"
+        ) from exc
+    expected = (
+        AccelerationNormalization.A_OVER_C_THETA
+        if units is UnitsConvention.EXPLICIT_C_THETA_NORMALIZED
+        else AccelerationNormalization.A_OVER_THETA_C_EQUALS_ONE
+    )
+    if normalization is not expected:
+        raise PillarTCoreProofError(
+            "acceleration normalization does not match units convention"
+        )
+    if units is UnitsConvention.EXPLICIT_C_THETA_NORMALIZED:
+        c_value = c_numeric_in_source_velocity_units
+        if isinstance(c_value, (bool, np.bool_)) or not isinstance(
+            c_value, (int, float, np.integer, np.floating)
+        ):
+            raise PillarTCoreProofError(
+                "explicit-c branch requires a real numerical c"
+            )
+        c_numeric = float(c_value)
+        if not math.isfinite(c_numeric) or c_numeric <= 0.0:
+            raise PillarTCoreProofError(
+                "explicit-c branch requires a finite strictly positive c"
+            )
+    else:
+        if c_numeric_in_source_velocity_units is None:
+            c_numeric = 1.0
+        elif (
+            isinstance(c_numeric_in_source_velocity_units, (bool, np.bool_))
+            or not isinstance(
+                c_numeric_in_source_velocity_units,
+                (int, float, np.integer, np.floating),
+            )
+            or not math.isfinite(
+                float(c_numeric_in_source_velocity_units)
+            )
+            or float(c_numeric_in_source_velocity_units) != 1.0
+        ):
+            raise PillarTCoreProofError(
+                "c=1 branch permits only an omitted c or exact numerical 1"
+            )
+        else:
+            c_numeric = 1.0
+    coefficient = (
+        -float(sound_speed_squared) / (c_numeric * denominator)
+    )
     shape = 1.5 * coefficient * coefficient * float(eps_g) ** 2
     return EulerSlavingShape(
-        acceleration_over_theta_coefficient=coefficient,
+        units_convention=units,
+        acceleration_normalization=normalization,
+        theta=float(theta),
+        c_numeric_in_source_velocity_units=c_numeric,
+        normalized_acceleration_coefficient=coefficient,
         conditional_a2_shape_value=shape,
         eps_g=float(eps_g),
     )

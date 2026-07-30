@@ -25,9 +25,9 @@ the proof artifacts.
   source reference without claiming a new proof.
 - `INCONCLUSIVE_MISSING_SIGNATURE` is mandatory when the legacy source lacks a
   typed assumption/domain/frame signature.
-- A downstream proof atlas may render an accepted status only when canonical
-  PR-269 status is `completed` and the frozen independent-review receipt is
-  resolvable.
+- This proof-author registry never self-authorizes rendering. A downstream
+  proof-atlas consumer must independently resolve canonical PR-269 completion
+  and a candidate-bound frozen `PASS` review receipt.
 
 All spatial contractions below use one positive-definite spatial metric. The
 registered STF5 ordering is
@@ -315,39 +315,56 @@ outside this statement.
 ## PR269-TF-12-ACCELERATION-EULER-SLAVING
 
 Assume a perfect fluid with no frame heat flux or anisotropic stress, a
-barotropic pressure law, `mu > 0`, and `mu+p != 0`. The spatial momentum
-equation is
+barotropic pressure law, `mu > 0`, `mu+p != 0`, and finite nonzero expansion
+`Theta`. The spatial momentum equation is
 
 ```text
 (mu+p) A_a = -D_a p.
 ```
 
 With `p = w mu` at the evaluated state and
-`D_a p = cs2 D_a mu`, division by `mu(1+w)Theta` gives
+`D_a p = cs2 D_a mu`, division by `mu(1+w)Theta` gives two explicitly typed
+repository branches.
+
+For `C_EQUALS_ONE_THETA_NORMALIZED` with
+`A_OVER_THETA_C_EQUALS_ONE`,
 
 ```text
 A_a/Theta = -[cs2/(1+w)] D_a ln(mu)/Theta.
 ```
 
-If `eps_g` is the exact norm `||D ln(mu)/Theta||`, the repository acceleration
-normalization gives the shape
+For `EXPLICIT_C_THETA_NORMALIZED` with `A_OVER_C_THETA`, an explicit finite
+strictly positive numerical `c` in the source velocity units is mandatory:
 
 ```text
-A2_std = (3/2)[cs2/(1+w)]^2 eps_g^2.
+A_a/(c Theta) = -[cs2/(c(1+w))] D_a ln(mu)/Theta.
+```
+
+The two normalizations are not aliases and cannot be selected by inference
+from numerical values. If `eps_g` is the exact norm
+`||D ln(mu)/Theta||`, the branch-specific normalized acceleration gives
+
+```text
+A2_std = (3/2) coefficient(branch)^2 eps_g^2,
+
+coefficient(c=1)       = -cs2/(1+w),
+coefficient(explicit-c) = -cs2/[c(1+w)].
 ```
 
 If the explicitly supplied `eps_g` is instead only an upper bound on that
 norm, the corresponding relation is
 
 ```text
-A2_std <= (3/2)[cs2/(1+w)]^2 eps_g^2.
+A2_std <= (3/2) coefficient(branch)^2 eps_g^2.
 ```
 
 No repository input currently gives this proof an absolute numerical
 `eps_g` authority. The executable function therefore requires an explicit
 value, labels the result conditional, and always returns
-`numerical_ceiling_authorized = false`. The formula is refused at `mu <= 0`,
-`w = -1`, or when the perfect-fluid premises fail.
+`numerical_ceiling_authorized = false`. The function refuses `mu <= 0`,
+`w = -1`, `Theta = 0`, a missing/nonpositive `c` on the explicit-c branch,
+any units/acceleration-normalization mismatch, or failure of the perfect-fluid
+premises.
 
 ## Legacy source resolution
 

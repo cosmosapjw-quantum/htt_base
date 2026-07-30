@@ -34,7 +34,7 @@ TEST = Path("tests/contracts/test_pillar_t_core.py")
 
 SCHEMA = "htt.pillar_t_core_proofs.v1"
 SPEC_SHA256 = (
-    "a196882190bf38e2d62c0c26de61dc6135dd3f4942f58113e93f112c853216d9"
+    "1abd632610b7ce51b9bf1ebe91b8f64c32e5ecddeea18af0bfc14901135c1c51"
 )
 V3_SHA256 = (
     "d14b24fda9556545abaf337310471af971c68f01438d32df13349f8cd4308f8b"
@@ -471,7 +471,12 @@ def _tf_records(
                 assumptions=assumptions,
                 domain=domain,
                 frame_convention=TF_FRAMES[obligation_id],
-                branch_convention="REAL_FINITE_REGISTERED_BRANCH",
+                branch_convention=(
+                    "EXPLICIT_C_OR_C_EQUALS_ONE_ACCELERATION_BRANCH"
+                    if obligation_id
+                    == "TF-12-ACCELERATION-EULER-SLAVING"
+                    else "REAL_FINITE_REGISTERED_BRANCH"
+                ),
                 proof_method=TF_METHODS[obligation_id],
                 executable_evidence=[
                     str(TEST) + "::test_tf_analytic_core_boundaries"
@@ -582,9 +587,9 @@ def build_payload() -> dict[str, object]:
             "required": True,
             "role": "independent_non_author_reviewer",
             "rendering_rule": (
-                "A record may be rendered as accepted only when canonical "
-                "PR-269 status is completed and its frozen independent review "
-                "receipt is resolvable."
+                "The registry alone is never renderable; a downstream "
+                "consumer must independently resolve canonical PR-269 "
+                "completion and a candidate-bound frozen PASS review receipt."
             ),
         },
         "records": records,

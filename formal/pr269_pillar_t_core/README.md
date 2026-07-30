@@ -15,5 +15,6 @@ bookkeeping, the chain rule, or elementary convex-gauge identities. Statements
 whose registered proof mode requires four independent axes remain unadjudicated
 until PR-270 and are not represented as PR-269 proof records.
 
-The proof-author verdicts in this slice remain non-renderable until canonical
-PR-269 completion and a valid frozen independent-review receipt.
+The proof-author registry never self-authorizes rendering. A later proof-atlas
+consumer must independently resolve canonical PR-269 completion and a
+candidate-bound frozen `PASS` review receipt.
