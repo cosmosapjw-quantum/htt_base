@@ -545,6 +545,38 @@ def test_vt_s8_refuses_marginal_only_and_cross_block_mutations() -> None:
             covariance_ba=((0.0,),),
             pairing_status=PairingStatus.PAIRED_JOINT_LAW,
         )
+    with pytest.raises(
+        VectorTensorStatisticalFoundationError,
+        match="positive semidefinite",
+    ):
+        paired_contrast_covariance(
+            covariance_aa=((-1.0e290,),),
+            covariance_bb=((1.0e308,),),
+            covariance_ab=((0.0,),),
+            covariance_ba=((0.0,),),
+            pairing_status=PairingStatus.PAIRED_JOINT_LAW,
+        )
+
+
+def test_vt_s8_exact_psd_gate_preserves_singular_and_dynamic_range() -> None:
+    singular = paired_contrast_covariance(
+        covariance_aa=((1.0,),),
+        covariance_bb=((1.0,),),
+        covariance_ab=((1.0,),),
+        covariance_ba=((1.0,),),
+        pairing_status=PairingStatus.PAIRED_JOINT_LAW,
+    )
+    assert singular.joint_rank == 1
+    assert singular.contrast_covariance == ((0.0,),)
+
+    dynamic = paired_contrast_covariance(
+        covariance_aa=((1.0e-290,),),
+        covariance_bb=((1.0e308,),),
+        covariance_ab=((0.0,),),
+        covariance_ba=((0.0,),),
+        pairing_status=PairingStatus.PAIRED_JOINT_LAW,
+    )
+    assert dynamic.joint_rank == 2
 
 
 def test_tf09_exact_sign_test_conditions_on_nonzero_ties() -> None:

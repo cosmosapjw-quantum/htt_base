@@ -202,6 +202,81 @@ def _matrix(
     return result
 
 
+def _exact_float_matrix(values: np.ndarray) -> list[list[Fraction]]:
+    return [
+        [Fraction.from_float(float(value)) for value in row]
+        for row in values
+    ]
+
+
+def _exact_float_psd(values: np.ndarray) -> bool:
+    """Decide PSD for the exact binary-rational values carried by floats."""
+
+    work = _exact_float_matrix(values)
+    while work:
+        size = len(work)
+        diagonals = tuple(work[index][index] for index in range(size))
+        if any(value < 0 for value in diagonals):
+            return False
+        pivot_index = next(
+            (index for index, value in enumerate(diagonals) if value > 0),
+            None,
+        )
+        if pivot_index is None:
+            return all(value == 0 for row in work for value in row)
+        if pivot_index != 0:
+            work[0], work[pivot_index] = work[pivot_index], work[0]
+            for row in work:
+                row[0], row[pivot_index] = (
+                    row[pivot_index],
+                    row[0],
+                )
+        pivot = work[0][0]
+        work = [
+            [
+                work[row][column]
+                - work[row][0] * work[0][column] / pivot
+                for column in range(1, size)
+            ]
+            for row in range(1, size)
+        ]
+    return True
+
+
+def _exact_float_rank(values: np.ndarray) -> int:
+    work = _exact_float_matrix(values)
+    row_count = len(work)
+    column_count = len(work[0]) if work else 0
+    rank = 0
+    for column in range(column_count):
+        pivot = next(
+            (
+                row
+                for row in range(rank, row_count)
+                if work[row][column] != 0
+            ),
+            None,
+        )
+        if pivot is None:
+            continue
+        work[rank], work[pivot] = work[pivot], work[rank]
+        pivot_value = work[rank][column]
+        for row in range(row_count):
+            if row == rank or work[row][column] == 0:
+                continue
+            multiplier = work[row][column] / pivot_value
+            work[row] = [
+                left - multiplier * right
+                for left, right in zip(
+                    work[row], work[rank], strict=True
+                )
+            ]
+        rank += 1
+        if rank == row_count:
+            break
+    return rank
+
+
 def _canonical_sha256(value: object) -> str:
     encoded = json.dumps(
         value,
@@ -975,21 +1050,7 @@ def paired_contrast_covariance(
             "ordered cross-covariance blocks must satisfy C_ba=C_ab^T"
         )
     joint = np.block([[aa, ab], [ba, bb]])
-    try:
-        eigenvalues = np.linalg.eigvalsh(joint)
-        joint_norm = float(np.linalg.norm(joint, ord=2))
-    except np.linalg.LinAlgError as exc:
-        raise VectorTensorStatisticalFoundationError(
-            "joint covariance eigensystem did not converge"
-        ) from exc
-    if not np.all(np.isfinite(eigenvalues)) or not math.isfinite(joint_norm):
-        raise VectorTensorStatisticalFoundationError(
-            "joint covariance calculation must remain finite"
-        )
-    tolerance = 512.0 * np.finfo(float).eps * max(
-        1.0, joint_norm
-    )
-    if float(np.min(eigenvalues)) < -tolerance:
+    if not _exact_float_psd(joint):
         raise VectorTensorStatisticalFoundationError(
             "joint covariance block must be positive semidefinite"
         )
@@ -1010,12 +1071,7 @@ def paired_contrast_covariance(
         raise VectorTensorStatisticalFoundationError(
             "paired covariance calculation must remain finite"
         )
-    try:
-        joint_rank = int(np.linalg.matrix_rank(joint))
-    except np.linalg.LinAlgError as exc:
-        raise VectorTensorStatisticalFoundationError(
-            "joint covariance rank did not converge"
-        ) from exc
+    joint_rank = _exact_float_rank(joint)
 
     def freeze(matrix: np.ndarray) -> tuple[tuple[float, ...], ...]:
         return tuple(tuple(float(value) for value in row) for row in matrix)
