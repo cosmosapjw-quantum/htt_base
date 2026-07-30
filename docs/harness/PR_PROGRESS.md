@@ -2,6 +2,32 @@
 
 Update every five PRs with percent complete and blockers.
 
+## PR-268 programme checkpoint (not a five-count checkpoint)
+
+Date: 2026-07-30
+
+- Active DAG: 163/222 complete = 73.42%; dependency-weighted completion
+  80.39%; critical-path proxy 71/77 = 92.21%. Global checkpoint 165 is not
+  due.
+- PR-268 registers 123 source-preserving proof obligations without counting
+  them as proofs. The owner-requested 65/58 aliases are explicitly separated
+  from the true `31 T + 34 S` and `30 I + 24 II + 4 BRIDGE` partitions.
+- The byte-identical tensor oracle supplies deterministic full-mode test
+  evidence for 12 linked propositions. Its reduced fast mode reproducibly
+  fails TF-11 and remains registered as non-stable; no result promotes proof
+  status.
+- Validation passes 21 focused tests, 101 adjacent regressions, 6 smoke tests,
+  10300/10359 collection with 59 deselected, strict DAG/mirror checks,
+  generator check, claim scans, compileall, `pip check`, and whitespace.
+- Claim drift: none. All v3 rows remain `NOT_ADJUDICATED`; incomplete and
+  conditional TF boundaries remain unchanged; no MIO posterior, native
+  solver/atlas, geometry, truth, or family result is introduced.
+- The first evidence-map run stopped on stale assignment input and is
+  preserved as non-acceptance evidence. Two base-confirmed historical test
+  failures remain recorded rather than repaired through frozen-source edits.
+- Completion is conditional on a fresh exact-candidate review. Only after it
+  passes may PR-269 and PR-271 begin as the next permitted parallel pair.
+
 ## PR-267 remediated conditional closeout (not a five-PR checkpoint)
 
 Date: 2026-07-30

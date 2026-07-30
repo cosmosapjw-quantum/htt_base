@@ -2,6 +2,37 @@
 
 Record commands actually run. Never mark skipped checks as passed.
 
+## PR-268 - two-pillar theorem registry v3 and executable oracle
+
+Date: 2026-07-30
+
+Change classification: additive COMMON theorem-obligation registry and loader,
+byte-identical supplied oracle packaging, deterministic generator/runner,
+tests, phase checkpoint, PR delta, status mirrors, and SSoT handoff. No proof
+adjudication, theorem count, observed-data execution, transfer validation,
+likelihood/posterior/evidence result, native solver/atlas, geometry, family
+identification, claim tier, or public-use state changed.
+
+| Command or check | Result | Notes |
+|---|---:|---|
+| PR-268 focused registry/oracle contract | PASS | `21 passed`; exact 65/58 inventories and true partitions, 123-row disjointness, typed missingness, frozen hashes, 12 oracle links, full-mode determinism, six mutations, TF-02/06/12 boundaries, and raw-count refusal. |
+| adjacent registry/lineage/anchor/functional/orbit/report regression | PASS | `101 passed`; runner uses bounded relevant PR-124 nodes and preserves two unrelated base failures separately. |
+| smoke | PASS | `6 passed`, `10353 deselected`; eight declared legacy deprecation warnings. |
+| full source-layout collection | PASS | `10300/10359 collected`, `59 deselected`, zero errors. |
+| strict canonical DAG and mirror checks | PASS | `222 PRs, DAG valid`; canonical and compatibility status are byte-identical. |
+| generated v3 registry `--check` | PASS | Generated 65/58 inventories and the tracked YAML are byte-identical. |
+| scoped claim-language and research-surface scans | PASS | Zero forbidden-language findings. |
+| `compileall`, `pip check`, and `git diff --check` | PASS | No bytecode, requirement, or whitespace defect. |
+| initial broad adjacent replay | FAIL, PARTLY FIXED AND PARTLY PRESERVED | Four failures: two hard-coded worktree `venv/bin/python` paths were fixed with `sys.executable`; two historical failures reproduce unchanged on the exact PR-267 base. |
+| two base-confirmed historical nodes | FAIL, PRE-EXISTING | PR-124 authority scan reports `SOURCE_HASH_MISMATCH mio.formalism.namespace`; the historical theorem extension generator reports stale metadata/config hashes. Frozen sources were not changed. |
+| registered evidence-map R1 | ERROR, PRESERVED | The main writer changed `pr268_spec.yaml` after assignment registration. The mapper correctly returned `F-PR268-CONTEXT-DRIFT`; its abandoned run is not acceptance evidence. |
+| exact frozen candidate review R1 | REQUIRED | Valid only at `.agent-harness/runs/pr268-final-review-20260730-r1/RUN_SUMMARY.json`; missing, stale, malformed, SHA-mismatched, or non-PASS evidence invalidates completion. |
+
+Scientific impact: this establishes a typed registration and executable-test
+boundary for later proof work. It proves no theorem, supplies no theorem
+count, and validates no transfer, observed data, physical source, geometry,
+native solver/atlas, or Bianchi family.
+
 ## PR-267 - abstaining anisotropy compatibility report
 
 Date: 2026-07-30

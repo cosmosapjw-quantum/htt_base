@@ -1,5 +1,40 @@
 # Project State
 
+## 2026-07-30 - PR-268 theorem-obligation registry checkpoint
+
+This section supersedes older orchestration snapshots below.
+
+- Active DAG: 222 cards, 163 completed, 1 blocked, 29 pending, 28 dormant
+  external/native, no foreground card, and background PR-151 acquisition.
+  Count completion is 73.42%, dependency-weighted completion 80.39%, and the
+  critical-path proxy is 71/77 = 92.21%. Global checkpoint 165 is not due.
+- PR-268 adds an additive v3 registry of 123 disjoint proof obligations:
+  the requested 65 alias is the legacy `31 T + 34 S` inventory and the
+  requested 58 alias is the proposal `30 I + 24 II + 4 BRIDGE` inventory.
+  These aliases are not literal pillar membership and raw rows are not theorem
+  counts.
+- All rows retain statement/source identity, typed premise missingness,
+  `U/TC/ST` route, owner, dependency, evidence path, source status, and
+  `NOT_ADJUDICATED` proof status. Frozen v2 bytes were not changed.
+- The supplied tensor-foundation oracle is packaged byte-identically. Full
+  mode at seed 20260730 is the stable all-pass vector; supplied fast mode
+  reproducibly fails TF-11 and is retained as non-stable. Oracle evidence has
+  no proof effect.
+- Validation passes 21 focused tests, 101 adjacent regressions, 6 smoke tests,
+  10300/10359 collection with 59 deselected, strict DAG/mirrors, generator
+  check, claim scans, compileall, `pip check`, and whitespace checks.
+- Two historical failures reproduced unchanged on the PR-267 base remain
+  explicit: the PR-124 consumer source-hash mismatch and stale theorem
+  extension metadata. The first PR-268 mapper run also stopped correctly on a
+  stale assignment input and is not acceptance evidence.
+- The programme checkpoint is
+  `docs/research_program/vector_tensor/checkpoint_pr268_20260730.md`.
+  PR-268 completion is valid only if the exact closeout candidate passes
+  `.agent-harness/runs/pr268-final-review-20260730-r1/`.
+- After exact acceptance, PR-269 and PR-271 are the permitted next parallel
+  pair. No data, transfer result, proof count, native solver/atlas, geometry,
+  posterior/evidence, truth, or family status changed.
+
 ## 2026-07-30 - PR-267 remediated anisotropy compatibility closeout
 
 This section supersedes older orchestration snapshots below.
