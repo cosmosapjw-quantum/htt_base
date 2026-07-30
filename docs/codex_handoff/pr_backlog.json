@@ -12975,13 +12975,16 @@
         "htt/src/common/mes_successor_registry.py",
         "tests/contracts/test_pr124_cas_lineage.py",
         "tests/contracts/test_mes_successor_registry.py",
+        "tests/contracts/test_pr259_review_policy.py",
+        "scripts/codex_harness/run_pr259_chronology.py",
         "docs/research_program/stat_foundations/pr259_publication_policy.json",
         "docs/codex_handoff",
         "machine_readable",
         "docs/PR_DELTAS/pr-259.md"
       ],
       "tests": [
-        "PYTHONPATH=htt/src:htt venv/bin/python -B -m pytest -p no:cacheprovider -q tests/contracts/test_pr124_cas_lineage.py tests/contracts/test_mes_successor_registry.py",
+        "PYTHONPATH=htt/src:htt venv/bin/python -B -m pytest -p no:cacheprovider -q tests/contracts/test_pr124_cas_lineage.py tests/contracts/test_mes_successor_registry.py tests/contracts/test_pr259_review_policy.py",
+        "python3 -B scripts/codex_harness/run_pr259_chronology.py focused",
         "venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml",
         "venv/bin/python -B scripts/codex_harness/sync_pr_dag_mirrors.py --check"
       ],

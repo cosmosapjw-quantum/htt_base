@@ -34,13 +34,8 @@
       "argv": [
         "{python}",
         "-B",
-        "-m",
-        "pytest",
-        "-p",
-        "no:cacheprovider",
-        "-q",
-        "tests/contracts/test_pr124_cas_lineage.py",
-        "tests/contracts/test_mes_successor_registry.py"
+        "scripts/codex_harness/run_pr259_chronology.py",
+        "focused"
       ],
       "timeout_seconds": 900
     },
@@ -69,13 +64,8 @@
       "argv": [
         "{python}",
         "-B",
-        "-m",
-        "pytest",
-        "-p",
-        "no:cacheprovider",
-        "-m",
-        "smoke",
-        "-q"
+        "scripts/codex_harness/run_pr259_chronology.py",
+        "smoke"
       ],
       "timeout_seconds": 900
     }
