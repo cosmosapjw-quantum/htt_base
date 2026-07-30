@@ -2497,7 +2497,44 @@ separately. Source proposal/open/conditional statuses remain unchanged.
 
 The first source-map subagent reconstructed the right cardinalities but wrote a
 schema-v1 envelope after schema v3 was required. The run is preserved as
-abandoned process evidence and is not accepted as review. Conditional
-completion requires a fresh frozen-candidate schema-v3 review at
-`.agent-harness/runs/pr260-final-review-20260730-r1/RUN_SUMMARY.json`; a
-missing, stale, or non-PASS result invalidates PR-260.
+abandoned process evidence and is not accepted as review. The exact
+`cb258619...` closeout candidate subsequently passed all 11 registered cells,
+an independent detached direct-parse oracle, strict coverage validation, and
+schema-v3 result validation with no findings. The run closed normally at
+`.agent-harness/runs/pr260-final-review-20260730-r1/RUN_SUMMARY.json`.
+
+## PR-261 — canonical joint vector/tensor anisotropy state (2026-07-30)
+
+Change classification: COMMON typed state transport, serialization,
+convention and transfer binding, explicit legacy adapter, O(3) compatibility,
+tests, and review policy. No observed data, transfer values, likelihood,
+posterior, evidence term, MIO certificate, native solver/atlas, geometry
+verdict, or family result is created.
+
+| Command | CWD | Result | Notes |
+| --- | --- | --- | --- |
+| `venv/bin/python -B scripts/codex_harness/run_pr261_joint_state.py focused` | linked PR-261 worktree | PASS | `25 passed`; round trip, unit branch, frame/congruence/support mismatch, typed missingness, PR-256 replay, legacy abstention, O(3) parity, transfer binding, and claim-policy mutations. |
+| `venv/bin/python -B scripts/codex_harness/run_pr261_joint_state.py adjacent` | linked PR-261 worktree | PASS | `96 passed`; PR-249, PR-256, O(3), and transfer-registry regressions; one declared legacy deprecation warning. |
+| `venv/bin/python -B scripts/codex_harness/run_pr261_joint_state.py smoke` | linked PR-261 worktree | PASS | `6 passed`, `10185 deselected`; eight declared legacy deprecation warnings retained. |
+| `PYTHONPATH=htt/src:htt ... --collect-only -q` | linked PR-261 worktree | PASS | `10132/10191 collected`, `59 deselected`; zero collection errors. |
+| strict `validate_pr_dag.py ... --status ... --strict-rescue-slice` | linked PR-261 worktree | PASS | `222 PRs, DAG valid`; PR-262/263 are dependency-ready only after valid PR-261 closeout. |
+| `sync_pr_dag_mirrors.py --check` | linked PR-261 worktree | PASS | Canonical and compatibility mirrors synchronized. |
+| scoped `check_claim_language.py` and research-surface lint | linked PR-261 worktree | PASS | Zero issues or hits. |
+| `compileall`, `pip check`, `git diff --check` | linked PR-261 worktree | PASS | No import, environment, or whitespace defect. Ruff is unavailable and no Ruff result is claimed. |
+
+Physics/convention disposition: congruence kinematics remain separate from
+between-frame velocities; vorticity and magnetic Weyl are axial, while
+acceleration and beta channels are polar. Available acceleration declares
+either `A_OVER_C_THETA` or `A_OVER_THETA_C_EQUALS_ONE`; no acceleration
+ceiling is created. `delta_omega_k` is not an anisotropic-curvature tensor.
+
+Legacy/transfer disposition: `DepartureState` bytes and values are unchanged.
+Migration requires exact source-state and semantic-authority receipts plus
+explicit convention and beta-role binding; otherwise it returns `ABSTAIN`.
+Transfer metadata uses the existing exact `TransferFunctionSpec`; the state
+does not compute transfer values or validate a native provider.
+
+Independent acceptance authority: the exact final closeout candidate must pass
+the schema-v3 review at
+`.agent-harness/runs/pr261-final-review-20260730-r1/RUN_SUMMARY.json`. Missing,
+stale, malformed, or non-PASS evidence invalidates PR-261 completion.

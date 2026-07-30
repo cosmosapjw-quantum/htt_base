@@ -1,5 +1,42 @@
 # Project State
 
+## 2026-07-30 - PR-261 joint anisotropy state conditional closeout
+
+This section supersedes older orchestration snapshots below.
+
+- Active DAG: 222 cards, 156 completed, 1 blocked, 36 pending, 28 dormant
+  external/native, no foreground card, and background PR-151 acquisition.
+  Count completion is 70.27%, dependency-weighted completion 78.09%, and the
+  critical-path proxy is 85.71%. Checkpoint 160 is not yet due.
+- PR-260's exact frozen closeout candidate `cb258619...` passed its registered
+  schema-v3 independent review with all 11 cells and no findings. The run
+  closed normally at
+  `.agent-harness/runs/pr260-final-review-20260730-r1/RUN_SUMMARY.json`.
+- PR-261 adds the COMMON `CongruenceKinematics`,
+  `VelocityFrameBundle`, `GeometryState`, and `JointAnisotropyState`
+  contracts. Missing acceleration, velocity, Weyl, anisotropic-curvature, and
+  anisotropic-stress channels remain typed rather than becoming zeros.
+- The state binds frame, congruence, epoch/window, averaging scale, STF/vector
+  basis, explicit-c versus `c=1` acceleration normalization, polar/axial
+  parity, perturbative order, component content identities, and transfer
+  provenance. `delta_omega_k` remains distinct from anisotropic spatial
+  curvature.
+- The legacy adapter binds the exact source-state and semantic-authority
+  identities, source conventions, and one explicit beta role. Missing or
+  mismatched authority returns `ABSTAIN`; `DepartureState` remains unchanged.
+  COMMON replays PR-256 payloads without importing HTT.
+- Validation passes 25 focused tests, 96 adjacent regressions, 6 smoke tests,
+  10132/10191 collection with 59 deselected, strict 222-card DAG and mirror
+  checks, scoped claim lints, compileall, `pip check`, and whitespace checks.
+- PR-261 completion is valid only if the exact final closeout commit passes
+  the registered independent review at
+  `.agent-harness/runs/pr261-final-review-20260730-r1/`. A missing, stale, or
+  non-PASS result invalidates the transition.
+- PR-262 and PR-263 are the next parallel-capable programme nodes. Neither
+  may inherit a geometry/family claim: PR-262 owns typed functionals and
+  anchors, while PR-263 owns a still-`UNPROVEN` orbit catalogue. PR-172
+  remains blocked and PR-151 remains non-terminal background acquisition.
+
 ## 2026-07-30 - PR-260 vector/tensor programme intake conditional closeout
 
 This section supersedes older orchestration snapshots below.

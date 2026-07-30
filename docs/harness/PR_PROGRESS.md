@@ -2,6 +2,26 @@
 
 Update every five PRs with percent complete and blockers.
 
+## PR-261 conditional closeout (not a five-PR checkpoint)
+
+Date: 2026-07-30
+
+- Active DAG: 156/222 complete = 70.27%; dependency-weighted completion
+  78.09%; critical-path proxy 85.71%. Checkpoint 160 is not due.
+- The PR-260 frozen review passed and closed normally. PR-261 adds one named
+  scientific-support capability: a content-addressed three-layer state for
+  congruence kinematics, between-frame velocities, and partial geometry.
+- Validation passes 25 focused tests, 96 adjacent regressions, 6 smoke tests,
+  10132/10191 collection with 59 deselected, strict DAG/mirror gates, claim
+  scans, compileall, `pip check`, and whitespace checks.
+- Claim drift: none. Missing components stay typed; legacy beta requires exact
+  semantic authority; external transfer metadata remains transfer-conditional;
+  no native solver/atlas, geometry, posterior/evidence, MIO truth, or family
+  status is promoted.
+- Completion remains conditional on the exact schema-v3 frozen-candidate
+  review. When it passes, PR-262 and PR-263 become the next permitted parallel
+  pair. PR-172 and background PR-151 retain their prior states.
+
 ## Checkpoint 155 — PR-256 through PR-260
 
 Date: 2026-07-30

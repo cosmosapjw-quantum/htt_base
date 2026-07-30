@@ -267,7 +267,28 @@ def test_pr261_275_cards_match_revalidated_dag_and_common_contract() -> None:
         "scientific_status_effect"
     ] == "none_programme_registration_only"
     assert status["execution_resolutions"]["PR-260"]["public_use"] is False
-    assert set(EXPECTED_DEPENDENCIES) <= set(status["pending"])
+    completed_extension = tuple(
+        pr_id
+        for pr_id in CANONICAL_DAG_EXTENSION
+        if pr_id in status["completed"]
+    )
+    pending_extension = tuple(
+        pr_id
+        for pr_id in CANONICAL_DAG_EXTENSION
+        if pr_id in status["pending"]
+    )
+    assert "PR-261" in completed_extension
+    assert set(completed_extension).isdisjoint(pending_extension)
+    assert set(completed_extension) | set(pending_extension) == set(
+        EXPECTED_DEPENDENCIES
+    )
+    for pr_id in completed_extension:
+        assert set(EXPECTED_DEPENDENCIES[pr_id]) <= set(status["completed"])
+        resolution = status["execution_resolutions"][pr_id]
+        assert resolution["resolution"] == "COMPLETED_SUCCESS"
+        assert resolution["success_dependency_satisfied"] is True
+        assert resolution["scientific_status_after"] == "OPEN"
+        assert resolution["public_use"] is False
     assert all(
         status["execution_lane"][pr_id] == "defensible"
         for pr_id in EXPECTED_DEPENDENCIES
