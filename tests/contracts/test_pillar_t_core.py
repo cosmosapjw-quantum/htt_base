@@ -757,6 +757,19 @@ def test_tf_conditional_mutations_refuse() -> None:
             ),
             gradient_normalization=C1_GRADIENT,
         )
+    with pytest.raises(PillarTCoreProofError, match="shape must be finite"):
+        euler_slaving_shape(
+            mu=1.0,
+            w=0.0,
+            dimensionless_sound_speed_ratio=0.1,
+            eps_g=np.finfo(float).max,
+            theta=1.0,
+            units_convention=UnitsConvention.C_EQUALS_ONE_THETA_NORMALIZED,
+            acceleration_normalization=(
+                AccelerationNormalization.A_OVER_THETA_C_EQUALS_ONE
+            ),
+            gradient_normalization=C1_GRADIENT,
+        )
     with pytest.raises(PillarTCoreProofError, match="coefficient must be finite"):
         euler_slaving_shape(
             mu=1.0,

@@ -1107,7 +1107,12 @@ def euler_slaving_shape(
         raise PillarTCoreProofError(
             "branch-normalized coefficient must be finite"
         )
-    shape = 1.5 * coefficient * coefficient * float(eps_g) ** 2
+    try:
+        shape = 1.5 * coefficient * coefficient * float(eps_g) ** 2
+    except OverflowError as exc:
+        raise PillarTCoreProofError(
+            "conditional acceleration shape must be finite"
+        ) from exc
     if not math.isfinite(shape):
         raise PillarTCoreProofError(
             "conditional acceleration shape must be finite"
