@@ -2433,3 +2433,35 @@ FAIL envelopes. The fail-branch closeout binds those immutable receipts and
 addresses their provenance/harness findings without repairing the frozen
 contract after results. A later attempt must register a new contract hash and
 rerun all four blind axes; the current PASS envelopes are not reusable.
+
+## PR-259 — frozen-lineage successor chronology repair (2026-07-30)
+
+Change classification: COMMON chronology contract, focused harness portability,
+canonical DAG/status bootstrap, tests, and review policy. Historical PR-124
+specification/receipt/module bytes are unchanged. No numerical science result,
+transfer output, observed data, likelihood, posterior, evidence term, MIO
+certificate, geometry label, native-solver result, or family identification is
+created or promoted.
+
+| Command | CWD | Result | Notes |
+| --- | --- | --- | --- |
+| `python3 -B scripts/codex_harness/run_pr259_chronology.py focused` | temporary merged worktree and candidate worktree | PASS | `64 passed`; exact PR-124 historical pin, PR-252 successor edge, mutation refusals, and policy routing. |
+| `python3 -B scripts/codex_harness/run_pr259_chronology.py smoke` | temporary merged worktree and candidate worktree | PASS | `6 passed`, `10141 deselected`; eight legacy deprecation warnings retained. |
+| `PYTHONPATH=htt/src:htt venv/bin/python -B -m pytest -p no:cacheprovider --collect-only -q` | candidate worktree | PASS | `10088/10147 collected`, `59 deselected`; zero collection errors. |
+| `sync_pr_dag_mirrors.py --check` | candidate and temporary merged worktrees | PASS | Canonical and compatibility mirrors are synchronized. |
+| `validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml` | candidate and temporary merged worktrees | PASS | `207 PRs, DAG valid`; bootstrap contains PR-259 and PR-260 only. |
+| first `integration_rehearsal.py create` on candidate `33a4c9fc` | temporary merged worktree, `/usr/bin/python3` | FAIL, REPRODUCED | Direct pytest policy argv could not import `common` after the consumer cleared `PYTHONPATH`. Editable-venv success was rejected as non-hermetic evidence. |
+| corrected `integration_rehearsal.py create` on candidate `de1b8a81` | temporary merged worktree, `/usr/bin/python3` | PASS | Focused, DAG, mirror, and smoke policy cells all passed; receipt SHA-256 `52395eb6049037f51e70d71d2f41d2cdb9d549d9624c3a2e1dc7be135fdcdbe4`. |
+| changed-surface `check_claim_language.py ... --dry-run --format json` | candidate worktree | PASS | Zero issues. |
+| repo-wide `check_no_mock_results.py .` | candidate worktree | FAIL, PRE-EXISTING | 108 historical `calibration_factor`/mock-marker hits. Scoped PR-259 implementation, test, runner, and policy search returned zero matches. |
+| `git diff --check` | candidate worktree | PASS | No whitespace errors. |
+
+Scientific/claim impact: none. The registered transition is a chronology edge,
+not a rewrite of the historical pin or a scientific successor verdict. The
+canonical status keeps scientific status `OPEN`, artifact mode
+`diagnostic_only`, and `public_use=false`.
+
+Independent review authority: the exact final closeout candidate must pass the
+registered schema-v3 reviewer run
+`.agent-harness/runs/pr259-final-review-20260730-r3/RUN_SUMMARY.json`; any
+missing, malformed, or non-PASS result invalidates this ledger closeout.
