@@ -106,6 +106,7 @@ _LAW_TOKEN = object()
 _DRAWS_TOKEN = object()
 _OBJECTIVE_TOKEN = object()
 _CALIBRATION_TOKEN = object()
+_ENVELOPE_CERTIFICATE_TOKEN = object()
 _COVERAGE_TOKEN = object()
 _PROFILE_TOKEN = object()
 _NULL_TOKEN = object()
@@ -795,9 +796,107 @@ class FiniteNullCoverageReport:
 
 
 @dataclass(frozen=True)
+class EnvelopeCertificateReport:
+    """Proof-bound authority for endpoint evaluation over an identified set.
+
+    A bare :class:`EnvelopeCertificate` label is descriptive only.  It cannot
+    authorize vertex enumeration.  This report binds an admitting label to
+    one functional, one exact identified set, one proof artifact, and, for a
+    monotonicity claim, one direction per coordinate.
+    """
+
+    certificate_id: str
+    certificate: EnvelopeCertificate
+    functional_id: str
+    identified_set_id: str
+    proof_artifact_id: str
+    proof_class: str
+    monotonic_directions: tuple[int, ...]
+    assumptions: tuple[str, ...]
+    _construction_token: InitVar[object] = None
+    _identity_seal: str = field(init=False, repr=False, compare=False)
+
+    def __post_init__(self, _construction_token: object) -> None:
+        if _construction_token is not _ENVELOPE_CERTIFICATE_TOKEN:
+            raise ConditionalExceedanceError(
+                "EnvelopeCertificateReport must be factory-built"
+            )
+        for name in (
+            "certificate_id",
+            "functional_id",
+            "identified_set_id",
+            "proof_artifact_id",
+        ):
+            _text(getattr(self, name), name)
+        if self.proof_class not in {"U", "TC", "ST"}:
+            raise ConditionalExceedanceError(
+                "proof_class must be one of U, TC, or ST"
+            )
+        if type(self.certificate) is not EnvelopeCertificate:
+            raise ConditionalExceedanceError(
+                "certificate must use the registered vocabulary"
+            )
+        directions = tuple(self.monotonic_directions)
+        if any(
+            isinstance(value, bool)
+            or not isinstance(value, Integral)
+            or int(value) not in {-1, 1}
+            for value in directions
+        ):
+            raise ConditionalExceedanceError(
+                "monotonic_directions must contain only -1 or +1"
+            )
+        assumptions = _texts(self.assumptions, "assumptions")
+        object.__setattr__(
+            self,
+            "monotonic_directions",
+            tuple(int(value) for value in directions),
+        )
+        object.__setattr__(self, "assumptions", assumptions)
+        object.__setattr__(
+            self,
+            "_identity_seal",
+            _sha256_payload(self._payload_unchecked()),
+        )
+
+    @property
+    def content_id(self) -> str:
+        self._assert_identity_sealed()
+        return self._identity_seal
+
+    def _payload_unchecked(self) -> dict[str, object]:
+        return {
+            "assumptions": list(self.assumptions),
+            "certificate": self.certificate.value,
+            "certificate_id": self.certificate_id,
+            "functional_id": self.functional_id,
+            "identified_set_id": self.identified_set_id,
+            "monotonic_directions": list(self.monotonic_directions),
+            "proof_artifact_id": self.proof_artifact_id,
+            "proof_class": self.proof_class,
+            "schema": "HTT_ENVELOPE_CERTIFICATE_REPORT_V1",
+        }
+
+    def _assert_identity_sealed(self) -> None:
+        _assert_sealed(
+            self._payload_unchecked(),
+            self._identity_seal,
+            name="envelope certificate",
+        )
+
+    def as_payload(self) -> dict[str, object]:
+        self._assert_identity_sealed()
+        return {
+            **self._payload_unchecked(),
+            "content_id": self._identity_seal,
+        }
+
+
+@dataclass(frozen=True)
 class ConditionalExceedanceProfile:
     profile_id: str
     functional_id: str
+    sample_unit: str | None
     thresholds: tuple[float, ...]
     lower: tuple[float, ...] | None
     upper: tuple[float, ...] | None
@@ -812,6 +911,7 @@ class ConditionalExceedanceProfile:
     covariance_id: str | None
     calibration_id: str | None
     identified_set_id: str | None
+    envelope_certificate_id: str | None
     refusal_reasons: tuple[str, ...]
     claim_ceiling: str = CONDITIONAL_EXCEEDANCE_CLAIM_CEILING
     allowed_use: tuple[str, ...] = CONDITIONAL_EXCEEDANCE_ALLOWED_USE
@@ -826,6 +926,8 @@ class ConditionalExceedanceProfile:
             )
         for name in ("profile_id", "functional_id", "conditioning_id"):
             _text(getattr(self, name), name)
+        if self.sample_unit is not None:
+            _text(self.sample_unit, "sample_unit")
         thresholds = _thresholds(self.thresholds)
         if type(self.status) is not ExceedanceStatus:
             raise ConditionalExceedanceError(
@@ -885,6 +987,10 @@ class ConditionalExceedanceProfile:
                 raise ConditionalExceedanceError(
                     "defined profile requires one explicit probability law"
                 )
+            if self.sample_unit is None:
+                raise ConditionalExceedanceError(
+                    "defined profile requires one explicit sample unit"
+                )
         elif any(value is not None for value in numeric):
             raise ConditionalExceedanceError(
                 "refusal profiles must not carry numeric probabilities"
@@ -908,6 +1014,7 @@ class ConditionalExceedanceProfile:
             "covariance_id",
             "calibration_id",
             "identified_set_id",
+            "envelope_certificate_id",
         ):
             value = getattr(self, name)
             if value is not None:
@@ -957,6 +1064,7 @@ class ConditionalExceedanceProfile:
             ),
             "covariance_id": self.covariance_id,
             "draws_id": self.draws_id,
+            "envelope_certificate_id": self.envelope_certificate_id,
             "forbidden_use": list(self.forbidden_use),
             "functional_id": self.functional_id,
             "identified_set_id": self.identified_set_id,
@@ -969,7 +1077,8 @@ class ConditionalExceedanceProfile:
             "sampling_law": (
                 None if self.sampling_law is None else self.sampling_law.value
             ),
-            "schema": "HTT_CONDITIONAL_EXCEEDANCE_PROFILE_V1",
+            "sample_unit": self.sample_unit,
+            "schema": "HTT_CONDITIONAL_EXCEEDANCE_PROFILE_V2",
             "status": self.status.value,
             "thresholds": list(self.thresholds),
             "upper": None if self.upper is None else list(self.upper),
@@ -1057,7 +1166,7 @@ class NullCalibratedExceedance:
 @dataclass(frozen=True)
 class PosteriorExceedance:
     profile: ConditionalExceedanceProfile
-    calibration: PosteriorCalibrationReport
+    calibration: PosteriorCalibrationReport | None
     owner: str = "HTT"
     _construction_token: InitVar[object] = None
     _identity_seal: str = field(init=False, repr=False, compare=False)
@@ -1071,12 +1180,24 @@ class PosteriorExceedance:
             raise ConditionalExceedanceError(
                 "profile must be a ConditionalExceedanceProfile"
             )
-        if type(self.calibration) is not PosteriorCalibrationReport:
+        if self.calibration is not None and type(
+            self.calibration
+        ) is not PosteriorCalibrationReport:
             raise ConditionalExceedanceError(
-                "calibration must be a PosteriorCalibrationReport"
+                "calibration must be a PosteriorCalibrationReport or None"
             )
         self.profile.as_payload()
-        self.calibration.as_payload()
+        if self.calibration is None:
+            if (
+                self.profile.status
+                is not ExceedanceStatus.POSTERIOR_CALIBRATION_REQUIRED
+                or self.profile.calibration_id is not None
+            ):
+                raise ConditionalExceedanceError(
+                    "missing calibration requires a typed calibration refusal"
+                )
+        else:
+            self.calibration.as_payload()
         if self.profile.lane is not ExceedanceLane.HTT_POSTERIOR:
             raise ConditionalExceedanceError(
                 "posterior exceedance is HTT-posterior owned"
@@ -1091,10 +1212,14 @@ class PosteriorExceedance:
 
     def _payload_unchecked(self) -> dict[str, object]:
         return {
-            "calibration": self.calibration.as_payload(),
+            "calibration": (
+                None
+                if self.calibration is None
+                else self.calibration.as_payload()
+            ),
             "owner": self.owner,
             "profile": self.profile.as_payload(),
-            "schema": "HTT_POSTERIOR_EXCEEDANCE_V1",
+            "schema": "HTT_POSTERIOR_EXCEEDANCE_V2",
         }
 
     def _assert_identity_sealed(self) -> None:
@@ -1106,7 +1231,8 @@ class PosteriorExceedance:
 
     def as_payload(self) -> dict[str, object]:
         self.profile.as_payload()
-        self.calibration.as_payload()
+        if self.calibration is not None:
+            self.calibration.as_payload()
         self._assert_identity_sealed()
         return {
             **self._payload_unchecked(),
@@ -1136,6 +1262,7 @@ def _point_profile(
     return ConditionalExceedanceProfile(
         profile_id=profile_id,
         functional_id=functional_id,
+        sample_unit=draws.sample_unit,
         thresholds=thresholds,
         lower=values,
         upper=values,
@@ -1150,6 +1277,7 @@ def _point_profile(
         covariance_id=law.covariance_id,
         calibration_id=calibration_id,
         identified_set_id=None,
+        envelope_certificate_id=None,
         refusal_reasons=(),
         _construction_token=_PROFILE_TOKEN,
     )
@@ -1167,10 +1295,12 @@ def _refusal_profile(
     draws: SamplingDraws | None = None,
     calibration_id: str | None = None,
     identified_set_id: str | None = None,
+    envelope_certificate_id: str | None = None,
 ) -> ConditionalExceedanceProfile:
     return ConditionalExceedanceProfile(
         profile_id=profile_id,
         functional_id=functional_id,
+        sample_unit=None if draws is None else draws.sample_unit,
         thresholds=_thresholds(thresholds),
         lower=None,
         upper=None,
@@ -1187,6 +1317,7 @@ def _refusal_profile(
         covariance_id=None if law is None else law.covariance_id,
         calibration_id=calibration_id,
         identified_set_id=identified_set_id,
+        envelope_certificate_id=envelope_certificate_id,
         refusal_reasons=(reason,),
         _construction_token=_PROFILE_TOKEN,
     )
@@ -1218,7 +1349,7 @@ def build_null_calibrated_exceedance(
     law: SamplingLawSpec,
     draws: SamplingDraws | LikelihoodObjective,
     conditioning_id: str,
-    alpha: object = 0.05,
+    alpha: object,
 ) -> NullCalibratedExceedance:
     if type(law) is not SamplingLawSpec:
         raise TypeError("law must be an exact SamplingLawSpec")
@@ -1302,16 +1433,19 @@ def build_posterior_exceedance(
     law: SamplingLawSpec,
     draws: SamplingDraws | LikelihoodObjective,
     conditioning_id: str,
-    calibration: PosteriorCalibrationReport,
+    calibration: PosteriorCalibrationReport | None = None,
 ) -> PosteriorExceedance:
     if type(law) is not SamplingLawSpec:
         raise TypeError("law must be an exact SamplingLawSpec")
-    if type(calibration) is not PosteriorCalibrationReport:
+    if calibration is not None and type(
+        calibration
+    ) is not PosteriorCalibrationReport:
         raise TypeError(
-            "calibration must be an exact PosteriorCalibrationReport"
+            "calibration must be an exact PosteriorCalibrationReport or None"
         )
     law.as_payload()
-    calibration.as_payload()
+    if calibration is not None:
+        calibration.as_payload()
     if type(draws) is not SamplingDraws:
         raise ConditionalExceedanceError(
             "posterior exceedance requires posterior draws, not an optimizer "
@@ -1334,7 +1468,19 @@ def build_posterior_exceedance(
             "draws are not bound to the declared posterior law"
         )
     resolved_thresholds = _thresholds(thresholds)
-    if calibration.status is not PosteriorCalibrationStatus.PASSED:
+    if calibration is None:
+        profile = _refusal_profile(
+            profile_id=profile_id,
+            functional_id=functional_id,
+            thresholds=resolved_thresholds,
+            status=ExceedanceStatus.POSTERIOR_CALIBRATION_REQUIRED,
+            conditioning_id=conditioning_id,
+            reason="posterior calibration artifact is missing",
+            law=law,
+            draws=draws,
+            calibration_id=None,
+        )
+    elif calibration.status is not PosteriorCalibrationStatus.PASSED:
         profile = _refusal_profile(
             profile_id=profile_id,
             functional_id=functional_id,
@@ -1415,6 +1561,44 @@ def _identified_set_id(value: IdentifiedDepartureSet) -> str:
     )
 
 
+def build_envelope_certificate_report(
+    *,
+    certificate_id: str,
+    certificate: EnvelopeCertificate | str,
+    functional_id: str,
+    identified_set: IdentifiedDepartureSet,
+    proof_artifact_id: str,
+    proof_class: str,
+    monotonic_directions: Sequence[int] = (),
+    assumptions: Sequence[str],
+) -> EnvelopeCertificateReport:
+    """Bind an endpoint certificate to one exact set and proof artifact."""
+
+    identified = _clone_identified_set(identified_set)
+    resolved = _enum(certificate, EnvelopeCertificate, "certificate")
+    directions = tuple(monotonic_directions)
+    if resolved is EnvelopeCertificate.MONOTONE:
+        if len(directions) != len(identified.coordinate_names):
+            raise ConditionalExceedanceError(
+                "MONOTONE certificates require one direction per coordinate"
+            )
+    elif directions:
+        raise ConditionalExceedanceError(
+            "monotonic_directions are allowed only for MONOTONE certificates"
+        )
+    return EnvelopeCertificateReport(
+        certificate_id=certificate_id,
+        certificate=resolved,  # type: ignore[arg-type]
+        functional_id=functional_id,
+        identified_set_id=_identified_set_id(identified),
+        proof_artifact_id=proof_artifact_id,
+        proof_class=proof_class,
+        monotonic_directions=tuple(directions),
+        assumptions=tuple(assumptions),
+        _construction_token=_ENVELOPE_CERTIFICATE_TOKEN,
+    )
+
+
 def identified_vertex_id(
     coordinate_names: Sequence[str],
     vertex: Sequence[object],
@@ -1440,7 +1624,7 @@ def build_conditional_exceedance_envelope(
     thresholds: Sequence[object],
     identified_set: IdentifiedDepartureSet,
     profiles_by_vertex: Mapping[str, ConditionalExceedanceProfile],
-    certificate: EnvelopeCertificate | str,
+    certificate: EnvelopeCertificateReport | EnvelopeCertificate | str,
     conditioning_id: str,
 ) -> ConditionalExceedanceProfile:
     """Build a vertex envelope only under the exact registered conditions."""
@@ -1448,11 +1632,20 @@ def build_conditional_exceedance_envelope(
     identified = _clone_identified_set(identified_set)
     set_id = _identified_set_id(identified)
     resolved_thresholds = _thresholds(thresholds)
-    resolved_certificate = _enum(
-        certificate,
-        EnvelopeCertificate,
-        "certificate",
+    certificate_report = (
+        certificate
+        if type(certificate) is EnvelopeCertificateReport
+        else None
     )
+    if certificate_report is not None:
+        certificate_report.as_payload()
+        resolved_certificate = certificate_report.certificate
+    else:
+        resolved_certificate = _enum(
+            certificate,
+            EnvelopeCertificate,
+            "certificate",
+        )
     if identified.status is IdentificationStatus.EMPTY:
         return _refusal_profile(
             profile_id=profile_id,
@@ -1462,6 +1655,11 @@ def build_conditional_exceedance_envelope(
             conditioning_id=conditioning_id,
             reason="empty identified set has no conditional exceedance",
             identified_set_id=set_id,
+            envelope_certificate_id=(
+                None
+                if certificate_report is None
+                else certificate_report.content_id
+            ),
         )
     if (
         identified.recession_directions
@@ -1486,6 +1684,32 @@ def build_conditional_exceedance_envelope(
             conditioning_id=conditioning_id,
             reason=reason,
             identified_set_id=set_id,
+            envelope_certificate_id=(
+                None
+                if certificate_report is None
+                else certificate_report.content_id
+            ),
+        )
+    if certificate_report is None:
+        return _refusal_profile(
+            profile_id=profile_id,
+            functional_id=functional_id,
+            thresholds=resolved_thresholds,
+            status=ExceedanceStatus.OPTIMIZER_REQUIRED,
+            conditioning_id=conditioning_id,
+            reason=(
+                "an admitting label requires a factory-built, proof-bound "
+                "EnvelopeCertificateReport"
+            ),
+            identified_set_id=set_id,
+        )
+    if (
+        certificate_report.identified_set_id != set_id
+        or certificate_report.functional_id != functional_id
+    ):
+        raise ConditionalExceedanceError(
+            "envelope certificate is not bound to this functional and "
+            "identified set"
         )
     expected_ids = {
         identified_vertex_id(identified.coordinate_names, vertex)
@@ -1504,6 +1728,10 @@ def build_conditional_exceedance_envelope(
     for profile in profiles:
         profile.as_payload()
     first = profiles[0]
+    if any(profile.sample_unit != first.sample_unit for profile in profiles):
+        raise ConditionalExceedanceError(
+            "vertex profiles must use one identical sample unit"
+        )
     if any(
         profile.status is not ExceedanceStatus.DEFINED_POINT
         or profile.thresholds != resolved_thresholds
@@ -1520,6 +1748,11 @@ def build_conditional_exceedance_envelope(
             "vertex profiles must share one defined law, functional, "
             "threshold, and covariance contract"
         )
+    if first.conditioning_source is not ConditioningSource.IDENTIFIED_SET:
+        raise ConditionalExceedanceError(
+            "vertex profiles must already use an IDENTIFIED_SET-conditioned "
+            "sampling law"
+        )
     assert all(profile.point is not None for profile in profiles)
     columns = tuple(zip(*(profile.point for profile in profiles), strict=True))
     lower = tuple(min(column) for column in columns)
@@ -1533,13 +1766,14 @@ def build_conditional_exceedance_envelope(
     return ConditionalExceedanceProfile(
         profile_id=profile_id,
         functional_id=functional_id,
+        sample_unit=first.sample_unit,
         thresholds=resolved_thresholds,
         lower=lower,
         upper=upper,
         point=point,
         status=status,
         sampling_law=first.sampling_law,
-        conditioning_source=ConditioningSource.IDENTIFIED_SET,
+        conditioning_source=first.conditioning_source,
         lane=first.lane,
         law_spec_id=first.law_spec_id,
         draws_id=None,
@@ -1547,6 +1781,7 @@ def build_conditional_exceedance_envelope(
         covariance_id=first.covariance_id,
         calibration_id=first.calibration_id,
         identified_set_id=set_id,
+        envelope_certificate_id=certificate_report.content_id,
         refusal_reasons=(),
         _construction_token=_PROFILE_TOKEN,
     )
@@ -1560,6 +1795,7 @@ __all__ = [
     "ConditionalExceedanceProfile",
     "ConditioningSource",
     "EnvelopeCertificate",
+    "EnvelopeCertificateReport",
     "ExceedanceLane",
     "ExceedanceStatus",
     "FiniteNullCoverageReport",
@@ -1572,6 +1808,7 @@ __all__ = [
     "SamplingLaw",
     "SamplingLawSpec",
     "build_conditional_exceedance_envelope",
+    "build_envelope_certificate_report",
     "build_likelihood_objective",
     "build_missing_probability_law_profile",
     "build_null_calibrated_exceedance",

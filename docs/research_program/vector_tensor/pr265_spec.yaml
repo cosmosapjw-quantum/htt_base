@@ -70,14 +70,20 @@ tail_definition:
   monotonicity: exceedance is non-increasing over thresholds
 finite_null_coverage:
   method: DKW_TWO_SIDED_SIMULTANEOUS
-  alpha: explicitly supplied in the open interval
+  alpha: mandatory keyword with no hidden default, explicitly supplied in the open interval
   minimum_draws: 2
 posterior_calibration:
   prerequisite: explicit PosteriorCalibrationReport
   numeric_profile_requires: PASSED
-  failed_or_missing: POSTERIOR_CALIBRATION_REQUIRED with no numeric probability
+  failed_or_missing: typed POSTERIOR_CALIBRATION_REQUIRED with no numeric probability
 partial_identification:
   identified_set_authority: PR-250 IdentifiedDepartureSet vertex-recession form
+  profile_unit: preserved from SamplingDraws and identical at every vertex
+  conditioning: every vertex profile already uses IDENTIFIED_SET
+  admitting_certificate: >-
+    factory-built EnvelopeCertificateReport bound to the exact functional,
+    identified set, proof artifact, proof class, assumptions, and monotonic
+    directions when applicable
   vertex_enumeration_requires:
     - convex bounded identified set with no recession direction
     - MONOTONE certificate or both upper quasi-convex and lower quasi-concave

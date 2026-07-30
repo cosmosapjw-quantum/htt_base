@@ -12,9 +12,10 @@ historical scalar vocabulary:
 * the object named ``OccupancyMeasure`` is only an empirical level-set mass
   over eligible diagnostic samples.  It is not physical occupancy.
 
-``Pi`` and the depth-path successor to ``G_F`` are intentionally unavailable
-until PR-265 and PR-266.  The legacy view preserves their historical values
-without silently granting them the semantics of those future typed objects.
+The structured ``Pi`` successor lives in
+:mod:`common.conditional_exceedance`; the depth-path successor to ``G_F``
+remains separate until PR-266.  The legacy scalar view preserves historical
+values without silently injecting either structured object into scalar slots.
 
 All public results are diagnostic-only.  This module contains no likelihood,
 posterior, evidence, native-solver, geometry-identification, or Bianchi-family
@@ -1557,8 +1558,9 @@ def build_legacy_xqpi_fg_view(
         )
     if successor_values["Pi"] is not None or successor_values["G_F"] is not None:
         raise TensorDepartureStatisticsError(
-            "Pi and G_F typed successors remain unavailable until PR-265 "
-            "and PR-266"
+            "structured Pi and G_F remain unavailable to the legacy scalar "
+            "view; Pi uses its separate typed contract and the G_F depth-path "
+            "successor remains unavailable until PR-266"
         )
     checked_tolerance = _nonnegative(tolerance, "tolerance")
     legacy = tuple(

@@ -18,6 +18,7 @@ from common.conditional_exceedance import (
     PosteriorCalibrationStatus,
     SamplingLaw,
     build_conditional_exceedance_envelope,
+    build_envelope_certificate_report,
     build_likelihood_objective,
     build_missing_probability_law_profile,
     build_null_calibrated_exceedance,
@@ -68,13 +69,19 @@ def _posterior_law():
     )
 
 
-def _draws(law, values, *, suffix: str = "BASE"):
+def _draws(
+    law,
+    values,
+    *,
+    suffix: str = "BASE",
+    sample_unit: str = "dimensionless functional value",
+):
     return build_sampling_draws(
         draws_id=f"PR265-DRAWS-{suffix}",
         law=law,
         values=values,
         source_artifact_id=f"PR265-SOURCE-{suffix}",
-        sample_unit="dimensionless functional value",
+        sample_unit=sample_unit,
     )
 
 
@@ -105,6 +112,24 @@ def _identified(
         null_kinds=(NullKind.NONE,),
         assumptions=("PR265 convex vertex-recession representation",),
         status=status,
+    )
+
+
+def _envelope_certificate(
+    identified,
+    *,
+    functional_id: str = "pr264.tr_sigma2",
+    certificate: EnvelopeCertificate = EnvelopeCertificate.MONOTONE,
+):
+    return build_envelope_certificate_report(
+        certificate_id=f"PR265-CERT-{functional_id}",
+        certificate=certificate,
+        functional_id=functional_id,
+        identified_set=identified,
+        proof_artifact_id=f"PR265-PROOF-{functional_id}",
+        proof_class="U",
+        monotonic_directions=(1,) if certificate is EnvelopeCertificate.MONOTONE else (),
+        assumptions=("endpoint certificate is fixture-bound and preregistered",),
     )
 
 
@@ -241,6 +266,7 @@ def test_profile_likelihood_is_an_objective_not_sampling_draws() -> None:
             law=law,
             draws=objective,
             conditioning_id="PR265-PROFILED",
+            alpha=0.05,
         )
 
 
@@ -278,6 +304,19 @@ def test_empirical_null_profile_is_tail_monotone_with_finite_dkw_band() -> None:
         assert lower <= truth <= upper
 
 
+def test_finite_null_alpha_must_be_explicit() -> None:
+    law = _null_law()
+    with pytest.raises(TypeError, match="alpha"):
+        build_null_calibrated_exceedance(
+            profile_id="PR265-HIDDEN-ALPHA",
+            functional_id="pr264.tr_sigma2",
+            thresholds=(0.2,),
+            law=law,
+            draws=_draws(law, (0.1, 0.3), suffix="HIDDEN-ALPHA"),
+            conditioning_id="PR265-HIDDEN-ALPHA",
+        )
+
+
 def test_strict_tail_rule_and_finite_draw_refusal_are_explicit() -> None:
     law = _null_law()
     exact = build_null_calibrated_exceedance(
@@ -287,6 +326,7 @@ def test_strict_tail_rule_and_finite_draw_refusal_are_explicit() -> None:
         law=law,
         draws=_draws(law, (0.5, 0.6), suffix="STRICT"),
         conditioning_id="PR265-STRICT",
+        alpha=0.05,
     )
     assert exact.profile.point == (0.5,)
     insufficient = build_null_calibrated_exceedance(
@@ -296,6 +336,7 @@ def test_strict_tail_rule_and_finite_draw_refusal_are_explicit() -> None:
         law=law,
         draws=_draws(law, (0.6,), suffix="ONE"),
         conditioning_id="PR265-ONE",
+        alpha=0.05,
     )
     assert insufficient.profile.status is ExceedanceStatus.INSUFFICIENT_DRAWS
     assert insufficient.profile.point is None
@@ -330,6 +371,19 @@ def test_posterior_exceedance_requires_explicit_law_and_passed_calibration() -> 
         ExceedanceStatus.POSTERIOR_CALIBRATION_REQUIRED
     )
     assert failed.profile.point is None
+    missing = build_posterior_exceedance(
+        profile_id="PR265-POSTERIOR-MISSING-CALIBRATION",
+        functional_id="pr264.tr_sigma2",
+        thresholds=(0.15, 0.5),
+        law=law,
+        draws=draws,
+        conditioning_id="PR265-POSTERIOR-ETA",
+    )
+    assert missing.calibration is None
+    assert missing.profile.status is (
+        ExceedanceStatus.POSTERIOR_CALIBRATION_REQUIRED
+    )
+    assert missing.profile.point is None
 
 
 def test_missing_probability_law_returns_typed_refusal_without_pi() -> None:
@@ -362,6 +416,7 @@ def test_bounded_monotone_identified_set_yields_only_an_envelope() -> None:
             law=law,
             draws=_draws(law, values, suffix=f"VERTEX-{vertex[0]}"),
             conditioning_id=f"eta={vertex[0]}",
+            alpha=0.05,
         )
         profiles[
             identified_vertex_id(identified.coordinate_names, vertex)
@@ -372,7 +427,7 @@ def test_bounded_monotone_identified_set_yields_only_an_envelope() -> None:
         thresholds=(0.2, 0.5, 0.8),
         identified_set=identified,
         profiles_by_vertex=profiles,
-        certificate=EnvelopeCertificate.MONOTONE,
+        certificate=_envelope_certificate(identified),
         conditioning_id="PR265-ETA-SET",
     )
     assert envelope.status is ExceedanceStatus.DEFINED_ENVELOPE
@@ -380,6 +435,79 @@ def test_bounded_monotone_identified_set_yields_only_an_envelope() -> None:
     assert envelope.lower == pytest.approx((0.0, 0.0, 0.0))
     assert envelope.upper == pytest.approx((2 / 3, 1 / 3, 1 / 3))
     assert envelope.identified_set_id is not None
+    assert envelope.envelope_certificate_id is not None
+    assert envelope.sample_unit == "dimensionless functional value"
+
+
+def test_envelope_rejects_conditioning_relabel_and_mixed_units() -> None:
+    identified = _identified()
+    certificate = _envelope_certificate(identified)
+    injected = _null_law()
+    injected_profiles = {}
+    for vertex in identified.vertices:
+        result = build_null_calibrated_exceedance(
+            profile_id=f"PR265-INJECTED-{vertex[0]}",
+            functional_id="pr264.tr_sigma2",
+            thresholds=(0.2,),
+            law=injected,
+            draws=_draws(
+                injected,
+                (0.1, 0.3),
+                suffix=f"INJECTED-{vertex[0]}",
+            ),
+            conditioning_id=f"eta={vertex[0]}",
+            alpha=0.05,
+        )
+        injected_profiles[
+            identified_vertex_id(identified.coordinate_names, vertex)
+        ] = result.profile
+    with pytest.raises(ConditionalExceedanceError, match="IDENTIFIED_SET"):
+        build_conditional_exceedance_envelope(
+            profile_id="PR265-NO-CONDITIONING-RELABEL",
+            functional_id="pr264.tr_sigma2",
+            thresholds=(0.2,),
+            identified_set=identified,
+            profiles_by_vertex=injected_profiles,
+            certificate=certificate,
+            conditioning_id="PR265-ETA-SET",
+        )
+
+    conditional = _null_law(
+        conditioning=ConditioningSource.IDENTIFIED_SET
+    )
+    mixed_profiles = {}
+    for vertex, unit in zip(
+        identified.vertices,
+        ("kelvin", "meter"),
+        strict=True,
+    ):
+        result = build_null_calibrated_exceedance(
+            profile_id=f"PR265-UNIT-{vertex[0]}",
+            functional_id="pr264.tr_sigma2",
+            thresholds=(0.2,),
+            law=conditional,
+            draws=_draws(
+                conditional,
+                (0.1, 0.3),
+                suffix=f"UNIT-{vertex[0]}",
+                sample_unit=unit,
+            ),
+            conditioning_id=f"eta={vertex[0]}",
+            alpha=0.05,
+        )
+        mixed_profiles[
+            identified_vertex_id(identified.coordinate_names, vertex)
+        ] = result.profile
+    with pytest.raises(ConditionalExceedanceError, match="sample unit"):
+        build_conditional_exceedance_envelope(
+            profile_id="PR265-MIXED-UNITS",
+            functional_id="pr264.tr_sigma2",
+            thresholds=(0.2,),
+            identified_set=identified,
+            profiles_by_vertex=mixed_profiles,
+            certificate=certificate,
+            conditioning_id="PR265-ETA-SET",
+        )
 
 
 def test_quasi_convex_upper_alone_cannot_fabricate_lower_endpoint() -> None:
@@ -395,6 +523,53 @@ def test_quasi_convex_upper_alone_cannot_fabricate_lower_endpoint() -> None:
     assert refusal.status is ExceedanceStatus.OPTIMIZER_REQUIRED
     assert refusal.lower is None
     assert "upper and lower" in refusal.refusal_reasons[0]
+
+    identified = _identified()
+    law = _null_law(conditioning=ConditioningSource.IDENTIFIED_SET)
+    eta_squared_profiles = {}
+    for vertex in identified.vertices:
+        result = build_null_calibrated_exceedance(
+            profile_id=f"PR265-ETA2-{vertex[0]}",
+            functional_id="eta_squared_counterexample",
+            thresholds=(0.5,),
+            law=law,
+            draws=_draws(
+                law,
+                (1.0, 1.0),
+                suffix=f"ETA2-{vertex[0]}",
+            ),
+            conditioning_id=f"eta={vertex[0]}",
+            alpha=0.05,
+        )
+        eta_squared_profiles[
+            identified_vertex_id(identified.coordinate_names, vertex)
+        ] = result.profile
+    bare_label = build_conditional_exceedance_envelope(
+        profile_id="PR265-ETA2-BARE-MONOTONE",
+        functional_id="eta_squared_counterexample",
+        thresholds=(0.5,),
+        identified_set=identified,
+        profiles_by_vertex=eta_squared_profiles,
+        certificate=EnvelopeCertificate.MONOTONE,
+        conditioning_id="eta in conv{-1,+1}",
+    )
+    assert bare_label.status is ExceedanceStatus.OPTIMIZER_REQUIRED
+    assert bare_label.lower is None
+    assert "proof-bound" in bare_label.refusal_reasons[0]
+
+
+def test_envelope_certificate_is_exact_and_mutation_sealed() -> None:
+    identified = _identified()
+    certificate = _envelope_certificate(identified)
+    assert certificate.identified_set_id.startswith("sha256:")
+    assert certificate.content_id.startswith("sha256:")
+    object.__setattr__(
+        certificate,
+        "proof_artifact_id",
+        "PR265-FORGED-PROOF",
+    )
+    with pytest.raises(ConditionalExceedanceError, match="identity drifted"):
+        certificate.as_payload()
 
 
 def test_unbounded_and_empty_identified_sets_never_return_one_pi() -> None:
@@ -452,6 +627,7 @@ def test_post_construction_law_objective_and_result_mutations_are_refused(
         law=law,
         draws=draws,
         conditioning_id="PR265-MUTATION",
+        alpha=0.05,
     )
     posterior_law = _posterior_law()
     calibration = _calibration()
@@ -484,6 +660,7 @@ def test_post_construction_law_objective_and_result_mutations_are_refused(
                 law=law,
                 draws=draws,
                 conditioning_id="PR265-FORGED",
+                alpha=0.05,
             )
     elif target == "draws":
         object.__setattr__(draws, "values", (999.0,))
@@ -495,6 +672,7 @@ def test_post_construction_law_objective_and_result_mutations_are_refused(
                 law=law,
                 draws=draws,
                 conditioning_id="PR265-FORGED",
+                alpha=0.05,
             )
     elif target == "profile":
         object.__setattr__(result.profile, "point", (0.99,))
