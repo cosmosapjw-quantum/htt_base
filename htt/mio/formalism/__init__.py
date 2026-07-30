@@ -30,6 +30,19 @@ from common.statistical_foundations import (
     SectorStress,
     SummaryDepartureState,
 )
+from common.tensor_functionals import (
+    FunctionalAdmissibilityReport,
+    FunctionalAnchorReport,
+    FunctionalCodomainReport,
+    FunctionalDomainReport,
+    FunctionalStressReport,
+    TensorFunctionalOperator,
+    TensorFunctionalResult,
+    TensorFunctionalSpec,
+    build_tensor_functional_spec,
+    evaluate_tensor_functional,
+    revalidate_tensor_functional_result,
+)
 
 from .bound_pushforward import (
     BoundToPiDominationResult,
@@ -81,6 +94,11 @@ __all__ = [
     "DiagnosticScalarReport",
     "DynamicBudgetBarrierResult",
     "FiniteCoverUnionBoundResult",
+    "FunctionalAdmissibilityReport",
+    "FunctionalAnchorReport",
+    "FunctionalCodomainReport",
+    "FunctionalDomainReport",
+    "FunctionalStressReport",
     "IdentifiedDepartureSet",
     "LegacyProjectionReport",
     "MESAnchorSpec",
@@ -92,10 +110,16 @@ __all__ = [
     "ScalarRange",
     "SectorStress",
     "SummaryDepartureState",
+    "TensorFunctionalOperator",
+    "TensorFunctionalResult",
+    "TensorFunctionalSpec",
     "bound_to_pi_domination",
+    "build_tensor_functional_spec",
     "build_budget_spec",
     "compare_denominator_policies",
     "dynamic_comparison_budget_barrier",
+    "evaluate_tensor_functional",
+    "revalidate_tensor_functional_result",
     "finite_cover_union_bound",
     "signed_component_projection",
 ]
