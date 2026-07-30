@@ -2,6 +2,33 @@
 
 Record commands actually run. Never mark skipped checks as passed.
 
+## PR-267 - abstaining anisotropy compatibility report
+
+Date: 2026-07-30
+
+Change classification: COMMON immutable aggregate/replay contract, HTT
+PR-256 replay adapter, tests, PR delta, status mirrors, and SSoT handoff. No
+data execution, external/native transfer validation, posterior/evidence
+result, native solver/atlas, geometry, family-identification, claim tier, or
+public-use state changed.
+
+| Command or check | Result | Notes |
+|---|---:|---|
+| PR-267 focused contract | PASS | `16 passed`; candidate, partial, rank-deficient, overlap, equivalence, unknown, missing-law, unavailable-depth, identity mutation, owner, and family-gate paths. |
+| adjacent PR-255/256/258/orbit/exceedance/depth regression | PASS | `154 passed`. |
+| smoke | PASS | `6 passed`, `10328 deselected`; eight declared legacy deprecation warnings. |
+| full source-layout collection | PASS | `10275/10334 collected`, `59 deselected`, zero errors. |
+| strict canonical DAG/status before completion | PASS | `222 PRs, DAG valid`. |
+| scoped claim-language scan | PASS | No forbidden claim language detected after one correctly refused prohibited-use phrase was rewritten. |
+| compileall and `git diff --check` | PASS | No bytecode or whitespace defect. |
+| first focused implementation run | FAIL, REPRODUCED AND FIXED | `13 passed, 3 failed`; all failures were test/policy fixture defects and are recorded in the PR delta. |
+| exact frozen candidate review | REQUIRED | Valid only at `.agent-harness/runs/pr267-final-review-20260730-r1/RUN_SUMMARY.json`; missing, stale, malformed, SHA-mismatched, or non-PASS evidence invalidates completion. |
+
+Scientific impact: this validates an abstaining pre-native diagnostic
+composition boundary. It does not validate data or transfer behavior, infer a
+physical source, establish a geometry, create probability-bearing MIO
+inference, or identify a Bianchi family.
+
 ## PR-266 - typed depth, mask, transport, and coherence path
 
 Date: 2026-07-30

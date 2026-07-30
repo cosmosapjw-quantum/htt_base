@@ -1,5 +1,34 @@
 # Project State
 
+## 2026-07-30 - PR-267 anisotropy compatibility conditional closeout
+
+This section supersedes older orchestration snapshots below.
+
+- Active DAG: 222 cards, 162 completed, 1 blocked, 30 pending, 28 dormant
+  external/native, no foreground card, and background PR-151 acquisition.
+  Count completion is 72.97%, dependency-weighted completion 80.02%, and the
+  critical-path proxy is 70/77 = 90.91%. Checkpoint 165 is not due.
+- PR-266's exact closeout passed its independent review. PR-267 now combines
+  replayed joint-state, orbit, anchored-response, local/global, open-set,
+  conditional-exceedance, and depth-coherence identities into one immutable
+  COMMON report.
+- Missing geometry/law/depth inputs produce `PARTIAL_DIAGNOSTIC`; weak rank,
+  local/global overlap, or response equivalence produce `INDETERMINATE`;
+  outside-library inputs produce `UNKNOWN`. Only a fully admitted finite
+  response path can emit `RESPONSE_COMPATIBILITY_CANDIDATE`.
+- The report carries no family, geometry, or nearest-label field. Orbit
+  completeness remains `UNPROVEN`, the family gate remains
+  `BLOCKED_PRE_NATIVE_ATLAS`, and the ceiling remains C2 diagnostic-only.
+- Validation passes 16 focused tests, 154 adjacent regressions, 6 smoke tests,
+  10275/10334 collection with 59 deselected, strict DAG/status, claim scan,
+  compileall, and whitespace checks.
+- PR-267 completion is valid only if the exact closeout commit passes
+  `.agent-harness/runs/pr267-final-review-20260730-r1/`. Missing, stale,
+  malformed, candidate-mismatched, or non-PASS evidence invalidates the
+  transition and keeps PR-268 closed.
+- No data, external/native transfer value, native solver/atlas, source,
+  geometry, posterior evidence, truth, or family status changed.
+
 ## 2026-07-30 - PR-266 depth/mask path conditional closeout
 
 This section supersedes older orchestration snapshots below.

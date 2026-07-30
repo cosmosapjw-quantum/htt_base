@@ -2,6 +2,26 @@
 
 Update every five PRs with percent complete and blockers.
 
+## PR-267 conditional closeout (not a five-PR checkpoint)
+
+Date: 2026-07-30
+
+- Active DAG: 162/222 complete = 72.97%; dependency-weighted completion
+  80.02%; critical-path proxy 70/77 = 90.91%. Checkpoint 165 is not due.
+- PR-266's frozen review passed. PR-267 adds one named scientific-support
+  capability: a replay-bound, abstaining anisotropy compatibility report that
+  keeps orbit, response-rank, local/global, open-set, exceedance, depth, and
+  geometry missingness in one typed C2 diagnostic.
+- Validation passes 16 focused tests, 154 adjacent regressions, 6 smoke tests,
+  10275/10334 collection with 59 deselected, strict DAG/status, claim scan,
+  compileall, and whitespace checks.
+- Claim drift: none. Orbit proof status remains `UNPROVEN`; MIO retains only
+  diagnostic inputs; HTT alone replays model-dependent local/global inputs;
+  the report has no nearest geometry or family label.
+- Completion remains conditional on the exact schema-v3 frozen-candidate
+  review. PR-268 cannot start until that review passes. PR-172 and background
+  PR-151 retain their prior states.
+
 ## PR-266 conditional closeout (not a five-PR checkpoint)
 
 Date: 2026-07-30
