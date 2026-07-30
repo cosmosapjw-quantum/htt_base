@@ -20,15 +20,22 @@ This section supersedes older orchestration snapshots below.
   and posterior laws. It refuses optimizer points as draws, requires an
   explicit passed calibration for posterior numbers, and keeps bounded
   partial-identification envelopes distinct from point estimates.
-- Validation through the PR-265 implementation passes 25 focused tests,
-  84 adjacent regressions, 6 smoke tests, 10243/10302 collection with 59
+- Its exact R1 review failed on hidden alpha, untyped missing calibration,
+  conditioning relabelling, unit erasure, and an unbound monotonicity label.
+  The failed receipt is preserved. The remediation makes alpha mandatory,
+  returns a typed no-number calibration refusal, preserves units and
+  conditioning, and binds envelope authority to one exact proof artifact,
+  functional, and identified set.
+- Validation after remediation passes 28 focused tests,
+  84 adjacent regressions, 6 smoke tests, 10246/10305 collection with 59
   deselected, strict 222-card DAG/mirror checks, scoped claim lints,
   compileall, `pip check`, and whitespace checks.
 - Progress advanced by five from checkpoint 155, so no replan PR is required.
   PR-266 is dependency-ready. PR-172 remains blocked and PR-151 remains
   non-terminal background acquisition.
-- Completion of PR-265 is valid only if the exact final closeout commit passes
-  `.agent-harness/runs/pr265-final-review-20260730-r1/`. A missing, stale,
+- Completion of PR-265 is valid only if the exact remediated closeout commit
+  passes `.agent-harness/runs/pr265-final-review-20260730-r2/`. R1 cannot
+  authorize completion. A missing, stale,
   malformed, candidate-mismatched, or non-PASS result invalidates the status
   transition.
 - These states remain pre-solver and transfer-conditional where applicable.

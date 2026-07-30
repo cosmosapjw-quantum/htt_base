@@ -2617,3 +2617,32 @@ Independent acceptance authority: PR-264 is authorized only by its fresh R2
 PASS. PR-265 remains conditional until the exact final closeout candidate
 passes and closes at
 `.agent-harness/runs/pr265-final-review-20260730-r1/RUN_SUMMARY.json`.
+
+## PR-265 — conditional-exceedance R1 remediation (2026-07-30)
+
+The exact `d97a8afd...` R1 candidate received a schema-v3 `FAIL`. All 16
+policy cells were covered; 11 passed and 5 failed. The run is preserved and
+closed at
+`.agent-harness/runs/pr265-final-review-20260730-r1/RUN_SUMMARY.json`.
+
+| Evidence | Result | Disposition |
+| --- | --- | --- |
+| omitted finite-null alpha | **FAIL** | Removed hidden default; alpha is a mandatory keyword. |
+| missing posterior calibration | **FAIL** | Returns typed `POSTERIOR_CALIBRATION_REQUIRED` with no number. |
+| injected-law envelope relabelling | **FAIL** | Every vertex law must already be `IDENTIFIED_SET` conditioned. |
+| mixed-unit vertex envelope | **FAIL** | `sample_unit` is preserved in profiles and must agree exactly. |
+| bare monotonicity label and `eta^2` counterexample | **FAIL** | Admitting endpoints require a sealed proof-bound `EnvelopeCertificateReport`; a bare label yields `OPTIMIZER_REQUIRED`. |
+| post-remediation focused suite | PASS | `28 passed`. |
+| post-remediation adjacent suite | PASS | `84 passed`; six declared deprecation warnings. |
+| post-remediation smoke suite | PASS | `6 passed`, `10299 deselected`; eight declared deprecation warnings. |
+| post-remediation collection | PASS | `10246/10305 collected`, `59 deselected`; zero collection errors. |
+| strict DAG, claim lints, compileall, `pip check`, whitespace | PASS | No DAG, claim, import, requirement, or whitespace defect. |
+
+The first remediated adjacent invocation exposed only a frozen PR-264 error
+message regex mismatch. The implementation retained the current semantics and
+restored the historical phrase; the test was not weakened and the rerun
+passed.
+
+Independent acceptance authority: the exact remediation closeout must pass a
+fresh R2 review at
+`.agent-harness/runs/pr265-final-review-20260730-r2/RUN_SUMMARY.json`.

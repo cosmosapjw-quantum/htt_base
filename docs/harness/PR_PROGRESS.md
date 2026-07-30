@@ -16,8 +16,13 @@ Date: 2026-07-30
   result could be admitted. The preserved remediation binds exact source
   states, anchors, functional identities, and transfer metadata, and the
   remediated R2 review passed all registered cells.
-- Validation through the PR-265 implementation passes 25 focused tests,
-  84 adjacent regressions, 6 smoke tests, 10243/10302 collection with 59
+- PR-265 review R1 then failed five adversarial cells: hidden alpha,
+  untyped missing calibration, conditioning relabelling, unit erasure, and an
+  unbound monotonicity label. The failed receipt is preserved. The remediation
+  makes alpha mandatory, returns typed no-number calibration status, preserves
+  units/conditioning, and requires a proof-bound envelope certificate.
+- Validation after remediation passes 28 focused tests,
+  84 adjacent regressions, 6 smoke tests, 10246/10305 collection with 59
   deselected, strict DAG/mirror gates, scoped claim scans, compileall,
   `pip check`, and whitespace checks.
 - Artifact:
@@ -27,10 +32,10 @@ Date: 2026-07-30
   diagnostic/null quantities; HTT owns explicit objective/posterior lanes;
   no native solver/atlas, geometry, truth, evidence, or family status is
   promoted.
-- PR-265 completion remains conditional on the exact closeout candidate
-  passing the registered independent review. PR-266 is the next programme
-  node; PR-172 stays blocked and PR-151 stays non-terminal background
-  acquisition.
+- PR-265 completion remains conditional on a fresh exact R2 review; R1 cannot
+  authorize it. PR-266 is the next dependency-ready programme node, but
+  PR-267 remains closed until valid R2 evidence exists. PR-172 stays blocked
+  and PR-151 stays non-terminal background acquisition.
 
 ## PR-262 remediated conditional closeout (not a five-PR checkpoint)
 
