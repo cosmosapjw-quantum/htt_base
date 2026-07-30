@@ -71,8 +71,10 @@ decision_precedence:
     RESPONSE_COMPATIBILITY_CANDIDATE.
 output_rules:
   response_class_ids: >-
-    Preserve only PR-258-safe neutral/local/global response-class identifiers;
-    never map them to a geometry or family label.
+    Admit and preserve only the exact PR-267 vocabulary
+    response-class-neutral, response-class-local, and response-class-global,
+    with each identifier fixed by its PR-258 source semantics. Arbitrary
+    aliases, including family-coded aliases, are refused rather than rendered.
   orbit_proof_status: preserve UNPROVEN
   nearest_label_on_abstention: forbidden
   claim_ceiling: diagnostic_only

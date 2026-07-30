@@ -637,7 +637,6 @@ def test_missing_geometry_yields_partial_without_nearest_label() -> None:
         (
             {
                 "equivalent": True,
-                "use_source_gate": False,
             },
             AnisotropyCompatibilityStatus.INDETERMINATE,
         ),
@@ -671,6 +670,97 @@ def test_pr256_adapter_matches_pr258_source_gate_exactly() -> None:
     assert local_global.source_report_id == gate.report_id
     assert local_global.status.value == gate.status.value
     assert local_global.claim_ceiling == "diagnostic_only"
+
+
+@pytest.mark.parametrize(
+    "smuggled_id",
+    (
+        "response-class-type-vii-h",
+        "response-class-type-ix",
+        "response-class-neutral-type-vii-h",
+    ),
+)
+def test_only_exact_role_vocabulary_can_enter_report(
+    smuggled_id: str,
+) -> None:
+    source, _, covariance = _source_report()
+    smuggled = build_response_class_manifold(
+        class_id=smuggled_id,
+        support_kind=ResponseSupportKind.FINITE_ANALYTIC_SUPPORT,
+        provider_id=_receipt(f"PR267-SMUGGLED-{smuggled_id}"),
+        observable_labels=source.observable_labels,
+        convention_id=_receipt("PR267-SMUGGLED-CONVENTION"),
+        nuisance_policy_id=_receipt("PR267-SMUGGLED-NUISANCE"),
+        support_nodes=((-3.0, 0.0),),
+        transfer_source=TransferSource.NONE,
+        source_semantics=ResponseClassSourceSemantics.NEUTRAL,
+        source_response_id=None,
+    )
+    control = build_response_class_manifold(
+        class_id="response-class-control",
+        support_kind=ResponseSupportKind.FINITE_ANALYTIC_SUPPORT,
+        provider_id=_receipt("PR267-SMUGGLED-CONTROL"),
+        observable_labels=source.observable_labels,
+        convention_id=_receipt("PR267-SMUGGLED-CONVENTION"),
+        nuisance_policy_id=_receipt("PR267-SMUGGLED-NUISANCE"),
+        support_nodes=((3.0, 0.0),),
+        transfer_source=TransferSource.NONE,
+        source_semantics=ResponseClassSourceSemantics.NEUTRAL,
+        source_response_id=None,
+    )
+    classes = (smuggled, control)
+    equivalence = build_response_equivalence_report(
+        classes=classes,
+        covariance=covariance,
+        nuisance_tangent=None,
+        equivalence_squared_distance_tolerance=0.1,
+        absolute_tolerance=1.0e-12,
+        relative_tolerance=1.0e-12,
+        reopening_observables=(),
+    )
+    gate = source_separation_not_applicable()
+    classification = classify_open_set_response(
+        observation=(-3.0, 0.0),
+        classes=classes,
+        equivalence_report=equivalence,
+        covariance=covariance,
+        nuisance_tangent=None,
+        unknown_squared_distance_threshold=4.0,
+        decision_squared_margin=0.5,
+        covariance_null_tolerance=1.0e-10,
+        absolute_tolerance=1.0e-12,
+        relative_tolerance=1.0e-12,
+        source_separation_gate=gate,
+    )
+    assert classification.status is (
+        OpenSetClassificationStatus.RESPONSE_CLASS_CANDIDATE
+    )
+    with pytest.raises(
+        AnisotropyTypeReportError,
+        match="exact registered neutral/local/global",
+    ):
+        build_open_set_replay_inputs(
+            classification_report=classification,
+            classes=classes,
+            equivalence_report=equivalence,
+            observation=(-3.0, 0.0),
+            covariance=covariance,
+            nuisance_tangent=None,
+            source_separation_gate=gate,
+            absolute_tolerance=1.0e-12,
+            relative_tolerance=1.0e-12,
+        )
+
+
+def test_registered_ids_are_fixed_by_source_semantics() -> None:
+    values = _inputs()
+    assert {
+        item.source_semantics: item.class_id
+        for item in values["open_set"].classes
+    } == {
+        ResponseClassSourceSemantics.LOCAL_BOOST: "response-class-local",
+        ResponseClassSourceSemantics.GLOBAL_TILT: "response-class-global",
+    }
 
 
 def test_source_gate_mismatch_is_rejected() -> None:

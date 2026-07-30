@@ -43,6 +43,7 @@ from common.open_set_response_classes import (
     OpenSetClassificationStatus,
     ReopeningObservableSpec,
     ResponseClassManifoldSpec,
+    ResponseClassSourceSemantics,
     ResponseEquivalenceClassReport,
     SourceSeparationGate,
     SourceSeparationGateStatus,
@@ -107,6 +108,14 @@ ANISOTROPY_TYPE_FORBIDDEN_USE = (
 _LOCAL_GLOBAL_TOKEN = object()
 _OPEN_SET_TOKEN = object()
 _REPORT_TOKEN = object()
+_REGISTERED_RESPONSE_CLASS_ID = {
+    ResponseClassSourceSemantics.NEUTRAL: "response-class-neutral",
+    ResponseClassSourceSemantics.LOCAL_BOOST: "response-class-local",
+    ResponseClassSourceSemantics.GLOBAL_TILT: "response-class-global",
+}
+_REGISTERED_RESPONSE_CLASS_IDS = frozenset(
+    _REGISTERED_RESPONSE_CLASS_ID.values()
+)
 
 
 def _text(value: object, name: str) -> str:
@@ -517,6 +526,19 @@ def _revalidate_response_class(
     return item
 
 
+def _validate_registered_response_class_namespace(
+    classes: tuple[ResponseClassManifoldSpec, ...],
+) -> None:
+    for item in classes:
+        expected = _REGISTERED_RESPONSE_CLASS_ID[item.source_semantics]
+        if item.class_id != expected:
+            raise AnisotropyTypeReportError(
+                "PR-267 accepts only the exact registered neutral/local/global "
+                "response-class identifiers; "
+                f"{item.source_semantics.value} requires {expected!r}"
+            )
+
+
 def _revalidate_reopening(
     item: ReopeningObservableSpec,
     classes: tuple[ResponseClassManifoldSpec, ...],
@@ -577,6 +599,7 @@ class OpenSetReplayInputs:
         )
         if not classes:
             raise AnisotropyTypeReportError("open-set classes must not be empty")
+        _validate_registered_response_class_namespace(classes)
         reopenings = tuple(
             _revalidate_reopening(item, classes)
             for item in self.reopening_observables
@@ -978,12 +1001,12 @@ class AnisotropyTypeReport:
             empty_ok=True,
         )
         if any(
-            forbidden in value.lower()
+            value not in _REGISTERED_RESPONSE_CLASS_IDS
             for value in response_ids
-            for forbidden in ("bianchi", "family", "geometry")
         ):
             raise AnisotropyTypeReportError(
-                "response-class namespace cannot contain family or geometry labels"
+                "report response-class identifiers must use the exact "
+                "registered neutral/local/global vocabulary"
             )
         if self.open_set_status in {
             OpenSetClassificationStatus.UNKNOWN_CLASS,
