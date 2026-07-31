@@ -1,6 +1,6 @@
 schema: htt.pillar_s_inference_validation.v1
 authority: PR-272
-preregistration_sha256: c3c9b4b116102ae35cab874d7382b1e792868f82ecd24cacb6de689ea84f5151
+preregistration_sha256: 4ab978cf971e565dd6a598bd795249555a717aefa8f6c89b26727fdf58f7f9a2
 source_status_promoted: false
 observed_data_used: false
 native_solver_output_used: false
@@ -29,9 +29,6 @@ random_stream_receipt:
     VT-S5-3|registered-coverage: 2795905749309676941
     VT-S5-naive|negative-control: 2214606202016800015
     VT-S6|joint-estimator: 2401913676505800485
-    PR272-SBC|calibrated: 5746781032529007864
-    PR272-SBC|misspecified-0.5: 8395834452227068985
-    PR272-SBC|misspecified-2.0: 4431650595382234637
     VT-S9|calibration: 7529712252199044319
     VT-S9|evaluation: 4252409867502728764
     VT-S12|calibration-null: 5877797975096652112
@@ -44,7 +41,22 @@ random_stream_receipt:
     VT-S13|unknown: 3182250533455329995
     VT-S14|local: 4822328724883014426
     VT-S14|global: 5845524320623910226
-  derived_streams_sha256: 1f0277f65d0e6cce324e46e84f3985582dfc2e5177a0d1a5853acd58e460850c
+    PR272-SBC|calibrated|seed-member-272003: 687996147305671306
+    PR272-SBC|calibrated|seed-member-272005: 2511245915637881358
+    PR272-SBC|calibrated|seed-member-272007: 8486268606477898512
+    PR272-SBC|calibrated|seed-member-272009: 1090754294837901053
+    PR272-SBC|calibrated|seed-member-272011: 7406516215931788809
+    PR272-SBC|misspecified-0.5|seed-member-272003: 8118196885658164930
+    PR272-SBC|misspecified-0.5|seed-member-272005: 7304564306763757552
+    PR272-SBC|misspecified-0.5|seed-member-272007: 8914358199959168882
+    PR272-SBC|misspecified-0.5|seed-member-272009: 7227983439094111818
+    PR272-SBC|misspecified-0.5|seed-member-272011: 6300490749519041176
+    PR272-SBC|misspecified-2.0|seed-member-272003: 2589966924036052975
+    PR272-SBC|misspecified-2.0|seed-member-272005: 4604601359720698195
+    PR272-SBC|misspecified-2.0|seed-member-272007: 6193726064777757566
+    PR272-SBC|misspecified-2.0|seed-member-272009: 2414483042361719869
+    PR272-SBC|misspecified-2.0|seed-member-272011: 371822939562409989
+  derived_streams_sha256: 02a6d5625b6b66a2a7e56a63cd1a1794ce7751a2dd6d3dee109ab99f16d9bacb
   numpy_version: 2.4.2
 records:
 - theorem_id: VT-S3
@@ -470,59 +482,341 @@ validation_results:
       claim_ceiling: diagnostic_only
   SBC-HTT-COMPUTATION:
     calibrated:
-      n_simulations: 3000
+      aggregation: pooled_seed_family_rank_uniformity
+      registered_seed_members:
+      - 272003
+      - 272005
+      - 272007
+      - 272009
+      - 272011
+      n_seed_members: 5
+      n_simulations_per_member: 3000
+      n_simulations: 15000
       n_draws: 20
       n_bins: 7
       rank_histogram_binned:
-      - 421
-      - 407
-      - 380
-      - 409
-      - 488
-      - 456
-      - 439
-      chi_square: 17.868
+      - 2126
+      - 2183
+      - 2071
+      - 2157
+      - 2177
+      - 2106
+      - 2180
+      chi_square: 5.209333333333333
       dof: 6
-      uniformity_pvalue: 0.006570676875276364
+      uniformity_pvalue: 0.5172586658888052
       var_scale: '1'
-      lineage_verified: sbclin-efeb84d4f7246009
-      verdict: inadequate_sbc_failed
+      member_runs:
+      - n_simulations: 3000
+        n_draws: 20
+        n_bins: 7
+        rank_histogram_binned:
+        - 428
+        - 425
+        - 403
+        - 435
+        - 435
+        - 430
+        - 444
+        chi_square: 2.3093333333333335
+        dof: 6
+        uniformity_pvalue: 0.8891663479231634
+        var_scale: '1'
+        lineage_verified: sbclin-316f7d840022739e
+        verdict: calibrated
+      - n_simulations: 3000
+        n_draws: 20
+        n_bins: 7
+        rank_histogram_binned:
+        - 429
+        - 420
+        - 443
+        - 414
+        - 438
+        - 400
+        - 456
+        chi_square: 5.020666666666666
+        dof: 6
+        uniformity_pvalue: 0.5411652066408266
+        var_scale: '1'
+        lineage_verified: sbclin-ed8efdb877bb63a5
+        verdict: calibrated
+      - n_simulations: 3000
+        n_draws: 20
+        n_bins: 7
+        rank_histogram_binned:
+        - 428
+        - 465
+        - 399
+        - 409
+        - 450
+        - 409
+        - 440
+        chi_square: 8.301333333333334
+        dof: 6
+        uniformity_pvalue: 0.21684759109221358
+        var_scale: '1'
+        lineage_verified: sbclin-e253e417f5d84ccf
+        verdict: calibrated
+      - n_simulations: 3000
+        n_draws: 20
+        n_bins: 7
+        rank_histogram_binned:
+        - 437
+        - 427
+        - 401
+        - 437
+        - 422
+        - 457
+        - 419
+        chi_square: 4.311333333333334
+        dof: 6
+        uniformity_pvalue: 0.6346238089789629
+        var_scale: '1'
+        lineage_verified: sbclin-7285ac2eeb758695
+        verdict: calibrated
+      - n_simulations: 3000
+        n_draws: 20
+        n_bins: 7
+        rank_histogram_binned:
+        - 404
+        - 446
+        - 425
+        - 462
+        - 432
+        - 410
+        - 421
+        chi_square: 5.720666666666667
+        dof: 6
+        uniformity_pvalue: 0.4551971216794525
+        var_scale: '1'
+        lineage_verified: sbclin-4460a4731140cf66
+        verdict: calibrated
+      verdict: calibrated
     misspecified:
       '0.5':
-        n_simulations: 3000
+        aggregation: pooled_seed_family_rank_uniformity
+        registered_seed_members:
+        - 272003
+        - 272005
+        - 272007
+        - 272009
+        - 272011
+        n_seed_members: 5
+        n_simulations_per_member: 3000
+        n_simulations: 15000
         n_draws: 20
         n_bins: 7
         rank_histogram_binned:
-        - 676
-        - 350
-        - 322
-        - 324
-        - 310
-        - 361
-        - 657
-        chi_square: 374.4806666666667
+        - 3352
+        - 1921
+        - 1568
+        - 1518
+        - 1565
+        - 1839
+        - 3237
+        chi_square: 1799.2570666666666
         dof: 6
-        uniformity_pvalue: 8.530295393034137e-78
+        uniformity_pvalue: 0.0
         var_scale: 1/2
-        lineage_verified: sbclin-a6a7945a38ca3569
+        member_runs:
+        - n_simulations: 3000
+          n_draws: 20
+          n_bins: 7
+          rank_histogram_binned:
+          - 652
+          - 347
+          - 335
+          - 296
+          - 335
+          - 381
+          - 654
+          chi_square: 337.73066666666665
+          dof: 6
+          uniformity_pvalue: 6.636087677096778e-70
+          var_scale: 1/2
+          lineage_verified: sbclin-e4941b85ebd96667
+          verdict: inadequate_sbc_failed
+        - n_simulations: 3000
+          n_draws: 20
+          n_bins: 7
+          rank_histogram_binned:
+          - 639
+          - 393
+          - 299
+          - 310
+          - 320
+          - 376
+          - 663
+          chi_square: 340.43733333333336
+          dof: 6
+          uniformity_pvalue: 1.742045081225265e-70
+          var_scale: 1/2
+          lineage_verified: sbclin-e578ce71871a04a8
+          verdict: inadequate_sbc_failed
+        - n_simulations: 3000
+          n_draws: 20
+          n_bins: 7
+          rank_histogram_binned:
+          - 665
+          - 405
+          - 324
+          - 300
+          - 293
+          - 357
+          - 656
+          chi_square: 371.34000000000003
+          dof: 6
+          uniformity_pvalue: 4.033435045920522e-77
+          var_scale: 1/2
+          lineage_verified: sbclin-6180ed57223f16d0
+          verdict: inadequate_sbc_failed
+        - n_simulations: 3000
+          n_draws: 20
+          n_bins: 7
+          rank_histogram_binned:
+          - 696
+          - 379
+          - 302
+          - 307
+          - 317
+          - 369
+          - 630
+          chi_square: 376.4733333333333
+          dof: 6
+          uniformity_pvalue: 3.183076567855745e-78
+          var_scale: 1/2
+          lineage_verified: sbclin-4dcfdb04f472be28
+          verdict: inadequate_sbc_failed
+        - n_simulations: 3000
+          n_draws: 20
+          n_bins: 7
+          rank_histogram_binned:
+          - 700
+          - 397
+          - 308
+          - 305
+          - 300
+          - 356
+          - 634
+          chi_square: 393.11
+          dof: 6
+          uniformity_pvalue: 8.464577648118679e-82
+          var_scale: 1/2
+          lineage_verified: sbclin-43520d1ca598cd53
+          verdict: inadequate_sbc_failed
         verdict: inadequate_sbc_failed
       '2.0':
-        n_simulations: 3000
+        aggregation: pooled_seed_family_rank_uniformity
+        registered_seed_members:
+        - 272003
+        - 272005
+        - 272007
+        - 272009
+        - 272011
+        n_seed_members: 5
+        n_simulations_per_member: 3000
+        n_simulations: 15000
         n_draws: 20
         n_bins: 7
         rank_histogram_binned:
-        - 212
-        - 445
-        - 566
-        - 616
-        - 538
-        - 391
-        - 232
-        chi_square: 357.50333333333333
+        - 1146
+        - 2180
+        - 2702
+        - 2940
+        - 2639
+        - 2234
+        - 1159
+        chi_square: 1477.2897333333333
         dof: 6
-        uniformity_pvalue: 3.779782698391599e-74
+        uniformity_pvalue: 4.44250183e-316
         var_scale: '2'
-        lineage_verified: sbclin-b01b29af5348dc4e
+        member_runs:
+        - n_simulations: 3000
+          n_draws: 20
+          n_bins: 7
+          rank_histogram_binned:
+          - 246
+          - 431
+          - 528
+          - 576
+          - 566
+          - 434
+          - 219
+          chi_square: 298.19
+          dof: 6
+          uniformity_pvalue: 1.997956150343799e-61
+          var_scale: '2'
+          lineage_verified: sbclin-36976d330a0930d9
+          verdict: inadequate_sbc_failed
+        - n_simulations: 3000
+          n_draws: 20
+          n_bins: 7
+          rank_histogram_binned:
+          - 227
+          - 443
+          - 529
+          - 597
+          - 514
+          - 458
+          - 232
+          chi_square: 294.22800000000007
+          dof: 6
+          uniformity_pvalue: 1.4105341699915107e-60
+          var_scale: '2'
+          lineage_verified: sbclin-d9a97f602892843f
+          verdict: inadequate_sbc_failed
+        - n_simulations: 3000
+          n_draws: 20
+          n_bins: 7
+          rank_histogram_binned:
+          - 218
+          - 439
+          - 575
+          - 596
+          - 512
+          - 423
+          - 237
+          chi_square: 321.09866666666665
+          dof: 6
+          uniformity_pvalue: 2.454185835385902e-66
+          var_scale: '2'
+          lineage_verified: sbclin-f2f1bc1528a821ed
+          verdict: inadequate_sbc_failed
+        - n_simulations: 3000
+          n_draws: 20
+          n_bins: 7
+          rank_histogram_binned:
+          - 205
+          - 453
+          - 536
+          - 576
+          - 545
+          - 453
+          - 232
+          chi_square: 318.84933333333333
+          dof: 6
+          uniformity_pvalue: 7.452056817935534e-66
+          var_scale: '2'
+          lineage_verified: sbclin-366deb799836dbb5
+          verdict: inadequate_sbc_failed
+        - n_simulations: 3000
+          n_draws: 20
+          n_bins: 7
+          rank_histogram_binned:
+          - 250
+          - 414
+          - 534
+          - 595
+          - 502
+          - 466
+          - 239
+          chi_square: 265.1686666666667
+          dof: 6
+          uniformity_pvalue: 2.3434788714845262e-54
+          var_scale: '2'
+          lineage_verified: sbclin-f40279f680d2ccdd
+          verdict: inadequate_sbc_failed
         verdict: inadequate_sbc_failed
     all_misspecified_fail: true
-validation_results_sha256: 3c0f498b8e8ef054072c06368a441b59e49183022bf9b7ce3cd3e9043e80b63f
+validation_results_sha256: 1ccdbd112d51cb51ea3de68b4feef01ad622c88a97baba3cdac69ed93c05d111
