@@ -107,6 +107,7 @@ def _mutation_results(
     truth_payload: MappingLike,
     truth_raw: bytes,
     truth_sha: str,
+    expected_submission_content_id: str,
 ) -> dict[str, str]:
     killed: list[tuple[str, str]] = []
 
@@ -150,6 +151,7 @@ def _mutation_results(
             truth_vault=truth_payload,
             truth_vault_raw=truth_raw,
             expected_truth_vault_sha256=truth_sha,
+            expected_submission_content_id=expected_submission_content_id,
             mutation_results={
                 name: "KILLED" for name in challenge.declared_mutations
             },
@@ -162,7 +164,10 @@ def _mutation_results(
     def changed_submission() -> None:
         payload = copy.deepcopy(submission_payload)
         payload["scenario"] = "SYNTHETIC_SENTINEL"
-        replay_blind_synthetic_submission(payload)
+        replay_blind_synthetic_submission(
+            payload,
+            expected_content_id=expected_submission_content_id,
+        )
 
     killed.append(
         _expect_killed("SUBMISSION_AFTER_SEAL", changed_submission)
@@ -175,9 +180,28 @@ def _mutation_results(
             key: value for key, value in payload.items() if key != "content_id"
         }
         payload["content_id"] = canonical_sha256(body)
-        replay_blind_synthetic_submission(payload)
+        replay_blind_synthetic_submission(
+            payload,
+            expected_content_id=expected_submission_content_id,
+        )
 
     _expect_killed("SUBMISSION_AFTER_SEAL", resealed_partition_submission)
+
+    def resealed_valid_submission() -> None:
+        payload = copy.deepcopy(submission_payload)
+        payload["case_results"][0]["depth_alert"] = not payload[
+            "case_results"
+        ][0]["depth_alert"]
+        body = {
+            key: value for key, value in payload.items() if key != "content_id"
+        }
+        payload["content_id"] = canonical_sha256(body)
+        replay_blind_synthetic_submission(
+            payload,
+            expected_content_id=expected_submission_content_id,
+        )
+
+    _expect_killed("SUBMISSION_AFTER_SEAL", resealed_valid_submission)
 
     def changed_commitment() -> None:
         build_blind_synthetic_adjudication(
@@ -187,6 +211,7 @@ def _mutation_results(
             truth_vault=truth_payload,
             truth_vault_raw=truth_raw,
             expected_truth_vault_sha256="0" * 64,
+            expected_submission_content_id=expected_submission_content_id,
             mutation_results={
                 name: "KILLED" for name in challenge.declared_mutations
             },
@@ -207,6 +232,14 @@ def build() -> tuple[MappingLike, MappingLike, MappingLike]:
     challenge = build_blind_synthetic_challenge(challenge_payload)
     submission = analyze_blind_challenge(challenge)
     submission_payload = submission.as_payload()
+    registered_adjudication = spec["analysis_protocol"]["stages"][1]
+    expected_submission_content_id = registered_adjudication[
+        "frozen_submission_content_id"
+    ]
+    replay_blind_synthetic_submission(
+        submission_payload,
+        expected_content_id=expected_submission_content_id,
+    )
 
     # REGISTERED_ADJUDICATION: the sealed submission now exists in memory.
     truth_raw = TRUTH_VAULT.read_bytes()
@@ -220,6 +253,7 @@ def build() -> tuple[MappingLike, MappingLike, MappingLike]:
         truth_payload=truth_payload,
         truth_raw=truth_raw,
         truth_sha=truth_sha,
+        expected_submission_content_id=expected_submission_content_id,
     )
     adjudication = build_blind_synthetic_adjudication(
         adjudication_id="PR273-REGISTERED-ADJUDICATION-V1",
@@ -230,6 +264,7 @@ def build() -> tuple[MappingLike, MappingLike, MappingLike]:
         expected_truth_vault_sha256=spec["frozen_inputs"]["truth_vault"][
             "sha256"
         ],
+        expected_submission_content_id=expected_submission_content_id,
         mutation_results=mutations,
     )
     adjudication_payload = adjudication.as_payload()

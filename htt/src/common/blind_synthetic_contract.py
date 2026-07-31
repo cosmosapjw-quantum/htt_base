@@ -671,7 +671,10 @@ def build_blind_synthetic_submission(
 
 def replay_blind_synthetic_submission(
     payload: Mapping[str, object],
+    *,
+    expected_content_id: str,
 ) -> BlindSyntheticSubmission:
+    _text(expected_content_id, "expected_content_id")
     if not isinstance(payload, Mapping):
         raise BlindSyntheticContractError("submission must be a mapping")
     if set(payload) != _SUBMISSION_PAYLOAD_KEYS:
@@ -707,6 +710,10 @@ def replay_blind_synthetic_submission(
     if payload.get("content_id") != rebuilt.content_id:
         raise BlindSyntheticContractError(
             "submission content identity does not match payload"
+        )
+    if rebuilt.content_id != expected_content_id:
+        raise BlindSyntheticContractError(
+            "submission content identity does not match the frozen analysis-stage identity"
         )
     return rebuilt
 
@@ -813,6 +820,7 @@ def build_blind_synthetic_adjudication(
     truth_vault: Mapping[str, object],
     truth_vault_raw: bytes,
     expected_truth_vault_sha256: str,
+    expected_submission_content_id: str,
     mutation_results: Mapping[str, str],
 ) -> BlindSyntheticAdjudication:
     """Unblind only after replaying the frozen analyst submission."""
@@ -823,6 +831,11 @@ def build_blind_synthetic_adjudication(
         raise TypeError("submission must be exact BlindSyntheticSubmission")
     challenge.as_payload()
     submission.as_payload()
+    _text(expected_submission_content_id, "expected_submission_content_id")
+    if submission.content_id != expected_submission_content_id:
+        raise BlindSyntheticContractError(
+            "submission does not match the frozen analysis-stage identity"
+        )
     if submission.challenge_id != challenge.challenge_id:
         raise BlindSyntheticContractError(
             "submission challenge ID does not match"

@@ -66,6 +66,13 @@ def _challenge():
     return build_blind_synthetic_challenge(_load(CHALLENGE))
 
 
+def _frozen_submission_content_id() -> str:
+    spec = yaml.safe_load(SPEC.read_text(encoding="utf-8"))
+    return spec["analysis_protocol"]["stages"][1][
+        "frozen_submission_content_id"
+    ]
+
+
 def test_pr273_spec_card_and_policy_bind_the_blind_integration_scope() -> None:
     spec = yaml.safe_load(SPEC.read_text(encoding="utf-8"))
     policy = _load(POLICY)
@@ -174,7 +181,10 @@ def test_required_negative_and_limit_cases_reach_typed_outcomes() -> None:
 
 def test_frozen_submission_replays_and_contains_no_hidden_truth() -> None:
     payload = _load(SUBMISSION)
-    submission = replay_blind_synthetic_submission(payload)
+    submission = replay_blind_synthetic_submission(
+        payload,
+        expected_content_id=_frozen_submission_content_id(),
+    )
     generated = analyze_blind_challenge(_challenge())
     assert submission.as_payload() == generated.as_payload()
     encoded = json.dumps(payload, sort_keys=True).lower()
@@ -206,7 +216,11 @@ def test_registered_adjudication_matches_all_cases_and_kills_mutations() -> None
 
 def test_truth_vault_schema_is_closed_at_registered_adjudication() -> None:
     challenge = _challenge()
-    submission = replay_blind_synthetic_submission(_load(SUBMISSION))
+    submission_payload = _load(SUBMISSION)
+    submission = replay_blind_synthetic_submission(
+        submission_payload,
+        expected_content_id=_frozen_submission_content_id(),
+    )
     truth = _load(TRUTH)
     truth["aux"] = "SYNTHETIC_SENTINEL"
     raw = (
@@ -220,6 +234,7 @@ def test_truth_vault_schema_is_closed_at_registered_adjudication() -> None:
             truth_vault=truth,
             truth_vault_raw=raw,
             expected_truth_vault_sha256=hashlib.sha256(raw).hexdigest(),
+            expected_submission_content_id=submission.content_id,
             mutation_results={
                 name: "KILLED" for name in challenge.declared_mutations
             },
@@ -238,6 +253,7 @@ def test_truth_vault_schema_is_closed_at_registered_adjudication() -> None:
         "challenge_content",
         "submission_scenario",
         "submission_partition_resealed",
+        "submission_valid_field_resealed",
         "submission_content",
     ),
 )
@@ -298,7 +314,10 @@ def test_blind_envelopes_fail_closed_under_boundary_mutations(
             BlindSyntheticContractError,
             match="envelope fields|truth",
         ):
-            replay_blind_synthetic_submission(payload)
+            replay_blind_synthetic_submission(
+                payload,
+                expected_content_id=_frozen_submission_content_id(),
+            )
     elif mutation == "submission_partition_resealed":
         payload = copy.deepcopy(submission_payload)
         payload["case_results"][3]["partition"] = "development"
@@ -310,12 +329,35 @@ def test_blind_envelopes_fail_closed_under_boundary_mutations(
             BlindSyntheticContractError,
             match="partition",
         ):
-            replay_blind_synthetic_submission(payload)
+            replay_blind_synthetic_submission(
+                payload,
+                expected_content_id=_frozen_submission_content_id(),
+            )
+    elif mutation == "submission_valid_field_resealed":
+        payload = copy.deepcopy(submission_payload)
+        payload["case_results"][0]["depth_alert"] = not payload[
+            "case_results"
+        ][0]["depth_alert"]
+        body = {
+            key: value for key, value in payload.items() if key != "content_id"
+        }
+        payload["content_id"] = canonical_sha256(body)
+        with pytest.raises(
+            BlindSyntheticContractError,
+            match="frozen analysis-stage identity",
+        ):
+            replay_blind_synthetic_submission(
+                payload,
+                expected_content_id=_frozen_submission_content_id(),
+            )
     else:
         payload = copy.deepcopy(submission_payload)
         payload["case_results"][0]["geometry_status"] = "FORGED"
         with pytest.raises(BlindSyntheticContractError, match="identity"):
-            replay_blind_synthetic_submission(payload)
+            replay_blind_synthetic_submission(
+                payload,
+                expected_content_id=_frozen_submission_content_id(),
+            )
 
 
 def test_diagnostic_pack_is_synthetic_claim_bounded_and_source_complete() -> None:

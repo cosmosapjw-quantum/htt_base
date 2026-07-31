@@ -52,10 +52,12 @@ analysis_protocol:
       output: docs/research_program/vector_tensor/integration/PR273_ANALYST_SUBMISSION.json
     - id: REGISTERED_ADJUDICATION
       precondition: analyst submission content identity is frozen
+      frozen_submission_content_id: sha256:b4d28fedd92fde013a50fe8cd8aff6101ee689473d8645856290ebc801f38619
       readable:
         - docs/research_program/vector_tensor/integration/PR273_TRUTH_VAULT.json
         - docs/research_program/vector_tensor/integration/PR273_ANALYST_SUBMISSION.json
       output: docs/research_program/vector_tensor/integration/PR273_ADJUDICATION.json
+      identity_rule: adjudication must receive and match the analysis-stage submission content identity; a caller-recomputed self-hash is not authority
   truth_accessed_by_analysis: false
   reviewer_independence_mode: blind-results
 
