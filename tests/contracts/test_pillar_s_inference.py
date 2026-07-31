@@ -79,7 +79,7 @@ def test_spec_is_frozen_before_results_and_dependency_open(design) -> None:
     card = next(card for card in backlog["prs"] if card["id"] == "PR-272")
     assert design["schema"] == "htt.pr272.pillar_s_inference.spec.v1"
     assert design["frozen_before_result_inspection"] is True
-    assert design["design_revision"] == 2
+    assert design["design_revision"] == 3
     assert design["revision_frozen_before_rerun"] is True
     assert design["dependencies"] == ["PR-271"]
     assert card["depends"] == ["PR-271"]
@@ -95,7 +95,7 @@ def test_preregistration_bytes_and_input_hashes_are_load_bearing(
     design, tmp_path: Path
 ) -> None:
     assert EXPECTED_SPEC_SHA256 == (
-        "c3c9b4b116102ae35cab874d7382b1e792868f82ecd24cacb6de689ea84f5151"
+        "4ab978cf971e565dd6a598bd795249555a717aefa8f6c89b26727fdf58f7f9a2"
     )
     for record in design["frozen_inputs"].values():
         import hashlib
@@ -210,7 +210,7 @@ def test_seed_family_and_every_derived_stream_are_recorded() -> None:
         272009,
         272011,
     ]
-    assert len(receipt["derived_streams"]) == 24
+    assert len(receipt["derived_streams"]) == 36
     assert receipt["seed_family_load_bearing"] is True
     assert all(
         isinstance(value, int) and 0 <= value < 2**63
@@ -541,6 +541,13 @@ def test_generated_metrics_meet_frozen_bounds_without_relabeling(
         raw_results["SBC-HTT-COMPUTATION"]["calibrated"]["verdict"]
         == "calibrated"
     )
+    assert (
+        raw_results["SBC-HTT-COMPUTATION"]["calibrated"]["aggregation"]
+        == "pooled_seed_family_rank_uniformity"
+    )
+    assert len(
+        raw_results["SBC-HTT-COMPUTATION"]["calibrated"]["member_runs"]
+    ) == 5
 
 
 def test_registered_reports_are_immutable_dataclasses(raw_results) -> None:

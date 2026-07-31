@@ -67,7 +67,7 @@ class ModelCandidate(_StringEnum):
 CLAIM_CEILING = "diagnostic_only"
 SPEC_PATH = Path("docs/research_program/vector_tensor/pr272_spec.yaml")
 EXPECTED_SPEC_SHA256 = (
-    "c3c9b4b116102ae35cab874d7382b1e792868f82ecd24cacb6de689ea84f5151"
+    "4ab978cf971e565dd6a598bd795249555a717aefa8f6c89b26727fdf58f7f9a2"
 )
 REGISTRY_PATH = Path(
     "docs/research_program/vector_tensor/proofs/"

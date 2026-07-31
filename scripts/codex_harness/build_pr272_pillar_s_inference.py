@@ -24,6 +24,7 @@ for source_root in (ROOT, ROOT / "htt/src", ROOT / "htt"):
 
 from common.sbc_ppc import (  # noqa: E402
     GaussianModel,
+    _chi2_sf as _sbc_chi2_sf,
     run_sbc,
     sbc_lineage_hash,
     sbc_verdict,
@@ -111,6 +112,21 @@ def _stream_seed(design: dict, cell_id: str, family: str) -> int:
 def _rng(design: dict, cell_id: str, family: str) -> np.random.Generator:
     return np.random.Generator(
         np.random.PCG64(_stream_seed(design, cell_id, family))
+    )
+
+
+def _seed_member_stream(
+    design: dict,
+    seed_member: int,
+    cell_id: str,
+    family: str,
+) -> int:
+    stream = design["preregistration"]["random_stream"]
+    return derive_registered_seed(
+        int(stream["master_seed"]),
+        (int(seed_member),),
+        cell_id,
+        family,
     )
 
 
@@ -283,12 +299,18 @@ def _build_s6(design: dict, master_seed: int) -> dict:
 
 def _build_sbc(design: dict, master_seed: int) -> dict:
     config = design["preregistration"]["sbc"]
-    run_config = {
-        "preregistration_sha256": EXPECTED_SPEC_SHA256,
-        "cell": "PR272-SBC",
-    }
+    seed_family = tuple(
+        int(value)
+        for value in design["preregistration"]["random_stream"]["seed_family"]
+    )
 
-    def run(scale: Fraction, family: str) -> dict:
+    def run(scale: Fraction, family: str, seed_member: int) -> dict:
+        run_config = {
+            "preregistration_sha256": EXPECTED_SPEC_SHA256,
+            "cell": "PR272-SBC",
+            "registered_seed_member": seed_member,
+            "aggregation": config["acceptance_statistic"],
+        }
         model = GaussianModel(
             Fraction(config["prior_variance"]),
             Fraction(config["likelihood_variance"]),
@@ -300,7 +322,9 @@ def _build_sbc(design: dict, master_seed: int) -> dict:
             model,
             n_simulations=int(config["simulations"]),
             n_draws=int(config["posterior_draws"]),
-            seed=_stream_seed(design, "PR272-SBC", family),
+            seed=_seed_member_stream(
+                design, seed_member, "PR272-SBC", family
+            ),
             n_bins=int(config["rank_bins"]),
             lineage_hash=lineage,
             config=run_config,
@@ -310,9 +334,49 @@ def _build_sbc(design: dict, master_seed: int) -> dict:
         )
         return result
 
-    good = run(Fraction(config["calibrated_variance_scale"]), "calibrated")
+    def pooled(scale: Fraction, family: str) -> dict:
+        members = [run(scale, family, seed_member) for seed_member in seed_family]
+        histogram = np.sum(
+            [
+                np.asarray(row["rank_histogram_binned"], dtype=int)
+                for row in members
+            ],
+            axis=0,
+        )
+        total = int(np.sum(histogram))
+        expected = total / len(histogram)
+        chi_square = float(
+            np.sum((histogram - expected) ** 2 / expected)
+        )
+        result = {
+            "aggregation": config["acceptance_statistic"],
+            "registered_seed_members": list(seed_family),
+            "n_seed_members": len(seed_family),
+            "n_simulations_per_member": int(config["simulations"]),
+            "n_simulations": total,
+            "n_draws": int(config["posterior_draws"]),
+            "n_bins": int(config["rank_bins"]),
+            "rank_histogram_binned": histogram.tolist(),
+            "chi_square": chi_square,
+            "dof": len(histogram) - 1,
+            "uniformity_pvalue": _sbc_chi2_sf(
+                chi_square, len(histogram) - 1
+            ),
+            "var_scale": str(scale),
+            "member_runs": members,
+        }
+        result["verdict"] = sbc_verdict(
+            result, float(config["pvalue_floor"])
+        )
+        return result
+
+    good = pooled(
+        Fraction(config["calibrated_variance_scale"]), "calibrated"
+    )
     bad = {
-        str(value): run(Fraction(str(value)), f"misspecified-{value}")
+        str(value): pooled(
+            Fraction(str(value)), f"misspecified-{value}"
+        )
         for value in config["misspecified_variance_scales"]
     }
     return {
@@ -706,9 +770,6 @@ def build_payload() -> dict:
         ("VT-S5-3", "registered-coverage"),
         ("VT-S5-naive", "negative-control"),
         ("VT-S6", "joint-estimator"),
-        ("PR272-SBC", "calibrated"),
-        ("PR272-SBC", "misspecified-0.5"),
-        ("PR272-SBC", "misspecified-2.0"),
         ("VT-S9", "calibration"),
         ("VT-S9", "evaluation"),
         ("VT-S12", "calibration-null"),
@@ -726,6 +787,16 @@ def build_payload() -> dict:
         f"{cell}|{family}": _stream_seed(design, cell, family)
         for cell, family in stream_cells
     }
+    for family in ("calibrated", "misspecified-0.5", "misspecified-2.0"):
+        for seed_member in seed_family:
+            derived_streams[
+                f"PR272-SBC|{family}|seed-member-{seed_member}"
+            ] = _seed_member_stream(
+                design,
+                seed_member,
+                "PR272-SBC",
+                family,
+            )
     results = {
         "VT-S3": _build_s3(design, master_seed),
         "VT-S5": _build_s5(design, master_seed),
