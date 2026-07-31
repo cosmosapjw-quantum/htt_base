@@ -136,6 +136,10 @@ from htt.infer.vector_tensor_validation import (
     evaluate_open_set_validation,
     evaluate_weak_identification,
 )
+from htt.infer.vector_tensor_data_admission import (
+    future_pilot_candidate_ids,
+    require_future_pilot_eligibility,
+)
 
 __all__ = [
     'LatentAxisModel', 'LatentAxisParams', 'dipole_projection',
@@ -173,6 +177,7 @@ __all__ = [
     'build_posterior_calibration_report', 'build_posterior_exceedance',
     'build_sampling_draws', 'build_sampling_law_spec',
     'identified_vertex_id',
+    'future_pilot_candidate_ids', 'require_future_pilot_eligibility',
     'LoocvReport', 'build_loocv_report',
     'BridgeResult', 'tilt_velocity', 'delta_q', 'lambda_J_pec', 'delta_H',
     'AxisGateDecision', 'build_diagnostic_axis', 'evaluate_axis_gate',

@@ -91,6 +91,16 @@ from .depth_path import (
     compose_transport_kernels,
     revalidate_depth_path,
 )
+from .vector_tensor_data_admission import (
+    AdmissionVerdict,
+    DataAdmissionDecision,
+    DataAdmissionError,
+    DataAdmissionReport,
+    NO_ADMITTED_DATA_PILOT,
+    build_data_admission_report,
+    candidates_from_registry,
+    evaluate_data_candidate,
+)
 from .null_ensembles import (
     LookElsewhereBookkeeping,
     NullCalibratedFeature,
@@ -161,6 +171,7 @@ for _submodule in (
     "scalar_lowell",
     "shell_alms",
     "template_fit",
+    "vector_tensor_data_admission",
 ):
     _loaded = _sys.modules.get(f"{__name__}.{_submodule}")
     if _loaded is not None:
@@ -169,6 +180,7 @@ for _submodule in (
 
 __all__ = [
     "AlmConvention",
+    "AdmissionVerdict",
     "AntipodalAxis",
     "BiPoSHConventionMetadata",
     "BiPoSHFeatureSummary",
@@ -182,6 +194,9 @@ __all__ = [
     "CounterpairFactor",
     "CovarianceAssumption",
     "DiagnosticMorphologyAxis",
+    "DataAdmissionDecision",
+    "DataAdmissionError",
+    "DataAdmissionReport",
     "DepthPath",
     "DepthPathError",
     "FeatureAvailability",
@@ -201,6 +216,7 @@ __all__ = [
     "MorphologyNullCalibration",
     "MaskStratum",
     "NullCalibratedFeature",
+    "NO_ADMITTED_DATA_PILOT",
     "NullEnsembleSpec",
     "ObservableVector",
     "ObservableFeatureStep",
@@ -231,6 +247,7 @@ __all__ = [
     "build_alm_feature",
     "build_biposh_feature_payload",
     "build_depth_path",
+    "build_data_admission_report",
     "build_lowell_morphology_feature_packet",
     "build_matched_counterpair",
     "build_mask_stratum",
@@ -244,6 +261,7 @@ __all__ = [
     "build_transport_kernel",
     "compose_transport_kernels",
     "compute_cl_from_alm",
+    "candidates_from_registry",
     "canonical_spin2_alm_convention",
     "canonical_temperature_alm_convention",
     "fit_template_diagnostic",
@@ -251,6 +269,7 @@ __all__ = [
     "draw_correlated_real_shell_alms",
     "estimate_lowell_pole",
     "estimate_lowell_pole_from_power_tensor",
+    "evaluate_data_candidate",
     "mean_squared_multipole_alignment",
     "scalar_alm_inversion_phase",
     "first_moment",
