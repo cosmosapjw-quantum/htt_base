@@ -57,10 +57,10 @@ AXIS_ROOT = (
     ROOT / "docs/research_program/vector_tensor/cas/axes"
 )
 CONTRACT_SHA256 = (
-    "7d811126a4becf184cafc342ded1c78ce8148c7d6d008f955c4b99c6b46f3c1f"
+    "2d2ceb84603b24ab0b34db8b69715483061428ee36d6b2f5952494a9bb8108b4"
 )
 ADJUDICATION_SHA256 = (
-    "95613b1a6f3e15aef99807f77639099c0d1165c72afc7247cc36e43cc1418ce6"
+    "a30a5597f0cc16786c4fcd4e689a6e5d0009387089f717205043152a439cf275"
 )
 
 
@@ -146,19 +146,19 @@ def test_contract_mutations_fail_closed(
         )
 
 
-def test_adjudication_preserves_mandatory_axis_blocker() -> None:
+def test_adjudication_binds_four_runner_observed_passes() -> None:
     result = load_cas_adjudication(ROOT)
-    assert result.aggregate_status is AggregateCASVerdict.CAS_BLOCKED
+    assert result.aggregate_status is AggregateCASVerdict.CAS_4AXIS_PASS
     assert result.axis_statuses == {
-        "wolfram_xact": "BLOCKED_PLATFORM_OR_LICENSE",
+        "wolfram_xact": "PASS",
         "sympy": "PASS",
         "sage_singular": "PASS",
         "lean": "PASS",
     }
     assert result.verification_state == "RUNNER_OBSERVED_EXECUTION"
-    assert result.claim_promotion_cas_eligible is False
-    assert result.claim_promotion_cas_requirement == "NOT_SATISFIED"
-    assert result.success_dependency_satisfied is False
+    assert result.claim_promotion_cas_eligible is True
+    assert result.claim_promotion_cas_requirement == "SATISFIED"
+    assert result.success_dependency_satisfied is True
     assert _sha256(ADJUDICATION_PATH) == ADJUDICATION_SHA256
 
 
@@ -166,7 +166,13 @@ def test_majority_vote_and_false_execution_are_rejected(
     tmp_path: Path,
 ) -> None:
     payload = copy.deepcopy(_json(ADJUDICATION_PATH))
-    payload["aggregate_status"] = "CAS_4AXIS_PASS"
+    payload["axis_statuses"]["wolfram_xact"] = (
+        "BLOCKED_PLATFORM_OR_LICENSE"
+    )
+    payload["execution_evidence"]["wolfram_xact"]["derived_status"] = (
+        "BLOCKED_PLATFORM_OR_LICENSE"
+    )
+    payload["execution_evidence"]["wolfram_xact"]["solver_executed"] = False
     with pytest.raises(PillarTCasError, match="blocked required axis"):
         load_cas_adjudication(
             ROOT,
@@ -174,8 +180,8 @@ def test_majority_vote_and_false_execution_are_rejected(
         )
 
     payload = copy.deepcopy(_json(ADJUDICATION_PATH))
-    payload["execution_evidence"]["wolfram_xact"]["solver_executed"] = True
-    with pytest.raises(PillarTCasError, match="cannot claim execution"):
+    payload["execution_evidence"]["wolfram_xact"]["solver_executed"] = False
+    with pytest.raises(PillarTCasError, match="PASS requires solver execution"):
         load_cas_adjudication(
             ROOT,
             _write_json(tmp_path, "false-execution.json", payload),
@@ -218,15 +224,47 @@ def test_wolfram_exit_255_activation_transcript_is_platform_blocker() -> None:
     )
 
 
+def test_repaired_axis_sources_preserve_declared_domains_and_coverage() -> None:
+    sympy_source = (
+        AXIS_ROOT / "sympy/axis_program.py"
+    ).read_text(encoding="utf-8")
+    assert 'q2 = sp.symbols("q2", nonzero=True)' in sympy_source
+    assert (
+        'q3, dq2, dq3 = sp.symbols("q3 dq2 dq3", real=True)'
+        in sympy_source
+    )
+
+    lean_source = (
+        AXIS_ROOT / "lean/PR270PillarTAxis.lean"
+    ).read_text(encoding="utf-8")
+    for token in (
+        "import Mathlib",
+        "0 < shearI2 l1 l2",
+        "theorem cayleyHamiltonAllPowers",
+        "theorem krylovCyclicIff",
+        "def localChartJacobian",
+        "theorem localChartJacobianFactor",
+        "structure AxisProofBundle",
+        "def axisProofBundle",
+    ):
+        assert token in lean_source
+    assert "native_decide" not in lean_source
+    assert "\naxiom " not in lean_source
+
+
 def test_registry_is_additive_and_source_status_is_unchanged() -> None:
     records = load_pillar_t_cas_registry(ROOT)
     assert tuple(record.obligation_id for record in records) == PROOF_IDS
     by_id = {record.obligation_id: record for record in records}
-    for theorem_id in ("VT-T5", "VT-T6", "VT-T7", "VT-T8"):
+    for theorem_id in ("VT-T5", "VT-T6", "VT-T7"):
         assert (
             by_id[theorem_id].verdict
-            is PillarTStatementVerdict.CAS_BLOCKED_REQUIRED_AXIS
+            is PillarTStatementVerdict.PROVED_CAS4_EXACT
         )
+    assert (
+        by_id["VT-T8"].verdict
+        is PillarTStatementVerdict.PROVED_CAS4_RESTRICTED_LOCAL_CHART
+    )
     assert (
         by_id["VT-T11"].verdict
         is PillarTStatementVerdict.PROVED_CONDITIONAL_LINEAR_ALGEBRA
@@ -237,7 +275,7 @@ def test_registry_is_additive_and_source_status_is_unchanged() -> None:
     )
     assert (
         by_id["VT-T13"].verdict
-        is PillarTStatementVerdict.PARTIAL_CHAIN_RULE_CAS_BLOCKED
+        is PillarTStatementVerdict.PARTIAL_CHAIN_RULE_CAS4
     )
     assert (
         by_id["VT-T14"].verdict
@@ -255,7 +293,9 @@ def test_registry_cannot_promote_blocked_or_native_statements(
 ) -> None:
     payload = copy.deepcopy(_yaml(REGISTRY_PATH))
     payload["records"][0]["verdict"] = "PROVED_CONDITIONAL_LINEAR_ALGEBRA"
-    with pytest.raises(PillarTCasError, match="violates the blocked boundary"):
+    with pytest.raises(
+        PillarTCasError, match="violates the registered boundary"
+    ):
         load_pillar_t_cas_registry(ROOT, _write_yaml(tmp_path, payload))
 
     payload = copy.deepcopy(_yaml(REGISTRY_PATH))
@@ -391,6 +431,14 @@ def test_native_geometry_gate_never_promotes_current_inputs() -> None:
     ("axis", "argv"),
     [
         (
+            "wolfram_xact",
+            (
+                "wolframscript",
+                "-file",
+                str(AXIS_ROOT / "wolfram_xact/axis_program.wls"),
+            ),
+        ),
+        (
             "sympy",
             (
                 sys.executable,
@@ -481,14 +529,14 @@ def test_publication_policy_wraps_expected_nonzero_cas_state() -> None:
     )
 
 
-def test_proof_doc_marks_local_global_and_blocked_boundaries() -> None:
+def test_proof_doc_marks_local_global_and_external_boundaries() -> None:
     text = (
         ROOT
         / "docs/research_program/vector_tensor/proofs/PR270_PILLAR_T_CAS.md"
     ).read_text(encoding="utf-8")
-    assert "Status: `CAS_BLOCKED`" in text
+    assert "Status: `CAS_4AXIS_PASS`" in text
     assert "principal/cyclic chart result only" in text
     assert "global separation" in text
     assert "INCONCLUSIVE_MISSING_TYPED_EVOLUTION_LAW" in text
     assert "INCONCLUSIVE_NATIVE_GEOMETRY_GATE" in text
-    assert "success dependency is false" in text
+    assert "success dependency is true" in text

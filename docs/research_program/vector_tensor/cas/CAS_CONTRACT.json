@@ -44,7 +44,7 @@
     "adjudicator": "independent_non_author_reviewer"
   },
   "semantics": {
-    "exact_statement": "For a real trace-free symmetric 3 by 3 shear tensor, the characteristic discriminant, normalized shear-shape identity, trace-free Cayley-Hamilton reduction, Krylov/Vandermonde factorization, Krylov Gram identity, and registered 14-coordinate local-chart Jacobian factor hold exactly. A polynomial quotient identity supplies only the invariant chain-rule core of VT-T13.",
+    "exact_statement": "For a real trace-free symmetric 3 by 3 shear tensor, the characteristic discriminant and normalized shear-shape bound, trace-free Cayley-Hamilton all-power reduction, Krylov/Vandermonde factorization and exact cyclicity criterion, Krylov Gram identity, and the analytic registered 14-coordinate local-chart Jacobian factor hold exactly. A polynomial quotient identity supplies only the invariant chain-rule core of VT-T13.",
     "symbol_type_domain_map": {
       "sigma": "real symmetric trace-free 3 by 3 matrix",
       "lambda_i": "real shear eigenvalues with lambda_1+lambda_2+lambda_3=0",
@@ -189,9 +189,13 @@
     },
     "lean": {
       "applicability": "required",
-      "obligation": "Faithful exact polynomial formalization compiled under formal/lean-toolchain.",
-      "required_outputs": ["Lean source", "build receipt", "runner-observed JSON payload"],
-      "pinned_toolchain": {"source": "formal/lean-toolchain"},
+      "obligation": "Faithful mathlib-backed formalization directly over the declared real domain, including the all-power reduction, cyclicity iff criterion, and determinant of the explicit sparse 14-coordinate analytic Jacobian.",
+      "required_outputs": ["Lean source", "typed AxisProofBundle", "build receipt", "runner-observed JSON payload"],
+      "pinned_toolchain": {
+        "source": "formal/lean-toolchain",
+        "mathlib_project": "formal_mathlib",
+        "mathlib_revision": "v4.31.0"
+      },
       "resource_limit": {"wall_seconds": 3600}
     }
   },

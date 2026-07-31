@@ -1,6 +1,6 @@
 # PR-270 Pillar T orbit, response, and realizability record
 
-Status: `CAS_BLOCKED`
+Status: `CAS_4AXIS_PASS`
 
 Claim ceiling: `diagnostic_only`
 
@@ -9,11 +9,10 @@ Source proof-adjudication status: `NOT_ADJUDICATED`
 PR-270 freezes one R3 `CAS_CONTRACT.json` for the exact algebraic cores of
 VT-T5 through VT-T8 and the restricted invariant chain-rule core of VT-T13.
 It separately verifies the conditional finite-dimensional statements VT-T11
-and VT-T12 and preserves the VT-T14 external-geometry refusal. The current
-runner-observed aggregate is not a proof verdict: Wolfram Engine+xAct is
-blocked by an unactivated/license state, while SymPy, SageMath+Singular, and
-Lean pass the byte-identical contract. Majority vote is forbidden, so the
-only aggregate is `CAS_BLOCKED`.
+and VT-T12 and preserves the VT-T14 external-geometry refusal. Wolfram
+Engine+xAct, SymPy, SageMath+Singular, and mathlib-backed Lean all executed
+against one byte-identical contract and passed, so the runner-observed
+aggregate is `CAS_4AXIS_PASS`.
 
 No source theorem status is rewritten. No local chart is promoted to global
 orbit completeness, no 1+3 evolution law is invented, and no geometry,
@@ -40,8 +39,8 @@ J_\sigma^2=\frac{6I_3^2}{I_2^3}.
 
 The square form gives \(\Delta\ge 0\) on the real STF domain. Repeated
 eigenvalues give \(\Delta=0\) and \(|J_\sigma|=1\). The zero-shear point is
-outside the normalized-shape branch. These identities pass three executed
-axes but retain `CAS_BLOCKED_REQUIRED_AXIS` until Wolfram+xAct executes.
+outside the normalized-shape branch. All four axes verify these identities;
+Lean proves the normalized bound directly over \(\mathbb{R}\).
 
 <a id="vt-t6"></a>
 ## VT-T6 — trace-free Cayley–Hamilton reduction
@@ -55,9 +54,8 @@ For a real trace-free \(3\times3\) matrix,
 
 Multiplication by \(\sigma\) reduces the fourth power, and recursive
 multiplication reduces every higher vector–shear contraction to powers
-zero, one, and two. SymPy and Sage use a generic symmetric STF matrix; Lean
-kernel-checks the same five-parameter matrix. The required fourth axis has
-not executed, so this PR records no four-axis proof promotion.
+zero, one, and two. Lean proves the all-power recurrence directly over the
+real five-parameter STF matrix; all four axes pass the shared exact contract.
 
 <a id="vt-t7"></a>
 ## VT-T7 — Krylov cyclicity
@@ -110,8 +108,10 @@ Therefore
 (2\lambda_1+\lambda_2)^5.
 \]
 
-The registered rational witness evaluates to 50,331,648. This is a local
-principal/cyclic chart result only. It does not establish global separation,
+The registered rational witness evaluates to 50,331,648. Lean constructs the
+actual sparse analytic 14-coordinate Jacobian from its derivative blocks and
+proves the determinant by repeated block-lower-triangular reduction. This is
+a principal/cyclic chart result only. It does not establish global separation,
 invariant-ring completeness, or a morphology atlas.
 
 <a id="vt-t11"></a>
@@ -172,17 +172,16 @@ report is permitted.
 
 | Axis | Preflight | Solver executed | Contract result |
 |---|---|---:|---|
-| Wolfram Engine+xAct | `BLOCKED_PLATFORM_OR_LICENSE` | no | blocked |
+| Wolfram Engine 15.0.0+xAct 1.3.0 | pass | yes | pass |
 | SymPy 1.14.0 | pass | yes | pass |
 | SageMath 10.9 + Singular 4.4.1 | pass | yes | pass |
-| Lean 4.31.0 | pass | yes | pass |
+| Lean 4.31.0 + mathlib v4.31.0 | pass | yes | pass |
 
-The Wolfram transcript reports that the engine is not activated or has a
-license-related problem and requests an explicit activation operation.
-Activation requires external user/license authority and was not attempted.
-No computation-class exception was preregistered. Thus the aggregate is
-`CAS_BLOCKED`, the PR-270 success dependency is false, and PR-273 remains
-closed even after PR-272 completes.
+No computation-class exception was preregistered or applied. Thus the
+aggregate is `CAS_4AXIS_PASS`, and the PR-270 CAS success dependency is true.
+This verdict establishes only the registered exact/formal propositions under
+their assumptions; it does not promote the source registry globally or
+change the VT-T13 and VT-T14 external-input boundaries.
 
 ## Reproduction
 
@@ -196,6 +195,6 @@ PYTHONPATH=.:htt/src:htt python3 -B -m pytest -p no:cacheprovider -q \
   tests/contracts/test_pillar_t_cas.py
 ```
 
-Both CAS commands currently exit 2 because the mandatory Wolfram axis is
-blocked. That nonzero exit is the expected fail-closed result, not a hidden
-test failure.
+Both commands return zero when all four pinned axes remain available and
+aligned. Any missing axis, assumption mismatch, failed obligation, or
+post-hoc exception returns a non-pass aggregate.

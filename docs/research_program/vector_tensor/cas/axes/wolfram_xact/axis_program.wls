@@ -1,10 +1,7 @@
 (* Independent Wolfram Engine + xAct axis for PR-270. *)
 
-Quiet[
-  Internal`InheritedBlock[{Print},
-    Print = (Null &);
-    Needs["xAct`xTensor`"]
-  ]
+Block[{$Output = {}, $Messages = {}},
+  Needs["xAct`xTensor`"]
 ];
 
 ClearAll["Global`*"];
@@ -52,12 +49,13 @@ gramOK = TrueQ[Factor[Det[Transpose[krylov].krylov] - Det[krylov]^2] === 0];
 
 i2 = Expand[Total[lambda^2]];
 i3 = Expand[Total[lambda^3]];
-delta = Expand[i2^3/2 - 3 i3^2];
+deltaInvariant = Expand[i2^3/2 - 3 i3^2];
 sqVandermonde = Times @@
   Flatten[Table[(lambda[[j]] - lambda[[i]])^2, {i, 1, 2}, {j, i + 1, 3}]];
-discriminantOK = TrueQ[Factor[delta - sqVandermonde] === 0];
+discriminantOK = TrueQ[Factor[deltaInvariant - sqVandermonde] === 0];
 shapeStrataOK = TrueQ[
-  {i2, i3, delta, 6 i3^2/i2^3} /. {l1 -> 2, l2 -> -1} === {6, 6, 0, 1}
+  ({i2, i3, deltaInvariant, 6 i3^2/i2^3} /.
+    {l1 -> 2, l2 -> -1}) === {6, 6, 0, 1}
 ];
 
 vectors = {
@@ -79,9 +77,9 @@ coordinates = Join[
     ]
   ]
 ];
-jacobianDet = Det[D[coordinates, {variables}]];
-expectedFactor = -48 v01^4 v02^4 v03^4
-  (l1 - l2)^5 (l1 + 2 l2)^5 (2 l1 + l2)^5;
+jacobianDet = Det[Outer[D, coordinates, variables]];
+expectedFactor = -48 * v01^4 * v02^4 * v03^4 *
+  (l1 - l2)^5 * (l1 + 2 l2)^5 * (2 l1 + l2)^5;
 jacobianOK = TrueQ[Factor[jacobianDet - expectedFactor] === 0];
 
 principalRules = {

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Portable PR-270 focused, adjacent, smoke, and blocked-CAS runner."""
+"""Portable PR-270 focused, adjacent, smoke, and four-axis CAS runner."""
 
 from __future__ import annotations
 
@@ -77,30 +77,30 @@ def _run_gate(*argv: str) -> subprocess.CompletedProcess[str]:
     )
 
 
-def _expected_blocked(payload: object) -> bool:
+def _expected_four_axis_pass(payload: object) -> bool:
     if not isinstance(payload, dict):
         return False
     statuses = payload.get("axis_statuses")
     return (
-        payload.get("aggregate_status") == "CAS_BLOCKED"
+        payload.get("aggregate_status") == "CAS_4AXIS_PASS"
         and payload.get("required_axes")
         == ["wolfram_xact", "sympy", "sage_singular", "lean"]
         and statuses
         == {
-            "wolfram_xact": "BLOCKED_PLATFORM_OR_LICENSE",
+            "wolfram_xact": "PASS",
             "sympy": "PASS",
             "sage_singular": "PASS",
             "lean": "PASS",
         }
-        and payload.get("claim_promotion_cas_eligible") is False
+        and payload.get("claim_promotion_cas_eligible") is True
         and payload.get("claim_promotion_cas_requirement")
-        == "NOT_SATISFIED"
+        == "SATISFIED"
     )
 
 
 def _preflight() -> int:
     completed = _run_gate("preflight", "--all")
-    if completed.returncode != 2:
+    if completed.returncode != 0:
         sys.stderr.write(completed.stdout + completed.stderr)
         return 1
     actual: dict[str, str] = {}
@@ -110,7 +110,7 @@ def _preflight() -> int:
         axis, status = line.split(": ", 1)
         actual[axis] = status
     expected = {
-        "wolfram_xact": "BLOCKED_PLATFORM_OR_LICENSE",
+        "wolfram_xact": "PASS",
         "sympy": "PASS",
         "sage_singular": "PASS",
         "lean": "PASS",
@@ -136,12 +136,17 @@ def _adjudication_replay() -> int:
             "--out",
             str(output),
         )
-        if completed.returncode != 2 or not output.is_file():
+        if completed.returncode != 0 or not output.is_file():
             sys.stderr.write(completed.stdout + completed.stderr)
             return 1
         replay = json.loads(output.read_text(encoding="utf-8"))
-    if not _expected_blocked(tracked) or not _expected_blocked(replay):
-        sys.stderr.write("tracked/replayed adjudication is not expected CAS_BLOCKED\n")
+    if (
+        not _expected_four_axis_pass(tracked)
+        or not _expected_four_axis_pass(replay)
+    ):
+        sys.stderr.write(
+            "tracked/replayed adjudication is not expected CAS_4AXIS_PASS\n"
+        )
         return 1
     for field in (
         "schema_version",

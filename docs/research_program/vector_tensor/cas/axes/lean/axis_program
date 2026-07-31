@@ -17,12 +17,53 @@ while [ ! -f "$repo_root/formal/lean-toolchain" ]; do
   repo_root=$parent
 done
 
-IFS= read -r lean_toolchain < "$repo_root/formal/lean-toolchain"
-if ! build_log=$(CDPATH= cd -- "$repo_root" &&
-    ELAN_TOOLCHAIN="$lean_toolchain" \
-      lean "$script_dir/PR270PillarTAxis.lean" 2>&1)
+if ! cmp -s "$repo_root/formal/lean-toolchain" \
+    "$repo_root/formal_mathlib/lean-toolchain"; then
+  printf '%s\n' "formal and formal_mathlib toolchains differ" >&2
+  exit 2
+fi
+
+mathlib_project="$repo_root/formal_mathlib"
+if [ ! -d "$mathlib_project/.lake/packages/mathlib" ]; then
+  primary_root=$(
+    git -C "$repo_root" worktree list --porcelain |
+      sed -n 's/^worktree //p' |
+      head -n 1
+  )
+  cached_project="$primary_root/formal_mathlib"
+  if [ ! -d "$cached_project/.lake/packages/mathlib" ]; then
+    printf '%s\n' \
+      "pinned formal_mathlib dependency cache is unavailable; run lake update" >&2
+    exit 2
+  fi
+  if ! cmp -s "$mathlib_project/lake-manifest.json" \
+      "$cached_project/lake-manifest.json"; then
+    printf '%s\n' "cached mathlib manifest differs from candidate manifest" >&2
+    exit 2
+  fi
+  if ! cmp -s "$mathlib_project/lean-toolchain" \
+      "$cached_project/lean-toolchain"; then
+    printf '%s\n' "cached mathlib toolchain differs from candidate toolchain" >&2
+    exit 2
+  fi
+  mathlib_project="$cached_project"
+fi
+
+lean_source="$script_dir/PR270PillarTAxis.lean"
+if grep -Eq 'native_decide|^[[:space:]]*axiom[[:space:]]' "$lean_source"; then
+  printf '%s\n' "forbidden native_decide or source axiom in Lean axis" >&2
+  exit 1
+fi
+
+if ! build_log=$(CDPATH= cd -- "$mathlib_project" &&
+    lake env lean -DwarningAsError=true "$lean_source" 2>&1)
 then
   printf '%s\n' "$build_log" >&2
+  exit 1
+fi
+if ! printf '%s\n' "$build_log" |
+    grep -Fq 'PR270PillarT.axisProofBundle : AxisProofBundle'; then
+  printf '%s\n' "compiled source did not expose the typed obligation bundle" >&2
   exit 1
 fi
 

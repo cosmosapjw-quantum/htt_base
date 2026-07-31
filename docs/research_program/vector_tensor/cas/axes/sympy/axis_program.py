@@ -116,7 +116,8 @@ def main() -> None:
         {l1: -2, l2: 0, x[0]: 1, x[1]: 1, x[2]: 1}
     ))
 
-    q2, q3, dq2, dq3 = sp.symbols("q2 q3 dq2 dq3", nonzero=True)
+    q2 = sp.symbols("q2", nonzero=True)
+    q3, dq2, dq3 = sp.symbols("q3 dq2 dq3", real=True)
     j2 = 6 * q3**2 / q2**3
     differential = sp.diff(j2, q2) * dq2 + sp.diff(j2, q3) * dq3
     chain_rule_ok = sp.factor(

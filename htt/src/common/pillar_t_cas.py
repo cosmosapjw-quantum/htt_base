@@ -4,14 +4,14 @@ PR-270 has two intentionally separate lanes:
 
 * exact polynomial obligations that require one blind four-axis CAS verdict;
 * conditional linear-algebra and refusal statements that can be checked
-  without pretending that a missing CAS engine or native geometry payload
-  exists.
+  without pretending that a native geometry payload exists.
 
 This module validates the frozen contract, runner-observed adjudication, and
 proof registry.  It also exposes small exact/typed witnesses for VT-T11,
-VT-T12, VT-T13, and VT-T14.  A three-axis agreement is never a four-axis
-verdict.  None of these records is an observational result, native-solver
-validation, morphology atlas, likelihood, posterior, or family label.
+VT-T12, VT-T13, and VT-T14.  The stored CAS verdict is accepted only when
+all four runner-observed axes pass one contract.  None of these records is
+an observational result, native-solver validation, morphology atlas,
+likelihood, posterior, or family label.
 """
 
 from __future__ import annotations
@@ -111,11 +111,14 @@ class AggregateCASVerdict(_StringEnum):
 
 
 class PillarTStatementVerdict(_StringEnum):
-    CAS_BLOCKED_REQUIRED_AXIS = "CAS_BLOCKED_REQUIRED_AXIS"
+    PROVED_CAS4_EXACT = "PROVED_CAS4_EXACT"
+    PROVED_CAS4_RESTRICTED_LOCAL_CHART = (
+        "PROVED_CAS4_RESTRICTED_LOCAL_CHART"
+    )
     PROVED_CONDITIONAL_LINEAR_ALGEBRA = (
         "PROVED_CONDITIONAL_LINEAR_ALGEBRA"
     )
-    PARTIAL_CHAIN_RULE_CAS_BLOCKED = "PARTIAL_CHAIN_RULE_CAS_BLOCKED"
+    PARTIAL_CHAIN_RULE_CAS4 = "PARTIAL_CHAIN_RULE_CAS4"
     INCONCLUSIVE_NATIVE_GEOMETRY_GATE = (
         "INCONCLUSIVE_NATIVE_GEOMETRY_GATE"
     )
@@ -396,6 +399,14 @@ def load_cas_adjudication(
         raise PillarTCasError(
             "three-axis agreement cannot satisfy the R3 CAS component"
         )
+    if all_pass and (
+        aggregate is not AggregateCASVerdict.CAS_4AXIS_PASS
+        or eligible is not True
+        or requirement != "SATISFIED"
+    ):
+        raise PillarTCasError(
+            "four PASS axes must bind CAS_4AXIS_PASS and SATISFIED eligibility"
+        )
     if payload.get("verification_state") != "RUNNER_OBSERVED_EXECUTION":
         raise PillarTCasError("stored-result replay is not PR-270 execution evidence")
     if payload.get("evidence_origin") != "runner_observed_local_subprocess":
@@ -506,13 +517,15 @@ def load_pillar_t_cas_registry(
             "registry must contain VT-T5-8 and VT-T11-14 once"
         )
     expected_verdicts = {
-        **{
-            f"VT-T{index}": PillarTStatementVerdict.CAS_BLOCKED_REQUIRED_AXIS
-            for index in range(5, 9)
-        },
+        "VT-T5": PillarTStatementVerdict.PROVED_CAS4_EXACT,
+        "VT-T6": PillarTStatementVerdict.PROVED_CAS4_EXACT,
+        "VT-T7": PillarTStatementVerdict.PROVED_CAS4_EXACT,
+        "VT-T8": (
+            PillarTStatementVerdict.PROVED_CAS4_RESTRICTED_LOCAL_CHART
+        ),
         "VT-T11": PillarTStatementVerdict.PROVED_CONDITIONAL_LINEAR_ALGEBRA,
         "VT-T12": PillarTStatementVerdict.PROVED_CONDITIONAL_LINEAR_ALGEBRA,
-        "VT-T13": PillarTStatementVerdict.PARTIAL_CHAIN_RULE_CAS_BLOCKED,
+        "VT-T13": PillarTStatementVerdict.PARTIAL_CHAIN_RULE_CAS4,
         "VT-T14": (
             PillarTStatementVerdict.INCONCLUSIVE_NATIVE_GEOMETRY_GATE
         ),
@@ -520,7 +533,7 @@ def load_pillar_t_cas_registry(
     for record in out:
         if record.verdict is not expected_verdicts[record.obligation_id]:
             raise PillarTCasError(
-                f"{record.obligation_id} verdict violates the blocked boundary"
+                f"{record.obligation_id} verdict violates the registered boundary"
             )
     return tuple(out)
 

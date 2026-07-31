@@ -1,28 +1,28 @@
 schema: htt.pillar_t_cas_proofs.v1
 authority: PR-270
 claim_ceiling: diagnostic_only
-scientific_status_effect: none_blocked_cas_and_conditional_linear_algebra_only
+scientific_status_effect: exact_formal_and_conditional_diagnostic_results_only
 source_proof_adjudication_status: NOT_ADJUDICATED
-aggregate_cas_verdict: CAS_BLOCKED
-success_dependency_satisfied: false
-cas_contract_sha256: 7d811126a4becf184cafc342ded1c78ce8148c7d6d008f955c4b99c6b46f3c1f
-cas_adjudication_sha256: 95613b1a6f3e15aef99807f77639099c0d1165c72afc7247cc36e43cc1418ce6
+aggregate_cas_verdict: CAS_4AXIS_PASS
+success_dependency_satisfied: true
+cas_contract_sha256: 2d2ceb84603b24ab0b34db8b69715483061428ee36d6b2f5952494a9bb8108b4
+cas_adjudication_sha256: a30a5597f0cc16786c4fcd4e689a6e5d0009387089f717205043152a439cf275
 axis_statuses:
-  wolfram_xact: BLOCKED_PLATFORM_OR_LICENSE
+  wolfram_xact: PASS
   sympy: PASS
   sage_singular: PASS
   lean: PASS
 records:
 - obligation_id: VT-T5
   source_proof_adjudication_status: NOT_ADJUDICATED
-  relation_to_source: EXACT_ELABORATION_BLOCKED_BEFORE_FOUR_AXIS_VERDICT
+  relation_to_source: EXACT_ELABORATION
   assumptions:
   - sigma is real symmetric trace-free 3 by 3
   - I2 is positive where normalized shape is used
   domains:
   - principal and repeated-eigenvalue shear strata
   proof_method: one sealed four-axis exact polynomial contract
-  verdict: CAS_BLOCKED_REQUIRED_AXIS
+  verdict: PROVED_CAS4_EXACT
   evidence_refs:
   - docs/research_program/vector_tensor/cas/CAS_CONTRACT.json
   - docs/research_program/vector_tensor/cas/CAS_ADJUDICATION.json
@@ -33,13 +33,13 @@ records:
   claim_ceiling: diagnostic_only
 - obligation_id: VT-T6
   source_proof_adjudication_status: NOT_ADJUDICATED
-  relation_to_source: EXACT_ELABORATION_BLOCKED_BEFORE_FOUR_AXIS_VERDICT
+  relation_to_source: EXACT_ELABORATION
   assumptions:
   - sigma is real trace-free 3 by 3
   domains:
-  - exact rational polynomial model of the registered real statement
+  - exact real trace-free matrix domain
   proof_method: one sealed four-axis exact polynomial contract
-  verdict: CAS_BLOCKED_REQUIRED_AXIS
+  verdict: PROVED_CAS4_EXACT
   evidence_refs:
   - docs/research_program/vector_tensor/cas/CAS_CONTRACT.json
   - docs/research_program/vector_tensor/cas/CAS_ADJUDICATION.json
@@ -49,14 +49,14 @@ records:
   claim_ceiling: diagnostic_only
 - obligation_id: VT-T7
   source_proof_adjudication_status: NOT_ADJUDICATED
-  relation_to_source: EXACT_ELABORATION_BLOCKED_BEFORE_FOUR_AXIS_VERDICT
+  relation_to_source: EXACT_ELABORATION
   assumptions:
   - sigma has a real eigenframe
   - the reference vector has declared eigenframe components
   domains:
   - principal cyclic and noncyclic boundary strata
   proof_method: one sealed four-axis exact polynomial contract
-  verdict: CAS_BLOCKED_REQUIRED_AXIS
+  verdict: PROVED_CAS4_EXACT
   evidence_refs:
   - docs/research_program/vector_tensor/cas/CAS_CONTRACT.json
   - docs/research_program/vector_tensor/cas/CAS_ADJUDICATION.json
@@ -67,7 +67,7 @@ records:
   claim_ceiling: diagnostic_only
 - obligation_id: VT-T8
   source_proof_adjudication_status: NOT_ADJUDICATED
-  relation_to_source: RESTRICTED_GENERIC_LOCAL_ELABORATION_BLOCKED_BEFORE_FOUR_AXIS_VERDICT
+  relation_to_source: RESTRICTED_GENERIC_LOCAL_ELABORATION
   assumptions:
   - sigma has simple spectrum
   - one declared reference vector is cyclic
@@ -75,7 +75,7 @@ records:
   domains:
   - registered principal cyclic SO(3) eigenframe chart
   proof_method: exact block-triangular Jacobian factor under one four-axis contract
-  verdict: CAS_BLOCKED_REQUIRED_AXIS
+  verdict: PROVED_CAS4_RESTRICTED_LOCAL_CHART
   evidence_refs:
   - docs/research_program/vector_tensor/cas/CAS_CONTRACT.json
   - docs/research_program/vector_tensor/cas/CAS_ADJUDICATION.json
@@ -131,7 +131,7 @@ records:
   domains:
   - exact invariant quotient-rule core only
   proof_method: cleared-denominator polynomial identity in the CAS contract
-  verdict: PARTIAL_CHAIN_RULE_CAS_BLOCKED
+  verdict: PARTIAL_CHAIN_RULE_CAS4
   evidence_refs:
   - docs/research_program/vector_tensor/cas/CAS_CONTRACT.json
   - docs/research_program/vector_tensor/cas/CAS_ADJUDICATION.json
