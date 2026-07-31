@@ -14,8 +14,13 @@ observed_data_execution: forbidden
 frozen_before_analysis: true
 frozen_on: '2026-07-30'
 frozen_parent_candidate: 74b79d5d
-candidate_attempt: PR273-CANDIDATE-R3
-design_revision: 4
+candidate_attempt: PR273-CANDIDATE-R4
+design_revision: 5
+second_failed_candidate_review:
+  candidate_sha: d4fb7f32921d2256049a740a2f3c9ced496840c6
+  receipt: .agent-harness/runs/pr273-final-review-20260730-r3/RUN_SUMMARY.json
+  finding_id: F-PR273-R3-CASE-ID-VALUE-BYPASS
+  repair: bind the challenge identity, exact opaque case ID tuple, and exact development/held-out partition tuple at construction
 failed_candidate_review:
   candidate_sha: 777fc49989c1a32a18bb03f77f8ee6be30cd6de5
   receipt: .agent-harness/runs/pr273-final-review-20260730-r2/RUN_SUMMARY.json

@@ -207,6 +207,8 @@ def test_registered_adjudication_matches_all_cases_and_kills_mutations() -> None
     (
         "truth_field",
         "nested_label",
+        "case_id_alias",
+        "challenge_id_alias",
         "observed_data",
         "challenge_content",
         "submission_content",
@@ -226,6 +228,23 @@ def test_blind_envelopes_fail_closed_under_boundary_mutations(
         with pytest.raises(
             BlindSyntheticContractError,
             match="truth|fields drifted",
+        ):
+            build_blind_synthetic_challenge(challenge_payload)
+    elif mutation == "case_id_alias":
+        challenge_payload["cases"][0]["case_id"] = "SYNTHETIC_SENTINEL"
+        challenge_payload["partitions"]["development"][0] = (
+            "SYNTHETIC_SENTINEL"
+        )
+        with pytest.raises(
+            BlindSyntheticContractError,
+            match="opaque inventory|opaque partition",
+        ):
+            build_blind_synthetic_challenge(challenge_payload)
+    elif mutation == "challenge_id_alias":
+        challenge_payload["challenge_id"] = "SYNTHETIC_SENTINEL"
+        with pytest.raises(
+            BlindSyntheticContractError,
+            match="opaque identity",
         ):
             build_blind_synthetic_challenge(challenge_payload)
     elif mutation == "observed_data":

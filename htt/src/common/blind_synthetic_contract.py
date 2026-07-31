@@ -35,6 +35,7 @@ BLIND_SYNTHETIC_FORBIDDEN_USE = (
     "MIO likelihood, posterior, Bayes factor, or evidence",
 )
 CHALLENGE_SCHEMA = "htt.pr273.blind_synthetic_challenge.v1"
+BLIND_SYNTHETIC_CHALLENGE_ID = "PR273-BLIND-SYNTHETIC-V1"
 SUBMISSION_SCHEMA = "htt.pr273.blind_synthetic_submission.v1"
 ADJUDICATION_SCHEMA = "htt.pr273.blind_synthetic_adjudication.v1"
 TRUTH_VAULT_SCHEMA = "htt.pr273.blind_synthetic_truth_vault.v1"
@@ -68,6 +69,11 @@ _STATE_KEYS = frozenset(
 )
 _RESPONSE_KEYS = frozenset({"local", "global", "observation"})
 _DEPTH_KEYS = frozenset({"support", "features", "covariance_scale"})
+_REQUIRED_CASE_IDS = ("C01", "C02", "C03", "C04", "C05")
+_REQUIRED_PARTITIONS = (
+    ("development", ("C01", "C02", "C03")),
+    ("held_out", ("C04", "C05")),
+)
 _REQUIRED_MUTATIONS = (
     "TRUTH_FIELD_IN_CHALLENGE",
     "OBSERVED_DATA_FLAG",
@@ -275,6 +281,10 @@ class BlindSyntheticChallenge:
                 "BlindSyntheticChallenge must be factory-built"
             )
         _text(self.challenge_id, "challenge_id")
+        if self.challenge_id != BLIND_SYNTHETIC_CHALLENGE_ID:
+            raise BlindSyntheticContractError(
+                "challenge ID must remain the registered opaque identity"
+            )
         if (
             isinstance(self.seed, bool)
             or not isinstance(self.seed, Integral)
@@ -297,6 +307,10 @@ class BlindSyntheticChallenge:
         for case in cases:
             _validate_case_payload(case)
         case_ids = _case_ids(cases)
+        if case_ids != _REQUIRED_CASE_IDS:
+            raise BlindSyntheticContractError(
+                "challenge case IDs must match the exact registered opaque inventory"
+            )
         partitions = tuple(
             (
                 _text(name, "partition"),
@@ -304,12 +318,9 @@ class BlindSyntheticChallenge:
             )
             for name, values in self.partitions
         )
-        if tuple(name for name, _ in partitions) != (
-            "development",
-            "held_out",
-        ):
+        if partitions != _REQUIRED_PARTITIONS:
             raise BlindSyntheticContractError(
-                "partitions must be development then held_out"
+                "partitions must match the exact registered opaque partition"
             )
         flat = tuple(
             case_id for _, values in partitions for case_id in values
@@ -841,6 +852,7 @@ def build_blind_synthetic_adjudication(
 __all__ = [
     "ADJUDICATION_SCHEMA",
     "BLIND_SYNTHETIC_ALLOWED_USE",
+    "BLIND_SYNTHETIC_CHALLENGE_ID",
     "BLIND_SYNTHETIC_CLAIM_CEILING",
     "BLIND_SYNTHETIC_FORBIDDEN_USE",
     "BlindSyntheticAdjudication",

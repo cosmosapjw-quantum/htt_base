@@ -117,6 +117,14 @@ def _mutation_results(
 
     killed.append(_expect_killed("TRUTH_FIELD_IN_CHALLENGE", truth_field))
 
+    def truth_in_case_id() -> None:
+        payload = copy.deepcopy(challenge_payload)
+        payload["cases"][0]["case_id"] = "SYNTHETIC_SENTINEL"
+        payload["partitions"]["development"][0] = "SYNTHETIC_SENTINEL"
+        build_blind_synthetic_challenge(payload)
+
+    _expect_killed("TRUTH_FIELD_IN_CHALLENGE", truth_in_case_id)
+
     def observed_flag() -> None:
         payload = copy.deepcopy(challenge_payload)
         payload["observed_data"] = True
