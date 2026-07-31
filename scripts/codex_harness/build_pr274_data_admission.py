@@ -166,6 +166,25 @@ def _verify_pr151_semantics(
         raise RuntimeError("PR-273 success resolution is not satisfied")
 
 
+def _execution_time_evidence_sha256(
+    record: Mapping[str, object],
+) -> str:
+    value = record.get("execution_time_sha256")
+    if (
+        not isinstance(value, str)
+        or len(value) != 64
+        or any(character not in "0123456789abcdef" for character in value)
+    ):
+        raise RuntimeError(
+            "live semantic status execution-time sha256 is malformed"
+        )
+    if record.get("serialize_current_sha256") is not False:
+        raise RuntimeError(
+            "live semantic status must not serialize its current sha256"
+        )
+    return value
+
+
 def _verify_frozen_inputs(
     spec: Mapping[str, object],
 ) -> tuple[dict[str, str], Mapping[str, object]]:
@@ -179,15 +198,18 @@ def _verify_frozen_inputs(
             raise RuntimeError(f"frozen input {label} is malformed")
         path = _repo_file(raw_record.get("path"), label=f"frozen input {label}")
         actual = _sha256(path)
-        relative = path.relative_to(ROOT.resolve(strict=True)).as_posix()
-        evidence[relative] = f"sha256:{actual}"
+        relative = PurePosixPath(str(raw_record["path"])).as_posix()
         if "sha256" in raw_record:
             expected = raw_record["sha256"]
             if actual != expected:
                 raise RuntimeError(
                     f"frozen input {label} drifted: {actual} != {expected}"
                 )
+            evidence[relative] = f"sha256:{actual}"
         elif raw_record.get("identity_mode") == "live_semantic":
+            evidence[relative] = (
+                "sha256:" + _execution_time_evidence_sha256(raw_record)
+            )
             loaded = _load_yaml(path)
             _verify_pr151_semantics(spec=spec, status=loaded)
             status_payload = loaded

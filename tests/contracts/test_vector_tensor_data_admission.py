@@ -220,6 +220,8 @@ def test_frozen_inputs_match_bytes_and_live_pr151_semantics() -> None:
             assert _sha(path) == record["sha256"], label
         else:
             assert record["identity_mode"] == "live_semantic"
+            assert record["serialize_current_sha256"] is False
+            assert len(record["execution_time_sha256"]) == 64
     status = _yaml(STATUS)
     assert "PR-151" in status["background_in_progress"]
     assert status["background_execution_contracts"]["PR-151"] == {
@@ -763,14 +765,99 @@ def test_committed_result_is_deterministic_and_source_bound() -> None:
     )
     assert completed.returncode == 0, completed.stdout + completed.stderr
     payload = _json(RESULT)
+    spec = _yaml(SPEC)
     source_evidence = payload["source_evidence"]
     assert source_evidence[
         "docs/codex_handoff/pr_status.yaml"
-    ] == f"sha256:{_sha(STATUS)}"
+    ] == (
+        "sha256:"
+        + spec["frozen_inputs"]["canonical_status"]["execution_time_sha256"]
+    )
     assert source_evidence[
         "docs/research_program/vector_tensor/data_admission/"
         "PR274_CANDIDATE_INPUTS.yaml"
     ] == f"sha256:{_sha(REGISTRY)}"
+
+
+def test_live_status_self_closeout_does_not_mutate_result_provenance(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    module_spec = importlib.util.spec_from_file_location(
+        "pr274_builder_live_status_test",
+        BUILDER,
+    )
+    assert module_spec is not None and module_spec.loader is not None
+    module = importlib.util.module_from_spec(module_spec)
+    module_spec.loader.exec_module(module)
+
+    spec_payload = _yaml(SPEC)
+    status_payload = _yaml(STATUS)
+    status_payload["completed"] = [
+        "PR-274",
+        *status_payload["completed"],
+    ]
+    status_payload["pending"] = [
+        value for value in status_payload["pending"] if value != "PR-274"
+    ]
+    status_payload["execution_resolutions"]["PR-274"] = {
+        "resolution": "COMPLETED_SUCCESS",
+        "success_dependency_satisfied": True,
+    }
+    closeout_status = tmp_path / "pr_status.yaml"
+    closeout_status.write_text(
+        yaml.safe_dump(status_payload, sort_keys=False),
+        encoding="utf-8",
+    )
+
+    original_repo_file = module._repo_file
+
+    def resolve_for_test(relative_text: object, *, label: str) -> Path:
+        if label == "frozen input canonical_status":
+            return closeout_status.resolve(strict=True)
+        return original_repo_file(relative_text, label=label)
+
+    monkeypatch.setattr(module, "_repo_file", resolve_for_test)
+    evidence, evaluated_status = module._verify_frozen_inputs(spec_payload)
+    assert "PR-274" in evaluated_status["completed"]
+    assert evidence["docs/codex_handoff/pr_status.yaml"] == (
+        "sha256:"
+        + spec_payload["frozen_inputs"]["canonical_status"][
+            "execution_time_sha256"
+        ]
+    )
+
+
+def test_live_status_semantic_drift_still_fails_closed(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    module_spec = importlib.util.spec_from_file_location(
+        "pr274_builder_live_status_drift_test",
+        BUILDER,
+    )
+    assert module_spec is not None and module_spec.loader is not None
+    module = importlib.util.module_from_spec(module_spec)
+    module_spec.loader.exec_module(module)
+
+    spec_payload = _yaml(SPEC)
+    status_payload = _yaml(STATUS)
+    status_payload["background_in_progress"] = []
+    drifted_status = tmp_path / "pr_status.yaml"
+    drifted_status.write_text(
+        yaml.safe_dump(status_payload, sort_keys=False),
+        encoding="utf-8",
+    )
+    original_repo_file = module._repo_file
+
+    def resolve_for_test(relative_text: object, *, label: str) -> Path:
+        if label == "frozen input canonical_status":
+            return drifted_status.resolve(strict=True)
+        return original_repo_file(relative_text, label=label)
+
+    monkeypatch.setattr(module, "_repo_file", resolve_for_test)
+    with pytest.raises(RuntimeError, match="PR-151 is not background_in_progress"):
+        module._verify_frozen_inputs(spec_payload)
 
 
 def test_builder_yaml_loader_rejects_duplicate_authority_keys(

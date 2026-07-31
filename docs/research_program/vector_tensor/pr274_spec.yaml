@@ -16,8 +16,8 @@ pilot_execution_in_this_change_set: forbidden
 frozen_before_preflight: true
 frozen_on: '2026-07-30'
 frozen_parent_candidate: 7d94aae3a56172c3892f456b4936d93b5dedbc41
-design_revision: 5
-candidate_attempt: PR274-CANDIDATE-R4
+design_revision: 6
+candidate_attempt: PR274-CANDIDATE-R5
 pre_execution_revision:
   reason: >-
     The canonical status file must change when PR-274 closes, so freezing its
@@ -55,6 +55,18 @@ third_failed_review_remediation:
     - identity evidence JSON rejects NaN, Infinity, and negative Infinity constants
     - ambiguous bytes cannot be legitimized by registering their own sha256
     - the PR-274 builder rejects duplicate keys in every YAML authority input
+post_review_closeout_remediation:
+  reviewed_candidate_sha: 1ac9b074b3c7e4c4b3e6cf7a0a5ce0bbf8e9a0f8
+  review_run: .agent-harness/runs/pr274-final-review-20260730-r4
+  review_status: PASS_INVALIDATED_BY_POST_REVIEW_IMPLEMENTATION_CHANGE
+  reproduced_failure: >-
+    an allowed PR-274 pending-to-completed status transition changed the live
+    canonical status SHA and made the immutable admission result stale
+  repaired_before_next_preflight:
+    - the pre-closeout execution-time status SHA remains frozen result provenance
+    - every replay still validates current PR-151 and PR-273 status semantics
+    - the current live status SHA is not serialized into the immutable result
+    - allowed self-closeout drift and forbidden semantic drift have regressions
 
 frozen_inputs:
   candidate_registry:
@@ -75,6 +87,8 @@ frozen_inputs:
   canonical_status:
     path: docs/codex_handoff/pr_status.yaml
     identity_mode: live_semantic
+    execution_time_sha256: ec667479a8092970968e4216a83da18fa22d97a9d05fd479d86755ea809da65d
+    serialize_current_sha256: false
     required_background_card: PR-151
     required_partial_scientific_use: forbidden
   wave19_data_readiness:
