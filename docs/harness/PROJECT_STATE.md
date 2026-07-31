@@ -1,5 +1,34 @@
 # Project State
 
+## 2026-07-30 - PR-273 blind synthetic integration checkpoint
+
+This section supersedes older orchestration snapshots below.
+
+- Active DAG: 222 cards, 168 completed, 1 blocked, 24 pending, 28 dormant
+  external/native, no foreground card, and background PR-151 acquisition.
+  Count completion is 75.68%, dependency-weighted completion 81.60%, and the
+  critical-path proxy is 96.10%.
+- PR-270 and PR-272 independently close the registered Pillar-T CAS and
+  Pillar-S synthetic-inference dependencies without promoting source theorem
+  status. PR-273 connects their typed state-to-report interfaces on five
+  synthetic cases, two held out.
+- PR-273 candidates R2--R5 failed on nested schema, opaque identity,
+  partition resealing, and detached interpreted-truth defects. All failed
+  receipts are preserved. Final candidate `ef1aa331...` passed both R6
+  candidate-bound reviews and strict schema-v3 validation.
+- Closeout validation passes 26 focused tests, 233 adjacent regressions, 7
+  smoke tests, source-layout collection of 10434/10493 nodes with 59
+  deselected, strict DAG/mirrors, generator checks, and both claim scans.
+- Programme checkpoint:
+  `docs/research_program/vector_tensor/checkpoint_pr273_20260730.md`.
+  Global five-count checkpoint generation is not due.
+- PR-274 is dependency-open for repository-bound data admission only. No
+  actual data pilot is authorized. PR-151 partial acquisition remains
+  forbidden as input; PR-172 remains blocked.
+- No observed-data, transfer, source-theorem, native solver/atlas, geometry,
+  posterior/evidence, truth-certificate, public-use, or family-identification
+  status changed.
+
 ## 2026-07-30 - Checkpoint 165 and PR-271 exact/core closeout
 
 This section supersedes older orchestration snapshots below.

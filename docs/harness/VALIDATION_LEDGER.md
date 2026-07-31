@@ -2,6 +2,34 @@
 
 Record commands actually run. Never mark skipped checks as passed.
 
+## PR-273 - blind synthetic integration checkpoint
+
+Date: 2026-07-30
+
+Change classification: deterministic synthetic integration code, sealed
+challenge/submission/truth/adjudication contracts, generated diagnostic pack,
+tests, status/delta closeout, and programme checkpoint. No observed-data
+execution, transfer validation, source-theorem promotion, native solver/atlas
+result, geometry verdict, family identification, or public-use state changed.
+
+| Command or check | Result | Notes |
+|---|---:|---|
+| deterministic PR-273 builder and byte check | PASS | Five cases, two held out, five declared mutation classes killed. |
+| focused integration contract | PASS | `26 passed`; includes every R2--R5 regression and strict committed-truth JSON parsing. |
+| adjacent vector/tensor regression | PASS | `233 passed`. |
+| smoke | PASS | `7 passed`, `10486 deselected`; eight retained legacy warnings. |
+| full source-layout collection | PASS | `10434/10493 collected`, `59 deselected`, zero errors with `PYTHONPATH=htt/src:htt`. |
+| initial bare collection invocation | FAIL, ENVIRONMENTAL | Missing source-layout path produced import errors; it is preserved and not counted as a pass. |
+| strict canonical DAG and mirrors | PASS | `222 PRs, DAG valid`; canonical/machine status byte-identical. |
+| claim-language and research-surface scans | PASS | Zero forbidden-language findings. |
+| R2--R5 candidate reviews | FAIL, PRESERVED | Nested truth alias, opaque ID mutation, partition reseal, and detached parsed-truth defects; none authorizes completion. |
+| exact frozen candidate R6 reviews | PASS | Candidate `ef1aa331...`; claim and integration lanes both pass, with strict result and coverage validation. |
+| programme progress checkpoint | PASS | `168/222 = 75.68%`; dependency weighted `81.60%`; critical path `96.10%`; PR-274 dependency-open. |
+
+Scientific impact: PR-273 supplies synthetic integration evidence only.
+MIO remains diagnostic, HTT remains the inference owner, source theorems
+remain unpromoted, and no observed/native/family claim is admitted.
+
 ## Checkpoint 165 and PR-271 exact/core statistical closeout
 
 Date: 2026-07-30

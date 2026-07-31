@@ -2,6 +2,32 @@
 
 Update every five PRs with percent complete and blockers.
 
+## PR-273 programme checkpoint
+
+Date: 2026-07-30
+
+- Active DAG: 168/222 complete = 75.68%; dependency-weighted completion
+  81.60%; critical-path proxy 96.10%.
+- PR-270's exact four-axis CAS result and PR-272's preregistered synthetic
+  inference validation are both complete. PR-273 connects the full typed
+  state-to-report path on five deterministic synthetic cases with two
+  held-out cases.
+- R2--R5 failed candidate reviews remain preserved. The final
+  `ef1aa331...` candidate closes every reproduced schema, identity,
+  partition, submission-seal, and truth-byte defect and passed both R6
+  independent reviews.
+- Validation: 26 focused, 233 adjacent, 7 smoke, 10434/10493 source-layout
+  collection with 59 deselected, strict 222-card DAG, byte-identical status
+  mirrors, generator check, and both claim scans pass.
+- The programme artifact is
+  `docs/research_program/vector_tensor/checkpoint_pr273_20260730.md`. A
+  global five-count checkpoint is not due.
+- PR-274 is the next vector/tensor node and is limited to admission/preflight.
+  PR-151 partial acquisition cannot be used, and no actual data execution is
+  authorized. PR-172 remains blocked.
+- Claim drift: none. Source theorems remain unpromoted; the pack remains
+  synthetic, diagnostic-only, pre-native, and family-unidentified.
+
 ## Checkpoint 165 — PR-266 through PR-269 and PR-271
 
 Date: 2026-07-30
