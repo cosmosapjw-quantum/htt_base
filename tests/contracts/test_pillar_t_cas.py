@@ -229,6 +229,98 @@ def test_unregistered_pass_with_exception_state_is_rejected(
         )
 
 
+def _replace_stdout_payload(row: dict) -> None:
+    row["stdout_tail"] = json.dumps(
+        row["payload"], separators=(",", ":")
+    ) + "\n"
+
+
+@pytest.mark.parametrize(
+    ("mutation", "match"),
+    [
+        (
+            lambda row: row["payload"]["checks"].update(
+                vt_t5_discriminant_identity=False
+            ),
+            "stored payload drifted",
+        ),
+        (
+            lambda row: (
+                row["payload"]["checks"].update(
+                    vt_t5_discriminant_identity=False
+                ),
+                _replace_stdout_payload(row),
+            ),
+            "failed exact obligation",
+        ),
+        (
+            lambda row: (
+                row["payload"]["checks"].pop(
+                    "vt_t5_discriminant_identity"
+                ),
+                _replace_stdout_payload(row),
+            ),
+            "exactly cover",
+        ),
+        (
+            lambda row: (
+                row["payload"]["computed"].update(principal_I2="9"),
+                _replace_stdout_payload(row),
+            ),
+            "expected exact values",
+        ),
+        (
+            lambda row: (
+                row["payload"].update(
+                    domain_assumption_diff=["complex branch"]
+                ),
+                _replace_stdout_payload(row),
+            ),
+            "assumption/domain difference",
+        ),
+        (
+            lambda row: (
+                row["payload"].update(
+                    counterexample={"kind": "exact witness"}
+                ),
+                _replace_stdout_payload(row),
+            ),
+            "counterexample",
+        ),
+        (
+            lambda row: row.update(exit_code=1),
+            "exit_code zero",
+        ),
+        (
+            lambda row: row.update(timed_out=True),
+            "timed out",
+        ),
+        (
+            lambda row: row["preflight_probe"].update(
+                status="BLOCKED_PACKAGE_UNAVAILABLE"
+            ),
+            "PASS preflight",
+        ),
+        (
+            lambda row: row.update(errors=["derived payload mismatch"]),
+            "validation errors",
+        ),
+    ],
+)
+def test_pass_execution_payload_is_rederived_fail_closed(
+    tmp_path: Path,
+    mutation,
+    match: str,
+) -> None:
+    payload = copy.deepcopy(_json(ADJUDICATION_PATH))
+    mutation(payload["execution_evidence"]["wolfram_xact"])
+    with pytest.raises(PillarTCasError, match=match):
+        load_cas_adjudication(
+            ROOT,
+            _write_json(tmp_path, "contradictory-pass.json", payload),
+        )
+
+
 def test_wolfram_exit_255_activation_transcript_is_platform_blocker() -> None:
     transcript = (
         "Your Wolfram Engine installation is not activated or is "

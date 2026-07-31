@@ -250,6 +250,77 @@ def _load_registered_tf_aliases(
     }
 
 
+def _validate_pass_execution_payload(
+    axis: str,
+    row: Mapping[str, object],
+    contract: CASContract,
+) -> None:
+    """Recompute a serialized PASS from its parent-observed raw payload."""
+
+    preflight = _mapping(
+        row.get("preflight_probe"), f"{axis}.preflight_probe"
+    )
+    if preflight.get("status") != "PASS":
+        raise PillarTCasError(f"{axis} PASS requires a PASS preflight")
+    exit_code = row.get("exit_code")
+    if type(exit_code) is not int or exit_code != 0:
+        raise PillarTCasError(f"{axis} PASS requires exit_code zero")
+    if row.get("timed_out") is not False:
+        raise PillarTCasError(f"{axis} PASS cannot be timed out")
+    if row.get("errors") != []:
+        raise PillarTCasError(
+            f"{axis} PASS cannot retain runner validation errors"
+        )
+    raw_payload = _mapping(row.get("payload"), f"{axis}.payload")
+    expected_fields = {
+        "checks",
+        "domain_assumption_diff",
+        "computed",
+        "counterexample",
+    }
+    if set(raw_payload) != expected_fields:
+        raise PillarTCasError(
+            f"{axis} PASS payload fields do not match the CAS contract"
+        )
+    stdout_tail = row.get("stdout_tail")
+    if not isinstance(stdout_tail, str):
+        raise PillarTCasError(f"{axis} stdout_tail must be text")
+    try:
+        observed_stdout = json.loads(stdout_tail)
+    except json.JSONDecodeError as exc:
+        raise PillarTCasError(
+            f"{axis} PASS stdout is not one JSON payload"
+        ) from exc
+    if observed_stdout != raw_payload:
+        raise PillarTCasError(
+            f"{axis} stored payload drifted from parent-observed stdout"
+        )
+    checks = _mapping(raw_payload.get("checks"), f"{axis}.payload.checks")
+    if set(checks) != set(contract.obligations):
+        raise PillarTCasError(
+            f"{axis} PASS checks must exactly cover contract obligations"
+        )
+    if any(value is not True for value in checks.values()):
+        raise PillarTCasError(
+            f"{axis} PASS payload contains a failed exact obligation"
+        )
+    if raw_payload.get("domain_assumption_diff") != []:
+        raise PillarTCasError(
+            f"{axis} PASS payload contains an assumption/domain difference"
+        )
+    computed = _mapping(
+        raw_payload.get("computed"), f"{axis}.payload.computed"
+    )
+    if dict(computed) != dict(contract.expected_exact_values):
+        raise PillarTCasError(
+            f"{axis} PASS payload does not match expected exact values"
+        )
+    if raw_payload.get("counterexample") is not None:
+        raise PillarTCasError(
+            f"{axis} PASS payload contains a counterexample"
+        )
+
+
 @dataclass(frozen=True)
 class CASContract:
     contract_id: str
@@ -428,6 +499,8 @@ def load_cas_adjudication(
             raise PillarTCasError(f"{axis}.solver_executed must be boolean")
         if status == "PASS" and executed is not True:
             raise PillarTCasError(f"{axis} PASS requires solver execution")
+        if status == "PASS":
+            _validate_pass_execution_payload(axis, row, contract)
         if status in _BLOCKED_AXIS_STATUSES and executed is not False:
             raise PillarTCasError(f"{axis} blocked status cannot claim execution")
     any_blocked = any(
