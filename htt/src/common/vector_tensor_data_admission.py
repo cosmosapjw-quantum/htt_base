@@ -19,8 +19,89 @@ DATA_ADMISSION_RESULT_SCHEMA = "htt.pr274.vector_tensor_data_admission.v1"
 DATA_ADMISSION_CLAIM_CEILING = "diagnostic_only"
 NO_ADMITTED_DATA_PILOT = "NO_ADMITTED_DATA_PILOT"
 _REGISTRY_ID = "PR274-CANDIDATE-INPUTS-V1"
+_REGISTRY_FROZEN_ON = "2026-07-30"
+_REGISTRY_SCOPE = "repository-bound admission preflight"
 _EXPECTED_COMPONENT_ROLES = ("data", "mask", "covariance")
-_MISSING = frozenset(
+_EXPECTED_CANDIDATE_IDS = (
+    "PLANCK_PR3_FFP10_SMICA_COMPACT_REFERENCE",
+    "CF4_QUERY_BATCH_COMPACT_REFERENCE",
+    "DESI_DR1_PR151_PARTIAL_BACKGROUND",
+    "PLANCK_NAME_ONLY_CONTROL",
+    "HSC_NAME_ONLY_CONTROL",
+    "KIDS_NAME_ONLY_CONTROL",
+)
+_EXPECTED_REQUIRED_FIELDS = {
+    "PLANCK_PR3_FFP10_SMICA_COMPACT_REFERENCE": (
+        "observed_low_ell_features",
+        "matched_null_features",
+        "mask_support",
+        "covariance",
+        "transfer_provenance",
+    ),
+    "CF4_QUERY_BATCH_COMPACT_REFERENCE": (
+        "sky_position",
+        "distance_depth",
+        "peculiar_velocity",
+        "mask_selection",
+        "covariance",
+        "transfer_provenance",
+    ),
+    "DESI_DR1_PR151_PARTIAL_BACKGROUND": (
+        "complete_1000_ezmock_bank",
+        "complete_25_abacus_validation_bank",
+        "matched_selection",
+        "covariance",
+        "transfer_provenance",
+    ),
+    "PLANCK_NAME_ONLY_CONTROL": (
+        "observed_features",
+        "mask",
+        "covariance",
+        "transfer_provenance",
+    ),
+    "HSC_NAME_ONLY_CONTROL": (
+        "spin2_features",
+        "mask",
+        "response",
+        "covariance",
+        "transfer_provenance",
+    ),
+    "KIDS_NAME_ONLY_CONTROL": (
+        "spin2_features",
+        "mask",
+        "response",
+        "covariance",
+        "transfer_provenance",
+    ),
+}
+_RESOLVABLE_SOURCE_PREFIXES = (
+    "arxiv:",
+    "dataset:",
+    "doi:",
+    "docs/",
+    "http://",
+    "https://",
+    "ivo://",
+    "repository:",
+    "urn:",
+)
+_RESOLVABLE_LICENSE_PREFIXES = (
+    "doi:",
+    "docs/",
+    "http://",
+    "https://",
+    "repository:",
+    "spdx:",
+    "urn:",
+)
+_DIRECTIONAL_CONVENTIONS = frozenset(
+    {
+        "GALACTIC_IAU1958_RIGHT_HANDED",
+        "HEALPIX_GALACTIC_RING",
+        "ICRS_EQUATORIAL_RIGHT_HANDED",
+    }
+)
+_MISSING_TOKENS = frozenset(
     {
         "MISSING",
         "MISSING_BACKGROUND_STREAM",
@@ -56,6 +137,9 @@ _CANDIDATE_KEYS = frozenset(
         "acquisition_status",
         "background_pr",
         "sky_support_status",
+        "sky_support_identity",
+        "directional_convention",
+        "covariance_identity",
         "transfer_provenance",
         "required_fields",
         "available_fields",
@@ -156,6 +240,18 @@ def _prefixed_sha256(value: str) -> bool:
     )
 
 
+def _is_missing(value: str) -> bool:
+    return value.strip().upper() in _MISSING_TOKENS
+
+
+def _has_resolvable_prefix(
+    value: str,
+    prefixes: tuple[str, ...],
+) -> bool:
+    lowered = value.casefold()
+    return any(lowered.startswith(prefix.casefold()) for prefix in prefixes)
+
+
 def _enum_value(
     enum_type: type[_EnumT],
     value: object,
@@ -216,6 +312,9 @@ class VectorTensorDataCandidate:
     acquisition_status: str
     background_pr: str
     sky_support_status: str
+    sky_support_identity: str
+    directional_convention: str
+    covariance_identity: str
     transfer_provenance: str
     required_fields: tuple[str, ...]
     available_fields: tuple[str, ...]
@@ -238,6 +337,9 @@ class VectorTensorDataCandidate:
             "acquisition_status",
             "background_pr",
             "sky_support_status",
+            "sky_support_identity",
+            "directional_convention",
+            "covariance_identity",
             "transfer_provenance",
         ):
             _text(getattr(self, name), name)
@@ -294,6 +396,9 @@ class VectorTensorDataCandidate:
             "acquisition_status": self.acquisition_status,
             "background_pr": self.background_pr,
             "sky_support_status": self.sky_support_status,
+            "sky_support_identity": self.sky_support_identity,
+            "directional_convention": self.directional_convention,
+            "covariance_identity": self.covariance_identity,
             "transfer_provenance": self.transfer_provenance,
             "required_fields": list(self.required_fields),
             "available_fields": list(self.available_fields),
@@ -374,6 +479,18 @@ def candidate_from_mapping(
             checked["sky_support_status"],
             "sky_support_status",
         ),
+        sky_support_identity=_text(
+            checked["sky_support_identity"],
+            "sky_support_identity",
+        ),
+        directional_convention=_text(
+            checked["directional_convention"],
+            "directional_convention",
+        ),
+        covariance_identity=_text(
+            checked["covariance_identity"],
+            "covariance_identity",
+        ),
         transfer_provenance=_text(
             checked["transfer_provenance"],
             "transfer_provenance",
@@ -405,6 +522,10 @@ def candidates_from_registry(
         raise DataAdmissionError("candidate registry schema drifted")
     if checked["registry_id"] != _REGISTRY_ID:
         raise DataAdmissionError("candidate registry ID drifted")
+    if checked["frozen_on"] != _REGISTRY_FROZEN_ON:
+        raise DataAdmissionError("candidate registry frozen_on drifted")
+    if checked["scope"] != _REGISTRY_SCOPE:
+        raise DataAdmissionError("candidate registry scope drifted")
     if checked["observed_data_execution_authorized"] is not False:
         raise DataAdmissionError(
             "candidate registry cannot authorize observed-data execution"
@@ -422,6 +543,16 @@ def candidates_from_registry(
     ids = tuple(value.candidate_id for value in candidates)
     if len(ids) != len(set(ids)):
         raise DataAdmissionError("candidate IDs must be unique")
+    if ids != _EXPECTED_CANDIDATE_IDS:
+        raise DataAdmissionError(
+            "candidate membership/order drifted from the frozen PR-274 contract"
+        )
+    for candidate in candidates:
+        expected_fields = _EXPECTED_REQUIRED_FIELDS[candidate.candidate_id]
+        if candidate.required_fields != expected_fields:
+            raise DataAdmissionError(
+                f"{candidate.candidate_id} required_fields drifted"
+            )
     return candidates
 
 
@@ -515,7 +646,7 @@ def _component_blockers(
     if binding.binding_status != ComponentBindingStatus.BOUND:
         blockers.append(f"{prefix}_component_not_bound")
         return blockers, None
-    if binding.path in _MISSING:
+    if _is_missing(binding.path):
         blockers.append(f"{prefix}_path_missing")
         return blockers, None
     if not _prefixed_sha256(binding.sha256):
@@ -588,12 +719,46 @@ def evaluate_data_candidate(
         blockers.append("source_identity_not_bound")
     if candidate.source_identity_status == IdentityStatus.NAME_ONLY:
         blockers.append("dataset_name_is_not_source_identity")
+    if _is_missing(candidate.source_identity):
+        blockers.append("source_identity_missing")
+    elif (
+        candidate.source_identity.casefold()
+        == candidate.product_name.casefold()
+    ):
+        blockers.append("dataset_name_is_not_source_identity")
+    elif not _has_resolvable_prefix(
+        candidate.source_identity,
+        _RESOLVABLE_SOURCE_PREFIXES,
+    ):
+        blockers.append("source_identity_not_resolvable")
     if candidate.release_status != IdentityStatus.BOUND:
         blockers.append("release_version_not_bound")
+    if _is_missing(candidate.release_version):
+        blockers.append("release_version_missing")
+    elif (
+        candidate.release_version.casefold()
+        == candidate.product_name.casefold()
+    ):
+        blockers.append("release_version_not_specific")
     if candidate.license_status != IdentityStatus.BOUND:
         blockers.append("license_identity_not_bound")
+    if _is_missing(candidate.license_identity):
+        blockers.append("license_identity_missing")
+    elif not _has_resolvable_prefix(
+        candidate.license_identity,
+        _RESOLVABLE_LICENSE_PREFIXES,
+    ):
+        blockers.append("license_identity_not_resolvable")
     if candidate.sky_support_status != "BOUND":
         blockers.append("sky_support_not_bound")
+    if _is_missing(candidate.sky_support_identity):
+        blockers.append("sky_support_identity_missing")
+    if _is_missing(candidate.directional_convention):
+        blockers.append("directional_convention_missing")
+    elif candidate.directional_convention not in _DIRECTIONAL_CONVENTIONS:
+        blockers.append("directional_convention_unregistered")
+    if _is_missing(candidate.covariance_identity):
+        blockers.append("covariance_identity_missing")
     if candidate.acquisition_status in {
         "PARTIAL_BACKGROUND_ACQUISITION",
         "NAME_ONLY",
@@ -602,13 +767,15 @@ def evaluate_data_candidate(
         blockers.append("partial_or_incomplete_acquisition_forbidden")
     if candidate.background_pr == "PR-151":
         blockers.append("pr151_partial_scientific_use_forbidden")
-    if candidate.transfer_provenance in _MISSING:
+    if _is_missing(candidate.transfer_provenance):
         blockers.append("transfer_provenance_missing")
-    if candidate.transfer_provenance in {
+    elif candidate.transfer_provenance in {
         "native_solver",
         "native_morphology_atlas",
     }:
         blockers.append("pre_native_transfer_provenance_forbidden")
+    elif candidate.transfer_provenance != "none_observer_side":
+        blockers.append("registered_non_native_transfer_spec_required")
     missing_fields = tuple(
         field
         for field in candidate.required_fields
@@ -623,6 +790,21 @@ def evaluate_data_candidate(
         blockers.extend(component_blockers)
         if verified_row is not None:
             verified.append(verified_row)
+    component_by_role = {
+        binding.role: binding for binding in candidate.components
+    }
+    if (
+        not _is_missing(candidate.sky_support_identity)
+        and candidate.sky_support_identity
+        != component_by_role["mask"].sha256
+    ):
+        blockers.append("sky_support_identity_not_mask_content_id")
+    if (
+        not _is_missing(candidate.covariance_identity)
+        and candidate.covariance_identity
+        != component_by_role["covariance"].sha256
+    ):
+        blockers.append("covariance_identity_not_component_content_id")
 
     unique_blockers = tuple(dict.fromkeys(blockers))
     if unique_blockers:

@@ -16,8 +16,8 @@ pilot_execution_in_this_change_set: forbidden
 frozen_before_preflight: true
 frozen_on: '2026-07-30'
 frozen_parent_candidate: 7d94aae3a56172c3892f456b4936d93b5dedbc41
-design_revision: 2
-candidate_attempt: PR274-CANDIDATE-R1
+design_revision: 3
+candidate_attempt: PR274-CANDIDATE-R2
 pre_execution_revision:
   reason: >-
     The canonical status file must change when PR-274 closes, so freezing its
@@ -25,11 +25,22 @@ pre_execution_revision:
     closeout. PR-151 status is therefore checked as live semantic authority,
     while the execution-time status hash remains result provenance.
   result_inspected_before_revision: false
+failed_review_remediation:
+  failed_candidate_sha: c8230ff6cc52aeddf98b632ff5469386352e535f
+  review_run: .agent-harness/runs/pr274-final-review-20260730-r1
+  disposition: FAILED_PRESERVED
+  repaired_before_next_preflight:
+    - bound status no longer overrides missing source, release, or license identity
+    - a product name cannot serve as its own source identity
+    - sky-support identity, directional convention, and covariance identity are explicit
+    - arbitrary transfer strings are refused pending a typed non-native registry contract
+    - frozen registry date, scope, membership, order, and required fields are exact
+    - the PR delta exists before the next claim-language review
 
 frozen_inputs:
   candidate_registry:
     path: docs/research_program/vector_tensor/data_admission/PR274_CANDIDATE_INPUTS.yaml
-    sha256: 6cf44d781791cd9cdfcbeb8622f17d0dc5e426e10b1a73a5baa9a9dceb7a70a0
+    sha256: 5251b646145bcc303dc7ee679ed27ae6c765f440951e2c3cb59502c349c476ba
   publication_policy:
     path: docs/research_program/vector_tensor/pr274_publication_policy.json
     sha256: 505def7252f53b0d9b0931ec819dd5be02f19bbd261c534bf1cf489760cc0bc9
@@ -70,6 +81,8 @@ candidate_contract:
     - repository_path
     - content_sha256
     - sky_support_status
+    - sky_support_identity
+    - directional_convention
     - covariance_identity
     - transfer_provenance
     - required_fields
@@ -89,12 +102,19 @@ admission_requirements:
   repository_binding:
     rule: every required component is a regular non-symlink file below the declared repository root and matches its sha256
   sky_support:
-    rule: mask or selection identity and directional convention must be bound
+    rule: >-
+      the sky-support identity must equal the bound mask/selection component
+      sha256 and the directional convention must use the closed v1 vocabulary
     accepted_status: BOUND
   covariance:
-    rule: a separately identified covariance component is mandatory
+    rule: >-
+      a separately identified covariance component is mandatory and its
+      covariance identity must equal the bound component sha256
   transfer:
-    rule: explicit none_observer_side or a non-native registered transfer source is mandatory
+    rule: >-
+      v1 admits explicit none_observer_side only; every transfer-dependent
+      candidate is refused until a typed non-native TransferFunctionSpec
+      registry contract is added in a separately reviewed schema revision
     forbidden_values: [MISSING, native_solver, native_morphology_atlas]
   fields:
     rule: every preregistered required field must be present

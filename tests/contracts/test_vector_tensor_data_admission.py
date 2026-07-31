@@ -110,22 +110,13 @@ def _bound_candidate_payload(repository_root: Path) -> dict[str, object]:
         "acquisition_status": "COMPLETE",
         "background_pr": "NONE",
         "sky_support_status": "BOUND",
+        "sky_support_identity": components["mask"]["sha256"],
+        "directional_convention": "ICRS_EQUATORIAL_RIGHT_HANDED",
+        "covariance_identity": components["covariance"]["sha256"],
         "transfer_provenance": "none_observer_side",
         "required_fields": required,
         "available_fields": list(required),
         "components": components,
-    }
-
-
-def _single_candidate_registry(candidate: dict[str, object]) -> dict[str, object]:
-    return {
-        "schema": "htt.pr274.vector_tensor_data_candidates.v1",
-        "registry_id": "PR274-CANDIDATE-INPUTS-V1",
-        "frozen_on": "2026-07-30",
-        "scope": "test-only admission contract",
-        "observed_data_execution_authorized": False,
-        "claim_ceiling": "diagnostic_only",
-        "candidates": [candidate],
     }
 
 
@@ -202,6 +193,32 @@ def test_registry_refuses_unknown_fields_duplicate_ids_and_bad_enums() -> None:
         candidates_from_registry(bad_enum)
 
 
+@pytest.mark.parametrize(
+    ("mutation", "match"),
+    (
+        ("frozen_on", "frozen_on drifted"),
+        ("scope", "scope drifted"),
+        ("candidate_id", "membership/order drifted"),
+        ("required_fields", "required_fields drifted"),
+    ),
+)
+def test_registry_refuses_preregistered_contract_drift(
+    mutation: str,
+    match: str,
+) -> None:
+    payload = copy.deepcopy(_registry())
+    if mutation == "frozen_on":
+        payload["frozen_on"] = "2099-01-01"
+    elif mutation == "scope":
+        payload["scope"] = "caller-selected"
+    elif mutation == "candidate_id":
+        payload["candidates"][0]["candidate_id"] = "UNREGISTERED_ID"
+    else:
+        payload["candidates"][0]["required_fields"] = ["caller_selected"]
+    with pytest.raises(DataAdmissionError, match=match):
+        candidates_from_registry(payload)
+
+
 def test_candidate_factory_and_content_seal_are_fail_closed(
     tmp_path: Path,
 ) -> None:
@@ -219,6 +236,9 @@ def test_candidate_factory_and_content_seal_are_fail_closed(
             acquisition_status="COMPLETE",
             background_pr="NONE",
             sky_support_status="BOUND",
+            sky_support_identity=f"sha256:{'0' * 64}",
+            directional_convention="ICRS_EQUATORIAL_RIGHT_HANDED",
+            covariance_identity=f"sha256:{'0' * 64}",
             transfer_provenance="none_observer_side",
             required_fields=("field",),
             available_fields=("field",),
@@ -307,46 +327,19 @@ def test_complete_repository_binding_is_only_admitted_for_later_authorization(
         "covariance",
     )
 
-    report = build_data_admission_report(
-        report_id="TEST-REPORT",
-        registry_payload=_single_candidate_registry(
-            _bound_candidate_payload(tmp_path)
-        ),
-        repository_root=tmp_path,
-        source_evidence=_source_evidence(),
-        pr151_status="background_in_progress",
-        pr151_partial_scientific_use="forbidden",
-        separate_execution_authorization_present=False,
-    )
-    assert future_pilot_candidate_ids(report) == (
-        "TEST_REPOSITORY_BOUND_INPUT",
-    )
-    with pytest.raises(
-        DataAdmissionError,
-        match="AWAITING_EXECUTION_AUTHORIZATION",
-    ):
-        require_future_pilot_eligibility(report)
-    assert report.pilot_executed is False
-
 
 def test_separate_authorization_never_changes_pilot_executed_flag(
     tmp_path: Path,
 ) -> None:
-    report = build_data_admission_report(
-        report_id="TEST-AUTHORIZED-NOT-EXECUTED",
-        registry_payload=_single_candidate_registry(
-            _bound_candidate_payload(tmp_path)
-        ),
+    candidate = candidate_from_mapping(_bound_candidate_payload(tmp_path))
+    decision = evaluate_data_candidate(
+        candidate,
         repository_root=tmp_path,
-        source_evidence=_source_evidence(),
-        pr151_status="background_in_progress",
-        pr151_partial_scientific_use="forbidden",
-        separate_execution_authorization_present=True,
+        separate_execution_authorization=True,
     )
-    assert report.status == "ADMITTED_INPUTS_AUTHORIZED_NOT_EXECUTED"
-    assert report.pilot_executed is False
-    assert require_future_pilot_eligibility(report) == (
-        "TEST_REPOSITORY_BOUND_INPUT",
+    assert decision.verdict == AdmissionVerdict.ADMITTED
+    assert decision.pilot_authorization_status == (
+        PilotAuthorizationStatus.AUTHORIZED_NOT_EXECUTED
     )
 
 
@@ -358,6 +351,25 @@ def test_separate_authorization_never_changes_pilot_executed_flag(
         ("absolute", "data_path_not_repository_relative"),
         ("missing_field", "required_field_missing:observer_feature"),
         ("native_transfer", "pre_native_transfer_provenance_forbidden"),
+        (
+            "unregistered_transfer",
+            "registered_non_native_transfer_spec_required",
+        ),
+        ("missing_sky_identity", "sky_support_identity_missing"),
+        ("missing_direction", "directional_convention_missing"),
+        ("missing_covariance_identity", "covariance_identity_missing"),
+        (
+            "sky_identity_mismatch",
+            "sky_support_identity_not_mask_content_id",
+        ),
+        (
+            "covariance_identity_mismatch",
+            "covariance_identity_not_component_content_id",
+        ),
+        (
+            "unregistered_direction",
+            "directional_convention_unregistered",
+        ),
     ),
 )
 def test_binding_and_semantic_mutations_fail_closed(
@@ -376,6 +388,86 @@ def test_binding_and_semantic_mutations_fail_closed(
         payload["available_fields"].remove("observer_feature")
     elif mutation == "native_transfer":
         payload["transfer_provenance"] = "native_solver"
+    elif mutation == "unregistered_transfer":
+        payload["transfer_provenance"] = "arbitrary_external_transfer"
+    elif mutation == "missing_sky_identity":
+        payload["sky_support_identity"] = "MISSING"
+    elif mutation == "missing_direction":
+        payload["directional_convention"] = "MISSING"
+    elif mutation == "missing_covariance_identity":
+        payload["covariance_identity"] = "MISSING"
+    elif mutation == "sky_identity_mismatch":
+        payload["sky_support_identity"] = f"sha256:{'a' * 64}"
+    elif mutation == "covariance_identity_mismatch":
+        payload["covariance_identity"] = f"sha256:{'b' * 64}"
+    elif mutation == "unregistered_direction":
+        payload["directional_convention"] = "CALLER_SELECTED_FRAME"
+    candidate = candidate_from_mapping(payload)
+    decision = evaluate_data_candidate(candidate, repository_root=tmp_path)
+    assert decision.verdict == AdmissionVerdict.REJECTED
+    assert expected_blocker in decision.blockers
+
+
+@pytest.mark.parametrize(
+    ("field", "expected_blocker"),
+    (
+        ("source_identity", "source_identity_missing"),
+        ("release_version", "release_version_missing"),
+        ("license_identity", "license_identity_missing"),
+    ),
+)
+def test_bound_status_cannot_override_missing_identity(
+    tmp_path: Path,
+    field: str,
+    expected_blocker: str,
+) -> None:
+    payload = _bound_candidate_payload(tmp_path)
+    payload[field] = "MISSING"
+    candidate = candidate_from_mapping(payload)
+    decision = evaluate_data_candidate(candidate, repository_root=tmp_path)
+    assert decision.verdict == AdmissionVerdict.REJECTED
+    assert expected_blocker in decision.blockers
+
+
+def test_product_name_cannot_be_its_own_bound_source_identity(
+    tmp_path: Path,
+) -> None:
+    payload = _bound_candidate_payload(tmp_path)
+    payload["source_identity"] = str(payload["product_name"]).upper()
+    candidate = candidate_from_mapping(payload)
+    decision = evaluate_data_candidate(candidate, repository_root=tmp_path)
+    assert decision.verdict == AdmissionVerdict.REJECTED
+    assert "dataset_name_is_not_source_identity" in decision.blockers
+
+
+@pytest.mark.parametrize(
+    ("field", "value", "expected_blocker"),
+    (
+        (
+            "source_identity",
+            "caller selected source",
+            "source_identity_not_resolvable",
+        ),
+        (
+            "license_identity",
+            "caller selected license",
+            "license_identity_not_resolvable",
+        ),
+        (
+            "release_version",
+            "Internal test product",
+            "release_version_not_specific",
+        ),
+    ),
+)
+def test_identity_text_must_be_resolvable_and_specific(
+    tmp_path: Path,
+    field: str,
+    value: str,
+    expected_blocker: str,
+) -> None:
+    payload = _bound_candidate_payload(tmp_path)
+    payload[field] = value
     candidate = candidate_from_mapping(payload)
     decision = evaluate_data_candidate(candidate, repository_root=tmp_path)
     assert decision.verdict == AdmissionVerdict.REJECTED
