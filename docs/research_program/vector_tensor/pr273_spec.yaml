@@ -14,8 +14,13 @@ observed_data_execution: forbidden
 frozen_before_analysis: true
 frozen_on: '2026-07-30'
 frozen_parent_candidate: 74b79d5d
-candidate_attempt: PR273-CANDIDATE-R2
-design_revision: 3
+candidate_attempt: PR273-CANDIDATE-R3
+design_revision: 4
+failed_candidate_review:
+  candidate_sha: 777fc49989c1a32a18bb03f77f8ee6be30cd6de5
+  receipt: .agent-harness/runs/pr273-final-review-20260730-r2/RUN_SUMMARY.json
+  finding_id: F-PR273-BLIND-ALIAS-BYPASS
+  repair: close every nested case mapping with an exact schema and make the nested label alias the load-bearing TRUTH_FIELD_IN_CHALLENGE mutation
 supersedes_invalid_candidate:
   attempt: PR273-CANDIDATE-R1
   receipt: docs/research_program/vector_tensor/integration/PR273_FAILED_ATTEMPT_R1.json
@@ -115,6 +120,8 @@ artifact_contract:
   diagnostic_pack:
     path: docs/research_program/vector_tensor/integration/PR273_DIAGNOSTIC_PACK.json
     required_metadata:
+      - owner
+      - scope
       - config_identity
       - seed
       - transfer_source

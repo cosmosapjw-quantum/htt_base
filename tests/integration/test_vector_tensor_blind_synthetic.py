@@ -204,7 +204,13 @@ def test_registered_adjudication_matches_all_cases_and_kills_mutations() -> None
 
 @pytest.mark.parametrize(
     "mutation",
-    ("truth_field", "observed_data", "challenge_content", "submission_content"),
+    (
+        "truth_field",
+        "nested_label",
+        "observed_data",
+        "challenge_content",
+        "submission_content",
+    ),
 )
 def test_blind_envelopes_fail_closed_under_boundary_mutations(
     mutation: str,
@@ -214,6 +220,13 @@ def test_blind_envelopes_fail_closed_under_boundary_mutations(
     if mutation == "truth_field":
         challenge_payload["truth"] = {"scenario": "FORBIDDEN"}
         with pytest.raises(BlindSyntheticContractError, match="truth|unregistered"):
+            build_blind_synthetic_challenge(challenge_payload)
+    elif mutation == "nested_label":
+        challenge_payload["cases"][0]["label"] = "SYNTHETIC_SENTINEL"
+        with pytest.raises(
+            BlindSyntheticContractError,
+            match="truth|fields drifted",
+        ):
             build_blind_synthetic_challenge(challenge_payload)
     elif mutation == "observed_data":
         challenge_payload["observed_data"] = True
@@ -238,6 +251,10 @@ def test_diagnostic_pack_is_synthetic_claim_bounded_and_source_complete() -> Non
     assert pack["case_count"] == 5
     assert pack["held_out_case_count"] == 2
     assert pack["observed_data"] is False
+    assert pack["owner"] == "HTT"
+    assert pack["contributors"] == ["COMMON", "OBSSTAT", "MIO"]
+    assert pack["scope"] == "pre-solver registered synthetic integration"
+    assert pack["artifact_mode"] == "synthetic_diagnostic"
     assert pack["analysis_stage_truth_accessed"] is False
     assert pack["transfer_source"] == "none"
     assert pack["claim_ceiling"] == "diagnostic_only"

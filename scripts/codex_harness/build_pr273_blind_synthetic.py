@@ -112,7 +112,7 @@ def _mutation_results(
 
     def truth_field() -> None:
         payload = copy.deepcopy(challenge_payload)
-        payload["truth"] = {"scenario": "FORBIDDEN"}
+        payload["cases"][0]["label"] = "SYNTHETIC_SENTINEL"
         build_blind_synthetic_challenge(payload)
 
     killed.append(_expect_killed("TRUTH_FIELD_IN_CHALLENGE", truth_field))
@@ -210,6 +210,10 @@ def build() -> tuple[MappingLike, MappingLike, MappingLike]:
     pack = {
         "schema": "htt.pr273.blind_synthetic_diagnostic_pack.v1",
         "pack_id": "PR273-BLIND-SYNTHETIC-DIAGNOSTIC-PACK-V1",
+        "owner": "HTT",
+        "contributors": ["COMMON", "OBSSTAT", "MIO"],
+        "scope": "pre-solver registered synthetic integration",
+        "artifact_mode": "synthetic_diagnostic",
         "config_identity": canonical_sha256(spec),
         "seed": challenge.seed,
         "transfer_source": challenge.transfer_source,

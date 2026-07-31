@@ -7,6 +7,7 @@
   ],
   "analysis_stage_truth_accessed": false,
   "analyzer_id": "HTT-PR273-TYPED-PIPELINE-V1",
+  "artifact_mode": "synthetic_diagnostic",
   "case_count": 5,
   "case_results": [
     {
@@ -331,8 +332,13 @@
   ],
   "challenge_content_id": "sha256:17f17d6b21d90d275e92c9d3827e4c125a61b27ff23927b7c37b3a5c3dec9153",
   "claim_ceiling": "diagnostic_only",
-  "config_identity": "sha256:c49af4b391e9b0d61b5dc04d6b9ba1ce7f810ca8a6a7a6f66b485d876f34d085",
-  "content_id": "sha256:e4059887cdd5a14116e276f7ad0abe8a176ab7dd53db2acdcf5d7137e3f51480",
+  "config_identity": "sha256:2f52db16ad22760aeca3b4d11db654a0249c0bd534f282651ece726f1bb495e2",
+  "content_id": "sha256:a21b8e2e1a2aaefaf90ec334aa0a54cca2304a9df174b05b23b6c497b1c9ec46",
+  "contributors": [
+    "COMMON",
+    "OBSSTAT",
+    "MIO"
+  ],
   "depth_alert_threshold": 25.0,
   "forbidden_use": [
     "observed-data inference",
@@ -350,6 +356,7 @@
     "TRUTH_VAULT_COMMITMENT": "KILLED"
   },
   "observed_data": false,
+  "owner": "HTT",
   "pack_id": "PR273-BLIND-SYNTHETIC-DIAGNOSTIC-PACK-V1",
   "required_pipeline": [
     "JointAnisotropyState",
@@ -371,6 +378,7 @@
     "x": "preregistered scalarized functional value"
   },
   "schema": "htt.pr273.blind_synthetic_diagnostic_pack.v1",
+  "scope": "pre-solver registered synthetic integration",
   "seed": 27320260730,
   "submission_content_id": "sha256:b4d28fedd92fde013a50fe8cd8aff6101ee689473d8645856290ebc801f38619",
   "transfer_source": "none"

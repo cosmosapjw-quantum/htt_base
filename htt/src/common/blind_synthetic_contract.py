@@ -44,6 +44,7 @@ _SUBMISSION_TOKEN = object()
 _ADJUDICATION_TOKEN = object()
 _TRUTH_FIELD_TOKENS = frozenset(
     {
+        "label",
         "truth",
         "truth_parameters",
         "truth_label",
@@ -54,6 +55,19 @@ _TRUTH_FIELD_TOKENS = frozenset(
         "reviewer_verdict",
     }
 )
+_CASE_KEYS = frozenset({"case_id", "state", "responses", "depth"})
+_STATE_KEYS = frozenset(
+    {
+        "sigma_stf5",
+        "omega_axial3",
+        "acceleration_polar3",
+        "beta_rm",
+        "beta_mo",
+        "geometry_stf5",
+    }
+)
+_RESPONSE_KEYS = frozenset({"local", "global", "observation"})
+_DEPTH_KEYS = frozenset({"support", "features", "covariance_scale"})
 _REQUIRED_MUTATIONS = (
     "TRUTH_FIELD_IN_CHALLENGE",
     "OBSERVED_DATA_FLAG",
@@ -154,7 +168,19 @@ def _forbidden_truth_paths(
     if isinstance(value, Mapping):
         for key, child in value.items():
             token = str(key).lower()
-            if token in _TRUTH_FIELD_TOKENS or token.startswith("expected_"):
+            if (
+                token in _TRUTH_FIELD_TOKENS
+                or token.startswith("expected_")
+                or any(
+                    marker in token
+                    for marker in (
+                        "truth",
+                        "scenario",
+                        "label",
+                        "verdict",
+                    )
+                )
+            ):
                 findings.append(f"{path}.{key}")
             findings.extend(
                 _forbidden_truth_paths(child, path=f"{path}.{key}")
@@ -184,6 +210,48 @@ def _case_ids(cases: Sequence[Mapping[str, object]]) -> tuple[str, ...]:
             "challenge case IDs must be non-empty and unique"
         )
     return ids
+
+
+def _exact_mapping(
+    value: object,
+    *,
+    name: str,
+    expected_keys: frozenset[str],
+) -> Mapping[str, object]:
+    if not isinstance(value, Mapping):
+        raise BlindSyntheticContractError(f"{name} must be a mapping")
+    actual = set(value)
+    if actual != expected_keys:
+        raise BlindSyntheticContractError(
+            f"{name} fields drifted; "
+            f"missing={sorted(expected_keys - actual)}, "
+            f"extra={sorted(actual - expected_keys)}"
+        )
+    return value
+
+
+def _validate_case_payload(case: Mapping[str, object]) -> None:
+    checked = _exact_mapping(
+        case,
+        name="case",
+        expected_keys=_CASE_KEYS,
+    )
+    _text(checked["case_id"], "case_id")
+    _exact_mapping(
+        checked["state"],
+        name="case.state",
+        expected_keys=_STATE_KEYS,
+    )
+    _exact_mapping(
+        checked["responses"],
+        name="case.responses",
+        expected_keys=_RESPONSE_KEYS,
+    )
+    _exact_mapping(
+        checked["depth"],
+        name="case.depth",
+        expected_keys=_DEPTH_KEYS,
+    )
 
 
 @dataclass(frozen=True)
@@ -226,6 +294,8 @@ class BlindSyntheticChallenge:
                 "blind synthetic challenge must not contain observed data"
             )
         cases = tuple(dict(case) for case in self.cases)
+        for case in cases:
+            _validate_case_payload(case)
         case_ids = _case_ids(cases)
         partitions = tuple(
             (
