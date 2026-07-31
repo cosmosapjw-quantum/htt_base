@@ -14,8 +14,12 @@ observed_data_execution: forbidden
 frozen_before_analysis: true
 frozen_on: '2026-07-30'
 frozen_parent_candidate: 74b79d5d
-candidate_attempt: PR273-CANDIDATE-R1
-design_revision: 2
+candidate_attempt: PR273-CANDIDATE-R2
+design_revision: 3
+supersedes_invalid_candidate:
+  attempt: PR273-CANDIDATE-R1
+  receipt: docs/research_program/vector_tensor/integration/PR273_FAILED_ATTEMPT_R1.json
+  reason: collinear full-rank C04 responses produced SUM_ONLY rather than the frozen rank-collapse NON_IDENTIFIED expectation
 pre_analysis_repair:
   failure: C01 geometry_stf5 fixture had four rather than five components
   disposition: repaired before any case result or reviewer verdict existed
@@ -40,7 +44,7 @@ analysis_protocol:
 frozen_inputs:
   challenge:
     path: docs/research_program/vector_tensor/integration/PR273_CHALLENGE.json
-    sha256: 2dc3bec27fd882d23afc646e743c68b14dea7446cfe2e0fd66707601638fdd72
+    sha256: a7fdc455d54c4de1b67fa287b28130663e4db54ca196c9b523c7369e95b90140
   truth_vault:
     path: docs/research_program/vector_tensor/integration/PR273_TRUTH_VAULT.json
     sha256: 6288dc9af230dbc8838db1f4992ac9480a3b9bd1953050798760f064e2e22abf
