@@ -141,9 +141,11 @@ preregistration:
   matched_counterpair:
     replicates: 4000
     feature_dimension: 3
+    modes_per_replicate: 16
     null_shift: 0.0
     alternative_shift: 0.9
-    feature_noise_sd: 1.0
+    per_mode_feature_noise_sd: 1.0
+    summary: mean over the frozen number of independent synthetic modes
     alpha: 0.05
     minimum_power_lower_bound: 0.80
     scalar_and_anchor_coordinates: exactly matched
@@ -171,6 +173,9 @@ preregistration:
     transfer_source: none
     HTT_output: Gaussian generalized-least-squares diagnostic comparison
     MIO_output: residual/coherence cross-check without likelihood or posterior
+    true_amplitude: 1.0
+    evaluation_draws: 4096
+    minimum_correct_selection_lower_bound: 0.80
 
 registered_statement_boundaries:
   VT-S3: >-
