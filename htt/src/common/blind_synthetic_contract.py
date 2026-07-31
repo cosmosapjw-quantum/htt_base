@@ -74,6 +74,47 @@ _REQUIRED_PARTITIONS = (
     ("development", ("C01", "C02", "C03")),
     ("held_out", ("C04", "C05")),
 )
+_PARTITION_BY_CASE = {
+    case_id: partition
+    for partition, case_ids in _REQUIRED_PARTITIONS
+    for case_id in case_ids
+}
+_SUBMISSION_PAYLOAD_KEYS = frozenset(
+    {
+        "schema",
+        "submission_id",
+        "analyzer_id",
+        "challenge_id",
+        "challenge_content_id",
+        "truth_accessed",
+        "observed_data",
+        "claim_ceiling",
+        "case_results",
+        "content_id",
+    }
+)
+_TRUTH_VAULT_KEYS = frozenset(
+    {
+        "schema",
+        "vault_id",
+        "challenge_id",
+        "unblind_stage",
+        "observed_data",
+        "expected_cases",
+    }
+)
+_TRUTH_CASE_KEYS = frozenset(
+    {
+        "case_id",
+        "scenario",
+        "expected_geometry_status",
+        "expected_local_global_status",
+        "expected_depth_alert",
+        "expected_missing_functional",
+    }
+)
+_TRUTH_VAULT_ID = "PR273-TRUTH-VAULT-V1"
+_TRUTH_UNBLIND_STAGE = "REGISTERED_POST_SUBMISSION_ADJUDICATION_ONLY"
 _REQUIRED_MUTATIONS = (
     "TRUTH_FIELD_IN_CHALLENGE",
     "OBSERVED_DATA_FLAG",
@@ -448,6 +489,10 @@ def build_blind_synthetic_challenge(
     partitions = payload.get("partitions")
     if not isinstance(partitions, Mapping):
         raise BlindSyntheticContractError("partitions must be a mapping")
+    if set(partitions) != {"development", "held_out"}:
+        raise BlindSyntheticContractError(
+            "partition fields must match the exact registered schema"
+        )
     rebuilt = BlindSyntheticChallenge(
         challenge_id=_text(payload.get("challenge_id"), "challenge_id"),
         seed=payload.get("seed"),
@@ -519,9 +564,9 @@ class BlindSyntheticSubmission:
                 "submission must contain case results"
             )
         ids = _case_ids(results)
-        if len(ids) != len(set(ids)):
+        if ids != _REQUIRED_CASE_IDS:
             raise BlindSyntheticContractError(
-                "submission case IDs must be unique"
+                "submission case IDs must match the exact challenge order"
             )
         for result in results:
             if set(result) != _REQUIRED_RESULT_KEYS:
@@ -545,6 +590,10 @@ class BlindSyntheticSubmission:
             if type(result["missing_functional"]) is not bool:
                 raise BlindSyntheticContractError(
                     "missing_functional must be Boolean"
+                )
+            if result["partition"] != _PARTITION_BY_CASE[result["case_id"]]:
+                raise BlindSyntheticContractError(
+                    "submission partition does not match the registered case"
                 )
         truth_paths = _forbidden_truth_paths(results)
         if truth_paths:
@@ -623,6 +672,20 @@ def build_blind_synthetic_submission(
 def replay_blind_synthetic_submission(
     payload: Mapping[str, object],
 ) -> BlindSyntheticSubmission:
+    if not isinstance(payload, Mapping):
+        raise BlindSyntheticContractError("submission must be a mapping")
+    if set(payload) != _SUBMISSION_PAYLOAD_KEYS:
+        raise BlindSyntheticContractError(
+            "submission envelope fields drifted; "
+            f"missing={sorted(_SUBMISSION_PAYLOAD_KEYS - set(payload))}, "
+            f"extra={sorted(set(payload) - _SUBMISSION_PAYLOAD_KEYS)}"
+        )
+    truth_paths = _forbidden_truth_paths(payload["case_results"])
+    if truth_paths:
+        raise BlindSyntheticContractError(
+            "submission contains forbidden truth fields: "
+            + ", ".join(truth_paths)
+        )
     if payload.get("schema") != SUBMISSION_SCHEMA:
         raise BlindSyntheticContractError("submission schema drifted")
     results = _sequence(payload.get("case_results"), "case_results")
@@ -773,18 +836,27 @@ def build_blind_synthetic_adjudication(
         raise BlindSyntheticContractError(
             "truth vault commitment does not match frozen bytes"
         )
-    if truth_vault.get("schema") != TRUTH_VAULT_SCHEMA:
+    checked_truth = _exact_mapping(
+        truth_vault,
+        name="truth_vault",
+        expected_keys=_TRUTH_VAULT_KEYS,
+    )
+    if checked_truth.get("schema") != TRUTH_VAULT_SCHEMA:
         raise BlindSyntheticContractError("truth vault schema drifted")
-    if truth_vault.get("challenge_id") != challenge.challenge_id:
+    if checked_truth.get("vault_id") != _TRUTH_VAULT_ID:
+        raise BlindSyntheticContractError("truth vault ID drifted")
+    if checked_truth.get("unblind_stage") != _TRUTH_UNBLIND_STAGE:
+        raise BlindSyntheticContractError("truth vault unblind stage drifted")
+    if checked_truth.get("challenge_id") != challenge.challenge_id:
         raise BlindSyntheticContractError(
             "truth vault challenge ID does not match"
         )
-    if truth_vault.get("observed_data") is not False:
+    if checked_truth.get("observed_data") is not False:
         raise BlindSyntheticContractError(
             "truth vault must remain synthetic"
         )
     expected_cases = _sequence(
-        truth_vault.get("expected_cases"), "expected_cases"
+        checked_truth.get("expected_cases"), "expected_cases"
     )
     if any(not isinstance(value, Mapping) for value in expected_cases):
         raise BlindSyntheticContractError(
@@ -793,6 +865,12 @@ def build_blind_synthetic_adjudication(
     if tuple(value.get("case_id") for value in expected_cases) != challenge.case_ids:
         raise BlindSyntheticContractError(
             "truth vault must preserve exact challenge case order"
+        )
+    for expected in expected_cases:
+        _exact_mapping(
+            expected,
+            name="truth_vault.expected_case",
+            expected_keys=_TRUTH_CASE_KEYS,
         )
     actual_by_id = {
         str(value["case_id"]): value for value in submission.case_results

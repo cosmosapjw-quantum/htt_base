@@ -14,8 +14,16 @@ observed_data_execution: forbidden
 frozen_before_analysis: true
 frozen_on: '2026-07-30'
 frozen_parent_candidate: 74b79d5d
-candidate_attempt: PR273-CANDIDATE-R4
-design_revision: 5
+candidate_attempt: PR273-CANDIDATE-R5
+design_revision: 6
+third_failed_candidate_review:
+  candidate_sha: 0e0c3d34bdae0b23f08a02c7b95008d501d0fa87
+  receipt: .agent-harness/runs/pr273-final-review-20260730-r4/RUN_SUMMARY.json
+  finding_ids:
+    - F-PR273-R4-SUBMISSION-TRUTH-FIELD-BYPASS
+    - F-PR273-R4-PARTITION-EXTRA-DISCARDED
+    - F-PR273-R4-SUBMISSION-PARTITION-REPLAY
+  repair: exact-check challenge partition keys, submission envelope keys, case order, case-to-partition binding, and truth-vault schemas on every replay
 second_failed_candidate_review:
   candidate_sha: d4fb7f32921d2256049a740a2f3c9ced496840c6
   receipt: .agent-harness/runs/pr273-final-review-20260730-r3/RUN_SUMMARY.json

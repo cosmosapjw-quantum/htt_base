@@ -15,7 +15,9 @@ import yaml
 
 from common.blind_synthetic_contract import (
     BlindSyntheticContractError,
+    build_blind_synthetic_adjudication,
     build_blind_synthetic_challenge,
+    canonical_sha256,
     replay_blind_synthetic_submission,
 )
 from htt.infer.vector_tensor_blind_integration import (
@@ -202,6 +204,28 @@ def test_registered_adjudication_matches_all_cases_and_kills_mutations() -> None
     assert set(adjudication["mutation_results"].values()) == {"KILLED"}
 
 
+def test_truth_vault_schema_is_closed_at_registered_adjudication() -> None:
+    challenge = _challenge()
+    submission = replay_blind_synthetic_submission(_load(SUBMISSION))
+    truth = _load(TRUTH)
+    truth["aux"] = "SYNTHETIC_SENTINEL"
+    raw = (
+        json.dumps(truth, sort_keys=True, separators=(",", ":")) + "\n"
+    ).encode("ascii")
+    with pytest.raises(BlindSyntheticContractError, match="truth_vault fields"):
+        build_blind_synthetic_adjudication(
+            adjudication_id="PR273-TRUTH-SCHEMA-MUTATION",
+            challenge=challenge,
+            submission=submission,
+            truth_vault=truth,
+            truth_vault_raw=raw,
+            expected_truth_vault_sha256=hashlib.sha256(raw).hexdigest(),
+            mutation_results={
+                name: "KILLED" for name in challenge.declared_mutations
+            },
+        )
+
+
 @pytest.mark.parametrize(
     "mutation",
     (
@@ -209,8 +233,11 @@ def test_registered_adjudication_matches_all_cases_and_kills_mutations() -> None
         "nested_label",
         "case_id_alias",
         "challenge_id_alias",
+        "partition_extra",
         "observed_data",
         "challenge_content",
+        "submission_scenario",
+        "submission_partition_resealed",
         "submission_content",
     ),
 )
@@ -247,6 +274,13 @@ def test_blind_envelopes_fail_closed_under_boundary_mutations(
             match="opaque identity",
         ):
             build_blind_synthetic_challenge(challenge_payload)
+    elif mutation == "partition_extra":
+        challenge_payload["partitions"]["aux"] = []
+        with pytest.raises(
+            BlindSyntheticContractError,
+            match="partition fields",
+        ):
+            build_blind_synthetic_challenge(challenge_payload)
     elif mutation == "observed_data":
         challenge_payload["observed_data"] = True
         with pytest.raises(BlindSyntheticContractError, match="observed"):
@@ -257,6 +291,26 @@ def test_blind_envelopes_fail_closed_under_boundary_mutations(
         payload["cases"][0]["state"]["sigma_stf5"][0] += 0.1
         with pytest.raises(BlindSyntheticContractError, match="identity"):
             build_blind_synthetic_challenge(payload)
+    elif mutation == "submission_scenario":
+        payload = copy.deepcopy(submission_payload)
+        payload["scenario"] = "SYNTHETIC_SENTINEL"
+        with pytest.raises(
+            BlindSyntheticContractError,
+            match="envelope fields|truth",
+        ):
+            replay_blind_synthetic_submission(payload)
+    elif mutation == "submission_partition_resealed":
+        payload = copy.deepcopy(submission_payload)
+        payload["case_results"][3]["partition"] = "development"
+        body = {
+            key: value for key, value in payload.items() if key != "content_id"
+        }
+        payload["content_id"] = canonical_sha256(body)
+        with pytest.raises(
+            BlindSyntheticContractError,
+            match="partition",
+        ):
+            replay_blind_synthetic_submission(payload)
     else:
         payload = copy.deepcopy(submission_payload)
         payload["case_results"][0]["geometry_status"] = "FORGED"

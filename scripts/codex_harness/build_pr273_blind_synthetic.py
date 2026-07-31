@@ -132,6 +132,13 @@ def _mutation_results(
 
     killed.append(_expect_killed("OBSERVED_DATA_FLAG", observed_flag))
 
+    def partition_extra() -> None:
+        payload = copy.deepcopy(challenge_payload)
+        payload["partitions"]["aux"] = []
+        build_blind_synthetic_challenge(payload)
+
+    _expect_killed("CHALLENGE_AFTER_SUBMISSION", partition_extra)
+
     def changed_challenge() -> None:
         payload = copy.deepcopy(challenge_payload)
         payload["cases"][0]["state"]["sigma_stf5"][0] += 0.001
@@ -154,12 +161,23 @@ def _mutation_results(
 
     def changed_submission() -> None:
         payload = copy.deepcopy(submission_payload)
-        payload["case_results"][0]["geometry_status"] = "FORGED"
+        payload["scenario"] = "SYNTHETIC_SENTINEL"
         replay_blind_synthetic_submission(payload)
 
     killed.append(
         _expect_killed("SUBMISSION_AFTER_SEAL", changed_submission)
     )
+
+    def resealed_partition_submission() -> None:
+        payload = copy.deepcopy(submission_payload)
+        payload["case_results"][3]["partition"] = "development"
+        body = {
+            key: value for key, value in payload.items() if key != "content_id"
+        }
+        payload["content_id"] = canonical_sha256(body)
+        replay_blind_synthetic_submission(payload)
+
+    _expect_killed("SUBMISSION_AFTER_SEAL", resealed_partition_submission)
 
     def changed_commitment() -> None:
         build_blind_synthetic_adjudication(
