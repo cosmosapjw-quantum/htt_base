@@ -1,0 +1,233 @@
+schema: htt.pr272.pillar_s_inference.spec.v1
+pr_id: PR-272
+title: Pillar S inference, coverage, and multiplicity
+owner: HTT
+contributors: [COMMON, MIO]
+dependencies: [PR-271]
+capability: preregistered_coverage_and_weak_identification_validation
+scope: pre-solver registered synthetic validation
+claim_ceiling: diagnostic_only
+roadmap_level: C2
+scientific_status_effect: registered synthetic-method validation only
+observed_data_execution: forbidden
+
+frozen_before_result_inspection: true
+frozen_on: '2026-07-30'
+frozen_parent_candidate: 69c3bd9a667c58c9c254974d7f9ba92b04ab96cc
+frozen_inputs:
+  theorem_signatures_v3:
+    path: docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml
+    sha256: d14b24fda9556545abaf337310471af971c68f01438d32df13349f8cd4308f8b
+  program_intake:
+    path: docs/research_program/vector_tensor/PROGRAM_INTAKE_REGISTRY_V1.yaml
+    sha256: b6964771c50c483e7697b087b9f058a3fd7d20ec893475a056608b852fdeb677
+  vector_tensor_program:
+    path: docs/research_program/vector_tensor/VECTOR_TENSOR_PROOF_PROGRAM_V1.yaml
+    sha256: 055a653cd042afcd2f078e159468fec05641c1366e0d8632164ccc5d8cabc6f9
+  vector_tensor_blueprint:
+    path: docs/research_program/vector_tensor/vector_tensor_mes_upgrade_blueprint.md
+    sha256: 518d4763baafb1cfd57c0674b354f110e86748849cd8cb0a9e4bc1b6eb2f32fc
+  pr271_spec:
+    path: docs/research_program/vector_tensor/pr271_spec.yaml
+    sha256: e145fdcca06078d79b65f8b47c6912983923e6fd33b24fa7caddb9b24214a871
+  pr271_statistical_foundations:
+    path: htt/src/common/vector_tensor_statistical_foundations.py
+    sha256: 3336c0b05eee12e03b3537b9b9cf0aaf9dd81a5c31bb8348888c68f29668f8ad
+  conditional_exceedance:
+    path: htt/src/common/conditional_exceedance.py
+    sha256: a6e912ec1b6ff98c11ad5c6ef513073b9fbb67b725c36a92697bc0d4d120b300
+  depth_path:
+    path: htt/src/common/depth_path.py
+    sha256: 41ffe054645c00a36158688b55a0aab390919d3759283b9d5e2f33d69ec8f247
+  open_set_response:
+    path: htt/src/common/open_set_response_classes.py
+    sha256: f04f0b6873e757a428aace2aec393f4c0e44699fb0a3b5fb855cea43ef895153
+  partial_id_coverage:
+    path: htt/src/common/partial_id_coverage.py
+    sha256: 641cb07865187f28de3e90e0c6f017b232ccffe53637fb02449a1e6ffb05cc05
+  weak_id_coverage:
+    path: htt/src/common/weak_id_coverage.py
+    sha256: 087118a92cda73acbd2c1c64636b2a9a7828aa792963f244e38c2c84b230ee13
+  sbc_ppc:
+    path: htt/src/common/sbc_ppc.py
+    sha256: 75d241d62d2c9d0b2e4505077b7643363d29c0dc04dd6b3cbecc8dd1e0c4d425
+
+selection:
+  vt_inference_ids:
+    [VT-S3, VT-S5, VT-S6, VT-S9, VT-S10, VT-S11, VT-S12, VT-S13, VT-S14]
+  source_status_policy: >-
+    Source statuses remain CONDITIONAL_PROGRAM or PROGRAM_OBLIGATION. A
+    registered synthetic validation record is not a theorem-source promotion.
+  evidence_grade: SIMULATION_DIAGNOSTIC
+
+preregistration:
+  random_stream:
+    engine: numpy.random.PCG64
+    derivation: sha256(master_seed, cell_id, replicate_family)
+    master_seed: 27220260730
+    seed_family: [272003, 272005, 272007, 272009, 272011]
+    mutation_rule: any seed edit requires a new change set before rerun
+  confidence:
+    nominal_coverage: 0.95
+    family_confidence: 0.99
+    retain_lower_bound: 0.92
+    failure_map_required: true
+    interval: one-sided Clopper-Pearson lower bound
+  max_q:
+    dimension: 4
+    calibration_draws: 4095
+    evaluation_draws: 4096
+    alpha: 0.05
+    statistic: max absolute whitened coordinate
+    critical_order: ceil((n_calibration + 1) * (1 - alpha))
+    correct_covariance: identity
+    misspecified_evaluation_covariance_scale: 1.5625
+    misspecified_failure_upper_coverage: 0.90
+  partial_identification:
+    width_grid: [0.0, 0.5, 1.0, 2.0]
+    delivered_replicates_per_grid_point: 4000
+    independent_seed_streams: 10
+    sigma: 1.0
+    least_favourable_position: boundary
+    method: Imbens-Manski
+    adversarial_method: naive_no_expansion
+    optimizer_requirement: >-
+      An uncertified interior extremum or unbounded identified set is a typed
+      refusal; a selected optimizer point is never a probability draw.
+  random_anchor:
+    numerator_mean: 1.0
+    anchor_mean: 2.0
+    joint_covariance: [[0.16, 0.06], [0.06, 0.09]]
+    sample_size: 64
+    evaluation_draws: 4000
+    normal_critical_value: 1.959963984540054
+    true_ratio: 0.5
+    rule: full numerator-anchor joint covariance is mandatory
+  sbc:
+    prior_variance: 4
+    likelihood_variance: 1
+    observations: 8
+    simulations: 3000
+    posterior_draws: 20
+    rank_bins: 7
+    pvalue_floor: 0.01
+    calibrated_variance_scale: 1
+    misspecified_variance_scales: [0.5, 2.0]
+    required_only_for: HTT posterior computation calibration
+  depth_multiplicity:
+    depth_count: 5
+    correlation: 0.55
+    calibration_draws: 4095
+    evaluation_draws: 4096
+    alpha: 0.05
+    statistic: maximum absolute standardized finite-path contrast
+    unadjusted_failure_lower_fwer: 0.10
+    same_centered_target_required: true
+    nested_path_required: true
+  weak_identification:
+    singular_value_floor: 0.05
+    principal_angle_floor_radians: 0.05
+    perturbation_radius: 0.01
+    well_identified_singular_values: [1.0, 0.5, 0.3]
+    weak_singular_values: [1.0, 0.4, 0.02]
+    verdict_below_floor: ABSTAIN_WEAK_IDENTIFICATION
+    wrong_covariance_id: refusal
+  composition:
+    orbit_chart_dimension: 3
+    supported_response_rows: 4
+    rank_tolerance: 1.0e-12
+    scope: one registered principal-stratum linear cell only
+    global_claim: forbidden
+  matched_counterpair:
+    replicates: 4000
+    feature_dimension: 3
+    null_shift: 0.0
+    alternative_shift: 0.9
+    feature_noise_sd: 1.0
+    alpha: 0.05
+    minimum_power_lower_bound: 0.80
+    scalar_and_anchor_coordinates: exactly matched
+  open_set:
+    calibration_per_known_class: 2048
+    evaluation_per_known_class: 2048
+    evaluation_unknown: 4096
+    feature_noise_sd: 0.35
+    known_centres: [[-2.0, 0.0], [2.0, 0.0]]
+    unknown_centre: [0.0, 3.0]
+    alpha: 0.05
+    minimum_known_coverage_lower_bound: 0.92
+    minimum_unknown_abstention_lower_bound: 0.95
+    finite_library_sensitivity_required: true
+  depth_local_global:
+    depths: [0.25, 0.5, 0.75, 1.0]
+    covariance:
+      [[1.0, 0.45, 0.25, 0.10],
+       [0.45, 1.0, 0.45, 0.25],
+       [0.25, 0.45, 1.0, 0.45],
+       [0.10, 0.25, 0.45, 1.0]]
+    local_design: [0.25, 0.5, 0.75, 1.0]
+    global_design: [1.0, 1.0, 1.0, 1.0]
+    mask_path_id: synthetic-nested-mask-v1
+    transfer_source: none
+    HTT_output: Gaussian generalized-least-squares diagnostic comparison
+    MIO_output: residual/coherence cross-check without likelihood or posterior
+
+registered_statement_boundaries:
+  VT-S3: >-
+    Split matched-null calibration controls the registered finite max-Q family
+    under exchangeability. It is not class-wide calibration.
+  VT-S5: >-
+    Coverage is grid-conditional for the registered bounded identified sets.
+    Failing points and optimizer refusals remain visible.
+  VT-S6: >-
+    A Fieller-style ratio confidence-body pushforward is evaluated only from a
+    registered joint numerator-anchor law. Marginals alone are insufficient.
+  VT-S9: >-
+    The finite nested depth/mask path uses a maximum statistic calibrated from
+    the same centered-null path. No exact continuum-path statement follows.
+  VT-S10: >-
+    The perturbation bound scales as inverse minimum whitened singular value.
+    A full-rank cell below either frozen floor abstains.
+  VT-S11: >-
+    Rank of a registered orbit-chart/response composition is checked for one
+    declared linear cell. It does not establish global orbit separation.
+  VT-S12: >-
+    Power is a registered synthetic matched-counterpair property and does not
+    identify a physical family.
+  VT-S13: >-
+    Coverage and abstention are finite-library synthetic diagnostics with a
+    frozen calibration/evaluation split.
+  VT-S14: >-
+    The adapter is validated on a declared synthetic depth covariance and
+    mask path. The source remains a program obligation pending admitted data.
+
+ownership:
+  HTT:
+    - sampling laws, likelihood objectives, SBC, coverage, model comparison
+  MIO:
+    - diagnostic residual, coherence, failure-map, and abstention cross-checks
+  COMMON:
+    - typed preregistration, validation records, intervals, and refusal states
+
+conditional_requirements:
+  null: required for VT-S3 and VT-S9
+  prior: required only for the registered SBC cell
+  PPC: not required; no predictive-adequacy claim is made
+  LOOCV: not required; no out-of-sample model-ranking claim is made
+
+forbidden:
+  - post-hoc seed, tolerance, DGP, grid, or threshold adjustment
+  - dropping a failed coverage or misspecified-covariance cell
+  - optimizer output relabelled as a sample or posterior
+  - MIO likelihood, posterior, Bayes factor, or evidence
+  - native solver or native morphology-atlas validation
+  - observed-data or PR-151 partial-data execution
+  - geometry detection or Bianchi family identification
+
+kill_conditions:
+  - a failed registered coverage cell is hidden or removed
+  - a seed, tolerance, DGP, or threshold changes after result inspection
+  - a marginal numerator-anchor law is accepted as a joint law
+  - a weakly identified cell emits a nearest type instead of abstaining
+  - an unadjusted multiple-depth result is reported as familywise controlled
+  - a source theorem status is promoted from simulation-only evidence
