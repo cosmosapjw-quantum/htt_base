@@ -15,6 +15,10 @@ frozen_before_analysis: true
 frozen_on: '2026-07-30'
 frozen_parent_candidate: 74b79d5d
 candidate_attempt: PR273-CANDIDATE-R1
+design_revision: 2
+pre_analysis_repair:
+  failure: C01 geometry_stf5 fixture had four rather than five components
+  disposition: repaired before any case result or reviewer verdict existed
 analysis_protocol:
   stages:
     - id: BLIND_ANALYSIS
@@ -36,7 +40,7 @@ analysis_protocol:
 frozen_inputs:
   challenge:
     path: docs/research_program/vector_tensor/integration/PR273_CHALLENGE.json
-    sha256: 96540ec1e8f66a3a8639d07837e542ed488252535891e01919019e1ae66b6b3f
+    sha256: 2dc3bec27fd882d23afc646e743c68b14dea7446cfe2e0fd66707601638fdd72
   truth_vault:
     path: docs/research_program/vector_tensor/integration/PR273_TRUTH_VAULT.json
     sha256: 6288dc9af230dbc8838db1f4992ac9480a3b9bd1953050798760f064e2e22abf
