@@ -123,6 +123,19 @@ from htt.infer.ver2_directional_shell import (
     build_directional_likelihood_inputs,
     evaluate_production_axis_gate,
 )
+from htt.infer.vector_tensor_validation import (
+    HttDepthDiscriminationReport,
+    JointAnchorCoverageReport,
+    MatchedCounterpairReport,
+    OpenSetValidationReport,
+    SimultaneousCalibrationReport,
+    WeakIdentificationReport,
+    evaluate_depth_local_global,
+    evaluate_joint_anchor_coverage,
+    evaluate_matched_counterpair_power,
+    evaluate_open_set_validation,
+    evaluate_weak_identification,
+)
 
 __all__ = [
     'LatentAxisModel', 'LatentAxisParams', 'dipole_projection',
@@ -177,4 +190,10 @@ __all__ = [
     'DEFAULT_DIRECTIONAL_RESPONSE_LIBRARY',
     'assess_directional_readiness', 'build_directional_output_manifest',
     'evaluate_production_axis_gate', 'build_directional_likelihood_inputs',
+    'HttDepthDiscriminationReport', 'JointAnchorCoverageReport',
+    'MatchedCounterpairReport', 'OpenSetValidationReport',
+    'SimultaneousCalibrationReport', 'WeakIdentificationReport',
+    'evaluate_depth_local_global', 'evaluate_joint_anchor_coverage',
+    'evaluate_matched_counterpair_power', 'evaluate_open_set_validation',
+    'evaluate_weak_identification',
 ]

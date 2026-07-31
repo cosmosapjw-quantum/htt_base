@@ -122,6 +122,10 @@ from .dynamic_budget import (
     DynamicBudgetBarrierResult,
     dynamic_comparison_budget_barrier,
 )
+from .vector_tensor_validation import (
+    MioDepthDiagnosticCrossCheck,
+    build_mio_depth_cross_check,
+)
 
 _MES_SUCCESSOR = current_mes_successor_registry().successor
 _MES_SUCCESSOR_ID = _MES_SUCCESSOR.successor_id
@@ -171,6 +175,7 @@ __all__ = [
     "LegacyCompatibilityStatus",
     "LegacyXQPiFGView",
     "MESAnchorSpec",
+    "MioDepthDiagnosticCrossCheck",
     "NormalizerBenchmarkReport",
     "NormalizerPurpose",
     "NormalizerSpec",
@@ -207,6 +212,7 @@ __all__ = [
     "compare_denominator_policies",
     "build_legacy_xqpi_fg_view",
     "build_missing_probability_law_profile",
+    "build_mio_depth_cross_check",
     "build_null_calibrated_exceedance",
     "build_occupancy_measure",
     "build_support_utilization_profile",
