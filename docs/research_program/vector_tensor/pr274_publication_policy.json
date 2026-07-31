@@ -124,6 +124,8 @@
     "tests_changed",
     "target_sha_changed",
     "candidate_registry_bytes_changed",
+    "data_identity_registry_bytes_changed",
+    "data_identity_evidence_bytes_changed",
     "source_evidence_bytes_changed",
     "admission_requirement_changed",
     "data_execution_authorization_changed",
@@ -132,6 +134,7 @@
   ],
   "forbidden_inputs": [
     "dataset name used as source identity",
+    "bare or unregistered source, release, or license identity",
     "PR-151 partial or background acquisition",
     "raw or incomplete input used for a figure",
     "unbound mask, selection, covariance, transfer, or required fields",

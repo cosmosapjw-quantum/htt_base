@@ -27,6 +27,7 @@ from common.vector_tensor_data_admission import (  # noqa: E402
     NO_ADMITTED_DATA_PILOT,
     build_data_admission_report,
     candidates_from_registry,
+    identity_registry_from_mapping,
 )
 
 
@@ -35,6 +36,11 @@ REGISTRY = (
     ROOT
     / "docs/research_program/vector_tensor/data_admission/"
     "PR274_CANDIDATE_INPUTS.yaml"
+)
+IDENTITY_REGISTRY = (
+    ROOT
+    / "docs/research_program/vector_tensor/data_admission/"
+    "PR274_DATA_IDENTITY_REGISTRY.yaml"
 )
 RESULT = (
     ROOT
@@ -173,6 +179,15 @@ def build() -> dict[str, object]:
 
     source_evidence, status = _verify_frozen_inputs(spec)
     registry = _load_yaml(REGISTRY)
+    identity_registry_payload = _load_yaml(IDENTITY_REGISTRY)
+    identity_registry = identity_registry_from_mapping(
+        identity_registry_payload
+    )
+    if identity_registry.entries:
+        raise RuntimeError(
+            "frozen PR-274 identity registry must remain empty; "
+            "a populated revision requires separate review"
+        )
     candidates = candidates_from_registry(registry)
     expected_ids = tuple(spec["candidate_contract"]["exact_ids"])
     actual_ids = tuple(value.candidate_id for value in candidates)
@@ -184,6 +199,7 @@ def build() -> dict[str, object]:
     report = build_data_admission_report(
         report_id="PR274-DATA-ADMISSION-RESULT-V1",
         registry_payload=registry,
+        identity_registry_payload=identity_registry_payload,
         repository_root=ROOT,
         source_evidence=source_evidence,
         pr151_status="background_in_progress",

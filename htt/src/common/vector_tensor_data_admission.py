@@ -16,9 +16,12 @@ from typing import Mapping, Sequence, TypeVar
 
 DATA_ADMISSION_SCHEMA = "htt.pr274.vector_tensor_data_candidates.v1"
 DATA_ADMISSION_RESULT_SCHEMA = "htt.pr274.vector_tensor_data_admission.v1"
+DATA_IDENTITY_REGISTRY_SCHEMA = "htt.pr274.data_identity_registry.v1"
+DATA_IDENTITY_EVIDENCE_SCHEMA = "htt.pr274.data_identity_evidence.v1"
 DATA_ADMISSION_CLAIM_CEILING = "diagnostic_only"
 NO_ADMITTED_DATA_PILOT = "NO_ADMITTED_DATA_PILOT"
 _REGISTRY_ID = "PR274-CANDIDATE-INPUTS-V1"
+_IDENTITY_REGISTRY_ID = "PR274-DATA-IDENTITIES-V1"
 _REGISTRY_FROZEN_ON = "2026-07-30"
 _REGISTRY_SCOPE = "repository-bound admission preflight"
 _EXPECTED_COMPONENT_ROLES = ("data", "mask", "covariance")
@@ -112,6 +115,7 @@ _MISSING_TOKENS = frozenset(
 _SHA256_PREFIXED_LENGTH = len("sha256:") + 64
 _CANDIDATE_TOKEN = object()
 _REPORT_TOKEN = object()
+_IDENTITY_REGISTRY_TOKEN = object()
 _REGISTRY_KEYS = frozenset(
     {
         "schema",
@@ -121,6 +125,37 @@ _REGISTRY_KEYS = frozenset(
         "observed_data_execution_authorized",
         "claim_ceiling",
         "candidates",
+    }
+)
+_IDENTITY_REGISTRY_KEYS = frozenset(
+    {
+        "schema",
+        "registry_id",
+        "frozen_on",
+        "scope",
+        "claim_ceiling",
+        "entries",
+    }
+)
+_IDENTITY_ENTRY_KEYS = frozenset(
+    {
+        "candidate_id",
+        "product_name",
+        "source_identity",
+        "release_version",
+        "license_identity",
+        "evidence_path",
+        "evidence_sha256",
+    }
+)
+_IDENTITY_EVIDENCE_KEYS = frozenset(
+    {
+        "schema",
+        "candidate_id",
+        "product_name",
+        "source_identity",
+        "release_version",
+        "license_identity",
     }
 )
 _CANDIDATE_KEYS = frozenset(
@@ -244,12 +279,31 @@ def _is_missing(value: str) -> bool:
     return value.strip().upper() in _MISSING_TOKENS
 
 
-def _has_resolvable_prefix(
+def _has_resolvable_identity(
     value: str,
     prefixes: tuple[str, ...],
 ) -> bool:
     lowered = value.casefold()
-    return any(lowered.startswith(prefix.casefold()) for prefix in prefixes)
+    for prefix in prefixes:
+        folded_prefix = prefix.casefold()
+        if lowered.startswith(folded_prefix):
+            suffix = value[len(prefix) :].strip()
+            return bool(suffix) and any(char.isalnum() for char in suffix)
+    return False
+
+
+def _is_specific_release(value: str) -> bool:
+    """Require an explicit version-bearing release token.
+
+    Exact authority comes from the typed identity registry below.  This
+    lexical guard only rejects placeholders before registry lookup.
+    """
+
+    return (
+        len(value) >= 3
+        and any(char.isalpha() for char in value)
+        and any(char.isdigit() for char in value)
+    )
 
 
 def _enum_value(
@@ -296,6 +350,156 @@ class RepositoryComponentBinding:
             "sha256": self.sha256,
             "binding_status": self.binding_status.value,
         }
+
+
+@dataclass(frozen=True)
+class RegisteredDataIdentity:
+    """One exact source/release/license triple backed by repository bytes."""
+
+    candidate_id: str
+    product_name: str
+    source_identity: str
+    release_version: str
+    license_identity: str
+    evidence_path: str
+    evidence_sha256: str
+
+    def __post_init__(self) -> None:
+        for name in (
+            "candidate_id",
+            "product_name",
+            "source_identity",
+            "release_version",
+            "license_identity",
+            "evidence_path",
+            "evidence_sha256",
+        ):
+            _text(getattr(self, name), name)
+        if not _prefixed_sha256(self.evidence_sha256):
+            raise DataAdmissionError(
+                "registered identity evidence requires sha256 identity"
+            )
+
+    def as_payload(self) -> dict[str, str]:
+        return {
+            "candidate_id": self.candidate_id,
+            "product_name": self.product_name,
+            "source_identity": self.source_identity,
+            "release_version": self.release_version,
+            "license_identity": self.license_identity,
+            "evidence_path": self.evidence_path,
+            "evidence_sha256": self.evidence_sha256,
+        }
+
+
+@dataclass(frozen=True)
+class DataIdentityRegistry:
+    """Factory-built typed authority for data identity admission."""
+
+    entries: tuple[RegisteredDataIdentity, ...]
+    _construction_token: InitVar[object] = None
+    _identity_seal: str = field(init=False, repr=False, compare=False)
+
+    def __post_init__(self, _construction_token: object) -> None:
+        if _construction_token is not _IDENTITY_REGISTRY_TOKEN:
+            raise DataAdmissionError("DataIdentityRegistry must be factory-built")
+        entries = tuple(self.entries)
+        if any(type(value) is not RegisteredDataIdentity for value in entries):
+            raise DataAdmissionError(
+                "identity registry requires exact RegisteredDataIdentity entries"
+            )
+        ids = tuple(value.candidate_id for value in entries)
+        if len(ids) != len(set(ids)):
+            raise DataAdmissionError(
+                "registered data identity candidate IDs must be unique"
+            )
+        object.__setattr__(self, "entries", entries)
+        object.__setattr__(
+            self,
+            "_identity_seal",
+            canonical_sha256(self._payload_unchecked()),
+        )
+
+    def _payload_unchecked(self) -> dict[str, object]:
+        return {
+            "schema": DATA_IDENTITY_REGISTRY_SCHEMA,
+            "registry_id": _IDENTITY_REGISTRY_ID,
+            "frozen_on": _REGISTRY_FROZEN_ON,
+            "scope": _REGISTRY_SCOPE,
+            "claim_ceiling": DATA_ADMISSION_CLAIM_CEILING,
+            "entries": [value.as_payload() for value in self.entries],
+        }
+
+    @property
+    def content_id(self) -> str:
+        if canonical_sha256(self._payload_unchecked()) != self._identity_seal:
+            raise DataAdmissionError("data identity registry drifted")
+        return self._identity_seal
+
+    def as_payload(self) -> dict[str, object]:
+        return {**self._payload_unchecked(), "content_id": self.content_id}
+
+
+def identity_registry_from_mapping(
+    payload: Mapping[str, object],
+) -> DataIdentityRegistry:
+    checked = _exact_mapping(
+        payload,
+        name="data identity registry",
+        expected_keys=_IDENTITY_REGISTRY_KEYS,
+    )
+    expected_scalars = {
+        "schema": DATA_IDENTITY_REGISTRY_SCHEMA,
+        "registry_id": _IDENTITY_REGISTRY_ID,
+        "frozen_on": _REGISTRY_FROZEN_ON,
+        "scope": _REGISTRY_SCOPE,
+        "claim_ceiling": DATA_ADMISSION_CLAIM_CEILING,
+    }
+    for field_name, expected in expected_scalars.items():
+        if checked[field_name] != expected:
+            raise DataAdmissionError(
+                f"data identity registry {field_name} drifted"
+            )
+    raw_entries = checked["entries"]
+    if (
+        isinstance(raw_entries, (str, bytes))
+        or not isinstance(raw_entries, Sequence)
+    ):
+        raise DataAdmissionError("data identity registry entries must be a sequence")
+    entries: list[RegisteredDataIdentity] = []
+    for index, value in enumerate(raw_entries):
+        row = _exact_mapping(
+            value,
+            name=f"data identity registry entry {index}",
+            expected_keys=_IDENTITY_ENTRY_KEYS,
+        )
+        entries.append(
+            RegisteredDataIdentity(
+                candidate_id=_text(row["candidate_id"], "candidate_id"),
+                product_name=_text(row["product_name"], "product_name"),
+                source_identity=_text(
+                    row["source_identity"],
+                    "source_identity",
+                ),
+                release_version=_text(
+                    row["release_version"],
+                    "release_version",
+                ),
+                license_identity=_text(
+                    row["license_identity"],
+                    "license_identity",
+                ),
+                evidence_path=_text(row["evidence_path"], "evidence_path"),
+                evidence_sha256=_text(
+                    row["evidence_sha256"],
+                    "evidence_sha256",
+                ),
+            )
+        )
+    return DataIdentityRegistry(
+        entries=tuple(entries),
+        _construction_token=_IDENTITY_REGISTRY_TOKEN,
+    )
 
 
 @dataclass(frozen=True)
@@ -697,10 +901,155 @@ def _component_blockers(
     return blockers, (binding.role, actual)
 
 
+def _identity_registry_blockers(
+    candidate: VectorTensorDataCandidate,
+    *,
+    identity_registry: DataIdentityRegistry | None,
+    repository_root: Path,
+) -> list[str]:
+    if identity_registry is None:
+        return ["typed_identity_registry_required"]
+    if type(identity_registry) is not DataIdentityRegistry:
+        raise TypeError("identity_registry must be exact DataIdentityRegistry")
+    identity_registry.content_id
+    matching = tuple(
+        value
+        for value in identity_registry.entries
+        if value.candidate_id == candidate.candidate_id
+    )
+    if len(matching) != 1:
+        return ["typed_identity_record_not_registered"]
+    record = matching[0]
+    blockers: list[str] = []
+    comparisons = (
+        ("product_name", "identity_product_not_registered"),
+        ("source_identity", "source_identity_not_registered"),
+        ("release_version", "release_version_not_registered"),
+        ("license_identity", "license_identity_not_registered"),
+    )
+    for field_name, blocker in comparisons:
+        if getattr(candidate, field_name) != getattr(record, field_name):
+            blockers.append(blocker)
+
+    if "\\" in record.evidence_path:
+        blockers.append("identity_evidence_path_not_repository_relative")
+        return blockers
+    relative = PurePosixPath(record.evidence_path)
+    if (
+        relative.is_absolute()
+        or ".." in relative.parts
+        or not relative.parts
+        or relative == PurePosixPath(".")
+    ):
+        blockers.append("identity_evidence_path_not_repository_relative")
+        return blockers
+    try:
+        root = repository_root.resolve(strict=True)
+    except OSError:
+        blockers.append("repository_root_missing")
+        return blockers
+    if not root.is_dir():
+        blockers.append("repository_root_not_directory")
+        return blockers
+    path = root.joinpath(*relative.parts)
+    cursor = root
+    for part in relative.parts:
+        cursor = cursor / part
+        if cursor.is_symlink():
+            blockers.append("identity_evidence_path_symlink_forbidden")
+            return blockers
+    try:
+        resolved = path.resolve(strict=True)
+    except OSError:
+        blockers.append("identity_evidence_file_missing")
+        return blockers
+    if not resolved.is_relative_to(root):
+        blockers.append("identity_evidence_path_escapes_repository")
+        return blockers
+    if not resolved.is_file():
+        blockers.append("identity_evidence_path_not_regular_file")
+        return blockers
+    raw = resolved.read_bytes()
+    actual = f"sha256:{hashlib.sha256(raw).hexdigest()}"
+    if actual != record.evidence_sha256:
+        blockers.append("identity_evidence_sha256_mismatch")
+        return blockers
+    try:
+        evidence = json.loads(raw.decode("utf-8"))
+        checked = _exact_mapping(
+            evidence,
+            name="data identity evidence",
+            expected_keys=_IDENTITY_EVIDENCE_KEYS,
+        )
+    except (UnicodeDecodeError, json.JSONDecodeError, DataAdmissionError):
+        blockers.append("identity_evidence_schema_invalid")
+        return blockers
+    expected = {
+        "schema": DATA_IDENTITY_EVIDENCE_SCHEMA,
+        "candidate_id": record.candidate_id,
+        "product_name": record.product_name,
+        "source_identity": record.source_identity,
+        "release_version": record.release_version,
+        "license_identity": record.license_identity,
+    }
+    if dict(checked) != expected:
+        blockers.append("identity_evidence_content_mismatch")
+    return blockers
+
+
+def _local_identity_reference_blockers(
+    value: str,
+    *,
+    label: str,
+    repository_root: Path,
+) -> list[str]:
+    """Resolve repository-local ``docs/`` identities to actual regular files."""
+
+    if not value.casefold().startswith("docs/"):
+        return []
+    path_text, _, anchor = value.partition("#")
+    relative = PurePosixPath(path_text)
+    blocker_prefix = f"{label}_identity"
+    if (
+        "\\" in path_text
+        or relative.is_absolute()
+        or ".." in relative.parts
+        or not relative.parts
+    ):
+        return [f"{blocker_prefix}_not_resolvable"]
+    try:
+        root = repository_root.resolve(strict=True)
+    except OSError:
+        return ["repository_root_missing"]
+    path = root.joinpath(*relative.parts)
+    cursor = root
+    for part in relative.parts:
+        cursor = cursor / part
+        if cursor.is_symlink():
+            return [f"{blocker_prefix}_symlink_forbidden"]
+    try:
+        resolved = path.resolve(strict=True)
+    except OSError:
+        return [f"{blocker_prefix}_not_resolvable"]
+    if not resolved.is_relative_to(root) or not resolved.is_file():
+        return [f"{blocker_prefix}_not_resolvable"]
+    if "#" in value and not anchor.strip():
+        return [f"{blocker_prefix}_not_resolvable"]
+    if anchor:
+        try:
+            source_text = resolved.read_text(encoding="utf-8")
+        except (OSError, UnicodeDecodeError):
+            return [f"{blocker_prefix}_not_resolvable"]
+        if anchor.casefold() not in source_text.casefold():
+            return [f"{blocker_prefix}_not_resolvable"]
+    return []
+
+
 def evaluate_data_candidate(
     candidate: VectorTensorDataCandidate,
     *,
     repository_root: Path,
+    identity_registry: DataIdentityRegistry | None = None,
     separate_execution_authorization: bool = False,
 ) -> DataAdmissionDecision:
     if type(candidate) is not VectorTensorDataCandidate:
@@ -726,11 +1075,19 @@ def evaluate_data_candidate(
         == candidate.product_name.casefold()
     ):
         blockers.append("dataset_name_is_not_source_identity")
-    elif not _has_resolvable_prefix(
+    elif not _has_resolvable_identity(
         candidate.source_identity,
         _RESOLVABLE_SOURCE_PREFIXES,
     ):
         blockers.append("source_identity_not_resolvable")
+    else:
+        blockers.extend(
+            _local_identity_reference_blockers(
+                candidate.source_identity,
+                label="source",
+                repository_root=repository_root,
+            )
+        )
     if candidate.release_status != IdentityStatus.BOUND:
         blockers.append("release_version_not_bound")
     if _is_missing(candidate.release_version):
@@ -740,15 +1097,32 @@ def evaluate_data_candidate(
         == candidate.product_name.casefold()
     ):
         blockers.append("release_version_not_specific")
+    elif not _is_specific_release(candidate.release_version):
+        blockers.append("release_version_not_specific")
     if candidate.license_status != IdentityStatus.BOUND:
         blockers.append("license_identity_not_bound")
     if _is_missing(candidate.license_identity):
         blockers.append("license_identity_missing")
-    elif not _has_resolvable_prefix(
+    elif not _has_resolvable_identity(
         candidate.license_identity,
         _RESOLVABLE_LICENSE_PREFIXES,
     ):
         blockers.append("license_identity_not_resolvable")
+    else:
+        blockers.extend(
+            _local_identity_reference_blockers(
+                candidate.license_identity,
+                label="license",
+                repository_root=repository_root,
+            )
+        )
+    blockers.extend(
+        _identity_registry_blockers(
+            candidate,
+            identity_registry=identity_registry,
+            repository_root=repository_root,
+        )
+    )
     if candidate.sky_support_status != "BOUND":
         blockers.append("sky_support_not_bound")
     if _is_missing(candidate.sky_support_identity):
@@ -831,6 +1205,7 @@ def evaluate_data_candidate(
 class DataAdmissionReport:
     report_id: str
     registry_content_id: str
+    identity_registry_content_id: str
     decisions: tuple[DataAdmissionDecision, ...]
     source_evidence: tuple[tuple[str, str], ...]
     pr151_status: str
@@ -853,6 +1228,10 @@ class DataAdmissionReport:
         if not _prefixed_sha256(self.registry_content_id):
             raise DataAdmissionError(
                 "registry_content_id must be a prefixed sha256 identity"
+            )
+        if not _prefixed_sha256(self.identity_registry_content_id):
+            raise DataAdmissionError(
+                "identity_registry_content_id must be a prefixed sha256 identity"
             )
         if self.owner != "OBSSTAT":
             raise DataAdmissionError("data-admission report owner drifted")
@@ -965,6 +1344,7 @@ class DataAdmissionReport:
             "schema": DATA_ADMISSION_RESULT_SCHEMA,
             "report_id": self.report_id,
             "registry_content_id": self.registry_content_id,
+            "identity_registry_content_id": self.identity_registry_content_id,
             "owner": self.owner,
             "contributors": list(self.contributors),
             "scope": self.scope,
@@ -1011,6 +1391,7 @@ def build_data_admission_report(
     *,
     report_id: str,
     registry_payload: Mapping[str, object],
+    identity_registry_payload: Mapping[str, object],
     repository_root: Path,
     source_evidence: Mapping[str, str],
     pr151_status: str,
@@ -1024,11 +1405,15 @@ def build_data_admission_report(
     if not isinstance(source_evidence, Mapping) or not source_evidence:
         raise DataAdmissionError("source_evidence must be a non-empty mapping")
     candidates = candidates_from_registry(registry_payload)
+    identity_registry = identity_registry_from_mapping(
+        identity_registry_payload
+    )
     registry_content_id = canonical_sha256(registry_payload)
     decisions = tuple(
         evaluate_data_candidate(
             candidate,
             repository_root=repository_root,
+            identity_registry=identity_registry,
             separate_execution_authorization=(
                 separate_execution_authorization_present
             ),
@@ -1050,6 +1435,7 @@ def build_data_admission_report(
     return DataAdmissionReport(
         report_id=_text(report_id, "report_id"),
         registry_content_id=registry_content_id,
+        identity_registry_content_id=identity_registry.content_id,
         decisions=decisions,
         source_evidence=tuple(sorted(source_evidence.items())),
         pr151_status=_text(pr151_status, "pr151_status"),
@@ -1071,17 +1457,22 @@ __all__ = [
     "DATA_ADMISSION_CLAIM_CEILING",
     "DATA_ADMISSION_RESULT_SCHEMA",
     "DATA_ADMISSION_SCHEMA",
+    "DATA_IDENTITY_EVIDENCE_SCHEMA",
+    "DATA_IDENTITY_REGISTRY_SCHEMA",
     "DataAdmissionDecision",
     "DataAdmissionError",
     "DataAdmissionReport",
+    "DataIdentityRegistry",
     "IdentityStatus",
     "NO_ADMITTED_DATA_PILOT",
     "PilotAuthorizationStatus",
     "RepositoryComponentBinding",
+    "RegisteredDataIdentity",
     "VectorTensorDataCandidate",
     "build_data_admission_report",
     "candidate_from_mapping",
     "candidates_from_registry",
     "canonical_sha256",
     "evaluate_data_candidate",
+    "identity_registry_from_mapping",
 ]

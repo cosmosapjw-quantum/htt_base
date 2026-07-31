@@ -15,6 +15,8 @@ import yaml
 
 from common.vector_tensor_data_admission import (
     AdmissionVerdict,
+    DATA_IDENTITY_EVIDENCE_SCHEMA,
+    DataIdentityRegistry,
     DataAdmissionError,
     IdentityStatus,
     NO_ADMITTED_DATA_PILOT,
@@ -25,6 +27,7 @@ from common.vector_tensor_data_admission import (
     candidates_from_registry,
     canonical_sha256,
     evaluate_data_candidate,
+    identity_registry_from_mapping,
 )
 from htt.infer.vector_tensor_data_admission import (
     future_pilot_candidate_ids,
@@ -41,6 +44,11 @@ REGISTRY = (
     ROOT
     / "docs/research_program/vector_tensor/data_admission/"
     "PR274_CANDIDATE_INPUTS.yaml"
+)
+IDENTITY_REGISTRY = (
+    ROOT
+    / "docs/research_program/vector_tensor/data_admission/"
+    "PR274_DATA_IDENTITY_REGISTRY.yaml"
 )
 RESULT = (
     ROOT
@@ -101,11 +109,11 @@ def _bound_candidate_payload(repository_root: Path) -> dict[str, object]:
         "candidate_id": "TEST_REPOSITORY_BOUND_INPUT",
         "product_name": "Internal test product",
         "artifact_mode": "observed_candidate",
-        "source_identity": "repository:test-product-v1",
+        "source_identity": "doi:10.1234/htt.test-product.v1",
         "source_identity_status": "BOUND",
         "release_version": "test-release-v1",
         "release_status": "BOUND",
-        "license_identity": "repository:test-license-v1",
+        "license_identity": "spdx:CC-BY-4.0",
         "license_status": "BOUND",
         "acquisition_status": "COMPLETE",
         "background_pr": "NONE",
@@ -117,6 +125,69 @@ def _bound_candidate_payload(repository_root: Path) -> dict[str, object]:
         "required_fields": required,
         "available_fields": list(required),
         "components": components,
+    }
+
+
+def _identity_registry_for(
+    payload: dict[str, object],
+    repository_root: Path,
+) -> DataIdentityRegistry:
+    evidence = {
+        "schema": DATA_IDENTITY_EVIDENCE_SCHEMA,
+        "candidate_id": payload["candidate_id"],
+        "product_name": payload["product_name"],
+        "source_identity": payload["source_identity"],
+        "release_version": payload["release_version"],
+        "license_identity": payload["license_identity"],
+    }
+    raw = (
+        json.dumps(
+            evidence,
+            indent=2,
+            sort_keys=True,
+            ensure_ascii=True,
+            allow_nan=False,
+        )
+        + "\n"
+    ).encode("ascii")
+    evidence_dir = repository_root / "identity"
+    evidence_dir.mkdir(parents=True, exist_ok=True)
+    evidence_path = evidence_dir / "registered-identity.json"
+    evidence_path.write_bytes(raw)
+    registry = {
+        "schema": "htt.pr274.data_identity_registry.v1",
+        "registry_id": "PR274-DATA-IDENTITIES-V1",
+        "frozen_on": "2026-07-30",
+        "scope": "repository-bound admission preflight",
+        "claim_ceiling": "diagnostic_only",
+        "entries": [
+            {
+                "candidate_id": payload["candidate_id"],
+                "product_name": payload["product_name"],
+                "source_identity": payload["source_identity"],
+                "release_version": payload["release_version"],
+                "license_identity": payload["license_identity"],
+                "evidence_path": evidence_path.relative_to(
+                    repository_root
+                ).as_posix(),
+                "evidence_sha256": (
+                    f"sha256:{hashlib.sha256(raw).hexdigest()}"
+                ),
+            }
+        ],
+    }
+    return identity_registry_from_mapping(registry)
+
+
+def _identity_registry_mapping_for(
+    payload: dict[str, object],
+    repository_root: Path,
+) -> dict[str, object]:
+    registry = _identity_registry_for(payload, repository_root).as_payload()
+    return {
+        key: value
+        for key, value in registry.items()
+        if key != "content_id"
     }
 
 
@@ -172,6 +243,10 @@ def test_registry_has_exact_closed_membership_and_no_execution_authority() -> No
             "mask",
             "covariance",
         )
+    identity_registry = identity_registry_from_mapping(
+        _yaml(IDENTITY_REGISTRY)
+    )
+    assert identity_registry.entries == ()
 
 
 def test_registry_refuses_unknown_fields_duplicate_ids_and_bad_enums() -> None:
@@ -310,10 +385,12 @@ def test_dataset_name_alone_is_never_source_identity(candidate_id: str) -> None:
 def test_complete_repository_binding_is_only_admitted_for_later_authorization(
     tmp_path: Path,
 ) -> None:
-    candidate = candidate_from_mapping(_bound_candidate_payload(tmp_path))
+    payload = _bound_candidate_payload(tmp_path)
+    candidate = candidate_from_mapping(payload)
     decision = evaluate_data_candidate(
         candidate,
         repository_root=tmp_path,
+        identity_registry=_identity_registry_for(payload, tmp_path),
         separate_execution_authorization=False,
     )
     assert decision.verdict == AdmissionVerdict.ADMITTED
@@ -331,10 +408,12 @@ def test_complete_repository_binding_is_only_admitted_for_later_authorization(
 def test_separate_authorization_never_changes_pilot_executed_flag(
     tmp_path: Path,
 ) -> None:
-    candidate = candidate_from_mapping(_bound_candidate_payload(tmp_path))
+    payload = _bound_candidate_payload(tmp_path)
+    candidate = candidate_from_mapping(payload)
     decision = evaluate_data_candidate(
         candidate,
         repository_root=tmp_path,
+        identity_registry=_identity_registry_for(payload, tmp_path),
         separate_execution_authorization=True,
     )
     assert decision.verdict == AdmissionVerdict.ADMITTED
@@ -403,7 +482,11 @@ def test_binding_and_semantic_mutations_fail_closed(
     elif mutation == "unregistered_direction":
         payload["directional_convention"] = "CALLER_SELECTED_FRAME"
     candidate = candidate_from_mapping(payload)
-    decision = evaluate_data_candidate(candidate, repository_root=tmp_path)
+    decision = evaluate_data_candidate(
+        candidate,
+        repository_root=tmp_path,
+        identity_registry=_identity_registry_for(payload, tmp_path),
+    )
     assert decision.verdict == AdmissionVerdict.REJECTED
     assert expected_blocker in decision.blockers
 
@@ -424,7 +507,11 @@ def test_bound_status_cannot_override_missing_identity(
     payload = _bound_candidate_payload(tmp_path)
     payload[field] = "MISSING"
     candidate = candidate_from_mapping(payload)
-    decision = evaluate_data_candidate(candidate, repository_root=tmp_path)
+    decision = evaluate_data_candidate(
+        candidate,
+        repository_root=tmp_path,
+        identity_registry=_identity_registry_for(payload, tmp_path),
+    )
     assert decision.verdict == AdmissionVerdict.REJECTED
     assert expected_blocker in decision.blockers
 
@@ -435,7 +522,11 @@ def test_product_name_cannot_be_its_own_bound_source_identity(
     payload = _bound_candidate_payload(tmp_path)
     payload["source_identity"] = str(payload["product_name"]).upper()
     candidate = candidate_from_mapping(payload)
-    decision = evaluate_data_candidate(candidate, repository_root=tmp_path)
+    decision = evaluate_data_candidate(
+        candidate,
+        repository_root=tmp_path,
+        identity_registry=_identity_registry_for(payload, tmp_path),
+    )
     assert decision.verdict == AdmissionVerdict.REJECTED
     assert "dataset_name_is_not_source_identity" in decision.blockers
 
@@ -469,7 +560,99 @@ def test_identity_text_must_be_resolvable_and_specific(
     payload = _bound_candidate_payload(tmp_path)
     payload[field] = value
     candidate = candidate_from_mapping(payload)
-    decision = evaluate_data_candidate(candidate, repository_root=tmp_path)
+    decision = evaluate_data_candidate(
+        candidate,
+        repository_root=tmp_path,
+        identity_registry=_identity_registry_for(payload, tmp_path),
+    )
+    assert decision.verdict == AdmissionVerdict.REJECTED
+    assert expected_blocker in decision.blockers
+
+
+def test_bound_candidate_requires_typed_identity_registry(
+    tmp_path: Path,
+) -> None:
+    payload = _bound_candidate_payload(tmp_path)
+    decision = evaluate_data_candidate(
+        candidate_from_mapping(payload),
+        repository_root=tmp_path,
+    )
+    assert decision.verdict == AdmissionVerdict.REJECTED
+    assert "typed_identity_registry_required" in decision.blockers
+
+
+@pytest.mark.parametrize(
+    ("field", "value", "expected_blocker"),
+    (
+        ("source_identity", "doi:", "source_identity_not_resolvable"),
+        ("license_identity", "spdx:", "license_identity_not_resolvable"),
+        ("release_version", "x", "release_version_not_specific"),
+        (
+            "source_identity",
+            "docs/definitely-missing-source.md#release",
+            "source_identity_not_resolvable",
+        ),
+        (
+            "license_identity",
+            "docs/definitely-missing-license.md#terms",
+            "license_identity_not_resolvable",
+        ),
+    ),
+)
+def test_r2_identity_false_greens_are_refused(
+    tmp_path: Path,
+    field: str,
+    value: str,
+    expected_blocker: str,
+) -> None:
+    payload = _bound_candidate_payload(tmp_path)
+    registry = _identity_registry_for(payload, tmp_path)
+    payload[field] = value
+    decision = evaluate_data_candidate(
+        candidate_from_mapping(payload),
+        repository_root=tmp_path,
+        identity_registry=registry,
+    )
+    assert decision.verdict == AdmissionVerdict.REJECTED
+    assert expected_blocker in decision.blockers
+
+
+@pytest.mark.parametrize(
+    ("mutation", "expected_blocker"),
+    (
+        ("missing", "identity_evidence_file_missing"),
+        ("hash", "identity_evidence_sha256_mismatch"),
+        ("content", "identity_evidence_content_mismatch"),
+    ),
+)
+def test_typed_identity_evidence_is_byte_bound(
+    tmp_path: Path,
+    mutation: str,
+    expected_blocker: str,
+) -> None:
+    payload = _bound_candidate_payload(tmp_path)
+    registry_payload = _identity_registry_mapping_for(payload, tmp_path)
+    entry = registry_payload["entries"][0]
+    evidence_path = tmp_path / entry["evidence_path"]
+    if mutation == "missing":
+        evidence_path.unlink()
+    elif mutation == "hash":
+        evidence_path.write_bytes(evidence_path.read_bytes() + b"drift")
+    else:
+        evidence = json.loads(evidence_path.read_text(encoding="utf-8"))
+        evidence["release_version"] = "different-release-v2"
+        raw = (
+            json.dumps(evidence, indent=2, sort_keys=True) + "\n"
+        ).encode("ascii")
+        evidence_path.write_bytes(raw)
+        entry["evidence_sha256"] = (
+            f"sha256:{hashlib.sha256(raw).hexdigest()}"
+        )
+    decision = evaluate_data_candidate(
+        candidate_from_mapping(payload),
+        repository_root=tmp_path,
+        identity_registry=identity_registry_from_mapping(registry_payload),
+    )
     assert decision.verdict == AdmissionVerdict.REJECTED
     assert expected_blocker in decision.blockers
 
@@ -481,7 +664,11 @@ def test_symlinked_component_or_parent_is_rejected(tmp_path: Path) -> None:
     link.symlink_to(target)
     payload["components"]["data"]["path"] = "inputs/data-link.bin"
     candidate = candidate_from_mapping(payload)
-    decision = evaluate_data_candidate(candidate, repository_root=tmp_path)
+    decision = evaluate_data_candidate(
+        candidate,
+        repository_root=tmp_path,
+        identity_registry=_identity_registry_for(payload, tmp_path),
+    )
     assert "data_path_symlink_forbidden" in decision.blockers
 
     real_dir = tmp_path / "real-components"
@@ -495,6 +682,7 @@ def test_symlinked_component_or_parent_is_rejected(tmp_path: Path) -> None:
     parent_decision = evaluate_data_candidate(
         parent_candidate,
         repository_root=tmp_path,
+        identity_registry=_identity_registry_for(payload, tmp_path),
     )
     assert "data_path_symlink_forbidden" in parent_decision.blockers
 
@@ -504,6 +692,7 @@ def test_empty_admission_report_is_not_future_pilot_eligible() -> None:
     report = build_data_admission_report(
         report_id="TEST-NO-ADMITTED-DATA",
         registry_payload=registry,
+        identity_registry_payload=_yaml(IDENTITY_REGISTRY),
         repository_root=ROOT,
         source_evidence=_source_evidence(),
         pr151_status="background_in_progress",

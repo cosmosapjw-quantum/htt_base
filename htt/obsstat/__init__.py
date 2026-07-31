@@ -93,13 +93,18 @@ from .depth_path import (
 )
 from .vector_tensor_data_admission import (
     AdmissionVerdict,
+    DATA_IDENTITY_EVIDENCE_SCHEMA,
+    DATA_IDENTITY_REGISTRY_SCHEMA,
     DataAdmissionDecision,
     DataAdmissionError,
     DataAdmissionReport,
+    DataIdentityRegistry,
     NO_ADMITTED_DATA_PILOT,
+    RegisteredDataIdentity,
     build_data_admission_report,
     candidates_from_registry,
     evaluate_data_candidate,
+    identity_registry_from_mapping,
 )
 from .null_ensembles import (
     LookElsewhereBookkeeping,
@@ -181,6 +186,8 @@ for _submodule in (
 __all__ = [
     "AlmConvention",
     "AdmissionVerdict",
+    "DATA_IDENTITY_EVIDENCE_SCHEMA",
+    "DATA_IDENTITY_REGISTRY_SCHEMA",
     "AntipodalAxis",
     "BiPoSHConventionMetadata",
     "BiPoSHFeatureSummary",
@@ -197,6 +204,7 @@ __all__ = [
     "DataAdmissionDecision",
     "DataAdmissionError",
     "DataAdmissionReport",
+    "DataIdentityRegistry",
     "DepthPath",
     "DepthPathError",
     "FeatureAvailability",
@@ -217,6 +225,7 @@ __all__ = [
     "MaskStratum",
     "NullCalibratedFeature",
     "NO_ADMITTED_DATA_PILOT",
+    "RegisteredDataIdentity",
     "NullEnsembleSpec",
     "ObservableVector",
     "ObservableFeatureStep",
@@ -270,6 +279,7 @@ __all__ = [
     "estimate_lowell_pole",
     "estimate_lowell_pole_from_power_tensor",
     "evaluate_data_candidate",
+    "identity_registry_from_mapping",
     "mean_squared_multipole_alignment",
     "scalar_alm_inversion_phase",
     "first_moment",

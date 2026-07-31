@@ -16,8 +16,8 @@ pilot_execution_in_this_change_set: forbidden
 frozen_before_preflight: true
 frozen_on: '2026-07-30'
 frozen_parent_candidate: 7d94aae3a56172c3892f456b4936d93b5dedbc41
-design_revision: 3
-candidate_attempt: PR274-CANDIDATE-R2
+design_revision: 4
+candidate_attempt: PR274-CANDIDATE-R3
 pre_execution_revision:
   reason: >-
     The canonical status file must change when PR-274 closes, so freezing its
@@ -36,14 +36,27 @@ failed_review_remediation:
     - arbitrary transfer strings are refused pending a typed non-native registry contract
     - frozen registry date, scope, membership, order, and required fields are exact
     - the PR delta exists before the next claim-language review
+second_failed_review_remediation:
+  failed_candidate_sha: 1fd766b08bc60b03161b8d0ddfd5a990ffe10943
+  review_run: .agent-harness/runs/pr274-final-review-20260730-r2
+  disposition: FAILED_PRESERVED
+  repaired_before_next_preflight:
+    - bare source and license prefixes are not resolvable identities
+    - a release placeholder must carry an explicit version token
+    - every BOUND source, release, and license triple must match one typed registry row
+    - the typed registry row must resolve to regular non-symlink repository evidence with an exact sha256
+    - identity evidence bytes must restate the exact candidate, product, source, release, and license tuple
 
 frozen_inputs:
   candidate_registry:
     path: docs/research_program/vector_tensor/data_admission/PR274_CANDIDATE_INPUTS.yaml
     sha256: 5251b646145bcc303dc7ee679ed27ae6c765f440951e2c3cb59502c349c476ba
+  data_identity_registry:
+    path: docs/research_program/vector_tensor/data_admission/PR274_DATA_IDENTITY_REGISTRY.yaml
+    sha256: 92ca32a29b7a660efd0f54780009e7a4ef901133b9d6e50d187d931a2b3c60c9
   publication_policy:
     path: docs/research_program/vector_tensor/pr274_publication_policy.json
-    sha256: 505def7252f53b0d9b0931ec819dd5be02f19bbd261c534bf1cf489760cc0bc9
+    sha256: 0b2f2813d18048317a444ac7296f969ea4fdda6edb92aff11561f56d196f6e75
   pr273_diagnostic_pack:
     path: docs/research_program/vector_tensor/integration/PR273_DIAGNOSTIC_PACK.json
     sha256: 3daeac74cabea9f232f10fc2c56470b24e98c4195f41fc7b4bcec3c3d09609c4
@@ -88,16 +101,28 @@ candidate_contract:
     - required_fields
   closed_schema: true
   duplicate_candidate_ids: forbidden
+  typed_identity_registry:
+    schema: htt.pr274.data_identity_registry.v1
+    evidence_schema: htt.pr274.data_identity_evidence.v1
+    production_membership: empty
+    population_requires_separate_review: true
 
 admission_requirements:
   source_identity:
-    rule: a product or survey name is not a source identity
+    rule: >-
+      a product or survey name and a bare scheme prefix are not source
+      identities; BOUND requires an exact typed registry row and bound
+      repository evidence bytes
     accepted_status: BOUND
   release:
-    rule: an exact product release and version are mandatory
+    rule: >-
+      an explicit version-bearing release token is mandatory and must exactly
+      match both the typed registry row and its bound evidence bytes
     accepted_status: BOUND
   license:
-    rule: a resolvable license identity is mandatory before repository admission
+    rule: >-
+      a non-empty resolvable license identity is mandatory and must exactly
+      match both the typed registry row and its bound evidence bytes
     accepted_status: BOUND
   repository_binding:
     rule: every required component is a regular non-symlink file below the declared repository root and matches its sha256
