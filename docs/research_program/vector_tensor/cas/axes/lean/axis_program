@@ -1,0 +1,70 @@
+#!/bin/sh
+set -eu
+
+script_dir=${0%/*}
+if [ "$script_dir" = "$0" ]; then
+  script_dir=.
+fi
+script_dir=$(CDPATH= cd -- "$script_dir" && pwd)
+
+repo_root=$script_dir
+while [ ! -f "$repo_root/formal/lean-toolchain" ]; do
+  parent=${repo_root%/*}
+  if [ "$parent" = "$repo_root" ]; then
+    printf '%s\n' "could not locate formal/lean-toolchain" >&2
+    exit 2
+  fi
+  repo_root=$parent
+done
+
+if ! cmp -s "$repo_root/formal/lean-toolchain" \
+    "$repo_root/formal_mathlib/lean-toolchain"; then
+  printf '%s\n' "formal and formal_mathlib toolchains differ" >&2
+  exit 2
+fi
+
+mathlib_project="$repo_root/formal_mathlib"
+if [ ! -d "$mathlib_project/.lake/packages/mathlib" ]; then
+  primary_root=$(
+    git -C "$repo_root" worktree list --porcelain |
+      sed -n 's/^worktree //p' |
+      head -n 1
+  )
+  cached_project="$primary_root/formal_mathlib"
+  if [ ! -d "$cached_project/.lake/packages/mathlib" ]; then
+    printf '%s\n' \
+      "pinned formal_mathlib dependency cache is unavailable; run lake update" >&2
+    exit 2
+  fi
+  if ! cmp -s "$mathlib_project/lake-manifest.json" \
+      "$cached_project/lake-manifest.json"; then
+    printf '%s\n' "cached mathlib manifest differs from candidate manifest" >&2
+    exit 2
+  fi
+  if ! cmp -s "$mathlib_project/lean-toolchain" \
+      "$cached_project/lean-toolchain"; then
+    printf '%s\n' "cached mathlib toolchain differs from candidate toolchain" >&2
+    exit 2
+  fi
+  mathlib_project="$cached_project"
+fi
+
+lean_source="$script_dir/PR270PillarTAxis.lean"
+if grep -Eq 'native_decide|^[[:space:]]*axiom[[:space:]]' "$lean_source"; then
+  printf '%s\n' "forbidden native_decide or source axiom in Lean axis" >&2
+  exit 1
+fi
+
+if ! build_log=$(CDPATH= cd -- "$mathlib_project" &&
+    lake env lean -DwarningAsError=true "$lean_source" 2>&1)
+then
+  printf '%s\n' "$build_log" >&2
+  exit 1
+fi
+if ! printf '%s\n' "$build_log" |
+    grep -Fq 'PR270PillarT.axisProofBundle : AxisProofBundle'; then
+  printf '%s\n' "compiled source did not expose the typed obligation bundle" >&2
+  exit 1
+fi
+
+printf '%s\n' '{"checks":{"vt_t5_discriminant_identity":true,"vt_t5_shape_bound_strata":true,"vt_t6_cayley_hamilton":true,"vt_t6_contraction_reduction":true,"vt_t7_krylov_vandermonde":true,"vt_t7_krylov_gram":true,"vt_t7_cyclicity_boundary":true,"vt_t8_local_jacobian_factor":true,"vt_t8_principal_witness_rank":true,"vt_t8_global_separation_not_promoted":true,"vt_t13_shape_chain_rule_core":true,"vt_t13_source_decomposition_not_promoted":true},"domain_assumption_diff":[],"computed":{"principal_I2":"8","principal_I3":"0","principal_Delta":"256","principal_Krylov_determinant":"16","principal_Krylov_Gram_determinant":"256","principal_local_Jacobian_determinant":"50331648","axisymmetric_I2":"6","axisymmetric_I3":"6","axisymmetric_Delta":"0","axisymmetric_J2":"1","local_Jacobian_factor":"-48*v01^4*v02^4*v03^4*(l1-l2)^5*(l1+2*l2)^5*(2*l1+l2)^5"},"counterexample":null}'

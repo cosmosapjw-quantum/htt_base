@@ -97,13 +97,43 @@ def _run(cmd: list[str], timeout: int) -> tuple[int, str]:
         return 124, "probe timeout"
 
 
+_WOLFRAM_LICENSE_MARKERS = (
+    "not activated",
+    "license-related problem",
+    "license checkout failed",
+    "license manager",
+    "licensing error",
+    "activation key",
+    "with the -activate option",
+)
+
+
+def _classify_wolfram_probe_failure(exit_code: int, transcript: str) -> str:
+    """Separate host/licensing blockers from a missing xAct installation.
+
+    ``wolframscript`` commonly returns 255 for an unactivated engine.  Exit
+    code alone therefore cannot distinguish a licensing failure from a
+    Wolfram-language/package error.  The engine's own bounded transcript is
+    the fail-closed discriminator.
+    """
+
+    if exit_code in (127, 124):
+        return "BLOCKED_PLATFORM_OR_LICENSE"
+    normalized = str(transcript).casefold()
+    if any(marker in normalized for marker in _WOLFRAM_LICENSE_MARKERS):
+        return "BLOCKED_PLATFORM_OR_LICENSE"
+    return "BLOCKED_PACKAGE_UNAVAILABLE"
+
+
 def _probe_wolfram(repo: Path) -> dict:
     code = 'Print[$VersionNumber]; Needs["xAct`xTensor`"]; Print["XACT_LOAD_OK"]; Exit[0]'
     exit_code, out = _run(["wolframscript", "-code", code], timeout=120)
     ready = exit_code == 0 and "XACT_LOAD_OK" in out
     return {
-        "status": "PASS" if ready else (
-            "BLOCKED_PLATFORM_OR_LICENSE" if exit_code in (127, 124) else "BLOCKED_PACKAGE_UNAVAILABLE"
+        "status": (
+            "PASS"
+            if ready
+            else _classify_wolfram_probe_failure(exit_code, out)
         ),
         "commands": [{"cmd": "wolframscript -code <version+xAct probe>", "exit": exit_code}],
         "transcript_tail": out[-800:],
