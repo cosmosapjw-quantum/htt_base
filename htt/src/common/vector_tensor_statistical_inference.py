@@ -67,7 +67,7 @@ class ModelCandidate(_StringEnum):
 CLAIM_CEILING = "diagnostic_only"
 SPEC_PATH = Path("docs/research_program/vector_tensor/pr272_spec.yaml")
 EXPECTED_SPEC_SHA256 = (
-    "c8d4d58fa1427b326cf20612e7a4fe043ef47c4452d830990dca676db49bc18e"
+    "c3c9b4b116102ae35cab874d7382b1e792868f82ecd24cacb6de689ea84f5151"
 )
 REGISTRY_PATH = Path(
     "docs/research_program/vector_tensor/proofs/"
@@ -287,6 +287,44 @@ def derive_seed(master_seed: int, cell_id: str, family: str) -> int:
     stream = _text(family, "family")
     digest = hashlib.sha256(
         f"{int(master_seed)}|{cell}|{stream}".encode("utf-8")
+    ).digest()
+    return int.from_bytes(digest[:8], "big") % (2**63)
+
+
+def derive_registered_seed(
+    master_seed: int,
+    seed_family: Sequence[int],
+    cell_id: str,
+    family: str,
+) -> int:
+    """Derive a stream seed bound to the complete registered seed family."""
+
+    if isinstance(master_seed, bool) or not isinstance(master_seed, Integral):
+        raise PillarSInferenceError("master_seed must be an integer")
+    if isinstance(seed_family, (str, bytes)) or not isinstance(
+        seed_family, Sequence
+    ):
+        raise PillarSInferenceError("seed_family must be an integer sequence")
+    normalized: list[int] = []
+    for value in seed_family:
+        if isinstance(value, bool) or not isinstance(value, Integral):
+            raise PillarSInferenceError(
+                "seed_family must contain only integers"
+            )
+        normalized.append(int(value))
+    if not normalized or len(set(normalized)) != len(normalized):
+        raise PillarSInferenceError(
+            "seed_family must be nonempty and contain unique values"
+        )
+    cell = _text(cell_id, "cell_id")
+    stream = _text(family, "family")
+    registered = json.dumps(
+        normalized,
+        separators=(",", ":"),
+        ensure_ascii=True,
+    )
+    digest = hashlib.sha256(
+        f"{int(master_seed)}|{registered}|{cell}|{stream}".encode("utf-8")
     ).digest()
     return int.from_bytes(digest[:8], "big") % (2**63)
 

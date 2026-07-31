@@ -37,7 +37,7 @@ from common.vector_tensor_statistical_inference import (  # noqa: E402
     build_joint_anchor_law,
     build_mio_depth_cross_check,
     calibrate_split_max_statistic,
-    derive_seed,
+    derive_registered_seed,
     evaluate_depth_local_global,
     evaluate_depth_multiplicity,
     evaluate_joint_anchor_coverage,
@@ -98,9 +98,19 @@ def _canonical_sha256(value: object) -> str:
     ).hexdigest()
 
 
-def _rng(master_seed: int, cell_id: str, family: str) -> np.random.Generator:
+def _stream_seed(design: dict, cell_id: str, family: str) -> int:
+    stream = design["preregistration"]["random_stream"]
+    return derive_registered_seed(
+        int(stream["master_seed"]),
+        tuple(int(value) for value in stream["seed_family"]),
+        cell_id,
+        family,
+    )
+
+
+def _rng(design: dict, cell_id: str, family: str) -> np.random.Generator:
     return np.random.Generator(
-        np.random.PCG64(derive_seed(master_seed, cell_id, family))
+        np.random.PCG64(_stream_seed(design, cell_id, family))
     )
 
 
@@ -119,15 +129,15 @@ def _build_s3(design: dict, master_seed: int) -> dict:
     dimension = int(config["dimension"])
     calibration_count = int(config["calibration_draws"])
     evaluation_count = int(config["evaluation_draws"])
-    calibration = _rng(master_seed, "VT-S3", "calibration").normal(
+    calibration = _rng(design, "VT-S3", "calibration").normal(
         size=(calibration_count, dimension)
     )
-    correct = _rng(master_seed, "VT-S3", "evaluation-correct").normal(
+    correct = _rng(design, "VT-S3", "evaluation-correct").normal(
         size=(evaluation_count, dimension)
     )
     scale = math.sqrt(float(config["misspecified_evaluation_covariance_scale"]))
     misspecified = (
-        _rng(master_seed, "VT-S3", "evaluation-misspecified").normal(
+        _rng(design, "VT-S3", "evaluation-misspecified").normal(
             size=(evaluation_count, dimension)
         )
         * scale
@@ -179,8 +189,8 @@ def _build_s5(design: dict, master_seed: int) -> dict:
             "imbens_manski",
             n_replicates=int(config["delivered_replicates_per_grid_point"]),
             seeds=int(config["independent_seed_streams"]),
-            base_seed=derive_seed(
-                master_seed, f"VT-S5-{index}", "registered-coverage"
+            base_seed=_stream_seed(
+                design, f"VT-S5-{index}", "registered-coverage"
             ),
             w_key=str(width),
             s=float(config["sigma"]),
@@ -197,7 +207,9 @@ def _build_s5(design: dict, master_seed: int) -> dict:
         str(config["adversarial_method"]),
         n_replicates=int(config["delivered_replicates_per_grid_point"]),
         seeds=int(config["independent_seed_streams"]),
-        base_seed=derive_seed(master_seed, "VT-S5-naive", "negative-control"),
+        base_seed=_stream_seed(
+            design, "VT-S5-naive", "negative-control"
+        ),
         w_key=str(grid[0]),
         s=float(config["sigma"]),
         theta0_position=str(config["least_favourable_position"]),
@@ -248,7 +260,7 @@ def _build_s6(design: dict, master_seed: int) -> dict:
         joint_cross_covariance_declared=True,
     )
     covariance_of_mean = law.covariance / law.sample_size
-    draws = _rng(master_seed, "VT-S6", "joint-estimator").multivariate_normal(
+    draws = _rng(design, "VT-S6", "joint-estimator").multivariate_normal(
         mean=np.asarray(law.mean),
         cov=covariance_of_mean,
         size=int(config["evaluation_draws"]),
@@ -288,7 +300,7 @@ def _build_sbc(design: dict, master_seed: int) -> dict:
             model,
             n_simulations=int(config["simulations"]),
             n_draws=int(config["posterior_draws"]),
-            seed=derive_seed(master_seed, "PR272-SBC", family),
+            seed=_stream_seed(design, "PR272-SBC", family),
             n_bins=int(config["rank_bins"]),
             lineage_hash=lineage,
             config=run_config,
@@ -320,12 +332,12 @@ def _build_s9(design: dict, master_seed: int) -> dict:
     correlation = float(config["correlation"])
     covariance = np.full((dimension, dimension), correlation)
     np.fill_diagonal(covariance, 1.0)
-    calibration = _rng(master_seed, "VT-S9", "calibration").multivariate_normal(
+    calibration = _rng(design, "VT-S9", "calibration").multivariate_normal(
         np.zeros(dimension),
         covariance,
         size=int(config["calibration_draws"]),
     )
-    evaluation = _rng(master_seed, "VT-S9", "evaluation").multivariate_normal(
+    evaluation = _rng(design, "VT-S9", "evaluation").multivariate_normal(
         np.zeros(dimension),
         covariance,
         size=int(config["evaluation_draws"]),
@@ -422,7 +434,7 @@ def _build_s12(design: dict, master_seed: int) -> dict:
     noise = float(config["per_mode_feature_noise_sd"])
 
     def summaries(family: str, shift: float) -> np.ndarray:
-        values = _rng(master_seed, "VT-S12", family).normal(
+        values = _rng(design, "VT-S12", family).normal(
             loc=shift,
             scale=noise,
             size=(count, modes, dimension),
@@ -458,19 +470,19 @@ def _build_s13(design: dict, master_seed: int) -> dict:
     evaluation_truth = []
     for index, centre in enumerate(centres):
         calibration_rows.append(
-            _rng(master_seed, "VT-S13", f"calibration-{index}").normal(
+            _rng(design, "VT-S13", f"calibration-{index}").normal(
                 loc=centre, scale=noise, size=(calibration_count, len(centre))
             )
         )
         calibration_truth.extend([index] * calibration_count)
         evaluation_rows.append(
-            _rng(master_seed, "VT-S13", f"evaluation-{index}").normal(
+            _rng(design, "VT-S13", f"evaluation-{index}").normal(
                 loc=centre, scale=noise, size=(evaluation_count, len(centre))
             )
         )
         evaluation_truth.extend([index] * evaluation_count)
     unknown_centre = np.asarray(config["unknown_centre"], dtype=float)
-    unknown = _rng(master_seed, "VT-S13", "unknown").normal(
+    unknown = _rng(design, "VT-S13", "unknown").normal(
         loc=unknown_centre,
         scale=noise,
         size=(int(config["evaluation_unknown"]), len(unknown_centre)),
@@ -506,10 +518,10 @@ def _build_s14(design: dict, master_seed: int) -> dict:
     amplitude = float(config["true_amplitude"])
     count = int(config["evaluation_draws"])
 
-    local_draws = _rng(master_seed, "VT-S14", "local").multivariate_normal(
+    local_draws = _rng(design, "VT-S14", "local").multivariate_normal(
         amplitude * local, covariance, size=count
     )
-    global_draws = _rng(master_seed, "VT-S14", "global").multivariate_normal(
+    global_draws = _rng(design, "VT-S14", "global").multivariate_normal(
         amplitude * global_, covariance, size=count
     )
     correct = 0
@@ -564,8 +576,10 @@ def _build_s14(design: dict, master_seed: int) -> dict:
         "correct_selection_lower_bound": lower,
         "minimum_correct_selection_lower_bound": minimum,
         "HTT_owner": "HTT",
-        "MIO_local_truth_cross_check": _jsonable(local_mean_cross_check),
-        "MIO_global_truth_cross_check": _jsonable(global_mean_cross_check),
+        "MIO_local_diagnostic_cross_check": _jsonable(local_mean_cross_check),
+        "MIO_global_diagnostic_cross_check": _jsonable(
+            global_mean_cross_check
+        ),
     }
 
 
@@ -709,7 +723,7 @@ def build_payload() -> dict:
         ("VT-S14", "global"),
     )
     derived_streams = {
-        f"{cell}|{family}": derive_seed(master_seed, cell, family)
+        f"{cell}|{family}": _stream_seed(design, cell, family)
         for cell, family in stream_cells
     }
     results = {
@@ -780,6 +794,8 @@ def build_payload() -> dict:
             ],
             "master_seed": master_seed,
             "registered_seed_family": list(seed_family),
+            "registered_seed_family_sha256": _canonical_sha256(seed_family),
+            "seed_family_load_bearing": True,
             "derived_streams": derived_streams,
             "derived_streams_sha256": _canonical_sha256(derived_streams),
             "numpy_version": np.__version__,

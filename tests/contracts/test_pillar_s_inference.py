@@ -31,6 +31,7 @@ from common.vector_tensor_statistical_inference import (
     build_joint_anchor_law,
     build_mio_depth_cross_check,
     calibrate_split_max_statistic,
+    derive_registered_seed,
     evaluate_depth_local_global,
     evaluate_depth_multiplicity,
     evaluate_joint_anchor_coverage,
@@ -78,6 +79,8 @@ def test_spec_is_frozen_before_results_and_dependency_open(design) -> None:
     card = next(card for card in backlog["prs"] if card["id"] == "PR-272")
     assert design["schema"] == "htt.pr272.pillar_s_inference.spec.v1"
     assert design["frozen_before_result_inspection"] is True
+    assert design["design_revision"] == 2
+    assert design["revision_frozen_before_rerun"] is True
     assert design["dependencies"] == ["PR-271"]
     assert card["depends"] == ["PR-271"]
     assert card["owner"] == "HTT"
@@ -92,7 +95,7 @@ def test_preregistration_bytes_and_input_hashes_are_load_bearing(
     design, tmp_path: Path
 ) -> None:
     assert EXPECTED_SPEC_SHA256 == (
-        "c8d4d58fa1427b326cf20612e7a4fe043ef47c4452d830990dca676db49bc18e"
+        "c3c9b4b116102ae35cab874d7382b1e792868f82ecd24cacb6de689ea84f5151"
     )
     for record in design["frozen_inputs"].values():
         import hashlib
@@ -208,10 +211,40 @@ def test_seed_family_and_every_derived_stream_are_recorded() -> None:
         272011,
     ]
     assert len(receipt["derived_streams"]) == 24
+    assert receipt["seed_family_load_bearing"] is True
     assert all(
         isinstance(value, int) and 0 <= value < 2**63
         for value in receipt["derived_streams"].values()
     )
+
+
+def test_every_registered_seed_family_member_is_execution_load_bearing(
+    design,
+) -> None:
+    stream = design["preregistration"]["random_stream"]
+    registered = tuple(stream["seed_family"])
+    cells = (
+        ("VT-S3", "calibration"),
+        ("VT-S5-0", "registered-coverage"),
+        ("PR272-SBC", "calibrated"),
+        ("VT-S14", "global"),
+    )
+    baseline = tuple(
+        derive_registered_seed(
+            stream["master_seed"], registered, cell, family
+        )
+        for cell, family in cells
+    )
+    for index in range(len(registered)):
+        mutated = list(registered)
+        mutated[index] += 1_000_000 + index
+        changed = tuple(
+            derive_registered_seed(
+                stream["master_seed"], mutated, cell, family
+            )
+            for cell, family in cells
+        )
+        assert all(left != right for left, right in zip(baseline, changed))
 
 
 def test_split_max_q_calibration_separates_covariance_identity() -> None:
@@ -529,10 +562,13 @@ def test_registered_reports_are_immutable_dataclasses(raw_results) -> None:
         require_simultaneous_control(forged)
     assert raw_results["VT-S14"]["HTT_owner"] == "HTT"
     for key in (
-        "MIO_local_truth_cross_check",
-        "MIO_global_truth_cross_check",
+        "MIO_local_diagnostic_cross_check",
+        "MIO_global_diagnostic_cross_check",
     ):
         report_payload = raw_results["VT-S14"][key]
         assert report_payload["likelihood_present"] is False
         assert report_payload["posterior_present"] is False
         assert report_payload["evidence_present"] is False
+    assert not any(
+        "truth" in key.lower() for key in raw_results["VT-S14"]
+    )
