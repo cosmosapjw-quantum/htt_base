@@ -657,6 +657,55 @@ def test_typed_identity_evidence_is_byte_bound(
     assert expected_blocker in decision.blockers
 
 
+@pytest.mark.parametrize("mutation", ("duplicate_key", "nonfinite_constant"))
+def test_ambiguous_identity_evidence_json_is_refused(
+    tmp_path: Path,
+    mutation: str,
+) -> None:
+    payload = _bound_candidate_payload(tmp_path)
+    registry_payload = _identity_registry_mapping_for(payload, tmp_path)
+    entry = registry_payload["entries"][0]
+    evidence_path = tmp_path / entry["evidence_path"]
+    evidence = {
+        "schema": DATA_IDENTITY_EVIDENCE_SCHEMA,
+        "candidate_id": payload["candidate_id"],
+        "product_name": payload["product_name"],
+        "source_identity": payload["source_identity"],
+        "release_version": payload["release_version"],
+        "license_identity": payload["license_identity"],
+    }
+    if mutation == "duplicate_key":
+        fields = [
+            f'"schema":{json.dumps(evidence["schema"])}',
+            '"candidate_id":"ATTACKER_ALIAS"',
+            f'"candidate_id":{json.dumps(evidence["candidate_id"])}',
+            f'"product_name":{json.dumps(evidence["product_name"])}',
+            f'"source_identity":{json.dumps(evidence["source_identity"])}',
+            f'"release_version":{json.dumps(evidence["release_version"])}',
+            f'"license_identity":{json.dumps(evidence["license_identity"])}',
+        ]
+        raw = ("{" + ",".join(fields) + "}\n").encode("ascii")
+    else:
+        fields = [
+            f'"schema":{json.dumps(evidence["schema"])}',
+            f'"candidate_id":{json.dumps(evidence["candidate_id"])}',
+            f'"product_name":{json.dumps(evidence["product_name"])}',
+            f'"source_identity":{json.dumps(evidence["source_identity"])}',
+            f'"release_version":{json.dumps(evidence["release_version"])}',
+            '"license_identity":NaN',
+        ]
+        raw = ("{" + ",".join(fields) + "}\n").encode("ascii")
+    evidence_path.write_bytes(raw)
+    entry["evidence_sha256"] = f"sha256:{hashlib.sha256(raw).hexdigest()}"
+    decision = evaluate_data_candidate(
+        candidate_from_mapping(payload),
+        repository_root=tmp_path,
+        identity_registry=identity_registry_from_mapping(registry_payload),
+    )
+    assert decision.verdict == AdmissionVerdict.REJECTED
+    assert "identity_evidence_schema_invalid" in decision.blockers
+
+
 def test_symlinked_component_or_parent_is_rejected(tmp_path: Path) -> None:
     payload = _bound_candidate_payload(tmp_path)
     target = tmp_path / "inputs" / "data.bin"

@@ -16,8 +16,8 @@ pilot_execution_in_this_change_set: forbidden
 frozen_before_preflight: true
 frozen_on: '2026-07-30'
 frozen_parent_candidate: 7d94aae3a56172c3892f456b4936d93b5dedbc41
-design_revision: 4
-candidate_attempt: PR274-CANDIDATE-R3
+design_revision: 5
+candidate_attempt: PR274-CANDIDATE-R4
 pre_execution_revision:
   reason: >-
     The canonical status file must change when PR-274 closes, so freezing its
@@ -46,6 +46,14 @@ second_failed_review_remediation:
     - every BOUND source, release, and license triple must match one typed registry row
     - the typed registry row must resolve to regular non-symlink repository evidence with an exact sha256
     - identity evidence bytes must restate the exact candidate, product, source, release, and license tuple
+third_failed_review_remediation:
+  failed_candidate_sha: f1edad211fafc3fae36a7493f0dd9b5580a80dfb
+  review_run: .agent-harness/runs/pr274-final-review-20260730-r3
+  disposition: FAILED_PRESERVED
+  repaired_before_next_preflight:
+    - identity evidence JSON rejects duplicate object keys before semantic comparison
+    - identity evidence JSON rejects NaN, Infinity, and negative Infinity constants
+    - ambiguous bytes cannot be legitimized by registering their own sha256
 
 frozen_inputs:
   candidate_registry:

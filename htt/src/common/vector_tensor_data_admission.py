@@ -974,8 +974,29 @@ def _identity_registry_blockers(
     if actual != record.evidence_sha256:
         blockers.append("identity_evidence_sha256_mismatch")
         return blockers
+    def reject_duplicate_keys(
+        pairs: list[tuple[str, object]],
+    ) -> dict[str, object]:
+        result: dict[str, object] = {}
+        for key, value in pairs:
+            if key in result:
+                raise DataAdmissionError(
+                    f"duplicate data identity evidence key: {key}"
+                )
+            result[key] = value
+        return result
+
+    def reject_nonfinite_constant(value: str) -> object:
+        raise DataAdmissionError(
+            f"non-finite data identity evidence constant: {value}"
+        )
+
     try:
-        evidence = json.loads(raw.decode("utf-8"))
+        evidence = json.loads(
+            raw.decode("utf-8"),
+            object_pairs_hook=reject_duplicate_keys,
+            parse_constant=reject_nonfinite_constant,
+        )
         checked = _exact_mapping(
             evidence,
             name="data identity evidence",
