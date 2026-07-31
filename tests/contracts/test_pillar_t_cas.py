@@ -31,6 +31,7 @@ from common.pillar_t_cas import (  # noqa: E402
     EXACT_OBLIGATIONS,
     GeometryEscalationStatus,
     PROOF_IDS,
+    REGISTERED_TF_ALIASES,
     PillarTCasError,
     PillarTStatementVerdict,
     REQUIRED_AXES,
@@ -208,6 +209,26 @@ def test_missing_axis_or_posthoc_exception_is_rejected(
         )
 
 
+def test_unregistered_pass_with_exception_state_is_rejected(
+    tmp_path: Path,
+) -> None:
+    payload = copy.deepcopy(_json(ADJUDICATION_PATH))
+    payload["axis_statuses"]["wolfram_xact"] = (
+        "NOT_APPLICABLE_COMPUTATION_CLASS"
+    )
+    payload["execution_evidence"]["wolfram_xact"]["derived_status"] = (
+        "NOT_APPLICABLE_COMPUTATION_CLASS"
+    )
+    payload["aggregate_status"] = "CAS_PASS_WITH_REGISTERED_EXCEPTION"
+    payload["claim_promotion_cas_eligible"] = False
+    payload["claim_promotion_cas_requirement"] = "NOT_SATISFIED"
+    with pytest.raises(PillarTCasError, match="preregistered no"):
+        load_cas_adjudication(
+            ROOT,
+            _write_json(tmp_path, "unregistered-exception.json", payload),
+        )
+
+
 def test_wolfram_exit_255_activation_transcript_is_platform_blocker() -> None:
     transcript = (
         "Your Wolfram Engine installation is not activated or is "
@@ -286,6 +307,37 @@ def test_registry_is_additive_and_source_status_is_unchanged() -> None:
         ROOT / "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml"
     )
     assert source["proof_adjudication_status"] == "NOT_ADJUDICATED"
+    assert {
+        record.obligation_id: record.tf_aliases for record in records
+    } == REGISTERED_TF_ALIASES
+
+
+def test_registry_binds_governing_spec_aliases_fail_closed(
+    tmp_path: Path,
+) -> None:
+    spec = _yaml(ROOT / "docs/research_program/vector_tensor/pr270_spec.yaml")
+    spec["selection"]["registered_tf_aliases"]["VT-T5"] = [
+        "TF-06-INVARIANT-DIMENSION"
+    ]
+    spec_path = tmp_path / "pr270_spec.yaml"
+    spec_path.write_text(
+        yaml.safe_dump(spec, sort_keys=False, width=100),
+        encoding="utf-8",
+    )
+    with pytest.raises(PillarTCasError, match="alias mapping drifted"):
+        load_pillar_t_cas_registry(ROOT, spec_relative=spec_path)
+
+    with pytest.raises(PillarTCasError, match="required file is missing"):
+        load_pillar_t_cas_registry(
+            ROOT, spec_relative=tmp_path / "missing-spec.yaml"
+        )
+
+    registry = copy.deepcopy(_yaml(REGISTRY_PATH))
+    registry["records"][0]["tf_aliases"] = [
+        "TF-06-INVARIANT-DIMENSION"
+    ]
+    with pytest.raises(PillarTCasError, match="registered TF aliases"):
+        load_pillar_t_cas_registry(ROOT, _write_yaml(tmp_path, registry))
 
 
 def test_registry_cannot_promote_blocked_or_native_statements(

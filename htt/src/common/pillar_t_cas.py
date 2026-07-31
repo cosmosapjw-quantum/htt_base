@@ -23,6 +23,7 @@ import hashlib
 import json
 import math
 from pathlib import Path
+from types import MappingProxyType
 from typing import Mapping, Sequence
 
 import numpy as np
@@ -73,6 +74,16 @@ EXACT_OBLIGATIONS = (
 PROOF_IDS = tuple(
     f"VT-T{index}" for index in (*range(5, 9), *range(11, 15))
 )
+REGISTERED_TF_ALIASES: Mapping[str, tuple[str, ...]] = MappingProxyType({
+    "VT-T5": ("TF-05-SHAPE-DISCRIMINANT",),
+    "VT-T6": ("TF-04-CAYLEY-HAMILTON-REDUCTION",),
+    "VT-T7": ("TF-03-KRYLOV-SYZYGY",),
+    "VT-T8": ("TF-06-INVARIANT-DIMENSION",),
+    "VT-T11": (),
+    "VT-T12": (),
+    "VT-T13": (),
+    "VT-T14": (),
+})
 
 _AXIS_STATUSES = {
     "PASS",
@@ -194,6 +205,49 @@ def _mapping(value: object, name: str) -> Mapping[str, object]:
     if not isinstance(value, Mapping):
         raise PillarTCasError(f"{name} must be a mapping")
     return value
+
+
+def _load_registered_tf_aliases(
+    repo: Path,
+    relative: str | Path = CAS_SPEC_PATH,
+) -> Mapping[str, tuple[str, ...]]:
+    """Load the exact VT-to-TF provenance map from the governing PR spec."""
+
+    payload = _yaml_object(_repo_file(repo, relative))
+    if payload.get("schema") != "htt.pr270.pillar_t_cas.spec.v1":
+        raise PillarTCasError("unexpected PR-270 spec schema")
+    if payload.get("pr_id") != "PR-270":
+        raise PillarTCasError("PR-270 spec identity drifted")
+    if payload.get("claim_ceiling") != "diagnostic_only":
+        raise PillarTCasError("PR-270 spec claim ceiling drifted")
+    selection = _mapping(payload.get("selection"), "selection")
+    exact = _text_tuple(
+        selection.get("exact_four_axis_obligations"),
+        "selection.exact_four_axis_obligations",
+    )
+    if exact != tuple(f"VT-T{index}" for index in range(5, 9)):
+        raise PillarTCasError("PR-270 exact four-axis selection drifted")
+    aliases = _mapping(
+        selection.get("registered_tf_aliases"),
+        "selection.registered_tf_aliases",
+    )
+    parsed = {
+        theorem_id: _text_tuple(
+            values,
+            f"selection.registered_tf_aliases.{theorem_id}",
+        )
+        for theorem_id, values in aliases.items()
+    }
+    expected = {
+        theorem_id: REGISTERED_TF_ALIASES[theorem_id]
+        for theorem_id in exact
+    }
+    if parsed != expected:
+        raise PillarTCasError("registered VT-to-TF alias mapping drifted")
+    return {
+        theorem_id: REGISTERED_TF_ALIASES[theorem_id]
+        for theorem_id in PROOF_IDS
+    }
 
 
 @dataclass(frozen=True)
@@ -344,6 +398,19 @@ def load_cas_adjudication(
         )
     if payload.get("exceptions_applied") != []:
         raise PillarTCasError("post-hoc or unregistered CAS exception detected")
+    uses_exception_status = any(
+        status == "NOT_APPLICABLE_COMPUTATION_CLASS"
+        for status in statuses.values()
+    )
+    if (
+        aggregate
+        is AggregateCASVerdict.CAS_PASS_WITH_REGISTERED_EXCEPTION
+        or uses_exception_status
+    ):
+        raise PillarTCasError(
+            "registered CAS exception state is impossible because PR-270 "
+            "preregistered no computation-class exception"
+        )
     evidence = _mapping(
         payload.get("execution_evidence"), "execution_evidence"
     )
@@ -427,6 +494,7 @@ def load_cas_adjudication(
 @dataclass(frozen=True)
 class PillarTCasProofRecord:
     obligation_id: str
+    tf_aliases: tuple[str, ...]
     relation_to_source: str
     verdict: PillarTStatementVerdict
     assumptions: tuple[str, ...]
@@ -439,11 +507,16 @@ class PillarTCasProofRecord:
 def load_pillar_t_cas_registry(
     repo: Path,
     relative: str | Path = CAS_REGISTRY_PATH,
+    *,
+    spec_relative: str | Path = CAS_SPEC_PATH,
 ) -> tuple[PillarTCasProofRecord, ...]:
     """Load the additive PR-270 records without rewriting source statuses."""
 
     contract = load_cas_contract(repo)
     adjudication = load_cas_adjudication(repo)
+    registered_tf_aliases = _load_registered_tf_aliases(
+        repo, spec_relative
+    )
     payload = _yaml_object(_repo_file(repo, relative))
     if payload.get("schema") != CAS_SCHEMA_VERSION:
         raise PillarTCasError("unexpected Pillar-T CAS registry schema")
@@ -487,9 +560,17 @@ def load_pillar_t_cas_registry(
         claim_ceiling = item.get("claim_ceiling")
         if claim_ceiling != "diagnostic_only":
             raise PillarTCasError(f"{obligation_id} claim ceiling drifted")
+        tf_aliases = _text_tuple(
+            item.get("tf_aliases"), f"{obligation_id}.tf_aliases"
+        )
+        if tf_aliases != registered_tf_aliases[obligation_id]:
+            raise PillarTCasError(
+                f"{obligation_id} registered TF aliases drifted"
+            )
         out.append(
             PillarTCasProofRecord(
                 obligation_id=obligation_id,
+                tf_aliases=tf_aliases,
                 relation_to_source=_exact_text(
                     item.get("relation_to_source"),
                     f"{obligation_id}.relation_to_source",
@@ -795,6 +876,7 @@ __all__ = [
     "CAS_CONTRACT_ID",
     "CAS_CONTRACT_PATH",
     "CAS_REGISTRY_PATH",
+    "CAS_SPEC_PATH",
     "CASAdjudication",
     "CASContract",
     "EXACT_OBLIGATIONS",
@@ -806,6 +888,7 @@ __all__ = [
     "PillarTStatementVerdict",
     "PrincipalAngleSeparation",
     "REQUIRED_AXES",
+    "REGISTERED_TF_ALIASES",
     "SupportedResponseQuotient",
     "load_cas_adjudication",
     "load_cas_contract",
