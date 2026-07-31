@@ -16,8 +16,15 @@ pilot_execution_in_this_change_set: forbidden
 frozen_before_preflight: true
 frozen_on: '2026-07-30'
 frozen_parent_candidate: 7d94aae3a56172c3892f456b4936d93b5dedbc41
-design_revision: 1
+design_revision: 2
 candidate_attempt: PR274-CANDIDATE-R1
+pre_execution_revision:
+  reason: >-
+    The canonical status file must change when PR-274 closes, so freezing its
+    whole-file hash would make the admission generator fail after an honest
+    closeout. PR-151 status is therefore checked as live semantic authority,
+    while the execution-time status hash remains result provenance.
+  result_inspected_before_revision: false
 
 frozen_inputs:
   candidate_registry:
@@ -34,7 +41,9 @@ frozen_inputs:
     sha256: 4f7719d65f910ccdd737d8abb5b1f9e87d4edc193fdac2882baa4d0c6d5d44c7
   canonical_status:
     path: docs/codex_handoff/pr_status.yaml
-    sha256: ec667479a8092970968e4216a83da18fa22d97a9d05fd479d86755ea809da65d
+    identity_mode: live_semantic
+    required_background_card: PR-151
+    required_partial_scientific_use: forbidden
   wave19_data_readiness:
     path: docs/generated/wave19_data_readiness.json
     sha256: 3a15d302a765f939a233b131bc44cc37139d6ce86e214d70fc22535c38f0bcd5
