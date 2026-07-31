@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "policy_id": "PR270-PUBLICATION-POLICY",
+  "change_set_id": "CS-PR270-PILLAR-T-CAS",
+  "publication_group_id": "PG-PR270-PILLAR-T-CAS",
+  "target_ref": "origin/research/pr04-multicomponent",
+  "target_sha": "e7c20643c0dd323481f0887aff8e437a1bf7950a",
+  "max_open_prs": 1,
+  "max_direct_to_target_prs": 1,
+  "max_prs_per_change_set": 1,
+  "max_stack_depth": 1,
+  "max_file_overlap_prs": 0,
+  "max_inventory_age_seconds": 300,
+  "max_receipt_age_seconds": 1800,
+  "max_authorization_ttl_seconds": 1800,
+  "publication_requires_external_publisher": true,
+  "ordinary_agent_push_forbidden": true,
+  "ordinary_agent_pr_mutation_forbidden": true,
+  "claim_ceiling": "diagnostic_only",
+  "family_identification_gate": "BLOCKED_PRE_NATIVE_ATLAS",
+  "required_commands": [
+    {
+      "id": "pr270-focused",
+      "argv": ["{python}", "-B", "scripts/codex_harness/run_pr270_pillar_t_cas.py", "focused"],
+      "timeout_seconds": 900
+    },
+    {
+      "id": "pr270-adjacent",
+      "argv": ["{python}", "-B", "scripts/codex_harness/run_pr270_pillar_t_cas.py", "adjacent"],
+      "timeout_seconds": 1200
+    },
+    {
+      "id": "pr270-preflight",
+      "argv": ["{python}", "-B", "scripts/codex_harness/run_pr270_pillar_t_cas.py", "preflight"],
+      "timeout_seconds": 600
+    },
+    {
+      "id": "pr270-adjudication-replay",
+      "argv": ["{python}", "-B", "scripts/codex_harness/run_pr270_pillar_t_cas.py", "adjudication"],
+      "timeout_seconds": 600
+    },
+    {
+      "id": "pr270-dag-strict",
+      "argv": ["{python}", "-B", "scripts/codex_harness/validate_pr_dag.py", "docs/codex_handoff/pr_backlog.yaml", "--status", "docs/codex_handoff/pr_status.yaml", "--strict-rescue-slice"],
+      "timeout_seconds": 240
+    },
+    {
+      "id": "pr270-claim-language",
+      "argv": ["{python}", "-B", "scripts/check_claim_language.py", "htt/src/common/pillar_t_cas.py", "tests/contracts/test_pillar_t_cas.py", "docs/research_program/vector_tensor/pr270_spec.yaml", "docs/research_program/vector_tensor/proofs/PR270_PILLAR_T_CAS.md", "docs/PR_DELTAS/pr-270.md"],
+      "timeout_seconds": 240
+    },
+    {
+      "id": "pr270-research-surface-claim-lint",
+      "argv": ["{python}", "-B", "scripts/claim_lint_research_surfaces.py"],
+      "timeout_seconds": 240
+    },
+    {
+      "id": "pr270-smoke",
+      "argv": ["{python}", "-B", "scripts/codex_harness/run_pr270_pillar_t_cas.py", "smoke"],
+      "timeout_seconds": 900
+    }
+  ],
+  "required_review_cells": [
+    "frozen_input_hashes",
+    "exact_vt_selection",
+    "tf_alias_mapping",
+    "global_local_separation",
+    "shape_discriminant",
+    "cayley_hamilton",
+    "krylov_cyclicity",
+    "generic_local_chart",
+    "supported_response_quotient",
+    "schur_principal_angles",
+    "evolution_chain_rule_boundary",
+    "native_geometry_refusal",
+    "four_axis_contract_identity",
+    "axis_independence",
+    "preflight_classification",
+    "aggregate_state_machine",
+    "no_source_status_promotion",
+    "claim_ceiling",
+    "claim_language",
+    "latest_target_integration"
+  ],
+  "invalidates_review": [
+    "candidate_sha_changed",
+    "candidate_tree_changed",
+    "diff_digest_changed",
+    "tests_changed",
+    "target_sha_changed",
+    "cas_contract_hash_changed",
+    "axis_result_changed",
+    "typed_statement_changed",
+    "claim_ceiling_changed"
+  ],
+  "forbidden_inputs": [
+    "sibling axis derivation or result before adjudication",
+    "post-hoc CAS exception",
+    "source status or oracle self-report used as a PR-270 verdict",
+    "unregistered 1+3 sign or branch convention",
+    "native solver or native morphology atlas placeholder",
+    "observed or PR-151 partial data"
+  ]
+}

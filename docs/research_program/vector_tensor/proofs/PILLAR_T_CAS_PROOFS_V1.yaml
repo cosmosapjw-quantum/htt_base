@@ -1,0 +1,160 @@
+schema: htt.pillar_t_cas_proofs.v1
+authority: PR-270
+claim_ceiling: diagnostic_only
+scientific_status_effect: none_blocked_cas_and_conditional_linear_algebra_only
+source_proof_adjudication_status: NOT_ADJUDICATED
+aggregate_cas_verdict: CAS_BLOCKED
+success_dependency_satisfied: false
+cas_contract_sha256: 7d811126a4becf184cafc342ded1c78ce8148c7d6d008f955c4b99c6b46f3c1f
+cas_adjudication_sha256: 95613b1a6f3e15aef99807f77639099c0d1165c72afc7247cc36e43cc1418ce6
+axis_statuses:
+  wolfram_xact: BLOCKED_PLATFORM_OR_LICENSE
+  sympy: PASS
+  sage_singular: PASS
+  lean: PASS
+records:
+- obligation_id: VT-T5
+  source_proof_adjudication_status: NOT_ADJUDICATED
+  relation_to_source: EXACT_ELABORATION_BLOCKED_BEFORE_FOUR_AXIS_VERDICT
+  assumptions:
+  - sigma is real symmetric trace-free 3 by 3
+  - I2 is positive where normalized shape is used
+  domains:
+  - principal and repeated-eigenvalue shear strata
+  proof_method: one sealed four-axis exact polynomial contract
+  verdict: CAS_BLOCKED_REQUIRED_AXIS
+  evidence_refs:
+  - docs/research_program/vector_tensor/cas/CAS_CONTRACT.json
+  - docs/research_program/vector_tensor/cas/CAS_ADJUDICATION.json
+  - docs/research_program/vector_tensor/proofs/PR270_PILLAR_T_CAS.md#vt-t5
+  counterexample_boundaries:
+  - zero shear makes normalized shape unavailable
+  - non-STF or complex-spectrum inputs are outside the statement
+  claim_ceiling: diagnostic_only
+- obligation_id: VT-T6
+  source_proof_adjudication_status: NOT_ADJUDICATED
+  relation_to_source: EXACT_ELABORATION_BLOCKED_BEFORE_FOUR_AXIS_VERDICT
+  assumptions:
+  - sigma is real trace-free 3 by 3
+  domains:
+  - exact rational polynomial model of the registered real statement
+  proof_method: one sealed four-axis exact polynomial contract
+  verdict: CAS_BLOCKED_REQUIRED_AXIS
+  evidence_refs:
+  - docs/research_program/vector_tensor/cas/CAS_CONTRACT.json
+  - docs/research_program/vector_tensor/cas/CAS_ADJUDICATION.json
+  - docs/research_program/vector_tensor/proofs/PR270_PILLAR_T_CAS.md#vt-t6
+  counterexample_boundaries:
+  - a non-trace-free matrix requires the omitted trace terms
+  claim_ceiling: diagnostic_only
+- obligation_id: VT-T7
+  source_proof_adjudication_status: NOT_ADJUDICATED
+  relation_to_source: EXACT_ELABORATION_BLOCKED_BEFORE_FOUR_AXIS_VERDICT
+  assumptions:
+  - sigma has a real eigenframe
+  - the reference vector has declared eigenframe components
+  domains:
+  - principal cyclic and noncyclic boundary strata
+  proof_method: one sealed four-axis exact polynomial contract
+  verdict: CAS_BLOCKED_REQUIRED_AXIS
+  evidence_refs:
+  - docs/research_program/vector_tensor/cas/CAS_CONTRACT.json
+  - docs/research_program/vector_tensor/cas/CAS_ADJUDICATION.json
+  - docs/research_program/vector_tensor/proofs/PR270_PILLAR_T_CAS.md#vt-t7
+  counterexample_boundaries:
+  - repeated spectrum
+  - zero reference-vector eigenframe component
+  claim_ceiling: diagnostic_only
+- obligation_id: VT-T8
+  source_proof_adjudication_status: NOT_ADJUDICATED
+  relation_to_source: RESTRICTED_GENERIC_LOCAL_ELABORATION_BLOCKED_BEFORE_FOUR_AXIS_VERDICT
+  assumptions:
+  - sigma has simple spectrum
+  - one declared reference vector is cyclic
+  - all four vectors share frame epoch window and perturbative order
+  domains:
+  - registered principal cyclic SO(3) eigenframe chart
+  proof_method: exact block-triangular Jacobian factor under one four-axis contract
+  verdict: CAS_BLOCKED_REQUIRED_AXIS
+  evidence_refs:
+  - docs/research_program/vector_tensor/cas/CAS_CONTRACT.json
+  - docs/research_program/vector_tensor/cas/CAS_ADJUDICATION.json
+  - docs/research_program/vector_tensor/proofs/PR270_PILLAR_T_CAS.md#vt-t8
+  counterexample_boundaries:
+  - repeated spectrum or noncyclic reference vector
+  - local rank never proves global orbit separation or invariant completeness
+  claim_ceiling: diagnostic_only
+- obligation_id: VT-T11
+  source_proof_adjudication_status: NOT_ADJUDICATED
+  relation_to_source: CONDITIONAL_LINEAR_ALGEBRA_CORE
+  assumptions:
+  - covariance support is selected before nuisance projection
+  - nuisance tangent has full declared column rank
+  domains:
+  - finite supported whitened coordinates
+  proof_method: exact projector identity and executable shape/rank witnesses
+  verdict: PROVED_CONDITIONAL_LINEAR_ALGEBRA
+  evidence_refs:
+  - htt/src/common/pillar_t_cas.py#supported_response_quotient
+  - htt/src/common/anchored_response_geometry.py
+  - tests/contracts/test_pillar_t_cas.py
+  - docs/research_program/vector_tensor/proofs/PR270_PILLAR_T_CAS.md#vt-t11
+  counterexample_boundaries:
+  - rank-deficient nuisance columns refuse
+  - covariance-null removal cannot be relabelled nuisance projection
+  claim_ceiling: diagnostic_only
+- obligation_id: VT-T12
+  source_proof_adjudication_status: NOT_ADJUDICATED
+  relation_to_source: CONDITIONAL_LINEAR_ALGEBRA_CORE
+  assumptions:
+  - local and global bases are orthonormal
+  - both bases use the same supported whitened coordinates
+  domains:
+  - finite-dimensional response tangent spaces
+  proof_method: principal-angle SVD and Schur eigenvalue identity
+  verdict: PROVED_CONDITIONAL_LINEAR_ALGEBRA
+  evidence_refs:
+  - htt/src/common/pillar_t_cas.py#principal_angle_separation
+  - htt/src/common/anchored_response_geometry.py
+  - tests/contracts/test_pillar_t_cas.py
+  - docs/research_program/vector_tensor/proofs/PR270_PILLAR_T_CAS.md#vt-t12
+  counterexample_boundaries:
+  - a zero angle is overlap not positive separation
+  - a small positive angle is weak identification not rank deficiency
+  claim_ceiling: diagnostic_only
+- obligation_id: VT-T13
+  source_proof_adjudication_status: NOT_ADJUDICATED
+  relation_to_source: PARTIAL_CHAIN_RULE_ONLY
+  assumptions:
+  - I2 is nonzero
+  - sigma and its invariants are differentiable
+  domains:
+  - exact invariant quotient-rule core only
+  proof_method: cleared-denominator polynomial identity in the CAS contract
+  verdict: PARTIAL_CHAIN_RULE_CAS_BLOCKED
+  evidence_refs:
+  - docs/research_program/vector_tensor/cas/CAS_CONTRACT.json
+  - docs/research_program/vector_tensor/cas/CAS_ADJUDICATION.json
+  - htt/src/common/pillar_t_cas.py#shape_chain_rule_core
+  - docs/research_program/vector_tensor/proofs/PR270_PILLAR_T_CAS.md#vt-t13
+  counterexample_boundaries:
+  - I2 equals zero
+  - no typed E H stress acceleration vorticity evolution branch is registered
+  claim_ceiling: diagnostic_only
+- obligation_id: VT-T14
+  source_proof_adjudication_status: NOT_ADJUDICATED
+  relation_to_source: EXTERNAL_GATE_REFUSAL
+  assumptions:
+  - no admitted native geometry payload or morphology atlas is in scope
+  domains:
+  - partial pre-solver kinematic diagnostics
+  proof_method: typed fail-closed external-input gate
+  verdict: INCONCLUSIVE_NATIVE_GEOMETRY_GATE
+  evidence_refs:
+  - htt/src/common/pillar_t_cas.py#native_geometry_gate
+  - docs/research_program/vector_tensor/proofs/PR270_PILLAR_T_CAS.md#vt-t14
+  - tests/contracts/test_pillar_t_cas.py
+  counterexample_boundaries:
+  - a future geometry payload requires its own admission and validation
+  - a future native atlas requires external null mask covariance and equivalence gates
+  claim_ceiling: diagnostic_only

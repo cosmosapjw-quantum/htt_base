@@ -1,0 +1,225 @@
+{
+  "schema_version": 2,
+  "risk_tier": "R3",
+  "required_axes": [
+    "wolfram_xact",
+    "sympy",
+    "sage_singular",
+    "lean"
+  ],
+  "identity": {
+    "contract_id": "CAS-PR270-VECTOR-TENSOR-ORBIT-001",
+    "contract_version": 1,
+    "claim_ids": [
+      "PR270-VT-T5-SHEAR-SHAPE",
+      "PR270-VT-T6-CAYLEY-HAMILTON",
+      "PR270-VT-T7-KRYLOV-CYCLICITY",
+      "PR270-VT-T8-GENERIC-LOCAL-CHART",
+      "PR270-VT-T13-CHAIN-RULE-CORE"
+    ],
+    "statement_class": "exact_polynomial_identity_and_restricted_generic_local_chart",
+    "source_input_hashes": [
+      {
+        "path": "docs/research_program/vector_tensor/pr269_spec.yaml",
+        "sha256": "510e7513ee058d9d20aa6a399a431cc24e013f721a5af6d3a794c7690d4164e7"
+      },
+      {
+        "path": "docs/research_program/vector_tensor/PROGRAM_INTAKE_REGISTRY_V1.yaml",
+        "sha256": "b6964771c50c483e7697b087b9f058a3fd7d20ec893475a056608b852fdeb677"
+      },
+      {
+        "path": "docs/research_program/vector_tensor/VECTOR_TENSOR_PROOF_PROGRAM_V1.yaml",
+        "sha256": "055a653cd042afcd2f078e159468fec05641c1366e0d8632164ccc5d8cabc6f9"
+      },
+      {
+        "path": "htt/src/common/orbit_catalogue_v3.py",
+        "sha256": "215746fce9e43407fb3d19750ef6cfcd3258a247b2a4aefc0b22356882400833"
+      },
+      {
+        "path": "htt/src/common/tensor_foundations_oracle.py",
+        "sha256": "ddd819323642f5b86e26ee8cad2c9e0bca9175ab842aa66ac4fc81d0c20eb444"
+      }
+    ],
+    "claim_ceiling": "diagnostic_only",
+    "adjudicator": "independent_non_author_reviewer"
+  },
+  "semantics": {
+    "exact_statement": "For a real trace-free symmetric 3 by 3 shear tensor, the characteristic discriminant, normalized shear-shape identity, trace-free Cayley-Hamilton reduction, Krylov/Vandermonde factorization, Krylov Gram identity, and registered 14-coordinate local-chart Jacobian factor hold exactly. A polynomial quotient identity supplies only the invariant chain-rule core of VT-T13.",
+    "symbol_type_domain_map": {
+      "sigma": "real symmetric trace-free 3 by 3 matrix",
+      "lambda_i": "real shear eigenvalues with lambda_1+lambda_2+lambda_3=0",
+      "v_j": "four typed real three-vectors in one shear eigenframe",
+      "K": "Krylov matrix with columns v_0, sigma v_0, sigma^2 v_0",
+      "I2": "tr(sigma^2), strictly positive where J_sigma is used",
+      "I3": "tr(sigma^3)",
+      "J2": "6 I3^2 / I2^3"
+    },
+    "frame_signature_units_conventions": {
+      "basis": "STF5_CARTESIAN_XX_YY_XY_XZ_YZ_V1",
+      "action": "active Cartesian SO(3); O(3) parity is retained as a separate type",
+      "units": "dimensionless orbit-shape algebra",
+      "chart": "eigenframe slice with one declared cyclic reference vector"
+    },
+    "assumptions": [
+      "sigma is real, symmetric, and trace-free",
+      "the local-chart theorem is restricted to simple spectrum and a cyclic reference vector",
+      "all four vectors share one frame, epoch/window, and perturbative order",
+      "I2 is nonzero for normalized shape and quotient-differential identities"
+    ],
+    "positivity_nonzero_conditions": [
+      "I2 > 0 on the normalized-shape branch",
+      "the three eigenvalue differences and three reference-vector eigenframe components are nonzero on the cyclic chart"
+    ],
+    "branches": [
+      "principal/cyclic local SO(3) chart",
+      "repeated-eigenvalue or noncyclic refusal stratum",
+      "proper versus improper parity typing without global O(3) reconstruction"
+    ],
+    "exclusions": [
+      "No global orbit-separation theorem is asserted.",
+      "No invariant-ring or degree-completeness theorem is asserted.",
+      "No full E_ab, H_ab, pi_ab, A_a, omega_a evolution decomposition is asserted.",
+      "No kinematic-to-geometric escalation, native morphology atlas, or Bianchi family identification is asserted."
+    ],
+    "singular_loci": [
+      "I2=0 makes J_sigma unavailable",
+      "a repeated eigenvalue or zero reference component makes the Krylov chart noncyclic",
+      "enlarged stabilizers are outside the principal local-chart statement"
+    ],
+    "order_of_limits": [],
+    "boundary_or_initial_conditions": [
+      "principal witness lambda=(-2,0,2), v0=(1,1,1), v1=(1,2,4), v2=(2,-1,3), v3=(-1,3,2)",
+      "axisymmetric witness lambda=(2,-1,-1)",
+      "zero-shear branch is refused for J_sigma"
+    ]
+  },
+  "target": {
+    "canonical_form": "Exact integer/rational polynomial identities, factored Krylov and Jacobian determinants, and explicit nonpromotion states.",
+    "equivalence_relation": "exact equality in the declared polynomial/rational function domain",
+    "invariants": [
+      "I2=tr(sigma^2)",
+      "I3=tr(sigma^3)",
+      "Delta=I2^3/2-3I3^2",
+      "Krylov determinant and Gram determinant",
+      "four-vector moment chart m_{jp}=v0^T sigma^p vj for p=0,1,2"
+    ],
+    "exact_test_obligations": [
+      "vt_t5_discriminant_identity",
+      "vt_t5_shape_bound_strata",
+      "vt_t6_cayley_hamilton",
+      "vt_t6_contraction_reduction",
+      "vt_t7_krylov_vandermonde",
+      "vt_t7_krylov_gram",
+      "vt_t7_cyclicity_boundary",
+      "vt_t8_local_jacobian_factor",
+      "vt_t8_principal_witness_rank",
+      "vt_t8_global_separation_not_promoted",
+      "vt_t13_shape_chain_rule_core",
+      "vt_t13_source_decomposition_not_promoted"
+    ],
+    "expected_exact_values": {
+      "principal_I2": "8",
+      "principal_I3": "0",
+      "principal_Delta": "256",
+      "principal_Krylov_determinant": "16",
+      "principal_Krylov_Gram_determinant": "256",
+      "principal_local_Jacobian_determinant": "50331648",
+      "axisymmetric_I2": "6",
+      "axisymmetric_I3": "6",
+      "axisymmetric_Delta": "0",
+      "axisymmetric_J2": "1",
+      "local_Jacobian_factor": "-48*v01^4*v02^4*v03^4*(l1-l2)^5*(l1+2*l2)^5*(2*l1+l2)^5"
+    },
+    "numeric_test_vectors": [
+      {
+        "id": "PRINCIPAL-CYCLIC-WITNESS",
+        "eigenvalues": ["-2", "0", "2"],
+        "vectors": [
+          ["1", "1", "1"],
+          ["1", "2", "4"],
+          ["2", "-1", "3"],
+          ["-1", "3", "2"]
+        ]
+      },
+      {
+        "id": "REPEATED-EIGENVALUE-BOUNDARY",
+        "eigenvalues": ["2", "-1", "-1"],
+        "reference_vector": ["1", "1", "1"]
+      },
+      {
+        "id": "NONCYCLIC-COMPONENT-BOUNDARY",
+        "eigenvalues": ["-2", "0", "2"],
+        "reference_vector": ["1", "0", "1"]
+      }
+    ],
+    "approximation_order": "exact",
+    "numeric_precision_digits": 100,
+    "absolute_tolerance": "0",
+    "relative_tolerance": "0",
+    "forbidden_shortcuts": [
+      "Do not read another axis script, derivation, or result before submitting.",
+      "Do not infer global separation from a nonzero local Jacobian.",
+      "Do not infer completeness from Cayley-Hamilton or finite test vectors.",
+      "Do not replace the full VT-T13 source decomposition by the restricted chain-rule core.",
+      "Do not treat tool preflight as a theorem verdict.",
+      "Do not convert a missing engine or license into an exception or pass."
+    ]
+  },
+  "axes": {
+    "wolfram_xact": {
+      "applicability": "required",
+      "obligation": "Independent exact verification in Wolfram Language with xAct loaded and version recorded.",
+      "required_outputs": ["script", "engine transcript", "runner-observed JSON payload"],
+      "pinned_toolchain": {"wolfram": "15.0.0", "xact": "1.3.0"},
+      "resource_limit": {"wall_seconds": 1800}
+    },
+    "sympy": {
+      "applicability": "required",
+      "obligation": "Independent exact symbolic verification in SymPy.",
+      "required_outputs": ["script", "engine transcript", "runner-observed JSON payload"],
+      "pinned_toolchain": {"python": "shared project interpreter", "sympy": "1.14.0"},
+      "resource_limit": {"wall_seconds": 1800}
+    },
+    "sage_singular": {
+      "applicability": "required",
+      "obligation": "Independent exact verification in SageMath with Singular version recorded.",
+      "required_outputs": ["script", "engine transcript", "runner-observed JSON payload"],
+      "pinned_toolchain": {"sage": "10.9", "singular": "4.4.1"},
+      "resource_limit": {"wall_seconds": 1800}
+    },
+    "lean": {
+      "applicability": "required",
+      "obligation": "Faithful exact polynomial formalization compiled under formal/lean-toolchain.",
+      "required_outputs": ["Lean source", "build receipt", "runner-observed JSON payload"],
+      "pinned_toolchain": {"source": "formal/lean-toolchain"},
+      "resource_limit": {"wall_seconds": 3600}
+    }
+  },
+  "independence": {
+    "mode": "blind-results",
+    "permitted_inputs": [
+      "this contract",
+      "docs/research_program/vector_tensor/pr270_spec.yaml",
+      "the assignment required_inputs",
+      "the assigned axis program only"
+    ],
+    "forbidden_sibling_paths": [
+      ".agent-harness/runs/*/results/*",
+      ".agent-harness/runs/*/artifacts/*",
+      "docs/research_program/vector_tensor/cas/axes/<other-axis>/*"
+    ],
+    "script_result_ownership": "per-axis results are unique and withheld until parent adjudication",
+    "correlation_disclosure": "The main writer authored the tracked engine programs; blind engine execution is independent evidence, not independent human derivation."
+  },
+  "exceptions_adjudication": {
+    "preregistered_exceptions": [],
+    "aggregate_status_rule": "R3 requires CAS_4AXIS_PASS; majority vote is forbidden",
+    "invalidation_triggers": [
+      "contract_hash_change",
+      "source_input_hash_change",
+      "assumption_or_domain_diff",
+      "unpinned_toolchain",
+      "candidate_code_or_test_change"
+    ]
+  }
+}
