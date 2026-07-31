@@ -14,14 +14,17 @@ observed_data_execution: forbidden
 frozen_before_result_inspection: true
 frozen_on: '2026-07-30'
 frozen_parent_candidate: 69c3bd9a667c58c9c254974d7f9ba92b04ab96cc
-design_revision: 2
-candidate_attempt: PR272-CANDIDATE-R2
-supersedes_invalid_candidate: 903f07e07357b22eb414cef85cbbd0e5711b4a62
+design_revision: 3
+candidate_attempt: PR272-CANDIDATE-R3
+supersedes_invalid_candidate:
+  - 903f07e07357b22eb414cef85cbbd0e5711b4a62
+  - 1955dc90
 failed_review_receipt: .agent-harness/runs/pr272-final-review-20260730-r1/RUN_SUMMARY.json
 revision_frozen_before_rerun: true
 revision_reason:
   - registered seed_family was receipt-only in candidate R1
   - MIO residual diagnostics used a forbidden truth_cross_check surface name
+  - R2 treated the family as one salt and retained a known-good SBC false rejection
 frozen_inputs:
   theorem_signatures_v3:
     path: docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml
@@ -77,10 +80,11 @@ preregistration:
     master_seed: 27220260730
     seed_family: [272003, 272005, 272007, 272009, 272011]
     seed_family_role: >-
-      The ordered registered family is a load-bearing salt for every declared
-      stream, including the base streams whose deterministic child indices
-      deliver partial-identification replicates. Editing any family member
-      changes every derived stream.
+      The ordered registered family is a load-bearing salt for every
+      non-SBC stream. Each registered member additionally seeds one
+      independent SBC repetition, and the acceptance statistic pools all
+      five rank histograms. Editing any family member therefore changes the
+      execution result.
     mutation_rule: any seed edit requires a new change set before rerun
   confidence:
     nominal_coverage: 0.95
@@ -126,6 +130,12 @@ preregistration:
     posterior_draws: 20
     rank_bins: 7
     pvalue_floor: 0.01
+    seed_family_aggregation: >-
+      Pool the rank histograms from exactly one independent repetition per
+      registered seed-family member, then apply one chi-square uniformity
+      test to the pooled histogram.
+    per_seed_results_retained: true
+    acceptance_statistic: pooled_seed_family_rank_uniformity
     calibrated_variance_scale: 1
     misspecified_variance_scales: [0.5, 2.0]
     required_only_for: HTT posterior computation calibration
