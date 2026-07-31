@@ -1,0 +1,143 @@
+schema: htt.pr274.vector_tensor_data_admission.spec.v1
+pr_id: PR-274
+title: Repository-bound vector/tensor data admission
+owner: OBSSTAT
+contributors: [HTT, COMMON]
+dependencies: [PR-273]
+capability: repository_bound_vector_tensor_data_admission
+scope: pre-solver admission and preflight only
+claim_ceiling: diagnostic_only
+roadmap_level: C2
+scientific_status_effect: data-admission status only
+observed_data_execution: separately_authorized_only
+separate_data_execution_authorization_present: false
+pilot_execution_in_this_change_set: forbidden
+
+frozen_before_preflight: true
+frozen_on: '2026-07-30'
+frozen_parent_candidate: 7d94aae3a56172c3892f456b4936d93b5dedbc41
+design_revision: 1
+candidate_attempt: PR274-CANDIDATE-R1
+
+frozen_inputs:
+  candidate_registry:
+    path: docs/research_program/vector_tensor/data_admission/PR274_CANDIDATE_INPUTS.yaml
+    sha256: 6cf44d781791cd9cdfcbeb8622f17d0dc5e426e10b1a73a5baa9a9dceb7a70a0
+  publication_policy:
+    path: docs/research_program/vector_tensor/pr274_publication_policy.json
+    sha256: 505def7252f53b0d9b0931ec819dd5be02f19bbd261c534bf1cf489760cc0bc9
+  pr273_diagnostic_pack:
+    path: docs/research_program/vector_tensor/integration/PR273_DIAGNOSTIC_PACK.json
+    sha256: 3daeac74cabea9f232f10fc2c56470b24e98c4195f41fc7b4bcec3c3d09609c4
+  pr273_delta:
+    path: docs/PR_DELTAS/pr-273.md
+    sha256: 4f7719d65f910ccdd737d8abb5b1f9e87d4edc193fdac2882baa4d0c6d5d44c7
+  canonical_status:
+    path: docs/codex_handoff/pr_status.yaml
+    sha256: ec667479a8092970968e4216a83da18fa22d97a9d05fd479d86755ea809da65d
+  wave19_data_readiness:
+    path: docs/generated/wave19_data_readiness.json
+    sha256: 3a15d302a765f939a233b131bc44cc37139d6ce86e214d70fc22535c38f0bcd5
+  data_binding_gap_report:
+    path: docs/generated/data_binding_gap_report.md
+    sha256: b6cd999790b4592495b624ed7598e0f9b6aedd576ae69ef4935a371d69096d78
+  pr151_spec:
+    path: docs/research_program/long_horizon_rescue/pr151_spec.yaml
+    sha256: 3a60c6b29e2a49863c13060b601e42ffe7578c53114e53b68a106034a2b9b543
+
+candidate_contract:
+  exact_ids:
+    - PLANCK_PR3_FFP10_SMICA_COMPACT_REFERENCE
+    - CF4_QUERY_BATCH_COMPACT_REFERENCE
+    - DESI_DR1_PR151_PARTIAL_BACKGROUND
+    - PLANCK_NAME_ONLY_CONTROL
+    - HSC_NAME_ONLY_CONTROL
+    - KIDS_NAME_ONLY_CONTROL
+  exact_component_roles: [data, mask, covariance]
+  required_identity_fields:
+    - source_identity
+    - release_version
+    - license_identity
+    - repository_path
+    - content_sha256
+    - sky_support_status
+    - covariance_identity
+    - transfer_provenance
+    - required_fields
+  closed_schema: true
+  duplicate_candidate_ids: forbidden
+
+admission_requirements:
+  source_identity:
+    rule: a product or survey name is not a source identity
+    accepted_status: BOUND
+  release:
+    rule: an exact product release and version are mandatory
+    accepted_status: BOUND
+  license:
+    rule: a resolvable license identity is mandatory before repository admission
+    accepted_status: BOUND
+  repository_binding:
+    rule: every required component is a regular non-symlink file below the declared repository root and matches its sha256
+  sky_support:
+    rule: mask or selection identity and directional convention must be bound
+    accepted_status: BOUND
+  covariance:
+    rule: a separately identified covariance component is mandatory
+  transfer:
+    rule: explicit none_observer_side or a non-native registered transfer source is mandatory
+    forbidden_values: [MISSING, native_solver, native_morphology_atlas]
+  fields:
+    rule: every preregistered required field must be present
+  acquisition:
+    forbidden_values:
+      - PARTIAL_BACKGROUND_ACQUISITION
+      - NAME_ONLY
+      - INCOMPLETE
+  pr151:
+    partial_scientific_use: forbidden
+    canonical_status_required: background_in_progress
+
+decision_contract:
+  admitted_input_status: ADMITTED_FOR_SEPARATE_PILOT_AUTHORIZATION
+  admitted_without_execution_authority: ADMITTED_INPUTS_AWAITING_EXECUTION_AUTHORIZATION
+  no_admitted_input_status: NO_ADMITTED_DATA_PILOT
+  pilot_executed: false
+  execution_side_effects: forbidden
+  requirement: >-
+    Admission and pilot execution authorization are separate decisions.
+    This change set may produce admission verdicts only.
+
+outputs:
+  result:
+    path: docs/research_program/vector_tensor/data_admission/PR274_ADMISSION_RESULT.json
+    artifact_mode: data_admission_preflight
+  allowed_use:
+    - repository-bound input gap analysis
+    - pre-solver data-admission planning
+  forbidden_use:
+    - observed-data inference
+    - claim-bearing figure
+    - transfer validation
+    - native solver or morphology-atlas validation
+    - geometry detection
+    - Bianchi family identification or ranking
+
+tests:
+  focused:
+    command: PYTHONPATH=htt/src:htt python -B -m pytest -p no:cacheprovider -q tests/contracts/test_vector_tensor_data_admission.py
+  generator_check:
+    command: python -B scripts/codex_harness/build_pr274_data_admission.py --check
+  adjacent:
+    command: python -B scripts/codex_harness/run_pr274_data_admission.py adjacent
+  smoke:
+    command: python -B scripts/codex_harness/run_pr274_data_admission.py smoke
+
+kill_conditions:
+  - dataset name alone passes admission
+  - an unbound or hash-mismatched required component passes
+  - PR-151 partial or background bytes pass as complete input
+  - admission silently implies execution authorization
+  - this change set executes an observed-data pilot
+  - raw or incomplete data enters a claim-bearing figure
+  - a native-solver, geometry, or family-identification claim appears
