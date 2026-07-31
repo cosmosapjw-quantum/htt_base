@@ -14,8 +14,13 @@ observed_data_execution: forbidden
 frozen_before_analysis: true
 frozen_on: '2026-07-30'
 frozen_parent_candidate: 74b79d5d
-candidate_attempt: PR273-CANDIDATE-R5
-design_revision: 6
+candidate_attempt: PR273-CANDIDATE-R6
+design_revision: 7
+fourth_failed_candidate_review:
+  candidate_sha: 8699b3bd8c22b0a177d484b038f3abd73f07ef88
+  receipt: .agent-harness/runs/pr273-final-review-20260730-r5/RUN_SUMMARY.json
+  finding_id: F-PR273-R5-DETACHED-TRUTH-MAPPING
+  repair: remove the detached truth mapping input and parse the adjudicated mapping only from the verified frozen truth-vault bytes
 third_failed_candidate_review:
   candidate_sha: 0e0c3d34bdae0b23f08a02c7b95008d501d0fa87
   receipt: .agent-harness/runs/pr273-final-review-20260730-r4/RUN_SUMMARY.json

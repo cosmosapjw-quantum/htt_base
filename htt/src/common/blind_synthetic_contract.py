@@ -173,6 +173,50 @@ def file_sha256(raw: bytes) -> str:
     return hashlib.sha256(raw).hexdigest()
 
 
+def _parse_committed_json_mapping(raw: bytes, name: str) -> Mapping[str, object]:
+    """Parse the exact committed bytes without a detached mapping authority."""
+
+    if not isinstance(raw, bytes):
+        raise BlindSyntheticContractError(f"{name} raw payload must be bytes")
+
+    def reject_constant(value: str) -> object:
+        raise BlindSyntheticContractError(
+            f"{name} contains non-finite JSON constant {value}"
+        )
+
+    def reject_duplicate_keys(
+        pairs: list[tuple[str, object]],
+    ) -> dict[str, object]:
+        result: dict[str, object] = {}
+        for key, value in pairs:
+            if key in result:
+                raise BlindSyntheticContractError(
+                    f"{name} contains duplicate key {key!r}"
+                )
+            result[key] = value
+        return result
+
+    try:
+        decoded = raw.decode("utf-8")
+    except UnicodeDecodeError as exc:
+        raise BlindSyntheticContractError(
+            f"{name} must be UTF-8 JSON bytes"
+        ) from exc
+    try:
+        parsed = json.loads(
+            decoded,
+            object_pairs_hook=reject_duplicate_keys,
+            parse_constant=reject_constant,
+        )
+    except (json.JSONDecodeError, TypeError) as exc:
+        raise BlindSyntheticContractError(
+            f"{name} must be valid JSON bytes"
+        ) from exc
+    if not isinstance(parsed, Mapping):
+        raise BlindSyntheticContractError(f"{name} root must be a mapping")
+    return parsed
+
+
 def _text(value: object, name: str) -> str:
     if not isinstance(value, str) or not value.strip() or value != value.strip():
         raise BlindSyntheticContractError(
@@ -817,7 +861,6 @@ def build_blind_synthetic_adjudication(
     adjudication_id: str,
     challenge: BlindSyntheticChallenge,
     submission: BlindSyntheticSubmission,
-    truth_vault: Mapping[str, object],
     truth_vault_raw: bytes,
     expected_truth_vault_sha256: str,
     expected_submission_content_id: str,
@@ -849,6 +892,10 @@ def build_blind_synthetic_adjudication(
         raise BlindSyntheticContractError(
             "truth vault commitment does not match frozen bytes"
         )
+    truth_vault = _parse_committed_json_mapping(
+        truth_vault_raw,
+        "truth_vault",
+    )
     checked_truth = _exact_mapping(
         truth_vault,
         name="truth_vault",

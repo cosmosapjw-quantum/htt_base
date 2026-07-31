@@ -148,7 +148,6 @@ def _mutation_results(
             adjudication_id="PR273-MUTATION-CHALLENGE",
             challenge=changed,
             submission=submission,
-            truth_vault=truth_payload,
             truth_vault_raw=truth_raw,
             expected_truth_vault_sha256=truth_sha,
             expected_submission_content_id=expected_submission_content_id,
@@ -208,7 +207,6 @@ def _mutation_results(
             adjudication_id="PR273-MUTATION-TRUTH-COMMITMENT",
             challenge=challenge,
             submission=submission,
-            truth_vault=truth_payload,
             truth_vault_raw=truth_raw,
             expected_truth_vault_sha256="0" * 64,
             expected_submission_content_id=expected_submission_content_id,
@@ -220,6 +218,24 @@ def _mutation_results(
     killed.append(
         _expect_killed("TRUTH_VAULT_COMMITMENT", changed_commitment)
     )
+
+    def changed_interpreted_truth() -> None:
+        payload = copy.deepcopy(truth_payload)
+        payload["expected_cases"][0]["scenario"] = "SYNTHETIC_SENTINEL"
+        mutated_raw = _json_bytes(payload)
+        build_blind_synthetic_adjudication(
+            adjudication_id="PR273-MUTATION-INTERPRETED-TRUTH",
+            challenge=challenge,
+            submission=submission,
+            truth_vault_raw=mutated_raw,
+            expected_truth_vault_sha256=truth_sha,
+            expected_submission_content_id=expected_submission_content_id,
+            mutation_results={
+                name: "KILLED" for name in challenge.declared_mutations
+            },
+        )
+
+    _expect_killed("TRUTH_VAULT_COMMITMENT", changed_interpreted_truth)
     return dict(killed)
 
 
@@ -259,7 +275,6 @@ def build() -> tuple[MappingLike, MappingLike, MappingLike]:
         adjudication_id="PR273-REGISTERED-ADJUDICATION-V1",
         challenge=challenge,
         submission=submission,
-        truth_vault=truth_payload,
         truth_vault_raw=truth_raw,
         expected_truth_vault_sha256=spec["frozen_inputs"]["truth_vault"][
             "sha256"

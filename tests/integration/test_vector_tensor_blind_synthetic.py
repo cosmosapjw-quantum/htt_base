@@ -231,7 +231,72 @@ def test_truth_vault_schema_is_closed_at_registered_adjudication() -> None:
             adjudication_id="PR273-TRUTH-SCHEMA-MUTATION",
             challenge=challenge,
             submission=submission,
-            truth_vault=truth,
+            truth_vault_raw=raw,
+            expected_truth_vault_sha256=hashlib.sha256(raw).hexdigest(),
+            expected_submission_content_id=submission.content_id,
+            mutation_results={
+                name: "KILLED" for name in challenge.declared_mutations
+            },
+        )
+
+
+def test_truth_adjudication_uses_only_the_committed_raw_bytes() -> None:
+    challenge = _challenge()
+    submission_payload = _load(SUBMISSION)
+    submission = replay_blind_synthetic_submission(
+        submission_payload,
+        expected_content_id=_frozen_submission_content_id(),
+    )
+    truth = _load(TRUTH)
+    truth["expected_cases"][0]["scenario"] = "SYNTHETIC_SENTINEL"
+    mutated_raw = (
+        json.dumps(truth, indent=2, sort_keys=True, ensure_ascii=True) + "\n"
+    ).encode("ascii")
+    original_sha = hashlib.sha256(TRUTH.read_bytes()).hexdigest()
+
+    assert "truth_vault" not in inspect.signature(
+        build_blind_synthetic_adjudication
+    ).parameters
+    with pytest.raises(
+        BlindSyntheticContractError,
+        match="commitment does not match frozen bytes",
+    ):
+        build_blind_synthetic_adjudication(
+            adjudication_id="PR273-DETACHED-TRUTH-REGRESSION",
+            challenge=challenge,
+            submission=submission,
+            truth_vault_raw=mutated_raw,
+            expected_truth_vault_sha256=original_sha,
+            expected_submission_content_id=submission.content_id,
+            mutation_results={
+                name: "KILLED" for name in challenge.declared_mutations
+            },
+        )
+
+
+@pytest.mark.parametrize(
+    "raw",
+    (
+        b'{"schema":"x","schema":"y"}',
+        b'{"schema":NaN}',
+        b"[]",
+        b"\xff",
+    ),
+)
+def test_truth_vault_raw_parser_rejects_ambiguous_or_invalid_json(
+    raw: bytes,
+) -> None:
+    challenge = _challenge()
+    submission_payload = _load(SUBMISSION)
+    submission = replay_blind_synthetic_submission(
+        submission_payload,
+        expected_content_id=_frozen_submission_content_id(),
+    )
+    with pytest.raises(BlindSyntheticContractError):
+        build_blind_synthetic_adjudication(
+            adjudication_id="PR273-TRUTH-PARSE-REFUSAL",
+            challenge=challenge,
+            submission=submission,
             truth_vault_raw=raw,
             expected_truth_vault_sha256=hashlib.sha256(raw).hexdigest(),
             expected_submission_content_id=submission.content_id,
