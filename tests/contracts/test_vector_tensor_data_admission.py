@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import copy
 import hashlib
+import importlib.util
 import inspect
 import json
 from pathlib import Path
@@ -770,6 +771,26 @@ def test_committed_result_is_deterministic_and_source_bound() -> None:
         "docs/research_program/vector_tensor/data_admission/"
         "PR274_CANDIDATE_INPUTS.yaml"
     ] == f"sha256:{_sha(REGISTRY)}"
+
+
+def test_builder_yaml_loader_rejects_duplicate_authority_keys(
+    tmp_path: Path,
+) -> None:
+    spec = importlib.util.spec_from_file_location(
+        "pr274_builder_under_test",
+        BUILDER,
+    )
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    ambiguous = tmp_path / "ambiguous.yaml"
+    ambiguous.write_text(
+        "schema: ATTACKER_ALIAS\n"
+        "schema: htt.pr274.data_identity_registry.v1\n",
+        encoding="utf-8",
+    )
+    with pytest.raises(RuntimeError, match="duplicate PR-274 YAML mapping key"):
+        module._load_yaml(ambiguous)
 
 
 def test_owner_surfaces_expose_admission_not_observed_data_execution() -> None:
