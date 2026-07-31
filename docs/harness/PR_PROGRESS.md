@@ -2,6 +2,30 @@
 
 Update every five PRs with percent complete and blockers.
 
+## PR-274 data-admission closeout
+
+Date: 2026-07-30
+
+- Active DAG: 169/222 complete = 76.13%; dependency-weighted completion
+  81.84%; critical-path proxy 75/77 = 97.40%.
+- PR-274 closes as `NO_ADMITTED_DATA_PILOT`: six candidate records evaluated,
+  zero admitted, no separate execution authorization, and no pilot executed.
+- R1--R3 failures and the R4 post-review closeout defect remain preserved.
+  Exact candidate `eea0a262...` passed both R5 independent reviews, all 18
+  policy cells, the 15-case closeout authority oracle, 43 registered replays,
+  five semantic-drift mutations, and seven provenance-policy mutations.
+- Validation: 54 focused, 99 adjacent, 8 smoke, 10488/10547 source-layout
+  collection with 59 deselected, deterministic builder before and after the
+  real closeout transition, strict 222-card DAG, synchronized mirrors, and
+  both claim scans pass.
+- A global five-count checkpoint is not due at 169; the next is 170.
+  PR-275 is the next vector/tensor node. PR-172 remains blocked and PR-151
+  remains background-only and incomplete.
+- Claim drift: none. This is repository-bound admission-preflight evidence
+  only; no observed-data, native solver/atlas, transfer-validation,
+  source-theorem, geometry, posterior/evidence, public-use, or family status
+  is promoted.
+
 ## PR-273 programme checkpoint
 
 Date: 2026-07-30

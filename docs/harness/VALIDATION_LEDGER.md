@@ -2612,6 +2612,40 @@ registered schema-v3 reviewer run
 `.agent-harness/runs/pr259-final-review-20260730-r3/RUN_SUMMARY.json`; any
 missing, malformed, or non-PASS result invalidates this ledger closeout.
 
+## PR-274 — repository-bound data admission (2026-07-30)
+
+Change classification: COMMON/OBSSTAT admission contracts, HTT read-only
+eligibility facade, typed source identity registry, deterministic preflight,
+tests, failed-review remediation, status mirrors, and SSoT closeout. No
+observed-data execution, transfer validation, likelihood/posterior/evidence
+result, native solver/atlas result, geometry verdict, public-use state, or
+family identification is created.
+
+| Command or check | Result | Notes |
+|---|---:|---|
+| `run_pr274_data_admission.py focused` | PASS | `54 passed`; includes R1--R4 regressions and live-status self-closeout separation. |
+| `run_pr274_data_admission.py adjacent` | PASS | `99 passed`; owner-facade and predecessor contracts retained. |
+| `run_pr274_data_admission.py smoke` | PASS | `8 passed`, `10539 deselected`; eight legacy warnings retained. |
+| source-layout collection | PASS | `10488/10547 collected`, `59 deselected`, zero errors. |
+| deterministic admission builder before and after closeout | PASS | Exact 10,011-byte `NO_ADMITTED_DATA_PILOT` result remains unchanged. |
+| strict canonical DAG and mirrors | PASS | `222 PRs, DAG valid`; canonical and compatibility mirrors synchronized. |
+| scoped claim-language and research-surface scans | PASS | Zero findings. |
+| frozen reviews R1--R3 | FAIL, PRESERVED | Status-only identity, placeholder identity, and duplicate-key JSON false greens; none authorizes completion. |
+| frozen review R4 | PASS, SUPERSEDED | Pre-closeout candidate passed; the later honest status transition exposed a self-reference defect and required implementation revision. |
+| exact frozen candidate R5 claim/data review | PASS | Candidate `eea0a262...`; all 18 cells and a 15-case closeout authority oracle pass. |
+| exact frozen candidate R5 harness review | PASS | All 18 cells, 43 replays, five semantic drifts, and seven provenance-policy mutations pass. |
+| progress report after closeout | PASS | `169/222 = 76.13%`; dependency weighted `81.84%`; critical path `75/77 = 97.40%`; checkpoint 170 is next. |
+
+Scientific and data disposition: the typed production identity registry is
+empty; all six candidates are rejected; PR-151 partial/background acquisition
+remains forbidden; no separate execution authority exists; no pilot ran.
+Scientific status remains `OPEN`, the claim ceiling remains
+`diagnostic_only`, and PR-275 is open only for generated reporting of existing
+registry, synthetic, and admission evidence.
+
+Independent acceptance authority:
+`.agent-harness/runs/pr274-final-review-20260730-r5/RUN_SUMMARY.json`.
+
 ## PR-260 — vector/tensor MES and proof-program formal intake (2026-07-30)
 
 Change classification: COMMON programme contracts, supplied-source intake,

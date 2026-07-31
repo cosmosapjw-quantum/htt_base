@@ -1,5 +1,38 @@
 # Project State
 
+## 2026-07-30 - PR-274 repository-bound data-admission closeout
+
+This section supersedes older orchestration snapshots below.
+
+- Active DAG: 222 cards, 169 completed, 1 blocked, 23 pending, 28 dormant
+  external/native, no foreground card, and background PR-151 acquisition.
+  Count completion is 76.13%, dependency-weighted completion 81.84%, and the
+  critical-path proxy is 75/77 = 97.40%.
+- PR-274 evaluates six frozen candidate records under exact source, release,
+  license, sky-support, covariance, transfer, field, repository-path, and
+  content-identity contracts. The production identity registry is empty, so
+  all six are rejected and the terminal result is
+  `NO_ADMITTED_DATA_PILOT`.
+- Candidates R1--R3 failed on status-only identity promotion, placeholder
+  identity references, and duplicate-key JSON ambiguity. R4 passed the
+  pre-closeout candidate, after which the normal status transition exposed a
+  deterministic self-reference defect. All receipts remain preserved.
+- Candidate `eea0a262...` separates frozen execution-time provenance from
+  live status semantics. R5 claim/data and harness/integration reviews pass
+  all 18 cells, a 15-case authority oracle, 43 registered replays, five live
+  semantic-drift mutations, and seven provenance-policy mutations.
+- Closeout validation passes 54 focused tests, 99 adjacent regressions, 8
+  smoke tests, source-layout collection of 10488/10547 nodes with 59
+  deselected, deterministic generation before and after closeout, strict
+  222-card DAG, synchronized mirrors, and both claim scans.
+- No separate data-execution authorization exists and no observed-data pilot
+  ran. PR-151 partial/background acquisition remains forbidden as scientific
+  input. PR-172 remains blocked.
+- PR-275 is dependency-open for registry-generated proof/status reporting,
+  concrete synthetic-case analysis, and a replication package. No admitted
+  data, transfer validation, native solver/atlas result, source-theorem
+  promotion, geometry, public-use, or family-identification status changed.
+
 ## 2026-07-30 - PR-273 blind synthetic integration checkpoint
 
 This section supersedes older orchestration snapshots below.
