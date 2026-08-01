@@ -33,7 +33,7 @@ Panel A plots `max_finite_abs_x` and `max_finite_abs_q`, both dimensionless regi
 
 ## Data/script/manifest provenance
 
-The source JSON is `SYNTHETIC_CASE_ANALYSIS.json` (file identity `sha256:5097d278545194f783fe075e7b03878d94ec34984531358f51780c977bba0a3f`), derived from the exact PR-273 diagnostic pack at seed `27320260730`. The generator is `scripts/vector_tensor/build_pr275_proof_atlas.py`; the figure manifest is `fig_pr275_synthetic_case_diagnostics.manifest.json` (canonical content identity `sha256:96d1c16d3dbe1ab8abc8d3c9e2cebb542ac45360f3ae5975f258435561b9fb7f`). Its exact file identity is recorded separately in `REPLICATION_PACKAGE.json`.
+The source JSON is `SYNTHETIC_CASE_ANALYSIS.json` (file identity `sha256:5097d278545194f783fe075e7b03878d94ec34984531358f51780c977bba0a3f`), derived from the exact PR-273 diagnostic pack at seed `27320260730`. The generator is `scripts/vector_tensor/build_pr275_proof_atlas.py`; the figure manifest is `fig_pr275_synthetic_case_diagnostics.manifest.json` (canonical content identity `sha256:eb41dd9978b2a09642440173ecb32ce94fccaf974e84b6fbfd47215307707999`). Its exact file identity is recorded separately in `REPLICATION_PACKAGE.json`.
 
 ## Category and claim tier
 
@@ -63,7 +63,7 @@ Observed-data publication would require separately admitted inputs, exact mask/c
 
 ## Replication package
 
-`REPLICATION_PACKAGE.json` (`sha256:8380d179163cbe4e976c484e1b3908207053b89fcd157993d6b61ef5848ff224`) records commands, environment versions, frozen source identities, exact PR-275 spec/generator/runner workflow identities, generated artifact hashes, PR-272 seed/tolerance contracts, the PR-273 seed/config identity, caveats, and the diagnostic-only claim ceiling.
+`REPLICATION_PACKAGE.json` (`sha256:9309260acd33402f1d2e20b1db8b3bb97347c7e1f9e17dcb62cd9c2136d55f0c`) records commands, environment versions, frozen source identities, exact PR-275 spec/generator/runner workflow identities, generated artifact hashes, PR-272 seed/tolerance contracts, the PR-273 seed/config identity, caveats, and the diagnostic-only claim ceiling.
 
 ## Claim boundary
 

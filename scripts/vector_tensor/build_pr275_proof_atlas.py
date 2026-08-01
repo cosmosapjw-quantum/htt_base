@@ -737,6 +737,12 @@ def build_synthetic_analysis(
     summaries: list[dict[str, object]] = []
     for case in cases:
         case_id = str(case["case_id"])
+        categorical_flags: dict[str, bool] = {}
+        for field in ("depth_alert", "missing_functional"):
+            value = case.get(field)
+            if type(value) is not bool:
+                raise RuntimeError(f"{case_id}.{field} must be boolean")
+            categorical_flags[field] = value
         summaries.append(
             {
                 "case_id": case_id,
@@ -751,8 +757,8 @@ def build_synthetic_analysis(
                 "depth_mean_normalized_score": float(
                     case.get("depth_mean_normalized_score")
                 ),
-                "depth_alert": case.get("depth_alert"),
-                "missing_functional": case.get("missing_functional"),
+                "depth_alert": categorical_flags["depth_alert"],
+                "missing_functional": categorical_flags["missing_functional"],
                 "geometry_status": case.get("geometry_status"),
                 "local_global_status": case.get("local_global_status"),
                 "compatibility_status": case.get("compatibility_status"),
