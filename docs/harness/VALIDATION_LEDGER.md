@@ -2,6 +2,39 @@
 
 Record commands actually run. Never mark skipped checks as passed.
 
+## PR-275 - proof atlas, synthetic report, and replication closeout
+
+Date: 2026-08-01
+
+Change classification: deterministic generated reporting, synthetic
+diagnostic figure/provenance, replication metadata, categorical source
+hardening, status mirrors, checkpoint 170, and SSoT closeout. No source proof
+promotion, observed-data execution, transfer validation, likelihood,
+posterior, evidence term, native solver/atlas result, geometry verdict, public
+use, or family identification is created.
+
+| Command or check | Result | Notes |
+|---|---:|---|
+| PR-275 generator plus repeated `--check` | PASS | Seven generated outputs replay exactly. |
+| `run_pr275_report.py focused` | PASS | `25 passed`; includes all R1--R3 regressions and the symmetric 2-by-5 categorical mutation matrix. |
+| `run_pr275_report.py adjacent` | PASS | `209 passed` with normal user-state access for installed Wolfram/Sage tools. |
+| `run_pr275_report.py smoke` | PASS | `8 passed`, `10564 deselected`; eight retained legacy deprecation warnings. |
+| source-layout collection | PASS | `10513/10572 collected`, `59 deselected`, zero errors. |
+| strict canonical DAG and mirrors | PASS | `222 PRs, DAG valid`; canonical and compatibility mirrors synchronized. |
+| claim-language and research-surface scans | PASS | Zero forbidden-language findings. |
+| frozen reviews R1--R3 | FAIL, PRESERVED | Duplicate/order, registry/replay, plot encoding, exact-boolean, and mutation-lock defects; none authorizes completion. |
+| exact frozen candidate R4 | PASS | Candidate `89a23a21...`; claim, harness, and physics/statistics lanes each pass all 22 cells; merged findings zero. |
+| checkpoint 170 | PASS | `170/222 = 76.58%`; dependency weighted `81.96%`; critical path `76/77 = 98.70%`; no replan required. |
+| first full repository suite on `e63574e0...` | FAIL, PRESERVED | `10037 passed`, `406 failed`, `69 skipped`, `59 deselected`, `15 xfailed`, 1 subtest passed; no PR-275 node failed. |
+
+Scientific impact: PR-275 supplies generated proof-status and synthetic
+diagnostic reporting only. All 123 source rows and all 28 VT obligations
+remain `NOT_ADJUDICATED`; zero observed inputs are admitted; scientific status
+remains `OPEN`; no native or family claim is authorized.
+
+Independent acceptance authority:
+`.agent-harness/runs/pr275-final-review-20260801-r4/RUN_SUMMARY.json`.
+
 ## PR-273 - blind synthetic integration checkpoint
 
 Date: 2026-07-30

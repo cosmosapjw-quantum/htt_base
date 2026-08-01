@@ -1,5 +1,35 @@
 # Project State
 
+## 2026-08-01 - PR-275 vector/tensor programme closeout
+
+This section supersedes older orchestration snapshots below.
+
+- Active DAG: 222 cards, 170 completed, 1 blocked, 22 pending, 28 dormant
+  external/native, no foreground card, and background PR-151 acquisition.
+  Count completion is 76.58%, dependency-weighted completion 81.96%, and the
+  critical-path proxy is 76/77 = 98.70%.
+- PR-275 generates the proof-status atlas, five-case synthetic diagnostic,
+  programme report, plot manifest, and replication package from registered
+  sources. Counts and status tables are generated, not hand copied.
+- All 123 v3 source rows and all 28 `VT-T`/`VT-S` obligations remain
+  `NOT_ADJUDICATED`. The 65/58 labels remain cardinality aliases, and the
+  exact PR-270 `CAS_4AXIS_PASS` has no source-status promotion effect.
+- PR-274 still has zero admitted inputs and `NO_ADMITTED_DATA_PILOT`; PR-275
+  contains no observed-data execution or admitted-data figure. Its sole
+  figure is a synthetic `VALIDATION` diagnostic.
+- R1--R3 failed reviews remain preserved. Exact candidate `89a23a21...`
+  passed the R4 claim, harness, and physics/statistics lanes with 22/22 cells
+  each and zero merged findings.
+- Validation passes 25 focused tests, 209 adjacent regressions, 8 smoke tests,
+  10,513/10,572 source-layout collection with 59 deselected, deterministic
+  generation, strict DAG/mirrors, and both claim scans. The broad-suite
+  historical failures remain disclosed in the PR delta and validation ledger.
+- Checkpoint 170 is materialized; progress advanced and no replan is needed.
+  PR-172 remains blocked. PR-204 and PR-190 are the unblocked next cards.
+- Scientific status remains `OPEN` and public use remains false. No native
+  solver/atlas, transfer validation, observed-data, geometry, posterior,
+  evidence, truth-certificate, or family-identification status changed.
+
 ## 2026-07-30 - PR-274 repository-bound data-admission closeout
 
 This section supersedes older orchestration snapshots below.

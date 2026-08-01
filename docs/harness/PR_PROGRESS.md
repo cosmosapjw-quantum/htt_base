@@ -2,6 +2,33 @@
 
 Update every five PRs with percent complete and blockers.
 
+## Checkpoint 170 and PR-275 programme closeout
+
+Date: 2026-08-01
+
+- Active DAG: 170/222 complete = 76.58%; dependency-weighted completion
+  81.96%; critical-path proxy 76/77 = 98.70%.
+- Generated checkpoint:
+  `docs/generated/progress_checkpoints/checkpoint_170.md`; progress advanced
+  by five from checkpoint 165, so no replan PR is required.
+- PR-275 generates its atlas, report, synthetic analysis/figure, manifest, and
+  replication package from registered artifacts. All 123 source rows and all
+  28 `VT-T`/`VT-S` obligations remain `NOT_ADJUDICATED`; 65/58 remain
+  cardinality aliases rather than proof counts.
+- R1--R3 remain failed, non-accepting receipts. Candidate `89a23a21...`
+  passed all 22 policy cells independently in each R4 lane, with zero merged
+  findings and strict envelope validation.
+- Validation: focused 25, adjacent 209, smoke 8, source-layout collection
+  10,513/10,572 with 59 deselected, generated replay, strict 222-card DAG,
+  synchronized mirrors, and both claim scans pass. Repository-wide historical
+  failures remain explicit and are not counted as a pass.
+- PR-172 remains the blocked critical-path card; PR-151 remains incomplete
+  background acquisition. PR-204 and PR-190 are unblocked next; the next
+  count checkpoint is 175.
+- Claim drift: none. No observed input was admitted or executed, and no native
+  solver/atlas, transfer-validation, geometry, posterior/evidence, public-use,
+  or family-identification claim is promoted.
+
 ## PR-274 data-admission closeout
 
 Date: 2026-07-30
