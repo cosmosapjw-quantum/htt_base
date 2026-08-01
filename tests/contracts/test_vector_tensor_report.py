@@ -431,19 +431,16 @@ def test_data_admission_and_synthetic_membership_mutations_fail_closed() -> None
             pack_sha256="0" * 64,
         )
 
-    for field, invalid_value in (
-        ("missing_functional", "false"),
-        ("missing_functional", 0),
-        ("depth_alert", "false"),
-    ):
-        invalid_flag = copy.deepcopy(sources["pr273_diagnostic_pack"])
-        invalid_flag["case_results"][0][field] = invalid_value
-        with pytest.raises(RuntimeError, match=rf"C01\.{field} must be boolean"):
-            module.build_synthetic_analysis(
-                spec=spec,
-                pack=invalid_flag,
-                pack_sha256="0" * 64,
-            )
+    for field in ("missing_functional", "depth_alert"):
+        for invalid_value in ("false", 0, 1, 0.0, None):
+            invalid_flag = copy.deepcopy(sources["pr273_diagnostic_pack"])
+            invalid_flag["case_results"][0][field] = invalid_value
+            with pytest.raises(RuntimeError, match=rf"C01\.{field} must be boolean"):
+                module.build_synthetic_analysis(
+                    spec=spec,
+                    pack=invalid_flag,
+                    pack_sha256="0" * 64,
+                )
 
 
 def test_duplicate_or_cross_registry_proposal_identity_fails_closed() -> None:
