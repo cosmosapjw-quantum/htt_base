@@ -1,0 +1,165 @@
+schema: htt.pr275.proof_atlas_report.spec.v1
+pr_id: PR-275
+title: Generated proof atlas, synthetic diagnostic report, and replication package
+owner: COMMON
+contributors: [HTT, MIO, OBSSTAT]
+dependencies: [PR-274]
+capability: registry_generated_proof_and_replication_atlas
+scope: pre-solver generated reporting only
+claim_ceiling: diagnostic_only
+roadmap_level: C2
+scientific_status_effect: generated status and synthetic diagnostic reporting only
+observed_data_used: false
+public_use: false
+design_revision: 1
+candidate_attempt: PR275-CANDIDATE-R1
+frozen_on: '2026-08-01'
+frozen_parent_candidate: 2ce15149ea98750b11731a5f4eb00462a981d658
+
+frozen_inputs:
+  theorem_signatures_v3:
+    path: docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml
+    sha256: d14b24fda9556545abaf337310471af971c68f01438d32df13349f8cd4308f8b
+  programme_intake:
+    path: docs/research_program/vector_tensor/PROGRAM_INTAKE_REGISTRY_V1.yaml
+    sha256: b6964771c50c483e7697b087b9f058a3fd7d20ec893475a056608b852fdeb677
+  proposal_registry:
+    path: docs/research_program/vector_tensor/proof_registry_two_pillars.yaml
+    sha256: 01e278c2223c7f117b429a3359dbc3d483ce0ef409bbb06140b62a9ca3b2f201
+  pillar_t_core:
+    path: docs/research_program/vector_tensor/proofs/PILLAR_T_CORE_PROOFS_V1.yaml
+    sha256: 808c69ca1111591a6d6b52079b6caa7889a838009540ef9959a077640dcdc1d6
+  pillar_t_cas:
+    path: docs/research_program/vector_tensor/proofs/PILLAR_T_CAS_PROOFS_V1.yaml
+    sha256: 8f2faf3847f21d2a903bd143ba35ee123ad24256da42e3e1444ad991ade7a27e
+  pillar_s_core:
+    path: docs/research_program/vector_tensor/proofs/PILLAR_S_CORE_PROOFS_V1.yaml
+    sha256: 8221b6e723ab1b2a8863b63f48e4a0bd77c730fe785618815446bb2dc9112c3e
+  pillar_s_inference:
+    path: docs/research_program/vector_tensor/proofs/PILLAR_S_INFERENCE_VALIDATION_V1.yaml
+    sha256: 71e609b1034b3d992c5697cdc714100f739efca8f6eb96fa2999beb438e975bf
+  cas_adjudication:
+    path: docs/research_program/vector_tensor/cas/CAS_ADJUDICATION.json
+    sha256: a30a5597f0cc16786c4fcd4e689a6e5d0009387089f717205043152a439cf275
+  pr273_diagnostic_pack:
+    path: docs/research_program/vector_tensor/integration/PR273_DIAGNOSTIC_PACK.json
+    sha256: 3daeac74cabea9f232f10fc2c56470b24e98c4195f41fc7b4bcec3c3d09609c4
+  pr274_admission_result:
+    path: docs/research_program/vector_tensor/data_admission/PR274_ADMISSION_RESULT.json
+    sha256: e841af100465d9c76b200e2aad0030ec76319a9d120e91226232d52c51d5baea
+  pr272_preregistration:
+    path: docs/research_program/vector_tensor/pr272_spec.yaml
+    sha256: 4ab978cf971e565dd6a598bd795249555a717aefa8f6c89b26727fdf58f7f9a2
+  pr273_protocol:
+    path: docs/research_program/vector_tensor/pr273_spec.yaml
+    sha256: eaa427251d752c5f70d85f46046d43ffbc73cb3f2bcfefd1d20b74c4306ce46d
+  pr274_closeout:
+    path: docs/PR_DELTAS/pr-274.md
+    sha256: ccbe6abab1920537bf89aecde89e3bead9170dffd701624d7b6f6f88e766f6a3
+  publication_policy:
+    path: docs/research_program/vector_tensor/pr275_publication_policy.json
+    sha256: 0c45545bece806058270849cb9e0c2f5f7d03e21e7335d81ec829e0fc9ef9bd9
+
+counting_contract:
+  source_obligation_count: 123
+  cardinality_aliases:
+    requested_pillar_T_65: legacy_signature_inventory
+    requested_pillar_S_58: proposal_registry_rows
+  exact_source_partitions:
+    legacy_signature_inventory: {T: 31, S: 34}
+    proposal_registry_rows: {I: 30, II: 24, BRIDGE: 4}
+  semantic_guard: >-
+    65 and 58 are source-inventory aliases, not literal proof-pillar theorem
+    counts; source rows, evidence rows, and proved rows are never conflated.
+  raw_record_count_is_public_theorem_count: false
+
+status_contract:
+  source_proof_adjudication_status: NOT_ADJUDICATED
+  source_status_promotion: forbidden
+  vt_programme_partition: {VT-T: 14, VT-S: 14}
+  vt_programme_raw_count_is_public_theorem_count: false
+  evidence_layers:
+    - pillar_t_core
+    - pillar_t_cas
+    - pillar_s_core
+    - pillar_s_inference
+  render_rule: >-
+    Evidence-layer verdicts render beside, never over, the source obligation's
+    own NOT_ADJUDICATED status. Inconclusive and restricted records retain
+    their exact verdict text.
+  cas_aggregate_allowed: CAS_4AXIS_PASS
+  cas_aggregate_effect: exact registered CAS obligations only; no source-row promotion
+
+synthetic_analysis_contract:
+  source_pack: PR273-BLIND-SYNTHETIC-DIAGNOSTIC-PACK-V1
+  exact_case_ids: [C01, C02, C03, C04, C05]
+  exact_partitions: {development: 3, held_out: 2}
+  quantities:
+    - max_finite_abs_x
+    - max_finite_abs_q
+    - depth_mean_normalized_score
+    - missing_functional
+  depth_alert_threshold_source: pr273_diagnostic_pack
+  point_summary_rule: finite absolute maxima are descriptive synthetic diagnostics, not estimators
+  observed_data: false
+
+figure_contract:
+  path: docs/research_program/vector_tensor/report/fig_pr275_synthetic_case_diagnostics.png
+  source_json: docs/research_program/vector_tensor/report/SYNTHETIC_CASE_ANALYSIS.json
+  manifest: docs/research_program/vector_tensor/report/fig_pr275_synthetic_case_diagnostics.manifest.json
+  category: VALIDATION
+  exactly_one_category: true
+  artifact_mode: synthetic_diagnostic
+  plot_owner: COMMON
+  claim_tier: diagnostic_only
+  panels:
+    - finite_abs_x_q_by_case
+    - depth_score_and_missingness_by_case
+  forbidden_content:
+    - governance readiness visualization
+    - proof count presented as a scientific result
+    - observed-data point or claim
+    - geometry or Bianchi family label
+
+data_admission_contract:
+  required_status: NO_ADMITTED_DATA_PILOT
+  required_admitted_count: 0
+  required_pilot_executed: false
+  admitted_data_figure: forbidden
+
+replication_contract:
+  exact_replay_grade: local_generated_artifact_exact_replay
+  scientific_reproducibility_grade: deterministic_registered_synthetic
+  source_identity_grade: repository_paths_and_sha256
+  required_metadata:
+    - commands
+    - environment
+    - source_identities
+    - seeds
+    - tolerances
+    - caveats
+    - claim_ceiling
+  manuscript_number_without_generated_source: forbidden
+
+outputs:
+  directory: docs/research_program/vector_tensor/report
+  required:
+    - PROOF_ATLAS.json
+    - PROOF_ATLAS.md
+    - SYNTHETIC_CASE_ANALYSIS.json
+    - fig_pr275_synthetic_case_diagnostics.png
+    - fig_pr275_synthetic_case_diagnostics.manifest.json
+    - REPLICATION_PACKAGE.json
+    - VECTOR_TENSOR_PROGRAM_REPORT.md
+  generator: scripts/vector_tensor/build_pr275_proof_atlas.py
+  runner: scripts/codex_harness/run_pr275_report.py
+
+kill_conditions:
+  - a source obligation is rendered proved from an evidence-layer verdict
+  - a blocked, restricted, partial, or inconclusive record is rendered proved
+  - 65 or 58 is presented as a literal proved-theorem pillar count
+  - a hand-copied status/count survives source mutation
+  - a governance or readiness plot is presented as scientific analysis
+  - an observed-data point appears despite NO_ADMITTED_DATA_PILOT
+  - a manuscript number lacks generated source
+  - native solver, native atlas, geometry, or Bianchi family identification is implied

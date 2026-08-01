@@ -1,0 +1,109 @@
+{
+  "caveats": [
+    "Exact replay grade applies to the declared local source identities and environment.",
+    "Synthetic reproducibility is not observed-data validation.",
+    "Source obligation rows remain NOT_ADJUDICATED.",
+    "No native solver or morphology atlas is present.",
+    "No Bianchi family identification or ranking is authorized."
+  ],
+  "claim_ceiling": "diagnostic_only",
+  "commands": [
+    "python -B scripts/vector_tensor/build_pr275_proof_atlas.py --check",
+    "python -B scripts/codex_harness/run_pr275_report.py focused",
+    "python -B scripts/codex_harness/run_pr275_report.py adjacent",
+    "python -B scripts/codex_harness/run_pr275_report.py smoke",
+    "python scripts/check_claim_language.py",
+    "python scripts/claim_lint_research_surfaces.py",
+    "python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml",
+    "python scripts/codex_harness/progress_report.py docs/codex_handoff/pr_backlog.yaml docs/codex_handoff/pr_status.yaml",
+    "PYTHONPATH=htt/src:htt python -m pytest --collect-only -q",
+    "PYTHONPATH=htt/src:htt python -m pytest -m smoke -q",
+    "PYTHONPATH=htt/src:htt python -m pytest -q"
+  ],
+  "content_id": "sha256:a18f6e0470d6dc5ea0131fb987642ab767056d5b92a3db310b6a61dcdfc053f9",
+  "content_identities": {
+    "proof_atlas": "sha256:fcca894f1677453bcb7e08835c3c6476f89a124c07c63abc3f0636fb8aaa8331",
+    "synthetic_analysis": "sha256:e870bf86d6609fe5604dd43c45d287c0aeb6ca115b0f014f0e73f0ebe54504e2"
+  },
+  "environment": {
+    "matplotlib_version": "3.10.8",
+    "numpy_version": "2.4.2",
+    "python_implementation": "CPython",
+    "python_version": "3.12.3",
+    "pyyaml_version": "6.0.1",
+    "source_layout": "PYTHONPATH=htt/src:htt"
+  },
+  "forbidden_use": [
+    "source theorem promotion",
+    "observed-data inference",
+    "native solver validation",
+    "geometry or Bianchi family identification"
+  ],
+  "generated_artifact_identities": {
+    "docs/research_program/vector_tensor/report/PROOF_ATLAS.json": "sha256:137e841e89b688d57ae32590df1cfd5694559f398b45168e345f015f094594c8",
+    "docs/research_program/vector_tensor/report/PROOF_ATLAS.md": "sha256:7668fab947d89de419651289ce8c2f9ede8c9f271ecb0b4ad3785b6e09406abb",
+    "docs/research_program/vector_tensor/report/SYNTHETIC_CASE_ANALYSIS.json": "sha256:c69ee6fefcf6fecdba26f381dc315f6338d0256ef0eb20aedd401b34d9abbdb5",
+    "docs/research_program/vector_tensor/report/fig_pr275_synthetic_case_diagnostics.manifest.json": "sha256:5155dac631e5c36cca02f1fd2beaa75400559c31f6c1a78e6066937094328d28",
+    "docs/research_program/vector_tensor/report/fig_pr275_synthetic_case_diagnostics.png": "sha256:f3ae131306ffcbd2463c823dcb017bd95e03fa61a95d476cdd69253dba88375c"
+  },
+  "git_and_worktree_identity": {
+    "final_closeout_commit": "recorded in docs/PR_DELTAS/pr-275.md after generation; excluded here to avoid self-reference",
+    "frozen_parent_candidate": "2ce15149ea98750b11731a5f4eb00462a981d658",
+    "generator_identity": "sha256:eb0ddae37d62400d81e46d99ae92c5cb621e150ece96dcf376b704c24b85e348"
+  },
+  "observed_data": false,
+  "owner": "COMMON",
+  "package_id": "PR275-REPLICATION-PACKAGE-V1",
+  "provenance_grades": {
+    "exact_replay_grade": "local_generated_artifact_exact_replay",
+    "manuscript_number_without_generated_source": "forbidden",
+    "required_metadata": [
+      "commands",
+      "environment",
+      "source_identities",
+      "seeds",
+      "tolerances",
+      "caveats",
+      "claim_ceiling"
+    ],
+    "scientific_reproducibility_grade": "deterministic_registered_synthetic",
+    "source_identity_grade": "repository_paths_and_sha256"
+  },
+  "schema": "htt.pr275.replication_package.v1",
+  "scope": "local exact replay and registered synthetic reproducibility",
+  "seeds": {
+    "pr272_master_seed": 27220260730,
+    "pr272_seed_family": [
+      272003,
+      272005,
+      272007,
+      272009,
+      272011
+    ],
+    "pr273_seed": 27320260730
+  },
+  "source_identities": {
+    "docs/PR_DELTAS/pr-274.md": "sha256:ccbe6abab1920537bf89aecde89e3bead9170dffd701624d7b6f6f88e766f6a3",
+    "docs/research_program/vector_tensor/PROGRAM_INTAKE_REGISTRY_V1.yaml": "sha256:b6964771c50c483e7697b087b9f058a3fd7d20ec893475a056608b852fdeb677",
+    "docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml": "sha256:d14b24fda9556545abaf337310471af971c68f01438d32df13349f8cd4308f8b",
+    "docs/research_program/vector_tensor/cas/CAS_ADJUDICATION.json": "sha256:a30a5597f0cc16786c4fcd4e689a6e5d0009387089f717205043152a439cf275",
+    "docs/research_program/vector_tensor/data_admission/PR274_ADMISSION_RESULT.json": "sha256:e841af100465d9c76b200e2aad0030ec76319a9d120e91226232d52c51d5baea",
+    "docs/research_program/vector_tensor/integration/PR273_DIAGNOSTIC_PACK.json": "sha256:3daeac74cabea9f232f10fc2c56470b24e98c4195f41fc7b4bcec3c3d09609c4",
+    "docs/research_program/vector_tensor/pr272_spec.yaml": "sha256:4ab978cf971e565dd6a598bd795249555a717aefa8f6c89b26727fdf58f7f9a2",
+    "docs/research_program/vector_tensor/pr273_spec.yaml": "sha256:eaa427251d752c5f70d85f46046d43ffbc73cb3f2bcfefd1d20b74c4306ce46d",
+    "docs/research_program/vector_tensor/pr275_publication_policy.json": "sha256:0c45545bece806058270849cb9e0c2f5f7d03e21e7335d81ec829e0fc9ef9bd9",
+    "docs/research_program/vector_tensor/proof_registry_two_pillars.yaml": "sha256:01e278c2223c7f117b429a3359dbc3d483ce0ef409bbb06140b62a9ca3b2f201",
+    "docs/research_program/vector_tensor/proofs/PILLAR_S_CORE_PROOFS_V1.yaml": "sha256:8221b6e723ab1b2a8863b63f48e4a0bd77c730fe785618815446bb2dc9112c3e",
+    "docs/research_program/vector_tensor/proofs/PILLAR_S_INFERENCE_VALIDATION_V1.yaml": "sha256:71e609b1034b3d992c5697cdc714100f739efca8f6eb96fa2999beb438e975bf",
+    "docs/research_program/vector_tensor/proofs/PILLAR_T_CAS_PROOFS_V1.yaml": "sha256:8f2faf3847f21d2a903bd143ba35ee123ad24256da42e3e1444ad991ade7a27e",
+    "docs/research_program/vector_tensor/proofs/PILLAR_T_CORE_PROOFS_V1.yaml": "sha256:808c69ca1111591a6d6b52079b6caa7889a838009540ef9959a077640dcdc1d6"
+  },
+  "tolerances_and_acceptance": {
+    "pr272_family_confidence": 0.99,
+    "pr272_nominal_coverage": 0.95,
+    "pr272_rank_tolerance": 1e-12,
+    "pr272_retain_lower_bound": 0.92,
+    "pr273_config_identity": "sha256:e69f3f84ae746d8eafde5bec3a101e18a4681dea3903f5cc2001f800bfe5a220",
+    "pr273_depth_alert_threshold": 25.0
+  }
+}
