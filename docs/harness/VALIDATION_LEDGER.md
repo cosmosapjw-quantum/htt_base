@@ -2,6 +2,185 @@
 
 Record commands actually run. Never mark skipped checks as passed.
 
+## PR-275 - proof atlas, synthetic report, and replication closeout
+
+Date: 2026-08-01
+
+Change classification: deterministic generated reporting, synthetic
+diagnostic figure/provenance, replication metadata, categorical source
+hardening, status mirrors, checkpoint 170, and SSoT closeout. No source proof
+promotion, observed-data execution, transfer validation, likelihood,
+posterior, evidence term, native solver/atlas result, geometry verdict, public
+use, or family identification is created.
+
+| Command or check | Result | Notes |
+|---|---:|---|
+| PR-275 generator plus repeated `--check` | PASS | Seven generated outputs replay exactly. |
+| `run_pr275_report.py focused` | PASS | `25 passed`; includes all R1--R3 regressions and the symmetric 2-by-5 categorical mutation matrix. |
+| `run_pr275_report.py adjacent` | PASS | `209 passed` with normal user-state access for installed Wolfram/Sage tools. |
+| `run_pr275_report.py smoke` | PASS | `8 passed`, `10564 deselected`; eight retained legacy deprecation warnings. |
+| source-layout collection | PASS | `10513/10572 collected`, `59 deselected`, zero errors. |
+| strict canonical DAG and mirrors | PASS | `222 PRs, DAG valid`; canonical and compatibility mirrors synchronized. |
+| claim-language and research-surface scans | PASS | Zero forbidden-language findings. |
+| frozen reviews R1--R3 | FAIL, PRESERVED | Duplicate/order, registry/replay, plot encoding, exact-boolean, and mutation-lock defects; none authorizes completion. |
+| exact frozen candidate R4 | PASS | Candidate `89a23a21...`; claim, harness, and physics/statistics lanes each pass all 22 cells; merged findings zero. |
+| checkpoint 170 | PASS | `170/222 = 76.58%`; dependency weighted `81.96%`; critical path `76/77 = 98.70%`; no replan required. |
+| first full repository suite on `e63574e0...` | FAIL, PRESERVED | `10037 passed`, `406 failed`, `69 skipped`, `59 deselected`, `15 xfailed`, 1 subtest passed; no PR-275 node failed. |
+
+Scientific impact: PR-275 supplies generated proof-status and synthetic
+diagnostic reporting only. All 123 source rows and all 28 VT obligations
+remain `NOT_ADJUDICATED`; zero observed inputs are admitted; scientific status
+remains `OPEN`; no native or family claim is authorized.
+
+Independent acceptance authority:
+`.agent-harness/runs/pr275-final-review-20260801-r4/RUN_SUMMARY.json`.
+
+## PR-273 - blind synthetic integration checkpoint
+
+Date: 2026-07-30
+
+Change classification: deterministic synthetic integration code, sealed
+challenge/submission/truth/adjudication contracts, generated diagnostic pack,
+tests, status/delta closeout, and programme checkpoint. No observed-data
+execution, transfer validation, source-theorem promotion, native solver/atlas
+result, geometry verdict, family identification, or public-use state changed.
+
+| Command or check | Result | Notes |
+|---|---:|---|
+| deterministic PR-273 builder and byte check | PASS | Five cases, two held out, five declared mutation classes killed. |
+| focused integration contract | PASS | `26 passed`; includes every R2--R5 regression and strict committed-truth JSON parsing. |
+| adjacent vector/tensor regression | PASS | `233 passed`. |
+| smoke | PASS | `7 passed`, `10486 deselected`; eight retained legacy warnings. |
+| full source-layout collection | PASS | `10434/10493 collected`, `59 deselected`, zero errors with `PYTHONPATH=htt/src:htt`. |
+| initial bare collection invocation | FAIL, ENVIRONMENTAL | Missing source-layout path produced import errors; it is preserved and not counted as a pass. |
+| strict canonical DAG and mirrors | PASS | `222 PRs, DAG valid`; canonical/machine status byte-identical. |
+| claim-language and research-surface scans | PASS | Zero forbidden-language findings. |
+| R2--R5 candidate reviews | FAIL, PRESERVED | Nested truth alias, opaque ID mutation, partition reseal, and detached parsed-truth defects; none authorizes completion. |
+| exact frozen candidate R6 reviews | PASS | Candidate `ef1aa331...`; claim and integration lanes both pass, with strict result and coverage validation. |
+| programme progress checkpoint | PASS | `168/222 = 75.68%`; dependency weighted `81.60%`; critical path `96.10%`; PR-274 dependency-open. |
+
+Scientific impact: PR-273 supplies synthetic integration evidence only.
+MIO remains diagnostic, HTT remains the inference owner, source theorems
+remain unpromoted, and no observed/native/family claim is admitted.
+
+## Checkpoint 165 and PR-271 exact/core statistical closeout
+
+Date: 2026-07-30
+
+Change classification: status/delta closeout and generated five-PR progress
+checkpoint for an unchanged, independently reviewed PR-271 implementation.
+No observed-data execution, transfer validation, theorem-source promotion,
+likelihood/posterior/evidence result, native solver/atlas result, geometry
+verdict, public-use state, or family identification is created.
+
+| Command or check | Result | Notes |
+|---|---:|---|
+| PR-271 R5 independent statistics review | PASS | Frozen candidate `697e1e1c...`; all 23 cells pass. Focused 27, adjacent 140, smoke 6, collection 10347/10406 with 59 deselected, generator, DAG, and claim checks pass. |
+| PR-271 R5 claim review | ERROR, PRESERVED | Reviewer disclosed a broad harness search that exposed prior/sibling snippets. It stopped substantive work; this lane is not acceptance evidence. |
+| PR-271 R6 isolated claim/provenance review | PASS | Same unchanged candidate; all 23 cells and eight registered commands pass without prior/sibling result inspection. |
+| `run_pr271_pillar_s_core.py focused` after status closeout | PASS | `27 passed`. |
+| programme-DAG and status snapshot tests | PASS | `42 passed`. |
+| strict canonical DAG | PASS | `222 PRs, DAG valid`. |
+| canonical/machine status comparison | PASS | Files are byte-identical. |
+| five-PR checkpoint generator | PASS | `165/222 = 74.32%`; dependency weighted `80.87%`; critical path `72/77 = 93.51%`; no replan required. |
+| claim-language and research-surface checks | PASS | No forbidden claim-language hit. |
+| proposed 100-case 4,000-digit R5 stress extension | INTERRUPTED, PARTIAL ONLY | It exceeded the bounded review budget and is not counted as a pass. The reviewer completed a bounded 100-case 300-digit differential with zero discrepancies. |
+
+Scientific impact: PR-271 satisfies its exact-candidate review contract for
+bounded statistical-method records only. All theorem source statuses remain
+`NOT_ADJUDICATED`, scientific status remains `OPEN`, and PR-272 is now
+dependency-open. PR-270 is independently open; PR-273 remains closed until
+both succeed.
+
+## PR-268 - two-pillar theorem registry v3 and executable oracle
+
+Date: 2026-07-30
+
+Change classification: additive COMMON theorem-obligation registry and loader,
+byte-identical supplied oracle packaging, deterministic generator/runner,
+tests, phase checkpoint, PR delta, status mirrors, and SSoT handoff. No proof
+adjudication, theorem count, observed-data execution, transfer validation,
+likelihood/posterior/evidence result, native solver/atlas, geometry, family
+identification, claim tier, or public-use state changed.
+
+| Command or check | Result | Notes |
+|---|---:|---|
+| PR-268 focused registry/oracle contract | PASS | `21 passed`; exact 65/58 inventories and true partitions, 123-row disjointness, typed missingness, frozen hashes, 12 oracle links, full-mode determinism, six mutations, TF-02/06/12 boundaries, and raw-count refusal. |
+| adjacent registry/lineage/anchor/functional/orbit/report regression | PASS | `101 passed`; runner uses bounded relevant PR-124 nodes and preserves two unrelated base failures separately. |
+| smoke | PASS | `6 passed`, `10353 deselected`; eight declared legacy deprecation warnings. |
+| full source-layout collection | PASS | `10300/10359 collected`, `59 deselected`, zero errors. |
+| strict canonical DAG and mirror checks | PASS | `222 PRs, DAG valid`; canonical and compatibility status are byte-identical. |
+| generated v3 registry `--check` | PASS | Generated 65/58 inventories and the tracked YAML are byte-identical. |
+| scoped claim-language and research-surface scans | PASS | Zero forbidden-language findings. |
+| `compileall`, `pip check`, and `git diff --check` | PASS | No bytecode, requirement, or whitespace defect. |
+| initial broad adjacent replay | FAIL, PARTLY FIXED AND PARTLY PRESERVED | Four failures: two hard-coded worktree `venv/bin/python` paths were fixed with `sys.executable`; two historical failures reproduce unchanged on the exact PR-267 base. |
+| two base-confirmed historical nodes | FAIL, PRE-EXISTING | PR-124 authority scan reports `SOURCE_HASH_MISMATCH mio.formalism.namespace`; the historical theorem extension generator reports stale metadata/config hashes. Frozen sources were not changed. |
+| registered evidence-map R1 | ERROR, PRESERVED | The main writer changed `pr268_spec.yaml` after assignment registration. The mapper correctly returned `F-PR268-CONTEXT-DRIFT`; its abandoned run is not acceptance evidence. |
+| exact frozen candidate review R1 | REQUIRED | Valid only at `.agent-harness/runs/pr268-final-review-20260730-r1/RUN_SUMMARY.json`; missing, stale, malformed, SHA-mismatched, or non-PASS evidence invalidates completion. |
+
+Scientific impact: this establishes a typed registration and executable-test
+boundary for later proof work. It proves no theorem, supplies no theorem
+count, and validates no transfer, observed data, physical source, geometry,
+native solver/atlas, or Bianchi family.
+
+## PR-267 - abstaining anisotropy compatibility report
+
+Date: 2026-07-30
+
+Change classification: COMMON immutable aggregate/replay contract, HTT
+PR-256 replay adapter, tests, PR delta, status mirrors, and SSoT handoff. No
+data execution, external/native transfer validation, posterior/evidence
+result, native solver/atlas, geometry, family-identification, claim tier, or
+public-use state changed.
+
+| Command or check | Result | Notes |
+|---|---:|---|
+| PR-267 focused contract after remediation | PASS | `20 passed`; candidate, partial, rank-deficient, overlap, equivalence, unknown, missing-law, unavailable-depth, identity mutation, owner, family-gate paths, exact source-semantic vocabulary, and three namespace-smuggling mutations. |
+| adjacent PR-255/256/258/orbit/exceedance/depth regression | PASS | `154 passed`. |
+| smoke | PASS | `6 passed`, `10332 deselected`; eight declared legacy deprecation warnings. |
+| full source-layout collection | PASS | `10279/10338 collected`, `59 deselected`, zero errors. |
+| strict canonical DAG/status before completion | PASS | `222 PRs, DAG valid`. |
+| scoped claim-language scan | PASS | No forbidden claim language detected after one correctly refused prohibited-use phrase was rewritten. |
+| compileall and `git diff --check` | PASS | No bytecode or whitespace defect. |
+| first focused implementation run | FAIL, REPRODUCED AND FIXED | `13 passed, 3 failed`; all failures were test/policy fixture defects and are recorded in the PR delta. |
+| exact frozen review R1 | FAIL, PRESERVED | `F-PR267-NAMESPACE-SMUGGLE`: a neutral class named `response-class-type-vii-h` could enter the compatibility-candidate payload. All other 19 review cells passed. R1 cannot authorize completion. |
+| namespace remediation | PASS | Exact `response-class-neutral`, `response-class-local`, and `response-class-global` vocabulary is fixed by PR-258 source semantics; `type-vii-h`, `type-ix`, and compound aliases are refused. |
+| exact frozen candidate review R2 | REQUIRED | Valid only at `.agent-harness/runs/pr267-final-review-20260730-r2/RUN_SUMMARY.json`; missing, stale, malformed, SHA-mismatched, or non-PASS evidence invalidates completion. |
+
+Scientific impact: this validates an abstaining pre-native diagnostic
+composition boundary. It does not validate data or transfer behavior, infer a
+physical source, establish a geometry, create probability-bearing MIO
+inference, or identify a Bianchi family.
+
+## PR-266 - typed depth, mask, transport, and coherence path
+
+Date: 2026-07-30
+
+Change classification: COMMON immutable contracts, OBSSTAT feature/covariance
+transport, MIO diagnostic coherence/scramble control, HTT explicit
+model-conditional likelihood adapter, tests, PR delta, status mirrors, and
+SSoT handoff. No observed data, external/native transfer validation, posterior
+or evidence result, native solver/atlas, geometry, family identification,
+claim tier, or public-use state changed.
+
+| Command or check | Result | Notes |
+|---|---:|---|
+| PR-266 focused contract | PASS | `13 passed`, including nested/non-nested support, composition, covariance perturbation and scale invariance, rank refusal, depth scramble, likelihood separation, indefinite-covariance refusal, mutation sealing, and claim ceiling. |
+| adjacent sky-support/depth/PR-264 regression | PASS | `58 passed`. |
+| smoke | PASS | `6 passed`, `10310 deselected`; eight declared legacy deprecation warnings. |
+| full source-layout collection | PASS | `10257/10316 collected`, `59 deselected`, zero errors. |
+| strict canonical DAG/status | PASS | `222 PRs, DAG valid`; PR-266 is the only new conditional completion. |
+| scoped claim-language scan | PASS | No forbidden claim language detected. |
+| compileall, source import origins, `pip check`, `git diff --check` | PASS | All new modules resolve from this worktree and the environment has no broken requirements. |
+| first focused implementation run | FAIL, REPRODUCED AND FIXED | `3 passed, 8 failed`; strict three-way `zip` used unequal adjacent sequences. Exact left slices now bind every path edge. |
+| `python -m ruff` | UNAVAILABLE | Shared environment has no `ruff` module; no lint pass is claimed. |
+| exact frozen candidate review | REQUIRED | Valid only at `.agent-harness/runs/pr266-final-review-20260730-r1/RUN_SUMMARY.json`; missing, stale, malformed, SHA-mismatched, or non-PASS evidence invalidates completion. |
+
+Scientific impact: this validates a typed observer-side diagnostic and
+model-input boundary. It does not validate an observational transfer, infer a
+global tilt, produce posterior evidence, run a native solver, establish a
+geometry, or identify a Bianchi family.
+
 ## PR-258 - open-set response classes and premise-anchor integration
 
 Date: 2026-07-30
@@ -2433,3 +2612,250 @@ FAIL envelopes. The fail-branch closeout binds those immutable receipts and
 addresses their provenance/harness findings without repairing the frozen
 contract after results. A later attempt must register a new contract hash and
 rerun all four blind axes; the current PASS envelopes are not reusable.
+
+## PR-259 — frozen-lineage successor chronology repair (2026-07-30)
+
+Change classification: COMMON chronology contract, focused harness portability,
+canonical DAG/status bootstrap, tests, and review policy. Historical PR-124
+specification/receipt/module bytes are unchanged. No numerical science result,
+transfer output, observed data, likelihood, posterior, evidence term, MIO
+certificate, geometry label, native-solver result, or family identification is
+created or promoted.
+
+| Command | CWD | Result | Notes |
+| --- | --- | --- | --- |
+| `python3 -B scripts/codex_harness/run_pr259_chronology.py focused` | temporary merged worktree and candidate worktree | PASS | `64 passed`; exact PR-124 historical pin, PR-252 successor edge, mutation refusals, and policy routing. |
+| `python3 -B scripts/codex_harness/run_pr259_chronology.py smoke` | temporary merged worktree and candidate worktree | PASS | `6 passed`, `10141 deselected`; eight legacy deprecation warnings retained. |
+| `PYTHONPATH=htt/src:htt venv/bin/python -B -m pytest -p no:cacheprovider --collect-only -q` | candidate worktree | PASS | `10088/10147 collected`, `59 deselected`; zero collection errors. |
+| `sync_pr_dag_mirrors.py --check` | candidate and temporary merged worktrees | PASS | Canonical and compatibility mirrors are synchronized. |
+| `validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml` | candidate and temporary merged worktrees | PASS | `207 PRs, DAG valid`; bootstrap contains PR-259 and PR-260 only. |
+| first `integration_rehearsal.py create` on candidate `33a4c9fc` | temporary merged worktree, `/usr/bin/python3` | FAIL, REPRODUCED | Direct pytest policy argv could not import `common` after the consumer cleared `PYTHONPATH`. Editable-venv success was rejected as non-hermetic evidence. |
+| corrected `integration_rehearsal.py create` on candidate `de1b8a81` | temporary merged worktree, `/usr/bin/python3` | PASS | Focused, DAG, mirror, and smoke policy cells all passed; receipt SHA-256 `52395eb6049037f51e70d71d2f41d2cdb9d549d9624c3a2e1dc7be135fdcdbe4`. |
+| changed-surface `check_claim_language.py ... --dry-run --format json` | candidate worktree | PASS | Zero issues. |
+| repo-wide `check_no_mock_results.py .` | candidate worktree | FAIL, PRE-EXISTING | 108 historical `calibration_factor`/mock-marker hits. Scoped PR-259 implementation, test, runner, and policy search returned zero matches. |
+| `git diff --check` | candidate worktree | PASS | No whitespace errors. |
+
+Scientific/claim impact: none. The registered transition is a chronology edge,
+not a rewrite of the historical pin or a scientific successor verdict. The
+canonical status keeps scientific status `OPEN`, artifact mode
+`diagnostic_only`, and `public_use=false`.
+
+Independent review authority: the exact final closeout candidate must pass the
+registered schema-v3 reviewer run
+`.agent-harness/runs/pr259-final-review-20260730-r3/RUN_SUMMARY.json`; any
+missing, malformed, or non-PASS result invalidates this ledger closeout.
+
+## PR-274 — repository-bound data admission (2026-07-30)
+
+Change classification: COMMON/OBSSTAT admission contracts, HTT read-only
+eligibility facade, typed source identity registry, deterministic preflight,
+tests, failed-review remediation, status mirrors, and SSoT closeout. No
+observed-data execution, transfer validation, likelihood/posterior/evidence
+result, native solver/atlas result, geometry verdict, public-use state, or
+family identification is created.
+
+| Command or check | Result | Notes |
+|---|---:|---|
+| `run_pr274_data_admission.py focused` | PASS | `54 passed`; includes R1--R4 regressions and live-status self-closeout separation. |
+| `run_pr274_data_admission.py adjacent` | PASS | `99 passed`; owner-facade and predecessor contracts retained. |
+| `run_pr274_data_admission.py smoke` | PASS | `8 passed`, `10539 deselected`; eight legacy warnings retained. |
+| source-layout collection | PASS | `10488/10547 collected`, `59 deselected`, zero errors. |
+| deterministic admission builder before and after closeout | PASS | Exact 10,011-byte `NO_ADMITTED_DATA_PILOT` result remains unchanged. |
+| strict canonical DAG and mirrors | PASS | `222 PRs, DAG valid`; canonical and compatibility mirrors synchronized. |
+| scoped claim-language and research-surface scans | PASS | Zero findings. |
+| frozen reviews R1--R3 | FAIL, PRESERVED | Status-only identity, placeholder identity, and duplicate-key JSON false greens; none authorizes completion. |
+| frozen review R4 | PASS, SUPERSEDED | Pre-closeout candidate passed; the later honest status transition exposed a self-reference defect and required implementation revision. |
+| exact frozen candidate R5 claim/data review | PASS | Candidate `eea0a262...`; all 18 cells and a 15-case closeout authority oracle pass. |
+| exact frozen candidate R5 harness review | PASS | All 18 cells, 43 replays, five semantic drifts, and seven provenance-policy mutations pass. |
+| progress report after closeout | PASS | `169/222 = 76.13%`; dependency weighted `81.84%`; critical path `75/77 = 97.40%`; checkpoint 170 is next. |
+
+Scientific and data disposition: the typed production identity registry is
+empty; all six candidates are rejected; PR-151 partial/background acquisition
+remains forbidden; no separate execution authority exists; no pilot ran.
+Scientific status remains `OPEN`, the claim ceiling remains
+`diagnostic_only`, and PR-275 is open only for generated reporting of existing
+registry, synthetic, and admission evidence.
+
+Independent acceptance authority:
+`.agent-harness/runs/pr274-final-review-20260730-r5/RUN_SUMMARY.json`.
+
+## PR-260 — vector/tensor MES and proof-program formal intake (2026-07-30)
+
+Change classification: COMMON programme contracts, supplied-source intake,
+canonical DAG/status expansion, deterministic registry generation, loader,
+tests, and checkpoint metadata. No theorem is proved or promoted; no numerical
+science, data, transfer, likelihood, posterior, evidence, MIO certificate,
+native solver/atlas, geometry, or family result is created.
+
+| Command | CWD | Result | Notes |
+| --- | --- | --- | --- |
+| `venv/bin/python -B scripts/codex_harness/run_pr260_intake.py focused` | linked PR-260 worktree | PASS | `21 passed`; exact source partitions, registry loader, mutations, policy, DAG, and PR-259 bootstrap regression. |
+| `PYTHONPATH=htt/src:htt venv/bin/python -B -m pytest -p no:cacheprovider -q tests/contracts/test_generated_status_counts.py tests/contracts/test_pr_delta_template.py tests/pr_cards/test_pr_253_baseline_replan.py tests/contracts/test_vector_tensor_program_dag.py` | linked PR-260 worktree | PASS | `47 passed`; existing premise-anchor atomic-intake failure semantics preserved. |
+| `venv/bin/python -B scripts/codex_harness/intake_vector_tensor_program.py --check` | linked PR-260 worktree | PASS | Legacy 65 = 31 T + 34 S; proposal 58 = 30 I + 24 II + 4 BRIDGE; U9/TC20/ST25; VT-T14/VT-S14. |
+| strict `validate_pr_dag.py ... --status ... --strict-rescue-slice` | linked PR-260 worktree | PASS | `222 PRs, DAG valid`; exact PR-261–275 order and dependencies. |
+| `sync_pr_dag_mirrors.py --check` | linked PR-260 worktree | PASS | Canonical YAML/status and compatibility YAML/JSON mirrors synchronized. |
+| `PYTHONPATH=htt/src:htt ... --collect-only -q` | linked PR-260 worktree | PASS | `10107/10166 collected`, `59 deselected`; zero collection errors. |
+| `run_pr260_intake.py smoke` | linked PR-260 worktree | PASS | `6 passed`, `10160 deselected`; eight legacy deprecation warnings retained. |
+| changed-surface `check_claim_language.py --dry-run --format json` | linked PR-260 worktree | PASS | Zero issues. |
+| `claim_lint_research_surfaces.py` | linked PR-260 worktree | PASS | Zero research-surface hits. |
+| `compileall`, `pip check`, `git diff --check` | linked PR-260 worktree | PASS | No import/bytecode errors, broken requirements, or un-dispositioned whitespace errors. Ruff is unavailable in the venv and no Ruff result is claimed. |
+| checkpoint-155 generation and scoreboard replay | linked PR-260 worktree | PASS | 155/222 = 69.82%; dependency weighted 77.72%; critical path 65/77 = 84.42%; progress +5, no replan required. |
+
+Source-intake disposition: A1's standalone seven-equals relation was recorded
+by attachment hash and normalized to a single equality symbol because Git
+treats the original byte sequence as a conflict sentinel. Two-space Markdown
+hard breaks in the owner-supplied combined plan are explicitly attributed.
+Registration wrappers for A3/A6 and terminal-newline normalization are recorded
+separately. Source proposal/open/conditional statuses remain unchanged.
+
+The first source-map subagent reconstructed the right cardinalities but wrote a
+schema-v1 envelope after schema v3 was required. The run is preserved as
+abandoned process evidence and is not accepted as review. The exact
+`cb258619...` closeout candidate subsequently passed all 11 registered cells,
+an independent detached direct-parse oracle, strict coverage validation, and
+schema-v3 result validation with no findings. The run closed normally at
+`.agent-harness/runs/pr260-final-review-20260730-r1/RUN_SUMMARY.json`.
+
+## PR-261 — canonical joint vector/tensor anisotropy state (2026-07-30)
+
+Change classification: COMMON typed state transport, serialization,
+convention and transfer binding, explicit legacy adapter, O(3) compatibility,
+tests, and review policy. No observed data, transfer values, likelihood,
+posterior, evidence term, MIO certificate, native solver/atlas, geometry
+verdict, or family result is created.
+
+| Command | CWD | Result | Notes |
+| --- | --- | --- | --- |
+| `venv/bin/python -B scripts/codex_harness/run_pr261_joint_state.py focused` | linked PR-261 worktree | PASS | `25 passed`; round trip, unit branch, frame/congruence/support mismatch, typed missingness, PR-256 replay, legacy abstention, O(3) parity, transfer binding, and claim-policy mutations. |
+| `venv/bin/python -B scripts/codex_harness/run_pr261_joint_state.py adjacent` | linked PR-261 worktree | PASS | `96 passed`; PR-249, PR-256, O(3), and transfer-registry regressions; one declared legacy deprecation warning. |
+| `venv/bin/python -B scripts/codex_harness/run_pr261_joint_state.py smoke` | linked PR-261 worktree | PASS | `6 passed`, `10185 deselected`; eight declared legacy deprecation warnings retained. |
+| `PYTHONPATH=htt/src:htt ... --collect-only -q` | linked PR-261 worktree | PASS | `10132/10191 collected`, `59 deselected`; zero collection errors. |
+| strict `validate_pr_dag.py ... --status ... --strict-rescue-slice` | linked PR-261 worktree | PASS | `222 PRs, DAG valid`; PR-262/263 are dependency-ready only after valid PR-261 closeout. |
+| `sync_pr_dag_mirrors.py --check` | linked PR-261 worktree | PASS | Canonical and compatibility mirrors synchronized. |
+| scoped `check_claim_language.py` and research-surface lint | linked PR-261 worktree | PASS | Zero issues or hits. |
+| `compileall`, `pip check`, `git diff --check` | linked PR-261 worktree | PASS | No import, environment, or whitespace defect. Ruff is unavailable and no Ruff result is claimed. |
+
+Physics/convention disposition: congruence kinematics remain separate from
+between-frame velocities; vorticity and magnetic Weyl are axial, while
+acceleration and beta channels are polar. Available acceleration declares
+either `A_OVER_C_THETA` or `A_OVER_THETA_C_EQUALS_ONE`; no acceleration
+ceiling is created. `delta_omega_k` is not an anisotropic-curvature tensor.
+
+Legacy/transfer disposition: `DepartureState` bytes and values are unchanged.
+Migration requires exact source-state and semantic-authority receipts plus
+explicit convention and beta-role binding; otherwise it returns `ABSTAIN`.
+Transfer metadata uses the existing exact `TransferFunctionSpec`; the state
+does not compute transfer values or validate a native provider.
+
+Independent acceptance authority: the exact final closeout candidate must pass
+the schema-v3 review at
+`.agent-harness/runs/pr261-final-review-20260730-r1/RUN_SUMMARY.json`. Missing,
+stale, malformed, or non-PASS evidence invalidates PR-261 completion.
+
+## PR-262 — tensor-valued functional and shared anchor contract (2026-07-30)
+
+Change classification: COMMON formal tensor-functional evaluation, PR-254
+anchor reuse, typed domain/admissibility/stress reports, MIO diagnostic bridge,
+tests, and review policy. No data, transfer value, likelihood, posterior,
+evidence, MIO truth certificate, native solver/atlas, geometry verdict, or
+family result is created.
+
+| Command | CWD | Result | Notes |
+| --- | --- | --- | --- |
+| `venv/bin/python -B scripts/codex_harness/run_pr262_tensor_functionals.py focused` | linked PR-262 worktree | PASS | `29 passed`; functional registry, six-field result separation, missingness, anchor refusal, O(3), scaling, mutation, MIO, and claim boundaries. |
+| `venv/bin/python -B scripts/codex_harness/run_pr262_tensor_functionals.py adjacent` | linked PR-262 worktree | PASS | `67 passed`; PR-254 anchor, PR-261 joint-state, and PR-254 card regressions. |
+| `venv/bin/python -B scripts/codex_harness/run_pr262_tensor_functionals.py smoke` | linked PR-262 worktree | PASS | `6 passed`, `10214 deselected`; eight declared legacy deprecation warnings retained. |
+| `PYTHONPATH=htt/src:htt ... --collect-only -q` | linked PR-262 worktree | PASS | `10161/10220 collected`, `59 deselected`; zero collection errors. |
+| strict `validate_pr_dag.py ... --status ... --strict-rescue-slice` | linked PR-262 worktree | PASS | `222 PRs, DAG valid`; PR-263 remains ready and PR-264 remains dependency-blocked. |
+| `sync_pr_dag_mirrors.py --write` then `--check` | linked PR-262 worktree | PASS | Canonical and compatibility mirrors synchronized. The preceding mode-less argparse failure changed no files and is recorded in the PR delta. |
+| scoped claim-language scan and research-surface lint | linked PR-262 worktree | PASS | Zero issues or hits. |
+| `compileall`, `pip check`, `git diff --check` | linked PR-262 worktree | PASS | No import, environment, or whitespace defect. Ruff is unavailable and no Ruff result is claimed. |
+| frozen schema-v3 review R1 at `2a1eb64d...` | linked PR-262 worktree | **FAIL** | Preserved two P1 findings: all 13 operators admitted an unsupported STF basis, and post-construction spec drift enabled negative signed occupancy plus nested claim-lane mutation. Run closed at `.agent-harness/runs/pr262-final-review-20260730-r1/RUN_SUMMARY.json`. |
+| focused suite after R1 remediation | linked PR-262 worktree | PASS | `31 passed`; adds canonical-basis refusal and spec identity-seal/replay mutation regressions. |
+| adjacent suite after R1 remediation | linked PR-262 worktree | PASS | `67 passed`; PR-254 and PR-261 regressions unchanged. |
+| smoke suite after R1 remediation | linked PR-262 worktree | PASS | `6 passed`, `10216 deselected`; eight declared legacy deprecation warnings retained. |
+| full collection after R1 remediation | linked PR-262 worktree | PASS | `10163/10222 collected`, `59 deselected`; zero collection errors. |
+
+Physics/math disposition: the closed operator registry fixes codomain shape,
+homogeneous degree, sign class, and scalar/pseudoscalar/polar/axial/STF O(3)
+typing. Proper/improper metamorphics check scalar invariance, pseudoscalar
+sign, and isotropic vector-anchor covariance. Scaling checks the degree-2
+homogeneity of `tr(sigma^2)` and unchanged gauge under matched anchor scaling.
+
+Anchor/ownership disposition: the evaluator reconstructs the existing PR-254
+authority. Rank collapse and one-sided/non-compact support cannot emit gauge,
+margin, or stress. MIO re-exports the exact COMMON types for diagnostic use
+only and adds no inference operation.
+
+Independent acceptance authority: R1 is retained as a failed historical
+receipt and cannot authorize completion. The exact remediated closeout
+candidate must pass a fresh schema-v3 R2 review at
+`.agent-harness/runs/pr262-final-review-20260730-r2/RUN_SUMMARY.json`. Missing,
+stale, malformed, or non-PASS R2 evidence invalidates PR-262 completion.
+
+## Checkpoint 160 — PR-263 through PR-265 validation closeout (2026-07-30)
+
+Change classification: incomplete orbit catalogue, tensor departure
+diagnostics, law-typed conditional exceedance, exact-candidate adversarial
+review, and five-PR progress checkpoint. No observed-data execution, native
+solver/atlas result, geometry verdict, likelihood evidence term, MIO
+posterior, or family result is created.
+
+| Command or evidence | CWD | Result | Notes |
+| --- | --- | --- | --- |
+| PR-263 focused/adjacent/smoke/collection suites | linked vector/tensor worktree | PASS | O(3)/SO(3), parity, stabilizer, chart overlap, v2 regression, and explicit `UNPROVEN` completeness boundaries pass. |
+| PR-264 focused/adjacent/smoke/collection suites | linked vector/tensor worktree | PASS | Tensor `x/Q/F/G_F`, scalar reduction, denominator/support refusal, covariance, monotonic occupancy, and legacy-view separation pass. |
+| frozen PR-264 review R1 | linked vector/tensor worktree | **FAIL** | Preserved finding: post-construction result mutation bypassed source/anchor consistency. |
+| exact-source PR-264 remediation and frozen review R2 | linked vector/tensor worktree | PASS | Source states, anchors, functional identity, and transfer metadata are replayed and sealed; all 15 registered cells pass. |
+| `venv/bin/python -B scripts/codex_harness/run_pr265_conditional_exceedance.py focused` | linked vector/tensor worktree | PASS | `25 passed`; law/conditioning typing, point-output refusal, DKW coverage, posterior calibration, identified-set envelope, ownership, mutation, and claim policy. |
+| PR-265 adjacent suite | linked vector/tensor worktree | PASS | `84 passed`; historical MIO/HTT exceedance, PR-250, and PR-264 regressions; six declared deprecation warnings. |
+| PR-265 smoke suite | linked vector/tensor worktree | PASS | `6 passed`, `10296 deselected`; eight declared deprecation warnings. |
+| PR-265 full collection | linked vector/tensor worktree | PASS | `10243/10302 collected`, `59 deselected`; zero collection errors. |
+| strict DAG, status mirror, scoped claim scans | linked vector/tensor worktree | PASS | `222 PRs, DAG valid`; canonical/mirror status equivalent; zero claim-language findings. |
+| checkpoint generator with `--checkpoint-every 5` | linked vector/tensor worktree | PASS | `160/222 = 72.07%`; dependency-weighted `79.54%`; critical path `69/77 = 89.61%`; progress advanced and no replan is required. |
+| compileall, `pip check`, `git diff --check` | linked vector/tensor worktree | PASS | No import, installed-environment, or whitespace defect. |
+
+Statistical disposition: every exceedance value is bound to one declared
+sampling law and conditioning source. An optimization objective is not a
+sampling distribution; an optimizer point is not a draw. MIO emits only
+finite-null/empirical diagnostics, while HTT posterior output additionally
+requires an explicit posterior law and passed calibration.
+
+Claim disposition: scalar/tensor reductions, orbit signatures, support
+utilization, occupancy, and conditional exceedance remain methodology or
+diagnostic surfaces. They do not establish orbit completeness, transfer
+validity, geometry, truth, evidence, or Bianchi family identification.
+
+Independent acceptance authority: PR-264 is authorized only by its fresh R2
+PASS. PR-265 remains conditional until the exact final closeout candidate
+passes and closes at
+`.agent-harness/runs/pr265-final-review-20260730-r1/RUN_SUMMARY.json`.
+
+## PR-265 — conditional-exceedance R1 remediation (2026-07-30)
+
+The exact `d97a8afd...` R1 candidate received a schema-v3 `FAIL`. All 16
+policy cells were covered; 11 passed and 5 failed. The run is preserved and
+closed at
+`.agent-harness/runs/pr265-final-review-20260730-r1/RUN_SUMMARY.json`.
+
+| Evidence | Result | Disposition |
+| --- | --- | --- |
+| omitted finite-null alpha | **FAIL** | Removed hidden default; alpha is a mandatory keyword. |
+| missing posterior calibration | **FAIL** | Returns typed `POSTERIOR_CALIBRATION_REQUIRED` with no number. |
+| injected-law envelope relabelling | **FAIL** | Every vertex law must already be `IDENTIFIED_SET` conditioned. |
+| mixed-unit vertex envelope | **FAIL** | `sample_unit` is preserved in profiles and must agree exactly. |
+| bare monotonicity label and `eta^2` counterexample | **FAIL** | Admitting endpoints require a sealed proof-bound `EnvelopeCertificateReport`; a bare label yields `OPTIMIZER_REQUIRED`. |
+| post-remediation focused suite | PASS | `28 passed`. |
+| post-remediation adjacent suite | PASS | `84 passed`; six declared deprecation warnings. |
+| post-remediation smoke suite | PASS | `6 passed`, `10299 deselected`; eight declared deprecation warnings. |
+| post-remediation collection | PASS | `10246/10305 collected`, `59 deselected`; zero collection errors. |
+| strict DAG, claim lints, compileall, `pip check`, whitespace | PASS | No DAG, claim, import, requirement, or whitespace defect. |
+
+The first remediated adjacent invocation exposed only a frozen PR-264 error
+message regex mismatch. The implementation retained the current semantics and
+restored the historical phrase; the test was not weakened and the rerun
+passed.
+
+Independent acceptance authority: the exact remediation closeout must pass a
+fresh R2 review at
+`.agent-harness/runs/pr265-final-review-20260730-r2/RUN_SUMMARY.json`.

@@ -578,6 +578,154 @@ class MesConsumerExclusion:
 
 
 @dataclass(frozen=True)
+class MesExclusionTransition:
+    """One chronology-preserving successor for a frozen exclusion binding."""
+
+    exclusion_id: str
+    path: str
+    prior_sha256: str
+    sha256: str
+    reason: str
+
+    def __post_init__(self) -> None:
+        exclusion_id = _nonempty(self.exclusion_id, "transition exclusion_id")
+        path = _source_path(self.path, "transition path")
+        prior_sha256 = _sha256(
+            self.prior_sha256, "transition prior_sha256"
+        )
+        sha256 = _sha256(self.sha256, "transition sha256")
+        reason = _nonempty(self.reason, "transition reason")
+        if prior_sha256 == sha256:
+            raise MesRegistryError(
+                "an exclusion successor must differ from its historical pin"
+            )
+        object.__setattr__(self, "exclusion_id", exclusion_id)
+        object.__setattr__(self, "path", path)
+        object.__setattr__(self, "prior_sha256", prior_sha256)
+        object.__setattr__(self, "sha256", sha256)
+        object.__setattr__(self, "reason", reason)
+
+
+def resolve_mes_exclusion_transition(
+    rows: Sequence[Mapping[str, object]],
+    *,
+    path: str,
+    prior_sha256: str,
+    current_sha256: str,
+) -> MesExclusionTransition:
+    """Resolve exactly one registered historical-to-current exclusion edge.
+
+    This is deliberately a chronology check rather than an override of a
+    frozen receipt.  Unknown paths, duplicate identities or paths, malformed
+    rows, and either endpoint drifting from the requested hashes fail closed.
+    """
+
+    if isinstance(rows, (str, bytes)) or not isinstance(rows, Sequence):
+        raise MesRegistryError("exclusion transitions must be a sequence")
+    selected_path = _source_path(path, "requested transition path")
+    selected_prior = _sha256(
+        prior_sha256, "requested transition prior_sha256"
+    )
+    selected_current = _sha256(
+        current_sha256, "requested transition current_sha256"
+    )
+    expected_keys = {
+        "exclusion_id",
+        "path",
+        "prior_sha256",
+        "sha256",
+        "reason",
+    }
+    transitions: list[MesExclusionTransition] = []
+    seen_ids: set[str] = set()
+    seen_paths: set[str] = set()
+    for row in rows:
+        if not isinstance(row, Mapping) or set(row) != expected_keys:
+            raise MesRegistryError(
+                "each exclusion transition requires exclusion_id/path/"
+                "prior_sha256/sha256/reason"
+            )
+        transition = MesExclusionTransition(
+            exclusion_id=row["exclusion_id"],
+            path=row["path"],
+            prior_sha256=row["prior_sha256"],
+            sha256=row["sha256"],
+            reason=row["reason"],
+        )
+        if transition.exclusion_id in seen_ids:
+            raise MesRegistryError("duplicate exclusion transition identity")
+        if transition.path in seen_paths:
+            raise MesRegistryError("duplicate exclusion transition path")
+        seen_ids.add(transition.exclusion_id)
+        seen_paths.add(transition.path)
+        if transition.path == selected_path:
+            transitions.append(transition)
+    if len(transitions) != 1:
+        raise MesRegistryError(
+            f"no unique registered exclusion transition for {selected_path}"
+        )
+    transition = transitions[0]
+    if transition.prior_sha256 != selected_prior:
+        raise MesRegistryError(
+            f"historical exclusion pin drifted for {selected_path}"
+        )
+    if transition.sha256 != selected_current:
+        raise MesRegistryError(
+            f"current exclusion pin drifted for {selected_path}"
+        )
+    return transition
+
+
+def registered_mes_exclusion_transition(
+    repo_root: Path,
+    *,
+    path: str,
+    historical_sha256: str,
+) -> MesExclusionTransition:
+    """Load PR-252 authority and resolve one frozen-to-live transition."""
+
+    migration_path = repo_root / DEFAULT_CONSUMER_MIGRATION_PATH
+    if migration_path.is_symlink() or not migration_path.is_file():
+        raise MesRegistryError(
+            "MES consumer migration must be a regular repository file"
+        )
+    if sha256_file(migration_path) != PR252_CONSUMER_MIGRATION_SHA256:
+        raise MesRegistryError(
+            "MES consumer migration hash does not match the PR-252 authority root"
+        )
+    try:
+        payload = yaml.safe_load(migration_path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeDecodeError, yaml.YAMLError) as exc:
+        raise MesRegistryError(f"invalid MES consumer migration: {exc}") from exc
+    if not isinstance(payload, Mapping):
+        raise MesRegistryError("MES consumer migration root must be a mapping")
+    if payload.get("schema") != "htt.mes_consumer_migration.v1":
+        raise MesRegistryError("unsupported MES consumer migration schema")
+    if payload.get("authority") != "PR-252":
+        raise MesRegistryError("MES consumer migration authority must be PR-252")
+
+    selected_path = _source_path(path, "registered transition path")
+    source_path = repo_root.joinpath(*PurePosixPath(selected_path).parts)
+    try:
+        source_path.resolve(strict=False).relative_to(repo_root.resolve())
+    except ValueError as exc:
+        raise MesRegistryError(
+            f"source escapes repository root: {selected_path}"
+        ) from exc
+    if source_path.is_symlink() or not source_path.is_file():
+        raise MesRegistryError(
+            f"registered exclusion source is not a regular file: {selected_path}"
+        )
+    rows = payload.get("exclusion_bindings")
+    return resolve_mes_exclusion_transition(
+        rows,
+        path=selected_path,
+        prior_sha256=historical_sha256,
+        current_sha256=sha256_file(source_path),
+    )
+
+
+@dataclass(frozen=True)
 class MesConsumerFinding:
     code: MesConsumerIssueCode
     subject: str
@@ -2235,6 +2383,7 @@ __all__ = [
     "LEGACY_REPRODUCTION_SHA256",
     "MesConsumerDeclaration",
     "MesConsumerExclusion",
+    "MesExclusionTransition",
     "MesConsumerFinding",
     "MesConsumerIssueCode",
     "MesConsumerScanReport",
@@ -2252,6 +2401,8 @@ __all__ = [
     "SourceHashBinding",
     "current_mes_successor_registry",
     "finding_codes",
+    "registered_mes_exclusion_transition",
+    "resolve_mes_exclusion_transition",
     "scan_declared_mes_consumers",
     "sha256_file",
     "validate_mes_successor_registry",

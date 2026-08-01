@@ -30,6 +30,10 @@ from common.mes_theorem_authority import (
     validate_d2_receipt,
     verify_authority_receipt,
 )
+from common.mes_successor_registry import (
+    LEGACY_REPRODUCTION_SHA256,
+    registered_mes_exclusion_transition,
+)
 from common.theorem_signatures import (
     LEGACY_REGISTRY_SHA256,
     TheoremSignatureError,
@@ -263,14 +267,23 @@ def test_successor_pointer_authorized_by_receipt_bytes_only() -> None:
 
 def test_frozen_modules_untouched(spec: dict) -> None:
     """The legacy registry and the frozen MES modules stay byte-identical to
-    the spec-pinned hashes (quarantine discipline; hash pins survive
-    commits, unlike a `git diff HEAD` check)."""
+    the spec-pinned hashes unless a later hash-bound authority registers one
+    exact historical-to-current successor edge."""
     frozen = spec["scope_and_non_goals"]["frozen_modules_must_not_change"]
     assert isinstance(frozen, dict) and frozen
     for rel, digest in frozen.items():
-        assert sha256_file(REPO_ROOT / rel) == digest, (
-            f"frozen module changed: {rel}"
+        observed = sha256_file(REPO_ROOT / rel)
+        if observed == digest:
+            continue
+        transition = registered_mes_exclusion_transition(
+            REPO_ROOT,
+            path=rel,
+            historical_sha256=digest,
         )
+        assert transition.prior_sha256 == digest
+        assert transition.sha256 == observed
+        if rel == "htt/tsc/admissibility/three_bound_hierarchy.py":
+            assert transition.sha256 == LEGACY_REPRODUCTION_SHA256
 
 
 def test_branches_registry_shape() -> None:

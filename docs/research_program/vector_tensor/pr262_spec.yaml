@@ -1,0 +1,73 @@
+schema_version: 1
+work_unit_id: PR-262
+title: Tensor-valued functional and shared anchor contract
+target_ref: origin/research/pr04-multicomponent
+target_sha: e7c20643c0dd323481f0887aff8e437a1bf7950a
+change_set_id: CS-PR262-TENSOR-FUNCTIONALS
+publication_group_id: PG-PR262-TENSOR-FUNCTIONALS
+dependencies:
+  - PR-261
+  - PR-254
+owner: COMMON
+contributors:
+  - MIO
+capability: tensor_functional_evaluation_with_shared_anchor_authority
+scientific_role: >-
+  Evaluate preregistered scalar, vector, and STF-tensor functionals of the
+  canonical joint anisotropy state while keeping the value, domain, codomain,
+  PR-254 anchor status, admissibility decision, and stress report in separate
+  typed fields. This is a diagnostic-only pre-solver contract.
+public_contract:
+  module: common.tensor_functionals
+  mio_bridge: mio.formalism.tensor_functionals
+  types:
+    - TensorFunctionalSpec
+    - TensorFunctionalResult
+    - FunctionalDomainReport
+    - FunctionalCodomainReport
+    - FunctionalAnchorReport
+    - FunctionalAdmissibilityReport
+    - FunctionalStressReport
+  factories:
+    - build_tensor_functional_spec
+    - evaluate_tensor_functional
+anchor_authority:
+  reused_module: common.anchor_geometry
+  reused_types:
+    - AnchorBodySpec
+    - AnchorFamily
+    - AnchorGaugeInterval
+    - AnchorMarginReport
+  parallel_anchor_hierarchy: forbidden
+  fail_closed:
+    rank_deficient_body: constructor_rejection_or_typed_anchor_refusal
+    non_compact_body: constructor_rejection
+    continuous_conditional_family: OPTIMIZER_REQUIRED
+    missing_component: MISSING_COMPONENT
+    channel_mismatch: CHANNEL_MISMATCH
+claim_boundary:
+  ceiling: diagnostic_only
+  allowed:
+    - formal tensor-functional evaluation
+    - typed premise-anchor stress diagnostic
+    - O3 covariance and parity regression
+  forbidden:
+    - posterior or likelihood semantics
+    - evidence term
+    - native solver validation
+    - geometry detection
+    - Bianchi family identification
+tests:
+  - >-
+    PYTHONPATH=htt/src:htt python -B -m pytest -p no:cacheprovider -q
+    tests/contracts/test_tensor_functionals.py
+  - >-
+    PYTHONPATH=htt/src:htt python -B -m pytest -p no:cacheprovider -q
+    htt/src/common/test_anchor_geometry.py tests/contracts/test_joint_anisotropy_state.py
+kill_switches:
+  - a parallel anchor authority is introduced
+  - a rank-deficient or non-compact anchor emits an ordinary value
+  - a missing state component is replaced by zero
+  - value, bound, admissibility, or stress are collapsed into one scalar
+  - a MIO surface acquires posterior, likelihood, or evidence semantics
+  - a functional result is described as a native-solver or family-identification result

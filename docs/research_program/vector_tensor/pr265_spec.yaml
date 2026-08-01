@@ -1,0 +1,125 @@
+schema_version: 1
+work_unit_id: PR-265
+title: Law-typed conditional exceedance Pi
+target_ref: origin/research/pr04-multicomponent
+target_sha: e7c20643c0dd323481f0887aff8e437a1bf7950a
+change_set_id: CS-PR265-CONDITIONAL-EXCEEDANCE
+publication_group_id: PG-PR265-CONDITIONAL-EXCEEDANCE
+dependencies:
+  - PR-264
+  - PR-250
+owner: MIO
+contributors:
+  - HTT
+  - COMMON
+contract_owner: COMMON
+capability: conditional_exceedance_law_typed_contract
+scientific_role: >-
+  Evaluate a conditional exceedance only when an exact sampling law and
+  conditioning source are declared. Preserve MIO empirical/null diagnostics,
+  HTT likelihood objectives, and HTT posterior exceedance as distinct typed
+  lanes. This is methodology and diagnostic output, not a truth probability,
+  evidence term, native-solver result, geometry detector, or family classifier.
+public_contract:
+  common_module: common.conditional_exceedance
+  mio_module: mio.formalism.conditional_exceedance
+  htt_module: htt.infer.conditional_exceedance
+  types:
+    - SamplingLawSpec
+    - SamplingDraws
+    - LikelihoodObjective
+    - ConditionalExceedanceProfile
+    - NullCalibratedExceedance
+    - PosteriorExceedance
+    - FiniteNullCoverageReport
+    - PosteriorCalibrationReport
+sampling_laws:
+  FIXED_INJECTION_MOCK:
+    lane: MIO_NULL
+    probability_eligible: true
+  BOOTSTRAP_RESAMPLING:
+    lane: MIO_NULL
+    probability_eligible: true
+  PROFILE_LIKELIHOOD:
+    lane: HTT_OBJECTIVE
+    probability_eligible: false
+  POSTERIOR_PREDICTIVE:
+    lane: HTT_POSTERIOR
+    probability_eligible: true
+  OBSERVATIONAL_POSTERIOR_PUSHFORWARD:
+    lane: HTT_POSTERIOR
+    probability_eligible: true
+conditioning_sources:
+  - INJECTED
+  - EXTERNALLY_ESTIMATED
+  - PROFILED
+  - POSTERIOR
+  - IDENTIFIED_SET
+ownership:
+  MIO: matched-null and empirical laws only
+  HTT: likelihood objectives and explicit posterior laws only
+  COMMON: law, draw, profile, coverage, calibration, and envelope contracts
+law_objective_firewall:
+  optimizer_output_as_draws: forbidden
+  profile_likelihood_as_probability: forbidden
+  missing_law: MISSING_PROBABILITY_LAW with no numeric Pi
+  post_construction_mutation: fail closed by content-identity replay
+tail_definition:
+  rule: sample value is strictly greater than threshold
+  threshold_grid: non-empty, strictly increasing, unique
+  monotonicity: exceedance is non-increasing over thresholds
+finite_null_coverage:
+  method: DKW_TWO_SIDED_SIMULTANEOUS
+  alpha: mandatory keyword with no hidden default, explicitly supplied in the open interval
+  minimum_draws: 2
+posterior_calibration:
+  prerequisite: explicit PosteriorCalibrationReport
+  numeric_profile_requires: PASSED
+  failed_or_missing: typed POSTERIOR_CALIBRATION_REQUIRED with no numeric probability
+partial_identification:
+  identified_set_authority: PR-250 IdentifiedDepartureSet vertex-recession form
+  profile_unit: preserved from SamplingDraws and identical at every vertex
+  conditioning: every vertex profile already uses IDENTIFIED_SET
+  admitting_certificate: >-
+    factory-built EnvelopeCertificateReport bound to the exact functional,
+    identified set, proof artifact, proof class, assumptions, and monotonic
+    directions when applicable
+  vertex_enumeration_requires:
+    - convex bounded identified set with no recession direction
+    - MONOTONE certificate or both upper quasi-convex and lower quasi-concave
+  upper_quasi_convex_only: OPTIMIZER_REQUIRED
+  unbounded: OPTIMIZER_REQUIRED
+  empty: EMPTY_IDENTIFIED_SET
+  selected_point_from_nonpoint_set: forbidden
+claim_boundary:
+  ceiling: diagnostic_only
+  allowed:
+    - matched-null or empirical conditional exceedance diagnostic
+    - explicit model-conditional posterior exceedance diagnostic
+    - partial-identification exceedance envelope
+    - finite-draw uncertainty report
+  forbidden:
+    - truth probability
+    - optimizer output relabelled probabilistic
+    - MIO posterior, likelihood, Bayes factor, or evidence
+    - native low-ell solver result
+    - native morphology atlas
+    - geometry detection
+    - Bianchi family identification
+tests:
+  - >-
+    PYTHONPATH=htt/src:htt python -B -m pytest -p no:cacheprovider -q
+    tests/contracts/test_conditional_exceedance.py
+  - >-
+    PYTHONPATH=htt/src:htt python -B -m pytest -p no:cacheprovider -q
+    tests/mio/test_exceedance.py tests/htt/test_posterior_exceedance.py
+    tests/pr_cards/test_pr_250_partial_id_covariance.py
+kill_switches:
+  - input artifact does not identify a probability law
+  - optimizer point is accepted as a sample, null draw, or posterior draw
+  - MIO exports a likelihood objective or posterior exceedance builder
+  - HTT posterior probability is computed without an explicit law
+  - failed posterior calibration is hidden behind a numeric result
+  - an unbounded or uncertified identified set yields one finite envelope
+  - upper quasi-convexity alone is used to compute a lower endpoint
+  - any result is called a truth probability, native result, or family label

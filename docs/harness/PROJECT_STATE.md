@@ -1,5 +1,385 @@
 # Project State
 
+## 2026-08-01 - PR-275 vector/tensor programme closeout
+
+This section supersedes older orchestration snapshots below.
+
+- Active DAG: 222 cards, 170 completed, 1 blocked, 22 pending, 28 dormant
+  external/native, no foreground card, and background PR-151 acquisition.
+  Count completion is 76.58%, dependency-weighted completion 81.96%, and the
+  critical-path proxy is 76/77 = 98.70%.
+- PR-275 generates the proof-status atlas, five-case synthetic diagnostic,
+  programme report, plot manifest, and replication package from registered
+  sources. Counts and status tables are generated, not hand copied.
+- All 123 v3 source rows and all 28 `VT-T`/`VT-S` obligations remain
+  `NOT_ADJUDICATED`. The 65/58 labels remain cardinality aliases, and the
+  exact PR-270 `CAS_4AXIS_PASS` has no source-status promotion effect.
+- PR-274 still has zero admitted inputs and `NO_ADMITTED_DATA_PILOT`; PR-275
+  contains no observed-data execution or admitted-data figure. Its sole
+  figure is a synthetic `VALIDATION` diagnostic.
+- R1--R3 failed reviews remain preserved. Exact candidate `89a23a21...`
+  passed the R4 claim, harness, and physics/statistics lanes with 22/22 cells
+  each and zero merged findings.
+- Validation passes 25 focused tests, 209 adjacent regressions, 8 smoke tests,
+  10,513/10,572 source-layout collection with 59 deselected, deterministic
+  generation, strict DAG/mirrors, and both claim scans. The broad-suite
+  historical failures remain disclosed in the PR delta and validation ledger.
+- Checkpoint 170 is materialized; progress advanced and no replan is needed.
+  PR-172 remains blocked. PR-204 and PR-190 are the unblocked next cards.
+- Scientific status remains `OPEN` and public use remains false. No native
+  solver/atlas, transfer validation, observed-data, geometry, posterior,
+  evidence, truth-certificate, or family-identification status changed.
+
+## 2026-07-30 - PR-274 repository-bound data-admission closeout
+
+This section supersedes older orchestration snapshots below.
+
+- Active DAG: 222 cards, 169 completed, 1 blocked, 23 pending, 28 dormant
+  external/native, no foreground card, and background PR-151 acquisition.
+  Count completion is 76.13%, dependency-weighted completion 81.84%, and the
+  critical-path proxy is 75/77 = 97.40%.
+- PR-274 evaluates six frozen candidate records under exact source, release,
+  license, sky-support, covariance, transfer, field, repository-path, and
+  content-identity contracts. The production identity registry is empty, so
+  all six are rejected and the terminal result is
+  `NO_ADMITTED_DATA_PILOT`.
+- Candidates R1--R3 failed on status-only identity promotion, placeholder
+  identity references, and duplicate-key JSON ambiguity. R4 passed the
+  pre-closeout candidate, after which the normal status transition exposed a
+  deterministic self-reference defect. All receipts remain preserved.
+- Candidate `eea0a262...` separates frozen execution-time provenance from
+  live status semantics. R5 claim/data and harness/integration reviews pass
+  all 18 cells, a 15-case authority oracle, 43 registered replays, five live
+  semantic-drift mutations, and seven provenance-policy mutations.
+- Closeout validation passes 54 focused tests, 99 adjacent regressions, 8
+  smoke tests, source-layout collection of 10488/10547 nodes with 59
+  deselected, deterministic generation before and after closeout, strict
+  222-card DAG, synchronized mirrors, and both claim scans.
+- No separate data-execution authorization exists and no observed-data pilot
+  ran. PR-151 partial/background acquisition remains forbidden as scientific
+  input. PR-172 remains blocked.
+- PR-275 is dependency-open for registry-generated proof/status reporting,
+  concrete synthetic-case analysis, and a replication package. No admitted
+  data, transfer validation, native solver/atlas result, source-theorem
+  promotion, geometry, public-use, or family-identification status changed.
+
+## 2026-07-30 - PR-273 blind synthetic integration checkpoint
+
+This section supersedes older orchestration snapshots below.
+
+- Active DAG: 222 cards, 168 completed, 1 blocked, 24 pending, 28 dormant
+  external/native, no foreground card, and background PR-151 acquisition.
+  Count completion is 75.68%, dependency-weighted completion 81.60%, and the
+  critical-path proxy is 96.10%.
+- PR-270 and PR-272 independently close the registered Pillar-T CAS and
+  Pillar-S synthetic-inference dependencies without promoting source theorem
+  status. PR-273 connects their typed state-to-report interfaces on five
+  synthetic cases, two held out.
+- PR-273 candidates R2--R5 failed on nested schema, opaque identity,
+  partition resealing, and detached interpreted-truth defects. All failed
+  receipts are preserved. Final candidate `ef1aa331...` passed both R6
+  candidate-bound reviews and strict schema-v3 validation.
+- Closeout validation passes 26 focused tests, 233 adjacent regressions, 7
+  smoke tests, source-layout collection of 10434/10493 nodes with 59
+  deselected, strict DAG/mirrors, generator checks, and both claim scans.
+- Programme checkpoint:
+  `docs/research_program/vector_tensor/checkpoint_pr273_20260730.md`.
+  Global five-count checkpoint generation is not due.
+- PR-274 is dependency-open for repository-bound data admission only. No
+  actual data pilot is authorized. PR-151 partial acquisition remains
+  forbidden as input; PR-172 remains blocked.
+- No observed-data, transfer, source-theorem, native solver/atlas, geometry,
+  posterior/evidence, truth-certificate, public-use, or family-identification
+  status changed.
+
+## 2026-07-30 - Checkpoint 165 and PR-271 exact/core closeout
+
+This section supersedes older orchestration snapshots below.
+
+- Active DAG: 222 cards, 165 completed, 1 blocked, 27 pending, 28 dormant
+  external/native, no foreground card, and background PR-151 acquisition.
+  Count completion is 74.32%, dependency-weighted completion 80.87%, and the
+  critical-path proxy is 72/77 = 93.51%.
+- Checkpoint 165 covers the completed PR-266 through PR-269 and PR-271
+  capability slice. Its generated source is
+  `docs/generated/progress_checkpoints/checkpoint_165.md`; progress advanced
+  by five from checkpoint 160, so no replan PR is required.
+- PR-269 supplies typed, conditional analytic/core proof-author records
+  without changing any source theorem status. PR-271 supplies exact and
+  bounded statistical-method records for its registered VT/TF slice while
+  keeping all source rows `NOT_ADJUDICATED`.
+- The exact PR-271 candidate `697e1e1c...` passed the independent statistics
+  lane in R5. The R5 claim lane stopped with an independence `ERROR` and is
+  not acceptance evidence. The same unchanged candidate then passed a fresh,
+  isolated claim/provenance R6 review. Both accepted lanes cover all 23
+  registered cells.
+- Closeout validation passes 27 focused tests, 42 programme-DAG/status tests,
+  the strict 222-card DAG, byte-identical status mirrors, the checkpoint
+  generator, and both claim-language checks.
+- PR-270 and PR-272 are dependency-open. PR-273 remains closed until both
+  succeed. PR-172 remains blocked and PR-151 remains non-terminal background
+  acquisition.
+- No observed data, transfer result, theorem-source promotion, native
+  solver/atlas result, likelihood/evidence result, geometry verdict, truth
+  certificate, public-use state, or family-identification status changed.
+
+## 2026-07-30 - PR-268 theorem-obligation registry checkpoint
+
+This section supersedes older orchestration snapshots below.
+
+- Active DAG: 222 cards, 163 completed, 1 blocked, 29 pending, 28 dormant
+  external/native, no foreground card, and background PR-151 acquisition.
+  Count completion is 73.42%, dependency-weighted completion 80.39%, and the
+  critical-path proxy is 71/77 = 92.21%. Global checkpoint 165 is not due.
+- PR-268 adds an additive v3 registry of 123 disjoint proof obligations:
+  the requested 65 alias is the legacy `31 T + 34 S` inventory and the
+  requested 58 alias is the proposal `30 I + 24 II + 4 BRIDGE` inventory.
+  These aliases are not literal pillar membership and raw rows are not theorem
+  counts.
+- All rows retain statement/source identity, typed premise missingness,
+  `U/TC/ST` route, owner, dependency, evidence path, source status, and
+  `NOT_ADJUDICATED` proof status. Frozen v2 bytes were not changed.
+- The supplied tensor-foundation oracle is packaged byte-identically. Full
+  mode at seed 20260730 is the stable all-pass vector; supplied fast mode
+  reproducibly fails TF-11 and is retained as non-stable. Oracle evidence has
+  no proof effect.
+- Validation passes 21 focused tests, 101 adjacent regressions, 6 smoke tests,
+  10300/10359 collection with 59 deselected, strict DAG/mirrors, generator
+  check, claim scans, compileall, `pip check`, and whitespace checks.
+- Two historical failures reproduced unchanged on the PR-267 base remain
+  explicit: the PR-124 consumer source-hash mismatch and stale theorem
+  extension metadata. The first PR-268 mapper run also stopped correctly on a
+  stale assignment input and is not acceptance evidence.
+- The programme checkpoint is
+  `docs/research_program/vector_tensor/checkpoint_pr268_20260730.md`.
+  PR-268 completion is valid only if the exact closeout candidate passes
+  `.agent-harness/runs/pr268-final-review-20260730-r1/`.
+- After exact acceptance, PR-269 and PR-271 are the permitted next parallel
+  pair. No data, transfer result, proof count, native solver/atlas, geometry,
+  posterior/evidence, truth, or family status changed.
+
+## 2026-07-30 - PR-267 remediated anisotropy compatibility closeout
+
+This section supersedes older orchestration snapshots below.
+
+- Active DAG: 222 cards, 162 completed, 1 blocked, 30 pending, 28 dormant
+  external/native, no foreground card, and background PR-151 acquisition.
+  Count completion is 72.97%, dependency-weighted completion 80.02%, and the
+  critical-path proxy is 70/77 = 90.91%. Checkpoint 165 is not due.
+- PR-266's exact closeout passed its independent review. PR-267 now combines
+  replayed joint-state, orbit, anchored-response, local/global, open-set,
+  conditional-exceedance, and depth-coherence identities into one immutable
+  COMMON report.
+- Missing geometry/law/depth inputs produce `PARTIAL_DIAGNOSTIC`; weak rank,
+  local/global overlap, or response equivalence produce `INDETERMINATE`;
+  outside-library inputs produce `UNKNOWN`. Only a fully admitted finite
+  response path can emit `RESPONSE_COMPATIBILITY_CANDIDATE`.
+- The report carries no family, geometry, or nearest-label field. Orbit
+  completeness remains `UNPROVEN`, the family gate remains
+  `BLOCKED_PRE_NATIVE_ATLAS`, and the ceiling remains C2 diagnostic-only.
+- The exact R1 candidate failed one high-severity family-label namespace
+  mutation: `response-class-type-vii-h` could bypass the old literal filter.
+  R1 is preserved and cannot authorize completion. The remediation accepts
+  only the exact neutral/local/global identifiers fixed by source semantics
+  and kills all three registered alias mutations.
+- Validation passes 20 focused tests, 154 adjacent regressions, 6 smoke tests,
+  10279/10338 collection with 59 deselected, strict DAG/status, claim scan,
+  compileall, and whitespace checks.
+- PR-267 completion is valid only if the exact closeout commit passes
+  `.agent-harness/runs/pr267-final-review-20260730-r2/`. Missing, stale,
+  malformed, candidate-mismatched, or non-PASS evidence invalidates the
+  transition and keeps PR-268 closed.
+- No data, external/native transfer value, native solver/atlas, source,
+  geometry, posterior evidence, truth, or family status changed.
+
+## 2026-07-30 - PR-266 depth/mask path conditional closeout
+
+This section supersedes older orchestration snapshots below.
+
+- Active DAG: 222 cards, 161 completed, 1 blocked, 31 pending, 28 dormant
+  external/native, no foreground card, and background PR-151 acquisition.
+  Count completion is 72.52%, dependency-weighted completion 79.78%, and the
+  critical-path proxy remains 89.61%. Checkpoint 165 is not due.
+- PR-265's exact remediated closeout passed its independent R2 review with all
+  16 registered cells. The five R1 failures remain preserved and do not
+  authorize completion.
+- PR-266 binds every ordered depth stratum to exact sky support, mask,
+  selection, covariance, source, feature, and transport identities. Later
+  supports must be subsets of earlier supports.
+- OBSSTAT owns feature extraction and covariance transport; MIO owns
+  diagnostic coherence and depth scrambling; HTT alone owns the explicit
+  model-conditional likelihood adapter. Rank-deficient covariance emits no
+  MIO score, and non-positive-definite covariance emits no HTT likelihood.
+- Validation passes 13 focused tests, 58 adjacent regressions, 6 smoke tests,
+  10257/10316 collection with 59 deselected, strict DAG/status, claim scan,
+  compileall, source-origin checks, `pip check`, and whitespace checks. Ruff
+  is unavailable and no Ruff pass is claimed.
+- PR-266 completion is valid only if the exact closeout commit passes
+  `.agent-harness/runs/pr266-final-review-20260730-r1/`. A missing, stale,
+  malformed, candidate-mismatched, or non-PASS result invalidates the status
+  transition and keeps PR-267 closed.
+- These changes remain diagnostic-only and pre-solver. They do not validate
+  data, a transfer model, a native solver/atlas, global tilt, geometry,
+  posterior evidence, or a Bianchi family.
+
+## 2026-07-30 - Checkpoint 160 and PR-265 conditional closeout
+
+This section supersedes older orchestration snapshots below.
+
+- Active DAG: 222 cards, 160 completed, 1 blocked, 32 pending, 28 dormant
+  external/native, no foreground card, and background PR-151 acquisition.
+  Count completion is 72.07%, dependency-weighted completion 79.54%, and the
+  critical-path proxy is 69/77 = 89.61%.
+- Checkpoint 160 covers PR-261 through PR-265. It records the joint state,
+  tensor-functional/anchor surface, incomplete orbit catalogue, tensor
+  departure diagnostics, and law-typed conditional-exceedance capability.
+  The generated source is
+  `docs/generated/progress_checkpoints/checkpoint_160.md`.
+- PR-264 review R1 failed on a mutable result-boundary defect. The failed
+  receipt is preserved; the exact-source replay remediation and fresh R2
+  review passed. No failed receipt authorizes completion.
+- PR-265 separates matched-null sampling laws, profile-likelihood objectives,
+  and posterior laws. It refuses optimizer points as draws, requires an
+  explicit passed calibration for posterior numbers, and keeps bounded
+  partial-identification envelopes distinct from point estimates.
+- Its exact R1 review failed on hidden alpha, untyped missing calibration,
+  conditioning relabelling, unit erasure, and an unbound monotonicity label.
+  The failed receipt is preserved. The remediation makes alpha mandatory,
+  returns a typed no-number calibration refusal, preserves units and
+  conditioning, and binds envelope authority to one exact proof artifact,
+  functional, and identified set.
+- Validation after remediation passes 28 focused tests,
+  84 adjacent regressions, 6 smoke tests, 10246/10305 collection with 59
+  deselected, strict 222-card DAG/mirror checks, scoped claim lints,
+  compileall, `pip check`, and whitespace checks.
+- Progress advanced by five from checkpoint 155, so no replan PR is required.
+  PR-266 is dependency-ready. PR-172 remains blocked and PR-151 remains
+  non-terminal background acquisition.
+- Completion of PR-265 is valid only if the exact remediated closeout commit
+  passes `.agent-harness/runs/pr265-final-review-20260730-r2/`. R1 cannot
+  authorize completion. A missing, stale,
+  malformed, candidate-mismatched, or non-PASS result invalidates the status
+  transition.
+- These states remain pre-solver and transfer-conditional where applicable.
+  They do not validate a native solver/atlas, promote a geometry or family
+  label, create MIO posterior/evidence semantics, or support observed-data
+  claims.
+
+## 2026-07-30 - PR-262 tensor-functional remediated conditional closeout
+
+This section supersedes older orchestration snapshots below.
+
+- Active DAG: 222 cards, 157 completed, 1 blocked, 35 pending, 28 dormant
+  external/native, no foreground card, and background PR-151 acquisition.
+  Count completion is 70.72%, dependency-weighted completion 78.45%, and the
+  critical-path proxy is 87.01%. Checkpoint 160 is not yet due.
+- PR-261's exact `7fd79bfc...` closeout candidate passed all 14 registered
+  review cells and its independent 23-case oracle. The run closed normally at
+  `.agent-harness/runs/pr261-final-review-20260730-r1/RUN_SUMMARY.json`.
+- The first frozen PR-262 candidate `2a1eb64d...` received a valid FAIL in
+  review R1. Its two P1 findings are preserved: unsupported STF bases emitted
+  ordinary O(3)-typed values, and post-construction spec mutation bypassed
+  sign/occupancy and nested claim-lane controls.
+- The remediation seals every factory-built spec identity, replays a fresh
+  canonical snapshot before evaluation, binds that snapshot into results, and
+  returns typed `FORBIDDEN_DOMAIN` with no value for noncanonical STF bases.
+- PR-262 otherwise adds COMMON-owned functional specifications and typed
+  results over `JointAnisotropyState`. Value, domain, codomain, PR-254 anchor
+  status, admissibility, and stress remain separate.
+- The implementation reuses PR-254 bodies, families, gauges, and margins.
+  It reconstructs the supplied authority before evaluation, so rank collapse,
+  one-sided/non-compact support, channel drift, continuous-family optimizer
+  requirements, and missing state components fail closed.
+- MIO receives only a diagnostic bridge to the same COMMON objects. No
+  likelihood, posterior, evidence, truth, native solver/atlas, geometry, or
+  family status changed.
+- Validation passes 31 focused tests, 67 adjacent regressions, 6 smoke tests,
+  10163/10222 collection with 59 deselected, strict 222-card DAG and mirror
+  checks, scoped claim lints, compileall, `pip check`, and whitespace checks.
+- PR-262 completion is valid only if the exact final closeout commit passes
+  the new registered schema-v3 review at
+  `.agent-harness/runs/pr262-final-review-20260730-r2/`. R1 remains failed
+  historical evidence; missing, stale, or non-PASS R2 evidence invalidates
+  the transition.
+- PR-263 is the remaining dependency-ready wave-57 node. PR-264 remains
+  blocked on both PR-262 and PR-263. PR-172 remains blocked and PR-151 remains
+  non-terminal background acquisition.
+
+## 2026-07-30 - PR-261 joint anisotropy state conditional closeout
+
+This section supersedes older orchestration snapshots below.
+
+- Active DAG: 222 cards, 156 completed, 1 blocked, 36 pending, 28 dormant
+  external/native, no foreground card, and background PR-151 acquisition.
+  Count completion is 70.27%, dependency-weighted completion 78.09%, and the
+  critical-path proxy is 85.71%. Checkpoint 160 is not yet due.
+- PR-260's exact frozen closeout candidate `cb258619...` passed its registered
+  schema-v3 independent review with all 11 cells and no findings. The run
+  closed normally at
+  `.agent-harness/runs/pr260-final-review-20260730-r1/RUN_SUMMARY.json`.
+- PR-261 adds the COMMON `CongruenceKinematics`,
+  `VelocityFrameBundle`, `GeometryState`, and `JointAnisotropyState`
+  contracts. Missing acceleration, velocity, Weyl, anisotropic-curvature, and
+  anisotropic-stress channels remain typed rather than becoming zeros.
+- The state binds frame, congruence, epoch/window, averaging scale, STF/vector
+  basis, explicit-c versus `c=1` acceleration normalization, polar/axial
+  parity, perturbative order, component content identities, and transfer
+  provenance. `delta_omega_k` remains distinct from anisotropic spatial
+  curvature.
+- The legacy adapter binds the exact source-state and semantic-authority
+  identities, source conventions, and one explicit beta role. Missing or
+  mismatched authority returns `ABSTAIN`; `DepartureState` remains unchanged.
+  COMMON replays PR-256 payloads without importing HTT.
+- Validation passes 25 focused tests, 96 adjacent regressions, 6 smoke tests,
+  10132/10191 collection with 59 deselected, strict 222-card DAG and mirror
+  checks, scoped claim lints, compileall, `pip check`, and whitespace checks.
+- PR-261 completion is valid only if the exact final closeout commit passes
+  the registered independent review at
+  `.agent-harness/runs/pr261-final-review-20260730-r1/`. A missing, stale, or
+  non-PASS result invalidates the transition.
+- PR-262 and PR-263 are the next parallel-capable programme nodes. Neither
+  may inherit a geometry/family claim: PR-262 owns typed functionals and
+  anchors, while PR-263 owns a still-`UNPROVEN` orbit catalogue. PR-172
+  remains blocked and PR-151 remains non-terminal background acquisition.
+
+## 2026-07-30 - PR-260 vector/tensor programme intake conditional closeout
+
+This section supersedes older orchestration snapshots below.
+
+- Active DAG: 222 cards, 155 completed, 1 blocked, 37 pending, 28 dormant
+  external/native, no foreground card, and background PR-151 acquisition.
+  Count completion is 69.82%, dependency-weighted completion 77.72%, and the
+  critical-path proxy 65/77 = 84.42%. The percentage decrease from the
+  205-card baseline is the declared 15-card denominator expansion, not loss of
+  a completed capability.
+- PR-259 repaired frozen-lineage chronology. PR-260 registers PR-261–275 and
+  the supplied proof programme. The registered sources contain 65 legacy
+  signatures partitioned 31 T + 34 S, 58 proposal rows partitioned 30 I +
+  24 II + 4 BRIDGE, U9/TC20/ST25 obligations, and VT-T1–14/VT-S1–14.
+  The 65/58 labels are cardinality aliases only and cannot reclassify source
+  ownership.
+- The COMMON loader binds all eight supplied source identities, exact tracked
+  hashes, proof classes, owners, dependencies, evidence paths, claim ceiling,
+  and the revalidated PR dependency graph. Raw cardinality is forbidden as a
+  theorem count. The supplied Python oracle remains proposal input, not a
+  validated proof surface.
+- Focused validation passes 21 tests; the DAG/status regression slice passes
+  47 tests; full collection reports 10107/10166 with 59 deselected; smoke
+  passes 6 with 10160 deselected. Strict 222-card DAG, mirrors, source
+  regeneration, claim-language scans, research-surface lint, compileall,
+  `pip check`, and whitespace checks pass.
+- Checkpoint 155 is generated and records five additional completions since
+  checkpoint 150. Progress advanced, so no replan PR is required.
+- PR-260 completion remains conditional on a schema-v3 read-only adversarial
+  review of the exact final closeout commit at
+  `.agent-harness/runs/pr260-final-review-20260730-r1/`. A missing, stale, or
+  non-PASS result invalidates the transition.
+- PR-261 is the next programme node. It may start only after the exact review
+  closes. PR-172 remains blocked and PR-151 remains non-terminal background
+  acquisition; no partial data, observed result, native solver/atlas,
+  posterior, MIO truth claim, geometry, or family-identification status
+  changed.
+
 ## 2026-07-30 - PR-258 open-set response integration local handoff
 
 This section supersedes older orchestration snapshots below. It records a

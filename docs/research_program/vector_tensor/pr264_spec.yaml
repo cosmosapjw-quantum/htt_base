@@ -1,0 +1,127 @@
+schema_version: 1
+work_unit_id: PR-264
+title: Vector/tensor x, Q, F, and G_F diagnostic successor
+target_ref: origin/research/pr04-multicomponent
+target_sha: e7c20643c0dd323481f0887aff8e437a1bf7950a
+change_set_id: CS-PR264-TENSOR-XQFG
+publication_group_id: PG-PR264-TENSOR-XQFG
+dependencies:
+  - PR-262
+  - PR-263
+owner: MIO
+contributors:
+  - COMMON
+contract_owner: COMMON
+capability: tensor_departure_diagnostic_successor
+scientific_role: >-
+  Preserve exact functional outputs, derive preregistered scalar x views,
+  inherit Q from the PR-254/PR-262 anchor stress, evaluate directional
+  identified-set/anchor support utilization, and expose only an empirical
+  diagnostic level-set mass. This is not a posterior, evidence term, physical
+  occupancy, native-solver result, geometry detector, or family classifier.
+public_contract:
+  module: common.tensor_departure_statistics
+  mio_bridge: mio.formalism.tensor_departure_statistics
+  types:
+    - CertifiedFunctionalPushforward
+    - SupportUtilizationProfile
+    - OccupancyMeasure
+    - LegacyXQPiFGView
+  factories:
+    - build_certified_functional_pushforward
+    - build_support_utilization_profile
+    - build_occupancy_measure
+    - build_legacy_xqpi_fg_view
+functional_pushforward:
+  input_type: >-
+    exact TensorFunctionalResult matrix plus one exact
+    JointAnisotropyState per row and one registered PR-254 anchor per column
+  replay_requirement: >-
+    every result is recomputed from its bound state, sealed functional
+    specification, and declared anchor before aggregation
+  post_construction_result_mutation: fail closed
+  row_identity: replayed JointAnisotropyState content identity
+  column_identity: one ordered TensorFunctionalSpec identity
+  anchor_identity: exact functional-id keyed registration
+  transfer_provenance: exact uniform state-bound metadata identity retained
+  scalarization:
+    scalar: SCALAR_IDENTITY
+    polar_or_axial_vector: EUCLIDEAN_NORM
+    canonical_stf5: STF_FROBENIUS_NORM
+    implicit_policy: forbidden
+  raw_values: retained separately
+  x_point_values: sample_by_functional
+  Q:
+    authority: PR-254 AnchorGaugeInterval via PR-262 FunctionalStressReport
+    point: only DEFINED anchor stress
+    bounds: DEFINED or CONDITIONAL stress interval
+    conditional_point_imputation: forbidden
+  summaries:
+    aggregation: sample-wise only
+    ratio_of_means: forbidden
+    missing_cell_policy: typed partial; no numeric summary
+support_utilization:
+  identified_set: convex hull of finite typed AnchorVector points
+  anchor_authority: exact PR-254 AnchorBodySpec
+  signed_ratio: h_I(u) / h_A(u)
+  antipodal_ratio: max(h_I(u), h_I(-u)) / h_A(u)
+  finite_direction_catalogue: lower-resolution profile only
+  overall_maximum: exact maximum anchor gauge over finite hull vertices
+  witness: point identity, dual direction, active anchor block or constraint
+  zero_direction: DENOMINATOR_COLLAPSE
+  zero_identified_point: defined zero utilization
+  missing_identified_set: typed refusal; never zero
+occupancy_measure:
+  measure_kind: EMPIRICAL_DIAGNOSTIC_LEVEL_SET_MASS
+  eligible_functional: sign-definite and PR-262 occupancy-eligible only
+  missing_cell_policy: entire measure unavailable; never impute zero
+  monotonicity: non-increasing across sorted thresholds
+  physical_occupancy_semantics: forbidden
+legacy:
+  view_order:
+    - x
+    - Q
+    - Pi
+    - F
+    - G_F
+  available_successors:
+    - x
+    - Q
+    - F
+  pending_successors:
+    Pi: PR-265
+    G_F: PR-266
+  scalar_reduction_tolerance: explicitly supplied and immutable per view
+  historical_values: preserved exactly
+claim_boundary:
+  ceiling: diagnostic_only
+  allowed:
+    - sample-wise functional pushforward
+    - premise-anchor stress diagnostic
+    - directional support-utilization diagnostic
+    - empirical diagnostic level-set mass
+    - legacy scalar reproduction
+  forbidden:
+    - MIO likelihood, posterior, Bayes factor, or evidence
+    - physical occupancy or anisotropic volume fraction
+    - native low-ell solver result
+    - native morphology atlas
+    - geometry detection
+    - Bianchi family identification
+tests:
+  - >-
+    PYTHONPATH=htt/src:htt python -B -m pytest -p no:cacheprovider -q
+    tests/contracts/test_tensor_departure_statistics.py
+  - >-
+    PYTHONPATH=htt/src:htt python -B -m pytest -p no:cacheprovider -q
+    tests/contracts/test_tensor_functionals.py
+    htt/src/common/test_anchor_geometry.py
+kill_switches:
+  - a tensor or vector is scalarized without a registered policy
+  - Q creates a denominator parallel to PR-254 anchor authority
+  - a conditional anchor interval becomes one Q point
+  - a finite direction catalogue is called globally complete
+  - missing support is treated as zero or unoccupied
+  - an empirical level-set mass is called physical occupancy
+  - MIO gains posterior, likelihood, Bayes-factor, or evidence semantics
+  - a diagnostic is labeled a native-solver result or Bianchi family

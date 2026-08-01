@@ -16,9 +16,11 @@ from common.mes_successor_registry import (
     DEFAULT_CONSUMER_SUPERSESSION_PATH,
     EGS3_BRANCH_SEAL_PATH,
     EGS3_BRANCH_SEAL_SHA256,
+    LEGACY_REPRODUCTION_SHA256,
     MesConsumerDeclaration,
     MesConsumerExclusion,
     MesConsumerIssueCode,
+    MesExclusionTransition,
     MesProcessResult,
     MesRegistryError,
     MesScientificAuthorityStatus,
@@ -30,6 +32,8 @@ from common.mes_successor_registry import (
     SourceHashBinding,
     current_mes_successor_registry,
     finding_codes,
+    registered_mes_exclusion_transition,
+    resolve_mes_exclusion_transition,
     scan_declared_mes_consumers,
     validate_mes_successor_registry,
 )
@@ -123,6 +127,83 @@ def _consumer_migration() -> dict[str, object]:
     payload = yaml.safe_load(path.read_text(encoding="utf-8"))
     assert isinstance(payload, dict)
     return payload
+
+
+def _registered_exclusion_row() -> dict[str, str]:
+    return {
+        "exclusion_id": "tsc.admissibility.three_bound_hierarchy",
+        "path": "htt/tsc/admissibility/three_bound_hierarchy.py",
+        "prior_sha256": (
+            "cc3ba841a4b61ac10a1d7a82e56b96391afcd81d8bd169bd8ca33940c7cf671e"
+        ),
+        "sha256": LEGACY_REPRODUCTION_SHA256,
+        "reason": "registered chronology fixture",
+    }
+
+
+def test_registered_pr252_exclusion_transition_binds_historical_and_live_bytes() -> None:
+    transition = registered_mes_exclusion_transition(
+        REPO_ROOT,
+        path="htt/tsc/admissibility/three_bound_hierarchy.py",
+        historical_sha256=(
+            "cc3ba841a4b61ac10a1d7a82e56b96391afcd81d8bd169bd8ca33940c7cf671e"
+        ),
+    )
+
+    assert isinstance(transition, MesExclusionTransition)
+    assert transition.sha256 == LEGACY_REPRODUCTION_SHA256
+    assert transition.sha256 == _digest(REPO_ROOT / transition.path)
+
+
+def test_exclusion_transition_mutations_fail_closed() -> None:
+    row = _registered_exclusion_row()
+
+    with pytest.raises(MesRegistryError, match="no unique registered"):
+        resolve_mes_exclusion_transition(
+            [row],
+            path="htt/tsc/admissibility/unknown.py",
+            prior_sha256=row["prior_sha256"],
+            current_sha256=row["sha256"],
+        )
+
+    duplicate = {**row, "exclusion_id": "duplicate.transition"}
+    with pytest.raises(MesRegistryError, match="duplicate exclusion transition path"):
+        resolve_mes_exclusion_transition(
+            [row, duplicate],
+            path=row["path"],
+            prior_sha256=row["prior_sha256"],
+            current_sha256=row["sha256"],
+        )
+
+    duplicate_identity = {
+        **row,
+        "path": "htt/tsc/admissibility/duplicate.py",
+    }
+    with pytest.raises(
+        MesRegistryError, match="duplicate exclusion transition identity"
+    ):
+        resolve_mes_exclusion_transition(
+            [row, duplicate_identity],
+            path=row["path"],
+            prior_sha256=row["prior_sha256"],
+            current_sha256=row["sha256"],
+        )
+
+    with pytest.raises(MesRegistryError, match="historical exclusion pin drifted"):
+        resolve_mes_exclusion_transition(
+            [row],
+            path=row["path"],
+            prior_sha256="0" * 64,
+            current_sha256=row["sha256"],
+        )
+
+    with pytest.raises(MesRegistryError, match="current exclusion pin drifted"):
+        resolve_mes_exclusion_transition(
+            [row],
+            path=row["path"],
+            prior_sha256=row["prior_sha256"],
+            current_sha256="f" * 64,
+        )
 
 
 def test_current_successor_is_available_and_pr124_authorized() -> None:

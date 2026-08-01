@@ -398,6 +398,60 @@ PREMISE_ANCHOR_CARD_SEMANTIC_SHA256 = {
     "PR-258": "364880c01495ee2be26fd573dca065d322040cb58c10d359750e3a8dbc69018a",
 }
 
+# --- Vector/tensor MES and proof programme (PR-259..275, Waves 54..66) ----
+# PR-259/260 are the chronology/bootstrap pair.  PR-260 atomically registers
+# the remaining PR-261..275 extension without changing any theorem status.
+VECTOR_TENSOR_CARD_CONTRACTS = {
+    "PR-259": {"depends": ["PR-258"], "owner": "COMMON"},
+    "PR-260": {"depends": ["PR-259"], "owner": "COMMON"},
+    "PR-261": {
+        "depends": ["PR-260", "PR-249", "PR-256"],
+        "owner": "COMMON",
+    },
+    "PR-262": {
+        "depends": ["PR-261", "PR-254"],
+        "owner": "COMMON",
+    },
+    "PR-263": {
+        "depends": ["PR-261", "PR-257"],
+        "owner": "OBSSTAT",
+    },
+    "PR-264": {"depends": ["PR-262", "PR-263"], "owner": "MIO"},
+    "PR-265": {"depends": ["PR-264", "PR-250"], "owner": "MIO"},
+    "PR-266": {"depends": ["PR-264"], "owner": "OBSSTAT"},
+    "PR-267": {
+        "depends": [
+            "PR-263",
+            "PR-265",
+            "PR-266",
+            "PR-255",
+            "PR-256",
+            "PR-258",
+        ],
+        "owner": "COMMON",
+    },
+    "PR-268": {
+        "depends": ["PR-262", "PR-263", "PR-267"],
+        "owner": "COMMON",
+    },
+    "PR-269": {"depends": ["PR-268"], "owner": "COMMON"},
+    "PR-270": {"depends": ["PR-269"], "owner": "COMMON"},
+    "PR-271": {"depends": ["PR-268"], "owner": "HTT"},
+    "PR-272": {"depends": ["PR-271"], "owner": "HTT"},
+    "PR-273": {"depends": ["PR-270", "PR-272"], "owner": "HTT"},
+    "PR-274": {"depends": ["PR-273"], "owner": "OBSSTAT"},
+    "PR-275": {"depends": ["PR-274"], "owner": "COMMON"},
+}
+VECTOR_TENSOR_BOOTSTRAP_IDS = {"PR-259", "PR-260"}
+VECTOR_TENSOR_FULL_IDS = set(VECTOR_TENSOR_CARD_CONTRACTS)
+VECTOR_TENSOR_REQUIRED_FIELDS = ADVOCATE_REQUIRED_FIELDS | {
+    "capability",
+    "inputs",
+    "outputs",
+    "track",
+    "solver_gate_required",
+}
+
 
 def _revival_track(pr_id: str) -> str:
     n = int(pr_id.split("-")[1])
@@ -598,6 +652,24 @@ def validate_backlog(data: dict[str, Any]) -> DagInfo:
         raise ValueError(f"duplicate PR ids: {duplicate_ids}")
 
     idset = set(ids)
+    premise_ids = set(PREMISE_ANCHOR_CARD_CONTRACTS)
+    present_premise_ids = idset & premise_ids
+    if present_premise_ids and present_premise_ids != premise_ids:
+        raise ValueError(
+            "premise-anchor intake must be atomic; "
+            f"missing={sorted(premise_ids - present_premise_ids)}"
+        )
+    present_vector_tensor_ids = idset & VECTOR_TENSOR_FULL_IDS
+    if present_vector_tensor_ids not in (
+        set(),
+        VECTOR_TENSOR_BOOTSTRAP_IDS,
+        VECTOR_TENSOR_FULL_IDS,
+    ):
+        raise ValueError(
+            "vector/tensor intake must be either the PR-259/260 bootstrap or "
+            "the complete PR-259..275 programme; "
+            f"present={sorted(present_vector_tensor_ids)}"
+        )
     prereqs = {pr["id"]: list(pr.get("depends") or []) for pr in prs}
     missing_deps = sorted({dep for deps in prereqs.values() for dep in deps if dep not in idset})
     if missing_deps:
@@ -675,6 +747,12 @@ def _require_string_list(card: dict[str, Any], field: str) -> list[str]:
     if not isinstance(value, list) or not all(isinstance(item, str) for item in value):
         raise ValueError(f"{card['id']} {field} must be a list of strings")
     return value
+
+
+def _require_nonempty_string(value: object, field: str) -> str:
+    if not isinstance(value, str) or not value.strip():
+        raise ValueError(f"{field} must be a non-empty string")
+    return value.strip()
 
 
 def _iter_strings(value: Any):
@@ -893,6 +971,22 @@ def validate_long_horizon_rescue_slice(
             "premise-anchor intake must be atomic; "
             f"missing={sorted(premise_anchor_ids - actual_premise_anchor_ids)}"
         )
+    vector_tensor_ids = set(VECTOR_TENSOR_CARD_CONTRACTS)
+    actual_vector_tensor_ids = actual_ids & vector_tensor_ids
+    if actual_vector_tensor_ids and actual_premise_anchor_ids != premise_anchor_ids:
+        raise ValueError(
+            "vector/tensor programme requires the full premise-anchor slice"
+        )
+    if actual_vector_tensor_ids not in (
+        set(),
+        VECTOR_TENSOR_BOOTSTRAP_IDS,
+        VECTOR_TENSOR_FULL_IDS,
+    ):
+        raise ValueError(
+            "vector/tensor intake must be either the PR-259/260 bootstrap or "
+            "the complete PR-259..275 programme; "
+            f"present={sorted(actual_vector_tensor_ids)}"
+        )
     if actual_foundation_ids:
         policy = data.get("policy") or {}
         expected_overlay = (
@@ -919,6 +1013,7 @@ def validate_long_horizon_rescue_slice(
         expected_total += len(FOUNDATION_CARD_CONTRACTS)
     if actual_premise_anchor_ids:
         expected_total += len(PREMISE_ANCHOR_CARD_CONTRACTS)
+    expected_total += len(actual_vector_tensor_ids)
     if len(info.ids) != expected_total:
         raise ValueError(
             f"strict rescue slice expects {expected_total} total cards, found {len(info.ids)}"
@@ -1203,6 +1298,8 @@ def validate_long_horizon_rescue_slice(
         _validate_premise_anchor_slice(cards)
         validate_premise_anchor_intake(load_yaml(PREMISE_ANCHOR_INTAKE))
         check_mirrors()
+    if actual_vector_tensor_ids:
+        _validate_vector_tensor_slice(cards, actual_vector_tensor_ids)
 
     if status is not None:
         _validate_rescue_status(status, info)
@@ -1485,6 +1582,77 @@ def _validate_premise_anchor_slice(cards: dict[str, Any]) -> None:
                         f"{pr_id} {field} contains unqualified roadmap claim level "
                         f"{match.group(0)!r}"
                     )
+
+
+def _validate_vector_tensor_slice(
+    cards: dict[str, Any], present_ids: set[str]
+) -> None:
+    """Validate bootstrap or full PR-259..275 vector/tensor programme intake."""
+
+    for pr_id in sorted(present_ids, key=lambda value: int(value.split("-")[1])):
+        card = cards[pr_id]
+        expected = VECTOR_TENSOR_CARD_CONTRACTS[pr_id]
+        missing_fields = sorted(VECTOR_TENSOR_REQUIRED_FIELDS - set(card))
+        if missing_fields:
+            raise ValueError(
+                f"{pr_id} missing vector/tensor programme fields: {missing_fields}"
+            )
+        if card.get("depends") != expected["depends"]:
+            raise ValueError(
+                f"{pr_id} vector/tensor dependencies drifted: "
+                f"{card.get('depends')!r} != {expected['depends']!r}"
+            )
+        expected_contracts = [
+            {"upstream_id": dependency, "mode": "requires_success"}
+            for dependency in expected["depends"]
+        ]
+        if card.get("dependency_contracts") != expected_contracts:
+            raise ValueError(
+                f"{pr_id} vector/tensor dependency contracts drifted"
+            )
+        if card.get("owner") != expected["owner"]:
+            raise ValueError(
+                f"{pr_id} vector/tensor owner drifted: "
+                f"{card.get('owner')!r} != {expected['owner']!r}"
+            )
+        for field in ("capability", "inputs", "outputs", "tests", "forbidden"):
+            value = card.get(field)
+            if field == "capability":
+                _require_nonempty_string(value, f"{pr_id}.{field}")
+            else:
+                _require_string_list(card, field)
+        _require_nonempty_string(card.get("kill"), f"{pr_id}.kill")
+        if (
+            card.get("execution_lane") != "defensible"
+            or card.get("activation_state") != "PENDING"
+            or card.get("execution_authorization")
+            != "EXPLICIT_USER_AUTHORIZED"
+        ):
+            raise ValueError(f"{pr_id} vector/tensor execution state drifted")
+        if (
+            card.get("scientific_status_on_intake") != "OPEN"
+            or card.get("public_use") is not False
+            or card.get("solver_gate_required") is not False
+            or card.get("claim_tier_ceiling") != "diagnostic_only"
+        ):
+            raise ValueError(
+                f"{pr_id} must remain internal, OPEN, solver-independent, "
+                "and diagnostic-only"
+            )
+        expected_track = (
+            "FOUNDATION" if pr_id in VECTOR_TENSOR_BOOTSTRAP_IDS
+            else "VECTOR_TENSOR"
+        )
+        if card.get("track") != expected_track:
+            raise ValueError(f"{pr_id} track must be {expected_track}")
+        if pr_id != "PR-259" and card.get("spec_first_required") is not True:
+            raise ValueError(f"{pr_id} must remain spec-first")
+        forbidden_text = " ".join(_iter_strings(card.get("forbidden"))).lower()
+        for boundary in ("native", "family-identification"):
+            if boundary not in forbidden_text:
+                raise ValueError(
+                    f"{pr_id} forbidden actions omit the {boundary} boundary"
+                )
 
 
 def _validate_strengthen_slice(cards: dict[str, Any]) -> None:

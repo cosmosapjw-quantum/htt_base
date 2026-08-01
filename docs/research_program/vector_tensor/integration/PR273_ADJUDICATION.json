@@ -1,0 +1,79 @@
+{
+  "adjudication_id": "PR273-REGISTERED-ADJUDICATION-V1",
+  "case_verdicts": [
+    {
+      "case_id": "C01",
+      "comparisons": {
+        "depth_alert": true,
+        "geometry_status": true,
+        "local_global_status": true,
+        "missing_functional": true
+      },
+      "partition": "development",
+      "scenario": "SCALAR_LIMIT",
+      "status": "MATCH"
+    },
+    {
+      "case_id": "C02",
+      "comparisons": {
+        "depth_alert": true,
+        "geometry_status": true,
+        "local_global_status": true,
+        "missing_functional": true
+      },
+      "partition": "development",
+      "scenario": "TENSOR_ONLY",
+      "status": "MATCH"
+    },
+    {
+      "case_id": "C03",
+      "comparisons": {
+        "depth_alert": true,
+        "geometry_status": true,
+        "local_global_status": true,
+        "missing_functional": true
+      },
+      "partition": "development",
+      "scenario": "MISSING_CHANNEL",
+      "status": "MATCH"
+    },
+    {
+      "case_id": "C04",
+      "comparisons": {
+        "depth_alert": true,
+        "geometry_status": true,
+        "local_global_status": true,
+        "missing_functional": true
+      },
+      "partition": "held_out",
+      "scenario": "LOCAL_GLOBAL_DEGENERATE",
+      "status": "MATCH"
+    },
+    {
+      "case_id": "C05",
+      "comparisons": {
+        "depth_alert": true,
+        "geometry_status": true,
+        "local_global_status": true,
+        "missing_functional": true
+      },
+      "partition": "held_out",
+      "scenario": "MASK_DEPTH_CONFOUNDED",
+      "status": "MATCH"
+    }
+  ],
+  "challenge_content_id": "sha256:17f17d6b21d90d275e92c9d3827e4c125a61b27ff23927b7c37b3a5c3dec9153",
+  "claim_ceiling": "diagnostic_only",
+  "content_id": "sha256:b89daf0e3fc7e4ee033ebdbe0fabd60e0961b6fcfc014480d3d967de31415b1c",
+  "mutation_results": {
+    "CHALLENGE_AFTER_SUBMISSION": "KILLED",
+    "OBSERVED_DATA_FLAG": "KILLED",
+    "SUBMISSION_AFTER_SEAL": "KILLED",
+    "TRUTH_FIELD_IN_CHALLENGE": "KILLED",
+    "TRUTH_VAULT_COMMITMENT": "KILLED"
+  },
+  "schema": "htt.pr273.blind_synthetic_adjudication.v1",
+  "status": "PASS",
+  "submission_content_id": "sha256:b4d28fedd92fde013a50fe8cd8aff6101ee689473d8645856290ebc801f38619",
+  "truth_vault_sha256": "6288dc9af230dbc8838db1f4992ac9480a3b9bd1953050798760f064e2e22abf"
+}

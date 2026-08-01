@@ -1,0 +1,822 @@
+schema: htt.pillar_s_inference_validation.v1
+authority: PR-272
+preregistration_sha256: 4ab978cf971e565dd6a598bd795249555a717aefa8f6c89b26727fdf58f7f9a2
+source_status_promoted: false
+observed_data_used: false
+native_solver_output_used: false
+transfer_source: none
+claim_ceiling: diagnostic_only
+raw_count_publication: FORBIDDEN
+random_stream_receipt:
+  engine: numpy.random.PCG64
+  derivation: sha256(master_seed, canonical_registered_seed_family, cell_id, replicate_family)
+  master_seed: 27220260730
+  registered_seed_family:
+  - 272003
+  - 272005
+  - 272007
+  - 272009
+  - 272011
+  registered_seed_family_sha256: b300e03e5b32c99f2508eb453bda720279a337e3f3c98b672f43cbd208dff290
+  seed_family_load_bearing: true
+  derived_streams:
+    VT-S3|calibration: 4503862149465324003
+    VT-S3|evaluation-correct: 4790607171046446129
+    VT-S3|evaluation-misspecified: 5515975196018681045
+    VT-S5-0|registered-coverage: 7617056237293522108
+    VT-S5-1|registered-coverage: 2048123637939896028
+    VT-S5-2|registered-coverage: 3055737446888008042
+    VT-S5-3|registered-coverage: 2795905749309676941
+    VT-S5-naive|negative-control: 2214606202016800015
+    VT-S6|joint-estimator: 2401913676505800485
+    VT-S9|calibration: 7529712252199044319
+    VT-S9|evaluation: 4252409867502728764
+    VT-S12|calibration-null: 5877797975096652112
+    VT-S12|evaluation-null: 49522639534429366
+    VT-S12|alternative: 5285976721048203624
+    VT-S13|calibration-0: 4294225637490763759
+    VT-S13|calibration-1: 729408990849313943
+    VT-S13|evaluation-0: 6026044600993041425
+    VT-S13|evaluation-1: 7110780500427694523
+    VT-S13|unknown: 3182250533455329995
+    VT-S14|local: 4822328724883014426
+    VT-S14|global: 5845524320623910226
+    PR272-SBC|calibrated|seed-member-272003: 687996147305671306
+    PR272-SBC|calibrated|seed-member-272005: 2511245915637881358
+    PR272-SBC|calibrated|seed-member-272007: 8486268606477898512
+    PR272-SBC|calibrated|seed-member-272009: 1090754294837901053
+    PR272-SBC|calibrated|seed-member-272011: 7406516215931788809
+    PR272-SBC|misspecified-0.5|seed-member-272003: 8118196885658164930
+    PR272-SBC|misspecified-0.5|seed-member-272005: 7304564306763757552
+    PR272-SBC|misspecified-0.5|seed-member-272007: 8914358199959168882
+    PR272-SBC|misspecified-0.5|seed-member-272009: 7227983439094111818
+    PR272-SBC|misspecified-0.5|seed-member-272011: 6300490749519041176
+    PR272-SBC|misspecified-2.0|seed-member-272003: 2589966924036052975
+    PR272-SBC|misspecified-2.0|seed-member-272005: 4604601359720698195
+    PR272-SBC|misspecified-2.0|seed-member-272007: 6193726064777757566
+    PR272-SBC|misspecified-2.0|seed-member-272009: 2414483042361719869
+    PR272-SBC|misspecified-2.0|seed-member-272011: 371822939562409989
+  derived_streams_sha256: 02a6d5625b6b66a2a7e56a63cd1a1794ce7751a2dd6d3dee109ab99f16d9bacb
+  numpy_version: 2.4.2
+records:
+- theorem_id: VT-S3
+  source_disposition: CONDITIONAL_PROGRAM_RETAINED
+  validation_status: VALIDATED_REGISTERED_SYNTHETIC
+  evidence_grade: SIMULATION_DIAGNOSTIC
+  evidence_path: docs/research_program/vector_tensor/proofs/PILLAR_S_INFERENCE_VALIDATION_V1.yaml#validation_results.VT-S3
+  assumptions:
+  - calibration and evaluation splits are independent and exchangeable
+  - the matched-null covariance identity is explicit
+  counterexample_boundaries:
+  - misspecified covariance remains a visible failed cell
+  - unadjusted coordinate tests are not familywise control
+  claim_ceiling: diagnostic_only
+- theorem_id: VT-S5
+  source_disposition: CONDITIONAL_PROGRAM_RETAINED
+  validation_status: VALIDATED_REGISTERED_SYNTHETIC
+  evidence_grade: SIMULATION_DIAGNOSTIC
+  evidence_path: docs/research_program/vector_tensor/proofs/PILLAR_S_INFERENCE_VALIDATION_V1.yaml#validation_results.VT-S5
+  assumptions:
+  - the registered identified-set grid and least-favourable boundary are fixed
+  - the Imbens-Manski construction and confidence level are frozen
+  counterexample_boundaries:
+  - uncertified interior extrema require an optimizer
+  - coverage is grid-conditional rather than class-wide
+  claim_ceiling: diagnostic_only
+- theorem_id: VT-S6
+  source_disposition: CONDITIONAL_PROGRAM_RETAINED
+  validation_status: VALIDATED_REGISTERED_SYNTHETIC
+  evidence_grade: SIMULATION_DIAGNOSTIC
+  evidence_path: docs/research_program/vector_tensor/proofs/PILLAR_S_INFERENCE_VALIDATION_V1.yaml#validation_results.VT-S6
+  assumptions:
+  - the numerator-anchor pair has one registered joint Gaussian law
+  - the full covariance of the estimator mean is retained
+  counterexample_boundaries:
+  - marginals alone do not define a ratio confidence body
+  - an anchor interval crossing zero is unbounded or disconnected
+  claim_ceiling: diagnostic_only
+- theorem_id: VT-S9
+  source_disposition: CONDITIONAL_PROGRAM_RETAINED
+  validation_status: VALIDATED_REGISTERED_SYNTHETIC
+  evidence_grade: SIMULATION_DIAGNOSTIC
+  evidence_path: docs/research_program/vector_tensor/proofs/PILLAR_S_INFERENCE_VALIDATION_V1.yaml#validation_results.VT-S9
+  assumptions:
+  - all rungs report one centered target on a nested finite path
+  - maximum-statistic null calibration uses an independent split
+  counterexample_boundaries:
+  - nonnested or differently centered depth paths are refused
+  - finite-path calibration does not cover a continuum of masks
+  claim_ceiling: diagnostic_only
+- theorem_id: VT-S10
+  source_disposition: CONDITIONAL_PROGRAM_RETAINED
+  validation_status: VALIDATED_REGISTERED_SYNTHETIC
+  evidence_grade: SIMULATION_DIAGNOSTIC
+  evidence_path: docs/research_program/vector_tensor/proofs/PILLAR_S_INFERENCE_VALIDATION_V1.yaml#validation_results.VT-S10
+  assumptions:
+  - response whitening uses the registered covariance
+  - rank, singular-value, principal-angle, and perturbation floors are fixed
+  counterexample_boundaries:
+  - full rank below the frozen singular-value or angle floor abstains
+  - a wrong covariance identity is refused
+  claim_ceiling: diagnostic_only
+- theorem_id: VT-S11
+  source_disposition: CONDITIONAL_PROGRAM_RETAINED
+  validation_status: VALIDATED_REGISTERED_LINEAR_CELL
+  evidence_grade: SIMULATION_DIAGNOSTIC
+  evidence_path: docs/research_program/vector_tensor/proofs/PILLAR_S_INFERENCE_VALIDATION_V1.yaml#validation_results.VT-S11
+  assumptions:
+  - orbit chart and supported response share one declared linear cell
+  - the rank tolerance is fixed before evaluation
+  counterexample_boundaries:
+  - one registered linear cell is not global orbit separation
+  - rank loss in either factor kills composition identifiability
+  claim_ceiling: diagnostic_only
+- theorem_id: VT-S12
+  source_disposition: CONDITIONAL_PROGRAM_RETAINED
+  validation_status: VALIDATED_REGISTERED_SYNTHETIC
+  evidence_grade: SIMULATION_DIAGNOSTIC
+  evidence_path: docs/research_program/vector_tensor/proofs/PILLAR_S_INFERENCE_VALIDATION_V1.yaml#validation_results.VT-S12
+  assumptions:
+  - scalar and anchor coordinates are exactly matched
+  - morphology summaries use the frozen modes and held-out split
+  counterexample_boundaries:
+  - power is conditional on the registered synthetic counterpair
+  - scalar or anchor mismatch invalidates the counterpair
+  claim_ceiling: diagnostic_only
+- theorem_id: VT-S13
+  source_disposition: CONDITIONAL_PROGRAM_RETAINED
+  validation_status: VALIDATED_REGISTERED_SYNTHETIC
+  evidence_grade: SIMULATION_DIAGNOSTIC
+  evidence_path: docs/research_program/vector_tensor/proofs/PILLAR_S_INFERENCE_VALIDATION_V1.yaml#validation_results.VT-S13
+  assumptions:
+  - known centres, unknown generator, threshold, and split are frozen
+  - finite-library removal sensitivity is reported
+  counterexample_boundaries:
+  - coverage is finite-library and split-conditional
+  - unknown cases abstain rather than receive a nearest family label
+  claim_ceiling: diagnostic_only
+- theorem_id: VT-S14
+  source_disposition: PROGRAM_OBLIGATION_RETAINED
+  validation_status: VALIDATED_REGISTERED_SYNTHETIC
+  evidence_grade: SIMULATION_DIAGNOSTIC
+  evidence_path: docs/research_program/vector_tensor/proofs/PILLAR_S_INFERENCE_VALIDATION_V1.yaml#validation_results.VT-S14
+  assumptions:
+  - depth covariance, local/global designs, and mask path are explicit
+  - HTT owns GLS while MIO receives residual diagnostics only
+  counterexample_boundaries:
+  - the adapter remains synthetic pending admitted data
+  - MIO residual diagnostics do not contain likelihood or posterior
+  claim_ceiling: diagnostic_only
+canonical_records_sha256: 3fa6dec248aec014d8b9e13f373da7478fb6f2c3d9aaea6bf7fd381d7bc9f68a
+validation_results:
+  VT-S3:
+    correct:
+      accepted_count: 3914
+      alpha: 0.05
+      calibration_count: 4095
+      calibration_covariance_id: identity-v1
+      claim_ceiling: diagnostic_only
+      coverage_lower_bound: 0.9475022674488507
+      critical_order: 3892
+      critical_value: 2.505431374800827
+      evaluation_count: 4096
+      evaluation_covariance_id: identity-v1
+      failure_visible: false
+      family_confidence: 0.99
+      retain_lower_bound: 0.92
+      simultaneous_coverage: 0.95556640625
+      status: VALIDATED_REGISTERED_SYNTHETIC
+    misspecified_covariance_negative_control:
+      accepted_count: 3423
+      alpha: 0.05
+      calibration_count: 4095
+      calibration_covariance_id: identity-v1
+      claim_ceiling: diagnostic_only
+      coverage_lower_bound: 0.8217782901603421
+      critical_order: 3892
+      critical_value: 2.505431374800827
+      evaluation_count: 4096
+      evaluation_covariance_id: scaled-1.5625-v1
+      failure_visible: true
+      family_confidence: 0.99
+      retain_lower_bound: 0.92
+      simultaneous_coverage: 0.835693359375
+      status: FAILED_MISSPECIFIED_COVARIANCE
+    misspecified_failure_preserved: true
+  VT-S5:
+    registered_grid:
+    - w: '0.0'
+      procedure: imbens_manski
+      theta0_position: boundary
+      c: 1.9599639845401384
+      endpoint_error: 9.992007221626409e-15
+      requested_replicates: 4000
+      delivered_replicates: 4000
+      seeds: 10
+      covered: 3798
+      coverage: 0.9495
+      marginal_lower_99: 0.9408649227003529
+      per_seed_coverage:
+      - 0.94
+      - 0.9375
+      - 0.9475
+      - 0.945
+      - 0.9525
+      - 0.945
+      - 0.965
+      - 0.955
+      - 0.955
+      - 0.9525
+      family_wise_lower: 0.9390121673499543
+    - w: '0.5'
+      procedure: imbens_manski
+      theta0_position: boundary
+      c: 1.7697128473562884
+      endpoint_error: 2.886579864025407e-14
+      requested_replicates: 4000
+      delivered_replicates: 4000
+      seeds: 10
+      covered: 3806
+      coverage: 0.9515
+      marginal_lower_99: 0.9430152729804071
+      per_seed_coverage:
+      - 0.945
+      - 0.9425
+      - 0.95
+      - 0.945
+      - 0.9425
+      - 0.95
+      - 0.9525
+      - 0.96
+      - 0.9575
+      - 0.97
+      family_wise_lower: 0.9411930672407145
+    - w: '1.0'
+      procedure: imbens_manski
+      theta0_position: boundary
+      c: 1.6814774423281165
+      endpoint_error: 3.9968028886505635e-15
+      requested_replicates: 4000
+      delivered_replicates: 4000
+      seeds: 10
+      covered: 3821
+      coverage: 0.95525
+      marginal_lower_99: 0.9470572929875622
+      per_seed_coverage:
+      - 0.9475
+      - 0.9675
+      - 0.9525
+      - 0.9725
+      - 0.945
+      - 0.935
+      - 0.95
+      - 0.96
+      - 0.95
+      - 0.9725
+      family_wise_lower: 0.9452944439758433
+    - w: '2.0'
+      procedure: imbens_manski
+      theta0_position: boundary
+      c: 1.646145548215543
+      endpoint_error: 2.398081733190338e-14
+      requested_replicates: 4000
+      delivered_replicates: 4000
+      seeds: 10
+      covered: 3804
+      coverage: 0.951
+      marginal_lower_99: 0.9424773481940285
+      per_seed_coverage:
+      - 0.95
+      - 0.96
+      - 0.94
+      - 0.9525
+      - 0.9275
+      - 0.9525
+      - 0.95
+      - 0.945
+      - 0.975
+      - 0.9575
+      family_wise_lower: 0.9406474358114529
+    minimum_family_wise_lower: 0.9390121673499543
+    registered_failure_map: []
+    adversarial_failure_map:
+    - w: '0.0'
+      procedure: naive_no_expansion
+      theta0_position: boundary
+      c: 0.0
+      endpoint_error: 9.992007221626409e-15
+      requested_replicates: 4000
+      delivered_replicates: 4000
+      seeds: 10
+      covered: 1009
+      coverage: 0.25225
+      marginal_lower_99: 0.23640214020137407
+      per_seed_coverage:
+      - 0.2475
+      - 0.2325
+      - 0.245
+      - 0.2475
+      - 0.2625
+      - 0.2675
+      - 0.255
+      - 0.245
+      - 0.28
+      - 0.24
+      family_wise_lower: 0.2332072924864299
+    optimizer_output_probability_use: REFUSED
+    status: VALIDATED_REGISTERED_SYNTHETIC
+  VT-S6:
+    joint_law_id: pr272-joint-random-anchor-v1
+    joint_law_content_id: 6b1401d1ce0686cfea36312d26ccc2819b9dbead631fa13c8785b30bb3996d96
+    coverage:
+      status: VALIDATED_REGISTERED_SYNTHETIC
+      law_id: pr272-joint-random-anchor-v1
+      true_ratio: 0.5
+      evaluation_count: 4000
+      bounded_count: 4000
+      unbounded_count: 0
+      covered_count: 3814
+      coverage: 0.9535
+      coverage_lower_bound: 0.9451693094201339
+      retain_lower_bound: 0.92
+      family_confidence: 0.99
+    marginal_only_mutation: REFUSED
+  VT-S9:
+    report:
+      status: VALIDATED_REGISTERED_SYNTHETIC
+      corrected:
+        status: VALIDATED_REGISTERED_SYNTHETIC
+        critical_value: 2.479452510685668
+        critical_order: 3892
+        alpha: 0.05
+        calibration_count: 4095
+        evaluation_count: 4096
+        accepted_count: 3858
+        simultaneous_coverage: 0.94189453125
+        family_confidence: 0.99
+        coverage_lower_bound: 0.9328329322115998
+        retain_lower_bound: 0.92
+        calibration_covariance_id: equicorrelated-depth-path-v1
+        evaluation_covariance_id: equicorrelated-depth-path-v1
+        failure_visible: false
+        claim_ceiling: diagnostic_only
+      pointwise_critical_values:
+      - 1.994003447992999
+      - 1.9482931140290591
+      - 1.9676713345030694
+      - 1.9280242217931087
+      - 1.977583562861658
+      unadjusted_familywise_error_rate: 0.176025390625
+      adjusted_familywise_error_rate: 0.05810546875
+      depth_count: 5
+      same_centered_target: true
+      nested_path: true
+    unadjusted_failure_preserved: true
+  VT-S10:
+    well_identified:
+      status: VALIDATED_REGISTERED_SYNTHETIC
+      supported_rank: 3
+      parameter_dimension: 3
+      singular_values:
+      - 1.0
+      - 0.5
+      - 0.3
+      minimum_singular_value: 0.3
+      singular_value_floor: 0.05
+      principal_angle_radians: 0.30000000000000016
+      principal_angle_floor_radians: 0.05
+      perturbation_radius: 0.01
+      worst_case_parameter_error_bound: 0.03333333333333333
+      covariance_id: identity-response-covariance-v1
+      claim_ceiling: diagnostic_only
+    weak:
+      status: ABSTAIN_WEAK_IDENTIFICATION
+      supported_rank: 3
+      parameter_dimension: 3
+      singular_values:
+      - 1.0
+      - 0.4
+      - 0.02
+      minimum_singular_value: 0.02
+      singular_value_floor: 0.05
+      principal_angle_radians: 0.020000000000001104
+      principal_angle_floor_radians: 0.05
+      perturbation_radius: 0.01
+      worst_case_parameter_error_bound: 0.5
+      covariance_id: identity-response-covariance-v1
+      claim_ceiling: diagnostic_only
+  VT-S11:
+    registered_cell:
+      status: VALIDATED_REGISTERED_LINEAR_CELL
+      orbit_rank: 3
+      response_rank: 3
+      composition_rank: 3
+      parameter_dimension: 3
+      registered_linear_cell_only: true
+      global_orbit_separation_claimed: false
+      claim_ceiling: diagnostic_only
+    rank_loss:
+      status: ABSTAIN_NON_IDENTIFIED
+      orbit_rank: 3
+      response_rank: 2
+      composition_rank: 2
+      parameter_dimension: 3
+      registered_linear_cell_only: true
+      global_orbit_separation_claimed: false
+      claim_ceiling: diagnostic_only
+  VT-S12:
+    status: VALIDATED_REGISTERED_SYNTHETIC
+    critical_value: 0.7056091460605605
+    null_rejection_rate: 0.049
+    alternative_power: 0.99975
+    alternative_power_lower_bound: 0.9983415811657146
+    minimum_power_lower_bound: 0.8
+    scalar_coordinates_matched: true
+    anchor_coordinates_matched: true
+    evaluation_count: 4000
+    claim_ceiling: diagnostic_only
+  VT-S13:
+    status: VALIDATED_REGISTERED_SYNTHETIC
+    distance_threshold: 0.8686205723610874
+    known_correct_count: 3895
+    known_total: 4096
+    known_coverage: 0.950927734375
+    known_coverage_lower_bound: 0.9425070791845975
+    unknown_abstained_count: 4096
+    unknown_total: 4096
+    unknown_abstention_rate: 1.0
+    unknown_abstention_lower_bound: 0.9988763226712685
+    reduced_library_known_coverage: 0.47705078125
+    finite_library_sensitivity: 0.473876953125
+    thresholds_frozen_before_evaluation: true
+    claim_ceiling: diagnostic_only
+  VT-S14:
+    status: VALIDATED_REGISTERED_SYNTHETIC
+    correct_selection_count: 7504
+    evaluation_count: 8192
+    correct_selection_rate: 0.916015625
+    correct_selection_lower_bound: 0.9086229387872429
+    minimum_correct_selection_lower_bound: 0.8
+    HTT_owner: HTT
+    MIO_local_diagnostic_cross_check:
+      status: VALIDATED_REGISTERED_SYNTHETIC
+      local_residual_norm: 0.017400301613368394
+      global_residual_norm: 2.2388903576256323
+      residual_norm_difference_global_minus_local: 2.221490056012264
+      mask_path_id: synthetic-nested-mask-v1
+      owner: MIO
+      likelihood_present: false
+      posterior_present: false
+      evidence_present: false
+      claim_ceiling: diagnostic_only
+    MIO_global_diagnostic_cross_check:
+      status: VALIDATED_REGISTERED_SYNTHETIC
+      local_residual_norm: 3.2854704374495136
+      global_residual_norm: 0.023692684340870764
+      residual_norm_difference_global_minus_local: -3.261777753108643
+      mask_path_id: synthetic-nested-mask-v1
+      owner: MIO
+      likelihood_present: false
+      posterior_present: false
+      evidence_present: false
+      claim_ceiling: diagnostic_only
+  SBC-HTT-COMPUTATION:
+    calibrated:
+      aggregation: pooled_seed_family_rank_uniformity
+      registered_seed_members:
+      - 272003
+      - 272005
+      - 272007
+      - 272009
+      - 272011
+      n_seed_members: 5
+      n_simulations_per_member: 3000
+      n_simulations: 15000
+      n_draws: 20
+      n_bins: 7
+      rank_histogram_binned:
+      - 2126
+      - 2183
+      - 2071
+      - 2157
+      - 2177
+      - 2106
+      - 2180
+      chi_square: 5.209333333333333
+      dof: 6
+      uniformity_pvalue: 0.5172586658888052
+      var_scale: '1'
+      member_runs:
+      - n_simulations: 3000
+        n_draws: 20
+        n_bins: 7
+        rank_histogram_binned:
+        - 428
+        - 425
+        - 403
+        - 435
+        - 435
+        - 430
+        - 444
+        chi_square: 2.3093333333333335
+        dof: 6
+        uniformity_pvalue: 0.8891663479231634
+        var_scale: '1'
+        lineage_verified: sbclin-316f7d840022739e
+        verdict: calibrated
+      - n_simulations: 3000
+        n_draws: 20
+        n_bins: 7
+        rank_histogram_binned:
+        - 429
+        - 420
+        - 443
+        - 414
+        - 438
+        - 400
+        - 456
+        chi_square: 5.020666666666666
+        dof: 6
+        uniformity_pvalue: 0.5411652066408266
+        var_scale: '1'
+        lineage_verified: sbclin-ed8efdb877bb63a5
+        verdict: calibrated
+      - n_simulations: 3000
+        n_draws: 20
+        n_bins: 7
+        rank_histogram_binned:
+        - 428
+        - 465
+        - 399
+        - 409
+        - 450
+        - 409
+        - 440
+        chi_square: 8.301333333333334
+        dof: 6
+        uniformity_pvalue: 0.21684759109221358
+        var_scale: '1'
+        lineage_verified: sbclin-e253e417f5d84ccf
+        verdict: calibrated
+      - n_simulations: 3000
+        n_draws: 20
+        n_bins: 7
+        rank_histogram_binned:
+        - 437
+        - 427
+        - 401
+        - 437
+        - 422
+        - 457
+        - 419
+        chi_square: 4.311333333333334
+        dof: 6
+        uniformity_pvalue: 0.6346238089789629
+        var_scale: '1'
+        lineage_verified: sbclin-7285ac2eeb758695
+        verdict: calibrated
+      - n_simulations: 3000
+        n_draws: 20
+        n_bins: 7
+        rank_histogram_binned:
+        - 404
+        - 446
+        - 425
+        - 462
+        - 432
+        - 410
+        - 421
+        chi_square: 5.720666666666667
+        dof: 6
+        uniformity_pvalue: 0.4551971216794525
+        var_scale: '1'
+        lineage_verified: sbclin-4460a4731140cf66
+        verdict: calibrated
+      verdict: calibrated
+    misspecified:
+      '0.5':
+        aggregation: pooled_seed_family_rank_uniformity
+        registered_seed_members:
+        - 272003
+        - 272005
+        - 272007
+        - 272009
+        - 272011
+        n_seed_members: 5
+        n_simulations_per_member: 3000
+        n_simulations: 15000
+        n_draws: 20
+        n_bins: 7
+        rank_histogram_binned:
+        - 3352
+        - 1921
+        - 1568
+        - 1518
+        - 1565
+        - 1839
+        - 3237
+        chi_square: 1799.2570666666666
+        dof: 6
+        uniformity_pvalue: 0.0
+        var_scale: 1/2
+        member_runs:
+        - n_simulations: 3000
+          n_draws: 20
+          n_bins: 7
+          rank_histogram_binned:
+          - 652
+          - 347
+          - 335
+          - 296
+          - 335
+          - 381
+          - 654
+          chi_square: 337.73066666666665
+          dof: 6
+          uniformity_pvalue: 6.636087677096778e-70
+          var_scale: 1/2
+          lineage_verified: sbclin-e4941b85ebd96667
+          verdict: inadequate_sbc_failed
+        - n_simulations: 3000
+          n_draws: 20
+          n_bins: 7
+          rank_histogram_binned:
+          - 639
+          - 393
+          - 299
+          - 310
+          - 320
+          - 376
+          - 663
+          chi_square: 340.43733333333336
+          dof: 6
+          uniformity_pvalue: 1.742045081225265e-70
+          var_scale: 1/2
+          lineage_verified: sbclin-e578ce71871a04a8
+          verdict: inadequate_sbc_failed
+        - n_simulations: 3000
+          n_draws: 20
+          n_bins: 7
+          rank_histogram_binned:
+          - 665
+          - 405
+          - 324
+          - 300
+          - 293
+          - 357
+          - 656
+          chi_square: 371.34000000000003
+          dof: 6
+          uniformity_pvalue: 4.033435045920522e-77
+          var_scale: 1/2
+          lineage_verified: sbclin-6180ed57223f16d0
+          verdict: inadequate_sbc_failed
+        - n_simulations: 3000
+          n_draws: 20
+          n_bins: 7
+          rank_histogram_binned:
+          - 696
+          - 379
+          - 302
+          - 307
+          - 317
+          - 369
+          - 630
+          chi_square: 376.4733333333333
+          dof: 6
+          uniformity_pvalue: 3.183076567855745e-78
+          var_scale: 1/2
+          lineage_verified: sbclin-4dcfdb04f472be28
+          verdict: inadequate_sbc_failed
+        - n_simulations: 3000
+          n_draws: 20
+          n_bins: 7
+          rank_histogram_binned:
+          - 700
+          - 397
+          - 308
+          - 305
+          - 300
+          - 356
+          - 634
+          chi_square: 393.11
+          dof: 6
+          uniformity_pvalue: 8.464577648118679e-82
+          var_scale: 1/2
+          lineage_verified: sbclin-43520d1ca598cd53
+          verdict: inadequate_sbc_failed
+        verdict: inadequate_sbc_failed
+      '2.0':
+        aggregation: pooled_seed_family_rank_uniformity
+        registered_seed_members:
+        - 272003
+        - 272005
+        - 272007
+        - 272009
+        - 272011
+        n_seed_members: 5
+        n_simulations_per_member: 3000
+        n_simulations: 15000
+        n_draws: 20
+        n_bins: 7
+        rank_histogram_binned:
+        - 1146
+        - 2180
+        - 2702
+        - 2940
+        - 2639
+        - 2234
+        - 1159
+        chi_square: 1477.2897333333333
+        dof: 6
+        uniformity_pvalue: 4.44250183e-316
+        var_scale: '2'
+        member_runs:
+        - n_simulations: 3000
+          n_draws: 20
+          n_bins: 7
+          rank_histogram_binned:
+          - 246
+          - 431
+          - 528
+          - 576
+          - 566
+          - 434
+          - 219
+          chi_square: 298.19
+          dof: 6
+          uniformity_pvalue: 1.997956150343799e-61
+          var_scale: '2'
+          lineage_verified: sbclin-36976d330a0930d9
+          verdict: inadequate_sbc_failed
+        - n_simulations: 3000
+          n_draws: 20
+          n_bins: 7
+          rank_histogram_binned:
+          - 227
+          - 443
+          - 529
+          - 597
+          - 514
+          - 458
+          - 232
+          chi_square: 294.22800000000007
+          dof: 6
+          uniformity_pvalue: 1.4105341699915107e-60
+          var_scale: '2'
+          lineage_verified: sbclin-d9a97f602892843f
+          verdict: inadequate_sbc_failed
+        - n_simulations: 3000
+          n_draws: 20
+          n_bins: 7
+          rank_histogram_binned:
+          - 218
+          - 439
+          - 575
+          - 596
+          - 512
+          - 423
+          - 237
+          chi_square: 321.09866666666665
+          dof: 6
+          uniformity_pvalue: 2.454185835385902e-66
+          var_scale: '2'
+          lineage_verified: sbclin-f2f1bc1528a821ed
+          verdict: inadequate_sbc_failed
+        - n_simulations: 3000
+          n_draws: 20
+          n_bins: 7
+          rank_histogram_binned:
+          - 205
+          - 453
+          - 536
+          - 576
+          - 545
+          - 453
+          - 232
+          chi_square: 318.84933333333333
+          dof: 6
+          uniformity_pvalue: 7.452056817935534e-66
+          var_scale: '2'
+          lineage_verified: sbclin-366deb799836dbb5
+          verdict: inadequate_sbc_failed
+        - n_simulations: 3000
+          n_draws: 20
+          n_bins: 7
+          rank_histogram_binned:
+          - 250
+          - 414
+          - 534
+          - 595
+          - 502
+          - 466
+          - 239
+          chi_square: 265.1686666666667
+          dof: 6
+          uniformity_pvalue: 2.3434788714845262e-54
+          var_scale: '2'
+          lineage_verified: sbclin-f40279f680d2ccdd
+          verdict: inadequate_sbc_failed
+        verdict: inadequate_sbc_failed
+    all_misspecified_fail: true
+validation_results_sha256: 1ccdbd112d51cb51ea3de68b4feef01ad622c88a97baba3cdac69ed93c05d111

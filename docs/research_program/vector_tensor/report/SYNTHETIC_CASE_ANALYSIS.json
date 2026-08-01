@@ -1,0 +1,137 @@
+{
+  "allowed_use": [
+    "synthetic pipeline validation",
+    "held-out diagnostic comparison",
+    "missing-channel and depth-confounding illustration"
+  ],
+  "analysis_id": "PR275-SYNTHETIC-CASE-DIAGNOSTICS-V1",
+  "artifact_mode": "synthetic_diagnostic",
+  "case_summaries": [
+    {
+      "case_id": "C01",
+      "compatibility_status": "RESPONSE_COMPATIBILITY_CANDIDATE",
+      "depth_alert": false,
+      "depth_mean_normalized_score": 0.0,
+      "geometry_status": "COMPLETE",
+      "local_global_status": "SEPARABLE_CANDIDATE",
+      "max_finite_abs_q": 0.223606797749979,
+      "max_finite_abs_x": 0.24494897427831783,
+      "missing_functional": false,
+      "partition": "development",
+      "scenario": "SCALAR_LIMIT"
+    },
+    {
+      "case_id": "C02",
+      "compatibility_status": "RESPONSE_COMPATIBILITY_CANDIDATE",
+      "depth_alert": false,
+      "depth_mean_normalized_score": 0.0,
+      "geometry_status": "COMPLETE",
+      "local_global_status": "SEPARABLE_CANDIDATE",
+      "max_finite_abs_q": 0.2824889378365107,
+      "max_finite_abs_x": 0.31559467676119,
+      "missing_functional": false,
+      "partition": "development",
+      "scenario": "TENSOR_ONLY"
+    },
+    {
+      "case_id": "C03",
+      "compatibility_status": "PARTIAL_DIAGNOSTIC",
+      "depth_alert": false,
+      "depth_mean_normalized_score": 0.0,
+      "geometry_status": "MISSING",
+      "local_global_status": "SEPARABLE_CANDIDATE",
+      "max_finite_abs_q": 0.37416573867739417,
+      "max_finite_abs_x": 0.37416573867739417,
+      "missing_functional": true,
+      "partition": "development",
+      "scenario": "MISSING_CHANNEL"
+    },
+    {
+      "case_id": "C04",
+      "compatibility_status": "INDETERMINATE",
+      "depth_alert": false,
+      "depth_mean_normalized_score": 0.0,
+      "geometry_status": "COMPLETE",
+      "local_global_status": "NON_IDENTIFIED",
+      "max_finite_abs_q": 0.37416573867739417,
+      "max_finite_abs_x": 0.37416573867739417,
+      "missing_functional": false,
+      "partition": "held_out",
+      "scenario": "LOCAL_GLOBAL_DEGENERATE"
+    },
+    {
+      "case_id": "C05",
+      "compatibility_status": "RESPONSE_COMPATIBILITY_CANDIDATE",
+      "depth_alert": true,
+      "depth_mean_normalized_score": 130.0,
+      "geometry_status": "COMPLETE",
+      "local_global_status": "SEPARABLE_CANDIDATE",
+      "max_finite_abs_q": 0.37416573867739417,
+      "max_finite_abs_x": 0.37416573867739417,
+      "missing_functional": false,
+      "partition": "held_out",
+      "scenario": "MASK_DEPTH_CONFOUNDED"
+    }
+  ],
+  "categorical_encodings": {
+    "missing_functional": {
+      "data_coordinate_anchor": "depth_mean_normalized_score",
+      "display_offset_has_data_semantics": false,
+      "label": "missing functional",
+      "label_position": "display-only point offset from the data anchor",
+      "panel": "B",
+      "source_type": "boolean",
+      "true_marker": "x"
+    }
+  },
+  "caveats": [
+    "Five deterministic synthetic cases are not a population sample.",
+    "The x and Q maxima are descriptive coordinates, not estimators.",
+    "A depth alert is a registered synthetic diagnostic flag only."
+  ],
+  "claim_ceiling": "diagnostic_only",
+  "content_id": "sha256:79bb7650fe0f2e231bcfb322f72b8c7b5f54d7ffd2ecfbb4a8317eff51e06829",
+  "coordinates": "categorical case ID ordered C01 through C05",
+  "depth_alert_threshold": 25.0,
+  "forbidden_use": [
+    "observed-data inference",
+    "proof or readiness evidence",
+    "geometry detection",
+    "Bianchi family identification or ranking"
+  ],
+  "frame": "registered per-case JointAnisotropyState conventions; plotted magnitudes only",
+  "normalization": {
+    "depth": "PR-273 registered mean_normalized_score; no PR-275 refit",
+    "x_q": "finite absolute maximum within each case; no cross-case rescaling"
+  },
+  "observed_data": false,
+  "owner": "COMMON",
+  "partition_counts": {
+    "development": 3,
+    "held_out": 2
+  },
+  "plot_category": "VALIDATION",
+  "quantity_definitions": {
+    "depth_mean_normalized_score": "registered PR-273 depth-coherence diagnostic score",
+    "max_finite_abs_q": "maximum absolute finite Q coordinate per registered synthetic case",
+    "max_finite_abs_x": "maximum absolute finite x coordinate per registered synthetic case",
+    "missing_functional": "at least one registered functional channel is unavailable"
+  },
+  "schema": "htt.pr275.synthetic_case_analysis.v1",
+  "scope": "registered PR-273 synthetic case summary",
+  "source_pack": {
+    "config_identity": "sha256:e69f3f84ae746d8eafde5bec3a101e18a4681dea3903f5cc2001f800bfe5a220",
+    "content_id": "sha256:3a94b6ad59bcbde8c5fc021ccdc3a466cb2900d3e7534172d58cd94ba6096289",
+    "path": "docs/research_program/vector_tensor/integration/PR273_DIAGNOSTIC_PACK.json",
+    "seed": 27320260730,
+    "sha256": "sha256:3daeac74cabea9f232f10fc2c56470b24e98c4195f41fc7b4bcec3c3d09609c4",
+    "transfer_source": "none"
+  },
+  "units": {
+    "case_id": "categorical",
+    "depth_mean_normalized_score": "dimensionless normalized score",
+    "max_finite_abs_q": "dimensionless registered normalized stress coordinate",
+    "max_finite_abs_x": "dimensionless registered normalized diagnostic coordinate",
+    "missing_functional": "categorical boolean; no numeric unit"
+  }
+}

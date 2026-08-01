@@ -41,6 +41,41 @@ from htt.infer.posterior_predictive import (
     build_posterior_predictive_report,
 )
 from htt.infer.posterior_exceedance import posterior_exceedance_summary
+from htt.infer.conditional_exceedance import (
+    ConditionalExceedanceProfile,
+    ConditioningSource,
+    EnvelopeCertificate,
+    EnvelopeCertificateReport,
+    ExceedanceLane,
+    ExceedanceStatus,
+    LikelihoodObjective,
+    PosteriorCalibrationReport,
+    PosteriorCalibrationStatus,
+    PosteriorExceedance,
+    SamplingDraws,
+    SamplingLaw,
+    SamplingLawSpec,
+    build_conditional_exceedance_envelope,
+    build_envelope_certificate_report,
+    build_likelihood_objective,
+    build_missing_probability_law_profile,
+    build_posterior_calibration_report,
+    build_posterior_exceedance,
+    build_sampling_draws,
+    build_sampling_law_spec,
+    identified_vertex_id,
+)
+from htt.infer.depth_path import (
+    DepthHypothesisClass,
+    DepthLikelihoodResult,
+    DepthModelPrediction,
+    build_depth_model_prediction,
+    evaluate_depth_path_likelihood,
+)
+from htt.infer.anisotropy_type_report import (
+    LocalGlobalCompatibilityInput,
+    build_local_global_compatibility_input,
+)
 from htt.infer.finite_mock import zero_trigger_upper_bound
 from htt.infer.nuisance_rank import (
     NuisanceProjectedRankAudit,
@@ -88,6 +123,23 @@ from htt.infer.ver2_directional_shell import (
     build_directional_likelihood_inputs,
     evaluate_production_axis_gate,
 )
+from htt.infer.vector_tensor_validation import (
+    HttDepthDiscriminationReport,
+    JointAnchorCoverageReport,
+    MatchedCounterpairReport,
+    OpenSetValidationReport,
+    SimultaneousCalibrationReport,
+    WeakIdentificationReport,
+    evaluate_depth_local_global,
+    evaluate_joint_anchor_coverage,
+    evaluate_matched_counterpair_power,
+    evaluate_open_set_validation,
+    evaluate_weak_identification,
+)
+from htt.infer.vector_tensor_data_admission import (
+    future_pilot_candidate_ids,
+    require_future_pilot_eligibility,
+)
 
 __all__ = [
     'LatentAxisModel', 'LatentAxisParams', 'dipole_projection',
@@ -108,6 +160,24 @@ __all__ = [
     'build_prior_sweep_report', 'build_inference_adequacy_report',
     'PosteriorPredictiveReport', 'build_posterior_predictive_report',
     'posterior_exceedance_summary',
+    'ConditionalExceedanceProfile', 'ConditioningSource',
+    'DepthHypothesisClass', 'DepthLikelihoodResult', 'DepthModelPrediction',
+    'LocalGlobalCompatibilityInput',
+    'EnvelopeCertificate', 'ExceedanceLane', 'ExceedanceStatus',
+    'EnvelopeCertificateReport',
+    'LikelihoodObjective', 'PosteriorCalibrationReport',
+    'PosteriorCalibrationStatus', 'PosteriorExceedance',
+    'SamplingDraws', 'SamplingLaw', 'SamplingLawSpec',
+    'build_conditional_exceedance_envelope',
+    'build_local_global_compatibility_input',
+    'build_depth_model_prediction', 'evaluate_depth_path_likelihood',
+    'build_envelope_certificate_report',
+    'build_likelihood_objective',
+    'build_missing_probability_law_profile',
+    'build_posterior_calibration_report', 'build_posterior_exceedance',
+    'build_sampling_draws', 'build_sampling_law_spec',
+    'identified_vertex_id',
+    'future_pilot_candidate_ids', 'require_future_pilot_eligibility',
     'LoocvReport', 'build_loocv_report',
     'BridgeResult', 'tilt_velocity', 'delta_q', 'lambda_J_pec', 'delta_H',
     'AxisGateDecision', 'build_diagnostic_axis', 'evaluate_axis_gate',
@@ -125,4 +195,10 @@ __all__ = [
     'DEFAULT_DIRECTIONAL_RESPONSE_LIBRARY',
     'assess_directional_readiness', 'build_directional_output_manifest',
     'evaluate_production_axis_gate', 'build_directional_likelihood_inputs',
+    'HttDepthDiscriminationReport', 'JointAnchorCoverageReport',
+    'MatchedCounterpairReport', 'OpenSetValidationReport',
+    'SimultaneousCalibrationReport', 'WeakIdentificationReport',
+    'evaluate_depth_local_global', 'evaluate_joint_anchor_coverage',
+    'evaluate_matched_counterpair_power', 'evaluate_open_set_validation',
+    'evaluate_weak_identification',
 ]

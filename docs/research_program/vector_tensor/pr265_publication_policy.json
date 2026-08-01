@@ -1,0 +1,118 @@
+{
+  "policy_id": "PR265-PUBLICATION-POLICY",
+  "schema_version": 1,
+  "change_set_id": "CS-PR265-CONDITIONAL-EXCEEDANCE",
+  "publication_group_id": "PG-PR265-CONDITIONAL-EXCEEDANCE",
+  "target_ref": "origin/research/pr04-multicomponent",
+  "target_sha": "e7c20643c0dd323481f0887aff8e437a1bf7950a",
+  "max_open_prs": 1,
+  "max_direct_to_target_prs": 1,
+  "max_prs_per_change_set": 1,
+  "max_stack_depth": 1,
+  "max_file_overlap_prs": 0,
+  "max_inventory_age_seconds": 300,
+  "max_receipt_age_seconds": 1800,
+  "max_authorization_ttl_seconds": 1800,
+  "publication_requires_external_publisher": true,
+  "ordinary_agent_push_forbidden": true,
+  "ordinary_agent_pr_mutation_forbidden": true,
+  "required_review_cells": [
+    "candidate_identity",
+    "law_lane_partition",
+    "conditioning_compatibility",
+    "optimizer_point_refusal",
+    "finite_null_coverage",
+    "posterior_calibration",
+    "strict_tail_monotonicity",
+    "missing_law_refusal",
+    "bounded_identified_envelope",
+    "unbounded_and_empty_refusal",
+    "quasi_convex_lower_counterexample",
+    "mutation_resistance",
+    "mio_htt_ownership",
+    "claim_ceiling",
+    "adjacent_regression",
+    "latest_target_integration"
+  ],
+  "required_commands": [
+    {
+      "id": "pr265-focused",
+      "argv": [
+        "{python}",
+        "-B",
+        "scripts/codex_harness/run_pr265_conditional_exceedance.py",
+        "focused"
+      ],
+      "timeout_seconds": 900
+    },
+    {
+      "id": "pr265-adjacent",
+      "argv": [
+        "{python}",
+        "-B",
+        "scripts/codex_harness/run_pr265_conditional_exceedance.py",
+        "adjacent"
+      ],
+      "timeout_seconds": 900
+    },
+    {
+      "id": "pr265-dag-strict",
+      "argv": [
+        "{python}",
+        "-B",
+        "scripts/codex_harness/validate_pr_dag.py",
+        "docs/codex_handoff/pr_backlog.yaml",
+        "--status",
+        "docs/codex_handoff/pr_status.yaml",
+        "--strict-rescue-slice"
+      ],
+      "timeout_seconds": 240
+    },
+    {
+      "id": "pr265-claim-language",
+      "argv": [
+        "{python}",
+        "-B",
+        "scripts/check_claim_language.py",
+        "htt/src/common/conditional_exceedance.py",
+        "htt/mio/formalism/conditional_exceedance.py",
+        "htt/htt/htt/infer/conditional_exceedance.py",
+        "tests/contracts/test_conditional_exceedance.py",
+        "docs/research_program/vector_tensor/pr265_spec.yaml",
+        "docs/PR_DELTAS/pr-265.md"
+      ],
+      "timeout_seconds": 240
+    },
+    {
+      "id": "pr265-smoke",
+      "argv": [
+        "{python}",
+        "-B",
+        "scripts/codex_harness/run_pr265_conditional_exceedance.py",
+        "smoke"
+      ],
+      "timeout_seconds": 900
+    }
+  ],
+  "invalidates_review": [
+    "candidate_sha_changed",
+    "candidate_tree_changed",
+    "diff_digest_changed",
+    "tests_changed",
+    "target_sha_changed",
+    "law_or_lane_rule_changed",
+    "coverage_or_calibration_rule_changed",
+    "envelope_certificate_changed",
+    "sample_unit_or_conditioning_binding_changed",
+    "claim_ceiling_changed"
+  ],
+  "forbidden_inputs": [
+    "optimizer point relabelled as draws",
+    "untyped probability law",
+    "native low-ell solver output",
+    "native morphology atlas",
+    "PR-151 partial acquisition",
+    "truth probability label",
+    "Bianchi family label"
+  ]
+}

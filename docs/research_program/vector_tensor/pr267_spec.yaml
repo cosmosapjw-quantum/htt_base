@@ -1,0 +1,125 @@
+schema_version: 1
+work_unit_id: PR-267
+title: Abstaining typed anisotropy compatibility report
+target_ref: origin/research/pr04-multicomponent
+target_sha: e7c20643c0dd323481f0887aff8e437a1bf7950a
+change_set_id: CS-PR267-ANISOTROPY-TYPE-REPORT
+publication_group_id: PG-PR267-ANISOTROPY-TYPE-REPORT
+dependencies:
+  - PR-263
+  - PR-265
+  - PR-266
+  - PR-255
+  - PR-256
+  - PR-258
+owner: COMMON
+contributors:
+  - OBSSTAT
+  - MIO
+  - HTT
+capability: abstaining_anisotropy_compatibility_report
+scientific_role: >-
+  Combine exact upstream diagnostic identities for orbit stratum, anchored
+  response rank and principal angles, local/global source compatibility,
+  finite open-set response classes, conditional exceedance, depth coherence,
+  geometry-channel missingness, and the governing claim ceiling. The report
+  is a pre-native C2 compatibility summary. It is not a geometry or
+  Bianchi-family classifier.
+public_contract:
+  common_module: common.anisotropy_type_report
+  htt_adapter_module: htt.infer.anisotropy_type_report
+  types:
+    - GeometryInformationStatus
+    - LocalGlobalCompatibility
+    - AnisotropyCompatibilityStatus
+    - LocalGlobalCompatibilityInput
+    - OpenSetReplayInputs
+    - AnisotropyTypeReport
+  no_family_label_field: true
+input_revalidation:
+  joint_state: exact payload round trip
+  orbit_report: recompute from exact joint state and registered v3 spec
+  anchored_response: recompute from replay matrices and exact normalizer
+  velocity_response: HTT adapter replays the exact PR-256 source geometry
+  open_set: >-
+    recompute from observation, response-class contracts, equivalence report,
+    covariance, nuisance tangent, source gate, and registered tolerances
+  conditional_exceedance: sealed profile identity
+  depth_coherence: sealed report identity
+geometry_missingness:
+  channels:
+    - spatial_curvature_stf5
+    - electric_weyl_stf5
+    - magnetic_weyl_stf5
+    - anisotropic_stress_stf5
+  complete: all four channels are present
+  partial: one to three channels are present
+  missing: none of the four channels is present
+decision_precedence:
+  - >-
+    Missing or partial geometry, unavailable depth coherence, or a
+    no-number conditional-exceedance result yields PARTIAL_DIAGNOSTIC.
+  - >-
+    Rank deficiency, local/global overlap or sum-only response, or an
+    equivalence/type-unidentified open-set result yields INDETERMINATE.
+  - >-
+    Outside-library UNKNOWN_CLASS or NEEDS_NATIVE yields UNKNOWN.
+  - >-
+    Only a full-rank anchored response, separable local/global candidate,
+    finite response-class candidate, complete geometry, defined depth
+    coherence, and numeric conditional exceedance may yield
+    RESPONSE_COMPATIBILITY_CANDIDATE.
+output_rules:
+  response_class_ids: >-
+    Admit and preserve only the exact PR-267 vocabulary
+    response-class-neutral, response-class-local, and response-class-global,
+    with each identifier fixed by its PR-258 source semantics. Arbitrary
+    aliases, including family-coded aliases, are refused rather than rendered.
+  orbit_proof_status: preserve UNPROVEN
+  nearest_label_on_abstention: forbidden
+  claim_ceiling: diagnostic_only
+  roadmap_claim_level: C2
+family_identification_gate:
+  requested_claim_tier: C2 diagnostic compatibility
+  allowed_claim_tier: C2 diagnostic compatibility
+  missing_gates:
+    - native low-ell morphology atlas
+    - native transfer provenance
+    - external null, mask, covariance, equivalence, and rank acceptance
+    - PPC or held-out inference gate for any later HTT claim
+  c6_status: BLOCKED
+ownership:
+  COMMON: immutable report, replay contracts, decision precedence, claim firewall
+  OBSSTAT: upstream orbit and observer-side feature/depth inputs only
+  MIO: upstream exceedance and coherence diagnostics only
+  HTT: PR-256 replay adapter and model-dependent inputs only
+claim_boundary:
+  ceiling: diagnostic_only
+  allowed:
+    - typed partial diagnostic report
+    - UNKNOWN and INDETERMINATE terminal diagnostic outcomes
+    - local/global and finite response-class compatibility candidate
+    - orbit stratum and UNPROVEN stabilizer/chart status
+  forbidden:
+    - nearest-label substitution after abstention
+    - geometry detection
+    - Bianchi family identification or ranking
+    - native solver or native morphology-atlas result
+    - MIO posterior, likelihood, Bayes factor, or evidence
+tests:
+  - >-
+    PYTHONPATH=.:htt/src:htt python -B -m pytest -p no:cacheprovider -q
+    tests/contracts/test_anisotropy_type_report.py
+  - >-
+    PYTHONPATH=.:htt/src:htt python -B -m pytest -p no:cacheprovider -q
+    htt/src/common/test_anchored_response_geometry.py
+    tests/pr_cards/test_pr_256_velocity_frame_decomposition.py
+    tests/pr_cards/test_pr_258_open_set_response_classes.py
+    tests/contracts/test_orbit_catalogue_v3.py
+    tests/contracts/test_conditional_exceedance.py
+    tests/contracts/test_depth_path.py
+kill_switches:
+  - an upstream report is accepted without replay or identity validation
+  - weak rank, overlap, missing geometry, or unknown class emits a nearest label
+  - a response-class identifier is rendered as a geometry or family
+  - a partial report is used as likelihood, posterior, evidence, or truth
