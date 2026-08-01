@@ -33,7 +33,7 @@ Panel A plots `max_finite_abs_x` and `max_finite_abs_q`, both dimensionless regi
 
 ## Data/script/manifest provenance
 
-The source JSON is `SYNTHETIC_CASE_ANALYSIS.json` (file identity `sha256:c69ee6fefcf6fecdba26f381dc315f6338d0256ef0eb20aedd401b34d9abbdb5`), derived from the exact PR-273 diagnostic pack at seed `27320260730`. The generator is `scripts/vector_tensor/build_pr275_proof_atlas.py`; the figure manifest is `fig_pr275_synthetic_case_diagnostics.manifest.json` (canonical content identity `sha256:7dac865ca2f3b240ef83acce3e131642199586bb2c0f983b8a2b2cd52b9309dc`). Its exact file identity is recorded separately in `REPLICATION_PACKAGE.json`.
+The source JSON is `SYNTHETIC_CASE_ANALYSIS.json` (file identity `sha256:5097d278545194f783fe075e7b03878d94ec34984531358f51780c977bba0a3f`), derived from the exact PR-273 diagnostic pack at seed `27320260730`. The generator is `scripts/vector_tensor/build_pr275_proof_atlas.py`; the figure manifest is `fig_pr275_synthetic_case_diagnostics.manifest.json` (canonical content identity `sha256:96d1c16d3dbe1ab8abc8d3c9e2cebb542ac45360f3ae5975f258435561b9fb7f`). Its exact file identity is recorded separately in `REPLICATION_PACKAGE.json`.
 
 ## Category and claim tier
 
@@ -41,7 +41,7 @@ Category: `VALIDATION` (exactly one category). Artifact mode: `synthetic_diagnos
 
 ## Interpretation
 
-The fixed cases exercise scalar-limit, tensor-only, missing-channel, local/global-degenerate, and mask/depth-confounded paths. C05 crosses the registered depth alert threshold; C03 retains a missing functional channel. These are pipeline-behavior diagnostics on the registered synthetic benchmark.
+The fixed cases exercise scalar-limit, tensor-only, missing-channel, local/global-degenerate, and mask/depth-confounded paths. C05 crosses the registered depth alert threshold; C03 retains a missing functional channel. The C03 cross is anchored at its actual depth score of zero; its text uses a display-only point offset and carries no numerical y meaning. These are pipeline-behavior diagnostics on the registered synthetic benchmark.
 
 ## What this plot does not show
 
@@ -63,7 +63,7 @@ Observed-data publication would require separately admitted inputs, exact mask/c
 
 ## Replication package
 
-`REPLICATION_PACKAGE.json` (`sha256:a18f6e0470d6dc5ea0131fb987642ab767056d5b92a3db310b6a61dcdfc053f9`) records commands, environment versions, source identities, generated artifact hashes, PR-272 seed/tolerance contracts, the PR-273 seed/config identity, caveats, and the diagnostic-only claim ceiling.
+`REPLICATION_PACKAGE.json` (`sha256:8380d179163cbe4e976c484e1b3908207053b89fcd157993d6b61ef5848ff224`) records commands, environment versions, frozen source identities, exact PR-275 spec/generator/runner workflow identities, generated artifact hashes, PR-272 seed/tolerance contracts, the PR-273 seed/config identity, caveats, and the diagnostic-only claim ceiling.
 
 ## Claim boundary
 

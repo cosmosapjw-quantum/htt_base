@@ -29,6 +29,7 @@ S_INFERENCE = ROOT / "docs/research_program/vector_tensor/proofs/PILLAR_S_INFERE
 PR273_PACK = ROOT / "docs/research_program/vector_tensor/integration/PR273_DIAGNOSTIC_PACK.json"
 PR274_RESULT = ROOT / "docs/research_program/vector_tensor/data_admission/PR274_ADMISSION_RESULT.json"
 GENERATOR = ROOT / "scripts/vector_tensor/build_pr275_proof_atlas.py"
+RUNNER = ROOT / "scripts/codex_harness/run_pr275_report.py"
 REPORT_DIR = ROOT / "docs/research_program/vector_tensor/report"
 ATLAS = REPORT_DIR / "PROOF_ATLAS.json"
 ATLAS_MD = REPORT_DIR / "PROOF_ATLAS.md"
@@ -233,6 +234,7 @@ def test_synthetic_analysis_is_bound_to_five_registered_cases() -> None:
     assert analysis["source_pack"]["seed"] == pack["seed"] == 27320260730
     assert analysis["observed_data"] is False
     assert rows[2]["missing_functional"] is True
+    assert rows[2]["depth_mean_normalized_score"] == 0.0
     assert rows[4]["depth_mean_normalized_score"] == 130.0
     assert rows[4]["depth_alert"] is True
     for source_record, derived in zip(pack["case_results"], rows, strict=True):
@@ -254,6 +256,16 @@ def test_figure_is_exactly_one_validation_category_and_synthetic_only() -> None:
     assert manifest["transfer_source"] == "none"
     assert manifest["sky_support_status"] == "synthetic_not_applicable"
     assert manifest["source_json"]["path"].endswith("SYNTHETIC_CASE_ANALYSIS.json")
+    assert manifest["units"]["missing_functional"] == "categorical boolean; no numeric unit"
+    assert manifest["categorical_encodings"]["missing_functional"] == {
+        "source_type": "boolean",
+        "true_marker": "x",
+        "panel": "B",
+        "data_coordinate_anchor": "depth_mean_normalized_score",
+        "label": "missing functional",
+        "label_position": "display-only point offset from the data anchor",
+        "display_offset_has_data_semantics": False,
+    }
     with Image.open(BytesIO(FIGURE.read_bytes())) as image:
         assert image.format == "PNG"
         assert image.size == (1600, 928)
@@ -280,6 +292,8 @@ def test_report_has_plot_summary_provenance_and_explicit_nonclaims() -> None:
 
 
 def test_replication_package_carries_commands_environment_seeds_and_tolerances() -> None:
+    import hashlib
+
     package = _json(REPLICATION)
     assert package["claim_ceiling"] == "diagnostic_only"
     assert package["observed_data"] is False
@@ -297,6 +311,10 @@ def test_replication_package_carries_commands_environment_seeds_and_tolerances()
     assert package["tolerances_and_acceptance"]["pr272_rank_tolerance"] == 1.0e-12
     assert package["tolerances_and_acceptance"]["pr273_depth_alert_threshold"] == 25.0
     assert package["source_identities"]
+    assert package["workflow_identities"] == {
+        str(path.relative_to(ROOT)): "sha256:" + hashlib.sha256(path.read_bytes()).hexdigest()
+        for path in (SPEC, GENERATOR, RUNNER)
+    }
     assert package["generated_artifact_identities"]
 
 
@@ -399,6 +417,44 @@ def test_data_admission_and_synthetic_membership_mutations_fail_closed() -> None
             spec=spec,
             pack=pack,
             pack_sha256="0" * 64,
+        )
+
+    duplicate_verdict = copy.deepcopy(sources["pr273_diagnostic_pack"])
+    duplicate_verdict["case_verdicts"].append(
+        copy.deepcopy(duplicate_verdict["case_verdicts"][0])
+    )
+    duplicate_verdict["case_verdicts"][-1]["scenario"] = "DUPLICATE_SENTINEL"
+    with pytest.raises(RuntimeError, match="case-verdict membership/order drifted"):
+        module.build_synthetic_analysis(
+            spec=spec,
+            pack=duplicate_verdict,
+            pack_sha256="0" * 64,
+        )
+
+
+def test_duplicate_or_cross_registry_proposal_identity_fails_closed() -> None:
+    module = _module()
+    spec = module._load_yaml(SPEC)
+    sources, source_hashes = module._verify_frozen_inputs(spec)
+
+    duplicate = copy.deepcopy(sources)
+    duplicate["proposal_registry"]["entries"][1]["id"] = duplicate[
+        "proposal_registry"
+    ]["entries"][0]["id"]
+    with pytest.raises(RuntimeError, match="proposal registry contains duplicate ids"):
+        module.build_proof_atlas(
+            spec=spec,
+            sources=duplicate,
+            source_hashes=source_hashes,
+        )
+
+    disagreeing = copy.deepcopy(sources)
+    disagreeing["proposal_registry"]["entries"][0]["statement"] += " MUTATED"
+    with pytest.raises(RuntimeError, match="disagree with the frozen v3 source registry"):
+        module.build_proof_atlas(
+            spec=spec,
+            sources=disagreeing,
+            source_hashes=source_hashes,
         )
 
 

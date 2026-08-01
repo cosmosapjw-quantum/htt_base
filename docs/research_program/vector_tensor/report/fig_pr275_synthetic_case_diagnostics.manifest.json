@@ -5,6 +5,17 @@
     "missing-channel and depth-confounding illustration"
   ],
   "artifact_mode": "synthetic_diagnostic",
+  "categorical_encodings": {
+    "missing_functional": {
+      "data_coordinate_anchor": "depth_mean_normalized_score",
+      "display_offset_has_data_semantics": false,
+      "label": "missing functional",
+      "label_position": "display-only point offset from the data anchor",
+      "panel": "B",
+      "source_type": "boolean",
+      "true_marker": "x"
+    }
+  },
   "categories": [
     "VALIDATION"
   ],
@@ -14,12 +25,12 @@
     "A depth alert is a registered synthetic diagnostic flag only."
   ],
   "claim_tier": "diagnostic_only",
-  "content_id": "sha256:7dac865ca2f3b240ef83acce3e131642199586bb2c0f983b8a2b2cd52b9309dc",
+  "content_id": "sha256:96d1c16d3dbe1ab8abc8d3c9e2cebb542ac45360f3ae5975f258435561b9fb7f",
   "coordinates": "categorical case ID ordered C01 through C05",
   "covariance_status": "registered_synthetic_case_inputs",
   "figure_id": "PR275-SYNTHETIC-CASE-DIAGNOSTICS-FIGURE-V1",
   "figure_path": "docs/research_program/vector_tensor/report/fig_pr275_synthetic_case_diagnostics.png",
-  "figure_sha256": "sha256:f3ae131306ffcbd2463c823dcb017bd95e03fa61a95d476cdd69253dba88375c",
+  "figure_sha256": "sha256:41318ea08e6d1d334756fab4605b3fdc92f2f1a011cb182cbbe93c85b5cc73c4",
   "forbidden_use": [
     "observed-data inference",
     "proof or readiness evidence",
@@ -31,7 +42,7 @@
     "command": "python -B scripts/vector_tensor/build_pr275_proof_atlas.py",
     "matplotlib_version": "3.10.8",
     "path": "scripts/vector_tensor/build_pr275_proof_atlas.py",
-    "sha256": "sha256:eb0ddae37d62400d81e46d99ae92c5cb621e150ece96dcf376b704c24b85e348"
+    "sha256": "sha256:45957c53794dba7ac4fd5c3ee0ac681c0fb82d9ec86a49dd46b463b76e7932e3"
   },
   "normalization": {
     "depth": "PR-273 registered mean_normalized_score; no PR-275 refit",
@@ -68,15 +79,16 @@
     "docs/research_program/vector_tensor/proofs/PILLAR_T_CORE_PROOFS_V1.yaml": "sha256:808c69ca1111591a6d6b52079b6caa7889a838009540ef9959a077640dcdc1d6"
   },
   "source_json": {
-    "content_id": "sha256:e870bf86d6609fe5604dd43c45d287c0aeb6ca115b0f014f0e73f0ebe54504e2",
+    "content_id": "sha256:79bb7650fe0f2e231bcfb322f72b8c7b5f54d7ffd2ecfbb4a8317eff51e06829",
     "path": "docs/research_program/vector_tensor/report/SYNTHETIC_CASE_ANALYSIS.json",
-    "sha256": "sha256:c69ee6fefcf6fecdba26f381dc315f6338d0256ef0eb20aedd401b34d9abbdb5"
+    "sha256": "sha256:5097d278545194f783fe075e7b03878d94ec34984531358f51780c977bba0a3f"
   },
   "transfer_source": "none",
   "units": {
     "case_id": "categorical",
     "depth_mean_normalized_score": "dimensionless normalized score",
     "max_finite_abs_q": "dimensionless registered normalized stress coordinate",
-    "max_finite_abs_x": "dimensionless registered normalized diagnostic coordinate"
+    "max_finite_abs_x": "dimensionless registered normalized diagnostic coordinate",
+    "missing_functional": "categorical boolean; no numeric unit"
   }
 }

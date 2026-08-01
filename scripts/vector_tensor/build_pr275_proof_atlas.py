@@ -30,6 +30,7 @@ os.environ.setdefault("MPLCONFIGDIR", "/tmp/htt-pr275-matplotlib-cache")
 
 ROOT = Path(__file__).resolve().parents[2]
 SPEC = ROOT / "docs/research_program/vector_tensor/pr275_spec.yaml"
+RUNNER = ROOT / "scripts/codex_harness/run_pr275_report.py"
 REPORT_DIR = ROOT / "docs/research_program/vector_tensor/report"
 ATLAS_JSON = REPORT_DIR / "PROOF_ATLAS.json"
 ATLAS_MD = REPORT_DIR / "PROOF_ATLAS.md"
@@ -515,6 +516,38 @@ def build_proof_atlas(
     proposal_entries = _require_records(proposal.get("entries"), label="proposal entries")
     if len(proposal_entries) != 58:
         raise RuntimeError("proposal registry row count drifted")
+    proposal_ids = [record.get("id") for record in proposal_entries]
+    if any(not isinstance(entry_id, str) or not entry_id for entry_id in proposal_ids):
+        raise RuntimeError("proposal registry contains an invalid id")
+    if len(set(proposal_ids)) != len(proposal_ids):
+        raise RuntimeError("proposal registry contains duplicate ids")
+    signature_proposal_rows = [
+        record
+        for record in source_rows
+        if record["source_group"] == "proposal_registry_rows"
+    ]
+    proposal_contract = [
+        (
+            record.get("id"),
+            record.get("pillar"),
+            record.get("status"),
+            record.get("statement"),
+        )
+        for record in proposal_entries
+    ]
+    signature_contract = [
+        (
+            record["entry_id"],
+            record["source_partition"],
+            record["source_status"],
+            record["statement"],
+        )
+        for record in signature_proposal_rows
+    ]
+    if proposal_contract != signature_contract:
+        raise RuntimeError(
+            "proposal registry rows disagree with the frozen v3 source registry"
+        )
     proposal_rows = [
         {
             "id": record.get("id"),
@@ -675,9 +708,16 @@ def build_synthetic_analysis(
     expected_ids = list(contract["exact_case_ids"])
     if [case.get("case_id") for case in cases] != expected_ids:
         raise RuntimeError("PR-273 synthetic case membership/order drifted")
+    verdict_ids = [record.get("case_id") for record in verdicts]
+    if verdict_ids != expected_ids:
+        raise RuntimeError("PR-273 case-verdict membership/order drifted")
+    for record in verdicts:
+        scenario = record.get("scenario")
+        if not isinstance(scenario, str) or not scenario.strip():
+            raise RuntimeError(
+                f"PR-273 case verdict {record.get('case_id')!r} lacks a scenario"
+            )
     scenario_by_id = {record.get("case_id"): record.get("scenario") for record in verdicts}
-    if set(scenario_by_id) != set(expected_ids):
-        raise RuntimeError("PR-273 case-verdict membership drifted")
 
     def finite_abs_max(values: object, *, label: str) -> float:
         if not isinstance(values, list):
@@ -755,7 +795,19 @@ def build_synthetic_analysis(
             "max_finite_abs_x": "dimensionless registered normalized diagnostic coordinate",
             "max_finite_abs_q": "dimensionless registered normalized stress coordinate",
             "depth_mean_normalized_score": "dimensionless normalized score",
+            "missing_functional": "categorical boolean; no numeric unit",
             "case_id": "categorical",
+        },
+        "categorical_encodings": {
+            "missing_functional": {
+                "source_type": "boolean",
+                "true_marker": "x",
+                "panel": "B",
+                "data_coordinate_anchor": "depth_mean_normalized_score",
+                "label": "missing functional",
+                "label_position": "display-only point offset from the data anchor",
+                "display_offset_has_data_semantics": False,
+            }
         },
         "normalization": {
             "x_q": "finite absolute maximum within each case; no cross-case rescaling",
@@ -846,9 +898,6 @@ def build_figure_bytes(analysis: Mapping[str, object]) -> bytes:
         fontsize=7.5,
     )
     y_top = max(float(x_values.max()), float(q_values.max())) * 1.22
-    for index, is_missing in enumerate(missing):
-        if is_missing:
-            axes[0].scatter(index, y_top * 0.92, marker="x", s=55, color="#b22222", linewidth=1.8, label="missing channel" if index == 2 else None)
     axes[0].set_ylim(0.0, y_top)
     axes[0].set_xticks(positions, case_ids)
     axes[0].set_ylabel("dimensionless registered coordinate")
@@ -872,9 +921,36 @@ def build_figure_bytes(analysis: Mapping[str, object]) -> bytes:
         fontsize=7.5,
     )
     for index, value in enumerate(depth):
-        axes[1].text(index, value + max(depth.max() * 0.018, 1.3), f"{value:g}", ha="center", va="bottom", fontsize=8)
+        axes[1].annotate(
+            f"{value:g}",
+            xy=(index, value),
+            xytext=((8, 3) if missing[index] else (0, 3)),
+            textcoords="offset points",
+            ha=("left" if missing[index] else "center"),
+            va="bottom",
+            fontsize=8,
+        )
         if missing[index]:
-            axes[1].scatter(index, threshold * 0.42, marker="x", s=50, color="#b22222", linewidth=1.8)
+            axes[1].scatter(
+                index,
+                value,
+                marker="x",
+                s=55,
+                color="#b22222",
+                linewidth=1.8,
+                clip_on=False,
+                label="missing functional (categorical)",
+            )
+            axes[1].annotate(
+                "missing functional",
+                xy=(index, value),
+                xytext=(0, 18),
+                textcoords="offset points",
+                ha="center",
+                va="bottom",
+                fontsize=7.5,
+                color="#8b1a1a",
+            )
     axes[1].set_ylim(0.0, max(depth.max() * 1.15, threshold * 1.35))
     axes[1].set_xticks(positions, case_ids)
     axes[1].set_ylabel("dimensionless normalized depth score")
@@ -952,6 +1028,7 @@ def build_figure_manifest(
         "normalization": analysis.get("normalization"),
         "frame": analysis.get("frame"),
         "coordinates": analysis.get("coordinates"),
+        "categorical_encodings": analysis.get("categorical_encodings"),
         "seed": analysis["source_pack"]["seed"],
         "generator": {
             "path": "scripts/vector_tensor/build_pr275_proof_atlas.py",
@@ -1080,6 +1157,10 @@ def build_replication_package(
     import numpy
 
     prereg = sources["pr272_preregistration"]["preregistration"]
+    workflow_identities = {
+        str(path.relative_to(ROOT)): "sha256:" + _sha256(path)
+        for path in (SPEC, Path(__file__).resolve(), RUNNER)
+    }
     payload: dict[str, object] = {
         "schema": "htt.pr275.replication_package.v1",
         "package_id": "PR275-REPLICATION-PACKAGE-V1",
@@ -1110,6 +1191,7 @@ def build_replication_package(
             "source_layout": "PYTHONPATH=htt/src:htt",
         },
         "source_identities": dict(source_hashes),
+        "workflow_identities": dict(sorted(workflow_identities.items())),
         "generated_artifact_identities": dict(generated_hashes),
         "seeds": {
             "pr272_master_seed": prereg["random_stream"]["master_seed"],
@@ -1208,7 +1290,7 @@ def build_program_report(
             "",
             "## Interpretation",
             "",
-            "The fixed cases exercise scalar-limit, tensor-only, missing-channel, local/global-degenerate, and mask/depth-confounded paths. C05 crosses the registered depth alert threshold; C03 retains a missing functional channel. These are pipeline-behavior diagnostics on the registered synthetic benchmark.",
+            "The fixed cases exercise scalar-limit, tensor-only, missing-channel, local/global-degenerate, and mask/depth-confounded paths. C05 crosses the registered depth alert threshold; C03 retains a missing functional channel. The C03 cross is anchored at its actual depth score of zero; its text uses a display-only point offset and carries no numerical y meaning. These are pipeline-behavior diagnostics on the registered synthetic benchmark.",
             "",
             "## What this plot does not show",
             "",
@@ -1233,7 +1315,7 @@ def build_program_report(
             "",
             "## Replication package",
             "",
-            f"`REPLICATION_PACKAGE.json` (`{replication['content_id']}`) records commands, environment versions, source identities, generated artifact hashes, PR-272 seed/tolerance contracts, the PR-273 seed/config identity, caveats, and the diagnostic-only claim ceiling.",
+            f"`REPLICATION_PACKAGE.json` (`{replication['content_id']}`) records commands, environment versions, frozen source identities, exact PR-275 spec/generator/runner workflow identities, generated artifact hashes, PR-272 seed/tolerance contracts, the PR-273 seed/config identity, caveats, and the diagnostic-only claim ceiling.",
             "",
             "## Claim boundary",
             "",

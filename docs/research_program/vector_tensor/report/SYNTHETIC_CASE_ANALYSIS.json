@@ -73,13 +73,24 @@
       "scenario": "MASK_DEPTH_CONFOUNDED"
     }
   ],
+  "categorical_encodings": {
+    "missing_functional": {
+      "data_coordinate_anchor": "depth_mean_normalized_score",
+      "display_offset_has_data_semantics": false,
+      "label": "missing functional",
+      "label_position": "display-only point offset from the data anchor",
+      "panel": "B",
+      "source_type": "boolean",
+      "true_marker": "x"
+    }
+  },
   "caveats": [
     "Five deterministic synthetic cases are not a population sample.",
     "The x and Q maxima are descriptive coordinates, not estimators.",
     "A depth alert is a registered synthetic diagnostic flag only."
   ],
   "claim_ceiling": "diagnostic_only",
-  "content_id": "sha256:e870bf86d6609fe5604dd43c45d287c0aeb6ca115b0f014f0e73f0ebe54504e2",
+  "content_id": "sha256:79bb7650fe0f2e231bcfb322f72b8c7b5f54d7ffd2ecfbb4a8317eff51e06829",
   "coordinates": "categorical case ID ordered C01 through C05",
   "depth_alert_threshold": 25.0,
   "forbidden_use": [
@@ -120,6 +131,7 @@
     "case_id": "categorical",
     "depth_mean_normalized_score": "dimensionless normalized score",
     "max_finite_abs_q": "dimensionless registered normalized stress coordinate",
-    "max_finite_abs_x": "dimensionless registered normalized diagnostic coordinate"
+    "max_finite_abs_x": "dimensionless registered normalized diagnostic coordinate",
+    "missing_functional": "categorical boolean; no numeric unit"
   }
 }
