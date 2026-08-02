@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "policy_id": "PR190-PUBLICATION-POLICY",
+  "change_set_id": "CS-PR190-TYPED-COMPARATOR-ATTAINABILITY",
+  "publication_group_id": "PG-PR190-TYPED-COMPARATOR-ATTAINABILITY",
+  "target_ref": "origin/research/pr04-multicomponent",
+  "target_sha": "7214ef7e91763ed807e0e350e1cfeffb82cec0f5",
+  "max_open_prs": 1,
+  "max_direct_to_target_prs": 1,
+  "max_prs_per_change_set": 1,
+  "max_stack_depth": 1,
+  "max_file_overlap_prs": 0,
+  "max_inventory_age_seconds": 300,
+  "max_receipt_age_seconds": 1800,
+  "max_authorization_ttl_seconds": 1800,
+  "publication_requires_external_publisher": true,
+  "ordinary_agent_push_forbidden": true,
+  "ordinary_agent_pr_mutation_forbidden": true,
+  "claim_ceiling": "theorem_candidate",
+  "family_identification_gate": "BLOCKED_PRE_NATIVE_ATLAS",
+  "required_commands": [
+    {
+      "id": "pr190-focused",
+      "argv": ["{python}", "-B", "scripts/codex_harness/run_pr190_attainability.py", "focused"],
+      "timeout_seconds": 900
+    },
+    {
+      "id": "pr190-generator-check",
+      "argv": ["{python}", "-B", "scripts/codex_harness/run_pr190_attainability.py", "check"],
+      "timeout_seconds": 300
+    },
+    {
+      "id": "pr190-cas-adjudication",
+      "argv": ["{python}", "-B", "scripts/codex_harness/run_pr190_attainability.py", "cas"],
+      "timeout_seconds": 3600
+    },
+    {
+      "id": "pr190-adjacent",
+      "argv": ["{python}", "-B", "scripts/codex_harness/run_pr190_attainability.py", "adjacent"],
+      "timeout_seconds": 1200
+    },
+    {
+      "id": "pr190-dag-strict",
+      "argv": ["{python}", "-B", "scripts/codex_harness/validate_pr_dag.py", "docs/codex_handoff/pr_backlog.yaml", "--status", "docs/codex_handoff/pr_status.yaml", "--strict-rescue-slice"],
+      "timeout_seconds": 240
+    },
+    {
+      "id": "pr190-claim-language",
+      "argv": ["{python}", "-B", "scripts/check_claim_language.py", "htt/src/common/comparator_attainability.py", "tests/pr_cards/test_pr_190_strengthen.py", "docs/research_program/strengthening/pr190_spec.yaml", "docs/PR_DELTAS/pr-190.md"],
+      "timeout_seconds": 240
+    },
+    {
+      "id": "pr190-smoke",
+      "argv": ["{python}", "-B", "scripts/codex_harness/run_pr190_attainability.py", "smoke"],
+      "timeout_seconds": 900
+    }
+  ],
+  "required_review_cells": [
+    "candidate_binding",
+    "typed_state_identity",
+    "orbit_report_identity",
+    "frame_and_congruence_identity",
+    "matter_model_epoch_and_scale",
+    "invariant_normalization",
+    "algebraic_constraint_local_global_separation",
+    "frobenius_obstruction",
+    "interior_family_scope",
+    "four_axis_cas_assumption_alignment",
+    "no_statement_weakening",
+    "negative_closeout_semantics",
+    "success_dependency_closed_on_refutation",
+    "theorem_capability_withheld_until_pr285",
+    "claim_ceiling",
+    "claim_language"
+  ],
+  "invalidates_review": [
+    "candidate_sha_changed",
+    "candidate_tree_changed",
+    "diff_digest_changed",
+    "tests_changed",
+    "target_sha_changed",
+    "typed_state_or_orbit_contract_changed",
+    "registered_endpoint_changed",
+    "frame_or_congruence_changed",
+    "matter_model_epoch_or_scale_changed",
+    "cas_contract_or_axis_changed",
+    "claim_ceiling_changed"
+  ],
+  "forbidden_inputs": [
+    "legacy scalar state used as current physical witness",
+    "optimizer output used as a solution witness",
+    "unregistered frame or congruence bridge",
+    "observed or partially acquired data",
+    "native solver or native morphology atlas placeholder",
+    "Bianchi family identification claim"
+  ]
+}

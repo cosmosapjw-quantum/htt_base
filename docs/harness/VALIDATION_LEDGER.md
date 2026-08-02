@@ -2859,3 +2859,34 @@ passed.
 Independent acceptance authority: the exact remediation closeout must pass a
 fresh R2 review at
 `.agent-harness/runs/pr265-final-review-20260730-r2/RUN_SUMMARY.json`.
+
+## PR-190 — typed comparator attainability negative closeout (2026-08-03)
+
+Change classification: COMMON/BASS typed state-to-orbit comparator audit,
+exact four-axis Frobenius obstruction, generated negative result, and canonical
+status closeout. No observed data, transfer evaluation, likelihood, posterior,
+native solver/atlas output, geometry verdict, or family claim is created.
+
+| Command or evidence | CWD | Result | Notes |
+| --- | --- | --- | --- |
+| `run_pr190_attainability.py focused` | isolated PR-190 worktree | PASS | `12 passed`; typed identity, exact targets, frame/congruence refusal, four sharpness levels, terminal status, and closed PR-191 success edge. |
+| `run_pr190_attainability.py adjacent` | isolated PR-190 worktree | PASS | `47 passed`, `1 deselected`; PR-189 hard-coded worktree-venv replay is preserved for PR-280. |
+| `run_pr190_attainability.py smoke` | isolated PR-190 worktree | PASS | `8 passed`, `10576 deselected`; eight declared legacy deprecation warnings. |
+| source-layout full collection | isolated PR-190 worktree | PASS | `10525/10584 collected`, `59 deselected`; zero collection errors. |
+| `run_pr190_attainability.py cas` | isolated PR-190 worktree | PASS | Wolfram+xAct, SymPy, SageMath+Singular, and Lean all PASS one contract; missing axes and exceptions are zero. |
+| strict DAG/status and mirror checks | isolated PR-190 worktree | PASS | `222 PRs, DAG valid`; canonical and compatibility mirrors synchronized. |
+| claim-language and research-surface lints | isolated PR-190 worktree | PASS | Zero claim-language findings. |
+| repo-wide no-mock helper | isolated PR-190 worktree | **FAIL, PRE-EXISTING** | Historical calibration-factor and mock-marker inventory remains; it is not relabelled as a PR-190 pass. |
+| scoped PR-190 mock-marker scan | isolated PR-190 worktree | PASS BY ABSENCE | No marker occurs on the changed scientific/code/result surfaces. |
+
+Scientific disposition: the registered Bianchi-I hypersurface-normal lower
+and interior targets require `W2=1/25` and `W2=3/100`, while Frobenius gives
+`W2=0` in that same congruence. The full conjunctive programme closes as
+`COMPLETED_FAILED_WITH_RECEIPT`; `success_dependency_satisfied=false` and the
+PR-191 success edge remains closed. The four-axis PASS certifies the exact
+obstruction component only and does not grant theorem capability.
+
+Independent acceptance authority: publication requires the immutable
+candidate review at
+`.agent-harness/runs/pr190-final-review-20260803/RUN_SUMMARY.json`. Any
+candidate or target mutation invalidates that review and requires resealing.

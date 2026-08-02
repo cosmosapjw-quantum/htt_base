@@ -136,7 +136,7 @@ ADVOCATE_EXPLICIT_APPROVED_SEQUENCE = {"PR-168", "PR-169", "PR-170", "PR-171"}
 # --- Post-v10 strengthening wave (PR-185..208, Waves 28..34) ---------------
 # Formal intake of the external-audit strengthening roadmap
 # (htt_post_v10_strengthening_plan_20260721). Registered atomically; the
-# scheduled subset (execution_authorization DAG_SCHEDULABLE) is this
+# scheduled subset (DAG_SCHEDULABLE or later explicit user authorization) is this
 # session's owner-approved parallel-to-PR-151 scope, the rest are
 # REGISTERED_NOT_SCHEDULED / NATIVE_BLOCKED with typed dependency edges.
 STRENGTHEN_FIRST_PR = 185
@@ -149,7 +149,7 @@ STRENGTHEN_CARD_CONTRACTS = {
     "PR-187": (["PR-186"], "defensible", "PENDING", "DAG_SCHEDULABLE"),
     "PR-188": (["PR-185", "PR-186", "PR-187"], "defensible", "PENDING", "DAG_SCHEDULABLE"),
     "PR-189": (["PR-187", "PR-188"], "defensible", "PENDING", "DAG_SCHEDULABLE"),
-    "PR-190": (["PR-187", "PR-189", "PR-249"], "defensible", "PENDING", "REGISTERED_NOT_SCHEDULED"),
+    "PR-190": (["PR-187", "PR-189", "PR-249"], "defensible", "PENDING", "EXPLICIT_USER_AUTHORIZED"),
     "PR-191": (["PR-187", "PR-190"], "defensible", "PENDING", "REGISTERED_NOT_SCHEDULED"),
     "PR-192": (["PR-187", "PR-191"], "defensible", "PENDING", "REGISTERED_NOT_SCHEDULED"),
     "PR-193": (["PR-186", "PR-187", "PR-191", "PR-248"], "defensible", "PENDING", "REGISTERED_NOT_SCHEDULED"),
@@ -177,7 +177,7 @@ STRENGTHEN_CAS_CARDS = {
 }
 STRENGTHEN_SCHEDULED = {
     pr for pr, contract in STRENGTHEN_CARD_CONTRACTS.items()
-    if contract[3] == "DAG_SCHEDULABLE"
+    if contract[3] in {"DAG_SCHEDULABLE", "EXPLICIT_USER_AUTHORIZED"}
 }
 # --- Legacy-revival round-2 dual-track wave (PR-209..246) ------------------
 # Formal intake of htt_legacy_revival_round2_20260721 (round-2 sits on the
@@ -1659,8 +1659,10 @@ def _validate_strengthen_slice(cards: dict[str, Any]) -> None:
     """Validate the atomic post-v10 strengthening intake (PR-185..208).
 
     External novelty and internal readiness are independent axes: every card
-    enters OPEN / spec-first / public_use=false with an exploratory internal
-    ceiling, regardless of its external novelty. Typed dependency edges,
+    entered OPEN / spec-first / public_use=false with an exploratory internal
+    ceiling, regardless of its external novelty. PR-190 is the explicit
+    post-275 execution amendment and carries a theorem-candidate ceiling
+    without granting theorem capability. Typed dependency edges,
     lanes, activation and authorization are pinned from
     STRENGTHEN_CARD_CONTRACTS so card and validator cannot drift.
     """
@@ -1707,8 +1709,11 @@ def _validate_strengthen_slice(cards: dict[str, Any]) -> None:
             raise ValueError(f"{pr_id} scientific_artifact_mode must be standard_internal")
         if card.get("public_use") is not False or card.get("spec_first_required") is not True:
             raise ValueError(f"{pr_id} must remain spec-first and public_use=false on intake")
-        if card.get("claim_tier_ceiling") != "exploratory":
-            raise ValueError(f"{pr_id} intake ceiling must be exploratory (readiness axis)")
+        expected_ceiling = "theorem_candidate" if pr_id == "PR-190" else "exploratory"
+        if card.get("claim_tier_ceiling") != expected_ceiling:
+            raise ValueError(
+                f"{pr_id} claim ceiling must be {expected_ceiling} (readiness axis)"
+            )
         claim_level = card.get("claim_level")
         if claim_level != {"scheme": "roadmap_rescue_v1", "level": "C1"}:
             raise ValueError(f"{pr_id} intake claim level must be roadmap_rescue_v1:C1")
@@ -1725,6 +1730,24 @@ def _validate_strengthen_slice(cards: dict[str, Any]) -> None:
                     )
         if pr_id in STRENGTHEN_CAS_CARDS:
             cas = card.get("cas_contract")
+            if pr_id == "PR-190":
+                if cas != {
+                    "schema": "htt.cas_contract.v3",
+                    "required_axes": [
+                        "wolfram_xact",
+                        "sympy",
+                        "sage_singular",
+                        "lean",
+                    ],
+                    "optional_non_gating_axes": ["rocq"],
+                    "missing_axis_outcome": "CAS_BLOCKED",
+                    "result_blinding": "required_until_adjudication",
+                }:
+                    raise ValueError(
+                        "PR-190 must use the canonical blind four-axis contract; "
+                        "Rocq is optional and non-gating"
+                    )
+                continue
             # v3 (policy repair ADJ-CAS-ROCQ-AXIS-001): Rocq (Coq) joins Lean as
             # a second kernel-independent proof-assistant lineage -> a five-axis
             # blind CAS contract.

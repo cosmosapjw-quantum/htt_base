@@ -280,6 +280,9 @@ formal_rocq/*.vos
 formal_rocq/*.glob
 formal_rocq/.*.aux
 /sage/*.sage.py
+# Sage preparses the tracked PR-190 CAS source beside the input when invoked
+# through `sage -python`; retain the .sage authority and ignore that cache.
+/docs/research_program/strengthening/pr190_cas/axes/sage_singular/*.sage.py
 
 # ─────────────────────────────────────────────────────────────────────
 #  Agent-harness retention (PR-124 preflight, 2026-07-17)
