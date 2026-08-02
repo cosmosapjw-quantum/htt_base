@@ -5926,38 +5926,62 @@ prs:
   - upstream_id: PR-249
     mode: requires_success
   targets:
-  - 'Strengthen against audit criticisms H04, H05: lower/upper endpoint와 모든 interior comparator 값이 동일
-    frame/convention의 Einstein–matter solution class에서 실현된다. algebraic sharpness가 아니라 solution-space sharpness를
-    목표로 한다.'
+  - JointAnisotropyState와 orbit-v3 report를 endpoint마다 동일 frame, congruence, matter model,
+    epoch, scale에 봉인한다.
+  - algebraic, constraint, local-dynamical, global-dynamical sharpness를 별도 conjunctive
+    단계로 판정하고 낮은 단계의 통과를 상위 단계로 승격하지 않는다.
+  - 등록된 lower, upper 및 interior comparator target의 full physical attainability를 statement
+    약화 없이 판정한다.
+  inputs:
+  - PR-187 typed frame/congruence convention
+  - PR-189 joint feasible-set receipt
+  - PR-249 typed-state foundation
+  - docs/research_program/THEOREM_REGISTRY.yaml의 T3-full, T3-int, KE-DYN receipts
+  outputs:
+  - factory-only typed endpoint witness bindings
+  - four-level ComparatorAttainabilityReport
+  - exact four-axis Frobenius obstruction adjudication
+  - receipt-bearing terminal success, failure, or blocked disposition
+  capability:
+  - theorem candidate only; PR-285 adjudication 전 theorem capability 없음
   files:
-  - common
-  - scripts/codex_harness
-  - tests/pr_cards
+  - htt/src/common/comparator_attainability.py
+  - scripts/codex_harness/run_pr190_attainability.py
+  - tests/pr_cards/test_pr_190_strengthen.py
+  - docs/research_program/strengthening/pr190_spec.yaml
+  - docs/research_program/strengthening/pr190_cas
+  - docs/generated/pr190_attainability/attainability_report.json
   - docs/PR_DELTAS/pr-190.md
   tests:
   - venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status
     docs/codex_handoff/pr_status.yaml --strict-rescue-slice
-  - to-be-created:venv/bin/python -B -m pytest -p no:cacheprovider -q tests/pr_cards/test_pr_190_strengthen.py
+  - python -B scripts/codex_harness/run_pr190_attainability.py focused
+  - python -B scripts/codex_harness/run_pr190_attainability.py check
+  - python -B scripts/codex_harness/run_pr190_attainability.py cas
+  - python -B scripts/codex_harness/run_pr190_attainability.py adjacent
+  - python -B scripts/codex_harness/run_pr190_attainability.py smoke
   dod:
-  - 어느 endpoint도 Gauss/momentum/Jacobi/matter conservation/evolution 중 하나를 만족하지 못하거나 sign-corner가 최적화와
-    다르면 full sharpness 실패.
-  - Author-side gates (mechanics/identification/calibration/provenance) reach EVIDENCE_READY; the Independence
-    gate (non-author derivation lineage plus preserved dissent) stays explicitly OPEN until adjudication
-    capacity returns; publication_use stays false.
-  kill: 하나라도 frame mismatch.
+  - 모든 endpoint가 동일 frame/congruence branch에서 네 sharpness level을 모두 만족할 때만 success edge를 연다.
+  - 하나의 decisive contradiction도 COMPLETED_FAILED_WITH_RECEIPT와 success_dependency_satisfied=false로
+    종결하며 statement를 약화하지 않는다.
+  - canonical 네 CAS 축은 동일 contract hash와 assumption branch를 사용하고 majority vote를 금지한다.
+  - 결과는 PR-285의 proof candidate input이며 publication_use는 false다.
+  kill: statement 약화가 필요하거나 frame/congruence/branch/assumption 불일치 또는 required CAS axis 누락.
   cost: high
   level: L2
   scope: pre-solver
-  risk: R3-CAS+ODE
-  claim_tier_ceiling: exploratory
+  risk: R3-CAS
+  claim_tier_ceiling: theorem_candidate
   claim_level:
     scheme: roadmap_rescue_v1
     level: C1
-  claim_impact: 등록 solution class에서 full comparator interval의 dynamical sharpness. (external novelty axis
-    only; roadmap_rescue_v1:C1 internal ceiling on intake).
+  claim_impact: 등록 full comparator attainability statement의 proof candidate 또는 receipt-bearing
+    반증. 관측 및 family claim에는 영향 없음.
   forbidden:
   - constraint witness를 cosmological solution이라고 부르지 않는다.
   - withdrawn W² endpoint를 shear endpoint로 바꿔치기하지 않는다.
+  - scalar 또는 optimizer output을 physical solution witness로 자동 승격하지 않는다.
+  - Rocq를 canonical 네 축 중 하나로 세거나 누락 축을 대체하지 않는다.
   - No publication_use, no external-novelty downgrade from an internal blocker, no fake Independence-gate
     pass.
   anti_drift:
@@ -5967,7 +5991,7 @@ prs:
   activation_state: PENDING
   execution_lane: defensible
   scientific_artifact_mode: standard_internal
-  execution_authorization: REGISTERED_NOT_SCHEDULED
+  execution_authorization: EXPLICIT_USER_AUTHORIZED
   public_use: false
   spec_first_required: true
   scientific_status_on_intake: OPEN
@@ -5975,10 +5999,11 @@ prs:
     schema: htt.cas_contract.v3
     required_axes:
     - wolfram_xact
-    - sympy_high_precision
+    - sympy
     - sage_singular
-    - lean_mathlib
-    - rocq_stdlib
+    - lean
+    optional_non_gating_axes:
+    - rocq
     missing_axis_outcome: CAS_BLOCKED
     result_blinding: required_until_adjudication
 - id: PR-191
