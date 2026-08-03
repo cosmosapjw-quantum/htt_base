@@ -19,13 +19,23 @@ The context harness cannot promote validity, novelty, readiness, or a claim.
 
 ## 1. Project identity
 
-BASS/HTT studies CMB T+E+B spectra and graded FLRW departure through
-`x_C = Σ²_std − W²_std + Ω_tilt + Ω_{k,aniso}`. Older code and reports cite
-this section for the dual MB-95/PSTF architecture and for the honest coverage
-envelope: full-mode end-to-end LoS closure is limited to FLRW, I, V, and IX;
-the remaining families are axis-aligned subsets, and off-axis work must fail
-closed. The owning dispatch, runtime controls, and scientific contracts decide
-the current boundary.
+BASS/HTT studies CMB T+E+B spectra and graded FLRW departure through the
+typed `JointAnisotropyState`. It seals congruence, velocity-frame, geometry,
+units, missing components, content identity, and transfer provenance before a
+functional, orbit, likelihood, or diagnostic can consume the state.
+
+The historical scalar
+`x_C = Σ²_std − W²_std + Ω_tilt + Ω_{k,aniso}` is not the current state
+authority and is not an anisotropy norm. It may appear only in an explicit
+`LegacyProjectionReport` carrying the BC1/BC2 conditions, source state,
+comparator, frame, units, and loss/cancellation disclosure. It is never
+auto-promoted into a vector/tensor state.
+
+Older code and reports cite this section for the dual MB-95/PSTF architecture
+and for the honest coverage envelope: full-mode end-to-end LoS closure is
+limited to FLRW, I, V, and IX; the remaining families are axis-aligned
+subsets, and off-axis work must fail closed. The owning dispatch, runtime
+controls, and scientific contracts decide the current boundary.
 
 ## 2. Canonical directory map
 
@@ -50,11 +60,14 @@ Use the manuscript build configuration and current sources under
 ## 5. Physics-parameter compatibility anchors
 
 Older live comments and tests cite this section. The values below are a compact
-compatibility index only; follow the named owner for current semantics.
+legacy compatibility index only. They cannot seed, anchor, or validate the
+current typed state or inference path; follow the named owner and a generated
+source for current semantics.
 
 - Historical production labels: `ln B(FLRW_tilt)=+26.40`,
-  `β=1.360e-3`, and `F_Bayes=0.093±0.025`. Their owning code and tests
-  guard the values.
+  `β=1.360e-3`, and `F_Bayes=0.093±0.025`. They remain legacy-only until
+  PR-288 independently revalidates normalized likelihood/prior, evidence,
+  PPC, and LOOCV semantics.
 - `T_CMB=2.72548 K` and `z_*=1089.94`:
   `docs/SSOT_POLICY.md` and owning configuration/tests.
 - `D_2=1002.086744 μK²`: enforced on the Rust MB-95 path; the PSTF Python
@@ -68,8 +81,10 @@ compatibility index only; follow the named owner for current semantics.
   benchmark method and environment supplied by the owning benchmark.
 
 Ownership order remains exact transport → normalized hierarchy → canonical
-source primitives → LoS/observable assembly → export bridge. BASS owns
-physics, HTT the observation bridge, and MIO reporting semantics.
+source primitives → LoS/observable assembly → feature extraction → typed
+state → separate diagnostics/inference. BASS owns physics and transfer/atlas
+adapters, OBSSTAT observable features, HTT model-dependent inference, MIO
+family-independent diagnostics, and COMMON the shared contracts/firewalls.
 
 ## 6. Compatibility prohibitions
 

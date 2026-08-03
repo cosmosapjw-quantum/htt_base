@@ -130,7 +130,6 @@ policy:
   - PR-197
   - PR-200
   - PR-203
-  - PR-204
   - PR-209
   - PR-210
   - PR-211
@@ -200,34 +199,54 @@ policy:
   - PR-275
   - PR-155
   - PR-156
-  - PR-157
-  - PR-158
   - PR-162
   - PR-163
   - PR-164
   - PR-165
   - PR-166
-  - PR-178
   - PR-181
   - PR-190
+  - PR-276
+  - PR-277
+  - PR-278
+  - PR-157
+  - PR-158
+  - PR-178
+  - PR-279
+  - PR-280
+  - PR-281
+  - PR-282
+  - PR-283
+  - PR-284
+  - PR-285
   - PR-191
   - PR-192
   - PR-193
   - PR-194
   - PR-195
   - PR-196
+  - PR-286
+  - PR-287
+  - PR-288
+  - PR-289
+  - PR-204
   - PR-198
   - PR-199
   - PR-201
   - PR-202
   - PR-205
   - PR-206
+  - PR-290
+  - PR-291
+  - PR-292
+  - PR-293
+  - PR-294
   - PR-207
   - PR-208
   dependency_overlays:
     schema: htt.pr_dependency_overlay.v1
-    authority: PR-253
-    rationale: Preserve receipt-sealed historical cards while applying the owner-authorized statistical-foundation and premise-anchor replans.
+    authority: PR-276
+    rationale: Preserve receipt-sealed historical cards while applying the owner-authorized statistical-foundation, premise-anchor, and post-275 reexecution replans.
     additions:
       PR-155:
       - PR-250
@@ -239,15 +258,42 @@ policy:
       - PR-257
       PR-157:
       - PR-252
+      - PR-278
       PR-181:
       - PR-255
       - PR-256
       - PR-257
+      PR-191:
+      - PR-285
+      PR-192:
+      - PR-285
       PR-193:
       - PR-254
+      - PR-285
+      PR-194:
+      - PR-285
+      PR-195:
+      - PR-285
+      PR-198:
+      - PR-281
+      - PR-282
+      - PR-287
+      - PR-288
+      - PR-289
+      PR-201:
+      - PR-283
+      - PR-284
+      - PR-287
+      - PR-289
+      PR-204:
+      - PR-287
+      - PR-288
+      - PR-289
       PR-205:
       - PR-254
       - PR-255
+      PR-207:
+      - PR-294
   checkpoint_every_completed_prs: 5
   no_native_lowell_solver_implementation: true
   family_identification_claims_blocked_until_native_morphology_atlas: true
@@ -351,6 +397,22 @@ waves:
   title: Data admission and separately authorized pilot boundary
 - wave: 66
   title: Generated proof atlas, report, and replication package
+- wave: 67
+  title: Post-275 SSOT and chronology reconciliation
+- wave: 68
+  title: Evidence-conditioned capability and independent lane adjudication
+- wave: 69
+  title: Reverse trace, invalidation graph, and hermetic failure inventory
+- wave: 70
+  title: Residual typed-state, parity, weak-identification, and depth closure
+- wave: 71
+  title: Source theorem and VT obligation adjudication
+- wave: 72
+  title: Fresh vector/tensor replay, Bayesian repair, and data identity v2
+- wave: 73
+  title: Separately authorized observed-data lanes
+- wave: 74
+  title: Open-set cross-probe synthesis and independent reproduction handoff
 prs:
 - id: PR-000
   wave: 0
@@ -6719,6 +6781,10 @@ prs:
     mode: requires_success
   - upstream_id: PR-200
     mode: requires_success
+  external_execution_gates:
+  - gate_id: H-CF4
+    mode: requires_human_execution_authorization
+    scope: admitted_cf4_observed_execution
   targets:
   - 'Strengthen against audit criticisms H14, H15, H07: 하나의 raw survey-window bulk-flow estimand에 대한 structural
     identified set I_B와 reconstruction/pipeline choices의 robustness set R_B를 분리하며, bridge를 통해 homogeneous
@@ -6857,6 +6923,10 @@ prs:
     mode: requires_success
   - upstream_id: PR-200
     mode: requires_success
+  external_execution_gates:
+  - gate_id: H-DESI
+    mode: requires_human_execution_authorization
+    scope: admitted_desi_observed_execution
   targets:
   - 'Strengthen against audit criticisms H21: 1000 EZmocks와 25 AbacusSummit validation mocks 전부에서 data와
     동일 selection/window/nuisance refit을 수행하여 clustering, kinematic, imaging/fiber systematics contributions를
@@ -6926,6 +6996,10 @@ prs:
     mode: requires_success
   - upstream_id: PR-200
     mode: requires_success
+  external_execution_gates:
+  - gate_id: H-ACT
+    mode: requires_human_execution_authorization
+    scope: admitted_act_observed_execution
   targets:
   - 'Strengthen against audit criticisms H21: ACT inference는 validated 40<L<763 band 또는 exact configuration-locked
     QE reconstruction에서만 수행하며 release simulations와 identical mean-field/response/noise treatment를 사용한다.'
@@ -11887,3 +11961,1308 @@ prs:
   solver_gate_required: false
   change_set_id: CS-PR275-PROOF-ATLAS-REPORT
   publication_group_id: PG-PR275-PROOF-ATLAS-REPORT
+- id: PR-276
+  wave: 67
+  title: Post-275 SSOT, chronology, and canonical DAG reconciliation
+  owner: COMMON
+  capability: current_typed_state_authority_and_post275_execution_dag
+  inputs:
+  - Verified PR-190 merge lineage and terminal failed receipt
+  - Canonical 222-card DAG/status and read-only post-275 proposal sources
+  outputs:
+  - Atomic PR-276 through PR-294 registration and pending-card dependency overlay
+  - Typed-state SSOT, regenerated handoff/context/status surfaces, and corrected PR-270 chronology
+  contributors: []
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes:
+  - common
+  depends:
+  - PR-190
+  dependency_contracts:
+  - upstream_id: PR-190
+    mode: requires_terminal_receipt
+  targets:
+  - Register the post-275 programme without reopening PR-190 success-only consumers.
+  - Make JointAnisotropyState current authority and x_C an explicit BC1/BC2 legacy projection only.
+  - Correct G1-G12 proposal prose to the eight actually defined gates G1-G8.
+  files:
+  - docs/research_program/post_pr275/pr276_spec.yaml
+  - docs/research_program/post_pr275/pr276_publication_policy.json
+  - scripts/codex_harness/run_pr276_reconciliation.py
+  - docs/codex_handoff/pr_backlog.yaml
+  - docs/codex_handoff/pr_status.yaml
+  - scripts/codex_harness/validate_pr_dag.py
+  - .agent-harness/context/SYMBOLS.md
+  - .agent-harness/context/FROZEN_DECISIONS.md
+  - docs/harness
+  - docs/generated/status_snapshot.json
+  - docs/generated/claim_ledger.json
+  - docs/generated/status_matrix.md
+  - tests/pr_cards/test_pr_276_post275_reconciliation.py
+  - docs/PR_DELTAS/pr-276.md
+  tests:
+  - python scripts/codex_harness/run_pr276_reconciliation.py focused
+  - python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice
+  - python scripts/codex_harness/sync_pr_dag_mirrors.py --check
+  - python scripts/codex_harness/run_pr276_reconciliation.py collect
+  - python scripts/codex_harness/run_pr276_reconciliation.py smoke
+  dod:
+  - All 241 cards have one orchestration state and the canonical/machine mirrors agree.
+  - Current handoff and generated surfaces bind the post-PR-190 baseline and contain no false pending PR-258 chronology.
+  - PR-172 remains historical failed-with-receipt and PR-184 remains its completed successor.
+  kill: Lineage mismatch, historical-receipt mutation, or collision with user-owned untracked inputs.
+  cost: high
+  level: L2
+  scope: pre-solver
+  risk: R2-GOVERNANCE
+  claim_tier_ceiling: diagnostic_only
+  claim_level:
+    scheme: not_applicable_governance_v1
+    level: NOT_APPLICABLE
+  claim_impact: Canonical scheduling and documentation only; no scientific capability is promoted.
+  forbidden:
+  - No historical receipt rewrite, automatic data execution, native-solver status, or family-identification claim.
+  - No completion-status-only capability grant or relaxation of PR-190 success edges.
+  anti_drift:
+  - Existing sealed cards are amended through an explicit dependency overlay rather than rewritten retroactively.
+  roadmap_anchor: docs/research_program/post_pr275/pr276_spec.yaml
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: governance_diagnostic
+  execution_authorization: EXPLICIT_USER_AUTHORIZED
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+  track: POST275
+  solver_gate_required: false
+  change_set_id: CS-PR276-POST275-RECONCILIATION
+  publication_group_id: PG-PR276-POST275-RECONCILIATION
+- id: PR-277
+  wave: 68
+  title: Evidence-conditioned claim capability engine
+  owner: COMMON
+  capability: evidence_closed_versioned_claim_capability_decisions
+  inputs:
+  - PR-276 reconciled evidence graph, typed state authority, and frozen decisions
+  - Terminal adjudication receipts and versioned theorem/data/estimand identities
+  outputs:
+  - Factory-only ClaimCapabilityDecision and action/outcome contracts
+  - Typed invalidation, supersession, recalibration, and reexecution edges
+  contributors:
+  - HTT
+  - MIO
+  - OBSSTAT
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes:
+  - common
+  depends:
+  - PR-276
+  dependency_contracts:
+  - upstream_id: PR-276
+    mode: requires_success
+  targets:
+  - Separate readiness, evidence branch, semantics, identification, provenance, and allowed use.
+  - Derive the read-only granted compatibility property from action and outcome, never caller input.
+  - Block only affected capabilities while preserving terminal historical claims.
+  files:
+  - htt/src/common/evidence_graph.py
+  - htt/src/common/remediation_state.py
+  - tests/contracts/test_claim_capability_engine.py
+  - docs/PR_DELTAS/pr-277.md
+  tests:
+  - to-be-created:PYTHONPATH=htt/src:htt python -m pytest -p no:cacheprovider -q tests/contracts/test_claim_capability_engine.py
+  dod:
+  - CONTRACT_VALIDATED through PUBLIC_RELEASE capabilities require evidence closure and an adjudication receipt.
+  - SUPERSEDE, REVOKE, DOWNGRADE, and invalidation propagate only to typed downstream consumers.
+  - Non-relaxable converse, retraction, MES, BC1/BC2, ownership, native, orbit, CAS, PDF, and anti-laundering rules remain fixed.
+  kill: A completed card, caller boolean, or parallel claim authority can grant a capability.
+  cost: high
+  level: L3
+  scope: pre-solver
+  risk: R3-CLAIMS
+  claim_tier_ceiling: diagnostic_only
+  claim_level:
+    scheme: not_applicable_governance_v1
+    level: NOT_APPLICABLE
+  claim_impact: Capability bookkeeping only; scientific evidence remains owned by its lane.
+  forbidden:
+  - No MIO posterior, native validation, family-identification, public release, or artifact-readiness laundering.
+  anti_drift:
+  - Changed theorem, data, mask, covariance, transfer, or estimand creates a new versioned identity.
+  roadmap_anchor: docs/research_program/post_pr275/pr276_spec.yaml
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: governance_diagnostic
+  execution_authorization: EXPLICIT_USER_AUTHORIZED
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+  track: POST275
+  solver_gate_required: false
+  change_set_id: CS-PR277-CAPABILITY-ENGINE
+  publication_group_id: PG-PR277-CAPABILITY-ENGINE
+- id: PR-278
+  wave: 68
+  title: Tier-A independent per-lane adjudication
+  owner: COMMON
+  capability: receipt_bound_non_author_lane_adjudication
+  inputs:
+  - PR-277 capability decisions and terminal Tier-A evidence receipts
+  - Maximum 20 eligible families and 62 registered dual-axis rows
+  outputs:
+  - Per-lane GRANT, HOLD, DOWNGRADE, or INCONCLUSIVE verdicts
+  - Evidence fingerprints, dissent, and claim ceilings without bulk promotion
+  contributors: []
+  adjudicator_role: independent_non_author_finding_panel
+  implementation_scopes:
+  - common
+  depends:
+  - PR-277
+  dependency_contracts:
+  - upstream_id: PR-277
+    mode: requires_success
+  targets:
+  - Adjudicate each eligible lane independently and preserve eight event-gated families.
+  - Keep CF4 P0 rescue count exactly zero and PR-157 as the final aggregator.
+  files:
+  - htt/src/common/remediation_state.py
+  - docs/research_program/post_pr275/tier_a_adjudication
+  - tests/contracts/test_tier_a_lane_adjudication.py
+  - docs/PR_DELTAS/pr-278.md
+  tests:
+  - to-be-created:PYTHONPATH=htt/src:htt python -m pytest -p no:cacheprovider -q tests/contracts/test_tier_a_lane_adjudication.py
+  dod:
+  - Every adjudicated lane carries a terminal receipt, scoped evidence fingerprint, dissent, and ceiling.
+  - DESI, native, genuinely incomplete, and M-DUALAXIS event gates remain unresolved until their named events occur.
+  kill: Author self-approval, missing receipt, source-identity drift, or bulk promotion.
+  cost: very_high
+  level: L3
+  scope: pre-solver
+  risk: R3-ADJUDICATION
+  claim_tier_ceiling: diagnostic_only
+  claim_level:
+    scheme: not_applicable_governance_v1
+    level: NOT_APPLICABLE
+  claim_impact: Independent evidence disposition only; no family status or public use follows automatically.
+  forbidden:
+  - No author self-approval, MIO posterior, native status, bulk rescue, or family-identification claim.
+  anti_drift:
+  - Deduplicate by claim id, scoped evidence fingerprint, and verdict rather than prose.
+  roadmap_anchor: docs/research_program/post_pr275/pr276_spec.yaml
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: governance_diagnostic
+  execution_authorization: EXPLICIT_USER_AUTHORIZED
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+  track: POST275
+  solver_gate_required: false
+  change_set_id: CS-PR278-TIER-A-ADJUDICATION
+  publication_group_id: PG-PR278-TIER-A-ADJUDICATION
+- id: PR-279
+  wave: 69
+  title: 222-card reverse trace and semantic invalidation graph
+  owner: COMMON
+  capability: complete_internal_pr_retrace_and_recompute_routing
+  inputs:
+  - PR-278 adjudicated lanes and all PR-000 through PR-275 terminal/current records
+  - Separate GitHub publication and review record identity space
+  outputs:
+  - PR_RETRACE_LEDGER covering each historical internal card exactly once
+  - Supersession map, semantic invalidation graph, recompute matrix, failure debt, and data runbooks
+  contributors:
+  - HTT
+  - MIO
+  - OBSSTAT
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes:
+  - common
+  depends:
+  - PR-278
+  dependency_contracts:
+  - upstream_id: PR-278
+    mode: requires_success
+  targets:
+  - Normalize legacy dispositions losslessly into the registered eleven-value vocabulary.
+  - Route scalar-to-typed, orbit, MES, frame, anchor, exceedance, depth, response, open-set, data, theorem, and CF4-P0 invalidations.
+  - Keep 222 internal work units distinct from GitHub publication/review records.
+  files:
+  - docs/research_program/post_pr275/PR_RETRACE_LEDGER.yaml
+  - docs/research_program/post_pr275/semantic_invalidation_graph.yaml
+  - tests/contracts/test_pr_retrace_ledger.py
+  - docs/PR_DELTAS/pr-279.md
+  tests:
+  - to-be-created:PYTHONPATH=htt/src:htt python -m pytest -p no:cacheprovider -q tests/contracts/test_pr_retrace_ledger.py
+  dod:
+  - Historical PR-000 through PR-275 appear exactly once and PR-276 through PR-294 occupy a separate prospective section.
+  - Every claim and artifact consumer resolves to a known disposition and recompute route.
+  kill: Orphan PR, claim, artifact, downstream consumer, or unknown disposition.
+  cost: very_high
+  level: L3
+  scope: pre-solver
+  risk: R3-PROVENANCE
+  claim_tier_ceiling: diagnostic_only
+  claim_level:
+    scheme: not_applicable_governance_v1
+    level: NOT_APPLICABLE
+  claim_impact: Reverse-trace and recomputation routing only.
+  forbidden:
+  - No GitHub/internal ID conflation, synthetic result promotion, native status, or family-identification claim.
+  anti_drift:
+  - Historical dispositions are immutable inputs; corrections use explicit supersession edges.
+  roadmap_anchor: docs/research_program/post_pr275/pr276_spec.yaml
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: governance_diagnostic
+  execution_authorization: EXPLICIT_USER_AUTHORIZED
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+  track: POST275
+  solver_gate_required: false
+  change_set_id: CS-PR279-REVERSE-TRACE
+  publication_group_id: PG-PR279-REVERSE-TRACE
+- id: PR-280
+  wave: 69
+  title: Hermetic harness v4 and fresh failure inventory
+  owner: COMMON
+  capability: declarative_cache_free_execution_profiles_and_failure_map
+  inputs:
+  - PR-279 recompute matrix and preserved broad-suite historical receipts
+  - Root pytest configuration, package boundaries, optional tools, and PR-124 authority receipt
+  outputs:
+  - Versioned exact, active, scientific, package, data, formal, publication, and full-inventory profiles
+  - Cache-free JUnit baseline with every failure assigned to a registered bucket
+  contributors: []
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes:
+  - common
+  depends:
+  - PR-279
+  dependency_contracts:
+  - upstream_id: PR-279
+    mode: requires_success
+  external_execution_gates:
+  - gate_id: G-CI-H
+    mode: requires_human_ruleset_change_authorization
+    scope: github_ruleset_mutation_only
+  targets:
+  - Make smoke and fast explicit path manifests with a separate active-import lane.
+  - Run true full inventory with root addopts cleared and classify every failure.
+  - Make PR-124 authority lookup package-portable while remaining fail-closed on absence or mutation.
+  files:
+  - scripts/codex_harness
+  - tests/contracts
+  - docs/research_program/post_pr275/harness_profiles_v4.yaml
+  - artifacts/full_inventory.xml
+  - docs/PR_DELTAS/pr-280.md
+  tests:
+  - to-be-created:python -m pytest -p no:cacheprovider -o addopts='' --junitxml=artifacts/full_inventory.xml
+  - to-be-created:PYTHONPATH=htt/src:htt python -m pytest -p no:cacheprovider -q tests/contracts/test_harness_profiles_v4.py
+  dod:
+  - UNKNOWN_UNCLASSIFIED is zero and active-core, claim-specific, selected-data, package, and publication lanes have no hidden failures.
+  - Optional or native tool absence blocks only the relevant proof grade.
+  - smoke_tested derives from an exact execution receipt and publication forbids broad-suite waivers.
+  kill: An active-core failure is hidden in PR-280 instead of stopping downstream science and opening a root-cause PR.
+  cost: very_high
+  level: L3
+  scope: pre-solver
+  risk: R3-HARNESS
+  claim_tier_ceiling: diagnostic_only
+  claim_level:
+    scheme: not_applicable_governance_v1
+    level: NOT_APPLICABLE
+  claim_impact: Test and packaging evidence only; no scientific result promotion.
+  forbidden:
+  - No silent skip, cached pass count, ruleset mutation without G-CI-H, native validation, or family-identification claim.
+  anti_drift:
+  - Preserve both historical 406-failure receipts and generate a new cache-free JUnit authority.
+  roadmap_anchor: docs/research_program/post_pr275/pr276_spec.yaml
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: governance_diagnostic
+  execution_authorization: EXPLICIT_USER_AUTHORIZED
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+  track: POST275
+  solver_gate_required: false
+  change_set_id: CS-PR280-HERMETIC-HARNESS-V4
+  publication_group_id: PG-PR280-HERMETIC-HARNESS-V4
+- id: PR-281
+  wave: 70
+  title: Orbit and anisotropy-type acceptance closure
+  owner: COMMON
+  capability: dimension_aware_orbit_acceptance_and_uncovered_direction_reporting
+  inputs:
+  - PR-280 hermetic active-science profile
+  - JointAnisotropyState, orbit catalogue v3, and covariance-supported response geometry
+  outputs:
+  - Constructor acceptance for 12/15/18-dimensional states and quotient ranks 9/12/15
+  - AnisotropyTypeReport uncovered_directions with covariance-supported null-space identity
+  contributors:
+  - OBSSTAT
+  - HTT
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes:
+  - common
+  - obsstat
+  - htt
+  depends:
+  - PR-280
+  dependency_contracts:
+  - upstream_id: PR-280
+    mode: requires_success
+  targets:
+  - Enforce the registered state/rank acceptance table, including single-vector rank one.
+  - Report unsupported directions without promoting numerical rank to generic completeness.
+  files:
+  - htt/src/common/joint_anisotropy_state.py
+  - htt/src/common/anisotropy_type_report.py
+  - tests/contracts/test_orbit_type_acceptance.py
+  - docs/PR_DELTAS/pr-281.md
+  tests:
+  - to-be-created:PYTHONPATH=htt/src:htt python -m pytest -p no:cacheprovider -q tests/contracts/test_orbit_type_acceptance.py
+  dod:
+  - Valid dimensions/ranks construct and invalid pairs fail closed.
+  - Uncovered directions bind covariance and response identities; generic completeness remains UNPROVEN.
+  kill: Nearest-family forcing or numerical-rank promotion to completeness proof.
+  cost: high
+  level: L2
+  scope: pre-solver
+  risk: R2-MATH
+  claim_tier_ceiling: diagnostic_only
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C2
+  claim_impact: Typed orbit and response support diagnostics only.
+  forbidden:
+  - No native atlas, geometry detection, family-identification, or completeness claim.
+  anti_drift:
+  - Rank is evaluated on the declared quotient and covariance support, never on an unlabeled matrix.
+  roadmap_anchor: docs/research_program/post_pr275/pr276_spec.yaml
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: synthetic_diagnostic
+  execution_authorization: EXPLICIT_USER_AUTHORIZED
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+  track: POST275_TYPED
+  solver_gate_required: false
+  change_set_id: CS-PR281-ORBIT-TYPE-ACCEPTANCE
+  publication_group_id: PG-PR281-ORBIT-TYPE-ACCEPTANCE
+- id: PR-282
+  wave: 70
+  title: Exact parity readiness and executable P-equivariance
+  owner: OBSSTAT
+  capability: receipt_bound_estimator_mask_weighting_parity_equivariance
+  inputs:
+  - PR-280 hermetic active-science profile
+  - Registered dependent sign vectors, estimator, mask, and weighting configuration
+  outputs:
+  - Executed P-equivariance receipt and arbitrary-dependence e-value merge
+  - G3 PASS or BLOCK outcome derived from execution
+  contributors:
+  - COMMON
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes:
+  - obsstat
+  - common
+  depends:
+  - PR-280
+  dependency_contracts:
+  - upstream_id: PR-280
+    mode: requires_success
+  targets:
+  - Execute parity equivariance across estimator, mask, and weighting instead of accepting a caller boolean.
+  - Preserve the registered arbitrary-dependence e-value merge for dependent sign vectors.
+  files:
+  - htt/obsstat
+  - tests/obsstat/test_exact_parity_readiness.py
+  - docs/PR_DELTAS/pr-282.md
+  tests:
+  - to-be-created:PYTHONPATH=htt/src:htt python -m pytest -p no:cacheprovider -q tests/obsstat/test_exact_parity_readiness.py
+  dod:
+  - Receipt seals estimator, mask, weighting, convention, and mutation outcomes.
+  - A failed equivariance execution blocks G3 without threshold changes.
+  kill: Caller-supplied readiness, post-hoc threshold change, or dependent tests multiplied as independent.
+  cost: high
+  level: L2
+  scope: pre-solver
+  risk: R3-STATISTICS
+  claim_tier_ceiling: diagnostic_only
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C2
+  claim_impact: Parity method readiness only.
+  forbidden:
+  - No caller boolean, native validation, observed-data inference, or family-identification claim.
+  anti_drift:
+  - Parity convention and estimator configuration freeze before execution.
+  roadmap_anchor: docs/research_program/post_pr275/pr276_spec.yaml
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: synthetic_diagnostic
+  execution_authorization: EXPLICIT_USER_AUTHORIZED
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+  track: POST275_TYPED
+  solver_gate_required: false
+  change_set_id: CS-PR282-EXACT-PARITY
+  publication_group_id: PG-PR282-EXACT-PARITY
+- id: PR-283
+  wave: 70
+  title: Runtime weak-identification and mandatory abstention
+  owner: HTT
+  capability: weak_identification_state_and_open_set_abstention
+  inputs:
+  - PR-280 hermetic active-science profile
+  - Source-separation rank, principal angles, covariance support, and open-set classifier
+  outputs:
+  - SourceSeparationGateStatus.WEAKLY_IDENTIFIED runtime branch
+  - Mandatory abstention for full-rank but below-threshold principal angles
+  contributors:
+  - COMMON
+  - MIO
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes:
+  - common
+  - htt
+  - mio
+  depends:
+  - PR-280
+  dependency_contracts:
+  - upstream_id: PR-280
+    mode: requires_success
+  targets:
+  - Separate algebraic full rank from practically weak source separation.
+  - Prevent the open-set classifier from forcing a candidate under weak identification.
+  files:
+  - htt/src/common/source_separation.py
+  - htt/htt
+  - tests/contracts/test_weak_identification.py
+  - docs/PR_DELTAS/pr-283.md
+  tests:
+  - to-be-created:PYTHONPATH=htt/src:htt python -m pytest -p no:cacheprovider -q tests/contracts/test_weak_identification.py
+  dod:
+  - Full-rank small-angle fixtures return WEAKLY_IDENTIFIED and no point candidate.
+  - Threshold, covariance, and angle identities are sealed before evaluation.
+  kill: A weakly identified case emits a forced label or point estimate.
+  cost: high
+  level: L2
+  scope: pre-solver
+  risk: R3-IDENTIFICATION
+  claim_tier_ceiling: diagnostic_only
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C2
+  claim_impact: Open-set source-separation abstention only.
+  forbidden:
+  - No weak-ID point estimate, nearest-family fallback, native status, or family-identification claim.
+  anti_drift:
+  - Principal-angle threshold and covariance support freeze before classification.
+  roadmap_anchor: docs/research_program/post_pr275/pr276_spec.yaml
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: synthetic_diagnostic
+  execution_authorization: EXPLICIT_USER_AUTHORIZED
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+  track: POST275_TYPED
+  solver_gate_required: false
+  change_set_id: CS-PR283-WEAK-IDENTIFICATION
+  publication_group_id: PG-PR283-WEAK-IDENTIFICATION
+- id: PR-284
+  wave: 70
+  title: Depth-path reverse-martingale and Doob calibration
+  owner: HTT
+  capability: premise_bound_depth_path_maximum_calibration
+  inputs:
+  - PR-280 hermetic active-science profile
+  - Nested DepthPath, transport metadata, filtration, and conditional-expectation premise
+  outputs:
+  - DepthPathReverseMartingaleReport and DepthPathDoobCalibration
+  - Matched-mock fallback when the reverse-martingale premise is unproved
+  contributors:
+  - OBSSTAT
+  - MIO
+  - COMMON
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes:
+  - common
+  - obsstat
+  - mio
+  - htt
+  depends:
+  - PR-280
+  dependency_contracts:
+  - upstream_id: PR-280
+    mode: requires_success
+  targets:
+  - Seal filtration, conditional expectation, path maximum, bound, and premise identity.
+  - Refuse free Doob calibration unless the reverse-martingale premise is proved.
+  files:
+  - htt/src/common/depth_path.py
+  - htt/htt
+  - tests/contracts/test_depth_path_doob_calibration.py
+  - docs/PR_DELTAS/pr-284.md
+  tests:
+  - to-be-created:PYTHONPATH=htt/src:htt python -m pytest -p no:cacheprovider -q tests/contracts/test_depth_path_doob_calibration.py
+  dod:
+  - Proved premises produce bound-bearing reports and unproved premises require matched mocks.
+  - Non-nested masks and mismatched sky support fail closed.
+  kill: Non-nested support is merged or a free bound is emitted without its premise.
+  cost: high
+  level: L2
+  scope: pre-solver
+  risk: R3-STATISTICS
+  claim_tier_ceiling: diagnostic_only
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C2
+  claim_impact: Depth-path calibration diagnostics only.
+  forbidden:
+  - No free calibration, mask merger, observed inference, native status, or family-identification claim.
+  anti_drift:
+  - Premise identity, filtration, masks, and threshold freeze before path inspection.
+  roadmap_anchor: docs/research_program/post_pr275/pr276_spec.yaml
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: synthetic_diagnostic
+  execution_authorization: EXPLICIT_USER_AUTHORIZED
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+  track: POST275_TYPED
+  solver_gate_required: false
+  change_set_id: CS-PR284-DEPTH-DOOB
+  publication_group_id: PG-PR284-DEPTH-DOOB
+- id: PR-285
+  wave: 71
+  title: Pillar T source and vector/tensor theorem adjudication
+  owner: COMMON
+  capability: terminal_receipt_for_every_pillar_t_obligation
+  inputs:
+  - PR-280 hermetic formal profiles
+  - Source Pillar T 65 rows, VT-T 14 rows, and PR-190 failed proof candidate
+  outputs:
+  - Statement, premise, domain, proof, counterexample, and verdict receipt for every row
+  - Four-axis CAS adjudication only for registry-declared CAS obligations
+  contributors: []
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes:
+  - common
+  depends:
+  - PR-280
+  dependency_contracts:
+  - upstream_id: PR-280
+    mode: requires_success
+  targets:
+  - End every Pillar T row as PASS, FAIL, INCONCLUSIVE_WITH_RECEIPT, or BLOCKED_WITH_RECEIPT.
+  - Preserve the PR-190 refutation and frozen legacy registry while adjudicating the v3 successor.
+  files:
+  - docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml
+  - docs/research_program/post_pr275/pillar_t_adjudication
+  - formal
+  - tests/contracts/test_pillar_t_complete_adjudication.py
+  - docs/PR_DELTAS/pr-285.md
+  tests:
+  - to-be-created:PYTHONPATH=htt/src:htt python -m pytest -p no:cacheprovider -q tests/contracts/test_pillar_t_complete_adjudication.py
+  dod:
+  - Bare NOT_ADJUDICATED count is zero and every verdict has a statement/premise/domain-specific receipt.
+  - CAS-required rows use the canonical four axes, one contract, five verdict states, and no majority vote.
+  kill: A statement must be weakened to pass, a required axis is omitted, or a refuted row renders proved.
+  cost: very_high
+  level: L3
+  scope: pre-solver
+  risk: R3-CAS
+  claim_tier_ceiling: diagnostic_only
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C2
+  claim_impact: Receipt-bearing theorem disposition; no observed or family claim.
+  forbidden:
+  - No statement weakening, CAS majority vote, native validation, observed claim, or family-identification claim.
+  anti_drift:
+  - Every axis shares one frozen assumption, branch, domain, and target contract.
+  roadmap_anchor: docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: proof_adjudication_diagnostic
+  execution_authorization: EXPLICIT_USER_AUTHORIZED
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+  track: POST275_THEOREM
+  solver_gate_required: false
+  change_set_id: CS-PR285-PILLAR-T-ADJUDICATION
+  publication_group_id: PG-PR285-PILLAR-T-ADJUDICATION
+- id: PR-286
+  wave: 71
+  title: Pillar S source and vector/tensor statistical adjudication
+  owner: HTT
+  capability: terminal_receipt_for_every_pillar_s_obligation
+  inputs:
+  - PR-280 hermetic scientific profiles
+  - Source Pillar S 58 rows and VT-S 14 rows
+  outputs:
+  - Estimand, sampling-law, covariance, exact/asymptotic, implementation, and coverage receipt for every row
+  - PASS, FAIL, INCONCLUSIVE_WITH_RECEIPT, or BLOCKED_WITH_RECEIPT terminal verdicts
+  contributors:
+  - COMMON
+  - OBSSTAT
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes:
+  - common
+  - obsstat
+  - htt
+  depends:
+  - PR-280
+  dependency_contracts:
+  - upstream_id: PR-280
+    mode: requires_success
+  targets:
+  - Adjudicate exact propositions by proof and statistical propositions by independent implementation plus preregistered coverage.
+  - End every row with a receipt-bearing terminal verdict.
+  files:
+  - docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml
+  - docs/research_program/post_pr275/pillar_s_adjudication
+  - tests/contracts/test_pillar_s_complete_adjudication.py
+  - docs/PR_DELTAS/pr-286.md
+  tests:
+  - to-be-created:PYTHONPATH=htt/src:htt python -m pytest -p no:cacheprovider -q tests/contracts/test_pillar_s_complete_adjudication.py
+  dod:
+  - Bare NOT_ADJUDICATED count is zero and every row has the evidence class its statement requires.
+  - Exact rows are not promoted from simulation-only evidence and statistical tolerances remain preregistered.
+  kill: An exact statement is approved by simulation alone or coverage failure is hidden post hoc.
+  cost: very_high
+  level: L3
+  scope: pre-solver
+  risk: R3-STATISTICS
+  claim_tier_ceiling: diagnostic_only
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C2
+  claim_impact: Receipt-bearing statistical proposition disposition only.
+  forbidden:
+  - No simulation-only exact proof, tolerance laundering, MIO posterior, native status, or family-identification claim.
+  anti_drift:
+  - Estimand, law, covariance, DGP, seeds, and tolerances freeze before result inspection.
+  roadmap_anchor: docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: proof_adjudication_diagnostic
+  execution_authorization: EXPLICIT_USER_AUTHORIZED
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+  track: POST275_THEOREM
+  solver_gate_required: false
+  change_set_id: CS-PR286-PILLAR-S-ADJUDICATION
+  publication_group_id: PG-PR286-PILLAR-S-ADJUDICATION
+- id: PR-287
+  wave: 72
+  title: Current typed replay and fresh blind synthetic challenge
+  owner: HTT
+  capability: current_vector_tensor_spine_replay_and_held_out_challenge
+  inputs:
+  - PR-281 through PR-286 typed-gap and theorem/statistics verdicts
+  - PR-247 through PR-260 preflight and PR-261 through PR-273 typed pipeline
+  outputs:
+  - Separate exact replay of the historical PR-273 pack
+  - Fresh seed and held-out blind challenge with result packs A, B, and C
+  contributors:
+  - COMMON
+  - OBSSTAT
+  - MIO
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes:
+  - common
+  - obsstat
+  - mio
+  - htt
+  depends:
+  - PR-281
+  - PR-282
+  - PR-283
+  - PR-284
+  - PR-285
+  - PR-286
+  dependency_contracts:
+  - upstream_id: PR-281
+    mode: requires_success
+  - upstream_id: PR-282
+    mode: requires_success
+  - upstream_id: PR-283
+    mode: requires_success
+  - upstream_id: PR-284
+    mode: requires_success
+  - upstream_id: PR-285
+    mode: requires_success
+  - upstream_id: PR-286
+    mode: requires_success
+  targets:
+  - Replay the current typed spine in semantic DAG order and keep historical replay distinct from fresh blind evidence.
+  - Regenerate x_phi/Q_phi/Pi_phi, SectorStress, support utilization, and partial-identification crosswalk outputs.
+  files:
+  - htt/htt
+  - htt/mio
+  - tests/integration/test_post275_blind_replay.py
+  - docs/research_program/post_pr275/blind_replay
+  - docs/PR_DELTAS/pr-287.md
+  tests:
+  - to-be-created:PYTHONPATH=htt/src:htt python -m pytest -p no:cacheprovider -q tests/integration/test_post275_blind_replay.py
+  dod:
+  - Coverage, multiplicity, covariance misspecification, weak-ID, open-set unknown, and mutations all execute on held-out cases.
+  - Legacy values appear only through BC1 projection and never seed or anchor current inference.
+  kill: Held-out leakage, surviving mutation, disclosed-truth reuse, or legacy-number copying.
+  cost: very_high
+  level: L3
+  scope: pre-solver
+  risk: R3-INTEGRATION
+  claim_tier_ceiling: diagnostic_only
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C2
+  claim_impact: Blind synthetic diagnostic evidence only.
+  forbidden:
+  - No synthetic-to-observed promotion, MIO posterior, native validation, or family-identification claim.
+  anti_drift:
+  - Truth, seeds, held-out identities, thresholds, and reviewer outputs remain blind until submission.
+  roadmap_anchor: docs/research_program/post_pr275/pr276_spec.yaml
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: synthetic_diagnostic
+  execution_authorization: EXPLICIT_USER_AUTHORIZED
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+  track: POST275_SYNTHETIC
+  solver_gate_required: false
+  change_set_id: CS-PR287-FRESH-BLIND-REPLAY
+  publication_group_id: PG-PR287-FRESH-BLIND-REPLAY
+- id: PR-288
+  wave: 72
+  title: Bayesian semantics, evidence, PPC, and LOOCV repair
+  owner: HTT
+  capability: independently_cross_checked_model_dependent_bayesian_inference
+  inputs:
+  - PR-280 hermetic optional-dependency profiles
+  - Registered normalized likelihood, prior, estimand, nuisance, and analytic fixtures
+  outputs:
+  - Independent dynesty and replicated scrambled-Sobol marginal evidence
+  - Posterior predictive draws and fold-wise nuisance-refit LOOCV
+  contributors:
+  - COMMON
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes:
+  - htt
+  - common
+  depends:
+  - PR-280
+  dependency_contracts:
+  - upstream_id: PR-280
+    mode: requires_success
+  targets:
+  - Cross-check two independent evidence engines against analytic fixtures and preregistered combined uncertainty.
+  - Replace plug-in PPC/LOOCV semantics with posterior draws and fold-wise nuisance refits.
+  files:
+  - htt/htt
+  - tests/htt/test_bayesian_semantics_repair.py
+  - docs/research_program/post_pr275/bayesian_semantics
+  - docs/PR_DELTAS/pr-288.md
+  tests:
+  - to-be-created:PYTHONPATH=htt/src:htt python -m pytest -p no:cacheprovider -q tests/htt/test_bayesian_semantics_repair.py
+  dod:
+  - dynesty and Sobol engines agree on analytic and registered fixtures within preregistered combined uncertainty.
+  - Legacy ln B, beta, F_Bayes, Qbar, Pi_HTT, and chapter tables remain legacy-only until passing.
+  kill: Engine disagreement, degenerate null, post-hoc tolerance, or plug-in residual reuse.
+  cost: very_high
+  level: L3
+  scope: pre-solver
+  risk: R3-STATISTICS
+  claim_tier_ceiling: diagnostic_only
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C2
+  claim_impact: HTT model-dependent synthetic inference validation only.
+  forbidden:
+  - No MIO evidence, invalid stress relabeled Bayes factor, native validation, observed claim, or family-identification claim.
+  anti_drift:
+  - Likelihood, prior, estimand, nuisance, integration uncertainty, and tolerance freeze before comparison.
+  roadmap_anchor: docs/research_program/post_pr275/pr276_spec.yaml
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: synthetic_diagnostic
+  execution_authorization: EXPLICIT_USER_AUTHORIZED
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+  track: POST275_STATISTICS
+  solver_gate_required: false
+  change_set_id: CS-PR288-BAYES-SEMANTICS
+  publication_group_id: PG-PR288-BAYES-SEMANTICS
+- id: PR-289
+  wave: 72
+  title: Data identity registry v2 and execution-authorization separation
+  owner: COMMON
+  capability: authenticated_data_identity_and_separate_execution_receipts
+  inputs:
+  - PR-280 hermetic data profiles and PR-274 immutable v1 receipts
+  - Candidate external data roots without automatic download or Git copying
+  outputs:
+  - DataIdentityRecordV2 and ExecutionAuthorizationReceipt contracts
+  - Per-lane admission records with Planck as first candidate and explicit refusal reasons
+  contributors:
+  - OBSSTAT
+  - HTT
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes:
+  - common
+  - obsstat
+  - htt
+  depends:
+  - PR-280
+  dependency_contracts:
+  - upstream_id: PR-280
+    mode: requires_success
+  targets:
+  - Revalidate existing external data roots by regular-file, size, hash, release, license, and completeness before any download.
+  - Keep admission and analysis execution as different signed, versioned receipts.
+  files:
+  - htt/src/common/data_identity.py
+  - docs/research_program/post_pr275/data_registry_v2
+  - tests/contracts/test_data_identity_registry_v2.py
+  - docs/PR_DELTAS/pr-289.md
+  tests:
+  - to-be-created:PYTHONPATH=htt/src:htt python -m pytest -p no:cacheprovider -q tests/contracts/test_data_identity_registry_v2.py
+  dod:
+  - Product/release/license/component/units/frame/mask/selection/covariance/null/transfer/sky-support fields determine admission.
+  - No large file is copied or symlinked into Git and no clean checkout triggers a redownload.
+  - DESI part files, name-only HSC/KiDS, and incomplete PR-151 acquisition fail admission.
+  kill: Any identity field is unclear or admission and execution authorization collapse into one record.
+  cost: high
+  level: L2
+  scope: pre-solver
+  risk: R3-DATA
+  claim_tier_ceiling: diagnostic_only
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C2
+  claim_impact: Data admission only; no observed execution follows.
+  forbidden:
+  - No automatic download, symlink admission, partial-data use, observed claim, native validation, or family-identification claim.
+  anti_drift:
+  - PR-274 v1 remains immutable; every v2 record binds a new identity and separate authorization lifecycle.
+  roadmap_anchor: docs/research_program/post_pr275/pr276_spec.yaml
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: data_admission_preflight
+  execution_authorization: EXPLICIT_USER_AUTHORIZED
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+  track: POST275_DATA
+  solver_gate_required: false
+  change_set_id: CS-PR289-DATA-IDENTITY-V2
+  publication_group_id: PG-PR289-DATA-IDENTITY-V2
+- id: PR-290
+  wave: 73
+  title: Planck typed low-ell observed-lane reboot
+  owner: HTT
+  capability: planck_observed_descriptive_and_pipeline_conditional_morphology
+  inputs:
+  - PR-202 completed Planck pipeline with PR-281/282/287/288/289 amendments
+  - H-PLANCK execution authorization and admitted PR3 products, masks, beams, conventions, and FFP10 simulations
+  outputs:
+  - Reexecuted alm, Cl, power tensor, poles, BiPoSH, parity, sector stress, conditional exceedance, and response reports
+  - SMICA-Commander comparison, look-elsewhere correction, and legacy scalar projection
+  contributors:
+  - OBSSTAT
+  - COMMON
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes:
+  - obsstat
+  - htt
+  depends:
+  - PR-202
+  - PR-287
+  - PR-288
+  - PR-289
+  dependency_contracts:
+  - upstream_id: PR-202
+    mode: requires_success
+  - upstream_id: PR-287
+    mode: requires_success
+  - upstream_id: PR-288
+    mode: requires_success
+  - upstream_id: PR-289
+    mode: requires_success
+  external_execution_gates:
+  - gate_id: H-PLANCK
+    mode: requires_human_execution_authorization
+    scope: admitted_planck_observed_execution
+  targets:
+  - Apply one mask/beam/harmonic pipeline to observations and FFP10 simulations.
+  - Retire diagonal-covariance and no-mask-deconvolution legacy result surfaces.
+  - Stop at observed descriptive or pipeline-conditional morphology compatibility.
+  files:
+  - htt/obsstat
+  - htt/htt
+  - docs/research_program/post_pr275/data_runs/planck
+  - tests/integration/test_planck_post275_lane.py
+  - docs/PR_DELTAS/pr-290.md
+  tests:
+  - human-gated:PYTHONPATH=htt/src:htt python -m pytest -p no:cacheprovider -q tests/integration/test_planck_post275_lane.py
+  dod:
+  - Authenticated products, admission receipt, H-PLANCK authorization, pipeline identity, covariance/null, and blind review all bind the result.
+  - Missing authorization closes with a non-execution receipt rather than a numerical output.
+  kill: Raw or unadmitted input, mismatched simulation pipeline, or claim-bearing figure without generated source.
+  cost: very_high
+  level: L3
+  scope: pre-solver
+  risk: R3-DATA
+  claim_tier_ceiling: diagnostic_only
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C2
+  claim_impact: At most OBSERVED_DESCRIPTIVE and pipeline-conditional MORPHOLOGY_COMPATIBILITY.
+  forbidden:
+  - No automatic execution, native transfer/solver validation, anisotropy detection, or family-identification claim.
+  anti_drift:
+  - Data fingerprint, mask, beam, harmonic convention, covariance, null, estimator, and look-elsewhere family freeze before execution.
+  roadmap_anchor: docs/research_program/post_pr275/pr276_spec.yaml
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: observed_data_conditional
+  execution_authorization: HUMAN_GATE_REQUIRED
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+  track: POST275_DATA
+  solver_gate_required: false
+  change_set_id: CS-PR290-PLANCK-REBOOT
+  publication_group_id: PG-PR290-PLANCK-REBOOT
+- id: PR-291
+  wave: 73
+  title: CF4 typed velocity-field observed-lane reboot
+  owner: HTT
+  capability: covariance_and_nuisance_conditional_cf4_morphology
+  inputs:
+  - PR-201 CF4 pipeline with PR-283/284/287/289 amendments
+  - H-CF4 execution authorization and admitted raw group catalogue
+  outputs:
+  - Monopole, bulk/shear, full covariance, depth/ZoA path, orbit invariant, and eigenspace-drift results
+  - Shared-nuisance identified set and G4-G7 receipts
+  contributors:
+  - OBSSTAT
+  - COMMON
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes:
+  - obsstat
+  - htt
+  depends:
+  - PR-201
+  - PR-287
+  - PR-289
+  dependency_contracts:
+  - upstream_id: PR-201
+    mode: requires_success
+  - upstream_id: PR-287
+    mode: requires_success
+  - upstream_id: PR-289
+    mode: requires_success
+  external_execution_gates:
+  - gate_id: H-CF4
+    mode: requires_human_execution_authorization
+    scope: admitted_cf4_observed_execution
+  targets:
+  - Recompute from the admitted raw group catalogue under full covariance and depth/ZoA transport.
+  - Preserve the curl/div 0.0089 no-go while retiring old P0 and velocity-shape headlines.
+  files:
+  - htt/obsstat
+  - htt/htt
+  - docs/research_program/post_pr275/data_runs/cf4
+  - tests/integration/test_cf4_post275_lane.py
+  - docs/PR_DELTAS/pr-291.md
+  tests:
+  - human-gated:PYTHONPATH=htt/src:htt python -m pytest -p no:cacheprovider -q tests/integration/test_cf4_post275_lane.py
+  dod:
+  - Admission, H-CF4 authorization, full covariance, nuisance identified set, depth path, and blind review bind every number.
+  - P0 rescue remains zero and weak identification yields abstention.
+  kill: Old P0 headline is revived, covariance is diagonalized silently, or weak-ID becomes a point estimate.
+  cost: very_high
+  level: L3
+  scope: pre-solver
+  risk: R3-DATA
+  claim_tier_ceiling: diagnostic_only
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C2
+  claim_impact: Covariance- and nuisance-conditional morphology compatibility only.
+  forbidden:
+  - No automatic execution, P0 rescue, native validation, source detection, or family-identification claim.
+  anti_drift:
+  - Catalogue, grouping, frame, depth, ZoA, covariance, nuisance, and estimand identities freeze before execution.
+  roadmap_anchor: docs/research_program/post_pr275/pr276_spec.yaml
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: observed_data_conditional
+  execution_authorization: HUMAN_GATE_REQUIRED
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+  track: POST275_DATA
+  solver_gate_required: false
+  change_set_id: CS-PR291-CF4-REBOOT
+  publication_group_id: PG-PR291-CF4-REBOOT
+- id: PR-292
+  wave: 73
+  title: HSC and KiDS spin-2 observed-lane reboot
+  owner: OBSSTAT
+  capability: admitted_spin2_response_reopening_decision
+  inputs:
+  - PR-287 blind replay and PR-289 admitted HSC/KiDS identity records
+  - H-HSC-KiDS execution authorization, objects/SACC/vectors, masks, randoms, PSF, n(z), and shear calibration
+  outputs:
+  - E/B, tomography, pseudo-Cl or COSEBI, compression-rank, fixed-CMB-axis, and cross-survey-covariance reports
+  - Receipt-bearing spin-2 response reopening or non-reopening decision
+  contributors:
+  - HTT
+  - COMMON
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes:
+  - obsstat
+  - htt
+  depends:
+  - PR-287
+  - PR-289
+  dependency_contracts:
+  - upstream_id: PR-287
+    mode: requires_success
+  - upstream_id: PR-289
+    mode: requires_success
+  external_execution_gates:
+  - gate_id: H-HSC-KiDS
+    mode: requires_human_execution_authorization
+    scope: admitted_hsc_kids_observed_execution
+  targets:
+  - Rebuild the spin-2 lane from admitted products with mask, PSF, redshift, calibration, and covariance identities.
+  - Return a reopening decision, not a source or family label.
+  files:
+  - htt/obsstat
+  - htt/htt
+  - docs/research_program/post_pr275/data_runs/hsc_kids
+  - tests/integration/test_hsc_kids_post275_lane.py
+  - docs/PR_DELTAS/pr-292.md
+  tests:
+  - human-gated:PYTHONPATH=htt/src:htt python -m pytest -p no:cacheprovider -q tests/integration/test_hsc_kids_post275_lane.py
+  dod:
+  - Every survey-specific systematic and shared covariance enters the same registered reopening decision.
+  - Name-only datasets and incomplete product sets yield non-execution receipts.
+  kill: Name-only admission, missing PSF/n(z)/calibration/covariance, or a response reopening presented as source identification.
+  cost: very_high
+  level: L3
+  scope: pre-solver
+  risk: R3-DATA
+  claim_tier_ceiling: diagnostic_only
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C2
+  claim_impact: Spin-2 response reopening or non-reopening only.
+  forbidden:
+  - No automatic execution, source detection, native validation, or family-identification claim.
+  anti_drift:
+  - Survey releases, masks, PSF, n(z), calibration, estimator, compression, and covariance freeze before execution.
+  roadmap_anchor: docs/research_program/post_pr275/pr276_spec.yaml
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: observed_data_conditional
+  execution_authorization: HUMAN_GATE_REQUIRED
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+  track: POST275_DATA
+  solver_gate_required: false
+  change_set_id: CS-PR292-HSC-KIDS-REBOOT
+  publication_group_id: PG-PR292-HSC-KIDS-REBOOT
+- id: PR-293
+  wave: 73
+  title: JWST and supernova directional observed-lane reboot
+  owner: HTT
+  capability: calibration_conditional_jwst_sn_directional_result
+  inputs:
+  - PR-287 blind replay, PR-288 statistical repair, and PR-289 admitted row-level identity records
+  - H-JWST execution authorization with hosts, errors, calibration, peculiar-velocity covariance, and competitors
+  outputs:
+  - Direction by depth by host result with zero-point and peculiar-velocity covariance
+  - CF4/2MRS competitor comparison and legacy projection
+  contributors:
+  - OBSSTAT
+  - COMMON
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes:
+  - obsstat
+  - htt
+  depends:
+  - PR-287
+  - PR-288
+  - PR-289
+  dependency_contracts:
+  - upstream_id: PR-287
+    mode: requires_success
+  - upstream_id: PR-288
+    mode: requires_success
+  - upstream_id: PR-289
+    mode: requires_success
+  external_execution_gates:
+  - gate_id: H-JWST
+    mode: requires_human_execution_authorization
+    scope: admitted_jwst_sn_observed_execution
+  targets:
+  - Require row-level source and host uncertainty with shared calibration and peculiar-velocity covariance.
+  - Stop at a calibration-conditional directional result with explicit competitor models.
+  files:
+  - htt/obsstat
+  - htt/htt
+  - docs/research_program/post_pr275/data_runs/jwst_sn
+  - tests/integration/test_jwst_sn_post275_lane.py
+  - docs/PR_DELTAS/pr-293.md
+  tests:
+  - human-gated:PYTHONPATH=htt/src:htt python -m pytest -p no:cacheprovider -q tests/integration/test_jwst_sn_post275_lane.py
+  dod:
+  - Row sources, host uncertainty, individual errors, zero-point and peculiar-velocity covariance, depth, direction, and competitors bind each result.
+  - Cited-seed or positional-link inputs cannot masquerade as admitted measurements.
+  kill: Missing row-level provenance/covariance or positional linkage promoted to physical identity.
+  cost: very_high
+  level: L3
+  scope: pre-solver
+  risk: R3-DATA
+  claim_tier_ceiling: diagnostic_only
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C2
+  claim_impact: Calibration-conditional directional result only.
+  forbidden:
+  - No automatic execution, positional-identity claim, native validation, or family-identification claim.
+  anti_drift:
+  - Rows, hosts, calibration groups, covariances, depth bins, directions, and competitors freeze before execution.
+  roadmap_anchor: docs/research_program/post_pr275/pr276_spec.yaml
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: observed_data_conditional
+  execution_authorization: HUMAN_GATE_REQUIRED
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+  track: POST275_DATA
+  solver_gate_required: false
+  change_set_id: CS-PR293-JWST-SN-REBOOT
+  publication_group_id: PG-PR293-JWST-SN-REBOOT
+- id: PR-294
+  wave: 74
+  title: Passed-lane open-set cross-probe synthesis
+  owner: HTT
+  capability: abstaining_cross_probe_source_separation_candidate
+  inputs:
+  - Terminal receipts from legacy cross-survey, joint comparator, and all post-275 data lanes
+  - ClaimCapabilityDecision-filtered passed-lane set only
+  outputs:
+  - Joint-covariance principal-angle and local/global/systematics challenge report
+  - SOURCE_SEPARATION_CANDIDATE or mandatory abstention
+  contributors:
+  - OBSSTAT
+  - COMMON
+  - MIO
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes:
+  - common
+  - obsstat
+  - mio
+  - htt
+  depends:
+  - PR-155
+  - PR-156
+  - PR-181
+  - PR-205
+  - PR-206
+  - PR-158
+  - PR-178
+  - PR-290
+  - PR-291
+  - PR-292
+  - PR-203
+  - PR-204
+  - PR-293
+  dependency_contracts:
+  - upstream_id: PR-155
+    mode: requires_terminal_receipt
+  - upstream_id: PR-156
+    mode: requires_terminal_receipt
+  - upstream_id: PR-181
+    mode: requires_terminal_receipt
+  - upstream_id: PR-205
+    mode: requires_terminal_receipt
+  - upstream_id: PR-206
+    mode: requires_terminal_receipt
+  - upstream_id: PR-158
+    mode: requires_terminal_receipt
+  - upstream_id: PR-178
+    mode: requires_terminal_receipt
+  - upstream_id: PR-290
+    mode: requires_terminal_receipt
+  - upstream_id: PR-291
+    mode: requires_terminal_receipt
+  - upstream_id: PR-292
+    mode: requires_terminal_receipt
+  - upstream_id: PR-203
+    mode: requires_terminal_receipt
+  - upstream_id: PR-204
+    mode: requires_terminal_receipt
+  - upstream_id: PR-293
+    mode: requires_terminal_receipt
+  targets:
+  - Combine only capability-approved passed lanes under joint covariance and multiplicity.
+  - Execute held-out local/global and systematics injections and abstain under weak identification.
+  - Supply the exact candidate for PR-207 independent external reproduction.
+  files:
+  - htt/htt
+  - htt/mio
+  - docs/research_program/post_pr275/cross_probe
+  - tests/integration/test_post275_cross_probe.py
+  - docs/PR_DELTAS/pr-294.md
+  tests:
+  - to-be-created:PYTHONPATH=htt/src:htt python -m pytest -p no:cacheprovider -q tests/integration/test_post275_cross_probe.py
+  dod:
+  - Failed, blocked, non-authorized, stale, dependent, or weakly identified lanes cannot enter the joint score.
+  - Joint covariance, principal angles, multiplicity, held-out injections, and abstention are receipt-bound.
+  kill: A failed lane is zero-filled, dependent evidence is counted twice, or a candidate is rendered as family identification.
+  cost: very_high
+  level: L3
+  scope: pre-solver
+  risk: R3-MULTIPROBE
+  claim_tier_ceiling: diagnostic_only
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C2
+  claim_impact: At most SOURCE_SEPARATION_CANDIDATE; family status remains forbidden.
+  forbidden:
+  - No automatic lane admission, dependent-confirmation inflation, MIO posterior, native validation, or family-identification claim.
+  anti_drift:
+  - Eligible-lane set, covariance, nuisance, multiplicity, injections, and thresholds freeze before joint evaluation.
+  roadmap_anchor: docs/research_program/post_pr275/pr276_spec.yaml
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: observed_data_conditional
+  execution_authorization: REGISTERED_NOT_SCHEDULED
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+  track: POST275_CROSS_PROBE
+  solver_gate_required: false
+  change_set_id: CS-PR294-CROSS-PROBE
+  publication_group_id: PG-PR294-CROSS-PROBE

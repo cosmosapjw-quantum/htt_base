@@ -15,10 +15,13 @@ from pathlib import Path
 
 from _harness import root
 from publication_integrity import (
+    ATTENDED_PUBLISHER_AUTHORIZATION_MODE,
+    EXTERNAL_PUBLISHER_AUTHORIZATION_MODE,
     PublicationIntegrityError,
     _walk_without_symlinks,
     authorization_hmac,
     bytes_sha256,
+    create_attended_nonce_ledger,
     load_publication_policy,
     load_publisher_key,
     read_external_bytes,
@@ -99,8 +102,24 @@ def _issue(args: argparse.Namespace, repo: Path) -> dict:
     except UnicodeDecodeError as exc:
         raise PublicationIntegrityError("PR body must be UTF-8") from exc
     now = datetime.now(timezone.utc).replace(microsecond=0)
+    nonce_ledger: dict[str, object] | None = None
+    if args.authorization_mode == ATTENDED_PUBLISHER_AUTHORIZATION_MODE:
+        if not args.nonce_ledger:
+            raise PublicationIntegrityError(
+                "attended authorization requires a nonce ledger path"
+            )
+        requested_ledger = Path(args.nonce_ledger).expanduser().absolute()
+        nonce_ledger = create_attended_nonce_ledger(
+            requested_ledger,
+            repo=repo,
+        )
+    elif args.nonce_ledger:
+        raise PublicationIntegrityError(
+            "external publisher authorization cannot select an attended nonce ledger"
+        )
     authorization = {
         "schema_version": 1,
+        "authorization_mode": args.authorization_mode,
         "change_set_id": seal.get("change_set_id"),
         "publication_group_id": seal.get("publication_group_id"),
         "target_remote": seal.get("target_remote"),
@@ -135,6 +154,8 @@ def _issue(args: argparse.Namespace, repo: Path) -> dict:
         "expires_at": (now + timedelta(seconds=ttl)).isoformat(timespec="seconds"),
         "nonce": secrets.token_hex(24),
     }
+    if nonce_ledger is not None:
+        authorization["nonce_ledger"] = nonce_ledger
     if not str(args.approved_by).strip():
         raise PublicationIntegrityError("approved_by must be non-empty")
     authorization["hmac_sha256"] = authorization_hmac(
@@ -146,6 +167,7 @@ def _issue(args: argparse.Namespace, repo: Path) -> dict:
         seal=seal,
         policy=policy,
         artifact_hashes=authorization["artifact_hashes"],
+        repo=repo,
         now=now,
     )
     if errors:
@@ -183,6 +205,21 @@ def main() -> None:
         help="authorize a ready PR; the safer default authorizes a draft",
     )
     issue.add_argument("--approved-by", required=True)
+    issue.add_argument(
+        "--authorization-mode",
+        choices=(
+            EXTERNAL_PUBLISHER_AUTHORIZATION_MODE,
+            ATTENDED_PUBLISHER_AUTHORIZATION_MODE,
+        ),
+        default=EXTERNAL_PUBLISHER_AUTHORIZATION_MODE,
+    )
+    issue.add_argument(
+        "--nonce-ledger",
+        help=(
+            "unused absolute external ledger path created and inode-bound into "
+            "attended authorization; forbidden for external-publisher authorizations"
+        ),
+    )
     issue.add_argument("--ttl-seconds", type=int, default=1800)
     issue.add_argument("--output", required=True)
     args = parser.parse_args()

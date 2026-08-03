@@ -1,0 +1,395 @@
+schema: htt.post_pr275.reconciliation.v1
+document_id: PR276-POST275-RECONCILIATION-v1
+status: REGISTERED
+registered_on: '2026-08-03'
+owner: COMMON
+claim_tier_ceiling: diagnostic_only
+public_use: false
+scientific_status_effect: none_governance_reconciliation_only
+publication_policy: docs/research_program/post_pr275/pr276_publication_policy.json
+
+publication_reconciliation:
+  reproduced_defect: >-
+    PR-247's unattended default-deny boundary was copied into later per-PR
+    policies as an unconditional ordinary-agent ban while no callable publisher
+    transaction existed for an attended, explicitly user-authorized delivery.
+  default_mode: unattended_external_publisher_only
+  attended_mode:
+    authorization_mode: attended_explicit_user
+    semantic_action: CREATE_REVIEW_PR
+    transaction: sealed_sha_push_then_single_pr_create
+    max_transactions: 1
+    requires_current_turn_authorization: true
+    direct_git_or_gh_mutation_forbidden: true
+    nonce_ledger_binding: authorization_hmac_frozen_external_inode_v1
+    entrypoint: .agent-harness/scripts/attended_pr_publisher.py
+  preserved_forbidden_actions:
+  - force_push
+  - approve
+  - merge
+  - ruleset_mutation
+  boundary: >-
+    PR creation technically requires a remote head.  In attended mode the exact
+    sealed-SHA push is an internal step of the single CREATE_REVIEW_PR action;
+    it is not a separate or reusable push grant.
+
+baseline:
+  target_branch: research/pr04-multicomponent
+  verified_merge_head: 1f11d0df0f55b80439585cf56afef55e9d38599a
+  merge_subject: 'Merge pull request #368 from cosmosapjw-quantum/changeset/pr190-typed-comparator-attainability'
+  first_parent: 7214ef7e91763ed807e0e350e1cfeffb82cec0f5
+  pr190_candidate: bae6ac2df15c95ee1e71a3e49b859c0added192d
+  merge_tree: 32b8a7f464f13fad35e25645aafbac5704fd887b
+  candidate_tree: 32b8a7f464f13fad35e25645aafbac5704fd887b
+  ancestry_verified: true
+  tree_identity_verified: true
+  pr190_terminal_resolution: COMPLETED_FAILED_WITH_RECEIPT
+  pr190_success_dependency_satisfied: false
+  pr190_receipt: docs/PR_DELTAS/pr-190.md
+
+scope:
+  prospective_pr_ids:
+  - PR-276
+  - PR-277
+  - PR-278
+  - PR-279
+  - PR-280
+  - PR-281
+  - PR-282
+  - PR-283
+  - PR-284
+  - PR-285
+  - PR-286
+  - PR-287
+  - PR-288
+  - PR-289
+  - PR-290
+  - PR-291
+  - PR-292
+  - PR-293
+  - PR-294
+  historical_internal_pr_count: 222
+  registered_total_after_intake: 241
+  github_publication_records_are_separate_identity_space: true
+  user_owned_untracked_inputs_are_read_only: true
+  uploaded_zip_admission_required_before_unpack: true
+
+entry_contract:
+  dependency:
+    upstream_id: PR-190
+    mode: requires_terminal_receipt
+  rationale: >-
+    PR-190 ended in a receipt-bearing refutation.  Its failed full-attainability
+    statement closes success-only consumers but supplies the terminal chronology
+    needed for this post-275 reconciliation.
+  preserved_closed_success_edges:
+  - downstream_id: PR-191
+    upstream_id: PR-190
+    mode: requires_success
+  - downstream_id: PR-205
+    upstream_id: PR-190
+    mode: requires_success
+  relaxation_authority: >-
+    Only a future versioned ClaimCapabilityDecision with explicit supersession
+    and evidence closure may replan either edge; PR-276 does not do so.
+
+typed_foundation_symbols:
+- MESAnchorSpec
+- DepartureState
+- JointAnisotropyState
+- SectorStress
+- IdentifiedDepartureSet
+- LegacyProjectionReport
+- AnisotropyTypeReport
+- ConditionalExceedanceSurface
+
+frozen_decisions:
+- decision_id: D-TYPED-FOUNDATION
+  decision: >-
+    JointAnisotropyState is the current scientific state authority.  Scalar x_C
+    survives only through an explicit LegacyProjectionReport with BC1/BC2 status.
+  reopen_condition: A proof-bearing receipt shows that BC1 is violated.
+- decision_id: D-GOVERNANCE-BRAKE-2026-08
+  decision: >-
+    After two consecutive assurance-only PRs, the next PR must deliver a named
+    downstream scientific capability, data integration, experiment, or
+    interpretable result unless a reproduced high-severity defect directly blocks it.
+  reopen_condition: A versioned replacement demonstrates a downstream consumer and a reproduced failure.
+
+defined_scientific_gates:
+- gate_id: G1
+  statement: Typed state identity and frame/congruence/units are closed.
+- gate_id: G2
+  statement: Orbit/type acceptance preserves parity, strata, and explicit incompleteness.
+- gate_id: G3
+  statement: Estimator, mask, and weighting pass executable parity equivariance.
+- gate_id: G4
+  statement: Weak identification produces abstention rather than a forced label.
+- gate_id: G5
+  statement: Depth paths carry nested-support and transport identities.
+- gate_id: G6
+  statement: Reverse-martingale calibration has a proved premise or matched-mock fallback.
+- gate_id: G7
+  statement: Source separation retains covariance-supported unidentified directions.
+- gate_id: G8
+  statement: Claim capability follows evidence closure and independent adjudication.
+undefined_gate_ids_forbidden:
+- G9
+- G10
+- G11
+- G12
+gate_correction: >-
+  Supplied proposal prose referred to G1-G12, but only G1-G8 had statements and
+  pass criteria.  PR-276 registers only G1-G8 and does not invent missing gates.
+
+human_execution_gates:
+- gate_id: H-PLANCK
+  lane: Planck
+  effect: separately_authorizes_observed_execution
+- gate_id: H-CF4
+  lane: CF4
+  effect: separately_authorizes_observed_execution
+- gate_id: H-HSC-KiDS
+  lane: HSC_KiDS
+  effect: separately_authorizes_observed_execution
+- gate_id: H-ACT
+  lane: ACT
+  effect: separately_authorizes_observed_execution
+- gate_id: H-DESI
+  lane: DESI
+  effect: separately_authorizes_observed_execution
+- gate_id: H-JWST
+  lane: JWST_SN
+  effect: separately_authorizes_observed_execution
+human_gate_policy: >-
+  Admission and execution authorization are different receipts.  Human gates
+  are metadata, never unresolved PR identifiers or inferred authorization.
+
+canonical_corrections:
+  state_authority:
+    current: JointAnisotropyState
+    legacy_projection: LegacyProjectionReport
+    legacy_projection_conditions:
+    - BC1
+    - BC2
+    forbidden: automatic_scalar_promotion
+  pr172_pr184:
+    PR-172: COMPLETED_FAILED_WITH_RECEIPT
+    PR-184: COMPLETED_SUCCESS
+    b_projector_repair_event: REJECTED_DUPLICATE_PROPOSAL
+    rationale: PR-184 is the registered premise-complete successor to historical PR-172.
+  pr270:
+    status: COMPLETED_SUCCESS
+    canonical_cas_adjudication_path: docs/research_program/vector_tensor/cas/CAS_ADJUDICATION.json
+    path_policy: >-
+      Preserve the frozen PR-270 artifact and every bound consumer.  Record the
+      existing vector_tensor/cas path as the canonical historical convention;
+      do not move or duplicate the receipt.
+  native_boundary:
+    native_solver_implementation: forbidden
+    native_morphology_atlas_simulation: forbidden
+    bianchi_family_identification: forbidden
+  data_boundary:
+    admission_is_execution: false
+    automatic_observed_execution: false
+
+post275_dependency_contracts:
+  PR-276:
+  - upstream_id: PR-190
+    mode: requires_terminal_receipt
+  PR-277:
+  - upstream_id: PR-276
+    mode: requires_success
+  PR-278:
+  - upstream_id: PR-277
+    mode: requires_success
+  PR-279:
+  - upstream_id: PR-278
+    mode: requires_success
+  PR-280:
+  - upstream_id: PR-279
+    mode: requires_success
+  PR-281:
+  - upstream_id: PR-280
+    mode: requires_success
+  PR-282:
+  - upstream_id: PR-280
+    mode: requires_success
+  PR-283:
+  - upstream_id: PR-280
+    mode: requires_success
+  PR-284:
+  - upstream_id: PR-280
+    mode: requires_success
+  PR-285:
+  - upstream_id: PR-280
+    mode: requires_success
+  PR-286:
+  - upstream_id: PR-280
+    mode: requires_success
+  PR-287:
+  - upstream_id: PR-281
+    mode: requires_success
+  - upstream_id: PR-282
+    mode: requires_success
+  - upstream_id: PR-283
+    mode: requires_success
+  - upstream_id: PR-284
+    mode: requires_success
+  - upstream_id: PR-285
+    mode: requires_success
+  - upstream_id: PR-286
+    mode: requires_success
+  PR-288:
+  - upstream_id: PR-280
+    mode: requires_success
+  PR-289:
+  - upstream_id: PR-280
+    mode: requires_success
+  PR-290:
+  - upstream_id: PR-202
+    mode: requires_success
+  - upstream_id: PR-287
+    mode: requires_success
+  - upstream_id: PR-288
+    mode: requires_success
+  - upstream_id: PR-289
+    mode: requires_success
+  PR-291:
+  - upstream_id: PR-201
+    mode: requires_success
+  - upstream_id: PR-287
+    mode: requires_success
+  - upstream_id: PR-289
+    mode: requires_success
+  PR-292:
+  - upstream_id: PR-287
+    mode: requires_success
+  - upstream_id: PR-289
+    mode: requires_success
+  PR-293:
+  - upstream_id: PR-287
+    mode: requires_success
+  - upstream_id: PR-288
+    mode: requires_success
+  - upstream_id: PR-289
+    mode: requires_success
+  PR-294:
+  - upstream_id: PR-155
+    mode: requires_terminal_receipt
+  - upstream_id: PR-156
+    mode: requires_terminal_receipt
+  - upstream_id: PR-181
+    mode: requires_terminal_receipt
+  - upstream_id: PR-205
+    mode: requires_terminal_receipt
+  - upstream_id: PR-206
+    mode: requires_terminal_receipt
+  - upstream_id: PR-158
+    mode: requires_terminal_receipt
+  - upstream_id: PR-178
+    mode: requires_terminal_receipt
+  - upstream_id: PR-290
+    mode: requires_terminal_receipt
+  - upstream_id: PR-291
+    mode: requires_terminal_receipt
+  - upstream_id: PR-292
+    mode: requires_terminal_receipt
+  - upstream_id: PR-203
+    mode: requires_terminal_receipt
+  - upstream_id: PR-204
+    mode: requires_terminal_receipt
+  - upstream_id: PR-293
+    mode: requires_terminal_receipt
+
+pending_card_dependency_amendments:
+  PR-157:
+  - PR-278
+  PR-191:
+  - PR-285
+  PR-192:
+  - PR-285
+  PR-193:
+  - PR-285
+  PR-194:
+  - PR-285
+  PR-195:
+  - PR-285
+  PR-198:
+  - PR-281
+  - PR-282
+  - PR-287
+  - PR-288
+  - PR-289
+  PR-201:
+  - PR-283
+  - PR-284
+  - PR-287
+  - PR-289
+  PR-204:
+  - PR-287
+  - PR-288
+  - PR-289
+  PR-207:
+  - PR-294
+amendment_policy: >-
+  These are prospective overlay edges.  Receipt-sealed card text and existing
+  success-only edges remain unchanged.  The overlay is canonical for scheduling.
+
+admission_and_execution_policy:
+  lane_prs:
+    Planck: PR-290
+    CF4: PR-291
+    HSC_KiDS: PR-292
+    ACT: PR-204
+    DESI: PR-203
+    JWST_SN: PR-293
+  maximum_initial_capabilities:
+    Planck: OBSERVED_DESCRIPTIVE
+    CF4: MORPHOLOGY_COMPATIBILITY
+    HSC_KiDS: MORPHOLOGY_COMPATIBILITY
+    ACT: METHOD_CALIBRATED
+    DESI: OBSERVED_INFERENTIAL
+    JWST_SN: OBSERVED_DESCRIPTIVE
+    cross_probe: SOURCE_SEPARATION_CANDIDATE
+  family_identification: forbidden
+  partial_desi_use: forbidden
+  name_only_admission: forbidden
+  separate_execution_authorization_required: true
+
+acceptance:
+  required:
+  - Canonical backlog, status, JSON/YAML mirrors, and policy order agree.
+  - PR-276 through PR-294 are atomically registered with complete card contracts.
+  - PR-276 alone is in progress; PR-277 through PR-294 remain pending.
+  - Current handoff surfaces contain no false statement that PR-258 is pending or unmerged.
+  - Generated status and claim surfaces bind the current worktree identity.
+  - CLAUDE and both long-backlog copies identify typed state as current authority.
+  - PR-270 is rendered completed without moving its frozen CAS adjudication.
+  - PR-172 failure and PR-184 successor chronology remain unchanged.
+  - Unattended publication remains default-deny while a current-turn owner
+    authorization can execute exactly one sealed attended PR transaction.
+  forbidden:
+  - Modify a historical proof receipt or sealed scientific artifact.
+  - Track, move, delete, unpack, or rewrite user-owned untracked inputs.
+  - Treat admission as observed-data execution authorization.
+  - Open a success-only dependency using completion status alone.
+
+validation_commands:
+- python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice
+- python scripts/codex_harness/sync_pr_dag_mirrors.py --check
+- python scripts/codex_harness/run_pr276_reconciliation.py focused
+- python scripts/codex_harness/run_pr276_reconciliation.py collect
+- python scripts/codex_harness/run_pr276_reconciliation.py smoke
+- python scripts/check_claim_language.py
+- python scripts/claim_lint_research_surfaces.py
+
+kill_conditions:
+- Remote merge lineage or candidate-tree identity no longer matches the recorded baseline.
+- Reconciliation requires changing a frozen historical receipt.
+- A user-owned untracked input collides with a tracked target.
+- A completed status alone grants theorem, data, inference, morphology, family, or publication capability.
+- An attended publication request is replayed, targets an unsealed SHA,
+  supplies an execution-time nonce-ledger override, replaces or resets the
+  authorization-created ledger, or attempts force-push, approval, merge, or
+  ruleset mutation.

@@ -259,7 +259,9 @@ def test_pr261_275_cards_match_revalidated_dag_and_common_contract() -> None:
         assert card["solver_gate_required"] is False
         assert card["scientific_status_on_intake"] == "OPEN"
 
-    assert status["in_progress"] is None
+    # The vector/tensor programme is complete; a later registered card may be
+    # the sole foreground task without changing any PR-261..275 disposition.
+    assert status["in_progress"] in (None, "PR-276")
     assert "PR-260" in status["completed"]
     assert status["execution_resolutions"]["PR-260"][
         "resolution"
@@ -307,7 +309,7 @@ def test_canonical_dag_and_compatibility_mirrors_validate() -> None:
         "--strict-rescue-slice",
     )
     assert dag.returncode == 0, dag.stdout + dag.stderr
-    assert "OK: 222 PRs, DAG valid" in dag.stdout
+    assert "OK: 241 PRs, DAG valid" in dag.stdout
 
     mirrors = _run(
         sys.executable,

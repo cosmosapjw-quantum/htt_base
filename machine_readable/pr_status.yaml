@@ -1,5 +1,6 @@
-generated_on: '2026-08-02'
+generated_on: '2026-08-03'
 completed:
+- PR-276
 - PR-275
 - PR-274
 - PR-273
@@ -195,6 +196,24 @@ pending:
 - PR-206
 - PR-207
 - PR-208
+- PR-277
+- PR-278
+- PR-279
+- PR-280
+- PR-281
+- PR-282
+- PR-283
+- PR-284
+- PR-285
+- PR-286
+- PR-287
+- PR-288
+- PR-289
+- PR-290
+- PR-291
+- PR-292
+- PR-293
+- PR-294
 dormant_external:
 - PR-159
 - PR-160
@@ -342,7 +361,38 @@ execution_lane:
   PR-273: defensible
   PR-274: defensible
   PR-275: defensible
+  PR-276: defensible
+  PR-277: defensible
+  PR-278: defensible
+  PR-279: defensible
+  PR-280: defensible
+  PR-281: defensible
+  PR-282: defensible
+  PR-283: defensible
+  PR-284: defensible
+  PR-285: defensible
+  PR-286: defensible
+  PR-287: defensible
+  PR-288: defensible
+  PR-289: defensible
+  PR-290: defensible
+  PR-291: defensible
+  PR-292: defensible
+  PR-293: defensible
+  PR-294: defensible
 execution_resolutions:
+  PR-276:
+    resolution: COMPLETED_SUCCESS
+    receipt: docs/PR_DELTAS/pr-276.md
+    review_receipt: .agent-harness/runs/pr276-content-immutable-r2-20260803/RUN_SUMMARY.json
+    candidate_sha: 3fa98dc3bd5da7ed1341031ca1442922b9d6c107
+    resolved_on: '2026-08-03'
+    scientific_status_effect: post275_ssot_and_chronology_reconciled
+    scientific_status_after: OPEN_UNCHANGED
+    scientific_artifact_mode: governance_reconciliation_diagnostic
+    observed_data_executed: false
+    public_use: false
+    success_dependency_satisfied: true
   PR-190:
     resolution: COMPLETED_FAILED_WITH_RECEIPT
     receipt: docs/PR_DELTAS/pr-190.md
@@ -1234,7 +1284,28 @@ wave19_amendment:
       Li et al. aggregate expansions
     boundary: source-table consistency measurements only; no H0 fit and no CF4
       conditioned claim
-external_events: {}
+external_events:
+  G-CI-H:
+    status: NOT_AUTHORIZED
+    scope: github_ruleset_mutation_only
+  H-PLANCK:
+    status: NOT_AUTHORIZED
+    lane: Planck
+  H-CF4:
+    status: NOT_AUTHORIZED
+    lane: CF4
+  H-HSC-KiDS:
+    status: NOT_AUTHORIZED
+    lane: HSC_KiDS
+  H-ACT:
+    status: NOT_AUTHORIZED
+    lane: ACT
+  H-DESI:
+    status: NOT_AUTHORIZED
+    lane: DESI
+  H-JWST:
+    status: NOT_AUTHORIZED
+    lane: JWST_SN
 notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable install
   and import discovery when python points to an active virtual environment. PR-003
   validates DAG structure, policy ordering, and progress bookkeeping only. PR-002

@@ -119,7 +119,9 @@ def _validate_review_result(
     return errors
 
 
-def _gate(args: argparse.Namespace, repo: Path) -> tuple[dict[str, Any], str | None]:
+def evaluate_gate(
+    args: argparse.Namespace, repo: Path
+) -> tuple[dict[str, Any], str | None]:
     errors: list[str] = []
     try:
         _, seal_bytes, seal = read_repo_json(
@@ -202,6 +204,7 @@ def _gate(args: argparse.Namespace, repo: Path) -> tuple[dict[str, Any], str | N
                 seal=seal,
                 policy=policy,
                 artifact_hashes=artifact_hashes,
+                repo=repo,
                 now=datetime.now(timezone.utc),
             )
         )
@@ -220,10 +223,18 @@ def _gate(args: argparse.Namespace, repo: Path) -> tuple[dict[str, Any], str | N
         "publication_executed": False,
         "change_set_id": locals().get("seal", {}).get("change_set_id"),
         "candidate_sha": locals().get("seal", {}).get("candidate_sha"),
+        "authorization_file_sha256": (
+            bytes_sha256(authorization_bytes)
+            if "authorization_bytes" in locals()
+            else None
+        ),
         "errors": errors,
     }
     if not errors:
         payload["publication_request"] = {
+            "authorization_mode": authorization.get(
+                "authorization_mode", "external_publisher"
+            ),
             "publication_repository_host": authorization.get(
                 "publication_repository_host"
             ),
@@ -237,6 +248,7 @@ def _gate(args: argparse.Namespace, repo: Path) -> tuple[dict[str, Any], str | N
             "pr_base_branch": authorization.get("pr_base_branch"),
             "pr_head_branch": authorization.get("pr_head_branch"),
             "pr_draft": authorization.get("pr_draft"),
+            "nonce_ledger": authorization.get("nonce_ledger"),
         }
     return payload, str(nonce) if isinstance(nonce, str) else None
 
@@ -256,7 +268,7 @@ def main() -> None:
             command.add_argument("--nonce-ledger", required=True)
     args = parser.parse_args()
     repo = root()
-    payload, nonce = _gate(args, repo)
+    payload, nonce = evaluate_gate(args, repo)
     if payload["ok"] and args.command == "consume":
         assert nonce is not None
         try:

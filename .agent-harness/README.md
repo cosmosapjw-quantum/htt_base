@@ -214,7 +214,7 @@ never a novelty, scientific-validity, or claim-acceptance decision.
 
 ## Freeze, review, integrate, and hand off to the publisher
 
-Ordinary agents stop before publication:
+Unattended and unapproved ordinary agents stop before publication:
 
 ```bash
 python3 .agent-harness/scripts/candidate_seal.py create \
@@ -261,6 +261,18 @@ the body carries exactly one matching `Change-Set-ID:` and
 SHA as the source, not the movable local branch. Repository hooks are only
 guardrails; managed policy and credential/network isolation are the capability
 boundary. See `docs/harness/PUBLICATION_INTEGRITY.md`.
+
+An active policy may additionally register the attended
+`attended_explicit_user` lane. After the same seal, review, integration, live
+inventory, and HMAC authorization checks, a current-turn user authorization
+may be consumed exactly once by `attended_pr_publisher.py`. Authorization
+issuance atomically creates an unused external ledger and HMAC-binds its
+canonical path, device, inode, empty-state ctime, and size; callers cannot
+select or recreate a ledger at execution time. The transaction
+pushes only the sealed SHA and creates the one bound review PR. It is not a
+direct `git push`/`gh pr create` bypass and cannot force-push, approve, merge,
+or mutate rulesets. The attended lane uses the current GitHub identity and is
+therefore not described as credential-isolated publication.
 
 ## Four-axis CAS gate
 
