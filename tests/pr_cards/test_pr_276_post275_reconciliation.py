@@ -317,15 +317,32 @@ def test_generated_status_surfaces_cover_current_dag_and_worktree() -> None:
     assert len(ledger["rows"]) == 241
     short_head = _run("git", "rev-parse", "--short=8", "HEAD").stdout.strip()
     short_parent = _run("git", "rev-parse", "--short=8", "HEAD^").stdout.strip()
+    allowed_sources = {f"{short_head}+dirty", f"{short_parent}+dirty"}
+    status = _yaml(STATUS)
+    closeout = status.get("execution_resolutions", {}).get("PR-276")
+    if isinstance(closeout, dict):
+        content_sha = closeout.get("candidate_sha")
+        assert isinstance(content_sha, str) and len(content_sha) == 40
+        resolved = _run("git", "rev-parse", f"{content_sha}^{{commit}}")
+        assert resolved.returncode == 0, resolved.stderr
+        assert resolved.stdout.strip() == content_sha
+        assert _run("git", "rev-parse", f"{content_sha}^").stdout.strip() == _yaml(
+            SPEC
+        )["baseline"]["verified_merge_head"]
+        assert (
+            _run("git", "show", "-s", "--format=%s", content_sha).stdout.strip()
+            == "PR-276: Reconcile post-275 execution authority"
+        )
+        allowed_sources.add(f"{content_sha[:8]}+dirty")
     # A tracked generated file cannot contain the SHA of the commit that
     # contains it without a Git-hash self-reference.  The generator therefore
     # records the dirty source state immediately before the containing commit;
-    # during an amend/closeout transition that is either HEAD or its first
-    # parent.  The immutable candidate seal binds the exact committed tree.
-    assert snapshot["metadata"]["source_commit"] in {
-        f"{short_head}+dirty",
-        f"{short_parent}+dirty",
-    }
+    # during an amend/closeout transition that is HEAD, its first parent, or
+    # the Git-verified content candidate named by the terminal receipt.  The
+    # last form is required in a detached latest-target integration worktree,
+    # whose HEAD intentionally stays on the target while candidate bytes are
+    # applied to the index.  The immutable candidate seal binds the exact tree.
+    assert snapshot["metadata"]["source_commit"] in allowed_sources
     assert snapshot["metadata"]["worktree_state"] == "dirty"
     matrix = (ROOT / "docs/generated/status_matrix.md").read_text(encoding="utf-8")
     assert "| Total PRs | 241 |" in matrix

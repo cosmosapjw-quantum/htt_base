@@ -16,12 +16,12 @@ historical execution/review evidence remains under `docs/PR_DELTAS/` and
 - Downstream: PR-191 and PR-205 success edges remain closed; PR-276 may consume
   the terminal receipt.
 
-## PR-276 in progress
+## PR-276 completed
 
 - Atomic intake registers PR-276 through PR-294, producing a 241-card DAG.
-- Current counts: 170 completed (70.54%), dependency-weighted 74.56%,
-  critical-path 98.70%, 39 pending, 2 blocked, 28 dormant, one foreground and
-  one background task.
+- Current counts: 171 completed (70.95%), dependency-weighted 74.78%,
+  critical-path 98.70%, 39 pending, 2 blocked, 28 dormant, no foreground task,
+  and one background task.
 - The dependency overlay adds PR-285 to PR-191--195, PR-278 to PR-157, typed
   residual/replay prerequisites to Planck/CF4/ACT cards, and PR-294 to PR-207
   without rewriting receipt-sealed historical cards.
@@ -48,14 +48,13 @@ historical execution/review evidence remains under `docs/PR_DELTAS/` and
   was invalidated by later byte changes. R6 passed both bounded pre-freeze
   axes with no blocking finding.
 - Immutable content review R1 failed on generated-source self-reference and
-  stale handoff wording; the receipt is preserved. The exact current content
-  candidate's seal/review status is governed by the latest registered runtime
-  evidence.
-- The local content candidate remains unpushed. Only a strict-valid immutable
-  PASS permits closeout.
+  stale handoff wording; the receipt is preserved.
+- Immutable content review R2 passed both registered axes on exact content
+  commit `3fa98dc3...`; its seal and normally closed run summary authorize the
+  canonical closeout without changing any scientific capability.
 
 ## Next transition
 
-PR-276 remains `in_progress` until tests and independent review pass on the
-exact candidate. After a valid closeout and delivery, PR-277 is the next
-dependency-valid card. Data execution remains separately human-gated.
+PR-277 is the next dependency-valid card. The exact final delivery state is
+determined by current runtime evidence and live remote verification. Data
+execution and public release remain separately gated.

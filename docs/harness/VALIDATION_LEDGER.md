@@ -2919,7 +2919,11 @@ geometry result, or family claim is created.
 | pre-freeze R5 | FAIL, PRESERVED | Both reviews verified the R4 corrections and bounded technical checks, then rejected stale active handoffs that still presented byte-invalidated R3 as current/final, omitted R4, and called the one context-safe scoped policy match zero raw findings. |
 | pre-freeze R6 | PASS, MUTABLE ONLY | Both bounded axes passed with no blocking finding. Harness result SHA-256 `522f29b...`; claim/SSOT result SHA-256 `35c878ae...`; closed run `.agent-harness/runs/pr276-prefreeze-r6-20260803/`. This tracked delivery transition invalidates R6 exactness and requires immutable review. |
 | immutable content R1 | FAIL, PRESERVED | Exact commit `2383ae40...` and seal `ce74dba5...`. Both reviewers reproduced `1 failed, 74 passed`: the test required a tracked generated artifact to contain its own commit SHA, creating a Git-hash self-reference. They also rejected handoff prose that described the existing content commit/seal as future work. Seal/scope/target/DAG/mirrors/collection/smoke/claim scans/unpushed state otherwise passed. Run: `.agent-harness/runs/pr276-content-immutable-r1-20260803/`. |
+| immutable content R2 | PASS | Exact content commit `3fa98dc3...`, seal `fbc3b457...`, claim result `d33a7bb8...`, harness result `499a54e2...`, merged result `3934d353...`, and normally closed run `.agent-harness/runs/pr276-content-immutable-r2-20260803/` bind the same source tree and target. Focused 75, DAG 241, mirrors, collection 10538/10597, smoke 8, claim scans, clean scope, and unpushed state pass. |
+| progress report after closeout | PASS | `171/241 = 70.95%`; dependency weighted `74.78%`; critical path `98.70%`; no foreground task; PR-277 is the sole unblocked next node. |
+| latest-target integration R1 | FAIL, PRESERVED | Exact closeout commit `88231a05...` and seal `88c00805...`. The detached integration tree kept `HEAD=1f11d0df...`; focused validation reported `1 failed, 74 passed` because generated-source provenance admitted only `HEAD/HEAD^` and rejected the correct content source `3fa98dc3+dirty`. The repair Git-verifies the receipt-bound content SHA, target parent, and commit subject before admitting it; no source/hash/seal check is weakened. Receipt: `.prguard/runtime/pr276-closeout-final-r1-20260803/INTEGRATION_RECEIPT.json`. |
 
-The local content candidate remains unpushed and incomplete. Its exact
-seal/review state is governed by the latest registered runtime evidence. Only
-a strict-valid immutable PASS permits status/mirror closeout.
+Canonical PR-276 status is complete. The closeout transition changes tracked
+bytes but not science or capability; final Git delivery therefore requires its
+own exact seal, registered review, latest-target integration rehearsal, and
+live remote-ref verification.

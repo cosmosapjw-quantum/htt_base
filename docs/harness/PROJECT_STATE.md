@@ -21,16 +21,15 @@ runs.
 ## Canonical orchestration state
 
 - DAG: 241 cards; validation passes.
-- Completed: 170/241 = 70.54%.
-- Dependency-weighted completion: 74.56%.
+- Completed: 171/241 = 70.95%.
+- Dependency-weighted completion: 74.78%.
 - Critical-path completion: 98.70%.
-- In progress: PR-276.
+- In progress: none.
 - Pending: 39.
 - Blocked terminal receipts: PR-190 and PR-172.
 - Dormant external/native: 28.
 - Background acquisition: PR-151 only.
-- No additional card is dependency-ready while PR-276 is in progress. After
-  a successful PR-276 closeout, PR-277 is the next canonical node.
+- PR-277 is the only dependency-ready next canonical node.
 
 The lower count percentage reflects atomic registration of PR-276 through
 PR-294; it is bookkeeping, not scientific regression or readiness evidence.
@@ -75,10 +74,10 @@ rulesets.
 Governing spec:
 `docs/research_program/post_pr275/pr276_spec.yaml`.
 
-The mutable review history preserves failed R1, R2, R4, and R5 envelopes; R3
-passed but was invalidated by later byte changes. R6 passed both bounded
-pre-freeze axes with no blocking finding. All seven publication-policy commands
-pass. A local content-candidate commit now exists and remains unpushed. Its
-exact seal/review state is governed by the latest registered runtime evidence,
-not by this handoff prose. PR-276 stays in progress until a strict-valid
-immutable review passes.
+The review history preserves failed R1, R2, R4, and R5 pre-freeze envelopes,
+byte-invalidated R3, bounded pre-freeze R6 PASS, and failed immutable content
+R1. Immutable content R2 passed both registered axes on exact content commit
+`3fa98dc3...`; canonical PR-276 status is therefore complete. Final delivery
+eligibility and remote state are governed by current runtime seals, registered
+review/integration receipts, and live remote-ref verification, not by this
+handoff prose. PR-277 is next; all data and public-release gates remain closed.

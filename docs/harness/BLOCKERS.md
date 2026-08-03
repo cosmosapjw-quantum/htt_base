@@ -42,12 +42,11 @@ their owning PR deltas and frozen receipts.
   one pass. They remain historical. PR-280 must create the cache-free JUnit
   baseline and classify every failure with `UNKNOWN_UNCLASSIFIED=0`.
 - GitHub ruleset mutation is separately blocked on `G-CI-H`.
-- PR-276's mutable history preserves failed R1, R2, R4, and R5 reviews; R3
-  passed but was invalidated by later byte changes, and R6 passed both bounded
-  pre-freeze axes. Immutable content review R1 then failed on generated-source
-  self-reference and stale handoff wording; that receipt is preserved. The
-  local content candidate remains unpushed, and its exact seal/review state is
-  governed by the latest registered runtime evidence. Completion requires a
-  strict-valid immutable PASS.
+- PR-276 is canonically complete after immutable content R2 passed on exact
+  commit `3fa98dc3...`. Failed immutable R1 and all pre-freeze receipts remain
+  preserved in its delta and validation ledger; none is relabelled. Any final
+  Git delivery remains fail-closed on the current exact closeout seal,
+  registered review, latest-target integration rehearsal, external publisher
+  authorization, and live remote-ref verification.
 - Publication remains blocked until PR-208 and may consume only results granted
   by the capability engine with generated sources and admitted data identities.
