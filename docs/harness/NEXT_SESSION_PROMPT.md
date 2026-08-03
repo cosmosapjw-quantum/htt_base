@@ -1,6 +1,6 @@
 # Next Session Prompt
 
-Continue PR-277 in the isolated worktree
+Verify the PR-277 delivery closeout in the isolated worktree
 `/home/cosmosapjw/worktrees/htt-pr277-capability-engine-20260803` on branch
 `changeset/pr277-evidence-conditioned-capability`.
 
@@ -10,9 +10,10 @@ Continue PR-277 in the isolated worktree
 - PR-190 remains terminal `COMPLETED_FAILED_WITH_RECEIPT`; do not relabel it
   success or reopen PR-191/PR-205 success edges.
 - PR-276 is merged and canonically complete.
-- PR-277 is canonical `in_progress`; PR-278 and later nodes remain blocked on
-  its successful closeout.
-- Canonical DAG: 241 cards, 171 completed, 38 pending, 2 blocked, 28 dormant,
+- PR-277 is canonical `COMPLETED_SUCCESS` after exact content R6 passed;
+  PR-278 is the sole dependency-ready next card but waits for owner review and
+  merge of this delivery.
+- Canonical DAG: 241 cards, 172 completed, 38 pending, 2 blocked, 28 dormant,
   and PR-151 background-only.
 - Governing spec:
   `docs/research_program/post_pr275/pr277_spec.yaml`.
@@ -64,26 +65,37 @@ Continue PR-277 in the isolated worktree
 9. The current repair gives the public issuer no closure marker, binds direct
    registration to the exact issuer frame, and revalidates all trust-bearing
    fields from exact evidence on every public use. Registration alone cannot
-   validate a relabelled record. The content history slot is amended in place;
-   fresh exact review remains required.
+   validate a relabelled record. The content history slot is amended in place.
+10. Exact content R6 passed all 19 cells on `a19d98e5...` and seal
+    `73df6790...`. Its 54-check independent oracle, 111 capability tests, 308
+    focused tests, collection, smoke, DAG, mirrors, context, claim scans, and
+    diff integrity passed with no blocker. The normally closed run summary is
+    the canonical content-review receipt.
+11. A premature main-coordinator zero-result merge attempt is preserved as
+    `PREMATURE_ZERO_RESULT_MERGE.json`; it is process-error evidence only. The
+    valid aggregate was generated after the reviewer envelope and must not be
+    conflated with that attempt.
 
 ## Required continuation
 
 1. Verify live target ancestry and confirm the user main checkout/untracked
    inputs remain untouched.
-2. Confirm the authorized content history still contains exactly one amended
-   commit named `PR-277: Add evidence-conditioned capability engine`.
-3. Rebuild shared context, seal the exact amended commit, and run registered
-   blind claim/harness review against immutable bytes. Re-run the preserved
-   R4/R5 oracles as negative controls. Do not count mutable or abandoned
-   reviews as acceptance.
-4. Address any concrete finding by amending/resealing; preserve every failed
-   receipt.
-5. Only after immutable PASS, mark PR-277 complete, regenerate status/handoff
-   surfaces, create the separate closeout commit if required by the delivery
-   policy, and perform latest-target integration.
+2. Confirm history contains exactly the content commit
+   `PR-277: Add evidence-conditioned capability engine` and the closeout commit
+   `PR-277: Close evidence-conditioned capability delivery`; do not add a
+   third commit.
+3. Rebuild shared context, seal the exact two-commit closeout candidate, and
+   consume only the owner-authorized final-review rereview exception for one
+   registered read-only reviewer. Require all 19 cells, closeout/status/mirror
+   checks, and exact candidate integrity.
+4. Create and verify latest-target integration plus a fresh open-PR inventory.
+   Any target drift, overlap, or failed required command is a hard stop.
+5. Bind the exact title/body, seal, final review, integration, inventory, and a
+   fresh one-use external nonce to the attended authorization.
 6. Use the registered attended publisher exactly once to push the sealed SHA
-   and create one non-draft review PR. Do not approve or merge it.
+   and create one non-draft review PR. Do not approve or merge it. If the
+   transaction is partial, inspect its receipt and remote state before any
+   further action; never retry blindly.
 
 ## Required commands
 

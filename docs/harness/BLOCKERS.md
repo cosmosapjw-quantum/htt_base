@@ -45,7 +45,7 @@ their owning PR deltas and frozen receipts.
 - PR-276 is merged at remote descendant `a6d3bd8b...`; its historical failed
   and passed review receipts remain preserved.
 - PR-277 has a tested implementation and an owner-authorized two-commit
-  delivery cycle, but no passing immutable aggregate yet. Immutable R1 was
+  delivery cycle. Immutable R1 was
   structurally partial; R2 rejected a callable raw builder; R3 lacked its
   second result envelope; and R4 rejected low-level raw allocation that could
   copy fields into valid-looking family and inference grants. R5 rejected an
@@ -53,9 +53,11 @@ their owning PR deltas and frozen receipts.
   disclosed blind-results-breaking prior-run searches. All receipts are
   preserved without majority voting. The current repair makes identity
   registration a misuse guard and exact evidence/adjudication revalidation the
-  authority on every public use. Completion and the one review-PR transaction
-  remain blocked pending a fresh seal, registered blind review, closeout
-  commit, and latest-target integration.
+  authority on every public use. Exact content R6 passed all 19 cells on
+  `a19d98e5...` with no blocking finding, so canonical status is complete.
+  Delivery remains blocked pending the authorized closeout commit, its exact
+  final review, latest-target integration, fresh inventory, and the one
+  attended review-PR transaction.
 - Active graph `INVALIDATES_*`, `REQUIRES_RECALIBRATION`, and
   `REQUIRES_REEXECUTION` edges are capability blockers. They cannot be cleared
   by caller omission or a status/gate annotation.

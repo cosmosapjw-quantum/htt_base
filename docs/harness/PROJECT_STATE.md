@@ -21,16 +21,16 @@ runs.
 ## Canonical orchestration state
 
 - DAG: 241 cards; validation passes.
-- Completed: 171/241 = 70.95%.
-- Dependency-weighted completion: 74.78%.
+- Completed: 172/241 = 71.37%.
+- Dependency-weighted completion: 75.00%.
 - Critical-path completion: 98.70%.
-- In progress: PR-277.
+- In progress: none.
 - Pending: 38.
 - Blocked terminal receipts: PR-190 and PR-172.
 - Dormant external/native: 28.
 - Background acquisition: PR-151 only.
-- No additional foreground node is dependency-ready while PR-277 is active;
-  PR-278 remains downstream of its successful closeout.
+- PR-278 is the sole dependency-ready next node. Its implementation waits for
+  the owner to review and merge the PR-277 delivery.
 
 The lower count percentage reflects atomic registration of PR-276 through
 PR-294; it is bookkeeping, not scientific regression or readiness evidence.
@@ -49,7 +49,7 @@ PR-294; it is bookkeeping, not scientific regression or readiness evidence.
   `docs/research_program/vector_tensor/cas/CAS_ADJUDICATION.json`.
 - Only G1 through G8 have registered statements and pass conditions. G9
   through G12 are undefined and are not gates.
-- PR-277's mutable implementation separates named claim capabilities from DAG
+- PR-277's reviewed contract separates named claim capabilities from DAG
   state. A capability decision requires an exact evidence closure, trusted
   evidence receipt, identity-bound adjudication, and receipt-covered
   capability/action/outcome/ceiling binding.
@@ -104,9 +104,10 @@ issuer no closure marker, binds registration to the exact validated issuer
 frame, and revalidates every trust-bearing field against the exact evidence
 and adjudication context on every public use. Registration is a misuse guard,
 not scientific authority; a relabelled record fails even after deliberate
-registration-layer perturbation. The content commit is amended in place.
-PR-277 remains `in_progress` until the new bytes pass a fresh exact review. The
-owner authorized exactly one content history slot, one closeout commit, and
-one attended review-PR transaction.
-Status closeout and latest-target integration remain mandatory before that
-transaction; all data and scientific public-release gates remain closed.
+registration-layer perturbation. Exact content R6 passed all 19 policy cells
+on `a19d98e5...`, including a 54-check independent oracle, and its run closed
+normally. Canonical PR-277 status is `COMPLETED_SUCCESS`; this is a governance
+contract result only. The owner authorized exactly one content history slot,
+one closeout commit, and one attended review-PR transaction. Final closeout
+review, latest-target integration, inventory, and the attended transaction
+remain mandatory; all data and scientific public-release gates remain closed.

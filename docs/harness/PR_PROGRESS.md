@@ -23,8 +23,8 @@ historical execution/review evidence remains under `docs/PR_DELTAS/` and
   unattended work remains external-publisher-only, while current-turn owner
   authorization may consume one sealed `CREATE_REVIEW_PR` transaction. No
   force-push, approval, merge, ruleset, data, or claim action is enabled.
-- Current counts: 171 completed (70.95%), dependency-weighted 74.78%,
-  critical-path 98.70%, 38 pending, 2 blocked, 28 dormant, PR-277 foreground,
+- Current counts: 172 completed (71.37%), dependency-weighted 75.00%,
+  critical-path 98.70%, 38 pending, 2 blocked, 28 dormant, no foreground task,
   and PR-151 background-only.
 - The dependency overlay adds PR-285 to PR-191--195, PR-278 to PR-157, typed
   residual/replay prerequisites to Planck/CF4/ACT cards, and PR-294 to PR-207
@@ -37,7 +37,7 @@ historical execution/review evidence remains under `docs/PR_DELTAS/` and
 - Data and GitHub ruleset human gates are registered but all remain
   `NOT_AUTHORIZED`.
 
-## PR-277 in progress
+## PR-277 completed
 
 - Added the exact 11-capability, 5-action, and 5-outcome vocabulary without
   deriving any capability from orchestration status.
@@ -57,7 +57,7 @@ historical execution/review evidence remains under `docs/PR_DELTAS/` and
 
 ## Validation state
 
-- Current PR-277 mutable focused suite: `308 passed`.
+- Current PR-277 closeout focused suite: `308 passed`.
 - Current source-layout collection: `10660/10719 collected`, 59 deselected;
   zero collection errors.
 - Current smoke: `8 passed`, 10711 deselected; eight declared legacy warnings.
@@ -73,8 +73,11 @@ historical execution/review evidence remains under `docs/PR_DELTAS/` and
   both reviewers later breached blind-results with broad prior-run searches;
   the run is abandoned and not acceptance. The current repair gives the public
   issuer no closure marker, refuses direct registrar use outside the exact
-  issuer frame, and revalidates exact evidence on every public use. The
-  amended content slot requires a new exact review.
+  issuer frame, and revalidates exact evidence on every public use.
+- Exact content R6 passed all 19 policy cells on `a19d98e5...`; its 54-check
+  independent oracle, 111 capability tests, 308 focused tests, collection,
+  smoke, DAG, mirrors, context, claim scans, and diff integrity all passed.
+  The normally closed run contains no blocking finding.
 
 - Canonical 241-card DAG/status validation: passing after intake.
 - Canonical/machine mirrors: synchronized after intake.
@@ -96,9 +99,10 @@ historical execution/review evidence remains under `docs/PR_DELTAS/` and
 
 ## Next transition
 
-PR-277 remains `in_progress`. The owner authorized one content history slot,
-one closeout commit, and one final review PR on 2026-08-04. The content slot is
-amended with the R2, R4, and R5 authority repairs; the next transition is a new
-seal and immutable blind review, followed by status closeout and latest-target
-integration. PR-278 must not start before successful closeout. Data execution
-and scientific public release remain separately gated.
+PR-277 is canonically `COMPLETED_SUCCESS`. The owner authorized one content
+history slot, one closeout commit, and one final review PR on 2026-08-04. The
+next transition is an exact closeout seal, final independent review,
+latest-target integration, inventory, and one attended PR transaction. PR-278
+is dependency-ready but must not start before the owner reviews and merges the
+PR-277 delivery. Data execution and scientific public release remain
+separately gated.
