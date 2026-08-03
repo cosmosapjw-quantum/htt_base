@@ -248,7 +248,7 @@ def evaluate_gate(
             "pr_base_branch": authorization.get("pr_base_branch"),
             "pr_head_branch": authorization.get("pr_head_branch"),
             "pr_draft": authorization.get("pr_draft"),
-            "nonce_ledger_path": authorization.get("nonce_ledger_path"),
+            "nonce_ledger": authorization.get("nonce_ledger"),
         }
     return payload, str(nonce) if isinstance(nonce, str) else None
 

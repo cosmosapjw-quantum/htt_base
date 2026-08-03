@@ -21,7 +21,7 @@ from publication_integrity import (
     _walk_without_symlinks,
     authorization_hmac,
     bytes_sha256,
-    canonical_nonce_ledger_path,
+    create_attended_nonce_ledger,
     load_publication_policy,
     load_publisher_key,
     read_external_bytes,
@@ -102,15 +102,16 @@ def _issue(args: argparse.Namespace, repo: Path) -> dict:
     except UnicodeDecodeError as exc:
         raise PublicationIntegrityError("PR body must be UTF-8") from exc
     now = datetime.now(timezone.utc).replace(microsecond=0)
-    nonce_ledger_path: str | None = None
+    nonce_ledger: dict[str, object] | None = None
     if args.authorization_mode == ATTENDED_PUBLISHER_AUTHORIZATION_MODE:
         if not args.nonce_ledger:
             raise PublicationIntegrityError(
                 "attended authorization requires a nonce ledger path"
             )
         requested_ledger = Path(args.nonce_ledger).expanduser().absolute()
-        nonce_ledger_path = str(
-            canonical_nonce_ledger_path(requested_ledger, repo=repo)
+        nonce_ledger = create_attended_nonce_ledger(
+            requested_ledger,
+            repo=repo,
         )
     elif args.nonce_ledger:
         raise PublicationIntegrityError(
@@ -153,8 +154,8 @@ def _issue(args: argparse.Namespace, repo: Path) -> dict:
         "expires_at": (now + timedelta(seconds=ttl)).isoformat(timespec="seconds"),
         "nonce": secrets.token_hex(24),
     }
-    if nonce_ledger_path is not None:
-        authorization["nonce_ledger_path"] = nonce_ledger_path
+    if nonce_ledger is not None:
+        authorization["nonce_ledger"] = nonce_ledger
     if not str(args.approved_by).strip():
         raise PublicationIntegrityError("approved_by must be non-empty")
     authorization["hmac_sha256"] = authorization_hmac(
@@ -215,8 +216,8 @@ def main() -> None:
     issue.add_argument(
         "--nonce-ledger",
         help=(
-            "absolute external ledger path bound into attended authorization; "
-            "forbidden for external-publisher authorizations"
+            "unused absolute external ledger path created and inode-bound into "
+            "attended authorization; forbidden for external-publisher authorizations"
         ),
     )
     issue.add_argument("--ttl-seconds", type=int, default=1800)

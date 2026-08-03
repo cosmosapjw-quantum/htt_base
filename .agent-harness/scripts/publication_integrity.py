@@ -55,7 +55,7 @@ PYTHON_EXECUTABLE_TOKEN = "{python}"
 EXTERNAL_PUBLISHER_AUTHORIZATION_MODE = "external_publisher"
 ATTENDED_PUBLISHER_AUTHORIZATION_MODE = "attended_explicit_user"
 ATTENDED_PUBLICATION_TRANSACTION = "sealed_sha_push_then_single_pr_create"
-ATTENDED_NONCE_LEDGER_BINDING = "authorization_hmac_absolute_external_path"
+ATTENDED_NONCE_LEDGER_BINDING = "authorization_hmac_frozen_external_inode_v1"
 NON_PUBLISHING_GIT_SUBCOMMANDS = {
     "add",
     "am",
@@ -1903,14 +1903,14 @@ def validate_authorization_payload(
                 raise PublicationIntegrityError(
                     "attended publication policy is incomplete or drifted"
                 )
-            nonce_ledger = canonical_nonce_ledger_path(
-                authorization.get("nonce_ledger_path"), repo=repo
+            validate_attended_nonce_ledger_identity(
+                authorization.get("nonce_ledger"), repo=repo
             )
-            if authorization.get("nonce_ledger_path") != str(nonce_ledger):
+            if "nonce_ledger_path" in authorization:
                 raise PublicationIntegrityError(
-                    "attended nonce ledger path must be canonical"
+                    "legacy attended nonce ledger path is not accepted"
                 )
-        elif "nonce_ledger_path" in authorization:
+        elif "nonce_ledger" in authorization or "nonce_ledger_path" in authorization:
             raise PublicationIntegrityError(
                 "external publisher authorization cannot select an attended "
                 "nonce ledger"
@@ -2051,6 +2051,189 @@ def canonical_nonce_ledger_path(
     if path.exists() or path.is_symlink():
         _walk_without_symlinks(path)
     return path
+
+
+def _attended_nonce_ledger_metadata(
+    path: Path,
+    metadata: os.stat_result,
+) -> dict[str, object]:
+    return {
+        "path": str(path),
+        "device": metadata.st_dev,
+        "inode": metadata.st_ino,
+        "initial_ctime_ns": metadata.st_ctime_ns,
+        "initial_size": metadata.st_size,
+    }
+
+
+def _validate_open_nonce_ledger(
+    metadata: os.stat_result,
+    *,
+    expected: Mapping[str, object] | None = None,
+) -> None:
+    if not stat.S_ISREG(metadata.st_mode):
+        raise PublicationIntegrityError("nonce ledger is not a regular file")
+    if metadata.st_uid != os.getuid() or stat.S_IMODE(metadata.st_mode) & 0o077:
+        raise PublicationIntegrityError(
+            "nonce ledger must be publisher-owned with 0600 permissions"
+        )
+    if metadata.st_nlink != 1:
+        raise PublicationIntegrityError("nonce ledger must not have hard links")
+    if expected is not None and (
+        metadata.st_dev != expected.get("device")
+        or metadata.st_ino != expected.get("inode")
+    ):
+        raise PublicationIntegrityError(
+            "attended nonce ledger inode differs from the authorization"
+        )
+
+
+def create_attended_nonce_ledger(
+    ledger_path: str | Path,
+    *,
+    repo: Path,
+) -> dict[str, object]:
+    path = canonical_nonce_ledger_path(ledger_path, repo=repo)
+    if path.exists() or path.is_symlink():
+        raise PublicationIntegrityError(
+            "attended nonce ledger path must be unused at authorization issuance"
+        )
+    flags = (
+        os.O_RDWR
+        | os.O_CREAT
+        | os.O_EXCL
+        | getattr(os, "O_CLOEXEC", 0)
+        | getattr(os, "O_NOFOLLOW", 0)
+    )
+    try:
+        fd = os.open(path, flags, 0o600)
+    except OSError as exc:
+        raise PublicationIntegrityError(
+            f"cannot create attended nonce ledger: {exc}"
+        ) from exc
+    try:
+        metadata = os.fstat(fd)
+        _validate_open_nonce_ledger(metadata)
+        if metadata.st_size != 0:
+            raise PublicationIntegrityError(
+                "new attended nonce ledger is not empty"
+            )
+        os.fsync(fd)
+        return _attended_nonce_ledger_metadata(path, metadata)
+    finally:
+        os.close(fd)
+
+
+def validate_attended_nonce_ledger_identity(
+    identity: object,
+    *,
+    repo: Path,
+) -> Path:
+    required = {
+        "path",
+        "device",
+        "inode",
+        "initial_ctime_ns",
+        "initial_size",
+    }
+    if not isinstance(identity, Mapping) or set(identity) != required:
+        raise PublicationIntegrityError(
+            "attended nonce ledger identity is missing or malformed"
+        )
+    path = canonical_nonce_ledger_path(identity.get("path"), repo=repo)
+    if identity.get("path") != str(path):
+        raise PublicationIntegrityError(
+            "attended nonce ledger path must be canonical"
+        )
+    for field in ("device", "inode", "initial_ctime_ns"):
+        require_plain_int(
+            identity.get(field),
+            field=f"nonce_ledger.{field}",
+            minimum=0,
+        )
+    require_plain_int(
+        identity.get("initial_size"),
+        field="nonce_ledger.initial_size",
+        minimum=0,
+        maximum=0,
+    )
+    try:
+        metadata = path.stat(follow_symlinks=False)
+    except OSError as exc:
+        raise PublicationIntegrityError(
+            f"attended nonce ledger is unavailable: {exc}"
+        ) from exc
+    _validate_open_nonce_ledger(metadata, expected=identity)
+    if (
+        metadata.st_size != identity.get("initial_size")
+        or metadata.st_ctime_ns != identity.get("initial_ctime_ns")
+    ):
+        raise PublicationIntegrityError(
+            "attended nonce ledger is not in its authorized initial state"
+        )
+    return path
+
+
+def consume_attended_authorization_nonce(
+    nonce: str,
+    *,
+    ledger_identity: Mapping[str, object],
+    repo: Path,
+) -> None:
+    require_safe_id(nonce, field="authorization nonce")
+    path = canonical_nonce_ledger_path(ledger_identity.get("path"), repo=repo)
+    flags = (
+        os.O_RDWR
+        | getattr(os, "O_CLOEXEC", 0)
+        | getattr(os, "O_NOFOLLOW", 0)
+    )
+    try:
+        fd = os.open(path, flags)
+    except OSError as exc:
+        raise PublicationIntegrityError(
+            f"cannot open attended nonce ledger: {exc}"
+        ) from exc
+    try:
+        fcntl.flock(fd, fcntl.LOCK_EX)
+        metadata = os.fstat(fd)
+        _validate_open_nonce_ledger(metadata, expected=ledger_identity)
+        try:
+            path_metadata = path.stat(follow_symlinks=False)
+        except OSError as exc:
+            raise PublicationIntegrityError(
+                "attended nonce ledger was replaced before consumption"
+            ) from exc
+        _validate_open_nonce_ledger(path_metadata, expected=ledger_identity)
+        os.lseek(fd, 0, os.SEEK_SET)
+        existing = os.read(fd, max(metadata.st_size, 1) + 1_000_000).decode(
+            "ascii", errors="strict"
+        )
+        consumed = {line.strip() for line in existing.splitlines() if line.strip()}
+        if nonce in consumed:
+            raise PublicationIntegrityError(
+                "publish authorization nonce was already used"
+            )
+        if existing or metadata.st_size != 0:
+            raise PublicationIntegrityError(
+                "attended nonce ledger contains unexpected state"
+            )
+        if metadata.st_ctime_ns != ledger_identity.get("initial_ctime_ns"):
+            raise PublicationIntegrityError(
+                "attended nonce ledger was reset after authorization"
+            )
+        os.write(fd, (nonce + "\n").encode("ascii"))
+        os.fsync(fd)
+        final_metadata = os.fstat(fd)
+        _validate_open_nonce_ledger(final_metadata, expected=ledger_identity)
+        try:
+            final_path_metadata = path.stat(follow_symlinks=False)
+        except OSError as exc:
+            raise PublicationIntegrityError(
+                "attended nonce ledger was replaced during consumption"
+            ) from exc
+        _validate_open_nonce_ledger(final_path_metadata, expected=ledger_identity)
+    finally:
+        os.close(fd)
 
 
 def consume_authorization_nonce(

@@ -265,9 +265,10 @@ boundary. See `docs/harness/PUBLICATION_INTEGRITY.md`.
 An active policy may additionally register the attended
 `attended_explicit_user` lane. After the same seal, review, integration, live
 inventory, and HMAC authorization checks, a current-turn user authorization
-may be consumed exactly once by `attended_pr_publisher.py`. That transaction
-derives its sole absolute external nonce-ledger path from the HMAC-signed
-authorization; callers cannot select another ledger at execution time. It
+may be consumed exactly once by `attended_pr_publisher.py`. Authorization
+issuance atomically creates an unused external ledger and HMAC-binds its
+canonical path, device, inode, empty-state ctime, and size; callers cannot
+select or recreate a ledger at execution time. The transaction
 pushes only the sealed SHA and creates the one bound review PR. It is not a
 direct `git push`/`gh pr create` bypass and cannot force-push, approve, merge,
 or mutate rulesets. The attended lane uses the current GitHub identity and is

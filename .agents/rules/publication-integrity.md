@@ -20,9 +20,10 @@ In an attended session, a current user turn may authorize one semantic
 `CREATE_REVIEW_PR` action. Only the policy-registered
 `.agent-harness/scripts/attended_pr_publisher.py` transaction may consume that
 authorization. It revalidates the seal, independent review, latest-target
-integration, live inventory, and one-use nonce. The nonce ledger is one
-absolute external path bound into the signed authorization and is not a
-publisher command-line choice. The transaction pushes only the sealed SHA and
+integration, live inventory, and one-use nonce. Authorization issuance creates
+one unused external ledger and signs its canonical path plus frozen filesystem
+identity; deletion, replacement, reset, and publisher-path override fail
+before remote mutation. The transaction pushes only the sealed SHA and
 creates exactly one review PR. Direct push/PR commands, force-push, approval,
 merge, ruleset mutation, unattended use, and authorization replay remain
 forbidden. This lane uses the current GitHub identity and is not described as

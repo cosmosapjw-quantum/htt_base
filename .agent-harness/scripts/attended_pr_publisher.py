@@ -29,7 +29,7 @@ from publication_integrity import (
     ATTENDED_PUBLICATION_TRANSACTION,
     PublicationIntegrityError,
     _walk_without_symlinks,
-    consume_authorization_nonce,
+    consume_attended_authorization_nonce,
     load_publication_policy,
     read_repo_json,
     write_json_exclusive,
@@ -255,8 +255,8 @@ def _publish(args: argparse.Namespace, repo: Path) -> dict[str, Any]:
         raise PublicationIntegrityError(
             "publication gate returned no validated authorization identity"
         )
-    nonce_ledger_path = request.get("nonce_ledger_path")
-    if not isinstance(nonce_ledger_path, str) or not nonce_ledger_path:
+    nonce_ledger = request.get("nonce_ledger")
+    if not isinstance(nonce_ledger, Mapping):
         raise PublicationIntegrityError(
             "publication gate returned no authorization-bound nonce ledger"
         )
@@ -282,9 +282,9 @@ def _publish(args: argparse.Namespace, repo: Path) -> dict[str, Any]:
     }
 
     try:
-        consume_authorization_nonce(
+        consume_attended_authorization_nonce(
             nonce,
-            ledger_path=nonce_ledger_path,
+            ledger_identity=nonce_ledger,
             repo=repo,
         )
         receipt["authorization_consumed"] = True

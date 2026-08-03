@@ -21,7 +21,7 @@ publication_reconciliation:
     max_transactions: 1
     requires_current_turn_authorization: true
     direct_git_or_gh_mutation_forbidden: true
-    nonce_ledger_binding: authorization_hmac_absolute_external_path
+    nonce_ledger_binding: authorization_hmac_frozen_external_inode_v1
     entrypoint: .agent-harness/scripts/attended_pr_publisher.py
   preserved_forbidden_actions:
   - force_push
@@ -389,6 +389,7 @@ kill_conditions:
 - Reconciliation requires changing a frozen historical receipt.
 - A user-owned untracked input collides with a tracked target.
 - A completed status alone grants theorem, data, inference, morphology, family, or publication capability.
-- An attended publication request is replayed, targets an unsealed SHA, or
-  supplies an execution-time nonce-ledger override, or attempts force-push,
-  approval, merge, or ruleset mutation.
+- An attended publication request is replayed, targets an unsealed SHA,
+  supplies an execution-time nonce-ledger override, replaces or resets the
+  authorization-created ledger, or attempts force-push, approval, merge, or
+  ruleset mutation.

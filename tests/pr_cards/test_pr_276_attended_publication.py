@@ -1,9 +1,11 @@
 from __future__ import annotations
 
 import argparse
+from concurrent.futures import ThreadPoolExecutor
 import copy
 from datetime import datetime, timedelta, timezone
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -22,6 +24,8 @@ from publication_integrity import (  # noqa: E402
     PublicationIntegrityError,
     authorization_hmac,
     classify_publication_command,
+    consume_attended_authorization_nonce,
+    create_attended_nonce_ledger,
     load_publication_policy,
     validate_authorization_payload,
 )
@@ -32,6 +36,18 @@ CANDIDATE_SHA = "a" * 40
 BRANCH = "changeset/pr276-policy-repair"
 BASE = "research/pr04-multicomponent"
 REPO_SLUG = "owner/repository"
+
+
+def _ledger_identity(
+    path: str = "/tmp/htt-pr276-attended-test-nonce-ledger",
+) -> dict[str, object]:
+    return {
+        "path": path,
+        "device": 1,
+        "inode": 2,
+        "initial_ctime_ns": 3,
+        "initial_size": 0,
+    }
 
 
 def _request() -> dict[str, object]:
@@ -48,7 +64,7 @@ def _request() -> dict[str, object]:
         "pr_base_branch": BASE,
         "pr_head_branch": BRANCH,
         "pr_draft": False,
-        "nonce_ledger_path": "/tmp/htt-pr276-attended-test-nonce-ledger",
+        "nonce_ledger": _ledger_identity(),
     }
 
 
@@ -88,7 +104,7 @@ def test_pr276_policy_registers_only_the_narrow_attended_transaction() -> None:
         "max_transactions": 1,
         "requires_current_turn_authorization": True,
         "direct_mutation_commands_forbidden": True,
-        "nonce_ledger_binding": "authorization_hmac_absolute_external_path",
+        "nonce_ledger_binding": "authorization_hmac_frozen_external_inode_v1",
         "publisher_entrypoint": ".agent-harness/scripts/attended_pr_publisher.py",
         "forbidden_actions": [
             "force_push",
@@ -196,7 +212,9 @@ def test_attended_authorization_requires_an_opted_in_policy(
         "issued_at": now.isoformat(timespec="seconds"),
         "expires_at": (now + timedelta(minutes=5)).isoformat(timespec="seconds"),
         "nonce": "5" * 48,
-        "nonce_ledger_path": str(tmp_path / "nonce-ledger"),
+        "nonce_ledger": create_attended_nonce_ledger(
+            tmp_path / "nonce-ledger", repo=ROOT
+        ),
     }
     authorization["hmac_sha256"] = authorization_hmac(authorization, key=key)
     assert validate_authorization_payload(
@@ -223,7 +241,7 @@ def test_attended_authorization_requires_an_opted_in_policy(
     assert errors == ["policy does not authorize attended publication"]
 
     rebound = copy.deepcopy(authorization)
-    rebound["nonce_ledger_path"] = str(tmp_path / "second-ledger")
+    rebound["nonce_ledger"]["path"] = str(tmp_path / "second-ledger")
     assert validate_authorization_payload(
         rebound,
         key=key,
@@ -235,7 +253,7 @@ def test_attended_authorization_requires_an_opted_in_policy(
     ) == ["publish authorization HMAC is invalid"]
 
     inside = copy.deepcopy(authorization)
-    inside["nonce_ledger_path"] = str(ROOT / ".prguard" / "nonce-ledger")
+    inside["nonce_ledger"]["path"] = str(ROOT / ".prguard" / "nonce-ledger")
     inside["hmac_sha256"] = authorization_hmac(inside, key=key)
     assert validate_authorization_payload(
         inside,
@@ -295,7 +313,7 @@ def test_attended_publisher_rejects_external_authorization_before_nonce_use(
         nonlocal consumed
         consumed = True
 
-    monkeypatch.setattr(attended, "consume_authorization_nonce", _consume)
+    monkeypatch.setattr(attended, "consume_attended_authorization_nonce", _consume)
     with pytest.raises(PublicationIntegrityError, match="attended_explicit_user"):
         attended._publish(_args(tmp_path), ROOT)
     assert consumed is False
@@ -348,12 +366,12 @@ def test_attended_publisher_executes_exact_transaction_and_records_receipt(
             "c" * 48,
         ),
     )
-    consumed: list[tuple[str, str]] = []
+    consumed: list[tuple[str, dict[str, object]]] = []
     monkeypatch.setattr(
         attended,
-        "consume_authorization_nonce",
+        "consume_attended_authorization_nonce",
         lambda nonce, **kwargs: consumed.append(
-            (nonce, str(kwargs["ledger_path"]))
+            (nonce, dict(kwargs["ledger_identity"]))
         ),
     )
 
@@ -384,7 +402,7 @@ def test_attended_publisher_executes_exact_transaction_and_records_receipt(
     )
 
     receipt = attended._publish(_args(tmp_path), ROOT)
-    assert consumed == [("c" * 48, str(request["nonce_ledger_path"]))]
+    assert consumed == [("c" * 48, dict(request["nonce_ledger"]))]
     assert commands[0] == [
         "git",
         "push",
@@ -429,7 +447,9 @@ def test_attended_publisher_blocks_mismatched_remote_without_mutation(
             "d" * 48,
         ),
     )
-    monkeypatch.setattr(attended, "consume_authorization_nonce", lambda *a, **k: None)
+    monkeypatch.setattr(
+        attended, "consume_attended_authorization_nonce", lambda *a, **k: None
+    )
     monkeypatch.setattr(attended, "_remote_head", lambda repo, **kwargs: "e" * 40)
     commands: list[list[str]] = []
     monkeypatch.setattr(
@@ -455,7 +475,9 @@ def test_attended_publisher_replay_uses_one_authorization_bound_ledger(
     tmp_path: Path,
 ) -> None:
     request = _request()
-    request["nonce_ledger_path"] = str(tmp_path / "bound-nonce-ledger")
+    request["nonce_ledger"] = create_attended_nonce_ledger(
+        tmp_path / "bound-nonce-ledger", repo=ROOT
+    )
     monkeypatch.setattr(
         attended,
         "_policy_for_seal",
@@ -505,3 +527,53 @@ def test_attended_publisher_replay_uses_one_authorization_bound_ledger(
 
     assert remote_checks == ["checked", "checked"]
     assert [row["status"] for row in receipts] == ["PASS", "FAIL"]
+
+    ledger_path = Path(str(request["nonce_ledger"]["path"]))
+    ledger_path.unlink()
+    fd = os.open(ledger_path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+    os.close(fd)
+    third = _args(tmp_path)
+    third.receipt_output = str(tmp_path / "third-receipt.json")
+    with pytest.raises(
+        PublicationIntegrityError,
+        match="inode differs|reset after authorization",
+    ):
+        attended._publish(third, ROOT)
+    assert remote_checks == ["checked", "checked"]
+    assert [row["status"] for row in receipts] == ["PASS", "FAIL", "FAIL"]
+
+
+def test_attended_nonce_ledger_rejects_reset_and_serializes_concurrency(
+    tmp_path: Path,
+) -> None:
+    concurrent_identity = create_attended_nonce_ledger(
+        tmp_path / "concurrent-ledger", repo=ROOT
+    )
+
+    def _consume() -> str:
+        try:
+            consume_attended_authorization_nonce(
+                "f" * 48,
+                ledger_identity=concurrent_identity,
+                repo=ROOT,
+            )
+        except PublicationIntegrityError as exc:
+            return str(exc)
+        return "PASS"
+
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        outcomes = list(pool.map(lambda _: _consume(), range(2)))
+    assert sorted(outcomes) == ["PASS", "publish authorization nonce was already used"]
+
+    reset_identity = create_attended_nonce_ledger(
+        tmp_path / "reset-ledger", repo=ROOT
+    )
+    reset_path = Path(str(reset_identity["path"]))
+    reset_path.write_text("transient\n", encoding="ascii")
+    reset_path.write_text("", encoding="ascii")
+    with pytest.raises(PublicationIntegrityError, match="reset after authorization"):
+        consume_attended_authorization_nonce(
+            "1" * 48,
+            ledger_identity=reset_identity,
+            repo=ROOT,
+        )
