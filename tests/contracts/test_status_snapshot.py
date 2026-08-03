@@ -430,7 +430,7 @@ def test_status_bundle_rejects_unknown_malformed_execution_resolution(
         )
 
 
-def test_status_bundle_uses_gate_outputs_for_artifact_promotion_axes(
+def test_status_bundle_rejects_gate_output_capability_laundering(
     tmp_path: Path,
 ) -> None:
     backlog_path, status_path = _write_fixture(tmp_path)
@@ -438,6 +438,7 @@ def test_status_bundle_uses_gate_outputs_for_artifact_promotion_axes(
     gate_outputs_path.write_text(
         yaml.safe_dump(
             {
+                "schema_version": "common.artifact_gate_outputs.v2",
                 "pr_overrides": {
                     "PR-010": {
                         "claim_tier": "conditional",
@@ -460,32 +461,16 @@ def test_status_bundle_uses_gate_outputs_for_artifact_promotion_axes(
         encoding="utf-8",
     )
 
-    bundle = build_status_bundle(
-        backlog_path=backlog_path,
-        status_path=status_path,
-        gate_outputs_path=gate_outputs_path,
-        source_commit="abc123",
-    )
-
-    row = next(
-        row for row in bundle.status_rows if row["artifact_id"] == "codex_dag.PR-010"
-    )
-    assert row["claim_tier"] == "conditional"
-    assert row["artifact_readiness"] == "validation_candidate"
-    assert row["artifact_mode"] == "external_audit_conditioned"
-    assert row["allowed_use"] == "paper_appendix"
-    assert row["manuscript_used"] is True
-    assert row["production_validated"] is False
-    assert row["caption_policy"] == ["must_state_transfer_conditional"]
-    assert row["promotion_blockers"] == ["native_solver_validation_absent"]
-    assert row["science_promotion_gates"] == {"native_solver_validation": "fail"}
-    assert row["publication_gates"] == {"paper_main": "fail"}
-    assert any(
-        "artifact_gate_outputs.yaml" in item for item in bundle.metadata["input_hashes"]
-    )
+    with pytest.raises(ValueError, match="caller-supplied capability field"):
+        build_status_bundle(
+            backlog_path=backlog_path,
+            status_path=status_path,
+            gate_outputs_path=gate_outputs_path,
+            source_commit="abc123",
+        )
 
 
-def test_status_bundle_downgrades_unverified_legacy_smoke_readiness(
+def test_status_bundle_rejects_caller_supplied_smoke_readiness(
     tmp_path: Path,
 ) -> None:
     backlog_path, status_path = _write_fixture(tmp_path)
@@ -493,11 +478,40 @@ def test_status_bundle_downgrades_unverified_legacy_smoke_readiness(
     gate_outputs_path.write_text(
         yaml.safe_dump(
             {
-                "pr_overrides": {
+                "schema_version": "common.artifact_gate_outputs.v2",
+                "pr_annotations": {
                     "PR-010": {
                         "artifact_readiness": "smoke_tested",
                     }
                 }
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ValueError, match="caller-supplied capability field"):
+        build_status_bundle(
+            backlog_path=backlog_path,
+            status_path=status_path,
+            gate_outputs_path=gate_outputs_path,
+            source_commit="abc123",
+        )
+
+
+def test_status_bundle_without_decision_is_internal_and_fail_closed(
+    tmp_path: Path,
+) -> None:
+    backlog_path, status_path = _write_fixture(tmp_path)
+    gate_outputs_path = tmp_path / "artifact_gate_outputs.yaml"
+    gate_outputs_path.write_text(
+        yaml.safe_dump(
+            {
+                "schema_version": "common.artifact_gate_outputs.v2",
+                "state_annotations": {
+                    "completed": {
+                        "caption_policy": ["must_state_no_capability_decision"],
+                    }
+                },
             }
         ),
         encoding="utf-8",
@@ -509,17 +523,16 @@ def test_status_bundle_downgrades_unverified_legacy_smoke_readiness(
         gate_outputs_path=gate_outputs_path,
         source_commit="abc123",
     )
-
     row = next(
         row for row in bundle.status_rows if row["artifact_id"] == "codex_dag.PR-010"
     )
-    assert row["smoke_tested"] is False
-    assert row["artifact_readiness"] == "generated"
-    assert "exact_test_execution_receipt_not_bound" in row["promotion_blockers"]
-    assert all(
-        row["artifact_readiness"] != "smoke_tested" or row["smoke_tested"] is True
-        for row in bundle.status_rows
-    )
+    assert row["allowed_use"] == "internal_only"
+    assert row["production_validated"] is False
+    assert "claim_capability_decision_absent" in row["promotion_blockers"]
+    assert row["science_promotion_gates"] == {
+        "claim_capability_decision": "fail"
+    }
+    assert row["publication_gates"] == {"claim_capability_decision": "fail"}
 
 
 def test_status_snapshot_uses_python310_compatible_utc_timestamp(

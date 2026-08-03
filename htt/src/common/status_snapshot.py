@@ -280,7 +280,7 @@ def build_status_bundle(
             "DAG completion is project bookkeeping only and is not scientific readiness.",
             "Rows never promote external-transfer outputs to native solver validation.",
             "DAG completion, artifact readiness, allowed use, and production validation are separate axes.",
-            "production_validated remains false unless an explicit artifact gate output says otherwise.",
+            "production_validated remains false without an exact factory-issued ClaimCapabilityDecision.",
             "Execution resolutions are process receipts only and never promote scientific status or claim tier.",
         ],
         "generating_command": command,
@@ -588,7 +588,44 @@ def _resolve_gate_outputs_path(
 def _load_gate_outputs(path: Path | None) -> Mapping[str, object]:
     if path is None:
         return {}
-    return _load_yaml_mapping(path)
+    payload = _load_yaml_mapping(path)
+    schema = payload.get("schema_version")
+    if schema != "common.artifact_gate_outputs.v2":
+        raise ValueError(
+            "artifact gate annotations require common.artifact_gate_outputs.v2"
+        )
+    _reject_caller_capability_fields(payload)
+    return payload
+
+
+_CALLER_CAPABILITY_FIELDS = frozenset(
+    {
+        "claimtier",
+        "artifactreadiness",
+        "artifactmode",
+        "alloweduse",
+        "productionvalidated",
+        "manuscriptused",
+        "granted",
+        "nativevalidated",
+    }
+)
+
+
+def _reject_caller_capability_fields(value: object, *, path: str = "gate_outputs") -> None:
+    if isinstance(value, Mapping):
+        for key, nested in value.items():
+            if not isinstance(key, str):
+                raise ValueError(f"{path} keys must be strings")
+            normalized = "".join(character for character in key.lower() if character.isalnum())
+            if normalized in _CALLER_CAPABILITY_FIELDS:
+                raise ValueError(
+                    f"caller-supplied capability field is forbidden: {path}.{key}"
+                )
+            _reject_caller_capability_fields(nested, path=f"{path}.{key}")
+    elif isinstance(value, Sequence) and not isinstance(value, (str, bytes, bytearray)):
+        for index, nested in enumerate(value):
+            _reject_caller_capability_fields(nested, path=f"{path}[{index}]")
 
 
 def _promotion_profile(
@@ -602,14 +639,14 @@ def _promotion_profile(
             "claim_tier": ClaimTier.DIAGNOSTIC_ONLY.value,
             "artifact_readiness": "generated",
             "artifact_mode": ArtifactMode.GOVERNANCE_DIAGNOSTIC.value,
-            "allowed_use": AllowedUse.EXTERNAL_AUDIT.value,
+            "allowed_use": AllowedUse.INTERNAL_ONLY.value,
             "production_validated": False,
             "manuscript_used": False,
             "caption_policy": ("must_state_dag_row_not_science_readiness",),
-            "promotion_blockers": ("native_solver_validation_absent",),
+            "promotion_blockers": ("claim_capability_decision_absent",),
             "report_generation_gates": {"dag_status_row_generated": "pass"},
-            "science_promotion_gates": {"native_solver_validation": "not_applicable"},
-            "publication_gates": {"dag_completion_not_publication_readiness": "pass"},
+            "science_promotion_gates": {"claim_capability_decision": "fail"},
+            "publication_gates": {"claim_capability_decision": "fail"},
         },
         "blocked": {
             "claim_tier": ClaimTier.BLOCKED.value,
@@ -619,7 +656,10 @@ def _promotion_profile(
             "production_validated": False,
             "manuscript_used": False,
             "caption_policy": ("must_state_blocker",),
-            "promotion_blockers": ("dag_status_blocked",),
+            "promotion_blockers": (
+                "dag_status_blocked",
+                "claim_capability_decision_absent",
+            ),
             "report_generation_gates": {"dag_status_row_generated": "pass"},
             "science_promotion_gates": {"blocked": "fail"},
             "publication_gates": {"blocked": "fail"},
@@ -632,7 +672,10 @@ def _promotion_profile(
             "production_validated": False,
             "manuscript_used": False,
             "caption_policy": ("must_state_not_completed",),
-            "promotion_blockers": ("dag_status_not_completed",),
+            "promotion_blockers": (
+                "dag_status_not_completed",
+                "claim_capability_decision_absent",
+            ),
             "report_generation_gates": {"dag_status_row_generated": "pass"},
             "science_promotion_gates": {"implementation_complete": "fail"},
             "publication_gates": {"implementation_complete": "fail"},
@@ -644,37 +687,50 @@ def _promotion_profile(
         else "blocked" if state == "blocked" else "not_completed"
     )
     profile = dict(defaults_by_state[base_key])
-    defaults = gate_outputs.get("defaults")
-    if isinstance(defaults, Mapping):
-        profile.update(_profile_subset(defaults))
-    state_defaults = gate_outputs.get("state_defaults")
-    if isinstance(state_defaults, Mapping):
-        maybe_state = state_defaults.get(base_key)
+    state_annotations = gate_outputs.get("state_annotations")
+    if isinstance(state_annotations, Mapping):
+        maybe_state = state_annotations.get(base_key)
         if isinstance(maybe_state, Mapping):
-            profile.update(_profile_subset(maybe_state))
-    overrides = gate_outputs.get("pr_overrides")
-    if isinstance(overrides, Mapping):
-        maybe_override = overrides.get(pr_id)
+            profile = _apply_gate_annotation(profile, maybe_state)
+    annotations = gate_outputs.get("pr_annotations")
+    if isinstance(annotations, Mapping):
+        maybe_override = annotations.get(pr_id)
         if isinstance(maybe_override, Mapping):
-            profile.update(_profile_subset(maybe_override))
+            profile = _apply_gate_annotation(profile, maybe_override)
     return _normalize_promotion_profile(profile)
 
 
-def _profile_subset(raw: Mapping[str, object]) -> dict[str, object]:
+def _annotation_subset(raw: Mapping[str, object]) -> dict[str, object]:
     allowed = {
-        "claim_tier",
-        "artifact_readiness",
-        "artifact_mode",
-        "allowed_use",
-        "production_validated",
-        "manuscript_used",
         "caption_policy",
         "promotion_blockers",
         "report_generation_gates",
-        "science_promotion_gates",
-        "publication_gates",
     }
+    unknown = set(raw) - allowed
+    if unknown:
+        raise ValueError(
+            f"artifact gate annotation has unsupported fields: {sorted(unknown)}"
+        )
     return {key: value for key, value in raw.items() if key in allowed}
+
+
+def _apply_gate_annotation(
+    profile: Mapping[str, object], raw: Mapping[str, object]
+) -> dict[str, object]:
+    annotation = _annotation_subset(raw)
+    merged = dict(profile)
+    for field in ("caption_policy", "promotion_blockers"):
+        if field in annotation:
+            merged[field] = tuple(
+                dict.fromkeys(
+                    (*_string_tuple(merged.get(field)), *_string_tuple(annotation[field]))
+                )
+            )
+    if "report_generation_gates" in annotation:
+        gates = _string_map(merged.get("report_generation_gates"))
+        gates.update(_string_map(annotation["report_generation_gates"]))
+        merged["report_generation_gates"] = gates
+    return merged
 
 
 def _string_tuple(value: object) -> tuple[str, ...]:

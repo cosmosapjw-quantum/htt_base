@@ -2,6 +2,14 @@
 
 Each claim needs owner, status, evidence, transfer source, claim tier, and caveats.
 
+## PR-277 - evidence-conditioned capability authority
+
+| Claim | Owner | Status | Evidence | Transfer source | Claim tier | Caveats |
+|---|---|---|---|---|---|---|
+| The reviewed PR-277 contract can issue a typed capability decision only when exact evidence, trusted receipts, adjudicated identity, and claim-node capability binding agree. | COMMON | IMPLEMENTED_REVIEWED_DIAGNOSTIC | `tests/contracts/test_claim_capability_engine.py`; `docs/PR_DELTAS/pr-277.md`; exact content R6 result and run summary | none | diagnostic_only | Exact R6 passed all 19 policy cells, but object presence or DAG completion is not capability authority; every public use revalidates the evidence context. |
+| Active lifecycle invalidation, recalibration, or reexecution edges block only their declared capability subset even when caller blockers are omitted. | COMMON | IMPLEMENTED_REVIEWED_DIAGNOSTIC | capability-engine focused suite; graph-derived blocker mutations; exact content R6 oracle | none | diagnostic_only | Resolution requires a new exact graph; caller booleans, registration state, and compatibility annotations cannot clear the edge. |
+| PR-277 grants observed inference, public release, native validation, morphology truth, or Bianchi-family identification. | COMMON | FORBIDDEN / NOT_GRANTED | pre-native hard stop; status anti-laundering tests; claim-language lints | none | blocked | No data were admitted or executed. `FAMILY_IDENTIFICATION` remains unconditionally refused before an admitted native atlas. |
+
 ## PR-176 - affine-divergence / q cross-falsifier
 
 | Claim | Owner | Status | Evidence | Transfer source | Claim tier | Caveats |

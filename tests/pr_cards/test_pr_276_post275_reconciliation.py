@@ -209,7 +209,14 @@ def test_status_is_total_and_preserves_negative_chronology() -> None:
     assert status["execution_resolutions"]["PR-190"][
         "success_dependency_satisfied"
     ] is False
-    assert all(states[pr_id] == "pending" for pr_id in POST275_IDS[1:])
+    assert states["PR-277"] == "completed"
+    assert status["execution_resolutions"]["PR-277"][
+        "resolution"
+    ] == "COMPLETED_SUCCESS"
+    assert status["execution_resolutions"]["PR-277"][
+        "success_dependency_satisfied"
+    ] is True
+    assert all(states[pr_id] == "pending" for pr_id in POST275_IDS[2:])
     if states["PR-276"] == "in_progress":
         assert "PR-276" not in status["execution_resolutions"]
     else:
@@ -327,19 +334,28 @@ def test_generated_status_surfaces_cover_current_dag_and_worktree() -> None:
     short_parent = _run("git", "rev-parse", "--short=8", "HEAD^").stdout.strip()
     allowed_sources = {f"{short_head}+dirty", f"{short_parent}+dirty"}
     status = _yaml(STATUS)
-    closeout = status.get("execution_resolutions", {}).get("PR-276")
-    if isinstance(closeout, dict):
+    closeout_specs = {
+        "PR-276": (
+            "PR-276: Reconcile post-275 execution authority",
+            _yaml(SPEC)["baseline"]["verified_merge_head"],
+        ),
+        "PR-277": (
+            "PR-277: Add evidence-conditioned capability engine",
+            "a6d3bd8b24e15727fbb6011c515d66d49cd4ba92",
+        ),
+    }
+    for pr_id, (subject, parent_sha) in closeout_specs.items():
+        closeout = status.get("execution_resolutions", {}).get(pr_id)
+        assert isinstance(closeout, dict)
         content_sha = closeout.get("candidate_sha")
         assert isinstance(content_sha, str) and len(content_sha) == 40
         resolved = _run("git", "rev-parse", f"{content_sha}^{{commit}}")
         assert resolved.returncode == 0, resolved.stderr
         assert resolved.stdout.strip() == content_sha
-        assert _run("git", "rev-parse", f"{content_sha}^").stdout.strip() == _yaml(
-            SPEC
-        )["baseline"]["verified_merge_head"]
+        assert _run("git", "rev-parse", f"{content_sha}^").stdout.strip() == parent_sha
         assert (
             _run("git", "show", "-s", "--format=%s", content_sha).stdout.strip()
-            == "PR-276: Reconcile post-275 execution authority"
+            == subject
         )
         allowed_sources.add(f"{content_sha[:8]}+dirty")
     # A tracked generated file cannot contain the SHA of the commit that

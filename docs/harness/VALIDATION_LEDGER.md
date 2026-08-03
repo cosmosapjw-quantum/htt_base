@@ -2941,3 +2941,44 @@ Canonical PR-276 status is complete. The closeout transition changes tracked
 bytes but not science or capability; final Git delivery therefore requires its
 own exact seal, registered review, latest-target integration rehearsal, and
 live remote-ref verification.
+
+## PR-277 — evidence-conditioned capability engine (2026-08-03)
+
+Change classification: COMMON evidence/adjudication contract, typed identity
+and lifecycle invalidation graph, status anti-laundering, tests, and generated
+status/handoff synchronization. No observed data, likelihood, posterior,
+transfer evaluation, theorem promotion, native solver/atlas output,
+morphology result, family identification, or public release is produced.
+
+| Command or evidence | Result | Notes |
+| --- | --- | --- |
+| verified remote entry | PASS | PR-276 GitHub merge is remote HEAD `a6d3bd8b24e15727fbb6011c515d66d49cd4ba92`; implementation uses an isolated PR-277 worktree and preserves the user checkout/untracked files. |
+| reproduced artifact-gate defect | FAIL, REPRODUCED THEN REPAIRED | Caller-authored readiness/tier/use/production/manuscript fields could affect status projection; v2 compatibility annotations now reject those fields and default to internal-only without a revalidated decision. |
+| first blind pre-freeze review | FAIL, PRESERVED | Claim review found capability relabelling and caller-omittable lifecycle blockers; regression review found incomplete derived mapping coverage. Run: `.agent-harness/runs/pr277-prefreeze-review-20260803/`. |
+| repair blind review | CLAIM PASS; REGRESSION COVERAGE FINDING, PRESERVED | Claim axis verified both authority repairs with 76 targeted passes and no banned-language match. Regression ran 248 focused and 42 repair-specific passes, then identified incomplete exact owner-set coverage. Run: `.agent-harness/runs/pr277-repair-review-20260803/`. |
+| final mutable focused suite | PASS | `308 passed`; includes raw-builder absence, ordinary-construction and raw-allocation refusal, exact-evidence revalidation after field or registration-layer mutation, all allowed/forbidden action-outcome mappings, all 11 profiles, all 55 capability-owner pairs, cross-capability refusal, graph-derived blockers, serialization, status, DAG, PR-276 regression, and the bounded attended-delivery policy. |
+| source-layout full collection | PASS | `10660/10719 collected`, 59 deselected; zero collection errors. |
+| smoke | PASS | `8 passed`, 10711 deselected; eight declared legacy deprecation warnings. |
+| strict DAG/status and mirrors | PASS | `241 PRs, DAG valid`; PR-277 is complete, no foreground card exists, and PR-278 is the sole unblocked next node; canonical and compatibility mirrors are synchronized. |
+| generated status sidecars | PASS | Regenerated snapshot, claim ledger, and matrix from current backlog/status plus compatibility-only gate annotations; 172 rows are complete and no-decision rows remain internal-only/non-production. |
+| shared-context injection budget | FAIL TWICE, THEN PASS | Initial PR-277 registration required `13025 > 12000` characters; first compaction still required `12269 > 12000`. Meaning-preserving table compaction retained IDs/technical tokens/scope/reopen conditions; context `e9b385d7...` then passed the all-role budget regression. |
+| claim-language and research-surface lints | PASS | No forbidden claim language; research-surface hit count zero. Missing `manuscripts` path is explicitly reported by the scanner. |
+| Python/whitespace/serialization checks | PASS | Touched Python compiles; JSON/YAML parse; `git diff --check` passes. |
+| Black and Ruff | UNAVAILABLE | The active environment has neither formatter/linter module; neither is reported as a pass. |
+| attended delivery authorization | GRANTED, BOUNDED | On 2026-08-04 the owner authorized exactly one content commit, one closeout commit, and one final non-draft review PR. The sealed-SHA push is permitted only inside the single attended `CREATE_REVIEW_PR` transaction; force-push, approval, merge, ruleset mutation, data execution, capability promotion, and scientific public release remain forbidden. |
+| immutable content review R1 | PARTIAL; PRESERVED | Exact claim review passed, but the second registered reviewer assignment selected a workspace-write profile and was refused by the reviewer contract. The run was abandoned without deleting its receipts and is not aggregate acceptance. |
+| immutable content review R2 | CLAIM PASS; PHYSICS/HARNESS FAIL, PRESERVED | Exact content SHA `0c8a1c20...`, seal `dae7d133...`. The blocking oracle directly imported the raw decision builder and fabricated `granted=True` for pre-native `FAMILY_IDENTIFICATION` with arbitrary digest-shaped refs. Majority vote was forbidden; aggregate acceptance failed. |
+| raw-builder remediation | IMPLEMENTED; SUPERSEDED BY R4 HARDENING | Removed the builder and importable factory token, made the public constructor always refuse, and confined ordinary allocation to the validated evidence issuer after all receipt/identity/owner/blocker/native/ceiling checks. |
+| immutable content review R3 | CLAIM PASS; SECOND RESULT ABSENT, PRESERVED | Exact content SHA `5be3405b...`, seal `eeaab8b3...`. Claim coverage and its result envelope passed, but the other tool turn ended without a registered result envelope. The run was abandoned without deleting evidence and is not aggregate acceptance. |
+| immutable content review R4 | CLAIM PASS; PHYSICS/HARNESS FAIL, PRESERVED | Exact content SHA `5be3405b...`, seal `eeaab8b3...`. The high-severity finding `F-PR277-R4-OBJECT-NEW-AUTHORITY-BYPASS` reproduced valid-looking pre-native family and MIO-owned inference grants by copying fields onto an `object.__new__` instance. All 19 cells were covered; majority vote was forbidden. Run: `.agent-harness/runs/pr277-content-immutable-review-r4-20260804/`. |
+| immutable content review R5 | FAIL FOUND, THEN ABANDONED; PRESERVED | Exact content SHA `3be8d16e...`, seal `45793595...`. Both fresh reviewers independently reproduced a public-issuer closure marker before later broad prior-run searches broke blind-results. The run has no valid result envelopes and is not acceptance evidence. No majority vote was used. Run: `.agent-harness/runs/pr277-content-immutable-review-r5-20260804/`. |
+| exact-revalidation remediation | IMPLEMENTED; FRESH IMMUTABLE REVIEW REQUIRED | The public issuer closure is empty and direct registrar calls outside the exact issuer frame refuse. Identity registration is only an unissued-object misuse guard. Every public use reissues from and compares the exact graph, receipts, adjudication, identity, owner, blocker, native-family, and ceiling context. The preserved R5 claim oracle stops at its first closure premise, the R5 physics/harness oracle passes two raw-copy checks, and the focused suite passes 308 tests. |
+| immutable content review R6 | PASS | Exact content commit `a19d98e5...`, seal `73df6790...`, 19/19 review cells, 54/54 fresh negative controls, result `dfdda5a6...`, merged result `0f95edab...`, and normally closed run `.agent-harness/runs/pr277-content-immutable-review-r6-20260804/`. Capability 111, focused 308, collection 10660/10719, smoke 8, DAG, mirrors, context, claim scans, and diff integrity pass; no blocker or finding was reported. |
+| premature R6 zero-result merge attempt | PROCESS ERROR, PRESERVED, NON-ACCEPTANCE | `merge_results.py --help` executed before the reviewer envelope existed and emitted `INVALID_ENVELOPES` with zero results. It is preserved as `PREMATURE_ZERO_RESULT_MERGE.json` (SHA-256 `1d1ed16d...`). The normal aggregate was generated only after strict result validation; this process error is not review evidence. |
+| progress report after PR-277 closeout | PASS | `172/241 = 71.37%`; dependency weighted `75.00%`; critical path `98.70%`; no foreground task; PR-278 is the sole unblocked next node. |
+| closeout combined targeted command | ENVIRONMENT FAIL, THEN SCOPED PASS | An overbroad parent `PYTHONPATH=htt/htt:htt/bass:htt/src` made the PR-276 portable child import `htt/bass/statistics.py` instead of stdlib `statistics` (`1 failed, 122 passed`). Re-execution with `PYTHONPATH` unset passed all 12 portable reconciliation tests; the separately scoped capability suite passed 111 and focused passed 308. No code or expectation changed. |
+
+Canonical PR-277 status is complete on exact content R6. The closeout commit
+changes tracked status and handoff bytes but no science or capability; final
+Git delivery still requires its own exact seal, owner-authorized review,
+latest-target integration, inventory, and one attended GitHub PR transaction.

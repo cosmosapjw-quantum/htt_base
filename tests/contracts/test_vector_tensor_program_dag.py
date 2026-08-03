@@ -261,7 +261,7 @@ def test_pr261_275_cards_match_revalidated_dag_and_common_contract() -> None:
 
     # The vector/tensor programme is complete; a later registered card may be
     # the sole foreground task without changing any PR-261..275 disposition.
-    assert status["in_progress"] in (None, "PR-276")
+    assert status["in_progress"] in (None, "PR-276", "PR-277")
     assert "PR-260" in status["completed"]
     assert status["execution_resolutions"]["PR-260"][
         "resolution"

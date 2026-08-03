@@ -1,0 +1,183 @@
+schema: htt.post_pr275.claim_capability_engine.v1
+document_id: PR277-CLAIM-CAPABILITY-ENGINE
+status: ACTIVE_IMPLEMENTATION_SPEC
+pr_id: PR-277
+change_set_id: CS-PR277-CAPABILITY-ENGINE
+publication_group_id: PG-PR277-CAPABILITY-ENGINE
+owner: COMMON
+claim_tier_ceiling: diagnostic_only
+scope: pre_solver_governance_contract
+publication_policy: docs/research_program/post_pr275/pr277_publication_policy.json
+
+delivery_authorization:
+  granted_on: '2026-08-04'
+  authorized_actions:
+  - content_commit
+  - closeout_commit
+  - one_review_pr
+  attended_transaction:
+    authorization_mode: attended_explicit_user
+    semantic_action: CREATE_REVIEW_PR
+    transaction: sealed_sha_push_then_single_pr_create
+    max_transactions: 1
+    nonce_ledger_binding: authorization_hmac_frozen_external_inode_v1
+    entrypoint: .agent-harness/scripts/attended_pr_publisher.py
+  forbidden_actions:
+  - force_push
+  - approve
+  - merge
+  - ruleset_mutation
+  boundary: >-
+    The exact sealed-SHA push is an internal step of the single authorized
+    CREATE_REVIEW_PR transaction. It is not reusable push authority.
+
+authority:
+  canonical_card: docs/codex_handoff/pr_backlog.yaml#PR-277
+  roadmap: docs/research_program/post_pr275/pr276_spec.yaml
+  dependency:
+    pr_id: PR-276
+    mode: requires_success
+    verified_merge_commit: a6d3bd8b24e15727fbb6011c515d66d49cd4ba92
+
+capabilities:
+- CONTRACT_VALIDATED
+- THEOREM_PROVED_EXACT
+- THEOREM_PROVED_CONDITIONAL
+- METHOD_CALIBRATED
+- DATA_ADMITTED
+- OBSERVED_DESCRIPTIVE
+- OBSERVED_INFERENTIAL
+- SOURCE_SEPARATION_CANDIDATE
+- MORPHOLOGY_COMPATIBILITY
+- FAMILY_IDENTIFICATION
+- PUBLIC_RELEASE
+
+actions:
+- GRANT
+- HOLD
+- SUPERSEDE
+- REVOKE
+- DOWNGRADE
+
+outcomes:
+- PASS
+- PASS_WITH_CEILING
+- ABSTAIN
+- BLOCK
+- STALE_REPLACED
+
+factory_contract:
+  decision_type: ClaimCapabilityDecision
+  direct_construction: forbidden
+  authority_model: exact_evidence_revalidation_on_every_public_use
+  identity_registration_role: unissued_object_misuse_guard_only
+  bare_python_object_identity_is_authority: false
+  bare_serialized_record_is_authority: false
+  required_authorities:
+  - exact EvidenceGraph closure
+  - content-addressed EvidenceReceipt
+  - existing AuthorityRegistry
+  - existing AdjudicationReceipt bound to the exact ClaimIdentity
+  - claim-node capability_binding covered by the exact graph and receipt
+  derived_not_caller_supplied:
+  - granted
+  - artifact_readiness
+  - evidence_branch
+  - scientific_semantics
+  - identification
+  - provenance_grade
+  - allowed_use
+  forbidden_inputs:
+  - orchestration completion state
+  - caller readiness boolean
+  - caller production validation boolean
+  - caller native status
+  capability_binding:
+    schema_version: claim_capability_binding_v1
+    exact_fields:
+    - capability
+    - action
+    - outcome
+    - claim_ceiling
+    rule: The requested decision must exactly match the binding adjudicated with the claim node.
+  replay_rule: >-
+    A byte-equivalent serialized copy names no new authority and must resolve
+    the same exact evidence. A raw in-memory allocation remains unissued, and
+    any changed trust-bearing field must fail exact graph, receipt,
+    adjudication, identity, owner, blocker, native-family, and ceiling
+    revalidation.
+
+versioned_identity:
+  type: VersionedClaimIdentity
+  component_dimensions:
+  - THEOREM
+  - DATA
+  - MASK
+  - COVARIANCE
+  - TRANSFER
+  - ESTIMAND
+  rules:
+  - Every component is bound by a lowercase SHA-256 identity.
+  - A successor must change version and at least one component or ClaimIdentity.
+  - A successor never mutates or reopens its predecessor.
+  - SUPERSEDE names the exact predecessor identity and creates a new identity.
+
+blockers:
+  kinds:
+  - PHYSICAL_HARD
+  - EVIDENCE_CONDITIONAL
+  - LEGACY_SUPERSESSION
+  - INFRASTRUCTURE_DEBT
+  propagation: only explicitly affected capabilities are blocked
+  graph_authority:
+  - INVALIDATES_* and REQUIRES_* edges are active evidence-conditional blockers.
+  - SUPERSEDED_BY binds version succession and is not itself an active blocker.
+  - Omitting a caller blocker cannot hide a blocker present in the exact graph.
+  - Resolution requires a new exact graph in which the active lifecycle edge is absent; caller booleans cannot resolve it.
+
+evidence_lifecycle_edges:
+- SUPERSEDED_BY
+- INVALIDATES_THEOREM
+- INVALIDATES_DATA
+- INVALIDATES_MASK
+- INVALIDATES_COVARIANCE
+- INVALIDATES_TRANSFER
+- INVALIDATES_ESTIMAND
+- REQUIRES_RECALIBRATION
+- REQUIRES_REEXECUTION
+
+non_relaxable_rules:
+- CONVERSE_BAN
+- P36_T2P_RETRACTION
+- REFUTED_MES_TRIPLES
+- LEGACY_PROJECTION_BC1_BC2
+- OWNER_ROLE_FIREWALLS
+- NATIVE_FAMILY_GATE
+- ORBIT_GENERIC_COMPLETENESS_UNPROVEN
+- STATE_CONTENT_IDENTITY
+- CAS_FIVE_STATE_NO_MAJORITY
+- STRICT_PDF_LINT
+- ANTI_LAUNDERING
+
+legacy_artifact_gate_outputs:
+  status: compatibility_annotations_only
+  caller_fields_forbidden:
+  - claim_tier
+  - artifact_readiness
+  - artifact_mode
+  - allowed_use
+  - production_validated
+  - manuscript_used
+  no_decision_fallback:
+    allowed_use: internal_only
+    production_validated: false
+    promotion_blocker: claim_capability_decision_absent
+  blanket_native_default: forbidden
+
+hard_stops:
+- A completed PR card or execution resolution grants a capability.
+- A caller-provided boolean or artifact gate override grants readiness.
+- A second principal registry or parallel claim authority is introduced.
+- FAMILY_IDENTIFICATION is granted before an admitted native morphology atlas.
+- MIO owns posterior, likelihood, or evidence semantics.
+- A terminal historical identity is reopened in place.

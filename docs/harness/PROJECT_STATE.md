@@ -1,6 +1,6 @@
 # Current Project State
 
-Date: 2026-08-03
+Date: 2026-08-04
 
 This is a current-state handoff, not a historical receipt. Historical candidate
 and review details remain in Git history, `docs/PR_DELTAS/`, and frozen harness
@@ -9,27 +9,28 @@ runs.
 ## Baseline
 
 - Canonical target: `research/pr04-multicomponent`.
-- Verified merge HEAD: `1f11d0df0f55b80439585cf56afef55e9d38599a`.
-- The merge has parents `7214ef7e...` and PR-190 candidate `bae6ac2d...`;
-  merge and candidate trees both equal `32b8a7f4...`.
+- Verified merge HEAD: `a6d3bd8b24e15727fbb6011c515d66d49cd4ba92`.
+- That remote merge contains the reviewed PR-276 delivery; PR-277 started only
+  after its ancestry and GitHub merge state were verified.
 - PR-190 is `COMPLETED_FAILED_WITH_RECEIPT`. Its registered full typed
   attainability statement is refuted; `success_dependency_satisfied=false`.
 - Work proceeds in the isolated branch
-  `changeset/pr276-ssot-chronology-reconciliation`. The main user checkout and
+  `changeset/pr277-evidence-conditioned-capability`. The main user checkout and
   all user-owned untracked inputs remain untouched.
 
 ## Canonical orchestration state
 
 - DAG: 241 cards; validation passes.
-- Completed: 171/241 = 70.95%.
-- Dependency-weighted completion: 74.78%.
+- Completed: 172/241 = 71.37%.
+- Dependency-weighted completion: 75.00%.
 - Critical-path completion: 98.70%.
 - In progress: none.
-- Pending: 39.
+- Pending: 38.
 - Blocked terminal receipts: PR-190 and PR-172.
 - Dormant external/native: 28.
 - Background acquisition: PR-151 only.
-- PR-277 is the only dependency-ready next canonical node.
+- PR-278 is the sole dependency-ready next node. Its implementation waits for
+  the owner to review and merge the PR-277 delivery.
 
 The lower count percentage reflects atomic registration of PR-276 through
 PR-294; it is bookkeeping, not scientific regression or readiness evidence.
@@ -48,6 +49,12 @@ PR-294; it is bookkeeping, not scientific regression or readiness evidence.
   `docs/research_program/vector_tensor/cas/CAS_ADJUDICATION.json`.
 - Only G1 through G8 have registered statements and pass conditions. G9
   through G12 are undefined and are not gates.
+- PR-277's reviewed contract separates named claim capabilities from DAG
+  state. A capability decision requires an exact evidence closure, trusted
+  evidence receipt, identity-bound adjudication, and receipt-covered
+  capability/action/outcome/ceiling binding.
+- Active graph invalidation/recalibration/reexecution edges automatically
+  block only their declared capability set. Caller omission cannot clear them.
 
 ## Claim and data boundary
 
@@ -63,30 +70,44 @@ PR-294; it is bookkeeping, not scientific regression or readiness evidence.
 - Current claims are diagnostic or receipt-bearing negative results only;
   public use remains false.
 
-## PR-276 scope
+## PR-277 scope
 
-PR-276 reconciles the post-275 DAG, typed-state SSOT, harness symbols and
-frozen decisions, current handoff, compatibility mirrors, generated status
-surfaces, and PR-270 chronology. It does not execute data, change scientific
-numbers, reopen failed statements, move historical receipts, or mutate GitHub
-rulesets.
+PR-277 introduces the evidence-conditioned `ClaimCapabilityDecision`,
+versioned theorem/data/mask/covariance/transfer/estimand identities, typed
+lifecycle invalidation edges, owner firewalls, and fail-closed generated-status
+fallbacks. It does not execute data, change scientific numbers, reopen failed
+statements, validate a native solver or atlas, or grant publication or family
+identification.
 
-The delivery repair restores an explicitly attended one-PR path without
-weakening the unattended firewall. Direct push/PR commands remain denied; the
-only opted-in path consumes the exact seal, independent review, latest-target
-integration, live inventory, current-turn authorization, and one-use nonce in
-one serialized transaction. The exact sealed-SHA push is an internal step of
-creating the review PR, not separate publication authority.
+Generated status rows now treat `artifact_gate_outputs.yaml` as compatibility
+annotations only. In the absence of an independently revalidated capability
+decision, every row remains internal-only and non-production; DAG completion
+cannot promote it.
 
 Governing spec:
-`docs/research_program/post_pr275/pr276_spec.yaml`.
+`docs/research_program/post_pr275/pr277_spec.yaml`.
 
-The review history preserves failed R1, R2, R4, and R5 pre-freeze envelopes,
-byte-invalidated R3, bounded pre-freeze R6 PASS, and failed immutable content
-R1. Immutable content R2 passed both registered axes on exact content commit
-`3fa98dc3...`; canonical PR-276 status is therefore complete. The later
-delivery-policy repair requires a new exact candidate review without changing
-the scientific completion state. Final delivery
-eligibility and remote state are governed by current runtime seals, registered
-review/integration receipts, and live remote-ref verification, not by this
-handoff prose. PR-277 is next; all data and public-release gates remain closed.
+The first mutable review failed on capability relabelling and caller-omittable
+graph invalidations; both receipts are preserved and both defects are repaired.
+The second claim review passed those boundaries. Its regression companion
+found a test-coverage gap in the exact owner matrix, now closed with all 55
+capability/owner pairs. Immutable content R1 was structurally partial. R2
+preserved a claim PASS but failed overall after a raw builder fabricated a
+granted pre-native family capability. R3 preserved only its claim result after
+the other tool turn produced no envelope. R4 preserved a claim PASS and a
+physics/harness FAIL: low-level raw allocation could copy valid fields and emit
+trust-bearing records. R5 then reproduced an exposed public-issuer closure
+marker on exact SHA `3be8d16e...`; later broad prior-run searches invalidated
+both reviewers' blind-results status, so R5 is abandoned and not acceptance.
+Majority vote was not used in any failure. The current repair gives the public
+issuer no closure marker, binds registration to the exact validated issuer
+frame, and revalidates every trust-bearing field against the exact evidence
+and adjudication context on every public use. Registration is a misuse guard,
+not scientific authority; a relabelled record fails even after deliberate
+registration-layer perturbation. Exact content R6 passed all 19 policy cells
+on `a19d98e5...`, including a 54-check independent oracle, and its run closed
+normally. Canonical PR-277 status is `COMPLETED_SUCCESS`; this is a governance
+contract result only. The owner authorized exactly one content history slot,
+one closeout commit, and one attended review-PR transaction. Final closeout
+review, latest-target integration, inventory, and the attended transaction
+remain mandatory; all data and scientific public-release gates remain closed.
