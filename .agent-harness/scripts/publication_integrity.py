@@ -1,7 +1,8 @@
 """Fail-closed change-set and publication-integrity primitives.
 
 This module never publishes.  Repository hooks use it to deny ordinary-agent
-publication attempts; a credential-isolated external publisher may use the
+publication attempts.  A credential-isolated external publisher, or the
+explicitly owner-authorized attended publisher entrypoint, may use the
 validation functions immediately before a serialized publication transaction.
 Repo-local hooks are guardrails, not an authentication boundary.
 """
@@ -51,6 +52,9 @@ EXECUTABLE_ORACLE_KINDS = {
     "independent_numerical_backend",
 }
 PYTHON_EXECUTABLE_TOKEN = "{python}"
+EXTERNAL_PUBLISHER_AUTHORIZATION_MODE = "external_publisher"
+ATTENDED_PUBLISHER_AUTHORIZATION_MODE = "attended_explicit_user"
+ATTENDED_PUBLICATION_TRANSACTION = "sealed_sha_push_then_single_pr_create"
 NON_PUBLISHING_GIT_SUBCOMMANDS = {
     "add",
     "am",
@@ -714,6 +718,96 @@ def load_publication_policy(
         require_plain_int(
             value.get(field), field=field, minimum=minimum, maximum=maximum
         )
+    attended = value.get("attended_publication")
+    if attended is not None:
+        if value.get("default_publication_mode") != (
+            "unattended_external_publisher_only"
+        ):
+            raise PublicationIntegrityError(
+                "attended policies must keep unattended external publication as default"
+            )
+        if (
+            value.get("unattended_publication_requires_external_publisher")
+            is not True
+        ):
+            raise PublicationIntegrityError(
+                "unattended publication must still require the external publisher"
+            )
+        required_attended_fields = {
+            "enabled",
+            "authorization_mode",
+            "transaction",
+            "max_transactions",
+            "requires_current_turn_authorization",
+            "direct_mutation_commands_forbidden",
+            "publisher_entrypoint",
+            "forbidden_actions",
+        }
+        if (
+            not isinstance(attended, Mapping)
+            or set(attended) != required_attended_fields
+        ):
+            raise PublicationIntegrityError(
+                "attended_publication must exactly match its registered schema"
+            )
+        if attended.get("enabled") is not True:
+            raise PublicationIntegrityError(
+                "attended_publication.enabled must be true when the lane is registered"
+            )
+        if (
+            attended.get("authorization_mode")
+            != ATTENDED_PUBLISHER_AUTHORIZATION_MODE
+        ):
+            raise PublicationIntegrityError(
+                "attended_publication authorization_mode is not registered"
+            )
+        if attended.get("transaction") != ATTENDED_PUBLICATION_TRANSACTION:
+            raise PublicationIntegrityError(
+                "attended_publication transaction is not registered"
+            )
+        require_plain_int(
+            attended.get("max_transactions"),
+            field="attended_publication.max_transactions",
+            minimum=1,
+            maximum=1,
+        )
+        if attended.get("requires_current_turn_authorization") is not True:
+            raise PublicationIntegrityError(
+                "attended publication requires current-turn user authorization"
+            )
+        if attended.get("direct_mutation_commands_forbidden") is not True:
+            raise PublicationIntegrityError(
+                "attended publication cannot enable direct mutation commands"
+            )
+        entrypoint = require_repo_relative_name(
+            attended.get("publisher_entrypoint"),
+            field="attended_publication.publisher_entrypoint",
+        )
+        entrypoint_path = canonical_repo_path(
+            repo,
+            entrypoint,
+            field="attended_publication.publisher_entrypoint",
+        )
+        if not entrypoint_path.is_file() or entrypoint_path.is_symlink():
+            raise PublicationIntegrityError(
+                "attended publication entrypoint must be a repository regular file"
+            )
+        forbidden_actions = attended.get("forbidden_actions")
+        required_forbidden = {
+            "force_push",
+            "approve",
+            "merge",
+            "ruleset_mutation",
+        }
+        if (
+            not isinstance(forbidden_actions, list)
+            or set(forbidden_actions) != required_forbidden
+            or len(forbidden_actions) != len(required_forbidden)
+        ):
+            raise PublicationIntegrityError(
+                "attended publication must preserve every non-relaxable "
+                "forbidden action"
+            )
     cells = value.get("required_review_cells")
     if (
         not isinstance(cells, list)
@@ -1759,6 +1853,37 @@ def validate_authorization_payload(
             raise PublicationIntegrityError(
                 "publish authorization schema_version must equal 1"
             )
+        authorization_mode = authorization.get(
+            "authorization_mode", EXTERNAL_PUBLISHER_AUTHORIZATION_MODE
+        )
+        if authorization_mode not in {
+            EXTERNAL_PUBLISHER_AUTHORIZATION_MODE,
+            ATTENDED_PUBLISHER_AUTHORIZATION_MODE,
+        }:
+            raise PublicationIntegrityError(
+                "publish authorization mode is not registered"
+            )
+        if authorization_mode == ATTENDED_PUBLISHER_AUTHORIZATION_MODE:
+            attended = policy.get("attended_publication")
+            if (
+                not isinstance(attended, Mapping)
+                or attended.get("enabled") is not True
+            ):
+                raise PublicationIntegrityError(
+                    "policy does not authorize attended publication"
+                )
+            if (
+                attended.get("authorization_mode")
+                != ATTENDED_PUBLISHER_AUTHORIZATION_MODE
+                or attended.get("transaction")
+                != ATTENDED_PUBLICATION_TRANSACTION
+                or attended.get("max_transactions") != 1
+                or attended.get("requires_current_turn_authorization") is not True
+                or attended.get("direct_mutation_commands_forbidden") is not True
+            ):
+                raise PublicationIntegrityError(
+                    "attended publication policy is incomplete or drifted"
+                )
         supplied_hmac = authorization.get("hmac_sha256")
         if not isinstance(supplied_hmac, str) or SHA256_RE.fullmatch(supplied_hmac) is None:
             raise PublicationIntegrityError("publish authorization HMAC is malformed")

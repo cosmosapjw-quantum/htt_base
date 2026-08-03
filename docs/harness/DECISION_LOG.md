@@ -63,3 +63,15 @@ passed immutable content R2 on commit `3fa98dc3...`; its canonical status is
 theorem, method, data, observed, morphology, source-separation, native,
 family-identification, or public-release capability. PR-277 is the next
 canonical node and every data-lane human gate remains default-deny.
+
+## D-ATTENDED-REVIEW-PR
+
+Unattended publication remains external-publisher-only. A current user turn
+may authorize one `CREATE_REVIEW_PR` transaction after the exact candidate is
+sealed, independently reviewed, integrated against the live target, and bound
+to a fresh PR inventory and one-use nonce. The registered attended entrypoint
+may push only the sealed SHA and create or verify the single bound review PR.
+Direct mutation commands, reusable authorization, force-push, approval, merge,
+ruleset mutation, data execution, and claim promotion remain forbidden. The
+attended lane uses the current GitHub identity and does not claim credential
+isolation.

@@ -19,6 +19,10 @@ historical execution/review evidence remains under `docs/PR_DELTAS/` and
 ## PR-276 completed
 
 - Atomic intake registers PR-276 through PR-294, producing a 241-card DAG.
+- A reproduced publication-policy drift is repaired in the same change-set:
+  unattended work remains external-publisher-only, while current-turn owner
+  authorization may consume one sealed `CREATE_REVIEW_PR` transaction. No
+  force-push, approval, merge, ruleset, data, or claim action is enabled.
 - Current counts: 171 completed (70.95%), dependency-weighted 74.78%,
   critical-path 98.70%, 39 pending, 2 blocked, 28 dormant, no foreground task,
   and one background task.

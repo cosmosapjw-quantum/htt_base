@@ -134,6 +134,14 @@ def test_post275_cards_are_atomic_complete_and_claim_limited() -> None:
     ]
     assert policy["target_sha"] == _yaml(SPEC)["baseline"]["verified_merge_head"]
     assert policy["ordinary_agent_push_forbidden"] is True
+    assert policy["ordinary_agent_pr_mutation_forbidden"] is True
+    assert policy["attended_publication"]["authorization_mode"] == (
+        "attended_explicit_user"
+    )
+    assert policy["attended_publication"]["max_transactions"] == 1
+    assert policy["attended_publication"][
+        "direct_mutation_commands_forbidden"
+    ] is True
     assert policy["claim_ceiling"] == "diagnostic_only"
 
 

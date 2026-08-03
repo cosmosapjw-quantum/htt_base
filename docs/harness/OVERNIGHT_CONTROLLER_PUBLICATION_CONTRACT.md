@@ -2,7 +2,8 @@
 
 The controller may create internal findings, local commits, and one coherent
 `changeset/` branch. It must not push, create or mutate a GitHub PR, or invoke
-an external publisher.
+an external or attended publisher. A prior or future user authorization cannot
+be cached or replayed by an unattended run.
 
 A successful unattended terminal report contains:
 

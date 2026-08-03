@@ -8,6 +8,30 @@ public_use: false
 scientific_status_effect: none_governance_reconciliation_only
 publication_policy: docs/research_program/post_pr275/pr276_publication_policy.json
 
+publication_reconciliation:
+  reproduced_defect: >-
+    PR-247's unattended default-deny boundary was copied into later per-PR
+    policies as an unconditional ordinary-agent ban while no callable publisher
+    transaction existed for an attended, explicitly user-authorized delivery.
+  default_mode: unattended_external_publisher_only
+  attended_mode:
+    authorization_mode: attended_explicit_user
+    semantic_action: CREATE_REVIEW_PR
+    transaction: sealed_sha_push_then_single_pr_create
+    max_transactions: 1
+    requires_current_turn_authorization: true
+    direct_git_or_gh_mutation_forbidden: true
+    entrypoint: .agent-harness/scripts/attended_pr_publisher.py
+  preserved_forbidden_actions:
+  - force_push
+  - approve
+  - merge
+  - ruleset_mutation
+  boundary: >-
+    PR creation technically requires a remote head.  In attended mode the exact
+    sealed-SHA push is an internal step of the single CREATE_REVIEW_PR action;
+    it is not a separate or reusable push grant.
+
 baseline:
   target_branch: research/pr04-multicomponent
   verified_merge_head: 1f11d0df0f55b80439585cf56afef55e9d38599a
@@ -342,6 +366,8 @@ acceptance:
   - CLAUDE and both long-backlog copies identify typed state as current authority.
   - PR-270 is rendered completed without moving its frozen CAS adjudication.
   - PR-172 failure and PR-184 successor chronology remain unchanged.
+  - Unattended publication remains default-deny while a current-turn owner
+    authorization can execute exactly one sealed attended PR transaction.
   forbidden:
   - Modify a historical proof receipt or sealed scientific artifact.
   - Track, move, delete, unpack, or rewrite user-owned untracked inputs.
@@ -362,3 +388,5 @@ kill_conditions:
 - Reconciliation requires changing a frozen historical receipt.
 - A user-owned untracked input collides with a tracked target.
 - A completed status alone grants theorem, data, inference, morphology, family, or publication capability.
+- An attended publication request is replayed, targets an unsealed SHA, or
+  attempts force-push, approval, merge, or ruleset mutation.

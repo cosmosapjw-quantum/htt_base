@@ -119,7 +119,9 @@ def _validate_review_result(
     return errors
 
 
-def _gate(args: argparse.Namespace, repo: Path) -> tuple[dict[str, Any], str | None]:
+def evaluate_gate(
+    args: argparse.Namespace, repo: Path
+) -> tuple[dict[str, Any], str | None]:
     errors: list[str] = []
     try:
         _, seal_bytes, seal = read_repo_json(
@@ -224,6 +226,9 @@ def _gate(args: argparse.Namespace, repo: Path) -> tuple[dict[str, Any], str | N
     }
     if not errors:
         payload["publication_request"] = {
+            "authorization_mode": authorization.get(
+                "authorization_mode", "external_publisher"
+            ),
             "publication_repository_host": authorization.get(
                 "publication_repository_host"
             ),
@@ -256,7 +261,7 @@ def main() -> None:
             command.add_argument("--nonce-ledger", required=True)
     args = parser.parse_args()
     repo = root()
-    payload, nonce = _gate(args, repo)
+    payload, nonce = evaluate_gate(args, repo)
     if payload["ok"] and args.command == "consume":
         assert nonce is not None
         try:

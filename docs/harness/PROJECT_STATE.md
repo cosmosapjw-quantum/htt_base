@@ -71,13 +71,22 @@ surfaces, and PR-270 chronology. It does not execute data, change scientific
 numbers, reopen failed statements, move historical receipts, or mutate GitHub
 rulesets.
 
+The delivery repair restores an explicitly attended one-PR path without
+weakening the unattended firewall. Direct push/PR commands remain denied; the
+only opted-in path consumes the exact seal, independent review, latest-target
+integration, live inventory, current-turn authorization, and one-use nonce in
+one serialized transaction. The exact sealed-SHA push is an internal step of
+creating the review PR, not separate publication authority.
+
 Governing spec:
 `docs/research_program/post_pr275/pr276_spec.yaml`.
 
 The review history preserves failed R1, R2, R4, and R5 pre-freeze envelopes,
 byte-invalidated R3, bounded pre-freeze R6 PASS, and failed immutable content
 R1. Immutable content R2 passed both registered axes on exact content commit
-`3fa98dc3...`; canonical PR-276 status is therefore complete. Final delivery
+`3fa98dc3...`; canonical PR-276 status is therefore complete. The later
+delivery-policy repair requires a new exact candidate review without changing
+the scientific completion state. Final delivery
 eligibility and remote state are governed by current runtime seals, registered
 review/integration receipts, and live remote-ref verification, not by this
 handoff prose. PR-277 is next; all data and public-release gates remain closed.

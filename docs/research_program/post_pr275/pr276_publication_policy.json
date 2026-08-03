@@ -13,9 +13,25 @@
   "max_inventory_age_seconds": 300,
   "max_receipt_age_seconds": 1800,
   "max_authorization_ttl_seconds": 1800,
-  "publication_requires_external_publisher": true,
+  "default_publication_mode": "unattended_external_publisher_only",
+  "unattended_publication_requires_external_publisher": true,
   "ordinary_agent_push_forbidden": true,
   "ordinary_agent_pr_mutation_forbidden": true,
+  "attended_publication": {
+    "enabled": true,
+    "authorization_mode": "attended_explicit_user",
+    "transaction": "sealed_sha_push_then_single_pr_create",
+    "max_transactions": 1,
+    "requires_current_turn_authorization": true,
+    "direct_mutation_commands_forbidden": true,
+    "publisher_entrypoint": ".agent-harness/scripts/attended_pr_publisher.py",
+    "forbidden_actions": [
+      "force_push",
+      "approve",
+      "merge",
+      "ruleset_mutation"
+    ]
+  },
   "claim_ceiling": "diagnostic_only",
   "family_identification_gate": "BLOCKED_PRE_NATIVE_ATLAS",
   "required_commands": [

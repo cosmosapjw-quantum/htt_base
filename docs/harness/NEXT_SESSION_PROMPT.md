@@ -13,9 +13,11 @@ Verify the PR-276 delivery closeout in the isolated worktree
 - Canonical DAG: 241 cards, 171 completed, 39 pending, 2 blocked, 28 dormant,
   PR-151 background-only.
 - Governing spec: `docs/research_program/post_pr275/pr276_spec.yaml`.
-- The owner authorized exactly two PR-276 delivery commits and one final push.
-  GitHub ruleset change, data download, archive unpacking, observed execution,
-  and any additional publication action remain unauthorized.
+- After reproducing policy drift, the owner authorized one additional named
+  corrective commit and one final review-PR transaction. The transaction may
+  internally push only the sealed SHA required to create that PR. GitHub
+  ruleset change, force-push, approval, merge, data download, archive unpacking,
+  observed execution, and any additional publication action remain unauthorized.
 
 ## Required continuation
 
@@ -25,14 +27,15 @@ Verify the PR-276 delivery closeout in the isolated worktree
    the bounded R6 pre-freeze PASS, and failed immutable content review R1; none
    may be relabelled.
 3. Rebuild `.agent-harness/generated/CONTEXT_PACK.md` before any subagent.
-4. Confirm final history contains exactly the content commit and one closeout
-   commit; do not add a third delivery commit.
-5. Verify the exact closeout candidate through the latest seal, registered
+4. Confirm final history contains the preserved content and closeout commits
+   plus exactly one `PR-276: Restore attended PR delivery` corrective commit.
+5. Verify the corrected candidate through the latest seal, registered
    harness/claim review, and latest-target integration receipt.
-6. Query the live remote ref. If the delivery branch is absent, use the
-   authorized credential-isolated external publisher exactly once; if it
-   already equals the sealed SHA, do not push again. Any other remote state is
-   a hard stop.
+6. Query the live remote ref and PR inventory. If both are absent, issue a
+   current-turn `attended_explicit_user` authorization and invoke only the
+   policy-registered `attended_pr_publisher.py` exactly once. If the branch or
+   PR already matches the sealed authorization, verify rather than duplicate
+   it. Any mismatched remote state is a hard stop.
 7. Begin PR-277 only in a new delivery cycle after the PR-276 remote boundary
    is verified.
 

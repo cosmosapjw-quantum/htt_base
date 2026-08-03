@@ -69,6 +69,7 @@ def main(argv: list[str] | None = None) -> int:
             common
             + [
                 "tests/pr_cards/test_pr_276_post275_reconciliation.py",
+                "tests/pr_cards/test_pr_276_attended_publication.py",
                 "tests/contracts/test_status_snapshot.py",
                 "tests/contracts/test_vector_tensor_program_dag.py",
                 "tests/contracts/test_pr119_long_horizon_intake.py",

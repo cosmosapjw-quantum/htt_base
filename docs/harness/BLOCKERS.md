@@ -46,7 +46,8 @@ their owning PR deltas and frozen receipts.
   commit `3fa98dc3...`. Failed immutable R1 and all pre-freeze receipts remain
   preserved in its delta and validation ledger; none is relabelled. Any final
   Git delivery remains fail-closed on the current exact closeout seal,
-  registered review, latest-target integration rehearsal, external publisher
-  authorization, and live remote-ref verification.
+  registered review, latest-target integration rehearsal, current-turn
+  attended or external publisher authorization, one-use nonce, and live
+  remote-ref verification. Direct push/PR commands remain forbidden.
 - Publication remains blocked until PR-208 and may consume only results granted
   by the capability engine with generated sources and admitted data identities.

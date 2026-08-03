@@ -15,6 +15,8 @@ from pathlib import Path
 
 from _harness import root
 from publication_integrity import (
+    ATTENDED_PUBLISHER_AUTHORIZATION_MODE,
+    EXTERNAL_PUBLISHER_AUTHORIZATION_MODE,
     PublicationIntegrityError,
     _walk_without_symlinks,
     authorization_hmac,
@@ -101,6 +103,7 @@ def _issue(args: argparse.Namespace, repo: Path) -> dict:
     now = datetime.now(timezone.utc).replace(microsecond=0)
     authorization = {
         "schema_version": 1,
+        "authorization_mode": args.authorization_mode,
         "change_set_id": seal.get("change_set_id"),
         "publication_group_id": seal.get("publication_group_id"),
         "target_remote": seal.get("target_remote"),
@@ -183,6 +186,14 @@ def main() -> None:
         help="authorize a ready PR; the safer default authorizes a draft",
     )
     issue.add_argument("--approved-by", required=True)
+    issue.add_argument(
+        "--authorization-mode",
+        choices=(
+            EXTERNAL_PUBLISHER_AUTHORIZATION_MODE,
+            ATTENDED_PUBLISHER_AUTHORIZATION_MODE,
+        ),
+        default=EXTERNAL_PUBLISHER_AUTHORIZATION_MODE,
+    )
     issue.add_argument("--ttl-seconds", type=int, default=1800)
     issue.add_argument("--output", required=True)
     args = parser.parse_args()
