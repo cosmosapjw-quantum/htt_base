@@ -24,6 +24,7 @@
     "max_transactions": 1,
     "requires_current_turn_authorization": true,
     "direct_mutation_commands_forbidden": true,
+    "nonce_ledger_binding": "authorization_hmac_absolute_external_path",
     "publisher_entrypoint": ".agent-harness/scripts/attended_pr_publisher.py",
     "forbidden_actions": [
       "force_push",

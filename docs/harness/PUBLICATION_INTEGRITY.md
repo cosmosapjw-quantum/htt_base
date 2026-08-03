@@ -48,7 +48,9 @@ reports, and a publication recommendation. It creates zero GitHub PRs.
    `attended_pr_publisher.py` entrypoint only when the current user turn
    explicitly authorizes one PR transaction and the active policy opts into
    `attended_explicit_user`. The entrypoint consumes the same immutable
-   evidence and nonce, treats the exact-SHA branch push as an internal step of
+   evidence and nonce. Its one absolute external nonce-ledger path is included
+   in the authorization HMAC and cannot be replaced by a publisher argument.
+   It treats the exact-SHA branch push as an internal step of
    `CREATE_REVIEW_PR`, and verifies the remote SHA and resulting PR. It never
    force-pushes, approves, merges, or changes rulesets.
 
@@ -98,7 +100,9 @@ The publisher consumes:
 The authorization binds the GitHub host/repository identity, repository push
 URL, target, candidate branch and SHA, SHA-sourced head refspec, exact PR
 title/body/base/head/draft state, and file hashes of all four evidence
-documents. The PR body must contain exactly one matching `Change-Set-ID:` and
+documents. Attended authorization additionally binds the canonical absolute
+external nonce-ledger path; execution exposes no ledger override. The PR body
+must contain exactly one matching `Change-Set-ID:` and
 `Publication-Group-ID:` line. Its issuance is UTC-bounded by policy and its
 nonce is consumed under an exclusive file lock. The external publisher must
 also serialize its GitHub transaction and verify the remote head still equals
@@ -116,8 +120,11 @@ only after a clean committed candidate is sealed, independently reviewed,
 integrated against the live target, and checked against a fresh PR inventory.
 The current user turn must authorize the one review-PR transaction. The
 authorization is SHA-, body-, target-, repository-, evidence-, TTL-, and
-nonce-bound. A replay, second PR, branch mismatch, target drift, candidate
-mutation, force-push, approval, merge, or ruleset mutation fails closed.
+nonce-ledger-bound. A replay, second PR, branch mismatch, target drift,
+candidate mutation, force-push, approval, merge, or ruleset mutation fails
+closed. The receipt records the authorization byte identity returned by the
+gate; the attended publisher does not reread mutable authorization bytes after
+validation.
 
 This attended lane uses the current authenticated GitHub identity and therefore
 does not claim credential isolation. Unattended work cannot select it. The

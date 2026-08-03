@@ -29,10 +29,8 @@ from publication_integrity import (
     ATTENDED_PUBLICATION_TRANSACTION,
     PublicationIntegrityError,
     _walk_without_symlinks,
-    bytes_sha256,
     consume_authorization_nonce,
     load_publication_policy,
-    read_external_json,
     read_repo_json,
     write_json_exclusive,
 )
@@ -252,11 +250,16 @@ def _publish(args: argparse.Namespace, repo: Path) -> dict[str, Any]:
             "attended publisher requires attended_explicit_user authorization"
         )
 
-    _, authorization_bytes, authorization = read_external_json(
-        repo, args.authorization, field="publish authorization"
-    )
-    if authorization.get("authorization_mode") != ATTENDED_PUBLISHER_AUTHORIZATION_MODE:
-        raise PublicationIntegrityError("authorization is not for the attended lane")
+    authorization_file_sha256 = gate_payload.get("authorization_file_sha256")
+    if not isinstance(authorization_file_sha256, str):
+        raise PublicationIntegrityError(
+            "publication gate returned no validated authorization identity"
+        )
+    nonce_ledger_path = request.get("nonce_ledger_path")
+    if not isinstance(nonce_ledger_path, str) or not nonce_ledger_path:
+        raise PublicationIntegrityError(
+            "publication gate returned no authorization-bound nonce ledger"
+        )
 
     receipt: dict[str, Any] = {
         "schema_version": 1,
@@ -267,7 +270,7 @@ def _publish(args: argparse.Namespace, repo: Path) -> dict[str, Any]:
         "candidate_branch": request.get("pr_head_branch"),
         "base_branch": request.get("pr_base_branch"),
         "publication_repository_slug": request.get("publication_repository_slug"),
-        "authorization_file_sha256": bytes_sha256(authorization_bytes),
+        "authorization_file_sha256": authorization_file_sha256,
         "authorization_nonce_sha256": hashlib.sha256(nonce.encode("ascii")).hexdigest(),
         "ordinary_direct_mutation_bypass": False,
         "force_push": False,
@@ -281,7 +284,7 @@ def _publish(args: argparse.Namespace, repo: Path) -> dict[str, Any]:
     try:
         consume_authorization_nonce(
             nonce,
-            ledger_path=args.nonce_ledger,
+            ledger_path=nonce_ledger_path,
             repo=repo,
         )
         receipt["authorization_consumed"] = True
@@ -380,7 +383,6 @@ def main() -> None:
     parser.add_argument("--inventory", required=True)
     parser.add_argument("--authorization", required=True)
     parser.add_argument("--publisher-key", required=True)
-    parser.add_argument("--nonce-ledger", required=True)
     parser.add_argument("--receipt-output", required=True)
     args = parser.parse_args()
     repo = root()

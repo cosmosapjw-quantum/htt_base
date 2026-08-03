@@ -204,6 +204,7 @@ def evaluate_gate(
                 seal=seal,
                 policy=policy,
                 artifact_hashes=artifact_hashes,
+                repo=repo,
                 now=datetime.now(timezone.utc),
             )
         )
@@ -222,6 +223,11 @@ def evaluate_gate(
         "publication_executed": False,
         "change_set_id": locals().get("seal", {}).get("change_set_id"),
         "candidate_sha": locals().get("seal", {}).get("candidate_sha"),
+        "authorization_file_sha256": (
+            bytes_sha256(authorization_bytes)
+            if "authorization_bytes" in locals()
+            else None
+        ),
         "errors": errors,
     }
     if not errors:
@@ -242,6 +248,7 @@ def evaluate_gate(
             "pr_base_branch": authorization.get("pr_base_branch"),
             "pr_head_branch": authorization.get("pr_head_branch"),
             "pr_draft": authorization.get("pr_draft"),
+            "nonce_ledger_path": authorization.get("nonce_ledger_path"),
         }
     return payload, str(nonce) if isinstance(nonce, str) else None
 

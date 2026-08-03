@@ -48,6 +48,7 @@ def _request() -> dict[str, object]:
         "pr_base_branch": BASE,
         "pr_head_branch": BRANCH,
         "pr_draft": False,
+        "nonce_ledger_path": "/tmp/htt-pr276-attended-test-nonce-ledger",
     }
 
 
@@ -73,7 +74,6 @@ def _args(tmp_path: Path) -> argparse.Namespace:
         inventory=str(tmp_path / "inventory.json"),
         authorization=str(tmp_path / "authorization.json"),
         publisher_key=str(tmp_path / "publisher.key"),
-        nonce_ledger=str(tmp_path / "nonce-ledger"),
         receipt_output=str(tmp_path / "receipt.json"),
     )
 
@@ -88,6 +88,7 @@ def test_pr276_policy_registers_only_the_narrow_attended_transaction() -> None:
         "max_transactions": 1,
         "requires_current_turn_authorization": True,
         "direct_mutation_commands_forbidden": True,
+        "nonce_ledger_binding": "authorization_hmac_absolute_external_path",
         "publisher_entrypoint": ".agent-harness/scripts/attended_pr_publisher.py",
         "forbidden_actions": [
             "force_push",
@@ -137,8 +138,16 @@ def test_attended_policy_schema_fails_closed_on_relaxation(tmp_path: Path) -> No
     with pytest.raises(PublicationIntegrityError, match="forbidden action"):
         load_publication_policy(tmp_path, "policy.json")
 
+    relaxed = copy.deepcopy(policy)
+    relaxed["attended_publication"]["nonce_ledger_binding"] = "caller_selected"
+    policy_path.write_text(json.dumps(relaxed), encoding="utf-8")
+    with pytest.raises(PublicationIntegrityError, match="nonce ledger"):
+        load_publication_policy(tmp_path, "policy.json")
 
-def test_attended_authorization_requires_an_opted_in_policy() -> None:
+
+def test_attended_authorization_requires_an_opted_in_policy(
+    tmp_path: Path,
+) -> None:
     _, policy = load_publication_policy(ROOT, POLICY_REL)
     key = bytes.fromhex("84" * 32)
     seal = {
@@ -187,6 +196,7 @@ def test_attended_authorization_requires_an_opted_in_policy() -> None:
         "issued_at": now.isoformat(timespec="seconds"),
         "expires_at": (now + timedelta(minutes=5)).isoformat(timespec="seconds"),
         "nonce": "5" * 48,
+        "nonce_ledger_path": str(tmp_path / "nonce-ledger"),
     }
     authorization["hmac_sha256"] = authorization_hmac(authorization, key=key)
     assert validate_authorization_payload(
@@ -195,6 +205,7 @@ def test_attended_authorization_requires_an_opted_in_policy() -> None:
         seal=seal,
         policy=policy,
         artifact_hashes=artifact_hashes,
+        repo=ROOT,
         now=now,
     ) == []
 
@@ -206,9 +217,47 @@ def test_attended_authorization_requires_an_opted_in_policy() -> None:
         seal=seal,
         policy=no_attended_lane,
         artifact_hashes=artifact_hashes,
+        repo=ROOT,
         now=now,
     )
     assert errors == ["policy does not authorize attended publication"]
+
+    rebound = copy.deepcopy(authorization)
+    rebound["nonce_ledger_path"] = str(tmp_path / "second-ledger")
+    assert validate_authorization_payload(
+        rebound,
+        key=key,
+        seal=seal,
+        policy=policy,
+        artifact_hashes=artifact_hashes,
+        repo=ROOT,
+        now=now,
+    ) == ["publish authorization HMAC is invalid"]
+
+    inside = copy.deepcopy(authorization)
+    inside["nonce_ledger_path"] = str(ROOT / ".prguard" / "nonce-ledger")
+    inside["hmac_sha256"] = authorization_hmac(inside, key=key)
+    assert validate_authorization_payload(
+        inside,
+        key=key,
+        seal=seal,
+        policy=policy,
+        artifact_hashes=artifact_hashes,
+        repo=ROOT,
+        now=now,
+    ) == ["nonce ledger must be outside the repository"]
+
+
+def test_attended_publisher_has_no_caller_selected_nonce_ledger_option() -> None:
+    completed = subprocess.run(
+        [sys.executable, str(Path(attended.__file__)), "--help"],
+        cwd=ROOT,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    assert completed.returncode == 0
+    assert "--nonce-ledger" not in completed.stdout
 
 
 def test_attended_publisher_rejects_external_authorization_before_nonce_use(
@@ -234,6 +283,7 @@ def test_attended_publisher_rejects_external_authorization_before_nonce_use(
             {
                 "ok": True,
                 "candidate_sha": CANDIDATE_SHA,
+                "authorization_file_sha256": "1" * 64,
                 "publication_request": request,
             },
             "b" * 48,
@@ -292,25 +342,19 @@ def test_attended_publisher_executes_exact_transaction_and_records_receipt(
             {
                 "ok": True,
                 "candidate_sha": CANDIDATE_SHA,
+                "authorization_file_sha256": "2" * 64,
                 "publication_request": request,
             },
             "c" * 48,
         ),
     )
-    monkeypatch.setattr(
-        attended,
-        "read_external_json",
-        lambda repo, path, field: (
-            Path(path),
-            b"authorization-bytes",
-            {"authorization_mode": ATTENDED_PUBLISHER_AUTHORIZATION_MODE},
-        ),
-    )
-    consumed: list[str] = []
+    consumed: list[tuple[str, str]] = []
     monkeypatch.setattr(
         attended,
         "consume_authorization_nonce",
-        lambda nonce, **kwargs: consumed.append(nonce),
+        lambda nonce, **kwargs: consumed.append(
+            (nonce, str(kwargs["ledger_path"]))
+        ),
     )
 
     remote_heads = iter((None, CANDIDATE_SHA))
@@ -340,7 +384,7 @@ def test_attended_publisher_executes_exact_transaction_and_records_receipt(
     )
 
     receipt = attended._publish(_args(tmp_path), ROOT)
-    assert consumed == ["c" * 48]
+    assert consumed == [("c" * 48, str(request["nonce_ledger_path"]))]
     assert commands[0] == [
         "git",
         "push",
@@ -353,6 +397,7 @@ def test_attended_publisher_executes_exact_transaction_and_records_receipt(
     assert receipt["branch_pushed"] is True
     assert receipt["pr_created"] is True
     assert receipt["pr_number"] == 376
+    assert receipt["authorization_file_sha256"] == "2" * 64
     assert receipts == [receipt]
 
 
@@ -378,18 +423,10 @@ def test_attended_publisher_blocks_mismatched_remote_without_mutation(
             {
                 "ok": True,
                 "candidate_sha": CANDIDATE_SHA,
+                "authorization_file_sha256": "3" * 64,
                 "publication_request": request,
             },
             "d" * 48,
-        ),
-    )
-    monkeypatch.setattr(
-        attended,
-        "read_external_json",
-        lambda repo, path, field: (
-            Path(path),
-            b"authorization-bytes",
-            {"authorization_mode": ATTENDED_PUBLISHER_AUTHORIZATION_MODE},
         ),
     )
     monkeypatch.setattr(attended, "consume_authorization_nonce", lambda *a, **k: None)
@@ -411,3 +448,60 @@ def test_attended_publisher_blocks_mismatched_remote_without_mutation(
         attended._publish(_args(tmp_path), ROOT)
     assert commands == []
     assert receipts[0]["status"] == "FAIL"
+
+
+def test_attended_publisher_replay_uses_one_authorization_bound_ledger(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    request = _request()
+    request["nonce_ledger_path"] = str(tmp_path / "bound-nonce-ledger")
+    monkeypatch.setattr(
+        attended,
+        "_policy_for_seal",
+        lambda repo, seal: {
+            "attended_publication": {
+                "enabled": True,
+                "transaction": ATTENDED_PUBLICATION_TRANSACTION,
+            }
+        },
+    )
+    monkeypatch.setattr(
+        attended,
+        "evaluate_gate",
+        lambda args, repo: (
+            {
+                "ok": True,
+                "candidate_sha": CANDIDATE_SHA,
+                "authorization_file_sha256": "4" * 64,
+                "publication_request": request,
+            },
+            "e" * 48,
+        ),
+    )
+    remote_checks: list[str] = []
+
+    def _remote(*args: object, **kwargs: object) -> str:
+        remote_checks.append("checked")
+        return CANDIDATE_SHA
+
+    monkeypatch.setattr(attended, "_remote_head", _remote)
+    monkeypatch.setattr(attended, "_open_prs", lambda *a, **k: [_verified_pr()])
+    receipts: list[dict[str, object]] = []
+    monkeypatch.setattr(
+        attended,
+        "_write_receipt",
+        lambda repo, output, receipt: receipts.append(dict(receipt)),
+    )
+
+    first = _args(tmp_path)
+    first.receipt_output = str(tmp_path / "first-receipt.json")
+    assert attended._publish(first, ROOT)["status"] == "PASS"
+
+    second = _args(tmp_path)
+    second.receipt_output = str(tmp_path / "second-receipt.json")
+    with pytest.raises(PublicationIntegrityError, match="already used"):
+        attended._publish(second, ROOT)
+
+    assert remote_checks == ["checked", "checked"]
+    assert [row["status"] for row in receipts] == ["PASS", "FAIL"]

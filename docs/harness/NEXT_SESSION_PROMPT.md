@@ -27,13 +27,16 @@ Verify the PR-276 delivery closeout in the isolated worktree
    the bounded R6 pre-freeze PASS, and failed immutable content review R1; none
    may be relabelled.
 3. Rebuild `.agent-harness/generated/CONTEXT_PACK.md` before any subagent.
-4. Confirm final history contains the preserved content and closeout commits
-   plus exactly one `PR-276: Restore attended PR delivery` corrective commit.
+4. Confirm final history contains the preserved content and closeout commits,
+   `PR-276: Restore attended PR delivery`, and the adversarially required
+   nonce-ledger binding repair. Preserve the failed replay-review receipt.
 5. Verify the corrected candidate through the latest seal, registered
    harness/claim review, and latest-target integration receipt.
 6. Query the live remote ref and PR inventory. If both are absent, issue a
    current-turn `attended_explicit_user` authorization and invoke only the
-   policy-registered `attended_pr_publisher.py` exactly once. If the branch or
+   policy-registered `attended_pr_publisher.py` exactly once. The nonce ledger
+   must come from the HMAC-signed authorization; the publisher exposes no
+   ledger override. If the branch or
    PR already matches the sealed authorization, verify rather than duplicate
    it. Any mismatched remote state is a hard stop.
 7. Begin PR-277 only in a new delivery cycle after the PR-276 remote boundary

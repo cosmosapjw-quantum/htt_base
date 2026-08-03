@@ -21,6 +21,7 @@ publication_reconciliation:
     max_transactions: 1
     requires_current_turn_authorization: true
     direct_git_or_gh_mutation_forbidden: true
+    nonce_ledger_binding: authorization_hmac_absolute_external_path
     entrypoint: .agent-harness/scripts/attended_pr_publisher.py
   preserved_forbidden_actions:
   - force_push
@@ -389,4 +390,5 @@ kill_conditions:
 - A user-owned untracked input collides with a tracked target.
 - A completed status alone grants theorem, data, inference, morphology, family, or publication capability.
 - An attended publication request is replayed, targets an unsealed SHA, or
-  attempts force-push, approval, merge, or ruleset mutation.
+  supplies an execution-time nonce-ledger override, or attempts force-push,
+  approval, merge, or ruleset mutation.

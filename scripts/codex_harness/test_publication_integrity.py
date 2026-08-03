@@ -1144,6 +1144,7 @@ def test_authorization_requires_external_key_bounded_ttl_and_one_use_nonce(
         seal=seal,
         policy=policy,
         artifact_hashes=hashes,
+        repo=repo,
         now=now,
     ) == []
     assert authorization["head_refspec"] == (
@@ -1160,6 +1161,7 @@ def test_authorization_requires_external_key_bounded_ttl_and_one_use_nonce(
         seal=seal,
         policy=policy,
         artifact_hashes=hashes,
+        repo=repo,
         now=now,
     )
 
@@ -1178,6 +1180,7 @@ def test_authorization_requires_external_key_bounded_ttl_and_one_use_nonce(
         seal=seal,
         policy=policy,
         artifact_hashes=hashes,
+        repo=repo,
         now=now,
     )
     inside = repo / "publisher.key"

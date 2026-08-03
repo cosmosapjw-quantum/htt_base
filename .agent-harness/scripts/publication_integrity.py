@@ -55,6 +55,7 @@ PYTHON_EXECUTABLE_TOKEN = "{python}"
 EXTERNAL_PUBLISHER_AUTHORIZATION_MODE = "external_publisher"
 ATTENDED_PUBLISHER_AUTHORIZATION_MODE = "attended_explicit_user"
 ATTENDED_PUBLICATION_TRANSACTION = "sealed_sha_push_then_single_pr_create"
+ATTENDED_NONCE_LEDGER_BINDING = "authorization_hmac_absolute_external_path"
 NON_PUBLISHING_GIT_SUBCOMMANDS = {
     "add",
     "am",
@@ -740,6 +741,7 @@ def load_publication_policy(
             "max_transactions",
             "requires_current_turn_authorization",
             "direct_mutation_commands_forbidden",
+            "nonce_ledger_binding",
             "publisher_entrypoint",
             "forbidden_actions",
         }
@@ -778,6 +780,11 @@ def load_publication_policy(
         if attended.get("direct_mutation_commands_forbidden") is not True:
             raise PublicationIntegrityError(
                 "attended publication cannot enable direct mutation commands"
+            )
+        if attended.get("nonce_ledger_binding") != ATTENDED_NONCE_LEDGER_BINDING:
+            raise PublicationIntegrityError(
+                "attended publication must bind one external nonce ledger in "
+                "the authorization HMAC"
             )
         entrypoint = require_repo_relative_name(
             attended.get("publisher_entrypoint"),
@@ -1844,6 +1851,7 @@ def validate_authorization_payload(
     seal: Mapping[str, Any],
     policy: Mapping[str, Any],
     artifact_hashes: Mapping[str, str],
+    repo: Path,
     now: datetime | None = None,
 ) -> list[str]:
     errors: list[str] = []
@@ -1863,6 +1871,15 @@ def validate_authorization_payload(
             raise PublicationIntegrityError(
                 "publish authorization mode is not registered"
             )
+        supplied_hmac = authorization.get("hmac_sha256")
+        if (
+            not isinstance(supplied_hmac, str)
+            or SHA256_RE.fullmatch(supplied_hmac) is None
+        ):
+            raise PublicationIntegrityError("publish authorization HMAC is malformed")
+        expected_hmac = authorization_hmac(authorization, key=key)
+        if not hmac.compare_digest(supplied_hmac, expected_hmac):
+            raise PublicationIntegrityError("publish authorization HMAC is invalid")
         if authorization_mode == ATTENDED_PUBLISHER_AUTHORIZATION_MODE:
             attended = policy.get("attended_publication")
             if (
@@ -1880,16 +1897,24 @@ def validate_authorization_payload(
                 or attended.get("max_transactions") != 1
                 or attended.get("requires_current_turn_authorization") is not True
                 or attended.get("direct_mutation_commands_forbidden") is not True
+                or attended.get("nonce_ledger_binding")
+                != ATTENDED_NONCE_LEDGER_BINDING
             ):
                 raise PublicationIntegrityError(
                     "attended publication policy is incomplete or drifted"
                 )
-        supplied_hmac = authorization.get("hmac_sha256")
-        if not isinstance(supplied_hmac, str) or SHA256_RE.fullmatch(supplied_hmac) is None:
-            raise PublicationIntegrityError("publish authorization HMAC is malformed")
-        expected_hmac = authorization_hmac(authorization, key=key)
-        if not hmac.compare_digest(supplied_hmac, expected_hmac):
-            raise PublicationIntegrityError("publish authorization HMAC is invalid")
+            nonce_ledger = canonical_nonce_ledger_path(
+                authorization.get("nonce_ledger_path"), repo=repo
+            )
+            if authorization.get("nonce_ledger_path") != str(nonce_ledger):
+                raise PublicationIntegrityError(
+                    "attended nonce ledger path must be canonical"
+                )
+        elif "nonce_ledger_path" in authorization:
+            raise PublicationIntegrityError(
+                "external publisher authorization cannot select an attended "
+                "nonce ledger"
+            )
         bindings = {
             "change_set_id": seal.get("change_set_id"),
             "publication_group_id": seal.get("publication_group_id"),
@@ -2009,6 +2034,25 @@ def validate_authorization_payload(
     return errors
 
 
+def canonical_nonce_ledger_path(
+    ledger_path: object,
+    *,
+    repo: Path,
+) -> Path:
+    if not isinstance(ledger_path, (str, os.PathLike)):
+        raise PublicationIntegrityError("nonce ledger path is missing")
+    raw = Path(ledger_path).expanduser()
+    if not raw.is_absolute():
+        raise PublicationIntegrityError("nonce ledger path must be absolute")
+    path = Path(os.path.normpath(os.fspath(raw)))
+    if _path_is_inside(path, repo):
+        raise PublicationIntegrityError("nonce ledger must be outside the repository")
+    _walk_without_symlinks(path.parent)
+    if path.exists() or path.is_symlink():
+        _walk_without_symlinks(path)
+    return path
+
+
 def consume_authorization_nonce(
     nonce: str,
     *,
@@ -2016,12 +2060,7 @@ def consume_authorization_nonce(
     repo: Path,
 ) -> None:
     require_safe_id(nonce, field="authorization nonce")
-    path = Path(ledger_path).expanduser().absolute()
-    if _path_is_inside(path, repo):
-        raise PublicationIntegrityError("nonce ledger must be outside the repository")
-    _walk_without_symlinks(path.parent)
-    if path.exists() or path.is_symlink():
-        _walk_without_symlinks(path)
+    path = canonical_nonce_ledger_path(ledger_path, repo=repo)
     flags = (
         os.O_RDWR
         | os.O_CREAT
