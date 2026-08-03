@@ -12067,10 +12067,23 @@ prs:
   files:
   - htt/src/common/evidence_graph.py
   - htt/src/common/remediation_state.py
+  - htt/src/common/status_snapshot.py
+  - docs/codex_handoff/artifact_gate_outputs.yaml
+  - docs/research_program/post_pr275/pr277_spec.yaml
+  - docs/research_program/post_pr275/pr277_publication_policy.json
+  - scripts/codex_harness/run_pr277_capability_engine.py
   - tests/contracts/test_claim_capability_engine.py
+  - tests/contracts/test_status_snapshot.py
+  - tests/contracts/test_vector_tensor_program_dag.py
+  - tests/pr_cards/test_pr_276_post275_reconciliation.py
   - docs/PR_DELTAS/pr-277.md
   tests:
-  - to-be-created:PYTHONPATH=htt/src:htt python -m pytest -p no:cacheprovider -q tests/contracts/test_claim_capability_engine.py
+  - python scripts/codex_harness/run_pr277_capability_engine.py probe
+  - python scripts/codex_harness/run_pr277_capability_engine.py focused
+  - python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice
+  - python scripts/codex_harness/sync_pr_dag_mirrors.py --check
+  - python scripts/codex_harness/run_pr277_capability_engine.py collect
+  - python scripts/codex_harness/run_pr277_capability_engine.py smoke
   dod:
   - CONTRACT_VALIDATED through PUBLIC_RELEASE capabilities require evidence closure and an adjudication receipt.
   - SUPERSEDE, REVOKE, DOWNGRADE, and invalidation propagate only to typed downstream consumers.
@@ -12089,7 +12102,7 @@ prs:
   - No MIO posterior, native validation, family-identification, public release, or artifact-readiness laundering.
   anti_drift:
   - Changed theorem, data, mask, covariance, transfer, or estimand creates a new versioned identity.
-  roadmap_anchor: docs/research_program/post_pr275/pr276_spec.yaml
+  roadmap_anchor: docs/research_program/post_pr275/pr277_spec.yaml
   activation_state: PENDING
   execution_lane: defensible
   scientific_artifact_mode: governance_diagnostic

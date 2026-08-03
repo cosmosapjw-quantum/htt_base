@@ -1,6 +1,6 @@
 # Current PR Progress
 
-Date: 2026-08-03
+Date: 2026-08-04
 
 This is a generated-current summary companion, not a historical receipt. Exact
 historical execution/review evidence remains under `docs/PR_DELTAS/` and
@@ -24,8 +24,8 @@ historical execution/review evidence remains under `docs/PR_DELTAS/` and
   authorization may consume one sealed `CREATE_REVIEW_PR` transaction. No
   force-push, approval, merge, ruleset, data, or claim action is enabled.
 - Current counts: 171 completed (70.95%), dependency-weighted 74.78%,
-  critical-path 98.70%, 39 pending, 2 blocked, 28 dormant, no foreground task,
-  and one background task.
+  critical-path 98.70%, 38 pending, 2 blocked, 28 dormant, PR-277 foreground,
+  and PR-151 background-only.
 - The dependency overlay adds PR-285 to PR-191--195, PR-278 to PR-157, typed
   residual/replay prerequisites to Planck/CF4/ACT cards, and PR-294 to PR-207
   without rewriting receipt-sealed historical cards.
@@ -37,7 +37,44 @@ historical execution/review evidence remains under `docs/PR_DELTAS/` and
 - Data and GitHub ruleset human gates are registered but all remain
   `NOT_AUTHORIZED`.
 
+## PR-277 in progress
+
+- Added the exact 11-capability, 5-action, and 5-outcome vocabulary without
+  deriving any capability from orchestration status.
+- Added factory-issued, content-addressed decisions using the existing
+  evidence graph, authority registry, evidence receipt, and adjudication
+  receipt.
+- Added six-component versioned identities, exact supersession, typed
+  invalidation/recalibration/reexecution edges, and automatic
+  affected-capability blockers.
+- Replaced caller-controlled artifact promotion fields with compatibility-only
+  annotations and an internal-only no-decision fallback.
+- Preserved two failed first-review authority findings, repaired them, and
+  added exhaustive action/outcome, capability-profile, and 55-row owner
+  firewall regression coverage.
+- No data, theorem, method, observed, source-separation, morphology,
+  family-identification, or publication capability is granted by this work.
+
 ## Validation state
+
+- Current PR-277 mutable focused suite: `308 passed`.
+- Current source-layout collection: `10660/10719 collected`, 59 deselected;
+  zero collection errors.
+- Current smoke: `8 passed`, 10711 deselected; eight declared legacy warnings.
+- Strict 241-card DAG, canonical/machine mirrors, claim-language lint, research
+  surface lint, Python compilation, and `git diff --check` pass. Black and Ruff
+  are unavailable in the active environment and are not reported as passes.
+- First claim review failed on two authority defects; repaired claim review
+  passed. Both mutable regression reviews found test-coverage gaps and both
+  are now exercised. Immutable content R1 was structurally partial; R2
+  preserved a claim PASS plus a blocking raw-builder counterexample; R3 could
+  not form an aggregate; and R4 preserved a claim PASS plus a blocking raw-
+  allocation counterexample. R5 reproduced a public-issuer closure marker, but
+  both reviewers later breached blind-results with broad prior-run searches;
+  the run is abandoned and not acceptance. The current repair gives the public
+  issuer no closure marker, refuses direct registrar use outside the exact
+  issuer frame, and revalidates exact evidence on every public use. The
+  amended content slot requires a new exact review.
 
 - Canonical 241-card DAG/status validation: passing after intake.
 - Canonical/machine mirrors: synchronized after intake.
@@ -59,6 +96,9 @@ historical execution/review evidence remains under `docs/PR_DELTAS/` and
 
 ## Next transition
 
-PR-277 is the next dependency-valid card. The exact final delivery state is
-determined by current runtime evidence and live remote verification. Data
-execution and public release remain separately gated.
+PR-277 remains `in_progress`. The owner authorized one content history slot,
+one closeout commit, and one final review PR on 2026-08-04. The content slot is
+amended with the R2, R4, and R5 authority repairs; the next transition is a new
+seal and immutable blind review, followed by status closeout and latest-target
+integration. PR-278 must not start before successful closeout. Data execution
+and scientific public release remain separately gated.

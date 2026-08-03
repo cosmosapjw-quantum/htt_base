@@ -1,6 +1,6 @@
 # Current Decision Log
 
-Date: 2026-08-03
+Date: 2026-08-04
 
 Historical decisions remain recoverable from Git history and owning PR deltas.
 Only decisions that govern the current post-275 programme are repeated here.
@@ -75,3 +75,29 @@ Direct mutation commands, reusable authorization, force-push, approval, merge,
 ruleset mutation, data execution, and claim promotion remain forbidden. The
 attended lane uses the current GitHub identity and does not claim credential
 isolation.
+
+## D-EVIDENCE-CONDITIONED-CAPABILITY
+
+DAG completion, artifact readiness, scientific semantics, identification,
+provenance grade, allowed use, and publication eligibility are independent
+axes. `ClaimCapabilityDecision` may be issued only from the existing trusted
+evidence and adjudication authorities. The receipt-covered claim node must bind
+the exact capability, action, outcome, and ceiling; callers cannot relabel an
+adjudicated contract as a theorem, observed inference, or public release.
+
+Changes to theorem, data, mask, covariance, transfer, or estimand create a new
+`VersionedClaimIdentity`. Active `INVALIDATES_*`,
+`REQUIRES_RECALIBRATION`, and `REQUIRES_REEXECUTION` edges automatically block
+their declared capability subset. `SUPERSEDED_BY` names an immutable
+predecessor but is not itself an active blocker. Pre-native
+`FAMILY_IDENTIFICATION` remains unconditionally refused. Reopen this decision
+only through a new versioned contract with exact evidence and adjudication; do
+not weaken it in place.
+
+Identity registration is an unissued-object misuse guard, not scientific
+authority. Ordinary construction refuses, the public issuer exposes no closure
+marker, and direct registrar use outside the exact validated issuer frame
+refuses. Every public field, derived grant state, and serialization request
+revalidates and compares the exact evidence/adjudication context. Python
+allocation, dataclass freezing, registration, or a serialized record alone is
+never treated as scientific authority.

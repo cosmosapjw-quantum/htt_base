@@ -209,7 +209,8 @@ def test_status_is_total_and_preserves_negative_chronology() -> None:
     assert status["execution_resolutions"]["PR-190"][
         "success_dependency_satisfied"
     ] is False
-    assert all(states[pr_id] == "pending" for pr_id in POST275_IDS[1:])
+    assert states["PR-277"] in {"pending", "in_progress"}
+    assert all(states[pr_id] == "pending" for pr_id in POST275_IDS[2:])
     if states["PR-276"] == "in_progress":
         assert "PR-276" not in status["execution_resolutions"]
     else:

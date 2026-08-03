@@ -1,0 +1,117 @@
+{
+  "schema_version": 1,
+  "policy_id": "PR277-PUBLICATION-POLICY",
+  "change_set_id": "CS-PR277-CAPABILITY-ENGINE",
+  "publication_group_id": "PG-PR277-CAPABILITY-ENGINE",
+  "target_ref": "origin/research/pr04-multicomponent",
+  "target_sha": "a6d3bd8b24e15727fbb6011c515d66d49cd4ba92",
+  "max_open_prs": 1,
+  "max_direct_to_target_prs": 1,
+  "max_prs_per_change_set": 1,
+  "max_stack_depth": 1,
+  "max_file_overlap_prs": 0,
+  "max_inventory_age_seconds": 300,
+  "max_receipt_age_seconds": 1800,
+  "max_authorization_ttl_seconds": 1800,
+  "default_publication_mode": "unattended_external_publisher_only",
+  "unattended_publication_requires_external_publisher": true,
+  "ordinary_agent_push_forbidden": true,
+  "ordinary_agent_pr_mutation_forbidden": true,
+  "attended_publication": {
+    "enabled": true,
+    "authorization_mode": "attended_explicit_user",
+    "transaction": "sealed_sha_push_then_single_pr_create",
+    "max_transactions": 1,
+    "requires_current_turn_authorization": true,
+    "direct_mutation_commands_forbidden": true,
+    "nonce_ledger_binding": "authorization_hmac_frozen_external_inode_v1",
+    "publisher_entrypoint": ".agent-harness/scripts/attended_pr_publisher.py",
+    "forbidden_actions": [
+      "force_push",
+      "approve",
+      "merge",
+      "ruleset_mutation"
+    ]
+  },
+  "claim_ceiling": "diagnostic_only",
+  "family_identification_gate": "BLOCKED_PRE_NATIVE_ATLAS",
+  "required_commands": [
+    {
+      "id": "pr277-focused",
+      "argv": ["{python}", "-B", "scripts/codex_harness/run_pr277_capability_engine.py", "focused"],
+      "timeout_seconds": 1200
+    },
+    {
+      "id": "pr277-dag",
+      "argv": ["{python}", "-B", "scripts/codex_harness/validate_pr_dag.py", "docs/codex_handoff/pr_backlog.yaml", "--status", "docs/codex_handoff/pr_status.yaml", "--strict-rescue-slice"],
+      "timeout_seconds": 300
+    },
+    {
+      "id": "pr277-mirror-check",
+      "argv": ["{python}", "-B", "scripts/codex_harness/sync_pr_dag_mirrors.py", "--check"],
+      "timeout_seconds": 300
+    },
+    {
+      "id": "pr277-collect",
+      "argv": ["{python}", "-B", "scripts/codex_harness/run_pr277_capability_engine.py", "collect"],
+      "timeout_seconds": 1800
+    },
+    {
+      "id": "pr277-smoke",
+      "argv": ["{python}", "-B", "scripts/codex_harness/run_pr277_capability_engine.py", "smoke"],
+      "timeout_seconds": 1200
+    },
+    {
+      "id": "pr277-claim-language",
+      "argv": ["{python}", "-B", "scripts/check_claim_language.py"],
+      "timeout_seconds": 300
+    },
+    {
+      "id": "pr277-research-surface-claim-lint",
+      "argv": ["{python}", "-B", "scripts/claim_lint_research_surfaces.py"],
+      "timeout_seconds": 300
+    }
+  ],
+  "required_review_cells": [
+    "candidate_binding",
+    "factory_only_decision",
+    "exact_evidence_closure",
+    "identity_bound_adjudication",
+    "exact_capability_binding",
+    "derived_granted_property",
+    "orthogonal_capability_axes",
+    "versioned_identity_supersession",
+    "typed_invalidation_propagation",
+    "graph_derived_invalidation_blockers",
+    "affected_capability_only_blocking",
+    "artifact_gate_anti_laundering",
+    "attended_delivery_boundary",
+    "terminal_history_preservation",
+    "owner_role_firewalls",
+    "native_family_gate",
+    "non_relaxable_rules",
+    "claim_ceiling",
+    "claim_language"
+  ],
+  "invalidates_review": [
+    "candidate_sha_changed",
+    "candidate_tree_changed",
+    "diff_digest_changed",
+    "tests_changed",
+    "target_sha_changed",
+    "capability_vocabulary_changed",
+    "factory_authority_changed",
+    "identity_or_edge_semantics_changed",
+    "artifact_gate_semantics_changed",
+    "claim_ceiling_changed"
+  ],
+  "forbidden_inputs": [
+    "completed status used as a scientific capability grant",
+    "caller-supplied readiness or production validation",
+    "parallel principal registry or claim authority",
+    "historical terminal identity reopening",
+    "native solver or native morphology atlas placeholder",
+    "MIO posterior or evidence semantics",
+    "Bianchi family identification claim"
+  ]
+}

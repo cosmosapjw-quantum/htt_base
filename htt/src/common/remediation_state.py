@@ -429,6 +429,396 @@ def claim_identity_fingerprint(
     return hashlib.sha256(canonical_claim_identity_payload(identity)).hexdigest()
 
 
+class ClaimCapability(StrEnum):
+    """Named scientific-use capability; never inferred from DAG completion."""
+
+    CONTRACT_VALIDATED = "CONTRACT_VALIDATED"
+    THEOREM_PROVED_EXACT = "THEOREM_PROVED_EXACT"
+    THEOREM_PROVED_CONDITIONAL = "THEOREM_PROVED_CONDITIONAL"
+    METHOD_CALIBRATED = "METHOD_CALIBRATED"
+    DATA_ADMITTED = "DATA_ADMITTED"
+    OBSERVED_DESCRIPTIVE = "OBSERVED_DESCRIPTIVE"
+    OBSERVED_INFERENTIAL = "OBSERVED_INFERENTIAL"
+    SOURCE_SEPARATION_CANDIDATE = "SOURCE_SEPARATION_CANDIDATE"
+    MORPHOLOGY_COMPATIBILITY = "MORPHOLOGY_COMPATIBILITY"
+    FAMILY_IDENTIFICATION = "FAMILY_IDENTIFICATION"
+    PUBLIC_RELEASE = "PUBLIC_RELEASE"
+
+
+class CapabilityAction(StrEnum):
+    GRANT = "GRANT"
+    HOLD = "HOLD"
+    SUPERSEDE = "SUPERSEDE"
+    REVOKE = "REVOKE"
+    DOWNGRADE = "DOWNGRADE"
+
+
+class CapabilityOutcome(StrEnum):
+    PASS = "PASS"
+    PASS_WITH_CEILING = "PASS_WITH_CEILING"
+    ABSTAIN = "ABSTAIN"
+    BLOCK = "BLOCK"
+    STALE_REPLACED = "STALE_REPLACED"
+
+
+class CapabilityBlockerKind(StrEnum):
+    PHYSICAL_HARD = "PHYSICAL_HARD"
+    EVIDENCE_CONDITIONAL = "EVIDENCE_CONDITIONAL"
+    LEGACY_SUPERSESSION = "LEGACY_SUPERSESSION"
+    INFRASTRUCTURE_DEBT = "INFRASTRUCTURE_DEBT"
+
+
+class IdentityDimension(StrEnum):
+    THEOREM = "THEOREM"
+    DATA = "DATA"
+    MASK = "MASK"
+    COVARIANCE = "COVARIANCE"
+    TRANSFER = "TRANSFER"
+    ESTIMAND = "ESTIMAND"
+
+
+class ArtifactReadinessAxis(StrEnum):
+    EVIDENCE_CLOSED = "EVIDENCE_CLOSED"
+    EVIDENCE_INCOMPLETE = "EVIDENCE_INCOMPLETE"
+    EVIDENCE_BLOCKED = "EVIDENCE_BLOCKED"
+
+
+class CapabilityEvidenceBranch(StrEnum):
+    CONTRACT = "CONTRACT"
+    THEOREM = "THEOREM"
+    METHOD = "METHOD"
+    DATA = "DATA"
+    OBSERVATION = "OBSERVATION"
+    SOURCE_SEPARATION = "SOURCE_SEPARATION"
+    MORPHOLOGY = "MORPHOLOGY"
+    FAMILY = "FAMILY"
+    RELEASE = "RELEASE"
+
+
+class CapabilityScientificSemantics(StrEnum):
+    CONTRACT_ONLY = "CONTRACT_ONLY"
+    EXACT_THEOREM = "EXACT_THEOREM"
+    CONDITIONAL_THEOREM = "CONDITIONAL_THEOREM"
+    CALIBRATED_METHOD = "CALIBRATED_METHOD"
+    DATA_ADMISSION_ONLY = "DATA_ADMISSION_ONLY"
+    OBSERVED_DESCRIPTION = "OBSERVED_DESCRIPTION"
+    OBSERVED_INFERENCE = "OBSERVED_INFERENCE"
+    SOURCE_SEPARATION_CANDIDATE = "SOURCE_SEPARATION_CANDIDATE"
+    MORPHOLOGY_COMPATIBILITY = "MORPHOLOGY_COMPATIBILITY"
+    FAMILY_IDENTIFICATION = "FAMILY_IDENTIFICATION"
+    PUBLICATION = "PUBLICATION"
+
+
+class CapabilityIdentification(StrEnum):
+    NOT_APPLICABLE = "NOT_APPLICABLE"
+    PARTIAL_IDENTIFICATION = "PARTIAL_IDENTIFICATION"
+    COMPATIBILITY_ONLY = "COMPATIBILITY_ONLY"
+    NATIVE_ATLAS_REQUIRED = "NATIVE_ATLAS_REQUIRED"
+
+
+class CapabilityProvenanceGrade(StrEnum):
+    CONTENT_ADDRESSED_ADJUDICATED = "CONTENT_ADDRESSED_ADJUDICATED"
+
+
+NON_RELAXABLE_CAPABILITY_RULES = (
+    "CONVERSE_BAN",
+    "P36_T2P_RETRACTION",
+    "REFUTED_MES_TRIPLES",
+    "LEGACY_PROJECTION_BC1_BC2",
+    "OWNER_ROLE_FIREWALLS",
+    "NATIVE_FAMILY_GATE",
+    "ORBIT_GENERIC_COMPLETENESS_UNPROVEN",
+    "STATE_CONTENT_IDENTITY",
+    "CAS_FIVE_STATE_NO_MAJORITY",
+    "STRICT_PDF_LINT",
+    "ANTI_LAUNDERING",
+)
+
+
+_VERSIONED_IDENTITY_FACTORY_TOKEN = object()
+
+
+def _identity_components(
+    values: Mapping[IdentityDimension | str, str],
+) -> Mapping[IdentityDimension, str]:
+    if not isinstance(values, Mapping):
+        raise RemediationContractError("component_fingerprints must be a mapping")
+    normalized: dict[IdentityDimension, str] = {}
+    for raw_dimension, raw_digest in values.items():
+        try:
+            dimension = IdentityDimension(_enum_value(raw_dimension))
+        except ValueError as exc:
+            raise RemediationContractError(
+                f"unknown identity dimension {raw_dimension!r}"
+            ) from exc
+        if dimension in normalized:
+            raise RemediationContractError(
+                f"duplicate identity dimension {dimension.value}"
+            )
+        normalized[dimension] = _sha256_digest(
+            raw_digest, f"component_fingerprints.{dimension.value}"
+        )
+    missing = set(IdentityDimension) - set(normalized)
+    if missing:
+        raise RemediationContractError(
+            "component_fingerprints must cover every identity dimension: "
+            f"missing={sorted(item.value for item in missing)}"
+        )
+    return MappingProxyType(
+        dict(sorted(normalized.items(), key=lambda item: item[0].value))
+    )
+
+
+@dataclass(frozen=True, init=False)
+class VersionedClaimIdentity:
+    """Immutable claim identity with explicit theorem/data/estimand components."""
+
+    version: str
+    owner: str
+    claim_identity: ClaimIdentity
+    component_fingerprints: Mapping[IdentityDimension, str]
+    predecessor_ref: str | None
+    changed_dimensions: tuple[IdentityDimension, ...]
+
+    def __init__(
+        self,
+        *,
+        _factory_token: object,
+        version: str,
+        owner: str,
+        claim_identity: ClaimIdentity,
+        component_fingerprints: Mapping[IdentityDimension | str, str],
+        predecessor_ref: str | None,
+        changed_dimensions: Sequence[IdentityDimension | str],
+    ) -> None:
+        if _factory_token is not _VERSIONED_IDENTITY_FACTORY_TOKEN:
+            raise RemediationContractError(
+                "VersionedClaimIdentity is factory-only; use root() or successor()"
+            )
+        if not isinstance(claim_identity, ClaimIdentity):
+            raise RemediationContractError(
+                "claim_identity must be a validated ClaimIdentity"
+            )
+        normalized_owner = _exact_nonempty_text(owner, "owner")
+        if normalized_owner not in _ACTIVE_OWNERS:
+            raise RemediationContractError(
+                f"unknown active remediation owner {normalized_owner!r}"
+            )
+        components = _identity_components(component_fingerprints)
+        changed: list[IdentityDimension] = []
+        for value in changed_dimensions:
+            try:
+                dimension = IdentityDimension(_enum_value(value))
+            except ValueError as exc:
+                raise RemediationContractError(
+                    f"unknown changed identity dimension {value!r}"
+                ) from exc
+            if dimension in changed:
+                raise RemediationContractError(
+                    f"duplicate changed identity dimension {dimension.value}"
+                )
+            changed.append(dimension)
+        changed_tuple = tuple(sorted(changed, key=lambda item: item.value))
+        if predecessor_ref is None:
+            if changed_tuple:
+                raise RemediationContractError(
+                    "a root identity cannot declare changed_dimensions"
+                )
+        else:
+            predecessor_ref = _sha256_digest(predecessor_ref, "predecessor_ref")
+            if not changed_tuple:
+                raise RemediationContractError(
+                    "a successor identity requires changed_dimensions"
+                )
+        object.__setattr__(self, "version", _exact_nonempty_text(version, "version"))
+        object.__setattr__(self, "owner", normalized_owner)
+        object.__setattr__(self, "claim_identity", claim_identity)
+        object.__setattr__(self, "component_fingerprints", components)
+        object.__setattr__(self, "predecessor_ref", predecessor_ref)
+        object.__setattr__(self, "changed_dimensions", changed_tuple)
+
+    @classmethod
+    def root(
+        cls,
+        *,
+        version: str,
+        owner: str,
+        claim_identity: ClaimIdentity,
+        component_fingerprints: Mapping[IdentityDimension | str, str],
+    ) -> "VersionedClaimIdentity":
+        return cls(
+            _factory_token=_VERSIONED_IDENTITY_FACTORY_TOKEN,
+            version=version,
+            owner=owner,
+            claim_identity=claim_identity,
+            component_fingerprints=component_fingerprints,
+            predecessor_ref=None,
+            changed_dimensions=(),
+        )
+
+    @classmethod
+    def successor(
+        cls,
+        predecessor: "VersionedClaimIdentity",
+        *,
+        version: str,
+        claim_identity: ClaimIdentity,
+        component_fingerprints: Mapping[IdentityDimension | str, str],
+    ) -> "VersionedClaimIdentity":
+        if not isinstance(predecessor, VersionedClaimIdentity):
+            raise TypeError("predecessor must be a VersionedClaimIdentity")
+        if not isinstance(claim_identity, ClaimIdentity):
+            raise RemediationContractError(
+                "claim_identity must be a validated ClaimIdentity"
+            )
+        if claim_identity.claim_id != predecessor.claim_identity.claim_id:
+            raise RemediationContractError(
+                "a changed claim_id requires a new root identity, not a successor"
+            )
+        normalized_version = _exact_nonempty_text(version, "version")
+        if normalized_version == predecessor.version:
+            raise RemediationContractError("a successor must change version")
+        components = _identity_components(component_fingerprints)
+        changed = tuple(
+            dimension
+            for dimension in IdentityDimension
+            if components[dimension]
+            != predecessor.component_fingerprints[dimension]
+        )
+        if not changed:
+            if (
+                claim_identity.identity_fingerprint
+                != predecessor.claim_identity.identity_fingerprint
+            ):
+                raise RemediationContractError(
+                    "a semantic claim change must alter a declared identity component"
+                )
+            raise RemediationContractError("a no-op successor is forbidden")
+        return cls(
+            _factory_token=_VERSIONED_IDENTITY_FACTORY_TOKEN,
+            version=normalized_version,
+            owner=predecessor.owner,
+            claim_identity=claim_identity,
+            component_fingerprints=components,
+            predecessor_ref=predecessor.identity_ref,
+            changed_dimensions=changed,
+        )
+
+    def payload(self) -> dict[str, object]:
+        return {
+            "schema_version": "versioned_claim_identity_v1",
+            "version": self.version,
+            "owner": self.owner,
+            "claim_identity": self.claim_identity.to_record(),
+            "component_fingerprints": {
+                dimension.value: digest
+                for dimension, digest in self.component_fingerprints.items()
+            },
+            "predecessor_ref": self.predecessor_ref,
+            "changed_dimensions": [item.value for item in self.changed_dimensions],
+        }
+
+    @property
+    def identity_ref(self) -> str:
+        return hashlib.sha256(
+            json.dumps(
+                self.payload(),
+                sort_keys=True,
+                separators=(",", ":"),
+                ensure_ascii=False,
+            ).encode("utf-8")
+        ).hexdigest()
+
+    def to_record(self) -> dict[str, object]:
+        return {**self.payload(), "identity_ref": self.identity_ref}
+
+
+@dataclass(frozen=True)
+class CapabilityBlocker:
+    """One typed blocker whose scope is an explicit capability subset."""
+
+    blocker_id: str
+    kind: CapabilityBlockerKind | str
+    affected_capabilities: Sequence[ClaimCapability | str]
+    evidence_ref: str
+
+    def __post_init__(self) -> None:
+        blocker_id = _exact_nonempty_text(self.blocker_id, "blocker_id")
+        try:
+            kind = CapabilityBlockerKind(_enum_value(self.kind))
+        except ValueError as exc:
+            raise RemediationContractError(
+                f"unknown capability blocker kind {self.kind!r}"
+            ) from exc
+        if isinstance(self.affected_capabilities, (str, bytes)) or not isinstance(
+            self.affected_capabilities, Sequence
+        ):
+            raise RemediationContractError(
+                "affected_capabilities must be a sequence"
+            )
+        try:
+            capabilities = tuple(
+                sorted(
+                    {
+                        ClaimCapability(_enum_value(value))
+                        for value in self.affected_capabilities
+                    },
+                    key=lambda item: item.value,
+                )
+            )
+        except ValueError as exc:
+            raise RemediationContractError(
+                "affected_capabilities contains an unknown capability"
+            ) from exc
+        if not capabilities or len(capabilities) != len(self.affected_capabilities):
+            raise RemediationContractError(
+                "affected_capabilities must be non-empty and unique"
+            )
+        object.__setattr__(self, "blocker_id", blocker_id)
+        object.__setattr__(self, "kind", kind)
+        object.__setattr__(self, "affected_capabilities", capabilities)
+        object.__setattr__(
+            self, "evidence_ref", _sha256_digest(self.evidence_ref, "evidence_ref")
+        )
+
+    def to_record(self) -> dict[str, object]:
+        return {
+            "blocker_id": self.blocker_id,
+            "kind": self.kind.value,
+            "affected_capabilities": [
+                item.value for item in self.affected_capabilities
+            ],
+            "evidence_ref": self.evidence_ref,
+        }
+
+
+_ALLOWED_OUTCOMES_BY_ACTION: Mapping[
+    CapabilityAction, frozenset[CapabilityOutcome]
+] = MappingProxyType(
+    {
+        CapabilityAction.GRANT: frozenset(
+            {CapabilityOutcome.PASS, CapabilityOutcome.PASS_WITH_CEILING}
+        ),
+        CapabilityAction.HOLD: frozenset(
+            {CapabilityOutcome.ABSTAIN, CapabilityOutcome.BLOCK}
+        ),
+        CapabilityAction.SUPERSEDE: frozenset(
+            {CapabilityOutcome.PASS, CapabilityOutcome.PASS_WITH_CEILING}
+        ),
+        CapabilityAction.REVOKE: frozenset(
+            {CapabilityOutcome.BLOCK, CapabilityOutcome.STALE_REPLACED}
+        ),
+        CapabilityAction.DOWNGRADE: frozenset(
+            {
+                CapabilityOutcome.PASS_WITH_CEILING,
+                CapabilityOutcome.ABSTAIN,
+                CapabilityOutcome.BLOCK,
+            }
+        ),
+    }
+)
+
+
 def _parse_datetime(value: datetime | date | str, field_name: str) -> datetime:
     if isinstance(value, datetime):
         parsed = value
@@ -1387,13 +1777,40 @@ def is_negative_execution_receipt(
     return parsed in _NEGATIVE_EXECUTION_RESOLUTIONS
 
 
+def __getattr__(name: str) -> object:
+    """Lazily preserve the historical remediation-state import surface.
+
+    The decision type and its issuer share one lexical authority in
+    ``common.evidence_graph``.  Keeping the implementation there prevents a
+    separately importable allocator from becoming a second construction path,
+    while this alias preserves existing ``common.remediation_state`` imports.
+    """
+
+    if name == "ClaimCapabilityDecision":
+        from common.evidence_graph import ClaimCapabilityDecision
+
+        return ClaimCapabilityDecision
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
+
+
 __all__ = [
     "AdjudicatedClaim",
     "AdjudicationReceipt",
+    "ArtifactReadinessAxis",
     "AuthorityError",
     "AuthorityRegistry",
+    "CapabilityAction",
+    "CapabilityBlocker",
+    "CapabilityBlockerKind",
+    "CapabilityEvidenceBranch",
+    "CapabilityIdentification",
+    "CapabilityOutcome",
+    "CapabilityProvenanceGrade",
+    "CapabilityScientificSemantics",
     "CanonicalClaimTier",
     "CLAIM_IDENTITY_CANONICALIZATION",
+    "ClaimCapability",
+    "ClaimCapabilityDecision",
     "ClaimIdentity",
     "ClaimLevel",
     "ClaimLevelScheme",
@@ -1402,12 +1819,15 @@ __all__ = [
     "DependencyMode",
     "ExecutionResolution",
     "ExternalDeliveryReceipt",
+    "IdentityDimension",
     "MAXIMUM_UNATTESTED_SCIENTIFIC_STATUS",
+    "NON_RELAXABLE_CAPABILITY_RULES",
     "OrchestrationState",
     "PrincipalRecord",
     "RemediationContractError",
     "RemediationState",
     "ScientificStatus",
+    "VersionedClaimIdentity",
     "assert_distinct_author_adjudicator",
     "canonical_claim_identity_payload",
     "claim_identity_fingerprint",

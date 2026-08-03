@@ -23,8 +23,9 @@ import math
 import platform
 import re
 import sys
+import weakref
 from dis import get_instructions
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import date, datetime, timezone
 from enum import Enum
 from pathlib import Path, PurePosixPath
@@ -32,10 +33,26 @@ from types import CodeType, MappingProxyType, ModuleType
 from typing import Callable, Mapping, Sequence
 
 from common.remediation_state import (
+    AdjudicationReceipt,
+    ArtifactReadinessAxis,
     AuthorityError,
     AuthorityRegistry,
+    CapabilityAction,
+    CapabilityBlocker,
+    CapabilityBlockerKind,
+    CapabilityEvidenceBranch,
+    CapabilityIdentification,
+    CapabilityOutcome,
+    CapabilityProvenanceGrade,
+    CapabilityScientificSemantics,
+    ClaimCapability,
+    IdentityDimension,
+    NON_RELAXABLE_CAPABILITY_RULES,
     PrincipalRecord,
+    RemediationContractError,
     ScientificStatus,
+    VersionedClaimIdentity,
+    _ALLOWED_OUTCOMES_BY_ACTION,
     require_independent_external_principal,
 )
 
@@ -172,6 +189,15 @@ class EvidenceEdgeKind(str, Enum):
     GENERATES = "generates"
     CONSUMED_BY = "consumed_by"
     DEPENDS_ON = "depends_on"
+    SUPERSEDED_BY = "superseded_by"
+    INVALIDATES_THEOREM = "invalidates_theorem"
+    INVALIDATES_DATA = "invalidates_data"
+    INVALIDATES_MASK = "invalidates_mask"
+    INVALIDATES_COVARIANCE = "invalidates_covariance"
+    INVALIDATES_TRANSFER = "invalidates_transfer"
+    INVALIDATES_ESTIMAND = "invalidates_estimand"
+    REQUIRES_RECALIBRATION = "requires_recalibration"
+    REQUIRES_REEXECUTION = "requires_reexecution"
 
 
 class TestOutcome(str, Enum):
@@ -232,6 +258,122 @@ _ALLOWED_EDGE_ENDPOINTS: Mapping[
             (EvidenceNodeKind.CONSUMER, EvidenceNodeKind.CONSUMER),
         }
     ),
+    EvidenceEdgeKind.SUPERSEDED_BY: frozenset(
+        (kind, kind) for kind in EvidenceNodeKind
+    ),
+    EvidenceEdgeKind.INVALIDATES_THEOREM: frozenset(
+        (EvidenceNodeKind.CLAIM, target)
+        for target in (
+            EvidenceNodeKind.CLAIM,
+            EvidenceNodeKind.PRODUCER,
+            EvidenceNodeKind.ARTIFACT,
+            EvidenceNodeKind.CONSUMER,
+        )
+    ),
+    EvidenceEdgeKind.INVALIDATES_DATA: frozenset(
+        (EvidenceNodeKind.INPUT, target)
+        for target in (
+            EvidenceNodeKind.CLAIM,
+            EvidenceNodeKind.PRODUCER,
+            EvidenceNodeKind.ARTIFACT,
+            EvidenceNodeKind.CONSUMER,
+        )
+    ),
+    EvidenceEdgeKind.INVALIDATES_MASK: frozenset(
+        (source, target)
+        for source in (EvidenceNodeKind.INPUT, EvidenceNodeKind.CONFIG)
+        for target in (
+            EvidenceNodeKind.CLAIM,
+            EvidenceNodeKind.PRODUCER,
+            EvidenceNodeKind.ARTIFACT,
+            EvidenceNodeKind.CONSUMER,
+        )
+    ),
+    EvidenceEdgeKind.INVALIDATES_COVARIANCE: frozenset(
+        (source, target)
+        for source in (EvidenceNodeKind.INPUT, EvidenceNodeKind.CONFIG)
+        for target in (
+            EvidenceNodeKind.CLAIM,
+            EvidenceNodeKind.PRODUCER,
+            EvidenceNodeKind.ARTIFACT,
+            EvidenceNodeKind.CONSUMER,
+        )
+    ),
+    EvidenceEdgeKind.INVALIDATES_TRANSFER: frozenset(
+        (source, target)
+        for source in (EvidenceNodeKind.INPUT, EvidenceNodeKind.CONFIG)
+        for target in (
+            EvidenceNodeKind.CLAIM,
+            EvidenceNodeKind.PRODUCER,
+            EvidenceNodeKind.ARTIFACT,
+            EvidenceNodeKind.CONSUMER,
+        )
+    ),
+    EvidenceEdgeKind.INVALIDATES_ESTIMAND: frozenset(
+        (source, target)
+        for source in (EvidenceNodeKind.CLAIM, EvidenceNodeKind.CONFIG)
+        for target in (
+            EvidenceNodeKind.CLAIM,
+            EvidenceNodeKind.PRODUCER,
+            EvidenceNodeKind.ARTIFACT,
+            EvidenceNodeKind.CONSUMER,
+        )
+    ),
+    EvidenceEdgeKind.REQUIRES_RECALIBRATION: frozenset(
+        (source, target)
+        for source in (
+            EvidenceNodeKind.CLAIM,
+            EvidenceNodeKind.INPUT,
+            EvidenceNodeKind.CONFIG,
+            EvidenceNodeKind.ARTIFACT,
+        )
+        for target in (
+            EvidenceNodeKind.PRODUCER,
+            EvidenceNodeKind.ARTIFACT,
+            EvidenceNodeKind.CONSUMER,
+        )
+    ),
+    EvidenceEdgeKind.REQUIRES_REEXECUTION: frozenset(
+        (source, target)
+        for source in (
+            EvidenceNodeKind.CLAIM,
+            EvidenceNodeKind.INPUT,
+            EvidenceNodeKind.CONFIG,
+            EvidenceNodeKind.ARTIFACT,
+        )
+        for target in (
+            EvidenceNodeKind.PRODUCER,
+            EvidenceNodeKind.ARTIFACT,
+            EvidenceNodeKind.CONSUMER,
+        )
+    ),
+}
+
+_LIFECYCLE_EDGE_KINDS = frozenset(
+    {
+        EvidenceEdgeKind.SUPERSEDED_BY,
+        EvidenceEdgeKind.INVALIDATES_THEOREM,
+        EvidenceEdgeKind.INVALIDATES_DATA,
+        EvidenceEdgeKind.INVALIDATES_MASK,
+        EvidenceEdgeKind.INVALIDATES_COVARIANCE,
+        EvidenceEdgeKind.INVALIDATES_TRANSFER,
+        EvidenceEdgeKind.INVALIDATES_ESTIMAND,
+        EvidenceEdgeKind.REQUIRES_RECALIBRATION,
+        EvidenceEdgeKind.REQUIRES_REEXECUTION,
+    }
+)
+
+_ACTIVE_CAPABILITY_BLOCKING_EDGE_KINDS = _LIFECYCLE_EDGE_KINDS - {
+    EvidenceEdgeKind.SUPERSEDED_BY
+}
+
+_INVALIDATION_DIMENSION_BY_EDGE: Mapping[EvidenceEdgeKind, IdentityDimension] = {
+    EvidenceEdgeKind.INVALIDATES_THEOREM: IdentityDimension.THEOREM,
+    EvidenceEdgeKind.INVALIDATES_DATA: IdentityDimension.DATA,
+    EvidenceEdgeKind.INVALIDATES_MASK: IdentityDimension.MASK,
+    EvidenceEdgeKind.INVALIDATES_COVARIANCE: IdentityDimension.COVARIANCE,
+    EvidenceEdgeKind.INVALIDATES_TRANSFER: IdentityDimension.TRANSFER,
+    EvidenceEdgeKind.INVALIDATES_ESTIMAND: IdentityDimension.ESTIMAND,
 }
 
 _READINESS_KEYS = frozenset(
@@ -2409,6 +2551,67 @@ class EvidenceNode:
         return node
 
 
+def _lifecycle_edge_metadata(
+    kind: EvidenceEdgeKind,
+    metadata: Mapping[str, object],
+) -> Mapping[str, object]:
+    """Normalize the exact capability-scoped lifecycle-edge payload."""
+
+    required = {"affected_capabilities", "reason_ref"}
+    if kind is EvidenceEdgeKind.SUPERSEDED_BY:
+        required.add("changed_dimensions")
+    _strict_keys(metadata, required=required, field=f"{kind.value} metadata")
+    raw_capabilities = metadata["affected_capabilities"]
+    if isinstance(raw_capabilities, (str, bytes)) or not isinstance(
+        raw_capabilities, Sequence
+    ):
+        raise EvidenceGraphError(
+            "lifecycle affected_capabilities must be a sequence"
+        )
+    try:
+        capabilities = tuple(
+            sorted(
+                {ClaimCapability(_enum_value(value)) for value in raw_capabilities},
+                key=lambda item: item.value,
+            )
+        )
+    except ValueError as exc:
+        raise EvidenceGraphError(
+            "lifecycle edge contains an unknown affected capability"
+        ) from exc
+    if not capabilities or len(capabilities) != len(raw_capabilities):
+        raise EvidenceGraphError(
+            "lifecycle affected_capabilities must be non-empty and unique"
+        )
+    normalized: dict[str, object] = {
+        "affected_capabilities": [item.value for item in capabilities],
+        "reason_ref": _sha256(metadata["reason_ref"], "lifecycle reason_ref"),
+    }
+    if kind is EvidenceEdgeKind.SUPERSEDED_BY:
+        raw_dimensions = metadata["changed_dimensions"]
+        if isinstance(raw_dimensions, (str, bytes)) or not isinstance(
+            raw_dimensions, Sequence
+        ):
+            raise EvidenceGraphError("changed_dimensions must be a sequence")
+        try:
+            dimensions = tuple(
+                sorted(
+                    {IdentityDimension(_enum_value(value)) for value in raw_dimensions},
+                    key=lambda item: item.value,
+                )
+            )
+        except ValueError as exc:
+            raise EvidenceGraphError(
+                "SUPERSEDED_BY contains an unknown identity dimension"
+            ) from exc
+        if not dimensions or len(dimensions) != len(raw_dimensions):
+            raise EvidenceGraphError(
+                "SUPERSEDED_BY changed_dimensions must be non-empty and unique"
+            )
+        normalized["changed_dimensions"] = [item.value for item in dimensions]
+    return MappingProxyType(normalized)
+
+
 @dataclass(frozen=True)
 class EvidenceEdge:
     kind: EvidenceEdgeKind | str
@@ -2430,10 +2633,15 @@ class EvidenceEdge:
         if not isinstance(self.metadata, Mapping):
             raise EvidenceGraphError("edge metadata must be a mapping")
         _reject_readiness_fields(self.metadata)
+        metadata = (
+            _lifecycle_edge_metadata(kind, self.metadata)
+            if kind in _LIFECYCLE_EDGE_KINDS
+            else self.metadata
+        )
         object.__setattr__(self, "kind", kind)
         object.__setattr__(self, "source_ref", source)
         object.__setattr__(self, "target_ref", target)
-        object.__setattr__(self, "metadata", _freeze_json(self.metadata))
+        object.__setattr__(self, "metadata", _freeze_json(metadata))
 
     def payload(self) -> dict[str, object]:
         return {
@@ -2661,6 +2869,10 @@ class EvidenceGraph:
         while frontier:
             current = frontier.pop()
             for edge in outgoing[current]:
+                # Supersession/invalidation lineage is governance metadata, not
+                # evidence support for the claim closure being adjudicated.
+                if edge.kind in _LIFECYCLE_EDGE_KINDS:
+                    continue
                 closure_edges.add(edge.edge_ref)
                 if edge.target_ref not in reachable:
                     reachable.add(edge.target_ref)
@@ -3545,6 +3757,856 @@ def load_exact_evidence_graph(
     return graph
 
 
+def lifecycle_invalidation_dimension(
+    kind: EvidenceEdgeKind | str,
+) -> IdentityDimension | None:
+    """Return the component invalidated by a typed edge, if component-specific."""
+
+    try:
+        parsed = EvidenceEdgeKind(_enum_value(kind))
+    except ValueError as exc:
+        raise EvidenceGraphError(f"unknown evidence edge kind {kind!r}") from exc
+    return _INVALIDATION_DIMENSION_BY_EDGE.get(parsed)
+
+
+def typed_invalidation_targets(
+    graph: EvidenceGraph,
+    *,
+    source_ref: str,
+    capability: ClaimCapability | str,
+) -> tuple[str, ...]:
+    """Return only downstream refs reached by edges affecting one capability."""
+
+    if not isinstance(graph, EvidenceGraph):
+        raise TypeError("graph must be an EvidenceGraph")
+    source = _sha256(source_ref, "source_ref")
+    if source not in {node.node_ref for node in graph.nodes}:
+        raise EvidenceGraphError("source_ref is outside the evidence graph")
+    try:
+        parsed_capability = ClaimCapability(_enum_value(capability))
+    except ValueError as exc:
+        raise EvidenceGraphError(f"unknown claim capability {capability!r}") from exc
+    outgoing: dict[str, list[EvidenceEdge]] = {}
+    for edge in graph.edges:
+        if edge.kind not in _LIFECYCLE_EDGE_KINDS:
+            continue
+        affected = tuple(edge.metadata.get("affected_capabilities", ()))
+        if parsed_capability.value not in affected:
+            continue
+        outgoing.setdefault(edge.source_ref, []).append(edge)
+    reached: set[str] = set()
+    frontier = [source]
+    while frontier:
+        current = frontier.pop()
+        for edge in outgoing.get(current, ()):
+            if edge.target_ref in reached:
+                continue
+            reached.add(edge.target_ref)
+            frontier.append(edge.target_ref)
+    reached.discard(source)
+    return tuple(sorted(reached))
+
+
+_CAPABILITY_PROFILES: Mapping[
+    ClaimCapability,
+    tuple[
+        CapabilityEvidenceBranch,
+        CapabilityScientificSemantics,
+        CapabilityIdentification,
+        tuple[str, ...],
+        str,
+        frozenset[str],
+    ],
+] = {
+    ClaimCapability.CONTRACT_VALIDATED: (
+        CapabilityEvidenceBranch.CONTRACT,
+        CapabilityScientificSemantics.CONTRACT_ONLY,
+        CapabilityIdentification.NOT_APPLICABLE,
+        ("validated_contract_consumption",),
+        "contract_only",
+        frozenset({"COMMON"}),
+    ),
+    ClaimCapability.THEOREM_PROVED_EXACT: (
+        CapabilityEvidenceBranch.THEOREM,
+        CapabilityScientificSemantics.EXACT_THEOREM,
+        CapabilityIdentification.NOT_APPLICABLE,
+        ("exact_theorem_reference",),
+        "exact_theorem_only",
+        frozenset({"COMMON", "BASS"}),
+    ),
+    ClaimCapability.THEOREM_PROVED_CONDITIONAL: (
+        CapabilityEvidenceBranch.THEOREM,
+        CapabilityScientificSemantics.CONDITIONAL_THEOREM,
+        CapabilityIdentification.NOT_APPLICABLE,
+        ("conditional_theorem_reference",),
+        "conditional_theorem_only",
+        frozenset({"COMMON", "BASS"}),
+    ),
+    ClaimCapability.METHOD_CALIBRATED: (
+        CapabilityEvidenceBranch.METHOD,
+        CapabilityScientificSemantics.CALIBRATED_METHOD,
+        CapabilityIdentification.NOT_APPLICABLE,
+        ("calibrated_method_use",),
+        "method_only",
+        frozenset({"COMMON", "HTT", "MIO", "BASS", "OBSSTAT"}),
+    ),
+    ClaimCapability.DATA_ADMITTED: (
+        CapabilityEvidenceBranch.DATA,
+        CapabilityScientificSemantics.DATA_ADMISSION_ONLY,
+        CapabilityIdentification.NOT_APPLICABLE,
+        ("admitted_data_input",),
+        "data_admission_only",
+        frozenset({"COMMON", "OBSSTAT"}),
+    ),
+    ClaimCapability.OBSERVED_DESCRIPTIVE: (
+        CapabilityEvidenceBranch.OBSERVATION,
+        CapabilityScientificSemantics.OBSERVED_DESCRIPTION,
+        CapabilityIdentification.PARTIAL_IDENTIFICATION,
+        ("observed_descriptive_reporting",),
+        "observed_descriptive_only",
+        frozenset({"HTT", "MIO", "OBSSTAT"}),
+    ),
+    ClaimCapability.OBSERVED_INFERENTIAL: (
+        CapabilityEvidenceBranch.OBSERVATION,
+        CapabilityScientificSemantics.OBSERVED_INFERENCE,
+        CapabilityIdentification.PARTIAL_IDENTIFICATION,
+        ("htt_observed_inference",),
+        "htt_inference_only",
+        frozenset({"HTT"}),
+    ),
+    ClaimCapability.SOURCE_SEPARATION_CANDIDATE: (
+        CapabilityEvidenceBranch.SOURCE_SEPARATION,
+        CapabilityScientificSemantics.SOURCE_SEPARATION_CANDIDATE,
+        CapabilityIdentification.PARTIAL_IDENTIFICATION,
+        ("source_separation_candidate_only",),
+        "candidate_only",
+        frozenset({"HTT"}),
+    ),
+    ClaimCapability.MORPHOLOGY_COMPATIBILITY: (
+        CapabilityEvidenceBranch.MORPHOLOGY,
+        CapabilityScientificSemantics.MORPHOLOGY_COMPATIBILITY,
+        CapabilityIdentification.COMPATIBILITY_ONLY,
+        ("morphology_compatibility_only",),
+        "compatibility_only",
+        frozenset({"HTT", "BASS", "OBSSTAT"}),
+    ),
+    ClaimCapability.FAMILY_IDENTIFICATION: (
+        CapabilityEvidenceBranch.FAMILY,
+        CapabilityScientificSemantics.FAMILY_IDENTIFICATION,
+        CapabilityIdentification.NATIVE_ATLAS_REQUIRED,
+        ("blocked_pre_native_atlas",),
+        "blocked_pre_native_atlas",
+        frozenset({"BASS"}),
+    ),
+    ClaimCapability.PUBLIC_RELEASE: (
+        CapabilityEvidenceBranch.RELEASE,
+        CapabilityScientificSemantics.PUBLICATION,
+        CapabilityIdentification.NOT_APPLICABLE,
+        ("receipt_scoped_public_release",),
+        "receipt_scoped_public_release",
+        frozenset({"COMMON"}),
+    ),
+}
+
+
+def _claim_node_for_versioned_identity(
+    graph: EvidenceGraph,
+    versioned_identity: VersionedClaimIdentity,
+    claim_ref: str,
+) -> EvidenceNode:
+    by_ref = {node.node_ref: node for node in graph.nodes}
+    claim = by_ref.get(claim_ref)
+    if claim is None or claim.kind is not EvidenceNodeKind.CLAIM:
+        raise EvidenceGraphError("receipt claim_ref is not a graph claim node")
+    if claim.content_sha256 != versioned_identity.identity_ref:
+        raise EvidenceGraphError(
+            "claim node content identity is not the exact VersionedClaimIdentity"
+        )
+    required_metadata = {
+        "claim_id": versioned_identity.claim_identity.claim_id,
+        "claim_identity_fingerprint": (
+            versioned_identity.claim_identity.identity_fingerprint
+        ),
+        "versioned_identity_ref": versioned_identity.identity_ref,
+    }
+    for key, expected in required_metadata.items():
+        if claim.metadata.get(key) != expected:
+            raise EvidenceGraphError(
+                f"claim node metadata {key} does not match versioned identity"
+            )
+    rules = tuple(claim.metadata.get("non_relaxable_rules", ()))
+    if rules != NON_RELAXABLE_CAPABILITY_RULES:
+        raise EvidenceGraphError(
+            "claim node must bind every non-relaxable capability rule"
+        )
+    return claim
+
+
+def _require_exact_capability_binding(
+    claim: EvidenceNode,
+    *,
+    capability: ClaimCapability,
+    action: CapabilityAction,
+    outcome: CapabilityOutcome,
+    claim_ceiling: str,
+) -> None:
+    """Require the adjudicated claim node to name the exact requested grant."""
+
+    raw_binding = claim.metadata.get("capability_binding")
+    if not isinstance(raw_binding, Mapping):
+        raise EvidenceGraphError(
+            "claim node is missing an exact capability_binding payload"
+        )
+    required = {
+        "schema_version",
+        "capability",
+        "action",
+        "outcome",
+        "claim_ceiling",
+    }
+    _strict_keys(
+        raw_binding,
+        required=required,
+        field="claim capability_binding",
+    )
+    expected = {
+        "schema_version": "claim_capability_binding_v1",
+        "capability": capability.value,
+        "action": action.value,
+        "outcome": outcome.value,
+        "claim_ceiling": claim_ceiling,
+    }
+    if dict(raw_binding) != expected:
+        raise EvidenceGraphError(
+            "requested capability decision does not match the adjudicated "
+            "claim capability_binding"
+        )
+
+
+def _graph_blockers_for_capability(
+    graph: EvidenceGraph,
+    capability: ClaimCapability,
+) -> tuple[CapabilityBlocker, ...]:
+    """Derive active blockers from the exact graph, never from caller omission."""
+
+    blockers: list[CapabilityBlocker] = []
+    for edge in sorted(graph.edges, key=lambda item: item.edge_ref):
+        if edge.kind not in _ACTIVE_CAPABILITY_BLOCKING_EDGE_KINDS:
+            continue
+        affected = tuple(edge.metadata.get("affected_capabilities", ()))
+        if capability.value not in affected:
+            continue
+        blockers.append(
+            CapabilityBlocker(
+                blocker_id=f"lifecycle:{edge.kind.value}:{edge.edge_ref}",
+                kind=CapabilityBlockerKind.EVIDENCE_CONDITIONAL,
+                affected_capabilities=(capability,),
+                evidence_ref=edge.edge_ref,
+            )
+        )
+    return tuple(blockers)
+
+
+def _require_exact_supersession_edge(
+    graph: EvidenceGraph,
+    *,
+    claim: EvidenceNode,
+    versioned_identity: VersionedClaimIdentity,
+    capability: ClaimCapability,
+) -> None:
+    if versioned_identity.predecessor_ref is None:
+        return
+    by_ref = {node.node_ref: node for node in graph.nodes}
+    matches = []
+    for edge in graph.edges:
+        if (
+            edge.kind is EvidenceEdgeKind.SUPERSEDED_BY
+            and edge.target_ref == claim.node_ref
+            and capability.value
+            in tuple(edge.metadata.get("affected_capabilities", ()))
+        ):
+            source = by_ref[edge.source_ref]
+            if source.content_sha256 != versioned_identity.predecessor_ref:
+                continue
+            if tuple(edge.metadata.get("changed_dimensions", ())) != tuple(
+                item.value for item in versioned_identity.changed_dimensions
+            ):
+                continue
+            matches.append(edge)
+    if len(matches) != 1:
+        raise EvidenceGraphError(
+            "successor capability requires exactly one matching SUPERSEDED_BY edge"
+        )
+
+
+_CLAIM_CAPABILITY_DECISION_FIELDS = (
+    "versioned_identity",
+    "capability",
+    "action",
+    "outcome",
+    "artifact_readiness",
+    "evidence_branch",
+    "scientific_semantics",
+    "identification",
+    "provenance_grade",
+    "allowed_use",
+    "claim_ceiling",
+    "evidence_graph_ref",
+    "evidence_closure_ref",
+    "evidence_receipt_id",
+    "adjudication_receipt_ref",
+    "blockers",
+    "non_relaxable_rules",
+)
+_CLAIM_CAPABILITY_TRUST_BEARING_NAMES = frozenset(
+    {
+        "__dict__",
+        *_CLAIM_CAPABILITY_DECISION_FIELDS,
+        "granted",
+        "payload",
+        "decision_ref",
+        "to_record",
+    }
+)
+
+
+def _make_claim_capability_registration_contract() -> tuple[
+    Callable[[object], None],
+    Callable[[Callable[..., object]], Callable[[object], None]],
+]:
+    """Return an identity guard and an issuer-frame-bound one-use registrar."""
+
+    issued_instances: dict[int, weakref.ReferenceType[object]] = {}
+
+    def require_registered(value: object) -> None:
+        reference = issued_instances.get(id(value))
+        if reference is None or reference() is not value:
+            raise RemediationContractError(
+                "ClaimCapabilityDecision was not issued by the validated "
+                "evidence authority"
+            )
+
+    def bind_registration(
+        issuer: Callable[..., object],
+    ) -> Callable[[object], None]:
+        issuer_code = issuer.__code__
+
+        def mark_issued(value: object) -> None:
+            if sys._getframe(1).f_code is not issuer_code:
+                raise RemediationContractError(
+                    "decision registration requires the validated issuer frame"
+                )
+            identity = id(value)
+
+            def retire(reference: weakref.ReferenceType[object]) -> None:
+                if issued_instances.get(identity) is reference:
+                    issued_instances.pop(identity, None)
+
+            issued_instances[identity] = weakref.ref(value, retire)
+
+        return mark_issued
+
+    return require_registered, bind_registration
+
+
+(
+    _require_claim_capability_decision_registered,
+    _bind_claim_capability_decision_registration,
+) = _make_claim_capability_registration_contract()
+del _make_claim_capability_registration_contract
+
+
+@dataclass(frozen=True)
+class _ClaimCapabilityValidationContext:
+    graph: EvidenceGraph
+    versioned_identity: VersionedClaimIdentity
+    evidence_receipt: EvidenceReceipt
+    adjudication_receipt: AdjudicationReceipt
+    registry: AuthorityRegistry
+    capability: ClaimCapability
+    action: CapabilityAction
+    outcome: CapabilityOutcome
+    blockers: tuple[CapabilityBlocker, ...]
+    evaluated_at: datetime
+    receipt_index: Mapping[str, EvidenceReceipt] | None
+    graph_index: Mapping[str, EvidenceGraph] | None
+
+
+@dataclass(frozen=True, init=False)
+class ClaimCapabilityDecision:
+    """Decision whose public use revalidates its exact evidence authority."""
+
+    versioned_identity: VersionedClaimIdentity
+    capability: ClaimCapability
+    action: CapabilityAction
+    outcome: CapabilityOutcome
+    artifact_readiness: ArtifactReadinessAxis
+    evidence_branch: CapabilityEvidenceBranch
+    scientific_semantics: CapabilityScientificSemantics
+    identification: CapabilityIdentification
+    provenance_grade: CapabilityProvenanceGrade
+    allowed_use: tuple[str, ...]
+    claim_ceiling: str
+    evidence_graph_ref: str
+    evidence_closure_ref: str
+    evidence_receipt_id: str
+    adjudication_receipt_ref: str
+    blockers: tuple[CapabilityBlocker, ...]
+    non_relaxable_rules: tuple[str, ...]
+    _validation_context: _ClaimCapabilityValidationContext = field(
+        repr=False,
+        compare=False,
+        hash=False,
+    )
+
+    def __init__(self, *_args: object, **_kwargs: object) -> None:
+        raise RemediationContractError(
+            "ClaimCapabilityDecision is factory-only; use "
+            "common.evidence_graph.issue_claim_capability_decision"
+        )
+
+    def __getattribute__(self, name: str) -> object:
+        if name == "_validation_context":
+            raise AttributeError("validation context is private")
+        if name in _CLAIM_CAPABILITY_TRUST_BEARING_NAMES:
+            _require_claim_capability_decision_valid(self)
+        return object.__getattribute__(self, name)
+
+    @property
+    def granted(self) -> bool:
+        """Compatibility projection derived solely from action and outcome."""
+
+        action = object.__getattribute__(self, "action")
+        outcome = object.__getattribute__(self, "outcome")
+        return action in {
+            CapabilityAction.GRANT,
+            CapabilityAction.SUPERSEDE,
+        } and outcome in {
+            CapabilityOutcome.PASS,
+            CapabilityOutcome.PASS_WITH_CEILING,
+        }
+
+    def payload(self) -> dict[str, object]:
+        raw = object.__getattribute__
+        versioned_identity = raw(self, "versioned_identity")
+        action = raw(self, "action")
+        outcome = raw(self, "outcome")
+        granted = action in {
+            CapabilityAction.GRANT,
+            CapabilityAction.SUPERSEDE,
+        } and outcome in {
+            CapabilityOutcome.PASS,
+            CapabilityOutcome.PASS_WITH_CEILING,
+        }
+        return {
+            "schema_version": "claim_capability_decision_v1",
+            "versioned_identity_ref": versioned_identity.identity_ref,
+            "claim_id": versioned_identity.claim_identity.claim_id,
+            "claim_identity_fingerprint": (
+                versioned_identity.claim_identity.identity_fingerprint
+            ),
+            "capability": raw(self, "capability").value,
+            "action": action.value,
+            "outcome": outcome.value,
+            "granted": granted,
+            "artifact_readiness": raw(self, "artifact_readiness").value,
+            "evidence_branch": raw(self, "evidence_branch").value,
+            "scientific_semantics": raw(self, "scientific_semantics").value,
+            "identification": raw(self, "identification").value,
+            "provenance_grade": raw(self, "provenance_grade").value,
+            "allowed_use": list(raw(self, "allowed_use")),
+            "claim_ceiling": raw(self, "claim_ceiling"),
+            "evidence_graph_ref": raw(self, "evidence_graph_ref"),
+            "evidence_closure_ref": raw(self, "evidence_closure_ref"),
+            "evidence_receipt_id": raw(self, "evidence_receipt_id"),
+            "adjudication_receipt_ref": raw(self, "adjudication_receipt_ref"),
+            "blockers": [item.to_record() for item in raw(self, "blockers")],
+            "non_relaxable_rules": list(raw(self, "non_relaxable_rules")),
+        }
+
+    @property
+    def decision_ref(self) -> str:
+        payload = object.__getattribute__(self, "payload")()
+        return hashlib.sha256(
+            json.dumps(
+                payload,
+                sort_keys=True,
+                separators=(",", ":"),
+                ensure_ascii=False,
+            ).encode("utf-8")
+        ).hexdigest()
+
+    def to_record(self) -> dict[str, object]:
+        payload = object.__getattribute__(self, "payload")()
+        decision_ref = hashlib.sha256(
+            json.dumps(
+                payload,
+                sort_keys=True,
+                separators=(",", ":"),
+                ensure_ascii=False,
+            ).encode("utf-8")
+        ).hexdigest()
+        return {**payload, "decision_ref": decision_ref}
+
+
+def _issue_claim_capability_decision_unbound(
+    graph: EvidenceGraph,
+    *,
+    versioned_identity: VersionedClaimIdentity,
+    evidence_receipt: EvidenceReceipt,
+    adjudication_receipt: AdjudicationReceipt,
+    registry: AuthorityRegistry,
+    capability: ClaimCapability | str,
+    action: CapabilityAction | str,
+    outcome: CapabilityOutcome | str,
+    blockers: Sequence[CapabilityBlocker] = (),
+    evaluated_at: datetime | date | str | None = None,
+    receipt_index: Mapping[str, EvidenceReceipt] | None = None,
+    graph_index: Mapping[str, EvidenceGraph] | None = None,
+    _mark_issued: Callable[[object], None],
+) -> ClaimCapabilityDecision:
+    """Issue one decision after exact closure and existing-authority validation."""
+
+    if not isinstance(graph, EvidenceGraph):
+        raise TypeError("graph must be an EvidenceGraph")
+    if not isinstance(versioned_identity, VersionedClaimIdentity):
+        raise TypeError("versioned_identity must be a VersionedClaimIdentity")
+    if not isinstance(evidence_receipt, EvidenceReceipt):
+        raise TypeError("evidence_receipt must be an EvidenceReceipt")
+    if not isinstance(adjudication_receipt, AdjudicationReceipt):
+        raise TypeError("adjudication_receipt must be an AdjudicationReceipt")
+    if not isinstance(registry, AuthorityRegistry):
+        raise TypeError("registry must be an AuthorityRegistry")
+    validation_time = (
+        datetime.now(UTC)
+        if evaluated_at is None
+        else _parse_datetime(evaluated_at, "evaluated_at")
+    )
+    if receipt_index is not None and not isinstance(receipt_index, Mapping):
+        raise TypeError("receipt_index must be a mapping")
+    if graph_index is not None and not isinstance(graph_index, Mapping):
+        raise TypeError("graph_index must be a mapping")
+    receipt_index_snapshot = (
+        None if receipt_index is None else MappingProxyType(dict(receipt_index))
+    )
+    graph_index_snapshot = (
+        None if graph_index is None else MappingProxyType(dict(graph_index))
+    )
+    try:
+        parsed_capability = ClaimCapability(_enum_value(capability))
+        parsed_action = CapabilityAction(_enum_value(action))
+        parsed_outcome = CapabilityOutcome(_enum_value(outcome))
+    except ValueError as exc:
+        raise EvidenceGraphError("unknown capability action or outcome") from exc
+    if parsed_outcome not in _ALLOWED_OUTCOMES_BY_ACTION[parsed_action]:
+        raise RemediationContractError(
+            f"outcome {parsed_outcome.value} is invalid for action "
+            f"{parsed_action.value}"
+        )
+    if (
+        parsed_action is CapabilityAction.SUPERSEDE
+        and versioned_identity.predecessor_ref is None
+    ):
+        raise RemediationContractError(
+            "SUPERSEDE requires an exact predecessor identity"
+        )
+    closure = evidence_receipt.validate(
+        graph,
+        registry,
+        evaluated_at=validation_time,
+        receipt_index=receipt_index_snapshot,
+        graph_index=graph_index_snapshot,
+    )
+    adjudication_receipt.validate(
+        registry,
+        expected_scope=evidence_receipt.body.scope,
+        at=validation_time,
+    )
+    claim = _claim_node_for_versioned_identity(
+        graph, versioned_identity, evidence_receipt.body.claim_ref
+    )
+    accepted = tuple(
+        row
+        for row in adjudication_receipt.accepted_claims
+        if row.claim_id == versioned_identity.claim_identity.claim_id
+        and row.identity_fingerprint
+        == versioned_identity.claim_identity.identity_fingerprint
+    )
+    if len(accepted) != 1:
+        raise EvidenceGraphError(
+            "adjudication receipt is not bound to the exact claim identity"
+        )
+    if accepted[0].scientific_status is not closure.scientific_status:
+        raise EvidenceGraphError(
+            "adjudication status does not match the exact evidence closure"
+        )
+    profile = _CAPABILITY_PROFILES[parsed_capability]
+    branch, semantics, identification, allowed_use, ceiling, allowed_owners = profile
+    _require_exact_capability_binding(
+        claim,
+        capability=parsed_capability,
+        action=parsed_action,
+        outcome=parsed_outcome,
+        claim_ceiling=ceiling,
+    )
+    _require_exact_supersession_edge(
+        graph,
+        claim=claim,
+        versioned_identity=versioned_identity,
+        capability=parsed_capability,
+    )
+    if versioned_identity.owner not in allowed_owners:
+        raise EvidenceGraphError(
+            f"owner {versioned_identity.owner} cannot receive "
+            f"{parsed_capability.value} capability"
+        )
+    caller_blockers = tuple(blockers)
+    if not all(isinstance(item, CapabilityBlocker) for item in caller_blockers):
+        raise EvidenceGraphError("blockers must contain CapabilityBlocker values")
+    graph_blockers = _graph_blockers_for_capability(graph, parsed_capability)
+    blocker_tuple = (*caller_blockers, *graph_blockers)
+    blocker_ids = tuple(item.blocker_id for item in blocker_tuple)
+    if len(blocker_ids) != len(set(blocker_ids)):
+        raise EvidenceGraphError(
+            "caller blockers conflict with blockers derived from the exact graph"
+        )
+    blocked_here = any(
+        parsed_capability in blocker.affected_capabilities
+        for blocker in blocker_tuple
+    )
+    grant_like = parsed_action in {
+        CapabilityAction.GRANT,
+        CapabilityAction.SUPERSEDE,
+    } and parsed_outcome in {
+        CapabilityOutcome.PASS,
+        CapabilityOutcome.PASS_WITH_CEILING,
+    }
+    if grant_like and blocked_here:
+        raise EvidenceGraphError(
+            "a blocker affecting this capability forbids a grant"
+        )
+    if grant_like and parsed_capability is ClaimCapability.FAMILY_IDENTIFICATION:
+        raise EvidenceGraphError(
+            "FAMILY_IDENTIFICATION is blocked before an admitted native atlas"
+        )
+    blocking_science = {
+        ScientificStatus.BLOCKED,
+        ScientificStatus.FALSIFIED,
+        ScientificStatus.ABANDONED,
+    }
+    if grant_like:
+        if not closure.mechanics_closed:
+            raise EvidenceGraphError("capability grant requires closed evidence mechanics")
+        if closure.scientific_status not in _CLAIM_RELEASE_SCIENTIFIC_STATUSES:
+            raise EvidenceGraphError(
+                "capability grant requires a positive terminal adjudication"
+            )
+        readiness = ArtifactReadinessAxis.EVIDENCE_CLOSED
+    elif closure.scientific_status in blocking_science or blocked_here:
+        readiness = ArtifactReadinessAxis.EVIDENCE_BLOCKED
+    elif closure.mechanics_closed:
+        readiness = ArtifactReadinessAxis.EVIDENCE_CLOSED
+    else:
+        readiness = ArtifactReadinessAxis.EVIDENCE_INCOMPLETE
+    adjudication_ref = hashlib.sha256(
+        adjudication_receipt.canonical_attestation_payload()
+        + b"\x00"
+        + adjudication_receipt.attestation.encode("utf-8")
+    ).hexdigest()
+    # ClaimCapabilityDecision deliberately has no callable constructor bridge.
+    # Authority comes from exact evidence revalidation, not from Python object
+    # identity, hidden tokens, or an allocation marker. Every public use checks
+    # the immutable context captured below against this same validation kernel.
+    decision = object.__new__(ClaimCapabilityDecision)
+    values: Mapping[str, object] = {
+        "versioned_identity": versioned_identity,
+        "capability": parsed_capability,
+        "action": parsed_action,
+        "outcome": parsed_outcome,
+        "artifact_readiness": readiness,
+        "evidence_branch": branch,
+        "scientific_semantics": semantics,
+        "identification": identification,
+        "provenance_grade": (
+            CapabilityProvenanceGrade.CONTENT_ADDRESSED_ADJUDICATED
+        ),
+        "allowed_use": tuple(allowed_use),
+        "claim_ceiling": ceiling,
+        "evidence_graph_ref": graph.graph_ref,
+        "evidence_closure_ref": closure.closure_ref,
+        "evidence_receipt_id": evidence_receipt.receipt_id,
+        "adjudication_receipt_ref": adjudication_ref,
+        "blockers": tuple(
+            sorted(blocker_tuple, key=lambda item: item.blocker_id)
+        ),
+        "non_relaxable_rules": NON_RELAXABLE_CAPABILITY_RULES,
+    }
+    for field, value in values.items():
+        object.__setattr__(decision, field, value)
+    object.__setattr__(
+        decision,
+        "_validation_context",
+        _ClaimCapabilityValidationContext(
+            graph=graph,
+            versioned_identity=versioned_identity,
+            evidence_receipt=evidence_receipt,
+            adjudication_receipt=adjudication_receipt,
+            registry=registry,
+            capability=parsed_capability,
+            action=parsed_action,
+            outcome=parsed_outcome,
+            blockers=caller_blockers,
+            evaluated_at=validation_time,
+            receipt_index=receipt_index_snapshot,
+            graph_index=graph_index_snapshot,
+        ),
+    )
+    _mark_issued(decision)
+    return decision
+
+
+def _bind_claim_capability_decision_issuer(
+    unbound: Callable[..., ClaimCapabilityDecision],
+    bind_registration: Callable[
+        [Callable[..., object]], Callable[[object], None]
+    ],
+) -> Callable[..., ClaimCapabilityDecision]:
+    """Bind registration to the validated implementation's exact frame."""
+
+    mark_issued: Callable[[object], None]
+
+    def issued_impl(
+        graph: EvidenceGraph,
+        *,
+        versioned_identity: VersionedClaimIdentity,
+        evidence_receipt: EvidenceReceipt,
+        adjudication_receipt: AdjudicationReceipt,
+        registry: AuthorityRegistry,
+        capability: ClaimCapability | str,
+        action: CapabilityAction | str,
+        outcome: CapabilityOutcome | str,
+        blockers: Sequence[CapabilityBlocker] = (),
+        evaluated_at: datetime | date | str | None = None,
+        receipt_index: Mapping[str, EvidenceReceipt] | None = None,
+        graph_index: Mapping[str, EvidenceGraph] | None = None,
+    ) -> ClaimCapabilityDecision:
+        return unbound(
+            graph,
+            versioned_identity=versioned_identity,
+            evidence_receipt=evidence_receipt,
+            adjudication_receipt=adjudication_receipt,
+            registry=registry,
+            capability=capability,
+            action=action,
+            outcome=outcome,
+            blockers=blockers,
+            evaluated_at=evaluated_at,
+            receipt_index=receipt_index,
+            graph_index=graph_index,
+            _mark_issued=mark_issued,
+        )
+
+    mark_issued = bind_registration(unbound)
+    return issued_impl
+
+
+_issue_claim_capability_decision_impl = _bind_claim_capability_decision_issuer(
+    _issue_claim_capability_decision_unbound,
+    _bind_claim_capability_decision_registration,
+)
+del _bind_claim_capability_decision_issuer
+del _bind_claim_capability_decision_registration
+del _issue_claim_capability_decision_unbound
+
+
+def _require_claim_capability_decision_valid(
+    decision: ClaimCapabilityDecision,
+) -> None:
+    """Revalidate all trust-bearing fields against exact authority inputs."""
+
+    if type(decision) is not ClaimCapabilityDecision:
+        raise RemediationContractError(
+            "claim capability decision must use the exact public type"
+        )
+    _require_claim_capability_decision_registered(decision)
+    try:
+        context = object.__getattribute__(decision, "_validation_context")
+    except AttributeError as exc:
+        raise RemediationContractError(
+            "ClaimCapabilityDecision lacks exact validation context"
+        ) from exc
+    if not isinstance(context, _ClaimCapabilityValidationContext):
+        raise RemediationContractError(
+            "ClaimCapabilityDecision validation context is invalid"
+        )
+    try:
+        expected = _issue_claim_capability_decision_impl(
+            context.graph,
+            versioned_identity=context.versioned_identity,
+            evidence_receipt=context.evidence_receipt,
+            adjudication_receipt=context.adjudication_receipt,
+            registry=context.registry,
+            capability=context.capability,
+            action=context.action,
+            outcome=context.outcome,
+            blockers=context.blockers,
+            evaluated_at=context.evaluated_at,
+            receipt_index=context.receipt_index,
+            graph_index=context.graph_index,
+        )
+    except (
+        AuthorityError,
+        EvidenceGraphError,
+        RemediationContractError,
+        TypeError,
+        ValueError,
+    ) as exc:
+        raise RemediationContractError(
+            "ClaimCapabilityDecision exact authority revalidation failed"
+        ) from exc
+    for field in _CLAIM_CAPABILITY_DECISION_FIELDS:
+        if object.__getattribute__(decision, field) != object.__getattribute__(
+            expected, field
+        ):
+            raise RemediationContractError(
+                "ClaimCapabilityDecision fields do not match exact authority "
+                f"context: {field}"
+            )
+
+
+def issue_claim_capability_decision(
+    graph: EvidenceGraph,
+    *,
+    versioned_identity: VersionedClaimIdentity,
+    evidence_receipt: EvidenceReceipt,
+    adjudication_receipt: AdjudicationReceipt,
+    registry: AuthorityRegistry,
+    capability: ClaimCapability | str,
+    action: CapabilityAction | str,
+    outcome: CapabilityOutcome | str,
+    blockers: Sequence[CapabilityBlocker] = (),
+    evaluated_at: datetime | date | str | None = None,
+    receipt_index: Mapping[str, EvidenceReceipt] | None = None,
+    graph_index: Mapping[str, EvidenceGraph] | None = None,
+) -> ClaimCapabilityDecision:
+    """Issue a decision that revalidates its exact authority on public use."""
+
+    return _issue_claim_capability_decision_impl(
+        graph,
+        versioned_identity=versioned_identity,
+        evidence_receipt=evidence_receipt,
+        adjudication_receipt=adjudication_receipt,
+        registry=registry,
+        capability=capability,
+        action=action,
+        outcome=outcome,
+        blockers=blockers,
+        evaluated_at=evaluated_at,
+        receipt_index=receipt_index,
+        graph_index=graph_index,
+    )
+
+
 __all__ = [
     "CANONICALIZATION",
     "GRAPH_SCHEMA_VERSION",
@@ -3568,10 +4630,13 @@ __all__ = [
     "TestOutcome",
     "authority_registry_content_ref",
     "issue_evidence_receipt",
+    "issue_claim_capability_decision",
+    "lifecycle_invalidation_dimension",
     "load_literal_release_pin_fields",
     "load_exact_evidence_graph",
     "load_exact_evidence_receipt",
     "validate_receipt_lineage",
+    "typed_invalidation_targets",
     "verify_pytest_environment_inputs",
     "verify_pytest_selector_inputs",
 ]
