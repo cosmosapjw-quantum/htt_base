@@ -9,13 +9,13 @@ runs.
 ## Baseline
 
 - Canonical target: `research/pr04-multicomponent`.
-- Verified merge HEAD: `a6d3bd8b24e15727fbb6011c515d66d49cd4ba92`.
-- That remote merge contains the reviewed PR-276 delivery; PR-277 started only
+- Verified merge HEAD: `a7800430660c5a4bd532d8655fc63df03b21496e`.
+- That remote merge contains the reviewed PR-277 delivery; PR-278 started only
   after its ancestry and GitHub merge state were verified.
 - PR-190 is `COMPLETED_FAILED_WITH_RECEIPT`. Its registered full typed
   attainability statement is refuted; `success_dependency_satisfied=false`.
 - Work proceeds in the isolated branch
-  `changeset/pr277-evidence-conditioned-capability`. The main user checkout and
+  `changeset/pr278-tier-a-per-lane-adjudication`. The main user checkout and
   all user-owned untracked inputs remain untouched.
 
 ## Canonical orchestration state
@@ -24,13 +24,13 @@ runs.
 - Completed: 172/241 = 71.37%.
 - Dependency-weighted completion: 75.00%.
 - Critical-path completion: 98.70%.
-- In progress: none.
-- Pending: 38.
+- In progress: PR-278.
+- Pending: 37.
 - Blocked terminal receipts: PR-190 and PR-172.
 - Dormant external/native: 28.
 - Background acquisition: PR-151 only.
-- PR-278 is the sole dependency-ready next node. Its implementation waits for
-  the owner to review and merge the PR-277 delivery.
+- No later node is dependency-ready while PR-278 remains in progress. PR-279
+  requires PR-278 success.
 
 The lower count percentage reflects atomic registration of PR-276 through
 PR-294; it is bookkeeping, not scientific regression or readiness evidence.
@@ -107,7 +107,40 @@ not scientific authority; a relabelled record fails even after deliberate
 registration-layer perturbation. Exact content R6 passed all 19 policy cells
 on `a19d98e5...`, including a 54-check independent oracle, and its run closed
 normally. Canonical PR-277 status is `COMPLETED_SUCCESS`; this is a governance
-contract result only. The owner authorized exactly one content history slot,
-one closeout commit, and one attended review-PR transaction. Final closeout
-review, latest-target integration, inventory, and the attended transaction
-remain mandatory; all data and scientific public-release gates remain closed.
+contract result only. Its reviewed delivery is merged at `a780043...`. All
+data and scientific public-release gates remain closed.
+
+## PR-278 scope and current result
+
+PR-278 freezes the exact Tier-A source at merge `a780043...`, separates 28
+family rows into 19 currently reviewable rows, one non-terminal T-OMK hold,
+and eight named event gates, and preserves all 62 dual-axis rows as individual
+`INCONCLUSIVE` results because no exact terminal-receipt crosswalk exists.
+
+The current family ledger contains 14 `GRANT`, 12 `HOLD`, one D-ACT
+`DOWNGRADE`, and one D-K1 `INCONCLUSIVE`. A lane `GRANT` is only admissibility
+for later PR-157 aggregation. It creates no capability, readiness, scientific
+status, CF4 P0 rescue, public use, native status, posterior/evidence result, or
+family identification.
+
+The first mutable pre-freeze review blocked a stale v1 delivery-policy pointer
+and six rows whose reviewer identity had been synthesized after the fact. The
+v1 panel inputs and failing reviews are preserved. The active v2 delivery
+successor binds policy v2 without rewriting those bytes, ingestion now rejects
+missing or assignment-mismatched principals, a blind six-row review at result
+SHA `13ef7078...` binds exact reviewer and author principals, and the complete
+repaired mutable review passed at `1578b8f7...`.
+
+Immutable content R1 on `f5e2ff7a...` then failed one independent portability
+check: `check-source` mixed current PR status with its base-snapshot hash. The
+strict-valid failure is preserved at `aef9ad24...`. The repair now resolves
+historical status/backlog from Git commit `a780043...`, promotes the exact
+mapper result identity through a compact self-addressed receipt, and requires
+source regeneration in the delivery policy. Focused validation passes 258
+tests. R1 is invalidated by these bytes and cannot authorize completion.
+
+Canonical orchestration remains `in_progress: PR-278`. The authorized content
+slot must be amended, newly sealed, and pass a fresh immutable review before
+the separate closeout commit is used. The final push is permitted only inside
+one attended non-draft review-PR transaction; approval, merge, ruleset change,
+data execution, capability promotion, and scientific release remain blocked.

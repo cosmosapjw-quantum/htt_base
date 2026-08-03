@@ -14796,12 +14796,18 @@
       ],
       "files": [
         "htt/src/common/remediation_state.py",
+        "htt/src/common/tier_a_lane_adjudication.py",
+        "htt/src/common/tier_a_adjudication_ledger.py",
         "docs/research_program/post_pr275/tier_a_adjudication",
+        "scripts/codex_harness/run_pr278_tier_a_adjudication.py",
         "tests/contracts/test_tier_a_lane_adjudication.py",
         "docs/PR_DELTAS/pr-278.md"
       ],
       "tests": [
-        "to-be-created:PYTHONPATH=htt/src:htt python -m pytest -p no:cacheprovider -q tests/contracts/test_tier_a_lane_adjudication.py"
+        "python -B scripts/codex_harness/run_pr278_tier_a_adjudication.py focused",
+        "python -B scripts/codex_harness/run_pr278_tier_a_adjudication.py verify-frozen-source",
+        "python -B scripts/codex_harness/run_pr278_tier_a_adjudication.py verify-panel",
+        "python -B scripts/codex_harness/run_pr278_tier_a_adjudication.py verify-ledger"
       ],
       "dod": [
         "Every adjudicated lane carries a terminal receipt, scoped evidence fingerprint, dissent, and ceiling.",
@@ -14824,7 +14830,7 @@
       "anti_drift": [
         "Deduplicate by claim id, scoped evidence fingerprint, and verdict rather than prose."
       ],
-      "roadmap_anchor": "docs/research_program/post_pr275/pr276_spec.yaml",
+      "roadmap_anchor": "docs/research_program/post_pr275/tier_a_adjudication/pr278_delivery_spec_v2.yaml",
       "activation_state": "PENDING",
       "execution_lane": "defensible",
       "scientific_artifact_mode": "governance_diagnostic",

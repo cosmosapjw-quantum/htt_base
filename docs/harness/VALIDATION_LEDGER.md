@@ -2982,3 +2982,37 @@ Canonical PR-277 status is complete on exact content R6. The closeout commit
 changes tracked status and handoff bytes but no science or capability; final
 Git delivery still requires its own exact seal, owner-authorized review,
 latest-target integration, inventory, and one attended GitHub PR transaction.
+
+## PR-278 — Tier-A independent per-lane adjudication (2026-08-04)
+
+Change classification: COMMON receipt-adjudication contracts, exact source and
+panel provenance, diagnostic-only ledgers, tests, and current handoff/status
+surfaces. No observed data, likelihood, posterior, theorem promotion, native
+solver/atlas result, family identification, capability issuance, or public use
+is produced.
+
+| Command or evidence | Result | Notes |
+| --- | --- | --- |
+| verified remote entry | PASS | PR-277 is merged at target `a7800430660c5a4bd532d8655fc63df03b21496e`; isolated PR-278 worktree preserves the main checkout and user-owned untracked files. |
+| raw collection baseline | FAIL, PRESERVED | A collection command without the repository source layout failed before collection with `ModuleNotFoundError: No module named 'bass'`; it is not reported as a pass. |
+| exact source mapper | INCONCLUSIVE NEGATIVE RESULT, PRESERVED | 28 family rows and 62 dual-axis rows mapped; zero exact dual-axis terminal-receipt crosswalks, so all 62 rows retain individual `INCONCLUSIVE` dispositions. |
+| first family panel | STRUCTURALLY VALID, PARTIALLY SUPERSEDED | Nineteen rows were individually reviewed. The original six data/method rows are preserved but non-authoritative because reviewer/author principals were absent. |
+| first pre-freeze review | FAIL, PRESERVED | Both independent axes blocked the stale v1 delivery-policy pointer; regression additionally reproduced synthesized reviewer identity on six lanes. |
+| principal remediation review | PASS STRUCTURE; SCIENTIFIC STATUS UNCHANGED | Blind six-row result `13ef7078...` is strict-valid, carries exact reviewer/author principals, and yields four `GRANT`, one D-ACT `DOWNGRADE`, and one D-K1 `INCONCLUSIVE`. |
+| complete repaired pre-freeze review | PASS, MUTABLE ONLY | Result `1578b8f7...`, merged result `ec782473...`, and normally closed run `pr278-prefreeze-repair-review-r1-20260804` passed all repaired authority, totality, claim, test, DAG, and mirror checks. Later content mutation invalidates exactness. |
+| source-layout probe | PASS | Portable runner imports `common`, `bass`, and `htt` from the current worktree. |
+| frozen source, panel, and ledger verification | PASS | Exact source manifest, exact-file plus self-addressed panel receipt, and deterministic 90-row ledger all verify. |
+| focused suite after source repair | PASS | `258 passed`; includes 28/20/19/8 partition, 62-row totality, exact Git snapshot regeneration despite live status drift, compact mapper receipt identity, principal binding/refusal, frozen record behavior, no capability/public use, and PR-277/remediation regressions. |
+| attended-policy targeted selection | COMMAND ERROR, THEN PASS | The first coordinator command named a nonexistent PR-277 test node and collected no tests. The corrected PR-276 attended-policy plus PR-278 policy-boundary invocation passed 11 tests without changing code or expectations. |
+| source-layout collection | PASS | `10697/10756 collected`, 59 deselected; zero collection errors. |
+| smoke | PASS | `8 passed`, 10748 deselected; eight declared legacy deprecation warnings. |
+| strict DAG/status and mirrors | PASS | `241 PRs, DAG valid`; PR-278 is in progress and canonical/compatibility mirrors are synchronized. |
+| immutable content R1 | FAIL, PRESERVED | Exact content `f5e2ff7a...`, seal `8d950d45...`. The reviewer reproduced `check-source` failing because live PR status was compared with the base-snapshot hash while tracked-byte verification remained green. Strict result `aef9ad24...`, coverage `13f3027f...`, oracle `93a362bb...`, merged result `8be784b7...`, and normally closed run bind the same failure. Claim firewalls and all other checks passed; majority vote was forbidden. |
+| R1 review-process errors | PRESERVED, NON-ACCEPTANCE | A coordinator `merge_results.py --help` invocation generated a premature zero-result aggregate `55ba0235...`. The reviewer's first summary-shaped result then failed schema-v3 validation, producing rejected aggregate `f23ea5e4...`. The same reviewer repaired only its assignment-owned envelope/coverage; strict validation and normal close then passed. Neither error is acceptance evidence. |
+| source-regeneration repair | IMPLEMENTED; FRESH REVIEW REQUIRED | Status/backlog now resolve from exact Git snapshot `a780043...`; the local mapper result is represented by a compact self-addressed tracked receipt that binds result SHA `515ab62f...`; policy and focused tests require `check-source`. Tracked source/panel/ledger identities were regenerated without changing the 14/12/1/1 or 62-INCONCLUSIVE scientific dispositions. R1 is invalidated. |
+
+PR-278 remains in progress. The owner-authorized content slot is being amended
+for the R1 blocker; its fresh immutable review must pass before the separate
+closeout commit. Push is permitted only inside one attended non-draft review-PR
+transaction. Approval, merge, force-push, ruleset mutation, data execution,
+capability promotion, and scientific public release remain unauthorized.

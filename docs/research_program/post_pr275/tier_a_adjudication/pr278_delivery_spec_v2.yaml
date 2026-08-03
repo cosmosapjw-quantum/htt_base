@@ -1,0 +1,70 @@
+schema: htt.post_pr275.tier_a_lane_adjudication.delivery.v2
+document_id: PR278-TIER-A-LANE-ADJUDICATION-DELIVERY-V2
+status: ACTIVE_DELIVERY_SPEC
+pr_id: PR-278
+change_set_id: CS-PR278-TIER-A-ADJUDICATION
+publication_group_id: PG-PR278-TIER-A-ADJUDICATION
+owner: COMMON
+claim_tier_ceiling: diagnostic_only
+scope: pre_solver_receipt_bound_non_author_adjudication
+publication_policy:
+  path: docs/research_program/post_pr275/tier_a_adjudication/pr278_publication_policy_v2.json
+  sha256: b3643e191a2e743b8b12165c99405f5dd9f46cd58b7af88593bc1e9070fe0193
+
+authority_transition:
+  predecessor:
+    path: docs/research_program/post_pr275/tier_a_adjudication/pr278_spec.yaml
+    sha256: 6457e9b15ede5795b4c2754b1c820331fdea6d9192a3089962496d2a398dad97
+    retained_role: CLOSED_PANEL_INPUT_ONLY
+  successor_rule: >-
+    This document is the sole active delivery authority for candidate review,
+    closeout, and publication. The predecessor remains byte-preserved because
+    closed panel assignments bind its exact hash; its v1 publication-policy
+    pointer must not control delivery or be rewritten retrospectively.
+  v1_policy_role: CLOSED_PANEL_INPUT_ONLY
+  active_policy_role: DELIVERY_REVIEW_AND_PUBLICATION
+
+delivery_authorization:
+  implementation_changes: authorized_by_current_user_request
+  content_commit: authorized_once_by_current_user_request
+  closeout_commit: authorized_once_by_current_user_request
+  push: authorized_only_inside_single_attended_review_pr_transaction
+  create_pr: authorized_once_non_draft_review_pr
+  merge: not_authorized
+  force_push: not_authorized
+  approval: not_authorized
+  ruleset_mutation: not_authorized
+  data_execution: not_authorized
+  capability_promotion: not_authorized
+
+required_repairs:
+- Every panel lane binds a non-empty reviewer principal and the exact author
+  principals against which non-author independence is checked.
+- Missing reviewer identity is rejected; no assignment-derived reviewer
+  principal may be synthesized during normalization.
+- The tracked panel receipt and final ledger are regenerated after any panel
+  result replacement and are verified against exact content identities.
+
+fixed_boundaries:
+  capability_effect: NONE_PENDING_PR157
+  public_use: false
+  family_status_changes: forbidden
+  capability_issuance: forbidden
+  cf4_p0_rescue_count: 0
+  final_aggregator: PR-157
+  native_family_identification: blocked
+
+review_invalidation:
+- candidate_sha_changed
+- candidate_tree_changed
+- diff_digest_changed
+- tests_changed
+- target_sha_changed
+- source_ledger_hash_changed
+- panel_receipt_hash_changed
+- final_ledger_hash_changed
+- reviewer_or_author_principal_changed
+- family_partition_changed
+- event_gate_changed
+- verdict_or_crosswalk_semantics_changed
+- claim_ceiling_changed
