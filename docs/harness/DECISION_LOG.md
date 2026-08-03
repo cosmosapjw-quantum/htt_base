@@ -113,3 +113,45 @@ data, observed-inference, morphology, source-separation, native,
 family-identification, public-release, approval, or merge capability. PR-278
 is the sole dependency-ready next card after owner review and merge of the
 PR-277 delivery.
+
+## D-TIER-A-PER-LANE-ADJUDICATION
+
+PR-278 dispositions are receipt-admissibility decisions for later PR-157
+aggregation, not claim capabilities. Exact source identity is frozen at Git
+snapshot `a780043...`; later backlog/status bytes cannot replace that evidence.
+The 19 currently reviewable family rows require assignment-bound non-author
+principals, while T-OMK and all eight event-gated families remain held. All 62
+dual-axis rows remain individually `INCONCLUSIVE` because no exact registered
+terminal-receipt crosswalk exists.
+
+The active delivery authority is
+`docs/research_program/post_pr275/tier_a_adjudication/pr278_delivery_spec_v2.yaml`.
+It supersedes the v1 delivery pointer without rewriting the predecessor bytes
+used by closed panel assignments. Missing or synthesized reviewer identity,
+bulk promotion, nonzero CF4 P0 rescue, capability issuance, public use, native
+status, posterior/evidence semantics, and family identification are permanent
+hard stops for this PR.
+
+Immutable content R1 showed that recording a base hash is insufficient when a
+generator still reads live status bytes. Historical status and backlog inputs
+must be loaded from exact Git commit `a780043...`. The local mapper envelope is
+retained operational evidence; its load-bearing identity and zero-crosswalk
+disposition are promoted through one compact self-addressed tracked receipt so
+clean-checkout source regeneration does not depend on ignored run directories.
+`verify-frozen-source` and `check-source` are separate gates: the former
+authenticates frozen output bytes, while the latter proves deterministic
+regeneration. Neither changes the 90 lane dispositions or any capability.
+
+## PR-278 closeout
+
+Immutable content R2 passed all 21 registered policy cells on exact content
+commit `34ec32aa...`, tree `bab43765...`, and seal `35fae6bf...`. Its strict
+result `c5ddc511...`, mutation oracle `266822a5...`, merged result
+`2a0789ae...`, and normally closed run summary `2fed1a5e...` report no blocker.
+Canonical PR-278 status is therefore `COMPLETED_SUCCESS`.
+
+This closeout registers receipt-level lane dispositions only. Scientific
+status remains `OPEN_UNCHANGED`; it grants no theorem, method, data, observed,
+source-separation, morphology, native, family-identification, public-release,
+approval, or merge capability. PR-279 is the sole dependency-ready next card,
+but begins only after owner review and merge of the exact PR-278 delivery.

@@ -19,6 +19,7 @@ import re
 from dataclasses import dataclass
 from datetime import date, datetime, time, timezone
 from enum import Enum
+from pathlib import PurePosixPath
 from types import MappingProxyType
 from typing import Callable, Mapping, Sequence
 
@@ -459,6 +460,220 @@ class CapabilityOutcome(StrEnum):
     ABSTAIN = "ABSTAIN"
     BLOCK = "BLOCK"
     STALE_REPLACED = "STALE_REPLACED"
+
+
+class LaneAdjudicationUnitKind(StrEnum):
+    """PR-278 review-unit identity; never a scientific capability axis."""
+
+    FAMILY = "FAMILY"
+    DUAL_AXIS_ROW = "DUAL_AXIS_ROW"
+
+
+class LaneAdjudicationVerdict(StrEnum):
+    """Receipt disposition consumed later by PR-157, not a capability action."""
+
+    GRANT = "GRANT"
+    HOLD = "HOLD"
+    DOWNGRADE = "DOWNGRADE"
+    INCONCLUSIVE = "INCONCLUSIVE"
+
+
+TIER_A_LANE_CAPABILITY_EFFECT = "NONE_PENDING_PR157"
+
+
+@dataclass(frozen=True)
+class TierALaneAdjudication:
+    """Exact-evidence non-author disposition for one PR-278 review unit.
+
+    ``GRANT`` here means only that PR-157 may consume the exact receipt.  This
+    type deliberately cannot issue :class:`ClaimCapabilityDecision`, change a
+    readiness state, or enable public use.
+    """
+
+    unit_id: str
+    unit_kind: LaneAdjudicationUnitKind | str
+    verdict: LaneAdjudicationVerdict | str
+    source_ledger_sha256: str
+    source_row_sha256: str
+    evidence_bindings: Mapping[str, str]
+    terminal_receipt_refs: Sequence[str]
+    reviewer_assignment_id: str
+    reviewer_principal: str
+    author_principals: Sequence[str]
+    dissent: str
+    claim_ceiling: str = "diagnostic_only"
+    capability_effect: str = TIER_A_LANE_CAPABILITY_EFFECT
+    public_use: bool = False
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "unit_id", _exact_nonempty_text(self.unit_id, "unit_id"))
+        try:
+            unit_kind = LaneAdjudicationUnitKind(_enum_value(self.unit_kind))
+            verdict = LaneAdjudicationVerdict(_enum_value(self.verdict))
+        except ValueError as exc:
+            raise RemediationContractError(
+                "unknown Tier-A lane unit kind or verdict"
+            ) from exc
+        object.__setattr__(self, "unit_kind", unit_kind)
+        object.__setattr__(self, "verdict", verdict)
+        object.__setattr__(
+            self,
+            "source_ledger_sha256",
+            _sha256_digest(self.source_ledger_sha256, "source_ledger_sha256"),
+        )
+        object.__setattr__(
+            self,
+            "source_row_sha256",
+            _sha256_digest(self.source_row_sha256, "source_row_sha256"),
+        )
+        if not isinstance(self.evidence_bindings, Mapping) or not self.evidence_bindings:
+            raise RemediationContractError("evidence_bindings must be a non-empty mapping")
+        bindings: dict[str, str] = {}
+        for raw_ref, raw_digest in self.evidence_bindings.items():
+            ref = _exact_nonempty_text(raw_ref, "evidence binding ref")
+            posix_ref = PurePosixPath(ref)
+            if (
+                ref.startswith("/")
+                or "\\" in ref
+                or ":" in posix_ref.parts[0]
+                or ".." in posix_ref.parts
+                or str(posix_ref) != ref
+            ):
+                raise RemediationContractError(
+                    "evidence binding refs must be canonical repository-relative POSIX paths"
+                )
+            if ref in bindings:
+                raise RemediationContractError(
+                    f"duplicate evidence binding ref: {ref}"
+                )
+            bindings[ref] = _sha256_digest(raw_digest, f"evidence binding {ref}")
+        object.__setattr__(
+            self,
+            "evidence_bindings",
+            MappingProxyType(dict(sorted(bindings.items()))),
+        )
+        if self.source_ledger_sha256 not in bindings.values():
+            raise RemediationContractError(
+                "source_ledger_sha256 must match an exact evidence binding"
+            )
+        if isinstance(self.terminal_receipt_refs, (str, bytes)) or not isinstance(
+            self.terminal_receipt_refs, Sequence
+        ):
+            raise RemediationContractError(
+                "terminal_receipt_refs must be a sequence"
+            )
+        receipts = tuple(
+            _exact_nonempty_text(ref, "terminal receipt ref")
+            for ref in self.terminal_receipt_refs
+        )
+        if len(receipts) != len(set(receipts)):
+            raise RemediationContractError(
+                "terminal_receipt_refs contains duplicates"
+            )
+        if any(ref not in bindings for ref in receipts):
+            raise RemediationContractError(
+                "every terminal receipt must be present in evidence_bindings"
+            )
+        if verdict in {
+            LaneAdjudicationVerdict.GRANT,
+            LaneAdjudicationVerdict.DOWNGRADE,
+        } and not receipts:
+            raise RemediationContractError(
+                f"{verdict.value} requires at least one terminal receipt"
+            )
+        object.__setattr__(self, "terminal_receipt_refs", tuple(sorted(receipts)))
+        assignment_id = _exact_nonempty_text(
+            self.reviewer_assignment_id, "reviewer_assignment_id"
+        )
+        object.__setattr__(self, "reviewer_assignment_id", assignment_id)
+        reviewer_principal = _authority_text(
+            self.reviewer_principal, "reviewer_principal"
+        )
+        if reviewer_principal not in {
+            f"reviewer:{assignment_id}",
+            f"agent:{assignment_id}",
+        }:
+            raise AuthorityError(
+                "reviewer_principal must bind the registered reviewer_assignment_id"
+            )
+        object.__setattr__(self, "reviewer_principal", reviewer_principal)
+        if isinstance(self.author_principals, (str, bytes)) or not isinstance(
+            self.author_principals, Sequence
+        ):
+            raise RemediationContractError("author_principals must be a sequence")
+        authors = tuple(
+            sorted(
+                {
+                    _authority_text(principal, "author principal")
+                    for principal in self.author_principals
+                }
+            )
+        )
+        if not authors:
+            raise RemediationContractError("author_principals must not be empty")
+        if self.reviewer_principal in authors:
+            raise AuthorityError("Tier-A adjudicator must not be an author")
+        object.__setattr__(self, "author_principals", authors)
+        if not isinstance(self.dissent, str):
+            raise TypeError("dissent must be a string")
+        dissent = self.dissent.strip()
+        if verdict is not LaneAdjudicationVerdict.GRANT and not dissent:
+            raise RemediationContractError(
+                f"{verdict.value} requires an explicit dissent or blocking rationale"
+            )
+        object.__setattr__(self, "dissent", dissent)
+        if self.claim_ceiling != "diagnostic_only":
+            raise RemediationContractError(
+                "Tier-A lane adjudication ceiling must remain diagnostic_only"
+            )
+        if self.capability_effect != TIER_A_LANE_CAPABILITY_EFFECT:
+            raise RemediationContractError(
+                "Tier-A lane adjudication cannot issue a capability"
+            )
+        if self.public_use is not False:
+            raise RemediationContractError(
+                "Tier-A lane adjudication cannot enable public use"
+            )
+
+    @property
+    def evidence_fingerprint(self) -> str:
+        """Fingerprint the reviewed proposition and evidence, not its verdict prose."""
+
+        payload = {
+            "schema": "htt.tier_a_lane_evidence.v1",
+            "unit_id": self.unit_id,
+            "unit_kind": self.unit_kind.value,
+            "source_ledger_sha256": self.source_ledger_sha256,
+            "source_row_sha256": self.source_row_sha256,
+            "evidence_bindings": dict(self.evidence_bindings),
+            "terminal_receipt_refs": list(self.terminal_receipt_refs),
+        }
+        canonical = json.dumps(
+            payload, sort_keys=True, separators=(",", ":"), ensure_ascii=False
+        ).encode("utf-8")
+        return hashlib.sha256(canonical).hexdigest()
+
+    def to_dict(self) -> dict[str, object]:
+        """Return the deterministic machine-readable lane disposition."""
+
+        return {
+            "unit_id": self.unit_id,
+            "unit_kind": self.unit_kind.value,
+            "verdict": self.verdict.value,
+            "evidence_fingerprint": self.evidence_fingerprint,
+            "evidence_refs": list(self.evidence_bindings),
+            "evidence_bindings": dict(self.evidence_bindings),
+            "terminal_receipt_refs": list(self.terminal_receipt_refs),
+            "reviewer_assignment_id": self.reviewer_assignment_id,
+            "reviewer_principal": self.reviewer_principal,
+            "author_principals": list(self.author_principals),
+            "dissent": self.dissent,
+            "claim_ceiling": self.claim_ceiling,
+            "capability_effect": self.capability_effect,
+            "public_use": self.public_use,
+            "source_ledger_sha256": self.source_ledger_sha256,
+            "source_row_sha256": self.source_row_sha256,
+        }
 
 
 class CapabilityBlockerKind(StrEnum):
@@ -1820,6 +2035,8 @@ __all__ = [
     "ExecutionResolution",
     "ExternalDeliveryReceipt",
     "IdentityDimension",
+    "LaneAdjudicationUnitKind",
+    "LaneAdjudicationVerdict",
     "MAXIMUM_UNATTESTED_SCIENTIFIC_STATUS",
     "NON_RELAXABLE_CAPABILITY_RULES",
     "OrchestrationState",
@@ -1827,6 +2044,8 @@ __all__ = [
     "RemediationContractError",
     "RemediationState",
     "ScientificStatus",
+    "TIER_A_LANE_CAPABILITY_EFFECT",
+    "TierALaneAdjudication",
     "VersionedClaimIdentity",
     "assert_distinct_author_adjudicator",
     "canonical_claim_identity_payload",

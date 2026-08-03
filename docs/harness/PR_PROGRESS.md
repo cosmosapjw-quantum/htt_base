@@ -23,8 +23,8 @@ historical execution/review evidence remains under `docs/PR_DELTAS/` and
   unattended work remains external-publisher-only, while current-turn owner
   authorization may consume one sealed `CREATE_REVIEW_PR` transaction. No
   force-push, approval, merge, ruleset, data, or claim action is enabled.
-- Current counts: 172 completed (71.37%), dependency-weighted 75.00%,
-  critical-path 98.70%, 38 pending, 2 blocked, 28 dormant, no foreground task,
+- Current counts: 173 completed (71.78%), dependency-weighted 75.33%,
+  critical-path 98.70%, 37 pending, 2 blocked, 28 dormant, no foreground card,
   and PR-151 background-only.
 - The dependency overlay adds PR-285 to PR-191--195, PR-278 to PR-157, typed
   residual/replay prerequisites to Planck/CF4/ACT cards, and PR-294 to PR-207
@@ -56,6 +56,13 @@ historical execution/review evidence remains under `docs/PR_DELTAS/` and
   family-identification, or publication capability is granted by this work.
 
 ## Validation state
+
+- Current PR-278 focused suite: `258 passed`.
+- Current source-layout collection: `10697/10756 collected`, 59 deselected;
+  zero collection errors.
+- Current smoke: `8 passed`, 10748 deselected; eight declared legacy warnings.
+- Frozen source, tracked panel receipt, final 90-row ledger, strict DAG/status,
+  canonical mirrors, and generated status sidecars pass current verification.
 
 - Current PR-277 closeout focused suite: `308 passed`.
 - Current source-layout collection: `10660/10719 collected`, 59 deselected;
@@ -99,10 +106,37 @@ historical execution/review evidence remains under `docs/PR_DELTAS/` and
 
 ## Next transition
 
-PR-277 is canonically `COMPLETED_SUCCESS`. The owner authorized one content
-history slot, one closeout commit, and one final review PR on 2026-08-04. The
-next transition is an exact closeout seal, final independent review,
-latest-target integration, inventory, and one attended PR transaction. PR-278
-is dependency-ready but must not start before the owner reviews and merges the
-PR-277 delivery. Data execution and scientific public release remain
-separately gated.
+PR-278 is canonically `COMPLETED_SUCCESS` after immutable content R2 passed all
+21 registered policy cells on exact content commit `34ec32aa...`. Scientific
+status remains `OPEN_UNCHANGED`, public use remains false, and PR-279 is the
+sole unblocked next card. The owner authorized one content slot, one closeout
+commit, and one attended review PR. The remaining delivery transition is an
+exact two-commit seal, independent review, latest-target integration, fresh PR
+inventory, and one non-draft review PR; no approval, merge, data execution,
+capability promotion, or scientific release follows.
+
+## PR-278 completed; exact delivery review pending
+
+- Frozen 28 family rows into 19 reviewable, one non-terminal, and eight
+  event-gated rows; preserved zero CF4 P0 rescue.
+- Preserved all 62 dual-axis rows as individual `INCONCLUSIVE` results because
+  the exact crosswalk count is zero.
+- Produced 14 family `GRANT`, 12 `HOLD`, one D-ACT `DOWNGRADE`, and one D-K1
+  `INCONCLUSIVE`; every result remains diagnostic-only and non-public pending
+  PR-157.
+- Preserved the first pre-freeze review's stale-policy and synthesized-reviewer
+  failures. Added the active v2 successor and a strict-valid blind six-row
+  re-adjudication with exact reviewer/author principals.
+- Complete repaired pre-freeze review passed at result `1578b8f7...`.
+- Immutable content R1 on `f5e2ff7a...` and seal `8d950d45...` failed one
+  high-severity source-regeneration check; result `aef9ad24...` is preserved.
+- The repair reads status/backlog from exact base Git bytes, adds a tracked
+  self-addressed mapper receipt, requires `check-source`, and passes 258
+  focused tests.
+- Immutable content R2 passed all 21 cells on exact commit `34ec32aa...`, seal
+  `35fae6bf...`, strict result `c5ddc511...`, coverage `c86fcc64...`, oracle
+  `266822a5...`, merged result `2a0789ae...`, and normally closed summary
+  `2fed1a5e...`.
+- Canonical closeout records 173/241 complete, no foreground card, and PR-279
+  as the sole unblocked next node. This status transition grants no capability
+  or scientific/public-use effect.

@@ -42,26 +42,20 @@ their owning PR deltas and frozen receipts.
   one pass. They remain historical. PR-280 must create the cache-free JUnit
   baseline and classify every failure with `UNKNOWN_UNCLASSIFIED=0`.
 - GitHub ruleset mutation is separately blocked on `G-CI-H`.
-- PR-276 is merged at remote descendant `a6d3bd8b...`; its historical failed
+- PR-277 is merged at remote descendant `a780043...`; its historical failed
   and passed review receipts remain preserved.
-- PR-277 has a tested implementation and an owner-authorized two-commit
-  delivery cycle. Immutable R1 was
-  structurally partial; R2 rejected a callable raw builder; R3 lacked its
-  second result envelope; and R4 rejected low-level raw allocation that could
-  copy fields into valid-looking family and inference grants. R5 rejected an
-  exposed public-issuer closure marker, then was abandoned after both reviewers
-  disclosed blind-results-breaking prior-run searches. All receipts are
-  preserved without majority voting. The current repair makes identity
-  registration a misuse guard and exact evidence/adjudication revalidation the
-  authority on every public use. Exact content R6 passed all 19 cells on
-  `a19d98e5...` with no blocking finding, so canonical status is complete.
-  Delivery remains blocked pending the authorized closeout commit, its exact
-  final review, latest-target integration, fresh inventory, and the one
-  attended review-PR transaction.
+- PR-278 content is complete. Immutable R1's source-regeneration failure is
+  preserved; amended content R2 passed all 21 cells on `34ec32aa...`. The
+  closeout commit changes status/handoff bytes and is not yet delivery-final:
+  it requires a new exact seal/review, latest-target integration, and fresh PR
+  inventory before the single attended transaction.
 - Active graph `INVALIDATES_*`, `REQUIRES_RECALIBRATION`, and
   `REQUIRES_REEXECUTION` edges are capability blockers. They cannot be cleared
   by caller omission or a status/gate annotation.
-- Direct push/PR commands remain forbidden. The current authorization may be
-  consumed only by the registered attended publisher after all exact gates.
+- The owner authorized one content history slot, one closeout commit, and one
+  attended non-draft review PR for PR-278. Direct push/PR commands remain
+  forbidden; the exact final sealed SHA may
+  be pushed only inside the single attended transaction. Approval, merge,
+  force-push, and ruleset mutation remain unauthorized.
 - Publication remains blocked until PR-208 and may consume only results granted
   by the capability engine with generated sources and admitted data identities.

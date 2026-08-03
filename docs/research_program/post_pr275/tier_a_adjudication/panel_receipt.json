@@ -1,0 +1,818 @@
+{
+  "capability_effect": "NONE_PENDING_PR157",
+  "claim_ceiling": "diagnostic_only",
+  "delivery_authority": {
+    "path": "docs/research_program/post_pr275/tier_a_adjudication/pr278_delivery_spec_v2.yaml",
+    "publication_policy": {
+      "path": "docs/research_program/post_pr275/tier_a_adjudication/pr278_publication_policy_v2.json",
+      "sha256": "b3643e191a2e743b8b12165c99405f5dd9f46cd58b7af88593bc1e9070fe0193"
+    },
+    "sha256": "e5ad215aa01c9c585bad96a871496a4cd098c216296c3192d9b5a32db1530c79"
+  },
+  "final_aggregator": "PR-157",
+  "lane_dispositions": [
+    {
+      "author_principals": [
+        "owner:OBSSTAT",
+        "program:BASS_HTT_program"
+      ],
+      "capability_effect": "NONE_PENDING_PR157",
+      "claim_ceiling": "diagnostic_only",
+      "counterevidence": [
+        "docs/PR_DELTAS/pr-152.md#Boundary excludes a low-L validation, isotropy proof, and sky-power limit",
+        "docs/PR_DELTAS/pr-177.md#Reproducible-terminal-result excludes a sky-isotropy result"
+      ],
+      "dissent": "The source row advertises an ACT low-ell isotropy upper limit, but PR-152 explicitly says its L=2..10 released-reconstruction comparison is outside the validated release range and is not an ACT low-L validation, isotropy proof, or sky-power limit. PR-177 is instead a strict-in-band conditional null and explicitly not a sky-isotropy result.",
+      "evidence_fingerprint": "daf6402ea94f057b6330d401a068b4e19498d1b1476c4a748fe94aa813c2852d",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/tier_a_adjudication/source_manifest.json#D-ACT",
+        "docs/generated/claim_adjudication/adjudication_ledger.json#D-ACT",
+        "docs/generated/claim_adjudication/literature_verdicts.json#D-ACT",
+        "docs/PR_DELTAS/pr-152.md",
+        "docs/PR_DELTAS/pr-177.md"
+      ],
+      "panel_result_path": ".agent-harness/runs/pr278-principal-remediation-r1-20260804/results/A-PR278-PANEL-DATA-METHOD-R2.json",
+      "panel_result_sha256": "13ef70783b74f4fe3520d604be234ca62e1ac05c2d02651015337a889c655a49",
+      "public_use": false,
+      "rationale": "Admit only the lower-scope released-reconstruction rank comparison and strict-in-band modulation null diagnostic. Do not admit the source row's upper-limit wording or any physical/isotropy interpretation.",
+      "reviewer_assignment_id": "A-PR278-PANEL-DATA-METHOD-R2",
+      "reviewer_principal": "reviewer:A-PR278-PANEL-DATA-METHOD-R2",
+      "source_ledger_sha256": "9cce5fd765ad7686ccbf84667829618053eb1c40c3f74a46c3e3957c90997b6f",
+      "source_row_sha256": "05e6d49bababe0ae2da02988978ec92b9ede7fe387633574e8900cda6a88e5d9",
+      "terminal_receipt_refs": [
+        "docs/PR_DELTAS/pr-152.md",
+        "docs/PR_DELTAS/pr-177.md"
+      ],
+      "unit_id": "D-ACT",
+      "unit_kind": "FAMILY",
+      "verdict": "DOWNGRADE"
+    },
+    {
+      "author_principals": [
+        "owner:HTT",
+        "owner:OBSSTAT",
+        "program:BASS_HTT_program"
+      ],
+      "capability_effect": "NONE_PENDING_PR157",
+      "claim_ceiling": "diagnostic_only",
+      "counterevidence": [
+        "docs/PR_DELTAS/pr-146.md limits independent validation to diagonal normalization, not off-diagonal covariance",
+        "docs/PR_DELTAS/pr-145.md through pr-148.md keep both CF4 P0s OPEN"
+      ],
+      "dissent": "",
+      "evidence_fingerprint": "5606a78a032ffa41b8867055f6786cfbc961a28eb2352ed2897af60ba3e97180",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/tier_a_adjudication/source_manifest.json#D-CF4",
+        "docs/generated/claim_adjudication/adjudication_ledger.json#D-CF4",
+        "docs/generated/claim_adjudication/literature_verdicts.json#D-CF4",
+        "docs/PR_DELTAS/pr-145.md",
+        "docs/PR_DELTAS/pr-146.md",
+        "docs/PR_DELTAS/pr-147.md",
+        "docs/PR_DELTAS/pr-148.md"
+      ],
+      "panel_result_path": ".agent-harness/runs/pr278-principal-remediation-r1-20260804/results/A-PR278-PANEL-DATA-METHOD-R2.json",
+      "panel_result_sha256": "13ef70783b74f4fe3520d604be234ca62e1ac05c2d02651015337a889c655a49",
+      "public_use": false,
+      "rationale": "The receipts support a real-CF4 full-covariance estimator result, same-catalogue covariance mechanics, nuisance-identified sets, and a non-identified depth-growth difference. GRANT admits these conditional receipts to PR-157 only; both CF4 P0s remain OPEN, release-matched mock ownership and independent off-diagonal validation remain absent, and no global-tilt or anomaly claim follows.",
+      "reviewer_assignment_id": "A-PR278-PANEL-DATA-METHOD-R2",
+      "reviewer_principal": "reviewer:A-PR278-PANEL-DATA-METHOD-R2",
+      "source_ledger_sha256": "9cce5fd765ad7686ccbf84667829618053eb1c40c3f74a46c3e3957c90997b6f",
+      "source_row_sha256": "0d1de20a2fb948a2d1467b5fe8777087989f209fb699970557b3d3e178c15359",
+      "terminal_receipt_refs": [
+        "docs/PR_DELTAS/pr-145.md",
+        "docs/PR_DELTAS/pr-146.md",
+        "docs/PR_DELTAS/pr-147.md",
+        "docs/PR_DELTAS/pr-148.md"
+      ],
+      "unit_id": "D-CF4",
+      "unit_kind": "FAMILY",
+      "verdict": "GRANT"
+    },
+    {
+      "author_principals": [
+        "owner:OBSSTAT",
+        "program:BASS_HTT_program"
+      ],
+      "capability_effect": "NONE_PENDING_PR157",
+      "claim_ceiling": "diagnostic_only",
+      "counterevidence": [
+        "docs/PR_DELTAS/pr-150.md reports global rank 39/1000 for a six-statistic max scan, not the ledger's pooled even-L rank 0.195 with L2/L4 ranks"
+      ],
+      "dissent": "PR-149 documents the odd-L diagonal structural-zero theorem, but PR-150 documents a six-statistic PR3/FFP10 max-scan result rather than the source row's even-L BiPoSH rank values. The exact terminal receipts therefore do not establish the full named family without inventing a crosswalk from other generated artifacts.",
+      "evidence_fingerprint": "7cfbd21914aadfc4d6a44b2dfe365f7491f8771c40af29a73da4096d98913ded",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/tier_a_adjudication/source_manifest.json#D-K1",
+        "docs/generated/claim_adjudication/adjudication_ledger.json#D-K1",
+        "docs/generated/claim_adjudication/literature_verdicts.json#D-K1",
+        "docs/PR_DELTAS/pr-149.md",
+        "docs/PR_DELTAS/pr-150.md"
+      ],
+      "panel_result_path": ".agent-harness/runs/pr278-principal-remediation-r1-20260804/results/A-PR278-PANEL-DATA-METHOD-R2.json",
+      "panel_result_sha256": "13ef70783b74f4fe3520d604be234ca62e1ac05c2d02651015337a889c655a49",
+      "public_use": false,
+      "rationale": "The odd-L theorem is receipt-supported, but the even-L rank component lacks an exact named terminal-delta receipt in this assignment. The family disposition is INCONCLUSIVE rather than a partial bulk grant.",
+      "reviewer_assignment_id": "A-PR278-PANEL-DATA-METHOD-R2",
+      "reviewer_principal": "reviewer:A-PR278-PANEL-DATA-METHOD-R2",
+      "source_ledger_sha256": "9cce5fd765ad7686ccbf84667829618053eb1c40c3f74a46c3e3957c90997b6f",
+      "source_row_sha256": "d7ab149c393132f7ae6df475cbdcb67ee43564c187f939dc601fc313bfa29f1d",
+      "terminal_receipt_refs": [
+        "docs/PR_DELTAS/pr-149.md",
+        "docs/PR_DELTAS/pr-150.md"
+      ],
+      "unit_id": "D-K1",
+      "unit_kind": "FAMILY",
+      "verdict": "INCONCLUSIVE"
+    },
+    {
+      "author_principals": [
+        "owner:OBSSTAT",
+        "program:BASS_HTT_program"
+      ],
+      "capability_effect": "NONE_PENDING_PR157",
+      "claim_ceiling": "diagnostic_only",
+      "counterevidence": [],
+      "dissent": "",
+      "evidence_fingerprint": "49b281eef7c25406b5160b91aef3f03ad0f9505cacd65b2cf0b5d860412c6d57",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/tier_a_adjudication/source_manifest.json#M-CLUSTER",
+        "docs/generated/claim_adjudication/adjudication_ledger.json#M-CLUSTER",
+        "docs/generated/claim_adjudication/literature_verdicts.json#M-CLUSTER",
+        "docs/PR_DELTAS/pr-135.md",
+        "docs/PR_DELTAS/pr-197.md"
+      ],
+      "panel_result_path": ".agent-harness/runs/pr278-principal-remediation-r1-20260804/results/A-PR278-PANEL-DATA-METHOD-R2.json",
+      "panel_result_sha256": "13ef70783b74f4fe3520d604be234ca62e1ac05c2d02651015337a889c655a49",
+      "public_use": false,
+      "rationale": "The exact receipts support observation-inclusive finite-null ranking, cluster-level exchangeability, conservative ties, no-leakage scoring, and refusal of a naive exact-test label. The frozen correction to novelty tier K is already reflected in the source row; this is statistical-method mechanics only.",
+      "reviewer_assignment_id": "A-PR278-PANEL-DATA-METHOD-R2",
+      "reviewer_principal": "reviewer:A-PR278-PANEL-DATA-METHOD-R2",
+      "source_ledger_sha256": "9cce5fd765ad7686ccbf84667829618053eb1c40c3f74a46c3e3957c90997b6f",
+      "source_row_sha256": "1046fb37df4174c1d5bb802a3345ffe7e0d145953cecaadd478764d8bd97b3b1",
+      "terminal_receipt_refs": [
+        "docs/PR_DELTAS/pr-135.md",
+        "docs/PR_DELTAS/pr-197.md"
+      ],
+      "unit_id": "M-CLUSTER",
+      "unit_kind": "FAMILY",
+      "verdict": "GRANT"
+    },
+    {
+      "author_principals": [
+        "owner:COMMON",
+        "owner:HTT",
+        "program:BASS_HTT_program"
+      ],
+      "capability_effect": "NONE_PENDING_PR157",
+      "claim_ceiling": "diagnostic_only",
+      "counterevidence": [],
+      "dissent": "",
+      "evidence_fingerprint": "3787ce58c0a91490688ef07fc3abc004f38175015a1c28f1a96cb79fee841fbc",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/tier_a_adjudication/source_manifest.json#M-DISCRIM",
+        "docs/generated/claim_adjudication/adjudication_ledger.json#M-DISCRIM",
+        "docs/generated/claim_adjudication/literature_verdicts.json#M-DISCRIM",
+        "docs/PR_DELTAS/pr-141.md",
+        "docs/PR_DELTAS/pr-221.md"
+      ],
+      "panel_result_path": ".agent-harness/runs/pr278-principal-remediation-r1-20260804/results/A-PR278-PANEL-DATA-METHOD-R2.json",
+      "panel_result_sha256": "13ef70783b74f4fe3520d604be234ca62e1ac05c2d02651015337a889c655a49",
+      "public_use": false,
+      "rationale": "The exact receipts support synthetic, model-dependent HTT discrimination-candidate mechanics with mandatory abstention under confusion, misspecification, inadequate fit, or prior sensitivity. This is not a detection, geometry result, or MIO posterior.",
+      "reviewer_assignment_id": "A-PR278-PANEL-DATA-METHOD-R2",
+      "reviewer_principal": "reviewer:A-PR278-PANEL-DATA-METHOD-R2",
+      "source_ledger_sha256": "9cce5fd765ad7686ccbf84667829618053eb1c40c3f74a46c3e3957c90997b6f",
+      "source_row_sha256": "9985043a18f4edc16055080642276d34f723fce5da70b23888de6845bdff5426",
+      "terminal_receipt_refs": [
+        "docs/PR_DELTAS/pr-141.md",
+        "docs/PR_DELTAS/pr-221.md"
+      ],
+      "unit_id": "M-DISCRIM",
+      "unit_kind": "FAMILY",
+      "verdict": "GRANT"
+    },
+    {
+      "author_principals": [
+        "owner:COMMON",
+        "program:BASS_HTT_program"
+      ],
+      "capability_effect": "NONE_PENDING_PR157",
+      "claim_ceiling": "diagnostic_only",
+      "counterevidence": [],
+      "dissent": "",
+      "evidence_fingerprint": "bccb3f8e7942042c969fc482837ceab67e53a18dd7af9441189fa636b9e11de5",
+      "evidence_refs": [
+        "docs/research_program/post_pr275/tier_a_adjudication/source_manifest.json#M-EVALUE",
+        "docs/generated/claim_adjudication/adjudication_ledger.json#M-EVALUE",
+        "docs/generated/claim_adjudication/literature_verdicts.json#M-EVALUE",
+        "docs/PR_DELTAS/pr-225.md"
+      ],
+      "panel_result_path": ".agent-harness/runs/pr278-principal-remediation-r1-20260804/results/A-PR278-PANEL-DATA-METHOD-R2.json",
+      "panel_result_sha256": "13ef70783b74f4fe3520d604be234ca62e1ac05c2d02651015337a889c655a49",
+      "public_use": false,
+      "rationale": "The exact receipt supports a toy calibrated layer for Hartlap correction, merged e-values, and optional-stopping/Ville behavior. It is a K-tier numerical re-demonstration with no cosmology, geometry, posterior, or public-use implication.",
+      "reviewer_assignment_id": "A-PR278-PANEL-DATA-METHOD-R2",
+      "reviewer_principal": "reviewer:A-PR278-PANEL-DATA-METHOD-R2",
+      "source_ledger_sha256": "9cce5fd765ad7686ccbf84667829618053eb1c40c3f74a46c3e3957c90997b6f",
+      "source_row_sha256": "977ce4502bee45244f3a064a36b90b160f32607f89e5fb4b830c6be558f40525",
+      "terminal_receipt_refs": [
+        "docs/PR_DELTAS/pr-225.md"
+      ],
+      "unit_id": "M-EVALUE",
+      "unit_kind": "FAMILY",
+      "verdict": "GRANT"
+    },
+    {
+      "author_principals": [
+        "owner:COMMON",
+        "owner:HTT",
+        "owner:OBSSTAT",
+        "program:BASS_HTT_program"
+      ],
+      "capability_effect": "NONE_PENDING_PR157",
+      "claim_ceiling": "diagnostic_only",
+      "counterevidence": [],
+      "dissent": "",
+      "evidence_bindings": {
+        "docs/PR_DELTAS/pr-129.md": "0a8115eb2463af63a58deaffb4be43f49ed752e017a0530012941ce9c32018a4",
+        "docs/PR_DELTAS/pr-140.md": "7523863e86349361624b87ac130e0e286c91afeae4921fdeddecf7ccf4e39690",
+        "docs/PR_DELTAS/pr-220.md": "0c3cb3ec0be5d9da44bf169220089f2eaae21f4b818e3fd312b841a42c2a9ff2",
+        "docs/codex_handoff/pr_backlog.yaml": "9d017d3e10c553d3ba112b490385f4a85b63c20267abe5190b68ab5d955c2709",
+        "docs/codex_handoff/pr_status.yaml": "fa8dee2949e786cb3e1dfac4d09ed74a4a75acd14300e5ed4293cc9710c5b18c",
+        "docs/generated/claim_adjudication/adjudication_ledger.json": "9cce5fd765ad7686ccbf84667829618053eb1c40c3f74a46c3e3957c90997b6f",
+        "docs/generated/claim_adjudication/literature_verdicts.json": "d8412195085042bb437f8419362ea6b5020c0456764fa1376936d7d5121f9593"
+      },
+      "evidence_fingerprint": "49dd3cd01b29ea4a8893bcce3ef0d4405cb2cd476ee5f52184d44e2cf99898b8",
+      "evidence_refs": [
+        "docs/PR_DELTAS/pr-129.md",
+        "docs/PR_DELTAS/pr-140.md",
+        "docs/PR_DELTAS/pr-220.md",
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml",
+        "docs/generated/claim_adjudication/adjudication_ledger.json",
+        "docs/generated/claim_adjudication/literature_verdicts.json"
+      ],
+      "panel_result_path": ".agent-harness/runs/pr278-family-panel-r1-20260804/results/A-PR278-PANEL-EVIDENCE-LEGACY.json",
+      "panel_result_sha256": "b78704ad042dfca6d2bac5bfa010eca7dcbe4770896310b77f98d352a59ced26",
+      "public_use": false,
+      "rationale": "The exact receipts substantiate estimator/domain separation, normalized-prior coherent-evidence mechanics, engine/sample independence checks, prior-sensitivity refusal, and inactive-prior negative controls. This GRANT admits only this diagnostic method evidence to PR-157; it creates no posterior, scientific rescue, readiness change, geometry claim, or public use.",
+      "reviewer_assignment_id": "A-PR278-PANEL-EVIDENCE-LEGACY",
+      "reviewer_principal": "reviewer:A-PR278-PANEL-EVIDENCE-LEGACY",
+      "source_ledger_sha256": "9cce5fd765ad7686ccbf84667829618053eb1c40c3f74a46c3e3957c90997b6f",
+      "source_row_sha256": "6faccc45a75d52755ae541bfd36041091d0a7811078fefeeb3f2dd65fcefbf48",
+      "terminal_receipt_refs": [
+        "docs/PR_DELTAS/pr-129.md",
+        "docs/PR_DELTAS/pr-140.md",
+        "docs/PR_DELTAS/pr-220.md"
+      ],
+      "unit_id": "M-EVIDENCE",
+      "unit_kind": "FAMILY",
+      "verdict": "GRANT"
+    },
+    {
+      "author_principals": [
+        "owner:COMMON",
+        "program:BASS_HTT_program"
+      ],
+      "capability_effect": "NONE_PENDING_PR157",
+      "claim_ceiling": "diagnostic_only",
+      "counterevidence": [],
+      "dissent": "",
+      "evidence_bindings": {
+        "docs/PR_DELTAS/pr-209.md": "ced70b2a248be6c6cc6b8cbcc93df519a4c50a9f7f1fd5426c855f56cce7f737",
+        "docs/PR_DELTAS/pr-214.md": "2955fc11f6a861b2cb5eb025ed09b9c95bae69b702d4d0ed59e68f4947667250",
+        "docs/PR_DELTAS/pr-227.md": "af3473402ab5f1b7668e916a6f89ba0601523bdd92402b8486d009f2092ae857",
+        "docs/codex_handoff/pr_backlog.yaml": "9d017d3e10c553d3ba112b490385f4a85b63c20267abe5190b68ab5d955c2709",
+        "docs/codex_handoff/pr_status.yaml": "fa8dee2949e786cb3e1dfac4d09ed74a4a75acd14300e5ed4293cc9710c5b18c",
+        "docs/generated/claim_adjudication/adjudication_ledger.json": "9cce5fd765ad7686ccbf84667829618053eb1c40c3f74a46c3e3957c90997b6f",
+        "docs/generated/claim_adjudication/literature_verdicts.json": "d8412195085042bb437f8419362ea6b5020c0456764fa1376936d7d5121f9593"
+      },
+      "evidence_fingerprint": "6c559a8d9fa0c42af9b541b944b10304e45c98e169e09fdeef0950d41550a7cf",
+      "evidence_refs": [
+        "docs/PR_DELTAS/pr-209.md",
+        "docs/PR_DELTAS/pr-214.md",
+        "docs/PR_DELTAS/pr-227.md",
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml",
+        "docs/generated/claim_adjudication/adjudication_ledger.json",
+        "docs/generated/claim_adjudication/literature_verdicts.json"
+      ],
+      "panel_result_path": ".agent-harness/runs/pr278-family-panel-r1-20260804/results/A-PR278-PANEL-EVIDENCE-LEGACY.json",
+      "panel_result_sha256": "b78704ad042dfca6d2bac5bfa010eca7dcbe4770896310b77f98d352a59ced26",
+      "public_use": false,
+      "rationale": "The exact receipts bind the immutable legacy inventory, mutation/negative-control corpus, active-import refusal, and byte-stable author-side reproduction while keeping the non-author independence gate explicit. The admitted evidence is process/reproducibility evidence only; legacy/TSC material gains no active scientific ownership.",
+      "reviewer_assignment_id": "A-PR278-PANEL-EVIDENCE-LEGACY",
+      "reviewer_principal": "reviewer:A-PR278-PANEL-EVIDENCE-LEGACY",
+      "source_ledger_sha256": "9cce5fd765ad7686ccbf84667829618053eb1c40c3f74a46c3e3957c90997b6f",
+      "source_row_sha256": "40ee9515fb2b431ada3f36ea246f63090cda9c2d87d89c688f3561191f387198",
+      "terminal_receipt_refs": [
+        "docs/PR_DELTAS/pr-209.md",
+        "docs/PR_DELTAS/pr-214.md",
+        "docs/PR_DELTAS/pr-227.md"
+      ],
+      "unit_id": "P-LEGACY",
+      "unit_kind": "FAMILY",
+      "verdict": "GRANT"
+    },
+    {
+      "author_principals": [
+        "owner:COMMON",
+        "program:BASS_HTT_program"
+      ],
+      "capability_effect": "NONE_PENDING_PR157",
+      "claim_ceiling": "diagnostic_only",
+      "counterevidence": [
+        "docs/generated/claim_adjudication/literature_verdicts.json#T-BIANCHI corrected_unlock_verdict=GENUINELY_INCOMPLETE and verdict_survives=false",
+        "docs/PR_DELTAS/pr-214.md documents a mutation detector, not a native morphology atlas or family-identification gate"
+      ],
+      "dissent": "The frozen literature verdict explicitly refutes the promotable unlock string and corrects it to GENUINELY_INCOMPLETE because the marginal, tier-K QA lookup does not clear the stated significance gate. PR-214 confirms only that a VI0/VIIh class-swap mutation is detected; it does not resolve that conflict.",
+      "evidence_bindings": {
+        "docs/PR_DELTAS/pr-214.md": "2955fc11f6a861b2cb5eb025ed09b9c95bae69b702d4d0ed59e68f4947667250",
+        "docs/codex_handoff/pr_backlog.yaml": "9d017d3e10c553d3ba112b490385f4a85b63c20267abe5190b68ab5d955c2709",
+        "docs/codex_handoff/pr_status.yaml": "fa8dee2949e786cb3e1dfac4d09ed74a4a75acd14300e5ed4293cc9710c5b18c",
+        "docs/generated/claim_adjudication/adjudication_ledger.json": "9cce5fd765ad7686ccbf84667829618053eb1c40c3f74a46c3e3957c90997b6f",
+        "docs/generated/claim_adjudication/literature_verdicts.json": "d8412195085042bb437f8419362ea6b5020c0456764fa1376936d7d5121f9593"
+      },
+      "evidence_fingerprint": "e52817e39dd3e13b53b44ee5b2215bafac22e2daa1441af462db689e178bd04f",
+      "evidence_refs": [
+        "docs/PR_DELTAS/pr-214.md",
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml",
+        "docs/generated/claim_adjudication/adjudication_ledger.json",
+        "docs/generated/claim_adjudication/literature_verdicts.json"
+      ],
+      "panel_result_path": ".agent-harness/runs/pr278-family-panel-r1-20260804/results/A-PR278-PANEL-EVIDENCE-LEGACY.json",
+      "panel_result_sha256": "b78704ad042dfca6d2bac5bfa010eca7dcbe4770896310b77f98d352a59ced26",
+      "public_use": false,
+      "rationale": "Evidence is present and hash-bound, but the frozen author inputs disagree on whether this marginal QA family is eligible for single-independence promotion. Conflict resolution is fail-closed HOLD, with no Bianchi family-identification implication.",
+      "reviewer_assignment_id": "A-PR278-PANEL-EVIDENCE-LEGACY",
+      "reviewer_principal": "reviewer:A-PR278-PANEL-EVIDENCE-LEGACY",
+      "source_ledger_sha256": "9cce5fd765ad7686ccbf84667829618053eb1c40c3f74a46c3e3957c90997b6f",
+      "source_row_sha256": "097e72ad22930e301e1217a63d4c8f6d3d81e634998b29447019b1b724ae0c9c",
+      "terminal_receipt_refs": [
+        "docs/PR_DELTAS/pr-214.md"
+      ],
+      "unit_id": "T-BIANCHI",
+      "unit_kind": "FAMILY",
+      "verdict": "HOLD"
+    },
+    {
+      "author_principals": [
+        "owner:COMMON",
+        "program:BASS_HTT_program"
+      ],
+      "capability_effect": "NONE_PENDING_PR157",
+      "claim_ceiling": "diagnostic_only",
+      "counterevidence": [
+        "docs/generated/claim_adjudication/literature_verdicts.json#T-BRIDGE corrected_unlock_verdict=GENUINELY_INCOMPLETE and verdict_survives=false",
+        "docs/PR_DELTAS/pr-222.md limits the receipt to a declared multi-window stochastic forward operator and says a single amplitude cannot point-identify 3-D tilt"
+      ],
+      "dissent": "The frozen literature verdict explicitly refutes the promotable unlock string and corrects it to GENUINELY_INCOMPLETE because the marginal synthetic rank exercise does not clear the stated significance gate. PR-222 validates rank-1 versus rank-3 toy mechanics but supplies neither release-matched CF4 windows nor a Bianchi-tilt/native transfer.",
+      "evidence_bindings": {
+        "docs/PR_DELTAS/pr-222.md": "392b01380e26e63fc09f15c5713749e6705ce654bcfd55e334b8fb9b1b4752c8",
+        "docs/codex_handoff/pr_backlog.yaml": "9d017d3e10c553d3ba112b490385f4a85b63c20267abe5190b68ab5d955c2709",
+        "docs/codex_handoff/pr_status.yaml": "fa8dee2949e786cb3e1dfac4d09ed74a4a75acd14300e5ed4293cc9710c5b18c",
+        "docs/generated/claim_adjudication/adjudication_ledger.json": "9cce5fd765ad7686ccbf84667829618053eb1c40c3f74a46c3e3957c90997b6f",
+        "docs/generated/claim_adjudication/literature_verdicts.json": "d8412195085042bb437f8419362ea6b5020c0456764fa1376936d7d5121f9593"
+      },
+      "evidence_fingerprint": "071b9a0107a4707063e140bea9fa508a83424fec9dd9fbdfd7a035acbe3ba901",
+      "evidence_refs": [
+        "docs/PR_DELTAS/pr-222.md",
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml",
+        "docs/generated/claim_adjudication/adjudication_ledger.json",
+        "docs/generated/claim_adjudication/literature_verdicts.json"
+      ],
+      "panel_result_path": ".agent-harness/runs/pr278-family-panel-r1-20260804/results/A-PR278-PANEL-EVIDENCE-LEGACY.json",
+      "panel_result_sha256": "b78704ad042dfca6d2bac5bfa010eca7dcbe4770896310b77f98d352a59ced26",
+      "public_use": false,
+      "rationale": "Evidence is present and hash-bound, but the frozen author inputs disagree on whether this marginal synthetic bridge is eligible for single-independence promotion. Conflict resolution is fail-closed HOLD; scalar/window rank is not geometry and external transfer is not native.",
+      "reviewer_assignment_id": "A-PR278-PANEL-EVIDENCE-LEGACY",
+      "reviewer_principal": "reviewer:A-PR278-PANEL-EVIDENCE-LEGACY",
+      "source_ledger_sha256": "9cce5fd765ad7686ccbf84667829618053eb1c40c3f74a46c3e3957c90997b6f",
+      "source_row_sha256": "be52b014994ab8215495aea8cd1595402ce6952ff43589870ea88c57f210784e",
+      "terminal_receipt_refs": [
+        "docs/PR_DELTAS/pr-222.md"
+      ],
+      "unit_id": "T-BRIDGE",
+      "unit_kind": "FAMILY",
+      "verdict": "HOLD"
+    },
+    {
+      "author_principals": [
+        "owner:COMMON",
+        "program:BASS_HTT_program"
+      ],
+      "capability_effect": "NONE_PENDING_PR157",
+      "claim_ceiling": "diagnostic_only",
+      "counterevidence": [
+        "docs/generated/claim_adjudication/literature_verdicts.json#T-EGS records the prior Hsu-for-Lim miscitation; the exact ledger row records the corrected Nilsson-Uggla-Wainwright-Lim attribution"
+      ],
+      "dissent": "",
+      "evidence_bindings": {
+        "docs/PR_DELTAS/pr-126.md": "1bfe0008a3d115aca7f1bf0fa7916f4b56e0f1066239ac7e6406a0e7051e7940",
+        "docs/codex_handoff/pr_backlog.yaml": "9d017d3e10c553d3ba112b490385f4a85b63c20267abe5190b68ab5d955c2709",
+        "docs/codex_handoff/pr_status.yaml": "fa8dee2949e786cb3e1dfac4d09ed74a4a75acd14300e5ed4293cc9710c5b18c",
+        "docs/generated/claim_adjudication/adjudication_ledger.json": "9cce5fd765ad7686ccbf84667829618053eb1c40c3f74a46c3e3957c90997b6f",
+        "docs/generated/claim_adjudication/literature_verdicts.json": "d8412195085042bb437f8419362ea6b5020c0456764fa1376936d7d5121f9593"
+      },
+      "evidence_fingerprint": "a9e45ab53b45e81af25914359a9cb8249f75e1f9c4bfcdef811a4563eea68b36",
+      "evidence_refs": [
+        "docs/PR_DELTAS/pr-126.md",
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml",
+        "docs/generated/claim_adjudication/adjudication_ledger.json",
+        "docs/generated/claim_adjudication/literature_verdicts.json"
+      ],
+      "panel_result_path": ".agent-harness/runs/pr278-family-panel-r1-20260804/results/A-PR278-PANEL-EVIDENCE-LEGACY.json",
+      "panel_result_sha256": "b78704ad042dfca6d2bac5bfa010eca7dcbe4770896310b77f98d352a59ced26",
+      "public_use": false,
+      "rationale": "The exact receipt supports only the sealed one-way conditional comparator statement and explicit converse counterexamples; it also keeps almost-EGS specified-only and refuses any FLRW certificate. The current ledger anchor records the corrected Lim attribution, so the earlier frozen miscitation finding is resolved on the reviewed row.",
+      "reviewer_assignment_id": "A-PR278-PANEL-EVIDENCE-LEGACY",
+      "reviewer_principal": "reviewer:A-PR278-PANEL-EVIDENCE-LEGACY",
+      "source_ledger_sha256": "9cce5fd765ad7686ccbf84667829618053eb1c40c3f74a46c3e3957c90997b6f",
+      "source_row_sha256": "4e76a0859101998c93b7c3730edcab664b7af9795aebcf19fb41d6df6fa214bd",
+      "terminal_receipt_refs": [
+        "docs/PR_DELTAS/pr-126.md"
+      ],
+      "unit_id": "T-EGS",
+      "unit_kind": "FAMILY",
+      "verdict": "GRANT"
+    },
+    {
+      "author_principals": [
+        "owner:COMMON",
+        "program:BASS_HTT_program"
+      ],
+      "capability_effect": "NONE_PENDING_PR157",
+      "claim_ceiling": "diagnostic_only",
+      "counterevidence": [],
+      "dissent": "",
+      "evidence_bindings": {
+        "docs/PR_DELTAS/pr-125.md": "62077ea32d1b694c17da0c491505ef33f99a555e08557fb063ebac17d573a649",
+        "docs/PR_DELTAS/pr-187.md": "5d6aba83b351a49a5461fab4f500e1abbf2deba4077d47a4ed95276050f4c450",
+        "docs/PR_DELTAS/pr-212.md": "bc2f8986512d810965bf3640fbca3d4bfc40a19964a312d6cdb2e82b556ff6f8",
+        "docs/codex_handoff/pr_backlog.yaml": "9d017d3e10c553d3ba112b490385f4a85b63c20267abe5190b68ab5d955c2709",
+        "docs/codex_handoff/pr_status.yaml": "fa8dee2949e786cb3e1dfac4d09ed74a4a75acd14300e5ed4293cc9710c5b18c",
+        "docs/generated/claim_adjudication/adjudication_ledger.json": "9cce5fd765ad7686ccbf84667829618053eb1c40c3f74a46c3e3957c90997b6f",
+        "docs/generated/claim_adjudication/literature_verdicts.json": "d8412195085042bb437f8419362ea6b5020c0456764fa1376936d7d5121f9593"
+      },
+      "evidence_fingerprint": "8b183dab5979263d64fd537e3bcae3ac4fbb9c0fba731a715a57bab8b839ad3f",
+      "evidence_refs": [
+        "docs/PR_DELTAS/pr-125.md",
+        "docs/PR_DELTAS/pr-187.md",
+        "docs/PR_DELTAS/pr-212.md",
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml",
+        "docs/generated/claim_adjudication/adjudication_ledger.json",
+        "docs/generated/claim_adjudication/literature_verdicts.json"
+      ],
+      "panel_result_path": ".agent-harness/runs/pr278-family-panel-r1-20260804/results/A-PR278-PANEL-EVIDENCE-LEGACY.json",
+      "panel_result_sha256": "b78704ad042dfca6d2bac5bfa010eca7dcbe4770896310b77f98d352a59ced26",
+      "public_use": false,
+      "rationale": "The exact receipts jointly support fail-closed frame/domain premises, frame-indexed signed-carrier and perturbative-order guards, and a Frobenius/rest-space-curvature refusal. They explicitly regenerate no comparator number and assert no physical, geometric, observational, native-transfer, or family-identification result.",
+      "reviewer_assignment_id": "A-PR278-PANEL-EVIDENCE-LEGACY",
+      "reviewer_principal": "reviewer:A-PR278-PANEL-EVIDENCE-LEGACY",
+      "source_ledger_sha256": "9cce5fd765ad7686ccbf84667829618053eb1c40c3f74a46c3e3957c90997b6f",
+      "source_row_sha256": "aa276c68b1a482c60fe7f7dcc5346631efdcf6185ad6989c29c5c4e94d24b7f3",
+      "terminal_receipt_refs": [
+        "docs/PR_DELTAS/pr-125.md",
+        "docs/PR_DELTAS/pr-187.md",
+        "docs/PR_DELTAS/pr-212.md"
+      ],
+      "unit_id": "T-FRAME",
+      "unit_kind": "FAMILY",
+      "verdict": "GRANT"
+    },
+    {
+      "author_principals": [
+        "owner:COMMON",
+        "owner:HTT",
+        "program:BASS_HTT_program"
+      ],
+      "capability_effect": "NONE_PENDING_PR157",
+      "claim_ceiling": "diagnostic_only",
+      "counterevidence": [
+        "literature_verdicts.json#T-JOINT: verdict_survives=false and corrected_unlock_verdict=GENUINELY_INCOMPLETE",
+        "pr-189.md: semialgebraic and Einstein-constraint branches beyond the polyhedral fixture remain deferred"
+      ],
+      "dissent": "The bound literature verdict explicitly rejects PROMOTABLE_ON_SINGLE_INDEPENDENCE_ADJUDICATION and corrects the lane to GENUINELY_INCOMPLETE because significance=marginal; the ledger and source manifest have not incorporated that correction.",
+      "evidence_fingerprint": "9e6c70dccc454e142a656dbe3657fdf7ccd3e70e49826986ce04efeba7dd4acf",
+      "evidence_refs": [
+        "docs/generated/claim_adjudication/adjudication_ledger.json#family=T-JOINT",
+        "docs/generated/claim_adjudication/literature_verdicts.json#T-JOINT",
+        "docs/PR_DELTAS/pr-189.md",
+        "docs/PR_DELTAS/pr-215.md"
+      ],
+      "panel_result_path": ".agent-harness/runs/pr278-family-panel-r1-20260804/results/A-PR278-PANEL-THEORY.json",
+      "panel_result_sha256": "d34e2dd6490097332085927252829da482d3d9dd772c1304f55bde3670729472",
+      "public_use": false,
+      "rationale": "PR-189 and PR-215 support the exact polyhedral and comparator-carrier joint-versus-product results, but PR-189 leaves semialgebraic and Einstein-constraint branches deferred and the bound verdict_survives=false record identifies a significance-axis contradiction. Independence review alone cannot cure the inconsistent source row, so this lane is held from later aggregation.",
+      "receipt_refs_examined": [
+        "docs/PR_DELTAS/pr-189.md",
+        "docs/PR_DELTAS/pr-215.md"
+      ],
+      "reviewer_assignment_id": "A-PR278-PANEL-THEORY",
+      "reviewer_principal": "agent:A-PR278-PANEL-THEORY",
+      "source_ledger_sha256": "9cce5fd765ad7686ccbf84667829618053eb1c40c3f74a46c3e3957c90997b6f",
+      "source_row_sha256": "b91b5f341a51861529b8dc691bce6505ba508ef9f1f1d5a419604afa6d74871c",
+      "terminal_receipt_refs": [
+        "docs/PR_DELTAS/pr-189.md",
+        "docs/PR_DELTAS/pr-215.md"
+      ],
+      "unit_id": "T-JOINT",
+      "unit_kind": "FAMILY",
+      "verdict": "HOLD"
+    },
+    {
+      "author_principals": [
+        "owner:COMMON",
+        "program:BASS_HTT_program"
+      ],
+      "capability_effect": "NONE_PENDING_PR157",
+      "claim_ceiling": "diagnostic_only",
+      "counterevidence": [],
+      "dissent": "",
+      "evidence_fingerprint": "5f0bfad2e7bdae05603d4f4efd2ec366a34c425a2f592a860dc3f7d05474cb21",
+      "evidence_refs": [
+        "docs/generated/claim_adjudication/adjudication_ledger.json#family=T-MES",
+        "docs/generated/claim_adjudication/literature_verdicts.json#T-MES",
+        "docs/PR_DELTAS/pr-217.md"
+      ],
+      "panel_result_path": ".agent-harness/runs/pr278-family-panel-r1-20260804/results/A-PR278-PANEL-THEORY.json",
+      "panel_result_sha256": "d34e2dd6490097332085927252829da482d3d9dd772c1304f55bde3670729472",
+      "public_use": false,
+      "rationale": "PR-217 preserves the exact frozen geodesic ceiling, labels the epsilon1 attribution branch as conditional, excludes the full-dipole endpoint under the hierarchy threshold, and quarantines the inaccessible non-geodesic coefficients. This matches the cited-correct, complete, verified, independence-only ledger row at diagnostic scope.",
+      "receipt_refs_examined": [
+        "docs/PR_DELTAS/pr-217.md"
+      ],
+      "reviewer_assignment_id": "A-PR278-PANEL-THEORY",
+      "reviewer_principal": "agent:A-PR278-PANEL-THEORY",
+      "source_ledger_sha256": "9cce5fd765ad7686ccbf84667829618053eb1c40c3f74a46c3e3957c90997b6f",
+      "source_row_sha256": "66469cc70cd72aabfc4af3552574a85b1f9a03214dd96eb35eec96fbeaff2ae9",
+      "terminal_receipt_refs": [
+        "docs/PR_DELTAS/pr-217.md"
+      ],
+      "unit_id": "T-MES",
+      "unit_kind": "FAMILY",
+      "verdict": "GRANT"
+    },
+    {
+      "author_principals": [
+        "owner:COMMON",
+        "program:BASS_HTT_program"
+      ],
+      "capability_effect": "NONE_PENDING_PR157",
+      "claim_ceiling": "diagnostic_only",
+      "counterevidence": [],
+      "dissent": "",
+      "evidence_fingerprint": "a80361212dabe478f88309dcc99d88ab139ad24012ee7da5e675006605f77c4b",
+      "evidence_refs": [
+        "docs/generated/claim_adjudication/adjudication_ledger.json#family=T-MULTIFLUID",
+        "docs/generated/claim_adjudication/literature_verdicts.json#T-MULTIFLUID",
+        "docs/PR_DELTAS/pr-223.md"
+      ],
+      "panel_result_path": ".agent-harness/runs/pr278-family-panel-r1-20260804/results/A-PR278-PANEL-THEORY.json",
+      "panel_result_sha256": "d34e2dd6490097332085927252829da482d3d9dd772c1304f55bde3670729472",
+      "public_use": false,
+      "rationale": "PR-223 supplies the exact antipodal-stream counterexample and five-axis CAS receipt showing that zero net flux does not imply zero anisotropic stress. The receipt supports only the textbook moment non-implication and no family, geometry, posterior, or observational inference.",
+      "receipt_refs_examined": [
+        "docs/PR_DELTAS/pr-223.md"
+      ],
+      "reviewer_assignment_id": "A-PR278-PANEL-THEORY",
+      "reviewer_principal": "agent:A-PR278-PANEL-THEORY",
+      "source_ledger_sha256": "9cce5fd765ad7686ccbf84667829618053eb1c40c3f74a46c3e3957c90997b6f",
+      "source_row_sha256": "779b09f68b297add8be1bb2fc839a3a0227b271e9b3e777d94ee3af5270a391b",
+      "terminal_receipt_refs": [
+        "docs/PR_DELTAS/pr-223.md"
+      ],
+      "unit_id": "T-MULTIFLUID",
+      "unit_kind": "FAMILY",
+      "verdict": "GRANT"
+    },
+    {
+      "author_principals": [
+        "owner:COMMON",
+        "program:BASS_HTT_program"
+      ],
+      "capability_effect": "NONE_PENDING_PR157",
+      "claim_ceiling": "diagnostic_only",
+      "counterevidence": [],
+      "dissent": "",
+      "evidence_fingerprint": "a2400e6cb02539c5a1c37be27d6e1a3eaab713230d040530df615b18375baf91",
+      "evidence_refs": [
+        "docs/generated/claim_adjudication/adjudication_ledger.json#family=T-PARITY",
+        "docs/generated/claim_adjudication/literature_verdicts.json#T-PARITY",
+        "docs/PR_DELTAS/pr-182.md"
+      ],
+      "panel_result_path": ".agent-harness/runs/pr278-family-panel-r1-20260804/results/A-PR278-PANEL-THEORY.json",
+      "panel_result_sha256": "d34e2dd6490097332085927252829da482d3d9dd772c1304f55bde3670729472",
+      "public_use": false,
+      "rationale": "PR-182's superseding v2 contract verifies the four scoped parity identities and records a negative result for the internal EB/TB reference relation. Its erratum narrows the B=0 premise, and its firewall explicitly forbids present-data handedness or family identification, matching diagnostic-only consumption.",
+      "receipt_refs_examined": [
+        "docs/PR_DELTAS/pr-182.md"
+      ],
+      "reviewer_assignment_id": "A-PR278-PANEL-THEORY",
+      "reviewer_principal": "agent:A-PR278-PANEL-THEORY",
+      "source_ledger_sha256": "9cce5fd765ad7686ccbf84667829618053eb1c40c3f74a46c3e3957c90997b6f",
+      "source_row_sha256": "5c84c4cf6932db2b81272feaa72d12e875917f420c6c67c20760d92e2ea57014",
+      "terminal_receipt_refs": [
+        "docs/PR_DELTAS/pr-182.md"
+      ],
+      "unit_id": "T-PARITY",
+      "unit_kind": "FAMILY",
+      "verdict": "GRANT"
+    },
+    {
+      "author_principals": [
+        "owner:COMMON",
+        "program:BASS_HTT_program"
+      ],
+      "capability_effect": "NONE_PENDING_PR157",
+      "claim_ceiling": "diagnostic_only",
+      "counterevidence": [],
+      "dissent": "",
+      "evidence_fingerprint": "03a0f668ba8edc70d03cf7f3815a391a3103112c2094c8b3611356016e0464b0",
+      "evidence_refs": [
+        "docs/generated/claim_adjudication/adjudication_ledger.json#family=T-RANK2",
+        "docs/generated/claim_adjudication/literature_verdicts.json#T-RANK2",
+        "docs/PR_DELTAS/pr-127.md",
+        "docs/PR_DELTAS/pr-219.md"
+      ],
+      "panel_result_path": ".agent-harness/runs/pr278-family-panel-r1-20260804/results/A-PR278-PANEL-THEORY.json",
+      "panel_result_sha256": "d34e2dd6490097332085927252829da482d3d9dd772c1304f55bde3670729472",
+      "public_use": false,
+      "rationale": "PR-127 verifies rank two and the W2/DeltaOmega_k kernel only for the declared response map; PR-219 preserves the scalar quotient and requires an explicit added observable to reopen merged classes. Together they support non-identification diagnostics, never physical family identification or a no-go theorem.",
+      "receipt_refs_examined": [
+        "docs/PR_DELTAS/pr-127.md",
+        "docs/PR_DELTAS/pr-219.md"
+      ],
+      "reviewer_assignment_id": "A-PR278-PANEL-THEORY",
+      "reviewer_principal": "agent:A-PR278-PANEL-THEORY",
+      "source_ledger_sha256": "9cce5fd765ad7686ccbf84667829618053eb1c40c3f74a46c3e3957c90997b6f",
+      "source_row_sha256": "99e847a306a4aa53f7b66ee875d9d8814de42827f45e308f5dc32a1d04f3808a",
+      "terminal_receipt_refs": [
+        "docs/PR_DELTAS/pr-127.md",
+        "docs/PR_DELTAS/pr-219.md"
+      ],
+      "unit_id": "T-RANK2",
+      "unit_kind": "FAMILY",
+      "verdict": "GRANT"
+    },
+    {
+      "author_principals": [
+        "owner:COMMON",
+        "program:BASS_HTT_program"
+      ],
+      "capability_effect": "NONE_PENDING_PR157",
+      "claim_ceiling": "diagnostic_only",
+      "counterevidence": [],
+      "dissent": "",
+      "evidence_fingerprint": "1ace4bb8202afdcb294bd13c061a2a548dcac90412ab99eb0c73a286c277e73f",
+      "evidence_refs": [
+        "docs/generated/claim_adjudication/adjudication_ledger.json#family=T-W2",
+        "docs/generated/claim_adjudication/literature_verdicts.json#T-W2",
+        "docs/PR_DELTAS/pr-186.md",
+        "docs/PR_DELTAS/pr-211.md"
+      ],
+      "panel_result_path": ".agent-harness/runs/pr278-family-panel-r1-20260804/results/A-PR278-PANEL-THEORY.json",
+      "panel_result_sha256": "d34e2dd6490097332085927252829da482d3d9dd772c1304f55bde3670729472",
+      "public_use": false,
+      "rationale": "PR-186 repairs the factor-three display defect and records a same-contract five-axis pass for the standard W2 normalization; PR-211 preserves the frozen anchor byte-identically and cross-checks the tensor/vector identity. The lane is a convention-consistency diagnostic only.",
+      "receipt_refs_examined": [
+        "docs/PR_DELTAS/pr-186.md",
+        "docs/PR_DELTAS/pr-211.md"
+      ],
+      "reviewer_assignment_id": "A-PR278-PANEL-THEORY",
+      "reviewer_principal": "agent:A-PR278-PANEL-THEORY",
+      "source_ledger_sha256": "9cce5fd765ad7686ccbf84667829618053eb1c40c3f74a46c3e3957c90997b6f",
+      "source_row_sha256": "05f9327c0b61da1ca9d89a5283979fa47c522e0709612ce89b01810dfeabc6b4",
+      "terminal_receipt_refs": [
+        "docs/PR_DELTAS/pr-186.md",
+        "docs/PR_DELTAS/pr-211.md"
+      ],
+      "unit_id": "T-W2",
+      "unit_kind": "FAMILY",
+      "verdict": "GRANT"
+    },
+    {
+      "author_principals": [
+        "owner:COMMON",
+        "program:BASS_HTT_program"
+      ],
+      "capability_effect": "NONE_PENDING_PR157",
+      "claim_ceiling": "diagnostic_only",
+      "counterevidence": [],
+      "dissent": "",
+      "evidence_fingerprint": "244b9ec66dc12e4383f012074692d07aa7a081689692422c1461a02563c38231",
+      "evidence_refs": [
+        "docs/generated/claim_adjudication/adjudication_ledger.json#family=T-XC",
+        "docs/generated/claim_adjudication/literature_verdicts.json#T-XC",
+        "docs/PR_DELTAS/pr-126.md",
+        "docs/PR_DELTAS/pr-210.md",
+        "docs/PR_DELTAS/pr-215.md"
+      ],
+      "panel_result_path": ".agent-harness/runs/pr278-family-panel-r1-20260804/results/A-PR278-PANEL-THEORY.json",
+      "panel_result_sha256": "d34e2dd6490097332085927252829da482d3d9dd772c1304f55bde3670729472",
+      "public_use": false,
+      "rationale": "PR-126 verifies the one-way comparator identity and explicit cancellation counterexamples, PR-210 enforces frame/epoch binding and the signed curvature carrier, and PR-215 supplies the exact coupled comparator interval. These receipts support the scalar diagnostic and its nonconverse, not FLRW certification or family identification.",
+      "receipt_refs_examined": [
+        "docs/PR_DELTAS/pr-126.md",
+        "docs/PR_DELTAS/pr-210.md",
+        "docs/PR_DELTAS/pr-215.md"
+      ],
+      "reviewer_assignment_id": "A-PR278-PANEL-THEORY",
+      "reviewer_principal": "agent:A-PR278-PANEL-THEORY",
+      "source_ledger_sha256": "9cce5fd765ad7686ccbf84667829618053eb1c40c3f74a46c3e3957c90997b6f",
+      "source_row_sha256": "2ef446ef5f87b91bc52ebe4a86c2f0eaeec5cc195457f413f5c2048901f3baa4",
+      "terminal_receipt_refs": [
+        "docs/PR_DELTAS/pr-126.md",
+        "docs/PR_DELTAS/pr-210.md",
+        "docs/PR_DELTAS/pr-215.md"
+      ],
+      "unit_id": "T-XC",
+      "unit_kind": "FAMILY",
+      "verdict": "GRANT"
+    }
+  ],
+  "pr_id": "PR-278",
+  "public_use": false,
+  "receipt_content_sha256": "10eb146b9b6be1391322c47f598941fe83f5777d1293812090e4505f8f145dd6",
+  "result_receipts": [
+    {
+      "assignment_id": "A-PR278-PANEL-DATA-METHOD-R2",
+      "lane_count": 6,
+      "path": ".agent-harness/runs/pr278-principal-remediation-r1-20260804/results/A-PR278-PANEL-DATA-METHOD-R2.json",
+      "run_id": "pr278-principal-remediation-r1-20260804",
+      "sha256": "13ef70783b74f4fe3520d604be234ca62e1ac05c2d02651015337a889c655a49",
+      "status": "inconclusive"
+    },
+    {
+      "assignment_id": "A-PR278-PANEL-EVIDENCE-LEGACY",
+      "lane_count": 6,
+      "path": ".agent-harness/runs/pr278-family-panel-r1-20260804/results/A-PR278-PANEL-EVIDENCE-LEGACY.json",
+      "run_id": "pr278-family-panel-r1-20260804",
+      "sha256": "b78704ad042dfca6d2bac5bfa010eca7dcbe4770896310b77f98d352a59ced26",
+      "status": "inconclusive"
+    },
+    {
+      "assignment_id": "A-PR278-PANEL-THEORY",
+      "lane_count": 7,
+      "path": ".agent-harness/runs/pr278-family-panel-r1-20260804/results/A-PR278-PANEL-THEORY.json",
+      "run_id": "pr278-family-panel-r1-20260804",
+      "sha256": "d34e2dd6490097332085927252829da482d3d9dd772c1304f55bde3670729472",
+      "status": "fail"
+    }
+  ],
+  "run_receipts": [
+    {
+      "assignment_count": 3,
+      "merged_results": {
+        "path": ".agent-harness/runs/pr278-family-panel-r1-20260804/MERGED_RESULTS.json",
+        "sha256": "98fad3229b2dff9885fd09abc5021d23717cc4e1ab6ca2e81508e6fab46c9b06"
+      },
+      "run_id": "pr278-family-panel-r1-20260804",
+      "run_summary": {
+        "path": ".agent-harness/runs/pr278-family-panel-r1-20260804/RUN_SUMMARY.json",
+        "sha256": "47122e8942ab3a24c521a53dd71e03223b3d9bc93ef79ff3eff716ec582d8c27"
+      }
+    },
+    {
+      "assignment_count": 1,
+      "merged_results": {
+        "path": ".agent-harness/runs/pr278-principal-remediation-r1-20260804/MERGED_RESULTS.json",
+        "sha256": "72e772fb9140c8db9c05eb6af1d3764ee57ab1fba9a727332186f5ca58928ca7"
+      },
+      "run_id": "pr278-principal-remediation-r1-20260804",
+      "run_summary": {
+        "path": ".agent-harness/runs/pr278-principal-remediation-r1-20260804/RUN_SUMMARY.json",
+        "sha256": "6f197b9801a8375140b3ccb88af9be4a5f115e26ef0cf2f6c8e1b241b76c2e9d"
+      }
+    }
+  ],
+  "schema": "htt.tier_a_adjudication.panel_receipt.v2",
+  "source_manifest": {
+    "manifest_content_sha256": "8db86f88a29ff31a8d75697e62f03582cc805453d2519c262780833d24830ecf",
+    "path": "docs/research_program/post_pr275/tier_a_adjudication/source_manifest.json",
+    "sha256": "0b7eb908da0e92e282ae2470e50ae584cd5f8c00c82c5b1f52f1664145e68a13",
+    "snapshot_commit": "a7800430660c5a4bd532d8655fc63df03b21496e"
+  },
+  "summary": {
+    "DOWNGRADE": 1,
+    "GRANT": 14,
+    "HOLD": 3,
+    "INCONCLUSIVE": 1,
+    "cf4_p0_rescue_count": 0,
+    "conflicts": 0,
+    "reviewed_families": 19
+  },
+  "superseded_result_receipts": [
+    {
+      "assignment_id": "A-PR278-PANEL-DATA-METHOD",
+      "authoritative": false,
+      "path": ".agent-harness/runs/pr278-family-panel-r1-20260804/results/A-PR278-PANEL-DATA-METHOD.json",
+      "reason": "MISSING_REVIEWER_AND_AUTHOR_PRINCIPAL_BINDING",
+      "run_id": "pr278-family-panel-r1-20260804",
+      "sha256": "0f5bc92525f82ad171f681cd93c3f412484c9c6bf0ecb654a29c45e3e15ecfc6"
+    }
+  ]
+}
