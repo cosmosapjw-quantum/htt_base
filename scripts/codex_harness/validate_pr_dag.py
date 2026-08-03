@@ -452,6 +452,182 @@ VECTOR_TENSOR_REQUIRED_FIELDS = ADVOCATE_REQUIRED_FIELDS | {
     "solver_gate_required",
 }
 
+# --- Post-275 re-adjudication and reexecution (PR-276..294, Waves 67..74) --
+# PR-276 consumes the terminal PR-190 refutation without reopening either
+# historical requires-success edge.  The remaining cards are registered as one
+# prospective programme; data execution still needs its lane-specific human
+# authorization receipt.
+POST275_CARD_CONTRACTS = {
+    "PR-276": {
+        "owner": "COMMON",
+        "dependencies": [("PR-190", "requires_terminal_receipt")],
+        "authorization": "EXPLICIT_USER_AUTHORIZED",
+    },
+    "PR-277": {
+        "owner": "COMMON",
+        "dependencies": [("PR-276", "requires_success")],
+        "authorization": "EXPLICIT_USER_AUTHORIZED",
+    },
+    "PR-278": {
+        "owner": "COMMON",
+        "dependencies": [("PR-277", "requires_success")],
+        "authorization": "EXPLICIT_USER_AUTHORIZED",
+    },
+    "PR-279": {
+        "owner": "COMMON",
+        "dependencies": [("PR-278", "requires_success")],
+        "authorization": "EXPLICIT_USER_AUTHORIZED",
+    },
+    "PR-280": {
+        "owner": "COMMON",
+        "dependencies": [("PR-279", "requires_success")],
+        "authorization": "EXPLICIT_USER_AUTHORIZED",
+    },
+    "PR-281": {
+        "owner": "COMMON",
+        "dependencies": [("PR-280", "requires_success")],
+        "authorization": "EXPLICIT_USER_AUTHORIZED",
+    },
+    "PR-282": {
+        "owner": "OBSSTAT",
+        "dependencies": [("PR-280", "requires_success")],
+        "authorization": "EXPLICIT_USER_AUTHORIZED",
+    },
+    "PR-283": {
+        "owner": "HTT",
+        "dependencies": [("PR-280", "requires_success")],
+        "authorization": "EXPLICIT_USER_AUTHORIZED",
+    },
+    "PR-284": {
+        "owner": "HTT",
+        "dependencies": [("PR-280", "requires_success")],
+        "authorization": "EXPLICIT_USER_AUTHORIZED",
+    },
+    "PR-285": {
+        "owner": "COMMON",
+        "dependencies": [("PR-280", "requires_success")],
+        "authorization": "EXPLICIT_USER_AUTHORIZED",
+    },
+    "PR-286": {
+        "owner": "HTT",
+        "dependencies": [("PR-280", "requires_success")],
+        "authorization": "EXPLICIT_USER_AUTHORIZED",
+    },
+    "PR-287": {
+        "owner": "HTT",
+        "dependencies": [
+            ("PR-281", "requires_success"),
+            ("PR-282", "requires_success"),
+            ("PR-283", "requires_success"),
+            ("PR-284", "requires_success"),
+            ("PR-285", "requires_success"),
+            ("PR-286", "requires_success"),
+        ],
+        "authorization": "EXPLICIT_USER_AUTHORIZED",
+    },
+    "PR-288": {
+        "owner": "HTT",
+        "dependencies": [("PR-280", "requires_success")],
+        "authorization": "EXPLICIT_USER_AUTHORIZED",
+    },
+    "PR-289": {
+        "owner": "COMMON",
+        "dependencies": [("PR-280", "requires_success")],
+        "authorization": "EXPLICIT_USER_AUTHORIZED",
+    },
+    "PR-290": {
+        "owner": "HTT",
+        "dependencies": [
+            ("PR-202", "requires_success"),
+            ("PR-287", "requires_success"),
+            ("PR-288", "requires_success"),
+            ("PR-289", "requires_success"),
+        ],
+        "authorization": "HUMAN_GATE_REQUIRED",
+    },
+    "PR-291": {
+        "owner": "HTT",
+        "dependencies": [
+            ("PR-201", "requires_success"),
+            ("PR-287", "requires_success"),
+            ("PR-289", "requires_success"),
+        ],
+        "authorization": "HUMAN_GATE_REQUIRED",
+    },
+    "PR-292": {
+        "owner": "OBSSTAT",
+        "dependencies": [
+            ("PR-287", "requires_success"),
+            ("PR-289", "requires_success"),
+        ],
+        "authorization": "HUMAN_GATE_REQUIRED",
+    },
+    "PR-293": {
+        "owner": "HTT",
+        "dependencies": [
+            ("PR-287", "requires_success"),
+            ("PR-288", "requires_success"),
+            ("PR-289", "requires_success"),
+        ],
+        "authorization": "HUMAN_GATE_REQUIRED",
+    },
+    "PR-294": {
+        "owner": "HTT",
+        "dependencies": [
+            ("PR-155", "requires_terminal_receipt"),
+            ("PR-156", "requires_terminal_receipt"),
+            ("PR-181", "requires_terminal_receipt"),
+            ("PR-205", "requires_terminal_receipt"),
+            ("PR-206", "requires_terminal_receipt"),
+            ("PR-158", "requires_terminal_receipt"),
+            ("PR-178", "requires_terminal_receipt"),
+            ("PR-290", "requires_terminal_receipt"),
+            ("PR-291", "requires_terminal_receipt"),
+            ("PR-292", "requires_terminal_receipt"),
+            ("PR-203", "requires_terminal_receipt"),
+            ("PR-204", "requires_terminal_receipt"),
+            ("PR-293", "requires_terminal_receipt"),
+        ],
+        "authorization": "REGISTERED_NOT_SCHEDULED",
+    },
+}
+POST275_FULL_IDS = set(POST275_CARD_CONTRACTS)
+POST275_REQUIRED_FIELDS = VECTOR_TENSOR_REQUIRED_FIELDS | {
+    "change_set_id",
+    "publication_group_id",
+}
+POST275_HUMAN_GATES = {
+    "PR-290": ("H-PLANCK", "admitted_planck_observed_execution"),
+    "PR-291": ("H-CF4", "admitted_cf4_observed_execution"),
+    "PR-292": ("H-HSC-KiDS", "admitted_hsc_kids_observed_execution"),
+    "PR-293": ("H-JWST", "admitted_jwst_sn_observed_execution"),
+}
+POST275_DEPENDENCY_OVERLAY = {
+    "schema": "htt.pr_dependency_overlay.v1",
+    "authority": "PR-276",
+    "rationale": (
+        "Preserve receipt-sealed historical cards while applying the "
+        "owner-authorized statistical-foundation, premise-anchor, and "
+        "post-275 reexecution replans."
+    ),
+    "additions": {
+        "PR-155": ["PR-250", "PR-251", "PR-255"],
+        "PR-156": ["PR-251", "PR-256", "PR-257"],
+        "PR-157": ["PR-252", "PR-278"],
+        "PR-181": ["PR-255", "PR-256", "PR-257"],
+        "PR-191": ["PR-285"],
+        "PR-192": ["PR-285"],
+        "PR-193": ["PR-254", "PR-285"],
+        "PR-194": ["PR-285"],
+        "PR-195": ["PR-285"],
+        "PR-198": ["PR-281", "PR-282", "PR-287", "PR-288", "PR-289"],
+        "PR-201": ["PR-283", "PR-284", "PR-287", "PR-289"],
+        "PR-204": ["PR-287", "PR-288", "PR-289"],
+        "PR-205": ["PR-254", "PR-255"],
+        "PR-207": ["PR-294"],
+    },
+}
+
 
 def _revival_track(pr_id: str) -> str:
     n = int(pr_id.split("-")[1])
@@ -669,6 +845,12 @@ def validate_backlog(data: dict[str, Any]) -> DagInfo:
             "vector/tensor intake must be either the PR-259/260 bootstrap or "
             "the complete PR-259..275 programme; "
             f"present={sorted(present_vector_tensor_ids)}"
+        )
+    present_post275_ids = idset & POST275_FULL_IDS
+    if present_post275_ids and present_post275_ids != POST275_FULL_IDS:
+        raise ValueError(
+            "post-275 intake must register PR-276..294 atomically; "
+            f"missing={sorted(POST275_FULL_IDS - present_post275_ids)}"
         )
     prereqs = {pr["id"]: list(pr.get("depends") or []) for pr in prs}
     missing_deps = sorted({dep for deps in prereqs.values() for dep in deps if dep not in idset})
@@ -987,12 +1169,27 @@ def validate_long_horizon_rescue_slice(
             "the complete PR-259..275 programme; "
             f"present={sorted(actual_vector_tensor_ids)}"
         )
+    post275_ids = set(POST275_CARD_CONTRACTS)
+    actual_post275_ids = actual_ids & post275_ids
+    if actual_post275_ids and actual_vector_tensor_ids != VECTOR_TENSOR_FULL_IDS:
+        raise ValueError(
+            "post-275 programme requires the full PR-259..275 vector/tensor programme"
+        )
+    if actual_post275_ids and actual_post275_ids != post275_ids:
+        raise ValueError(
+            "post-275 intake must be atomic; "
+            f"missing={sorted(post275_ids - actual_post275_ids)}"
+        )
     if actual_foundation_ids:
         policy = data.get("policy") or {}
         expected_overlay = (
-            PREMISE_ANCHOR_DEPENDENCY_OVERLAY
-            if actual_premise_anchor_ids
-            else FOUNDATION_DEPENDENCY_OVERLAY
+            POST275_DEPENDENCY_OVERLAY
+            if actual_post275_ids
+            else (
+                PREMISE_ANCHOR_DEPENDENCY_OVERLAY
+                if actual_premise_anchor_ids
+                else FOUNDATION_DEPENDENCY_OVERLAY
+            )
         )
         if policy.get("dependency_overlays") != expected_overlay:
             raise ValueError(
@@ -1014,6 +1211,7 @@ def validate_long_horizon_rescue_slice(
     if actual_premise_anchor_ids:
         expected_total += len(PREMISE_ANCHOR_CARD_CONTRACTS)
     expected_total += len(actual_vector_tensor_ids)
+    expected_total += len(actual_post275_ids)
     if len(info.ids) != expected_total:
         raise ValueError(
             f"strict rescue slice expects {expected_total} total cards, found {len(info.ids)}"
@@ -1300,6 +1498,8 @@ def validate_long_horizon_rescue_slice(
         check_mirrors()
     if actual_vector_tensor_ids:
         _validate_vector_tensor_slice(cards, actual_vector_tensor_ids)
+    if actual_post275_ids:
+        _validate_post275_slice(cards)
 
     if status is not None:
         _validate_rescue_status(status, info)
@@ -1653,6 +1853,129 @@ def _validate_vector_tensor_slice(
                 raise ValueError(
                     f"{pr_id} forbidden actions omit the {boundary} boundary"
                 )
+
+
+def _validate_post275_slice(cards: dict[str, Any]) -> None:
+    """Validate the atomic PR-276..294 post-275 execution programme."""
+
+    spec_path = (
+        Path(__file__).resolve().parents[2]
+        / "docs/research_program/post_pr275/pr276_spec.yaml"
+    )
+    spec = load_yaml(spec_path)
+    if spec.get("schema") != "htt.post_pr275.reconciliation.v1":
+        raise ValueError("PR-276 reconciliation spec schema drifted")
+    if spec.get("status") != "REGISTERED":
+        raise ValueError("PR-276 reconciliation spec must be REGISTERED")
+    gate_rows = spec.get("defined_scientific_gates")
+    if not isinstance(gate_rows, list) or [row.get("gate_id") for row in gate_rows] != [
+        f"G{index}" for index in range(1, 9)
+    ]:
+        raise ValueError("PR-276 must register exactly the defined G1..G8 gates")
+    if spec.get("undefined_gate_ids_forbidden") != ["G9", "G10", "G11", "G12"]:
+        raise ValueError("PR-276 undefined-gate correction drifted")
+    if spec.get("scope", {}).get("prospective_pr_ids") != _pr_range(276, 294):
+        raise ValueError("PR-276 prospective ID inventory drifted")
+
+    for pr_id in _pr_range(276, 294):
+        card = cards[pr_id]
+        expected = POST275_CARD_CONTRACTS[pr_id]
+        missing_fields = sorted(POST275_REQUIRED_FIELDS - set(card))
+        if missing_fields:
+            raise ValueError(
+                f"{pr_id} missing post-275 programme fields: {missing_fields}"
+            )
+        expected_contracts = [
+            {"upstream_id": upstream_id, "mode": mode}
+            for upstream_id, mode in expected["dependencies"]
+        ]
+        if card.get("depends") != [row["upstream_id"] for row in expected_contracts]:
+            raise ValueError(f"{pr_id} post-275 dependencies drifted")
+        if card.get("dependency_contracts") != expected_contracts:
+            raise ValueError(f"{pr_id} post-275 dependency modes drifted")
+        if card.get("owner") != expected["owner"]:
+            raise ValueError(f"{pr_id} post-275 owner drifted")
+        if card.get("execution_authorization") != expected["authorization"]:
+            raise ValueError(f"{pr_id} execution authorization drifted")
+        for field in ("capability", "kill", "change_set_id", "publication_group_id"):
+            _require_nonempty_string(card.get(field), f"{pr_id}.{field}")
+        for field in (
+            "inputs",
+            "outputs",
+            "contributors",
+            "implementation_scopes",
+            "targets",
+            "files",
+            "tests",
+            "dod",
+            "forbidden",
+            "anti_drift",
+        ):
+            _require_string_list(card, field)
+        if (
+            card.get("activation_state") != "PENDING"
+            or card.get("execution_lane") != "defensible"
+            or card.get("scientific_status_on_intake") != "OPEN"
+            or card.get("public_use") is not False
+            or card.get("spec_first_required") is not True
+            or card.get("solver_gate_required") is not False
+            or card.get("claim_tier_ceiling") != "diagnostic_only"
+        ):
+            raise ValueError(
+                f"{pr_id} must remain PENDING, internal, OPEN, spec-first, "
+                "solver-independent, and diagnostic-only"
+            )
+        forbidden_text = " ".join(_iter_strings(card.get("forbidden"))).lower()
+        for boundary in ("native", "family-identification"):
+            if boundary not in forbidden_text:
+                raise ValueError(
+                    f"{pr_id} forbidden actions omit the {boundary} boundary"
+                )
+
+    for pr_id, (gate_id, scope) in POST275_HUMAN_GATES.items():
+        if cards[pr_id].get("external_execution_gates") != [
+            {
+                "gate_id": gate_id,
+                "mode": "requires_human_execution_authorization",
+                "scope": scope,
+            }
+        ]:
+            raise ValueError(f"{pr_id} lane-specific human gate drifted")
+    if cards["PR-280"].get("external_execution_gates") != [
+        {
+            "gate_id": "G-CI-H",
+            "mode": "requires_human_ruleset_change_authorization",
+            "scope": "github_ruleset_mutation_only",
+        }
+    ]:
+        raise ValueError("PR-280 GitHub-ruleset human gate drifted")
+
+    if cards["PR-276"].get("claim_level") != {
+        "scheme": "not_applicable_governance_v1",
+        "level": "NOT_APPLICABLE",
+    }:
+        raise ValueError("PR-276 must remain non-scientific governance work")
+    if cards["PR-277"].get("claim_level") != cards["PR-276"].get("claim_level"):
+        raise ValueError("PR-277 capability bookkeeping must remain non-scientific")
+    if cards["PR-278"].get("claim_level") != cards["PR-276"].get("claim_level"):
+        raise ValueError("PR-278 adjudication bookkeeping must remain non-scientific")
+    if cards["PR-279"].get("claim_level") != cards["PR-276"].get("claim_level"):
+        raise ValueError("PR-279 reverse trace must remain non-scientific")
+    if cards["PR-280"].get("claim_level") != cards["PR-276"].get("claim_level"):
+        raise ValueError("PR-280 harness evidence must remain non-scientific")
+
+    # The negative PR-190 result is terminal evidence, not a success.  PR-276
+    # may consume it, while the two historical success-only consumers stay
+    # closed until an explicit versioned supersession.
+    for downstream in ("PR-191", "PR-205"):
+        contracts = cards[downstream].get("dependency_contracts") or []
+        matching = [
+            row
+            for row in contracts
+            if isinstance(row, dict) and row.get("upstream_id") == "PR-190"
+        ]
+        if matching != [{"upstream_id": "PR-190", "mode": "requires_success"}]:
+            raise ValueError(f"{downstream} must retain its closed PR-190 success edge")
 
 
 def _validate_strengthen_slice(cards: dict[str, Any]) -> None:

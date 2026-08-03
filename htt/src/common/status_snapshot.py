@@ -1055,10 +1055,39 @@ def _validate_status_partition(
             f"active PRs are not execution-authorized: {sorted(unauthorized)}"
         )
     if strict_rescue:
+        terminal = completed | blocked | skipped
+
+        def dependency_is_satisfied(
+            card: Mapping[str, object], dependency: str
+        ) -> bool:
+            contracts = card.get("dependency_contracts")
+            if not isinstance(contracts, list):
+                return dependency in completed
+            matching = [
+                contract
+                for contract in contracts
+                if isinstance(contract, Mapping)
+                and contract.get("upstream_id") == dependency
+            ]
+            if len(matching) != 1:
+                # The canonical DAG validator owns projection-shape errors.
+                # Status generation remains fail-closed if it cannot resolve a
+                # unique typed edge.
+                return False
+            mode = matching[0].get("mode")
+            if mode == "requires_terminal_receipt":
+                return dependency in terminal
+            if mode in {"requires_success", "requires_adjudicated_claim_set"}:
+                return dependency in completed
+            return False
+
         dependency_blocked = sorted(
             pr_id
             for pr_id in active
-            if any(str(dep) not in completed for dep in card_map[pr_id].get("depends", []))
+            if any(
+                not dependency_is_satisfied(card_map[pr_id], str(dep))
+                for dep in card_map[pr_id].get("depends", [])
+            )
         )
         if dependency_blocked:
             raise ValueError(

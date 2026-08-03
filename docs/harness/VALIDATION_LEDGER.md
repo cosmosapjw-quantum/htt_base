@@ -200,7 +200,7 @@ identification, claim promotion, or public-use state is introduced.
 | `PYTHONPATH=htt/src:htt python -B scripts/codex_harness/run_pr258_open_set_oracle.py` | PASS | Independent squared-metric, exact structural-null unit-congruence, signed-zero identity, artifact-metadata binding, MC-contract rejection, covariance-null precedence, nuisance-orbit quotient, class-contract binding, equivalence precedence, source-gate surface and 3D-to-2D/covariance rebinding rejection, graph closure, node-consistent tie, rank, and full-regraph checks passed. |
 | same integration runner, `adjacent` | PASS | `139 passed` across PR-219/255/256/257/258, followed by the isolated wheel import and HTT-facade identity probe. |
 | same integration runner, `claim` | PASS | Manuscript claim-language scan returned `issue_count: 0`; explicit owner/scope/artifact-mode/sky/null/covariance metadata, artifact provenance, typed perturbation relations, distinct non-baseline report identities, forbidden-key absence, and historical PR-219/statistical-foundation hashes passed. |
-| strict PR DAG/status validation | PASS | `205` cards valid; PR-257 is completed at merged PR #365 / `d62d63d...`; PR-258 remains pending until merge. |
+| strict PR DAG/status validation | PASS | Historical PR-258 candidate receipt: `205` cards were valid and PR-257 was merged at PR #365 / `d62d63d...`; PR-258 had not yet merged at the time of this frozen check. Current status is governed by canonical DAG/status. |
 | canonical/compatibility status comparison | PASS | `docs/codex_handoff/pr_status.yaml` and `machine_readable/pr_status.yaml` are byte-identical. |
 | final architecture/SSOT handoff replay | PASS | Project state, progress, decisions, blockers, next-session prompt, PR delta, and validation ledger pass scoped claim-language and forbidden-claim scans with zero findings. Progress remains 152/205 (74.15%), and remote target `d62d63d...` is unchanged. |
 | candidate Python byte compilation | PASS | PR-258 COMMON/HTT facade and three registered runner/oracle scripts compile. |
@@ -2890,3 +2890,36 @@ Independent acceptance authority: publication requires the immutable
 candidate review at
 `.agent-harness/runs/pr190-final-review-20260803/RUN_SUMMARY.json`. Any
 candidate or target mutation invalidates that review and requires resealing.
+
+## PR-276 — post-275 SSOT and chronology reconciliation (2026-08-03)
+
+Change classification: canonical DAG/status intake, typed-state SSOT and
+handoff reconciliation, generated status surfaces, historical chronology,
+portable test policy, and one typed dependency-status defect repair. No data,
+likelihood, posterior, transfer evaluation, theorem promotion, native output,
+geometry result, or family claim is created.
+
+| Command or evidence | Result | Notes |
+| --- | --- | --- |
+| `run_pr276_reconciliation.py focused` | PASS | `75 passed`; includes Git-bound merge lineage, 241-card atomic intake, typed terminal-receipt semantics, historical PR-119 slice, status generation, and portable-runner probe. |
+| `run_pr276_reconciliation.py collect` | PASS | `10538/10597 collected`, 59 deselected; zero collection errors. |
+| `run_pr276_reconciliation.py smoke` | PASS | `8 passed`, 10589 deselected; eight declared legacy deprecation warnings. |
+| strict DAG/status validation | PASS | `241 PRs, DAG valid`; PR-276 alone is foreground and PR-277 is blocked until closeout. |
+| canonical/machine mirror check | PASS | YAML/JSON backlog and status mirrors synchronized. |
+| generated status/claim/matrix input hashes | PASS | Current backlog `0f65244c...`, status `ac25101e...`, and gate-output `66fe6f79...` identities are bound. |
+| claim-language and research-surface lints | PASS | Zero findings. |
+| `git diff --check` | PASS | No whitespace error. |
+| repo-wide no-mock helper | FAIL, PRE-EXISTING | Historical calibration-factor and mock-marker inventory remains. The exact scoped regex over PR-276 implementation/specification/tests/canonical scheduling/active handoff emitted one context-safe PR-280 rule that binds smoke-test status to an execution receipt and forbids publication waivers; it emitted no mock/fake validation result marker. Validation disclosures are explicitly excluded from the scoped result. |
+| bare publication-policy pytest commands | FAIL, REPRODUCED AND REPAIRED | The exact original focused-policy command failed during collection with `ModuleNotFoundError: No module named 'common'`; a separate bare full-collection invocation failed with `ModuleNotFoundError: No module named 'bass'`. The repo-rooted portable runner replaced both policy surfaces, and neither failed command is called a pass. |
+| pre-final-lineage broad `tests/contracts` inventory | `162 failed, 1522 passed, 49 skipped, 15 xfailed` | Inventory began before the last Git-lineage test mutation and is not final candidate acceptance. Main buckets are missing historical `legacy/`/archives/PDFs/binaries, unavailable canonical PR-122 Python, stale generated packages, package portability, and PR-167 historical intake debt. PR-280 owns cache-free JUnit classification. |
+| pre-freeze R1 | FAIL, PRESERVED | False merge identities, stale generated hashes, non-portable policy command, and PR-270 status wording. Run: `.agent-harness/runs/pr276-prefreeze-audit-20260803/`. |
+| pre-freeze R2 | FAIL, PRESERVED | Claim review passed, but harness review found a false first-parent SHA and a self-confirming literal test. |
+| pre-freeze R3 | PASS, MUTABLE ONLY | Independent Git queries, seven policy commands, hashes, DAG/mirrors, and claim boundaries pass. Run: `.agent-harness/runs/pr276-prefreeze-r2-20260803/`. Any byte mutation invalidates exactness. |
+| pre-freeze R4 | CLAIM PASS; HARNESS FAIL, PRESERVED | Harness review found two inaccurate validation disclosures: the exact import error and the scoped-regex result. The disclosures were corrected without changing implementation or policy; R5 performed the bounded recheck. |
+| pre-freeze R5 | FAIL, PRESERVED | Both reviews verified the R4 corrections and bounded technical checks, then rejected stale active handoffs that still presented byte-invalidated R3 as current/final, omitted R4, and called the one context-safe scoped policy match zero raw findings. |
+| pre-freeze R6 | PASS, MUTABLE ONLY | Both bounded axes passed with no blocking finding. Harness result SHA-256 `522f29b...`; claim/SSOT result SHA-256 `35c878ae...`; closed run `.agent-harness/runs/pr276-prefreeze-r6-20260803/`. This tracked delivery transition invalidates R6 exactness and requires immutable review. |
+| immutable content R1 | FAIL, PRESERVED | Exact commit `2383ae40...` and seal `ce74dba5...`. Both reviewers reproduced `1 failed, 74 passed`: the test required a tracked generated artifact to contain its own commit SHA, creating a Git-hash self-reference. They also rejected handoff prose that described the existing content commit/seal as future work. Seal/scope/target/DAG/mirrors/collection/smoke/claim scans/unpushed state otherwise passed. Run: `.agent-harness/runs/pr276-content-immutable-r1-20260803/`. |
+
+The local content candidate remains unpushed and incomplete. Its exact
+seal/review state is governed by the latest registered runtime evidence. Only
+a strict-valid immutable PASS permits status/mirror closeout.

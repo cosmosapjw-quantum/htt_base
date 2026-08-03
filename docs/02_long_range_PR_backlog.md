@@ -408,9 +408,9 @@ At each PR: web-backed brainstorming when available -> subagent steelman diverge
   - Mock coverage gates production axis
 - **Kill / rollback:** Reject if mock coverage is missing but claim tier exceeds diagnostic.
 
-## Wave 5: MIO x/Q/Pi/F/G formalism and diagnostic reports
+## Wave 5: Typed-state MIO x/Q/Pi/F/G formalism and diagnostic reports
 
-### PR-050 — DepartureBundle and comparator/frame metadata
+### PR-050 — Legacy DepartureBundle projection and comparator/frame metadata
 - **Owner:** MIO
 - **Depends:** PR-010, PR-014
 - **Verification level:** L2
@@ -422,9 +422,10 @@ At each PR: web-backed brainstorming when available -> subagent steelman diverge
 - **Tests / commands:**
   - `python -m pytest tests/mio/test_departure_bundle.py -q`
 - **Definition of done:**
-  - B_C components, comparator C, frame, units, and cancellation index are explicit
-  - x_C is a signed projection, not anisotropy norm
-- **Kill / rollback:** Reject if x_C is exported without comparator/frame metadata.
+  - Current consumers use `JointAnisotropyState`; `DepartureBundle` remains a legacy adapter
+  - Any x_C export is an explicit `LegacyProjectionReport` with BC1/BC2, source-state identity, comparator C, frame, units, loss disclosure, and cancellation index
+  - x_C is a signed projection, not a state, anisotropy norm, or family identifier
+- **Kill / rollback:** Reject if x_C is exported without typed source identity and BC1/BC2 projection metadata, or is auto-promoted to vector/tensor state.
 
 ### PR-051 — BudgetSpec and denominator-policy sensitivity
 - **Owner:** MIO
@@ -817,9 +818,9 @@ At each PR: web-backed brainstorming when available -> subagent steelman diverge
   - Downstream result cards show transfer-conditional status
 - **Kill / rollback:** Reject if external-transfer sensitivity is absent from public report.
 
-## Wave 9: Full-covariance MES synthetic programme
+## Wave 9: Typed-state covariance/response MES synthetic programme
 
-### PR-090 — Full-covariance MES template branch synthetic harness
+### PR-090 — Typed-state MES template branch synthetic harness
 - **Owner:** COMMON
 - **Depends:** PR-074, PR-076, PR-082
 - **Verification level:** L3
@@ -830,11 +831,11 @@ At each PR: web-backed brainstorming when available -> subagent steelman diverge
 - **Tests / commands:**
   - `python -m pytest tests/htt/test_mes_template_bound.py -q`
 - **Definition of done:**
-  - Template-mean branch computes synthetic bound and no-claim gates
+  - Template-mean branch consumes a typed state/functional and computes a synthetic bound plus no-claim gates
   - Does not replace diagonal MES theorem
 - **Kill / rollback:** Reject if template branch is called universal MES.
 
-### PR-091 — Full-covariance MES covariance/BiPoSH branch synthetic harness
+### PR-091 — Typed-state MES covariance/BiPoSH response synthetic harness
 - **Owner:** COMMON
 - **Depends:** PR-075, PR-076, PR-090
 - **Verification level:** L3
@@ -845,7 +846,7 @@ At each PR: web-backed brainstorming when available -> subagent steelman diverge
 - **Tests / commands:**
   - `python -m pytest tests/htt/test_mes_cov_bound.py -q`
 - **Definition of done:**
-  - Covariance branch uses response rank/singular values and nuisance projection
+  - Covariance branch binds state, response, mask, covariance, response rank/singular values, and nuisance projection
   - Rank deficiency emits no-claim
 - **Kill / rollback:** Reject if rank-deficient response yields finite physical bound.
 
@@ -930,7 +931,7 @@ At each PR: web-backed brainstorming when available -> subagent steelman diverge
 
 ## Wave 11: Result packs, manuscript/figure integration, and external audit freeze
 
-### PR-110 — Result Pack A: scalar-to-morphology upgrade report
+### PR-110 — Result Pack A: typed-state-to-morphology report with legacy projection
 - **Owner:** COMMON
 - **Depends:** PR-056, PR-076, PR-092
 - **Verification level:** L4
@@ -943,7 +944,7 @@ At each PR: web-backed brainstorming when available -> subagent steelman diverge
   - `python -m pytest tests/result_packs/test_pack_A.py -q`
   - `python scripts/result_packs/generate_pack_A_scalar_to_morphology.py --dry-run`
 - **Definition of done:**
-  - Report compares scalar Q/F/Pi with morphology/MES features under caveats
+  - Report compares typed x_phi/Q_phi/Pi_phi and sector stress with morphology/MES features; scalar values appear only through a labeled `LegacyProjectionReport`
   - No geometry detection claim
 - **Kill / rollback:** Reject if report states Bianchi geometry detection.
 

@@ -1,7 +1,7 @@
 # Generated Shared Context View
 
-Context version: `2aadf7ee464f3801564eb811ce842dacce78a59d68206d10d6304fbb79a13fa4`
-Built at: `2026-07-23T04:51:57+00:00`
+Context version: `aa860ee8fa76da4878ae08fc5d07598c21457fe665211698f642601f70f14c52`
+Built at: `2026-08-02T17:39:42+00:00`
 
 This compact view is generated from the machine context index. Live HEAD, DAG, status, and active-run context is computed by the hooks at use time. Reference-only files are read only when an assignment names them.
 
@@ -9,7 +9,7 @@ This compact view is generated from the machine context index. Live HEAD, DAG, s
 
 ## Source: `.agent-harness/context/SYMBOLS.md`
 
-SHA-256: `5c51f848f93430c8b49d46bd66219162409f06b35fdf778ea9f44c0bf5d214cb`
+SHA-256: `f601b0123a914a1f3f9977267ce6b3625cba9be76bd67dbe351bf1fad32c4a2e`
 
 # Symbol and Interface Table
 
@@ -21,6 +21,14 @@ SHA-256: `5c51f848f93430c8b49d46bd66219162409f06b35fdf778ea9f44c0bf5d214cb`
 | `ReleaseEvidencePin` | Typed view of literal-only fixed-point fields | repository-relative paths and SHA-256 refs | dimensionless | parsed without importing pin module | `htt/src/common/release_evidence_binding.py` |
 | `AuthorityRegistry` | Exact principal/role/scope verifier registry | immutable principal records | dimensionless | correlated internal identities cannot promote science | `htt/src/common/remediation_state.py` |
 | `MatchedNullCompetitionReport` | Canonical HTT matched-null adequacy report | exact typed report | report-defined | caller scalar or duck type is non-authoritative | `htt/htt/htt/infer/null_competition.py` |
+| `MESAnchorSpec` | Typed MES anchor, normalization, domain, frame, and provenance authority | immutable contract | declared per component | anchor role and denominator policy are explicit | `htt/src/common/statistical_foundations.py` |
+| `DepartureState` | Typed scalar/tensor departure components before joint kinematic/geometry assembly | immutable contract | declared component units | missing is typed; no implicit zero fill | `htt/src/common/statistical_foundations.py` |
+| `JointAnisotropyState` | Current joint congruence, velocity-frame, geometry, unit, missingness, and transfer state authority | content-addressed immutable state | component-declared | no scalar beta or x_C auto-promotion | `htt/src/common/joint_anisotropy_state.py` |
+| `SectorStress` | Per-sector anchor stress with value, bound, eligibility, and support kept distinct | immutable diagnostic record | sector-declared | point estimate is not a bound | `htt/src/common/statistical_foundations.py` |
+| `IdentifiedDepartureSet` | Partial-identification set with recession and boundedness semantics | immutable set contract | state-coordinate units | missing directions are not zero | `htt/src/common/statistical_foundations.py` |
+| `LegacyProjectionReport` | Explicit BC1/BC2 projection from typed state to legacy scalar views | immutable compatibility report | projection-declared | x_C is a lossy signed projection, never the state authority | `htt/src/common/statistical_foundations.py` |
+| `AnisotropyTypeReport` | Abstaining orbit/response/local-global/depth compatibility report | immutable typed report | dimensionless identities plus declared units | unknown or indeterminate replaces nearest-family forcing | `htt/src/common/anisotropy_type_report.py` |
+| `ConditionalExceedanceSurface` | Registered vector/tensor programme interface for law-typed exceedance envelopes; executable successor currently uses `ConditionalExceedanceProfile` | programme interface plus typed executable profile | probability with declared conditioning | optimizer output is never a sample or posterior | `docs/research_program/vector_tensor/VECTOR_TENSOR_PROOF_PROGRAM_V1.yaml`; `htt/src/common/conditional_exceedance.py` |
 | PR4 scope firewall | User-directed ban on PR4 download/intake/reduction/analysis | execution policy | zero commands | complete skip, not inferred completion | `docs/research_program/long_horizon_rescue/pr122_spec.yaml` |
 
 Record overloaded symbols explicitly. A CAS axis may introduce internal names,
@@ -30,7 +38,7 @@ but its result must map them back to this table.
 
 ## Source: `.agent-harness/context/FROZEN_DECISIONS.md`
 
-SHA-256: `59b28e22613b2a8b1e1b04a679b9c822aa9d7d74ad15aea06c16537a7e0e8fd6`
+SHA-256: `16e798e4d40dd41dcf9d679fc39b6dfa32eb61f8f9cf602a15f7cec0f9f26d6e`
 
 # Frozen Decisions and Rejected Alternatives
 
@@ -53,6 +61,8 @@ SHA-256: `59b28e22613b2a8b1e1b04a679b9c822aa9d7d74ad15aea06c16537a7e0e8fd6`
 | D-PR173-RECONSTRUCTION | Validate reports against freshly reconstructed frozen-source targets and metadata, not self-consistent resealed fields | Independent review reproduced coordinated uncertainty and provenance false greens in the first validator | PR-173 result consumers | A stronger externally rooted verifier with the same or stricter mutation coverage |
 | D-PR177-STRICT-SUPPORT | Interpret the canonical `40<L<763` support literally as integer multipoles 41..762 and use one frozen five-component score | The user-authorized plan and canonical backlog override an inclusive intake paraphrase; endpoint or scan drift changes the estimand | PR-177 and direct consumers | A separately preregistered estimand with its own null calibration and claim lane |
 | D-PR177-AUTHORITY-REPLAY | Bind result eligibility to frozen PR-152 pins, complete feature/deep input maps, and a separate 401-unit raw-feature replay | Self-consistent card/cache or provenance resealing is not independent source authority; final reviews required complete-map reconstruction | PR-177 result consumers | A stronger external source-attestation mechanism preserving all current falsifiers |
+| D-TYPED-FOUNDATION | Use `JointAnisotropyState` as current scientific state authority; expose scalar x_C only through `LegacyProjectionReport(BC1/BC2)` | PR-248--275 typed foundation and post-275 reconciliation; scalar projection loses state, frame, missingness, and orbit information | All current scientific consumers | A proof-bearing receipt demonstrates that BC1 is violated |
+| D-GOVERNANCE-BRAKE-2026-08 | After two consecutive assurance-only PRs, require the next PR to deliver a named downstream scientific capability, data integration, experiment, or interpretable result unless a reproduced high-severity defect directly blocks it | Gate count and document volume are not research progress; assurance work must serve a named consumer | Post-275 scheduling and replan decisions | A versioned replacement names a downstream consumer and reproduces the failure it prevents |
 
 Agents must not silently reopen a frozen decision. A proposed reversal is a
 meta-finding with new evidence and an explicit reopen condition.

@@ -269,6 +269,76 @@ def test_status_bundle_rejects_duplicate_background_entries(tmp_path: Path) -> N
         )
 
 
+def test_active_card_accepts_only_a_typed_terminal_receipt_dependency(
+    tmp_path: Path,
+) -> None:
+    backlog = {
+        "policy": {"topological_order": ["PR-119", "PR-120"]},
+        "prs": [
+            {
+                "id": "PR-119",
+                "title": "Receipt-bearing negative result",
+                "owner": "COMMON",
+                "depends": [],
+                "activation_state": "PENDING",
+                "execution_lane": "defensible",
+                "execution_authorization": "EXPLICIT_USER_AUTHORIZED",
+            },
+            {
+                "id": "PR-120",
+                "title": "Chronology consumer",
+                "owner": "COMMON",
+                "depends": ["PR-119"],
+                "dependency_contracts": [
+                    {
+                        "upstream_id": "PR-119",
+                        "mode": "requires_terminal_receipt",
+                    }
+                ],
+                "activation_state": "PENDING",
+                "execution_lane": "defensible",
+                "execution_authorization": "EXPLICIT_USER_AUTHORIZED",
+            },
+        ],
+    }
+    status = {
+        "completed": [],
+        "blocked": ["PR-119"],
+        "pending": [],
+        "dormant_external": [],
+        "in_progress": "PR-120",
+        "background_in_progress": [],
+        "background_execution_contracts": {},
+        "execution_lane": {"PR-119": "defensible", "PR-120": "defensible"},
+        "execution_resolutions": {
+            "PR-119": {
+                "resolution": "COMPLETED_FAILED_WITH_RECEIPT",
+                "receipt": "docs/PR_DELTAS/pr-119.md",
+            }
+        },
+    }
+    backlog_path = tmp_path / "pr_backlog.yaml"
+    status_path = tmp_path / "pr_status.yaml"
+    backlog_path.write_text(yaml.safe_dump(backlog), encoding="utf-8")
+    status_path.write_text(yaml.safe_dump(status), encoding="utf-8")
+
+    bundle = build_status_bundle(
+        backlog_path=backlog_path,
+        status_path=status_path,
+        source_commit="abc123",
+    )
+    assert bundle.status_rows[1]["orchestration_state"] == "in_progress"
+
+    backlog["prs"][1]["dependency_contracts"][0]["mode"] = "requires_success"
+    backlog_path.write_text(yaml.safe_dump(backlog), encoding="utf-8")
+    with pytest.raises(ValueError, match="incomplete direct dependencies"):
+        build_status_bundle(
+            backlog_path=backlog_path,
+            status_path=status_path,
+            source_commit="abc123",
+        )
+
+
 @pytest.mark.parametrize("field", ["in_progress", "background_in_progress"])
 def test_status_bundle_rejects_unknown_active_ids(
     tmp_path: Path, field: str

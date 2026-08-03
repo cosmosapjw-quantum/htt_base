@@ -81,6 +81,76 @@ def _card(payload: dict[str, object], pr_id: str) -> dict[str, object]:
     return next(card for card in _cards(payload) if card["id"] == pr_id)
 
 
+def _historical_rescue_backlog() -> dict[str, object]:
+    """Reconstruct the PR-119 intake-era 113-card transaction input.
+
+    The canonical DAG intentionally grows after each atomic intake.  Historical
+    materializer and mutation tests must therefore exercise the PR-119 slice,
+    rather than feeding later PR-167+ cards back into an intake command that is
+    required to reject them.
+    """
+
+    payload = copy.deepcopy(_yaml(BACKLOG_YAML))
+    allowed = {f"PR-{number:03d}" for number in range(167)}
+    payload["prs"] = [card for card in _cards(payload) if card["id"] in allowed]
+
+    policy = payload["policy"]
+    assert isinstance(policy, dict)
+    order = policy["topological_order"]
+    assert isinstance(order, list)
+    legacy_order = [pr_id for pr_id in order if int(pr_id[-3:]) <= 118]
+    policy["topological_order"] = [
+        *legacy_order,
+        *[f"PR-{number:03d}" for number in range(119, 167)],
+    ]
+    policy.pop("dependency_overlays", None)
+    policy.pop("advocate_intake", None)
+    policy["long_horizon_intake"] = {
+        "spec": "docs/research_program/long_horizon_rescue/pr119_spec.yaml",
+        "active_slice": "PR-119..PR-166",
+        "advocate_slice": "deferred_to_PR-167",
+        "scientific_rescue_count_on_intake": 0,
+    }
+
+    waves = payload["waves"]
+    assert isinstance(waves, list)
+    payload["waves"] = [
+        row
+        for row in waves
+        if isinstance(row, dict)
+        and isinstance(row.get("wave"), int)
+        and row["wave"] <= 21
+    ]
+    return payload
+
+
+def _historical_rescue_status() -> dict[str, object]:
+    """Filter current orchestration state to the PR-119 intake-era identity set."""
+
+    status = copy.deepcopy(_yaml(STATUS))
+    allowed = {f"PR-{number:03d}" for number in range(167)}
+    for field in (
+        "completed",
+        "blocked",
+        "skipped",
+        "pending",
+        "dormant_external",
+        "background_in_progress",
+    ):
+        values = status.get(field, []) or []
+        assert isinstance(values, list)
+        status[field] = [pr_id for pr_id in values if pr_id in allowed]
+    if status.get("in_progress") not in allowed:
+        status["in_progress"] = None
+    for field in ("execution_lane", "execution_resolutions"):
+        values = status.get(field, {}) or {}
+        assert isinstance(values, dict)
+        status[field] = {
+            pr_id: value for pr_id, value in values.items() if pr_id in allowed
+        }
+    return status
+
+
 def _strings(value: object):
     if isinstance(value, str):
         yield value
@@ -100,9 +170,8 @@ def test_pr119_intake_is_exact_atomic_and_preserves_frozen_legacy_slice() -> Non
     validate_long_horizon_rescue_slice(backlog, info, status=status)
 
     ids = [card["id"] for card in _cards(backlog)]
-    assert len(ids) == 113
-    assert ids[65:] == [f"PR-{number:03d}" for number in range(119, 167)]
-    assert not set(ids) & {f"PR-{number:03d}" for number in range(167, 184)}
+    assert len(ids) == 241
+    assert ids[65:113] == [f"PR-{number:03d}" for number in range(119, 167)]
     assert _canonical_sha256(_cards(backlog)[:65]) == EXPECTED_LEGACY_SLICE_SHA256
     assert hashlib.sha256(CHECKPOINT_065.read_bytes()).hexdigest() == (
         EXPECTED_CHECKPOINT_065_SHA256
@@ -110,9 +179,12 @@ def test_pr119_intake_is_exact_atomic_and_preserves_frozen_legacy_slice() -> Non
 
 
 def test_intake_rewrite_is_deterministic_idempotent_and_preserves_frozen_prefix() -> None:
-    original_text = BACKLOG_YAML.read_text(encoding="utf-8")
+    historical = _historical_rescue_backlog()
+    original_text = yaml.safe_dump(
+        historical, sort_keys=False, allow_unicode=True, width=100
+    )
     cards = parse_roadmap_cards(ROADMAP.read_text(encoding="utf-8"))
-    payload_once = materialize_payload(copy.deepcopy(_yaml(BACKLOG_YAML)), cards)
+    payload_once = materialize_payload(copy.deepcopy(historical), cards)
     rendered_once = _preserving_yaml_text(original_text, cards)
     assert yaml.safe_load(rendered_once) == payload_once
 
@@ -128,7 +200,7 @@ def test_intake_rewrite_is_deterministic_idempotent_and_preserves_frozen_prefix(
 
 
 def test_intake_rewrite_repairs_policy_and_rescue_wave_metadata_drift() -> None:
-    canonical = _yaml(BACKLOG_YAML)
+    canonical = _historical_rescue_backlog()
     cards = parse_roadmap_cards(ROADMAP.read_text(encoding="utf-8"))
     drifted = copy.deepcopy(canonical)
     drifted["policy"]["long_horizon_intake"][
@@ -143,7 +215,9 @@ def test_intake_rewrite_repairs_policy_and_rescue_wave_metadata_drift() -> None:
     ]
     assert repaired["waves"] == canonical["waves"]
 
-    canonical_text = BACKLOG_YAML.read_text(encoding="utf-8")
+    canonical_text = yaml.safe_dump(
+        canonical, sort_keys=False, allow_unicode=True, width=100
+    )
     drifted_text = canonical_text.replace(
         "scientific_rescue_count_on_intake: 0",
         "scientific_rescue_count_on_intake: 999",
@@ -317,7 +391,7 @@ def test_active_claim_level_prose_is_scheme_qualified_but_finding_ids_are_immuta
     ],
 )
 def test_strict_rescue_validator_rejects_semantic_drift(mutation, message: str) -> None:
-    backlog = copy.deepcopy(_yaml(BACKLOG_YAML))
+    backlog = _historical_rescue_backlog()
     mutation(backlog)
 
     with pytest.raises(ValueError, match=message):
@@ -354,9 +428,9 @@ def test_status_axes_require_disjoint_full_coverage_and_terminal_receipts() -> N
 
 
 def test_status_terminal_buckets_have_exact_resolution_mapping_and_receipt_pointer() -> None:
-    backlog = _yaml(BACKLOG_YAML)
+    backlog = _historical_rescue_backlog()
     info = validate_backlog(backlog)
-    status = _yaml(STATUS)
+    status = _historical_rescue_status()
 
     completed_mismatch = copy.deepcopy(status)
     completed_mismatch["execution_resolutions"]["PR-119"]["resolution"] = (
