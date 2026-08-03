@@ -141,3 +141,17 @@ clean-checkout source regeneration does not depend on ignored run directories.
 `verify-frozen-source` and `check-source` are separate gates: the former
 authenticates frozen output bytes, while the latter proves deterministic
 regeneration. Neither changes the 90 lane dispositions or any capability.
+
+## PR-278 closeout
+
+Immutable content R2 passed all 21 registered policy cells on exact content
+commit `34ec32aa...`, tree `bab43765...`, and seal `35fae6bf...`. Its strict
+result `c5ddc511...`, mutation oracle `266822a5...`, merged result
+`2a0789ae...`, and normally closed run summary `2fed1a5e...` report no blocker.
+Canonical PR-278 status is therefore `COMPLETED_SUCCESS`.
+
+This closeout registers receipt-level lane dispositions only. Scientific
+status remains `OPEN_UNCHANGED`; it grants no theorem, method, data, observed,
+source-separation, morphology, native, family-identification, public-release,
+approval, or merge capability. PR-279 is the sole dependency-ready next card,
+but begins only after owner review and merge of the exact PR-278 delivery.

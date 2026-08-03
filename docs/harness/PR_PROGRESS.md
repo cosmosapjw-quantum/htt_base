@@ -23,8 +23,8 @@ historical execution/review evidence remains under `docs/PR_DELTAS/` and
   unattended work remains external-publisher-only, while current-turn owner
   authorization may consume one sealed `CREATE_REVIEW_PR` transaction. No
   force-push, approval, merge, ruleset, data, or claim action is enabled.
-- Current counts: 172 completed (71.37%), dependency-weighted 75.00%,
-  critical-path 98.70%, 37 pending, 2 blocked, 28 dormant, PR-278 in progress,
+- Current counts: 173 completed (71.78%), dependency-weighted 75.33%,
+  critical-path 98.70%, 37 pending, 2 blocked, 28 dormant, no foreground card,
   and PR-151 background-only.
 - The dependency overlay adds PR-285 to PR-191--195, PR-278 to PR-157, typed
   residual/replay prerequisites to Planck/CF4/ACT cards, and PR-294 to PR-207
@@ -106,16 +106,16 @@ historical execution/review evidence remains under `docs/PR_DELTAS/` and
 
 ## Next transition
 
-PR-277 is merged and canonically `COMPLETED_SUCCESS`. PR-278 is implemented
-but remains canonically in progress. Repaired mutable pre-freeze review passed.
-Immutable content R1 failed on deterministic source regeneration; its exact
-receipt is preserved and the current snapshot/mapper-receipt repair invalidates
-it. The next transition is an amended content SHA, new seal, and fresh review.
-The owner authorized one content slot, one closeout commit, and one attended
-review PR; no approval, merge, data execution, capability promotion, or
-scientific release follows.
+PR-278 is canonically `COMPLETED_SUCCESS` after immutable content R2 passed all
+21 registered policy cells on exact content commit `34ec32aa...`. Scientific
+status remains `OPEN_UNCHANGED`, public use remains false, and PR-279 is the
+sole unblocked next card. The owner authorized one content slot, one closeout
+commit, and one attended review PR. The remaining delivery transition is an
+exact two-commit seal, independent review, latest-target integration, fresh PR
+inventory, and one non-draft review PR; no approval, merge, data execution,
+capability promotion, or scientific release follows.
 
-## PR-278 content R1 failed; portability repair pending fresh review
+## PR-278 completed; exact delivery review pending
 
 - Frozen 28 family rows into 19 reviewable, one non-terminal, and eight
   event-gated rows; preserved zero CF4 P0 rescue.
@@ -132,5 +132,11 @@ scientific release follows.
   high-severity source-regeneration check; result `aef9ad24...` is preserved.
 - The repair reads status/backlog from exact base Git bytes, adds a tracked
   self-addressed mapper receipt, requires `check-source`, and passes 258
-  focused tests. Canonical status remains `in_progress: PR-278`; a fresh seal
-  and immutable review are required before closeout.
+  focused tests.
+- Immutable content R2 passed all 21 cells on exact commit `34ec32aa...`, seal
+  `35fae6bf...`, strict result `c5ddc511...`, coverage `c86fcc64...`, oracle
+  `266822a5...`, merged result `2a0789ae...`, and normally closed summary
+  `2fed1a5e...`.
+- Canonical closeout records 173/241 complete, no foreground card, and PR-279
+  as the sole unblocked next node. This status transition grants no capability
+  or scientific/public-use effect.

@@ -1,24 +1,26 @@
 # Next Session Prompt
 
-Continue PR-278 in the isolated worktree
+PR-278 is canonically closed in the isolated worktree
 `/home/cosmosapjw/worktrees/htt-pr278-tier-a-adjudication-20260804` on branch
 `changeset/pr278-tier-a-per-lane-adjudication`.
 
 ## Authority and current state
 
 - Base and verified PR-277 merge: `a7800430660c5a4bd532d8655fc63df03b21496e`.
-- Canonical DAG: 241 valid cards, 172 completed, PR-278 in progress, 37
+- Canonical DAG: 241 valid cards, 173 completed, no foreground card, 37
   pending, 2 terminal blocked, 28 dormant, and PR-151 background-only.
-- Active delivery authority:
+- PR-279 is the sole dependency-ready next node, but it must not start until
+  the exact PR-278 delivery is reviewed and merged by the owner.
+- Active PR-278 authority:
   `docs/research_program/post_pr275/tier_a_adjudication/pr278_delivery_spec_v2.yaml`.
 - The predecessor `pr278_spec.yaml` and v1 policy are closed-panel inputs. Do
   not rewrite them; closed assignments bind their exact bytes.
 - The owner authorized one content history slot, one closeout commit, and one
-  final non-draft review PR. Push is allowed only inside that single attended
-  transaction. Approval, merge, force-push, ruleset mutation, data execution,
-  capability promotion, and scientific public release remain unauthorized.
+  final non-draft review PR. Approval, merge, force-push, ruleset mutation,
+  data execution, capability promotion, and scientific public release remain
+  unauthorized.
 
-## Current result
+## Closed result
 
 - Frozen source: 28 family rows, 20 candidates, 19 independently reviewable,
   T-OMK held for PR-192, and eight event-gated families.
@@ -29,9 +31,7 @@ Continue PR-278 in the isolated worktree
 - `GRANT` means only exact-receipt admissibility for later PR-157. It grants no
   `ClaimCapabilityDecision`, readiness, scientific status, CF4 P0 rescue,
   public use, native status, posterior/evidence result, or family identity.
-- The frozen source resolves changed backlog/status paths through Git snapshot
-  commit `a780043...` plus exact blob hashes; never reinterpret live bytes as
-  the old evidence.
+- Scientific status is `OPEN_UNCHANGED`; public use is false.
 
 ## Preserved review chronology
 
@@ -44,30 +44,28 @@ Continue PR-278 in the isolated worktree
    delivery-policy pointer and synthesized reviewer identity. Both strict-valid
    failures are preserved; do not vote them away.
 4. Remediation run `pr278-principal-remediation-r1-20260804` independently
-   re-adjudicated exactly the six affected rows. Result SHA
-   `13ef70783b74f4fe3520d604be234ca62e1ac05c2d02651015337a889c655a49`
-   is strict-valid and binds exact reviewer/author principals.
-5. Complete repaired pre-freeze review result `1578b8f7...` passed. Immutable
-   content R1 then failed on exact commit `f5e2ff7a...`: `check-source` read
-   live status against its frozen base hash. Strict result `aef9ad24...` and
-   coverage `13f3027f...` preserve the blocker. The current repair resolves
-   DAG sources from Git snapshot `a780043...`, promotes mapper result identity
-   into a tracked compact receipt, and adds `check-source` to policy/tests.
+   re-adjudicated exactly the six affected rows. Its strict-valid result binds
+   exact reviewer/author principals.
+5. Immutable content R1 failed on exact commit `f5e2ff7a...`: `check-source`
+   read live status against its frozen base hash. Its strict result and normally
+   closed run preserve the blocker.
+6. The amended content resolves historical inputs from Git snapshot
+   `a780043...`, carries a compact self-addressed mapper receipt, and requires
+   `check-source`. Immutable content R2 passed all 21 policy cells on exact
+   content commit `34ec32aa...`, seal `35fae6bf...`, result `c5ddc511...`, and
+   normally closed run summary `2fed1a5e...`.
 
-## Required continuation
+## Delivery continuation
 
-1. Run the complete repaired validation set below.
-2. Amend the authorized content slot in place, verify the branch remains one
-   PR-278 commit ahead, and create a fresh candidate seal.
-3. Register a new exact-content blind review. Preserve any finding and do not
-   use R1 or majority vote as acceptance.
-4. Only after a PASS, mark PR-278 complete, synchronize mirrors/generated
-   status/handoffs, and use the one separate closeout commit.
-5. Seal and review the exact two-commit candidate, rehearse against the latest
-   target, inventory open PRs, then use the single attended review-PR
-   transaction. Do not merge or approve it.
+This handoff is intentionally frozen before the owner-authorized attended
+delivery transaction. If no PR exists, seal and independently review the exact
+two-commit candidate, rehearse it against the latest target, bind a fresh open-
+PR inventory, and create exactly one non-draft review PR through the attended
+publisher. If that PR already exists, do not recreate or mutate it: wait for
+owner review/merge. After merge, verify remote ancestry and begin PR-279 from a
+fresh isolated worktree.
 
-## Required commands
+## Required verification
 
 ```bash
 python -B scripts/codex_harness/run_pr278_tier_a_adjudication.py probe

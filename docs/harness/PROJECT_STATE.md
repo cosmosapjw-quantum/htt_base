@@ -21,16 +21,15 @@ runs.
 ## Canonical orchestration state
 
 - DAG: 241 cards; validation passes.
-- Completed: 172/241 = 71.37%.
-- Dependency-weighted completion: 75.00%.
+- Completed: 173/241 = 71.78%.
+- Dependency-weighted completion: 75.33%.
 - Critical-path completion: 98.70%.
-- In progress: PR-278.
+- In progress: none.
 - Pending: 37.
 - Blocked terminal receipts: PR-190 and PR-172.
 - Dormant external/native: 28.
 - Background acquisition: PR-151 only.
-- No later node is dependency-ready while PR-278 remains in progress. PR-279
-  requires PR-278 success.
+- PR-279 is the sole dependency-ready next node.
 
 The lower count percentage reflects atomic registration of PR-276 through
 PR-294; it is bookkeeping, not scientific regression or readiness evidence.
@@ -139,8 +138,14 @@ mapper result identity through a compact self-addressed receipt, and requires
 source regeneration in the delivery policy. Focused validation passes 258
 tests. R1 is invalidated by these bytes and cannot authorize completion.
 
-Canonical orchestration remains `in_progress: PR-278`. The authorized content
-slot must be amended, newly sealed, and pass a fresh immutable review before
-the separate closeout commit is used. The final push is permitted only inside
-one attended non-draft review-PR transaction; approval, merge, ruleset change,
+Immutable content R2 passed all 21 policy cells on amended content commit
+`34ec32aa...` and seal `35fae6bf...`; result `c5ddc511...`, coverage
+`c86fcc64...`, and oracle `266822a5...` report no blocker. Canonical PR-278 is
+therefore `COMPLETED_SUCCESS`, while scientific status remains `OPEN_UNCHANGED`
+and public use remains false.
+
+Current orchestration is 173/241 completed, no foreground card, with PR-279 as
+the sole dependency-ready next node. The closeout bytes still require an exact
+final seal/review, latest-target integration, fresh inventory, and the single
+attended non-draft review-PR transaction. Approval, merge, ruleset change,
 data execution, capability promotion, and scientific release remain blocked.

@@ -3006,13 +3006,18 @@ is produced.
 | attended-policy targeted selection | COMMAND ERROR, THEN PASS | The first coordinator command named a nonexistent PR-277 test node and collected no tests. The corrected PR-276 attended-policy plus PR-278 policy-boundary invocation passed 11 tests without changing code or expectations. |
 | source-layout collection | PASS | `10697/10756 collected`, 59 deselected; zero collection errors. |
 | smoke | PASS | `8 passed`, 10748 deselected; eight declared legacy deprecation warnings. |
-| strict DAG/status and mirrors | PASS | `241 PRs, DAG valid`; PR-278 is in progress and canonical/compatibility mirrors are synchronized. |
+| strict DAG/status and mirrors before closeout | PASS | `241 PRs, DAG valid`; PR-278 is in progress and canonical/compatibility mirrors are synchronized. |
 | immutable content R1 | FAIL, PRESERVED | Exact content `f5e2ff7a...`, seal `8d950d45...`. The reviewer reproduced `check-source` failing because live PR status was compared with the base-snapshot hash while tracked-byte verification remained green. Strict result `aef9ad24...`, coverage `13f3027f...`, oracle `93a362bb...`, merged result `8be784b7...`, and normally closed run bind the same failure. Claim firewalls and all other checks passed; majority vote was forbidden. |
 | R1 review-process errors | PRESERVED, NON-ACCEPTANCE | A coordinator `merge_results.py --help` invocation generated a premature zero-result aggregate `55ba0235...`. The reviewer's first summary-shaped result then failed schema-v3 validation, producing rejected aggregate `f23ea5e4...`. The same reviewer repaired only its assignment-owned envelope/coverage; strict validation and normal close then passed. Neither error is acceptance evidence. |
-| source-regeneration repair | IMPLEMENTED; FRESH REVIEW REQUIRED | Status/backlog now resolve from exact Git snapshot `a780043...`; the local mapper result is represented by a compact self-addressed tracked receipt that binds result SHA `515ab62f...`; policy and focused tests require `check-source`. Tracked source/panel/ledger identities were regenerated without changing the 14/12/1/1 or 62-INCONCLUSIVE scientific dispositions. R1 is invalidated. |
+| source-regeneration repair | IMPLEMENTED; R2 REVIEWED | Status/backlog now resolve from exact Git snapshot `a780043...`; the local mapper result is represented by a compact self-addressed tracked receipt that binds result SHA `515ab62f...`; policy and focused tests require `check-source`. Tracked source/panel/ledger identities were regenerated without changing the 14/12/1/1 or 62-INCONCLUSIVE scientific dispositions. R1 is invalidated. |
+| immutable content R2 | PASS | Exact content `34ec32aa...`, tree `bab43765...`, and seal `35fae6bf...`. All 21 registered policy cells passed. Strict result `c5ddc511...`, coverage `c86fcc64...`, five-mutation oracle `266822a5...`, merged result `2a0789ae...`, and normally closed summary `2fed1a5e...` bind the same candidate and report no blocker. |
+| R2 review-process error | PRESERVED, NON-ACCEPTANCE | The reviewer invoked execution-style `merge_results.py --help`, producing aggregate `dc4a5b5e...` before coordinator adjudication. It is excluded. The coordinator merged only after the sole strict-valid result existed and then closed the run normally. |
+| canonical closeout | PASS; SCIENCE OPEN UNCHANGED | PR-278 is `COMPLETED_SUCCESS`; `173/241 = 71.78%`, dependency weighted `75.33%`, critical path `98.70%`, no foreground card, and PR-279 is the sole unblocked next node. Canonical/machine mirrors and generated status surfaces are synchronized. No capability or public-use transition follows. |
+| closeout compile-only validation | PATH ERRORS PRESERVED, THEN PASS | Two invocations named nonexistent `common` and `htt/htt/common` directories and printed `Can't list`; they are not passes. The corrected `htt/src/common`, harness-script, and contract-test compile command passed without changing code or expectations. |
 
-PR-278 remains in progress. The owner-authorized content slot is being amended
-for the R1 blocker; its fresh immutable review must pass before the separate
-closeout commit. Push is permitted only inside one attended non-draft review-PR
-transaction. Approval, merge, force-push, ruleset mutation, data execution,
-capability promotion, and scientific public release remain unauthorized.
+PR-278 content is closed and immutable R2 authorizes the canonical status
+transition. The separate closeout commit still requires an exact final seal,
+independent review, latest-target integration, and fresh PR inventory before
+one attended non-draft review-PR transaction. Approval, merge, force-push,
+ruleset mutation, data execution, capability promotion, and scientific public
+release remain unauthorized.
