@@ -1463,7 +1463,9 @@ def _status_rows(records: dict[str, ArtifactRecord]) -> list[dict[str, object]]:
                 implementation_scope=record.manifest.implementation_scope,
                 claim_tier=record.manifest.claim_tier,
                 implemented=True,
-                smoke_tested=True,
+                # Legacy export rows do not carry PR-280 exact execution
+                # receipt bindings, so they cannot set generic smoke readiness.
+                smoke_tested=False,
                 production_validated=(
                     record.manifest.production_status == "production_validated"
                 ),

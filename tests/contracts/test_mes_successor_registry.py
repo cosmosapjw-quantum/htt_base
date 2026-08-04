@@ -8,6 +8,7 @@ from pathlib import Path
 import pytest
 import yaml
 
+import common.mes_successor_registry as mes_registry
 from common.mes_successor_registry import (
     CURRENT_SUCCESSOR_ID,
     DEFAULT_ACTIVE_PYTHON_ROOTS,
@@ -40,6 +41,9 @@ from common.mes_successor_registry import (
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
+PACKAGED_PR124_RECEIPT = (
+    REPO_ROOT / "htt/src/common/resources/pr124_mes_authority_table.json"
+)
 
 
 def _digest(path: Path) -> str:
@@ -221,6 +225,83 @@ def test_current_successor_is_available_and_pr124_authorized() -> None:
     # is re-run by validate_mes_successor_registry below)
     assert pointer.scientific_authority is True
     assert registry.as_payload()["release_claim_allowed"] is True
+
+
+def test_packaged_pr124_receipt_is_byte_identical_to_historical_authority() -> None:
+    historical = REPO_ROOT / "docs/generated/pr124_mes_authority_table.json"
+
+    assert PACKAGED_PR124_RECEIPT.read_bytes() == historical.read_bytes()
+    assert _digest(PACKAGED_PR124_RECEIPT) == mes_registry.PR124_AUTHORITY_RECEIPT_SHA256
+
+
+def test_repository_layout_never_falls_back_when_receipt_is_missing(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    module_path = tmp_path / "htt/src/common/mes_successor_registry.py"
+    module_path.parent.mkdir(parents=True)
+    module_path.write_text("# identity fixture\n", encoding="utf-8")
+    monkeypatch.setattr(mes_registry, "__file__", str(module_path))
+    monkeypatch.setattr(
+        mes_registry.resources,
+        "files",
+        lambda package: REPO_ROOT / "htt/src/common",
+    )
+    mes_registry._live_receipt_pin_check.cache_clear()
+
+    with pytest.raises(MesRegistryError, match="package fallback is forbidden"):
+        mes_registry._live_receipt_pin_check()
+
+
+def test_installed_layout_uses_only_hash_pinned_package_resource(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    installed_module = tmp_path / "site-packages/common/mes_successor_registry.py"
+    installed_module.parent.mkdir(parents=True)
+    installed_module.write_text("# installed fixture\n", encoding="utf-8")
+    resources_root = tmp_path / "package/common"
+    resource = resources_root / "resources/pr124_mes_authority_table.json"
+    resource.parent.mkdir(parents=True)
+    resource.write_bytes(PACKAGED_PR124_RECEIPT.read_bytes())
+    monkeypatch.setattr(mes_registry, "__file__", str(installed_module))
+    monkeypatch.setattr(mes_registry.resources, "files", lambda package: resources_root)
+    mes_registry._live_receipt_pin_check.cache_clear()
+
+    assert (
+        mes_registry._live_receipt_pin_check()
+        == mes_registry.PR124_AUTHORITY_RECEIPT_SHA256
+    )
+    resource.write_bytes(resource.read_bytes() + b"\n")
+    mes_registry._live_receipt_pin_check.cache_clear()
+    with pytest.raises(MesRegistryError, match="do not match the module pin"):
+        mes_registry._live_receipt_pin_check()
+
+
+def test_installed_layout_rejects_unreadable_package_resource(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    class UnreadableResource:
+        def joinpath(self, *parts: str) -> "UnreadableResource":
+            return self
+
+        def is_file(self) -> bool:
+            return True
+
+        def read_bytes(self) -> bytes:
+            raise OSError("synthetic unreadable resource")
+
+    installed_module = tmp_path / "site-packages/common/mes_successor_registry.py"
+    installed_module.parent.mkdir(parents=True)
+    installed_module.write_text("# installed fixture\n", encoding="utf-8")
+    monkeypatch.setattr(mes_registry, "__file__", str(installed_module))
+    monkeypatch.setattr(
+        mes_registry.resources,
+        "files",
+        lambda package: UnreadableResource(),
+    )
+    mes_registry._live_receipt_pin_check.cache_clear()
+
+    with pytest.raises(MesRegistryError, match="unreadable"):
+        mes_registry._live_receipt_pin_check()
 
 
 @pytest.mark.parametrize(

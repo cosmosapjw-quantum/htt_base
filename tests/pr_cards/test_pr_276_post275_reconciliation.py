@@ -19,6 +19,7 @@ PUBLICATION_POLICY = (
 )
 RUNNER = ROOT / "scripts/codex_harness/run_pr276_reconciliation.py"
 POST275_IDS = [f"PR-{number:03d}" for number in range(276, 295)]
+PR280_ROOT_CAUSE_IDS = ["PR-295", "PR-296", "PR-297"]
 COMMON_CARD_FIELDS = {
     "owner",
     "depends",
@@ -114,10 +115,14 @@ def test_verified_pr190_merge_and_terminal_entry_contract_are_frozen() -> None:
 def test_post275_cards_are_atomic_complete_and_claim_limited() -> None:
     backlog = _yaml(BACKLOG)
     cards = {card["id"]: card for card in backlog["prs"]}
-    assert len(cards) == 241
-    assert list(cards)[-19:] == POST275_IDS
+    assert len(cards) == 244
+    assert list(cards)[-22:-3] == POST275_IDS
+    assert list(cards)[-3:] == PR280_ROOT_CAUSE_IDS
     assert set(POST275_IDS) <= set(backlog["policy"]["topological_order"])
-    for pr_id in POST275_IDS:
+    assert set(PR280_ROOT_CAUSE_IDS) <= set(
+        backlog["policy"]["topological_order"]
+    )
+    for pr_id in (*POST275_IDS, *PR280_ROOT_CAUSE_IDS):
         card = cards[pr_id]
         assert not (COMMON_CARD_FIELDS - set(card)), pr_id
         assert card["claim_tier_ceiling"] == "diagnostic_only"
@@ -172,6 +177,18 @@ def test_post275_dependency_dag_and_pending_amendments_match_spec() -> None:
     for pr_id, dependencies in spec["pending_card_dependency_amendments"].items():
         assert set(dependencies) <= set(additions[pr_id])
     assert backlog["policy"]["dependency_overlays"]["authority"] == "PR-276"
+    root_amendment = spec["pr280_root_cause_amendment"]
+    for pr_id in PR280_ROOT_CAUSE_IDS:
+        assert cards[pr_id]["dependency_contracts"] == root_amendment[
+            "successor_dependencies"
+        ][pr_id]
+    for pr_id in root_amendment["direct_consumers"]:
+        assert cards[pr_id]["dependency_contracts"] == [
+            {"upstream_id": "PR-280", "mode": "requires_terminal_receipt"}
+        ]
+        assert set(root_amendment["required_successors_for_each_direct_consumer"]) <= set(
+            additions[pr_id]
+        )
 
     result = _run(
         sys.executable,
@@ -182,7 +199,7 @@ def test_post275_dependency_dag_and_pending_amendments_match_spec() -> None:
         "--strict-rescue-slice",
     )
     assert result.returncode == 0, result.stdout + result.stderr
-    assert "OK: 241 PRs, DAG valid" in result.stdout
+    assert "OK: 244 PRs, DAG valid" in result.stdout
 
 
 def test_status_is_total_and_preserves_negative_chronology() -> None:
@@ -201,7 +218,7 @@ def test_status_is_total_and_preserves_negative_chronology() -> None:
     if status.get("in_progress") is not None:
         assert status["in_progress"] not in states
         states[status["in_progress"]] = "in_progress"
-    assert len(states) == 241
+    assert len(states) == 244
     assert states["PR-190"] == "blocked"
     assert states["PR-172"] == "blocked"
     assert states["PR-184"] == "completed"
@@ -249,6 +266,9 @@ def test_status_is_total_and_preserves_negative_chronology() -> None:
         assert status["execution_resolutions"]["PR-276"][
             "resolution"
         ] == "COMPLETED_SUCCESS"
+    for pr_id in PR280_ROOT_CAUSE_IDS:
+        assert states[pr_id] == "pending"
+        assert pr_id not in resolutions
 
 
 def test_only_defined_g1_through_g8_are_registered() -> None:
@@ -352,9 +372,9 @@ def test_generated_status_surfaces_cover_current_dag_and_worktree() -> None:
     ledger = json.loads(
         (ROOT / "docs/generated/claim_ledger.json").read_text(encoding="utf-8")
     )
-    assert snapshot["metadata"]["total_prs"] == 241
-    assert len(snapshot["rows"]) == 241
-    assert len(ledger["rows"]) == 241
+    assert snapshot["metadata"]["total_prs"] == 244
+    assert len(snapshot["rows"]) == 244
+    assert len(ledger["rows"]) == 244
     short_head = _run("git", "rev-parse", "--short=8", "HEAD").stdout.strip()
     short_parent = _run("git", "rev-parse", "--short=8", "HEAD^").stdout.strip()
     allowed_sources = {f"{short_head}+dirty", f"{short_parent}+dirty"}
@@ -419,7 +439,7 @@ def test_generated_status_surfaces_cover_current_dag_and_worktree() -> None:
         assert hashlib.sha256(path.read_bytes()).hexdigest() == expected
     assert snapshot["metadata"]["worktree_state"] == "dirty"
     matrix = (ROOT / "docs/generated/status_matrix.md").read_text(encoding="utf-8")
-    assert "| Total PRs | 241 |" in matrix
+    assert "| Total PRs | 244 |" in matrix
     assert "| In progress | 1 |" in matrix or "| In progress | 0 |" in matrix
 
 

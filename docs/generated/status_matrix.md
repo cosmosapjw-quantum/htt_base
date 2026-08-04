@@ -7,13 +7,13 @@ Manual status counts are prohibited; use `docs/generated/status_snapshot.json` a
 
 | Metric | Value |
 | --- | ---: |
-| Total PRs | 241 |
+| Total PRs | 244 |
 | Completed PRs | 174 |
-| Blocked PRs | 2 |
+| Blocked PRs | 3 |
 | Skipped PRs | 0 |
 | In progress | 0 |
 | Background in progress | 1 |
-| Pending PRs | 36 |
+| Pending PRs | 38 |
 | Dormant external PRs | 28 |
 
 | Metadata | Value |
@@ -22,19 +22,19 @@ Manual status counts are prohibited; use `docs/generated/status_snapshot.json` a
 | Implementation scope | `common` |
 | Claim tier | `diagnostic_only` |
 | Transfer source | `none` |
-| Config hash | `453bcb0616a61c31ba4854b660649d1a15e08e78a8bfe9999f4f0e83ea263bd8` |
-| Input hashes | `docs/codex_handoff/pr_backlog.yaml:fa83b21fdf979b667013d513e6b86d5100fa3200fc620324b4463f17e481e99b`<br>`docs/codex_handoff/pr_status.yaml:e14abee51ae8c612e2fb6124d159ccb6d489c292d79e6e9ecc5ef32bfaf7a71f`<br>`docs/codex_handoff/artifact_gate_outputs.yaml:59e738c74f7cf1ea54151c88d79d07d3c9e62d9bbd013a8cbfa35bbb2a316ba4` |
+| Config hash | `dee1b117ab24b9fc4fc058355e8fb8a6b8104d0a21e9deee263c92f8d94d6245` |
+| Input hashes | `docs/codex_handoff/pr_backlog.yaml:2831ae786028a8b268928dcd048aeaadcea2c113cc71cd338c6faa36c149ce68`<br>`docs/codex_handoff/pr_status.yaml:07163b2677654b2bb0998098827609bfced22bfe8e26af34515b72d6ce8d74ff`<br>`docs/codex_handoff/artifact_gate_outputs.yaml:59e738c74f7cf1ea54151c88d79d07d3c9e62d9bbd013a8cbfa35bbb2a316ba4`<br>`docs/research_program/post_pr275/test_execution_receipts_v4.yaml:740b87eb78b431ed00931ac87097279d180dc2e4cc5bb00c044e11c1341f1f2c`<br>`docs/research_program/post_pr275/harness_profiles_v4.yaml:12205d9334c3577c0a623fbf0b4e8373bbe51ff2f421ca18b2a474229382a912` |
 | Sky support status | `not_directional` |
 | Null/mock status | `not_statistical` |
-| Caveats | DAG completion is project bookkeeping only and is not scientific readiness.<br>Rows never promote external-transfer outputs to native solver validation.<br>DAG completion, artifact readiness, allowed use, and production validation are separate axes.<br>production_validated remains false without an exact factory-issued ClaimCapabilityDecision.<br>Execution resolutions are process receipts only and never promote scientific status or claim tier. |
-| Generating command | `python -m common.status_snapshot --write docs/generated/status_snapshot.json` |
-| Source commit | `404c4907+dirty` |
+| Caveats | DAG completion is project bookkeeping only and is not scientific readiness.<br>Rows never promote external-transfer outputs to native solver validation.<br>DAG completion, artifact readiness, allowed use, and production validation are separate axes.<br>production_validated remains false without an exact factory-issued ClaimCapabilityDecision.<br>Execution resolutions are process receipts only and never promote scientific status or claim tier.<br>Verified smoke receipts set only generic process readiness; they do not grant a ClaimCapability. |
+| Generating command | `python -m common.status_snapshot --backlog docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --source-commit 2f5d2b61da30c72594aece60e9e601066378a7c3 --execution-receipts docs/research_program/post_pr275/test_execution_receipts_v4.yaml --write docs/generated/status_snapshot.json` |
+| Source commit | `2f5d2b61da30c72594aece60e9e601066378a7c3` |
 | Worktree state | `dirty` |
 
 | Owner | Rows |
 | --- | ---: |
-| `BASS` | 13 |
-| `COMMON` | 131 |
+| `BASS` | 15 |
+| `COMMON` | 132 |
 | `HTT` | 46 |
 | `MIO` | 14 |
 | `OBSSTAT` | 37 |
@@ -42,28 +42,28 @@ Manual status counts are prohibited; use `docs/generated/status_snapshot.json` a
 | State | Rows |
 | --- | ---: |
 | `background_in_progress` | 1 |
-| `blocked` | 2 |
+| `blocked` | 3 |
 | `completed` | 174 |
 | `dormant_external` | 28 |
-| `pending` | 36 |
+| `pending` | 38 |
 
 | Claim Tier | Rows |
 | --- | ---: |
-| `blocked` | 2 |
-| `diagnostic_only` | 239 |
+| `blocked` | 3 |
+| `diagnostic_only` | 241 |
 
 | Artifact Readiness | Rows |
 | --- | ---: |
-| `blocked` | 2 |
+| `blocked` | 3 |
 | `generated` | 174 |
-| `missing` | 65 |
+| `missing` | 67 |
 
 | Allowed Use | Rows |
 | --- | ---: |
-| `internal_only` | 241 |
+| `internal_only` | 244 |
 
 | Artifact Mode | Rows |
 | --- | ---: |
-| `governance_diagnostic` | 241 |
+| `governance_diagnostic` | 244 |
 
 This matrix is a diagnostic-only DAG rendering. It does not certify solver validation, posterior evidence, native transfer validation, or family-ID evidence.

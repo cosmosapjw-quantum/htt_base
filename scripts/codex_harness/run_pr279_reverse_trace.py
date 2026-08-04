@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -52,6 +53,44 @@ def _module():
     import common.pr_retrace as pr_retrace
 
     return pr_retrace
+
+
+def _pr280_inventory_resolution() -> tuple[str, tuple[str, ...]] | None:
+    """Resolve PR-280 debt only from its strict, complete receipt set."""
+
+    classification = PROGRAM_DIR / "full_inventory_v4_classification.json"
+    receipt = PROGRAM_DIR / "full_inventory_v4_receipt.json"
+    if not classification.exists() and not receipt.exists():
+        return None
+    if not classification.is_file() or not receipt.is_file():
+        raise RuntimeError("PR-280 inventory closeout artifacts are partial or non-regular")
+    source = str(ROOT / "htt/src")
+    if source not in sys.path:
+        sys.path.insert(0, source)
+    from common.failure_inventory_v4 import validate_inventory_artifacts
+
+    validated = validate_inventory_artifacts(
+        ROOT, require_closeout_acceptance=False
+    )
+    active_core_count = validated.get("active_core_count")
+    if not isinstance(active_core_count, int) or isinstance(active_core_count, bool):
+        raise RuntimeError("PR-280 receipt active-core count is malformed")
+    classification_payload = _json_mapping(classification)
+    raw_cases = classification_payload.get("cases")
+    if not isinstance(raw_cases, list):
+        raise RuntimeError("PR-280 classification cases are malformed")
+    active_core_nodes = tuple(
+        sorted(
+            str(row["case_identity"])
+            for row in raw_cases
+            if isinstance(row, dict)
+            and row.get("bucket") == "ACTIVE_CORE_REGRESSION"
+            and isinstance(row.get("case_identity"), str)
+        )
+    )
+    if len(active_core_nodes) != active_core_count:
+        raise RuntimeError("PR-280 active-core node count does not reconcile")
+    return hashlib.sha256(receipt.read_bytes()).hexdigest(), active_core_nodes
 
 
 def _json_mapping(path: Path) -> dict[str, object]:
@@ -152,11 +191,21 @@ def _build_documents() -> dict[str, dict[str, object]]:
     module.validate_recompute_matrix(
         recompute, ledger=ledger, inventory=inventory
     )
+    pr280_resolution = _pr280_inventory_resolution()
+    pr280_receipt_sha256 = None if pr280_resolution is None else pr280_resolution[0]
+    pr280_active_core_nodes = None if pr280_resolution is None else pr280_resolution[1]
     failure_debt = module.build_failure_debt(
-        backlog=backlog, inventory=inventory
+        backlog=backlog,
+        inventory=inventory,
+        pr280_inventory_receipt_sha256=pr280_receipt_sha256,
+        pr280_active_core_nodes=pr280_active_core_nodes,
     )
     module.validate_failure_debt(
-        failure_debt, backlog=backlog, inventory=inventory
+        failure_debt,
+        backlog=backlog,
+        inventory=inventory,
+        pr280_inventory_receipt_sha256=pr280_receipt_sha256,
+        pr280_active_core_nodes=pr280_active_core_nodes,
     )
     runbooks = module.build_data_runbooks(backlog=backlog)
     module.validate_data_runbooks(runbooks, backlog=backlog)

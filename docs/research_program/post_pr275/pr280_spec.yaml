@@ -1,0 +1,387 @@
+schema: htt.post_pr275.hermetic_harness_v4.v1
+document_id: PR280-HERMETIC-HARNESS-V4
+status: ACTIVE_DELIVERY_SPEC
+pr_id: PR-280
+change_set_id: CS-PR280-HERMETIC-HARNESS-V4
+publication_group_id: PG-PR280-HERMETIC-HARNESS-V4
+owner: COMMON
+claim_tier_ceiling: diagnostic_only
+scope: pre_solver_test_packaging_and_failure_inventory
+publication_policy: docs/research_program/post_pr275/pr280_publication_policy.json
+
+delivery_authorization:
+  implementation_changes: authorized_by_current_user_request
+  content_commit: authorized_once_by_current_user_request
+  closeout_commit: authorized_once_by_current_user_request
+  push: authorized_only_inside_single_attended_review_pr_transaction
+  create_pr: authorized_once_non_draft_review_pr
+  merge: not_authorized
+  force_push: not_authorized
+  approval: not_authorized
+  ruleset_mutation: not_authorized_without_G_CI_H
+  observed_data_execution: not_authorized
+  capability_promotion: not_authorized
+
+authority:
+  canonical_card: docs/codex_handoff/pr_backlog.yaml#PR-280
+  roadmap: docs/research_program/post_pr275/pr276_spec.yaml
+  dependency:
+    pr_id: PR-279
+    mode: requires_success
+    verified_merge_commit: 315277077e27e8493342f5b219da152197bad059
+  historical_receipts:
+  - docs/PR_DELTAS/pr-275.md
+  - docs/harness/VALIDATION_LEDGER.md
+  preservation_rule: >-
+    The two historical 406-failure records remain historical evidence. Their
+    one-pass-count disagreement is not corrected in place and neither record
+    is accepted as the PR-280 baseline.
+
+execution_profiles:
+  manifest: docs/research_program/post_pr275/harness_profiles_v4.yaml
+  schema: htt.harness_profiles.v4
+  required_profile_ids:
+  - exact
+  - current-active
+  - scientific
+  - package
+  - data:planck
+  - data:cf4
+  - data:hsc-kids
+  - data:act
+  - data:desi
+  - data:jwst
+  - formal:wolfram-xact
+  - formal:sympy
+  - formal:sage-singular
+  - formal:lean
+  - publication
+  - full-inventory
+  compatibility_profile_ids:
+  - collect
+  - smoke
+  - fast
+  - active-import
+  invariants:
+  - Every pytest profile clears or explicitly replaces root addopts and disables the cache provider.
+  - Smoke and fast use versioned explicit pytest node IDs; marker-only selection is forbidden.
+  - Active import provenance is a separate lane and records resolved module source paths.
+  - Data profiles execute tests or preflight only; they never admit data or authorize observed execution.
+  - Formal profiles report unavailable axes without transferring authority to another axis.
+  - Publication and full-inventory profiles reject every waiver.
+  - A focused-development waiver, when explicitly registered, is never receipt-eligible and never sets smoke_tested.
+  changed_surface_routing:
+    status: local_declarative_only
+    ruleset_gate: G-CI-H
+    github_ruleset_mutation: forbidden_without_separate_human_authorization
+
+diagnostic_profile_results:
+  authority: process_diagnostics_only_not_scientific_or_cas_validation
+  exact: {passed: 121, failed: 0}
+  current_active: {passed: 194, failed: 0}
+  scientific: {passed: 207, failed: 0}
+  package: {passed: 3, failed: 0}
+  collect: {collected: 10845, failed: 0}
+  smoke: {passed: 8, failed: 0}
+  fast: {passed: 6, failed: 0}
+  active_import: {source_layout_modules: 6, mismatches: 0}
+  data_preflight:
+    planck: {passed: 54, skipped: 0, failed: 0}
+    cf4: {passed: 15, skipped: 6, failed: 0, quarantine_preserved: true}
+    hsc_kids: {passed: 54, skipped: 0, failed: 0}
+    act: {passed: 23, skipped: 0, failed: 0}
+    desi: {passed: 33, skipped: 1, failed: 0}
+    jwst: {passed: 21, skipped: 7, failed: 0}
+  formal_tool_availability:
+    wolfram_xact: UNAVAILABLE_XACT_ROOT
+    sympy: AVAILABLE_NOT_A_VERDICT
+    sage_singular: AVAILABLE_NOT_A_VERDICT
+    lean: AVAILABLE_NOT_A_VERDICT
+  publication:
+    passed: 30
+    failed: 28
+    disposition: PUBLICATION_DEBT_OPEN
+    principal_causes:
+    - clean worktree lacks the immutable legacy prefix required by PDF claim-lint fixtures
+    - release-evidence graph source hashes are stale against current production bytes
+    - current manuscript figure outputs are stale after the DAG/status update
+    rule: >-
+      Publication profile failures are disclosed and never waived. They block
+      publication readiness but do not convert into scientific-core success or
+      replace the three separately registered active-core root causes.
+
+fresh_inventory:
+  command:
+  - python
+  - -m
+  - pytest
+  - -p
+  - no:cacheprovider
+  - -o
+  - addopts=
+  - --junitxml=artifacts/full_inventory.xml
+  root_addopts_cleared: true
+  cache_provider_disabled: true
+  junit_path: artifacts/full_inventory.xml
+  junit_tracking: ephemeral_hash_bound_input
+  receipt_path: docs/research_program/post_pr275/full_inventory_v4_receipt.json
+  classification_path: docs/research_program/post_pr275/full_inventory_v4_classification.json
+  exact_failure_buckets:
+  - ACTIVE_CORE_REGRESSION
+  - STALE_EXPECTATION
+  - MISSING_HISTORICAL_ARTIFACT
+  - LEGACY_BYTE_REPLAY_FAILURE
+  - OPTIONAL_EXTERNAL_TOOL
+  - DATA_NOT_ADMITTED
+  - NATIVE_NOT_AVAILABLE
+  - CF4_QUARANTINE
+  - PUBLICATION_DEBT
+  - UNKNOWN_UNCLASSIFIED
+  bucket_semantics:
+    ACTIVE_CORE_REGRESSION: >-
+      A failure in a current supported contract or implementation path after
+      its declared repository inputs and required dependencies are present.
+      This bucket activates the downstream stop rule.
+    STALE_EXPECTATION: >-
+      A test still asserts a superseded, future-skeleton, or otherwise
+      non-current expectation; it is not evidence that the current contract
+      passed.
+    MISSING_HISTORICAL_ARTIFACT: >-
+      Exact legacy replay requires a preserved artifact that is intentionally
+      absent from a clean checkout. The missing input is recorded, never
+      reconstructed or silently substituted.
+    LEGACY_BYTE_REPLAY_FAILURE: >-
+      A legacy exact-byte or content-identity assertion changes across a
+      declared interpreter/numerical environment while current semantic tests
+      remain separately passing.
+    OPTIONAL_EXTERNAL_TOOL: >-
+      An explicitly optional executable, library, compiler, or formal engine
+      is absent; only its named profile or proof grade is unavailable.
+    DATA_NOT_ADMITTED: >-
+      External observational or simulation data lacks a valid admission or
+      execution-authorization receipt. No acquisition or observed run is
+      inferred from this bucket.
+    NATIVE_NOT_AVAILABLE: >-
+      The external native solver or morphology atlas is unavailable. No
+      surrogate or family-identification claim is permitted.
+    CF4_QUARANTINE: >-
+      A test correctly preserves the registered CF4 P0 quarantine or fails
+      because that quarantined lane cannot be treated as an active input.
+    PUBLICATION_DEBT: >-
+      A current report, PDF, figure, bibliography, or publication freeze
+      surface is absent or stale, without implying a scientific-core pass.
+    UNKNOWN_UNCLASSIFIED: >-
+      No bounded disposition is supported. This must be zero for successful
+      PR-280 closeout and cannot be matched by a fallback rule.
+  rules:
+  - Every non-pass JUnit case receives exactly one bucket and one registered rule identity.
+  - Classification uses exact node identity plus bounded failure evidence after replacing only the execution checkout root, user-home root, and pytest temporary-run root; path-only broad defaults are forbidden.
+  - UNKNOWN_UNCLASSIFIED must be zero before successful closeout.
+  - ACTIVE_CORE_REGRESSION must be zero before any downstream scientific PR starts.
+  - Optional or native absence blocks only its named profile or proof grade.
+  - A cache-free execution receipt never changes scientific status or grants a ClaimCapability.
+  count_observability:
+    passed_or_xpassed_case_elements: >-
+      Pytest JUnit XML does not distinguish an ordinary pass from XPASS, so
+      the baseline records pass-like testcase elements and never invents an
+      XPASS count.
+    deselected: >-
+      Pytest JUnit XML does not represent deselected items. The receipt records
+      this limitation instead of asserting a synthetic zero.
+    subtests: >-
+      Multiple non-pass subtest children are preserved with ordinal case
+      identities. Passing subtests are not individually represented, so the
+      suite-declared test count and extra declared subtest units remain
+      separate raw counts rather than being folded into pass-like testcase
+      elements.
+  stop_rule: >-
+    Any ACTIVE_CORE_REGRESSION stops PR-281 through PR-294. PR-280 must report
+    the exact failing nodes and bind one separately registered root-cause work
+    unit to each failure type; it must not hide or bulk-reclassify the failure.
+  terminal_inventory_candidate:
+    outcome: COMPLETED_FAILED_WITH_RECEIPT
+    execution_source_commit: 315277077e27e8493342f5b219da152197bad059
+    execution_source_tree: 9c9584bd5e3a3a6c80d0cf9b03feb1861eb8d3fb
+    classification_source_commit: 2f5d2b61da30c72594aece60e9e601066378a7c3
+    classification_source_tree: 28ca9978d96eca21c4b0c8905c9ea141f72b1f60
+    classification_file_sha256: 7dd40dcd7a2723e1467478beae9ce17c033c2ca8551a43e69093e4292fab575e
+    receipt_file_sha256: 66630487b08aa03c374fb05f11b6007bc53336974ed6a8f1970205e139a2123e
+    junit_sha256: df931aa1c82959767a643f7842fc007e2ab627df6216a349446ca7d0d1d3d538
+    junit_counts:
+      collected: 10799
+      suite_declared_tests: 10815
+      subtest_extra_declared_units: 16
+      multi_outcome_containers: 1
+      passed_or_xpassed_case_elements: 10265
+      failed: 458
+      errors: 0
+      skipped: 71
+      xfailed: 19
+    exact_bucket_counts:
+      ACTIVE_CORE_REGRESSION: 3
+      STALE_EXPECTATION: 130
+      MISSING_HISTORICAL_ARTIFACT: 152
+      LEGACY_BYTE_REPLAY_FAILURE: 14
+      OPTIONAL_EXTERNAL_TOOL: 50
+      DATA_NOT_ADMITTED: 26
+      NATIVE_NOT_AVAILABLE: 3
+      CF4_QUARANTINE: 136
+      PUBLICATION_DEBT: 34
+      UNKNOWN_UNCLASSIFIED: 0
+    unknown_count: 0
+    active_core_count: 3
+    success_dependency_satisfied: false
+    scientific_status_after: OPEN_UNCHANGED
+    exact_root_cause_bindings:
+    - failure_node: htt.bass.validation.test_external_code_policy::test_no_external_code_imports_in_production
+      successor_pr: PR-295
+      failure_type: forbidden_external_code_import_in_production
+    - failure_node: htt.bass.spectrum.test_d2_pstf_progressive_closure::test_python_pstf_closure_does_not_regress
+      successor_pr: PR-296
+      failure_type: python_pstf_progressive_closure_regression
+    - failure_node: scripts.codex_harness.test_codex_assets::test_installer_copies_repo_scoped_assets_with_project_harness_config
+      successor_pr: PR-297
+      failure_type: repo_scoped_installer_transitive_context_closure
+    downstream_contract: >-
+      PR-280's terminal receipt may be consumed as negative evidence only.
+      PR-281 through PR-286, PR-288, and PR-289 remain stopped until PR-295,
+      PR-296, and PR-297 each complete successfully.
+
+execution_receipts:
+  execution_schema: common.pytest_execution_evidence.v2
+  binding_schema: htt.harness_receipt_bindings.v4
+  registry_path: docs/research_program/post_pr275/test_execution_receipts_v4.yaml
+  consumer: common.status_snapshot
+  authority_reuse: >-
+    TestExecution.from_pytest_evidence, verify_pytest_selector_inputs, and
+    verify_pytest_environment_inputs remain the only execution-evidence
+    validators. The v4 registry binds an eligible profile and candidate git
+    objects to that existing receipt; it is not a parallel execution authority.
+  required_identity:
+  - pr_id
+  - profile_id
+  - manifest_derived_profile_kind_and_smoke_eligibility
+  - profile_manifest_sha256
+  - common_pytest_execution_evidence_v2_content_sha256
+  - TestExecution.execution_ref
+  - candidate_commit
+  - candidate_tree
+  - waiver_id_null
+  - binding_sha256
+  transitive_subject_closure: >-
+    The reused receipt binds selector inputs, pytest configuration, plugins,
+    conftests, interpreter, and every loaded file-backed import origin. Live
+    validation rehashes those inputs; the wrapper additionally resolves the
+    exact candidate commit/tree from Git.
+  status_rule: >-
+    smoke_tested is true only when a strict receipt validator rechecks the
+    registered manifest, subject bytes, exact profile, zero failures, and an
+    eligible smoke execution. DAG completion, marker labels, caller fields,
+    cached counts, broad-suite waivers, and publication waivers never set it.
+  default_without_valid_receipt: false
+  row_provenance_fields:
+  - smoke_evidence_ref
+  - smoke_execution_ref
+  - smoke_profile_id
+  - smoke_candidate_commit
+  - smoke_candidate_tree
+  non_smoke_profiles: >-
+    exact/current/scientific/package/publication receipts remain named process
+    evidence but cannot set generic smoke readiness. Data and formal profiles
+    are never receipt eligible. Formal availability results cannot be combined
+    or substituted for CAS_CONTRACT or the five-state CAS adjudicator.
+
+gate_annotation_firewall:
+  caller_report_generation_gate_allowlist:
+  - dag_status_row_generated
+  forbidden_alias_examples:
+  - smoke_tested
+  - data_admitted
+  - native_solver_validation
+  - formal_4axis_pass
+  rule: >-
+    Caller annotations may add prose blockers/captions and the single DAG-row
+    generation marker only. Capability/readiness aliases cannot be introduced
+    through report_generation_gates.
+
+pr124_package_portability:
+  historical_receipt: docs/generated/pr124_mes_authority_table.json
+  historical_receipt_mutation: forbidden
+  expected_sha256: 81ad8c382fbe481eaf715b971680199fed5142e2498928cff57ae9d847cc20f3
+  package_resource: common/resources/pr124_mes_authority_table.json
+  lookup_order:
+  - repository_receipt_when_repository_layout_is_present
+  - installed_package_resource_only_when_repository_layout_is_absent
+  fail_closed_rules:
+  - A present repository receipt that is missing, non-regular, symlinked, or hash-mismatched cannot fall back to the package copy.
+  - An absent, non-regular, unreadable, or hash-mismatched package resource blocks successor construction.
+  - The resource copy must be byte-identical to the preserved historical receipt and included in wheel RECORD.
+  - Deep repository governance validation continues to verify the original receipt and bound artifacts; the package copy is not a parallel authority.
+
+failure_map_outputs:
+  existing_debt_projection: docs/research_program/post_pr275/failure_debt.yaml#DEBT-PR280-FRESH-INVENTORY
+  debt_resolution_rule: >-
+    The existing PR-279 debt row becomes RESOLVED_IN_PR280 only when the
+    complete PR-280 classification and receipt pass strict validation with
+    active_core_count zero. A structurally valid receipt with any active-core
+    failure instead becomes OPEN_ROOT_CAUSE_REQUIRED. This inventory binds the
+    three exact nodes to PR-295, PR-296, and PR-297 without granting scientific
+    capability; an unregistered active node fails debt generation closed.
+  required_summary_fields:
+  - collected
+  - suite_declared_tests
+  - subtest_extra_declared_units
+  - multi_outcome_containers
+  - evidence_canonicalization
+  - junit_count_observability
+  - passed_or_xpassed_case_elements
+  - failed
+  - errors
+  - skipped
+  - xfailed
+  - pytest_exit_code
+  - execution_completed
+  - execution_environment
+  - bucket_counts
+  - unknown_count
+  - active_core_count
+  - execution_source_commit
+  - execution_source_tree
+  - classification_source_commit
+  - classification_source_tree
+  - profile_manifest_sha256
+  - junit_sha256
+  scientific_status: OPEN_UNCHANGED
+  public_use: false
+  transfer_source: none
+
+required_tests:
+- tests/contracts/test_harness_profiles_v4.py
+- tests/contracts/test_failure_inventory_v4.py
+- tests/contracts/test_mes_successor_registry.py
+- tests/contracts/test_pr124_cas_lineage.py
+- tests/contracts/test_status_snapshot.py
+- htt/test_packaging_imports.py
+
+claim_boundary:
+  artifact_mode: governance_diagnostic
+  observed_data_execution: false
+  admitted_data_products: 0
+  theorem_or_cas_promotion: false
+  native_solver_validation: false
+  morphology_atlas_validation: false
+  bianchi_family_identification: forbidden
+  mio_posterior_or_evidence: forbidden
+  external_transfer_as_native: forbidden
+
+hard_stops:
+- An active-core failure is assigned to any softer bucket or omitted.
+- UNKNOWN_UNCLASSIFIED is nonzero at closeout.
+- A cached or marker-only run sets smoke_tested.
+- A publication or full-inventory failure is waived.
+- A package resource bypasses a present mutated repository receipt.
+- A missing formal axis is counted as another axis pass.
+- G-CI-H is treated as authorization to mutate GitHub rulesets.
+- Harness evidence promotes a scientific, native, morphology, or family claim.
+- PR-280 is marked successful, or any direct science consumer can start before
+  all three exact root-cause successors complete successfully.

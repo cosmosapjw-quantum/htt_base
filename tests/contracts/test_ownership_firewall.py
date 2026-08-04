@@ -95,7 +95,7 @@ def test_canonical_contract_rows_normalize_legacy_tsc_strings() -> None:
         implementation_scope="tsc",
         claim_tier="conditional",
         implemented=True,
-        smoke_tested=True,
+        smoke_tested=False,
         production_validated=False,
         manuscript_used=False,
         source_commit="abc123",

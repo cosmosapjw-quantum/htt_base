@@ -40,14 +40,25 @@ def test_smoke_dry_run_prints_exact_pytest_command() -> None:
     completed = _run("smoke", "--dry-run", "--python", "/tmp/python")
 
     assert completed.returncode == 0, completed.stderr
-    assert completed.stdout.strip() == "/tmp/python -m pytest -m smoke -q"
+    command = completed.stdout.strip()
+    assert command.startswith(
+        "/tmp/python -m pytest -p no:cacheprovider -o addopts= -q "
+    )
+    assert "-m smoke" not in command
+    assert "test_route_b_constants_frozen" in command
+    assert "test_blind_analysis_runs_every_typed_pipeline_stage_deterministically" in command
 
 
 def test_package_subset_targets_packaging_import_smoke() -> None:
     completed = _run("package", "--dry-run", "--python", "/tmp/python")
 
     assert completed.returncode == 0, completed.stderr
-    assert completed.stdout.strip() == "/tmp/python -m pytest htt/test_packaging_imports.py -q"
+    command = completed.stdout.strip()
+    assert command.startswith(
+        "/tmp/python -m pytest -p no:cacheprovider -o addopts= -q "
+    )
+    assert "test_dirty_build_cache_cannot_change_wheel_or_source_payload" in command
+    assert "test_packaged_pr124_receipt_is_byte_identical_to_historical_authority" in command
 
 
 def test_unknown_subset_exits_nonzero_without_running() -> None:
@@ -61,7 +72,7 @@ def test_execution_returns_child_exit_code_without_masking_failure() -> None:
     completed = _run("smoke", "--python", "/bin/false")
 
     assert completed.returncode == 1
-    assert completed.stdout.strip().endswith("-m pytest -m smoke -q")
+    assert "-m pytest -p no:cacheprovider -o addopts= -q" in completed.stdout
 
 
 def test_default_python_prefers_repo_venv_without_hidden_pythonpath() -> None:
@@ -74,7 +85,7 @@ def test_default_python_prefers_repo_venv_without_hidden_pythonpath() -> None:
         assert command.startswith(str(expected_python))
     else:
         assert command.startswith(sys.executable)
-    assert "PYTHONPATH" not in command
+    assert "-p no:cacheprovider -o addopts=" in command
 
 
 def test_harness_doc_lists_supported_subsets_and_scope() -> None:
@@ -82,7 +93,8 @@ def test_harness_doc_lists_supported_subsets_and_scope() -> None:
 
     for subset in ("collect", "smoke", "fast", "package"):
         assert f"`{subset}`" in rendered
-    assert "does not set `PYTHONPATH`" in rendered
+    assert "source-layout roots" in rendered
+    assert "Marker-only smoke" in rendered
     assert "not scientific validation" in rendered
     assert "family-identification evidence" in rendered
 

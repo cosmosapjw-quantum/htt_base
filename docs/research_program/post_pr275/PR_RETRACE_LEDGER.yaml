@@ -8,9 +8,9 @@ source_identities:
 - source_id: SRC-PR279-INTERNAL-222
   sha256: 7d7c62a08c6a6d175827e0fcb123c3ecdc758b9e25984e279bf9022d47751301
 - source_id: canonical_backlog
-  semantic_sha256: d38bedda9aa01d613fb69c581b4f7977f108c86fafca4df65d9d356ed494f8dc
+  semantic_sha256: 35708bc7c75ddb1ef1fd52bb617c8918b772a2d8d968e4454ff06f5454cdd16e
 - source_id: canonical_status
-  semantic_sha256: b75788b7c8ab2b0239caa8ca68611894492217861e4de8660fe8c05a9102e81e
+  semantic_sha256: 2560bd8e8fe405058d3ae2ddc105dab3b9fdf92dd69e0aff0e77dcbfb08f251f
 assumptions:
 - Legacy CSV status is historical text; current orchestration status comes only from the canonical SSoT.
 - Normalized dispositions route work and do not grant scientific capability.
@@ -41,8 +41,8 @@ source:
   trailing_blank_lines: 0
   record_count: 222
 canonical_snapshot:
-  backlog_semantic_sha256: d38bedda9aa01d613fb69c581b4f7977f108c86fafca4df65d9d356ed494f8dc
-  status_semantic_sha256: b75788b7c8ab2b0239caa8ca68611894492217861e4de8660fe8c05a9102e81e
+  backlog_semantic_sha256: 35708bc7c75ddb1ef1fd52bb617c8918b772a2d8d968e4454ff06f5454cdd16e
+  status_semantic_sha256: 2560bd8e8fe405058d3ae2ddc105dab3b9fdf92dd69e0aff0e77dcbfb08f251f
 historical_internal_work_units:
 - internal_pr_id: PR-000
   source_fields:
@@ -9717,9 +9717,27 @@ prospective_post275_work_units:
     capability: declarative_cache_free_execution_profiles_and_failure_map
     claim_tier_ceiling: diagnostic_only
   current_canonical:
-    orchestration_status: pending
+    orchestration_status: blocked
     execution_lane: defensible
-    execution_resolution: null
+    execution_resolution:
+      resolution: COMPLETED_FAILED_WITH_RECEIPT
+      receipt: docs/PR_DELTAS/pr-280.md
+      review_receipt: .agent-harness/runs/pr280-final-delivery-review-r7-20260804/results/A-PR280-FINAL-DELIVERY-REVIEW.json
+      candidate_sha: 2f5d2b61da30c72594aece60e9e601066378a7c3
+      resolved_on: '2026-08-04'
+      scientific_status_effect: fresh_inventory_terminal_negative_and_root_cause_routing_registered
+      scientific_status_after: OPEN_UNCHANGED
+      scientific_artifact_mode: governance_harness_failure_inventory
+      inventory_receipt: docs/research_program/post_pr275/full_inventory_v4_receipt.json
+      inventory_receipt_sha256: 66630487b08aa03c374fb05f11b6007bc53336974ed6a8f1970205e139a2123e
+      active_core_count: 3
+      active_core_successors:
+      - PR-295
+      - PR-296
+      - PR-297
+      observed_data_executed: false
+      public_use: false
+      success_dependency_satisfied: false
 - internal_pr_id: PR-281
   section: prospective_post275
   canonical_card:

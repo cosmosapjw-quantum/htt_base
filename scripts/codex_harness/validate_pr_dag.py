@@ -485,32 +485,32 @@ POST275_CARD_CONTRACTS = {
     },
     "PR-281": {
         "owner": "COMMON",
-        "dependencies": [("PR-280", "requires_success")],
+        "dependencies": [("PR-280", "requires_terminal_receipt")],
         "authorization": "EXPLICIT_USER_AUTHORIZED",
     },
     "PR-282": {
         "owner": "OBSSTAT",
-        "dependencies": [("PR-280", "requires_success")],
+        "dependencies": [("PR-280", "requires_terminal_receipt")],
         "authorization": "EXPLICIT_USER_AUTHORIZED",
     },
     "PR-283": {
         "owner": "HTT",
-        "dependencies": [("PR-280", "requires_success")],
+        "dependencies": [("PR-280", "requires_terminal_receipt")],
         "authorization": "EXPLICIT_USER_AUTHORIZED",
     },
     "PR-284": {
         "owner": "HTT",
-        "dependencies": [("PR-280", "requires_success")],
+        "dependencies": [("PR-280", "requires_terminal_receipt")],
         "authorization": "EXPLICIT_USER_AUTHORIZED",
     },
     "PR-285": {
         "owner": "COMMON",
-        "dependencies": [("PR-280", "requires_success")],
+        "dependencies": [("PR-280", "requires_terminal_receipt")],
         "authorization": "EXPLICIT_USER_AUTHORIZED",
     },
     "PR-286": {
         "owner": "HTT",
-        "dependencies": [("PR-280", "requires_success")],
+        "dependencies": [("PR-280", "requires_terminal_receipt")],
         "authorization": "EXPLICIT_USER_AUTHORIZED",
     },
     "PR-287": {
@@ -527,12 +527,12 @@ POST275_CARD_CONTRACTS = {
     },
     "PR-288": {
         "owner": "HTT",
-        "dependencies": [("PR-280", "requires_success")],
+        "dependencies": [("PR-280", "requires_terminal_receipt")],
         "authorization": "EXPLICIT_USER_AUTHORIZED",
     },
     "PR-289": {
         "owner": "COMMON",
-        "dependencies": [("PR-280", "requires_success")],
+        "dependencies": [("PR-280", "requires_terminal_receipt")],
         "authorization": "EXPLICIT_USER_AUTHORIZED",
     },
     "PR-290": {
@@ -596,6 +596,56 @@ POST275_REQUIRED_FIELDS = VECTOR_TENSOR_REQUIRED_FIELDS | {
     "change_set_id",
     "publication_group_id",
 }
+PR280_ROOT_CAUSE_CARD_CONTRACTS = {
+    "PR-295": {
+        "owner": "BASS",
+        "capability": "external_camb_oracle_separated_from_production_runtime",
+        "failure_node": (
+            "htt.bass.validation.test_external_code_policy::"
+            "test_no_external_code_imports_in_production"
+        ),
+        "claim_level": {
+            "scheme": "not_applicable_governance_v1",
+            "level": "NOT_APPLICABLE",
+        },
+    },
+    "PR-296": {
+        "owner": "BASS",
+        "capability": (
+            "python_pstf_d2_nonregression_restored_without_baseline_laundering"
+        ),
+        "failure_node": (
+            "htt.bass.spectrum.test_d2_pstf_progressive_closure::"
+            "test_python_pstf_closure_does_not_regress"
+        ),
+        "claim_level": {"scheme": "roadmap_rescue_v1", "level": "C1"},
+    },
+    "PR-297": {
+        "owner": "COMMON",
+        "capability": (
+            "repo_scoped_handoff_installer_closes_registered_context_dependencies"
+        ),
+        "failure_node": (
+            "scripts.codex_harness.test_codex_assets::"
+            "test_installer_copies_repo_scoped_assets_with_project_harness_config"
+        ),
+        "claim_level": {
+            "scheme": "not_applicable_governance_v1",
+            "level": "NOT_APPLICABLE",
+        },
+    },
+}
+PR280_ROOT_CAUSE_FULL_IDS = set(PR280_ROOT_CAUSE_CARD_CONTRACTS)
+PR280_DIRECT_CONSUMERS = {
+    "PR-281",
+    "PR-282",
+    "PR-283",
+    "PR-284",
+    "PR-285",
+    "PR-286",
+    "PR-288",
+    "PR-289",
+}
 POST275_HUMAN_GATES = {
     "PR-290": ("H-PLANCK", "admitted_planck_observed_execution"),
     "PR-291": ("H-CF4", "admitted_cf4_observed_execution"),
@@ -625,6 +675,14 @@ POST275_DEPENDENCY_OVERLAY = {
         "PR-204": ["PR-287", "PR-288", "PR-289"],
         "PR-205": ["PR-254", "PR-255"],
         "PR-207": ["PR-294"],
+        "PR-281": ["PR-295", "PR-296", "PR-297"],
+        "PR-282": ["PR-295", "PR-296", "PR-297"],
+        "PR-283": ["PR-295", "PR-296", "PR-297"],
+        "PR-284": ["PR-295", "PR-296", "PR-297"],
+        "PR-285": ["PR-295", "PR-296", "PR-297"],
+        "PR-286": ["PR-295", "PR-296", "PR-297"],
+        "PR-288": ["PR-295", "PR-296", "PR-297"],
+        "PR-289": ["PR-295", "PR-296", "PR-297"],
     },
 }
 
@@ -852,6 +910,17 @@ def validate_backlog(data: dict[str, Any]) -> DagInfo:
             "post-275 intake must register PR-276..294 atomically; "
             f"missing={sorted(POST275_FULL_IDS - present_post275_ids)}"
         )
+    present_pr280_root_cause_ids = idset & PR280_ROOT_CAUSE_FULL_IDS
+    if (
+        present_pr280_root_cause_ids
+        and present_pr280_root_cause_ids != PR280_ROOT_CAUSE_FULL_IDS
+    ):
+        raise ValueError(
+            "PR-280 root-cause intake must register PR-295..297 atomically; "
+            f"missing={sorted(PR280_ROOT_CAUSE_FULL_IDS - present_pr280_root_cause_ids)}"
+        )
+    if present_pr280_root_cause_ids and present_post275_ids != POST275_FULL_IDS:
+        raise ValueError("PR-280 root-cause intake requires the full post-275 programme")
     prereqs = {pr["id"]: list(pr.get("depends") or []) for pr in prs}
     missing_deps = sorted({dep for deps in prereqs.values() for dep in deps if dep not in idset})
     if missing_deps:
@@ -1180,6 +1249,18 @@ def validate_long_horizon_rescue_slice(
             "post-275 intake must be atomic; "
             f"missing={sorted(post275_ids - actual_post275_ids)}"
         )
+    pr280_root_cause_ids = set(PR280_ROOT_CAUSE_CARD_CONTRACTS)
+    actual_pr280_root_cause_ids = actual_ids & pr280_root_cause_ids
+    if actual_pr280_root_cause_ids and actual_post275_ids != post275_ids:
+        raise ValueError("PR-280 root-cause cards require the full post-275 slice")
+    if (
+        actual_pr280_root_cause_ids
+        and actual_pr280_root_cause_ids != pr280_root_cause_ids
+    ):
+        raise ValueError(
+            "PR-280 root-cause intake must be atomic; "
+            f"missing={sorted(pr280_root_cause_ids - actual_pr280_root_cause_ids)}"
+        )
     if actual_foundation_ids:
         policy = data.get("policy") or {}
         expected_overlay = (
@@ -1212,6 +1293,7 @@ def validate_long_horizon_rescue_slice(
         expected_total += len(PREMISE_ANCHOR_CARD_CONTRACTS)
     expected_total += len(actual_vector_tensor_ids)
     expected_total += len(actual_post275_ids)
+    expected_total += len(actual_pr280_root_cause_ids)
     if len(info.ids) != expected_total:
         raise ValueError(
             f"strict rescue slice expects {expected_total} total cards, found {len(info.ids)}"
@@ -1500,6 +1582,8 @@ def validate_long_horizon_rescue_slice(
         _validate_vector_tensor_slice(cards, actual_vector_tensor_ids)
     if actual_post275_ids:
         _validate_post275_slice(cards)
+    if actual_pr280_root_cause_ids:
+        _validate_pr280_root_cause_slice(cards)
 
     if status is not None:
         _validate_rescue_status(status, info)
@@ -1876,6 +1960,16 @@ def _validate_post275_slice(cards: dict[str, Any]) -> None:
         raise ValueError("PR-276 undefined-gate correction drifted")
     if spec.get("scope", {}).get("prospective_pr_ids") != _pr_range(276, 294):
         raise ValueError("PR-276 prospective ID inventory drifted")
+    if spec.get("scope", {}).get("pr280_root_cause_successor_ids") != [
+        "PR-295",
+        "PR-296",
+        "PR-297",
+    ]:
+        raise ValueError("PR-280 root-cause successor inventory drifted")
+    if spec.get("scope", {}).get(
+        "current_registered_total_after_pr280_root_cause_intake"
+    ) != 244:
+        raise ValueError("PR-280 root-cause card count drifted")
 
     for pr_id in _pr_range(276, 294):
         card = cards[pr_id]
@@ -1976,6 +2070,98 @@ def _validate_post275_slice(cards: dict[str, Any]) -> None:
         ]
         if matching != [{"upstream_id": "PR-190", "mode": "requires_success"}]:
             raise ValueError(f"{downstream} must retain its closed PR-190 success edge")
+
+
+def _validate_pr280_root_cause_slice(cards: dict[str, Any]) -> None:
+    """Validate the exact one-failure-type PR-295..297 interruption slice."""
+
+    spec_path = (
+        Path(__file__).resolve().parents[2]
+        / "docs/research_program/post_pr275/pr276_spec.yaml"
+    )
+    amendment = load_yaml(spec_path).get("pr280_root_cause_amendment")
+    if not isinstance(amendment, dict):
+        raise ValueError("PR-280 root-cause amendment is missing")
+    if amendment.get("historical_prospective_scope_unchanged") != "PR-276..PR-294":
+        raise ValueError("PR-276 historical prospective scope was rewritten")
+    if amendment.get("direct_consumers") != sorted(PR280_DIRECT_CONSUMERS):
+        raise ValueError("PR-280 direct-consumer stop set drifted")
+    if amendment.get("required_successors_for_each_direct_consumer") != [
+        "PR-295",
+        "PR-296",
+        "PR-297",
+    ]:
+        raise ValueError("PR-280 root-cause success set drifted")
+    successor_specs = amendment.get("successors")
+    successor_dependencies = amendment.get("successor_dependencies")
+    if not isinstance(successor_specs, dict) or not isinstance(
+        successor_dependencies, dict
+    ):
+        raise ValueError("PR-280 successor spec or dependencies are malformed")
+
+    seen_failure_nodes: set[str] = set()
+    for pr_id, expected in PR280_ROOT_CAUSE_CARD_CONTRACTS.items():
+        card = cards[pr_id]
+        missing_fields = sorted(POST275_REQUIRED_FIELDS - set(card))
+        if missing_fields:
+            raise ValueError(
+                f"{pr_id} missing PR-280 root-cause fields: {missing_fields}"
+            )
+        expected_contracts = [
+            {"upstream_id": "PR-280", "mode": "requires_terminal_receipt"}
+        ]
+        if card.get("depends") != ["PR-280"]:
+            raise ValueError(f"{pr_id} must depend only on terminal PR-280")
+        if card.get("dependency_contracts") != expected_contracts:
+            raise ValueError(f"{pr_id} terminal-receipt dependency drifted")
+        if successor_dependencies.get(pr_id) != expected_contracts:
+            raise ValueError(f"{pr_id} successor dependency spec drifted")
+        if card.get("owner") != expected["owner"]:
+            raise ValueError(f"{pr_id} root-cause owner drifted")
+        if card.get("capability") != expected["capability"]:
+            raise ValueError(f"{pr_id} root-cause capability drifted")
+        if card.get("claim_level") != expected["claim_level"]:
+            raise ValueError(f"{pr_id} root-cause claim level drifted")
+        failure_node = expected["failure_node"]
+        if failure_node in seen_failure_nodes:
+            raise ValueError("one active-core failure maps to multiple successors")
+        seen_failure_nodes.add(failure_node)
+        spec_row = successor_specs.get(pr_id)
+        if not isinstance(spec_row, dict) or spec_row.get("failure_node") != failure_node:
+            raise ValueError(f"{pr_id} exact failure-node binding drifted")
+        if failure_node not in " ".join(_iter_strings(card.get("inputs"))):
+            raise ValueError(f"{pr_id} input omits its exact active-core node")
+        for field in (
+            "inputs",
+            "outputs",
+            "contributors",
+            "implementation_scopes",
+            "targets",
+            "files",
+            "tests",
+            "dod",
+            "forbidden",
+            "anti_drift",
+        ):
+            _require_string_list(card, field)
+        for field in ("kill", "change_set_id", "publication_group_id"):
+            _require_nonempty_string(card.get(field), f"{pr_id}.{field}")
+        if (
+            card.get("activation_state") != "PENDING"
+            or card.get("execution_lane") != "defensible"
+            or card.get("execution_authorization") != "REGISTERED_NOT_SCHEDULED"
+            or card.get("scientific_status_on_intake") != "OPEN"
+            or card.get("public_use") is not False
+            or card.get("spec_first_required") is not True
+            or card.get("solver_gate_required") is not False
+            or card.get("claim_tier_ceiling") != "diagnostic_only"
+            or card.get("track") != "POST275_ROOT_CAUSE"
+        ):
+            raise ValueError(f"{pr_id} root-cause intake boundaries drifted")
+        forbidden_text = " ".join(_iter_strings(card.get("forbidden"))).lower()
+        for boundary in ("native", "family-identification"):
+            if boundary not in forbidden_text:
+                raise ValueError(f"{pr_id} omits the {boundary} boundary")
 
 
 def _validate_strengthen_slice(cards: dict[str, Any]) -> None:

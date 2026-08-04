@@ -22,6 +22,12 @@ from typing import Any, Mapping, Sequence
 import yaml
 
 from common.claim_ledger import claim_entry_to_dict
+from common.harness_profiles_v4 import (
+    HarnessProfileError,
+    VerifiedSmokeReceipt,
+    load_profile_manifest,
+    validate_smoke_receipt_registry,
+)
 from common.contracts import (
     AllowedUse,
     ArtifactMode,
@@ -36,6 +42,12 @@ from common.contracts import (
 DEFAULT_BACKLOG_PATH = Path("docs/codex_handoff/pr_backlog.yaml")
 DEFAULT_STATUS_PATH = Path("docs/codex_handoff/pr_status.yaml")
 DEFAULT_GATE_OUTPUTS_NAME = "artifact_gate_outputs.yaml"
+DEFAULT_PROFILE_MANIFEST_PATH = Path(
+    "docs/research_program/post_pr275/harness_profiles_v4.yaml"
+)
+DEFAULT_SMOKE_RECEIPT_REGISTRY_PATH = Path(
+    "docs/research_program/post_pr275/test_execution_receipts_v4.yaml"
+)
 
 _OWNER_SCOPE = {
     Owner.COMMON: ImplementationScope.COMMON,
@@ -105,6 +117,7 @@ def build_status_bundle(
     backlog_path: str | Path = DEFAULT_BACKLOG_PATH,
     status_path: str | Path = DEFAULT_STATUS_PATH,
     gate_outputs_path: str | Path | None = None,
+    execution_receipts_path: str | Path | None = None,
     source_commit: str | None = None,
     generated_on: str | None = None,
     generating_command: str | None = None,
@@ -116,6 +129,10 @@ def build_status_bundle(
     resolved_gate_outputs = _resolve_gate_outputs_path(
         resolved_backlog,
         gate_outputs_path=gate_outputs_path,
+    )
+    resolved_execution_receipts = _resolve_execution_receipts_path(
+        resolved_backlog,
+        execution_receipts_path=execution_receipts_path,
     )
     backlog = _load_yaml_mapping(resolved_backlog)
     status = _load_yaml_mapping(resolved_status)
@@ -129,6 +146,26 @@ def build_status_bundle(
     in_progress = _status_set(status.get("in_progress"))
     background_in_progress = _status_set(status.get("background_in_progress"))
     execution_resolutions = validate_status_contract(cards=prs, status=status)
+    verified_smoke_receipts = _load_verified_smoke_receipts(
+        resolved_execution_receipts,
+        backlog_path=resolved_backlog,
+    )
+    unknown_receipt_prs = set(verified_smoke_receipts) - {
+        _required_str(pr, "id") for pr in prs
+    }
+    if unknown_receipt_prs:
+        raise ValueError(
+            f"smoke receipt registry contains unknown PR ids: {sorted(unknown_receipt_prs)}"
+        )
+    receipt_eligible_terminal_prs = completed | blocked
+    nonterminal_receipt_prs = (
+        set(verified_smoke_receipts) - receipt_eligible_terminal_prs
+    )
+    if nonterminal_receipt_prs:
+        raise ValueError(
+            "smoke receipt registry can bind only completed or receipt-bearing "
+            f"blocked PRs: {sorted(nonterminal_receipt_prs)}"
+        )
     source = source_commit or _current_source_commit()
     command = generating_command or (
         "python -m common.status_snapshot --write docs/generated/status_snapshot.json"
@@ -157,14 +194,20 @@ def build_status_bundle(
         )
         claim_tier = promotion["claim_tier"]
         implemented = state == "completed"
-        # PR-122 does not infer executable test evidence from DAG state.  Some
-        # legacy gate-output rows used ``artifact_readiness=smoke_tested`` as a
-        # descriptive label, but emitting that label alongside the false
-        # boolean would create a contradictory machine-readable status row.
-        smoke_tested = False
+        receipt = verified_smoke_receipts.get(pr_id)
+        smoke_tested = receipt is not None
         artifact_readiness = str(promotion["artifact_readiness"])
         promotion_blockers = tuple(promotion["promotion_blockers"])
-        if artifact_readiness == "smoke_tested" and not smoke_tested:
+        report_generation_gates = dict(promotion["report_generation_gates"])
+        if smoke_tested:
+            artifact_readiness = "smoke_tested"
+            promotion_blockers = tuple(
+                blocker
+                for blocker in promotion_blockers
+                if blocker != "exact_test_execution_receipt_not_bound"
+            )
+            report_generation_gates["exact_test_execution_receipt_bound"] = "pass"
+        elif artifact_readiness == "smoke_tested":
             artifact_readiness = "generated" if implemented else "missing"
             promotion_blockers = tuple(
                 dict.fromkeys(
@@ -178,10 +221,6 @@ def build_status_bundle(
                 implementation_scope=scope,
                 claim_tier=claim_tier,
                 implemented=implemented,
-                # DAG completion is bookkeeping, not executable test evidence.
-                # PR-122 deliberately defaults this axis to false; a future
-                # status consumer may set it only from an exact, verified test
-                # execution receipt rather than reconstructing it from state.
                 smoke_tested=smoke_tested,
                 production_validated=bool(promotion["production_validated"]),
                 manuscript_used=bool(promotion["manuscript_used"]),
@@ -191,9 +230,16 @@ def build_status_bundle(
                 allowed_use=AllowedUse(str(promotion["allowed_use"])),
                 caption_policy=tuple(promotion["caption_policy"]),
                 promotion_blockers=promotion_blockers,
-                report_generation_gates=dict(promotion["report_generation_gates"]),
+                report_generation_gates=report_generation_gates,
                 science_promotion_gates=dict(promotion["science_promotion_gates"]),
                 publication_gates=dict(promotion["publication_gates"]),
+                smoke_evidence_ref=(None if receipt is None else receipt.evidence_ref),
+                smoke_execution_ref=(None if receipt is None else receipt.execution_ref),
+                smoke_profile_id=(None if receipt is None else receipt.profile_id),
+                smoke_candidate_commit=(
+                    None if receipt is None else receipt.candidate_commit
+                ),
+                smoke_candidate_tree=(None if receipt is None else receipt.candidate_tree),
             )
         )
         # Orchestration state is orthogonal to implementation/readiness/claim
@@ -228,6 +274,10 @@ def build_status_bundle(
     input_paths = [resolved_backlog, resolved_status]
     if resolved_gate_outputs is not None:
         input_paths.append(resolved_gate_outputs)
+    if resolved_execution_receipts is not None:
+        input_paths.extend(
+            [resolved_execution_receipts, _profile_manifest_for(resolved_backlog)]
+        )
     input_hashes = _input_hashes(input_paths)
     state_counts = Counter(_state_from_row(row) for row in status_rows)
     config_hash = _config_hash(
@@ -249,6 +299,7 @@ def build_status_bundle(
             "pending_prs": state_counts["pending"],
             "dormant_external_prs": state_counts["dormant_external"],
             "execution_resolution_prs": sorted(execution_resolutions),
+            "smoke_receipt_prs": sorted(verified_smoke_receipts),
         }
     )
     metadata: dict[str, object] = {
@@ -268,6 +319,8 @@ def build_status_bundle(
         "dormant_external_prs": state_counts["dormant_external"],
         "execution_resolution_count": len(execution_resolutions),
         "execution_resolution_prs": sorted(execution_resolutions),
+        "smoke_receipt_count": len(verified_smoke_receipts),
+        "smoke_receipt_prs": sorted(verified_smoke_receipts),
         "owner": Owner.COMMON.value,
         "implementation_scope": ImplementationScope.COMMON.value,
         "claim_tier": ClaimTier.DIAGNOSTIC_ONLY.value,
@@ -282,6 +335,7 @@ def build_status_bundle(
             "DAG completion, artifact readiness, allowed use, and production validation are separate axes.",
             "production_validated remains false without an exact factory-issued ClaimCapabilityDecision.",
             "Execution resolutions are process receipts only and never promote scientific status or claim tier.",
+            "Verified smoke receipts set only generic process readiness; they do not grant a ClaimCapability.",
         ],
         "generating_command": command,
         "source_commit": source,
@@ -585,6 +639,66 @@ def _resolve_gate_outputs_path(
     return candidate if candidate.exists() else None
 
 
+def _repo_root_for_backlog(backlog_path: Path) -> Path:
+    resolved = backlog_path.resolve()
+    if resolved.name != "pr_backlog.yaml" or resolved.parent.name != "codex_handoff":
+        raise ValueError(
+            "receipt-backed status generation requires docs/codex_handoff/pr_backlog.yaml"
+        )
+    return resolved.parents[2]
+
+
+def _profile_manifest_for(backlog_path: Path) -> Path:
+    return _repo_root_for_backlog(backlog_path) / DEFAULT_PROFILE_MANIFEST_PATH
+
+
+def _resolve_execution_receipts_path(
+    backlog_path: Path,
+    *,
+    execution_receipts_path: str | Path | None,
+) -> Path | None:
+    try:
+        canonical = (
+            _repo_root_for_backlog(backlog_path)
+            / DEFAULT_SMOKE_RECEIPT_REGISTRY_PATH
+        )
+    except ValueError:
+        if execution_receipts_path is not None:
+            raise ValueError(
+                "explicit execution receipts require the canonical backlog path"
+            )
+        return None
+    if execution_receipts_path is not None:
+        path = Path(execution_receipts_path)
+        if not path.exists():
+            raise FileNotFoundError(path)
+        if path.resolve() != canonical.resolve():
+            raise ValueError("parallel execution receipt registries are forbidden")
+        return path
+    return canonical if canonical.exists() else None
+
+
+def _load_verified_smoke_receipts(
+    path: Path | None,
+    *,
+    backlog_path: Path,
+) -> dict[str, VerifiedSmokeReceipt]:
+    if path is None:
+        return {}
+    repo_root = _repo_root_for_backlog(backlog_path)
+    manifest = load_profile_manifest(
+        _profile_manifest_for(backlog_path), repo_root=repo_root
+    )
+    try:
+        return validate_smoke_receipt_registry(
+            path,
+            manifest=manifest,
+            repo_root=repo_root,
+        )
+    except HarnessProfileError as exc:
+        raise ValueError(f"invalid smoke receipt registry: {exc}") from exc
+
+
 def _load_gate_outputs(path: Path | None) -> Mapping[str, object]:
     if path is None:
         return {}
@@ -604,12 +718,27 @@ _CALLER_CAPABILITY_FIELDS = frozenset(
         "artifactreadiness",
         "artifactmode",
         "alloweduse",
+        "smoketested",
+        "dataadmitted",
         "productionvalidated",
         "manuscriptused",
         "granted",
         "nativevalidated",
+        "nativesolvervalidation",
+        "formal4axispass",
+        "cas4axispass",
+        "theoremprovedexact",
+        "theoremprovedconditional",
+        "methodcalibrated",
+        "observeddescriptive",
+        "observedinferential",
+        "sourceseparationcandidate",
+        "morphologycompatibility",
+        "familyidentification",
+        "publicrelease",
     }
 )
+_CALLER_REPORT_GENERATION_GATES = frozenset({"dag_status_row_generated"})
 
 
 def _reject_caller_capability_fields(value: object, *, path: str = "gate_outputs") -> None:
@@ -727,8 +856,15 @@ def _apply_gate_annotation(
                 )
             )
     if "report_generation_gates" in annotation:
+        requested_gates = _string_map(annotation["report_generation_gates"])
+        unknown_gates = set(requested_gates) - _CALLER_REPORT_GENERATION_GATES
+        if unknown_gates:
+            raise ValueError(
+                "caller-supplied report-generation gate is forbidden: "
+                f"{sorted(unknown_gates)}"
+            )
         gates = _string_map(merged.get("report_generation_gates"))
-        gates.update(_string_map(annotation["report_generation_gates"]))
+        gates.update(requested_gates)
         merged["report_generation_gates"] = gates
     return merged
 
@@ -773,6 +909,7 @@ def write_status_artifacts(
     backlog_path: str | Path = DEFAULT_BACKLOG_PATH,
     status_path: str | Path = DEFAULT_STATUS_PATH,
     gate_outputs_path: str | Path | None = None,
+    execution_receipts_path: str | Path | None = None,
     source_commit: str | None = None,
     generating_command: str | None = None,
 ) -> StatusArtifactPaths:
@@ -785,6 +922,7 @@ def write_status_artifacts(
         backlog_path=backlog_path,
         status_path=status_path,
         gate_outputs_path=gate_outputs_path,
+        execution_receipts_path=execution_receipts_path,
         source_commit=source_commit,
         generating_command=generating_command,
     )
@@ -834,6 +972,12 @@ def main(argv: Sequence[str] | None = None) -> int:
         help="Optional artifact promotion/readiness gate-output YAML.",
     )
     parser.add_argument(
+        "--execution-receipts",
+        type=Path,
+        default=None,
+        help="Optional PR-280 exact smoke receipt binding registry.",
+    )
+    parser.add_argument(
         "--write",
         type=Path,
         required=True,
@@ -846,6 +990,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         backlog_path=args.backlog,
         status_path=args.status,
         gate_outputs_path=args.gate_outputs,
+        execution_receipts_path=args.execution_receipts,
         source_commit=args.source_commit,
         generating_command=command,
     )

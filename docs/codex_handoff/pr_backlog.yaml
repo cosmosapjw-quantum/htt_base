@@ -214,6 +214,9 @@ policy:
   - PR-178
   - PR-279
   - PR-280
+  - PR-295
+  - PR-296
+  - PR-297
   - PR-281
   - PR-282
   - PR-283
@@ -294,6 +297,38 @@ policy:
       - PR-255
       PR-207:
       - PR-294
+      PR-281:
+      - PR-295
+      - PR-296
+      - PR-297
+      PR-282:
+      - PR-295
+      - PR-296
+      - PR-297
+      PR-283:
+      - PR-295
+      - PR-296
+      - PR-297
+      PR-284:
+      - PR-295
+      - PR-296
+      - PR-297
+      PR-285:
+      - PR-295
+      - PR-296
+      - PR-297
+      PR-286:
+      - PR-295
+      - PR-296
+      - PR-297
+      PR-288:
+      - PR-295
+      - PR-296
+      - PR-297
+      PR-289:
+      - PR-295
+      - PR-296
+      - PR-297
   checkpoint_every_completed_prs: 5
   no_native_lowell_solver_implementation: true
   family_identification_claims_blocked_until_native_morphology_atlas: true
@@ -12360,7 +12395,7 @@ prs:
   - PR-280
   dependency_contracts:
   - upstream_id: PR-280
-    mode: requires_success
+    mode: requires_terminal_receipt
   targets:
   - Enforce the registered state/rank acceptance table, including single-vector rank one.
   - Report unsupported directions without promoting numerical rank to generic completeness.
@@ -12421,7 +12456,7 @@ prs:
   - PR-280
   dependency_contracts:
   - upstream_id: PR-280
-    mode: requires_success
+    mode: requires_terminal_receipt
   targets:
   - Execute parity equivariance across estimator, mask, and weighting instead of accepting a caller boolean.
   - Preserve the registered arbitrary-dependence e-value merge for dependent sign vectors.
@@ -12483,7 +12518,7 @@ prs:
   - PR-280
   dependency_contracts:
   - upstream_id: PR-280
-    mode: requires_success
+    mode: requires_terminal_receipt
   targets:
   - Separate algebraic full rank from practically weak source separation.
   - Prevent the open-set classifier from forcing a candidate under weak identification.
@@ -12548,7 +12583,7 @@ prs:
   - PR-280
   dependency_contracts:
   - upstream_id: PR-280
-    mode: requires_success
+    mode: requires_terminal_receipt
   targets:
   - Seal filtration, conditional expectation, path maximum, bound, and premise identity.
   - Refuse free Doob calibration unless the reverse-martingale premise is proved.
@@ -12607,7 +12642,7 @@ prs:
   - PR-280
   dependency_contracts:
   - upstream_id: PR-280
-    mode: requires_success
+    mode: requires_terminal_receipt
   targets:
   - End every Pillar T row as PASS, FAIL, INCONCLUSIVE_WITH_RECEIPT, or BLOCKED_WITH_RECEIPT.
   - Preserve the PR-190 refutation and frozen legacy registry while adjudicating the v3 successor.
@@ -12671,7 +12706,7 @@ prs:
   - PR-280
   dependency_contracts:
   - upstream_id: PR-280
-    mode: requires_success
+    mode: requires_terminal_receipt
   targets:
   - Adjudicate exact propositions by proof and statistical propositions by independent implementation plus preregistered coverage.
   - End every row with a receipt-bearing terminal verdict.
@@ -12813,7 +12848,7 @@ prs:
   - PR-280
   dependency_contracts:
   - upstream_id: PR-280
-    mode: requires_success
+    mode: requires_terminal_receipt
   targets:
   - Cross-check two independent evidence engines against analytic fixtures and preregistered combined uncertainty.
   - Replace plug-in PPC/LOOCV semantics with posterior draws and fold-wise nuisance refits.
@@ -12876,7 +12911,7 @@ prs:
   - PR-280
   dependency_contracts:
   - upstream_id: PR-280
-    mode: requires_success
+    mode: requires_terminal_receipt
   targets:
   - Revalidate existing external data roots by regular-file, size, hash, release, license, and completeness before any download.
   - Keep admission and analysis execution as different signed, versioned receipts.
@@ -13313,3 +13348,204 @@ prs:
   solver_gate_required: false
   change_set_id: CS-PR294-CROSS-PROBE
   publication_group_id: PG-PR294-CROSS-PROBE
+- id: PR-295
+  wave: 70
+  title: External CAMB oracle and BASS production-boundary repair
+  owner: BASS
+  capability: external_camb_oracle_separated_from_production_runtime
+  inputs:
+  - PR-280 terminal failed inventory receipt and exact external-code-policy node evidence
+  - htt.bass.validation.test_external_code_policy::test_no_external_code_imports_in_production
+  - Existing CAMB cross-check, EGS2 tests, seal runner, frozen seal, and package source inventory
+  outputs:
+  - A production bass and tsc tree with no forbidden external cosmology-code imports
+  - A script/test-only CAMB oracle path preserving the external-transfer diagnostic and unavailable-tool blocker
+  contributors:
+  - COMMON
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes:
+  - bass_py
+  - common
+  depends:
+  - PR-280
+  dependency_contracts:
+  - upstream_id: PR-280
+    mode: requires_terminal_receipt
+  targets:
+  - Move every live CAMB import and execution path outside the installed production package without weakening the scanner or adding an exemption.
+  - Preserve the numerical cross-check as an external-transfer diagnostic and keep CAMB absence explicit and lane-local.
+  - Update every import, package, seal-runner, and audit consumer affected by the relocation.
+  files:
+  - htt/bass/transfer/visibility_camb_crosscheck.py
+  - htt/bass/validation/test_external_code_policy.py
+  - research_gates/egs2/tests/test_egs2_camb_crosscheck.py
+  - scripts/run_egs2_camb_crosscheck_seal.py
+  - docs/generated/seminative_camb_crosscheck_seal.json
+  - htt/test_packaging_imports.py
+  - docs/PR_DELTAS/pr-295.md
+  tests:
+  - PYTHONPATH=htt/src:htt:htt/htt python -m pytest -p no:cacheprovider -o addopts= -q htt/bass/validation/test_external_code_policy.py
+  - PYTHONPATH=htt/src:htt:htt/htt python -m pytest -p no:cacheprovider -o addopts= -q research_gates/egs2/tests/test_egs2_camb_crosscheck.py
+  - PYTHONPATH=htt/src:htt:htt/htt python scripts/run_egs2_camb_crosscheck_seal.py --check
+  dod:
+  - The exact PR-280 external-code-policy node passes with no production-path exemption or scanner weakening.
+  - CAMB-present checks remain source-bound and numerically consistent while CAMB absence remains BLOCKED_CAMB_UNAVAILABLE.
+  - Installed-package consumers resolve canonical imports and all affected manifests name the relocated source.
+  kill: A fix leaves a forbidden production import, grants a scanner waiver, silently passes CAMB absence, promotes external transfer to native evidence, or rewrites a historical seal without a source-bound receipt.
+  cost: high
+  level: L2
+  scope: pre-solver
+  risk: R3-TRANSFER-PACKAGING
+  claim_tier_ceiling: diagnostic_only
+  claim_level:
+    scheme: not_applicable_governance_v1
+    level: NOT_APPLICABLE
+  claim_impact: Production-boundary repair only; the CAMB result remains an external-transfer diagnostic and never native solver evidence.
+  forbidden:
+  - No scanner waiver, native-transfer promotion, observed-data claim, geometry detection, or family-identification claim.
+  anti_drift:
+  - Bind the before/after EGS2 seal identity and keep the historical seal immutable unless intentionally regenerated under an explicit source/version receipt.
+  roadmap_anchor: docs/research_program/post_pr275/pr280_spec.yaml
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: governance_diagnostic
+  execution_authorization: REGISTERED_NOT_SCHEDULED
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+  track: POST275_ROOT_CAUSE
+  solver_gate_required: false
+  change_set_id: CS-PR295-CAMB-ORACLE-BOUNDARY
+  publication_group_id: PG-PR295-CAMB-ORACLE-BOUNDARY
+- id: PR-296
+  wave: 70
+  title: Python PSTF D2 progressive-closure regression repair
+  owner: BASS
+  capability: python_pstf_d2_nonregression_restored_without_baseline_laundering
+  inputs:
+  - PR-280 terminal failed inventory receipt and exact PSTF progressive-closure node evidence
+  - htt.bass.spectrum.test_d2_pstf_progressive_closure::test_python_pstf_closure_does_not_regress
+  - Frozen 65-point k-grid, pipeline/assembly configuration, Planck-2018 species fixture, closure tiers, and D2 anchor
+  outputs:
+  - A root-cause report tied to the compute_flrw_d_ell path and first responsible production symbol
+  - A corrected Python PSTF result at the ten_orders tier or tighter without changing the frozen guard
+  contributors:
+  - COMMON
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes:
+  - bass_py
+  depends:
+  - PR-280
+  dependency_contracts:
+  - upstream_id: PR-280
+    mode: requires_terminal_receipt
+  targets:
+  - Reproduce and localize the astronomical-tier output through the registered species, FLRW pipeline, and C_l assembly path before changing production code.
+  - Restore the frozen ten_orders-or-tighter floor on the identical configuration without substituting a static or Rust value.
+  - Keep the strict bit-level closure test honest unless the real Python PSTF pipeline genuinely closes it.
+  files:
+  - htt/bass/spectrum/test_d2_pstf_progressive_closure.py
+  - htt/bass/spectrum/test_d2_pstf_closure.py
+  - htt/bass/spectrum/flrw_pipeline.py
+  - htt/bass/spectrum/cl_assembly.py
+  - htt/bass/species/registry.py
+  - docs/PR_DELTAS/pr-296.md
+  tests:
+  - PYTHONPATH=htt/src:htt:htt/htt python -m pytest -p no:cacheprovider -o addopts= -q htt/bass/spectrum/test_d2_pstf_progressive_closure.py::test_classify_closure_handles_known_tiers htt/bass/spectrum/test_d2_pstf_progressive_closure.py::test_last_known_tier_is_a_valid_label
+  - PYTHONPATH=htt/src:htt:htt/htt python -m pytest -p no:cacheprovider -o addopts= -q htt/bass/spectrum/test_d2_pstf_progressive_closure.py::test_python_pstf_closure_does_not_regress
+  - PYTHONPATH=htt/src:htt:htt/htt python -m pytest -p no:cacheprovider -o addopts= -q htt/bass/spectrum/test_d2_pstf_closure.py::test_python_pstf_d2_matches_route_b_anchor htt/bass/spectrum/test_d2_pstf_closure.py::test_d2_anchor_constant_does_not_drift
+  dod:
+  - The exact PR-280 progressive-closure node passes on the identical fixed configuration with measured tier ten_orders or tighter.
+  - LAST_KNOWN_CLOSURE_TIER is not loosened, the D2 anchor remains unchanged, and the progressive guard is neither skipped nor xfailed.
+  - The root cause and affected production symbols are receipt-bound; the strict closure test remains an honest XFAIL unless its declared tolerance is reached.
+  kill: A fix loosens the tier floor, skips or xfails the progressive guard, changes the anchor, injects a static answer, or presents the repair as native solver or family evidence.
+  cost: very_high
+  level: L3
+  scope: pre-solver
+  risk: R3-NUMERICAL
+  claim_tier_ceiling: diagnostic_only
+  claim_level:
+    scheme: roadmap_rescue_v1
+    level: C1
+  claim_impact: Python PSTF numerical non-regression only; no native, transfer, morphology, observed, or family capability follows.
+  forbidden:
+  - No baseline laundering, static-answer substitution, native validation, observed-data inference, geometry detection, or family-identification claim.
+  anti_drift:
+  - Freeze the k-grid, pipeline/assembly configuration, species fixture, worker count, anchor, tier thresholds, environment identity, and measured D2.
+  roadmap_anchor: docs/research_program/post_pr275/pr280_spec.yaml
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: synthetic_diagnostic
+  execution_authorization: REGISTERED_NOT_SCHEDULED
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+  track: POST275_ROOT_CAUSE
+  solver_gate_required: false
+  change_set_id: CS-PR296-PSTF-D2-NONREGRESSION
+  publication_group_id: PG-PR296-PSTF-D2-NONREGRESSION
+- id: PR-297
+  wave: 70
+  title: Repo-scoped handoff installer transitive-context closure repair
+  owner: COMMON
+  capability: repo_scoped_handoff_installer_closes_registered_context_dependencies
+  inputs:
+  - PR-280 terminal failed inventory receipt and exact repo-scoped installer node evidence
+  - scripts.codex_harness.test_codex_assets::test_installer_copies_repo_scoped_assets_with_project_harness_config
+  - Installer source inventory, CONTEXT_INDEX, claim registry spec references, repository skills, and harness validator
+  outputs:
+  - A repo-scoped installer that copies every registered transitive context/spec dependency into a clean target
+  - A clean-target validation receipt proving no user-global mutation and no omitted referenced spec
+  contributors: []
+  adjudicator_role: independent_non_author_reviewer
+  implementation_scopes:
+  - common
+  depends:
+  - PR-280
+  dependency_contracts:
+  - upstream_id: PR-280
+    mode: requires_terminal_receipt
+  targets:
+  - Reproduce the clean-target missing-spec failure and derive the install set from registered context dependencies.
+  - Copy and validate every referenced spec without weakening the context validator or dropping claim-registry references.
+  - Keep installation repository-scoped and leave user-global Codex or agent state untouched.
+  files:
+  - scripts/codex_harness/install_codex_handoff.sh
+  - scripts/codex_harness/test_codex_assets.py
+  - .agent-harness/context/CONTEXT_INDEX.json
+  - .agent-harness/context/CLAIM_REGISTRY.jsonl
+  - docs/PR_DELTAS/pr-297.md
+  tests:
+  - PYTHONPATH=htt/src:htt:htt/htt python -m pytest -p no:cacheprovider -o addopts= -q scripts/codex_harness/test_codex_assets.py::test_installer_copies_repo_scoped_assets_with_project_harness_config
+  - python scripts/codex_harness/verify_skill_layout.py
+  - python .agent-harness/scripts/validate_harness.py
+  dod:
+  - The exact PR-280 installer node passes in a clean temporary target and every registered spec reference resolves there.
+  - Repository skills, harness configuration, context, and claim registry remain internally consistent after installation.
+  - No user-global file is read as installation authority or mutated as a side effect.
+  kill: A fix weakens context validation, drops claim references, copies into user-global state, or silently omits a registered spec dependency.
+  cost: medium
+  level: L2
+  scope: pre-solver
+  risk: R2-HARNESS-PORTABILITY
+  claim_tier_ceiling: diagnostic_only
+  claim_level:
+    scheme: not_applicable_governance_v1
+    level: NOT_APPLICABLE
+  claim_impact: Repository portability repair only; it grants no scientific, native, morphology, or publication capability.
+  forbidden:
+  - No validator weakening, claim-reference deletion, user-global mutation, native validation, observed-data claim, or family-identification claim.
+  anti_drift:
+  - Bind the installed file inventory, exact referenced-spec closure, clean-target root, and validator command in the repair receipt.
+  roadmap_anchor: docs/research_program/post_pr275/pr280_spec.yaml
+  activation_state: PENDING
+  execution_lane: defensible
+  scientific_artifact_mode: governance_diagnostic
+  execution_authorization: REGISTERED_NOT_SCHEDULED
+  public_use: false
+  spec_first_required: true
+  scientific_status_on_intake: OPEN
+  track: POST275_ROOT_CAUSE
+  solver_gate_required: false
+  change_set_id: CS-PR297-HANDOFF-INSTALLER-CLOSURE
+  publication_group_id: PG-PR297-HANDOFF-INSTALLER-CLOSURE
