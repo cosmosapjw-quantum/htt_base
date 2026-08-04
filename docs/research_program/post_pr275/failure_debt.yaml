@@ -15,19 +15,48 @@ generating_procedure: scripts/codex_harness/run_pr279_reverse_trace.py build
 claim_tier_ceiling: diagnostic_only
 rows:
 - debt_id: DEBT-PR280-FRESH-INVENTORY
-  status: OPEN
-  blocker_class: INFRASTRUCTURE_DEBT
+  status: OPEN_ROOT_CAUSE_REQUIRED
+  blocker_class: ACTIVE_CORE_REGRESSION
   affected_prs:
   - PR-280
+  - PR-281
+  - PR-282
+  - PR-283
+  - PR-284
+  - PR-285
+  - PR-286
+  - PR-287
+  - PR-288
+  - PR-289
+  - PR-290
+  - PR-291
+  - PR-292
+  - PR-293
+  - PR-294
+  - PR-295
+  - PR-296
+  - PR-297
   route_id: ROUTE-STABLE_REPLAY
-  next_work_unit: PR-280
+  next_work_unit: PR-295
   named_event: null
-  resolution_receipt_sha256: null
-  active_core_count: null
-  active_core_nodes: null
-  root_cause_work_units: []
-  resolution_condition: null
-  effect: Fresh cache-free full inventory and failure classification have not run.
+  resolution_receipt_sha256: 66630487b08aa03c374fb05f11b6007bc53336974ed6a8f1970205e139a2123e
+  active_core_count: 3
+  active_core_nodes:
+  - htt.bass.validation.test_external_code_policy::test_no_external_code_imports_in_production
+  - htt.bass.spectrum.test_d2_pstf_progressive_closure::test_python_pstf_closure_does_not_regress
+  - scripts.codex_harness.test_codex_assets::test_installer_copies_repo_scoped_assets_with_project_harness_config
+  root_cause_work_units:
+  - pr_id: PR-295
+    failure_node: htt.bass.validation.test_external_code_policy::test_no_external_code_imports_in_production
+  - pr_id: PR-296
+    failure_node: htt.bass.spectrum.test_d2_pstf_progressive_closure::test_python_pstf_closure_does_not_regress
+  - pr_id: PR-297
+    failure_node: scripts.codex_harness.test_codex_assets::test_installer_copies_repo_scoped_assets_with_project_harness_config
+  resolution_condition: Every exact active-core node passes under a cache-free rerun receipt and each
+    bound root-cause successor is COMPLETED_SUCCESS; rebucketing, waiver, skip, or baseline relaxation
+    is not resolution.
+  effect: Fresh cache-free inventory is receipt-bound but contains three exact active-core failures; PR-295,
+    PR-296, and PR-297 must resolve them before downstream science.
 - debt_id: DEBT-PR276-STALE-RECONCILIATION-ASSERTIONS
   status: RESOLVED_IN_PR279
   blocker_class: INFRASTRUCTURE_DEBT

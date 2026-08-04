@@ -1,6 +1,6 @@
 schema: htt.post_pr275.hermetic_harness_v4.v1
 document_id: PR280-HERMETIC-HARNESS-V4
-status: ACTIVE_IMPLEMENTATION_SPEC
+status: ACTIVE_DELIVERY_SPEC
 pr_id: PR-280
 change_set_id: CS-PR280-HERMETIC-HARNESS-V4
 publication_group_id: PG-PR280-HERMETIC-HARNESS-V4
@@ -11,10 +11,10 @@ publication_policy: docs/research_program/post_pr275/pr280_publication_policy.js
 
 delivery_authorization:
   implementation_changes: authorized_by_current_user_request
-  content_commit: not_authorized
-  closeout_commit: not_authorized
-  push: not_authorized
-  create_pr: not_authorized
+  content_commit: authorized_once_by_current_user_request
+  closeout_commit: authorized_once_by_current_user_request
+  push: authorized_only_inside_single_attended_review_pr_transaction
+  create_pr: authorized_once_non_draft_review_pr
   merge: not_authorized
   force_push: not_authorized
   approval: not_authorized
@@ -81,7 +81,7 @@ diagnostic_profile_results:
   current_active: {passed: 194, failed: 0}
   scientific: {passed: 207, failed: 0}
   package: {passed: 3, failed: 0}
-  collect: {collected: 10844, failed: 0}
+  collect: {collected: 10845, failed: 0}
   smoke: {passed: 8, failed: 0}
   fast: {passed: 6, failed: 0}
   active_import: {source_layout_modules: 6, mismatches: 0}
@@ -201,6 +201,11 @@ fresh_inventory:
   terminal_inventory_candidate:
     outcome: COMPLETED_FAILED_WITH_RECEIPT
     execution_source_commit: 315277077e27e8493342f5b219da152197bad059
+    execution_source_tree: 9c9584bd5e3a3a6c80d0cf9b03feb1861eb8d3fb
+    classification_source_commit: 2f5d2b61da30c72594aece60e9e601066378a7c3
+    classification_source_tree: 28ca9978d96eca21c4b0c8905c9ea141f72b1f60
+    classification_file_sha256: 7dd40dcd7a2723e1467478beae9ce17c033c2ca8551a43e69093e4292fab575e
+    receipt_file_sha256: 66630487b08aa03c374fb05f11b6007bc53336974ed6a8f1970205e139a2123e
     junit_sha256: df931aa1c82959767a643f7842fc007e2ab627df6216a349446ca7d0d1d3d538
     junit_counts:
       collected: 10799

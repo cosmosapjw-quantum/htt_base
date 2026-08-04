@@ -175,6 +175,7 @@ completed:
 - PR-180
 - PR-251
 blocked:
+- PR-280
 - PR-190
 - PR-172
 pending:
@@ -199,7 +200,6 @@ pending:
 - PR-206
 - PR-207
 - PR-208
-- PR-280
 - PR-295
 - PR-296
 - PR-297
@@ -387,6 +387,25 @@ execution_lane:
   PR-296: defensible
   PR-297: defensible
 execution_resolutions:
+  PR-280:
+    resolution: COMPLETED_FAILED_WITH_RECEIPT
+    receipt: docs/PR_DELTAS/pr-280.md
+    review_receipt: .agent-harness/runs/pr280-final-delivery-review-r7-20260804/results/A-PR280-FINAL-DELIVERY-REVIEW.json
+    candidate_sha: 2f5d2b61da30c72594aece60e9e601066378a7c3
+    resolved_on: '2026-08-04'
+    scientific_status_effect: fresh_inventory_terminal_negative_and_root_cause_routing_registered
+    scientific_status_after: OPEN_UNCHANGED
+    scientific_artifact_mode: governance_harness_failure_inventory
+    inventory_receipt: docs/research_program/post_pr275/full_inventory_v4_receipt.json
+    inventory_receipt_sha256: 66630487b08aa03c374fb05f11b6007bc53336974ed6a8f1970205e139a2123e
+    active_core_count: 3
+    active_core_successors:
+    - PR-295
+    - PR-296
+    - PR-297
+    observed_data_executed: false
+    public_use: false
+    success_dependency_satisfied: false
   PR-279:
     resolution: COMPLETED_SUCCESS
     receipt: docs/PR_DELTAS/pr-279.md
