@@ -5,7 +5,7 @@ scope: named unresolved or explicitly resolved blockers discovered by reverse tr
 allowed_use: dependency routing and stop decisions only
 transfer_source: preserved per affected lane
 source_identities:
-- backlog_semantic_sha256: d38bedda9aa01d613fb69c581b4f7977f108c86fafca4df65d9d356ed494f8dc
+- backlog_semantic_sha256: 35708bc7c75ddb1ef1fd52bb617c8918b772a2d8d968e4454ff06f5454cdd16e
 - inventory_semantic_sha256: 03105a50fec3ecb7500094efa04bb4f708f8a4bfdd2bbd17e049418f2321b28e
 assumptions:
 - Blockers affect only named capabilities and downstream work units.
@@ -22,6 +22,11 @@ rows:
   route_id: ROUTE-STABLE_REPLAY
   next_work_unit: PR-280
   named_event: null
+  resolution_receipt_sha256: null
+  active_core_count: null
+  active_core_nodes: null
+  root_cause_work_units: []
+  resolution_condition: null
   effect: Fresh cache-free full inventory and failure classification have not run.
 - debt_id: DEBT-PR276-STALE-RECONCILIATION-ASSERTIONS
   status: RESOLVED_IN_PR279

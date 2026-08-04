@@ -8,6 +8,9 @@ from pathlib import Path
 import yaml
 import pytest
 
+import common.status_snapshot as status_snapshot
+from common.contracts import StatusSnapshotEntry
+from common.harness_profiles_v4 import VerifiedSmokeReceipt
 from common.status_snapshot import (
     build_status_bundle,
     render_status_matrix,
@@ -495,6 +498,159 @@ def test_status_bundle_rejects_caller_supplied_smoke_readiness(
             status_path=status_path,
             gate_outputs_path=gate_outputs_path,
             source_commit="abc123",
+        )
+
+
+@pytest.mark.parametrize(
+    "gate_alias",
+    [
+        "smoke_tested",
+        "native_solver_validation",
+        "data_admitted",
+        "formal_4axis_pass",
+    ],
+)
+def test_status_bundle_rejects_report_generation_capability_aliases(
+    tmp_path: Path, gate_alias: str
+) -> None:
+    backlog_path, status_path = _write_fixture(tmp_path)
+    gate_outputs_path = tmp_path / "artifact_gate_outputs.yaml"
+    gate_outputs_path.write_text(
+        yaml.safe_dump(
+            {
+                "schema_version": "common.artifact_gate_outputs.v2",
+                "state_annotations": {
+                    "completed": {
+                        "report_generation_gates": {gate_alias: "pass"},
+                    }
+                },
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    with pytest.raises(
+        ValueError,
+        match="caller-supplied (capability field|report-generation gate)",
+    ):
+        build_status_bundle(
+            backlog_path=backlog_path,
+            status_path=status_path,
+            gate_outputs_path=gate_outputs_path,
+            source_commit="abc123",
+        )
+
+
+def test_verified_smoke_receipt_sets_only_process_readiness(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    backlog_path, status_path = _write_fixture(tmp_path)
+    receipt = VerifiedSmokeReceipt(
+        pr_id="PR-010",
+        profile_id="smoke",
+        evidence_ref="a" * 64,
+        execution_ref="b" * 64,
+        candidate_commit="c" * 40,
+        candidate_tree="d" * 40,
+    )
+    monkeypatch.setattr(
+        status_snapshot,
+        "_load_verified_smoke_receipts",
+        lambda path, *, backlog_path: {"PR-010": receipt},
+    )
+
+    bundle = build_status_bundle(
+        backlog_path=backlog_path,
+        status_path=status_path,
+        source_commit="abc123",
+    )
+    row = next(
+        row for row in bundle.status_rows if row["artifact_id"] == "codex_dag.PR-010"
+    )
+
+    assert row["smoke_tested"] is True
+    assert row["artifact_readiness"] == "smoke_tested"
+    assert row["smoke_evidence_ref"] == "a" * 64
+    assert row["smoke_execution_ref"] == "b" * 64
+    assert row["smoke_candidate_commit"] == "c" * 40
+    assert row["smoke_candidate_tree"] == "d" * 40
+    assert row["production_validated"] is False
+    assert row["allowed_use"] == "internal_only"
+    assert row["science_promotion_gates"] == {
+        "claim_capability_decision": "fail"
+    }
+
+
+def test_verified_smoke_receipt_on_failed_terminal_pr_does_not_mark_implemented(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    backlog_path, status_path = _write_fixture(tmp_path)
+    status = yaml.safe_load(status_path.read_text(encoding="utf-8"))
+    status["completed"].remove("PR-010")
+    status["blocked"] = ["PR-010"]
+    status["execution_resolutions"] = {
+        "PR-010": {
+            "resolution": "COMPLETED_FAILED_WITH_RECEIPT",
+            "receipt": "docs/PR_DELTAS/pr-010.md",
+            "resolved_on": "2026-08-04",
+            "scientific_status_effect": "active_core_failure_preserved",
+            "scientific_status_after": "OPEN_UNCHANGED",
+            "success_dependency_satisfied": False,
+        }
+    }
+    status_path.write_text(yaml.safe_dump(status), encoding="utf-8")
+    receipt = VerifiedSmokeReceipt(
+        pr_id="PR-010",
+        profile_id="smoke",
+        evidence_ref="a" * 64,
+        execution_ref="b" * 64,
+        candidate_commit="c" * 40,
+        candidate_tree="d" * 40,
+    )
+    monkeypatch.setattr(
+        status_snapshot,
+        "_load_verified_smoke_receipts",
+        lambda path, *, backlog_path: {"PR-010": receipt},
+    )
+
+    bundle = build_status_bundle(
+        backlog_path=backlog_path,
+        status_path=status_path,
+        source_commit="abc123",
+    )
+    row = next(
+        row for row in bundle.status_rows if row["artifact_id"] == "codex_dag.PR-010"
+    )
+    assert row["implemented"] is False
+    assert row["smoke_tested"] is True
+    assert row["artifact_readiness"] == "smoke_tested"
+    assert row["production_validated"] is False
+    assert row["allowed_use"] == "internal_only"
+
+
+def test_status_row_rejects_unbound_or_contradictory_smoke_readiness() -> None:
+    common = {
+        "artifact_id": "codex_dag.PR-280",
+        "owner": "COMMON",
+        "implementation_scope": "common",
+        "claim_tier": "diagnostic_only",
+        "implemented": True,
+        "production_validated": False,
+        "manuscript_used": False,
+        "source_commit": "abc123",
+    }
+
+    with pytest.raises(ValueError, match="receipt, profile, commit, and tree"):
+        StatusSnapshotEntry(
+            **common,
+            smoke_tested=True,
+            artifact_readiness="smoke_tested",
+        )
+    with pytest.raises(ValueError, match="verified receipt binding"):
+        StatusSnapshotEntry(
+            **common,
+            smoke_tested=False,
+            artifact_readiness="smoke_tested",
         )
 
 

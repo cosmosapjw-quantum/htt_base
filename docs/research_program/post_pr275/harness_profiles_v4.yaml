@@ -1,0 +1,350 @@
+schema_version: htt.harness_profiles.v4
+manifest_id: PR280-HARNESS-PROFILES-V4
+changed_surface_routes:
+- route_id: harness_and_common_contracts
+  path_regex: (\.agent-harness/context/CLAIM_REGISTRY\.jsonl|htt/src/common/(contracts|status_snapshot|harness_profiles_v4|failure_inventory_v4|mes_successor_registry)\.py|scripts/(ver2_artifact_export\.py|codex_harness/(run_pr280_harness|run_subset)\.py)|tests/__init__\.py|tests/contracts/test_(harness_profiles_v4|failure_inventory_v4|harness_runner|status_snapshot|mes_successor_registry|ownership_firewall)\.py|docs/(codex_handoff/test_harness\.md|research_program/post_pr275/(harness_profiles_v4|test_execution_receipts_v4|pr280_spec|full_inventory_v4_failure_rules)\.yaml|research_program/post_pr275/(pr280_publication_policy|full_inventory_v4_classification|full_inventory_v4_receipt)\.json))
+  profiles: [exact, smoke, active-import]
+- route_id: package_surface
+  path_regex: (htt/pyproject\.toml|htt/src/common/resources/.*|htt/test_packaging_imports\.py)
+  profiles: [package, active-import]
+- route_id: pr280_root_cause_dag_surface
+  path_regex: (docs/codex_handoff/pr_(backlog\.(yaml|json)|status\.yaml)|machine_readable/pr_(backlog\.(yaml|json)|status\.yaml)|docs/research_program/post_pr275/(pr276_spec|failure_debt|PR_RETRACE_LEDGER|data_runbooks|recompute_matrix)\.yaml|htt/src/common/pr_retrace\.py|scripts/codex_harness/(run_pr279_reverse_trace|validate_pr_dag|test_pr_dag_harness)\.py|tests/(contracts/test_pr_retrace_ledger|pr_cards/test_pr_276_post275_reconciliation)\.py|docs/generated/(status_snapshot|claim_ledger)\.json|docs/generated/(status_matrix|progress_scoreboard)\.md)
+  profiles: [exact, current-active]
+- route_id: typed_scientific_surface
+  path_regex: (htt/(src/common|mio|obsstat|htt/htt)/(joint_anisotropy_state|tensor_functionals|orbit_catalogue_v3|conditional_exceedance|depth_path|anisotropy_type_report|.*pillar_.*|blind_synthetic).*|tests/(contracts|integration)/test_(joint_anisotropy_state|tensor_functionals|orbit_catalogue_v3|conditional_exceedance|depth_path|anisotropy_type_report|pillar_.*|vector_tensor_blind_synthetic)\.py)
+  profiles: [scientific, smoke]
+- route_id: data_preflight_surface
+  path_regex: (data|docs/research_program/.*/data|htt/obsstat|tests/(obsstat|htt)|tests/contracts/test_(vector_tensor_data_admission|pr1(44|51|52|53|54)_.*)).*
+  profiles: [data:planck, data:cf4, data:hsc-kids, data:act, data:desi, data:jwst]
+- route_id: formal_surface
+  path_regex: (formal/.*|docs/generated/.*/axis_.*|tests/contracts/test_pillar_t_cas\.py)
+  profiles: [formal:wolfram-xact, formal:sympy, formal:sage-singular, formal:lean]
+- route_id: publication_surface
+  path_regex: (manuscript/.*|docs/.*\.(tex|bib|pdf)|tests/contracts/test_(claim_language_lint|pdf_claim_lint|publication_claim_freeze|current_manuscript_figures)\.py)
+  profiles: [publication]
+- route_id: safe_default
+  path_regex: .*
+  profiles: [current-active]
+profiles:
+- profile_id: exact
+  kind: pytest
+  lane: contract_exactness
+  selectors:
+  - scripts/codex_harness/test_pr_dag_harness.py
+  - tests/pr_cards/test_pr_276_post275_reconciliation.py
+  - tests/contracts/test_harness_profiles_v4.py
+  - tests/contracts/test_failure_inventory_v4.py
+  - tests/contracts/test_status_snapshot.py
+  - tests/contracts/test_mes_successor_registry.py::test_current_successor_is_available_and_pr124_authorized
+  - tests/contracts/test_mes_successor_registry.py::test_packaged_pr124_receipt_is_byte_identical_to_historical_authority
+  - tests/contracts/test_mes_successor_registry.py::test_repository_layout_never_falls_back_when_receipt_is_missing
+  - tests/contracts/test_mes_successor_registry.py::test_installed_layout_uses_only_hash_pinned_package_resource
+  - tests/contracts/test_mes_successor_registry.py::test_installed_layout_rejects_unreadable_package_resource
+  pytest_args: [-q]
+  modules: []
+  tools: []
+  smoke_status_eligible: false
+  receipt_eligible: true
+  waiver_policy: registered_non_receipt
+  claim_ceiling: diagnostic_only
+  allowed_use: focused contract verification only
+- profile_id: current-active
+  kind: pytest
+  lane: post_pr275_active_contracts
+  selectors:
+  - tests/contracts/test_claim_capability_engine.py
+  - tests/contracts/test_tier_a_lane_adjudication.py
+  - tests/contracts/test_pr_retrace_ledger.py
+  pytest_args: [-q]
+  modules: []
+  tools: []
+  smoke_status_eligible: false
+  receipt_eligible: true
+  waiver_policy: registered_non_receipt
+  claim_ceiling: diagnostic_only
+  allowed_use: current active implementation regression only
+- profile_id: scientific
+  kind: pytest
+  lane: typed_vector_tensor_spine
+  selectors:
+  - tests/contracts/test_joint_anisotropy_state.py
+  - tests/contracts/test_tensor_functionals.py
+  - tests/contracts/test_orbit_catalogue_v3.py
+  - tests/contracts/test_conditional_exceedance.py
+  - tests/contracts/test_depth_path.py
+  - tests/contracts/test_anisotropy_type_report.py
+  - tests/contracts/test_pillar_t_core.py
+  - tests/contracts/test_pillar_s_core.py
+  - tests/integration/test_vector_tensor_blind_synthetic.py
+  pytest_args: [-q]
+  modules: []
+  tools: []
+  smoke_status_eligible: false
+  receipt_eligible: true
+  waiver_policy: registered_non_receipt
+  claim_ceiling: diagnostic_only
+  allowed_use: synthetic and contract regression only
+- profile_id: package
+  kind: pytest
+  lane: clean_wheel_and_imports
+  selectors:
+  - htt/test_packaging_imports.py::test_package_data_and_cache_exclusions_are_explicit
+  - htt/test_packaging_imports.py::test_dirty_build_cache_cannot_change_wheel_or_source_payload
+  - tests/contracts/test_mes_successor_registry.py::test_packaged_pr124_receipt_is_byte_identical_to_historical_authority
+  pytest_args: [-q]
+  modules: []
+  tools: []
+  smoke_status_eligible: false
+  receipt_eligible: true
+  waiver_policy: registered_non_receipt
+  claim_ceiling: diagnostic_only
+  allowed_use: package portability only
+- profile_id: data:planck
+  kind: pytest
+  lane: planck_preflight
+  selectors:
+  - tests/contracts/test_vector_tensor_data_admission.py
+  pytest_args: [-q]
+  modules: []
+  tools: []
+  smoke_status_eligible: false
+  receipt_eligible: false
+  waiver_policy: forbidden
+  claim_ceiling: diagnostic_only
+  allowed_use: preflight only; no admission or observed execution
+- profile_id: data:cf4
+  kind: pytest
+  lane: cf4_preflight
+  selectors:
+  - tests/contracts/test_pr144_cf4_manifest.py
+  - tests/htt/test_cf4_active_input_quarantine.py::test_typed_provider_exposes_no_numerical_or_replacement_payload
+  - tests/htt/test_cf4_active_input_quarantine.py::test_evidence_defaults_exclude_c_and_explicit_c_fails_closed
+  - tests/htt/test_cf4_active_input_quarantine.py::test_workspace_default_has_status_only_and_no_cf4_dipole_row
+  - tests/htt/test_cf4_active_input_quarantine.py::test_evidence_comparison_and_compatibility_kwargs_require_explicit_c_free_mode
+  - tests/htt/test_cf4_active_input_quarantine.py::test_active_dipole_and_latent_axis_paths_ignore_injected_cf4_mapping
+  - tests/htt/test_cf4_active_input_quarantine.py::test_null_generators_and_runner_operate_without_cf4_channel
+  - tests/htt/test_cf4_active_input_quarantine.py::test_lowz_and_bridge_defaults_fail_but_explicit_synthetic_inputs_work
+  - tests/htt/test_cf4_active_input_quarantine.py::test_non_cf4_diagnostics_do_not_reintroduce_channel_c
+  - tests/htt/test_cf4_active_input_quarantine.py::test_cf4_conditioned_active_producers_raise_canonical_error
+  - tests/htt/test_cf4_active_input_quarantine.py::test_deprecated_evidence_alias_and_directional_models_have_no_c_route
+  - tests/htt/test_cf4_active_input_quarantine.py::test_shared_cause_and_nuisance_paths_ignore_or_reject_cf4
+  - tests/htt/test_cf4_active_input_quarantine.py::test_lowell_and_control_defaults_cannot_restore_channel_c
+  pytest_args: [-q]
+  modules: []
+  tools: []
+  smoke_status_eligible: false
+  receipt_eligible: false
+  waiver_policy: forbidden
+  claim_ceiling: diagnostic_only
+  allowed_use: preflight and quarantine only
+- profile_id: data:hsc-kids
+  kind: pytest
+  lane: hsc_kids_preflight
+  selectors:
+  - tests/contracts/test_vector_tensor_data_admission.py
+  pytest_args: [-q]
+  modules: []
+  tools: []
+  smoke_status_eligible: false
+  receipt_eligible: false
+  waiver_policy: forbidden
+  claim_ceiling: diagnostic_only
+  allowed_use: preflight only; no admission or observed execution
+- profile_id: data:act
+  kind: pytest
+  lane: act_preflight
+  selectors:
+  - tests/contracts/test_pr152_act_raw_qe.py::test_availability_decision_defers_public_raw_qe_without_local_run
+  - tests/contracts/test_pr152_act_raw_qe.py::test_raw_qe_receipt_is_fail_closed_for_every_required_element
+  - tests/contracts/test_pr152_act_raw_qe.py::test_raw_qe_receipt_rejects_syntactic_digest_self_assertion
+  - tests/contracts/test_pr152_act_raw_qe.py::test_raw_qe_receipt_rejects_byte_and_lineage_drift
+  - tests/contracts/test_pr152_act_raw_qe.py::test_act_cache_binding_rejects_key_or_shape_drift
+  - tests/contracts/test_pr152_act_raw_qe.py::test_production_input_manifest_requires_exactly_400
+  - tests/contracts/test_pr152_act_raw_qe.py::test_guards_reject_forbidden_moves
+  - tests/contracts/test_pr152_act_raw_qe.py::test_caption_lint_blocks_a_detection_phrase
+  - tests/pr_cards/test_pr_177_act_dr6_in_band_kappa_off_diagonal_modulation_di.py::test_strict_support_and_raw_authority_root_are_frozen
+  - tests/pr_cards/test_pr_177_act_dr6_in_band_kappa_off_diagonal_modulation_di.py::test_resolution_guard_and_terminal_truth_table_are_closed
+  - tests/pr_cards/test_pr_177_act_dr6_in_band_kappa_off_diagonal_modulation_di.py::test_deep_replay_failure_completeness_and_nested_digest_are_fail_closed
+  pytest_args: [-q]
+  modules: []
+  tools: []
+  smoke_status_eligible: false
+  receipt_eligible: false
+  waiver_policy: forbidden
+  claim_ceiling: diagnostic_only
+  allowed_use: preflight only; no admission or observed execution
+- profile_id: data:desi
+  kind: pytest
+  lane: desi_preflight
+  selectors:
+  - tests/contracts/test_pr151_desi_exact_selection.py
+  - tests/contracts/test_pr151_phase_progress.py
+  - tests/contracts/test_desi_dr1_mock_acquisition.py
+  pytest_args: [-q]
+  modules: []
+  tools: []
+  smoke_status_eligible: false
+  receipt_eligible: false
+  waiver_policy: forbidden
+  claim_ceiling: diagnostic_only
+  allowed_use: recovery inventory and preflight only
+- profile_id: data:jwst
+  kind: pytest
+  lane: jwst_preflight
+  selectors:
+  - tests/contracts/test_pr153_jwst_anchor.py
+  - tests/contracts/test_pr153_jwst_distance_consistency.py
+  - tests/contracts/test_pr154_jwst_host_hierarchy_runner.py
+  pytest_args: [-q]
+  modules: []
+  tools: []
+  smoke_status_eligible: false
+  receipt_eligible: false
+  waiver_policy: forbidden
+  claim_ceiling: diagnostic_only
+  allowed_use: preflight only; no admission or observed execution
+- profile_id: formal:wolfram-xact
+  kind: tool_probe
+  lane: formal_axis_wolfram_xact
+  selectors: []
+  pytest_args: []
+  modules: []
+  tools: [executable:wolframscript, env-path:XACT_ROOT]
+  smoke_status_eligible: false
+  receipt_eligible: false
+  waiver_policy: forbidden
+  claim_ceiling: diagnostic_only
+  allowed_use: tool availability only; not a CAS verdict
+- profile_id: formal:sympy
+  kind: tool_probe
+  lane: formal_axis_sympy
+  selectors: []
+  pytest_args: []
+  modules: []
+  tools: [python-module:sympy]
+  smoke_status_eligible: false
+  receipt_eligible: false
+  waiver_policy: forbidden
+  claim_ceiling: diagnostic_only
+  allowed_use: tool availability only; not a CAS verdict
+- profile_id: formal:sage-singular
+  kind: tool_probe
+  lane: formal_axis_sage_singular
+  selectors: []
+  pytest_args: []
+  modules: []
+  tools: [executable:sage, executable:Singular]
+  smoke_status_eligible: false
+  receipt_eligible: false
+  waiver_policy: forbidden
+  claim_ceiling: diagnostic_only
+  allowed_use: tool availability only; not a CAS verdict
+- profile_id: formal:lean
+  kind: tool_probe
+  lane: formal_axis_lean
+  selectors: []
+  pytest_args: []
+  modules: []
+  tools: [executable:lake, repo-path:formal/lean-toolchain]
+  smoke_status_eligible: false
+  receipt_eligible: false
+  waiver_policy: forbidden
+  claim_ceiling: diagnostic_only
+  allowed_use: tool availability only; not a CAS verdict
+- profile_id: publication
+  kind: pytest
+  lane: publication_contracts
+  selectors:
+  - tests/contracts/test_claim_language_lint.py
+  - tests/contracts/test_pdf_claim_lint.py
+  - tests/contracts/test_generated_status_counts.py
+  - tests/contracts/test_publication_claim_freeze.py
+  - tests/contracts/test_current_manuscript_figures.py
+  pytest_args: [-q]
+  modules: []
+  tools: []
+  smoke_status_eligible: false
+  receipt_eligible: true
+  waiver_policy: forbidden
+  claim_ceiling: diagnostic_only
+  allowed_use: publication contract diagnostics only
+- profile_id: full-inventory
+  kind: pytest
+  lane: full_failure_inventory
+  selectors: []
+  pytest_args: [--junitxml=artifacts/full_inventory.xml]
+  modules: []
+  tools: []
+  smoke_status_eligible: false
+  receipt_eligible: false
+  waiver_policy: forbidden
+  claim_ceiling: diagnostic_only
+  allowed_use: cache-free diagnostic failure inventory only
+- profile_id: collect
+  kind: pytest
+  lane: collection
+  selectors: []
+  pytest_args: [--collect-only, -q]
+  modules: []
+  tools: []
+  smoke_status_eligible: false
+  receipt_eligible: false
+  waiver_policy: forbidden
+  claim_ceiling: diagnostic_only
+  allowed_use: collection diagnostics only
+- profile_id: smoke
+  kind: pytest
+  lane: explicit_smoke
+  selectors:
+  - htt/bass/validation/test_d2_regression_anchor.py::test_route_b_constants_frozen
+  - htt/bass/validation/test_d2_regression_anchor.py::test_route_b_mm_curve_bit_identical
+  - htt/bass/validation/test_d2_regression_anchor.py::test_route_b_sentinel_constant_matches_curve
+  - htt/bass/validation/test_d2_regression_anchor.py::test_route_b_zero_at_origin
+  - htt/bass/validation/test_d2_regression_anchor.py::test_route_b_negative_input_rejected
+  - htt/bass/validation/test_d2_regression_anchor.py::test_rust_flrw_reference_metadata_present
+  - tests/contracts/test_vector_tensor_data_admission.py::test_frozen_registry_closes_as_no_admitted_data_pilot
+  - tests/integration/test_vector_tensor_blind_synthetic.py::test_blind_analysis_runs_every_typed_pipeline_stage_deterministically
+  pytest_args: [-q]
+  modules: []
+  tools: []
+  smoke_status_eligible: true
+  receipt_eligible: true
+  waiver_policy: forbidden
+  claim_ceiling: diagnostic_only
+  allowed_use: generic process smoke readiness only
+- profile_id: fast
+  kind: pytest
+  lane: explicit_fast
+  selectors:
+  - htt/bass/validation/test_d2_regression_anchor.py::test_route_b_constants_frozen
+  - htt/bass/validation/test_d2_regression_anchor.py::test_route_b_mm_curve_bit_identical
+  - htt/bass/validation/test_d2_regression_anchor.py::test_route_b_sentinel_constant_matches_curve
+  - htt/bass/validation/test_d2_regression_anchor.py::test_route_b_zero_at_origin
+  - htt/bass/validation/test_d2_regression_anchor.py::test_route_b_negative_input_rejected
+  - htt/bass/validation/test_d2_regression_anchor.py::test_rust_flrw_reference_metadata_present
+  pytest_args: [-q]
+  modules: []
+  tools: []
+  smoke_status_eligible: false
+  receipt_eligible: false
+  waiver_policy: registered_non_receipt
+  claim_ceiling: diagnostic_only
+  allowed_use: focused development feedback only
+- profile_id: active-import
+  kind: import_probe
+  lane: source_layout_import_provenance
+  selectors: []
+  pytest_args: []
+  modules:
+  - bass=htt/bass/__init__.py
+  - common=htt/src/common/__init__.py
+  - htt=htt/__init__.py
+  - mio=htt/mio/__init__.py
+  - obsstat=htt/obsstat/__init__.py
+  - tests=tests/__init__.py
+  tools: []
+  smoke_status_eligible: false
+  receipt_eligible: false
+  waiver_policy: forbidden
+  claim_ceiling: diagnostic_only
+  allowed_use: import provenance diagnostic only

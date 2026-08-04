@@ -31,6 +31,7 @@ from dataclasses import dataclass
 from enum import Enum
 from fractions import Fraction
 from functools import lru_cache
+from importlib import resources
 from pathlib import Path, PurePosixPath
 from typing import Iterable, Mapping, Sequence
 
@@ -775,14 +776,43 @@ def _live_receipt_pin_check() -> str:
     pointer unless the actual receipt bytes on disk hash to the pin. Deep
     content verification remains in ``validate_mes_successor_registry``.
     """
-    repo_root = Path(__file__).resolve().parents[3]
-    receipt = repo_root / "docs/generated/pr124_mes_authority_table.json"
-    if not receipt.is_file():
-        raise MesRegistryError(
-            "PR-124 authority receipt is missing on disk; the typed MES "
-            "successor cannot be constructed without its receipt bytes"
-        )
-    digest = sha256_file(receipt)
+    module_path = Path(__file__).resolve()
+    repo_root = module_path.parents[3]
+    repo_module = repo_root / "htt/src/common/mes_successor_registry.py"
+    repository_layout = (
+        repo_module.is_file() and repo_module.resolve() == module_path
+    )
+    if repository_layout:
+        receipt = repo_root / "docs/generated/pr124_mes_authority_table.json"
+        if receipt.is_symlink() or not receipt.is_file():
+            raise MesRegistryError(
+                "PR-124 authority receipt is missing or non-regular in the "
+                "repository; package fallback is forbidden"
+            )
+        try:
+            payload = receipt.read_bytes()
+        except OSError as exc:
+            raise MesRegistryError(
+                "PR-124 authority receipt is unreadable in the repository; "
+                "package fallback is forbidden"
+            ) from exc
+    else:
+        try:
+            receipt_resource = resources.files("common").joinpath(
+                "resources", "pr124_mes_authority_table.json"
+            )
+            if not receipt_resource.is_file():
+                raise MesRegistryError(
+                    "packaged PR-124 authority receipt is missing or non-regular"
+                )
+            payload = receipt_resource.read_bytes()
+        except MesRegistryError:
+            raise
+        except (OSError, TypeError) as exc:
+            raise MesRegistryError(
+                "packaged PR-124 authority receipt is unreadable"
+            ) from exc
+    digest = hashlib.sha256(payload).hexdigest()
     if digest != PR124_AUTHORITY_RECEIPT_SHA256:
         raise MesRegistryError(
             "PR-124 authority receipt bytes do not match the module pin "

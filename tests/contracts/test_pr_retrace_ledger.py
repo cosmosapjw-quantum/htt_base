@@ -2,17 +2,22 @@ from __future__ import annotations
 
 import copy
 from collections import Counter
+import hashlib
 from pathlib import Path
+import runpy
 import subprocess
 import sys
 
 import pytest
 
 from common.evidence_graph import EvidenceEdge, EvidenceEdgeKind, EvidenceGraph
+from common.failure_inventory_v4 import validate_inventory_artifacts
 from common.pr_retrace import (
     DataArtifactDisposition,
+    PR280_ACTIVE_CORE_SUCCESSORS,
     RetraceContractError,
     RetraceDisposition,
+    build_failure_debt,
     canonical_json_sha256,
     load_yaml_mapping,
     normalize_legacy_disposition,
@@ -47,6 +52,29 @@ OUTPUTS = {
     "runbooks": PROGRAM / "data_runbooks.yaml",
     "inventory": PROGRAM / "data_artifact_disposition.yaml",
 }
+
+
+def _pr280_inventory_resolution() -> tuple[str, tuple[str, ...]] | None:
+    classification = PROGRAM / "full_inventory_v4_classification.json"
+    receipt = PROGRAM / "full_inventory_v4_receipt.json"
+    if not classification.exists() and not receipt.exists():
+        return None
+    assert classification.is_file() and receipt.is_file()
+    validated = validate_inventory_artifacts(
+        ROOT, require_closeout_acceptance=False
+    )
+    active_core_count = validated["active_core_count"]
+    assert isinstance(active_core_count, int) and not isinstance(active_core_count, bool)
+    classification_payload = load_yaml_mapping(classification)
+    active_core_nodes = tuple(
+        sorted(
+            row["case_identity"]
+            for row in classification_payload["cases"]
+            if row["bucket"] == "ACTIVE_CORE_REGRESSION"
+        )
+    )
+    assert len(active_core_nodes) == active_core_count
+    return hashlib.sha256(receipt.read_bytes()).hexdigest(), active_core_nodes
 
 
 @pytest.fixture(scope="module")
@@ -509,8 +537,13 @@ def test_failure_debt_is_typed_and_act_dependency_is_not_misreported(
     documents: dict[str, dict[str, object]], backlog: dict[str, object]
 ) -> None:
     debt = documents["failure_debt"]
+    resolution = _pr280_inventory_resolution()
     validate_failure_debt(
-        debt, backlog=backlog, inventory=documents["inventory"]
+        debt,
+        backlog=backlog,
+        inventory=documents["inventory"],
+        pr280_inventory_receipt_sha256=(None if resolution is None else resolution[0]),
+        pr280_active_core_nodes=(None if resolution is None else resolution[1]),
     )
     rows = {row["debt_id"]: row for row in debt["rows"]}
     assert len(rows["DEBT-NATIVE-SOLVER-ATLAS"]["affected_prs"]) == 18
@@ -525,10 +558,72 @@ def test_failure_debt_exact_projection_rejects_summary_rewrite(
     changed = copy.deepcopy(documents["failure_debt"])
     changed["summary"]["open_count"] = 0
     with pytest.raises(RetraceContractError):
+        resolution = _pr280_inventory_resolution()
         validate_failure_debt(
             changed,
             backlog=backlog,
             inventory=documents["inventory"],
+            pr280_inventory_receipt_sha256=(None if resolution is None else resolution[0]),
+            pr280_active_core_nodes=(None if resolution is None else resolution[1]),
+        )
+
+
+def test_pr280_debt_resolution_rejects_partial_closeout_artifacts(
+    tmp_path: Path,
+) -> None:
+    runner = runpy.run_path(str(RUNNER))
+    resolver = runner["_pr280_inventory_resolution"]
+    resolver.__globals__["PROGRAM_DIR"] = tmp_path
+
+    assert resolver() is None
+    (tmp_path / "full_inventory_v4_classification.json").write_text(
+        "{}\n", encoding="utf-8"
+    )
+    with pytest.raises(RuntimeError, match="partial or non-regular"):
+        resolver()
+
+
+def test_pr280_active_core_debt_names_entire_stopped_post275_slice(
+    backlog: dict[str, object], documents: dict[str, dict[str, object]]
+) -> None:
+    active_nodes = tuple(node for node, _successor in PR280_ACTIVE_CORE_SUCCESSORS)
+    debt = build_failure_debt(
+        backlog=backlog,
+        inventory=documents["inventory"],
+        pr280_inventory_receipt_sha256="a" * 64,
+        pr280_active_core_nodes=active_nodes,
+    )
+    row = next(
+        item
+        for item in debt["rows"]
+        if item["debt_id"] == "DEBT-PR280-FRESH-INVENTORY"
+    )
+    assert row["status"] == "OPEN_ROOT_CAUSE_REQUIRED"
+    assert row["affected_prs"] == [
+        "PR-280",
+        *(f"PR-{number}" for number in range(281, 295)),
+        "PR-295",
+        "PR-296",
+        "PR-297",
+    ]
+    assert row["next_work_unit"] == "PR-295"
+    assert row["active_core_count"] == 3
+    assert row["active_core_nodes"] == list(active_nodes)
+    assert row["root_cause_work_units"] == [
+        {"failure_node": node, "pr_id": successor}
+        for node, successor in PR280_ACTIVE_CORE_SUCCESSORS
+    ]
+
+
+def test_pr280_active_core_debt_rejects_unregistered_failure_node(
+    backlog: dict[str, object], documents: dict[str, dict[str, object]]
+) -> None:
+    with pytest.raises(RetraceContractError, match="lacks a registered"):
+        build_failure_debt(
+            backlog=backlog,
+            inventory=documents["inventory"],
+            pr280_inventory_receipt_sha256="a" * 64,
+            pr280_active_core_nodes=("tests.unknown::test_unregistered",),
         )
 
 

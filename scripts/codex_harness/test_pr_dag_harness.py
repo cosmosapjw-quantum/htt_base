@@ -757,6 +757,70 @@ def test_terminal_receipt_closes_only_explicit_terminal_edge(tmp_path: Path) -> 
     assert payload["completed"] == 0
 
 
+def test_pr280_terminal_failure_unlocks_only_all_three_root_cause_repairs(
+    tmp_path: Path,
+) -> None:
+    backlog_path = tmp_path / "backlog.yaml"
+    status_path = tmp_path / "status.yaml"
+    # Synthetic IDs isolate dependency-mode semantics; canonical tests pin the
+    # real PR-280/295/296/297 card identities and overlays separately.
+    terminal_id = "PR-800"
+    root_ids = ["PR-801", "PR-802", "PR-803"]
+    consumer_id = "PR-804"
+    pr280 = _typed_card(terminal_id)
+    roots = [
+        _typed_card(
+            pr_id,
+            depends=[terminal_id],
+            mode="requires_terminal_receipt",
+        )
+        for pr_id in root_ids
+    ]
+    consumer = _typed_card(consumer_id)
+    consumer["depends"] = [terminal_id, *root_ids]
+    consumer["dependency_contracts"] = [
+        {"upstream_id": terminal_id, "mode": "requires_terminal_receipt"},
+        *(
+            {"upstream_id": pr_id, "mode": "requires_success"}
+            for pr_id in root_ids
+        ),
+    ]
+    _write_yaml(backlog_path, _typed_backlog(pr280, *roots, consumer))
+
+    status = {
+        "completed": [],
+        "blocked": [],
+        "pending": [terminal_id, *root_ids, consumer_id],
+        "dormant_external": [],
+        "execution_resolutions": {},
+        "external_events": {},
+    }
+    _write_yaml(status_path, status)
+    initial = _run(str(PROGRESS), str(backlog_path), str(status_path), "--json")
+    assert initial.returncode == 0, initial.stderr
+    assert json.loads(initial.stdout)["unblocked_next"] == [terminal_id]
+
+    status["pending"].remove(terminal_id)
+    status["blocked"] = [terminal_id]
+    status["execution_resolutions"][terminal_id] = _resolution(
+        "COMPLETED_FAILED_WITH_RECEIPT"
+    )
+    _write_yaml(status_path, status)
+    interrupted = _run(str(PROGRESS), str(backlog_path), str(status_path), "--json")
+    assert interrupted.returncode == 0, interrupted.stderr
+    assert json.loads(interrupted.stdout)["unblocked_next"] == root_ids
+
+    status["blocked"] = [terminal_id]
+    status["pending"] = [consumer_id]
+    status["completed"] = root_ids
+    for pr_id in root_ids:
+        status["execution_resolutions"][pr_id] = _resolution("COMPLETED_SUCCESS")
+    _write_yaml(status_path, status)
+    resolved = _run(str(PROGRESS), str(backlog_path), str(status_path), "--json")
+    assert resolved.returncode == 0, resolved.stderr
+    assert json.loads(resolved.stdout)["unblocked_next"] == [consumer_id]
+
+
 def test_cli_adjudicated_edge_never_unlocks_from_shape_only_record(
     tmp_path: Path,
 ) -> None:

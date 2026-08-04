@@ -153,6 +153,9 @@ def test_package_data_and_cache_exclusions_are_explicit() -> None:
         "fixtures/recombination_ref_planck2018_z1e10.csv",
     ]
     assert package_data["bass.validation"] == ["_d2_anchor_golden.json"]
+    assert package_data["common"] == [
+        "resources/pr124_mes_authority_table.json"
+    ]
     assert package_data["htt.tests"] == [
         "fixtures/pipeline_outputs/FLRW_tilt_results.json",
         "fixtures/pipeline_outputs/IS06_3D_posterior.npz",
@@ -236,6 +239,37 @@ def test_dirty_build_cache_cannot_change_wheel_or_source_payload() -> None:
 
         with zipfile.ZipFile(dirty_wheel) as archive:
             names = archive.namelist()
+            packaged_pr124_receipt = archive.read(
+                "common/resources/pr124_mes_authority_table.json"
+            )
+            record_name = next(name for name in names if name.endswith(".dist-info/RECORD"))
+            wheel_record = archive.read(record_name).decode("utf-8")
+        historical_pr124_receipt = (
+            REPO_ROOT / "docs/generated/pr124_mes_authority_table.json"
+        ).read_bytes()
+        assert packaged_pr124_receipt == historical_pr124_receipt
+        assert "common/resources/pr124_mes_authority_table.json," in wheel_record
+        installed_probe = subprocess.run(
+            [
+                sys.executable,
+                "-c",
+                (
+                    "import inspect,sys;"
+                    "sys.path.insert(0,sys.argv[1]);"
+                    "from common.mes_successor_registry import current_mes_successor_registry;"
+                    "import common.mes_successor_registry as registry;"
+                    "assert '.whl/' in str(inspect.getsourcefile(registry));"
+                    "assert current_mes_successor_registry().successor.scientific_authority is True"
+                ),
+                str(clean_wheel),
+            ],
+            cwd=tmp,
+            env=env,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        assert installed_probe.returncode == 0, installed_probe.stderr
         assert not any(
             part in {"build", "__pycache__"} or part.endswith(".egg-info")
             for name in names
@@ -1011,14 +1045,20 @@ def test_packaged_resources_and_consumers_work_outside_repo_cwd() -> None:
     env = os.environ.copy()
     env.pop("PYTHONPATH", None)
     code = """
+import hashlib
 from importlib import resources
 
+from common.mes_successor_registry import (
+    PR124_AUTHORITY_RECEIPT_SHA256,
+    current_mes_successor_registry,
+)
 from htt.core.ssot import load_obs
 from obsstat.velocity_power import fiducial
 
 expected = (
     ("bass.recombination", ("fixtures", "recombination_ref_planck2018.csv")),
     ("bass.validation", ("_d2_anchor_golden.json",)),
+    ("common", ("resources", "pr124_mes_authority_table.json")),
     ("htt.tests", ("fixtures", "pipeline_outputs", "IS06_3D_posterior.npz")),
     ("workspace", ("data", "obs_defaults.json")),
 )
@@ -1027,6 +1067,12 @@ for package, parts in expected:
     for part in parts:
         resource = resource.joinpath(part)
     assert resource.is_file(), (package, parts)
+
+receipt = resources.files("common").joinpath(
+    "resources", "pr124_mes_authority_table.json"
+)
+assert hashlib.sha256(receipt.read_bytes()).hexdigest() == PR124_AUTHORITY_RECEIPT_SHA256
+assert current_mes_successor_registry().successor.scientific_authority is True
 
 obs = load_obs()
 fid = fiducial()

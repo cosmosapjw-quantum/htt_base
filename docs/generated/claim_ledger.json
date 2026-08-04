@@ -8,11 +8,12 @@
       "Rows never promote external-transfer outputs to native solver validation.",
       "DAG completion, artifact readiness, allowed use, and production validation are separate axes.",
       "production_validated remains false without an exact factory-issued ClaimCapabilityDecision.",
-      "Execution resolutions are process receipts only and never promote scientific status or claim tier."
+      "Execution resolutions are process receipts only and never promote scientific status or claim tier.",
+      "Verified smoke receipts set only generic process readiness; they do not grant a ClaimCapability."
     ],
     "claim_tier": "diagnostic_only",
     "completed_prs": 174,
-    "config_hash": "453bcb0616a61c31ba4854b660649d1a15e08e78a8bfe9999f4f0e83ea263bd8",
+    "config_hash": "135dc4d3f41a562b576fdc4ee353d508fb0defef7a856a8e1a0ddcae7b623427",
     "dormant_external_prs": 28,
     "execution_resolution_count": 111,
     "execution_resolution_prs": [
@@ -128,25 +129,29 @@
       "PR-278",
       "PR-279"
     ],
-    "generated_on": "2026-08-04T03:41:44+00:00",
-    "generating_command": "python -m common.status_snapshot --write docs/generated/status_snapshot.json",
+    "generated_on": "2026-08-04T08:06:18+00:00",
+    "generating_command": "python -m common.status_snapshot --backlog docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --execution-receipts docs/research_program/post_pr275/test_execution_receipts_v4.yaml --write docs/generated/status_snapshot.json",
     "implementation_scope": "common",
     "in_progress_prs": 0,
     "input_hashes": [
-      "docs/codex_handoff/pr_backlog.yaml:fa83b21fdf979b667013d513e6b86d5100fa3200fc620324b4463f17e481e99b",
-      "docs/codex_handoff/pr_status.yaml:e14abee51ae8c612e2fb6124d159ccb6d489c292d79e6e9ecc5ef32bfaf7a71f",
-      "docs/codex_handoff/artifact_gate_outputs.yaml:59e738c74f7cf1ea54151c88d79d07d3c9e62d9bbd013a8cbfa35bbb2a316ba4"
+      "docs/codex_handoff/pr_backlog.yaml:2831ae786028a8b268928dcd048aeaadcea2c113cc71cd338c6faa36c149ce68",
+      "docs/codex_handoff/pr_status.yaml:190d82d647ecc3183c42de45cc068d5c4c17a5b83eb30f651c1404b1a759fc54",
+      "docs/codex_handoff/artifact_gate_outputs.yaml:59e738c74f7cf1ea54151c88d79d07d3c9e62d9bbd013a8cbfa35bbb2a316ba4",
+      "docs/research_program/post_pr275/test_execution_receipts_v4.yaml:740b87eb78b431ed00931ac87097279d180dc2e4cc5bb00c044e11c1341f1f2c",
+      "docs/research_program/post_pr275/harness_profiles_v4.yaml:12205d9334c3577c0a623fbf0b4e8373bbe51ff2f421ca18b2a474229382a912"
     ],
     "null_mock_status": "not_statistical",
     "owner": "COMMON",
-    "pending_prs": 36,
+    "pending_prs": 39,
     "semantic_source": "common.contracts.ClaimLedgerEntry",
     "skipped_prs": 0,
     "sky_support_status": "not_directional",
+    "smoke_receipt_count": 0,
+    "smoke_receipt_prs": [],
     "source": "common.status_snapshot.claim_ledger",
-    "source_commit": "404c4907+dirty",
+    "source_commit": "31527707+dirty",
     "status_path": "docs/codex_handoff/pr_status.yaml",
-    "total_prs": 241,
+    "total_prs": 244,
     "transfer_source": "none",
     "worktree_state": "dirty"
   },
@@ -173,7 +178,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -197,7 +202,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -221,7 +226,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -245,7 +250,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -269,7 +274,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -293,7 +298,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -317,7 +322,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -341,7 +346,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -365,7 +370,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -389,7 +394,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -413,7 +418,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -437,7 +442,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -461,7 +466,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -485,7 +490,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -509,7 +514,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -533,7 +538,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -557,7 +562,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -581,7 +586,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "MIO",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -605,7 +610,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -629,7 +634,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -653,7 +658,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -677,7 +682,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "BASS",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -701,7 +706,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -725,7 +730,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -749,7 +754,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "MIO",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -773,7 +778,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -797,7 +802,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -821,7 +826,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "BASS",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -845,7 +850,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -869,7 +874,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "MIO",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -893,7 +898,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -917,7 +922,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -941,7 +946,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "BASS",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -965,7 +970,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -989,7 +994,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "MIO",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -1013,7 +1018,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -1037,7 +1042,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "BASS",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -1061,7 +1066,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "MIO",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -1085,7 +1090,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -1109,7 +1114,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "MIO",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -1133,7 +1138,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -1157,7 +1162,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "MIO",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -1181,7 +1186,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -1205,7 +1210,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -1230,7 +1235,7 @@
         "sky_support_status=directional_certificate_readiness_recorded"
       ],
       "owner": "MIO",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -1254,7 +1259,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -1278,7 +1283,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -1302,7 +1307,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -1329,7 +1334,7 @@
         "g_f_bridge_status=diagnostic_bridge_metadata_recorded"
       ],
       "owner": "MIO",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -1356,7 +1361,7 @@
         "tail_probability_status=descriptive_until_null_gate_passes"
       ],
       "owner": "MIO",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -1384,7 +1389,7 @@
         "claim_scope=dag_row_not_artifact_payload"
       ],
       "owner": "HTT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -1408,7 +1413,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -1432,7 +1437,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -1456,7 +1461,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -1480,7 +1485,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -1504,7 +1509,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -1528,7 +1533,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -1552,7 +1557,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "MIO",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -1576,7 +1581,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -1600,7 +1605,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -1624,7 +1629,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -1648,7 +1653,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -1672,7 +1677,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -1696,7 +1701,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -1720,7 +1725,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -1744,7 +1749,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -1768,7 +1773,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -1792,7 +1797,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -1816,7 +1821,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -1840,7 +1845,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -1864,7 +1869,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -1888,7 +1893,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -1912,7 +1917,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -1936,7 +1941,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -1960,7 +1965,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -1984,7 +1989,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -2008,7 +2013,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -2032,7 +2037,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -2056,7 +2061,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -2080,7 +2085,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -2104,7 +2109,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -2128,7 +2133,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -2152,7 +2157,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -2176,7 +2181,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -2200,7 +2205,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -2224,7 +2229,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -2248,7 +2253,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -2272,7 +2277,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -2296,7 +2301,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "MIO",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -2320,7 +2325,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -2344,7 +2349,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -2368,7 +2373,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -2392,7 +2397,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -2416,7 +2421,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -2440,7 +2445,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -2464,7 +2469,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -2488,7 +2493,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -2512,7 +2517,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -2536,7 +2541,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -2560,7 +2565,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -2584,7 +2589,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -2608,7 +2613,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "BASS",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -2632,7 +2637,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "BASS",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -2656,7 +2661,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "BASS",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -2680,7 +2685,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -2704,7 +2709,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -2728,7 +2733,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -2752,7 +2757,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -2776,7 +2781,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -2800,7 +2805,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -2824,7 +2829,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -2848,7 +2853,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -2872,7 +2877,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -2896,7 +2901,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -2920,7 +2925,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -2944,7 +2949,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -2968,7 +2973,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -2992,7 +2997,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -3016,7 +3021,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -3040,7 +3045,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "BASS",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -3064,7 +3069,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -3088,7 +3093,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -3112,7 +3117,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -3136,7 +3141,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -3160,7 +3165,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -3184,7 +3189,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -3208,7 +3213,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -3232,7 +3237,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -3256,7 +3261,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -3280,7 +3285,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -3304,7 +3309,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -3328,7 +3333,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -3352,7 +3357,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -3376,7 +3381,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -3400,7 +3405,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -3424,7 +3429,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -3448,7 +3453,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -3472,7 +3477,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -3496,7 +3501,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -3520,7 +3525,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -3544,7 +3549,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -3568,7 +3573,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -3592,7 +3597,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -3616,7 +3621,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -3640,7 +3645,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -3664,7 +3669,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -3688,7 +3693,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -3712,7 +3717,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -3736,7 +3741,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -3760,7 +3765,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -3784,7 +3789,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -3808,7 +3813,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -3832,7 +3837,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -3856,7 +3861,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -3880,7 +3885,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -3904,7 +3909,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -3928,7 +3933,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -3952,7 +3957,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -3976,7 +3981,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -4000,7 +4005,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -4024,7 +4029,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -4048,7 +4053,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -4072,7 +4077,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -4096,7 +4101,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -4120,7 +4125,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -4144,7 +4149,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -4168,7 +4173,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -4192,7 +4197,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -4216,7 +4221,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -4240,7 +4245,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -4264,7 +4269,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -4288,7 +4293,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -4312,7 +4317,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -4336,7 +4341,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -4360,7 +4365,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -4384,7 +4389,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -4408,7 +4413,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -4432,7 +4437,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -4456,7 +4461,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -4480,7 +4485,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -4504,7 +4509,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -4528,7 +4533,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -4552,7 +4557,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -4576,7 +4581,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "MIO",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -4600,7 +4605,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "MIO",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -4624,7 +4629,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -4648,7 +4653,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -4672,7 +4677,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -4696,7 +4701,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -4720,7 +4725,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -4744,7 +4749,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -4768,7 +4773,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -4792,7 +4797,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -4816,7 +4821,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -4840,7 +4845,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -4864,7 +4869,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -4888,7 +4893,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -4912,7 +4917,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -4936,7 +4941,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -4960,7 +4965,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -4984,7 +4989,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -5008,7 +5013,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -5032,7 +5037,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -5056,7 +5061,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "BASS",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -5080,7 +5085,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -5104,7 +5109,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -5128,7 +5133,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -5152,7 +5157,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -5176,7 +5181,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -5200,7 +5205,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -5224,7 +5229,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -5248,7 +5253,79 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-295 is marked pending in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-295",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=External CAMB oracle and BASS production-boundary repair",
+        "state=pending",
+        "depends=PR-280",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "BASS",
+      "source_commit": "31527707+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-296 is marked pending in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-296",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=Python PSTF D2 progressive-closure regression repair",
+        "state=pending",
+        "depends=PR-280",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "BASS",
+      "source_commit": "31527707+dirty"
+    },
+    {
+      "allowed_claims": [
+        "PR-297 is marked pending in the Codex DAG status snapshot."
+      ],
+      "artifact_id": "codex_dag.PR-297",
+      "claim_tier": "diagnostic_only",
+      "evidence_refs": [
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml"
+      ],
+      "forbidden_claims": [
+        "DAG status is not scientific readiness, solver validation, transfer validation, posterior evidence, MIO certification, morphology compatibility, or family-ID evidence."
+      ],
+      "notes": [
+        "title=Repo-scoped handoff installer transitive-context closure repair",
+        "state=pending",
+        "depends=PR-280",
+        "transfer_source=none",
+        "null_mock_status=not_statistical",
+        "sky_support_status=not_directional"
+      ],
+      "owner": "COMMON",
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -5272,7 +5349,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -5296,7 +5373,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -5320,7 +5397,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -5344,7 +5421,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -5368,7 +5445,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -5392,7 +5469,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "BASS",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -5416,7 +5493,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "BASS",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -5440,7 +5517,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -5464,7 +5541,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "BASS",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -5488,7 +5565,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -5512,7 +5589,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "BASS",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -5536,7 +5613,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -5560,7 +5637,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -5584,7 +5661,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -5608,7 +5685,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -5632,7 +5709,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -5656,7 +5733,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -5680,7 +5757,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -5704,7 +5781,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -5728,7 +5805,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -5752,7 +5829,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -5776,7 +5853,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -5800,7 +5877,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -5824,7 +5901,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -5848,7 +5925,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "OBSSTAT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -5872,7 +5949,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -5896,7 +5973,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "HTT",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -5920,7 +5997,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     },
     {
       "allowed_claims": [
@@ -5944,7 +6021,7 @@
         "sky_support_status=not_directional"
       ],
       "owner": "COMMON",
-      "source_commit": "404c4907+dirty"
+      "source_commit": "31527707+dirty"
     }
   ]
 }

@@ -48,6 +48,25 @@ class DataArtifactDisposition(str, Enum):
     BLOCKED = "BLOCKED"
 
 
+PR280_ACTIVE_CORE_SUCCESSORS = (
+    (
+        "htt.bass.validation.test_external_code_policy::"
+        "test_no_external_code_imports_in_production",
+        "PR-295",
+    ),
+    (
+        "htt.bass.spectrum.test_d2_pstf_progressive_closure::"
+        "test_python_pstf_closure_does_not_regress",
+        "PR-296",
+    ),
+    (
+        "scripts.codex_harness.test_codex_assets::"
+        "test_installer_copies_repo_scoped_assets_with_project_harness_config",
+        "PR-297",
+    ),
+)
+
+
 INTERNAL_CSV_FIELDS = (
     "pr_id",
     "wave",
@@ -390,11 +409,18 @@ def historical_and_prospective_ids(
     prospective = tuple(str(value) for value in prospective_spec.get("exact_ids", ()))
     if set(historical) & set(prospective):
         raise RetraceContractError("historical and prospective PR spaces overlap")
-    if set(cards) != set(historical) | set(prospective):
-        missing = sorted(set(cards) - set(historical) - set(prospective))
+    later_root_cause = {successor for _node, successor in PR280_ACTIVE_CORE_SUCCESSORS}
+    registered_later = set(cards) - set(historical) - set(prospective)
+    if registered_later not in (set(), later_root_cause):
+        missing = sorted(registered_later - later_root_cause)
         extra = sorted(set(prospective) - set(cards))
         raise RetraceContractError(
             f"canonical PR partition mismatch: missing={missing}, extra={extra}"
+        )
+    if set(prospective) - set(cards):
+        raise RetraceContractError(
+            "canonical PR partition is missing prospective work units: "
+            f"{sorted(set(prospective) - set(cards))}"
         )
     return historical, prospective
 
@@ -2604,8 +2630,52 @@ def validate_supersession_map(
 
 
 def build_failure_debt(
-    *, backlog: Mapping[str, object], inventory: Mapping[str, object]
+    *,
+    backlog: Mapping[str, object],
+    inventory: Mapping[str, object],
+    pr280_inventory_receipt_sha256: str | None = None,
+    pr280_active_core_nodes: Sequence[str] | None = None,
 ) -> dict[str, object]:
+    if pr280_inventory_receipt_sha256 is not None and re.fullmatch(
+        r"[0-9a-f]{64}", pr280_inventory_receipt_sha256
+    ) is None:
+        raise RetraceContractError("PR-280 inventory receipt hash is malformed")
+    if pr280_inventory_receipt_sha256 is None:
+        if pr280_active_core_nodes is not None:
+            raise RetraceContractError(
+                "PR-280 active-core nodes require an inventory receipt"
+            )
+        active_core_nodes: tuple[str, ...] | None = None
+    else:
+        if not isinstance(pr280_active_core_nodes, Sequence) or isinstance(
+            pr280_active_core_nodes, (str, bytes)
+        ):
+            raise RetraceContractError(
+                "PR-280 receipt requires an exact active-core node sequence"
+            )
+        supplied_nodes = tuple(pr280_active_core_nodes)
+        if any(not isinstance(node, str) or not node for node in supplied_nodes):
+            raise RetraceContractError("PR-280 active-core node is malformed")
+        if len(supplied_nodes) != len(set(supplied_nodes)):
+            raise RetraceContractError("PR-280 active-core nodes contain duplicates")
+        successor_by_node = dict(PR280_ACTIVE_CORE_SUCCESSORS)
+        unknown_nodes = sorted(set(supplied_nodes) - set(successor_by_node))
+        if unknown_nodes:
+            raise RetraceContractError(
+                "PR-280 active-core node lacks a registered root-cause successor: "
+                f"{unknown_nodes}"
+            )
+        active_core_nodes = tuple(
+            node
+            for node, _successor in PR280_ACTIVE_CORE_SUCCESSORS
+            if node in supplied_nodes
+        )
+    active_core_count = None if active_core_nodes is None else len(active_core_nodes)
+    active_successors = [
+        {"pr_id": successor, "failure_node": node}
+        for node, successor in PR280_ACTIVE_CORE_SUCCESSORS
+        if active_core_nodes is not None and node in active_core_nodes
+    ]
     cards = _cards(backlog)
     native_cards = sorted(
         pr_id
@@ -2615,13 +2685,52 @@ def build_failure_debt(
     rows = [
         {
             "debt_id": "DEBT-PR280-FRESH-INVENTORY",
-            "status": "OPEN",
-            "blocker_class": "INFRASTRUCTURE_DEBT",
-            "affected_prs": ["PR-280"],
+            "status": (
+                "OPEN"
+                if pr280_inventory_receipt_sha256 is None
+                else "RESOLVED_IN_PR280"
+                if active_core_count == 0
+                else "OPEN_ROOT_CAUSE_REQUIRED"
+            ),
+            "blocker_class": (
+                "ACTIVE_CORE_REGRESSION"
+                if active_core_count
+                else "INFRASTRUCTURE_DEBT"
+            ),
+            "affected_prs": (
+                [
+                    "PR-280",
+                    *(f"PR-{number}" for number in range(281, 295)),
+                    *(row["pr_id"] for row in active_successors),
+                ]
+                if active_core_count
+                else ["PR-280"]
+            ),
             "route_id": route_id(RetraceDisposition.STABLE_REPLAY),
-            "next_work_unit": "PR-280",
+            "next_work_unit": (
+                active_successors[0]["pr_id"] if active_core_count else "PR-280"
+            ),
             "named_event": None,
-            "effect": "Fresh cache-free full inventory and failure classification have not run.",
+            "resolution_receipt_sha256": pr280_inventory_receipt_sha256,
+            "active_core_count": active_core_count,
+            "active_core_nodes": (
+                None if active_core_nodes is None else list(active_core_nodes)
+            ),
+            "root_cause_work_units": active_successors,
+            "resolution_condition": (
+                None
+                if not active_core_count
+                else "Every exact active-core node passes under a cache-free rerun "
+                "receipt and each bound root-cause successor is COMPLETED_SUCCESS; "
+                "rebucketing, waiver, skip, or baseline relaxation is not resolution."
+            ),
+            "effect": (
+                "Fresh cache-free full inventory and failure classification have not run."
+                if pr280_inventory_receipt_sha256 is None
+                else "Fresh cache-free full inventory and exact failure classification are receipt-bound; no scientific capability is granted."
+                if active_core_count == 0
+                else "Fresh cache-free inventory is receipt-bound but contains three exact active-core failures; PR-295, PR-296, and PR-297 must resolve them before downstream science."
+            ),
         },
         {
             "debt_id": "DEBT-PR276-STALE-RECONCILIATION-ASSERTIONS",
@@ -2779,6 +2888,8 @@ def validate_failure_debt(
     *,
     backlog: Mapping[str, object],
     inventory: Mapping[str, object],
+    pr280_inventory_receipt_sha256: str | None = None,
+    pr280_active_core_nodes: Sequence[str] | None = None,
 ) -> None:
     if document.get("schema") != "htt.pr279_failure_debt.v1":
         raise RetraceContractError("unknown failure-debt schema")
@@ -2791,6 +2902,7 @@ def validate_failure_debt(
         "EVIDENCE_CONDITIONAL",
         "LEGACY_SUPERSESSION",
         "INFRASTRUCTURE_DEBT",
+        "ACTIVE_CORE_REGRESSION",
     }
     known_routes = {route_id(item) for item in RetraceDisposition}
     for raw_row in rows:
@@ -2814,7 +2926,10 @@ def validate_failure_debt(
                 f"{debt_id} lacks both a next work unit and a named event"
             )
     expected_document = build_failure_debt(
-        backlog=backlog, inventory=inventory
+        backlog=backlog,
+        inventory=inventory,
+        pr280_inventory_receipt_sha256=pr280_inventory_receipt_sha256,
+        pr280_active_core_nodes=pr280_active_core_nodes,
     )
     if document != expected_document:
         raise RetraceContractError(
@@ -3111,6 +3226,7 @@ __all__ = [
     "INTERNAL_CSV_FIELDS",
     "LIFECYCLE_EDGE_KINDS",
     "NormalizedLegacyDisposition",
+    "PR280_ACTIVE_CORE_SUCCESSORS",
     "RetraceContractError",
     "RetraceDisposition",
     "build_data_artifact_inventory_from_snapshot",

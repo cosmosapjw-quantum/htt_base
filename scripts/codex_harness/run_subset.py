@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import os
 import shlex
 import subprocess
 import sys
@@ -10,13 +11,17 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 REPO_VENV_PYTHON = REPO_ROOT / "venv" / "bin" / "python"
+PROFILE_MANIFEST = (
+    REPO_ROOT / "docs/research_program/post_pr275/harness_profiles_v4.yaml"
+)
+for _source_root in (REPO_ROOT / "htt/src", REPO_ROOT / "htt"):
+    if str(_source_root) not in sys.path:
+        sys.path.insert(0, str(_source_root))
 
-SUBSETS: dict[str, tuple[str, ...]] = {
-    "collect": ("-m", "pytest", "--collect-only", "-q"),
-    "fast": ("-m", "pytest", "-m", "fast and not slow", "-q"),
-    "package": ("-m", "pytest", "htt/test_packaging_imports.py", "-q"),
-    "smoke": ("-m", "pytest", "-m", "smoke", "-q"),
-}
+from common.harness_profiles_v4 import load_profile_manifest  # noqa: E402
+
+
+SUBSETS = frozenset({"collect", "fast", "package", "smoke"})
 
 
 def default_python() -> str:
@@ -28,7 +33,8 @@ def default_python() -> str:
 def command_for(subset: str, *, python: str | None = None) -> list[str]:
     if subset not in SUBSETS:
         raise KeyError(subset)
-    return [python or default_python(), *SUBSETS[subset]]
+    manifest = load_profile_manifest(PROFILE_MANIFEST, repo_root=REPO_ROOT)
+    return manifest.profile(subset).pytest_command(python or default_python())
 
 
 def print_subset_list(*, python: str | None = None) -> None:
@@ -64,7 +70,16 @@ def main(argv: list[str] | None = None) -> int:
     if args.dry_run:
         return 0
 
-    completed = subprocess.run(command, cwd=REPO_ROOT, check=False)
+    environment = dict(os.environ)
+    for name in tuple(environment):
+        if name.startswith("PYTEST_"):
+            environment.pop(name, None)
+    environment["PYTHONPATH"] = os.pathsep.join(
+        str(path) for path in (REPO_ROOT / "htt/src", REPO_ROOT / "htt", REPO_ROOT / "htt/htt")
+    )
+    completed = subprocess.run(
+        command, cwd=REPO_ROOT, env=environment, check=False
+    )
     return completed.returncode
 
 

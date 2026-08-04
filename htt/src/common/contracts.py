@@ -18,6 +18,7 @@ The VER2 rule is:
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass, field
 from enum import Enum
 from typing import Any, Mapping, Optional, Literal
@@ -481,6 +482,11 @@ class StatusSnapshotEntry:
     report_generation_gates: dict[str, str] = field(default_factory=dict)
     science_promotion_gates: dict[str, str] = field(default_factory=dict)
     publication_gates: dict[str, str] = field(default_factory=dict)
+    smoke_evidence_ref: str | None = None
+    smoke_execution_ref: str | None = None
+    smoke_profile_id: str | None = None
+    smoke_candidate_commit: str | None = None
+    smoke_candidate_tree: str | None = None
 
     def __post_init__(self) -> None:
         _set_canonical_owner(self)
@@ -498,6 +504,42 @@ class StatusSnapshotEntry:
             raise ValueError("StatusSnapshotEntry.artifact_id must be non-empty")
         if not self.source_commit:
             raise ValueError("StatusSnapshotEntry.source_commit must be non-empty")
+        smoke_bindings = (
+            self.smoke_evidence_ref,
+            self.smoke_execution_ref,
+            self.smoke_profile_id,
+            self.smoke_candidate_commit,
+            self.smoke_candidate_tree,
+        )
+        if self.smoke_tested:
+            if self.artifact_readiness != "smoke_tested":
+                raise ValueError(
+                    "smoke_tested requires artifact_readiness='smoke_tested'"
+                )
+            if not all(isinstance(value, str) and value for value in smoke_bindings):
+                raise ValueError(
+                    "smoke_tested requires receipt, profile, commit, and tree bindings"
+                )
+            for label, value in (
+                ("smoke_evidence_ref", self.smoke_evidence_ref),
+                ("smoke_execution_ref", self.smoke_execution_ref),
+            ):
+                if not isinstance(value, str) or re.fullmatch(r"[0-9a-f]{64}", value) is None:
+                    raise ValueError(f"{label} must be a SHA-256 identity")
+            for label, value in (
+                ("smoke_candidate_commit", self.smoke_candidate_commit),
+                ("smoke_candidate_tree", self.smoke_candidate_tree),
+            ):
+                if not isinstance(value, str) or re.fullmatch(
+                    r"[0-9a-f]{40,64}", value
+                ) is None:
+                    raise ValueError(f"{label} must be a git object identity")
+        elif any(value is not None for value in smoke_bindings):
+            raise ValueError("smoke receipt bindings require smoke_tested=True")
+        elif self.artifact_readiness == "smoke_tested":
+            raise ValueError(
+                "artifact_readiness='smoke_tested' requires verified receipt binding"
+            )
 
 
 @dataclass(frozen=True)

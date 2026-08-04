@@ -70,6 +70,11 @@ scope:
   - PR-294
   historical_internal_pr_count: 222
   registered_total_after_intake: 241
+  pr280_root_cause_successor_ids:
+  - PR-295
+  - PR-296
+  - PR-297
+  current_registered_total_after_pr280_root_cause_intake: 244
   github_publication_records_are_separate_identity_space: true
   user_owned_untracked_inputs_are_read_only: true
   uploaded_zip_admission_required_before_unpack: true
@@ -211,22 +216,22 @@ post275_dependency_contracts:
     mode: requires_success
   PR-281:
   - upstream_id: PR-280
-    mode: requires_success
+    mode: requires_terminal_receipt
   PR-282:
   - upstream_id: PR-280
-    mode: requires_success
+    mode: requires_terminal_receipt
   PR-283:
   - upstream_id: PR-280
-    mode: requires_success
+    mode: requires_terminal_receipt
   PR-284:
   - upstream_id: PR-280
-    mode: requires_success
+    mode: requires_terminal_receipt
   PR-285:
   - upstream_id: PR-280
-    mode: requires_success
+    mode: requires_terminal_receipt
   PR-286:
   - upstream_id: PR-280
-    mode: requires_success
+    mode: requires_terminal_receipt
   PR-287:
   - upstream_id: PR-281
     mode: requires_success
@@ -242,10 +247,10 @@ post275_dependency_contracts:
     mode: requires_success
   PR-288:
   - upstream_id: PR-280
-    mode: requires_success
+    mode: requires_terminal_receipt
   PR-289:
   - upstream_id: PR-280
-    mode: requires_success
+    mode: requires_terminal_receipt
   PR-290:
   - upstream_id: PR-202
     mode: requires_success
@@ -302,6 +307,46 @@ post275_dependency_contracts:
   - upstream_id: PR-293
     mode: requires_terminal_receipt
 
+pr280_root_cause_amendment:
+  authority: PR-280 fresh cache-free inventory stop rule
+  historical_prospective_scope_unchanged: PR-276..PR-294
+  terminal_pr280_mode: requires_terminal_receipt
+  successors:
+    PR-295:
+      failure_node: htt.bass.validation.test_external_code_policy::test_no_external_code_imports_in_production
+      failure_type: forbidden_external_code_import_in_production
+    PR-296:
+      failure_node: htt.bass.spectrum.test_d2_pstf_progressive_closure::test_python_pstf_closure_does_not_regress
+      failure_type: python_pstf_progressive_closure_regression
+    PR-297:
+      failure_node: scripts.codex_harness.test_codex_assets::test_installer_copies_repo_scoped_assets_with_project_harness_config
+      failure_type: repo_scoped_installer_transitive_context_closure
+  successor_dependencies:
+    PR-295:
+    - upstream_id: PR-280
+      mode: requires_terminal_receipt
+    PR-296:
+    - upstream_id: PR-280
+      mode: requires_terminal_receipt
+    PR-297:
+    - upstream_id: PR-280
+      mode: requires_terminal_receipt
+  direct_consumers:
+  - PR-281
+  - PR-282
+  - PR-283
+  - PR-284
+  - PR-285
+  - PR-286
+  - PR-288
+  - PR-289
+  required_successors_for_each_direct_consumer:
+  - PR-295
+  - PR-296
+  - PR-297
+  scientific_status_effect: none
+  public_use: false
+
 pending_card_dependency_amendments:
   PR-157:
   - PR-278
@@ -332,6 +377,38 @@ pending_card_dependency_amendments:
   - PR-289
   PR-207:
   - PR-294
+  PR-281:
+  - PR-295
+  - PR-296
+  - PR-297
+  PR-282:
+  - PR-295
+  - PR-296
+  - PR-297
+  PR-283:
+  - PR-295
+  - PR-296
+  - PR-297
+  PR-284:
+  - PR-295
+  - PR-296
+  - PR-297
+  PR-285:
+  - PR-295
+  - PR-296
+  - PR-297
+  PR-286:
+  - PR-295
+  - PR-296
+  - PR-297
+  PR-288:
+  - PR-295
+  - PR-296
+  - PR-297
+  PR-289:
+  - PR-295
+  - PR-296
+  - PR-297
 amendment_policy: >-
   These are prospective overlay edges.  Receipt-sealed card text and existing
   success-only edges remain unchanged.  The overlay is canonical for scheduling.
