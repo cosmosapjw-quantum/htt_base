@@ -1,0 +1,371 @@
+schema: htt.pr279_supersession_map.v1
+document_id: PR279-SUPERSESSION-MAP
+owner: COMMON
+scope: narrow evidence-backed successor readings and preserved negative history
+allowed_use: diagnostic invalidation and recomputation routing only
+transfer_source: not_applicable_or_preserved_per_historical_surface
+source_identities:
+- relation_id: SUP-PR172-PR184
+  reason_ref: 5e55151735fbc5fffde3e21e66c7e46fb49f68011f11d78693a8b80de6d7ee90
+- relation_id: SUP-PR168-PR248
+  reason_ref: a3b76513a4f3868f723f7d591f4a56a399e47665e04c9a8e95ba17aa132a12c2
+- relation_id: SUP-PR130-TAIL-GATE
+  reason_ref: 6f0e707c27cad5d53666bd9d3c3c16b54610988a0454dfcf3b592574c4eea014
+- relation_id: SUP-PR169-ALGEBRAIC-ONLY
+  reason_ref: 1cc004dc2c95f08101cb93f0a2ce828adafeaab9a4d080f394b5c0bf456ebc0b
+- relation_id: SUP-PR170-PROVENANCE-ONLY
+  reason_ref: 5d270118f433cca7247576b63235f1c6d6037741c2477a10852058f0d85115c6
+assumptions:
+- A successor changes only its registered identity dimensions.
+- Historical failed receipts remain immutable and terminal under their original statement.
+caveats:
+- PR-248 to PR-252 is withheld because its tracked exact-hash authorities contradict each other.
+- No direct PR-124 to PR-259 supersession edge is registered.
+generating_procedure: scripts/codex_harness/run_pr279_reverse_trace.py build
+claim_tier_ceiling: diagnostic_only
+capability_issuance: forbidden
+typed_supersession_graph:
+  schema_version: claim_evidence_graph_v1
+  canonicalization: sorted_compact_json_utf8_v1
+  nodes:
+  - kind: artifact
+    label: PR279 predecessor SUP-PR170-PROVENANCE-ONLY
+    content_sha256: 0079dab825dbd1732a655e07f183599227c37961689f3ab79446cd17d65ef127
+    axes:
+      process_result: PASS
+      evidence_status: PRESENT
+      scientific_status: OPEN
+    metadata:
+      historical_identity: PR-170-CANDIDATE
+      path: docs/research_program/long_horizon_rescue/pr170_spec.yaml
+      preservation: The candidate branch remains historical and CAS-blocked; the successor is source-provenance
+        audit only.
+    test_execution: null
+    node_ref: 4cd904e8aa7cce7c88bf1300d70da0168b4e3c488d9fb4d8f57462a04bd1df62
+  - kind: artifact
+    label: PR279 predecessor SUP-PR172-PR184
+    content_sha256: 9856349d1a05ee66eef85c14a96db3d3c665e900f53cb8218ff3e961ab5438e3
+    axes:
+      process_result: PASS
+      evidence_status: PRESENT
+      scientific_status: OPEN
+    metadata:
+      historical_identity: PR-172
+      path: docs/generated/pr172_result_card.json
+      preservation: PR-172 remains failed-with-receipt; PR-184 changes only the premise-complete callable
+        reading.
+    test_execution: null
+    node_ref: 573de0422888d0bdee3140779a2e9d974f4516b89d69b5f6254ab74e4a49ad14
+  - kind: artifact
+    label: PR279 predecessor SUP-PR169-ALGEBRAIC-ONLY
+    content_sha256: 966fedf2f0bd3831bc1065d0d0da1a73033638d0a98affa7f83d5f1bdc4f52e1
+    axes:
+      process_result: PASS
+      evidence_status: PRESENT
+      scientific_status: OPEN
+    metadata:
+      historical_identity: PR-169-CANDIDATE
+      path: docs/research_program/long_horizon_rescue/pr169_spec.yaml
+      preservation: The constructive candidate remains historical; only exact comparator algebra survives.
+    test_execution: null
+    node_ref: 6ea0aa347edb039e6df9bc8292af0530dd559e6b79587d6456543a36ee3e3ac9
+  - kind: artifact
+    label: PR279 successor SUP-PR168-PR248
+    content_sha256: a3b76513a4f3868f723f7d591f4a56a399e47665e04c9a8e95ba17aa132a12c2
+    axes:
+      process_result: PASS
+      evidence_status: PRESENT
+      scientific_status: OPEN
+    metadata:
+      path: docs/research_program/stat_foundations/pr248_pr168_integrity_supersession.yaml
+      scope: registered successor reading only
+      successor_identity: PR-248
+    test_execution: null
+    node_ref: 8ca3a05f8767adb026a62f2c548dedd2d4ee6b5e4edca5e40cc12c9c12ae10ca
+  - kind: artifact
+    label: PR279 successor SUP-PR170-PROVENANCE-ONLY
+    content_sha256: 5d270118f433cca7247576b63235f1c6d6037741c2477a10852058f0d85115c6
+    axes:
+      process_result: PASS
+      evidence_status: PRESENT
+      scientific_status: OPEN
+    metadata:
+      path: docs/generated/pr170_candidate_branch_supersession.json
+      scope: registered successor reading only
+      successor_identity: PR-170-PROVENANCE-ONLY
+    test_execution: null
+    node_ref: 99bc07873fca5be569bd4dcbf3bc4489d4a004197329e78add09e0f062ace18e
+  - kind: artifact
+    label: PR279 successor SUP-PR130-TAIL-GATE
+    content_sha256: 6f0e707c27cad5d53666bd9d3c3c16b54610988a0454dfcf3b592574c4eea014
+    axes:
+      process_result: PASS
+      evidence_status: PRESENT
+      scientific_status: OPEN
+    metadata:
+      path: docs/generated/pr130_legacy_invalidation.json
+      scope: registered successor reading only
+      successor_identity: C-PR130-NT2-TAIL
+    test_execution: null
+    node_ref: 9e1239478a958e3e2ac900aaf21c863fce128c809c2e546443b3529bc4dd4c41
+  - kind: artifact
+    label: PR279 predecessor SUP-PR130-TAIL-GATE
+    content_sha256: eca2f079942485097c4d2ae7390d6675c976f9b592d01241bb9313269c31a431
+    axes:
+      process_result: PASS
+      evidence_status: PRESENT
+      scientific_status: OPEN
+    metadata:
+      historical_identity: PR-130-LEGACY
+      path: htt/obsstat/egs2_fisher.py
+      preservation: The legacy module remains byte-frozen; the tail theorem and sufficiency gate own the
+        successor reading.
+    test_execution: null
+    node_ref: b7d57d18f2bda4c16c1223816c8cc156d985c3ba03d309d64f6d36cff54c07ba
+  - kind: artifact
+    label: PR279 successor SUP-PR169-ALGEBRAIC-ONLY
+    content_sha256: 1cc004dc2c95f08101cb93f0a2ce828adafeaab9a4d080f394b5c0bf456ebc0b
+    axes:
+      process_result: PASS
+      evidence_status: PRESENT
+      scientific_status: OPEN
+    metadata:
+      path: docs/generated/pr169_candidate_branch_supersession.json
+      scope: registered successor reading only
+      successor_identity: PR-169-ALGEBRAIC-ONLY
+    test_execution: null
+    node_ref: bd3011dbd2f8fd8dc503e1231212abaea139519d5bd8a559b5e794a5e8cae2f3
+  - kind: claim
+    label: C-PR279-SUPERSESSION-PROJECTION
+    content_sha256: 0dea00380efff8c15a6d1bcfec5ca4dfd12903f6fe12412bfed2e440bbd4acbc
+    axes:
+      process_result: PASS
+      evidence_status: PRESENT
+      scientific_status: OPEN
+    metadata:
+      capability_issuance: forbidden
+      scope: diagnostic supersession projection
+    test_execution: null
+    node_ref: ceca48d0680e708f962dc70567a69fb3dd792391084f6dd1476c83bce3687033
+  - kind: artifact
+    label: PR279 successor SUP-PR172-PR184
+    content_sha256: 5c75cfb4a909e076605e90bafe36a59732f27994d7d08acf90c16e93fc99d688
+    axes:
+      process_result: PASS
+      evidence_status: PRESENT
+      scientific_status: OPEN
+    metadata:
+      path: docs/generated/pr184_result_card.json
+      scope: registered successor reading only
+      successor_identity: PR-184
+    test_execution: null
+    node_ref: d2e3add7d8d7b174ab10bfa842efb622569c3c447dcabaf55fd7cb08641c5bcf
+  - kind: artifact
+    label: PR279 predecessor SUP-PR168-PR248
+    content_sha256: 6d3e571e87055ecc740cf7eab871a011afa4b638111a48d5f3781868116c3599
+    axes:
+      process_result: PASS
+      evidence_status: PRESENT
+      scientific_status: OPEN
+    metadata:
+      historical_identity: PR-168
+      path: docs/generated/pr168_code_integrity_receipt.json
+      preservation: PR-168 receipt and inventory remain byte-preserved; PR-248 is a bounded live-registry
+        overlay.
+    test_execution: null
+    node_ref: fbfaeaf1e658ab4ffcae549099b8c52d7b5f87329acf03c7c6ee3502de5e90b9
+  edges:
+  - kind: superseded_by
+    source_ref: 4cd904e8aa7cce7c88bf1300d70da0168b4e3c488d9fb4d8f57462a04bd1df62
+    target_ref: 99bc07873fca5be569bd4dcbf3bc4489d4a004197329e78add09e0f062ace18e
+    metadata:
+      affected_capabilities:
+      - FAMILY_IDENTIFICATION
+      - MORPHOLOGY_COMPATIBILITY
+      - PUBLIC_RELEASE
+      - THEOREM_PROVED_CONDITIONAL
+      changed_dimensions:
+      - THEOREM
+      reason_ref: 5d270118f433cca7247576b63235f1c6d6037741c2477a10852058f0d85115c6
+    edge_ref: 3022ae922b30b5b57a08e49b305cf4261637c5e3ea9d49088f5c2ec3e2dc1766
+  - kind: superseded_by
+    source_ref: b7d57d18f2bda4c16c1223816c8cc156d985c3ba03d309d64f6d36cff54c07ba
+    target_ref: 9e1239478a958e3e2ac900aaf21c863fce128c809c2e546443b3529bc4dd4c41
+    metadata:
+      affected_capabilities:
+      - METHOD_CALIBRATED
+      - PUBLIC_RELEASE
+      - THEOREM_PROVED_CONDITIONAL
+      changed_dimensions:
+      - THEOREM
+      reason_ref: 6f0e707c27cad5d53666bd9d3c3c16b54610988a0454dfcf3b592574c4eea014
+    edge_ref: 8cecff8e4a8e4cb8bda2374f9b9681c474eaf626a6711efc435541782041eb49
+  - kind: superseded_by
+    source_ref: 6ea0aa347edb039e6df9bc8292af0530dd559e6b79587d6456543a36ee3e3ac9
+    target_ref: bd3011dbd2f8fd8dc503e1231212abaea139519d5bd8a559b5e794a5e8cae2f3
+    metadata:
+      affected_capabilities:
+      - FAMILY_IDENTIFICATION
+      - MORPHOLOGY_COMPATIBILITY
+      - PUBLIC_RELEASE
+      - THEOREM_PROVED_CONDITIONAL
+      changed_dimensions:
+      - THEOREM
+      reason_ref: 1cc004dc2c95f08101cb93f0a2ce828adafeaab9a4d080f394b5c0bf456ebc0b
+    edge_ref: b8b70da214298b951dd002f43be3ace015aed444bc54fcaa702de9a9ee0cc1ea
+  - kind: superseded_by
+    source_ref: 573de0422888d0bdee3140779a2e9d974f4516b89d69b5f6254ab74e4a49ad14
+    target_ref: d2e3add7d8d7b174ab10bfa842efb622569c3c447dcabaf55fd7cb08641c5bcf
+    metadata:
+      affected_capabilities:
+      - CONTRACT_VALIDATED
+      - PUBLIC_RELEASE
+      changed_dimensions:
+      - THEOREM
+      reason_ref: 5e55151735fbc5fffde3e21e66c7e46fb49f68011f11d78693a8b80de6d7ee90
+    edge_ref: cdde03c2e2f24273ce72a1553412edd8d348e97c0f0917c99b42128598b6b01f
+  - kind: superseded_by
+    source_ref: fbfaeaf1e658ab4ffcae549099b8c52d7b5f87329acf03c7c6ee3502de5e90b9
+    target_ref: 8ca3a05f8767adb026a62f2c548dedd2d4ee6b5e4edca5e40cc12c9c12ae10ca
+    metadata:
+      affected_capabilities:
+      - CONTRACT_VALIDATED
+      - METHOD_CALIBRATED
+      - PUBLIC_RELEASE
+      changed_dimensions:
+      - THEOREM
+      reason_ref: a3b76513a4f3868f723f7d591f4a56a399e47665e04c9a8e95ba17aa132a12c2
+    edge_ref: f1325ddf0bd42a242c32435bf3a07d32dabb86cf0d301a9a3cf20a6da12f710a
+  graph_ref: 33aa0b2e408da8453a1fbc300e2de6a4d9b5c24aef8608b0408ba58abe8b81da
+relations:
+- relation_id: SUP-PR172-PR184
+  predecessor_id: PR-172
+  predecessor_path: docs/generated/pr172_result_card.json
+  successor_id: PR-184
+  successor_path: docs/generated/pr184_result_card.json
+  evidence_path: docs/research_program/long_horizon_rescue/pr184_spec.yaml
+  changed_dimensions:
+  - THEOREM
+  affected_capabilities:
+  - CONTRACT_VALIDATED
+  - PUBLIC_RELEASE
+  preservation: PR-172 remains failed-with-receipt; PR-184 changes only the premise-complete callable
+    reading.
+  predecessor_sha256: 9856349d1a05ee66eef85c14a96db3d3c665e900f53cb8218ff3e961ab5438e3
+  successor_sha256: 5c75cfb4a909e076605e90bafe36a59732f27994d7d08acf90c16e93fc99d688
+  reason_ref: 5e55151735fbc5fffde3e21e66c7e46fb49f68011f11d78693a8b80de6d7ee90
+  predecessor_node_ref: 573de0422888d0bdee3140779a2e9d974f4516b89d69b5f6254ab74e4a49ad14
+  successor_node_ref: d2e3add7d8d7b174ab10bfa842efb622569c3c447dcabaf55fd7cb08641c5bcf
+  edge_ref: cdde03c2e2f24273ce72a1553412edd8d348e97c0f0917c99b42128598b6b01f
+- relation_id: SUP-PR168-PR248
+  predecessor_id: PR-168
+  predecessor_path: docs/generated/pr168_code_integrity_receipt.json
+  successor_id: PR-248
+  successor_path: docs/research_program/stat_foundations/pr248_pr168_integrity_supersession.yaml
+  evidence_path: docs/research_program/stat_foundations/pr248_pr168_integrity_supersession.yaml
+  changed_dimensions:
+  - THEOREM
+  affected_capabilities:
+  - CONTRACT_VALIDATED
+  - METHOD_CALIBRATED
+  - PUBLIC_RELEASE
+  preservation: PR-168 receipt and inventory remain byte-preserved; PR-248 is a bounded live-registry
+    overlay.
+  predecessor_sha256: 6d3e571e87055ecc740cf7eab871a011afa4b638111a48d5f3781868116c3599
+  successor_sha256: a3b76513a4f3868f723f7d591f4a56a399e47665e04c9a8e95ba17aa132a12c2
+  reason_ref: a3b76513a4f3868f723f7d591f4a56a399e47665e04c9a8e95ba17aa132a12c2
+  predecessor_node_ref: fbfaeaf1e658ab4ffcae549099b8c52d7b5f87329acf03c7c6ee3502de5e90b9
+  successor_node_ref: 8ca3a05f8767adb026a62f2c548dedd2d4ee6b5e4edca5e40cc12c9c12ae10ca
+  edge_ref: f1325ddf0bd42a242c32435bf3a07d32dabb86cf0d301a9a3cf20a6da12f710a
+- relation_id: SUP-PR130-TAIL-GATE
+  predecessor_id: PR-130-LEGACY
+  predecessor_path: htt/obsstat/egs2_fisher.py
+  successor_id: C-PR130-NT2-TAIL
+  successor_path: docs/generated/pr130_legacy_invalidation.json
+  evidence_path: docs/generated/pr130_legacy_invalidation.json
+  changed_dimensions:
+  - THEOREM
+  affected_capabilities:
+  - THEOREM_PROVED_CONDITIONAL
+  - METHOD_CALIBRATED
+  - PUBLIC_RELEASE
+  preservation: The legacy module remains byte-frozen; the tail theorem and sufficiency gate own the successor
+    reading.
+  predecessor_sha256: eca2f079942485097c4d2ae7390d6675c976f9b592d01241bb9313269c31a431
+  successor_sha256: 6f0e707c27cad5d53666bd9d3c3c16b54610988a0454dfcf3b592574c4eea014
+  reason_ref: 6f0e707c27cad5d53666bd9d3c3c16b54610988a0454dfcf3b592574c4eea014
+  predecessor_node_ref: b7d57d18f2bda4c16c1223816c8cc156d985c3ba03d309d64f6d36cff54c07ba
+  successor_node_ref: 9e1239478a958e3e2ac900aaf21c863fce128c809c2e546443b3529bc4dd4c41
+  edge_ref: 8cecff8e4a8e4cb8bda2374f9b9681c474eaf626a6711efc435541782041eb49
+- relation_id: SUP-PR169-ALGEBRAIC-ONLY
+  predecessor_id: PR-169-CANDIDATE
+  predecessor_path: docs/research_program/long_horizon_rescue/pr169_spec.yaml
+  successor_id: PR-169-ALGEBRAIC-ONLY
+  successor_path: docs/generated/pr169_candidate_branch_supersession.json
+  evidence_path: docs/generated/pr169_candidate_branch_supersession.json
+  changed_dimensions:
+  - THEOREM
+  affected_capabilities:
+  - THEOREM_PROVED_CONDITIONAL
+  - MORPHOLOGY_COMPATIBILITY
+  - FAMILY_IDENTIFICATION
+  - PUBLIC_RELEASE
+  preservation: The constructive candidate remains historical; only exact comparator algebra survives.
+  predecessor_sha256: 966fedf2f0bd3831bc1065d0d0da1a73033638d0a98affa7f83d5f1bdc4f52e1
+  successor_sha256: 1cc004dc2c95f08101cb93f0a2ce828adafeaab9a4d080f394b5c0bf456ebc0b
+  reason_ref: 1cc004dc2c95f08101cb93f0a2ce828adafeaab9a4d080f394b5c0bf456ebc0b
+  predecessor_node_ref: 6ea0aa347edb039e6df9bc8292af0530dd559e6b79587d6456543a36ee3e3ac9
+  successor_node_ref: bd3011dbd2f8fd8dc503e1231212abaea139519d5bd8a559b5e794a5e8cae2f3
+  edge_ref: b8b70da214298b951dd002f43be3ace015aed444bc54fcaa702de9a9ee0cc1ea
+- relation_id: SUP-PR170-PROVENANCE-ONLY
+  predecessor_id: PR-170-CANDIDATE
+  predecessor_path: docs/research_program/long_horizon_rescue/pr170_spec.yaml
+  successor_id: PR-170-PROVENANCE-ONLY
+  successor_path: docs/generated/pr170_candidate_branch_supersession.json
+  evidence_path: docs/generated/pr170_candidate_branch_supersession.json
+  changed_dimensions:
+  - THEOREM
+  affected_capabilities:
+  - THEOREM_PROVED_CONDITIONAL
+  - MORPHOLOGY_COMPATIBILITY
+  - FAMILY_IDENTIFICATION
+  - PUBLIC_RELEASE
+  preservation: The candidate branch remains historical and CAS-blocked; the successor is source-provenance
+    audit only.
+  predecessor_sha256: 0079dab825dbd1732a655e07f183599227c37961689f3ab79446cd17d65ef127
+  successor_sha256: 5d270118f433cca7247576b63235f1c6d6037741c2477a10852058f0d85115c6
+  reason_ref: 5d270118f433cca7247576b63235f1c6d6037741c2477a10852058f0d85115c6
+  predecessor_node_ref: 4cd904e8aa7cce7c88bf1300d70da0168b4e3c488d9fb4d8f57462a04bd1df62
+  successor_node_ref: 99bc07873fca5be569bd4dcbf3bc4489d4a004197329e78add09e0f062ace18e
+  edge_ref: 3022ae922b30b5b57a08e49b305cf4261637c5e3ea9d49088f5c2ec3e2dc1766
+related_invalidations:
+- invalidation_id: INV-PR128-AUTHORITY-TABLE
+  relation: INVALIDATES_THEOREM
+  historical_pr: PR-128
+  evidence_path: docs/generated/pr128_invalidation_table.json
+  reason_ref: 7a38217e6d1cf3956f1c6401cd2c78d18c2391dd66dd0511534a4f3710489714
+  disposition: CORRECTED_SUPERSEDED
+preserved_falsified_history:
+- history_id: FALSIFIED-PR190-FULL-ATTAINABILITY
+  historical_pr: PR-190
+  statement_path: docs/research_program/strengthening/pr190_spec.yaml
+  result_path: docs/generated/pr190_attainability/attainability_report.json
+  result_sha256: 580aa9e36ac5419c7364ca6b295dece08c39c8ca1f91962d25c63d32fd3cf426
+  disposition: FALSIFIED_HISTORICAL
+  successor: null
+withheld_relations:
+- relation_id: WITHHELD-PR248-PR252-HASH-CONTRADICTION
+  candidate_relation: PR-248 -> PR-252
+  extension_path: docs/research_program/stat_foundations/pr252_pr248_integrity_supersession.yaml
+  extension_sha256: 4f66b0924db5ced757125aa6455232200502656e80ca913ef3fad5377acdf83a
+  pinned_migration_sha256: a90134895e34aff79e2c22538c012a08b692efe6486a29ce2dfef8db378a5efb
+  current_migration_path: docs/research_program/stat_foundations/pr252_mes_consumer_migration.yaml
+  current_migration_sha256: 0d4126a9a34df75faebb10c205c5ecadc331e788d34be8ebb0b949219413ad1d
+  route_id: ROUTE-CORRECTED_SUPERSEDED
+  named_resolution_event: OWNER_APPROVED_CHRONOLOGY_PRESERVING_SUCCESSOR_REGISTRATION
+summary:
+  typed_supersession_count: 5
+  related_invalidation_count: 1
+  preserved_falsified_count: 1
+  withheld_relation_count: 1
+  historical_predecessor_rewrite_count: 0

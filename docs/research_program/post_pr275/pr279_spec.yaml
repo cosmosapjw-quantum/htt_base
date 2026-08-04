@@ -1,0 +1,384 @@
+schema: htt.post_pr275.reverse_trace.v1
+document_id: PR279-REVERSE-TRACE-AND-INVALIDATION
+status: ACTIVE_IMPLEMENTATION_SPEC
+pr_id: PR-279
+change_set_id: CS-PR279-REVERSE-TRACE
+publication_group_id: PG-PR279-REVERSE-TRACE
+owner: COMMON
+contributors: [HTT, MIO, OBSSTAT]
+claim_tier_ceiling: diagnostic_only
+scope: pre_solver_retrace_and_recomputation_routing
+publication_policy: docs/research_program/post_pr275/pr279_publication_policy.json
+
+delivery_authorization:
+  implementation_changes: authorized_by_current_user_request
+  content_commit: authorized_once_by_current_user_request
+  closeout_commit: authorized_once_by_current_user_request
+  push: authorized_only_inside_single_attended_review_pr_transaction
+  create_pr: authorized_once_non_draft_review_pr
+  merge: not_authorized
+  force_push: not_authorized
+  approval: not_authorized
+  ruleset_mutation: not_authorized
+  observed_data_execution: not_authorized
+  capability_promotion: not_authorized
+
+authority:
+  canonical_card: docs/codex_handoff/pr_backlog.yaml#PR-279
+  roadmap: docs/research_program/post_pr275/pr276_spec.yaml
+  dependency:
+    pr_id: PR-278
+    mode: requires_success
+    verified_target_merge: 1b0e4200ab4dd487909a8519d7808e81ad4b9169
+  predecessor_lifecycle_contract:
+    module: common.evidence_graph
+    rule: >-
+      PR-279 consumes the PR-277 SUPERSEDED_BY, INVALIDATES_*,
+      REQUIRES_RECALIBRATION, and REQUIRES_REEXECUTION semantics. It does not
+      issue ClaimCapabilityDecision objects and does not create a parallel
+      claim authority.
+
+source_intake:
+  handling: read_only_normalized_snapshot
+  originals_remain_untracked: true
+  archive_unpacking: forbidden
+  sources:
+  - source_id: SRC-PR279-INTERNAL-222
+    filename: HTT_PR_RERUN_MATRIX_20260802.csv
+    sha256: 7d7c62a08c6a6d175827e0fcb123c3ecdc758b9e25984e279bf9022d47751301
+    expected_records: 222
+    role: immutable_legacy_disposition_input
+    status_rule: legacy current_status is preserved as source text but never overrides canonical pr_status.yaml
+  - source_id: SRC-PR279-GITHUB-366
+    filename: HTT_GITHUB_PR_PUBLICATION_INDEX_20260802.csv
+    sha256: 4aba19685b7e41c9efa14de1a942ae82f0765710902d67206d5bb4be6b685e84
+    expected_records: 366
+    role: separate_publication_review_lineage_input
+  - source_id: SRC-PR279-REDO-CAMPAIGN
+    filename: gate_disposition_and_redo_campaign.yaml
+    sha256: 5cd35f64025122832f1c9242a0671393d6fc30c79c798e10e82655ab529c0453
+    normalized_semantic_sha256: 9b9053e4e368d16e4d98e331fddb9826d859659fb9c8479d9077b5947278d7bf
+    role: approximate_data_artifact_grouping_and_invalidation_root_input
+    authority_limit: proposed_diagnostic_routing_only
+  data_group_proposal:
+    path: .agent-harness/runs/pr279-evidence-map-20260804/results/A-PR279-DATA.json
+    assignment_id: A-PR279-DATA
+    context_version: e9b385d7fbc4f8e47c97c3b0c7edae4e522d9be4e025d9342e26ab24829e3019
+    evidence_fingerprint: sha256:894c27d5a0b33f6708ebcaedf4034a3f575d7677b04374a02eeacf30a033c43c
+    file_sha256: 63a4920dddb74e3a49788ce17f9c03aabd9be1f665b561f5b03cdca9d7b07014
+    semantic_sha256: b0f35ad33a29ce5b771831d76ac896d42fc950b7c009b00f22b3f801b0e1a137
+    groups_semantic_sha256: abbf2fc37a3382035cdb94cdf7560b314915de049536b7656733abdbd2d2d8bf
+    expected_groups: 45
+    authority_limit: independent_proposal_consumed_as_diagnostic_group_normalization
+  tracked_resolver:
+    path: docs/research_program/post_pr275/pr279_source_snapshot.yaml
+    role: >-
+      Portable lossless normalization of both CSV inventories plus the
+      decision-relevant redo-campaign section. The source files remain
+      untracked and read-only; all derived outputs regenerate from this one
+      tracked surface plus the canonical DAG and status.
+
+identity_spaces:
+  internal_work_unit:
+    pattern: '^PR-[0-9]{3}$'
+    historical_scope: PR-000_through_PR-275_present_in_canonical_dag
+    expected_count: 222
+  github_publication_review:
+    pattern: '^GITHUB-PR-[0-9]{4}$'
+    numeric_source_range: [2, 367]
+    expected_count: 366
+  prospective_internal:
+    exact_ids:
+    - PR-276
+    - PR-277
+    - PR-278
+    - PR-279
+    - PR-280
+    - PR-281
+    - PR-282
+    - PR-283
+    - PR-284
+    - PR-285
+    - PR-286
+    - PR-287
+    - PR-288
+    - PR-289
+    - PR-290
+    - PR-291
+    - PR-292
+    - PR-293
+    - PR-294
+  cross_space_rule: >-
+    Numeric equality is never identity equality. A GitHub record may refer to
+    an internal PR only through an explicit typed relation carrying both IDs.
+
+canonical_dispositions:
+- STABLE_REPLAY
+- MIGRATION_ONLY
+- REPROVE
+- RECALIBRATE_SYNTHETIC
+- RERUN_FROM_RAW_DATA
+- RERUN_FROM_ADMITTED_SUMMARY
+- CORRECTED_SUPERSEDED
+- FALSIFIED_HISTORICAL
+- LEGACY_REPRODUCTION_ONLY
+- EXTERNAL_BLOCKED
+- NATIVE_BLOCKED
+
+legacy_normalization:
+  lossless_fields:
+  - legacy_disposition
+  - legacy_actions
+  - normalized_dispositions
+  - execution_steps
+  atomic_rules:
+    MIGRATE_REVALIDATE:
+      dispositions: [MIGRATION_ONLY, STABLE_REPLAY]
+    HOLD_NATIVE:
+      dispositions: [NATIVE_BLOCKED]
+    PROOF_READJUDICATION:
+      dispositions: [REPROVE]
+    FRESH_SYNTHETIC:
+      dispositions: [RECALIBRATE_SYNTHETIC]
+    FROM_RAW:
+      dispositions: [RERUN_FROM_RAW_DATA]
+    LEGACY_PUSHFORWARD:
+      dispositions: [LEGACY_REPRODUCTION_ONLY]
+    REGENERATE:
+      dispositions: [STABLE_REPLAY]
+    REBASE_THEN:
+      dispositions: [MIGRATION_ONLY]
+    FULL_REFIT:
+      dispositions: []
+      execution_steps: [FULL_REFIT_AFTER_REQUIRED_ADMISSION_OR_SYNTHETIC_CALIBRATION]
+    RESUME_COMPLETE_THEN:
+      dispositions: [EXTERNAL_BLOCKED]
+      execution_steps: [COMPLETE_AUTHENTICATED_ACQUISITION]
+    REPAIR_THEN_RERUN:
+      dispositions: [CORRECTED_SUPERSEDED]
+      execution_steps: [USE_REGISTERED_SUCCESSOR_NOT_HISTORICAL_FAILURE]
+    READMIT_COMPLETE_DATA_THEN_SEPARATELY_AUTHORIZE:
+      dispositions: [EXTERNAL_BLOCKED, RERUN_FROM_ADMITTED_SUMMARY]
+      execution_steps: [READMIT_COMPLETE_DATA, REQUIRE_SEPARATE_EXECUTION_AUTHORIZATION]
+  source_grammar:
+    ordinary_join: _AND_
+    prefix_composition:
+      REBASE_THEN_: REBASE_THEN
+      RESUME_COMPLETE_THEN_: RESUME_COMPLETE_THEN
+    exact_atoms:
+    - MIGRATE_REVALIDATE
+    - HOLD_NATIVE
+    - REPAIR_THEN_RERUN
+    - READMIT_COMPLETE_DATA_THEN_SEPARATELY_AUTHORIZE
+    rule: >-
+      Prefix composition consumes the first following atomic action without
+      an `_AND_` delimiter; later actions retain `_AND_`. This explicitly
+      covers the 23 immutable REBASE/RESUME rows and must round-trip to the
+      original string.
+  explicit_current_overrides:
+    PR-172:
+      add: [FALSIFIED_HISTORICAL, CORRECTED_SUPERSEDED]
+      successor: PR-184
+    PR-190:
+      add: [FALSIFIED_HISTORICAL]
+      reason: registered_full_typed_dynamical_sharpness_refuted
+  rules:
+  - A combined legacy string is parsed into registered atomic actions without dropping order or multiplicity.
+  - FULL_REFIT remains an execution step; it is not silently renamed as a data source.
+  - RERUN_FROM_ADMITTED_SUMMARY is allowed only after a registered data-admission receipt.
+  - Current orchestration state and execution resolution come only from canonical pr_status.yaml.
+  - Historical source fields are immutable; corrections are explicit supersession edges.
+
+invalidation_roots:
+- root_id: ROOT-SCALAR-TO-TYPED-STATE
+  direct_authority_pr: PR-261
+  authority_path: htt/src/common/joint_anisotropy_state.py
+  authority_role: typed_state_content_identity
+  edge_kinds: [REQUIRES_RECALIBRATION]
+  affected_capabilities: [METHOD_CALIBRATED, OBSERVED_DESCRIPTIVE, OBSERVED_INFERENTIAL, SOURCE_SEPARATION_CANDIDATE, MORPHOLOGY_COMPATIBILITY, PUBLIC_RELEASE]
+- root_id: ROOT-ORBIT-CATALOGUE-V3
+  direct_authority_pr: PR-263
+  predecessor_prs: [PR-257]
+  authority_path: htt/src/common/orbit_catalogue_v3.py
+  authority_role: orbit_action_parity_stratum_contract
+  edge_kinds: [REQUIRES_RECALIBRATION]
+  affected_capabilities: [METHOD_CALIBRATED, SOURCE_SEPARATION_CANDIDATE, MORPHOLOGY_COMPATIBILITY, PUBLIC_RELEASE]
+- root_id: ROOT-MES-REFREEZE
+  direct_authority_pr: PR-252
+  predecessor_prs: [PR-248]
+  authority_path: docs/research_program/stat_foundations/pr252_mes_consumer_migration.yaml
+  authority_role: exact_successor_migration_receipt
+  edge_kinds: [REQUIRES_REEXECUTION]
+  affected_capabilities: [METHOD_CALIBRATED, OBSERVED_DESCRIPTIVE, OBSERVED_INFERENTIAL, PUBLIC_RELEASE]
+- root_id: ROOT-FRAME-SEPARATION
+  direct_authority_pr: PR-256
+  predecessor_prs: [PR-249]
+  authority_path: htt/src/common/frame_contract.py
+  authority_role: congruence_velocity_frame_contract
+  edge_kinds: [REQUIRES_REEXECUTION]
+  affected_capabilities: [METHOD_CALIBRATED, OBSERVED_DESCRIPTIVE, OBSERVED_INFERENTIAL, SOURCE_SEPARATION_CANDIDATE, MORPHOLOGY_COMPATIBILITY, PUBLIC_RELEASE]
+- root_id: ROOT-ANCHOR-GEOMETRY
+  direct_authority_pr: PR-254
+  successor_consumer_prs: [PR-255, PR-262]
+  authority_path: htt/src/common/anchor_geometry.py
+  authority_role: typed_anchor_gauge_contract
+  edge_kinds: [REQUIRES_RECALIBRATION]
+  affected_capabilities: [METHOD_CALIBRATED, OBSERVED_DESCRIPTIVE, OBSERVED_INFERENTIAL, SOURCE_SEPARATION_CANDIDATE, MORPHOLOGY_COMPATIBILITY, PUBLIC_RELEASE]
+- root_id: ROOT-CONDITIONAL-EXCEEDANCE
+  direct_authority_pr: PR-265
+  dependency_prs: [PR-250]
+  authority_path: htt/src/common/conditional_exceedance.py
+  authority_role: sampling_law_and_exceedance_semantics
+  edge_kinds: [REQUIRES_RECALIBRATION]
+  affected_capabilities: [METHOD_CALIBRATED, OBSERVED_DESCRIPTIVE, OBSERVED_INFERENTIAL, PUBLIC_RELEASE]
+- root_id: ROOT-DEPTH-PATH
+  direct_authority_pr: PR-266
+  authority_path: htt/src/common/depth_path.py
+  authority_role: depth_mask_transport_contract
+  edge_kinds: [REQUIRES_RECALIBRATION]
+  affected_capabilities: [METHOD_CALIBRATED, OBSERVED_DESCRIPTIVE, OBSERVED_INFERENTIAL, SOURCE_SEPARATION_CANDIDATE, MORPHOLOGY_COMPATIBILITY, PUBLIC_RELEASE]
+- root_id: ROOT-RESPONSE-GEOMETRY
+  direct_authority_pr: PR-255
+  successor_consumer_prs: [PR-267]
+  authority_path: htt/src/common/anchored_response_geometry.py
+  authority_role: covariance_supported_response_geometry
+  edge_kinds: [REQUIRES_RECALIBRATION]
+  affected_capabilities: [METHOD_CALIBRATED, SOURCE_SEPARATION_CANDIDATE, MORPHOLOGY_COMPATIBILITY, PUBLIC_RELEASE]
+- root_id: ROOT-OPEN-SET-CLASS
+  direct_authority_pr: PR-258
+  successor_consumer_prs: [PR-267]
+  authority_path: htt/src/common/open_set_response_classes.py
+  authority_role: response_equivalence_and_abstention_contract
+  edge_kinds: [REQUIRES_RECALIBRATION]
+  affected_capabilities: [METHOD_CALIBRATED, SOURCE_SEPARATION_CANDIDATE, MORPHOLOGY_COMPATIBILITY, PUBLIC_RELEASE]
+- root_id: ROOT-DATA-ADMISSION
+  direct_authority_pr: PR-274
+  authority_path: docs/research_program/vector_tensor/data_admission/PR274_ADMISSION_RESULT.json
+  authority_role: no_admitted_data_preflight_receipt
+  edge_kinds: [REQUIRES_REEXECUTION]
+  affected_capabilities: [DATA_ADMITTED, OBSERVED_DESCRIPTIVE, OBSERVED_INFERENTIAL, SOURCE_SEPARATION_CANDIDATE, MORPHOLOGY_COMPATIBILITY, PUBLIC_RELEASE]
+  caveat: This receipt changes no data, mask, covariance, or transfer identity; it only prevents observed reexecution before later admission.
+- root_id: ROOT-THEOREM-REGISTRY-V3
+  direct_authority_pr: PR-268
+  authority_path: docs/research_program/vector_tensor/THEOREM_SIGNATURES_V3.yaml
+  authority_role: versioned_registry_successor_and_adjudication_queue
+  edge_kinds: [REQUIRES_RECALIBRATION]
+  affected_capabilities: [THEOREM_PROVED_EXACT, THEOREM_PROVED_CONDITIONAL, PUBLIC_RELEASE]
+  current_activation: DORMANT_NO_CURRENT_TARGETS
+  caveat: Registry intake alone does not invalidate or prove any theorem; only statement-specific successor/adjudication edges may do so.
+- root_id: ROOT-CF4-P0-QUARANTINE
+  direct_authority_pr: PR-120
+  downstream_aggregator_prs: [PR-209]
+  authority_path: docs/generated/cf4_p0_quarantine_block.json
+  authority_role: exact_quarantine_and_consumer_propagation_receipt
+  edge_kinds: [REQUIRES_REEXECUTION]
+  affected_capabilities: [OBSERVED_DESCRIPTIVE, OBSERVED_INFERENTIAL, SOURCE_SEPARATION_CANDIDATE, MORPHOLOGY_COMPATIBILITY, PUBLIC_RELEASE]
+  caveat: The quarantine blocks the affected CF4 artifacts; it is not itself a changed covariance identity.
+
+lifecycle_projection:
+  node_contract: common.evidence_graph.EvidenceNode
+  edge_contract: common.evidence_graph.EvidenceEdge
+  required_edge_metadata: [affected_capabilities, reason_ref]
+  active_claim_authority: false
+  rules:
+  - Root authority and target artifact nodes are content-addressed over tracked bytes or normalized row identities.
+  - Only artifact-level edges instantiate PR-277 lifecycle types.
+  - Internal PR routing uses a separate ROUTED_TO relation and never enters ClaimCapabilityDecision closure.
+  - Completion status, PR number, or dependency position is not an invalidation reason.
+
+required_outputs:
+- docs/research_program/post_pr275/pr279_source_snapshot.yaml
+- docs/research_program/post_pr275/PR_RETRACE_LEDGER.yaml
+- docs/research_program/post_pr275/github_publication_review_index.yaml
+- docs/research_program/post_pr275/semantic_invalidation_graph.yaml
+- docs/research_program/post_pr275/supersession_map.yaml
+- docs/research_program/post_pr275/recompute_matrix.yaml
+- docs/research_program/post_pr275/failure_debt.yaml
+- docs/research_program/post_pr275/data_runbooks.yaml
+- docs/research_program/post_pr275/data_artifact_disposition.yaml
+
+data_artifact_scope:
+  source_count_status: approximate_45_groups
+  normalized_scope: exactly_45_named_groups
+  grouping_authority: >-
+    PR-279 implementation normalization selected from the approximate campaign
+    groups and independent physics/statistics audit. The 45 boundaries are not
+    represented as a historical fact of the source document.
+  expected_totals:
+    REDO_REQUIRED: 20
+    REDO_UPGRADE: 14
+    PRESERVE: 5
+    BLOCKED: 6
+  rule: >-
+    Each named group must carry a resolvable tracked producer or historical
+    source surface, an internal PR owner, a recompute route, consumers, and a
+    claim ceiling. BLOCKED entries additionally require one named external or
+    admission event.
+  required_fields:
+  - artifact_id
+  - artifact_kind
+  - materialized
+  - disposition
+  - disposition_basis
+  - internal_prs
+  - scientific_owner
+  - producer_or_source_paths
+  - consumers
+  - normalized_dispositions
+  - recompute_route
+  - claim_ceiling
+  - transfer_source
+  - sky_mask_covariance_null_status
+  - assumptions
+  - caveats
+  - generating_procedure
+  semantic_rules:
+  - REDO_UPGRADE is a migration target, not admission, readiness, calibration, or claim promotion.
+  - Only the shared-cause fitted score is directly falsified by N-STAT-PSEUDO-BAYES; propagated V1 surfaces remain conservative legacy-only reruns.
+  - A non-materialized target is identified as such and never called an observed-data artifact.
+  - DESI BGS_ANY and BGS_BRIGHT-21.5 are different versioned estimands.
+  - Any missing dedicated downstream card is a named failure-debt row, not an invented execution route.
+
+output_metadata:
+  required_global_fields:
+  - owner
+  - scope
+  - allowed_use
+  - transfer_source
+  - source_identities
+  - assumptions
+  - caveats
+  - generating_procedure
+  - claim_tier_ceiling
+  rule: Exact hashes are required for the tracked intake and lifecycle nodes; they do not by themselves confer validity or readiness.
+
+output_invariants:
+- Exactly 222 historical internal work units occur once each.
+- The 19 PR-276 through PR-294 units occur only in the prospective section.
+- Exactly 366 GitHub records use the GITHUB-PR namespace.
+- Every legacy disposition round-trips through legacy_actions without loss.
+- Every internal row has at least one canonical disposition and a named recompute route.
+- Every typed lifecycle edge resolves content-addressed endpoints and carries affected_capabilities and reason_ref under the PR-277 contract.
+- Every supersession edge preserves its historical predecessor.
+- Every claim, artifact, and consumer in scope resolves to a known disposition and recompute route.
+- Unknown disposition, orphan endpoint, orphan consumer, and unregistered downstream route count are zero.
+
+fixed_boundaries:
+  capability_effect: none
+  public_use: false
+  observed_data_execution: false
+  native_solver_status: absent
+  native_morphology_atlas_status: absent
+  family_identification: blocked_pre_native_atlas
+  mio_posterior_or_evidence: forbidden
+  legacy_projection_role: comparison_only
+
+hard_stops:
+- An internal PR number and GitHub PR number are treated as the same identity.
+- A completed status is used as scientific capability evidence.
+- A historical disposition or receipt is rewritten in place.
+- A claim, artifact, consumer, or edge endpoint is unresolved.
+- An unknown disposition or recompute route survives validation.
+- A blocked data item lacks a named event or is silently used as admitted input.
+- A synthetic or legacy number is promoted to current observed evidence.
+- Native status, Bianchi-family identification, or MIO posterior semantics are introduced.

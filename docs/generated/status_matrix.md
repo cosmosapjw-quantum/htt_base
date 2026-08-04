@@ -22,13 +22,13 @@ Manual status counts are prohibited; use `docs/generated/status_snapshot.json` a
 | Implementation scope | `common` |
 | Claim tier | `diagnostic_only` |
 | Transfer source | `none` |
-| Config hash | `eeaf9f495aef652403e7bcb3197ed489d32c27ed2dabdadeb7fa75ff3131e1a1` |
-| Input hashes | `docs/codex_handoff/pr_backlog.yaml:fe33ac2e39ee6e045c292fd222e0cc06c196acdb4d55cd0a00f41cfb1b867439`<br>`docs/codex_handoff/pr_status.yaml:79e4850c15c2494907a9b1c209edc155c153f8335498bb441ba7cf3b7ba3b864`<br>`docs/codex_handoff/artifact_gate_outputs.yaml:59e738c74f7cf1ea54151c88d79d07d3c9e62d9bbd013a8cbfa35bbb2a316ba4` |
+| Config hash | `94d6598223004dec65c835bd43662ca64365b980e5c88efbb362c755fffd9cf4` |
+| Input hashes | `docs/codex_handoff/pr_backlog.yaml:fa83b21fdf979b667013d513e6b86d5100fa3200fc620324b4463f17e481e99b`<br>`docs/codex_handoff/pr_status.yaml:79e4850c15c2494907a9b1c209edc155c153f8335498bb441ba7cf3b7ba3b864`<br>`docs/codex_handoff/artifact_gate_outputs.yaml:59e738c74f7cf1ea54151c88d79d07d3c9e62d9bbd013a8cbfa35bbb2a316ba4` |
 | Sky support status | `not_directional` |
 | Null/mock status | `not_statistical` |
 | Caveats | DAG completion is project bookkeeping only and is not scientific readiness.<br>Rows never promote external-transfer outputs to native solver validation.<br>DAG completion, artifact readiness, allowed use, and production validation are separate axes.<br>production_validated remains false without an exact factory-issued ClaimCapabilityDecision.<br>Execution resolutions are process receipts only and never promote scientific status or claim tier. |
 | Generating command | `python -m common.status_snapshot --backlog docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --gate-outputs docs/codex_handoff/artifact_gate_outputs.yaml --write docs/generated/status_snapshot.json` |
-| Source commit | `34ec32aa+dirty` |
+| Source commit | `1b0e4200+dirty` |
 | Worktree state | `dirty` |
 
 | Owner | Rows |
